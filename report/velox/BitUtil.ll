@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
 _ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48.peel: ; preds = %bb.g, %bb.f
   %.0.i46.peel = phi i64 [ %i.cb, %bb.g ], [ %i.bl, %bb.f ]
   %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 %i.ay ; 2 uses
-  %5 = call i64 @llvm.pdep.i64(i64 %.0.i46.peel, i64 %i.bb)
+  %5 = tail call noundef i64 @llvm.pdep.i64(i64 %.0.i46.peel, i64 %i.bb)
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !7
   %i.ce = and i64 %i.cd, %notmask.i.peel
   %i.cf = and i64 %5, %i.ax
@@ -247,7 +247,7 @@ bb.i:                                             ; preds = %bb.h
 
 _ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit.peel: ; preds = %bb.i, %bb.h
   %.0.i.peel = phi i64 [ %i.dj, %bb.i ], [ %i.ct, %bb.h ]
-  %6 = call i64 @llvm.pdep.i64(i64 %.0.i.peel, i64 %i.cj)
+  %6 = tail call noundef i64 @llvm.pdep.i64(i64 %.0.i.peel, i64 %i.cj)
   %i.dk = getelementptr inbounds nuw i8, ptr %4, i64 %i.ch
   store i64 %6, ptr %i.dk, align 8, !tbaa !7
   br label %bb.j
@@ -308,7 +308,7 @@ bb.m:                                             ; preds = %bb.l
 
 _ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit: ; preds = %bb.l, %bb.m
   %.0.i = phi i64 [ %i.eq, %bb.m ], [ %i.ea, %bb.l ]
-  %7 = call i64 @llvm.pdep.i64(i64 %.0.i, i64 %i.dq)
+  %7 = tail call noundef i64 @llvm.pdep.i64(i64 %.0.i, i64 %i.dq)
   %i.er = getelementptr inbounds nuw i8, ptr %4, i64 %i.do
   store i64 %7, ptr %i.er, align 8, !tbaa !7
   br label %bb.n
@@ -333,7 +333,7 @@ _ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit48: ; preds = %bb.
   %i.fh = zext nneg i32 %i.fd to i64
   %i.fi = lshr i64 %i.fg, %i.fh
   %i.fj = getelementptr inbounds nuw i8, ptr %4, i64 %i.ev ; 2 uses
-  %8 = call i64 @llvm.pdep.i64(i64 %i.fi, i64 %i.ey)
+  %8 = tail call noundef i64 @llvm.pdep.i64(i64 %i.fi, i64 %i.ey)
   %i.fk = load i64, ptr %i.fj, align 8, !tbaa !7
   %i.fl = and i64 %i.fk, %notmask.i
   %i.fm = and i64 %8, %i.eu
@@ -736,6 +736,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare i64 @llvm.x86.sse42.crc32.64.64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.pdep.i64(i64, i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -764,9 +767,6 @@ declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v64i64(<64 x i64>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.pdep.i64(i64, i64) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -201,10 +201,10 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.g = add nuw nsw i64 %i.f, 64
   %i.h = icmp ugt <64 x i8> %i.c, splat (i8 -65)
   %i.i = xor i64 %i.e, -1                         ; 2 uses
-  %4 = call i64 @llvm.pdep.i64(i64 %i.i, i64 6148914691236517205)
+  %4 = tail call noundef i64 @llvm.pdep.i64(i64 %i.i, i64 6148914691236517205)
   %i.j = xor i64 %4, -1
   %i.k = lshr i64 %i.i, 32
-  %5 = call i64 @llvm.pdep.i64(i64 %i.k, i64 6148914691236517205)
+  %5 = tail call noundef i64 @llvm.pdep.i64(i64 %i.k, i64 6148914691236517205)
   %i.l = xor i64 %5, -1
   %i.m = shufflevector <64 x i8> %i.c, <64 x i8> poison, <64 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 2 uses
   %i.n = bitcast <64 x i8> %i.m to <32 x i16>
@@ -262,10 +262,10 @@ bb.d:                                             ; preds = %._crit_edge.i
   %i.as = add nuw nsw i64 %i.ar, 64               ; 2 uses
   %i.at = icmp ugt <64 x i8> %i.ao, splat (i8 -65)
   %i.au = xor i64 %i.aq, -1                       ; 2 uses
-  %6 = call i64 @llvm.pdep.i64(i64 %i.au, i64 6148914691236517205)
+  %6 = tail call noundef i64 @llvm.pdep.i64(i64 %i.au, i64 6148914691236517205)
   %i.av = xor i64 %6, -1
   %i.aw = lshr i64 %i.au, 32
-  %7 = call i64 @llvm.pdep.i64(i64 %i.aw, i64 6148914691236517205)
+  %7 = tail call noundef i64 @llvm.pdep.i64(i64 %i.aw, i64 6148914691236517205)
   %i.ax = xor i64 %7, -1
   %i.ay = shufflevector <64 x i8> %i.ao, <64 x i8> poison, <64 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 2 uses
   %i.az = bitcast <64 x i8> %i.ay to <32 x i16>
@@ -320,7 +320,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cl = add i64 %i.ck, %i.cc                    ; 3 uses
   %i.cm = icmp ugt <64 x i8> %i.ch, splat (i8 -65)
   %i.cn = xor i64 %i.cj, -1                       ; 2 uses
-  %8 = call i64 @llvm.pdep.i64(i64 %i.cn, i64 6148914691236517205)
+  %8 = tail call noundef i64 @llvm.pdep.i64(i64 %i.cn, i64 6148914691236517205)
   %i.co = xor i64 %8, -1
   %i.cp = shufflevector <64 x i8> %i.ch, <64 x i8> poison, <64 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 2 uses
   %i.cq = bitcast <64 x i8> %i.cp to <32 x i16>
@@ -348,7 +348,7 @@ bb.g:                                             ; preds = %bb.f
   %i.di = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.dd, <16 x i32> %i.dh, <16 x i32> splat (i32 -16711936), i32 108)
   %i.dj = bitcast <16 x i32> %i.di to <64 x i8>
   %i.dk = lshr i64 %i.cn, 32
-  %9 = call i64 @llvm.pdep.i64(i64 %i.dk, i64 6148914691236517205)
+  %9 = tail call noundef i64 @llvm.pdep.i64(i64 %i.dk, i64 6148914691236517205)
   %i.dl = xor i64 %9, -1
   %i.dm = bitcast i64 %i.dl to <64 x i1>
   %i.dn = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.dj, <64 x i8> zeroinitializer, <64 x i1> %i.dm)
@@ -751,7 +751,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bv = bitcast <32 x i16> %i.bs to <16 x i32>
   %i.bw = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.bt, <16 x i32> %i.bu, <16 x i32> %i.bv, i32 254) ; 2 uses
   %i.bx = shl i64 %i.y, 2
-  %4 = call i64 @llvm.pext.i64(i64 %i.bx, i64 %i.av)
+  %4 = tail call noundef i64 @llvm.pext.i64(i64 %i.bx, i64 %i.av)
   %i.by = trunc i64 %4 to i32
   %i.bz = bitcast <16 x i32> %i.bw to <32 x i16>  ; 2 uses
   %i.ca = icmp ult <32 x i16> %i.bz, splat (i16 2048)
@@ -766,7 +766,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not222.i.i, label %bb.i, label %_ZN7simdutf7icelake12_GLOBAL__N_133fast_avx512_convert_utf8_to_utf16ILNS_10endiannessE0EEESt4pairIPKcPDsES6_mS7_.exit
 
 bb.i:                                             ; preds = %bb.h
-  %5 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.av) ; 2 uses
+  %5 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.av) ; 2 uses
   %i.ci = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %5) ; 2 uses
   %i.cj = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 false)
   %i.ck = sub nuw nsw i64 64, %i.cj
@@ -818,7 +818,7 @@ bb.j:                                             ; preds = %bb.f
   %i.dy = bitcast <32 x i16> %i.dp to <16 x i32>
   %i.dz = bitcast <32 x i16> %i.dw to <16 x i32>
   %i.ea = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.dx, <16 x i32> %i.dy, <16 x i32> %i.dz, i32 254)
-  %6 = call i64 @llvm.pext.i64(i64 %i.cr, i64 %i.cz) ; 2 uses
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.cr, i64 %i.cz) ; 2 uses
   %i.eb = trunc i64 %6 to i32
   %i.ec = lshr i64 %6, 1                          ; 2 uses
   %i.ed = trunc i64 %i.ec to i32
@@ -832,7 +832,7 @@ bb.j:                                             ; preds = %bb.f
   %i.el = select <32 x i1> %i.ek, <32 x i16> %i.ej, <32 x i16> %i.ei ; 3 uses
   %i.em = and i64 %i.ec, 2147483648
   %i.en = xor i64 %i.em, 4294967295
-  %7 = call i64 @llvm.pdep.i64(i64 %i.en, i64 %i.cz) ; 2 uses
+  %7 = tail call noundef i64 @llvm.pdep.i64(i64 %i.en, i64 %i.cz) ; 2 uses
   %i.eo = xor i64 %i.ct, %i.cu
   %.not407.i = icmp eq i64 %i.eo, -1
   br i1 %.not407.i, label %bb.k, label %_ZN7simdutf7icelake12_GLOBAL__N_133fast_avx512_convert_utf8_to_utf16ILNS_10endiannessE0EEESt4pairIPKcPDsES6_mS7_.exit
@@ -841,7 +841,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ep = xor i64 %i.aj, -1
   %i.eq = and i64 %i.y, %i.ep
   %i.er = shl i64 %i.eq, 2
-  %8 = call i64 @llvm.pext.i64(i64 %i.er, i64 %i.cz)
+  %8 = tail call noundef i64 @llvm.pext.i64(i64 %i.er, i64 %i.cz)
   %i.es = trunc i64 %8 to i32
   %i.et = icmp ult <32 x i16> %i.el, splat (i16 2048)
   %i.eu = bitcast i32 %i.es to <32 x i1>
@@ -1025,7 +1025,7 @@ bb.x:                                             ; preds = %bb.w
   %i.jn = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.jk, <16 x i32> %i.jl, <16 x i32> %i.jm, i32 254) ; 2 uses
   %i.jo = and i64 %i.hl, %i.gl
   %i.jp = shl i64 %i.jo, 2
-  %9 = call i64 @llvm.pext.i64(i64 %i.jp, i64 %i.im)
+  %9 = tail call noundef i64 @llvm.pext.i64(i64 %i.jp, i64 %i.im)
   %i.jq = trunc i64 %9 to i32
   %i.jr = bitcast <16 x i32> %i.jn to <32 x i16>  ; 2 uses
   %i.js = icmp ult <32 x i16> %i.jr, splat (i16 2048)
@@ -1041,7 +1041,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.ka = and i64 %i.im, %i.gl
-  %10 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.ka) ; 2 uses
+  %10 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.ka) ; 2 uses
   %i.kb = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %10) ; 2 uses
   %i.kc = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %10, i1 false)
   %i.kd = sub nuw nsw i64 64, %i.kc
@@ -1097,7 +1097,7 @@ bb.z:                                             ; preds = %bb.v
   %i.lu = bitcast <32 x i16> %i.ll to <16 x i32>
   %i.lv = bitcast <32 x i16> %i.ls to <16 x i32>
   %i.lw = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.lt, <16 x i32> %i.lu, <16 x i32> %i.lv, i32 254)
-  %11 = call i64 @llvm.pext.i64(i64 %i.kk, i64 %i.kv) ; 2 uses
+  %11 = tail call noundef i64 @llvm.pext.i64(i64 %i.kk, i64 %i.kv) ; 2 uses
   %i.lx = trunc i64 %11 to i32
   %i.ly = lshr i64 %11, 1                         ; 2 uses
   %i.lz = trunc i64 %i.ly to i32
@@ -1112,7 +1112,7 @@ bb.z:                                             ; preds = %bb.v
   %i.mi = and i64 %i.ly, 2147483648
   %i.mj = xor i64 %i.mi, 4294967295
   %i.mk = and i64 %i.kv, %i.gl
-  %12 = call i64 @llvm.pdep.i64(i64 %i.mj, i64 %i.mk) ; 2 uses
+  %12 = tail call noundef i64 @llvm.pdep.i64(i64 %i.mj, i64 %i.mk) ; 2 uses
   %i.ml = xor i64 %i.kn, %i.gl
   %.not241.i.i = icmp eq i64 %i.km, %i.ml
   br i1 %.not241.i.i, label %bb.aa, label %_ZN7simdutf7icelake12_GLOBAL__N_133fast_avx512_convert_utf8_to_utf16ILNS_10endiannessE0EEESt4pairIPKcPDsES6_mS7_.exit
@@ -1121,7 +1121,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.mm = xor i64 %i.hv, %i.gl
   %i.mn = and i64 %i.mm, %i.hl
   %i.mo = shl i64 %i.mn, 2
-  %13 = call i64 @llvm.pext.i64(i64 %i.mo, i64 %i.kv)
+  %13 = tail call noundef i64 @llvm.pext.i64(i64 %i.mo, i64 %i.kv)
   %i.mp = trunc i64 %13 to i32
   %i.mq = icmp ult <32 x i16> %i.mh, splat (i16 2048)
   %i.mr = bitcast i32 %i.mp to <32 x i1>
@@ -1164,7 +1164,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.np = xor <64 x i1> %i.hi, splat (i1 true)
   %i.nq = bitcast <64 x i1> %i.np to i64
   %i.nr = and i64 %i.nq, %i.gl                    ; 2 uses
-  %14 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nr)
+  %14 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nr)
   %i.ns = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %14, i1 false)
   %i.nt = sub nuw nsw i64 64, %i.ns
   %i.nu = getelementptr inbounds nuw i8, ptr %.0396410.i, i64 %i.nt
@@ -1178,7 +1178,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.oc = zext <32 x i8> %i.ob to <32 x i16>
   %i.od = shl nuw nsw <32 x i16> %i.ny, splat (i16 6)
   %i.oe = add nuw nsw <32 x i16> %i.od, %i.oc
-  %15 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nj)
+  %15 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nj)
   %i.of = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %15) ; 2 uses
   %notmask240.i.i = shl nsw i64 -1, %i.of
   %i.og = trunc i64 %notmask240.i.i to i32
@@ -1318,7 +1318,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bz = bitcast <32 x i16> %i.bw to <16 x i32>
   %i.ca = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.bx, <16 x i32> %i.by, <16 x i32> %i.bz, i32 254) ; 3 uses
   %i.cb = shl i64 %i.ac, 2
-  %4 = call i64 @llvm.pext.i64(i64 %i.cb, i64 %i.az)
+  %4 = tail call noundef i64 @llvm.pext.i64(i64 %i.cb, i64 %i.az)
   %i.cc = trunc i64 %4 to i32
   %i.cd = bitcast <16 x i32> %i.ca to <32 x i16>
   %i.ce = icmp ult <32 x i16> %i.cd, splat (i16 2048)
@@ -1333,7 +1333,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not232.i.i, label %bb.i, label %_ZN7simdutf7icelake12_GLOBAL__N_133fast_avx512_convert_utf8_to_utf16ILNS_10endiannessE1EEESt4pairIPKcPDsES6_mS7_.exit
 
 bb.i:                                             ; preds = %bb.h
-  %5 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.az) ; 2 uses
+  %5 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.az) ; 2 uses
   %i.cm = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %5) ; 2 uses
   %i.cn = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 false)
   %i.co = sub nuw nsw i64 64, %i.cn
@@ -1388,7 +1388,7 @@ bb.j:                                             ; preds = %bb.f
   %i.ef = bitcast <32 x i16> %i.dw to <16 x i32>
   %i.eg = bitcast <32 x i16> %i.ed to <16 x i32>
   %i.eh = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.ee, <16 x i32> %i.ef, <16 x i32> %i.eg, i32 254)
-  %6 = call i64 @llvm.pext.i64(i64 %i.cy, i64 %i.dg) ; 2 uses
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.cy, i64 %i.dg) ; 2 uses
   %i.ei = trunc i64 %6 to i32
   %i.ej = lshr i64 %6, 1                          ; 2 uses
   %i.ek = trunc i64 %i.ej to i32
@@ -1402,7 +1402,7 @@ bb.j:                                             ; preds = %bb.f
   %i.es = select <32 x i1> %i.er, <32 x i16> %i.eq, <32 x i16> %i.ep ; 3 uses
   %i.et = and i64 %i.ej, 2147483648
   %i.eu = xor i64 %i.et, 4294967295
-  %7 = call i64 @llvm.pdep.i64(i64 %i.eu, i64 %i.dg) ; 2 uses
+  %7 = tail call noundef i64 @llvm.pdep.i64(i64 %i.eu, i64 %i.dg) ; 2 uses
   %i.ev = xor i64 %i.da, %i.db
   %.not451.i = icmp eq i64 %i.ev, -1
   br i1 %.not451.i, label %bb.k, label %_ZN7simdutf7icelake12_GLOBAL__N_133fast_avx512_convert_utf8_to_utf16ILNS_10endiannessE1EEESt4pairIPKcPDsES6_mS7_.exit
@@ -1411,7 +1411,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ew = xor i64 %i.an, -1
   %i.ex = and i64 %i.ac, %i.ew
   %i.ey = shl i64 %i.ex, 2
-  %8 = call i64 @llvm.pext.i64(i64 %i.ey, i64 %i.dg)
+  %8 = tail call noundef i64 @llvm.pext.i64(i64 %i.ey, i64 %i.dg)
   %i.ez = trunc i64 %8 to i32
   %i.fa = icmp ult <32 x i16> %i.es, splat (i16 2048)
   %i.fb = bitcast i32 %i.ez to <32 x i1>
@@ -1607,7 +1607,7 @@ bb.x:                                             ; preds = %bb.w
   %i.kg = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.kd, <16 x i32> %i.ke, <16 x i32> %i.kf, i32 254) ; 3 uses
   %i.kh = and i64 %i.ie, %i.gy
   %i.ki = shl i64 %i.kh, 2
-  %9 = call i64 @llvm.pext.i64(i64 %i.ki, i64 %i.jf)
+  %9 = tail call noundef i64 @llvm.pext.i64(i64 %i.ki, i64 %i.jf)
   %i.kj = trunc i64 %9 to i32
   %i.kk = bitcast <16 x i32> %i.kg to <32 x i16>
   %i.kl = icmp ult <32 x i16> %i.kk, splat (i16 2048)
@@ -1623,7 +1623,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.kt = and i64 %i.jf, %i.gy
-  %10 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.kt) ; 2 uses
+  %10 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.kt) ; 2 uses
   %i.ku = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %10) ; 2 uses
   %i.kv = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %10, i1 false)
   %i.kw = sub nuw nsw i64 64, %i.kv
@@ -1682,7 +1682,7 @@ bb.z:                                             ; preds = %bb.v
   %i.mq = bitcast <32 x i16> %i.mh to <16 x i32>
   %i.mr = bitcast <32 x i16> %i.mo to <16 x i32>
   %i.ms = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.mp, <16 x i32> %i.mq, <16 x i32> %i.mr, i32 254)
-  %11 = call i64 @llvm.pext.i64(i64 %i.lg, i64 %i.lr) ; 2 uses
+  %11 = tail call noundef i64 @llvm.pext.i64(i64 %i.lg, i64 %i.lr) ; 2 uses
   %i.mt = trunc i64 %11 to i32
   %i.mu = lshr i64 %11, 1                         ; 2 uses
   %i.mv = trunc i64 %i.mu to i32
@@ -1697,7 +1697,7 @@ bb.z:                                             ; preds = %bb.v
   %i.ne = and i64 %i.mu, 2147483648
   %i.nf = xor i64 %i.ne, 4294967295
   %i.ng = and i64 %i.lr, %i.gy
-  %12 = call i64 @llvm.pdep.i64(i64 %i.nf, i64 %i.ng) ; 2 uses
+  %12 = tail call noundef i64 @llvm.pdep.i64(i64 %i.nf, i64 %i.ng) ; 2 uses
   %i.nh = xor i64 %i.lj, %i.gy
   %.not253.i.i = icmp eq i64 %i.li, %i.nh
   br i1 %.not253.i.i, label %bb.aa, label %_ZN7simdutf7icelake12_GLOBAL__N_133fast_avx512_convert_utf8_to_utf16ILNS_10endiannessE1EEESt4pairIPKcPDsES6_mS7_.exit
@@ -1706,7 +1706,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ni = xor i64 %i.io, %i.gy
   %i.nj = and i64 %i.ni, %i.ie
   %i.nk = shl i64 %i.nj, 2
-  %13 = call i64 @llvm.pext.i64(i64 %i.nk, i64 %i.lr)
+  %13 = tail call noundef i64 @llvm.pext.i64(i64 %i.nk, i64 %i.lr)
   %i.nl = trunc i64 %13 to i32
   %i.nm = icmp ult <32 x i16> %i.nd, splat (i16 2048)
   %i.nn = bitcast i32 %i.nl to <32 x i1>
@@ -1752,7 +1752,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.oo = xor <64 x i1> %i.ib, splat (i1 true)
   %i.op = bitcast <64 x i1> %i.oo to i64
   %i.oq = and i64 %i.op, %i.gy                    ; 2 uses
-  %14 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oq)
+  %14 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oq)
   %i.or = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %14, i1 false)
   %i.os = sub nuw nsw i64 64, %i.or
   %i.ot = getelementptr inbounds nuw i8, ptr %.0440454.i, i64 %i.os
@@ -1768,7 +1768,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.pd = add nuw nsw <32 x i16> %i.pc, %i.pb
   %i.pe = bitcast <32 x i16> %i.pd to <64 x i8>
   %i.pf = shufflevector <64 x i8> %i.pe, <64 x i8> poison, <64 x i32> <i32 1, i32 0, i32 3, i32 2, i32 5, i32 4, i32 7, i32 6, i32 9, i32 8, i32 11, i32 10, i32 13, i32 12, i32 15, i32 14, i32 17, i32 16, i32 19, i32 18, i32 21, i32 20, i32 23, i32 22, i32 25, i32 24, i32 27, i32 26, i32 29, i32 28, i32 31, i32 30, i32 33, i32 32, i32 35, i32 34, i32 37, i32 36, i32 39, i32 38, i32 41, i32 40, i32 43, i32 42, i32 45, i32 44, i32 47, i32 46, i32 49, i32 48, i32 51, i32 50, i32 53, i32 52, i32 55, i32 54, i32 57, i32 56, i32 59, i32 58, i32 61, i32 60, i32 63, i32 62>
-  %15 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oi)
+  %15 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oi)
   %i.pg = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %15) ; 2 uses
   %notmask252.i.i = shl nsw i64 -1, %i.pg
   %i.ph = trunc i64 %notmask252.i.i to i32
@@ -1905,7 +1905,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bv = bitcast <32 x i16> %i.bs to <16 x i32>
   %i.bw = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.bt, <16 x i32> %i.bu, <16 x i32> %i.bv, i32 254) ; 2 uses
   %i.bx = shl i64 %i.y, 2
-  %4 = call i64 @llvm.pext.i64(i64 %i.bx, i64 %i.av)
+  %4 = tail call noundef i64 @llvm.pext.i64(i64 %i.bx, i64 %i.av)
   %i.by = trunc i64 %4 to i32
   %i.bz = bitcast <16 x i32> %i.bw to <32 x i16>  ; 2 uses
   %i.ca = icmp ult <32 x i16> %i.bz, splat (i16 2048)
@@ -1920,7 +1920,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not222.i.i, label %bb.i, label %.critedge.i
 
 bb.i:                                             ; preds = %bb.h
-  %5 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.av) ; 2 uses
+  %5 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.av) ; 2 uses
   %i.ci = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %5) ; 2 uses
   %i.cj = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 false)
   %i.ck = sub nuw nsw i64 64, %i.cj
@@ -1972,7 +1972,7 @@ bb.j:                                             ; preds = %bb.f
   %i.dy = bitcast <32 x i16> %i.dp to <16 x i32>
   %i.dz = bitcast <32 x i16> %i.dw to <16 x i32>
   %i.ea = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.dx, <16 x i32> %i.dy, <16 x i32> %i.dz, i32 254)
-  %6 = call i64 @llvm.pext.i64(i64 %i.cr, i64 %i.cz) ; 2 uses
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.cr, i64 %i.cz) ; 2 uses
   %i.eb = trunc i64 %6 to i32
   %i.ec = lshr i64 %6, 1                          ; 2 uses
   %i.ed = trunc i64 %i.ec to i32
@@ -1986,7 +1986,7 @@ bb.j:                                             ; preds = %bb.f
   %i.el = select <32 x i1> %i.ek, <32 x i16> %i.ej, <32 x i16> %i.ei ; 3 uses
   %i.em = and i64 %i.ec, 2147483648
   %i.en = xor i64 %i.em, 4294967295
-  %7 = call i64 @llvm.pdep.i64(i64 %i.en, i64 %i.cz) ; 2 uses
+  %7 = tail call noundef i64 @llvm.pdep.i64(i64 %i.en, i64 %i.cz) ; 2 uses
   %i.eo = xor i64 %i.ct, %i.cu
   %.not442.i = icmp eq i64 %i.eo, -1
   br i1 %.not442.i, label %bb.k, label %.critedge.i
@@ -1995,7 +1995,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ep = xor i64 %i.aj, -1
   %i.eq = and i64 %i.y, %i.ep
   %i.er = shl i64 %i.eq, 2
-  %8 = call i64 @llvm.pext.i64(i64 %i.er, i64 %i.cz)
+  %8 = tail call noundef i64 @llvm.pext.i64(i64 %i.er, i64 %i.cz)
   %i.es = trunc i64 %8 to i32
   %i.et = icmp ult <32 x i16> %i.el, splat (i16 2048)
   %i.eu = bitcast i32 %i.es to <32 x i1>
@@ -2179,7 +2179,7 @@ bb.x:                                             ; preds = %bb.w
   %i.jn = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.jk, <16 x i32> %i.jl, <16 x i32> %i.jm, i32 254) ; 2 uses
   %i.jo = and i64 %i.hl, %i.gl
   %i.jp = shl i64 %i.jo, 2
-  %9 = call i64 @llvm.pext.i64(i64 %i.jp, i64 %i.im)
+  %9 = tail call noundef i64 @llvm.pext.i64(i64 %i.jp, i64 %i.im)
   %i.jq = trunc i64 %9 to i32
   %i.jr = bitcast <16 x i32> %i.jn to <32 x i16>  ; 2 uses
   %i.js = icmp ult <32 x i16> %i.jr, splat (i16 2048)
@@ -2195,7 +2195,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.ka = and i64 %i.im, %i.gl
-  %10 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.ka) ; 2 uses
+  %10 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.ka) ; 2 uses
   %i.kb = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %10) ; 2 uses
   %i.kc = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %10, i1 false)
   %i.kd = sub nuw nsw i64 64, %i.kc
@@ -2251,7 +2251,7 @@ bb.z:                                             ; preds = %bb.v
   %i.lu = bitcast <32 x i16> %i.ll to <16 x i32>
   %i.lv = bitcast <32 x i16> %i.ls to <16 x i32>
   %i.lw = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.lt, <16 x i32> %i.lu, <16 x i32> %i.lv, i32 254)
-  %11 = call i64 @llvm.pext.i64(i64 %i.kk, i64 %i.kv) ; 2 uses
+  %11 = tail call noundef i64 @llvm.pext.i64(i64 %i.kk, i64 %i.kv) ; 2 uses
   %i.lx = trunc i64 %11 to i32
   %i.ly = lshr i64 %11, 1                         ; 2 uses
   %i.lz = trunc i64 %i.ly to i32
@@ -2266,7 +2266,7 @@ bb.z:                                             ; preds = %bb.v
   %i.mi = and i64 %i.ly, 2147483648
   %i.mj = xor i64 %i.mi, 4294967295
   %i.mk = and i64 %i.kv, %i.gl
-  %12 = call i64 @llvm.pdep.i64(i64 %i.mj, i64 %i.mk) ; 2 uses
+  %12 = tail call noundef i64 @llvm.pdep.i64(i64 %i.mj, i64 %i.mk) ; 2 uses
   %i.ml = xor i64 %i.kn, %i.gl
   %.not241.i.i = icmp eq i64 %i.km, %i.ml
   br i1 %.not241.i.i, label %bb.aa, label %.critedge.i
@@ -2275,7 +2275,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.mm = xor i64 %i.hv, %i.gl
   %i.mn = and i64 %i.mm, %i.hl
   %i.mo = shl i64 %i.mn, 2
-  %13 = call i64 @llvm.pext.i64(i64 %i.mo, i64 %i.kv)
+  %13 = tail call noundef i64 @llvm.pext.i64(i64 %i.mo, i64 %i.kv)
   %i.mp = trunc i64 %13 to i32
   %i.mq = icmp ult <32 x i16> %i.mh, splat (i16 2048)
   %i.mr = bitcast i32 %i.mp to <32 x i1>
@@ -2318,7 +2318,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.np = xor <64 x i1> %i.hi, splat (i1 true)
   %i.nq = bitcast <64 x i1> %i.np to i64
   %i.nr = and i64 %i.nq, %i.gl                    ; 2 uses
-  %14 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nr)
+  %14 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nr)
   %i.ns = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %14, i1 false)
   %i.nt = sub nuw nsw i64 64, %i.ns
   %i.nu = getelementptr inbounds nuw i8, ptr %.0432447.i, i64 %i.nt
@@ -2332,7 +2332,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.oc = zext <32 x i8> %i.ob to <32 x i16>
   %i.od = shl nuw nsw <32 x i16> %i.ny, splat (i16 6)
   %i.oe = add nuw nsw <32 x i16> %i.od, %i.oc
-  %15 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nj)
+  %15 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.nj)
   %i.of = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %15) ; 2 uses
   %notmask240.i.i = shl nsw i64 -1, %i.of
   %i.og = trunc i64 %notmask240.i.i to i32
@@ -2511,7 +2511,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bz = bitcast <32 x i16> %i.bw to <16 x i32>
   %i.ca = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.bx, <16 x i32> %i.by, <16 x i32> %i.bz, i32 254) ; 3 uses
   %i.cb = shl i64 %i.ac, 2
-  %4 = call i64 @llvm.pext.i64(i64 %i.cb, i64 %i.az)
+  %4 = tail call noundef i64 @llvm.pext.i64(i64 %i.cb, i64 %i.az)
   %i.cc = trunc i64 %4 to i32
   %i.cd = bitcast <16 x i32> %i.ca to <32 x i16>
   %i.ce = icmp ult <32 x i16> %i.cd, splat (i16 2048)
@@ -2526,7 +2526,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not232.i.i, label %bb.i, label %.critedge.i
 
 bb.i:                                             ; preds = %bb.h
-  %5 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.az) ; 2 uses
+  %5 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.az) ; 2 uses
   %i.cm = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %5) ; 2 uses
   %i.cn = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 false)
   %i.co = sub nuw nsw i64 64, %i.cn
@@ -2581,7 +2581,7 @@ bb.j:                                             ; preds = %bb.f
   %i.ef = bitcast <32 x i16> %i.dw to <16 x i32>
   %i.eg = bitcast <32 x i16> %i.ed to <16 x i32>
   %i.eh = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.ee, <16 x i32> %i.ef, <16 x i32> %i.eg, i32 254)
-  %6 = call i64 @llvm.pext.i64(i64 %i.cy, i64 %i.dg) ; 2 uses
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.cy, i64 %i.dg) ; 2 uses
   %i.ei = trunc i64 %6 to i32
   %i.ej = lshr i64 %6, 1                          ; 2 uses
   %i.ek = trunc i64 %i.ej to i32
@@ -2595,7 +2595,7 @@ bb.j:                                             ; preds = %bb.f
   %i.es = select <32 x i1> %i.er, <32 x i16> %i.eq, <32 x i16> %i.ep ; 3 uses
   %i.et = and i64 %i.ej, 2147483648
   %i.eu = xor i64 %i.et, 4294967295
-  %7 = call i64 @llvm.pdep.i64(i64 %i.eu, i64 %i.dg) ; 2 uses
+  %7 = tail call noundef i64 @llvm.pdep.i64(i64 %i.eu, i64 %i.dg) ; 2 uses
   %i.ev = xor i64 %i.da, %i.db
   %.not486.i = icmp eq i64 %i.ev, -1
   br i1 %.not486.i, label %bb.k, label %.critedge.i
@@ -2604,7 +2604,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ew = xor i64 %i.an, -1
   %i.ex = and i64 %i.ac, %i.ew
   %i.ey = shl i64 %i.ex, 2
-  %8 = call i64 @llvm.pext.i64(i64 %i.ey, i64 %i.dg)
+  %8 = tail call noundef i64 @llvm.pext.i64(i64 %i.ey, i64 %i.dg)
   %i.ez = trunc i64 %8 to i32
   %i.fa = icmp ult <32 x i16> %i.es, splat (i16 2048)
   %i.fb = bitcast i32 %i.ez to <32 x i1>
@@ -2800,7 +2800,7 @@ bb.x:                                             ; preds = %bb.w
   %i.kg = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.kd, <16 x i32> %i.ke, <16 x i32> %i.kf, i32 254) ; 3 uses
   %i.kh = and i64 %i.ie, %i.gy
   %i.ki = shl i64 %i.kh, 2
-  %9 = call i64 @llvm.pext.i64(i64 %i.ki, i64 %i.jf)
+  %9 = tail call noundef i64 @llvm.pext.i64(i64 %i.ki, i64 %i.jf)
   %i.kj = trunc i64 %9 to i32
   %i.kk = bitcast <16 x i32> %i.kg to <32 x i16>
   %i.kl = icmp ult <32 x i16> %i.kk, splat (i16 2048)
@@ -2816,7 +2816,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.kt = and i64 %i.jf, %i.gy
-  %10 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.kt) ; 2 uses
+  %10 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.kt) ; 2 uses
   %i.ku = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %10) ; 2 uses
   %i.kv = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %10, i1 false)
   %i.kw = sub nuw nsw i64 64, %i.kv
@@ -2875,7 +2875,7 @@ bb.z:                                             ; preds = %bb.v
   %i.mq = bitcast <32 x i16> %i.mh to <16 x i32>
   %i.mr = bitcast <32 x i16> %i.mo to <16 x i32>
   %i.ms = tail call <16 x i32> @llvm.x86.avx512.pternlog.d.512(<16 x i32> %i.mp, <16 x i32> %i.mq, <16 x i32> %i.mr, i32 254)
-  %11 = call i64 @llvm.pext.i64(i64 %i.lg, i64 %i.lr) ; 2 uses
+  %11 = tail call noundef i64 @llvm.pext.i64(i64 %i.lg, i64 %i.lr) ; 2 uses
   %i.mt = trunc i64 %11 to i32
   %i.mu = lshr i64 %11, 1                         ; 2 uses
   %i.mv = trunc i64 %i.mu to i32
@@ -2890,7 +2890,7 @@ bb.z:                                             ; preds = %bb.v
   %i.ne = and i64 %i.mu, 2147483648
   %i.nf = xor i64 %i.ne, 4294967295
   %i.ng = and i64 %i.lr, %i.gy
-  %12 = call i64 @llvm.pdep.i64(i64 %i.nf, i64 %i.ng) ; 2 uses
+  %12 = tail call noundef i64 @llvm.pdep.i64(i64 %i.nf, i64 %i.ng) ; 2 uses
   %i.nh = xor i64 %i.lj, %i.gy
   %.not253.i.i = icmp eq i64 %i.li, %i.nh
   br i1 %.not253.i.i, label %bb.aa, label %.critedge.i
@@ -2899,7 +2899,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ni = xor i64 %i.io, %i.gy
   %i.nj = and i64 %i.ni, %i.ie
   %i.nk = shl i64 %i.nj, 2
-  %13 = call i64 @llvm.pext.i64(i64 %i.nk, i64 %i.lr)
+  %13 = tail call noundef i64 @llvm.pext.i64(i64 %i.nk, i64 %i.lr)
   %i.nl = trunc i64 %13 to i32
   %i.nm = icmp ult <32 x i16> %i.nd, splat (i16 2048)
   %i.nn = bitcast i32 %i.nl to <32 x i1>
@@ -2945,7 +2945,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.oo = xor <64 x i1> %i.ib, splat (i1 true)
   %i.op = bitcast <64 x i1> %i.oo to i64
   %i.oq = and i64 %i.op, %i.gy                    ; 2 uses
-  %14 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oq)
+  %14 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oq)
   %i.or = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %14, i1 false)
   %i.os = sub nuw nsw i64 64, %i.or
   %i.ot = getelementptr inbounds nuw i8, ptr %.0476491.i, i64 %i.os
@@ -2961,7 +2961,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.pd = add nuw nsw <32 x i16> %i.pc, %i.pb
   %i.pe = bitcast <32 x i16> %i.pd to <64 x i8>
   %i.pf = shufflevector <64 x i8> %i.pe, <64 x i8> poison, <64 x i32> <i32 1, i32 0, i32 3, i32 2, i32 5, i32 4, i32 7, i32 6, i32 9, i32 8, i32 11, i32 10, i32 13, i32 12, i32 15, i32 14, i32 17, i32 16, i32 19, i32 18, i32 21, i32 20, i32 23, i32 22, i32 25, i32 24, i32 27, i32 26, i32 29, i32 28, i32 31, i32 30, i32 33, i32 32, i32 35, i32 34, i32 37, i32 36, i32 39, i32 38, i32 41, i32 40, i32 43, i32 42, i32 45, i32 44, i32 47, i32 46, i32 49, i32 48, i32 51, i32 50, i32 53, i32 52, i32 55, i32 54, i32 57, i32 56, i32 59, i32 58, i32 61, i32 60, i32 63, i32 62>
-  %15 = call i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oi)
+  %15 = tail call noundef i64 @llvm.pdep.i64(i64 4294967295, i64 %i.oi)
   %i.pg = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %15) ; 2 uses
   %notmask252.i.i = shl nsw i64 -1, %i.pg
   %i.ph = trunc i64 %notmask252.i.i to i32
@@ -3364,7 +3364,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bh = icmp uge <64 x i8> %i.bf, %i.bg         ; 2 uses
   %i.bi = bitcast <64 x i1> %i.bh to i64          ; 2 uses
   %i.bj = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.bf, <64 x i8> zeroinitializer, <64 x i1> %i.bh)
-  %4 = call i64 @llvm.pext.i64(i64 %i.bi, i64 %i.bi)
+  %4 = tail call noundef i64 @llvm.pext.i64(i64 %i.bi, i64 %i.bi)
   %i.bk = bitcast i64 %4 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.bj, ptr align 1 %.1161.i, <64 x i1> %i.bk)
   %i.bl = tail call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.av)
@@ -3512,11 +3512,11 @@ bb.h:                                             ; preds = %bb.g
   %i.fa = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.ev, <64 x i8> zeroinitializer, <64 x i1> %i.ex)
   %i.fb = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.eu)
   %i.fc = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ey)
-  %5 = call i64 @llvm.pext.i64(i64 %i.eu, i64 %i.eu)
+  %5 = tail call noundef i64 @llvm.pext.i64(i64 %i.eu, i64 %i.eu)
   %i.fd = bitcast i64 %5 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.ez, ptr align 1 %.1161.i, <64 x i1> %i.fd)
   %i.fe = getelementptr inbounds nuw i8, ptr %.1161.i, i64 %i.fb ; 2 uses
-  %6 = call i64 @llvm.pext.i64(i64 %i.ey, i64 %i.ey)
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.ey, i64 %i.ey)
   %i.ff = bitcast i64 %6 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.fa, ptr align 1 %i.fe, <64 x i1> %i.ff)
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fe, i64 %i.fc
@@ -3727,7 +3727,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bi = icmp uge <64 x i8> %i.bg, %i.bh         ; 2 uses
   %i.bj = bitcast <64 x i1> %i.bi to i64          ; 2 uses
   %i.bk = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.bg, <64 x i8> zeroinitializer, <64 x i1> %i.bi)
-  %4 = call i64 @llvm.pext.i64(i64 %i.bj, i64 %i.bj)
+  %4 = tail call noundef i64 @llvm.pext.i64(i64 %i.bj, i64 %i.bj)
   %i.bl = bitcast i64 %4 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.bk, ptr align 1 %.1165.i, <64 x i1> %i.bl)
   %i.bm = tail call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.aw)
@@ -3875,11 +3875,11 @@ bb.h:                                             ; preds = %bb.g
   %i.fb = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.ew, <64 x i8> zeroinitializer, <64 x i1> %i.ey)
   %i.fc = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ev)
   %i.fd = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ez)
-  %5 = call i64 @llvm.pext.i64(i64 %i.ev, i64 %i.ev)
+  %5 = tail call noundef i64 @llvm.pext.i64(i64 %i.ev, i64 %i.ev)
   %i.fe = bitcast i64 %5 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.fa, ptr align 1 %.1165.i, <64 x i1> %i.fe)
   %i.ff = getelementptr inbounds nuw i8, ptr %.1165.i, i64 %i.fc ; 2 uses
-  %6 = call i64 @llvm.pext.i64(i64 %i.ez, i64 %i.ez)
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.ez, i64 %i.ez)
   %i.fg = bitcast i64 %6 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.fb, ptr align 1 %i.ff, <64 x i1> %i.fg)
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ff, i64 %i.fd
@@ -4090,7 +4090,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bh = icmp uge <64 x i8> %i.bf, %i.bg         ; 2 uses
   %i.bi = bitcast <64 x i1> %i.bh to i64          ; 2 uses
   %i.bj = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.bf, <64 x i8> zeroinitializer, <64 x i1> %i.bh)
-  %5 = call i64 @llvm.pext.i64(i64 %i.bi, i64 %i.bi)
+  %5 = tail call noundef i64 @llvm.pext.i64(i64 %i.bi, i64 %i.bi)
   %i.bk = bitcast i64 %5 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.bj, ptr align 1 %.1161.i, <64 x i1> %i.bk)
   %i.bl = tail call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.av)
@@ -4238,11 +4238,11 @@ bb.h:                                             ; preds = %bb.g
   %i.fa = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.ev, <64 x i8> zeroinitializer, <64 x i1> %i.ex)
   %i.fb = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.eu)
   %i.fc = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ey)
-  %6 = call i64 @llvm.pext.i64(i64 %i.eu, i64 %i.eu)
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.eu, i64 %i.eu)
   %i.fd = bitcast i64 %6 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.ez, ptr align 1 %.1161.i, <64 x i1> %i.fd)
   %i.fe = getelementptr inbounds nuw i8, ptr %.1161.i, i64 %i.fb ; 2 uses
-  %7 = call i64 @llvm.pext.i64(i64 %i.ey, i64 %i.ey)
+  %7 = tail call noundef i64 @llvm.pext.i64(i64 %i.ey, i64 %i.ey)
   %i.ff = bitcast i64 %7 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.fa, ptr align 1 %i.fe, <64 x i1> %i.ff)
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fe, i64 %i.fc
@@ -4477,7 +4477,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bi = icmp uge <64 x i8> %i.bg, %i.bh         ; 2 uses
   %i.bj = bitcast <64 x i1> %i.bi to i64          ; 2 uses
   %i.bk = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.bg, <64 x i8> zeroinitializer, <64 x i1> %i.bi)
-  %5 = call i64 @llvm.pext.i64(i64 %i.bj, i64 %i.bj)
+  %5 = tail call noundef i64 @llvm.pext.i64(i64 %i.bj, i64 %i.bj)
   %i.bl = bitcast i64 %5 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.bk, ptr align 1 %.1165.i, <64 x i1> %i.bl)
   %i.bm = tail call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.aw)
@@ -4625,11 +4625,11 @@ bb.h:                                             ; preds = %bb.g
   %i.fb = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %i.ew, <64 x i8> zeroinitializer, <64 x i1> %i.ey)
   %i.fc = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ev)
   %i.fd = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ez)
-  %6 = call i64 @llvm.pext.i64(i64 %i.ev, i64 %i.ev)
+  %6 = tail call noundef i64 @llvm.pext.i64(i64 %i.ev, i64 %i.ev)
   %i.fe = bitcast i64 %6 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.fa, ptr align 1 %.1165.i, <64 x i1> %i.fe)
   %i.ff = getelementptr inbounds nuw i8, ptr %.1165.i, i64 %i.fc ; 2 uses
-  %7 = call i64 @llvm.pext.i64(i64 %i.ez, i64 %i.ez)
+  %7 = tail call noundef i64 @llvm.pext.i64(i64 %i.ez, i64 %i.ez)
   %i.fg = bitcast i64 %7 to <64 x i1>
   tail call void @llvm.masked.store.v64i8.p0(<64 x i8> %i.fb, ptr align 1 %i.ff, <64 x i1> %i.fg)
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ff, i64 %i.fd
@@ -5032,7 +5032,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .thread.i:                                        ; preds = %bb.c
   %i.w = zext i16 %i.f to i32
-  %4 = call i32 @llvm.pdep.i32(i32 %i.w, i32 -1431655766)
+  %4 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.w, i32 -1431655766)
   %i.x = xor i32 %4, -1                           ; 2 uses
   %i.y = add <16 x i32> %i.d, splat (i32 983040)
   %i.z = shl <16 x i32> %i.d, splat (i32 16)
@@ -5113,7 +5113,7 @@ bb.g:                                             ; preds = %bb.e
 
 .thread299.i:                                     ; preds = %bb.g
   %i.bt = zext i16 %i.az to i32
-  %5 = call i32 @llvm.pdep.i32(i32 %i.bt, i32 -1431655766)
+  %5 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.bt, i32 -1431655766)
   %i.bu = lshr exact i64 %.lcssa305.i, 1
   %i.bv = trunc i64 %i.bu to i32
   %notmask110.i = shl nsw i32 -1, %i.bv
@@ -5207,7 +5207,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .thread.i:                                        ; preds = %bb.c
   %i.y = zext i16 %i.f to i32
-  %4 = call i32 @llvm.pdep.i32(i32 %i.y, i32 -1431655766)
+  %4 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.y, i32 -1431655766)
   %i.z = xor i32 %4, -1                           ; 2 uses
   %i.aa = add <16 x i32> %i.d, splat (i32 983040)
   %i.ab = shl <16 x i32> %i.d, splat (i32 16)
@@ -5293,7 +5293,7 @@ bb.g:                                             ; preds = %bb.e
 
 .thread319.i:                                     ; preds = %bb.g
   %i.ca = zext i16 %i.bd to i32
-  %5 = call i32 @llvm.pdep.i32(i32 %i.ca, i32 -1431655766)
+  %5 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.ca, i32 -1431655766)
   %i.cb = lshr exact i64 %.lcssa325.i, 1
   %i.cc = trunc i64 %i.cb to i32
   %notmask114.i = shl nsw i32 -1, %i.cc
@@ -5395,7 +5395,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.z = zext i16 %i.h to i32
-  %4 = call i32 @llvm.pdep.i32(i32 %i.z, i32 -1431655766)
+  %4 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.z, i32 -1431655766)
   %i.aa = xor i32 %4, -1                          ; 2 uses
   %i.ab = xor i16 %i.h, -1
   %i.ac = and <16 x i32> %i.f, splat (i32 -2048)
@@ -5420,7 +5420,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ap = shl nuw nsw i32 %.195.i, 1
   %notmask193.i = shl nsw i32 -1, %i.ap
   %i.aq = xor i32 %notmask193.i, -1
-  %i.ar = and i32 %i.aa, %i.aq
+  %i.ar = and i32 %i.aq, %i.aa
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -5514,7 +5514,7 @@ bb.j:                                             ; preds = %bb.g
   %i.cn = lshr exact i64 %.lcssa395.i, 1
   %i.co = trunc i64 %i.cn to i32
   %notmask188.i = shl nsw i32 -1, %i.co
-  %5 = call i32 @llvm.pdep.i32(i32 %i.cm, i32 -1431655766)
+  %5 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.cm, i32 -1431655766)
   %.demorgan.i = or i32 %5, %notmask188.i
   %i.cp = xor i32 %.demorgan.i, -1                ; 2 uses
   %i.cq = xor i16 %i.bu, %i.bp
@@ -5542,7 +5542,7 @@ bb.k:                                             ; preds = %bb.j
   %i.dg = shl nuw nsw i32 %.199.i, 1
   %notmask190.i = shl nsw i32 -1, %i.dg
   %i.dh = xor i32 %notmask190.i, -1
-  %i.di = and i32 %i.cp, %i.dh
+  %i.di = and i32 %i.dh, %i.cp
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -5651,7 +5651,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.ac = zext i16 %i.h to i32
-  %4 = call i32 @llvm.pdep.i32(i32 %i.ac, i32 -1431655766)
+  %4 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.ac, i32 -1431655766)
   %i.ad = xor i32 %4, -1                          ; 2 uses
   %i.ae = xor i16 %i.h, -1
   %i.af = and <16 x i32> %i.f, splat (i32 -2048)
@@ -5676,7 +5676,7 @@ bb.e:                                             ; preds = %bb.d
   %i.as = shl nuw nsw i32 %.199.i, 1
   %notmask197.i = shl nsw i32 -1, %i.as
   %i.at = xor i32 %notmask197.i, -1
-  %i.au = and i32 %i.ad, %i.at
+  %i.au = and i32 %i.at, %i.ad
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -5776,7 +5776,7 @@ bb.j:                                             ; preds = %bb.g
   %i.cw = lshr exact i64 %.lcssa415.i, 1
   %i.cx = trunc i64 %i.cw to i32
   %notmask192.i = shl nsw i32 -1, %i.cx
-  %5 = call i32 @llvm.pdep.i32(i32 %i.cv, i32 -1431655766)
+  %5 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.cv, i32 -1431655766)
   %.demorgan.i = or i32 %5, %notmask192.i
   %i.cy = xor i32 %.demorgan.i, -1                ; 2 uses
   %i.cz = xor i16 %i.bz, %i.bu
@@ -5804,7 +5804,7 @@ bb.k:                                             ; preds = %bb.j
   %i.dp = shl nuw nsw i32 %.203.i, 1
   %notmask194.i = shl nsw i32 -1, %i.dp
   %i.dq = xor i32 %notmask194.i, -1
-  %i.dr = and i32 %i.cy, %i.dq
+  %i.dr = and i32 %i.dq, %i.cy
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -5904,7 +5904,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
 
 .thread.i.i:                                      ; preds = %bb.c
   %i.w = zext i16 %i.f to i32
-  %4 = call i32 @llvm.pdep.i32(i32 %i.w, i32 -1431655766)
+  %4 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.w, i32 -1431655766)
   %i.x = xor i32 %4, -1                           ; 2 uses
   %i.y = add <16 x i32> %i.d, splat (i32 983040)
   %i.z = shl <16 x i32> %i.d, splat (i32 16)
@@ -5985,7 +5985,7 @@ bb.g:                                             ; preds = %bb.e
 
 .thread299.i.i:                                   ; preds = %bb.g
   %i.bt = zext i16 %i.az to i32
-  %5 = call i32 @llvm.pdep.i32(i32 %i.bt, i32 -1431655766)
+  %5 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.bt, i32 -1431655766)
   %i.bu = lshr exact i64 %.lcssa305.i.i, 1
   %i.bv = trunc i64 %i.bu to i32
   %notmask110.i.i = shl nsw i32 -1, %i.bv
@@ -6079,7 +6079,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
 
 .thread.i.i:                                      ; preds = %bb.c
   %i.y = zext i16 %i.f to i32
-  %4 = call i32 @llvm.pdep.i32(i32 %i.y, i32 -1431655766)
+  %4 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.y, i32 -1431655766)
   %i.z = xor i32 %4, -1                           ; 2 uses
   %i.aa = add <16 x i32> %i.d, splat (i32 983040)
   %i.ab = shl <16 x i32> %i.d, splat (i32 16)
@@ -6165,7 +6165,7 @@ bb.g:                                             ; preds = %bb.e
 
 .thread319.i.i:                                   ; preds = %bb.g
   %i.ca = zext i16 %i.bd to i32
-  %5 = call i32 @llvm.pdep.i32(i32 %i.ca, i32 -1431655766)
+  %5 = tail call noundef i32 @llvm.pdep.i32(i32 range(i32 0, 65536) %i.ca, i32 -1431655766)
   %i.cb = lshr exact i64 %.lcssa325.i.i, 1
   %i.cc = trunc i64 %i.cb to i32
   %notmask114.i.i = shl nsw i32 -1, %i.cc
@@ -6568,6 +6568,15 @@ declare <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16>, <8 x i16>) #38
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <8 x i16> @llvm.x86.sse2.pmulhu.w(<8 x i16>, <8 x i16>) #38
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.pdep.i64(i64, i64) #39
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.pext.i64(i64, i64) #39
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.pdep.i32(i32, i32) #39
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #43
 
@@ -6648,15 +6657,6 @@ declare <8 x i32> @llvm.bswap.v8i32(<8 x i32>) #39
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #39
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.pdep.i64(i64, i64) #39
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.pext.i64(i64, i64) #39
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.pdep.i32(i32, i32) #39
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

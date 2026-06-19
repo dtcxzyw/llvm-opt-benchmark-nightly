@@ -201,7 +201,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbv = bitcast <16 x i16> %i.bbu to <32 x i8>
   %i.bbw = icmp slt <32 x i8> %i.bbv, zeroinitializer
   %i.bbx = bitcast <32 x i1> %i.bbw to i32
-  %69 = call i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
+  %69 = tail call noundef i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
   %i.bby = trunc i32 %69 to i16
   br label %.lr.ph.i.i343
 
@@ -277,7 +277,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bdk = bitcast <16 x i16> %i.bdj to <32 x i8>
   %i.bdl = icmp slt <32 x i8> %i.bdk, zeroinitializer
   %i.bdm = bitcast <32 x i1> %i.bdl to i32
-  %70 = call i32 @llvm.pext.i32(i32 %i.bdm, i32 -1431655766)
+  %70 = tail call noundef i32 @llvm.pext.i32(i32 %i.bdm, i32 -1431655766)
   %i.bdn = sdiv i32 %.02431.i.i335, 8
   %i.bdo = sext i32 %i.bdn to i64
   %i.bdp = getelementptr inbounds i8, ptr %i.anf, i64 %i.bdo
@@ -348,7 +348,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bew = bitcast <16 x i16> %i.bev to <32 x i8>
   %i.bex = icmp slt <32 x i8> %i.bew, zeroinitializer
   %i.bey = bitcast <32 x i1> %i.bex to i32
-  %71 = call i32 @llvm.pext.i32(i32 %i.bey, i32 -1431655766)
+  %71 = tail call noundef i32 @llvm.pext.i32(i32 %i.bey, i32 -1431655766)
   %i.bez = sdiv i32 %.02431.i66.i327, 8
   %i.bfa = sext i32 %i.bez to i64
   %i.bfb = getelementptr inbounds i8, ptr %i.anf, i64 %i.bfa
@@ -411,7 +411,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bgg = bitcast <16 x i16> %i.bgf to <32 x i8>
   %i.bgh = icmp slt <32 x i8> %i.bgg, zeroinitializer
   %i.bgi = bitcast <32 x i1> %i.bgh to i32
-  %72 = call i32 @llvm.pext.i32(i32 %i.bgi, i32 -1431655766)
+  %72 = tail call noundef i32 @llvm.pext.i32(i32 %i.bgi, i32 -1431655766)
   %i.bgj = sdiv i32 %.02532.i.i319, 8
   %i.bgk = sext i32 %i.bgj to i64
   %i.bgl = getelementptr inbounds i8, ptr %i.anf, i64 %i.bgk
@@ -814,7 +814,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbh = bitcast <16 x i16> %i.bbg to <32 x i8>
   %i.bbi = icmp slt <32 x i8> %i.bbh, zeroinitializer
   %i.bbj = bitcast <32 x i1> %i.bbi to i32
-  %69 = call i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
+  %69 = tail call noundef i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
   %i.bbk = trunc i32 %69 to i16
   br label %.lr.ph.i.i353
 
@@ -890,7 +890,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bcv = bitcast <16 x i16> %i.bcu to <32 x i8>
   %i.bcw = icmp slt <32 x i8> %i.bcv, zeroinitializer
   %i.bcx = bitcast <32 x i1> %i.bcw to i32
-  %70 = call i32 @llvm.pext.i32(i32 %i.bcx, i32 -1431655766)
+  %70 = tail call noundef i32 @llvm.pext.i32(i32 %i.bcx, i32 -1431655766)
   %i.bcy = sdiv i32 %.02431.i.i343, 8
   %i.bcz = sext i32 %i.bcy to i64
   %i.bda = getelementptr inbounds i8, ptr %i.amt, i64 %i.bcz
@@ -961,7 +961,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.beg = bitcast <16 x i16> %i.bef to <32 x i8>
   %i.beh = icmp slt <32 x i8> %i.beg, zeroinitializer
   %i.bei = bitcast <32 x i1> %i.beh to i32
-  %71 = call i32 @llvm.pext.i32(i32 %i.bei, i32 -1431655766)
+  %71 = tail call noundef i32 @llvm.pext.i32(i32 %i.bei, i32 -1431655766)
   %i.bej = sdiv i32 %.02431.i68.i334, 8
   %i.bek = sext i32 %i.bej to i64
   %i.bel = getelementptr inbounds i8, ptr %i.amt, i64 %i.bek
@@ -1024,7 +1024,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bfp = bitcast <16 x i16> %i.bfo to <32 x i8>
   %i.bfq = icmp slt <32 x i8> %i.bfp, zeroinitializer
   %i.bfr = bitcast <32 x i1> %i.bfq to i32
-  %72 = call i32 @llvm.pext.i32(i32 %i.bfr, i32 -1431655766)
+  %72 = tail call noundef i32 @llvm.pext.i32(i32 %i.bfr, i32 -1431655766)
   %i.bfs = sdiv i32 %.02532.i.i325, 8
   %i.bft = sext i32 %i.bfs to i64
   %i.bfu = getelementptr inbounds i8, ptr %i.amt, i64 %i.bft
@@ -1427,7 +1427,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbv = bitcast <16 x i16> %i.bbu to <32 x i8>
   %i.bbw = icmp slt <32 x i8> %i.bbv, zeroinitializer
   %i.bbx = bitcast <32 x i1> %i.bbw to i32
-  %69 = call i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
+  %69 = tail call noundef i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
   %i.bby = trunc i32 %69 to i16
   br label %.lr.ph.i.i343
 
@@ -1503,7 +1503,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bdk = bitcast <16 x i16> %i.bdj to <32 x i8>
   %i.bdl = icmp slt <32 x i8> %i.bdk, zeroinitializer
   %i.bdm = bitcast <32 x i1> %i.bdl to i32
-  %70 = call i32 @llvm.pext.i32(i32 %i.bdm, i32 -1431655766)
+  %70 = tail call noundef i32 @llvm.pext.i32(i32 %i.bdm, i32 -1431655766)
   %i.bdn = sdiv i32 %.02431.i.i335, 8
   %i.bdo = sext i32 %i.bdn to i64
   %i.bdp = getelementptr inbounds i8, ptr %i.anf, i64 %i.bdo
@@ -1574,7 +1574,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bew = bitcast <16 x i16> %i.bev to <32 x i8>
   %i.bex = icmp slt <32 x i8> %i.bew, zeroinitializer
   %i.bey = bitcast <32 x i1> %i.bex to i32
-  %71 = call i32 @llvm.pext.i32(i32 %i.bey, i32 -1431655766)
+  %71 = tail call noundef i32 @llvm.pext.i32(i32 %i.bey, i32 -1431655766)
   %i.bez = sdiv i32 %.02431.i66.i327, 8
   %i.bfa = sext i32 %i.bez to i64
   %i.bfb = getelementptr inbounds i8, ptr %i.anf, i64 %i.bfa
@@ -1637,7 +1637,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bgg = bitcast <16 x i16> %i.bgf to <32 x i8>
   %i.bgh = icmp slt <32 x i8> %i.bgg, zeroinitializer
   %i.bgi = bitcast <32 x i1> %i.bgh to i32
-  %72 = call i32 @llvm.pext.i32(i32 %i.bgi, i32 -1431655766)
+  %72 = tail call noundef i32 @llvm.pext.i32(i32 %i.bgi, i32 -1431655766)
   %i.bgj = sdiv i32 %.02532.i.i319, 8
   %i.bgk = sext i32 %i.bgj to i64
   %i.bgl = getelementptr inbounds i8, ptr %i.anf, i64 %i.bgk
@@ -2040,7 +2040,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbv = bitcast <16 x i16> %i.bbu to <32 x i8>
   %i.bbw = icmp slt <32 x i8> %i.bbv, zeroinitializer
   %i.bbx = bitcast <32 x i1> %i.bbw to i32
-  %69 = call i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
+  %69 = tail call noundef i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
   %i.bby = trunc i32 %69 to i16
   br label %.lr.ph.i.i343
 
@@ -2116,7 +2116,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bdk = bitcast <16 x i16> %i.bdj to <32 x i8>
   %i.bdl = icmp slt <32 x i8> %i.bdk, zeroinitializer
   %i.bdm = bitcast <32 x i1> %i.bdl to i32
-  %70 = call i32 @llvm.pext.i32(i32 %i.bdm, i32 -1431655766)
+  %70 = tail call noundef i32 @llvm.pext.i32(i32 %i.bdm, i32 -1431655766)
   %i.bdn = sdiv i32 %.02431.i.i335, 8
   %i.bdo = sext i32 %i.bdn to i64
   %i.bdp = getelementptr inbounds i8, ptr %i.anf, i64 %i.bdo
@@ -2187,7 +2187,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bew = bitcast <16 x i16> %i.bev to <32 x i8>
   %i.bex = icmp slt <32 x i8> %i.bew, zeroinitializer
   %i.bey = bitcast <32 x i1> %i.bex to i32
-  %71 = call i32 @llvm.pext.i32(i32 %i.bey, i32 -1431655766)
+  %71 = tail call noundef i32 @llvm.pext.i32(i32 %i.bey, i32 -1431655766)
   %i.bez = sdiv i32 %.02431.i66.i327, 8
   %i.bfa = sext i32 %i.bez to i64
   %i.bfb = getelementptr inbounds i8, ptr %i.anf, i64 %i.bfa
@@ -2250,7 +2250,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bgg = bitcast <16 x i16> %i.bgf to <32 x i8>
   %i.bgh = icmp slt <32 x i8> %i.bgg, zeroinitializer
   %i.bgi = bitcast <32 x i1> %i.bgh to i32
-  %72 = call i32 @llvm.pext.i32(i32 %i.bgi, i32 -1431655766)
+  %72 = tail call noundef i32 @llvm.pext.i32(i32 %i.bgi, i32 -1431655766)
   %i.bgj = sdiv i32 %.02532.i.i319, 8
   %i.bgk = sext i32 %i.bgj to i64
   %i.bgl = getelementptr inbounds i8, ptr %i.anf, i64 %i.bgk
@@ -2653,7 +2653,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbh = bitcast <16 x i16> %i.bbg to <32 x i8>
   %i.bbi = icmp slt <32 x i8> %i.bbh, zeroinitializer
   %i.bbj = bitcast <32 x i1> %i.bbi to i32
-  %69 = call i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
+  %69 = tail call noundef i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
   %i.bbk = trunc i32 %69 to i16
   br label %.lr.ph.i.i353
 
@@ -2729,7 +2729,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bcv = bitcast <16 x i16> %i.bcu to <32 x i8>
   %i.bcw = icmp slt <32 x i8> %i.bcv, zeroinitializer
   %i.bcx = bitcast <32 x i1> %i.bcw to i32
-  %70 = call i32 @llvm.pext.i32(i32 %i.bcx, i32 -1431655766)
+  %70 = tail call noundef i32 @llvm.pext.i32(i32 %i.bcx, i32 -1431655766)
   %i.bcy = sdiv i32 %.02431.i.i343, 8
   %i.bcz = sext i32 %i.bcy to i64
   %i.bda = getelementptr inbounds i8, ptr %i.amt, i64 %i.bcz
@@ -2800,7 +2800,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.beg = bitcast <16 x i16> %i.bef to <32 x i8>
   %i.beh = icmp slt <32 x i8> %i.beg, zeroinitializer
   %i.bei = bitcast <32 x i1> %i.beh to i32
-  %71 = call i32 @llvm.pext.i32(i32 %i.bei, i32 -1431655766)
+  %71 = tail call noundef i32 @llvm.pext.i32(i32 %i.bei, i32 -1431655766)
   %i.bej = sdiv i32 %.02431.i68.i334, 8
   %i.bek = sext i32 %i.bej to i64
   %i.bel = getelementptr inbounds i8, ptr %i.amt, i64 %i.bek
@@ -2863,7 +2863,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bfp = bitcast <16 x i16> %i.bfo to <32 x i8>
   %i.bfq = icmp slt <32 x i8> %i.bfp, zeroinitializer
   %i.bfr = bitcast <32 x i1> %i.bfq to i32
-  %72 = call i32 @llvm.pext.i32(i32 %i.bfr, i32 -1431655766)
+  %72 = tail call noundef i32 @llvm.pext.i32(i32 %i.bfr, i32 -1431655766)
   %i.bfs = sdiv i32 %.02532.i.i325, 8
   %i.bft = sext i32 %i.bfs to i64
   %i.bfu = getelementptr inbounds i8, ptr %i.amt, i64 %i.bft
@@ -3266,7 +3266,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbh = bitcast <16 x i16> %i.bbg to <32 x i8>
   %i.bbi = icmp slt <32 x i8> %i.bbh, zeroinitializer
   %i.bbj = bitcast <32 x i1> %i.bbi to i32
-  %69 = call i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
+  %69 = tail call noundef i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
   %i.bbk = trunc i32 %69 to i16
   br label %.lr.ph.i.i353
 
@@ -3342,7 +3342,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bcv = bitcast <16 x i16> %i.bcu to <32 x i8>
   %i.bcw = icmp slt <32 x i8> %i.bcv, zeroinitializer
   %i.bcx = bitcast <32 x i1> %i.bcw to i32
-  %70 = call i32 @llvm.pext.i32(i32 %i.bcx, i32 -1431655766)
+  %70 = tail call noundef i32 @llvm.pext.i32(i32 %i.bcx, i32 -1431655766)
   %i.bcy = sdiv i32 %.02431.i.i343, 8
   %i.bcz = sext i32 %i.bcy to i64
   %i.bda = getelementptr inbounds i8, ptr %i.amt, i64 %i.bcz
@@ -3413,7 +3413,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.beg = bitcast <16 x i16> %i.bef to <32 x i8>
   %i.beh = icmp slt <32 x i8> %i.beg, zeroinitializer
   %i.bei = bitcast <32 x i1> %i.beh to i32
-  %71 = call i32 @llvm.pext.i32(i32 %i.bei, i32 -1431655766)
+  %71 = tail call noundef i32 @llvm.pext.i32(i32 %i.bei, i32 -1431655766)
   %i.bej = sdiv i32 %.02431.i68.i334, 8
   %i.bek = sext i32 %i.bej to i64
   %i.bel = getelementptr inbounds i8, ptr %i.amt, i64 %i.bek
@@ -3476,7 +3476,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bfp = bitcast <16 x i16> %i.bfo to <32 x i8>
   %i.bfq = icmp slt <32 x i8> %i.bfp, zeroinitializer
   %i.bfr = bitcast <32 x i1> %i.bfq to i32
-  %72 = call i32 @llvm.pext.i32(i32 %i.bfr, i32 -1431655766)
+  %72 = tail call noundef i32 @llvm.pext.i32(i32 %i.bfr, i32 -1431655766)
   %i.bfs = sdiv i32 %.02532.i.i325, 8
   %i.bft = sext i32 %i.bfs to i64
   %i.bfu = getelementptr inbounds i8, ptr %i.amt, i64 %i.bft
@@ -3879,6 +3879,9 @@ _ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNS0_9functions12_GLOBA
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.pext.i32(i32, i32) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -3898,9 +3901,6 @@ declare i64 @llvm.smax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.pext.i32(i32, i32) #23
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
