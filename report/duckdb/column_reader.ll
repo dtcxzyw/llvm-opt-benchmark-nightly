@@ -201,14 +201,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi = phi <2 x i64> [ %i.t, %vector.ph ], [ %i.y, %vector.body ]
   %vec.phi24 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.z, %vector.body ]
   %i.v = shl i64 %index, 2                        ; 2 uses
-  %next.gep = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
-  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
-  %i.x = getelementptr i8, ptr %next.gep, i64 8
-  %wide.load = load <2 x i32>, ptr %next.gep, align 1, !alias.scope !783
+  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
+  %i.x = getelementptr i8, ptr %i.w, i64 8
+  %wide.load = load <2 x i32>, ptr %i.w, align 1, !alias.scope !783
   %wide.load26 = load <2 x i32>, ptr %i.x, align 1, !alias.scope !783
   %i.y = add <2 x i64> %vec.phi, splat (i64 -4)   ; 2 uses
   %i.z = add <2 x i64> %vec.phi24, splat (i64 -4) ; 2 uses
-  %6 = getelementptr i8, ptr %i.w, i64 16
   %i.aa = trunc <2 x i32> %wide.load to <2 x i16>
   %i.ab = trunc <2 x i32> %wide.load26 to <2 x i16>
   %i.ac = getelementptr [2 x i8], ptr %i.u, i64 %index ; 2 uses
@@ -220,7 +218,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !789
 
 middle.block:                                     ; preds = %vector.body
-  store ptr %6, ptr %1, align 8, !tbaa !385, !alias.scope !792, !noalias !794
+  %6 = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
+  %7 = getelementptr i8, ptr %6, i64 16
+  store ptr %7, ptr %1, align 8, !tbaa !385, !alias.scope !792, !noalias !794
   %bin.rdx = add <2 x i64> %i.z, %i.y
   %i.af = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   store i64 %i.af, ptr %i.h, align 8, !tbaa !388, !alias.scope !792, !noalias !794
@@ -623,14 +623,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi = phi <2 x i64> [ %i.t, %vector.ph ], [ %i.y, %vector.body ]
   %vec.phi24 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.z, %vector.body ]
   %i.v = shl i64 %index, 2                        ; 2 uses
-  %next.gep = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
-  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
-  %i.x = getelementptr i8, ptr %next.gep, i64 8
-  %wide.load = load <2 x i32>, ptr %next.gep, align 1, !alias.scope !863
+  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
+  %i.x = getelementptr i8, ptr %i.w, i64 8
+  %wide.load = load <2 x i32>, ptr %i.w, align 1, !alias.scope !863
   %wide.load26 = load <2 x i32>, ptr %i.x, align 1, !alias.scope !863
   %i.y = add <2 x i64> %vec.phi, splat (i64 -4)   ; 2 uses
   %i.z = add <2 x i64> %vec.phi24, splat (i64 -4) ; 2 uses
-  %6 = getelementptr i8, ptr %i.w, i64 16
   %i.aa = trunc <2 x i32> %wide.load to <2 x i16>
   %i.ab = trunc <2 x i32> %wide.load26 to <2 x i16>
   %i.ac = getelementptr [2 x i8], ptr %i.u, i64 %index ; 2 uses
@@ -642,7 +640,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !868
 
 middle.block:                                     ; preds = %vector.body
-  store ptr %6, ptr %1, align 8, !tbaa !385, !alias.scope !869, !noalias !871
+  %6 = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
+  %7 = getelementptr i8, ptr %6, i64 16
+  store ptr %7, ptr %1, align 8, !tbaa !385, !alias.scope !869, !noalias !871
   %bin.rdx = add <2 x i64> %i.z, %i.y
   %i.af = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   store i64 %i.af, ptr %i.h, align 8, !tbaa !388, !alias.scope !869, !noalias !871
@@ -1045,7 +1045,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.i.i:                                       ; preds = %bb.d
   %.promoted.i.i = load ptr, ptr %1, align 8      ; 8 uses
   %.promoted18.i.i = load i64, ptr %i.h, align 8, !tbaa !388 ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 32
+  %min.iters.check = icmp ult i64 %3, 20
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i
@@ -1083,14 +1083,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi = phi <2 x i64> [ %i.t, %vector.ph ], [ %i.y, %vector.body ]
   %vec.phi24 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.z, %vector.body ]
   %i.v = shl i64 %index, 3                        ; 2 uses
-  %next.gep = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
-  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
-  %i.x = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep, align 1, !alias.scope !1295
+  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
+  %i.x = getelementptr i8, ptr %i.w, i64 16
+  %wide.load = load <2 x i64>, ptr %i.w, align 1, !alias.scope !1295
   %wide.load26 = load <2 x i64>, ptr %i.x, align 1, !alias.scope !1295
   %i.y = add <2 x i64> %vec.phi, splat (i64 -8)   ; 2 uses
   %i.z = add <2 x i64> %vec.phi24, splat (i64 -8) ; 2 uses
-  %6 = getelementptr i8, ptr %i.w, i64 32
   %i.aa = trunc <2 x i64> %wide.load to <2 x i16>
   %i.ab = trunc <2 x i64> %wide.load26 to <2 x i16>
   %i.ac = getelementptr [2 x i8], ptr %i.u, i64 %index ; 2 uses
@@ -1102,7 +1100,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !1300
 
 middle.block:                                     ; preds = %vector.body
-  store ptr %6, ptr %1, align 8, !tbaa !385, !alias.scope !1301, !noalias !1303
+  %6 = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
+  %7 = getelementptr i8, ptr %6, i64 32
+  store ptr %7, ptr %1, align 8, !tbaa !385, !alias.scope !1301, !noalias !1303
   %bin.rdx = add <2 x i64> %i.z, %i.y
   %i.af = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   store i64 %i.af, ptr %i.h, align 8, !tbaa !388, !alias.scope !1301, !noalias !1303
@@ -1505,14 +1505,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi = phi <2 x i64> [ %i.t, %vector.ph ], [ %i.y, %vector.body ]
   %vec.phi24 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.z, %vector.body ]
   %i.v = shl i64 %index, 3                        ; 2 uses
-  %next.gep = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
-  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
-  %i.x = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep, align 1, !alias.scope !1313
+  %i.w = getelementptr i8, ptr %.promoted.i.i, i64 %i.v ; 2 uses
+  %i.x = getelementptr i8, ptr %i.w, i64 16
+  %wide.load = load <2 x i64>, ptr %i.w, align 1, !alias.scope !1313
   %wide.load26 = load <2 x i64>, ptr %i.x, align 1, !alias.scope !1313
   %i.y = add <2 x i64> %vec.phi, splat (i64 -8)   ; 2 uses
   %i.z = add <2 x i64> %vec.phi24, splat (i64 -8) ; 2 uses
-  %6 = getelementptr i8, ptr %i.w, i64 32
   %i.aa = trunc <2 x i64> %wide.load to <2 x i32>
   %i.ab = trunc <2 x i64> %wide.load26 to <2 x i32>
   %i.ac = getelementptr [4 x i8], ptr %i.u, i64 %index ; 2 uses
@@ -1524,7 +1522,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !1318
 
 middle.block:                                     ; preds = %vector.body
-  store ptr %6, ptr %1, align 8, !tbaa !385, !alias.scope !1319, !noalias !1321
+  %6 = getelementptr i8, ptr %.promoted.i.i, i64 %i.v
+  %7 = getelementptr i8, ptr %6, i64 32
+  store ptr %7, ptr %1, align 8, !tbaa !385, !alias.scope !1319, !noalias !1321
   %bin.rdx = add <2 x i64> %i.z, %i.y
   %i.af = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   store i64 %i.af, ptr %i.h, align 8, !tbaa !388, !alias.scope !1319, !noalias !1321

@@ -201,7 +201,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.az = getelementptr i8, ptr %next.gep, i64 8
   %wide.load = load <2 x i32>, ptr %next.gep, align 4, !alias.scope !17
   %wide.load89 = load <2 x i32>, ptr %i.az, align 4, !alias.scope !17
-  %5 = add i64 %i.ax, 3
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %index ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store <2 x i32> %wide.load, ptr %i.ba, align 4, !alias.scope !20, !noalias !17
@@ -212,6 +211,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bd, label %middle.block, label %vector.body, !llvm.loop !22
 
 middle.block:                                     ; preds = %vector.body
+  %5 = add i64 %i.ax, 3
   store i64 %5, ptr %i.u, align 8, !alias.scope !25, !noalias !27
   %cmp.n = icmp eq i64 %i.at, %n.vec
   br i1 %cmp.n, label %._crit_edge.loopexit, label %.lr.ph.preheader124
@@ -278,7 +278,6 @@ vector.body110:                                   ; preds = %vector.body110, %ve
   %i.bu = getelementptr i8, ptr %next.gep114, i64 8
   %wide.load115 = load <2 x i32>, ptr %next.gep114, align 4, !alias.scope !28
   %wide.load116 = load <2 x i32>, ptr %i.bu, align 4, !alias.scope !28
-  %6 = add i64 %i.bs, 3
   %i.bv = getelementptr [4 x i8], ptr %i.bk, i64 %index111 ; 2 uses
   %i.bw = getelementptr i8, ptr %i.bv, i64 8
   store <2 x i32> %wide.load115, ptr %i.bv, align 4, !alias.scope !31, !noalias !28
@@ -289,6 +288,7 @@ vector.body110:                                   ; preds = %vector.body110, %ve
   br i1 %i.by, label %middle.block119, label %vector.body110, !llvm.loop !33
 
 middle.block119:                                  ; preds = %vector.body110
+  %6 = add i64 %i.bs, 3
   store i64 %6, ptr %i.bj, align 8, !alias.scope !34, !noalias !36
   %cmp.n120 = icmp eq i64 %i.bn, %n.vec109
   br i1 %cmp.n120, label %._crit_edge73, label %scalar.ph105.preheader

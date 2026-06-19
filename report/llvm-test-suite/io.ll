@@ -201,13 +201,13 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   store <4 x i32> zeroinitializer, ptr %i.r, align 4, !tbaa !4, !alias.scope !213, !noalias !216
   store <4 x i32> zeroinitializer, ptr %i.s, align 4, !tbaa !4, !alias.scope !213, !noalias !216
-  %3 = add nuw i32 %i.p, 5
   %index.next = add nuw i32 %index, 8             ; 2 uses
   %i.t = add nuw i32 %i.p, 8
   %i.u = icmp eq i32 %index.next, %n.vec
   br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !218
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add nuw i32 %i.p, 5
   store i32 %3, ptr %i.c, align 4, !tbaa !4, !alias.scope !216
   br i1 %cmp.n, label %._crit_edge.us, label %scalar.ph.preheader
 

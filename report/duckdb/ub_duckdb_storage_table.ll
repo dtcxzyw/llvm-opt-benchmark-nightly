@@ -201,15 +201,15 @@ vector.ph1260:                                    ; preds = %vector.memcheck1252
 
 vector.body1263:                                  ; preds = %vector.body1263, %vector.ph1260
   %index1264 = phi i64 [ 0, %vector.ph1260 ], [ %index.next1266, %vector.body1263 ] ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.aei, i64 %index1264
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 28
-  %10 = load i32, ptr %9, align 4, !tbaa !3, !alias.scope !1924
   %index.next1266 = add nuw i64 %index1264, 8     ; 2 uses
   %i.ahj = icmp eq i64 %index.next1266, %n.vec1262
-  br i1 %i.ahj, label %middle.block1267, label %vector.body1263, !llvm.loop !1927
+  br i1 %i.ahj, label %middle.block1267, label %vector.body1263, !llvm.loop !1924
 
 middle.block1267:                                 ; preds = %vector.body1263
-  store i32 %10, ptr %i.ael, align 4, !tbaa !3, !alias.scope !1928, !noalias !1924
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.aei, i64 %index1264
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 28
+  %10 = load i32, ptr %9, align 4, !tbaa !3, !alias.scope !1925
+  store i32 %10, ptr %i.ael, align 4, !tbaa !3, !alias.scope !1928, !noalias !1925
   %cmp.n1268 = icmp eq i64 %i.aef, %n.vec1262
   br i1 %cmp.n1268, label %_ZN6duckdbL24TemplatedFilterSelectionIbNS_6EqualsELb0EEEmRNS_19UnifiedVectorFormatET_RNS_15SelectionVectorEmS6_.exit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us21.us.i.preheader1347
 
@@ -352,15 +352,15 @@ vector.ph1242:                                    ; preds = %vector.memcheck1234
 
 vector.body1245:                                  ; preds = %vector.body1245, %vector.ph1242
   %index1246 = phi i64 [ 0, %vector.ph1242 ], [ %index.next1248, %vector.body1245 ] ; 2 uses
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.aei, i64 %index1246
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 28
-  %13 = load i32, ptr %12, align 4, !tbaa !3, !alias.scope !1932
   %index.next1248 = add nuw i64 %index1246, 8     ; 2 uses
   %i.ajz = icmp eq i64 %index.next1248, %n.vec1244
-  br i1 %i.ajz, label %middle.block1249, label %vector.body1245, !llvm.loop !1935
+  br i1 %i.ajz, label %middle.block1249, label %vector.body1245, !llvm.loop !1932
 
 middle.block1249:                                 ; preds = %vector.body1245
-  store i32 %13, ptr %i.ael, align 4, !tbaa !3, !alias.scope !1936, !noalias !1932
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.aei, i64 %index1246
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 28
+  %13 = load i32, ptr %12, align 4, !tbaa !3, !alias.scope !1933
+  store i32 %13, ptr %i.ael, align 4, !tbaa !3, !alias.scope !1936, !noalias !1933
   %cmp.n1250 = icmp eq i64 %i.aef, %n.vec1244
   br i1 %cmp.n1250, label %_ZN6duckdbL24TemplatedFilterSelectionIbNS_6EqualsELb0EEEmRNS_19UnifiedVectorFormatET_RNS_15SelectionVectorEmS6_.exit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us27.i248.preheader1351
 
@@ -638,15 +638,15 @@ vector.ph1224:                                    ; preds = %vector.memcheck1216
 
 vector.body1227:                                  ; preds = %vector.body1227, %vector.ph1224
   %index1228 = phi i64 [ 0, %vector.ph1224 ], [ %index.next1230, %vector.body1227 ] ; 2 uses
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1228
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 28
-  %16 = load i32, ptr %15, align 4, !tbaa !3, !alias.scope !1941
   %index.next1230 = add nuw i64 %index1228, 8     ; 2 uses
   %i.apf = icmp eq i64 %index.next1230, %n.vec1226
-  br i1 %i.apf, label %middle.block1231, label %vector.body1227, !llvm.loop !1944
+  br i1 %i.apf, label %middle.block1231, label %vector.body1227, !llvm.loop !1941
 
 middle.block1231:                                 ; preds = %vector.body1227
-  store i32 %16, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1945, !noalias !1941
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1228
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 28
+  %16 = load i32, ptr %15, align 4, !tbaa !3, !alias.scope !1942
+  store i32 %16, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1945, !noalias !1942
   %cmp.n1232 = icmp eq i64 %i.aef, %n.vec1226
   br i1 %cmp.n1232, label %_ZN6duckdbL24TemplatedFilterSelectionIbNS_6EqualsELb0EEEmRNS_19UnifiedVectorFormatET_RNS_15SelectionVectorEmS6_.exit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us49.us.i.preheader1359
 
@@ -789,15 +789,15 @@ vector.ph1206:                                    ; preds = %vector.memcheck1198
 
 vector.body1209:                                  ; preds = %vector.body1209, %vector.ph1206
   %index1210 = phi i64 [ 0, %vector.ph1206 ], [ %index.next1212, %vector.body1209 ] ; 2 uses
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1210
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 28
-  %19 = load i32, ptr %18, align 4, !tbaa !3, !alias.scope !1949
   %index.next1212 = add nuw i64 %index1210, 8     ; 2 uses
   %i.arv = icmp eq i64 %index.next1212, %n.vec1208
-  br i1 %i.arv, label %middle.block1213, label %vector.body1209, !llvm.loop !1952
+  br i1 %i.arv, label %middle.block1213, label %vector.body1209, !llvm.loop !1949
 
 middle.block1213:                                 ; preds = %vector.body1209
-  store i32 %19, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1953, !noalias !1949
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1210
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 28
+  %19 = load i32, ptr %18, align 4, !tbaa !3, !alias.scope !1950
+  store i32 %19, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1953, !noalias !1950
   %cmp.n1214 = icmp eq i64 %i.aef, %n.vec1208
   br i1 %cmp.n1214, label %_ZN6duckdbL24TemplatedFilterSelectionIbNS_6EqualsELb0EEEmRNS_19UnifiedVectorFormatET_RNS_15SelectionVectorEmS6_.exit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us55.i.preheader1363
 
@@ -962,15 +962,15 @@ vector.ph1188:                                    ; preds = %vector.memcheck1180
 
 vector.body1191:                                  ; preds = %vector.body1191, %vector.ph1188
   %index1192 = phi i64 [ 0, %vector.ph1188 ], [ %index.next1194, %vector.body1191 ] ; 2 uses
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1192
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 28
-  %22 = load i32, ptr %21, align 4, !tbaa !3, !alias.scope !1957
   %index.next1194 = add nuw i64 %index1192, 8     ; 2 uses
   %i.aur = icmp eq i64 %index.next1194, %n.vec1190
-  br i1 %i.aur, label %middle.block1195, label %vector.body1191, !llvm.loop !1960
+  br i1 %i.aur, label %middle.block1195, label %vector.body1191, !llvm.loop !1957
 
 middle.block1195:                                 ; preds = %vector.body1191
-  store i32 %22, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1961, !noalias !1957
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1192
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 28
+  %22 = load i32, ptr %21, align 4, !tbaa !3, !alias.scope !1958
+  store i32 %22, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1961, !noalias !1958
   %cmp.n1196 = icmp eq i64 %i.aef, %n.vec1190
   br i1 %cmp.n1196, label %_ZN6duckdbL24TemplatedFilterSelectionIbNS_6EqualsELb0EEEmRNS_19UnifiedVectorFormatET_RNS_15SelectionVectorEmS6_.exit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us32.us.i.preheader1369
 
@@ -1086,15 +1086,15 @@ vector.ph1170:                                    ; preds = %vector.memcheck1166
 
 vector.body1173:                                  ; preds = %vector.body1173, %vector.ph1170
   %index1174 = phi i64 [ 0, %vector.ph1170 ], [ %index.next1176, %vector.body1173 ] ; 2 uses
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1174
-  %24 = getelementptr inbounds nuw i8, ptr %23, i64 28
-  %25 = load i32, ptr %24, align 4, !tbaa !3, !alias.scope !1965
   %index.next1176 = add nuw i64 %index1174, 8     ; 2 uses
   %i.awm = icmp eq i64 %index.next1176, %n.vec1172
-  br i1 %i.awm, label %middle.block1177, label %vector.body1173, !llvm.loop !1968
+  br i1 %i.awm, label %middle.block1177, label %vector.body1173, !llvm.loop !1965
 
 middle.block1177:                                 ; preds = %vector.body1173
-  store i32 %25, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1969, !noalias !1965
+  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.amd, i64 %index1174
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 28
+  %25 = load i32, ptr %24, align 4, !tbaa !3, !alias.scope !1966
+  store i32 %25, ptr %i.amh, align 4, !tbaa !3, !alias.scope !1969, !noalias !1966
   %cmp.n1178 = icmp eq i64 %i.aef, %n.vec1172
   br i1 %cmp.n1178, label %_ZN6duckdbL24TemplatedFilterSelectionIbNS_6EqualsELb0EEEmRNS_19UnifiedVectorFormatET_RNS_15SelectionVectorEmS6_.exit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us40.i.preheader1373
 
@@ -1497,53 +1497,53 @@ begin_hunk_1_@llvm.vector.reduce.umin.v2i64
 !1921 = distinct !{!1921, !72}
 !1922 = distinct !{!1922, !72}
 !1923 = distinct !{!1923, !72}
-!1924 = !{!1925}
-!1925 = distinct !{!1925, !1926}
-!1926 = distinct !{!1926, !"LVerDomain"}
-!1927 = distinct !{!1927, !72, !242, !243}
+!1924 = distinct !{!1924, !72, !242, !243}
+!1925 = !{!1926}
+!1926 = distinct !{!1926, !1927}
+!1927 = distinct !{!1927, !"LVerDomain"}
 !1928 = !{!1929}
-!1929 = distinct !{!1929, !1926}
+!1929 = distinct !{!1929, !1927}
 !1930 = distinct !{!1930, !252}
 !1931 = distinct !{!1931, !72, !242}
-!1932 = !{!1933}
-!1933 = distinct !{!1933, !1934}
-!1934 = distinct !{!1934, !"LVerDomain"}
-!1935 = distinct !{!1935, !72, !242, !243}
+!1932 = distinct !{!1932, !72, !242, !243}
+!1933 = !{!1934}
+!1934 = distinct !{!1934, !1935}
+!1935 = distinct !{!1935, !"LVerDomain"}
 !1936 = !{!1937}
-!1937 = distinct !{!1937, !1934}
+!1937 = distinct !{!1937, !1935}
 !1938 = distinct !{!1938, !252}
 !1939 = distinct !{!1939, !72, !242}
 !1940 = distinct !{!1940, !72}
-!1941 = !{!1942}
-!1942 = distinct !{!1942, !1943}
-!1943 = distinct !{!1943, !"LVerDomain"}
-!1944 = distinct !{!1944, !72, !242, !243}
+!1941 = distinct !{!1941, !72, !242, !243}
+!1942 = !{!1943}
+!1943 = distinct !{!1943, !1944}
+!1944 = distinct !{!1944, !"LVerDomain"}
 !1945 = !{!1946}
-!1946 = distinct !{!1946, !1943}
+!1946 = distinct !{!1946, !1944}
 !1947 = distinct !{!1947, !252}
 !1948 = distinct !{!1948, !72, !242}
-!1949 = !{!1950}
-!1950 = distinct !{!1950, !1951}
-!1951 = distinct !{!1951, !"LVerDomain"}
-!1952 = distinct !{!1952, !72, !242, !243}
+!1949 = distinct !{!1949, !72, !242, !243}
+!1950 = !{!1951}
+!1951 = distinct !{!1951, !1952}
+!1952 = distinct !{!1952, !"LVerDomain"}
 !1953 = !{!1954}
-!1954 = distinct !{!1954, !1951}
+!1954 = distinct !{!1954, !1952}
 !1955 = distinct !{!1955, !252}
 !1956 = distinct !{!1956, !72, !242}
-!1957 = !{!1958}
-!1958 = distinct !{!1958, !1959}
-!1959 = distinct !{!1959, !"LVerDomain"}
-!1960 = distinct !{!1960, !72, !242, !243}
+!1957 = distinct !{!1957, !72, !242, !243}
+!1958 = !{!1959}
+!1959 = distinct !{!1959, !1960}
+!1960 = distinct !{!1960, !"LVerDomain"}
 !1961 = !{!1962}
-!1962 = distinct !{!1962, !1959}
+!1962 = distinct !{!1962, !1960}
 !1963 = distinct !{!1963, !252}
 !1964 = distinct !{!1964, !72, !242}
-!1965 = !{!1966}
-!1966 = distinct !{!1966, !1967}
-!1967 = distinct !{!1967, !"LVerDomain"}
-!1968 = distinct !{!1968, !72, !242, !243}
+!1965 = distinct !{!1965, !72, !242, !243}
+!1966 = !{!1967}
+!1967 = distinct !{!1967, !1968}
+!1968 = distinct !{!1968, !"LVerDomain"}
 !1969 = !{!1970}
-!1970 = distinct !{!1970, !1967}
+!1970 = distinct !{!1970, !1968}
 !1971 = distinct !{!1971, !252}
 !1972 = distinct !{!1972, !72, !242}
 !1973 = distinct !{!1973, !72, !242, !243}
