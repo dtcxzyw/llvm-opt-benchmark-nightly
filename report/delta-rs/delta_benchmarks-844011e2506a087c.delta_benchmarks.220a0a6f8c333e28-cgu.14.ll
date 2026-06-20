@@ -201,51 +201,51 @@ bb.ew:                                            ; preds = %bb.ev
   br i1 %i.su, label %.preheader30.1.i.i.i.i.i.i.i.i.i, label %bb.fb
 
 .preheader30.1.i.i.i.i.i.i.i.i.i:                 ; preds = %.noexc58.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i
-  %.sroa.014.2.i.i.i.i.i.i.i.i.i = phi i8 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.tm, %.noexc58.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.014.2.i.i.i.i.i.i.i.i.i = phi i8 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.tm, %.noexc58.i.i.i.i.i.i ] ; 3 uses
   %i.sv = icmp eq i16 %i.sh, 0
   br i1 %i.sv, label %.preheader30.2.i.i.i.i.i.i.i.i.i, label %bb.ex
 
 bb.ex:                                            ; preds = %.preheader30.1.i.i.i.i.i.i.i.i.i
   %i.sw = or disjoint i64 %.sroa.06.036.i.i.i.i.i.i.i.i.i, 16
-  %i.sx = trunc nuw i8 %.sroa.014.2.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
+  %i.sx = trunc nuw i8 %.sroa.014.2.i.i.i.i.i.i.i.i.i to i1
   %i.sy = invoke fastcc noundef zeroext i1 @_RNCNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containss0_0Cs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.g, i64 noundef %i.sw, i16 noundef %i.sh, i1 noundef zeroext %i.sx) #43
           to label %.noexc55.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.i.i.i.i.i.i, !noalias !17390
 
 .noexc55.i.i.i.i.i.i:                             ; preds = %bb.ex
-  %3 = or i1 %i.sy, %i.sx
-  %4 = zext i1 %3 to i8
+  %3 = zext i1 %i.sy to i8
+  %4 = or i8 %.sroa.014.2.i.i.i.i.i.i.i.i.i, %3
   br label %.preheader30.2.i.i.i.i.i.i.i.i.i
 
 .preheader30.2.i.i.i.i.i.i.i.i.i:                 ; preds = %.noexc55.i.i.i.i.i.i, %.preheader30.1.i.i.i.i.i.i.i.i.i
-  %.sroa.014.2.1.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.014.2.i.i.i.i.i.i.i.i.i, %.preheader30.1.i.i.i.i.i.i.i.i.i ], [ %4, %.noexc55.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.014.2.1.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.014.2.i.i.i.i.i.i.i.i.i, %.preheader30.1.i.i.i.i.i.i.i.i.i ], [ %4, %.noexc55.i.i.i.i.i.i ] ; 3 uses
   %i.sz = icmp eq i16 %i.sn, 0
   br i1 %i.sz, label %.preheader30.3.i.i.i.i.i.i.i.i.i, label %bb.ey
 
 bb.ey:                                            ; preds = %.preheader30.2.i.i.i.i.i.i.i.i.i
   %i.ta = or disjoint i64 %.sroa.06.036.i.i.i.i.i.i.i.i.i, 32
-  %i.tb = trunc nuw i8 %.sroa.014.2.1.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
+  %i.tb = trunc nuw i8 %.sroa.014.2.1.i.i.i.i.i.i.i.i.i to i1
   %i.tc = invoke fastcc noundef zeroext i1 @_RNCNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containss0_0Cs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.g, i64 noundef %i.ta, i16 noundef %i.sn, i1 noundef zeroext %i.tb) #43
           to label %.noexc56.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.i.i.i.i.i.i, !noalias !17390
 
 .noexc56.i.i.i.i.i.i:                             ; preds = %bb.ey
-  %5 = or i1 %i.tc, %i.tb
-  %6 = zext i1 %5 to i8
+  %5 = zext i1 %i.tc to i8
+  %6 = or i8 %.sroa.014.2.1.i.i.i.i.i.i.i.i.i, %5
   br label %.preheader30.3.i.i.i.i.i.i.i.i.i
 
 .preheader30.3.i.i.i.i.i.i.i.i.i:                 ; preds = %.noexc56.i.i.i.i.i.i, %.preheader30.2.i.i.i.i.i.i.i.i.i
-  %.sroa.014.2.2.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.014.2.1.i.i.i.i.i.i.i.i.i, %.preheader30.2.i.i.i.i.i.i.i.i.i ], [ %6, %.noexc56.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.014.2.2.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.014.2.1.i.i.i.i.i.i.i.i.i, %.preheader30.2.i.i.i.i.i.i.i.i.i ], [ %6, %.noexc56.i.i.i.i.i.i ] ; 3 uses
   %i.td = icmp eq i16 %i.st, 0
   br i1 %i.td, label %bb.fa, label %bb.ez
 
 bb.ez:                                            ; preds = %.preheader30.3.i.i.i.i.i.i.i.i.i
   %i.te = or disjoint i64 %.sroa.06.036.i.i.i.i.i.i.i.i.i, 48
-  %i.tf = trunc nuw i8 %.sroa.014.2.2.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
+  %i.tf = trunc nuw i8 %.sroa.014.2.2.i.i.i.i.i.i.i.i.i to i1
   %i.tg = invoke fastcc noundef zeroext i1 @_RNCNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containss0_0Cs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.g, i64 noundef %i.te, i16 noundef %i.st, i1 noundef zeroext %i.tf) #43
           to label %.noexc57.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.i.i.i.i.i.i, !noalias !17390
 
 .noexc57.i.i.i.i.i.i:                             ; preds = %bb.ez
-  %7 = or i1 %i.tg, %i.tf
-  %8 = zext i1 %7 to i8
+  %7 = zext i1 %i.tg to i8
+  %8 = or i8 %.sroa.014.2.2.i.i.i.i.i.i.i.i.i, %7
   br label %bb.fa
 
 bb.fa:                                            ; preds = %.noexc57.i.i.i.i.i.i, %.preheader30.3.i.i.i.i.i.i.i.i.i
@@ -266,8 +266,8 @@ bb.fb:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br label %.preheader30.1.i.i.i.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %bb.fc, %.preheader.i.i.i.i.i.i.i.i.i
-  %.sroa.014.3.lcssa.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.014.0.lcssa.i.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i.i ], [ %.sroa.014.4.i.i.i.i.i.i.i.i.i, %bb.fc ]
-  %.lcssa.i.i.i.i.i.i.i.i.i = phi i1 [ %i.rv, %.preheader.i.i.i.i.i.i.i.i.i ], [ %i.uf, %bb.fc ] ; 2 uses
+  %.sroa.014.3.lcssa.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.014.0.lcssa.i.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i.i ], [ %.sroa.014.4.i.i.i.i.i.i.i.i.i, %bb.fc ] ; 2 uses
+  %.lcssa.i.i.i.i.i.i.i.i.i = phi i1 [ %i.rv, %.preheader.i.i.i.i.i.i.i.i.i ], [ %i.uf, %bb.fc ]
   %i.tn = add i64 %.val37.i.i.i.i.i.i, -38        ; 2 uses
   %i.to = getelementptr inbounds nuw i8, ptr %.val.i.i13.i.i.i.i, i64 %i.tn ; 2 uses
   %.sroa.0.0.copyload.i58.i.i.i.i.i.i.i.i.i = load <16 x i8>, ptr %i.to, align 1, !alias.scope !17494, !noalias !17498
@@ -321,8 +321,8 @@ bb.ff:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc60.i.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.i.i.i.i.i, !noalias !17390
 
 .noexc60.i.i.i.i.i.i:                             ; preds = %bb.ff
-  %9 = or i1 %.lcssa.i.i.i.i.i.i.i.i.i, %i.uj
-  %10 = zext i1 %9 to i8
+  %9 = zext i1 %i.uj to i8
+  %10 = or i8 %.sroa.014.3.lcssa.i.i.i.i.i.i.i.i.i, %9
   br label %bb.fe
 
 .loopexit.i.i.i.i.i.i:                            ; preds = %bb.fd

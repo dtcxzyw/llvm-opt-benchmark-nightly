@@ -201,7 +201,7 @@ _RINvNtCs2HSpDNxY7OE_9hashbrown3map9make_hashNtNtCs6Po7BT7Nknu_5alloc6string6Str
   %i.co = load i64, ptr @_RNvNtNtCsjTPIcpFZL1T_8foldhash4seed6global19GLOBAL_SEED_STORAGE, align 8, !noalias !13760, !noundef !10
   %i.cp = zext i64 %i.cn to i128
   %i.cq = zext i64 %i.co to i128
-  %i.cr = mul nuw i128 %i.cp, %i.cq               ; 2 uses
+  %i.cr = mul nuw i128 %i.cq, %i.cp               ; 2 uses
   %i.cs = lshr i128 %i.cr, 64
   %i.ct = xor i128 %i.cs, %i.cr
   %i.cu = trunc i128 %i.ct to i64                 ; 2 uses
@@ -604,7 +604,7 @@ _RINvNtCs2HSpDNxY7OE_9hashbrown3map9make_hashNtCseo6ZV82fEK1_3url3UrlNtNtB4_6has
   %i.bi = load i64, ptr @_RNvNtNtCsjTPIcpFZL1T_8foldhash4seed6global19GLOBAL_SEED_STORAGE, align 8, !noalias !16205, !noundef !10
   %i.bj = zext i64 %i.bh to i128
   %i.bk = zext i64 %i.bi to i128
-  %i.bl = mul nuw i128 %i.bj, %i.bk               ; 2 uses
+  %i.bl = mul nuw i128 %i.bk, %i.bj               ; 2 uses
   %i.bm = lshr i128 %i.bl, 64
   %i.bn = xor i128 %i.bm, %i.bl
   %i.bo = trunc i128 %i.bn to i64                 ; 2 uses
