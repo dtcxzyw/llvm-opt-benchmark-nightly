@@ -201,14 +201,13 @@ bb.l:                                             ; preds = %bb.k
   %i.bv = call noundef zeroext i1 %i.bu(ptr noundef nonnull align 8 dereferenceable(94) %i.br, i32 noundef 0) ; 2 uses
   %i.bw = select i1 %i.bv, ptr @_ZN8facebook5velox13DecodedVector17constantNullMask_E, ptr null
   store ptr %i.bw, ptr %i.bp, align 8, !tbaa !123
+  %5 = zext i1 %i.bv to i8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %5 = phi i1 [ %i.bv, %bb.l ], [ true, %bb.k ]
+  %6 = phi i8 [ %5, %bb.l ], [ 1, %bb.k ]
   %i.bx = load i8, ptr %i.r, align 1, !tbaa !124, !range !81, !noundef !82
-  %6 = trunc nuw i8 %i.bx to i1
-  %narrow = or i1 %5, %6
-  %7 = zext i1 %narrow to i8
+  %7 = or i8 %i.bx, %6
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i8 %7, ptr %i.by, align 8, !tbaa !97
   ret void
@@ -486,17 +485,16 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !390 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 64
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
+  %4 = sext i32 %i.d to i64
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !8
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.ag, i64 %4
   %.pre.i = load i32, ptr %i.ae, align 8, !tbaa !36
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.preheader.i
   %.011.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.ak, %bb.d ] ; 3 uses
   %i.ah = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.ah to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %6
+  %i.ai = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.ah
   store i32 %.pre.i, ptr %i.ai, align 4, !tbaa !3
   %i.aj = add nsw i64 %.011.i, -1
   %i.ak = and i64 %i.aj, %.011.i                  ; 2 uses
@@ -537,17 +535,16 @@ bb.f:                                             ; preds = %bb.e
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !390 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 64
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 72
+  %5 = sext i32 %i.be to i64
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !8
+  %invariant.gep.i38 = getelementptr [4 x i8], ptr %i.bj, i64 %5
   %.pre.i38 = load i32, ptr %i.bh, align 8, !tbaa !36
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %.preheader.i37
   %.011.i39 = phi i64 [ %i.bc, %.preheader.i37 ], [ %i.bn, %bb.g ] ; 3 uses
   %i.bk = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39, i1 true)
-  %7 = trunc nuw nsw i64 %i.bk to i32
-  %8 = or disjoint i32 %i.be, %7
-  %9 = sext i32 %8 to i64
-  %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %9
+  %i.bl = getelementptr [4 x i8], ptr %invariant.gep.i38, i64 %i.bk
   store i32 %.pre.i38, ptr %i.bl, align 4, !tbaa !3
   %i.bm = add i64 %.011.i39, -1
   %i.bn = and i64 %i.bm, %.011.i39                ; 2 uses
@@ -592,7 +589,9 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %i.ce = load ptr, ptr %i.bw, align 8, !tbaa !390 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 64
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 72
+  %6 = sext i32 %i.cd to i64
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !8
+  %invariant.gep.i45 = getelementptr [4 x i8], ptr %i.ch, i64 %6
   %.pre24.i = load i32, ptr %i.cf, align 8, !tbaa !36
   br label %bb.j
 
@@ -694,10 +693,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 bb.j:                                             ; preds = %bb.j, %.lr.ph.i
   %.01519.i = phi i64 [ %i.cc, %.lr.ph.i ], [ %i.dy, %bb.j ] ; 3 uses
   %i.dv = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.dv to i32
-  %11 = or disjoint i32 %i.cd, %10
-  %12 = sext i32 %11 to i64
-  %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.ch, i64 %12
+  %i.dw = getelementptr [4 x i8], ptr %invariant.gep.i45, i64 %i.dv
   store i32 %.pre24.i, ptr %i.dw, align 4, !tbaa !3
   %i.dx = add i64 %.01519.i, -1
   %i.dy = and i64 %i.dx, %.01519.i                ; 2 uses
@@ -735,17 +731,16 @@ bb.k:                                             ; preds = %._crit_edge
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !390 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 64
   %i.et = getelementptr inbounds nuw i8, ptr %i.er, i64 72
+  %7 = sext i32 %i.d to i64
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !8
+  %invariant.gep.i51 = getelementptr [4 x i8], ptr %i.eu, i64 %7
   %.pre.i47 = load i32, ptr %i.es, align 8, !tbaa !36
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.preheader.i46
   %.011.i48 = phi i64 [ %i.eo, %.preheader.i46 ], [ %i.ey, %bb.l ] ; 3 uses
   %i.ev = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i48, i1 true)
-  %13 = trunc nuw nsw i64 %i.ev to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64
-  %i.ew = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %15
+  %i.ew = getelementptr [4 x i8], ptr %invariant.gep.i51, i64 %i.ev
   store i32 %.pre.i47, ptr %i.ew, align 4, !tbaa !3
   %i.ex = add nsw i64 %.011.i48, -1
   %i.ey = and i64 %i.ex, %.011.i48                ; 2 uses
@@ -1148,14 +1143,13 @@ bb.v:                                             ; preds = %bb.u
   %i.cs = call noundef zeroext i1 %i.cr(ptr noundef nonnull align 8 dereferenceable(94) %i.co, i32 noundef 0) ; 2 uses
   %i.ct = select i1 %i.cs, ptr @_ZN8facebook5velox13DecodedVector17constantNullMask_E, ptr null
   store ptr %i.ct, ptr %i.cm, align 8, !tbaa !123
+  %5 = zext i1 %i.cs to i8
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %5 = phi i1 [ %i.cs, %bb.v ], [ true, %bb.u ]
+  %6 = phi i8 [ %5, %bb.v ], [ 1, %bb.u ]
   %i.cu = load i8, ptr %i.ao, align 1, !tbaa !124, !range !81, !noundef !82
-  %6 = trunc nuw i8 %i.cu to i1
-  %narrow = or i1 %5, %6
-  %7 = zext i1 %narrow to i8
+  %7 = or i8 %i.cu, %6
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i8 %7, ptr %i.cv, align 8, !tbaa !97
   ret void
@@ -1435,17 +1429,16 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !415 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 64
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
+  %4 = sext i32 %i.d to i64
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !8
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.ag, i64 %4
   %.pre.i = load i32, ptr %i.ae, align 8, !tbaa !36
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.preheader.i
   %.011.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.ak, %bb.d ] ; 3 uses
   %i.ah = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.ah to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %6
+  %i.ai = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.ah
   store i32 %.pre.i, ptr %i.ai, align 4, !tbaa !3
   %i.aj = add nsw i64 %.011.i, -1
   %i.ak = and i64 %i.aj, %.011.i                  ; 2 uses
@@ -1486,17 +1479,16 @@ bb.f:                                             ; preds = %bb.e
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !415 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 64
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 72
+  %5 = sext i32 %i.be to i64
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !8
+  %invariant.gep.i38 = getelementptr [4 x i8], ptr %i.bj, i64 %5
   %.pre.i38 = load i32, ptr %i.bh, align 8, !tbaa !36
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %.preheader.i37
   %.011.i39 = phi i64 [ %i.bc, %.preheader.i37 ], [ %i.bn, %bb.g ] ; 3 uses
   %i.bk = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39, i1 true)
-  %7 = trunc nuw nsw i64 %i.bk to i32
-  %8 = or disjoint i32 %i.be, %7
-  %9 = sext i32 %8 to i64
-  %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %9
+  %i.bl = getelementptr [4 x i8], ptr %invariant.gep.i38, i64 %i.bk
   store i32 %.pre.i38, ptr %i.bl, align 4, !tbaa !3
   %i.bm = add i64 %.011.i39, -1
   %i.bn = and i64 %i.bm, %.011.i39                ; 2 uses
@@ -1541,7 +1533,9 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %i.ce = load ptr, ptr %i.bw, align 8, !tbaa !415 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 64
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 72
+  %6 = sext i32 %i.cd to i64
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !8
+  %invariant.gep.i45 = getelementptr [4 x i8], ptr %i.ch, i64 %6
   %.pre24.i = load i32, ptr %i.cf, align 8, !tbaa !36
   br label %bb.j
 
@@ -1643,10 +1637,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 bb.j:                                             ; preds = %bb.j, %.lr.ph.i
   %.01519.i = phi i64 [ %i.cc, %.lr.ph.i ], [ %i.dy, %bb.j ] ; 3 uses
   %i.dv = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.dv to i32
-  %11 = or disjoint i32 %i.cd, %10
-  %12 = sext i32 %11 to i64
-  %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.ch, i64 %12
+  %i.dw = getelementptr [4 x i8], ptr %invariant.gep.i45, i64 %i.dv
   store i32 %.pre24.i, ptr %i.dw, align 4, !tbaa !3
   %i.dx = add i64 %.01519.i, -1
   %i.dy = and i64 %i.dx, %.01519.i                ; 2 uses
@@ -1684,17 +1675,16 @@ bb.k:                                             ; preds = %._crit_edge
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !415 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 64
   %i.et = getelementptr inbounds nuw i8, ptr %i.er, i64 72
+  %7 = sext i32 %i.d to i64
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !8
+  %invariant.gep.i51 = getelementptr [4 x i8], ptr %i.eu, i64 %7
   %.pre.i47 = load i32, ptr %i.es, align 8, !tbaa !36
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.preheader.i46
   %.011.i48 = phi i64 [ %i.eo, %.preheader.i46 ], [ %i.ey, %bb.l ] ; 3 uses
   %i.ev = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i48, i1 true)
-  %13 = trunc nuw nsw i64 %i.ev to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64
-  %i.ew = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %15
+  %i.ew = getelementptr [4 x i8], ptr %invariant.gep.i51, i64 %i.ev
   store i32 %.pre.i47, ptr %i.ew, align 4, !tbaa !3
   %i.ex = add nsw i64 %.011.i48, -1
   %i.ey = and i64 %i.ex, %.011.i48                ; 2 uses

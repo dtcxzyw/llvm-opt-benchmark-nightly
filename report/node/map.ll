@@ -201,9 +201,9 @@ bb.o:                                             ; preds = %bb.n
   %i.eh = inttoptr i64 %i.eg to ptr
   %i.ei = load i8, ptr %i.eh, align 1             ; 2 uses
   %i.ej = and i8 %i.ei, 4
-  %9 = icmp eq i8 %i.ej, 0
-  %10 = icmp ult i8 %i.ei, 20
-  %11 = and i1 %10, %9                            ; 2 uses
+  %9 = icmp ne i8 %i.ej, 0
+  %10 = icmp ugt i8 %i.ei, 19
+  %.not98 = or i1 %10, %9                         ; 2 uses
   br label %.lr.ph.i36
 
 .lr.ph.i36:                                       ; preds = %bb.o, %.critedge8.i37
@@ -224,12 +224,10 @@ bb.p:                                             ; preds = %.lr.ph.i36
   br i1 %.not22.i, label %_ZN2v88internalL15HasElementsKindENS_10MemorySpanINS0_12DirectHandleINS0_3MapEEEEENS0_12ElementsKindE.exit.thread, label %.lr.ph.i36
 
 _ZN2v88internalL11ContainsMapENS_10MemorySpanINS0_12DirectHandleINS0_3MapEEEEENS0_6TaggedIS3_EE.exit: ; preds = %bb.p
-  %.not = xor i1 %.03295, true
-  %or.cond = and i1 %11, %.not                    ; 2 uses
-  %12 = and i1 %.03295, %11
-  %spec.select = select i1 %or.cond, i64 %.sroa.063.094, i64 %i.ed
-  %not.or.cond = xor i1 %or.cond, true
-  %spec.select90 = select i1 %not.or.cond, i1 %12, i1 false
+  %or.cond.not = or i1 %.03295, %.not98
+  %spec.select = select i1 %or.cond.not, i64 %i.ed, i64 %.sroa.063.094
+  %not.or.cond = xor i1 %.not98, true
+  %spec.select90 = select i1 %not.or.cond, i1 %.03295, i1 false
   br label %_ZN2v88internalL15HasElementsKindENS_10MemorySpanINS0_12DirectHandleINS0_3MapEEEEENS0_12ElementsKindE.exit.thread
 
 _ZN2v88internalL15HasElementsKindENS_10MemorySpanINS0_12DirectHandleINS0_3MapEEEEENS0_12ElementsKindE.exit.thread: ; preds = %.critedge8.i, %.critedge8.i37, %_ZN2v88internalL11ContainsMapENS_10MemorySpanINS0_12DirectHandleINS0_3MapEEEEENS0_6TaggedIS3_EE.exit, %_ZN2v88internalL15HasElementsKindENS_10MemorySpanINS0_12DirectHandleINS0_3MapEEEEENS0_12ElementsKindE.exit, %bb.n

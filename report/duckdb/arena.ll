@@ -201,26 +201,24 @@ bb.aa:                                            ; preds = %bb.y
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i
   %i.co = shl i32 %i.ck, 6
+  %6 = zext i32 %i.co to i64
   br label %arena_bin_malloc_with_fresh_slab.exit.i
 
 arena_bin_malloc_with_fresh_slab.exit.i:          ; preds = %._crit_edge.loopexit.i.i.i.i, %bb.aa
-  %.0.lcssa.i.i.i.i = phi i32 [ 0, %bb.aa ], [ %i.co, %._crit_edge.loopexit.i.i.i.i ]
+  %.0.lcssa.i.i.i.i = phi i64 [ 0, %bb.aa ], [ %6, %._crit_edge.loopexit.i.i.i.i ] ; 2 uses
   %.010.lcssa.i.i.i.i = phi i64 [ %.0101.i.i.i.i, %bb.aa ], [ %.010.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ]
-  %i.cp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.010.lcssa.i.i.i.i, i1 true)
-  %6 = trunc nuw nsw i64 %i.cp to i32
-  %7 = or disjoint i32 %.0.lcssa.i.i.i.i, %6
-  %8 = zext i32 %7 to i64                         ; 3 uses
-  %i.cq = lshr i64 %8, 6
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.cq ; 2 uses
-  %i.cr = load i64, ptr %9, align 8, !tbaa !10
-  %10 = and i64 %8, 63
-  %i.cs = shl nuw i64 1, %10
+  %i.cp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.010.lcssa.i.i.i.i, i1 true) ; 2 uses
+  %7 = add nuw nsw i64 %i.cp, %.0.lcssa.i.i.i.i
+  %i.cq = lshr exact i64 %.0.lcssa.i.i.i.i, 3
+  %8 = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.cq ; 2 uses
+  %i.cr = load i64, ptr %8, align 8, !tbaa !10
+  %i.cs = shl nuw i64 1, %i.cp
   %i.ct = xor i64 %i.cs, %i.cr
-  store i64 %i.ct, ptr %9, align 8, !tbaa !10
+  store i64 %i.ct, ptr %8, align 8, !tbaa !10
   %i.cu = getelementptr i8, ptr %i.bp, i64 8
   %.val.i.i.i = load ptr, ptr %i.cu, align 8, !tbaa !122
   %i.cv = load i64, ptr %i.bm, align 8, !tbaa !159
-  %i.cw = mul i64 %i.cv, %8
+  %i.cw = mul i64 %i.cv, %7
   %i.cx = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.cw
   %i.cy = load i64, ptr %i.bp, align 8, !tbaa !124
   %i.cz = add i64 %i.cy, -268435456
@@ -623,26 +621,24 @@ bb.f:                                             ; preds = %arena_bin_refill_sl
 
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
   %i.at = shl i32 %i.ap, 6
+  %3 = zext i32 %i.at to i64
   br label %arena_slab_reg_alloc.exit
 
 arena_slab_reg_alloc.exit:                        ; preds = %bb.f, %._crit_edge.loopexit.i.i
-  %.0.lcssa.i.i = phi i32 [ 0, %bb.f ], [ %i.at, %._crit_edge.loopexit.i.i ]
+  %.0.lcssa.i.i = phi i64 [ 0, %bb.f ], [ %3, %._crit_edge.loopexit.i.i ] ; 2 uses
   %.010.lcssa.i.i = phi i64 [ %.0101.i.i, %bb.f ], [ %.010.i.i, %._crit_edge.loopexit.i.i ]
-  %i.au = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.010.lcssa.i.i, i1 true)
-  %3 = trunc nuw nsw i64 %i.au to i32
-  %4 = or disjoint i32 %.0.lcssa.i.i, %3
-  %5 = zext i32 %4 to i64                         ; 3 uses
-  %i.av = lshr i64 %5, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.av ; 2 uses
-  %i.aw = load i64, ptr %6, align 8, !tbaa !10
-  %7 = and i64 %5, 63
-  %i.ax = shl nuw i64 1, %7
+  %i.au = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.010.lcssa.i.i, i1 true) ; 2 uses
+  %4 = add nuw nsw i64 %i.au, %.0.lcssa.i.i
+  %i.av = lshr exact i64 %.0.lcssa.i.i, 3
+  %5 = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.av ; 2 uses
+  %i.aw = load i64, ptr %5, align 8, !tbaa !10
+  %i.ax = shl nuw i64 1, %i.au
   %i.ay = xor i64 %i.ax, %i.aw
-  store i64 %i.ay, ptr %6, align 8, !tbaa !10
+  store i64 %i.ay, ptr %5, align 8, !tbaa !10
   %i.az = getelementptr i8, ptr %i.ak, i64 8
   %.val.i10 = load ptr, ptr %i.az, align 8, !tbaa !122
   %i.ba = load i64, ptr %i.am, align 8, !tbaa !159
-  %i.bb = mul i64 %i.ba, %5
+  %i.bb = mul i64 %i.ba, %4
   %i.bc = getelementptr inbounds nuw i8, ptr %.val.i10, i64 %i.bb
   %i.bd = load i64, ptr %i.ak, align 8, !tbaa !124
   %i.be = add i64 %i.bd, -268435456

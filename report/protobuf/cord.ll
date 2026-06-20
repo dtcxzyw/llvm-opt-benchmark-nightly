@@ -201,21 +201,17 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 bb.p:                                             ; preds = %_ZN4absl12lts_202505124Cord13GetFirstChunkERKS1_.exit, %bb.o
   %i.dl = phi i32 [ %i.dk, %bb.o ], [ 0, %_ZN4absl12lts_202505124Cord13GetFirstChunkERKS1_.exit ] ; 2 uses
   %i.dm = icmp eq i64 %.sroa.speculated, %2
-  %i.dn = icmp ne i32 %i.dl, 0                    ; 2 uses
+  %i.dn = icmp ne i32 %i.dl, 0
   %or.cond = select i1 %i.dm, i1 true, i1 %i.dn
   br i1 %or.cond, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.do = tail call noundef i32 @_ZNK4absl12lts_202505124Cord15CompareSlowPathESt17basic_string_viewIcSt11char_traitsIcEEmm(ptr noundef nonnull align 8 dereferenceable(16) %0, i64 %.sroa.07.0.copyload, ptr %.sroa.28.0.copyload, i64 noundef %.sroa.speculated, i64 noundef %2) ; 2 uses
-  %isnotnull.i.i20 = icmp ne i32 %i.do, 0
+  %i.do = tail call noundef i32 @_ZNK4absl12lts_202505124Cord15CompareSlowPathESt17basic_string_viewIcSt11char_traitsIcEEmm(ptr noundef nonnull align 8 dereferenceable(16) %0, i64 %.sroa.07.0.copyload, ptr %.sroa.28.0.copyload, i64 noundef %.sroa.speculated, i64 noundef %2)
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q
-  %isnotnull.i.i20.sink = phi i1 [ %isnotnull.i.i20, %bb.q ], [ %i.dn, %bb.p ]
   %.lobit.neg.i.i19.sink.in = phi i32 [ %i.do, %bb.q ], [ %i.dl, %bb.p ]
-  %.lobit.neg.i.i19.sink = ashr i32 %.lobit.neg.i.i19.sink.in, 31
-  %isnotnull.zext.i.i21 = zext i1 %isnotnull.i.i20.sink to i32
-  %3 = or i32 %.lobit.neg.i.i19.sink, %isnotnull.zext.i.i21
+  %3 = tail call noundef range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32 %.lobit.neg.i.i19.sink.in, i32 0)
   ret i32 %3
 }
 
@@ -618,21 +614,17 @@ bb.ab:                                            ; preds = %_ZN4absl12lts_20250
 bb.ac:                                            ; preds = %_ZN4absl12lts_202505124Cord13GetFirstChunkERKS1_.exit45, %bb.ab
   %i.hv = phi i32 [ %i.hu, %bb.ab ], [ 0, %_ZN4absl12lts_202505124Cord13GetFirstChunkERKS1_.exit45 ] ; 2 uses
   %i.hw = icmp eq i64 %.sroa.speculated, %2
-  %i.hx = icmp ne i32 %i.hv, 0                    ; 2 uses
+  %i.hx = icmp ne i32 %i.hv, 0
   %or.cond = select i1 %i.hw, i1 true, i1 %i.hx
   br i1 %or.cond, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.hy = tail call noundef i32 @_ZNK4absl12lts_202505124Cord15CompareSlowPathERKS1_mm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.sroa.speculated, i64 noundef %2) ; 2 uses
-  %isnotnull.i.i47 = icmp ne i32 %i.hy, 0
+  %i.hy = tail call noundef i32 @_ZNK4absl12lts_202505124Cord15CompareSlowPathERKS1_mm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.sroa.speculated, i64 noundef %2)
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ad
-  %isnotnull.i.i47.sink = phi i1 [ %isnotnull.i.i47, %bb.ad ], [ %i.hx, %bb.ac ]
   %.lobit.neg.i.i46.sink.in = phi i32 [ %i.hy, %bb.ad ], [ %i.hv, %bb.ac ]
-  %.lobit.neg.i.i46.sink = ashr i32 %.lobit.neg.i.i46.sink.in, 31
-  %isnotnull.zext.i.i48 = zext i1 %isnotnull.i.i47.sink to i32
-  %3 = or i32 %.lobit.neg.i.i46.sink, %isnotnull.zext.i.i48
+  %3 = tail call noundef range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32 %.lobit.neg.i.i46.sink.in, i32 0)
   ret i32 %3
 }
 
@@ -667,6 +659,9 @@ declare i64 @llvm.ctpop.i64(i64) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #18

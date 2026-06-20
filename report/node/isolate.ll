@@ -201,8 +201,8 @@ _ZN2v88internal6HandleINS0_6ObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ; p
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit
   %i.y = phi i64 [ %i.f, %.lr.ph ], [ %i.mb, %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit ]
-  %.0111431 = phi i8 [ 0, %.lr.ph ], [ %.2113, %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit ] ; 4 uses
-  %.0114430 = phi i8 [ 0, %.lr.ph ], [ %.2116, %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit ] ; 4 uses
+  %.0111431 = phi i1 [ false, %.lr.ph ], [ %.2113, %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit ] ; 4 uses
+  %.0114430 = phi i1 [ false, %.lr.ph ], [ %.2116, %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit ] ; 4 uses
   %.sroa.0251.0427 = phi ptr [ %.0.i.i134, %.lr.ph ], [ %.0.i.i136, %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit ] ; 6 uses
   %i.z = add i64 %i.y, 39
   %i.aa = inttoptr i64 %i.z to ptr
@@ -605,13 +605,9 @@ bb.ap:                                            ; preds = %bb.y
 
 .thread:                                          ; preds = %bb.am, %_ZNKSt8functionIFvN2v88internal7Isolate14PromiseHandlerEEEclES3_.exit164, %.thread403, %bb.ap
   %i.la = phi i1 [ true, %bb.ap ], [ %i.kz, %.thread403 ], [ true, %_ZNKSt8functionIFvN2v88internal7Isolate14PromiseHandlerEEEclES3_.exit164 ], [ true, %bb.am ] ; 2 uses
-  %10 = trunc nuw i8 %.0111431 to i1
-  %i.lb = or i1 %i.la, %10
-  %11 = zext i1 %i.lb to i8
-  %12 = trunc nuw i8 %.0114430 to i1
+  %i.lb = or i1 %.0111431, %i.la
   %i.lc = xor i1 %i.la, true
-  %i.ld = or i1 %12, %i.lc
-  %13 = zext i1 %i.ld to i8
+  %i.ld = or i1 %.0114430, %i.lc
   br label %_ZNK2v88internal11MaybeHandleINS0_19WasmSuspenderObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 bb.aq:                                            ; preds = %_ZN2v88internal6HandleINS0_10HeapObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
@@ -645,18 +641,14 @@ _ZN2v88internal6HandleINS0_9JSPromiseEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: 
   store ptr %i.lt, ptr %i.g, align 8
   store i64 %i.lm, ptr %.0.i.i137, align 8
   %i.lu = call fastcc noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_123WalkPromiseTreeInternalEPNS0_7IsolateENS0_12DirectHandleINS0_9JSPromiseEEERKSt8functionIFvNS2_14PromiseHandlerEEE(ptr noundef %0, ptr nonnull %.0.i.i137, ptr noundef nonnull align 8 dereferenceable(32) %2) ; 2 uses
-  %14 = trunc nuw i8 %.0111431 to i1
-  %i.lv = or i1 %i.lu, %14
-  %15 = zext i1 %i.lv to i8
-  %16 = trunc nuw i8 %.0114430 to i1
+  %i.lv = or i1 %.0111431, %i.lu
   %i.lw = xor i1 %i.lu, true
-  %i.lx = or i1 %16, %i.lw
-  %17 = zext i1 %i.lx to i8
+  %i.lx = or i1 %.0114430, %i.lw
   br label %_ZNK2v88internal11MaybeHandleINS0_19WasmSuspenderObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 _ZNK2v88internal11MaybeHandleINS0_19WasmSuspenderObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit: ; preds = %_ZN2v88internal6HandleINS0_9JSPromiseEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %bb.aq, %bb.i, %.thread
-  %.2116 = phi i8 [ %13, %.thread ], [ %.0114430, %bb.i ], [ %17, %_ZN2v88internal6HandleINS0_9JSPromiseEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %.0114430, %bb.aq ] ; 2 uses
-  %.2113 = phi i8 [ %11, %.thread ], [ %.0111431, %bb.i ], [ %15, %_ZN2v88internal6HandleINS0_9JSPromiseEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %.0111431, %bb.aq ] ; 2 uses
+  %.2116 = phi i1 [ %i.ld, %.thread ], [ %.0114430, %bb.i ], [ %i.lx, %_ZN2v88internal6HandleINS0_9JSPromiseEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %.0114430, %bb.aq ] ; 2 uses
+  %.2113 = phi i1 [ %i.lb, %.thread ], [ %.0111431, %bb.i ], [ %i.lv, %_ZN2v88internal6HandleINS0_9JSPromiseEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %.0111431, %bb.aq ] ; 2 uses
   %i.ly = load i64, ptr %.sroa.0251.0427, align 8
   %i.lz = add i64 %i.ly, 15
   %i.ma = inttoptr i64 %i.lz to ptr
@@ -682,10 +674,8 @@ _ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6Ta
   br i1 %i.mk, label %._crit_edge, label %bb.d, !llvm.loop !112
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal6HandleINS0_5UnionIJNS0_15PromiseReactionENS0_3SmiEEEEEC2ENS0_6TaggedIS5_EEPNS0_7IsolateE.exit
-  %18 = trunc nuw i8 %.2113 to i1
-  %19 = trunc nuw i8 %.2116 to i1
-  %not. = xor i1 %18, true
-  %i.ml = select i1 %not., i1 true, i1 %19
+  %not. = xor i1 %.2113, true
+  %i.ml = select i1 %not., i1 true, i1 %.2116
   br i1 %i.ml, label %._crit_edge.thread, label %.thread408
 
 ._crit_edge.thread:                               ; preds = %_ZN2v88internal6HandleINS0_6ObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %._crit_edge

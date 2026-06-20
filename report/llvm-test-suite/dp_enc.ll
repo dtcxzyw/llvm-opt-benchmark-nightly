@@ -199,20 +199,20 @@ bb.d:                                             ; preds = %._crit_edge
   %.0417552 = phi i16 [ %i.dh, %.lr.ph557.preheader ], [ %.1418, %bb.n ] ; 4 uses
   %i.dk = sub nsw i64 %indvars.iv583.a, %i.dj
   %i.dl = getelementptr inbounds [4 x i8], ptr %0, i64 %i.dk
-  %i.dm = load i32, ptr %i.dl, align 4, !tbaa !4  ; 5 uses
+  %i.dm = load i32, ptr %i.dl, align 4, !tbaa !4  ; 13 uses
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv583.a ; 5 uses
   %i.do = getelementptr inbounds i8, ptr %i.dn, i64 -4
-  %i.dp = load i32, ptr %i.do, align 4, !tbaa !4
-  %i.dq = sub nsw i32 %i.dm, %i.dp                ; 5 uses
+  %i.dp = load i32, ptr %i.do, align 4, !tbaa !4  ; 3 uses
+  %i.dq = sub i32 %i.dp, %i.dm
   %i.dr = getelementptr inbounds i8, ptr %i.dn, i64 -8
-  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !4
-  %i.dt = sub nsw i32 %i.dm, %i.ds                ; 7 uses
+  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !4  ; 3 uses
+  %i.dt = sub nsw i32 %i.dm, %i.ds                ; 3 uses
   %i.du = getelementptr inbounds i8, ptr %i.dn, i64 -12
-  %i.dv = load i32, ptr %i.du, align 4, !tbaa !4
-  %i.dw = sub nsw i32 %i.dm, %i.dv                ; 7 uses
+  %i.dv = load i32, ptr %i.du, align 4, !tbaa !4  ; 3 uses
+  %i.dw = sub nsw i32 %i.dm, %i.dv                ; 3 uses
   %i.dx = getelementptr inbounds i8, ptr %i.dn, i64 -16
-  %i.dy = load i32, ptr %i.dx, align 4, !tbaa !4
-  %i.dz = sub nsw i32 %i.dm, %i.dy                ; 7 uses
+  %i.dy = load i32, ptr %i.dx, align 4, !tbaa !4  ; 3 uses
+  %i.dz = sub nsw i32 %i.dm, %i.dy                ; 3 uses
   %i.ea = sext i16 %.0555 to i32
   %i.eb = sext i16 %.0409554 to i32
   %i.ec = sext i16 %.0413553 to i32
@@ -221,10 +221,10 @@ bb.d:                                             ; preds = %._crit_edge
   %.neg505 = mul i32 %i.dt, %i.eb
   %.neg507 = mul i32 %i.dw, %i.ec
   %.neg509 = mul i32 %i.dz, %i.ed
-  %reass.add514 = add i32 %.neg505, %.neg504
-  %reass.add515 = add i32 %reass.add514, %.neg507
-  %reass.add516 = add i32 %reass.add515, %.neg509
-  %7 = sub i32 %i.c, %reass.add516
+  %reass.add514 = add i32 %.neg505, %.neg507
+  %reass.add515 = add i32 %reass.add514, %.neg509
+  %reass.add518.neg = sub i32 %.neg504, %reass.add515
+  %7 = add i32 %reass.add518.neg, %i.c
   %i.ee = ashr i32 %7, %6
   %i.ef = load i32, ptr %i.dn, align 4, !tbaa !4
   %i.eg = add i32 %i.dm, %i.ee
@@ -233,34 +233,24 @@ bb.d:                                             ; preds = %._crit_edge
   %i.ej = ashr exact i32 %i.ei, %i.a              ; 5 uses
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv583.a
   store i32 %i.ej, ptr %i.ek, align 4, !tbaa !4
-  %8 = icmp sgt i32 %i.ej, 0
-  %9 = zext i1 %8 to i32
-  %10 = ashr i32 %i.ej, 31                        ; 2 uses
-  %11 = or i32 %10, %9
-  %i.el = icmp sgt i32 %11, 0
+  %i.el = icmp sgt i32 %i.ej, 0
   br i1 %i.el, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %.lr.ph557
-  %12 = icmp sgt i32 %i.dz, 0
-  %13 = zext i1 %12 to i32
-  %14 = ashr i32 %i.dz, 31
-  %15 = or i32 %14, %13                           ; 2 uses
-  %i.em = trunc nsw i32 %15 to i16
+  %8 = tail call i32 @llvm.scmp.i32.i32(i32 %i.dm, i32 %i.dy) ; 2 uses
+  %i.em = trunc nsw i32 %8 to i16
   %i.en = sub i16 %.0417552, %i.em                ; 4 uses
-  %i.eo = mul nsw i32 %15, %i.dz
+  %i.eo = mul nsw i32 %8, %i.dz
   %i.ep = ashr i32 %i.eo, %6
   %i.eq = sub nsw i32 %i.ej, %i.ep                ; 2 uses
   %i.er = icmp slt i32 %i.eq, 1
   br i1 %i.er, label %bb.n, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %16 = icmp sgt i32 %i.dw, 0
-  %17 = zext i1 %16 to i32
-  %18 = ashr i32 %i.dw, 31
-  %19 = or i32 %18, %17                           ; 2 uses
-  %i.es = trunc nsw i32 %19 to i16
+  %9 = tail call i32 @llvm.scmp.i32.i32(i32 %i.dm, i32 %i.dv) ; 2 uses
+  %i.es = trunc nsw i32 %9 to i16
   %i.et = sub i16 %.0413553, %i.es                ; 3 uses
-  %i.eu = mul nsw i32 %19, %i.dw
+  %i.eu = mul nsw i32 %9, %i.dw
   %i.ev = ashr i32 %i.eu, %6
   %i.ew = shl nsw i32 %i.ev, 1
   %i.ex = sub nsw i32 %i.eq, %i.ew                ; 2 uses
@@ -268,13 +258,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ey, label %bb.n, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %20 = icmp sgt i32 %i.dt, 0
-  %21 = zext i1 %20 to i32
-  %22 = ashr i32 %i.dt, 31
-  %23 = or i32 %22, %21                           ; 2 uses
-  %i.ez = trunc nsw i32 %23 to i16
+  %10 = tail call i32 @llvm.scmp.i32.i32(i32 %i.dm, i32 %i.ds) ; 2 uses
+  %i.ez = trunc nsw i32 %10 to i16
   %i.fa = sub i16 %.0409554, %i.ez                ; 2 uses
-  %i.fb = mul nsw i32 %23, %i.dt
+  %i.fb = mul nsw i32 %10, %i.dt
   %i.fc = ashr i32 %i.fb, %6
   %.neg478 = mul i32 %i.fc, -3
   %i.fd = add i32 %i.ex, %.neg478
@@ -282,26 +269,19 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.fe, label %bb.n, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %24 = icmp sgt i32 %i.dq, 0
-  %25 = zext i1 %24 to i32
-  %26 = ashr i32 %i.dq, 31
-  %27 = or i32 %26, %25
-  %28 = trunc nsw i32 %27 to i16
-  %29 = sub i16 %.0555, %28
+  %11 = tail call i16 @llvm.scmp.i16.i32(i32 %i.dp, i32 %i.dm)
+  %12 = add i16 %11, %.0555
   br label %bb.n
 
 bb.i:                                             ; preds = %.lr.ph557
-  %i.ff = icmp slt i32 %10, 0
+  %i.ff = icmp slt i32 %i.ej, 0
   br i1 %i.ff, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %bb.i
-  %30 = icmp sgt i32 %i.dz, 0
-  %31 = zext i1 %30 to i32
-  %32 = ashr i32 %i.dz, 31
-  %33 = or i32 %32, %31                           ; 2 uses
-  %i.fg = trunc nsw i32 %33 to i16
+  %13 = tail call i32 @llvm.scmp.i32.i32(i32 %i.dm, i32 %i.dy) ; 2 uses
+  %i.fg = trunc nsw i32 %13 to i16
   %i.fh = add i16 %.0417552, %i.fg                ; 4 uses
-  %i.fi = mul i32 %i.dz, %33
+  %i.fi = mul i32 %i.dz, %13
   %i.fj = sub i32 0, %i.fi
   %i.fk = ashr i32 %i.fj, %6
   %i.fl = sub nsw i32 %i.ej, %i.fk                ; 2 uses
@@ -309,13 +289,10 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.fm, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %34 = icmp sgt i32 %i.dw, 0
-  %35 = zext i1 %34 to i32
-  %36 = ashr i32 %i.dw, 31
-  %37 = or i32 %36, %35                           ; 2 uses
-  %i.fn = trunc nsw i32 %37 to i16
+  %14 = tail call i32 @llvm.scmp.i32.i32(i32 %i.dm, i32 %i.dv) ; 2 uses
+  %i.fn = trunc nsw i32 %14 to i16
   %i.fo = add i16 %.0413553, %i.fn                ; 3 uses
-  %i.fp = mul i32 %i.dw, %37
+  %i.fp = mul i32 %i.dw, %14
   %i.fq = sub i32 0, %i.fp
   %i.fr = ashr i32 %i.fq, %6
   %i.fs = shl nsw i32 %i.fr, 1
@@ -324,13 +301,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fu, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %38 = icmp sgt i32 %i.dt, 0
-  %39 = zext i1 %38 to i32
-  %40 = ashr i32 %i.dt, 31
-  %41 = or i32 %40, %39                           ; 2 uses
-  %i.fv = trunc nsw i32 %41 to i16
+  %15 = tail call i32 @llvm.scmp.i32.i32(i32 %i.dm, i32 %i.ds) ; 2 uses
+  %i.fv = trunc nsw i32 %15 to i16
   %i.fw = add i16 %.0409554, %i.fv                ; 2 uses
-  %i.fx = mul i32 %i.dt, %41
+  %i.fx = mul i32 %i.dt, %15
   %i.fy = sub i32 0, %i.fx
   %i.fz = ashr i32 %i.fy, %6
   %.neg477 = mul i32 %i.fz, -3
@@ -339,19 +313,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.gb, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %42 = icmp sgt i32 %i.dq, 0
-  %43 = zext i1 %42 to i32
-  %44 = ashr i32 %i.dq, 31
-  %45 = or i32 %44, %43
-  %46 = trunc nsw i32 %45 to i16
-  %i.gc = add i16 %.0555, %46
+  %16 = tail call i16 @llvm.scmp.i16.i32(i32 %i.dm, i32 %i.dp)
+  %i.gc = add i16 %16, %.0555
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.h, %bb.m, %bb.i, %bb.l, %bb.k, %bb.j, %bb.g, %bb.f, %bb.e
   %.1418 = phi i16 [ %i.en, %bb.e ], [ %i.en, %bb.f ], [ %i.en, %bb.g ], [ %i.en, %bb.h ], [ %i.fh, %bb.j ], [ %i.fh, %bb.k ], [ %i.fh, %bb.l ], [ %i.fh, %bb.m ], [ %.0417552, %bb.i ] ; 2 uses
   %.1414 = phi i16 [ %.0413553, %bb.e ], [ %i.et, %bb.f ], [ %i.et, %bb.g ], [ %i.et, %bb.h ], [ %.0413553, %bb.j ], [ %i.fo, %bb.k ], [ %i.fo, %bb.l ], [ %i.fo, %bb.m ], [ %.0413553, %bb.i ] ; 2 uses
   %.1410 = phi i16 [ %.0409554, %bb.e ], [ %.0409554, %bb.f ], [ %i.fa, %bb.g ], [ %i.fa, %bb.h ], [ %.0409554, %bb.j ], [ %.0409554, %bb.k ], [ %i.fw, %bb.l ], [ %i.fw, %bb.m ], [ %.0409554, %bb.i ] ; 2 uses
-  %.1 = phi i16 [ %.0555, %bb.e ], [ %.0555, %bb.f ], [ %.0555, %bb.g ], [ %29, %bb.h ], [ %.0555, %bb.j ], [ %.0555, %bb.k ], [ %.0555, %bb.l ], [ %i.gc, %bb.m ], [ %.0555, %bb.i ] ; 2 uses
+  %.1 = phi i16 [ %.0555, %bb.e ], [ %.0555, %bb.f ], [ %.0555, %bb.g ], [ %12, %bb.h ], [ %.0555, %bb.j ], [ %.0555, %bb.k ], [ %.0555, %bb.l ], [ %i.gc, %bb.m ], [ %.0555, %bb.i ] ; 2 uses
   %indvars.iv.next584.a = add nuw nsw i64 %indvars.iv583.a, 1 ; 2 uses
   %exitcond586.not.a = icmp eq i64 %indvars.iv.next584.a, %wide.trip.count585.a
   br i1 %exitcond586.not.a, label %._crit_edge558, label %.lr.ph557, !llvm.loop !33
@@ -403,32 +373,32 @@ bb.o:                                             ; preds = %._crit_edge
   %.0427533 = phi i16 [ %i.gl, %.lr.ph542.preheader ], [ %.1428, %bb.ag ] ; 10 uses
   %i.gu = sub nsw i64 %indvars.iv579, %i.gt
   %i.gv = getelementptr inbounds [4 x i8], ptr %0, i64 %i.gu
-  %i.gw = load i32, ptr %i.gv, align 4, !tbaa !4  ; 9 uses
+  %i.gw = load i32, ptr %i.gv, align 4, !tbaa !4  ; 25 uses
   %i.gx = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv579 ; 9 uses
   %i.gy = getelementptr inbounds i8, ptr %i.gx, i64 -4
   %i.gz = getelementptr inbounds i8, ptr %i.gx, i64 -8
-  %i.ha = load i32, ptr %i.gy, align 4, !tbaa !4
-  %i.hb = sub nsw i32 %i.gw, %i.ha                ; 5 uses
+  %i.ha = load i32, ptr %i.gy, align 4, !tbaa !4  ; 3 uses
+  %i.hb = sub i32 %i.ha, %i.gw
   %i.hc = getelementptr inbounds i8, ptr %i.gx, i64 -12
-  %i.hd = load i32, ptr %i.gz, align 4, !tbaa !4
-  %i.he = sub nsw i32 %i.gw, %i.hd                ; 7 uses
+  %i.hd = load i32, ptr %i.gz, align 4, !tbaa !4  ; 3 uses
+  %i.he = sub nsw i32 %i.gw, %i.hd                ; 3 uses
   %i.hf = getelementptr inbounds i8, ptr %i.gx, i64 -16
-  %i.hg = load i32, ptr %i.hc, align 4, !tbaa !4
-  %i.hh = sub nsw i32 %i.gw, %i.hg                ; 7 uses
+  %i.hg = load i32, ptr %i.hc, align 4, !tbaa !4  ; 3 uses
+  %i.hh = sub nsw i32 %i.gw, %i.hg                ; 3 uses
   %i.hi = getelementptr inbounds i8, ptr %i.gx, i64 -20
-  %i.hj = load i32, ptr %i.hf, align 4, !tbaa !4
-  %i.hk = sub nsw i32 %i.gw, %i.hj                ; 7 uses
+  %i.hj = load i32, ptr %i.hf, align 4, !tbaa !4  ; 3 uses
+  %i.hk = sub nsw i32 %i.gw, %i.hj                ; 3 uses
   %i.hl = getelementptr inbounds i8, ptr %i.gx, i64 -24
-  %i.hm = load i32, ptr %i.hi, align 4, !tbaa !4
-  %i.hn = sub nsw i32 %i.gw, %i.hm                ; 7 uses
+  %i.hm = load i32, ptr %i.hi, align 4, !tbaa !4  ; 3 uses
+  %i.hn = sub nsw i32 %i.gw, %i.hm                ; 3 uses
   %i.ho = getelementptr inbounds i8, ptr %i.gx, i64 -28
-  %i.hp = load i32, ptr %i.hl, align 4, !tbaa !4
-  %i.hq = sub nsw i32 %i.gw, %i.hp                ; 7 uses
+  %i.hp = load i32, ptr %i.hl, align 4, !tbaa !4  ; 3 uses
+  %i.hq = sub nsw i32 %i.gw, %i.hp                ; 3 uses
   %i.hr = getelementptr inbounds i8, ptr %i.gx, i64 -32
-  %i.hs = load i32, ptr %i.ho, align 4, !tbaa !4
-  %i.ht = sub nsw i32 %i.gw, %i.hs                ; 7 uses
-  %i.hu = load i32, ptr %i.hr, align 4, !tbaa !4
-  %i.hv = sub nsw i32 %i.gw, %i.hu                ; 7 uses
+  %i.hs = load i32, ptr %i.ho, align 4, !tbaa !4  ; 3 uses
+  %i.ht = sub nsw i32 %i.gw, %i.hs                ; 3 uses
+  %i.hu = load i32, ptr %i.hr, align 4, !tbaa !4  ; 3 uses
+  %i.hv = sub nsw i32 %i.gw, %i.hu                ; 3 uses
   %i.hw = sext i16 %.2540 to i32
   %i.hx = sext i16 %.2411539 to i32
   %i.hy = sext i16 %.2415538 to i32
@@ -445,15 +415,15 @@ bb.o:                                             ; preds = %._crit_edge
   %.neg489 = mul i32 %i.hq, %i.ib
   %.neg491 = mul i32 %i.ht, %i.ic
   %.neg493 = mul i32 %i.hv, %i.id
-  %reass.add = add i32 %.neg481.a, %.neg480.a
-  %reass.add498 = add i32 %reass.add, %.neg483
-  %reass.add499 = add i32 %reass.add498, %.neg485
-  %reass.add500 = add i32 %reass.add499, %.neg487
-  %reass.add501 = add i32 %reass.add500, %.neg489
-  %reass.add502 = add i32 %reass.add501, %.neg491
-  %reass.add503 = add i32 %reass.add502, %.neg493
-  %47 = sub i32 %i.c, %reass.add503
-  %i.ie = ashr i32 %47, %6
+  %reass.add = add i32 %.neg481.a, %.neg483
+  %reass.add498 = add i32 %reass.add, %.neg485
+  %reass.add499 = add i32 %reass.add498, %.neg487
+  %reass.add500 = add i32 %reass.add499, %.neg489
+  %reass.add501 = add i32 %reass.add500, %.neg491
+  %reass.add502 = add i32 %reass.add501, %.neg493
+  %reass.add505.neg = sub i32 %.neg480.a, %reass.add502
+  %17 = add i32 %reass.add505.neg, %i.c
+  %i.ie = ashr i32 %17, %6
   %i.if = load i32, ptr %i.gx, align 4, !tbaa !4
   %i.ig = add i32 %i.gw, %i.ie
   %i.ih = sub i32 %i.if, %i.ig
@@ -461,34 +431,24 @@ bb.o:                                             ; preds = %._crit_edge
   %i.ij = ashr exact i32 %i.ii, %i.a              ; 5 uses
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv579
   store i32 %i.ij, ptr %i.ik, align 4, !tbaa !4
-  %48 = icmp sgt i32 %i.ij, 0
-  %49 = zext i1 %48 to i32
-  %50 = ashr i32 %i.ij, 31                        ; 2 uses
-  %51 = or i32 %50, %49
-  %i.il = icmp sgt i32 %51, 0
+  %i.il = icmp sgt i32 %i.ij, 0
   br i1 %i.il, label %bb.p, label %bb.x
 
 bb.p:                                             ; preds = %.lr.ph542
-  %52 = icmp sgt i32 %i.hv, 0
-  %53 = zext i1 %52 to i32
-  %54 = ashr i32 %i.hv, 31
-  %55 = or i32 %54, %53                           ; 2 uses
-  %i.im = trunc nsw i32 %55 to i16
+  %18 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hu) ; 2 uses
+  %i.im = trunc nsw i32 %18 to i16
   %i.in = sub i16 %.0421536, %i.im                ; 8 uses
-  %i.io = mul nsw i32 %55, %i.hv
+  %i.io = mul nsw i32 %18, %i.hv
   %i.ip = ashr i32 %i.io, %6
   %i.iq = sub nsw i32 %i.ij, %i.ip                ; 2 uses
   %i.ir = icmp slt i32 %i.iq, 1
   br i1 %i.ir, label %bb.ag, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %56 = icmp sgt i32 %i.ht, 0
-  %57 = zext i1 %56 to i32
-  %58 = ashr i32 %i.ht, 31
-  %59 = or i32 %58, %57                           ; 2 uses
-  %i.is = trunc nsw i32 %59 to i16
+  %19 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hs) ; 2 uses
+  %i.is = trunc nsw i32 %19 to i16
   %i.it = sub i16 %.0423535, %i.is                ; 7 uses
-  %i.iu = mul nsw i32 %59, %i.ht
+  %i.iu = mul nsw i32 %19, %i.ht
   %i.iv = ashr i32 %i.iu, %6
   %i.iw = shl nsw i32 %i.iv, 1
   %i.ix = sub nsw i32 %i.iq, %i.iw                ; 2 uses
@@ -496,13 +456,10 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.iy, label %bb.ag, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %60 = icmp sgt i32 %i.hq, 0
-  %61 = zext i1 %60 to i32
-  %62 = ashr i32 %i.hq, 31
-  %63 = or i32 %62, %61                           ; 2 uses
-  %i.iz = trunc nsw i32 %63 to i16
+  %20 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hp) ; 2 uses
+  %i.iz = trunc nsw i32 %20 to i16
   %i.ja = sub i16 %.0425534, %i.iz                ; 6 uses
-  %i.jb = mul nsw i32 %63, %i.hq
+  %i.jb = mul nsw i32 %20, %i.hq
   %i.jc = ashr i32 %i.jb, %6
   %.neg473 = mul i32 %i.jc, -3
   %i.jd = add i32 %i.ix, %.neg473                 ; 2 uses
@@ -510,13 +467,10 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.je, label %bb.ag, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %64 = icmp sgt i32 %i.hn, 0
-  %65 = zext i1 %64 to i32
-  %66 = ashr i32 %i.hn, 31
-  %67 = or i32 %66, %65                           ; 2 uses
-  %i.jf = trunc nsw i32 %67 to i16
+  %21 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hm) ; 2 uses
+  %i.jf = trunc nsw i32 %21 to i16
   %i.jg = sub i16 %.0427533, %i.jf                ; 5 uses
-  %i.jh = mul nsw i32 %67, %i.hn
+  %i.jh = mul nsw i32 %21, %i.hn
   %i.ji = ashr i32 %i.jh, %6
   %i.jj = shl nsw i32 %i.ji, 2
   %i.jk = sub nsw i32 %i.jd, %i.jj                ; 2 uses
@@ -524,13 +478,10 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.jl, label %bb.ag, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %68 = icmp sgt i32 %i.hk, 0
-  %69 = zext i1 %68 to i32
-  %70 = ashr i32 %i.hk, 31
-  %71 = or i32 %70, %69                           ; 2 uses
-  %i.jm = trunc nsw i32 %71 to i16
+  %22 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hj) ; 2 uses
+  %i.jm = trunc nsw i32 %22 to i16
   %i.jn = sub i16 %.2419537, %i.jm                ; 4 uses
-  %i.jo = mul nsw i32 %71, %i.hk
+  %i.jo = mul nsw i32 %22, %i.hk
   %i.jp = ashr i32 %i.jo, %6
   %.neg474 = mul i32 %i.jp, -5
   %i.jq = add i32 %i.jk, %.neg474                 ; 2 uses
@@ -538,13 +489,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.jr, label %bb.ag, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %72 = icmp sgt i32 %i.hh, 0
-  %73 = zext i1 %72 to i32
-  %74 = ashr i32 %i.hh, 31
-  %75 = or i32 %74, %73                           ; 2 uses
-  %i.js = trunc nsw i32 %75 to i16
+  %23 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hg) ; 2 uses
+  %i.js = trunc nsw i32 %23 to i16
   %i.jt = sub i16 %.2415538, %i.js                ; 3 uses
-  %i.ju = mul nsw i32 %75, %i.hh
+  %i.ju = mul nsw i32 %23, %i.hh
   %i.jv = ashr i32 %i.ju, %6
   %.neg475 = mul i32 %i.jv, -6
   %i.jw = add i32 %i.jq, %.neg475                 ; 2 uses
@@ -552,13 +500,10 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.jx, label %bb.ag, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %76 = icmp sgt i32 %i.he, 0
-  %77 = zext i1 %76 to i32
-  %78 = ashr i32 %i.he, 31
-  %79 = or i32 %78, %77                           ; 2 uses
-  %i.jy = trunc nsw i32 %79 to i16
+  %24 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hd) ; 2 uses
+  %i.jy = trunc nsw i32 %24 to i16
   %i.jz = sub i16 %.2411539, %i.jy                ; 2 uses
-  %i.ka = mul nsw i32 %79, %i.he
+  %i.ka = mul nsw i32 %24, %i.he
   %i.kb = ashr i32 %i.ka, %6
   %.neg476 = mul i32 %i.kb, -7
   %i.kc = add i32 %i.jw, %.neg476
@@ -566,26 +511,19 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.kd, label %bb.ag, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %80 = icmp sgt i32 %i.hb, 0
-  %81 = zext i1 %80 to i32
-  %82 = ashr i32 %i.hb, 31
-  %83 = or i32 %82, %81
-  %84 = trunc nsw i32 %83 to i16
-  %85 = sub i16 %.2540, %84
+  %25 = tail call i16 @llvm.scmp.i16.i32(i32 %i.ha, i32 %i.gw)
+  %26 = add i16 %25, %.2540
   br label %bb.ag
 
 bb.x:                                             ; preds = %.lr.ph542
-  %i.ke = icmp slt i32 %50, 0
+  %i.ke = icmp slt i32 %i.ij, 0
   br i1 %i.ke, label %bb.y, label %bb.ag
 
 bb.y:                                             ; preds = %bb.x
-  %86 = icmp sgt i32 %i.hv, 0
-  %87 = zext i1 %86 to i32
-  %88 = ashr i32 %i.hv, 31
-  %89 = or i32 %88, %87                           ; 2 uses
-  %i.kf = trunc nsw i32 %89 to i16
+  %27 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hu) ; 2 uses
+  %i.kf = trunc nsw i32 %27 to i16
   %i.kg = add i16 %.0421536, %i.kf                ; 8 uses
-  %i.kh = mul i32 %i.hv, %89
+  %i.kh = mul i32 %i.hv, %27
   %i.ki = sub i32 0, %i.kh
   %i.kj = ashr i32 %i.ki, %6
   %i.kk = sub nsw i32 %i.ij, %i.kj                ; 2 uses
@@ -593,13 +531,10 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.kl, label %bb.ag, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %90 = icmp sgt i32 %i.ht, 0
-  %91 = zext i1 %90 to i32
-  %92 = ashr i32 %i.ht, 31
-  %93 = or i32 %92, %91                           ; 2 uses
-  %i.km = trunc nsw i32 %93 to i16
+  %28 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hs) ; 2 uses
+  %i.km = trunc nsw i32 %28 to i16
   %i.kn = add i16 %.0423535, %i.km                ; 7 uses
-  %i.ko = mul i32 %i.ht, %93
+  %i.ko = mul i32 %i.ht, %28
   %i.kp = sub i32 0, %i.ko
   %i.kq = ashr i32 %i.kp, %6
   %i.kr = shl nsw i32 %i.kq, 1
@@ -608,13 +543,10 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.kt, label %bb.ag, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %94 = icmp sgt i32 %i.hq, 0
-  %95 = zext i1 %94 to i32
-  %96 = ashr i32 %i.hq, 31
-  %97 = or i32 %96, %95                           ; 2 uses
-  %i.ku = trunc nsw i32 %97 to i16
+  %29 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hp) ; 2 uses
+  %i.ku = trunc nsw i32 %29 to i16
   %i.kv = add i16 %.0425534, %i.ku                ; 6 uses
-  %i.kw = mul i32 %i.hq, %97
+  %i.kw = mul i32 %i.hq, %29
   %i.kx = sub i32 0, %i.kw
   %i.ky = ashr i32 %i.kx, %6
   %.neg469 = mul i32 %i.ky, -3
@@ -623,13 +555,10 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.la, label %bb.ag, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %98 = icmp sgt i32 %i.hn, 0
-  %99 = zext i1 %98 to i32
-  %100 = ashr i32 %i.hn, 31
-  %101 = or i32 %100, %99                         ; 2 uses
-  %i.lb = trunc nsw i32 %101 to i16
+  %30 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hm) ; 2 uses
+  %i.lb = trunc nsw i32 %30 to i16
   %i.lc = add i16 %.0427533, %i.lb                ; 5 uses
-  %i.ld = mul i32 %i.hn, %101
+  %i.ld = mul i32 %i.hn, %30
   %i.le = sub i32 0, %i.ld
   %i.lf = ashr i32 %i.le, %6
   %i.lg = shl nsw i32 %i.lf, 2
@@ -638,13 +567,10 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.li, label %bb.ag, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %102 = icmp sgt i32 %i.hk, 0
-  %103 = zext i1 %102 to i32
-  %104 = ashr i32 %i.hk, 31
-  %105 = or i32 %104, %103                        ; 2 uses
-  %i.lj = trunc nsw i32 %105 to i16
+  %31 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hj) ; 2 uses
+  %i.lj = trunc nsw i32 %31 to i16
   %i.lk = add i16 %.2419537, %i.lj                ; 4 uses
-  %i.ll = mul i32 %i.hk, %105
+  %i.ll = mul i32 %i.hk, %31
   %i.lm = sub i32 0, %i.ll
   %i.ln = ashr i32 %i.lm, %6
   %.neg470 = mul i32 %i.ln, -5
@@ -653,13 +579,10 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.lp, label %bb.ag, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %106 = icmp sgt i32 %i.hh, 0
-  %107 = zext i1 %106 to i32
-  %108 = ashr i32 %i.hh, 31
-  %109 = or i32 %108, %107                        ; 2 uses
-  %i.lq = trunc nsw i32 %109 to i16
+  %32 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hg) ; 2 uses
+  %i.lq = trunc nsw i32 %32 to i16
   %i.lr = add i16 %.2415538, %i.lq                ; 3 uses
-  %i.ls = mul i32 %i.hh, %109
+  %i.ls = mul i32 %i.hh, %32
   %i.lt = sub i32 0, %i.ls
   %i.lu = ashr i32 %i.lt, %6
   %.neg471 = mul i32 %i.lu, -6
@@ -668,13 +591,10 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.lw, label %bb.ag, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %110 = icmp sgt i32 %i.he, 0
-  %111 = zext i1 %110 to i32
-  %112 = ashr i32 %i.he, 31
-  %113 = or i32 %112, %111                        ; 2 uses
-  %i.lx = trunc nsw i32 %113 to i16
+  %33 = tail call i32 @llvm.scmp.i32.i32(i32 %i.gw, i32 %i.hd) ; 2 uses
+  %i.lx = trunc nsw i32 %33 to i16
   %i.ly = add i16 %.2411539, %i.lx                ; 2 uses
-  %i.lz = mul i32 %i.he, %113
+  %i.lz = mul i32 %i.he, %33
   %i.ma = sub i32 0, %i.lz
   %i.mb = ashr i32 %i.ma, %6
   %.neg472 = mul i32 %i.mb, -7
@@ -683,12 +603,8 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.md, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %114 = icmp sgt i32 %i.hb, 0
-  %115 = zext i1 %114 to i32
-  %116 = ashr i32 %i.hb, 31
-  %117 = or i32 %116, %115
-  %118 = trunc nsw i32 %117 to i16
-  %i.me = add i16 %.2540, %118
+  %34 = tail call i16 @llvm.scmp.i16.i32(i32 %i.gw, i32 %i.ha)
+  %i.me = add i16 %34, %.2540
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.w, %bb.af, %bb.x, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p
@@ -699,7 +615,7 @@ bb.ag:                                            ; preds = %bb.w, %bb.af, %bb.x
   %.3420 = phi i16 [ %.2419537, %bb.p ], [ %.2419537, %bb.q ], [ %.2419537, %bb.r ], [ %.2419537, %bb.s ], [ %i.jn, %bb.t ], [ %i.jn, %bb.u ], [ %i.jn, %bb.v ], [ %i.jn, %bb.w ], [ %.2419537, %bb.y ], [ %.2419537, %bb.z ], [ %.2419537, %bb.aa ], [ %.2419537, %bb.ab ], [ %i.lk, %bb.ac ], [ %i.lk, %bb.ad ], [ %i.lk, %bb.ae ], [ %i.lk, %bb.af ], [ %.2419537, %bb.x ] ; 2 uses
   %.3416 = phi i16 [ %.2415538, %bb.p ], [ %.2415538, %bb.q ], [ %.2415538, %bb.r ], [ %.2415538, %bb.s ], [ %.2415538, %bb.t ], [ %i.jt, %bb.u ], [ %i.jt, %bb.v ], [ %i.jt, %bb.w ], [ %.2415538, %bb.y ], [ %.2415538, %bb.z ], [ %.2415538, %bb.aa ], [ %.2415538, %bb.ab ], [ %.2415538, %bb.ac ], [ %i.lr, %bb.ad ], [ %i.lr, %bb.ae ], [ %i.lr, %bb.af ], [ %.2415538, %bb.x ] ; 2 uses
   %.3412 = phi i16 [ %.2411539, %bb.p ], [ %.2411539, %bb.q ], [ %.2411539, %bb.r ], [ %.2411539, %bb.s ], [ %.2411539, %bb.t ], [ %.2411539, %bb.u ], [ %i.jz, %bb.v ], [ %i.jz, %bb.w ], [ %.2411539, %bb.y ], [ %.2411539, %bb.z ], [ %.2411539, %bb.aa ], [ %.2411539, %bb.ab ], [ %.2411539, %bb.ac ], [ %.2411539, %bb.ad ], [ %i.ly, %bb.ae ], [ %i.ly, %bb.af ], [ %.2411539, %bb.x ] ; 2 uses
-  %.3 = phi i16 [ %.2540, %bb.p ], [ %.2540, %bb.q ], [ %.2540, %bb.r ], [ %.2540, %bb.s ], [ %.2540, %bb.t ], [ %.2540, %bb.u ], [ %.2540, %bb.v ], [ %85, %bb.w ], [ %.2540, %bb.y ], [ %.2540, %bb.z ], [ %.2540, %bb.aa ], [ %.2540, %bb.ab ], [ %.2540, %bb.ac ], [ %.2540, %bb.ad ], [ %.2540, %bb.ae ], [ %i.me, %bb.af ], [ %.2540, %bb.x ] ; 2 uses
+  %.3 = phi i16 [ %.2540, %bb.p ], [ %.2540, %bb.q ], [ %.2540, %bb.r ], [ %.2540, %bb.s ], [ %.2540, %bb.t ], [ %.2540, %bb.u ], [ %.2540, %bb.v ], [ %26, %bb.w ], [ %.2540, %bb.y ], [ %.2540, %bb.z ], [ %.2540, %bb.aa ], [ %.2540, %bb.ab ], [ %.2540, %bb.ac ], [ %.2540, %bb.ad ], [ %.2540, %bb.ae ], [ %i.me, %bb.af ], [ %.2540, %bb.x ] ; 2 uses
   %indvars.iv.next580 = add nuw nsw i64 %indvars.iv579, 1 ; 2 uses
   %exitcond582.not = icmp eq i64 %indvars.iv.next580, %wide.trip.count581
   br i1 %exitcond582.not, label %._crit_edge543, label %.lr.ph542, !llvm.loop !34
@@ -727,7 +643,7 @@ bb.ah:                                            ; preds = %.lr.ph570, %.loopex
   %indvars.iv600 = phi i64 [ %i.cy, %.lr.ph570 ], [ %indvars.iv.next601, %.loopexit ] ; 4 uses
   %i.mf = sub nsw i64 %indvars.iv600, %i.cy
   %i.mg = getelementptr inbounds [4 x i8], ptr %0, i64 %i.mf
-  %i.mh = load i32, ptr %i.mg, align 4, !tbaa !4  ; 5 uses
+  %i.mh = load i32, ptr %i.mg, align 4, !tbaa !4  ; 7 uses
   %i.mi = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv600 ; 2 uses
   %i.mj = getelementptr inbounds i8, ptr %i.mi, i64 -4 ; 4 uses
   br i1 %i.cw, label %.lr.ph566.preheader, label %._crit_edge567
@@ -801,15 +717,11 @@ middle.block684:                                  ; preds = %vector.body675
   %i.nj = ashr i32 %i.ni, %6
   %i.nk = add i32 %i.nj, %i.mh
   %i.nl = sub i32 %i.nh, %i.nk
-  %i.nm = shl i32 %i.nl, %i.a
-  %i.nn = ashr exact i32 %i.nm, %i.a              ; 5 uses
+  %i.nm = shl i32 %i.nl, %i.a                     ; 2 uses
+  %i.nn = ashr exact i32 %i.nm, %i.a              ; 4 uses
   %i.no = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv600
   store i32 %i.nn, ptr %i.no, align 4, !tbaa !4
-  %119 = icmp sgt i32 %i.nn, 0
-  %120 = zext i1 %119 to i32
-  %121 = ashr i32 %i.nn, 31                       ; 2 uses
-  %122 = or i32 %121, %120
-  %i.np = icmp sgt i32 %122, 0
+  %i.np = icmp sgt i32 %i.nn, 0
   br i1 %i.np, label %.preheader.preheader, label %bb.ai
 
 .preheader.preheader:                             ; preds = %._crit_edge567
@@ -825,18 +737,15 @@ middle.block684:                                  ; preds = %vector.body675
   %indvars.iv.next597.a = add nsw i64 %indvars.iv596636, -1 ; 3 uses
   %i.nr = sub nsw i64 1, %indvars.iv596636
   %i.ns = getelementptr inbounds [4 x i8], ptr %i.mj, i64 %i.nr
-  %i.nt = load i32, ptr %i.ns, align 4, !tbaa !4
-  %i.nu = sub nsw i32 %i.mh, %i.nt                ; 3 uses
-  %123 = icmp sgt i32 %i.nu, 0
-  %124 = zext i1 %123 to i32
-  %125 = ashr i32 %i.nu, 31
-  %126 = or i32 %125, %124                        ; 2 uses
+  %i.nt = load i32, ptr %i.ns, align 4, !tbaa !4  ; 2 uses
+  %i.nu = sub nsw i32 %i.mh, %i.nt
+  %35 = tail call i32 @llvm.scmp.i32.i32(i32 %i.mh, i32 %i.nt) ; 2 uses
   %i.nv = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.next597.a ; 2 uses
   %i.nw = load i16, ptr %i.nv, align 2, !tbaa !8
-  %i.nx = trunc nsw i32 %126 to i16
+  %i.nx = trunc nsw i32 %35 to i16
   %i.ny = sub i16 %i.nw, %i.nx
   store i16 %i.ny, ptr %i.nv, align 2, !tbaa !8
-  %i.nz = mul nsw i32 %126, %i.nu
+  %i.nz = mul nsw i32 %35, %i.nu
   %i.oa = ashr i32 %i.nz, %6
   %i.ob = trunc i64 %indvars.iv.next597.a to i32
   %i.oc = sub i32 %i.ob, %4
@@ -846,8 +755,8 @@ middle.block684:                                  ; preds = %vector.body675
   br i1 %i.oe, label %..loopexit.loopexit631_crit_edge, label %.preheader, !llvm.loop !37
 
 bb.ai:                                            ; preds = %._crit_edge567
-  %127 = icmp slt i32 %121, 0
-  %or.cond687 = and i1 %127, %i.cz
+  %36 = icmp ne i32 %i.nm, 0
+  %or.cond687 = and i1 %36, %i.cz
   br i1 %or.cond687, label %.lr.ph635, label %.loopexit
 
 .preheader521:                                    ; preds = %.lr.ph635
@@ -860,20 +769,16 @@ bb.ai:                                            ; preds = %._crit_edge567
   %indvars.iv.next593 = add nsw i64 %indvars.iv592633, -1 ; 3 uses
   %i.og = sub nsw i64 1, %indvars.iv592633
   %i.oh = getelementptr inbounds [4 x i8], ptr %i.mj, i64 %i.og
-  %i.oi = load i32, ptr %i.oh, align 4, !tbaa !4
-  %i.oj = sub nsw i32 %i.mh, %i.oi                ; 3 uses
-  %128 = icmp sgt i32 %i.oj, 0
-  %129 = zext i1 %128 to i32
-  %130 = ashr i32 %i.oj, 31
-  %131 = or i32 %130, %129                        ; 2 uses
+  %i.oi = load i32, ptr %i.oh, align 4, !tbaa !4  ; 2 uses
+  %i.oj = sub i32 %i.oi, %i.mh
+  %37 = tail call i32 @llvm.scmp.i32.i32(i32 %i.mh, i32 %i.oi) ; 2 uses
   %i.ok = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.next593 ; 2 uses
   %i.ol = load i16, ptr %i.ok, align 2, !tbaa !8
-  %i.om = trunc nsw i32 %131 to i16
+  %i.om = trunc nsw i32 %37 to i16
   %i.on = add i16 %i.ol, %i.om
   store i16 %i.on, ptr %i.ok, align 2, !tbaa !8
-  %i.oo = mul i32 %i.oj, %131
-  %132 = sub i32 0, %i.oo
-  %i.op = ashr i32 %132, %6
+  %i.oo = mul i32 %i.oj, %37
+  %i.op = ashr i32 %i.oo, %6
   %i.oq = trunc i64 %indvars.iv.next593 to i32
   %i.or = sub i32 %i.oq, %4
   %.neg464 = mul i32 %i.op, %i.or
@@ -897,17 +802,23 @@ bb.ai:                                            ; preds = %._crit_edge567
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #3
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #4
+declare range(i16 -1, 2) i16 @llvm.scmp.i16.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #3
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -201,7 +201,7 @@ _ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePr
   %i.ao = trunc i8 %i.an to i1
   %.not.jt4 = xor i1 %i.ao, true
   %i.ap = load i8, ptr %i.q, align 1, !range !6   ; 2 uses
-  %i.aq = trunc nuw i8 %i.ap to i1                ; 2 uses
+  %i.aq = trunc nuw i8 %i.ap to i1
   %or.cond.jt4 = select i1 %.not.jt4, i1 %i.aq, i1 false
   %i.ar = load i8, ptr %i.o, align 1, !range !6
   %i.as = trunc nuw i8 %i.ar to i1
@@ -213,7 +213,7 @@ _ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePr
   %i.au = trunc i8 %i.at to i1
   %.not.jt0 = xor i1 %i.au, true
   %i.av = load i8, ptr %i.q, align 1, !range !6   ; 2 uses
-  %i.aw = trunc nuw i8 %i.av to i1                ; 2 uses
+  %i.aw = trunc nuw i8 %i.av to i1
   %or.cond.jt0 = select i1 %.not.jt0, i1 %i.aw, i1 false
   %i.ax = load i8, ptr %i.o, align 1, !range !6
   %i.ay = trunc nuw i8 %i.ax to i1
@@ -225,7 +225,7 @@ _ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePr
   %i.ba = trunc i8 %i.az to i1
   %.not.jt2 = xor i1 %i.ba, true
   %i.bb = load i8, ptr %i.q, align 1, !range !6   ; 2 uses
-  %i.bc = trunc nuw i8 %i.bb to i1                ; 2 uses
+  %i.bc = trunc nuw i8 %i.bb to i1
   %or.cond.jt2 = select i1 %.not.jt2, i1 %i.bc, i1 false
   %i.bd = load i8, ptr %i.o, align 1, !range !6
   %i.be = trunc nuw i8 %i.bd to i1
@@ -237,7 +237,7 @@ _ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePr
   %i.bg = trunc i8 %i.bf to i1
   %.not.jt1 = xor i1 %i.bg, true
   %i.bh = load i8, ptr %i.q, align 1, !range !6   ; 2 uses
-  %i.bi = trunc nuw i8 %i.bh to i1                ; 2 uses
+  %i.bi = trunc nuw i8 %i.bh to i1
   %or.cond.jt1 = select i1 %.not.jt1, i1 %i.bi, i1 false
   %i.bj = load i8, ptr %i.o, align 1, !range !6
   %i.bk = trunc nuw i8 %i.bj to i1
@@ -248,7 +248,7 @@ _ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePr
   %i.bl = load i8, ptr %i.p, align 1              ; 3 uses
   %i.bm = trunc i8 %i.bl to i1
   %.not.jt3 = xor i1 %i.bm, true
-  %i.bn = load i8, ptr %i.q, align 1, !range !6
+  %i.bn = load i8, ptr %i.q, align 1, !range !6   ; 3 uses
   %i.bo = trunc nuw i8 %i.bn to i1
   %or.cond.jt3 = select i1 %.not.jt3, i1 %i.bo, i1 false
   %i.bp = load i8, ptr %i.o, align 1, !range !6
@@ -277,89 +277,59 @@ bb.k:                                             ; preds = %_ZN2v88internal10Pa
   br label %bb.o
 
 bb.l:                                             ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt4, %bb.h
-  %i.bv = phi i8 [ %i.an, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt4 ], [ %i.br, %bb.h ] ; 2 uses
+  %i.bv = phi i8 [ %i.an, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt4 ], [ %i.br, %bb.h ]
   %i.bw = load i8, ptr %i.r, align 2, !range !6, !noundef !7
   %i.bx = trunc nuw i8 %i.bw to i1
-  br i1 %i.bx, label %7, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
+  br i1 %i.bx, label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
 
 bb.m:                                             ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt0, %bb.i
-  %i.by = phi i8 [ %i.at, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt0 ], [ %i.bs, %bb.i ] ; 2 uses
+  %i.by = phi i8 [ %i.at, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt0 ], [ %i.bs, %bb.i ]
   %i.bz = load i8, ptr %i.r, align 2, !range !6, !noundef !7
   %i.ca = trunc nuw i8 %i.bz to i1
-  br i1 %i.ca, label %11, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
+  br i1 %i.ca, label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
 
 bb.n:                                             ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt2, %bb.j
-  %i.cb = phi i8 [ %i.az, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt2 ], [ %i.bt, %bb.j ] ; 2 uses
+  %i.cb = phi i8 [ %i.az, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt2 ], [ %i.bt, %bb.j ]
   %i.cc = load i8, ptr %i.r, align 2, !range !6, !noundef !7
   %i.cd = trunc nuw i8 %i.cc to i1
-  br i1 %i.cd, label %15, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
+  br i1 %i.cd, label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
 
 bb.o:                                             ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt1, %bb.k
-  %i.ce = phi i8 [ %i.bf, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt1 ], [ %i.bu, %bb.k ] ; 2 uses
+  %i.ce = phi i8 [ %i.bf, %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt1 ], [ %i.bu, %bb.k ]
   %i.cf = load i8, ptr %i.r, align 2, !range !6, !noundef !7
   %i.cg = trunc nuw i8 %i.cf to i1
-  br i1 %i.cg, label %19, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
+  br i1 %i.cg, label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit, label %_ZN2v88internal9PreParser23DeclarePublicClassFieldEPNS0_10ClassScopeERKNS0_19PreParserExpressionEbbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, !prof !5
 
 bb.p:                                             ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt3
   %i.ch = load i8, ptr %i.r, align 2, !range !6, !noundef !7
   %i.ci = trunc nuw i8 %i.ch to i1
-  br i1 %i.ci, label %23, label %bb.r, !prof !5
+  br i1 %i.ci, label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit, label %bb.r, !prof !5
 
 .thread65:                                        ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE20ClassPropertyKindForENS0_17ParsePropertyKindE.exit.jt3
   %i.cj = or disjoint i8 %i.bl, 1                 ; 2 uses
   store i8 %i.cj, ptr %i.p, align 1
   %i.ck = load i8, ptr %i.r, align 2, !range !6, !noundef !7
   %i.cl = trunc nuw i8 %i.ck to i1
-  br i1 %i.cl, label %23, label %.thread64, !prof !5
+  br i1 %i.cl, label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit, label %.thread64, !prof !5
 
-7:                                                ; preds = %bb.l
-  %8 = shl nuw nsw i8 %i.ap, 3
-  %9 = xor i8 %8, 8
-  %.mask.jt4 = and i8 %i.bv, 2
-  %10 = select i1 %i.aq, i8 2, i8 %.mask.jt4
-  br label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit
-
-11:                                               ; preds = %bb.m
-  %12 = shl nuw nsw i8 %i.av, 3
-  %13 = xor i8 %12, 8
-  %.mask.jt0 = and i8 %i.by, 2
-  %14 = select i1 %i.aw, i8 2, i8 %.mask.jt0
-  br label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit
-
-15:                                               ; preds = %bb.n
-  %16 = shl nuw nsw i8 %i.bb, 3
-  %17 = xor i8 %16, 8
-  %.mask.jt2 = and i8 %i.cb, 2
-  %18 = select i1 %i.bc, i8 2, i8 %.mask.jt2
-  br label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit
-
-19:                                               ; preds = %bb.o
-  %20 = shl nuw nsw i8 %i.bh, 3
-  %21 = xor i8 %20, 8
-  %.mask.jt1 = and i8 %i.ce, 2
-  %22 = select i1 %i.bi, i8 2, i8 %.mask.jt1
-  br label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit
-
-23:                                               ; preds = %.thread65, %bb.p
-  %24 = phi i8 [ %i.cj, %.thread65 ], [ %i.bl, %bb.p ] ; 2 uses
-  %.mask.jt3 = and i8 %24, 2
-  br label %_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit
-
-_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit: ; preds = %23, %11, %19, %15, %7
-  %.sink71 = phi i8 [ %24, %23 ], [ %i.by, %11 ], [ %i.ce, %19 ], [ %i.cb, %15 ], [ %i.bv, %7 ]
-  %.sink = phi i8 [ 0, %23 ], [ %13, %11 ], [ %21, %19 ], [ %17, %15 ], [ %9, %7 ]
-  %.mask.jt3.sink = phi i8 [ %.mask.jt3, %23 ], [ %14, %11 ], [ %22, %19 ], [ %18, %15 ], [ %10, %7 ]
-  %.0.i39 = phi i8 [ 1, %23 ], [ 9, %11 ], [ 11, %19 ], [ 10, %15 ], [ 12, %7 ]
-  %.masked.jt3 = and i8 %.sink71, -3
-  %i.cm = or i8 %.masked.jt3, %.sink
-  %i.cn = or disjoint i8 %i.cm, %.mask.jt3.sink
+_ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteralProperty4KindE.exit: ; preds = %bb.p, %.thread65, %bb.o, %bb.n, %bb.m, %bb.l
+  %.sink80 = phi i8 [ %i.bh, %bb.o ], [ %i.ap, %bb.l ], [ %i.bb, %bb.n ], [ %i.av, %bb.m ], [ %i.bn, %.thread65 ], [ %i.bn, %bb.p ] ; 2 uses
+  %.sink = phi i1 [ false, %bb.o ], [ false, %bb.l ], [ false, %bb.n ], [ false, %bb.m ], [ true, %.thread65 ], [ true, %bb.p ]
+  %.sink74 = phi i8 [ %i.ce, %bb.o ], [ %i.bv, %bb.l ], [ %i.cb, %bb.n ], [ %i.by, %bb.m ], [ %i.cj, %.thread65 ], [ %i.bl, %bb.p ]
+  %.0.i40 = phi i8 [ 11, %bb.o ], [ 12, %bb.l ], [ 10, %bb.n ], [ 9, %bb.m ], [ 1, %.thread65 ], [ 1, %bb.p ]
+  %7 = shl nuw nsw i8 %.sink80, 3
+  %8 = shl nuw nsw i8 %.sink80, 1
+  %i.cm = or disjoint i8 %7, %8
+  %9 = xor i8 %i.cm, 8
+  %10 = select i1 %.sink, i8 0, i8 %9
+  %i.cn = or i8 %10, %.sink74
   store i8 %i.cn, ptr %i.p, align 1
   %i.co = load ptr, ptr %0, align 8
   %i.cp = call noundef ptr @_ZN2v88internal5Scope12AsClassScopeEv(ptr noundef nonnull align 8 dereferenceable(124) %i.co) #17
   %i.cq = load i8, ptr %i.q, align 1, !range !6, !noundef !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   %i.cr = load ptr, ptr %i.k, align 8
-  %i.cs = call noundef ptr @_ZN2v88internal10ClassScope18DeclarePrivateNameEPKNS0_12AstRawStringENS0_12VariableModeENS0_12IsStaticFlagEPb(ptr noundef nonnull align 8 dereferenceable(145) %i.cp, ptr noundef %i.cr, i8 noundef zeroext %.0.i39, i8 noundef zeroext %i.cq, ptr noundef nonnull %i.b) #17 ; 0 uses
+  %i.cs = call noundef ptr @_ZN2v88internal10ClassScope18DeclarePrivateNameEPKNS0_12AstRawStringENS0_12VariableModeENS0_12IsStaticFlagEPb(ptr noundef nonnull align 8 dereferenceable(145) %i.cp, ptr noundef %i.cr, i8 noundef zeroext %.0.i40, i8 noundef zeroext %i.cq, ptr noundef nonnull %i.b) #17 ; 0 uses
   %i.ct = load i8, ptr %i.b, align 1, !range !6, !noundef !7
   %i.cu = trunc nuw i8 %i.ct to i1
   br i1 %i.cu, label %_ZN2v88internal9PreParser25DeclarePrivateClassMemberEPNS0_10ClassScopeERKNS0_19PreParserIdentifierERKNS0_19PreParserExpressionENS0_20ClassLiteralProperty4KindEbPNS0_10ParserBaseIS1_E9ClassInfoE.exit, label %bb.q

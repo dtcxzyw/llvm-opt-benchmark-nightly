@@ -201,12 +201,10 @@ _ZN5folly11AsyncSocket17BytesWriteRequestC2EPS0_NS0_22WriteCallbackWithStateEPK5
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr align 8 %3, i64 %i.af, i1 false)
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 1008
   %i.ah = load i8, ptr %i.ag, align 8, !tbaa !14324, !range !13961, !noundef !149
-  %9 = trunc nuw i8 %i.ah to i1
-  %10 = and i32 %8, 8
-  %11 = icmp ne i32 %10, 0
-  %12 = and i1 %11, %9
-  %13 = zext i1 %12 to i8
-  store i8 %13, ptr %i.x, align 8, !tbaa !15230
+  %9 = trunc i32 %8 to i8
+  %10 = lshr i8 %9, 3
+  %11 = and i8 %i.ah, %10
+  store i8 %11, ptr %i.x, align 8, !tbaa !15230
   ret ptr %i.h
 }
 

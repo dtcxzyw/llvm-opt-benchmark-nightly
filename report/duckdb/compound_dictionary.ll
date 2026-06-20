@@ -201,17 +201,16 @@ bb.i:                                             ; preds = %bb.i, %.new
 .preheader.i.preheader.unr-lcssa:                 ; preds = %bb.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod.not)
+  %3 = zext nneg i32 %i.h to i64
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.i.preheader.unr-lcssa, %bb.n
-  %indvars.iv244.i = phi i64 [ %indvars.iv.next245.i, %bb.n ], [ 0, %.preheader.i.preheader.unr-lcssa ] ; 6 uses
-  %3 = trunc nuw i64 %indvars.iv244.i to i32
-  %4 = and i32 %i.h, %3
+.preheader.i:                                     ; preds = %bb.n, %.preheader.i.preheader.unr-lcssa
+  %indvars.iv244.i = phi i64 [ 0, %.preheader.i.preheader.unr-lcssa ], [ %indvars.iv.next245.i, %bb.n ] ; 6 uses
   %i.cj = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %indvars.iv244.i
   %i.ck = load i16, ptr %i.cj, align 2, !tbaa !7
   %i.cl = zext i16 %i.ck to i32
-  %5 = zext nneg i32 %4 to i64                    ; 3 uses
-  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %5
+  %4 = and i64 %indvars.iv244.i, %3               ; 3 uses
+  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %4
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !3
   %spec.select197.i = tail call i32 @llvm.umin.i32(i32 %i.cn, i32 %i.cl) ; 4 uses
   %i.co = icmp eq i32 %spec.select197.i, 0
@@ -223,13 +222,13 @@ bb.j:                                             ; preds = %.preheader.i
   br label %bb.n
 
 bb.k:                                             ; preds = %.preheader.i
-  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %5 ; 2 uses
+  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %4 ; 2 uses
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !3  ; 3 uses
   %i.cs = zext i32 %i.cr to i64
   %i.ct = trunc i32 %i.cr to i16
   %i.cu = getelementptr inbounds nuw [2 x i8], ptr %i.bs, i64 %indvars.iv244.i
   store i16 %i.ct, ptr %i.cu, align 2, !tbaa !7
-  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %5
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %4
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !3
   %i.cx = zext i32 %i.cw to i64
   %i.cy = add nuw nsw i64 %i.cx, %i.cs            ; 2 uses

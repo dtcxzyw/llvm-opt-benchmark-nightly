@@ -201,10 +201,9 @@ bb.a:
   %i.ae = lshr i64 %i.b, 56
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 3 uses
   %i.ag = load i8, ptr %i.q, align 1, !tbaa !13
-  %.tr44.1 = trunc nuw i64 %i.ae to i8
-  %.narrow45.1 = xor i8 %i.ag, %.tr44.1
-  %4 = zext i8 %.narrow45.1 to i64
-  %i.ah = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %4
+  %4 = zext i8 %i.ag to i64
+  %5 = xor i64 %i.ae, %4
+  %i.ah = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %5
   %i.ai = load i16, ptr %i.ah, align 2, !tbaa !19
   %i.aj = zext i16 %i.ai to i64
   %i.ak = lshr i64 %i.x, 8
