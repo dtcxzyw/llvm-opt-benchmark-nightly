@@ -201,13 +201,13 @@ vector.body275:                                   ; preds = %bb.g
   br label %"_ZZN8facebook5velox4bits10forEachBitIZNKS0_13FlatMapVector11toMapVectorEvE3$_0EEvPKmiibT_ENKUliE_clEi.exit.i.i"
 
 .lr.ph.i.preheader.i.i:                           ; preds = %bb.g
-  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %indvars.iv53.i.i
+  %i.cx = getelementptr [4 x i8], ptr %i.az, i64 %indvars.iv53.i.i
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.preheader.i.i
-  %.01520.i.i.i = phi i64 [ %i.dd, %.lr.ph.i.i.i ], [ %i.cb, %.lr.ph.i.preheader.i.i ] ; 3 uses
+  %.01520.i.i.i = phi i64 [ %i.cb, %.lr.ph.i.preheader.i.i ], [ %i.dd, %.lr.ph.i.i.i ] ; 3 uses
   %i.cy = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01520.i.i.i, i1 true)
-  %i.cz = getelementptr inbounds nuw [4 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
+  %i.cz = getelementptr [4 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !3
   %i.db = add nsw i32 %i.da, 1
   store i32 %i.db, ptr %i.cz, align 4, !tbaa !3
