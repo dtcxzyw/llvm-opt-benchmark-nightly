@@ -201,6 +201,7 @@ bb.qv:                                            ; preds = %bb.qu, %bb.qt
 
 .lr.ph.i.i.i.i6.i:                                ; preds = %.lr.ph.i.i.i.i227
   %i.caw = shl nsw i32 %i.cas, 6
+  %99 = sext i32 %i.caw to i64
   %i.cax = load ptr, ptr %94, align 8             ; 3 uses
   br label %bb.re
 
@@ -323,12 +324,10 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction5applyERKNS0_17S
 bb.re:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i.i.i.i.i, %.lr.ph.i.i.i.i6.i
   %.01541.i.i.i.i.i = phi i64 [ %i.cav, %.lr.ph.i.i.i.i6.i ], [ %i.cet, %_ZZNK8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i.i.i.i.i ] ; 3 uses
   %i.ccy = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01541.i.i.i.i.i, i1 true)
-  %99 = trunc nuw nsw i64 %i.ccy to i32
-  %100 = or disjoint i32 %i.caw, %99
-  %101 = sext i32 %100 to i64                     ; 2 uses
-  %i.ccz = getelementptr inbounds [4 x i8], ptr %.val20.val.i.i.i.i.i, i64 %101
+  %100 = or disjoint i64 %i.ccy, %99              ; 2 uses
+  %i.ccz = getelementptr inbounds [4 x i8], ptr %.val20.val.i.i.i.i.i, i64 %100
   %i.cda = load i32, ptr %i.ccz, align 4, !tbaa !3 ; 6 uses
-  %i.cdb = getelementptr inbounds [4 x i8], ptr %.val20.val21.i.i.i.i.i, i64 %101
+  %i.cdb = getelementptr inbounds [4 x i8], ptr %.val20.val21.i.i.i.i.i, i64 %100
   %i.cdc = load i32, ptr %i.cdb, align 4, !tbaa !3 ; 3 uses
   %i.cdd = add nsw i32 %i.cdc, %i.cda             ; 5 uses
   %i.cde = icmp eq i32 %i.cdc, 0
@@ -731,16 +730,15 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %i.ch = load ptr, ptr %i.cf, align 8, !tbaa !310
   %i.ci = load ptr, ptr %i.cg, align 8, !tbaa !310
   %.promoted = load i32, ptr %i.ce, align 4, !tbaa !3
+  %6 = sext i32 %i.bx to i64
+  %invariant.gep = getelementptr [4 x i8], ptr %i.ci, i64 %6
   br label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.us
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.us: ; preds = %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us, %.lr.ph.i.split.us
   %i.cj = phi i32 [ %.promoted, %.lr.ph.i.split.us ], [ %i.cs, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us ] ; 2 uses
   %.01519.i.us = phi i64 [ %i.bw, %.lr.ph.i.split.us ], [ %i.cu, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us ] ; 3 uses
   %i.ck = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i.us, i1 true)
-  %6 = trunc nuw nsw i64 %i.ck to i32
-  %7 = or disjoint i32 %i.bx, %6
-  %8 = sext i32 %7 to i64
-  %i.cl = getelementptr inbounds [4 x i8], ptr %i.ci, i64 %8
+  %i.cl = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.ck
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !3
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds [4 x i8], ptr %i.ch, i64 %i.cn
@@ -1143,18 +1141,17 @@ bb.a:
   %.val11.val = load ptr, ptr %i.o, align 8, !tbaa !247
   %i.p = getelementptr i8, ptr %.val11, i64 40
   %.val11.val12 = load ptr, ptr %i.p, align 8, !tbaa !251
+  %3 = sext i32 %i.m to i64
   %i.q = getelementptr inbounds nuw i8, ptr %.val, i64 37
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %_ZZNK8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit
   %.013 = phi i64 [ %i.k, %.preheader ], [ %i.bn, %_ZZNK8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit ] ; 3 uses
   %i.r = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.013, i1 true)
-  %3 = trunc nuw nsw i64 %i.r to i32
-  %4 = or disjoint i32 %i.m, %3
-  %5 = sext i32 %4 to i64                         ; 2 uses
-  %i.s = getelementptr inbounds [4 x i8], ptr %.val11.val, i64 %5
+  %4 = or disjoint i64 %i.r, %3                   ; 2 uses
+  %i.s = getelementptr inbounds [4 x i8], ptr %.val11.val, i64 %4
   %i.t = load i32, ptr %i.s, align 4, !tbaa !3    ; 6 uses
-  %i.u = getelementptr inbounds [4 x i8], ptr %.val11.val12, i64 %5
+  %i.u = getelementptr inbounds [4 x i8], ptr %.val11.val12, i64 %4
   %i.v = load i32, ptr %i.u, align 4, !tbaa !3    ; 3 uses
   %i.w = add nsw i32 %i.v, %i.t                   ; 5 uses
   %i.x = icmp eq i32 %i.v, 0

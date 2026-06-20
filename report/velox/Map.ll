@@ -201,6 +201,7 @@ bb.la:                                            ; preds = %bb.kz
   br i1 %.not.i.i.i.i.i389, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKS1_RSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISC_EERKSA_IKNS0_4TypeEERNS0_4exec7EvalCtxERSC_EUliE0_EEvT_.exit, label %.preheader.i.i.i.i.i
 
 .preheader.i.i.i.i.i:                             ; preds = %bb.la
+  %127 = sext i32 %i.aon to i64
   %i.ape = load ptr, ptr %i.h, align 8, !tbaa !310
   %i.apf = load ptr, ptr %i.g, align 8, !tbaa !342
   %i.apg = getelementptr inbounds nuw i8, ptr %i.ape, i64 104
@@ -212,19 +213,17 @@ bb.lb:                                            ; preds = %_ZZNK8facebook5velo
   %.81189 = phi i32 [ 0, %.preheader.i.i.i.i.i ], [ %i.aqf, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i.i.i.i.i ] ; 3 uses
   %.011.i.i.i.i.i = phi i64 [ %i.apd, %.preheader.i.i.i.i.i ], [ %i.aqh, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i.i.i.i.i ] ; 3 uses
   %i.apj = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i, i1 true)
-  %127 = trunc nuw nsw i64 %i.apj to i32
-  %128 = or disjoint i32 %i.aon, %127
-  %129 = sext i32 %128 to i64                     ; 3 uses
-  %i.apk = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %129
+  %128 = or disjoint i64 %i.apj, %127             ; 3 uses
+  %i.apk = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %128
   store i32 %.81189, ptr %i.apk, align 4, !tbaa !3
   %i.apl = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.apm = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %129
+  %i.apm = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %128
   store i32 %i.apl, ptr %i.apm, align 4, !tbaa !3
   %i.apn = icmp sgt i32 %i.apl, 0
   br i1 %i.apn, label %.lr.ph.i.i.i.i.i.i390, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i390:                            ; preds = %bb.lb
-  %i.apo = getelementptr inbounds [4 x i8], ptr %i.apf, i64 %129
+  %i.apo = getelementptr inbounds [4 x i8], ptr %i.apf, i64 %128
   %i.app = load i32, ptr %i.apo, align 4, !tbaa !3
   %i.apq = sext i32 %i.app to i64
   %i.apr = getelementptr inbounds [4 x i8], ptr %i.aph, i64 %i.apq
@@ -280,6 +279,7 @@ bb.le:                                            ; preds = %bb.ld
 
 .preheader.i37.i.i.i.i:                           ; preds = %bb.le
   %i.aqt = shl nsw i32 %i.aqi, 6
+  %129 = sext i32 %i.aqt to i64
   %i.aqu = load ptr, ptr %i.h, align 8, !tbaa !310
   %i.aqv = load ptr, ptr %i.g, align 8, !tbaa !342
   %i.aqw = getelementptr inbounds nuw i8, ptr %i.aqu, i64 104
@@ -291,19 +291,17 @@ bb.lf:                                            ; preds = %_ZZNK8facebook5velo
   %.01181 = phi i32 [ 0, %.preheader.i37.i.i.i.i ], [ %i.arv, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %.011.i39.i.i.i.i = phi i64 [ %i.aqs, %.preheader.i37.i.i.i.i ], [ %i.arx, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %i.aqz = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39.i.i.i.i, i1 true)
-  %130 = trunc nuw nsw i64 %i.aqz to i32
-  %131 = or disjoint i32 %i.aqt, %130
-  %132 = sext i32 %131 to i64                     ; 3 uses
-  %i.ara = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %132
+  %130 = or disjoint i64 %i.aqz, %129             ; 3 uses
+  %i.ara = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %130
   store i32 %.01181, ptr %i.ara, align 4, !tbaa !3
   %i.arb = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.arc = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %132
+  %i.arc = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %130
   store i32 %i.arb, ptr %i.arc, align 4, !tbaa !3
   %i.ard = icmp sgt i32 %i.arb, 0
   br i1 %i.ard, label %.lr.ph.i.i43.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i40.i.i.i.i
 
 .lr.ph.i.i43.i.i.i.i:                             ; preds = %bb.lf
-  %i.are = getelementptr inbounds [4 x i8], ptr %i.aqv, i64 %132
+  %i.are = getelementptr inbounds [4 x i8], ptr %i.aqv, i64 %130
   %i.arf = load i32, ptr %i.are, align 4, !tbaa !3
   %i.arg = sext i32 %i.arf to i64
   %i.arh = getelementptr inbounds [4 x i8], ptr %i.aqx, i64 %i.arg
@@ -369,6 +367,7 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i
   %i.ash = shl nsw i32 %i.asd, 6
+  %131 = sext i32 %i.ash to i64
   %i.asi = load ptr, ptr %i.asb, align 8, !tbaa !306
   %i.asj = load ptr, ptr %96, align 8
   br label %bb.lk
@@ -438,19 +437,17 @@ bb.lk:                                            ; preds = %_ZZNK8facebook5velo
   %.71188 = phi i32 [ %.21183, %.lr.ph.i.i.i.i.i ], [ %i.aul, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit21.i.i.i.i.i ] ; 3 uses
   %.01526.i.i.i.i.i = phi i64 [ %i.asg, %.lr.ph.i.i.i.i.i ], [ %i.aun, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit21.i.i.i.i.i ] ; 3 uses
   %i.atp = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01526.i.i.i.i.i, i1 true)
-  %133 = trunc nuw nsw i64 %i.atp to i32
-  %134 = or disjoint i32 %i.ash, %133
-  %135 = sext i32 %134 to i64                     ; 3 uses
-  %i.atq = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %135
+  %132 = or disjoint i64 %i.atp, %131             ; 3 uses
+  %i.atq = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %132
   store i32 %.71188, ptr %i.atq, align 4, !tbaa !3
   %i.atr = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.ats = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %135
+  %i.ats = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %132
   store i32 %i.atr, ptr %i.ats, align 4, !tbaa !3
   %i.att = icmp sgt i32 %i.atr, 0
   br i1 %i.att, label %.lr.ph.i18.i.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit21.i.i.i.i.i
 
 .lr.ph.i18.i.i.i.i.i:                             ; preds = %bb.lk
-  %i.atu = getelementptr inbounds [4 x i8], ptr %i.asa, i64 %135
+  %i.atu = getelementptr inbounds [4 x i8], ptr %i.asa, i64 %132
   %i.atv = load i32, ptr %i.atu, align 4, !tbaa !3
   %i.atw = sext i32 %i.atv to i64
   %i.atx = getelementptr inbounds [4 x i8], ptr %i.asi, i64 %i.atw
@@ -504,6 +501,7 @@ bb.lm:                                            ; preds = %._crit_edge.i.i.i.i
   br i1 %.not.i55.i.i.i.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKS1_RSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISC_EERKSA_IKNS0_4TypeEERNS0_4exec7EvalCtxERSC_EUliE0_EEvT_.exit, label %.preheader.i56.i.i.i.i
 
 .preheader.i56.i.i.i.i:                           ; preds = %bb.lm
+  %133 = sext i32 %i.aon to i64
   %i.aux = load ptr, ptr %i.h, align 8, !tbaa !310
   %i.auy = load ptr, ptr %i.g, align 8, !tbaa !342
   %i.auz = getelementptr inbounds nuw i8, ptr %i.aux, i64 104
@@ -515,19 +513,17 @@ bb.ln:                                            ; preds = %_ZZNK8facebook5velo
   %.51186 = phi i32 [ %.41185, %.preheader.i56.i.i.i.i ], [ %i.avy, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i59.i.i.i.i ] ; 3 uses
   %.011.i58.i.i.i.i = phi i64 [ %i.auw, %.preheader.i56.i.i.i.i ], [ %i.awa, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i59.i.i.i.i ] ; 3 uses
   %i.avc = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i58.i.i.i.i, i1 true)
-  %136 = trunc nuw nsw i64 %i.avc to i32
-  %137 = or disjoint i32 %i.aon, %136
-  %138 = sext i32 %137 to i64                     ; 3 uses
-  %i.avd = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %138
+  %134 = or disjoint i64 %i.avc, %133             ; 3 uses
+  %i.avd = getelementptr inbounds [4 x i8], ptr %i.akp, i64 %134
   store i32 %.51186, ptr %i.avd, align 4, !tbaa !3
   %i.ave = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.avf = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %138
+  %i.avf = getelementptr inbounds [4 x i8], ptr %i.ala, i64 %134
   store i32 %i.ave, ptr %i.avf, align 4, !tbaa !3
   %i.avg = icmp sgt i32 %i.ave, 0
   br i1 %i.avg, label %.lr.ph.i.i62.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i59.i.i.i.i
 
 .lr.ph.i.i62.i.i.i.i:                             ; preds = %bb.ln
-  %i.avh = getelementptr inbounds [4 x i8], ptr %i.auy, i64 %138
+  %i.avh = getelementptr inbounds [4 x i8], ptr %i.auy, i64 %134
   %i.avi = load i32, ptr %i.avh, align 4, !tbaa !3
   %i.avj = sext i32 %i.avi to i64
   %i.avk = getelementptr inbounds [4 x i8], ptr %i.ava, i64 %i.avj
@@ -930,6 +926,8 @@ bb.wj:                                            ; preds = %bb.wi
 .preheader.i.i.i.i.i790:                          ; preds = %bb.wj
   %i.cuc = load ptr, ptr %i.p, align 8, !tbaa !310
   %i.cud = load ptr, ptr %i.n, align 8, !tbaa !342
+  %135 = sext i32 %i.ctl to i64
+  %invariant.gep.i.i.i.i.i = getelementptr [4 x i8], ptr %i.cud, i64 %135
   %i.cue = getelementptr inbounds nuw i8, ptr %i.cuc, i64 120
   %i.cuf = load ptr, ptr %i.cue, align 8, !tbaa !308
   br label %bb.wk
@@ -938,10 +936,7 @@ bb.wk:                                            ; preds = %bb.wk, %.preheader.
   %.011.i.i.i.i.i791 = phi i64 [ %i.cub, %.preheader.i.i.i.i.i790 ], [ %i.cup, %bb.wk ] ; 3 uses
   %i.cug = phi i32 [ 0, %.preheader.i.i.i.i.i790 ], [ %i.cun, %bb.wk ]
   %i.cuh = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i791, i1 true)
-  %139 = trunc nuw nsw i64 %i.cuh to i32
-  %140 = or disjoint i32 %i.ctl, %139
-  %141 = sext i32 %140 to i64
-  %i.cui = getelementptr inbounds [4 x i8], ptr %i.cud, i64 %141
+  %i.cui = getelementptr [4 x i8], ptr %invariant.gep.i.i.i.i.i, i64 %i.cuh
   %i.cuj = load i32, ptr %i.cui, align 4, !tbaa !3
   %i.cuk = sext i32 %i.cuj to i64
   %i.cul = getelementptr inbounds [4 x i8], ptr %i.cuf, i64 %i.cuk
@@ -976,6 +971,8 @@ bb.wm:                                            ; preds = %bb.wl
   %i.cvb = shl nsw i32 %i.cuq, 6
   %i.cvc = load ptr, ptr %i.p, align 8, !tbaa !310
   %i.cvd = load ptr, ptr %i.n, align 8, !tbaa !342
+  %136 = sext i32 %i.cvb to i64
+  %invariant.gep.i38.i.i.i.i = getelementptr [4 x i8], ptr %i.cvd, i64 %136
   %i.cve = getelementptr inbounds nuw i8, ptr %i.cvc, i64 120
   %i.cvf = load ptr, ptr %i.cve, align 8, !tbaa !308
   br label %bb.wn
@@ -984,10 +981,7 @@ bb.wn:                                            ; preds = %bb.wn, %.preheader.
   %.011.i39.i.i.i.i780 = phi i64 [ %i.cva, %.preheader.i37.i.i.i.i779 ], [ %i.cvp, %bb.wn ] ; 3 uses
   %i.cvg = phi i32 [ 0, %.preheader.i37.i.i.i.i779 ], [ %i.cvn, %bb.wn ]
   %i.cvh = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39.i.i.i.i780, i1 true)
-  %142 = trunc nuw nsw i64 %i.cvh to i32
-  %143 = or disjoint i32 %i.cvb, %142
-  %144 = sext i32 %143 to i64
-  %i.cvi = getelementptr inbounds [4 x i8], ptr %i.cvd, i64 %144
+  %i.cvi = getelementptr [4 x i8], ptr %invariant.gep.i38.i.i.i.i, i64 %i.cvh
   %i.cvj = load i32, ptr %i.cvi, align 4, !tbaa !3
   %i.cvk = sext i32 %i.cvj to i64
   %i.cvl = getelementptr inbounds [4 x i8], ptr %i.cvf, i64 %i.cvk
@@ -1030,6 +1024,8 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
 
 .lr.ph.i.i.i.i.i786:                              ; preds = %.lr.ph.i.i.i.i781
   %i.cvz = shl nsw i32 %i.cvv, 6
+  %137 = sext i32 %i.cvz to i64
+  %invariant.gep.i44.i.i.i.i = getelementptr [4 x i8], ptr %i.cvs, i64 %137
   %i.cwa = load ptr, ptr %i.cvt, align 8, !tbaa !308
   br label %bb.wp
 
@@ -1395,10 +1391,7 @@ bb.wp:                                            ; preds = %bb.wp, %.lr.ph.i.i.
   %i.dhw = phi i32 [ %.11177, %.lr.ph.i.i.i.i.i786 ], [ %i.did, %bb.wp ]
   %.01519.i.i.i.i.i = phi i64 [ %i.cvy, %.lr.ph.i.i.i.i.i786 ], [ %i.dif, %bb.wp ] ; 3 uses
   %i.dhx = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i.i.i.i.i, i1 true)
-  %145 = trunc nuw nsw i64 %i.dhx to i32
-  %146 = or disjoint i32 %i.cvz, %145
-  %147 = sext i32 %146 to i64
-  %i.dhy = getelementptr inbounds [4 x i8], ptr %i.cvs, i64 %147
+  %i.dhy = getelementptr [4 x i8], ptr %invariant.gep.i44.i.i.i.i, i64 %i.dhx
   %i.dhz = load i32, ptr %i.dhy, align 4, !tbaa !3
   %i.dia = sext i32 %i.dhz to i64
   %i.dib = getelementptr inbounds [4 x i8], ptr %i.cwa, i64 %i.dia
@@ -1431,6 +1424,8 @@ bb.wq:                                            ; preds = %._crit_edge.i.i.i.i
 .preheader.i46.i.i.i.i:                           ; preds = %bb.wq
   %i.dip = load ptr, ptr %i.p, align 8, !tbaa !310
   %i.diq = load ptr, ptr %i.n, align 8, !tbaa !342
+  %138 = sext i32 %i.ctl to i64
+  %invariant.gep.i51.i.i.i.i = getelementptr [4 x i8], ptr %i.diq, i64 %138
   %i.dir = getelementptr inbounds nuw i8, ptr %i.dip, i64 120
   %i.dis = load ptr, ptr %i.dir, align 8, !tbaa !308
   br label %bb.wr
@@ -1439,10 +1434,7 @@ bb.wr:                                            ; preds = %bb.wr, %.preheader.
   %.011.i48.i.i.i.i = phi i64 [ %i.dio, %.preheader.i46.i.i.i.i ], [ %i.djc, %bb.wr ] ; 3 uses
   %i.dit = phi i32 [ %.31179, %.preheader.i46.i.i.i.i ], [ %i.dja, %bb.wr ]
   %i.diu = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i48.i.i.i.i, i1 true)
-  %148 = trunc nuw nsw i64 %i.diu to i32
-  %149 = or disjoint i32 %i.ctl, %148
-  %150 = sext i32 %149 to i64
-  %i.div = getelementptr inbounds [4 x i8], ptr %i.diq, i64 %150
+  %i.div = getelementptr [4 x i8], ptr %invariant.gep.i51.i.i.i.i, i64 %i.diu
   %i.diw = load i32, ptr %i.div, align 4, !tbaa !3
   %i.dix = sext i32 %i.diw to i64
   %i.diy = getelementptr inbounds [4 x i8], ptr %i.dis, i64 %i.dix
@@ -1845,6 +1837,7 @@ bb.xo:                                            ; preds = %bb.xn
 .preheader.i.i.i.i.i856:                          ; preds = %bb.xo
   %i.dpz = load ptr, ptr %i.p, align 8, !tbaa !310 ; 2 uses
   %i.dqa = load ptr, ptr %i.n, align 8, !tbaa !342
+  %139 = sext i32 %i.dpi to i64
   %i.dqb = getelementptr inbounds nuw i8, ptr %i.dpz, i64 120
   %i.dqc = load ptr, ptr %i.dqb, align 8, !tbaa !308
   %i.dqd = getelementptr inbounds nuw i8, ptr %i.dpz, i64 104
@@ -1861,23 +1854,21 @@ bb.xp:                                            ; preds = %_ZZNK8facebook5velo
   %.8 = phi i32 [ 0, %.preheader.i.i.i.i.i856 ], [ %i.dsu, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i ] ; 3 uses
   %.011.i.i.i.i.i858 = phi i64 [ %i.dpy, %.preheader.i.i.i.i.i856 ], [ %i.dsw, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i ] ; 3 uses
   %i.dqk = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i858, i1 true)
-  %151 = trunc nuw nsw i64 %i.dqk to i32
-  %152 = or disjoint i32 %i.dpi, %151
-  %153 = sext i32 %152 to i64                     ; 4 uses
-  %i.dql = getelementptr inbounds [4 x i8], ptr %i.dqa, i64 %153 ; 2 uses
+  %140 = or disjoint i64 %i.dqk, %139             ; 4 uses
+  %i.dql = getelementptr inbounds [4 x i8], ptr %i.dqa, i64 %140 ; 2 uses
   %i.dqm = load i32, ptr %i.dql, align 4, !tbaa !3
   %i.dqn = sext i32 %i.dqm to i64
   %i.dqo = getelementptr inbounds [4 x i8], ptr %i.dqc, i64 %i.dqn
   %i.dqp = load i32, ptr %i.dqo, align 4, !tbaa !3 ; 6 uses
-  %i.dqq = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %153
+  %i.dqq = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %140
   store i32 %.8, ptr %i.dqq, align 4, !tbaa !3
-  %i.dqr = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %153
+  %i.dqr = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %140
   store i32 %i.dqp, ptr %i.dqr, align 4, !tbaa !3
   %i.dqs = icmp sgt i32 %i.dqp, 0
   br i1 %i.dqs, label %iter.check2229, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i
 
 iter.check2229:                                   ; preds = %bb.xp
-  %i.dqt = getelementptr inbounds [4 x i8], ptr %i.dqg, i64 %153
+  %i.dqt = getelementptr inbounds [4 x i8], ptr %i.dqg, i64 %140
   %i.dqu = load i32, ptr %i.dqt, align 4, !tbaa !3
   %i.dqv = sext i32 %i.dqu to i64
   %i.dqw = getelementptr inbounds [4 x i8], ptr %i.dqi, i64 %i.dqv
@@ -2069,6 +2060,7 @@ bb.xr:                                            ; preds = %bb.xq
   %i.dti = shl nsw i32 %i.dsx, 6
   %i.dtj = load ptr, ptr %i.p, align 8, !tbaa !310 ; 2 uses
   %i.dtk = load ptr, ptr %i.n, align 8, !tbaa !342
+  %141 = sext i32 %i.dti to i64
   %i.dtl = getelementptr inbounds nuw i8, ptr %i.dtj, i64 120
   %i.dtm = load ptr, ptr %i.dtl, align 8, !tbaa !308
   %i.dtn = getelementptr inbounds nuw i8, ptr %i.dtj, i64 104
@@ -2085,23 +2077,21 @@ bb.xs:                                            ; preds = %_ZZNK8facebook5velo
   %.0 = phi i32 [ 0, %.preheader.i37.i.i.i.i842 ], [ %i.dwe, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %.011.i39.i.i.i.i844 = phi i64 [ %i.dth, %.preheader.i37.i.i.i.i842 ], [ %i.dwg, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %i.dtu = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39.i.i.i.i844, i1 true)
-  %154 = trunc nuw nsw i64 %i.dtu to i32
-  %155 = or disjoint i32 %i.dti, %154
-  %156 = sext i32 %155 to i64                     ; 4 uses
-  %i.dtv = getelementptr inbounds [4 x i8], ptr %i.dtk, i64 %156 ; 2 uses
+  %142 = or disjoint i64 %i.dtu, %141             ; 4 uses
+  %i.dtv = getelementptr inbounds [4 x i8], ptr %i.dtk, i64 %142 ; 2 uses
   %i.dtw = load i32, ptr %i.dtv, align 4, !tbaa !3
   %i.dtx = sext i32 %i.dtw to i64
   %i.dty = getelementptr inbounds [4 x i8], ptr %i.dtm, i64 %i.dtx
   %i.dtz = load i32, ptr %i.dty, align 4, !tbaa !3 ; 6 uses
-  %i.dua = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %156
+  %i.dua = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %142
   store i32 %.0, ptr %i.dua, align 4, !tbaa !3
-  %i.dub = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %156
+  %i.dub = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %142
   store i32 %i.dtz, ptr %i.dub, align 4, !tbaa !3
   %i.duc = icmp sgt i32 %i.dtz, 0
   br i1 %i.duc, label %iter.check2023, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i
 
 iter.check2023:                                   ; preds = %bb.xs
-  %i.dud = getelementptr inbounds [4 x i8], ptr %i.dtq, i64 %156
+  %i.dud = getelementptr inbounds [4 x i8], ptr %i.dtq, i64 %142
   %i.due = load i32, ptr %i.dud, align 4, !tbaa !3
   %i.duf = sext i32 %i.due to i64
   %i.dug = getelementptr inbounds [4 x i8], ptr %i.dts, i64 %i.duf
@@ -2308,6 +2298,7 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
 
 .lr.ph.i.i.i.i.i852:                              ; preds = %.lr.ph.i.i.i.i845
   %i.dwv = shl nsw i32 %i.dwr, 6
+  %143 = sext i32 %i.dwv to i64
   %i.dww = load ptr, ptr %i.dwk, align 8, !tbaa !308
   %i.dwx = load ptr, ptr %i.dwl, align 8, !tbaa !306
   %i.dwy = load ptr, ptr %i.dwo, align 8, !tbaa !306
@@ -2517,23 +2508,21 @@ bb.xv:                                            ; preds = %_ZZNK8facebook5velo
   %.7 = phi i32 [ %.2, %.lr.ph.i.i.i.i.i852 ], [ %i.ecd, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit20.i.i.i.i.i ] ; 3 uses
   %.01523.i.i.i.i.i = phi i64 [ %i.dwu, %.lr.ph.i.i.i.i.i852 ], [ %i.ecf, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit20.i.i.i.i.i ] ; 3 uses
   %i.dzt = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01523.i.i.i.i.i, i1 true)
-  %157 = trunc nuw nsw i64 %i.dzt to i32
-  %158 = or disjoint i32 %i.dwv, %157
-  %159 = sext i32 %158 to i64                     ; 4 uses
-  %i.dzu = getelementptr inbounds [4 x i8], ptr %i.dwj, i64 %159 ; 2 uses
+  %144 = or disjoint i64 %i.dzt, %143             ; 4 uses
+  %i.dzu = getelementptr inbounds [4 x i8], ptr %i.dwj, i64 %144 ; 2 uses
   %i.dzv = load i32, ptr %i.dzu, align 4, !tbaa !3
   %i.dzw = sext i32 %i.dzv to i64
   %i.dzx = getelementptr inbounds [4 x i8], ptr %i.dww, i64 %i.dzw
   %i.dzy = load i32, ptr %i.dzx, align 4, !tbaa !3 ; 6 uses
-  %i.dzz = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %159
+  %i.dzz = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %144
   store i32 %.7, ptr %i.dzz, align 4, !tbaa !3
-  %i.eaa = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %159
+  %i.eaa = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %144
   store i32 %i.dzy, ptr %i.eaa, align 4, !tbaa !3
   %i.eab = icmp sgt i32 %i.dzy, 0
   br i1 %i.eab, label %iter.check2073, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit20.i.i.i.i.i
 
 iter.check2073:                                   ; preds = %bb.xv
-  %i.eac = getelementptr inbounds [4 x i8], ptr %i.dwn, i64 %159
+  %i.eac = getelementptr inbounds [4 x i8], ptr %i.dwn, i64 %144
   %i.ead = load i32, ptr %i.eac, align 4, !tbaa !3
   %i.eae = sext i32 %i.ead to i64
   %i.eaf = getelementptr inbounds [4 x i8], ptr %i.dwy, i64 %i.eae
@@ -2723,6 +2712,7 @@ bb.xw:                                            ; preds = %._crit_edge.i.i.i.i
 .preheader.i54.i.i.i.i:                           ; preds = %bb.xw
   %i.ecp = load ptr, ptr %i.p, align 8, !tbaa !310 ; 2 uses
   %i.ecq = load ptr, ptr %i.n, align 8, !tbaa !342
+  %145 = sext i32 %i.dpi to i64
   %i.ecr = getelementptr inbounds nuw i8, ptr %i.ecp, i64 120
   %i.ecs = load ptr, ptr %i.ecr, align 8, !tbaa !308
   %i.ect = getelementptr inbounds nuw i8, ptr %i.ecp, i64 104
@@ -2739,23 +2729,21 @@ bb.xx:                                            ; preds = %_ZZNK8facebook5velo
   %.5 = phi i32 [ %.4, %.preheader.i54.i.i.i.i ], [ %i.efk, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i ] ; 3 uses
   %.011.i56.i.i.i.i = phi i64 [ %i.eco, %.preheader.i54.i.i.i.i ], [ %i.efm, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i ] ; 3 uses
   %i.eda = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i56.i.i.i.i, i1 true)
-  %160 = trunc nuw nsw i64 %i.eda to i32
-  %161 = or disjoint i32 %i.dpi, %160
-  %162 = sext i32 %161 to i64                     ; 4 uses
-  %i.edb = getelementptr inbounds [4 x i8], ptr %i.ecq, i64 %162 ; 2 uses
+  %146 = or disjoint i64 %i.eda, %145             ; 4 uses
+  %i.edb = getelementptr inbounds [4 x i8], ptr %i.ecq, i64 %146 ; 2 uses
   %i.edc = load i32, ptr %i.edb, align 4, !tbaa !3
   %i.edd = sext i32 %i.edc to i64
   %i.ede = getelementptr inbounds [4 x i8], ptr %i.ecs, i64 %i.edd
   %i.edf = load i32, ptr %i.ede, align 4, !tbaa !3 ; 6 uses
-  %i.edg = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %162
+  %i.edg = getelementptr inbounds [4 x i8], ptr %i.djo, i64 %146
   store i32 %.5, ptr %i.edg, align 4, !tbaa !3
-  %i.edh = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %162
+  %i.edh = getelementptr inbounds [4 x i8], ptr %i.djz, i64 %146
   store i32 %i.edf, ptr %i.edh, align 4, !tbaa !3
   %i.edi = icmp sgt i32 %i.edf, 0
   br i1 %i.edi, label %iter.check2177, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i
 
 iter.check2177:                                   ; preds = %bb.xx
-  %i.edj = getelementptr inbounds [4 x i8], ptr %i.ecw, i64 %162
+  %i.edj = getelementptr inbounds [4 x i8], ptr %i.ecw, i64 %146
   %i.edk = load i32, ptr %i.edj, align 4, !tbaa !3
   %i.edl = sext i32 %i.edk to i64
   %i.edm = getelementptr inbounds [4 x i8], ptr %i.ecy, i64 %i.edl
@@ -3158,6 +3146,7 @@ bb.ky:                                            ; preds = %bb.kx
   br i1 %.not.i.i.i.i.i383, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKS1_RSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISC_EERKSA_IKNS0_4TypeEERNS0_4exec7EvalCtxERSC_EUliE0_EEvT_.exit, label %.preheader.i.i.i.i.i
 
 .preheader.i.i.i.i.i:                             ; preds = %bb.ky
+  %124 = sext i32 %i.aoh to i64
   %i.aoy = load ptr, ptr %i.h, align 8, !tbaa !310
   %i.aoz = load ptr, ptr %i.g, align 8, !tbaa !342
   %i.apa = getelementptr inbounds nuw i8, ptr %i.aoy, i64 104
@@ -3169,19 +3158,17 @@ bb.kz:                                            ; preds = %_ZZNK8facebook5velo
   %.81170 = phi i32 [ 0, %.preheader.i.i.i.i.i ], [ %i.apz, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i.i.i.i.i ] ; 3 uses
   %.011.i.i.i.i.i = phi i64 [ %i.aox, %.preheader.i.i.i.i.i ], [ %i.aqb, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i.i.i.i.i ] ; 3 uses
   %i.apd = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i, i1 true)
-  %124 = trunc nuw nsw i64 %i.apd to i32
-  %125 = or disjoint i32 %i.aoh, %124
-  %126 = sext i32 %125 to i64                     ; 3 uses
-  %i.ape = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %126
+  %125 = or disjoint i64 %i.apd, %124             ; 3 uses
+  %i.ape = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %125
   store i32 %.81170, ptr %i.ape, align 4, !tbaa !3
   %i.apf = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.apg = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %126
+  %i.apg = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %125
   store i32 %i.apf, ptr %i.apg, align 4, !tbaa !3
   %i.aph = icmp sgt i32 %i.apf, 0
   br i1 %i.aph, label %.lr.ph.i.i.i.i.i.i384, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i384:                            ; preds = %bb.kz
-  %i.api = getelementptr inbounds [4 x i8], ptr %i.aoz, i64 %126
+  %i.api = getelementptr inbounds [4 x i8], ptr %i.aoz, i64 %125
   %i.apj = load i32, ptr %i.api, align 4, !tbaa !3
   %i.apk = sext i32 %i.apj to i64
   %i.apl = getelementptr inbounds [4 x i8], ptr %i.apb, i64 %i.apk
@@ -3237,6 +3224,7 @@ bb.lc:                                            ; preds = %bb.lb
 
 .preheader.i37.i.i.i.i:                           ; preds = %bb.lc
   %i.aqn = shl nsw i32 %i.aqc, 6
+  %126 = sext i32 %i.aqn to i64
   %i.aqo = load ptr, ptr %i.h, align 8, !tbaa !310
   %i.aqp = load ptr, ptr %i.g, align 8, !tbaa !342
   %i.aqq = getelementptr inbounds nuw i8, ptr %i.aqo, i64 104
@@ -3248,19 +3236,17 @@ bb.ld:                                            ; preds = %_ZZNK8facebook5velo
   %.01162 = phi i32 [ 0, %.preheader.i37.i.i.i.i ], [ %i.arp, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %.011.i39.i.i.i.i = phi i64 [ %i.aqm, %.preheader.i37.i.i.i.i ], [ %i.arr, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %i.aqt = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39.i.i.i.i, i1 true)
-  %127 = trunc nuw nsw i64 %i.aqt to i32
-  %128 = or disjoint i32 %i.aqn, %127
-  %129 = sext i32 %128 to i64                     ; 3 uses
-  %i.aqu = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %129
+  %127 = or disjoint i64 %i.aqt, %126             ; 3 uses
+  %i.aqu = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %127
   store i32 %.01162, ptr %i.aqu, align 4, !tbaa !3
   %i.aqv = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.aqw = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %129
+  %i.aqw = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %127
   store i32 %i.aqv, ptr %i.aqw, align 4, !tbaa !3
   %i.aqx = icmp sgt i32 %i.aqv, 0
   br i1 %i.aqx, label %.lr.ph.i.i43.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i40.i.i.i.i
 
 .lr.ph.i.i43.i.i.i.i:                             ; preds = %bb.ld
-  %i.aqy = getelementptr inbounds [4 x i8], ptr %i.aqp, i64 %129
+  %i.aqy = getelementptr inbounds [4 x i8], ptr %i.aqp, i64 %127
   %i.aqz = load i32, ptr %i.aqy, align 4, !tbaa !3
   %i.ara = sext i32 %i.aqz to i64
   %i.arb = getelementptr inbounds [4 x i8], ptr %i.aqr, i64 %i.ara
@@ -3326,6 +3312,7 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i
   %i.asb = shl nsw i32 %i.arx, 6
+  %128 = sext i32 %i.asb to i64
   %i.asc = load ptr, ptr %i.arv, align 8, !tbaa !306
   %i.asd = load ptr, ptr %93, align 8
   br label %bb.li
@@ -3395,19 +3382,17 @@ bb.li:                                            ; preds = %_ZZNK8facebook5velo
   %.71169 = phi i32 [ %.21164, %.lr.ph.i.i.i.i.i ], [ %i.auf, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit21.i.i.i.i.i ] ; 3 uses
   %.01526.i.i.i.i.i = phi i64 [ %i.asa, %.lr.ph.i.i.i.i.i ], [ %i.auh, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit21.i.i.i.i.i ] ; 3 uses
   %i.atj = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01526.i.i.i.i.i, i1 true)
-  %130 = trunc nuw nsw i64 %i.atj to i32
-  %131 = or disjoint i32 %i.asb, %130
-  %132 = sext i32 %131 to i64                     ; 3 uses
-  %i.atk = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %132
+  %129 = or disjoint i64 %i.atj, %128             ; 3 uses
+  %i.atk = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %129
   store i32 %.71169, ptr %i.atk, align 4, !tbaa !3
   %i.atl = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.atm = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %132
+  %i.atm = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %129
   store i32 %i.atl, ptr %i.atm, align 4, !tbaa !3
   %i.atn = icmp sgt i32 %i.atl, 0
   br i1 %i.atn, label %.lr.ph.i18.i.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit21.i.i.i.i.i
 
 .lr.ph.i18.i.i.i.i.i:                             ; preds = %bb.li
-  %i.ato = getelementptr inbounds [4 x i8], ptr %i.aru, i64 %132
+  %i.ato = getelementptr inbounds [4 x i8], ptr %i.aru, i64 %129
   %i.atp = load i32, ptr %i.ato, align 4, !tbaa !3
   %i.atq = sext i32 %i.atp to i64
   %i.atr = getelementptr inbounds [4 x i8], ptr %i.asc, i64 %i.atq
@@ -3461,6 +3446,7 @@ bb.lk:                                            ; preds = %._crit_edge.i.i.i.i
   br i1 %.not.i55.i.i.i.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKS1_RSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISC_EERKSA_IKNS0_4TypeEERNS0_4exec7EvalCtxERSC_EUliE0_EEvT_.exit, label %.preheader.i56.i.i.i.i
 
 .preheader.i56.i.i.i.i:                           ; preds = %bb.lk
+  %130 = sext i32 %i.aoh to i64
   %i.aur = load ptr, ptr %i.h, align 8, !tbaa !310
   %i.aus = load ptr, ptr %i.g, align 8, !tbaa !342
   %i.aut = getelementptr inbounds nuw i8, ptr %i.aur, i64 104
@@ -3472,19 +3458,17 @@ bb.ll:                                            ; preds = %_ZZNK8facebook5velo
   %.51167 = phi i32 [ %.41166, %.preheader.i56.i.i.i.i ], [ %i.avs, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i59.i.i.i.i ] ; 3 uses
   %.011.i58.i.i.i.i = phi i64 [ %i.auq, %.preheader.i56.i.i.i.i ], [ %i.avu, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i59.i.i.i.i ] ; 3 uses
   %i.auw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i58.i.i.i.i, i1 true)
-  %133 = trunc nuw nsw i64 %i.auw to i32
-  %134 = or disjoint i32 %i.aoh, %133
-  %135 = sext i32 %134 to i64                     ; 3 uses
-  %i.aux = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %135
+  %131 = or disjoint i64 %i.auw, %130             ; 3 uses
+  %i.aux = getelementptr inbounds [4 x i8], ptr %i.akj, i64 %131
   store i32 %.51167, ptr %i.aux, align 4, !tbaa !3
   %i.auy = load i32, ptr %i.i, align 4, !tbaa !3  ; 3 uses
-  %i.auz = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %135
+  %i.auz = getelementptr inbounds [4 x i8], ptr %i.aku, i64 %131
   store i32 %i.auy, ptr %i.auz, align 4, !tbaa !3
   %i.ava = icmp sgt i32 %i.auy, 0
   br i1 %i.ava, label %.lr.ph.i.i62.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE0_clEi.exit.i59.i.i.i.i
 
 .lr.ph.i.i62.i.i.i.i:                             ; preds = %bb.ll
-  %i.avb = getelementptr inbounds [4 x i8], ptr %i.aus, i64 %135
+  %i.avb = getelementptr inbounds [4 x i8], ptr %i.aus, i64 %131
   %i.avc = load i32, ptr %i.avb, align 4, !tbaa !3
   %i.avd = sext i32 %i.avc to i64
   %i.ave = getelementptr inbounds [4 x i8], ptr %i.auu, i64 %i.avd
@@ -3887,6 +3871,8 @@ bb.wb:                                            ; preds = %bb.wa
 .preheader.i.i.i.i.i771:                          ; preds = %bb.wb
   %i.crw = load ptr, ptr %i.p, align 8, !tbaa !310
   %i.crx = load ptr, ptr %i.n, align 8, !tbaa !342
+  %132 = sext i32 %i.crf to i64
+  %invariant.gep.i.i.i.i.i = getelementptr [4 x i8], ptr %i.crx, i64 %132
   %i.cry = getelementptr inbounds nuw i8, ptr %i.crw, i64 120
   %i.crz = load ptr, ptr %i.cry, align 8, !tbaa !308
   br label %bb.wc
@@ -3895,10 +3881,7 @@ bb.wc:                                            ; preds = %bb.wc, %.preheader.
   %.011.i.i.i.i.i772 = phi i64 [ %i.crv, %.preheader.i.i.i.i.i771 ], [ %i.csj, %bb.wc ] ; 3 uses
   %i.csa = phi i32 [ 0, %.preheader.i.i.i.i.i771 ], [ %i.csh, %bb.wc ]
   %i.csb = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i772, i1 true)
-  %136 = trunc nuw nsw i64 %i.csb to i32
-  %137 = or disjoint i32 %i.crf, %136
-  %138 = sext i32 %137 to i64
-  %i.csc = getelementptr inbounds [4 x i8], ptr %i.crx, i64 %138
+  %i.csc = getelementptr [4 x i8], ptr %invariant.gep.i.i.i.i.i, i64 %i.csb
   %i.csd = load i32, ptr %i.csc, align 4, !tbaa !3
   %i.cse = sext i32 %i.csd to i64
   %i.csf = getelementptr inbounds [4 x i8], ptr %i.crz, i64 %i.cse
@@ -3933,6 +3916,8 @@ bb.we:                                            ; preds = %bb.wd
   %i.csv = shl nsw i32 %i.csk, 6
   %i.csw = load ptr, ptr %i.p, align 8, !tbaa !310
   %i.csx = load ptr, ptr %i.n, align 8, !tbaa !342
+  %133 = sext i32 %i.csv to i64
+  %invariant.gep.i38.i.i.i.i = getelementptr [4 x i8], ptr %i.csx, i64 %133
   %i.csy = getelementptr inbounds nuw i8, ptr %i.csw, i64 120
   %i.csz = load ptr, ptr %i.csy, align 8, !tbaa !308
   br label %bb.wf
@@ -3941,10 +3926,7 @@ bb.wf:                                            ; preds = %bb.wf, %.preheader.
   %.011.i39.i.i.i.i761 = phi i64 [ %i.csu, %.preheader.i37.i.i.i.i760 ], [ %i.ctj, %bb.wf ] ; 3 uses
   %i.cta = phi i32 [ 0, %.preheader.i37.i.i.i.i760 ], [ %i.cth, %bb.wf ]
   %i.ctb = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39.i.i.i.i761, i1 true)
-  %139 = trunc nuw nsw i64 %i.ctb to i32
-  %140 = or disjoint i32 %i.csv, %139
-  %141 = sext i32 %140 to i64
-  %i.ctc = getelementptr inbounds [4 x i8], ptr %i.csx, i64 %141
+  %i.ctc = getelementptr [4 x i8], ptr %invariant.gep.i38.i.i.i.i, i64 %i.ctb
   %i.ctd = load i32, ptr %i.ctc, align 4, !tbaa !3
   %i.cte = sext i32 %i.ctd to i64
   %i.ctf = getelementptr inbounds [4 x i8], ptr %i.csz, i64 %i.cte
@@ -3987,6 +3969,8 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
 
 .lr.ph.i.i.i.i.i767:                              ; preds = %.lr.ph.i.i.i.i762
   %i.ctt = shl nsw i32 %i.ctp, 6
+  %134 = sext i32 %i.ctt to i64
+  %invariant.gep.i44.i.i.i.i = getelementptr [4 x i8], ptr %i.ctm, i64 %134
   %i.ctu = load ptr, ptr %i.ctn, align 8, !tbaa !308
   br label %bb.wh
 
@@ -4352,10 +4336,7 @@ bb.wh:                                            ; preds = %bb.wh, %.lr.ph.i.i.
   %i.dfq = phi i32 [ %.11158, %.lr.ph.i.i.i.i.i767 ], [ %i.dfx, %bb.wh ]
   %.01519.i.i.i.i.i = phi i64 [ %i.cts, %.lr.ph.i.i.i.i.i767 ], [ %i.dfz, %bb.wh ] ; 3 uses
   %i.dfr = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i.i.i.i.i, i1 true)
-  %142 = trunc nuw nsw i64 %i.dfr to i32
-  %143 = or disjoint i32 %i.ctt, %142
-  %144 = sext i32 %143 to i64
-  %i.dfs = getelementptr inbounds [4 x i8], ptr %i.ctm, i64 %144
+  %i.dfs = getelementptr [4 x i8], ptr %invariant.gep.i44.i.i.i.i, i64 %i.dfr
   %i.dft = load i32, ptr %i.dfs, align 4, !tbaa !3
   %i.dfu = sext i32 %i.dft to i64
   %i.dfv = getelementptr inbounds [4 x i8], ptr %i.ctu, i64 %i.dfu
@@ -4388,6 +4369,8 @@ bb.wi:                                            ; preds = %._crit_edge.i.i.i.i
 .preheader.i46.i.i.i.i:                           ; preds = %bb.wi
   %i.dgj = load ptr, ptr %i.p, align 8, !tbaa !310
   %i.dgk = load ptr, ptr %i.n, align 8, !tbaa !342
+  %135 = sext i32 %i.crf to i64
+  %invariant.gep.i51.i.i.i.i = getelementptr [4 x i8], ptr %i.dgk, i64 %135
   %i.dgl = getelementptr inbounds nuw i8, ptr %i.dgj, i64 120
   %i.dgm = load ptr, ptr %i.dgl, align 8, !tbaa !308
   br label %bb.wj
@@ -4396,10 +4379,7 @@ bb.wj:                                            ; preds = %bb.wj, %.preheader.
   %.011.i48.i.i.i.i = phi i64 [ %i.dgi, %.preheader.i46.i.i.i.i ], [ %i.dgw, %bb.wj ] ; 3 uses
   %i.dgn = phi i32 [ %.31160, %.preheader.i46.i.i.i.i ], [ %i.dgu, %bb.wj ]
   %i.dgo = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i48.i.i.i.i, i1 true)
-  %145 = trunc nuw nsw i64 %i.dgo to i32
-  %146 = or disjoint i32 %i.crf, %145
-  %147 = sext i32 %146 to i64
-  %i.dgp = getelementptr inbounds [4 x i8], ptr %i.dgk, i64 %147
+  %i.dgp = getelementptr [4 x i8], ptr %invariant.gep.i51.i.i.i.i, i64 %i.dgo
   %i.dgq = load i32, ptr %i.dgp, align 4, !tbaa !3
   %i.dgr = sext i32 %i.dgq to i64
   %i.dgs = getelementptr inbounds [4 x i8], ptr %i.dgm, i64 %i.dgr
@@ -4802,6 +4782,7 @@ bb.xg:                                            ; preds = %bb.xf
 .preheader.i.i.i.i.i837:                          ; preds = %bb.xg
   %i.dnt = load ptr, ptr %i.p, align 8, !tbaa !310 ; 2 uses
   %i.dnu = load ptr, ptr %i.n, align 8, !tbaa !342
+  %136 = sext i32 %i.dnc to i64
   %i.dnv = getelementptr inbounds nuw i8, ptr %i.dnt, i64 120
   %i.dnw = load ptr, ptr %i.dnv, align 8, !tbaa !308
   %i.dnx = getelementptr inbounds nuw i8, ptr %i.dnt, i64 104
@@ -4818,23 +4799,21 @@ bb.xh:                                            ; preds = %_ZZNK8facebook5velo
   %.8 = phi i32 [ 0, %.preheader.i.i.i.i.i837 ], [ %i.dqo, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i ] ; 3 uses
   %.011.i.i.i.i.i839 = phi i64 [ %i.dns, %.preheader.i.i.i.i.i837 ], [ %i.dqq, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i ] ; 3 uses
   %i.doe = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i839, i1 true)
-  %148 = trunc nuw nsw i64 %i.doe to i32
-  %149 = or disjoint i32 %i.dnc, %148
-  %150 = sext i32 %149 to i64                     ; 4 uses
-  %i.dof = getelementptr inbounds [4 x i8], ptr %i.dnu, i64 %150 ; 2 uses
+  %137 = or disjoint i64 %i.doe, %136             ; 4 uses
+  %i.dof = getelementptr inbounds [4 x i8], ptr %i.dnu, i64 %137 ; 2 uses
   %i.dog = load i32, ptr %i.dof, align 4, !tbaa !3
   %i.doh = sext i32 %i.dog to i64
   %i.doi = getelementptr inbounds [4 x i8], ptr %i.dnw, i64 %i.doh
   %i.doj = load i32, ptr %i.doi, align 4, !tbaa !3 ; 6 uses
-  %i.dok = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %150
+  %i.dok = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %137
   store i32 %.8, ptr %i.dok, align 4, !tbaa !3
-  %i.dol = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %150
+  %i.dol = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %137
   store i32 %i.doj, ptr %i.dol, align 4, !tbaa !3
   %i.dom = icmp sgt i32 %i.doj, 0
   br i1 %i.dom, label %iter.check2191, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i
 
 iter.check2191:                                   ; preds = %bb.xh
-  %i.don = getelementptr inbounds [4 x i8], ptr %i.doa, i64 %150
+  %i.don = getelementptr inbounds [4 x i8], ptr %i.doa, i64 %137
   %i.doo = load i32, ptr %i.don, align 4, !tbaa !3
   %i.dop = sext i32 %i.doo to i64
   %i.doq = getelementptr inbounds [4 x i8], ptr %i.doc, i64 %i.dop
@@ -5026,6 +5005,7 @@ bb.xj:                                            ; preds = %bb.xi
   %i.drc = shl nsw i32 %i.dqr, 6
   %i.drd = load ptr, ptr %i.p, align 8, !tbaa !310 ; 2 uses
   %i.dre = load ptr, ptr %i.n, align 8, !tbaa !342
+  %138 = sext i32 %i.drc to i64
   %i.drf = getelementptr inbounds nuw i8, ptr %i.drd, i64 120
   %i.drg = load ptr, ptr %i.drf, align 8, !tbaa !308
   %i.drh = getelementptr inbounds nuw i8, ptr %i.drd, i64 104
@@ -5042,23 +5022,21 @@ bb.xk:                                            ; preds = %_ZZNK8facebook5velo
   %.0 = phi i32 [ 0, %.preheader.i37.i.i.i.i823 ], [ %i.dty, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %.011.i39.i.i.i.i825 = phi i64 [ %i.drb, %.preheader.i37.i.i.i.i823 ], [ %i.dua, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i ] ; 3 uses
   %i.dro = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i39.i.i.i.i825, i1 true)
-  %151 = trunc nuw nsw i64 %i.dro to i32
-  %152 = or disjoint i32 %i.drc, %151
-  %153 = sext i32 %152 to i64                     ; 4 uses
-  %i.drp = getelementptr inbounds [4 x i8], ptr %i.dre, i64 %153 ; 2 uses
+  %139 = or disjoint i64 %i.dro, %138             ; 4 uses
+  %i.drp = getelementptr inbounds [4 x i8], ptr %i.dre, i64 %139 ; 2 uses
   %i.drq = load i32, ptr %i.drp, align 4, !tbaa !3
   %i.drr = sext i32 %i.drq to i64
   %i.drs = getelementptr inbounds [4 x i8], ptr %i.drg, i64 %i.drr
   %i.drt = load i32, ptr %i.drs, align 4, !tbaa !3 ; 6 uses
-  %i.dru = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %153
+  %i.dru = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %139
   store i32 %.0, ptr %i.dru, align 4, !tbaa !3
-  %i.drv = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %153
+  %i.drv = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %139
   store i32 %i.drt, ptr %i.drv, align 4, !tbaa !3
   %i.drw = icmp sgt i32 %i.drt, 0
   br i1 %i.drw, label %iter.check1985, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i
 
 iter.check1985:                                   ; preds = %bb.xk
-  %i.drx = getelementptr inbounds [4 x i8], ptr %i.drk, i64 %153
+  %i.drx = getelementptr inbounds [4 x i8], ptr %i.drk, i64 %139
   %i.dry = load i32, ptr %i.drx, align 4, !tbaa !3
   %i.drz = sext i32 %i.dry to i64
   %i.dsa = getelementptr inbounds [4 x i8], ptr %i.drm, i64 %i.drz
@@ -5265,6 +5243,7 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
 
 .lr.ph.i.i.i.i.i833:                              ; preds = %.lr.ph.i.i.i.i826
   %i.dup = shl nsw i32 %i.dul, 6
+  %140 = sext i32 %i.dup to i64
   %i.duq = load ptr, ptr %i.due, align 8, !tbaa !308
   %i.dur = load ptr, ptr %i.duf, align 8, !tbaa !306
   %i.dus = load ptr, ptr %i.dui, align 8, !tbaa !306
@@ -5474,23 +5453,21 @@ bb.xn:                                            ; preds = %_ZZNK8facebook5velo
   %.7 = phi i32 [ %.2, %.lr.ph.i.i.i.i.i833 ], [ %i.dzx, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit20.i.i.i.i.i ] ; 3 uses
   %.01523.i.i.i.i.i = phi i64 [ %i.duo, %.lr.ph.i.i.i.i.i833 ], [ %i.dzz, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit20.i.i.i.i.i ] ; 3 uses
   %i.dxn = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01523.i.i.i.i.i, i1 true)
-  %154 = trunc nuw nsw i64 %i.dxn to i32
-  %155 = or disjoint i32 %i.dup, %154
-  %156 = sext i32 %155 to i64                     ; 4 uses
-  %i.dxo = getelementptr inbounds [4 x i8], ptr %i.dud, i64 %156 ; 2 uses
+  %141 = or disjoint i64 %i.dxn, %140             ; 4 uses
+  %i.dxo = getelementptr inbounds [4 x i8], ptr %i.dud, i64 %141 ; 2 uses
   %i.dxp = load i32, ptr %i.dxo, align 4, !tbaa !3
   %i.dxq = sext i32 %i.dxp to i64
   %i.dxr = getelementptr inbounds [4 x i8], ptr %i.duq, i64 %i.dxq
   %i.dxs = load i32, ptr %i.dxr, align 4, !tbaa !3 ; 6 uses
-  %i.dxt = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %156
+  %i.dxt = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %141
   store i32 %.7, ptr %i.dxt, align 4, !tbaa !3
-  %i.dxu = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %156
+  %i.dxu = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %141
   store i32 %i.dxs, ptr %i.dxu, align 4, !tbaa !3
   %i.dxv = icmp sgt i32 %i.dxs, 0
   br i1 %i.dxv, label %iter.check2035, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit20.i.i.i.i.i
 
 iter.check2035:                                   ; preds = %bb.xn
-  %i.dxw = getelementptr inbounds [4 x i8], ptr %i.duh, i64 %156
+  %i.dxw = getelementptr inbounds [4 x i8], ptr %i.duh, i64 %141
   %i.dxx = load i32, ptr %i.dxw, align 4, !tbaa !3
   %i.dxy = sext i32 %i.dxx to i64
   %i.dxz = getelementptr inbounds [4 x i8], ptr %i.dus, i64 %i.dxy
@@ -5680,6 +5657,7 @@ bb.xo:                                            ; preds = %._crit_edge.i.i.i.i
 .preheader.i54.i.i.i.i:                           ; preds = %bb.xo
   %i.eaj = load ptr, ptr %i.p, align 8, !tbaa !310 ; 2 uses
   %i.eak = load ptr, ptr %i.n, align 8, !tbaa !342
+  %142 = sext i32 %i.dnc to i64
   %i.eal = getelementptr inbounds nuw i8, ptr %i.eaj, i64 120
   %i.eam = load ptr, ptr %i.eal, align 8, !tbaa !308
   %i.ean = getelementptr inbounds nuw i8, ptr %i.eaj, i64 104
@@ -5696,23 +5674,21 @@ bb.xp:                                            ; preds = %_ZZNK8facebook5velo
   %.5 = phi i32 [ %.4, %.preheader.i54.i.i.i.i ], [ %i.ede, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i ] ; 3 uses
   %.011.i56.i.i.i.i = phi i64 [ %i.eai, %.preheader.i54.i.i.i.i ], [ %i.edg, %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i ] ; 3 uses
   %i.eau = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i56.i.i.i.i, i1 true)
-  %157 = trunc nuw nsw i64 %i.eau to i32
-  %158 = or disjoint i32 %i.dnc, %157
-  %159 = sext i32 %158 to i64                     ; 4 uses
-  %i.eav = getelementptr inbounds [4 x i8], ptr %i.eak, i64 %159 ; 2 uses
+  %143 = or disjoint i64 %i.eau, %142             ; 4 uses
+  %i.eav = getelementptr inbounds [4 x i8], ptr %i.eak, i64 %143 ; 2 uses
   %i.eaw = load i32, ptr %i.eav, align 4, !tbaa !3
   %i.eax = sext i32 %i.eaw to i64
   %i.eay = getelementptr inbounds [4 x i8], ptr %i.eam, i64 %i.eax
   %i.eaz = load i32, ptr %i.eay, align 4, !tbaa !3 ; 6 uses
-  %i.eba = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %159
+  %i.eba = getelementptr inbounds [4 x i8], ptr %i.dhi, i64 %143
   store i32 %.5, ptr %i.eba, align 4, !tbaa !3
-  %i.ebb = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %159
+  %i.ebb = getelementptr inbounds [4 x i8], ptr %i.dht, i64 %143
   store i32 %i.eaz, ptr %i.ebb, align 4, !tbaa !3
   %i.ebc = icmp sgt i32 %i.eaz, 0
   br i1 %i.ebc, label %iter.check2139, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i
 
 iter.check2139:                                   ; preds = %bb.xp
-  %i.ebd = getelementptr inbounds [4 x i8], ptr %i.eaq, i64 %159
+  %i.ebd = getelementptr inbounds [4 x i8], ptr %i.eaq, i64 %143
   %i.ebe = load i32, ptr %i.ebd, align 4, !tbaa !3
   %i.ebf = sext i32 %i.ebe to i64
   %i.ebg = getelementptr inbounds [4 x i8], ptr %i.eas, i64 %i.ebf

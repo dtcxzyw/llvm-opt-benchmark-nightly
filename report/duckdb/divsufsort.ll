@@ -201,6 +201,7 @@ bb.kj:                                            ; preds = %.lr.ph451
   %invariant.gep918 = getelementptr [4 x i8], ptr %3, i64 %indvars.iv609
   %indvars.iv609.tr = trunc i64 %indvars.iv609 to i32
   %i.bvg = shl i32 %indvars.iv609.tr, 8           ; 2 uses
+  %6 = sext i32 %i.bvg to i64
   br label %bb.kk
 
 bb.kk:                                            ; preds = %.lr.ph472, %._crit_edge465
@@ -212,10 +213,8 @@ bb.kk:                                            ; preds = %.lr.ph472, %._crit_
   %i.bvh = load i32, ptr %gep919, align 4, !tbaa !3
   %i.bvi = sub i32 %.17469, %i.bvh                ; 2 uses
   store i32 %.17469, ptr %gep919, align 4, !tbaa !3
-  %6 = trunc nuw nsw i64 %indvars.iv606 to i32
-  %7 = or i32 %i.bvg, %6
-  %8 = sext i32 %7 to i64
-  %i.bvj = getelementptr inbounds [4 x i8], ptr %3, i64 %8
+  %7 = or i64 %indvars.iv606, %6
+  %i.bvj = getelementptr inbounds [4 x i8], ptr %3, i64 %7
   %i.bvk = load i32, ptr %i.bvj, align 4, !tbaa !3 ; 2 uses
   %.not460 = icmp sgt i32 %i.bvk, %.1263468
   br i1 %.not460, label %._crit_edge465, label %.lr.ph464.preheader
