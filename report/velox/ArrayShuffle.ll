@@ -201,16 +201,18 @@ bb.y:                                             ; preds = %bb.x
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !422 ; 3 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ea, i64 64
-  br i1 %i.ed, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i, label %.preheader.split.i.i.i.i.i.i.i
+  br i1 %i.ed, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i.i.i.i.i.i.i, label %.preheader.split.i.i.i.i.i.i.i
 
-_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i
-  %.017.us.i.i.i.i.i.i.i = phi i64 [ %i.eo, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i ], [ %i.dy, %.preheader.i.i.i.i.i.i.i ] ; 3 uses
-  %i.ei = phi i32 [ %i.em, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i ], [ 0, %.preheader.i.i.i.i.i.i.i ]
+_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i.i.i.i.i.i.i: ; preds = %.preheader.i.i.i.i.i.i.i
+  %35 = sext i32 %i.di to i64
+  %invariant.gep26.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.ef, i64 %35
+  br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i
+
+_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i.i.i.i.i.i.i
+  %.017.us.i.i.i.i.i.i.i = phi i64 [ %i.eo, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i ], [ %i.dy, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i.i.i.i.i.i.i ] ; 3 uses
+  %i.ei = phi i32 [ %i.em, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i.i.i.i.i.i.i ], [ 0, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i.i.i.i.i.i.i ]
   %i.ej = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.us.i.i.i.i.i.i.i, i1 true)
-  %35 = trunc nuw nsw i64 %i.ej to i32
-  %36 = or disjoint i32 %i.di, %35
-  %37 = sext i32 %36 to i64
-  %i.ek = getelementptr inbounds [4 x i8], ptr %i.ef, i64 %37
+  %i.ek = getelementptr [4 x i8], ptr %invariant.gep26.i.i.i.i.i.i.i, i64 %i.ej
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !3
   %i.em = add nsw i32 %i.el, %i.ei                ; 2 uses
   %i.en = add nsw i64 %.017.us.i.i.i.i.i.i.i, -1
@@ -242,16 +244,15 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_1
 
 .preheader.split.split.i.i.i.i.i.i.i:             ; preds = %.preheader.split.i.i.i.i.i.i.i
   %i.fa = load ptr, ptr %i.eg, align 8, !tbaa !426
+  %36 = sext i32 %i.di to i64
+  %invariant.gep.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.fa, i64 %36
   br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i.i.i.i.i.i.i
 
 _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i.i.i.i.i.i.i, %.preheader.split.split.i.i.i.i.i.i.i
   %.017.i.i.i.i.i.i.i = phi i64 [ %i.dy, %.preheader.split.split.i.i.i.i.i.i.i ], [ %i.fk, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i.i.i.i.i.i.i ] ; 3 uses
   %i.fb = phi i32 [ 0, %.preheader.split.split.i.i.i.i.i.i.i ], [ %i.fi, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i.i.i.i.i.i.i ]
   %i.fc = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.i.i.i.i.i.i.i, i1 true)
-  %38 = trunc nuw nsw i64 %i.fc to i32
-  %39 = or disjoint i32 %i.di, %38
-  %40 = sext i32 %39 to i64
-  %i.fd = getelementptr inbounds [4 x i8], ptr %i.fa, i64 %40
+  %i.fd = getelementptr [4 x i8], ptr %invariant.gep.i.i.i.i.i.i.i, i64 %i.fc
   %i.fe = load i32, ptr %i.fd, align 4, !tbaa !3
   %i.ff = sext i32 %i.fe to i64
   %i.fg = getelementptr inbounds [4 x i8], ptr %i.ef, i64 %i.ff
@@ -293,16 +294,18 @@ bb.aa:                                            ; preds = %bb.z
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !422 ; 3 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fy, i64 64
-  br i1 %i.gb, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i, label %.preheader.split.i39.i.i.i.i.i.i
+  br i1 %i.gb, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i49.i.i.i.i.i.i, label %.preheader.split.i39.i.i.i.i.i.i
 
-_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i: ; preds = %.preheader.i37.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i
-  %.017.us.i48.i.i.i.i.i.i = phi i64 [ %i.gm, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i ], [ %i.fv, %.preheader.i37.i.i.i.i.i.i ] ; 3 uses
-  %i.gg = phi i32 [ %i.gk, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i ], [ 0, %.preheader.i37.i.i.i.i.i.i ]
+_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i49.i.i.i.i.i.i: ; preds = %.preheader.i37.i.i.i.i.i.i
+  %37 = sext i32 %i.fw to i64
+  %invariant.gep26.i50.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.gd, i64 %37
+  br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i
+
+_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i49.i.i.i.i.i.i
+  %.017.us.i48.i.i.i.i.i.i = phi i64 [ %i.gm, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i ], [ %i.fv, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i49.i.i.i.i.i.i ] ; 3 uses
+  %i.gg = phi i32 [ %i.gk, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i47.i.i.i.i.i.i ], [ 0, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i49.i.i.i.i.i.i ]
   %i.gh = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.us.i48.i.i.i.i.i.i, i1 true)
-  %41 = trunc nuw nsw i64 %i.gh to i32
-  %42 = or disjoint i32 %i.fw, %41
-  %43 = sext i32 %42 to i64
-  %i.gi = getelementptr inbounds [4 x i8], ptr %i.gd, i64 %43
+  %i.gi = getelementptr [4 x i8], ptr %invariant.gep26.i50.i.i.i.i.i.i, i64 %i.gh
   %i.gj = load i32, ptr %i.gi, align 4, !tbaa !3
   %i.gk = add nsw i32 %i.gj, %i.gg                ; 2 uses
   %i.gl = add i64 %.017.us.i48.i.i.i.i.i.i, -1
@@ -334,16 +337,15 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_1
 
 .preheader.split.split.i40.i.i.i.i.i.i:           ; preds = %.preheader.split.i39.i.i.i.i.i.i
   %i.gy = load ptr, ptr %i.ge, align 8, !tbaa !426
+  %38 = sext i32 %i.fw to i64
+  %invariant.gep.i41.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.gy, i64 %38
   br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i41.i.i.i.i.i.i
 
 _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i41.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i41.i.i.i.i.i.i, %.preheader.split.split.i40.i.i.i.i.i.i
   %.017.i42.i.i.i.i.i.i = phi i64 [ %i.fv, %.preheader.split.split.i40.i.i.i.i.i.i ], [ %i.hi, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i41.i.i.i.i.i.i ] ; 3 uses
   %i.gz = phi i32 [ 0, %.preheader.split.split.i40.i.i.i.i.i.i ], [ %i.hg, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i41.i.i.i.i.i.i ]
   %i.ha = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.i42.i.i.i.i.i.i, i1 true)
-  %44 = trunc nuw nsw i64 %i.ha to i32
-  %45 = or disjoint i32 %i.fw, %44
-  %46 = sext i32 %45 to i64
-  %i.hb = getelementptr inbounds [4 x i8], ptr %i.gy, i64 %46
+  %i.hb = getelementptr [4 x i8], ptr %invariant.gep.i41.i.i.i.i.i.i, i64 %i.ha
   %i.hc = load i32, ptr %i.hb, align 4, !tbaa !3
   %i.hd = sext i32 %i.hc to i64
   %i.he = getelementptr inbounds [4 x i8], ptr %i.gd, i64 %i.hd
@@ -393,16 +395,18 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowI
   %i.hx = load i8, ptr %i.hm, align 2, !tbaa !421, !range !58, !noundef !59
   %i.hy = trunc nuw i8 %i.hx to i1
   %i.hz = load ptr, ptr %i.hp, align 8, !tbaa !422 ; 3 uses
-  br i1 %i.hy, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i.i
+  br i1 %i.hy, label %.lr.ph.split.us.i.i.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i.i
 
-_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i
-  %i.ia = phi i32 [ %i.ie, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i ], [ %.1, %.lr.ph.i.i.i.i.i.i.i ]
-  %.01526.us.i.i.i.i.i.i.i = phi i64 [ %i.ig, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i ], [ %i.hv, %.lr.ph.i.i.i.i.i.i.i ] ; 3 uses
+.lr.ph.split.us.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i
+  %39 = sext i32 %i.hw to i64
+  %invariant.gep51.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.hz, i64 %39
+  br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i
+
+_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i, %.lr.ph.split.us.i.i.i.i.i.i.i
+  %i.ia = phi i32 [ %.1, %.lr.ph.split.us.i.i.i.i.i.i.i ], [ %i.ie, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i ]
+  %.01526.us.i.i.i.i.i.i.i = phi i64 [ %i.hv, %.lr.ph.split.us.i.i.i.i.i.i.i ], [ %i.ig, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i54.i.i.i.i.i.i ] ; 3 uses
   %i.ib = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01526.us.i.i.i.i.i.i.i, i1 true)
-  %47 = trunc nuw nsw i64 %i.ib to i32
-  %48 = or disjoint i32 %i.hw, %47
-  %49 = sext i32 %48 to i64
-  %i.ic = getelementptr inbounds [4 x i8], ptr %i.hz, i64 %49
+  %i.ic = getelementptr [4 x i8], ptr %invariant.gep51.i.i.i.i.i.i.i, i64 %i.ib
   %i.id = load i32, ptr %i.ic, align 4, !tbaa !3
   %i.ie = add nsw i32 %i.id, %i.ia                ; 2 uses
   %i.if = add i64 %.01526.us.i.i.i.i.i.i.i, -1
@@ -433,6 +437,8 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_1
 
 .lr.ph.split.split.i.i.i.i.i.i.i:                 ; preds = %.lr.ph.split.i.i.i.i.i.i.i
   %i.ir = load ptr, ptr %i.hn, align 8, !tbaa !426
+  %40 = sext i32 %i.hw to i64
+  %invariant.gep.i57.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.ir, i64 %40
   br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i52.i.i.i.i.i.i
 
 bb.ab:                                            ; preds = %.lr.ph.i.i.i.i.i.i
@@ -835,10 +841,7 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_1
   %i.aaf = phi i32 [ %.1, %.lr.ph.split.split.i.i.i.i.i.i.i ], [ %i.aam, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i52.i.i.i.i.i.i ]
   %.01526.i.i.i.i.i.i.i = phi i64 [ %i.hv, %.lr.ph.split.split.i.i.i.i.i.i.i ], [ %i.aao, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i52.i.i.i.i.i.i ] ; 3 uses
   %i.aag = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01526.i.i.i.i.i.i.i, i1 true)
-  %50 = trunc nuw nsw i64 %i.aag to i32
-  %51 = or disjoint i32 %i.hw, %50
-  %52 = sext i32 %51 to i64
-  %i.aah = getelementptr inbounds [4 x i8], ptr %i.ir, i64 %52
+  %i.aah = getelementptr [4 x i8], ptr %invariant.gep.i57.i.i.i.i.i.i, i64 %i.aag
   %i.aai = load i32, ptr %i.aah, align 4, !tbaa !3
   %i.aaj = sext i32 %i.aai to i64
   %i.aak = getelementptr inbounds [4 x i8], ptr %i.hz, i64 %i.aaj
@@ -878,16 +881,18 @@ bb.ac:                                            ; preds = %._crit_edge.i.i.i.i
   %i.abe = load ptr, ptr %i.abd, align 8, !tbaa !422 ; 3 uses
   %i.abf = getelementptr inbounds nuw i8, ptr %i.aaz, i64 8
   %i.abg = getelementptr inbounds nuw i8, ptr %i.aaz, i64 64
-  br i1 %i.abc, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i, label %.preheader.split.i59.i.i.i.i.i.i
+  br i1 %i.abc, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i76.i.i.i.i.i.i, label %.preheader.split.i59.i.i.i.i.i.i
 
-_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i: ; preds = %.preheader.i57.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i
-  %.017.us.i68.i.i.i.i.i.i = phi i64 [ %i.abn, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i ], [ %i.aax, %.preheader.i57.i.i.i.i.i.i ] ; 3 uses
-  %i.abh = phi i32 [ %i.abl, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i ], [ %.3, %.preheader.i57.i.i.i.i.i.i ]
+_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i76.i.i.i.i.i.i: ; preds = %.preheader.i57.i.i.i.i.i.i
+  %41 = sext i32 %i.di to i64
+  %invariant.gep26.i77.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.abe, i64 %41
+  br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i
+
+_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i76.i.i.i.i.i.i
+  %.017.us.i68.i.i.i.i.i.i = phi i64 [ %i.abn, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i ], [ %i.aax, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i76.i.i.i.i.i.i ] ; 3 uses
+  %i.abh = phi i32 [ %i.abl, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.i67.i.i.i.i.i.i ], [ %.3, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.us.preheader.i76.i.i.i.i.i.i ]
   %i.abi = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.us.i68.i.i.i.i.i.i, i1 true)
-  %53 = trunc nuw nsw i64 %i.abi to i32
-  %54 = or disjoint i32 %i.di, %53
-  %55 = sext i32 %54 to i64
-  %i.abj = getelementptr inbounds [4 x i8], ptr %i.abe, i64 %55
+  %i.abj = getelementptr [4 x i8], ptr %invariant.gep26.i77.i.i.i.i.i.i, i64 %i.abi
   %i.abk = load i32, ptr %i.abj, align 4, !tbaa !3
   %i.abl = add nsw i32 %i.abk, %i.abh             ; 2 uses
   %i.abm = add nsw i64 %.017.us.i68.i.i.i.i.i.i, -1
@@ -919,16 +924,15 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_1
 
 .preheader.split.split.i60.i.i.i.i.i.i:           ; preds = %.preheader.split.i59.i.i.i.i.i.i
   %i.abz = load ptr, ptr %i.abf, align 8, !tbaa !426
+  %42 = sext i32 %i.di to i64
+  %invariant.gep.i68.i.i.i.i.i.i = getelementptr [4 x i8], ptr %i.abz, i64 %42
   br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i61.i.i.i.i.i.i
 
 _ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i61.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i61.i.i.i.i.i.i, %.preheader.split.split.i60.i.i.i.i.i.i
   %.017.i62.i.i.i.i.i.i = phi i64 [ %i.aax, %.preheader.split.split.i60.i.i.i.i.i.i ], [ %i.acj, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i61.i.i.i.i.i.i ] ; 3 uses
   %i.aca = phi i32 [ %.3, %.preheader.split.split.i60.i.i.i.i.i.i ], [ %i.ach, %_ZZNK8facebook5velox9functions12_GLOBAL__N_120ArrayShuffleFunction5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxERSA_ENKUlT_E_clIiEEDaSN_.exit.i61.i.i.i.i.i.i ]
   %i.acb = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.i62.i.i.i.i.i.i, i1 true)
-  %56 = trunc nuw nsw i64 %i.acb to i32
-  %57 = or disjoint i32 %i.di, %56
-  %58 = sext i32 %57 to i64
-  %i.acc = getelementptr inbounds [4 x i8], ptr %i.abz, i64 %58
+  %i.acc = getelementptr [4 x i8], ptr %invariant.gep.i68.i.i.i.i.i.i, i64 %i.acb
   %i.acd = load i32, ptr %i.acc, align 4, !tbaa !3
   %i.ace = sext i32 %i.acd to i64
   %i.acf = getelementptr inbounds [4 x i8], ptr %i.abe, i64 %i.ace

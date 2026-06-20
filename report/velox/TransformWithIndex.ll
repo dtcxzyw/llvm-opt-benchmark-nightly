@@ -201,21 +201,23 @@ bb.aj:                                            ; preds = %bb.ai
 
 .preheader.i.i.i.i.i.i:                           ; preds = %bb.aj
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.bx, null
-  br i1 %.not.i.i.i.i.i.i.i, label %.preheader.split.us.i.i.i.i.i.i.a, label %.preheader.split.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i.i, label %.preheader.split.us.i.i.i.i.i.i, label %.preheader.split.i.i.i.i.i.i
 
-.preheader.split.us.i.i.i.i.i.i.a:                ; preds = %.preheader.i.i.i.i.i.i, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i.i.i.i.i.i
-  %.011.us.i.i.i.i.i.i = phi i64 [ %i.fz, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i.i.i.i.i.i ], [ %i.fe, %.preheader.i.i.i.i.i.i ] ; 3 uses
+.preheader.split.us.i.i.i.i.i.i:                  ; preds = %.preheader.i.i.i.i.i.i
+  %26 = sext i32 %i.eo to i64
+  br label %.preheader.split.us.i.i.i.i.i.i.a
+
+.preheader.split.us.i.i.i.i.i.i.a:                ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i.i.i.i.i.i, %.preheader.split.us.i.i.i.i.i.i
+  %.011.us.i.i.i.i.i.i = phi i64 [ %i.fe, %.preheader.split.us.i.i.i.i.i.i ], [ %i.fz, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i.i.i.i.i.i ] ; 3 uses
   %i.ff = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.us.i.i.i.i.i.i, i1 true)
-  %26 = trunc nuw nsw i64 %i.ff to i32
-  %27 = or disjoint i32 %i.eo, %26
-  %28 = sext i32 %27 to i64                       ; 2 uses
-  %i.fg = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %28
+  %27 = or disjoint i64 %i.ff, %26                ; 2 uses
+  %i.fg = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %27
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !3, !noalias !219 ; 4 uses
   %i.fi = icmp sgt i32 %i.fh, 0
   br i1 %i.fi, label %iter.check588, label %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i.i.i.i.i.i
 
 iter.check588:                                    ; preds = %.preheader.split.us.i.i.i.i.i.i.a
-  %i.fj = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %28
+  %i.fj = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %27
   %i.fk = load i32, ptr %i.fj, align 4, !tbaa !3, !noalias !219
   %i.fl = sext i32 %i.fk to i64
   %wide.trip.count.i.us.i.i.i.i.i.i = zext nneg i32 %i.fh to i64 ; 6 uses
@@ -433,21 +435,23 @@ bb.am:                                            ; preds = %bb.al
 .preheader.i37.i.i.i.i.i:                         ; preds = %bb.am
   %i.hq = shl nsw i32 %i.hf, 6                    ; 2 uses
   %.not.i.i38.i.i.i.i.i = icmp eq ptr %i.bx, null
-  br i1 %.not.i.i38.i.i.i.i.i, label %.preheader.split.us.i51.i.i.i.i.i.a, label %.preheader.split.i39.i.i.i.i.i
+  br i1 %.not.i.i38.i.i.i.i.i, label %.preheader.split.us.i51.i.i.i.i.i, label %.preheader.split.i39.i.i.i.i.i
 
-.preheader.split.us.i51.i.i.i.i.i.a:              ; preds = %.preheader.i37.i.i.i.i.i, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i53.i.i.i.i.i
-  %.011.us.i52.i.i.i.i.i = phi i64 [ %i.il, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i53.i.i.i.i.i ], [ %i.hp, %.preheader.i37.i.i.i.i.i ] ; 3 uses
+.preheader.split.us.i51.i.i.i.i.i:                ; preds = %.preheader.i37.i.i.i.i.i
+  %28 = sext i32 %i.hq to i64
+  br label %.preheader.split.us.i51.i.i.i.i.i.a
+
+.preheader.split.us.i51.i.i.i.i.i.a:              ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i53.i.i.i.i.i, %.preheader.split.us.i51.i.i.i.i.i
+  %.011.us.i52.i.i.i.i.i = phi i64 [ %i.hp, %.preheader.split.us.i51.i.i.i.i.i ], [ %i.il, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i53.i.i.i.i.i ] ; 3 uses
   %i.hr = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.us.i52.i.i.i.i.i, i1 true)
-  %29 = trunc nuw nsw i64 %i.hr to i32
-  %30 = or disjoint i32 %i.hq, %29
-  %31 = sext i32 %30 to i64                       ; 2 uses
-  %i.hs = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %31
+  %29 = or disjoint i64 %i.hr, %28                ; 2 uses
+  %i.hs = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %29
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !3, !noalias !219 ; 4 uses
   %i.hu = icmp sgt i32 %i.ht, 0
   br i1 %i.hu, label %iter.check308, label %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i53.i.i.i.i.i
 
 iter.check308:                                    ; preds = %.preheader.split.us.i51.i.i.i.i.i.a
-  %i.hv = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %31
+  %i.hv = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %29
   %i.hw = load i32, ptr %i.hv, align 4, !tbaa !3, !noalias !219
   %i.hx = sext i32 %i.hw to i64
   %wide.trip.count.i.us.i56.i.i.i.i.i = zext nneg i32 %i.ht to i64 ; 6 uses
@@ -669,21 +673,23 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_9functions12_GLOBAL__N_126TransformWit
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i
   %i.jx = shl nsw i32 %i.jt, 6                    ; 2 uses
-  br i1 %.not.i.i63.i.i.i.i.i, label %.lr.ph.split.us.i.i.i.i.i.i.a, label %.lr.ph.split.i.i.i.i.i.i
+  br i1 %.not.i.i63.i.i.i.i.i, label %.lr.ph.split.us.i.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i
 
-.lr.ph.split.us.i.i.i.i.i.i.a:                    ; preds = %.lr.ph.i.i.i.i.i.i, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit26.us.i.i.i.i.i.i
-  %.01529.us.i.i.i.i.i.i = phi i64 [ %i.ks, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit26.us.i.i.i.i.i.i ], [ %i.jw, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
+.lr.ph.split.us.i.i.i.i.i.i:                      ; preds = %.lr.ph.i.i.i.i.i.i
+  %30 = sext i32 %i.jx to i64
+  br label %.lr.ph.split.us.i.i.i.i.i.i.a
+
+.lr.ph.split.us.i.i.i.i.i.i.a:                    ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit26.us.i.i.i.i.i.i, %.lr.ph.split.us.i.i.i.i.i.i
+  %.01529.us.i.i.i.i.i.i = phi i64 [ %i.jw, %.lr.ph.split.us.i.i.i.i.i.i ], [ %i.ks, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit26.us.i.i.i.i.i.i ] ; 3 uses
   %i.jy = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01529.us.i.i.i.i.i.i, i1 true)
-  %32 = trunc nuw nsw i64 %i.jy to i32
-  %33 = or disjoint i32 %i.jx, %32
-  %34 = sext i32 %33 to i64                       ; 2 uses
-  %i.jz = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %34
+  %31 = or disjoint i64 %i.jy, %30                ; 2 uses
+  %i.jz = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %31
   %i.ka = load i32, ptr %i.jz, align 4, !tbaa !3, !noalias !219 ; 4 uses
   %i.kb = icmp sgt i32 %i.ka, 0
   br i1 %i.kb, label %iter.check343, label %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit26.us.i.i.i.i.i.i
 
 iter.check343:                                    ; preds = %.lr.ph.split.us.i.i.i.i.i.i.a
-  %i.kc = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %34
+  %i.kc = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %31
   %i.kd = load i32, ptr %i.kc, align 4, !tbaa !3, !noalias !219
   %i.ke = sext i32 %i.kd to i64
   %wide.trip.count.i20.us.i.i.i.i.i.i = zext nneg i32 %i.ka to i64 ; 6 uses
@@ -1086,21 +1092,23 @@ bb.ar:                                            ; preds = %._crit_edge.i.i.i.i
 
 .preheader.i84.i.i.i.i.i:                         ; preds = %bb.ar
   %.not.i.i85.i.i.i.i.i = icmp eq ptr %i.bx, null
-  br i1 %.not.i.i85.i.i.i.i.i, label %.preheader.split.us.i98.i.i.i.i.i.a, label %.preheader.split.i86.i.i.i.i.i
+  br i1 %.not.i.i85.i.i.i.i.i, label %.preheader.split.us.i98.i.i.i.i.i, label %.preheader.split.i86.i.i.i.i.i
 
-.preheader.split.us.i98.i.i.i.i.i.a:              ; preds = %.preheader.i84.i.i.i.i.i, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i100.i.i.i.i.i
-  %.011.us.i99.i.i.i.i.i = phi i64 [ %i.pc, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i100.i.i.i.i.i ], [ %i.oh, %.preheader.i84.i.i.i.i.i ] ; 3 uses
+.preheader.split.us.i98.i.i.i.i.i:                ; preds = %.preheader.i84.i.i.i.i.i
+  %32 = sext i32 %i.eo to i64
+  br label %.preheader.split.us.i98.i.i.i.i.i.a
+
+.preheader.split.us.i98.i.i.i.i.i.a:              ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i100.i.i.i.i.i, %.preheader.split.us.i98.i.i.i.i.i
+  %.011.us.i99.i.i.i.i.i = phi i64 [ %i.oh, %.preheader.split.us.i98.i.i.i.i.i ], [ %i.pc, %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i100.i.i.i.i.i ] ; 3 uses
   %i.oi = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.us.i99.i.i.i.i.i, i1 true)
-  %35 = trunc nuw nsw i64 %i.oi to i32
-  %36 = or disjoint i32 %i.eo, %35
-  %37 = sext i32 %36 to i64                       ; 2 uses
-  %i.oj = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %37
+  %33 = or disjoint i64 %i.oi, %32                ; 2 uses
+  %i.oj = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %33
   %i.ok = load i32, ptr %i.oj, align 4, !tbaa !3, !noalias !219 ; 4 uses
   %i.ol = icmp sgt i32 %i.ok, 0
   br i1 %i.ol, label %iter.check518, label %_ZZN8facebook5velox9functions12_GLOBAL__N_126TransformWithIndexFunction19createIndicesVectorERKSt10shared_ptrINS0_11ArrayVectorEERKNS0_17SelectivityVectorEPNS0_6memory10MemoryPoolEENKUliE_clEi.exit.us.i100.i.i.i.i.i
 
 iter.check518:                                    ; preds = %.preheader.split.us.i98.i.i.i.i.i.a
-  %i.om = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %37
+  %i.om = getelementptr inbounds [4 x i8], ptr %i.bt, i64 %33
   %i.on = load i32, ptr %i.om, align 4, !tbaa !3, !noalias !219
   %i.oo = sext i32 %i.on to i64
   %wide.trip.count.i.us.i103.i.i.i.i.i = zext nneg i32 %i.ok to i64 ; 6 uses
