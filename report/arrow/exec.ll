@@ -201,7 +201,7 @@ _ZN5arrow6StatusD2Ev.exit:
   %19 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %20 = alloca %"class.arrow::Status", align 8    ; 6 uses
   %21 = alloca %"class.std::shared_ptr.35", align 8 ; 6 uses
-  %22 = alloca %"struct.arrow::compute::ExecValue", align 8 ; 14 uses
+  %22 = alloca %"struct.arrow::compute::ExecValue", align 8 ; 15 uses
   %23 = alloca %"struct.arrow::DataTypeLayout", align 8 ; 6 uses
   %24 = alloca %"class.arrow::Status", align 8    ; 4 uses
   %25 = alloca %"class.arrow::Result.109", align 8 ; 13 uses
@@ -604,8 +604,8 @@ bb.ax:                                            ; preds = %bb.av
   %i.ew = getelementptr inbounds nuw i8, ptr %22, i64 120
   br label %bb.ay
 
-._crit_edge.loopexit.i:                           ; preds = %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i
-  %i.ex = xor i8 %31, 1
+._crit_edge.loopexit.i:                           ; preds = %29
+  %i.ex = xor i8 %30, 1
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.ax
@@ -613,8 +613,8 @@ bb.ax:                                            ; preds = %bb.av
   store i8 %i.ey, ptr %i.ej, align 4, !tbaa !682, !noalias !671
   br label %bb.be
 
-bb.ay:                                            ; preds = %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i, %.lr.ph.i
-  %.sroa.014.018.i = phi ptr [ %i.ep, %.lr.ph.i ], [ %32, %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i ] ; 3 uses
+bb.ay:                                            ; preds = %29, %.lr.ph.i
+  %.sroa.014.018.i = phi ptr [ %i.ep, %.lr.ph.i ], [ %31, %29 ] ; 3 uses
   %.val10.i = load ptr, ptr %.sroa.014.018.i, align 8, !noalias !671 ; 2 uses
   %i.ez = getelementptr i8, ptr %.sroa.014.018.i, i64 16
   %.val11.i = load i8, ptr %i.ez, align 8, !tbaa !76, !noalias !671
@@ -622,10 +622,14 @@ bb.ay:                                            ; preds = %_ZN5arrow7compute6d
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %22, i8 0, i64 16, i1 false), !noalias !671
   store i64 -1, ptr %i.et, align 8, !tbaa !311, !noalias !671
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.eu, i8 0, i64 112, i1 false), !noalias !671
-  switch i8 %.val11.i, label %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i [
+  switch i8 %.val11.i, label %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.thread.i [
     i8 2, label %_ZNK5arrow5Datum5arrayEv.exit.i.i
     i8 1, label %.thread12.i.i
   ]
+
+_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.thread.i: ; preds = %bb.ay
+  call void @llvm.lifetime.end.p0(ptr nonnull %22) #27, !noalias !671
+  br label %29
 
 _ZNK5arrow5Datum5arrayEv.exit.i.i:                ; preds = %bb.ay
   invoke void @_ZN5arrow9ArraySpan10SetMembersERKNS_9ArrayDataE(ptr noundef nonnull align 8 dereferenceable(136) %22, ptr noundef nonnull align 8 dereferenceable(120) %.val10.i)
@@ -689,18 +693,20 @@ bb.bc:                                            ; preds = %_ZNSt6vectorIN5arro
   call void @_ZdlPvm(ptr noundef nonnull %i.fg, i64 noundef %i.fk) #31, !noalias !671, !inline_history !287
   br label %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i
 
-_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i: ; preds = %bb.bc, %_ZNSt6vectorIN5arrow9ArraySpanESaIS1_EED2Ev.exit.i.i.i.i, %.thread12.i.i, %bb.ay
-  %.01118.i.i = phi i32 [ %i.fc, %bb.bc ], [ %i.fc, %_ZNSt6vectorIN5arrow9ArraySpanESaIS1_EED2Ev.exit.i.i.i.i ], [ %i.fb, %.thread12.i.i ], [ 0, %bb.ay ]
+_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i: ; preds = %bb.bc, %_ZNSt6vectorIN5arrow9ArraySpanESaIS1_EED2Ev.exit.i.i.i.i, %.thread12.i.i
+  %.01118.i.i = phi i32 [ %i.fc, %bb.bc ], [ %i.fc, %_ZNSt6vectorIN5arrow9ArraySpanESaIS1_EED2Ev.exit.i.i.i.i ], [ %i.fb, %.thread12.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #27, !noalias !671
   %i.fl = icmp eq i32 %.01118.i.i, 1
   %i.fm = load i8, ptr %i.eo, align 8, !tbaa !694, !range !132, !noalias !671, !noundef !133
-  %29 = trunc nuw i8 %i.fm to i1
-  %30 = and i1 %i.fl, %29
-  %31 = zext i1 %30 to i8                         ; 2 uses
-  store i8 %31, ptr %i.eo, align 8, !tbaa !694, !noalias !671
-  %32 = getelementptr inbounds nuw i8, ptr %.sroa.014.018.i, i64 24 ; 2 uses
-  %33 = icmp eq ptr %32, %i.er
-  br i1 %33, label %._crit_edge.loopexit.i, label %bb.ay
+  %spec.select19.i = select i1 %i.fl, i8 %i.fm, i8 0
+  br label %29
+
+29:                                               ; preds = %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i, %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.thread.i
+  %30 = phi i8 [ 0, %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.thread.i ], [ %spec.select19.i, %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i ] ; 2 uses
+  store i8 %30, ptr %i.eo, align 8, !tbaa !694, !noalias !671
+  %31 = getelementptr inbounds nuw i8, ptr %.sroa.014.018.i, i64 24 ; 2 uses
+  %32 = icmp eq ptr %31, %i.er
+  br i1 %32, label %._crit_edge.loopexit.i, label %bb.ay
 
 bb.bd:                                            ; preds = %bb.av
   %i.fn = getelementptr inbounds nuw i8, ptr %1, i64 80
