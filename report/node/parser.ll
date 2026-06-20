@@ -201,9 +201,9 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 97 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 27 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 26
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 92 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 92 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   br label %bb.b
 
@@ -278,8 +278,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 switch.lookup:                                    ; preds = %bb.f
-  %switch.downshift = lshr i8 71, %i.bb           ; 2 uses
-  %switch.masked = trunc i8 %switch.downshift to i1 ; 2 uses
+  %switch.masked = icmp eq i8 %i.bb, 7            ; 2 uses
   %i.bd = icmp eq i8 %i.bb, 0
   %i.be = shl nuw nsw i8 %i.bb, 3
   %switch.shiftamt75 = zext nneg i8 %i.be to i64
@@ -302,7 +301,7 @@ bb.h:                                             ; preds = %switch.lookup
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %switch.lookup
-  %i.bm = phi i8 [ %i.bl, %bb.h ], [ %i.bf, %switch.lookup ] ; 2 uses
+  %i.bm = phi i8 [ %i.bl, %bb.h ], [ %i.bf, %switch.lookup ]
   %i.bn = load i8, ptr %i.m, align 8, !range !6, !noundef !7
   %i.bo = and i8 %i.bn, %i.at
   %i.bp = icmp ne i8 %i.bo, 0
@@ -312,15 +311,11 @@ bb.i:                                             ; preds = %bb.h, %switch.looku
 
 bb.j:                                             ; preds = %bb.i
   %i.bs = shl nuw nsw i8 %i.bh, 3
-  %6 = xor i8 %i.bs, 8
-  %7 = select i1 %switch.masked, i8 %6, i8 0
-  %8 = and i8 %switch.downshift, %i.bh
-  %.not79 = icmp eq i8 %8, 0
-  %.mask = and i8 %i.bm, 2
-  %i.bt = select i1 %.not79, i8 %.mask, i8 2
-  %.masked = and i8 %i.bm, -3
-  %9 = or i8 %.masked, %7
-  %i.bu = or disjoint i8 %9, %i.bt
+  %6 = shl nuw nsw i8 %i.bh, 1
+  %7 = or disjoint i8 %i.bs, %6
+  %8 = xor i8 %7, 8
+  %i.bt = select i1 %switch.masked, i8 0, i8 %8
+  %i.bu = or i8 %i.bt, %i.bm
   store i8 %i.bu, ptr %i.s, align 1
   %i.bv = load ptr, ptr %0, align 8
   %i.bw = call noundef ptr @_ZN2v88internal5Scope12AsClassScopeEv(ptr noundef nonnull align 8 dereferenceable(124) %i.bv) #19
@@ -328,8 +323,8 @@ bb.j:                                             ; preds = %bb.i
   %i.by = load i8, ptr %i.t, align 1, !range !6, !noundef !7
   %i.bz = trunc nuw i8 %i.by to i1
   call void @_ZN2v88internal6Parser25DeclarePrivateClassMemberEPNS0_10ClassScopeEPKNS0_12AstRawStringEPNS0_20ClassLiteralPropertyENS7_4KindEbPNS0_10ParserBaseIS1_E9ClassInfoE(ptr noundef nonnull align 8 dereferenceable(1852) %0, ptr noundef %i.bw, ptr noundef %i.bx, ptr noundef %i.au, i8 noundef zeroext %switch.masked77, i1 noundef zeroext %i.bz, ptr noundef nonnull %1)
-  %i.ca = load ptr, ptr %i.w, align 8
-  %i.cb = load ptr, ptr %i.x, align 8
+  %i.ca = load ptr, ptr %i.v, align 8
+  %i.cb = load ptr, ptr %i.w, align 8
   %i.cc = icmp eq ptr %i.ca, %i.cb
   br i1 %i.cc, label %_ZN2v88internal16FuncNameInferrer5InferEv.exit.jt2, label %bb.k, !llvm.loop !38
 
@@ -337,15 +332,15 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN2v88internal16FuncNameInferrer5InferEv.exit.jt2.sink.split, !llvm.loop !38
 
 bb.l:                                             ; preds = %bb.i
-  br i1 %switch.masked, label %bb.p, label %bb.m, !prof !8
+  br i1 %switch.masked, label %bb.m, label %bb.p, !prof !5
 
 bb.m:                                             ; preds = %bb.l
   br i1 %i.bk, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.cd = load i32, ptr %i.v, align 4
+  %i.cd = load i32, ptr %i.x, align 4
   %i.ce = add nsw i32 %i.cd, 1
-  store i32 %i.ce, ptr %i.v, align 4
+  store i32 %i.ce, ptr %i.x, align 4
   %i.cf = load ptr, ptr %0, align 8
   %i.cg = call noundef ptr @_ZN2v88internal5Scope12AsClassScopeEv(ptr noundef nonnull align 8 dereferenceable(124) %i.cf) #19
   %.pre = load i8, ptr %i.t, align 1, !range !6
@@ -359,8 +354,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ci = phi i1 [ %i.ch, %bb.n ], [ false, %bb.m ]
   %.0 = phi ptr [ %i.cg, %bb.n ], [ null, %bb.m ]
   call void @_ZN2v88internal6Parser23DeclarePublicClassFieldEPNS0_10ClassScopeEPNS0_20ClassLiteralPropertyEbbPNS0_10ParserBaseIS1_E9ClassInfoE(ptr noundef nonnull align 8 dereferenceable(1852) %0, ptr noundef %.0, ptr noundef %i.au, i1 noundef zeroext %.pre-phi, i1 noundef zeroext %i.ci, ptr noundef nonnull %1)
-  %i.cj = load ptr, ptr %i.w, align 8
-  %i.ck = load ptr, ptr %i.x, align 8
+  %i.cj = load ptr, ptr %i.v, align 8
+  %i.ck = load ptr, ptr %i.w, align 8
   %i.cl = icmp eq ptr %i.cj, %i.ck
   br i1 %i.cl, label %_ZN2v88internal16FuncNameInferrer5InferEv.exit.jt2, label %_ZN2v88internal16FuncNameInferrer5InferEv.exit.jt2.sink.split
 
@@ -373,8 +368,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   call void @_ZN2v88internal6Parser24DeclarePublicClassMethodEPKNS0_12AstRawStringEPNS0_20ClassLiteralPropertyEbPNS0_10ParserBaseIS1_E9ClassInfoE(ptr noundef nonnull align 8 dereferenceable(1852) %0, ptr noundef %2, ptr noundef %i.au, i1 noundef zeroext %i.bp, ptr noundef nonnull %1)
-  %i.cm = load ptr, ptr %i.w, align 8
-  %i.cn = load ptr, ptr %i.x, align 8
+  %i.cm = load ptr, ptr %i.v, align 8
+  %i.cn = load ptr, ptr %i.w, align 8
   %i.co = icmp eq ptr %i.cm, %i.cn
   br i1 %i.co, label %_ZN2v88internal16FuncNameInferrer5InferEv.exit.jt2, label %_ZN2v88internal16FuncNameInferrer5InferEv.exit.jt2.sink.split
 

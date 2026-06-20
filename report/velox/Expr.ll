@@ -201,31 +201,22 @@ _ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit: ; preds = 
 
 .lr.ph110:                                        ; preds = %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit, %bb.g
   %.sroa.080.0109 = phi ptr [ %i.ag, %bb.g ], [ %i.q, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ] ; 2 uses
-  %storemerge107108 = phi i8 [ %storemerge, %bb.g ], [ %.0.i, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ] ; 2 uses
+  %storemerge107108 = phi i8 [ %storemerge, %bb.g ], [ %.0.i, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ]
   %i.ac = load ptr, ptr %.sroa.080.0109, align 8, !tbaa !113 ; 2 uses
   %i.ad = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(482) %i.ac, ptr nonnull @_ZTIN8facebook5velox4exec4ExprE, ptr nonnull @_ZTIN8facebook5velox4exec10LambdaExprE, i64 0) #30 ; 2 uses
   %.not = icmp eq ptr %i.ad, null
-  br i1 %.not, label %9, label %bb.f
+  br i1 %.not, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph110
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 504
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !113
-  %3 = getelementptr inbounds nuw i8, ptr %i.af, i64 281
-  %4 = load i8, ptr %3, align 1, !tbaa !182, !range !53, !noundef !57
-  %5 = trunc nuw i8 %4 to i1
-  %6 = icmp ne i8 %storemerge107108, 0
-  %7 = and i1 %6, %5
-  %8 = zext i1 %7 to i8
   br label %bb.g
 
-9:                                                ; preds = %.lr.ph110
-  %10 = getelementptr inbounds nuw i8, ptr %i.ac, i64 281
-  %11 = load i8, ptr %10, align 1, !tbaa !182, !range !53, !noundef !57
-  %12 = and i8 %storemerge107108, %11
-  br label %bb.g
-
-bb.g:                                             ; preds = %9, %bb.f
-  %storemerge = phi i8 [ %12, %9 ], [ %8, %bb.f ] ; 2 uses
+bb.g:                                             ; preds = %.lr.ph110, %bb.f
+  %.pn124 = phi ptr [ %i.af, %bb.f ], [ %i.ac, %.lr.ph110 ]
+  %.pn123.in = getelementptr inbounds nuw i8, ptr %.pn124, i64 281
+  %.pn123 = load i8, ptr %.pn123.in, align 1, !tbaa !182, !range !53, !noundef !57
+  %storemerge = and i8 %storemerge107108, %.pn123 ; 2 uses
   store i8 %storemerge, ptr %i.p, align 1, !tbaa !182
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.080.0109, i64 16 ; 2 uses
   %i.ah = icmp eq ptr %i.ag, %i.r
@@ -628,10 +619,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.v = load atomic i8, ptr %i.c seq_cst, align 8, !range !53, !noundef !57
-  %5 = trunc nuw i8 %i.v to i1
-  %6 = and i1 %1, %5
-  %7 = zext i1 %6 to i8
-  store atomic i8 %7, ptr %i.c seq_cst, align 8
+  %5 = select i1 %1, i8 %i.v, i8 0
+  store atomic i8 %5, ptr %i.c seq_cst, align 8
   %.pre = load ptr, ptr %4, align 8, !tbaa !86
   br label %bb.i
 
@@ -1034,10 +1023,8 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.v
   %i.br = load atomic i8, ptr %i.f seq_cst, align 8, !range !53, !noundef !57
-  %7 = trunc nuw i8 %i.br to i1
-  %8 = and i1 %2, %7
-  %9 = zext i1 %8 to i8
-  store atomic i8 %9, ptr %i.f seq_cst, align 8
+  %7 = select i1 %2, i8 %i.br, i8 0
+  store atomic i8 %7, ptr %i.f seq_cst, align 8
   %i.bs = load ptr, ptr %6, align 8, !tbaa !86    ; 3 uses
   %.not.i.i23 = icmp eq ptr %i.bs, null
   %.neg.i.i24 = select i1 %.not.i.i23, i64 0, i64 -40

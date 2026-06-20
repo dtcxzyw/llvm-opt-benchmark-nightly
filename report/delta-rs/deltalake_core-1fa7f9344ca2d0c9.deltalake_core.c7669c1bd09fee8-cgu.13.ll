@@ -201,7 +201,7 @@ _RINvNtCs2HSpDNxY7OE_9hashbrown3map9make_hasheNtNtB4_6hasher18DefaultHashBuilder
   %i.ap = load i64, ptr @_RNvNtNtCsjTPIcpFZL1T_8foldhash4seed6global19GLOBAL_SEED_STORAGE, align 8, !noalias !993, !noundef !4
   %i.aq = zext i64 %i.ao to i128
   %i.ar = zext i64 %i.ap to i128
-  %i.as = mul nuw i128 %i.aq, %i.ar               ; 2 uses
+  %i.as = mul nuw i128 %i.ar, %i.aq               ; 2 uses
   %i.at = lshr i128 %i.as, 64
   %i.au = xor i128 %i.at, %i.as
   %i.av = trunc i128 %i.au to i64                 ; 2 uses
@@ -604,51 +604,51 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %i.ih, label %.preheader30.1.i.i.i.i, label %bb.ck
 
 .preheader30.1.i.i.i.i:                           ; preds = %.noexc58.i, %.lr.ph.i.i.i.i
-  %.sroa.014.2.i.i.i.i = phi i8 [ 0, %.lr.ph.i.i.i.i ], [ %i.iz, %.noexc58.i ] ; 2 uses
+  %.sroa.014.2.i.i.i.i = phi i8 [ 0, %.lr.ph.i.i.i.i ], [ %i.iz, %.noexc58.i ] ; 3 uses
   %i.ii = icmp eq i16 %i.hu, 0
   br i1 %i.ii, label %.preheader30.2.i.i.i.i, label %bb.cg
 
 bb.cg:                                            ; preds = %.preheader30.1.i.i.i.i
   %i.ij = or disjoint i64 %.sroa.06.036.i.i.i.i, 16
-  %i.ik = trunc nuw i8 %.sroa.014.2.i.i.i.i to i1 ; 2 uses
+  %i.ik = trunc nuw i8 %.sroa.014.2.i.i.i.i to i1
   %i.il = invoke fastcc noundef zeroext i1 @_RNCNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containss0_0Cs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.d, i64 noundef %i.ij, i16 noundef %i.hu, i1 noundef zeroext %i.ik) #49
           to label %.noexc55.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !17133
 
 .noexc55.i:                                       ; preds = %bb.cg
-  %3 = or i1 %i.il, %i.ik
-  %4 = zext i1 %3 to i8
+  %3 = zext i1 %i.il to i8
+  %4 = or i8 %.sroa.014.2.i.i.i.i, %3
   br label %.preheader30.2.i.i.i.i
 
 .preheader30.2.i.i.i.i:                           ; preds = %.noexc55.i, %.preheader30.1.i.i.i.i
-  %.sroa.014.2.1.i.i.i.i = phi i8 [ %.sroa.014.2.i.i.i.i, %.preheader30.1.i.i.i.i ], [ %4, %.noexc55.i ] ; 2 uses
+  %.sroa.014.2.1.i.i.i.i = phi i8 [ %.sroa.014.2.i.i.i.i, %.preheader30.1.i.i.i.i ], [ %4, %.noexc55.i ] ; 3 uses
   %i.im = icmp eq i16 %i.ia, 0
   br i1 %i.im, label %.preheader30.3.i.i.i.i, label %bb.ch
 
 bb.ch:                                            ; preds = %.preheader30.2.i.i.i.i
   %i.in = or disjoint i64 %.sroa.06.036.i.i.i.i, 32
-  %i.io = trunc nuw i8 %.sroa.014.2.1.i.i.i.i to i1 ; 2 uses
+  %i.io = trunc nuw i8 %.sroa.014.2.1.i.i.i.i to i1
   %i.ip = invoke fastcc noundef zeroext i1 @_RNCNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containss0_0Cs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.d, i64 noundef %i.in, i16 noundef %i.ia, i1 noundef zeroext %i.io) #49
           to label %.noexc56.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !17133
 
 .noexc56.i:                                       ; preds = %bb.ch
-  %5 = or i1 %i.ip, %i.io
-  %6 = zext i1 %5 to i8
+  %5 = zext i1 %i.ip to i8
+  %6 = or i8 %.sroa.014.2.1.i.i.i.i, %5
   br label %.preheader30.3.i.i.i.i
 
 .preheader30.3.i.i.i.i:                           ; preds = %.noexc56.i, %.preheader30.2.i.i.i.i
-  %.sroa.014.2.2.i.i.i.i = phi i8 [ %.sroa.014.2.1.i.i.i.i, %.preheader30.2.i.i.i.i ], [ %6, %.noexc56.i ] ; 2 uses
+  %.sroa.014.2.2.i.i.i.i = phi i8 [ %.sroa.014.2.1.i.i.i.i, %.preheader30.2.i.i.i.i ], [ %6, %.noexc56.i ] ; 3 uses
   %i.iq = icmp eq i16 %i.ig, 0
   br i1 %i.iq, label %bb.cj, label %bb.ci
 
 bb.ci:                                            ; preds = %.preheader30.3.i.i.i.i
   %i.ir = or disjoint i64 %.sroa.06.036.i.i.i.i, 48
-  %i.is = trunc nuw i8 %.sroa.014.2.2.i.i.i.i to i1 ; 2 uses
+  %i.is = trunc nuw i8 %.sroa.014.2.2.i.i.i.i to i1
   %i.it = invoke fastcc noundef zeroext i1 @_RNCNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containss0_0Cs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.d, i64 noundef %i.ir, i16 noundef %i.ig, i1 noundef zeroext %i.is) #49
           to label %.noexc57.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !17133
 
 .noexc57.i:                                       ; preds = %bb.ci
-  %7 = or i1 %i.it, %i.is
-  %8 = zext i1 %7 to i8
+  %7 = zext i1 %i.it to i8
+  %8 = or i8 %.sroa.014.2.2.i.i.i.i, %7
   br label %bb.cj
 
 bb.cj:                                            ; preds = %.noexc57.i, %.preheader30.3.i.i.i.i
@@ -669,8 +669,8 @@ bb.ck:                                            ; preds = %.lr.ph.i.i.i.i
   br label %.preheader30.1.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.cl, %.preheader.i.i.i.i
-  %.sroa.014.3.lcssa.i.i.i.i = phi i8 [ %.sroa.014.0.lcssa.i.i.i.i, %.preheader.i.i.i.i ], [ %.sroa.014.4.i.i.i.i, %bb.cl ]
-  %.lcssa.i.i.i.i = phi i1 [ %i.hi, %.preheader.i.i.i.i ], [ %i.js, %bb.cl ] ; 2 uses
+  %.sroa.014.3.lcssa.i.i.i.i = phi i8 [ %.sroa.014.0.lcssa.i.i.i.i, %.preheader.i.i.i.i ], [ %.sroa.014.4.i.i.i.i, %bb.cl ] ; 2 uses
+  %.lcssa.i.i.i.i = phi i1 [ %i.hi, %.preheader.i.i.i.i ], [ %i.js, %bb.cl ]
   %i.ja = add i64 %.val37.i, -38                  ; 2 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.ja ; 2 uses
   %.sroa.0.0.copyload.i58.i.i.i.i = load <16 x i8>, ptr %i.jb, align 1, !alias.scope !17236, !noalias !17240
@@ -724,8 +724,8 @@ bb.co:                                            ; preds = %._crit_edge.i.i.i.i
           to label %.noexc60.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !17133
 
 .noexc60.i:                                       ; preds = %bb.co
-  %9 = or i1 %.lcssa.i.i.i.i, %i.jw
-  %10 = zext i1 %9 to i8
+  %9 = zext i1 %i.jw to i8
+  %10 = or i8 %.sroa.014.3.lcssa.i.i.i.i, %9
   br label %bb.cn
 
 .loopexit.i:                                      ; preds = %bb.cm
@@ -1128,15 +1128,14 @@ bb.of:                                            ; preds = %.noexc.i490
   %i.aez = load i128, ptr %i.b, align 16, !alias.scope !18411, !noalias !18396, !noundef !4 ; 2 uses
   %i.afa = trunc i128 %i.aez to i64
   %i.afb = lshr i128 %i.aez, 64
-  %3 = trunc nuw i128 %i.afb to i64
   %i.afc = load i64, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !18411, !noalias !18396, !noundef !4
   %i.afd = xor i64 %i.afc, %i.afa
   %i.afe = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i, align 16, !alias.scope !18411, !noalias !18396, !nonnull !4, !align !18, !noundef !4
   %i.aff = load i64, ptr %i.afe, align 8, !noalias !18414, !noundef !4
-  %4 = xor i64 %i.aff, %3
-  %i.afg = zext i64 %i.afd to i128
-  %5 = zext i64 %4 to i128
-  %i.afh = mul nuw i128 %5, %i.afg                ; 2 uses
+  %3 = zext i64 %i.afd to i128
+  %i.afg = zext i64 %i.aff to i128
+  %4 = xor i128 %i.afb, %i.afg
+  %i.afh = mul nuw i128 %4, %3                    ; 2 uses
   %i.afi = lshr i128 %i.afh, 64
   %i.afj = xor i128 %i.afi, %i.afh
   %i.afk = trunc i128 %i.afj to i64

@@ -201,12 +201,10 @@ bb.bu:                                            ; preds = %bb.bt
 bb.bv:                                            ; preds = %bb.bu
   %i.ju = sub nuw nsw i32 75, %i.jp
   %i.jv = shl nsw i32 -1, %i.ju
-  %.sroa.067.4.extract.shift150 = lshr i64 %i.jn, 32
-  %.sroa.067.4.extract.trunc151 = trunc nuw i64 %.sroa.067.4.extract.shift150 to i32
-  %2 = and i32 %i.jv, %.sroa.067.4.extract.trunc151
-  %.sroa.067.4.insert.ext153 = zext i32 %2 to i64
-  %.sroa.067.4.insert.shift154 = shl nuw i64 %.sroa.067.4.insert.ext153, 32
-  %i.jw = bitcast i64 %.sroa.067.4.insert.shift154 to double
+  %2 = zext i32 %i.jv to i64
+  %.sroa.067.4.insert.ext153653 = shl nuw i64 %2, 32
+  %.sroa.067.4.extract.shift150654 = and i64 %.sroa.067.4.insert.ext153653, %i.jn
+  %i.jw = bitcast i64 %.sroa.067.4.extract.shift150654 to double
   br label %bb.bx
 
 bb.bw:                                            ; preds = %bb.bt

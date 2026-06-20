@@ -201,7 +201,7 @@ bb.ax:                                            ; preds = %bb.av
   br label %bb.ay
 
 ._crit_edge.loopexit.i:                           ; preds = %_ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i
-  %i.es = xor i8 %34, 1
+  %i.es = xor i8 %32, 1
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.ax
@@ -281,10 +281,8 @@ bb.bd:                                            ; preds = %_ZNSt6vectorIN5arro
 _ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS_5DatumE.exit.i: ; preds = %bb.bd, %_ZNSt6vectorIN5arrow9ArraySpanESaIS1_EED2Ev.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #26, !noalias !648
   %i.fh = load i8, ptr %i.ek, align 8, !tbaa !671, !range !240, !noalias !648, !noundef !241
-  %32 = trunc nuw i8 %i.fh to i1
-  %33 = and i1 %.0.i.i, %32
-  %34 = zext i1 %33 to i8                         ; 2 uses
-  store i8 %34, ptr %i.ek, align 8, !tbaa !671, !noalias !648
+  %32 = select i1 %.0.i.i, i8 %i.fh, i8 0         ; 2 uses
+  store i8 %32, ptr %i.ek, align 8, !tbaa !671, !noalias !648
   %i.fi = getelementptr inbounds nuw i8, ptr %.sroa.015.021.i, i64 24 ; 2 uses
   %.not19.i = icmp eq ptr %i.fi, %i.en
   br i1 %.not19.i, label %._crit_edge.loopexit.i, label %bb.ay

@@ -201,32 +201,31 @@ bb.h:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us: ; preds = %bb.h, %bb.f
   %.sroa.09.0.i.i.i.us = phi i64 [ %i.at, %bb.h ], [ %i.ai, %bb.f ]
   %i.au = lshr i64 %.sroa.09.0.i.i.i.us, 32
-  %4 = trunc nuw i64 %i.au to i32
   %i.av = load atomic volatile i64, ptr %i.v monotonic, align 8
   %i.aw = lshr i64 %i.av, 32
   %i.ax = trunc nuw i64 %i.aw to i32
   %i.ay = add i32 %i.ax, -1                       ; 2 uses
-  %.sroa.0.0.in20.i.us = and i32 %i.ay, %4        ; 2 uses
-  %.sroa.0.021.i.us = zext i32 %.sroa.0.0.in20.i.us to i64 ; 2 uses
+  %4 = zext i32 %i.ay to i64
+  %5 = and i64 %i.au, %4                          ; 2 uses
   br i1 %.not22.i.us, label %.lr.ph.i.us, label %_ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us
 
 .lr.ph.i.us:                                      ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us, %bb.i
-  %.sroa.0.025.i.us = phi i64 [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.0.021.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ]
-  %.sroa.0.0.in24.i.us = phi i32 [ %.sroa.0.0.in.i.us, %bb.i ], [ %.sroa.0.0.in20.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ]
-  %.023.i.us = phi i32 [ %i.ba, %bb.i ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
-  %i.az = icmp eq i64 %.sroa.067.088.us, %.sroa.0.025.i.us
+  %.sroa.0.0.in24.i.us = phi i32 [ %7, %bb.i ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
+  %.sroa.0.021.i.us = phi i64 [ %.sroa.0.0.i.us, %bb.i ], [ %5, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
+  %i.az = icmp eq i64 %.sroa.0.021.i.us, %.sroa.067.088.us
   br i1 %i.az, label %_ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.i.us
-  %5 = add i32 %.023.i.us, %.sroa.0.0.in24.i.us
-  %i.ba = add nuw nsw i32 %.023.i.us, 1           ; 2 uses
-  %.sroa.0.0.in.i.us = and i32 %5, %i.ay          ; 2 uses
+  %6 = trunc nuw i64 %.sroa.0.021.i.us to i32
+  %i.ba = add i32 %.sroa.0.0.in24.i.us, %6
+  %.sroa.0.0.in.i.us = and i32 %i.ba, %i.ay
   %.sroa.0.0.i.us = zext i32 %.sroa.0.0.in.i.us to i64 ; 2 uses
-  %exitcond.not.i.us = icmp eq i32 %i.ba, %.03591.us
+  %7 = add nuw nsw i32 %.sroa.0.0.in24.i.us, 1    ; 2 uses
+  %exitcond.not.i.us = icmp eq i32 %7, %.03591.us
   br i1 %exitcond.not.i.us, label %_ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us, label %.lr.ph.i.us, !llvm.loop !20
 
 _ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us: ; preds = %.lr.ph.i.us, %bb.i, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us
-  %spec.select.i.us = phi i64 [ %.sroa.0.021.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ], [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.067.088.us, %.lr.ph.i.us ] ; 5 uses
+  %spec.select.i.us = phi i64 [ %5, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ], [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.067.088.us, %.lr.ph.i.us ] ; 5 uses
   %i.bb = icmp eq i64 %.sroa.067.088.us, %spec.select.i.us
   br i1 %i.bb, label %bb.o, label %bb.j
 
@@ -276,32 +275,31 @@ bb.m:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us: ; preds = %bb.m, %bb.k
   %.sroa.09.0.i.i.i40.us = phi i64 [ %i.bw, %bb.m ], [ %i.bl, %bb.k ]
   %i.bx = lshr i64 %.sroa.09.0.i.i.i40.us, 32
-  %6 = trunc nuw i64 %i.bx to i32
   %i.by = load atomic volatile i64, ptr %i.v monotonic, align 8
   %i.bz = lshr i64 %i.by, 32
   %i.ca = trunc nuw i64 %i.bz to i32
   %i.cb = add i32 %i.ca, -1                       ; 2 uses
-  %.sroa.0.0.in20.i41.us = and i32 %i.cb, %6      ; 2 uses
-  %.sroa.0.021.i42.us = zext i32 %.sroa.0.0.in20.i41.us to i64 ; 2 uses
+  %8 = zext i32 %i.cb to i64
+  %9 = and i64 %i.bx, %8                          ; 2 uses
   br i1 %.not22.i.us, label %.lr.ph.i45.us, label %_ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit52.us
 
 .lr.ph.i45.us:                                    ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us, %bb.n
-  %.sroa.0.025.i46.us = phi i64 [ %.sroa.0.0.i50.us, %bb.n ], [ %.sroa.0.021.i42.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us ]
-  %.sroa.0.0.in24.i47.us = phi i32 [ %.sroa.0.0.in.i49.us, %bb.n ], [ %.sroa.0.0.in20.i41.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us ]
-  %.023.i48.us = phi i32 [ %i.cd, %bb.n ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us ] ; 2 uses
-  %i.cc = icmp eq i64 %spec.select.i.us, %.sroa.0.025.i46.us
+  %.sroa.0.0.in24.i47.us = phi i32 [ %11, %bb.n ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us ] ; 2 uses
+  %.sroa.0.021.i45.us = phi i64 [ %.sroa.0.0.i50.us, %bb.n ], [ %9, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us ] ; 2 uses
+  %i.cc = icmp eq i64 %.sroa.0.021.i45.us, %spec.select.i.us
   br i1 %i.cc, label %_ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit52.thread.us, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.i45.us
-  %7 = add i32 %.023.i48.us, %.sroa.0.0.in24.i47.us
-  %i.cd = add nuw nsw i32 %.023.i48.us, 1         ; 2 uses
-  %.sroa.0.0.in.i49.us = and i32 %7, %i.cb        ; 2 uses
+  %10 = trunc nuw i64 %.sroa.0.021.i45.us to i32
+  %i.cd = add i32 %.sroa.0.0.in24.i47.us, %10
+  %.sroa.0.0.in.i49.us = and i32 %i.cd, %i.cb
   %.sroa.0.0.i50.us = zext i32 %.sroa.0.0.in.i49.us to i64 ; 2 uses
-  %exitcond.not.i51.us = icmp eq i32 %i.cd, %.03591.us
+  %11 = add nuw nsw i32 %.sroa.0.0.in24.i47.us, 1 ; 2 uses
+  %exitcond.not.i51.us = icmp eq i32 %11, %.03591.us
   br i1 %exitcond.not.i51.us, label %_ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit52.us, label %.lr.ph.i45.us, !llvm.loop !20
 
 _ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit52.us: ; preds = %bb.n, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us
-  %spec.select.i44.us = phi i64 [ %.sroa.0.021.i42.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us ], [ %.sroa.0.0.i50.us, %bb.n ]
+  %spec.select.i44.us = phi i64 [ %9, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i39.us ], [ %.sroa.0.0.i50.us, %bb.n ]
   %.not84.us = icmp eq i64 %spec.select.i44.us, %spec.select.i.us
   br i1 %.not84.us, label %_ZN2v88internal9HashTableINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit52.thread.us, label %.critedge.us
 
@@ -704,32 +702,31 @@ bb.h:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us: ; preds = %bb.h, %bb.f
   %.sroa.09.0.i.i.i.us = phi i64 [ %i.as, %bb.h ], [ %i.ah, %bb.f ]
   %i.at = lshr i64 %.sroa.09.0.i.i.i.us, 32
-  %4 = trunc nuw i64 %i.at to i32
   %i.au = load atomic volatile i64, ptr %i.v monotonic, align 8
   %i.av = lshr i64 %i.au, 32
   %i.aw = trunc nuw i64 %i.av to i32
   %i.ax = add i32 %i.aw, -1                       ; 2 uses
-  %.sroa.0.0.in20.i.us = and i32 %i.ax, %4        ; 2 uses
-  %.sroa.0.021.i.us = zext i32 %.sroa.0.0.in20.i.us to i64 ; 2 uses
+  %4 = zext i32 %i.ax to i64
+  %5 = and i64 %i.at, %4                          ; 2 uses
   br i1 %.not22.i.us, label %.lr.ph.i.us, label %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us
 
 .lr.ph.i.us:                                      ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us, %bb.i
-  %.sroa.0.025.i.us = phi i64 [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.0.021.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ]
-  %.sroa.0.0.in24.i.us = phi i32 [ %.sroa.0.0.in.i.us, %bb.i ], [ %.sroa.0.0.in20.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ]
-  %.023.i.us = phi i32 [ %i.az, %bb.i ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
-  %i.ay = icmp eq i64 %.sroa.070.091.us, %.sroa.0.025.i.us
+  %.sroa.0.0.in24.i.us = phi i32 [ %7, %bb.i ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
+  %.sroa.0.021.i.us = phi i64 [ %.sroa.0.0.i.us, %bb.i ], [ %5, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
+  %i.ay = icmp eq i64 %.sroa.0.021.i.us, %.sroa.070.091.us
   br i1 %i.ay, label %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.i.us
-  %5 = add i32 %.023.i.us, %.sroa.0.0.in24.i.us
-  %i.az = add nuw nsw i32 %.023.i.us, 1           ; 2 uses
-  %.sroa.0.0.in.i.us = and i32 %5, %i.ax          ; 2 uses
+  %6 = trunc nuw i64 %.sroa.0.021.i.us to i32
+  %i.az = add i32 %.sroa.0.0.in24.i.us, %6
+  %.sroa.0.0.in.i.us = and i32 %i.az, %i.ax
   %.sroa.0.0.i.us = zext i32 %.sroa.0.0.in.i.us to i64 ; 2 uses
-  %exitcond.not.i.us = icmp eq i32 %i.az, %.03594.us
+  %7 = add nuw nsw i32 %.sroa.0.0.in24.i.us, 1    ; 2 uses
+  %exitcond.not.i.us = icmp eq i32 %7, %.03594.us
   br i1 %exitcond.not.i.us, label %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us, label %.lr.ph.i.us, !llvm.loop !122
 
 _ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us: ; preds = %.lr.ph.i.us, %bb.i, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us
-  %spec.select.i.us = phi i64 [ %.sroa.0.021.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ], [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.070.091.us, %.lr.ph.i.us ] ; 4 uses
+  %spec.select.i.us = phi i64 [ %5, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ], [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.070.091.us, %.lr.ph.i.us ] ; 4 uses
   %i.ba = icmp eq i64 %.sroa.070.091.us, %spec.select.i.us
   br i1 %i.ba, label %bb.y, label %bb.j
 
@@ -778,32 +775,31 @@ bb.m:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us: ; preds = %bb.m, %bb.k
   %.sroa.09.0.i.i.i41.us = phi i64 [ %i.bt, %bb.m ], [ %i.bi, %bb.k ]
   %i.bu = lshr i64 %.sroa.09.0.i.i.i41.us, 32
-  %6 = trunc nuw i64 %i.bu to i32
   %i.bv = load atomic volatile i64, ptr %i.v monotonic, align 8
   %i.bw = lshr i64 %i.bv, 32
   %i.bx = trunc nuw i64 %i.bw to i32
   %i.by = add i32 %i.bx, -1                       ; 2 uses
-  %.sroa.0.0.in20.i42.us = and i32 %i.by, %6      ; 2 uses
-  %.sroa.0.021.i43.us = zext i32 %.sroa.0.0.in20.i42.us to i64 ; 2 uses
+  %8 = zext i32 %i.by to i64
+  %9 = and i64 %i.bu, %8                          ; 2 uses
   br i1 %.not22.i.us, label %.lr.ph.i46.us, label %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.us
 
 .lr.ph.i46.us:                                    ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us, %bb.n
-  %.sroa.0.025.i47.us = phi i64 [ %.sroa.0.0.i51.us, %bb.n ], [ %.sroa.0.021.i43.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ]
-  %.sroa.0.0.in24.i48.us = phi i32 [ %.sroa.0.0.in.i50.us, %bb.n ], [ %.sroa.0.0.in20.i42.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ]
-  %.023.i49.us = phi i32 [ %i.ca, %bb.n ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ] ; 2 uses
-  %i.bz = icmp eq i64 %spec.select.i.us, %.sroa.0.025.i47.us
+  %.sroa.0.0.in24.i48.us = phi i32 [ %11, %bb.n ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ] ; 2 uses
+  %.sroa.0.021.i46.us = phi i64 [ %.sroa.0.0.i51.us, %bb.n ], [ %9, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ] ; 2 uses
+  %i.bz = icmp eq i64 %.sroa.0.021.i46.us, %spec.select.i.us
   br i1 %i.bz, label %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.thread.us, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.i46.us
-  %7 = add i32 %.023.i49.us, %.sroa.0.0.in24.i48.us
-  %i.ca = add nuw nsw i32 %.023.i49.us, 1         ; 2 uses
-  %.sroa.0.0.in.i50.us = and i32 %7, %i.by        ; 2 uses
+  %10 = trunc nuw i64 %.sroa.0.021.i46.us to i32
+  %i.ca = add i32 %.sroa.0.0.in24.i48.us, %10
+  %.sroa.0.0.in.i50.us = and i32 %i.ca, %i.by
   %.sroa.0.0.i51.us = zext i32 %.sroa.0.0.in.i50.us to i64 ; 2 uses
-  %exitcond.not.i52.us = icmp eq i32 %i.ca, %.03594.us
+  %11 = add nuw nsw i32 %.sroa.0.0.in24.i48.us, 1 ; 2 uses
+  %exitcond.not.i52.us = icmp eq i32 %11, %.03594.us
   br i1 %exitcond.not.i52.us, label %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.us, label %.lr.ph.i46.us, !llvm.loop !122
 
 _ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.us: ; preds = %bb.n, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us
-  %spec.select.i45.us = phi i64 [ %.sroa.0.021.i43.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ], [ %.sroa.0.0.i51.us, %bb.n ]
+  %spec.select.i45.us = phi i64 [ %9, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ], [ %.sroa.0.0.i51.us, %bb.n ]
   %.not87.us = icmp eq i64 %spec.select.i45.us, %spec.select.i.us
   br i1 %.not87.us, label %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.thread.us, label %.critedge.us
 
@@ -1037,34 +1033,33 @@ bb.c:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.a, %bb.c
   %.sroa.09.0.i.i = phi i64 [ %i.l, %bb.c ], [ %i.a, %bb.a ]
   %i.m = lshr i64 %.sroa.09.0.i.i, 32
-  %6 = trunc nuw i64 %i.m to i32
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = load atomic volatile i64, ptr %i.n monotonic, align 8
   %i.p = lshr i64 %i.o, 32
   %i.q = trunc nuw i64 %i.p to i32
   %i.r = add i32 %i.q, -1                         ; 2 uses
-  %.sroa.0.0.in20 = and i32 %i.r, %6              ; 2 uses
-  %.sroa.0.021 = zext i32 %.sroa.0.0.in20 to i64  ; 2 uses
+  %6 = zext i32 %i.r to i64
+  %7 = and i64 %i.m, %6                           ; 2 uses
   %.not22 = icmp sgt i32 %3, 1
   br i1 %.not22, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit, %bb.d
-  %.sroa.0.025 = phi i64 [ %.sroa.0.0, %bb.d ], [ %.sroa.0.021, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ]
-  %.sroa.0.0.in24 = phi i32 [ %.sroa.0.0.in, %bb.d ], [ %.sroa.0.0.in20, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ]
-  %.023 = phi i32 [ %i.t, %bb.d ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
-  %i.s = icmp eq i64 %4, %.sroa.0.025
+  %.sroa.0.0.in24 = phi i32 [ %9, %bb.d ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
+  %.sroa.0.021 = phi i64 [ %.sroa.0.0, %bb.d ], [ %7, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
+  %i.s = icmp eq i64 %.sroa.0.021, %4
   br i1 %i.s, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
-  %7 = add i32 %.023, %.sroa.0.0.in24
-  %i.t = add nuw nsw i32 %.023, 1                 ; 2 uses
-  %.sroa.0.0.in = and i32 %7, %i.r                ; 2 uses
+  %8 = trunc nuw i64 %.sroa.0.021 to i32
+  %i.t = add i32 %.sroa.0.0.in24, %8
+  %.sroa.0.0.in = and i32 %i.t, %i.r
   %.sroa.0.0 = zext i32 %.sroa.0.0.in to i64      ; 2 uses
-  %exitcond.not = icmp eq i32 %i.t, %3
+  %9 = add nuw nsw i32 %.sroa.0.0.in24, 1         ; 2 uses
+  %exitcond.not = icmp eq i32 %9, %3
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !122
 
 ._crit_edge:                                      ; preds = %bb.d, %.lr.ph, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit
-  %spec.select = phi i64 [ %.sroa.0.021, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ], [ %4, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
+  %spec.select = phi i64 [ %7, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ], [ %4, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
   ret i64 %spec.select
 }
 
@@ -1467,34 +1462,33 @@ bb.c:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.a, %bb.c
   %.sroa.09.0.i.i = phi i64 [ %i.l, %bb.c ], [ %i.a, %bb.a ]
   %i.m = lshr i64 %.sroa.09.0.i.i, 32
-  %6 = trunc nuw i64 %i.m to i32
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = load atomic volatile i64, ptr %i.n monotonic, align 8
   %i.p = lshr i64 %i.o, 32
   %i.q = trunc nuw i64 %i.p to i32
   %i.r = add i32 %i.q, -1                         ; 2 uses
-  %.sroa.0.0.in20 = and i32 %i.r, %6              ; 2 uses
-  %.sroa.0.021 = zext i32 %.sroa.0.0.in20 to i64  ; 2 uses
+  %6 = zext i32 %i.r to i64
+  %7 = and i64 %i.m, %6                           ; 2 uses
   %.not22 = icmp sgt i32 %3, 1
   br i1 %.not22, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit, %bb.d
-  %.sroa.0.025 = phi i64 [ %.sroa.0.0, %bb.d ], [ %.sroa.0.021, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ]
-  %.sroa.0.0.in24 = phi i32 [ %.sroa.0.0.in, %bb.d ], [ %.sroa.0.0.in20, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ]
-  %.023 = phi i32 [ %i.t, %bb.d ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
-  %i.s = icmp eq i64 %4, %.sroa.0.025
+  %.sroa.0.0.in24 = phi i32 [ %9, %bb.d ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
+  %.sroa.0.021 = phi i64 [ %.sroa.0.0, %bb.d ], [ %7, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
+  %i.s = icmp eq i64 %.sroa.0.021, %4
   br i1 %i.s, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
-  %7 = add i32 %.023, %.sroa.0.0.in24
-  %i.t = add nuw nsw i32 %.023, 1                 ; 2 uses
-  %.sroa.0.0.in = and i32 %7, %i.r                ; 2 uses
+  %8 = trunc nuw i64 %.sroa.0.021 to i32
+  %i.t = add i32 %.sroa.0.0.in24, %8
+  %.sroa.0.0.in = and i32 %i.t, %i.r
   %.sroa.0.0 = zext i32 %.sroa.0.0.in to i64      ; 2 uses
-  %exitcond.not = icmp eq i32 %i.t, %3
+  %9 = add nuw nsw i32 %.sroa.0.0.in24, 1         ; 2 uses
+  %exitcond.not = icmp eq i32 %9, %3
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %bb.d, %.lr.ph, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit
-  %spec.select = phi i64 [ %.sroa.0.021, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ], [ %4, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
+  %spec.select = phi i64 [ %7, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ], [ %4, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
   ret i64 %spec.select
 }
 
@@ -1897,32 +1891,31 @@ bb.h:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us: ; preds = %bb.h, %bb.f
   %.sroa.09.0.i.i.i.us = phi i64 [ %i.as, %bb.h ], [ %i.ah, %bb.f ]
   %i.at = lshr i64 %.sroa.09.0.i.i.i.us, 32
-  %4 = trunc nuw i64 %i.at to i32
   %i.au = load atomic volatile i64, ptr %i.v monotonic, align 8
   %i.av = lshr i64 %i.au, 32
   %i.aw = trunc nuw i64 %i.av to i32
   %i.ax = add i32 %i.aw, -1                       ; 2 uses
-  %.sroa.0.0.in20.i.us = and i32 %i.ax, %4        ; 2 uses
-  %.sroa.0.021.i.us = zext i32 %.sroa.0.0.in20.i.us to i64 ; 2 uses
+  %4 = zext i32 %i.ax to i64
+  %5 = and i64 %i.at, %4                          ; 2 uses
   br i1 %.not22.i.us, label %.lr.ph.i.us, label %_ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us
 
 .lr.ph.i.us:                                      ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us, %bb.i
-  %.sroa.0.025.i.us = phi i64 [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.0.021.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ]
-  %.sroa.0.0.in24.i.us = phi i32 [ %.sroa.0.0.in.i.us, %bb.i ], [ %.sroa.0.0.in20.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ]
-  %.023.i.us = phi i32 [ %i.az, %bb.i ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
-  %i.ay = icmp eq i64 %.sroa.069.090.us, %.sroa.0.025.i.us
+  %.sroa.0.0.in24.i.us = phi i32 [ %7, %bb.i ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
+  %.sroa.0.021.i.us = phi i64 [ %.sroa.0.0.i.us, %bb.i ], [ %5, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ] ; 2 uses
+  %i.ay = icmp eq i64 %.sroa.0.021.i.us, %.sroa.069.090.us
   br i1 %i.ay, label %_ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.i.us
-  %5 = add i32 %.023.i.us, %.sroa.0.0.in24.i.us
-  %i.az = add nuw nsw i32 %.023.i.us, 1           ; 2 uses
-  %.sroa.0.0.in.i.us = and i32 %5, %i.ax          ; 2 uses
+  %6 = trunc nuw i64 %.sroa.0.021.i.us to i32
+  %i.az = add i32 %.sroa.0.0.in24.i.us, %6
+  %.sroa.0.0.in.i.us = and i32 %i.az, %i.ax
   %.sroa.0.0.i.us = zext i32 %.sroa.0.0.in.i.us to i64 ; 2 uses
-  %exitcond.not.i.us = icmp eq i32 %i.az, %.03593.us
+  %7 = add nuw nsw i32 %.sroa.0.0.in24.i.us, 1    ; 2 uses
+  %exitcond.not.i.us = icmp eq i32 %7, %.03593.us
   br i1 %exitcond.not.i.us, label %_ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us, label %.lr.ph.i.us, !llvm.loop !178
 
 _ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit.us: ; preds = %.lr.ph.i.us, %bb.i, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us
-  %spec.select.i.us = phi i64 [ %.sroa.0.021.i.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ], [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.069.090.us, %.lr.ph.i.us ] ; 5 uses
+  %spec.select.i.us = phi i64 [ %5, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i.us ], [ %.sroa.0.0.i.us, %bb.i ], [ %.sroa.069.090.us, %.lr.ph.i.us ] ; 5 uses
   %i.ba = icmp eq i64 %.sroa.069.090.us, %spec.select.i.us
   br i1 %i.ba, label %bb.o, label %bb.j
 
@@ -1971,32 +1964,31 @@ bb.m:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us: ; preds = %bb.m, %bb.k
   %.sroa.09.0.i.i.i41.us = phi i64 [ %i.bt, %bb.m ], [ %i.bi, %bb.k ]
   %i.bu = lshr i64 %.sroa.09.0.i.i.i41.us, 32
-  %6 = trunc nuw i64 %i.bu to i32
   %i.bv = load atomic volatile i64, ptr %i.v monotonic, align 8
   %i.bw = lshr i64 %i.bv, 32
   %i.bx = trunc nuw i64 %i.bw to i32
   %i.by = add i32 %i.bx, -1                       ; 2 uses
-  %.sroa.0.0.in20.i42.us = and i32 %i.by, %6      ; 2 uses
-  %.sroa.0.021.i43.us = zext i32 %.sroa.0.0.in20.i42.us to i64 ; 2 uses
+  %8 = zext i32 %i.by to i64
+  %9 = and i64 %i.bu, %8                          ; 2 uses
   br i1 %.not22.i.us, label %.lr.ph.i46.us, label %_ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.us
 
 .lr.ph.i46.us:                                    ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us, %bb.n
-  %.sroa.0.025.i47.us = phi i64 [ %.sroa.0.0.i51.us, %bb.n ], [ %.sroa.0.021.i43.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ]
-  %.sroa.0.0.in24.i48.us = phi i32 [ %.sroa.0.0.in.i50.us, %bb.n ], [ %.sroa.0.0.in20.i42.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ]
-  %.023.i49.us = phi i32 [ %i.ca, %bb.n ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ] ; 2 uses
-  %i.bz = icmp eq i64 %spec.select.i.us, %.sroa.0.025.i47.us
+  %.sroa.0.0.in24.i48.us = phi i32 [ %11, %bb.n ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ] ; 2 uses
+  %.sroa.0.021.i46.us = phi i64 [ %.sroa.0.0.i51.us, %bb.n ], [ %9, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ] ; 2 uses
+  %i.bz = icmp eq i64 %.sroa.0.021.i46.us, %spec.select.i.us
   br i1 %i.bz, label %_ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.thread.us, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.i46.us
-  %7 = add i32 %.023.i49.us, %.sroa.0.0.in24.i48.us
-  %i.ca = add nuw nsw i32 %.023.i49.us, 1         ; 2 uses
-  %.sroa.0.0.in.i50.us = and i32 %7, %i.by        ; 2 uses
+  %10 = trunc nuw i64 %.sroa.0.021.i46.us to i32
+  %i.ca = add i32 %.sroa.0.0.in24.i48.us, %10
+  %.sroa.0.0.in.i50.us = and i32 %i.ca, %i.by
   %.sroa.0.0.i51.us = zext i32 %.sroa.0.0.in.i50.us to i64 ; 2 uses
-  %exitcond.not.i52.us = icmp eq i32 %i.ca, %.03593.us
+  %11 = add nuw nsw i32 %.sroa.0.0.in24.i48.us, 1 ; 2 uses
+  %exitcond.not.i52.us = icmp eq i32 %11, %.03593.us
   br i1 %exitcond.not.i52.us, label %_ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.us, label %.lr.ph.i46.us, !llvm.loop !178
 
 _ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.us: ; preds = %bb.n, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us
-  %spec.select.i45.us = phi i64 [ %.sroa.0.021.i43.us, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ], [ %.sroa.0.0.i51.us, %bb.n ]
+  %spec.select.i45.us = phi i64 [ %9, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit.i40.us ], [ %.sroa.0.0.i51.us, %bb.n ]
   %.not86.us = icmp eq i64 %spec.select.i45.us, %spec.select.i.us
   br i1 %.not86.us, label %_ZN2v88internal9HashTableINS0_18ObjectTwoHashTableENS0_25ObjectMultiHashTableShapeILi2EEEE13EntryForProbeENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEEiNS0_13InternalIndexE.exit53.thread.us, label %.critedge.us
 
@@ -2163,34 +2155,33 @@ bb.c:                                             ; preds = %_ZN2v88internal12Is
 _ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.a, %bb.c
   %.sroa.09.0.i.i = phi i64 [ %i.l, %bb.c ], [ %i.a, %bb.a ]
   %i.m = lshr i64 %.sroa.09.0.i.i, 32
-  %6 = trunc nuw i64 %i.m to i32
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = load atomic volatile i64, ptr %i.n monotonic, align 8
   %i.p = lshr i64 %i.o, 32
   %i.q = trunc nuw i64 %i.p to i32
   %i.r = add i32 %i.q, -1                         ; 2 uses
-  %.sroa.0.0.in20 = and i32 %i.r, %6              ; 2 uses
-  %.sroa.0.021 = zext i32 %.sroa.0.0.in20 to i64  ; 2 uses
+  %6 = zext i32 %i.r to i64
+  %7 = and i64 %i.m, %6                           ; 2 uses
   %.not22 = icmp sgt i32 %3, 1
   br i1 %.not22, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit, %bb.d
-  %.sroa.0.025 = phi i64 [ %.sroa.0.0, %bb.d ], [ %.sroa.0.021, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ]
-  %.sroa.0.0.in24 = phi i32 [ %.sroa.0.0.in, %bb.d ], [ %.sroa.0.0.in20, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ]
-  %.023 = phi i32 [ %i.t, %bb.d ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
-  %i.s = icmp eq i64 %4, %.sroa.0.025
+  %.sroa.0.0.in24 = phi i32 [ %9, %bb.d ], [ 1, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
+  %.sroa.0.021 = phi i64 [ %.sroa.0.0, %bb.d ], [ %7, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ] ; 2 uses
+  %i.s = icmp eq i64 %.sroa.0.021, %4
   br i1 %i.s, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
-  %7 = add i32 %.023, %.sroa.0.0.in24
-  %i.t = add nuw nsw i32 %.023, 1                 ; 2 uses
-  %.sroa.0.0.in = and i32 %7, %i.r                ; 2 uses
+  %8 = trunc nuw i64 %.sroa.0.021 to i32
+  %i.t = add i32 %.sroa.0.0.in24, %8
+  %.sroa.0.0.in = and i32 %i.t, %i.r
   %.sroa.0.0 = zext i32 %.sroa.0.0.in to i64      ; 2 uses
-  %exitcond.not = icmp eq i32 %i.t, %3
+  %9 = add nuw nsw i32 %.sroa.0.0.in24, 1         ; 2 uses
+  %exitcond.not = icmp eq i32 %9, %3
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !178
 
 ._crit_edge:                                      ; preds = %bb.d, %.lr.ph, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit
-  %spec.select = phi i64 [ %.sroa.0.021, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ], [ %4, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
+  %spec.select = phi i64 [ %7, %_ZN2v88internal24ObjectHashTableShapeBase13HashForObjectENS0_13ReadOnlyRootsENS0_6TaggedINS0_6ObjectEEE.exit ], [ %4, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
   ret i64 %spec.select
 }
 

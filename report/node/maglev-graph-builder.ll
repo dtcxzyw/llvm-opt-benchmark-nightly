@@ -201,14 +201,12 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.dt = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 59), align 1, !range !10, !noundef !11
-  %10 = trunc nuw i8 %i.dt to i1
   %i.du = icmp eq i32 %i.dr, 1
-  %11 = and i1 %i.du, %10
-  %12 = zext i1 %11 to i8
+  %10 = select i1 %i.du, i8 %i.dt, i8 0
   br label %_ZNK2v88internal6maglev18MaglevGraphBuilder12IsInsideLoopEv.exit
 
 _ZNK2v88internal6maglev18MaglevGraphBuilder12IsInsideLoopEv.exit: ; preds = %bb.h, %bb.i, %bb.j, %bb.k, %bb.l
-  %.2.i = phi i8 [ 1, %bb.h ], [ 1, %bb.j ], [ %12, %bb.l ], [ 1, %bb.k ], [ 0, %bb.i ]
+  %.2.i = phi i8 [ 1, %bb.h ], [ 1, %bb.j ], [ %10, %bb.l ], [ 1, %bb.k ], [ 0, %bb.i ]
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cp, i64 24
   %i.dw = load i64, ptr %i.dv, align 8
   %i.dx = getelementptr inbounds nuw i8, ptr %i.cp, i64 16 ; 3 uses

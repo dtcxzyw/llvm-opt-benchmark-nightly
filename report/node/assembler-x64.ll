@@ -201,30 +201,22 @@ bb.bg:                                            ; preds = %bb.be, %bb.bf
   %i.fa = and i32 %i.ex, 32
   %.not22 = icmp ne i32 %i.fa, 0
   %or.cond45.not = select i1 %i.ez, i1 %.not22, i1 false
-  br i1 %or.cond45.not, label %2, label %bb.bh
+  br i1 %or.cond45.not, label %_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.fb = and i32 %i.ex, -131073                  ; 2 uses
   store i32 %i.fb, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
-  br label %2
-
-2:                                                ; preds = %bb.bg, %bb.bh
-  %3 = phi i32 [ %i.fb, %bb.bh ], [ %i.ex, %bb.bg ] ; 4 uses
-  %4 = and i32 %3, 2
-  %.not.i = icmp eq i32 %4, 0
-  br i1 %.not.i, label %5, label %_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit
-
-5:                                                ; preds = %2
-  %6 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 924), align 4, !range !87, !noundef !88
-  %7 = trunc nuw i8 %6 to i1
-  %8 = and i32 %3, 4
-  %9 = icmp ne i32 %8, 0
-  %or.cond.i = and i1 %9, %7
-  %10 = zext i1 %or.cond.i to i8
   br label %_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit
 
-_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit: ; preds = %2, %5
-  %.0.i = phi i8 [ %10, %5 ], [ 1, %2 ]
+_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit: ; preds = %bb.bg, %bb.bh
+  %2 = phi i32 [ %i.fb, %bb.bh ], [ %i.ex, %bb.bg ] ; 4 uses
+  %3 = and i32 %2, 2
+  %.not.i = icmp eq i32 %3, 0
+  %4 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 924), align 4, !range !87
+  %5 = trunc i32 %2 to i8
+  %6 = lshr i8 %5, 2
+  %7 = and i8 %4, %6
+  %.0.i = select i1 %.not.i, i8 %7, i8 1
   store i8 %.0.i, ptr @_ZN2v88internal11CpuFeatures23supports_wasm_simd_128_E, align 1
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.fd = load i8, ptr %i.fc, align 4, !range !87, !noundef !88
@@ -232,12 +224,12 @@ _ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit: ; preds = %2, %5
   br i1 %i.fe, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit
-  %i.ff = or i32 %3, 65536                        ; 2 uses
+  %i.ff = or i32 %2, 65536                        ; 2 uses
   store i32 %i.ff, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit
-  %i.fg = phi i32 [ %i.ff, %bb.bi ], [ %3, %_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit ]
+  %i.fg = phi i32 [ %i.ff, %bb.bi ], [ %2, %_ZN2v88internal11CpuFeatures19SupportsWasmSimd128Ev.exit ]
   %i.fh = and i32 %i.fg, 65536
   %.not23 = icmp eq i32 %i.fh, 0
   br i1 %.not23, label %bb.bl, label %bb.bk

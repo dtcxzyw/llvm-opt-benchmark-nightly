@@ -201,13 +201,11 @@ bb.gp:                                            ; preds = %bb.go
   store ptr %g_StdErr.g_StdOut, ptr %i.yx, align 8, !tbaa !100
   %i.yy = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 2 uses
   %i.yz = load i8, ptr %i.yy, align 8, !tbaa !95, !range !36, !noundef !37
-  %19 = trunc nuw i8 %i.yz to i1
   %i.za = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 3 uses
   %i.zb = load i32, ptr %i.za, align 8            ; 3 uses
-  %20 = icmp ne i32 %i.zb, 0
-  %narrow = and i1 %20, %19
-  %21 = zext i1 %narrow to i8                     ; 2 uses
-  store i8 %21, ptr %i.yv, align 8, !tbaa !101
+  %.not632 = icmp eq i32 %i.zb, 0
+  %19 = select i1 %.not632, i8 0, i8 %i.yz        ; 2 uses
+  store i8 %19, ptr %i.yv, align 8, !tbaa !101
   %i.zc = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 2 uses
   %i.zd = getelementptr inbounds nuw i8, ptr %11, i64 32 ; 3 uses
   store i32 0, ptr %i.zd, align 8, !tbaa !55
@@ -304,7 +302,7 @@ bb.gu:                                            ; preds = %bb.gt
   %i.aar = getelementptr inbounds nuw i8, ptr %3, i64 560
   %i.aas = load i8, ptr %i.aar, align 8, !tbaa !139, !range !36, !noundef !37
   store i8 %i.aas, ptr %i.aac, align 8, !tbaa !140
-  store i8 %21, ptr %i.aab, align 2, !tbaa !141
+  store i8 %19, ptr %i.aab, align 2, !tbaa !141
   %i.aat = load i8, ptr %i.yy, align 8, !tbaa !95, !range !36, !noundef !37
   %i.aau = trunc nuw i8 %i.aat to i1
   %i.aav = icmp eq i32 %i.zs, 0
