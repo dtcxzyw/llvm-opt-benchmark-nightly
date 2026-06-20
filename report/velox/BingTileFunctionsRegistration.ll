@@ -201,6 +201,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %7 = sext i32 %i.d to i64
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !2965, !nonnull !94, !align !215 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
@@ -209,8 +210,6 @@ bb.c:                                             ; preds = %bb.b
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit22.i, %.preheader.i
   %.032.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.as, %_ZN8facebook5velox6StatusD2Ev.exit22.i ] ; 3 uses
   %i.af = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i, i1 true)
-  %7 = trunc nuw nsw i64 %i.af to i32
-  %8 = or disjoint i32 %i.d, %7
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   %i.ag = load ptr, ptr %i.ad, align 8, !tbaa !2966, !nonnull !94, !align !215
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !155, !noalias !2986
@@ -222,8 +221,8 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !2977, !nonnull !94, !align !215
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !709
-  %9 = sext i32 %8 to i64
-  %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 %9
+  %8 = getelementptr i8, ptr %i.ao, i64 %i.af
+  %i.ap = getelementptr i8, ptr %8, i64 %7
   store i8 %i.ak, ptr %i.ap, align 1, !tbaa !26
   %i.aq = load ptr, ptr %6, align 8, !tbaa !806
   %.not.i21.i = icmp eq ptr %i.aq, null
@@ -270,6 +269,7 @@ bb.f:                                             ; preds = %bb.e
 .preheader.i37:                                   ; preds = %bb.f
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bm = shl nsw i32 %i.at, 6
+  %9 = sext i32 %i.bm to i64
   %i.bn = load ptr, ptr %i.bl, align 8, !tbaa !2965, !nonnull !94, !align !215 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 24
@@ -278,8 +278,6 @@ bb.f:                                             ; preds = %bb.e
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i38: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit22.i41, %.preheader.i37
   %.032.i39 = phi i64 [ %i.bk, %.preheader.i37 ], [ %i.cd, %_ZN8facebook5velox6StatusD2Ev.exit22.i41 ] ; 3 uses
   %i.bq = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i39, i1 true)
-  %10 = trunc nuw nsw i64 %i.bq to i32
-  %11 = or disjoint i32 %i.bm, %10
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   %i.br = load ptr, ptr %i.bo, align 8, !tbaa !2966, !nonnull !94, !align !215
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !155, !noalias !2993
@@ -291,8 +289,8 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !2977, !nonnull !94, !align !215
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !709
-  %12 = sext i32 %11 to i64
-  %i.ca = getelementptr inbounds i8, ptr %i.bz, i64 %12
+  %10 = getelementptr i8, ptr %i.bz, i64 %i.bq
+  %i.ca = getelementptr i8, ptr %10, i64 %9
   store i8 %i.bv, ptr %i.ca, align 1, !tbaa !26
   %i.cb = load ptr, ptr %5, align 8, !tbaa !806
   %.not.i21.i40 = icmp eq ptr %i.cb, null
@@ -346,6 +344,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.lr.ph.i: ; preds = %bb.h
   %i.cv = shl nsw i32 %i.cq, 6
+  %11 = sext i32 %i.cv to i64
   br label %_ZN8facebook5velox6StatusD2Ev.exit54.i
 
 bb.i:                                             ; preds = %bb.h
@@ -380,8 +379,6 @@ _ZN8facebook5velox6StatusD2Ev.exit35.i:           ; preds = %_ZZNK8facebook5velo
 _ZN8facebook5velox6StatusD2Ev.exit54.i:           ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.lr.ph.i, %_ZN8facebook5velox6StatusD2Ev.exit54.i
   %.01575.i = phi i64 [ %i.cu, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.lr.ph.i ], [ %i.dy, %_ZN8facebook5velox6StatusD2Ev.exit54.i ] ; 3 uses
   %i.dm = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01575.i, i1 true)
-  %13 = trunc nuw nsw i64 %i.dm to i32
-  %14 = or disjoint i32 %i.cv, %13
   %i.dn = load ptr, ptr %i.cn, align 8, !tbaa !2966, !nonnull !94, !align !215
   %i.do = load i64, ptr %i.dn, align 8, !tbaa !155, !noalias !3003
   %i.dp = lshr i64 %i.do, 26
@@ -391,8 +388,8 @@ _ZN8facebook5velox6StatusD2Ev.exit54.i:           ; preds = %_ZZNK8facebook5velo
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !2977, !nonnull !94, !align !215
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !709
-  %15 = sext i32 %14 to i64
-  %i.dw = getelementptr inbounds i8, ptr %i.dv, i64 %15
+  %12 = getelementptr i8, ptr %i.dv, i64 %i.dm
+  %i.dw = getelementptr i8, ptr %12, i64 %11
   store i8 %i.dr, ptr %i.dw, align 1, !tbaa !26
   %i.dx = add i64 %.01575.i, -1
   %i.dy = and i64 %i.dx, %.01575.i                ; 2 uses
@@ -426,6 +423,7 @@ bb.j:                                             ; preds = %._crit_edge
 
 .preheader.i48:                                   ; preds = %bb.j
   %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %13 = sext i32 %i.d to i64
   %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !2965, !nonnull !94, !align !215 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 8
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 24
@@ -434,8 +432,6 @@ bb.j:                                             ; preds = %._crit_edge
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_20ConstantVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i49: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit22.i52, %.preheader.i48
   %.032.i50 = phi i64 [ %i.eo, %.preheader.i48 ], [ %i.fg, %_ZN8facebook5velox6StatusD2Ev.exit22.i52 ] ; 3 uses
   %i.et = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i50, i1 true)
-  %16 = trunc nuw nsw i64 %i.et to i32
-  %17 = or disjoint i32 %i.d, %16
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   %i.eu = load ptr, ptr %i.er, align 8, !tbaa !2966, !nonnull !94, !align !215
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !155, !noalias !3008
@@ -447,8 +443,8 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 16
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !2977, !nonnull !94, !align !215
   %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !709
-  %18 = sext i32 %17 to i64
-  %i.fd = getelementptr inbounds i8, ptr %i.fc, i64 %18
+  %14 = getelementptr i8, ptr %i.fc, i64 %i.et
+  %i.fd = getelementptr i8, ptr %14, i64 %13
   store i8 %i.ey, ptr %i.fd, align 1, !tbaa !26
   %i.fe = load ptr, ptr %4, align 8, !tbaa !806
   %.not.i21.i51 = icmp eq ptr %i.fe, null
@@ -673,6 +669,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %7 = sext i32 %i.d to i64
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !3014, !nonnull !94, !align !215 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
@@ -681,13 +678,11 @@ bb.c:                                             ; preds = %bb.b
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i, %.preheader.i
   %.029.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.au, %_ZN8facebook5velox6StatusD2Ev.exit19.i ] ; 3 uses
   %i.af = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i, i1 true)
-  %7 = trunc nuw nsw i64 %i.af to i32
-  %8 = or disjoint i32 %i.d, %7
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   %i.ag = load ptr, ptr %i.ad, align 8, !tbaa !3015, !nonnull !94, !align !215
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !2930, !noalias !3034
-  %9 = sext i32 %8 to i64                         ; 2 uses
-  %i.ai = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %9
+  %8 = or disjoint i64 %i.af, %7                  ; 2 uses
+  %i.ai = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %8
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !155, !noalias !3034
   %i.ak = lshr i64 %i.aj, 26
   %i.al = trunc i64 %i.ak to i8
@@ -697,7 +692,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !3025, !nonnull !94, !align !215
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !709
-  %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %9
+  %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %8
   store i8 %i.am, ptr %i.ar, align 1, !tbaa !26
   %i.as = load ptr, ptr %6, align 8, !tbaa !806
   %.not.i18.i = icmp eq ptr %i.as, null
@@ -744,6 +739,7 @@ bb.f:                                             ; preds = %bb.e
 .preheader.i37:                                   ; preds = %bb.f
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bo = shl nsw i32 %i.av, 6
+  %9 = sext i32 %i.bo to i64
   %i.bp = load ptr, ptr %i.bn, align 8, !tbaa !3014, !nonnull !94, !align !215 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
@@ -752,13 +748,11 @@ bb.f:                                             ; preds = %bb.e
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i38: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i41, %.preheader.i37
   %.029.i39 = phi i64 [ %i.bm, %.preheader.i37 ], [ %i.ch, %_ZN8facebook5velox6StatusD2Ev.exit19.i41 ] ; 3 uses
   %i.bs = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i39, i1 true)
-  %10 = trunc nuw nsw i64 %i.bs to i32
-  %11 = or disjoint i32 %i.bo, %10
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !3015, !nonnull !94, !align !215
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !2930, !noalias !3041
-  %12 = sext i32 %11 to i64                       ; 2 uses
-  %i.bv = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %12
+  %10 = or disjoint i64 %i.bs, %9                 ; 2 uses
+  %i.bv = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %10
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !155, !noalias !3041
   %i.bx = lshr i64 %i.bw, 26
   %i.by = trunc i64 %i.bx to i8
@@ -768,7 +762,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !3025, !nonnull !94, !align !215
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !709
-  %i.ce = getelementptr inbounds i8, ptr %i.cd, i64 %12
+  %i.ce = getelementptr inbounds i8, ptr %i.cd, i64 %10
   store i8 %i.bz, ptr %i.ce, align 1, !tbaa !26
   %i.cf = load ptr, ptr %5, align 8, !tbaa !806
   %.not.i18.i40 = icmp eq ptr %i.cf, null
@@ -825,6 +819,7 @@ bb.h:                                             ; preds = %._crit_edge
 
 .preheader.i46:                                   ; preds = %bb.h
   %i.db = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %11 = sext i32 %i.d to i64
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !3014, !nonnull !94, !align !215 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
   %i.de = getelementptr inbounds nuw i8, ptr %i.dc, i64 24
@@ -833,13 +828,11 @@ bb.h:                                             ; preds = %._crit_edge
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.i47: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i50, %.preheader.i46
   %.029.i48 = phi i64 [ %i.da, %.preheader.i46 ], [ %i.du, %_ZN8facebook5velox6StatusD2Ev.exit19.i50 ] ; 3 uses
   %i.df = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i48, i1 true)
-  %13 = trunc nuw nsw i64 %i.df to i32
-  %14 = or disjoint i32 %i.d, %13
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   %i.dg = load ptr, ptr %i.dd, align 8, !tbaa !3015, !nonnull !94, !align !215
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !2930, !noalias !3048
-  %15 = sext i32 %14 to i64                       ; 2 uses
-  %i.di = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %15
+  %12 = or disjoint i64 %i.df, %11                ; 2 uses
+  %i.di = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %12
   %i.dj = load i64, ptr %i.di, align 8, !tbaa !155, !noalias !3048
   %i.dk = lshr i64 %i.dj, 26
   %i.dl = trunc i64 %i.dk to i8
@@ -849,7 +842,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 16
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !3025, !nonnull !94, !align !215
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !709
-  %i.dr = getelementptr inbounds i8, ptr %i.dq, i64 %15
+  %i.dr = getelementptr inbounds i8, ptr %i.dq, i64 %12
   store i8 %i.dm, ptr %i.dr, align 1, !tbaa !26
   %i.ds = load ptr, ptr %4, align 8, !tbaa !806
   %.not.i18.i49 = icmp eq ptr %i.ds, null
@@ -893,6 +886,7 @@ bb.a:
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.lr.ph: ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.l = shl nsw i32 %1, 6
+  %4 = sext i32 %i.l to i64
   br label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -946,15 +940,13 @@ _ZN8facebook5velox6StatusD2Ev.exit32:             ; preds = %_ZZNK8facebook5velo
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit: ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.lr.ph, %_ZN8facebook5velox6StatusD2Ev.exit51
   %.01572 = phi i64 [ %i.j, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions25BingTileZoomLevelFunctionINS1_10VectorExecEEES7_aNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9BingTileTELb0EEEEEEJSC_EEEE7iterateIJNS1_16FlatVectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.lr.ph ], [ %i.bc, %_ZN8facebook5velox6StatusD2Ev.exit51 ] ; 3 uses
   %i.ak = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01572, i1 true)
-  %4 = trunc nuw nsw i64 %i.ak to i32
-  %5 = or disjoint i32 %i.l, %4
   %i.al = load ptr, ptr %i.k, align 8, !tbaa !3014, !nonnull !94, !align !215 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !3015, !nonnull !94, !align !215
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !2930, !noalias !3061
-  %6 = sext i32 %5 to i64                         ; 2 uses
-  %i.ap = getelementptr inbounds [8 x i8], ptr %i.ao, i64 %6
+  %5 = or disjoint i64 %i.ak, %4                  ; 2 uses
+  %i.ap = getelementptr inbounds [8 x i8], ptr %i.ao, i64 %5
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !155, !noalias !3061
   %i.ar = lshr i64 %i.aq, 26
   %i.as = trunc i64 %i.ar to i8
@@ -965,7 +957,7 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !3025, !nonnull !94, !align !215
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !709
-  %i.az = getelementptr inbounds i8, ptr %i.ay, i64 %6
+  %i.az = getelementptr inbounds i8, ptr %i.ay, i64 %5
   store i8 %i.at, ptr %i.az, align 1, !tbaa !26
   %i.ba = load ptr, ptr %3, align 8, !tbaa !806
   %.not.i50 = icmp eq ptr %i.ba, null

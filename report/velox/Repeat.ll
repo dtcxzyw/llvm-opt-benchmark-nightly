@@ -201,7 +201,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ho = shl nsw i32 %i.hd, 6                    ; 2 uses
   %.idx.i.i39.i.i.i.i.i.i.i = shl nuw nsw i64 %i.aa, 2 ; 2 uses
   %.not5.i.i.i.i.i40.i.i.i.i.i.i.i = icmp eq i32 %i.z, 0
-  br i1 %.not5.i.i.i.i.i40.i.i.i.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i, label %.lr.ph.i.i.i.i.i41.i.i.i.i.i.i.preheader.i.preheader
+  br i1 %.not5.i.i.i.i.i40.i.i.i.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.preheader.i, label %.lr.ph.i.i.i.i.i41.i.i.i.i.i.i.preheader.i.preheader
 
 .lr.ph.i.i.i.i.i41.i.i.i.i.i.i.preheader.i.preheader: ; preds = %.preheader.i37.i.i.i.i.i.i.i
   %i.hp = add nsw i64 %.idx.i.i39.i.i.i.i.i.i.i, -4 ; 3 uses
@@ -219,15 +219,17 @@ bb.ah:                                            ; preds = %bb.ag
   %cmp.n514 = icmp eq i64 %i.hr, %n.vec506
   br label %iter.check500
 
-_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i: ; preds = %.preheader.i37.i.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i
-  %.017.i38.i.i.i.i.i.i.us.i = phi i64 [ %i.hy, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i ], [ %i.hn, %.preheader.i37.i.i.i.i.i.i.i ] ; 3 uses
+_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.preheader.i: ; preds = %.preheader.i37.i.i.i.i.i.i.i
+  %52 = sext i32 %i.ho to i64
+  br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i
+
+_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.preheader.i
+  %.017.i38.i.i.i.i.i.i.us.i = phi i64 [ %i.hy, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.i ], [ %i.hn, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i47.i.i.i.i.i.i.us.preheader.i ] ; 3 uses
   %i.hu = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.i38.i.i.i.i.i.i.us.i, i1 true)
-  %52 = trunc nuw nsw i64 %i.hu to i32
-  %53 = or disjoint i32 %i.ho, %52
-  %54 = sext i32 %53 to i64                       ; 2 uses
-  %i.hv = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %54
+  %53 = or disjoint i64 %i.hu, %52                ; 2 uses
+  %i.hv = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %53
   store i32 0, ptr %i.hv, align 4, !tbaa !3, !noalias !220
-  %i.hw = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %54
+  %i.hw = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %53
   store i32 0, ptr %i.hw, align 4, !tbaa !3, !noalias !220
   %i.hx = add i64 %.017.i38.i.i.i.i.i.i.us.i, -1
   %i.hy = and i64 %i.hx, %.017.i38.i.i.i.i.i.i.us.i ; 2 uses
@@ -377,21 +379,23 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowI
 
 .lr.ph.i.i.i.i10.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i.i
   %i.jj = shl nsw i32 %i.jf, 6                    ; 2 uses
-  br i1 %.not5.i.i.i.i.i51.i.i.i.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i, label %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a
+  br i1 %.not5.i.i.i.i.i51.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a, label %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i
 
-.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a: ; preds = %.lr.ph.i.i.i.i10.i.i.i.i
-  %i.jk = sext i32 %.5.i to i64
+.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i: ; preds = %.lr.ph.i.i.i.i10.i.i.i.i
+  %54 = sext i32 %.5.i to i64
   br label %iter.check531
 
-_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i: ; preds = %.lr.ph.i.i.i.i10.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i
-  %.01547.i.i.i.i.i.i.i.us.i = phi i64 [ %i.jp, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i ], [ %i.ji, %.lr.ph.i.i.i.i10.i.i.i.i ] ; 3 uses
+.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a: ; preds = %.lr.ph.i.i.i.i10.i.i.i.i
+  %i.jk = sext i32 %i.jj to i64
+  br label %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i
+
+_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a
+  %.01547.i.i.i.i.i.i.i.us.i = phi i64 [ %i.jp, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.us.i ], [ %i.ji, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a ] ; 3 uses
   %i.jl = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01547.i.i.i.i.i.i.i.us.i, i1 true)
-  %55 = trunc nuw nsw i64 %i.jl to i32
-  %56 = or disjoint i32 %i.jj, %55
-  %57 = sext i32 %56 to i64                       ; 2 uses
-  %i.jm = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %57
+  %55 = or disjoint i64 %i.jl, %i.jk              ; 2 uses
+  %i.jm = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %55
   store i32 0, ptr %i.jm, align 4, !tbaa !3, !noalias !220
-  %i.jn = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %57
+  %i.jn = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %55
   store i32 %.5.i, ptr %i.jn, align 4, !tbaa !3, !noalias !220
   %i.jo = add i64 %.01547.i.i.i.i.i.i.i.us.i, -1
   %i.jp = and i64 %i.jo, %.01547.i.i.i.i.i.i.i.us.i ; 2 uses
@@ -566,9 +570,9 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCount
   %i.lh = icmp ult i64 %i.lg, %i.js
   br i1 %i.lh, label %iter.check591, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS0_9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISF_EERKSD_IKNS0_4TypeEERS4_EUlT_E_ZNS4_22applyToSelectedNoThrowISQ_EEvSB_SP_EUlSP_E_EEvSB_SP_T0_EUlSP_E_EEvPKmiibSP_ENKUliE_clEi.exit.i.i.i.i.i.i.loopexit65.i, !llvm.loop !335
 
-iter.check531:                                    ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.loopexit.i, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a
-  %indvars.iv73.i = phi i64 [ %i.jk, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a ], [ %indvars.iv.next74.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.loopexit.i ] ; 3 uses
-  %.01547.i.i.i.i.i.i.i.i = phi i64 [ %i.ji, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i.a ], [ %i.mc, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.loopexit.i ] ; 3 uses
+iter.check531:                                    ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.loopexit.i, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i
+  %indvars.iv73.i = phi i64 [ %54, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i ], [ %indvars.iv.next74.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.loopexit.i ] ; 3 uses
+  %.01547.i.i.i.i.i.i.i.i = phi i64 [ %i.ji, %.lr.ph.i.i.i.i27.i.i.i.i.i.i.i.preheader.preheader.i ], [ %i.mc, %_ZZNK8facebook5velox9functions12_GLOBAL__N_114RepeatFunction18applyConstantCountERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISA_EERKS8_IKNS0_4TypeEERNS0_4exec7EvalCtxEENKUlT_E_clIiEEDaSM_.exit.i58.i.i.i.i.i.i.loopexit.i ] ; 3 uses
   %i.li = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01547.i.i.i.i.i.i.i.i, i1 true)
   %i.lj = trunc nuw nsw i64 %i.li to i32
   %i.lk = or disjoint i32 %i.jj, %i.lj            ; 4 uses
@@ -679,7 +683,7 @@ bb.aj:                                            ; preds = %._crit_edge.i.i.i.i
 .preheader.i62.i.i.i.i.i.i.preheader.i:           ; preds = %bb.aj
   %.idx.i.i64.i.i.i.i.i.i.i = shl nuw nsw i64 %i.aa, 2 ; 2 uses
   %.not5.i.i.i.i.i65.i.i.i.i.i.i.i = icmp eq i32 %i.z, 0
-  br i1 %.not5.i.i.i.i.i65.i.i.i.i.i.i.i, label %.preheader.i62.i.i.i.i.i.i.us.i, label %.preheader.i62.i.i.i.i.i.i.preheader61.i
+  br i1 %.not5.i.i.i.i.i65.i.i.i.i.i.i.i, label %.preheader.i62.i.i.i.i.i.i.us.preheader.i, label %.preheader.i62.i.i.i.i.i.i.preheader61.i
 
 .preheader.i62.i.i.i.i.i.i.preheader61.i:         ; preds = %.preheader.i62.i.i.i.i.i.i.preheader.i
   %i.mo = sext i32 %.4.i to i64
@@ -698,15 +702,17 @@ bb.aj:                                            ; preds = %._crit_edge.i.i.i.i
   %cmp.n636 = icmp eq i64 %i.mr, %n.vec628
   br label %iter.check622
 
-.preheader.i62.i.i.i.i.i.i.us.i:                  ; preds = %.preheader.i62.i.i.i.i.i.i.preheader.i, %.preheader.i62.i.i.i.i.i.i.us.i
-  %.017.i63.i.i.i.i.i.i.us.i = phi i64 [ %i.my, %.preheader.i62.i.i.i.i.i.i.us.i ], [ %i.mn, %.preheader.i62.i.i.i.i.i.i.preheader.i ] ; 3 uses
+.preheader.i62.i.i.i.i.i.i.us.preheader.i:        ; preds = %.preheader.i62.i.i.i.i.i.i.preheader.i
+  %56 = sext i32 %i.fm to i64
+  br label %.preheader.i62.i.i.i.i.i.i.us.i
+
+.preheader.i62.i.i.i.i.i.i.us.i:                  ; preds = %.preheader.i62.i.i.i.i.i.i.us.i, %.preheader.i62.i.i.i.i.i.i.us.preheader.i
+  %.017.i63.i.i.i.i.i.i.us.i = phi i64 [ %i.my, %.preheader.i62.i.i.i.i.i.i.us.i ], [ %i.mn, %.preheader.i62.i.i.i.i.i.i.us.preheader.i ] ; 3 uses
   %i.mu = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.017.i63.i.i.i.i.i.i.us.i, i1 true)
-  %58 = trunc nuw nsw i64 %i.mu to i32
-  %59 = or disjoint i32 %i.fm, %58
-  %60 = sext i32 %59 to i64                       ; 2 uses
-  %i.mv = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %60
+  %57 = or disjoint i64 %i.mu, %56                ; 2 uses
+  %i.mv = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %57
   store i32 0, ptr %i.mv, align 4, !tbaa !3, !noalias !220
-  %i.mw = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %60
+  %i.mw = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %57
   store i32 %.4.i, ptr %i.mw, align 4, !tbaa !3, !noalias !220
   %i.mx = add nsw i64 %.017.i63.i.i.i.i.i.i.us.i, -1
   %i.my = and i64 %i.mx, %.017.i63.i.i.i.i.i.i.us.i ; 2 uses

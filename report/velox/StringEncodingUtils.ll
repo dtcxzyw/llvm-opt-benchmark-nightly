@@ -201,16 +201,15 @@ bb.c:                                             ; preds = %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !152, !nonnull !121, !align !151
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !92
+  %4 = sext i32 %i.d to i64
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.ah, i64 %4
   %i.ai = load ptr, ptr %i.ae, align 8, !tbaa !132
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.preheader.i
   %.014.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.au, %bb.e ] ; 3 uses
   %i.aj = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.014.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.aj to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64
-  %i.ak = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %6
+  %i.ak = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.aj
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !3
   %i.am = sext i32 %i.al to i64                   ; 2 uses
   %i.an = lshr i64 %i.am, 6
@@ -266,16 +265,15 @@ bb.g:                                             ; preds = %bb.f
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !152, !nonnull !121, !align !151
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !92
+  %5 = sext i32 %i.bo to i64
+  %invariant.gep.i44 = getelementptr [4 x i8], ptr %i.bu, i64 %5
   %i.bv = load ptr, ptr %i.br, align 8, !tbaa !132
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %.preheader.i41
   %.014.i44 = phi i64 [ %i.bm, %.preheader.i41 ], [ %i.ch, %bb.i ] ; 3 uses
   %i.bw = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.014.i44, i1 true)
-  %7 = trunc nuw nsw i64 %i.bw to i32
-  %8 = or disjoint i32 %i.bo, %7
-  %9 = sext i32 %8 to i64
-  %i.bx = getelementptr inbounds [4 x i8], ptr %i.bu, i64 %9
+  %i.bx = getelementptr [4 x i8], ptr %invariant.gep.i44, i64 %i.bw
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !3
   %i.bz = sext i32 %i.by to i64                   ; 2 uses
   %i.ca = lshr i64 %i.bz, 6
@@ -329,16 +327,15 @@ bb.j:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %.neg.i.i.i.i52 = select i1 %.not.i.i.i.i51, i64 0, i64 -40
   %i.db = getelementptr inbounds i8, ptr %i.da, i64 %.neg.i.i.i.i52
   %i.dc = load ptr, ptr %i.cs, align 8, !tbaa !92
+  %6 = sext i32 %i.cz to i64
+  %invariant.gep.i55 = getelementptr [4 x i8], ptr %i.dc, i64 %6
   %i.dd = load ptr, ptr %i.db, align 8, !tbaa !132
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.l, %.preheader.i50
   %.013.i = phi i64 [ %i.cy, %.preheader.i50 ], [ %i.dp, %bb.l ] ; 3 uses
   %i.de = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.013.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.de to i32
-  %11 = or disjoint i32 %i.cz, %10
-  %12 = sext i32 %11 to i64
-  %i.df = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %12
+  %i.df = getelementptr [4 x i8], ptr %invariant.gep.i55, i64 %i.de
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !3
   %i.dh = sext i32 %i.dg to i64                   ; 2 uses
   %i.di = lshr i64 %i.dh, 6
@@ -395,16 +392,15 @@ bb.m:                                             ; preds = %.critedge
   %i.ek = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !152, !nonnull !121, !align !151
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !92
+  %7 = sext i32 %i.d to i64
+  %invariant.gep.i62 = getelementptr [4 x i8], ptr %i.em, i64 %7
   %i.en = load ptr, ptr %i.ej, align 8, !tbaa !132
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.o, %.preheader.i55
   %.014.i58 = phi i64 [ %i.ef, %.preheader.i55 ], [ %i.ez, %bb.o ] ; 3 uses
   %i.eo = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.014.i58, i1 true)
-  %13 = trunc nuw nsw i64 %i.eo to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64
-  %i.ep = getelementptr inbounds [4 x i8], ptr %i.em, i64 %15
+  %i.ep = getelementptr [4 x i8], ptr %invariant.gep.i62, i64 %i.eo
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !3
   %i.er = sext i32 %i.eq to i64                   ; 2 uses
   %i.es = lshr i64 %i.er, 6

@@ -201,6 +201,7 @@ bb.y:                                             ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.y
   %i.ho = shl nsw i32 %i.hk, 6
+  %10 = sext i32 %i.ho to i64
   br label %bb.ai
 
 bb.z:                                             ; preds = %bb.y
@@ -341,12 +342,10 @@ _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_
 bb.ai:                                            ; preds = %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE0EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
   %.01520.i.i.i.i.i.i = phi i64 [ %i.hn, %.lr.ph.i.i.i.i.i.i ], [ %i.mp, %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE0EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i.i.i.i.i ] ; 3 uses
   %i.ke = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01520.i.i.i.i.i.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.ke to i32
-  %11 = or disjoint i32 %i.ho, %10
-  %12 = sext i32 %11 to i64                       ; 3 uses
-  %i.kf = getelementptr inbounds [4 x i8], ptr %i.hf, i64 %12
+  %11 = or disjoint i64 %i.ke, %10                ; 3 uses
+  %i.kf = getelementptr inbounds [4 x i8], ptr %i.hf, i64 %11
   %i.kg = load i32, ptr %i.kf, align 4, !tbaa !3  ; 2 uses
-  %i.kh = getelementptr inbounds [4 x i8], ptr %i.hg, i64 %12
+  %i.kh = getelementptr inbounds [4 x i8], ptr %i.hg, i64 %11
   %i.ki = load i32, ptr %i.kh, align 4, !tbaa !3  ; 2 uses
   %i.kj = load i32, ptr %i.a, align 4, !tbaa !3   ; 3 uses
   %i.kk = sub nsw i32 %i.kg, %i.kj                ; 5 uses
@@ -459,7 +458,7 @@ _ZN8facebook5velox4bits12findFirstBitEPKmii.exit.i.i.i.i.i.i: ; preds = %bb.ap, 
 
 _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE0EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i.i.i.i.i: ; preds = %_ZN8facebook5velox4bits12findFirstBitEPKmii.exit.i.i.i.i.i.i, %bb.ap, %.critedge.i.i.i.i.i.i.i.i, %bb.ak, %bb.ai
   %i.mm = phi i32 [ -1, %bb.ai ], [ %spec.select.i.i.i.i.i.i, %_ZN8facebook5velox4bits12findFirstBitEPKmii.exit.i.i.i.i.i.i ], [ -1, %bb.ak ], [ -1, %.critedge.i.i.i.i.i.i.i.i ], [ -1, %bb.ap ]
-  %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %12
+  %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %11
   store i32 %i.mm, ptr %i.mn, align 4, !tbaa !3
   %i.mo = add i64 %.01520.i.i.i.i.i.i, -1
   %i.mp = and i64 %i.mo, %.01520.i.i.i.i.i.i      ; 2 uses
@@ -782,15 +781,14 @@ bb.bl:                                            ; preds = %bb.bk
 
 .preheader.i.i.i.i.i.i34:                         ; preds = %bb.bl
   %.val.val.i.i.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !206
+  %12 = sext i32 %i.qt to i64
+  %invariant.gep.i.i.i.i.i.i = getelementptr [4 x i8], ptr %.val.val.i.i.i.i.i.i, i64 %12
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bm, %.preheader.i.i.i.i.i.i34
   %.011.i.i.i.i.i.i35 = phi i64 [ %i.rj, %.preheader.i.i.i.i.i.i34 ], [ %i.rn, %bb.bm ] ; 3 uses
   %i.rk = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i.i35, i1 true)
-  %13 = trunc nuw nsw i64 %i.rk to i32
-  %14 = or disjoint i32 %i.qt, %13
-  %15 = sext i32 %14 to i64
-  %i.rl = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i.i.i.i.i.i, i64 %15
+  %i.rl = getelementptr [4 x i8], ptr %invariant.gep.i.i.i.i.i.i, i64 %i.rk
   store i32 -1, ptr %i.rl, align 4, !tbaa !3
   %i.rm = add nsw i64 %.011.i.i.i.i.i.i35, -1
   %i.rn = and i64 %i.rm, %.011.i.i.i.i.i.i35      ; 2 uses
@@ -820,15 +818,14 @@ bb.bo:                                            ; preds = %bb.bn
 .preheader.i37.i.i.i.i.i23:                       ; preds = %bb.bo
   %i.rz = shl nsw i32 %i.ro, 6
   %.val.val.i39.i.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !206
+  %13 = sext i32 %i.rz to i64
+  %invariant.gep.i40.i.i.i.i.i = getelementptr [4 x i8], ptr %.val.val.i39.i.i.i.i.i, i64 %13
   br label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bp, %.preheader.i37.i.i.i.i.i23
   %.011.i40.i.i.i.i.i = phi i64 [ %i.ry, %.preheader.i37.i.i.i.i.i23 ], [ %i.sd, %bb.bp ] ; 3 uses
   %i.sa = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i40.i.i.i.i.i, i1 true)
-  %16 = trunc nuw nsw i64 %i.sa to i32
-  %17 = or disjoint i32 %i.rz, %16
-  %18 = sext i32 %17 to i64
-  %i.sb = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i39.i.i.i.i.i, i64 %18
+  %i.sb = getelementptr [4 x i8], ptr %invariant.gep.i40.i.i.i.i.i, i64 %i.sa
   store i32 -1, ptr %i.sb, align 4, !tbaa !3
   %i.sc = add i64 %.011.i40.i.i.i.i.i, -1
   %i.sd = and i64 %i.sc, %.011.i40.i.i.i.i.i      ; 2 uses
@@ -862,6 +859,8 @@ bb.bq:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i4.i:                              ; preds = %bb.bq
   %i.sk = shl nsw i32 %i.sg, 6
+  %14 = sext i32 %i.sk to i64
+  %invariant.gep.i47.i.i.i.i.i = getelementptr [4 x i8], ptr %.val17.val.i.i.i.i.i.i, i64 %14
   br label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
@@ -886,10 +885,7 @@ bb.br:                                            ; preds = %bb.bq
 bb.bs:                                            ; preds = %bb.bs, %.lr.ph.i.i.i.i.i4.i
   %.01520.i.i.i.i.i.i31 = phi i64 [ %i.sj, %.lr.ph.i.i.i.i.i4.i ], [ %i.sw, %bb.bs ] ; 3 uses
   %i.st = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01520.i.i.i.i.i.i31, i1 true)
-  %19 = trunc nuw nsw i64 %i.st to i32
-  %20 = or disjoint i32 %i.sk, %19
-  %21 = sext i32 %20 to i64
-  %i.su = getelementptr inbounds nuw [4 x i8], ptr %.val17.val.i.i.i.i.i.i, i64 %21
+  %i.su = getelementptr [4 x i8], ptr %invariant.gep.i47.i.i.i.i.i, i64 %i.st
   store i32 -1, ptr %i.su, align 4, !tbaa !3
   %i.sv = add i64 %.01520.i.i.i.i.i.i31, -1
   %i.sw = and i64 %i.sv, %.01520.i.i.i.i.i.i31    ; 2 uses
@@ -916,15 +912,14 @@ bb.bt:                                            ; preds = %._crit_edge.i.i.i.i
 
 .preheader.i48.i.i.i.i.i:                         ; preds = %bb.bt
   %.val.val.i50.i.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !206
+  %15 = sext i32 %i.qt to i64
+  %invariant.gep.i55.i.i.i.i.i = getelementptr [4 x i8], ptr %.val.val.i50.i.i.i.i.i, i64 %15
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bu, %.preheader.i48.i.i.i.i.i
   %.011.i51.i.i.i.i.i = phi i64 [ %i.tf, %.preheader.i48.i.i.i.i.i ], [ %i.tj, %bb.bu ] ; 3 uses
   %i.tg = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i51.i.i.i.i.i, i1 true)
-  %22 = trunc nuw nsw i64 %i.tg to i32
-  %23 = or disjoint i32 %i.qt, %22
-  %24 = sext i32 %23 to i64
-  %i.th = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i50.i.i.i.i.i, i64 %24
+  %i.th = getelementptr [4 x i8], ptr %invariant.gep.i55.i.i.i.i.i, i64 %i.tg
   store i32 -1, ptr %i.th, align 4, !tbaa !3
   %i.ti = add nsw i64 %.011.i51.i.i.i.i.i, -1
   %i.tj = and i64 %i.ti, %.011.i51.i.i.i.i.i      ; 2 uses
@@ -1327,17 +1322,16 @@ bb.k:                                             ; preds = %bb.j
 .preheader.i.i.i.i.i:                             ; preds = %bb.k
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.val.val.i.i.i.i.i = load ptr, ptr %i.ct, align 8, !tbaa !206
+  %2 = sext i32 %i.cc to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.preheader.i.i.i.i.i
   %.012.i.i.i.i.i = phi i64 [ %i.cs, %.preheader.i.i.i.i.i ], [ %i.cz, %bb.l ] ; 3 uses
   %i.cu = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i.i.i.i.i, i1 true)
-  %2 = trunc nuw nsw i64 %i.cu to i32
-  %3 = or disjoint i32 %i.cc, %2
-  %4 = sext i32 %3 to i64                         ; 2 uses
-  %i.cv = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %4
+  %3 = or disjoint i64 %i.cu, %2                  ; 2 uses
+  %i.cv = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %3
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !3
-  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i.i.i.i.i, i64 %4
+  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i.i.i.i.i, i64 %3
   store i32 %i.cw, ptr %i.cx, align 4, !tbaa !3
   %i.cy = add nsw i64 %.012.i.i.i.i.i, -1
   %i.cz = and i64 %i.cy, %.012.i.i.i.i.i          ; 2 uses
@@ -1368,17 +1362,16 @@ bb.n:                                             ; preds = %bb.m
   %i.dl = shl nsw i32 %i.da, 6
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.val.val.i40.i.i.i.i = load ptr, ptr %i.dm, align 8, !tbaa !206
+  %4 = sext i32 %i.dl to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %.preheader.i37.i.i.i.i
   %.012.i42.i.i.i.i = phi i64 [ %i.dk, %.preheader.i37.i.i.i.i ], [ %i.ds, %bb.o ] ; 3 uses
   %i.dn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i42.i.i.i.i, i1 true)
-  %5 = trunc nuw nsw i64 %i.dn to i32
-  %6 = or disjoint i32 %i.dl, %5
-  %7 = sext i32 %6 to i64                         ; 2 uses
-  %i.do = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %7
+  %5 = or disjoint i64 %i.dn, %4                  ; 2 uses
+  %i.do = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %5
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !3
-  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i40.i.i.i.i, i64 %7
+  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i40.i.i.i.i, i64 %5
   store i32 %i.dp, ptr %i.dq, align 4, !tbaa !3
   %i.dr = add i64 %.012.i42.i.i.i.i, -1
   %i.ds = and i64 %i.dr, %.012.i42.i.i.i.i        ; 2 uses
@@ -1416,6 +1409,7 @@ bb.p:                                             ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.p
   %i.eb = shl nsw i32 %i.dx, 6
+  %6 = sext i32 %i.eb to i64
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -1501,12 +1495,10 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i.i.i
   %.01522.i.i.i.i.i = phi i64 [ %i.ea, %.lr.ph.i.i.i.i.i ], [ %i.fh, %bb.r ] ; 3 uses
   %i.fc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01522.i.i.i.i.i, i1 true)
-  %8 = trunc nuw nsw i64 %i.fc to i32
-  %9 = or disjoint i32 %i.eb, %8
-  %10 = sext i32 %9 to i64                        ; 2 uses
-  %i.fd = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %10
+  %7 = or disjoint i64 %i.fc, %6                  ; 2 uses
+  %i.fd = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %7
   %i.fe = load i32, ptr %i.fd, align 4, !tbaa !3
-  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %.val18.val.i.i.i.i.i, i64 %10
+  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %.val18.val.i.i.i.i.i, i64 %7
   store i32 %i.fe, ptr %i.ff, align 4, !tbaa !3
   %i.fg = add i64 %.01522.i.i.i.i.i, -1
   %i.fh = and i64 %i.fg, %.01522.i.i.i.i.i        ; 2 uses
@@ -1534,17 +1526,16 @@ bb.s:                                             ; preds = %._crit_edge.i.i.i.i
 .preheader.i50.i.i.i.i:                           ; preds = %bb.s
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.val.val.i53.i.i.i.i = load ptr, ptr %i.fr, align 8, !tbaa !206
+  %8 = sext i32 %i.cc to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.preheader.i50.i.i.i.i
   %.012.i55.i.i.i.i = phi i64 [ %i.fq, %.preheader.i50.i.i.i.i ], [ %i.fx, %bb.t ] ; 3 uses
   %i.fs = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i55.i.i.i.i, i1 true)
-  %11 = trunc nuw nsw i64 %i.fs to i32
-  %12 = or disjoint i32 %i.cc, %11
-  %13 = sext i32 %12 to i64                       ; 2 uses
-  %i.ft = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %13
+  %9 = or disjoint i64 %i.fs, %8                  ; 2 uses
+  %i.ft = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %9
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !3
-  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i53.i.i.i.i, i64 %13
+  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i53.i.i.i.i, i64 %9
   store i32 %i.fu, ptr %i.fv, align 4, !tbaa !3
   %i.fw = add nsw i64 %.012.i55.i.i.i.i, -1
   %i.fx = and i64 %i.fw, %.012.i55.i.i.i.i        ; 2 uses
@@ -1947,6 +1938,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not.i.i.i.i.i.i, label %_ZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_.exit, label %.preheader.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i:                           ; preds = %bb.t
+  %18 = sext i32 %i.gg to i64
   %i.gx = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.gy = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.gz = getelementptr inbounds nuw i8, ptr %15, i64 8
@@ -1957,12 +1949,10 @@ bb.t:                                             ; preds = %bb.s
 _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i.i.i.i.i.i: ; preds = %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
   %.011.i.i.i.i.i.i = phi i64 [ %i.gw, %.preheader.i.i.i.i.i.i ], [ %i.ho, %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i.i.i.i.i.i ] ; 3 uses
   %i.hb = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i.i, i1 true)
-  %18 = trunc nuw nsw i64 %i.hb to i32
-  %19 = or disjoint i32 %i.gg, %18
-  %20 = sext i32 %19 to i64                       ; 3 uses
-  %i.hc = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %20
+  %19 = or disjoint i64 %i.hb, %18                ; 3 uses
+  %i.hc = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %19
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !3
-  %i.he = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %20
+  %i.he = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %19
   %i.hf = load i32, ptr %i.he, align 4, !tbaa !3
   %i.hg = sub nsw i32 %i.hd, %.sroa.015.0.extract.trunc.i
   %.reass103.i.reass.reass = add i32 %i.hf, %invariant.op203
@@ -1985,7 +1975,7 @@ _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_
   %i.hk = add nsw i32 %i.hi, %.sroa.015.0.extract.trunc.i
   %spec.select46.i = select i1 %i.hj, i32 -1, i32 %i.hk
   %i.hl = load ptr, ptr %i.j, align 8, !tbaa !206
-  %i.hm = getelementptr inbounds nuw [4 x i8], ptr %i.hl, i64 %20
+  %i.hm = getelementptr inbounds nuw [4 x i8], ptr %i.hl, i64 %19
   store i32 %spec.select46.i, ptr %i.hm, align 4, !tbaa !3
   %i.hn = add nsw i64 %.011.i.i.i.i.i.i, -1
   %i.ho = and i64 %i.hn, %.011.i.i.i.i.i.i        ; 2 uses
@@ -2014,6 +2004,7 @@ bb.v:                                             ; preds = %bb.u
 
 .preheader.i37.i.i.i.i.i:                         ; preds = %bb.v
   %i.ia = shl nsw i32 %i.hp, 6
+  %20 = sext i32 %i.ia to i64
   %i.ib = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.ic = getelementptr inbounds nuw i8, ptr %12, i64 16
   %i.id = getelementptr inbounds nuw i8, ptr %13, i64 8
@@ -2024,12 +2015,10 @@ bb.v:                                             ; preds = %bb.u
 _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i39.i.i.i.i.i: ; preds = %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i39.i.i.i.i.i, %.preheader.i37.i.i.i.i.i
   %.011.i38.i.i.i.i.i = phi i64 [ %i.hz, %.preheader.i37.i.i.i.i.i ], [ %i.is, %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i39.i.i.i.i.i ] ; 3 uses
   %i.if = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i38.i.i.i.i.i, i1 true)
-  %21 = trunc nuw nsw i64 %i.if to i32
-  %22 = or disjoint i32 %i.ia, %21
-  %23 = sext i32 %22 to i64                       ; 3 uses
-  %i.ig = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %23
+  %21 = or disjoint i64 %i.if, %20                ; 3 uses
+  %i.ig = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %21
   %i.ih = load i32, ptr %i.ig, align 4, !tbaa !3
-  %i.ii = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %23
+  %i.ii = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %21
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !3
   %i.ik = sub nsw i32 %i.ih, %.sroa.015.0.extract.trunc.i
   %.reass.i.reass.reass = add i32 %i.ij, %invariant.op
@@ -2052,7 +2041,7 @@ _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_
   %i.io = add nsw i32 %i.im, %.sroa.015.0.extract.trunc.i
   %spec.select47.i = select i1 %i.in, i32 -1, i32 %i.io
   %i.ip = load ptr, ptr %i.j, align 8, !tbaa !206
-  %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.ip, i64 %23
+  %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.ip, i64 %21
   store i32 %spec.select47.i, ptr %i.iq, align 4, !tbaa !3
   %i.ir = add i64 %.011.i38.i.i.i.i.i, -1
   %i.is = and i64 %i.ir, %.011.i38.i.i.i.i.i      ; 2 uses
@@ -2091,6 +2080,7 @@ bb.w:                                             ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.w
   %i.jd = shl nsw i32 %i.iz, 6
+  %22 = sext i32 %i.jd to i64
   %i.je = load ptr, ptr %i.j, align 8, !tbaa !206
   br label %bb.y
 
@@ -2142,12 +2132,10 @@ _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_
 bb.y:                                             ; preds = %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i42.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
   %.01520.i.i.i.i.i.i = phi i64 [ %i.jc, %.lr.ph.i.i.i.i.i.i ], [ %i.mp, %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i42.i.i.i.i.i ] ; 3 uses
   %i.jw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01520.i.i.i.i.i.i, i1 true)
-  %24 = trunc nuw nsw i64 %i.jw to i32
-  %25 = or disjoint i32 %i.jd, %24
-  %26 = sext i32 %25 to i64                       ; 3 uses
-  %i.jx = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %26
+  %23 = or disjoint i64 %i.jw, %22                ; 3 uses
+  %i.jx = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %23
   %i.jy = load i32, ptr %i.jx, align 4, !tbaa !3
-  %i.jz = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %26
+  %i.jz = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %23
   %i.ka = load i32, ptr %i.jz, align 4, !tbaa !3
   %i.kb = sub nsw i32 %i.jy, %.sroa.015.0.extract.trunc.i ; 6 uses
   %.reass99.i.reass.reass.reass = add i32 %i.ka, %invariant.op201 ; 9 uses
@@ -2278,7 +2266,7 @@ _ZN8facebook5velox4bits16testWordsReverseIZNS1_11findLastBitEPKmiibEUlimE_ZNS1_1
 
 _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i42.i.i.i.i.i: ; preds = %_ZN8facebook5velox4bits16testWordsReverseIZNS1_11findLastBitEPKmiibEUlimE_ZNS1_11findLastBitES4_iibEUliE_EEbiiT_T0_.exit.thread74.i.i.i.i.i, %_ZN8facebook5velox4bits16testWordsReverseIZNS1_11findLastBitEPKmiibEUlimE_ZNS1_11findLastBitES4_iibEUliE_EEbiiT_T0_.exit.i.i.i.i.i, %bb.ag, %.critedge.i.i.i.i.i.i, %bb.aa, %bb.y
   %i.mm = phi i32 [ %i.ml, %_ZN8facebook5velox4bits16testWordsReverseIZNS1_11findLastBitEPKmiibEUlimE_ZNS1_11findLastBitES4_iibEUliE_EEbiiT_T0_.exit.thread74.i.i.i.i.i ], [ -1, %_ZN8facebook5velox4bits16testWordsReverseIZNS1_11findLastBitEPKmiibEUlimE_ZNS1_11findLastBitES4_iibEUliE_EEbiiT_T0_.exit.i.i.i.i.i ], [ -1, %bb.aa ], [ -1, %bb.y ], [ -1, %.critedge.i.i.i.i.i.i ], [ -1, %bb.ag ]
-  %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.je, i64 %26
+  %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.je, i64 %23
   store i32 %i.mm, ptr %i.mn, align 4, !tbaa !3
   %i.mo = add i64 %.01520.i.i.i.i.i.i, -1
   %i.mp = and i64 %i.mo, %.01520.i.i.i.i.i.i      ; 2 uses
@@ -2304,6 +2292,7 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
   br i1 %.not.i45.i.i.i.i.i, label %_ZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_.exit, label %.preheader.i46.i.i.i.i.i
 
 .preheader.i46.i.i.i.i.i:                         ; preds = %bb.ai
+  %24 = sext i32 %i.gg to i64
   %i.mz = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.na = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.nb = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -2314,12 +2303,10 @@ bb.ai:                                            ; preds = %._crit_edge.i.i.i.i
 _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i48.i.i.i.i.i: ; preds = %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i48.i.i.i.i.i, %.preheader.i46.i.i.i.i.i
   %.011.i47.i.i.i.i.i = phi i64 [ %i.my, %.preheader.i46.i.i.i.i.i ], [ %i.nq, %_ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_9ValueTypeE1EE24setRowNumbersIgnoreNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEESF_ENKUlT_E_clIiEEDaSG_.exit.i48.i.i.i.i.i ] ; 3 uses
   %i.nd = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i47.i.i.i.i.i, i1 true)
-  %27 = trunc nuw nsw i64 %i.nd to i32
-  %28 = or disjoint i32 %i.gg, %27
-  %29 = sext i32 %28 to i64                       ; 3 uses
-  %i.ne = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %29
+  %25 = or disjoint i64 %i.nd, %24                ; 3 uses
+  %i.ne = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %25
   %i.nf = load i32, ptr %i.ne, align 4, !tbaa !3
-  %i.ng = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %29
+  %i.ng = getelementptr inbounds [4 x i8], ptr %i.eg, i64 %25
   %i.nh = load i32, ptr %i.ng, align 4, !tbaa !3
   %i.ni = sub nsw i32 %i.nf, %.sroa.015.0.extract.trunc.i
   %.reass101.i.reass.reass = add i32 %i.nh, %invariant.op202
@@ -2342,7 +2329,7 @@ _ZZN8facebook5velox6window9prestosql12_GLOBAL__N_122FirstLastValueFunctionILNS3_
   %i.nm = add nsw i32 %i.nk, %.sroa.015.0.extract.trunc.i
   %spec.select49.i = select i1 %i.nl, i32 -1, i32 %i.nm
   %i.nn = load ptr, ptr %i.j, align 8, !tbaa !206
-  %i.no = getelementptr inbounds nuw [4 x i8], ptr %i.nn, i64 %29
+  %i.no = getelementptr inbounds nuw [4 x i8], ptr %i.nn, i64 %25
   store i32 %spec.select49.i, ptr %i.no, align 4, !tbaa !3
   %i.np = add nsw i64 %.011.i47.i.i.i.i.i, -1
   %i.nq = and i64 %i.np, %.011.i47.i.i.i.i.i      ; 2 uses
@@ -2624,15 +2611,14 @@ bb.bc:                                            ; preds = %bb.bb
 
 .preheader.i.i.i.i.i.i35:                         ; preds = %bb.bc
   %.val.val.i.i.i.i.i.i = load ptr, ptr %i.j, align 8, !tbaa !206
+  %26 = sext i32 %i.rg to i64
+  %invariant.gep.i.i.i.i.i.i = getelementptr [4 x i8], ptr %.val.val.i.i.i.i.i.i, i64 %26
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bd, %.preheader.i.i.i.i.i.i35
   %.011.i.i.i.i.i.i36 = phi i64 [ %i.rw, %.preheader.i.i.i.i.i.i35 ], [ %i.sa, %bb.bd ] ; 3 uses
   %i.rx = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i.i36, i1 true)
-  %30 = trunc nuw nsw i64 %i.rx to i32
-  %31 = or disjoint i32 %i.rg, %30
-  %32 = sext i32 %31 to i64
-  %i.ry = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i.i.i.i.i.i, i64 %32
+  %i.ry = getelementptr [4 x i8], ptr %invariant.gep.i.i.i.i.i.i, i64 %i.rx
   store i32 -1, ptr %i.ry, align 4, !tbaa !3
   %i.rz = add nsw i64 %.011.i.i.i.i.i.i36, -1
   %i.sa = and i64 %i.rz, %.011.i.i.i.i.i.i36      ; 2 uses
@@ -2662,15 +2648,14 @@ bb.bf:                                            ; preds = %bb.be
 .preheader.i37.i.i.i.i.i23:                       ; preds = %bb.bf
   %i.sm = shl nsw i32 %i.sb, 6
   %.val.val.i39.i.i.i.i.i = load ptr, ptr %i.j, align 8, !tbaa !206
+  %27 = sext i32 %i.sm to i64
+  %invariant.gep.i40.i.i.i.i.i = getelementptr [4 x i8], ptr %.val.val.i39.i.i.i.i.i, i64 %27
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bg, %.preheader.i37.i.i.i.i.i23
   %.011.i40.i.i.i.i.i = phi i64 [ %i.sl, %.preheader.i37.i.i.i.i.i23 ], [ %i.sq, %bb.bg ] ; 3 uses
   %i.sn = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i40.i.i.i.i.i, i1 true)
-  %33 = trunc nuw nsw i64 %i.sn to i32
-  %34 = or disjoint i32 %i.sm, %33
-  %35 = sext i32 %34 to i64
-  %i.so = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i39.i.i.i.i.i, i64 %35
+  %i.so = getelementptr [4 x i8], ptr %invariant.gep.i40.i.i.i.i.i, i64 %i.sn
   store i32 -1, ptr %i.so, align 4, !tbaa !3
   %i.sp = add i64 %.011.i40.i.i.i.i.i, -1
   %i.sq = and i64 %i.sp, %.011.i40.i.i.i.i.i      ; 2 uses
@@ -2704,6 +2689,8 @@ bb.bh:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i4.i:                              ; preds = %bb.bh
   %i.sx = shl nsw i32 %i.st, 6
+  %28 = sext i32 %i.sx to i64
+  %invariant.gep.i47.i.i.i.i.i = getelementptr [4 x i8], ptr %.val17.val.i.i.i.i.i.i, i64 %28
   br label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
@@ -2728,10 +2715,7 @@ bb.bi:                                            ; preds = %bb.bh
 bb.bj:                                            ; preds = %bb.bj, %.lr.ph.i.i.i.i.i4.i
   %.01520.i.i.i.i.i.i31 = phi i64 [ %i.sw, %.lr.ph.i.i.i.i.i4.i ], [ %i.tj, %bb.bj ] ; 3 uses
   %i.tg = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01520.i.i.i.i.i.i31, i1 true)
-  %36 = trunc nuw nsw i64 %i.tg to i32
-  %37 = or disjoint i32 %i.sx, %36
-  %38 = sext i32 %37 to i64
-  %i.th = getelementptr inbounds nuw [4 x i8], ptr %.val17.val.i.i.i.i.i.i, i64 %38
+  %i.th = getelementptr [4 x i8], ptr %invariant.gep.i47.i.i.i.i.i, i64 %i.tg
   store i32 -1, ptr %i.th, align 4, !tbaa !3
   %i.ti = add i64 %.01520.i.i.i.i.i.i31, -1
   %i.tj = and i64 %i.ti, %.01520.i.i.i.i.i.i31    ; 2 uses
@@ -2758,15 +2742,14 @@ bb.bk:                                            ; preds = %._crit_edge.i.i.i.i
 
 .preheader.i48.i.i.i.i.i:                         ; preds = %bb.bk
   %.val.val.i50.i.i.i.i.i = load ptr, ptr %i.j, align 8, !tbaa !206
+  %29 = sext i32 %i.rg to i64
+  %invariant.gep.i55.i.i.i.i.i = getelementptr [4 x i8], ptr %.val.val.i50.i.i.i.i.i, i64 %29
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bl, %.preheader.i48.i.i.i.i.i
   %.011.i51.i.i.i.i.i = phi i64 [ %i.ts, %.preheader.i48.i.i.i.i.i ], [ %i.tw, %bb.bl ] ; 3 uses
   %i.tt = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i51.i.i.i.i.i, i1 true)
-  %39 = trunc nuw nsw i64 %i.tt to i32
-  %40 = or disjoint i32 %i.rg, %39
-  %41 = sext i32 %40 to i64
-  %i.tu = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i50.i.i.i.i.i, i64 %41
+  %i.tu = getelementptr [4 x i8], ptr %invariant.gep.i55.i.i.i.i.i, i64 %i.tt
   store i32 -1, ptr %i.tu, align 4, !tbaa !3
   %i.tv = add nsw i64 %.011.i51.i.i.i.i.i, -1
   %i.tw = and i64 %i.tv, %.011.i51.i.i.i.i.i      ; 2 uses
@@ -3039,17 +3022,16 @@ bb.k:                                             ; preds = %bb.j
 .preheader.i.i.i.i.i:                             ; preds = %bb.k
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.val.val.i.i.i.i.i = load ptr, ptr %i.ct, align 8, !tbaa !206
+  %2 = sext i32 %i.cc to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.preheader.i.i.i.i.i
   %.012.i.i.i.i.i = phi i64 [ %i.cs, %.preheader.i.i.i.i.i ], [ %i.cz, %bb.l ] ; 3 uses
   %i.cu = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i.i.i.i.i, i1 true)
-  %2 = trunc nuw nsw i64 %i.cu to i32
-  %3 = or disjoint i32 %i.cc, %2
-  %4 = sext i32 %3 to i64                         ; 2 uses
-  %i.cv = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %4
+  %3 = or disjoint i64 %i.cu, %2                  ; 2 uses
+  %i.cv = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %3
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !3
-  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i.i.i.i.i, i64 %4
+  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i.i.i.i.i, i64 %3
   store i32 %i.cw, ptr %i.cx, align 4, !tbaa !3
   %i.cy = add nsw i64 %.012.i.i.i.i.i, -1
   %i.cz = and i64 %i.cy, %.012.i.i.i.i.i          ; 2 uses
@@ -3080,17 +3062,16 @@ bb.n:                                             ; preds = %bb.m
   %i.dl = shl nsw i32 %i.da, 6
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.val.val.i40.i.i.i.i = load ptr, ptr %i.dm, align 8, !tbaa !206
+  %4 = sext i32 %i.dl to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %.preheader.i37.i.i.i.i
   %.012.i42.i.i.i.i = phi i64 [ %i.dk, %.preheader.i37.i.i.i.i ], [ %i.ds, %bb.o ] ; 3 uses
   %i.dn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i42.i.i.i.i, i1 true)
-  %5 = trunc nuw nsw i64 %i.dn to i32
-  %6 = or disjoint i32 %i.dl, %5
-  %7 = sext i32 %6 to i64                         ; 2 uses
-  %i.do = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %7
+  %5 = or disjoint i64 %i.dn, %4                  ; 2 uses
+  %i.do = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %5
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !3
-  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i40.i.i.i.i, i64 %7
+  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i40.i.i.i.i, i64 %5
   store i32 %i.dp, ptr %i.dq, align 4, !tbaa !3
   %i.dr = add i64 %.012.i42.i.i.i.i, -1
   %i.ds = and i64 %i.dr, %.012.i42.i.i.i.i        ; 2 uses
@@ -3128,6 +3109,7 @@ bb.p:                                             ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.p
   %i.eb = shl nsw i32 %i.dx, 6
+  %6 = sext i32 %i.eb to i64
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -3213,12 +3195,10 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i.i.i
   %.01522.i.i.i.i.i = phi i64 [ %i.ea, %.lr.ph.i.i.i.i.i ], [ %i.fh, %bb.r ] ; 3 uses
   %i.fc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01522.i.i.i.i.i, i1 true)
-  %8 = trunc nuw nsw i64 %i.fc to i32
-  %9 = or disjoint i32 %i.eb, %8
-  %10 = sext i32 %9 to i64                        ; 2 uses
-  %i.fd = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %10
+  %7 = or disjoint i64 %i.fc, %6                  ; 2 uses
+  %i.fd = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %7
   %i.fe = load i32, ptr %i.fd, align 4, !tbaa !3
-  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %.val18.val.i.i.i.i.i, i64 %10
+  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %.val18.val.i.i.i.i.i, i64 %7
   store i32 %i.fe, ptr %i.ff, align 4, !tbaa !3
   %i.fg = add i64 %.01522.i.i.i.i.i, -1
   %i.fh = and i64 %i.fg, %.01522.i.i.i.i.i        ; 2 uses
@@ -3246,17 +3226,16 @@ bb.s:                                             ; preds = %._crit_edge.i.i.i.i
 .preheader.i50.i.i.i.i:                           ; preds = %bb.s
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.val.val.i53.i.i.i.i = load ptr, ptr %i.fr, align 8, !tbaa !206
+  %8 = sext i32 %i.cc to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.preheader.i50.i.i.i.i
   %.012.i55.i.i.i.i = phi i64 [ %i.fq, %.preheader.i50.i.i.i.i ], [ %i.fx, %bb.t ] ; 3 uses
   %i.fs = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i55.i.i.i.i, i1 true)
-  %11 = trunc nuw nsw i64 %i.fs to i32
-  %12 = or disjoint i32 %i.cc, %11
-  %13 = sext i32 %12 to i64                       ; 2 uses
-  %i.ft = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %13
+  %9 = or disjoint i64 %i.fs, %8                  ; 2 uses
+  %i.ft = getelementptr inbounds [4 x i8], ptr %.0.val.16.val, i64 %9
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !3
-  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i53.i.i.i.i, i64 %13
+  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %.val.val.i53.i.i.i.i, i64 %9
   store i32 %i.fu, ptr %i.fv, align 4, !tbaa !3
   %i.fw = add nsw i64 %.012.i55.i.i.i.i, -1
   %i.fx = and i64 %i.fw, %.012.i55.i.i.i.i        ; 2 uses

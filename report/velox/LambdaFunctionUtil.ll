@@ -201,26 +201,25 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br label %.lr.ph.split.i.i.i.i.i.i
 
 .lr.ph.split.us.i.i.i.i.i.i:                      ; preds = %.lr.ph.i.i.i.i.i.i
+  %20 = sext i32 %i.lo to i64
   %i.lv = load ptr, ptr %i.b, align 8             ; 3 uses
   br label %bb.aq
 
 bb.aq:                                            ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_11ArrayVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit22.us.i.i.i.i.i.i, %.lr.ph.split.us.i.i.i.i.i.i
   %.01525.us.i.i.i.i.i.i = phi i64 [ %i.ln, %.lr.ph.split.us.i.i.i.i.i.i ], [ %i.nb, %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_11ArrayVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit22.us.i.i.i.i.i.i ] ; 3 uses
   %i.lw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01525.us.i.i.i.i.i.i, i1 true)
-  %20 = trunc nuw nsw i64 %i.lw to i32
-  %21 = or disjoint i32 %i.lo, %20
-  %22 = sext i32 %21 to i64                       ; 3 uses
-  %i.lx = getelementptr inbounds [4 x i8], ptr %i.lf, i64 %22
+  %21 = or disjoint i64 %i.lw, %20                ; 3 uses
+  %i.lx = getelementptr inbounds [4 x i8], ptr %i.lf, i64 %21
   %i.ly = load i32, ptr %i.lx, align 4, !tbaa !3
   %i.lz = sext i32 %i.ly to i64                   ; 2 uses
   %i.ma = getelementptr inbounds [4 x i8], ptr %i.le, i64 %i.lz
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !3  ; 6 uses
   %i.mc = getelementptr inbounds [4 x i8], ptr %i.lg, i64 %i.lz
   %i.md = load i32, ptr %i.mc, align 4, !tbaa !3  ; 3 uses
-  %i.me = getelementptr inbounds [4 x i8], ptr %i.lh, i64 %22
+  %i.me = getelementptr inbounds [4 x i8], ptr %i.lh, i64 %21
   store i32 %i.mb, ptr %i.me, align 4, !tbaa !3
   %i.mf = load i32, ptr %i.h, align 4, !tbaa !3
-  %i.mg = getelementptr inbounds [4 x i8], ptr %i.li, i64 %22
+  %i.mg = getelementptr inbounds [4 x i8], ptr %i.li, i64 %21
   store i32 %i.mf, ptr %i.mg, align 4, !tbaa !3
   %i.mh = icmp sgt i32 %i.mb, 0
   br i1 %i.mh, label %.lr.ph.i19.us.i.i.i.i.i.i.preheader, label %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_11ArrayVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit22.us.i.i.i.i.i.i
@@ -623,26 +622,25 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br label %.lr.ph.split.i.i.i.i.i.i
 
 .lr.ph.split.us.i.i.i.i.i.i:                      ; preds = %.lr.ph.i.i.i.i.i.i
+  %24 = sext i32 %i.lo to i64
   %i.lv = load ptr, ptr %i.b, align 8             ; 3 uses
   br label %bb.aq
 
 bb.aq:                                            ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_9MapVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit22.us.i.i.i.i.i.i, %.lr.ph.split.us.i.i.i.i.i.i
   %.01525.us.i.i.i.i.i.i = phi i64 [ %i.ln, %.lr.ph.split.us.i.i.i.i.i.i ], [ %i.nb, %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_9MapVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit22.us.i.i.i.i.i.i ] ; 3 uses
   %i.lw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01525.us.i.i.i.i.i.i, i1 true)
-  %24 = trunc nuw nsw i64 %i.lw to i32
-  %25 = or disjoint i32 %i.lo, %24
-  %26 = sext i32 %25 to i64                       ; 3 uses
-  %i.lx = getelementptr inbounds [4 x i8], ptr %i.lf, i64 %26
+  %25 = or disjoint i64 %i.lw, %24                ; 3 uses
+  %i.lx = getelementptr inbounds [4 x i8], ptr %i.lf, i64 %25
   %i.ly = load i32, ptr %i.lx, align 4, !tbaa !3
   %i.lz = sext i32 %i.ly to i64                   ; 2 uses
   %i.ma = getelementptr inbounds [4 x i8], ptr %i.le, i64 %i.lz
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !3  ; 6 uses
   %i.mc = getelementptr inbounds [4 x i8], ptr %i.lg, i64 %i.lz
   %i.md = load i32, ptr %i.mc, align 4, !tbaa !3  ; 3 uses
-  %i.me = getelementptr inbounds [4 x i8], ptr %i.lh, i64 %26
+  %i.me = getelementptr inbounds [4 x i8], ptr %i.lh, i64 %25
   store i32 %i.mb, ptr %i.me, align 4, !tbaa !3
   %i.mf = load i32, ptr %i.h, align 4, !tbaa !3
-  %i.mg = getelementptr inbounds [4 x i8], ptr %i.li, i64 %26
+  %i.mg = getelementptr inbounds [4 x i8], ptr %i.li, i64 %25
   store i32 %i.mf, ptr %i.mg, align 4, !tbaa !3
   %i.mh = icmp sgt i32 %i.mb, 0
   br i1 %i.mh, label %.lr.ph.i19.us.i.i.i.i.i.i.preheader, label %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_9MapVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit22.us.i.i.i.i.i.i
@@ -1045,16 +1043,15 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %i.ch = load ptr, ptr %i.cf, align 8, !tbaa !76
   %i.ci = load ptr, ptr %i.cg, align 8, !tbaa !76
   %.promoted = load i32, ptr %i.ce, align 4, !tbaa !3
+  %6 = sext i32 %i.bx to i64
+  %invariant.gep = getelementptr [4 x i8], ptr %i.ci, i64 %6
   br label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.us
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.us: ; preds = %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us, %.lr.ph.i.split.us
   %i.cj = phi i32 [ %.promoted, %.lr.ph.i.split.us ], [ %i.cs, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us ] ; 2 uses
   %.01519.i.us = phi i64 [ %i.bw, %.lr.ph.i.split.us ], [ %i.cu, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us ] ; 3 uses
   %i.ck = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i.us, i1 true)
-  %6 = trunc nuw nsw i64 %i.ck to i32
-  %7 = or disjoint i32 %i.bx, %6
-  %8 = sext i32 %7 to i64
-  %i.cl = getelementptr inbounds [4 x i8], ptr %i.ci, i64 %8
+  %i.cl = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.ck
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !3
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds [4 x i8], ptr %i.ch, i64 %i.cn
@@ -1457,25 +1454,24 @@ bb.a:
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !76
   %i.ag = load ptr, ptr %i.w, align 8, !tbaa !76
   %i.ah = load ptr, ptr %i.aa, align 8, !tbaa !76
+  %3 = sext i32 %i.m to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_11ArrayVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit.us, %.preheader.split.us
   %.011.us = phi i64 [ %i.k, %.preheader.split.us ], [ %i.bo, %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_11ArrayVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit.us ] ; 3 uses
   %i.ai = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.us, i1 true)
-  %3 = trunc nuw nsw i64 %i.ai to i32
-  %4 = or disjoint i32 %i.m, %3
-  %5 = sext i32 %4 to i64                         ; 3 uses
-  %i.aj = getelementptr inbounds [4 x i8], ptr %i.ae, i64 %5
+  %4 = or disjoint i64 %i.ai, %3                  ; 3 uses
+  %i.aj = getelementptr inbounds [4 x i8], ptr %i.ae, i64 %4
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
   %i.al = sext i32 %i.ak to i64                   ; 2 uses
   %i.am = getelementptr inbounds [4 x i8], ptr %i.ad, i64 %i.al
   %i.an = load i32, ptr %i.am, align 4, !tbaa !3  ; 6 uses
   %i.ao = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.al
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !3  ; 3 uses
-  %i.aq = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %5
+  %i.aq = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %4
   store i32 %i.an, ptr %i.aq, align 4, !tbaa !3
   %i.ar = load i32, ptr %i.y, align 4, !tbaa !3
-  %i.as = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %5
+  %i.as = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %4
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !3
   %i.at = icmp sgt i32 %i.an, 0
   br i1 %i.at, label %.lr.ph.i.us, label %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_11ArrayVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit.us
@@ -1878,16 +1874,15 @@ bb.h:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %i.ch = load ptr, ptr %i.cf, align 8, !tbaa !76
   %i.ci = load ptr, ptr %i.cg, align 8, !tbaa !76
   %.promoted = load i32, ptr %i.ce, align 4, !tbaa !3
+  %6 = sext i32 %i.bx to i64
+  %invariant.gep = getelementptr [4 x i8], ptr %i.ci, i64 %6
   br label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.us
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.us: ; preds = %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us, %.lr.ph.i.split.us
   %i.cj = phi i32 [ %.promoted, %.lr.ph.i.split.us ], [ %i.cs, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us ] ; 2 uses
   %.01519.i.us = phi i64 [ %i.bw, %.lr.ph.i.split.us ], [ %i.cu, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us ] ; 3 uses
   %i.ck = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i.us, i1 true)
-  %6 = trunc nuw nsw i64 %i.ck to i32
-  %7 = or disjoint i32 %i.bx, %6
-  %8 = sext i32 %7 to i64
-  %i.cl = getelementptr inbounds [4 x i8], ptr %i.ci, i64 %8
+  %i.cl = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.ck
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !3
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds [4 x i8], ptr %i.ch, i64 %i.cn
@@ -2127,25 +2122,24 @@ bb.a:
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !76
   %i.ag = load ptr, ptr %i.w, align 8, !tbaa !76
   %i.ah = load ptr, ptr %i.aa, align 8, !tbaa !76
+  %3 = sext i32 %i.m to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_9MapVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit.us, %.preheader.split.us
   %.011.us = phi i64 [ %i.k, %.preheader.split.us ], [ %i.bo, %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_9MapVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit.us ] ; 3 uses
   %i.ai = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.us, i1 true)
-  %3 = trunc nuw nsw i64 %i.ai to i32
-  %4 = or disjoint i32 %i.m, %3
-  %5 = sext i32 %4 to i64                         ; 3 uses
-  %i.aj = getelementptr inbounds [4 x i8], ptr %i.ae, i64 %5
+  %4 = or disjoint i64 %i.ai, %3                  ; 3 uses
+  %i.aj = getelementptr inbounds [4 x i8], ptr %i.ae, i64 %4
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
   %i.al = sext i32 %i.ak to i64                   ; 2 uses
   %i.am = getelementptr inbounds [4 x i8], ptr %i.ad, i64 %i.al
   %i.an = load i32, ptr %i.am, align 4, !tbaa !3  ; 6 uses
   %i.ao = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.al
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !3  ; 3 uses
-  %i.aq = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %5
+  %i.aq = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %4
   store i32 %i.an, ptr %i.aq, align 4, !tbaa !3
   %i.ar = load i32, ptr %i.y, align 4, !tbaa !3
-  %i.as = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %5
+  %i.as = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %4
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !3
   %i.at = icmp sgt i32 %i.an, 0
   br i1 %i.at, label %.lr.ph.i.us, label %_ZZN8facebook5velox9functions12_GLOBAL__N_114flattenBuffersINS0_9MapVectorEEEvRKNS0_17SelectivityVectorEiRNS0_13DecodedVectorERN5boost13intrusive_ptrINS0_6BufferEEESE_SE_SE_ENKUliE_clEi.exit.us

@@ -201,6 +201,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %4 = sext i32 %i.d to i64
   %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !1900 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 8
   %.pre38.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !1881
@@ -214,6 +215,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !1888, !nonnull !78, !align !199
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !514
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.aj, i64 %4
   %i.ak = icmp slt i64 %.sroa.0.0.copyload.i16.pre.i, 0
   %..i = select i1 %i.ak, i64 %i.ad, i64 %i.ae
   %i.al = trunc i64 %..i to i32
@@ -222,10 +224,7 @@ bb.c:                                             ; preds = %bb.b
 _ZN8facebook5velox6StatusD2Ev.exit26.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit26.i, %.preheader.i
   %.037.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.ap, %_ZN8facebook5velox6StatusD2Ev.exit26.i ] ; 3 uses
   %i.am = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.037.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.am to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64
-  %i.an = getelementptr inbounds [4 x i8], ptr %i.aj, i64 %6
+  %i.an = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.am
   store i32 %i.al, ptr %i.an, align 4, !tbaa !3
   %i.ao = add nsw i64 %.037.i, -1
   %i.ap = and i64 %i.ao, %.037.i                  ; 2 uses
@@ -262,6 +261,7 @@ bb.e:                                             ; preds = %bb.d
 .preheader.i37:                                   ; preds = %bb.e
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bj = shl nsw i32 %i.aq, 6
+  %5 = sext i32 %i.bj to i64
   %.pre.i38 = load ptr, ptr %i.bi, align 8, !tbaa !1900 ; 2 uses
   %.phi.trans.insert.i39 = getelementptr inbounds nuw i8, ptr %.pre.i38, i64 8
   %.pre38.i40 = load ptr, ptr %.phi.trans.insert.i39, align 8, !tbaa !1881
@@ -275,6 +275,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !1888, !nonnull !78, !align !199
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !514
+  %invariant.gep.i43 = getelementptr [4 x i8], ptr %i.br, i64 %5
   %i.bs = icmp slt i64 %.sroa.0.0.copyload.i16.pre.i41, 0
   %..i45 = select i1 %i.bs, i64 %i.bl, i64 %i.bm
   %i.bt = trunc i64 %..i45 to i32
@@ -283,10 +284,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN8facebook5velox6StatusD2Ev.exit26.i43:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit26.i43, %.preheader.i37
   %.037.i44 = phi i64 [ %i.bh, %.preheader.i37 ], [ %i.bx, %_ZN8facebook5velox6StatusD2Ev.exit26.i43 ] ; 3 uses
   %i.bu = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.037.i44, i1 true)
-  %7 = trunc nuw nsw i64 %i.bu to i32
-  %8 = or disjoint i32 %i.bj, %7
-  %9 = sext i32 %8 to i64
-  %i.bv = getelementptr inbounds [4 x i8], ptr %i.br, i64 %9
+  %i.bv = getelementptr [4 x i8], ptr %invariant.gep.i43, i64 %i.bu
   store i32 %i.bt, ptr %i.bv, align 4, !tbaa !3
   %i.bw = add i64 %.037.i44, -1
   %i.bx = and i64 %i.bw, %.037.i44                ; 2 uses
@@ -330,6 +328,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 .lr.ph.i:                                         ; preds = %bb.f
   %i.cn = shl nsw i32 %i.ci, 6
+  %6 = sext i32 %i.cn to i64
   %.pre98.i = load ptr, ptr %.phi.trans.insert.i49, align 8, !tbaa !1881
   %.sroa.0.0.copyload.i47.pre.i = load i64, ptr %.pre98.i, align 8, !tbaa !138, !noalias !1908 ; 3 uses
   %.nonneg86.i = xor i64 %.sroa.0.0.copyload.i47.pre.i, -1
@@ -340,6 +339,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !1888, !nonnull !78, !align !199
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !514
+  %invariant.gep.i54 = getelementptr [4 x i8], ptr %i.cu, i64 %6
   %i.cv = icmp slt i64 %.sroa.0.0.copyload.i47.pre.i, 0
   %.102.i = select i1 %i.cv, i64 %i.cp, i64 %i.cq
   %i.cw = trunc i64 %.102.i to i32
@@ -436,10 +436,7 @@ _ZN8facebook5velox6StatusD2Ev.exit39.i:           ; preds = %_ZN8facebook5velox6
 _ZN8facebook5velox6StatusD2Ev.exit63.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit63.i, %.lr.ph.i
   %.01590.i = phi i64 [ %i.cm, %.lr.ph.i ], [ %i.dy, %_ZN8facebook5velox6StatusD2Ev.exit63.i ] ; 3 uses
   %i.dv = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01590.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.dv to i32
-  %11 = or disjoint i32 %i.cn, %10
-  %12 = sext i32 %11 to i64
-  %i.dw = getelementptr inbounds [4 x i8], ptr %i.cu, i64 %12
+  %i.dw = getelementptr [4 x i8], ptr %invariant.gep.i54, i64 %i.dv
   store i32 %i.cw, ptr %i.dw, align 4, !tbaa !3
   %i.dx = add i64 %.01590.i, -1
   %i.dy = and i64 %i.dx, %.01590.i                ; 2 uses
@@ -473,6 +470,7 @@ bb.h:                                             ; preds = %._crit_edge
 
 .preheader.i55:                                   ; preds = %bb.h
   %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %7 = sext i32 %i.d to i64
   %.pre.i56 = load ptr, ptr %i.ep, align 8, !tbaa !1900 ; 2 uses
   %.phi.trans.insert.i57 = getelementptr inbounds nuw i8, ptr %.pre.i56, i64 8
   %.pre38.i58 = load ptr, ptr %.phi.trans.insert.i57, align 8, !tbaa !1881
@@ -486,6 +484,7 @@ bb.h:                                             ; preds = %._crit_edge
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 16
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !1888, !nonnull !78, !align !199
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !514
+  %invariant.gep.i65 = getelementptr [4 x i8], ptr %i.ex, i64 %7
   %i.ey = icmp slt i64 %.sroa.0.0.copyload.i16.pre.i59, 0
   %..i63 = select i1 %i.ey, i64 %i.er, i64 %i.es
   %i.ez = trunc i64 %..i63 to i32
@@ -494,10 +493,7 @@ bb.h:                                             ; preds = %._crit_edge
 _ZN8facebook5velox6StatusD2Ev.exit26.i61:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit26.i61, %.preheader.i55
   %.037.i62 = phi i64 [ %i.eo, %.preheader.i55 ], [ %i.fd, %_ZN8facebook5velox6StatusD2Ev.exit26.i61 ] ; 3 uses
   %i.fa = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.037.i62, i1 true)
-  %13 = trunc nuw nsw i64 %i.fa to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64
-  %i.fb = getelementptr inbounds [4 x i8], ptr %i.ex, i64 %15
+  %i.fb = getelementptr [4 x i8], ptr %invariant.gep.i65, i64 %i.fa
   store i32 %i.ez, ptr %i.fb, align 4, !tbaa !3
   %i.fc = add nsw i64 %.037.i62, -1
   %i.fd = and i64 %i.fc, %.037.i62                ; 2 uses
@@ -717,6 +713,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %4 = sext i32 %i.d to i64
   %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !1938 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 8
   %.pre31.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !1922
@@ -731,10 +728,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i, %.preheader.i
   %.030.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.ar, %_ZN8facebook5velox6StatusD2Ev.exit19.i ] ; 3 uses
   %i.ah = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.030.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.ah to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64                         ; 2 uses
-  %i.ai = getelementptr inbounds [16 x i8], ptr %.pre32.i, i64 %6
+  %5 = or disjoint i64 %i.ah, %4                  ; 2 uses
+  %i.ai = getelementptr inbounds [16 x i8], ptr %.pre32.i, i64 %5
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.ai, align 8, !tbaa !138, !noalias !1939 ; 3 uses
   %i.aj = icmp sgt i64 %.sroa.0.0.copyload.i.i, -1
   br i1 %i.aj, label %bb.e, label %bb.f
@@ -752,7 +747,7 @@ bb.f:                                             ; preds = %bb.d
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.f, %bb.e
   %i.an = phi i64 [ %i.ak, %bb.e ], [ %i.am, %bb.f ]
   %i.ao = trunc i64 %i.an to i32
-  %i.ap = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %6
+  %i.ap = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %5
   store i32 %i.ao, ptr %i.ap, align 4, !tbaa !3
   %i.aq = add nsw i64 %.030.i, -1
   %i.ar = and i64 %i.aq, %.030.i                  ; 2 uses
@@ -789,6 +784,7 @@ bb.h:                                             ; preds = %bb.g
 .preheader.i37:                                   ; preds = %bb.h
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bl = shl nsw i32 %i.as, 6
+  %6 = sext i32 %i.bl to i64
   %.pre.i38 = load ptr, ptr %i.bk, align 8, !tbaa !1938 ; 2 uses
   %.phi.trans.insert.i39 = getelementptr inbounds nuw i8, ptr %.pre.i38, i64 8
   %.pre31.i40 = load ptr, ptr %.phi.trans.insert.i39, align 8, !tbaa !1922
@@ -803,10 +799,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i45, %.preheader.i37
   %.030.i42 = phi i64 [ %i.bj, %.preheader.i37 ], [ %i.cb, %_ZN8facebook5velox6StatusD2Ev.exit19.i45 ] ; 3 uses
   %i.br = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.030.i42, i1 true)
-  %7 = trunc nuw nsw i64 %i.br to i32
-  %8 = or disjoint i32 %i.bl, %7
-  %9 = sext i32 %8 to i64                         ; 2 uses
-  %i.bs = getelementptr inbounds [16 x i8], ptr %.pre32.i41, i64 %9
+  %7 = or disjoint i64 %i.br, %6                  ; 2 uses
+  %i.bs = getelementptr inbounds [16 x i8], ptr %.pre32.i41, i64 %7
   %.sroa.0.0.copyload.i.i43 = load i64, ptr %i.bs, align 8, !tbaa !138, !noalias !1943 ; 3 uses
   %i.bt = icmp sgt i64 %.sroa.0.0.copyload.i.i43, -1
   br i1 %i.bt, label %bb.j, label %bb.k
@@ -824,7 +818,7 @@ bb.k:                                             ; preds = %bb.i
 _ZN8facebook5velox6StatusD2Ev.exit19.i45:         ; preds = %bb.k, %bb.j
   %i.bx = phi i64 [ %i.bu, %bb.j ], [ %i.bw, %bb.k ]
   %i.by = trunc i64 %i.bx to i32
-  %i.bz = getelementptr inbounds [4 x i8], ptr %i.bq, i64 %9
+  %i.bz = getelementptr inbounds [4 x i8], ptr %i.bq, i64 %7
   store i32 %i.by, ptr %i.bz, align 4, !tbaa !3
   %i.ca = add i64 %.030.i42, -1
   %i.cb = and i64 %i.ca, %.030.i42                ; 2 uses
@@ -868,6 +862,7 @@ bb.l:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 .lr.ph.i:                                         ; preds = %bb.l
   %i.cr = shl nsw i32 %i.cm, 6
+  %8 = sext i32 %i.cr to i64
   %.pre92.i = load ptr, ptr %.phi.trans.insert.i49, align 8, !tbaa !1922
   %.pre93.i = load ptr, ptr %.pre92.i, align 8, !tbaa !527, !noalias !1946
   %i.cs = load ptr, ptr %i.ck, align 8, !tbaa !1927, !nonnull !78, !align !199
@@ -925,10 +920,8 @@ _ZN8facebook5velox6StatusD2Ev.exit32.i:           ; preds = %bb.p, %bb.o
 bb.q:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit56.i, %.lr.ph.i
   %.01583.i = phi i64 [ %i.cq, %.lr.ph.i ], [ %i.dz, %_ZN8facebook5velox6StatusD2Ev.exit56.i ] ; 3 uses
   %i.dp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01583.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.dp to i32
-  %11 = or disjoint i32 %i.cr, %10
-  %12 = sext i32 %11 to i64                       ; 2 uses
-  %i.dq = getelementptr inbounds [16 x i8], ptr %.pre93.i, i64 %12
+  %9 = or disjoint i64 %i.dp, %8                  ; 2 uses
+  %i.dq = getelementptr inbounds [16 x i8], ptr %.pre93.i, i64 %9
   %.sroa.0.0.copyload.i40.i = load i64, ptr %i.dq, align 8, !tbaa !138, !noalias !1946 ; 3 uses
   %i.dr = icmp sgt i64 %.sroa.0.0.copyload.i40.i, -1
   br i1 %i.dr, label %bb.r, label %bb.s
@@ -946,7 +939,7 @@ bb.s:                                             ; preds = %bb.q
 _ZN8facebook5velox6StatusD2Ev.exit56.i:           ; preds = %bb.s, %bb.r
   %i.dv = phi i64 [ %i.ds, %bb.r ], [ %i.du, %bb.s ]
   %i.dw = trunc i64 %i.dv to i32
-  %i.dx = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %12
+  %i.dx = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %9
   store i32 %i.dw, ptr %i.dx, align 4, !tbaa !3
   %i.dy = add i64 %.01583.i, -1
   %i.dz = and i64 %i.dy, %.01583.i                ; 2 uses
@@ -980,6 +973,7 @@ bb.t:                                             ; preds = %._crit_edge
 
 .preheader.i55:                                   ; preds = %bb.t
   %i.eq = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %10 = sext i32 %i.d to i64
   %.pre.i56 = load ptr, ptr %i.eq, align 8, !tbaa !1938 ; 2 uses
   %.phi.trans.insert.i57 = getelementptr inbounds nuw i8, ptr %.pre.i56, i64 8
   %.pre31.i58 = load ptr, ptr %.phi.trans.insert.i57, align 8, !tbaa !1922
@@ -994,10 +988,8 @@ bb.t:                                             ; preds = %._crit_edge
 bb.u:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i63, %.preheader.i55
   %.030.i60 = phi i64 [ %i.ep, %.preheader.i55 ], [ %i.fg, %_ZN8facebook5velox6StatusD2Ev.exit19.i63 ] ; 3 uses
   %i.ew = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.030.i60, i1 true)
-  %13 = trunc nuw nsw i64 %i.ew to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64                       ; 2 uses
-  %i.ex = getelementptr inbounds [16 x i8], ptr %.pre32.i59, i64 %15
+  %11 = or disjoint i64 %i.ew, %10                ; 2 uses
+  %i.ex = getelementptr inbounds [16 x i8], ptr %.pre32.i59, i64 %11
   %.sroa.0.0.copyload.i.i61 = load i64, ptr %i.ex, align 8, !tbaa !138, !noalias !1955 ; 3 uses
   %i.ey = icmp sgt i64 %.sroa.0.0.copyload.i.i61, -1
   br i1 %i.ey, label %bb.v, label %bb.w
@@ -1015,7 +1007,7 @@ bb.w:                                             ; preds = %bb.u
 _ZN8facebook5velox6StatusD2Ev.exit19.i63:         ; preds = %bb.w, %bb.v
   %i.fc = phi i64 [ %i.ez, %bb.v ], [ %i.fb, %bb.w ]
   %i.fd = trunc i64 %i.fc to i32
-  %i.fe = getelementptr inbounds [4 x i8], ptr %i.ev, i64 %15
+  %i.fe = getelementptr inbounds [4 x i8], ptr %i.ev, i64 %11
   store i32 %i.fd, ptr %i.fe, align 4, !tbaa !3
   %i.ff = add nsw i64 %.030.i60, -1
   %i.fg = and i64 %i.ff, %.030.i60                ; 2 uses
@@ -1418,6 +1410,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %4 = sext i32 %i.d to i64
   %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !2066 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 8
   %.pre33.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !2047
@@ -1427,15 +1420,13 @@ bb.c:                                             ; preds = %bb.b
   %.phi.trans.insert37.i = getelementptr inbounds nuw i8, ptr %.pre36.i, i64 16
   %.pre38.i = load ptr, ptr %.phi.trans.insert37.i, align 8, !tbaa !2054
   %.pre39.i = load ptr, ptr %.pre38.i, align 8, !tbaa !514
+  %invariant.gep.i = getelementptr [4 x i8], ptr %.pre39.i, i64 %4
   br label %_ZN8facebook5velox6StatusD2Ev.exit22.i
 
 _ZN8facebook5velox6StatusD2Ev.exit22.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit22.i, %.preheader.i
   %.032.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.af, %_ZN8facebook5velox6StatusD2Ev.exit22.i ] ; 3 uses
   %i.ac = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.ac to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64
-  %i.ad = getelementptr inbounds [4 x i8], ptr %.pre39.i, i64 %6
+  %i.ad = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.ac
   store i32 %.pre34.i, ptr %i.ad, align 4, !tbaa !3
   %i.ae = add nsw i64 %.032.i, -1
   %i.af = and i64 %i.ae, %.032.i                  ; 2 uses
@@ -1472,6 +1463,7 @@ bb.e:                                             ; preds = %bb.d
 .preheader.i37:                                   ; preds = %bb.e
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.az = shl nsw i32 %i.ag, 6
+  %5 = sext i32 %i.az to i64
   %.pre.i38 = load ptr, ptr %i.ay, align 8, !tbaa !2066 ; 2 uses
   %.phi.trans.insert.i39 = getelementptr inbounds nuw i8, ptr %.pre.i38, i64 8
   %.pre33.i40 = load ptr, ptr %.phi.trans.insert.i39, align 8, !tbaa !2047
@@ -1481,15 +1473,13 @@ bb.e:                                             ; preds = %bb.d
   %.phi.trans.insert37.i44 = getelementptr inbounds nuw i8, ptr %.pre36.i43, i64 16
   %.pre38.i45 = load ptr, ptr %.phi.trans.insert37.i44, align 8, !tbaa !2054
   %.pre39.i46 = load ptr, ptr %.pre38.i45, align 8, !tbaa !514
+  %invariant.gep.i47 = getelementptr [4 x i8], ptr %.pre39.i46, i64 %5
   br label %_ZN8facebook5velox6StatusD2Ev.exit22.i47
 
 _ZN8facebook5velox6StatusD2Ev.exit22.i47:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit22.i47, %.preheader.i37
   %.032.i48 = phi i64 [ %i.ax, %.preheader.i37 ], [ %i.bd, %_ZN8facebook5velox6StatusD2Ev.exit22.i47 ] ; 3 uses
   %i.ba = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i48, i1 true)
-  %7 = trunc nuw nsw i64 %i.ba to i32
-  %8 = or disjoint i32 %i.az, %7
-  %9 = sext i32 %8 to i64
-  %i.bb = getelementptr inbounds [4 x i8], ptr %.pre39.i46, i64 %9
+  %i.bb = getelementptr [4 x i8], ptr %invariant.gep.i47, i64 %i.ba
   store i32 %.pre34.i41, ptr %i.bb, align 4, !tbaa !3
   %i.bc = add i64 %.032.i48, -1
   %i.bd = and i64 %i.bc, %.032.i48                ; 2 uses
@@ -1533,12 +1523,14 @@ bb.f:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions7iceberg12DaysFunctionINS1_10VectorExecEEES8_NS0_4DateENS0_15ConstantCheckerIJSA_EEEJSA_EEEE7iterateIJNS1_20ConstantVectorReaderISA_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.lr.ph.i: ; preds = %bb.f
   %i.bs = shl nsw i32 %i.bn, 6
+  %6 = sext i32 %i.bs to i64
   %.pre88.i = load ptr, ptr %.phi.trans.insert.i52, align 8, !tbaa !2047
   %.pre89.i = load i32, ptr %.pre88.i, align 4, !tbaa !3, !noalias !2074
   %.pre91.i = load ptr, ptr %.phi.trans.insert81.i, align 8, !tbaa !2053
   %.phi.trans.insert92.i = getelementptr inbounds nuw i8, ptr %.pre91.i, i64 16
   %.pre93.i = load ptr, ptr %.phi.trans.insert92.i, align 8, !tbaa !2054
   %.pre94.i = load ptr, ptr %.pre93.i, align 8, !tbaa !514
+  %invariant.gep.i55 = getelementptr [4 x i8], ptr %.pre94.i, i64 %6
   br label %_ZN8facebook5velox6StatusD2Ev.exit54.i
 
 bb.g:                                             ; preds = %bb.f
@@ -1625,10 +1617,7 @@ _ZN8facebook5velox6StatusD2Ev.exit35.i:           ; preds = %_ZN8facebook5velox6
 _ZN8facebook5velox6StatusD2Ev.exit54.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit54.i, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions7iceberg12DaysFunctionINS1_10VectorExecEEES8_NS0_4DateENS0_15ConstantCheckerIJSA_EEEJSA_EEEE7iterateIJNS1_20ConstantVectorReaderISA_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.lr.ph.i
   %.01575.i = phi i64 [ %i.br, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions7iceberg12DaysFunctionINS1_10VectorExecEEES8_NS0_4DateENS0_15ConstantCheckerIJSA_EEEJSA_EEEE7iterateIJNS1_20ConstantVectorReaderISA_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.lr.ph.i ], [ %i.cl, %_ZN8facebook5velox6StatusD2Ev.exit54.i ] ; 3 uses
   %i.ci = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01575.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.ci to i32
-  %11 = or disjoint i32 %i.bs, %10
-  %12 = sext i32 %11 to i64
-  %i.cj = getelementptr inbounds [4 x i8], ptr %.pre94.i, i64 %12
+  %i.cj = getelementptr [4 x i8], ptr %invariant.gep.i55, i64 %i.ci
   store i32 %.pre89.i, ptr %i.cj, align 4, !tbaa !3
   %i.ck = add i64 %.01575.i, -1
   %i.cl = and i64 %i.ck, %.01575.i                ; 2 uses
@@ -1662,6 +1651,7 @@ bb.h:                                             ; preds = %._crit_edge
 
 .preheader.i56:                                   ; preds = %bb.h
   %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %7 = sext i32 %i.d to i64
   %.pre.i57 = load ptr, ptr %i.dc, align 8, !tbaa !2066 ; 2 uses
   %.phi.trans.insert.i58 = getelementptr inbounds nuw i8, ptr %.pre.i57, i64 8
   %.pre33.i59 = load ptr, ptr %.phi.trans.insert.i58, align 8, !tbaa !2047
@@ -1671,15 +1661,13 @@ bb.h:                                             ; preds = %._crit_edge
   %.phi.trans.insert37.i63 = getelementptr inbounds nuw i8, ptr %.pre36.i62, i64 16
   %.pre38.i64 = load ptr, ptr %.phi.trans.insert37.i63, align 8, !tbaa !2054
   %.pre39.i65 = load ptr, ptr %.pre38.i64, align 8, !tbaa !514
+  %invariant.gep.i70 = getelementptr [4 x i8], ptr %.pre39.i65, i64 %7
   br label %_ZN8facebook5velox6StatusD2Ev.exit22.i66
 
 _ZN8facebook5velox6StatusD2Ev.exit22.i66:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit22.i66, %.preheader.i56
   %.032.i67 = phi i64 [ %i.db, %.preheader.i56 ], [ %i.dg, %_ZN8facebook5velox6StatusD2Ev.exit22.i66 ] ; 3 uses
   %i.dd = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.032.i67, i1 true)
-  %13 = trunc nuw nsw i64 %i.dd to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64
-  %i.de = getelementptr inbounds [4 x i8], ptr %.pre39.i65, i64 %15
+  %i.de = getelementptr [4 x i8], ptr %invariant.gep.i70, i64 %i.dd
   store i32 %.pre34.i60, ptr %i.de, align 4, !tbaa !3
   %i.df = add nsw i64 %.032.i67, -1
   %i.dg = and i64 %i.df, %.032.i67                ; 2 uses
@@ -1996,6 +1984,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %4 = sext i32 %i.d to i64
   %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !2107 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 8
   %.pre30.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !2088
@@ -2010,12 +1999,10 @@ bb.c:                                             ; preds = %bb.b
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i, %.preheader.i
   %.029.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.ah, %_ZN8facebook5velox6StatusD2Ev.exit19.i ] ; 3 uses
   %i.ac = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.ac to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64                         ; 2 uses
-  %i.ad = getelementptr inbounds [4 x i8], ptr %.pre31.i, i64 %6
+  %5 = or disjoint i64 %i.ac, %4                  ; 2 uses
+  %i.ad = getelementptr inbounds [4 x i8], ptr %.pre31.i, i64 %5
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !3, !noalias !2108
-  %i.af = getelementptr inbounds [4 x i8], ptr %.pre36.i, i64 %6
+  %i.af = getelementptr inbounds [4 x i8], ptr %.pre36.i, i64 %5
   store i32 %i.ae, ptr %i.af, align 4, !tbaa !3
   %i.ag = add nsw i64 %.029.i, -1
   %i.ah = and i64 %i.ag, %.029.i                  ; 2 uses
@@ -2052,6 +2039,7 @@ bb.e:                                             ; preds = %bb.d
 .preheader.i37:                                   ; preds = %bb.e
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bb = shl nsw i32 %i.ai, 6
+  %6 = sext i32 %i.bb to i64
   %.pre.i38 = load ptr, ptr %i.ba, align 8, !tbaa !2107 ; 2 uses
   %.phi.trans.insert.i39 = getelementptr inbounds nuw i8, ptr %.pre.i38, i64 8
   %.pre30.i40 = load ptr, ptr %.phi.trans.insert.i39, align 8, !tbaa !2088
@@ -2066,12 +2054,10 @@ bb.e:                                             ; preds = %bb.d
 _ZN8facebook5velox6StatusD2Ev.exit19.i47:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i47, %.preheader.i37
   %.029.i48 = phi i64 [ %i.az, %.preheader.i37 ], [ %i.bh, %_ZN8facebook5velox6StatusD2Ev.exit19.i47 ] ; 3 uses
   %i.bc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i48, i1 true)
-  %7 = trunc nuw nsw i64 %i.bc to i32
-  %8 = or disjoint i32 %i.bb, %7
-  %9 = sext i32 %8 to i64                         ; 2 uses
-  %i.bd = getelementptr inbounds [4 x i8], ptr %.pre31.i41, i64 %9
+  %7 = or disjoint i64 %i.bc, %6                  ; 2 uses
+  %i.bd = getelementptr inbounds [4 x i8], ptr %.pre31.i41, i64 %7
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !3, !noalias !2112
-  %i.bf = getelementptr inbounds [4 x i8], ptr %.pre36.i46, i64 %9
+  %i.bf = getelementptr inbounds [4 x i8], ptr %.pre36.i46, i64 %7
   store i32 %i.be, ptr %i.bf, align 4, !tbaa !3
   %i.bg = add i64 %.029.i48, -1
   %i.bh = and i64 %i.bg, %.029.i48                ; 2 uses
@@ -2115,6 +2101,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions7iceberg12DaysFunctionINS1_10VectorExecEEES8_NS0_4DateENS0_15ConstantCheckerIJSA_EEEJSA_EEEE7iterateIJNS1_16FlatVectorReaderISA_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.lr.ph.i: ; preds = %bb.f
   %i.bw = shl nsw i32 %i.br, 6
+  %8 = sext i32 %i.bw to i64
   %.pre85.i = load ptr, ptr %.phi.trans.insert.i52, align 8, !tbaa !2088
   %.pre86.i = load ptr, ptr %.pre85.i, align 8, !tbaa !1081, !noalias !2115
   %.pre88.i = load ptr, ptr %.phi.trans.insert78.i, align 8, !tbaa !2093
@@ -2245,12 +2232,10 @@ _ZN8facebook5velox6StatusD2Ev.exit32.i:           ; preds = %_ZN8facebook5velox6
 _ZN8facebook5velox6StatusD2Ev.exit51.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit51.i, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions7iceberg12DaysFunctionINS1_10VectorExecEEES8_NS0_4DateENS0_15ConstantCheckerIJSA_EEEJSA_EEEE7iterateIJNS1_16FlatVectorReaderISA_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.lr.ph.i
   %.01572.i = phi i64 [ %i.bv, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions7iceberg12DaysFunctionINS1_10VectorExecEEES8_NS0_4DateENS0_15ConstantCheckerIJSA_EEEJSA_EEEE7iterateIJNS1_16FlatVectorReaderISA_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.lr.ph.i ], [ %i.dz, %_ZN8facebook5velox6StatusD2Ev.exit51.i ] ; 3 uses
   %i.du = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01572.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.du to i32
-  %11 = or disjoint i32 %i.bw, %10
-  %12 = sext i32 %11 to i64                       ; 2 uses
-  %i.dv = getelementptr inbounds [4 x i8], ptr %.pre86.i, i64 %12
+  %9 = or disjoint i64 %i.du, %8                  ; 2 uses
+  %i.dv = getelementptr inbounds [4 x i8], ptr %.pre86.i, i64 %9
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !3, !noalias !2115
-  %i.dx = getelementptr inbounds [4 x i8], ptr %.pre91.i, i64 %12
+  %i.dx = getelementptr inbounds [4 x i8], ptr %.pre91.i, i64 %9
   store i32 %i.dw, ptr %i.dx, align 4, !tbaa !3
   %i.dy = add i64 %.01572.i, -1
   %i.dz = and i64 %i.dy, %.01572.i                ; 2 uses
@@ -2284,6 +2269,7 @@ bb.h:                                             ; preds = %._crit_edge
 
 .preheader.i56:                                   ; preds = %bb.h
   %i.eq = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %10 = sext i32 %i.d to i64
   %.pre.i57 = load ptr, ptr %i.eq, align 8, !tbaa !2107 ; 2 uses
   %.phi.trans.insert.i58 = getelementptr inbounds nuw i8, ptr %.pre.i57, i64 8
   %.pre30.i59 = load ptr, ptr %.phi.trans.insert.i58, align 8, !tbaa !2088
@@ -2298,12 +2284,10 @@ bb.h:                                             ; preds = %._crit_edge
 _ZN8facebook5velox6StatusD2Ev.exit19.i66:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i66, %.preheader.i56
   %.029.i67 = phi i64 [ %i.ep, %.preheader.i56 ], [ %i.ew, %_ZN8facebook5velox6StatusD2Ev.exit19.i66 ] ; 3 uses
   %i.er = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i67, i1 true)
-  %13 = trunc nuw nsw i64 %i.er to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64                       ; 2 uses
-  %i.es = getelementptr inbounds [4 x i8], ptr %.pre31.i60, i64 %15
+  %11 = or disjoint i64 %i.er, %10                ; 2 uses
+  %i.es = getelementptr inbounds [4 x i8], ptr %.pre31.i60, i64 %11
   %i.et = load i32, ptr %i.es, align 4, !tbaa !3, !noalias !2126
-  %i.eu = getelementptr inbounds [4 x i8], ptr %.pre36.i65, i64 %15
+  %i.eu = getelementptr inbounds [4 x i8], ptr %.pre36.i65, i64 %11
   store i32 %i.et, ptr %i.eu, align 4, !tbaa !3
   %i.ev = add nsw i64 %.029.i67, -1
   %i.ew = and i64 %i.ev, %.029.i67                ; 2 uses
@@ -2630,17 +2614,19 @@ bb.i:                                             ; preds = %bb.h
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !2136, !nonnull !78, !align !199
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !514 ; 3 uses
-  br i1 %i.bw, label %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us, label %.preheader.i37.split
+  br i1 %i.bw, label %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us.preheader, label %.preheader.i37.split
 
-_ZN8facebook5velox6StatusD2Ev.exit19.i47.us:      ; preds = %.preheader.i37, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us
-  %.029.i46.us = phi i64 [ %i.cj, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us ], [ %i.bt, %.preheader.i37 ] ; 3 uses
+_ZN8facebook5velox6StatusD2Ev.exit19.i47.us.preheader: ; preds = %.preheader.i37
+  %4 = sext i32 %i.bv to i64
+  br label %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us
+
+_ZN8facebook5velox6StatusD2Ev.exit19.i47.us:      ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us.preheader, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us
+  %.029.i46.us = phi i64 [ %i.cj, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us ], [ %i.bt, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us.preheader ] ; 3 uses
   %i.ce = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i46.us, i1 true)
-  %4 = trunc nuw nsw i64 %i.ce to i32
-  %5 = or disjoint i32 %i.bv, %4
-  %6 = sext i32 %5 to i64                         ; 2 uses
-  %i.cf = getelementptr inbounds [4 x i8], ptr %.pre33.i43, i64 %6
+  %5 = or disjoint i64 %i.ce, %4                  ; 2 uses
+  %i.cf = getelementptr inbounds [4 x i8], ptr %.pre33.i43, i64 %5
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !3, !noalias !2149
-  %i.ch = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %6
+  %i.ch = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %5
   store i32 %i.cg, ptr %i.ch, align 4, !tbaa !3
   %i.ci = add i64 %.029.i46.us, -1
   %i.cj = and i64 %i.ci, %.029.i46.us             ; 2 uses
@@ -2651,19 +2637,21 @@ _ZN8facebook5velox6StatusD2Ev.exit19.i47.us:      ; preds = %.preheader.i37, %_Z
   %i.ck = getelementptr inbounds nuw i8, ptr %.pre31.i41, i64 59
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !945, !range !77, !noalias !2149, !noundef !78
   %i.cm = trunc nuw i8 %i.cl to i1
-  br i1 %i.cm, label %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74, label %.preheader.i37.split.split
+  br i1 %i.cm, label %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74.preheader, label %.preheader.i37.split.split
 
-_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74:    ; preds = %.preheader.i37.split, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74
-  %.029.i46.us73 = phi i64 [ %i.cu, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74 ], [ %i.bt, %.preheader.i37.split ] ; 3 uses
+_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74.preheader: ; preds = %.preheader.i37.split
+  %6 = sext i32 %i.bv to i64
+  %invariant.gep = getelementptr [4 x i8], ptr %i.cd, i64 %6
+  br label %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74
+
+_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74:    ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74.preheader, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74
+  %.029.i46.us73 = phi i64 [ %i.cu, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74 ], [ %i.bt, %_ZN8facebook5velox6StatusD2Ev.exit19.i47.us74.preheader ] ; 3 uses
   %i.cn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i46.us73, i1 true)
-  %7 = trunc nuw nsw i64 %i.cn to i32
-  %8 = or disjoint i32 %i.bv, %7
-  %9 = sext i32 %8 to i64
   %i.co = load i32, ptr %i.by, align 8, !tbaa !946, !noalias !2149
   %i.cp = sext i32 %i.co to i64
   %i.cq = getelementptr inbounds [4 x i8], ptr %.pre33.i43, i64 %i.cp
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !3, !noalias !2149
-  %i.cs = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %9
+  %i.cs = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.cn
   store i32 %i.cr, ptr %i.cs, align 4, !tbaa !3
   %i.ct = add i64 %.029.i46.us73, -1
   %i.cu = and i64 %i.ct, %.029.i46.us73           ; 2 uses
@@ -2672,21 +2660,20 @@ _ZN8facebook5velox6StatusD2Ev.exit19.i47.us74:    ; preds = %.preheader.i37.spli
 
 .preheader.i37.split.split:                       ; preds = %.preheader.i37.split
   %i.cv = load ptr, ptr %i.bx, align 8, !tbaa !947, !noalias !2149
+  %7 = sext i32 %i.bv to i64
   br label %_ZN8facebook5velox6StatusD2Ev.exit19.i47
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i47:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i47, %.preheader.i37.split.split
   %.029.i46 = phi i64 [ %i.bt, %.preheader.i37.split.split ], [ %i.df, %_ZN8facebook5velox6StatusD2Ev.exit19.i47 ] ; 3 uses
   %i.cw = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i46, i1 true)
-  %10 = trunc nuw nsw i64 %i.cw to i32
-  %11 = or disjoint i32 %i.bv, %10
-  %12 = sext i32 %11 to i64                       ; 2 uses
-  %i.cx = shl nsw i64 %12, 2
+  %8 = or disjoint i64 %i.cw, %7                  ; 2 uses
+  %i.cx = shl nsw i64 %8, 2
   %i.cy = getelementptr inbounds i8, ptr %i.cv, i64 %i.cx
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !3, !noalias !2149
   %i.da = sext i32 %i.cz to i64
   %i.db = getelementptr inbounds [4 x i8], ptr %.pre33.i43, i64 %i.da
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !3, !noalias !2149
-  %i.dd = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %12
+  %i.dd = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %8
   store i32 %i.dc, ptr %i.dd, align 4, !tbaa !3
   %i.de = add i64 %.029.i46, -1
   %i.df = and i64 %i.de, %.029.i46                ; 2 uses
@@ -2991,17 +2978,19 @@ bb.p:                                             ; preds = %._crit_edge
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 16
   %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !2136, !nonnull !78, !align !199
   %i.is = load ptr, ptr %i.ir, align 8, !tbaa !514 ; 3 uses
-  br i1 %i.il, label %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us, label %.preheader.i57.split
+  br i1 %i.il, label %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us.preheader, label %.preheader.i57.split
 
-_ZN8facebook5velox6StatusD2Ev.exit19.i67.us:      ; preds = %.preheader.i57, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us
-  %.029.i66.us = phi i64 [ %i.iy, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us ], [ %i.ij, %.preheader.i57 ] ; 3 uses
+_ZN8facebook5velox6StatusD2Ev.exit19.i67.us.preheader: ; preds = %.preheader.i57
+  %9 = sext i32 %i.d to i64
+  br label %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us
+
+_ZN8facebook5velox6StatusD2Ev.exit19.i67.us:      ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us.preheader, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us
+  %.029.i66.us = phi i64 [ %i.iy, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us ], [ %i.ij, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us.preheader ] ; 3 uses
   %i.it = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i66.us, i1 true)
-  %13 = trunc nuw nsw i64 %i.it to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64                       ; 2 uses
-  %i.iu = getelementptr inbounds [4 x i8], ptr %.pre33.i63, i64 %15
+  %10 = or disjoint i64 %i.it, %9                 ; 2 uses
+  %i.iu = getelementptr inbounds [4 x i8], ptr %.pre33.i63, i64 %10
   %i.iv = load i32, ptr %i.iu, align 4, !tbaa !3, !noalias !2164
-  %i.iw = getelementptr inbounds [4 x i8], ptr %i.is, i64 %15
+  %i.iw = getelementptr inbounds [4 x i8], ptr %i.is, i64 %10
   store i32 %i.iv, ptr %i.iw, align 4, !tbaa !3
   %i.ix = add nsw i64 %.029.i66.us, -1
   %i.iy = and i64 %i.ix, %.029.i66.us             ; 2 uses
@@ -3012,19 +3001,21 @@ _ZN8facebook5velox6StatusD2Ev.exit19.i67.us:      ; preds = %.preheader.i57, %_Z
   %i.iz = getelementptr inbounds nuw i8, ptr %.pre31.i61, i64 59
   %i.ja = load i8, ptr %i.iz, align 1, !tbaa !945, !range !77, !noalias !2164, !noundef !78
   %i.jb = trunc nuw i8 %i.ja to i1
-  br i1 %i.jb, label %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83, label %.preheader.i57.split.split
+  br i1 %i.jb, label %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83.preheader, label %.preheader.i57.split.split
 
-_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83:    ; preds = %.preheader.i57.split, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83
-  %.029.i66.us82 = phi i64 [ %i.jj, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83 ], [ %i.ij, %.preheader.i57.split ] ; 3 uses
+_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83.preheader: ; preds = %.preheader.i57.split
+  %11 = sext i32 %i.d to i64
+  %invariant.gep113 = getelementptr [4 x i8], ptr %i.is, i64 %11
+  br label %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83
+
+_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83:    ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83.preheader, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83
+  %.029.i66.us82 = phi i64 [ %i.jj, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83 ], [ %i.ij, %_ZN8facebook5velox6StatusD2Ev.exit19.i67.us83.preheader ] ; 3 uses
   %i.jc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i66.us82, i1 true)
-  %16 = trunc nuw nsw i64 %i.jc to i32
-  %17 = or disjoint i32 %i.d, %16
-  %18 = sext i32 %17 to i64
   %i.jd = load i32, ptr %i.in, align 8, !tbaa !946, !noalias !2164
   %i.je = sext i32 %i.jd to i64
   %i.jf = getelementptr inbounds [4 x i8], ptr %.pre33.i63, i64 %i.je
   %i.jg = load i32, ptr %i.jf, align 4, !tbaa !3, !noalias !2164
-  %i.jh = getelementptr inbounds [4 x i8], ptr %i.is, i64 %18
+  %i.jh = getelementptr [4 x i8], ptr %invariant.gep113, i64 %i.jc
   store i32 %i.jg, ptr %i.jh, align 4, !tbaa !3
   %i.ji = add nsw i64 %.029.i66.us82, -1
   %i.jj = and i64 %i.ji, %.029.i66.us82           ; 2 uses
@@ -3033,21 +3024,20 @@ _ZN8facebook5velox6StatusD2Ev.exit19.i67.us83:    ; preds = %.preheader.i57.spli
 
 .preheader.i57.split.split:                       ; preds = %.preheader.i57.split
   %i.jk = load ptr, ptr %i.im, align 8, !tbaa !947, !noalias !2164
+  %12 = sext i32 %i.d to i64
   br label %_ZN8facebook5velox6StatusD2Ev.exit19.i67
 
 _ZN8facebook5velox6StatusD2Ev.exit19.i67:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i67, %.preheader.i57.split.split
   %.029.i66 = phi i64 [ %i.ij, %.preheader.i57.split.split ], [ %i.ju, %_ZN8facebook5velox6StatusD2Ev.exit19.i67 ] ; 3 uses
   %i.jl = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.029.i66, i1 true)
-  %19 = trunc nuw nsw i64 %i.jl to i32
-  %20 = or disjoint i32 %i.d, %19
-  %21 = sext i32 %20 to i64                       ; 2 uses
-  %i.jm = shl nsw i64 %21, 2
+  %13 = or disjoint i64 %i.jl, %12                ; 2 uses
+  %i.jm = shl nsw i64 %13, 2
   %i.jn = getelementptr inbounds i8, ptr %i.jk, i64 %i.jm
   %i.jo = load i32, ptr %i.jn, align 4, !tbaa !3, !noalias !2164
   %i.jp = sext i32 %i.jo to i64
   %i.jq = getelementptr inbounds [4 x i8], ptr %.pre33.i63, i64 %i.jp
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !3, !noalias !2164
-  %i.js = getelementptr inbounds [4 x i8], ptr %i.is, i64 %21
+  %i.js = getelementptr inbounds [4 x i8], ptr %i.is, i64 %13
   store i32 %i.jr, ptr %i.js, align 4, !tbaa !3
   %i.jt = add nsw i64 %.029.i66, -1
   %i.ju = and i64 %i.jt, %.029.i66                ; 2 uses
@@ -3450,6 +3440,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %4 = sext i32 %i.d to i64
   %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !2258 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 8
   %.pre38.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !2239
@@ -3463,6 +3454,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !2246, !nonnull !78, !align !199
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !514
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.aj, i64 %4
   %i.ak = icmp slt i64 %.sroa.0.0.copyload.i16.pre.i, 0
   %..i = select i1 %i.ak, i64 %i.ad, i64 %i.ae
   %i.al = trunc i64 %..i to i32
@@ -3471,10 +3463,7 @@ bb.c:                                             ; preds = %bb.b
 _ZN8facebook5velox6StatusD2Ev.exit26.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit26.i, %.preheader.i
   %.037.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.ap, %_ZN8facebook5velox6StatusD2Ev.exit26.i ] ; 3 uses
   %i.am = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.037.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.am to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64
-  %i.an = getelementptr inbounds [4 x i8], ptr %i.aj, i64 %6
+  %i.an = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.am
   store i32 %i.al, ptr %i.an, align 4, !tbaa !3
   %i.ao = add nsw i64 %.037.i, -1
   %i.ap = and i64 %i.ao, %.037.i                  ; 2 uses
@@ -3511,6 +3500,7 @@ bb.e:                                             ; preds = %bb.d
 .preheader.i37:                                   ; preds = %bb.e
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bj = shl nsw i32 %i.aq, 6
+  %5 = sext i32 %i.bj to i64
   %.pre.i38 = load ptr, ptr %i.bi, align 8, !tbaa !2258 ; 2 uses
   %.phi.trans.insert.i39 = getelementptr inbounds nuw i8, ptr %.pre.i38, i64 8
   %.pre38.i40 = load ptr, ptr %.phi.trans.insert.i39, align 8, !tbaa !2239
@@ -3524,6 +3514,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !2246, !nonnull !78, !align !199
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !514
+  %invariant.gep.i43 = getelementptr [4 x i8], ptr %i.br, i64 %5
   %i.bs = icmp slt i64 %.sroa.0.0.copyload.i16.pre.i41, 0
   %..i45 = select i1 %i.bs, i64 %i.bl, i64 %i.bm
   %i.bt = trunc i64 %..i45 to i32
@@ -3532,10 +3523,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN8facebook5velox6StatusD2Ev.exit26.i43:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit26.i43, %.preheader.i37
   %.037.i44 = phi i64 [ %i.bh, %.preheader.i37 ], [ %i.bx, %_ZN8facebook5velox6StatusD2Ev.exit26.i43 ] ; 3 uses
   %i.bu = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.037.i44, i1 true)
-  %7 = trunc nuw nsw i64 %i.bu to i32
-  %8 = or disjoint i32 %i.bj, %7
-  %9 = sext i32 %8 to i64
-  %i.bv = getelementptr inbounds [4 x i8], ptr %i.br, i64 %9
+  %i.bv = getelementptr [4 x i8], ptr %invariant.gep.i43, i64 %i.bu
   store i32 %i.bt, ptr %i.bv, align 4, !tbaa !3
   %i.bw = add i64 %.037.i44, -1
   %i.bx = and i64 %i.bw, %.037.i44                ; 2 uses
@@ -3579,6 +3567,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 .lr.ph.i:                                         ; preds = %bb.f
   %i.cn = shl nsw i32 %i.ci, 6
+  %6 = sext i32 %i.cn to i64
   %.pre98.i = load ptr, ptr %.phi.trans.insert.i49, align 8, !tbaa !2239
   %.sroa.0.0.copyload.i47.pre.i = load i64, ptr %.pre98.i, align 8, !tbaa !138, !noalias !2266 ; 3 uses
   %.nonneg86.i = xor i64 %.sroa.0.0.copyload.i47.pre.i, -1
@@ -3589,6 +3578,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZZN8faceb
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !2246, !nonnull !78, !align !199
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !514
+  %invariant.gep.i54 = getelementptr [4 x i8], ptr %i.cu, i64 %6
   %i.cv = icmp slt i64 %.sroa.0.0.copyload.i47.pre.i, 0
   %.102.i = select i1 %i.cv, i64 %i.cp, i64 %i.cq
   %i.cw = trunc i64 %.102.i to i32
@@ -3685,10 +3675,7 @@ _ZN8facebook5velox6StatusD2Ev.exit39.i:           ; preds = %_ZN8facebook5velox6
 _ZN8facebook5velox6StatusD2Ev.exit63.i:           ; preds = %_ZN8facebook5velox6StatusD2Ev.exit63.i, %.lr.ph.i
   %.01590.i = phi i64 [ %i.cm, %.lr.ph.i ], [ %i.dy, %_ZN8facebook5velox6StatusD2Ev.exit63.i ] ; 3 uses
   %i.dv = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01590.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.dv to i32
-  %11 = or disjoint i32 %i.cn, %10
-  %12 = sext i32 %11 to i64
-  %i.dw = getelementptr inbounds [4 x i8], ptr %i.cu, i64 %12
+  %i.dw = getelementptr [4 x i8], ptr %invariant.gep.i54, i64 %i.dv
   store i32 %i.cw, ptr %i.dw, align 4, !tbaa !3
   %i.dx = add i64 %.01590.i, -1
   %i.dy = and i64 %i.dx, %.01590.i                ; 2 uses
@@ -3722,6 +3709,7 @@ bb.h:                                             ; preds = %._crit_edge
 
 .preheader.i55:                                   ; preds = %bb.h
   %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %7 = sext i32 %i.d to i64
   %.pre.i56 = load ptr, ptr %i.ep, align 8, !tbaa !2258 ; 2 uses
   %.phi.trans.insert.i57 = getelementptr inbounds nuw i8, ptr %.pre.i56, i64 8
   %.pre38.i58 = load ptr, ptr %.phi.trans.insert.i57, align 8, !tbaa !2239
@@ -3735,6 +3723,7 @@ bb.h:                                             ; preds = %._crit_edge
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 16
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !2246, !nonnull !78, !align !199
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !514
+  %invariant.gep.i65 = getelementptr [4 x i8], ptr %i.ex, i64 %7
   %i.ey = icmp slt i64 %.sroa.0.0.copyload.i16.pre.i59, 0
   %..i63 = select i1 %i.ey, i64 %i.er, i64 %i.es
   %i.ez = trunc i64 %..i63 to i32
@@ -3743,10 +3732,7 @@ bb.h:                                             ; preds = %._crit_edge
 _ZN8facebook5velox6StatusD2Ev.exit26.i61:         ; preds = %_ZN8facebook5velox6StatusD2Ev.exit26.i61, %.preheader.i55
   %.037.i62 = phi i64 [ %i.eo, %.preheader.i55 ], [ %i.fd, %_ZN8facebook5velox6StatusD2Ev.exit26.i61 ] ; 3 uses
   %i.fa = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.037.i62, i1 true)
-  %13 = trunc nuw nsw i64 %i.fa to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64
-  %i.fb = getelementptr inbounds [4 x i8], ptr %i.ex, i64 %15
+  %i.fb = getelementptr [4 x i8], ptr %invariant.gep.i65, i64 %i.fa
   store i32 %i.ez, ptr %i.fb, align 4, !tbaa !3
   %i.fc = add nsw i64 %.037.i62, -1
   %i.fd = and i64 %i.fc, %.037.i62                ; 2 uses
@@ -3966,6 +3952,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %4 = sext i32 %i.d to i64
   %.pre.i = load ptr, ptr %i.ab, align 8, !tbaa !2296 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 8
   %.pre31.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !2280
@@ -3980,10 +3967,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i, %.preheader.i
   %.030.i = phi i64 [ %i.aa, %.preheader.i ], [ %i.ar, %_ZN8facebook5velox6StatusD2Ev.exit19.i ] ; 3 uses
   %i.ah = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.030.i, i1 true)
-  %4 = trunc nuw nsw i64 %i.ah to i32
-  %5 = or disjoint i32 %i.d, %4
-  %6 = sext i32 %5 to i64                         ; 2 uses
-  %i.ai = getelementptr inbounds [16 x i8], ptr %.pre32.i, i64 %6
+  %5 = or disjoint i64 %i.ah, %4                  ; 2 uses
+  %i.ai = getelementptr inbounds [16 x i8], ptr %.pre32.i, i64 %5
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.ai, align 8, !tbaa !138, !noalias !2297 ; 3 uses
   %i.aj = icmp sgt i64 %.sroa.0.0.copyload.i.i, -1
   br i1 %i.aj, label %bb.e, label %bb.f
@@ -4001,7 +3986,7 @@ bb.f:                                             ; preds = %bb.d
 _ZN8facebook5velox6StatusD2Ev.exit19.i:           ; preds = %bb.f, %bb.e
   %i.an = phi i64 [ %i.ak, %bb.e ], [ %i.am, %bb.f ]
   %i.ao = trunc i64 %i.an to i32
-  %i.ap = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %6
+  %i.ap = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %5
   store i32 %i.ao, ptr %i.ap, align 4, !tbaa !3
   %i.aq = add nsw i64 %.030.i, -1
   %i.ar = and i64 %i.aq, %.030.i                  ; 2 uses
@@ -4038,6 +4023,7 @@ bb.h:                                             ; preds = %bb.g
 .preheader.i37:                                   ; preds = %bb.h
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bl = shl nsw i32 %i.as, 6
+  %6 = sext i32 %i.bl to i64
   %.pre.i38 = load ptr, ptr %i.bk, align 8, !tbaa !2296 ; 2 uses
   %.phi.trans.insert.i39 = getelementptr inbounds nuw i8, ptr %.pre.i38, i64 8
   %.pre31.i40 = load ptr, ptr %.phi.trans.insert.i39, align 8, !tbaa !2280
@@ -4052,10 +4038,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i45, %.preheader.i37
   %.030.i42 = phi i64 [ %i.bj, %.preheader.i37 ], [ %i.cb, %_ZN8facebook5velox6StatusD2Ev.exit19.i45 ] ; 3 uses
   %i.br = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.030.i42, i1 true)
-  %7 = trunc nuw nsw i64 %i.br to i32
-  %8 = or disjoint i32 %i.bl, %7
-  %9 = sext i32 %8 to i64                         ; 2 uses
-  %i.bs = getelementptr inbounds [16 x i8], ptr %.pre32.i41, i64 %9
+  %7 = or disjoint i64 %i.br, %6                  ; 2 uses
+  %i.bs = getelementptr inbounds [16 x i8], ptr %.pre32.i41, i64 %7
   %.sroa.0.0.copyload.i.i43 = load i64, ptr %i.bs, align 8, !tbaa !138, !noalias !2301 ; 3 uses
   %i.bt = icmp sgt i64 %.sroa.0.0.copyload.i.i43, -1
   br i1 %i.bt, label %bb.j, label %bb.k
@@ -4073,7 +4057,7 @@ bb.k:                                             ; preds = %bb.i
 _ZN8facebook5velox6StatusD2Ev.exit19.i45:         ; preds = %bb.k, %bb.j
   %i.bx = phi i64 [ %i.bu, %bb.j ], [ %i.bw, %bb.k ]
   %i.by = trunc i64 %i.bx to i32
-  %i.bz = getelementptr inbounds [4 x i8], ptr %i.bq, i64 %9
+  %i.bz = getelementptr inbounds [4 x i8], ptr %i.bq, i64 %7
   store i32 %i.by, ptr %i.bz, align 4, !tbaa !3
   %i.ca = add i64 %.030.i42, -1
   %i.cb = and i64 %i.ca, %.030.i42                ; 2 uses
@@ -4117,6 +4101,7 @@ bb.l:                                             ; preds = %.lr.ph, %_ZZN8faceb
 
 .lr.ph.i:                                         ; preds = %bb.l
   %i.cr = shl nsw i32 %i.cm, 6
+  %8 = sext i32 %i.cr to i64
   %.pre92.i = load ptr, ptr %.phi.trans.insert.i49, align 8, !tbaa !2280
   %.pre93.i = load ptr, ptr %.pre92.i, align 8, !tbaa !527, !noalias !2304
   %i.cs = load ptr, ptr %i.ck, align 8, !tbaa !2285, !nonnull !78, !align !199
@@ -4174,10 +4159,8 @@ _ZN8facebook5velox6StatusD2Ev.exit32.i:           ; preds = %bb.p, %bb.o
 bb.q:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit56.i, %.lr.ph.i
   %.01583.i = phi i64 [ %i.cq, %.lr.ph.i ], [ %i.dz, %_ZN8facebook5velox6StatusD2Ev.exit56.i ] ; 3 uses
   %i.dp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01583.i, i1 true)
-  %10 = trunc nuw nsw i64 %i.dp to i32
-  %11 = or disjoint i32 %i.cr, %10
-  %12 = sext i32 %11 to i64                       ; 2 uses
-  %i.dq = getelementptr inbounds [16 x i8], ptr %.pre93.i, i64 %12
+  %9 = or disjoint i64 %i.dp, %8                  ; 2 uses
+  %i.dq = getelementptr inbounds [16 x i8], ptr %.pre93.i, i64 %9
   %.sroa.0.0.copyload.i40.i = load i64, ptr %i.dq, align 8, !tbaa !138, !noalias !2304 ; 3 uses
   %i.dr = icmp sgt i64 %.sroa.0.0.copyload.i40.i, -1
   br i1 %i.dr, label %bb.r, label %bb.s
@@ -4195,7 +4178,7 @@ bb.s:                                             ; preds = %bb.q
 _ZN8facebook5velox6StatusD2Ev.exit56.i:           ; preds = %bb.s, %bb.r
   %i.dv = phi i64 [ %i.ds, %bb.r ], [ %i.du, %bb.s ]
   %i.dw = trunc i64 %i.dv to i32
-  %i.dx = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %12
+  %i.dx = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %9
   store i32 %i.dw, ptr %i.dx, align 4, !tbaa !3
   %i.dy = add i64 %.01583.i, -1
   %i.dz = and i64 %i.dy, %.01583.i                ; 2 uses
@@ -4229,6 +4212,7 @@ bb.t:                                             ; preds = %._crit_edge
 
 .preheader.i55:                                   ; preds = %bb.t
   %i.eq = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %10 = sext i32 %i.d to i64
   %.pre.i56 = load ptr, ptr %i.eq, align 8, !tbaa !2296 ; 2 uses
   %.phi.trans.insert.i57 = getelementptr inbounds nuw i8, ptr %.pre.i56, i64 8
   %.pre31.i58 = load ptr, ptr %.phi.trans.insert.i57, align 8, !tbaa !2280
@@ -4243,10 +4227,8 @@ bb.t:                                             ; preds = %._crit_edge
 bb.u:                                             ; preds = %_ZN8facebook5velox6StatusD2Ev.exit19.i63, %.preheader.i55
   %.030.i60 = phi i64 [ %i.ep, %.preheader.i55 ], [ %i.fg, %_ZN8facebook5velox6StatusD2Ev.exit19.i63 ] ; 3 uses
   %i.ew = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.030.i60, i1 true)
-  %13 = trunc nuw nsw i64 %i.ew to i32
-  %14 = or disjoint i32 %i.d, %13
-  %15 = sext i32 %14 to i64                       ; 2 uses
-  %i.ex = getelementptr inbounds [16 x i8], ptr %.pre32.i59, i64 %15
+  %11 = or disjoint i64 %i.ew, %10                ; 2 uses
+  %i.ex = getelementptr inbounds [16 x i8], ptr %.pre32.i59, i64 %11
   %.sroa.0.0.copyload.i.i61 = load i64, ptr %i.ex, align 8, !tbaa !138, !noalias !2313 ; 3 uses
   %i.ey = icmp sgt i64 %.sroa.0.0.copyload.i.i61, -1
   br i1 %i.ey, label %bb.v, label %bb.w
@@ -4264,7 +4246,7 @@ bb.w:                                             ; preds = %bb.u
 _ZN8facebook5velox6StatusD2Ev.exit19.i63:         ; preds = %bb.w, %bb.v
   %i.fc = phi i64 [ %i.ez, %bb.v ], [ %i.fb, %bb.w ]
   %i.fd = trunc i64 %i.fc to i32
-  %i.fe = getelementptr inbounds [4 x i8], ptr %i.ev, i64 %15
+  %i.fe = getelementptr inbounds [4 x i8], ptr %i.ev, i64 %11
   store i32 %i.fd, ptr %i.fe, align 4, !tbaa !3
   %i.ff = add nsw i64 %.030.i60, -1
   %i.fg = and i64 %i.ff, %.030.i60                ; 2 uses

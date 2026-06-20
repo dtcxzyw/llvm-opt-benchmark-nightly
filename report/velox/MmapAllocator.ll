@@ -201,13 +201,13 @@ bb.k:                                             ; preds = %.lr.ph
 
 .lr.ph.i:                                         ; preds = %bb.k
   %i.aw = shl nsw i32 %spec.store.select, 6
+  %6 = sext i32 %i.aw to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.o, %.lr.ph.i
   %.023.i = phi i64 [ %i.as, %.lr.ph.i ], [ %i.bx, %bb.o ] ; 3 uses
   %.01922.i = phi i32 [ 0, %.lr.ph.i ], [ %i.by, %bb.o ]
   %i.ax = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.023.i, i1 true) ; 4 uses
-  %6 = trunc nuw nsw i64 %i.ax to i32
   %i.ay = load ptr, ptr %i.af, align 8, !tbaa !113
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.ar
   %i.ba = trunc nuw nsw i64 %i.ax to i8
@@ -242,9 +242,8 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.br = load ptr, ptr %i.ai, align 8, !tbaa !180
   %i.bs = load i64, ptr %i.ah, align 8, !tbaa !182 ; 2 uses
-  %7 = or disjoint i32 %i.aw, %6
-  %8 = sext i32 %7 to i64
-  %i.bt = shl nsw i64 %8, 12
+  %7 = or disjoint i64 %i.ax, %6
+  %i.bt = shl nsw i64 %7, 12
   %i.bu = mul i64 %i.bt, %i.bs
   %i.bv = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bu
   tail call void @_ZN8facebook5velox6memory10Allocation6appendEPhm(ptr noundef nonnull align 8 dereferenceable(36) %3, ptr noundef %i.bv, i64 noundef %i.bs)
@@ -511,6 +510,7 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.o = shl nsw i32 %1, 6
+  %5 = sext i32 %i.o to i64
   br label %bb.b
 
 ._crit_edge.loopexit:                             ; preds = %bb.e
@@ -527,7 +527,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   %.023 = phi i64 [ %i.f, %.lr.ph ], [ %i.ar, %bb.e ] ; 3 uses
   %.01922 = phi i32 [ 0, %.lr.ph ], [ %i.as, %bb.e ]
   %i.r = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.023, i1 true) ; 4 uses
-  %5 = trunc nuw nsw i64 %i.r to i32
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !113
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.b
   %i.u = trunc nuw nsw i64 %i.r to i8
@@ -562,9 +561,8 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.al = load ptr, ptr %i.n, align 8, !tbaa !180
   %i.am = load i64, ptr %i.m, align 8, !tbaa !182 ; 2 uses
-  %6 = or disjoint i32 %i.o, %5
-  %7 = sext i32 %6 to i64
-  %i.an = shl nsw i64 %7, 12
+  %6 = or disjoint i64 %i.r, %5
+  %i.an = shl nsw i64 %6, 12
   %i.ao = mul i64 %i.an, %i.am
   %i.ap = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ao
   tail call void @_ZN8facebook5velox6memory10Allocation6appendEPhm(ptr noundef nonnull align 8 dereferenceable(36) %4, ptr noundef %i.ap, i64 noundef %i.am)
