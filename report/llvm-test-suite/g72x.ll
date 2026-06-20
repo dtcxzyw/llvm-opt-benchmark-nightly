@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @update(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef initializes((8, 10)) %7) local_unnamed_addr #7 {
 bb.a:
-  %.lobit = lshr i32 %6, 31                       ; 2 uses
+  %.lobit = lshr i32 %6, 31                       ; 3 uses
   %i.a = trunc nuw nsw i32 %.lobit to i16         ; 2 uses
   %i.b = and i32 %4, 32767                        ; 19 uses
   %i.c = getelementptr inbounds nuw i8, ptr %7, i64 52 ; 2 uses
@@ -262,22 +262,22 @@ bb.e:                                             ; preds = %.sink.split, %bb.d
   %i.al = add i64 %i.ai, %i.ah
   %i.am = add i64 %i.al, %i.ak
   store i64 %i.am, ptr %7, align 8, !tbaa !8
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 18 ; 3 uses
   br i1 %i.x, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.an = load i16, ptr %9, align 2, !tbaa !13    ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %9 = load i16, ptr %8, align 8, !tbaa !13       ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 18 ; 3 uses
+  %i.an = load i16, ptr %11, align 2, !tbaa !13   ; 2 uses
   %i.ao = ashr i16 %i.an, 7
   %i.ap = sub i16 %i.an, %i.ao                    ; 5 uses
   %.not167 = icmp eq i32 %6, 0
   br i1 %.not167, label %bb.q, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %10 = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %11 = load i16, ptr %10, align 8, !tbaa !13
-  %.not168 = icmp eq i16 %11, %i.a                ; 2 uses
-  %i.aq = load i16, ptr %8, align 8, !tbaa !13    ; 4 uses
+  %.not168 = icmp eq i16 %9, %i.a
+  %i.aq = load i16, ptr %10, align 8, !tbaa !13   ; 4 uses
   %i.ar = sub i16 0, %i.aq
   %i.as = select i1 %.not168, i16 %i.ar, i16 %i.aq ; 3 uses
   %i.at = icmp slt i16 %i.as, -8191
@@ -327,18 +327,20 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.f
-  store i16 %i.ap, ptr %9, align 2, !tbaa !13
-  %i.bg = load i16, ptr %8, align 8, !tbaa !13    ; 2 uses
+  store i16 %i.ap, ptr %11, align 2, !tbaa !13
+  %i.bg = load i16, ptr %10, align 8, !tbaa !13   ; 2 uses
   %i.bh = ashr i16 %i.bg, 8
   %i.bi = sub i16 %i.bg, %i.bh
   br label %bb.u
 
 bb.r:                                             ; preds = %bb.p, %bb.n, %bb.o, %bb.m
   %.1157.ph = phi i16 [ -12288, %bb.o ], [ %spec.select176, %bb.p ], [ %spec.select, %bb.n ], [ -12288, %bb.m ] ; 3 uses
-  store i16 %.1157.ph, ptr %9, align 2, !tbaa !13
+  store i16 %.1157.ph, ptr %11, align 2, !tbaa !13
   %i.bj = ashr i16 %i.aq, 8
   %i.bk = sub i16 %i.aq, %i.bj                    ; 2 uses
-  br i1 %.not168, label %bb.s, label %bb.t
+  %12 = sext i16 %9 to i32
+  %13 = icmp eq i32 %.lobit, %12
+  br i1 %13, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.bl = add i16 %i.bk, 192
@@ -351,7 +353,7 @@ bb.t:                                             ; preds = %bb.r
 bb.u:                                             ; preds = %bb.q, %bb.s, %bb.t
   %.sink216 = phi i16 [ %i.bi, %bb.q ], [ %i.bl, %bb.s ], [ %i.bm, %bb.t ] ; 3 uses
   %.1157191 = phi i16 [ %i.ap, %bb.q ], [ %.1157.ph, %bb.s ], [ %.1157.ph, %bb.t ] ; 3 uses
-  store i16 %.sink216, ptr %8, align 8, !tbaa !13
+  store i16 %.sink216, ptr %10, align 8, !tbaa !13
   %i.bn = sub i16 15360, %.1157191                ; 3 uses
   %i.bo = sext i16 %.sink216 to i32
   %i.bp = sext i16 %i.bn to i32
@@ -369,7 +371,7 @@ bb.w:                                             ; preds = %bb.u
 
 .sink.split217:                                   ; preds = %bb.w, %bb.v
   %.sink218 = phi i16 [ %i.bs, %bb.v ], [ %i.bn, %bb.w ]
-  store i16 %.sink218, ptr %8, align 8, !tbaa !13
+  store i16 %.sink218, ptr %10, align 8, !tbaa !13
   br label %bb.x
 
 bb.x:                                             ; preds = %.sink.split217, %bb.w
@@ -473,9 +475,10 @@ bb.x:                                             ; preds = %.sink.split217, %bb
   br label %bb.y
 
 .loopexit:                                        ; preds = %bb.e
+  %14 = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.eo = getelementptr inbounds nuw i8, ptr %7, i64 36 ; 3 uses
   %scevgep = getelementptr i8, ptr %7, i64 38
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %14, i8 0, i64 16, i1 false)
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %scevgep, ptr noundef nonnull align 2 dereferenceable(10) %i.eo, i64 10, i1 false), !tbaa !13
   %i.ep = icmp eq i32 %i.b, 0
   br i1 %i.ep, label %bb.y, label %.lr.ph.i.preheader

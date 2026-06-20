@@ -201,6 +201,8 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 56
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !45   ; 2 uses
   %.not4.i.i.i.i.i = icmp eq ptr %i.x, %i.z
+  %6 = lshr i16 %i.q, 8                           ; 2 uses
+  %7 = trunc nuw i16 %6 to i8
   br i1 %.not4.i.i.i.i.i, label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i.i.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.a, %_ZSt8_DestroyISt6vectorIPN6hermes5regex4NodeESaIS4_EEEvPT_.exit.i.i.i.i.i
@@ -275,13 +277,12 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit
   %i.ba = trunc i16 %i.q to i1
-  %6 = and i16 %i.q, 256
-  %7 = icmp ne i16 %6, 0                          ; 2 uses
+  %8 = trunc i16 %6 to i1
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.bc = load i8, ptr %i.bb, align 4
-  %8 = and i8 %i.bc, 8
-  %.not = icmp eq i8 %8, 0
-  %9 = and i1 %.not, %7
+  %9 = lshr i8 %i.bc, 3
+  %10 = xor i8 %9, -1
+  %11 = and i8 %7, %10
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !110
   %i.bf = load ptr, ptr %0, align 8, !tbaa !7     ; 2 uses
@@ -300,7 +301,7 @@ bb.f:                                             ; preds = %_ZN4llvh23SmallVect
   store ptr %i.bo, ptr %i.bm, align 16, !tbaa !47
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.bp = trunc i32 %i.be to i16
-  call void @_ZN6hermes5regex5RegexINS0_16UTF16RegexTraitsEE14pushLookaroundESt6vectorIPNS0_4NodeESaIS6_EEttbb(ptr noundef nonnull align 8 dereferenceable(336) %i.bk, ptr noundef nonnull %5, i16 noundef zeroext %i.bp, i16 noundef zeroext %i.bh, i1 noundef zeroext %i.ba, i1 noundef zeroext %7)
+  call void @_ZN6hermes5regex5RegexINS0_16UTF16RegexTraitsEE14pushLookaroundESt6vectorIPNS0_4NodeESaIS6_EEttbb(ptr noundef nonnull align 8 dereferenceable(336) %i.bk, ptr noundef nonnull %5, i16 noundef zeroext %i.bp, i16 noundef zeroext %i.bh, i1 noundef zeroext %i.ba, i1 noundef zeroext %8)
   %i.bq = load ptr, ptr %5, align 16, !tbaa !49   ; 3 uses
   %.not.i.i.i8 = icmp eq ptr %i.bq, null
   br i1 %.not.i.i.i8, label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit9, label %bb.g
@@ -328,10 +329,11 @@ bb.h:                                             ; preds = %_ZNSt6vectorIPN6her
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit11: ; preds = %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit9, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
+  %12 = trunc nuw i8 %11 to i1
   br label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit: ; preds = %bb.e, %bb.d, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit11, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit
-  %.0 = phi i1 [ true, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit ], [ %9, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit11 ], [ true, %bb.d ], [ true, %bb.e ]
+  %.0 = phi i1 [ true, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit ], [ %12, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit11 ], [ true, %bb.d ], [ true, %bb.e ]
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.cb = call noundef zeroext i1 @_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE26tryConsumeQuantifierPrefixEPNS7_10QuantifierE(ptr noundef nonnull align 8 dereferenceable(41) %0, ptr noundef nonnull %i.ca)
   br i1 %i.cb, label %bb.i, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE20tryConsumeQuantifierEPNS7_10QuantifierE.exit

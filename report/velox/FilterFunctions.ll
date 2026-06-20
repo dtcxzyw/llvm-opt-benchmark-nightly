@@ -201,7 +201,7 @@ _ZNK8facebook5velox13DecodedVector7indicesEv.exit123.i: ; preds = %.noexc122.i, 
 
 _ZNK8facebook5velox6Buffer9asMutableImEEPT_v.exit.i.i: ; preds = %_ZNK8facebook5velox13DecodedVector7indicesEv.exit123.i
   %i.ku = getelementptr inbounds nuw i8, ptr %.val.i, i64 16
-  %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !288 ; 15 uses
+  %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !288 ; 16 uses
   %.not.i.i.i125.i = icmp sgt i32 %i.ko, 0
   br i1 %.not.i.i.i125.i, label %bb.bs, label %_ZN8facebook5velox4bits8fillBitsEPmiib.exit.i.i
 
@@ -404,15 +404,17 @@ bb.ch:                                            ; preds = %bb.cg
   %i.ny = load i64, ptr %i.nx, align 8, !tbaa !139
   %i.nz = and i64 %i.nv, %i.ny                    ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq i64 %i.nz, 0
-  br i1 %.not.i.i.i.i.i.i.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERS1_N5boost13intrusive_ptrINS0_6BufferEEESA_iRKS1_PKiEUliE_EEvT_.exit.i.i, label %.preheader.i.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERS1_N5boost13intrusive_ptrINS0_6BufferEEESA_iRKS1_PKiEUliE_EEvT_.exit.i.i, label %.preheader.i.i.i.i.i.i.preheader.i
 
-.preheader.i.i.i.i.i.i.i:                         ; preds = %bb.ch, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i.i.i.i.i.i.i
-  %.011.i.i.i.i.i.i.i = phi i64 [ %i.op, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i.i.i.i.i.i.i ], [ %i.nz, %bb.ch ] ; 3 uses
+.preheader.i.i.i.i.i.i.preheader.i:               ; preds = %bb.ch
+  %66 = sext i32 %i.nj to i64
+  %invariant.gep96.i = getelementptr [4 x i8], ptr %i.kq, i64 %66
+  br label %.preheader.i.i.i.i.i.i.i
+
+.preheader.i.i.i.i.i.i.i:                         ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.preheader.i
+  %.011.i.i.i.i.i.i.i = phi i64 [ %i.op, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i.i.i.i.i.i.i ], [ %i.nz, %.preheader.i.i.i.i.i.i.preheader.i ] ; 3 uses
   %i.oa = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i.i.i, i1 true)
-  %66 = trunc nuw nsw i64 %i.oa to i32
-  %67 = or disjoint i32 %i.nj, %66
-  %.pre3.i.i.i.i.i.i.i.i = sext i32 %67 to i64
-  %.phi.trans.insert4.i.i.i.i.i.i.i.i = getelementptr inbounds [4 x i8], ptr %i.kq, i64 %.pre3.i.i.i.i.i.i.i.i
+  %.phi.trans.insert4.i.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %invariant.gep96.i, i64 %i.oa
   %.pre5.i.i.i.i.i.i.i.i = load i32, ptr %.phi.trans.insert4.i.i.i.i.i.i.i.i, align 4, !tbaa !3 ; 2 uses
   %.pre6.i.i.i.i.i.i.i.i = sext i32 %.pre5.i.i.i.i.i.i.i.i to i64 ; 3 uses
   br i1 %.not.i126.i, label %._crit_edge.i.i.i.i.i.i.i.i, label %bb.ci
@@ -466,15 +468,14 @@ bb.ck:                                            ; preds = %bb.cj
 
 .preheader.i37.i.i.i.i.i.i:                       ; preds = %bb.ck
   %i.pb = shl nsw i32 %i.oq, 6
+  %67 = sext i32 %i.pb to i64
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.kq, i64 %67
   br label %bb.cl
 
 bb.cl:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i41.i.i.i.i.i.i, %.preheader.i37.i.i.i.i.i.i
   %.011.i38.i.i.i.i.i.i = phi i64 [ %i.pa, %.preheader.i37.i.i.i.i.i.i ], [ %i.pr, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i41.i.i.i.i.i.i ] ; 3 uses
   %i.pc = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i38.i.i.i.i.i.i, i1 true)
-  %68 = trunc nuw nsw i64 %i.pc to i32
-  %69 = or disjoint i32 %i.pb, %68
-  %.pre3.i.i46.i.i.i.i.i.i = sext i32 %69 to i64
-  %.phi.trans.insert4.i.i47.i.i.i.i.i.i = getelementptr inbounds [4 x i8], ptr %i.kq, i64 %.pre3.i.i46.i.i.i.i.i.i
+  %.phi.trans.insert4.i.i47.i.i.i.i.i.i = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.pc
   %.pre5.i.i48.i.i.i.i.i.i = load i32, ptr %.phi.trans.insert4.i.i47.i.i.i.i.i.i, align 4, !tbaa !3 ; 2 uses
   %.pre6.i.i49.i.i.i.i.i.i = sext i32 %.pre5.i.i48.i.i.i.i.i.i to i64 ; 3 uses
   br i1 %.not.i126.i, label %._crit_edge.i.i43.i.i.i.i.i.i, label %bb.cm
@@ -521,7 +522,7 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFu
   %i.pu = sdiv i32 %.080.i.i.i.i.i.i, 64          ; 3 uses
   %i.pv = sext i32 %i.pu to i64
   %i.pw = getelementptr inbounds [8 x i8], ptr %i.ne, i64 %i.pv
-  %i.px = load i64, ptr %i.pw, align 8, !tbaa !139 ; 2 uses
+  %i.px = load i64, ptr %i.pw, align 8, !tbaa !139 ; 3 uses
   switch i64 %i.px, label %.lr.ph.i.i.i.i.i.i.i [
     i64 -1, label %bb.cn
     i64 0, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i
@@ -529,7 +530,28 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFu
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i128.i
   %i.py = shl nsw i32 %i.pu, 6
-  br label %70
+  %68 = sext i32 %i.py to i64
+  %invariant.gep92.i = getelementptr [4 x i8], ptr %i.kq, i64 %68 ; 2 uses
+  br i1 %.not.i126.i, label %._crit_edge.i19.i.i.i.i.i.i.i.us, label %bb.co
+
+._crit_edge.i19.i.i.i.i.i.i.i.us:                 ; preds = %.lr.ph.i.i.i.i.i.i.i, %._crit_edge.i19.i.i.i.i.i.i.i.us
+  %.01531.i.i.i.i.i.i.i.us = phi i64 [ %78, %._crit_edge.i19.i.i.i.i.i.i.i.us ], [ %i.px, %.lr.ph.i.i.i.i.i.i.i ] ; 3 uses
+  %69 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01531.i.i.i.i.i.i.i.us, i1 true)
+  %gep93.i.us = getelementptr [4 x i8], ptr %invariant.gep92.i, i64 %69
+  %.pre5.i25.i.i.i.i.i.i.i.us = load i32, ptr %gep93.i.us, align 4, !tbaa !3 ; 2 uses
+  %.pre6.i26.i.i.i.i.i.i.i.us = sext i32 %.pre5.i25.i.i.i.i.i.i.i.us to i64
+  %70 = trunc i32 %.pre5.i25.i.i.i.i.i.i.i.us to i8
+  %71 = and i8 %70, 7
+  %72 = shl nuw i8 1, %71
+  %73 = lshr i64 %.pre6.i26.i.i.i.i.i.i.i.us, 3
+  %74 = getelementptr inbounds nuw i8, ptr %i.kv, i64 %73 ; 2 uses
+  %75 = load i8, ptr %74, align 1, !tbaa !33
+  %76 = or i8 %75, %72
+  store i8 %76, ptr %74, align 1, !tbaa !33
+  %77 = add i64 %.01531.i.i.i.i.i.i.i.us, -1
+  %78 = and i64 %77, %.01531.i.i.i.i.i.i.i.us     ; 2 uses
+  %.not.i60.i.i.i.i.i.i.us = icmp eq i64 %78, 0
+  br i1 %.not.i60.i.i.i.i.i.i.us, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i, label %._crit_edge.i19.i.i.i.i.i.i.i.us, !llvm.loop !743
 
 bb.cn:                                            ; preds = %.lr.ph.i.i.i.i.i128.i
   %i.pz = shl nsw i32 %i.pu, 6                    ; 2 uses
@@ -560,7 +582,7 @@ bb.cn:                                            ; preds = %.lr.ph.i.i.i.i.i128
   store i8 %i.qk, ptr %i.qi, align 1, !tbaa !33
   %i.ql = add nuw i64 %.032.i.i.i.i.i.i.i.us, 1   ; 2 uses
   %i.qm = icmp ult i64 %i.ql, %i.qb
-  br i1 %i.qm, label %._crit_edge.i.i54.i.i.i.i.i.i.us, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i, !llvm.loop !743
+  br i1 %i.qm, label %._crit_edge.i.i54.i.i.i.i.i.i.us, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i, !llvm.loop !744
 
 .lr.ph33.i.i.i.i.i.i.i.split:                     ; preds = %.lr.ph33.i.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i53.i.i.i.i.i.i
   %.032.i.i.i.i.i.i.i = phi i64 [ %i.rb, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i53.i.i.i.i.i.i ], [ %i.qc, %.lr.ph33.i.i.i.i.i.i.i ] ; 2 uses
@@ -592,20 +614,14 @@ bb.cn:                                            ; preds = %.lr.ph.i.i.i.i.i128
 _ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i53.i.i.i.i.i.i: ; preds = %._crit_edge.i.i54.i.i.i.i.i.i, %.lr.ph33.i.i.i.i.i.i.i.split
   %i.rb = add nuw i64 %.032.i.i.i.i.i.i.i, 1      ; 2 uses
   %i.rc = icmp ult i64 %i.rb, %i.qb
-  br i1 %i.rc, label %.lr.ph33.i.i.i.i.i.i.i.split, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i, !llvm.loop !743
+  br i1 %i.rc, label %.lr.ph33.i.i.i.i.i.i.i.split, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i, !llvm.loop !744
 
-70:                                               ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit27.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i
-  %.01531.i.i.i.i.i.i.i = phi i64 [ %i.px, %.lr.ph.i.i.i.i.i.i.i ], [ %i.rr, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit27.i.i.i.i.i.i.i ] ; 3 uses
-  %71 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01531.i.i.i.i.i.i.i, i1 true)
-  %72 = trunc nuw nsw i64 %71 to i32
-  %73 = or disjoint i32 %i.py, %72
-  %.pre3.i23.i.i.i.i.i.i.i = sext i32 %73 to i64
-  %.phi.trans.insert4.i24.i.i.i.i.i.i.i = getelementptr inbounds [4 x i8], ptr %i.kq, i64 %.pre3.i23.i.i.i.i.i.i.i
-  %.pre5.i25.i.i.i.i.i.i.i = load i32, ptr %.phi.trans.insert4.i24.i.i.i.i.i.i.i, align 4, !tbaa !3 ; 2 uses
+bb.co:                                            ; preds = %.lr.ph.i.i.i.i.i.i.i, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit27.i.i.i.i.i.i.i
+  %.01531.i.i.i.i.i.i.i = phi i64 [ %i.rr, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit27.i.i.i.i.i.i.i ], [ %i.px, %.lr.ph.i.i.i.i.i.i.i ] ; 3 uses
+  %79 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01531.i.i.i.i.i.i.i, i1 true)
+  %gep93.i = getelementptr [4 x i8], ptr %invariant.gep92.i, i64 %79
+  %.pre5.i25.i.i.i.i.i.i.i = load i32, ptr %gep93.i, align 4, !tbaa !3 ; 2 uses
   %.pre6.i26.i.i.i.i.i.i.i = sext i32 %.pre5.i25.i.i.i.i.i.i.i to i64 ; 3 uses
-  br i1 %.not.i126.i, label %._crit_edge.i19.i.i.i.i.i.i.i, label %bb.co
-
-bb.co:                                            ; preds = %70
   %i.rd = lshr i64 %.pre6.i26.i.i.i.i.i.i.i, 6
   %i.re = getelementptr inbounds nuw [8 x i8], ptr %i.lo, i64 %i.rd
   %i.rf = load i64, ptr %i.re, align 8, !tbaa !139
@@ -615,7 +631,7 @@ bb.co:                                            ; preds = %70
   %.not.i17.i.i.i.i.i.i.i = icmp eq i64 %i.ri, 0
   br i1 %.not.i17.i.i.i.i.i.i.i, label %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit27.i.i.i.i.i.i.i, label %._crit_edge.i19.i.i.i.i.i.i.i
 
-._crit_edge.i19.i.i.i.i.i.i.i:                    ; preds = %bb.co, %70
+._crit_edge.i19.i.i.i.i.i.i.i:                    ; preds = %bb.co
   %i.rj = trunc i32 %.pre5.i25.i.i.i.i.i.i.i to i8
   %i.rk = and i8 %i.rj, 7
   %i.rl = shl nuw i8 1, %i.rk
@@ -630,9 +646,9 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelec
   %i.rq = add i64 %.01531.i.i.i.i.i.i.i, -1
   %i.rr = and i64 %i.rq, %.01531.i.i.i.i.i.i.i    ; 2 uses
   %.not.i60.i.i.i.i.i.i = icmp eq i64 %i.rr, 0
-  br i1 %.not.i60.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i, label %70, !llvm.loop !744
+  br i1 %.not.i60.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i, label %bb.co, !llvm.loop !743
 
-_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i53.i.i.i.i.i.i, %._crit_edge.i.i54.i.i.i.i.i.i.us, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit27.i.i.i.i.i.i.i, %bb.cn, %.lr.ph.i.i.i.i.i128.i
+_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEESB_iRKS6_PKiEUliE_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i.i.i: ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i53.i.i.i.i.i.i, %._crit_edge.i.i54.i.i.i.i.i.i.us, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit27.i.i.i.i.i.i.i, %._crit_edge.i19.i.i.i.i.i.i.i.us, %bb.cn, %.lr.ph.i.i.i.i.i128.i
   %i.rs = add nsw i32 %i.pt, 64                   ; 2 uses
   %.not33.i.i.i.i.i.i = icmp sgt i32 %i.rs, %i.nj
   br i1 %.not33.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i128.i, !llvm.loop !745
@@ -648,15 +664,17 @@ bb.cp:                                            ; preds = %._crit_edge.i.i.i.i
   %i.rz = load i64, ptr %i.ry, align 8, !tbaa !139
   %i.sa = and i64 %i.rz, %i.rw                    ; 2 uses
   %.not.i62.i.i.i.i.i.i = icmp eq i64 %i.sa, 0
-  br i1 %.not.i62.i.i.i.i.i.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERS1_N5boost13intrusive_ptrINS0_6BufferEEESA_iRKS1_PKiEUliE_EEvT_.exit.i.i, label %.preheader.i63.i.i.i.i.i.i
+  br i1 %.not.i62.i.i.i.i.i.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNKS0_9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERS1_N5boost13intrusive_ptrINS0_6BufferEEESA_iRKS1_PKiEUliE_EEvT_.exit.i.i, label %.preheader.i63.i.i.i.i.i.preheader.i
 
-.preheader.i63.i.i.i.i.i.i:                       ; preds = %bb.cp, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i67.i.i.i.i.i.i
-  %.011.i64.i.i.i.i.i.i = phi i64 [ %i.sq, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i67.i.i.i.i.i.i ], [ %i.sa, %bb.cp ] ; 3 uses
+.preheader.i63.i.i.i.i.i.preheader.i:             ; preds = %bb.cp
+  %80 = sext i32 %i.nj to i64
+  %invariant.gep94.i = getelementptr [4 x i8], ptr %i.kq, i64 %80
+  br label %.preheader.i63.i.i.i.i.i.i
+
+.preheader.i63.i.i.i.i.i.i:                       ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i67.i.i.i.i.i.i, %.preheader.i63.i.i.i.i.i.preheader.i
+  %.011.i64.i.i.i.i.i.i = phi i64 [ %i.sq, %_ZZNK8facebook5velox9functions12_GLOBAL__N_117MapFilterFunction27buildInMapSelectivityVectorERNS0_17SelectivityVectorEN5boost13intrusive_ptrINS0_6BufferEEES9_iRKS4_PKiENKUliE_clEi.exit.i67.i.i.i.i.i.i ], [ %i.sa, %.preheader.i63.i.i.i.i.i.preheader.i ] ; 3 uses
   %i.sb = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i64.i.i.i.i.i.i, i1 true)
-  %74 = trunc nuw nsw i64 %i.sb to i32
-  %75 = or disjoint i32 %i.nj, %74
-  %.pre3.i.i72.i.i.i.i.i.i = sext i32 %75 to i64
-  %.phi.trans.insert4.i.i73.i.i.i.i.i.i = getelementptr inbounds [4 x i8], ptr %i.kq, i64 %.pre3.i.i72.i.i.i.i.i.i
+  %.phi.trans.insert4.i.i73.i.i.i.i.i.i = getelementptr [4 x i8], ptr %invariant.gep94.i, i64 %i.sb
   %.pre5.i.i74.i.i.i.i.i.i = load i32, ptr %.phi.trans.insert4.i.i73.i.i.i.i.i.i, align 4, !tbaa !3 ; 2 uses
   %.pre6.i.i75.i.i.i.i.i.i = sext i32 %.pre5.i.i74.i.i.i.i.i.i to i64 ; 3 uses
   br i1 %.not.i126.i, label %._crit_edge.i.i69.i.i.i.i.i.i, label %bb.cq

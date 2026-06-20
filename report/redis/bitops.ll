@@ -201,10 +201,11 @@ bb.bj:                                            ; preds = %.lr.ph688
   %i.nw = load ptr, ptr %i.nv, align 8, !tbaa !113
   %i.nx = getelementptr inbounds nuw i8, ptr %i.nw, i64 %.10698
   %i.ny = load i8, ptr %i.nx, align 1, !tbaa !13
+  %1 = zext i8 %i.ny to i32
   br label %bb.bk
 
 bb.bk:                                            ; preds = %.lr.ph688, %bb.bj
-  %1 = phi i8 [ %i.ny, %bb.bj ], [ 0, %.lr.ph688 ] ; 6 uses
+  %2 = phi i32 [ %1, %bb.bj ], [ 0, %.lr.ph688 ]  ; 6 uses
   switch i64 %.0436523528, label %default.unreachable [
     i64 0, label %bb.bp
     i64 1, label %bb.bl
@@ -217,25 +218,32 @@ bb.bk:                                            ; preds = %.lr.ph688, %bb.bj
   ]
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.nz = or i8 %1, %.1462683                     ; 2 uses
+  %3 = trunc nuw i32 %2 to i8
+  %i.nz = or i8 %.1462683, %3                     ; 2 uses
   %i.oa = icmp eq i8 %i.nz, -1
   br i1 %i.oa, label %.thread563, label %.thread554
 
 bb.bm:                                            ; preds = %bb.bk
-  %i.ob = xor i8 %1, %.1462683
+  %4 = trunc nuw i32 %2 to i8
+  %i.ob = xor i8 %.1462683, %4
   br label %.thread554
 
 bb.bn:                                            ; preds = %bb.bk, %bb.bk, %bb.bk
-  %i.oc = or i8 %1, %.0449684                     ; 2 uses
+  %5 = trunc nuw i32 %2 to i8
+  %i.oc = or i8 %.0449684, %5                     ; 2 uses
   %i.od = icmp eq i8 %i.oc, -1
   br i1 %i.od, label %._crit_edge689, label %.thread554
 
 bb.bo:                                            ; preds = %bb.bk
-  %i.oe = and i8 %1, %.1462683
+  %6 = trunc nuw i32 %2 to i8
+  %i.oe = and i8 %.1462683, %6
   %i.of = or i8 %i.oe, %.0447685                  ; 3 uses
-  %2 = xor i8 %1, %.1462683
-  %3 = xor i8 %i.of, -1
-  %4 = and i8 %2, %3                              ; 2 uses
+  %7 = zext i8 %i.of to i32
+  %8 = xor i32 %7, -1
+  %9 = zext i8 %.1462683 to i32
+  %10 = xor i32 %2, %9
+  %11 = and i32 %10, %8
+  %12 = trunc nuw i32 %11 to i8                   ; 2 uses
   %i.og = icmp eq i8 %i.of, -1
   br i1 %i.og, label %.thread563, label %.thread554
 
@@ -243,14 +251,15 @@ default.unreachable:                              ; preds = %bb.bk
   unreachable
 
 bb.bp:                                            ; preds = %bb.bk
-  %i.oh = and i8 %1, %.1462683                    ; 2 uses
+  %13 = trunc nuw i32 %2 to i8
+  %i.oh = and i8 %.1462683, %13                   ; 2 uses
   %i.oi = icmp eq i8 %i.oh, 0
   br i1 %i.oi, label %.thread563, label %.thread554
 
 .thread554:                                       ; preds = %bb.bm, %bb.bk, %bb.bl, %bb.bo, %bb.bn, %bb.bp
   %.1448561 = phi i8 [ %.0447685, %bb.bl ], [ %.0447685, %bb.bp ], [ %.0447685, %bb.bn ], [ %i.of, %bb.bo ], [ %.0447685, %bb.bk ], [ %.0447685, %bb.bm ]
   %.1450560 = phi i8 [ %.0449684, %bb.bl ], [ %.0449684, %bb.bp ], [ %i.oc, %bb.bn ], [ %.0449684, %bb.bo ], [ %.0449684, %bb.bk ], [ %.0449684, %bb.bm ] ; 2 uses
-  %.2463559 = phi i8 [ %i.nz, %bb.bl ], [ %i.oh, %bb.bp ], [ %.1462683, %bb.bn ], [ %4, %bb.bo ], [ %.1462683, %bb.bk ], [ %i.ob, %bb.bm ] ; 2 uses
+  %.2463559 = phi i8 [ %i.nz, %bb.bl ], [ %i.oh, %bb.bp ], [ %.1462683, %bb.bn ], [ %12, %bb.bo ], [ %.1462683, %bb.bk ], [ %i.ob, %bb.bm ] ; 2 uses
   %i.oj = add nuw i64 %.8446686, 1                ; 2 uses
   %exitcond759.not = icmp eq i64 %i.oj, %umax758
   br i1 %exitcond759.not, label %._crit_edge689, label %.lr.ph688, !llvm.loop !154
@@ -279,7 +288,7 @@ bb.bs:                                            ; preds = %._crit_edge689
   br label %.thread563
 
 .thread563:                                       ; preds = %bb.bl, %bb.bo, %bb.bp, %._crit_edge689, %bb.bq, %bb.br, %bb.bs
-  %.sink = phi i8 [ %i.ol, %bb.bq ], [ %i.on, %bb.br ], [ %i.oo, %bb.bs ], [ %.3464, %._crit_edge689 ], [ 0, %bb.bp ], [ -1, %bb.bl ], [ %4, %bb.bo ]
+  %.sink = phi i8 [ %i.ol, %bb.bq ], [ %i.on, %bb.br ], [ %i.oo, %bb.bs ], [ %.3464, %._crit_edge689 ], [ 0, %bb.bp ], [ -1, %bb.bl ], [ %12, %bb.bo ]
   %i.op = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.10698
   store i8 %.sink, ptr %i.op, align 1, !tbaa !13
   %i.oq = add i64 %.10698, 1                      ; 2 uses
