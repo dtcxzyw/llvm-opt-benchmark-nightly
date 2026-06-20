@@ -201,11 +201,10 @@ bb.m:                                             ; preds = %_ZN4llvh16itanium_d
   store i8 0, ptr %i.ao, align 16, !tbaa !150
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 737 ; 3 uses
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !36, !range !111, !noundef !112 ; 2 uses
-  %2 = trunc nuw i8 %i.ar to i1
   %i.as = icmp ne ptr %1, null                    ; 2 uses
-  %3 = or i1 %i.as, %2
-  %4 = zext i1 %3 to i8
-  store i8 %4, ptr %i.aq, align 1, !tbaa !150
+  %2 = zext i1 %i.as to i8
+  %3 = or i8 %i.ar, %2
+  store i8 %3, ptr %i.aq, align 1, !tbaa !150
   %i.at = tail call fastcc noundef ptr @_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9parseTypeEv(ptr noundef nonnull align 16 dereferenceable(4864) %0) ; 2 uses
   %i.au = icmp eq ptr %i.at, null
   br i1 %i.au, label %_ZN14SwapAndRestoreIbED2Ev.exit48, label %bb.n

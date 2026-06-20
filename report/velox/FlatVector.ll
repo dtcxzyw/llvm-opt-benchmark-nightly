@@ -201,6 +201,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKS1_PKiE3$_0EEvT_.exit", label %.preheader.i.i.i.i.i
 
 .preheader.i.i.i.i.i:                             ; preds = %bb.l
+  %15 = zext i32 %i.bm to i64
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.m
@@ -221,16 +222,14 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_0clEi.exit.i.i.i.i.i": ; preds = %bb.m
-  %i.ck = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i, i1 true)
-  %15 = trunc nuw nsw i64 %i.ck to i32
-  %16 = or disjoint i32 %i.bm, %15
+  %i.ck = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i, i1 true) ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !61
-  %17 = zext i32 %16 to i64                       ; 2 uses
-  %i.cn = lshr i64 %17, 3
+  %16 = or disjoint i64 %i.ck, %15
+  %i.cn = lshr i64 %16, 3
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.cn ; 2 uses
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !62
-  %i.cq = and i64 %17, 7
+  %i.cq = and i64 %i.ck, 7
   %i.cr = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.cq
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !62
   %i.ct = and i8 %i.cs, %i.cp
@@ -262,6 +261,7 @@ bb.p:                                             ; preds = %bb.o
 
 .preheader.i37.i.i.i.i:                           ; preds = %bb.p
   %i.dh = shl nsw i32 %i.cw, 6
+  %17 = zext i32 %i.dh to i64
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.q
@@ -282,16 +282,14 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_0clEi.exit.i41.i.i.i.i": ; preds = %bb.q
-  %i.dp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i38.i.i.i.i, i1 true)
-  %18 = trunc nuw nsw i64 %i.dp to i32
-  %19 = or disjoint i32 %i.dh, %18
+  %i.dp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i38.i.i.i.i, i1 true) ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !61
-  %20 = zext i32 %19 to i64                       ; 2 uses
-  %i.ds = lshr i64 %20, 3
+  %18 = or disjoint i64 %i.dp, %17
+  %i.ds = lshr i64 %18, 3
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.ds ; 2 uses
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !62
-  %i.dv = and i64 %20, 7
+  %i.dv = and i64 %i.dp, 7
   %i.dw = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.dv
   %i.dx = load i8, ptr %i.dw, align 1, !tbaa !62
   %i.dy = and i8 %i.dx, %i.du
@@ -329,6 +327,7 @@ bb.s:                                             ; preds = %"_ZZN8facebook5velo
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.s
   %i.ej = shl nsw i32 %i.ef, 6
+  %19 = zext i32 %i.ej to i64
   br label %bb.w
 
 bb.t:                                             ; preds = %bb.s
@@ -390,16 +389,14 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_0clEi.exit19.i.i.i.i.i": ; preds = %bb.w
-  %i.fk = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01522.i.i.i.i.i, i1 true)
-  %21 = trunc nuw nsw i64 %i.fk to i32
-  %22 = or disjoint i32 %i.ej, %21
+  %i.fk = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01522.i.i.i.i.i, i1 true) ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fg, i64 16
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !61
-  %23 = zext i32 %22 to i64                       ; 2 uses
-  %i.fn = lshr i64 %23, 3
+  %20 = or disjoint i64 %i.fk, %19
+  %i.fn = lshr i64 %20, 3
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fm, i64 %i.fn ; 2 uses
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !62
-  %i.fq = and i64 %23, 7
+  %i.fq = and i64 %i.fk, 7
   %i.fr = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.fq
   %i.fs = load i8, ptr %i.fr, align 1, !tbaa !62
   %i.ft = and i8 %i.fs, %i.fp
@@ -428,6 +425,7 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %.not.i49.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKS1_PKiE3$_0EEvT_.exit", label %.preheader.i50.i.i.i.i
 
 .preheader.i50.i.i.i.i:                           ; preds = %bb.y
+  %21 = zext i32 %i.bm to i64
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.z
@@ -448,16 +446,14 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_0clEi.exit.i54.i.i.i.i": ; preds = %bb.z
-  %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i51.i.i.i.i, i1 true)
-  %24 = trunc nuw nsw i64 %i.gm to i32
-  %25 = or disjoint i32 %i.bm, %24
+  %i.gm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i51.i.i.i.i, i1 true) ; 2 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gi, i64 16
   %i.go = load ptr, ptr %i.gn, align 8, !tbaa !61
-  %26 = zext i32 %25 to i64                       ; 2 uses
-  %i.gp = lshr i64 %26, 3
+  %22 = or disjoint i64 %i.gm, %21
+  %i.gp = lshr i64 %22, 3
   %i.gq = getelementptr inbounds nuw i8, ptr %i.go, i64 %i.gp ; 2 uses
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !62
-  %i.gs = and i64 %26, 7
+  %i.gs = and i64 %i.gm, 7
   %i.gt = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.gs
   %i.gu = load i8, ptr %i.gt, align 1, !tbaa !62
   %i.gv = and i8 %i.gu, %i.gr
@@ -598,6 +594,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not.i.i.i.i.i59, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKS1_PKiE3$_0EEvT_.exit", label %.preheader.i.i.i.i.i60
 
 .preheader.i.i.i.i.i60:                           ; preds = %bb.aj
+  %23 = zext i32 %i.ip to i64
   %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.jh = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.ak
@@ -618,16 +615,14 @@ bb.al:                                            ; preds = %bb.ak
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clEi.exit.i.i.i.i.i": ; preds = %bb.ak
-  %i.jn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i61, i1 true)
-  %27 = trunc nuw nsw i64 %i.jn to i32
-  %28 = or disjoint i32 %i.ip, %27
+  %i.jn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i61, i1 true) ; 2 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jj, i64 16
   %i.jp = load ptr, ptr %i.jo, align 8, !tbaa !61
-  %29 = zext i32 %28 to i64                       ; 2 uses
-  %i.jq = lshr i64 %29, 3
+  %24 = or disjoint i64 %i.jn, %23
+  %i.jq = lshr i64 %24, 3
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jp, i64 %i.jq ; 2 uses
   %i.js = load i8, ptr %i.jr, align 1, !tbaa !62
-  %i.jt = and i64 %29, 7
+  %i.jt = and i64 %i.jn, 7
   %i.ju = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.jt
   %i.jv = load i8, ptr %i.ju, align 1, !tbaa !62
   %i.jw = and i8 %i.jv, %i.js
@@ -659,6 +654,7 @@ bb.an:                                            ; preds = %bb.am
 
 .preheader.i37.i.i.i.i32:                         ; preds = %bb.an
   %i.kk = shl nsw i32 %i.jz, 6
+  %25 = zext i32 %i.kk to i64
   %i.kl = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.km = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.ao
@@ -679,16 +675,14 @@ bb.ap:                                            ; preds = %bb.ao
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clEi.exit.i41.i.i.i.i": ; preds = %bb.ao
-  %i.ks = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i38.i.i.i.i33, i1 true)
-  %30 = trunc nuw nsw i64 %i.ks to i32
-  %31 = or disjoint i32 %i.kk, %30
+  %i.ks = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i38.i.i.i.i33, i1 true) ; 2 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.ko, i64 16
   %i.ku = load ptr, ptr %i.kt, align 8, !tbaa !61
-  %32 = zext i32 %31 to i64                       ; 2 uses
-  %i.kv = lshr i64 %32, 3
+  %26 = or disjoint i64 %i.ks, %25
+  %i.kv = lshr i64 %26, 3
   %i.kw = getelementptr inbounds nuw i8, ptr %i.ku, i64 %i.kv ; 2 uses
   %i.kx = load i8, ptr %i.kw, align 1, !tbaa !62
-  %i.ky = and i64 %32, 7
+  %i.ky = and i64 %i.ks, 7
   %i.kz = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.ky
   %i.la = load i8, ptr %i.kz, align 1, !tbaa !62
   %i.lb = and i8 %i.la, %i.kx
@@ -726,6 +720,7 @@ bb.aq:                                            ; preds = %"_ZZN8facebook5velo
 
 .lr.ph.i.i.i.i.i53:                               ; preds = %bb.aq
   %i.lm = shl nsw i32 %i.li, 6
+  %27 = zext i32 %i.lm to i64
   br label %bb.au
 
 bb.ar:                                            ; preds = %bb.aq
@@ -787,16 +782,14 @@ bb.av:                                            ; preds = %bb.au
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clEi.exit19.i.i.i.i.i": ; preds = %bb.au
-  %i.mn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01522.i.i.i.i.i54, i1 true)
-  %33 = trunc nuw nsw i64 %i.mn to i32
-  %34 = or disjoint i32 %i.lm, %33
+  %i.mn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01522.i.i.i.i.i54, i1 true) ; 2 uses
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mj, i64 16
   %i.mp = load ptr, ptr %i.mo, align 8, !tbaa !61
-  %35 = zext i32 %34 to i64                       ; 2 uses
-  %i.mq = lshr i64 %35, 3
+  %28 = or disjoint i64 %i.mn, %27
+  %i.mq = lshr i64 %28, 3
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mp, i64 %i.mq ; 2 uses
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !62
-  %i.mt = and i64 %35, 7
+  %i.mt = and i64 %i.mn, 7
   %i.mu = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.mt
   %i.mv = load i8, ptr %i.mu, align 1, !tbaa !62
   %i.mw = and i8 %i.mv, %i.ms
@@ -825,6 +818,7 @@ bb.aw:                                            ; preds = %._crit_edge.i.i.i.i
   br i1 %.not.i49.i.i.i.i43, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKS1_PKiE3$_0EEvT_.exit", label %.preheader.i50.i.i.i.i44
 
 .preheader.i50.i.i.i.i44:                         ; preds = %bb.aw
+  %29 = zext i32 %i.ip to i64
   %i.ni = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.nj = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.ax
@@ -845,16 +839,14 @@ bb.ay:                                            ; preds = %bb.ax
   unreachable
 
 "_ZZN8facebook5velox10FlatVectorINS0_10StringViewEE4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clEi.exit.i54.i.i.i.i": ; preds = %bb.ax
-  %i.np = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i51.i.i.i.i45, i1 true)
-  %36 = trunc nuw nsw i64 %i.np to i32
-  %37 = or disjoint i32 %i.ip, %36
+  %i.np = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i51.i.i.i.i45, i1 true) ; 2 uses
   %i.nq = getelementptr inbounds nuw i8, ptr %i.nl, i64 16
   %i.nr = load ptr, ptr %i.nq, align 8, !tbaa !61
-  %38 = zext i32 %37 to i64                       ; 2 uses
-  %i.ns = lshr i64 %38, 3
+  %30 = or disjoint i64 %i.np, %29
+  %i.ns = lshr i64 %30, 3
   %i.nt = getelementptr inbounds nuw i8, ptr %i.nr, i64 %i.ns ; 2 uses
   %i.nu = load i8, ptr %i.nt, align 1, !tbaa !62
-  %i.nv = and i64 %38, 7
+  %i.nv = and i64 %i.np, 7
   %i.nw = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.nv
   %i.nx = load i8, ptr %i.nw, align 1, !tbaa !62
   %i.ny = and i8 %i.nx, %i.nu
@@ -1257,10 +1249,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.v = load atomic i8, ptr %i.c seq_cst, align 8, !range !78, !noundef !82
-  %5 = trunc nuw i8 %i.v to i1
-  %6 = and i1 %1, %5
-  %7 = zext i1 %6 to i8
-  store atomic i8 %7, ptr %i.c seq_cst, align 8
+  %5 = select i1 %1, i8 %i.v, i8 0
+  store atomic i8 %5, ptr %i.c seq_cst, align 8
   %.pre = load ptr, ptr %4, align 8, !tbaa !242
   br label %bb.i
 
@@ -1663,10 +1653,8 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.v
   %i.br = load atomic i8, ptr %i.f seq_cst, align 8, !range !78, !noundef !82
-  %7 = trunc nuw i8 %i.br to i1
-  %8 = and i1 %2, %7
-  %9 = zext i1 %8 to i8
-  store atomic i8 %9, ptr %i.f seq_cst, align 8
+  %7 = select i1 %2, i8 %i.br, i8 0
+  store atomic i8 %7, ptr %i.f seq_cst, align 8
   %i.bs = load ptr, ptr %6, align 8, !tbaa !242   ; 3 uses
   %.not.i.i23 = icmp eq ptr %i.bs, null
   %.neg.i.i24 = select i1 %.not.i.i23, i64 0, i64 -40

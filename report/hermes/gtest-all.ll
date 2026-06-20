@@ -201,8 +201,8 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q
-  %i.cg = phi i1 [ %i.cd, %bb.p ], [ %i.cf, %bb.q ] ; 3 uses
-  %i.ch = zext i1 %i.cg to i8
+  %i.cg = phi i1 [ %i.cd, %bb.p ], [ %i.cf, %bb.q ] ; 2 uses
+  %i.ch = zext i1 %i.cg to i8                     ; 2 uses
   %i.ci = zext i1 %i.cd to i32
   %i.cj = add nsw i32 %.196, %i.ci                ; 2 uses
   %i.ck = zext i1 %i.cg to i32
@@ -210,10 +210,8 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ay, i64 128
   store i8 %i.ch, ptr %i.cm, align 8, !tbaa !225
   %i.cn = load i8, ptr %i.af, align 8, !tbaa !215, !range !74, !noundef !75
-  %4 = trunc nuw i8 %i.cn to i1
-  %5 = or i1 %i.cg, %4
-  %6 = zext i1 %5 to i8
-  store i8 %6, ptr %i.af, align 8, !tbaa !215
+  %4 = or i8 %i.cn, %i.ch
+  store i8 %4, ptr %i.af, align 8, !tbaa !215
   %i.co = load ptr, ptr %3, align 8, !tbaa !7     ; 2 uses
   %i.cp = icmp eq ptr %i.co, %i.n
   br i1 %i.cp, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i63

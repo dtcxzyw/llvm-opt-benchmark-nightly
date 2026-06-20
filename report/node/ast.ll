@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN2v88int
   %i.j = phi ptr [ %i.e, %.lr.ph ], [ %i.cm, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ] ; 3 uses
   %i.k = phi i32 [ %i.g, %.lr.ph ], [ %i.co, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ]
-  %.088 = phi i8 [ 1, %.lr.ph ], [ %.1, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ] ; 2 uses
+  %.088 = phi i8 [ 1, %.lr.ph ], [ %.1, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ] ; 3 uses
   %.02787 = phi i1 [ false, %.lr.ph ], [ %.128, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ] ; 2 uses
   %.02986 = phi i8 [ 0, %.lr.ph ], [ %.231, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ] ; 8 uses
   %.03285 = phi i32 [ 1, %.lr.ph ], [ %.234, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit ] ; 6 uses
@@ -354,19 +354,18 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   br label %.sink.split.i.i
 
-.sink.split.i.i:                                  ; preds = %bb.o, %bb.n
+.sink.split.i.i:                                  ; preds = %bb.n, %bb.o
   %.sink4.i.i = phi i64 [ 32, %bb.o ], [ 24, %bb.n ]
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.sink4.i.i
   %i.bo = load i32, ptr %i.bn, align 4
-  %i.bp = and i32 %i.bo, 8
-  %1 = icmp ne i32 %i.bp, 0
+  %.fr70 = freeze i32 %i.bo
+  %i.bp = and i32 %.fr70, 8
+  %.not71 = icmp eq i32 %i.bp, 0
+  %spec.select = select i1 %.not71, i8 0, i8 %.088
   br label %_ZN2v88internal10Expression18IsCompileTimeValueEv.exit
 
-_ZN2v88internal10Expression18IsCompileTimeValueEv.exit: ; preds = %bb.l, %bb.m, %bb.n, %.sink.split.i.i
-  %.1.i = phi i1 [ true, %bb.l ], [ false, %bb.m ], [ false, %bb.n ], [ %1, %.sink.split.i.i ]
-  %2 = trunc nuw i8 %.088 to i1
-  %3 = and i1 %.1.i, %2
-  %4 = zext i1 %3 to i8
+_ZN2v88internal10Expression18IsCompileTimeValueEv.exit: ; preds = %bb.l, %.sink.split.i.i, %bb.n, %bb.m
+  %1 = phi i8 [ 0, %bb.n ], [ %spec.select, %.sink.split.i.i ], [ 0, %bb.m ], [ %.088, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   store i32 0, ptr %i.a, align 4
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
@@ -435,7 +434,7 @@ _ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototy
   %.234 = phi i32 [ %.03285, %bb.c ], [ %.03285, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit ], [ %.133, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread ] ; 2 uses
   %.231 = phi i8 [ %.02986, %bb.c ], [ %.02986, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit ], [ %.130, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread ] ; 2 uses
   %.128 = phi i1 [ true, %bb.c ], [ true, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit ], [ %.02787, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread ]
-  %.1 = phi i8 [ %.088, %bb.c ], [ 0, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit ], [ %4, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread ] ; 2 uses
+  %.1 = phi i8 [ %.088, %bb.c ], [ 0, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit ], [ %1, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 12
   %i.co = load i32, ptr %i.cn, align 4            ; 2 uses
@@ -444,8 +443,8 @@ _ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototy
   br i1 %i.cq, label %bb.b, label %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93, !llvm.loop !28
 
 _ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93: ; preds = %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit
-  %5 = shl nuw nsw i8 %.1, 3
-  %6 = zext nneg i8 %5 to i32
+  %2 = zext nneg i8 %.1 to i32
+  %3 = shl nuw nsw i32 %2, 3
   br label %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread
 
 _ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread: ; preds = %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit.thread.i, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93, %.preheader, %bb.f, %bb.e
@@ -453,26 +452,26 @@ _ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototy
   %.04076 = phi i32 [ %.242, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93 ], [ %.04082, %bb.e ], [ %.04082, %bb.f ], [ 0, %.preheader ], [ %.04082, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit.thread.i ]
   %.03274 = phi i32 [ %.234, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93 ], [ %.03285, %bb.e ], [ %.03285, %bb.f ], [ 1, %.preheader ], [ %.03285, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit.thread.i ]
   %.02972 = phi i8 [ %.231, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93 ], [ %.02986, %bb.e ], [ %.02986, %bb.f ], [ 0, %.preheader ], [ %.02986, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit.thread.i ]
-  %.2 = phi i32 [ %6, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93 ], [ 0, %bb.e ], [ 0, %bb.f ], [ 8, %.preheader ], [ 0, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit.thread.i ]
+  %.2 = phi i32 [ %3, %_ZN2v88internal31ObjectLiteralBoilerplateBuilder32InitFlagsForPendingNullPrototypeEi.exit.thread.loopexit93 ], [ 0, %bb.e ], [ 0, %bb.f ], [ 8, %.preheader ], [ 0, %_ZNK2v88internal21ObjectLiteralProperty15IsNullPrototypeEv.exit.thread.i ]
   %.04076.fr = freeze i32 %.04076                 ; 2 uses
   %i.cr = load i32, ptr %0, align 8
   %i.cs = and i32 %i.cr, -656
   %.032.masked = and i32 %.03274, -653
   %i.ct = zext nneg i8 %.02972 to i32
   %i.cu = shl nuw nsw i32 %i.ct, 2
+  %4 = or i32 %.2, %.032.masked
+  %5 = or i32 %4, %i.cu
   %.not66 = icmp eq i32 %.04076.fr, 0
-  %.masked114 = and i32 %i.cu, 380
+  %.masked114 = and i32 %5, -641
+  %6 = or i32 %.masked114, %i.cs
   %spec.select.a = select i1 %.not66, i32 0, i32 128
   %i.cv = icmp ult i32 %.05078, 33
   %i.cw = shl i32 %.04076.fr, 1
   %i.cx = icmp uge i32 %i.cw, %.05078
   %i.cy = or i1 %i.cv, %i.cx
   %i.cz = select i1 %i.cy, i32 512, i32 0
-  %.masked113 = or disjoint i32 %spec.select.a, %.032.masked
-  %.masked = or i32 %.masked113, %.2
-  %7 = or disjoint i32 %.masked, %i.cz
-  %i.da = or i32 %7, %.masked114
-  %i.db = or i32 %i.da, %i.cs
+  %i.da = or disjoint i32 %i.cz, %spec.select.a
+  %i.db = or disjoint i32 %i.da, %6
   store i32 %i.db, ptr %0, align 8
   br label %bb.q
 

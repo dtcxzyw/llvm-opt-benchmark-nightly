@@ -201,7 +201,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %._crit_edge
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %._crit_edge ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
   %.05979 = phi i64 [ 0, %bb.a ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
   %.06078 = phi i32 [ 0, %bb.a ], [ %.161.lcssa, %._crit_edge ] ; 2 uses
   %.06377 = phi i32 [ 0, %bb.a ], [ %.164.lcssa, %._crit_edge ] ; 2 uses
@@ -239,33 +239,23 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge
   %i.af = or <32 x i1> %i.ab, %i.ae
   %i.ag = bitcast <32 x i1> %i.af to i32          ; 2 uses
   %.not70 = icmp eq i32 %i.ag, 0
-  br i1 %.not70, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not70, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.b
-  %2 = trunc nuw nsw i64 %indvars.iv to i32
-  %.pre = trunc nuw nsw i64 %indvars.iv to i32
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %VP8LFastSLog2.exit67
-  %.174 = phi i64 [ %i.bi, %VP8LFastSLog2.exit67 ], [ %.05979, %.lr.ph.preheader ] ; 2 uses
-  %.16173 = phi i32 [ %i.ba, %VP8LFastSLog2.exit67 ], [ %.06078, %.lr.ph.preheader ]
-  %.06272 = phi i32 [ %i.bk, %VP8LFastSLog2.exit67 ], [ %i.ag, %.lr.ph.preheader ] ; 3 uses
-  %.16471 = phi i32 [ %.265, %VP8LFastSLog2.exit67 ], [ %.06377, %.lr.ph.preheader ] ; 2 uses
-  %i.ah = tail call range(i32 0, 32) i32 @llvm.cttz.i32(i32 range(i32 1, 0) %.06272, i1 true) ; 3 uses
+.lr.ph:                                           ; preds = %bb.b, %VP8LFastSLog2.exit67
+  %.174 = phi i64 [ %i.bi, %VP8LFastSLog2.exit67 ], [ %.05979, %bb.b ] ; 2 uses
+  %.16173 = phi i32 [ %i.ba, %VP8LFastSLog2.exit67 ], [ %.06078, %bb.b ]
+  %.06272 = phi i32 [ %i.bk, %VP8LFastSLog2.exit67 ], [ %i.ag, %bb.b ] ; 3 uses
+  %.16471 = phi i32 [ %.265, %VP8LFastSLog2.exit67 ], [ %.06377, %bb.b ] ; 2 uses
+  %i.ah = tail call range(i32 0, 32) i32 @llvm.cttz.i32(i32 range(i32 1, 0) %.06272, i1 true) ; 2 uses
   %i.ai = shl nuw i32 1, %i.ah
   %i.aj = and i32 %i.ai, %i.ac
   %.not66 = icmp eq i32 %i.aj, 0
-  br i1 %.not66, label %.lr.ph._crit_edge, label %bb.c
-
-.lr.ph._crit_edge:                                ; preds = %.lr.ph
-  %.pre83 = or disjoint i32 %i.ah, %.pre
-  %.pre85 = zext nneg i32 %.pre83 to i64
-  br label %bb.f
+  %2 = zext nneg i32 %i.ah to i64
+  %.pre85 = or disjoint i64 %indvars.iv, %2       ; 3 uses
+  br i1 %.not66, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
-  %3 = or disjoint i32 %i.ah, %2
-  %4 = zext nneg i32 %3 to i64                    ; 2 uses
-  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %4
+  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.pre85
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !3  ; 4 uses
   %i.am = add i32 %i.al, %.16471
   %i.an = icmp ult i32 %i.al, 256
@@ -287,13 +277,12 @@ VP8LFastSLog2.exit:                               ; preds = %bb.d, %bb.e
   %i.au = add i64 %i.at, %.174
   br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph._crit_edge, %VP8LFastSLog2.exit
-  %.pre-phi86 = phi i64 [ %.pre85, %.lr.ph._crit_edge ], [ %4, %VP8LFastSLog2.exit ] ; 2 uses
-  %.265 = phi i32 [ %.16471, %.lr.ph._crit_edge ], [ %i.am, %VP8LFastSLog2.exit ] ; 2 uses
-  %.2 = phi i64 [ %.174, %.lr.ph._crit_edge ], [ %i.au, %VP8LFastSLog2.exit ]
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.pre-phi86
+bb.f:                                             ; preds = %.lr.ph, %VP8LFastSLog2.exit
+  %.265 = phi i32 [ %i.am, %VP8LFastSLog2.exit ], [ %.16471, %.lr.ph ] ; 2 uses
+  %.2 = phi i64 [ %i.au, %VP8LFastSLog2.exit ], [ %.174, %.lr.ph ]
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.pre85
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !3
-  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.pre-phi86
+  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.pre85
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !3
   %i.az = add i32 %i.ay, %i.aw                    ; 4 uses
   %i.ba = add i32 %i.az, %.16173                  ; 2 uses

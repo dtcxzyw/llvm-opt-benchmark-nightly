@@ -201,17 +201,16 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
 
 .preheader.i48.i.i.i:                             ; preds = %bb.g
   %i.br = xor i64 %.demorgan.i.i, -1
+  %1 = zext nneg i32 %i.v to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %.preheader.i48.i.i.i
   %.012.i53.i.i.i = phi i64 [ %i.br, %.preheader.i48.i.i.i ], [ %i.bw, %bb.h ] ; 3 uses
   %i.bs = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i53.i.i.i, i1 true)
-  %1 = trunc nuw nsw i64 %i.bs to i32
-  %2 = or disjoint i32 %i.v, %1
-  %3 = zext nneg i32 %2 to i64                    ; 2 uses
-  %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %3
+  %2 = or disjoint i64 %i.bs, %1                  ; 2 uses
+  %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %2
   store i32 0, ptr %i.bt, align 4, !tbaa !3
-  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %3
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %2
   store i32 0, ptr %i.bu, align 4, !tbaa !3
   %i.bv = add nsw i64 %.012.i53.i.i.i, -1
   %i.bw = and i64 %i.bv, %.012.i53.i.i.i          ; 2 uses

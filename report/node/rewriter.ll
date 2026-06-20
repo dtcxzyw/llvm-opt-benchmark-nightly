@@ -201,10 +201,9 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp ne i32 %i.d, 0
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 83 ; 4 uses
   %i.g = load i8, ptr %i.f, align 1, !range !7, !noundef !8 ; 2 uses
-  %2 = trunc nuw i8 %i.g to i1
-  %3 = or i1 %i.e, %2
-  %4 = zext i1 %3 to i8
-  store i8 %4, ptr %i.f, align 1
+  %2 = zext i1 %i.e to i8
+  %3 = or i8 %i.g, %2
+  store i8 %3, ptr %i.f, align 1
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.j = load i32, ptr %i.i, align 4              ; 2 uses
@@ -607,10 +606,9 @@ bb.t:                                             ; preds = %bb.s
   %i.cd = icmp ne i32 %i.cc, 0
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 83 ; 4 uses
   %i.cf = load i8, ptr %i.ce, align 1, !range !7, !noundef !8 ; 2 uses
-  %2 = trunc nuw i8 %i.cf to i1
-  %3 = or i1 %i.cd, %2
-  %4 = zext i1 %3 to i8
-  store i8 %4, ptr %i.ce, align 1
+  %2 = zext i1 %i.cd to i8
+  %3 = or i8 %i.cf, %2
+  store i8 %3, ptr %i.ce, align 1
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.ci = load i32, ptr %i.ch, align 4            ; 2 uses

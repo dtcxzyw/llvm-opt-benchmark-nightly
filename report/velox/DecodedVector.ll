@@ -201,14 +201,13 @@ bb.l:                                             ; preds = %bb.k
   %i.bv = call noundef zeroext i1 %i.bu(ptr noundef nonnull align 8 dereferenceable(94) %i.br, i32 noundef 0) ; 2 uses
   %i.bw = select i1 %i.bv, ptr @_ZN8facebook5velox13DecodedVector17constantNullMask_E, ptr null
   store ptr %i.bw, ptr %i.bp, align 8, !tbaa !123
+  %5 = zext i1 %i.bv to i8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %5 = phi i1 [ %i.bv, %bb.l ], [ true, %bb.k ]
+  %6 = phi i8 [ %5, %bb.l ], [ 1, %bb.k ]
   %i.bx = load i8, ptr %i.r, align 1, !tbaa !124, !range !81, !noundef !82
-  %6 = trunc nuw i8 %i.bx to i1
-  %narrow = or i1 %5, %6
-  %7 = zext i1 %narrow to i8
+  %7 = or i8 %i.bx, %6
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i8 %7, ptr %i.by, align 8, !tbaa !97
   ret void
@@ -611,14 +610,13 @@ bb.v:                                             ; preds = %bb.u
   %i.cs = call noundef zeroext i1 %i.cr(ptr noundef nonnull align 8 dereferenceable(94) %i.co, i32 noundef 0) ; 2 uses
   %i.ct = select i1 %i.cs, ptr @_ZN8facebook5velox13DecodedVector17constantNullMask_E, ptr null
   store ptr %i.ct, ptr %i.cm, align 8, !tbaa !123
+  %5 = zext i1 %i.cs to i8
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %5 = phi i1 [ %i.cs, %bb.v ], [ true, %bb.u ]
+  %6 = phi i8 [ %5, %bb.v ], [ 1, %bb.u ]
   %i.cu = load i8, ptr %i.ao, align 1, !tbaa !124, !range !81, !noundef !82
-  %6 = trunc nuw i8 %i.cu to i1
-  %narrow = or i1 %5, %6
-  %7 = zext i1 %narrow to i8
+  %7 = or i8 %i.cu, %6
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i8 %7, ptr %i.cv, align 8, !tbaa !97
   ret void

@@ -201,15 +201,14 @@ bb.n:                                             ; preds = %.loopexit.i
   br i1 %.not24.i57.us.i, label %iseq_scan_bits.exit67.us.i, label %.lr.ph.split.us.i64.us.preheader.i
 
 .lr.ph.split.us.i64.us.preheader.i:               ; preds = %.lr.ph16.split.us.i
-  %i.bk = shl i64 %indvars.iv26.i, 6
-  %.masked52.i = and i64 %i.bk, 4294967232
-  %2 = getelementptr [8 x i8], ptr %i.p, i64 %.masked52.i
+  %i.bk = shl i64 %indvars.iv26.i, 9
+  %invariant.gep.i.us.i = getelementptr i8, ptr %i.p, i64 %i.bk
   br label %.lr.ph.split.us.i64.us.i
 
 .lr.ph.split.us.i64.us.i:                         ; preds = %.lr.ph.split.us.i64.us.i, %.lr.ph.split.us.i64.us.preheader.i
   %.025.us.i65.us.i = phi i64 [ %i.bo, %.lr.ph.split.us.i64.us.i ], [ %i.bj, %.lr.ph.split.us.i64.us.preheader.i ] ; 3 uses
   %i.bl = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.025.us.i65.us.i, i1 true)
-  %i.bm = getelementptr [8 x i8], ptr %2, i64 %i.bl
+  %i.bm = getelementptr [8 x i8], ptr %invariant.gep.i.us.i, i64 %i.bl
   call void @rb_gc_mark_and_move(ptr noundef nonnull %i.bm) #20
   %i.bn = add i64 %.025.us.i65.us.i, -1
   %i.bo = and i64 %i.bn, %.025.us.i65.us.i        ; 2 uses
@@ -266,13 +265,12 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph.split
 
 .lr.ph.split.i60.preheader.i:                     ; preds = %.lr.ph16.split.i
   %i.cd = shl i64 %indvars.iv.i, 6
-  %.masked.i = and i64 %i.cd, 4294967232
   br label %.lr.ph.split.i60.i
 
 .lr.ph.split.i60.i:                               ; preds = %bb.r, %.lr.ph.split.i60.preheader.i
   %.025.i61.i = phi i64 [ %i.cl, %bb.r ], [ %i.cc, %.lr.ph.split.i60.preheader.i ] ; 3 uses
   %i.ce = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.025.i61.i, i1 true)
-  %i.cf = or disjoint i64 %i.ce, %.masked.i       ; 2 uses
+  %i.cf = or disjoint i64 %i.ce, %i.cd            ; 2 uses
   %i.cg = getelementptr [8 x i8], ptr %i.p, i64 %i.cf ; 3 uses
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !11
   call void @rb_gc_mark_and_move(ptr noundef nonnull %i.cg) #20

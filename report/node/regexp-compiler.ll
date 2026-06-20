@@ -201,29 +201,29 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   ]
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.dg = load i32, ptr %i.a, align 16            ; 3 uses
-  %i.dh = trunc i32 %i.dg to i16                  ; 4 uses
-  %i.di = load i32, ptr %i.am, align 4            ; 2 uses
-  %9 = trunc i32 %i.di to i16                     ; 2 uses
-  %10 = select i1 %i.dc, i32 255, i32 65535       ; 2 uses
-  %11 = xor i16 %9, %i.dh                         ; 2 uses
-  %12 = call range(i16 0, 17) i16 @llvm.ctpop.i16(i16 %11)
-  %13 = icmp samesign ult i16 %12, 2
-  br i1 %13, label %bb.af, label %bb.ag
+  %i.dg = load i32, ptr %i.a, align 16            ; 4 uses
+  %i.dh = trunc i32 %i.dg to i16                  ; 3 uses
+  %i.di = load i32, ptr %i.am, align 4            ; 3 uses
+  %9 = select i1 %i.dc, i32 255, i32 65535        ; 2 uses
+  %10 = xor i32 %i.di, %i.dg                      ; 2 uses
+  %11 = and i32 %10, 65535                        ; 2 uses
+  %12 = add i32 %10, 65535
+  %13 = and i32 %12, %11
+  %14 = icmp eq i32 %13, 0
+  br i1 %14, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
   %i.dj = and i32 %i.dg, 65535
-  %14 = trunc nuw i32 %10 to i16
-  %15 = xor i16 %11, %14
-  %16 = zext i16 %15 to i32
+  %15 = xor i32 %11, %9
   %i.dk = load ptr, ptr %i.da, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 160
   %i.dm = load ptr, ptr %i.dl, align 8
-  call void %i.dm(ptr noundef nonnull align 8 dereferenceable(40) %i.da, i32 noundef %i.dj, i32 noundef %16, ptr noundef %i.j) #26, !inline_history !52
+  call void %i.dm(ptr noundef nonnull align 8 dereferenceable(40) %i.da, i32 noundef %i.dj, i32 noundef %15, ptr noundef %i.j) #26, !inline_history !52
   br label %_ZN2v88internal12_GLOBAL__N_114EmitAtomLetterEPNS0_7IsolateEPNS0_14RegExpCompilerEtPNS0_5LabelEibb.exit.thread
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.dn = sub i16 %9, %i.dh                       ; 5 uses
+  %16 = trunc i32 %i.di to i16
+  %i.dn = sub i16 %16, %i.dh                      ; 5 uses
   %i.do = call range(i16 0, 17) i16 @llvm.ctpop.i16(i16 %i.dn)
   %i.dp = icmp samesign ugt i16 %i.do, 1
   %.not.i.i = icmp ugt i16 %i.dn, %i.dh
@@ -231,7 +231,7 @@ bb.ag:                                            ; preds = %bb.ae
   br i1 %or.cond.i.i, label %_ZN2v88internal12_GLOBAL__N_125ShortCutEmitCharacterPairEPNS0_20RegExpMacroAssemblerEbttPNS0_5LabelE.exit.i, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.dq = trunc nuw i32 %10 to i16
+  %i.dq = trunc nuw i32 %9 to i16
   %i.dr = xor i16 %i.dn, %i.dq
   %i.ds = sub nuw i16 %i.dh, %i.dn
   %i.dt = load ptr, ptr %i.da, align 8

@@ -201,7 +201,7 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %or.cond12.not, label %bb.bh, label %.loopexit303
 
 bb.bh:                                            ; preds = %._crit_edge.thread
-  %13 = and i1 %.1139374, %.4124                  ; 2 uses
+  %13 = select i1 %.4124, i1 %.1139374, i1 false  ; 2 uses
   %indvars.iv.next438 = add nsw i64 %indvars.iv437, 1 ; 2 uses
   %lftr.wideiv439 = trunc i64 %indvars.iv.next438 to i32
   %exitcond440.not = icmp eq i32 %i.l, %lftr.wideiv439

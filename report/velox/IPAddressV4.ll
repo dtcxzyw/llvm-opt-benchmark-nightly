@@ -201,14 +201,34 @@ _ZN5folly11IPAddressV49fetchMaskEm.exit:          ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
   %i.k = ashr exact i64 -4294967296, %1
   %i.l = trunc i64 %i.k to i32
-  %i.m = tail call noundef i32 @llvm.bswap.i32(i32 %i.l)
-  %6 = insertelement <4 x i32> poison, i32 %i.m, i64 0
-  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <4 x i32> zeroinitializer
-  %8 = lshr <4 x i32> %7, <i32 0, i32 8, i32 16, i32 24>
-  %9 = trunc <4 x i32> %8 to <4 x i8>
-  %10 = load <4 x i8>, ptr %0, align 4, !tbaa !11
-  %11 = and <4 x i8> %10, %9
-  store <4 x i8> %11, ptr %5, align 4
+  %i.m = tail call noundef i32 @llvm.bswap.i32(i32 %i.l) ; 4 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %i.m to i8
+  %.sroa.4.0.extract.shift = lshr i32 %i.m, 8
+  %.sroa.4.0.extract.trunc = trunc i32 %.sroa.4.0.extract.shift to i8
+  %.sroa.5.0.extract.shift = lshr i32 %i.m, 16
+  %.sroa.5.0.extract.trunc = trunc i32 %.sroa.5.0.extract.shift to i8
+  %6 = load i8, ptr %0, align 4, !tbaa !11
+  %7 = and i8 %6, %.sroa.0.0.extract.trunc
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !11
+  %10 = and i8 %9, %.sroa.4.0.extract.trunc
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %12 = load i8, ptr %11, align 2, !tbaa !11
+  %13 = and i8 %12, %.sroa.5.0.extract.trunc
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %15 = load i8, ptr %14, align 1, !tbaa !11
+  %16 = zext i8 %15 to i32
+  %.sroa.5.0.insert.ext.i13 = shl nuw i32 %16, 24
+  %.sroa.6.0.extract.shift14 = and i32 %.sroa.5.0.insert.ext.i13, %i.m
+  %.sroa.4.0.insert.ext.i = zext i8 %13 to i32
+  %.sroa.4.0.insert.shift.i = shl nuw nsw i32 %.sroa.4.0.insert.ext.i, 16
+  %.sroa.4.0.insert.insert.i = or disjoint i32 %.sroa.6.0.extract.shift14, %.sroa.4.0.insert.shift.i
+  %.sroa.3.0.insert.ext.i = zext i8 %10 to i32
+  %.sroa.3.0.insert.shift.i = shl nuw nsw i32 %.sroa.3.0.insert.ext.i, 8
+  %.sroa.3.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.insert.i, %.sroa.3.0.insert.shift.i
+  %.sroa.0.0.insert.ext.i = zext i8 %7 to i32
+  %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.3.0.insert.insert.i, %.sroa.0.0.insert.ext.i
+  store i32 %.sroa.0.0.insert.insert.i, ptr %5, align 4
   call void @_ZN5folly11IPAddressV4C1ERKSt5arrayIhLm4EE(ptr noundef nonnull align 4 dereferenceable(4) %3, ptr noundef nonnull align 1 dereferenceable(4) %5) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
   %i.n = load i32, ptr %3, align 4

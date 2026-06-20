@@ -201,11 +201,9 @@ bb.bb:                                            ; preds = %bb.bd
 
 bb.bc:                                            ; preds = %bb.az
   %i.ma = load atomic i8, ptr %i.f seq_cst, align 8, !range !73, !noundef !74
-  %12 = trunc nuw i8 %i.ma to i1
-  %13 = icmp ne i8 %.16, 0
-  %14 = and i1 %13, %12
-  %15 = zext i1 %14 to i8
-  store atomic i8 %15, ptr %i.f seq_cst, align 8
+  %.not = icmp eq i8 %.16, 0
+  %12 = select i1 %.not, i8 0, i8 %i.ma
+  store atomic i8 %12, ptr %i.f seq_cst, align 8
   %.pre = load ptr, ptr %11, align 8, !tbaa !145
   br label %bb.bd
 

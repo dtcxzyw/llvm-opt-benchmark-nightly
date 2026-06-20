@@ -201,7 +201,7 @@ vector.body275:                                   ; preds = %bb.g
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.preheader.i.i
-  %.01520.i.i.i = phi i64 [ %i.dd, %.lr.ph.i.i.i ], [ %i.cb, %.lr.ph.i.preheader.i.i ] ; 3 uses
+  %.01520.i.i.i = phi i64 [ %i.cb, %.lr.ph.i.preheader.i.i ], [ %i.dd, %.lr.ph.i.i.i ] ; 3 uses
   %i.cy = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01520.i.i.i, i1 true)
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !3
@@ -229,15 +229,17 @@ bb.h:                                             ; preds = %._crit_edge.i.i
   %i.dk = load i64, ptr %i.dj, align 8, !tbaa !33
   %i.dl = and i64 %i.dk, %i.dh                    ; 2 uses
   %.not.i43.i.i = icmp eq i64 %i.dl, 0
-  br i1 %.not.i43.i.i, label %"_ZN8facebook5velox4bits10forEachBitIZNKS0_13FlatMapVector11toMapVectorEvE3$_0EEvPKmiibT_.exit", label %.preheader.i44.i.i
+  br i1 %.not.i43.i.i, label %"_ZN8facebook5velox4bits10forEachBitIZNKS0_13FlatMapVector11toMapVectorEvE3$_0EEvPKmiibT_.exit", label %.preheader.i46.i.i
 
-.preheader.i44.i.i:                               ; preds = %bb.h, %.preheader.i44.i.i
-  %.011.i46.i.i = phi i64 [ %i.dr, %.preheader.i44.i.i ], [ %i.dl, %bb.h ] ; 3 uses
+.preheader.i46.i.i:                               ; preds = %bb.h
+  %15 = zext nneg i32 %i.bx to i64
+  %invariant.gep.i48.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %15
+  br label %.preheader.i44.i.i
+
+.preheader.i44.i.i:                               ; preds = %.preheader.i44.i.i, %.preheader.i46.i.i
+  %.011.i46.i.i = phi i64 [ %i.dl, %.preheader.i46.i.i ], [ %i.dr, %.preheader.i44.i.i ] ; 3 uses
   %i.dm = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i46.i.i, i1 true)
-  %15 = trunc nuw nsw i64 %i.dm to i32
-  %16 = or disjoint i32 %i.bx, %15
-  %17 = zext nneg i32 %16 to i64
-  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %17 ; 2 uses
+  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i48.i.i, i64 %i.dm ; 2 uses
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !3
   %i.dp = add nsw i32 %i.do, 1
   store i32 %i.dp, ptr %i.dn, align 4, !tbaa !3

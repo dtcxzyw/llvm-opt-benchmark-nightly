@@ -201,15 +201,12 @@ bb.d:                                             ; preds = %.preheader, %bb.d
   %i.g = add i64 %.019, %0
   %i.h = tail call fastcc zeroext i1 @mi_arena_try_purge_range(ptr noundef %2, i64 noundef %i.g, i64 noundef 1) ; 2 uses
   %i.i = load i8, ptr %i.e, align 1, !tbaa !74, !range !18, !noundef !19
-  %4 = trunc nuw i8 %i.i to i1
-  %5 = or i1 %i.h, %4
-  %6 = zext i1 %5 to i8
-  store i8 %6, ptr %i.e, align 1, !tbaa !74
+  %4 = zext i1 %i.h to i8
+  %5 = or i8 %i.i, %4
+  store i8 %5, ptr %i.e, align 1, !tbaa !74
   %i.j = load i8, ptr %i.f, align 8, !tbaa !73, !range !18, !noundef !19
-  %7 = trunc nuw i8 %i.j to i1
-  %8 = and i1 %i.h, %7
-  %9 = zext i1 %8 to i8
-  store i8 %9, ptr %i.f, align 8, !tbaa !73
+  %6 = select i1 %i.h, i8 %i.j, i8 0
+  store i8 %6, ptr %i.f, align 8, !tbaa !73
   %i.k = add nuw i64 %.019, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.k, %1
   br i1 %exitcond.not, label %.loopexit, label %bb.d, !llvm.loop !128
