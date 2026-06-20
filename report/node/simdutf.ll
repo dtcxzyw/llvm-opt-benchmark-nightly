@@ -201,20 +201,23 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.2 = phi <8 x i64> [ %i.r, %bb.e ], [ %.137, %bb.d ] ; 4 uses
-  %3 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 0, i32 1>
-  %4 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 2, i32 3>
-  %5 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 4, i32 5>
-  %6 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 6, i32 7>
+  %.2 = phi <8 x i64> [ %i.r, %bb.e ], [ %.137, %bb.d ] ; 5 uses
+  %3 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 poison, i32 1>
+  %4 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 poison, i32 3>
+  %5 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 poison, i32 5>
+  %6 = shufflevector <8 x i64> %.2, <8 x i64> poison, <2 x i32> <i32 poison, i32 7>
   %i.s = add <2 x i64> %3, %4
   %i.t = add <2 x i64> %i.s, %6
   %i.u = add <2 x i64> %i.t, %5
-  %i.v = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.u)
+  %7 = shufflevector <8 x i64> %.2, <8 x i64> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.v = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %7)
+  %8 = extractelement <2 x i64> %i.u, i64 1
+  %9 = add i64 %i.v, %8
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a, %bb.f, %._crit_edge
   %.0.lcssa89 = phi i64 [ %i.a, %bb.f ], [ 0, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
-  %.038 = phi i64 [ %i.v, %bb.f ], [ 0, %._crit_edge ], [ 0, %bb.a ]
+  %.038 = phi i64 [ %9, %bb.f ], [ 0, %._crit_edge ], [ 0, %bb.a ]
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %.0.lcssa89 ; 3 uses
   %i.x = sub i64 %2, %.0.lcssa89                  ; 5 uses
   %.not.i = icmp eq i64 %2, %.0.lcssa89

@@ -66,12 +66,11 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.022.in.lcssa = phi <4 x i32> [ %i.c, %bb.a ], [ %i.u, %.lr.ph ] ; 2 uses
-  %2 = shufflevector <4 x i32> %.022.in.lcssa, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
-  %i.v = add <4 x i32> %.022.in.lcssa, %2         ; 2 uses
-  %3 = shufflevector <4 x i32> %i.v, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %4 = add <4 x i32> %i.v, %3
-  %5 = extractelement <4 x i32> %4, i64 0
-  ret i32 %5
+  %2 = shufflevector <4 x i32> %.022.in.lcssa, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
+  %i.v = add <4 x i32> %.022.in.lcssa, %2
+  %3 = shufflevector <4 x i32> %i.v, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %4 = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %3)
+  ret i32 %4
 }
 
 ; Function Attrs: nounwind uwtable
@@ -110,7 +109,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.g = zext nneg i32 %.0.lcssa to i64
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.g
   %i.i = sub nsw i32 %1, %.0.lcssa
-  tail call void @VP8LSubtractGreenFromBlueAndRed_C(ptr noundef %i.h, i32 noundef %i.i) #5
+  tail call void @VP8LSubtractGreenFromBlueAndRed_C(ptr noundef %i.h, i32 noundef %i.i) #6
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
@@ -302,7 +301,7 @@ bb.c:                                             ; preds = %.loopexit
   %i.dq = zext nneg i32 %i.dn to i64
   %i.dr = sub nsw i64 0, %i.dq
   %i.ds = getelementptr inbounds [4 x i8], ptr %i.dp, i64 %i.dr
-  tail call void @VP8LCollectColorBlueTransforms_C(ptr noundef nonnull %i.ds, i32 noundef %1, i32 noundef %i.dn, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) #5
+  tail call void @VP8LCollectColorBlueTransforms_C(ptr noundef nonnull %i.ds, i32 noundef %1, i32 noundef %i.dn, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) #6
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.loopexit
@@ -469,7 +468,7 @@ bb.c:                                             ; preds = %.loopexit
   %i.ct = zext nneg i32 %i.cq to i64
   %i.cu = sub nsw i64 0, %i.ct
   %i.cv = getelementptr inbounds [4 x i8], ptr %i.cs, i64 %i.cu
-  tail call void @VP8LCollectColorRedTransforms_C(ptr noundef nonnull %i.cv, i32 noundef %1, i32 noundef %i.cq, i32 noundef %3, i32 noundef %4, ptr noundef %5) #5
+  tail call void @VP8LCollectColorRedTransforms_C(ptr noundef nonnull %i.cv, i32 noundef %1, i32 noundef %i.cq, i32 noundef %3, i32 noundef %4, ptr noundef %5) #6
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.loopexit
@@ -491,12 +490,16 @@ declare void @VP8LCollectColorRedTransforms_C(ptr noundef, i32 noundef, i32 noun
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16>, <8 x i16>) #3
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #5
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(none) }
 attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

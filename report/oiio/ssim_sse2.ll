@@ -201,13 +201,12 @@ bb.a:
   %i.fp = shufflevector <4 x i32> %i.fk, <4 x i32> %i.fn, <2 x i32> <i32 1, i32 5>
   %i.fq = add <2 x i32> %i.fo, %i.fp
   store <2 x i32> %i.fq, ptr %i.fl, align 4, !tbaa !3
-  %5 = shufflevector <4 x i32> %i.es, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
-  %i.fr = add <4 x i32> %i.es, %5                 ; 2 uses
-  %6 = shufflevector <4 x i32> %i.fr, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %7 = add <4 x i32> %i.fr, %6
-  %8 = extractelement <4 x i32> %7, i64 0
+  %5 = shufflevector <4 x i32> %i.es, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
+  %i.fr = add <4 x i32> %i.es, %5
+  %6 = shufflevector <4 x i32> %i.fr, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %7 = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %6)
   %i.fs = getelementptr inbounds nuw i8, ptr %4, i64 20
-  store i32 %8, ptr %i.fs, align 4, !tbaa !16
+  store i32 %7, ptr %i.fs, align 4, !tbaa !16
   %i.ft = call double @VP8SSIMFromStats(ptr noundef nonnull %4) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   ret double %i.ft
@@ -229,6 +228,9 @@ declare double @VP8SSIMFromStats(ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
