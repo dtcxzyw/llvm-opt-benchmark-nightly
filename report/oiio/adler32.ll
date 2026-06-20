@@ -123,7 +123,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.ao = add <8 x i32> %i.ag, %i.an
   %i.ap = tail call <4 x i64> @llvm.x86.avx2.psad.bw(<32 x i8> %i.ak, <32 x i8> zeroinitializer)
   %i.aq = bitcast <4 x i64> %i.ap to <8 x i32>
-  %i.ar = add <8 x i32> %i.ao, %i.aq              ; 3 uses
+  %i.ar = add <8 x i32> %i.ao, %i.aq              ; 2 uses
   %i.as = shufflevector <32 x i8> %i.ai, <32 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <32 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55>
   %i.at = bitcast <32 x i8> %i.as to <16 x i16>
   %i.au = add <16 x i16> %i.ae, %i.at             ; 2 uses
@@ -151,23 +151,12 @@ adler32_avx2_chunk.exit:                          ; preds = %bb.e
   %i.bm = tail call <8 x i32> @llvm.x86.avx2.pmadd.wd(<16 x i16> %i.ba, <16 x i16> <i16 32, i16 31, i16 30, i16 29, i16 28, i16 27, i16 26, i16 25, i16 16, i16 15, i16 14, i16 13, i16 12, i16 11, i16 10, i16 9>)
   %i.bn = add <8 x i32> %i.bl, %i.bm
   %i.bo = tail call <8 x i32> @llvm.x86.avx2.pmadd.wd(<16 x i16> %i.bd, <16 x i16> <i16 24, i16 23, i16 22, i16 21, i16 20, i16 19, i16 18, i16 17, i16 8, i16 7, i16 6, i16 5, i16 4, i16 3, i16 2, i16 1>)
-  %i.bp = add <8 x i32> %i.bn, %i.bo              ; 2 uses
-  %3 = shufflevector <8 x i32> %i.ar, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %4 = shufflevector <8 x i32> %i.ar, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %5 = add <4 x i32> %3, %4                       ; 2 uses
-  %6 = shufflevector <8 x i32> %i.bp, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %7 = shufflevector <8 x i32> %i.bp, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %8 = add <4 x i32> %6, %7                       ; 2 uses
-  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 0>
-  %10 = add <4 x i32> %9, %8                      ; 2 uses
-  %11 = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %12 = add <4 x i32> %11, %5
-  %13 = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %14 = add <4 x i32> %13, %10
-  %15 = extractelement <4 x i32> %12, i64 0
-  %i.bq = add i32 %15, %.2145160
-  %16 = extractelement <4 x i32> %14, i64 0
-  %i.br = add i32 %i.bg, %16
+  %i.bp = add <8 x i32> %i.bn, %i.bo
+  %3 = shufflevector <8 x i32> %i.ar, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %4 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %3)
+  %i.bq = add i32 %4, %.2145160
+  %5 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.bp)
+  %i.br = add i32 %i.bg, %5
   %i.bs = urem i32 %i.bq, 65521                   ; 2 uses
   %i.bt = urem i32 %i.br, 65521                   ; 2 uses
   %.not35 = icmp eq ptr %i.aa, %i.v
@@ -381,17 +370,13 @@ adler32_sse2_chunk.exit:                          ; preds = %bb.e
   %i.bm = tail call <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16> %i.ba, <8 x i16> <i16 16, i16 15, i16 14, i16 13, i16 12, i16 11, i16 10, i16 9>)
   %i.bn = add <4 x i32> %i.bl, %i.bm
   %i.bo = tail call <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16> %i.bd, <8 x i16> <i16 8, i16 7, i16 6, i16 5, i16 4, i16 3, i16 2, i16 1>)
-  %3 = add <4 x i32> %i.bn, %i.bo                 ; 2 uses
-  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 0>
-  %i.bp = add <4 x i32> %4, %3                    ; 2 uses
+  %i.bp = add <4 x i32> %i.bn, %i.bo
   %i.bq = shufflevector <4 x i32> %i.ar, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %5 = add <4 x i32> %i.bq, %i.ar
-  %6 = shufflevector <4 x i32> %i.bp, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %i.br = add <4 x i32> %6, %i.bp
-  %i.bs = extractelement <4 x i32> %5, i64 0
+  %i.br = add <4 x i32> %i.bq, %i.ar
+  %i.bs = extractelement <4 x i32> %i.br, i64 0
   %i.bt = add i32 %i.bs, %.26075
-  %7 = extractelement <4 x i32> %i.br, i64 0
-  %i.bu = add i32 %i.bg, %7
+  %3 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.bp)
+  %i.bu = add i32 %i.bg, %3
   %i.bv = urem i32 %i.bt, 65521                   ; 2 uses
   %i.bw = urem i32 %i.bu, 65521                   ; 2 uses
   %.not35 = icmp eq ptr %i.aa, %i.v
@@ -514,6 +499,12 @@ declare <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16>, <8 x i16>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

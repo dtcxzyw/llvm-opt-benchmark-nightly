@@ -201,13 +201,9 @@ bb.bb:                                            ; preds = %bb.bc
   %i.lz = lshr <4 x i32> %i.ly, splat (i32 16)
   %i.ma = bitcast <8 x i16> %i.mk to <4 x i32>
   %i.mb = and <4 x i32> %i.ma, splat (i32 65535)
-  %12 = add nuw nsw <4 x i32> %i.mb, %i.lz        ; 2 uses
-  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %14 = add nuw nsw <4 x i32> %13, %12            ; 2 uses
-  %15 = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %i.mc = add nuw nsw <4 x i32> %15, %14
-  %16 = extractelement <4 x i32> %i.mc, i64 0
-  %i.md = add i32 %16, %.026.i.i                  ; 2 uses
+  %i.mc = add nuw nsw <4 x i32> %i.mb, %i.lz
+  %12 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.mc)
+  %i.md = add i32 %12, %.026.i.i                  ; 2 uses
   %i.me = getelementptr i8, ptr %.06823.i.i, i64 2097120
   %.not.i89.i = icmp ugt ptr %i.me, %i.lv
   br i1 %.not.i89.i, label %.preheader.i90.i, label %.preheader16.i.i, !llvm.loop !200
@@ -281,13 +277,9 @@ bb.bd:                                            ; preds = %bb.bc
   %.sroa.050.2.lcssa.i104.i = phi <4 x i32> [ zeroinitializer, %.preheader.i90.i ], [ %i.nn, %._crit_edge.loopexit.i99.i ] ; 2 uses
   %i.no = lshr <4 x i32> %.sroa.050.2.lcssa.i104.i, splat (i32 16)
   %i.np = and <4 x i32> %.sroa.050.2.lcssa.i104.i, splat (i32 65535)
-  %17 = add nuw nsw <4 x i32> %i.np, %i.no        ; 2 uses
-  %18 = shufflevector <4 x i32> %17, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %19 = add nuw nsw <4 x i32> %18, %17            ; 2 uses
-  %20 = shufflevector <4 x i32> %19, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %i.nq = add nuw nsw <4 x i32> %20, %19
-  %21 = extractelement <4 x i32> %i.nq, i64 0
-  %i.nr = add i32 %21, %.0.lcssa.i94.i            ; 2 uses
+  %i.nq = add nuw nsw <4 x i32> %i.np, %i.no
+  %13 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.nq)
+  %i.nr = add i32 %13, %.0.lcssa.i94.i            ; 2 uses
   %i.ns = icmp ult ptr %.270.lcssa.i101.i, %i.lv
   br i1 %i.ns, label %.lr.ph44.i.i, label %._crit_edge45.i.i
 
@@ -690,13 +682,9 @@ bb.cc:                                            ; preds = %bb.cd
   %i.tv = lshr <4 x i32> %i.tu, splat (i32 16)
   %i.tw = bitcast <8 x i16> %i.ug to <4 x i32>
   %i.tx = and <4 x i32> %i.tw, splat (i32 65535)
-  %22 = add nuw nsw <4 x i32> %i.tx, %i.tv        ; 2 uses
-  %23 = shufflevector <4 x i32> %22, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %24 = add nuw nsw <4 x i32> %23, %22            ; 2 uses
-  %25 = shufflevector <4 x i32> %24, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %i.ty = add nuw nsw <4 x i32> %25, %24
-  %26 = extractelement <4 x i32> %i.ty, i64 0
-  %i.tz = add i32 %26, %.026.i142.i               ; 2 uses
+  %i.ty = add nuw nsw <4 x i32> %i.tx, %i.tv
+  %14 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ty)
+  %i.tz = add i32 %14, %.026.i142.i               ; 2 uses
   %i.ua = getelementptr i8, ptr %.06823.i145.i, i64 2097120
   %.not.i154.i = icmp ugt ptr %i.ua, %i.tr
   br i1 %.not.i154.i, label %.preheader.i155.i, label %.preheader16.i141.i, !llvm.loop !214
@@ -770,13 +758,9 @@ bb.ce:                                            ; preds = %bb.cd
   %.sroa.050.2.lcssa.i173.i = phi <4 x i32> [ zeroinitializer, %.preheader.i155.i ], [ %i.vj, %._crit_edge.loopexit.i168.i ] ; 2 uses
   %i.vk = lshr <4 x i32> %.sroa.050.2.lcssa.i173.i, splat (i32 16)
   %i.vl = and <4 x i32> %.sroa.050.2.lcssa.i173.i, splat (i32 65535)
-  %27 = add nuw nsw <4 x i32> %i.vl, %i.vk        ; 2 uses
-  %28 = shufflevector <4 x i32> %27, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %29 = add nuw nsw <4 x i32> %28, %27            ; 2 uses
-  %30 = shufflevector <4 x i32> %29, <4 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %i.vm = add nuw nsw <4 x i32> %30, %29
-  %31 = extractelement <4 x i32> %i.vm, i64 0
-  %i.vn = add i32 %31, %.0.lcssa.i159.i           ; 2 uses
+  %i.vm = add nuw nsw <4 x i32> %i.vl, %i.vk
+  %15 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.vm)
+  %i.vn = add i32 %15, %.0.lcssa.i159.i           ; 2 uses
   %i.vo = icmp ult ptr %.270.lcssa.i170.i, %i.tr
   br i1 %i.vo, label %.lr.ph44.i179.i, label %._crit_edge45.i174.i
 
@@ -1178,6 +1162,9 @@ declare i8 @llvm.umax.i8(i8, i8) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #18
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
