@@ -201,8 +201,8 @@ bb.a:
   call void @_ZSt10__do_visitINSt8__detail9__variant20__variant_idx_cookieEZSteqIJN5arrow9FieldPathENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorINS4_8FieldRefESaISD_EEEEbRKSt7variantIJDpT_EESL_EUlOT_T0_E_JRKSG_IJS5_SB_SF_EEEEDcOSO_DpOT1_(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(40) %i.e), !inline_history !3042
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   %i.g = load i8, ptr %i.a, align 1, !tbaa !322, !range !36, !noundef !37
-  %4 = trunc nuw i8 %i.g to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
+  %4 = trunc nuw i8 %i.g to i1
   ret i1 %4
 }
 
