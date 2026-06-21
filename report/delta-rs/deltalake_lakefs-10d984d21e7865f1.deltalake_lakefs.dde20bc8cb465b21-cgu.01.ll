@@ -201,8 +201,7 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.w, label %_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultINtNtCs3eCsZ2Mx498_14http_body_util9collected9CollectedNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesEINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB5_5error5ErrorNtNtB5_6marker4SyncNtB37_4SendEL_EE3mapB1B_NCNCNvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtB3T_8Response5bytes00ECsj34PGqTgg0L_16deltalake_lakefs.exit.thread, label %bb.t
 
 _RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultINtNtCs3eCsZ2Mx498_14http_body_util9collected9CollectedNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesEINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB5_5error5ErrorNtNtB5_6marker4SyncNtB37_4SendEL_EE3mapB1B_NCNCNvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtB3T_8Response5bytes00ECsj34PGqTgg0L_16deltalake_lakefs.exit.thread: ; preds = %bb.s
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload), "nonnull"(ptr %.sroa.4.0.copyload) ]
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -605,8 +604,7 @@ bb.ad:                                            ; preds = %bb.ac
   store ptr %i.cb, ptr %i.bx, align 8
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 40
   store ptr %i.cc, ptr %i.cd, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cc) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb), "nonnull"(ptr %i.cc) ]
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
   %i.cf = load i64, ptr %i.ce, align 8, !range !59, !invariant.load !7
   %i.cg = add nsw i64 %i.cf, -1
@@ -1009,8 +1007,7 @@ bb.ae:                                            ; preds = %bb.ad
   store ptr %i.cn, ptr %i.cj, align 8
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 40
   store ptr %i.co, ptr %i.cp, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cn) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.co) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cn), "nonnull"(ptr %i.co) ]
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 16
   %i.cr = load i64, ptr %i.cq, align 8, !range !59, !invariant.load !7
   %i.cs = add nsw i64 %i.cr, -1
@@ -1413,8 +1410,7 @@ bb.ab:                                            ; preds = %bb.aa
   store ptr %i.bl, ptr %i.bh, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 24
   store ptr %i.bm, ptr %i.bn, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bl) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bm) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bl), "nonnull"(ptr %i.bm) ]
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   %i.bp = load i64, ptr %i.bo, align 8, !range !59, !invariant.load !7
   %i.bq = add nsw i64 %i.bp, -1
@@ -1817,8 +1813,7 @@ bb.ab:                                            ; preds = %bb.aa
   store ptr %i.bl, ptr %i.bh, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 24
   store ptr %i.bm, ptr %i.bn, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bl) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bm) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bl), "nonnull"(ptr %i.bm) ]
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   %i.bp = load i64, ptr %i.bo, align 8, !range !59, !invariant.load !7
   %i.bq = add nsw i64 %i.bp, -1

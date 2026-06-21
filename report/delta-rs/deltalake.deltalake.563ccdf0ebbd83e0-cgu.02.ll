@@ -201,8 +201,7 @@ _RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCs2aRboSwuR0Z_18opentelemetry_http10HttpClientEL_EECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i
 
 bb.ac:                                            ; preds = %_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtB5_6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCs2aRboSwuR0Z_18opentelemetry_http10HttpClientEL_EEENtNtCscq8Lx7CD32J_17opentelemetry_sdk5error12OTelSdkErrorE8and_thenB1Z_NCNCNvXNtNtNtCs1e4wyRlCFp2_18opentelemetry_otlp8exporter4http5traceNtB4I_14OtlpHttpClientNtNtNtB3u_5trace6export12SpanExporter6export0s_0ECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.i.i.i.i.i), "nonnull"(ptr %.sroa.10.0.i.i.i.i.i) ]
   %i.fm = getelementptr inbounds nuw i8, ptr %i.dp, i64 64 ; 2 uses
   store ptr %.sroa.8.0.i.i.i.i.i, ptr %i.fm, align 8, !noalias !90
   %i.fn = getelementptr i8, ptr %i.dp, i64 72     ; 2 uses
@@ -605,8 +604,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_
   br i1 %i.nf, label %bb.ee, label %bb.em
 
 bb.ee:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtCs4j34XAPZOn0_4http8response8ResponseNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesEIBX_DNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB4b_4SendEL_EEB4s_EL_EEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3279.0.copyload.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5280.0.copyload.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3279.0.copyload.i.i.i.i.i), "nonnull"(ptr %.sroa.5280.0.copyload.i.i.i.i.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !230
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !230
   store ptr %.sroa.3279.0.copyload.i.i.i.i.i, ptr %i.g, align 8, !noalias !234
@@ -1009,8 +1007,7 @@ bb.a:
   br i1 %exitcond.not.i.us18.not, label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs7p2uQeJxui2_9deltalake.exit.i.us.preheader, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern14small_slice_eq.exit.thread6
 
 _RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs7p2uQeJxui2_9deltalake.exit.i.us.preheader: ; preds = %.preheader.split.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.522.0.copyload.i.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.us), "nonnull"(ptr %.sroa.522.0.copyload.i.us) ]
   br label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs7p2uQeJxui2_9deltalake.exit.i.us
 
 bb.b:                                             ; preds = %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs7p2uQeJxui2_9deltalake.exit.i.us

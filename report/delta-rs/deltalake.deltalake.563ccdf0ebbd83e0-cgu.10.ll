@@ -201,8 +201,7 @@ bb.d:                                             ; preds = %bb.c
 .thread70:                                        ; preds = %bb.c
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br label %bb.f
 
@@ -605,9 +604,7 @@ bb.a:
   br i1 %.not.i.i, label %_RINvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEEINtNtB7_3map3MapIBN_IBX_IB1n_NtNtCsjhHCjzi9uUI_17datafusion_common15table_reference14TableReferenceEEIBX_INtNtB1M_4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEENCNvMNtB2T_8dfschemaNtB5b_8DFSchema4iter0EENtNtNtB9_6traits8iterator8Iterator4folduNCINvB2p_8map_foldTRB1m_TIB1n_RB2P_ERB43_EENtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruNCINvMs8_NtNtB7c_12logical_plan4planNtB81_13SubqueryAlias7try_newB2P_E0NCINvNvB5N_8for_each4callB78_NCINvMsj_NtB1M_3vecINtB9D_3VecB78_E14extend_trustedIB2n_BM_B7S_EE0E0E0ECs7p2uQeJxui2_9deltalake.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.41.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.52.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.41.0.copyload), "nonnull"(ptr %.sroa.52.0.copyload) ]
   %.sink18.i.sroa.gep.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %.sink18.i.sroa.gep1.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %.sink15.i.sroa.gep.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -922,8 +919,7 @@ bb.a:
   br i1 %.not.i.i, label %_RINvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEBW_ENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTRB1m_B3K_ENtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB4L_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE39sql_statement_to_plan_with_context_impls_0NCINvNvB2I_8for_each4callB3U_NCINvMsj_NtB1r_3vecINtB8t_3VecB3U_E14extend_trustedINtB3r_3MapBM_B4E_EE0E0E0ECs7p2uQeJxui2_9deltalake.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.41.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.41.0.copyload) ]
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.c
 
@@ -1326,8 +1322,7 @@ bb.a:
   br i1 %.not.i.i, label %_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewENCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB2P_13RawDeltaTable21get_active_partitionss7_0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNtB8_7flatten11flatten_oneINtNtBc_6result6ResultINtNtCs6Po7BT7Nknu_5alloc3vec3VecTReINtNtBc_6option6OptionNtNtB5A_6string6StringEEENtNtB2P_5error11PythonErrorEuNCINvB6_8map_foldB5v_TB5v_uEuNCINvXs8_NtCs3gpiEk3WpjL_9hashbrown3setINtB7V_7HashSetB5v_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtB44_7collect6ExtendB5v_E6extendINtB4J_7FlatMapBX_B59_B2H_EE0NCINvNvB40_8for_each4callB7E_NCINvXs1i_NtB7X_3mapINtBbc_7HashMapB5v_uB8I_EIB9x_B7E_E6extendIBO_Ba6_B7M_EE0E0E0E0EB2P_.exit.i.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload.i.i), "nonnull"(ptr %.sroa.5.sroa.4.0.copyload.i.i) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5696)
   %i.h = icmp eq ptr %.sroa.0.0.copyload.i.i, %.sroa.5.sroa.0.0.copyload.i.i
   br i1 %i.h, label %_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewENCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB2P_13RawDeltaTable21get_active_partitionss7_0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNtB8_7flatten11flatten_oneINtNtBc_6result6ResultINtNtCs6Po7BT7Nknu_5alloc3vec3VecTReINtNtBc_6option6OptionNtNtB5A_6string6StringEEENtNtB2P_5error11PythonErrorEuNCINvB6_8map_foldB5v_TB5v_uEuNCINvXs8_NtCs3gpiEk3WpjL_9hashbrown3setINtB7V_7HashSetB5v_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtB44_7collect6ExtendB5v_E6extendINtB4J_7FlatMapBX_B59_B2H_EE0NCINvNvB40_8for_each4callB7E_NCINvXs1i_NtB7X_3mapINtBbc_7HashMapB5v_uB8I_EIB9x_B7E_E6extendIBO_Ba6_B7M_EE0E0E0E0EB2P_.exit.i.i, label %bb.c
@@ -1730,8 +1725,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !6776
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i), "nonnull"(ptr %.val2.i.i) ]
   %i.an = getelementptr inbounds nuw i8, ptr %i.ad, i64 208
   %i.ao = load ptr, ptr %i.an, align 8, !alias.scope !6773, !noalias !6774, !nonnull !4, !noundef !4
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ad, i64 216
@@ -1894,8 +1888,7 @@ bb.i:                                             ; preds = %.split.i.i.i, %bb.c
   %.sroa.3.0.i.i.i = phi i64 [ %i.cd, %.split.i.i.i ], [ 17, %bb.c ]
   %.sroa.0.0.i.i.i = phi ptr [ %i.cb, %.split.i.i.i ], [ @276, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !6776
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i), "nonnull"(ptr %.val2.i.i) ]
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ad, i64 208
   %i.cf = load ptr, ptr %i.ce, align 8, !alias.scope !6773, !noalias !6774, !nonnull !4, !noundef !4
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ad, i64 216
@@ -2298,8 +2291,7 @@ _RNvXs1_NtNtNtCsbvkFyIu7lgC_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapter
 
 _RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterTNtNtCs6Po7BT7Nknu_5alloc6string6StringBR_EENtNtNtNtBb_4iter6traits8iterator8Iterator4folduQNCINvNtNtB1E_8adapters3map8map_foldRBQ_BQ_uNvYBQ_NtNtBb_5clone5Clone5cloneNCINvNvXs_NtB2r_9enumerateINtB3G_9EnumeratepEB1y_4fold9enumerateBQ_uNCINvNvB1y_8for_each4callTjBQ_ENCINvMs1_NtNtBV_11collections9vec_dequeINtB5g_8VecDequeBQ_E10write_iterINtNtB2r_6cloned6ClonedINtNtB5g_4iter4IterBQ_EEE0E0E0E0ECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %_RNvXs1_NtNtNtCsbvkFyIu7lgC_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters3map8map_foldRTNtNtCs6Po7BT7Nknu_5alloc6string6StringB1v_EB1u_uNvYB1u_NtNtBb_5clone5Clone5cloneNCINvNvXs_NtBV_9enumerateINtB2X_9EnumeratepENtNtNtBX_6traits8iterator8Iterator4fold9enumerateB1u_uNCINvNvB3v_8for_each4callTjB1u_ENCINvMs1_NtNtB1z_11collections9vec_dequeINtB52_8VecDequeB1u_E10write_iterINtNtBV_6cloned6ClonedINtNtB52_4iter4IterB1u_EEE0E0E0E0INtB7_5FnMutTuB1t_EE8call_mutCs7p2uQeJxui2_9deltalake.exit.i.i, %bb.a
   %.sroa.9.0 = phi i64 [ %.sroa.9.0.copyload, %bb.a ], [ %i.u, %_RNvXs1_NtNtNtCsbvkFyIu7lgC_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters3map8map_foldRTNtNtCs6Po7BT7Nknu_5alloc6string6StringB1v_EB1u_uNvYB1u_NtNtBb_5clone5Clone5cloneNCINvNvXs_NtBV_9enumerateINtB2X_9EnumeratepENtNtNtBX_6traits8iterator8Iterator4fold9enumerateB1u_uNCINvNvB3v_8for_each4callTjB1u_ENCINvMs1_NtNtB1z_11collections9vec_dequeINtB52_8VecDequeB1u_E10write_iterINtNtBV_6cloned6ClonedINtNtB52_4iter4IterB1u_EEE0E0E0E0INtB7_5FnMutTuB1t_EE8call_mutCs7p2uQeJxui2_9deltalake.exit.i.i ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.55.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.66.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.55.0.copyload), "nonnull"(ptr %.sroa.66.0.copyload) ]
   %i.x = icmp eq ptr %.sroa.55.0.copyload, %.sroa.66.0.copyload
   br i1 %i.x, label %_RINvXs2_NtNtNtCs6Po7BT7Nknu_5alloc11collections9vec_deque4iterINtB6_4IterTNtNtBc_6string6StringB1a_EENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1H_8adapters3map8map_foldRB19_B19_uNvYB19_NtNtB1J_5clone5Clone5cloneNCINvNvXs_NtB2J_9enumerateINtB42_9EnumeratepEB1B_4fold9enumerateB19_uNCINvNvB1B_8for_each4callTjB19_ENCINvMs1_B8_INtB8_8VecDequeB19_E10write_iterINtNtB2J_6cloned6ClonedBY_EE0E0E0E0ECs7p2uQeJxui2_9deltalake.exit, label %bb.f
 
@@ -2702,8 +2694,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ce) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd), "nonnull"(ptr %i.ce) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !9333
   %i.cm = call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef 48, i64 noundef 8) #44, !noalias !9333 ; 8 uses
   %i.cn = icmp eq ptr %i.cm, null
@@ -2755,8 +2746,7 @@ bb.aa:                                            ; preds = %bb.u, %bb.ao, %bb.a
 
 _RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.au)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ce) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd), "nonnull"(ptr %i.ce) ]
   invoke void @_RNvXNtNtCs6Po7BT7Nknu_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchEINtB2_18SpecFromIterNestedB11_INtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtB6_5boxed3BoxDNtB13_17RecordBatchReaderp4ItemINtNtB2B_6result6ResultB11_NtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorENtNtB2B_6marker4SendEL_ENCNvMNtCs7p2uQeJxui2_9deltalake5mergeNtB5N_14PyMergeBuilder3news_0EE9from_iterB5P_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.au, ptr noundef nonnull %i.cd, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.ce)
           to label %bb.ac unwind label %bb.ab
 
@@ -3159,8 +3149,7 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.h
   %i.av = extractvalue { ptr, ptr } %i.au, 0      ; 2 uses
   %i.aw = extractvalue { ptr, ptr } %i.au, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.av) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.av), "nonnull"(ptr %i.aw) ]
   %i.ax = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   store i64 0, ptr %i.ax, align 8, !alias.scope !10122, !noalias !10128
   %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 16
@@ -3563,8 +3552,7 @@ bb.f:                                             ; preds = %.noexc5
 bb.g:                                             ; preds = %bb.d
   %i.y = extractvalue { ptr, ptr } %i.w, 0        ; 2 uses
   %i.z = extractvalue { ptr, ptr } %i.w, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y), "nonnull"(ptr %i.z) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !10301
   invoke void @_RNvMNtCsgbCypRs12E4_4pyo35panicNtB2_14PanicException18from_panic_payload(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.e, ptr noundef nonnull %i.y, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.z)
           to label %.invoke.i unwind label %bb.h, !noalias !10301
@@ -3967,8 +3955,7 @@ bb.y:                                             ; preds = %bb.w
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc noundef zeroext i1 @_RNvXs1N_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_13DescribeTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr captures(address, read_provenance) %.0.val, ptr nofree readonly captures(address) %.8.val, ptr captures(address, read_provenance) %.0.val1, ptr nofree readonly captures(address) %.8.val3) unnamed_addr #1 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.0.val1) ]
   %i.a = icmp eq ptr %.0.val, %.0.val1
   br i1 %i.a, label %bb.d, label %bb.b
 
@@ -4019,8 +4006,7 @@ _RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core
   br i1 %i.w, label %bb.d, label %_RNvXse_NtCsjhHCjzi9uUI_17datafusion_common8dfschemaNtB5_8DFSchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.d:                                             ; preds = %bb.a, %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.8.val3) ]
   %i.x = icmp eq ptr %.8.val, %.8.val3
   br i1 %i.x, label %_RNvXse_NtCsjhHCjzi9uUI_17datafusion_common8dfschemaNtB5_8DFSchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.e
 
@@ -4423,8 +4409,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = trunc nuw i64 %.val to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val3) ]
   %i.g = icmp eq ptr %.val1, %.val3               ; 2 uses
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -4827,8 +4812,7 @@ bb.a:
   br i1 %.not.i, label %bb.b, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.thread
 
 bb.b:                                             ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5), "nonnull"(ptr %.val7) ]
   %i.f = icmp eq ptr %.val5, %.val7
   br i1 %i.f, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.thread9, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit
 
@@ -5231,8 +5215,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not.i.i.i.i, label %bb.q, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.q:                                             ; preds = %.lr.ph.i.i.i28
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i30) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i30), "nonnull"(ptr %.val7.i.i.i) ]
   %i.ci = icmp eq ptr %.val5.i.i.i30, %.val7.i.i.i
   br i1 %i.ci, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.thread9.i.i.i, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.i.i.i
 
@@ -5635,8 +5618,7 @@ bb.n:                                             ; preds = %.lr.ph
   br i1 %i.bo, label %bb.o, label %_RNvXs1H_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_5UnionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.o:                                             ; preds = %bb.n
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val3) ]
   %i.bp = icmp eq ptr %.val, %.val3
   br i1 %i.bp, label %_RNvXs1H_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_5UnionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.p
 

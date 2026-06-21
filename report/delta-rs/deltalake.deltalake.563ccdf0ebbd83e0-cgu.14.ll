@@ -201,8 +201,7 @@ bb.d:                                             ; preds = %bb.c
 .thread60:                                        ; preds = %bb.c
   %i.q = extractvalue { ptr, ptr } %i.o, 0        ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.o, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br label %bb.f
 
@@ -328,8 +327,7 @@ bb.d:                                             ; preds = %bb.c
 .thread70:                                        ; preds = %bb.c
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br label %bb.f
 
@@ -447,8 +445,7 @@ bb.d:                                             ; preds = %bb.c
 .thread36:                                        ; preds = %bb.c
   %i.m = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m), "nonnull"(ptr %i.n) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br label %bb.f
 
@@ -570,8 +567,7 @@ bb.d:                                             ; preds = %bb.c
 .thread60:                                        ; preds = %bb.c
   %i.q = extractvalue { ptr, ptr } %i.o, 0        ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.o, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br label %bb.f
 
@@ -685,8 +681,7 @@ bb.d:                                             ; preds = %bb.c
 .thread36:                                        ; preds = %bb.c
   %i.m = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m), "nonnull"(ptr %i.n) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br label %bb.f
 
@@ -1089,8 +1084,7 @@ _RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel
   br i1 %i.bu, label %.lr.ph348, label %.thread
 
 .lr.ph348:                                        ; preds = %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_NtNtNtBN_11expressions7scalars6ScalarEECs7p2uQeJxui2_9deltalake.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0326.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5328.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0326.0.copyload), "nonnull"(ptr %.sroa.5328.0.copyload) ]
   %i.bv = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.ab
 
@@ -1493,8 +1487,7 @@ _RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel
   br i1 %i.cv, label %.lr.ph, label %.thread514
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_NtNtNtBN_11expressions7scalars6ScalarEECs7p2uQeJxui2_9deltalake.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0479.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5481.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0479.0.copyload), "nonnull"(ptr %.sroa.5481.0.copyload) ]
   %i.cw = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.cx = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %.sroa.4209.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 8
@@ -1897,8 +1890,7 @@ _RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel
   br i1 %i.ft, label %.lr.ph678, label %.thread532
 
 .lr.ph678:                                        ; preds = %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_NtNtNtBN_11expressions7scalars6ScalarEECs7p2uQeJxui2_9deltalake.exit436
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0485.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5487.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0485.0.copyload), "nonnull"(ptr %.sroa.5487.0.copyload) ]
   %i.fu = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.fv = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.sroa.4254.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
@@ -2243,8 +2235,7 @@ _RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel
   br i1 %i.il, label %.lr.ph680, label %.thread537
 
 .lr.ph680:                                        ; preds = %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_NtNtNtBN_11expressions7scalars6ScalarEECs7p2uQeJxui2_9deltalake.exit449
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0493.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5495.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0493.0.copyload), "nonnull"(ptr %.sroa.5495.0.copyload) ]
   %i.im = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.in = load ptr, ptr %1, align 8, !nonnull !12
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 16
@@ -2622,8 +2613,7 @@ _RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel
   br i1 %i.ks, label %.lr.ph682, label %.thread561
 
 .lr.ph682:                                        ; preds = %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_NtNtNtBN_11expressions7scalars6ScalarEECs7p2uQeJxui2_9deltalake.exit460
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0500.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5502.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0500.0.copyload), "nonnull"(ptr %.sroa.5502.0.copyload) ]
   %i.kt = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.ku = load ptr, ptr %1, align 8, !nonnull !12
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ku, i64 16
@@ -3026,8 +3016,7 @@ bb.k:                                             ; preds = %.body2
 .thread36.i:                                      ; preds = %.body2
   %i.ac = extractvalue { ptr, ptr } %i.aa, 0      ; 2 uses
   %i.ad = extractvalue { ptr, ptr } %i.aa, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac), "nonnull"(ptr %i.ad) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !9028
   invoke void @_RNvMNtCsgbCypRs12E4_4pyo35panicNtB2_14PanicException18from_panic_payload(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.d, ptr noundef nonnull %i.ac, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ad)
           to label %.invoke.i unwind label %bb.m, !noalias !9028
