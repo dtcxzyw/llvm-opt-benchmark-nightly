@@ -201,7 +201,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbw = icmp slt <32 x i8> %i.bbv, zeroinitializer
   %i.bbx = bitcast <32 x i1> %i.bbw to i32
   %i.bby = tail call noundef i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
-  %i.bbz = trunc i32 %i.bby to i16
+  %i.bbz = trunc nuw i32 %i.bby to i16
   br label %.lr.ph.i.i343
 
 .preheader.i.i336:                                ; preds = %.lr.ph.i.i343, %bb.lg
@@ -280,7 +280,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bdp = sdiv i32 %.02431.i.i335, 8
   %i.bdq = sext i32 %i.bdp to i64
   %i.bdr = getelementptr inbounds i8, ptr %i.anf, i64 %i.bdq
-  %i.bds = trunc i32 %i.bdo to i16
+  %i.bds = trunc nuw i32 %i.bdo to i16
   store i16 %i.bds, ptr %i.bdr, align 2, !tbaa !474
   %i.bdt = add nuw i32 %.02431.i.i335, 16         ; 2 uses
   %i.bdu = icmp ult i32 %i.bdt, %i.bbj
@@ -351,7 +351,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bfc = sdiv i32 %.02431.i66.i327, 8
   %i.bfd = sext i32 %i.bfc to i64
   %i.bfe = getelementptr inbounds i8, ptr %i.anf, i64 %i.bfd
-  %i.bff = trunc i32 %i.bfb to i16
+  %i.bff = trunc nuw i32 %i.bfb to i16
   store i16 %i.bff, ptr %i.bfe, align 2, !tbaa !474
   %i.bfg = add nuw i32 %.02431.i66.i327, 16       ; 2 uses
   %i.bfh = icmp ult i32 %i.bfg, %i.bbj
@@ -414,7 +414,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bgn = sdiv i32 %.02532.i.i319, 8
   %i.bgo = sext i32 %i.bgn to i64
   %i.bgp = getelementptr inbounds i8, ptr %i.anf, i64 %i.bgo
-  %i.bgq = trunc i32 %i.bgm to i16
+  %i.bgq = trunc nuw i32 %i.bgm to i16
   store i16 %i.bgq, ptr %i.bgp, align 2, !tbaa !474
   %i.bgr = add nuw i32 %.02532.i.i319, 16         ; 2 uses
   %i.bgs = icmp ult i32 %i.bgr, %i.bbj
@@ -817,7 +817,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbi = icmp slt <32 x i8> %i.bbh, zeroinitializer
   %i.bbj = bitcast <32 x i1> %i.bbi to i32
   %i.bbk = tail call noundef i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
-  %i.bbl = trunc i32 %i.bbk to i16
+  %i.bbl = trunc nuw i32 %i.bbk to i16
   br label %.lr.ph.i.i353
 
 .preheader.i.i344:                                ; preds = %.lr.ph.i.i353, %bb.lg
@@ -896,7 +896,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bda = sdiv i32 %.02431.i.i343, 8
   %i.bdb = sext i32 %i.bda to i64
   %i.bdc = getelementptr inbounds i8, ptr %i.amt, i64 %i.bdb
-  %i.bdd = trunc i32 %i.bcz to i16
+  %i.bdd = trunc nuw i32 %i.bcz to i16
   store i16 %i.bdd, ptr %i.bdc, align 2, !tbaa !474
   %i.bde = add nuw i32 %.02431.i.i343, 16         ; 2 uses
   %i.bdf = icmp ult i32 %i.bde, %i.bax
@@ -967,7 +967,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bem = sdiv i32 %.02431.i68.i334, 8
   %i.ben = sext i32 %i.bem to i64
   %i.beo = getelementptr inbounds i8, ptr %i.amt, i64 %i.ben
-  %i.bep = trunc i32 %i.bel to i16
+  %i.bep = trunc nuw i32 %i.bel to i16
   store i16 %i.bep, ptr %i.beo, align 2, !tbaa !474
   %i.beq = add nuw i32 %.02431.i68.i334, 16       ; 2 uses
   %i.ber = icmp ult i32 %i.beq, %i.bax
@@ -1030,7 +1030,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bfw = sdiv i32 %.02532.i.i325, 8
   %i.bfx = sext i32 %i.bfw to i64
   %i.bfy = getelementptr inbounds i8, ptr %i.amt, i64 %i.bfx
-  %i.bfz = trunc i32 %i.bfv to i16
+  %i.bfz = trunc nuw i32 %i.bfv to i16
   store i16 %i.bfz, ptr %i.bfy, align 2, !tbaa !474
   %i.bga = add nuw i32 %.02532.i.i325, 16         ; 2 uses
   %i.bgb = icmp ult i32 %i.bga, %i.bax
@@ -1433,7 +1433,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbw = icmp slt <32 x i8> %i.bbv, zeroinitializer
   %i.bbx = bitcast <32 x i1> %i.bbw to i32
   %i.bby = tail call noundef i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
-  %i.bbz = trunc i32 %i.bby to i16
+  %i.bbz = trunc nuw i32 %i.bby to i16
   br label %.lr.ph.i.i343
 
 .preheader.i.i336:                                ; preds = %.lr.ph.i.i343, %bb.lg
@@ -1512,7 +1512,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bdp = sdiv i32 %.02431.i.i335, 8
   %i.bdq = sext i32 %i.bdp to i64
   %i.bdr = getelementptr inbounds i8, ptr %i.anf, i64 %i.bdq
-  %i.bds = trunc i32 %i.bdo to i16
+  %i.bds = trunc nuw i32 %i.bdo to i16
   store i16 %i.bds, ptr %i.bdr, align 2, !tbaa !474
   %i.bdt = add nuw i32 %.02431.i.i335, 16         ; 2 uses
   %i.bdu = icmp ult i32 %i.bdt, %i.bbj
@@ -1583,7 +1583,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bfc = sdiv i32 %.02431.i66.i327, 8
   %i.bfd = sext i32 %i.bfc to i64
   %i.bfe = getelementptr inbounds i8, ptr %i.anf, i64 %i.bfd
-  %i.bff = trunc i32 %i.bfb to i16
+  %i.bff = trunc nuw i32 %i.bfb to i16
   store i16 %i.bff, ptr %i.bfe, align 2, !tbaa !474
   %i.bfg = add nuw i32 %.02431.i66.i327, 16       ; 2 uses
   %i.bfh = icmp ult i32 %i.bfg, %i.bbj
@@ -1646,7 +1646,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bgn = sdiv i32 %.02532.i.i319, 8
   %i.bgo = sext i32 %i.bgn to i64
   %i.bgp = getelementptr inbounds i8, ptr %i.anf, i64 %i.bgo
-  %i.bgq = trunc i32 %i.bgm to i16
+  %i.bgq = trunc nuw i32 %i.bgm to i16
   store i16 %i.bgq, ptr %i.bgp, align 2, !tbaa !474
   %i.bgr = add nuw i32 %.02532.i.i319, 16         ; 2 uses
   %i.bgs = icmp ult i32 %i.bgr, %i.bbj
@@ -2049,7 +2049,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbw = icmp slt <32 x i8> %i.bbv, zeroinitializer
   %i.bbx = bitcast <32 x i1> %i.bbw to i32
   %i.bby = tail call noundef i32 @llvm.pext.i32(i32 %i.bbx, i32 -1431655766)
-  %i.bbz = trunc i32 %i.bby to i16
+  %i.bbz = trunc nuw i32 %i.bby to i16
   br label %.lr.ph.i.i343
 
 .preheader.i.i336:                                ; preds = %.lr.ph.i.i343, %bb.lg
@@ -2128,7 +2128,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bdp = sdiv i32 %.02431.i.i335, 8
   %i.bdq = sext i32 %i.bdp to i64
   %i.bdr = getelementptr inbounds i8, ptr %i.anf, i64 %i.bdq
-  %i.bds = trunc i32 %i.bdo to i16
+  %i.bds = trunc nuw i32 %i.bdo to i16
   store i16 %i.bds, ptr %i.bdr, align 2, !tbaa !474
   %i.bdt = add nuw i32 %.02431.i.i335, 16         ; 2 uses
   %i.bdu = icmp ult i32 %i.bdt, %i.bbj
@@ -2199,7 +2199,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bfc = sdiv i32 %.02431.i66.i327, 8
   %i.bfd = sext i32 %i.bfc to i64
   %i.bfe = getelementptr inbounds i8, ptr %i.anf, i64 %i.bfd
-  %i.bff = trunc i32 %i.bfb to i16
+  %i.bff = trunc nuw i32 %i.bfb to i16
   store i16 %i.bff, ptr %i.bfe, align 2, !tbaa !474
   %i.bfg = add nuw i32 %.02431.i66.i327, 16       ; 2 uses
   %i.bfh = icmp ult i32 %i.bfg, %i.bbj
@@ -2262,7 +2262,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bgn = sdiv i32 %.02532.i.i319, 8
   %i.bgo = sext i32 %i.bgn to i64
   %i.bgp = getelementptr inbounds i8, ptr %i.anf, i64 %i.bgo
-  %i.bgq = trunc i32 %i.bgm to i16
+  %i.bgq = trunc nuw i32 %i.bgm to i16
   store i16 %i.bgq, ptr %i.bgp, align 2, !tbaa !474
   %i.bgr = add nuw i32 %.02532.i.i319, 16         ; 2 uses
   %i.bgs = icmp ult i32 %i.bgr, %i.bbj
@@ -2665,7 +2665,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbi = icmp slt <32 x i8> %i.bbh, zeroinitializer
   %i.bbj = bitcast <32 x i1> %i.bbi to i32
   %i.bbk = tail call noundef i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
-  %i.bbl = trunc i32 %i.bbk to i16
+  %i.bbl = trunc nuw i32 %i.bbk to i16
   br label %.lr.ph.i.i353
 
 .preheader.i.i344:                                ; preds = %.lr.ph.i.i353, %bb.lg
@@ -2744,7 +2744,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bda = sdiv i32 %.02431.i.i343, 8
   %i.bdb = sext i32 %i.bda to i64
   %i.bdc = getelementptr inbounds i8, ptr %i.amt, i64 %i.bdb
-  %i.bdd = trunc i32 %i.bcz to i16
+  %i.bdd = trunc nuw i32 %i.bcz to i16
   store i16 %i.bdd, ptr %i.bdc, align 2, !tbaa !474
   %i.bde = add nuw i32 %.02431.i.i343, 16         ; 2 uses
   %i.bdf = icmp ult i32 %i.bde, %i.bax
@@ -2815,7 +2815,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bem = sdiv i32 %.02431.i68.i334, 8
   %i.ben = sext i32 %i.bem to i64
   %i.beo = getelementptr inbounds i8, ptr %i.amt, i64 %i.ben
-  %i.bep = trunc i32 %i.bel to i16
+  %i.bep = trunc nuw i32 %i.bel to i16
   store i16 %i.bep, ptr %i.beo, align 2, !tbaa !474
   %i.beq = add nuw i32 %.02431.i68.i334, 16       ; 2 uses
   %i.ber = icmp ult i32 %i.beq, %i.bax
@@ -2878,7 +2878,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bfw = sdiv i32 %.02532.i.i325, 8
   %i.bfx = sext i32 %i.bfw to i64
   %i.bfy = getelementptr inbounds i8, ptr %i.amt, i64 %i.bfx
-  %i.bfz = trunc i32 %i.bfv to i16
+  %i.bfz = trunc nuw i32 %i.bfv to i16
   store i16 %i.bfz, ptr %i.bfy, align 2, !tbaa !474
   %i.bga = add nuw i32 %.02532.i.i325, 16         ; 2 uses
   %i.bgb = icmp ult i32 %i.bga, %i.bax
@@ -3281,7 +3281,7 @@ bb.lg:                                            ; preds = %bb.lf
   %i.bbi = icmp slt <32 x i8> %i.bbh, zeroinitializer
   %i.bbj = bitcast <32 x i1> %i.bbi to i32
   %i.bbk = tail call noundef i32 @llvm.pext.i32(i32 %i.bbj, i32 -1431655766)
-  %i.bbl = trunc i32 %i.bbk to i16
+  %i.bbl = trunc nuw i32 %i.bbk to i16
   br label %.lr.ph.i.i353
 
 .preheader.i.i344:                                ; preds = %.lr.ph.i.i353, %bb.lg
@@ -3360,7 +3360,7 @@ bb.lh:                                            ; preds = %bb.lf
   %i.bda = sdiv i32 %.02431.i.i343, 8
   %i.bdb = sext i32 %i.bda to i64
   %i.bdc = getelementptr inbounds i8, ptr %i.amt, i64 %i.bdb
-  %i.bdd = trunc i32 %i.bcz to i16
+  %i.bdd = trunc nuw i32 %i.bcz to i16
   store i16 %i.bdd, ptr %i.bdc, align 2, !tbaa !474
   %i.bde = add nuw i32 %.02431.i.i343, 16         ; 2 uses
   %i.bdf = icmp ult i32 %i.bde, %i.bax
@@ -3431,7 +3431,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.bem = sdiv i32 %.02431.i68.i334, 8
   %i.ben = sext i32 %i.bem to i64
   %i.beo = getelementptr inbounds i8, ptr %i.amt, i64 %i.ben
-  %i.bep = trunc i32 %i.bel to i16
+  %i.bep = trunc nuw i32 %i.bel to i16
   store i16 %i.bep, ptr %i.beo, align 2, !tbaa !474
   %i.beq = add nuw i32 %.02431.i68.i334, 16       ; 2 uses
   %i.ber = icmp ult i32 %i.beq, %i.bax
@@ -3494,7 +3494,7 @@ bb.lo:                                            ; preds = %bb.lk
   %i.bfw = sdiv i32 %.02532.i.i325, 8
   %i.bfx = sext i32 %i.bfw to i64
   %i.bfy = getelementptr inbounds i8, ptr %i.amt, i64 %i.bfx
-  %i.bfz = trunc i32 %i.bfv to i16
+  %i.bfz = trunc nuw i32 %i.bfv to i16
   store i16 %i.bfz, ptr %i.bfy, align 2, !tbaa !474
   %i.bga = add nuw i32 %.02532.i.i325, 16         ; 2 uses
   %i.bgb = icmp ult i32 %i.bga, %i.bax
