@@ -201,7 +201,7 @@ bb.gi:                                            ; preds = %bb.fs
   %.not21.i.i.i.i.i = icmp eq ptr %i.ajf, %i.rr
   br i1 %.not21.i.i.i.i.i, label %"_ZN6google8protobuf8internal12ExtensionSet7ForEachIZNS1_15ReflectionVisit11VisitFieldsINS0_7MessageEZNS4_18VisitMessageFieldsIZNKS0_10Reflection21MaybePoisonAfterClearERS6_E3$_0EEvS9_OT_EUlSB_E_EEvRSB_OT0_NS1_9FieldMaskEEUliSE_E_NS2_8PrefetchEEEvSB_SF_.exit.i.i.i", label %.lr.ph33.i.i.i.i.i, !llvm.loop !452
 
-"_ZN6google8protobuf8internal12ExtensionSet7ForEachIZNS1_15ReflectionVisit11VisitFieldsINS0_7MessageEZNS4_18VisitMessageFieldsIZNKS0_10Reflection21MaybePoisonAfterClearERS6_E3$_0EEvS9_OT_EUlSB_E_EEvRSB_OT0_NS1_9FieldMaskEEUliSE_E_NS2_8PrefetchEEEvSB_SF_.exit.i.i.i": ; preds = %.noexc52, %.preheader.i.i.i.i.i, %bb.cj
+"_ZN6google8protobuf8internal12ExtensionSet7ForEachIZNS1_15ReflectionVisit11VisitFieldsINS0_7MessageEZNS4_18VisitMessageFieldsIZNKS0_10Reflection21MaybePoisonAfterClearERS6_E3$_0EEvS9_OT_EUlSB_E_EEvRSB_OT0_NS1_9FieldMaskEEUliSE_E_NS2_8PrefetchEEEvSB_SF_.exit.i.i.i": ; preds = %.noexc52, %bb.cj, %.preheader.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #35
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #35

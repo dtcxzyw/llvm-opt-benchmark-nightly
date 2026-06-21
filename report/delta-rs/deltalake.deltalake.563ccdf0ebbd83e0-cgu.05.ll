@@ -201,7 +201,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTINtNtCs6Po7BT7Nknu_5
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -24
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -263,7 +263,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -48
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.v, i64 48, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.v, i64 48, i1 false)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -325,7 +325,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -48
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.v, i64 48, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.v, i64 48, i1 false)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -387,7 +387,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -120
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(120) %i.v, i64 120, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(120) %i.v, i64 120, i1 false)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -450,7 +450,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -32
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 32, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 32, i1 false)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -512,7 +512,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs8VI8w5SIoU4_15
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -112
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %0, ptr noundef nonnull align 16 dereferenceable(112) %i.v, i64 112, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %0, ptr noundef nonnull align 16 dereferenceable(112) %i.v, i64 112, i1 false)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -697,7 +697,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTRexEE9next_implKb0_E
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -24
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a

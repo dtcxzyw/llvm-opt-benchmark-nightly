@@ -199,7 +199,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 26 uses
   %i.c = alloca i32, align 4                      ; 9 uses
   %i.d = alloca i32, align 4                      ; 4 uses
-  %i.e = alloca i32, align 4                      ; 7 uses
+  %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca ptr, align 8                      ; 5 uses
   %i.g = alloca ptr, align 8                      ; 4 uses
   %4 = alloca %struct.STYLE, align 4              ; 3 uses
@@ -602,15 +602,17 @@ bb.nk:                                            ; preds = %bb.nj
   br label %bb.nl
 
 bb.nl:                                            ; preds = %bb.ni, %bb.nk, %bb.nj, %bb.ne
+  %.promoted1548 = load i32, ptr %i.e, align 4
   %i.cfq = icmp eq ptr %i.bxd, null
   br label %bb.nm
 
 bb.nm:                                            ; preds = %bb.oj, %bb.nl
+  %.lcssa15411550 = phi i32 [ %.promoted1548, %bb.nl ], [ %.lcssa15411549, %bb.oj ] ; 2 uses
   %.0994 = phi i32 [ 0, %bb.nl ], [ %.2, %bb.oj ] ; 3 uses
   %i.cfr = load ptr, ptr %i.a, align 8, !tbaa !13 ; 10 uses
   %i.cfs = getelementptr inbounds nuw i8, ptr %i.cfr, i64 32 ; 4 uses
   %i.cft = load i8, ptr %i.cfs, align 8, !tbaa !8
-  switch i8 %i.cft, label %.critedge83 [
+  switch i8 %i.cft, label %.critedge83.loopexit [
     i8 2, label %bb.nn
     i8 102, label %bb.np
   ]
@@ -621,19 +623,19 @@ bb.nn:                                            ; preds = %bb.nm
   %i.cfw = getelementptr inbounds nuw i8, ptr %i.cfv, i64 48
   %i.cfx = load ptr, ptr %i.cfw, align 8, !tbaa !8
   %i.cfy = icmp eq ptr %i.cfx, %i.bxf
-  br i1 %i.cfy, label %bb.no, label %.critedge83
+  br i1 %i.cfy, label %bb.no, label %.critedge83.loopexit
 
 bb.no:                                            ; preds = %bb.nn
   %i.cfz = getelementptr inbounds nuw i8, ptr %i.cfv, i64 32
   %i.cga = load i8, ptr %i.cfz, align 8, !tbaa !8
   %i.cgb = icmp eq i8 %i.cga, -111
-  br i1 %i.cgb, label %bb.nq, label %.critedge83
+  br i1 %i.cgb, label %bb.nq, label %.critedge83.loopexit
 
 bb.np:                                            ; preds = %bb.nm
   %i.cgc = getelementptr inbounds nuw i8, ptr %i.cfr, i64 40
   %i.cgd = load i8, ptr %i.cgc, align 8, !tbaa !8 ; 2 uses
   %.not1214 = icmp eq i8 %i.cgd, 3
-  br i1 %.not1214, label %.critedge83, label %.critedge81
+  br i1 %.not1214, label %.critedge83.loopexit, label %.critedge81
 
 bb.nq:                                            ; preds = %bb.no
   %i.cge = call ptr @LexGetToken() #6             ; 2 uses
@@ -645,6 +647,7 @@ bb.nq:                                            ; preds = %bb.no
 
 .thread1456:                                      ; preds = %bb.nq
   %i.cgh = getelementptr inbounds nuw i8, ptr %i.cfr, i64 80
+  store i32 %.lcssa15411550, ptr %i.e, align 4
   %i.cgi = load ptr, ptr %i.cgh, align 8, !tbaa !8
   %i.cgj = call ptr @SymName(ptr noundef %i.cgi) #6
   %i.cgk = call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 6, i32 noundef 30, ptr noundef nonnull @.str.44, i32 noundef 2, ptr noundef nonnull %i.cfs, ptr noundef nonnull @.str.17, ptr noundef %i.cgj) #6 ; 0 uses
@@ -684,7 +687,6 @@ bb.nq:                                            ; preds = %bb.no
 
 bb.nr:                                            ; preds = %bb.nq, %.critedge81
   %.0950 = phi ptr [ %i.cfr, %bb.nq ], [ %i.chc, %.critedge81 ] ; 10 uses
-  store i32 0, ptr %i.e, align 4, !tbaa !4
   %i.chf = getelementptr inbounds nuw i8, ptr %.0950, i64 80 ; 4 uses
   %i.chg = load ptr, ptr %i.chf, align 8, !tbaa !8 ; 3 uses
   %i.chh = getelementptr inbounds nuw i8, ptr %i.chg, i64 96
@@ -696,7 +698,7 @@ bb.nr:                                            ; preds = %bb.nq, %.critedge81
   %.11009.in1542 = getelementptr inbounds nuw i8, ptr %i.chi, i64 8
   %.110091543 = load ptr, ptr %.11009.in1542, align 8, !tbaa !8 ; 2 uses
   %.not12171544 = icmp eq ptr %.110091543, %i.chi
-  br i1 %.not12171544, label %.loopexit1477, label %.preheader1468
+  br i1 %.not12171544, label %bb.nu, label %.preheader1468
 
 .preheader1468:                                   ; preds = %.preheader1476, %bb.nt
   %.110091545 = phi ptr [ %.11009, %bb.nt ], [ %.110091543, %.preheader1476 ] ; 2 uses
@@ -724,18 +726,12 @@ bb.nt:                                            ; preds = %bb.ns
 
 .loopexit1477.loopexit:                           ; preds = %bb.nt
   %.pre1645.pre = load ptr, ptr %i.chf, align 8, !tbaa !8
-  br label %.loopexit1477
-
-.loopexit1477:                                    ; preds = %.loopexit1477.loopexit, %.preheader1476
-  %.pre1645 = phi ptr [ %i.chg, %.preheader1476 ], [ %.pre1645.pre, %.loopexit1477.loopexit ]
-  %.lcssa1541 = phi i32 [ 0, %.preheader1476 ], [ %i.chp, %.loopexit1477.loopexit ] ; 2 uses
-  store i32 %.lcssa1541, ptr %i.e, align 4
   br label %bb.nu
 
-bb.nu:                                            ; preds = %.loopexit1477, %bb.nr
-  %5 = phi i32 [ %.lcssa1541, %.loopexit1477 ], [ 0, %bb.nr ] ; 2 uses
-  %6 = phi ptr [ %.pre1645, %.loopexit1477 ], [ %i.chg, %bb.nr ]
-  call void @PushScope(ptr noundef %6, i32 noundef 0, i32 noundef 0) #6
+bb.nu:                                            ; preds = %.loopexit1477.loopexit, %.preheader1476, %bb.nr
+  %5 = phi ptr [ %i.chg, %bb.nr ], [ %i.chg, %.preheader1476 ], [ %.pre1645.pre, %.loopexit1477.loopexit ]
+  %.lcssa15411549 = phi i32 [ 0, %bb.nr ], [ 0, %.preheader1476 ], [ %i.chp, %.loopexit1477.loopexit ] ; 3 uses
+  call void @PushScope(ptr noundef %5, i32 noundef 0, i32 noundef 0) #6
   %i.chq = call ptr @Parse(ptr noundef nonnull %i.a, ptr noundef %1, i32 noundef 0, i32 noundef 0) ; 4 uses
   call void @PopScope() #6
   %i.chr = getelementptr inbounds nuw i8, ptr %.0950, i64 32 ; 2 uses
@@ -811,14 +807,14 @@ bb.ny:                                            ; preds = %bb.nx
   br label %bb.nz
 
 bb.nz:                                            ; preds = %bb.ny, %bb.nx
-  %i.ciy = icmp sgt i32 %5, 0
+  %i.ciy = icmp sgt i32 %.lcssa15411549, 0
   br i1 %i.ciy, label %.lr.ph1547, label %.preheader1475.preheader
 
 .lr.ph1547:                                       ; preds = %bb.nz, %.lr.ph1547
   %.110031546 = phi i32 [ %i.ciz, %.lr.ph1547 ], [ 0, %bb.nz ]
   call void @PopScope() #6
   %i.ciz = add nuw nsw i32 %.110031546, 1         ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ciz, %5
+  %exitcond.not = icmp eq i32 %i.ciz, %.lcssa15411549
   br i1 %exitcond.not, label %.preheader1475.preheader, label %.lr.ph1547, !llvm.loop !44
 
 .preheader1475.preheader:                         ; preds = %.lr.ph1547, %bb.nz
@@ -968,7 +964,11 @@ bb.oj:                                            ; preds = %bb.oh, %bb.oi
   call void @PopScope() #6
   br label %bb.nm
 
-.critedge83:                                      ; preds = %bb.nm, %bb.nn, %bb.no, %bb.np, %.thread1456
+.critedge83.loopexit:                             ; preds = %bb.np, %bb.no, %bb.nn, %bb.nm
+  store i32 %.lcssa15411550, ptr %i.e, align 4
+  br label %.critedge83
+
+.critedge83:                                      ; preds = %.critedge83.loopexit, %.thread1456
   %i.clc = getelementptr inbounds nuw i8, ptr %i.bxf, i64 122
   %i.cld = load i16, ptr %i.clc, align 2, !tbaa !8
   %i.cle = zext i16 %i.cld to i32

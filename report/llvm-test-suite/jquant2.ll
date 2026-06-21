@@ -201,10 +201,11 @@ find_nearby_colors.exit:                          ; preds = %find_nearby_colors.
 .lr.ph.i37:                                       ; preds = %find_nearby_colors.exit
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 152
   %wide.trip.count.i38 = zext nneg i32 %.0139.lcssa.i to i64
-  %i.el = load ptr, ptr %i.ek, align 8, !tbaa !71 ; 3 uses
-  %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 8
+  %4 = load ptr, ptr %i.ek, align 8, !tbaa !71    ; 3 uses
+  %i.el = load ptr, ptr %4, align 8, !tbaa !67
+  %i.em = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !67
-  %i.eo = getelementptr inbounds nuw i8, ptr %i.el, i64 16
+  %i.eo = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !67
   br label %bb.v
 
@@ -212,9 +213,8 @@ bb.v:                                             ; preds = %bb.cb, %.lr.ph.i37
   %indvars.iv.i39 = phi i64 [ 0, %.lr.ph.i37 ], [ %indvars.iv.next.i41, %bb.cb ] ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.i39
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !57  ; 33 uses
-  %4 = load ptr, ptr %i.el, align 8, !tbaa !67
   %i.es = zext i8 %i.er to i64                    ; 3 uses
-  %i.et = getelementptr inbounds nuw i8, ptr %4, i64 %i.es
+  %i.et = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.es
   %i.eu = load i8, ptr %i.et, align 1, !tbaa !57
   %i.ev = zext i8 %i.eu to i32
   %i.ew = sub nsw i32 %i.k, %i.ev
