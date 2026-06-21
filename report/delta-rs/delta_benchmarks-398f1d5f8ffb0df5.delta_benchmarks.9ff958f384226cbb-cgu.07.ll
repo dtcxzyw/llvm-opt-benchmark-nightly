@@ -201,9 +201,7 @@ bb.a:
   br i1 %.not.i.i, label %_RINvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtBb_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEEINtNtB7_3map3MapIBN_IBX_IB1n_NtNtCsjhHCjzi9uUI_17datafusion_common15table_reference14TableReferenceEEIBX_INtNtB1M_4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEENCNvMNtB2T_8dfschemaNtB5b_8DFSchema4iter0EENtNtNtB9_6traits8iterator8Iterator4folduNCINvB2p_8map_foldTRB1m_TIB1n_RB2P_ERB43_EENtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruNCINvMs8_NtNtB7c_12logical_plan4planNtB81_13SubqueryAlias7try_newB2P_E0NCINvNvB5N_8for_each4callB78_NCINvMsj_NtB1M_3vecINtB9D_3VecB78_E14extend_trustedIB2n_BM_B7S_EE0E0E0ECsdJxlLsGgtXr_16delta_benchmarks.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.41.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.52.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.41.0.copyload), "nonnull"(ptr %.sroa.52.0.copyload) ]
   %.sink18.i.sroa.gep.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %.sink18.i.sroa.gep1.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %.sink15.i.sroa.gep.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -518,8 +516,7 @@ bb.a:
   br i1 %.not.i.i, label %_RINvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEBW_ENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTRB1m_B3K_ENtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB4L_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE39sql_statement_to_plan_with_context_impls_0NCINvNvB2I_8for_each4callB3U_NCINvMsj_NtB1r_3vecINtB8t_3VecB3U_E14extend_trustedINtB3r_3MapBM_B4E_EE0E0E0ECsdJxlLsGgtXr_16delta_benchmarks.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.41.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.41.0.copyload) ]
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.c
 
@@ -922,8 +919,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !2869
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i), "nonnull"(ptr %.val2.i.i) ]
   %i.an = getelementptr inbounds nuw i8, ptr %i.ad, i64 208
   %i.ao = load ptr, ptr %i.an, align 8, !alias.scope !2866, !noalias !2867, !nonnull !4, !noundef !4
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ad, i64 216
@@ -1086,8 +1082,7 @@ bb.i:                                             ; preds = %.split.i.i.i, %bb.c
   %.sroa.3.0.i.i.i = phi i64 [ %i.cd, %.split.i.i.i ], [ 17, %bb.c ]
   %.sroa.0.0.i.i.i = phi ptr [ %i.cb, %.split.i.i.i ], [ @135, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !2869
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i), "nonnull"(ptr %.val2.i.i) ]
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ad, i64 208
   %i.cf = load ptr, ptr %i.ce, align 8, !alias.scope !2866, !noalias !2867, !nonnull !4, !noundef !4
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ad, i64 216
@@ -1490,8 +1485,7 @@ bb.y:                                             ; preds = %bb.w
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc noundef zeroext i1 @_RNvXs1N_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_13DescribeTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr captures(address, read_provenance) %.0.val, ptr nofree readonly captures(address) %.8.val, ptr captures(address, read_provenance) %.0.val1, ptr nofree readonly captures(address) %.8.val3) unnamed_addr #3 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.0.val1) ]
   %i.a = icmp eq ptr %.0.val, %.0.val1
   br i1 %i.a, label %bb.d, label %bb.b
 
@@ -1522,8 +1516,7 @@ _RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core
   br i1 %i.p, label %bb.d, label %_RNvXse_NtCsjhHCjzi9uUI_17datafusion_common8dfschemaNtB5_8DFSchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.d:                                             ; preds = %bb.a, %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.8.val3) ]
   %i.q = icmp eq ptr %.8.val, %.8.val3
   br i1 %i.q, label %_RNvXse_NtCsjhHCjzi9uUI_17datafusion_common8dfschemaNtB5_8DFSchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.e
 
@@ -1926,8 +1919,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = trunc nuw i64 %.val to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val3) ]
   %i.g = icmp eq ptr %.val1, %.val3               ; 2 uses
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -2330,8 +2322,7 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %i.cr, label %bb.v, label %_RNvXs1H_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_5UnionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val3) ]
   %i.cs = icmp eq ptr %.val, %.val3
   br i1 %i.cs, label %_RNvXs1H_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_5UnionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.w
 
