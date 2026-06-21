@@ -1,0 +1,735 @@
+diff --git a/llvm/include/llvm/Analysis/ConstantFolding.h b/llvm/include/llvm/Analysis/ConstantFolding.h
+index 2f7a327e1652a..f223ebf0586f4 100644
+--- a/llvm/include/llvm/Analysis/ConstantFolding.h
++++ b/llvm/include/llvm/Analysis/ConstantFolding.h
+@@ -175,6 +175,9 @@ LLVM_ABI Constant *ConstantFoldUnaryIntrinsic(Intrinsic::ID ID, Constant *Op,
+ LLVM_ABI Constant *ConstantFoldBinaryIntrinsic(Intrinsic::ID ID, Constant *LHS,
+                                                Constant *RHS, Type *Ty);
+ 
++LLVM_ABI Constant *ConstantFoldIntrinsic(Intrinsic::ID ID,
++                                         ArrayRef<Constant *> Ops, Type *Ty);
++
+ /// ConstantFoldLoadThroughBitcast - try to cast constant to destination type
+ /// returning null if unsuccessful. Can cast pointer to pointer or pointer to
+ /// integer and vice versa if their sizes are equal.
+diff --git a/llvm/include/llvm/Analysis/InstSimplifyFolder.h b/llvm/include/llvm/Analysis/InstSimplifyFolder.h
+index a8dff839de214..93cf827750528 100644
+--- a/llvm/include/llvm/Analysis/InstSimplifyFolder.h
++++ b/llvm/include/llvm/Analysis/InstSimplifyFolder.h
+@@ -132,6 +132,11 @@ class LLVM_ABI InstSimplifyFolder final : public IRBuilderFolder {
+     return simplifyBinaryIntrinsic(ID, Ty, LHS, RHS, FMF, SQ);
+   }
+ 
++  Value *FoldIntrinsic(Intrinsic::ID ID, ArrayRef<Value *> Ops, Type *Ty,
++                       FastMathFlags FMF) const override {
++    return simplifyIntrinsic(ID, Ty, Ops, FMF, SQ);
++  }
++
+   //===--------------------------------------------------------------------===//
+   // Cast/Conversion Operators
+   //===--------------------------------------------------------------------===//
+diff --git a/llvm/include/llvm/Analysis/TargetFolder.h b/llvm/include/llvm/Analysis/TargetFolder.h
+index 0a9d9c3d88111..74d8ac3f1fc1f 100644
+--- a/llvm/include/llvm/Analysis/TargetFolder.h
++++ b/llvm/include/llvm/Analysis/TargetFolder.h
+@@ -19,6 +19,7 @@
+ #define LLVM_ANALYSIS_TARGETFOLDER_H
+ 
+ #include "llvm/ADT/ArrayRef.h"
++#include "llvm/ADT/SmallVectorExtras.h"
+ #include "llvm/Analysis/ConstantFolding.h"
+ #include "llvm/IR/ConstantFold.h"
+ #include "llvm/IR/Constants.h"
+@@ -207,6 +208,15 @@ class LLVM_ABI TargetFolder final : public IRBuilderFolder {
+     return nullptr;
+   }
+ 
++  Value *FoldIntrinsic(Intrinsic::ID ID, ArrayRef<Value *> Ops, Type *Ty,
++                       FastMathFlags FMF) const override {
++    auto COps =
++        map_to_vector(Ops, [](Value *Op) { return dyn_cast<Constant>(Op); });
++    if (none_of(COps, equal_to(nullptr)))
++      return ConstantFoldIntrinsic(ID, COps, Ty);
++    return nullptr;
++  }
++
+   //===--------------------------------------------------------------------===//
+   // Cast/Conversion Operators
+   //===--------------------------------------------------------------------===//
+diff --git a/llvm/include/llvm/IR/ConstantFolder.h b/llvm/include/llvm/IR/ConstantFolder.h
+index b2937c2339ca7..c47a990650f68 100644
+--- a/llvm/include/llvm/IR/ConstantFolder.h
++++ b/llvm/include/llvm/IR/ConstantFolder.h
+@@ -194,6 +194,12 @@ class LLVM_ABI ConstantFolder final : public IRBuilderFolder {
+     return nullptr;
+   }
+ 
++  Value *FoldIntrinsic(Intrinsic::ID ID, ArrayRef<Value *> Ops, Type *Ty,
++                       FastMathFlags FMF) const override {
++    // Use TargetFolder or InstSimplifyFolder instead.
++    return nullptr;
++  }
++
+   //===--------------------------------------------------------------------===//
+   // Cast/Conversion Operators
+   //===--------------------------------------------------------------------===//
+diff --git a/llvm/include/llvm/IR/IRBuilderFolder.h b/llvm/include/llvm/IR/IRBuilderFolder.h
+index e68fff29b7165..1699845b22466 100644
+--- a/llvm/include/llvm/IR/IRBuilderFolder.h
++++ b/llvm/include/llvm/IR/IRBuilderFolder.h
+@@ -76,13 +76,15 @@ class LLVM_ABI IRBuilderFolder {
+   virtual Value *FoldCast(Instruction::CastOps Op, Value *V,
+                           Type *DestTy) const = 0;
+ 
+-  virtual Value *
+-  FoldUnaryIntrinsic(Intrinsic::ID ID, Value *Op, Type *Ty,
+-                     FastMathFlags FMF = FastMathFlags()) const = 0;
++  virtual Value *FoldUnaryIntrinsic(Intrinsic::ID ID, Value *Op, Type *Ty,
++                                    FastMathFlags FMF = {}) const = 0;
+ 
+-  virtual Value *
+-  FoldBinaryIntrinsic(Intrinsic::ID ID, Value *LHS, Value *RHS, Type *Ty,
+-                      FastMathFlags FMF = FastMathFlags()) const = 0;
++  virtual Value *FoldBinaryIntrinsic(Intrinsic::ID ID, Value *LHS, Value *RHS,
++                                     Type *Ty,
++                                     FastMathFlags FMF = {}) const = 0;
++
++  virtual Value *FoldIntrinsic(Intrinsic::ID ID, ArrayRef<Value *> Ops,
++                               Type *Ty, FastMathFlags FMF = {}) const = 0;
+ 
+   //===--------------------------------------------------------------------===//
+   // Cast/Conversion Operators
+diff --git a/llvm/include/llvm/IR/NoFolder.h b/llvm/include/llvm/IR/NoFolder.h
+index a86cbf724e69f..5ba098d5cddf4 100644
+--- a/llvm/include/llvm/IR/NoFolder.h
++++ b/llvm/include/llvm/IR/NoFolder.h
+@@ -124,6 +124,11 @@ class LLVM_ABI NoFolder final : public IRBuilderFolder {
+     return nullptr;
+   }
+ 
++  Value *FoldIntrinsic(Intrinsic::ID ID, ArrayRef<Value *> Ops, Type *Ty,
++                       FastMathFlags FMF) const override {
++    return nullptr;
++  }
++
+   //===--------------------------------------------------------------------===//
+   // Cast/Conversion Operators
+   //===--------------------------------------------------------------------===//
+diff --git a/llvm/lib/Analysis/ConstantFolding.cpp b/llvm/lib/Analysis/ConstantFolding.cpp
+index f18b7a0b66a21..aba7492de9179 100644
+--- a/llvm/lib/Analysis/ConstantFolding.cpp
++++ b/llvm/lib/Analysis/ConstantFolding.cpp
+@@ -2489,13 +2489,13 @@ getEvaluationRoundingMode(const ConstrainedFPIntrinsic *CI) {
+ }
+ 
+ /// Try to constant fold llvm.canonicalize for the given caller and value.
+-static Constant *constantFoldCanonicalize(const Type *Ty, const CallBase *CI,
+-                                          const APFloat &Src) {
++static Constant *constantFoldCanonicalize(const Type *Ty, const APFloat &Src,
++                                          const Function *CtxF = nullptr) {
+   // Zero, positive and negative, is always OK to fold.
+   if (Src.isZero()) {
+     // Get a fresh 0, since ppc_fp128 does have non-canonical zeros.
+     return ConstantFP::get(
+-        CI->getContext(),
++        Ty->getContext(),
+         APFloat::getZero(Src.getSemantics(), Src.isNegative()));
+   }
+ 
+@@ -2507,14 +2507,13 @@ static Constant *constantFoldCanonicalize(const Type *Ty, const CallBase *CI,
+   // Denorms and nans may have special encodings, but it should be OK to fold a
+   // totally average number.
+   if (Src.isNormal() || Src.isInfinity())
+-    return ConstantFP::get(CI->getContext(), Src);
++    return ConstantFP::get(Ty->getContext(), Src);
+ 
+-  if (Src.isDenormal() && CI->getParent() && CI->getFunction()) {
+-    DenormalMode DenormMode =
+-        CI->getFunction()->getDenormalMode(Src.getSemantics());
++  if (Src.isDenormal() && CtxF) {
++    DenormalMode DenormMode = CtxF->getDenormalMode(Src.getSemantics());
+ 
+     if (DenormMode == DenormalMode::getIEEE())
+-      return ConstantFP::get(CI->getContext(), Src);
++      return ConstantFP::get(Ty->getContext(), Src);
+ 
+     if (DenormMode.Input == DenormalMode::Dynamic)
+       return nullptr;
+@@ -2531,7 +2530,7 @@ static Constant *constantFoldCanonicalize(const Type *Ty, const CallBase *CI,
+          (DenormMode.Output == DenormalMode::PositiveZero &&
+           DenormMode.Input == DenormalMode::IEEE));
+ 
+-    return ConstantFP::get(CI->getContext(),
++    return ConstantFP::get(Ty->getContext(),
+                            APFloat::getZero(Src.getSemantics(), !IsPositive));
+   }
+ 
+@@ -2539,11 +2538,10 @@ static Constant *constantFoldCanonicalize(const Type *Ty, const CallBase *CI,
+ }
+ 
+ static Constant *ConstantFoldScalarCall1(StringRef Name,
+-                                         Intrinsic::ID IntrinsicID,
+-                                         Type *Ty,
++                                         Intrinsic::ID IntrinsicID, Type *Ty,
+                                          ArrayRef<Constant *> Operands,
+-                                         const TargetLibraryInfo *TLI,
+-                                         const CallBase *Call) {
++                                         const TargetLibraryInfo *TLI = nullptr,
++                                         const CallBase *Call = nullptr) {
+   assert(Operands.size() == 1 && "Wrong number of operands.");
+ 
+   if (IntrinsicID == Intrinsic::is_constant) {
+@@ -2580,7 +2578,7 @@ static Constant *ConstantFoldScalarCall1(StringRef Name,
+       // a function during inlining), Call's caller may not be available.
+       // So check Call's BB first before querying Call->getCaller.
+       const Function *Caller =
+-          Call->getParent() ? Call->getCaller() : nullptr;
++          Call && Call->getParent() ? Call->getCaller() : nullptr;
+       if (Caller &&
+           !NullPointerIsDefined(
+               Caller, Operands[0]->getType()->getPointerAddressSpace())) {
+@@ -2622,8 +2620,11 @@ static Constant *ConstantFoldScalarCall1(StringRef Name,
+       return ConstantInt::get(Ty, Int);
+     }
+ 
+-    if (IntrinsicID == Intrinsic::canonicalize)
+-      return constantFoldCanonicalize(Ty, Call, U);
++    if (IntrinsicID == Intrinsic::canonicalize) {
++      const Function *CtxF =
++          Call && Call->getParent() ? Call->getFunction() : nullptr;
++      return constantFoldCanonicalize(Ty, U, CtxF);
++    }
+ 
+ #if defined(HAS_IEE754_FLOAT128) && defined(HAS_LOGF128)
+     if (Ty->isFP128Ty()) {
+@@ -2697,48 +2698,49 @@ static Constant *ConstantFoldScalarCall1(StringRef Name,
+     // Rounding operations (floor, trunc, ceil, round and nearbyint) do not
+     // raise FP exceptions, unless the argument is signaling NaN.
+ 
+-    std::optional<APFloat::roundingMode> RM;
+-    switch (IntrinsicID) {
+-    default:
+-      break;
+-    case Intrinsic::experimental_constrained_nearbyint:
+-    case Intrinsic::experimental_constrained_rint: {
+-      auto CI = cast<ConstrainedFPIntrinsic>(Call);
+-      RM = CI->getRoundingMode();
+-      if (!RM || *RM == RoundingMode::Dynamic)
+-        return nullptr;
+-      break;
+-    }
+-    case Intrinsic::experimental_constrained_round:
+-      RM = APFloat::rmNearestTiesToAway;
+-      break;
+-    case Intrinsic::experimental_constrained_ceil:
+-      RM = APFloat::rmTowardPositive;
+-      break;
+-    case Intrinsic::experimental_constrained_floor:
+-      RM = APFloat::rmTowardNegative;
+-      break;
+-    case Intrinsic::experimental_constrained_trunc:
+-      RM = APFloat::rmTowardZero;
+-      break;
+-    }
+-    if (RM) {
+-      auto CI = cast<ConstrainedFPIntrinsic>(Call);
+-      if (U.isFinite()) {
+-        APFloat::opStatus St = U.roundToIntegral(*RM);
+-        if (IntrinsicID == Intrinsic::experimental_constrained_rint &&
+-            St == APFloat::opInexact) {
++    if (auto *CI = dyn_cast_or_null<ConstrainedFPIntrinsic>(Call)) {
++      std::optional<APFloat::roundingMode> RM;
++      switch (IntrinsicID) {
++      default:
++        break;
++      case Intrinsic::experimental_constrained_nearbyint:
++      case Intrinsic::experimental_constrained_rint: {
++        RM = CI->getRoundingMode();
++        if (!RM || *RM == RoundingMode::Dynamic)
++          return nullptr;
++        break;
++      }
++      case Intrinsic::experimental_constrained_round:
++        RM = APFloat::rmNearestTiesToAway;
++        break;
++      case Intrinsic::experimental_constrained_ceil:
++        RM = APFloat::rmTowardPositive;
++        break;
++      case Intrinsic::experimental_constrained_floor:
++        RM = APFloat::rmTowardNegative;
++        break;
++      case Intrinsic::experimental_constrained_trunc:
++        RM = APFloat::rmTowardZero;
++        break;
++      }
++      if (RM) {
++        if (U.isFinite()) {
++          APFloat::opStatus St = U.roundToIntegral(*RM);
++          if (IntrinsicID == Intrinsic::experimental_constrained_rint &&
++              St == APFloat::opInexact) {
++            std::optional<fp::ExceptionBehavior> EB =
++                CI->getExceptionBehavior();
++            if (EB == fp::ebStrict)
++              return nullptr;
++          }
++        } else if (U.isSignaling()) {
+           std::optional<fp::ExceptionBehavior> EB = CI->getExceptionBehavior();
+-          if (EB == fp::ebStrict)
++          if (EB && *EB != fp::ebIgnore)
+             return nullptr;
++          U = APFloat::getQNaN(U.getSemantics());
+         }
+-      } else if (U.isSignaling()) {
+-        std::optional<fp::ExceptionBehavior> EB = CI->getExceptionBehavior();
+-        if (EB && *EB != fp::ebIgnore)
+-          return nullptr;
+-        U = APFloat::getQNaN(U.getSemantics());
++        return ConstantFP::get(Ty, U);
+       }
+-      return ConstantFP::get(Ty, U);
+     }
+ 
+     // NVVM float/double to signed/unsigned int32/int64 conversions:
+@@ -3350,7 +3352,7 @@ static Constant *ConstantFoldNextToward(const APFloat &Op0, const APFloat &Op1,
+ 
+ static Constant *ConstantFoldLibCall2(StringRef Name, Type *Ty,
+                                       ArrayRef<Constant *> Operands,
+-                                      const TargetLibraryInfo *TLI) {
++                                      const TargetLibraryInfo *TLI = nullptr) {
+   if (!TLI)
+     return nullptr;
+ 
+@@ -3421,7 +3423,7 @@ static Constant *ConstantFoldLibCall2(StringRef Name, Type *Ty,
+ 
+ static Constant *ConstantFoldIntrinsicCall2(Intrinsic::ID IntrinsicID, Type *Ty,
+                                             ArrayRef<Constant *> Operands,
+-                                            const CallBase *Call) {
++                                            const CallBase *Call = nullptr) {
+   assert(Operands.size() == 2 && "Wrong number of operands.");
+ 
+   if (Ty->isFloatingPointTy()) {
+@@ -4098,11 +4100,10 @@ static Constant *ConstantFoldAMDGCNPermIntrinsic(ArrayRef<Constant *> Operands,
+ }
+ 
+ static Constant *ConstantFoldScalarCall3(StringRef Name,
+-                                         Intrinsic::ID IntrinsicID,
+-                                         Type *Ty,
++                                         Intrinsic::ID IntrinsicID, Type *Ty,
+                                          ArrayRef<Constant *> Operands,
+-                                         const TargetLibraryInfo *TLI,
+-                                         const CallBase *Call) {
++                                         const TargetLibraryInfo *TLI = nullptr,
++                                         const CallBase *Call = nullptr) {
+   assert(Operands.size() == 3 && "Wrong number of operands.");
+ 
+   if (const auto *Op1 = dyn_cast<ConstantFP>(Operands[0])) {
+@@ -4112,7 +4113,8 @@ static Constant *ConstantFoldScalarCall3(StringRef Name,
+         const APFloat &C2 = Op2->getValueAPF();
+         const APFloat &C3 = Op3->getValueAPF();
+ 
+-        if (const auto *ConstrIntr = dyn_cast<ConstrainedFPIntrinsic>(Call)) {
++        if (const auto *ConstrIntr =
++                dyn_cast_or_null<ConstrainedFPIntrinsic>(Call)) {
+           RoundingMode RM = getEvaluationRoundingMode(ConstrIntr);
+           APFloat Res = C1;
+           APFloat::opStatus St;
+@@ -4262,11 +4264,10 @@ static Constant *ConstantFoldScalarCall3(StringRef Name,
+ }
+ 
+ static Constant *ConstantFoldScalarCall(StringRef Name,
+-                                        Intrinsic::ID IntrinsicID,
+-                                        Type *Ty,
++                                        Intrinsic::ID IntrinsicID, Type *Ty,
+                                         ArrayRef<Constant *> Operands,
+-                                        const TargetLibraryInfo *TLI,
+-                                        const CallBase *Call) {
++                                        const TargetLibraryInfo *TLI = nullptr,
++                                        const CallBase *Call = nullptr) {
+   if (IntrinsicID != Intrinsic::not_intrinsic &&
+       any_of(Operands, IsaPred<PoisonValue>) &&
+       intrinsicPropagatesPoison(IntrinsicID))
+@@ -4708,12 +4709,17 @@ ConstantFoldStructCall(StringRef Name, Intrinsic::ID IntrinsicID,
+ 
+ Constant *llvm::ConstantFoldUnaryIntrinsic(Intrinsic::ID ID, Constant *Op,
+                                            Type *Ty) {
+-  return ConstantFoldScalarCall1("", ID, Ty, Op, nullptr, nullptr);
++  return ConstantFoldScalarCall1("", ID, Ty, Op);
+ }
+ 
+ Constant *llvm::ConstantFoldBinaryIntrinsic(Intrinsic::ID ID, Constant *LHS,
+                                             Constant *RHS, Type *Ty) {
+-  return ConstantFoldIntrinsicCall2(ID, Ty, {LHS, RHS}, nullptr);
++  return ConstantFoldIntrinsicCall2(ID, Ty, {LHS, RHS});
++}
++
++Constant *llvm::ConstantFoldIntrinsic(Intrinsic::ID ID,
++                                      ArrayRef<Constant *> Ops, Type *Ty) {
++  return ConstantFoldScalarCall("", ID, Ty, Ops);
+ }
+ 
+ Constant *llvm::ConstantFoldCall(const CallBase *Call, Function *F,
+diff --git a/llvm/lib/IR/IRBuilder.cpp b/llvm/lib/IR/IRBuilder.cpp
+index eac591af3f495..46a52d94ec7f4 100644
+--- a/llvm/lib/IR/IRBuilder.cpp
++++ b/llvm/lib/IR/IRBuilder.cpp
+@@ -966,7 +966,9 @@ Value *IRBuilderBase::CreateIntrinsic(Intrinsic::ID ID,
+                                       FMFSource FMFSource, const Twine &Name,
+                                       ArrayRef<OperandBundleDef> OpBundles,
+                                       function_ref<void(CallInst *)> SetFn) {
+-  // TODO: Try to constant-fold.
++  Type *RetTy = Intrinsic::getType(Context, ID, OverloadTypes)->getReturnType();
++  if (Value *V = Folder.FoldIntrinsic(ID, Args, RetTy, FMFSource.get(FMF)))
++    return V;
+   CallInst *CI = CreateIntrinsicWithoutFolding(ID, OverloadTypes, Args,
+                                                FMFSource, Name, OpBundles);
+   SetFn(CI);
+@@ -977,7 +979,8 @@ Value *IRBuilderBase::CreateIntrinsic(Type *RetTy, Intrinsic::ID ID,
+                                       ArrayRef<Value *> Args,
+                                       FMFSource FMFSource, const Twine &Name,
+                                       function_ref<void(CallInst *)> SetFn) {
+-  // TODO: Try to constant-fold.
++  if (Value *V = Folder.FoldIntrinsic(ID, Args, RetTy, FMFSource.get(FMF)))
++    return V;
+   CallInst *CI =
+       CreateIntrinsicWithoutFolding(RetTy, ID, Args, FMFSource, Name);
+   SetFn(CI);
+diff --git a/llvm/test/Transforms/IRCE/correct-loop-info.ll b/llvm/test/Transforms/IRCE/correct-loop-info.ll
+index c75de167681ad..7ea445718289a 100644
+--- a/llvm/test/Transforms/IRCE/correct-loop-info.ll
++++ b/llvm/test/Transforms/IRCE/correct-loop-info.ll
+@@ -13,33 +13,30 @@ source_filename = "correct-loop-info.ll"
+ define void @baz() personality ptr @ham {
+ ; CHECK-LABEL: @baz(
+ ; CHECK-NEXT:  bb:
+-; CHECK-NEXT:    [[EXIT_PRELOOP_AT:%.*]] = call i32 @llvm.smax.i32(i32 undef, i32 -1)
+-; CHECK-NEXT:    [[EXIT_MAINLOOP_AT:%.*]] = call i32 @llvm.smax.i32(i32 undef, i32 0)
+ ; CHECK-NEXT:    br label [[OUTERHEADER:%.*]]
+ ; CHECK:       outerheader:
+ ; CHECK-NEXT:    [[TMP:%.*]] = icmp slt i32 undef, 84
+ ; CHECK-NEXT:    br i1 [[TMP]], label [[BB2:%.*]], label [[BB16:%.*]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[TMP0:%.*]] = icmp slt i32 undef, [[EXIT_PRELOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP0]], label [[INNERHEADER_PRELOOP_PREHEADER:%.*]], label [[PRELOOP_PSEUDO_EXIT:%.*]]
++; CHECK-NEXT:    br i1 false, label [[INNERHEADER_PRELOOP_PREHEADER:%.*]], label [[PRELOOP_PSEUDO_EXIT:%.*]]
+ ; CHECK:       innerheader.preloop.preheader:
+ ; CHECK-NEXT:    br label [[INNERHEADER_PRELOOP:%.*]]
+ ; CHECK:       mainloop:
+-; CHECK-NEXT:    [[TMP1:%.*]] = icmp slt i32 [[INDVAR_END:%.*]], [[EXIT_MAINLOOP_AT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp slt i32 [[INDVAR_END:%.*]], 2147483647
+ ; CHECK-NEXT:    br i1 [[TMP1]], label [[INNERHEADER_PREHEADER:%.*]], label [[MAIN_PSEUDO_EXIT:%.*]]
+ ; CHECK:       innerheader.preheader:
+ ; CHECK-NEXT:    br label [[INNERHEADER:%.*]]
+ ; CHECK:       innerheader:
+ ; CHECK-NEXT:    [[TMP4:%.*]] = phi i32 [ [[TMP6:%.*]], [[BB8:%.*]] ], [ [[TMP4_PRELOOP_COPY:%.*]], [[INNERHEADER_PREHEADER]] ]
+ ; CHECK-NEXT:    invoke void @pluto()
+-; CHECK-NEXT:    to label [[BB5:%.*]] unwind label [[OUTER_EXITING_LOOPEXIT_SPLIT_LP_LOOPEXIT_SPLIT_LP:%.*]]
++; CHECK-NEXT:            to label [[BB5:%.*]] unwind label [[OUTER_EXITING_LOOPEXIT_SPLIT_LP_LOOPEXIT_SPLIT_LP:%.*]]
+ ; CHECK:       bb5:
+ ; CHECK-NEXT:    [[TMP6]] = add nsw i32 [[TMP4]], 1
+ ; CHECK-NEXT:    [[TMP7:%.*]] = icmp slt i32 [[TMP6]], 1
+ ; CHECK-NEXT:    br i1 true, label [[BB8]], label [[EXIT3_LOOPEXIT5:%.*]]
+ ; CHECK:       bb8:
+ ; CHECK-NEXT:    [[TMP9:%.*]] = icmp slt i32 [[TMP6]], 84
+-; CHECK-NEXT:    [[TMP2:%.*]] = icmp slt i32 [[TMP6]], [[EXIT_MAINLOOP_AT]]
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp slt i32 [[TMP6]], 2147483647
+ ; CHECK-NEXT:    br i1 [[TMP2]], label [[INNERHEADER]], label [[MAIN_EXIT_SELECTOR:%.*]]
+ ; CHECK:       main.exit.selector:
+ ; CHECK-NEXT:    [[TMP6_LCSSA:%.*]] = phi i32 [ [[TMP6]], [[BB8]] ]
+@@ -51,22 +48,22 @@ define void @baz() personality ptr @ham {
+ ; CHECK-NEXT:    br label [[POSTLOOP:%.*]]
+ ; CHECK:       outer_exiting.loopexit:
+ ; CHECK-NEXT:    [[LPAD_LOOPEXIT:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    cleanup
++; CHECK-NEXT:            cleanup
+ ; CHECK-NEXT:    br label [[OUTER_EXITING:%.*]]
+ ; CHECK:       outer_exiting.loopexit.split-lp.loopexit:
+ ; CHECK-NEXT:    [[LPAD_LOOPEXIT2:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    cleanup
++; CHECK-NEXT:            cleanup
+ ; CHECK-NEXT:    br label [[OUTER_EXITING_LOOPEXIT_SPLIT_LP:%.*]]
+ ; CHECK:       outer_exiting.loopexit.split-lp.loopexit.split-lp:
+ ; CHECK-NEXT:    [[LPAD_LOOPEXIT_SPLIT_LP3:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    cleanup
++; CHECK-NEXT:            cleanup
+ ; CHECK-NEXT:    br label [[OUTER_EXITING_LOOPEXIT_SPLIT_LP]]
+ ; CHECK:       outer_exiting.loopexit.split-lp:
+ ; CHECK-NEXT:    br label [[OUTER_EXITING]]
+ ; CHECK:       outer_exiting:
+ ; CHECK-NEXT:    switch i32 undef, label [[EXIT2:%.*]] [
+-; CHECK-NEXT:    i32 142, label [[BB14:%.*]]
+-; CHECK-NEXT:    i32 448, label [[EXIT:%.*]]
++; CHECK-NEXT:      i32 142, label [[BB14:%.*]]
++; CHECK-NEXT:      i32 448, label [[EXIT:%.*]]
+ ; CHECK-NEXT:    ]
+ ; CHECK:       exit3.loopexit:
+ ; CHECK-NEXT:    br label [[EXIT3:%.*]]
+@@ -91,19 +88,19 @@ define void @baz() personality ptr @ham {
+ ; CHECK:       innerheader.preloop:
+ ; CHECK-NEXT:    [[TMP4_PRELOOP:%.*]] = phi i32 [ [[TMP6_PRELOOP:%.*]], [[BB8_PRELOOP:%.*]] ], [ undef, [[INNERHEADER_PRELOOP_PREHEADER]] ]
+ ; CHECK-NEXT:    invoke void @pluto()
+-; CHECK-NEXT:    to label [[BB5_PRELOOP:%.*]] unwind label [[OUTER_EXITING_LOOPEXIT:%.*]]
++; CHECK-NEXT:            to label [[BB5_PRELOOP:%.*]] unwind label [[OUTER_EXITING_LOOPEXIT:%.*]]
+ ; CHECK:       bb5.preloop:
+ ; CHECK-NEXT:    [[TMP6_PRELOOP]] = add i32 [[TMP4_PRELOOP]], 1
+ ; CHECK-NEXT:    [[TMP7_PRELOOP:%.*]] = icmp slt i32 [[TMP6_PRELOOP]], 1
+ ; CHECK-NEXT:    br i1 [[TMP7_PRELOOP]], label [[BB8_PRELOOP]], label [[EXIT3_LOOPEXIT:%.*]]
+ ; CHECK:       bb8.preloop:
+ ; CHECK-NEXT:    [[TMP9_PRELOOP:%.*]] = icmp slt i32 [[TMP6_PRELOOP]], 84
+-; CHECK-NEXT:    [[TMP4:%.*]] = icmp slt i32 [[TMP6_PRELOOP]], [[EXIT_PRELOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP4]], label [[INNERHEADER_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP0:![0-9]+]], !loop_constrainer.loop.clone [[META5:![0-9]+]]
++; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt i32 [[TMP6_PRELOOP]], 2147483647
++; CHECK-NEXT:    br i1 [[TMP5]], label [[INNERHEADER_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP0:![0-9]+]], !loop_constrainer.loop.clone [[META5:![0-9]+]]
+ ; CHECK:       preloop.exit.selector:
+ ; CHECK-NEXT:    [[TMP6_PRELOOP_LCSSA:%.*]] = phi i32 [ [[TMP6_PRELOOP]], [[BB8_PRELOOP]] ]
+-; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt i32 [[TMP6_PRELOOP_LCSSA]], 84
+-; CHECK-NEXT:    br i1 [[TMP5]], label [[PRELOOP_PSEUDO_EXIT]], label [[BB13]]
++; CHECK-NEXT:    [[TMP4:%.*]] = icmp slt i32 [[TMP6_PRELOOP_LCSSA]], 84
++; CHECK-NEXT:    br i1 [[TMP4]], label [[PRELOOP_PSEUDO_EXIT]], label [[BB13]]
+ ; CHECK:       preloop.pseudo.exit:
+ ; CHECK-NEXT:    [[TMP4_PRELOOP_COPY]] = phi i32 [ undef, [[BB2]] ], [ [[TMP6_PRELOOP_LCSSA]], [[PRELOOP_EXIT_SELECTOR]] ]
+ ; CHECK-NEXT:    [[INDVAR_END]] = phi i32 [ undef, [[BB2]] ], [ [[TMP6_PRELOOP_LCSSA]], [[PRELOOP_EXIT_SELECTOR]] ]
+@@ -113,7 +110,7 @@ define void @baz() personality ptr @ham {
+ ; CHECK:       innerheader.postloop:
+ ; CHECK-NEXT:    [[TMP4_POSTLOOP:%.*]] = phi i32 [ [[TMP6_POSTLOOP:%.*]], [[BB8_POSTLOOP:%.*]] ], [ [[TMP4_COPY]], [[POSTLOOP]] ]
+ ; CHECK-NEXT:    invoke void @pluto()
+-; CHECK-NEXT:    to label [[BB5_POSTLOOP:%.*]] unwind label [[OUTER_EXITING_LOOPEXIT_SPLIT_LP_LOOPEXIT:%.*]]
++; CHECK-NEXT:            to label [[BB5_POSTLOOP:%.*]] unwind label [[OUTER_EXITING_LOOPEXIT_SPLIT_LP_LOOPEXIT:%.*]]
+ ; CHECK:       bb5.postloop:
+ ; CHECK-NEXT:    [[TMP6_POSTLOOP]] = add i32 [[TMP4_POSTLOOP]], 1
+ ; CHECK-NEXT:    [[TMP7_POSTLOOP:%.*]] = icmp slt i32 [[TMP6_POSTLOOP]], 1
+diff --git a/llvm/test/Transforms/IndVarSimplify/lcssa-preservation.ll b/llvm/test/Transforms/IndVarSimplify/lcssa-preservation.ll
+index 9a5e54a91057c..d1b6ca0b68102 100644
+--- a/llvm/test/Transforms/IndVarSimplify/lcssa-preservation.ll
++++ b/llvm/test/Transforms/IndVarSimplify/lcssa-preservation.ll
+@@ -17,12 +17,11 @@ define void @PR18642(i32 %x) {
+ ; CHECK:       outer.latch:
+ ; CHECK-NEXT:    br i1 false, label [[OUTER_HEADER]], label [[EXIT_LOOPEXIT1:%.*]]
+ ; CHECK:       exit.loopexit:
+-; CHECK-NEXT:    [[INC_LCSSA:%.*]] = phi i32 [ -2147483648, [[INNER_LATCH]] ]
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       exit.loopexit1:
+ ; CHECK-NEXT:    br label [[EXIT]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[EXIT_PHI:%.*]] = phi i32 [ [[INC_LCSSA]], [[EXIT_LOOPEXIT]] ], [ undef, [[EXIT_LOOPEXIT1]] ]
++; CHECK-NEXT:    [[EXIT_PHI:%.*]] = phi i32 [ -2147483648, [[EXIT_LOOPEXIT]] ], [ undef, [[EXIT_LOOPEXIT1]] ]
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/LoopUnroll/runtime-loop-multiexit-dom-verify.ll b/llvm/test/Transforms/LoopUnroll/runtime-loop-multiexit-dom-verify.ll
+index bfbda4ad4036e..1e7702421082e 100644
+--- a/llvm/test/Transforms/LoopUnroll/runtime-loop-multiexit-dom-verify.ll
++++ b/llvm/test/Transforms/LoopUnroll/runtime-loop-multiexit-dom-verify.ll
+@@ -251,8 +251,7 @@ define void @test4(i16 %c3) {
+ ; CHECK-LABEL: @test4(
+ ; CHECK-NEXT:  preheader:
+ ; CHECK-NEXT:    [[C1:%.*]] = zext i32 undef to i64
+-; CHECK-NEXT:    [[UMAX:%.*]] = call i64 @llvm.umax.i64(i64 [[C1]], i64 1)
+-; CHECK-NEXT:    [[TMP0:%.*]] = freeze i64 [[UMAX]]
++; CHECK-NEXT:    [[TMP0:%.*]] = freeze i64 [[C1]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], -1
+ ; CHECK-NEXT:    [[XTRAITER:%.*]] = and i64 [[TMP0]], 3
+ ; CHECK-NEXT:    [[LCMP_MOD:%.*]] = icmp ne i64 [[XTRAITER]], 0
+diff --git a/llvm/test/Transforms/LoopVectorize/X86/replicating-load-store-costs.ll b/llvm/test/Transforms/LoopVectorize/X86/replicating-load-store-costs.ll
+index cd3f424f359e5..efaf1c22b8624 100644
+--- a/llvm/test/Transforms/LoopVectorize/X86/replicating-load-store-costs.ll
++++ b/llvm/test/Transforms/LoopVectorize/X86/replicating-load-store-costs.ll
+@@ -1008,12 +1008,6 @@ define void @replicated_load_wide_store_derived_iv_zext_and(ptr noalias %src, pt
+ ; I64-NEXT:    br label %[[VECTOR_SCEVCHECK:.*]]
+ ; I64:       [[VECTOR_SCEVCHECK]]:
+ ; I64-NEXT:    [[TMP0:%.*]] = trunc i32 [[STEP]] to i1
+-; I64-NEXT:    [[MUL:%.*]] = call { i1, i1 } @llvm.umul.with.overflow.i1(i1 [[TMP0]], i1 false)
+-; I64-NEXT:    [[MUL_RESULT:%.*]] = extractvalue { i1, i1 } [[MUL]], 0
+-; I64-NEXT:    [[MUL_OVERFLOW:%.*]] = extractvalue { i1, i1 } [[MUL]], 1
+-; I64-NEXT:    [[TMP1:%.*]] = select i1 [[TMP0]], i1 [[MUL_RESULT]], i1 false
+-; I64-NEXT:    [[TMP2:%.*]] = or i1 [[TMP1]], [[MUL_OVERFLOW]]
+-; I64-NEXT:    [[TMP3:%.*]] = or i1 [[TMP2]], [[TMP0]]
+ ; I64-NEXT:    [[TMP4:%.*]] = sext i1 [[TMP0]] to i32
+ ; I64-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i32 [[STEP]], [[TMP4]]
+ ; I64-NEXT:    [[TMP5:%.*]] = sub i32 0, [[STEP]]
+@@ -1026,7 +1020,7 @@ define void @replicated_load_wide_store_derived_iv_zext_and(ptr noalias %src, pt
+ ; I64-NEXT:    [[TMP9:%.*]] = icmp ugt i32 [[TMP8]], 0
+ ; I64-NEXT:    [[TMP10:%.*]] = select i1 [[TMP6]], i1 [[TMP9]], i1 false
+ ; I64-NEXT:    [[TMP11:%.*]] = or i1 [[TMP10]], [[MUL_OVERFLOW3]]
+-; I64-NEXT:    [[TMP12:%.*]] = or i1 [[TMP3]], [[IDENT_CHECK]]
++; I64-NEXT:    [[TMP12:%.*]] = or i1 [[TMP0]], [[IDENT_CHECK]]
+ ; I64-NEXT:    [[TMP13:%.*]] = or i1 [[TMP12]], [[TMP11]]
+ ; I64-NEXT:    br i1 [[TMP13]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; I64:       [[VECTOR_PH]]:
+@@ -1141,15 +1135,9 @@ define void @replicated_load_wide_store_derived_iv_zext_and2(ptr noalias %dst, p
+ ; I64-NEXT:    br label %[[VECTOR_SCEVCHECK:.*]]
+ ; I64:       [[VECTOR_SCEVCHECK]]:
+ ; I64-NEXT:    [[TMP0:%.*]] = trunc i32 [[STEP]] to i1
+-; I64-NEXT:    [[MUL:%.*]] = call { i1, i1 } @llvm.umul.with.overflow.i1(i1 [[TMP0]], i1 false)
+-; I64-NEXT:    [[MUL_RESULT:%.*]] = extractvalue { i1, i1 } [[MUL]], 0
+-; I64-NEXT:    [[MUL_OVERFLOW:%.*]] = extractvalue { i1, i1 } [[MUL]], 1
+-; I64-NEXT:    [[TMP1:%.*]] = select i1 [[TMP0]], i1 [[MUL_RESULT]], i1 false
+-; I64-NEXT:    [[TMP2:%.*]] = or i1 [[TMP1]], [[MUL_OVERFLOW]]
+-; I64-NEXT:    [[TMP3:%.*]] = or i1 [[TMP2]], [[TMP0]]
+ ; I64-NEXT:    [[TMP4:%.*]] = sext i1 [[TMP0]] to i32
+ ; I64-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i32 [[STEP]], [[TMP4]]
+-; I64-NEXT:    [[TMP5:%.*]] = or i1 [[TMP3]], [[IDENT_CHECK]]
++; I64-NEXT:    [[TMP5:%.*]] = or i1 [[TMP0]], [[IDENT_CHECK]]
+ ; I64-NEXT:    br i1 [[TMP5]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; I64:       [[VECTOR_PH]]:
+ ; I64-NEXT:    [[TMP6:%.*]] = shl i32 [[STEP]], 7
+diff --git a/llvm/test/Transforms/LoopVectorize/trip-count-expansion-may-introduce-ub.ll b/llvm/test/Transforms/LoopVectorize/trip-count-expansion-may-introduce-ub.ll
+index f1e3cd9f32fff..c54fe01a844d3 100644
+--- a/llvm/test/Transforms/LoopVectorize/trip-count-expansion-may-introduce-ub.ll
++++ b/llvm/test/Transforms/LoopVectorize/trip-count-expansion-may-introduce-ub.ll
+@@ -985,8 +985,7 @@ define i64 @multi_exit_4_exit_count_with_urem_by_constant_in_latch(ptr %dst, i64
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i64 @llvm.smax.i64(i64 [[N]], i64 0)
+ ; CHECK-NEXT:    [[TMP0:%.*]] = urem i64 [[N]], 42
+-; CHECK-NEXT:    [[SMAX1:%.*]] = call i64 @llvm.smax.i64(i64 [[TMP0]], i64 0)
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i64 @llvm.umin.i64(i64 [[SMAX]], i64 [[SMAX1]])
++; CHECK-NEXT:    [[UMIN:%.*]] = call i64 @llvm.umin.i64(i64 [[SMAX]], i64 [[TMP0]])
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add nuw i64 [[UMIN]], 1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ule i64 [[TMP1]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH:%.*]], label [[VECTOR_PH:%.*]]
+diff --git a/llvm/test/Transforms/LoopVectorize/version-mem-access.ll b/llvm/test/Transforms/LoopVectorize/version-mem-access.ll
+index 3d0272bef7dfa..3a98ae31b02b4 100644
+--- a/llvm/test/Transforms/LoopVectorize/version-mem-access.ll
++++ b/llvm/test/Transforms/LoopVectorize/version-mem-access.ll
+@@ -129,14 +129,8 @@ define void @stride_poison(ptr %dst) mustprogress {
+ ; CHECK-LABEL: define void @stride_poison(
+ ; CHECK-SAME: ptr [[DST:%.*]]) #[[ATTR0:[0-9]+]] {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[UMAX:%.*]] = call i64 @llvm.umax.i64(i64 poison, i64 1)
+-; CHECK-NEXT:    [[TMP0:%.*]] = udiv i64 99, [[UMAX]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = add nuw nsw i64 [[TMP0]], 2
+ ; CHECK-NEXT:    br label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+-; CHECK-NEXT:    [[N_MOD_VF:%.*]] = urem i64 [[TMP1]], 2
+-; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[TMP1]], [[N_MOD_VF]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = mul i64 [[N_VEC]], poison
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
+@@ -147,11 +141,10 @@ define void @stride_poison(ptr %dst) mustprogress {
+ ; CHECK-NEXT:    store i8 0, ptr [[TMP5]], align 1
+ ; CHECK-NEXT:    store i8 0, ptr [[TMP6]], align 1
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 2
+-; CHECK-NEXT:    [[TMP7:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    [[TMP7:%.*]] = icmp eq i64 [[INDEX_NEXT]], poison
+ ; CHECK-NEXT:    br i1 [[TMP7]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP6:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[TMP1]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[CMP_N]], [[EXIT:label %.*]], label %[[SCALAR_PH:.*]]
++; CHECK-NEXT:    br i1 poison, [[EXIT:label %.*]], label %[[SCALAR_PH:.*]]
+ ; CHECK:       [[SCALAR_PH]]:
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinsics.ll b/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinsics.ll
+index c2b783439444a..0d44d87412710 100644
+--- a/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinsics.ll
++++ b/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinsics.ll
+@@ -48,9 +48,7 @@ entry:
+ define <8 x i1> @test4(<4 x float> %0, <4 x float> %1) {
+ ; CHECK-LABEL: @test4(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[TMP0:%.*]], <4 x float> [[TMP1:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+-; CHECK-NEXT:    [[TMP3:%.*]] = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> [[TMP2]], i32 0)
+-; CHECK-NEXT:    ret <8 x i1> [[TMP3]]
++; CHECK-NEXT:    ret <8 x i1> zeroinitializer
+ ;
+ entry:
+   %2 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %0, i32 0)
+@@ -62,9 +60,7 @@ entry:
+ define <2 x i1> @test4b(<4 x float> %0, <4 x float> %1) {
+ ; CHECK-LABEL: @test4b(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[TMP0:%.*]], <4 x float> [[TMP1:%.*]], <2 x i32> <i32 0, i32 4>
+-; CHECK-NEXT:    [[TMP3:%.*]] = call <2 x i1> @llvm.is.fpclass.v2f32(<2 x float> [[TMP2]], i32 0)
+-; CHECK-NEXT:    ret <2 x i1> [[TMP3]]
++; CHECK-NEXT:    ret <2 x i1> zeroinitializer
+ ;
+ entry:
+   %2 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %0, i32 0)
+diff --git a/llvm/test/Transforms/VectorCombine/AArch64/shuffletoidentity.ll b/llvm/test/Transforms/VectorCombine/AArch64/shuffletoidentity.ll
+index 40dff3721e609..50b52c2016f41 100644
+--- a/llvm/test/Transforms/VectorCombine/AArch64/shuffletoidentity.ll
++++ b/llvm/test/Transforms/VectorCombine/AArch64/shuffletoidentity.ll
+@@ -534,8 +534,8 @@ define <4 x i64> @single_zext(<4 x i32> %x) {
+ 
+ define <4 x i64> @not_zext(<4 x i32> %x) {
+ ; CHECK-LABEL: @not_zext(
+-; CHECK-NEXT:    [[REVSHUF:%.*]] = shufflevector <4 x i32> [[X]], <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+-; CHECK-NEXT:    [[ZEXT:%.*]] = zext <4 x i32> [[REVSHUF:%.*]] to <4 x i64>
++; CHECK-NEXT:    [[REVSHUF:%.*]] = shufflevector <4 x i32> [[X:%.*]], <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
++; CHECK-NEXT:    [[ZEXT:%.*]] = zext <4 x i32> [[REVSHUF]] to <4 x i64>
+ ; CHECK-NEXT:    ret <4 x i64> [[ZEXT]]
+ ;
+   %zext = zext <4 x i32> %x to <4 x i64>
+@@ -745,10 +745,7 @@ define <4 x i64> @zext_add_chain(<4 x i32> %x) {
+ define <8 x i8> @intrinsics_minmax(<8 x i8> %a, <8 x i8> %b) {
+ ; CHECK-LABEL: @intrinsics_minmax(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = call <8 x i8> @llvm.smin.v8i8(<8 x i8> [[A:%.*]], <8 x i8> [[B:%.*]])
+-; CHECK-NEXT:    [[TMP2:%.*]] = call <8 x i8> @llvm.smax.v8i8(<8 x i8> [[TMP1]], <8 x i8> [[B]])
+-; CHECK-NEXT:    [[TMP3:%.*]] = call <8 x i8> @llvm.umin.v8i8(<8 x i8> [[TMP2]], <8 x i8> [[B]])
+-; CHECK-NEXT:    [[R:%.*]] = call <8 x i8> @llvm.umax.v8i8(<8 x i8> [[TMP3]], <8 x i8> [[B]])
+-; CHECK-NEXT:    ret <8 x i8> [[R]]
++; CHECK-NEXT:    ret <8 x i8> [[B]]
+ ;
+   %ab = shufflevector <8 x i8> %a, <8 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+   %at = shufflevector <8 x i8> %a, <8 x i8> poison, <4 x i32> <i32 7, i32 6, i32 5, i32 4>
+@@ -922,8 +919,7 @@ define <4 x i8> @singleop(<4 x i8> %a, <4 x i8> %b) {
+ 
+ define <4 x i64> @cast_mismatched_types(<4 x i32> %x) {
+ ; CHECK-LABEL: @cast_mismatched_types(
+-; CHECK-SAME: <4 x i32> [[X:%.*]]) {
+-; CHECK-NEXT:    [[ZEXT:%.*]] = zext <4 x i32> [[X]] to <4 x i64>
++; CHECK-NEXT:    [[ZEXT:%.*]] = zext <4 x i32> [[X:%.*]] to <4 x i64>
+ ; CHECK-NEXT:    ret <4 x i64> [[ZEXT]]
+ ;
+   %shuf = shufflevector <4 x i32> %x, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
+diff --git a/llvm/test/Transforms/VectorCombine/RISCV/shuffle-of-intrinsics.ll b/llvm/test/Transforms/VectorCombine/RISCV/shuffle-of-intrinsics.ll
+index f3e5d273e88cc..a9e3a18115b77 100644
+--- a/llvm/test/Transforms/VectorCombine/RISCV/shuffle-of-intrinsics.ll
++++ b/llvm/test/Transforms/VectorCombine/RISCV/shuffle-of-intrinsics.ll
+@@ -48,9 +48,7 @@ entry:
+ define <8 x i1> @test4(<4 x float> %0, <4 x float> %1) {
+ ; CHECK-LABEL: @test4(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[TMP0:%.*]], <4 x float> [[TMP1:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+-; CHECK-NEXT:    [[TMP3:%.*]] = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> [[TMP2]], i32 0)
+-; CHECK-NEXT:    ret <8 x i1> [[TMP3]]
++; CHECK-NEXT:    ret <8 x i1> zeroinitializer
+ ;
+ entry:
+   %2 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %0, i32 0)
+diff --git a/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll b/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll
+index 59c8b0a6be4e9..66ec22c61e0dc 100644
+--- a/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll
++++ b/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll
+@@ -51,9 +51,7 @@ entry:
+ define <8 x i1> @test4(<4 x float> %0, <4 x float> %1) {
+ ; SSE-LABEL: @test4(
+ ; SSE-NEXT:  entry:
+-; SSE-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[TMP0:%.*]], <4 x float> [[TMP1:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+-; SSE-NEXT:    [[TMP3:%.*]] = call <8 x i1> @llvm.is.fpclass.v8f32(<8 x float> [[TMP2]], i32 0)
+-; SSE-NEXT:    ret <8 x i1> [[TMP3]]
++; SSE-NEXT:    ret <8 x i1> zeroinitializer
+ ;
+ ; AVX-LABEL: @test4(
+ ; AVX-NEXT:  entry:
+@@ -72,9 +70,7 @@ entry:
+ define <2 x i1> @test4b(<4 x float> %0, <4 x float> %1) {
+ ; CHECK-LABEL: @test4b(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[TMP0:%.*]], <4 x float> [[TMP1:%.*]], <2 x i32> <i32 0, i32 4>
+-; CHECK-NEXT:    [[TMP3:%.*]] = call <2 x i1> @llvm.is.fpclass.v2f32(<2 x float> [[TMP2]], i32 0)
+-; CHECK-NEXT:    ret <2 x i1> [[TMP3]]
++; CHECK-NEXT:    ret <2 x i1> zeroinitializer
+ ;
+ entry:
+   %2 = call <4 x i1> @llvm.is.fpclass.v4f32(<4 x float> %0, i32 0)
+@@ -224,8 +220,7 @@ define <8 x i32> @test_shared_operands(<4 x i32> %0, <4 x i32> %1) {
+ ; CHECK-LABEL: @test_shared_operands(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x i32> [[TMP0:%.*]], <4 x i32> [[TMP1:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+-; CHECK-NEXT:    [[R:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[TMP2]], <8 x i32> [[TMP2]])
+-; CHECK-NEXT:    ret <8 x i32> [[R]]
++; CHECK-NEXT:    ret <8 x i32> [[TMP2]]
+ ;
+ entry:
+   %a = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %0, <4 x i32> %0)
