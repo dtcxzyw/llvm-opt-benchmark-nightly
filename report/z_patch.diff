@@ -1,0 +1,114 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 6992602f54fe9..34e9ba6432388 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3841,10 +3841,26 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       }
+     }
+ 
+-    // If the assume has operand bundles, the folds below will never work, so
+-    // don't bother trying.
+-    if (II->hasOperandBundles())
++    if (II->hasOperandBundles()) {
++      // Merge consecutive assumes to save some resources
++      if (auto *PrevAI = dyn_cast_or_null<AssumeInst>(II->getPrevNode());
++          PrevAI && PrevAI->hasOperandBundles()) {
++        SmallVector<OperandBundleDef, 4> Bundles;
++        Bundles.reserve(II->getNumOperandBundles() +
++                        PrevAI->getNumOperandBundles());
++        for (auto Bundle : PrevAI->operand_bundles())
++          Bundles.emplace_back(Bundle);
++        for (auto Bundle : II->operand_bundles())
++          Bundles.emplace_back(Bundle);
++        Builder.CreateAssumption(Bundles);
++        eraseInstFromFunction(*PrevAI);
++        return eraseInstFromFunction(*II);
++      }
++
++      // If the assume has operand bundles, the folds below will never work, so
++      // don't bother trying.
+       break;
++    }
+ 
+     Value *IIOperand = II->getArgOperand(0);
+ 
+diff --git a/llvm/test/Transforms/InstCombine/assume-loop-align.ll b/llvm/test/Transforms/InstCombine/assume-loop-align.ll
+index 0c5e403ca54a9..2701775f011e8 100644
+--- a/llvm/test/Transforms/InstCombine/assume-loop-align.ll
++++ b/llvm/test/Transforms/InstCombine/assume-loop-align.ll
+@@ -10,8 +10,7 @@ target triple = "x86_64-unknown-linux-gnu"
+ define void @foo(ptr %a, ptr %b) #0 {
+ ; CHECK-LABEL: @foo(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 64) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[B:%.*]], i64 64) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 64), "align"(ptr [[B:%.*]], i64 64) ]
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index 2d4d51b8bbe4b..78b4ae9fcdd49 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -134,8 +134,7 @@ define i1 @align_with_offset_on_gep(ptr %base) {
+ 
+ define void @align_with_constant_offset_0(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_0(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 0) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 0) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -145,8 +144,7 @@ define void @align_with_constant_offset_0(ptr %ptr) {
+ 
+ define void @align_with_constant_offset_1(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_1(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 -8) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 -8) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -157,8 +155,7 @@ define void @align_with_constant_offset_1(ptr %ptr) {
+ 
+ define void @align_with_constant_offset_4(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_4(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 0) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 0) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -169,8 +166,7 @@ define void @align_with_constant_offset_4(ptr %ptr) {
+ 
+ define void @align_with_constant_offset_8(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_8(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 8) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 8) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -180,8 +176,7 @@ define void @align_with_constant_offset_8(ptr %ptr) {
+ 
+ define void @align_with_variable_offset(ptr %ptr, i64 %offset) {
+ ; CHECK-LABEL: @align_with_variable_offset(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 [[OFFSET:%.*]]) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 [[OFFSET:%.*]]) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -601,10 +596,7 @@ define void @redundant_nonnull3(ptr %ptr) {
+ 
+ define void @partially_redundant(ptr %ptr, ptr %ptr2, ptr %ptr3, ptr %ptr4, ptr %ptr5) {
+ ; CHECK-LABEL: @partially_redundant(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR2:%.*]]) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR:%.*]]) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR4:%.*]]), "nonnull"(ptr [[PTR3:%.*]]) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR5:%.*]]) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR5:%.*]]), "nonnull"(ptr [[PTR4:%.*]]), "nonnull"(ptr [[PTR3:%.*]]), "nonnull"(ptr [[PTR:%.*]]), "nonnull"(ptr [[PTR2:%.*]]) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "nonnull"(ptr %ptr), "nonnull"(ptr %ptr2) ]
