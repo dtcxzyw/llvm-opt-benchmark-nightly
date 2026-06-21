@@ -201,6 +201,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit
+  %3 = phi ptr [ null, %.lr.ph ], [ %4, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit ] ; 13 uses
   %i.g = phi ptr [ null, %.lr.ph ], [ %i.bf, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit ] ; 5 uses
   %i.h = phi ptr [ null, %.lr.ph ], [ %i.bg, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
   %.sroa.016.022 = phi ptr [ %i.b, %.lr.ph ], [ %i.bh, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit ] ; 2 uses
@@ -221,7 +222,6 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit
 
 bb.e:                                             ; preds = %bb.c
-  %3 = load ptr, ptr %0, align 8, !tbaa !92       ; 12 uses
   %i.n = ptrtoint ptr %i.g to i64                 ; 3 uses
   %i.o = ptrtoint ptr %3 to i64                   ; 3 uses
   %i.p = sub i64 %i.n, %i.o                       ; 3 uses
@@ -246,7 +246,7 @@ _ZNKSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE1
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.w = shl nuw nsw i64 %i.v, 3
   %i.x = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #16
-          to label %.noexc9 unwind label %.loopexit ; 12 uses
+          to label %.noexc9 unwind label %.loopexit ; 13 uses
 
 .noexc9:                                          ; preds = %_ZNKSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.p
@@ -390,6 +390,7 @@ _ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17
   br label %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.d, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i
+  %4 = phi ptr [ %3, %bb.d ], [ %i.x, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i ]
   %i.bf = phi ptr [ %i.g, %bb.d ], [ %i.be, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i ]
   %i.bg = phi ptr [ %i.m, %bb.d ], [ %i.bd, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i ]
   %i.bh = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.016.022) #20 ; 2 uses

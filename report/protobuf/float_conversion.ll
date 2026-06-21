@@ -135,7 +135,7 @@ bb.j:                                             ; preds = %_ZN4absl12lts_20250
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !15 ; 2 uses
   %i.aj = icmp slt i32 %i.ai, 0
   %narrow.i = select i1 %i.aj, i32 6, i32 %i.ai   ; 4 uses
-  %spec.select.i = zext i32 %narrow.i to i64      ; 6 uses
+  %spec.select.i = zext i32 %narrow.i to i64      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #18
   store i32 0, ptr %i.e, align 4, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
@@ -164,7 +164,7 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.212.0.copyload.i = load i64, ptr %.sroa.212.0..sroa_idx.i, align 8, !tbaa !23 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   store i8 %.05586.i, ptr %5, align 8, !tbaa !24
-  %i.as = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i64 %spec.select.i, ptr %i.as, align 8, !tbaa !29
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store ptr %1, ptr %i.at, align 8, !tbaa !30
@@ -359,21 +359,21 @@ bb.u:                                             ; preds = %bb.t
 _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastENS0_7uint128EPc.exit69.i.i.i: ; preds = %.preheader.i62.i.i.i
   %i.ds = getelementptr inbounds i8, ptr %.0.i.i66.i.i.i, i64 -2 ; 3 uses
   store i8 48, ptr %i.ds, align 1, !tbaa !12
-  %7 = load i64, ptr %i.as, align 8, !tbaa !29
-  %i.dt = call fastcc noundef ptr @_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastENS0_7uint128EPcim(i64 %.sroa.011.0.copyload.i, i64 %.sroa.212.0.copyload.i, ptr noundef %i.cq, i32 noundef %i.cr, i64 noundef %7)
+  %i.dt = call fastcc noundef ptr @_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastENS0_7uint128EPcim(i64 %.sroa.011.0.copyload.i, i64 %.sroa.212.0.copyload.i, ptr noundef %i.cq, i32 noundef %i.cr, i64 noundef %spec.select.i)
   %i.du = load i8, ptr %i.ds, align 1, !tbaa !12
   %.not.i24.i.i = icmp eq i8 %i.du, 48
   %spec.select.i.i.i = select i1 %.not.i24.i.i, ptr %i.dr, ptr %i.ds
+  %.val.i.i.i.pre = load i64, ptr %i.as, align 8, !tbaa !29
   br label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i.i
 
 _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i.i: ; preds = %.preheader.i.i.i.i, %bb.r, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastENS0_7uint128EPc.exit69.i.i.i
+  %.val.i.i.i = phi i64 [ %.val.i.i.i.pre, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastENS0_7uint128EPc.exit69.i.i.i ], [ %spec.select.i, %bb.r ], [ %spec.select.i, %.preheader.i.i.i.i ] ; 2 uses
   %i.dv = phi ptr [ %i.cq, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastENS0_7uint128EPc.exit69.i.i.i ], [ %i.bh, %bb.r ], [ %i.bh, %.preheader.i.i.i.i ]
   %.042.i.i.i = phi ptr [ %i.dt, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastENS0_7uint128EPc.exit69.i.i.i ], [ %i.bh, %bb.r ], [ %i.bh, %.preheader.i.i.i.i ]
   %.041.i.i.i = phi ptr [ %spec.select.i.i.i, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastENS0_7uint128EPc.exit69.i.i.i ], [ %i.bo, %bb.r ], [ %i.co, %.preheader.i.i.i.i ] ; 2 uses
   %i.dw = ptrtoint ptr %.042.i.i.i to i64         ; 2 uses
   %i.dx = ptrtoint ptr %.041.i.i.i to i64
   %i.dy = sub i64 %i.dw, %i.dx                    ; 2 uses
-  %.val.i.i.i = load i64, ptr %i.as, align 8, !tbaa !29 ; 2 uses
   %.not.i70.i.i.i = icmp eq i64 %.val.i.i.i, 0
   br i1 %.not.i70.i.i.i, label %_ZNK4absl12lts_2025051219str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.i.i.i, label %_ZNK4absl12lts_2025051219str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.thread.i.i.i
 
@@ -776,7 +776,7 @@ bb.j:                                             ; preds = %_ZN4absl12lts_20250
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !15 ; 2 uses
   %i.ak = icmp slt i32 %i.aj, 0
   %narrow = select i1 %i.ak, i32 6, i32 %i.aj     ; 4 uses
-  %spec.select = zext i32 %narrow to i64          ; 10 uses
+  %spec.select = zext i32 %narrow to i64          ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #18
   store i32 0, ptr %i.f, align 4, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
@@ -1034,16 +1034,17 @@ _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigits
   %i.dr = load i8, ptr %i.cs, align 1, !tbaa !12
   %.not.i.i = icmp eq i8 %i.dr, 48
   %spec.select.i.i = select i1 %.not.i.i, ptr %i.cq, ptr %i.cs
+  %.val.i.i.pre = load i64, ptr %i.as, align 8, !tbaa !29
   br label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i
 
 _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i: ; preds = %.preheader.i.i.i, %bb.r, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i
+  %.val.i.i = phi i64 [ %.val.i.i.pre, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i ], [ %spec.select, %bb.r ], [ %spec.select, %.preheader.i.i.i ] ; 2 uses
   %i.ds = phi ptr [ %i.cr, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i ], [ %i.bd, %bb.r ], [ %i.bd, %.preheader.i.i.i ]
   %.038.i.i = phi ptr [ %i.dq, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i ], [ %i.bd, %bb.r ], [ %i.bd, %.preheader.i.i.i ]
   %.037.i.i = phi ptr [ %spec.select.i.i, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i ], [ %i.bk, %bb.r ], [ %i.ch, %.preheader.i.i.i ] ; 2 uses
   %i.dt = ptrtoint ptr %.038.i.i to i64           ; 2 uses
   %i.du = ptrtoint ptr %.037.i.i to i64
   %i.dv = sub i64 %i.dt, %i.du                    ; 2 uses
-  %.val.i.i = load i64, ptr %i.as, align 8, !tbaa !29 ; 2 uses
   %.not.i57.i.i = icmp eq i64 %.val.i.i, 0
   br i1 %.not.i57.i.i, label %_ZNK4absl12lts_2025051219str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.i.i, label %_ZNK4absl12lts_2025051219str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.thread.i.i
 

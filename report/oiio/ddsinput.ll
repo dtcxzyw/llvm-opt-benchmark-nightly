@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit18: ; preds = %_ZN
 define linkonce_odr hidden ptr @_ZN3fmt3v126detail9write_intINS0_14basic_appenderIcEEmcEET_S5_T0_jRKNS0_12format_specsERKNS1_14digit_groupingIT1_EE(ptr %0, i64 noundef %1, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(64) %4) local_unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %class.anon.46, align 1             ; 5 uses
-  %i.a = alloca i32, align 4                      ; 6 uses
+  %i.a = alloca i32, align 4                      ; 5 uses
   %6 = alloca %"class.fmt::v12::basic_memory_buffer", align 8 ; 15 uses
   %7 = alloca %class.anon.40, align 8             ; 7 uses
   store i32 %2, ptr %i.a, align 4, !tbaa !3
@@ -258,16 +258,17 @@ bb.e:                                             ; preds = %bb.d
   %i.y = shl nuw nsw i32 %i.x, 8
   %i.z = select i1 %.not.i, i32 %i.x, i32 %i.y
   %i.aa = or i32 %i.z, %2
-  %i.ab = add i32 %i.aa, 33554432
+  %i.ab = add i32 %i.aa, 33554432                 ; 2 uses
   store i32 %i.ab, ptr %i.a, align 4, !tbaa !3
   br label %.preheader168
 
 .preheader168:                                    ; preds = %bb.e, %bb.d
+  %8 = phi i32 [ %i.ab, %bb.e ], [ %2, %bb.d ]
   br label %bb.f
 
-bb.f:                                             ; preds = %.preheader168, %bb.f
-  %.03.i.i = phi i64 [ %i.ad, %bb.f ], [ %1, %.preheader168 ]
-  %.0.i.i = phi i32 [ %i.ac, %bb.f ], [ 0, %.preheader168 ] ; 2 uses
+bb.f:                                             ; preds = %bb.f, %.preheader168
+  %.03.i.i = phi i64 [ %1, %.preheader168 ], [ %i.ad, %bb.f ]
+  %.0.i.i = phi i32 [ 0, %.preheader168 ], [ %i.ac, %bb.f ] ; 2 uses
   %i.ac = add nuw nsw i32 %.0.i.i, 1              ; 3 uses
   %i.ad = lshr i64 %.03.i.i, 4                    ; 2 uses
   %.not.i.i = icmp eq i64 %i.ad, 0
@@ -335,11 +336,12 @@ bb.h:                                             ; preds = %bb.g
   %.not.i49 = icmp eq i32 %2, 0
   %i.aw = select i1 %.not.i49, i32 48, i32 12288
   %i.ax = or i32 %i.aw, %2
-  %i.ay = add i32 %i.ax, 16777216
+  %i.ay = add i32 %i.ax, 16777216                 ; 2 uses
   store i32 %i.ay, ptr %i.a, align 4, !tbaa !3
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %_ZN3fmt3v126detail12count_digitsILi3EmEEiT0_.exit
+  %9 = phi i32 [ %i.ay, %bb.h ], [ %2, %bb.g ], [ %2, %_ZN3fmt3v126detail12count_digitsILi3EmEEiT0_.exit ]
   %i.az = zext nneg i32 %i.ap to i64              ; 3 uses
   %i.ba = icmp samesign ugt i32 %.0.i.i47, 499
   br i1 %i.ba, label %_ZN3fmt3v126detail6bufferIcE11try_reserveEm.exit.i.i56, label %_ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.i50.thread
@@ -386,16 +388,17 @@ bb.k:                                             ; preds = %bb.j
   %i.bm = shl nuw nsw i32 %i.bl, 8
   %i.bn = select i1 %.not.i63, i32 %i.bl, i32 %i.bm
   %i.bo = or i32 %i.bn, %2
-  %i.bp = add i32 %i.bo, 33554432
+  %i.bp = add i32 %i.bo, 33554432                 ; 2 uses
   store i32 %i.bp, ptr %i.a, align 4, !tbaa !3
   br label %.preheader166
 
 .preheader166:                                    ; preds = %bb.k, %bb.j
+  %10 = phi i32 [ %i.bp, %bb.k ], [ %2, %bb.j ]
   br label %bb.l
 
-bb.l:                                             ; preds = %.preheader166, %bb.l
-  %.03.i.i64 = phi i64 [ %i.br, %bb.l ], [ %1, %.preheader166 ]
-  %.0.i.i65 = phi i32 [ %i.bq, %bb.l ], [ 0, %.preheader166 ] ; 2 uses
+bb.l:                                             ; preds = %bb.l, %.preheader166
+  %.03.i.i64 = phi i64 [ %1, %.preheader166 ], [ %i.br, %bb.l ]
+  %.0.i.i65 = phi i32 [ 0, %.preheader166 ], [ %i.bq, %bb.l ] ; 2 uses
   %i.bq = add nuw nsw i32 %.0.i.i65, 1            ; 3 uses
   %i.br = lshr i64 %.03.i.i64, 1                  ; 2 uses
   %.not.i.i66 = icmp eq i64 %i.br, 0
@@ -461,10 +464,10 @@ _ZN3fmt3v126detail10write_charIcNS0_14basic_appenderIcEEEET0_S5_T_RKNS0_12format
   br label %bb.t
 
 .loopexit:                                        ; preds = %.split.us.i.i.i, %.split.i.i.i, %.split.us.i.i.i70, %bb.b
-  %.0.a = phi i32 [ %i.ac, %.split.i.i.i ], [ %i.s, %bb.b ], [ %i.bq, %.split.us.i.i.i70 ], [ %i.ap, %.split.us.i.i.i ] ; 2 uses
-  %8 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.cj = lshr i32 %8, 24
-  %i.ck = add i32 %i.cj, %.0.a
+  %.0.a = phi i32 [ %8, %.split.i.i.i ], [ %2, %bb.b ], [ %10, %.split.us.i.i.i70 ], [ %9, %.split.us.i.i.i ]
+  %.0 = phi i32 [ %i.ac, %.split.i.i.i ], [ %i.s, %bb.b ], [ %i.bq, %.split.us.i.i.i70 ], [ %i.ap, %.split.us.i.i.i ] ; 2 uses
+  %i.cj = lshr i32 %.0.a, 24
+  %i.ck = add i32 %i.cj, %.0
   %i.cl = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !40
   %i.cn = icmp eq i64 %i.cm, 0
@@ -504,7 +507,7 @@ _ZNK3fmt3v126detail14digit_groupingIcE4nextERNS3_10next_stateE.exit.i: ; preds =
   %.sroa.0.1.i = phi ptr [ %i.cw, %bb.p ], [ %i.cr, %._ZNK3fmt3v126detail14digit_groupingIcE4nextERNS3_10next_stateE.exit_crit_edge.i ]
   %i.cx = sext i8 %.sink.i.i to i32
   %i.cy = add nsw i32 %.sroa.5.06.i, %i.cx        ; 2 uses
-  %i.cz = icmp sgt i32 %.0.a, %i.cy
+  %i.cz = icmp sgt i32 %.0, %i.cy
   br i1 %i.cz, label %bb.q, label %_ZNK3fmt3v126detail14digit_groupingIcE16count_separatorsEi.exit
 
 bb.q:                                             ; preds = %_ZNK3fmt3v126detail14digit_groupingIcE4nextERNS3_10next_stateE.exit.i
@@ -907,7 +910,7 @@ bb.g:                                             ; preds = %bb.f, %_ZN3fmt3v126
 define linkonce_odr hidden ptr @_ZN3fmt3v126detail9write_intINS0_14basic_appenderIcEEocEET_S5_T0_jRKNS0_12format_specsERKNS1_14digit_groupingIT1_EE(ptr %0, i128 noundef %1, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(64) %4) local_unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %class.anon.46, align 1             ; 5 uses
-  %i.a = alloca i32, align 4                      ; 6 uses
+  %i.a = alloca i32, align 4                      ; 5 uses
   %6 = alloca %"class.fmt::v12::basic_memory_buffer", align 8 ; 15 uses
   %7 = alloca %class.anon.54, align 8             ; 7 uses
   store i32 %2, ptr %i.a, align 4, !tbaa !3
@@ -989,16 +992,17 @@ bb.k:                                             ; preds = %bb.j
   %i.x = shl nuw nsw i32 %i.w, 8
   %i.y = select i1 %.not.i, i32 %i.w, i32 %i.x
   %i.z = or i32 %i.y, %2
-  %i.aa = add i32 %i.z, 33554432
+  %i.aa = add i32 %i.z, 33554432                  ; 2 uses
   store i32 %i.aa, ptr %i.a, align 4, !tbaa !3
   br label %.preheader202
 
 .preheader202:                                    ; preds = %bb.k, %bb.j
+  %8 = phi i32 [ %i.aa, %bb.k ], [ %2, %bb.j ]
   br label %bb.l
 
-bb.l:                                             ; preds = %.preheader202, %bb.l
-  %.03.i.i = phi i128 [ %i.ac, %bb.l ], [ %1, %.preheader202 ]
-  %.0.i.i = phi i32 [ %i.ab, %bb.l ], [ 0, %.preheader202 ] ; 2 uses
+bb.l:                                             ; preds = %bb.l, %.preheader202
+  %.03.i.i = phi i128 [ %1, %.preheader202 ], [ %i.ac, %bb.l ]
+  %.0.i.i = phi i32 [ 0, %.preheader202 ], [ %i.ab, %bb.l ] ; 2 uses
   %i.ab = add nuw nsw i32 %.0.i.i, 1              ; 3 uses
   %i.ac = lshr i128 %.03.i.i, 4                   ; 2 uses
   %.not.i.i = icmp eq i128 %i.ac, 0
@@ -1067,11 +1071,12 @@ bb.n:                                             ; preds = %bb.m
   %.not.i49 = icmp eq i32 %2, 0
   %i.aw = select i1 %.not.i49, i32 48, i32 12288
   %i.ax = or i32 %i.aw, %2
-  %i.ay = add i32 %i.ax, 16777216
+  %i.ay = add i32 %i.ax, 16777216                 ; 2 uses
   store i32 %i.ay, ptr %i.a, align 4, !tbaa !3
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %_ZN3fmt3v126detail12count_digitsILi3EoEEiT0_.exit
+  %9 = phi i32 [ %i.ay, %bb.n ], [ %2, %bb.m ], [ %2, %_ZN3fmt3v126detail12count_digitsILi3EoEEiT0_.exit ]
   %i.az = zext nneg i32 %i.ap to i64              ; 3 uses
   %i.ba = icmp samesign ugt i32 %.0.i.i47, 499
   br i1 %i.ba, label %_ZN3fmt3v126detail6bufferIcE11try_reserveEm.exit.i.i56, label %_ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.i50.thread
@@ -1118,16 +1123,17 @@ bb.q:                                             ; preds = %bb.p
   %i.bm = shl nuw nsw i32 %i.bl, 8
   %i.bn = select i1 %.not.i63, i32 %i.bl, i32 %i.bm
   %i.bo = or i32 %i.bn, %2
-  %i.bp = add i32 %i.bo, 33554432
+  %i.bp = add i32 %i.bo, 33554432                 ; 2 uses
   store i32 %i.bp, ptr %i.a, align 4, !tbaa !3
   br label %.preheader199
 
 .preheader199:                                    ; preds = %bb.q, %bb.p
+  %10 = phi i32 [ %i.bp, %bb.q ], [ %2, %bb.p ]
   br label %bb.r
 
-bb.r:                                             ; preds = %.preheader199, %bb.r
-  %.03.i.i64 = phi i128 [ %i.br, %bb.r ], [ %1, %.preheader199 ]
-  %.0.i.i65 = phi i32 [ %i.bq, %bb.r ], [ 0, %.preheader199 ] ; 2 uses
+bb.r:                                             ; preds = %bb.r, %.preheader199
+  %.03.i.i64 = phi i128 [ %1, %.preheader199 ], [ %i.br, %bb.r ]
+  %.0.i.i65 = phi i32 [ 0, %.preheader199 ], [ %i.bq, %bb.r ] ; 2 uses
   %i.bq = add nuw nsw i32 %.0.i.i65, 1            ; 3 uses
   %i.br = lshr i128 %.03.i.i64, 1                 ; 2 uses
   %.not.i.i66 = icmp eq i128 %i.br, 0
@@ -1193,10 +1199,10 @@ _ZN3fmt3v126detail10write_charIcNS0_14basic_appenderIcEEEET0_S5_T_RKNS0_12format
   br label %bb.z
 
 .loopexit:                                        ; preds = %.split.us.i.i.i, %.split.i.i.i, %.split.us.i.i.i70, %_ZN3fmt3v126detail12count_digitsEo.exit
-  %.0.a = phi i32 [ %i.ab, %.split.i.i.i ], [ %.012.i.i, %_ZN3fmt3v126detail12count_digitsEo.exit ], [ %i.bq, %.split.us.i.i.i70 ], [ %i.ap, %.split.us.i.i.i ] ; 2 uses
-  %8 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.cj = lshr i32 %8, 24
-  %i.ck = add i32 %i.cj, %.0.a
+  %.0.a = phi i32 [ %8, %.split.i.i.i ], [ %2, %_ZN3fmt3v126detail12count_digitsEo.exit ], [ %10, %.split.us.i.i.i70 ], [ %9, %.split.us.i.i.i ]
+  %.0 = phi i32 [ %i.ab, %.split.i.i.i ], [ %.012.i.i, %_ZN3fmt3v126detail12count_digitsEo.exit ], [ %i.bq, %.split.us.i.i.i70 ], [ %i.ap, %.split.us.i.i.i ] ; 2 uses
+  %i.cj = lshr i32 %.0.a, 24
+  %i.ck = add i32 %i.cj, %.0
   %i.cl = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !40
   %i.cn = icmp eq i64 %i.cm, 0
@@ -1236,7 +1242,7 @@ _ZNK3fmt3v126detail14digit_groupingIcE4nextERNS3_10next_stateE.exit.i: ; preds =
   %.sroa.0.1.i = phi ptr [ %i.cw, %bb.v ], [ %i.cr, %._ZNK3fmt3v126detail14digit_groupingIcE4nextERNS3_10next_stateE.exit_crit_edge.i ]
   %i.cx = sext i8 %.sink.i.i to i32
   %i.cy = add nsw i32 %.sroa.5.06.i, %i.cx        ; 2 uses
-  %i.cz = icmp sgt i32 %.0.a, %i.cy
+  %i.cz = icmp sgt i32 %.0, %i.cy
   br i1 %i.cz, label %bb.w, label %_ZNK3fmt3v126detail14digit_groupingIcE16count_separatorsEi.exit
 
 bb.w:                                             ; preds = %_ZNK3fmt3v126detail14digit_groupingIcE4nextERNS3_10next_stateE.exit.i

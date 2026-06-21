@@ -201,7 +201,7 @@ declare noundef i32 @_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE5shiftER
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvh8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_jEEE4growEj(ptr noundef nonnull align 8 dereferenceable(20) %0, i32 noundef %1) local_unnamed_addr #0 comdat align 2 {
 _ZN4llvh8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_jEEE15allocateBucketsEj.exit:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !20   ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !14     ; 4 uses
   %i.d = add i32 %1, -1
@@ -290,7 +290,7 @@ bb.b:                                             ; preds = %_ZN4llvh8DenseMapIN
   store i32 0, ptr %i.ao, align 8, !tbaa !149
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 0, ptr %i.ap, align 4, !tbaa !157
-  %i.aq = load i32, ptr %i.a, align 8, !tbaa !20  ; 2 uses
+  %i.aq = load i32, ptr %i.a, align 8, !tbaa !20  ; 4 uses
   %i.ar = zext i32 %i.aq to i64
   %.idx.i.i = shl nuw nsw i64 %i.ar, 3            ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx.i.i
@@ -342,23 +342,25 @@ bb.b:                                             ; preds = %_ZN4llvh8DenseMapIN
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E9initEmptyEv.exit.i: ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.b
   %.not22.i = icmp eq i32 %i.b, 0
-  br i1 %.not22.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E18moveFromOldBucketsEPS9_SC_.exit, label %.lr.ph.i6
+  br i1 %.not22.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E18moveFromOldBucketsEPS9_SC_.exit, label %.lr.ph.i6.preheader
 
-.lr.ph.i6:                                        ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E9initEmptyEv.exit.i, %bb.f
-  %i.bg = phi i32 [ %i.ca, %bb.f ], [ 0, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E9initEmptyEv.exit.i ] ; 2 uses
-  %.023.i = phi ptr [ %i.cb, %bb.f ], [ %i.c, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E9initEmptyEv.exit.i ] ; 3 uses
+.lr.ph.i6.preheader:                              ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm8SymbolIDEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E9initEmptyEv.exit.i
+  %2 = icmp ne i32 %i.aq, 0
+  %3 = add i32 %i.aq, -1                          ; 2 uses
+  br label %.lr.ph.i6
+
+.lr.ph.i6:                                        ; preds = %.lr.ph.i6.preheader, %bb.f
+  %i.bg = phi i32 [ %i.ca, %bb.f ], [ 0, %.lr.ph.i6.preheader ] ; 2 uses
+  %.023.i = phi ptr [ %i.cb, %bb.f ], [ %i.c, %.lr.ph.i6.preheader ] ; 3 uses
   %.sroa.03.0.copyload.i = load i32, ptr %.023.i, align 4, !tbaa !3 ; 5 uses
   %i.bh = and i32 %.sroa.03.0.copyload.i, -2
   %switch.i = icmp eq i32 %i.bh, 536870910
   br i1 %switch.i, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i6
-  %2 = load i32, ptr %i.a, align 8, !tbaa !20     ; 2 uses
-  %3 = icmp ne i32 %2, 0
-  tail call void @llvm.assume(i1 %3)
+  tail call void @llvm.assume(i1 %2)
   %i.bi = mul i32 %.sroa.03.0.copyload.i, 37
-  %4 = add i32 %2, -1                             ; 2 uses
-  %.03649.i.i.i = and i32 %4, %i.bi               ; 2 uses
+  %.03649.i.i.i = and i32 %i.bi, %3               ; 2 uses
   %i.bj = zext i32 %.03649.i.i.i to i64
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.bj ; 3 uses
   %.sroa.05.0.copyload50.i.i.i = load i32, ptr %i.bk, align 4, !tbaa !3 ; 2 uses
@@ -386,7 +388,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   %spec.select.i.i.i = select i1 %or.cond.not.i.i.i, ptr %i.bm, ptr %.03352.i.i.i
   %i.br = add i32 %.03851.i.i.i, 1
   %i.bs = add i32 %.03851.i.i.i, %.03653.i.i.i
-  %.036.i.i.i = and i32 %i.bs, %4                 ; 2 uses
+  %.036.i.i.i = and i32 %i.bs, %3                 ; 2 uses
   %i.bt = zext i32 %.036.i.i.i to i64
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.bt ; 3 uses
   %.sroa.05.0.copyload.i.i.i = load i32, ptr %i.bu, align 4, !tbaa !3 ; 2 uses

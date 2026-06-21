@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   store ptr %i.ab, ptr %i.z, align 8, !tbaa !52
   %i.ac = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
-  %i.ae = load i64, ptr %i.ad, align 8
+  %i.ae = load i64, ptr %i.ad, align 8            ; 2 uses
   store i64 %i.ae, ptr %i.ac, align 8
   %.not18.i.i.i.i.i = icmp eq i64 %.010.i.i.i.i, 1
   br i1 %.not18.i.i.i.i.i, label %_ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i.i.i, label %.lr.ph.i.i.preheader.i.i.i
@@ -226,7 +226,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.q, i8 0, i64 24, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %i.q, i64 56
   %i.ao = getelementptr inbounds nuw i8, ptr %i.q, i64 24
-  %i.ap = load i64, ptr %i.ao, align 8
+  %i.ap = load i64, ptr %i.ao, align 8            ; 2 uses
   store i64 %i.ap, ptr %i.an, align 8
   %i.aq = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 2 uses
   %.013.i.i.i.i.i.prol = getelementptr inbounds nuw i8, ptr %i.q, i64 64
@@ -235,6 +235,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
 .lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %.lr.ph.i.i.preheader.i.i.i
   %.lcssa231.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i.i.i ], [ %i.aj, %.lr.ph.i.i.i.i.i.prol ]
   %.lcssa230.unr.a = phi ptr [ poison, %.lr.ph.i.i.preheader.i.i.i ], [ %i.am, %.lr.ph.i.i.i.i.i.prol ]
+  %.lcssa237.unr = phi i64 [ poison, %.lr.ph.i.i.preheader.i.i.i ], [ %i.ap, %.lr.ph.i.i.i.i.i.prol ]
   %.lcssa229.unr.a = phi ptr [ poison, %.lr.ph.i.i.preheader.i.i.i ], [ %i.aq, %.lr.ph.i.i.i.i.i.prol ]
   %.01321.i.i.i.i.i.unr = phi ptr [ %.01317.i.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i ], [ %.013.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.prol ]
   %.020.i.i.i.i.i.unr = phi ptr [ %i.q, %.lr.ph.i.i.preheader.i.i.i ], [ %i.aq, %.lr.ph.i.i.i.i.i.prol ]
@@ -274,7 +275,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bc, i8 0, i64 24, i1 false)
   %i.bk = getelementptr inbounds nuw i8, ptr %.020.i.i.i.i.i, i64 88
   %i.bl = getelementptr inbounds nuw i8, ptr %.020.i.i.i.i.i, i64 56
-  %i.bm = load i64, ptr %i.bl, align 8
+  %i.bm = load i64, ptr %i.bl, align 8            ; 2 uses
   store i64 %i.bm, ptr %i.bk, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.020.i.i.i.i.i, i64 64 ; 2 uses
   %.013.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.01321.i.i.i.i.i, i64 64 ; 2 uses
@@ -284,22 +285,22 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
 ._crit_edge.i.i.loopexit.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.i.i.i.prol.loopexit
   %.lcssa231 = phi ptr [ %.lcssa231.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.bg, %.lr.ph.i.i.i.i.i ]
   %.lcssa230.a = phi ptr [ %.lcssa230.unr.a, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.bj, %.lr.ph.i.i.i.i.i ]
+  %.lcssa237 = phi i64 [ %.lcssa237.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.bm, %.lr.ph.i.i.i.i.i ]
   %.lcssa229.a = phi ptr [ %.lcssa229.unr.a, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.bn, %.lr.ph.i.i.i.i.i ] ; 2 uses
   %.pre.i.i.i = load ptr, ptr %.lcssa229.a, align 8, !tbaa !19
   br label %_ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i.i.i
 
 _ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i.i.i: ; preds = %._crit_edge.i.i.loopexit.i.i.i, %bb.c
+  %6 = phi i64 [ %i.ae, %bb.c ], [ %.lcssa237, %._crit_edge.i.i.loopexit.i.i.i ]
   %i.bo = phi ptr [ %i.ab, %bb.c ], [ %.lcssa230.a, %._crit_edge.i.i.loopexit.i.i.i ]
   %i.bp = phi ptr [ %i.y, %bb.c ], [ %.lcssa231, %._crit_edge.i.i.loopexit.i.i.i ]
   %i.bq = phi ptr [ %i.v, %bb.c ], [ %.pre.i.i.i, %._crit_edge.i.i.loopexit.i.i.i ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.q, %bb.c ], [ %.lcssa229.a, %._crit_edge.i.i.loopexit.i.i.i ] ; 2 uses
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.q, %bb.c ], [ %.lcssa229.a, %._crit_edge.i.i.loopexit.i.i.i ]
   store ptr %i.bq, ptr %i.c, align 8, !tbaa !19
   store ptr %i.bp, ptr %i.x, align 8, !tbaa !18
   store ptr %i.bo, ptr %i.aa, align 8, !tbaa !52
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.0.lcssa.i.i.i.i.i, i8 0, i64 24, i1 false)
-  %.phi.trans.insert26.i.i.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 24
-  %.pre27.i.i.i = load i64, ptr %.phi.trans.insert26.i.i.i, align 8
-  store i64 %.pre27.i.i.i, ptr %i.ad, align 8
+  store i64 %6, ptr %i.ad, align 8
   store ptr %i.q, ptr %i.n, align 8, !tbaa !110
   store i64 %.010.i.i.i.i, ptr %i.m, align 8, !tbaa !111
   br label %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf8compiler3cpp10FieldGroupESt6vectorIS6_SaIS6_EEEES6_EC2ESB_l.exit.i.i
@@ -423,7 +424,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i44
   store ptr %i.df, ptr %i.dd, align 8, !tbaa !52
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cg, i64 24 ; 2 uses
-  %i.di = load i64, ptr %i.dh, align 8
+  %i.di = load i64, ptr %i.dh, align 8            ; 2 uses
   store i64 %i.di, ptr %i.dg, align 8
   %.not18.i.i.i.i.i47 = icmp eq i64 %.010.i.i.i.i45, 1
   br i1 %.not18.i.i.i.i.i47, label %_ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i.i.i57, label %.lr.ph.i.i.preheader.i.i.i48
@@ -448,7 +449,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i44
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cu, i8 0, i64 24, i1 false)
   %i.dr = getelementptr inbounds nuw i8, ptr %i.cu, i64 56
   %i.ds = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
-  %i.dt = load i64, ptr %i.ds, align 8
+  %i.dt = load i64, ptr %i.ds, align 8            ; 2 uses
   store i64 %i.dt, ptr %i.dr, align 8
   %i.du = getelementptr inbounds nuw i8, ptr %i.cu, i64 32 ; 2 uses
   %.013.i.i.i.i.i53.prol = getelementptr inbounds nuw i8, ptr %i.cu, i64 64
@@ -457,6 +458,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i44
 .lr.ph.i.i.i.i.i50.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i50.prol, %.lr.ph.i.i.preheader.i.i.i48
   %.lcssa223.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i.i.i48 ], [ %i.dn, %.lr.ph.i.i.i.i.i50.prol ]
   %.lcssa222.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i.i.i48 ], [ %i.dq, %.lr.ph.i.i.i.i.i50.prol ]
+  %.lcssa228.unr = phi i64 [ poison, %.lr.ph.i.i.preheader.i.i.i48 ], [ %i.dt, %.lr.ph.i.i.i.i.i50.prol ]
   %.lcssa221.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i.i.i48 ], [ %i.du, %.lr.ph.i.i.i.i.i50.prol ]
   %.01321.i.i.i.i.i51.unr = phi ptr [ %.01317.i.i.i.i.i49, %.lr.ph.i.i.preheader.i.i.i48 ], [ %.013.i.i.i.i.i53.prol, %.lr.ph.i.i.i.i.i50.prol ]
   %.020.i.i.i.i.i52.unr = phi ptr [ %i.cu, %.lr.ph.i.i.preheader.i.i.i48 ], [ %i.du, %.lr.ph.i.i.i.i.i50.prol ]
@@ -496,7 +498,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i44
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.eg, i8 0, i64 24, i1 false)
   %i.eo = getelementptr inbounds nuw i8, ptr %.020.i.i.i.i.i52, i64 88
   %i.ep = getelementptr inbounds nuw i8, ptr %.020.i.i.i.i.i52, i64 56
-  %i.eq = load i64, ptr %i.ep, align 8
+  %i.eq = load i64, ptr %i.ep, align 8            ; 2 uses
   store i64 %i.eq, ptr %i.eo, align 8
   %i.er = getelementptr inbounds nuw i8, ptr %.020.i.i.i.i.i52, i64 64 ; 2 uses
   %.013.i.i.i.i.i53.1 = getelementptr inbounds nuw i8, ptr %.01321.i.i.i.i.i51, i64 64 ; 2 uses
@@ -506,22 +508,22 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i44
 ._crit_edge.i.i.loopexit.i.i.i55:                 ; preds = %.lr.ph.i.i.i.i.i50, %.lr.ph.i.i.i.i.i50.prol.loopexit
   %.lcssa223 = phi ptr [ %.lcssa223.unr, %.lr.ph.i.i.i.i.i50.prol.loopexit ], [ %i.ek, %.lr.ph.i.i.i.i.i50 ]
   %.lcssa222 = phi ptr [ %.lcssa222.unr, %.lr.ph.i.i.i.i.i50.prol.loopexit ], [ %i.en, %.lr.ph.i.i.i.i.i50 ]
+  %.lcssa228 = phi i64 [ %.lcssa228.unr, %.lr.ph.i.i.i.i.i50.prol.loopexit ], [ %i.eq, %.lr.ph.i.i.i.i.i50 ]
   %.lcssa221 = phi ptr [ %.lcssa221.unr, %.lr.ph.i.i.i.i.i50.prol.loopexit ], [ %i.er, %.lr.ph.i.i.i.i.i50 ] ; 2 uses
   %.pre.i.i.i56 = load ptr, ptr %.lcssa221, align 8, !tbaa !19
   br label %_ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i.i.i57
 
 _ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i.i.i57: ; preds = %._crit_edge.i.i.loopexit.i.i.i55, %bb.l
+  %7 = phi i64 [ %i.di, %bb.l ], [ %.lcssa228, %._crit_edge.i.i.loopexit.i.i.i55 ]
   %i.es = phi ptr [ %i.df, %bb.l ], [ %.lcssa222, %._crit_edge.i.i.loopexit.i.i.i55 ]
   %i.et = phi ptr [ %i.dc, %bb.l ], [ %.lcssa223, %._crit_edge.i.i.loopexit.i.i.i55 ]
   %i.eu = phi ptr [ %i.cz, %bb.l ], [ %.pre.i.i.i56, %._crit_edge.i.i.loopexit.i.i.i55 ]
-  %.0.lcssa.i.i.i.i.i58 = phi ptr [ %i.cu, %bb.l ], [ %.lcssa221, %._crit_edge.i.i.loopexit.i.i.i55 ] ; 2 uses
+  %.0.lcssa.i.i.i.i.i58 = phi ptr [ %i.cu, %bb.l ], [ %.lcssa221, %._crit_edge.i.i.loopexit.i.i.i55 ]
   store ptr %i.eu, ptr %i.cg, align 8, !tbaa !19
   store ptr %i.et, ptr %i.db, align 8, !tbaa !18
   store ptr %i.es, ptr %i.de, align 8, !tbaa !52
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.0.lcssa.i.i.i.i.i58, i8 0, i64 24, i1 false)
-  %.phi.trans.insert26.i.i.i59 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i58, i64 24
-  %.pre27.i.i.i60 = load i64, ptr %.phi.trans.insert26.i.i.i59, align 8
-  store i64 %.pre27.i.i.i60, ptr %i.dh, align 8
+  store i64 %7, ptr %i.dh, align 8
   store ptr %i.cu, ptr %i.cr, align 8, !tbaa !110
   store i64 %.010.i.i.i.i45, ptr %i.cq, align 8, !tbaa !111
   br label %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf8compiler3cpp10FieldGroupESt6vectorIS6_SaIS6_EEEES6_EC2ESB_l.exit.i.i33
@@ -924,7 +926,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %i.br, label %bb.ad, label %bb.ae, !prof !53
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ac
@@ -943,7 +945,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.bw, label %bb.ah, label %bb.ai, !prof !53
 
 bb.ah:                                            ; preds = %bb.ag
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
   br label %bb.ak
 
 bb.ai:                                            ; preds = %bb.ag
@@ -1346,7 +1348,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   store ptr %i.w, ptr %i.u, align 8, !tbaa !52
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.z = load i64, ptr %i.y, align 8
+  %i.z = load i64, ptr %i.y, align 8              ; 2 uses
   store i64 %i.z, ptr %i.x, align 8
   %.not18.i.i.i = icmp eq i64 %.010.i.i, 1
   br i1 %.not18.i.i.i, label %_ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i, label %.lr.ph.i.i.preheader.i
@@ -1371,7 +1373,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.l, i8 0, i64 24, i1 false)
   %i.ai = getelementptr inbounds nuw i8, ptr %i.l, i64 56
   %i.aj = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  %i.ak = load i64, ptr %i.aj, align 8
+  %i.ak = load i64, ptr %i.aj, align 8            ; 2 uses
   store i64 %i.ak, ptr %i.ai, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %i.l, i64 32 ; 2 uses
   %.013.i.i.i.prol = getelementptr inbounds nuw i8, ptr %i.l, i64 64
@@ -1380,6 +1382,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.preheader.i
   %.lcssa51.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i ], [ %i.ae, %.lr.ph.i.i.i.prol ]
   %.lcssa50.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i ], [ %i.ah, %.lr.ph.i.i.i.prol ]
+  %.lcssa54.unr = phi i64 [ poison, %.lr.ph.i.i.preheader.i ], [ %i.ak, %.lr.ph.i.i.i.prol ]
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i ], [ %i.al, %.lr.ph.i.i.i.prol ]
   %.01321.i.i.i.unr = phi ptr [ %.01317.i.i.i, %.lr.ph.i.i.preheader.i ], [ %.013.i.i.i.prol, %.lr.ph.i.i.i.prol ]
   %.020.i.i.i.unr = phi ptr [ %i.l, %.lr.ph.i.i.preheader.i ], [ %i.al, %.lr.ph.i.i.i.prol ]
@@ -1419,7 +1422,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ax, i8 0, i64 24, i1 false)
   %i.bf = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 88
   %i.bg = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 56
-  %i.bh = load i64, ptr %i.bg, align 8
+  %i.bh = load i64, ptr %i.bg, align 8            ; 2 uses
   store i64 %i.bh, ptr %i.bf, align 8
   %i.bi = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 64 ; 2 uses
   %.013.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.01321.i.i.i, i64 64 ; 2 uses
@@ -1429,22 +1432,22 @@ bb.c:                                             ; preds = %.lr.ph.i.i
 ._crit_edge.i.i.loopexit.i:                       ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.prol.loopexit
   %.lcssa51 = phi ptr [ %.lcssa51.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.bb, %.lr.ph.i.i.i ]
   %.lcssa50 = phi ptr [ %.lcssa50.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.be, %.lr.ph.i.i.i ]
+  %.lcssa54 = phi i64 [ %.lcssa54.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.bh, %.lr.ph.i.i.i ]
   %.lcssa = phi ptr [ %.lcssa.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.bi, %.lr.ph.i.i.i ] ; 2 uses
   %.pre.i = load ptr, ptr %.lcssa, align 8, !tbaa !19
   br label %_ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i
 
 _ZSt29__uninitialized_construct_bufIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEvT_SC_T0_.exit.i: ; preds = %._crit_edge.i.i.loopexit.i, %bb.c
+  %3 = phi i64 [ %i.z, %bb.c ], [ %.lcssa54, %._crit_edge.i.i.loopexit.i ]
   %i.bj = phi ptr [ %i.w, %bb.c ], [ %.lcssa50, %._crit_edge.i.i.loopexit.i ]
   %i.bk = phi ptr [ %i.t, %bb.c ], [ %.lcssa51, %._crit_edge.i.i.loopexit.i ]
   %i.bl = phi ptr [ %i.q, %bb.c ], [ %.pre.i, %._crit_edge.i.i.loopexit.i ]
-  %.0.lcssa.i.i.i = phi ptr [ %i.l, %bb.c ], [ %.lcssa, %._crit_edge.i.i.loopexit.i ] ; 2 uses
+  %.0.lcssa.i.i.i = phi ptr [ %i.l, %bb.c ], [ %.lcssa, %._crit_edge.i.i.loopexit.i ]
   store ptr %i.bl, ptr %0, align 8, !tbaa !19
   store ptr %i.bk, ptr %i.s, align 8, !tbaa !18
   store ptr %i.bj, ptr %i.v, align 8, !tbaa !52
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.0.lcssa.i.i.i, i8 0, i64 24, i1 false)
-  %.phi.trans.insert26.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 24
-  %.pre27.i = load i64, ptr %.phi.trans.insert26.i, align 8
-  store i64 %.pre27.i, ptr %i.y, align 8
+  store i64 %3, ptr %i.y, align 8
   store ptr %i.l, ptr %i.i, align 8, !tbaa !110
   store i64 %.010.i.i, ptr %i.h, align 8, !tbaa !111
   br label %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf8compiler3cpp10FieldGroupESt6vectorIS6_SaIS6_EEEES6_EC2ESB_l.exit

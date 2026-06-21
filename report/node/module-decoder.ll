@@ -201,9 +201,9 @@ bb.ao:                                            ; preds = %.lr.ph88, %bb.ar
   %.sroa.056.087 = phi ptr [ %.sroa.056.085, %.lr.ph88 ], [ %.sroa.056.0, %bb.ar ] ; 4 uses
   %.03086 = phi ptr [ %i.gp, %.lr.ph88 ], [ %.sroa.056.087, %bb.ar ] ; 7 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %.03086, i64 4
-  %i.gv = load i32, ptr %i.gu, align 4            ; 3 uses
+  %i.gv = load i32, ptr %i.gu, align 4            ; 4 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %.03086, i64 20
-  %i.gx = load i32, ptr %i.gw, align 4            ; 4 uses
+  %i.gx = load i32, ptr %i.gw, align 4            ; 3 uses
   %.not.i48 = icmp eq i32 %i.gv, %i.gx
   br i1 %.not.i48, label %_ZZN2v88internal4wasm17ModuleDecoderImpl19DecodeExportSectionEvENKUlRKNS1_10WasmExportES5_E_clES5_S5_.exit, label %bb.ap
 
@@ -233,13 +233,14 @@ _ZZN2v88internal4wasm17ModuleDecoderImpl19DecodeExportSectionEvENKUlRKNS1_10Wasm
 
 split:                                            ; preds = %_ZZN2v88internal4wasm17ModuleDecoderImpl19DecodeExportSectionEvENKUlRKNS1_10WasmExportES5_E_clES5_S5_.exit, %._crit_edge93
   %.pre-phi97 = phi i64 [ %.pre96, %._crit_edge93 ], [ %i.hf, %_ZZN2v88internal4wasm17ModuleDecoderImpl19DecodeExportSectionEvENKUlRKNS1_10WasmExportES5_E_clES5_S5_.exit ]
+  %.lcssa = phi i32 [ %i.gx, %._crit_edge93 ], [ %i.gv, %_ZZN2v88internal4wasm17ModuleDecoderImpl19DecodeExportSectionEvENKUlRKNS1_10WasmExportES5_E_clES5_S5_.exit ] ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %i.gr, i64 %.pre-phi97 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   store ptr %i.hk, ptr %1, align 8
   %i.hl = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.speculated.i.i = call i32 @llvm.smin.i32(i32 %i.gx, i32 50) ; 2 uses
+  %.sroa.speculated.i.i = call i32 @llvm.smin.i32(i32 %.lcssa, i32 50) ; 2 uses
   store i32 %.sroa.speculated.i.i, ptr %i.hl, align 8
-  %i.hm = icmp ugt i32 %i.gx, 50
+  %i.hm = icmp ugt i32 %.lcssa, 50
   br i1 %i.hm, label %bb.aq, label %_ZN2v88internal4wasm19TruncatedUserStringILi50EEC2EPKhm.exit
 
 bb.aq:                                            ; preds = %split

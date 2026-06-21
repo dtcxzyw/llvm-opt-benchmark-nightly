@@ -70,7 +70,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_PyUnicode_FormatLong(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 12 uses
+  %i.a = alloca ptr, align 8                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = icmp sgt i32 %2, 2147483644
   br i1 %i.b, label %bb.b, label %switch.lookup
@@ -90,7 +90,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep253 = getelementptr inbounds nuw i8, ptr @switch.table._PyUnicode_FormatLong.11, i64 %i.e
   %switch.load254 = load i8, ptr %switch.gep253, align 1
   %switch.ext255 = zext i8 %switch.load254 to i32 ; 2 uses
-  %i.f = tail call ptr @PyNumber_ToBase(ptr noundef %0, i32 noundef %switch.ext) #8 ; 11 uses
+  %i.f = tail call ptr @PyNumber_ToBase(ptr noundef %0, i32 noundef %switch.ext) #8 ; 15 uses
   store ptr %i.f, ptr %i.a, align 8, !tbaa !11
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %Py_DECREF.exit109.thread, label %bb.c
@@ -188,24 +188,23 @@ bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m,
 bb.o:                                             ; preds = %bb.n
   %i.aa = add i32 %.186, %2                       ; 4 uses
   %i.ab = sext i32 %i.aa to i64
-  %i.ac = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.ab) #8 ; 3 uses
+  %i.ac = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.ab) #8 ; 6 uses
   %.not99.not = icmp eq ptr %i.ac, null
   br i1 %.not99.not, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %bb.o
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !11     ; 3 uses
-  %i.ad = load i32, ptr %4, align 8, !tbaa !14    ; 2 uses
+  %i.ad = load i32, ptr %i.f, align 8, !tbaa !14  ; 2 uses
   %.not.i108 = icmp sgt i32 %i.ad, -1
   br i1 %.not.i108, label %bb.q, label %Py_DECREF.exit109.thread
 
 bb.q:                                             ; preds = %bb.p
   %i.ae = add nsw i32 %i.ad, -1                   ; 2 uses
-  store i32 %i.ae, ptr %4, align 8, !tbaa !14
+  store i32 %i.ae, ptr %i.f, align 8, !tbaa !14
   %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %bb.r, label %Py_DECREF.exit109.thread
 
 bb.r:                                             ; preds = %bb.q
-  tail call void @_Py_Dealloc(ptr noundef nonnull %4) #8
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.f) #8
   br label %Py_DECREF.exit109.thread
 
 bb.s:                                             ; preds = %bb.o
@@ -464,6 +463,7 @@ bb.u:                                             ; preds = %bb.t
   br label %Py_DECREF.exit109
 
 Py_DECREF.exit109:                                ; preds = %._crit_edge, %bb.t, %bb.u, %bb.n
+  %4 = phi ptr [ %i.f, %bb.n ], [ %i.ac, %bb.u ], [ %i.ac, %bb.t ], [ %i.ac, %._crit_edge ] ; 2 uses
   %.284 = phi i32 [ %.082, %bb.n ], [ %i.aa, %bb.u ], [ %i.aa, %bb.t ], [ %i.aa, %._crit_edge ] ; 7 uses
   %.4 = phi ptr [ %.076, %bb.n ], [ %i.ag, %bb.u ], [ %i.ag, %bb.t ], [ %i.ag, %._crit_edge ] ; 23 uses
   %i.do = icmp eq i32 %3, 88
@@ -688,7 +688,7 @@ pred.store.continue227:                           ; preds = %pred.store.if226, %
 
 middle.block229:                                  ; preds = %pred.store.continue227
   %cmp.n230 = icmp eq i64 %n.vec194, %i.dp
-  br i1 %cmp.n230, label %.loopexit, label %vec.epilog.iter.check234
+  br i1 %cmp.n230, label %.loopexit.loopexit, label %vec.epilog.iter.check234
 
 vec.epilog.iter.check234:                         ; preds = %middle.block229
   %i.gv = and i32 %.284, 12
@@ -758,7 +758,7 @@ pred.store.continue249:                           ; preds = %pred.store.if248, %
 
 vec.epilog.middle.block251:                       ; preds = %pred.store.continue249
   %cmp.n252 = icmp eq i64 %n.vec238, %i.dp
-  br i1 %cmp.n252, label %.loopexit, label %.lr.ph151.preheader
+  br i1 %cmp.n252, label %.loopexit.loopexit, label %.lr.ph151.preheader
 
 .lr.ph151.preheader:                              ; preds = %iter.check232, %vec.epilog.iter.check234, %vec.epilog.middle.block251
   %.381150.ph = phi i64 [ 0, %iter.check232 ], [ %n.vec194, %vec.epilog.iter.check234 ], [ %n.vec238, %vec.epilog.middle.block251 ]
@@ -780,10 +780,14 @@ bb.v:                                             ; preds = %.lr.ph151
 bb.w:                                             ; preds = %.lr.ph151, %bb.v
   %i.hv = add nuw nsw i64 %.381150, 1             ; 2 uses
   %exitcond156.not = icmp eq i64 %i.hv, %i.dp
-  br i1 %exitcond156.not, label %.loopexit, label %.lr.ph151, !llvm.loop !35
+  br i1 %exitcond156.not, label %.loopexit.loopexit, label %.lr.ph151, !llvm.loop !35
 
-.loopexit:                                        ; preds = %bb.w, %middle.block229, %vec.epilog.middle.block251, %.preheader, %Py_DECREF.exit109
-  %5 = load ptr, ptr %i.a, align 8, !tbaa !11     ; 8 uses
+.loopexit.loopexit:                               ; preds = %bb.w, %vec.epilog.middle.block251, %middle.block229
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !11
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader, %Py_DECREF.exit109
+  %5 = phi ptr [ %.pre, %.loopexit.loopexit ], [ %4, %.preheader ], [ %4, %Py_DECREF.exit109 ] ; 8 uses
   %i.hw = getelementptr i8, ptr %5, i64 8
   %.val121 = load ptr, ptr %i.hw, align 8, !tbaa !36
   %i.hx = getelementptr i8, ptr %.val121, i64 168

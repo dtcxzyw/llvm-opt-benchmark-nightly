@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %ocb_ntz.exit
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
   %.049.lcssa = phi ptr [ %1, %bb.a ], [ %i.w, %bb.c ]
-  %i.ag = and i64 %2, 15                          ; 3 uses
+  %i.ag = and i64 %2, 15                          ; 5 uses
   %.not55 = icmp eq i64 %i.ag, 0
   br i1 %.not55, label %bb.e, label %bb.d
 
@@ -212,7 +212,9 @@ bb.d:                                             ; preds = %._crit_edge
   %i.ak = load <2 x i64>, ptr %i.ai, align 8, !tbaa !21
   %i.al = xor <2 x i64> %i.ak, %i.aj              ; 2 uses
   store <2 x i64> %i.al, ptr %i.ah, align 8, !tbaa !21
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  %4 = sub nuw nsw i64 16, %i.ag
+  %5 = getelementptr i8, ptr %3, i64 %i.ag
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %5, i8 0, i64 %4, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %3, ptr align 1 %.049.lcssa, i64 %i.ag, i1 false)
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 %i.ag
   store i8 -128, ptr %i.am, align 1, !tbaa !21
@@ -468,7 +470,7 @@ bb.f:                                             ; preds = %ocb_ntz.exit
 .loopexit:                                        ; preds = %bb.f, %bb.d, %bb.c
   %.390 = phi ptr [ %i.v, %bb.c ], [ %2, %bb.d ], [ %i.az, %bb.f ] ; 5 uses
   %.386 = phi ptr [ %i.u, %bb.c ], [ %1, %bb.d ], [ %i.ak, %bb.f ] ; 6 uses
-  %i.ba = and i64 %3, 15                          ; 4 uses
+  %i.ba = and i64 %3, 15                          ; 6 uses
   %.not100 = icmp eq i64 %i.ba, 0
   br i1 %.not100, label %bb.j, label %bb.g
 
@@ -557,7 +559,9 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %ocb_block_xor.exit, label %bb.i, !llvm.loop !31
 
 ocb_block_xor.exit:                               ; preds = %bb.i, %ocb_block_xor.exit.unr-lcssa
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  %6 = sub nuw nsw i64 16, %i.ba
+  %7 = getelementptr i8, ptr %5, i64 %i.ba
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %7, i8 0, i64 %6, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %5, ptr nonnull align 1 %.386, i64 %i.ba, i1 false)
   %i.ct = getelementptr inbounds nuw i8, ptr %5, i64 %i.ba
   store i8 -128, ptr %i.ct, align 1, !tbaa !21

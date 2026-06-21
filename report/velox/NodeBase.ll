@@ -201,7 +201,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %i.br, label %bb.ad, label %bb.ae, !prof !72
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ac
@@ -220,7 +220,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.bw, label %bb.ah, label %bb.ai, !prof !72
 
 bb.ah:                                            ; preds = %bb.ag
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
   br label %bb.ak
 
 bb.ai:                                            ; preds = %bb.ag
@@ -251,6 +251,9 @@ _ZNSt12_Vector_baseIPvSaIS0_EE13_M_deallocateEPS0_m.exit: ; preds = %bb.ak, %bb.
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKPvSt6vectorIS2_SaIS2_EEEENS1_IPS2_S7_EEET0_T_SC_SB_.exit: ; preds = %bb.v, %bb.u, %bb.t, %bb.m, %bb.l, %bb.k, %_ZNSt12_Vector_baseIPvSaIS0_EE13_M_deallocateEPS0_m.exit, %bb.a
   ret void
 }
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nounwind
 declare void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(216) dereferenceable(216)) unnamed_addr #12

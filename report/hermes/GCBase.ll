@@ -201,7 +201,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapP
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvh8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEE4growEj(ptr noundef nonnull align 8 dereferenceable(20) %0, i32 noundef %1) local_unnamed_addr #1 comdat align 2 {
 _ZN4llvh8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEE15allocateBucketsEj.exit:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !206  ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !205    ; 4 uses
   %i.d = add i32 %1, -1
@@ -290,7 +290,7 @@ bb.b:                                             ; preds = %_ZN4llvh8DenseMapIj
   store i32 0, ptr %i.ao, align 8, !tbaa !248
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 0, ptr %i.ap, align 4, !tbaa !251
-  %i.aq = load i32, ptr %i.a, align 8, !tbaa !206 ; 2 uses
+  %i.aq = load i32, ptr %i.a, align 8, !tbaa !206 ; 4 uses
   %i.ar = zext i32 %i.aq to i64
   %.idx.i.i = shl nuw nsw i64 %i.ar, 3            ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx.i.i
@@ -342,22 +342,24 @@ bb.b:                                             ; preds = %_ZN4llvh8DenseMapIj
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEEjjS3_S6_E9initEmptyEv.exit.i: ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.b
   %.not18.i = icmp eq i32 %i.b, 0
-  br i1 %.not18.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEEjjS3_S6_E18moveFromOldBucketsEPS6_S9_.exit, label %.lr.ph.i6
+  br i1 %.not18.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEEjjS3_S6_E18moveFromOldBucketsEPS6_S9_.exit, label %.lr.ph.i6.preheader
 
-.lr.ph.i6:                                        ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEEjjS3_S6_E9initEmptyEv.exit.i, %bb.f
-  %i.bg = phi i32 [ %i.cd, %bb.f ], [ 0, %_ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEEjjS3_S6_E9initEmptyEv.exit.i ] ; 2 uses
-  %.019.i = phi ptr [ %i.ce, %bb.f ], [ %i.c, %_ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEEjjS3_S6_E9initEmptyEv.exit.i ] ; 3 uses
+.lr.ph.i6.preheader:                              ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEEjjS3_S6_E9initEmptyEv.exit.i
+  %2 = icmp ne i32 %i.aq, 0
+  %3 = add i32 %i.aq, -1                          ; 2 uses
+  br label %.lr.ph.i6
+
+.lr.ph.i6:                                        ; preds = %.lr.ph.i6.preheader, %bb.f
+  %i.bg = phi i32 [ %i.cd, %bb.f ], [ 0, %.lr.ph.i6.preheader ] ; 2 uses
+  %.019.i = phi ptr [ %i.ce, %bb.f ], [ %i.c, %.lr.ph.i6.preheader ] ; 3 uses
   %i.bh = load i32, ptr %.019.i, align 4, !tbaa !3 ; 5 uses
   %switch.i = icmp ugt i32 %i.bh, -3
   br i1 %switch.i, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i6
-  %2 = load i32, ptr %i.a, align 8, !tbaa !206    ; 2 uses
-  %3 = icmp ne i32 %2, 0
-  tail call void @llvm.assume(i1 %3)
+  tail call void @llvm.assume(i1 %2)
   %i.bi = mul i32 %i.bh, 37
-  %4 = add i32 %2, -1                             ; 2 uses
-  %.02744.i.i.i = and i32 %4, %i.bi               ; 2 uses
+  %.02744.i.i.i = and i32 %i.bi, %3               ; 2 uses
   %i.bj = zext i32 %.02744.i.i.i to i64
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.bj ; 3 uses
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !3  ; 2 uses
@@ -385,7 +387,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   %spec.select.i.i.i = select i1 %or.cond.not.i.i.i, ptr %i.bo, ptr %.02945.i.i.i
   %i.bt = add i32 %.02546.i.i.i, 1
   %i.bu = add i32 %.02546.i.i.i, %.02747.i.i.i
-  %.027.i.i.i = and i32 %i.bu, %4                 ; 2 uses
+  %.027.i.i.i = and i32 %i.bu, %3                 ; 2 uses
   %i.bv = zext i32 %.027.i.i.i to i64
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.bv ; 3 uses
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !3  ; 2 uses

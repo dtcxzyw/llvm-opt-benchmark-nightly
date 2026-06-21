@@ -201,7 +201,7 @@ bb.a:
   %i.d = alloca [1025 x i8], align 16             ; 5 uses
   %i.e = alloca ptr, align 8                      ; 6 uses
   %i.f = alloca i64, align 8                      ; 5 uses
-  %i.g = alloca ptr, align 8                      ; 6 uses
+  %i.g = alloca ptr, align 8                      ; 5 uses
   %i.h = alloca [1025 x i8], align 16             ; 3 uses
   %i.i = alloca [32 x i8], align 16               ; 7 uses
   %i.j = alloca i32, align 4                      ; 7 uses
@@ -461,9 +461,11 @@ bb.af:                                            ; preds = %.thread, %rsock_val
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %.not.i.i50 = icmp eq ptr %i.k, null            ; 2 uses
   %.not47.i.i = icmp eq ptr %.0.i, null           ; 2 uses
+  %.promoted = load ptr, ptr %i.g, align 8
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.bh, %bb.af
+  %5 = phi ptr [ %.promoted, %bb.af ], [ %6, %bb.bh ] ; 4 uses
   %.040.i = phi i32 [ 0, %bb.af ], [ %.141.i, %bb.bh ] ; 2 uses
   %.037.i = phi i32 [ 0, %bb.af ], [ %.1.i52, %bb.bh ] ; 2 uses
   br i1 %.not.i.i50, label %bb.ai, label %bb.ah
@@ -582,7 +584,6 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   %i.dm = load ptr, ptr %i.cu, align 8, !tbaa !60
-  store ptr %i.dm, ptr %i.g, align 8, !tbaa !52
   br label %bb.bb
 
 bb.ay:                                            ; preds = %bb.av
@@ -600,6 +601,7 @@ bb.ba:                                            ; preds = %bb.ay
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.ax, %bb.aw
+  %6 = phi ptr [ %i.dm, %bb.ax ], [ %5, %bb.aw ], [ %5, %bb.az ], [ %5, %bb.ba ] ; 3 uses
   %.141.i = phi i32 [ %i.dk, %bb.ax ], [ %i.dk, %bb.aw ], [ %.040.i, %bb.az ], [ %.040.i, %bb.ba ] ; 3 uses
   %.139.i = phi i1 [ true, %bb.ax ], [ true, %bb.aw ], [ %i.dp, %bb.az ], [ true, %bb.ba ]
   %.1.i52 = phi i32 [ 0, %bb.ax ], [ %i.di, %bb.aw ], [ %.037.i, %bb.az ], [ %.037.i, %bb.ba ] ; 3 uses
@@ -643,6 +645,7 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %.not53.i, label %rb_getaddrinfo.exit, label %allocate_getaddrinfo_arg.exit.thread.sink.split.i
 
 allocate_getaddrinfo_arg.exit.thread.sink.split.i: ; preds = %bb.bi, %bb.au
+  %7 = phi ptr [ %5, %bb.au ], [ %6, %bb.bi ]
   %.141.lcssa86.sink.i = phi i32 [ %i.dd, %bb.au ], [ %.141.i, %bb.bi ]
   %.0.ph.i = phi i32 [ -11, %bb.au ], [ %.1.i52, %bb.bi ]
   %i.dv = call ptr @rb_errno_ptr() #17
@@ -650,6 +653,7 @@ allocate_getaddrinfo_arg.exit.thread.sink.split.i: ; preds = %bb.bi, %bb.au
   br label %rb_getaddrinfo.exit
 
 rb_getaddrinfo.exit:                              ; preds = %bb.bi, %allocate_getaddrinfo_arg.exit.thread.sink.split.i
+  %8 = phi ptr [ %7, %allocate_getaddrinfo_arg.exit.thread.sink.split.i ], [ %6, %bb.bi ]
   %.0.i51 = phi i32 [ %.0.ph.i, %allocate_getaddrinfo_arg.exit.thread.sink.split.i ], [ %.1.i52, %bb.bi ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.dw = icmp eq i32 %.0.i51, 0
@@ -659,8 +663,7 @@ bb.bj:                                            ; preds = %rb_getaddrinfo.exit
   %i.dx = call noalias nonnull dereferenceable(16) ptr @ruby_xmalloc(i64 noundef 16) #18 ; 3 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   store i32 0, ptr %i.dy, align 8, !tbaa !10
-  %5 = load ptr, ptr %i.g, align 8, !tbaa !52
-  store ptr %5, ptr %i.dx, align 8, !tbaa !14
+  store ptr %8, ptr %i.dx, align 8, !tbaa !14
   br label %.thread68
 
 .thread80:                                        ; preds = %rb_array_len.exit.i, %bb.s, %._crit_edge.loopexit.i

@@ -201,7 +201,7 @@ bb.ae:                                            ; preds = %bb.ab
   %i.cv = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.cx = load <2 x ptr>, ptr %i.cu, align 8, !tbaa !84, !noalias !938
-  %i.cy = load ptr, ptr %i.cu, align 8, !tbaa !179, !noalias !938 ; 3 uses
+  %i.cy = load ptr, ptr %i.cu, align 8, !tbaa !179, !noalias !938 ; 5 uses
   store ptr null, ptr %i.cw, align 8, !tbaa !90, !noalias !938
   store <2 x ptr> %i.cx, ptr %10, align 16, !tbaa !84, !alias.scope !938
   store ptr null, ptr %i.cu, align 8, !tbaa !179, !noalias !938
@@ -604,12 +604,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge59.i:                                  ; preds = %.lr.ph58.i.epil.preheader, %._crit_edge59.i.loopexit.unr-lcssa, %.preheader.i
   %.139.lcssa.i = phi i8 [ 0, %.preheader.i ], [ %i.abp, %._crit_edge59.i.loopexit.unr-lcssa ], [ %i.abv, %.lr.ph58.i.epil.preheader ]
   store i8 %.139.lcssa.i, ptr %.141.lcssa.i, align 1, !tbaa !97
+  %.pre84.pre = load ptr, ptr %10, align 16, !tbaa !179
   br label %"_ZN5arrow8internal20GenerateBitsUnrolledIZNKS_16SparseUnionArray17GetFlattenedFieldEiPNS_10MemoryPoolEE3$_0EEvPhllOT_.exit"
 
 "_ZN5arrow8internal20GenerateBitsUnrolledIZNKS_16SparseUnionArray17GetFlattenedFieldEiPNS_10MemoryPoolEE3$_0EEvPhllOT_.exit": ; preds = %._crit_edge59.i, %._crit_edge53.i, %bb.ae
+  %.pre84 = phi ptr [ %.pre84.pre, %._crit_edge59.i ], [ %i.cy, %._crit_edge53.i ], [ %i.cy, %bb.ae ] ; 4 uses
   %12 = load ptr, ptr %8, align 16, !tbaa !179    ; 3 uses
   %.not71 = icmp eq ptr %12, null
-  %.pre84 = load ptr, ptr %10, align 16, !tbaa !179 ; 4 uses
   br i1 %.not71, label %bb.al, label %bb.aj
 
 bb.aj:                                            ; preds = %"_ZN5arrow8internal20GenerateBitsUnrolledIZNKS_16SparseUnionArray17GetFlattenedFieldEiPNS_10MemoryPoolEE3$_0EEvPhllOT_.exit"

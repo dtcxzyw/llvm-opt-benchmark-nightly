@@ -201,11 +201,12 @@ bb.a:
   %i.u = alloca [80 x i8], align 8                ; 12 uses
   %i.v = alloca [24 x i8], align 8                ; 10 uses
   %i.w = alloca [8 x i8], align 8                 ; 6 uses
-  %.sroa.5 = alloca [24 x i8], align 8            ; 5 uses
+  %2 = alloca [32 x i8], align 8                  ; 4 uses
   %.sroa.6 = alloca [24 x i8], align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !155)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.y = load ptr, ptr %i.x, align 8, !alias.scope !155, !noalias !158, !nonnull !4, !align !113, !noundef !4 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !160)
@@ -544,7 +545,7 @@ bb.ae:                                            ; preds = %.preheader9.prehead
   br label %bb.af
 
 .loopexit10.i.i.i.i.i:                            ; preds = %bb.ao, %.loopexit.split-lp11.i.i.i.i.i, %.loopexit10.loopexit.split-lp.i.i.i.i.i, %.loopexit10.loopexit.i.i.i.i.i
-  %.pn17.i.i.i.i.i = phi { ptr, i32 } [ %i.ce, %bb.ao ], [ %lpad.loopexit.split-lp13.i.i.i.i.i, %.loopexit.split-lp11.i.i.i.i.i ], [ %lpad.loopexit17.i.i.i.i.i, %.loopexit10.loopexit.i.i.i.i.i ], [ %lpad.loopexit.split-lp18.i.i.i.i.i, %.loopexit10.loopexit.split-lp.i.i.i.i.i ]
+  %.pn17.i.i.i.i.i = phi { ptr, i32 } [ %i.ce, %bb.ao ], [ %lpad.loopexit.split-lp18.i.i.i.i.i, %.loopexit10.loopexit.split-lp.i.i.i.i.i ], [ %lpad.loopexit17.i.i.i.i.i, %.loopexit10.loopexit.i.i.i.i.i ], [ %lpad.loopexit.split-lp13.i.i.i.i.i, %.loopexit.split-lp11.i.i.i.i.i ]
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.f) #14
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtBN_6string6StringEECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i.i.i unwind label %bb.ax, !noalias !175
 
@@ -690,7 +691,7 @@ bb.az:                                            ; preds = %.preheader.preheade
   br label %bb.ba
 
 .loopexit.i.i.i.i.i:                              ; preds = %bb.bj, %.loopexit.split-lp.i.i.i.i.i, %.loopexit.loopexit.split-lp.i.i.i.i.i, %.loopexit.loopexit.i.i.i.i.i
-  %.pn21.i.i.i.i.i = phi { ptr, i32 } [ %.pn19.i.i.i.i.i, %bb.bj ], [ %lpad.loopexit.split-lp.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i ], [ %lpad.loopexit21.i.i.i.i.i, %.loopexit.loopexit.i.i.i.i.i ], [ %lpad.loopexit.split-lp22.i.i.i.i.i, %.loopexit.loopexit.split-lp.i.i.i.i.i ]
+  %.pn21.i.i.i.i.i = phi { ptr, i32 } [ %.pn19.i.i.i.i.i, %bb.bj ], [ %lpad.loopexit.split-lp22.i.i.i.i.i, %.loopexit.loopexit.split-lp.i.i.i.i.i ], [ %lpad.loopexit21.i.i.i.i.i, %.loopexit.loopexit.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i ]
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.k) #14
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtBN_6string6StringEECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i.i.i unwind label %bb.ax, !noalias !175
 
@@ -1056,10 +1057,10 @@ bb.cz:                                            ; preds = %_RNCNvCshbKHpCRGxgC
   br i1 %i.dv, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamEECshbKHpCRGxgC_16deltalake_derive.exit, label %bb.b
 
 .thread:                                          ; preds = %_RNCNvCshbKHpCRGxgC_16deltalake_derive23generate_try_update_key0B3_.exit.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i.i.i.i, i64 24, i1 false), !noalias !215
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.i.i.i.i, i64 24, i1 false), !noalias !215
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !noalias !155
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !noalias !155
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %.sroa.665.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.665.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6, i64 24, i1 false)
   br label %bb.db
@@ -1076,7 +1077,7 @@ bb.db:                                            ; preds = %.thread, %_RINvNtCs
   ret void
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamEECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %bb.cz, %bb.a, %bb.da
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   br label %bb.db
 }
 
