@@ -56,7 +56,7 @@ bb.a:
 define hidden noundef zeroext i1 @_ZN10duckdb_re24Prog13SearchOnePassERKNS_11StringPieceES3_NS0_6AnchorENS0_9MatchKindEPS1_i(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(432) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5, i32 noundef %6) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %7 = alloca %class.LogMessage, align 8          ; 11 uses
-  %i.a = alloca [10 x ptr], align 16              ; 10 uses
+  %i.a = alloca [10 x ptr], align 16              ; 9 uses
   %i.b = alloca [10 x ptr], align 16              ; 13 uses
   %8 = alloca %"class.duckdb_re2::StringPiece", align 8 ; 11 uses
   %i.c = icmp ne i32 %3, 1
@@ -130,7 +130,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.y = load i8, ptr %0, align 8, !tbaa !30, !range !66, !noundef !67
   %i.z = trunc nuw i8 %i.y to i1
-  %.pre.pre = load ptr, ptr %1, align 8, !tbaa !28 ; 7 uses
+  %.pre.pre = load ptr, ptr %1, align 8, !tbaa !28 ; 6 uses
   %.val128 = load ptr, ptr %8, align 8
   %.not = icmp ne ptr %.val128, %.pre.pre
   %or.cond213.not = select i1 %i.z, i1 %.not, i1 false
@@ -170,7 +170,6 @@ bb.i:                                             ; preds = %._crit_edge198, %bb
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.ap = getelementptr inbounds nuw i8, ptr %.pre.pre, i64 %i.ah
   store ptr %.pre.pre, ptr %i.b, align 16, !tbaa !25
-  store ptr %.pre.pre, ptr %i.a, align 16, !tbaa !25
   %.not186 = icmp eq i64 %i.ah, 0
   br i1 %.not186, label %._crit_edge178, label %.lr.ph177
 
@@ -573,7 +572,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.bc, label %bb.y, label %bb.z, !prof !114
 
 bb.y:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr align 1 %1, i64 %i.bb, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr align 1 %1, i64 %i.bb, i1 false)
   br label %bb.ab
 
 bb.z:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit

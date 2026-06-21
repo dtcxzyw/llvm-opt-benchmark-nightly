@@ -201,7 +201,7 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEE
   br i1 %i.eq, label %bb.t, label %bb.u, !prof !219
 
 bb.t:                                             ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEPllET0_T_S9_S8_RSaIT1_E.exit63
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %scevgep, ptr align 8 %1, i64 %i.ep, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep, ptr align 8 %1, i64 %i.ep, i1 false)
   br label %bb.w
 
 bb.u:                                             ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEPllET0_T_S9_S8_RSaIT1_E.exit63
@@ -254,11 +254,11 @@ bb.a:
   br i1 %i.d, label %_ZSt10__distanceISt23_Rb_tree_const_iteratorIlEENSt15iterator_traitsIT_E15difference_typeES3_S3_St18input_iterator_tag.exit, label %.lr.ph.i, !llvm.loop !298
 
 _ZSt10__distanceISt23_Rb_tree_const_iteratorIlEENSt15iterator_traitsIT_E15difference_typeES3_S3_St18input_iterator_tag.exit: ; preds = %.lr.ph.i
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !103
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !102  ; 11 uses
-  %i.i = ptrtoint ptr %i.f to i64
+  %i.i = ptrtoint ptr %i.f to i64                 ; 2 uses
   %i.j = ptrtoint ptr %i.h to i64                 ; 4 uses
   %i.k = sub i64 %i.i, %i.j
   %i.l = ashr exact i64 %i.k, 3
@@ -481,7 +481,7 @@ _ZSt22__uninitialized_copy_aISt23_Rb_tree_const_iteratorIlEPllET0_T_S4_S3_RSaIT1
   br i1 %i.cj, label %bb.u, label %bb.v, !prof !219
 
 bb.u:                                             ; preds = %_ZSt22__uninitialized_copy_aISt23_Rb_tree_const_iteratorIlEPllET0_T_S4_S3_RSaIT1_E.exit63
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cf, ptr align 8 %1, i64 %i.ci, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cf, ptr align 8 %1, i64 %i.ci, i1 false)
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZSt22__uninitialized_copy_aISt23_Rb_tree_const_iteratorIlEPllET0_T_S4_S3_RSaIT1_E.exit63
@@ -499,9 +499,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   br i1 %.not.i65, label %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %4 = load ptr, ptr %i.e, align 8, !tbaa !103
-  %5 = ptrtoint ptr %4 to i64
-  %i.cn = sub i64 %5, %i.bm
+  %i.cn = sub i64 %i.i, %i.bm
   tail call void @_ZdlPvm(ptr noundef nonnull %i.bl, i64 noundef %i.cn) #27
   br label %_ZNSt12_Vector_baseIlSaIlEE13_M_deallocateEPlm.exit
 

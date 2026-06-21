@@ -201,9 +201,10 @@ _ZNSt10unique_ptrIA_mSt14default_deleteIS0_EE5resetIPmvEEvT_.exit.i: ; preds = %
   br label %_ZN2v86bigint13ShiftedDigitsC2ERNS0_6DigitsEib.exit131
 
 _ZN2v86bigint13ShiftedDigitsC2ERNS0_6DigitsEib.exit131: ; preds = %bb.d, %_ZNSt10unique_ptrIA_mSt14default_deleteIS0_EE5resetIPmvEEvT_.exit.i
-  %.sroa.0278.0 = phi ptr [ %i.x, %_ZNSt10unique_ptrIA_mSt14default_deleteIS0_EE5resetIPmvEEvT_.exit.i ], [ %i.m, %bb.d ]
+  %.sroa.0278.0 = phi ptr [ %i.x, %_ZNSt10unique_ptrIA_mSt14default_deleteIS0_EE5resetIPmvEEvT_.exit.i ], [ %i.m, %bb.d ] ; 4 uses
   %.sroa.5279.1 = phi i32 [ %.sroa.5279.0, %_ZNSt10unique_ptrIA_mSt14default_deleteIS0_EE5resetIPmvEEvT_.exit.i ], [ %i.o, %bb.d ] ; 7 uses
   %.sroa.12283.0 = phi ptr [ %i.x, %_ZNSt10unique_ptrIA_mSt14default_deleteIS0_EE5resetIPmvEEvT_.exit.i ], [ null, %bb.d ] ; 2 uses
+  %.sroa.0278.0319 = ptrtoaddr ptr %.sroa.0278.0 to i64 ; 2 uses
   store ptr %.sroa.0284.0, ptr %6, align 8
   store ptr %.sroa.0278.0, ptr %5, align 8
   store i32 %.sroa.5279.1, ptr %i.n, align 8
@@ -251,10 +252,8 @@ bb.f:                                             ; preds = %bb.e
   %i.az = ptrtoaddr ptr %i.ay to i64              ; 2 uses
   %i.ba = add i32 %i.av, -1
   %i.bb = mul i32 %i.ba, %i.c                     ; 3 uses
-  %16 = load ptr, ptr %5, align 8                 ; 3 uses
-  %17 = ptrtoaddr ptr %16 to i64                  ; 2 uses
   %i.bc = zext i32 %i.bb to i64                   ; 3 uses
-  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bc ; 6 uses
+  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0278.0, i64 %i.bc ; 6 uses
   %i.be = sub i32 %.sroa.5279.1, %i.bb            ; 2 uses
   %.sroa.speculated.i132 = tail call i32 @llvm.umin.i32(i32 %i.y, i32 %i.be) ; 5 uses
   %.not.i = icmp eq i32 %.sroa.speculated.i132, 0
@@ -267,7 +266,7 @@ bb.f:                                             ; preds = %bb.e
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
   %i.bf = shl nuw nsw i64 %i.bc, 3
-  %i.bg = add i64 %i.bf, %17
+  %i.bg = add i64 %i.bf, %.sroa.0278.0319
   %i.bh = sub i64 %i.az, %i.bg
   %diff.check = icmp ult i64 %i.bh, 32
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.ph
@@ -482,7 +481,7 @@ middle.block328:                                  ; preds = %vector.body325
   %i.dk = trunc nuw nsw i64 %indvars.iv307 to i32
   %i.dl = mul i32 %i.c, %i.dk                     ; 3 uses
   %i.dm = zext i32 %i.dl to i64                   ; 3 uses
-  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.dm ; 6 uses
+  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0278.0, i64 %i.dm ; 6 uses
   %i.do = sub i32 %.sroa.5279.1, %i.dl            ; 2 uses
   %.sroa.speculated.i154 = tail call i32 @llvm.umin.i32(i32 %i.c, i32 %i.do) ; 4 uses
   %.not.i155 = icmp eq i32 %.sroa.5279.1, %i.dl
@@ -495,7 +494,7 @@ middle.block328:                                  ; preds = %vector.body325
 
 vector.memcheck331:                               ; preds = %.lr.ph.preheader.i156
   %i.dp = shl nuw nsw i64 %i.dm, 3
-  %i.dq = add i64 %i.dp, %17
+  %i.dq = add i64 %i.dp, %.sroa.0278.0319
   %i.dr = sub i64 %i.az, %i.dq
   %diff.check332 = icmp ult i64 %i.dr, 32
   br i1 %diff.check332, label %.lr.ph.i158.preheader, label %vector.ph335

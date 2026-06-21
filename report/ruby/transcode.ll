@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d, %bb.c
 define dso_local noundef range(i32 -1, 1) i32 @rb_econv_insert_output(ptr nofree noundef captures(none) initializes((4, 8)) %0, ptr noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4096 x i8], align 16             ; 5 uses
-  %i.b = alloca i64, align 8                      ; 5 uses
+  %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = getelementptr i8, ptr %0, i64 104
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !51   ; 2 uses
   %i.e = icmp eq ptr %i.d, null
@@ -235,11 +235,7 @@ rb_econv_encoding_to_insert_output.exit:          ; preds = %bb.a, %bb.c, %bb.d
 bb.e:                                             ; preds = %rb_econv_encoding_to_insert_output.exit
   %i.o = tail call i32 @rb_st_locale_insensitive_strcasecmp(ptr noundef %.0.i, ptr noundef %3) #22
   %i.p = icmp eq i32 %i.o, 0
-  br i1 %i.p, label %4, label %bb.f
-
-4:                                                ; preds = %bb.e
-  store i64 %2, ptr %i.b, align 8, !tbaa !25
-  br label %bb.g
+  br i1 %i.p, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.q = call fastcc ptr @allocate_converted_string(ptr noundef %3, ptr noundef %.0.i, ptr noundef %1, i64 noundef %2, ptr noundef nonnull %i.a, i64 noundef 4096, ptr noundef %i.b) ; 2 uses
@@ -250,9 +246,9 @@ thread-pre-split:                                 ; preds = %bb.f
   %.pr = load i64, ptr %i.b, align 8, !tbaa !25
   br label %bb.g
 
-bb.g:                                             ; preds = %thread-pre-split, %4
-  %i.s = phi i64 [ %.pr, %thread-pre-split ], [ %2, %4 ] ; 7 uses
-  %.0117 = phi ptr [ %i.q, %thread-pre-split ], [ %1, %4 ] ; 6 uses
+bb.g:                                             ; preds = %bb.e, %thread-pre-split
+  %i.s = phi i64 [ %.pr, %thread-pre-split ], [ %2, %bb.e ] ; 7 uses
+  %.0117 = phi ptr [ %i.q, %thread-pre-split ], [ %1, %bb.e ] ; 6 uses
   %i.t = getelementptr i8, ptr %0, i64 96
   %i.u = load i32, ptr %i.t, align 8, !tbaa !48   ; 3 uses
   %i.v = add i32 %i.u, -1                         ; 2 uses
@@ -655,7 +651,7 @@ load_transcoder_entry.exit.thread:                ; preds = %bb.c, %load_transco
 define dso_local i64 @rb_econv_append(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = alloca ptr, align 8                      ; 6 uses
+  %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
@@ -749,12 +745,12 @@ RSTRING_PTR.exit:                                 ; preds = %bb.l, %bb.m
   %i.ak = call i32 @llvm.fshl.i32(i32 %.1, i32 %.1, i32 12)
   %.off = add i32 %i.ak, -1
   %switch = icmp ult i32 %.off, 2
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !29  ; 2 uses
   br i1 %switch, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %RSTRING_PTR.exit
   store i32 %.1, ptr %i.c, align 4, !tbaa !7
-  %5 = load ptr, ptr %i.b, align 8, !tbaa !29
-  %i.al = call i64 @rb_str_coderange_scan_restartable(ptr noundef %i.ai, ptr noundef %5, ptr noundef %.047, ptr noundef nonnull %i.c) #19 ; 0 uses
+  %i.al = call i64 @rb_str_coderange_scan_restartable(ptr noundef %i.ai, ptr noundef %.pre, ptr noundef %.047, ptr noundef nonnull %i.c) #19 ; 0 uses
   %i.am = load i32, ptr %i.c, align 4, !tbaa !7   ; 2 uses
   %i.an = load i64, ptr %i.q, align 8, !tbaa !38
   %i.ao = and i64 %i.an, -3145729
@@ -766,8 +762,7 @@ bb.n:                                             ; preds = %RSTRING_PTR.exit
 bb.o:                                             ; preds = %RSTRING_PTR.exit, %bb.n
   %.2 = phi i32 [ %.1, %RSTRING_PTR.exit ], [ %i.am, %bb.n ]
   %i.ar = load ptr, ptr %i.a, align 8, !tbaa !29  ; 2 uses
-  %6 = load ptr, ptr %i.b, align 8, !tbaa !29
-  %i.as = ptrtoint ptr %6 to i64
+  %i.as = ptrtoint ptr %.pre to i64
   %i.at = ptrtoint ptr %i.ai to i64
   %i.au = sub i64 %i.t, %i.at
   %i.av = add i64 %i.au, %i.as

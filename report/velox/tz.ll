@@ -201,11 +201,11 @@ define linkonce_odr ptr @_ZNSt6vectorIN8facebook5velox4date10transitionESaIS3_EE
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !44     ; 8 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.c = ptrtoint ptr %i.a to i64                 ; 3 uses
+  %i.c = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !81   ; 10 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !43
   %.not = icmp eq ptr %i.f, %i.h
   br i1 %.not, label %bb.i, label %bb.b
@@ -261,7 +261,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 bb.i:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds i8, ptr %i.a, i64 %i.d
   %i.y = ptrtoint ptr %i.f to i64
-  %i.z = sub i64 %i.y, %i.c                       ; 2 uses
+  %i.z = sub i64 %i.y, %i.c                       ; 3 uses
   %i.aa = icmp eq i64 %i.z, 9223372036854775792
   br i1 %i.aa, label %bb.j, label %_ZNKSt6vectorIN8facebook5velox4date10transitionESaIS3_EE12_M_check_lenEmPKc.exit.i
 
@@ -318,10 +318,7 @@ _ZNSt6vectorIN8facebook5velox4date10transitionESaIS3_EE11_S_relocateEPS3_S6_S6_R
   br i1 %.not.i33.i, label %_ZNSt6vectorIN8facebook5velox4date10transitionESaIS3_EE17_M_realloc_insertIJRKNSt6chrono10time_pointINS7_3_V212system_clockENS7_8durationIlSt5ratioILl1ELl1EEEEEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt6vectorIN8facebook5velox4date10transitionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit32.i
-  %3 = load ptr, ptr %i.g, align 8, !tbaa !43
-  %4 = ptrtoint ptr %3 to i64
-  %5 = sub i64 %4, %i.c
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %5) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %i.z) #15
   br label %_ZNSt6vectorIN8facebook5velox4date10transitionESaIS3_EE17_M_realloc_insertIJRKNSt6chrono10time_pointINS7_3_V212system_clockENS7_8durationIlSt5ratioILl1ELl1EEEEEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit
 
 _ZNSt6vectorIN8facebook5velox4date10transitionESaIS3_EE17_M_realloc_insertIJRKNSt6chrono10time_pointINS7_3_V212system_clockENS7_8durationIlSt5ratioILl1ELl1EEEEEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit: ; preds = %_ZNSt6vectorIN8facebook5velox4date10transitionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit32.i, %bb.k

@@ -188,11 +188,11 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %i.at = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %i.as ; 4 uses
   %i.au = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %.05794 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 %i.as
+  %6 = load i8, ptr %i.av, align 1, !tbaa !7      ; 3 uses
   %i.aw = icmp ugt i64 %.05794, 1
   %i.ax = add i64 %.05794, -2                     ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 %i.ax
   %i.az = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %i.ax
-  %.pre117 = load i8, ptr %i.av, align 1, !tbaa !7 ; 3 uses
   br i1 %i.aw, label %.lr.ph.split.preheader, label %.lr.ph.split.us.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
@@ -215,7 +215,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %i.be = add i8 %store_forwarded, 1              ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.11.0, i64 %i.bd
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !7
-  %i.bh = icmp ne i8 %.pre117, %i.bg
+  %i.bh = icmp ne i8 %6, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.bd
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !7
   %i.bk = zext i1 %i.bh to i8
@@ -252,7 +252,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %i.bz = add i8 %store_forwarded143, 1           ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.11.0, i64 %i.by
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !7   ; 2 uses
-  %i.cc = icmp ne i8 %.pre117, %i.cb
+  %i.cc = icmp ne i8 %6, %i.cb
   %i.cd = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.by
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !7
   %i.cf = zext i1 %i.cc to i8
@@ -264,7 +264,7 @@ bb.m:                                             ; preds = %.lr.ph.split
   %i.ci = add nsw i64 %.06093, -2                 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.11.0, i64 %i.ci
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !7
-  %i.cl = icmp eq i8 %.pre117, %i.ck
+  %i.cl = icmp eq i8 %6, %i.ck
   br i1 %i.cl, label %bb.n, label %.lr.ph.i.i
 
 bb.n:                                             ; preds = %bb.m

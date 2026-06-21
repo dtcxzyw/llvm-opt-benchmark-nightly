@@ -201,7 +201,7 @@ bb.o:                                             ; preds = %"_ZN9__gnu_cxx5__op
   %i.jk = icmp eq ptr %i.jj, null
   %or.cond.not15.i.i.i13.i = select i1 %i.jh, i1 %i.jk, i1 false
   %i.jl = getelementptr inbounds nuw i8, ptr %.sroa.022.1.i.i, i64 40
-  %i.jm = load i64, ptr %i.jl, align 8            ; 4 uses
+  %i.jm = load i64, ptr %i.jl, align 8            ; 3 uses
   %i.jn = icmp eq i64 %i.jm, 23
   %or.cond10.i.i.i14.i = select i1 %or.cond.not15.i.i.i13.i, i1 %i.jn, i1 false
   br i1 %or.cond10.i.i.i14.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i, label %._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread1.i.i_crit_edge.i.i
@@ -262,10 +262,11 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.o, !llvm.loop !324
 
 "_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.thread26.i.i": ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i", %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i
-  %i.kq = phi i64 [ %.pre48.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i ], [ %i.jz, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i" ], [ 23, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i ]
-  %i.kr = phi ptr [ %.pre46.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i ], [ %i.ka, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i" ], [ null, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i ] ; 2 uses
-  %i.ks = phi i32 [ %.pre45.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i ], [ %i.kb, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i" ], [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i ]
-  %i.kt = getelementptr inbounds nuw i8, ptr %.sroa.022.1.i.i, i64 40 ; 4 uses
+  %.lcssa = phi i64 [ %i.jm, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i" ], [ %i.jm, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i ], [ 23, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i ] ; 3 uses
+  %i.kq = phi i64 [ %i.jz, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i" ], [ 23, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i ], [ %.pre48.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i ]
+  %i.kr = phi ptr [ %i.ka, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i" ], [ null, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i ], [ %.pre46.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i ] ; 2 uses
+  %i.ks = phi i32 [ %i.kb, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.i19.i" ], [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i.i21.i ], [ %.pre45.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i.i23.i ]
+  %i.kt = getelementptr inbounds nuw i8, ptr %.sroa.022.1.i.i, i64 40 ; 3 uses
   %i.ku = icmp eq i32 %i.ks, 0
   %i.kv = icmp eq ptr %i.kr, null
   %or.cond.not15.i.i8.i.i = select i1 %i.ku, i1 %i.kv, i1 false
@@ -375,9 +376,9 @@ bb.p:                                             ; preds = %"_ZN9__gnu_cxx5__op
   br i1 %i.mx, label %bb.q, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i16
 
 bb.q:                                             ; preds = %bb.p
-  %i.my = icmp ult i64 %i.jm, 16
+  %i.my = icmp ult i64 %.lcssa, 16
   call void @llvm.assume(i1 %i.my)
-  %i.mz = add nuw nsw i64 %i.jm, 1
+  %i.mz = add nuw nsw i64 %.lcssa, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.m, ptr noundef nonnull align 8 dereferenceable(1) %i.mw, i64 %i.mz, i1 false)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i4.i
 
@@ -385,12 +386,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store ptr %i.mv, ptr %i.l, align 8, !tbaa !90
   %i.na = load i64, ptr %i.mw, align 8, !tbaa !118
   store i64 %i.na, ptr %i.m, align 8, !tbaa !118
-  %.pre.i18 = load i64, ptr %i.kt, align 8, !tbaa !93
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i4.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i4.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i16, %bb.q
-  %8 = phi i64 [ %.pre.i18, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i16 ], [ %i.jm, %bb.q ]
-  store i64 %8, ptr %i.n, align 8, !tbaa !93
+  store i64 %.lcssa, ptr %i.n, align 8, !tbaa !93
   store ptr %i.mw, ptr %i.mu, align 8, !tbaa !90
   store i64 0, ptr %i.kt, align 8, !tbaa !93
   store i8 0, ptr %i.mw, align 8, !tbaa !118
@@ -793,7 +792,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
   %i.o = load ptr, ptr %i.n, align 8              ; 2 uses
   %i.p = icmp eq ptr %i.o, null
   %or.cond.not15.i.i = select i1 %i.m, i1 %i.p, i1 false
-  %i.q = getelementptr inbounds nuw i8, ptr %.pn24, i64 112 ; 3 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %.pn24, i64 112 ; 2 uses
   %i.r = load i64, ptr %i.q, align 8              ; 4 uses
   %i.s = icmp eq i64 %i.r, 23
   %or.cond10.i.i = select i1 %or.cond.not15.i.i, i1 %i.s, i1 false
@@ -856,7 +855,6 @@ bb.c:                                             ; preds = %"_ZN9__gnu_cxx5__op
   call void @llvm.assume(i1 %i.ay)
   %i.az = add nuw nsw i64 %i.r, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.f, ptr noundef nonnull align 8 dereferenceable(1) %i.aw, i64 %i.az, i1 false)
-  %.pre = load i64, ptr %i.q, align 8, !tbaa !93
   br label %_ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.thread"
@@ -866,8 +864,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit
 
 _ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  %3 = phi i64 [ %.pre, %bb.c ], [ %i.r, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ]
-  store i64 %3, ptr %i.g, align 8, !tbaa !93
+  store i64 %i.r, ptr %i.g, align 8, !tbaa !93
   store ptr %i.aw, ptr %i.au, align 8, !tbaa !90
   store i64 0, ptr %i.q, align 8, !tbaa !93
   store i8 0, ptr %i.aw, align 8, !tbaa !118

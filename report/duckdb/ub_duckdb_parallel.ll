@@ -201,7 +201,7 @@ define noundef zeroext range(i8 0, 2) i8 @_ZN6duckdb16PipelineExecutor9NextBatch
 bb.a:
   %3 = alloca %"struct.duckdb::OperatorPartitionData", align 8 ; 18 uses
   %4 = alloca %"struct.duckdb::OperatorPartitionData", align 8 ; 9 uses
-  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator.0", align 1  ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
@@ -257,7 +257,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #34
-  %i.z = load i64, ptr %4, align 8, !tbaa !1100   ; 2 uses
+  %i.z = load i64, ptr %4, align 8, !tbaa !1100   ; 3 uses
   store i64 %i.z, ptr %i.a, align 8, !tbaa !257
   store i64 %i.z, ptr %3, align 8, !tbaa !1100
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
@@ -295,10 +295,9 @@ bb.g:                                             ; preds = %_ZSt8_DestroyIPN6du
 _ZN6duckdb21OperatorPartitionDataaSEOS0_.exit:    ; preds = %_ZSt8_DestroyIPN6duckdb19ColumnPartitionDataES1_EvT_S3_RSaIT0_E.exit.i.i.i.i.i, %bb.g
   %i.al = load ptr, ptr %0, align 8, !tbaa !884, !nonnull !132, !align !133
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 128
-  %13 = load i64, ptr %i.am, align 8, !tbaa !236
-  %i.an = load i64, ptr %i.a, align 8, !tbaa !257
-  %i.ao = add i64 %13, 1
-  %i.ap = add i64 %i.ao, %i.an                    ; 2 uses
+  %i.an = load i64, ptr %i.am, align 8, !tbaa !236
+  %i.ao = add i64 %i.an, 1
+  %i.ap = add i64 %i.ao, %i.z                     ; 2 uses
   store i64 %i.ap, ptr %3, align 8, !tbaa !1100
   %.not35 = icmp ult i64 %i.ap, %i.f
   br i1 %.not35, label %bb.p, label %bb.h

@@ -159,7 +159,7 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca i64, align 8                      ; 6 uses
-  %i.e = alloca ptr, align 8                      ; 30 uses
+  %i.e = alloca ptr, align 8                      ; 29 uses
   %5 = alloca %"class.std::vector.3", align 8     ; 18 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
@@ -562,7 +562,7 @@ bb.at:                                            ; preds = %_ZNSt6vectorIcSaIcE
 ._crit_edge522:                                   ; preds = %._crit_edge513, %bb.at
   %.lcssa515 = phi ptr [ %i.fm, %bb.at ], [ %i.fz, %._crit_edge513 ] ; 3 uses
   store ptr %.lcssa515, ptr %i.e, align 8
-  %i.fw = getelementptr inbounds nuw i8, ptr %.lcssa515, i64 4 ; 2 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %.lcssa515, i64 4 ; 3 uses
   %i.fx = icmp ult ptr %2, %i.fw
   br i1 %i.fx, label %bb.be, label %bb.bi
 
@@ -775,7 +775,6 @@ _ZNSt6vectorIN27OpenImageIO_v3_1_Imf__3_3_510IDManifest20ChannelGroupManifestESa
   %i.ie = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %3, i64 8
   %wide.trip.count = zext nneg i32 %i.hl to i64
-  %.pre629 = load ptr, ptr %i.e, align 8, !tbaa !7
   br label %bb.bp
 
 ._crit_edge565:                                   ; preds = %._crit_edge562, %_ZNSt6vectorIN27OpenImageIO_v3_1_Imf__3_3_510IDManifest20ChannelGroupManifestESaIS2_EE6resizeEm.exit
@@ -847,7 +846,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   ret void
 
 bb.bp:                                            ; preds = %.lr.ph564, %._crit_edge562
-  %i.ja = phi ptr [ %.pre629, %.lr.ph564 ], [ %i.oz, %._crit_edge562 ] ; 5 uses
+  %i.ja = phi ptr [ %i.fw, %.lr.ph564 ], [ %i.oz, %._crit_edge562 ] ; 5 uses
   %indvars.iv625 = phi i64 [ 0, %.lr.ph564 ], [ %indvars.iv.next626, %._crit_edge562 ] ; 2 uses
   %i.jb = load ptr, ptr %0, align 8, !tbaa !36
   %i.jc = getelementptr inbounds nuw [208 x i8], ptr %i.jb, i64 %indvars.iv625 ; 14 uses

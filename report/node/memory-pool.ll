@@ -201,7 +201,8 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
-  %.sroa.0106 = alloca %"struct.std::_Tuple_impl.539", align 8 ; 5 uses
+  %.sroa.0105 = alloca %"struct.std::_Tuple_impl.539", align 8 ; 5 uses
+  %.sroa.0 = alloca %"struct.std::_Tuple_impl.539", align 8 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   tail call void @_ZN2v84base5Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d) #20
   %i.e = load i64, ptr %1, align 8                ; 3 uses
@@ -348,9 +349,9 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bl, label %.critedge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0106)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0105)
   %i.bm = getelementptr inbounds i8, ptr %i.bk, i64 -16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0106, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0105, i8 0, i64 24, i1 false)
   %i.bn = load ptr, ptr %i.bm, align 8
   %i.bo = getelementptr inbounds i8, ptr %i.bk, i64 -24 ; 2 uses
   %i.bp = load ptr, ptr %i.bo, align 8            ; 3 uses
@@ -359,7 +360,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.bq = getelementptr inbounds i8, ptr %i.bk, i64 -40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0106, ptr noundef nonnull align 8 dereferenceable(16) %i.bq, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0105, ptr noundef nonnull align 8 dereferenceable(16) %i.bq, i64 16, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bo, i8 0, i64 16, i1 false)
   br label %_ZNSt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS2_EEEC2EOS7_.exit
 
@@ -491,7 +492,7 @@ _ZNSt6vectorISt4pairImS_ISt10unique_ptrIN2v88internal19MutablePageMetadataESt8fu
 
 bb.y:                                             ; preds = %_ZNSt6vectorISt4pairImS_ISt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS4_EEESaIS9_EEESaISC_EE8pop_backEv.exit
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0106, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0105, i64 16, i1 false)
   store ptr %i.bp, ptr %i.de, align 8
   br label %_ZNSt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS2_EEED2Ev.exit
 
@@ -500,7 +501,7 @@ _ZNSt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS2_EEED2Ev.e
   store i64 %i.bs, ptr %i.df, align 8
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %i.dg, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0106)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0105)
   br label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit
 
 .critedge:                                        ; preds = %bb.l, %bb.k
@@ -571,7 +572,9 @@ _ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN2v88intern
   br i1 %i.eb, label %.critedge13, label %bb.af
 
 bb.af:                                            ; preds = %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN2v88internal7IsolateESt6vectorISt10unique_ptrINS4_19MutablePageMetadataESt8functionIFvPS9_EEESaISE_EEEENS0_6HashEqIS6_vE4HashENSJ_2EqESaISt4pairIKS6_SG_EEE8iteratorptEv.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.ec = getelementptr inbounds i8, ptr %i.ea, i64 -16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i8 0, i64 24, i1 false)
   %i.ed = load ptr, ptr %i.ec, align 8
   %i.ee = getelementptr inbounds i8, ptr %i.ea, i64 -24 ; 2 uses
   %i.ef = load ptr, ptr %i.ee, align 8            ; 3 uses
@@ -580,12 +583,11 @@ bb.af:                                            ; preds = %_ZNK4absl18containe
 
 bb.ag:                                            ; preds = %bb.af
   %i.eg = getelementptr inbounds i8, ptr %i.ea, i64 -40
-  %.sroa.0.0.copyload = load <2 x i64>, ptr %i.eg, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.eg, i64 16, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ee, i8 0, i64 16, i1 false)
   br label %_ZNSt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS2_EEEC2EOS7_.exit22
 
 _ZNSt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS2_EEEC2EOS7_.exit22: ; preds = %bb.af, %bb.ag
-  %.sroa.0.0 = phi <2 x i64> [ zeroinitializer, %bb.af ], [ %.sroa.0.0.copyload, %bb.ag ]
   %i.eh = getelementptr inbounds i8, ptr %i.ea, i64 -8 ; 2 uses
   %i.ei = load i64, ptr %i.eh, align 8
   store ptr null, ptr %i.eh, align 8
@@ -646,7 +648,7 @@ bb.am:                                            ; preds = %bb.al, %_ZNSt6vecto
 
 bb.an:                                            ; preds = %bb.am
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <2 x i64> %.sroa.0.0, ptr %0, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false)
   store ptr %i.ef, ptr %i.ey, align 8
   br label %_ZNSt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS2_EEED2Ev.exit34
 
@@ -655,6 +657,7 @@ _ZNSt10unique_ptrIN2v88internal19MutablePageMetadataESt8functionIFvPS2_EEED2Ev.e
   store i64 %i.ei, ptr %i.ez, align 8
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %i.fa, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit
 
 .critedge13:                                      ; preds = %.critedge, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN2v88internal7IsolateESt6vectorISt10unique_ptrINS4_19MutablePageMetadataESt8functionIFvPS9_EEESaISE_EEEENS0_6HashEqIS6_vE4HashENSJ_2EqESaISt4pairIKS6_SG_EEE8iteratorptEv.exit

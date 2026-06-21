@@ -201,9 +201,8 @@ bb.ar:                                            ; preds = %bb.ae, %bb.ao, %bb.
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @opj_j2k_read_cod(ptr nofree noundef captures(none) %0, ptr noundef %1, i32 noundef %2, ptr noundef %3) #3 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 5 uses
+  %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  store i32 %2, ptr %i.a, align 4, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !46
@@ -296,8 +295,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.u
 
 bb.n:                                             ; preds = %bb.l
-  %4 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.aq = add i32 %4, -5
+  %i.aq = add i32 %2, -5
   store i32 %i.aq, ptr %i.a, align 4, !tbaa !3
   %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !57 ; 3 uses

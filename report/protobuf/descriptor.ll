@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %class.anon.694, align 8            ; 4 uses
   %4 = alloca %class.anon.694, align 8            ; 4 uses
   %5 = alloca %"class.google::protobuf::DescriptorPool::DeferredValidation", align 8 ; 14 uses
-  %6 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 8 uses
+  %6 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #40
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 512 ; 3 uses
   call void @_ZN6google8protobuf8internal15ThreadSafeArenaC1EPcm(ptr noundef nonnull align 8 dereferenceable(168) %i.a, ptr noundef nonnull align 8 dereferenceable(736) %5, i64 noundef 512)
@@ -233,9 +233,9 @@ _ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit: ; preds = 
   store ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218container_internal11kEmptyGroupE, i64 16), ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #40
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !186  ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !186  ; 5 uses
   store ptr %i.k, ptr %6, align 8, !tbaa !261
-  %.not.i = icmp eq ptr %i.k, null
+  %.not.i = icmp eq ptr %i.k, null                ; 3 uses
   br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeC2EPNS0_5MutexE.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit
@@ -340,12 +340,10 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.l, %bb.i
   %.2 = phi ptr [ %i.af, %bb.l ], [ %i.ac, %bb.i ]
-  %7 = load ptr, ptr %6, align 8, !tbaa !261      ; 2 uses
-  %.not.i48 = icmp eq ptr %7, null
-  br i1 %.not.i48, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.q
+  br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %7)
+  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
           to label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit unwind label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -361,12 +359,10 @@ _ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit:  ; preds = %bb.p, %bb.q
 
 bb.s:                                             ; preds = %bb.o, %bb.n
   %.2.ph = phi ptr [ %i.ai, %bb.o ], [ null, %bb.n ]
-  %8 = load ptr, ptr %6, align 8, !tbaa !261      ; 2 uses
-  %.not.i49 = icmp eq ptr %8, null
-  br i1 %.not.i49, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit50, label %bb.t
+  br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit50, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %8)
+  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
           to label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit50 unwind label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -544,7 +540,7 @@ bb.a:
   %3 = alloca %class.anon.694, align 8            ; 4 uses
   %4 = alloca %class.anon.694, align 8            ; 4 uses
   %5 = alloca %"class.google::protobuf::DescriptorPool::DeferredValidation", align 8 ; 14 uses
-  %6 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 6 uses
+  %6 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #40
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 512 ; 3 uses
   call void @_ZN6google8protobuf8internal15ThreadSafeArenaC1EPcm(ptr noundef nonnull align 8 dereferenceable(168) %i.a, ptr noundef nonnull align 8 dereferenceable(736) %5, i64 noundef 512)
@@ -576,9 +572,9 @@ _ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit: ; preds = 
   store ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218container_internal11kEmptyGroupE, i64 16), ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #40
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !186  ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !186  ; 4 uses
   store ptr %i.k, ptr %6, align 8, !tbaa !261
-  %.not.i = icmp eq ptr %i.k, null
+  %.not.i = icmp eq ptr %i.k, null                ; 2 uses
   br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeC2EPNS0_5MutexE.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit
@@ -817,12 +813,10 @@ _ZNK6google8protobuf6Symbol7GetFileEv.exit:       ; preds = %bb.y, %bb.i, %bb.ag
   %cond = phi i1 [ true, %bb.w ], [ false, %bb.u ], [ false, %bb.q ], [ true, %bb.ag ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.m ], [ false, %_ZNK6google8protobuf6Symbol21enum_value_descriptorEv.exit.i ], [ false, %bb.n ], [ false, %bb.o ], [ false, %bb.p ], [ true, %bb.y ], [ true, %bb.z ], [ true, %bb.aa ], [ true, %bb.ab ], [ true, %bb.ac ], [ true, %_ZNK6google8protobuf6Symbol21enum_value_descriptorEv.exit.i44 ], [ true, %bb.ad ], [ true, %bb.ae ], [ true, %bb.af ]
   %.2 = phi ptr [ null, %bb.w ], [ %i.bd, %bb.u ], [ null, %bb.q ], [ %i.cd, %bb.ag ], [ null, %bb.i ], [ null, %bb.j ], [ null, %bb.k ], [ null, %bb.l ], [ null, %bb.m ], [ null, %_ZNK6google8protobuf6Symbol21enum_value_descriptorEv.exit.i ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.p ], [ null, %bb.y ], [ %i.bj, %bb.z ], [ %i.bl, %bb.aa ], [ %i.bp, %bb.ab ], [ %i.br, %bb.ac ], [ %i.bv, %_ZNK6google8protobuf6Symbol21enum_value_descriptorEv.exit.i44 ], [ %i.bx, %bb.ad ], [ %i.cb, %bb.ae ], [ %i.bg, %bb.af ]
   %.0 = phi ptr [ undef, %bb.w ], [ %i.bd, %bb.u ], [ %i.az, %bb.q ], [ undef, %bb.ag ], [ null, %bb.i ], [ %i.af, %bb.j ], [ %i.ah, %bb.k ], [ %i.al, %bb.l ], [ %i.an, %bb.m ], [ %i.ar, %_ZNK6google8protobuf6Symbol21enum_value_descriptorEv.exit.i ], [ %i.at, %bb.n ], [ %i.ax, %bb.o ], [ %i.ac, %bb.p ], [ undef, %bb.y ], [ undef, %bb.z ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ undef, %bb.ac ], [ undef, %_ZNK6google8protobuf6Symbol21enum_value_descriptorEv.exit.i44 ], [ undef, %bb.ad ], [ undef, %bb.ae ], [ undef, %bb.af ]
-  %7 = load ptr, ptr %6, align 8, !tbaa !261      ; 2 uses
-  %.not.i46 = icmp eq ptr %7, null
-  br i1 %.not.i46, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.ai
+  br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %_ZNK6google8protobuf6Symbol7GetFileEv.exit
-  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %7)
+  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
           to label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit unwind label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -1012,7 +1006,7 @@ bb.a:
   %3 = alloca %class.anon.694, align 8            ; 4 uses
   %4 = alloca %class.anon.694, align 8            ; 4 uses
   %5 = alloca %"class.google::protobuf::DescriptorPool::DeferredValidation", align 8 ; 14 uses
-  %6 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 6 uses
+  %6 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.b = load i32, ptr %i.a, align 8, !tbaa !683
   %i.c = icmp eq i32 %i.b, 0
@@ -1208,9 +1202,9 @@ _ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit: ; preds = 
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 720
   store ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218container_internal11kEmptyGroupE, i64 16), ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #40
-  %i.cb = load ptr, ptr %i.d, align 8, !tbaa !186 ; 3 uses
+  %i.cb = load ptr, ptr %i.d, align 8, !tbaa !186 ; 4 uses
   store ptr %i.cb, ptr %6, align 8, !tbaa !261
-  %.not.i = icmp eq ptr %i.cb, null
+  %.not.i = icmp eq ptr %i.cb, null               ; 2 uses
   br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeC2EPNS0_5MutexE.exit, label %bb.p
 
 bb.p:                                             ; preds = %_ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit
@@ -1574,12 +1568,10 @@ _ZNK6google8protobuf14DescriptorPool6Tables13FindExtensionEPKNS0_10DescriptorEi.
   %.233 = phi ptr [ %i.fe, %bb.ae ], [ %i.fb, %_ZNK6google8protobuf14DescriptorPool6Tables13FindExtensionEPKNS0_10DescriptorEi.exit80 ], [ null, %bb.ag ], [ null, %_ZNK4absl12lts_2025051218container_internal15btree_containerINS1_5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS7_15FieldDescriptorESt4lessISB_ESaIS5_IKSB_SE_EELi256ELb0EEEEEE4findISB_EENS1_14btree_iteratorIKNS1_10btree_nodeISK_EERKSI_PSS_EERSH_.exit.i100 ], [ null, %bb.aq ]
   %cond = phi i1 [ false, %bb.ae ], [ false, %_ZNK6google8protobuf14DescriptorPool6Tables13FindExtensionEPKNS0_10DescriptorEi.exit80 ], [ true, %bb.ag ], [ true, %_ZNK4absl12lts_2025051218container_internal15btree_containerINS1_5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS7_15FieldDescriptorESt4lessISB_ESaIS5_IKSB_SE_EELi256ELb0EEEEEE4findISB_EENS1_14btree_iteratorIKNS1_10btree_nodeISK_EERKSI_PSS_EERSH_.exit.i100 ], [ true, %bb.aq ]
   %.2 = phi ptr [ %i.fe, %bb.ae ], [ %i.fb, %_ZNK6google8protobuf14DescriptorPool6Tables13FindExtensionEPKNS0_10DescriptorEi.exit80 ], [ null, %bb.ag ], [ null, %_ZNK4absl12lts_2025051218container_internal15btree_containerINS1_5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS7_15FieldDescriptorESt4lessISB_ESaIS5_IKSB_SE_EELi256ELb0EEEEEE4findISB_EENS1_14btree_iteratorIKNS1_10btree_nodeISK_EERKSI_PSS_EERSH_.exit.i100 ], [ %i.hp, %bb.aq ]
-  %7 = load ptr, ptr %6, align 8, !tbaa !261      ; 2 uses
-  %.not.i108 = icmp eq ptr %7, null
-  br i1 %.not.i108, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.ar
+  br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZNK6google8protobuf14DescriptorPool6Tables13FindExtensionEPKNS0_10DescriptorEi.exit107
-  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %7)
+  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.cb)
           to label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit unwind label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
@@ -1982,7 +1974,7 @@ bb.a:
   %4 = alloca %class.anon.694, align 8            ; 4 uses
   %5 = alloca %"class.google::protobuf::DescriptorPool::DeferredValidation", align 8 ; 14 uses
   %6 = alloca %"class.std::vector.226", align 8   ; 12 uses
-  %7 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 6 uses
+  %7 = alloca %"class.absl::lts_20250512::MutexLockMaybe", align 8 ; 5 uses
   %8 = alloca %"class.std::vector.195", align 8   ; 11 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #40
@@ -2018,9 +2010,9 @@ _ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit: ; preds = 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #40
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !186  ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !186  ; 4 uses
   store ptr %i.l, ptr %7, align 8, !tbaa !261
-  %.not.i = icmp eq ptr %i.l, null
+  %.not.i = icmp eq ptr %i.l, null                ; 2 uses
   br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeC2EPNS0_5MutexE.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6google8protobuf14DescriptorPool18DeferredValidationC2EPKS1_.exit
@@ -2423,12 +2415,10 @@ bb.au:                                            ; preds = %bb.at
           to label %bb.av unwind label %bb.h
 
 bb.av:                                            ; preds = %bb.au, %bb.at
-  %10 = load ptr, ptr %7, align 8, !tbaa !261     ; 2 uses
-  %.not.i43 = icmp eq ptr %10, null
-  br i1 %.not.i43, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.aw
+  br i1 %.not.i, label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %10)
+  invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.l)
           to label %_ZN4absl12lts_2025051214MutexLockMaybeD2Ev.exit unwind label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
@@ -2831,7 +2821,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %i.br, label %bb.ad, label %bb.ae, !prof !322
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ac
@@ -2850,7 +2840,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.bw, label %bb.ah, label %bb.ai, !prof !322
 
 bb.ah:                                            ; preds = %bb.ag
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
   br label %bb.ak
 
 bb.ai:                                            ; preds = %bb.ag

@@ -201,10 +201,9 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32Turbos
   br i1 %.not2.i, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit
 
 _ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE11PopSomeArgsEPKNS0_9SignatureINS1_9ValueTypeEEEi.exit.i
-  %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
+  %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %i.cr, ptr %4, align 8
-  %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store ptr %i.cr, ptr %i.cs, align 8
+  %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ct = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.cu = getelementptr inbounds nuw i8, ptr %4, i64 88
   store ptr %i.cu, ptr %i.ct, align 8
@@ -607,10 +606,9 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32Turbos
   br i1 %.not2.i, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit
 
 _ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE11PopSomeArgsEPKNS0_9SignatureINS1_9ValueTypeEEEi.exit.i
-  %i.ct = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
+  %i.ct = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %i.ct, ptr %4, align 8
-  %i.cu = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store ptr %i.ct, ptr %i.cu, align 8
+  %i.cu = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cv = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.cw = getelementptr inbounds nuw i8, ptr %4, i64 88
   store ptr %i.cw, ptr %i.cv, align 8
@@ -902,10 +900,9 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32Turbos
   br i1 %.not2.i, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit
 
 _ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE11PopSomeArgsEPKNS0_9SignatureINS1_9ValueTypeEEEi.exit.i
-  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %i.bs, ptr %3, align 8
-  %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store ptr %i.bs, ptr %i.bt, align 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 88
   store ptr %i.bv, ptr %i.bu, align 8
@@ -1299,10 +1296,9 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32Turbos
   br i1 %.not2.i, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread, label %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit
 
 _ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit.thread: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE11PopSomeArgsEPKNS0_9SignatureINS1_9ValueTypeEEEi.exit.i
-  %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %i.bu, ptr %3, align 8
-  %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store ptr %i.bu, ptr %i.bv, align 8
+  %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 88
   store ptr %i.bx, ptr %i.bw, align 8

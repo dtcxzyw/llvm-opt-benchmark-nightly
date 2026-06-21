@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %bb.k
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 56 ; 2 uses
   %i.bn = load ptr, ptr %i.bm, align 8, !noalias !2350, !noundef !9 ; 4 uses
   %i.bo = load ptr, ptr %1, align 8, !alias.scope !2350, !nonnull !9, !noundef !9
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16 ; 2 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !noalias !2350, !nonnull !9, !noundef !9
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
   store atomic ptr %i.br, ptr %i.bk monotonic, align 8, !noalias !2350
@@ -323,9 +323,7 @@ bb.aa:                                            ; preds = %bb.y
   br i1 %i.ct, label %.critedge.i, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %3 = load ptr, ptr %1, align 8, !nonnull !9, !noundef !9
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.cu = load ptr, ptr %4, align 8, !nonnull !9, !noundef !9
+  %i.cu = load ptr, ptr %i.bp, align 8, !nonnull !9, !noundef !9
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cs, i64 32
   br label %bb.ac

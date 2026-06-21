@@ -201,7 +201,7 @@ bb.a:
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %19 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
-  %20 = alloca %"class.std::shared_ptr.10", align 8 ; 12 uses
+  %20 = alloca %"class.std::shared_ptr.10", align 8 ; 11 uses
   %21 = alloca %"class.std::map", align 8         ; 19 uses
   %22 = alloca %"class.std::vector.16", align 16  ; 18 uses
   %23 = alloca %"class.std::vector.16", align 8   ; 7 uses
@@ -604,14 +604,13 @@ bb.is:                                            ; preds = %bb.ir, %bb.in
   br label %.body610
 
 bb.it:                                            ; preds = %bb.ie
-  %i.ami = load ptr, ptr %20, align 8, !tbaa !100
+  %i.ami = load ptr, ptr %20, align 8, !tbaa !100 ; 2 uses
   invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData27setArrayFromRedFastestOrderERKSt6vectorIfSaIfEE(ptr noundef nonnull align 8 dereferenceable(232) %i.ami, ptr noundef nonnull align 8 dereferenceable(24) %i.ala)
           to label %bb.iu unwind label %bb.jf
 
 bb.iu:                                            ; preds = %bb.it
   %i.amj = getelementptr inbounds nuw i8, ptr %i.v, i64 144
-  %68 = load ptr, ptr %20, align 8, !tbaa !100
-  store ptr %68, ptr %i.amj, align 8, !tbaa !100
+  store ptr %i.ami, ptr %i.amj, align 8, !tbaa !100
   %i.amk = getelementptr inbounds nuw i8, ptr %i.v, i64 152 ; 3 uses
   %i.aml = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.amm = load ptr, ptr %i.aml, align 8, !tbaa !97 ; 4 uses
@@ -1014,8 +1013,8 @@ bb.i:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %common.resume
 
 bb.j:                                             ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS5_SaIS5_EESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit
-  %i.an = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 64 ; 3 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 72 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 64 ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 72 ; 2 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !73 ; 3 uses
   %i.aq = load ptr, ptr %i.an, align 8, !tbaa !71 ; 3 uses
   %i.ar = ptrtoint ptr %i.ap to i64
@@ -1157,13 +1156,9 @@ bb.t:                                             ; preds = %bb.s
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.t
   %i.cf = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #27
-  %.pre = load ptr, ptr %i.an, align 8, !tbaa !68
-  %.pre57 = load ptr, ptr %i.ao, align 8, !tbaa !68
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i, %bb.s
-  %9 = phi ptr [ %i.ap, %bb.s ], [ %.pre57, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ]
-  %10 = phi ptr [ %i.aq, %bb.s ], [ %.pre, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ]
   %i.cg = phi ptr [ null, %bb.s ], [ %i.cf, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ] ; 6 uses
   store ptr %i.cg, ptr %0, align 8, !tbaa !71
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1171,7 +1166,7 @@ bb.u:                                             ; preds = %_ZNSt15__new_alloca
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.at
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.ci, ptr %i.cj, align 8, !tbaa !75
-  %i.ck = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %10, ptr %9, ptr noundef %i.cg)
+  %i.ck = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.aq, ptr %i.ap, ptr noundef %i.cg)
           to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit unwind label %bb.v
 
 bb.v:                                             ; preds = %bb.u

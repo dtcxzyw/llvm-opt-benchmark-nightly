@@ -201,7 +201,7 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 5 uses
   %9 = alloca %"struct.folly::SharedMutexImpl<false>::WaitForever", align 1 ; 3 uses
   %10 = alloca %"class.folly::LockedPtr", align 8 ; 9 uses
-  %11 = alloca %"class.folly::LockedPtr.22", align 8 ; 10 uses
+  %11 = alloca %"class.folly::LockedPtr.22", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #9
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
@@ -604,18 +604,14 @@ bb.bd:                                            ; preds = %bb.ba, %bb.bc
   %i.mc = phi ptr [ %i.ls, %bb.ba ], [ %.pre, %bb.bc ] ; 2 uses
   %.not.i.i14 = icmp eq ptr %i.mc, null
   %.neg.i.i15 = select i1 %.not.i.i14, i64 0, i64 -40
-  %i.md = getelementptr inbounds i8, ptr %i.mc, i64 %.neg.i.i15
+  %i.md = getelementptr inbounds i8, ptr %i.mc, i64 %.neg.i.i15 ; 3 uses
   invoke void @_ZN8facebook5velox17SelectivityVector6selectERKS1_(ptr noundef nonnull align 8 dereferenceable(38) %i.md, ptr noundef nonnull align 8 dereferenceable(38) %1)
           to label %bb.be unwind label %bb.bb
 
 bb.be:                                            ; preds = %bb.bd
-  %12 = load ptr, ptr %11, align 8, !tbaa !145    ; 2 uses
-  %.not.i.i16 = icmp eq ptr %12, null
-  %.neg.i.i17 = select i1 %.not.i.i16, i64 0, i64 -40
-  %13 = getelementptr inbounds i8, ptr %12, i64 %.neg.i.i17 ; 2 uses
-  %i.me = getelementptr inbounds nuw i8, ptr %13, i64 28
+  %i.me = getelementptr inbounds nuw i8, ptr %i.md, i64 28
   %i.mf = load i32, ptr %i.me, align 4, !tbaa !23
-  %i.mg = getelementptr inbounds nuw i8, ptr %13, i64 32
+  %i.mg = getelementptr inbounds nuw i8, ptr %i.md, i64 32
   %i.mh = load i32, ptr %i.mg, align 8, !tbaa !35
   %i.mi = icmp sge i32 %i.mf, %i.mh
   %i.mj = getelementptr inbounds nuw i8, ptr %0, i64 105
@@ -1018,7 +1014,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.du, label %bb.u, label %bb.v, !prof !149
 
 bb.u:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ds, ptr align 8 %1, i64 %i.dt, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ds, ptr align 8 %1, i64 %i.dt, i1 false)
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit

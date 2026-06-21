@@ -201,9 +201,8 @@ bb.j:                                             ; preds = %.lr.ph
   %i.cz = sext i32 %3 to i64
   %i.da = add nsw i64 %i.cz, 1040
   %i.db = add nsw i64 %i.da, %i.cy
-  %i.dc = tail call noalias ptr @malloc(i64 noundef %i.db) #21 ; 11 uses
+  %i.dc = tail call noalias ptr @malloc(i64 noundef %i.db) #21 ; 10 uses
   %i.dd = ptrtoaddr ptr %i.dc to i64
-  store i32 0, ptr %i.dc, align 4, !tbaa !12
   %i.de = getelementptr inbounds nuw i8, ptr %i.dc, i64 4 ; 3 uses
   store i32 %i.cx, ptr %i.de, align 4, !tbaa !13
   %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 8 ; 3 uses
@@ -606,7 +605,7 @@ bb.a:
   %i.c = alloca [40 x i8], align 16               ; 5 uses
   %i.d = alloca [30 x i8], align 16               ; 4 uses
   %i.e = alloca [30 x i8], align 16               ; 4 uses
-  %i.f = alloca ptr, align 8                      ; 8 uses
+  %i.f = alloca ptr, align 8                      ; 7 uses
   %i.g = alloca ptr, align 8                      ; 9 uses
   %i.h = alloca ptr, align 8                      ; 5 uses
   %i.i = alloca ptr, align 8                      ; 5 uses
@@ -1009,7 +1008,7 @@ bb.t:                                             ; preds = %bb.s
 free_num.exit.i124:                               ; preds = %bb.t, %bb.s, %._crit_edge.i121
   %narrow.i125 = add nuw i32 %.018.lcssa.i122, 1040
   %i.ix = zext i32 %narrow.i125 to i64
-  %i.iy = tail call noalias ptr @malloc(i64 noundef %i.ix) #21 ; 11 uses
+  %i.iy = tail call noalias ptr @malloc(i64 noundef %i.ix) #21 ; 10 uses
   store i32 0, ptr %i.iy, align 4, !tbaa !12
   %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 4
   store i32 %.018.lcssa.i122, ptr %i.iz, align 4, !tbaa !13
@@ -1019,7 +1018,6 @@ free_num.exit.i124:                               ; preds = %bb.t, %bb.s, %._cri
   store i32 1, ptr %i.jb, align 4, !tbaa !10
   %i.jc = getelementptr inbounds nuw i8, ptr %i.iy, i64 16 ; 8 uses
   store i8 0, ptr %i.jc, align 4, !tbaa !15
-  store ptr %i.iy, ptr %i.f, align 8, !tbaa !8
   br i1 %i.im, label %iter.check387, label %bb.u
 
 bb.u:                                             ; preds = %free_num.exit.i124

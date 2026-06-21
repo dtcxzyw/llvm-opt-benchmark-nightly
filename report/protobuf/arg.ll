@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN4absl12lts_2025051219str_format_internal13ConvertIntArgINS0_6int128EEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i128 %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %4 = alloca %"class.absl::lts_20250512::str_format_internal::FormatConversionSpecImpl", align 8 ; 4 uses
+  %4 = alloca %"class.absl::lts_20250512::str_format_internal::FormatConversionSpecImpl", align 8 ; 3 uses
   %5 = alloca %"class.absl::lts_20250512::str_format_internal::(anonymous namespace)::IntDigits", align 8 ; 17 uses
   store i64 %1, ptr %4, align 8
   %.sroa.223.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -514,8 +514,7 @@ bb.w:                                             ; preds = %bb.u
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit
 
 bb.x:                                             ; preds = %bb.s
-  %.sroa.01.0.copyload = load i64, ptr %4, align 8
-  call fastcc void @_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_123ConvertIntImplInnerSlowERKNS2_9IntDigitsENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr nonnull %.val, i64 %.val25, i64 %.sroa.01.0.copyload, i32 %2, ptr noundef %3)
+  call fastcc void @_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_123ConvertIntImplInnerSlowERKNS2_9IntDigitsENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr nonnull %.val, i64 %.val25, i64 %1, i32 %2, ptr noundef %3)
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit
 
 _ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.w, %bb.v, %bb.t, %bb.c, %bb.d, %bb.x, %bb.q
@@ -527,7 +526,7 @@ _ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_str
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN4absl12lts_2025051219str_format_internal13ConvertIntArgINS0_7uint128EEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 %0, i64 %1, i64 %2, i32 %3, ptr noundef %4) local_unnamed_addr #0 comdat {
 bb.a:
-  %5 = alloca %"class.absl::lts_20250512::str_format_internal::FormatConversionSpecImpl", align 8 ; 4 uses
+  %5 = alloca %"class.absl::lts_20250512::str_format_internal::FormatConversionSpecImpl", align 8 ; 3 uses
   %6 = alloca %"class.absl::lts_20250512::str_format_internal::(anonymous namespace)::IntDigits", align 8 ; 17 uses
   store i64 %2, ptr %5, align 8
   %.sroa.228.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -809,8 +808,7 @@ bb.u:                                             ; preds = %bb.s
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit
 
 bb.v:                                             ; preds = %bb.q
-  %.sroa.01.0.copyload = load i64, ptr %5, align 8
-  call fastcc void @_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_123ConvertIntImplInnerSlowERKNS2_9IntDigitsENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr nonnull %.val, i64 %.val30, i64 %.sroa.01.0.copyload, i32 %3, ptr noundef %4)
+  call fastcc void @_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_123ConvertIntImplInnerSlowERKNS2_9IntDigitsENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr nonnull %.val, i64 %.val30, i64 %2, i32 %3, ptr noundef %4)
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit
 
 _ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.u, %bb.t, %bb.r, %bb.c, %bb.d, %bb.v, %bb.o

@@ -201,7 +201,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.dm, label %bb.u, label %bb.v, !prof !137
 
 bb.u:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.dk, ptr align 2 %1, i64 %i.dl, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.dk, ptr align 2 %1, i64 %i.dl, i1 false)
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit

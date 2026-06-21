@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %.lr.ph52, %_ZNSt6ve
   %.sroa.036.050 = phi ptr [ %i.l, %.lr.ph52 ], [ %i.cz, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EED2Ev.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.036.050, i64 8 ; 2 uses
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !173  ; 3 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.036.050, i64 8
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !173  ; 4 uses
   %i.t = load ptr, ptr %.sroa.036.050, align 8, !tbaa !174 ; 4 uses
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.t to i64
@@ -230,12 +230,10 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_dele
   store ptr %i.y, ptr %i.p, align 8, !tbaa !173
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store ptr %i.z, ptr %i.o, align 16, !tbaa !136
-  %.pre = load ptr, ptr %i.r, align 8, !tbaa !135
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit
 
 _ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE13_M_deallocateEPS5_m.exit.i, %bb.d
-  %6 = phi ptr [ %.pre, %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE13_M_deallocateEPS5_m.exit.i ], [ %i.s, %bb.d ] ; 2 uses
-  %.not4147 = icmp eq ptr %i.t, %6
+  %.not4147 = icmp eq ptr %i.t, %i.s
   br i1 %.not4147, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt10unique_ptrIN6duckdb16ParsedExpressionESt14default_deleteIS1_EED2Ev.exit, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit
@@ -472,7 +470,7 @@ _ZNKSt14default_deleteIN6duckdb16ParsedExpressionEEclEPS1_.exit.i: ; preds = %_Z
 _ZNSt10unique_ptrIN6duckdb16ParsedExpressionESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE9push_backEOS5_.exit.thread, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE9push_backEOS5_.exit, %_ZNKSt14default_deleteIN6duckdb16ParsedExpressionEEclEPS1_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.ce = getelementptr inbounds nuw i8, ptr %.sroa.032.048, i64 8 ; 2 uses
-  %.not41 = icmp eq ptr %i.ce, %6
+  %.not41 = icmp eq ptr %i.ce, %i.s
   br i1 %.not41, label %._crit_edge, label %.lr.ph
 
 bb.m:                                             ; preds = %_ZNK6duckdb10unique_ptrINS_16ParsedExpressionESt14default_deleteIS1_ELb1EEptEv.exit

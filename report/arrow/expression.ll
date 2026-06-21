@@ -201,16 +201,16 @@ bb.a:
   %35 = alloca %"class.arrow::compute::Expression", align 16 ; 7 uses
   %36 = alloca %"struct.arrow::Datum", align 8    ; 8 uses
   %37 = alloca %"class.arrow::Result.155", align 8 ; 21 uses
-  %38 = alloca %"class.arrow::compute::Expression", align 8 ; 7 uses
+  %38 = alloca %"class.arrow::compute::Expression", align 8 ; 5 uses
   %39 = alloca %"class.std::vector", align 16     ; 14 uses
   %40 = alloca %"class.arrow::Result.155", align 8 ; 19 uses
   %41 = alloca %"class.arrow::compute::Expression", align 16 ; 4 uses
-  %42 = alloca %"class.arrow::compute::Expression", align 8 ; 8 uses
+  %42 = alloca %"class.arrow::compute::Expression", align 8 ; 7 uses
   %43 = alloca %"struct.arrow::compute::Expression::Call", align 8 ; 25 uses
   %44 = alloca %"class.arrow::compute::Expression", align 16 ; 3 uses
   %45 = alloca %"struct.arrow::compute::Expression::Call", align 8 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #31
-  %i.a = load ptr, ptr %1, align 8, !tbaa !63     ; 6 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !63     ; 16 uses
   store ptr %i.a, ptr %38, align 8, !tbaa !63
   %i.b = getelementptr inbounds nuw i8, ptr %38, i64 8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
@@ -232,7 +232,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.thread82, label %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i
 
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i: ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 144
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 144 ; 4 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !67, !noalias !621
   %i.g = icmp eq i8 %i.f, 1
   br i1 %i.g, label %_ZNK5arrow7compute10Expression9field_refEv.exit.i, label %.thread82
@@ -343,24 +343,22 @@ _ZN5arrow5DatumC2ERKS0_.exit.i:                   ; preds = %_ZNKSt13unordered_m
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i: ; preds = %_ZN5arrow5DatumC2ERKS0_.exit.i
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !139, !noalias !621
-  %46 = load ptr, ptr %38, align 8, !tbaa !63, !noalias !621, !nonnull !66, !noundef !66 ; 10 uses
-  %47 = getelementptr inbounds nuw i8, ptr %46, i64 144 ; 3 uses
-  %i.ao = load i8, ptr %47, align 8, !tbaa !67, !noalias !621
+  %i.ao = load i8, ptr %i.e, align 8, !tbaa !67, !noalias !621
   switch i8 %i.ao, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i [
     i8 0, label %bb.j
     i8 1, label %bb.k
   ]
 
 bb.j:                                             ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i.i
-  %i.ap = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow5Datum4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %46)
+  %i.ap = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow5Datum4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %_ZNK5arrow7compute10Expression4typeEv.exit.i unwind label %bb.q, !noalias !621
 
 bb.k:                                             ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i.i
-  %i.aq = getelementptr inbounds nuw i8, ptr %46, i64 40
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   br label %_ZNK5arrow7compute10Expression4typeEv.exit.i
 
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i: ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i.i
-  %i.ar = getelementptr inbounds nuw i8, ptr %46, i64 120
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   br label %_ZNK5arrow7compute10Expression4typeEv.exit.i
 
 _ZNK5arrow7compute10Expression4typeEv.exit.i:     ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i, %bb.k, %bb.j
@@ -454,22 +452,22 @@ bb.q:                                             ; preds = %bb.t, %bb.r, %_ZNK5
   br label %bb.dc
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i66.i: ; preds = %bb.l
-  %i.bk = load i8, ptr %47, align 8, !tbaa !67, !noalias !621
+  %i.bk = load i8, ptr %i.e, align 8, !tbaa !67, !noalias !621
   switch i8 %i.bk, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i68.i [
     i8 0, label %bb.r
     i8 1, label %bb.s
   ]
 
 bb.r:                                             ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i66.i
-  %i.bl = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow5Datum4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %46)
+  %i.bl = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow5Datum4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %_ZNK5arrow7compute10Expression4typeEv.exit70.i unwind label %bb.q, !noalias !621
 
 bb.s:                                             ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i66.i
-  %i.bm = getelementptr inbounds nuw i8, ptr %46, i64 40
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   br label %_ZNK5arrow7compute10Expression4typeEv.exit70.i
 
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i68.i: ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i66.i
-  %i.bn = getelementptr inbounds nuw i8, ptr %46, i64 120
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   br label %_ZNK5arrow7compute10Expression4typeEv.exit70.i
 
 _ZNK5arrow7compute10Expression4typeEv.exit70.i:   ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i68.i, %bb.s, %bb.r
@@ -492,22 +490,22 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not43.i, label %.critedge.i, label %_ZNK5arrow7compute10Expression7literalEv.exit.i72.i
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i72.i: ; preds = %bb.u
-  %i.bv = load i8, ptr %47, align 8, !tbaa !67, !noalias !621
+  %i.bv = load i8, ptr %i.e, align 8, !tbaa !67, !noalias !621
   switch i8 %i.bv, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i74.i [
     i8 0, label %bb.v
     i8 1, label %bb.w
   ]
 
 bb.v:                                             ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i72.i
-  %i.bw = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow5Datum4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %46)
+  %i.bw = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow5Datum4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %_ZNK5arrow7compute10Expression4typeEv.exit76.i unwind label %bb.af, !noalias !621
 
 bb.w:                                             ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i72.i
-  %i.bx = getelementptr inbounds nuw i8, ptr %46, i64 40
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   br label %_ZNK5arrow7compute10Expression4typeEv.exit76.i
 
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i74.i: ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit.i72.i
-  %i.by = getelementptr inbounds nuw i8, ptr %46, i64 120
+  %i.by = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   br label %_ZNK5arrow7compute10Expression4typeEv.exit76.i
 
 _ZNK5arrow7compute10Expression4typeEv.exit76.i:   ; preds = %bb.v, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i74.i, %bb.w
@@ -910,8 +908,7 @@ bb.dc:                                            ; preds = %.body107.i, %bb.co,
 .thread82:                                        ; preds = %_ZNKSt8__detail15_Hashtable_baseIN5arrow8FieldRefESt4pairIKS2_NS1_5DatumEENS_10_Select1stESt8equal_toIS2_ENS2_4HashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.i.i.i.i.i, %bb.h, %bb.c, %bb.a, %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i, %.noexc51, %_ZNKSt13unordered_mapIN5arrow8FieldRefENS0_5DatumENS1_4HashESt8equal_toIS1_ESaISt4pairIKS1_S2_EEE4findERS7_.exit.i
   store ptr null, ptr %37, align 8, !tbaa !274, !alias.scope !621
   %i.jp = getelementptr inbounds nuw i8, ptr %37, i64 8
-  %48 = load ptr, ptr %38, align 8, !tbaa !63, !noalias !621
-  store ptr %48, ptr %i.jp, align 8, !tbaa !63, !alias.scope !621
+  store ptr %i.a, ptr %i.jp, align 8, !tbaa !63, !alias.scope !621
   %i.jq = getelementptr inbounds nuw i8, ptr %37, i64 16
   store ptr null, ptr %i.b, align 8, !tbaa !79, !noalias !621
   store ptr %i.d, ptr %i.jq, align 8, !tbaa !79, !alias.scope !621
@@ -1228,11 +1225,7 @@ bb.eg:                                            ; preds = %bb.ef
 
 bb.eh:                                            ; preds = %bb.eg
   %i.na = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIN5arrow7compute10ExpressionESaIS2_EEaSERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %39, ptr noundef nonnull align 8 dereferenceable(24) %i.li)
-          to label %._crit_edge33 unwind label %bb.ei ; 0 uses
-
-._crit_edge33:                                    ; preds = %bb.eh
-  %.pre34 = load ptr, ptr %42, align 8, !tbaa !63
-  br label %bb.ej
+          to label %bb.ej unwind label %bb.ei     ; 0 uses
 
 bb.ei:                                            ; preds = %bb.eh
   %i.nb = landingpad { ptr, i32 }
@@ -1243,12 +1236,11 @@ bb.ei:                                            ; preds = %bb.eh
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #31
   br label %bb.ge
 
-bb.ej:                                            ; preds = %._crit_edge33, %bb.eg
-  %49 = phi ptr [ %.pre34, %._crit_edge33 ], [ %i.mt, %bb.eg ]
+bb.ej:                                            ; preds = %bb.eh, %bb.eg
   %i.nc = load ptr, ptr %39, align 16, !tbaa !130
   %i.nd = getelementptr inbounds nuw [16 x i8], ptr %i.nc, i64 %.02725 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %42, i8 0, i64 16, i1 false)
-  store ptr %49, ptr %i.nd, align 8, !tbaa !78
+  store ptr %i.mt, ptr %i.nd, align 8, !tbaa !78
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nd, i64 8 ; 2 uses
   %i.nf = load ptr, ptr %i.ne, align 8, !tbaa !79 ; 8 uses
   store ptr %i.mu, ptr %i.ne, align 8, !tbaa !79
@@ -1651,7 +1643,7 @@ bb.a:
   %5 = alloca %"class.std::vector", align 16      ; 14 uses
   %6 = alloca %"class.arrow::Result.155", align 8 ; 19 uses
   %7 = alloca %"class.arrow::compute::Expression", align 16 ; 4 uses
-  %8 = alloca %"class.arrow::compute::Expression", align 8 ; 8 uses
+  %8 = alloca %"class.arrow::compute::Expression", align 8 ; 7 uses
   %9 = alloca %"struct.arrow::compute::Expression::Call", align 8 ; 25 uses
   %10 = alloca %"class.arrow::compute::Expression", align 16 ; 3 uses
   %11 = alloca %"struct.arrow::compute::Expression::Call", align 8 ; 15 uses
@@ -1941,11 +1933,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   %i.co = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIN5arrow7compute10ExpressionESaIS2_EEaSERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %i.aw)
-          to label %._crit_edge20 unwind label %bb.ah ; 0 uses
-
-._crit_edge20:                                    ; preds = %bb.ag
-  %.pre = load ptr, ptr %8, align 8, !tbaa !63
-  br label %bb.ai
+          to label %bb.ai unwind label %bb.ah     ; 0 uses
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cp = landingpad { ptr, i32 }
@@ -1956,12 +1944,11 @@ bb.ah:                                            ; preds = %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
   br label %bb.cd
 
-bb.ai:                                            ; preds = %._crit_edge20, %bb.af
-  %12 = phi ptr [ %.pre, %._crit_edge20 ], [ %i.ch, %bb.af ]
+bb.ai:                                            ; preds = %bb.ag, %bb.af
   %i.cq = load ptr, ptr %5, align 16, !tbaa !130
   %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.cq, i64 %.02717 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
-  store ptr %12, ptr %i.cr, align 8, !tbaa !78
+  store ptr %i.ch, ptr %i.cr, align 8, !tbaa !78
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8 ; 2 uses
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !79 ; 8 uses
   store ptr %i.ci, ptr %i.cs, align 8, !tbaa !79
@@ -2364,7 +2351,7 @@ bb.a:
   %7 = alloca %"class.std::vector", align 16      ; 14 uses
   %8 = alloca %"class.arrow::Result.155", align 8 ; 19 uses
   %9 = alloca %"class.arrow::compute::Expression", align 16 ; 4 uses
-  %10 = alloca %"class.arrow::compute::Expression", align 8 ; 8 uses
+  %10 = alloca %"class.arrow::compute::Expression", align 8 ; 7 uses
   %11 = alloca %"struct.arrow::compute::Expression::Call", align 8 ; 25 uses
   %12 = alloca %"class.arrow::compute::Expression", align 16 ; 3 uses
   %13 = alloca %"struct.arrow::compute::Expression::Call", align 8 ; 15 uses
@@ -2767,11 +2754,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.bf
   %i.hr = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIN5arrow7compute10ExpressionESaIS2_EEaSERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %i.fz)
-          to label %._crit_edge22 unwind label %bb.bh ; 0 uses
-
-._crit_edge22:                                    ; preds = %bb.bg
-  %.pre = load ptr, ptr %10, align 8, !tbaa !63
-  br label %bb.bi
+          to label %bb.bi unwind label %bb.bh     ; 0 uses
 
 bb.bh:                                            ; preds = %bb.bg
   %i.hs = landingpad { ptr, i32 }
@@ -2782,12 +2765,11 @@ bb.bh:                                            ; preds = %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #31
   br label %bb.dd
 
-bb.bi:                                            ; preds = %._crit_edge22, %bb.bf
-  %14 = phi ptr [ %.pre, %._crit_edge22 ], [ %i.hk, %bb.bf ]
+bb.bi:                                            ; preds = %bb.bg, %bb.bf
   %i.ht = load ptr, ptr %7, align 16, !tbaa !130
   %i.hu = getelementptr inbounds nuw [16 x i8], ptr %i.ht, i64 %.02719 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
-  store ptr %14, ptr %i.hu, align 8, !tbaa !78
+  store ptr %i.hk, ptr %i.hu, align 8, !tbaa !78
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 8 ; 2 uses
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !79 ; 8 uses
   store ptr %i.hl, ptr %i.hv, align 8, !tbaa !79

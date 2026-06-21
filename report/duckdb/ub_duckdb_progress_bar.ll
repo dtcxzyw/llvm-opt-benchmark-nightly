@@ -201,17 +201,20 @@ bb.l:                                             ; preds = %.preheader328, %bb.
 .lr.ph:                                           ; preds = %.preheader327
   %i.dl = getelementptr inbounds nuw [24 x i8], ptr %i.bl, i64 %.046382 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
-  br i1 %.not.i.i.i147, label %.lr.ph.split.us, label %.lr.ph.split, !prof !174
+  br i1 %.not.i.i.i147, label %.lr.ph.split.us.preheader, label %.lr.ph.split, !prof !174
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.n
-  %.0337.us = phi i64 [ %i.dy, %bb.n ], [ 0, %.lr.ph ] ; 7 uses
-  %.043336.us = phi double [ %i.dx, %bb.n ], [ 0.000000e+00, %.lr.ph ]
+.lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %20 = load ptr, ptr %i.cj, align 8, !tbaa !169
   %21 = load ptr, ptr %i.ci, align 8, !tbaa !167  ; 2 uses
   %22 = ptrtoint ptr %20 to i64
   %23 = ptrtoint ptr %21 to i64
   %24 = sub i64 %22, %23
   %25 = ashr exact i64 %24, 3                     ; 2 uses
+  br label %.lr.ph.split.us
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %bb.n
+  %.0337.us = phi i64 [ %i.dy, %bb.n ], [ 0, %.lr.ph.split.us.preheader ] ; 7 uses
+  %.043336.us = phi double [ %i.dx, %bb.n ], [ 0.000000e+00, %.lr.ph.split.us.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad)
   store i64 %.0337.us, ptr %i.ac, align 8, !tbaa !63
@@ -251,17 +254,20 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not386, label %._crit_edge360.split.us, label %.lr.ph359
 
 .lr.ph359:                                        ; preds = %.preheader
-  br i1 %.not.i.i.i70, label %.lr.ph359.split.us, label %.lr.ph359.split, !prof !174
+  br i1 %.not.i.i.i70, label %.lr.ph359.split.us.preheader, label %.lr.ph359.split, !prof !174
 
-.lr.ph359.split.us:                               ; preds = %.lr.ph359, %bb.p
-  %.044358.us = phi i64 [ %i.ek, %bb.p ], [ 0, %.lr.ph359 ] ; 7 uses
-  %.045357.us = phi double [ %i.ej, %bb.p ], [ 0.000000e+00, %.lr.ph359 ]
+.lr.ph359.split.us.preheader:                     ; preds = %.lr.ph359
   %26 = load ptr, ptr %i.cv, align 8, !tbaa !169
   %27 = load ptr, ptr %i.cu, align 8, !tbaa !167  ; 2 uses
   %28 = ptrtoint ptr %26 to i64
   %29 = ptrtoint ptr %27 to i64
   %30 = sub i64 %28, %29
   %31 = ashr exact i64 %30, 3                     ; 2 uses
+  br label %.lr.ph359.split.us
+
+.lr.ph359.split.us:                               ; preds = %.lr.ph359.split.us.preheader, %bb.p
+  %.044358.us = phi i64 [ %i.ek, %bb.p ], [ 0, %.lr.ph359.split.us.preheader ] ; 7 uses
+  %.045357.us = phi double [ %i.ej, %bb.p ], [ 0.000000e+00, %.lr.ph359.split.us.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar)
   store i64 %.044358.us, ptr %i.aq, align 8, !tbaa !63

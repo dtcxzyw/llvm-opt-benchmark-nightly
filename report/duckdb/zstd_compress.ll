@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.q = phi ptr [ %i.d, %bb.e ], [ %i.p, %bb.f ] ; 4 uses
+  %i.q = phi ptr [ %i.d, %bb.e ], [ %i.p, %bb.f ] ; 3 uses
   %.0.i24 = phi ptr [ null, %bb.e ], [ %i.d, %bb.f ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 3200
   store ptr %.0.i24, ptr %i.r, align 8, !tbaa !70
@@ -219,14 +219,13 @@ _ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread: ;
   store ptr %i.s, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !69
   br label %bb.h
 
-bb.h:                                             ; preds = %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread
-  %.sink48 = phi i64 [ 8920, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41 ], [ 14552, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread ]
-  %.sink = phi ptr [ null, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41 ], [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread ]
-  %i.u = phi ptr [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41 ], [ %i.s, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread ]
-  %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 %.sink48 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 3208
-  store ptr %.sink, ptr %2, align 8, !tbaa !71
-  %i.w = icmp ugt ptr %i.v, %i.f
+bb.h:                                             ; preds = %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41
+  %.sink = phi ptr [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41 ], [ %i.s, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread ] ; 2 uses
+  %i.u = phi ptr [ null, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41 ], [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread ]
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 3208
+  store ptr %i.u, ptr %i.v, align 8, !tbaa !71
+  %2 = getelementptr inbounds nuw i8, ptr %.sink, i64 8920 ; 4 uses
+  %i.w = icmp ugt ptr %2, %i.f
   br i1 %i.w, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -234,13 +233,13 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit31
 
 bb.j:                                             ; preds = %bb.h
-  store ptr %i.v, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !67
-  store ptr %i.v, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !68
-  store ptr %i.v, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !69
+  store ptr %2, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !67
+  store ptr %2, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !68
+  store ptr %2, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !69
   br label %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit31
 
 _ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit31: ; preds = %bb.i, %bb.j
-  %.0.i30 = phi ptr [ null, %bb.i ], [ %i.u, %bb.j ]
+  %.0.i30 = phi ptr [ null, %bb.i ], [ %.sink, %bb.j ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 3520
   store ptr %.0.i30, ptr %i.x, align 8, !tbaa !72
   %i.y = tail call i32 asm "cpuid", "={ax},{ax},~{ebx},~{ecx},~{edx},~{dirflag},~{fpsr},~{flags}"(i32 0) #25, !srcloc !7 ; 2 uses
@@ -643,7 +642,7 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.q = phi ptr [ %i.d, %bb.e ], [ %i.p, %bb.f ] ; 4 uses
+  %i.q = phi ptr [ %i.d, %bb.e ], [ %i.p, %bb.f ] ; 3 uses
   %.0.i24.i = phi ptr [ null, %bb.e ], [ %i.d, %bb.f ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 3200
   store ptr %.0.i24.i, ptr %i.r, align 8, !tbaa !70
@@ -662,13 +661,12 @@ _ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread.i:
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread.i, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41.i
-  %.sink48.i = phi i64 [ 8920, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41.i ], [ 14552, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread.i ]
-  %.sink.i = phi ptr [ null, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41.i ], [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread.i ]
-  %i.u = phi ptr [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41.i ], [ %i.s, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread.i ]
-  %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 %.sink48.i ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 3208
-  store ptr %.sink.i, ptr %2, align 8, !tbaa !71
-  %i.w = icmp ugt ptr %i.v, %i.f
+  %.sink.i = phi ptr [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41.i ], [ %i.s, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread.i ] ; 2 uses
+  %i.u = phi ptr [ null, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread41.i ], [ %i.q, %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit28.thread.i ]
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 3208
+  store ptr %i.u, ptr %i.v, align 8, !tbaa !71
+  %2 = getelementptr inbounds nuw i8, ptr %.sink.i, i64 8920 ; 4 uses
+  %i.w = icmp ugt ptr %2, %i.f
   br i1 %i.w, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -676,13 +674,13 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit31.i
 
 bb.j:                                             ; preds = %bb.h
-  store ptr %i.v, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !67
-  store ptr %i.v, ptr %.sroa.10.0..sroa_idx.i, align 8, !tbaa !68
-  store ptr %i.v, ptr %.sroa.12.0..sroa_idx.i, align 8, !tbaa !69
+  store ptr %2, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !67
+  store ptr %2, ptr %.sroa.10.0..sroa_idx.i, align 8, !tbaa !68
+  store ptr %2, ptr %.sroa.12.0..sroa_idx.i, align 8, !tbaa !69
   br label %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit31.i
 
 _ZN11duckdb_zstdL25ZSTD_cwksp_reserve_objectEPNS_10ZSTD_cwkspEm.exit31.i: ; preds = %bb.j, %bb.i
-  %.0.i30.i = phi ptr [ null, %bb.i ], [ %i.u, %bb.j ]
+  %.0.i30.i = phi ptr [ null, %bb.i ], [ %.sink.i, %bb.j ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 3520
   store ptr %.0.i30.i, ptr %i.x, align 8, !tbaa !72
   %i.y = tail call i32 asm "cpuid", "={ax},{ax},~{ebx},~{ecx},~{edx},~{dirflag},~{fpsr},~{flags}"(i32 0) #25, !srcloc !7 ; 2 uses

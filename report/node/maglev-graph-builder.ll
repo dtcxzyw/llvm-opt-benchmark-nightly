@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.e, %bb.d, %_ZN2v
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden i64 @_ZN2v88internal6maglev18MaglevGraphBuilder24StoreAndCacheContextSlotEPNS1_9ValueNodeEiS4_NS0_11ContextModeE(ptr noundef nonnull align 8 dereferenceable(953) %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, i32 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 4 uses
+  %i.a = alloca ptr, align 8                      ; 3 uses
   %i.b = alloca ptr, align 8                      ; 9 uses
   %5 = alloca %"class.std::tuple.462", align 8    ; 10 uses
   store ptr %3, ptr %i.a, align 8
@@ -322,9 +322,8 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.042.074, i64 48 ; 2 uses
-  %6 = load ptr, ptr %i.bf, align 8
-  %i.bg = load ptr, ptr %i.a, align 8
-  %.not31 = icmp eq ptr %6, %i.bg
+  %i.bg = load ptr, ptr %i.bf, align 8
+  %.not31 = icmp eq ptr %i.bg, %3
   br i1 %.not31, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -727,7 +726,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %9 = alloca %"class.v8::internal::maglev::KnownNodeAspects::LoadedPropertyMapKey", align 8 ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
-  %i.c = alloca ptr, align 8                      ; 4 uses
+  %i.c = alloca ptr, align 8                      ; 3 uses
   %10 = alloca %"class.v8::internal::compiler::NameRef", align 8 ; 4 uses
   %11 = alloca %"class.v8::internal::compiler::NameRef", align 8 ; 4 uses
   store i64 %2, ptr %9, align 8
@@ -996,9 +995,8 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.x, %.critedge22
-  %12 = load ptr, ptr %i.c, align 8
   %i.cq = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIPN2v88internal6maglev9ValueNodeES4_St4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S4_EEEEixERS9_(ptr noundef nonnull align 8 dereferenceable(56) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
-  store ptr %12, ptr %i.cq, align 8
+  store ptr %3, ptr %i.cq, align 8
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.z, %bb.ab, %bb.aa, %bb.ac

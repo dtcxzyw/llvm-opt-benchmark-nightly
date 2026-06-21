@@ -201,11 +201,11 @@ define linkonce_odr ptr @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointES
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !70     ; 9 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 5 uses
-  %i.c = ptrtoint ptr %i.a to i64                 ; 5 uses
+  %i.c = ptrtoint ptr %i.a to i64                 ; 4 uses
   %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !53   ; 8 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !52
   %.not = icmp eq ptr %i.f, %i.h
   br i1 %.not, label %bb.i, label %bb.b
@@ -261,7 +261,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 bb.i:                                             ; preds = %bb.a
   %i.ab = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 4 uses
   %i.ac = ptrtoint ptr %i.f to i64                ; 2 uses
-  %i.ad = sub i64 %i.ac, %i.c                     ; 2 uses
+  %i.ad = sub i64 %i.ac, %i.c                     ; 3 uses
   %i.ae = icmp eq i64 %i.ad, 9223372036854775800
   br i1 %i.ae, label %bb.j, label %_ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmPKc.exit.i
 
@@ -415,10 +415,7 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_S_relocateEPS1_
   br i1 %.not.i23.i, label %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i
-  %3 = load ptr, ptr %i.g, align 8, !tbaa !52
-  %4 = ptrtoint ptr %3 to i64
-  %5 = sub i64 %4, %i.c
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %5) #24
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %i.ad) #24
   br label %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit
 
 _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit: ; preds = %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i, %bb.k
@@ -821,7 +818,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.cw, label %bb.x, label %bb.y, !prof !82
 
 bb.x:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cu, ptr align 4 %1, i64 %i.cv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cu, ptr align 4 %1, i64 %i.cv, i1 false)
   br label %bb.aa
 
 bb.y:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_.exit

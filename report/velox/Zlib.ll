@@ -201,7 +201,7 @@ bb.a:
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i: ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.e = invoke noalias noundef nonnull dereferenceable(4224) ptr @_Znwm(i64 noundef 4224) #23
           to label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i unwind label %bb.b ; 4 uses
 
@@ -387,7 +387,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %i.bn = phi ptr [ %i.bi, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %i.ae, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit.thread ], [ %i.bi, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit ] ; 8 uses
+  %i.bn = phi ptr [ %i.bi, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %i.ae, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit.thread ], [ %i.bi, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit ] ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   %i.bo = and i16 %i.v, 31
   %i.bp = icmp eq i16 %i.bo, 31
@@ -409,12 +409,11 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_b
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
   store ptr %i.bt, ptr %i.bn, align 8, !tbaa !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.bt, ptr noundef nonnull align 8 dereferenceable(3) %i.j, i64 3, i1 false)
-  %.pre129 = load ptr, ptr %i.d, align 8, !tbaa !58
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   store i64 2, ptr %i.bu, align 8, !tbaa !49
   store ptr %i.j, ptr %3, align 8, !tbaa !40
   store i64 0, ptr %i.k, align 8, !tbaa !49
-  %i.bv = getelementptr inbounds nuw i8, ptr %.pre129, i64 32 ; 2 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bn, i64 32 ; 2 uses
   store ptr %i.bv, ptr %i.d, align 8, !tbaa !58
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit42
 

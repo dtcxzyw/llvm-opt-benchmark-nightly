@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %"struct.std::_Rb_tree<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, unsigned long>, std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, unsigned long>>, duckdb::CaseInsensitiveStringCompare>::_Auto_node", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   store ptr %0, ptr %3, align 8, !tbaa !396
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.b = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #24 ; 4 uses
   tail call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE17_M_construct_nodeIJRS5_RmEEEvPSt13_Rb_tree_nodeIS8_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.b, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(8) %2)
   store ptr %i.b, ptr %i.a, align 8, !tbaa !398
@@ -244,30 +244,34 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %.sroa.05.0.i = phi ptr [ %i.k, %bb.b ], [ %.02024.i, %._crit_edge.i ] ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i, i64 32
   %i.m = invoke noundef zeroext i1 @_ZN6duckdb10StringUtil10CILessThanERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_(ptr noundef nonnull align 8 dereferenceable(32) %i.l, ptr noundef nonnull align 8 dereferenceable(32) %i.c)
-          to label %.noexc8.a unwind label %.loopexit.split-lp
+          to label %.noexc8 unwind label %.loopexit.split-lp
 
-.noexc8.a:                                        ; preds = %bb.c
-  %.pre.a = load ptr, ptr %i.a, align 8, !tbaa !398 ; 5 uses
-  br i1 %i.m, label %select.unfold, label %bb.f
+.noexc8:                                          ; preds = %bb.c
+  br i1 %i.m, label %.noexc8.a, label %bb.f
+
+.noexc8.a:                                        ; preds = %.noexc8
+  %.pre = load ptr, ptr %3, align 8, !tbaa !402
+  %.pre.a = load ptr, ptr %i.a, align 8, !tbaa !398
+  br label %select.unfold
 
 select.unfold:                                    ; preds = %.noexc8.a, %._crit_edge.thread.i
   %i.n = phi ptr [ %i.b, %._crit_edge.thread.i ], [ %.pre.a, %.noexc8.a ] ; 3 uses
-  %.sroa.4.0.i.ph.a = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %.noexc8.a ] ; 3 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !402, !nonnull !135, !align !136 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.p = icmp eq ptr %.sroa.4.0.i.ph.a, %i.o
+  %.sroa.4.0.i.ph.a = phi ptr [ %0, %._crit_edge.thread.i ], [ %.pre, %.noexc8.a ] ; 2 uses
+  %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %.noexc8.a ] ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph.a, i64 8 ; 2 uses
+  %i.p = icmp eq ptr %.sroa.4.0.i.ph, %i.o
   br i1 %i.p, label %.thread21, label %bb.d
 
 bb.d:                                             ; preds = %select.unfold
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph.a, i64 32
+  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph, i64 32
   %i.s = invoke noundef zeroext i1 @_ZN6duckdb10StringUtil10CILessThanERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_(ptr noundef nonnull align 8 dereferenceable(32) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %i.r)
           to label %.thread21 unwind label %bb.e
 
 .thread21:                                        ; preds = %bb.d, %select.unfold
   %i.t = phi i1 [ true, %select.unfold ], [ %i.s, %bb.d ]
-  tail call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %i.t, ptr noundef %i.n, ptr noundef nonnull %.sroa.4.0.i.ph.a, ptr noundef nonnull align 8 dereferenceable(32) %i.o) #20
-  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
+  tail call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %i.t, ptr noundef %i.n, ptr noundef nonnull %.sroa.4.0.i.ph, ptr noundef nonnull align 8 dereferenceable(32) %i.o) #20
+  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph.a, i64 40 ; 2 uses
   %i.v = load i64, ptr %i.u, align 8, !tbaa !169
   %i.w = add i64 %i.v, 1
   store i64 %i.w, ptr %i.u, align 8, !tbaa !169
@@ -288,14 +292,15 @@ bb.e:                                             ; preds = %bb.d
           cleanup
   br label %bb.h
 
-bb.f:                                             ; preds = %.noexc8.a
-  %.not.i10 = icmp eq ptr %.pre.a, null
+bb.f:                                             ; preds = %.noexc8
+  %.pr = load ptr, ptr %i.a, align 8, !tbaa !398  ; 4 uses
+  %.not.i10 = icmp eq ptr %.pr, null
   br i1 %.not.i10, label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE10_Auto_nodeD2Ev.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.y = getelementptr inbounds nuw i8, ptr %.pre.a, i64 32
+  %i.y = getelementptr inbounds nuw i8, ptr %.pr, i64 32
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !77   ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %.pre.a, i64 48
+  %i.aa = getelementptr inbounds nuw i8, ptr %.pr, i64 48
   %i.ab = icmp eq ptr %i.z, %i.aa
   br i1 %i.ab, label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
 
@@ -304,7 +309,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %.pre.a) #22
+  tail call void @_ZdlPv(ptr noundef nonnull %.pr) #22
   br label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE10_Auto_nodeD2Ev.exit
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE10_Auto_nodeD2Ev.exit: ; preds = %.thread21, %bb.f, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESt10_Select1stIS8_EN6duckdb28CaseInsensitiveStringCompareESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E.exit.i

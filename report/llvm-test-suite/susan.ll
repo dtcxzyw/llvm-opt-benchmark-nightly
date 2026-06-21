@@ -200,7 +200,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define dso_local void @susan_smoothing(i32 noundef %0, ptr noundef %1, double noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef readonly captures(none) %5) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = alloca i32, align 4                      ; 7 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 6 uses
   %i.d = fptrunc double %2 to float               ; 3 uses
   store ptr %1, ptr %i.a, align 8, !tbaa !11
@@ -253,7 +253,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %or.cond347, label %.preheader260, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %i.y = load i32, ptr %i.b, align 4, !tbaa !4
+  %i.y = load i32, ptr %i.b, align 4, !tbaa !4    ; 2 uses
   %i.z = sub nsw i32 %i.y, %i.m
   %i.aa = mul nsw i32 %i.m, %i.m
   %i.ab = zext nneg i32 %i.aa to i64
@@ -285,7 +285,6 @@ bb.f:                                             ; preds = %bb.e
   %i.ao = zext i32 %i.an to i64
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %i.aq = sext i32 %.0173 to i64
-  %.pre319 = load i32, ptr %i.b, align 4, !tbaa !4
   %xtraiter = and i32 %i.am, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %i.ar = sub i32 0, %i.h
@@ -317,7 +316,7 @@ bb.g:                                             ; preds = %.preheader259, %bb.
 
 .preheader257:                                    ; preds = %.preheader257.lr.ph, %._crit_edge301
   %i.bf = phi i32 [ %i.ah, %.preheader257.lr.ph ], [ %i.fh, %._crit_edge301 ]
-  %i.bg = phi i32 [ %.pre319, %.preheader257.lr.ph ], [ %i.fi, %._crit_edge301 ] ; 3 uses
+  %i.bg = phi i32 [ %i.y, %.preheader257.lr.ph ], [ %i.fi, %._crit_edge301 ] ; 3 uses
   %.0174304 = phi ptr [ %1, %.preheader257.lr.ph ], [ %.1175.lcssa, %._crit_edge301 ] ; 2 uses
   %.1181303 = phi i32 [ %.0173, %.preheader257.lr.ph ], [ %.pre-phi, %._crit_edge301 ] ; 5 uses
   %i.bh = sub nsw i32 %i.bg, %.0173

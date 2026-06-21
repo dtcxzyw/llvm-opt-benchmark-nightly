@@ -201,7 +201,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %_ZNSt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_deleteIS1_EED2Ev.exit, %bb.a
@@ -348,8 +348,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bw = ptrtoint ptr %i.aq to i64               ; 3 uses
-  %i.bx = ptrtoint ptr %i.as to i64               ; 4 uses
-  %i.by = sub i64 %i.bw, %i.bx                    ; 3 uses
+  %i.bx = ptrtoint ptr %i.as to i64               ; 3 uses
+  %i.by = sub i64 %i.bw, %i.bx                    ; 4 uses
   %i.bz = icmp eq i64 %i.by, 9223372036854775800
   br i1 %i.bz, label %bb.n, label %_ZNKSt6vectorISt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
 
@@ -452,10 +452,7 @@ _ZNSt6vectorISt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_delete
   br i1 %.not.i23.i, label %_ZNSt6vectorISt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit, label %bb.o
 
 bb.o:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i
-  %6 = load ptr, ptr %i.t, align 8
-  %7 = ptrtoint ptr %6 to i64
-  %8 = sub i64 %7, %i.bx
-  call void @_ZdlPvm(ptr noundef nonnull %i.as, i64 noundef %8) #25
+  call void @_ZdlPvm(ptr noundef nonnull %i.as, i64 noundef %i.by) #25
   br label %_ZNSt6vectorISt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit
 
 _ZNSt6vectorISt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN12v8_inspector16V8DebuggerScriptESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, %bb.o

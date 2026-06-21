@@ -201,8 +201,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.q
   %.sroa.0.023 = phi ptr [ %.sroa.0.021, %.lr.ph ], [ %.sroa.0.0, %bb.q ] ; 8 uses
   %.pn22 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.023, %bb.q ] ; 4 uses
-  %i.j = getelementptr i8, ptr %.pn22, i64 48     ; 3 uses
-  %.val1.i = load i64, ptr %i.j, align 8, !tbaa !58 ; 4 uses
+  %i.j = getelementptr i8, ptr %.pn22, i64 48     ; 2 uses
+  %.val1.i = load i64, ptr %i.j, align 8, !tbaa !58 ; 5 uses
   %.val3.i = load i64, ptr %i.c, align 8, !tbaa !58 ; 2 uses
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umin.i64(i64 %.val3.i, i64 %.val1.i) ; 2 uses
   %i.k = icmp eq i64 %.sroa.speculated.i.i.i.i, 0
@@ -249,8 +249,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN3re26RegexpEEC2EOS9_.exit
 
 _ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN3re26RegexpEEC2EOS9_.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %3 = load i64, ptr %i.j, align 8, !tbaa !58
-  store i64 %3, ptr %i.e, align 8, !tbaa !58
+  store i64 %.val1.i, ptr %i.e, align 8, !tbaa !58
   store ptr %i.p, ptr %.sroa.0.023, align 8, !tbaa !37
   store i64 0, ptr %i.j, align 8, !tbaa !58
   store i8 0, ptr %i.p, align 8, !tbaa !41

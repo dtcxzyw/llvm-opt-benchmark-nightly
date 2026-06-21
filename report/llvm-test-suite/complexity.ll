@@ -201,7 +201,7 @@ _ZNSt6vectorIlSaIlEE9push_backERKl.exit:          ; preds = %_ZNSt6vectorIlSaIlE
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !75
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0164.0224, i64 392 ; 2 uses
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !76
-  %i.bj = sitofp i64 %i.bi to double              ; 2 uses
+  %i.bj = sitofp i64 %i.bi to double              ; 3 uses
   %i.bk = fdiv double %i.bg, %i.bj                ; 2 uses
   %.not.i.i = icmp eq ptr %i.aa, %i.z
   br i1 %.not.i.i, label %bb.n, label %bb.m
@@ -262,16 +262,17 @@ _ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.p, %.
 
 bb.q:                                             ; preds = %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ae, i64 noundef %i.bn) #23
+  %.pre.pre = load i64, ptr %i.bh, align 8, !tbaa !76
+  %.pre386 = sitofp i64 %.pre.pre to double
   br label %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i: ; preds = %bb.q, %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i
+  %.pre385.pre-phi = phi double [ %.pre386, %bb.q ], [ %i.bj, %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i ]
   %11 = getelementptr inbounds nuw [8 x i8], ptr %i.bv, i64 %i.bt
-  %.pre = load i64, ptr %i.bh, align 8, !tbaa !76
-  %.pre384 = sitofp i64 %.pre to double
   br label %_ZNSt6vectorIdSaIdEE9push_backEOd.exit
 
 _ZNSt6vectorIdSaIdEE9push_backEOd.exit:           ; preds = %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i, %bb.m
-  %.pre-phi = phi double [ %.pre384, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i ], [ %i.bj, %bb.m ]
+  %.pre-phi = phi double [ %.pre385.pre-phi, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i ], [ %i.bj, %bb.m ]
   %i.by = phi ptr [ %11, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i ], [ %i.z, %bb.m ] ; 4 uses
   %.pn275 = phi ptr [ %i.bw, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i ], [ %i.aa, %bb.m ]
   %i.bz = phi ptr [ %i.bv, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i ], [ %i.ae, %bb.m ] ; 6 uses

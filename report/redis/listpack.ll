@@ -201,17 +201,21 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %i.c
   %i.e = getelementptr inbounds i8, ptr %i.d, i64 -1
-  %i.f = load ptr, ptr %1, align 8, !tbaa !19     ; 3 uses
+  %i.f = load ptr, ptr %1, align 8, !tbaa !19     ; 4 uses
   %i.g = icmp eq i64 %2, 0
-  br i1 %i.g, label %bb.s, label %.preheader.a
+  br i1 %i.g, label %bb.s, label %.preheader
 
-.preheader.a:                                     ; preds = %bb.a, %lpAssertValidEntry.exit
-  %.in = phi i64 [ %i.h, %lpAssertValidEntry.exit ], [ %2, %bb.a ]
-  %.05160 = phi ptr [ %i.al, %lpAssertValidEntry.exit ], [ %i.f, %bb.a ] ; 4 uses
-  %.05359 = phi i64 [ %i.i, %lpAssertValidEntry.exit ], [ 0, %bb.a ]
+.preheader:                                       ; preds = %bb.a
+  %.pre = load i8, ptr %i.f, align 1, !tbaa !13
+  br label %.preheader.a
+
+.preheader.a:                                     ; preds = %.preheader, %lpAssertValidEntry.exit
+  %3 = phi i8 [ %.pre, %.preheader ], [ %i.am, %lpAssertValidEntry.exit ] ; 4 uses
+  %.in = phi i64 [ %2, %.preheader ], [ %i.h, %lpAssertValidEntry.exit ]
+  %.05160 = phi ptr [ %i.f, %.preheader ], [ %i.al, %lpAssertValidEntry.exit ] ; 3 uses
+  %.05359 = phi i64 [ 0, %.preheader ], [ %i.i, %lpAssertValidEntry.exit ]
   %i.h = add i64 %.in, -1                         ; 2 uses
   %i.i = add nuw i64 %.05359, 1                   ; 2 uses
-  %3 = load i8, ptr %.05160, align 1, !tbaa !13   ; 4 uses
   %i.j = zext i8 %3 to i32                        ; 5 uses
   %i.k = icmp sgt i8 %3, -1
   br i1 %i.k, label %lpSkip.exit, label %bb.b
@@ -297,7 +301,7 @@ lpSkip.exit:                                      ; preds = %switch.lookup, %.pr
   %i.aj = zext i32 %.shrunk.i to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %.05160, i64 %.0.i5.i
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.aj ; 5 uses
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !13
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !13  ; 2 uses
   %i.an = icmp eq i8 %i.am, -1
   br i1 %i.an, label %bb.o, label %bb.m
 
@@ -327,7 +331,7 @@ bb.o:                                             ; preds = %lpSkip.exit, %lpAss
   %i.at = ptrtoint ptr %i.al to i64               ; 2 uses
   %i.au = add i64 %i.as, 1
   %i.av = sub i64 %i.au, %i.at
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.f, ptr nonnull align 1 %i.al, i64 %i.av, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.f, ptr nonnull align 1 %i.al, i64 %i.av, i1 false)
   %.neg = add i64 %i.ap, %i.c
   %i.aw = sub i64 %.neg, %i.at                    ; 2 uses
   %i.ax = trunc i64 %i.aw to i32

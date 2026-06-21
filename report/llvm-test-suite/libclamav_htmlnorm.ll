@@ -201,7 +201,7 @@ bb.a:
   %i.b = alloca [1025 x i8], align 16             ; 26 uses
   %i.c = alloca [1025 x i8], align 16             ; 12 uses
   %i.d = alloca [1025 x i8], align 16             ; 37 uses
-  %5 = alloca %struct.tag_arguments_tag, align 8  ; 23 uses
+  %5 = alloca %struct.tag_arguments_tag, align 8  ; 21 uses
   %6 = alloca %struct.entity_conv, align 8        ; 9 uses
   %i.e = alloca [1025 x i8], align 16             ; 10 uses
   %i.f = alloca [10 x i8], align 1                ; 10 uses
@@ -604,8 +604,8 @@ bb.jb:                                            ; preds = %bb.ir
   br i1 %i.acc, label %bb.jc, label %bb.jy
 
 bb.jc:                                            ; preds = %bb.jb
-  %i.acd = load i32, ptr %5, align 8, !tbaa !24   ; 2 uses
-  %i.ace = icmp sgt i32 %i.acd, 0
+  %i.acd = load i32, ptr %5, align 8, !tbaa !24   ; 3 uses
+  %i.ace = icmp sgt i32 %i.acd, 0                 ; 2 uses
   br i1 %i.ace, label %.lr.ph.i, label %.critedge1216
 
 .lr.ph.i:                                         ; preds = %bb.jc
@@ -748,13 +748,12 @@ bb.jn:                                            ; preds = %html_output_flush.e
   br label %html_output_str.exit.i
 
 html_output_str.exit.i:                           ; preds = %bb.jn, %html_output_flush.exit15.i.i, %.critedge1216
-  %7 = load i32, ptr %5, align 8, !tbaa !24
-  %8 = icmp sgt i32 %7, 0
-  br i1 %8, label %.lr.ph58.i, label %._crit_edge59.i
+  br i1 %i.ace, label %.lr.ph58.i, label %._crit_edge59.i
 
 .lr.ph58.i:                                       ; preds = %html_output_str.exit.i
   %i.aed = load ptr, ptr %i.u, align 8
   %i.aee = load ptr, ptr %i.v, align 8
+  %7 = zext nneg i32 %i.acd to i64
   br label %bb.jo
 
 bb.jo:                                            ; preds = %html_output_c.exit50.i, %.lr.ph58.i
@@ -917,10 +916,8 @@ bb.jv:                                            ; preds = %html_output_flush.e
 
 html_output_c.exit50.i:                           ; preds = %bb.jv, %html_output_str.exit39.i, %bb.jo
   %indvars.iv.next63.i = add nuw nsw i64 %indvars.iv62.i, 1 ; 2 uses
-  %9 = load i32, ptr %5, align 8, !tbaa !24
-  %10 = sext i32 %9 to i64
-  %11 = icmp slt i64 %indvars.iv.next63.i, %10
-  br i1 %11, label %bb.jo, label %._crit_edge59.i, !llvm.loop !49
+  %exitcond1912.not = icmp eq i64 %indvars.iv.next63.i, %7
+  br i1 %exitcond1912.not, label %._crit_edge59.i, label %bb.jo, !llvm.loop !49
 
 ._crit_edge59.i:                                  ; preds = %html_output_c.exit50.i, %html_output_str.exit.i
   br i1 %.not.i1538, label %.critedge1220, label %bb.jw

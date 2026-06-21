@@ -201,7 +201,7 @@ _ZN6icu_7812FormatParser3setERKNS_13UnicodeStringE.exit: ; preds = %bb.b, %bb.c
 bb.d:                                             ; preds = %.lr.ph, %bb.p
   %i.ah = phi ptr [ %i.x, %.lr.ph ], [ %i.cm, %bb.p ]
   %.056 = phi i8 [ 0, %.lr.ph ], [ %.4.ph, %bb.p ] ; 3 uses
-  %storemerge55 = phi i32 [ 0, %.lr.ph ], [ %i.cl, %bb.p ]
+  %storemerge55 = phi i32 [ 0, %.lr.ph ], [ %i.cl, %bb.p ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.aj = sext i32 %storemerge55 to i64
@@ -244,6 +244,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bc = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef nonnull align 8 dereferenceable(64) %7, i32 noundef 0, i32 noundef %i.bb) #25 ; 0 uses
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
+  %.pre = load i32, ptr %i.b, align 4
   br label %bb.p
 
 bb.g:                                             ; preds = %_ZN6icu_7812FormatParser14isQuoteLiteralERKNS_13UnicodeStringE.exit
@@ -366,10 +367,10 @@ _ZN6icu_7824DateTimePatternGenerator10addPatternERKNS_13UnicodeStringEaRS1_R10UE
   br label %.loopexit
 
 bb.p:                                             ; preds = %bb.f, %bb.i, %bb.e, %switch.early.test, %bb.k
+  %8 = phi i32 [ %storemerge55, %switch.early.test ], [ %storemerge55, %bb.k ], [ %storemerge55, %bb.e ], [ %.pre, %bb.f ], [ %storemerge55, %bb.i ]
   %.4.ph = phi i8 [ 0, %switch.early.test ], [ 1, %bb.k ], [ 0, %bb.e ], [ 1, %bb.f ], [ 1, %bb.i ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %6) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
-  %8 = load i32, ptr %i.b, align 4
   %i.cl = add nsw i32 %8, 1                       ; 3 uses
   store i32 %i.cl, ptr %i.b, align 4
   %i.cm = load ptr, ptr %i.d, align 8             ; 2 uses
@@ -772,7 +773,7 @@ _ZN6icu_7812FormatParser3setERKNS_13UnicodeStringE.exit: ; preds = %bb.b, %bb.c
 
 bb.d:                                             ; preds = %.lr.ph120, %bb.z
   %i.aw = phi ptr [ %i.y, %.lr.ph120 ], [ %i.gk, %bb.z ]
-  %storemerge119 = phi i32 [ 0, %.lr.ph120 ], [ %i.gj, %bb.z ]
+  %storemerge119 = phi i32 [ 0, %.lr.ph120 ], [ %i.gj, %bb.z ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.ay = sext i32 %storemerge119 to i64
@@ -811,6 +812,7 @@ bb.e:                                             ; preds = %_ZN6icu_7812FormatP
   %i.br = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %8, i32 noundef 0, i32 noundef %i.bq) #25 ; 0 uses
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %8) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
+  %.pre = load i32, ptr %i.d, align 4
   br label %bb.z
 
 bb.f:                                             ; preds = %_ZN6icu_7812FormatParser14isQuoteLiteralERKNS_13UnicodeStringE.exit
@@ -1125,9 +1127,9 @@ _ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit: ; preds =
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZN6icu_7812FormatParser17getCanonicalIndexERKNS_13UnicodeStringE.exit.thread, %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit, %bb.e, %.thread
+  %9 = phi i32 [ %storemerge119, %_ZN6icu_7812FormatParser17getCanonicalIndexERKNS_13UnicodeStringE.exit.thread ], [ %storemerge119, %_ZNK6icu_7814SkeletonFields13appendFieldToEiRNS_13UnicodeStringE.exit ], [ %.pre, %bb.e ], [ %storemerge119, %.thread ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  %9 = load i32, ptr %i.d, align 4
   %i.gj = add nsw i32 %9, 1                       ; 3 uses
   store i32 %i.gj, ptr %i.d, align 4
   %i.gk = load ptr, ptr %i.f, align 8             ; 2 uses

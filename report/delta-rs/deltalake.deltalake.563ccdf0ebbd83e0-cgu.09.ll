@@ -201,9 +201,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXs_NtCs3JXekYNd0JR_7dashmap4iterINtB4_10OwningIterNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_3vec3VecbEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) %0, ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(112) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = alloca [24 x i8], align 8                  ; 2 uses
   %i.a = alloca [32 x i8], align 8                ; 7 uses
-  %.sroa.2 = alloca [16 x i8], align 8            ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 6 uses
@@ -274,21 +272,20 @@ _RNvXsA_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_11RawIntoIterTNtNtCs6Po7BT7N
   %i.ad = load i64, ptr %i.f, align 8, !noundef !4 ; 2 uses
   %i.ae = load i64, ptr %i.g, align 8, !noundef !4
   %i.af = icmp eq i64 %i.ad, %i.ae
-  br i1 %i.af, label %3, label %bb.g
+  br i1 %i.af, label %bb.f, label %bb.g
 
 bb.e:                                             ; preds = %_RNvXsA_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_11RawIntoIterTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB15_3vec3VecbEEEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCs7p2uQeJxui2_9deltalake.exit
   %.sroa.7.0..sroa_idx = getelementptr inbounds i8, ptr %i.aa, i64 -40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx, i64 16, i1 false)
-  %i.ag = getelementptr inbounds i8, ptr %i.aa, i64 -24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.ag, i64 24, i1 false)
-  store i64 %.sroa.0.0.copyload, ptr %0, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2, i64 16, i1 false)
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx, i64 16, i1 false)
+  %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %i.aa, i64 -24
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, i64 24, i1 false)
   br label %bb.f
 
-bb.f:                                             ; preds = %3, %bb.e
+bb.f:                                             ; preds = %_RNvXsA_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_11RawIntoIterTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB15_3vec3VecbEEEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCs7p2uQeJxui2_9deltalake.exit.thread, %bb.e
+  %storemerge = phi i64 [ %.sroa.0.0.copyload, %bb.e ], [ -9223372036854775808, %_RNvXsA_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_11RawIntoIterTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB15_3vec3VecbEEEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCs7p2uQeJxui2_9deltalake.exit.thread ]
+  store i64 %storemerge, ptr %0, align 8
   ret void
 
 bb.g:                                             ; preds = %_RNvXsA_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_11RawIntoIterTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB15_3vec3VecbEEEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCs7p2uQeJxui2_9deltalake.exit.thread
@@ -304,10 +301,6 @@ bb.g:                                             ; preds = %_RNvXsA_NtNtCsbZMnT
 bb.h:                                             ; preds = %bb.g
   invoke void @_RNvMs0_NtCs3JXekYNd0JR_7dashmap4lockNtB5_9RawRwLock21unlock_exclusive_slow(ptr noundef nonnull align 8 %i.ah)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslfDARg5dRCJ_8lock_api6rwlock16RwLockWriteGuardNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1B_4util11SharedValueINtNtB35_3vec3VecbEEEEEECs7p2uQeJxui2_9deltalake.exit unwind label %bb.u
-
-3:                                                ; preds = %_RNvXsA_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_11RawIntoIterTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB15_3vec3VecbEEEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCs7p2uQeJxui2_9deltalake.exit.thread
-  store i64 -9223372036854775808, ptr %0, align 8
-  br label %bb.f
 
 common.resume.i:                                  ; preds = %.body.i, %bb.o, %bb.s
   %eh.lpad-body = phi { ptr, i32 } [ %i.cc, %bb.s ], [ %i.bx, %bb.o ], [ %eh.lpad-body.i, %.body.i ]

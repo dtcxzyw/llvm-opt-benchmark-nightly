@@ -201,6 +201,9 @@ bb.ai:                                            ; preds = %_ZNSt14_Optional_ba
   ret void
 }
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN2v88internal12_GLOBAL__N_111MyersDiffer4Path3AddERKS3_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr %.0.val, ptr %.8.val) unnamed_addr #0 align 2 {
 bb.a:
@@ -296,7 +299,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN2v88internal12_GLOBAL__N_111MyersDiff
   br i1 %i.ae, label %bb.m, label %bb.n, !prof !12
 
 bb.m:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN2v88internal12_GLOBAL__N_111MyersDiffer5PointES5_SaIS4_EET0_T_S8_S7_RT1_.exit.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ad, ptr align 4 %.0.val, i64 %i.h, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ad, ptr align 4 %.0.val, i64 %i.h, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPN2v88internal12_GLOBAL__N_111MyersDiffer5PointES5_SaIS4_EET0_T_S8_S7_RT1_.exit60.i.i
 
 bb.n:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN2v88internal12_GLOBAL__N_111MyersDiffer5PointES5_SaIS4_EET0_T_S8_S7_RT1_.exit.i.i

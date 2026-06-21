@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %_ZNSt12__shared_ptr
   call void @llvm.experimental.noalias.scope.decl(metadata !70)
   store ptr null, ptr %0, align 8, !tbaa !73, !alias.scope !70
   %i.r = invoke noalias noundef nonnull dereferenceable(280) ptr @_Znwm(i64 noundef 280) #20
-          to label %.noexc unwind label %bb.r     ; 7 uses
+          to label %.noexc unwind label %bb.r     ; 8 uses
 
 .noexc:                                           ; preds = %bb.h
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
@@ -209,7 +209,7 @@ bb.h:                                             ; preds = %_ZNSt12__shared_ptr
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 12
   store i32 1, ptr %i.t, align 4, !tbaa !54, !noalias !70
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.r, align 8, !tbaa !7, !noalias !70
-  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 11 uses
   invoke void @_ZN16OpenColorIO_v2_512MatrixOpDataC1Ev(ptr noundef nonnull align 8 dereferenceable(260) %i.u)
           to label %bb.i unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit9.i.i.i.i, !noalias !70
 
@@ -229,47 +229,46 @@ bb.i:                                             ; preds = %.noexc
           to label %bb.j unwind label %bb.s       ; 0 uses
 
 bb.j:                                             ; preds = %bb.i
-  %4 = load ptr, ptr %0, align 8, !tbaa !73       ; 10 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.018, i64 216
-  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 248
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.r, i64 264
   %i.ac = load <2 x i32>, ptr %i.aa, align 8, !tbaa !77
   store <2 x i32> %i.ac, ptr %i.ab, align 8, !tbaa !77
   %i.ad = getelementptr inbounds nuw i8, ptr %.018, i64 200
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !11 ; 3 uses
-  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData13setArrayValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %4, i64 noundef 0, double noundef %i.ae)
+  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData13setArrayValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %i.u, i64 noundef 0, double noundef %i.ae)
           to label %bb.k unwind label %bb.t
 
 bb.k:                                             ; preds = %bb.j
-  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData13setArrayValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %4, i64 noundef 5, double noundef %i.ae)
+  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData13setArrayValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %i.u, i64 noundef 5, double noundef %i.ae)
           to label %bb.l unwind label %bb.t
 
 bb.l:                                             ; preds = %bb.k
-  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData13setArrayValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %4, i64 noundef 10, double noundef %i.ae)
+  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData13setArrayValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %i.u, i64 noundef 10, double noundef %i.ae)
           to label %bb.m unwind label %bb.t
 
 bb.m:                                             ; preds = %bb.l
   %i.af = getelementptr inbounds nuw i8, ptr %.018, i64 208
   %i.ag = load double, ptr %i.af, align 8, !tbaa !57 ; 3 uses
-  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %4, i64 noundef 0, double noundef %i.ag)
+  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %i.u, i64 noundef 0, double noundef %i.ag)
           to label %bb.n unwind label %bb.u
 
 bb.n:                                             ; preds = %bb.m
-  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %4, i64 noundef 1, double noundef %i.ag)
+  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %i.u, i64 noundef 1, double noundef %i.ag)
           to label %bb.o unwind label %bb.u
 
 bb.o:                                             ; preds = %bb.n
-  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %4, i64 noundef 2, double noundef %i.ag)
+  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %i.u, i64 noundef 2, double noundef %i.ag)
           to label %bb.p unwind label %bb.u
 
 bb.p:                                             ; preds = %bb.o
-  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %4, i64 noundef 3, double noundef 0.000000e+00)
+  invoke void @_ZN16OpenColorIO_v2_512MatrixOpData14setOffsetValueEmd(ptr noundef nonnull align 8 dereferenceable(260) %i.u, i64 noundef 3, double noundef 0.000000e+00)
           to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %bb.p
-  %i.ah = load ptr, ptr %4, align 8, !tbaa !7
+  %i.ah = load ptr, ptr %i.u, align 8, !tbaa !7
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8
-  invoke void %i.aj(ptr noundef nonnull align 8 dereferenceable(260) %4)
+  invoke void %i.aj(ptr noundef nonnull align 8 dereferenceable(260) %i.u)
           to label %bb.v unwind label %bb.u
 
 bb.r:                                             ; preds = %bb.h

@@ -201,22 +201,10 @@ begin_hunk_0_@_ZN16OpenColorIO_v2_519applyTetrahedralAVXEPKfiS1_Pfi:bb.a
 
 .lr.ph208.i:                                      ; preds = %.lr.ph208.i, %.lr.ph208.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph208.preheader.i ], [ %indvars.iv.next.i, %.lr.ph208.i ] ; 2 uses
-  %.1205.i = phi ptr [ %.066.lcssa.i, %.lr.ph208.preheader.i ], [ %i.uj, %.lr.ph208.i ] ; 5 uses
-  %5 = load float, ptr %.1205.i, align 4, !tbaa !16
-  %i.ui = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i ; 4 uses
-  store float %5, ptr %i.ui, align 16, !tbaa !16
-  %6 = getelementptr inbounds nuw i8, ptr %.1205.i, i64 4
-  %7 = load float, ptr %6, align 4, !tbaa !16
-  %8 = getelementptr inbounds nuw i8, ptr %i.ui, i64 4
-  store float %7, ptr %8, align 4, !tbaa !16
-  %9 = getelementptr inbounds nuw i8, ptr %.1205.i, i64 8
-  %10 = load float, ptr %9, align 4, !tbaa !16
-  %11 = getelementptr inbounds nuw i8, ptr %i.ui, i64 8
-  store float %10, ptr %11, align 8, !tbaa !16
-  %12 = getelementptr inbounds nuw i8, ptr %.1205.i, i64 12
-  %13 = load float, ptr %12, align 4, !tbaa !16
-  %14 = getelementptr inbounds nuw i8, ptr %i.ui, i64 12
-  store float %13, ptr %14, align 4, !tbaa !16
+  %.1205.i = phi ptr [ %.066.lcssa.i, %.lr.ph208.preheader.i ], [ %i.uj, %.lr.ph208.i ] ; 2 uses
+  %i.ui = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %5 = load <4 x float>, ptr %.1205.i, align 4, !tbaa !16
+  store <4 x float> %5, ptr %i.ui, align 16, !tbaa !16
   %i.uj = getelementptr inbounds nuw i8, ptr %.1205.i, i64 16
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %i.uk = icmp samesign ult i64 %indvars.iv.next.i, %i.kd
@@ -229,18 +217,10 @@ begin_hunk_0_@_ZN16OpenColorIO_v2_519applyTetrahedralAVXEPKfiS1_Pfi:bb.a
 
 .lr.ph214.i:                                      ; preds = %.lr.ph214.i, %.lr.ph214.preheader.i
   %indvars.iv218.i = phi i64 [ 0, %.lr.ph214.preheader.i ], [ %indvars.iv.next219.i, %.lr.ph214.i ] ; 2 uses
-  %.168211.i = phi ptr [ %.067.lcssa.i, %.lr.ph214.preheader.i ], [ %i.um, %.lr.ph214.i ] ; 4 uses
-  %i.ul = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv218.i ; 3 uses
-  %15 = load <2 x float>, ptr %i.ul, align 16, !tbaa !16
-  store <2 x float> %15, ptr %.168211.i, align 4, !tbaa !16
-  %16 = getelementptr inbounds nuw i8, ptr %i.ul, i64 8
-  %17 = load float, ptr %16, align 8, !tbaa !16
-  %18 = getelementptr inbounds nuw i8, ptr %.168211.i, i64 8
-  store float %17, ptr %18, align 4, !tbaa !16
-  %19 = getelementptr inbounds nuw i8, ptr %i.ul, i64 12
-  %20 = load float, ptr %19, align 4, !tbaa !16
-  %21 = getelementptr inbounds nuw i8, ptr %.168211.i, i64 12
-  store float %20, ptr %21, align 4, !tbaa !16
+  %.168211.i = phi ptr [ %.067.lcssa.i, %.lr.ph214.preheader.i ], [ %i.um, %.lr.ph214.i ] ; 2 uses
+  %i.ul = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv218.i
+  %6 = load <4 x float>, ptr %i.ul, align 16, !tbaa !16
+  store <4 x float> %6, ptr %.168211.i, align 4, !tbaa !16
   %i.um = getelementptr inbounds nuw i8, ptr %.168211.i, i64 16
   %indvars.iv.next219.i = add nuw nsw i64 %indvars.iv218.i, 4 ; 2 uses
   %i.un = icmp samesign ult i64 %indvars.iv.next219.i, %i.uh

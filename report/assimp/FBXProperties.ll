@@ -201,7 +201,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZNK6Assimp3FBX13PropertyTable21GetUnparsedPropertiesB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::unordered_map.32") align 8 %0, ptr noundef nonnull align 8 dereferenceable(136) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::shared_ptr.46", align 8 ; 7 uses
+  %2 = alloca %"class.std::shared_ptr.46", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.a, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -245,7 +245,7 @@ bb.d:                                             ; preds = %_ZNSt13unordered_ma
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.017.026, i64 40
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = invoke fastcc noundef ptr @_ZN6Assimp3FBX12_GLOBAL__N_117ReadTypedPropertyERKNS0_7ElementE(ptr noundef nonnull align 8 dereferenceable(40) %i.m)
-          to label %bb.e unwind label %bb.m       ; 6 uses
+          to label %bb.e unwind label %bb.m       ; 7 uses
 
 bb.e:                                             ; preds = %bb.d
   store ptr %i.n, ptr %2, align 8
@@ -309,8 +309,7 @@ bb.n:                                             ; preds = %bb.l
           to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN6Assimp3FBX8PropertyEESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit unwind label %bb.ad ; 2 uses
 
 _ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN6Assimp3FBX8PropertyEESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit: ; preds = %bb.n
-  %3 = load ptr, ptr %2, align 8
-  store ptr %3, ptr %i.ad, align 8
+  store ptr %i.n, ptr %i.ad, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8 ; 3 uses
   %i.af = load ptr, ptr %i.ae, align 8
   %.not.i.i.i = icmp eq ptr %i.o, %i.af
