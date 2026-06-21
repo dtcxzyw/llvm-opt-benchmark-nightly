@@ -201,7 +201,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 5 uses
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %3 = alloca %struct.aiString, align 4           ; 4 uses
+  %3 = alloca %struct.aiString, align 4           ; 3 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %5 = alloca %struct.aiString, align 4           ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -499,8 +499,7 @@ _ZN10aiMetadata5AllocEj.exit:                     ; preds = %bb.m
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %i.cr, i8 0, i64 1024, i1 false)
   %i.ee = and i64 %i.ec, 4294966272
   %.not.i45 = icmp eq i64 %i.ee, 0
-  %spec.select.i = select i1 %.not.i45, i32 %i.ed, i32 1023 ; 3 uses
-  store i32 %spec.select.i, ptr %3, align 4
+  %spec.select.i = select i1 %.not.i45, i32 %i.ed, i32 1023 ; 2 uses
   %i.ef = load ptr, ptr %i.ea, align 8
   %i.eg = zext i32 %spec.select.i to i64          ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cr, ptr align 1 %i.ef, i64 %i.eg, i1 false)
@@ -903,7 +902,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPPKN6Assimp3MDL8HalfLife18SequenceHeade
   br i1 %i.cw, label %bb.x, label %bb.y, !prof !459
 
 bb.x:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPKN6Assimp3MDL8HalfLife18SequenceHeader_HL1ES6_SaIS5_EET0_T_S9_S8_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cu, ptr align 8 %1, i64 %i.cv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cu, ptr align 8 %1, i64 %i.cv, i1 false)
   br label %bb.aa
 
 bb.y:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPKN6Assimp3MDL8HalfLife18SequenceHeader_HL1ES6_SaIS5_EET0_T_S9_S8_RT1_.exit

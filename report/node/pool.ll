@@ -29,10 +29,10 @@ bb.a:
   br i1 %.not, label %bb.m, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.val57 = load ptr, ptr %2, align 8, !tbaa !9   ; 3 uses
+  %.val57 = load ptr, ptr %2, align 8, !tbaa !9   ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.val58 = load ptr, ptr %i.a, align 8           ; 3 uses
-  %.not.i = icmp eq ptr %.val57, null
+  %.not.i = icmp eq ptr %.val57, null             ; 2 uses
   br i1 %.not.i, label %ZSTD_customCalloc.exit, label %bb.c
 
 ZSTD_customCalloc.exit:                           ; preds = %bb.b
@@ -89,12 +89,10 @@ bb.e:                                             ; preds = %ZSTD_customCalloc.e
   %i.x = getelementptr inbounds nuw i8, ptr %.0.i6769, i64 232
   store i32 0, ptr %i.x, align 8, !tbaa !21
   %i.y = shl i64 %0, 3                            ; 3 uses
-  %.val = load ptr, ptr %2, align 8, !tbaa !9     ; 2 uses
-  %.not.i62 = icmp eq ptr %.val, null
-  br i1 %.not.i62, label %bb.g, label %bb.f
+  br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.critedge
-  %i.z = tail call ptr %.val(ptr noundef %.val58, i64 noundef %i.y) #9, !inline_history !12 ; 2 uses
+  %i.z = tail call ptr %.val57(ptr noundef %.val58, i64 noundef %i.y) #9, !inline_history !12 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.z, i8 0, i64 %i.y, i1 false)
   br label %ZSTD_customCalloc.exit64
 

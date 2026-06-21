@@ -201,13 +201,13 @@ bb.a:
   %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %24 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %25 = alloca %"struct.v8::internal::wasm::IndexImmediate", align 4 ; 5 uses
-  %26 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 5 uses
+  %26 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %27 = alloca %"struct.v8::internal::wasm::IndexImmediate", align 4 ; 6 uses
   %28 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %29 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %30 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %31 = alloca %"struct.v8::internal::wasm::IndexImmediate", align 4 ; 5 uses
-  %32 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 5 uses
+  %32 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %33 = alloca %"struct.v8::internal::wasm::IndexImmediate", align 4 ; 6 uses
   %34 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %35 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -610,7 +610,7 @@ bb.cs:                                            ; preds = %_ZNK2v88internal4wa
   %i.abm = load i8, ptr %i.abl, align 2, !range !8, !noundef !9
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #17
   %i.abn = getelementptr inbounds nuw i8, ptr %i.abk, i64 4
-  %.sroa.0.0.copyload.i1137 = load i32, ptr %i.abn, align 4 ; 2 uses
+  %.sroa.0.0.copyload.i1137 = load i32, ptr %i.abn, align 4 ; 4 uses
   store i32 %.sroa.0.0.copyload.i1137, ptr %26, align 4
   %i.abo = and i32 %.sroa.0.0.copyload.i1137, 3
   %i.abp = icmp eq i32 %i.abo, 0
@@ -666,12 +666,11 @@ bb.cx:                                            ; preds = %_ZN2v88internal4was
   %i.aci = getelementptr inbounds nuw i8, ptr %i.ach, i64 8
   %i.acj = load i32, ptr %i.aci, align 8          ; 3 uses
   store i32 %i.acj, ptr %28, align 4
-  %.sroa.0263.0.copyload = load i32, ptr %26, align 4 ; 2 uses
-  %i.ack = icmp eq i32 %i.acj, %.sroa.0263.0.copyload
+  %i.ack = icmp eq i32 %i.acj, %.sroa.0.0.copyload.i1137
   br i1 %i.ack, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit742.thread, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit742, !prof !6
 
 _ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit742: ; preds = %bb.cx
-  %i.acl = call noundef zeroext i1 @_ZN2v88internal4wasm15IsSubtypeOfImplENS1_9ValueTypeES2_PKNS1_10WasmModuleES5_(i32 %i.acj, i32 %.sroa.0263.0.copyload, ptr noundef nonnull %i.acc, ptr noundef nonnull %i.acc) #17
+  %i.acl = call noundef zeroext i1 @_ZN2v88internal4wasm15IsSubtypeOfImplENS1_9ValueTypeES2_PKNS1_10WasmModuleES5_(i32 %i.acj, i32 %.sroa.0.0.copyload.i1137, ptr noundef nonnull %i.acc, ptr noundef nonnull %i.acc) #17
   br i1 %i.acl, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit742.thread, label %bb.cy, !prof !41
 
 bb.cy:                                            ; preds = %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit742
@@ -1064,7 +1063,7 @@ bb.dy:                                            ; preds = %bb.dx
 bb.dz:                                            ; preds = %bb.dx
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #17
   %i.ajc = getelementptr inbounds nuw i8, ptr %i.aix, i64 4
-  %.sroa.0.0.copyload.i1193 = load i32, ptr %i.ajc, align 4 ; 2 uses
+  %.sroa.0.0.copyload.i1193 = load i32, ptr %i.ajc, align 4 ; 4 uses
   store i32 %.sroa.0.0.copyload.i1193, ptr %32, align 4
   %i.ajd = and i32 %.sroa.0.0.copyload.i1193, 3
   %i.aje = icmp eq i32 %i.ajd, 0
@@ -1120,12 +1119,11 @@ bb.ee:                                            ; preds = %_ZN2v88internal4was
   %i.ajx = getelementptr inbounds nuw i8, ptr %i.ajw, i64 8
   %i.ajy = load i32, ptr %i.ajx, align 8          ; 3 uses
   store i32 %i.ajy, ptr %34, align 4
-  %.sroa.0240.0.copyload = load i32, ptr %32, align 4 ; 2 uses
-  %i.ajz = icmp eq i32 %i.ajy, %.sroa.0240.0.copyload
+  %i.ajz = icmp eq i32 %i.ajy, %.sroa.0.0.copyload.i1193
   br i1 %i.ajz, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit739.thread, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit739, !prof !6
 
 _ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit739: ; preds = %bb.ee
-  %i.aka = call noundef zeroext i1 @_ZN2v88internal4wasm15IsSubtypeOfImplENS1_9ValueTypeES2_PKNS1_10WasmModuleES5_(i32 %i.ajy, i32 %.sroa.0240.0.copyload, ptr noundef nonnull %i.ajr, ptr noundef nonnull %i.ajr) #17
+  %i.aka = call noundef zeroext i1 @_ZN2v88internal4wasm15IsSubtypeOfImplENS1_9ValueTypeES2_PKNS1_10WasmModuleES5_(i32 %i.ajy, i32 %.sroa.0.0.copyload.i1193, ptr noundef nonnull %i.ajr, ptr noundef nonnull %i.ajr) #17
   br i1 %i.aka, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit739.thread, label %bb.ef, !prof !41
 
 bb.ef:                                            ; preds = %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit739

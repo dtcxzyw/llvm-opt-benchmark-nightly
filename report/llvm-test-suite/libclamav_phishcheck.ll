@@ -201,8 +201,8 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @cleanupURL(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef captures(address_is_null) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 14 uses
-  %i.b = alloca ptr, align 8                      ; 13 uses
+  %i.a = alloca ptr, align 8                      ; 12 uses
+  %i.b = alloca ptr, align 8                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !47   ; 4 uses
@@ -312,11 +312,12 @@ string_free.exit.i:                               ; preds = %.preheader.i53, %bb
   br label %string_assign_null.exit58
 
 bb.j:                                             ; preds = %bb.c
-  %3 = getelementptr i8, ptr %i.m, i64 %i.t
-  %4 = getelementptr i8, ptr %3, i64 -1           ; 2 uses
-  store ptr %4, ptr %i.b, align 8, !tbaa !29
   %.not39 = icmp sgt i64 %i.t, 1
-  br i1 %.not39, label %.preheader137, label %.preheader.i60
+  br i1 %.not39, label %.preheader137.preheader, label %.preheader.i60
+
+.preheader137.preheader:                          ; preds = %bb.j
+  %3 = getelementptr i8, ptr %i.m, i64 %i.t
+  br label %.preheader137
 
 .preheader.i60:                                   ; preds = %bb.j, %bb.k
   %.0.i.i61 = phi ptr [ %i.an, %bb.k ], [ %0, %bb.j ] ; 4 uses
@@ -382,19 +383,19 @@ string_free.exit.i71:                             ; preds = %.preheader.i68, %bb
   store ptr null, ptr %i.ay, align 8, !tbaa !48
   br label %string_assign_null.exit58
 
-.preheader137:                                    ; preds = %bb.j, %.preheader137
-  %i.az = phi ptr [ %5, %.preheader137 ], [ %4, %bb.j ] ; 14 uses
-  %i.ba = load i8, ptr %i.az, align 1, !tbaa !49
+.preheader137:                                    ; preds = %.preheader137.preheader, %.preheader137
+  %i.az = phi ptr [ %4, %.preheader137 ], [ %3, %.preheader137.preheader ]
+  %4 = getelementptr i8, ptr %i.az, i64 -1        ; 14 uses
+  %i.ba = load i8, ptr %4, align 1, !tbaa !49
   %i.bb = sext i8 %i.ba to i64
   %i.bc = getelementptr inbounds [2 x i8], ptr %i.l, i64 %i.bb
   %i.bd = load i16, ptr %i.bc, align 2, !tbaa !62
   %i.be = and i16 %i.bd, 8192
   %.not40 = icmp eq i16 %i.be, 0
-  %5 = getelementptr inbounds i8, ptr %i.az, i64 -1
   br i1 %.not40, label %bb.q, label %.preheader137, !llvm.loop !64
 
 bb.q:                                             ; preds = %.preheader137
-  store ptr %i.az, ptr %i.b, align 8
+  store ptr %4, ptr %i.b, align 8
   %i.bf = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %i.m, ptr noundef nonnull dereferenceable(5) @dotnet, i64 noundef 4) #15
   %.not41 = icmp eq i32 %i.bf, 0
   br i1 %.not41, label %.preheader.i76.preheader, label %bb.r
@@ -477,14 +478,14 @@ string_free.exit.i87:                             ; preds = %.preheader.i84, %bb
   br label %string_assign_null.exit58
 
 bb.z:                                             ; preds = %bb.s
-  %.not6.i = icmp ugt ptr %i.m, %i.az
+  %.not6.i = icmp ugt ptr %i.m, %4
   br i1 %.not6.i, label %str_replace.exit112, label %iter.check
 
 iter.check:                                       ; preds = %bb.z
   %i.bx = add i64 %indvar, %i.e
   %i.by = ptrtoaddr ptr %i.m to i64
   %i.bz = add i64 %i.by, 1
-  %i.ca = ptrtoaddr ptr %i.az to i64
+  %i.ca = ptrtoaddr ptr %4 to i64
   %i.cb = add i64 %i.ca, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bz, i64 %i.cb)
   %i.cc = sub i64 %umax, %i.bx                    ; 7 uses
@@ -887,14 +888,14 @@ bb.aa:                                            ; preds = %.lr.ph.i91
 
 bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i91
   %i.fn = getelementptr inbounds nuw i8, ptr %.07.i, i64 1 ; 2 uses
-  %.not.i92 = icmp ugt ptr %i.fn, %i.az
+  %.not.i92 = icmp ugt ptr %i.fn, %4
   br i1 %.not.i92, label %iter.check252, label %.lr.ph.i91, !llvm.loop !70
 
 iter.check252:                                    ; preds = %bb.ab, %vec.epilog.middle.block, %middle.block
   %i.fo = add i64 %indvar, %i.e
   %i.fp = ptrtoaddr ptr %i.m to i64
   %i.fq = add i64 %i.fp, 1
-  %i.fr = ptrtoaddr ptr %i.az to i64
+  %i.fr = ptrtoaddr ptr %4 to i64
   %i.fs = add i64 %i.fr, 1
   %umax141 = tail call i64 @llvm.umax.i64(i64 %i.fq, i64 %i.fs)
   %i.ft = sub i64 %umax141, %i.fo                 ; 7 uses
@@ -1297,14 +1298,14 @@ bb.ac:                                            ; preds = %.lr.ph.i94
 
 bb.ad:                                            ; preds = %bb.ac, %.lr.ph.i94
   %i.je = getelementptr inbounds nuw i8, ptr %.07.i95, i64 1 ; 2 uses
-  %.not.i96 = icmp ugt ptr %i.je, %i.az
+  %.not.i96 = icmp ugt ptr %i.je, %4
   br i1 %.not.i96, label %iter.check401, label %.lr.ph.i94, !llvm.loop !73
 
 iter.check401:                                    ; preds = %bb.ad, %vec.epilog.middle.block287, %middle.block249
   %i.jf = add i64 %indvar, %i.e
   %i.jg = ptrtoaddr ptr %i.m to i64
   %i.jh = add i64 %i.jg, 1
-  %i.ji = ptrtoaddr ptr %i.az to i64
+  %i.ji = ptrtoaddr ptr %4 to i64
   %i.jj = add i64 %i.ji, 1
   %umax290 = tail call i64 @llvm.umax.i64(i64 %i.jh, i64 %i.jj)
   %i.jk = sub i64 %umax290, %i.jf                 ; 7 uses
@@ -1707,14 +1708,14 @@ bb.ae:                                            ; preds = %.lr.ph.i99
 
 bb.af:                                            ; preds = %bb.ae, %.lr.ph.i99
   %i.mv = getelementptr inbounds nuw i8, ptr %.07.i100, i64 1 ; 2 uses
-  %.not.i101 = icmp ugt ptr %i.mv, %i.az
+  %.not.i101 = icmp ugt ptr %i.mv, %4
   br i1 %.not.i101, label %iter.check550, label %.lr.ph.i99, !llvm.loop !76
 
 iter.check550:                                    ; preds = %bb.af, %vec.epilog.middle.block436, %middle.block398
   %i.mw = add i64 %indvar, %i.e
   %i.mx = ptrtoaddr ptr %i.m to i64
   %i.my = add i64 %i.mx, 1
-  %i.mz = ptrtoaddr ptr %i.az to i64
+  %i.mz = ptrtoaddr ptr %4 to i64
   %i.na = add i64 %i.mz, 1
   %umax439 = tail call i64 @llvm.umax.i64(i64 %i.my, i64 %i.na)
   %i.nb = sub i64 %umax439, %i.mw                 ; 7 uses
@@ -2117,14 +2118,14 @@ bb.ag:                                            ; preds = %.lr.ph.i104
 
 bb.ah:                                            ; preds = %bb.ag, %.lr.ph.i104
   %i.qm = getelementptr inbounds nuw i8, ptr %.07.i105, i64 1 ; 2 uses
-  %.not.i106 = icmp ugt ptr %i.qm, %i.az
+  %.not.i106 = icmp ugt ptr %i.qm, %4
   br i1 %.not.i106, label %iter.check699, label %.lr.ph.i104, !llvm.loop !79
 
 iter.check699:                                    ; preds = %bb.ah, %vec.epilog.middle.block585, %middle.block547
   %i.qn = add i64 %indvar, %i.e
   %i.qo = ptrtoaddr ptr %i.m to i64
   %i.qp = add i64 %i.qo, 1
-  %i.qq = ptrtoaddr ptr %i.az to i64
+  %i.qq = ptrtoaddr ptr %4 to i64
   %i.qr = add i64 %i.qq, 1
   %umax588 = tail call i64 @llvm.umax.i64(i64 %i.qp, i64 %i.qr)
   %i.qs = sub i64 %umax588, %i.qn                 ; 7 uses
@@ -2527,13 +2528,13 @@ bb.ai:                                            ; preds = %.lr.ph.i109
 
 bb.aj:                                            ; preds = %bb.ai, %.lr.ph.i109
   %i.ud = getelementptr inbounds nuw i8, ptr %.07.i110, i64 1 ; 2 uses
-  %.not.i111 = icmp ugt ptr %i.ud, %i.az
+  %.not.i111 = icmp ugt ptr %i.ud, %4
   br i1 %.not.i111, label %str_replace.exit112, label %.lr.ph.i109, !llvm.loop !82
 
 str_replace.exit112:                              ; preds = %bb.aj, %middle.block696, %vec.epilog.middle.block734, %bb.z
   call fastcc void @str_strip(ptr noundef %i.a, ptr noundef %i.b, ptr noundef nonnull @lt, i64 noundef 3)
   call fastcc void @str_strip(ptr noundef %i.a, ptr noundef %i.b, ptr noundef nonnull @gt, i64 noundef 3)
-  %i.ue = load ptr, ptr %i.a, align 8, !tbaa !29  ; 3 uses
+  %i.ue = load ptr, ptr %i.a, align 8, !tbaa !29  ; 10 uses
   %i.uf = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.ue, i32 noundef 58) #15 ; 2 uses
   %.not4410 = icmp eq ptr %i.uf, null
   br i1 %.not4410, label %.critedge50, label %.lr.ph12
@@ -2584,7 +2585,7 @@ bb.ak:                                            ; preds = %.lr.ph12
   %.09.i.unr = phi ptr [ %.1, %.lr.ph.i114 ], [ %i.ur, %.prol.preheader ]
   %.068.i.unr = phi i64 [ %i.uj, %.lr.ph.i114 ], [ %i.us, %.prol.preheader ]
   %i.ut = icmp ult i64 %i.uj, 4
-  br i1 %i.ut, label %str_make_lowercase.exit.loopexit, label %.lr.ph.i114.new
+  br i1 %i.ut, label %str_make_lowercase.exit, label %.lr.ph.i114.new
 
 .lr.ph.i114.new:                                  ; preds = %.prol.loopexit, %.lr.ph.i114.new
   %.09.i = phi ptr [ %i.vv, %.lr.ph.i114.new ], [ %.09.i.unr, %.prol.loopexit ] ; 6 uses
@@ -2623,33 +2624,28 @@ bb.ak:                                            ; preds = %.lr.ph12
   %i.vv = getelementptr inbounds nuw i8, ptr %.09.i, i64 4
   %i.vw = add i64 %.068.i, -4                     ; 2 uses
   %.not.i115.3 = icmp eq i64 %i.vw, 0
-  br i1 %.not.i115.3, label %str_make_lowercase.exit.loopexit, label %.lr.ph.i114.new, !llvm.loop !88
+  br i1 %.not.i115.3, label %str_make_lowercase.exit, label %.lr.ph.i114.new, !llvm.loop !88
 
-str_make_lowercase.exit.loopexit:                 ; preds = %.lr.ph.i114.new, %.prol.loopexit
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !29
-  br label %str_make_lowercase.exit
-
-str_make_lowercase.exit:                          ; preds = %str_make_lowercase.exit.loopexit, %.critedge50
-  %6 = phi ptr [ %.pre, %str_make_lowercase.exit.loopexit ], [ %i.ue, %.critedge50 ] ; 6 uses
+str_make_lowercase.exit:                          ; preds = %.prol.loopexit, %.lr.ph.i114.new, %.critedge50
   %i.vx = load ptr, ptr %i.b, align 8, !tbaa !29  ; 6 uses
-  %.not.i116 = icmp ugt ptr %i.vx, %6
+  %.not.i116 = icmp ugt ptr %i.vx, %i.ue
   br i1 %.not.i116, label %bb.al, label %str_hex_to_char.exit
 
 bb.al:                                            ; preds = %str_make_lowercase.exit
-  %i.vy = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %6) #15
+  %i.vy = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ue) #15
   %i.vz = icmp ult i64 %i.vy, 3
   br i1 %i.vz, label %str_hex_to_char.exit, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.wa = load i8, ptr %6, align 1, !tbaa !49
+  %i.wa = load i8, ptr %i.ue, align 1, !tbaa !49
   %i.wb = icmp eq i8 %i.wa, 37
   br i1 %i.wb, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.wc = getelementptr inbounds nuw i8, ptr %6, i64 1
+  %i.wc = getelementptr inbounds nuw i8, ptr %i.ue, i64 1
   %i.wd = load i8, ptr %i.wc, align 1, !tbaa !49  ; 2 uses
   %i.we = icmp eq i8 %i.wd, 48
-  %i.wf = getelementptr inbounds nuw i8, ptr %6, i64 2 ; 3 uses
+  %i.wf = getelementptr inbounds nuw i8, ptr %i.ue, i64 2 ; 3 uses
   %i.wg = load i8, ptr %i.wf, align 1, !tbaa !49  ; 2 uses
   %i.wh = icmp eq i8 %i.wg, 48
   %or.cond.i.i = select i1 %i.we, i1 %i.wh, i1 false
@@ -2674,7 +2670,7 @@ hex2int.exit.i:                                   ; preds = %._crit_edge.i.i, %b
   br label %bb.ao
 
 bb.ao:                                            ; preds = %hex2int.exit.i, %bb.am
-  %.0.i = phi ptr [ %i.wf, %hex2int.exit.i ], [ %6, %bb.am ] ; 3 uses
+  %.0.i = phi ptr [ %i.wf, %hex2int.exit.i ], [ %i.ue, %bb.am ] ; 4 uses
   store ptr %.0.i, ptr %i.a, align 8, !tbaa !29
   %i.wt = getelementptr inbounds nuw i8, ptr %.0.i, i64 4 ; 2 uses
   %i.wu = icmp ult ptr %i.wt, %i.vx
@@ -2741,12 +2737,12 @@ hex2int.exit34.i:                                 ; preds = %._crit_edge.i33.i, 
   br label %str_hex_to_char.exit
 
 str_hex_to_char.exit:                             ; preds = %str_make_lowercase.exit, %bb.al, %._crit_edge.i
+  %.promoted152 = phi ptr [ %i.ue, %str_make_lowercase.exit ], [ %i.ue, %bb.al ], [ %.0.i, %._crit_edge.i ] ; 3 uses
   %.promoted159 = phi ptr [ %i.vx, %str_make_lowercase.exit ], [ %i.vx, %bb.al ], [ %.027.lcssa.i, %._crit_edge.i ] ; 5 uses
   %.not45 = icmp eq i32 %2, 0                     ; 2 uses
   br i1 %.not45, label %.preheader, label %bb.ar
 
 .preheader:                                       ; preds = %str_hex_to_char.exit
-  %.promoted152 = load ptr, ptr %i.a, align 8, !tbaa !29 ; 3 uses
   %.not46154 = icmp ugt ptr %.promoted152, %.promoted159
   br i1 %.not46154, label %.critedge2, label %.lr.ph
 

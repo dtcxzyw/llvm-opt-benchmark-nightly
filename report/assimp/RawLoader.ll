@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden noundef i64 @_ZN6Assimp12strtoul10_64I17DeadlyImportErrorEEmPKcPS3_Pj(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #8 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   store ptr %0, ptr %i.a, align 8
   %i.b = load i8, ptr %0, align 1                 ; 3 uses
@@ -331,8 +331,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph71:                                         ; preds = %.preheader, %.lr.ph71
   %i.am = phi ptr [ %i.an, %.lr.ph71 ], [ %i.ah, %.preheader ]
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 4 uses
-  store ptr %i.an, ptr %i.a, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 3 uses
   %i.ao = load i8, ptr %i.an, align 1
   %i.ap = add i8 %i.ao, -48
   %or.cond43 = icmp ult i8 %i.ap, 10

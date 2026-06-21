@@ -201,7 +201,7 @@ bb.a:
   %16 = alloca %"class.std::unordered_set.199", align 8 ; 17 uses
   %17 = alloca %"class.std::unordered_map.215", align 8 ; 16 uses
   %18 = alloca %"struct.duckdb::SelectionVector", align 8 ; 9 uses
-  %19 = alloca %"struct.duckdb::ValidityMask", align 8 ; 9 uses
+  %19 = alloca %"struct.duckdb::ValidityMask", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !38   ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -604,8 +604,7 @@ bb.cn:                                            ; preds = %bb.cm
 
 .noexc260:                                        ; preds = %bb.cn
   %i.mx = getelementptr inbounds nuw i8, ptr %i.w, i64 40 ; 2 uses
-  %20 = load ptr, ptr %19, align 8, !tbaa !103
-  store ptr %20, ptr %i.mx, align 8, !tbaa !103
+  store ptr null, ptr %i.mx, align 8, !tbaa !103
   %i.my = icmp eq ptr %i.mx, %19
   br i1 %i.my, label %bb.cu, label %_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i
 

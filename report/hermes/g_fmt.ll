@@ -7,7 +7,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden noundef ptr @g_fmt(ptr nofree noundef returned writeonly captures(ret: address, provenance) %0, double noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 21 uses
+  %i.a = alloca i32, align 4                      ; 15 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %union.anon, align 8                ; 3 uses
@@ -87,39 +87,37 @@ bb.g:                                             ; preds = %bb.f
   %.3 = phi ptr [ %i.v, %bb.f ], [ %i.x, %bb.g ], [ %i.aa, %.lr.ph78 ] ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.3, i64 1 ; 2 uses
   store i8 101, ptr %.3, align 1, !tbaa !7
-  %3 = load i32, ptr %i.a, align 4, !tbaa !3      ; 2 uses
-  %i.ad = add nsw i32 %3, -1
+  %i.ad = add nsw i32 %i.h, -1                    ; 2 uses
   store i32 %i.ad, ptr %i.a, align 4, !tbaa !3
-  %i.ae = icmp slt i32 %3, 1
+  %i.ae = icmp slt i32 %i.h, 1
   br i1 %i.ae, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.loopexit60
   store i8 45, ptr %i.ac, align 1, !tbaa !7
-  %4 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.af = sub nsw i32 0, %4                       ; 2 uses
+  %i.af = sub nsw i32 1, %i.h                     ; 2 uses
   store i32 %i.af, ptr %i.a, align 4, !tbaa !3
   br label %bb.j
 
 bb.i:                                             ; preds = %.loopexit60
   store i8 43, ptr %i.ac, align 1, !tbaa !7
-  %.pre91 = load i32, ptr %i.a, align 4, !tbaa !3
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.ag = phi i32 [ %.pre91, %bb.i ], [ %i.af, %bb.h ] ; 2 uses
+  %i.ag = phi i32 [ %i.ad, %bb.i ], [ %i.af, %bb.h ] ; 4 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %bb.j
   %.046 = phi i32 [ 2, %bb.j ], [ %i.ai, %bb.k ]  ; 6 uses
-  %.041 = phi i32 [ 10, %bb.j ], [ %i.ah, %bb.k ] ; 8 uses
+  %.041 = phi i32 [ 10, %bb.j ], [ %i.ah, %bb.k ] ; 10 uses
   %i.ah = mul nuw nsw i32 %.041, 10               ; 2 uses
-  %.not56 = icmp sgt i32 %i.ah, %i.ag
+  %.not56 = icmp samesign ugt i32 %i.ah, %i.ag
   %i.ai = add nuw nsw i32 %.046, 1
   br i1 %.not56, label %.preheader59, label %bb.k, !llvm.loop !14
 
 .preheader59:                                     ; preds = %bb.k
   %.4 = getelementptr inbounds nuw i8, ptr %.3, i64 2
   %i.aj = sdiv i32 %i.ag, %.041                   ; 3 uses
+  %.recomposed = srem i32 %i.ag, %.041
   %i.ak = trunc i32 %i.aj to i8
   %i.al = add i8 %i.ak, 48
   %i.am = getelementptr inbounds nuw i8, ptr %.3, i64 3 ; 3 uses
@@ -134,10 +132,8 @@ bb.k:                                             ; preds = %bb.k, %bb.j
 
 .lr.ph81.prol:                                    ; preds = %.lr.ph81.preheader
   %i.ap = add nsw i32 %.046, -1
-  %i.aq = mul nsw i32 %i.aj, %.041
-  %5 = load i32, ptr %i.a, align 4, !tbaa !3
-  %6 = sub nsw i32 %5, %i.aq
-  %i.ar = mul nsw i32 %6, 10                      ; 2 uses
+  %i.aq = mul nsw i32 %i.aj, %.041                ; 0 uses
+  %i.ar = mul nsw i32 %.recomposed, 10            ; 3 uses
   store i32 %i.ar, ptr %i.a, align 4, !tbaa !3
   %i.as = sdiv i32 %i.ar, %.041                   ; 2 uses
   %i.at = trunc i32 %i.as to i8
@@ -148,6 +144,7 @@ bb.k:                                             ; preds = %bb.k, %bb.j
 
 .lr.ph81.prol.loopexit:                           ; preds = %.lr.ph81.prol, %.lr.ph81.preheader
   %.lcssa.unr = phi ptr [ poison, %.lr.ph81.preheader ], [ %i.av, %.lr.ph81.prol ]
+  %.unr = phi i32 [ %i.ag, %.lr.ph81.preheader ], [ %i.ar, %.lr.ph81.prol ]
   %.unr.a = phi ptr [ %i.am, %.lr.ph81.preheader ], [ %i.av, %.lr.ph81.prol ]
   %.unr121 = phi i32 [ %i.aj, %.lr.ph81.preheader ], [ %i.as, %.lr.ph81.prol ]
   %.14780.unr = phi i32 [ %.046, %.lr.ph81.preheader ], [ %i.ap, %.lr.ph81.prol ]
@@ -155,13 +152,13 @@ bb.k:                                             ; preds = %bb.k, %bb.j
   br i1 %i.aw, label %.loopexit.sink.split, label %.lr.ph81
 
 .lr.ph81:                                         ; preds = %.lr.ph81.prol.loopexit, %.lr.ph81
+  %3 = phi i32 [ %i.bi, %.lr.ph81 ], [ %.unr, %.lr.ph81.prol.loopexit ]
   %i.ax = phi ptr [ %i.bm, %.lr.ph81 ], [ %.unr.a, %.lr.ph81.prol.loopexit ] ; 3 uses
   %i.ay = phi i32 [ %i.bj, %.lr.ph81 ], [ %.unr121, %.lr.ph81.prol.loopexit ]
   %.14780 = phi i32 [ %i.bg, %.lr.ph81 ], [ %.14780.unr, %.lr.ph81.prol.loopexit ] ; 2 uses
   %i.az = mul nsw i32 %i.ay, %.041
-  %7 = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.ba = sub nsw i32 %7, %i.az
-  %i.bb = mul nsw i32 %i.ba, 10                   ; 2 uses
+  %i.ba = sub nsw i32 %3, %i.az
+  %i.bb = mul nsw i32 %i.ba, 10                   ; 3 uses
   store i32 %i.bb, ptr %i.a, align 4, !tbaa !3
   %i.bc = sdiv i32 %i.bb, %.041                   ; 2 uses
   %i.bd = trunc i32 %i.bc to i8
@@ -169,10 +166,9 @@ bb.k:                                             ; preds = %bb.k, %bb.j
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 1
   store i8 %i.be, ptr %i.ax, align 1, !tbaa !7
   %i.bg = add nsw i32 %.14780, -2
-  %i.bh = mul nsw i32 %i.bc, %.041
-  %8 = load i32, ptr %i.a, align 4, !tbaa !3
-  %9 = sub nsw i32 %8, %i.bh
-  %i.bi = mul nsw i32 %9, 10                      ; 2 uses
+  %i.bh = mul nsw i32 %i.bc, %.041                ; 0 uses
+  %.recomposed126 = srem i32 %i.bb, %.041
+  %i.bi = mul nsw i32 %.recomposed126, 10         ; 3 uses
   store i32 %i.bi, ptr %i.a, align 4, !tbaa !3
   %i.bj = sdiv i32 %i.bi, %.041                   ; 2 uses
   %i.bk = trunc i32 %i.bj to i8
@@ -198,26 +194,19 @@ bb.m:                                             ; preds = %bb.l
   %i.bq = icmp slt i32 %i.h, 0
   br i1 %i.bq, label %.lr.ph72.preheader, label %.preheader61.preheader
 
-.preheader61.preheader:                           ; preds = %.lr.ph72.preheader, %bb.m
-  %.7.ph = phi ptr [ %.669, %bb.m ], [ %scevgep, %.lr.ph72.preheader ]
-  br label %.preheader61
-
 .lr.ph72.preheader:                               ; preds = %bb.m
   %i.br = xor i32 %i.h, -1
   %i.bs = zext nneg i32 %i.br to i64              ; 2 uses
   %i.bt = add nuw nsw i64 %i.bs, 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.669, i8 48, i64 %i.bt, i1 false), !tbaa !7
-  %10 = add nsw i32 %i.h, 1                       ; 2 uses
-  %exitcond.not = icmp eq i32 %10, 0
-  %11 = add nsw i32 %i.h, 2                       ; 2 uses
-  %exitcond.not.1 = icmp eq i32 %11, 0
-  %12 = add nsw i32 %i.h, 3
-  %spec.select = select i1 %exitcond.not.1, i32 %11, i32 %12
-  %.lcssa116 = select i1 %exitcond.not, i32 %10, i32 %spec.select
-  store i32 %.lcssa116, ptr %i.a, align 4, !tbaa !3
-  %i.bu = getelementptr i8, ptr %.0, i64 %i.bs
-  %scevgep = getelementptr i8, ptr %i.bu, i64 2
+  %4 = getelementptr i8, ptr %.0, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %4, i64 2
+  store i32 0, ptr %i.a, align 4, !tbaa !3
   br label %.preheader61.preheader
+
+.preheader61.preheader:                           ; preds = %.lr.ph72.preheader, %bb.m
+  %.7.ph = phi ptr [ %.669, %bb.m ], [ %i.bu, %.lr.ph72.preheader ]
+  br label %.preheader61
 
 .preheader61:                                     ; preds = %.preheader61.preheader, %.preheader61
   %.244 = phi ptr [ %i.bv, %.preheader61 ], [ %i.e, %.preheader61.preheader ] ; 2 uses

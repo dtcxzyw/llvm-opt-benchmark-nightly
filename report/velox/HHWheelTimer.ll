@@ -201,7 +201,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define weak_odr noundef i64 @_ZN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEE9cancelAllEv(ptr noundef nonnull align 8 dereferenceable(16712) %0) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.boost::intrusive::list", align 16 ; 24 uses
-  %2 = alloca %"class.std::unique_ptr", align 8   ; 7 uses
+  %2 = alloca %"class.std::unique_ptr", align 8   ; 6 uses
   %3 = alloca %"class.boost::intrusive::list", align 16 ; 21 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16672 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !62   ; 2 uses
@@ -347,7 +347,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.bv, label %_ZSt11make_uniqueIA_N5boost9intrusive4listIN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEE8CallbackEJNS1_18constant_time_sizeILb0EEEEEEENSt8__detail9_MakeUniqIT_E7__arrayEm.exit, label %.preheader.i, !llvm.loop !2400
 
 _ZSt11make_uniqueIA_N5boost9intrusive4listIN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEE8CallbackEJNS1_18constant_time_sizeILb0EEEEEEENSt8__detail9_MakeUniqIT_E7__arrayEm.exit: ; preds = %.preheader.i, %vec.epilog.middle.block, %middle.block
-  %.ptr5.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %.ptr5.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
   store ptr %.ptr5.i, ptr %2, align 8, !tbaa !2401, !alias.scope !2394
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   br label %_ZNK5boost9intrusive9list_implINS0_8bhtraitsIN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEE8CallbackENS0_16list_node_traitsIPvEELNS0_14link_mode_typeE2ENS0_7dft_tagELj1EEEmLb0EvE5emptyEv.exit.preheader
@@ -563,8 +563,7 @@ select.unfold:                                    ; preds = %.loopexit, %_ZNK5bo
 
 .lr.ph:                                           ; preds = %.preheader, %_ZN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEE22cancelTimeoutsFromListERN5boost9intrusive4listINS6_8CallbackEJNS8_18constant_time_sizeILb0EEEEEE.exit
   %.096 = phi i64 [ %i.fd, %_ZN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEE22cancelTimeoutsFromListERN5boost9intrusive4listINS6_8CallbackEJNS8_18constant_time_sizeILb0EEEEEE.exit ], [ 0, %.preheader ] ; 2 uses
-  %4 = load ptr, ptr %2, align 8, !tbaa !2401
-  %i.dp = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.096 ; 4 uses
+  %i.dp = getelementptr inbounds nuw [16 x i8], ptr %.ptr5.i, i64 %.096 ; 4 uses
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !59 ; 3 uses
   %.not.i5.i = icmp eq ptr %i.dq, null
   %i.dr = icmp eq ptr %i.dq, %i.dp
@@ -967,7 +966,7 @@ bb.a:
 define weak_odr noundef i64 @_ZN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEE9cancelAllEv(ptr noundef nonnull align 8 dereferenceable(16712) %0) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.boost::intrusive::list.12", align 16 ; 24 uses
-  %2 = alloca %"class.std::unique_ptr.27", align 8 ; 7 uses
+  %2 = alloca %"class.std::unique_ptr.27", align 8 ; 6 uses
   %3 = alloca %"class.boost::intrusive::list.12", align 16 ; 21 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16672 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !1641 ; 2 uses
@@ -1113,7 +1112,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.bv, label %_ZSt11make_uniqueIA_N5boost9intrusive4listIN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEE8CallbackEJNS1_18constant_time_sizeILb0EEEEEEENSt8__detail9_MakeUniqIT_E7__arrayEm.exit, label %.preheader.i, !llvm.loop !2439
 
 _ZSt11make_uniqueIA_N5boost9intrusive4listIN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEE8CallbackEJNS1_18constant_time_sizeILb0EEEEEEENSt8__detail9_MakeUniqIT_E7__arrayEm.exit: ; preds = %.preheader.i, %vec.epilog.middle.block, %middle.block
-  %.ptr5.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %.ptr5.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
   store ptr %.ptr5.i, ptr %2, align 8, !tbaa !2440, !alias.scope !2434
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   br label %.lr.ph.preheader
@@ -1329,8 +1328,7 @@ select.unfold:                                    ; preds = %.loopexit, %.lr.ph
 
 .lr.ph96:                                         ; preds = %.preheader, %_ZN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEE22cancelTimeoutsFromListERN5boost9intrusive4listINS6_8CallbackEJNS8_18constant_time_sizeILb0EEEEEE.exit
   %.095 = phi i64 [ %i.fd, %_ZN5folly16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEE22cancelTimeoutsFromListERN5boost9intrusive4listINS6_8CallbackEJNS8_18constant_time_sizeILb0EEEEEE.exit ], [ 0, %.preheader ] ; 2 uses
-  %4 = load ptr, ptr %2, align 8, !tbaa !2440
-  %i.dp = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.095 ; 4 uses
+  %i.dp = getelementptr inbounds nuw [16 x i8], ptr %.ptr5.i, i64 %.095 ; 4 uses
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !59 ; 3 uses
   %.not.i5.i = icmp eq ptr %i.dq, null
   %i.dr = icmp eq ptr %i.dq, %i.dp

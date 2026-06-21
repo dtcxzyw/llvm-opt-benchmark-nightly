@@ -201,17 +201,17 @@ bb.j:                                             ; preds = %bb.f, %bb.i
 define internal range(i32 0, 2) i32 @encode_mcu_huff(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %i.a = alloca [512 x i8], align 16              ; 6 uses
-  %2 = alloca %struct.working_state, align 8      ; 20 uses
+  %2 = alloca %struct.working_state, align 8      ; 18 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !56   ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !85   ; 2 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !86   ; 4 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !86   ; 7 uses
   store ptr %i.f, ptr %2, align 8, !tbaa !89
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !92   ; 4 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 11 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !92   ; 6 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
   store i64 %i.h, ptr %i.i, align 8, !tbaa !93
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
@@ -292,28 +292,23 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i
-  %.2.i.i = phi ptr [ %.neg.sroa.sel.i.i, %bb.d ], [ %.155.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+  %.2.i.i = phi ptr [ %.neg.sroa.sel.i.i, %bb.d ], [ %.155.lcssa.i.i, %._crit_edge.i.i ] ; 2 uses
   store i64 0, ptr %i.j, align 8, !tbaa !31
   store i32 64, ptr %i.t, align 8, !tbaa !96
+  %3 = ptrtoint ptr %.2.i.i to i64                ; 2 uses
   br i1 %i.x, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = ptrtoint ptr %.2.i.i to i64
   %i.aq = ptrtoint ptr %i.a to i64
   %i.ar = sub i64 %3, %i.aq                       ; 2 uses
   %.not6072.i.i = icmp eq i64 %i.ar, 0
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !89  ; 2 uses
-  br i1 %.not6072.i.i, label %.loopexit.i, label %.lr.ph76.preheader.i.i
+  br i1 %.not6072.i.i, label %.loopexit.i, label %.lr.ph76.i.i
 
-.lr.ph76.preheader.i.i:                           ; preds = %bb.f
-  %.pre.i.i = load i64, ptr %i.i, align 8, !tbaa !93
-  br label %.lr.ph76.i.i
-
-.lr.ph76.i.i:                                     ; preds = %bb.h, %.lr.ph76.preheader.i.i
-  %i.as = phi ptr [ %i.bj, %bb.h ], [ %.pre.i, %.lr.ph76.preheader.i.i ]
-  %i.at = phi i64 [ %i.bk, %bb.h ], [ %.pre.i.i, %.lr.ph76.preheader.i.i ]
-  %.05174.i.i = phi i64 [ %i.bl, %bb.h ], [ %i.ar, %.lr.ph76.preheader.i.i ] ; 2 uses
-  %.373.i.i = phi ptr [ %i.aw, %bb.h ], [ %i.a, %.lr.ph76.preheader.i.i ] ; 2 uses
+.lr.ph76.i.i:                                     ; preds = %bb.f, %bb.h
+  %i.as = phi ptr [ %i.bj, %bb.h ], [ %i.f, %bb.f ]
+  %i.at = phi i64 [ %i.bk, %bb.h ], [ %i.h, %bb.f ]
+  %.05174.i.i = phi i64 [ %i.bl, %bb.h ], [ %i.ar, %bb.f ] ; 2 uses
+  %.373.i.i = phi ptr [ %i.aw, %bb.h ], [ %i.a, %bb.f ] ; 2 uses
   %.051..i.i = call i64 @llvm.umin.i64(i64 %.05174.i.i, i64 %i.at) ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.as, ptr align 1 %.373.i.i, i64 %.051..i.i, i1 false)
   %i.au = load ptr, ptr %2, align 8, !tbaa !89
@@ -352,12 +347,9 @@ bb.h:                                             ; preds = %dump_buffer.exit.i.
   br i1 %.not60.i.i, label %.loopexit.i, label %.lr.ph76.i.i, !llvm.loop !100
 
 bb.i:                                             ; preds = %bb.e
-  %4 = load ptr, ptr %2, align 8, !tbaa !89
-  %5 = ptrtoint ptr %.2.i.i to i64
-  %i.bm = ptrtoint ptr %4 to i64
-  %.neg59.i.i = sub i64 %i.bm, %5
-  %6 = load i64, ptr %i.i, align 8, !tbaa !93
-  %i.bn = add i64 %.neg59.i.i, %6
+  %i.bm = ptrtoint ptr %i.f to i64
+  %.neg59.i.i = sub i64 %i.bm, %3
+  %i.bn = add i64 %.neg59.i.i, %i.h
   store i64 %i.bn, ptr %i.i, align 8, !tbaa !93
   br label %.loopexit.i
 
@@ -366,7 +358,7 @@ flush_bits.exit.i:                                ; preds = %bb.g
   br label %emit_restart.exit.thread
 
 .loopexit.i:                                      ; preds = %bb.h, %bb.i, %bb.f
-  %i.bo = phi ptr [ %.pre.i, %bb.f ], [ %.2.i.i, %bb.i ], [ %i.bj, %bb.h ] ; 2 uses
+  %i.bo = phi ptr [ %i.f, %bb.f ], [ %.2.i.i, %bb.i ], [ %i.bj, %bb.h ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 1
   store ptr %i.bp, ptr %2, align 8, !tbaa !89

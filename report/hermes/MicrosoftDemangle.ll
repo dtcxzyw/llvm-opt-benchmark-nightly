@@ -201,8 +201,7 @@ _ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_17QualifiedNameNodeEJEEEPT_DpOT0
   %i.v = getelementptr inbounds nuw i8, ptr %.sink11.i, i64 8
   store i32 20, ptr %i.v, align 8, !tbaa !60
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvh11ms_demangle17QualifiedNameNodeE, i64 16), ptr %.sink11.i, align 8, !tbaa !18
-  %i.w = getelementptr inbounds nuw i8, ptr %.sink11.i, i64 16 ; 3 uses
-  store ptr null, ptr %i.w, align 8, !tbaa !79
+  %i.w = getelementptr inbounds nuw i8, ptr %.sink11.i, i64 16 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.y = add i64 %.pre-phi12, %i.t
   %i.z = and i64 %i.y, -8                         ; 2 uses

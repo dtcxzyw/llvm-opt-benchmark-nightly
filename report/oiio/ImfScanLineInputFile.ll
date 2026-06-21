@@ -201,7 +201,7 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 6 uses
   %8 = alloca %"class.OpenImageIO_v3_1_IlmThread__3_3_5::ProcessGroup", align 8 ; 14 uses
   %9 = alloca %"class.OpenImageIO_v3_1_IlmThread__3_3_5::TaskGroup", align 8 ; 7 uses
-  %10 = alloca %"class.std::unique_ptr", align 8  ; 7 uses
+  %10 = alloca %"class.std::unique_ptr", align 8  ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !24
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !70
@@ -604,7 +604,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %common.resume
 
 _ZN27OpenImageIO_v3_1_Imf__3_3_517ScanLineInputFile4Data12checkoutScanEv.exit: ; preds = %bb.bd, %_ZSt11make_uniqueIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_115ScanLineProcessEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit.i
-  %.val58 = phi ptr [ %.val.i, %bb.bd ], [ %i.eq, %_ZSt11make_uniqueIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_115ScanLineProcessEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit.i ] ; 16 uses
+  %.val58 = phi ptr [ %.val.i, %bb.bd ], [ %i.eq, %_ZSt11make_uniqueIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_115ScanLineProcessEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit.i ] ; 17 uses
   %i.eu = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.em) #22, !noalias !178 ; 0 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %.val58, i64 4
   %i.ew = getelementptr inbounds nuw i8, ptr %.val58, i64 8 ; 2 uses
@@ -636,9 +636,8 @@ bb.bh:                                            ; preds = %bb.bg
   unreachable
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit.i69:      ; preds = %bb.bg
-  %11 = load ptr, ptr %10, align 8, !tbaa !181
   %i.fl = load ptr, ptr %i.eo, align 8, !tbaa !181 ; 5 uses
-  store ptr %11, ptr %i.eo, align 8, !tbaa !181
+  store ptr %.val58, ptr %i.eo, align 8, !tbaa !181
   %.not.i.i.i.i.i70 = icmp eq ptr %i.fl, null
   br i1 %.not.i.i.i.i.i70, label %_ZNSt10unique_ptrIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_115ScanLineProcessESt14default_deleteIS2_EED2Ev.exit, label %bb.bi
 

@@ -201,7 +201,7 @@ declare void @_ZN2v88internal6maglev16KnownNodeAspects24ClearUnstableNodeAspects
 define hidden void @_ZN2v88internal6maglev8StoreMap24ClearUnstableNodeAspectsEbRNS1_16KnownNodeAspectsE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, i1 noundef zeroext %1, ptr noundef nonnull align 8 dereferenceable(352) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %3 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 4 uses
-  %4 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 5 uses
+  %4 = alloca %"class.v8::internal::compiler::MapRef", align 8 ; 4 uses
   %5 = alloca %"struct.v8::internal::Brief", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8
@@ -273,7 +273,7 @@ _ZNK2v88internal14ZoneCompactSetINS0_8compiler6MapRefEE4sizeEv.exit: ; preds = %
 
 _ZNK2v88internal6maglev8NodeInfo13possible_mapsEv.exit14: ; preds = %_ZNK2v88internal14ZoneCompactSetINS0_8compiler6MapRefEE4sizeEv.exit, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
-  %i.ad = tail call ptr @_ZNK2v88internal14ZoneCompactSetINS0_8compiler6MapRefEE2atEm(ptr noundef nonnull align 8 dereferenceable(8) %i.u, i64 noundef 0)
+  %i.ad = tail call ptr @_ZNK2v88internal14ZoneCompactSetINS0_8compiler6MapRefEE2atEm(ptr noundef nonnull align 8 dereferenceable(8) %i.u, i64 noundef 0) ; 2 uses
   store ptr %i.ad, ptr %4, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 280
   %i.af = load i8, ptr %i.ae, align 8, !range !21, !noundef !16
@@ -323,10 +323,9 @@ bb.f:                                             ; preds = %.critedge.i.i
 .critedge.i.i:                                    ; preds = %bb.f, %.critedge.preheader.i.i
   %.sroa.5.013.i.i = phi i64 [ %i.aw, %bb.f ], [ 0, %.critedge.preheader.i.i ] ; 2 uses
   %i.ax = call ptr @_ZNK2v88internal14ZoneCompactSetINS0_8compiler6MapRefEE2atEm(ptr noundef nonnull align 8 dereferenceable(8) %i.ao, i64 noundef %.sroa.5.013.i.i)
-  %.val.val.i.i = load ptr, ptr %4, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   store ptr %i.ax, ptr %3, align 8
-  %i.ay = call noundef zeroext i1 @_ZNK2v88internal8compiler9ObjectRef6equalsES2_(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr %.val.val.i.i) #28
+  %i.ay = call noundef zeroext i1 @_ZNK2v88internal8compiler9ObjectRef6equalsES2_(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr %i.ad) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br i1 %i.ay, label %bb.g, label %bb.f
 

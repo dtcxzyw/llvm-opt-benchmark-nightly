@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %._crit_edge
 ; Function Attrs: mustprogress uwtable
 define hidden noundef i32 @mbedtls_internal_aes_encrypt(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = alloca %struct.anon, align 4               ; 14 uses
+  %3 = alloca %struct.anon, align 4               ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !15
@@ -286,7 +286,7 @@ bb.a:
   %i.bs = zext nneg i32 %i.br to i64
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr @_ZL3FT3, i64 %i.bs
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !3
-  %i.bv = xor i32 %i.bq, %i.bu                    ; 5 uses
+  %i.bv = xor i32 %i.bq, %i.bu                    ; 4 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.043, i64 12
   %i.bx = load i32, ptr %i.ay, align 4, !tbaa !3
   %i.by = and i32 %i.y, 255
@@ -310,7 +310,7 @@ bb.a:
   %i.cq = zext nneg i32 %i.cp to i64
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr @_ZL3FT3, i64 %i.cq
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !3
-  %i.ct = xor i32 %i.co, %i.cs                    ; 5 uses
+  %i.ct = xor i32 %i.co, %i.cs                    ; 4 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.043, i64 16
   %i.cv = load i32, ptr %i.bw, align 4, !tbaa !3
   %i.cw = and i32 %i.z, 255
@@ -334,7 +334,7 @@ bb.a:
   %i.do = zext nneg i32 %i.dn to i64
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr @_ZL3FT3, i64 %i.do
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !3
-  %i.dr = xor i32 %i.dm, %i.dq                    ; 5 uses
+  %i.dr = xor i32 %i.dm, %i.dq                    ; 4 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.043, i64 20
   %i.dt = load i32, ptr %i.cu, align 4, !tbaa !3
   %i.du = and i32 %i.ax, 255
@@ -432,28 +432,17 @@ bb.a:
   %i.hi = load i32, ptr %i.hh, align 4, !tbaa !3
   %i.hj = xor i32 %i.he, %i.hi                    ; 2 uses
   %i.hk = icmp samesign ugt i32 %.032.in42, 2
-  br i1 %i.hk, label %.lr.ph, label %._crit_edge, !llvm.loop !24
+  br i1 %i.hk, label %.lr.ph, label %bb.b, !llvm.loop !24
 
-._crit_edge:                                      ; preds = %.lr.ph
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i32 %i.bv, ptr %4, align 4, !tbaa !3
-  store i32 %i.ct, ptr %5, align 4, !tbaa !3
-  store i32 %i.dr, ptr %6, align 4, !tbaa !3
-  br label %bb.b
-
-bb.b:                                             ; preds = %._crit_edge, %bb.a
-  %.lcssa41 = phi i32 [ %i.hj, %._crit_edge ], [ %i.s, %bb.a ] ; 5 uses
-  %.lcssa39 = phi i32 [ %i.gl, %._crit_edge ], [ %i.o, %bb.a ] ; 5 uses
-  %.lcssa37 = phi i32 [ %i.fn, %._crit_edge ], [ %i.k, %bb.a ] ; 4 uses
-  %.lcssa = phi i32 [ %i.ep, %._crit_edge ], [ %i.g, %bb.a ] ; 4 uses
-  %.0.lcssa = phi ptr [ %i.gm, %._crit_edge ], [ %i.q, %bb.a ] ; 8 uses
-  %i.hl = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
-  %i.hm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+bb.b:                                             ; preds = %.lr.ph, %bb.a
+  %.lcssa41 = phi i32 [ %i.s, %bb.a ], [ %i.hj, %.lr.ph ] ; 4 uses
+  %.lcssa39 = phi i32 [ %i.o, %bb.a ], [ %i.gl, %.lr.ph ] ; 4 uses
+  %.lcssa37 = phi i32 [ %i.k, %bb.a ], [ %i.fn, %.lr.ph ] ; 4 uses
+  %.lcssa = phi i32 [ %i.g, %bb.a ], [ %i.ep, %.lr.ph ] ; 4 uses
+  %.0.lcssa = phi ptr [ %i.q, %bb.a ], [ %i.gm, %.lr.ph ] ; 8 uses
+  %i.hl = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %i.hm = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.hn = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.lcssa39, ptr %i.hm, align 4
-  store i32 %.lcssa41, ptr %i.hl, align 4
   %i.ho = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 4
   %i.hp = load i32, ptr %.0.lcssa, align 4, !tbaa !3
   %i.hq = and i32 %.lcssa, 255
@@ -700,7 +689,7 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
 ; Function Attrs: mustprogress uwtable
 define hidden noundef i32 @mbedtls_internal_aes_decrypt(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = alloca %struct.anon.0, align 4             ; 14 uses
+  %3 = alloca %struct.anon.0, align 4             ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !15
@@ -785,7 +774,7 @@ bb.a:
   %i.bs = zext nneg i32 %i.br to i64
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr @_ZL3RT3, i64 %i.bs
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !3
-  %i.bv = xor i32 %i.bq, %i.bu                    ; 5 uses
+  %i.bv = xor i32 %i.bq, %i.bu                    ; 4 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.043, i64 12
   %i.bx = load i32, ptr %i.ay, align 4, !tbaa !3
   %i.by = and i32 %i.y, 255
@@ -809,7 +798,7 @@ bb.a:
   %i.cq = zext nneg i32 %i.cp to i64
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr @_ZL3RT3, i64 %i.cq
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !3
-  %i.ct = xor i32 %i.co, %i.cs                    ; 5 uses
+  %i.ct = xor i32 %i.co, %i.cs                    ; 4 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.043, i64 16
   %i.cv = load i32, ptr %i.bw, align 4, !tbaa !3
   %i.cw = and i32 %i.x, 255
@@ -833,7 +822,7 @@ bb.a:
   %i.do = zext nneg i32 %i.dn to i64
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr @_ZL3RT3, i64 %i.do
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !3
-  %i.dr = xor i32 %i.dm, %i.dq                    ; 5 uses
+  %i.dr = xor i32 %i.dm, %i.dq                    ; 4 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.043, i64 20
   %i.dt = load i32, ptr %i.cu, align 4, !tbaa !3
   %i.du = and i32 %i.ax, 255
@@ -931,28 +920,17 @@ bb.a:
   %i.hi = load i32, ptr %i.hh, align 4, !tbaa !3
   %i.hj = xor i32 %i.he, %i.hi                    ; 2 uses
   %i.hk = icmp samesign ugt i32 %.032.in42, 2
-  br i1 %i.hk, label %.lr.ph, label %._crit_edge, !llvm.loop !25
+  br i1 %i.hk, label %.lr.ph, label %bb.b, !llvm.loop !25
 
-._crit_edge:                                      ; preds = %.lr.ph
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i32 %i.bv, ptr %4, align 4, !tbaa !3
-  store i32 %i.ct, ptr %5, align 4, !tbaa !3
-  store i32 %i.dr, ptr %6, align 4, !tbaa !3
-  br label %bb.b
-
-bb.b:                                             ; preds = %._crit_edge, %bb.a
-  %.lcssa41 = phi i32 [ %i.fn, %._crit_edge ], [ %i.k, %bb.a ] ; 4 uses
-  %.lcssa39 = phi i32 [ %i.gl, %._crit_edge ], [ %i.o, %bb.a ] ; 5 uses
-  %.lcssa37 = phi i32 [ %i.hj, %._crit_edge ], [ %i.s, %bb.a ] ; 5 uses
-  %.lcssa = phi i32 [ %i.ep, %._crit_edge ], [ %i.g, %bb.a ] ; 4 uses
-  %.0.lcssa = phi ptr [ %i.gm, %._crit_edge ], [ %i.q, %bb.a ] ; 8 uses
-  %i.hl = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
-  %i.hm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+bb.b:                                             ; preds = %.lr.ph, %bb.a
+  %.lcssa41 = phi i32 [ %i.k, %bb.a ], [ %i.fn, %.lr.ph ] ; 4 uses
+  %.lcssa39 = phi i32 [ %i.o, %bb.a ], [ %i.gl, %.lr.ph ] ; 4 uses
+  %.lcssa37 = phi i32 [ %i.s, %bb.a ], [ %i.hj, %.lr.ph ] ; 4 uses
+  %.lcssa = phi i32 [ %i.g, %bb.a ], [ %i.ep, %.lr.ph ] ; 4 uses
+  %.0.lcssa = phi ptr [ %i.q, %bb.a ], [ %i.gm, %.lr.ph ] ; 8 uses
+  %i.hl = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %i.hm = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.hn = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.lcssa37, ptr %i.hl, align 4
-  store i32 %.lcssa39, ptr %i.hm, align 4
   %i.ho = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 4
   %i.hp = load i32, ptr %.0.lcssa, align 4, !tbaa !3
   %i.hq = and i32 %.lcssa, 255

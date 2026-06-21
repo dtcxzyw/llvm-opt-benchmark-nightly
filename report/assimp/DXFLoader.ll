@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %"class.std::map", align 8          ; 12 uses
   %4 = alloca %"class.std::map.44", align 8       ; 11 uses
   %5 = alloca %"class.std::vector.49", align 8    ; 17 uses
-  %6 = alloca %"class.std::shared_ptr.20", align 8 ; 8 uses
+  %6 = alloca %"class.std::shared_ptr.20", align 8 ; 7 uses
   %7 = alloca %"class.std::vector.55", align 8    ; 10 uses
   %i.c = tail call noundef zeroext i1 @_ZN6Assimp13DefaultLogger12isNullLoggerEv()
   br i1 %i.c, label %bb.l, label %bb.b
@@ -524,7 +524,7 @@ bb.ad:                                            ; preds = %bb.ab
   br label %_ZNSt10shared_ptrIKN6Assimp3DXF8PolyLineEEC2IS2_vEERKS_IT_E.exit145
 
 _ZNSt10shared_ptrIKN6Assimp3DXF8PolyLineEEC2IS2_vEERKS_IT_E.exit145: ; preds = %bb.aa, %bb.ac, %bb.ad
-  %i.dk = phi ptr [ %i.dc, %bb.aa ], [ %i.dc, %bb.ac ], [ %.pre, %bb.ad ] ; 6 uses
+  %i.dk = phi ptr [ %i.dc, %bb.aa ], [ %i.dc, %bb.ac ], [ %.pre, %bb.ad ] ; 7 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   %i.dm = load ptr, ptr %i.dl, align 8
   %i.dn = load ptr, ptr %i.dk, align 8
@@ -619,12 +619,11 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEjSt4lessIS5_ESaISt
 _ZNKSt6vectorIPKN6Assimp3DXF8PolyLineESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEjSt4lessIS5_ESaISt4pairIKS5_jEEE4findERS9_.exit.thread
   store i32 %.0101288, ptr %i.el, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
-  %8 = load ptr, ptr %6, align 8
   %i.em = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #27
           to label %.noexc149 unwind label %.thread420 ; 3 uses
 
 .noexc149:                                        ; preds = %_ZNKSt6vectorIPKN6Assimp3DXF8PolyLineESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
-  store ptr %8, ptr %i.em, align 8
+  store ptr %i.dk, ptr %i.em, align 8
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 8 ; 2 uses
   store ptr %i.em, ptr %7, align 8
   store ptr %i.en, ptr %i.cu, align 8
@@ -1027,7 +1026,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden noundef i64 @_ZN6Assimp12strtoul10_64I17DeadlyImportErrorEEmPKcPS3_Pj(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #12 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   store ptr %0, ptr %i.a, align 8
   %i.b = load i8, ptr %0, align 1                 ; 3 uses
@@ -1157,8 +1156,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph71:                                         ; preds = %.preheader, %.lr.ph71
   %i.am = phi ptr [ %i.an, %.lr.ph71 ], [ %i.ah, %.preheader ]
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 4 uses
-  store ptr %i.an, ptr %i.a, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 3 uses
   %i.ao = load i8, ptr %i.an, align 1
   %i.ap = add i8 %i.ao, -48
   %or.cond43 = icmp ult i8 %i.ap, 10

@@ -201,14 +201,14 @@ bb.a:
   %8 = alloca %"struct.duckdb::LogicalType", align 8 ; 4 uses
   %9 = alloca %"struct.(anonymous namespace)::StringCastInputState", align 8 ; 14 uses
   %10 = alloca %"class.duckdb::optional_idx", align 8 ; 22 uses
-  %i.c = alloca i64, align 8                      ; 12 uses
+  %i.c = alloca i64, align 8                      ; 9 uses
   %11 = alloca %"class.duckdb::optional_idx", align 8 ; 5 uses
   %12 = alloca %"class.duckdb::optional_idx", align 8 ; 5 uses
   %13 = alloca %"class.duckdb::optional_idx", align 8 ; 5 uses
   %14 = alloca %"class.duckdb::optional_idx", align 8 ; 5 uses
   %15 = alloca %"struct.duckdb::string_t", align 8 ; 9 uses
   %16 = alloca %"class.duckdb::optional_idx", align 8 ; 10 uses
-  %i.d = alloca i64, align 8                      ; 9 uses
+  %i.d = alloca i64, align 8                      ; 7 uses
   %i.e = load i32, ptr %0, align 8, !tbaa !100    ; 2 uses
   %i.f = icmp ult i32 %i.e, 13
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -611,7 +611,7 @@ bb.ai:                                            ; preds = %.critedge
           to label %bb.aj unwind label %bb.al     ; 5 uses
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.dl = add i64 %.lcssa276.ph, 1                ; 2 uses
+  %i.dl = add i64 %.lcssa276.ph, 1                ; 4 uses
   store i64 %i.dl, ptr %i.c, align 8, !tbaa !13
   %i.dm = add i64 %i.dk, 3
   %.not.i = icmp eq i64 %i.dm, %.lcssa276.ph
@@ -623,22 +623,17 @@ bb.ak:                                            ; preds = %bb.aj
           to label %_ZN6duckdbL6IsNullEPKcmm.exit unwind label %bb.al
 
 _ZN6duckdbL6IsNullEPKcmm.exit:                    ; preds = %bb.ak
-  br i1 %i.do, label %.thread, label %_ZN6duckdbL6IsNullEPKcmm.exit._ZN6duckdbL6IsNullEPKcmm.exit.thread_crit_edge
-
-_ZN6duckdbL6IsNullEPKcmm.exit._ZN6duckdbL6IsNullEPKcmm.exit.thread_crit_edge: ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit
-  %.pre355 = load i64, ptr %i.c, align 8, !tbaa !13
-  br label %_ZN6duckdbL6IsNullEPKcmm.exit.thread
+  br i1 %i.do, label %.thread, label %_ZN6duckdbL6IsNullEPKcmm.exit.thread
 
 bb.al:                                            ; preds = %bb.ak, %bb.ai
   %i.dp = landingpad { ptr, i32 }
           cleanup
   br label %bb.cf
 
-_ZN6duckdbL6IsNullEPKcmm.exit.thread:             ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit._ZN6duckdbL6IsNullEPKcmm.exit.thread_crit_edge, %bb.aj
-  %17 = phi i64 [ %.pre355, %_ZN6duckdbL6IsNullEPKcmm.exit._ZN6duckdbL6IsNullEPKcmm.exit.thread_crit_edge ], [ %i.dl, %bb.aj ] ; 3 uses
+_ZN6duckdbL6IsNullEPKcmm.exit.thread:             ; preds = %bb.aj, %_ZN6duckdbL6IsNullEPKcmm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.sroa.5)
-  %i.dq = sub i64 %17, %i.dk                      ; 2 uses
+  %i.dq = sub i64 %i.dl, %i.dk                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   %i.dr = invoke { i64, ptr } @_ZN6duckdb12StringVector11EmptyStringERNS_6VectorEm(ptr noundef nonnull align 8 dereferenceable(104) %7, i64 noundef %i.dq)
           to label %.noexc163 unwind label %bb.bb ; 2 uses
@@ -657,7 +652,7 @@ _ZN6duckdbL6IsNullEPKcmm.exit.thread:             ; preds = %_ZN6duckdbL6IsNullE
           to label %.noexc164 unwind label %bb.bb
 
 .noexc164:                                        ; preds = %.noexc163
-  %.not.i160 = icmp eq i64 %17, %i.dk
+  %.not.i160 = icmp eq i64 %i.dl, %i.dk
   br i1 %.not.i160, label %.thread92.i, label %.lr.ph.i161
 
 .thread92.i:                                      ; preds = %.noexc164
@@ -709,7 +704,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq
   %i.ej = add i64 %i.eb, 1                        ; 2 uses
-  %i.ek = icmp ult i64 %i.ej, %17
+  %i.ek = icmp ult i64 %i.ej, %i.dl
   br i1 %i.ek, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
@@ -990,8 +985,7 @@ bb.br:                                            ; preds = %bb.bm
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bn
-  %storemerge136 = phi i64 [ 0, %bb.bn ], [ %i.hh, %bb.br ] ; 3 uses
-  store i64 %storemerge136, ptr %i.c, align 8, !tbaa !13
+  %storemerge136 = phi i64 [ 0, %bb.bn ], [ %i.hh, %bb.br ] ; 2 uses
   %i.hi = invoke noundef i64 @_ZNK6duckdb12optional_idx8GetIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %10)
           to label %bb.bt unwind label %bb.bw     ; 3 uses
 
@@ -1006,11 +1000,7 @@ bb.bu:                                            ; preds = %bb.bt
           to label %_ZN6duckdbL6IsNullEPKcmm.exit173 unwind label %bb.bw
 
 _ZN6duckdbL6IsNullEPKcmm.exit173:                 ; preds = %bb.bu
-  br i1 %i.hl, label %bb.bv, label %_ZN6duckdbL6IsNullEPKcmm.exit173._ZN6duckdbL6IsNullEPKcmm.exit173.thread_crit_edge
-
-_ZN6duckdbL6IsNullEPKcmm.exit173._ZN6duckdbL6IsNullEPKcmm.exit173.thread_crit_edge: ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit173
-  %.pre356 = load i64, ptr %i.c, align 8, !tbaa !13
-  br label %_ZN6duckdbL6IsNullEPKcmm.exit173.thread
+  br i1 %i.hl, label %bb.bv, label %_ZN6duckdbL6IsNullEPKcmm.exit173.thread
 
 bb.bv:                                            ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit173
   %i.hm = load i64, ptr %2, align 8, !tbaa !13
@@ -1022,9 +1012,8 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv, %bb.
           cleanup
   br label %bb.ce
 
-_ZN6duckdbL6IsNullEPKcmm.exit173.thread:          ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit173._ZN6duckdbL6IsNullEPKcmm.exit173.thread_crit_edge, %bb.bt
-  %18 = phi i64 [ %.pre356, %_ZN6duckdbL6IsNullEPKcmm.exit173._ZN6duckdbL6IsNullEPKcmm.exit173.thread_crit_edge ], [ %storemerge136, %bb.bt ]
-  %i.ho = invoke fastcc { i64, ptr } @_ZN6duckdbL12HandleStringILb1EEENS_8string_tERNS_6VectorEPKcmm(ptr noundef nonnull align 8 dereferenceable(104) %i.gx, ptr noundef %i.j, i64 noundef %i.hi, i64 noundef %18)
+_ZN6duckdbL6IsNullEPKcmm.exit173.thread:          ; preds = %bb.bt, %_ZN6duckdbL6IsNullEPKcmm.exit173
+  %i.ho = invoke fastcc { i64, ptr } @_ZN6duckdbL12HandleStringILb1EEENS_8string_tERNS_6VectorEPKcmm(ptr noundef nonnull align 8 dereferenceable(104) %i.gx, ptr noundef %i.j, i64 noundef %i.hi, i64 noundef %storemerge136)
           to label %bb.bx unwind label %bb.bz     ; 2 uses
 
 bb.bx:                                            ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit173.thread
@@ -1252,8 +1241,7 @@ bb.cw:                                            ; preds = %bb.cr
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %bb.cs
-  %storemerge = phi i64 [ 0, %bb.cs ], [ %i.kc, %bb.cw ] ; 3 uses
-  store i64 %storemerge, ptr %i.d, align 8, !tbaa !13
+  %storemerge = phi i64 [ 0, %bb.cs ], [ %i.kc, %bb.cw ] ; 2 uses
   %i.kd = invoke noundef i64 @_ZNK6duckdb12optional_idx8GetIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %16)
           to label %bb.cy unwind label %bb.dc     ; 3 uses
 
@@ -1268,11 +1256,7 @@ bb.cz:                                            ; preds = %bb.cy
           to label %_ZN6duckdbL6IsNullEPKcmm.exit183 unwind label %bb.dc
 
 _ZN6duckdbL6IsNullEPKcmm.exit183:                 ; preds = %bb.cz
-  br i1 %i.kg, label %bb.da, label %_ZN6duckdbL6IsNullEPKcmm.exit183._ZN6duckdbL6IsNullEPKcmm.exit183.thread_crit_edge
-
-_ZN6duckdbL6IsNullEPKcmm.exit183._ZN6duckdbL6IsNullEPKcmm.exit183.thread_crit_edge: ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit183
-  %.pre = load i64, ptr %i.d, align 8, !tbaa !13
-  br label %_ZN6duckdbL6IsNullEPKcmm.exit183.thread
+  br i1 %i.kg, label %bb.da, label %_ZN6duckdbL6IsNullEPKcmm.exit183.thread
 
 bb.da:                                            ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit183
   %i.kh = load i64, ptr %2, align 8, !tbaa !13    ; 2 uses
@@ -1307,9 +1291,8 @@ bb.dc:                                            ; preds = %bb.db, %bb.cz, %bb.
           cleanup
   br label %bb.dk
 
-_ZN6duckdbL6IsNullEPKcmm.exit183.thread:          ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit183._ZN6duckdbL6IsNullEPKcmm.exit183.thread_crit_edge, %bb.cy
-  %19 = phi i64 [ %.pre, %_ZN6duckdbL6IsNullEPKcmm.exit183._ZN6duckdbL6IsNullEPKcmm.exit183.thread_crit_edge ], [ %storemerge, %bb.cy ]
-  %i.ku = invoke fastcc { i64, ptr } @_ZN6duckdbL12HandleStringILb1EEENS_8string_tERNS_6VectorEPKcmm(ptr noundef nonnull align 8 dereferenceable(104) %i.js, ptr noundef %i.j, i64 noundef %i.kd, i64 noundef %19)
+_ZN6duckdbL6IsNullEPKcmm.exit183.thread:          ; preds = %bb.cy, %_ZN6duckdbL6IsNullEPKcmm.exit183
+  %i.ku = invoke fastcc { i64, ptr } @_ZN6duckdbL12HandleStringILb1EEENS_8string_tERNS_6VectorEPKcmm(ptr noundef nonnull align 8 dereferenceable(104) %i.js, ptr noundef %i.j, i64 noundef %i.kd, i64 noundef %storemerge)
           to label %bb.dd unwind label %bb.df     ; 2 uses
 
 bb.dd:                                            ; preds = %_ZN6duckdbL6IsNullEPKcmm.exit183.thread

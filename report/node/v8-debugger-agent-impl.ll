@@ -201,7 +201,7 @@ bb.a:
   %33 = alloca %"class.v8_inspector::String16", align 8 ; 7 uses
   %34 = alloca %"class.std::__cxx11::basic_string.462", align 8 ; 5 uses
   %i.a = alloca i32, align 4                      ; 5 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
+  %i.b = alloca i32, align 4                      ; 5 uses
   %35 = alloca %"class.std::unique_ptr.501", align 8 ; 6 uses
   %36 = alloca %"class.v8_inspector::String16", align 8 ; 7 uses
   %37 = alloca %"class.std::unique_ptr.83", align 8 ; 3 uses
@@ -604,7 +604,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
-  %i.fs = phi i32 [ %.pre154, %bb.ab ], [ %.0, %bb.aa ]
+  %i.fs = phi i32 [ %.pre154, %bb.ab ], [ %.0, %bb.aa ] ; 2 uses
   %i.ft = phi i32 [ %.pre, %bb.ab ], [ %2, %bb.aa ]
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #19
   call void @_ZN12v8_inspector19V8DebuggerAgentImpl17setBreakpointImplERKNS_8String16ES3_S3_ii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.501") align 8 %35, ptr noundef nonnull align 8 dereferenceable(592) %1, ptr noundef nonnull align 8 dereferenceable(40) %30, ptr noundef nonnull align 8 dereferenceable(40) %i.fn, ptr noundef nonnull align 8 dereferenceable(40) %28, i32 noundef %i.ft, i32 noundef %i.fs)
@@ -616,15 +616,14 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 bb.ad:                                            ; preds = %bb.ac
   %i.fw = load ptr, ptr %i.fo, align 8            ; 4 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fu, i64 48
-  %38 = load i32, ptr %i.fx, align 8
-  %i.fy = load i32, ptr %i.b, align 4
+  %i.fy = load i32, ptr %i.fx, align 8
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fu, i64 52
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fu, i64 56
   %i.gb = load i8, ptr %i.ga, align 8, !range !17, !noundef !27
   %i.gc = trunc nuw i8 %i.gb to i1
   %.val.i.i = load i32, ptr %i.fz, align 4
-  %.0.i.i = select i1 %i.gc, i32 %.val.i.i, i32 %i.fy
-  %i.gd = call i64 @_ZNK12v8_inspector16V8DebuggerScript6offsetEii(ptr noundef nonnull align 8 dereferenceable(304) %i.fw, i32 noundef %38, i32 noundef %.0.i.i) #19, !noalias !178 ; 3 uses
+  %.0.i.i = select i1 %i.gc, i32 %.val.i.i, i32 %i.fs
+  %i.gd = call i64 @_ZNK12v8_inspector16V8DebuggerScript6offsetEii(ptr noundef nonnull align 8 dereferenceable(304) %i.fw, i32 noundef %i.fy, i32 noundef %.0.i.i) #19, !noalias !178 ; 3 uses
   %.sroa.645.0.extract.shift.i = lshr i64 %i.gd, 32 ; 2 uses
   %.sroa.645.0.extract.trunc.i = trunc nuw i64 %.sroa.645.0.extract.shift.i to i32
   %i.ge = trunc i64 %i.gd to i1
@@ -1027,7 +1026,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.bm, label %bb.ac, label %bb.ad, !prof !86
 
 bb.ac:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.bl, ptr align 1 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bl, ptr align 1 %2, i64 %i.c, i1 false)
   br label %_ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49
 
 bb.ad:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
@@ -1046,7 +1045,7 @@ _ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49: ; preds = %bb.ac
   br i1 %i.br, label %bb.af, label %bb.ag, !prof !86
 
 bb.af:                                            ; preds = %_ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bp, ptr align 1 %1, i64 %i.bq, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bp, ptr align 1 %1, i64 %i.bq, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit50
 
 bb.ag:                                            ; preds = %_ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49

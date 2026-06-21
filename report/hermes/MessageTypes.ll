@@ -201,11 +201,11 @@ bb.a:
   %2 = alloca %"class.std::unique_ptr.245", align 8 ; 5 uses
   %i.a = load i32, ptr %1, align 4, !tbaa !73
   %i.b = icmp eq i32 %i.a, 1
-  %spec.select.i = select i1 %i.b, ptr %1, ptr null ; 2 uses
+  %spec.select.i = select i1 %i.b, ptr %1, ptr null
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23, !noalias !2295 ; 9 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false), !noalias !2295
-  %i.d = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 8 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 5 uses
   %i.f = icmp ugt i64 %i.e, 54901024028897475
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -226,12 +226,10 @@ _ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler23SamplingHeapProfileNod
   store ptr %i.j, ptr %i.h, align 8, !tbaa !729
   %i.k = getelementptr inbounds nuw [168 x i8], ptr %i.j, i64 %i.e
   store ptr %i.k, ptr %i.g, align 8, !tbaa !730
-  %.pre = load i64, ptr %i.d, align 8, !tbaa !2147 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 16 ; 2 uses
-  %.idx = shl nuw nsw i64 %.pre, 3
+  %.idx = shl nuw nsw i64 %i.e, 3
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx
-  %.not27 = icmp eq i64 %.pre, 0
-  br i1 %.not27, label %.thread23, label %.lr.ph
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler23SamplingHeapProfileNodeESaIS5_EE7reserveEm.exit, %bb.e
   %.028 = phi ptr [ %i.u, %bb.e ], [ %i.l, %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler23SamplingHeapProfileNodeESaIS5_EE7reserveEm.exit ] ; 2 uses
@@ -262,7 +260,7 @@ bb.e:                                             ; preds = %_ZN8facebook6hermes
   %.not = icmp eq ptr %i.u, %i.m
   br i1 %.not, label %.thread23, label %.lr.ph
 
-.thread23:                                        ; preds = %bb.e, %bb.c, %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler23SamplingHeapProfileNodeESaIS5_EE7reserveEm.exit
+.thread23:                                        ; preds = %bb.e, %bb.c
   %i.v = ptrtoint ptr %i.c to i64
   store i64 %i.v, ptr %0, align 8, !tbaa !725
   br label %_ZNSt10unique_ptrISt6vectorIN8facebook6hermes3cdp7message12heapProfiler23SamplingHeapProfileNodeESaIS6_EESt14default_deleteIS8_EED2Ev.exit
@@ -665,11 +663,11 @@ bb.a:
   %2 = alloca %"class.std::unique_ptr.260", align 8 ; 5 uses
   %i.a = load i32, ptr %1, align 4, !tbaa !73
   %i.b = icmp eq i32 %i.a, 1
-  %spec.select.i = select i1 %i.b, ptr %1, ptr null ; 2 uses
+  %spec.select.i = select i1 %i.b, ptr %1, ptr null
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23, !noalias !2311 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false), !noalias !2311
-  %i.d = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 8 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 5 uses
   %i.f = icmp ugt i64 %i.e, 288230376151711743
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -683,26 +681,21 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not34, label %.thread, label %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler25SamplingHeapProfileSampleESaIS5_EE7reserveEm.exit
 
 _ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler25SamplingHeapProfileSampleESaIS5_EE7reserveEm.exit: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.h = shl nuw nsw i64 %i.e, 5
   %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #23 ; 3 uses
-  %.pre.pre = load i64, ptr %i.d, align 8, !tbaa !2147 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.i, ptr %i.c, align 8, !tbaa !767
   store ptr %i.i, ptr %3, align 8, !tbaa !769
   %i.j = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %i.e
   store ptr %i.j, ptr %i.g, align 8, !tbaa !770
   %i.k = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 16 ; 2 uses
-  %.idx = shl nuw nsw i64 %.pre.pre, 3
+  %.idx = shl nuw nsw i64 %i.e, 3
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %.idx
-  %.not24 = icmp eq i64 %.pre.pre, 0
-  br i1 %.not24, label %.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler25SamplingHeapProfileSampleESaIS5_EE7reserveEm.exit
   %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph, %bb.i
-  %.025 = phi ptr [ %i.k, %.lr.ph ], [ %i.y, %bb.i ] ; 2 uses
+bb.d:                                             ; preds = %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler25SamplingHeapProfileSampleESaIS5_EE7reserveEm.exit, %bb.i
+  %.025 = phi ptr [ %i.k, %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler25SamplingHeapProfileSampleESaIS5_EE7reserveEm.exit ], [ %i.y, %bb.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.m = load ptr, ptr %.025, align 8, !tbaa !71  ; 3 uses
   %.not.i.i = icmp eq ptr %i.m, null
@@ -749,7 +742,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.not = icmp eq ptr %i.y, %i.l
   br i1 %.not, label %.thread, label %bb.d
 
-.thread:                                          ; preds = %bb.i, %bb.c, %_ZNSt6vectorIN8facebook6hermes3cdp7message12heapProfiler25SamplingHeapProfileSampleESaIS5_EE7reserveEm.exit
+.thread:                                          ; preds = %bb.i, %bb.c
   %i.z = ptrtoint ptr %i.c to i64
   store i64 %i.z, ptr %0, align 8, !tbaa !765
   br label %_ZNSt10unique_ptrISt6vectorIN8facebook6hermes3cdp7message12heapProfiler25SamplingHeapProfileSampleESaIS6_EESt14default_deleteIS8_EED2Ev.exit
@@ -1026,10 +1019,10 @@ define linkonce_odr hidden void @_ZN8facebook6hermes3cdp7message13valueFromJsonI
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !73
   %i.b = icmp eq i32 %i.a, 1
-  %spec.select.i = select i1 %i.b, ptr %1, ptr null ; 2 uses
+  %spec.select.i = select i1 %i.b, ptr %1, ptr null
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23, !noalias !2333 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false), !noalias !2333
-  %i.d = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 4 uses
   %i.f = icmp ugt i64 %i.e, 1152921504606846975
   br i1 %i.f, label %bb.b, label %bb.c
@@ -1045,25 +1038,19 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNSt6vectorIxSaIxEE7reserveEm.exit:              ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.i = shl nuw nsw i64 %i.e, 3
+  %i.i = shl nuw nsw i64 %i.e, 3                  ; 2 uses
   %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #23 ; 3 uses
   store ptr %i.j, ptr %i.c, align 8, !tbaa !812
   store ptr %i.j, ptr %i.h, align 8, !tbaa !2336
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.e
   store ptr %i.k, ptr %i.g, align 8, !tbaa !815
-  %.pre = load i64, ptr %i.d, align 8, !tbaa !2147 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 16 ; 2 uses
-  %.idx = shl nuw nsw i64 %.pre, 3
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx
-  %.not30 = icmp eq i64 %.pre, 0
-  br i1 %.not30, label %.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZNSt6vectorIxSaIxEE7reserveEm.exit
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.i
   %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph, %bb.l
-  %.031 = phi ptr [ %i.l, %.lr.ph ], [ %i.am, %bb.l ] ; 2 uses
+bb.d:                                             ; preds = %_ZNSt6vectorIxSaIxEE7reserveEm.exit, %bb.l
+  %.031 = phi ptr [ %i.l, %_ZNSt6vectorIxSaIxEE7reserveEm.exit ], [ %i.am, %bb.l ] ; 2 uses
   %i.n = load ptr, ptr %.031, align 8, !tbaa !71  ; 3 uses
   %.not.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i, label %bb.m, label %bb.e
@@ -1141,7 +1128,7 @@ bb.l:                                             ; preds = %_ZNSt6vectorIxSaIxE
   %.not = icmp eq ptr %i.am, %i.m
   br i1 %.not, label %.thread, label %bb.d
 
-.thread:                                          ; preds = %bb.l, %bb.c, %_ZNSt6vectorIxSaIxEE7reserveEm.exit
+.thread:                                          ; preds = %bb.l, %bb.c
   %i.an = ptrtoint ptr %i.c to i64
   store i64 %i.an, ptr %0, align 8, !tbaa !808
   br label %_ZNSt10unique_ptrISt6vectorIxSaIxEESt14default_deleteIS2_EED2Ev.exit
@@ -1174,11 +1161,11 @@ bb.a:
   %2 = alloca %"class.std::unique_ptr.281", align 8 ; 6 uses
   %i.a = load i32, ptr %1, align 4, !tbaa !73
   %i.b = icmp eq i32 %i.a, 1
-  %spec.select.i = select i1 %i.b, ptr %1, ptr null ; 2 uses
+  %spec.select.i = select i1 %i.b, ptr %1, ptr null
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23, !noalias !2342 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false), !noalias !2342
-  %i.d = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 8 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 5 uses
   %i.f = icmp ugt i64 %i.e, 384307168202282325
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -1192,26 +1179,21 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not34, label %.thread, label %_ZNSt6vectorIN8facebook6hermes3cdp7message8profiler16PositionTickInfoESaIS5_EE7reserveEm.exit
 
 _ZNSt6vectorIN8facebook6hermes3cdp7message8profiler16PositionTickInfoESaIS5_EE7reserveEm.exit: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.h = mul nuw nsw i64 %i.e, 24
   %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #23 ; 3 uses
-  %.pre.pre = load i64, ptr %i.d, align 8, !tbaa !2147 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.i, ptr %i.c, align 8, !tbaa !819
   store ptr %i.i, ptr %3, align 8, !tbaa !821
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %i.i, i64 %i.e
   store ptr %i.j, ptr %i.g, align 8, !tbaa !822
   %i.k = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 16 ; 2 uses
-  %.idx = shl nuw nsw i64 %.pre.pre, 3
+  %.idx = shl nuw nsw i64 %i.e, 3
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %.idx
-  %.not23 = icmp eq i64 %.pre.pre, 0
-  br i1 %.not23, label %.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZNSt6vectorIN8facebook6hermes3cdp7message8profiler16PositionTickInfoESaIS5_EE7reserveEm.exit
   %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph, %bb.f
-  %.024 = phi ptr [ %i.k, %.lr.ph ], [ %i.x, %bb.f ] ; 2 uses
+bb.d:                                             ; preds = %_ZNSt6vectorIN8facebook6hermes3cdp7message8profiler16PositionTickInfoESaIS5_EE7reserveEm.exit, %bb.f
+  %.024 = phi ptr [ %i.k, %_ZNSt6vectorIN8facebook6hermes3cdp7message8profiler16PositionTickInfoESaIS5_EE7reserveEm.exit ], [ %i.x, %bb.f ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.m = load ptr, ptr %.024, align 8, !tbaa !71
   call void @_ZN8facebook6hermes3cdp7message13valueFromJsonINS2_8profiler16PositionTickInfoEEENSt9enable_ifIXsr3std10is_base_ofINS2_12SerializableET_EE5valueESt10unique_ptrIS8_St14default_deleteIS8_EEE4typeEPKN6hermes6parser9JSONValueE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.281") align 8 %2, ptr noundef %i.m)
@@ -1255,7 +1237,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN8face
   %.not = icmp eq ptr %i.x, %i.l
   br i1 %.not, label %.thread, label %bb.d
 
-.thread:                                          ; preds = %bb.f, %bb.c, %_ZNSt6vectorIN8facebook6hermes3cdp7message8profiler16PositionTickInfoESaIS5_EE7reserveEm.exit
+.thread:                                          ; preds = %bb.f, %bb.c
   %i.y = ptrtoint ptr %i.c to i64
   store i64 %i.y, ptr %0, align 8, !tbaa !817
   br label %_ZNSt10unique_ptrISt6vectorIN8facebook6hermes3cdp7message8profiler16PositionTickInfoESaIS6_EESt14default_deleteIS8_EED2Ev.exit
@@ -1658,11 +1640,11 @@ bb.a:
   %2 = alloca %"class.std::unique_ptr.237", align 8 ; 6 uses
   %i.a = load i32, ptr %1, align 4, !tbaa !73
   %i.b = icmp eq i32 %i.a, 1
-  %spec.select.i = select i1 %i.b, ptr %1, ptr null ; 2 uses
+  %spec.select.i = select i1 %i.b, ptr %1, ptr null
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23, !noalias !2434 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false), !noalias !2434
-  %i.d = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 8 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !2147 ; 5 uses
   %i.f = icmp ugt i64 %i.e, 384307168202282325
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -1676,26 +1658,21 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not34, label %.thread, label %_ZNSt6vectorIN8facebook6hermes3cdp7message8debugger14ScriptPositionESaIS5_EE7reserveEm.exit
 
 _ZNSt6vectorIN8facebook6hermes3cdp7message8debugger14ScriptPositionESaIS5_EE7reserveEm.exit: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.h = mul nuw nsw i64 %i.e, 24
   %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #23 ; 3 uses
-  %.pre.pre = load i64, ptr %i.d, align 8, !tbaa !2147 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.i, ptr %i.c, align 8, !tbaa !1055
   store ptr %i.i, ptr %3, align 8, !tbaa !1057
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %i.i, i64 %i.e
   store ptr %i.j, ptr %i.g, align 8, !tbaa !1058
   %i.k = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 16 ; 2 uses
-  %.idx = shl nuw nsw i64 %.pre.pre, 3
+  %.idx = shl nuw nsw i64 %i.e, 3
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %.idx
-  %.not23 = icmp eq i64 %.pre.pre, 0
-  br i1 %.not23, label %.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZNSt6vectorIN8facebook6hermes3cdp7message8debugger14ScriptPositionESaIS5_EE7reserveEm.exit
   %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph, %bb.f
-  %.024 = phi ptr [ %i.k, %.lr.ph ], [ %i.x, %bb.f ] ; 2 uses
+bb.d:                                             ; preds = %_ZNSt6vectorIN8facebook6hermes3cdp7message8debugger14ScriptPositionESaIS5_EE7reserveEm.exit, %bb.f
+  %.024 = phi ptr [ %i.k, %_ZNSt6vectorIN8facebook6hermes3cdp7message8debugger14ScriptPositionESaIS5_EE7reserveEm.exit ], [ %i.x, %bb.f ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.m = load ptr, ptr %.024, align 8, !tbaa !71
   call void @_ZN8facebook6hermes3cdp7message13valueFromJsonINS2_8debugger14ScriptPositionEEENSt9enable_ifIXsr3std10is_base_ofINS2_12SerializableET_EE5valueESt10unique_ptrIS8_St14default_deleteIS8_EEE4typeEPKN6hermes6parser9JSONValueE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.237") align 8 %2, ptr noundef %i.m)
@@ -1739,7 +1716,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN8face
   %.not = icmp eq ptr %i.x, %i.l
   br i1 %.not, label %.thread, label %bb.d
 
-.thread:                                          ; preds = %bb.f, %bb.c, %_ZNSt6vectorIN8facebook6hermes3cdp7message8debugger14ScriptPositionESaIS5_EE7reserveEm.exit
+.thread:                                          ; preds = %bb.f, %bb.c
   %i.y = ptrtoint ptr %i.c to i64
   store i64 %i.y, ptr %0, align 8, !tbaa !1053
   br label %_ZNSt10unique_ptrISt6vectorIN8facebook6hermes3cdp7message8debugger14ScriptPositionESaIS6_EESt14default_deleteIS8_EED2Ev.exit

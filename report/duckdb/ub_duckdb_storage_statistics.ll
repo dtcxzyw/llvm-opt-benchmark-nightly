@@ -201,8 +201,8 @@ _ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN
   br label %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit28.us.i.i
 
 _ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit28.us.i.i: ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdbL16ToStringInternalB5cxx11ERKNS2_14BaseStatisticsEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit.thread.us.i.i", %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit28.us.preheader.i.i
-  %.val.i102.us.i.i = phi i64 [ %.val.i.us.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdbL16ToStringInternalB5cxx11ERKNS2_14BaseStatisticsEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit.thread.us.i.i" ], [ %.val.i99128.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit28.us.preheader.i.i ]
-  %.sroa.063.1101.us.i.i = phi ptr [ %i.en, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdbL16ToStringInternalB5cxx11ERKNS2_14BaseStatisticsEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit.thread.us.i.i" ], [ %.sroa.063.0127.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit28.us.preheader.i.i ] ; 9 uses
+  %.val.i102.us.i.i = phi i64 [ %.val.i.us.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdbL16ToStringInternalB5cxx11ERKNS2_14BaseStatisticsEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit.thread.us.i.i" ], [ %.val.i99128.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit28.us.preheader.i.i ] ; 2 uses
+  %.sroa.063.1101.us.i.i = phi ptr [ %i.en, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdbL16ToStringInternalB5cxx11ERKNS2_14BaseStatisticsEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit.thread.us.i.i" ], [ %.sroa.063.0127.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit28.us.preheader.i.i ] ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
@@ -497,10 +497,9 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.gh, label %bb.aa, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN6duckdbL16ToStringInternalB5cxx11ERKNS9_14BaseStatisticsEE3$_0EEET_SF_SF_T0_.exit"
 
 bb.aa:                                            ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdbL16ToStringInternalB5cxx11ERKNS2_14BaseStatisticsEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit20.thread74.i.i"
-  %7 = load i64, ptr %.sroa.063.1101.us.i.i, align 8, !tbaa !123
   %i.gi = load i64, ptr %.sroa.060.1123.i.i, align 8, !tbaa !123
   store i64 %i.gi, ptr %.sroa.063.1101.us.i.i, align 8, !tbaa !123
-  store i64 %7, ptr %.sroa.060.1123.i.i, align 8, !tbaa !123
+  store i64 %.val.i102.us.i.i, ptr %.sroa.060.1123.i.i, align 8, !tbaa !123
   %i.gj = getelementptr inbounds nuw i8, ptr %.sroa.063.1101.us.i.i, i64 8 ; 2 uses
   %.val.i99.i.i = load i64, ptr %i.gj, align 8, !tbaa !123 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -903,8 +902,8 @@ _ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN
   br label %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit25.us.i.i
 
 _ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit25.us.i.i: ; preds = %bb.n, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit25.us.preheader.i.i
-  %.val.i81.us.i.i = phi i64 [ %.val.i.us.i.i, %bb.n ], [ %.val.i78108.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit25.us.preheader.i.i ]
-  %.sroa.060.180.us.i.i = phi ptr [ %i.dy, %bb.n ], [ %.sroa.060.0107.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit25.us.preheader.i.i ] ; 9 uses
+  %.val.i81.us.i.i = phi i64 [ %.val.i.us.i.i, %bb.n ], [ %.val.i78108.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit25.us.preheader.i.i ] ; 2 uses
+  %.sroa.060.180.us.i.i = phi ptr [ %i.dy, %bb.n ], [ %.sroa.060.0107.i.i, %_ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit25.us.preheader.i.i ] ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   %i.dp = getelementptr inbounds nuw [56 x i8], ptr %i.dh, i64 %.val.i81.us.i.i ; 2 uses
@@ -1067,8 +1066,8 @@ bb.t:                                             ; preds = %bb.r
 
 _ZNK6duckdb6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeEELb1ESaIS9_EEixEm.exit41.i.i: ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdb16ToStructuredTypeERKNS2_11LogicalTypeEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit.us.i.i", %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdb16ToStructuredTypeERKNS2_11LogicalTypeEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit17.i.i"
   %.sroa.057.0.pn.i.i = phi ptr [ %.sroa.057.1.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdb16ToStructuredTypeERKNS2_11LogicalTypeEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit17.i.i" ], [ %.sroa.057.0106.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdb16ToStructuredTypeERKNS2_11LogicalTypeEE3$_0EclINS_17__normal_iteratorIPmSt6vectorImSaImEEEESE_EEbT_T0_.exit.us.i.i" ]
-  %.sroa.057.1.i.i = getelementptr inbounds i8, ptr %.sroa.057.0.pn.i.i, i64 -8 ; 6 uses
-  %i.et = load i64, ptr %.sroa.057.1.i.i, align 8, !tbaa !123 ; 3 uses
+  %.sroa.057.1.i.i = getelementptr inbounds i8, ptr %.sroa.057.0.pn.i.i, i64 -8 ; 5 uses
+  %i.et = load i64, ptr %.sroa.057.1.i.i, align 8, !tbaa !123 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i64 %i.et, ptr %i.d, align 8, !tbaa !123
@@ -1163,10 +1162,8 @@ bb.x:                                             ; preds = %"_ZN9__gnu_cxx5__op
   br i1 %i.fn, label %bb.y, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN6duckdb16ToStructuredTypeERKNS9_11LogicalTypeEE3$_0EEET_SF_SF_T0_.exit"
 
 bb.y:                                             ; preds = %bb.x
-  %7 = load i64, ptr %.sroa.060.180.us.i.i, align 8, !tbaa !123
-  %8 = load i64, ptr %.sroa.057.1.i.i, align 8, !tbaa !123
-  store i64 %8, ptr %.sroa.060.180.us.i.i, align 8, !tbaa !123
-  store i64 %7, ptr %.sroa.057.1.i.i, align 8, !tbaa !123
+  store i64 %i.et, ptr %.sroa.060.180.us.i.i, align 8, !tbaa !123
+  store i64 %.val.i81.us.i.i, ptr %.sroa.057.1.i.i, align 8, !tbaa !123
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.060.180.us.i.i, i64 8 ; 2 uses
   %.val.i78.i.i = load i64, ptr %i.fo, align 8, !tbaa !123 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

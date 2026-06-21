@@ -201,7 +201,7 @@ define internal fastcc range(i32 0, 2) i32 @parse_value(ptr noundef %0, ptr nofr
 bb.a:
   %i.a = alloca [1000 x i8], align 16             ; 5 uses
   %i.b = alloca [1000 x i8], align 16             ; 6 uses
-  %i.c = alloca ptr, align 8                      ; 12 uses
+  %i.c = alloca ptr, align 8                      ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   %i.d = load ptr, ptr %1, align 8, !tbaa !12     ; 9 uses
   store ptr %i.d, ptr %i.c, align 8, !tbaa !12
@@ -326,14 +326,13 @@ bb.l:                                             ; preds = %bb.a
   br label %parse_hex.exit
 
 bb.m:                                             ; preds = %bb.a
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 7 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 6 uses
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !9   ; 2 uses
   %i.ae = icmp eq i8 %i.ad, 120
   br i1 %i.ae, label %bb.n, label %bb.aa
 
 bb.n:                                             ; preds = %bb.m
-  %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 2 ; 5 uses
-  store ptr %i.af, ptr %i.c, align 8, !tbaa !12
+  %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 2 ; 4 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.v, %bb.n
@@ -443,7 +442,6 @@ bb.aa:                                            ; preds = %bb.m
   br label %bb.al
 
 bb.ab:                                            ; preds = %bb.aa
-  store ptr %i.ac, ptr %i.c, align 8, !tbaa !12
   %.pre.i = load i8, ptr %i.ac, align 1, !tbaa !9
   br label %bb.ac
 

@@ -201,7 +201,7 @@ declare zeroext i1 @_upb_Message_AddUnknownSlowPath_dont_copy_me__upb_internal_u
 define internal fastcc void @_upb_Decoder_AddMapEntryUnknown(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef nonnull %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = alloca i64, align 8                      ; 5 uses
+  %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = alloca [10 x i8], align 1                ; 5 uses
   %5 = alloca [2 x %struct.upb_StringView], align 16 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
@@ -237,7 +237,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.i, label %upb_Decoder_EncodeVarint32.exit, label %bb.d, !llvm.loop !89
 
 upb_Decoder_EncodeVarint32.exit:                  ; preds = %bb.d
-  %i.n = load i64, ptr %i.b, align 8, !tbaa !32
+  %i.n = load i64, ptr %i.b, align 8, !tbaa !32   ; 2 uses
   %i.o = trunc i64 %i.n to i32
   br label %bb.e
 
@@ -266,8 +266,7 @@ upb_Decoder_EncodeVarint32.exit17:                ; preds = %bb.e
   %i.y = load ptr, ptr %i.a, align 8, !tbaa !53
   store ptr %i.y, ptr %i.x, align 16, !tbaa !75
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %6 = load i64, ptr %i.b, align 8, !tbaa !32
-  store i64 %6, ptr %i.z, align 8, !tbaa !77
+  store i64 %i.n, ptr %i.z, align 8, !tbaa !77
   %i.aa = call zeroext i1 @_upb_Message_AddUnknownV_dont_copy_me__upb_internal_use_only(ptr noundef %1, ptr noundef nonnull %i.d, ptr noundef nonnull %5, i64 noundef 2) #12
   br i1 %i.aa, label %bb.g, label %bb.f
 

@@ -201,10 +201,10 @@ bb.fh:                                            ; preds = %_ZNSt6vectorIP6aiMe
   %i.alo = phi ptr [ %i.adn, %.lr.ph399.i ], [ %i.ard, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit.i ]
   %.076397.i = phi i64 [ 0, %.lr.ph399.i ], [ %i.are, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit.i ] ; 4 uses
   %i.alp = getelementptr inbounds nuw [96 x i8], ptr %i.adb, i64 %.076397.i ; 7 uses
-  %i.alq = getelementptr inbounds nuw i8, ptr %i.alp, i64 72 ; 4 uses
-  %i.alr = load ptr, ptr %i.alq, align 8
-  %i.als = getelementptr inbounds nuw i8, ptr %i.alp, i64 80 ; 2 uses
-  %i.alt = load ptr, ptr %i.als, align 8
+  %i.alq = getelementptr inbounds nuw i8, ptr %i.alp, i64 72 ; 3 uses
+  %i.alr = load ptr, ptr %i.alq, align 8          ; 2 uses
+  %i.als = getelementptr inbounds nuw i8, ptr %i.alp, i64 80
+  %i.alt = load ptr, ptr %i.als, align 8          ; 2 uses
   %i.alu = icmp eq ptr %i.alr, %i.alt
   br i1 %i.alu, label %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit.i, label %bb.fi
 
@@ -231,10 +231,8 @@ bb.fj:                                            ; preds = %bb.fi
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.amd, ptr nonnull align 4 %i.ba, i64 %i.adl, i1 false)
   %i.ame = getelementptr inbounds nuw i8, ptr %i.amd, i64 %i.adl
   store i8 0, ptr %i.ame, align 1
-  %25 = load ptr, ptr %i.als, align 8
-  %26 = load ptr, ptr %i.alq, align 8
-  %i.amf = ptrtoint ptr %25 to i64
-  %i.amg = ptrtoint ptr %26 to i64
+  %i.amf = ptrtoint ptr %i.alt to i64
+  %i.amg = ptrtoint ptr %i.alr to i64
   %i.amh = sub i64 %i.amf, %i.amg
   %i.ami = ashr exact i64 %i.amh, 4               ; 3 uses
   %i.amj = trunc i64 %i.ami to i32                ; 2 uses

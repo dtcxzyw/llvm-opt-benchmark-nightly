@@ -201,7 +201,7 @@ define internal void @"_ZNSt17_Function_handlerIFvN4llvh9StringRefEEZN6hermes3hb
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %"class.llvh::StringRef", align 8   ; 9 uses
-  %i.b = alloca ptr, align 8                      ; 7 uses
+  %i.b = alloca ptr, align 8                      ; 6 uses
   %.val = load ptr, ptr %1, align 8, !tbaa !110   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val2 = load i64, ptr %i.c, align 8, !tbaa !111 ; 3 uses
@@ -297,11 +297,9 @@ bb.h:                                             ; preds = %bb.g
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %i.r, ptr noundef nonnull %i.x, i64 noundef 0, i64 noundef 1) #18
   %.pre.i.i.i.i = load i32, ptr %i.s, align 8, !tbaa !383
   %.pre9.i.i.i = load i8, ptr %i.ac, align 1
-  %.pre10.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !110
   br label %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i.i.i
 
 _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i.i.i: ; preds = %bb.h, %bb.g
-  %3 = phi ptr [ %.pre10.i.i.i, %bb.h ], [ %i.ac, %bb.g ]
   %i.ai = phi i8 [ %.pre9.i.i.i, %bb.h ], [ %i.ad, %bb.g ]
   %i.aj = phi i32 [ %.pre.i.i.i.i, %bb.h ], [ %i.ag, %bb.g ]
   %i.ak = load ptr, ptr %i.r, align 8, !tbaa !189
@@ -311,7 +309,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i.i.i: ; preds = %bb
   %i.an = load i32, ptr %i.s, align 8, !tbaa !383
   %i.ao = add i32 %i.an, 1
   store i32 %i.ao, ptr %i.s, align 8, !tbaa !383
-  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ac, i64 1 ; 2 uses
   store ptr %i.ap, ptr %i.b, align 8, !tbaa !110
   br label %bb.i
 

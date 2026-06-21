@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %_ZN5arrow6StatusD2E
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !3
   %i.ab = sext i32 %i.aa to i64
   %i.ac = sub nsw i64 0, %i.ab
-  %i.ad = getelementptr inbounds i8, ptr %i.z, i64 %i.ac ; 4 uses
+  %i.ad = getelementptr inbounds i8, ptr %i.z, i64 %i.ac ; 3 uses
   %i.ae = load i16, ptr %i.ad, align 2, !tbaa !71 ; 2 uses
   %i.af = icmp ugt i16 %i.ae, 4
   br i1 %i.af, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i, label %_ZNK3org6apache5arrow7flatbuf7Message7versionEv.exit.thread
@@ -279,45 +279,31 @@ _ZNK3org6apache5arrow7flatbuf7Message7versionEv.exit21.thread: ; preds = %_ZNK3o
   br i1 %i.ay, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit.thread
 
 _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i: ; preds = %_ZNK3org6apache5arrow7flatbuf7Message7versionEv.exit21.thread
-  %i.az = getelementptr inbounds nuw i8, ptr %i.ad, i64 12 ; 2 uses
-  %i.ba = load i16, ptr %i.az, align 2, !tbaa !71
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ad, i64 12
+  %i.ba = load i16, ptr %i.az, align 2, !tbaa !71 ; 2 uses
   %.not.i.i.i = icmp eq i16 %i.ba, 0
-  br i1 %.not.i.i.i, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit.thread, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit
+  br i1 %.not.i.i.i, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit.thread, label %bb.g
 
-_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit: ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i
+bb.g:                                             ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
-  %7 = load i16, ptr %i.ad, align 2, !tbaa !71
-  %8 = icmp ugt i16 %7, 12
-  br i1 %8, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i25, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit27
-
-_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i25: ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit
-  %9 = load i16, ptr %i.az, align 2, !tbaa !71    ; 2 uses
-  %.not.i.i.i26 = icmp eq i16 %9, 0
-  br i1 %.not.i.i.i26, label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit27, label %bb.g
-
-bb.g:                                             ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i25
-  %i.bb = zext i16 %9 to i64
+  %i.bb = zext i16 %i.ba to i64
   %i.bc = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.bb ; 2 uses
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !3
   %i.be = zext i32 %i.bd to i64
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.be
-  br label %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit27
-
-_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit27: ; preds = %bb.g, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i25, %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit
-  %10 = phi ptr [ %i.bf, %bb.g ], [ null, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i25 ], [ null, %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit ]
-  invoke void @_ZN5arrow3ipc8internal19GetKeyValueMetadataEPKN22arrow_vendored_private11flatbuffers6VectorINS3_6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEEjEEPSt10shared_ptrINS_16KeyValueMetadataEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %6, ptr noundef %10, ptr noundef nonnull %5)
+  invoke void @_ZN5arrow3ipc8internal19GetKeyValueMetadataEPKN22arrow_vendored_private11flatbuffers6VectorINS3_6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEEjEEPSt10shared_ptrINS_16KeyValueMetadataEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %6, ptr noundef nonnull %i.bf, ptr noundef nonnull %5)
           to label %_ZN5arrow6StatusD2Ev.exit29 unwind label %bb.h
 
-_ZN5arrow6StatusD2Ev.exit29:                      ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit27
+_ZN5arrow6StatusD2Ev.exit29:                      ; preds = %bb.g
   %i.bg = load ptr, ptr %6, align 8, !tbaa !27    ; 2 uses
   store ptr %i.bg, ptr %0, align 8, !tbaa !27
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
   %i.bh = icmp eq ptr %i.bg, null                 ; 2 uses
   br i1 %i.bh, label %_ZN5arrow6StatusD2Ev.exit33, label %.critedge
 
-bb.h:                                             ; preds = %_ZNK3org6apache5arrow7flatbuf7Message15custom_metadataEv.exit27
+bb.h:                                             ; preds = %bb.g
   %i.bi = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
@@ -720,7 +706,7 @@ bb.a:
   %10 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %11 = alloca %"class.arrow::Result.72", align 8 ; 11 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %13 = alloca %"class.std::__shared_ptr", align 16 ; 5 uses
+  %13 = alloca %"class.std::__shared_ptr", align 16 ; 6 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -743,7 +729,7 @@ bb.a:
   %29 = alloca %"class.arrow::Status", align 8    ; 7 uses
   %30 = alloca %"class.arrow::Status", align 8    ; 7 uses
   %i.g = alloca i64, align 8                      ; 5 uses
-  %31 = alloca %"class.std::shared_ptr", align 16 ; 11 uses
+  %31 = alloca %"class.std::shared_ptr", align 16 ; 10 uses
   %32 = alloca %"class.arrow::Result.47", align 8 ; 15 uses
   %33 = alloca %"class.std::unique_ptr.51", align 8 ; 7 uses
   %34 = alloca %"class.arrow::Status", align 8    ; 9 uses
@@ -1146,6 +1132,7 @@ bb.bl:                                            ; preds = %bb.bj
 
 bb.bm:                                            ; preds = %bb.bl
   %i.fz = load <2 x ptr>, ptr %13, align 16, !tbaa !11
+  %43 = load ptr, ptr %13, align 16, !tbaa !317   ; 3 uses
   store ptr null, ptr %13, align 16, !tbaa !317
   store <2 x ptr> %i.fz, ptr %31, align 16, !tbaa !11
   %.pre = load ptr, ptr %33, align 8, !tbaa !317  ; 3 uses
@@ -1394,6 +1381,9 @@ bb.by:                                            ; preds = %_ZN5arrow6StatusD2E
 .lr.ph.i:                                         ; preds = %bb.by
   %i.jc = sext i32 %i.ge to i64
   %i.jd = add nsw i64 %i.gd, %i.jc
+  %44 = getelementptr inbounds nuw i8, ptr %43, i64 9
+  %45 = getelementptr inbounds nuw i8, ptr %43, i64 8
+  %46 = getelementptr inbounds nuw i8, ptr %43, i64 16
   br label %bb.ca
 
 bb.bz:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit67.i
@@ -1408,15 +1398,11 @@ bb.ca:                                            ; preds = %bb.cn, %.lr.ph.i
   %i.jg = add nsw i64 %i.jd, %i.jf
   %i.jh = getelementptr inbounds nuw i8, ptr %.sroa.01.06.i, i64 8
   %i.ji = load i64, ptr %i.jh, align 8, !tbaa !371
-  %43 = load ptr, ptr %31, align 16, !tbaa !16, !noalias !320 ; 3 uses
-  %44 = getelementptr inbounds nuw i8, ptr %43, i64 9
   %i.jj = load i8, ptr %44, align 1, !tbaa !46, !range !42, !noundef !43
   %i.jk = trunc nuw i8 %i.jj to i1
-  %45 = getelementptr inbounds nuw i8, ptr %43, i64 8
   %i.jl = load i8, ptr %45, align 8, !range !42
   %i.jm = trunc nuw i8 %i.jl to i1
   %i.jn = select i1 %i.jk, i1 %i.jm, i1 false, !prof !30
-  %46 = getelementptr inbounds nuw i8, ptr %43, i64 16
   %i.jo = load ptr, ptr %46, align 8
   %i.jp = select i1 %i.jn, ptr %i.jo, ptr null, !prof !30
   %i.jq = getelementptr inbounds i8, ptr %i.jp, i64 %i.jf

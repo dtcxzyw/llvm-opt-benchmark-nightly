@@ -201,7 +201,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.bc, label %bb.w, label %bb.x, !prof !47
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr align 1 %1, i64 %i.bb, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr align 1 %1, i64 %i.bb, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit55
 
 bb.x:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
@@ -440,7 +440,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_
   br i1 %i.br, label %bb.ac, label %bb.ad, !prof !47
 
 bb.ac:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_EES8_SaIS7_EET0_T_SB_SA_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
   br label %_ZSt22__uninitialized_copy_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_EES8_S7_ET0_T_SA_S9_RSaIT1_E.exit49
 
 bb.ad:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_EES8_SaIS7_EET0_T_SB_SA_RT1_.exit
@@ -459,7 +459,7 @@ _ZSt22__uninitialized_copy_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_EES8_S7_ET0_
   br i1 %i.bw, label %bb.af, label %bb.ag, !prof !47
 
 bb.af:                                            ; preds = %_ZSt22__uninitialized_copy_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_EES8_S7_ET0_T_SA_S9_RSaIT1_E.exit49
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_EES8_SaIS7_EET0_T_SB_SA_RT1_.exit50
 
 bb.ag:                                            ; preds = %_ZSt22__uninitialized_copy_aIPPSt6vectorIPN6hermes5regex4NodeESaIS4_EES8_S7_ET0_T_SA_S9_RSaIT1_E.exit49
@@ -862,7 +862,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.bm, label %bb.ac, label %bb.ad, !prof !47
 
 bb.ac:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.bl, ptr align 1 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bl, ptr align 1 %2, i64 %i.c, i1 false)
   br label %_ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49
 
 bb.ad:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
@@ -881,7 +881,7 @@ _ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49: ; preds = %bb.ac
   br i1 %i.br, label %bb.af, label %bb.ag, !prof !47
 
 bb.af:                                            ; preds = %_ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bp, ptr align 1 %1, i64 %i.bq, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bp, ptr align 1 %1, i64 %i.bq, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit50
 
 bb.ag:                                            ; preds = %_ZSt22__uninitialized_copy_aIPKhPhhET0_T_S4_S3_RSaIT1_E.exit49
@@ -927,11 +927,11 @@ bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %.sroa.0.0.copyload.i.i.i to i64
   %i.c = sub i64 %i.b, %i.a                       ; 6 uses
   %i.d = ashr exact i64 %i.c, 3                   ; 6 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !482
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !501  ; 11 uses
-  %i.i = ptrtoint ptr %i.f to i64
+  %i.i = ptrtoint ptr %i.f to i64                 ; 2 uses
   %i.j = ptrtoint ptr %i.h to i64                 ; 4 uses
   %i.k = sub i64 %i.i, %i.j
   %.not = icmp ult i64 %i.k, %i.c
@@ -1307,7 +1307,7 @@ _ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iterator
   br i1 %i.fy, label %bb.t, label %bb.u, !prof !47
 
 bb.t:                                             ; preds = %_ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEEPS6_S6_ET0_T_SG_SF_RSaIT1_E.exit45
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fu, ptr align 8 %1, i64 %i.fx, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fu, ptr align 8 %1, i64 %i.fx, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit46
 
 bb.u:                                             ; preds = %_ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEEPS6_S6_ET0_T_SG_SF_RSaIT1_E.exit45
@@ -1325,9 +1325,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S
   br i1 %.not.i47, label %_ZNSt12_Vector_baseIPN6hermes5regex4NodeESaIS3_EE13_M_deallocateEPS3_m.exit, label %bb.w
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit46
-  %4 = load ptr, ptr %i.e, align 8, !tbaa !482
-  %5 = ptrtoint ptr %4 to i64
-  %i.gc = sub i64 %5, %i.ez
+  %i.gc = sub i64 %i.i, %i.ez
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ey, i64 noundef %i.gc) #17
   br label %_ZNSt12_Vector_baseIPN6hermes5regex4NodeESaIS3_EE13_M_deallocateEPS3_m.exit
 
@@ -1355,11 +1353,11 @@ bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %.sroa.0.0.copyload.i.i.i to i64
   %i.c = sub i64 %i.b, %i.a                       ; 6 uses
   %i.d = ashr exact i64 %i.c, 3                   ; 6 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !482
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !501  ; 11 uses
-  %i.i = ptrtoint ptr %i.f to i64
+  %i.i = ptrtoint ptr %i.f to i64                 ; 2 uses
   %i.j = ptrtoint ptr %i.h to i64                 ; 4 uses
   %i.k = sub i64 %i.i, %i.j
   %.not = icmp ult i64 %i.k, %i.c
@@ -1735,7 +1733,7 @@ _ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iterator
   br i1 %i.fy, label %bb.t, label %bb.u, !prof !47
 
 bb.t:                                             ; preds = %_ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEES7_S6_ET0_T_SE_SD_RSaIT1_E.exit45
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fu, ptr align 8 %1, i64 %i.fx, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fu, ptr align 8 %1, i64 %i.fx, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit46
 
 bb.u:                                             ; preds = %_ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEES7_S6_ET0_T_SE_SD_RSaIT1_E.exit45
@@ -1753,9 +1751,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S
   br i1 %.not.i47, label %_ZNSt12_Vector_baseIPN6hermes5regex4NodeESaIS3_EE13_M_deallocateEPS3_m.exit, label %bb.w
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit46
-  %4 = load ptr, ptr %i.e, align 8, !tbaa !482
-  %5 = ptrtoint ptr %4 to i64
-  %i.gc = sub i64 %5, %i.ez
+  %i.gc = sub i64 %i.i, %i.ez
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ey, i64 noundef %i.gc) #17
   br label %_ZNSt12_Vector_baseIPN6hermes5regex4NodeESaIS3_EE13_M_deallocateEPS3_m.exit
 

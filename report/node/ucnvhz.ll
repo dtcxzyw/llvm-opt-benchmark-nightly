@@ -142,7 +142,7 @@ bb.f:                                             ; preds = %.thread, %bb.e, %bb
 ; Function Attrs: mustprogress nounwind uwtable
 define internal void @_ZL37UConverter_toUnicode_HZ_OFFSETS_LOGICP23UConverterToUnicodeArgsP10UErrorCode(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1) #0 {
 bb.a:
-  %i.a = alloca [2 x i8], align 1                 ; 6 uses
+  %i.a = alloca [2 x i8], align 1                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
@@ -154,9 +154,7 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8              ; 3 uses
-  store i8 0, ptr %i.a, align 1
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  store i8 0, ptr %i.l, align 1
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.m = icmp ult ptr %i.c, %i.g
   br i1 %i.m, label %.lr.ph.lr.ph, label %.loopexit
 

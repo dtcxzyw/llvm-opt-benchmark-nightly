@@ -124,19 +124,18 @@ $_ZNK6google8protobuf8internal20RepeatedPtrFieldBase26SpaceUsedExcludingSelfLong
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK6google8protobuf8internal12ExtensionSet12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISC_EE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %class.anon, align 8                ; 5 uses
-  %5 = alloca %class.anon, align 8                ; 7 uses
+  %4 = alloca %class.anon, align 8                ; 8 uses
   %i.a = alloca ptr, align 8                      ; 2 uses
   store ptr %3, ptr %i.a, align 8, !tbaa !7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2
   %.val = load i16, ptr %i.b, align 2, !tbaa !10  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val3 = load ptr, ptr %i.c, align 8            ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  store ptr %1, ptr %5, align 8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  store ptr %1, ptr %4, align 8
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %2, ptr %.sroa.2.0..sroa_idx, align 8
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   store ptr %i.a, ptr %.sroa.3.0..sroa_idx, align 8
   %i.d = icmp slt i16 %.val, 0
   br i1 %i.d, label %bb.b, label %bb.c, !prof !13
@@ -149,15 +148,13 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 10
   %i.j = load i8, ptr %i.i, align 1, !tbaa !22
   %i.k = zext i8 %i.j to i32
-  call fastcc void @"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISV_EEE3$_0NS2_8PrefetchEEEvT_S11_T0_T1_"(ptr %i.f, i32 0, ptr %i.h, i32 %i.k, ptr noundef nonnull byval(%class.anon) align 8 %5)
+  call fastcc void @"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISV_EEE3$_0NS2_8PrefetchEEEvT_S11_T0_T1_"(ptr %i.f, i32 0, ptr %i.h, i32 %i.k, ptr noundef nonnull byval(%class.anon) align 8 %4)
   br label %"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISD_EEE3$_0NS2_8PrefetchEEEvT_T0_.exit"
 
 bb.c:                                             ; preds = %bb.a
   %i.l = zext nneg i16 %.val to i64
   %.idx.i = shl nuw nsw i64 %i.l, 5
   %i.m = getelementptr inbounds nuw i8, ptr %.val3, i64 %.idx.i ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull readonly align 8 dereferenceable(24) %5, i64 24, i1 false)
   %.not34.i.i = icmp eq i16 %.val, 0
   br i1 %.not34.i.i, label %.preheader23.i.i, label %.lr.ph.i.i
 
@@ -186,7 +183,7 @@ bb.c:                                             ; preds = %bb.a
 .preheader.i.i:                                   ; preds = %.lr.ph29.i.i, %.preheader23.i.i
   %.019.lcssa.i.i = phi ptr [ %.val3, %.preheader23.i.i ], [ %i.ae, %.lr.ph29.i.i ] ; 2 uses
   %.not2131.i.i = icmp eq ptr %.019.lcssa.i.i, %i.m
-  br i1 %.not2131.i.i, label %"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIPKNS2_8KeyValueEZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISG_EEE3$_0NS2_8PrefetchEEEvT_SM_T0_T1_.exit.i", label %.lr.ph33.i.i
+  br i1 %.not2131.i.i, label %"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISD_EEE3$_0NS2_8PrefetchEEEvT_T0_.exit", label %.lr.ph33.i.i
 
 .lr.ph29.i.i:                                     ; preds = %.preheader23.i.i, %.lr.ph29.i.i
   %.128.i.i = phi ptr [ %i.af, %.lr.ph29.i.i ], [ %.018.lcssa.i.i, %.preheader23.i.i ] ; 3 uses
@@ -213,14 +210,10 @@ bb.c:                                             ; preds = %bb.a
   call fastcc void @"_ZZNK6google8protobuf8internal12ExtensionSet12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISC_EEENK3$_0clEiRKNS2_9ExtensionE"(ptr noundef nonnull readonly align 8 dereferenceable(24) %4, i32 noundef %i.ag, ptr noundef nonnull align 8 dereferenceable(24) %i.ah)
   %i.ai = getelementptr inbounds nuw i8, ptr %.12032.i.i, i64 32 ; 2 uses
   %.not21.i.i = icmp eq ptr %i.ai, %i.m
-  br i1 %.not21.i.i, label %"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIPKNS2_8KeyValueEZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISG_EEE3$_0NS2_8PrefetchEEEvT_SM_T0_T1_.exit.i", label %.lr.ph33.i.i, !llvm.loop !32
+  br i1 %.not21.i.i, label %"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISD_EEE3$_0NS2_8PrefetchEEEvT_T0_.exit", label %.lr.ph33.i.i, !llvm.loop !32
 
-"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIPKNS2_8KeyValueEZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISG_EEE3$_0NS2_8PrefetchEEEvT_SM_T0_T1_.exit.i": ; preds = %.lr.ph33.i.i, %.preheader.i.i
+"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISD_EEE3$_0NS2_8PrefetchEEEvT_T0_.exit": ; preds = %.lr.ph33.i.i, %.preheader.i.i, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  br label %"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISD_EEE3$_0NS2_8PrefetchEEEvT_T0_.exit"
-
-"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISD_EEE3$_0NS2_8PrefetchEEEvT_T0_.exit": ; preds = %bb.b, %"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIPKNS2_8KeyValueEZNKS2_12AppendToListEPKNS0_10DescriptorEPKNS0_14DescriptorPoolEPSt6vectorIPKNS0_15FieldDescriptorESaISG_EEE3$_0NS2_8PrefetchEEEvT_SM_T0_T1_.exit.i"
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   ret void
 }
 

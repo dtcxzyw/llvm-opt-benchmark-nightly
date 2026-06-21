@@ -201,7 +201,7 @@ define i32 @mbedtls_ssl_decrypt_buf(ptr noundef %0, ptr noundef %1, ptr nofree n
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca [55 x i8], align 16               ; 10 uses
-  %i.c = alloca i64, align 8                      ; 9 uses
+  %i.c = alloca i64, align 8                      ; 8 uses
   %i.d = alloca [12 x i8], align 1                ; 8 uses
   %i.e = alloca [48 x i8], align 16               ; 9 uses
   %i.f = alloca [48 x i8], align 16               ; 6 uses
@@ -315,7 +315,7 @@ bb.o:                                             ; preds = %bb.m
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 124
   %i.av = load i32, ptr %i.au, align 4, !tbaa !57
   call fastcc void @ssl_extract_add_data_from_record(ptr noundef %i.b, ptr noundef %i.c, ptr noundef %2, i32 noundef %i.av, i64 noundef %i.ao)
-  %i.aw = load i64, ptr %i.c, align 8, !tbaa !58
+  %i.aw = load i64, ptr %i.c, align 8, !tbaa !58  ; 2 uses
   call void @mbedtls_debug_print_buf(ptr noundef %0, i32 noundef 4, ptr noundef nonnull @.str, i32 noundef 1609, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.b, i64 noundef %i.aw) #19
   %i.ax = load i64, ptr %i.af, align 8, !tbaa !54
   call void @mbedtls_debug_print_buf(ptr noundef %0, i32 noundef 4, ptr noundef nonnull @.str, i32 noundef 1617, ptr noundef nonnull @.str.35, ptr noundef nonnull %i.d, i64 noundef %i.ax) #19
@@ -325,7 +325,6 @@ bb.o:                                             ; preds = %bb.m
   call void @mbedtls_debug_print_buf(ptr noundef %0, i32 noundef 4, ptr noundef nonnull @.str, i32 noundef 1619, ptr noundef nonnull @.str.36, ptr noundef %i.az, i64 noundef %i.ba) #19
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 224
   %i.bc = load i64, ptr %i.af, align 8, !tbaa !54
-  %3 = load i64, ptr %i.c, align 8, !tbaa !58
   %i.bd = load i64, ptr %i.s, align 8, !tbaa !42
   %i.be = load i64, ptr %i.an, align 8, !tbaa !56 ; 2 uses
   %i.bf = add i64 %i.be, %i.bd
@@ -335,7 +334,7 @@ bb.o:                                             ; preds = %bb.m
   %i.bj = ptrtoint ptr %i.bh to i64
   %.neg = sub i64 %i.bg, %i.bi
   %i.bk = add i64 %.neg, %i.bj
-  %i.bl = call i32 @mbedtls_cipher_auth_decrypt_ext(ptr noundef nonnull %i.bb, ptr noundef nonnull %i.d, i64 noundef %i.bc, ptr noundef nonnull %i.b, i64 noundef %3, ptr noundef %.0259, i64 noundef %i.bf, ptr noundef %.0259, i64 noundef %i.bk, ptr noundef nonnull %i.a, i64 noundef %i.be) #19 ; 4 uses
+  %i.bl = call i32 @mbedtls_cipher_auth_decrypt_ext(ptr noundef nonnull %i.bb, ptr noundef nonnull %i.d, i64 noundef %i.bc, ptr noundef nonnull %i.b, i64 noundef %i.aw, ptr noundef %.0259, i64 noundef %i.bf, ptr noundef %.0259, i64 noundef %i.bk, ptr noundef nonnull %i.a, i64 noundef %i.be) #19 ; 4 uses
   %.not302 = icmp eq i32 %i.bl, 0
   br i1 %.not302, label %bb.q, label %bb.p
 

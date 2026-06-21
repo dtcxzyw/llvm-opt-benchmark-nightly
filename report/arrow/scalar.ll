@@ -201,42 +201,18 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i: ; pre
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
 
 _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.preheader.i.i.i.i.i.i, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i
-  %i.eee = phi ptr [ %i.edw, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i ], [ %scevgep65.i.i.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i.i.i.i ] ; 21 uses
-  %199 = getelementptr i8, ptr %i.eee, i64 -2
-  store i8 46, ptr %199, align 1, !tbaa !66, !noalias !21169
+  %i.eee = phi ptr [ %i.edw, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i ], [ %scevgep65.i.i.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i.i.i.i ] ; 3 uses
   %i.eef = shl nsw i64 %i.edc, 1
-  %200 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eef ; 2 uses
-  %i.eeg = getelementptr inbounds nuw i8, ptr %200, i64 1
-  %201 = load i8, ptr %i.eeg, align 1, !tbaa !66, !noalias !21169
-  %i.eeh = getelementptr i8, ptr %i.eee, i64 -3
-  store i8 %201, ptr %i.eeh, align 1, !tbaa !66, !noalias !21169
-  %202 = load i8, ptr %200, align 1, !tbaa !66, !noalias !21169
-  %203 = getelementptr i8, ptr %i.eee, i64 -4
-  store i8 %202, ptr %203, align 1, !tbaa !66, !noalias !21169
-  %204 = getelementptr i8, ptr %i.eee, i64 -5
-  store i8 58, ptr %204, align 1, !tbaa !66, !noalias !21169
+  %i.eeg = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eef
+  %i.eeh = getelementptr i8, ptr %i.eee, i64 -5
+  %199 = load <2 x i8>, ptr %i.eeg, align 1, !tbaa !66, !noalias !21169
+  %200 = shufflevector <2 x i8> %199, <2 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %201 = shufflevector <4 x i8> <i8 58, i8 poison, i8 poison, i8 46>, <4 x i8> %200, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
+  store <4 x i8> %201, ptr %i.eeh, align 1, !tbaa !66, !noalias !21169
   %i.eei = shl nsw i64 %i.ecz, 1
-  %205 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eei ; 2 uses
-  %206 = getelementptr inbounds nuw i8, ptr %205, i64 1
-  %207 = load i8, ptr %206, align 1, !tbaa !66, !noalias !21169
-  %208 = getelementptr i8, ptr %i.eee, i64 -6
-  store i8 %207, ptr %208, align 1, !tbaa !66, !noalias !21169
-  %209 = load i8, ptr %205, align 1, !tbaa !66, !noalias !21169
-  %210 = getelementptr i8, ptr %i.eee, i64 -7
-  store i8 %209, ptr %210, align 1, !tbaa !66, !noalias !21169
-  %i.eej = getelementptr i8, ptr %i.eee, i64 -8
-  store i8 58, ptr %i.eej, align 1, !tbaa !66, !noalias !21169
+  %i.eej = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eei
   %i.eek = shl nuw nsw i64 %i.ecx, 1
-  %211 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eek ; 2 uses
-  %212 = getelementptr inbounds nuw i8, ptr %211, i64 1
-  %213 = load i8, ptr %212, align 1, !tbaa !66, !noalias !21169
-  %214 = getelementptr i8, ptr %i.eee, i64 -9
-  store i8 %213, ptr %214, align 1, !tbaa !66, !noalias !21169
-  %215 = load i8, ptr %211, align 1, !tbaa !66, !noalias !21169
-  %216 = getelementptr i8, ptr %i.eee, i64 -10
-  store i8 %215, ptr %216, align 1, !tbaa !66, !noalias !21169
-  %i.eel = getelementptr i8, ptr %i.eee, i64 -11
-  store i8 32, ptr %i.eel, align 1, !tbaa !66, !noalias !21169
+  %i.eel = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eek
   %i.eem = add nsw i32 %.sroa.037.0.i.i.i.i.i.i, 719468 ; 2 uses
   %i.een = icmp sgt i32 %.sroa.037.0.i.i.i.i.i.i, -719469
   %i.eeo = add nuw nsw i32 %.sroa.037.0.i.i.i.i.i.i, 573372
@@ -276,58 +252,44 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   %.sroa.3.0.insert.ext.i.i.i.i.i.i.i.i = add i32 %i.efp, 16777216
   %i.efq = lshr exact i32 %.sroa.3.0.insert.ext.i.i.i.i.i.i.i.i, 23
   %i.efr = zext nneg i32 %i.efq to i64
-  %217 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.efr ; 2 uses
-  %218 = getelementptr inbounds nuw i8, ptr %217, i64 1
-  %219 = load i8, ptr %218, align 1, !tbaa !66, !noalias !21169
-  %220 = getelementptr i8, ptr %i.eee, i64 -12
-  store i8 %219, ptr %220, align 1, !tbaa !66, !noalias !21169
-  %221 = load i8, ptr %217, align 1, !tbaa !66, !noalias !21169
-  %222 = getelementptr i8, ptr %i.eee, i64 -13
-  store i8 %221, ptr %222, align 1, !tbaa !66, !noalias !21169
-  %i.efs = getelementptr i8, ptr %i.eee, i64 -14
-  store i8 45, ptr %i.efs, align 1, !tbaa !66, !noalias !21169
+  %i.efs = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.efr
   %i.eft = shl nsw i32 %i.efl, 1
   %i.efu = and i32 %i.eft, 510
   %i.efv = zext nneg i32 %i.efu to i64
-  %223 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.efv ; 2 uses
-  %224 = getelementptr inbounds nuw i8, ptr %223, i64 1
-  %225 = load i8, ptr %224, align 1, !tbaa !66, !noalias !21169
-  %i.efw = getelementptr i8, ptr %i.eee, i64 -15
-  store i8 %225, ptr %i.efw, align 1, !tbaa !66, !noalias !21169
-  %226 = load i8, ptr %223, align 1, !tbaa !66, !noalias !21169
-  %227 = getelementptr i8, ptr %i.eee, i64 -16
-  store i8 %226, ptr %227, align 1, !tbaa !66, !noalias !21169
-  %228 = getelementptr i8, ptr %i.eee, i64 -17
-  store i8 45, ptr %228, align 1, !tbaa !66, !noalias !21169
+  %i.efw = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.efv
   %sext.i.i.i.i.i.i.i = shl i32 %i.efo, 16
-  %229 = ashr exact i32 %sext.i.i.i.i.i.i.i, 16   ; 2 uses
-  %230 = icmp slt i32 %229, 0
-  %231 = call i32 @llvm.abs.i32(i32 %229, i1 true) ; 2 uses
-  %.lhs.trunc.i.i.i.i.i.i.i = trunc nuw i32 %231 to i16 ; 3 uses
-  %i.efx = urem i16 %.lhs.trunc.i.i.i.i.i.i.i, 100
+  %202 = ashr exact i32 %sext.i.i.i.i.i.i.i, 16   ; 2 uses
+  %203 = icmp slt i32 %202, 0
+  %204 = call i32 @llvm.abs.i32(i32 %202, i1 true) ; 2 uses
+  %.lhs.trunc.i.i.i.i.i.i.i = trunc nuw i32 %204 to i16 ; 3 uses
+  %205 = urem i16 %.lhs.trunc.i.i.i.i.i.i.i, 100
+  %206 = shl nuw nsw i16 %205, 1
+  %207 = zext nneg i16 %206 to i64
+  %208 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %207
+  %209 = udiv i16 %.lhs.trunc.i.i.i.i.i.i.i, 100
+  %i.efx = urem i16 %209, 100
   %i.efy = shl nuw nsw i16 %i.efx, 1
   %i.efz = zext nneg i16 %i.efy to i64
-  %i.ega = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.efz ; 2 uses
-  %i.egb = getelementptr inbounds nuw i8, ptr %i.ega, i64 1
-  %232 = load i8, ptr %i.egb, align 1, !tbaa !66, !noalias !21169
-  %233 = getelementptr i8, ptr %i.eee, i64 -18
-  store i8 %232, ptr %233, align 1, !tbaa !66, !noalias !21169
-  %234 = load i8, ptr %i.ega, align 1, !tbaa !66, !noalias !21169
-  %235 = getelementptr i8, ptr %i.eee, i64 -19
-  store i8 %234, ptr %235, align 1, !tbaa !66, !noalias !21169
-  %236 = udiv i16 %.lhs.trunc.i.i.i.i.i.i.i, 100
-  %237 = urem i16 %236, 100
-  %238 = shl nuw nsw i16 %237, 1
-  %239 = zext nneg i16 %238 to i64
-  %240 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %239 ; 2 uses
-  %241 = getelementptr inbounds nuw i8, ptr %240, i64 1
-  %242 = load i8, ptr %241, align 1, !tbaa !66, !noalias !21169
-  %243 = getelementptr i8, ptr %i.eee, i64 -20
-  store i8 %242, ptr %243, align 1, !tbaa !66, !noalias !21169
-  %244 = load i8, ptr %240, align 1, !tbaa !66, !noalias !21169
-  %245 = getelementptr i8, ptr %i.eee, i64 -21    ; 2 uses
-  store i8 %244, ptr %245, align 1, !tbaa !66, !noalias !21169
-  %i.egc = icmp samesign ugt i32 %231, 9999
+  %i.ega = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.efz
+  %i.egb = getelementptr i8, ptr %i.eee, i64 -21  ; 2 uses
+  %210 = load <2 x i8>, ptr %i.eej, align 1, !tbaa !66, !noalias !21169
+  %211 = load <2 x i8>, ptr %i.eel, align 1, !tbaa !66, !noalias !21169
+  %212 = load <2 x i8>, ptr %i.efs, align 1, !tbaa !66, !noalias !21169
+  %213 = load <2 x i8>, ptr %i.efw, align 1, !tbaa !66, !noalias !21169
+  %214 = load <2 x i8>, ptr %208, align 1, !tbaa !66, !noalias !21169
+  %215 = load <2 x i8>, ptr %i.ega, align 1, !tbaa !66, !noalias !21169
+  %216 = shufflevector <2 x i8> %215, <2 x i8> %214, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %217 = shufflevector <16 x i8> %216, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 45, i8 poison, i8 poison, i8 45, i8 poison, i8 poison, i8 32, i8 poison, i8 poison, i8 58, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 20, i32 poison, i32 poison, i32 23, i32 poison, i32 poison, i32 26, i32 poison, i32 poison, i32 29, i32 poison, i32 poison>
+  %218 = shufflevector <2 x i8> %213, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %219 = shufflevector <16 x i8> %217, <16 x i8> %218, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 16, i32 17, i32 7, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 13, i32 poison, i32 poison>
+  %220 = shufflevector <2 x i8> %212, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %221 = shufflevector <16 x i8> %219, <16 x i8> %220, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 10, i32 poison, i32 poison, i32 13, i32 poison, i32 poison>
+  %222 = shufflevector <2 x i8> %211, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %223 = shufflevector <16 x i8> %221, <16 x i8> %222, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 16, i32 17, i32 13, i32 poison, i32 poison>
+  %224 = shufflevector <2 x i8> %210, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %225 = shufflevector <16 x i8> %223, <16 x i8> %224, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
+  store <16 x i8> %225, ptr %i.egb, align 1, !tbaa !66, !noalias !21169
+  %i.egc = icmp samesign ugt i32 %204, 9999
   br i1 %i.egc, label %bb.aos, label %bb.aot
 
 bb.aos:                                           ; preds = %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
@@ -339,8 +301,8 @@ bb.aos:                                           ; preds = %_ZN5arrow8internal6
   br label %bb.aot
 
 bb.aot:                                           ; preds = %bb.aos, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
-  %.4.i.i.i.i.i.i = phi ptr [ %i.egg, %bb.aos ], [ %245, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i ] ; 2 uses
-  br i1 %230, label %bb.aou, label %_ZN5arrow8internal6detail16FormatYYYY_MM_DDEN14arrow_vendored4date14year_month_dayEPPc.exit.i.i.i.i.i.i
+  %.4.i.i.i.i.i.i = phi ptr [ %i.egg, %bb.aos ], [ %i.egb, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i ] ; 2 uses
+  br i1 %203, label %bb.aou, label %_ZN5arrow8internal6detail16FormatYYYY_MM_DDEN14arrow_vendored4date14year_month_dayEPPc.exit.i.i.i.i.i.i
 
 bb.aou:                                           ; preds = %bb.aot
   %i.egh = getelementptr inbounds i8, ptr %.4.i.i.i.i.i.i, i64 -1 ; 2 uses
@@ -477,42 +439,18 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i.i.i: ; p
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
 
 _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.preheader.i50.i.i.i.i.i, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i.i.i
-  %i.eib = phi ptr [ %i.eht, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i.i.i ], [ %scevgep65.i53.i.i.i.i.i, %.lr.ph.i.i.preheader.i50.i.i.i.i.i ] ; 21 uses
-  %246 = getelementptr i8, ptr %i.eib, i64 -2
-  store i8 46, ptr %246, align 1, !tbaa !66, !noalias !21177
+  %i.eib = phi ptr [ %i.eht, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i.i.i ], [ %scevgep65.i53.i.i.i.i.i, %.lr.ph.i.i.preheader.i50.i.i.i.i.i ] ; 3 uses
   %i.eic = shl nsw i64 %i.egz, 1
-  %247 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eic ; 2 uses
-  %i.eid = getelementptr inbounds nuw i8, ptr %247, i64 1
-  %248 = load i8, ptr %i.eid, align 1, !tbaa !66, !noalias !21177
-  %i.eie = getelementptr i8, ptr %i.eib, i64 -3
-  store i8 %248, ptr %i.eie, align 1, !tbaa !66, !noalias !21177
-  %249 = load i8, ptr %247, align 1, !tbaa !66, !noalias !21177
-  %250 = getelementptr i8, ptr %i.eib, i64 -4
-  store i8 %249, ptr %250, align 1, !tbaa !66, !noalias !21177
-  %251 = getelementptr i8, ptr %i.eib, i64 -5
-  store i8 58, ptr %251, align 1, !tbaa !66, !noalias !21177
+  %i.eid = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eic
+  %i.eie = getelementptr i8, ptr %i.eib, i64 -5
+  %226 = load <2 x i8>, ptr %i.eid, align 1, !tbaa !66, !noalias !21177
+  %227 = shufflevector <2 x i8> %226, <2 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %228 = shufflevector <4 x i8> <i8 58, i8 poison, i8 poison, i8 46>, <4 x i8> %227, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
+  store <4 x i8> %228, ptr %i.eie, align 1, !tbaa !66, !noalias !21177
   %i.eif = shl nsw i64 %i.egw, 1
-  %252 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eif ; 2 uses
-  %253 = getelementptr inbounds nuw i8, ptr %252, i64 1
-  %254 = load i8, ptr %253, align 1, !tbaa !66, !noalias !21177
-  %255 = getelementptr i8, ptr %i.eib, i64 -6
-  store i8 %254, ptr %255, align 1, !tbaa !66, !noalias !21177
-  %256 = load i8, ptr %252, align 1, !tbaa !66, !noalias !21177
-  %257 = getelementptr i8, ptr %i.eib, i64 -7
-  store i8 %256, ptr %257, align 1, !tbaa !66, !noalias !21177
-  %i.eig = getelementptr i8, ptr %i.eib, i64 -8
-  store i8 58, ptr %i.eig, align 1, !tbaa !66, !noalias !21177
+  %i.eig = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eif
   %i.eih = shl nuw nsw i64 %i.egu, 1
-  %258 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eih ; 2 uses
-  %259 = getelementptr inbounds nuw i8, ptr %258, i64 1
-  %260 = load i8, ptr %259, align 1, !tbaa !66, !noalias !21177
-  %261 = getelementptr i8, ptr %i.eib, i64 -9
-  store i8 %260, ptr %261, align 1, !tbaa !66, !noalias !21177
-  %262 = load i8, ptr %258, align 1, !tbaa !66, !noalias !21177
-  %263 = getelementptr i8, ptr %i.eib, i64 -10
-  store i8 %262, ptr %263, align 1, !tbaa !66, !noalias !21177
-  %i.eii = getelementptr i8, ptr %i.eib, i64 -11
-  store i8 32, ptr %i.eii, align 1, !tbaa !66, !noalias !21177
+  %i.eii = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eih
   %i.eij = add nsw i32 %.sroa.037.0.i22.i.i.i.i.i, 719468 ; 2 uses
   %i.eik = icmp sgt i32 %.sroa.037.0.i22.i.i.i.i.i, -719469
   %i.eil = add nuw nsw i32 %.sroa.037.0.i22.i.i.i.i.i, 573372
@@ -552,58 +490,44 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   %.sroa.3.0.insert.ext.i.i.i44.i.i.i.i.i = add i32 %i.ejm, 16777216
   %i.ejn = lshr exact i32 %.sroa.3.0.insert.ext.i.i.i44.i.i.i.i.i, 23
   %i.ejo = zext nneg i32 %i.ejn to i64
-  %264 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ejo ; 2 uses
-  %265 = getelementptr inbounds nuw i8, ptr %264, i64 1
-  %266 = load i8, ptr %265, align 1, !tbaa !66, !noalias !21177
-  %267 = getelementptr i8, ptr %i.eib, i64 -12
-  store i8 %266, ptr %267, align 1, !tbaa !66, !noalias !21177
-  %268 = load i8, ptr %264, align 1, !tbaa !66, !noalias !21177
-  %269 = getelementptr i8, ptr %i.eib, i64 -13
-  store i8 %268, ptr %269, align 1, !tbaa !66, !noalias !21177
-  %i.ejp = getelementptr i8, ptr %i.eib, i64 -14
-  store i8 45, ptr %i.ejp, align 1, !tbaa !66, !noalias !21177
+  %i.ejp = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ejo
   %i.ejq = shl nsw i32 %i.eji, 1
   %i.ejr = and i32 %i.ejq, 510
   %i.ejs = zext nneg i32 %i.ejr to i64
-  %270 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ejs ; 2 uses
-  %271 = getelementptr inbounds nuw i8, ptr %270, i64 1
-  %272 = load i8, ptr %271, align 1, !tbaa !66, !noalias !21177
-  %i.ejt = getelementptr i8, ptr %i.eib, i64 -15
-  store i8 %272, ptr %i.ejt, align 1, !tbaa !66, !noalias !21177
-  %273 = load i8, ptr %270, align 1, !tbaa !66, !noalias !21177
-  %274 = getelementptr i8, ptr %i.eib, i64 -16
-  store i8 %273, ptr %274, align 1, !tbaa !66, !noalias !21177
-  %275 = getelementptr i8, ptr %i.eib, i64 -17
-  store i8 45, ptr %275, align 1, !tbaa !66, !noalias !21177
+  %i.ejt = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ejs
   %sext.i.i45.i.i.i.i.i = shl i32 %i.ejl, 16
-  %276 = ashr exact i32 %sext.i.i45.i.i.i.i.i, 16 ; 2 uses
-  %277 = icmp slt i32 %276, 0
-  %278 = call i32 @llvm.abs.i32(i32 %276, i1 true) ; 2 uses
-  %.lhs.trunc.i.i46.i.i.i.i.i = trunc nuw i32 %278 to i16 ; 3 uses
-  %i.eju = urem i16 %.lhs.trunc.i.i46.i.i.i.i.i, 100
+  %229 = ashr exact i32 %sext.i.i45.i.i.i.i.i, 16 ; 2 uses
+  %230 = icmp slt i32 %229, 0
+  %231 = call i32 @llvm.abs.i32(i32 %229, i1 true) ; 2 uses
+  %.lhs.trunc.i.i46.i.i.i.i.i = trunc nuw i32 %231 to i16 ; 3 uses
+  %232 = urem i16 %.lhs.trunc.i.i46.i.i.i.i.i, 100
+  %233 = shl nuw nsw i16 %232, 1
+  %234 = zext nneg i16 %233 to i64
+  %235 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %234
+  %236 = udiv i16 %.lhs.trunc.i.i46.i.i.i.i.i, 100
+  %i.eju = urem i16 %236, 100
   %i.ejv = shl nuw nsw i16 %i.eju, 1
   %i.ejw = zext nneg i16 %i.ejv to i64
-  %i.ejx = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ejw ; 2 uses
-  %i.ejy = getelementptr inbounds nuw i8, ptr %i.ejx, i64 1
-  %279 = load i8, ptr %i.ejy, align 1, !tbaa !66, !noalias !21177
-  %280 = getelementptr i8, ptr %i.eib, i64 -18
-  store i8 %279, ptr %280, align 1, !tbaa !66, !noalias !21177
-  %281 = load i8, ptr %i.ejx, align 1, !tbaa !66, !noalias !21177
-  %282 = getelementptr i8, ptr %i.eib, i64 -19
-  store i8 %281, ptr %282, align 1, !tbaa !66, !noalias !21177
-  %283 = udiv i16 %.lhs.trunc.i.i46.i.i.i.i.i, 100
-  %284 = urem i16 %283, 100
-  %285 = shl nuw nsw i16 %284, 1
-  %286 = zext nneg i16 %285 to i64
-  %287 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %286 ; 2 uses
-  %288 = getelementptr inbounds nuw i8, ptr %287, i64 1
-  %289 = load i8, ptr %288, align 1, !tbaa !66, !noalias !21177
-  %290 = getelementptr i8, ptr %i.eib, i64 -20
-  store i8 %289, ptr %290, align 1, !tbaa !66, !noalias !21177
-  %291 = load i8, ptr %287, align 1, !tbaa !66, !noalias !21177
-  %292 = getelementptr i8, ptr %i.eib, i64 -21    ; 2 uses
-  store i8 %291, ptr %292, align 1, !tbaa !66, !noalias !21177
-  %i.ejz = icmp samesign ugt i32 %278, 9999
+  %i.ejx = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ejw
+  %i.ejy = getelementptr i8, ptr %i.eib, i64 -21  ; 2 uses
+  %237 = load <2 x i8>, ptr %i.eig, align 1, !tbaa !66, !noalias !21177
+  %238 = load <2 x i8>, ptr %i.eii, align 1, !tbaa !66, !noalias !21177
+  %239 = load <2 x i8>, ptr %i.ejp, align 1, !tbaa !66, !noalias !21177
+  %240 = load <2 x i8>, ptr %i.ejt, align 1, !tbaa !66, !noalias !21177
+  %241 = load <2 x i8>, ptr %235, align 1, !tbaa !66, !noalias !21177
+  %242 = load <2 x i8>, ptr %i.ejx, align 1, !tbaa !66, !noalias !21177
+  %243 = shufflevector <2 x i8> %242, <2 x i8> %241, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %244 = shufflevector <16 x i8> %243, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 45, i8 poison, i8 poison, i8 45, i8 poison, i8 poison, i8 32, i8 poison, i8 poison, i8 58, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 20, i32 poison, i32 poison, i32 23, i32 poison, i32 poison, i32 26, i32 poison, i32 poison, i32 29, i32 poison, i32 poison>
+  %245 = shufflevector <2 x i8> %240, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %246 = shufflevector <16 x i8> %244, <16 x i8> %245, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 16, i32 17, i32 7, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 13, i32 poison, i32 poison>
+  %247 = shufflevector <2 x i8> %239, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %248 = shufflevector <16 x i8> %246, <16 x i8> %247, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 10, i32 poison, i32 poison, i32 13, i32 poison, i32 poison>
+  %249 = shufflevector <2 x i8> %238, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %250 = shufflevector <16 x i8> %248, <16 x i8> %249, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 16, i32 17, i32 13, i32 poison, i32 poison>
+  %251 = shufflevector <2 x i8> %237, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %252 = shufflevector <16 x i8> %250, <16 x i8> %251, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
+  store <16 x i8> %252, ptr %i.ejy, align 1, !tbaa !66, !noalias !21177
+  %i.ejz = icmp samesign ugt i32 %231, 9999
   br i1 %i.ejz, label %bb.ape, label %bb.apf
 
 bb.ape:                                           ; preds = %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
@@ -615,8 +539,8 @@ bb.ape:                                           ; preds = %_ZN5arrow8internal6
   br label %bb.apf
 
 bb.apf:                                           ; preds = %bb.ape, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
-  %.4.i47.i.i.i.i.i = phi ptr [ %i.ekd, %bb.ape ], [ %292, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i ] ; 2 uses
-  br i1 %277, label %bb.apg, label %_ZN5arrow8internal6detail16FormatYYYY_MM_DDEN14arrow_vendored4date14year_month_dayEPPc.exit.i48.i.i.i.i.i
+  %.4.i47.i.i.i.i.i = phi ptr [ %i.ekd, %bb.ape ], [ %i.ejy, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i ] ; 2 uses
+  br i1 %230, label %bb.apg, label %_ZN5arrow8internal6detail16FormatYYYY_MM_DDEN14arrow_vendored4date14year_month_dayEPPc.exit.i48.i.i.i.i.i
 
 bb.apg:                                           ; preds = %bb.apf
   %i.eke = getelementptr inbounds i8, ptr %.4.i47.i.i.i.i.i, i64 -1 ; 2 uses
@@ -748,42 +672,18 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i78.i.i.i.i.i: ; p
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
 
 _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.preheader.i93.i.i.i.i.i, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i78.i.i.i.i.i
-  %i.elx = phi ptr [ %i.elp, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i78.i.i.i.i.i ], [ %scevgep65.i96.i.i.i.i.i, %.lr.ph.i.i.preheader.i93.i.i.i.i.i ] ; 21 uses
-  %293 = getelementptr i8, ptr %i.elx, i64 -2
-  store i8 46, ptr %293, align 1, !tbaa !66, !noalias !21180
+  %i.elx = phi ptr [ %i.elp, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i78.i.i.i.i.i ], [ %scevgep65.i96.i.i.i.i.i, %.lr.ph.i.i.preheader.i93.i.i.i.i.i ] ; 3 uses
   %i.ely = shl nsw i64 %i.ekv, 1
-  %294 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ely ; 2 uses
-  %i.elz = getelementptr inbounds nuw i8, ptr %294, i64 1
-  %295 = load i8, ptr %i.elz, align 1, !tbaa !66, !noalias !21180
-  %i.ema = getelementptr i8, ptr %i.elx, i64 -3
-  store i8 %295, ptr %i.ema, align 1, !tbaa !66, !noalias !21180
-  %296 = load i8, ptr %294, align 1, !tbaa !66, !noalias !21180
-  %297 = getelementptr i8, ptr %i.elx, i64 -4
-  store i8 %296, ptr %297, align 1, !tbaa !66, !noalias !21180
-  %298 = getelementptr i8, ptr %i.elx, i64 -5
-  store i8 58, ptr %298, align 1, !tbaa !66, !noalias !21180
+  %i.elz = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ely
+  %i.ema = getelementptr i8, ptr %i.elx, i64 -5
+  %253 = load <2 x i8>, ptr %i.elz, align 1, !tbaa !66, !noalias !21180
+  %254 = shufflevector <2 x i8> %253, <2 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %255 = shufflevector <4 x i8> <i8 58, i8 poison, i8 poison, i8 46>, <4 x i8> %254, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
+  store <4 x i8> %255, ptr %i.ema, align 1, !tbaa !66, !noalias !21180
   %i.emb = shl nsw i64 %i.eks, 1
-  %299 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.emb ; 2 uses
-  %300 = getelementptr inbounds nuw i8, ptr %299, i64 1
-  %301 = load i8, ptr %300, align 1, !tbaa !66, !noalias !21180
-  %302 = getelementptr i8, ptr %i.elx, i64 -6
-  store i8 %301, ptr %302, align 1, !tbaa !66, !noalias !21180
-  %303 = load i8, ptr %299, align 1, !tbaa !66, !noalias !21180
-  %304 = getelementptr i8, ptr %i.elx, i64 -7
-  store i8 %303, ptr %304, align 1, !tbaa !66, !noalias !21180
-  %i.emc = getelementptr i8, ptr %i.elx, i64 -8
-  store i8 58, ptr %i.emc, align 1, !tbaa !66, !noalias !21180
+  %i.emc = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.emb
   %i.emd = shl nuw nsw i64 %i.ekq, 1
-  %305 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.emd ; 2 uses
-  %306 = getelementptr inbounds nuw i8, ptr %305, i64 1
-  %307 = load i8, ptr %306, align 1, !tbaa !66, !noalias !21180
-  %308 = getelementptr i8, ptr %i.elx, i64 -9
-  store i8 %307, ptr %308, align 1, !tbaa !66, !noalias !21180
-  %309 = load i8, ptr %305, align 1, !tbaa !66, !noalias !21180
-  %310 = getelementptr i8, ptr %i.elx, i64 -10
-  store i8 %309, ptr %310, align 1, !tbaa !66, !noalias !21180
-  %i.eme = getelementptr i8, ptr %i.elx, i64 -11
-  store i8 32, ptr %i.eme, align 1, !tbaa !66, !noalias !21180
+  %i.eme = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.emd
   %i.emf = add nsw i32 %.sroa.037.0.i66.i.i.i.i.i, 719468 ; 2 uses
   %i.emg = udiv i32 %i.emf, 146097                ; 2 uses
   %.neg.i.i16.i82.i.i.i.i.i = mul nsw i32 %i.emg, -146097
@@ -820,58 +720,44 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   %.sroa.3.0.insert.ext.i.i.i88.i.i.i.i.i = add i32 %i.enf, 16777216
   %i.eng = lshr exact i32 %.sroa.3.0.insert.ext.i.i.i88.i.i.i.i.i, 23
   %i.enh = zext nneg i32 %i.eng to i64
-  %311 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.enh ; 2 uses
-  %312 = getelementptr inbounds nuw i8, ptr %311, i64 1
-  %313 = load i8, ptr %312, align 1, !tbaa !66, !noalias !21180
-  %314 = getelementptr i8, ptr %i.elx, i64 -12
-  store i8 %313, ptr %314, align 1, !tbaa !66, !noalias !21180
-  %315 = load i8, ptr %311, align 1, !tbaa !66, !noalias !21180
-  %316 = getelementptr i8, ptr %i.elx, i64 -13
-  store i8 %315, ptr %316, align 1, !tbaa !66, !noalias !21180
-  %i.eni = getelementptr i8, ptr %i.elx, i64 -14
-  store i8 45, ptr %i.eni, align 1, !tbaa !66, !noalias !21180
+  %i.eni = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.enh
   %i.enj = shl nsw i32 %i.enb, 1
   %i.enk = and i32 %i.enj, 510
   %i.enl = zext nneg i32 %i.enk to i64
-  %317 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.enl ; 2 uses
-  %318 = getelementptr inbounds nuw i8, ptr %317, i64 1
-  %319 = load i8, ptr %318, align 1, !tbaa !66, !noalias !21180
-  %i.enm = getelementptr i8, ptr %i.elx, i64 -15
-  store i8 %319, ptr %i.enm, align 1, !tbaa !66, !noalias !21180
-  %320 = load i8, ptr %317, align 1, !tbaa !66, !noalias !21180
-  %321 = getelementptr i8, ptr %i.elx, i64 -16
-  store i8 %320, ptr %321, align 1, !tbaa !66, !noalias !21180
-  %322 = getelementptr i8, ptr %i.elx, i64 -17
-  store i8 45, ptr %322, align 1, !tbaa !66, !noalias !21180
+  %i.enm = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.enl
   %sext.i.i89.i.i.i.i.i = shl i32 %i.ene, 16
-  %323 = ashr exact i32 %sext.i.i89.i.i.i.i.i, 16 ; 2 uses
-  %324 = icmp slt i32 %323, 0
-  %325 = call i32 @llvm.abs.i32(i32 %323, i1 true) ; 2 uses
-  %.lhs.trunc.i.i90.i.i.i.i.i = trunc nuw i32 %325 to i16 ; 3 uses
-  %i.enn = urem i16 %.lhs.trunc.i.i90.i.i.i.i.i, 100
+  %256 = ashr exact i32 %sext.i.i89.i.i.i.i.i, 16 ; 2 uses
+  %257 = icmp slt i32 %256, 0
+  %258 = call i32 @llvm.abs.i32(i32 %256, i1 true) ; 2 uses
+  %.lhs.trunc.i.i90.i.i.i.i.i = trunc nuw i32 %258 to i16 ; 3 uses
+  %259 = urem i16 %.lhs.trunc.i.i90.i.i.i.i.i, 100
+  %260 = shl nuw nsw i16 %259, 1
+  %261 = zext nneg i16 %260 to i64
+  %262 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %261
+  %263 = udiv i16 %.lhs.trunc.i.i90.i.i.i.i.i, 100
+  %i.enn = urem i16 %263, 100
   %i.eno = shl nuw nsw i16 %i.enn, 1
   %i.enp = zext nneg i16 %i.eno to i64
-  %i.enq = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.enp ; 2 uses
-  %i.enr = getelementptr inbounds nuw i8, ptr %i.enq, i64 1
-  %326 = load i8, ptr %i.enr, align 1, !tbaa !66, !noalias !21180
-  %327 = getelementptr i8, ptr %i.elx, i64 -18
-  store i8 %326, ptr %327, align 1, !tbaa !66, !noalias !21180
-  %328 = load i8, ptr %i.enq, align 1, !tbaa !66, !noalias !21180
-  %329 = getelementptr i8, ptr %i.elx, i64 -19
-  store i8 %328, ptr %329, align 1, !tbaa !66, !noalias !21180
-  %330 = udiv i16 %.lhs.trunc.i.i90.i.i.i.i.i, 100
-  %331 = urem i16 %330, 100
-  %332 = shl nuw nsw i16 %331, 1
-  %333 = zext nneg i16 %332 to i64
-  %334 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %333 ; 2 uses
-  %335 = getelementptr inbounds nuw i8, ptr %334, i64 1
-  %336 = load i8, ptr %335, align 1, !tbaa !66, !noalias !21180
-  %337 = getelementptr i8, ptr %i.elx, i64 -20
-  store i8 %336, ptr %337, align 1, !tbaa !66, !noalias !21180
-  %338 = load i8, ptr %334, align 1, !tbaa !66, !noalias !21180
-  %339 = getelementptr i8, ptr %i.elx, i64 -21    ; 2 uses
-  store i8 %338, ptr %339, align 1, !tbaa !66, !noalias !21180
-  %i.ens = icmp samesign ugt i32 %325, 9999
+  %i.enq = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.enp
+  %i.enr = getelementptr i8, ptr %i.elx, i64 -21  ; 2 uses
+  %264 = load <2 x i8>, ptr %i.emc, align 1, !tbaa !66, !noalias !21180
+  %265 = load <2 x i8>, ptr %i.eme, align 1, !tbaa !66, !noalias !21180
+  %266 = load <2 x i8>, ptr %i.eni, align 1, !tbaa !66, !noalias !21180
+  %267 = load <2 x i8>, ptr %i.enm, align 1, !tbaa !66, !noalias !21180
+  %268 = load <2 x i8>, ptr %262, align 1, !tbaa !66, !noalias !21180
+  %269 = load <2 x i8>, ptr %i.enq, align 1, !tbaa !66, !noalias !21180
+  %270 = shufflevector <2 x i8> %269, <2 x i8> %268, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %271 = shufflevector <16 x i8> %270, <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 45, i8 poison, i8 poison, i8 45, i8 poison, i8 poison, i8 32, i8 poison, i8 poison, i8 58, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 20, i32 poison, i32 poison, i32 23, i32 poison, i32 poison, i32 26, i32 poison, i32 poison, i32 29, i32 poison, i32 poison>
+  %272 = shufflevector <2 x i8> %267, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %273 = shufflevector <16 x i8> %271, <16 x i8> %272, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 16, i32 17, i32 7, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 13, i32 poison, i32 poison>
+  %274 = shufflevector <2 x i8> %266, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %275 = shufflevector <16 x i8> %273, <16 x i8> %274, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 10, i32 poison, i32 poison, i32 13, i32 poison, i32 poison>
+  %276 = shufflevector <2 x i8> %265, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %277 = shufflevector <16 x i8> %275, <16 x i8> %276, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 16, i32 17, i32 13, i32 poison, i32 poison>
+  %278 = shufflevector <2 x i8> %264, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %279 = shufflevector <16 x i8> %277, <16 x i8> %278, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
+  store <16 x i8> %279, ptr %i.enr, align 1, !tbaa !66, !noalias !21180
+  %i.ens = icmp samesign ugt i32 %258, 9999
   br i1 %i.ens, label %bb.app, label %bb.apq
 
 bb.app:                                           ; preds = %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
@@ -883,8 +769,8 @@ bb.app:                                           ; preds = %_ZN5arrow8internal6
   br label %bb.apq
 
 bb.apq:                                           ; preds = %bb.app, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i
-  %.4.i91.i.i.i.i.i = phi ptr [ %i.enw, %bb.app ], [ %339, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i ] ; 2 uses
-  br i1 %324, label %bb.apr, label %_ZN5arrow8internal15StringFormatterINS_13TimestampTypeEvEclINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEZNS_12_GLOBAL__N_114FormatToBufferIS3_NS_15TimestampScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_EUlSt17basic_string_viewIcSt11char_traitsIcEEE_EEDTclclsr3stdE7declvalISI_EEtlSO_EEESG_lOSI_.exit.i.i.i.i.i
+  %.4.i91.i.i.i.i.i = phi ptr [ %i.enw, %bb.app ], [ %i.enr, %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i ] ; 2 uses
+  br i1 %257, label %bb.apr, label %_ZN5arrow8internal15StringFormatterINS_13TimestampTypeEvEclINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEZNS_12_GLOBAL__N_114FormatToBufferIS3_NS_15TimestampScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_EUlSt17basic_string_viewIcSt11char_traitsIcEEE_EEDTclclsr3stdE7declvalISI_EEtlSO_EEESG_lOSI_.exit.i.i.i.i.i
 
 bb.apr:                                           ; preds = %bb.apq
   %i.enx = getelementptr inbounds i8, ptr %.4.i91.i.i.i.i.i, i64 -1 ; 2 uses

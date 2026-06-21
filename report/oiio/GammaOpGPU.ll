@@ -201,10 +201,10 @@ begin_hunk_0_@_ZN16OpenColorIO_v2_524GetGammaGPUShaderProgramERSt10shared_ptrINS
   %240 = alloca %"class.OpenColorIO_v2_5::GpuShaderText::GpuShaderLine", align 8 ; 7 uses
   %241 = alloca %"class.OpenColorIO_v2_5::GpuShaderText::GpuShaderLine", align 8 ; 7 uses
   %242 = alloca %"class.OpenColorIO_v2_5::GpuShaderText::GpuShaderLine", align 8 ; 7 uses
-  %243 = alloca %"class.std::shared_ptr.0", align 8 ; 5 uses
-  %244 = alloca %"class.std::shared_ptr.0", align 8 ; 5 uses
-  %245 = alloca %"class.std::shared_ptr.0", align 8 ; 5 uses
-  %246 = alloca %"class.std::shared_ptr.0", align 8 ; 5 uses
+  %243 = alloca %"class.std::shared_ptr.0", align 8 ; 4 uses
+  %244 = alloca %"class.std::shared_ptr.0", align 8 ; 4 uses
+  %245 = alloca %"class.std::shared_ptr.0", align 8 ; 4 uses
+  %246 = alloca %"class.std::shared_ptr.0", align 8 ; 4 uses
   %247 = alloca %"class.std::shared_ptr.0", align 8 ; 4 uses
   %248 = alloca %"class.std::shared_ptr.0", align 8 ; 4 uses
   %249 = alloca %"class.std::shared_ptr.0", align 8 ; 4 uses
@@ -396,7 +396,7 @@ bb.ae:                                            ; preds = %bb.ac
   br label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit
 
 _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit: ; preds = %bb.ab, %bb.ad, %bb.ae
-  %i.aq = phi ptr [ %i.w, %bb.ab ], [ %i.w, %bb.ad ], [ %.pre977, %bb.ae ]
+  %i.aq = phi ptr [ %i.w, %bb.ab ], [ %i.w, %bb.ad ], [ %.pre977, %bb.ae ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %206) #10
   %i.ar = getelementptr inbounds nuw i8, ptr %206, i64 4
   %i.as = getelementptr inbounds nuw i8, ptr %206, i64 8
@@ -430,18 +430,17 @@ _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit: ; preds = %b
           to label %.noexc unwind label %bb.dn
 
 .noexc:                                           ; preds = %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit
-  %255 = load ptr, ptr %243, align 8, !tbaa !13   ; 3 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %255, i64 200
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.aq, i64 200
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsFwdERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.bi, ptr noundef nonnull align 4 dereferenceable(20) %207)
           to label %.noexc55 unwind label %bb.dn
 
 .noexc55:                                         ; preds = %.noexc
-  %i.bj = getelementptr inbounds nuw i8, ptr %255, i64 224
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.aq, i64 224
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsFwdERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.bj, ptr noundef nonnull align 4 dereferenceable(20) %208)
           to label %.noexc56 unwind label %bb.dn
 
 .noexc56:                                         ; preds = %.noexc55
-  %i.bk = getelementptr inbounds nuw i8, ptr %255, i64 248
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.aq, i64 248
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsFwdERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.bk, ptr noundef nonnull align 4 dereferenceable(20) %209)
           to label %.noexc57 unwind label %bb.dn
 
@@ -844,7 +843,7 @@ bb.dr:                                            ; preds = %bb.dp
   br label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit63
 
 _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit63: ; preds = %bb.do, %bb.dq, %bb.dr
-  %i.oq = phi ptr [ %i.w, %bb.do ], [ %i.w, %bb.dq ], [ %.pre976, %bb.dr ]
+  %i.oq = phi ptr [ %i.w, %bb.do ], [ %i.w, %bb.dq ], [ %.pre976, %bb.dr ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %174) #10
   %i.or = getelementptr inbounds nuw i8, ptr %174, i64 4
   %i.os = getelementptr inbounds nuw i8, ptr %174, i64 8
@@ -878,18 +877,17 @@ _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit63: ; preds = 
           to label %.noexc224 unwind label %bb.ha
 
 .noexc224:                                        ; preds = %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit63
-  %256 = load ptr, ptr %244, align 8, !tbaa !13   ; 3 uses
-  %i.pi = getelementptr inbounds nuw i8, ptr %256, i64 200
+  %i.pi = getelementptr inbounds nuw i8, ptr %i.oq, i64 200
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsRevERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.pi, ptr noundef nonnull align 4 dereferenceable(20) %175)
           to label %.noexc225 unwind label %bb.ha
 
 .noexc225:                                        ; preds = %.noexc224
-  %i.pj = getelementptr inbounds nuw i8, ptr %256, i64 224
+  %i.pj = getelementptr inbounds nuw i8, ptr %i.oq, i64 224
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsRevERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.pj, ptr noundef nonnull align 4 dereferenceable(20) %176)
           to label %.noexc226 unwind label %bb.ha
 
 .noexc226:                                        ; preds = %.noexc225
-  %i.pk = getelementptr inbounds nuw i8, ptr %256, i64 248
+  %i.pk = getelementptr inbounds nuw i8, ptr %i.oq, i64 248
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsRevERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.pk, ptr noundef nonnull align 4 dereferenceable(20) %177)
           to label %.noexc227 unwind label %bb.ha
 
@@ -1292,7 +1290,7 @@ bb.he:                                            ; preds = %bb.hc
   br label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit239
 
 _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit239: ; preds = %bb.hb, %bb.hd, %bb.he
-  %i.acq = phi ptr [ %i.w, %bb.hb ], [ %i.w, %bb.hd ], [ %.pre975, %bb.he ]
+  %i.acq = phi ptr [ %i.w, %bb.hb ], [ %i.w, %bb.hd ], [ %.pre975, %bb.he ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %137) #10
   %i.acr = getelementptr inbounds nuw i8, ptr %137, i64 4
   %i.acs = getelementptr inbounds nuw i8, ptr %137, i64 8
@@ -1326,18 +1324,17 @@ _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit239: ; preds =
           to label %.noexc323 unwind label %bb.lh
 
 .noexc323:                                        ; preds = %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit239
-  %257 = load ptr, ptr %245, align 8, !tbaa !13   ; 3 uses
-  %i.adi = getelementptr inbounds nuw i8, ptr %257, i64 200
+  %i.adi = getelementptr inbounds nuw i8, ptr %i.acq, i64 200
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsFwdERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.adi, ptr noundef nonnull align 4 dereferenceable(20) %138)
           to label %.noexc324 unwind label %bb.lh
 
 .noexc324:                                        ; preds = %.noexc323
-  %i.adj = getelementptr inbounds nuw i8, ptr %257, i64 224
+  %i.adj = getelementptr inbounds nuw i8, ptr %i.acq, i64 224
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsFwdERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.adj, ptr noundef nonnull align 4 dereferenceable(20) %139)
           to label %.noexc325 unwind label %bb.lh
 
 .noexc325:                                        ; preds = %.noexc324
-  %i.adk = getelementptr inbounds nuw i8, ptr %257, i64 248
+  %i.adk = getelementptr inbounds nuw i8, ptr %i.acq, i64 248
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsFwdERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.adk, ptr noundef nonnull align 4 dereferenceable(20) %140)
           to label %.noexc326 unwind label %bb.lh
 
@@ -1740,7 +1737,7 @@ bb.ll:                                            ; preds = %bb.lj
   br label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit338
 
 _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit338: ; preds = %bb.li, %bb.lk, %bb.ll
-  %i.arz = phi ptr [ %i.w, %bb.li ], [ %i.w, %bb.lk ], [ %.pre, %bb.ll ]
+  %i.arz = phi ptr [ %i.w, %bb.li ], [ %i.w, %bb.lk ], [ %.pre, %bb.ll ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %100) #10
   %i.asa = getelementptr inbounds nuw i8, ptr %100, i64 4
   %i.asb = getelementptr inbounds nuw i8, ptr %100, i64 8
@@ -1774,18 +1771,17 @@ _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit338: ; preds =
           to label %.noexc517 unwind label %bb.po
 
 .noexc517:                                        ; preds = %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit338
-  %258 = load ptr, ptr %246, align 8, !tbaa !13   ; 3 uses
-  %i.asr = getelementptr inbounds nuw i8, ptr %258, i64 200
+  %i.asr = getelementptr inbounds nuw i8, ptr %i.arz, i64 200
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsRevERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.asr, ptr noundef nonnull align 4 dereferenceable(20) %101)
           to label %.noexc518 unwind label %bb.po
 
 .noexc518:                                        ; preds = %.noexc517
-  %i.ass = getelementptr inbounds nuw i8, ptr %258, i64 224
+  %i.ass = getelementptr inbounds nuw i8, ptr %i.arz, i64 224
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsRevERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.ass, ptr noundef nonnull align 4 dereferenceable(20) %102)
           to label %.noexc519 unwind label %bb.po
 
 .noexc519:                                        ; preds = %.noexc518
-  %i.ast = getelementptr inbounds nuw i8, ptr %258, i64 248
+  %i.ast = getelementptr inbounds nuw i8, ptr %i.arz, i64 248
   invoke void @_ZN16OpenColorIO_v2_516ComputeParamsRevERKSt6vectorIdSaIdEERNS_14RendererParamsE(ptr noundef nonnull align 8 dereferenceable(24) %i.ast, ptr noundef nonnull align 4 dereferenceable(20) %103)
           to label %.noexc520 unwind label %bb.po
 
