@@ -145,10 +145,10 @@ bb.f:                                             ; preds = %bb.e
 iter.check:                                       ; preds = %.loopexit.thread, %.loopexit
   %.2129 = phi i32 [ 0, %.loopexit.thread ], [ %.2, %.loopexit ] ; 4 uses
   %.271127 = phi ptr [ null, %.loopexit.thread ], [ %.271, %.loopexit ] ; 4 uses
-  %.174126 = phi i32 [ %i.bd, %.loopexit.thread ], [ %.174, %.loopexit ] ; 12 uses
+  %.174126 = phi i32 [ %i.bd, %.loopexit.thread ], [ %.174, %.loopexit ] ; 11 uses
   %.180124 = phi ptr [ %i.az, %.loopexit.thread ], [ %.180, %.loopexit ] ; 8 uses
   %.183122 = phi ptr [ %i.ba, %.loopexit.thread ], [ %.183, %.loopexit ] ; 8 uses
-  %i.bo = zext nneg i32 %.174126 to i64           ; 5 uses
+  %i.bo = zext nneg i32 %.174126 to i64           ; 7 uses
   %min.iters.check = icmp samesign ult i32 %.174126, 4
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
@@ -265,12 +265,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph102.preheader:                              ; preds = %._crit_edge
   %i.ct = add i32 %.174126, %.2129
-  %2 = zext nneg i32 %.174126 to i64              ; 2 uses
   %min.iters.check165 = icmp samesign ult i32 %.174126, 8
   br i1 %min.iters.check165, label %.lr.ph102.preheader176, label %vector.ph166
 
 vector.ph166:                                     ; preds = %.lr.ph102.preheader
-  %n.vec168 = and i64 %2, 2147483640              ; 4 uses
+  %n.vec168 = and i64 %i.bo, 2147483640           ; 4 uses
   %i.cu = trunc nuw nsw i64 %n.vec168 to i32
   %i.cv = add i32 %.2129, %i.cu
   %i.cw = shl nuw nsw i64 %n.vec168, 2
@@ -295,7 +294,7 @@ vector.body169:                                   ; preds = %vector.body169, %ve
   br i1 %i.da, label %middle.block173, label %vector.body169, !llvm.loop !19
 
 middle.block173:                                  ; preds = %vector.body169
-  %cmp.n174 = icmp eq i64 %n.vec168, %2
+  %cmp.n174 = icmp eq i64 %n.vec168, %i.bo
   br i1 %cmp.n174, label %._crit_edge103, label %.lr.ph102.preheader176
 
 .lr.ph102.preheader176:                           ; preds = %.lr.ph102.preheader, %middle.block173
