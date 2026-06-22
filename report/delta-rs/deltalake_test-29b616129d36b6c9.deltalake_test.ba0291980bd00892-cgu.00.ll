@@ -201,7 +201,8 @@ bb.e:                                             ; preds = %.body.i.i
 bb.f:                                             ; preds = %.body.i.i
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = load i64, ptr %i.t, align 8, !range !733, !noalias !854, !noundef !3
   %i.v = inttoptr i64 %i.u to ptr
@@ -604,7 +605,8 @@ bb.e:                                             ; preds = %.body.i.i
 bb.f:                                             ; preds = %.body.i.i
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = load i64, ptr %i.t, align 8, !range !733, !noalias !887, !noundef !3
   %i.v = inttoptr i64 %i.u to ptr
@@ -1007,7 +1009,8 @@ bb.e:                                             ; preds = %.body.i.i
 .thread.i.i:                                      ; preds = %.body.i.i
   %i.s = extractvalue { ptr, ptr } %i.q, 0        ; 2 uses
   %i.t = extractvalue { ptr, ptr } %i.q, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -1034,7 +1037,8 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.078.0101116.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.086.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.8.0103115.i.i = phi ptr [ %i.t, %.thread.i.i ], [ %.sroa.487.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i), "nonnull"(ptr %.sroa.8.0103115.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0103115.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !733, !noalias !916, !noundef !3
   br label %bb.i
@@ -1089,7 +1093,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.ab = extractvalue { ptr, ptr } %i.z, 0       ; 4 uses
   %i.ac = extractvalue { ptr, ptr } %i.z, 1       ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab), "nonnull"(ptr %i.ac) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = load ptr, ptr %i.ac, align 8, !invariant.load !3, !noalias !916 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
@@ -1492,7 +1497,8 @@ bb.e:                                             ; preds = %.body.i.i
 .thread.i.i:                                      ; preds = %.body.i.i
   %i.s = extractvalue { ptr, ptr } %i.q, 0        ; 2 uses
   %i.t = extractvalue { ptr, ptr } %i.q, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -1519,7 +1525,8 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.078.0101116.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.086.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.8.0103115.i.i = phi ptr [ %i.t, %.thread.i.i ], [ %.sroa.487.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i), "nonnull"(ptr %.sroa.8.0103115.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0103115.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !733, !noalias !946, !noundef !3
   br label %bb.i
@@ -1574,7 +1581,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.ab = extractvalue { ptr, ptr } %i.z, 0       ; 4 uses
   %i.ac = extractvalue { ptr, ptr } %i.z, 1       ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab), "nonnull"(ptr %i.ac) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = load ptr, ptr %i.ac, align 8, !invariant.load !3, !noalias !946 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
@@ -1977,7 +1985,8 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0108.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.487.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0107.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0108.i.i), "nonnull"(ptr %.sroa.10.0107.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0108.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0107.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.v = load i64, ptr %i.u, align 16, !range !733, !noalias !976, !noundef !3
   %i.w = ptrtoint ptr %.sroa.10.0107.i.i to i64
@@ -2380,7 +2389,8 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0108.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.487.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0107.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0108.i.i), "nonnull"(ptr %.sroa.10.0107.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0108.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0107.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.v = load i64, ptr %i.u, align 16, !range !733, !noalias !1005, !noundef !3
   %i.w = ptrtoint ptr %.sroa.10.0107.i.i to i64
@@ -2783,7 +2793,8 @@ bb.e:                                             ; preds = %.body.i.i
 bb.f:                                             ; preds = %.body.i.i
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = load i64, ptr %i.t, align 8, !range !733, !noalias !1038, !noundef !3
   %i.v = inttoptr i64 %i.u to ptr
@@ -3186,7 +3197,8 @@ bb.e:                                             ; preds = %.body.i.i
 bb.f:                                             ; preds = %.body.i.i
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = load i64, ptr %i.t, align 8, !range !733, !noalias !1071, !noundef !3
   %i.v = inttoptr i64 %i.u to ptr
@@ -3589,7 +3601,8 @@ bb.e:                                             ; preds = %.body.i.i
 .thread.i.i:                                      ; preds = %.body.i.i
   %i.s = extractvalue { ptr, ptr } %i.q, 0        ; 2 uses
   %i.t = extractvalue { ptr, ptr } %i.q, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -3616,7 +3629,8 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.078.0101116.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.086.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.8.0103115.i.i = phi ptr [ %i.t, %.thread.i.i ], [ %.sroa.487.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i), "nonnull"(ptr %.sroa.8.0103115.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0103115.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !733, !noalias !1100, !noundef !3
   br label %bb.i
@@ -3671,7 +3685,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.ab = extractvalue { ptr, ptr } %i.z, 0       ; 4 uses
   %i.ac = extractvalue { ptr, ptr } %i.z, 1       ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab), "nonnull"(ptr %i.ac) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = load ptr, ptr %i.ac, align 8, !invariant.load !3, !noalias !1100 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
@@ -4074,7 +4089,8 @@ bb.e:                                             ; preds = %.body.i.i
 .thread.i.i:                                      ; preds = %.body.i.i
   %i.s = extractvalue { ptr, ptr } %i.q, 0        ; 2 uses
   %i.t = extractvalue { ptr, ptr } %i.q, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -4101,7 +4117,8 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.078.0101116.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.086.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.8.0103115.i.i = phi ptr [ %i.t, %.thread.i.i ], [ %.sroa.487.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i), "nonnull"(ptr %.sroa.8.0103115.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.078.0101116.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0103115.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !733, !noalias !1129, !noundef !3
   br label %bb.i
@@ -4156,7 +4173,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.ab = extractvalue { ptr, ptr } %i.z, 0       ; 4 uses
   %i.ac = extractvalue { ptr, ptr } %i.z, 1       ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab), "nonnull"(ptr %i.ac) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = load ptr, ptr %i.ac, align 8, !invariant.load !3, !noalias !1129 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
