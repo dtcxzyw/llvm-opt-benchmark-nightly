@@ -58,9 +58,9 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.k, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !26
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.d
   store ptr %i.l, ptr %i.f, align 8, !tbaa !23
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %.lr.ph.preheader
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.d

@@ -201,8 +201,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %or.cond80, label %rb_enc_str_asciicompat_p.exit.thread, label %.thread91
 
 .thread91:                                        ; preds = %bb.t
-  %1 = mul nuw nsw i32 %i.ai, 10
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag) ]
+  %1 = mul nuw nsw i32 %i.ai, 10
   %op.rdx = add nuw nsw i32 %i.an, -32208
   %op.rdx103 = add nuw nsw i32 %op.rdx, %1
   br label %bb.v

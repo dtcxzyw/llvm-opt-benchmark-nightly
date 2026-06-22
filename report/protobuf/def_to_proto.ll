@@ -147,9 +147,9 @@ bb.a:
   br i1 %i.k, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.d
   store ptr %i.l, ptr %i.c, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -180,9 +180,9 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.x, label %upb_Arena_Malloc.exit.i.i74, label %upb_Arena_Malloc.exit.thread.i.i73, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i73:               ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i71) ]
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i.i.i71, i64 %i.s
   store ptr %i.y, ptr %i.q, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i71) ]
   br label %strviewdup.exit
 
 upb_Arena_Malloc.exit.i.i74:                      ; preds = %bb.c
@@ -292,9 +292,9 @@ bb.f:                                             ; preds = %.lr.ph89, %enumresr
   br i1 %i.bj, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.bk = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.aq
   store ptr %i.bk, ptr %i.be, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %enumresrange_toproto.exit
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.f
@@ -384,9 +384,9 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.cu, label %upb_Arena_Malloc.exit.i.i.i80, label %upb_Arena_Malloc.exit.thread.i.i.i78, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i78:             ; preds = %bb.j
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i76) ]
   %i.cv = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i76, i64 %i.cn
   store ptr %i.cv, ptr %i.cm, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i76) ]
   br label %bb.k
 
 upb_Arena_Malloc.exit.i.i.i80:                    ; preds = %bb.j
@@ -485,9 +485,9 @@ bb.a:
   br i1 %i.k, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.d
   store ptr %i.l, ptr %i.c, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -518,9 +518,9 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.x, label %upb_Arena_Malloc.exit.i.i28, label %upb_Arena_Malloc.exit.thread.i.i27, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i27:               ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i25) ]
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i.i.i25, i64 %i.s
   store ptr %i.y, ptr %i.q, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i25) ]
   br label %strviewdup.exit
 
 upb_Arena_Malloc.exit.i.i28:                      ; preds = %bb.c
@@ -591,9 +591,9 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.bc, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.bd = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.av
   store ptr %i.bd, ptr %i.au, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.h
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.g
@@ -679,9 +679,9 @@ bb.a:
   br i1 %i.k, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.d
   store ptr %i.l, ptr %i.c, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -712,9 +712,9 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.x, label %upb_Arena_Malloc.exit.i.i76, label %upb_Arena_Malloc.exit.thread.i.i75, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i75:               ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i73) ]
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i.i.i73, i64 %i.s
   store ptr %i.y, ptr %i.q, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i73) ]
   br label %strviewdup.exit
 
 upb_Arena_Malloc.exit.i.i76:                      ; preds = %bb.c
@@ -804,9 +804,9 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bk, label %upb_Arena_Malloc.exit.i.i84, label %upb_Arena_Malloc.exit.thread.i.i80, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i80:               ; preds = %bb.k
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i78) ]
   %i.bl = getelementptr inbounds nuw i8, ptr %.val.i.i.i78, i64 %i.bf
   store ptr %i.bl, ptr %i.bd, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i78) ]
   br label %strviewdup.exit86
 
 upb_Arena_Malloc.exit.i.i84:                      ; preds = %bb.k
@@ -853,9 +853,9 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.cd, label %upb_Arena_Malloc.exit.i, label %upb_Arena_Malloc.exit.thread.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i:                   ; preds = %bb.n
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.ce = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.by
   store ptr %i.ce, ptr %i.bw, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br label %qual_dup.exit
 
 upb_Arena_Malloc.exit.i:                          ; preds = %bb.n
@@ -897,9 +897,9 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.cu, label %upb_Arena_Malloc.exit.i95, label %upb_Arena_Malloc.exit.thread.i91, !prof !17
 
 upb_Arena_Malloc.exit.thread.i91:                 ; preds = %bb.q
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i89) ]
   %i.cv = getelementptr inbounds nuw i8, ptr %.val.i.i89, i64 %i.cp
   store ptr %i.cv, ptr %i.cn, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i89) ]
   br label %qual_dup.exit97
 
 upb_Arena_Malloc.exit.i95:                        ; preds = %bb.q
@@ -953,9 +953,9 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.dn, label %upb_Arena_Malloc.exit.i105, label %upb_Arena_Malloc.exit.thread.i101, !prof !17
 
 upb_Arena_Malloc.exit.thread.i101:                ; preds = %bb.t
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i99) ]
   %i.do = getelementptr inbounds nuw i8, ptr %.val.i.i99, i64 %i.di
   store ptr %i.do, ptr %i.dg, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i99) ]
   br label %qual_dup.exit107
 
 upb_Arena_Malloc.exit.i105:                       ; preds = %bb.t
@@ -1020,9 +1020,9 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.eo, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.y
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.ep = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 8
   store ptr %i.ep, ptr %i.ej, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %strviewdup.exit.i
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.y
@@ -1058,9 +1058,9 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.fa, label %upb_Arena_Malloc.exit.i.i47.i, label %upb_Arena_Malloc.exit.thread.i.i43.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i43.i:             ; preds = %bb.ab
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i41.i) ]
   %i.fb = getelementptr inbounds nuw i8, ptr %.val.i.i.i41.i, i64 8
   store ptr %i.fb, ptr %i.ev, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i41.i) ]
   br label %strviewdup.exit49.i
 
 upb_Arena_Malloc.exit.i.i47.i:                    ; preds = %bb.ab
@@ -1118,9 +1118,9 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.fr, label %upb_Arena_Malloc.exit.i.i56.i, label %upb_Arena_Malloc.exit.thread.i.i52.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i52.i:             ; preds = %bb.ag
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i50.i) ]
   %i.fs = getelementptr inbounds nuw i8, ptr %.val.i.i.i50.i, i64 8
   store ptr %i.fs, ptr %i.fm, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i50.i) ]
   br label %strviewdup.exit58.i
 
 upb_Arena_Malloc.exit.i.i56.i:                    ; preds = %bb.ag
@@ -1158,9 +1158,9 @@ bb.ai:                                            ; preds = %bb.af
   br i1 %i.gi, label %upb_Arena_Malloc.exit.i.i65.i, label %upb_Arena_Malloc.exit.thread.i.i61.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i61.i:             ; preds = %bb.ai
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i59.i) ]
   %i.gj = getelementptr inbounds nuw i8, ptr %.val.i.i.i59.i, i64 %i.gd
   store ptr %i.gj, ptr %i.gb, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i59.i) ]
   br label %strviewdup.exit67.i
 
 upb_Arena_Malloc.exit.i.i65.i:                    ; preds = %bb.ai
@@ -1219,9 +1219,9 @@ bb.aq:                                            ; preds = %bb.af
   br i1 %i.hc, label %upb_Arena_Malloc.exit.i.i113, label %upb_Arena_Malloc.exit.thread.i.i111, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i111:              ; preds = %bb.aq
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i109) ]
   %i.hd = getelementptr inbounds nuw i8, ptr %.val.i.i.i109, i64 %i.gx
   store ptr %i.hd, ptr %i.gv, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i109) ]
   br label %strviewdup2.exit.i
 
 upb_Arena_Malloc.exit.i.i113:                     ; preds = %bb.aq
@@ -1299,9 +1299,9 @@ special_escape.exit.i.i.epil:                     ; preds = %.lr.ph.i.i.epil.pre
   br i1 %i.hu, label %upb_Arena_Malloc.exit.i73.i, label %upb_Arena_Malloc.exit.thread.i70.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i70.i:               ; preds = %._crit_edge.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i68.i) ]
   %i.hv = getelementptr inbounds nuw i8, ptr %.val.i.i68.i, i64 %i.hp
   store ptr %i.hv, ptr %i.hn, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i68.i) ]
   br label %bb.av
 
 upb_Arena_Malloc.exit.i73.i:                      ; preds = %._crit_edge.i.i
@@ -1519,9 +1519,9 @@ bb.bk:                                            ; preds = %bb.bi
   br i1 %i.kk, label %upb_Arena_Malloc.exit.i.i.i119, label %upb_Arena_Malloc.exit.thread.i.i.i118, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i118:            ; preds = %bb.bk
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i116) ]
   %i.kl = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i116, i64 %i.kd
   store ptr %i.kl, ptr %i.kc, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i116) ]
   br label %bb.bl
 
 upb_Arena_Malloc.exit.i.i.i119:                   ; preds = %bb.bk
@@ -1607,9 +1607,9 @@ bb.a:
   br i1 %i.k, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.d
   store ptr %i.l, ptr %i.c, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -1640,9 +1640,9 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.x, label %upb_Arena_Malloc.exit.i.i26, label %upb_Arena_Malloc.exit.thread.i.i25, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i25:               ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i23) ]
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i.i.i23, i64 %i.s
   store ptr %i.y, ptr %i.q, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i23) ]
   br label %strviewdup.exit
 
 upb_Arena_Malloc.exit.i.i26:                      ; preds = %bb.c
@@ -1707,9 +1707,9 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.ay, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.az = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.ar
   store ptr %i.az, ptr %i.aq, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.h
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.g
@@ -1791,9 +1791,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.n = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.f
   store ptr %i.n, ptr %i.e, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.d
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.b
@@ -1823,9 +1823,9 @@ bb.d:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.y, label %upb_Arena_Malloc.exit.i.i137.i, label %upb_Arena_Malloc.exit.thread.i.i136.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i136.i:            ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i134.i) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val.i.i.i134.i, i64 %i.t
   store ptr %i.z, ptr %i.r, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i134.i) ]
   br label %strviewdup.exit.i
 
 upb_Arena_Malloc.exit.i.i137.i:                   ; preds = %bb.d
@@ -1872,9 +1872,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ao, label %upb_Arena_Malloc.exit.i.i145.i, label %upb_Arena_Malloc.exit.thread.i.i141.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i141.i:            ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i139.i) ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.val.i.i.i139.i, i64 %i.aj
   store ptr %i.ap, ptr %i.ah, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i139.i) ]
   br label %strviewdup.exit147.i
 
 upb_Arena_Malloc.exit.i.i145.i:                   ; preds = %bb.g
@@ -1917,9 +1917,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ba, label %upb_Arena_Malloc.exit.i.i155.i, label %upb_Arena_Malloc.exit.thread.i.i151.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i151.i:            ; preds = %bb.j
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i149.i) ]
   %i.bb = getelementptr inbounds nuw i8, ptr %.val.i.i.i149.i, i64 8
   store ptr %i.bb, ptr %i.av, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i149.i) ]
   br label %strviewdup.exit157.i
 
 upb_Arena_Malloc.exit.i.i155.i:                   ; preds = %bb.j
@@ -1955,9 +1955,9 @@ bb.l:                                             ; preds = %bb.i
   br i1 %i.bl, label %upb_Arena_Malloc.exit.i.i165.i, label %upb_Arena_Malloc.exit.thread.i.i161.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i161.i:            ; preds = %bb.l
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i159.i) ]
   %i.bm = getelementptr inbounds nuw i8, ptr %.val.i.i.i159.i, i64 8
   store ptr %i.bm, ptr %i.bg, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i159.i) ]
   br label %strviewdup.exit167.i
 
 upb_Arena_Malloc.exit.i.i165.i:                   ; preds = %bb.l
@@ -2026,9 +2026,9 @@ bb.n:                                             ; preds = %strviewdup.exit167.
   br i1 %i.cn, label %upb_Arena_Malloc.exit.i.i175.i, label %upb_Arena_Malloc.exit.thread.i.i171.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i171.i:            ; preds = %.lr.ph.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i169.i) ]
   %i.co = getelementptr inbounds nuw i8, ptr %.val.i.i.i169.i, i64 %i.ci
   store ptr %i.co, ptr %i.cg, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i169.i) ]
   br label %strviewdup.exit177.i
 
 upb_Arena_Malloc.exit.i.i175.i:                   ; preds = %.lr.ph.i
@@ -2203,9 +2203,9 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.ey, label %upb_Arena_Malloc.exit.i.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i.i:             ; preds = %bb.v
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   %i.ez = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %i.er
   store ptr %i.ez, ptr %i.eq, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   br label %bb.w
 
 upb_Arena_Malloc.exit.i.i.i.i:                    ; preds = %bb.v
@@ -2291,9 +2291,9 @@ bb.a:
   br i1 %i.k, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.d
   store ptr %i.l, ptr %i.c, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -2324,9 +2324,9 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.x, label %upb_Arena_Malloc.exit.i.i40, label %upb_Arena_Malloc.exit.thread.i.i39, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i39:               ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i37) ]
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i.i.i37, i64 %i.s
   store ptr %i.y, ptr %i.q, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i37) ]
   br label %strviewdup.exit
 
 upb_Arena_Malloc.exit.i.i40:                      ; preds = %bb.c
@@ -2366,9 +2366,9 @@ strviewdup.exit:                                  ; preds = %upb_Arena_Malloc.ex
   br i1 %i.ap, label %upb_Arena_Malloc.exit.i, label %upb_Arena_Malloc.exit.thread.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i:                   ; preds = %strviewdup.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.aq = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.ak
   store ptr %i.aq, ptr %i.ai, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br label %qual_dup.exit
 
 upb_Arena_Malloc.exit.i:                          ; preds = %strviewdup.exit
@@ -2410,9 +2410,9 @@ qual_dup.exit:                                    ; preds = %upb_Arena_Malloc.ex
   br i1 %i.bi, label %upb_Arena_Malloc.exit.i49, label %upb_Arena_Malloc.exit.thread.i45, !prof !17
 
 upb_Arena_Malloc.exit.thread.i45:                 ; preds = %qual_dup.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i43) ]
   %i.bj = getelementptr inbounds nuw i8, ptr %.val.i.i43, i64 %i.bd
   store ptr %i.bj, ptr %i.bb, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i43) ]
   br label %qual_dup.exit51
 
 upb_Arena_Malloc.exit.i49:                        ; preds = %qual_dup.exit
@@ -2503,9 +2503,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.cs, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.ct = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.cl
   store ptr %i.ct, ptr %i.ck, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.n
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.m
@@ -2592,9 +2592,9 @@ bb.a:
   br i1 %i.k, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.d
   store ptr %i.l, ptr %i.c, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -2625,9 +2625,9 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.x, label %upb_Arena_Malloc.exit.i.i38, label %upb_Arena_Malloc.exit.thread.i.i37, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i37:               ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i35) ]
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i.i.i35, i64 %i.s
   store ptr %i.y, ptr %i.q, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i35) ]
   br label %strviewdup.exit
 
 upb_Arena_Malloc.exit.i.i38:                      ; preds = %bb.c
@@ -2714,9 +2714,9 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.bg, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.bh = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.az
   store ptr %i.bh, ptr %i.ay, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.h
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.g
@@ -2795,9 +2795,9 @@ bb.a:
   br i1 %i.m, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.n = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.f
   store ptr %i.n, ptr %i.e, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -2828,9 +2828,9 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br i1 %i.z, label %upb_Arena_Malloc.exit.i.i140, label %upb_Arena_Malloc.exit.thread.i.i139, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i139:              ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i137) ]
   %i.aa = getelementptr inbounds nuw i8, ptr %.val.i.i.i137, i64 %i.u
   store ptr %i.aa, ptr %i.s, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i137) ]
   br label %strviewdup.exit
 
 upb_Arena_Malloc.exit.i.i140:                     ; preds = %bb.c
@@ -3057,9 +3057,9 @@ bb.f:                                             ; preds = %.lr.ph177, %extrang
   br i1 %i.db, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.dc = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.cc
   store ptr %i.dc, ptr %i.cw, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.h
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.f
@@ -3124,9 +3124,9 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.ed, label %upb_Arena_Malloc.exit.i.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i.i:             ; preds = %bb.k
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   %i.ee = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %i.cf
   store ptr %i.ee, ptr %i.dy, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   br label %bb.l
 
 upb_Arena_Malloc.exit.i.i.i.i:                    ; preds = %bb.k
@@ -3195,9 +3195,9 @@ bb.n:                                             ; preds = %.lr.ph181, %resrang
   br i1 %i.ez, label %upb_Arena_Malloc.exit.i.i.i146, label %upb_Arena_Malloc.exit.thread.i.i.i144, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i144:            ; preds = %bb.n
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i142) ]
   %i.fa = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i142, i64 %i.cr
   store ptr %i.fa, ptr %i.eu, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i142) ]
   br label %resrange_toproto.exit
 
 upb_Arena_Malloc.exit.i.i.i146:                   ; preds = %bb.n
@@ -3287,9 +3287,9 @@ bb.r:                                             ; preds = %bb.p
   br i1 %i.gk, label %upb_Arena_Malloc.exit.i.i.i152, label %upb_Arena_Malloc.exit.thread.i.i.i150, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i150:            ; preds = %bb.r
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i148) ]
   %i.gl = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i148, i64 %i.gd
   store ptr %i.gl, ptr %i.gc, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i148) ]
   br label %bb.s
 
 upb_Arena_Malloc.exit.i.i.i152:                   ; preds = %bb.r
@@ -3357,9 +3357,9 @@ bb.a:
   br i1 %i.i, label %upb_Arena_Malloc.exit.i, label %upb_Arena_Malloc.exit.thread.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i:                   ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.j = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.d
   store ptr %i.j, ptr %i.b, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br label %strviewdup2.exit
 
 upb_Arena_Malloc.exit.i:                          ; preds = %bb.a
@@ -3497,9 +3497,9 @@ _upb_MiniTableField_ElemSizeLg2_dont_copy_me__upb_internal_use_only.exit.i: ; pr
   br i1 %i.aa, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !17
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %_upb_MiniTableField_ElemSizeLg2_dont_copy_me__upb_internal_use_only.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.v
   store ptr %i.ab, ptr %3, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.f
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %_upb_MiniTableField_ElemSizeLg2_dont_copy_me__upb_internal_use_only.exit.i
@@ -3731,9 +3731,9 @@ bb.a:
   br i1 %i.f, label %upb_Arena_Malloc.exit, label %upb_Arena_Malloc.exit.thread, !prof !17
 
 upb_Arena_Malloc.exit.thread:                     ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val.i, i64 32
   store ptr %i.g, ptr %i.a, align 8, !tbaa !13
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   br label %bb.c
 
 upb_Arena_Malloc.exit:                            ; preds = %bb.a

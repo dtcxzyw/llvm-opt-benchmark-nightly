@@ -201,8 +201,8 @@ bb.ad:                                            ; preds = %._crit_edge.i.i.i
   br label %bb.g, !llvm.loop !164
 
 _ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN6google8protobuf6SymbolEEENS5_12_GLOBAL__N_120SymbolByFullNameHashENS8_18SymbolByFullNameEqESaIS6_EE4findIS6_EENSC_8iteratorERKT_.exit.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i8.i.i, %bb.ab
-  %6 = getelementptr inbounds nuw i8, ptr %.val15.i.i.i, i64 %i.bz
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i) ]
+  %6 = getelementptr inbounds nuw i8, ptr %.val15.i.i.i, i64 %i.bz
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN6google8protobuf6SymbolEEENS5_12_GLOBAL__N_120SymbolByFullNameHashENS8_18SymbolByFullNameEqESaIS6_EE4findIS6_EENSC_8iteratorERKT_.exit.thread18.i
 
 _ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN6google8protobuf6SymbolEEENS5_12_GLOBAL__N_120SymbolByFullNameHashENS8_18SymbolByFullNameEqESaIS6_EE4findIS6_EENSC_8iteratorERKT_.exit.thread18.i: ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN6google8protobuf6SymbolEEENS5_12_GLOBAL__N_120SymbolByFullNameHashENS8_18SymbolByFullNameEqESaIS6_EE4findIS6_EENSC_8iteratorERKT_.exit.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i.i.i, %bb.e
@@ -605,9 +605,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i12.i.i: ; preds = %bb.
   br i1 %i.cu, label %.thread36.i.i.i, label %bb.r
 
 .thread36.i.i.i:                                  ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i12.i.i, %bb.q
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i) ]
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i, i64 %i.aj
   %i.cw = getelementptr inbounds nuw i8, ptr %.val15.i.i.i, i64 %i.aj
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN6google8protobuf6SymbolEEENS5_12_GLOBAL__N_120SymbolByFullNameHashENS8_18SymbolByFullNameEqESaIS6_EE10find_largeINS8_13FullNameQueryEEENSC_8iteratorERKT_m.exit.i.i
 
 bb.r:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i12.i.i, %_ZNK6google8protobuf6Symbol9full_nameEv.exit.i.i.i
@@ -1010,9 +1010,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i10.i.i: ; preds = %.lr
 
 .thread39.i.i.i:                                  ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i10.i.i, %.lr.ph.i.us.us.i.i
   %.us-phi.i.i = phi i64 [ %i.am, %.lr.ph.i.us.us.i.i ], [ %i.bb, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i10.i.i ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i) ]
   %3 = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i, i64 %.us-phi.i.i
   %4 = getelementptr inbounds nuw i8, ptr %.val15.i.i.i, i64 %.us-phi.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS5_12_GLOBAL__N_121DescriptorsByNameHashIS6_EENSA_19DescriptorsByNameEqIS6_EESaIS8_EE10find_largeISt17basic_string_viewIcSt11char_traitsIcEEEENSG_8iteratorERKT_m.exit.i.i
 
 bb.h:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i10.i.i, %.lr.ph.i.i.i
@@ -1415,9 +1415,9 @@ bb.g:                                             ; preds = %bb.i, %bb.f
   br i1 %i.bh, label %.thread39.i.i.i.i, label %bb.h, !prof !322
 
 .thread39.i.i.i.i:                                ; preds = %.lr.ph.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i.i.i) ]
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i.i, i64 %i.bb
   %i.bj = getelementptr inbounds nuw i8, ptr %.val6.i.i.i, i64 %i.bb
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i.i.i) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf15FieldDescriptorEEENS5_12_GLOBAL__N_116ParentNumberHashENSA_14ParentNumberEqESaIS8_EE10find_largeINSA_17ParentNumberQueryEEENSE_8iteratorERKT_m.exit.i.i.i
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i.i
@@ -1750,9 +1750,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i14.i.i.i: ; preds = %b
   br i1 %i.br, label %.thread37.i.i.i.i, label %bb.n
 
 .thread37.i.i.i.i:                                ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i14.i.i.i, %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i.i) ]
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i.i, i64 %i.bb
   %i.bt = getelementptr inbounds nuw i8, ptr %.val15.i.i.i.i, i64 %i.bb
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i.i) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN6google8protobuf6SymbolEEENS5_12_GLOBAL__N_118SymbolByParentHashENS8_16SymbolByParentEqESaIS6_EE10find_largeINS8_20ParentNameFieldQueryEEENSC_8iteratorERKT_m.exit.i.i.i
 
 bb.n:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i14.i.i.i, %bb.l, %bb.k, %bb.j, %.lr.ph.i.i.i.i
@@ -2090,9 +2090,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i.i13.i.i: ; preds = %b
   br i1 %i.dq, label %.thread39.i.i.i, label %bb.t
 
 .thread39.i.i.i:                                  ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i.i13.i.i, %bb.s
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i) ]
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i, i64 %i.ap
   %i.ds = getelementptr inbounds nuw i8, ptr %.val15.i.i.i, i64 %i.ap
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i.i.i) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN6google8protobuf6SymbolEEENS5_12_GLOBAL__N_118SymbolByParentHashENS8_16SymbolByParentEqESaIS6_EE10find_largeINS8_15ParentNameQueryEEENSC_8iteratorERKT_m.exit.i.i
 
 bb.t:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i.i13.i.i, %_ZNK6google8protobuf6Symbol15parent_name_keyEv.exit.i.i.i
@@ -2495,9 +2495,9 @@ bb.bq:                                            ; preds = %bb.bs, %bb.bp
   br i1 %i.qo, label %.thread39.i.i.i.i, label %bb.br, !prof !322
 
 .thread39.i.i.i.i:                                ; preds = %.lr.ph.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i.i.i) ]
   %i.qp = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i.i, i64 %i.qi
   %i.qq = getelementptr inbounds nuw i8, ptr %.val6.i.i.i, i64 %i.qi
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i.i.i) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf15FieldDescriptorEEENS5_12_GLOBAL__N_116ParentNumberHashENSA_14ParentNumberEqESaIS8_EE10find_largeINSA_17ParentNumberQueryEEENSE_8iteratorERKT_m.exit.i.i.i
 
 bb.br:                                            ; preds = %.lr.ph.i.i.i.i
@@ -2900,9 +2900,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i12: ; preds = %bb.g
   br i1 %i.aq, label %.thread38.i, label %bb.h
 
 .thread38.i:                                      ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i12, %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i9) ]
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %.val15.i, i64 %i.ai
   %i.as = getelementptr inbounds nuw i8, ptr %.val.i9, i64 %i.ai
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i9) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf10DescriptorEEENS5_12_GLOBAL__N_121DescriptorsByNameHashIS6_EENSA_19DescriptorsByNameEqIS6_EESaIS8_EE10find_largeISt17basic_string_viewIcSt11char_traitsIcEEEENSG_8iteratorERKT_m.exit
 
 bb.h:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i12, %.lr.ph.i
@@ -3305,9 +3305,9 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.at, label %.thread39.i, label %bb.f, !prof !322
 
 .thread39.i:                                      ; preds = %.lr.ph.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %.val14.i, i64 %i.an
   %i.av = getelementptr inbounds nuw i8, ptr %.val6, i64 %i.an
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf19EnumValueDescriptorEEENS5_12_GLOBAL__N_116ParentNumberHashENSA_14ParentNumberEqESaIS8_EE10find_largeINSA_17ParentNumberQueryEEENSE_8iteratorERKT_m.exit
 
 bb.f:                                             ; preds = %.lr.ph.i

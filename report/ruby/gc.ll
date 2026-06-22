@@ -201,8 +201,8 @@ rb_darray_size.exit:                              ; preds = %bb.k, %heap_page_fr
   %i.ad = phi ptr [ %.pre, %heap_page_free.exit ], [ %i.k, %bb.k ] ; 4 uses
   %i.ae = phi i64 [ %i.w, %heap_page_free.exit ], [ %i.j, %bb.k ]
   %.1 = phi i64 [ %.0395063, %heap_page_free.exit ], [ %i.ac, %bb.k ] ; 2 uses
-  %1 = add nuw i64 %.05162, 1                     ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad) ]
+  %1 = add nuw i64 %.05162, 1                     ; 3 uses
   %i.af = load i64, ptr %i.ad, align 8, !tbaa !96
   %i.ag = icmp ult i64 %1, %i.af
   br i1 %i.ag, label %.lr.ph, label %rb_darray_size.exit.rb_darray_size.exit45.loopexit_crit_edge
