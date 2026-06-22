@@ -201,8 +201,9 @@ bb.b:                                             ; preds = %bb.c, %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = extractvalue { ptr, ptr } %i.a, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.d = extractvalue { ptr, ptr } %i.a, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c), "nonnull"(ptr %i.d) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.e = invoke noundef nonnull align 8 ptr @_RNvMNtCsjPG5xYjJYir_9aws_types10sdk_configNtB2_7Builder18set_identity_cache(ptr noalias noundef nonnull align 8 dereferenceable(416) %1, ptr noundef nonnull %i.c, ptr nonnull %i.d)
           to label %bb.d unwind label %bb.b       ; 0 uses
 
@@ -605,8 +606,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = extractvalue { ptr, ptr } %i.a, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.d = extractvalue { ptr, ptr } %i.a, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c), "nonnull"(ptr %i.d) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.f = load ptr, ptr %i.e, align 8, !noundef !22
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -1009,9 +1011,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultIBH_DNtNtCsjyY8HP3IvQ6_12object_store6upload15MultipartUploadEL_ENtB2n_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultIBH_DNtNtCsjyY8HP3IvQ6_12object_store6upload15MultipartUploadEL_ENtB2n_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -1056,9 +1058,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ListResultNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ListResultNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -1103,9 +1105,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -1150,9 +1152,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9GetResultNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9GetResultNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -1197,9 +1199,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9PutResultNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9PutResultNtB2g_5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -1244,9 +1246,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -1291,9 +1293,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -1696,9 +1698,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RNvXs8_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -2101,9 +2103,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.f, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs8CRAYtH5WmW_12futures_util6stream6stream4fuse4FuseINtNtBL_3map3MapINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB41_5ErrorENtNtB4_6marker4SendEL_EENCNvYNtNtCs9rVkZwOUgsI_13deltalake_aws7storage16S3StorageBackendNtB41_11ObjectStore13delete_stream0EEEB5n_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.h = load i64, ptr %i.g, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.e, i64 noundef range(i64 1, 536870913) %i.h) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs8CRAYtH5WmW_12futures_util6stream6stream4fuse4FuseINtNtBL_3map3MapINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB41_5ErrorENtNtB4_6marker4SendEL_EENCNvYNtNtCs9rVkZwOUgsI_13deltalake_aws7storage16S3StorageBackendNtB41_11ObjectStore13delete_stream0EEEB5n_.exit
 
@@ -2506,9 +2508,9 @@ bb.gk:                                            ; preds = %bb.gj, %bb.gi
   br i1 %i.mq, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i, label %bb.gl
 
 bb.gl:                                            ; preds = %bb.gk
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i128) ]
   %i.mr = getelementptr inbounds nuw i8, ptr %.val10.i, i64 16
   %i.ms = load i64, ptr %i.mr, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i128) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i128, i64 noundef range(i64 1, 0) %i.mp, i64 noundef range(i64 1, 536870913) %i.ms) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
 
@@ -2911,9 +2913,9 @@ bb.iw:                                            ; preds = %bb.iv, %bb.iu
   br i1 %i.rj, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.ix
 
 bb.ix:                                            ; preds = %bb.iw
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val74) ]
   %i.rk = getelementptr inbounds nuw i8, ptr %.val75, i64 16
   %i.rl = load i64, ptr %i.rk, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val74) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val74, i64 noundef range(i64 1, 0) %i.ri, i64 noundef range(i64 1, 536870913) %i.rl) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -3316,9 +3318,9 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.br, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_EECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.bs = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   %i.bt = load i64, ptr %i.bs, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.bq, i64 noundef range(i64 1, 536870913) %i.bt) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtCsaB04DkjCm5a_10aws_config4meta6region13ProvideRegionEL_EECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -3721,9 +3723,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -3789,9 +3791,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.h, label %common.ret, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -3845,9 +3847,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -3901,9 +3903,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -3957,9 +3959,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -4029,9 +4031,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.k, label %common.ret, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.m = load i64, ptr %i.l, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.j, i64 noundef range(i64 1, 536870913) %i.m) #27
   br label %common.ret
 
@@ -4085,9 +4087,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -4141,9 +4143,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -4197,9 +4199,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -4259,9 +4261,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.h, label %common.ret, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -4332,9 +4334,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.l, label %common.ret, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #27
   br label %common.ret
 
@@ -4405,9 +4407,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -4480,9 +4482,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %common.ret, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #27
   br label %common.ret
 
@@ -4525,9 +4527,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.v, label %common.ret, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %i.w = getelementptr inbounds nuw i8, ptr %.val4, i64 16
   %i.x = load i64, ptr %i.w, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3, i64 noundef range(i64 1, 0) %i.u, i64 noundef range(i64 1, 536870913) %i.x) #27
   br label %common.ret
 
@@ -4930,9 +4932,9 @@ bb.l:                                             ; preds = %bb.j
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs1gW4XV4gJGV_9http_body11combinators8box_body7BoxBodyNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB3a_4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit.sink.split.i.i: ; preds = %bb.k, %bb.g
   %.sink12.i.i = phi i64 [ %i.s, %bb.g ], [ %i.ab, %bb.k ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.ah = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 16
   %i.ai = load i64, ptr %i.ah, align 8, !range !162, !invariant.load !22, !noalias !1617
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef range(i64 1, 0) %.sink12.i.i, i64 noundef range(i64 1, 536870913) %i.ai) #27, !noalias !1617
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2DiVQAxFeQE_16aws_smithy_types4body5InnerECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -5335,9 +5337,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.j, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs9PsDcNHE0mC_16aws_smithy_async6future12now_or_later10NowOrLaterINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types6region6RegionEINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputB1Q_NtNtB4_6marker4SendEL_EEEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.k = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 16
   %i.l = load i64, ptr %i.k, align 8, !range !162, !invariant.load !22, !noalias !3012
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef range(i64 1, 0) %i.i, i64 noundef range(i64 1, 536870913) %i.l) #27, !noalias !3012
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs9PsDcNHE0mC_16aws_smithy_async6future12now_or_later10NowOrLaterINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types6region6RegionEINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputB1Q_NtNtB4_6marker4SendEL_EEEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -5740,9 +5742,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.w, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultIBX_DNtNtCsjyY8HP3IvQ6_12object_store6upload15MultipartUploadEL_ENtB2D_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.x = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.y = load i64, ptr %i.x, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.v, i64 noundef range(i64 1, 536870913) %i.y) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultIBX_DNtNtCsjyY8HP3IvQ6_12object_store6upload15MultipartUploadEL_ENtB2D_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -5918,9 +5920,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.ac, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultIBX_DNtNtCsjyY8HP3IvQ6_12object_store6upload15MultipartUploadEL_ENtB2D_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.ab, i64 noundef range(i64 1, 536870913) %i.ae) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultIBX_DNtNtCsjyY8HP3IvQ6_12object_store6upload15MultipartUploadEL_ENtB2D_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -6061,9 +6063,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.w, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ListResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.x = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.y = load i64, ptr %i.x, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.v, i64 noundef range(i64 1, 536870913) %i.y) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ListResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -6265,9 +6267,9 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %i.ai, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.val17, i64 16
   %i.ak = load i64, ptr %i.aj, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.ah, i64 noundef range(i64 1, 536870913) %i.ak) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -6396,9 +6398,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.w, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9GetResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.x = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.y = load i64, ptr %i.x, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.v, i64 noundef range(i64 1, 536870913) %i.y) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9GetResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -6538,9 +6540,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.ad, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9PutResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.af = load i64, ptr %i.ae, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.ac, i64 noundef range(i64 1, 536870913) %i.af) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9PutResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -6694,9 +6696,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.y, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.aa = load i64, ptr %i.z, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.x, i64 noundef range(i64 1, 536870913) %i.aa) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -6829,9 +6831,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.w, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.x = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.y = load i64, ptr %i.x, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.v, i64 noundef range(i64 1, 536870913) %i.y) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -6964,9 +6966,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.w, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.x = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.y = load i64, ptr %i.x, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.v, i64 noundef range(i64 1, 536870913) %i.y) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -7106,9 +7108,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.ac, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9GetResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.ab, i64 noundef range(i64 1, 536870913) %i.ae) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9GetResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -7262,9 +7264,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.ah, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9PutResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ai = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.aj = load i64, ptr %i.ai, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.ag, i64 noundef range(i64 1, 536870913) %i.aj) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtCsjyY8HP3IvQ6_12object_store9PutResultNtB2w_5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -7430,9 +7432,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.aa, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.ac = load i64, ptr %i.ab, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.z, i64 noundef range(i64 1, 536870913) %i.ac) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -7835,9 +7837,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.ac, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12) ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val12, i64 noundef range(i64 1, 0) %i.ab, i64 noundef range(i64 1, 536870913) %i.ae) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit
 
@@ -7972,9 +7974,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br i1 %i.bf, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit23, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8) ]
   %i.bg = getelementptr inbounds nuw i8, ptr %.val9, i64 16
   %i.bh = load i64, ptr %i.bg, align 8, !range !162, !invariant.load !22
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8, i64 noundef range(i64 1, 0) %i.be, i64 noundef range(i64 1, 536870913) %i.bh) #27
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs9rVkZwOUgsI_13deltalake_aws.exit23
 

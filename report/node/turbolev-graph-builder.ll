@@ -201,8 +201,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cl, ptr nonnull align 4 %i.bj, i64 %i.bm, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bh) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cl, ptr nonnull align 4 %i.bj, i64 %i.bm, i1 false)
   %.pre.i43 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread
 
@@ -605,11 +605,7 @@ bb.n:                                             ; preds = %bb.p, %bb.m
   %i.di = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i, i64 %i.dh
   %i.dj = load ptr, ptr %i.di, align 8
   %i.dk = icmp eq ptr %i.dj, %i.cf
-  br i1 %i.dk, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread50, label %bb.o, !prof !11
-
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread50: ; preds = %.lr.ph.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i) ]
-  br label %bb.x
+  br i1 %i.dk, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit, label %bb.o, !prof !11
 
 bb.o:                                             ; preds = %.lr.ph.i.i.i.i
   %i.dl = add i16 %.sroa.017.047.i.i.i.i, -1
@@ -627,6 +623,10 @@ bb.p:                                             ; preds = %._crit_edge.i.i.i.i
   %i.dp = add i64 %.sroa.13.0.i.i.i.i, 16         ; 2 uses
   %i.dq = add i64 %i.dp, %.sroa.6.0.i.i.i.i
   br label %bb.n, !llvm.loop !2606
+
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit: ; preds = %.lr.ph.i.i.i.i
+  %.not53 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, null
+  br i1 %.not53, label %bb.t, label %bb.x
 
 .thread52:                                        ; preds = %bb.l
   %.not.i.i.i.i.i.i.i12 = icmp ult i64 %i.ci, 131072
@@ -649,7 +649,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ds = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i2.i.i.i.i.i.i.i14, i64 %i.dr
   br label %bb.w
 
-bb.t:                                             ; preds = %._crit_edge.i.i.i.i
+bb.t:                                             ; preds = %._crit_edge.i.i.i.i, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit
   call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !2618
   br label %bb.u
 
@@ -721,10 +721,10 @@ _ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88intern
   %.pre78 = load ptr, ptr %1, align 8
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.l, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread50, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19
-  %.pre7981 = phi ptr [ %.pre7980, %bb.l ], [ %.pre7980, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread50 ], [ %.pre79, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19 ]
-  %i.eu = phi ptr [ %i.cd, %bb.l ], [ %i.cd, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread50 ], [ %.pre79, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19 ] ; 2 uses
-  %i.ev = phi ptr [ %i.ce, %bb.l ], [ %i.ce, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread50 ], [ %.pre78, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19 ] ; 2 uses
+bb.x:                                             ; preds = %bb.l, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19
+  %.pre7981 = phi ptr [ %.pre7980, %bb.l ], [ %.pre7980, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit ], [ %.pre79, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19 ]
+  %i.eu = phi ptr [ %i.cd, %bb.l ], [ %i.cd, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit ], [ %.pre79, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19 ] ; 2 uses
+  %i.ev = phi ptr [ %i.ce, %bb.l ], [ %i.ce, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit ], [ %.pre78, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit19 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #27
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   store ptr %i.ew, ptr %1, align 8
@@ -957,7 +957,7 @@ bb.d:                                             ; preds = %bb.f, %bb.c
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i, i64 %i.ag
   %i.ai = load ptr, ptr %i.ah, align 8
   %i.aj = icmp eq ptr %i.ai, %1
-  br i1 %i.aj, label %bb.g, label %bb.e, !prof !11
+  br i1 %i.aj, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit, label %bb.e, !prof !11
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i.i
   %i.ak = add i16 %.sroa.017.047.i.i.i.i, -1
@@ -976,8 +976,11 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ap = add i64 %i.ao, %.sroa.6.0.i.i.i.i
   br label %bb.d, !llvm.loop !2606
 
-bb.g:                                             ; preds = %.lr.ph.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i) ]
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit: ; preds = %.lr.ph.i.i.i.i
+  %.not = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, null
+  br i1 %.not, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread, label %bb.g
+
+bb.g:                                             ; preds = %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit
   tail call void @llvm.prefetch.p0(ptr nonnull %.sroa.0.0.copyload.i.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !2624
   br label %bb.h
 
@@ -1041,8 +1044,8 @@ _ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88intern
   %i.bq = load ptr, ptr %i.bp, align 8
   br label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread
 
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.b, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit
-  %.0 = phi ptr [ %i.bq, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit ], [ null, %bb.b ], [ null, %._crit_edge.i.i.i.i ]
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.b, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit
+  %.0 = phi ptr [ %i.bq, %_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEEixIS8_S9_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISH_EPT_RSN_EclL_ZSt7declvalIRSH_EDTcl9__declvalISN_ELi0EEEvEEEEERKSN_.exit ], [ null, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit ], [ null, %bb.b ], [ null, %._crit_edge.i.i.i.i ]
   ret ptr %.0
 }
 
@@ -1445,7 +1448,14 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 616
   %i.l = load i64, ptr %i.k, align 8
   %.not.i.i.i.i.i = icmp ult i64 %i.l, 131072
-  br i1 %.not.i.i.i.i.i, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit
+  br i1 %.not.i.i.i.i.i, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %5
+
+5:                                                ; preds = %bb.c
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 632
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %6, align 8
+  %7 = load i32, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, align 4
+  %8 = icmp eq i32 %7, %i.g
+  br i1 %8, label %bb.h, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread
 
 bb.d:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 624
@@ -1492,11 +1502,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   %i.al = getelementptr inbounds nuw [48 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i, i64 %i.ak
   %i.am = load i32, ptr %i.al, align 4
   %i.an = icmp eq i32 %i.am, %i.g
-  br i1 %i.an, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread34, label %bb.f, !prof !11
-
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread34: ; preds = %.lr.ph.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i) ]
-  br label %bb.h
+  br i1 %i.an, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit, label %bb.f, !prof !11
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i.i
   %i.ao = add i16 %.sroa.017.047.i.i.i.i, -1
@@ -1515,14 +1521,11 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   %i.at = add i64 %i.as, %.sroa.6.0.i.i.i.i
   br label %bb.e, !llvm.loop !2745
 
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit: ; preds = %bb.c
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 632
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %5, align 8
-  %6 = load i32, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, align 4
-  %i.au = icmp eq i32 %6, %i.g
-  br i1 %i.au, label %bb.h, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit: ; preds = %.lr.ph.i.i.i.i
+  %i.au = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, null
+  br i1 %i.au, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %bb.h
 
-bb.h:                                             ; preds = %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread34, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit
+bb.h:                                             ; preds = %5, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   store i32 %i.g, ptr %3, align 4
   %i.av = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEEixIS7_SI_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISQ_EPT_RSW_EclL_ZSt7declvalIRSQ_EDTcl9__declvalISW_ELi0EEEvEEEEEOS7_(ptr noundef nonnull align 8 dereferenceable(40) %i.h, ptr noundef nonnull align 4 dereferenceable(4) %3) ; 3 uses
@@ -1575,7 +1578,7 @@ bb.j:                                             ; preds = %.lr.ph, %bb.j
   %.not = icmp eq ptr %i.bo, %i.bc
   br i1 %.not, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %bb.j
 
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.j, %_ZNRSt8optionalIN2v88internal10ZoneVectorISt4pairINS1_8compiler10turboshaft16SnapshotTableKeyINS5_7OpIndexENS5_12VariableDataEEES7_EEEE5valueEv.exit, %bb.c, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit, %bb.a
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.j, %_ZNRSt8optionalIN2v88internal10ZoneVectorISt4pairINS1_8compiler10turboshaft16SnapshotTableKeyINS5_7OpIndexENS5_12VariableDataEEES7_EEEE5valueEv.exit, %bb.c, %5, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit, %bb.a
   ret i32 %i.e
 }
 
@@ -1978,8 +1981,8 @@ _ZNSt6vectorIN2v88internal8compiler10turboshaft26GraphBuildingNodeProcessor18Gen
   %i.jr = trunc nuw nsw i64 %indvars.iv252 to i32
   br label %.lr.ph234
 
-._crit_edge235:                                   ; preds = %bb.bf, %_ZN2v88internal8compiler10turboshaft17GeneratorAnalyzer13GetLoopHeaderEPKNS0_6maglev10BasicBlockE.exit, %._crit_edge.i.i.i.i.i, %_ZNSt6vectorIN2v88internal8compiler10turboshaft26GraphBuildingNodeProcessor18GeneratorSplitEdgeESaIS5_EE9push_backEOS5_.exit
-  %.065.lcssa = phi ptr [ %i.ie, %_ZNSt6vectorIN2v88internal8compiler10turboshaft26GraphBuildingNodeProcessor18GeneratorSplitEdgeESaIS5_EE9push_backEOS5_.exit ], [ %i.kf, %._crit_edge.i.i.i.i.i ], [ %i.kf, %_ZN2v88internal8compiler10turboshaft17GeneratorAnalyzer13GetLoopHeaderEPKNS0_6maglev10BasicBlockE.exit ], [ %i.kf, %bb.bf ]
+._crit_edge235:                                   ; preds = %bb.bf, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.i, %_ZN2v88internal8compiler10turboshaft17GeneratorAnalyzer13GetLoopHeaderEPKNS0_6maglev10BasicBlockE.exit, %._crit_edge.i.i.i.i.i, %_ZNSt6vectorIN2v88internal8compiler10turboshaft26GraphBuildingNodeProcessor18GeneratorSplitEdgeESaIS5_EE9push_backEOS5_.exit
+  %.065.lcssa = phi ptr [ %i.ie, %_ZNSt6vectorIN2v88internal8compiler10turboshaft26GraphBuildingNodeProcessor18GeneratorSplitEdgeESaIS5_EE9push_backEOS5_.exit ], [ %i.kf, %._crit_edge.i.i.i.i.i ], [ %i.kf, %_ZN2v88internal8compiler10turboshaft17GeneratorAnalyzer13GetLoopHeaderEPKNS0_6maglev10BasicBlockE.exit ], [ %i.kf, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.i ], [ %i.kf, %bb.bf ]
   %i.js = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %indvars.iv252 ; 3 uses
   store i8 0, ptr %i.js, align 8
   %.sroa.4174.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.js, i64 4
@@ -2013,7 +2016,7 @@ _ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_26BlockOr
   store i64 %i.kc, ptr %i.jv, align 8
   %i.kd = load ptr, ptr %i.kb, align 8
   %i.ke = getelementptr inbounds nuw [8 x i8], ptr %i.kd, i64 %i.ka
-  %i.kf = load ptr, ptr %i.ke, align 8            ; 13 uses
+  %i.kf = load ptr, ptr %i.ke, align 8            ; 14 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 44
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41) %i.kf, i8 0, i64 41, i1 false)
   store i32 -1, ptr %i.kg, align 4
@@ -2346,7 +2349,7 @@ bb.bh:                                            ; preds = %bb.bj, %bb.bg
   %i.ot = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i.i, i64 %i.os
   %i.ou = load ptr, ptr %i.ot, align 8
   %i.ov = icmp eq ptr %i.ou, %storemerge232
-  br i1 %i.ov, label %bb.bk, label %bb.bi, !prof !11
+  br i1 %i.ov, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.i, label %bb.bi, !prof !11
 
 bb.bi:                                            ; preds = %.lr.ph.i.i.i.i.i93
   %i.ow = add i16 %.sroa.017.047.i.i.i.i.i, -1
@@ -2365,8 +2368,11 @@ bb.bj:                                            ; preds = %._crit_edge.i.i.i.i
   %i.pb = add i64 %i.pa, %.sroa.6.0.i.i.i.i.i
   br label %bb.bh, !llvm.loop !2606
 
-bb.bk:                                            ; preds = %.lr.ph.i.i.i.i.i93
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i) ]
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.i: ; preds = %.lr.ph.i.i.i.i.i93
+  %.not.i96 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, null
+  br i1 %.not.i96, label %._crit_edge235, label %bb.bk
+
+bb.bk:                                            ; preds = %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE8containsIS8_EEbRKT_.exit.i
   call void @llvm.prefetch.p0(ptr nonnull %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !4009
   br label %bb.bl
 
