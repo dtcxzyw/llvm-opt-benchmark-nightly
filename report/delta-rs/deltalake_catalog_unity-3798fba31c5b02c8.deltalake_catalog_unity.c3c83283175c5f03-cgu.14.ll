@@ -201,8 +201,7 @@ bb.h:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !534
   %i.am = extractvalue { ptr, ptr } %i.ae, 0      ; 3 uses
   %i.an = extractvalue { ptr, ptr } %i.ae, 1      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am), "nonnull"(ptr %i.an) ]
   store i8 0, ptr %i.i, align 1
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 280
   store ptr %i.am, ptr %i.ao, align 8

@@ -201,8 +201,7 @@ _RNvYNvYeNtNtCs6Po7BT7Nknu_5alloc6borrow7ToOwned8to_ownedINtNtNtCsbvkFyIu7lgC_4c
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   tail call void @_RNvNvNtCs6Po7BT7Nknu_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull %.0.val, ptr noundef nonnull %.8.val)
   br label %bb.g
 
@@ -605,8 +604,7 @@ bb.at:                                            ; preds = %.loopexit33
   br i1 %i.ff, label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsgbCypRs12E4_4pyo35impl_16extract_argument31KeywordOnlyParameterDescriptionEIBX_INtNtBb_6option6OptionINtNtB1s_8instance8BorrowedNtNtNtB1s_5types3any5PyAnyEEEEINtB5_7ZipImplBW_B2H_E4nextCs7p2uQeJxui2_9deltalake.exit.lr.ph.i, label %.loopexit
 
 _RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsgbCypRs12E4_4pyo35impl_16extract_argument31KeywordOnlyParameterDescriptionEIBX_INtNtBb_6option6OptionINtNtB1s_8instance8BorrowedNtNtNtB1s_5types3any5PyAnyEEEEINtB5_7ZipImplBW_B2H_E4nextCs7p2uQeJxui2_9deltalake.exit.lr.ph.i: ; preds = %bb.at
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.56.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i), "nonnull"(ptr %.sroa.56.0.copyload.i) ]
   %i.fg = sub nuw i64 %.sroa.8.0.copyload.i, %.sroa.67.0.copyload.i
   %i.fh = freeze i64 %i.fg                        ; 2 uses
   %xtraiter = and i64 %i.fh, 1
@@ -1009,8 +1007,7 @@ bb.ar:                                            ; preds = %.loopexit41
   br i1 %i.ef, label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsgbCypRs12E4_4pyo35impl_16extract_argument31KeywordOnlyParameterDescriptionEIBX_INtNtBb_6option6OptionINtNtB1s_8instance8BorrowedNtNtNtB1s_5types3any5PyAnyEEEEINtB5_7ZipImplBW_B2H_E4nextCs7p2uQeJxui2_9deltalake.exit.lr.ph.i, label %.loopexit
 
 _RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCsgbCypRs12E4_4pyo35impl_16extract_argument31KeywordOnlyParameterDescriptionEIBX_INtNtBb_6option6OptionINtNtB1s_8instance8BorrowedNtNtNtB1s_5types3any5PyAnyEEEEINtB5_7ZipImplBW_B2H_E4nextCs7p2uQeJxui2_9deltalake.exit.lr.ph.i: ; preds = %bb.ar
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.56.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i), "nonnull"(ptr %.sroa.56.0.copyload.i) ]
   %i.eg = sub nuw i64 %.sroa.8.0.copyload.i, %.sroa.67.0.copyload.i
   %i.eh = freeze i64 %i.eg                        ; 2 uses
   %xtraiter = and i64 %i.eh, 1
@@ -1413,8 +1410,7 @@ bb.e:                                             ; preds = %bb.a
   %i.n = tail call { ptr, ptr } %i.m(ptr noundef nonnull %.sroa.01.0, ptr noundef nonnull %i.d, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @25) ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.n, 0        ; 3 uses
   %i.p = extractvalue { ptr, ptr } %i.n, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.o, ptr %i.a, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1817,14 +1813,13 @@ _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9All
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit: ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i, %bb.t
   %.not.i20 = icmp eq i64 %i.ae, 20
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 8 uses
   br i1 %.not.i20, label %bb.v, label %bb.aa
 
 bb.v:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit
   %i.au = extractelement <2 x ptr> %i.ag, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
   %i.av = extractelement <2 x ptr> %i.ag, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.av) ]
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au), "nonnull"(ptr %i.av) ]
   %i.aw = load i64, ptr %3, align 8, !range !37, !alias.scope !24412, !noundef !8
   %i.ax = icmp eq i64 %i.aw, -9223372036854775808
   br i1 %i.ax, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %bb.w
@@ -1870,19 +1865,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT
 
 bb.aa:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, i64 16, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
-  %i.bf = load i64, ptr %4, align 8, !range !37, !alias.scope !24424, !noundef !8
+  %i.bf = load i64, ptr %3, align 8, !range !37, !alias.scope !24424, !noundef !8
   %i.bg = icmp eq i64 %i.bf, -9223372036854775808
   br i1 %i.bg, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %4)
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %bb.ae unwind label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bh = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.val2.i.i23 = load i64, ptr %4, align 8, !alias.scope !24427 ; 2 uses
+  %.val2.i.i23 = load i64, ptr %3, align 8, !alias.scope !24427 ; 2 uses
   %i.bi = icmp eq i64 %.val2.i.i23, 0
   br i1 %i.bi, label %.body21, label %bb.ad
 
@@ -1894,7 +1888,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.body21
 
 bb.ae:                                            ; preds = %bb.ab
-  %.val.i.i26 = load i64, ptr %4, align 8, !alias.scope !24427 ; 2 uses
+  %.val.i.i26 = load i64, ptr %3, align 8, !alias.scope !24427 ; 2 uses
   %i.bl = icmp eq i64 %.val.i.i26, 0
   br i1 %i.bl, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit.sink.split
 
@@ -2297,14 +2291,13 @@ _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9All
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit: ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i, %bb.t
   %.not.i20 = icmp eq i64 %i.ac, 20
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 8 uses
   br i1 %.not.i20, label %bb.v, label %bb.aa
 
 bb.v:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit
   %i.as = extractelement <2 x ptr> %i.ae, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as) ]
   %i.at = extractelement <2 x ptr> %i.ae, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as), "nonnull"(ptr %i.at) ]
   %i.au = load i64, ptr %3, align 8, !range !37, !alias.scope !24622, !noundef !8
   %i.av = icmp eq i64 %i.au, -9223372036854775808
   br i1 %i.av, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %bb.w
@@ -2350,19 +2343,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT
 
 bb.aa:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, i64 16, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
-  %i.bd = load i64, ptr %4, align 8, !range !37, !alias.scope !24634, !noundef !8
+  %i.bd = load i64, ptr %3, align 8, !range !37, !alias.scope !24634, !noundef !8
   %i.be = icmp eq i64 %i.bd, -9223372036854775808
   br i1 %i.be, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %4)
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %bb.ae unwind label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bf = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.val2.i.i23 = load i64, ptr %4, align 8, !alias.scope !24637 ; 2 uses
+  %.val2.i.i23 = load i64, ptr %3, align 8, !alias.scope !24637 ; 2 uses
   %i.bg = icmp eq i64 %.val2.i.i23, 0
   br i1 %i.bg, label %.body21, label %bb.ad
 
@@ -2374,7 +2366,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.body21
 
 bb.ae:                                            ; preds = %bb.ab
-  %.val.i.i26 = load i64, ptr %4, align 8, !alias.scope !24637 ; 2 uses
+  %.val.i.i26 = load i64, ptr %3, align 8, !alias.scope !24637 ; 2 uses
   %i.bj = icmp eq i64 %.val.i.i26, 0
   br i1 %i.bj, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit.sink.split
 
@@ -2777,14 +2769,13 @@ _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9All
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit: ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i, %bb.t
   %.not.i17 = icmp eq i64 %i.ah, 20
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 8 uses
   br i1 %.not.i17, label %bb.v, label %bb.aa
 
 bb.v:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit
   %i.ax = extractelement <2 x ptr> %i.aj, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ax) ]
   %i.ay = extractelement <2 x ptr> %i.aj, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ay) ]
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ax), "nonnull"(ptr %i.ay) ]
   %i.az = load i64, ptr %3, align 8, !range !37, !alias.scope !24822, !noundef !8
   %i.ba = icmp eq i64 %i.az, -9223372036854775808
   br i1 %i.ba, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %bb.w
@@ -2830,19 +2821,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT
 
 bb.aa:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs7p2uQeJxui2_9deltalake.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, i64 16, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
-  %i.bi = load i64, ptr %4, align 8, !range !37, !alias.scope !24834, !noundef !8
+  %i.bi = load i64, ptr %3, align 8, !range !37, !alias.scope !24834, !noundef !8
   %i.bj = icmp eq i64 %i.bi, -9223372036854775808
   br i1 %i.bj, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %4)
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %bb.ae unwind label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bk = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.val2.i.i20 = load i64, ptr %4, align 8, !alias.scope !24837 ; 2 uses
+  %.val2.i.i20 = load i64, ptr %3, align 8, !alias.scope !24837 ; 2 uses
   %i.bl = icmp eq i64 %.val2.i.i20, 0
   br i1 %i.bl, label %.body18, label %bb.ad
 
@@ -2854,7 +2844,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.body18
 
 bb.ae:                                            ; preds = %bb.ab
-  %.val.i.i23 = load i64, ptr %4, align 8, !alias.scope !24837 ; 2 uses
+  %.val.i.i23 = load i64, ptr %3, align 8, !alias.scope !24837 ; 2 uses
   %i.bo = icmp eq i64 %.val.i.i23, 0
   br i1 %i.bo, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECs7p2uQeJxui2_9deltalake.exit.sink.split
 
