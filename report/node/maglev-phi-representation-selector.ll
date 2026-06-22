@@ -201,8 +201,8 @@ _ZN2v88internal4Zone13AllocateArrayIPNS0_6maglev9ValueNodeEA_S5_EEPT_m.exit.i.i.
   br i1 %.not26.i.i.i, label %_ZN2v88internal10ZoneVectorIPNS0_6maglev9ValueNodeEE19PrepareForInsertionEPKS4_mPm.exit.thread.i.i, label %bb.am
 
 bb.am:                                            ; preds = %_ZN2v88internal4Zone13AllocateArrayIPNS0_6maglev9ValueNodeEA_S5_EEPT_m.exit.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.jm, ptr nonnull align 8 %i.im, i64 %i.ip, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.il) ]
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.jm, ptr nonnull align 8 %i.im, i64 %i.ip, i1 false)
   %.pre.i39.i.i = load ptr, ptr %i.aa, align 8
   br label %_ZN2v88internal10ZoneVectorIPNS0_6maglev9ValueNodeEE19PrepareForInsertionEPKS4_mPm.exit.thread.i.i
 
@@ -605,7 +605,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load i64, ptr %i.j, align 8
@@ -653,7 +653,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.ah
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIjN2v88internal8compiler10turboshaft13SnapshotTableIPNS4_6maglev9ValueNodeENS6_9NoKeyDataEE8SnapshotEEENS_13hash_internal4HashIjEESt8equal_toIjESaISt4pairIKjSD_EEE10find_largeIjEENSO_8iteratorERSL_m.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i

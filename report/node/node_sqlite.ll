@@ -201,7 +201,7 @@ bb.a:
   %2 = alloca %"class.v8::Local.425", align 8     ; 4 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %4 = alloca %"class.node::Utf8Value", align 8   ; 6 uses
-  %5 = alloca %"class.node::BaseObjectPtrImpl.538", align 8 ; 12 uses
+  %5 = alloca %"class.node::BaseObjectPtrImpl.538", align 8 ; 11 uses
   %i.c = alloca ptr, align 8                      ; 8 uses
   %6 = alloca %"class.node::BaseObjectPtrImpl.538", align 8 ; 8 uses
   %7 = alloca %"class.node::BaseObjectPtrImpl.480", align 8 ; 5 uses
@@ -509,7 +509,6 @@ bb.aa:                                            ; preds = %bb.z
 
 _ZN4node17BaseObjectPtrImplINS_6sqlite13StatementSyncELb0EED2Ev.exit.i: ; preds = %bb.aa, %bb.z
   %i.dv = phi ptr [ %i.ds, %bb.z ], [ %.pr.i, %bb.aa ] ; 5 uses
-  store ptr null, ptr %5, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dv) ]
   store ptr %i.dv, ptr %5, align 8
   %i.dw = call noundef ptr @_ZN4node10BaseObject12pointer_dataEv(ptr noundef nonnull align 8 dereferenceable(48) %i.dv) #30

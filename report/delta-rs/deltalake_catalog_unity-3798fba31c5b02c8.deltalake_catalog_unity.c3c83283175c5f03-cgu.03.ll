@@ -201,9 +201,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.n, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i
 
 _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i: ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   %i.o = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i, i64 16
   %i.p = load i64, ptr %i.o, align 8, !range !180, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef %i.m, i64 noundef range(i64 1, -9223372036854775807) %i.p) #26
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i
 
@@ -606,13 +606,12 @@ bb.bg:                                            ; preds = %bb.ba
 .noexc128.i:                                      ; preds = %.loopexit.i.i.i
   %i.gi = load i64, ptr %i.aa, align 8, !range !601, !noalias !791, !noundef !3 ; 2 uses
   %i.gj = icmp eq i64 %i.gi, 2
-  %i.gk = load ptr, ptr %i.fk, align 8, !noalias !791 ; 15 uses
+  %i.gk = load ptr, ptr %i.fk, align 8, !noalias !791, !nonnull !3, !noundef !3 ; 13 uses
   br i1 %i.gj, label %bb.bq, label %bb.bh
 
 bb.bh:                                            ; preds = %.noexc128.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !791 ; 2 uses
   %i.gl = trunc nuw i64 %i.gi to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gk) ]
   br i1 %i.gl, label %bb.bi, label %bb.bm
 
 bb.bi:                                            ; preds = %bb.bh
@@ -705,7 +704,6 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %.noexc128.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !791
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gk) ]
   br label %.loopexit234.i
 
 .body187.i:                                       ; preds = %bb.fm, %bb.fk, %.body.i, %.loopexit.split-lp.loopexit.split-lp.i, %.loopexit.split-lp.loopexit.i, %.loopexit.i50
@@ -1108,13 +1106,12 @@ bb.am:                                            ; preds = %bb.al
 .noexc70.i:                                       ; preds = %bb.am
   %i.dh = load i64, ptr %i.f, align 8, !range !601, !noalias !1271, !noundef !3 ; 2 uses
   %i.di = icmp eq i64 %i.dh, 2
-  %i.dj = load ptr, ptr %i.cu, align 8, !noalias !1271 ; 10 uses
+  %i.dj = load ptr, ptr %i.cu, align 8, !noalias !1271, !nonnull !3, !noundef !3 ; 9 uses
   br i1 %i.di, label %.loopexit432, label %bb.an
 
 bb.an:                                            ; preds = %.noexc70.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1271 ; 2 uses
   %i.dk = trunc nuw i64 %i.dh to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dj) ]
   br i1 %i.dk, label %bb.ao, label %bb.ar
 
 bb.ao:                                            ; preds = %bb.an
@@ -1182,9 +1179,8 @@ bb.at:                                            ; preds = %bb.ar
   br i1 %i.ey, label %bb.av, label %bb.aw
 
 .loopexit432:                                     ; preds = %.noexc70.i.1, %.noexc70.i
-  %.lcssa381 = phi ptr [ %i.dj, %.noexc70.i ], [ %i.hc, %.noexc70.i.1 ] ; 2 uses
+  %.lcssa381 = phi ptr [ %i.dj, %.noexc70.i ], [ %i.hc, %.noexc70.i.1 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1271
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.lcssa381) ]
   br label %.loopexit
 
 .body83.i:                                        ; preds = %.loopexit.i43.loopexit.split-lp, %.loopexit.i43.loopexit.loopexit.split-lp, %.loopexit.i43.loopexit.loopexit, %bb.co, %bb.cl, %.body.i, %.loopexit.split-lp.i
@@ -1491,13 +1487,12 @@ bb.bm:                                            ; preds = %bb.bl
 .noexc70.i.1:                                     ; preds = %bb.bm
   %i.ha = load i64, ptr %i.f, align 8, !range !601, !noalias !1343, !noundef !3 ; 2 uses
   %i.hb = icmp eq i64 %i.ha, 2
-  %i.hc = load ptr, ptr %i.cu, align 8, !noalias !1343 ; 10 uses
+  %i.hc = load ptr, ptr %i.cu, align 8, !noalias !1343, !nonnull !3, !noundef !3 ; 9 uses
   br i1 %i.hb, label %.loopexit432, label %bb.bn
 
 bb.bn:                                            ; preds = %.noexc70.i.1
   %.sroa.4.0.copyload.i.i.i.i.i.i.i.1 = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1343 ; 2 uses
   %i.hd = trunc nuw i64 %i.ha to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.hc) ]
   br i1 %i.hd, label %bb.br, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
@@ -1900,13 +1895,12 @@ bb.am:                                            ; preds = %bb.al
 .noexc62.i:                                       ; preds = %bb.am
   %i.dh = load i64, ptr %i.f, align 8, !range !601, !noalias !1445, !noundef !3 ; 2 uses
   %i.di = icmp eq i64 %i.dh, 2
-  %i.dj = load ptr, ptr %i.cu, align 8, !noalias !1445 ; 10 uses
+  %i.dj = load ptr, ptr %i.cu, align 8, !noalias !1445, !nonnull !3, !noundef !3 ; 9 uses
   br i1 %i.di, label %.loopexit432, label %bb.an
 
 bb.an:                                            ; preds = %.noexc62.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1445 ; 2 uses
   %i.dk = trunc nuw i64 %i.dh to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dj) ]
   br i1 %i.dk, label %bb.ao, label %bb.ar
 
 bb.ao:                                            ; preds = %bb.an
@@ -1974,9 +1968,8 @@ bb.at:                                            ; preds = %bb.ar
   br i1 %i.ey, label %bb.av, label %bb.aw
 
 .loopexit432:                                     ; preds = %.noexc62.i.1, %.noexc62.i
-  %.lcssa381 = phi ptr [ %i.dj, %.noexc62.i ], [ %i.hc, %.noexc62.i.1 ] ; 2 uses
+  %.lcssa381 = phi ptr [ %i.dj, %.noexc62.i ], [ %i.hc, %.noexc62.i.1 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1445
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.lcssa381) ]
   br label %.loopexit
 
 .loopexit.i43:                                    ; preds = %.loopexit.i43.loopexit.split-lp, %.loopexit.i43.loopexit.loopexit.split-lp, %.loopexit.i43.loopexit.loopexit, %bb.cn, %.body.i, %.loopexit.split-lp.i
@@ -2283,13 +2276,12 @@ bb.bm:                                            ; preds = %bb.bl
 .noexc62.i.1:                                     ; preds = %bb.bm
   %i.ha = load i64, ptr %i.f, align 8, !range !601, !noalias !1517, !noundef !3 ; 2 uses
   %i.hb = icmp eq i64 %i.ha, 2
-  %i.hc = load ptr, ptr %i.cu, align 8, !noalias !1517 ; 10 uses
+  %i.hc = load ptr, ptr %i.cu, align 8, !noalias !1517, !nonnull !3, !noundef !3 ; 9 uses
   br i1 %i.hb, label %.loopexit432, label %bb.bn
 
 bb.bn:                                            ; preds = %.noexc62.i.1
   %.sroa.4.0.copyload.i.i.i.i.i.i.i.1 = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1517 ; 2 uses
   %i.hd = trunc nuw i64 %i.ha to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.hc) ]
   br i1 %i.hd, label %bb.br, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
@@ -2692,13 +2684,12 @@ bb.ax:                                            ; preds = %bb.aw
 .noexc158.i:                                      ; preds = %bb.ax
   %i.ei = load i64, ptr %i.h, align 8, !range !601, !noalias !1632, !noundef !3 ; 2 uses
   %i.ej = icmp eq i64 %i.ei, 2
-  %i.ek = load ptr, ptr %i.dv, align 8, !noalias !1632 ; 13 uses
+  %i.ek = load ptr, ptr %i.dv, align 8, !noalias !1632, !nonnull !3, !noundef !3 ; 11 uses
   br i1 %i.ej, label %bb.bh, label %bb.ay
 
 bb.ay:                                            ; preds = %.noexc158.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !1632 ; 2 uses
   %i.el = trunc nuw i64 %i.ei to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ek) ]
   br i1 %i.el, label %bb.az, label %bb.bd
 
 bb.az:                                            ; preds = %bb.ay
@@ -2783,7 +2774,6 @@ bb.bg:                                            ; preds = %bb.bd
 
 bb.bh:                                            ; preds = %.noexc158.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1632
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ek) ]
   br label %.loopexit
 
 .body193.i:                                       ; preds = %bb.dh, %bb.da, %.body174.i, %.body.i50, %.loopexit.split-lp.i, %.loopexit.i42
@@ -3186,10 +3176,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvXsh_NtCseqDwI8vvjGQ_10serde_json2deINtB6_6MapKeyNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer15deserialize_anyNtNtNtNtCs6sYutav3ODB_5serde7private2de7content14ContentVisitorECsgO8S5jLFugx_23deltalake_catalog_unity.exit
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1757 ; 2 uses
   %i.l = trunc nuw i64 %i.g to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -3592,10 +3582,10 @@ bb.ao:                                            ; preds = %bb.af
   br label %bb.ak
 
 bb.ap:                                            ; preds = %bb.af
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1973 ; 2 uses
   %i.cr = trunc nuw i64 %i.by to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
   br i1 %i.cr, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
@@ -3998,6 +3988,7 @@ bb.a:
   br i1 %i.b, label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjENtNtCs6Po7BT7Nknu_5alloc5alloc6GlobalECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.c = shl i64 %.val1, 4                        ; 2 uses
   %i.d = add i64 %i.c, 16                         ; 2 uses
   %i.e = add i64 %.val1, 17
@@ -4006,7 +3997,6 @@ _RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.h = icmp ult i64 %i.f, 9223372036854775793
   tail call void @llvm.assume(i1 %i.g)
   tail call void @llvm.assume(i1 %i.h)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.i = icmp eq i64 %i.f, 0
   br i1 %i.i, label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjENtNtCs6Po7BT7Nknu_5alloc5alloc6GlobalECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %bb.b
 
@@ -4094,9 +4084,9 @@ bb.f:                                             ; preds = %bb.e, %_RINvMsi_NtC
   br i1 %i.ad, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtB4_3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs4j34XAPZOn0_4http10extensions8AnyCloneNtNtB4_6marker4SyncNtB2j_4SendEL_EEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i
 
 _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i: ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.val5.i.i, i64 16
   %i.af = load i64, ptr %i.ae, align 8, !range !180, !invariant.load !3, !noalias !2988
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef %i.ac, i64 noundef range(i64 1, -9223372036854775807) %i.af) #26, !noalias !2988
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtB4_3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs4j34XAPZOn0_4http10extensions8AnyCloneNtNtB4_6marker4SyncNtB2j_4SendEL_EEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i
 

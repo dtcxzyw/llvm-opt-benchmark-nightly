@@ -201,9 +201,8 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.a = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc11impl_uniqIDE, i64 0) #34 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.b = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc11impl_uniqIDE, i64 0) #34 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !903
@@ -220,9 +219,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.l = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc7impl_IDE, i64 0) #34 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.m = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc7impl_IDE, i64 0) #34 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -239,9 +237,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.d:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.w = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc8impl_INTE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.x = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc8impl_INTE, i64 0) #34 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.z = load i32, ptr %i.y, align 8, !tbaa !907
@@ -254,9 +251,8 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.e:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ae = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc11impl_STRINGE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.af = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc11impl_STRINGE, i64 0) #34 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !909
@@ -269,9 +265,8 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.f:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.am = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc22impl_phylumdeclarationE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.an = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc22impl_phylumdeclarationE, i64 0) #34 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !911
@@ -284,20 +279,18 @@ bb.f:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.au = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc19impl_storageclassesE, i64 0) #34
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !912
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ax = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc19impl_storageclassesE, i64 0) #34
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   store ptr %i.aw, ptr %i.ay, align 8, !tbaa !912
   br label %bb.am
 
 bb.h:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.az = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_alternativeE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ba = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_alternativeE, i64 0) #34 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
@@ -310,20 +303,18 @@ bb.h:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.i:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.bh = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc14impl_argumentsE, i64 0) #34
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bj = load i32, ptr %i.bi, align 8, !tbaa !913
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.bk = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc14impl_argumentsE, i64 0) #34
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store i32 %i.bj, ptr %i.bl, align 8, !tbaa !913
   br label %bb.am
 
 bb.j:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.bm = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_CexpressionE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.bn = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_CexpressionE, i64 0) #34 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   %i.bp = load i32, ptr %i.bo, align 8, !tbaa !914
@@ -336,20 +327,18 @@ bb.j:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.k:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.bu = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_idCexpressionE, i64 0) #34
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !916
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.bx = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_idCexpressionE, i64 0) #34
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store ptr %i.bw, ptr %i.by, align 8, !tbaa !916
   br label %bb.am
 
 bb.l:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.bz = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_includefileE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ca = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_includefileE, i64 0) #34 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   %i.cc = load i32, ptr %i.cb, align 8, !tbaa !917
@@ -361,9 +350,8 @@ bb.l:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.m:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.cg = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc23impl_includedeclarationE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ch = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc23impl_includedeclarationE, i64 0) #34 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   %i.cj = load i32, ptr %i.ci, align 8, !tbaa !920
@@ -376,9 +364,8 @@ bb.m:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.n:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.co = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_patternchainsE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.cp = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_patternchainsE, i64 0) #34 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 8
   %i.cr = load i32, ptr %i.cq, align 8, !tbaa !922
@@ -391,9 +378,8 @@ bb.n:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.o:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.cw = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc17impl_patternchainE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.cx = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc17impl_patternchainE, i64 0) #34 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   %i.cz = load i32, ptr %i.cy, align 8, !tbaa !924
@@ -406,9 +392,8 @@ bb.o:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.p:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.de = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc21impl_patternchainitemE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.df = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc21impl_patternchainitemE, i64 0) #34 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   %i.dh = load i32, ptr %i.dg, align 8, !tbaa !926
@@ -421,9 +406,8 @@ bb.p:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.q:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.dm = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc19impl_outmostpatternE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.dn = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc19impl_outmostpatternE, i64 0) #34 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !927
@@ -436,9 +420,8 @@ bb.q:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.r:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.du = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc9impl_termE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.dv = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc9impl_termE, i64 0) #34 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   %i.dx = load i32, ptr %i.dw, align 8, !tbaa !928
@@ -451,20 +434,18 @@ bb.r:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.s:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ec = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc11impl_fnfileE, i64 0) #34
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 8
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !930
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ef = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc11impl_fnfileE, i64 0) #34
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   store ptr %i.ee, ptr %i.eg, align 8, !tbaa !930
   br label %bb.am
 
 bb.t:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.eh = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_fndeclarationE, i64 0) #34 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ei = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_fndeclarationE, i64 0) #34 ; 4 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !931
@@ -485,9 +466,8 @@ bb.t:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.u:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ev = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc10impl_CtextE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ew = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc10impl_CtextE, i64 0) #34 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
   %i.ey = load i32, ptr %i.ex, align 8, !tbaa !935
@@ -500,9 +480,8 @@ bb.u:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.v:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.fd = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc15impl_Ctext_elemE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.fe = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc15impl_Ctext_elemE, i64 0) #34 ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
   %i.fg = load i32, ptr %i.ff, align 8, !tbaa !937
@@ -515,9 +494,8 @@ bb.v:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.w:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.fl = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_foreach_afterE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.fm = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_foreach_afterE, i64 0) #34 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fl, i64 8
   %i.fo = load i32, ptr %i.fn, align 8, !tbaa !939
@@ -530,9 +508,8 @@ bb.w:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.x:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ft = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc20impl_withexpressionsE, i64 0) #34 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.fu = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc20impl_withexpressionsE, i64 0) #34 ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !941
@@ -549,9 +526,8 @@ bb.x:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.y:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ge = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc19impl_withexpressionE, i64 0) #34 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.gf = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc19impl_withexpressionE, i64 0) #34 ; 3 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %i.ge, i64 8
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !944
@@ -568,64 +544,58 @@ bb.y:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.z:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.gp = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc14impl_withcasesE, i64 0) #34
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 8
   %i.gr = load ptr, ptr %i.gq, align 8, !tbaa !947
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.gs = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc14impl_withcasesE, i64 0) #34
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 8
   store ptr %i.gr, ptr %i.gt, align 8, !tbaa !947
   br label %bb.am
 
 bb.aa:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.gu = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc13impl_withcaseE, i64 0) #34
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 8
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !948
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.gx = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc13impl_withcaseE, i64 0) #34
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gx, i64 8
   store ptr %i.gw, ptr %i.gy, align 8, !tbaa !948
   br label %bb.am
 
 bb.ab:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.gz = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc23impl_unparsedeclarationE, i64 0) #34
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 8
   %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !949
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.hc = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc23impl_unparsedeclarationE, i64 0) #34
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 8
   store ptr %i.hb, ptr %i.hd, align 8, !tbaa !949
   br label %bb.am
 
 bb.ac:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.he = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc14impl_viewnamesE, i64 0) #34
   %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 8
   %i.hg = load i8, ptr %i.hf, align 8, !tbaa !950, !range !35, !noundef !36
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.hh = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc14impl_viewnamesE, i64 0) #34
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 8
   store i8 %i.hg, ptr %i.hi, align 8, !tbaa !950
   br label %bb.am
 
 bb.ad:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.hj = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_unparseitemE, i64 0) #34
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 8
   %i.hl = load i32, ptr %i.hk, align 8, !tbaa !951
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.hm = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc16impl_unparseitemE, i64 0) #34
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 8
   store i32 %i.hl, ptr %i.hn, align 8, !tbaa !951
   br label %bb.am
 
 bb.ae:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ho = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc13impl_filelineE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.hp = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc13impl_filelineE, i64 0) #34 ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.ho, i64 8
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !952
@@ -638,9 +608,8 @@ bb.ae:                                            ; preds = %bb.a
   br label %bb.am
 
 bb.af:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.hw = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc31impl_elem_patternrepresentationE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.hx = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc31impl_elem_patternrepresentationE, i64 0) #34 ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hw, i64 8
   %i.hz = load i32, ptr %i.hy, align 8, !tbaa !955
@@ -653,9 +622,8 @@ bb.af:                                            ; preds = %bb.a
   br label %bb.am
 
 bb.ag:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ie = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc9impl_pathE, i64 0) #34
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.if = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc9impl_pathE, i64 0) #34
   %i.ig = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   %i.ih = getelementptr inbounds nuw i8, ptr %i.if, i64 8
@@ -664,9 +632,8 @@ bb.ag:                                            ; preds = %bb.a
   br label %bb.am
 
 bb.ah:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ij = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc21impl_ac_operator_nameE, i64 0) #34 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ik = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc21impl_ac_operator_nameE, i64 0) #34 ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %i.ij, i64 8
   %i.im = load i32, ptr %i.il, align 8, !tbaa !956
@@ -679,44 +646,40 @@ bb.ah:                                            ; preds = %bb.a
   br label %bb.am
 
 bb.ai:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.ir = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc27impl_addedphylumdeclarationE, i64 0) #34
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 8
   %i.it = load i8, ptr %i.is, align 8, !tbaa !958, !range !35, !noundef !36
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.iu = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc27impl_addedphylumdeclarationE, i64 0) #34
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iu, i64 8
   store i8 %i.it, ptr %i.iv, align 8, !tbaa !958
   br label %bb.am
 
 bb.aj:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.iw = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc29impl_countedphylumdeclarationE, i64 0) #34
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 8
   %i.iy = load i32, ptr %i.ix, align 8, !tbaa !959
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.iz = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc29impl_countedphylumdeclarationE, i64 0) #34
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 8
   store i32 %i.iy, ptr %i.ja, align 8, !tbaa !959
   br label %bb.am
 
 bb.ak:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.jb = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc13impl_charrunsE, i64 0) #34
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   %i.jd = load i32, ptr %i.jc, align 8, !tbaa !960
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.je = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc13impl_charrunsE, i64 0) #34
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 8
   store i32 %i.jd, ptr %i.jf, align 8, !tbaa !960
   br label %bb.am
 
 bb.al:                                            ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.jg = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_bindingidmarkE, i64 0) #34
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 8
   %i.ji = load i8, ptr %i.jh, align 8, !tbaa !962, !range !35, !noundef !36
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.jj = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN2kc20impl_abstract_phylumE, ptr nonnull @_ZTIN2kc18impl_bindingidmarkE, i64 0) #34
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 8
   store i8 %i.ji, ptr %i.jk, align 8, !tbaa !962
