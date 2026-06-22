@@ -201,8 +201,8 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %6 = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.v)
   call void @llvm.assume(i1 true) [ "align"(ptr %.3.i.i, i64 8), "align"(ptr %1, i64 8) ]
+  %6 = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.v)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.3.i.i, ptr nonnull readonly align 8 %1, i64 %6, i1 false)
   tail call void @mi_free(ptr noundef nonnull %1) #8
   br label %mi_heap_malloc_zero_aligned_at.exit

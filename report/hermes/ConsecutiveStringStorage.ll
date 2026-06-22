@@ -201,14 +201,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.au = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ak, i64 %i.au ; 3 uses
-  %next.gep50 = getelementptr i8, ptr %0, i64 %i.au ; 2 uses
-  %i.av = getelementptr i8, ptr %next.gep50, i64 16
-  %wide.load = load <8 x i16>, ptr %next.gep50, align 2, !tbaa !61
-  %wide.load51.a = load <8 x i16>, ptr %i.av, align 2, !tbaa !61
   call void @llvm.assume(i1 true) [ "align"(ptr %next.gep, i64 2) ]
+  %i.av = getelementptr i8, ptr %0, i64 %i.au     ; 2 uses
+  %3 = getelementptr i8, ptr %i.av, i64 16
+  %wide.load51.a = load <8 x i16>, ptr %i.av, align 2, !tbaa !61
+  %wide.load51 = load <8 x i16>, ptr %3, align 2, !tbaa !61
   %i.aw = getelementptr i8, ptr %next.gep, i64 16
-  store <8 x i16> %wide.load, ptr %next.gep, align 2
-  store <8 x i16> %wide.load51.a, ptr %i.aw, align 2
+  store <8 x i16> %wide.load51.a, ptr %next.gep, align 2
+  store <8 x i16> %wide.load51, ptr %i.aw, align 2
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ax = icmp eq i64 %index.next, %n.vec
   br i1 %i.ax, label %middle.block, label %vector.body, !llvm.loop !349
@@ -233,9 +233,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index55 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next62, %vec.epilog.vector.body ] ; 2 uses
   %i.bb = shl i64 %index55, 1                     ; 2 uses
   %next.gep56 = getelementptr i8, ptr %i.ak, i64 %i.bb ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %next.gep56, i64 2) ]
   %next.gep60 = getelementptr i8, ptr %0, i64 %i.bb
   %wide.load61 = load <4 x i16>, ptr %next.gep60, align 2, !tbaa !61
-  call void @llvm.assume(i1 true) [ "align"(ptr %next.gep56, i64 2) ]
   store <4 x i16> %wide.load61, ptr %next.gep56, align 2
   %index.next62 = add nuw i64 %index55, 4         ; 2 uses
   %i.bc = icmp eq i64 %index.next62, %n.vec54
@@ -253,9 +253,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.01727 = phi ptr [ %i.bd, %.lr.ph ], [ %.01727.ph, %.lr.ph.preheader ] ; 3 uses
   %.01826 = phi ptr [ %i.be, %.lr.ph ], [ %.01826.ph, %.lr.ph.preheader ] ; 2 uses
-  %3 = load i16, ptr %.01826, align 2, !tbaa !61
   call void @llvm.assume(i1 true) [ "align"(ptr %.01727, i64 2) ]
-  store i16 %3, ptr %.01727, align 2
+  %4 = load i16, ptr %.01826, align 2, !tbaa !61
+  store i16 %4, ptr %.01727, align 2
   %i.bd = getelementptr inbounds nuw i8, ptr %.01727, i64 2
   %i.be = getelementptr inbounds nuw i8, ptr %.01826, i64 2 ; 2 uses
   %.not19 = icmp eq ptr %i.be, %i.aj

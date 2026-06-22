@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 424
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.ac, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.ac, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 416
   %i.ae = load i64, ptr %i.ad, align 8
@@ -248,7 +248,6 @@ bb.f:                                             ; preds = %bb.h, %bb.e
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.ba
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_8BaseDataEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_S8_EEEE10find_largeIS7_EENSK_8iteratorERSH_m.exit.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
@@ -651,7 +650,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.j, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.j, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.l = load i64, ptr %i.k, align 8
@@ -698,7 +697,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i.i:                                  ; preds = %.lr.ph.i.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %i.ah
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i) ]
   br label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyIbNS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SA_EEEE4findIS7_EENSM_14const_iteratorERSJ_.exit
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -857,7 +855,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.k = load i64, ptr %i.j, align 8
@@ -904,7 +902,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i.i:                                  ; preds = %.lr.ph.i.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %i.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyIbNS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SA_EEEE10find_largeIS7_EENSM_8iteratorERSJ_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1174,7 +1171,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.k = load i64, ptr %i.j, align 8
@@ -1221,7 +1218,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i.i:                                  ; preds = %.lr.ph.i.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %i.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS6_12MapMaskAndOrENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SB_EEEE10find_largeIS7_EENSN_8iteratorERSK_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1485,7 +1481,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.k = load i64, ptr %i.j, align 8
@@ -1532,7 +1528,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i.i:                                  ; preds = %.lr.ph.i.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %i.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyIbNS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SA_EEEE10find_largeIS7_EENSM_8iteratorERSJ_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1648,7 +1643,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 464
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.n, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.n, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.p = load i64, ptr %i.o, align 8
@@ -1695,7 +1690,6 @@ bb.g:                                             ; preds = %bb.i, %bb.f
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.al
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIiN2v84base18DoublyThreadedListINS3_8internal8compiler10turboshaft16SnapshotTableKeyINS8_7OpIndexENS8_7KeyDataEEENS8_16OffsetListTraitsEEEEENS_13hash_internal4HashIiEESt8equal_toIiENS6_13ZoneAllocatorISt4pairIKiSE_EEEE10find_largeIiEENSQ_8iteratorERSN_m.exit.i
 
 bb.h:                                             ; preds = %.lr.ph.i.i
@@ -2059,7 +2053,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 424
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.j, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.j, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 416
   %i.l = load i64, ptr %i.k, align 8
@@ -2106,7 +2100,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.ah
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_8BaseDataEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_S8_EEEE10find_largeIS7_EENSK_8iteratorERSH_m.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i
@@ -2479,7 +2472,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.af
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 464
-  %.sroa.0.0.copyload.i.i.i.i.i20 = load ptr, ptr %i.fe, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i20 = load ptr, ptr %i.fe, align 8 ; 3 uses
   call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i20, i32 0, i32 1, i32 1)
   %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.fg = load i64, ptr %i.ff, align 8
@@ -2526,7 +2519,6 @@ bb.aj:                                            ; preds = %bb.al, %bb.ai
 
 .thread33.i.i36:                                  ; preds = %.lr.ph.i.i26
   %i.gg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i20, i64 %i.gc
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i20) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIiN2v84base18DoublyThreadedListINS3_8internal8compiler10turboshaft16SnapshotTableKeyINS8_7OpIndexENS8_7KeyDataEEENS8_16OffsetListTraitsEEEEENS_13hash_internal4HashIiEESt8equal_toIiENS6_13ZoneAllocatorISt4pairIKiSE_EEEE10find_largeIiEENSQ_8iteratorERSN_m.exit.i
 
 bb.ak:                                            ; preds = %.lr.ph.i.i26
@@ -2929,7 +2921,7 @@ _ZN4absl18container_internal18hash_policy_traitsINS0_17FlatHashMapPolicyIN2v88in
 
 bb.g:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.z, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.z, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i, i32 0, i32 1, i32 1)
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ab = load i64, ptr %i.aa, align 8
@@ -3037,7 +3029,6 @@ _ZN4absl18container_internal18hash_policy_traitsINS0_17FlatHashMapPolicyIN2v88in
 
 .thread35.i:                                      ; preds = %_ZN4absl18container_internal18hash_policy_traitsINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft13MemoryAddressENS6_16SnapshotTableKeyINS6_7OpIndexENS6_7KeyDataEEEEEvE5applyINS0_12EqualElementIS7_St8equal_toIS7_EEEJRSt4pairIKS7_SB_EESC_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSO_DpOSP_.exit.i11
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %i.cf
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft13MemoryAddressENS6_16SnapshotTableKeyINS6_7OpIndexENS6_7KeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SB_EEEE10find_largeIS7_EENSN_8iteratorERSK_m.exit
 
 _ZN4absl18container_internal18hash_policy_traitsINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft13MemoryAddressENS6_16SnapshotTableKeyINS6_7OpIndexENS6_7KeyDataEEEEEvE5applyINS0_12EqualElementIS7_St8equal_toIS7_EEEJRSt4pairIKS7_SB_EESC_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSO_DpOSP_.exit.thread.i: ; preds = %_ZN4absl18container_internal18hash_policy_traitsINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft13MemoryAddressENS6_16SnapshotTableKeyINS6_7OpIndexENS6_7KeyDataEEEEEvE5applyINS0_12EqualElementIS7_St8equal_toIS7_EEEJRSt4pairIKS7_SB_EESC_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSO_DpOSP_.exit.i11, %bb.k, %bb.j, %bb.i, %.lr.ph.i
@@ -3440,7 +3431,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.k = load i64, ptr %i.j, align 8
@@ -3487,7 +3478,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyIbNS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SA_EEEE10find_largeIS7_EENSM_8iteratorERSJ_m.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i
@@ -3890,7 +3880,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.k = load i64, ptr %i.j, align 8
@@ -3937,7 +3927,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS6_12MapMaskAndOrENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SB_EEEE10find_largeIS7_EENSN_8iteratorERSK_m.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i
@@ -4340,8 +4329,8 @@ _ZN2v88internal4Zone13AllocateArrayIbA_bEEPT_m.exit.i: ; preds = %bb.aa, %bb.z
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorIbE19PrepareForInsertionEPKbmPm.exit.thread, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN2v88internal4Zone13AllocateArrayIbA_bEEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dq, ptr nonnull align 1 %i.cs, i64 %i.cv, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cr) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dq, ptr nonnull align 1 %i.cs, i64 %i.cv, i1 false)
   %.pre.i39 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorIbE19PrepareForInsertionEPKbmPm.exit.thread
 
@@ -4744,8 +4733,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft12MapMaskAndOrEA_S5
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft12MapMaskAndOrEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft12MapMaskAndOrEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ci, ptr nonnull align 8 %i.bi, i64 %i.bl, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bh) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ci, ptr nonnull align 8 %i.bi, i64 %i.bl, i1 false)
   %.pre.i44 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft12MapMaskAndOrEE19PrepareForInsertionEPKS4_mPm.exit.thread
 
@@ -5145,8 +5134,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.co, ptr nonnull align 4 %i.bm, i64 %i.bp, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.co, ptr nonnull align 4 %i.bm, i64 %i.bp, i1 false)
   %.pre.i42 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread
 
@@ -5549,8 +5538,8 @@ _ZN2v88internal4Zone13AllocateArrayIbA_bEEPT_m.exit.i: ; preds = %bb.z, %bb.y
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorIbE19PrepareForInsertionEPKbmPm.exit.thread, label %bb.aa
 
 bb.aa:                                            ; preds = %_ZN2v88internal4Zone13AllocateArrayIbA_bEEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dl, ptr nonnull align 1 %i.cn, i64 %i.cq, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cm) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dl, ptr nonnull align 1 %i.cn, i64 %i.cq, i1 false)
   %.pre.i39 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorIbE19PrepareForInsertionEPKbmPm.exit.thread
 
@@ -5926,8 +5915,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft12MapMaskAndOrEA_S5
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft12MapMaskAndOrEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft12MapMaskAndOrEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ci, ptr nonnull align 8 %i.bi, i64 %i.bl, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bh) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ci, ptr nonnull align 8 %i.bi, i64 %i.bl, i1 false)
   %.pre.i44 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft12MapMaskAndOrEE19PrepareForInsertionEPKS4_mPm.exit.thread
 
@@ -6263,8 +6252,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.co, ptr nonnull align 4 %i.bm, i64 %i.bp, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.co, ptr nonnull align 4 %i.bm, i64 %i.bp, i1 false)
   %.pre.i42 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread
 

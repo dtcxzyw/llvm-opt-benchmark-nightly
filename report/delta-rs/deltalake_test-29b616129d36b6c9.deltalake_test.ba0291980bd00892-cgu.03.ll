@@ -201,9 +201,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.n, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsfY7SmN0bPrO_14deltalake_test.exit.i.i.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   %i.o = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i, i64 16
   %i.p = load i64, ptr %i.o, align 8, !range !25, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %i.m, i64 noundef range(i64 1, 536870913) %i.p) #19
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsfY7SmN0bPrO_14deltalake_test.exit.i.i.i.i
 
@@ -606,13 +606,12 @@ bb.bg:                                            ; preds = %bb.bf
 .noexc96.i:                                       ; preds = %.noexc95.i
   %i.gw = load i64, ptr %i.n, align 8, !range !285, !noalias !401, !noundef !3 ; 2 uses
   %i.gx = icmp eq i64 %i.gw, 2
-  %i.gy = load ptr, ptr %i.gc, align 8, !noalias !401 ; 19 uses
+  %i.gy = load ptr, ptr %i.gc, align 8, !noalias !401, !nonnull !3, !noundef !3 ; 17 uses
   br i1 %i.gx, label %bb.bs, label %bb.bh
 
 bb.bh:                                            ; preds = %.noexc96.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !401 ; 2 uses
   %i.gz = trunc nuw i64 %i.gw to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gy) ]
   br i1 %i.gz, label %bb.bi, label %bb.bn
 
 bb.bi:                                            ; preds = %bb.bh
@@ -733,7 +732,6 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %.noexc96.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !401
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gy) ]
   br label %.loopexit199.i
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB1B_EECsfY7SmN0bPrO_14deltalake_test.exit.i: ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.loopexit.loopexit.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.loopexit.loopexit.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.loopexit.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.loopexit.split-lp, %bb.ev, %bb.ed, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, %.loopexit.split-lp.loopexit.split-lp.loopexit.i, %.loopexit.split-lp.loopexit.i, %.loopexit.i62

@@ -82,9 +82,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EECsj34PGqTgg0L_16deltalake_lakefs.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !9, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #18
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EECsj34PGqTgg0L_16deltalake_lakefs.exit
 
@@ -487,9 +487,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.n, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   %i.o = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i, i64 16
   %i.p = load i64, ptr %i.o, align 8, !range !9, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %i.m, i64 noundef range(i64 1, 536870913) %i.p) #18
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtNtCs2pqxYH9ZEk8_3std2io5error6CustomEECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i.i
 
@@ -892,10 +892,10 @@ bb.as:                                            ; preds = %bb.af
   br label %bb.ak
 
 bb.at:                                            ; preds = %bb.af
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ct) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !227 ; 8 uses
   %i.dn = trunc nuw i64 %i.cq to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ct) ]
   br i1 %i.dn, label %bb.au, label %bb.ax
 
 bb.au:                                            ; preds = %bb.at
@@ -1298,10 +1298,10 @@ bb.as:                                            ; preds = %bb.af
   br label %bb.ak
 
 bb.at:                                            ; preds = %bb.af
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !535 ; 8 uses
   %i.de = trunc nuw i64 %i.ch to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   br i1 %i.de, label %bb.au, label %bb.ax
 
 bb.au:                                            ; preds = %bb.at
@@ -1704,12 +1704,11 @@ bb.ae:                                            ; preds = %bb.ad
 .noexc62.i:                                       ; preds = %bb.ae
   %i.da = load i64, ptr %i.t, align 8, !range !340, !noalias !814, !noundef !3
   %i.db = icmp eq i64 %i.da, 2
-  %i.dc = load ptr, ptr %i.cn, align 8, !noalias !814 ; 5 uses
+  %i.dc = load ptr, ptr %i.cn, align 8, !noalias !814, !nonnull !3, !noundef !3 ; 3 uses
   br i1 %i.db, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.noexc62.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !814
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dc) ]
   %i.dd = icmp eq i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, 7
   br i1 %i.dd, label %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess8next_keyNtNvXNvNCNvMs_NtCsj34PGqTgg0L_16deltalake_lakefs6clientNtB2c_12LakeFSClient11has_changes01__NtB25_12DiffResponseNtB1a_11Deserialize11deserialize7___FieldEB2e_.exit.i, label %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess8next_keyNtNvXNvNCNvMs_NtCsj34PGqTgg0L_16deltalake_lakefs6clientNtB2c_12LakeFSClient11has_changes01__NtB25_12DiffResponseNtB1a_11Deserialize11deserialize7___FieldEB2e_.exit.thread107.i
 
@@ -1719,7 +1718,6 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs1
 
 bb.ag:                                            ; preds = %.noexc62.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !814
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dc) ]
   br label %.loopexit115.i
 
 .loopexit.i46:                                    ; preds = %bb.ce, %bb.bp, %bb.bl, %bb.bk, %bb.bj
@@ -2122,9 +2120,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.y, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECsj34PGqTgg0L_16deltalake_lakefs.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val10.i, i64 16
   %i.aa = load i64, ptr %i.z, align 8, !range !9, !invariant.load !3, !noalias !1709
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val9.i, i64 noundef range(i64 1, 0) %i.x, i64 noundef range(i64 1, 536870913) %i.aa) #18, !noalias !1709
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECsj34PGqTgg0L_16deltalake_lakefs.exit.i
 

@@ -201,8 +201,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft18StoreObservabilit
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft18StoreObservabilityEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft18StoreObservabilityEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cp, ptr nonnull align 4 %i.bn, i64 %i.bq, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bl) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cp, ptr nonnull align 4 %i.bn, i64 %i.bq, i1 false)
   %.pre.i39 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft18StoreObservabilityEE19PrepareForInsertionEPKS4_mPm.exit.thread
 
@@ -605,7 +605,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.l, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.l, align 8 ; 3 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i, i32 0, i32 1, i32 1)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = load i64, ptr %i.m, align 8
@@ -666,7 +666,6 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 .thread33.i:                                      ; preds = %.lr.ph.i
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %i.ar
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyISt4pairIN2v88internal8compiler10turboshaft7OpIndexEiENS7_16SnapshotTableKeyINS7_18StoreObservabilityENS7_27MaybeRedundantStoresKeyDataEEEEENS_13hash_internal4HashIS9_EESt8equal_toIS9_ENS5_13ZoneAllocatorIS3_IKS9_SD_EEEE10find_largeIS9_EENSO_8iteratorERSL_m.exit
 
 bb.f:                                             ; preds = %.lr.ph.i
@@ -1069,8 +1068,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft18StoreObservabilit
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft18StoreObservabilityEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft18StoreObservabilityEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cp, ptr nonnull align 4 %i.bn, i64 %i.bq, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bl) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cp, ptr nonnull align 4 %i.bn, i64 %i.bq, i1 false)
   %.pre.i40 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft18StoreObservabilityEE19PrepareForInsertionEPKS4_mPm.exit.thread
 
@@ -1473,7 +1472,13 @@ bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.o = load i64, ptr %i.n, align 8
   %.not.i.i.i.i.i = icmp ult i64 %i.o, 131072
-  br i1 %.not.i.i.i.i.i, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit
+  br i1 %.not.i.i.i.i.i, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread, label %2
+
+2:                                                ; preds = %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %4 = load i32, ptr %3, align 8
+  %5 = icmp eq i32 %4, %.sroa.0.0.copyload.i
+  br i1 %5, label %bb.j, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread
 
 bb.f:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 16
@@ -1520,11 +1525,7 @@ bb.g:                                             ; preds = %bb.i, %bb.f
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i, i64 %i.an
   %i.ap = load i32, ptr %i.ao, align 4
   %i.aq = icmp eq i32 %i.ap, %.sroa.0.0.copyload.i
-  br i1 %i.aq, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread8, label %bb.h, !prof !11
-
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread8: ; preds = %.lr.ph.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i) ]
-  br label %bb.j
+  br i1 %i.aq, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit, label %bb.h, !prof !11
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i.i
   %i.ar = add i16 %.sroa.017.048.i.i.i.i, -1
@@ -1543,18 +1544,16 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i.i
   %i.aw = add i64 %i.av, %.sroa.6.0.i.i.i.i
   br label %bb.g, !llvm.loop !178
 
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit: ; preds = %bb.e
-  %2 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %3 = load i32, ptr %2, align 8
-  %i.ax = icmp eq i32 %3, %.sroa.0.0.copyload.i
-  br i1 %i.ax, label %bb.j, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit: ; preds = %.lr.ph.i.i.i.i
+  %i.ax = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, null
+  br i1 %i.ax, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread, label %bb.j
 
-bb.j:                                             ; preds = %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread8, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit
+bb.j:                                             ; preds = %2, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 2432
   store i8 1, ptr %i.ay, align 8
   br label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread
 
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.e, %bb.c, %bb.j, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit, %bb.a, %bb.b
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.e, %2, %bb.c, %bb.j, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIjEENS_13hash_internal4HashIjEESt8equal_toIjEN2v88internal13ZoneAllocatorIjEEE8containsIjEEbRKj.exit, %bb.a, %bb.b
   ret void
 }
 
@@ -1957,8 +1956,8 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_
   br i1 %.not26.i, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_m.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cl, ptr nonnull align 4 %i.bj, i64 %i.bm, i1 false)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bh) ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cl, ptr nonnull align 4 %i.bj, i64 %i.bm, i1 false)
   %.pre.i43 = load ptr, ptr %i.i, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread
 
@@ -2361,7 +2360,14 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2936
   %i.h = load i64, ptr %i.g, align 8
   %.not.i.i.i.i.i = icmp ult i64 %i.h, 131072
-  br i1 %.not.i.i.i.i.i, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit
+  br i1 %.not.i.i.i.i.i, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %5
+
+5:                                                ; preds = %bb.c
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 2952
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %6, align 8
+  %7 = load i32, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, align 4
+  %8 = icmp eq i32 %7, %i.c
+  br i1 %8, label %bb.h, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread
 
 bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2944
@@ -2408,11 +2414,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   %i.ah = getelementptr inbounds nuw [48 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i, i64 %i.ag
   %i.ai = load i32, ptr %i.ah, align 4
   %i.aj = icmp eq i32 %i.ai, %i.c
-  br i1 %i.aj, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread28, label %bb.f, !prof !11
-
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread28: ; preds = %.lr.ph.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i) ]
-  br label %bb.h
+  br i1 %i.aj, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit, label %bb.f, !prof !11
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i.i
   %i.ak = add i16 %.sroa.017.047.i.i.i.i, -1
@@ -2431,14 +2433,11 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ap = add i64 %i.ao, %.sroa.6.0.i.i.i.i
   br label %bb.e, !llvm.loop !567
 
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit: ; preds = %bb.c
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 2952
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %5, align 8
-  %6 = load i32, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, align 4
-  %i.aq = icmp eq i32 %6, %i.c
-  br i1 %i.aq, label %bb.h, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit: ; preds = %.lr.ph.i.i.i.i
+  %i.aq = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, null
+  br i1 %i.aq, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %bb.h
 
-bb.h:                                             ; preds = %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread28, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit
+bb.h:                                             ; preds = %5, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   store i32 %i.c, ptr %3, align 4
   %i.ar = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEEixIS7_SI_Li0EEEDTclsrT0_5valueclL_ZSt9addressofISQ_EPT_RSW_EclL_ZSt7declvalIRSQ_EDTcl9__declvalISW_ELi0EEEvEEEEEOS7_(ptr noundef nonnull align 8 dereferenceable(40) %i.d, ptr noundef nonnull align 4 dereferenceable(4) %3) ; 3 uses
@@ -2492,7 +2491,7 @@ bb.j:                                             ; preds = %.lr.ph, %bb.j
   %.not = icmp eq ptr %i.bl, %i.ay
   br i1 %.not, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread, label %bb.j
 
-_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.j, %_ZNRSt8optionalIN2v88internal10ZoneVectorISt4pairINS1_8compiler10turboshaft16SnapshotTableKeyINS5_7OpIndexENS5_12VariableDataEEES7_EEEE5valueEv.exit, %bb.c, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit, %bb.a
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %bb.j, %_ZNRSt8optionalIN2v88internal10ZoneVectorISt4pairINS1_8compiler10turboshaft16SnapshotTableKeyINS5_7OpIndexENS5_12VariableDataEEES7_EEEE5valueEv.exit, %bb.c, %5, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft10BlockIndexESt8optionalINS4_10ZoneVectorISt4pairINS6_16SnapshotTableKeyINS6_7OpIndexENS6_12VariableDataEEESC_EEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISA_IKS7_SH_EEEE8containsIS7_EEbRSP_.exit, %bb.a
   ret i32 %i.a
 }
 

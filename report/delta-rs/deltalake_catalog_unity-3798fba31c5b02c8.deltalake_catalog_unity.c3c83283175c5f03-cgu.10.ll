@@ -201,9 +201,9 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = tail call noundef nonnull ptr @_RNvMNtCshhQzAC5dGUF_17crossbeam_channel7contextNtB2_7Context3new() ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   store ptr %i.c, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %.sroa.0.0.copyload = load i16, ptr %.0.val, align 8 ; 2 uses
   store i16 3, ptr %.0.val, align 8
   %.not = icmp eq i16 %.sroa.0.0.copyload, 3
@@ -276,9 +276,9 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = tail call noundef nonnull ptr @_RNvMNtCshhQzAC5dGUF_17crossbeam_channel7contextNtB2_7Context3new() ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   store ptr %i.c, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %.sroa.0.0.copyload = load ptr, ptr %.0.val, align 8 ; 2 uses
   store ptr null, ptr %.0.val, align 8
   %.not = icmp eq ptr %.sroa.0.0.copyload, null
@@ -357,6 +357,7 @@ bb.a:
   %i.h = alloca [24 x i8], align 8                ; 5 uses
   %i.i = alloca [24 x i8], align 8                ; 5 uses
   %i.j = alloca [72 x i8], align 8                ; 16 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.l = load ptr, ptr %i.k, align 8, !nonnull !3, !align !27, !noundef !3
   %i.m = ptrtoint ptr %i.l to i64                 ; 3 uses
@@ -369,7 +370,6 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.q = load ptr, ptr %i.p, align 8, !nonnull !3, !align !27, !noundef !3 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.r = atomicrmw add ptr %.0.val, i64 1 monotonic, align 8
   %i.s = icmp slt i64 %i.r, 0
   br i1 %i.s, label %bb.h, label %bb.c
@@ -772,7 +772,7 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
-  %i.f = alloca [24 x i8], align 8                ; 8 uses
+  %i.f = alloca [24 x i8], align 8                ; 6 uses
   %.sroa.5 = alloca [16 x i8], align 8            ; 4 uses
   %i.g = alloca [24 x i8], align 8                ; 5 uses
   %i.h = load ptr, ptr %0, align 8, !nonnull !3, !align !27, !noundef !3
@@ -785,13 +785,13 @@ bb.a:
   call void @llvm.experimental.noalias.scope.decl(metadata !308)
   %i.m = load i64, ptr %i.f, align 8, !range !151, !alias.scope !308, !noalias !311, !noundef !3
   %i.n = trunc nuw i64 %i.m to i1
+  %1 = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   br i1 %i.n, label %bb.b, label %_RNvMNtCsbvkFyIu7lgC_4core6resultINtB2_6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardNtNtCshhQzAC5dGUF_17crossbeam_channel5waker5WakerEINtBM_11PoisonErrorBH_EE6unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i, !prof !29
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !313
-  %1 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.o = load ptr, ptr %1, align 8, !alias.scope !308, !noalias !311, !nonnull !3, !align !27, !noundef !3
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.p = load i8, ptr %2, align 8, !range !4, !alias.scope !308, !noalias !311, !noundef !3
   store ptr %i.o, ptr %i.d, align 8, !noalias !313
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -819,14 +819,12 @@ common.resume:                                    ; preds = %bb.ac, %bb.ah, %bb.
   resume { ptr, i32 } %common.resume.op
 
 _RNvMNtCsbvkFyIu7lgC_4core6resultINtB2_6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardNtNtCshhQzAC5dGUF_17crossbeam_channel5waker5WakerEINtBM_11PoisonErrorBH_EE6unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i: ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.t = load ptr, ptr %3, align 8, !alias.scope !308, !noalias !311, !nonnull !3, !align !27, !noundef !3 ; 8 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.u = load i8, ptr %4, align 8, !range !4, !alias.scope !308, !noalias !311, !noundef !3 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  %i.t = load ptr, ptr %1, align 8, !alias.scope !308, !noalias !311, !nonnull !3, !align !27, !noundef !3 ; 8 uses
+  %i.u = load i8, ptr %2, align 8, !range !4, !alias.scope !308, !noalias !311, !noundef !3 ; 2 uses
   %i.v = trunc nuw i8 %i.u to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.w = atomicrmw add ptr %.0.val, i64 1 monotonic, align 8
   %i.x = icmp slt i64 %i.w, 0
   br i1 %i.x, label %bb.k, label %bb.f
@@ -1229,8 +1227,8 @@ _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i: ; p
   br i1 %i.ao, label %.lr.ph.i.i, label %_RNvMs_NtNtCshhQzAC5dGUF_17crossbeam_channel7flavors4listINtB4_5BlockINtNtNtCs95DO3lnzZ3L_4moka6common10concurrent7WriteOpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEE9wait_nextB2B_.exit.i
 
 _RNvMs_NtNtCshhQzAC5dGUF_17crossbeam_channel7flavors4listINtB4_5BlockINtNtNtCs95DO3lnzZ3L_4moka6common10concurrent7WriteOpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEE9wait_nextB2B_.exit.i: ; preds = %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i, %bb.d
-  %1 = load atomic ptr, ptr %i.af acquire, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.011.145.i) ]
+  %1 = load atomic ptr, ptr %i.af acquire, align 8
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.011.145.i, i64 noundef 1496, i64 noundef 8) #18
   br label %bb.f
 
@@ -1633,8 +1631,8 @@ _RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_ut
 
 _RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_util6future6future6shared5InnerINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtB1N_6future6future6Futurep6OutputbNtNtB1N_6marker4SendEL_EEEE10try_unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread: ; preds = %bb.a, %_RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_util6future6future6shared5InnerINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtB1N_6future6future6Futurep6OutputbNtNtB1N_6marker4SendEL_EEEE10try_unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit
   %.sroa.6.020 = phi ptr [ %.sroa.6.0.copyload9, %_RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_util6future6future6shared5InnerINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtB1N_6future6future6Futurep6OutputbNtNtB1N_6marker4SendEL_EEEE10try_unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit ], [ %0, %bb.a ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.020) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %.sroa.6.020, ptr %i.b, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.6.020, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !noundef !3
@@ -1771,8 +1769,8 @@ _RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_ut
 
 _RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_util6future6future6shared5InnerINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtB1N_6future6future6Futurep6OutputuNtNtB1N_6marker4SendEL_EEEE10try_unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread: ; preds = %bb.a, %_RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_util6future6future6shared5InnerINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtB1N_6future6future6Futurep6OutputuNtNtB1N_6marker4SendEL_EEEE10try_unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit
   %.sroa.6.015 = phi ptr [ %.sroa.6.0.copyload8, %_RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_util6future6future6shared5InnerINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtB1N_6future6future6Futurep6OutputuNtNtB1N_6marker4SendEL_EEEE10try_unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit ], [ %0, %bb.a ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.015) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %.sroa.6.015, ptr %i.b, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.6.015, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !noundef !3
@@ -2175,9 +2173,9 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   ret void
 
 bb.d:                                             ; preds = %.lr.ph
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.015) ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.06.015, i64 1488
   %i.l = load ptr, ptr %i.k, align 8, !noundef !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.015) ]
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.06.015, i64 noundef 1496, i64 noundef 8) #18
   br label %bb.f
 
@@ -2365,8 +2363,8 @@ bb.s:                                             ; preds = %._crit_edge.i, %bb.
 
 bb.t:                                             ; preds = %bb.p
   %i.bg = extractvalue { ptr, ptr } %i.bd, 0      ; 2 uses
-  %2 = extractvalue { ptr, ptr } %i.bd, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bg) ]
+  %2 = extractvalue { ptr, ptr } %i.bd, 1
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
   %i.bi = load i64, ptr %i.bh, align 8, !noalias !1300, !noundef !3 ; 2 uses
   invoke void @_RNvMs3_CskItxkTFUcJI_4slabINtB5_4SlabINtNtCsbvkFyIu7lgC_4core6option6OptionNtNtNtBE_4task4wake5WakerEE9insert_atCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.ao, i64 noundef %i.bi, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %i.bg, ptr %2)
@@ -2425,8 +2423,8 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %._crit_edge.i
   %i.bx = extractvalue { ptr, ptr } %i.bw, 0      ; 3 uses
-  %3 = extractvalue { ptr, ptr } %i.bw, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bx) ]
+  %3 = extractvalue { ptr, ptr } %i.bw, 1         ; 2 uses
   %.val9.i = load ptr, ptr %i.be, align 8, !noalias !1300, !align !27, !noundef !3 ; 2 uses
   %i.by = icmp eq ptr %.val9.i, null
   br i1 %i.by, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i, label %bb.ac
@@ -2829,8 +2827,8 @@ bb.r:                                             ; preds = %._crit_edge.i, %bb.
 
 bb.s:                                             ; preds = %bb.o
   %i.bf = extractvalue { ptr, ptr } %i.bc, 0      ; 2 uses
-  %2 = extractvalue { ptr, ptr } %i.bc, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bf) ]
+  %2 = extractvalue { ptr, ptr } %i.bc, 1
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aj, i64 40
   %i.bh = load i64, ptr %i.bg, align 8, !noalias !1354, !noundef !3 ; 2 uses
   invoke void @_RNvMs3_CskItxkTFUcJI_4slabINtB5_4SlabINtNtCsbvkFyIu7lgC_4core6option6OptionNtNtNtBE_4task4wake5WakerEE9insert_atCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.an, i64 noundef %i.bh, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %i.bf, ptr %2)
@@ -2889,8 +2887,8 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %._crit_edge.i
   %i.bw = extractvalue { ptr, ptr } %i.bv, 0      ; 3 uses
-  %3 = extractvalue { ptr, ptr } %i.bv, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
+  %3 = extractvalue { ptr, ptr } %i.bv, 1         ; 2 uses
   %.val9.i = load ptr, ptr %i.bd, align 8, !noalias !1354, !align !27, !noundef !3 ; 2 uses
   %i.bx = icmp eq ptr %.val9.i, null
   br i1 %i.bx, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i, label %bb.ab

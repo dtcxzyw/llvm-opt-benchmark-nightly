@@ -201,8 +201,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %4 = load i64, ptr %i.a, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.c, i64 8) ]
+  %4 = load i64, ptr %i.a, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.c, i8 0, i64 %4, i1 false)
   br label %bb.g
 
@@ -271,8 +271,8 @@ bb.d:                                             ; preds = %bb.c
   br label %_mi_page_malloc_zero.exit
 
 bb.e:                                             ; preds = %bb.c
-  %3 = load i64, ptr %i.a, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.c, i64 8) ]
+  %3 = load i64, ptr %i.a, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.c, i8 0, i64 %3, i1 false)
   br label %_mi_page_malloc_zero.exit
 
@@ -390,8 +390,8 @@ bb.f:                                             ; preds = %bb.e
   br label %mi_heap_malloc_small_zero.exit
 
 bb.g:                                             ; preds = %bb.e
-  %4 = load i64, ptr %i.g, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.i, i64 8) ]
+  %4 = load i64, ptr %i.g, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %4, i1 false)
   br label %mi_heap_malloc_small_zero.exit
 
@@ -447,8 +447,8 @@ bb.f:                                             ; preds = %bb.e
   br label %_mi_heap_malloc_zero_ex.exit
 
 bb.g:                                             ; preds = %bb.e
-  %3 = load i64, ptr %i.g, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.i, i64 8) ]
+  %3 = load i64, ptr %i.g, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %3, i1 false)
   br label %_mi_heap_malloc_zero_ex.exit
 
@@ -581,8 +581,8 @@ bb.d:                                             ; preds = %bb.c
   br label %mi_heap_malloc_small_zero.exit
 
 bb.e:                                             ; preds = %bb.c
-  %1 = load i64, ptr %i.h, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.j, i64 8) ]
+  %1 = load i64, ptr %i.h, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.j, i8 0, i64 %1, i1 false)
   br label %mi_heap_malloc_small_zero.exit
 
@@ -631,8 +631,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_mi_heap_malloc_zero.exit
 
 bb.f:                                             ; preds = %bb.d
-  %2 = load i64, ptr %i.g, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.i, i64 8) ]
+  %2 = load i64, ptr %i.g, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %2, i1 false)
   br label %_mi_heap_malloc_zero.exit
 
@@ -687,8 +687,8 @@ bb.e:                                             ; preds = %bb.d
   br label %mi_heap_zalloc.exit
 
 bb.f:                                             ; preds = %bb.d
-  %1 = load i64, ptr %i.i, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.k, i64 8) ]
+  %1 = load i64, ptr %i.i, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.k, i8 0, i64 %1, i1 false)
   br label %mi_heap_zalloc.exit
 
@@ -752,8 +752,8 @@ bb.g:                                             ; preds = %bb.f
   br label %mi_count_size_overflow.exit
 
 bb.h:                                             ; preds = %bb.f
-  %3 = load i64, ptr %i.j, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.l, i64 8) ]
+  %3 = load i64, ptr %i.j, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.l, i8 0, i64 %3, i1 false)
   br label %mi_count_size_overflow.exit
 
@@ -819,8 +819,8 @@ bb.g:                                             ; preds = %bb.f
   br label %mi_heap_calloc.exit
 
 bb.h:                                             ; preds = %bb.f
-  %2 = load i64, ptr %i.l, align 8, !tbaa !20
   call void @llvm.assume(i1 true) [ "align"(ptr %i.n, i64 8) ]
+  %2 = load i64, ptr %i.l, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.n, i8 0, i64 %2, i1 false)
   br label %mi_heap_calloc.exit
 

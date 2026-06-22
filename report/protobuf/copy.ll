@@ -128,9 +128,9 @@ bb.i:                                             ; preds = %upb_MiniTableField_
   br i1 %i.ao, label %upb_Arena_Malloc.exit, label %upb_Arena_Malloc.exit.thread, !prof !27
 
 upb_Arena_Malloc.exit.thread:                     ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.ak
   store ptr %i.ap, ptr %4, align 8, !tbaa !24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   br label %bb.j
 
 upb_Arena_Malloc.exit:                            ; preds = %bb.i
@@ -211,9 +211,9 @@ bb.a:
   br i1 %i.o, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !27
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.p = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.j
   store ptr %i.p, ptr %3, align 8, !tbaa !24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %_upb_Array_ResizeUninitialized_dont_copy_me__upb_internal_use_only.exit
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
@@ -286,9 +286,9 @@ upb_Clone_MessageValue.exit.thread.us:            ; preds = %upb_Clone_MessageVa
   br i1 %i.al, label %upb_Arena_Malloc.exit.i.us, label %upb_Arena_Malloc.exit.i.thread.us, !prof !27
 
 upb_Arena_Malloc.exit.i.thread.us:                ; preds = %.lr.ph.split.us50
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.us) ]
   %i.am = getelementptr inbounds nuw i8, ptr %.val.i.i.us, i64 %i.ah
   store ptr %i.am, ptr %3, align 8, !tbaa !24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.us) ]
   br label %upb_Clone_MessageValue.exit.thread.us52
 
 upb_Arena_Malloc.exit.i.us:                       ; preds = %.lr.ph.split.us50
@@ -534,9 +534,9 @@ bb.t:                                             ; preds = %bb.s
   br label %upb_Clone_StringView.exit
 
 bb.u:                                             ; preds = %bb.s
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.bn = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.bh
   store ptr %i.bn, ptr %3, align 8, !tbaa !24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br label %upb_Clone_StringView.exit
 
 upb_Clone_StringView.exit:                        ; preds = %bb.t, %bb.u
@@ -939,9 +939,9 @@ bb.bn:                                            ; preds = %upb_MiniTableExtens
   br i1 %i.hs, label %upb_Arena_Malloc.exit.i, label %upb_Arena_Malloc.exit.i.thread, !prof !27
 
 upb_Arena_Malloc.exit.i.thread:                   ; preds = %bb.bn
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i214) ]
   %i.ht = getelementptr inbounds nuw i8, ptr %.val.i.i214, i64 %i.ho
   store ptr %i.ht, ptr %3, align 8, !tbaa !24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i214) ]
   br label %bb.bo
 
 upb_Arena_Malloc.exit.i:                          ; preds = %bb.bn

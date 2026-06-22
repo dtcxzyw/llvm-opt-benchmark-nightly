@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define noundef ptr @_ZN5folly4coro15SharedMutexFair22scanReadersAndUpgraderEPNS1_15LockAwaiterBaseERNS1_5StateENS1_8LockTypeE(ptr noundef %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) %1, i8 noundef zeroext %2) local_unnamed_addr #10 align 2 {
 bb.a:
-  %.promoted = load i64, ptr %1, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
+  %.promoted = load i64, ptr %1, align 8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.e

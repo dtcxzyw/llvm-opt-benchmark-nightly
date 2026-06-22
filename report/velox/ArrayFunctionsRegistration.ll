@@ -201,9 +201,9 @@ bb.be:                                            ; preds = %.critedge.i.i107
   br label %bb.bc, !llvm.loop !46849
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyInivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NS7_8PrefetchE.exit.i: ; preds = %bb.bd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pb) ]
   %i.sv = getelementptr inbounds nuw [4 x i8], ptr %i.sm, i64 %i.sq
   store i32 %i.mq, ptr %i.sv, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pb) ]
   %i.sw = getelementptr inbounds nuw [32 x i8], ptr %i.pb, i64 %i.rl
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.pc, ptr noundef nonnull align 1 dereferenceable(32) %i.sw, i64 32, i1 false)
   br label %.noexc29
@@ -606,9 +606,9 @@ bb.ax:                                            ; preds = %.critedge.i.i110
   br label %bb.av, !llvm.loop !46849
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyInivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NS7_8PrefetchE.exit.i: ; preds = %bb.aw
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.oi) ]
   %i.sc = getelementptr inbounds nuw [4 x i8], ptr %i.rt, i64 %i.rx
   store i32 %i.lx, ptr %i.sc, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.oi) ]
   %i.sd = getelementptr inbounds nuw [32 x i8], ptr %i.oi, i64 %i.qs
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.oj, ptr noundef nonnull align 1 dereferenceable(32) %i.sd, i64 32, i1 false)
   br label %.noexc36
@@ -1011,9 +1011,9 @@ bb.ay:                                            ; preds = %.critedge.i.i173
   br label %bb.aw, !llvm.loop !46849
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyInivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NS7_8PrefetchE.exit.i174: ; preds = %bb.ax
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pf) ]
   %i.sz = getelementptr inbounds nuw [4 x i8], ptr %i.sq, i64 %i.su
   store i32 %i.mu, ptr %i.sz, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pf) ]
   %i.ta = getelementptr inbounds nuw [32 x i8], ptr %i.pf, i64 %i.rp
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.pg, ptr noundef nonnull align 1 dereferenceable(32) %i.ta, i64 32, i1 false)
   br label %_ZN5folly3f146detail16F14VectorMapImplIniNS_23HeterogeneousAccessHashInvEENS_26HeterogeneousAccessEqualToInvEESaISt4pairIKniEESt17integral_constantIbLb1EEE9eraseIntoIRKNS_16variadic_noop_fnEEENS1_23VectorContainerIteratorIPS9_EENSI_IPKS9_EEOT_.exit.i
@@ -1416,9 +1416,9 @@ bb.du:                                            ; preds = %.critedge.i.i319
   br label %bb.ds, !llvm.loop !46849
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyInivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NS7_8PrefetchE.exit.i322: ; preds = %bb.dt
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ami) ]
   %i.aqc = getelementptr inbounds nuw [4 x i8], ptr %i.apt, i64 %i.apx
   store i32 %i.ajx, ptr %i.aqc, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ami) ]
   %i.aqd = getelementptr inbounds nuw [32 x i8], ptr %i.ami, i64 %i.aos
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.amj, ptr noundef nonnull align 1 dereferenceable(32) %i.aqd, i64 32, i1 false)
   br label %.noexc42
@@ -1821,9 +1821,9 @@ bb.be:                                            ; preds = %.critedge.i.i116
   br label %bb.bc, !llvm.loop !47708
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox9TimestampEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i: ; preds = %bb.bd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.py) ]
   %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.tx, i64 %i.ub
   store i32 %i.nj, ptr %i.ug, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.py) ]
   %i.uh = getelementptr inbounds nuw [24 x i8], ptr %i.py, i64 %i.sp
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.pz, ptr noundef nonnull align 1 dereferenceable(24) %i.uh, i64 24, i1 false)
   br label %.noexc29
@@ -2226,9 +2226,9 @@ bb.ax:                                            ; preds = %.critedge.i.i119
   br label %bb.av, !llvm.loop !47708
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox9TimestampEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i: ; preds = %bb.aw
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pf) ]
   %i.tn = getelementptr inbounds nuw [4 x i8], ptr %i.te, i64 %i.ti
   store i32 %i.mq, ptr %i.tn, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pf) ]
   %i.to = getelementptr inbounds nuw [24 x i8], ptr %i.pf, i64 %i.rw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.pg, ptr noundef nonnull align 1 dereferenceable(24) %i.to, i64 24, i1 false)
   br label %.noexc36
@@ -2631,9 +2631,9 @@ bb.ay:                                            ; preds = %.critedge.i.i185
   br label %bb.aw, !llvm.loop !47708
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox9TimestampEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i186: ; preds = %bb.ax
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qc) ]
   %i.um = getelementptr inbounds nuw [4 x i8], ptr %i.ud, i64 %i.uh
   store i32 %i.nn, ptr %i.um, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qc) ]
   %i.un = getelementptr inbounds nuw [24 x i8], ptr %i.qc, i64 %i.sv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.qd, ptr noundef nonnull align 1 dereferenceable(24) %i.un, i64 24, i1 false)
   br label %_ZN5folly3f146detail16F14VectorMapImplIN8facebook5velox9TimestampEiNS_23HeterogeneousAccessHashIS5_vEENS_26HeterogeneousAccessEqualToIS5_vEESaISt4pairIKS5_iEESt17integral_constantIbLb1EEE9eraseIntoIRKNS_16variadic_noop_fnEEENS1_23VectorContainerIteratorIPSC_EENSL_IPKSC_EEOT_.exit.i
@@ -3036,9 +3036,9 @@ bb.du:                                            ; preds = %.critedge.i.i338
   br label %bb.ds, !llvm.loop !47708
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox9TimestampEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i341: ; preds = %bb.dt
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aos) ]
   %i.ata = getelementptr inbounds nuw [4 x i8], ptr %i.asr, i64 %i.asv
   store i32 %i.amd, ptr %i.ata, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aos) ]
   %i.atb = getelementptr inbounds nuw [24 x i8], ptr %i.aos, i64 %i.arj
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.aot, ptr noundef nonnull align 1 dereferenceable(24) %i.atb, i64 24, i1 false)
   br label %.noexc42
@@ -3441,9 +3441,9 @@ bb.ax:                                            ; preds = %.critedge.i.i124
   br label %bb.av, !llvm.loop !48222
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox10StringViewEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i: ; preds = %bb.aw
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.py) ]
   %i.ta = getelementptr inbounds nuw [4 x i8], ptr %i.sr, i64 %i.sv
   store i32 %i.lo, ptr %i.ta, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.py) ]
   %i.tb = getelementptr inbounds nuw [24 x i8], ptr %i.py, i64 %i.rm
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.rl, ptr noundef nonnull align 1 dereferenceable(24) %i.tb, i64 24, i1 false)
   br label %.noexc30
@@ -3846,9 +3846,9 @@ bb.aq:                                            ; preds = %.critedge.i.i127
   br label %bb.ao, !llvm.loop !48222
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox10StringViewEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i: ; preds = %bb.ap
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ph) ]
   %i.sj = getelementptr inbounds nuw [4 x i8], ptr %i.sa, i64 %i.se
   store i32 %i.kx, ptr %i.sj, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ph) ]
   %i.sk = getelementptr inbounds nuw [24 x i8], ptr %i.ph, i64 %i.qv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.qu, ptr noundef nonnull align 1 dereferenceable(24) %i.sk, i64 24, i1 false)
   br label %.noexc37
@@ -4251,9 +4251,9 @@ bb.ar:                                            ; preds = %.critedge.i.i196
   br label %bb.ap, !llvm.loop !48222
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox10StringViewEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i197: ; preds = %bb.aq
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qr) ]
   %i.tt = getelementptr inbounds nuw [4 x i8], ptr %i.tk, i64 %i.to
   store i32 %i.mh, ptr %i.tt, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qr) ]
   %i.tu = getelementptr inbounds nuw [24 x i8], ptr %i.qr, i64 %i.sf
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.se, ptr noundef nonnull align 1 dereferenceable(24) %i.tu, i64 24, i1 false)
   br label %_ZN5folly3f146detail16F14VectorMapImplIN8facebook5velox10StringViewEiNS_23HeterogeneousAccessHashIS5_vEENS_26HeterogeneousAccessEqualToIS5_vEESaISt4pairIKS5_iEESt17integral_constantIbLb1EEE9eraseIntoIRKNS_16variadic_noop_fnEEENS1_23VectorContainerIteratorIPSC_EENSL_IPKSC_EEOT_.exit.i
@@ -4656,9 +4656,9 @@ bb.dg:                                            ; preds = %.critedge.i.i361
   br label %bb.de, !llvm.loop !48222
 
 _ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox10StringViewEivvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSA_8PrefetchE.exit.i364: ; preds = %bb.df
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.amj) ]
   %i.apl = getelementptr inbounds nuw [4 x i8], ptr %i.apc, i64 %i.apg
   store i32 %i.ahz, ptr %i.apl, align 4, !tbaa !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.amj) ]
   %i.apm = getelementptr inbounds nuw [24 x i8], ptr %i.amj, i64 %i.anx
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.anw, ptr noundef nonnull align 1 dereferenceable(24) %i.apm, i64 24, i1 false)
   br label %.noexc43

@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds i8, ptr %i.k, i64 %i.m
   %i.o = shl nuw nsw i64 %i.j, 7
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.o ; 2 uses
-  %3 = shl nuw nsw i64 %i.g, 7
   call void @llvm.assume(i1 true) [ "align"(ptr %i.p, i64 8) ]
+  %3 = shl nuw nsw i64 %i.g, 7
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.p, i8 0, i64 range(i64 0, 549755813761) %3, i1 false)
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 64
   %i.r = tail call zeroext i1 @mi_bbitmap_setN(ptr noundef nonnull %i.q, i64 noundef %i.j, i64 noundef %i.g) #6 ; 0 uses

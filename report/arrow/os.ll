@@ -201,8 +201,8 @@ bb.k:                                             ; preds = %_mi_os_good_alloc_s
   br i1 %i.v, label %mi_os_ensure_zero.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 22
   call void @llvm.assume(i1 true) [ "align"(ptr %i.r, i64 8) ]
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.r, i8 0, i64 range(i64 1, 0) %0, i1 false)
   store i8 1, ptr %2, align 2, !tbaa !28
   br label %mi_os_ensure_zero.exit

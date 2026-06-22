@@ -201,10 +201,10 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.b, i64 8) ]
   %i.m = getelementptr i8, ptr %1, i64 28
   %i.n = load i32, ptr %i.m, align 4, !tbaa !21
   %i.o = zext i32 %i.n to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.b, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.b, i8 0, i64 %i.o, i1 false)
   br label %bb.g
 
@@ -396,10 +396,10 @@ bb.o:                                             ; preds = %bb.n
   br label %_mi_page_malloc.exit34
 
 bb.p:                                             ; preds = %bb.n
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ay, i64 8) ]
   %i.bj = getelementptr i8, ptr %.02836, i64 28
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !21
   %i.bl = zext i32 %i.bk to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ay, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ay, i8 0, i64 %i.bl, i1 false)
   br label %_mi_page_malloc.exit34
 
@@ -520,10 +520,10 @@ bb.f:                                             ; preds = %bb.e
   br label %mi_heap_malloc_small_zero.exit
 
 bb.g:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.h, i64 8) ]
   %i.s = getelementptr i8, ptr %i.f, i64 28
   %i.t = load i32, ptr %i.s, align 4, !tbaa !21
   %i.u = zext i32 %i.t to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.h, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.h, i8 0, i64 %i.u, i1 false)
   br label %mi_heap_malloc_small_zero.exit
 
@@ -579,10 +579,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_mi_heap_malloc_zero_ex.exit
 
 bb.g:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.h, i64 8) ]
   %i.s = getelementptr i8, ptr %i.f, i64 28
   %i.t = load i32, ptr %i.s, align 4, !tbaa !21
   %i.u = zext i32 %i.t to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.h, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.h, i8 0, i64 %i.u, i1 false)
   br label %_mi_heap_malloc_zero_ex.exit
 
@@ -715,10 +715,10 @@ bb.d:                                             ; preds = %bb.c
   br label %mi_heap_malloc_small_zero.exit
 
 bb.e:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.i, i64 8) ]
   %i.t = getelementptr i8, ptr %i.g, i64 28
   %i.u = load i32, ptr %i.t, align 4, !tbaa !21
   %i.v = zext i32 %i.u to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.i, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %i.v, i1 false)
   br label %mi_heap_malloc_small_zero.exit
 
@@ -767,10 +767,10 @@ bb.e:                                             ; preds = %bb.d
   br label %_mi_heap_malloc_zero.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.h, i64 8) ]
   %i.s = getelementptr i8, ptr %i.f, i64 28
   %i.t = load i32, ptr %i.s, align 4, !tbaa !21
   %i.u = zext i32 %i.t to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.h, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.h, i8 0, i64 %i.u, i1 false)
   br label %_mi_heap_malloc_zero.exit
 
@@ -825,10 +825,10 @@ bb.e:                                             ; preds = %bb.d
   br label %mi_heap_zalloc.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.j, i64 8) ]
   %i.u = getelementptr i8, ptr %i.h, i64 28
   %i.v = load i32, ptr %i.u, align 4, !tbaa !21
   %i.w = zext i32 %i.v to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.j, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.j, i8 0, i64 %i.w, i1 false)
   br label %mi_heap_zalloc.exit
 
@@ -1231,10 +1231,10 @@ bb.g:                                             ; preds = %bb.f
   br label %mi_count_size_overflow.exit
 
 bb.h:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.k, i64 8) ]
   %i.v = getelementptr i8, ptr %i.i, i64 28
   %i.w = load i32, ptr %i.v, align 4, !tbaa !21
   %i.x = zext i32 %i.w to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.k, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.k, i8 0, i64 %i.x, i1 false)
   br label %mi_count_size_overflow.exit
 
@@ -1300,10 +1300,10 @@ bb.g:                                             ; preds = %bb.f
   br label %mi_heap_calloc.exit
 
 bb.h:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   %i.x = getelementptr i8, ptr %i.k, i64 28
   %i.y = load i32, ptr %i.x, align 4, !tbaa !21
   %i.z = zext i32 %i.y to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %i.z, i1 false)
   br label %mi_heap_calloc.exit
 
@@ -1706,10 +1706,10 @@ bb.f:                                             ; preds = %bb.e
   br label %mi_heap_malloc_zero_aligned_at.exit
 
 bb.g:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 8) ]
   %i.ac = getelementptr i8, ptr %i.m, i64 28
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !21
   %i.ae = zext i32 %i.ad to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.o, i8 0, i64 %i.ae, i1 false)
   br label %mi_heap_malloc_zero_aligned_at.exit
 
@@ -1776,10 +1776,10 @@ bb.f:                                             ; preds = %bb.e
   br label %mi_heap_zalloc_aligned_at.exit
 
 bb.g:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 8) ]
   %i.ab = getelementptr i8, ptr %i.m, i64 28
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !21
   %i.ad = zext i32 %i.ac to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.o, i8 0, i64 %i.ad, i1 false)
   br label %mi_heap_zalloc_aligned_at.exit
 
@@ -1858,10 +1858,10 @@ bb.h:                                             ; preds = %bb.g
   br label %mi_count_size_overflow.exit
 
 bb.i:                                             ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.r, i64 8) ]
   %i.af = getelementptr i8, ptr %i.p, i64 28
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !21
   %i.ah = zext i32 %i.ag to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.r, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.r, i8 0, i64 %i.ah, i1 false)
   br label %mi_count_size_overflow.exit
 
@@ -1939,10 +1939,10 @@ bb.h:                                             ; preds = %bb.g
   br label %mi_heap_calloc_aligned_at.exit
 
 bb.i:                                             ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.r, i64 8) ]
   %i.ae = getelementptr i8, ptr %i.p, i64 28
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !21
   %i.ag = zext i32 %i.af to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.r, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.r, i8 0, i64 %i.ag, i1 false)
   br label %mi_heap_calloc_aligned_at.exit
 
@@ -2069,10 +2069,10 @@ bb.f:                                             ; preds = %bb.e
   br label %mi_heap_zalloc_aligned_at.exit
 
 bb.g:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.q, i64 8) ]
   %i.ae = getelementptr i8, ptr %i.o, i64 28
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !21
   %i.ag = zext i32 %i.af to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.q, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.q, i8 0, i64 %i.ag, i1 false)
   br label %mi_heap_zalloc_aligned_at.exit
 
@@ -2141,10 +2141,10 @@ bb.f:                                             ; preds = %bb.e
   br label %mi_heap_zalloc_aligned.exit
 
 bb.g:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.q, i64 8) ]
   %i.ad = getelementptr i8, ptr %i.o, i64 28
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !21
   %i.af = zext i32 %i.ae to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.q, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.q, i8 0, i64 %i.af, i1 false)
   br label %mi_heap_zalloc_aligned.exit
 
@@ -2225,10 +2225,10 @@ bb.h:                                             ; preds = %bb.g
   br label %mi_heap_calloc_aligned_at.exit
 
 bb.i:                                             ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.t, i64 8) ]
   %i.ah = getelementptr i8, ptr %i.r, i64 28
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !21
   %i.aj = zext i32 %i.ai to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.t, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.t, i8 0, i64 %i.aj, i1 false)
   br label %mi_heap_calloc_aligned_at.exit
 
@@ -2308,10 +2308,10 @@ bb.h:                                             ; preds = %bb.g
   br label %mi_heap_calloc_aligned.exit
 
 bb.i:                                             ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.t, i64 8) ]
   %i.ag = getelementptr i8, ptr %i.r, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !21
   %i.ai = zext i32 %i.ah to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.t, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.t, i8 0, i64 %i.ai, i1 false)
   br label %mi_heap_calloc_aligned.exit
 
@@ -2397,10 +2397,10 @@ bb.i:                                             ; preds = %bb.h
   br label %mi_heap_malloc_zero_aligned_at.exit
 
 bb.j:                                             ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.q, i64 8) ]
   %i.ae = getelementptr i8, ptr %i.o, i64 28
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !21
   %i.ag = zext i32 %i.af to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.q, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.q, i8 0, i64 %i.ag, i1 false)
   br label %mi_heap_malloc_zero_aligned_at.exit
 
@@ -2523,8 +2523,8 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.u
-  %6 = tail call i64 @llvm.umin.i64(i64 %2, i64 %.1.i.i)
   call void @llvm.assume(i1 true) [ "align"(ptr %.2.i.i58, i64 8), "align"(ptr %1, i64 8) ]
+  %6 = tail call i64 @llvm.umin.i64(i64 %2, i64 %.1.i.i)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.2.i.i58, ptr nonnull readonly align 8 %1, i64 %6, i1 false)
   %i.cm = add i64 %i.ai, -8
   %i.cn = and i64 %i.cm, -33554432                ; 2 uses
@@ -2927,10 +2927,10 @@ _mi_heap_page_destroy.exit:                       ; preds = %bb.i, %bb.j, %bb.k
   br i1 %exitcond.i, label %mi_heap_visit_pages.exit, label %bb.c, !llvm.loop !200
 
 mi_heap_visit_pages.exit:                         ; preds = %.critedge.i, %bb.a, %bb.b
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   %i.be = getelementptr i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.be, i8 0, i64 1032, i1 false)
   %i.bf = getelementptr i8, ptr %0, i64 1040
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1800) %i.bf, ptr noundef nonnull readonly align 16 dereferenceable(1800) getelementptr inbounds nuw (i8, ptr @_mi_heap_empty, i64 1040), i64 1800, i1 false)
   %i.bg = getelementptr i8, ptr %0, i64 2840
   store atomic ptr null, ptr %i.bg seq_cst, align 8, !tbaa !209
@@ -3037,9 +3037,9 @@ _mi_heap_delayed_free_partial.exit.i:             ; preds = %.loopexit.i.i, %.cr
 
 bb.g:                                             ; preds = %bb.h
   tail call void @_mi_heap_delayed_free_all(ptr noundef nonnull %0)
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   %i.aa = getelementptr i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aa, i8 0, i64 1032, i1 false)
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1800) %i.y, ptr noundef nonnull readonly align 16 dereferenceable(1800) getelementptr inbounds nuw (i8, ptr @_mi_heap_empty, i64 1040), i64 1800, i1 false)
   store atomic ptr null, ptr %i.j seq_cst, align 8, !tbaa !209
   store i64 0, ptr %i.g, align 8, !tbaa !196
@@ -3442,8 +3442,8 @@ mi_thread_data_zalloc.exit:                       ; preds = %.loopexit.i
   br i1 %i.ay, label %_mi_heap_set_default_direct.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %mi_thread_data_zalloc.exit.thread, %mi_thread_data_zalloc.exit
-  %1 = getelementptr i8, ptr %.4.i, i64 3064      ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %.4.i, i64 8) ]
+  %1 = getelementptr i8, ptr %.4.i, i64 3064      ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1608) %1, ptr noundef nonnull readonly align 64 dereferenceable(1608) @tld_empty, i64 1608, i1 false)
   %i.az = getelementptr i8, ptr %.4.i, i64 4032   ; 2 uses
   %i.ba = getelementptr i8, ptr %.4.i, i64 3992
@@ -3846,10 +3846,10 @@ bb.g:                                             ; preds = %bb.f
   br label %mi_calloc.exit
 
 bb.h:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   %i.x = getelementptr i8, ptr %i.k, i64 28
   %i.y = load i32, ptr %i.x, align 4, !tbaa !21
   %i.z = zext i32 %i.y to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %i.z, i1 false)
   br label %mi_calloc.exit
 
@@ -4028,10 +4028,10 @@ bb.g:                                             ; preds = %bb.f
   br label %mi_calloc.exit
 
 bb.h:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   %i.x = getelementptr i8, ptr %i.k, i64 28
   %i.y = load i32, ptr %i.x, align 4, !tbaa !21
   %i.z = zext i32 %i.y to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %i.z, i1 false)
   br label %mi_calloc.exit
 
@@ -4210,10 +4210,10 @@ bb.g:                                             ; preds = %bb.f
   br label %mi_calloc.exit
 
 bb.h:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   %i.x = getelementptr i8, ptr %i.k, i64 28
   %i.y = load i32, ptr %i.x, align 4, !tbaa !21
   %i.z = zext i32 %i.y to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %i.z, i1 false)
   br label %mi_calloc.exit
 
@@ -4616,10 +4616,10 @@ bb.g:                                             ; preds = %bb.f
   br label %_mi_heap_malloc_zero.exit
 
 bb.h:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   %i.x = getelementptr i8, ptr %i.k, i64 28
   %i.y = load i32, ptr %i.x, align 4, !tbaa !21
   %i.z = zext i32 %i.y to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %i.z, i1 false)
   br label %_mi_heap_malloc_zero.exit
 
@@ -4676,10 +4676,10 @@ bb.o:                                             ; preds = %bb.n
   br label %_mi_heap_malloc_zero.exit63.thread
 
 bb.p:                                             ; preds = %bb.n
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ao, i64 8) ]
   %i.ay = getelementptr i8, ptr %i.am, i64 28
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !21
   %i.ba = zext i32 %i.az to i64
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ao, i64 8) ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ao, i8 0, i64 %i.ba, i1 false)
   br label %_mi_heap_malloc_zero.exit63.thread
 

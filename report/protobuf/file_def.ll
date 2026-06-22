@@ -201,9 +201,9 @@ bb.a:
   br i1 %i.i, label %upb_Arena_Malloc.exit.i, label %upb_Arena_Malloc.exit.thread.i, !prof !68
 
 upb_Arena_Malloc.exit.thread.i:                   ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.j = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 144
   store ptr %i.j, ptr %i.d, align 8, !tbaa !65
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   br label %_upb_DefBuilder_Alloc.exit
 
 upb_Arena_Malloc.exit.i:                          ; preds = %bb.a
@@ -310,9 +310,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.aw, label %upb_Arena_Malloc.exit.i250, label %_upb_DefBuilder_Alloc.exit252.thread457, !prof !68
 
 _upb_DefBuilder_Alloc.exit252.thread457:          ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i246) ]
   %i.ax = getelementptr inbounds nuw i8, ptr %.val.i.i246, i64 %i.aq
   store ptr %i.ax, ptr %i.ar, align 8, !tbaa !65
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i246) ]
   %i.ay = getelementptr inbounds nuw i8, ptr %.0.i, i64 96 ; 2 uses
   store ptr %.val.i.i246, ptr %i.ay, align 8, !tbaa !44
   br label %bb.i
@@ -357,9 +357,9 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.bl, label %upb_Arena_Malloc.exit.i.i, label %_upb_DefBuilder_AllocCounted.exit.thread460, !prof !68
 
 _upb_DefBuilder_AllocCounted.exit.thread460:      ; preds = %bb.k
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.bm = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.bf
   store ptr %i.bm, ptr %i.bg, align 8, !tbaa !65
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %.lr.ph362
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.k
@@ -625,9 +625,9 @@ bb.ab:                                            ; preds = %bb.z
   br i1 %i.ey, label %upb_Arena_Malloc.exit.i.i.i, label %upb_Arena_Malloc.exit.thread.i.i.i, !prof !68
 
 upb_Arena_Malloc.exit.thread.i.i.i:               ; preds = %bb.ab
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.ez = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.er
   store ptr %i.ez, ptr %.val240, align 8, !tbaa !65
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   br label %bb.ac
 
 upb_Arena_Malloc.exit.i.i.i:                      ; preds = %bb.ab
@@ -714,9 +714,9 @@ bb.aj:                                            ; preds = %bb.ah
   br i1 %i.gc, label %upb_Arena_Malloc.exit.i.i283, label %upb_Arena_Malloc.exit.thread.i.i281, !prof !68
 
 upb_Arena_Malloc.exit.thread.i.i281:              ; preds = %bb.aj
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i279) ]
   %i.gd = getelementptr inbounds nuw i8, ptr %.val.i.i.i279, i64 %i.fw
   store ptr %i.gd, ptr %i.fx, align 8, !tbaa !65
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i279) ]
   br label %.lr.ph364.preheader
 
 upb_Arena_Malloc.exit.i.i283:                     ; preds = %bb.aj
@@ -793,9 +793,9 @@ bb.ao:                                            ; preds = %bb.am
   br i1 %i.hc, label %upb_Arena_Malloc.exit.i.i295, label %upb_Arena_Malloc.exit.thread.i.i293, !prof !68
 
 upb_Arena_Malloc.exit.thread.i.i293:              ; preds = %bb.ao
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i291) ]
   %i.hd = getelementptr inbounds nuw i8, ptr %.val.i.i.i291, i64 %i.gx
   store ptr %i.hd, ptr %i.gv, align 8, !tbaa !65
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i291) ]
   br label %.lr.ph367.preheader
 
 upb_Arena_Malloc.exit.i.i295:                     ; preds = %bb.ao
@@ -884,9 +884,9 @@ bb.at:                                            ; preds = %bb.ar
   br i1 %i.ig, label %upb_Arena_Malloc.exit.i.i307, label %upb_Arena_Malloc.exit.thread.i.i305, !prof !68
 
 upb_Arena_Malloc.exit.thread.i.i305:              ; preds = %bb.at
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i303) ]
   %i.ih = getelementptr inbounds nuw i8, ptr %.val.i.i.i303, i64 %i.ib
   store ptr %i.ih, ptr %i.hz, align 8, !tbaa !65
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i303) ]
   br label %.lr.ph370.preheader
 
 upb_Arena_Malloc.exit.i.i307:                     ; preds = %bb.at

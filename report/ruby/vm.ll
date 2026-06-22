@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
 .preheader3.i:                                    ; preds = %bb.a, %.preheader3.i
   %.0.i9 = phi ptr [ %i.k, %.preheader3.i ], [ %0, %bb.a ] ; 2 uses
   %i.k = getelementptr i8, ptr %.0.i9, i64 56     ; 3 uses
-  %.not24.i = icmp ult ptr %i.k, %i.c
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
+  %.not24.i = icmp ult ptr %i.k, %i.c
   tail call void @llvm.assume(i1 %.not24.i)
   %i.l = getelementptr i8, ptr %.0.i9, i64 88
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !15, !nonnull !64, !noundef !64 ; 2 uses
@@ -605,6 +605,7 @@ define internal noundef i64 @vm_call_iseq_setup_kwparm_kwarg(ptr noundef %0, ptr
 vm_ci_kwarg.exit:
   %i.a = load ptr, ptr %2, align 8, !tbaa !226
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !225  ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.b, i64 2) ]
   %i.c = getelementptr i8, ptr %2, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !233
   %i.e = getelementptr i8, ptr %i.d, i64 16       ; 2 uses
@@ -617,7 +618,6 @@ vm_ci_kwarg.exit:
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !124  ; 2 uses
   %i.k = getelementptr i8, ptr %i.j, i64 56
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !720  ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.b, i64 2) ]
   %i.m = getelementptr i8, ptr %i.b, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !238  ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !7    ; 4 uses
