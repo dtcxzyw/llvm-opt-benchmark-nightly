@@ -201,10 +201,6 @@ bb.a:
   %i.h = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %i.f
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 12
   %.sroa.05.0.copyload = load i32, ptr %i.i, align 4 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load ptr, ptr %2, align 8, !nonnull !5, !align !6
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %5 = load ptr, ptr %4, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 160
   %i.l = load ptr, ptr %i.k, align 8
@@ -225,6 +221,10 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit: ; preds = %bb.a
   %i.u = ptrtoint ptr %1 to i64
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load ptr, ptr %2, align 8, !nonnull !5, !align !6
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = load ptr, ptr %4, align 8
   %i.v = ptrtoint ptr %5 to i64
   %i.w = sub i64 %i.u, %i.v
   %i.x = trunc i64 %i.w to i32
@@ -304,12 +304,12 @@ _ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit: ; preds
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer21ProcessAllocateStructERKNS2_20WasmAllocateStructOpE(ptr noundef nonnull align 8 dereferenceable(561) %0, ptr noundef nonnull align 8 dereferenceable(17) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8
   %i.f = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.g = zext i32 %.sroa.0.0.copyload.i.i to i64
   %i.h = add i64 %i.f, %i.g
@@ -375,17 +375,12 @@ bb.d:                                             ; preds = %bb.c
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %i.ao = load i32, ptr %i.an, align 4            ; 2 uses
   %.not54 = icmp eq i32 %i.ao, -1
-  %.pre = load ptr, ptr %i.a, align 8             ; 2 uses
-  br i1 %.not54, label %bb.e, label %..thread_crit_edge
-
-..thread_crit_edge:                               ; preds = %bb.d
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 8
-  %.pre55 = load ptr, ptr %.phi.trans.insert, align 8
-  br label %.thread
+  br i1 %.not54, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
+  %2 = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6
   %i.ap = ptrtoint ptr %1 to i64
-  %i.aq = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.ap, %i.as
@@ -400,11 +395,10 @@ bb.e:                                             ; preds = %bb.d
   %i.az = tail call i32 @_ZN2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer19RefineTypeKnowledgeENS2_7OpIndexENS0_4wasm9ValueTypeERKNS2_9OperationE(ptr noundef nonnull align 8 dereferenceable(561) %0, i32 %i.ay, i32 3397, ptr noundef nonnull align 4 dereferenceable(4) %1) ; 0 uses
   br label %.critedge
 
-.thread:                                          ; preds = %..thread_crit_edge, %bb.b
-  %.pre-phi68 = phi i64 [ %i.aj, %..thread_crit_edge ], [ %.pre67, %bb.b ]
-  %i.ba = phi ptr [ %i.af, %..thread_crit_edge ], [ %.pre61, %bb.b ]
-  %2 = phi ptr [ %.pre55, %..thread_crit_edge ], [ %i.e, %bb.b ]
-  %.sroa.026.4 = phi i32 [ %i.ao, %..thread_crit_edge ], [ %.sroa.026.0.copyload, %bb.b ] ; 3 uses
+.thread:                                          ; preds = %bb.d, %bb.b
+  %.pre-phi68 = phi i64 [ %i.aj, %bb.d ], [ %.pre67, %bb.b ]
+  %i.ba = phi ptr [ %i.af, %bb.d ], [ %.pre61, %bb.b ]
+  %.sroa.026.4 = phi i32 [ %i.ao, %bb.d ], [ %.sroa.026.0.copyload, %bb.b ] ; 3 uses
   %i.bb = zext i32 %.sroa.026.4 to i64            ; 2 uses
   %i.bc = icmp ugt i64 %.pre-phi68, %i.bb
   tail call void @llvm.assume(i1 %i.bc)
@@ -417,7 +411,10 @@ bb.f:                                             ; preds = %.thread
 
 _ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit: ; preds = %.thread
   %i.be = ptrtoint ptr %1 to i64
-  %i.bf = ptrtoint ptr %2 to i64
+  %3 = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = load ptr, ptr %4, align 8
+  %i.bf = ptrtoint ptr %5 to i64
   %i.bg = sub i64 %i.be, %i.bf
   %i.bh = trunc i64 %i.bg to i32
   %i.bi = getelementptr inbounds nuw [24 x i8], ptr %i.ba, i64 %i.bb ; 2 uses
