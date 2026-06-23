@@ -201,18 +201,18 @@ bb.a:
   br i1 %i.e, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1p_8adapters3map8map_foldRBQ_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesuNCNCINvNtCsjyY8HP3IvQ6_12object_store4util15coalesce_rangesNCNCNvYINtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage7runtime21DeltaIOStorageBackendINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB3r_11ObjectStoreEL_EEB6k_10get_ranges00NtB3r_5ErrorINtNtBb_3pin3PinINtNtB5Q_5boxed3BoxDNtNtNtBb_6future6future6Futurep6OutputINtNtBb_6result6ResultB2H_B70_ENtNtBb_6marker4SendEL_EEE00NCINvNvB1j_8for_each4callB2H_NCINvMsj_NtB5Q_3vecINtB9W_3VecB2H_E14extend_trustedINtB29_3MapBF_B3i_EE0E0E0EB4v_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   %i.j = ptrtoint ptr %i.d to i64
   %i.k = ptrtoint ptr %i.b to i64
   %i.l = sub nuw i64 %i.j, %i.k
   %i.m = lshr exact i64 %i.l, 4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %bb.b
@@ -312,18 +312,18 @@ bb.a:
   br i1 %i.e, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1p_8adapters3map8map_foldRBQ_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesuNCNCINvNtCsjyY8HP3IvQ6_12object_store4util15coalesce_rangesNCNCNvYNtNtB3r_3aws8AmazonS3NtB3r_11ObjectStore10get_ranges00NtB3r_5ErrorINtNtBb_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBb_6future6future6Futurep6OutputINtNtBb_6result6ResultB2H_B5e_ENtNtBb_6marker4SendEL_EEE00NCINvNvB1j_8for_each4callB2H_NCINvMsj_NtB5L_3vecINtB8q_3VecB2H_E14extend_trustedINtB29_3MapBF_B3i_EE0E0E0ECs14kWLkQVSKO_14deltalake_core.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   %i.j = ptrtoint ptr %i.d to i64
   %i.k = ptrtoint ptr %i.b to i64
   %i.l = sub nuw i64 %i.j, %i.k
   %i.m = lshr exact i64 %i.l, 4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %bb.b
@@ -423,18 +423,18 @@ bb.a:
   br i1 %i.e, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1p_8adapters3map8map_foldRBQ_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesuNCNCINvNtCsjyY8HP3IvQ6_12object_store4util15coalesce_rangesNCNCNvYNtNtB3r_3gcp18GoogleCloudStorageNtB3r_11ObjectStore10get_ranges00NtB3r_5ErrorINtNtBb_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBb_6future6future6Futurep6OutputINtNtBb_6result6ResultB2H_B5p_ENtNtBb_6marker4SendEL_EEE00NCINvNvB1j_8for_each4callB2H_NCINvMsj_NtB5W_3vecINtB8B_3VecB2H_E14extend_trustedINtB29_3MapBF_B3i_EE0E0E0ECs14kWLkQVSKO_14deltalake_core.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   %i.j = ptrtoint ptr %i.d to i64
   %i.k = ptrtoint ptr %i.b to i64
   %i.l = sub nuw i64 %i.j, %i.k
   %i.m = lshr exact i64 %i.l, 4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %bb.b
@@ -534,18 +534,18 @@ bb.a:
   br i1 %i.e, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1p_8adapters3map8map_foldRBQ_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesuNCNCINvNtCsjyY8HP3IvQ6_12object_store4util15coalesce_rangesNCNCNvYNtNtB3r_4http9HttpStoreNtB3r_11ObjectStore10get_ranges00NtB3r_5ErrorINtNtBb_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBb_6future6future6Futurep6OutputINtNtBb_6result6ResultB2H_B5g_ENtNtBb_6marker4SendEL_EEE00NCINvNvB1j_8for_each4callB2H_NCINvMsj_NtB5N_3vecINtB8s_3VecB2H_E14extend_trustedINtB29_3MapBF_B3i_EE0E0E0ECs14kWLkQVSKO_14deltalake_core.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   %i.j = ptrtoint ptr %i.d to i64
   %i.k = ptrtoint ptr %i.b to i64
   %i.l = sub nuw i64 %i.j, %i.k
   %i.m = lshr exact i64 %i.l, 4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %bb.b
@@ -645,18 +645,18 @@ bb.a:
   br i1 %i.e, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1p_8adapters3map8map_foldRBQ_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesuNCNCINvNtCsjyY8HP3IvQ6_12object_store4util15coalesce_rangesNCNCNvYNtNtB3r_5azure14MicrosoftAzureNtB3r_11ObjectStore10get_ranges00NtB3r_5ErrorINtNtBb_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBb_6future6future6Futurep6OutputINtNtBb_6result6ResultB2H_B5n_ENtNtBb_6marker4SendEL_EEE00NCINvNvB1j_8for_each4callB2H_NCINvMsj_NtB5U_3vecINtB8z_3VecB2H_E14extend_trustedINtB29_3MapBF_B3i_EE0E0E0ECs14kWLkQVSKO_14deltalake_core.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   %i.j = ptrtoint ptr %i.d to i64
   %i.k = ptrtoint ptr %i.b to i64
   %i.l = sub nuw i64 %i.j, %i.k
   %i.m = lshr exact i64 %i.l, 4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %bb.b
@@ -1059,13 +1059,13 @@ bb.a:
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterRNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1H_8adapters3map8map_foldRBQ_NtNtBV_12table_source27TableProviderFilterPushDownuNCNvXs0_NtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion3cdf4scanNtB3W_21DeltaCdfTableProviderNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProvider25supports_filters_pushdown0NCINvNvB1B_8for_each4callB2Z_NCINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB7q_3VecB2Z_E14extend_trustedINtB2r_3MapBF_B3O_EE0E0E0EB42_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
   %i.d = sub nuw i64 %i.b, %i.c
@@ -1468,12 +1468,12 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %i.bj, label %bb.n, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.bk = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bk = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val.a = load ptr, ptr %i.bk, align 8, !nonnull !4, !noundef !4
-  %i.bl = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bl = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val21 = load ptr, ptr %i.bl, align 8, !nonnull !4, !noundef !4
-  %i.bm = getelementptr inbounds nuw i8, ptr %.val21, i64 16
-  %i.bn = getelementptr inbounds nuw i8, ptr %.val.a, i64 16
+  %i.bm = getelementptr inbounds nuw i8, ptr %.val.a, i64 16
+  %i.bn = getelementptr inbounds nuw i8, ptr %.val21, i64 16
   %i.bo = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 %i.bn, ptr noundef nonnull readonly align 8 %i.bm, i64 noundef range(i64 0, 1152921504606846976) %.val20)
   br label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -1486,12 +1486,12 @@ bb.o:                                             ; preds = %.lr.ph
   br i1 %i.br, label %_RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 _RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit: ; preds = %bb.o
-  %i.bs = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bs = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val23.a = load ptr, ptr %i.bs, align 8, !nonnull !4, !noundef !4
-  %i.bt = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val25 = load ptr, ptr %i.bt, align 8, !nonnull !4, !noundef !4
-  %i.bu = getelementptr inbounds nuw i8, ptr %.val25, i64 16
-  %i.bv = getelementptr inbounds nuw i8, ptr %.val23.a, i64 16
+  %i.bu = getelementptr inbounds nuw i8, ptr %.val23.a, i64 16
+  %i.bv = getelementptr inbounds nuw i8, ptr %.val25, i64 16
   %i.bw = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 %i.bv, ptr noundef nonnull readonly align 8 %i.bu, i64 noundef range(i64 0, 576460752303423488) %.val24)
   br i1 %i.bw, label %bb.af, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 

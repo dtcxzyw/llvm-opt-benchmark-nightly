@@ -201,12 +201,10 @@ bb.a:
   %3 = alloca %"class.v8::internal::TNode.1", align 8 ; 2 uses
   %4 = alloca %"class.v8::internal::TNode.11", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %5 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %6, align 1
-  %i.c = icmp ult i8 %5, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %5 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -217,7 +215,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %6 = load i8, ptr %5, align 1
+  %i.h = lshr i8 %6, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -383,12 +383,10 @@ bb.a:
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler20BytecodeOperandCountEi(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -399,7 +397,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -802,12 +802,10 @@ bb.g:                                             ; preds = %bb.d, %bb.c, %bb.b
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler20BytecodeOperandFlag8Ei(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -818,7 +816,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -860,12 +860,10 @@ _ZN2v88internal11interpreter20InterpreterAssembler23BytecodeUnsignedOperandEiNS1
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler21BytecodeOperandFlag16Ei(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -876,7 +874,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -918,12 +918,10 @@ _ZN2v88internal11interpreter20InterpreterAssembler23BytecodeUnsignedOperandEiNS1
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler19BytecodeOperandUImmEi(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -934,7 +932,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -996,12 +996,10 @@ declare void @_ZN2v88internal17CodeStubAssembler13SmiFromUint32ENS0_5TNodeINS0_7
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler18BytecodeOperandImmEi(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.11") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -1012,7 +1010,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -1074,12 +1074,10 @@ declare void @_ZN2v88internal17CodeStubAssembler12SmiFromInt32ENS0_5TNodeINS0_6I
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler23BytecodeOperandIdxInt32Ei(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -1090,7 +1088,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -1181,12 +1181,10 @@ bb.a:
   %3 = alloca %"class.v8::internal::TNode.1", align 8 ; 2 uses
   %4 = alloca %"class.v8::internal::TNode.8", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %5 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %6, align 1
-  %i.c = icmp ult i8 %5, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %5 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -1197,7 +1195,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %6 = load i8, ptr %5, align 1
+  %i.h = lshr i8 %6, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -1244,12 +1244,10 @@ _ZN2v88internal11interpreter20InterpreterAssembler23BytecodeUnsignedOperandEiNS1
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler24BytecodeOperandRuntimeIdEi(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -1260,7 +1258,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -1304,12 +1304,10 @@ bb.a:
   %3 = alloca %"class.v8::internal::TNode.1", align 8 ; 2 uses
   %4 = alloca %"class.v8::internal::TNode.8", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %5 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %6, align 1
-  %i.c = icmp ult i8 %5, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %5 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -1320,7 +1318,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %6 = load i8, ptr %5, align 1
+  %i.h = lshr i8 %6, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
@@ -1367,12 +1367,10 @@ _ZN2v88internal11interpreter20InterpreterAssembler23BytecodeUnsignedOperandEiNS1
 define hidden void @_ZN2v88internal11interpreter20InterpreterAssembler26BytecodeOperandIntrinsicIdEi(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.v8::internal::TNode.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(108) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i8, ptr %i.a, align 8                 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.b = load i8, ptr %4, align 1
-  %i.c = icmp ult i8 %3, -44
+  %i.b = load i8, ptr %i.a, align 8               ; 2 uses
+  %i.c = icmp ult i8 %i.b, -44
   tail call void @llvm.assume(i1 %i.c)
-  %i.d = zext i8 %3 to i64                        ; 2 uses
+  %i.d = zext i8 %i.b to i64                      ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp slt i32 %2, %i.f
@@ -1383,7 +1381,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN2v88internal11interpreter9Bytecodes14GetOperandSizeENS1_8BytecodeEiNS1_12OperandScaleE.exit: ; preds = %bb.a
-  %i.h = lshr i8 %i.b, 1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 17
+  %4 = load i8, ptr %3, align 1
+  %i.h = lshr i8 %4, 1
   %i.i = zext nneg i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.i
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.d
