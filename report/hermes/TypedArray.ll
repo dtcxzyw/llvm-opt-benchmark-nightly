@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.k
 
 _ZN6hermes2vm12_GLOBAL__N_137convertNegativeBoundsRelativeToLengthIdEET_S3_S3_.exit: ; preds = %bb.l, %bb.m
   %i.bc = phi double [ %i.az, %bb.l ], [ %i.bb, %bb.m ]
-  %i.bd = fptosi double %i.bc to i64              ; 14 uses
+  %i.bd = fptosi double %i.bc to i64              ; 10 uses
   %i.be = fcmp olt double %.mask.i59.pre-phi, 0.000000e+00
   br i1 %i.be, label %bb.n, label %bb.o
 
@@ -218,7 +218,7 @@ bb.o:                                             ; preds = %_ZN6hermes2vm12_GLO
 
 _ZN6hermes2vm12_GLOBAL__N_137convertNegativeBoundsRelativeToLengthIdEET_S3_S3_.exit60: ; preds = %bb.n, %bb.o
   %i.bk = phi double [ %i.bh, %bb.n ], [ %i.bj, %bb.o ]
-  %i.bl = fptosi double %i.bk to i64              ; 12 uses
+  %i.bl = fptosi double %i.bk to i64              ; 8 uses
   %.sroa.0.0.copyload.i.i61 = load i64, ptr %i.d, align 8, !tbaa !21 ; 2 uses
   %i.bm = and i64 %.sroa.0.0.copyload.i.i61, 281474976710655
   %i.bn = inttoptr i64 %i.bm to ptr               ; 2 uses
@@ -305,31 +305,23 @@ _ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit: ; preds = %bb.r
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dd, i64 %i.dg ; 7 uses
   %i.di = tail call range(i8 0, 9) i8 @llvm.cttz.i8(i8 %i.co, i1 true)
   switch i8 %i.di, label %bb.u [
-    i8 0, label %4
-    i8 1, label %5
-    i8 2, label %9
-    i8 3, label %13
+    i8 0, label %bb.t
+    i8 1, label %iter.check
+    i8 2, label %.lr.ph.i.i.i67.preheader
+    i8 3, label %.lr.ph.i.i.i71.preheader
   ]
 
-4:                                                ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
-  %.not.i.i.i = icmp eq i64 %i.bl, %i.bd
-  br i1 %.not.i.i.i, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %bb.t
-
-bb.t:                                             ; preds = %4
+bb.t:                                             ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
   %i.dj = getelementptr inbounds i8, ptr %i.dh, i64 %i.bd ; 2 uses
   %gepdiff = sub nsw i64 %i.bl, %i.bd
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !13
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.dj, i8 %i.dk, i64 %gepdiff, i1 false)
   br label %_ZSt4fillIPhhEvT_S1_RKT0_.exit
 
-5:                                                ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
-  %6 = getelementptr inbounds [2 x i8], ptr %i.dh, i64 %i.bd ; 6 uses
-  %7 = getelementptr inbounds [2 x i8], ptr %i.dh, i64 %i.bl
-  %8 = load i16, ptr %6, align 2, !tbaa !351      ; 3 uses
-  %.not5.i.i.i = icmp eq i64 %i.bd, %i.bl
-  br i1 %.not5.i.i.i, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %iter.check
-
-iter.check:                                       ; preds = %5
+iter.check:                                       ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
+  %4 = getelementptr inbounds [2 x i8], ptr %i.dh, i64 %i.bd ; 6 uses
+  %5 = getelementptr inbounds [2 x i8], ptr %i.dh, i64 %i.bl
+  %6 = load i16, ptr %4, align 2, !tbaa !351      ; 3 uses
   %i.dl = shl i64 %i.bl, 1
   %i.dm = add i64 %i.dl, -2
   %i.dn = shl i64 %i.bd, 1
@@ -347,15 +339,15 @@ vector.ph139:                                     ; preds = %vector.main.loop.it
   %n.mod.vf140 = and i64 %i.dq, 12
   %n.vec141 = and i64 %i.dq, -16                  ; 4 uses
   %i.dr = shl i64 %n.vec141, 1
-  %i.ds = getelementptr i8, ptr %6, i64 %i.dr
-  %broadcast.splatinsert142 = insertelement <8 x i16> poison, i16 %8, i64 0
+  %i.ds = getelementptr i8, ptr %4, i64 %i.dr
+  %broadcast.splatinsert142 = insertelement <8 x i16> poison, i16 %6, i64 0
   %broadcast.splat143 = shufflevector <8 x i16> %broadcast.splatinsert142, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body144
 
 vector.body144:                                   ; preds = %vector.body144, %vector.ph139
   %index145 = phi i64 [ 0, %vector.ph139 ], [ %index.next147, %vector.body144 ] ; 2 uses
   %i.dt = shl i64 %index145, 1
-  %next.gep146 = getelementptr i8, ptr %6, i64 %i.dt ; 2 uses
+  %next.gep146 = getelementptr i8, ptr %4, i64 %i.dt ; 2 uses
   %i.du = getelementptr i8, ptr %next.gep146, i64 16
   store <8 x i16> %broadcast.splat143, ptr %next.gep146, align 2, !tbaa !351
   store <8 x i16> %broadcast.splat143, ptr %i.du, align 2, !tbaa !351
@@ -375,15 +367,15 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec141, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec152 = and i64 %i.dq, -4                   ; 3 uses
   %i.dw = shl i64 %n.vec152, 1
-  %i.dx = getelementptr i8, ptr %6, i64 %i.dw
-  %broadcast.splatinsert153 = insertelement <4 x i16> poison, i16 %8, i64 0
+  %i.dx = getelementptr i8, ptr %4, i64 %i.dw
+  %broadcast.splatinsert153 = insertelement <4 x i16> poison, i16 %6, i64 0
   %broadcast.splat154 = shufflevector <4 x i16> %broadcast.splatinsert153, <4 x i16> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index155 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next157, %vec.epilog.vector.body ] ; 2 uses
   %i.dy = shl i64 %index155, 1
-  %next.gep156 = getelementptr i8, ptr %6, i64 %i.dy
+  %next.gep156 = getelementptr i8, ptr %4, i64 %i.dy
   store <4 x i16> %broadcast.splat154, ptr %next.gep156, align 2, !tbaa !351
   %index.next157 = add nuw i64 %index155, 4       ; 2 uses
   %i.dz = icmp eq i64 %index.next157, %n.vec152
@@ -394,24 +386,20 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n158, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.06.i.i.i.ph = phi ptr [ %6, %iter.check ], [ %i.ds, %vec.epilog.iter.check ], [ %i.dx, %vec.epilog.middle.block ]
+  %.06.i.i.i.ph = phi ptr [ %4, %iter.check ], [ %i.ds, %vec.epilog.iter.check ], [ %i.dx, %vec.epilog.middle.block ]
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
   %.06.i.i.i = phi ptr [ %i.ea, %.lr.ph.i.i.i ], [ %.06.i.i.i.ph, %.lr.ph.i.i.i.preheader ] ; 2 uses
-  store i16 %8, ptr %.06.i.i.i, align 2, !tbaa !351
+  store i16 %6, ptr %.06.i.i.i, align 2, !tbaa !351
   %i.ea = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 2 ; 2 uses
-  %.not.i.i.i65 = icmp eq ptr %i.ea, %7
+  %.not.i.i.i65 = icmp eq ptr %i.ea, %5
   br i1 %.not.i.i.i65, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !403
 
-9:                                                ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
-  %10 = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %i.bd ; 4 uses
-  %11 = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %i.bl
-  %12 = load i32, ptr %10, align 4, !tbaa !3      ; 2 uses
-  %.not5.i.i.i66 = icmp eq i64 %i.bd, %i.bl
-  br i1 %.not5.i.i.i66, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i67.preheader
-
-.lr.ph.i.i.i67.preheader:                         ; preds = %9
+.lr.ph.i.i.i67.preheader:                         ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
+  %7 = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %i.bd ; 4 uses
+  %8 = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %i.bl
+  %9 = load i32, ptr %7, align 4, !tbaa !3        ; 2 uses
   %i.eb = sub i64 %i.bl, %i.bd
   %i.ec = add i64 %i.eb, 4611686018427387903
   %i.ed = and i64 %i.ec, 4611686018427387903      ; 2 uses
@@ -422,15 +410,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vector.ph124:                                     ; preds = %.lr.ph.i.i.i67.preheader
   %n.vec126 = and i64 %i.ee, 9223372036854775800  ; 3 uses
   %i.ef = shl i64 %n.vec126, 2
-  %i.eg = getelementptr i8, ptr %10, i64 %i.ef
-  %broadcast.splatinsert127 = insertelement <4 x i32> poison, i32 %12, i64 0
+  %i.eg = getelementptr i8, ptr %7, i64 %i.ef
+  %broadcast.splatinsert127 = insertelement <4 x i32> poison, i32 %9, i64 0
   %broadcast.splat128 = shufflevector <4 x i32> %broadcast.splatinsert127, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body129
 
 vector.body129:                                   ; preds = %vector.body129, %vector.ph124
   %index130 = phi i64 [ 0, %vector.ph124 ], [ %index.next132, %vector.body129 ] ; 2 uses
   %i.eh = shl i64 %index130, 2
-  %next.gep131 = getelementptr i8, ptr %10, i64 %i.eh ; 2 uses
+  %next.gep131 = getelementptr i8, ptr %7, i64 %i.eh ; 2 uses
   %i.ei = getelementptr i8, ptr %next.gep131, i64 16
   store <4 x i32> %broadcast.splat128, ptr %next.gep131, align 4, !tbaa !3
   store <4 x i32> %broadcast.splat128, ptr %i.ei, align 4, !tbaa !3
@@ -443,24 +431,20 @@ middle.block133:                                  ; preds = %vector.body129
   br i1 %cmp.n134, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i67.preheader160
 
 .lr.ph.i.i.i67.preheader160:                      ; preds = %.lr.ph.i.i.i67.preheader, %middle.block133
-  %.06.i.i.i68.ph = phi ptr [ %10, %.lr.ph.i.i.i67.preheader ], [ %i.eg, %middle.block133 ]
+  %.06.i.i.i68.ph = phi ptr [ %7, %.lr.ph.i.i.i67.preheader ], [ %i.eg, %middle.block133 ]
   br label %.lr.ph.i.i.i67
 
 .lr.ph.i.i.i67:                                   ; preds = %.lr.ph.i.i.i67.preheader160, %.lr.ph.i.i.i67
   %.06.i.i.i68 = phi ptr [ %i.ek, %.lr.ph.i.i.i67 ], [ %.06.i.i.i68.ph, %.lr.ph.i.i.i67.preheader160 ] ; 2 uses
-  store i32 %12, ptr %.06.i.i.i68, align 4, !tbaa !3
+  store i32 %9, ptr %.06.i.i.i68, align 4, !tbaa !3
   %i.ek = getelementptr inbounds nuw i8, ptr %.06.i.i.i68, i64 4 ; 2 uses
-  %.not.i.i.i69 = icmp eq ptr %i.ek, %11
+  %.not.i.i.i69 = icmp eq ptr %i.ek, %8
   br i1 %.not.i.i.i69, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i67, !llvm.loop !405
 
-13:                                               ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
-  %14 = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %i.bd ; 4 uses
-  %15 = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %i.bl
-  %16 = load i64, ptr %14, align 8, !tbaa !21     ; 2 uses
-  %.not5.i.i.i70 = icmp eq i64 %i.bd, %i.bl
-  br i1 %.not5.i.i.i70, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
-
-.lr.ph.i.i.i71.preheader:                         ; preds = %13
+.lr.ph.i.i.i71.preheader:                         ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
+  %10 = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %i.bd ; 4 uses
+  %11 = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %i.bl
+  %12 = load i64, ptr %10, align 8, !tbaa !21     ; 2 uses
   %i.el = sub i64 %i.bl, %i.bd
   %i.em = add i64 %i.el, 2305843009213693951
   %i.en = and i64 %i.em, 2305843009213693951      ; 2 uses
@@ -471,15 +455,15 @@ middle.block133:                                  ; preds = %vector.body129
 vector.ph:                                        ; preds = %.lr.ph.i.i.i71.preheader
   %n.vec = and i64 %i.eo, 4611686018427387900     ; 3 uses
   %i.ep = shl i64 %n.vec, 3
-  %i.eq = getelementptr i8, ptr %14, i64 %i.ep
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %16, i64 0
+  %i.eq = getelementptr i8, ptr %10, i64 %i.ep
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %12, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.er = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %14, i64 %i.er ; 2 uses
+  %next.gep = getelementptr i8, ptr %10, i64 %i.er ; 2 uses
   %i.es = getelementptr i8, ptr %next.gep, i64 16
   store <2 x i64> %broadcast.splat, ptr %next.gep, align 8, !tbaa !21
   store <2 x i64> %broadcast.splat, ptr %i.es, align 8, !tbaa !21
@@ -492,20 +476,20 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader162
 
 .lr.ph.i.i.i71.preheader162:                      ; preds = %.lr.ph.i.i.i71.preheader, %middle.block
-  %.06.i.i.i72.ph = phi ptr [ %14, %.lr.ph.i.i.i71.preheader ], [ %i.eq, %middle.block ]
+  %.06.i.i.i72.ph = phi ptr [ %10, %.lr.ph.i.i.i71.preheader ], [ %i.eq, %middle.block ]
   br label %.lr.ph.i.i.i71
 
 .lr.ph.i.i.i71:                                   ; preds = %.lr.ph.i.i.i71.preheader162, %.lr.ph.i.i.i71
   %.06.i.i.i72 = phi ptr [ %i.eu, %.lr.ph.i.i.i71 ], [ %.06.i.i.i72.ph, %.lr.ph.i.i.i71.preheader162 ] ; 2 uses
-  store i64 %16, ptr %.06.i.i.i72, align 8, !tbaa !21
+  store i64 %12, ptr %.06.i.i.i72, align 8, !tbaa !21
   %i.eu = getelementptr inbounds nuw i8, ptr %.06.i.i.i72, i64 8 ; 2 uses
-  %.not.i.i.i73 = icmp eq ptr %i.eu, %15
+  %.not.i.i.i73 = icmp eq ptr %i.eu, %11
   br i1 %.not.i.i.i73, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71, !llvm.loop !407
 
 bb.u:                                             ; preds = %_ZN6hermes2vm16JSTypedArrayBase5beginERNS0_7RuntimeE.exit
   unreachable
 
-_ZSt4fillIPhhEvT_S1_RKT0_.exit:                   ; preds = %.lr.ph.i.i.i71, %.lr.ph.i.i.i67, %.lr.ph.i.i.i, %middle.block, %middle.block133, %middle.block148, %vec.epilog.middle.block, %13, %9, %5, %bb.t, %4
+_ZSt4fillIPhhEvT_S1_RKT0_.exit:                   ; preds = %.lr.ph.i.i.i71, %.lr.ph.i.i.i67, %.lr.ph.i.i.i, %middle.block, %middle.block133, %middle.block148, %vec.epilog.middle.block, %bb.t
   %.sroa.0.0.copyload.i74 = load i64, ptr %i.d, align 8, !tbaa !21
   br label %bb.v
 

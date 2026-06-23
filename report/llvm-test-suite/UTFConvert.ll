@@ -11,12 +11,12 @@ define dso_local noundef zeroext i1 @_Z20ConvertUTF8ToUnicodeRK11CStringBaseIcER
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   store i32 0, ptr %i.a, align 8, !tbaa !8
-  %i.b = load ptr, ptr %1, align 8, !tbaa !12     ; 4 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !12     ; 3 uses
   store i32 0, ptr %i.b, align 4, !tbaa !13
-  %i.c = load ptr, ptr %0, align 8, !tbaa !15     ; 5 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !15     ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !18   ; 5 uses
-  %i.f = sext i32 %i.e to i64                     ; 6 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !18   ; 4 uses
+  %i.f = sext i32 %i.e to i64                     ; 5 uses
   %i.g = icmp eq i32 %i.e, 0
   br i1 %i.g, label %_ZL13Utf8_To_Utf16PwPmPKcm.exit, label %.lr.ph.i
 
@@ -108,17 +108,13 @@ bb.h:                                             ; preds = %bb.g, %.thread.i, %
 _ZL13Utf8_To_Utf16PwPmPKcm.exit:                  ; preds = %bb.b, %bb.g, %bb.h, %bb.a
   %.058.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.am, %bb.h ], [ %.05898.i, %bb.b ], [ %.05898.i, %bb.g ] ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !22 ; 3 uses
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !22 ; 2 uses
   %.not.i9 = icmp sgt i32 %i.ap, %.058.lcssa.i
-  br i1 %.not.i9, label %_ZN11CStringBaseIwE9GetBufferEi.exit, label %2
+  br i1 %.not.i9, label %_ZN11CStringBaseIwE9GetBufferEi.exit, label %bb.i
 
-2:                                                ; preds = %_ZL13Utf8_To_Utf16PwPmPKcm.exit
-  %3 = add nsw i32 %.058.lcssa.i, 1               ; 3 uses
-  %4 = icmp eq i32 %3, %i.ap
-  br i1 %4, label %_ZN11CStringBaseIwE9GetBufferEi.exit, label %bb.i
-
-bb.i:                                             ; preds = %2
-  %i.aq = zext nneg i32 %3 to i64
+bb.i:                                             ; preds = %_ZL13Utf8_To_Utf16PwPmPKcm.exit
+  %2 = add nsw i32 %.058.lcssa.i, 1               ; 2 uses
+  %i.aq = zext nneg i32 %2 to i64
   %i.ar = icmp slt i32 %.058.lcssa.i, -1
   %i.as = shl nuw nsw i64 %i.aq, 2
   %i.at = select i1 %i.ar, i64 -1, i64 %i.as
@@ -143,29 +139,29 @@ bb.j:                                             ; preds = %._crit_edge.thread.
   store ptr %i.au, ptr %1, align 8, !tbaa !12
   %i.ay = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.ax
   store i32 0, ptr %i.ay, align 4, !tbaa !13
-  store i32 %3, ptr %i.ao, align 4, !tbaa !22
+  store i32 %2, ptr %i.ao, align 4, !tbaa !22
   br label %_ZN11CStringBaseIwE9GetBufferEi.exit
 
-_ZN11CStringBaseIwE9GetBufferEi.exit:             ; preds = %_ZL13Utf8_To_Utf16PwPmPKcm.exit, %2, %bb.j
-  %.pre-phi = phi i64 [ %i.f, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %i.f, %2 ], [ %.pre39.pre-phi, %bb.j ] ; 3 uses
-  %5 = phi i32 [ %i.e, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %i.e, %2 ], [ %.pre34, %bb.j ]
-  %6 = phi ptr [ %i.c, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %i.c, %2 ], [ %.pre33, %bb.j ] ; 2 uses
-  %7 = phi ptr [ %i.b, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %i.b, %2 ], [ %i.au, %bb.j ] ; 6 uses
-  %i.az = icmp eq i32 %5, 0
+_ZN11CStringBaseIwE9GetBufferEi.exit:             ; preds = %_ZL13Utf8_To_Utf16PwPmPKcm.exit, %bb.j
+  %.pre-phi = phi i64 [ %i.f, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %.pre39.pre-phi, %bb.j ] ; 3 uses
+  %3 = phi i32 [ %i.e, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %.pre34, %bb.j ]
+  %4 = phi ptr [ %i.c, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %.pre33, %bb.j ] ; 2 uses
+  %5 = phi ptr [ %i.b, %_ZL13Utf8_To_Utf16PwPmPKcm.exit ], [ %i.au, %bb.j ] ; 6 uses
+  %i.az = icmp eq i32 %3, 0
   br i1 %i.az, label %_ZL13Utf8_To_Utf16PwPmPKcm.exit31, label %.lr.ph.i10
 
 .lr.ph.i10:                                       ; preds = %_ZN11CStringBaseIwE9GetBufferEi.exit, %bb.t
   %.05898.i11 = phi i64 [ %i.co, %bb.t ], [ 0, %_ZN11CStringBaseIwE9GetBufferEi.exit ] ; 6 uses
   %.06197.i12 = phi i64 [ %.364.i28, %bb.t ], [ 0, %_ZN11CStringBaseIwE9GetBufferEi.exit ] ; 3 uses
   %i.ba = add i64 %.06197.i12, 1                  ; 2 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 %.06197.i12
+  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 %.06197.i12
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !19  ; 7 uses
   %i.bd = zext i8 %i.bc to i32                    ; 2 uses
   %i.be = icmp sgt i8 %i.bc, -1
   br i1 %i.be, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.lr.ph.i10
-  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %.05898.i11
+  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.05898.i11
   store i32 %i.bd, ptr %i.bf, align 4, !tbaa !13
   br label %bb.t, !llvm.loop !23
 
@@ -213,7 +209,7 @@ bb.n:                                             ; preds = %bb.p, %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.bw = add i64 %.162.i19, 1                    ; 2 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %6, i64 %.162.i19
+  %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 %.162.i19
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !19  ; 2 uses
   %or.cond.i22 = icmp sgt i8 %i.by, -65
   br i1 %or.cond.i22, label %.thread.i24, label %bb.p
@@ -234,7 +230,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ce, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.thread.i24
-  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %.05898.i11
+  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.05898.i11
   store i32 %.15285.i25, ptr %i.cf, align 4, !tbaa !13
   br label %bb.t
 
@@ -246,7 +242,7 @@ bb.r:                                             ; preds = %.thread.i24
 bb.s:                                             ; preds = %bb.r
   %i.ci = lshr i32 %i.cg, 10
   %i.cj = or disjoint i32 %i.ci, 55296
-  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %.05898.i11 ; 2 uses
+  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.05898.i11 ; 2 uses
   store i32 %i.cj, ptr %i.ck, align 4, !tbaa !13
   %i.cl = and i32 %.15285.i25, 1023
   %i.cm = or disjoint i32 %i.cl, 56320
@@ -264,13 +260,13 @@ bb.t:                                             ; preds = %bb.s, %bb.q, %bb.k
 _ZL13Utf8_To_Utf16PwPmPKcm.exit31:                ; preds = %bb.l, %bb.r, %bb.t, %_ZN11CStringBaseIwE9GetBufferEi.exit
   %.058.lcssa.i29 = phi i64 [ 0, %_ZN11CStringBaseIwE9GetBufferEi.exit ], [ %i.co, %bb.t ], [ %.05898.i11, %bb.l ], [ %.05898.i11, %bb.r ]
   %i.cq = phi i1 [ true, %_ZN11CStringBaseIwE9GetBufferEi.exit ], [ true, %bb.t ], [ false, %bb.l ], [ false, %bb.r ]
-  %i.cr = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %.058.lcssa.i29
+  %i.cr = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.058.lcssa.i29
   store i32 0, ptr %i.cr, align 4, !tbaa !13
-  %wcslen.i.i = tail call i64 @wcslen(ptr nonnull %7) ; 2 uses
+  %wcslen.i.i = tail call i64 @wcslen(ptr nonnull %5) ; 2 uses
   %i.cs = trunc i64 %wcslen.i.i to i32
   %sext.i = shl i64 %wcslen.i.i, 32
   %i.ct = ashr exact i64 %sext.i, 30
-  %i.cu = getelementptr inbounds i8, ptr %7, i64 %i.ct
+  %i.cu = getelementptr inbounds i8, ptr %5, i64 %i.ct
   store i32 0, ptr %i.cu, align 4, !tbaa !13
   store i32 %i.cs, ptr %i.a, align 8, !tbaa !8
   ret i1 %i.cq
@@ -358,16 +354,16 @@ bb.i:                                             ; preds = %.lr.ph.split.us.spl
 _ZL13Utf16_To_Utf8PcPmPKwm.exit:                  ; preds = %bb.c, %bb.d, %.loopexit.split.us.us.us.i, %bb.a
   %.058.lcssa.i = phi i32 [ 0, %bb.a ], [ %.05887.us.us.i, %bb.c ], [ %.05887.us.us.i, %bb.d ], [ %.260.us.us.i, %.loopexit.split.us.us.us.i ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !25 ; 3 uses
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !25 ; 2 uses
   %.not.i = icmp sgt i32 %i.ab, %.058.lcssa.i
-  br i1 %.not.i, label %_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split, label %bb.j
+  br i1 %.not.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZL13Utf16_To_Utf8PcPmPKwm.exit
-  %2 = add nsw i32 %.058.lcssa.i, 1               ; 3 uses
-  %3 = icmp eq i32 %2, %i.ab
-  br i1 %3, label %_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split, label %bb.k
+  %.pre.i = load ptr, ptr %1, align 8, !tbaa !15
+  br label %_ZN11CStringBaseIcE9GetBufferEi.exit
 
-bb.k:                                             ; preds = %bb.j
+bb.k:                                             ; preds = %_ZL13Utf16_To_Utf8PcPmPKwm.exit
+  %2 = add nsw i32 %.058.lcssa.i, 1               ; 2 uses
   %i.ac = sext i32 %2 to i64
   %i.ad = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ac) #4 ; 11 uses
   %i.ae = ptrtoaddr ptr %i.ad to i64
@@ -512,20 +508,16 @@ bb.l:                                             ; preds = %._crit_edge.thread.
   store i32 %2, ptr %i.aa, align 4, !tbaa !25
   br label %_ZN11CStringBaseIcE9GetBufferEi.exit
 
-_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split: ; preds = %bb.j, %_ZL13Utf16_To_Utf8PcPmPKwm.exit
-  %.pr = load ptr, ptr %1, align 8, !tbaa !15
-  br label %_ZN11CStringBaseIcE9GetBufferEi.exit
-
-_ZN11CStringBaseIcE9GetBufferEi.exit:             ; preds = %_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split, %bb.l
-  %4 = phi ptr [ %.pr, %_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split ], [ %i.ad, %bb.l ] ; 6 uses
-  %.pre-phi = phi i64 [ %i.f, %_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split ], [ %.pre40.pre-phi, %bb.l ] ; 4 uses
-  %i.bl = phi i32 [ %i.e, %_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split ], [ %.pre37, %bb.l ]
-  %i.bm = phi ptr [ %i.c, %_ZN11CStringBaseIcE9GetBufferEi.exitthread-pre-split ], [ %.pre36, %bb.l ] ; 4 uses
+_ZN11CStringBaseIcE9GetBufferEi.exit:             ; preds = %bb.j, %bb.l
+  %.pre-phi = phi i64 [ %i.f, %bb.j ], [ %.pre40.pre-phi, %bb.l ] ; 4 uses
+  %i.bl = phi i32 [ %i.e, %bb.j ], [ %.pre37, %bb.l ]
+  %i.bm = phi ptr [ %i.c, %bb.j ], [ %.pre36, %bb.l ] ; 4 uses
+  %3 = phi ptr [ %.pre.i, %bb.j ], [ %i.ad, %bb.l ] ; 6 uses
   %i.bn = icmp eq i32 %i.bl, 0
   br i1 %i.bn, label %_ZL13Utf16_To_Utf8PcPmPKwm.exit27, label %.lr.ph.i9
 
 .lr.ph.i9:                                        ; preds = %_ZN11CStringBaseIcE9GetBufferEi.exit
-  %.not.i10 = icmp eq ptr %4, null
+  %.not.i10 = icmp eq ptr %3, null
   br i1 %.not.i10, label %.lr.ph.split.us.split.us.i13, label %.lr.ph.split.i
 
 .lr.ph.split.us.split.us.i13:                     ; preds = %.lr.ph.i9, %.loopexit.split.us.us.us.i21
@@ -604,7 +596,7 @@ bb.t:                                             ; preds = %.lr.ph.split.us.spl
 
 bb.u:                                             ; preds = %.lr.ph.split.i
   %i.cl = trunc nuw nsw i32 %i.cj to i8
-  %i.cm = getelementptr inbounds nuw i8, ptr %4, i64 %.05887.i
+  %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 %.05887.i
   store i8 %i.cl, ptr %i.cm, align 1, !tbaa !19
   %i.cn = add i64 %.05887.i, 1
   br label %.loopexit.split.i, !llvm.loop !24
@@ -663,7 +655,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dh = lshr i32 %.152135.i, %i.dg
   %i.di = trunc i32 %i.dh to i8
   %i.dj = add i8 %i.df, %i.di
-  %i.dk = getelementptr inbounds nuw i8, ptr %4, i64 %.05887.i
+  %i.dk = getelementptr inbounds nuw i8, ptr %3, i64 %.05887.i
   store i8 %i.dj, ptr %i.dk, align 1, !tbaa !19
   %i.dl = add i64 %.05887.i, 1                    ; 3 uses
   %i.dm = zext nneg i32 %.053.lcssa.i to i64      ; 2 uses
@@ -685,7 +677,7 @@ vector.body71:                                    ; preds = %.split.i
   %i.du = trunc <4 x i32> %i.dt to <4 x i8>
   %i.dv = and <4 x i8> %i.du, splat (i8 63)
   %i.dw = or disjoint <4 x i8> %i.dv, splat (i8 -128)
-  %i.dx = getelementptr i8, ptr %4, i64 %i.dl
+  %i.dx = getelementptr i8, ptr %3, i64 %i.dl
   store <4 x i8> %i.dw, ptr %i.dx, align 1, !tbaa !19
   %cmp.n75 = icmp eq i64 %n.vec68, %i.dm
   br i1 %cmp.n75, label %.loopexit.split.i, label %scalar.ph.preheader
@@ -704,7 +696,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.eb = trunc i32 %i.ea to i8
   %i.ec = and i8 %i.eb, 63
   %i.ed = or disjoint i8 %i.ec, -128
-  %i.ee = getelementptr inbounds nuw i8, ptr %4, i64 %.159.i
+  %i.ee = getelementptr inbounds nuw i8, ptr %3, i64 %.159.i
   store i8 %i.ed, ptr %i.ee, align 1, !tbaa !19
   %i.ef = add i64 %.159.i, 1                      ; 2 uses
   %.not70.i = icmp eq i32 %i.dy, 0
@@ -719,7 +711,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 _ZL13Utf16_To_Utf8PcPmPKwm.exit27:                ; preds = %bb.w, %bb.x, %.loopexit.split.i, %bb.n, %bb.o, %.loopexit.split.us.us.us.i21, %_ZN11CStringBaseIcE9GetBufferEi.exit
   %.058.lcssa.i11 = phi i64 [ 0, %_ZN11CStringBaseIcE9GetBufferEi.exit ], [ %.260.us.us.i22, %.loopexit.split.us.us.us.i21 ], [ %.05887.us.us.i15, %bb.n ], [ %.05887.us.us.i15, %bb.o ], [ %.260.i, %.loopexit.split.i ], [ %.05887.i, %bb.w ], [ %.05887.i, %bb.x ]
   %i.eh = phi i1 [ true, %_ZN11CStringBaseIcE9GetBufferEi.exit ], [ true, %.loopexit.split.us.us.us.i21 ], [ false, %bb.n ], [ false, %bb.o ], [ true, %.loopexit.split.i ], [ false, %bb.w ], [ false, %bb.x ]
-  %i.ei = getelementptr inbounds nuw i8, ptr %4, i64 %.058.lcssa.i11
+  %i.ei = getelementptr inbounds nuw i8, ptr %3, i64 %.058.lcssa.i11
   store i8 0, ptr %i.ei, align 1, !tbaa !19
   %i.ej = load ptr, ptr %1, align 8, !tbaa !15    ; 2 uses
   %strlen.i.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ej) ; 2 uses

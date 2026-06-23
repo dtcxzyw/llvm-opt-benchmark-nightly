@@ -201,25 +201,21 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [24 x i8], ptr %.054, i64 %.085
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -24 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i64 24, i1 false)
-  %.idx = mul nsw i64 %.085, 24
-  %8 = add nsw i64 %.idx, -24                     ; 2 uses
   %i.ai = icmp sgt i64 %.085, 2
-  br i1 %i.ai, label %bb.k, label %9, !prof !337
+  br i1 %i.ai, label %bb.k, label %bb.l, !prof !337
 
 bb.k:                                             ; preds = %bb.j
+  %.idx = mul nuw nsw i64 %.085, 24
+  %8 = add nsw i64 %.idx, -24
   %i.aj = getelementptr inbounds nuw i8, ptr %.054, i64 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aj, ptr nonnull align 8 %.054, i64 %8, i1 false)
   br label %_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE3EEES4_ET0_T_S6_S5_.exit
 
-9:                                                ; preds = %bb.j
-  %10 = icmp eq i64 %8, 24
-  br i1 %10, label %bb.l, label %_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE3EEES4_ET0_T_S6_S5_.exit
-
-bb.l:                                             ; preds = %9
+bb.l:                                             ; preds = %bb.j
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, ptr noundef nonnull align 8 dereferenceable(24) %.054, i64 24, i1 false)
   br label %_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE3EEES4_ET0_T_S6_S5_.exit
 
-_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE3EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.k, %9, %bb.l
+_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE3EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.k, %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.054, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %_ZSt11swap_rangesIPN6duckdb7SortKeyILNS0_11SortKeyTypeE3EEES4_ET0_T_S6_S5_.exit
@@ -622,25 +618,21 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [24 x i8], ptr %.054, i64 %.085
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -24 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i64 24, i1 false)
-  %.idx = mul nsw i64 %.085, 24
-  %8 = add nsw i64 %.idx, -24                     ; 2 uses
   %i.ai = icmp sgt i64 %.085, 2
-  br i1 %i.ai, label %bb.k, label %9, !prof !337
+  br i1 %i.ai, label %bb.k, label %bb.l, !prof !337
 
 bb.k:                                             ; preds = %bb.j
+  %.idx = mul nuw nsw i64 %.085, 24
+  %8 = add nsw i64 %.idx, -24
   %i.aj = getelementptr inbounds nuw i8, ptr %.054, i64 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aj, ptr nonnull align 8 %.054, i64 %8, i1 false)
   br label %_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE7EEES4_ET0_T_S6_S5_.exit
 
-9:                                                ; preds = %bb.j
-  %10 = icmp eq i64 %8, 24
-  br i1 %10, label %bb.l, label %_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE7EEES4_ET0_T_S6_S5_.exit
-
-bb.l:                                             ; preds = %9
+bb.l:                                             ; preds = %bb.j
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, ptr noundef nonnull align 8 dereferenceable(24) %.054, i64 24, i1 false)
   br label %_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE7EEES4_ET0_T_S6_S5_.exit
 
-_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE7EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.k, %9, %bb.l
+_ZSt13move_backwardIPN6duckdb7SortKeyILNS0_11SortKeyTypeE7EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.k, %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.054, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %_ZSt11swap_rangesIPN6duckdb7SortKeyILNS0_11SortKeyTypeE7EEES4_ET0_T_S6_S5_.exit

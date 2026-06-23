@@ -201,19 +201,19 @@ bb.da:                                            ; preds = %bb.cz
   %i.qq = add nuw nsw i64 %i.qo, 511
   %i.qr = and i64 %i.qq, 65024                    ; 2 uses
   %i.qs = trunc nuw nsw i64 %i.qr to i32          ; 3 uses
-  %i.qt = load i32, ptr %.053.sroa.phi, align 4, !tbaa !18 ; 3 uses
+  %i.qt = load i32, ptr %.053.sroa.phi, align 4, !tbaa !18 ; 2 uses
   %.not.i97 = icmp sgt i32 %i.qt, %i.qs
-  br i1 %.not.i97, label %bb.de, label %bb.db
+  br i1 %.not.i97, label %bb.db, label %bb.dc
 
 bb.db:                                            ; preds = %bb.da
-  %8 = or disjoint i32 %i.qs, 1                   ; 3 uses
-  %9 = icmp eq i32 %8, %i.qt
-  br i1 %9, label %bb.de, label %bb.dc
+  %.pre.i = load ptr, ptr %.053, align 8, !tbaa !16
+  br label %bb.de
 
-bb.dc:                                            ; preds = %bb.db
+bb.dc:                                            ; preds = %bb.da
+  %8 = or disjoint i32 %i.qs, 1                   ; 2 uses
   %i.qu = zext nneg i32 %8 to i64
   %i.qv = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.qu) #9
-          to label %.noexc101 unwind label %bb.dg ; 10 uses
+          to label %.noexc101 unwind label %bb.dg ; 11 uses
 
 .noexc101:                                        ; preds = %bb.dc
   %i.qw = ptrtoaddr ptr %i.qv to i64
@@ -352,9 +352,9 @@ bb.dd:                                            ; preds = %._crit_edge.thread.
   store i32 %8, ptr %.053.sroa.phi, align 4, !tbaa !18
   br label %bb.de
 
-bb.de:                                            ; preds = %bb.dd, %bb.db, %bb.da
-  %10 = load ptr, ptr %.053, align 8, !tbaa !16   ; 2 uses
-  %i.sd = invoke noundef i32 @_Z16ReadStream_FALSEP19ISequentialInStreamPvm(ptr noundef %0, ptr noundef %10, i64 noundef %i.qr)
+bb.de:                                            ; preds = %bb.dd, %bb.db
+  %9 = phi ptr [ %.pre.i, %bb.db ], [ %i.qv, %bb.dd ] ; 2 uses
+  %i.sd = invoke noundef i32 @_Z16ReadStream_FALSEP19ISequentialInStreamPvm(ptr noundef %0, ptr noundef %9, i64 noundef %i.qr)
           to label %bb.df unwind label %bb.dh     ; 2 uses
 
 bb.df:                                            ; preds = %bb.de
@@ -376,7 +376,7 @@ bb.di:                                            ; preds = %bb.df
   %i.sh = add i32 %i.sg, %i.qs
   store i32 %i.sh, ptr %i.q, align 8, !tbaa !8
   %i.si = load i64, ptr %i.af, align 8, !tbaa !43
-  %i.sj = getelementptr inbounds nuw i8, ptr %10, i64 %i.si
+  %i.sj = getelementptr inbounds nuw i8, ptr %9, i64 %i.si
   store i8 0, ptr %i.sj, align 1, !tbaa !17
   %i.sk = load ptr, ptr %.053, align 8, !tbaa !16 ; 2 uses
   %strlen.i.i = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.sk) ; 2 uses

@@ -201,27 +201,27 @@ bb.a:
 
 .split:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !58   ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !58   ; 2 uses
   %.not.i = icmp slt i32 %1, %i.e
-  br i1 %.not.i, label %_ZN11CStringBaseIcE9GetBufferEi.exit, label %bb.b
+  br i1 %.not.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.split
-  %3 = add nsw i32 %1, 1                          ; 3 uses
-  %4 = icmp eq i32 %3, %i.e
-  br i1 %4, label %_ZN11CStringBaseIcE9GetBufferEi.exit, label %bb.c
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !60
+  br label %_ZN11CStringBaseIcE9GetBufferEi.exit
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %.split
+  %3 = add nsw i32 %1, 1                          ; 2 uses
   %i.f = sext i32 %3 to i64
-  %i.g = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.f) #20 ; 10 uses
+  %i.g = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.f) #20 ; 11 uses
   %i.h = ptrtoaddr ptr %i.g to i64
   %i.i = icmp sgt i32 %i.e, 0
   br i1 %i.i, label %.preheader.i.i, label %bb.d
 
 .preheader.i.i:                                   ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !60   ; 4 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !61   ; 4 uses
   %i.l = icmp sgt i32 %i.k, 0
-  %.pre.i.i = load ptr, ptr %2, align 8, !tbaa !61 ; 10 uses
+  %.pre.i.i = load ptr, ptr %2, align 8, !tbaa !60 ; 10 uses
   br i1 %i.l, label %iter.check, label %._crit_edge.i.i
 
 iter.check:                                       ; preds = %.preheader.i.i
@@ -341,19 +341,19 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge.thread.i.i, %._crit_edge.i.i, %bb.c
-  store ptr %i.g, ptr %2, align 8, !tbaa !61
+  store ptr %i.g, ptr %2, align 8, !tbaa !60
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ao = load i32, ptr %i.an, align 8, !tbaa !60
+  %i.ao = load i32, ptr %i.an, align 8, !tbaa !61
   %i.ap = sext i32 %i.ao to i64
   %i.aq = getelementptr inbounds i8, ptr %i.g, i64 %i.ap
   store i8 0, ptr %i.aq, align 1, !tbaa !36
   store i32 %3, ptr %i.d, align 4, !tbaa !58
   br label %_ZN11CStringBaseIcE9GetBufferEi.exit
 
-_ZN11CStringBaseIcE9GetBufferEi.exit:             ; preds = %.split, %bb.b, %bb.d
-  %5 = load ptr, ptr %2, align 8, !tbaa !61       ; 2 uses
+_ZN11CStringBaseIcE9GetBufferEi.exit:             ; preds = %bb.b, %bb.d
+  %4 = phi ptr [ %.pre.i, %bb.b ], [ %i.g, %bb.d ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
-  %i.ar = call noundef i32 @_ZN8NArchive4NZip10CInArchive9ReadBytesEPvjPj(ptr noundef nonnull align 8 dereferenceable(138) %0, ptr noundef %5, i32 noundef %1, ptr noundef nonnull %i.b)
+  %i.ar = call noundef i32 @_ZN8NArchive4NZip10CInArchive9ReadBytesEPvjPj(ptr noundef nonnull align 8 dereferenceable(138) %0, ptr noundef %4, i32 noundef %1, ptr noundef nonnull %i.b)
   %.not.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i, label %_ZN8NArchive4NZip10CInArchive20ReadBytesAndTestSizeEPvj.exit.i, label %bb.e
 
@@ -377,8 +377,8 @@ bb.f:                                             ; preds = %_ZN8NArchive4NZip10
 
 .split10:                                         ; preds = %bb.a
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store i32 0, ptr %i.aw, align 8, !tbaa !60
-  %i.ax = load ptr, ptr %2, align 8, !tbaa !61
+  store i32 0, ptr %i.aw, align 8, !tbaa !61
+  %i.ax = load ptr, ptr %2, align 8, !tbaa !60
   store i8 0, ptr %i.ax, align 1, !tbaa !36
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !58
@@ -386,13 +386,13 @@ bb.f:                                             ; preds = %_ZN8NArchive4NZip10
   br i1 %.not.i11, label %.split10._ZN11CStringBaseIcE9GetBufferEi.exit21_crit_edge, label %bb.g
 
 .split10._ZN11CStringBaseIcE9GetBufferEi.exit21_crit_edge: ; preds = %.split10
-  %.pre = load ptr, ptr %2, align 8, !tbaa !61
+  %.pre = load ptr, ptr %2, align 8, !tbaa !60
   br label %_ZN11CStringBaseIcE9GetBufferEi.exit21
 
 bb.g:                                             ; preds = %.split10
   %i.ba = tail call noalias noundef nonnull dereferenceable(1) ptr @_Znam(i64 noundef 1) #20 ; 3 uses
-  store ptr %i.ba, ptr %2, align 8, !tbaa !61
-  %i.bb = load i32, ptr %i.aw, align 8, !tbaa !60
+  store ptr %i.ba, ptr %2, align 8, !tbaa !60
+  %i.bb = load i32, ptr %i.aw, align 8, !tbaa !61
   %i.bc = sext i32 %i.bb to i64
   %i.bd = getelementptr inbounds i8, ptr %i.ba, i64 %i.bc
   store i8 0, ptr %i.bd, align 1, !tbaa !36
@@ -425,11 +425,11 @@ bb.i:                                             ; preds = %_ZN8NArchive4NZip10
   unreachable
 
 _ZN8NArchive4NZip10CInArchive13SafeReadBytesEPvj.exit: ; preds = %_ZN8NArchive4NZip10CInArchive20ReadBytesAndTestSizeEPvj.exit.i23, %_ZN8NArchive4NZip10CInArchive20ReadBytesAndTestSizeEPvj.exit.i
-  %phi.call = phi ptr [ %5, %_ZN8NArchive4NZip10CInArchive20ReadBytesAndTestSizeEPvj.exit.i ], [ %i.be, %_ZN8NArchive4NZip10CInArchive20ReadBytesAndTestSizeEPvj.exit.i23 ]
+  %phi.call = phi ptr [ %4, %_ZN8NArchive4NZip10CInArchive20ReadBytesAndTestSizeEPvj.exit.i ], [ %i.be, %_ZN8NArchive4NZip10CInArchive20ReadBytesAndTestSizeEPvj.exit.i23 ]
   %i.bk = zext i32 %1 to i64
   %i.bl = getelementptr inbounds nuw i8, ptr %phi.call, i64 %i.bk
   store i8 0, ptr %i.bl, align 1, !tbaa !36
-  %i.bm = load ptr, ptr %2, align 8, !tbaa !61    ; 2 uses
+  %i.bm = load ptr, ptr %2, align 8, !tbaa !60    ; 2 uses
   %strlen.i.i = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bm) ; 2 uses
   %i.bn = trunc i64 %strlen.i.i to i32
   %sext.i = shl i64 %strlen.i.i, 32
@@ -437,7 +437,7 @@ _ZN8NArchive4NZip10CInArchive13SafeReadBytesEPvj.exit: ; preds = %_ZN8NArchive4N
   %i.bp = getelementptr inbounds i8, ptr %i.bm, i64 %i.bo
   store i8 0, ptr %i.bp, align 1, !tbaa !36
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %i.bn, ptr %i.bq, align 8, !tbaa !60
+  store i32 %i.bn, ptr %i.bq, align 8, !tbaa !61
   ret void
 }
 
@@ -840,7 +840,7 @@ bb.d:                                             ; preds = %_ZN8NArchive4NZip10
 
 bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 44
-  store ptr %i.s, ptr %i.q, align 8, !tbaa !61
+  store ptr %i.s, ptr %i.q, align 8, !tbaa !60
   store i8 0, ptr %i.s, align 1, !tbaa !36
   store i32 4, ptr %i.t, align 4, !tbaa !58
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 5 uses
@@ -968,9 +968,9 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %_ZN8NArchive4NZipL12FlagsAreSameERNS0_5CItemES2_.exit.thread
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.bk = load i32, ptr %i.bj, align 8, !tbaa !60
+  %i.bk = load i32, ptr %i.bj, align 8, !tbaa !61
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !60
+  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !61
   %.not30 = icmp eq i32 %i.bk, %i.bm
   br i1 %.not30, label %bb.q, label %_ZN8NArchive4NZipL12FlagsAreSameERNS0_5CItemES2_.exit.thread39
 
@@ -1034,7 +1034,7 @@ bb.t:                                             ; preds = %_ZN8NArchive4NZip11
 
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.i:      ; preds = %_ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.u) #19, !inline_history !98
-  %i.cc = load ptr, ptr %i.q, align 8, !tbaa !61  ; 2 uses
+  %i.cc = load ptr, ptr %i.q, align 8, !tbaa !60  ; 2 uses
   %i.cd = icmp eq ptr %i.cc, null
   br i1 %i.cd, label %_ZN8NArchive4NZip5CItemD2Ev.exit, label %bb.u
 
@@ -1112,7 +1112,7 @@ bb.d:                                             ; preds = %_ZN8NArchive4NZip11
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i:        ; preds = %_ZN8NArchive4NZip11CExtraBlockD2Ev.exit
   tail call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.h) #19, !inline_history !98
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !61   ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !60   ; 2 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %_ZN8NArchive4NZip10CLocalItemD2Ev.exit, label %bb.e
 
@@ -1515,7 +1515,7 @@ bb.i:                                             ; preds = %_ZN8NArchive4NZip10
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   store i64 0, ptr %i.ab, align 8
   %i.am = call noalias noundef nonnull dereferenceable(4) ptr @_Znam(i64 noundef 4) #20 ; 2 uses
-  store ptr %i.am, ptr %i.n, align 8, !tbaa !61
+  store ptr %i.am, ptr %i.n, align 8, !tbaa !60
   store i8 0, ptr %i.am, align 1, !tbaa !36
   store i32 4, ptr %i.o, align 4, !tbaa !58
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.q, i8 0, i64 16, i1 false)
@@ -1629,7 +1629,7 @@ bb.v:                                             ; preds = %_ZN8NArchive4NZip11
 
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.i:      ; preds = %_ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.p) #19, !inline_history !98
-  %i.bm = load ptr, ptr %i.n, align 8, !tbaa !61  ; 2 uses
+  %i.bm = load ptr, ptr %i.n, align 8, !tbaa !60  ; 2 uses
   %i.bn = icmp eq ptr %i.bm, null
   br i1 %i.bn, label %_ZN8NArchive4NZip5CItemD2Ev.exit, label %bb.w
 
@@ -1788,7 +1788,7 @@ define dso_local noundef i32 @_ZN8NArchive4NZip10CInArchive15ReadLocalsAndCdER13
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   store i64 0, ptr %i.x, align 8
   %i.ab = call noalias noundef nonnull dereferenceable(4) ptr @_Znam(i64 noundef 4) #20 ; 2 uses
-  store ptr %i.ab, ptr %i.f, align 8, !tbaa !61
+  store ptr %i.ab, ptr %i.f, align 8, !tbaa !60
   store i8 0, ptr %i.ab, align 1, !tbaa !36
   store i32 4, ptr %i.g, align 4, !tbaa !58
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
@@ -2003,19 +2003,19 @@ bb.s:                                             ; preds = %.loopexit.split-lp2
 
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.i.jt3:  ; preds = %_ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.jt3
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.h) #19, !inline_history !98
-  %i.bm = load ptr, ptr %i.f, align 8, !tbaa !61  ; 2 uses
+  %i.bm = load ptr, ptr %i.f, align 8, !tbaa !60  ; 2 uses
   %i.bn = icmp eq ptr %i.bm, null
   br i1 %i.bn, label %_ZN8NArchive4NZip5CItemD2Ev.exit.jt3, label %bb.t
 
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.i.jt0:  ; preds = %_ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.jt0
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.h) #19, !inline_history !98
-  %i.bo = load ptr, ptr %i.f, align 8, !tbaa !61  ; 2 uses
+  %i.bo = load ptr, ptr %i.f, align 8, !tbaa !60  ; 2 uses
   %i.bp = icmp eq ptr %i.bo, null
   br i1 %i.bp, label %_ZN8NArchive4NZip5CItemD2Ev.exit.jt0, label %bb.u
 
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.i.jt1:  ; preds = %_ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.jt1
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.h) #19, !inline_history !98
-  %i.bq = load ptr, ptr %i.f, align 8, !tbaa !61  ; 2 uses
+  %i.bq = load ptr, ptr %i.f, align 8, !tbaa !60  ; 2 uses
   %i.br = icmp eq ptr %i.bq, null
   br i1 %i.br, label %_ZN8NArchive4NZip5CItemD2Ev.exit.jt1, label %bb.v
 
@@ -2124,7 +2124,7 @@ bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   store i64 0, ptr %i.cw, align 8
   %i.dj = call noalias noundef nonnull dereferenceable(4) ptr @_Znam(i64 noundef 4) #20 ; 2 uses
-  store ptr %i.dj, ptr %i.bz, align 8, !tbaa !61
+  store ptr %i.dj, ptr %i.bz, align 8, !tbaa !60
   store i8 0, ptr %i.dj, align 1, !tbaa !36
   store i32 4, ptr %i.ca, align 4, !tbaa !58
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cc, i8 0, i64 16, i1 false)
@@ -2158,8 +2158,8 @@ bb.ac:                                            ; preds = %bb.aa
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.do, i64 %indvars.iv
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !76 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 32
-  %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !61
-  %i.dt = load ptr, ptr %i.bz, align 8, !tbaa !61
+  %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !60
+  %i.dt = load ptr, ptr %i.bz, align 8, !tbaa !60
   %i.du = invoke noundef i32 @_Z15MyStringComparePKcS0_(ptr noundef %i.ds, ptr noundef %i.dt)
           to label %bb.ad unwind label %bb.ae
 
@@ -2286,8 +2286,8 @@ _ZN8NArchive4NZipL12FlagsAreSameERNS0_5CItemES2_.exit.thread: ; preds = %bb.al, 
 bb.am:                                            ; preds = %_ZN8NArchive4NZipL12FlagsAreSameERNS0_5CItemES2_.exit.thread
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ep, i64 32 ; 4 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ep, i64 40 ; 5 uses
-  %i.fl = load i32, ptr %i.fk, align 8, !tbaa !60
-  %i.fm = load i32, ptr %i.cp, align 8, !tbaa !60
+  %i.fl = load i32, ptr %i.fk, align 8, !tbaa !61
+  %i.fm = load i32, ptr %i.cp, align 8, !tbaa !61
   %.not126 = icmp eq i32 %i.fl, %i.fm
   br i1 %.not126, label %bb.an, label %_ZN8NArchive4NZipL12FlagsAreSameERNS0_5CItemES2_.exit.thread160
 
@@ -2310,10 +2310,10 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.ft, label %_ZN11CStringBaseIcEaSERKS0_.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  store i32 0, ptr %i.fk, align 8, !tbaa !60
-  %i.fu = load ptr, ptr %i.fj, align 8, !tbaa !61
+  store i32 0, ptr %i.fk, align 8, !tbaa !61
+  %i.fu = load ptr, ptr %i.fj, align 8, !tbaa !60
   store i8 0, ptr %i.fu, align 1, !tbaa !36
-  %i.fv = load i32, ptr %i.cp, align 8, !tbaa !60
+  %i.fv = load i32, ptr %i.cp, align 8, !tbaa !61
   %i.fw = add nsw i32 %i.fv, 1                    ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.ep, i64 44 ; 2 uses
   %i.fy = load i32, ptr %i.fx, align 4, !tbaa !58 ; 2 uses
@@ -2321,7 +2321,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.fz, label %._ZN11CStringBaseIcE11SetCapacityEi.exit_crit_edge.i, label %bb.ar
 
 ._ZN11CStringBaseIcE11SetCapacityEi.exit_crit_edge.i: ; preds = %bb.aq
-  %.pre8.i = load ptr, ptr %i.fj, align 8, !tbaa !61
+  %.pre8.i = load ptr, ptr %i.fj, align 8, !tbaa !60
   br label %_ZN11CStringBaseIcE11SetCapacityEi.exit.i
 
 bb.ar:                                            ; preds = %bb.aq
@@ -2332,12 +2332,12 @@ bb.ar:                                            ; preds = %bb.aq
 .noexc146:                                        ; preds = %bb.ar
   %i.gc = ptrtoaddr ptr %i.gb to i64
   %i.gd = icmp sgt i32 %i.fy, 0
-  %.pre7.i = load i32, ptr %i.fk, align 8, !tbaa !60 ; 6 uses
+  %.pre7.i = load i32, ptr %i.fk, align 8, !tbaa !61 ; 6 uses
   br i1 %i.gd, label %.preheader.i.i, label %bb.as
 
 .preheader.i.i:                                   ; preds = %.noexc146
   %i.ge = icmp sgt i32 %.pre7.i, 0
-  %.pre.i.i = load ptr, ptr %i.fj, align 8, !tbaa !61 ; 10 uses
+  %.pre.i.i = load ptr, ptr %i.fj, align 8, !tbaa !60 ; 10 uses
   br i1 %i.ge, label %iter.check, label %._crit_edge.i.i
 
 iter.check:                                       ; preds = %.preheader.i.i
@@ -2454,12 +2454,12 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 ._crit_edge.thread.i.i:                           ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %._crit_edge.i.i
   call void @_ZdaPv(ptr noundef nonnull %.pre.i.i) #18
-  %.pre.i = load i32, ptr %i.fk, align 8, !tbaa !60
+  %.pre.i = load i32, ptr %i.fk, align 8, !tbaa !61
   br label %bb.as
 
 bb.as:                                            ; preds = %._crit_edge.thread.i.i, %._crit_edge.i.i, %.noexc146
   %i.hg = phi i32 [ %.pre.i, %._crit_edge.thread.i.i ], [ %.pre7.i, %._crit_edge.i.i ], [ %.pre7.i, %.noexc146 ]
-  store ptr %i.gb, ptr %i.fj, align 8, !tbaa !61
+  store ptr %i.gb, ptr %i.fj, align 8, !tbaa !60
   %i.hh = sext i32 %i.hg to i64
   %i.hi = getelementptr inbounds i8, ptr %i.gb, i64 %i.hh
   store i8 0, ptr %i.hi, align 1, !tbaa !36
@@ -2468,7 +2468,7 @@ bb.as:                                            ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIcE11SetCapacityEi.exit.i:        ; preds = %bb.as, %._ZN11CStringBaseIcE11SetCapacityEi.exit_crit_edge.i
   %i.hj = phi ptr [ %.pre8.i, %._ZN11CStringBaseIcE11SetCapacityEi.exit_crit_edge.i ], [ %i.gb, %bb.as ]
-  %i.hk = load ptr, ptr %i.bz, align 8, !tbaa !61
+  %i.hk = load ptr, ptr %i.bz, align 8, !tbaa !60
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.at, %_ZN11CStringBaseIcE11SetCapacityEi.exit.i
@@ -2482,8 +2482,8 @@ bb.at:                                            ; preds = %bb.at, %_ZN11CStrin
   br i1 %.not.i.i145, label %_Z12MyStringCopyIcEPT_S1_PKS0_.exit.i, label %bb.at, !llvm.loop !118
 
 _Z12MyStringCopyIcEPT_S1_PKS0_.exit.i:            ; preds = %bb.at
-  %i.ho = load i32, ptr %i.cp, align 8, !tbaa !60
-  store i32 %i.ho, ptr %i.fk, align 8, !tbaa !60
+  %i.ho = load i32, ptr %i.cp, align 8, !tbaa !61
+  store i32 %i.ho, ptr %i.fk, align 8, !tbaa !61
   br label %_ZN11CStringBaseIcEaSERKS0_.exit
 
 _ZN11CStringBaseIcEaSERKS0_.exit:                 ; preds = %_Z12MyStringCopyIcEPT_S1_PKS0_.exit.i, %bb.ap
@@ -2598,7 +2598,7 @@ bb.ba:                                            ; preds = %_ZN8NArchive4NZip11
 
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i.i156:   ; preds = %_ZN8NArchive4NZip11CExtraBlockD2Ev.exit.i155
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.cb) #19, !inline_history !98
-  %i.io = load ptr, ptr %i.bz, align 8, !tbaa !61 ; 2 uses
+  %i.io = load ptr, ptr %i.bz, align 8, !tbaa !60 ; 2 uses
   %i.ip = icmp eq ptr %i.io, null
   br i1 %i.ip, label %_ZN8NArchive4NZip5CItemD2Ev.exit157, label %bb.bb
 
@@ -3001,7 +3001,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN8NArchive4NZip11CExtraBlockD2Ev.exit:          ; preds = %bb.a
   tail call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.a) #19, !inline_history !98
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !61   ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !60   ; 2 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_ZN11CStringBaseIcED2Ev.exit, label %bb.c
 
@@ -3210,7 +3210,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !60   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !61   ; 2 uses
   %i.e = add nsw i32 %i.d, 1                      ; 3 uses
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %_ZN11CStringBaseIcE11SetCapacityEi.exit.i.i, label %bb.b
@@ -3219,14 +3219,14 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.h = sext i32 %i.e to i64
   %i.i = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #20 ; 3 uses
-  store ptr %i.i, ptr %i.a, align 8, !tbaa !61
+  store ptr %i.i, ptr %i.a, align 8, !tbaa !60
   store i8 0, ptr %i.i, align 1, !tbaa !36
   store i32 %i.e, ptr %i.g, align 4, !tbaa !58
   br label %_ZN11CStringBaseIcE11SetCapacityEi.exit.i.i
 
 _ZN11CStringBaseIcE11SetCapacityEi.exit.i.i:      ; preds = %bb.b, %bb.a
   %i.j = phi ptr [ null, %bb.a ], [ %i.i, %bb.b ]
-  %i.k = load ptr, ptr %i.b, align 8, !tbaa !61
+  %i.k = load ptr, ptr %i.b, align 8, !tbaa !60
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %_ZN11CStringBaseIcE11SetCapacityEi.exit.i.i
@@ -3241,7 +3241,7 @@ bb.c:                                             ; preds = %bb.c, %_ZN11CString
 
 _ZN11CStringBaseIcEC2ERKS0_.exit.i:               ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i32 %i.d, ptr %i.o, align 8, !tbaa !60
+  store i32 %i.d, ptr %i.o, align 8, !tbaa !61
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -3260,7 +3260,7 @@ _ZN11CStringBaseIcEC2ERKS0_.exit.i:               ; preds = %bb.c
   %i.u = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   tail call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.p) #19
-  %i.v = load ptr, ptr %i.a, align 8, !tbaa !61   ; 2 uses
+  %i.v = load ptr, ptr %i.a, align 8, !tbaa !60   ; 2 uses
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %common.resume, label %bb.d
 
@@ -3443,8 +3443,8 @@ attributes #22 = { noreturn nounwind }
 !57 = distinct !{!57, !40}
 !58 = !{!59, !5, i64 12}
 !59 = !{!"_ZTS11CStringBaseIcE", !16, i64 0, !5, i64 8, !5, i64 12}
-!60 = !{!59, !5, i64 8}
-!61 = !{!59, !16, i64 0}
+!60 = !{!59, !16, i64 0}
+!61 = !{!59, !5, i64 8}
 !62 = distinct !{!62, !40, !63, !64}
 !63 = !{!"llvm.loop.isvectorized", i32 1}
 !64 = !{!"llvm.loop.unroll.runtime.disable"}

@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %_RNvMs10_NtNtNtCs6P
 
 bb.i:                                             ; preds = %bb.g
   %narrow.i.i = sub nuw nsw i16 5, %i.ai          ; 2 uses
-  %i.al = zext nneg i16 %narrow.i.i to i64        ; 5 uses
+  %i.al = zext nneg i16 %narrow.i.i to i64        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.am = getelementptr inbounds nuw i8, ptr %i.ac, i64 626 ; 2 uses
@@ -228,7 +228,8 @@ _RINvNtNtNtCs6Po7BT7Nknu_5alloc11collections5btree4node13move_to_sliceNtNtCseqDw
   %i.aw = shl nuw nsw i64 %i.ao, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.av, ptr nonnull align 8 %i.ag, i64 %i.aw, i1 false), !alias.scope !635, !noalias !629
   %i.ax = add nuw nsw i64 %i.aq, 1                ; 4 uses
-  %i.ay = sub nuw nsw i64 %i.ap, %i.ax            ; 4 uses
+  %i.ay = sub nuw nsw i64 %i.ap, %i.ax            ; 2 uses
+  %2 = add nsw i64 %i.al, -1                      ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ac, i64 360 ; 2 uses
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %i.az, i64 %i.ax
   %i.bb = mul nuw nsw i64 %i.ay, 24
@@ -246,9 +247,9 @@ _RINvNtNtNtCs6Po7BT7Nknu_5alloc11collections5btree4node13move_to_sliceNtNtCseqDw
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bh, ptr noundef nonnull align 8 dereferenceable(24) %i.be, i64 24, i1 false), !noalias !629
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.v, ptr noundef nonnull align 8 dereferenceable(32) %i.bi, i64 32, i1 false), !noalias !629
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bi, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.b, i64 32, i1 false), !noalias !646
-  %i.bj = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %i.ay
+  %i.bj = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bj, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !629
-  %i.bk = getelementptr inbounds nuw [32 x i8], ptr %i.ag, i64 %i.ay
+  %i.bk = getelementptr inbounds nuw [32 x i8], ptr %i.ag, i64 %2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bk, ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 32, i1 false), !noalias !629
   %i.bl = icmp eq i64 %i.ad, 0
   br i1 %i.bl, label %_RNvMs10_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree4nodeINtB6_16BalancingContextNtNtBc_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE15bulk_steal_leftCs7p2uQeJxui2_9deltalake.exit.i.i, label %_RNvMs10_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree4nodeINtB6_16BalancingContextNtNtBc_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE15bulk_steal_leftCs7p2uQeJxui2_9deltalake.exit.loopexit.i.i

@@ -201,7 +201,7 @@ _ZNK6icu_7813UnicodeString9getBufferEv.exit:      ; preds = %bb.b, %bb.d, %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 48
-  %i.u = load ptr, ptr %i.t, align 8              ; 66 uses
+  %i.u = load ptr, ptr %i.t, align 8              ; 65 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 128
   %i.w = load i32, ptr %i.v, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 71 uses
@@ -604,8 +604,8 @@ bb.ah:                                            ; preds = %bb.h
   br label %.critedge1078
 
 bb.ai:                                            ; preds = %bb.h
-  %i.iz = load i64, ptr %.0809, align 8           ; 9 uses
-  %i.ja = load i64, ptr %i.cc, align 8            ; 4 uses
+  %i.iz = load i64, ptr %.0809, align 8           ; 8 uses
+  %i.ja = load i64, ptr %i.cc, align 8            ; 3 uses
   %i.jb = add nsw i64 %i.ja, -2                   ; 2 uses
   %i.jc = icmp slt i64 %i.iz, %i.jb
   br i1 %i.jc, label %bb.aj, label %bb.ak
@@ -644,41 +644,20 @@ bb.am:                                            ; preds = %bb.ak
 bb.an:                                            ; preds = %bb.am
   %i.jr = getelementptr inbounds [2 x i8], ptr %i.u, i64 %i.iz ; 3 uses
   %i.js = load i16, ptr %i.jr, align 2
-  %i.jt = zext i16 %i.js to i32                   ; 9 uses
+  %i.jt = zext i16 %i.js to i32                   ; 6 uses
   %i.ju = and i32 %i.jt, 63488
   %i.jv = icmp eq i32 %i.ju, 55296
-  br i1 %i.jv, label %7, label %bb.ar
+  br i1 %i.jv, label %bb.ao, label %bb.ar
 
-7:                                                ; preds = %bb.an
-  %8 = and i32 %i.jt, 1024
-  %9 = icmp eq i32 %8, 0
-  br i1 %9, label %10, label %21
+bb.ao:                                            ; preds = %bb.an
+  %7 = and i32 %i.jt, 1024
+  %8 = icmp ne i32 %7, 0
+  %9 = load i64, ptr %i.ci, align 8
+  %10 = icmp sgt i64 %i.iz, %9
+  %or.cond1516 = select i1 %8, i1 %10, i1 false
+  br i1 %or.cond1516, label %bb.ap, label %bb.ar
 
-10:                                               ; preds = %7
-  %11 = add nsw i64 %i.iz, 1                      ; 2 uses
-  %.not1060 = icmp eq i64 %11, %i.ja
-  br i1 %.not1060, label %bb.ar, label %bb.ao
-
-bb.ao:                                            ; preds = %10
-  %12 = getelementptr inbounds [2 x i8], ptr %i.u, i64 %11
-  %13 = load i16, ptr %12, align 2
-  %14 = zext i16 %13 to i32                       ; 2 uses
-  %15 = and i32 %14, 64512
-  %16 = icmp eq i32 %15, 56320
-  br i1 %16, label %17, label %bb.ar
-
-17:                                               ; preds = %bb.ao
-  %18 = shl nuw nsw i32 %i.jt, 10
-  %19 = add nsw i32 %18, -56613888
-  %20 = add nuw nsw i32 %19, %14
-  br label %bb.ar
-
-21:                                               ; preds = %7
-  %22 = load i64, ptr %i.ci, align 8
-  %23 = icmp sgt i64 %i.iz, %22
-  br i1 %23, label %bb.ap, label %bb.ar
-
-bb.ap:                                            ; preds = %21
+bb.ap:                                            ; preds = %bb.ao
   %i.jw = getelementptr i8, ptr %i.jr, i64 -2
   %i.jx = load i16, ptr %i.jw, align 2
   %i.jy = zext i16 %i.jx to i32                   ; 2 uses
@@ -692,8 +671,8 @@ bb.aq:                                            ; preds = %bb.ap
   %i.kd = add nsw i32 %i.kc, %i.kb
   br label %bb.ar
 
-bb.ar:                                            ; preds = %17, %bb.ao, %10, %bb.aq, %bb.ap, %21, %bb.an
-  %.1840 = phi i32 [ %i.jt, %bb.an ], [ %20, %17 ], [ %i.jt, %bb.ao ], [ %i.jt, %10 ], [ %i.kd, %bb.aq ], [ %i.jt, %bb.ap ], [ %i.jt, %21 ] ; 2 uses
+bb.ar:                                            ; preds = %bb.ao, %bb.aq, %bb.ap, %bb.an
+  %.1840 = phi i32 [ %i.jt, %bb.an ], [ %i.jt, %bb.ap ], [ %i.jt, %bb.ao ], [ %i.kd, %bb.aq ] ; 2 uses
   %i.ke = call fastcc noundef signext i8 @_ZN6icu_78L16isLineTerminatorEi(i32 noundef %.1840)
   %.not1061 = icmp eq i8 %i.ke, 0
   br i1 %.not1061, label %.thread1379, label %bb.as

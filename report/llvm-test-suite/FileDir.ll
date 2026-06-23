@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false), !alias.scope !64
-  %i.am = add nsw i32 %i.e, 2                     ; 14 uses
+  %i.am = add nsw i32 %i.e, 2                     ; 12 uses
   %i.an = icmp eq i32 %i.am, 0                    ; 3 uses
   br i1 %i.an, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i19, label %bb.i
 
@@ -361,7 +361,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i78
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i78:    ; preds = %.noexc84, %bb.t
-  %.pr = phi ptr [ null, %bb.t ], [ %i.cl, %.noexc84 ] ; 8 uses
+  %.pr = phi ptr [ null, %bb.t ], [ %i.cl, %.noexc84 ] ; 7 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.v, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i78
@@ -378,18 +378,14 @@ _ZN11CStringBaseIwEC2ERKS0_.exit.i82:             ; preds = %bb.v
   store i32 %i.f, ptr %i.ce, align 8, !tbaa !17, !alias.scope !70
   %i.cp = load i32, ptr %i.b, align 8, !tbaa !17  ; 2 uses
   %.not.i.i103 = icmp sgt i32 %i.cp, 0
-  br i1 %.not.i.i103, label %7, label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i104
+  br i1 %.not.i.i103, label %bb.w, label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i104
 
-7:                                                ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i82
+bb.w:                                             ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i82
   %.1.i.i110 = call i32 @llvm.smax.i32(i32 %.0.i.i90, i32 %i.cp)
-  %8 = add nsw i32 %.1.i.i110, %i.am              ; 2 uses
-  %9 = add nsw i32 %8, 1                          ; 3 uses
-  %10 = icmp eq i32 %9, %i.am
-  br i1 %10, label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i104, label %bb.w
-
-bb.w:                                             ; preds = %7
-  %i.cq = zext nneg i32 %9 to i64
-  %i.cr = icmp slt i32 %8, -1
+  %7 = add nsw i32 %.1.i.i110, %i.am              ; 2 uses
+  %8 = add nsw i32 %7, 1                          ; 2 uses
+  %i.cq = zext nneg i32 %8 to i64
+  %i.cr = icmp slt i32 %7, -1
   %i.cs = shl nuw nsw i64 %i.cq, 2
   %i.ct = select i1 %i.cr, i64 -1, i64 %i.cs
   %i.cu = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ct) #23
@@ -417,12 +413,12 @@ bb.x:                                             ; preds = %._crit_edge.thread.
   store ptr %i.cu, ptr %3, align 8, !tbaa !8
   %i.cw = getelementptr inbounds [4 x i8], ptr %i.cu, i64 %i.ak
   store i32 0, ptr %i.cw, align 4, !tbaa !12
-  store i32 %9, ptr %i.cd, align 4, !tbaa !14
+  store i32 %8, ptr %i.cd, align 4, !tbaa !14
   br label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i104
 
-_ZN11CStringBaseIwE10GrowLengthEi.exit.i104:      ; preds = %7, %_ZN11CStringBaseIwEC2ERKS0_.exit.i82, %bb.x
-  %11 = phi ptr [ %i.cu, %bb.x ], [ %.pr, %_ZN11CStringBaseIwEC2ERKS0_.exit.i82 ], [ %.pr, %7 ] ; 5 uses
-  %i.cx = getelementptr inbounds [4 x i8], ptr %11, i64 %i.ak
+_ZN11CStringBaseIwE10GrowLengthEi.exit.i104:      ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i82, %bb.x
+  %9 = phi ptr [ %i.cu, %bb.x ], [ %.pr, %_ZN11CStringBaseIwEC2ERKS0_.exit.i82 ] ; 5 uses
+  %i.cx = getelementptr inbounds [4 x i8], ptr %9, i64 %i.ak
   %i.cy = load ptr, ptr %i.a, align 8, !tbaa !8
   br label %bb.y
 
@@ -454,11 +450,11 @@ bb.aa:                                            ; preds = %bb.z
           to label %bb.ab unwind label %bb.ad, !inline_history !73
 
 bb.ab:                                            ; preds = %.noexc30
-  %i.dh = icmp eq ptr %11, null
+  %i.dh = icmp eq ptr %9, null
   br i1 %i.dh, label %_ZN11CStringBaseIwED2Ev.exit77, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  call void @_ZdaPv(ptr noundef nonnull %11) #24
+  call void @_ZdaPv(ptr noundef nonnull %9) #24
   br label %_ZN11CStringBaseIwED2Ev.exit77
 
 _ZN11CStringBaseIwED2Ev.exit77:                   ; preds = %bb.ab, %bb.ac
@@ -471,11 +467,11 @@ _ZN11CStringBaseIwED2Ev.exit77:                   ; preds = %bb.ab, %bb.ac
 bb.ad:                                            ; preds = %.noexc30
   %i.di = landingpad { ptr, i32 }
           cleanup
-  %i.dj = icmp eq ptr %11, null
+  %i.dj = icmp eq ptr %9, null
   br i1 %i.dj, label %_ZN11CStringBaseIwED2Ev.exit76, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  call void @_ZdaPv(ptr noundef nonnull %11) #24
+  call void @_ZdaPv(ptr noundef nonnull %9) #24
   br label %_ZN11CStringBaseIwED2Ev.exit76
 
 _ZN11CStringBaseIwED2Ev.exit76:                   ; preds = %bb.ad, %bb.ae
@@ -494,7 +490,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i67
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i67:    ; preds = %.noexc73, %bb.af
-  %.sroa.0136.0 = phi ptr [ null, %bb.af ], [ %i.dk, %.noexc73 ] ; 8 uses
+  %.sroa.0136.0 = phi ptr [ null, %bb.af ], [ %i.dk, %.noexc73 ] ; 7 uses
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ah, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i67
@@ -510,18 +506,14 @@ bb.ah:                                            ; preds = %bb.ah, %_ZN11CStrin
 _ZN11CStringBaseIwEC2ERKS0_.exit.i71:             ; preds = %bb.ah
   %i.do = load i32, ptr %i.b, align 8, !tbaa !17  ; 2 uses
   %.not.i.i88 = icmp sgt i32 %i.do, 0
-  br i1 %.not.i.i88, label %12, label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i
+  br i1 %.not.i.i88, label %bb.ai, label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i
 
-12:                                               ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i71
+bb.ai:                                            ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i71
   %.1.i.i91 = call i32 @llvm.smax.i32(i32 %.0.i.i90, i32 %i.do)
-  %13 = add nsw i32 %.1.i.i91, %i.am              ; 2 uses
-  %14 = add nsw i32 %13, 1                        ; 2 uses
-  %15 = icmp eq i32 %14, %i.am
-  br i1 %15, label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i, label %bb.ai
-
-bb.ai:                                            ; preds = %12
-  %i.dp = zext nneg i32 %14 to i64
-  %i.dq = icmp slt i32 %13, -1
+  %10 = add nsw i32 %.1.i.i91, %i.am              ; 2 uses
+  %11 = add nsw i32 %10, 1
+  %i.dp = zext nneg i32 %11 to i64
+  %i.dq = icmp slt i32 %10, -1
   %i.dr = shl nuw nsw i64 %i.dp, 2
   %i.ds = select i1 %i.dq, i64 -1, i64 %i.dr
   %i.dt = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ds) #23
@@ -550,8 +542,8 @@ bb.aj:                                            ; preds = %._crit_edge.thread.
   store i32 0, ptr %i.dv, align 4, !tbaa !12
   br label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i
 
-_ZN11CStringBaseIwE10GrowLengthEi.exit.i:         ; preds = %bb.aj, %12, %_ZN11CStringBaseIwEC2ERKS0_.exit.i71
-  %.sroa.0136.1 = phi ptr [ %.sroa.0136.0, %12 ], [ %i.dt, %bb.aj ], [ %.sroa.0136.0, %_ZN11CStringBaseIwEC2ERKS0_.exit.i71 ] ; 7 uses
+_ZN11CStringBaseIwE10GrowLengthEi.exit.i:         ; preds = %bb.aj, %_ZN11CStringBaseIwEC2ERKS0_.exit.i71
+  %.sroa.0136.1 = phi ptr [ %.sroa.0136.0, %_ZN11CStringBaseIwEC2ERKS0_.exit.i71 ], [ %i.dt, %bb.aj ] ; 7 uses
   %i.dw = getelementptr inbounds [4 x i8], ptr %.sroa.0136.1, i64 %i.ak
   %i.dx = load ptr, ptr %i.a, align 8, !tbaa !8
   br label %bb.ak

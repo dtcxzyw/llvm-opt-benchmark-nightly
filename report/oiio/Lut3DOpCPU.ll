@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %.thread336.i, %._cr
   %i.ha = phi <2 x double> [ %i.gy, %.preheader361.loopexit.i ], [ %i.gk, %.loopexit364.i ] ; 2 uses
   %invariant.gep.i = getelementptr [8 x i8], ptr %i.f, i64 %i.ga ; 3 uses
   store double %i.gz, ptr %invariant.gep.i, align 8, !tbaa !125
-  %i.hb = load i64, ptr %i.b, align 16, !tbaa !117 ; 2 uses
+  %i.hb = load i64, ptr %i.b, align 16, !tbaa !117
   %i.hc = icmp eq i64 %i.hb, %i.ga
   %spec.select.i = zext i1 %i.hc to i64
   %gep.1.i = getelementptr i8, ptr %invariant.gep.i, i64 32
@@ -215,9 +215,8 @@ bb.i:                                             ; preds = %.thread336.i, %._cr
   store double %i.hg, ptr %gep.2.i, align 8, !tbaa !125
   %i.hh = load i64, ptr %i.by, align 16, !tbaa !117
   %i.hi = icmp eq i64 %i.hh, %i.ga
-  %spec.select.2.i = select i1 %i.hi, i64 3, i64 %spec.select.1.i ; 2 uses
+  %spec.select.2.i = select i1 %i.hi, i64 3, i64 %spec.select.1.i ; 3 uses
   %i.hj = icmp samesign ult i64 %spec.select.2.i, 2
-  %4 = add nsw i64 %spec.select.2.i, -1           ; 4 uses
   br i1 %i.hj, label %bb.j, label %.preheader361._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
@@ -256,16 +255,16 @@ bb.i:                                             ; preds = %.thread336.i, %._cr
   br i1 %niter.ncmp.1, label %.preheader361.loopexit.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !127
 
 bb.j:                                             ; preds = %.preheader361.i
-  %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %4
-  %5 = load i64, ptr %i.ik, align 8, !tbaa !117
-  %6 = icmp eq i64 %4, 0
-  %.lcssa.i = select i1 %6, i64 %i.he, i64 %i.hb
-  store i64 %.lcssa.i, ptr %i.b, align 16
+  %i.ik = getelementptr [8 x i8], ptr %i.b, i64 %spec.select.2.i
+  %4 = getelementptr i8, ptr %i.ik, i64 -8
+  %5 = load i64, ptr %4, align 8, !tbaa !117
+  store i64 %i.he, ptr %i.b, align 16
   store i64 %5, ptr %i.bu, align 8, !tbaa !117
   br label %.preheader361._crit_edge.i
 
 .preheader361._crit_edge.i:                       ; preds = %bb.j, %.preheader361.i
-  %i.il = icmp ult i64 %4, 2
+  %6 = add nsw i64 %spec.select.2.i, -1           ; 2 uses
+  %i.il = icmp ult i64 %6, 2
   br i1 %i.il, label %.lr.ph389.preheader.i, label %._crit_edge424.i
 
 .loopexit357.i:                                   ; preds = %bb.v
@@ -291,7 +290,7 @@ bb.j:                                             ; preds = %.preheader361.i
 
 .lr.ph389.preheader.i:                            ; preds = %.preheader361._crit_edge.i, %.loopexit357.i
   %.2261421.i = phi i64 [ %.4263.i, %.loopexit357.i ], [ %.1260.i, %.preheader361._crit_edge.i ]
-  %.0291419.i = phi i64 [ 1, %.loopexit357.i ], [ %4, %.preheader361._crit_edge.i ] ; 28 uses
+  %.0291419.i = phi i64 [ 1, %.loopexit357.i ], [ %6, %.preheader361._crit_edge.i ] ; 28 uses
   %i.iw = add nuw nsw i64 %.0291419.i, 1          ; 12 uses
   %i.ix = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0291419.i ; 3 uses
   %i.iy = load i64, ptr %i.ix, align 8, !tbaa !117 ; 2 uses

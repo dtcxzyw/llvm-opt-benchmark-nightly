@@ -201,7 +201,7 @@ bb.bh:                                            ; preds = %._crit_edge
 
 .critedge:                                        ; preds = %.thread, %._crit_edge, %.preheader1240, %._crit_edge1287, %.critedge.loopexit.split.loop.exit1315, %bb.y
   %.46101108 = phi i32 [ %.0606, %bb.y ], [ %.0606, %.critedge.loopexit.split.loop.exit1315 ], [ %.0606, %._crit_edge1287 ], [ %.46101109, %.thread ], [ %.3609, %._crit_edge ], [ %.0606, %.preheader1240 ] ; 15 uses
-  %.36811106 = phi i32 [ %.0678, %bb.y ], [ %.2680, %.critedge.loopexit.split.loop.exit1315 ], [ %i.cc, %._crit_edge1287 ], [ %.36811107, %.thread ], [ %.0678, %._crit_edge ], [ %.0678, %.preheader1240 ] ; 20 uses
+  %.36811106 = phi i32 [ %.0678, %bb.y ], [ %.2680, %.critedge.loopexit.split.loop.exit1315 ], [ %i.cc, %._crit_edge1287 ], [ %.36811107, %.thread ], [ %.0678, %._crit_edge ], [ %.0678, %.preheader1240 ] ; 18 uses
   %.26961104 = phi i8 [ %.0694, %bb.y ], [ %.1695, %.critedge.loopexit.split.loop.exit1315 ], [ %.0694, %._crit_edge1287 ], [ %.26961105, %.thread ], [ %.0694, %._crit_edge ], [ %.0694, %.preheader1240 ] ; 3 uses
   %.16981102 = phi i8 [ %.0697, %bb.y ], [ %.0697, %.critedge.loopexit.split.loop.exit1315 ], [ %.0697, %._crit_edge1287 ], [ %.16981103, %.thread ], [ %.0697, %._crit_edge ], [ %.0697, %.preheader1240 ] ; 10 uses
   %.17131100 = phi i8 [ %.0712, %bb.y ], [ %.0712, %.critedge.loopexit.split.loop.exit1315 ], [ %.0712, %._crit_edge1287 ], [ %.17131101, %.thread ], [ %.0712, %._crit_edge ], [ %.0712, %.preheader1240 ] ; 8 uses
@@ -604,8 +604,8 @@ sqlite3_str_reset.exit.i1020:                     ; preds = %sqlite3DbFree.exit.
   br label %printfTempBuf.exit953.thread1156
 
 bb.hu:                                            ; preds = %bb.hc, %sqlite3DbMallocRaw.exit1024
-  %.3727.ph = phi ptr [ %.0.i1023, %sqlite3DbMallocRaw.exit1024 ], [ null, %bb.hc ] ; 3 uses
-  %.11.ph = phi ptr [ %.0.i1023, %sqlite3DbMallocRaw.exit1024 ], [ %i.a, %bb.hc ] ; 14 uses
+  %.3727.ph = phi ptr [ %.0.i1023, %sqlite3DbMallocRaw.exit1024 ], [ null, %bb.hc ] ; 2 uses
+  %.11.ph = phi ptr [ %.0.i1023, %sqlite3DbMallocRaw.exit1024 ], [ %i.a, %bb.hc ] ; 13 uses
   %i.adt = icmp sgt i32 %.7613.fr, 0              ; 2 uses
   %i.adu = zext i1 %i.adt to i8
   %i.adv = or i8 %.17131100, %i.adu
@@ -866,7 +866,7 @@ bb.iq:                                            ; preds = %bb.ip, %.loopexit12
   %i.ahf = ptrtoint ptr %.23 to i64               ; 2 uses
   %i.ahg = ptrtoint ptr %.11.ph to i64            ; 2 uses
   %i.ahh = sub i64 %i.ahf, %i.ahg
-  %i.ahi = trunc i64 %i.ahh to i32                ; 6 uses
+  %i.ahi = trunc i64 %i.ahh to i32                ; 5 uses
   %i.ahj = icmp ne i8 %.17651094, 0
   %i.ahk = icmp eq i8 %.26961104, 0
   %or.cond22.not1216 = select i1 %i.ahj, i1 %i.ahk, i1 false
@@ -877,7 +877,7 @@ bb.iq:                                            ; preds = %bb.ip, %.loopexit12
 bb.ir:                                            ; preds = %bb.iq
   %i.ahm = sub i32 %.36811106, %i.ahi             ; 5 uses
   %.not8821399 = icmp slt i32 %i.ahi, 0
-  br i1 %.not8821399, label %._crit_edge1403, label %iter.check
+  br i1 %.not8821399, label %.lr.ph1408.preheader, label %iter.check
 
 iter.check:                                       ; preds = %bb.ir
   %i.ahn = sext i32 %.36811106 to i64             ; 12 uses
@@ -936,7 +936,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ahq, %n.vec
-  br i1 %cmp.n, label %._crit_edge1403, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %.lr.ph1408.preheader, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %n.mod.vf, 0
@@ -966,7 +966,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n2034 = icmp eq i64 %i.ahq, %n.vec2030
-  br i1 %cmp.n2034, label %._crit_edge1403, label %.lr.ph1402.preheader
+  br i1 %cmp.n2034, label %.lr.ph1408.preheader, label %.lr.ph1402.preheader
 
 .lr.ph1402.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv1501.ph = phi i64 [ %i.ahn, %iter.check ], [ %i.ahn, %vector.scevcheck ], [ %i.ahn, %vector.memcheck ], [ %i.ahz, %vec.epilog.iter.check ], [ %i.ail, %vec.epilog.middle.block ]
@@ -983,13 +983,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.aiz, ptr %i.aja, align 1, !tbaa !227
   %indvars.iv.next1502 = add nsw i64 %indvars.iv1501, -1
   %.not882.not = icmp sgt i64 %indvars.iv1501, %i.aho
-  br i1 %.not882.not, label %.lr.ph1402, label %._crit_edge1403, !llvm.loop !347
+  br i1 %.not882.not, label %.lr.ph1402, label %.lr.ph1408.preheader, !llvm.loop !347
 
-._crit_edge1403:                                  ; preds = %.lr.ph1402, %middle.block, %vec.epilog.middle.block, %bb.ir
-  %.not8831404 = icmp eq i32 %.36811106, %i.ahi
-  br i1 %.not8831404, label %printfTempBuf.exit953, label %.lr.ph1408.preheader
-
-.lr.ph1408.preheader:                             ; preds = %._crit_edge1403
+.lr.ph1408.preheader:                             ; preds = %.lr.ph1402, %middle.block, %vec.epilog.middle.block, %bb.ir
   %.not1638.not.not.not = icmp ne i8 %.2748, 0
   %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = zext i1 %.not1638.not.not.not to i64
   %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr i8, ptr %.11.ph, i64 %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx
@@ -1001,10 +997,10 @@ printfTempBuf.exit953.thread1156:                 ; preds = %bb.hd, %bb.hm, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #59
   br label %sqlite3_str_append.exit920
 
-printfTempBuf.exit953:                            ; preds = %.lr.ph1408.preheader, %._crit_edge1403, %bb.iq, %bb.gv, %bb.gp
-  %.4728 = phi ptr [ null, %bb.gp ], [ null, %bb.gv ], [ %.3727.ph, %bb.iq ], [ %.3727.ph, %._crit_edge1403 ], [ %.3727.ph, %.lr.ph1408.preheader ]
-  %.3654 = phi i32 [ %i.abh, %bb.gp ], [ %i.abm, %bb.gv ], [ %i.ahi, %bb.iq ], [ %.36811106, %._crit_edge1403 ], [ %.36811106, %.lr.ph1408.preheader ]
-  %.24 = phi ptr [ %i.abg, %bb.gp ], [ %.9604, %bb.gv ], [ %.11.ph, %bb.iq ], [ %.11.ph, %._crit_edge1403 ], [ %.11.ph, %.lr.ph1408.preheader ]
+printfTempBuf.exit953:                            ; preds = %.lr.ph1408.preheader, %bb.iq, %bb.gv, %bb.gp
+  %.4728 = phi ptr [ null, %bb.gp ], [ null, %bb.gv ], [ %.3727.ph, %bb.iq ], [ %.3727.ph, %.lr.ph1408.preheader ]
+  %.3654 = phi i32 [ %i.abh, %bb.gp ], [ %i.abm, %bb.gv ], [ %i.ahi, %bb.iq ], [ %.36811106, %.lr.ph1408.preheader ]
+  %.24 = phi ptr [ %i.abg, %bb.gp ], [ %.9604, %bb.gv ], [ %.11.ph, %bb.iq ], [ %.11.ph, %.lr.ph1408.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #59
   br label %sqlite3RecordErrorOffsetOfExpr.exit
 
@@ -1407,7 +1403,7 @@ bb.el:                                            ; preds = %sqlite3_column_int.
 
 bb.em:                                            ; preds = %bb.el
   %i.sb = getelementptr inbounds nuw i8, ptr %i.sa, i64 8 ; 3 uses
-  %i.sc = load i32, ptr %i.sb, align 8, !tbaa !6924 ; 5 uses
+  %i.sc = load i32, ptr %i.sb, align 8, !tbaa !6924 ; 4 uses
   %i.sd = icmp slt i32 %i.sc, 4
   br i1 %i.sd, label %bb.eo, label %bb.en
 
@@ -1473,11 +1469,9 @@ bb.et:                                            ; preds = %fts5LeafRead.exit.i
 
 bb.eu:                                            ; preds = %bb.et
   %i.sz = load i32, ptr %i.kd, align 4, !tbaa !6638
-  %4 = icmp eq i32 %i.sz, 5
-  %i.ta = icmp eq i32 %i.sc, 4
+  %i.ta = icmp eq i32 %i.sz, 5
   %i.tb = icmp eq i32 %i.sf, 4
-  %5 = and i1 %i.ta, %i.tb
-  %or.cond143.i.i = and i1 %5, %4
+  %or.cond143.i.i = and i1 %i.tb, %i.ta
   br i1 %or.cond143.i.i, label %fts5IntegrityCheckPgidx.exit.i.i, label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu, %bb.et

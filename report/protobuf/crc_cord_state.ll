@@ -201,10 +201,10 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br label %_ZSt9__advanceISt15_Deque_iteratorIN4absl12lts_2025051212crc_internal12CrcCordState9PrefixCrcERKS5_PS6_ElEvRT_T0_St26random_access_iterator_tag.exit
 
 _ZSt9__advanceISt15_Deque_iteratorIN4absl12lts_2025051212crc_internal12CrcCordState9PrefixCrcERKS5_PS6_ElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.ak, %bb.ah
-  %.sroa.0269.0 = phi ptr [ %i.gd, %bb.ah ], [ %i.gm, %bb.ak ] ; 3 uses
-  %.sroa.10273.2 = phi ptr [ %i.fq, %bb.ah ], [ %i.gi, %bb.ak ]
-  %.sroa.17276.2 = phi ptr [ %i.fs, %bb.ah ], [ %i.gj, %bb.ak ]
-  %.sroa.24279.2 = phi ptr [ %i.fu, %bb.ah ], [ %i.gh, %bb.ak ]
+  %.sroa.0269.0 = phi ptr [ %i.gm, %bb.ak ], [ %i.gd, %bb.ah ] ; 3 uses
+  %.sroa.10273.2 = phi ptr [ %i.gi, %bb.ak ], [ %i.fq, %bb.ah ]
+  %.sroa.17276.2 = phi ptr [ %i.gj, %bb.ak ], [ %i.fs, %bb.ah ]
+  %.sroa.24279.2 = phi ptr [ %i.gh, %bb.ak ], [ %i.fu, %bb.ah ]
   %i.gn = load ptr, ptr %i.a, align 8, !tbaa !31  ; 2 uses
   %.not12.i.i.i.i.i.i = icmp eq ptr %i.gn, %storemerge.i.i
   br i1 %.not12.i.i.i.i.i.i, label %_ZSt22__uninitialized_move_aISt15_Deque_iteratorIN4absl12lts_2025051212crc_internal12CrcCordState9PrefixCrcERS5_PS5_ES8_SaIS5_EET0_T_SB_SA_RT1_.exit.i, label %.lr.ph.i.i.i.i.i.i.preheader

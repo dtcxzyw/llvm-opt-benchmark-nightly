@@ -201,9 +201,9 @@ _ZN11CStringBaseIwED2Ev.exit101:                  ; preds = %bb.q, %_ZN11CString
   br label %.body109
 
 _ZN11CStringBaseIwEC2EPKw.exit._crit_edge:        ; preds = %_ZN11CStringBaseIwED2Ev.exit99, %_ZN11CStringBaseIwEC2EPKw.exit.preheader
-  %.sroa.0188.0.lcssa = phi ptr [ %.sroa.0188.1, %_ZN11CStringBaseIwEC2EPKw.exit.preheader ], [ %.sroa.0188.2, %_ZN11CStringBaseIwED2Ev.exit99 ] ; 8 uses
+  %.sroa.0188.0.lcssa = phi ptr [ %.sroa.0188.1, %_ZN11CStringBaseIwEC2EPKw.exit.preheader ], [ %.sroa.0188.2, %_ZN11CStringBaseIwED2Ev.exit99 ] ; 7 uses
   %.sroa.11.0.lcssa = phi i32 [ %i.ad, %_ZN11CStringBaseIwEC2EPKw.exit.preheader ], [ 3, %_ZN11CStringBaseIwED2Ev.exit99 ] ; 2 uses
-  %i.br = load i32, ptr %i.j, align 8, !tbaa !43, !noalias !44 ; 11 uses
+  %i.br = load i32, ptr %i.j, align 8, !tbaa !43, !noalias !44 ; 9 uses
   %i.bs = add nsw i32 %i.br, 1                    ; 4 uses
   %i.bt = icmp eq i32 %i.bs, 0
   br i1 %i.bt, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i102, label %bb.r
@@ -221,7 +221,7 @@ bb.r:                                             ; preds = %_ZN11CStringBaseIwE
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i102
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i102:   ; preds = %.noexc108, %_ZN11CStringBaseIwEC2EPKw.exit._crit_edge
-  %.sroa.0.0 = phi ptr [ null, %_ZN11CStringBaseIwEC2EPKw.exit._crit_edge ], [ %i.by, %.noexc108 ] ; 7 uses
+  %.sroa.0.0 = phi ptr [ null, %_ZN11CStringBaseIwEC2EPKw.exit._crit_edge ], [ %i.by, %.noexc108 ] ; 6 uses
   %i.bz = load ptr, ptr %i.i, align 8, !tbaa !34, !noalias !44
   br label %bb.s
 
@@ -242,24 +242,16 @@ _ZN11CStringBaseIwEC2ERKS0_.exit.i106:            ; preds = %bb.s
   %..i.i147 = select i1 %i.cf, i32 16, i32 4
   %.0.i.i148 = select i1 %i.cd, i32 %i.ce, i32 %..i.i147
   %i.cg = call i32 @llvm.umax.i32(i32 %.0.i.i148, i32 %.sroa.11.0.lcssa)
-  %i.ch = add nsw i32 %i.cg, %i.bs                ; 3 uses
-  %5 = icmp eq i32 %i.ch, %i.br
-  br i1 %5, label %_ZN11CStringBaseIwEC2ERKS0_.exit.i106._ZN11CStringBaseIwE10GrowLengthEi.exit.i143_crit_edge, label %6
+  %5 = add nsw i32 %i.cg, %i.bs                   ; 2 uses
+  %i.ch = add nsw i32 %5, 1
+  %6 = zext nneg i32 %i.ch to i64
+  %7 = icmp slt i32 %5, -1
+  %8 = shl nuw nsw i64 %6, 2
+  %9 = select i1 %7, i64 -1, i64 %8
+  %10 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %9) #20
+          to label %.noexc160 unwind label %bb.v  ; 7 uses
 
-_ZN11CStringBaseIwEC2ERKS0_.exit.i106._ZN11CStringBaseIwE10GrowLengthEi.exit.i143_crit_edge: ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i106
-  %.pre = sext i32 %i.br to i64
-  br label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i143
-
-6:                                                ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i106
-  %7 = add nsw i32 %i.ch, 1
-  %8 = zext nneg i32 %7 to i64
-  %9 = icmp slt i32 %i.ch, -1
-  %10 = shl nuw nsw i64 %8, 2
-  %11 = select i1 %9, i64 -1, i64 %10
-  %12 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %11) #20
-          to label %.noexc160 unwind label %bb.v  ; 3 uses
-
-.noexc160:                                        ; preds = %6
+.noexc160:                                        ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i106
   %i.ci = icmp sgt i32 %i.br, -1
   br i1 %i.ci, label %.preheader.i.i.i150, label %bb.t
 
@@ -270,7 +262,7 @@ _ZN11CStringBaseIwEC2ERKS0_.exit.i106._ZN11CStringBaseIwE10GrowLengthEi.exit.i14
 .lr.ph.i.i.i155:                                  ; preds = %.preheader.i.i.i150
   %wide.trip.count.i.i.i156 = zext nneg i32 %i.br to i64
   %i.cj = shl nuw nsw i64 %wide.trip.count.i.i.i156, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %12, ptr align 4 %.sroa.0.0, i64 %i.cj, i1 false), !tbaa !35
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %10, ptr align 4 %.sroa.0.0, i64 %i.cj, i1 false), !tbaa !35
   br label %._crit_edge.thread.i.i.i153
 
 ._crit_edge.i.i.i152:                             ; preds = %.preheader.i.i.i150
@@ -282,20 +274,14 @@ _ZN11CStringBaseIwEC2ERKS0_.exit.i106._ZN11CStringBaseIwE10GrowLengthEi.exit.i14
   br label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge.thread.i.i.i153, %._crit_edge.i.i.i152, %.noexc160
-  %i.cl = sext i32 %i.br to i64                   ; 2 uses
-  %i.cm = getelementptr inbounds [4 x i8], ptr %12, i64 %i.cl
+  %i.cl = sext i32 %i.br to i64
+  %i.cm = getelementptr inbounds [4 x i8], ptr %10, i64 %i.cl ; 2 uses
   store i32 0, ptr %i.cm, align 4, !tbaa !35
-  br label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i143
-
-_ZN11CStringBaseIwE10GrowLengthEi.exit.i143:      ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i106._ZN11CStringBaseIwE10GrowLengthEi.exit.i143_crit_edge, %bb.t
-  %.pre-phi = phi i64 [ %.pre, %_ZN11CStringBaseIwEC2ERKS0_.exit.i106._ZN11CStringBaseIwE10GrowLengthEi.exit.i143_crit_edge ], [ %i.cl, %bb.t ]
-  %.sroa.0.1 = phi ptr [ %.sroa.0.0, %_ZN11CStringBaseIwEC2ERKS0_.exit.i106._ZN11CStringBaseIwE10GrowLengthEi.exit.i143_crit_edge ], [ %12, %bb.t ] ; 8 uses
-  %13 = getelementptr inbounds [4 x i8], ptr %.sroa.0.1, i64 %.pre-phi
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.u, %_ZN11CStringBaseIwE10GrowLengthEi.exit.i143
-  %.04.i.i144 = phi ptr [ %.sroa.0188.0.lcssa, %_ZN11CStringBaseIwE10GrowLengthEi.exit.i143 ], [ %i.cn, %bb.u ] ; 2 uses
-  %.0.i4.i145 = phi ptr [ %13, %_ZN11CStringBaseIwE10GrowLengthEi.exit.i143 ], [ %i.cp, %bb.u ] ; 2 uses
+bb.u:                                             ; preds = %bb.u, %bb.t
+  %.04.i.i144 = phi ptr [ %.sroa.0188.0.lcssa, %bb.t ], [ %i.cn, %bb.u ] ; 2 uses
+  %.0.i4.i145 = phi ptr [ %i.cm, %bb.t ], [ %i.cp, %bb.u ] ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.04.i.i144, i64 4
   %i.co = load i32, ptr %.04.i.i144, align 4, !tbaa !35 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.0.i4.i145, i64 4
@@ -303,7 +289,7 @@ bb.u:                                             ; preds = %bb.u, %_ZN11CString
   %.not.i5.i146 = icmp eq i32 %i.co, 0
   br i1 %.not.i5.i146, label %bb.x, label %bb.u, !llvm.loop !38
 
-bb.v:                                             ; preds = %6
+bb.v:                                             ; preds = %_ZN11CStringBaseIwEC2ERKS0_.exit.i106
   %i.cq = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.cr = icmp eq ptr %.sroa.0.0, null
@@ -359,7 +345,7 @@ bb.ab:                                            ; preds = %.noexc113, %bb.aa
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 1104
   store i64 0, ptr %i.dh, align 8, !tbaa !59
   %i.di = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
-  %i.dj = invoke noundef zeroext i1 @_ZN8NWindows5NFile3NIO8COutFile6CreateEPKwb(ptr noundef nonnull align 8 dereferenceable(1084) %i.di, ptr noundef %.sroa.0.1, i1 noundef zeroext false)
+  %i.dj = invoke noundef zeroext i1 @_ZN8NWindows5NFile3NIO8COutFile6CreateEPKwb(ptr noundef nonnull align 8 dereferenceable(1084) %i.di, ptr noundef nonnull %10, i1 noundef zeroext false)
           to label %_ZN14COutFileStream6CreateEPKwb.exit unwind label %bb.ae ; 2 uses
 
 _ZN14COutFileStream6CreateEPKwb.exit:             ; preds = %bb.ab
@@ -411,7 +397,7 @@ bb.ag:                                            ; preds = %_ZN14COutFileStream
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i116
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i116:   ; preds = %.noexc.i, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i116
-  %.04.i.i.i117 = phi ptr [ %i.dz, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i116 ], [ %.sroa.0.1, %.noexc.i ] ; 2 uses
+  %.04.i.i.i117 = phi ptr [ %i.dz, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i116 ], [ %10, %.noexc.i ] ; 2 uses
   %.0.i.i.i118 = phi ptr [ %i.eb, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i116 ], [ %i.dx, %.noexc.i ] ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %.04.i.i.i117, i64 4
   %i.ea = load i32, ptr %.04.i.i.i117, align 4, !tbaa !35 ; 2 uses
@@ -481,7 +467,7 @@ _ZN11CStringBaseIwE11SetCapacityEi.exit.i124.preheader: ; preds = %bb.al, %bb.aj
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i124:     ; preds = %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124.preheader, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124
-  %.04.i.i125 = phi ptr [ %i.ex, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124 ], [ %.sroa.0.1, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124.preheader ] ; 2 uses
+  %.04.i.i125 = phi ptr [ %i.ex, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124 ], [ %10, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124.preheader ] ; 2 uses
   %.0.i.i126 = phi ptr [ %i.ez, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124 ], [ %.0.i.i126.ph, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i124.preheader ] ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %.04.i.i125, i64 4
   %i.ey = load i32, ptr %.04.i.i125, align 4, !tbaa !35 ; 2 uses
@@ -497,22 +483,15 @@ bb.am:                                            ; preds = %_ZN11CStringBaseIwE
 
 bb.an:                                            ; preds = %bb.am, %bb.ac
   %.1 = phi i32 [ %i.dl, %bb.ac ], [ %.0.ph, %bb.am ] ; 2 uses
-  %i.fb = icmp eq ptr %.sroa.0.1, null
-  br i1 %i.fb, label %_ZN11CStringBaseIwED2Ev.exit132, label %14
+  call void @_ZdaPv(ptr noundef nonnull %10) #21
+  %i.fb = icmp eq ptr %.sroa.0188.0.lcssa, null
+  br i1 %i.fb, label %_ZN11CStringBaseIwED2Ev.exit133, label %bb.ao
 
-14:                                               ; preds = %bb.an
-  call void @_ZdaPv(ptr noundef nonnull %.sroa.0.1) #21
-  br label %_ZN11CStringBaseIwED2Ev.exit132
-
-_ZN11CStringBaseIwED2Ev.exit132:                  ; preds = %bb.an, %14
-  %15 = icmp eq ptr %.sroa.0188.0.lcssa, null
-  br i1 %15, label %_ZN11CStringBaseIwED2Ev.exit133, label %bb.ao
-
-bb.ao:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit132
+bb.ao:                                            ; preds = %bb.an
   call void @_ZdaPv(ptr noundef nonnull %.sroa.0188.0.lcssa) #21
   br label %_ZN11CStringBaseIwED2Ev.exit133
 
-_ZN11CStringBaseIwED2Ev.exit133:                  ; preds = %_ZN11CStringBaseIwED2Ev.exit132, %bb.ao
+_ZN11CStringBaseIwED2Ev.exit133:                  ; preds = %bb.an, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.fc = load ptr, ptr %i.g, align 8, !tbaa !34  ; 2 uses
   %i.fd = icmp eq ptr %i.fc, null
@@ -545,18 +524,14 @@ _ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit: ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   br i1 %i.dj, label %.outer.split.outer, label %.thread
 
-.body122:                                         ; preds = %bb.ae, %bb.ai, %bb.af
-  %.pn = phi { ptr, i32 } [ %i.do, %bb.af ], [ %i.dn, %bb.ae ], [ %i.ed, %bb.ai ] ; 2 uses
-  %16 = icmp eq ptr %.sroa.0.1, null
-  br i1 %16, label %.body109, label %17
-
-17:                                               ; preds = %.body122
-  call void @_ZdaPv(ptr noundef nonnull %.sroa.0.1) #21
+.body122:                                         ; preds = %bb.af, %bb.ai, %bb.ae
+  %.pn = phi { ptr, i32 } [ %i.do, %bb.af ], [ %i.dn, %bb.ae ], [ %i.ed, %bb.ai ]
+  call void @_ZdaPv(ptr noundef nonnull %10) #21
   br label %.body109
 
-.body109:                                         ; preds = %bb.v, %bb.w, %bb.ad, %.body122, %17, %bb.p, %_ZN11CStringBaseIwED2Ev.exit101
-  %.sroa.0188.0217 = phi ptr [ %.sroa.0188.0288, %bb.p ], [ %.sroa.0188.0288, %_ZN11CStringBaseIwED2Ev.exit101 ], [ %.sroa.0188.0.lcssa, %bb.v ], [ %.sroa.0188.0.lcssa, %bb.ad ], [ %.sroa.0188.0.lcssa, %bb.w ], [ %.sroa.0188.0.lcssa, %.body122 ], [ %.sroa.0188.0.lcssa, %17 ] ; 2 uses
-  %.pn85.pn.pn = phi { ptr, i32 } [ %i.bo, %bb.p ], [ %.pn85, %_ZN11CStringBaseIwED2Ev.exit101 ], [ %i.cq, %bb.v ], [ %i.dm, %bb.ad ], [ %i.cq, %bb.w ], [ %.pn, %.body122 ], [ %.pn, %17 ] ; 2 uses
+.body109:                                         ; preds = %bb.v, %bb.w, %bb.ad, %.body122, %bb.p, %_ZN11CStringBaseIwED2Ev.exit101
+  %.sroa.0188.0217 = phi ptr [ %.sroa.0188.0288, %bb.p ], [ %.sroa.0188.0288, %_ZN11CStringBaseIwED2Ev.exit101 ], [ %.sroa.0188.0.lcssa, %bb.v ], [ %.sroa.0188.0.lcssa, %bb.ad ], [ %.sroa.0188.0.lcssa, %bb.w ], [ %.sroa.0188.0.lcssa, %.body122 ] ; 2 uses
+  %.pn85.pn.pn = phi { ptr, i32 } [ %i.bo, %bb.p ], [ %.pn85, %_ZN11CStringBaseIwED2Ev.exit101 ], [ %i.cq, %bb.v ], [ %i.dm, %bb.ad ], [ %i.cq, %bb.w ], [ %.pn, %.body122 ] ; 2 uses
   %i.fl = icmp eq ptr %.sroa.0188.0217, null
   br i1 %i.fl, label %_ZN11CStringBaseIwED2Ev.exit137, label %bb.as
 
