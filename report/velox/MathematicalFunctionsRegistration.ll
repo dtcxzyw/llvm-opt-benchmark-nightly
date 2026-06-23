@@ -201,7 +201,7 @@ bb.o:                                             ; preds = %.noexc27
   %i.cn = icmp ugt i32 %i.ch, %i.cm
   br i1 %i.cn, label %.lr.ph.i.i.i.i.i26, label %_ZN8facebook5velox6StatusD2Ev.exit38, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc28, %.noexc21, %.noexc27, %bb.o, %.noexc20, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc28, %.noexc21, %bb.m, %.noexc20, %bb.o, %.noexc27
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bv, %.noexc21 ], [ %i.bo, %.noexc20 ], [ %i.bo, %bb.m ], [ %i.ce, %.noexc27 ], [ %i.ce, %bb.o ], [ %i.cl, %.noexc28 ]
   %i.co = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cp = trunc i64 %i.co to i16
@@ -604,7 +604,7 @@ bb.h:                                             ; preds = %.noexc33
   %i.bt = icmp ugt i32 %i.bn, %i.bs
   br i1 %i.bt, label %.lr.ph.i.i.i.i.i32, label %_ZN8facebook5velox6StatusD2Ev.exit44, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit44:             ; preds = %.noexc34, %.noexc27, %.noexc33, %bb.h, %.noexc26, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit44:             ; preds = %.noexc34, %.noexc27, %bb.f, %.noexc26, %bb.h, %.noexc33
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bb, %.noexc27 ], [ %i.au, %.noexc26 ], [ %i.au, %bb.f ], [ %i.bk, %.noexc33 ], [ %i.bk, %bb.h ], [ %i.br, %.noexc34 ]
   %i.bu = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.bv = trunc i64 %i.bu to i16
@@ -982,7 +982,7 @@ bb.i:                                             ; preds = %.noexc50
   %i.cb = icmp ugt i32 %i.bv, %i.ca
   br i1 %i.cb, label %.lr.ph.i.i.i.i.i49, label %_ZN8facebook5velox6StatusD2Ev.exit61, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit61:             ; preds = %.noexc51, %.noexc44, %.noexc50, %bb.i, %.noexc43, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit61:             ; preds = %.noexc51, %.noexc44, %bb.g, %.noexc43, %bb.i, %.noexc50
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bj, %.noexc44 ], [ %i.bc, %.noexc43 ], [ %i.bc, %bb.g ], [ %i.bs, %.noexc50 ], [ %i.bs, %bb.i ], [ %i.bz, %.noexc51 ]
   %i.cc = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cd = trunc i64 %i.cc to i16
@@ -1302,7 +1302,7 @@ bb.ae:                                            ; preds = %.noexc87
   %i.fs = icmp ugt i32 %i.fm, %i.fr
   br i1 %i.fs, label %.lr.ph.i.i.i.i.i86, label %_ZN8facebook5velox6StatusD2Ev.exit101, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit101:            ; preds = %.noexc88, %.noexc80, %.noexc87, %bb.ae, %.noexc79, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit101:            ; preds = %.noexc88, %.noexc80, %bb.ac, %.noexc79, %bb.ae, %.noexc87
   %.1.i.i.i.i.i76.sink = phi i64 [ %i.fa, %.noexc80 ], [ %i.et, %.noexc79 ], [ %i.et, %bb.ac ], [ %i.fj, %.noexc87 ], [ %i.fj, %bb.ae ], [ %i.fq, %.noexc88 ]
   %i.ft = lshr i64 %.1.i.i.i.i.i76.sink, 32
   %i.fu = trunc i64 %i.ft to i16
@@ -1705,7 +1705,7 @@ bb.o:                                             ; preds = %.noexc22
   %i.cp = icmp ugt i32 %i.cj, %i.co
   br i1 %i.cp, label %.lr.ph.i.i.i.i.i21, label %_ZN8facebook5velox6StatusD2Ev.exit32, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit32:             ; preds = %.noexc23, %.noexc16, %.noexc22, %bb.o, %.noexc15, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit32:             ; preds = %.noexc23, %.noexc16, %bb.m, %.noexc15, %bb.o, %.noexc22
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bx, %.noexc16 ], [ %i.bq, %.noexc15 ], [ %i.bq, %bb.m ], [ %i.cg, %.noexc22 ], [ %i.cg, %bb.o ], [ %i.cn, %.noexc23 ]
   %i.cq = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cr = trunc i64 %i.cq to i16
@@ -2108,7 +2108,7 @@ bb.h:                                             ; preds = %.noexc28
   %i.bw = icmp ugt i32 %i.bq, %i.bv
   br i1 %i.bw, label %.lr.ph.i.i.i.i.i27, label %_ZN8facebook5velox6StatusD2Ev.exit38, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc29, %.noexc22, %.noexc28, %bb.h, %.noexc21, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc29, %.noexc22, %bb.f, %.noexc21, %bb.h, %.noexc28
   %.1.i.i.i.i.i.sink = phi i64 [ %i.be, %.noexc22 ], [ %i.ax, %.noexc21 ], [ %i.ax, %bb.f ], [ %i.bn, %.noexc28 ], [ %i.bn, %bb.h ], [ %i.bu, %.noexc29 ]
   %i.bx = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.by = trunc i64 %i.bx to i16
@@ -2490,7 +2490,7 @@ bb.i:                                             ; preds = %.noexc45
   %i.cf = icmp ugt i32 %i.bz, %i.ce
   br i1 %i.cf, label %.lr.ph.i.i.i.i.i44, label %_ZN8facebook5velox6StatusD2Ev.exit55, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc39, %.noexc45, %bb.i, %.noexc38, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc39, %bb.g, %.noexc38, %bb.i, %.noexc45
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bn, %.noexc39 ], [ %i.bg, %.noexc38 ], [ %i.bg, %bb.g ], [ %i.bw, %.noexc45 ], [ %i.bw, %bb.i ], [ %i.cd, %.noexc46 ]
   %i.cg = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.ch = trunc i64 %i.cg to i16
@@ -2811,7 +2811,7 @@ bb.ae:                                            ; preds = %.noexc81
   %i.fx = icmp ugt i32 %i.fr, %i.fw
   br i1 %i.fx, label %.lr.ph.i.i.i.i.i80, label %_ZN8facebook5velox6StatusD2Ev.exit95, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit95:             ; preds = %.noexc82, %.noexc74, %.noexc81, %bb.ae, %.noexc73, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit95:             ; preds = %.noexc82, %.noexc74, %bb.ac, %.noexc73, %bb.ae, %.noexc81
   %.1.i.i.i.i.i70.sink = phi i64 [ %i.ff, %.noexc74 ], [ %i.ey, %.noexc73 ], [ %i.ey, %bb.ac ], [ %i.fo, %.noexc81 ], [ %i.fo, %bb.ae ], [ %i.fv, %.noexc82 ]
   %i.fy = lshr i64 %.1.i.i.i.i.i70.sink, 32
   %i.fz = trunc i64 %i.fy to i16
@@ -3214,7 +3214,7 @@ bb.o:                                             ; preds = %.noexc21
   %i.cp = icmp ugt i32 %i.cj, %i.co
   br i1 %i.cp, label %.lr.ph.i.i.i.i.i20, label %_ZN8facebook5velox6StatusD2Ev.exit31, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit31:             ; preds = %.noexc22, %.noexc15, %.noexc21, %bb.o, %.noexc14, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit31:             ; preds = %.noexc22, %.noexc15, %bb.m, %.noexc14, %bb.o, %.noexc21
   %.1.i.i.i.i.i18.sink = phi i64 [ %i.bx, %.noexc15 ], [ %i.bq, %.noexc14 ], [ %i.bq, %bb.m ], [ %i.cg, %.noexc21 ], [ %i.cg, %bb.o ], [ %i.cn, %.noexc22 ]
   %i.cq = lshr i64 %.1.i.i.i.i.i18.sink, 32
   %i.cr = trunc i64 %i.cq to i16
@@ -3617,7 +3617,7 @@ bb.h:                                             ; preds = %.noexc27
   %i.bw = icmp ugt i32 %i.bq, %i.bv
   br i1 %i.bw, label %.lr.ph.i.i.i.i.i26, label %_ZN8facebook5velox6StatusD2Ev.exit37, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit37:             ; preds = %.noexc28, %.noexc21, %.noexc27, %bb.h, %.noexc20, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit37:             ; preds = %.noexc28, %.noexc21, %bb.f, %.noexc20, %bb.h, %.noexc27
   %.1.i.i.i.i.i24.sink = phi i64 [ %i.be, %.noexc21 ], [ %i.ax, %.noexc20 ], [ %i.ax, %bb.f ], [ %i.bn, %.noexc27 ], [ %i.bn, %bb.h ], [ %i.bu, %.noexc28 ]
   %i.bx = lshr i64 %.1.i.i.i.i.i24.sink, 32
   %i.by = trunc i64 %i.bx to i16
@@ -3999,7 +3999,7 @@ bb.i:                                             ; preds = %.noexc44
   %i.cf = icmp ugt i32 %i.bz, %i.ce
   br i1 %i.cf, label %.lr.ph.i.i.i.i.i43, label %_ZN8facebook5velox6StatusD2Ev.exit54, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit54:             ; preds = %.noexc45, %.noexc38, %.noexc44, %bb.i, %.noexc37, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit54:             ; preds = %.noexc45, %.noexc38, %bb.g, %.noexc37, %bb.i, %.noexc44
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bn, %.noexc38 ], [ %i.bg, %.noexc37 ], [ %i.bg, %bb.g ], [ %i.bw, %.noexc44 ], [ %i.bw, %bb.i ], [ %i.cd, %.noexc45 ]
   %i.cg = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.ch = trunc i64 %i.cg to i16
@@ -4320,7 +4320,7 @@ bb.ae:                                            ; preds = %.noexc80
   %i.fx = icmp ugt i32 %i.fr, %i.fw
   br i1 %i.fx, label %.lr.ph.i.i.i.i.i79, label %_ZN8facebook5velox6StatusD2Ev.exit94, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit94:             ; preds = %.noexc81, %.noexc73, %.noexc80, %bb.ae, %.noexc72, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit94:             ; preds = %.noexc81, %.noexc73, %bb.ac, %.noexc72, %bb.ae, %.noexc80
   %.1.i.i.i.i.i77.sink = phi i64 [ %i.ff, %.noexc73 ], [ %i.ey, %.noexc72 ], [ %i.ey, %bb.ac ], [ %i.fo, %.noexc80 ], [ %i.fo, %bb.ae ], [ %i.fv, %.noexc81 ]
   %i.fy = lshr i64 %.1.i.i.i.i.i77.sink, 32
   %i.fz = trunc i64 %i.fy to i16
@@ -4723,7 +4723,7 @@ bb.o:                                             ; preds = %.noexc20
   %i.cr = icmp ugt i32 %i.cl, %i.cq
   br i1 %i.cr, label %.lr.ph.i.i.i.i.i19, label %_ZN8facebook5velox6StatusD2Ev.exit30, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit30:             ; preds = %.noexc21, %.noexc14, %.noexc20, %bb.o, %.noexc13, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit30:             ; preds = %.noexc21, %.noexc14, %bb.m, %.noexc13, %bb.o, %.noexc20
   %.1.i.i.i.i.i17.sink = phi i64 [ %i.bz, %.noexc14 ], [ %i.bs, %.noexc13 ], [ %i.bs, %bb.m ], [ %i.ci, %.noexc20 ], [ %i.ci, %bb.o ], [ %i.cp, %.noexc21 ]
   %i.cs = lshr i64 %.1.i.i.i.i.i17.sink, 32
   %i.ct = trunc i64 %i.cs to i16
@@ -5126,7 +5126,7 @@ bb.h:                                             ; preds = %.noexc26
   %i.by = icmp ugt i32 %i.bs, %i.bx
   br i1 %i.by, label %.lr.ph.i.i.i.i.i25, label %_ZN8facebook5velox6StatusD2Ev.exit36, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit36:             ; preds = %.noexc27, %.noexc20, %.noexc26, %bb.h, %.noexc19, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit36:             ; preds = %.noexc27, %.noexc20, %bb.f, %.noexc19, %bb.h, %.noexc26
   %.1.i.i.i.i.i23.sink = phi i64 [ %i.bg, %.noexc20 ], [ %i.az, %.noexc19 ], [ %i.az, %bb.f ], [ %i.bp, %.noexc26 ], [ %i.bp, %bb.h ], [ %i.bw, %.noexc27 ]
   %i.bz = lshr i64 %.1.i.i.i.i.i23.sink, 32
   %i.ca = trunc i64 %i.bz to i16
@@ -5510,7 +5510,7 @@ bb.i:                                             ; preds = %.noexc45
   %i.ch = icmp ugt i32 %i.cb, %i.cg
   br i1 %i.ch, label %.lr.ph.i.i.i.i.i44, label %_ZN8facebook5velox6StatusD2Ev.exit55, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc38, %.noexc45, %bb.i, %.noexc37, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc38, %bb.g, %.noexc37, %bb.i, %.noexc45
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bp, %.noexc38 ], [ %i.bi, %.noexc37 ], [ %i.bi, %bb.g ], [ %i.by, %.noexc45 ], [ %i.by, %bb.i ], [ %i.cf, %.noexc46 ]
   %i.ci = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cj = trunc i64 %i.ci to i16
@@ -5833,7 +5833,7 @@ bb.ae:                                            ; preds = %.noexc83
   %i.gb = icmp ugt i32 %i.fv, %i.ga
   br i1 %i.gb, label %.lr.ph.i.i.i.i.i82, label %_ZN8facebook5velox6StatusD2Ev.exit97, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit97:             ; preds = %.noexc84, %.noexc75, %.noexc83, %bb.ae, %.noexc74, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit97:             ; preds = %.noexc84, %.noexc75, %bb.ac, %.noexc74, %bb.ae, %.noexc83
   %.1.i.i.i.i.i80.sink = phi i64 [ %i.fj, %.noexc75 ], [ %i.fc, %.noexc74 ], [ %i.fc, %bb.ac ], [ %i.fs, %.noexc83 ], [ %i.fs, %bb.ae ], [ %i.fz, %.noexc84 ]
   %i.gc = lshr i64 %.1.i.i.i.i.i80.sink, 32
   %i.gd = trunc i64 %i.gc to i16
@@ -6236,7 +6236,7 @@ bb.u:                                             ; preds = %.noexc25
   %i.dy = icmp ugt i32 %i.ds, %i.dx
   br i1 %i.dy, label %.lr.ph.i.i.i.i.i24, label %_ZN8facebook5velox6StatusD2Ev.exit35, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit35:             ; preds = %.noexc26, %.noexc19, %.noexc25, %bb.u, %.noexc18, %bb.s
+_ZN8facebook5velox6StatusD2Ev.exit35:             ; preds = %.noexc26, %.noexc19, %bb.s, %.noexc18, %bb.u, %.noexc25
   %.1.i.i.i.i.i.sink = phi i64 [ %i.dg, %.noexc19 ], [ %i.cz, %.noexc18 ], [ %i.cz, %bb.s ], [ %i.dp, %.noexc25 ], [ %i.dp, %bb.u ], [ %i.dw, %.noexc26 ]
   %i.dz = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.ea = trunc i64 %i.dz to i16
@@ -6639,7 +6639,7 @@ bb.n:                                             ; preds = %.noexc31
   %i.de = icmp ugt i32 %i.cy, %i.dd
   br i1 %i.de, label %.lr.ph.i.i.i.i.i30, label %_ZN8facebook5velox6StatusD2Ev.exit41, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit41:             ; preds = %.noexc32, %.noexc25, %.noexc31, %bb.n, %.noexc24, %bb.l
+_ZN8facebook5velox6StatusD2Ev.exit41:             ; preds = %.noexc32, %.noexc25, %bb.l, %.noexc24, %bb.n, %.noexc31
   %.1.i.i.i.i.i.sink = phi i64 [ %i.cm, %.noexc25 ], [ %i.cf, %.noexc24 ], [ %i.cf, %bb.l ], [ %i.cv, %.noexc31 ], [ %i.cv, %bb.n ], [ %i.dc, %.noexc32 ]
   %i.df = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.dg = trunc i64 %i.df to i16
@@ -7042,7 +7042,7 @@ bb.o:                                             ; preds = %.noexc48
   %i.dm = icmp ugt i32 %i.dg, %i.dl
   br i1 %i.dm, label %.lr.ph.i.i.i.i.i47, label %_ZN8facebook5velox6StatusD2Ev.exit58, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit58:             ; preds = %.noexc49, %.noexc42, %.noexc48, %bb.o, %.noexc41, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit58:             ; preds = %.noexc49, %.noexc42, %bb.m, %.noexc41, %bb.o, %.noexc48
   %.1.i.i.i.i.i.sink = phi i64 [ %i.cu, %.noexc42 ], [ %i.cn, %.noexc41 ], [ %i.cn, %bb.m ], [ %i.dd, %.noexc48 ], [ %i.dd, %bb.o ], [ %i.dk, %.noexc49 ]
   %i.dn = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.do = trunc i64 %i.dn to i16
@@ -7423,7 +7423,7 @@ bb.aq:                                            ; preds = %.noexc90
   %i.im = icmp ugt i32 %i.ig, %i.il
   br i1 %i.im, label %.lr.ph.i.i.i.i.i89, label %_ZN8facebook5velox6StatusD2Ev.exit104, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit104:            ; preds = %.noexc91, %.noexc83, %.noexc90, %bb.aq, %.noexc82, %bb.ao
+_ZN8facebook5velox6StatusD2Ev.exit104:            ; preds = %.noexc91, %.noexc83, %bb.ao, %.noexc82, %bb.aq, %.noexc90
   %.1.i.i.i.i.i79.sink = phi i64 [ %i.hu, %.noexc83 ], [ %i.hn, %.noexc82 ], [ %i.hn, %bb.ao ], [ %i.id, %.noexc90 ], [ %i.id, %bb.aq ], [ %i.ik, %.noexc91 ]
   %i.in = lshr i64 %.1.i.i.i.i.i79.sink, 32
   %i.io = trunc i64 %i.in to i16
@@ -7826,7 +7826,7 @@ bb.o:                                             ; preds = %.noexc27
   %i.ch = icmp ugt i32 %i.cb, %i.cg
   br i1 %i.ch, label %.lr.ph.i.i.i.i.i26, label %_ZN8facebook5velox6StatusD2Ev.exit38, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc28, %.noexc21, %.noexc27, %bb.o, %.noexc20, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc28, %.noexc21, %bb.m, %.noexc20, %bb.o, %.noexc27
   %.1.i.i.i.i.i.sink = phi i64 [ %i.br, %.noexc21 ], [ %i.bk, %.noexc20 ], [ %i.bk, %bb.m ], [ %i.by, %.noexc27 ], [ %i.by, %bb.o ], [ %i.cf, %.noexc28 ]
   %i.ci = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cj = trunc nuw i64 %i.ci to i32
@@ -8229,7 +8229,7 @@ bb.h:                                             ; preds = %.noexc33
   %i.bn = icmp ugt i32 %i.bh, %i.bm
   br i1 %i.bn, label %.lr.ph.i.i.i.i.i32, label %_ZN8facebook5velox6StatusD2Ev.exit44, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit44:             ; preds = %.noexc34, %.noexc27, %.noexc33, %bb.h, %.noexc26, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit44:             ; preds = %.noexc34, %.noexc27, %bb.f, %.noexc26, %bb.h, %.noexc33
   %.1.i.i.i.i.i.sink = phi i64 [ %i.ax, %.noexc27 ], [ %i.aq, %.noexc26 ], [ %i.aq, %bb.f ], [ %i.be, %.noexc33 ], [ %i.be, %bb.h ], [ %i.bl, %.noexc34 ]
   %i.bo = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.bp = trunc nuw i64 %i.bo to i32
@@ -8601,7 +8601,7 @@ bb.i:                                             ; preds = %.noexc50
   %i.bv = icmp ugt i32 %i.bp, %i.bu
   br i1 %i.bv, label %.lr.ph.i.i.i.i.i49, label %_ZN8facebook5velox6StatusD2Ev.exit61, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit61:             ; preds = %.noexc51, %.noexc44, %.noexc50, %bb.i, %.noexc43, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit61:             ; preds = %.noexc51, %.noexc44, %bb.g, %.noexc43, %bb.i, %.noexc50
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bf, %.noexc44 ], [ %i.ay, %.noexc43 ], [ %i.ay, %bb.g ], [ %i.bm, %.noexc50 ], [ %i.bm, %bb.i ], [ %i.bt, %.noexc51 ]
   %i.bw = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.bx = trunc nuw i64 %i.bw to i32
@@ -8915,7 +8915,7 @@ bb.ae:                                            ; preds = %.noexc87
   %i.fg = icmp ugt i32 %i.fa, %i.ff
   br i1 %i.fg, label %.lr.ph.i.i.i.i.i86, label %_ZN8facebook5velox6StatusD2Ev.exit101, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit101:            ; preds = %.noexc88, %.noexc80, %.noexc87, %bb.ae, %.noexc79, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit101:            ; preds = %.noexc88, %.noexc80, %bb.ac, %.noexc79, %bb.ae, %.noexc87
   %.1.i.i.i.i.i76.sink = phi i64 [ %i.eq, %.noexc80 ], [ %i.ej, %.noexc79 ], [ %i.ej, %bb.ac ], [ %i.ex, %.noexc87 ], [ %i.ex, %bb.ae ], [ %i.fe, %.noexc88 ]
   %i.fh = lshr i64 %.1.i.i.i.i.i76.sink, 32
   %i.fi = trunc nuw i64 %i.fh to i32
@@ -9318,7 +9318,7 @@ bb.o:                                             ; preds = %.noexc22
   %i.cj = icmp ugt i32 %i.cd, %i.ci
   br i1 %i.cj, label %.lr.ph.i.i.i.i.i21, label %_ZN8facebook5velox6StatusD2Ev.exit32, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit32:             ; preds = %.noexc23, %.noexc16, %.noexc22, %bb.o, %.noexc15, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit32:             ; preds = %.noexc23, %.noexc16, %bb.m, %.noexc15, %bb.o, %.noexc22
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bt, %.noexc16 ], [ %i.bm, %.noexc15 ], [ %i.bm, %bb.m ], [ %i.ca, %.noexc22 ], [ %i.ca, %bb.o ], [ %i.ch, %.noexc23 ]
   %i.ck = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cl = trunc nuw i64 %i.ck to i32
@@ -9721,7 +9721,7 @@ bb.h:                                             ; preds = %.noexc28
   %i.bq = icmp ugt i32 %i.bk, %i.bp
   br i1 %i.bq, label %.lr.ph.i.i.i.i.i27, label %_ZN8facebook5velox6StatusD2Ev.exit38, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc29, %.noexc22, %.noexc28, %bb.h, %.noexc21, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit38:             ; preds = %.noexc29, %.noexc22, %bb.f, %.noexc21, %bb.h, %.noexc28
   %.1.i.i.i.i.i.sink = phi i64 [ %i.ba, %.noexc22 ], [ %i.at, %.noexc21 ], [ %i.at, %bb.f ], [ %i.bh, %.noexc28 ], [ %i.bh, %bb.h ], [ %i.bo, %.noexc29 ]
   %i.br = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.bs = trunc nuw i64 %i.br to i32
@@ -10097,7 +10097,7 @@ bb.i:                                             ; preds = %.noexc45
   %i.bz = icmp ugt i32 %i.bt, %i.by
   br i1 %i.bz, label %.lr.ph.i.i.i.i.i44, label %_ZN8facebook5velox6StatusD2Ev.exit55, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc39, %.noexc45, %bb.i, %.noexc38, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc39, %bb.g, %.noexc38, %bb.i, %.noexc45
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bj, %.noexc39 ], [ %i.bc, %.noexc38 ], [ %i.bc, %bb.g ], [ %i.bq, %.noexc45 ], [ %i.bq, %bb.i ], [ %i.bx, %.noexc46 ]
   %i.ca = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cb = trunc nuw i64 %i.ca to i32
@@ -10412,7 +10412,7 @@ bb.ae:                                            ; preds = %.noexc81
   %i.fl = icmp ugt i32 %i.ff, %i.fk
   br i1 %i.fl, label %.lr.ph.i.i.i.i.i80, label %_ZN8facebook5velox6StatusD2Ev.exit95, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit95:             ; preds = %.noexc82, %.noexc74, %.noexc81, %bb.ae, %.noexc73, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit95:             ; preds = %.noexc82, %.noexc74, %bb.ac, %.noexc73, %bb.ae, %.noexc81
   %.1.i.i.i.i.i70.sink = phi i64 [ %i.ev, %.noexc74 ], [ %i.eo, %.noexc73 ], [ %i.eo, %bb.ac ], [ %i.fc, %.noexc81 ], [ %i.fc, %bb.ae ], [ %i.fj, %.noexc82 ]
   %i.fm = lshr i64 %.1.i.i.i.i.i70.sink, 32
   %i.fn = trunc nuw i64 %i.fm to i32
@@ -10815,7 +10815,7 @@ bb.o:                                             ; preds = %.noexc21
   %i.cj = icmp ugt i32 %i.cd, %i.ci
   br i1 %i.cj, label %.lr.ph.i.i.i.i.i20, label %_ZN8facebook5velox6StatusD2Ev.exit31, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit31:             ; preds = %.noexc22, %.noexc15, %.noexc21, %bb.o, %.noexc14, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit31:             ; preds = %.noexc22, %.noexc15, %bb.m, %.noexc14, %bb.o, %.noexc21
   %.1.i.i.i.i.i18.sink = phi i64 [ %i.bt, %.noexc15 ], [ %i.bm, %.noexc14 ], [ %i.bm, %bb.m ], [ %i.ca, %.noexc21 ], [ %i.ca, %bb.o ], [ %i.ch, %.noexc22 ]
   %i.ck = lshr i64 %.1.i.i.i.i.i18.sink, 32
   %i.cl = trunc nuw i64 %i.ck to i32
@@ -11218,7 +11218,7 @@ bb.h:                                             ; preds = %.noexc27
   %i.bq = icmp ugt i32 %i.bk, %i.bp
   br i1 %i.bq, label %.lr.ph.i.i.i.i.i26, label %_ZN8facebook5velox6StatusD2Ev.exit37, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit37:             ; preds = %.noexc28, %.noexc21, %.noexc27, %bb.h, %.noexc20, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit37:             ; preds = %.noexc28, %.noexc21, %bb.f, %.noexc20, %bb.h, %.noexc27
   %.1.i.i.i.i.i24.sink = phi i64 [ %i.ba, %.noexc21 ], [ %i.at, %.noexc20 ], [ %i.at, %bb.f ], [ %i.bh, %.noexc27 ], [ %i.bh, %bb.h ], [ %i.bo, %.noexc28 ]
   %i.br = lshr i64 %.1.i.i.i.i.i24.sink, 32
   %i.bs = trunc nuw i64 %i.br to i32
@@ -11594,7 +11594,7 @@ bb.i:                                             ; preds = %.noexc44
   %i.bz = icmp ugt i32 %i.bt, %i.by
   br i1 %i.bz, label %.lr.ph.i.i.i.i.i43, label %_ZN8facebook5velox6StatusD2Ev.exit54, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit54:             ; preds = %.noexc45, %.noexc38, %.noexc44, %bb.i, %.noexc37, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit54:             ; preds = %.noexc45, %.noexc38, %bb.g, %.noexc37, %bb.i, %.noexc44
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bj, %.noexc38 ], [ %i.bc, %.noexc37 ], [ %i.bc, %bb.g ], [ %i.bq, %.noexc44 ], [ %i.bq, %bb.i ], [ %i.bx, %.noexc45 ]
   %i.ca = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cb = trunc nuw i64 %i.ca to i32
@@ -11909,7 +11909,7 @@ bb.ae:                                            ; preds = %.noexc80
   %i.fl = icmp ugt i32 %i.ff, %i.fk
   br i1 %i.fl, label %.lr.ph.i.i.i.i.i79, label %_ZN8facebook5velox6StatusD2Ev.exit94, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit94:             ; preds = %.noexc81, %.noexc73, %.noexc80, %bb.ae, %.noexc72, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit94:             ; preds = %.noexc81, %.noexc73, %bb.ac, %.noexc72, %bb.ae, %.noexc80
   %.1.i.i.i.i.i77.sink = phi i64 [ %i.ev, %.noexc73 ], [ %i.eo, %.noexc72 ], [ %i.eo, %bb.ac ], [ %i.fc, %.noexc80 ], [ %i.fc, %bb.ae ], [ %i.fj, %.noexc81 ]
   %i.fm = lshr i64 %.1.i.i.i.i.i77.sink, 32
   %i.fn = trunc nuw i64 %i.fm to i32
@@ -12312,7 +12312,7 @@ bb.o:                                             ; preds = %.noexc20
   %i.cl = icmp ugt i32 %i.cf, %i.ck
   br i1 %i.cl, label %.lr.ph.i.i.i.i.i19, label %_ZN8facebook5velox6StatusD2Ev.exit30, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit30:             ; preds = %.noexc21, %.noexc14, %.noexc20, %bb.o, %.noexc13, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit30:             ; preds = %.noexc21, %.noexc14, %bb.m, %.noexc13, %bb.o, %.noexc20
   %.1.i.i.i.i.i17.sink = phi i64 [ %i.bv, %.noexc14 ], [ %i.bo, %.noexc13 ], [ %i.bo, %bb.m ], [ %i.cc, %.noexc20 ], [ %i.cc, %bb.o ], [ %i.cj, %.noexc21 ]
   %i.cm = lshr i64 %.1.i.i.i.i.i17.sink, 32
   %i.cn = trunc nuw i64 %i.cm to i32
@@ -12715,7 +12715,7 @@ bb.h:                                             ; preds = %.noexc26
   %i.bs = icmp ugt i32 %i.bm, %i.br
   br i1 %i.bs, label %.lr.ph.i.i.i.i.i25, label %_ZN8facebook5velox6StatusD2Ev.exit36, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit36:             ; preds = %.noexc27, %.noexc20, %.noexc26, %bb.h, %.noexc19, %bb.f
+_ZN8facebook5velox6StatusD2Ev.exit36:             ; preds = %.noexc27, %.noexc20, %bb.f, %.noexc19, %bb.h, %.noexc26
   %.1.i.i.i.i.i23.sink = phi i64 [ %i.bc, %.noexc20 ], [ %i.av, %.noexc19 ], [ %i.av, %bb.f ], [ %i.bj, %.noexc26 ], [ %i.bj, %bb.h ], [ %i.bq, %.noexc27 ]
   %i.bt = lshr i64 %.1.i.i.i.i.i23.sink, 32
   %i.bu = trunc nuw i64 %i.bt to i32
@@ -13093,7 +13093,7 @@ bb.i:                                             ; preds = %.noexc45
   %i.cb = icmp ugt i32 %i.bv, %i.ca
   br i1 %i.cb, label %.lr.ph.i.i.i.i.i44, label %_ZN8facebook5velox6StatusD2Ev.exit55, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc38, %.noexc45, %bb.i, %.noexc37, %bb.g
+_ZN8facebook5velox6StatusD2Ev.exit55:             ; preds = %.noexc46, %.noexc38, %bb.g, %.noexc37, %bb.i, %.noexc45
   %.1.i.i.i.i.i.sink = phi i64 [ %i.bl, %.noexc38 ], [ %i.be, %.noexc37 ], [ %i.be, %bb.g ], [ %i.bs, %.noexc45 ], [ %i.bs, %bb.i ], [ %i.bz, %.noexc46 ]
   %i.cc = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.cd = trunc nuw i64 %i.cc to i32
@@ -13410,7 +13410,7 @@ bb.ae:                                            ; preds = %.noexc83
   %i.fp = icmp ugt i32 %i.fj, %i.fo
   br i1 %i.fp, label %.lr.ph.i.i.i.i.i82, label %_ZN8facebook5velox6StatusD2Ev.exit97, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit97:             ; preds = %.noexc84, %.noexc75, %.noexc83, %bb.ae, %.noexc74, %bb.ac
+_ZN8facebook5velox6StatusD2Ev.exit97:             ; preds = %.noexc84, %.noexc75, %bb.ac, %.noexc74, %bb.ae, %.noexc83
   %.1.i.i.i.i.i80.sink = phi i64 [ %i.ez, %.noexc75 ], [ %i.es, %.noexc74 ], [ %i.es, %bb.ac ], [ %i.fg, %.noexc83 ], [ %i.fg, %bb.ae ], [ %i.fn, %.noexc84 ]
   %i.fq = lshr i64 %.1.i.i.i.i.i80.sink, 32
   %i.fr = trunc nuw i64 %i.fq to i32
@@ -13813,7 +13813,7 @@ bb.u:                                             ; preds = %.noexc25
   %i.ds = icmp ugt i32 %i.dm, %i.dr
   br i1 %i.ds, label %.lr.ph.i.i.i.i.i24, label %_ZN8facebook5velox6StatusD2Ev.exit35, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit35:             ; preds = %.noexc26, %.noexc19, %.noexc25, %bb.u, %.noexc18, %bb.s
+_ZN8facebook5velox6StatusD2Ev.exit35:             ; preds = %.noexc26, %.noexc19, %bb.s, %.noexc18, %bb.u, %.noexc25
   %.1.i.i.i.i.i.sink = phi i64 [ %i.dc, %.noexc19 ], [ %i.cv, %.noexc18 ], [ %i.cv, %bb.s ], [ %i.dj, %.noexc25 ], [ %i.dj, %bb.u ], [ %i.dq, %.noexc26 ]
   %i.dt = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.du = trunc nuw i64 %i.dt to i32
@@ -14216,7 +14216,7 @@ bb.n:                                             ; preds = %.noexc31
   %i.cy = icmp ugt i32 %i.cs, %i.cx
   br i1 %i.cy, label %.lr.ph.i.i.i.i.i30, label %_ZN8facebook5velox6StatusD2Ev.exit41, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit41:             ; preds = %.noexc32, %.noexc25, %.noexc31, %bb.n, %.noexc24, %bb.l
+_ZN8facebook5velox6StatusD2Ev.exit41:             ; preds = %.noexc32, %.noexc25, %bb.l, %.noexc24, %bb.n, %.noexc31
   %.1.i.i.i.i.i.sink = phi i64 [ %i.ci, %.noexc25 ], [ %i.cb, %.noexc24 ], [ %i.cb, %bb.l ], [ %i.cp, %.noexc31 ], [ %i.cp, %bb.n ], [ %i.cw, %.noexc32 ]
   %i.cz = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.da = trunc nuw i64 %i.cz to i32
@@ -14619,7 +14619,7 @@ bb.o:                                             ; preds = %.noexc48
   %i.dg = icmp ugt i32 %i.da, %i.df
   br i1 %i.dg, label %.lr.ph.i.i.i.i.i47, label %_ZN8facebook5velox6StatusD2Ev.exit58, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit58:             ; preds = %.noexc49, %.noexc42, %.noexc48, %bb.o, %.noexc41, %bb.m
+_ZN8facebook5velox6StatusD2Ev.exit58:             ; preds = %.noexc49, %.noexc42, %bb.m, %.noexc41, %bb.o, %.noexc48
   %.1.i.i.i.i.i.sink = phi i64 [ %i.cq, %.noexc42 ], [ %i.cj, %.noexc41 ], [ %i.cj, %bb.m ], [ %i.cx, %.noexc48 ], [ %i.cx, %bb.o ], [ %i.de, %.noexc49 ]
   %i.dh = lshr i64 %.1.i.i.i.i.i.sink, 32
   %i.di = trunc nuw i64 %i.dh to i32
@@ -14994,7 +14994,7 @@ bb.aq:                                            ; preds = %.noexc90
   %i.ia = icmp ugt i32 %i.hu, %i.hz
   br i1 %i.ia, label %.lr.ph.i.i.i.i.i89, label %_ZN8facebook5velox6StatusD2Ev.exit104, !llvm.loop !15026
 
-_ZN8facebook5velox6StatusD2Ev.exit104:            ; preds = %.noexc91, %.noexc83, %.noexc90, %bb.aq, %.noexc82, %bb.ao
+_ZN8facebook5velox6StatusD2Ev.exit104:            ; preds = %.noexc91, %.noexc83, %bb.ao, %.noexc82, %bb.aq, %.noexc90
   %.1.i.i.i.i.i79.sink = phi i64 [ %i.hk, %.noexc83 ], [ %i.hd, %.noexc82 ], [ %i.hd, %bb.ao ], [ %i.hr, %.noexc90 ], [ %i.hr, %bb.aq ], [ %i.hy, %.noexc91 ]
   %i.ib = lshr i64 %.1.i.i.i.i.i79.sink, 32
   %i.ic = trunc nuw i64 %i.ib to i32
@@ -15397,7 +15397,7 @@ bb.o:                                             ; preds = %.noexc32
   br label %_ZN8facebook5velox6StatusD2Ev.exit43
 
 _ZN8facebook5velox6StatusD2Ev.exit43:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.m, %.noexc20, %..loopexit_crit_edge.i.i.i.i.i29, %bb.o, %.noexc32
-  %.pn.i10 = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i31, %..loopexit_crit_edge.i.i.i.i.i29 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc20 ], [ %extract.t16.i.i.i.i.i24, %.noexc32 ], [ %extract.t16.i.i.i.i.i24, %bb.o ]
+  %.pn.i10 = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i24, %.noexc32 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc20 ], [ %extract.t20.le.i.i.i.i.i31, %..loopexit_crit_edge.i.i.i.i.i29 ], [ %extract.t16.i.i.i.i.i24, %bb.o ]
   %storemerge.i = add i64 %.pn.i10, %i.ax
   %i.ci = load ptr, ptr %i.at, align 8, !tbaa !16440, !nonnull !393, !align !891
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
@@ -15800,7 +15800,7 @@ bb.h:                                             ; preds = %.noexc38
   br label %_ZN8facebook5velox6StatusD2Ev.exit49
 
 _ZN8facebook5velox6StatusD2Ev.exit49:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.f, %.noexc26, %..loopexit_crit_edge.i.i.i.i.i35, %bb.h, %.noexc38
-  %.pn.i17 = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i37, %..loopexit_crit_edge.i.i.i.i.i35 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc26 ], [ %extract.t16.i.i.i.i.i30, %.noexc38 ], [ %extract.t16.i.i.i.i.i30, %bb.h ]
+  %.pn.i17 = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i30, %.noexc38 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc26 ], [ %extract.t20.le.i.i.i.i.i37, %..loopexit_crit_edge.i.i.i.i.i35 ], [ %extract.t16.i.i.i.i.i30, %bb.h ]
   %storemerge.i = add i64 %.pn.i17, %i.ad
   %i.bo = getelementptr inbounds nuw i8, ptr %i.y, i64 32
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !16440, !nonnull !393, !align !891
@@ -16184,7 +16184,7 @@ bb.i:                                             ; preds = %.noexc55
   br label %_ZN8facebook5velox6StatusD2Ev.exit66
 
 _ZN8facebook5velox6StatusD2Ev.exit66:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.g, %.noexc43, %..loopexit_crit_edge.i.i.i.i.i52, %bb.i, %.noexc55
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i54, %..loopexit_crit_edge.i.i.i.i.i52 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc43 ], [ %extract.t16.i.i.i.i.i47, %.noexc55 ], [ %extract.t16.i.i.i.i.i47, %bb.i ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i47, %.noexc55 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc43 ], [ %extract.t20.le.i.i.i.i.i54, %..loopexit_crit_edge.i.i.i.i.i52 ], [ %extract.t16.i.i.i.i.i47, %bb.i ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.al
   %i.bw = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !16440, !nonnull !393, !align !891
@@ -16510,7 +16510,7 @@ bb.ae:                                            ; preds = %.noexc102
   br label %_ZN8facebook5velox6StatusD2Ev.exit116
 
 _ZN8facebook5velox6StatusD2Ev.exit116:            ; preds = %..loopexit_crit_edge.i.i.i.i.i86, %bb.ac, %.noexc89, %..loopexit_crit_edge.i.i.i.i.i99, %bb.ae, %.noexc102
-  %.pn.i23 = phi i64 [ %extract.t20.le.i.i.i.i.i88, %..loopexit_crit_edge.i.i.i.i.i86 ], [ %extract.t20.le.i.i.i.i.i101, %..loopexit_crit_edge.i.i.i.i.i99 ], [ %extract.t16.i.i.i.i.i81, %bb.ac ], [ %extract.t16.i.i.i.i.i81, %.noexc89 ], [ %extract.t16.i.i.i.i.i94, %.noexc102 ], [ %extract.t16.i.i.i.i.i94, %bb.ae ]
+  %.pn.i23 = phi i64 [ %extract.t20.le.i.i.i.i.i88, %..loopexit_crit_edge.i.i.i.i.i86 ], [ %extract.t16.i.i.i.i.i94, %.noexc102 ], [ %extract.t16.i.i.i.i.i81, %bb.ac ], [ %extract.t16.i.i.i.i.i81, %.noexc89 ], [ %extract.t20.le.i.i.i.i.i101, %..loopexit_crit_edge.i.i.i.i.i99 ], [ %extract.t16.i.i.i.i.i94, %bb.ae ]
   %storemerge.i = add i64 %.pn.i23, %i.du
   %i.ff = getelementptr inbounds nuw i8, ptr %i.dp, i64 32
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !16440, !nonnull !393, !align !891
@@ -16913,7 +16913,7 @@ bb.o:                                             ; preds = %.noexc27
   br label %_ZN8facebook5velox6StatusD2Ev.exit37
 
 _ZN8facebook5velox6StatusD2Ev.exit37:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.m, %.noexc15, %..loopexit_crit_edge.i.i.i.i.i24, %bb.o, %.noexc27
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i26, %..loopexit_crit_edge.i.i.i.i.i24 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc15 ], [ %extract.t16.i.i.i.i.i19, %.noexc27 ], [ %extract.t16.i.i.i.i.i19, %bb.o ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i19, %.noexc27 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc15 ], [ %extract.t20.le.i.i.i.i.i26, %..loopexit_crit_edge.i.i.i.i.i24 ], [ %extract.t16.i.i.i.i.i19, %bb.o ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.ax
   %i.ck = load ptr, ptr %i.at, align 8, !tbaa !16512, !nonnull !393, !align !891
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 16
@@ -17316,7 +17316,7 @@ bb.h:                                             ; preds = %.noexc33
   br label %_ZN8facebook5velox6StatusD2Ev.exit43
 
 _ZN8facebook5velox6StatusD2Ev.exit43:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.f, %.noexc21, %..loopexit_crit_edge.i.i.i.i.i30, %bb.h, %.noexc33
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i32, %..loopexit_crit_edge.i.i.i.i.i30 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc21 ], [ %extract.t16.i.i.i.i.i25, %.noexc33 ], [ %extract.t16.i.i.i.i.i25, %bb.h ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i25, %.noexc33 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc21 ], [ %extract.t20.le.i.i.i.i.i32, %..loopexit_crit_edge.i.i.i.i.i30 ], [ %extract.t16.i.i.i.i.i25, %bb.h ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.ad
   %i.br = getelementptr inbounds nuw i8, ptr %i.y, i64 32
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !16512, !nonnull !393, !align !891
@@ -17704,7 +17704,7 @@ bb.i:                                             ; preds = %.noexc50
   br label %_ZN8facebook5velox6StatusD2Ev.exit60
 
 _ZN8facebook5velox6StatusD2Ev.exit60:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.g, %.noexc38, %..loopexit_crit_edge.i.i.i.i.i47, %bb.i, %.noexc50
-  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i49, %..loopexit_crit_edge.i.i.i.i.i47 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc38 ], [ %extract.t16.i.i.i.i.i42, %.noexc50 ], [ %extract.t16.i.i.i.i.i42, %bb.i ]
+  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i42, %.noexc50 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc38 ], [ %extract.t20.le.i.i.i.i.i49, %..loopexit_crit_edge.i.i.i.i.i47 ], [ %extract.t16.i.i.i.i.i42, %bb.i ]
   %storemerge.i.i.i = add i64 %.pn.i.i.i, %i.al
   %i.ca = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !16512, !nonnull !393, !align !891
@@ -18031,7 +18031,7 @@ bb.ae:                                            ; preds = %.noexc96
   br label %_ZN8facebook5velox6StatusD2Ev.exit110
 
 _ZN8facebook5velox6StatusD2Ev.exit110:            ; preds = %..loopexit_crit_edge.i.i.i.i.i80, %bb.ac, %.noexc83, %..loopexit_crit_edge.i.i.i.i.i93, %bb.ae, %.noexc96
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i82, %..loopexit_crit_edge.i.i.i.i.i80 ], [ %extract.t20.le.i.i.i.i.i95, %..loopexit_crit_edge.i.i.i.i.i93 ], [ %extract.t16.i.i.i.i.i75, %bb.ac ], [ %extract.t16.i.i.i.i.i75, %.noexc83 ], [ %extract.t16.i.i.i.i.i88, %.noexc96 ], [ %extract.t16.i.i.i.i.i88, %bb.ae ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i82, %..loopexit_crit_edge.i.i.i.i.i80 ], [ %extract.t16.i.i.i.i.i88, %.noexc96 ], [ %extract.t16.i.i.i.i.i75, %bb.ac ], [ %extract.t16.i.i.i.i.i75, %.noexc83 ], [ %extract.t20.le.i.i.i.i.i95, %..loopexit_crit_edge.i.i.i.i.i93 ], [ %extract.t16.i.i.i.i.i88, %bb.ae ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.dw
   %i.fk = getelementptr inbounds nuw i8, ptr %i.dr, i64 32
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !16512, !nonnull !393, !align !891
@@ -18434,7 +18434,7 @@ bb.o:                                             ; preds = %.noexc26
   br label %_ZN8facebook5velox6StatusD2Ev.exit36
 
 _ZN8facebook5velox6StatusD2Ev.exit36:             ; preds = %.noexc26, %bb.o, %..loopexit_crit_edge.i.i.i.i.i23, %.noexc14, %bb.m, %..loopexit_crit_edge.i.i.i.i.i
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i25, %..loopexit_crit_edge.i.i.i.i.i23 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc14 ], [ %extract.t16.i.i.i.i.i18, %.noexc26 ], [ %extract.t16.i.i.i.i.i18, %bb.o ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i18, %.noexc26 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc14 ], [ %extract.t20.le.i.i.i.i.i25, %..loopexit_crit_edge.i.i.i.i.i23 ], [ %extract.t16.i.i.i.i.i18, %bb.o ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.az
   %i.ck = load ptr, ptr %i.at, align 8, !tbaa !16590, !nonnull !393, !align !891
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 16
@@ -18837,7 +18837,7 @@ bb.h:                                             ; preds = %.noexc32
   br label %_ZN8facebook5velox6StatusD2Ev.exit42
 
 _ZN8facebook5velox6StatusD2Ev.exit42:             ; preds = %.noexc32, %bb.h, %..loopexit_crit_edge.i.i.i.i.i29, %.noexc20, %bb.f, %..loopexit_crit_edge.i.i.i.i.i
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i31, %..loopexit_crit_edge.i.i.i.i.i29 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc20 ], [ %extract.t16.i.i.i.i.i24, %.noexc32 ], [ %extract.t16.i.i.i.i.i24, %bb.h ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i24, %.noexc32 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc20 ], [ %extract.t20.le.i.i.i.i.i31, %..loopexit_crit_edge.i.i.i.i.i29 ], [ %extract.t16.i.i.i.i.i24, %bb.h ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.ag
   %i.br = getelementptr inbounds nuw i8, ptr %i.y, i64 32
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !16590, !nonnull !393, !align !891
@@ -19225,7 +19225,7 @@ bb.i:                                             ; preds = %.noexc49
   br label %_ZN8facebook5velox6StatusD2Ev.exit59
 
 _ZN8facebook5velox6StatusD2Ev.exit59:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.g, %.noexc37, %..loopexit_crit_edge.i.i.i.i.i46, %bb.i, %.noexc49
-  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i48, %..loopexit_crit_edge.i.i.i.i.i46 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc37 ], [ %extract.t16.i.i.i.i.i41, %.noexc49 ], [ %extract.t16.i.i.i.i.i41, %bb.i ]
+  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i41, %.noexc49 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc37 ], [ %extract.t20.le.i.i.i.i.i48, %..loopexit_crit_edge.i.i.i.i.i46 ], [ %extract.t16.i.i.i.i.i41, %bb.i ]
   %storemerge.i.i.i = add i64 %.pn.i.i.i, %i.ap
   %i.ca = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !16590, !nonnull !393, !align !891
@@ -19552,7 +19552,7 @@ bb.ae:                                            ; preds = %.noexc95
   br label %_ZN8facebook5velox6StatusD2Ev.exit109
 
 _ZN8facebook5velox6StatusD2Ev.exit109:            ; preds = %.noexc95, %bb.ae, %..loopexit_crit_edge.i.i.i.i.i92, %.noexc82, %bb.ac, %..loopexit_crit_edge.i.i.i.i.i79
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i81, %..loopexit_crit_edge.i.i.i.i.i79 ], [ %extract.t20.le.i.i.i.i.i94, %..loopexit_crit_edge.i.i.i.i.i92 ], [ %extract.t16.i.i.i.i.i74, %bb.ac ], [ %extract.t16.i.i.i.i.i74, %.noexc82 ], [ %extract.t16.i.i.i.i.i87, %.noexc95 ], [ %extract.t16.i.i.i.i.i87, %bb.ae ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i81, %..loopexit_crit_edge.i.i.i.i.i79 ], [ %extract.t16.i.i.i.i.i87, %.noexc95 ], [ %extract.t16.i.i.i.i.i74, %bb.ac ], [ %extract.t16.i.i.i.i.i74, %.noexc82 ], [ %extract.t20.le.i.i.i.i.i94, %..loopexit_crit_edge.i.i.i.i.i92 ], [ %extract.t16.i.i.i.i.i87, %bb.ae ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.dz
   %i.fk = getelementptr inbounds nuw i8, ptr %i.dr, i64 32
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !16590, !nonnull !393, !align !891
@@ -19955,7 +19955,7 @@ bb.o:                                             ; preds = %.noexc25
   br label %_ZN8facebook5velox6StatusD2Ev.exit35
 
 _ZN8facebook5velox6StatusD2Ev.exit35:             ; preds = %.noexc25, %bb.o, %..loopexit_crit_edge.i.i.i.i.i22, %.noexc13, %bb.m, %..loopexit_crit_edge.i.i.i.i.i
-  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i24, %..loopexit_crit_edge.i.i.i.i.i22 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc13 ], [ %extract.t16.i.i.i.i.i17, %.noexc25 ], [ %extract.t16.i.i.i.i.i17, %bb.o ]
+  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i17, %.noexc25 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc13 ], [ %extract.t20.le.i.i.i.i.i24, %..loopexit_crit_edge.i.i.i.i.i22 ], [ %extract.t16.i.i.i.i.i17, %bb.o ]
   %storemerge.i.i.i = add i64 %.pn.i.i.i, %i.az
   %i.cm = load ptr, ptr %i.at, align 8, !tbaa !16668, !nonnull !393, !align !891
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
@@ -20358,7 +20358,7 @@ bb.h:                                             ; preds = %.noexc31
   br label %_ZN8facebook5velox6StatusD2Ev.exit41
 
 _ZN8facebook5velox6StatusD2Ev.exit41:             ; preds = %.noexc31, %bb.h, %..loopexit_crit_edge.i.i.i.i.i28, %.noexc19, %bb.f, %..loopexit_crit_edge.i.i.i.i.i
-  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i30, %..loopexit_crit_edge.i.i.i.i.i28 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc19 ], [ %extract.t16.i.i.i.i.i23, %.noexc31 ], [ %extract.t16.i.i.i.i.i23, %bb.h ]
+  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i23, %.noexc31 ], [ %extract.t16.i.i.i.i.i, %bb.f ], [ %extract.t16.i.i.i.i.i, %.noexc19 ], [ %extract.t20.le.i.i.i.i.i30, %..loopexit_crit_edge.i.i.i.i.i28 ], [ %extract.t16.i.i.i.i.i23, %bb.h ]
   %storemerge.i.i.i = add i64 %.pn.i.i.i, %i.ag
   %i.bt = getelementptr inbounds nuw i8, ptr %i.y, i64 32
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !16668, !nonnull !393, !align !891
@@ -20748,7 +20748,7 @@ bb.i:                                             ; preds = %.noexc50
   br label %_ZN8facebook5velox6StatusD2Ev.exit60
 
 _ZN8facebook5velox6StatusD2Ev.exit60:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.g, %.noexc37, %..loopexit_crit_edge.i.i.i.i.i47, %bb.i, %.noexc50
-  %.pn.i.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i49, %..loopexit_crit_edge.i.i.i.i.i47 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc37 ], [ %extract.t16.i.i.i.i.i42, %.noexc50 ], [ %extract.t16.i.i.i.i.i42, %bb.i ]
+  %.pn.i.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i42, %.noexc50 ], [ %extract.t16.i.i.i.i.i, %bb.g ], [ %extract.t16.i.i.i.i.i, %.noexc37 ], [ %extract.t20.le.i.i.i.i.i49, %..loopexit_crit_edge.i.i.i.i.i47 ], [ %extract.t16.i.i.i.i.i42, %bb.i ]
   %storemerge.i.i.i.i = add i64 %.pn.i.i.i.i, %i.ap
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !16668, !nonnull !393, !align !891
@@ -21077,7 +21077,7 @@ bb.ae:                                            ; preds = %.noexc98
   br label %_ZN8facebook5velox6StatusD2Ev.exit112
 
 _ZN8facebook5velox6StatusD2Ev.exit112:            ; preds = %.noexc98, %bb.ae, %..loopexit_crit_edge.i.i.i.i.i95, %.noexc84, %bb.ac, %..loopexit_crit_edge.i.i.i.i.i81
-  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i83, %..loopexit_crit_edge.i.i.i.i.i81 ], [ %extract.t20.le.i.i.i.i.i97, %..loopexit_crit_edge.i.i.i.i.i95 ], [ %extract.t16.i.i.i.i.i76, %bb.ac ], [ %extract.t16.i.i.i.i.i76, %.noexc84 ], [ %extract.t16.i.i.i.i.i90, %.noexc98 ], [ %extract.t16.i.i.i.i.i90, %bb.ae ]
+  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i83, %..loopexit_crit_edge.i.i.i.i.i81 ], [ %extract.t16.i.i.i.i.i90, %.noexc98 ], [ %extract.t16.i.i.i.i.i76, %bb.ac ], [ %extract.t16.i.i.i.i.i76, %.noexc84 ], [ %extract.t20.le.i.i.i.i.i97, %..loopexit_crit_edge.i.i.i.i.i95 ], [ %extract.t16.i.i.i.i.i90, %bb.ae ]
   %storemerge.i.i.i = add i64 %.pn.i.i.i, %i.eb
   %i.fo = getelementptr inbounds nuw i8, ptr %i.dt, i64 32
   %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !16668, !nonnull !393, !align !891
@@ -21480,7 +21480,7 @@ bb.u:                                             ; preds = %.noexc30
   br label %_ZN8facebook5velox6StatusD2Ev.exit40
 
 _ZN8facebook5velox6StatusD2Ev.exit40:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.s, %.noexc18, %..loopexit_crit_edge.i.i.i.i.i27, %bb.u, %.noexc30
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i29, %..loopexit_crit_edge.i.i.i.i.i27 ], [ %extract.t16.i.i.i.i.i, %bb.s ], [ %extract.t16.i.i.i.i.i, %.noexc18 ], [ %extract.t16.i.i.i.i.i22, %.noexc30 ], [ %extract.t16.i.i.i.i.i22, %bb.u ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i22, %.noexc30 ], [ %extract.t16.i.i.i.i.i, %bb.s ], [ %extract.t16.i.i.i.i.i, %.noexc18 ], [ %extract.t20.le.i.i.i.i.i29, %..loopexit_crit_edge.i.i.i.i.i27 ], [ %extract.t16.i.i.i.i.i22, %bb.u ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.bq
   %i.dt = load ptr, ptr %i.at, align 8, !tbaa !16748, !nonnull !393, !align !891
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 16
@@ -21883,7 +21883,7 @@ bb.n:                                             ; preds = %.noexc36
   br label %_ZN8facebook5velox6StatusD2Ev.exit46
 
 _ZN8facebook5velox6StatusD2Ev.exit46:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.l, %.noexc24, %..loopexit_crit_edge.i.i.i.i.i33, %bb.n, %.noexc36
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i35, %..loopexit_crit_edge.i.i.i.i.i33 ], [ %extract.t16.i.i.i.i.i, %bb.l ], [ %extract.t16.i.i.i.i.i, %.noexc24 ], [ %extract.t16.i.i.i.i.i28, %.noexc36 ], [ %extract.t16.i.i.i.i.i28, %bb.n ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i28, %.noexc36 ], [ %extract.t16.i.i.i.i.i, %bb.l ], [ %extract.t16.i.i.i.i.i, %.noexc24 ], [ %extract.t20.le.i.i.i.i.i35, %..loopexit_crit_edge.i.i.i.i.i33 ], [ %extract.t16.i.i.i.i.i28, %bb.n ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.aw
   %i.cz = getelementptr inbounds nuw i8, ptr %i.y, i64 32
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !16748, !nonnull !393, !align !891
@@ -22286,7 +22286,7 @@ bb.o:                                             ; preds = %.noexc53
   br label %_ZN8facebook5velox6StatusD2Ev.exit63
 
 _ZN8facebook5velox6StatusD2Ev.exit63:             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.m, %.noexc41, %..loopexit_crit_edge.i.i.i.i.i50, %bb.o, %.noexc53
-  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t20.le.i.i.i.i.i52, %..loopexit_crit_edge.i.i.i.i.i50 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc41 ], [ %extract.t16.i.i.i.i.i45, %.noexc53 ], [ %extract.t16.i.i.i.i.i45, %bb.o ]
+  %.pn.i.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i, %..loopexit_crit_edge.i.i.i.i.i ], [ %extract.t16.i.i.i.i.i45, %.noexc53 ], [ %extract.t16.i.i.i.i.i, %bb.m ], [ %extract.t16.i.i.i.i.i, %.noexc41 ], [ %extract.t20.le.i.i.i.i.i52, %..loopexit_crit_edge.i.i.i.i.i50 ], [ %extract.t16.i.i.i.i.i45, %bb.o ]
   %storemerge.i.i.i = add i64 %.pn.i.i.i, %i.be
   %i.dh = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !16748, !nonnull !393, !align !891
@@ -22673,7 +22673,7 @@ bb.aq:                                            ; preds = %.noexc105
   br label %_ZN8facebook5velox6StatusD2Ev.exit119
 
 _ZN8facebook5velox6StatusD2Ev.exit119:            ; preds = %..loopexit_crit_edge.i.i.i.i.i89, %bb.ao, %.noexc92, %..loopexit_crit_edge.i.i.i.i.i102, %bb.aq, %.noexc105
-  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i91, %..loopexit_crit_edge.i.i.i.i.i89 ], [ %extract.t20.le.i.i.i.i.i104, %..loopexit_crit_edge.i.i.i.i.i102 ], [ %extract.t16.i.i.i.i.i84, %bb.ao ], [ %extract.t16.i.i.i.i.i84, %.noexc92 ], [ %extract.t16.i.i.i.i.i97, %.noexc105 ], [ %extract.t16.i.i.i.i.i97, %bb.aq ]
+  %.pn.i.i = phi i64 [ %extract.t20.le.i.i.i.i.i91, %..loopexit_crit_edge.i.i.i.i.i89 ], [ %extract.t16.i.i.i.i.i97, %.noexc105 ], [ %extract.t16.i.i.i.i.i84, %bb.ao ], [ %extract.t16.i.i.i.i.i84, %.noexc92 ], [ %extract.t20.le.i.i.i.i.i104, %..loopexit_crit_edge.i.i.i.i.i102 ], [ %extract.t16.i.i.i.i.i97, %bb.aq ]
   %storemerge.i.i = add i64 %.pn.i.i, %i.fw
   %i.hz = getelementptr inbounds nuw i8, ptr %i.ey, i64 32
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !16748, !nonnull !393, !align !891

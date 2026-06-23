@@ -201,28 +201,28 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !62   ; 3 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !62   ; 2 uses
   %.not.i = icmp sgt i32 %i.w, %i.t
-  br i1 %.not.i, label %_ZN11CStringBaseIwE9GetBufferEi.exit, label %bb.h
+  br i1 %.not.i, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %2 = add nuw nsw i32 %i.t, 1                    ; 3 uses
-  %3 = icmp eq i32 %2, %i.w
-  br i1 %3, label %_ZN11CStringBaseIwE9GetBufferEi.exit, label %bb.i
+  %.pre.i = load ptr, ptr %1, align 8, !tbaa !65
+  br label %_ZN11CStringBaseIwE9GetBufferEi.exit
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %bb.g
+  %2 = add nuw nsw i32 %i.t, 1                    ; 2 uses
   %i.x = zext nneg i32 %2 to i64
   %i.y = shl nuw nsw i64 %i.x, 2
-  %i.z = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.y) #18 ; 9 uses
+  %i.z = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.y) #18 ; 10 uses
   %i.aa = ptrtoaddr ptr %i.z to i64
   %i.ab = icmp sgt i32 %i.w, 0
   br i1 %i.ab, label %.preheader.i.i, label %bb.j
 
 .preheader.i.i:                                   ; preds = %bb.i
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !65 ; 3 uses
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !66 ; 3 uses
   %i.ae = icmp sgt i32 %i.ad, 0
-  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !66 ; 9 uses
+  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !65 ; 9 uses
   br i1 %i.ae, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i
@@ -314,17 +314,17 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge.thread.i.i, %._crit_edge.i.i, %bb.i
-  store ptr %i.z, ptr %1, align 8, !tbaa !66
+  store ptr %i.z, ptr %1, align 8, !tbaa !65
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.be = load i32, ptr %i.bd, align 8, !tbaa !65
+  %i.be = load i32, ptr %i.bd, align 8, !tbaa !66
   %i.bf = sext i32 %i.be to i64
   %i.bg = getelementptr inbounds [4 x i8], ptr %i.z, i64 %i.bf
   store i32 0, ptr %i.bg, align 4, !tbaa !67
   store i32 %2, ptr %i.v, align 4, !tbaa !62
   br label %_ZN11CStringBaseIwE9GetBufferEi.exit
 
-_ZN11CStringBaseIwE9GetBufferEi.exit:             ; preds = %bb.g, %bb.h, %bb.j
-  %4 = load ptr, ptr %1, align 8, !tbaa !66       ; 3 uses
+_ZN11CStringBaseIwE9GetBufferEi.exit:             ; preds = %bb.h, %bb.j
+  %3 = phi ptr [ %.pre.i, %bb.h ], [ %i.z, %bb.j ] ; 3 uses
   %.not43 = icmp eq i32 %i.t, 0
   br i1 %.not43, label %._crit_edge35, label %.lr.ph34.preheader
 
@@ -347,7 +347,7 @@ vector.body51:                                    ; preds = %vector.body51, %vec
   %wide.load54 = load <4 x i16>, ptr %i.bk, align 2, !tbaa !75
   %i.bl = zext <4 x i16> %wide.load53.a to <4 x i32>
   %i.bm = zext <4 x i16> %wide.load54 to <4 x i32>
-  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %index52 ; 2 uses
+  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index52 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <4 x i32> %i.bl, ptr %i.bn, align 4, !tbaa !67
   store <4 x i32> %i.bm, ptr %i.bo, align 4, !tbaa !67
@@ -369,7 +369,7 @@ middle.block56:                                   ; preds = %vector.body51
   %.02632 = phi ptr [ %i.bt, %.lr.ph34 ], [ %.02632.ph, %.lr.ph34.preheader61 ] ; 2 uses
   %i.bq = load i16, ptr %.02632, align 2, !tbaa !75
   %i.br = zext i16 %i.bq to i32
-  %i.bs = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
+  %i.bs = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   store i32 %i.br, ptr %i.bs, align 4, !tbaa !67
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.02632, i64 2
@@ -377,10 +377,10 @@ middle.block56:                                   ; preds = %vector.body51
   br i1 %exitcond.not, label %._crit_edge35, label %.lr.ph34, !llvm.loop !78
 
 ._crit_edge35:                                    ; preds = %.lr.ph34, %middle.block56, %_ZN11CStringBaseIwE9GetBufferEi.exit
-  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.s
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.s
   store i32 0, ptr %i.bu, align 4, !tbaa !67
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %i.t, ptr %i.bv, align 8, !tbaa !65
+  store i32 %i.t, ptr %i.bv, align 8, !tbaa !66
   %i.bw = add nuw nsw i64 %.027.lcssa, 2
   %i.bx = load i64, ptr %i.b, align 8, !tbaa !55
   %i.by = add i64 %i.bw, %i.bx
@@ -783,7 +783,7 @@ bb.aa:                                            ; preds = %bb.z
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i.i:    ; preds = %bb.aa
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dx, i64 28
-  store ptr %i.dz, ptr %i.dy, align 8, !tbaa !66
+  store ptr %i.dz, ptr %i.dy, align 8, !tbaa !65
   store i32 0, ptr %i.dz, align 4, !tbaa !67
   store i32 1, ptr %i.ea, align 4, !tbaa !62
   br label %bb.ab
@@ -800,7 +800,7 @@ bb.ab:                                            ; preds = %bb.ab, %_ZN11CStrin
 
 bb.ac:                                            ; preds = %bb.ab
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dx, i64 24
-  store i32 0, ptr %i.ee, align 8, !tbaa !65
+  store i32 0, ptr %i.ee, align 8, !tbaa !66
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dx, i64 32
   store i32 1, ptr %i.ef, align 8
   invoke void @_ZN17CBaseRecordVector18ReserveOnePositionEv(ptr noundef nonnull align 8 dereferenceable(32) %i.dp)
@@ -1203,8 +1203,8 @@ attributes #21 = { noreturn }
 !62 = !{!63, !5, i64 12}
 !63 = !{!"_ZTS11CStringBaseIwE", !64, i64 0, !5, i64 8, !5, i64 12}
 !64 = !{!"p1 wchar_t", !10, i64 0}
-!65 = !{!63, !5, i64 8}
-!66 = !{!63, !64, i64 0}
+!65 = !{!63, !64, i64 0}
+!66 = !{!63, !5, i64 8}
 !67 = !{!68, !68, i64 0}
 !68 = !{!"wchar_t", !6, i64 0}
 !69 = distinct !{!69, !19, !70, !71}

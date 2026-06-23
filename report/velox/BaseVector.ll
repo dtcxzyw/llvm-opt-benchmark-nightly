@@ -201,7 +201,7 @@ _ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit: ; preds = %_ZN5boos
   br label %_ZSt4fillIPiiEvT_S1_RKT0_.exit
 
 _ZSt4fillIPiiEvT_S1_RKT0_.exit:                   ; preds = %.lr.ph.i.i.i.preheader, %bb.f, %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit
-  %i.br = phi ptr [ %.pre47, %.lr.ph.i.i.i.preheader ], [ %.pre, %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit ], [ %.pre47, %bb.f ] ; 2 uses
+  %i.br = phi ptr [ %.pre47, %.lr.ph.i.i.i.preheader ], [ %.pre47, %bb.f ], [ %.pre, %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit ] ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 44
   %i.bt = load i8, ptr %i.bs, align 4, !tbaa !374
   %i.bu = and i8 %i.bt, 2
