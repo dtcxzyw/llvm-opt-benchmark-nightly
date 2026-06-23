@@ -201,7 +201,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i16, align 2                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 3 uses
@@ -353,10 +353,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3145)
   call void @llvm.experimental.noalias.scope.decl(metadata !3148)
   %i.ba = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !204, !noalias !3151 ; 2 uses
+  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !204, !noalias !3151 ; 3 uses
   store i64 %i.bb, ptr %12, align 8, !tbaa !204, !alias.scope !3151
   store ptr null, ptr %i.ba, align 8, !tbaa !204, !noalias !3151
-  %.cast = inttoptr i64 %i.bb to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.bb to ptr              ; 6 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !121, !range !129, !noundef !130
   %i.be = trunc nuw i8 %i.bd to i1
@@ -527,11 +527,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge64
   %i.dj = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn57 = phi { ptr, i32 } [ %i.dj, %bb.y ], [ %i.cb, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i85 = icmp eq ptr %15, null
   br i1 %.not.i85, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit87, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i86
 
@@ -592,15 +593,14 @@ _ZN5arrow6StatusD2Ev.exit93:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge68
 
 .critedge72:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i94 = icmp eq ptr %16, null
+  %.not.i94 = icmp eq i64 %i.bb, 0
   br i1 %.not.i94, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit96, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i95
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i95: ; preds = %.critedge72
-  %i.dw = load ptr, ptr %16, align 8, !tbaa !87
+  %i.dw = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   %i.dy = load ptr, ptr %i.dx, align 8
-  call void %i.dy(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.dy(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit96
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit96: ; preds = %.critedge72, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i95
@@ -1003,7 +1003,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -1154,10 +1154,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3494)
   call void @llvm.experimental.noalias.scope.decl(metadata !3497)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !3500 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !3500 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !3500
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !3500
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -1331,11 +1331,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.dp = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dp, %bb.y ], [ %i.ch, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -1399,15 +1400,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.ei = load ptr, ptr %16, align 8, !tbaa !87
+  %i.ei = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
   %i.ek = load ptr, ptr %i.ej, align 8
-  call void %i.ek(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ek(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -1810,7 +1810,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -1959,10 +1959,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3689)
   call void @llvm.experimental.noalias.scope.decl(metadata !3692)
   %i.ax = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !204, !noalias !3695 ; 2 uses
+  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !204, !noalias !3695 ; 3 uses
   store i64 %i.ay, ptr %12, align 8, !tbaa !204, !alias.scope !3695
   store ptr null, ptr %i.ax, align 8, !tbaa !204, !noalias !3695
-  %.cast = inttoptr i64 %i.ay to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ay to ptr              ; 6 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bb = trunc nuw i8 %i.ba to i1
@@ -2132,11 +2132,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.z:                                             ; preds = %.critedge66
   %i.dg = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.p
+  %15 = phi ptr [ %.pre, %bb.z ], [ %.cast, %bb.p ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dg, %bb.z ], [ %i.by, %bb.p ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -2195,15 +2196,14 @@ _ZN5arrow6StatusD2Ev.exit95:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i96 = icmp eq ptr %16, null
+  %.not.i96 = icmp eq i64 %i.ay, 0
   br i1 %.not.i96, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit98, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i97
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i97: ; preds = %.critedge74
-  %i.du = load ptr, ptr %16, align 8, !tbaa !87
+  %i.du = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   %i.dw = load ptr, ptr %i.dv, align 8
-  call void %i.dw(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.dw(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit98
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit98: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i97
@@ -2606,7 +2606,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -2757,10 +2757,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3767)
   call void @llvm.experimental.noalias.scope.decl(metadata !3770)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !3773 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !3773 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !3773
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !3773
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -2934,11 +2934,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.dp = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dp, %bb.y ], [ %i.ch, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -3002,15 +3003,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.ei = load ptr, ptr %16, align 8, !tbaa !87
+  %i.ei = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
   %i.ek = load ptr, ptr %i.ej, align 8
-  call void %i.ek(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ek(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -3413,7 +3413,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -3562,10 +3562,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3833)
   call void @llvm.experimental.noalias.scope.decl(metadata !3836)
   %i.ax = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !204, !noalias !3839 ; 2 uses
+  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !204, !noalias !3839 ; 3 uses
   store i64 %i.ay, ptr %12, align 8, !tbaa !204, !alias.scope !3839
   store ptr null, ptr %i.ax, align 8, !tbaa !204, !noalias !3839
-  %.cast = inttoptr i64 %i.ay to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ay to ptr              ; 6 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bb = trunc nuw i8 %i.ba to i1
@@ -3735,11 +3735,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.z:                                             ; preds = %.critedge66
   %i.dg = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.p
+  %15 = phi ptr [ %.pre, %bb.z ], [ %.cast, %bb.p ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dg, %bb.z ], [ %i.by, %bb.p ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -3798,15 +3799,14 @@ _ZN5arrow6StatusD2Ev.exit95:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i96 = icmp eq ptr %16, null
+  %.not.i96 = icmp eq i64 %i.ay, 0
   br i1 %.not.i96, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit98, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i97
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i97: ; preds = %.critedge74
-  %i.du = load ptr, ptr %16, align 8, !tbaa !87
+  %i.du = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   %i.dw = load ptr, ptr %i.dv, align 8
-  call void %i.dw(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.dw(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit98
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit98: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i97
@@ -4209,7 +4209,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -4360,10 +4360,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3900)
   call void @llvm.experimental.noalias.scope.decl(metadata !3903)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !3906 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !3906 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !3906
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !3906
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -4536,11 +4536,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.do = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.do, %bb.y ], [ %i.cg, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -4603,15 +4604,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.eg = load ptr, ptr %16, align 8, !tbaa !87
+  %i.eg = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8
-  call void %i.ei(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ei(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -5014,7 +5014,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -5165,10 +5165,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !4091)
   call void @llvm.experimental.noalias.scope.decl(metadata !4094)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4097 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4097 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !4097
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !4097
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -5341,11 +5341,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.do = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.do, %bb.y ], [ %i.cg, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -5408,15 +5409,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.eg = load ptr, ptr %16, align 8, !tbaa !87
+  %i.eg = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8
-  call void %i.ei(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ei(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -5819,7 +5819,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -5970,10 +5970,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !4157)
   call void @llvm.experimental.noalias.scope.decl(metadata !4160)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4163 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4163 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !4163
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !4163
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -6143,11 +6143,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.dl = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dl, %bb.y ], [ %i.cd, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -6207,15 +6208,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.ea = load ptr, ptr %16, align 8, !tbaa !87
+  %i.ea = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
-  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -6618,7 +6618,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -6769,10 +6769,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !4918)
   call void @llvm.experimental.noalias.scope.decl(metadata !4921)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4924 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4924 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !4924
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !4924
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -6942,11 +6942,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.dl = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dl, %bb.y ], [ %i.cd, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -7006,15 +7007,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.ea = load ptr, ptr %16, align 8, !tbaa !87
+  %i.ea = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
-  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -7417,7 +7417,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -7568,10 +7568,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !4977)
   call void @llvm.experimental.noalias.scope.decl(metadata !4980)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4983 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !4983 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !4983
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !4983
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -7741,11 +7741,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.dl = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dl, %bb.y ], [ %i.cd, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -7805,15 +7806,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.ea = load ptr, ptr %16, align 8, !tbaa !87
+  %i.ea = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
-  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -8216,7 +8216,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -8367,10 +8367,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !5036)
   call void @llvm.experimental.noalias.scope.decl(metadata !5039)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !5042 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !5042 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !5042
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !5042
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -8540,11 +8540,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.dl = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dl, %bb.y ], [ %i.cd, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -8604,15 +8605,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.ea = load ptr, ptr %16, align 8, !tbaa !87
+  %i.ea = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
-  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
@@ -9015,7 +9015,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.arrow::Result.50", align 8 ; 17 uses
-  %12 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
+  %12 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
   %13 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %14 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -9166,10 +9166,10 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !5095)
   call void @llvm.experimental.noalias.scope.decl(metadata !5098)
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !5101 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !204, !noalias !5101 ; 3 uses
   store i64 %i.ba, ptr %12, align 8, !tbaa !204, !alias.scope !5101
   store ptr null, ptr %i.az, align 8, !tbaa !204, !noalias !5101
-  %.cast = inttoptr i64 %i.ba to ptr              ; 3 uses
+  %.cast = inttoptr i64 %i.ba to ptr              ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.cast, i64 9
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !121, !range !129, !noundef !130
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -9339,11 +9339,12 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit: ;
 bb.y:                                             ; preds = %.critedge66
   %i.dl = landingpad { ptr, i32 }
           cleanup
+  %.pre = load ptr, ptr %12, align 8, !tbaa !204
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.o
+  %15 = phi ptr [ %.pre, %bb.y ], [ %.cast, %bb.o ] ; 3 uses
   %.pn59 = phi { ptr, i32 } [ %i.dl, %bb.y ], [ %i.cd, %bb.o ]
-  %15 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
   %.not.i87 = icmp eq ptr %15, null
   br i1 %.not.i87, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit89, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i88
 
@@ -9403,15 +9404,14 @@ _ZN5arrow6StatusD2Ev.exit97:                      ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge70
 
 .critedge74:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %16 = load ptr, ptr %12, align 8, !tbaa !204    ; 3 uses
-  %.not.i98 = icmp eq ptr %16, null
+  %.not.i98 = icmp eq i64 %i.ba, 0
   br i1 %.not.i98, label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100, label %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99
 
 _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99: ; preds = %.critedge74
-  %i.ea = load ptr, ptr %16, align 8, !tbaa !87
+  %i.ea = load ptr, ptr %.cast, align 8, !tbaa !87
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8
-  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %16) #25, !inline_history !214
+  call void %i.ec(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %.cast) #25, !inline_history !214
   br label %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100
 
 _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit100: ; preds = %.critedge74, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i99

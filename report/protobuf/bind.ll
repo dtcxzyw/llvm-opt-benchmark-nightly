@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.critedge.i.i, %.lr.ph.i.preheader.i
-  %.sroa.7.032.i.i = phi ptr [ %i.q, %.critedge.i.i ], [ %i.i, %.lr.ph.i.preheader.i ]
-  %.sroa.026.031.i.i = phi i64 [ %i.w, %.critedge.i.i ], [ 0, %.lr.ph.i.preheader.i ]
-  %.sroa.023.030.i.i = phi ptr [ %i.ao, %.critedge.i.i ], [ %i.k, %.lr.ph.i.preheader.i ] ; 4 uses
+  %.sroa.7.032.i.i = phi ptr [ %i.i, %.lr.ph.i.preheader.i ], [ %i.q, %.critedge.i.i ]
+  %.sroa.026.031.i.i = phi i64 [ 0, %.lr.ph.i.preheader.i ], [ %i.w, %.critedge.i.i ]
+  %.sroa.023.030.i.i = phi ptr [ %i.k, %.lr.ph.i.preheader.i ], [ %i.ao, %.critedge.i.i ] ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.7.032.i.i, i64 %.sroa.026.031.i.i ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.023.030.i.i, i64 8
   %i.s = load i64, ptr %i.r, align 8, !tbaa !43
@@ -606,9 +606,9 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.critedge.i.i, %.lr.ph.i.preheader.i
-  %.sroa.7.032.i.i = phi ptr [ %i.o, %.critedge.i.i ], [ %i.g, %.lr.ph.i.preheader.i ]
-  %.sroa.026.031.i.i = phi i64 [ %i.u, %.critedge.i.i ], [ 0, %.lr.ph.i.preheader.i ]
-  %.sroa.023.030.i.i = phi ptr [ %i.am, %.critedge.i.i ], [ %i.i, %.lr.ph.i.preheader.i ] ; 4 uses
+  %.sroa.7.032.i.i = phi ptr [ %i.g, %.lr.ph.i.preheader.i ], [ %i.o, %.critedge.i.i ]
+  %.sroa.026.031.i.i = phi i64 [ 0, %.lr.ph.i.preheader.i ], [ %i.u, %.critedge.i.i ]
+  %.sroa.023.030.i.i = phi ptr [ %i.i, %.lr.ph.i.preheader.i ], [ %i.am, %.critedge.i.i ] ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.7.032.i.i, i64 %.sroa.026.031.i.i ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.023.030.i.i, i64 8
   %i.q = load i64, ptr %i.p, align 8, !tbaa !43

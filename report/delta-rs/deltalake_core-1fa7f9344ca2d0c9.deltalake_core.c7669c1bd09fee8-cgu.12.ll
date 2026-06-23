@@ -201,7 +201,7 @@ define hidden void @_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIt
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 10 uses
   %i.b = alloca [104 x i8], align 8               ; 10 uses
-  %i.c = alloca [104 x i8], align 8               ; 5 uses
+  %i.c = alloca [104 x i8], align 8               ; 4 uses
   %i.d = alloca [104 x i8], align 8               ; 4 uses
   %i.e = alloca [192 x i8], align 8               ; 5 uses
   %i.f = alloca [88 x i8], align 8                ; 4 uses
@@ -215,7 +215,7 @@ bb.a:
   br i1 %.not2, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.513.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.614.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -347,7 +347,7 @@ bb.n:                                             ; preds = %bb.i, %bb.h
   %i.ad = getelementptr inbounds i8, ptr %.pn.i.i.i.i, i64 -16
   %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !13373, !noalias !13376, !nonnull !10, !noundef !10
   %i.af = getelementptr inbounds nuw [104 x i8], ptr %i.ae, i64 %i.w
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.af, ptr noundef nonnull align 8 dereferenceable(104) %i.c, i64 104, i1 false), !noalias !13365
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.af, ptr noundef nonnull readonly align 8 dereferenceable(104) %i.l, i64 104, i1 false), !noalias !13357
   %i.ag = add i64 %i.w, 1
   store i64 %i.ag, ptr %i.v, align 8, !alias.scope !13373, !noalias !13376
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !13365
@@ -750,7 +750,7 @@ define hidden void @_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIt
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 10 uses
   %i.b = alloca [104 x i8], align 8               ; 10 uses
-  %i.c = alloca [112 x i8], align 8               ; 5 uses
+  %i.c = alloca [112 x i8], align 8               ; 4 uses
   %i.d = alloca [112 x i8], align 8               ; 4 uses
   %i.e = alloca [200 x i8], align 8               ; 5 uses
   %i.f = alloca [88 x i8], align 8                ; 4 uses
@@ -764,7 +764,7 @@ bb.a:
   br i1 %.not2, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 88 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.513.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.614.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -896,7 +896,7 @@ bb.n:                                             ; preds = %bb.i, %bb.h
   %i.ad = getelementptr inbounds i8, ptr %.pn.i.i.i.i, i64 -16
   %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !16612, !noalias !16615, !nonnull !10, !noundef !10
   %i.af = getelementptr inbounds nuw [112 x i8], ptr %i.ae, i64 %i.w
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.af, ptr noundef nonnull align 8 dereferenceable(112) %i.c, i64 112, i1 false), !noalias !16604
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.af, ptr noundef nonnull readonly align 8 dereferenceable(112) %i.l, i64 112, i1 false), !noalias !16596
   %i.ag = add i64 %i.w, 1
   store i64 %i.ag, ptr %i.v, align 8, !alias.scope !16612, !noalias !16615
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !16604
@@ -995,7 +995,7 @@ define hidden void @_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIt
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 10 uses
   %i.b = alloca [104 x i8], align 8               ; 10 uses
-  %i.c = alloca [208 x i8], align 8               ; 5 uses
+  %i.c = alloca [208 x i8], align 8               ; 4 uses
   %i.d = alloca [208 x i8], align 8               ; 4 uses
   %i.e = alloca [88 x i8], align 8                ; 4 uses
   %i.f = alloca [296 x i8], align 8               ; 4 uses
@@ -1007,7 +1007,7 @@ bb.a:
   br i1 %.not2, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 88
+  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 88 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.513.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.614.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -1118,7 +1118,7 @@ bb.l:                                             ; preds = %bb.g, %bb.f
   %i.aa = getelementptr inbounds i8, ptr %.pn.i.i.i, i64 -16
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !16635, !noalias !16638, !nonnull !10, !noundef !10
   %i.ac = getelementptr inbounds nuw [208 x i8], ptr %i.ab, i64 %i.t
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %i.ac, ptr noundef nonnull align 8 dereferenceable(208) %i.c, i64 208, i1 false), !noalias !16629
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %i.ac, ptr noundef nonnull readonly align 8 dereferenceable(208) %i.j, i64 208, i1 false)
   %i.ad = add i64 %i.t, 1
   store i64 %i.ad, ptr %i.s, align 8, !alias.scope !16635, !noalias !16638
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !16629

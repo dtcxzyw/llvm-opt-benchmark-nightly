@@ -201,10 +201,10 @@ bb.l:                                             ; preds = %bb.k, %bb.g
   unreachable
 
 rb_scan_args_set.exit:                            ; preds = %bb.k, %rb_scan_args_set.exit78
-  %.0 = phi i64 [ %i.p, %bb.k ], [ 36, %rb_scan_args_set.exit78 ] ; 6 uses
-  %i.aa = phi i64 [ %i.y, %bb.k ], [ %i.l, %rb_scan_args_set.exit78 ] ; 4 uses
-  %i.ab = phi i64 [ %i.s, %bb.k ], [ %i.f, %rb_scan_args_set.exit78 ] ; 5 uses
-  %.045 = phi i32 [ %0, %bb.k ], [ %i.n, %rb_scan_args_set.exit78 ]
+  %.0 = phi i64 [ 36, %rb_scan_args_set.exit78 ], [ %i.p, %bb.k ] ; 6 uses
+  %i.aa = phi i64 [ %i.l, %rb_scan_args_set.exit78 ], [ %i.y, %bb.k ] ; 4 uses
+  %i.ab = phi i64 [ %i.f, %rb_scan_args_set.exit78 ], [ %i.s, %bb.k ] ; 5 uses
+  %.045 = phi i32 [ %i.n, %rb_scan_args_set.exit78 ], [ %0, %bb.k ]
   switch i32 %.045, label %default.unreachable [
     i32 1, label %bb.m
     i32 2, label %bb.p
