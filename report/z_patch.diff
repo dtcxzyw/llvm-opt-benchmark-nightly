@@ -1,0 +1,139 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index d452c7a33e07b..4d6b3e43baa23 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1477,28 +1477,43 @@ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+                                           ConstraintInfo &Info) {
+   LLVM_DEBUG(dbgs() << "Checking " << *CheckInst << "\n");
+ 
+-  auto R = Info.getConstraintForSolving(Pred, A, B);
+-  if (R.empty() || !R.isValid(Info)) {
+-    LLVM_DEBUG(dbgs() << "   failed to decompose condition\n");
+-    return std::nullopt;
+-  }
+-
+-  auto &CSToUse = Info.getCS(R.IsSigned);
+-  if (auto ImpliedCondition = R.isImpliedBy(CSToUse)) {
+-    if (!DebugCounter::shouldExecute(EliminatedCounter))
++  auto TryWithConstraint = [&](const ConstraintTy &R) -> std::optional<bool> {
++    if (R.empty() || !R.isValid(Info)) {
++      LLVM_DEBUG(dbgs() << "   failed to decompose condition\n");
+       return std::nullopt;
++    }
+ 
+-    LLVM_DEBUG({
+-      dbgs() << "Condition ";
+-      dumpUnpackedICmp(
+-          dbgs(), *ImpliedCondition ? Pred : CmpInst::getInversePredicate(Pred),
+-          A, B);
+-      dbgs() << " implied by dominating constraints\n";
+-      CSToUse.dump();
+-    });
++    auto &CSToUse = Info.getCS(R.IsSigned);
++    if (auto ImpliedCondition = R.isImpliedBy(CSToUse)) {
++      if (!DebugCounter::shouldExecute(EliminatedCounter))
++        return std::nullopt;
++      LLVM_DEBUG({
++        dbgs() << "Condition ";
++        dumpUnpackedICmp(dbgs(),
++                         *ImpliedCondition ? Pred
++                                           : CmpInst::getInversePredicate(Pred),
++                         A, B);
++        dbgs() << " implied by dominating constraints\n";
++        CSToUse.dump();
++      });
++      return ImpliedCondition;
++    }
++    return std::nullopt;
++  };
++
++  const auto &R = Info.getConstraintForSolving(Pred, A, B);
++  if (auto ImpliedCondition = TryWithConstraint(R))
+     return ImpliedCondition;
+-  }
+ 
++  // Additionally, query the signed system for eq/ne predicates.
++  if (CmpInst::isEquality(Pred)) {
++    SmallVector<Value *> NewVariables;
++    const auto &SR = Info.getConstraint(Pred, A, B, NewVariables,
++                                        /*ForceSignedSystem=*/true);
++    if (NewVariables.empty())
++      if (auto ImpliedCondition = TryWithConstraint(SR))
++        return ImpliedCondition;
++  }
+   return std::nullopt;
+ }
+ 
+diff --git a/llvm/test/Transforms/ConstraintElimination/eq.ll b/llvm/test/Transforms/ConstraintElimination/eq.ll
+index 511a08f7796a3..e795b9ea58a77 100644
+--- a/llvm/test/Transforms/ConstraintElimination/eq.ll
++++ b/llvm/test/Transforms/ConstraintElimination/eq.ll
+@@ -472,3 +472,36 @@ entry:
+   %and3 = and i1 %cmp4, %and2
+   ret i1 %and3
+ }
++
++define i1 @assume_a_gt_b_and_b_ge_c_signed(i64 %a, i64 %b, i64 %c) {
++; CHECK-LABEL: @assume_a_gt_b_and_b_ge_c_signed(
++; CHECK-NEXT:    [[AB:%.*]] = icmp sgt i64 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AB]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sge i64 [[B]], [[C:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    ret i1 false
++;
++  %ab = icmp sgt i64 %a, %b
++  call void @llvm.assume(i1 %ab)
++  %bc = icmp sge i64 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %eq = icmp eq i64 %a, %c
++  ret i1 %eq
++}
++
++define i1 @assume_a_le_b_and_b_le_c_signed(i64 %a, i64 %b, i64 %c) {
++; CHECK-LABEL: @assume_a_le_b_and_b_le_c_signed(
++; CHECK-NEXT:    [[AB:%.*]] = icmp sle i64 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AB]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sle i64 [[B]], [[C:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[EQ:%.*]] = icmp eq i64 [[A]], [[C]]
++; CHECK-NEXT:    ret i1 [[EQ]]
++;
++  %ab = icmp sle i64 %a, %b
++  call void @llvm.assume(i1 %ab)
++  %bc = icmp sle i64 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %eq = icmp eq i64 %a, %c
++  ret i1 %eq
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/ne.ll b/llvm/test/Transforms/ConstraintElimination/ne.ll
+index 4753860db2851..f1aa2afe06b6c 100644
+--- a/llvm/test/Transforms/ConstraintElimination/ne.ll
++++ b/llvm/test/Transforms/ConstraintElimination/ne.ll
+@@ -371,7 +371,6 @@ define i1 @assume_2b(i64 %a, i64 %b) {
+   ret i1 %ret
+ }
+ 
+-; TODO: extend to support signed comparisons
+ define i1 @assume_3a(i64 %a, i64 %b) {
+ ; CHECK-LABEL: @assume_3a(
+ ; CHECK-NEXT:    [[NE:%.*]] = icmp ne i64 [[A:%.*]], [[B:%.*]]
+@@ -423,3 +422,19 @@ define i1 @assume_4b(i64 %a, i64 %b) {
+   %ret = icmp sle i64 %a, %b
+   ret i1 %ret
+ }
++
++define i1 @assume_a_lt_b_and_b_lt_c_signed(i64 %a, i64 %b, i64 %c) {
++; CHECK-LABEL: @assume_a_lt_b_and_b_lt_c_signed(
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp slt i64 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    tail call void @llvm.assume(i1 [[TMP1]])
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp slt i64 [[B]], [[C:%.*]]
++; CHECK-NEXT:    tail call void @llvm.assume(i1 [[TMP2]])
++; CHECK-NEXT:    ret i1 true
++;
++  %1 = icmp slt i64 %a, %b
++  tail call void @llvm.assume(i1 %1)
++  %2 = icmp slt i64 %b, %c
++  tail call void @llvm.assume(i1 %2)
++  %3 = icmp ne i64 %a, %c
++  ret i1 %3
++}
