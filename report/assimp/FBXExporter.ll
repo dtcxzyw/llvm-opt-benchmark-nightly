@@ -201,8 +201,8 @@ bb.uj:                                            ; preds = %.lr.ph13822, %_ZNSt
   %.sroa.215503.013815 = phi ptr [ null, %.lr.ph13822 ], [ %.sroa.215503.1, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit2606 ] ; 12 uses
   %.sroa.48.013814 = phi ptr [ null, %.lr.ph13822 ], [ %.sroa.48.2, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit2606 ] ; 6 uses
   %i.due = load ptr, ptr %i.dtl, align 8
-  %i.duf = getelementptr inbounds nuw [4 x i8], ptr %i.djk, i64 %i.dud ; 3 uses
-  %i.dug = load i32, ptr %i.duf, align 4          ; 2 uses
+  %i.duf = getelementptr inbounds nuw [4 x i8], ptr %i.djk, i64 %i.dud ; 2 uses
+  %i.dug = load i32, ptr %i.duf, align 4          ; 3 uses
   %i.duh = sext i32 %i.dug to i64                 ; 2 uses
   %i.dui = getelementptr inbounds [12 x i8], ptr %i.due, i64 %i.duh ; 3 uses
   %i.duj = load ptr, ptr %i.djs, align 8
@@ -262,8 +262,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ul
 
 .noexc2540:                                       ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
   %i.dvo = getelementptr inbounds i8, ptr %i.dvn, i64 %i.dvf ; 2 uses
-  %257 = load i32, ptr %i.duf, align 4
-  store i32 %257, ptr %i.dvo, align 4
+  store i32 %i.dug, ptr %i.dvo, align 4
   %i.dvp = icmp sgt i64 %i.dvf, 0
   br i1 %i.dvp, label %bb.un, label %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i
 
@@ -666,7 +665,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %i.br, label %bb.ad, label %bb.ae, !prof !181
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bq, ptr align 8 %2, i64 %i.c, i1 false)
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ac
@@ -685,7 +684,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.bw, label %bb.ah, label %bb.ai, !prof !181
 
 bb.ah:                                            ; preds = %bb.ag
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 8 %1, i64 %i.bv, i1 false)
   br label %bb.ak
 
 bb.ai:                                            ; preds = %bb.ag
@@ -921,7 +920,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %i.br, label %bb.ad, label %bb.ae, !prof !181
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.bq, ptr align 4 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.bq, ptr align 4 %2, i64 %i.c, i1 false)
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ac
@@ -940,7 +939,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.bw, label %bb.ah, label %bb.ai, !prof !181
 
 bb.ah:                                            ; preds = %bb.ag
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bu, ptr align 4 %1, i64 %i.bv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bu, ptr align 4 %1, i64 %i.bv, i1 false)
   br label %bb.ak
 
 bb.ai:                                            ; preds = %bb.ag

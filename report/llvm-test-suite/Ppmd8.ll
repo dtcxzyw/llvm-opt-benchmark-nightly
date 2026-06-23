@@ -201,7 +201,7 @@ bb.u:                                             ; preds = %bb.t, %bb.m
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc ptr @AllocUnitsRare(ptr nofree noundef %0, i32 noundef range(i32 0, 257) %1) unnamed_addr #7 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 7 uses
+  %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 4 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !39
   %i.d = icmp eq i32 %i.c, 0
@@ -307,12 +307,11 @@ bb.h:                                             ; preds = %._crit_edge.i
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.k, %.lr.ph75.i
-  %.0..0.73.i = phi i32 [ %.0..0..0..0..0..0.71.i, %.lr.ph75.i ], [ %.0..0..0..i, %bb.k ] ; 2 uses
+  %.0..0.73.i = phi i32 [ %.0..0..0..0..0..0.71.i, %.lr.ph75.i ], [ %i.au, %bb.k ] ; 2 uses
   %i.ar = zext i32 %.0..0.73.i to i64
   %i.as = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ar ; 8 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 4
-  %i.au = load i32, ptr %i.at, align 4, !tbaa !76 ; 3 uses
-  store i32 %i.au, ptr %i.a, align 4, !tbaa !4
+  %i.au = load i32, ptr %i.at, align 4, !tbaa !76 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !77 ; 6 uses
   %i.ax = icmp eq i32 %i.aw, 0
@@ -435,12 +434,10 @@ bb.j:                                             ; preds = %._crit_edge68.i
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !4
   %i.dn = add i32 %i.dm, 1
   store i32 %i.dn, ptr %i.dl, align 4, !tbaa !4
-  %.0..0..0..0..0..0..pre.pre.i = load i32, ptr %i.a, align 4, !tbaa !4
   br label %._crit_edge68._crit_edge.i
 
 ._crit_edge68._crit_edge.i:                       ; preds = %._crit_edge68.i, %bb.j
   %.pre-phi.i = phi i64 [ %i.cs, %bb.j ], [ %i.cn, %._crit_edge68.i ] ; 3 uses
-  %.0..0..0..pre.i = phi i32 [ %.0..0..0..0..0..0..pre.pre.i, %bb.j ], [ %i.au, %._crit_edge68.i ]
   store i32 -1, ptr %.048.lcssa.i, align 4, !tbaa !74
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %.pre-phi.i ; 2 uses
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !4
@@ -462,8 +459,7 @@ bb.j:                                             ; preds = %._crit_edge68.i
   br label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge68._crit_edge.i, %bb.i
-  %.0..0..0..i = phi i32 [ %i.au, %bb.i ], [ %.0..0..0..pre.i, %._crit_edge68._crit_edge.i ] ; 2 uses
-  %.not55.i = icmp eq i32 %.0..0..0..i, 0
+  %.not55.i = icmp eq i32 %i.au, 0
   br i1 %.not55.i, label %GlueFreeBlocks.exit, label %bb.i
 
 GlueFreeBlocks.exit:                              ; preds = %bb.k, %bb.h

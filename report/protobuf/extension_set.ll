@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define noundef i64 @_ZNK6google8protobuf8internal12ExtensionSet8ByteSizeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #3 align 2 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #35
   store i64 0, ptr %i.a, align 8, !tbaa !148
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -252,13 +252,9 @@ bb.c:                                             ; preds = %bb.a
   %i.w = select i1 %i.u, i1 %i.v, i1 false
   br i1 %i.w, label %.lr.ph.i.i, label %.preheader24.i.i, !llvm.loop !403
 
-.preheader.i.i.loopexit:                          ; preds = %.lr.ph30.i.i
-  store i64 %i.ab, ptr %i.a, align 8
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.loopexit, %.preheader24.i.i
-  %.promoted4 = phi i64 [ 0, %.preheader24.i.i ], [ %i.ab, %.preheader.i.i.loopexit ] ; 2 uses
-  %.019.lcssa.i.i = phi ptr [ %.val1, %.preheader24.i.i ], [ %i.ah, %.preheader.i.i.loopexit ] ; 2 uses
+.preheader.i.i:                                   ; preds = %.lr.ph30.i.i, %.preheader24.i.i
+  %.promoted4 = phi i64 [ 0, %.preheader24.i.i ], [ %i.ab, %.lr.ph30.i.i ] ; 2 uses
+  %.019.lcssa.i.i = phi ptr [ %.val1, %.preheader24.i.i ], [ %i.ah, %.lr.ph30.i.i ] ; 2 uses
   %.not2132.i.i = icmp eq ptr %.019.lcssa.i.i, %i.m
   br i1 %.not2132.i.i, label %"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_8ByteSizeEvE3$_0NS2_8PrefetchEEEvT_T0_.exit", label %.lr.ph34.i.i
 
@@ -269,7 +265,7 @@ bb.c:                                             ; preds = %bb.a
   %i.y = load i32, ptr %.01928.i.i, align 8, !tbaa !109
   %i.z = getelementptr inbounds nuw i8, ptr %.01928.i.i, i64 8
   %i.aa = tail call noundef i64 @_ZNK6google8protobuf8internal12ExtensionSet9Extension8ByteSizeEi(ptr noundef nonnull align 8 dereferenceable(24) %i.z, i32 noundef %i.y)
-  %i.ab = add i64 %i.x, %i.aa                     ; 3 uses
+  %i.ab = add i64 %i.x, %i.aa                     ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.129.i.i, i64 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.129.i.i, i64 18
   %i.ae = load i8, ptr %i.ad, align 2
@@ -280,7 +276,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ah = getelementptr inbounds nuw i8, ptr %.01928.i.i, i64 32 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.129.i.i, i64 32 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ai, %i.m
-  br i1 %.not.i.i, label %.preheader.i.i.loopexit, label %.lr.ph30.i.i, !llvm.loop !404
+  br i1 %.not.i.i, label %.preheader.i.i, label %.lr.ph30.i.i, !llvm.loop !404
 
 .lr.ph34.i.i:                                     ; preds = %.preheader.i.i, %.lr.ph34.i.i
   %i.aj = phi i64 [ %i.an, %.lr.ph34.i.i ], [ %.promoted4, %.preheader.i.i ]
@@ -683,7 +679,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 ; Function Attrs: mustprogress uwtable
 define noundef i64 @_ZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #35
   store i64 0, ptr %i.a, align 8, !tbaa !148
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -738,13 +734,9 @@ bb.c:                                             ; preds = %bb.a
   %i.x = select i1 %i.v, i1 %i.w, i1 false
   br i1 %i.x, label %.lr.ph.i.i, label %.preheader31.i.i, !llvm.loop !443
 
-.preheader.i.i.loopexit:                          ; preds = %"_ZZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEvENK3$_0clEiRKNS2_9ExtensionE.exit.i.i"
-  store i64 %i.bj, ptr %i.a, align 8
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.loopexit, %.preheader31.i.i
-  %.promoted4 = phi i64 [ 0, %.preheader31.i.i ], [ %i.bj, %.preheader.i.i.loopexit ] ; 2 uses
-  %.019.lcssa.i.i = phi ptr [ %.val1, %.preheader31.i.i ], [ %i.bp, %.preheader.i.i.loopexit ] ; 2 uses
+.preheader.i.i:                                   ; preds = %"_ZZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEvENK3$_0clEiRKNS2_9ExtensionE.exit.i.i", %.preheader31.i.i
+  %.promoted4 = phi i64 [ 0, %.preheader31.i.i ], [ %i.bj, %"_ZZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEvENK3$_0clEiRKNS2_9ExtensionE.exit.i.i" ] ; 2 uses
+  %.019.lcssa.i.i = phi ptr [ %.val1, %.preheader31.i.i ], [ %i.bp, %"_ZZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEvENK3$_0clEiRKNS2_9ExtensionE.exit.i.i" ] ; 2 uses
   %.not2139.i.i = icmp eq ptr %.019.lcssa.i.i, %i.m
   br i1 %.not2139.i.i, label %"_ZNK6google8protobuf8internal12ExtensionSet7ForEachIZNKS2_18MessageSetByteSizeEvE3$_0NS2_8PrefetchEEEvT_T0_.exit", label %.lr.ph41.i.i
 
@@ -809,7 +801,7 @@ bb.g:                                             ; preds = %bb.f
 
 "_ZZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEvENK3$_0clEiRKNS2_9ExtensionE.exit.i.i": ; preds = %bb.g, %bb.f, %bb.e
   %.0.i.i.i.i = phi i64 [ %i.ah, %bb.e ], [ %i.bi, %bb.g ], [ 0, %bb.f ]
-  %i.bj = add i64 %i.z, %.0.i.i.i.i               ; 3 uses
+  %i.bj = add i64 %i.z, %.0.i.i.i.i               ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.136.i.i, i64 8 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.136.i.i, i64 18
   %i.bm = load i8, ptr %i.bl, align 2
@@ -820,7 +812,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bp = getelementptr inbounds nuw i8, ptr %.01935.i.i, i64 32 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.136.i.i, i64 32 ; 2 uses
   %.not.i.i = icmp eq ptr %i.bq, %i.m
-  br i1 %.not.i.i, label %.preheader.i.i.loopexit, label %bb.d, !llvm.loop !445
+  br i1 %.not.i.i, label %.preheader.i.i, label %bb.d, !llvm.loop !445
 
 bb.h:                                             ; preds = %"_ZZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEvENK3$_0clEiRKNS2_9ExtensionE.exit29.i.i", %.lr.ph41.i.i
   %i.br = phi i64 [ %.promoted4, %.lr.ph41.i.i ], [ %i.db, %"_ZZNK6google8protobuf8internal12ExtensionSet18MessageSetByteSizeEvENK3$_0clEiRKNS2_9ExtensionE.exit29.i.i" ]

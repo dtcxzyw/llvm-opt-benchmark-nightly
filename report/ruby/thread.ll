@@ -201,7 +201,7 @@ define hidden void @rb_thread_terminate_all(ptr noundef %0) local_unnamed_addr #
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 7 uses
-  %i.c = alloca ptr, align 8                      ; 5 uses
+  %i.c = alloca ptr, align 8                      ; 4 uses
   %1 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   %i.d = alloca i64, align 8                      ; 5 uses
   %i.e = getelementptr i8, ptr %0, i64 24         ; 2 uses
@@ -250,7 +250,7 @@ rb_threadptr_unlock_all_locking_mutexes.exit:     ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 64
   store i32 0, ptr %i.p, align 8, !tbaa !231
   store i64 36, ptr %1, align 8, !tbaa !233
-  %i.q = getelementptr i8, ptr %.0..0..0..0.6, i64 24 ; 2 uses
+  %i.q = getelementptr i8, ptr %.0..0..0..0.6, i64 24 ; 3 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !234
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   store ptr %i.r, ptr %i.s, align 8, !tbaa !235
@@ -466,9 +466,7 @@ bb.y:                                             ; preds = %bb.x
 
 .loopexit:                                        ; preds = %vm_check_ints_blocking.exit, %terminate_all.exit, %bb.x
   %i.cp = load ptr, ptr %i.s, align 8, !tbaa !235
-  %.0..0..0..0.4 = load ptr, ptr %i.c, align 8, !tbaa !147
-  %2 = getelementptr i8, ptr %.0..0..0..0.4, i64 24
-  store ptr %i.cp, ptr %2, align 8, !tbaa !234
+  store ptr %i.cp, ptr %i.q, align 8, !tbaa !234
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)

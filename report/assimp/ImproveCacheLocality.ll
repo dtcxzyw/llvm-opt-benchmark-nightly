@@ -201,24 +201,22 @@ bb.m:                                             ; preds = %bb.l
   %.03551.i = phi ptr [ %i.bx, %.preheader41.i ], [ %i.ad, %.preheader41.lr.ph.i ] ; 2 uses
   %.03650.i = phi i32 [ %i.bw, %.preheader41.i ], [ 0, %.preheader41.lr.ph.i ]
   %.03849.i = phi ptr [ %i.bv, %.preheader41.i ], [ %i.ab, %.preheader41.lr.ph.i ] ; 2 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %.03551.i, i64 8 ; 3 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %.03551.i, i64 8
   %i.bk = icmp eq ptr %i.ac, %.03849.i
   %spec.select.i = select i1 %i.bk, ptr %i.ab, ptr %.03849.i ; 2 uses
-  %i.bl = load ptr, ptr %i.bj, align 8
+  %i.bl = load ptr, ptr %i.bj, align 8            ; 3 uses
   %i.bm = load i32, ptr %i.bl, align 4
   %i.bn = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 4 ; 2 uses
   store i32 %i.bm, ptr %spec.select.i, align 4
   %i.bo = icmp eq ptr %i.ac, %i.bn
   %spec.select.1.i = select i1 %i.bo, ptr %i.ab, ptr %i.bn ; 2 uses
-  %4 = load ptr, ptr %i.bj, align 8
-  %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
   %i.bq = load i32, ptr %i.bp, align 4
   %i.br = getelementptr inbounds nuw i8, ptr %spec.select.1.i, i64 4 ; 2 uses
   store i32 %i.bq, ptr %spec.select.1.i, align 4
   %i.bs = icmp eq ptr %i.ac, %i.br
   %spec.select.2.i = select i1 %i.bs, ptr %i.ab, ptr %i.br ; 2 uses
-  %5 = load ptr, ptr %i.bj, align 8
-  %i.bt = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   %i.bu = load i32, ptr %i.bt, align 4
   %i.bv = getelementptr inbounds nuw i8, ptr %spec.select.2.i, i64 4
   store i32 %i.bu, ptr %spec.select.2.i, align 4

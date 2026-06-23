@@ -201,7 +201,7 @@ bb.bh:                                            ; preds = %.noexc207
 bb.bi:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZNK6duckdb22TemporaryMemoryManager18ComputeReservationERKNS9_20TemporaryMemoryStateEE3$_0EEEvT_T0_.exit.i.i.i.i", %.lr.ph.i.i.i.i
   %.sroa.0.030.i.i.i.i = phi ptr [ %i.iq, %.lr.ph.i.i.i.i ], [ %i.kf, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZNK6duckdb22TemporaryMemoryManager18ComputeReservationERKNS9_20TemporaryMemoryStateEE3$_0EEEvT_T0_.exit.i.i.i.i" ] ; 6 uses
   %i.is = load i64, ptr %.sroa.0.030.i.i.i.i, align 8, !tbaa !70 ; 5 uses
-  %.sroa.0.09.i.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.030.i.i.i.i, i64 -8 ; 3 uses
+  %.sroa.0.09.i.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.030.i.i.i.i, i64 -8 ; 4 uses
   %i.it = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorIdLb1ESaIdEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %10, i64 noundef %i.is)
           to label %.noexc209 unwind label %.loopexit
 
@@ -228,16 +228,17 @@ bb.bi:                                            ; preds = %"_ZSt25__unguarded_
 
 .lr.ph.i.us.preheader.i.i.i.i:                    ; preds = %.lr.ph.i.preheader.i.i.i.i
   %i.jf = getelementptr inbounds nuw [8 x i8], ptr %i.ja, i64 %i.is
+  %.pre.i.i.i.i = load i64, ptr %.sroa.0.09.i.i.i.i.i, align 8, !tbaa !70
   %.pre.i.i.i.i.a = load double, ptr %i.jf, align 8, !tbaa !1170
   br label %.lr.ph.i.us.i.i.i.i
 
 .lr.ph.i.us.i.i.i.i:                              ; preds = %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i, %.lr.ph.i.us.preheader.i.i.i.i
-  %.sroa.0.011.i.us.i.i.i.i = phi ptr [ %.sroa.0.0.i.us.i.i.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i ], [ %.sroa.0.09.i.i.i.i.i, %.lr.ph.i.us.preheader.i.i.i.i ] ; 4 uses
-  %.sroa.06.010.i.us.i.i.i.i.a = phi ptr [ %.sroa.0.011.i.us.i.i.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i ], [ %.sroa.0.030.i.i.i.i, %.lr.ph.i.us.preheader.i.i.i.i ]
-  %16 = load i64, ptr %.sroa.0.011.i.us.i.i.i.i, align 8, !tbaa !70
-  store i64 %16, ptr %.sroa.06.010.i.us.i.i.i.i.a, align 8, !tbaa !70
-  %.sroa.0.0.i.us.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.011.i.us.i.i.i.i, i64 -8 ; 2 uses
-  %i.jg = load i64, ptr %.sroa.0.0.i.us.i.i.i.i, align 8, !tbaa !70 ; 3 uses
+  %16 = phi i64 [ %i.jg, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i ], [ %.pre.i.i.i.i, %.lr.ph.i.us.preheader.i.i.i.i ]
+  %.sroa.06.010.i.us.i.i.i.i.a = phi ptr [ %.sroa.0.0.i.us.i.i.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i ], [ %.sroa.0.09.i.i.i.i.i, %.lr.ph.i.us.preheader.i.i.i.i ] ; 3 uses
+  %.sroa.06.010.i.us.i.i.i.i = phi ptr [ %.sroa.06.010.i.us.i.i.i.i.a, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i ], [ %.sroa.0.030.i.i.i.i, %.lr.ph.i.us.preheader.i.i.i.i ]
+  store i64 %16, ptr %.sroa.06.010.i.us.i.i.i.i, align 8, !tbaa !70
+  %.sroa.0.0.i.us.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.06.010.i.us.i.i.i.i.a, i64 -8 ; 2 uses
+  %i.jg = load i64, ptr %.sroa.0.0.i.us.i.i.i.i, align 8, !tbaa !70 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   store i64 %i.jg, ptr %i.h, align 8, !tbaa !70
@@ -372,7 +373,7 @@ bb.bo:                                            ; preds = %bb.bm
   unreachable
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZNK6duckdb22TemporaryMemoryManager18ComputeReservationERKNS9_20TemporaryMemoryStateEE3$_0EEEvT_T0_.exit.i.i.i.i": ; preds = %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i, %.noexc210
-  %.sroa.06.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.030.i.i.i.i, %.noexc210 ], [ %.sroa.0.011.i.us.i.i.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i ]
+  %.sroa.06.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.030.i.i.i.i, %.noexc210 ], [ %.sroa.06.010.i.us.i.i.i.i.a, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit.us.i.i.i.i ]
   store i64 %i.is, ptr %.sroa.06.0.lcssa.i.i.i.i.i, align 8, !tbaa !70
   %i.kf = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i206 = icmp eq ptr %i.kf, %i.ih
@@ -775,8 +776,8 @@ _ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.preheader.i.i: ; preds = %_ZN6duckdb
   br label %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.i.i
 
 _ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.i.i:  ; preds = %bb.n, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.preheader.i.i
-  %.val.i72.us.i.i = phi i64 [ %.val.i.us.i.i, %bb.n ], [ %.val.i6999.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.preheader.i.i ]
-  %.sroa.051.171.us.i.i = phi ptr [ %i.ci, %bb.n ], [ %.sroa.051.098.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.preheader.i.i ] ; 9 uses
+  %.val.i72.us.i.i = phi i64 [ %.val.i.us.i.i, %bb.n ], [ %.val.i6999.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.preheader.i.i ] ; 2 uses
+  %.sroa.051.171.us.i.i = phi ptr [ %i.ci, %bb.n ], [ %.sroa.051.098.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.preheader.i.i ] ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %.val.i72.us.i.i
@@ -918,8 +919,8 @@ bb.t:                                             ; preds = %bb.r
 
 _ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit32.i.i:     ; preds = %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit24.i.i
   %.sroa.048.0.pn.i.i = phi ptr [ %.sroa.048.1.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit24.i.i ], [ %.sroa.048.097.i.i, %_ZN6duckdb6vectorIdLb1ESaIdEEixEm.exit16.us.i.i ]
-  %.sroa.048.1.i.i = getelementptr inbounds i8, ptr %.sroa.048.0.pn.i.i, i64 -8 ; 6 uses
-  %i.dd = load i64, ptr %.sroa.048.1.i.i, align 8, !tbaa !70 ; 3 uses
+  %.sroa.048.1.i.i = getelementptr inbounds i8, ptr %.sroa.048.0.pn.i.i, i64 -8 ; 5 uses
+  %i.dd = load i64, ptr %.sroa.048.1.i.i, align 8, !tbaa !70 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i64 %i.dd, ptr %i.d, align 8, !tbaa !70
@@ -993,10 +994,8 @@ bb.x:                                             ; preds = %_ZN6duckdb6vectorId
   br i1 %i.dr, label %bb.y, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZNK6duckdb22TemporaryMemoryManager18ComputeReservationERKNS9_20TemporaryMemoryStateEE3$_0EEET_SG_SG_T0_.exit"
 
 bb.y:                                             ; preds = %bb.x
-  %7 = load i64, ptr %.sroa.051.171.us.i.i, align 8, !tbaa !70
-  %8 = load i64, ptr %.sroa.048.1.i.i, align 8, !tbaa !70
-  store i64 %8, ptr %.sroa.051.171.us.i.i, align 8, !tbaa !70
-  store i64 %7, ptr %.sroa.048.1.i.i, align 8, !tbaa !70
+  store i64 %i.dd, ptr %.sroa.051.171.us.i.i, align 8, !tbaa !70
+  store i64 %.val.i72.us.i.i, ptr %.sroa.048.1.i.i, align 8, !tbaa !70
   %i.ds = getelementptr inbounds nuw i8, ptr %.sroa.051.171.us.i.i, i64 8 ; 2 uses
   %.val.i69.i.i = load i64, ptr %i.ds, align 8, !tbaa !70 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

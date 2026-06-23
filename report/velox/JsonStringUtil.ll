@@ -201,8 +201,8 @@ define noundef zeroext i1 @_ZN8facebook5velox20lessThanForJsonParseERKSt17basic_
 bb.a:
   %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 7 uses
-  %i.c = alloca i64, align 8                      ; 7 uses
-  %i.d = alloca i64, align 8                      ; 7 uses
+  %i.c = alloca i64, align 8                      ; 6 uses
+  %i.d = alloca i64, align 8                      ; 6 uses
   %i.e = load i64, ptr %0, align 8, !tbaa !14     ; 2 uses
   %i.f = load i64, ptr %1, align 8, !tbaa !14     ; 2 uses
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %i.e) ; 2 uses
@@ -278,8 +278,6 @@ bb.g:                                             ; preds = %bb.f, %.thread.i
   %.pre4.i = load i32, ptr %i.b, align 4, !tbaa !3
   %i.ab = tail call i32 @llvm.smax.i32(i32 %.pre4.i, i32 1)
   %i.ac = zext nneg i32 %i.ab to i64
-  %.pre32 = load i64, ptr %i.c, align 8, !tbaa !17
-  %.pre33 = load i64, ptr %i.d, align 8, !tbaa !17
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -287,17 +285,15 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %2 = phi i64 [ %.pre33, %bb.g ], [ %i.h, %bb.h ]
-  %3 = phi i64 [ %.pre32, %bb.g ], [ %i.i, %bb.h ]
   %.03210.i = phi i32 [ %.03211.i, %bb.g ], [ %i.v, %bb.h ]
   %i.ae = phi i64 [ %i.ac, %bb.g ], [ 1, %bb.h ]
   %.0.i = phi i32 [ %i.aa, %bb.g ], [ %i.ad, %bb.h ]
   %i.af = load i32, ptr %i.a, align 4, !tbaa !3
   %i.ag = tail call i32 @llvm.smax.i32(i32 %i.af, i32 1)
   %i.ah = zext nneg i32 %i.ag to i64
-  %i.ai = add i64 %3, %i.ah                       ; 2 uses
+  %i.ai = add i64 %i.i, %i.ah                     ; 2 uses
   store i64 %i.ai, ptr %i.c, align 8, !tbaa !17
-  %i.aj = add i64 %2, %i.ae                       ; 2 uses
+  %i.aj = add i64 %i.ae, %i.h                     ; 2 uses
   store i64 %i.aj, ptr %i.d, align 8, !tbaa !17
   %i.ak = sub nsw i32 %.03210.i, %.0.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13

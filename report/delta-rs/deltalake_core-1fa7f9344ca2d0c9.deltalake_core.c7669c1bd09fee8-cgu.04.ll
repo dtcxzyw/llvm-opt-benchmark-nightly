@@ -201,11 +201,11 @@ bb.a:
   %.sroa.6 = alloca [40 x i8], align 8            ; 5 uses
   %.sroa.469 = alloca [24 x i8], align 8          ; 4 uses
   %.sroa.47 = alloca [24 x i8], align 8           ; 4 uses
-  %i.x = alloca [8 x i8], align 8                 ; 4 uses
+  %i.x = alloca [8 x i8], align 8                 ; 2 uses
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.m, %bb.a
-  %.tr242 = phi ptr [ %1, %bb.a ], [ %i.bo, %bb.m ] ; 33 uses
+  %.tr242 = phi ptr [ %1, %bb.a ], [ %i.bo, %bb.m ] ; 31 uses
   %i.y = load i128, ptr %.tr242, align 16, !range !4450, !noundef !27 ; 3 uses
   %i.z = icmp ne i128 %i.y, 10
   tail call void @llvm.assume(i1 %i.z)
@@ -557,7 +557,6 @@ bb.ak:                                            ; preds = %bb.i
   br label %bb.p
 
 bb.al:                                            ; preds = %tailrecurse, %tailrecurse, %tailrecurse
-  store ptr %.tr242, ptr %i.x, align 8
   %.sroa.04.0 = getelementptr inbounds nuw i8, ptr %.tr242, i64 16 ; 2 uses
   %i.da = load i64, ptr %.sroa.04.0, align 8, !range !66, !noundef !27
   %.not207 = icmp eq i64 %i.da, -9223372036854775808
@@ -579,7 +578,6 @@ bb.an:                                            ; preds = %bb.al
   br label %bb.p
 
 bb.ao:                                            ; preds = %tailrecurse, %tailrecurse, %tailrecurse, %tailrecurse
-  store ptr %.tr242, ptr %i.x, align 8
   %.sroa.066.0 = getelementptr inbounds nuw i8, ptr %.tr242, i64 16 ; 2 uses
   %i.db = load i64, ptr %.sroa.066.0, align 8, !range !66, !noundef !27
   %.not206 = icmp eq i64 %i.db, -9223372036854775808

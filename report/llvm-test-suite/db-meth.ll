@@ -201,9 +201,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.g, %.thread
-  %i.dm = getelementptr inbounds i8, ptr %i.cw, i64 -8 ; 10 uses
-  %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !45 ; 5 uses
-  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !40 ; 2 uses
+  %i.dm = getelementptr inbounds i8, ptr %i.cw, i64 -8 ; 9 uses
+  %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !45 ; 7 uses
+  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !40 ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 4
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !53
   %i.dr = icmp eq i32 %i.dq, 1
@@ -451,7 +451,6 @@ bb.ai:                                            ; preds = %bb.k, %bb.j
   %i.ha = load i32, ptr %i.gz, align 8, !tbaa !33
   %.0124.177 = tail call i32 @llvm.umin.i32(i32 %.0124.lcssa, i32 %i.ha) ; 2 uses
   %i.hb = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #10 ; 14 uses
-  %1 = load ptr, ptr %i.dm, align 8, !tbaa !45    ; 3 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %i.hb, i64 8
   store i32 1, ptr %i.hc, align 8, !tbaa !29
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hb, i64 12
@@ -468,13 +467,12 @@ _ZN3ExpC2Ejj7Exptype4Type2OpPS_jPS3_.exit190:     ; preds = %bb.aj
   store <4 x i32> <i32 0, i32 6, i32 8, i32 39>, ptr %i.hf, align 8, !tbaa !11
   store ptr %i.hf, ptr %i.hb, align 8, !tbaa !40
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hb, i64 24
-  store ptr %1, ptr %i.hg, align 8, !tbaa !63
+  store ptr %i.dn, ptr %i.hg, align 8, !tbaa !63
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hb, i64 48
   store i32 %.0143.lcssa225, ptr %i.hh, align 8, !tbaa !11
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hb, i64 56
   store ptr %i.ax, ptr %i.hi, align 8, !tbaa !11
-  %.pre = load ptr, ptr %1, align 8, !tbaa !40
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 12
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.do, i64 12
   %.pre220 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !62
   %i.hj = icmp ne i32 %.pre220, 18
   br label %bb.ap
@@ -492,7 +490,7 @@ bb.am:                                            ; preds = %bb.al
   store <4 x i32> <i32 0, i32 4, i32 11, i32 5>, ptr %i.hl, align 8, !tbaa !11
   store ptr %i.hl, ptr %i.hb, align 8, !tbaa !40
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hb, i64 24
-  store ptr %1, ptr %i.hm, align 8, !tbaa !63
+  store ptr %i.dn, ptr %i.hm, align 8, !tbaa !63
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hb, i64 32
   store ptr %i.ay, ptr %i.hn, align 8, !tbaa !64
   %i.ho = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #10 ; 9 uses

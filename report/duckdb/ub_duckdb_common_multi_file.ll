@@ -201,7 +201,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb12OpenFi
   br i1 %i.ac, label %bb.d, label %.preheader.i.i.preheader, !llvm.loop !1624
 
 .preheader.i.i.preheader:                         ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb12OpenFileInfoESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i.i
-  %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.019.1.i.i, i64 8 ; 4 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.019.1.i.i, i64 8 ; 3 uses
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb12OpenFileInfoESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit16.i.i
@@ -256,12 +256,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store ptr %i.ap, ptr %3, align 8, !tbaa !16
   %i.au = load i64, ptr %i.aq, align 8, !tbaa !18
   store i64 %i.au, ptr %i.g, align 8, !tbaa !18
-  %.pre.i = load i64, ptr %i.ae, align 8, !tbaa !19
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i26
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i26: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  %6 = phi i64 [ %i.w, %bb.g ], [ %.pre.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ]
-  store i64 %6, ptr %i.h, align 8, !tbaa !19
+  store i64 %i.w, ptr %i.h, align 8, !tbaa !19
   store ptr %i.aq, ptr %.sroa.019.1.i.i, align 8, !tbaa !16
   store i64 0, ptr %i.ae, align 8, !tbaa !19
   store i8 0, ptr %i.aq, align 8, !tbaa !18
@@ -664,7 +662,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.w
   %.sroa.0.022 = phi ptr [ %.sroa.0.019, %.lr.ph ], [ %.sroa.0.0, %bb.w ] ; 8 uses
   %.pn21 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.022, %bb.w ] ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.pn21, i64 56 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.pn21, i64 56 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !19   ; 5 uses
   %i.j = load i64, ptr %i.b, align 8, !tbaa !19   ; 2 uses
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.j, i64 %i.i) ; 2 uses
@@ -703,7 +701,6 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.assume(i1 %i.t)
   %i.u = add nuw nsw i64 %i.i, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 8 dereferenceable(1) %i.r, i64 %i.u, i1 false)
-  %.pre = load i64, ptr %i.h, align 8, !tbaa !19
   br label %_ZN6duckdb12OpenFileInfoC2EOS0_.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.c
@@ -713,8 +710,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZN6duckdb12OpenFileInfoC2EOS0_.exit
 
 _ZN6duckdb12OpenFileInfoC2EOS0_.exit:             ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %3 = phi i64 [ %.pre, %bb.d ], [ %i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
-  store i64 %3, ptr %i.d, align 8, !tbaa !19
+  store i64 %i.i, ptr %i.d, align 8, !tbaa !19
   store ptr %i.r, ptr %.sroa.0.022, align 8, !tbaa !16
   store i64 0, ptr %i.h, align 8, !tbaa !19
   store i8 0, ptr %i.r, align 8, !tbaa !18

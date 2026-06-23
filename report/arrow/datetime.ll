@@ -201,7 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.h
   %.sroa.0.019 = phi ptr [ %.sroa.0.017, %.lr.ph ], [ %.sroa.0.0, %bb.h ] ; 8 uses
   %.pn18 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.019, %bb.h ] ; 8 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %.pn18, i64 96 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.pn18, i64 96 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !39   ; 5 uses
   %i.o = load i64, ptr %i.c, align 8, !tbaa !39   ; 2 uses
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.o, i64 %i.n) ; 2 uses
@@ -240,7 +240,6 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.assume(i1 %i.y)
   %i.z = add nuw nsw i64 %i.n, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.d, ptr noundef nonnull align 8 dereferenceable(1) %i.w, i64 %i.z, i1 false)
-  %.pre = load i64, ptr %i.m, align 8, !tbaa !39
   br label %_ZN14arrow_vendored4date9time_zoneC2EOS1_.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.c
@@ -250,8 +249,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZN14arrow_vendored4date9time_zoneC2EOS1_.exit
 
 _ZN14arrow_vendored4date9time_zoneC2EOS1_.exit:   ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %3 = phi i64 [ %.pre, %bb.d ], [ %i.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
-  store i64 %3, ptr %i.e, align 8, !tbaa !39
+  store i64 %i.n, ptr %i.e, align 8, !tbaa !39
   store ptr %i.w, ptr %.sroa.0.019, align 8, !tbaa !30
   store i64 0, ptr %i.m, align 8, !tbaa !39
   store i8 0, ptr %i.w, align 8, !tbaa !31
@@ -654,11 +652,11 @@ define linkonce_odr ptr @_ZNSt6vectorIN14arrow_vendored4date6detail10transitionE
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !73     ; 8 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.c = ptrtoint ptr %i.a to i64                 ; 3 uses
+  %i.c = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !92   ; 10 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !48
   %.not = icmp eq ptr %i.f, %i.h
   br i1 %.not, label %bb.i, label %bb.b
@@ -714,7 +712,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 bb.i:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds i8, ptr %i.a, i64 %i.d
   %i.y = ptrtoint ptr %i.f to i64
-  %i.z = sub i64 %i.y, %i.c                       ; 2 uses
+  %i.z = sub i64 %i.y, %i.c                       ; 3 uses
   %i.aa = icmp eq i64 %i.z, 9223372036854775792
   br i1 %i.aa, label %bb.j, label %_ZNKSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE12_M_check_lenEmPKc.exit.i
 
@@ -771,10 +769,7 @@ _ZNSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE11_S_relocateEPS3
   br i1 %.not.i33.i, label %_ZNSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE17_M_realloc_insertIJRKNSt6chrono10time_pointINS7_3_V212system_clockENS7_8durationIlSt5ratioILl1ELl1EEEEEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit32.i
-  %3 = load ptr, ptr %i.g, align 8, !tbaa !48
-  %4 = ptrtoint ptr %3 to i64
-  %5 = sub i64 %4, %i.c
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %5) #28
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %i.z) #28
   br label %_ZNSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE17_M_realloc_insertIJRKNSt6chrono10time_pointINS7_3_V212system_clockENS7_8durationIlSt5ratioILl1ELl1EEEEEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit
 
 _ZNSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE17_M_realloc_insertIJRKNSt6chrono10time_pointINS7_3_V212system_clockENS7_8durationIlSt5ratioILl1ELl1EEEEEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit: ; preds = %_ZNSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit32.i, %bb.k

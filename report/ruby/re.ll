@@ -201,7 +201,7 @@ bb.a:
   %2 = alloca %struct.OnigErrorInfo, align 8      ; 5 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 3 uses
-  %i.c = alloca ptr, align 8                      ; 8 uses
+  %i.c = alloca ptr, align 8                      ; 6 uses
   %i.d = alloca i64, align 8                      ; 6 uses
   %i.e = alloca [90 x i8], align 16               ; 7 uses
   %3 = alloca %struct.re_pattern_buffer, align 8  ; 5 uses
@@ -214,7 +214,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
   %i.i = inttoptr i64 %0 to ptr                   ; 3 uses
   %i.j = getelementptr i8, ptr %i.i, i64 16
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !40   ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !40   ; 8 uses
   store ptr %i.k, ptr %i.c, align 8, !tbaa !50
   %i.l = getelementptr i8, ptr %i.k, i64 72
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !51
@@ -278,8 +278,7 @@ bb.f:                                             ; preds = %RSTRING_PTR.exit
   unreachable
 
 bb.g:                                             ; preds = %RSTRING_PTR.exit
-  %4 = load ptr, ptr %i.c, align 8, !tbaa !50     ; 3 uses
-  %i.ae = getelementptr i8, ptr %4, i64 440
+  %i.ae = getelementptr i8, ptr %i.k, i64 440
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !56
   %i.ag = inttoptr i64 %i.ab to ptr               ; 3 uses
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !37
@@ -309,7 +308,7 @@ bb.i:                                             ; preds = %RSTRING_PTR.exit31
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   %i.as = getelementptr i8, ptr %i.al, i64 %i.an
-  %i.at = getelementptr i8, ptr %4, i64 56
+  %i.at = getelementptr i8, ptr %i.k, i64 56
   %i.au = load i32, ptr %i.at, align 8, !tbaa !60
   %i.av = load ptr, ptr @OnigDefaultSyntax, align 8, !tbaa !61
   %i.aw = call i32 @onig_new_without_alloc(ptr noundef nonnull %3, ptr noundef %i.al, ptr noundef %i.as, i32 noundef %i.au, ptr noundef %i.h, ptr noundef %i.av, ptr noundef nonnull %2) #28 ; 2 uses
@@ -321,9 +320,8 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %5 = load ptr, ptr %i.c, align 8, !tbaa !50     ; 2 uses
-  call void @onig_free_body(ptr noundef %5) #28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(456) %5, ptr noundef nonnull align 8 dereferenceable(456) %3, i64 456, i1 false), !tbaa.struct !62
+  call void @onig_free_body(ptr noundef nonnull %i.k) #28
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(456) %i.k, ptr noundef nonnull align 8 dereferenceable(456) %3, i64 456, i1 false), !tbaa.struct !62
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -332,7 +330,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.i, %RSTRING_PTR.exit31
   %i.ax = getelementptr i8, ptr %i.al, i64 %i.an
-  %i.ay = getelementptr i8, ptr %4, i64 56
+  %i.ay = getelementptr i8, ptr %i.k, i64 56
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !60
   %i.ba = load ptr, ptr @OnigDefaultSyntax, align 8, !tbaa !61
   %i.bb = call i32 @onig_new(ptr noundef nonnull %i.c, ptr noundef %i.al, ptr noundef %i.ax, i32 noundef %i.az, ptr noundef %i.h, ptr noundef %i.ba, ptr noundef nonnull %2) #28

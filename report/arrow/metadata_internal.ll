@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %.sroa.072.085 = phi ptr [ %i.aa, %.lr.ph ], [ %i.de, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55 ] ; 3 uses
   %i.ak = load i32, ptr %.sroa.072.085, align 4, !tbaa !3
   %i.al = zext i32 %i.ak to i64
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.072.085, i64 %i.al ; 6 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.072.085, i64 %i.al ; 4 uses
   %i.an = load i32, ptr %i.am, align 4, !tbaa !3
   %i.ao = sext i32 %i.an to i64
   %i.ap = sub nsw i64 0, %i.ao
@@ -275,7 +275,7 @@ bb.p:                                             ; preds = %_ZNK22arrow_vendore
 
 _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i32: ; preds = %bb.p
   %i.bh = getelementptr inbounds nuw i8, ptr %i.aq, i64 6
-  %i.bi = load i16, ptr %i.bh, align 2, !tbaa !31
+  %i.bi = load i16, ptr %i.bh, align 2, !tbaa !31 ; 2 uses
   %.not.i.i.i33 = icmp eq i16 %i.bi, 0
   br i1 %.not.i.i.i33, label %bb.q, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i42
 
@@ -362,19 +362,11 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cf, ptr nonnull align 4 %i.bz, i64 %i.cb, i1 false)
   br label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i46
 
-_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i46: ; preds = %bb.u, %bb.t, %._crit_edge.i.i.i
+_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i46: ; preds = %._crit_edge.i.i.i, %bb.t, %bb.u
   store i64 %i.cb, ptr %i.ag, align 8, !tbaa !102, !alias.scope !283
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 %i.cb
   store i8 0, ptr %i.ch, align 1, !tbaa !14
-  %8 = load i32, ptr %i.am, align 4, !tbaa !3
-  %9 = sext i32 %8 to i64
-  %10 = sub nsw i64 0, %9
-  %11 = getelementptr inbounds i8, ptr %i.am, i64 %10
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 6
-  %13 = load i16, ptr %12, align 2, !tbaa !31     ; 2 uses
-  %.not.i.i.i47 = icmp ne i16 %13, 0
-  call void @llvm.assume(i1 %.not.i.i.i47)
-  %i.ci = zext i16 %13 to i64
+  %i.ci = zext i16 %i.bi to i64
   %i.cj = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ci ; 2 uses
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !3
   %i.cl = zext i32 %i.ck to i64
@@ -777,7 +769,7 @@ _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cc ; 6 uses
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !3
   %i.cf = sext i32 %i.ce to i64
-  %i.cg = sub nsw i64 0, %i.cf                    ; 2 uses
+  %i.cg = sub nsw i64 0, %i.cf                    ; 3 uses
   %i.ch = getelementptr inbounds i8, ptr %i.cd, i64 %i.cg ; 2 uses
   %i.ci = load i16, ptr %i.ch, align 2, !tbaa !31
   %i.cj = icmp ugt i16 %i.ci, 4
@@ -847,20 +839,21 @@ _ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.h, %_
 
 bb.i:                                             ; preds = %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPvm(ptr noundef nonnull %i.ct, i64 noundef %i.cw) #24
+  %.pre.pre = load i32, ptr %i.cd, align 4, !tbaa !3
+  %.pre116 = sext i32 %.pre.pre to i64
+  %.pre117 = sub nsw i64 0, %.pre116
   br label %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i
+  %.pre114.pre-phi = phi i64 [ %.pre117, %bb.i ], [ %i.cg, %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.de, ptr %3, align 8, !tbaa !490
   store ptr %i.dh, ptr %i.bb, align 8, !tbaa !488
   %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %i.dc
   store ptr %i.di, ptr %i.bc, align 8, !tbaa !736
-  %.pre = load i32, ptr %i.cd, align 4, !tbaa !3
-  %.pre111 = sext i32 %.pre to i64
-  %.pre113 = sub nsw i64 0, %.pre111
   br label %_ZNSt6vectorIlSaIlEE9push_backEOl.exit
 
 _ZNSt6vectorIlSaIlEE9push_backEOl.exit:           ; preds = %bb.e, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i
-  %.pre-phi114 = phi i64 [ %i.cg, %bb.e ], [ %.pre113, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i ]
+  %.pre-phi114 = phi i64 [ %i.cg, %bb.e ], [ %.pre114.pre-phi, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
   %i.dj = getelementptr inbounds i8, ptr %i.cd, i64 %.pre-phi114 ; 2 uses
   %i.dk = load i16, ptr %i.dj, align 2, !tbaa !31

@@ -5,7 +5,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @psub(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -59,7 +59,7 @@ bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %spec.select110, i64 4 ; 2 uses
   %i.t = load i16, ptr %i.s, align 2, !tbaa !14
   %i.u = zext i16 %i.t to i32
-  %i.v = tail call ptr (i32, ...) @palloc(i32 noundef %i.u) #3 ; 5 uses
+  %i.v = tail call ptr (i32, ...) @palloc(i32 noundef %i.u) #3 ; 7 uses
   store ptr %i.v, ptr %i.a, align 8, !tbaa !12
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %bb.q, label %bb.g
@@ -73,7 +73,6 @@ bb.g:                                             ; preds = %bb.f
   %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 6
   store i8 %.sink, ptr %i.aa, align 2, !tbaa !10
   %i.ab = getelementptr inbounds nuw i8, ptr %spec.select110, i64 8 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %spec.select111, i64 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %spec.select111, i64 4
   %i.ae = load i16, ptr %i.ad, align 2, !tbaa !14
@@ -82,10 +81,11 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %bb.g
-  %.060 = phi ptr [ %2, %bb.g ], [ %3, %bb.h ]    ; 2 uses
+  %.060.idx = phi i64 [ 8, %bb.g ], [ %.060.add, %bb.h ] ; 2 uses
   %.058 = phi ptr [ %i.ab, %bb.g ], [ %i.al, %bb.h ] ; 2 uses
   %.057 = phi ptr [ %i.ac, %bb.g ], [ %i.ah, %bb.h ] ; 2 uses
   %.056 = phi i32 [ 1, %bb.g ], [ %i.aq, %bb.h ]
+  %.060.ptr = getelementptr inbounds nuw i8, ptr %i.v, i64 %.060.idx
   %i.ah = getelementptr inbounds nuw i8, ptr %.057, i64 2 ; 2 uses
   %i.ai = load i16, ptr %.057, align 2, !tbaa !8
   %i.aj = xor i16 %i.ai, -1
@@ -97,8 +97,8 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.ap = add nuw nsw i32 %i.ao, %i.an            ; 2 uses
   %i.aq = lshr i32 %i.ap, 16                      ; 2 uses
   %i.ar = trunc i32 %i.ap to i16
-  %3 = getelementptr inbounds nuw i8, ptr %.060, i64 2 ; 3 uses
-  store i16 %i.ar, ptr %.060, align 2, !tbaa !8
+  %.060.add = add nuw nsw i64 %.060.idx, 2        ; 3 uses
+  store i16 %i.ar, ptr %.060.ptr, align 2, !tbaa !8
   %i.as = icmp ult ptr %i.ah, %i.ag
   br i1 %i.as, label %bb.h, label %bb.i, !llvm.loop !15
 
@@ -107,22 +107,13 @@ bb.i:                                             ; preds = %bb.h
   %i.au = zext i16 %i.at to i64
   %i.av = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %i.au ; 2 uses
   %i.aw = icmp ult ptr %i.al, %i.av
-  br i1 %i.aw, label %.lr.ph, label %.preheader
-
-.preheader.loopexit:                              ; preds = %.lr.ph
-  %.pre = load ptr, ptr %i.a, align 8
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.loopexit, %bb.i
-  %4 = phi ptr [ %i.v, %bb.i ], [ %.pre, %.preheader.loopexit ] ; 2 uses
-  %.161.lcssa = phi ptr [ %3, %bb.i ], [ %6, %.preheader.loopexit ]
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  br label %bb.j
+  br i1 %i.aw, label %.lr.ph, label %.preheader.preheader
 
 .lr.ph:                                           ; preds = %bb.i, %.lr.ph
   %.1.in96 = phi i32 [ %i.bc, %.lr.ph ], [ %i.aq, %bb.i ]
   %.15995 = phi ptr [ %i.ax, %.lr.ph ], [ %i.al, %bb.i ] ; 2 uses
-  %.16194 = phi ptr [ %6, %.lr.ph ], [ %3, %bb.i ] ; 2 uses
+  %.16194.idx = phi i64 [ %.16194.add, %.lr.ph ], [ %.060.add, %bb.i ] ; 2 uses
+  %.16194.ptr = getelementptr inbounds nuw i8, ptr %i.v, i64 %.16194.idx
   %i.ax = getelementptr inbounds nuw i8, ptr %.15995, i64 2 ; 2 uses
   %i.ay = load i16, ptr %.15995, align 2, !tbaa !8
   %i.az = zext i16 %i.ay to i32
@@ -130,28 +121,31 @@ bb.i:                                             ; preds = %bb.h
   %i.bb = add nuw nsw i32 %i.ba, %i.az            ; 2 uses
   %i.bc = lshr i32 %i.bb, 16
   %i.bd = trunc i32 %i.bb to i16
-  %6 = getelementptr inbounds nuw i8, ptr %.16194, i64 2 ; 2 uses
-  store i16 %i.bd, ptr %.16194, align 2, !tbaa !8
+  %.16194.add = add nuw nsw i64 %.16194.idx, 2    ; 2 uses
+  store i16 %i.bd, ptr %.16194.ptr, align 2, !tbaa !8
   %i.be = icmp ult ptr %i.ax, %i.av
-  br i1 %i.be, label %.lr.ph, label %.preheader.loopexit, !llvm.loop !17
+  br i1 %i.be, label %.lr.ph, label %.preheader.preheader, !llvm.loop !17
 
-bb.j:                                             ; preds = %.preheader, %bb.j
-  %.2 = phi ptr [ %i.bf, %bb.j ], [ %.161.lcssa, %.preheader ]
-  %i.bf = getelementptr inbounds i8, ptr %.2, i64 -2 ; 4 uses
+.preheader.preheader:                             ; preds = %.lr.ph, %bb.i
+  %.2.idx.ph = phi i64 [ %.060.add, %bb.i ], [ %.16194.add, %.lr.ph ]
+  br label %bb.j
+
+bb.j:                                             ; preds = %.preheader.preheader, %bb.j
+  %.2.idx = phi i64 [ %.2.add, %bb.j ], [ %.2.idx.ph, %.preheader.preheader ] ; 3 uses
+  %.2.add = add nsw i64 %.2.idx, -2               ; 2 uses
+  %i.bf = getelementptr inbounds i8, ptr %i.v, i64 %.2.add
   %i.bg = load i16, ptr %i.bf, align 2, !tbaa !8
   %.not76 = icmp eq i16 %i.bg, 0
-  %7 = icmp ugt ptr %i.bf, %5
-  %or.cond = select i1 %.not76, i1 %7, i1 false
+  %2 = icmp sgt i64 %.2.idx, 10
+  %or.cond = and i1 %.not76, %2
   br i1 %or.cond, label %bb.j, label %bb.k, !llvm.loop !18
 
 bb.k:                                             ; preds = %bb.j
-  %8 = ptrtoint ptr %i.bf to i64
-  %9 = ptrtoint ptr %5 to i64
-  %10 = sub i64 %8, %9
-  %i.bh = lshr exact i64 %10, 1
+  %gepdiff = add i64 %.2.idx, 131062
+  %i.bh = lshr i64 %gepdiff, 1
   %i.bi = trunc i64 %i.bh to i16
   %i.bj = add i16 %i.bi, 1
-  %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.v, i64 4
   store i16 %i.bj, ptr %i.bk, align 2, !tbaa !14
   br label %bb.l
 

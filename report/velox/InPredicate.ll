@@ -201,7 +201,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.du, label %bb.u, label %bb.v, !prof !66
 
 bb.u:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ds, ptr align 8 %1, i64 %i.dt, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ds, ptr align 8 %1, i64 %i.dt, i1 false)
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit
@@ -604,7 +604,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.q
   %.sroa.0.022 = phi ptr [ %.sroa.0.020, %.lr.ph ], [ %.sroa.0.0, %bb.q ] ; 8 uses
   %.pn21 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.022, %bb.q ] ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.pn21, i64 40 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.pn21, i64 40 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !31   ; 5 uses
   %i.j = load i64, ptr %i.c, align 8, !tbaa !31   ; 2 uses
   %.sroa.speculated.i.i.i = call i64 @llvm.umin.i64(i64 %i.j, i64 %i.i) ; 2 uses
@@ -643,7 +643,6 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.assume(i1 %i.t)
   %i.u = add nuw nsw i64 %i.i, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.d, ptr noundef nonnull align 8 dereferenceable(1) %i.r, i64 %i.u, i1 false)
-  %.pre = load i64, ptr %i.h, align 8, !tbaa !31
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i: ; preds = %bb.c
@@ -653,8 +652,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i: ; 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
-  %3 = phi i64 [ %.pre, %bb.d ], [ %i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i ]
-  store i64 %3, ptr %i.e, align 8, !tbaa !31
+  store i64 %i.i, ptr %i.e, align 8, !tbaa !31
   store ptr %i.r, ptr %.sroa.0.022, align 8, !tbaa !49
   store i64 0, ptr %i.h, align 8, !tbaa !31
   store i8 0, ptr %i.r, align 8, !tbaa !30

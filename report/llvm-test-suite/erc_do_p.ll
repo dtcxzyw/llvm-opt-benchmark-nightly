@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.gm = getelementptr inbounds nuw i8, ptr %i.eq, i64 26
   %i.gn = getelementptr inbounds nuw i8, ptr %i.eq, i64 28
   %i.go = getelementptr inbounds nuw i8, ptr %i.eq, i64 30
-  %i.gp = getelementptr inbounds nuw i8, ptr %i.eq, i64 32 ; 2 uses
+  %i.gp = getelementptr nuw i8, ptr %i.eq, i64 32 ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %1, i64 316920
   %i.gr = getelementptr inbounds nuw i8, ptr %1, i64 316928
   br i1 %i.fg, label %.lr.ph.preheader, label %._crit_edge199.split
@@ -211,16 +211,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %smax = tail call i32 @llvm.smax.i32(i32 %i.gs, i32 1)
   %i.gt = zext nneg i32 %i.fe to i64
   %wide.trip.count = zext nneg i32 %smax to i64
-  %i.gu = getelementptr inbounds nuw i8, ptr %i.eq, i64 34
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.eq, i64 36
-  %i.gw = getelementptr inbounds nuw i8, ptr %i.eq, i64 38
-  %i.gx = getelementptr inbounds nuw i8, ptr %i.eq, i64 40
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.eq, i64 42
-  %i.gz = getelementptr inbounds nuw i8, ptr %i.eq, i64 44
-  %i.ha = getelementptr inbounds nuw i8, ptr %i.eq, i64 46
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.eq, i64 36
-  %i.hc = getelementptr inbounds nuw i8, ptr %i.eq, i64 40
-  %i.hd = getelementptr inbounds nuw i8, ptr %i.eq, i64 44
+  %i.gu = getelementptr nuw i8, ptr %i.eq, i64 34
+  %i.gv = getelementptr nuw i8, ptr %i.eq, i64 36
+  %i.gw = getelementptr nuw i8, ptr %i.eq, i64 38
+  %i.gx = getelementptr nuw i8, ptr %i.eq, i64 40
+  %i.gy = getelementptr nuw i8, ptr %i.eq, i64 42
+  %i.gz = getelementptr nuw i8, ptr %i.eq, i64 44
+  %i.ha = getelementptr nuw i8, ptr %i.eq, i64 46
+  %i.hb = getelementptr nuw i8, ptr %i.eq, i64 36
+  %i.hc = getelementptr nuw i8, ptr %i.eq, i64 40
+  %i.hd = getelementptr nuw i8, ptr %i.eq, i64 44
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
@@ -236,7 +236,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.a, %.loopexit ] ; 10 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.a, %.loopexit ] ; 9 uses
+  %3 = shl nsw i64 %indvars.iv, 2                 ; 5 uses
   %i.hk = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
   %i.hl = shl i64 %indvars.iv, 3
   %i.hm = and i64 %i.hl, 8589934584               ; 4 uses
@@ -308,9 +309,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.jj = getelementptr inbounds nuw i8, ptr %i.iy, i64 88 ; 2 uses
   store i32 %i.ji, ptr %i.jj, align 8, !tbaa !179
   %i.jk = getelementptr inbounds nuw i8, ptr %i.iy, i64 92
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %3 = shl i32 %indvars.iv.tr, 2
-  store i32 %3, ptr %i.jk, align 4, !tbaa !180
+  %indvars.iv.tr = trunc nsw i64 %3 to i32
+  store i32 %indvars.iv.tr, ptr %i.jk, align 4, !tbaa !180
   %i.jl = getelementptr inbounds nuw i8, ptr %i.iy, i64 5932 ; 2 uses
   %i.jm = load i32, ptr %i.jl, align 4, !tbaa !16
   %i.jn = mul nsw i32 %i.jm, %i.hk
@@ -713,30 +713,29 @@ buildPredblockRegionYUV.exit:                     ; preds = %.preheader.preheade
 
 .preheader172:                                    ; preds = %buildPredblockRegionYUV.exit
   %i.vj = load ptr, ptr %i.gr, align 8, !tbaa !64 ; 2 uses
-  %4 = shl nuw nsw i64 %indvars.iv, 1             ; 4 uses
   %i.vk = load ptr, ptr %i.vj, align 8, !tbaa !65 ; 2 uses
   %i.vl = getelementptr inbounds nuw [8 x i8], ptr %i.vk, i64 %i.he
   %i.vm = load ptr, ptr %i.vl, align 8, !tbaa !60
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.vm, i64 %4
-  %6 = load <2 x i16>, ptr %i.gp, align 2, !tbaa !61
-  store <2 x i16> %6, ptr %5, align 2, !tbaa !61
+  %scevgep203 = getelementptr nuw i8, ptr %i.vm, i64 %3
+  %4 = load i32, ptr %i.gp, align 2, !tbaa !61
+  store i32 %4, ptr %scevgep203, align 2, !tbaa !61
   %i.vn = getelementptr inbounds nuw [8 x i8], ptr %i.vk, i64 %i.hj
   %i.vo = load ptr, ptr %i.vn, align 8, !tbaa !60
-  %7 = getelementptr inbounds nuw [2 x i8], ptr %i.vo, i64 %4
-  %8 = load <2 x i16>, ptr %i.hb, align 2, !tbaa !61
-  store <2 x i16> %8, ptr %7, align 2, !tbaa !61
+  %scevgep203.1 = getelementptr nuw i8, ptr %i.vo, i64 %3
+  %5 = load i32, ptr %i.hb, align 2, !tbaa !61
+  store i32 %5, ptr %scevgep203.1, align 2, !tbaa !61
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vj, i64 8
   %i.vq = load ptr, ptr %i.vp, align 8, !tbaa !65 ; 2 uses
   %i.vr = getelementptr inbounds nuw [8 x i8], ptr %i.vq, i64 %i.he
   %i.vs = load ptr, ptr %i.vr, align 8, !tbaa !60
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %i.vs, i64 %4
-  %10 = load <2 x i16>, ptr %i.hc, align 2, !tbaa !61
-  store <2 x i16> %10, ptr %9, align 2, !tbaa !61
+  %scevgep203.1213 = getelementptr nuw i8, ptr %i.vs, i64 %3
+  %6 = load i32, ptr %i.hc, align 2, !tbaa !61
+  store i32 %6, ptr %scevgep203.1213, align 2, !tbaa !61
   %i.vt = getelementptr inbounds nuw [8 x i8], ptr %i.vq, i64 %i.hj
   %i.vu = load ptr, ptr %i.vt, align 8, !tbaa !60
-  %11 = getelementptr inbounds nuw [2 x i8], ptr %i.vu, i64 %4
-  %12 = load <2 x i16>, ptr %i.hd, align 2, !tbaa !61
-  store <2 x i16> %12, ptr %11, align 2, !tbaa !61
+  %scevgep203.1.1 = getelementptr nuw i8, ptr %i.vu, i64 %3
+  %7 = load i32, ptr %i.hd, align 2, !tbaa !61
+  store i32 %7, ptr %scevgep203.1.1, align 2, !tbaa !61
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader172, %buildPredblockRegionYUV.exit

@@ -201,7 +201,7 @@ define dso_local range(i32 0, 2) i32 @zsetAdd(ptr noundef %0, double noundef %1,
 bb.a:
   %i.a = alloca [32 x ptr], align 16              ; 5 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
-  %i.c = alloca double, align 8                   ; 5 uses
+  %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca ptr, align 8                      ; 4 uses
   %i.e = and i32 %3, 1
   %.not = icmp eq i32 %i.e, 0                     ; 2 uses
@@ -490,8 +490,7 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.an
   %i.cw = load ptr, ptr %i.ct, align 8, !tbaa !139
   %i.cx = call ptr @dictGetKey(ptr noundef %i.cw) #17 ; 15 uses
-  %i.cy = load double, ptr %i.cx, align 8, !tbaa !16 ; 5 uses
-  store double %i.cy, ptr %i.c, align 8, !tbaa !16
+  %i.cy = load double, ptr %i.cx, align 8, !tbaa !16 ; 4 uses
   br i1 %.not, label %bb.as, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
@@ -894,6 +893,8 @@ zslGetNodeSpanAtLevel.exit39:                     ; preds = %zslGetNodeSpanAtLev
   br i1 %i.ar, label %.lr.ph77, label %._crit_edge78
 
 .lr.ph77:                                         ; preds = %._crit_edge
+  %4 = load ptr, ptr %i.b, align 16
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br label %bb.b
@@ -910,8 +911,6 @@ bb.b:                                             ; preds = %.lr.ph77, %zslUnlin
 
 .lr.ph.i:                                         ; preds = %bb.b
   %wide.trip.count.i = zext nneg i32 %i.aw to i64
-  %4 = load ptr, ptr %i.b, align 16, !tbaa !29
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.ay = load ptr, ptr %5, align 8, !tbaa !31
   %i.az = icmp eq ptr %i.ay, %.274
   br i1 %i.az, label %zslIncrNodeSpanAtLevel.exit.peel.i, label %zslDecrNodeSpanAtLevel.exit.peel.i
@@ -1088,6 +1087,8 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %._crit_edge
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = load ptr, ptr %i.b, align 16
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br label %bb.d
@@ -1113,8 +1114,6 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.i:                                         ; preds = %bb.e
   %wide.trip.count.i = zext nneg i32 %i.ae to i64
-  %3 = load ptr, ptr %i.b, align 16, !tbaa !29
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ag = load ptr, ptr %4, align 8, !tbaa !31
   %i.ah = icmp eq ptr %i.ag, %.244
   br i1 %i.ah, label %zslIncrNodeSpanAtLevel.exit.peel.i, label %zslDecrNodeSpanAtLevel.exit.peel.i
@@ -1344,6 +1343,8 @@ zslLexValueGteMin.exit.thread:                    ; preds = %zslLexValueGteMin.e
 .lr.ph73:                                         ; preds = %._crit_edge
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = load ptr, ptr %i.b, align 16
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br label %bb.j
@@ -1418,8 +1419,6 @@ zslLexValueLteMax.exit.thread:                    ; preds = %bb.s, %bb.q, %bb.p,
 
 .lr.ph.i:                                         ; preds = %zslLexValueLteMax.exit.thread
   %wide.trip.count.i = zext nneg i32 %i.bq to i64
-  %3 = load ptr, ptr %i.b, align 16, !tbaa !29
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.bs = load ptr, ptr %4, align 8, !tbaa !31
   %i.bt = icmp eq ptr %i.bs, %.271
   br i1 %i.bt, label %zslIncrNodeSpanAtLevel.exit.peel.i, label %zslDecrNodeSpanAtLevel.exit.peel.i

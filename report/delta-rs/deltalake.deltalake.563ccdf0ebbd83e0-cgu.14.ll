@@ -201,7 +201,7 @@ bb.a:
   %i.i = alloca [16 x i8], align 8                ; 7 uses
   %i.j = alloca [16 x i8], align 8                ; 7 uses
   %i.k = alloca [24 x i8], align 8                ; 7 uses
-  %i.l = alloca [16 x i8], align 8                ; 20 uses
+  %i.l = alloca [16 x i8], align 8                ; 19 uses
   %i.m = alloca [24 x i8], align 8                ; 21 uses
   %i.n = alloca [48 x i8], align 8                ; 9 uses
   %i.o = alloca [8 x i8], align 8                 ; 4 uses
@@ -503,7 +503,6 @@ bb.ag:                                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !1956
   store i64 -9223372036854775808, ptr %i.m, align 8, !noalias !1956
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !1956
-  store i8 5, ptr %i.l, align 8, !noalias !1956
   %i.ca = icmp eq i64 %i.by, 0
   br i1 %i.ca, label %.thread.thread.i.i.i, label %.lr.ph.i.i.i
 
@@ -906,8 +905,8 @@ bb.a:
   %i.j = alloca [16 x i8], align 8                ; 7 uses
   %i.k = alloca [16 x i8], align 8                ; 7 uses
   %i.l = alloca [24 x i8], align 8                ; 7 uses
-  %i.m = alloca [16 x i8], align 8                ; 22 uses
-  %i.n = alloca [16 x i8], align 8                ; 23 uses
+  %i.m = alloca [16 x i8], align 8                ; 21 uses
+  %i.n = alloca [16 x i8], align 8                ; 22 uses
   %i.o = alloca [24 x i8], align 8                ; 21 uses
   %i.p = alloca [64 x i8], align 8                ; 5 uses
   %i.q = alloca [8 x i8], align 8                 ; 4 uses
@@ -1237,9 +1236,7 @@ bb.aj:                                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !2148
   store i64 -9223372036854775808, ptr %i.o, align 8, !noalias !2148
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !2148
-  store i8 5, ptr %i.n, align 8, !noalias !2148
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !2148
-  store i8 5, ptr %i.m, align 8, !noalias !2148
   %i.cl = icmp eq i64 %i.cj, 0
   br i1 %i.cl, label %.thread200.thread.i.i.i, label %.lr.ph.i.i.i
 
@@ -1642,7 +1639,7 @@ bb.a:
   %i.l = alloca [16 x i8], align 8                ; 7 uses
   %i.m = alloca [24 x i8], align 8                ; 7 uses
   %i.n = alloca [48 x i8], align 8                ; 18 uses
-  %i.o = alloca [16 x i8], align 8                ; 21 uses
+  %i.o = alloca [16 x i8], align 8                ; 20 uses
   %i.p = alloca [24 x i8], align 8                ; 21 uses
   %i.q = alloca [96 x i8], align 8                ; 12 uses
   %i.r = alloca [8 x i8], align 8                 ; 4 uses
@@ -1940,7 +1937,6 @@ bb.ad:                                            ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !2700
   store i64 -9223372036854775808, ptr %i.p, align 8, !noalias !2700
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !2700
-  store i8 5, ptr %i.o, align 8, !noalias !2700
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !2700
   store ptr null, ptr %i.n, align 8, !noalias !2700
   %i.ci = icmp eq i64 %i.cg, 0

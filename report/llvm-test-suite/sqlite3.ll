@@ -201,10 +201,10 @@ bb.a:
   %1 = alloca %struct.sqlite3_context, align 8    ; 13 uses
   %2 = alloca %struct.Mem, align 8                ; 5 uses
   %3 = alloca %struct.Mem, align 8                ; 5 uses
-  %i.c = alloca i32, align 4                      ; 11 uses
+  %i.c = alloca i32, align 4                      ; 10 uses
   %4 = alloca %struct.Mem, align 8                ; 15 uses
   %i.d = alloca i64, align 8                      ; 4 uses
-  %i.e = alloca i32, align 4                      ; 9 uses
+  %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca i32, align 4                      ; 7 uses
   %i.g = alloca i32, align 4                      ; 4 uses
   %i.h = alloca i32, align 4                      ; 4 uses
@@ -607,7 +607,7 @@ bb.ha:                                            ; preds = %bb.gs
   br label %bb.hb
 
 bb.hb:                                            ; preds = %bb.gy, %bb.gz, %bb.gw, %bb.ha
-  %i.agz = phi i32 [ %i.agv, %bb.ha ], [ %i.agt, %bb.gy ], [ %.pr, %bb.gz ], [ %i.agm, %bb.gw ] ; 4 uses
+  %i.agz = phi i32 [ %i.agv, %bb.ha ], [ %i.agt, %bb.gy ], [ %.pr, %bb.gz ], [ %i.agm, %bb.gw ] ; 5 uses
   %.01709 = phi ptr [ null, %bb.ha ], [ %i.age, %bb.gy ], [ %i.age, %bb.gz ], [ %i.age, %bb.gw ] ; 4 uses
   %.11705 = phi ptr [ %i.agx, %bb.ha ], [ null, %bb.gy ], [ null, %bb.gz ], [ %i.ago, %bb.gw ] ; 4 uses
   %.01720.in = getelementptr inbounds nuw i8, ptr %i.agb, i64 104
@@ -757,24 +757,24 @@ bb.hr:                                            ; preds = %bb.hq, %bb.ho
   br i1 %.not2723, label %._crit_edge2697, label %.lr.ph2696
 
 .lr.ph2696:                                       ; preds = %bb.hr, %bb.hy
-  %8 = phi i32 [ %i.ajm, %bb.hy ], [ %.pre2839.a, %bb.hr ] ; 2 uses
-  %indvars.iv2811 = phi i64 [ %indvars.iv.next2812, %bb.hy ], [ 0, %bb.hr ] ; 3 uses
-  %.017252693 = phi ptr [ %.11726, %bb.hy ], [ %i.ais, %bb.hr ] ; 5 uses
-  %i.ait = icmp ult ptr %.017252693, %i.air
-  %i.aiu = getelementptr inbounds nuw [4 x i8], ptr %i.ahu, i64 %indvars.iv2811 ; 2 uses
+  %indvars.iv2813 = phi i64 [ %indvars.iv.next2812, %bb.hy ], [ 0, %bb.hr ] ; 3 uses
+  %.017252695 = phi ptr [ %.11726, %bb.hy ], [ %i.ais, %bb.hr ] ; 5 uses
+  %8 = phi i32 [ %i.ajm, %bb.hy ], [ %.pre2839.a, %bb.hr ] ; 3 uses
+  %i.ait = icmp ult ptr %.017252695, %i.air
+  %i.aiu = getelementptr inbounds nuw [4 x i8], ptr %i.ahu, i64 %indvars.iv2813 ; 2 uses
   br i1 %i.ait, label %bb.hs, label %bb.hx
 
 bb.hs:                                            ; preds = %.lr.ph2696
   store i32 %8, ptr %i.aiu, align 4, !tbaa !4
-  %i.aiv = load i8, ptr %.017252693, align 1, !tbaa !37 ; 2 uses
+  %i.aiv = load i8, ptr %.017252695, align 1, !tbaa !37 ; 2 uses
   %i.aiw = zext i8 %i.aiv to i32                  ; 2 uses
-  %i.aix = getelementptr inbounds nuw [4 x i8], ptr %.017102291, i64 %indvars.iv2811 ; 3 uses
+  %i.aix = getelementptr inbounds nuw [4 x i8], ptr %.017102291, i64 %indvars.iv2813 ; 3 uses
   store i32 %i.aiw, ptr %i.aix, align 4, !tbaa !4
   %i.aiy = icmp sgt i8 %i.aiv, -1
   br i1 %i.aiy, label %bb.hu, label %bb.ht
 
 bb.ht:                                            ; preds = %bb.hs
-  %i.aiz = call fastcc i32 @sqlite3GetVarint32(ptr noundef nonnull %.017252693, ptr noundef %i.aix)
+  %i.aiz = call fastcc i32 @sqlite3GetVarint32(ptr noundef nonnull %.017252695, ptr noundef %i.aix)
   %i.aja = zext nneg i32 %i.aiz to i64
   %.pr2293 = load i32, ptr %i.aix, align 4, !tbaa !4
   br label %bb.hu
@@ -782,7 +782,7 @@ bb.ht:                                            ; preds = %bb.hs
 bb.hu:                                            ; preds = %bb.hs, %bb.ht
   %i.ajb = phi i32 [ %i.aiw, %bb.hs ], [ %.pr2293, %bb.ht ] ; 3 uses
   %i.ajc = phi i64 [ 1, %bb.hs ], [ %i.aja, %bb.ht ]
-  %i.ajd = getelementptr inbounds nuw i8, ptr %.017252693, i64 %i.ajc
+  %i.ajd = getelementptr inbounds nuw i8, ptr %.017252695, i64 %i.ajc
   %i.aje = icmp ugt i32 %i.ajb, 11
   br i1 %i.aje, label %bb.hv, label %bb.hw
 
@@ -800,8 +800,7 @@ bb.hw:                                            ; preds = %bb.hu
 
 sqlite3VdbeSerialTypeLen.exit:                    ; preds = %bb.hv, %bb.hw
   %.0.i2136 = phi i32 [ %i.ajg, %bb.hv ], [ %i.ajk, %bb.hw ]
-  %9 = load i32, ptr %i.e, align 4, !tbaa !4
-  %i.ajl = add i32 %9, %.0.i2136                  ; 2 uses
+  %i.ajl = add i32 %.0.i2136, %8                  ; 2 uses
   store i32 %i.ajl, ptr %i.e, align 4, !tbaa !4
   br label %bb.hy
 
@@ -811,8 +810,8 @@ bb.hx:                                            ; preds = %.lr.ph2696
 
 bb.hy:                                            ; preds = %sqlite3VdbeSerialTypeLen.exit, %bb.hx
   %i.ajm = phi i32 [ %i.ajl, %sqlite3VdbeSerialTypeLen.exit ], [ %8, %bb.hx ] ; 2 uses
-  %.11726 = phi ptr [ %i.ajd, %sqlite3VdbeSerialTypeLen.exit ], [ %.017252693, %bb.hx ] ; 2 uses
-  %indvars.iv.next2812 = add nuw nsw i64 %indvars.iv2811, 1 ; 2 uses
+  %.11726 = phi ptr [ %i.ajd, %sqlite3VdbeSerialTypeLen.exit ], [ %.017252695, %bb.hx ] ; 2 uses
+  %indvars.iv.next2812 = add nuw nsw i64 %indvars.iv2813, 1 ; 2 uses
   %exitcond2815.not = icmp eq i64 %indvars.iv.next2812, %i.aht
   br i1 %exitcond2815.not, label %._crit_edge2697, label %.lr.ph2696, !llvm.loop !958
 
@@ -831,8 +830,7 @@ bb.hz:                                            ; preds = %._crit_edge2697
 bb.ia:                                            ; preds = %bb.hz, %._crit_edge2697
   store i16 1, ptr %i.cn, align 4, !tbaa !124
   %i.ajq = icmp ugt ptr %.01725.lcssa, %i.air
-  %10 = load i32, ptr %i.c, align 4
-  %i.ajr = icmp ugt i32 %i.ajn, %10
+  %i.ajr = icmp ugt i32 %i.ajn, %i.agz
   %or.cond3069 = select i1 %i.ajq, i1 true, i1 %i.ajr
   br i1 %or.cond3069, label %select.unfold, label %bb.ib
 
@@ -1235,13 +1233,11 @@ bb.i:                                             ; preds = %._crit_edge
   %sext.i17 = shl i64 %i.ay, 32
   %i.az = ashr exact i64 %sext.i17, 32
   %i.ba = sub nsw i64 %.pre26.a, %i.az
-  store i64 %i.ba, ptr @mem.5, align 8, !tbaa !22
   tail call void @free(ptr noundef nonnull %i.ax) #43
-  %.pre25 = load i64, ptr @mem.5, align 8, !tbaa !22
   br label %sqlite3_free.exit16
 
 sqlite3_free.exit16:                              ; preds = %._crit_edge, %bb.i
-  %i.bb = phi i64 [ %.pre26.a, %._crit_edge ], [ %.pre25, %bb.i ]
+  %i.bb = phi i64 [ %.pre26.a, %._crit_edge ], [ %i.ba, %bb.i ]
   %i.bc = getelementptr inbounds i8, ptr %i.ac, i64 -8 ; 2 uses
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !28
   %sext.i15 = shl i64 %i.bd, 32
@@ -1467,13 +1463,11 @@ bb.d:                                             ; preds = %._crit_edge
   %sext.i15 = shl i64 %i.w, 32
   %i.x = ashr exact i64 %sext.i15, 32
   %i.y = sub nsw i64 %.pre44.a, %i.x
-  store i64 %i.y, ptr @mem.5, align 8, !tbaa !22
   tail call void @free(ptr noundef nonnull %i.v) #43
-  %.pre43 = load i64, ptr @mem.5, align 8, !tbaa !22
   br label %sqlite3_free.exit
 
 sqlite3_free.exit:                                ; preds = %._crit_edge, %bb.d
-  %i.z = phi i64 [ %.pre44.a, %._crit_edge ], [ %.pre43, %bb.d ]
+  %i.z = phi i64 [ %.pre44.a, %._crit_edge ], [ %i.y, %bb.d ]
   %i.aa = getelementptr inbounds i8, ptr %i.a, i64 -8 ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !28
   %sext.i = shl i64 %i.ab, 32
@@ -1546,13 +1540,11 @@ bb.g:                                             ; preds = %._crit_edge37
   %sext.i21 = shl i64 %i.bf, 32
   %i.bg = ashr exact i64 %sext.i21, 32
   %i.bh = sub nsw i64 %.pre47.a, %i.bg
-  store i64 %i.bh, ptr @mem.5, align 8, !tbaa !22
   tail call void @free(ptr noundef nonnull %i.be) #43
-  %.pre46 = load i64, ptr @mem.5, align 8, !tbaa !22
   br label %sqlite3_free.exit20
 
 sqlite3_free.exit20:                              ; preds = %._crit_edge37, %bb.g
-  %i.bi = phi i64 [ %.pre47.a, %._crit_edge37 ], [ %.pre46, %bb.g ]
+  %i.bi = phi i64 [ %.pre47.a, %._crit_edge37 ], [ %i.bh, %bb.g ]
   %i.bj = getelementptr inbounds i8, ptr %i.aj, i64 -8 ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !28
   %sext.i19 = shl i64 %i.bk, 32
@@ -1622,13 +1614,11 @@ bb.j:                                             ; preds = %._crit_edge42
   %sext.i27 = shl i64 %i.cm, 32
   %i.cn = ashr exact i64 %sext.i27, 32
   %i.co = sub nsw i64 %.pre50, %i.cn
-  store i64 %i.co, ptr @mem.5, align 8, !tbaa !22
   tail call void @free(ptr noundef nonnull %i.cl) #43
-  %.pre49 = load i64, ptr @mem.5, align 8, !tbaa !22
   br label %sqlite3_free.exit26
 
 sqlite3_free.exit26:                              ; preds = %._crit_edge42, %bb.j
-  %i.cp = phi i64 [ %.pre50, %._crit_edge42 ], [ %.pre49, %bb.j ]
+  %i.cp = phi i64 [ %.pre50, %._crit_edge42 ], [ %i.co, %bb.j ]
   %i.cq = getelementptr inbounds i8, ptr %i.bq, i64 -8 ; 2 uses
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !28
   %sext.i25 = shl i64 %i.cr, 32
@@ -2031,14 +2021,11 @@ bb.ss:                                            ; preds = %bb.sr
   %i.cbw = ptrtoint ptr %i.cbu to i64
   %i.cbx = sub i64 %i.cbv, %i.cbw
   %i.cby = trunc i64 %i.cbx to i32
-  %i.cbz = getelementptr inbounds nuw i8, ptr %.0.i11.i.i638, i64 64 ; 2 uses
-  %12 = load i32, ptr %i.cbz, align 8
+  %i.cbz = getelementptr inbounds nuw i8, ptr %.0.i11.i.i638, i64 64
   %i.cca = shl i32 %i.cby, 1
   %i.ccb = add i32 %i.cca, %i.cbs
-  %13 = and i32 %i.ccb, -2
-  %i.ccc = and i32 %12, 1
-  %14 = or disjoint i32 %13, %i.ccc
-  store i32 %14, ptr %i.cbz, align 8
+  %i.ccc = and i32 %i.ccb, -2
+  store i32 %i.ccc, ptr %i.cbz, align 8
   br label %sqlite3CommitTransaction.exit
 
 bb.st:                                            ; preds = %bb.sr, %bb.sq
@@ -2441,8 +2428,7 @@ sqlite3NameFromToken.exit:                        ; preds = %bb.m, %bb.g, %bb.i,
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %bb.r
-  %6 = phi i32 [ 0, %.lr.ph ], [ %i.bx, %bb.r ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.r ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.r ] ; 3 uses
   %i.at = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %indvars.iv
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !1208 ; 3 uses
@@ -2495,6 +2481,7 @@ sqlite3StrICmp.exit:                              ; preds = %..critedge.loopexit
   br i1 %i.bq, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %sqlite3StrICmp.exit
+  %6 = trunc nuw nsw i64 %indvars.iv to i32
   %i.br = getelementptr inbounds i8, ptr %i.q, i64 -8 ; 2 uses
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !28
   %sext.i = shl i64 %i.bs, 32
@@ -2503,12 +2490,12 @@ bb.q:                                             ; preds = %sqlite3StrICmp.exit
   %i.bv = sub nsw i64 %i.bu, %i.bt
   store i64 %i.bv, ptr @mem.5, align 8, !tbaa !22
   tail call void @free(ptr noundef nonnull %i.br) #43
-  %i.bw = add nsw i32 %6, 1
+  %i.bw = add nuw nsw i32 %6, 1
   br label %.thread57
 
 bb.r:                                             ; preds = %sqlite3StrICmp.exit, %bb.n
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.bx = trunc nuw nsw i64 %indvars.iv.next to i32 ; 2 uses
+  %i.bx = trunc nuw nsw i64 %indvars.iv.next to i32
   store i32 %i.bx, ptr %i.a, align 4, !tbaa !4
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !1614

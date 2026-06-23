@@ -201,7 +201,7 @@ bb.a:
   %9 = alloca %"struct.duckdb::VectorDataIndex", align 8 ; 10 uses
   %10 = alloca %"struct.duckdb::VectorDataIndex", align 8 ; 6 uses
   %i.g = alloca i64, align 8                      ; 5 uses
-  %i.h = alloca i64, align 8                      ; 13 uses
+  %i.h = alloca i64, align 8                      ; 12 uses
   %i.i = alloca i64, align 8                      ; 9 uses
   %i.j = alloca ptr, align 8                      ; 9 uses
   %11 = alloca %"struct.duckdb::ValidityMask", align 8 ; 11 uses
@@ -604,7 +604,7 @@ bb.bl:                                            ; preds = %bb.bk, %_ZNK6duckdb
 
 ._crit_edge:                                      ; preds = %bb.bl, %bb.bk, %bb.bh
   %i.jw = phi i64 [ %.promoted204, %bb.bh ], [ %i.jc, %bb.bk ], [ %i.ju, %bb.bl ] ; 3 uses
-  %.lcssa203 = phi i64 [ %.promoted202, %bb.bh ], [ %i.jb, %bb.bk ], [ %i.iu, %bb.bl ] ; 2 uses
+  %.lcssa203 = phi i64 [ %.promoted202, %bb.bh ], [ %i.jb, %bb.bk ], [ %i.iu, %bb.bl ] ; 3 uses
   store i64 %.lcssa203, ptr %i.h, align 8
   store i64 %i.jw, ptr %i.i, align 8
   %i.jx = icmp ne i64 %i.it, 0
@@ -635,6 +635,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit138: ; preds = %bb.bm, %bb.bn
   br label %thread-pre-split
 
 thread-pre-split:                                 ; preds = %._crit_edge, %_ZNK6duckdb15SelectionVector9get_indexEm.exit138
+  %12 = phi i64 [ 1, %_ZNK6duckdb15SelectionVector9get_indexEm.exit138 ], [ %.lcssa203, %._crit_edge ] ; 2 uses
   %i.kj = phi i64 [ %i.ki, %_ZNK6duckdb15SelectionVector9get_indexEm.exit138 ], [ %i.jw, %._crit_edge ] ; 2 uses
   %.not125 = icmp eq i64 %i.kj, 0
   br i1 %.not125, label %bb.bx, label %bb.bo
@@ -864,7 +865,6 @@ _ZN6duckdb21TemplatedValidityMaskImE11SetAllValidEm.exit: ; preds = %_ZN6duckdb1
   br label %bb.ca
 
 bb.ca:                                            ; preds = %_ZN6duckdb21TemplatedValidityMaskImE11SetAllValidEm.exit, %_ZN6duckdb19ColumnDataAllocator14GetDataPointerERNS_20ChunkManagementStateEjj.exit145
-  %12 = load i64, ptr %i.h, align 8, !tbaa !103   ; 2 uses
   %.not225 = icmp eq i64 %12, 0
   br i1 %.not225, label %_ZN6duckdb21TemplatedValidityMaskImED2Ev.exit, label %.lr.ph217.preheader
 
@@ -1267,8 +1267,8 @@ bb.l:                                             ; preds = %bb.d, %_ZNK9__gnu_c
 
 bb.m:                                             ; preds = %.backedge, %.preheader
   %.sroa.0.0.pn = phi ptr [ %.sroa.0.0, %.preheader ], [ %.sroa.0.1, %.backedge ] ; 2 uses
-  %.sroa.0.1 = getelementptr inbounds i8, ptr %.sroa.0.0.pn, i64 -16 ; 7 uses
-  %i.ci = load ptr, ptr %.sroa.0.1, align 8, !tbaa !1141
+  %.sroa.0.1 = getelementptr inbounds i8, ptr %.sroa.0.0.pn, i64 -16 ; 6 uses
+  %i.ci = load ptr, ptr %.sroa.0.1, align 8, !tbaa !1141 ; 3 uses
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !284 ; 2 uses
   %.not.i.i8 = icmp eq ptr %.pre, %i.cj
   br i1 %.not.i.i8, label %bb.o, label %bb.n
@@ -1376,12 +1376,11 @@ _ZNK6duckdb18ColumnDataConsumer14ChunkReference17GetMinimumBlockIDEv.exit.i.i15:
   %.sroa.02.2.i.i.i.i.i16 = phi ptr [ %i.df, %_ZN6duckdb6vectorINS_13ChunkMetaDataELb1ESaIS1_EEixEm.exit48 ], [ %spec.select.i.i.i.i.i13, %.lr.ph.i.i.i.i.i11 ]
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.02.2.i.i.i.i.i16, i64 8
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !3
-  %8 = load ptr, ptr %.sroa.0.1, align 8, !tbaa !1141 ; 2 uses
-  %i.dq = getelementptr inbounds nuw i8, ptr %8, i64 48
+  %i.dq = getelementptr inbounds nuw i8, ptr %i.ci, i64 48
   %i.dr = getelementptr inbounds i8, ptr %.sroa.0.0.pn, i64 -8
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !1143
   %i.dt = zext i32 %i.ds to i64                   ; 3 uses
-  %i.du = getelementptr inbounds nuw i8, ptr %8, i64 56
+  %i.du = getelementptr inbounds nuw i8, ptr %i.ci, i64 56
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !452
   %i.dw = load ptr, ptr %i.dq, align 8, !tbaa !454 ; 2 uses
   %i.dx = ptrtoint ptr %i.dv to i64

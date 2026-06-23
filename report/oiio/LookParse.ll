@@ -201,7 +201,7 @@ bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %4 = alloca %"class.std::vector.8", align 8     ; 12 uses
-  %5 = alloca %"class.std::vector.8", align 8     ; 10 uses
+  %5 = alloca %"class.std::vector.8", align 8     ; 9 uses
   %6 = alloca %"class.std::vector", align 8       ; 11 uses
   %7 = alloca %"class.std::vector.8", align 8     ; 10 uses
   %8 = alloca %"struct.OpenColorIO_v2_5::LookParseResult::Token", align 8 ; 12 uses
@@ -366,11 +366,11 @@ bb.h:                                             ; preds = %bb.g
 
 ._crit_edge79:                                    ; preds = %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit
   %i.bf = ptrtoint ptr %i.cu to i64
-  %.not4.i.i.i = icmp eq ptr %9, %i.ct
+  %.not4.i.i.i = icmp eq ptr %i.cs, %i.ct
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %._crit_edge79, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.bl, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ %9, %._crit_edge79 ] ; 3 uses
+  %.05.i.i.i = phi ptr [ %i.bl, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ %i.cs, %._crit_edge79 ] ; 3 uses
   %i.bg = load ptr, ptr %.05.i.i.i, align 8, !tbaa !13 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 16 ; 2 uses
   %i.bi = icmp eq ptr %i.bg, %i.bh
@@ -388,13 +388,13 @@ _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i, label %.lr.ph.i.i.i, !llvm.loop !44
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i, %._crit_edge79
-  %.not.i.i1.i = icmp eq ptr %9, null
+  %.not.i.i1.i = icmp eq ptr %i.cs, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i
-  %i.bm = ptrtoint ptr %9 to i64
+  %i.bm = ptrtoint ptr %i.cs to i64
   %i.bn = sub i64 %i.bf, %i.bm
-  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.bn) #19
+  call void @_ZdlPvm(ptr noundef nonnull %i.cs, i64 noundef %i.bn) #19
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit: ; preds = %bb.h, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i, %bb.i
@@ -452,7 +452,7 @@ bb.k:                                             ; preds = %bb.g
 bb.l:                                             ; preds = %.lr.ph78, %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit
   %i.cd = phi ptr [ %i.av, %.lr.ph78 ], [ %i.fq, %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit ]
   %i.ce = phi ptr [ null, %.lr.ph78 ], [ %i.ds, %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit ] ; 2 uses
-  %i.cf = phi ptr [ null, %.lr.ph78 ], [ %9, %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit ] ; 3 uses
+  %i.cf = phi ptr [ null, %.lr.ph78 ], [ %i.cs, %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit ] ; 3 uses
   %i.cg = phi i64 [ 0, %.lr.ph78 ], [ %i.fo, %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit ]
   %.01076 = phi i32 [ 0, %.lr.ph78 ], [ %i.fn, %_ZNSt6vectorIN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
@@ -494,7 +494,7 @@ bb.m:                                             ; preds = %_ZNSt6vectorINSt7__
   %i.cp = load ptr, ptr %5, align 8, !tbaa !43    ; 5 uses
   %i.cq = load ptr, ptr %i.aw, align 8, !tbaa !40 ; 2 uses
   %i.cr = load ptr, ptr %i.ax, align 8, !tbaa !45
-  %i.cs = load ptr, ptr %7, align 8, !tbaa !43    ; 5 uses
+  %i.cs = load ptr, ptr %7, align 8, !tbaa !43    ; 11 uses
   store ptr %i.cs, ptr %5, align 8, !tbaa !43
   %i.ct = load ptr, ptr %i.ay, align 8, !tbaa !40 ; 6 uses
   store ptr %i.ct, ptr %i.aw, align 8, !tbaa !40
@@ -581,11 +581,13 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit51
   %i.dr = ptrtoint ptr %i.ct to i64
+  %9 = ptrtoint ptr %i.cs to i64
+  %10 = sub i64 %i.dr, %9
+  %11 = ashr exact i64 %10, 5
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit51
   %i.ds = phi ptr [ %i.cs, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit51 ], [ %i.ct, %_ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit ]
-  %9 = phi ptr [ %i.cs, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit51 ], [ %11, %_ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit ] ; 6 uses
   invoke void @_ZNSt6vectorIS_IN16OpenColorIO_v2_515LookParseResult5TokenESaIS2_EESaIS4_EE9push_backERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %6)
           to label %bb.w unwind label %bb.y
 
@@ -596,7 +598,6 @@ bb.p:                                             ; preds = %_ZNSt6vectorINSt7__
   br label %bb.z
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit
-  %10 = phi ptr [ %11, %_ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit ], [ %i.cs, %.lr.ph.preheader ]
   %i.du = phi i64 [ %i.et, %_ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit ], [ 0, %.lr.ph.preheader ]
   %.075 = phi i32 [ %i.es, %_ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit ], [ 0, %.lr.ph.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
@@ -604,7 +605,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorINSt7__
   store i64 0, ptr %i.bb, align 8, !tbaa !7
   store i8 0, ptr %i.ba, align 8, !tbaa !14
   store i32 0, ptr %i.bc, align 8, !tbaa !25
-  %i.dv = getelementptr inbounds nuw [32 x i8], ptr %10, i64 %i.du
+  %i.dv = getelementptr inbounds nuw [32 x i8], ptr %i.cs, i64 %i.du
   invoke void @_ZN16OpenColorIO_v2_515LookParseResult5Token5parseERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(36) %8, ptr noundef nonnull align 8 dereferenceable(32) %i.dv)
           to label %bb.q unwind label %bb.v
 
@@ -685,11 +686,7 @@ _ZN16OpenColorIO_v2_515LookParseResult5TokenD2Ev.exit: ; preds = %_ZNSt6vectorIN
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
   %i.es = add i32 %.075, 1                        ; 2 uses
   %i.et = zext i32 %i.es to i64                   ; 2 uses
-  %11 = load ptr, ptr %5, align 8, !tbaa !43      ; 3 uses
-  %12 = ptrtoint ptr %11 to i64
-  %13 = sub i64 %i.dr, %12
-  %14 = ashr exact i64 %13, 5
-  %i.eu = icmp ugt i64 %14, %i.et
+  %i.eu = icmp ugt i64 %11, %i.et
   br i1 %i.eu, label %.lr.ph, label %._crit_edge, !llvm.loop !46
 
 bb.v:                                             ; preds = %bb.u, %.noexc.i.i.i, %.lr.ph

@@ -201,7 +201,7 @@ bb.fb:                                            ; preds = %bb.fa
 
 .lr.ph77.i:                                       ; preds = %.preheader.i, %._crit_edge75.i
   %indvars.iv137.i = phi i64 [ %indvars.iv.next138.i, %._crit_edge75.i ], [ 0, %.preheader.i ] ; 2 uses
-  %i.vz = getelementptr inbounds nuw [8 x i8], ptr %.0230.i, i64 %indvars.iv137.i ; 2 uses
+  %i.vz = getelementptr inbounds nuw [8 x i8], ptr %.0230.i, i64 %indvars.iv137.i
   %i.wa = load ptr, ptr %i.vz, align 8, !tbaa !27 ; 3 uses
   %i.wb = load ptr, ptr %i.wa, align 8, !tbaa !9  ; 2 uses
   %.not25871.i = icmp eq ptr %i.wb, null
@@ -214,15 +214,10 @@ bb.fb:                                            ; preds = %bb.fa
   %i.wd = getelementptr inbounds nuw i8, ptr %.072.i, i64 8 ; 2 uses
   %i.we = load ptr, ptr %i.wd, align 8, !tbaa !9  ; 2 uses
   %.not258.i = icmp eq ptr %i.we, null
-  br i1 %.not258.i, label %._crit_edge75.loopexit.i, label %.lr.ph74.i
+  br i1 %.not258.i, label %._crit_edge75.i, label %.lr.ph74.i
 
-._crit_edge75.loopexit.i:                         ; preds = %.lr.ph74.i
-  %.pre143.i = load ptr, ptr %i.vz, align 8, !tbaa !27
-  br label %._crit_edge75.i
-
-._crit_edge75.i:                                  ; preds = %._crit_edge75.loopexit.i, %.lr.ph77.i
-  %2 = phi ptr [ %.pre143.i, %._crit_edge75.loopexit.i ], [ %i.wa, %.lr.ph77.i ]
-  call void @free(ptr noundef %2) #20
+._crit_edge75.i:                                  ; preds = %.lr.ph74.i, %.lr.ph77.i
+  call void @free(ptr noundef nonnull %i.wa) #20
   %indvars.iv.next138.i = add nuw nsw i64 %indvars.iv137.i, 1 ; 2 uses
   %i.wf = load i32, ptr @njob, align 4, !tbaa !4
   %i.wg = sext i32 %i.wf to i64

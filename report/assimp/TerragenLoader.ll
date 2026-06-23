@@ -201,19 +201,17 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl
   %.3153 = phi ptr [ %i.kc, %bb.cm ], [ %.2152294, %bb.cl ] ; 2 uses
   store i32 4, ptr %.1157292, align 8
   %i.kd = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #22
-          to label %bb.co unwind label %bb.cp     ; 2 uses
+          to label %bb.co unwind label %bb.cp     ; 4 uses
 
 bb.co:                                            ; preds = %bb.cn
-  %i.ke = getelementptr inbounds nuw i8, ptr %.1157292, i64 8 ; 4 uses
+  %i.ke = getelementptr inbounds nuw i8, ptr %.1157292, i64 8 ; 2 uses
   store ptr %i.kd, ptr %i.ke, align 8
   store i32 %.1144295, ptr %i.kd, align 4
   %i.kf = add i32 %.1144295, 1
-  %7 = load ptr, ptr %i.ke, align 8
-  %i.kg = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.kg = getelementptr inbounds nuw i8, ptr %i.kd, i64 4
   store i32 %i.kf, ptr %i.kg, align 4
   %i.kh = add i32 %.1144295, 2
-  %8 = load ptr, ptr %i.ke, align 8
-  %i.ki = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.ki = getelementptr inbounds nuw i8, ptr %i.kd, i64 8
   store i32 %i.kh, ptr %i.ki, align 4
   %i.kj = add i32 %.1144295, 3
   %i.kk = load ptr, ptr %i.ke, align 8

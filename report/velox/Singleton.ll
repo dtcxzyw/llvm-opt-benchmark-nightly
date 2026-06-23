@@ -201,14 +201,10 @@ middle.block85:                                   ; preds = %vector.body70
   br label %.lr.ph.i.i.i.i.i29
 
 .lr.ph.i.i.i.i.i29:                               ; preds = %.lr.ph.i.i.i.i.i29.preheader89, %.lr.ph.i.i.i.i.i29
-  %.015.i.i.i.i.i30 = phi ptr [ %i.be, %.lr.ph.i.i.i.i.i29 ], [ %.015.i.i.i.i.i30.ph, %.lr.ph.i.i.i.i.i29.preheader89 ] ; 3 uses
-  %.01214.i.i.i.i.i31 = phi ptr [ %i.bd, %.lr.ph.i.i.i.i.i29 ], [ %.01214.i.i.i.i.i31.ph, %.lr.ph.i.i.i.i.i29.preheader89 ] ; 3 uses
-  %3 = load i64, ptr %.01214.i.i.i.i.i31, align 8, !tbaa !2914
-  store i64 %3, ptr %.015.i.i.i.i.i30, align 8, !tbaa !2914
-  %4 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i30, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i31, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !2914
-  store i64 %6, ptr %4, align 8, !tbaa !2914
+  %.015.i.i.i.i.i30 = phi ptr [ %i.be, %.lr.ph.i.i.i.i.i29 ], [ %.015.i.i.i.i.i30.ph, %.lr.ph.i.i.i.i.i29.preheader89 ] ; 2 uses
+  %.01214.i.i.i.i.i31 = phi ptr [ %i.bd, %.lr.ph.i.i.i.i.i29 ], [ %.01214.i.i.i.i.i31.ph, %.lr.ph.i.i.i.i.i29.preheader89 ] ; 2 uses
+  %3 = load <2 x i64>, ptr %.01214.i.i.i.i.i31, align 8, !tbaa !2914
+  store <2 x i64> %3, ptr %.015.i.i.i.i.i30, align 8, !tbaa !2914
   %i.bd = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i31, i64 16 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i30, i64 16 ; 2 uses
   %.not.i.i.i.i.i32 = icmp eq ptr %i.bd, %i.c

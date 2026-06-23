@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %"class.std::map.2497", align 8     ; 11 uses
   %5 = alloca %"class.std::map.2497", align 8     ; 10 uses
   %6 = alloca %"class.duckdb::vector.613", align 16 ; 14 uses
-  %7 = alloca %"class.duckdb::vector.613", align 8 ; 14 uses
+  %7 = alloca %"class.duckdb::vector.613", align 8 ; 13 uses
   %8 = alloca %"class.duckdb::Value", align 8     ; 7 uses
   %9 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
   %10 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
@@ -604,22 +604,11 @@ _ZNSt6vectorIN6duckdb5ValueESaIS1_EED2Ev.exit47.i: ; preds = %bb.aj, %_ZSt8_Dest
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %9) #30, !noalias !660
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #30, !noalias !660
   %i.fr = invoke { ptr, i8 } @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6duckdb5ValueEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE17_M_emplace_uniqueIJRS7_S9_EEES6_ISt17_Rb_tree_iteratorISA_EbEDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(32) %i.aw, ptr noundef nonnull align 8 dereferenceable(64) %8)
-          to label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb5ValueESt4lessIS5_ESaISt4pairIKS5_S7_EEE7emplaceIJRSB_S7_EEESA_ISt17_Rb_tree_iteratorISC_EbEDpOT_.exit.i unwind label %bb.ar, !noalias !660 ; 0 uses
+          to label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EED2Ev.exit57.i unwind label %bb.ar, !noalias !660 ; 0 uses
 
-_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb5ValueESt4lessIS5_ESaISt4pairIKS5_S7_EEE7emplaceIJRSB_S7_EEESA_ISt17_Rb_tree_iteratorISC_EbEDpOT_.exit.i: ; preds = %_ZNSt6vectorIN6duckdb5ValueESaIS1_EED2Ev.exit47.i
+_ZNSt6vectorIN6duckdb5ValueESaIS1_EED2Ev.exit57.i: ; preds = %_ZNSt6vectorIN6duckdb5ValueESaIS1_EED2Ev.exit47.i
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %8) #30, !noalias !660
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #30, !noalias !660
-  %25 = load ptr, ptr %7, align 8, !tbaa !650, !noalias !660 ; 2 uses
-  %.not4.i.i.i49.i = icmp eq ptr %25, null
-  br i1 %.not4.i.i.i49.i, label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EED2Ev.exit57.i, label %.lr.ph.i.i.i50.i
-
-.lr.ph.i.i.i50.i:                                 ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb5ValueESt4lessIS5_ESaISt4pairIKS5_S7_EEE7emplaceIJRSB_S7_EEESA_ISt17_Rb_tree_iteratorISC_EbEDpOT_.exit.i, %.lr.ph.i.i.i50.i
-  %.05.i.i.i51.i = phi ptr [ %26, %.lr.ph.i.i.i50.i ], [ %25, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb5ValueESt4lessIS5_ESaISt4pairIKS5_S7_EEE7emplaceIJRSB_S7_EEESA_ISt17_Rb_tree_iteratorISC_EbEDpOT_.exit.i ] ; 2 uses
-  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.05.i.i.i51.i) #30, !noalias !660
-  %26 = getelementptr inbounds nuw i8, ptr %.05.i.i.i51.i, i64 64
-  br label %.lr.ph.i.i.i50.i
-
-_ZNSt6vectorIN6duckdb5ValueESaIS1_EED2Ev.exit57.i: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb5ValueESt4lessIS5_ESaISt4pairIKS5_S7_EEE7emplaceIJRSB_S7_EEESA_ISt17_Rb_tree_iteratorISC_EbEDpOT_.exit.i
   %.pre40.i = load ptr, ptr %6, align 16, !tbaa !650, !noalias !660 ; 3 uses
   %.pre41.i = load ptr, ptr %i.aj, align 8, !tbaa !651, !noalias !660 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #30, !noalias !660

@@ -201,7 +201,7 @@ declare i64 @__isoc23_strtoul(ptr noundef, ptr noundef, i32 noundef) local_unnam
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local signext range(i8 0, 2) i8 @ucm_parseMappingLine(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr noundef %3) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 6 uses
@@ -311,9 +311,8 @@ bb.j:                                             ; preds = %bb.i
 
 ._crit_edge:                                      ; preds = %bb.j, %.peel.next
   %indvars.iv.lcssa = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.j ] ; 3 uses
-  %spec.select.lcssa = phi ptr [ %spec.select109, %.peel.next ], [ %spec.select, %bb.j ] ; 2 uses
+  %spec.select.lcssa = phi ptr [ %spec.select109, %.peel.next ], [ %spec.select, %bb.j ]
   %i.ao = trunc nuw nsw i64 %indvars.iv.lcssa to i8
-  store ptr %spec.select.lcssa, ptr %i.a, align 8
   %cond = icmp eq i64 %indvars.iv.lcssa, 1
   br i1 %cond, label %bb.k, label %bb.l
 
