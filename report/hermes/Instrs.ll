@@ -201,25 +201,21 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.cl = getelementptr inbounds i8, ptr %i.ck, i64 -1 ; 2 uses
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !59
-  %3 = add nsw i64 %.086, -1                      ; 2 uses
   %i.cn = icmp sgt i64 %.086, 2
-  br i1 %i.cn, label %bb.k, label %4, !prof !103
+  br i1 %i.cn, label %bb.k, label %bb.l, !prof !103
 
 bb.k:                                             ; preds = %bb.j
+  %3 = add nsw i64 %.086, -1
   %i.co = getelementptr inbounds nuw i8, ptr %.058, i64 1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.co, ptr nonnull align 1 %.058, i64 %3, i1 false)
   br label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
 
-4:                                                ; preds = %bb.j
-  %5 = icmp eq i64 %3, 1
-  br i1 %5, label %bb.l, label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
-
-bb.l:                                             ; preds = %4
+bb.l:                                             ; preds = %bb.j
   %i.cp = load i8, ptr %.058, align 1, !tbaa !59
   store i8 %i.cp, ptr %i.cl, align 1, !tbaa !59
   br label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
 
-_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit:       ; preds = %bb.k, %4, %bb.l
+_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit:       ; preds = %bb.k, %bb.l
   store i8 %i.cm, ptr %.058, align 1, !tbaa !59
   br label %_ZSt11swap_rangesIPcS0_ET0_T_S2_S1_.exit
 

@@ -201,23 +201,21 @@ bb.ae:                                            ; preds = %bb.a
   %i.ga = sext i8 %i.fz to i32
   %isdigittmp = add nsw i32 %i.ga, -48
   %isdigit = icmp ult i32 %isdigittmp, 10
-  %3 = icmp eq i8 %i.fz, 46                       ; 3 uses
   br i1 %isdigit, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph
-  br i1 %3, label %.thread, label %bb.ai
+  %.not37 = icmp eq i8 %i.fz, 46
+  br i1 %.not37, label %.thread, label %bb.ai
 
 bb.ag:                                            ; preds = %.lr.ph
-  %.031.not = xor i1 %.031116, true
-  %brmerge = or i1 %3, %.031.not
-  br i1 %brmerge, label %.thread, label %bb.ah
+  br i1 %.031116, label %bb.ah, label %.thread
 
 bb.ah:                                            ; preds = %bb.ag
   %.not38 = icmp eq i8 %i.fz, 48
   br i1 %.not38, label %.thread, label %bb.ai
 
 .thread:                                          ; preds = %bb.ag, %bb.af, %bb.ah
-  %.132 = phi i1 [ true, %bb.af ], [ true, %bb.ah ], [ %3, %bb.ag ]
+  %.132 = phi i1 [ true, %bb.af ], [ true, %bb.ah ], [ false, %bb.ag ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !118
@@ -620,23 +618,21 @@ bb.ae:                                            ; preds = %bb.a
   %i.gb = sext i8 %i.ga to i32
   %isdigittmp = add nsw i32 %i.gb, -48
   %isdigit = icmp ult i32 %isdigittmp, 10
-  %4 = icmp eq i8 %i.ga, 46                       ; 3 uses
   br i1 %isdigit, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph
-  br i1 %4, label %.thread, label %bb.ai
+  %.not36 = icmp eq i8 %i.ga, 46
+  br i1 %.not36, label %.thread, label %bb.ai
 
 bb.ag:                                            ; preds = %.lr.ph
-  %.031.not = xor i1 %.031115, true
-  %brmerge = or i1 %4, %.031.not
-  br i1 %brmerge, label %.thread, label %bb.ah
+  br i1 %.031115, label %bb.ah, label %.thread
 
 bb.ah:                                            ; preds = %bb.ag
   %.not37 = icmp eq i8 %i.ga, 48
   br i1 %.not37, label %.thread, label %bb.ai
 
 .thread:                                          ; preds = %bb.ag, %bb.af, %bb.ah
-  %.132 = phi i1 [ true, %bb.af ], [ true, %bb.ah ], [ %4, %bb.ag ]
+  %.132 = phi i1 [ true, %bb.af ], [ true, %bb.ah ], [ false, %bb.ag ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !125

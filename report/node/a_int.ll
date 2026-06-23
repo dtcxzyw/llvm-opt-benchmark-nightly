@@ -201,7 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %indvar = phi i64 [ %indvar.next, %bb.b ], [ 0, %bb.a ] ; 5 uses
   %.04.i = phi i64 [ %i.e, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %.0.i = phi i64 [ %i.c, %bb.b ], [ 8, %bb.a ]   ; 4 uses
+  %.0.i = phi i64 [ %i.c, %bb.b ], [ 8, %bb.a ]   ; 3 uses
   %i.b = trunc i64 %.04.i to i8                   ; 4 uses
   %i.c = add nsw i64 %.0.i, -1                    ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c
@@ -214,15 +214,11 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 asn1_put_uint64.exit:                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c ; 2 uses
   %i.g = sub i64 9, %.0.i                         ; 6 uses
-  %.not = icmp eq i64 %.0.i, 9
-  br i1 %.not, label %.thread, label %3
+  %.not = icmp eq i32 %2, 0
+  %3 = icmp slt i8 %i.b, 0
+  br i1 %.not, label %bb.e, label %bb.c
 
-3:                                                ; preds = %asn1_put_uint64.exit
-  %4 = icmp eq i32 %2, 0
-  %5 = icmp slt i8 %i.b, 0
-  br i1 %4, label %bb.e, label %bb.c
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %asn1_put_uint64.exit
   %i.h = icmp ugt i8 %i.b, -128
   br i1 %i.h, label %bb.e, label %bb.d
 
@@ -292,21 +288,12 @@ middle.block:                                     ; preds = %vector.body
   %i.aa = sext i1 %.038.lcssa.i to i8
   br label %bb.e
 
-bb.e:                                             ; preds = %3, %bb.c, %bb.d, %._crit_edge.i
-  %.139.shrunk.i = phi i1 [ true, %bb.c ], [ %5, %3 ], [ %.038.lcssa.i, %._crit_edge.i ], [ false, %bb.d ]
-  %.0.i4 = phi i8 [ -1, %bb.c ], [ 0, %3 ], [ %i.aa, %._crit_edge.i ], [ -1, %bb.d ] ; 5 uses
+bb.e:                                             ; preds = %asn1_put_uint64.exit, %bb.c, %bb.d, %._crit_edge.i
+  %.139.shrunk.i = phi i1 [ true, %bb.c ], [ %3, %asn1_put_uint64.exit ], [ %.038.lcssa.i, %._crit_edge.i ], [ false, %bb.d ]
+  %.0.i4 = phi i8 [ -1, %bb.c ], [ 0, %asn1_put_uint64.exit ], [ %i.aa, %._crit_edge.i ], [ -1, %bb.d ] ; 5 uses
   %.139.i = zext i1 %.139.shrunk.i to i64         ; 2 uses
-  %6 = add i64 %i.g, %.139.i                      ; 3 uses
   %i.ab = icmp eq ptr %0, null
   br i1 %i.ab, label %i2c_ibuf.exit, label %.lr.ph.preheader.i.i
-
-.thread:                                          ; preds = %asn1_put_uint64.exit
-  %7 = icmp eq ptr %0, null
-  br i1 %7, label %i2c_ibuf.exit, label %.thread15
-
-.thread15:                                        ; preds = %.thread
-  store i8 0, ptr %0, align 1, !tbaa !16
-  br label %i2c_ibuf.exit
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.e
   store i8 %.0.i4, ptr %0, align 1, !tbaa !16
@@ -367,9 +354,9 @@ bb.e:                                             ; preds = %3, %bb.c, %bb.d, %.
   %.not16.i.i.1 = icmp eq i64 %i.az, 0
   br i1 %.not16.i.i.1, label %i2c_ibuf.exit, label %.lr.ph.i.i, !llvm.loop !23
 
-i2c_ibuf.exit:                                    ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %.thread15, %.thread, %bb.e
-  %.037.i13 = phi i64 [ 1, %.thread ], [ %6, %bb.e ], [ 1, %.thread15 ], [ %6, %.lr.ph.i.i ], [ %6, %.lr.ph.i.i.prol.loopexit ]
-  %i.bi = trunc i64 %.037.i13 to i32
+i2c_ibuf.exit:                                    ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.e
+  %4 = add i64 %i.g, %.139.i
+  %i.bi = trunc i64 %4 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %i.bi
 }

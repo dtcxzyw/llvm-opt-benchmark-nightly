@@ -201,7 +201,7 @@ bb.cu:                                            ; preds = %extend_fw.exit
   %i.abh = getelementptr inbounds nuw i8, ptr %i.abb, i64 12 ; 2 uses
   %i.abi = load i32, ptr %i.abh, align 4, !tbaa !51 ; 9 uses
   %i.abj = xor i32 %i.abi, -1
-  %i.abk = add i32 %i.abg, %i.abj                 ; 16 uses
+  %i.abk = add i32 %i.abg, %i.abj                 ; 15 uses
   %i.abl = icmp sgt i32 %i.abk, 0
   br i1 %i.abl, label %bb.cv, label %bb.fi
 
@@ -227,7 +227,7 @@ bb.cx:                                            ; preds = %bb.cw
   %i.abv = zext i32 %i.abp to i64
   %i.abw = getelementptr inbounds nuw i8, ptr %.pre759, i64 %i.abv ; 4 uses
   %i.abx = xor i32 %i.abp, -1
-  %i.aby = add i32 %i.abm, %i.abx                 ; 10 uses
+  %i.aby = add i32 %i.abm, %i.abx                 ; 9 uses
   %i.abz = icmp ugt i32 %i.aby, 999999
   br i1 %i.abz, label %greedy.exitthread-pre-split, label %bb.cy
 
@@ -295,8 +295,7 @@ bb.dc:                                            ; preds = %bb.cz
 
 bb.dd:                                            ; preds = %bb.cy
   %.neg606.i = sub i32 %i.aca, %..i               ; 2 uses
-  %.not607.i = icmp eq i32 %i.aby, 0              ; 2 uses
-  br i1 %.not607.i, label %.critedge.thread.i409, label %.lr.ph.i408
+  br label %.lr.ph.i408
 
 .lr.ph.i408:                                      ; preds = %bb.dd, %bb.de
   %.0430532.i = phi i32 [ %i.adq, %bb.de ], [ %i.aby, %bb.dd ] ; 3 uses
@@ -361,8 +360,8 @@ add_col_elt.exit508.i:                            ; preds = %bb.dg, %bb.df
   store ptr %i.ady, ptr %i.ael, align 8, !tbaa !44
   br label %greedy.exit
 
-.critedge.thread.i409:                            ; preds = %.lr.ph.i408, %.critedge.i426, %bb.dd
-  %.0438530.i = phi i32 [ %i.adp, %.critedge.i426 ], [ %i.abk, %bb.dd ], [ %.0438531.i, %.lr.ph.i408 ]
+.critedge.thread.i409:                            ; preds = %.lr.ph.i408, %.critedge.i426
+  %.0438530.i = phi i32 [ %i.adp, %.critedge.i426 ], [ %.0438531.i, %.lr.ph.i408 ]
   %i.aem = add i32 %..i, %i.aby                   ; 4 uses
   %i.aen = add i32 %i.aem, 1
   %i.aeo = zext i32 %i.aen to i64
@@ -461,14 +460,11 @@ scalar.ph1070:                                    ; preds = %scalar.ph1070.prol.
   %i.afs = add i32 %..i, -1
   %i.aft = add i32 %..i, 1                        ; 4 uses
   %invariant.umin.i = call i32 @llvm.umin.i32(i32 %i.aby, i32 range(i32 1, 501) %i.abk) ; 2 uses
-  br i1 %.not607.i, label %.critedge3.thread.i, label %.lr.ph536.preheader.i
-
-.lr.ph536.preheader.i:                            ; preds = %.loopexit1139
   %wide.trip.count.i412 = zext nneg i32 %invariant.umin.i to i64
   br label %.lr.ph536.i
 
-.lr.ph536.i:                                      ; preds = %bb.dh, %.lr.ph536.preheader.i
-  %indvars.iv612.i = phi i64 [ 0, %.lr.ph536.preheader.i ], [ %indvars.iv.next613.i, %bb.dh ] ; 4 uses
+.lr.ph536.i:                                      ; preds = %bb.dh, %.loopexit1139
+  %indvars.iv612.i = phi i64 [ 0, %.loopexit1139 ], [ %indvars.iv.next613.i, %bb.dh ] ; 4 uses
   %i.afu = getelementptr inbounds nuw i8, ptr %i.abu, i64 %indvars.iv612.i
   %i.afv = load i8, ptr %i.afu, align 1, !tbaa !20
   %i.afw = getelementptr inbounds nuw i8, ptr %i.abw, i64 %indvars.iv612.i
@@ -529,8 +525,7 @@ add_col_elt.exit512.i:                            ; preds = %bb.dj, %bb.di
   call void @free(ptr noundef %i.aer) #18
   br label %greedy.exitthread-pre-split
 
-.critedge3.thread.i:                              ; preds = %.critedge3.i, %.loopexit1139
-  %.1439.lcssa703.i = phi i32 [ %.1439.lcssa.i, %.critedge3.i ], [ 0, %.loopexit1139 ]
+.critedge3.thread.i:                              ; preds = %.critedge3.i
   %i.agt = call ptr @xmalloc(i64 noundef %i.aep) #18 ; 14 uses
   %i.agu = call ptr @xmalloc(i64 noundef %i.aep) #18 ; 12 uses
   %i.agv = add nuw nsw i64 %i.aet, 1              ; 2 uses
@@ -616,7 +611,7 @@ scalar.ph1057:                                    ; preds = %scalar.ph1057.prol.
 
 .loopexit:                                        ; preds = %scalar.ph1057.prol.loopexit, %scalar.ph1057, %middle.block1065
   %i.ahr = getelementptr inbounds [4 x i8], ptr %i.agt, i64 %i.afq ; 3 uses
-  store i32 %.1439.lcssa703.i, ptr %i.ahr, align 4, !tbaa !4
+  store i32 %.1439.lcssa.i, ptr %i.ahr, align 4, !tbaa !4
   %i.ahs = zext i32 %i.aft to i64
   %i.aht = shl nuw nsw i64 %i.ahs, 2              ; 4 uses
   %i.ahu = call ptr @xmalloc(i64 noundef %i.aht) #18 ; 15 uses

@@ -200,12 +200,10 @@ bb.o:                                             ; preds = %bb.o, %.preheader52
   %indvars.iv107.i = phi i64 [ %indvars.iv.next108.i, %.loopexit.i ], [ 0, %.lr.ph103.i.preheader.preheader ] ; 12 uses
   %indvars.iv.i163 = phi i64 [ %indvars.iv.next.i164, %.loopexit.i ], [ 1, %.lr.ph103.i.preheader.preheader ] ; 2 uses
   %i.wx = sub nsw i64 99, %indvars.iv107.i        ; 3 uses
-  %indvars109.i = trunc i64 %indvars.iv107.i to i32 ; 2 uses
-  %indvars.iv.next108.i = add nuw nsw i64 %indvars.iv107.i, 1 ; 2 uses
   %i.wy = getelementptr [4 x i8], ptr @main.a, i64 %indvars.iv107.i
   %i.wz = mul nuw nsw i64 %indvars.iv107.i, 804
-  %i.xa = getelementptr i8, ptr %i.wy, i64 %i.wz  ; 7 uses
-  %i.xb = load float, ptr %i.xa, align 4, !tbaa !11
+  %i.xa = getelementptr i8, ptr %i.wy, i64 %i.wz  ; 6 uses
+  %i.xb = load float, ptr %i.xa, align 4, !tbaa !11 ; 3 uses
   %i.xc = tail call float @llvm.fabs.f32(float %i.xb) ; 2 uses
   %xtraiter = and i64 %i.wx, 1
   %i.xd = icmp eq i64 %indvars.iv107.i, 98
@@ -260,6 +258,8 @@ idamax.exit.i.unr-lcssa:                          ; preds = %.lr.ph48.i.i
 
 idamax.exit.i:                                    ; preds = %idamax.exit.i.unr-lcssa, %.lr.ph48.i.i.epil.preheader
   %.3.i.i.lcssa = phi i32 [ %.3.i.i.1, %idamax.exit.i.unr-lcssa ], [ %.3.i.i.epil, %.lr.ph48.i.i.epil.preheader ] ; 2 uses
+  %indvars109.i = trunc i64 %indvars.iv107.i to i32 ; 2 uses
+  %indvars.iv.next108.i = add nuw nsw i64 %indvars.iv107.i, 1 ; 2 uses
   %i.xt = add nsw i32 %.3.i.i.lcssa, %indvars109.i ; 2 uses
   %i.xu = getelementptr inbounds nuw [4 x i8], ptr @main.ipvt, i64 %indvars.iv107.i
   store i32 %i.xt, ptr %i.xu, align 4, !tbaa !4
@@ -273,16 +273,15 @@ idamax.exit.i:                                    ; preds = %idamax.exit.i.unr-l
 
 bb.p:                                             ; preds = %idamax.exit.i
   %.not.i = icmp eq i32 %.3.i.i.lcssa, 0          ; 2 uses
-  %.pre.i = load float, ptr %i.xa, align 4, !tbaa !11 ; 2 uses
   br i1 %.not.i, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  store float %.pre.i, ptr %i.xx, align 4, !tbaa !11
+  store float %i.xb, ptr %i.xx, align 4, !tbaa !11
   store float %i.xy, ptr %i.xa, align 4, !tbaa !11
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %i.ya = phi float [ %i.xy, %bb.q ], [ %.pre.i, %bb.p ]
+  %i.ya = phi float [ %i.xy, %bb.q ], [ %i.xb, %bb.p ]
   %i.yb = fdiv float -1.000000e+00, %i.ya         ; 2 uses
   %i.yc = sub nuw nsw i64 99, %indvars.iv107.i    ; 6 uses
   %i.yd = getelementptr i8, ptr %i.xa, i64 4      ; 4 uses
@@ -685,15 +684,13 @@ bb.x:                                             ; preds = %bb.x, %.preheader52
 
 .lr.ph103.i199.preheader:                         ; preds = %.lr.ph103.i199.preheader.preheader, %.loopexit.i214
   %i.adi = phi i32 [ %i.afu, %.loopexit.i214 ], [ 0, %.lr.ph103.i199.preheader.preheader ]
-  %indvars.iv107.i200 = phi i64 [ %indvars.iv.next108.i203, %.loopexit.i214 ], [ 0, %.lr.ph103.i199.preheader.preheader ] ; 12 uses
+  %indvars.iv107.i200 = phi i64 [ %indvars.iv.next108.i212, %.loopexit.i214 ], [ 0, %.lr.ph103.i199.preheader.preheader ] ; 12 uses
   %indvars.iv.i201 = phi i64 [ %indvars.iv.next.i215, %.loopexit.i214 ], [ 1, %.lr.ph103.i199.preheader.preheader ] ; 2 uses
   %i.adj = sub nsw i64 99, %indvars.iv107.i200    ; 3 uses
-  %indvars109.i202 = trunc i64 %indvars.iv107.i200 to i32 ; 2 uses
-  %indvars.iv.next108.i203 = add nuw nsw i64 %indvars.iv107.i200, 1 ; 2 uses
   %i.adk = getelementptr [4 x i8], ptr @main.a, i64 %indvars.iv107.i200
   %i.adl = mul nuw nsw i64 %indvars.iv107.i200, 804
-  %i.adm = getelementptr i8, ptr %i.adk, i64 %i.adl ; 7 uses
-  %i.adn = load float, ptr %i.adm, align 4, !tbaa !11
+  %i.adm = getelementptr i8, ptr %i.adk, i64 %i.adl ; 6 uses
+  %i.adn = load float, ptr %i.adm, align 4, !tbaa !11 ; 3 uses
   %i.ado = tail call float @llvm.fabs.f32(float %i.adn) ; 2 uses
   %xtraiter847 = and i64 %i.adj, 1
   %i.adp = icmp eq i64 %indvars.iv107.i200, 98
@@ -748,6 +745,8 @@ idamax.exit.i212.unr-lcssa:                       ; preds = %.lr.ph48.i.i204
 
 idamax.exit.i212:                                 ; preds = %idamax.exit.i212.unr-lcssa, %.lr.ph48.i.i204.epil.preheader
   %.3.i.i209.lcssa = phi i32 [ %.3.i.i209.1, %idamax.exit.i212.unr-lcssa ], [ %.3.i.i209.epil, %.lr.ph48.i.i204.epil.preheader ] ; 2 uses
+  %indvars109.i202 = trunc i64 %indvars.iv107.i200 to i32 ; 2 uses
+  %indvars.iv.next108.i212 = add nuw nsw i64 %indvars.iv107.i200, 1 ; 2 uses
   %i.aef = add nsw i32 %.3.i.i209.lcssa, %indvars109.i202 ; 2 uses
   %i.aeg = getelementptr inbounds nuw [4 x i8], ptr @main.ipvt, i64 %indvars.iv107.i200
   store i32 %i.aef, ptr %i.aeg, align 4, !tbaa !4
@@ -761,16 +760,15 @@ idamax.exit.i212:                                 ; preds = %idamax.exit.i212.un
 
 bb.y:                                             ; preds = %idamax.exit.i212
   %.not.i218 = icmp eq i32 %.3.i.i209.lcssa, 0    ; 2 uses
-  %.pre.i219 = load float, ptr %i.adm, align 4, !tbaa !11 ; 2 uses
   br i1 %.not.i218, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  store float %.pre.i219, ptr %i.aej, align 4, !tbaa !11
+  store float %i.adn, ptr %i.aej, align 4, !tbaa !11
   store float %i.aek, ptr %i.adm, align 4, !tbaa !11
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %i.aem = phi float [ %i.aek, %bb.z ], [ %.pre.i219, %bb.y ]
+  %i.aem = phi float [ %i.aek, %bb.z ], [ %i.adn, %bb.y ]
   %i.aen = fdiv float -1.000000e+00, %i.aem       ; 2 uses
   %i.aeo = sub nuw nsw i64 99, %indvars.iv107.i200 ; 6 uses
   %i.aep = getelementptr i8, ptr %i.adm, i64 4    ; 4 uses
@@ -899,7 +897,7 @@ daxpy.exit.i234:                                  ; preds = %.lr.ph.i.i230, %mid
 .loopexit.i214:                                   ; preds = %daxpy.exit.i234, %idamax.exit.i212
   %i.afu = phi i32 [ %indvars109.i202, %idamax.exit.i212 ], [ %i.adi, %daxpy.exit.i234 ] ; 2 uses
   %indvars.iv.next.i215 = add nuw nsw i64 %indvars.iv.i201, 1
-  %exitcond111.not.i216 = icmp eq i64 %indvars.iv.next108.i203, 99
+  %exitcond111.not.i216 = icmp eq i64 %indvars.iv.next108.i212, 99
   br i1 %exitcond111.not.i216, label %.loopexit100.i217, label %.lr.ph103.i199.preheader, !llvm.loop !33
 
 .loopexit100.i217:                                ; preds = %.loopexit.i214
@@ -1302,15 +1300,13 @@ bb.ak:                                            ; preds = %bb.ak, %.preheader5
 
 .lr.ph103.i311.preheader:                         ; preds = %.lr.ph103.i311.preheader.preheader, %.loopexit.i326
   %i.aqk = phi i32 [ %i.asw, %.loopexit.i326 ], [ 0, %.lr.ph103.i311.preheader.preheader ]
-  %indvars.iv107.i312 = phi i64 [ %indvars.iv.next108.i315, %.loopexit.i326 ], [ 0, %.lr.ph103.i311.preheader.preheader ] ; 12 uses
+  %indvars.iv107.i312 = phi i64 [ %indvars.iv.next108.i322, %.loopexit.i326 ], [ 0, %.lr.ph103.i311.preheader.preheader ] ; 12 uses
   %indvars.iv.i313 = phi i64 [ %indvars.iv.next.i327, %.loopexit.i326 ], [ 1, %.lr.ph103.i311.preheader.preheader ] ; 2 uses
   %i.aql = sub nsw i64 99, %indvars.iv107.i312    ; 3 uses
-  %indvars109.i314 = trunc i64 %indvars.iv107.i312 to i32 ; 2 uses
-  %indvars.iv.next108.i315 = add nuw nsw i64 %indvars.iv107.i312, 1 ; 2 uses
   %i.aqm = getelementptr [4 x i8], ptr @main.aa, i64 %indvars.iv107.i312
   %i.aqn = mul nuw nsw i64 %indvars.iv107.i312, 800
-  %i.aqo = getelementptr i8, ptr %i.aqm, i64 %i.aqn ; 7 uses
-  %i.aqp = load float, ptr %i.aqo, align 4, !tbaa !11
+  %i.aqo = getelementptr i8, ptr %i.aqm, i64 %i.aqn ; 6 uses
+  %i.aqp = load float, ptr %i.aqo, align 4, !tbaa !11 ; 3 uses
   %i.aqq = tail call float @llvm.fabs.f32(float %i.aqp) ; 2 uses
   %xtraiter853 = and i64 %i.aql, 1
   %i.aqr = icmp eq i64 %indvars.iv107.i312, 98
@@ -1365,7 +1361,9 @@ idamax.exit.i324.unr-lcssa:                       ; preds = %.lr.ph48.i.i316
 
 idamax.exit.i324:                                 ; preds = %idamax.exit.i324.unr-lcssa, %.lr.ph48.i.i316.epil.preheader
   %.3.i.i321.lcssa = phi i32 [ %.3.i.i321.1, %idamax.exit.i324.unr-lcssa ], [ %.3.i.i321.epil, %.lr.ph48.i.i316.epil.preheader ] ; 2 uses
-  %i.arh = add nsw i32 %.3.i.i321.lcssa, %indvars109.i314 ; 2 uses
+  %indvars109.i312 = trunc i64 %indvars.iv107.i312 to i32 ; 2 uses
+  %indvars.iv.next108.i322 = add nuw nsw i64 %indvars.iv107.i312, 1 ; 2 uses
+  %i.arh = add nsw i32 %.3.i.i321.lcssa, %indvars109.i312 ; 2 uses
   %i.ari = getelementptr inbounds nuw [4 x i8], ptr @main.ipvt, i64 %indvars.iv107.i312
   store i32 %i.arh, ptr %i.ari, align 4, !tbaa !4
   %i.arj = sext i32 %i.arh to i64                 ; 2 uses
@@ -1378,16 +1376,15 @@ idamax.exit.i324:                                 ; preds = %idamax.exit.i324.un
 
 bb.al:                                            ; preds = %idamax.exit.i324
   %.not.i330 = icmp eq i32 %.3.i.i321.lcssa, 0    ; 2 uses
-  %.pre.i331 = load float, ptr %i.aqo, align 4, !tbaa !11 ; 2 uses
   br i1 %.not.i330, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  store float %.pre.i331, ptr %i.arl, align 4, !tbaa !11
+  store float %i.aqp, ptr %i.arl, align 4, !tbaa !11
   store float %i.arm, ptr %i.aqo, align 4, !tbaa !11
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
-  %i.aro = phi float [ %i.arm, %bb.am ], [ %.pre.i331, %bb.al ]
+  %i.aro = phi float [ %i.arm, %bb.am ], [ %i.aqp, %bb.al ]
   %i.arp = fdiv float -1.000000e+00, %i.aro       ; 2 uses
   %i.arq = sub nuw nsw i64 99, %indvars.iv107.i312 ; 6 uses
   %i.arr = getelementptr i8, ptr %i.aqo, i64 4    ; 4 uses
@@ -1514,9 +1511,9 @@ daxpy.exit.i346:                                  ; preds = %.lr.ph.i.i342, %mid
   br i1 %exitcond.not.i348, label %.loopexit.i326, label %bb.ao, !llvm.loop !32
 
 .loopexit.i326:                                   ; preds = %daxpy.exit.i346, %idamax.exit.i324
-  %i.asw = phi i32 [ %indvars109.i314, %idamax.exit.i324 ], [ %i.aqk, %daxpy.exit.i346 ] ; 2 uses
+  %i.asw = phi i32 [ %indvars109.i312, %idamax.exit.i324 ], [ %i.aqk, %daxpy.exit.i346 ] ; 2 uses
   %indvars.iv.next.i327 = add nuw nsw i64 %indvars.iv.i313, 1
-  %exitcond111.not.i328 = icmp eq i64 %indvars.iv.next108.i315, 99
+  %exitcond111.not.i328 = icmp eq i64 %indvars.iv.next108.i322, 99
   br i1 %exitcond111.not.i328, label %.loopexit100.i329, label %.lr.ph103.i311.preheader, !llvm.loop !33
 
 .loopexit100.i329:                                ; preds = %.loopexit.i326
@@ -1919,7 +1916,7 @@ bb.a:
 
 .lr.ph103.preheader:                              ; preds = %bb.a
   %i.c = sext i32 %1 to i64                       ; 4 uses
-  %i.d = zext nneg i32 %2 to i64                  ; 3 uses
+  %i.d = zext nneg i32 %2 to i64                  ; 2 uses
   %wide.trip.count110 = zext nneg i32 %i.a to i64
   %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
   %i.e = shl nsw i64 %i.c, 2
@@ -1936,7 +1933,7 @@ bb.a:
   br label %.lr.ph103
 
 .lr.ph103:                                        ; preds = %.lr.ph103.preheader, %.loopexit
-  %indvars.iv107 = phi i64 [ 0, %.lr.ph103.preheader ], [ %indvars.iv.next108, %.loopexit ] ; 14 uses
+  %indvars.iv107 = phi i64 [ 0, %.lr.ph103.preheader ], [ %indvars.iv.next108, %.loopexit ] ; 13 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph103.preheader ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
   %i.m = sub i64 %i.k, %indvars.iv107             ; 3 uses
   %i.n = add nuw i64 %indvars.iv107, 1
@@ -1952,31 +1949,25 @@ bb.a:
   %scevgep119.a = getelementptr i8, ptr %scevgep118, i64 %i.u
   %scevgep121 = getelementptr i8, ptr %scevgep120, i64 %i.u
   %indvars109 = trunc i64 %indvars.iv107 to i32   ; 3 uses
-  %indvars.iv.next108 = add nuw nsw i64 %indvars.iv107, 1 ; 3 uses
-  %5 = sub nsw i64 %i.d, %indvars.iv107
   %i.v = mul nsw i64 %indvars.iv107, %i.c
   %i.w = mul nsw i32 %1, %indvars109
   %i.x = sext i32 %i.w to i64
   %i.y = getelementptr [4 x i8], ptr %0, i64 %indvars.iv107
-  %i.z = getelementptr [4 x i8], ptr %i.y, i64 %i.x ; 7 uses
-  %i.aa = icmp eq i64 %5, 1
-  br i1 %i.aa, label %idamax.exit, label %6
-
-6:                                                ; preds = %.lr.ph103
-  %7 = load float, ptr %i.z, align 4, !tbaa !11
-  %8 = tail call float @llvm.fabs.f32(float %7)   ; 2 uses
+  %i.z = getelementptr [4 x i8], ptr %i.y, i64 %i.x ; 6 uses
+  %5 = load float, ptr %i.z, align 4, !tbaa !11   ; 3 uses
+  %6 = tail call float @llvm.fabs.f32(float %5)   ; 2 uses
   %xtraiter = and i64 %i.m, 1
-  %9 = icmp eq i64 %i.l, %indvars.iv107
-  br i1 %9, label %.lr.ph48.i.epil.preheader, label %.new
+  %i.aa = icmp eq i64 %i.l, %indvars.iv107
+  br i1 %i.aa, label %.lr.ph48.i.epil.preheader, label %.new
 
-.new:                                             ; preds = %6
+.new:                                             ; preds = %.lr.ph103
   %unroll_iter = and i64 %i.m, -2
   br label %.lr.ph48.i
 
 .lr.ph48.i:                                       ; preds = %.lr.ph48.i, %.new
   %indvars.iv52.i = phi i64 [ 1, %.new ], [ %indvars.iv.next53.i.1, %.lr.ph48.i ] ; 4 uses
   %.247.i = phi i32 [ 0, %.new ], [ %.3.i.1, %.lr.ph48.i ]
-  %.23345.i = phi float [ %8, %.new ], [ %.334.i.1, %.lr.ph48.i ] ; 2 uses
+  %.23345.i = phi float [ %6, %.new ], [ %.334.i.1, %.lr.ph48.i ] ; 2 uses
   %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %.lr.ph48.i ]
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv52.i
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !11
@@ -2002,10 +1993,10 @@ idamax.exit.loopexit.unr-lcssa:                   ; preds = %.lr.ph48.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %idamax.exit, label %.lr.ph48.i.epil.preheader
 
-.lr.ph48.i.epil.preheader:                        ; preds = %idamax.exit.loopexit.unr-lcssa, %6
-  %indvars.iv52.i.epil.init = phi i64 [ 1, %6 ], [ %indvars.iv.next53.i.1, %idamax.exit.loopexit.unr-lcssa ] ; 2 uses
-  %.247.i.epil.init = phi i32 [ 0, %6 ], [ %.3.i.1, %idamax.exit.loopexit.unr-lcssa ]
-  %.23345.i.epil.init = phi float [ %8, %6 ], [ %.334.i.1, %idamax.exit.loopexit.unr-lcssa ]
+.lr.ph48.i.epil.preheader:                        ; preds = %idamax.exit.loopexit.unr-lcssa, %.lr.ph103
+  %indvars.iv52.i.epil.init = phi i64 [ 1, %.lr.ph103 ], [ %indvars.iv.next53.i.1, %idamax.exit.loopexit.unr-lcssa ] ; 2 uses
+  %.247.i.epil.init = phi i32 [ 0, %.lr.ph103 ], [ %.3.i.1, %idamax.exit.loopexit.unr-lcssa ]
+  %.23345.i.epil.init = phi float [ %6, %.lr.ph103 ], [ %.334.i.1, %idamax.exit.loopexit.unr-lcssa ]
   %lcmp.mod142 = trunc i64 %i.m to i1
   tail call void @llvm.assume(i1 %lcmp.mod142)
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv52.i.epil.init
@@ -2016,9 +2007,10 @@ idamax.exit.loopexit.unr-lcssa:                   ; preds = %.lr.ph48.i
   %.3.i.epil = select i1 %i.ao, i32 %i.ap, i32 %.247.i.epil.init
   br label %idamax.exit
 
-idamax.exit:                                      ; preds = %.lr.ph48.i.epil.preheader, %idamax.exit.loopexit.unr-lcssa, %.lr.ph103
-  %.035.i = phi i32 [ 0, %.lr.ph103 ], [ %.3.i.1, %idamax.exit.loopexit.unr-lcssa ], [ %.3.i.epil, %.lr.ph48.i.epil.preheader ] ; 2 uses
-  %i.aq = add nsw i32 %.035.i, %indvars109        ; 2 uses
+idamax.exit:                                      ; preds = %idamax.exit.loopexit.unr-lcssa, %.lr.ph48.i.epil.preheader
+  %.3.i.lcssa = phi i32 [ %.3.i.1, %idamax.exit.loopexit.unr-lcssa ], [ %.3.i.epil, %.lr.ph48.i.epil.preheader ] ; 2 uses
+  %indvars.iv.next108 = add nuw nsw i64 %indvars.iv107, 1 ; 3 uses
+  %i.aq = add nsw i32 %.3.i.lcssa, %indvars109    ; 2 uses
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv107
   store i32 %i.aq, ptr %i.ar, align 4, !tbaa !4
   %i.as = sext i32 %i.aq to i64                   ; 2 uses
@@ -2029,17 +2021,16 @@ idamax.exit:                                      ; preds = %.lr.ph48.i.epil.pre
   br i1 %i.aw, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %idamax.exit
-  %.not = icmp eq i32 %.035.i, 0                  ; 2 uses
-  %.pre = load float, ptr %i.z, align 4, !tbaa !11 ; 2 uses
+  %.not = icmp eq i32 %.3.i.lcssa, 0              ; 2 uses
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store float %.pre, ptr %i.au, align 4, !tbaa !11
+  store float %5, ptr %i.au, align 4, !tbaa !11
   store float %i.av, ptr %i.z, align 4, !tbaa !11
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.ax = phi float [ %i.av, %bb.c ], [ %.pre, %bb.b ]
+  %i.ax = phi float [ %i.av, %bb.c ], [ %5, %bb.b ]
   %i.ay = fdiv float -1.000000e+00, %i.ax         ; 2 uses
   %i.az = sub nsw i64 %i.d, %indvars.iv.next108   ; 8 uses
   %i.ba = getelementptr i8, ptr %i.z, i64 4       ; 6 uses

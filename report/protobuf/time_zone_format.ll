@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %.lr.ph
   br i1 %.not324, label %.critedge2, label %.lr.ph, !llvm.loop !39
 
 .critedge2:                                       ; preds = %.lr.ph, %bb.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit
-  %.2270.lcssa = phi ptr [ %.1269.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit ], [ %scevgep1018, %bb.p ], [ %.2270991, %.lr.ph ] ; 42 uses
+  %.2270.lcssa = phi ptr [ %.1269.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit ], [ %scevgep1018, %bb.p ], [ %.2270991, %.lr.ph ] ; 43 uses
   %.not324.lcssa = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit ], [ %i.dx, %bb.p ], [ %i.dx, %.lr.ph ] ; 2 uses
   %.not325 = icmp ne ptr %.2270.lcssa, %.0249
   %i.dz = icmp eq ptr %.1276, %.0249
@@ -285,7 +285,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   br label %bb.gx
 
 bb.v:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit383, %.critedge2
-  %.3278 = phi ptr [ %.1276, %.critedge2 ], [ %i.ek, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit ], [ %i.ej, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit383 ] ; 54 uses
+  %.3278 = phi ptr [ %.1276, %.critedge2 ], [ %i.ek, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit ], [ %i.ej, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit383 ] ; 57 uses
   br i1 %.not324.lcssa, label %.thread800, label %bb.w, !llvm.loop !40
 
 bb.w:                                             ; preds = %bb.v
@@ -688,7 +688,7 @@ bb.cu:                                            ; preds = %bb.bn
   br i1 %i.wb, label %.thread800, label %bb.cv, !llvm.loop !40
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.wc = load i8, ptr %i.wa, align 1, !tbaa !14  ; 4 uses
+  %i.wc = load i8, ptr %i.wa, align 1, !tbaa !14  ; 3 uses
   switch i8 %i.wc, label %bb.fn [
     i8 84, label %bb.cw
     i8 122, label %bb.df
@@ -1091,12 +1091,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit688: ; pre
 bb.ew:                                            ; preds = %bb.cv
   %i.aed = getelementptr inbounds nuw i8, ptr %.2270.lcssa, i64 2 ; 2 uses
   %.not334 = icmp eq ptr %i.aed, %i.cb
-  br i1 %.not334, label %.thread813, label %bb.ex
+  br i1 %.not334, label %bb.fo, label %bb.ex
 
 bb.ex:                                            ; preds = %bb.ew
   %i.aee = load i8, ptr %i.aed, align 1, !tbaa !14
   %i.aef = icmp eq i8 %i.aee, 89
-  br i1 %i.aef, label %bb.ey, label %.thread813
+  br i1 %i.aef, label %bb.ey, label %bb.fo
 
 bb.ey:                                            ; preds = %bb.ex
   %i.aeg = getelementptr inbounds i8, ptr %.2270.lcssa, i64 -1 ; 2 uses
@@ -1282,83 +1282,61 @@ bb.fn:                                            ; preds = %bb.cv
   %i.agd = sext i8 %i.wc to i32
   %isdigittmp = add nsw i32 %i.agd, -48
   %isdigit = icmp ult i32 %isdigittmp, 10
-  br i1 %isdigit, label %21, label %.thread800
+  br i1 %isdigit, label %bb.fo, label %.thread800
 
-21:                                               ; preds = %bb.fn
-  %22 = icmp eq i8 %i.wc, 45
-  br i1 %22, label %bb.fo, label %.thread813
-
-bb.fo:                                            ; preds = %21
-  %23 = getelementptr inbounds nuw i8, ptr %.2270.lcssa, i64 2 ; 2 uses
-  %.pre.i730 = load i8, ptr %23, align 1, !tbaa !14
-  br label %.thread813
-
-.thread813:                                       ; preds = %bb.ex, %bb.ew, %bb.fo, %21
-  %24 = phi i8 [ %.pre.i730, %bb.fo ], [ %i.wc, %21 ], [ 52, %bb.ew ], [ 52, %bb.ex ] ; 3 uses
-  %25 = phi i1 [ true, %bb.fo ], [ false, %21 ], [ false, %bb.ew ], [ false, %bb.ex ] ; 3 uses
-  %.0.i726 = phi ptr [ %23, %bb.fo ], [ %i.wa, %21 ], [ %i.wa, %bb.ew ], [ %i.wa, %bb.ex ] ; 3 uses
-  %26 = sext i8 %24 to i32
-  %memchr95.i = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %26, i64 11) ; 2 uses
+bb.fo:                                            ; preds = %bb.fn, %bb.ex, %bb.ew
+  %21 = sext i8 %i.wc to i32
+  %memchr95.i = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %21, i64 11) ; 2 uses
   %.not7396.i = icmp eq ptr %memchr95.i, null
-  %i.age = ptrtoint ptr %memchr95.i to i64
-  %i.agf = trunc i64 %i.age to i32
-  %i.agg = sub i32 %i.agf, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
-  %i.agh = icmp sgt i32 %i.agg, 9
-  %or.cond1174 = or i1 %.not7396.i, %i.agh
-  br i1 %or.cond1174, label %select.unfold.i, label %.lr.ph1152
+  br i1 %.not7396.i, label %.thread800, label %.thread813
 
-.lr.ph1152:                                       ; preds = %.thread813, %bb.fq
-  %27 = phi i32 [ %31, %bb.fq ], [ %i.agg, %.thread813 ] ; 2 uses
-  %.05397.i1151 = phi i32 [ %i.agm, %bb.fq ], [ 0, %.thread813 ] ; 3 uses
-  %.199.i1150 = phi ptr [ %i.agn, %bb.fq ], [ %.0.i726, %.thread813 ] ; 3 uses
-  %28 = phi i8 [ %i.ago, %bb.fq ], [ %24, %.thread813 ] ; 2 uses
-  %i.agi = icmp slt i32 %.05397.i1151, -214748364
-  br i1 %i.agi, label %select.unfold.i, label %bb.fp
+.thread813:                                       ; preds = %bb.fo, %bb.fq
+  %memchr100.i = phi ptr [ %memchr.i, %bb.fq ], [ %memchr95.i, %bb.fo ]
+  %.199.i.idx = phi i64 [ %.199.i.add, %bb.fq ], [ 1, %bb.fo ] ; 2 uses
+  %.05397.i = phi i32 [ %i.agm, %bb.fq ], [ 0, %bb.fo ] ; 3 uses
+  %i.age = ptrtoint ptr %memchr100.i to i64
+  %i.agf = trunc i64 %i.age to i32
+  %i.agg = sub i32 %i.agf, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
+  %i.agh = icmp sgt i32 %i.agg, 9
+  br i1 %i.agh, label %select.unfold.i, label %.lr.ph1152
+
+.lr.ph1152:                                       ; preds = %.thread813
+  %i.agi = icmp slt i32 %.05397.i, -214748364
+  br i1 %i.agi, label %.thread800, label %bb.fp
 
 bb.fp:                                            ; preds = %.lr.ph1152
-  %i.agj = mul nsw i32 %.05397.i1151, 10          ; 2 uses
-  %i.agk = or disjoint i32 %27, -2147483648
+  %i.agj = mul nsw i32 %.05397.i, 10              ; 2 uses
+  %i.agk = or disjoint i32 %i.agg, -2147483648
   %i.agl = icmp slt i32 %i.agj, %i.agk
-  br i1 %i.agl, label %select.unfold.i, label %bb.fq
+  br i1 %i.agl, label %.thread800, label %bb.fq
 
 bb.fq:                                            ; preds = %bb.fp
-  %i.agm = sub nsw i32 %i.agj, %27                ; 2 uses
-  %i.agn = getelementptr inbounds nuw i8, ptr %.199.i1150, i64 1 ; 3 uses
-  %i.ago = load i8, ptr %i.agn, align 1, !tbaa !14 ; 3 uses
+  %i.agm = sub nsw i32 %i.agj, %i.agg             ; 2 uses
+  %.199.i.add = add nuw nsw i64 %.199.i.idx, 1    ; 3 uses
+  %i.agn = getelementptr inbounds nuw i8, ptr %.2270.lcssa, i64 %.199.i.add
+  %i.ago = load i8, ptr %i.agn, align 1, !tbaa !14
   %i.agp = sext i8 %i.ago to i32
   %memchr.i = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %i.agp, i64 11) ; 2 uses
   %.not73.i = icmp eq ptr %memchr.i, null
-  %29 = ptrtoint ptr %memchr.i to i64
-  %30 = trunc i64 %29 to i32
-  %31 = sub i32 %30, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
-  %32 = icmp sgt i32 %31, 9
-  %or.cond1178 = or i1 %.not73.i, %32
-  br i1 %or.cond1178, label %select.unfold.i, label %.lr.ph1152
+  br i1 %.not73.i, label %select.unfold.i, label %.thread813
 
-select.unfold.i:                                  ; preds = %.lr.ph1152, %bb.fp, %bb.fq, %.thread813
-  %33 = phi i8 [ %24, %.thread813 ], [ %i.ago, %bb.fq ], [ %28, %bb.fp ], [ %28, %.lr.ph1152 ]
-  %.255.ph.i = phi i32 [ 0, %.thread813 ], [ %i.agm, %bb.fq ], [ -2147483640, %bb.fp ], [ %.05397.i1151, %.lr.ph1152 ] ; 4 uses
-  %.252.ph.not.i = phi i1 [ true, %.thread813 ], [ true, %bb.fq ], [ false, %bb.fp ], [ false, %.lr.ph1152 ]
-  %.3.ph.i = phi ptr [ %.0.i726, %.thread813 ], [ %i.agn, %bb.fq ], [ %.199.i1150, %bb.fp ], [ %.199.i1150, %.lr.ph1152 ] ; 4 uses
-  %34 = icmp ne ptr %.3.ph.i, %.0.i726
-  %or.cond.not94.i = and i1 %.252.ph.not.i, %34
-  %35 = icmp ne i32 %.255.ph.i, -2147483648
-  %or.cond3.i727 = select i1 %25, i1 true, i1 %35
-  %or.cond76.i = select i1 %or.cond.not94.i, i1 %or.cond3.i727, i1 false
-  %or.cond76.not.i = xor i1 %or.cond76.i, true
-  %i.agq = icmp eq i32 %.255.ph.i, 0              ; 2 uses
-  %or.cond5.not.i = select i1 %25, i1 %i.agq, i1 false
-  %or.cond80.i = select i1 %or.cond76.not.i, i1 true, i1 %or.cond5.not.i
+select.unfold.i:                                  ; preds = %bb.fq, %.thread813
+  %.255.ph.i = phi i32 [ %i.agm, %bb.fq ], [ %.05397.i, %.thread813 ] ; 4 uses
+  %.3.ph.i.idx = phi i64 [ %.199.i.add, %bb.fq ], [ %.199.i.idx, %.thread813 ] ; 2 uses
+  %.3.ph.i.ptr = getelementptr inbounds nuw i8, ptr %.2270.lcssa, i64 %.3.ph.i.idx ; 4 uses
+  %i.agq = icmp eq i64 %.3.ph.i.idx, 1
+  %22 = icmp eq i32 %.255.ph.i, -2147483648
+  %or.cond80.i = select i1 %i.agq, i1 true, i1 %22
   br i1 %or.cond80.i, label %.thread800, label %bb.fr
 
 bb.fr:                                            ; preds = %select.unfold.i
-  %i.agr = sub nsw i32 0, %.255.ph.i
-  %spec.select.i728 = select i1 %25, i32 %.255.ph.i, i32 %i.agr ; 6 uses
-  %or.cond77.i = icmp ugt i32 %spec.select.i728, 1024
+  %i.agr = sub nsw i32 0, %.255.ph.i              ; 5 uses
+  %or.cond77.i = icmp ugt i32 %i.agr, 1024
   br i1 %or.cond77.i, label %.thread800, label %_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit
 
 _ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit: ; preds = %bb.fr
-  switch i8 %33, label %.thread800 [
+  %23 = load i8, ptr %.3.ph.i.ptr, align 1, !tbaa !14
+  switch i8 %23, label %.thread800 [
     i8 83, label %bb.fs
     i8 102, label %bb.fs
   ]
@@ -1465,18 +1443,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit740: ; preds = %bb
   br label %bb.gx
 
 bb.ga:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit737, %bb.fs
-  br i1 %i.agq, label %bb.gm, label %bb.gb
+  %.not868 = icmp eq i32 %.255.ph.i, 0
+  br i1 %.not868, label %bb.gm, label %bb.gb
 
 bb.gb:                                            ; preds = %bb.ga
-  %i.aho = icmp samesign ugt i32 %spec.select.i728, 18
+  %i.aho = icmp samesign ugt i32 %i.agr, 18
   br i1 %i.aho, label %.thread817, label %bb.gc
 
 bb.gc:                                            ; preds = %bb.gb
-  %i.ahp = icmp samesign ugt i32 %spec.select.i728, 15
+  %i.ahp = icmp samesign ugt i32 %i.agr, 15
   br i1 %i.ahp, label %.thread817, label %bb.gd
 
 .thread817:                                       ; preds = %bb.gb, %bb.gc
-  %.0793820 = phi i32 [ %spec.select.i728, %bb.gc ], [ 18, %bb.gb ] ; 2 uses
+  %.0793820 = phi i32 [ %i.agr, %bb.gc ], [ 18, %bb.gb ] ; 2 uses
   %i.ahq = load i64, ptr %3, align 8, !tbaa !48
   %i.ahr = zext nneg i32 %.0793820 to i64
   %i.ahs = getelementptr [8 x i8], ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_16kExp10E, i64 %i.ahr
@@ -1487,15 +1466,15 @@ bb.gc:                                            ; preds = %bb.gb
 
 bb.gd:                                            ; preds = %bb.gc
   %i.ahw = load i64, ptr %3, align 8, !tbaa !48
-  %36 = sub nuw nsw i32 15, %spec.select.i728
-  %37 = zext nneg i32 %36 to i64
-  %38 = getelementptr inbounds nuw [8 x i8], ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_16kExp10E, i64 %37
-  %i.ahx = load i64, ptr %38, align 8, !tbaa !41
+  %24 = sext i32 %.255.ph.i to i64
+  %25 = getelementptr [8 x i8], ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_16kExp10E, i64 %24
+  %26 = getelementptr i8, ptr %25, i64 120
+  %i.ahx = load i64, ptr %26, align 8, !tbaa !41
   %i.ahy = sdiv i64 %i.ahw, %i.ahx
   br label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gd, %.thread817
-  %.0793819 = phi i32 [ %.0793820, %.thread817 ], [ %spec.select.i728, %bb.gd ] ; 3 uses
+  %.0793819 = phi i32 [ %.0793820, %.thread817 ], [ %i.agr, %bb.gd ] ; 3 uses
   %i.ahz = phi i64 [ %i.ahv, %.thread817 ], [ %i.ahy, %bb.gd ] ; 4 uses
   %i.aia = icmp slt i64 %i.ahz, 0                 ; 2 uses
   br i1 %i.aia, label %bb.gf, label %bb.gi
@@ -1571,7 +1550,7 @@ bb.gk:                                            ; preds = %._crit_edge.i754
 
 _ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18Format64EPcil.exit763: ; preds = %._crit_edge.i754, %bb.gk
   %.4.i756 = phi ptr [ %i.aiu, %bb.gk ], [ %.329.lcssa.i755, %._crit_edge.i754 ] ; 2 uses
-  %i.aiv = load i8, ptr %.3.ph.i, align 1, !tbaa !14
+  %i.aiv = load i8, ptr %.3.ph.i.ptr, align 1, !tbaa !14
   %i.aiw = icmp eq i8 %i.aiv, 83
   br i1 %i.aiw, label %bb.gl, label %.thread821
 
@@ -1582,7 +1561,7 @@ bb.gl:                                            ; preds = %_ZN4absl12lts_20250
 
 bb.gm:                                            ; preds = %bb.gl, %bb.ga
   %.2284.ph = phi ptr [ %i.by, %bb.ga ], [ %i.aix, %bb.gl ] ; 3 uses
-  %.pr = load i8, ptr %.3.ph.i, align 1, !tbaa !14
+  %.pr = load i8, ptr %.3.ph.i.ptr, align 1, !tbaa !14
   %i.aiy = icmp eq i8 %.pr, 83
   br i1 %i.aiy, label %bb.gn, label %.thread821
 
@@ -1624,12 +1603,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767 unwind label %.loopexit886 ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i764
-  %i.ajr = getelementptr inbounds nuw i8, ptr %.3.ph.i, i64 1 ; 2 uses
+  %i.ajr = getelementptr inbounds nuw i8, ptr %.3.ph.i.ptr, i64 1 ; 2 uses
   br label %.thread800
 
-.thread800:                                       ; preds = %bb.do, %bb.bn, %select.unfold.i, %bb.fr, %bb.dy, %bb.bo, %bb.cj, %bb.ck, %bb.bz, %bb.bp, %bb.ca, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767, %_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit598, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit651, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit725, %bb.fn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit688, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit623, %bb.cu, %bb.v, %bb.w, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit584, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit562, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit540, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit392
-  %.6281 = phi ptr [ %.3278, %bb.bn ], [ %i.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit392 ], [ %i.rj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit540 ], [ %i.tr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit562 ], [ %i.vz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit584 ], [ %.3278, %bb.v ], [ %.3278, %bb.w ], [ %.3278, %bb.cu ], [ %i.xc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit598 ], [ %i.zc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit623 ], [ %i.abl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit651 ], [ %i.aec, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit688 ], [ %i.agc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit725 ], [ %.3278, %bb.bo ], [ %.3278, %bb.fn ], [ %.3278, %bb.dy ], [ %i.ajr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767 ], [ %.3278, %_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit ], [ %.3278, %bb.ca ], [ %.3278, %bb.bp ], [ %.3278, %bb.bz ], [ %.3278, %bb.ck ], [ %.3278, %bb.cj ], [ %.3278, %select.unfold.i ], [ %.3278, %bb.fr ], [ %.3278, %bb.do ] ; 2 uses
-  %.6274 = phi ptr [ %.2270.lcssa, %bb.bn ], [ %i.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit392 ], [ %i.rj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit540 ], [ %i.tr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit562 ], [ %i.vz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit584 ], [ %.2270.lcssa, %bb.v ], [ %.2270.lcssa, %bb.w ], [ %i.wa, %bb.cu ], [ %i.xc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit598 ], [ %i.zc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit623 ], [ %i.abl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit651 ], [ %i.aec, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit688 ], [ %i.agc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit725 ], [ %.2270.lcssa, %bb.bo ], [ %i.wa, %bb.fn ], [ %i.wa, %bb.dy ], [ %i.ajr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767 ], [ %i.wa, %_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit ], [ %.2270.lcssa, %bb.ca ], [ %.2270.lcssa, %bb.bp ], [ %.2270.lcssa, %bb.bz ], [ %.2270.lcssa, %bb.ck ], [ %.2270.lcssa, %bb.cj ], [ %i.wa, %select.unfold.i ], [ %i.wa, %bb.fr ], [ %i.wa, %bb.do ] ; 2 uses
+.thread800:                                       ; preds = %.lr.ph1152, %bb.fp, %bb.fo, %bb.do, %bb.bn, %select.unfold.i, %bb.fr, %bb.dy, %bb.bo, %bb.cj, %bb.ck, %bb.bz, %bb.bp, %bb.ca, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767, %_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit598, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit651, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit725, %bb.fn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit688, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit623, %bb.cu, %bb.v, %bb.w, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit584, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit562, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit540, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit392
+  %.6281 = phi ptr [ %.3278, %bb.bn ], [ %i.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit392 ], [ %i.rj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit540 ], [ %i.tr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit562 ], [ %i.vz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit584 ], [ %.3278, %bb.v ], [ %.3278, %bb.w ], [ %.3278, %bb.cu ], [ %i.xc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit598 ], [ %i.zc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit623 ], [ %i.abl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit651 ], [ %i.aec, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit688 ], [ %i.agc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit725 ], [ %.3278, %bb.bo ], [ %.3278, %bb.fn ], [ %.3278, %bb.dy ], [ %i.ajr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767 ], [ %.3278, %_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit ], [ %.3278, %bb.ca ], [ %.3278, %bb.bp ], [ %.3278, %bb.bz ], [ %.3278, %bb.ck ], [ %.3278, %bb.cj ], [ %.3278, %bb.do ], [ %.3278, %bb.fr ], [ %.3278, %select.unfold.i ], [ %.3278, %bb.fo ], [ %.3278, %bb.fp ], [ %.3278, %.lr.ph1152 ] ; 2 uses
+  %.6274 = phi ptr [ %.2270.lcssa, %bb.bn ], [ %i.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit392 ], [ %i.rj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit540 ], [ %i.tr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit562 ], [ %i.vz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit584 ], [ %.2270.lcssa, %bb.v ], [ %.2270.lcssa, %bb.w ], [ %i.wa, %bb.cu ], [ %i.xc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit598 ], [ %i.zc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit623 ], [ %i.abl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit651 ], [ %i.aec, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit688 ], [ %i.agc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit725 ], [ %.2270.lcssa, %bb.bo ], [ %i.wa, %bb.fn ], [ %i.wa, %bb.dy ], [ %i.ajr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit767 ], [ %i.wa, %_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit ], [ %.2270.lcssa, %bb.ca ], [ %.2270.lcssa, %bb.bp ], [ %.2270.lcssa, %bb.bz ], [ %.2270.lcssa, %bb.ck ], [ %.2270.lcssa, %bb.cj ], [ %i.wa, %bb.do ], [ %i.wa, %bb.fr ], [ %i.wa, %select.unfold.i ], [ %i.wa, %bb.fo ], [ %i.wa, %bb.fp ], [ %i.wa, %.lr.ph1152 ] ; 2 uses
   %.not = icmp eq ptr %.6274, %i.cb
   br i1 %.not, label %._crit_edge, label %.preheader
 
