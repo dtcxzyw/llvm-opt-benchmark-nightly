@@ -201,16 +201,15 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph
 
 .preheader54:                                     ; preds = %.lr.ph, %middle.block, %bb.b
-  %.not73 = icmp eq i64 %1, 0
-  %.not74 = icmp eq i32 %3, 0
-  %or.cond = or i1 %.not73, %.not74
-  br i1 %or.cond, label %._crit_edge65, label %.lr.ph58.us.preheader.preheader
+  %5 = icmp ne i64 %1, 0
+  %6 = icmp ne i32 %3, 0
+  %or.cond = and i1 %5, %6
+  br i1 %or.cond, label %.lr.ph58.us.preheader.preheader, label %._crit_edge65
 
 .lr.ph58.us.preheader.preheader:                  ; preds = %.preheader54
   %i.t = shl nuw nsw i64 %i.f, 2
   %xtraiter = and i64 %i.f, 3                     ; 3 uses
-  %5 = add i32 %3, -1
-  %i.u = icmp ult i32 %5, 3
+  %i.u = icmp ult i32 %3, 4
   %unroll_iter = and i64 %i.f, 4294967292
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod121 = icmp ne i64 %xtraiter, 0
@@ -456,22 +455,21 @@ bb.a:
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = zext i32 %3 to i64                       ; 7 uses
+  %i.e = zext i32 %3 to i64                       ; 6 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.e
-  %.not56 = icmp eq i64 %1, 0
-  %.not57 = icmp eq i32 %3, 0
-  %or.cond = or i1 %.not56, %.not57
-  br i1 %or.cond, label %._crit_edge49, label %.preheader41.us.us.preheader
+  %5 = icmp ne i64 %1, 0
+  %6 = icmp ne i32 %3, 0
+  %or.cond = and i1 %5, %6
+  br i1 %or.cond, label %.preheader41.us.us.preheader, label %._crit_edge49
 
 .preheader41.us.us.preheader:                     ; preds = %bb.b
-  %5 = add nsw i64 %i.e, -1                       ; 2 uses
   %xtraiter = and i64 %i.e, 3                     ; 3 uses
-  %i.g = icmp ult i64 %5, 3
+  %i.g = icmp ult i32 %3, 4
   %unroll_iter = and i64 %i.e, 4294967292
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod78 = icmp ne i64 %xtraiter, 0
   %xtraiter80 = and i64 %i.e, 1
-  %i.h = icmp eq i64 %5, 0
+  %i.h = icmp eq i32 %3, 1
   %unroll_iter86 = and i64 %i.e, 4294967294
   %lcmp.mod82.not = icmp eq i64 %xtraiter80, 0
   %lcmp.mod85 = trunc i32 %3 to i1

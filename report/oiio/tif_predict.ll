@@ -199,7 +199,7 @@ bb.a:
   %i.g = lshr i16 %i.f, 3                         ; 6 uses
   %i.h = zext nneg i16 %i.g to i64                ; 3 uses
   %i.i = zext nneg i16 %i.g to i64                ; 5 uses
-  %i.j = sdiv i64 %2, %i.i                        ; 11 uses
+  %i.j = sdiv i64 %2, %i.i                        ; 10 uses
   %i.k = mul nsw i64 %i.d, %i.i
   %i.l = srem i64 %2, %i.k
   %.not = icmp eq i64 %i.l, 0
@@ -514,23 +514,19 @@ bb.j:                                             ; preds = %.lr.ph206, %bb.j
   store <8 x i16> %i.dl, ptr %i.dq, align 1, !tbaa !64
   %i.dr = getelementptr inbounds nuw i8, ptr %i.do, i64 48
   store <8 x i16> %i.dm, ptr %i.dr, align 1, !tbaa !64
-  %i.ds = add nuw nsw i64 %.3205, 16              ; 4 uses
+  %i.ds = add nuw nsw i64 %.3205, 16              ; 3 uses
   %i.dt = or disjoint i64 %i.ds, 15
   %i.du = icmp slt i64 %i.dt, %i.j
-  br i1 %i.du, label %bb.j, label %.loopexit.thread
+  br i1 %i.du, label %bb.j, label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit187
-  %i.dv = icmp slt i64 %i.j, 1
-  %.not212 = icmp eq i16 %i.g, 0
-  %or.cond236 = or i1 %i.dv, %.not212
-  br i1 %or.cond236, label %._crit_edge211, label %.preheader.us.preheader
+.loopexit:                                        ; preds = %bb.j, %.loopexit187
+  %.4 = phi i64 [ 0, %.loopexit187 ], [ %i.ds, %bb.j ] ; 2 uses
+  %i.dv = icmp slt i64 %.4, %i.j
+  %3 = icmp ne i16 %i.g, 0
+  %or.cond212 = and i1 %i.dv, %3
+  br i1 %or.cond212, label %.preheader.us.preheader, label %._crit_edge211
 
-.loopexit.thread:                                 ; preds = %bb.j
-  %3 = icmp samesign ult i64 %i.ds, %i.j
-  br i1 %3, label %.preheader.us.preheader, label %._crit_edge211
-
-.preheader.us.preheader:                          ; preds = %.loopexit, %.loopexit.thread
-  %.4228231 = phi i64 [ 0, %.loopexit ], [ %i.ds, %.loopexit.thread ]
+.preheader.us.preheader:                          ; preds = %.loopexit
   %xtraiter260 = and i64 %i.i, 1
   %i.dw = icmp eq i16 %i.g, 1
   %unroll_iter = and i64 %i.i, 8190
@@ -539,7 +535,7 @@ bb.j:                                             ; preds = %.lr.ph206, %bb.j
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.5210.us = phi i64 [ %i.es, %._crit_edge.us ], [ %.4228231, %.preheader.us.preheader ] ; 3 uses
+  %.5210.us = phi i64 [ %i.es, %._crit_edge.us ], [ %.4, %.preheader.us.preheader ] ; 3 uses
   %invariant.gep.us = getelementptr i8, ptr %i.m, i64 %.5210.us ; 3 uses
   %i.dx = mul nuw nsw i64 %.5210.us, %i.i
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 %i.dx ; 3 uses
@@ -591,7 +587,7 @@ bb.j:                                             ; preds = %.lr.ph206, %bb.j
   %exitcond219.not = icmp eq i64 %i.es, %i.j
   br i1 %exitcond219.not, label %._crit_edge211, label %.preheader.us
 
-._crit_edge211:                                   ; preds = %._crit_edge.us, %.loopexit.thread, %.loopexit
+._crit_edge211:                                   ; preds = %._crit_edge.us, %.loopexit
   tail call void @_TIFFfreeExt(ptr noundef nonnull %0, ptr noundef nonnull %i.m) #10
   br label %bb.k
 
@@ -994,10 +990,10 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_TIFFmemcpy(ptr noundef nonnull %i.m, ptr noundef %1, i64 noundef %2) #10
-  %3 = icmp slt i64 %i.j, 1
-  %.not98 = icmp eq i16 %i.g, 0
-  %or.cond = or i1 %3, %.not98
-  br i1 %or.cond, label %._crit_edge92, label %.preheader.us.preheader
+  %3 = icmp sgt i64 %i.j, 0
+  %4 = icmp ne i16 %i.g, 0
+  %or.cond = and i1 %3, %4
+  br i1 %or.cond, label %.preheader.us.preheader, label %._crit_edge92
 
 .preheader.us.preheader:                          ; preds = %bb.d
   %wide.trip.count = zext nneg i16 %i.g to i64    ; 2 uses

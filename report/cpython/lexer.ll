@@ -199,7 +199,7 @@ bb.b:                                             ; preds = %bb.a
   br label %tok_get.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = getelementptr i8, ptr %0, i64 8          ; 47 uses
+  %i.i = getelementptr i8, ptr %0, i64 8          ; 46 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !11   ; 2 uses
   %i.k = getelementptr i8, ptr %0, i64 56         ; 7 uses
   store ptr %i.j, ptr %i.k, align 8, !tbaa !23
@@ -596,16 +596,12 @@ bb.ba:                                            ; preds = %bb.ax, %bb.as
 
 .preheader.i.i:                                   ; preds = %.backedge.i.i
   %i.eo = icmp sgt i32 %.2262623.i.i, 0
-  br i1 %i.eo, label %.lr.ph504.i.i, label %.preheader.i.._crit_edge505.i_crit_edge.i
-
-.preheader.i.._crit_edge505.i_crit_edge.i:        ; preds = %.preheader.i.i
-  %.pre.i = load ptr, ptr %i.i, align 8, !tbaa !11
-  br label %._crit_edge505.i.i
+  %.pre580.i.pre.i = load ptr, ptr %i.i, align 8, !tbaa !11 ; 3 uses
+  br i1 %i.eo, label %.lr.ph504.i.i, label %._crit_edge505.i.i
 
 .lr.ph504.i.i:                                    ; preds = %.preheader.i.i
   %i.ep = load i8, ptr %i.cn, align 4, !tbaa !41  ; 2 uses
   %.not.i377.i.i = icmp eq i8 %i.ep, -1
-  %.pre186.i = load ptr, ptr %i.i, align 8, !tbaa !11 ; 2 uses
   br i1 %.not.i377.i.i, label %._crit_edge505.i.i, label %.lr.ph504.split.i.i
 
 .lr.ph504.split.i.i:                              ; preds = %.lr.ph504.i.i
@@ -1008,8 +1004,8 @@ bb.em:                                            ; preds = %bb.ee
   %.not288.i.i = icmp eq i32 %.2262623.i.i, %i.nu
   br i1 %.not288.i.i, label %.preheader.i.i, label %bb.bb, !llvm.loop !48
 
-._crit_edge505.i.i:                               ; preds = %tok_backup.exit379.i.i, %.lr.ph504.i.i, %.preheader.i.._crit_edge505.i_crit_edge.i, %bb.ba
-  %i.nv = phi ptr [ %.pre.i, %.preheader.i.._crit_edge505.i_crit_edge.i ], [ %i.eh, %bb.ba ], [ %.pre186.i, %.lr.ph504.i.i ], [ %i.od, %tok_backup.exit379.i.i ]
+._crit_edge505.i.i:                               ; preds = %tok_backup.exit379.i.i, %.lr.ph504.i.i, %.preheader.i.i, %bb.ba
+  %i.nv = phi ptr [ %i.eh, %bb.ba ], [ %.pre580.i.pre.i, %.lr.ph504.i.i ], [ %.pre580.i.pre.i, %.preheader.i.i ], [ %i.od, %tok_backup.exit379.i.i ]
   %i.nw = load ptr, ptr %i.k, align 8, !tbaa !23
   %i.nx = getelementptr i8, ptr %i.e, i64 96
   %i.ny = load i32, ptr %i.nx, align 8, !tbaa !37
@@ -1019,7 +1015,7 @@ bb.em:                                            ; preds = %bb.ee
   br label %tok_get.exit
 
 bb.en:                                            ; preds = %tok_backup.exit379.i.i, %.lr.ph504.split.i.i
-  %i.oc = phi ptr [ %.pre186.i, %.lr.ph504.split.i.i ], [ %i.od, %tok_backup.exit379.i.i ]
+  %i.oc = phi ptr [ %.pre580.i.pre.i, %.lr.ph504.split.i.i ], [ %i.od, %tok_backup.exit379.i.i ]
   %.0503.i.i = phi i32 [ 0, %.lr.ph504.split.i.i ], [ %i.oi, %tok_backup.exit379.i.i ]
   %i.od = getelementptr i8, ptr %i.oc, i64 -1     ; 5 uses
   store ptr %i.od, ptr %i.i, align 8, !tbaa !11
