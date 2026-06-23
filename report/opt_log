@@ -1,0 +1,3 @@
+node/simdutf.bc: failed to run opt
+node/simdjson.bc: failed to run opt
+velox/simdjson.bc: failed to run opt
