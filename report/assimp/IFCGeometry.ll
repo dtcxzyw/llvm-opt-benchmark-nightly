@@ -201,8 +201,8 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vecto
   br label %bb.az
 
 ._crit_edge497:                                   ; preds = %._crit_edge494.us, %.lr.ph496, %.preheader391
-  %.sroa.0353.1.lcssa608 = phi ptr [ %.sroa.0353.1.lcssa607, %.lr.ph496 ], [ %.sroa.0353.2.lcssa, %.preheader391 ], [ %.sroa.0353.1.lcssa607, %._crit_edge494.us ] ; 3 uses
-  %.sroa.22.1.lcssa606 = phi ptr [ %.sroa.22.1.lcssa605, %.lr.ph496 ], [ %.sroa.22.2.lcssa, %.preheader391 ], [ %.sroa.22.1.lcssa605, %._crit_edge494.us ] ; 3 uses
+  %.sroa.0353.1.lcssa608 = phi ptr [ %.sroa.0353.2.lcssa, %.preheader391 ], [ %.sroa.0353.1.lcssa607, %.lr.ph496 ], [ %.sroa.0353.1.lcssa607, %._crit_edge494.us ] ; 3 uses
+  %.sroa.22.1.lcssa606 = phi ptr [ %.sroa.22.2.lcssa, %.preheader391 ], [ %.sroa.22.1.lcssa605, %.lr.ph496 ], [ %.sroa.22.1.lcssa605, %._crit_edge494.us ] ; 3 uses
   %i.ol = invoke noundef zeroext i1 @_ZN6Assimp13DefaultLogger12isNullLoggerEv()
           to label %.noexc185 unwind label %bb.ay
 

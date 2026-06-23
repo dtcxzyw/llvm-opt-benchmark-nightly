@@ -201,10 +201,10 @@ bb.l:                                             ; preds = %bb.k
   %i.db = load ptr, ptr %i.m, align 8, !tbaa !66  ; 2 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !7  ; 2 uses
   %i.dd = getelementptr i8, ptr %i.db, i64 4      ; 2 uses
-  %.not128.i = icmp eq i32 %i.dc, 0
-  %.not129.i = icmp eq i32 %i.cz, 0
-  %or.cond181.i = select i1 %.not128.i, i1 true, i1 %.not129.i
-  br i1 %or.cond181.i, label %and_code_range_buf.exit.thread.thread, label %.lr.ph123.us.preheader.i
+  %3 = icmp ne i32 %i.dc, 0
+  %4 = icmp ne i32 %i.cz, 0
+  %or.cond181.i = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond181.i, label %.lr.ph123.us.preheader.i, label %and_code_range_buf.exit.thread.thread
 
 .lr.ph123.us.preheader.i:                         ; preds = %bb.l
   %wide.trip.count151.i = zext i32 %i.dc to i64
@@ -607,10 +607,10 @@ and_code_range1.exit.us:                          ; preds = %bb.t, %._crit_edge.
   br i1 %.not51.i.us, label %and_code_range1.exit.us, label %bb.t
 
 .preheader:                                       ; preds = %bb.j
-  %.not128 = icmp eq i32 %i.x, 0
-  %.not129 = icmp eq i32 %i.r, 0
-  %or.cond181 = select i1 %.not128, i1 true, i1 %.not129
-  br i1 %or.cond181, label %bbuf_clone.exit, label %.lr.ph123.us.preheader
+  %6 = icmp ne i32 %i.x, 0
+  %7 = icmp ne i32 %i.r, 0
+  %or.cond181 = select i1 %6, i1 %7, i1 false
+  br i1 %or.cond181, label %.lr.ph123.us.preheader, label %bbuf_clone.exit
 
 .lr.ph123.us.preheader:                           ; preds = %.preheader
   %wide.trip.count151 = zext i32 %i.x to i64
@@ -703,7 +703,7 @@ bbuf_clone.exit.sink.split:                       ; preds = %bb.h, %bb.d
   br label %bbuf_clone.exit
 
 bbuf_clone.exit:                                  ; preds = %and_code_range1.exit, %bb.y, %and_code_range1.exit.us, %bb.t, %bb.n, %._crit_edge.us, %bb.w, %bbuf_clone.exit.sink.split, %.preheader111, %.preheader, %.thread, %bb.h, %bb.g, %bb.d, %bb.c, %bb.f, %bb.b
-  %.0 = phi i32 [ 0, %._crit_edge.us ], [ %i.av, %bb.n ], [ %i.i, %bb.d ], [ 0, %bb.b ], [ 0, %bb.f ], [ %i.p, %bb.h ], [ 0, %.thread ], [ 0, %.preheader ], [ 0, %.preheader111 ], [ -5, %bb.c ], [ %i.bx, %bb.w ], [ -5, %bb.g ], [ 0, %and_code_range1.exit.us ], [ 0, %bbuf_clone.exit.sink.split ], [ %i.ba, %bb.t ], [ 0, %and_code_range1.exit ], [ %i.ch, %bb.y ]
+  %.0 = phi i32 [ 0, %._crit_edge.us ], [ %i.ba, %bb.t ], [ %i.i, %bb.d ], [ 0, %bb.b ], [ 0, %bb.f ], [ %i.p, %bb.h ], [ 0, %.thread ], [ 0, %.preheader ], [ 0, %.preheader111 ], [ -5, %bb.c ], [ %i.bx, %bb.w ], [ -5, %bb.g ], [ 0, %bbuf_clone.exit.sink.split ], [ %i.av, %bb.n ], [ 0, %and_code_range1.exit.us ], [ 0, %and_code_range1.exit ], [ %i.ch, %bb.y ]
   ret i32 %.0
 }
 

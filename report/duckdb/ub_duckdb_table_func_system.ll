@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   call void @llvm.experimental.noalias.scope.decl(metadata !1633)
   %i.ad = invoke noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #27
-          to label %.noexc30 unwind label %27     ; 3 uses
+          to label %.noexc30 unwind label %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us ; 3 uses
 
 .noexc30:                                         ; preds = %bb.f
   invoke void @_ZN6duckdb9DataChunkC1Ev(ptr noundef nonnull align 8 dereferenceable(72) %i.ad)
@@ -216,16 +216,16 @@ bb.g:                                             ; preds = %.noexc30
 bb.h:                                             ; preds = %.noexc30
   store ptr %i.ad, ptr %5, align 8, !tbaa !1469, !alias.scope !1633
   %i.af = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
-          to label %bb.i unwind label %29
+          to label %bb.i unwind label %bb.n
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZN6duckdb9Allocator16DefaultAllocatorEv()
-          to label %bb.j unwind label %29
+          to label %bb.j unwind label %bb.n
 
 bb.j:                                             ; preds = %bb.i
   %i.ah = load ptr, ptr %0, align 8, !tbaa !1636, !nonnull !38, !align !148
   invoke void @_ZN6duckdb9DataChunk10InitializeERNS_9AllocatorERKNS_6vectorINS_11LogicalTypeELb1ESaIS4_EEEm(ptr noundef nonnull align 8 dereferenceable(72) %i.af, ptr noundef nonnull align 8 dereferenceable(32) %i.ag, ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i64 noundef 2048)
-          to label %bb.k unwind label %29
+          to label %bb.k unwind label %bb.n
 
 bb.k:                                             ; preds = %bb.j
   %i.ai = load ptr, ptr %4, align 8, !tbaa !1632
@@ -235,7 +235,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.al = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6duckdb6vectorINS0_INS_5ValueELb1ESaIS1_EEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %4, i64 noundef 0)
-          to label %.noexc31 unwind label %.loopexit ; 2 uses
+          to label %.noexc31 unwind label %.noexc37.us ; 2 uses
 
 .noexc31:                                         ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
@@ -255,10 +255,10 @@ _ZNK6duckdb19TestGeneratedValues4RowsEv.exit32:   ; preds = %.noexc31, %bb.k
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !66
   %i.az = load ptr, ptr %i.aw, align 8, !tbaa !63
-  %.not = icmp eq ptr %i.ay, %i.az
-  %.not114 = icmp eq i64 %i.at, %.020111
-  %or.cond = select i1 %.not, i1 true, i1 %.not114
-  br i1 %or.cond, label %._crit_edge106, label %.preheader.us.preheader
+  %6 = icmp ne ptr %i.ay, %i.az
+  %7 = icmp ne i64 %i.at, %.020111
+  %or.cond = and i1 %6, %7
+  br i1 %or.cond, label %.preheader.us.preheader, label %bb.m
 
 .preheader.us.preheader:                          ; preds = %_ZNK6duckdb19TestGeneratedValues4RowsEv.exit32
   %i.ba = add i64 %i.at, %indvars.iv
@@ -268,64 +268,33 @@ _ZNK6duckdb19TestGeneratedValues4RowsEv.exit32:   ; preds = %.noexc31, %bb.k
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
   %.019105.us = phi i64 [ %i.bc, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 7 uses
-  br label %bb.m
+  br label %.loopexit.split-lp
 
-bb.m:                                             ; preds = %.preheader.us, %bb.o
-  %.0104.us = phi i64 [ 0, %.preheader.us ], [ %24, %bb.o ] ; 3 uses
-  %6 = load ptr, ptr %5, align 8, !tbaa !1469     ; 3 uses
-  %.not.i.us = icmp eq ptr %6, null
-  br i1 %.not.i.us, label %.noexc.i, label %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us, !prof !30
+bb.m:                                             ; preds = %._crit_edge.us, %_ZNK6duckdb19TestGeneratedValues4RowsEv.exit32
+  %8 = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
+          to label %bb.ab unwind label %.noexc37.us
 
-_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us: ; preds = %bb.m
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %8 = load ptr, ptr %7, align 8, !tbaa !1367
-  %9 = load ptr, ptr %6, align 8, !tbaa !1368     ; 2 uses
-  %10 = ptrtoint ptr %8 to i64
-  %11 = ptrtoint ptr %9 to i64
-  %12 = sub i64 %10, %11
-  %13 = sdiv exact i64 %12, 104                   ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  store i64 %.019105.us, ptr %i.f, align 8, !tbaa !54
-  store i64 %13, ptr %i.g, align 8, !tbaa !54
-  %.not.i.i.i.us = icmp ult i64 %.019105.us, %13
-  br i1 %.not.i.i.i.us, label %bb.n, label %.noexc.i66, !prof !349
+_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us: ; preds = %bb.f
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body
 
-bb.n:                                             ; preds = %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %14 = getelementptr inbounds nuw [104 x i8], ptr %9, i64 %.019105.us
-  %15 = load ptr, ptr %i.h, align 8, !tbaa !1589
-  %16 = load ptr, ptr %4, align 8, !tbaa !1591    ; 2 uses
-  %17 = ptrtoint ptr %15 to i64
-  %18 = ptrtoint ptr %16 to i64
-  %19 = sub i64 %17, %18
-  %20 = sdiv exact i64 %19, 24                    ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store i64 %.019105.us, ptr %i.b, align 8, !tbaa !54
-  store i64 %20, ptr %i.c, align 8, !tbaa !54
-  %.not.i.i.i69.us = icmp ult i64 %.019105.us, %20
-  br i1 %.not.i.i.i69.us, label %.noexc37.us, label %.noexc.i79, !prof !349
+bb.n:                                             ; preds = %bb.j, %bb.i, %bb.h
+  %10 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body33
 
-.noexc37.us:                                      ; preds = %bb.n
-  %21 = add nuw nsw i64 %.0104.us, %.020111
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %22 = getelementptr inbounds nuw [24 x i8], ptr %16, i64 %.019105.us
-  %23 = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %22, i64 noundef %21)
-          to label %_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit.us unwind label %.split.us
+.noexc37.us:                                      ; preds = %bb.m, %bb.l, %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.body33
 
-_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit.us: ; preds = %.noexc37.us
-  invoke void @_ZN6duckdb6Vector8SetValueEmRKNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(104) %14, i64 noundef %.0104.us, ptr noundef nonnull align 8 dereferenceable(64) %23)
-          to label %bb.o unwind label %.split.us
+bb.o:                                             ; preds = %bb.ad
+  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
+          cleanup
+  br label %.body33
 
-bb.o:                                             ; preds = %_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit.us
-  %24 = add nuw nsw i64 %.0104.us, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %24, %umax
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.m, !llvm.loop !1638
-
-._crit_edge.us:                                   ; preds = %bb.o
+._crit_edge.us:                                   ; preds = %30
   %i.bc = add nuw i64 %.019105.us, 1              ; 2 uses
   %i.bd = load ptr, ptr %0, align 8, !tbaa !1636, !nonnull !38, !align !148 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
@@ -336,38 +305,15 @@ bb.o:                                             ; preds = %_ZNK6duckdb19TestGe
   %i.bj = sub i64 %i.bh, %i.bi
   %i.bk = sdiv exact i64 %i.bj, 24
   %i.bl = icmp ult i64 %i.bc, %i.bk
-  br i1 %i.bl, label %.preheader.us, label %._crit_edge106, !llvm.loop !1639
+  br i1 %i.bl, label %.preheader.us, label %bb.m, !llvm.loop !1638
 
-.split.us:                                        ; preds = %_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit.us, %.noexc37.us
-  %25 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body33
+.loopexit.split-lp:                               ; preds = %.preheader.us, %30
+  %.0104 = phi i64 [ 0, %.preheader.us ], [ %31, %30 ] ; 3 uses
+  %11 = load ptr, ptr %5, align 8, !tbaa !1469    ; 3 uses
+  %.not.i = icmp eq ptr %11, null
+  br i1 %.not.i, label %.noexc.i, label %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit, !prof !30
 
-._crit_edge106:                                   ; preds = %._crit_edge.us, %_ZNK6duckdb19TestGeneratedValues4RowsEv.exit32
-  %26 = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
-          to label %bb.ab unwind label %.loopexit
-
-27:                                               ; preds = %bb.f
-  %28 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-29:                                               ; preds = %bb.j, %bb.i, %bb.h
-  %30 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body33
-
-.loopexit:                                        ; preds = %._crit_edge106, %bb.l, %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body33
-
-.loopexit.split-lp:                               ; preds = %bb.ad
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %.body33
-
-.noexc.i:                                         ; preds = %bb.m
+.noexc.i:                                         ; preds = %.loopexit.split-lp
   %i.bm = call ptr @__cxa_allocate_exception(i64 16) #26 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
@@ -425,7 +371,22 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.s:                                             ; preds = %bb.p
   unreachable
 
-.noexc.i66:                                       ; preds = %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us
+_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit: ; preds = %.loopexit.split-lp
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %13 = load ptr, ptr %12, align 8, !tbaa !1367
+  %14 = load ptr, ptr %11, align 8, !tbaa !1368   ; 2 uses
+  %15 = ptrtoint ptr %13 to i64
+  %16 = ptrtoint ptr %14 to i64
+  %17 = sub i64 %15, %16
+  %18 = sdiv exact i64 %17, 104                   ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
+  store i64 %.019105.us, ptr %i.f, align 8, !tbaa !54
+  store i64 %18, ptr %i.g, align 8, !tbaa !54
+  %.not.i.i.i = icmp ult i64 %.019105.us, %18
+  br i1 %.not.i.i.i, label %19, label %.noexc.i66, !prof !349
+
+.noexc.i66:                                       ; preds = %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit
   %i.bw = call ptr @__cxa_allocate_exception(i64 16) #26 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   %i.bx = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
@@ -483,7 +444,24 @@ bb.v:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.w:                                             ; preds = %bb.t
   unreachable
 
-.noexc.i79:                                       ; preds = %bb.n
+19:                                               ; preds = %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
+  %20 = getelementptr inbounds nuw [104 x i8], ptr %14, i64 %.019105.us
+  %21 = load ptr, ptr %i.h, align 8, !tbaa !1589
+  %22 = load ptr, ptr %4, align 8, !tbaa !1591    ; 2 uses
+  %23 = ptrtoint ptr %21 to i64
+  %24 = ptrtoint ptr %22 to i64
+  %25 = sub i64 %23, %24
+  %26 = sdiv exact i64 %25, 24                    ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
+  store i64 %.019105.us, ptr %i.b, align 8, !tbaa !54
+  store i64 %26, ptr %i.c, align 8, !tbaa !54
+  %.not.i.i.i69 = icmp ult i64 %.019105.us, %26
+  br i1 %.not.i.i.i69, label %.noexc37, label %.noexc.i79, !prof !349
+
+.noexc.i79:                                       ; preds = %19
   %i.cg = call ptr @__cxa_allocate_exception(i64 16) #26 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
@@ -541,8 +519,30 @@ bb.z:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.aa:                                            ; preds = %bb.x
   unreachable
 
-bb.ab:                                            ; preds = %._crit_edge106
-  %i.cq = getelementptr inbounds nuw i8, ptr %26, i64 24
+.noexc37:                                         ; preds = %19
+  %27 = add nuw nsw i64 %.0104, %.020111
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  %28 = getelementptr inbounds nuw [24 x i8], ptr %22, i64 %.019105.us
+  %29 = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %28, i64 noundef %27)
+          to label %_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit unwind label %32
+
+_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit: ; preds = %.noexc37
+  invoke void @_ZN6duckdb6Vector8SetValueEmRKNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(104) %20, i64 noundef %.0104, ptr noundef nonnull align 8 dereferenceable(64) %29)
+          to label %30 unwind label %32
+
+30:                                               ; preds = %_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit
+  %31 = add nuw nsw i64 %.0104, 1                 ; 2 uses
+  %exitcond.not = icmp eq i64 %31, %umax
+  br i1 %exitcond.not, label %._crit_edge.us, label %.loopexit.split-lp, !llvm.loop !1639
+
+32:                                               ; preds = %.noexc37, %_ZNK6duckdb19TestGeneratedValues8GetValueEmm.exit
+  %33 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body33
+
+bb.ab:                                            ; preds = %bb.m
+  %i.cq = getelementptr inbounds nuw i8, ptr %8, i64 24
   store i64 %i.av, ptr %i.cq, align 8, !tbaa !39
   %i.cr = load ptr, ptr %i.l, align 8, !tbaa !1640, !nonnull !38, !align !148 ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8 ; 3 uses
@@ -569,7 +569,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.183) #28
-          to label %.noexc40 unwind label %.loopexit.split-lp
+          to label %.noexc40 unwind label %bb.o
 
 .noexc40:                                         ; preds = %bb.ad
   unreachable
@@ -585,7 +585,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEES
   call void @llvm.assume(i1 %.not.i.i.i.i39)
   %i.di = shl nuw nsw i64 %i.dh, 3
   %i.dj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.di) #27
-          to label %.noexc41 unwind label %.loopexit ; 10 uses
+          to label %.noexc41 unwind label %.noexc37.us ; 10 uses
 
 .noexc41:                                         ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.db
@@ -698,8 +698,8 @@ _ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit: ; preds 
   %indvars.iv.next = add i64 %indvars.iv, -2048
   br i1 %i.ej, label %_ZSt8_DestroyIPN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEES4_EvT_S6_RSaIT0_E.exit.i.i, label %bb.b, !llvm.loop !1657
 
-.body33:                                          ; preds = %.loopexit, %.loopexit.split-lp, %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %.split.us, %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i75, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i74, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %bb.v, %29
-  %.pn.pn = phi { ptr, i32 } [ %30, %29 ], [ %i.cn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i74 ], [ %i.bt, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.bt, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ], [ %.pn9.i.i, %bb.r ], [ %i.cd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ], [ %i.cd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ], [ %.pn8.i.i.i, %bb.v ], [ %25, %.split.us ], [ %i.cn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i75 ], [ %.pn8.i.i.i71, %bb.z ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
+.body33:                                          ; preds = %.noexc37.us, %bb.o, %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %32, %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i75, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i74, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %bb.v, %bb.n
+  %.pn.pn = phi { ptr, i32 } [ %10, %bb.n ], [ %i.cn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i74 ], [ %i.bt, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.bt, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ], [ %.pn9.i.i, %bb.r ], [ %i.cd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ], [ %i.cd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ], [ %.pn8.i.i.i, %bb.v ], [ %33, %32 ], [ %i.cn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i75 ], [ %.pn8.i.i.i71, %bb.z ], [ %lpad.loopexit, %.noexc37.us ], [ %lpad.loopexit.split-lp, %bb.o ] ; 2 uses
   %i.ek = load ptr, ptr %5, align 8, !tbaa !1469  ; 3 uses
   %.not.i43 = icmp eq ptr %i.ek, null
   br i1 %.not.i43, label %.body, label %_ZNKSt14default_deleteIN6duckdb9DataChunkEEclEPS1_.exit.i44
@@ -709,8 +709,8 @@ _ZNKSt14default_deleteIN6duckdb9DataChunkEEclEPS1_.exit.i44: ; preds = %.body33
   call void @_ZdlPv(ptr noundef nonnull %i.ek) #29
   br label %.body
 
-.body:                                            ; preds = %_ZNKSt14default_deleteIN6duckdb9DataChunkEEclEPS1_.exit.i44, %.body33, %27, %bb.g
-  %.pn.pn.pn = phi { ptr, i32 } [ %i.ae, %bb.g ], [ %28, %27 ], [ %.pn.pn, %.body33 ], [ %.pn.pn, %_ZNKSt14default_deleteIN6duckdb9DataChunkEEclEPS1_.exit.i44 ]
+.body:                                            ; preds = %_ZNKSt14default_deleteIN6duckdb9DataChunkEEclEPS1_.exit.i44, %.body33, %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us, %bb.g
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.ae, %bb.g ], [ %9, %_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEptEv.exit.us ], [ %.pn.pn, %.body33 ], [ %.pn.pn, %_ZNKSt14default_deleteIN6duckdb9DataChunkEEclEPS1_.exit.i44 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   br label %bb.af
 

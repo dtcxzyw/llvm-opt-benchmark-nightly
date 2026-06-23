@@ -201,7 +201,7 @@ bb.cj:                                            ; preds = %bb.ce
           cleanup
   br label %.body
 
-.preheader.us.preheader:                          ; preds = %.loopexit, %.loopexit279
+.preheader.us.preheader:                          ; preds = %.loopexit279, %.loopexit
   %.0150 = phi ptr [ %i.hr, %.loopexit ], [ null, %.loopexit279 ]
   %.0149 = phi float [ %i.hy, %.loopexit ], [ 0.000000e+00, %.loopexit279 ] ; 2 uses
   %.0148 = phi float [ %i.ia, %.loopexit ], [ 0.000000e+00, %.loopexit279 ] ; 2 uses
@@ -210,12 +210,12 @@ bb.cj:                                            ; preds = %bb.ce
   %wide.trip.count = zext nneg i32 %i.fy to i64
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %indvars.iv319 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next320, %._crit_edge.us ] ; 3 uses
-  %.0143304.us = phi i32 [ 0, %.preheader.us.preheader ], [ %i.km, %._crit_edge.us ]
-  %.1151302.us = phi ptr [ %.0150, %.preheader.us.preheader ], [ %.3153.us, %._crit_edge.us ]
-  %.0154301.us = phi ptr [ %i.hj, %.preheader.us.preheader ], [ %i.jp, %._crit_edge.us ]
-  %.0156300.us = phi ptr [ %i.gf, %.preheader.us.preheader ], [ %i.kn, %._crit_edge.us ]
+.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge
+  %indvars.iv319 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next320, %._crit_edge ] ; 3 uses
+  %.0143304.us = phi i32 [ 0, %.preheader.us.preheader ], [ %i.km, %._crit_edge ]
+  %.1151302.us = phi ptr [ %.0150, %.preheader.us.preheader ], [ %.3153.us, %._crit_edge ]
+  %.0154301.us = phi ptr [ %i.hj, %.preheader.us.preheader ], [ %i.jp, %._crit_edge ]
+  %.0156300.us = phi ptr [ %i.gf, %.preheader.us.preheader ], [ %i.kn, %._crit_edge ]
   %i.ig = trunc nuw nsw i64 %indvars.iv319 to i32
   %i.ih = uitofp nneg i32 %i.ig to float          ; 4 uses
   %i.ii = mul nuw i64 %indvars.iv319, %i.if
@@ -227,6 +227,20 @@ bb.cj:                                            ; preds = %bb.ce
   %i.in = uitofp nneg i32 %i.im to float
   %i.io = fmul float %.0149, %i.in                ; 2 uses
   br label %bb.ck
+
+._crit_edge305.split:                             ; preds = %._crit_edge
+  store i32 1, ptr %i.bw, align 8
+  %7 = invoke noalias noundef nonnull dereferenceable(4) ptr @_Znam(i64 noundef 4) #22
+          to label %bb.cp unwind label %8         ; 2 uses
+
+8:                                                ; preds = %._crit_edge305.split
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body
+
+._crit_edge:                                      ; preds = %bb.cn
+  %exitcond321.not = icmp eq i64 %indvars.iv.next320, %wide.trip.count322
+  br i1 %exitcond321.not, label %._crit_edge305.split, label %.preheader.us, !llvm.loop !8
 
 bb.ck:                                            ; preds = %.preheader.us, %bb.cn
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %bb.cn ] ; 5 uses
@@ -321,7 +335,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck
   %.3153.us = phi ptr [ %i.ka, %bb.cl ], [ %.2152294.us, %bb.ck ] ; 2 uses
   store i32 4, ptr %.1157292.us, align 8
   %i.kb = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #22
-          to label %bb.cn unwind label %.split.us ; 2 uses
+          to label %bb.cn unwind label %bb.co     ; 2 uses
 
 bb.cn:                                            ; preds = %bb.cm
   %i.kc = getelementptr inbounds nuw i8, ptr %.1157292.us, i64 8 ; 4 uses
@@ -343,30 +357,16 @@ bb.cn:                                            ; preds = %bb.cm
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %.1157292.us, i64 16 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.ck, !llvm.loop !8
+  br i1 %exitcond.not, label %._crit_edge, label %bb.ck, !llvm.loop !10
 
-._crit_edge.us:                                   ; preds = %bb.cn
-  %exitcond323.not = icmp eq i64 %indvars.iv.next320, %wide.trip.count322
-  br i1 %exitcond323.not, label %._crit_edge305, label %.preheader.us, !llvm.loop !10
-
-.split.us:                                        ; preds = %bb.cm
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-._crit_edge305:                                   ; preds = %._crit_edge.us
-  store i32 1, ptr %i.bw, align 8
-  %8 = invoke noalias noundef nonnull dereferenceable(4) ptr @_Znam(i64 noundef 4) #22
-          to label %bb.cp unwind label %bb.co     ; 2 uses
-
-bb.co:                                            ; preds = %._crit_edge305
+bb.co:                                            ; preds = %bb.cm
   %i.ko = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-bb.cp:                                            ; preds = %._crit_edge305
-  store ptr %8, ptr %i.bx, align 8
-  store i32 0, ptr %8, align 4
+bb.cp:                                            ; preds = %._crit_edge305.split
+  store ptr %7, ptr %i.bx, align 8
+  store i32 0, ptr %7, align 4
   br label %bb.cq
 
 bb.cq:                                            ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit236, %bb.ai, %bb.ay, %bb.bj, %bb.bh, %bb.cp, %bb.bk, %bb.an, %bb.ad
@@ -512,8 +512,8 @@ _ZN6Assimp12StreamReaderILb0ELb0EED2Ev.exit:      ; preds = %bb.da, %bb.dc, %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   ret void
 
-.body:                                            ; preds = %.loopexit280, %.loopexit.split-lp, %.loopexit281, %.loopexit.split-lp282, %bb.cv, %bb.cu, %bb.br, %bb.bt, %bb.bo, %bb.v, %bb.ah, %bb.ar, %bb.ax, %bb.bg, %bb.bc, %bb.au, %bb.am, %bb.ac, %bb.w, %bb.s, %bb.x, %bb.y, %bb.cx, %bb.cg, %bb.ci, %bb.co, %.split.us, %bb.cj, %bb.ch, %bb.by, %bb.bv, %bb.n, %bb.k, %bb.h, %bb.g
-  %.pn191 = phi { ptr, i32 } [ %i.af, %bb.g ], [ %i.ag, %bb.h ], [ %i.aj, %bb.k ], [ %i.ao, %bb.n ], [ %i.ko, %bb.co ], [ %i.lm, %bb.cx ], [ %i.cm, %bb.x ], [ %i.cn, %bb.y ], [ %i.ev, %bb.br ], [ %i.cb, %bb.s ], [ %i.ej, %bb.bg ], [ %i.eq, %bb.bo ], [ %i.fl, %bb.bv ], [ %i.fp, %bb.by ], [ %i.ib, %bb.cg ], [ %i.ic, %bb.ch ], [ %i.id, %bb.ci ], [ %i.ie, %bb.cj ], [ %7, %.split.us ], [ %i.cl, %bb.w ], [ %i.cj, %bb.v ], [ %i.cs, %bb.ac ], [ %i.cz, %bb.ah ], [ %i.dg, %bb.am ], [ %i.do, %bb.ar ], [ %i.dt, %bb.au ], [ %i.dy, %bb.ax ], [ %i.ee, %bb.bc ], [ %i.lc, %bb.cu ], [ %i.fi, %bb.bt ], [ %lpad.loopexit.split-lp284, %.loopexit.split-lp282 ], [ %i.ld, %bb.cv ], [ %lpad.loopexit283, %.loopexit281 ], [ %lpad.loopexit, %.loopexit280 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit280, %.loopexit.split-lp, %.loopexit281, %.loopexit.split-lp282, %bb.cv, %bb.cu, %bb.br, %bb.bt, %bb.bo, %bb.v, %bb.ah, %bb.ar, %bb.ax, %bb.bg, %bb.bc, %bb.au, %bb.am, %bb.ac, %bb.w, %bb.s, %bb.x, %bb.y, %bb.cx, %bb.cg, %bb.ci, %8, %bb.co, %bb.cj, %bb.ch, %bb.by, %bb.bv, %bb.n, %bb.k, %bb.h, %bb.g
+  %.pn191 = phi { ptr, i32 } [ %i.af, %bb.g ], [ %i.ag, %bb.h ], [ %i.aj, %bb.k ], [ %i.ao, %bb.n ], [ %9, %8 ], [ %i.lm, %bb.cx ], [ %i.cm, %bb.x ], [ %i.cn, %bb.y ], [ %i.ev, %bb.br ], [ %i.cb, %bb.s ], [ %i.ej, %bb.bg ], [ %i.eq, %bb.bo ], [ %i.fl, %bb.bv ], [ %i.fp, %bb.by ], [ %i.ib, %bb.cg ], [ %i.ic, %bb.ch ], [ %i.id, %bb.ci ], [ %i.ie, %bb.cj ], [ %i.ko, %bb.co ], [ %i.cl, %bb.w ], [ %i.cj, %bb.v ], [ %i.cs, %bb.ac ], [ %i.cz, %bb.ah ], [ %i.dg, %bb.am ], [ %i.do, %bb.ar ], [ %i.dt, %bb.au ], [ %i.dy, %bb.ax ], [ %i.ee, %bb.bc ], [ %i.lc, %bb.cu ], [ %i.fi, %bb.bt ], [ %lpad.loopexit.split-lp284, %.loopexit.split-lp282 ], [ %i.ld, %bb.cv ], [ %lpad.loopexit283, %.loopexit281 ], [ %lpad.loopexit, %.loopexit280 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @_ZN6Assimp12StreamReaderILb0ELb0EED2Ev(ptr noundef nonnull align 8 dead_on_return(49) dereferenceable(49) %5) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   br label %bb.dh

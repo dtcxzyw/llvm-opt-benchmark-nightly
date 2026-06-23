@@ -201,8 +201,8 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.k) #23
   br label %bb.h
 
-common.resume:                                    ; preds = %20, %bb.h
-  %common.resume.op = phi { ptr, i32 } [ %.pn.pn, %bb.h ], [ %21, %20 ]
+common.resume:                                    ; preds = %8, %bb.h
+  %common.resume.op = phi { ptr, i32 } [ %.pn.pn, %bb.h ], [ %9, %8 ]
   resume { ptr, i32 } %common.resume.op
 
 bb.h:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.g, %bb.e
@@ -219,11 +219,11 @@ bb.i:                                             ; preds = %bb.a
   %i.v = zext i32 %i.u to i64
   %i.w = shl nuw nsw i64 %i.v, 2
   %.not.i = icmp ugt i64 %i.w, %i.b
-  br i1 %.not.i, label %17, label %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
+  br i1 %.not.i, label %5, label %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
 
 _ZNK6duckdb10ByteBuffer9availableEm.exit.preheader: ; preds = %bb.i
   %.not34 = icmp eq i32 %2, 0
-  br i1 %.not34, label %.split.us, label %.lr.ph.us.preheader
+  br i1 %.not34, label %bb.j, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
   %i.x = load ptr, ptr %0, align 8, !tbaa !245
@@ -236,45 +236,34 @@ _ZNK6duckdb10ByteBuffer9availableEm.exit.preheader: ; preds = %bb.i
 
 .lr.ph.us.preheader.new:                          ; preds = %.lr.ph.us.preheader
   %unroll_iter = and i64 %wide.trip.count, 4294967292
-  br label %bb.j
+  br label %.split.us
 
-bb.j:                                             ; preds = %bb.j, %.lr.ph.us.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %indvars.iv.next.353, %bb.j ] ; 6 uses
-  %niter = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %niter.next.3, %bb.j ]
-  %5 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv
-  %6 = load i8, ptr %5, align 1, !tbaa !123
-  %7 = shl nuw nsw i64 %indvars.iv, 2
-  %gep.us = getelementptr inbounds nuw i8, ptr %1, i64 %7
-  store i8 %6, ptr %gep.us, align 1, !tbaa !123
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next
-  %9 = load i8, ptr %8, align 1, !tbaa !123
-  %10 = shl nuw nsw i64 %indvars.iv.next, 2
-  %gep.us.146 = getelementptr inbounds nuw i8, ptr %1, i64 %10
-  store i8 %9, ptr %gep.us.146, align 1, !tbaa !123
-  %indvars.iv.next.147 = or disjoint i64 %indvars.iv, 2 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.147
-  %12 = load i8, ptr %11, align 1, !tbaa !123
-  %13 = shl nuw nsw i64 %indvars.iv.next.147, 2
-  %gep.us.249 = getelementptr inbounds nuw i8, ptr %1, i64 %13
-  store i8 %12, ptr %gep.us.249, align 1, !tbaa !123
-  %indvars.iv.next.250 = or disjoint i64 %indvars.iv, 3 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.250
-  %15 = load i8, ptr %14, align 1, !tbaa !123
-  %16 = shl nuw nsw i64 %indvars.iv.next.250, 2
-  %gep.us.352 = getelementptr inbounds nuw i8, ptr %1, i64 %16
-  store i8 %15, ptr %gep.us.352, align 1, !tbaa !123
-  %indvars.iv.next.353 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.us.unr-lcssa, label %bb.j, !llvm.loop !246
+5:                                                ; preds = %bb.i
+  %6 = tail call ptr @__cxa_allocate_exception(i64 16) #23 ; 3 uses
+  invoke void @_ZNSt13runtime_errorC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull @.str.16)
+          to label %7 unwind label %8
 
-._crit_edge.us.unr-lcssa:                         ; preds = %bb.j
+7:                                                ; preds = %5
+  tail call void @__cxa_throw(ptr nonnull %6, ptr nonnull @_ZTISt13runtime_error, ptr nonnull @_ZNSt13runtime_errorD1Ev) #24
+  unreachable
+
+8:                                                ; preds = %5
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  tail call void @__cxa_free_exception(ptr nonnull %6) #23
+  br label %common.resume
+
+bb.j:                                             ; preds = %._crit_edge.us.3, %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
+  %.pre-phi = phi i32 [ %.pre42, %._crit_edge.us.3 ], [ %i.u, %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader ]
+  store i32 %.pre-phi, ptr %i.s, align 8, !tbaa !34
+  ret void
+
+._crit_edge.us.unr-lcssa:                         ; preds = %.split.us
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge.us, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.unr-lcssa, %.lr.ph.us.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next.353, %._crit_edge.us.unr-lcssa ]
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next.351, %._crit_edge.us.unr-lcssa ]
   %lcmp.mod44 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod44)
   br label %bb.k
@@ -290,7 +279,7 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %bb.k, !llvm.loop !247
+  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %bb.k, !llvm.loop !246
 
 ._crit_edge.us:                                   ; preds = %bb.k, %._crit_edge.us.unr-lcssa
   %i.ae = load ptr, ptr %0, align 8, !tbaa !245
@@ -337,7 +326,7 @@ bb.l:                                             ; preds = %bb.l, %._crit_edge.
   %indvars.iv.next.1.3 = add nuw nsw i64 %indvars.iv.1, 4 ; 2 uses
   %niter60.next.3 = add nuw i64 %niter60, 4       ; 2 uses
   %niter60.ncmp.3 = icmp eq i64 %niter60.next.3, %unroll_iter59
-  br i1 %niter60.ncmp.3, label %._crit_edge.us.1.unr-lcssa, label %bb.l, !llvm.loop !246
+  br i1 %niter60.ncmp.3, label %._crit_edge.us.1.unr-lcssa, label %bb.l, !llvm.loop !247
 
 ._crit_edge.us.1.unr-lcssa:                       ; preds = %bb.l
   %lcmp.mod57.not = icmp eq i64 %xtraiter55, 0
@@ -408,7 +397,7 @@ bb.n:                                             ; preds = %bb.n, %._crit_edge.
   %indvars.iv.next.2.3 = add nuw nsw i64 %indvars.iv.2, 4 ; 2 uses
   %niter67.next.3 = add nuw i64 %niter67, 4       ; 2 uses
   %niter67.ncmp.3 = icmp eq i64 %niter67.next.3, %unroll_iter66
-  br i1 %niter67.ncmp.3, label %._crit_edge.us.2.unr-lcssa, label %bb.n, !llvm.loop !246
+  br i1 %niter67.ncmp.3, label %._crit_edge.us.2.unr-lcssa, label %bb.n, !llvm.loop !247
 
 ._crit_edge.us.2.unr-lcssa:                       ; preds = %bb.n
   %lcmp.mod64.not = icmp eq i64 %xtraiter62, 0
@@ -479,7 +468,7 @@ bb.p:                                             ; preds = %bb.p, %._crit_edge.
   %indvars.iv.next.3.3 = add nuw nsw i64 %indvars.iv.3, 4 ; 2 uses
   %niter74.next.3 = add nuw i64 %niter74, 4       ; 2 uses
   %niter74.ncmp.3 = icmp eq i64 %niter74.next.3, %unroll_iter73
-  br i1 %niter74.ncmp.3, label %._crit_edge.us.3.unr-lcssa, label %bb.p, !llvm.loop !246
+  br i1 %niter74.ncmp.3, label %._crit_edge.us.3.unr-lcssa, label %bb.p, !llvm.loop !247
 
 ._crit_edge.us.3.unr-lcssa:                       ; preds = %bb.p
   %lcmp.mod71.not = icmp eq i64 %xtraiter69, 0
@@ -507,27 +496,38 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
 ._crit_edge.us.3:                                 ; preds = %bb.q, %._crit_edge.us.3.unr-lcssa
   %.pre = load i32, ptr %i.s, align 8, !tbaa !34
   %.pre42 = add i32 %.pre, %2
-  br label %.split.us
+  br label %bb.j
 
-17:                                               ; preds = %bb.i
-  %18 = tail call ptr @__cxa_allocate_exception(i64 16) #23 ; 3 uses
-  invoke void @_ZNSt13runtime_errorC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %18, ptr noundef nonnull @.str.16)
-          to label %19 unwind label %20
-
-19:                                               ; preds = %17
-  tail call void @__cxa_throw(ptr nonnull %18, ptr nonnull @_ZTISt13runtime_error, ptr nonnull @_ZNSt13runtime_errorD1Ev) #24
-  unreachable
-
-20:                                               ; preds = %17
-  %21 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %18) #23
-  br label %common.resume
-
-.split.us:                                        ; preds = %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader, %._crit_edge.us.3
-  %.pre-phi = phi i32 [ %.pre42, %._crit_edge.us.3 ], [ %i.u, %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader ]
-  store i32 %.pre-phi, ptr %i.s, align 8, !tbaa !34
-  ret void
+.split.us:                                        ; preds = %.split.us, %.lr.ph.us.preheader.new
+  %indvars.iv = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %indvars.iv.next.351, %.split.us ] ; 6 uses
+  %niter = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %niter.next.3, %.split.us ]
+  %10 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv
+  %11 = load i8, ptr %10, align 1, !tbaa !123
+  %12 = shl nuw nsw i64 %indvars.iv, 2
+  %gep = getelementptr inbounds nuw i8, ptr %1, i64 %12
+  store i8 %11, ptr %gep, align 1, !tbaa !123
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next
+  %14 = load i8, ptr %13, align 1, !tbaa !123
+  %15 = shl nuw nsw i64 %indvars.iv.next, 2
+  %gep.144 = getelementptr inbounds nuw i8, ptr %1, i64 %15
+  store i8 %14, ptr %gep.144, align 1, !tbaa !123
+  %indvars.iv.next.145 = or disjoint i64 %indvars.iv, 2 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.145
+  %17 = load i8, ptr %16, align 1, !tbaa !123
+  %18 = shl nuw nsw i64 %indvars.iv.next.145, 2
+  %gep.247 = getelementptr inbounds nuw i8, ptr %1, i64 %18
+  store i8 %17, ptr %gep.247, align 1, !tbaa !123
+  %indvars.iv.next.248 = or disjoint i64 %indvars.iv, 3 ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.248
+  %20 = load i8, ptr %19, align 1, !tbaa !123
+  %21 = shl nuw nsw i64 %indvars.iv.next.248, 2
+  %gep.350 = getelementptr inbounds nuw i8, ptr %1, i64 %21
+  store i8 %20, ptr %gep.350, align 1, !tbaa !123
+  %indvars.iv.next.351 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
+  br i1 %niter.ncmp.3, label %._crit_edge.us.unr-lcssa, label %.split.us, !llvm.loop !247
 
 bb.r:                                             ; preds = %bb.d
   unreachable
@@ -616,8 +616,8 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.k) #23
   br label %bb.h
 
-common.resume:                                    ; preds = %20, %bb.h
-  %common.resume.op = phi { ptr, i32 } [ %.pn.pn, %bb.h ], [ %21, %20 ]
+common.resume:                                    ; preds = %8, %bb.h
+  %common.resume.op = phi { ptr, i32 } [ %.pn.pn, %bb.h ], [ %9, %8 ]
   resume { ptr, i32 } %common.resume.op
 
 bb.h:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.g, %bb.e
@@ -634,11 +634,11 @@ bb.i:                                             ; preds = %bb.a
   %i.v = zext i32 %i.u to i64
   %i.w = shl nuw nsw i64 %i.v, 3
   %.not.i = icmp ugt i64 %i.w, %i.b
-  br i1 %.not.i, label %17, label %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
+  br i1 %.not.i, label %5, label %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
 
 _ZNK6duckdb10ByteBuffer9availableEm.exit.preheader: ; preds = %bb.i
   %.not34 = icmp eq i32 %2, 0
-  br i1 %.not34, label %.split.us, label %.lr.ph.us.preheader
+  br i1 %.not34, label %bb.j, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
   %i.x = load ptr, ptr %0, align 8, !tbaa !245
@@ -651,45 +651,34 @@ _ZNK6duckdb10ByteBuffer9availableEm.exit.preheader: ; preds = %bb.i
 
 .lr.ph.us.preheader.new:                          ; preds = %.lr.ph.us.preheader
   %unroll_iter = and i64 %wide.trip.count, 4294967292
-  br label %bb.j
+  br label %.split.us
 
-bb.j:                                             ; preds = %bb.j, %.lr.ph.us.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %indvars.iv.next.353, %bb.j ] ; 6 uses
-  %niter = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %niter.next.3, %bb.j ]
-  %5 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv
-  %6 = load i8, ptr %5, align 1, !tbaa !123
-  %7 = shl nuw nsw i64 %indvars.iv, 3
-  %gep.us = getelementptr inbounds nuw i8, ptr %1, i64 %7
-  store i8 %6, ptr %gep.us, align 1, !tbaa !123
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next
-  %9 = load i8, ptr %8, align 1, !tbaa !123
-  %10 = shl nuw nsw i64 %indvars.iv.next, 3
-  %gep.us.146 = getelementptr inbounds nuw i8, ptr %1, i64 %10
-  store i8 %9, ptr %gep.us.146, align 1, !tbaa !123
-  %indvars.iv.next.147 = or disjoint i64 %indvars.iv, 2 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.147
-  %12 = load i8, ptr %11, align 1, !tbaa !123
-  %13 = shl nuw nsw i64 %indvars.iv.next.147, 3
-  %gep.us.249 = getelementptr inbounds nuw i8, ptr %1, i64 %13
-  store i8 %12, ptr %gep.us.249, align 1, !tbaa !123
-  %indvars.iv.next.250 = or disjoint i64 %indvars.iv, 3 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.250
-  %15 = load i8, ptr %14, align 1, !tbaa !123
-  %16 = shl nuw nsw i64 %indvars.iv.next.250, 3
-  %gep.us.352 = getelementptr inbounds nuw i8, ptr %1, i64 %16
-  store i8 %15, ptr %gep.us.352, align 1, !tbaa !123
-  %indvars.iv.next.353 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.us.unr-lcssa, label %bb.j, !llvm.loop !251
+5:                                                ; preds = %bb.i
+  %6 = tail call ptr @__cxa_allocate_exception(i64 16) #23 ; 3 uses
+  invoke void @_ZNSt13runtime_errorC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull @.str.16)
+          to label %7 unwind label %8
 
-._crit_edge.us.unr-lcssa:                         ; preds = %bb.j
+7:                                                ; preds = %5
+  tail call void @__cxa_throw(ptr nonnull %6, ptr nonnull @_ZTISt13runtime_error, ptr nonnull @_ZNSt13runtime_errorD1Ev) #24
+  unreachable
+
+8:                                                ; preds = %5
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  tail call void @__cxa_free_exception(ptr nonnull %6) #23
+  br label %common.resume
+
+bb.j:                                             ; preds = %._crit_edge.us.7, %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader
+  %.pre-phi = phi i32 [ %.pre42, %._crit_edge.us.7 ], [ %i.u, %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader ]
+  store i32 %.pre-phi, ptr %i.s, align 8, !tbaa !34
+  ret void
+
+._crit_edge.us.unr-lcssa:                         ; preds = %.split.us
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge.us, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.unr-lcssa, %.lr.ph.us.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next.353, %._crit_edge.us.unr-lcssa ]
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next.351, %._crit_edge.us.unr-lcssa ]
   %lcmp.mod44 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod44)
   br label %bb.k
@@ -705,7 +694,7 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %bb.k, !llvm.loop !252
+  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %bb.k, !llvm.loop !251
 
 ._crit_edge.us:                                   ; preds = %bb.k, %._crit_edge.us.unr-lcssa
   %i.ae = load ptr, ptr %0, align 8, !tbaa !245
@@ -752,7 +741,7 @@ bb.l:                                             ; preds = %bb.l, %._crit_edge.
   %indvars.iv.next.1.3 = add nuw nsw i64 %indvars.iv.1, 4 ; 2 uses
   %niter60.next.3 = add i64 %niter60, 4           ; 2 uses
   %niter60.ncmp.3 = icmp eq i64 %niter60.next.3, %unroll_iter59
-  br i1 %niter60.ncmp.3, label %._crit_edge.us.1.unr-lcssa, label %bb.l, !llvm.loop !251
+  br i1 %niter60.ncmp.3, label %._crit_edge.us.1.unr-lcssa, label %bb.l, !llvm.loop !252
 
 ._crit_edge.us.1.unr-lcssa:                       ; preds = %bb.l
   %lcmp.mod57.not = icmp eq i64 %xtraiter55, 0
@@ -823,7 +812,7 @@ bb.n:                                             ; preds = %bb.n, %._crit_edge.
   %indvars.iv.next.2.3 = add nuw nsw i64 %indvars.iv.2, 4 ; 2 uses
   %niter67.next.3 = add i64 %niter67, 4           ; 2 uses
   %niter67.ncmp.3 = icmp eq i64 %niter67.next.3, %unroll_iter66
-  br i1 %niter67.ncmp.3, label %._crit_edge.us.2.unr-lcssa, label %bb.n, !llvm.loop !251
+  br i1 %niter67.ncmp.3, label %._crit_edge.us.2.unr-lcssa, label %bb.n, !llvm.loop !252
 
 ._crit_edge.us.2.unr-lcssa:                       ; preds = %bb.n
   %lcmp.mod64.not = icmp eq i64 %xtraiter62, 0
@@ -894,7 +883,7 @@ bb.p:                                             ; preds = %bb.p, %._crit_edge.
   %indvars.iv.next.3.3 = add nuw nsw i64 %indvars.iv.3, 4 ; 2 uses
   %niter74.next.3 = add i64 %niter74, 4           ; 2 uses
   %niter74.ncmp.3 = icmp eq i64 %niter74.next.3, %unroll_iter73
-  br i1 %niter74.ncmp.3, label %._crit_edge.us.3.unr-lcssa, label %bb.p, !llvm.loop !251
+  br i1 %niter74.ncmp.3, label %._crit_edge.us.3.unr-lcssa, label %bb.p, !llvm.loop !252
 
 ._crit_edge.us.3.unr-lcssa:                       ; preds = %bb.p
   %lcmp.mod71.not = icmp eq i64 %xtraiter69, 0
@@ -965,7 +954,7 @@ bb.r:                                             ; preds = %bb.r, %._crit_edge.
   %indvars.iv.next.4.3 = add nuw nsw i64 %indvars.iv.4, 4 ; 2 uses
   %niter81.next.3 = add i64 %niter81, 4           ; 2 uses
   %niter81.ncmp.3 = icmp eq i64 %niter81.next.3, %unroll_iter80
-  br i1 %niter81.ncmp.3, label %._crit_edge.us.4.unr-lcssa, label %bb.r, !llvm.loop !251
+  br i1 %niter81.ncmp.3, label %._crit_edge.us.4.unr-lcssa, label %bb.r, !llvm.loop !252
 
 ._crit_edge.us.4.unr-lcssa:                       ; preds = %bb.r
   %lcmp.mod78.not = icmp eq i64 %xtraiter76, 0
@@ -1036,7 +1025,7 @@ bb.t:                                             ; preds = %bb.t, %._crit_edge.
   %indvars.iv.next.5.3 = add nuw nsw i64 %indvars.iv.5, 4 ; 2 uses
   %niter88.next.3 = add i64 %niter88, 4           ; 2 uses
   %niter88.ncmp.3 = icmp eq i64 %niter88.next.3, %unroll_iter87
-  br i1 %niter88.ncmp.3, label %._crit_edge.us.5.unr-lcssa, label %bb.t, !llvm.loop !251
+  br i1 %niter88.ncmp.3, label %._crit_edge.us.5.unr-lcssa, label %bb.t, !llvm.loop !252
 
 ._crit_edge.us.5.unr-lcssa:                       ; preds = %bb.t
   %lcmp.mod85.not = icmp eq i64 %xtraiter83, 0
@@ -1107,7 +1096,7 @@ bb.v:                                             ; preds = %bb.v, %._crit_edge.
   %indvars.iv.next.6.3 = add nuw nsw i64 %indvars.iv.6, 4 ; 2 uses
   %niter95.next.3 = add i64 %niter95, 4           ; 2 uses
   %niter95.ncmp.3 = icmp eq i64 %niter95.next.3, %unroll_iter94
-  br i1 %niter95.ncmp.3, label %._crit_edge.us.6.unr-lcssa, label %bb.v, !llvm.loop !251
+  br i1 %niter95.ncmp.3, label %._crit_edge.us.6.unr-lcssa, label %bb.v, !llvm.loop !252
 
 ._crit_edge.us.6.unr-lcssa:                       ; preds = %bb.v
   %lcmp.mod92.not = icmp eq i64 %xtraiter90, 0
@@ -1178,7 +1167,7 @@ bb.x:                                             ; preds = %bb.x, %._crit_edge.
   %indvars.iv.next.7.3 = add nuw nsw i64 %indvars.iv.7, 4 ; 2 uses
   %niter102.next.3 = add i64 %niter102, 4         ; 2 uses
   %niter102.ncmp.3 = icmp eq i64 %niter102.next.3, %unroll_iter101
-  br i1 %niter102.ncmp.3, label %._crit_edge.us.7.unr-lcssa, label %bb.x, !llvm.loop !251
+  br i1 %niter102.ncmp.3, label %._crit_edge.us.7.unr-lcssa, label %bb.x, !llvm.loop !252
 
 ._crit_edge.us.7.unr-lcssa:                       ; preds = %bb.x
   %lcmp.mod99.not = icmp eq i64 %xtraiter97, 0
@@ -1206,27 +1195,38 @@ bb.y:                                             ; preds = %bb.y, %.epil.prehea
 ._crit_edge.us.7:                                 ; preds = %bb.y, %._crit_edge.us.7.unr-lcssa
   %.pre = load i32, ptr %i.s, align 8, !tbaa !34
   %.pre42 = add i32 %.pre, %2
-  br label %.split.us
+  br label %bb.j
 
-17:                                               ; preds = %bb.i
-  %18 = tail call ptr @__cxa_allocate_exception(i64 16) #23 ; 3 uses
-  invoke void @_ZNSt13runtime_errorC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %18, ptr noundef nonnull @.str.16)
-          to label %19 unwind label %20
-
-19:                                               ; preds = %17
-  tail call void @__cxa_throw(ptr nonnull %18, ptr nonnull @_ZTISt13runtime_error, ptr nonnull @_ZNSt13runtime_errorD1Ev) #24
-  unreachable
-
-20:                                               ; preds = %17
-  %21 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %18) #23
-  br label %common.resume
-
-.split.us:                                        ; preds = %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader, %._crit_edge.us.7
-  %.pre-phi = phi i32 [ %.pre42, %._crit_edge.us.7 ], [ %i.u, %_ZNK6duckdb10ByteBuffer9availableEm.exit.preheader ]
-  store i32 %.pre-phi, ptr %i.s, align 8, !tbaa !34
-  ret void
+.split.us:                                        ; preds = %.split.us, %.lr.ph.us.preheader.new
+  %indvars.iv = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %indvars.iv.next.351, %.split.us ] ; 6 uses
+  %niter = phi i64 [ 0, %.lr.ph.us.preheader.new ], [ %niter.next.3, %.split.us ]
+  %10 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv
+  %11 = load i8, ptr %10, align 1, !tbaa !123
+  %12 = shl nuw nsw i64 %indvars.iv, 3
+  %gep = getelementptr inbounds nuw i8, ptr %1, i64 %12
+  store i8 %11, ptr %gep, align 1, !tbaa !123
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next
+  %14 = load i8, ptr %13, align 1, !tbaa !123
+  %15 = shl nuw nsw i64 %indvars.iv.next, 3
+  %gep.144 = getelementptr inbounds nuw i8, ptr %1, i64 %15
+  store i8 %14, ptr %gep.144, align 1, !tbaa !123
+  %indvars.iv.next.145 = or disjoint i64 %indvars.iv, 2 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.145
+  %17 = load i8, ptr %16, align 1, !tbaa !123
+  %18 = shl nuw nsw i64 %indvars.iv.next.145, 3
+  %gep.247 = getelementptr inbounds nuw i8, ptr %1, i64 %18
+  store i8 %17, ptr %gep.247, align 1, !tbaa !123
+  %indvars.iv.next.248 = or disjoint i64 %indvars.iv, 3 ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %i.z, i64 %indvars.iv.next.248
+  %20 = load i8, ptr %19, align 1, !tbaa !123
+  %21 = shl nuw nsw i64 %indvars.iv.next.248, 3
+  %gep.350 = getelementptr inbounds nuw i8, ptr %1, i64 %21
+  store i8 %20, ptr %gep.350, align 1, !tbaa !123
+  %indvars.iv.next.351 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
+  br i1 %niter.ncmp.3, label %._crit_edge.us.unr-lcssa, label %.split.us, !llvm.loop !252
 
 bb.z:                                             ; preds = %bb.d
   unreachable
@@ -1629,13 +1629,13 @@ begin_hunk_1_@llvm.vector.reduce.umax.v4i32
 !243 = !{!"vtable pointer", !6, i64 0}
 !244 = !{!35, !28, i64 8}
 !245 = !{!35, !27, i64 0}
-!246 = distinct !{!246, !125}
-!247 = distinct !{!247, !127}
+!246 = distinct !{!246, !127}
+!247 = distinct !{!247, !125}
 !248 = distinct !{!248, !127}
 !249 = distinct !{!249, !127}
 !250 = distinct !{!250, !127}
-!251 = distinct !{!251, !125}
-!252 = distinct !{!252, !127}
+!251 = distinct !{!251, !127}
+!252 = distinct !{!252, !125}
 !253 = distinct !{!253, !127}
 !254 = distinct !{!254, !127}
 !255 = distinct !{!255, !127}

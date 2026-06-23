@@ -201,9 +201,9 @@ middle.block829:                                  ; preds = %vector.body824
 
 scalar.ph817.preheader:                           ; preds = %.lr.ph.i420, %middle.block829
   %.02933.i.ph = phi i64 [ 0, %.lr.ph.i420 ], [ %n.vec821, %middle.block829 ]
-  br label %scalar.ph817
+  br label %.preheader.us.i.new
 
-.preheader32.i:                                   ; preds = %scalar.ph817, %middle.block829
+.preheader32.i:                                   ; preds = %.preheader.us.i.new, %middle.block829
   %.not38.i = icmp eq i64 %2, 0
   br i1 %.not38.i, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit.thread, label %.preheader.us.preheader.i
 
@@ -218,54 +218,37 @@ _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit.thread: ; pre
   %unroll_iter889 = and i64 %.0214, -2
   %lcmp.mod887.not = icmp eq i64 %xtraiter886, 0
   %lcmp.mod888 = trunc i64 %.0214 to i1
-  br label %.preheader.us.i
+  br label %.preheader.i422
 
-.preheader.us.i:                                  ; preds = %._crit_edge.us.i, %.preheader.us.preheader.i
-  %.02836.us.i = phi i64 [ %i.xe, %._crit_edge.us.i ], [ 0, %.preheader.us.preheader.i ] ; 2 uses
-  %18 = mul i64 %.02836.us.i, %4                  ; 3 uses
-  br i1 %i.wn, label %.epil.preheader885, label %.preheader.us.i.new
+.preheader.us.i.new:                              ; preds = %scalar.ph817.preheader, %.preheader.us.i.new
+  %niter890 = phi i64 [ %niter890.next.1, %.preheader.us.i.new ], [ %.02933.i.ph, %scalar.ph817.preheader ] ; 4 uses
+  %i.wo = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %niter890
+  %i.wp = load float, ptr %i.wo, align 4
+  %i.wq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %niter890
+  %i.wr = load float, ptr %i.wq, align 4
+  %18 = fsub float %i.wp, %i.wr                   ; 2 uses
+  %19 = fcmp ogt float %18, 0.000000e+00
+  %20 = fdiv float %18, %i.wd
+  %.sink.i = select i1 %19, float %20, float 1.000000e+00
+  %i.ws = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %niter890
+  store float %.sink.i, ptr %i.ws, align 4
+  %niter890.next.1 = add nuw i64 %niter890, 1     ; 2 uses
+  %niter890.ncmp.1 = icmp eq i64 %niter890.next.1, %.0214
+  br i1 %niter890.ncmp.1, label %.preheader32.i, label %.preheader.us.i.new, !llvm.loop !823
 
-.preheader.us.i.new:                              ; preds = %.preheader.us.i, %.preheader.us.i.new
-  %.034.us.i = phi i64 [ %37, %.preheader.us.i.new ], [ 0, %.preheader.us.i ] ; 5 uses
-  %niter890 = phi i64 [ %niter890.next.1, %.preheader.us.i.new ], [ 0, %.preheader.us.i ]
-  %19 = load ptr, ptr %i.wm, align 8
-  %20 = add i64 %.034.us.i, %18                   ; 2 uses
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %19, i64 %20
-  %22 = load i64, ptr %21, align 8
-  %23 = sitofp i64 %22 to float
-  %i.wo = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.034.us.i
-  %i.wp = load float, ptr %i.wo, align 8
-  %i.wq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.034.us.i
-  %i.wr = load float, ptr %i.wq, align 8
-  %24 = call float @llvm.fmuladd.f32(float %23, float %i.wp, float %i.wr)
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %20
-  store float %24, ptr %25, align 4
-  %26 = or disjoint i64 %.034.us.i, 1             ; 3 uses
-  %27 = load ptr, ptr %i.wm, align 8
-  %28 = add i64 %26, %18                          ; 2 uses
-  %29 = getelementptr inbounds nuw [8 x i8], ptr %27, i64 %28
-  %30 = load i64, ptr %29, align 8
-  %31 = sitofp i64 %30 to float
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %26
-  %33 = load float, ptr %32, align 4
-  %34 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %26
-  %35 = load float, ptr %34, align 4
-  %36 = call float @llvm.fmuladd.f32(float %31, float %33, float %35)
-  %i.ws = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %28
-  store float %36, ptr %i.ws, align 4
-  %37 = add nuw i64 %.034.us.i, 2                 ; 2 uses
-  %niter890.next.1 = add i64 %niter890, 2         ; 2 uses
-  %niter890.ncmp.1 = icmp eq i64 %niter890.next.1, %unroll_iter889
-  br i1 %niter890.ncmp.1, label %._crit_edge.us.i.unr-lcssa, label %.preheader.us.i.new, !llvm.loop !823
+.preheader.i422:                                  ; preds = %._crit_edge.us.i, %.preheader.us.preheader.i
+  %.02836.i = phi i64 [ %i.xe, %._crit_edge.us.i ], [ 0, %.preheader.us.preheader.i ] ; 2 uses
+  %21 = mul i64 %.02836.i, %4                     ; 3 uses
+  br i1 %i.wn, label %.epil.preheader885, label %scalar.ph817
 
-._crit_edge.us.i.unr-lcssa:                       ; preds = %.preheader.us.i.new
+._crit_edge.us.i.unr-lcssa:                       ; preds = %scalar.ph817
   br i1 %lcmp.mod887.not, label %._crit_edge.us.i, label %.epil.preheader885
 
-.epil.preheader885:                               ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.us.i
-  %.034.us.i.epil.init = phi i64 [ 0, %.preheader.us.i ], [ %37, %._crit_edge.us.i.unr-lcssa ] ; 3 uses
+.epil.preheader885:                               ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.i422
+  %.034.us.i.epil.init = phi i64 [ 0, %.preheader.i422 ], [ %40, %._crit_edge.us.i.unr-lcssa ] ; 3 uses
   call void @llvm.assume(i1 %lcmp.mod888)
   %i.wt = load ptr, ptr %i.wm, align 8
-  %i.wu = add i64 %.034.us.i.epil.init, %18       ; 2 uses
+  %i.wu = add i64 %.034.us.i.epil.init, %21       ; 2 uses
   %i.wv = getelementptr inbounds nuw [8 x i8], ptr %i.wt, i64 %i.wu
   %i.ww = load i64, ptr %i.wv, align 8
   %i.wx = sitofp i64 %i.ww to float
@@ -279,25 +262,42 @@ _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit.thread: ; pre
   br label %._crit_edge.us.i
 
 ._crit_edge.us.i:                                 ; preds = %._crit_edge.us.i.unr-lcssa, %.epil.preheader885
-  %i.xe = add nuw i64 %.02836.us.i, 1             ; 2 uses
+  %i.xe = add nuw i64 %.02836.i, 1                ; 2 uses
   %exitcond42.not.i = icmp eq i64 %i.xe, %2
-  br i1 %exitcond42.not.i, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit, label %.preheader.us.i, !llvm.loop !824
+  br i1 %exitcond42.not.i, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit, label %.preheader.i422, !llvm.loop !824
 
-scalar.ph817:                                     ; preds = %scalar.ph817.preheader, %scalar.ph817
-  %.02933.i = phi i64 [ %i.xk, %scalar.ph817 ], [ %.02933.i.ph, %scalar.ph817.preheader ] ; 4 uses
-  %i.xf = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.02933.i
-  %i.xg = load float, ptr %i.xf, align 4
-  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.02933.i
-  %i.xi = load float, ptr %i.xh, align 4
-  %38 = fsub float %i.xg, %i.xi                   ; 2 uses
-  %39 = fcmp ogt float %38, 0.000000e+00
-  %40 = fdiv float %38, %i.wd
-  %.sink.i = select i1 %39, float %40, float 1.000000e+00
-  %i.xj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.02933.i
-  store float %.sink.i, ptr %i.xj, align 4
-  %i.xk = add nuw i64 %.02933.i, 1                ; 2 uses
-  %exitcond.not.i421 = icmp eq i64 %i.xk, %.0214
-  br i1 %exitcond.not.i421, label %.preheader32.i, label %scalar.ph817, !llvm.loop !825
+scalar.ph817:                                     ; preds = %.preheader.i422, %scalar.ph817
+  %.034.i = phi i64 [ %40, %scalar.ph817 ], [ 0, %.preheader.i422 ] ; 5 uses
+  %.02933.i = phi i64 [ %i.xk, %scalar.ph817 ], [ 0, %.preheader.i422 ]
+  %22 = load ptr, ptr %i.wm, align 8
+  %23 = add i64 %.034.i, %21                      ; 2 uses
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %22, i64 %23
+  %25 = load i64, ptr %24, align 8
+  %26 = sitofp i64 %25 to float
+  %i.xf = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.034.i
+  %i.xg = load float, ptr %i.xf, align 8
+  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.034.i
+  %i.xi = load float, ptr %i.xh, align 8
+  %27 = call float @llvm.fmuladd.f32(float %26, float %i.xg, float %i.xi)
+  %28 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %23
+  store float %27, ptr %28, align 4
+  %29 = or disjoint i64 %.034.i, 1                ; 3 uses
+  %30 = load ptr, ptr %i.wm, align 8
+  %31 = add i64 %29, %21                          ; 2 uses
+  %32 = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %31
+  %33 = load i64, ptr %32, align 8
+  %34 = sitofp i64 %33 to float
+  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %29
+  %36 = load float, ptr %35, align 4
+  %37 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %29
+  %38 = load float, ptr %37, align 4
+  %39 = call float @llvm.fmuladd.f32(float %34, float %36, float %38)
+  %i.xj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %31
+  store float %39, ptr %i.xj, align 4
+  %40 = add nuw i64 %.034.i, 2                    ; 2 uses
+  %i.xk = add i64 %.02933.i, 2                    ; 2 uses
+  %exitcond.not.i421 = icmp eq i64 %i.xk, %unroll_iter889
+  br i1 %exitcond.not.i421, label %._crit_edge.us.i.unr-lcssa, label %scalar.ph817, !llvm.loop !825
 
 _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit: ; preds = %._crit_edge.us.i, %bb.cr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -388,9 +388,9 @@ middle.block814:                                  ; preds = %vector.body809
 
 scalar.ph804.preheader:                           ; preds = %.lr.ph.i423, %middle.block814
   %.02933.i425.ph = phi i64 [ 0, %.lr.ph.i423 ], [ %n.vec808, %middle.block814 ]
-  br label %scalar.ph804
+  br label %.preheader.us.i431.new
 
-.preheader32.i428:                                ; preds = %scalar.ph804, %middle.block814
+.preheader32.i428:                                ; preds = %.preheader.us.i431.new, %middle.block814
   %.not38.i429 = icmp eq i64 %2, 0
   br i1 %.not38.i429, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit437, label %.preheader.us.preheader.i430
 
@@ -401,54 +401,37 @@ scalar.ph804.preheader:                           ; preds = %.lr.ph.i423, %middl
   %unroll_iter = and i64 %.0214, -2
   %lcmp.mod883.not = icmp eq i64 %xtraiter882, 0
   %lcmp.mod884 = trunc i64 %.0214 to i1
-  br label %.preheader.us.i431
+  br label %.preheader.i433
 
-.preheader.us.i431:                               ; preds = %._crit_edge.us.i435, %.preheader.us.preheader.i430
-  %.02836.us.i432 = phi i64 [ %i.zi, %._crit_edge.us.i435 ], [ 0, %.preheader.us.preheader.i430 ] ; 2 uses
-  %41 = mul i64 %.02836.us.i432, %4               ; 3 uses
-  br i1 %i.yr, label %.epil.preheader, label %.preheader.us.i431.new
-
-.preheader.us.i431.new:                           ; preds = %.preheader.us.i431, %.preheader.us.i431.new
-  %.034.us.i433 = phi i64 [ %60, %.preheader.us.i431.new ], [ 0, %.preheader.us.i431 ] ; 5 uses
-  %niter.a = phi i64 [ %niter.next.1.a, %.preheader.us.i431.new ], [ 0, %.preheader.us.i431 ]
-  %42 = load ptr, ptr %i.yq, align 8
-  %43 = add i64 %.034.us.i433, %41                ; 2 uses
-  %44 = getelementptr inbounds nuw [8 x i8], ptr %42, i64 %43
-  %45 = load i64, ptr %44, align 8
-  %46 = sitofp i64 %45 to float
-  %i.ys = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.034.us.i433
-  %i.yt = load float, ptr %i.ys, align 8
-  %i.yu = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.034.us.i433
+.preheader.us.i431.new:                           ; preds = %scalar.ph804.preheader, %.preheader.us.i431.new
+  %niter.a = phi i64 [ %niter.next.1.a, %.preheader.us.i431.new ], [ %.02933.i425.ph, %scalar.ph804.preheader ] ; 4 uses
+  %i.ys = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %niter.a
+  %i.yt = load float, ptr %i.ys, align 4
+  %i.yu = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %niter.a
   %i.yv = load float, ptr %i.yu, align 4
-  %47 = call float @llvm.fmuladd.f32(float %46, float %i.yt, float %i.yv)
-  %48 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %43
-  store float %47, ptr %48, align 4
-  %49 = or disjoint i64 %.034.us.i433, 1          ; 3 uses
-  %50 = load ptr, ptr %i.yq, align 8
-  %51 = add i64 %49, %41                          ; 2 uses
-  %52 = getelementptr inbounds nuw [8 x i8], ptr %50, i64 %51
-  %53 = load i64, ptr %52, align 8
-  %54 = sitofp i64 %53 to float
-  %55 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %49
-  %56 = load float, ptr %55, align 4
-  %57 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %49
-  %58 = load float, ptr %57, align 4
-  %59 = call float @llvm.fmuladd.f32(float %54, float %56, float %58)
-  %i.yw = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %51
-  store float %59, ptr %i.yw, align 4
-  %60 = add nuw i64 %.034.us.i433, 2              ; 2 uses
-  %niter.next.1.a = add i64 %niter.a, 2           ; 2 uses
-  %niter.ncmp.1.a = icmp eq i64 %niter.next.1.a, %unroll_iter
-  br i1 %niter.ncmp.1.a, label %._crit_edge.us.i435.unr-lcssa, label %.preheader.us.i431.new, !llvm.loop !823
+  %41 = fsub float %i.yt, %i.yv                   ; 2 uses
+  %42 = fcmp ogt float %41, 0.000000e+00
+  %43 = fdiv float %41, %i.yh
+  %.sink.i428 = select i1 %42, float %43, float 1.000000e+00
+  %i.yw = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %niter.a
+  store float %.sink.i428, ptr %i.yw, align 4
+  %niter.next.1.a = add nuw i64 %niter.a, 1       ; 2 uses
+  %niter.ncmp.1.a = icmp eq i64 %niter.next.1.a, %.0214
+  br i1 %niter.ncmp.1.a, label %.preheader32.i428, label %.preheader.us.i431.new, !llvm.loop !828
 
-._crit_edge.us.i435.unr-lcssa:                    ; preds = %.preheader.us.i431.new
+.preheader.i433:                                  ; preds = %._crit_edge.us.i435, %.preheader.us.preheader.i430
+  %.02836.i434 = phi i64 [ %i.zi, %._crit_edge.us.i435 ], [ 0, %.preheader.us.preheader.i430 ] ; 2 uses
+  %44 = mul i64 %.02836.i434, %4                  ; 3 uses
+  br i1 %i.yr, label %.epil.preheader, label %scalar.ph804
+
+._crit_edge.us.i435.unr-lcssa:                    ; preds = %scalar.ph804
   br i1 %lcmp.mod883.not, label %._crit_edge.us.i435, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge.us.i435.unr-lcssa, %.preheader.us.i431
-  %.034.us.i433.epil.init = phi i64 [ 0, %.preheader.us.i431 ], [ %60, %._crit_edge.us.i435.unr-lcssa ] ; 3 uses
+.epil.preheader:                                  ; preds = %._crit_edge.us.i435.unr-lcssa, %.preheader.i433
+  %.034.us.i433.epil.init = phi i64 [ 0, %.preheader.i433 ], [ %63, %._crit_edge.us.i435.unr-lcssa ] ; 3 uses
   call void @llvm.assume(i1 %lcmp.mod884)
   %i.yx = load ptr, ptr %i.yq, align 8
-  %i.yy = add i64 %.034.us.i433.epil.init, %41    ; 2 uses
+  %i.yy = add i64 %.034.us.i433.epil.init, %44    ; 2 uses
   %i.yz = getelementptr inbounds nuw [8 x i8], ptr %i.yx, i64 %i.yy
   %i.za = load i64, ptr %i.yz, align 8
   %i.zb = sitofp i64 %i.za to float
@@ -462,25 +445,42 @@ scalar.ph804.preheader:                           ; preds = %.lr.ph.i423, %middl
   br label %._crit_edge.us.i435
 
 ._crit_edge.us.i435:                              ; preds = %._crit_edge.us.i435.unr-lcssa, %.epil.preheader
-  %i.zi = add nuw i64 %.02836.us.i432, 1          ; 2 uses
+  %i.zi = add nuw i64 %.02836.i434, 1             ; 2 uses
   %exitcond42.not.i436 = icmp eq i64 %i.zi, %2
-  br i1 %exitcond42.not.i436, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit437, label %.preheader.us.i431, !llvm.loop !824
+  br i1 %exitcond42.not.i436, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit437, label %.preheader.i433, !llvm.loop !824
 
-scalar.ph804:                                     ; preds = %scalar.ph804.preheader, %scalar.ph804
-  %.02933.i425 = phi i64 [ %i.zo, %scalar.ph804 ], [ %.02933.i425.ph, %scalar.ph804.preheader ] ; 4 uses
-  %i.zj = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.02933.i425
-  %i.zk = load float, ptr %i.zj, align 4
-  %i.zl = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.02933.i425
+scalar.ph804:                                     ; preds = %.preheader.i433, %scalar.ph804
+  %.034.i435 = phi i64 [ %63, %scalar.ph804 ], [ 0, %.preheader.i433 ] ; 5 uses
+  %.02933.i425 = phi i64 [ %i.zo, %scalar.ph804 ], [ 0, %.preheader.i433 ]
+  %45 = load ptr, ptr %i.yq, align 8
+  %46 = add i64 %.034.i435, %44                   ; 2 uses
+  %47 = getelementptr inbounds nuw [8 x i8], ptr %45, i64 %46
+  %48 = load i64, ptr %47, align 8
+  %49 = sitofp i64 %48 to float
+  %i.zj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.034.i435
+  %i.zk = load float, ptr %i.zj, align 8
+  %i.zl = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.034.i435
   %i.zm = load float, ptr %i.zl, align 4
-  %61 = fsub float %i.zk, %i.zm                   ; 2 uses
-  %62 = fcmp ogt float %61, 0.000000e+00
-  %63 = fdiv float %61, %i.yh
-  %.sink.i426 = select i1 %62, float %63, float 1.000000e+00
-  %i.zn = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.02933.i425
-  store float %.sink.i426, ptr %i.zn, align 4
-  %i.zo = add nuw i64 %.02933.i425, 1             ; 2 uses
-  %exitcond.not.i427 = icmp eq i64 %i.zo, %.0214
-  br i1 %exitcond.not.i427, label %.preheader32.i428, label %scalar.ph804, !llvm.loop !828
+  %50 = call float @llvm.fmuladd.f32(float %49, float %i.zk, float %i.zm)
+  %51 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %46
+  store float %50, ptr %51, align 4
+  %52 = or disjoint i64 %.034.i435, 1             ; 3 uses
+  %53 = load ptr, ptr %i.yq, align 8
+  %54 = add i64 %52, %44                          ; 2 uses
+  %55 = getelementptr inbounds nuw [8 x i8], ptr %53, i64 %54
+  %56 = load i64, ptr %55, align 8
+  %57 = sitofp i64 %56 to float
+  %58 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %52
+  %59 = load float, ptr %58, align 4
+  %60 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %52
+  %61 = load float, ptr %60, align 4
+  %62 = call float @llvm.fmuladd.f32(float %57, float %59, float %61)
+  %i.zn = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %54
+  store float %62, ptr %i.zn, align 4
+  %63 = add nuw i64 %.034.i435, 2                 ; 2 uses
+  %i.zo = add i64 %.02933.i425, 2                 ; 2 uses
+  %exitcond.not.i427 = icmp eq i64 %i.zo, %unroll_iter
+  br i1 %exitcond.not.i427, label %._crit_edge.us.i435.unr-lcssa, label %scalar.ph804, !llvm.loop !825
 
 _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit437: ; preds = %._crit_edge.us.i435, %bb.cv, %.preheader32.i428
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
@@ -883,9 +883,9 @@ begin_hunk_1_@llvm.fmuladd.v4f32
 !820 = distinct !{!820, !4}
 !821 = distinct !{!821, !4}
 !822 = distinct !{!822, !4, !67, !68}
-!823 = distinct !{!823, !4}
+!823 = distinct !{!823, !4, !68, !67}
 !824 = distinct !{!824, !4}
-!825 = distinct !{!825, !4, !68, !67}
+!825 = distinct !{!825, !4}
 !826 = distinct !{!826, !4}
 !827 = distinct !{!827, !4, !67, !68}
 !828 = distinct !{!828, !4, !68, !67}
