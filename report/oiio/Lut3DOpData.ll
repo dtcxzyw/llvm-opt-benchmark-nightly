@@ -201,12 +201,12 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #4
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN16OpenColorIO_v2_511Lut3DOpData7ComposeERSt10shared_ptrIKS0_ES4_(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::shared_ptr", align 16  ; 10 uses
-  %4 = alloca %"class.std::shared_ptr", align 16  ; 10 uses
+  %3 = alloca %"class.std::shared_ptr", align 16  ; 9 uses
+  %4 = alloca %"class.std::shared_ptr", align 8   ; 10 uses
   %5 = alloca %"class.OpenColorIO_v2_5::OpRcPtrVec", align 8 ; 9 uses
   %6 = alloca %"class.OpenColorIO_v2_5::FormatMetadataImpl", align 8 ; 7 uses
   %7 = alloca %"class.std::shared_ptr", align 8   ; 7 uses
-  %8 = alloca %"class.std::shared_ptr", align 16  ; 7 uses
+  %8 = alloca %"class.std::shared_ptr", align 8   ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
@@ -237,7 +237,7 @@ _ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64)
   %i.j = load ptr, ptr %2, align 8, !tbaa !7, !noalias !64 ; 3 uses
-  store ptr %i.j, ptr %4, align 16, !tbaa !67, !alias.scope !64
+  store ptr %i.j, ptr %4, align 8, !tbaa !67, !alias.scope !64
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !53, !noalias !64 ; 3 uses
@@ -259,12 +259,12 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.r = atomicrmw volatile add ptr %i.n, i32 1 acq_rel, align 4, !noalias !64 ; 0 uses
-  %.pre.pre = load ptr, ptr %4, align 16, !tbaa !67
+  %.pre.pre = load ptr, ptr %4, align 8, !tbaa !67
   br label %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit34
 
 _ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit34: ; preds = %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit, %bb.f, %bb.g
-  %.pre = phi ptr [ %i.j, %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit ], [ %i.j, %bb.f ], [ %.pre.pre, %bb.g ] ; 4 uses
-  %i.s = load ptr, ptr %3, align 16, !tbaa !67    ; 3 uses
+  %.pre = phi ptr [ %i.j, %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit ], [ %i.j, %bb.f ], [ %.pre.pre, %bb.g ] ; 5 uses
+  %i.s = load ptr, ptr %3, align 16, !tbaa !67    ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 224 ; 2 uses
   %i.u = load i32, ptr %i.t, align 8, !tbaa !13
   %i.v = icmp eq i32 %i.u, 1
@@ -278,7 +278,7 @@ bb.h:                                             ; preds = %_ZSt18const_pointer
 
 bb.i:                                             ; preds = %bb.h
   store ptr %.pre, ptr %3, align 16, !tbaa !54
-  store ptr %i.s, ptr %4, align 16, !tbaa !54
+  store ptr %i.s, ptr %4, align 8, !tbaa !54
   %i.z = load ptr, ptr %i.k, align 8, !tbaa !53
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !53
   store ptr %i.aa, ptr %i.k, align 8, !tbaa !53
@@ -288,7 +288,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit34
-  %i.ab = phi ptr [ %i.s, %bb.i ], [ %.pre, %bb.h ], [ %.pre, %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit34 ]
+  %9 = phi ptr [ %.pre, %bb.i ], [ %i.s, %bb.h ], [ %i.s, %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit34 ] ; 6 uses
+  %i.ab = phi ptr [ %i.s, %bb.i ], [ %.pre, %bb.h ], [ %.pre, %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit34 ] ; 2 uses
   %.0 = phi i1 [ true, %bb.i ], [ false, %bb.h ], [ false, %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataEKS1_ESt10shared_ptrIT_ERKS3_IT0_E.exit34 ]
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 176 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !51
@@ -298,7 +299,6 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %_ZSt1
           to label %bb.k unwind label %bb.q       ; 2 uses
 
 bb.k:                                             ; preds = %bb.j
-  %9 = load ptr, ptr %3, align 16, !tbaa !67      ; 6 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 176 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !51
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
@@ -483,6 +483,7 @@ _ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut3DOpDataELN9__gnu_cxx12_Lock_policyE
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   call void @_ZN16OpenColorIO_v2_518FormatMetadataImplD1Ev(ptr noundef nonnull align 8 dereferenceable(120) %6) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
+  %.pre87 = load ptr, ptr %4, align 8, !tbaa !67, !noalias !81
   br label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut3DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 bb.ah:                                            ; preds = %bb.u
@@ -518,12 +519,13 @@ bb.am:                                            ; preds = %bb.al, %bb.ai
   br label %.body
 
 _ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut3DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.p, %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut3DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit56
+  %10 = phi ptr [ %.pre87, %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut3DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit56 ], [ %i.ab, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   call void @llvm.experimental.noalias.scope.decl(metadata !81)
-  %i.cj = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.ck = load ptr, ptr %i.k, align 8, !tbaa !53, !noalias !81 ; 2 uses
-  %10 = load <2 x ptr>, ptr %4, align 16, !tbaa !63, !noalias !81
-  store <2 x ptr> %10, ptr %8, align 16, !tbaa !63, !alias.scope !81
+  store ptr %10, ptr %8, align 8, !tbaa !67, !alias.scope !81
+  %i.cj = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  %i.ck = load ptr, ptr %i.k, align 8, !tbaa !53, !noalias !81 ; 3 uses
+  store ptr %i.ck, ptr %i.cj, align 8, !tbaa !53, !alias.scope !81
   %.not.i.i.i.i57 = icmp eq ptr %i.ck, null
   br i1 %.not.i.i.i.i57, label %_ZSt18const_pointer_castIN16OpenColorIO_v2_511Lut3DOpDataES1_ESt10shared_ptrIT_ERKS2_IT0_E.exit59, label %bb.an
 
@@ -553,7 +555,7 @@ bb.aq:                                            ; preds = %_ZSt18const_pointer
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !55
   %i.ct = load ptr, ptr %0, align 8, !tbaa !67    ; 5 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 48
-  %i.cv = load ptr, ptr %4, align 16, !tbaa !67   ; 2 uses
+  %i.cv = load ptr, ptr %4, align 8, !tbaa !67    ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 48
   invoke void @_ZN16OpenColorIO_v2_518FormatMetadataImpl7combineERKS0_(ptr noundef nonnull align 8 dereferenceable(120) %i.cu, ptr noundef nonnull align 8 dereferenceable(120) %i.cw)
           to label %bb.ar unwind label %bb.aw

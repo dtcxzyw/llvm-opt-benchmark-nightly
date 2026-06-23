@@ -201,7 +201,7 @@ _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cb, i64 %i.cd ; 6 uses
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !3
   %i.cg = sext i32 %i.cf to i64
-  %i.ch = sub nsw i64 0, %i.cg                    ; 2 uses
+  %i.ch = sub nsw i64 0, %i.cg                    ; 3 uses
   %i.ci = getelementptr inbounds i8, ptr %i.ce, i64 %i.ch ; 2 uses
   %i.cj = load i16, ptr %i.ci, align 2, !tbaa !31
   %i.ck = icmp ugt i16 %i.cj, 4
@@ -271,20 +271,21 @@ _ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.h, %_
 
 bb.i:                                             ; preds = %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPvm(ptr noundef nonnull %i.cu, i64 noundef %i.cx) #22
+  %.pre.pre = load i32, ptr %i.ce, align 4, !tbaa !3
+  %.pre112 = sext i32 %.pre.pre to i64
+  %.pre113 = sub nsw i64 0, %.pre112
   br label %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i
+  %.pre110.pre-phi = phi i64 [ %.pre113, %bb.i ], [ %i.ch, %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.df, ptr %3, align 8, !tbaa !478
   store ptr %i.di, ptr %i.bc, align 8, !tbaa !476
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %i.dd
   store ptr %i.dj, ptr %i.bd, align 8, !tbaa !760
-  %.pre = load i32, ptr %i.ce, align 4, !tbaa !3
-  %.pre107 = sext i32 %.pre to i64
-  %.pre109 = sub nsw i64 0, %.pre107
   br label %_ZNSt6vectorIlSaIlEE9push_backEOl.exit
 
 _ZNSt6vectorIlSaIlEE9push_backEOl.exit:           ; preds = %bb.e, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i
-  %.pre-phi110 = phi i64 [ %i.ch, %bb.e ], [ %.pre109, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i ]
+  %.pre-phi110 = phi i64 [ %i.ch, %bb.e ], [ %.pre110.pre-phi, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.dk = getelementptr inbounds i8, ptr %i.ce, i64 %.pre-phi110 ; 2 uses
   %i.dl = load i16, ptr %i.dk, align 2, !tbaa !31

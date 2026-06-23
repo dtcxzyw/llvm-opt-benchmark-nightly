@@ -201,12 +201,13 @@ _upb_DefBuilder_Alloc.exit.i94.i.i:               ; preds = %upb_Arena_Malloc.ex
   %.017.i.i.i = phi ptr [ %.1.i.i.i, %bb.bg ], [ %i.fa, %.lr.ph.preheader.i.i.i ] ; 2 uses
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !32
   %i.fe = icmp eq i8 %i.fd, 92
-  %i.ff = getelementptr inbounds nuw i8, ptr %i.fc, i64 1
+  %i.ff = getelementptr inbounds nuw i8, ptr %i.fc, i64 1 ; 2 uses
   store ptr %i.ff, ptr %i.a, align 8, !tbaa !17
   br i1 %i.fe, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %.lr.ph.i.i.i
   %i.fg = call signext i8 @_upb_DefBuilder_ParseEscape(ptr noundef %0, ptr noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.fb) #14
+  %.pre.i.i.i = load ptr, ptr %i.a, align 8, !tbaa !17
   br label %bb.bg
 
 bb.bf:                                            ; preds = %.lr.ph.i.i.i
@@ -214,10 +215,10 @@ bb.bf:                                            ; preds = %.lr.ph.i.i.i
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be
+  %3 = phi ptr [ %i.ff, %bb.bf ], [ %.pre.i.i.i, %bb.be ] ; 2 uses
   %storemerge.i.i.i = phi i8 [ %i.fh, %bb.bf ], [ %i.fg, %bb.be ]
   %.1.i.i.i = getelementptr inbounds nuw i8, ptr %.017.i.i.i, i64 1 ; 2 uses
   store i8 %storemerge.i.i.i, ptr %.017.i.i.i, align 1, !tbaa !32
-  %3 = load ptr, ptr %i.a, align 8, !tbaa !17     ; 2 uses
   %i.fi = icmp ult ptr %3, %i.fb
   br i1 %i.fi, label %.lr.ph.i.i.i, label %unescape.exit.i.i, !llvm.loop !83
 

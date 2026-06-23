@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 16, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.t = load i64, ptr %i.s, align 8
+  %i.t = load i64, ptr %i.s, align 8              ; 2 uses
   store i64 %i.t, ptr %i.r, align 8
   %.not18.i.i.i = icmp eq i64 %.010.i.i, 1
   br i1 %.not18.i.i.i, label %_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN8v8_crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i, label %.lr.ph.i.i.preheader.i
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.01317.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 16, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   %i.y = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
-  %i.z = load i64, ptr %i.y, align 8
+  %i.z = load i64, ptr %i.y, align 8              ; 2 uses
   store i64 %i.z, ptr %i.x, align 8
   store ptr null, ptr %i.y, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 2 uses
@@ -226,6 +226,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   br label %.lr.ph.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.preheader.i
+  %.lcssa95.unr = phi i64 [ poison, %.lr.ph.i.i.preheader.i ], [ %i.z, %.lr.ph.i.i.i.prol ]
   %.lcssa90.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i ], [ %i.aa, %.lr.ph.i.i.i.prol ]
   %.01321.i.i.i.unr = phi ptr [ %.01317.i.i.i, %.lr.ph.i.i.preheader.i ], [ %.013.i.i.i.prol, %.lr.ph.i.i.i.prol ]
   %.020.i.i.i.unr = phi ptr [ %i.m, %.lr.ph.i.i.preheader.i ], [ %i.aa, %.lr.ph.i.i.i.prol ]
@@ -246,7 +247,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.013.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.af, i64 16, i1 false)
   %i.ag = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 64
   %i.ah = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 40 ; 2 uses
-  %i.ai = load i64, ptr %i.ah, align 8
+  %i.ai = load i64, ptr %i.ah, align 8            ; 2 uses
   store i64 %i.ai, ptr %i.ag, align 8
   store ptr null, ptr %i.ah, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 48 ; 2 uses
@@ -255,12 +256,13 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   br i1 %.not.i.i.i.1, label %_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN8v8_crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !142
 
 _ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN8v8_crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i: ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %bb.c
+  %.in.i = phi i64 [ %i.t, %bb.c ], [ %.lcssa95.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.ai, %.lr.ph.i.i.i ]
   %.0.lcssa.i.i.i = phi ptr [ %i.m, %bb.c ], [ %.lcssa90.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.aj, %.lr.ph.i.i.i ] ; 2 uses
+  %3 = inttoptr i64 %.in.i to ptr
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.0.lcssa.i.i.i, i64 16, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 16 ; 2 uses
-  %4 = load ptr, ptr %3, align 8
-  store ptr null, ptr %3, align 8
-  store ptr %4, ptr %i.s, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 16
+  store ptr null, ptr %4, align 8
+  store ptr %3, ptr %i.s, align 8
   br label %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN8v8_crdtp16DomainDispatcherESt14default_deleteIS8_EEESt6vectorISC_SaISC_EEEESC_EC2ESH_l.exit
 
 _ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN8v8_crdtp16DomainDispatcherESt14default_deleteIS8_EEESt6vectorISC_SaISC_EEEESC_EC2ESH_l.exit: ; preds = %select.unfold.i.i, %bb.b, %_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN8v8_crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i

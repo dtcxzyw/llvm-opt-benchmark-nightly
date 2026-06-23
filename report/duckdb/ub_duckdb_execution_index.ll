@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %bb.y, %_ZNSt10uniqu
 
 bb.aa:                                            ; preds = %_ZN6duckdb13SegmentHandleD2Ev.exit, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.ea = call noundef i64 @_ZNK6duckdb12optional_idx8GetIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %i.c) ; 5 uses
+  %i.ea = call noundef i64 @_ZNK6duckdb12optional_idx8GetIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %i.c) ; 6 uses
   store i64 %i.ea, ptr %i.b, align 8, !tbaa !73
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !72
@@ -292,10 +292,11 @@ bb.af:                                            ; preds = %bb.ae
 _ZN6duckdb18FixedSizeAllocator23NextBufferWithFreeSpaceEv.exit: ; preds = %bb.ae, %bb.af
   %.sink.i = phi i64 [ %i.fz, %bb.af ], [ -1, %bb.ae ]
   store i64 %.sink.i, ptr %i.c, align 8, !tbaa !73
+  %.pre = load i64, ptr %i.b, align 8, !tbaa !73
   br label %bb.ag
 
 bb.ag:                                            ; preds = %_ZN6duckdb18FixedSizeAllocator23NextBufferWithFreeSpaceEv.exit, %_ZNSt13unordered_mapImN6duckdb10unique_ptrINS0_15FixedSizeBufferESt14default_deleteIS2_ELb1EEESt4hashImESt8equal_toImESaISt4pairIKmS5_EEE4findERSB_.exit40
-  %7 = load i64, ptr %i.b, align 8, !tbaa !73
+  %7 = phi i64 [ %.pre, %_ZN6duckdb18FixedSizeAllocator23NextBufferWithFreeSpaceEv.exit ], [ %i.ea, %_ZNSt13unordered_mapImN6duckdb10unique_ptrINS0_15FixedSizeBufferESt14default_deleteIS2_ELb1EEESt4hashImESt8equal_toImESaISt4pairIKmS5_EEE4findERSB_.exit40 ]
   %i.ga = zext i32 %i.fd to i64
   %i.gb = shl nuw i64 %i.ga, 32
   %i.gc = and i64 %7, 4294967295

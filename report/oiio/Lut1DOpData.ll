@@ -201,7 +201,7 @@ bb.a:
   %6 = alloca %"class.OpenColorIO_v2_5::OpRcPtrVec", align 8 ; 9 uses
   %7 = alloca %"class.std::shared_ptr.23", align 16 ; 6 uses
   %8 = alloca %"class.OpenColorIO_v2_5::FormatMetadataImpl", align 8 ; 7 uses
-  %9 = alloca %"class.std::shared_ptr.23", align 16 ; 5 uses
+  %9 = alloca %"class.std::shared_ptr.23", align 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !143)
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
@@ -444,7 +444,7 @@ bb.ab:                                            ; preds = %bb.y
   br label %.body
 
 _ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit39: ; preds = %bb.aa, %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %i.bx = phi ptr [ %i.bb, %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.bj, %bb.aa ] ; 2 uses
+  %i.bx = phi ptr [ %i.bb, %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.bj, %bb.aa ] ; 3 uses
   %i.by = load ptr, ptr %4, align 16, !tbaa !111  ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 168
   %i.ca = load i32, ptr %i.bz, align 8, !tbaa !55
@@ -491,6 +491,7 @@ bb.ah:                                            ; preds = %bb.q
 
 _ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit49: ; preds = %bb.ah
   %i.ck = load <2 x ptr>, ptr %9, align 16, !tbaa !146
+  %10 = load ptr, ptr %9, align 16, !tbaa !111
   store <2 x ptr> %i.ck, ptr %0, align 8, !tbaa !146
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   br label %bb.aj
@@ -502,6 +503,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %.body
 
 bb.aj:                                            ; preds = %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit49, %bb.ad
+  %11 = phi ptr [ %10, %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut1DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit49 ], [ %i.bx, %bb.ad ]
   invoke void @_ZN16OpenColorIO_v2_513CreateLut1DOpERNS_10OpRcPtrVecERSt10shared_ptrINS_11Lut1DOpDataEENS_18TransformDirectionE(ptr noundef nonnull align 8 dereferenceable(144) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i32 noundef 0)
           to label %bb.ak unwind label %bb.w
 
@@ -510,14 +512,14 @@ bb.ak:                                            ; preds = %bb.aj
           to label %bb.al unwind label %bb.w
 
 bb.al:                                            ; preds = %bb.ak
-  %10 = load ptr, ptr %0, align 8, !tbaa !111     ; 8 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %10, i64 48
+  %i.cm = getelementptr inbounds nuw i8, ptr %11, i64 48
   %i.cn = load ptr, ptr %5, align 16, !tbaa !111
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 48
   invoke void @_ZN16OpenColorIO_v2_518FormatMetadataImpl7combineERKS0_(ptr noundef nonnull align 8 dereferenceable(120) %i.cm, ptr noundef nonnull align 8 dereferenceable(120) %i.co)
           to label %bb.am unwind label %bb.w
 
 bb.am:                                            ; preds = %bb.al
+  %12 = load ptr, ptr %0, align 8, !tbaa !111     ; 7 uses
   %i.cp = load ptr, ptr %5, align 16, !tbaa !111  ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 228
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !79 ; 2 uses
@@ -543,7 +545,7 @@ bb.ap:                                            ; preds = %bb.an
   br label %.body
 
 bb.aq:                                            ; preds = %bb.am
-  %i.cv = getelementptr inbounds nuw i8, ptr %10, i64 228
+  %i.cv = getelementptr inbounds nuw i8, ptr %12, i64 228
   store i32 %i.cr, ptr %i.cv, align 4, !tbaa !79
   br i1 %.0, label %.thread, label %bb.ar
 
@@ -553,34 +555,34 @@ bb.aq:                                            ; preds = %bb.am
   store i32 1, ptr %i.cx, align 8, !tbaa !80
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cp, i64 232
   store i32 1, ptr %i.cy, align 8, !tbaa !80
-  %i.cz = getelementptr inbounds nuw i8, ptr %10, i64 232
+  %i.cz = getelementptr inbounds nuw i8, ptr %12, i64 232
   store i32 1, ptr %i.cz, align 8, !tbaa !80
   br label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %10, i64 232
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %12, i64 232
   %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !80
   %i.da = icmp eq i32 %.pre, 1
   br i1 %i.da, label %bb.as, label %.noexc50
 
 bb.as:                                            ; preds = %.thread, %bb.ar
-  invoke void @_ZN16OpenColorIO_v2_511Lut1DOpData21initializeFromForwardEv(ptr noundef nonnull align 8 dereferenceable(364) %10)
+  invoke void @_ZN16OpenColorIO_v2_511Lut1DOpData21initializeFromForwardEv(ptr noundef nonnull align 8 dereferenceable(364) %12)
           to label %.noexc50 unwind label %bb.w
 
 .noexc50:                                         ; preds = %bb.as, %bb.ar
-  %i.db = getelementptr inbounds nuw i8, ptr %10, i64 192 ; 2 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %12, i64 192 ; 2 uses
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !49
   %i.dd = icmp eq i64 %i.dc, 3
   br i1 %i.dd, label %.preheader.i.i, label %_ZN16OpenColorIO_v2_511Lut1DOpData8finalizeEv.exit
 
 .preheader.i.i:                                   ; preds = %.noexc50
-  %i.de = getelementptr inbounds nuw i8, ptr %10, i64 184
+  %i.de = getelementptr inbounds nuw i8, ptr %12, i64 184
   %i.df = load i64, ptr %i.de, align 8, !tbaa !43 ; 2 uses
   %.not12.not.i.i = icmp eq i64 %i.df, 0
   br i1 %.not12.not.i.i, label %.critedge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i
-  %i.dg = getelementptr inbounds nuw i8, ptr %10, i64 200
+  %i.dg = getelementptr inbounds nuw i8, ptr %12, i64 200
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !27
   br label %bb.at
 

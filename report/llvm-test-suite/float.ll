@@ -201,10 +201,19 @@ middle.block104:                                  ; preds = %vector.body94
   br i1 %.not4670, label %._crit_edge72, label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge, %.lr.ph.i49.preheader
-  %.04271 = phi ptr [ %.042, %.lr.ph.i49.preheader ], [ %.04269, %._crit_edge ] ; 3 uses
-  %i.bt = load i8, ptr %.04271, align 1, !tbaa !8
+  %.04271 = phi ptr [ %.042, %.lr.ph.i49.preheader ], [ %.04269, %._crit_edge ] ; 2 uses
+  %i.bt = load i8, ptr %.04271, align 1, !tbaa !8 ; 2 uses
   %i.bu = icmp sgt i8 %i.bt, 48
-  br i1 %i.bu, label %.lr.ph68.a, label %.lr.ph.i49.preheader
+  br i1 %i.bu, label %.lr.ph68, label %.lr.ph.i49.preheader
+
+.lr.ph68:                                         ; preds = %.preheader
+  %2 = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %F_floatmul.man1.F_floatmul.man2) #14
+  %3 = getelementptr i8, ptr %F_floatmul.man1.F_floatmul.man2, i64 %2
+  %4 = getelementptr i8, ptr %3, i64 -1           ; 2 uses
+  %5 = icmp uge ptr %4, %F_floatmul.man1.F_floatmul.man2 ; 2 uses
+  %narrow = add nsw i8 %i.bt, -49
+  %6 = sext i8 %narrow to i32
+  br label %.lr.ph68.a
 
 .lr.ph.i49.preheader:                             ; preds = %_F_stradd.exit, %.preheader
   %strlen.i = tail call i64 @strlen(ptr nonnull dereferenceable(1) %F_floatmul.man1.F_floatmul.man2)
@@ -214,27 +223,23 @@ middle.block104:                                  ; preds = %vector.body94
   %.not46 = icmp ult ptr %.042, %F_floatmul.man2.F_floatmul.man1
   br i1 %.not46, label %._crit_edge72, label %.preheader, !llvm.loop !43
 
-.lr.ph68.a:                                       ; preds = %.preheader, %_F_stradd.exit
-  %.03967 = phi i32 [ %i.cw, %_F_stradd.exit ], [ 0, %.preheader ]
+.lr.ph68.a:                                       ; preds = %.lr.ph68, %_F_stradd.exit
+  %.03967 = phi i32 [ 0, %.lr.ph68 ], [ %i.cw, %_F_stradd.exit ] ; 2 uses
   %i.bv = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @F_floatmul.prod) #14
-  %2 = getelementptr i8, ptr @F_floatmul.prod, i64 %i.bv
-  %3 = getelementptr i8, ptr %2, i64 -1           ; 2 uses
-  %4 = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %F_floatmul.man1.F_floatmul.man2) #14
-  %i.bw = getelementptr i8, ptr %F_floatmul.man1.F_floatmul.man2, i64 %4
+  %i.bw = getelementptr i8, ptr @F_floatmul.prod, i64 %i.bv
   %i.bx = getelementptr i8, ptr %i.bw, i64 -1     ; 2 uses
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_F_stradd.result, i64 199), align 1, !tbaa !8
-  %5 = icmp uge ptr %3, @F_floatmul.prod          ; 2 uses
-  %i.by = icmp uge ptr %i.bx, %F_floatmul.man1.F_floatmul.man2 ; 2 uses
-  %i.bz = select i1 %5, i1 true, i1 %i.by
+  %i.by = icmp uge ptr %i.bx, @F_floatmul.prod    ; 2 uses
+  %i.bz = select i1 %i.by, i1 true, i1 %5
   br i1 %i.bz, label %.lr.ph.i, label %._crit_edge.thread.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph68.a, %bb.h
-  %i.ca = phi i1 [ %i.cs, %bb.h ], [ %i.by, %.lr.ph68.a ]
-  %i.cb = phi i1 [ %i.cr, %bb.h ], [ %5, %.lr.ph68.a ]
+  %i.ca = phi i1 [ %i.cs, %bb.h ], [ %5, %.lr.ph68.a ]
+  %i.cb = phi i1 [ %i.cr, %bb.h ], [ %i.by, %.lr.ph68.a ]
   %.03043.i = phi i32 [ %.1.i, %bb.h ], [ 0, %.lr.ph68.a ]
   %.03142.i = phi ptr [ %i.cq, %bb.h ], [ getelementptr inbounds nuw (i8, ptr @_F_stradd.result, i64 198), %.lr.ph68.a ] ; 2 uses
-  %.03341.i = phi ptr [ %.134.i, %bb.h ], [ %i.bx, %.lr.ph68.a ] ; 3 uses
-  %.03540.i = phi ptr [ %.136.i, %bb.h ], [ %3, %.lr.ph68.a ] ; 3 uses
+  %.03341.i = phi ptr [ %.134.i, %bb.h ], [ %4, %.lr.ph68.a ] ; 3 uses
+  %.03540.i = phi ptr [ %.136.i, %bb.h ], [ %i.bx, %.lr.ph68.a ] ; 3 uses
   br i1 %i.cb, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i
@@ -289,12 +294,9 @@ bb.i:                                             ; preds = %._crit_edge.i
 _F_stradd.exit:                                   ; preds = %bb.i, %._crit_edge.thread.i
   %.132.i = phi ptr [ %i.cq, %bb.i ], [ %i.cu, %._crit_edge.thread.i ]
   %i.cv = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) @F_floatmul.prod, ptr noundef nonnull dereferenceable(1) %.132.i) #13 ; 0 uses
-  %i.cw = add nuw nsw i32 %.03967, 1              ; 2 uses
-  %6 = load i8, ptr %.04271, align 1, !tbaa !8
-  %7 = sext i8 %6 to i32
-  %8 = add nsw i32 %7, -48
-  %9 = icmp slt i32 %i.cw, %8
-  br i1 %9, label %.lr.ph68.a, label %.lr.ph.i49.preheader, !llvm.loop !45
+  %i.cw = add nuw nsw i32 %.03967, 1
+  %exitcond.not = icmp eq i32 %.03967, %6
+  br i1 %exitcond.not, label %.lr.ph.i49.preheader, label %.lr.ph68.a, !llvm.loop !45
 
 ._crit_edge72:                                    ; preds = %.lr.ph.i49.preheader, %._crit_edge
   %i.cx = load ptr, ptr @F_floatmul.result, align 8, !tbaa !30
