@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %.thread.i.i
   br i1 %i.ak, label %bb.h, label %bb.k, !prof !21
 
 bb.h:                                             ; preds = %bb.g
-  %i.al = load <16 x i8>, ptr %.val.i, align 16, !noalias !64
+  %i.al = load <16 x i8>, ptr %.val.i, align 16
   %i.am = icmp slt <16 x i8> %i.al, zeroinitializer
   %i.an = bitcast <16 x i1> %i.am to i16          ; 2 uses
   %.not.i18.i.i = icmp ne i16 %i.an, 0
@@ -226,30 +226,30 @@ bb.k:                                             ; preds = %bb.h, %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %.sroa.4.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.4.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
-  call void @llvm.experimental.noalias.scope.decl(metadata !67)
-  %i.at = load ptr, ptr %1, align 8, !alias.scope !67, !noalias !70, !nonnull !3, !noundef !3 ; 3 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !64)
+  %i.at = load ptr, ptr %1, align 8, !alias.scope !64, !noalias !67, !nonnull !3, !noundef !3 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %.sroa.3.0.i.ph.i ; 2 uses
-  %i.av = load i8, ptr %i.au, align 1, !noalias !72, !noundef !3
+  %i.av = load i8, ptr %i.au, align 1, !noalias !69, !noundef !3
   %i.aw = and i8 %i.av, 1
   %i.ax = zext nneg i8 %i.aw to i64
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.az = add i64 %.sroa.3.0.i.ph.i, -16
-  %i.ba = load i64, ptr %i.d, align 8, !alias.scope !67, !noalias !70, !noundef !3
+  %i.ba = load i64, ptr %i.d, align 8, !alias.scope !64, !noalias !67, !noundef !3
   %i.bb = and i64 %i.ba, %i.az
-  store i8 %i.f, ptr %i.au, align 1, !noalias !72
+  store i8 %i.f, ptr %i.au, align 1, !noalias !69
   %i.bc = getelementptr i8, ptr %i.at, i64 %i.bb
   %i.bd = getelementptr i8, ptr %i.bc, i64 16
-  store i8 %i.f, ptr %i.bd, align 1, !noalias !72
-  %i.be = load <2 x i64>, ptr %i.ay, align 8, !alias.scope !67, !noalias !70
+  store i8 %i.f, ptr %i.bd, align 1, !noalias !69
+  %i.be = load <2 x i64>, ptr %i.ay, align 8, !alias.scope !64, !noalias !67
   %i.bf = insertelement <2 x i64> <i64 poison, i64 -1>, i64 %i.ax, i64 0
   %i.bg = sub <2 x i64> %i.be, %i.bf
-  store <2 x i64> %i.bg, ptr %i.ay, align 8, !alias.scope !67, !noalias !70
+  store <2 x i64> %i.bg, ptr %i.ay, align 8, !alias.scope !64, !noalias !67
   %i.bh = sub nsw i64 0, %.sroa.3.0.i.ph.i
   %i.bi = getelementptr inbounds [32 x i8], ptr %i.at, i64 %i.bh ; 2 uses
   %i.bj = getelementptr inbounds i8, ptr %i.bi, i64 -32
-  store i8 %2, ptr %i.bj, align 8, !noalias !67
+  store i8 %2, ptr %i.bj, align 8, !noalias !64
   %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %i.bi, i64 -31
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4, i64 31, i1 false), !noalias !67
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4, i64 31, i1 false), !noalias !64
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.j
@@ -283,16 +283,16 @@ bb.n:                                             ; preds = %bb.l
 define hidden void @_RNvMs1_NtNtCs3JXekYNd0JR_7dashmap6mapref5entryINtB5_11VacantEntryNtCseo6ZV82fEK1_3url3UrlINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactoryEL_EE6insertCsa5Qem16B4JI_15deltalake_azure(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(112) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !nonnull !3, !align !73, !noundef !3 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !nonnull !3, !align !70, !noundef !3 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.e = load i64, ptr %i.d, align 8, !noundef !3
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.g = load i64, ptr %i.f, align 8, !noundef !3 ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !74)
-  %i.h = load ptr, ptr %i.c, align 8, !alias.scope !74, !noalias !77, !nonnull !3, !noundef !3 ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !71)
+  %i.h = load ptr, ptr %i.c, align 8, !alias.scope !71, !noalias !74, !nonnull !3, !noundef !3 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.g ; 2 uses
-  %i.j = load i8, ptr %i.i, align 1, !noalias !79, !noundef !3
+  %i.j = load i8, ptr %i.i, align 1, !noalias !76, !noundef !3
   %i.k = and i8 %i.j, 1
   %i.l = zext nneg i8 %i.k to i64
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
@@ -300,24 +300,24 @@ bb.a:
   %i.o = trunc nuw nsw i64 %i.n to i8             ; 2 uses
   %i.p = add i64 %i.g, -16
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.r = load i64, ptr %i.q, align 8, !alias.scope !74, !noalias !77, !noundef !3
+  %i.r = load i64, ptr %i.q, align 8, !alias.scope !71, !noalias !74, !noundef !3
   %i.s = and i64 %i.r, %i.p
-  store i8 %i.o, ptr %i.i, align 1, !noalias !79
+  store i8 %i.o, ptr %i.i, align 1, !noalias !76
   %i.t = getelementptr i8, ptr %i.h, i64 %i.s
   %i.u = getelementptr i8, ptr %i.t, i64 16
-  store i8 %i.o, ptr %i.u, align 1, !noalias !79
-  %i.v = load <2 x i64>, ptr %i.m, align 8, !alias.scope !74, !noalias !77
+  store i8 %i.o, ptr %i.u, align 1, !noalias !76
+  %i.v = load <2 x i64>, ptr %i.m, align 8, !alias.scope !71, !noalias !74
   %i.w = insertelement <2 x i64> <i64 poison, i64 -1>, i64 %i.l, i64 0
   %i.x = sub <2 x i64> %i.v, %i.w
-  store <2 x i64> %i.x, ptr %i.m, align 8, !alias.scope !74, !noalias !77
+  store <2 x i64> %i.x, ptr %i.m, align 8, !alias.scope !71, !noalias !74
   %i.y = sub nsw i64 0, %i.g
   %i.z = getelementptr inbounds [104 x i8], ptr %i.h, i64 %i.y ; 3 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 -104 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.aa, ptr noundef nonnull align 8 dereferenceable(88) %1, i64 88, i1 false), !noalias !74
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.aa, ptr noundef nonnull align 8 dereferenceable(88) %1, i64 88, i1 false), !noalias !71
   %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %i.z, i64 -16 ; 2 uses
-  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !74
+  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !71
   %.sroa.5.0..sroa_idx = getelementptr inbounds i8, ptr %i.z, i64 -8
-  store ptr %3, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !74
+  store ptr %3, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !71
   store ptr %i.b, ptr %0, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.aa, ptr %i.ab, align 8
@@ -330,16 +330,16 @@ bb.a:
 define hidden void @_RNvMs1_NtNtCs3JXekYNd0JR_7dashmap6mapref5entryINtB5_11VacantEntryNtCseo6ZV82fEK1_3url3UrlINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories18ObjectStoreFactoryEL_EE6insertCsa5Qem16B4JI_15deltalake_azure(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(112) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !nonnull !3, !align !73, !noundef !3 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !nonnull !3, !align !70, !noundef !3 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.e = load i64, ptr %i.d, align 8, !noundef !3
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.g = load i64, ptr %i.f, align 8, !noundef !3 ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !80)
-  %i.h = load ptr, ptr %i.c, align 8, !alias.scope !80, !noalias !83, !nonnull !3, !noundef !3 ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !77)
+  %i.h = load ptr, ptr %i.c, align 8, !alias.scope !77, !noalias !80, !nonnull !3, !noundef !3 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.g ; 2 uses
-  %i.j = load i8, ptr %i.i, align 1, !noalias !85, !noundef !3
+  %i.j = load i8, ptr %i.i, align 1, !noalias !82, !noundef !3
   %i.k = and i8 %i.j, 1
   %i.l = zext nneg i8 %i.k to i64
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
@@ -347,24 +347,24 @@ bb.a:
   %i.o = trunc nuw nsw i64 %i.n to i8             ; 2 uses
   %i.p = add i64 %i.g, -16
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.r = load i64, ptr %i.q, align 8, !alias.scope !80, !noalias !83, !noundef !3
+  %i.r = load i64, ptr %i.q, align 8, !alias.scope !77, !noalias !80, !noundef !3
   %i.s = and i64 %i.r, %i.p
-  store i8 %i.o, ptr %i.i, align 1, !noalias !85
+  store i8 %i.o, ptr %i.i, align 1, !noalias !82
   %i.t = getelementptr i8, ptr %i.h, i64 %i.s
   %i.u = getelementptr i8, ptr %i.t, i64 16
-  store i8 %i.o, ptr %i.u, align 1, !noalias !85
-  %i.v = load <2 x i64>, ptr %i.m, align 8, !alias.scope !80, !noalias !83
+  store i8 %i.o, ptr %i.u, align 1, !noalias !82
+  %i.v = load <2 x i64>, ptr %i.m, align 8, !alias.scope !77, !noalias !80
   %i.w = insertelement <2 x i64> <i64 poison, i64 -1>, i64 %i.l, i64 0
   %i.x = sub <2 x i64> %i.v, %i.w
-  store <2 x i64> %i.x, ptr %i.m, align 8, !alias.scope !80, !noalias !83
+  store <2 x i64> %i.x, ptr %i.m, align 8, !alias.scope !77, !noalias !80
   %i.y = sub nsw i64 0, %i.g
   %i.z = getelementptr inbounds [104 x i8], ptr %i.h, i64 %i.y ; 3 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 -104 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.aa, ptr noundef nonnull align 8 dereferenceable(88) %1, i64 88, i1 false), !noalias !80
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.aa, ptr noundef nonnull align 8 dereferenceable(88) %1, i64 88, i1 false), !noalias !77
   %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %i.z, i64 -16 ; 2 uses
-  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !80
+  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !77
   %.sroa.5.0..sroa_idx = getelementptr inbounds i8, ptr %i.z, i64 -8
-  store ptr %3, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !80
+  store ptr %3, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !77
   store ptr %i.b, ptr %0, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.aa, ptr %i.ab, align 8
@@ -395,53 +395,53 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 9 uses
   %i.d = alloca [40 x i8], align 8                ; 2 uses
-  %i.e = load ptr, ptr %1, align 8, !alias.scope !86, !noalias !89, !nonnull !3, !noundef !3 ; 2 uses
+  %i.e = load ptr, ptr %1, align 8, !alias.scope !83, !noalias !86, !nonnull !3, !noundef !3 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !alias.scope !86, !noalias !89, !noundef !3
+  %i.g = load i64, ptr %i.f, align 8, !alias.scope !83, !noalias !86, !noundef !3
   %i.h = add i64 %i.g, 1
   call void @_RNvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBU_EE3newCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(40) %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, i64 noundef %i.h)
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.j = load i64, ptr %i.i, align 8, !alias.scope !86, !noalias !89, !noundef !3
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !91
-  %i.k = tail call { i64, i64 } @_RINvMs2_NtNtCs2pqxYH9ZEk8_3std6thread5localINtB6_8LocalKeyINtNtCsbvkFyIu7lgC_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @5), !noalias !91 ; 2 uses
+  %i.j = load i64, ptr %i.i, align 8, !alias.scope !83, !noalias !86, !noundef !3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !88
+  %i.k = tail call { i64, i64 } @_RINvMs2_NtNtCs2pqxYH9ZEk8_3std6thread5localINtB6_8LocalKeyINtNtCsbvkFyIu7lgC_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @5), !noalias !88 ; 2 uses
   %i.l = extractvalue { i64, i64 } %i.k, 0
   %i.m = extractvalue { i64, i64 } %i.k, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) @1, i64 32, i1 false), !noalias !91
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) @1, i64 32, i1 false), !noalias !88
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
-  store i64 %i.l, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !91
+  store i64 %i.l, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !88
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  store i64 %i.m, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !91
+  store i64 %i.m, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !88
   invoke void @_RINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE7reserveNCINvNtB8_3map11make_hasherBQ_B1S_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE0ECsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.c, i64 noundef 0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.sroa.4.0..sroa_idx.i)
-          to label %.noexc.i unwind label %bb.b, !noalias !91
+          to label %.noexc.i unwind label %bb.b, !noalias !88
 
 .noexc.i:                                         ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !95
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !95
-  store ptr %i.c, ptr %i.b, align 8, !noalias !108
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !92
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !92
+  store ptr %i.c, ptr %i.b, align 8, !noalias !105
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false)
   invoke void @_RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBV_EE9fold_implNCINvXsG_NtB8_3mapINtB1V_4IterBV_BV_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB2t_8adapters10filter_map15filter_map_foldTRBV_B4e_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyBV_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapBV_BV_ENtB5A_12AzureOptions16as_azure_options0NCINvNvB2n_8for_each4callB4n_NCINvXs1i_B1V_INtB1V_7HashMapB4o_BV_NtNtNtB6e_4hash6random11RandomStateEINtNtB2r_7collect6ExtendB4n_E6extendINtB3t_9FilterMapINtB68_4IterBV_BV_EB5v_EE0E0E0E0uEB5A_(ptr noalias noundef nonnull align 8 captures(none) dereferenceable(32) %i.a, i64 noundef %i.j, ptr noalias noundef nonnull align 8 dereferenceable(8) %i.b)
-          to label %_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_.exit unwind label %bb.b, !noalias !91
+          to label %_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_.exit unwind label %bb.b, !noalias !88
 
 bb.b:                                             ; preds = %.noexc.i, %bb.a
   %i.n = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.c)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEECsa5Qem16B4JI_15deltalake_azure.exit.i unwind label %bb.c, !noalias !91
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEECsa5Qem16B4JI_15deltalake_azure.exit.i unwind label %bb.c, !noalias !88
 
 bb.c:                                             ; preds = %bb.b
   %i.o = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #13, !noalias !91
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #13, !noalias !88
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEECsa5Qem16B4JI_15deltalake_azure.exit.i: ; preds = %bb.b
   resume { ptr, i32 } %i.n
 
 _RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_.exit: ; preds = %.noexc.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !95
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !95
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.c, i64 48, i1 false), !noalias !112
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !91
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !92
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !92
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.c, i64 48, i1 false), !noalias !109
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !88
   ret void
 }
 
@@ -470,18 +470,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %i.g = load i8, ptr %i.c, align 8, !range !113, !noundef !3 ; 3 uses
+  %i.g = load i8, ptr %i.c, align 8, !range !110, !noundef !3 ; 3 uses
   %.not = icmp eq i8 %i.g, 3
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.experimental.noalias.scope.decl(metadata !114)
-  store i8 2, ptr %i.c, align 8, !alias.scope !114
+  call void @llvm.experimental.noalias.scope.decl(metadata !111)
+  store i8 2, ptr %i.c, align 8, !alias.scope !111
   %.not.i = icmp eq i8 %i.g, 2
   br i1 %.not.i, label %bb.d, label %_RNvXs1_NtNtCs8CRAYtH5WmW_12futures_util6future5readyINtB5_5ReadybENtNtNtCsbvkFyIu7lgC_4core6future6future6Future4pollCsa5Qem16B4JI_15deltalake_azure.exit, !prof !21
 
 bb.d:                                             ; preds = %bb.c
-  call void @_RNvNtCsbvkFyIu7lgC_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 29, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #15, !noalias !114
+  call void @_RNvNtCsbvkFyIu7lgC_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 29, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #15, !noalias !111
   unreachable
 
 _RNvXs1_NtNtCs8CRAYtH5WmW_12futures_util6future5readyINtB5_5ReadybENtNtNtCsbvkFyIu7lgC_4core6future6future6Future4pollCsa5Qem16B4JI_15deltalake_azure.exit: ; preds = %bb.c
@@ -494,7 +494,7 @@ bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.sroa.13)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvXs2_NtCs7cL0Iqqqcdm_12futures_core6streamINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtB5_6Streamp4ItemINtNtBL_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2s_5ErrorENtNtBL_6marker4SendEL_EENtB5_9TryStream13try_poll_nextCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(16) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
-  %i.i = load i64, ptr %i.a, align 8, !range !117, !noundef !3 ; 3 uses
+  %i.i = load i64, ptr %i.a, align 8, !range !114, !noundef !3 ; 3 uses
   switch i64 %i.i, label %bb.k [
     i64 -9223372036854775806, label %bb.f
     i64 -9223372036854775807, label %bb.g
@@ -565,7 +565,7 @@ bb.k:                                             ; preds = %bb.e
   %i.o = icmp sgt i64 %spec.select.i, 0
   %i.p = zext i1 %i.o to i8
   store i8 %i.p, ptr %i.c, align 8
-  %i.q = load i64, ptr %i.d, align 8, !range !22, !alias.scope !118, !noundef !3
+  %i.q = load i64, ptr %i.d, align 8, !range !22, !alias.scope !115, !noundef !3
   %i.r = icmp eq i64 %i.q, -9223372036854775808
   br i1 %i.r, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtCsjyY8HP3IvQ6_12object_store10ObjectMetaEECsa5Qem16B4JI_15deltalake_azure.exit, label %bb.l
 
@@ -630,12 +630,12 @@ define hidden void @_RNvXs1_NtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_strea
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %i.c = load i8, ptr %i.b, align 8, !range !113, !noundef !3
+  %i.c = load i8, ptr %i.b, align 8, !range !110, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 120
   call void @_RNvXs_NtCs7cL0Iqqqcdm_12futures_core6streamINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtB4_6Streamp4ItemINtNtBK_6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2r_5ErrorENtNtBK_6marker4SendEL_EEB1L_9size_hintCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d)
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !range !121, !noundef !3
+  %i.f = load i64, ptr %i.e, align 8, !range !118, !noundef !3
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.h = load i64, ptr %i.g, align 8              ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -669,17 +669,17 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9debug_map(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  call void @llvm.experimental.noalias.scope.decl(metadata !119)
   call void @llvm.experimental.noalias.scope.decl(metadata !122)
-  call void @llvm.experimental.noalias.scope.decl(metadata !125)
-  %i.c = load ptr, ptr %0, align 8, !alias.scope !125, !noalias !122, !nonnull !3, !noundef !3 ; 2 uses
+  %i.c = load ptr, ptr %0, align 8, !alias.scope !122, !noalias !119, !nonnull !3, !noundef !3 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !125, !noalias !122, !noundef !3
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !122, !noalias !119, !noundef !3
   %i.f = add i64 %i.e, 1
-  call void @_RNvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBU_EE3newCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.c, i64 noundef %i.f), !noalias !125
+  call void @_RNvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBU_EE3newCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.c, i64 noundef %i.f), !noalias !122
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.h = load i64, ptr %i.g, align 8, !alias.scope !125, !noalias !122, !noundef !3
+  %i.h = load i64, ptr %i.g, align 8, !alias.scope !122, !noalias !119, !noundef !3
   %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 %i.h, ptr %.sroa.42.0..sroa_idx.i, align 8, !alias.scope !122, !noalias !125
+  store i64 %i.h, ptr %.sroa.42.0..sroa_idx.i, align 8, !alias.scope !119, !noalias !122
   %i.i = call noundef nonnull align 8 ptr @_RINvMs6_NtNtCsbvkFyIu7lgC_4core3fmt8buildersNtB6_8DebugMap7entriesRNtNtCs6Po7BT7Nknu_5alloc6string6StringB12_INtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterB13_B13_EECsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.b, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.j = call noundef zeroext i1 @_RNvMs6_NtNtCsbvkFyIu7lgC_4core3fmt8buildersNtB5_8DebugMap6finish(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.i)
@@ -761,7 +761,7 @@ define internal noundef ptr @_RNvYNCNKNvNvMNtNtCs2pqxYH9ZEk8_3std4hash6randomNtB
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNvMNtNtCs2pqxYH9ZEk8_3std4hash6randomNtBa_11RandomState3new4KEYS0s_023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !127, !noalias !128, !noundef !3
+  %i.c = load i8, ptr %i.b, align 8, !range !124, !noalias !125, !noundef !3
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %_RNCNKNvNvMNtNtCs2pqxYH9ZEk8_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csa5Qem16B4JI_15deltalake_azure.exit, label %bb.b, !prof !20
 
@@ -961,72 +961,69 @@ attributes #15 = { noinline noreturn }
 !62 = distinct !{!62, !63, !"_RNCINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB8_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE25find_or_find_insert_indexNCINvNtBa_3map14equivalent_keyBS_BS_B1U_E0NCINvB34_11make_hasherBS_B1U_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE0E0Csa5Qem16B4JI_15deltalake_azure: argument 0"}
 !63 = distinct !{!63, !"_RNCINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB8_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE25find_or_find_insert_indexNCINvNtBa_3map14equivalent_keyBS_BS_B1U_E0NCINvB34_11make_hasherBS_B1U_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE0E0Csa5Qem16B4JI_15deltalake_azure"}
 !64 = !{!65}
-!65 = distinct !{!65, !66, !"_RNvNtNtNtCsbvkFyIu7lgC_4core9core_arch3x864sse214__mm_load_si128: argument 0"}
-!66 = distinct !{!66, !"_RNvNtNtNtCsbvkFyIu7lgC_4core9core_arch3x864sse214__mm_load_si128"}
+!65 = distinct !{!65, !66, !"_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE22insert_tagged_at_indexCsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!66 = distinct !{!66, !"_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE22insert_tagged_at_indexCsa5Qem16B4JI_15deltalake_azure"}
 !67 = !{!68}
-!68 = distinct !{!68, !69, !"_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE22insert_tagged_at_indexCsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!69 = distinct !{!69, !"_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE22insert_tagged_at_indexCsa5Qem16B4JI_15deltalake_azure"}
-!70 = !{!71}
-!71 = distinct !{!71, !69, !"_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE22insert_tagged_at_indexCsa5Qem16B4JI_15deltalake_azure: argument 1"}
-!72 = !{!68, !71}
-!73 = !{i64 8}
+!68 = distinct !{!68, !66, !"_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE22insert_tagged_at_indexCsa5Qem16B4JI_15deltalake_azure: argument 1"}
+!69 = !{!65, !68}
+!70 = !{i64 8}
+!71 = !{!72}
+!72 = distinct !{!72, !73, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!73 = distinct !{!73, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure"}
 !74 = !{!75}
-!75 = distinct !{!75, !76, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!76 = distinct !{!76, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure"}
+!75 = distinct !{!75, !73, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 1"}
+!76 = !{!72, !75}
 !77 = !{!78}
-!78 = distinct !{!78, !76, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 1"}
-!79 = !{!75, !78}
+!78 = distinct !{!78, !79, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories18ObjectStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!79 = distinct !{!79, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories18ObjectStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure"}
 !80 = !{!81}
-!81 = distinct !{!81, !82, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories18ObjectStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!82 = distinct !{!82, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories18ObjectStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure"}
+!81 = distinct !{!81, !79, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories18ObjectStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 1"}
+!82 = !{!78, !81}
 !83 = !{!84}
-!84 = distinct !{!84, !82, !"_RNvMs6_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCseo6ZV82fEK1_3url3UrlINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories18ObjectStoreFactoryEL_EEEE14insert_in_slotCsa5Qem16B4JI_15deltalake_azure: argument 1"}
-!85 = !{!81, !84}
+!84 = distinct !{!84, !85, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 1"}
+!85 = distinct !{!85, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure"}
 !86 = !{!87}
-!87 = distinct !{!87, !88, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 1"}
-!88 = distinct !{!88, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure"}
-!89 = !{!90}
-!90 = distinct !{!90, !88, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!91 = !{!92, !94}
-!92 = distinct !{!92, !93, !"_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_: argument 0"}
-!93 = distinct !{!93, !"_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_"}
-!94 = distinct !{!94, !93, !"_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_: argument 1"}
-!95 = !{!96, !98, !99, !101, !102, !104, !105, !107, !92, !94}
-!96 = distinct !{!96, !97, !"_RINvXsA_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB11_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1O_8adapters10filter_map15filter_map_foldTRB11_B3z_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB11_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtB6_7HashMapB11_B11_ENtB4X_12AzureOptions16as_azure_options0NCINvNvB1I_8for_each4callB3J_NCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB75_7HashMapB3K_B11_NtNtNtBc_4hash6random11RandomStateEINtNtB1M_7collect6ExtendB3J_E6extendINtB2O_9FilterMapBQ_B4S_EE0E0E0EB4X_: argument 0"}
-!97 = distinct !{!97, !"_RINvXsA_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB11_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1O_8adapters10filter_map15filter_map_foldTRB11_B3z_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB11_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtB6_7HashMapB11_B11_ENtB4X_12AzureOptions16as_azure_options0NCINvNvB1I_8for_each4callB3J_NCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB75_7HashMapB3K_B11_NtNtNtBc_4hash6random11RandomStateEINtNtB1M_7collect6ExtendB3J_E6extendINtB2O_9FilterMapBQ_B4S_EE0E0E0EB4X_"}
-!98 = distinct !{!98, !97, !"_RINvXsA_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB11_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1O_8adapters10filter_map15filter_map_foldTRB11_B3z_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB11_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtB6_7HashMapB11_B11_ENtB4X_12AzureOptions16as_azure_options0NCINvNvB1I_8for_each4callB3J_NCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB75_7HashMapB3K_B11_NtNtNtBc_4hash6random11RandomStateEINtNtB1M_7collect6ExtendB3J_E6extendINtB2O_9FilterMapBQ_B4S_EE0E0E0EB4X_: argument 1"}
-!99 = distinct !{!99, !100, !"_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB23_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB1e_7HashMapB23_B23_ENtB2P_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4m_8for_each4callTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB23_ENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6H_7HashMapB5q_B23_NtNtNtB1k_4hash6random11RandomStateEINtNtB4q_7collect6ExtendB5p_E6extendBV_E0E0EB2P_: argument 0"}
-!100 = distinct !{!100, !"_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB23_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB1e_7HashMapB23_B23_ENtB2P_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4m_8for_each4callTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB23_ENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6H_7HashMapB5q_B23_NtNtNtB1k_4hash6random11RandomStateEINtNtB4q_7collect6ExtendB5p_E6extendBV_E0E0EB2P_"}
-!101 = distinct !{!101, !100, !"_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB23_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB1e_7HashMapB23_B23_ENtB2P_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4m_8for_each4callTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB23_ENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6H_7HashMapB5q_B23_NtNtNtB1k_4hash6random11RandomStateEINtNtB4q_7collect6ExtendB5p_E6extendBV_E0E0EB2P_: argument 1"}
-!102 = distinct !{!102, !103, !"_RINvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB1X_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB18_7HashMapB1X_B1X_ENtB2J_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB57_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB1X_NtNtNtB1e_4hash6random11RandomStateEINtNtB4k_7collect6ExtendTB5Q_B1X_EE6extendB3_E0EB2J_: argument 0"}
-!103 = distinct !{!103, !"_RINvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB1X_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB18_7HashMapB1X_B1X_ENtB2J_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB57_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB1X_NtNtNtB1e_4hash6random11RandomStateEINtNtB4k_7collect6ExtendTB5Q_B1X_EE6extendB3_E0EB2J_"}
-!104 = distinct !{!104, !103, !"_RINvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB1X_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB18_7HashMapB1X_B1X_ENtB2J_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB57_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB1X_NtNtNtB1e_4hash6random11RandomStateEINtNtB4k_7collect6ExtendTB5Q_B1X_EE6extendB3_E0EB2J_: argument 1"}
-!105 = distinct !{!105, !106, !"_RINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect6ExtendTBP_B1R_EE6extendINtNtNtB3o_8adapters10filter_map9FilterMapINtNtNtNtB2z_11collections4hash3map4IterB1R_B1R_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB5a_7HashMapB1R_B1R_ENtB5Z_12AzureOptions16as_azure_options0EEB5Z_: argument 0"}
-!106 = distinct !{!106, !"_RINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect6ExtendTBP_B1R_EE6extendINtNtNtB3o_8adapters10filter_map9FilterMapINtNtNtNtB2z_11collections4hash3map4IterB1R_B1R_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB5a_7HashMapB1R_B1R_ENtB5Z_12AzureOptions16as_azure_options0EEB5Z_"}
-!107 = distinct !{!107, !106, !"_RINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect6ExtendTBP_B1R_EE6extendINtNtNtB3o_8adapters10filter_map9FilterMapINtNtNtNtB2z_11collections4hash3map4IterB1R_B1R_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB5a_7HashMapB1R_B1R_ENtB5Z_12AzureOptions16as_azure_options0EEB5Z_: argument 1"}
-!108 = !{!109, !111, !96, !98, !99, !101, !102, !104, !105, !107, !92, !94}
-!109 = distinct !{!109, !110, !"_RINvXsG_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringBL_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1x_8adapters10filter_map15filter_map_foldTRBL_B3i_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyBL_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapBL_BL_ENtB4E_12AzureOptions16as_azure_options0NCINvNvB1r_8for_each4callB3r_NCINvXs1i_B6_INtB6_7HashMapB3s_BL_NtNtNtB5i_4hash6random11RandomStateEINtNtB1v_7collect6ExtendB3r_E6extendINtB2x_9FilterMapINtB5c_4IterBL_BL_EB4z_EE0E0E0EB4E_: argument 0"}
-!110 = distinct !{!110, !"_RINvXsG_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringBL_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1x_8adapters10filter_map15filter_map_foldTRBL_B3i_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyBL_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapBL_BL_ENtB4E_12AzureOptions16as_azure_options0NCINvNvB1r_8for_each4callB3r_NCINvXs1i_B6_INtB6_7HashMapB3s_BL_NtNtNtB5i_4hash6random11RandomStateEINtNtB1v_7collect6ExtendB3r_E6extendINtB2x_9FilterMapINtB5c_4IterBL_BL_EB4z_EE0E0E0EB4E_"}
-!111 = distinct !{!111, !110, !"_RINvXsG_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringBL_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1x_8adapters10filter_map15filter_map_foldTRBL_B3i_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyBL_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapBL_BL_ENtB4E_12AzureOptions16as_azure_options0NCINvNvB1r_8for_each4callB3r_NCINvXs1i_B6_INtB6_7HashMapB3s_BL_NtNtNtB5i_4hash6random11RandomStateEINtNtB1v_7collect6ExtendB3r_E6extendINtB2x_9FilterMapINtB5c_4IterBL_BL_EB4z_EE0E0E0EB4E_: argument 1"}
-!112 = !{!94}
-!113 = !{i8 0, i8 4}
-!114 = !{!115}
-!115 = distinct !{!115, !116, !"_RNvXs1_NtNtCs8CRAYtH5WmW_12futures_util6future5readyINtB5_5ReadybENtNtNtCsbvkFyIu7lgC_4core6future6future6Future4pollCsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!116 = distinct !{!116, !"_RNvXs1_NtNtCs8CRAYtH5WmW_12futures_util6future5readyINtB5_5ReadybENtNtNtCsbvkFyIu7lgC_4core6future6future6Future4pollCsa5Qem16B4JI_15deltalake_azure"}
-!117 = !{i64 0, i64 -9223372036854775805}
-!118 = !{!119}
-!119 = distinct !{!119, !120, !"_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtCsjyY8HP3IvQ6_12object_store10ObjectMetaEECsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!120 = distinct !{!120, !"_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtCsjyY8HP3IvQ6_12object_store10ObjectMetaEECsa5Qem16B4JI_15deltalake_azure"}
-!121 = !{i64 0, i64 2}
+!87 = distinct !{!87, !85, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!88 = !{!89, !91}
+!89 = distinct !{!89, !90, !"_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_: argument 0"}
+!90 = distinct !{!90, !"_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_"}
+!91 = distinct !{!91, !90, !"_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B27_EE9from_iterINtNtNtB2R_8adapters10filter_map9FilterMapINtB7_4IterB27_B27_ENCNvXCsa5Qem16B4JI_15deltalake_azureIBS_B27_B27_ENtB5a_12AzureOptions16as_azure_options0EEB5a_: argument 1"}
+!92 = !{!93, !95, !96, !98, !99, !101, !102, !104, !89, !91}
+!93 = distinct !{!93, !94, !"_RINvXsA_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB11_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1O_8adapters10filter_map15filter_map_foldTRB11_B3z_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB11_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtB6_7HashMapB11_B11_ENtB4X_12AzureOptions16as_azure_options0NCINvNvB1I_8for_each4callB3J_NCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB75_7HashMapB3K_B11_NtNtNtBc_4hash6random11RandomStateEINtNtB1M_7collect6ExtendB3J_E6extendINtB2O_9FilterMapBQ_B4S_EE0E0E0EB4X_: argument 0"}
+!94 = distinct !{!94, !"_RINvXsA_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB11_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1O_8adapters10filter_map15filter_map_foldTRB11_B3z_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB11_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtB6_7HashMapB11_B11_ENtB4X_12AzureOptions16as_azure_options0NCINvNvB1I_8for_each4callB3J_NCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB75_7HashMapB3K_B11_NtNtNtBc_4hash6random11RandomStateEINtNtB1M_7collect6ExtendB3J_E6extendINtB2O_9FilterMapBQ_B4S_EE0E0E0EB4X_"}
+!95 = distinct !{!95, !94, !"_RINvXsA_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB11_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1O_8adapters10filter_map15filter_map_foldTRB11_B3z_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB11_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtB6_7HashMapB11_B11_ENtB4X_12AzureOptions16as_azure_options0NCINvNvB1I_8for_each4callB3J_NCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB75_7HashMapB3K_B11_NtNtNtBc_4hash6random11RandomStateEINtNtB1M_7collect6ExtendB3J_E6extendINtB2O_9FilterMapBQ_B4S_EE0E0E0EB4X_: argument 1"}
+!96 = distinct !{!96, !97, !"_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB23_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB1e_7HashMapB23_B23_ENtB2P_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4m_8for_each4callTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB23_ENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6H_7HashMapB5q_B23_NtNtNtB1k_4hash6random11RandomStateEINtNtB4q_7collect6ExtendB5p_E6extendBV_E0E0EB2P_: argument 0"}
+!97 = distinct !{!97, !"_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB23_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB1e_7HashMapB23_B23_ENtB2P_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4m_8for_each4callTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB23_ENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6H_7HashMapB5q_B23_NtNtNtB1k_4hash6random11RandomStateEINtNtB4q_7collect6ExtendB5p_E6extendBV_E0E0EB2P_"}
+!98 = distinct !{!98, !97, !"_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB23_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB1e_7HashMapB23_B23_ENtB2P_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4m_8for_each4callTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB23_ENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6H_7HashMapB5q_B23_NtNtNtB1k_4hash6random11RandomStateEINtNtB4q_7collect6ExtendB5p_E6extendBV_E0E0EB2P_: argument 1"}
+!99 = distinct !{!99, !100, !"_RINvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB1X_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB18_7HashMapB1X_B1X_ENtB2J_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB57_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB1X_NtNtNtB1e_4hash6random11RandomStateEINtNtB4k_7collect6ExtendTB5Q_B1X_EE6extendB3_E0EB2J_: argument 0"}
+!100 = distinct !{!100, !"_RINvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB1X_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB18_7HashMapB1X_B1X_ENtB2J_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB57_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB1X_NtNtNtB1e_4hash6random11RandomStateEINtNtB4k_7collect6ExtendTB5Q_B1X_EE6extendB3_E0EB2J_"}
+!101 = distinct !{!101, !100, !"_RINvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringB1X_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB18_7HashMapB1X_B1X_ENtB2J_12AzureOptions16as_azure_options0ENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB57_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyB1X_NtNtNtB1e_4hash6random11RandomStateEINtNtB4k_7collect6ExtendTB5Q_B1X_EE6extendB3_E0EB2J_: argument 1"}
+!102 = distinct !{!102, !103, !"_RINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect6ExtendTBP_B1R_EE6extendINtNtNtB3o_8adapters10filter_map9FilterMapINtNtNtNtB2z_11collections4hash3map4IterB1R_B1R_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB5a_7HashMapB1R_B1R_ENtB5Z_12AzureOptions16as_azure_options0EEB5Z_: argument 0"}
+!103 = distinct !{!103, !"_RINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect6ExtendTBP_B1R_EE6extendINtNtNtB3o_8adapters10filter_map9FilterMapINtNtNtNtB2z_11collections4hash3map4IterB1R_B1R_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB5a_7HashMapB1R_B1R_ENtB5Z_12AzureOptions16as_azure_options0EEB5Z_"}
+!104 = distinct !{!104, !103, !"_RINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect6ExtendTBP_B1R_EE6extendINtNtNtB3o_8adapters10filter_map9FilterMapINtNtNtNtB2z_11collections4hash3map4IterB1R_B1R_ENCNvXCsa5Qem16B4JI_15deltalake_azureINtB5a_7HashMapB1R_B1R_ENtB5Z_12AzureOptions16as_azure_options0EEB5Z_: argument 1"}
+!105 = !{!106, !108, !93, !95, !96, !98, !99, !101, !102, !104, !89, !91}
+!106 = distinct !{!106, !107, !"_RINvXsG_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringBL_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1x_8adapters10filter_map15filter_map_foldTRBL_B3i_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyBL_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapBL_BL_ENtB4E_12AzureOptions16as_azure_options0NCINvNvB1r_8for_each4callB3r_NCINvXs1i_B6_INtB6_7HashMapB3s_BL_NtNtNtB5i_4hash6random11RandomStateEINtNtB1v_7collect6ExtendB3r_E6extendINtB2x_9FilterMapINtB5c_4IterBL_BL_EB4z_EE0E0E0EB4E_: argument 0"}
+!107 = distinct !{!107, !"_RINvXsG_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringBL_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1x_8adapters10filter_map15filter_map_foldTRBL_B3i_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyBL_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapBL_BL_ENtB4E_12AzureOptions16as_azure_options0NCINvNvB1r_8for_each4callB3r_NCINvXs1i_B6_INtB6_7HashMapB3s_BL_NtNtNtB5i_4hash6random11RandomStateEINtNtB1v_7collect6ExtendB3r_E6extendINtB2x_9FilterMapINtB5c_4IterBL_BL_EB4z_EE0E0E0EB4E_"}
+!108 = distinct !{!108, !107, !"_RINvXsG_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringBL_ENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1x_8adapters10filter_map15filter_map_foldTRBL_B3i_ETNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyBL_EuNCNvXCsa5Qem16B4JI_15deltalake_azureINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapBL_BL_ENtB4E_12AzureOptions16as_azure_options0NCINvNvB1r_8for_each4callB3r_NCINvXs1i_B6_INtB6_7HashMapB3s_BL_NtNtNtB5i_4hash6random11RandomStateEINtNtB1v_7collect6ExtendB3r_E6extendINtB2x_9FilterMapINtB5c_4IterBL_BL_EB4z_EE0E0E0EB4E_: argument 1"}
+!109 = !{!91}
+!110 = !{i8 0, i8 4}
+!111 = !{!112}
+!112 = distinct !{!112, !113, !"_RNvXs1_NtNtCs8CRAYtH5WmW_12futures_util6future5readyINtB5_5ReadybENtNtNtCsbvkFyIu7lgC_4core6future6future6Future4pollCsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!113 = distinct !{!113, !"_RNvXs1_NtNtCs8CRAYtH5WmW_12futures_util6future5readyINtB5_5ReadybENtNtNtCsbvkFyIu7lgC_4core6future6future6Future4pollCsa5Qem16B4JI_15deltalake_azure"}
+!114 = !{i64 0, i64 -9223372036854775805}
+!115 = !{!116}
+!116 = distinct !{!116, !117, !"_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtCsjyY8HP3IvQ6_12object_store10ObjectMetaEECsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!117 = distinct !{!117, !"_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtCsjyY8HP3IvQ6_12object_store10ObjectMetaEECsa5Qem16B4JI_15deltalake_azure"}
+!118 = !{i64 0, i64 2}
+!119 = !{!120}
+!120 = distinct !{!120, !121, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!121 = distinct !{!121, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure"}
 !122 = !{!123}
-!123 = distinct !{!123, !124, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!124 = distinct !{!124, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure"}
-!125 = !{!126}
-!126 = distinct !{!126, !124, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 1"}
-!127 = !{i8 0, i8 2}
-!128 = !{!129, !131}
-!129 = distinct !{!129, !130, !"_RINvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsbvkFyIu7lgC_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsa5Qem16B4JI_15deltalake_azure: argument 0"}
-!130 = distinct !{!130, !"_RINvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsbvkFyIu7lgC_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsa5Qem16B4JI_15deltalake_azure"}
-!131 = distinct !{!131, !132, !"_RNCNKNvNvMNtNtCs2pqxYH9ZEk8_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csa5Qem16B4JI_15deltalake_azure: argument 0"}
-!132 = distinct !{!132, !"_RNCNKNvNvMNtNtCs2pqxYH9ZEk8_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csa5Qem16B4JI_15deltalake_azure"}
+!123 = distinct !{!123, !121, !"_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB5_7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB13_E4iterCsa5Qem16B4JI_15deltalake_azure: argument 1"}
+!124 = !{i8 0, i8 2}
+!125 = !{!126, !128}
+!126 = distinct !{!126, !127, !"_RINvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsbvkFyIu7lgC_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsa5Qem16B4JI_15deltalake_azure: argument 0"}
+!127 = distinct !{!127, !"_RINvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCsbvkFyIu7lgC_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECsa5Qem16B4JI_15deltalake_azure"}
+!128 = distinct !{!128, !129, !"_RNCNKNvNvMNtNtCs2pqxYH9ZEk8_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csa5Qem16B4JI_15deltalake_azure: argument 0"}
+!129 = distinct !{!129, !"_RNCNKNvNvMNtNtCs2pqxYH9ZEk8_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Csa5Qem16B4JI_15deltalake_azure"}
 end_hunk_0
