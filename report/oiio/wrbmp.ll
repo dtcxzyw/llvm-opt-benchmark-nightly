@@ -157,7 +157,7 @@ bb.r:                                             ; preds = %bb.p, %bb.n
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.q, %bb.r
-  %i.bf = phi i32 [ %i.av, %bb.q ], [ %i.bc, %bb.r ], [ %i.af, %.loopexit.loopexit ] ; 5 uses
+  %i.bf = phi i32 [ %i.av, %bb.q ], [ %i.bc, %bb.r ], [ %i.af, %.loopexit.loopexit ] ; 4 uses
   %.1 = phi i32 [ %i.au, %bb.q ], [ %i.bc, %bb.r ], [ %i.ak, %.loopexit.loopexit ]
   %i.bg = and i32 %i.bf, 3
   %.not8590 = icmp eq i32 %i.bg, 0
@@ -165,10 +165,8 @@ bb.r:                                             ; preds = %bb.p, %bb.n
 
 .lr.ph.preheader:                                 ; preds = %.loopexit
   %i.bh = getelementptr inbounds nuw i8, ptr %i.k, i64 92
-  %3 = and i32 %i.bf, 3
-  %4 = xor i32 %3, 3
-  %5 = add i32 %i.bf, %4
-  %i.bi = add i32 %5, 1                           ; 2 uses
+  %3 = or i32 %i.bf, 3
+  %i.bi = add i32 %3, 1                           ; 2 uses
   store i32 %i.bi, ptr %i.bh, align 4, !tbaa !56
   br label %bb.s
 
