@@ -201,7 +201,8 @@ _RNvYNvYeNtNtCs6Po7BT7Nknu_5alloc6borrow7ToOwned8to_ownedINtNtNtCsbvkFyIu7lgC_4c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   tail call void @_RNvNvNtCs6Po7BT7Nknu_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull %.0.val, ptr noundef nonnull %.8.val)
   br label %bb.f
 
@@ -604,7 +605,8 @@ bb.m:                                             ; preds = %bb.j
 _RNvMs_NtNtCs1N9T06jgEdt_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14BinaryViewTypeE9get_valueCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %bb.m, %bb.i, %bb.e
   %.sroa.4.0.i.i = phi i64 [ %i.ab, %bb.e ], [ %i.au, %bb.m ], [ %i.ae, %bb.i ] ; 2 uses
   %.sroa.0.0.i.i = phi ptr [ %i.ac, %bb.e ], [ %i.ay, %bb.m ], [ %i.an, %bb.i ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i), "nonnull"(ptr %.val2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.az = getelementptr inbounds nuw i8, ptr %.val2, i64 8
   %i.ba = load i64, ptr %i.az, align 8, !noundef !27
   %i.bb = icmp eq i64 %i.ba, %.sroa.4.0.i.i
@@ -1007,7 +1009,8 @@ _RNvXs2_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB5_18DefaultHashBuilderNtNtCsbvkFyIu7
   br i1 %.not.i.i.i.i.i, label %.loopexit.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.noexc32.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload.i.i), "nonnull"(ptr %.sroa.0.sroa.5.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.5.0.copyload.i.i) ]
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 3 uses
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
@@ -1187,7 +1190,8 @@ _RNvMsa_NtCs2HSpDNxY7OE_9hashbrown3rawNtB5_13RawTableInner31find_or_find_insert_
   br i1 %i.dx, label %.lr.ph.i.i.i.i.i.i.i.preheader.i.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i.i, !prof !152
 
 .lr.ph.i.i.i.i.i.i.i.preheader.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i.i.i.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.val.i.i.i.i.i.i.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i.i.i.i.i.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i.i.i.i.i.i.i.i.i) ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 bb.ad:                                            ; preds = %_RNvYNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1590,7 +1594,8 @@ bb.a:
   br i1 %i.w, label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEIBX_NtNtNtB1q_11expressions7scalars6ScalarEEINtB5_7ZipImplBW_B2d_E4nextCs14kWLkQVSKO_14deltalake_core.exit.lr.ph, label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEIBX_NtNtNtB1q_11expressions7scalars6ScalarEEINtB5_7ZipImplBW_B2d_E4nextCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 _RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEIBX_NtNtNtB1q_11expressions7scalars6ScalarEEINtB5_7ZipImplBW_B2d_E4nextCs14kWLkQVSKO_14deltalake_core.exit.lr.ph: ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.560.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.560.0.copyload) ]
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %.sroa.621.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.x = load i64, ptr %2, align 8, !range !586
@@ -1993,7 +1998,8 @@ bb.ad:                                            ; preds = %bb.ac, %_RNvXs1z_Nt
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc noundef zeroext i1 @_RNvXs1N_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_13DescribeTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr captures(address, read_provenance) %.0.val, ptr nofree readonly captures(address) %.8.val, ptr captures(address, read_provenance) %.0.val1, ptr nofree readonly captures(address) %.8.val3) unnamed_addr #1 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.0.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val1) ]
   %i.a = icmp eq ptr %.0.val, %.0.val1
   br i1 %i.a, label %bb.d, label %bb.b
 
@@ -2024,7 +2030,8 @@ _RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core
   br i1 %i.p, label %bb.d, label %_RNvXse_NtCsjhHCjzi9uUI_17datafusion_common8dfschemaNtB5_8DFSchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.d:                                             ; preds = %bb.a, %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.8.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val3) ]
   %i.q = icmp eq ptr %.8.val, %.8.val3
   br i1 %i.q, label %_RNvXse_NtCsjhHCjzi9uUI_17datafusion_common8dfschemaNtB5_8DFSchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.e
 
@@ -2427,7 +2434,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = trunc nuw i64 %.val to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %i.g = icmp eq ptr %.val1, %.val3               ; 2 uses
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -2578,7 +2586,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %_RNvXs2x_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB6_24WindowFunctionDefinitionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
 
 bb.e:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4), "nonnull"(ptr %.val6) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val4, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !nonnull !27, !noundef !27
   %i.k = getelementptr inbounds nuw i8, ptr %.val4, i64 24
@@ -2603,7 +2612,8 @@ bb.e:                                             ; preds = %bb.c
   br label %_RNvXs2x_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB6_24WindowFunctionDefinitionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
 
 bb.f:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4), "nonnull"(ptr %.val6) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.val4, i64 16
   %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !27, !noundef !27
   %i.af = getelementptr inbounds nuw i8, ptr %.val4, i64 24
@@ -3006,7 +3016,7 @@ bb.l:                                             ; preds = %.lr.ph54.us.i.i.i
 
 .lr.ph.split.us._crit_edge.i.i.i:                 ; preds = %.lr.ph.us.i.i.i, %bb.l
   %.pre.pre-phi.i.i = phi i64 [ %i.by, %bb.l ], [ %i.bp, %.lr.ph.us.i.i.i ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ], !noalias !19434
   br label %_RINvMs3_NtCs2HSpDNxY7OE_9hashbrown3mapINtB6_7HashMapRNtNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions12column_names10ColumnNameBO_E3getBP_ECs14kWLkQVSKO_14deltalake_core.exit.i
 
 .lr.ph.i.i.i:                                     ; preds = %.split.i.i.i, %.loopexit.i.i.i
@@ -3027,7 +3037,8 @@ bb.l:                                             ; preds = %.lr.ph54.us.i.i.i
   br i1 %i.cr, label %.lr.ph.i.i.i.i.i.i.preheader.i.i.i, label %.loopexit.i.i.i, !prof !152
 
 .lr.ph.i.i.i.i.i.i.preheader.i.i.i:               ; preds = %.lr.ph.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i.i.i.i.i), "nonnull"(ptr %.val.i.i.i.i.i) ], !noalias !19434
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i.i.i.i.i) ], !noalias !19434
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i) ], !noalias !19434
   br label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %_RNvYNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i.i.i.i.i.i
@@ -3430,7 +3441,8 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %i.cr, label %bb.v, label %_RNvXs1H_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_5UnionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %i.cs = icmp eq ptr %.val, %.val3
   br i1 %i.cs, label %_RNvXs1H_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_5UnionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.w
 

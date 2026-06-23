@@ -21,23 +21,25 @@ define dso_local void @SOR_execute(i32 noundef %0, i32 noundef %1, double nounde
 bb.a:
   %i.a = fmul double %2, 2.500000e-01             ; 3 uses
   %i.b = fsub double 1.000000e+00, %2             ; 3 uses
-  %5 = icmp sgt i32 %4, 0
-  %6 = icmp sgt i32 %0, 2
-  %or.cond = and i1 %5, %6
-  %i.c = icmp sgt i32 %1, 2
-  %or.cond54 = and i1 %or.cond, %i.c
-  br i1 %or.cond54, label %.preheader.us.us.preheader, label %._crit_edge38
+  %5 = add i32 %0, -1
+  %6 = add i32 %1, -1                             ; 2 uses
+  %i.c = icmp sgt i32 %4, 0
+  br i1 %i.c, label %.preheader.lr.ph, label %._crit_edge38
 
-.preheader.us.us.preheader:                       ; preds = %bb.a
-  %7 = add nsw i32 %1, -1                         ; 2 uses
-  %8 = add nsw i32 %0, -1
+.preheader.lr.ph:                                 ; preds = %bb.a
+  %7 = icmp slt i32 %0, 3
+  %8 = icmp slt i32 %1, 3
+  %brmerge = or i1 %7, %8
+  br i1 %brmerge, label %._crit_edge38, label %.preheader.us.us.preheader
+
+.preheader.us.us.preheader:                       ; preds = %.preheader.lr.ph
   %.phi.trans.insert.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.pre.pre = load ptr, ptr %.phi.trans.insert.phi.trans.insert, align 8, !tbaa !8
-  %wide.trip.count48 = zext i32 %8 to i64
-  %wide.trip.count = zext i32 %7 to i64
+  %wide.trip.count48 = zext i32 %5 to i64
+  %wide.trip.count = zext i32 %6 to i64
   %i.d = add nsw i64 %wide.trip.count, -1         ; 3 uses
   %xtraiter = and i64 %i.d, 1
-  %i.e = icmp eq i32 %7, 2
+  %i.e = icmp eq i32 %6, 2
   %unroll_iter = and i64 %i.d, -2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod55 = trunc i64 %i.d to i1
@@ -47,9 +49,37 @@ bb.a:
   %.037.us.us = phi i32 [ %i.ak, %._crit_edge.split.us.us.us ], [ 0, %.preheader.us.us.preheader ]
   br label %.lr.ph.us.us.us
 
-.lr.ph.us.us.us:                                  ; preds = %..loopexit_crit_edge.us.us.us, %.preheader.us.us
-  %i.f = phi ptr [ %i.k, %..loopexit_crit_edge.us.us.us ], [ %.pre.pre, %.preheader.us.us ] ; 8 uses
-  %indvars.iv45 = phi i64 [ %indvars.iv.next46, %..loopexit_crit_edge.us.us.us ], [ 1, %.preheader.us.us ] ; 2 uses
+..loopexit_crit_edge.unr-lcssa:                   ; preds = %.lr.ph.us.us.us.new
+  br i1 %lcmp.mod.not, label %..loopexit_crit_edge, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %..loopexit_crit_edge.unr-lcssa, %.lr.ph.us.us.us
+  %store_forwarded.epil.init = phi double [ %load_initial, %.lr.ph.us.us.us ], [ %i.aj, %..loopexit_crit_edge.unr-lcssa ]
+  %.epil.init = phi double [ %.pre52, %.lr.ph.us.us.us ], [ %i.ag, %..loopexit_crit_edge.unr-lcssa ]
+  %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph.us.us.us ], [ %indvars.iv.next.1, %..loopexit_crit_edge.unr-lcssa ] ; 4 uses
+  tail call void @llvm.assume(i1 %lcmp.mod55)
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.epil.init
+  %10 = load double, ptr %9, align 8, !tbaa !11
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.epil.init
+  %12 = load double, ptr %11, align 8, !tbaa !11
+  %13 = fadd double %10, %12
+  %14 = getelementptr [8 x i8], ptr %i.f, i64 %indvars.iv.epil.init
+  %15 = fadd double %13, %store_forwarded.epil.init
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv.epil.init
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %18 = load double, ptr %17, align 8, !tbaa !11
+  %19 = fadd double %15, %18
+  %20 = fmul double %i.b, %.epil.init
+  %21 = tail call double @llvm.fmuladd.f64(double %i.a, double %19, double %20)
+  store double %21, ptr %14, align 8, !tbaa !11
+  br label %..loopexit_crit_edge
+
+..loopexit_crit_edge:                             ; preds = %..loopexit_crit_edge.unr-lcssa, %.epil.preheader
+  %exitcond46.not = icmp eq i64 %indvars.iv.next46, %wide.trip.count48
+  br i1 %exitcond46.not, label %._crit_edge.split.us.us.us, label %.lr.ph.us.us.us, !llvm.loop !13
+
+.lr.ph.us.us.us:                                  ; preds = %.preheader.us.us, %..loopexit_crit_edge
+  %i.f = phi ptr [ %.pre.pre, %.preheader.us.us ], [ %i.k, %..loopexit_crit_edge ] ; 8 uses
+  %indvars.iv45 = phi i64 [ 1, %.preheader.us.us ], [ %indvars.iv.next46, %..loopexit_crit_edge ] ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv45
   %i.h = getelementptr i8, ptr %i.g, i64 -8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !8    ; 3 uses
@@ -96,42 +126,14 @@ bb.a:
   store double %i.aj, ptr %i.ad, align 8, !tbaa !11
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %..loopexit_crit_edge.us.us.us.unr-lcssa, label %.lr.ph.us.us.us.new, !llvm.loop !13
+  br i1 %niter.ncmp.1, label %..loopexit_crit_edge.unr-lcssa, label %.lr.ph.us.us.us.new, !llvm.loop !15
 
-..loopexit_crit_edge.us.us.us.unr-lcssa:          ; preds = %.lr.ph.us.us.us.new
-  br i1 %lcmp.mod.not, label %..loopexit_crit_edge.us.us.us, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %..loopexit_crit_edge.us.us.us.unr-lcssa, %.lr.ph.us.us.us
-  %store_forwarded.epil.init = phi double [ %load_initial, %.lr.ph.us.us.us ], [ %i.aj, %..loopexit_crit_edge.us.us.us.unr-lcssa ]
-  %.epil.init = phi double [ %.pre52, %.lr.ph.us.us.us ], [ %i.ag, %..loopexit_crit_edge.us.us.us.unr-lcssa ]
-  %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph.us.us.us ], [ %indvars.iv.next.1, %..loopexit_crit_edge.us.us.us.unr-lcssa ] ; 4 uses
-  tail call void @llvm.assume(i1 %lcmp.mod55)
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.epil.init
-  %10 = load double, ptr %9, align 8, !tbaa !11
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.epil.init
-  %12 = load double, ptr %11, align 8, !tbaa !11
-  %13 = fadd double %10, %12
-  %14 = getelementptr [8 x i8], ptr %i.f, i64 %indvars.iv.epil.init
-  %15 = fadd double %13, %store_forwarded.epil.init
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv.epil.init
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 8
-  %18 = load double, ptr %17, align 8, !tbaa !11
-  %19 = fadd double %15, %18
-  %20 = fmul double %i.b, %.epil.init
-  %21 = tail call double @llvm.fmuladd.f64(double %i.a, double %19, double %20)
-  store double %21, ptr %14, align 8, !tbaa !11
-  br label %..loopexit_crit_edge.us.us.us
-
-..loopexit_crit_edge.us.us.us:                    ; preds = %..loopexit_crit_edge.us.us.us.unr-lcssa, %.epil.preheader
-  %exitcond49.not = icmp eq i64 %indvars.iv.next46, %wide.trip.count48
-  br i1 %exitcond49.not, label %._crit_edge.split.us.us.us, label %.lr.ph.us.us.us, !llvm.loop !15
-
-._crit_edge.split.us.us.us:                       ; preds = %..loopexit_crit_edge.us.us.us
+._crit_edge.split.us.us.us:                       ; preds = %..loopexit_crit_edge
   %i.ak = add nuw nsw i32 %.037.us.us, 1          ; 2 uses
   %exitcond50.not = icmp eq i32 %i.ak, %4
   br i1 %exitcond50.not, label %._crit_edge38, label %.preheader.us.us, !llvm.loop !16
 
-._crit_edge38:                                    ; preds = %._crit_edge.split.us.us.us, %bb.a
+._crit_edge38:                                    ; preds = %._crit_edge.split.us.us.us, %.preheader.lr.ph, %bb.a
   ret void
 }
 

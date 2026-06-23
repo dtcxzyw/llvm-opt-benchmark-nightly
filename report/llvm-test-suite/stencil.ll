@@ -71,14 +71,17 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @stencil_calc(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr @x_block_size, align 4, !tbaa !4 ; 7 uses
-  %i.b = add nsw i32 %i.a, 2
+  %i.a = load i32, ptr @x_block_size, align 4, !tbaa !4
+  %.fr = freeze i32 %i.a                          ; 7 uses
+  %i.b = add nsw i32 %.fr, 2
   %i.c = zext i32 %i.b to i64
-  %i.d = load i32, ptr @y_block_size, align 4, !tbaa !4 ; 11 uses
-  %i.e = add i32 %i.d, 2
+  %i.d = load i32, ptr @y_block_size, align 4, !tbaa !4
+  %.fr338 = freeze i32 %i.d                       ; 11 uses
+  %i.e = add i32 %.fr338, 2
   %i.f = zext i32 %i.e to i64                     ; 6 uses
-  %i.g = load i32, ptr @z_block_size, align 4, !tbaa !4 ; 7 uses
-  %i.h = add i32 %i.g, 2
+  %i.g = load i32, ptr @z_block_size, align 4, !tbaa !4
+  %.fr339 = freeze i32 %i.g                       ; 7 uses
+  %i.h = add i32 %.fr339, 2
   %i.i = zext i32 %i.h to i64                     ; 10 uses
   %i.j = mul nuw i64 %i.i, %i.f                   ; 5 uses
   %i.k = mul i64 %i.j, %i.c
@@ -92,34 +95,38 @@ bb.a:
   %i.s = getelementptr i8, ptr %i.r, i64 4
   %i.t = load i32, ptr %i.s, align 4, !tbaa !4    ; 3 uses
   %i.u = icmp sgt i32 %i.t, 0                     ; 2 uses
-  br i1 %i.n, label %.preheader255, label %.preheader264.a
+  br i1 %i.n, label %.preheader255, label %.preheader264
 
-.preheader264.a:                                  ; preds = %bb.a
-  br i1 %i.u, label %.lr.ph, label %.loopexit256
+.preheader264:                                    ; preds = %bb.a
+  br i1 %i.u, label %.preheader264.a, label %.loopexit256
 
-.lr.ph:                                           ; preds = %.preheader264.a
+.preheader264.a:                                  ; preds = %.preheader264
   %1 = load ptr, ptr @sorted_list, align 8, !tbaa !11
   %2 = load ptr, ptr @blocks, align 8, !tbaa !11
-  %.not271 = icmp slt i32 %i.a, 1                 ; 2 uses
-  %.not242268 = icmp slt i32 %i.d, 1              ; 2 uses
-  %.not243266 = icmp slt i32 %i.g, 1              ; 2 uses
+  %.not271 = icmp slt i32 %.fr, 1
+  %.not243266 = icmp slt i32 %.fr339, 1           ; 2 uses
   %3 = sext i32 %0 to i64                         ; 2 uses
-  %i.v = add i32 %i.g, 1                          ; 2 uses
-  %i.w = add i32 %i.d, 1
-  %i.x = add i32 %i.a, 1
+  %.not240277 = icmp slt i32 %.fr338, 1
+  %or.cond = or i1 %.not271, %.not240277
+  br i1 %or.cond, label %.loopexit256, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.preheader264.a
+  %i.v = add i32 %.fr339, 1                       ; 2 uses
+  %i.w = add nuw i32 %.fr338, 1
+  %i.x = add nuw i32 %.fr, 1
   %i.y = shl nuw nsw i64 %i.f, 3
   %i.z = add nuw nsw i64 %i.y, 8
   %i.aa = mul i64 %i.z, %i.i
   %i.ab = shl i64 %i.j, 3
   %i.ac = shl nuw nsw i64 %i.i, 3                 ; 3 uses
-  %i.ad = zext i32 %i.g to i64
+  %i.ad = zext i32 %.fr339 to i64
   %i.ae = shl nuw nsw i64 %i.ad, 3                ; 3 uses
   %wide.trip.count353.a = zext nneg i32 %i.t to i64
   %wide.trip.count332 = zext i32 %i.x to i64
   %wide.trip.count327 = zext i32 %i.w to i64      ; 2 uses
   %wide.trip.count = zext i32 %i.v to i64         ; 3 uses
-  %wide.trip.count348 = zext nneg i32 %i.a to i64
-  %wide.trip.count343 = zext i32 %i.d to i64      ; 2 uses
+  %wide.trip.count348 = zext nneg i32 %.fr to i64
+  %wide.trip.count343 = zext nneg i32 %.fr338 to i64 ; 2 uses
   %i.af = getelementptr i8, ptr %i.l, i64 %i.aa
   %i.ag = getelementptr i8, ptr %i.af, i64 8
   %i.ah = shl nuw nsw i64 %i.f, 3
@@ -142,13 +149,11 @@ bb.a:
   %n.vec = and i64 %i.aw, -2                      ; 2 uses
   %i.ax = or i64 %i.aw, 1
   %cmp.n = icmp eq i64 %i.aw, %n.vec
-  %4 = select i1 %.not271, i1 true, i1 %.not242268
-  %or.cond574 = select i1 %4, i1 true, i1 %.not243266
   %xtraiter = and i64 %wide.trip.count343, 1
-  %i.ay = icmp eq i32 %i.d, 1
+  %i.ay = icmp eq i32 %.fr338, 1
   %unroll_iter = and i64 %wide.trip.count343, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod590 = trunc i32 %i.d to i1
+  %lcmp.mod590 = trunc i32 %.fr338 to i1
   br label %bb.c
 
 .preheader255:                                    ; preds = %bb.a
@@ -157,26 +162,28 @@ bb.a:
 .lr.ph313:                                        ; preds = %.preheader255
   %i.az = load ptr, ptr @sorted_list, align 8, !tbaa !11
   %i.ba = load ptr, ptr @blocks, align 8, !tbaa !11
-  %.not244295 = icmp slt i32 %i.a, 1              ; 2 uses
-  %.not248292 = icmp slt i32 %i.d, 1              ; 2 uses
-  %.not249288 = icmp slt i32 %i.g, 1              ; 2 uses
+  %.not244295 = icmp slt i32 %.fr, 1              ; 2 uses
+  %.not248292 = icmp slt i32 %.fr338, 1           ; 2 uses
+  %.not249288 = icmp slt i32 %.fr339, 1           ; 2 uses
   %i.bb = sext i32 %0 to i64                      ; 2 uses
-  %i.bc = add i32 %i.g, 1                         ; 2 uses
-  %i.bd = add i32 %i.d, 1
-  %i.be = add i32 %i.a, 1
+  %i.bc = add i32 %.fr339, 1                      ; 2 uses
+  %i.bd = add i32 %.fr338, 1
+  %i.be = add i32 %.fr, 1
   %i.bf = shl nuw nsw i64 %i.f, 3
   %i.bg = add nuw nsw i64 %i.bf, 8
   %i.bh = mul i64 %i.bg, %i.i
   %i.bi = shl i64 %i.j, 3
   %i.bj = shl nuw nsw i64 %i.i, 3                 ; 3 uses
-  %i.bk = zext i32 %i.g to i64
+  %i.bk = zext i32 %.fr339 to i64
   %i.bl = shl nuw nsw i64 %i.bk, 3                ; 3 uses
   %wide.trip.count392 = zext nneg i32 %i.t to i64
+  %brmerge = or i1 %.not248292, %.not249288
   %wide.trip.count368 = zext i32 %i.be to i64
   %wide.trip.count363 = zext i32 %i.bd to i64
   %wide.trip.count358 = zext i32 %i.bc to i64     ; 2 uses
-  %wide.trip.count387 = zext nneg i32 %i.a to i64
-  %wide.trip.count382 = zext i32 %i.d to i64      ; 2 uses
+  %brmerge336 = or i1 %.not248292, %.not249288    ; 2 uses
+  %wide.trip.count387 = zext nneg i32 %.fr to i64
+  %wide.trip.count382 = zext i32 %.fr338 to i64   ; 2 uses
   %i.bm = getelementptr i8, ptr %i.l, i64 %i.bh
   %i.bn = getelementptr i8, ptr %i.bm, i64 8
   %i.bo = add nsw i64 %wide.trip.count358, -1     ; 3 uses
@@ -184,13 +191,12 @@ bb.a:
   %n.vec555 = and i64 %i.bo, -2                   ; 2 uses
   %i.bp = or i64 %i.bo, 1
   %cmp.n569 = icmp eq i64 %i.bo, %n.vec555
-  %5 = select i1 %.not244295, i1 true, i1 %.not248292
-  %or.cond572 = select i1 %5, i1 true, i1 %.not249288
+  %brmerge506 = or i1 %.not244295, %brmerge336
   %xtraiter591 = and i64 %wide.trip.count382, 1
-  %i.bq = icmp eq i32 %i.d, 1
-  %unroll_iter594 = and i64 %wide.trip.count382, 2147483646
+  %i.bq = icmp eq i32 %.fr338, 1
+  %unroll_iter594 = and i64 %wide.trip.count382, 4294967294
   %lcmp.mod592.not = icmp eq i64 %xtraiter591, 0
-  %lcmp.mod593 = trunc i32 %i.d to i1
+  %lcmp.mod593 = trunc i32 %.fr338 to i1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph313, %.loopexit
@@ -202,22 +208,26 @@ bb.b:                                             ; preds = %.lr.ph313, %.loopex
   %i.bv = getelementptr inbounds [192 x i8], ptr %i.ba, i64 %i.bu ; 3 uses
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !14
   %i.bx = icmp slt i32 %i.bw, 0
-  %brmerge = select i1 %i.bx, i1 true, i1 %.not244295
-  %6 = select i1 %brmerge, i1 true, i1 %.not248292
-  %or.cond = select i1 %6, i1 true, i1 %.not249288
-  br i1 %or.cond, label %.loopexit, label %.preheader252.lr.ph.split.split
+  %brmerge505 = or i1 %i.bx, %.not244295
+  br i1 %brmerge505, label %.loopexit, label %.preheader252.lr.ph
 
-.preheader252.lr.ph.split.split:                  ; preds = %bb.b
+.preheader252.lr.ph:                              ; preds = %bb.b
+  br i1 %brmerge, label %.preheader253.a, label %.preheader252.lr.ph.split.split
+
+.preheader252.lr.ph.split.split:                  ; preds = %.preheader252.lr.ph
   %i.by = getelementptr inbounds nuw i8, ptr %i.bv, i64 184
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !20
   %i.ca = getelementptr inbounds [8 x i8], ptr %i.bz, i64 %i.bb
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !21
   br label %.preheader252
 
-.preheader253.a:                                  ; preds = %._crit_edge294.split
-  br i1 %or.cond572, label %.loopexit, label %.preheader251.lr.ph.split.split
+.preheader253:                                    ; preds = %._crit_edge294.split
+  br i1 %brmerge506, label %.loopexit, label %.preheader251.lr.ph.split.split
 
-.preheader251.lr.ph.split.split:                  ; preds = %.preheader253.a
+.preheader253.a:                                  ; preds = %.preheader252.lr.ph
+  br i1 %brmerge336, label %.loopexit, label %.preheader251.lr.ph.split.split
+
+.preheader251.lr.ph.split.split:                  ; preds = %.preheader253, %.preheader253.a
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bv, i64 184
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !20
   %i.ce = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %i.bb
@@ -336,7 +346,7 @@ scalar.ph551:                                     ; preds = %scalar.ph551.prehea
 ._crit_edge294.split:                             ; preds = %._crit_edge291
   %indvars.iv.next366 = add nuw nsw i64 %indvars.iv365, 1 ; 2 uses
   %exitcond369.not = icmp eq i64 %indvars.iv.next366, %wide.trip.count368
-  br i1 %exitcond369.not, label %.preheader253.a, label %.preheader252, !llvm.loop !35
+  br i1 %exitcond369.not, label %.preheader253, label %.preheader252, !llvm.loop !35
 
 .preheader251:                                    ; preds = %.preheader251.lr.ph.split.split, %._crit_edge306.split
   %indvars.iv384 = phi i64 [ 1, %.preheader251.lr.ph.split.split ], [ %indvars.iv.next385, %._crit_edge306.split ] ; 2 uses
@@ -392,7 +402,7 @@ scalar.ph551:                                     ; preds = %scalar.ph551.prehea
   %exitcond388.not = icmp eq i64 %indvar.next372, %wide.trip.count387
   br i1 %exitcond388.not, label %.loopexit, label %.preheader251, !llvm.loop !37
 
-.loopexit:                                        ; preds = %._crit_edge306.split, %bb.b, %.preheader253.a
+.loopexit:                                        ; preds = %._crit_edge306.split, %.preheader253, %bb.b, %.preheader253.a
   %indvars.iv.next390 = add nuw nsw i64 %indvars.iv389, 1 ; 2 uses
   %exitcond393.not = icmp eq i64 %indvars.iv.next390, %wide.trip.count392
   br i1 %exitcond393.not, label %.loopexit256, label %bb.b, !llvm.loop !38
@@ -406,10 +416,8 @@ bb.c:                                             ; preds = %.lr.ph, %.loopexit2
   %i.fh = getelementptr inbounds [192 x i8], ptr %2, i64 %i.fg ; 3 uses
   %i.fi = load i32, ptr %i.fh, align 8, !tbaa !14
   %i.fj = icmp slt i32 %i.fi, 0
-  %brmerge439 = select i1 %i.fj, i1 true, i1 %.not271
-  %7 = select i1 %brmerge439, i1 true, i1 %.not242268
-  %or.cond573 = select i1 %7, i1 true, i1 %.not243266
-  br i1 %or.cond573, label %.loopexit262, label %.preheader260.lr.ph.split.split
+  %brmerge508 = or i1 %i.fj, %.not243266
+  br i1 %brmerge508, label %.loopexit262, label %.preheader260.lr.ph.split.split
 
 .preheader260.lr.ph.split.split:                  ; preds = %bb.c
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 184
@@ -419,7 +427,7 @@ bb.c:                                             ; preds = %.lr.ph, %.loopexit2
   br label %.preheader260
 
 .preheader261:                                    ; preds = %._crit_edge270.split
-  br i1 %or.cond574, label %.loopexit262, label %.preheader259.lr.ph.split.split
+  br i1 %.not243266, label %.loopexit262, label %.preheader259.lr.ph.split.split
 
 .preheader259.lr.ph.split.split:                  ; preds = %.preheader261
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fh, i64 184
@@ -819,7 +827,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %exitcond354.not = icmp eq i64 %indvars.iv.next351, %wide.trip.count353.a
   br i1 %exitcond354.not, label %.loopexit256, label %bb.c, !llvm.loop !67
 
-.loopexit256:                                     ; preds = %.loopexit262, %.loopexit, %.preheader264.a, %.preheader255
+.loopexit256:                                     ; preds = %.loopexit262, %.loopexit, %.preheader264.a, %.preheader264, %.preheader255
   ret void
 }
 

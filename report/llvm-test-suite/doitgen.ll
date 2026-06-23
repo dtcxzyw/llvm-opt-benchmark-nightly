@@ -99,20 +99,22 @@ xmalloc.exit:                                     ; preds = %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @kernel_doitgen(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #7 {
 bb.a:
-  %6 = icmp sgt i32 %0, 0
-  %7 = icmp sgt i32 %1, 0
-  %or.cond = and i1 %6, %7
-  %i.a = icmp sgt i32 %2, 0
-  %or.cond86 = and i1 %or.cond, %i.a
-  br i1 %or.cond86, label %.preheader37.us.us.us.preheader, label %._crit_edge
+  %6 = ptrtoaddr ptr %5 to i64
+  %7 = ptrtoaddr ptr %3 to i64
+  %i.a = icmp sgt i32 %0, 0
+  br i1 %i.a, label %.preheader37.lr.ph, label %._crit_edge
 
-.preheader37.us.us.us.preheader:                  ; preds = %bb.a
-  %8 = ptrtoaddr ptr %3 to i64
-  %9 = ptrtoaddr ptr %5 to i64
+.preheader37.lr.ph:                               ; preds = %bb.a
+  %8 = icmp slt i32 %1, 1
+  %9 = icmp slt i32 %2, 1
+  %brmerge = or i1 %8, %9
+  br i1 %brmerge, label %._crit_edge, label %.preheader37.us.us.us.preheader
+
+.preheader37.us.us.us.preheader:                  ; preds = %.preheader37.lr.ph
   %wide.trip.count82 = zext nneg i32 %0 to i64
   %wide.trip.count77 = zext nneg i32 %1 to i64
   %wide.trip.count65 = zext nneg i32 %2 to i64    ; 8 uses
-  %i.b = sub i64 %8, %9
+  %i.b = sub i64 %7, %6
   %xtraiter = and i64 %wide.trip.count65, 1
   %i.c = icmp eq i32 %2, 1
   %unroll_iter = and i64 %wide.trip.count65, 2147483646
@@ -267,7 +269,7 @@ middle.block:                                     ; preds = %vector.body
   %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
   br i1 %exitcond83.not, label %._crit_edge, label %.preheader37.us.us.us, !llvm.loop !24
 
-._crit_edge:                                      ; preds = %._crit_edge43.split.us.us.us.split.us.us, %bb.a
+._crit_edge:                                      ; preds = %._crit_edge43.split.us.us.us.split.us.us, %.preheader37.lr.ph, %bb.a
   ret void
 }
 
@@ -277,20 +279,22 @@ declare double @llvm.fmuladd.f64(double, double, double) #8
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @kernel_doitgen_StrictFP(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #7 {
 bb.a:
-  %6 = icmp sgt i32 %0, 0
-  %7 = icmp sgt i32 %1, 0
-  %or.cond = and i1 %6, %7
-  %i.a = icmp sgt i32 %2, 0
-  %or.cond86 = and i1 %or.cond, %i.a
-  br i1 %or.cond86, label %.preheader37.us.us.us.preheader, label %._crit_edge
+  %6 = ptrtoaddr ptr %5 to i64
+  %7 = ptrtoaddr ptr %3 to i64
+  %i.a = icmp sgt i32 %0, 0
+  br i1 %i.a, label %.preheader37.lr.ph, label %._crit_edge
 
-.preheader37.us.us.us.preheader:                  ; preds = %bb.a
-  %8 = ptrtoaddr ptr %3 to i64
-  %9 = ptrtoaddr ptr %5 to i64
+.preheader37.lr.ph:                               ; preds = %bb.a
+  %8 = icmp slt i32 %1, 1
+  %9 = icmp slt i32 %2, 1
+  %brmerge = or i1 %8, %9
+  br i1 %brmerge, label %._crit_edge, label %.preheader37.us.us.us.preheader
+
+.preheader37.us.us.us.preheader:                  ; preds = %.preheader37.lr.ph
   %wide.trip.count82 = zext nneg i32 %0 to i64
   %wide.trip.count77 = zext nneg i32 %1 to i64
   %wide.trip.count65 = zext nneg i32 %2 to i64    ; 8 uses
-  %i.b = sub i64 %8, %9
+  %i.b = sub i64 %7, %6
   %xtraiter = and i64 %wide.trip.count65, 1
   %i.c = icmp eq i32 %2, 1
   %unroll_iter = and i64 %wide.trip.count65, 2147483646
@@ -448,7 +452,7 @@ middle.block:                                     ; preds = %vector.body
   %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
   br i1 %exitcond83.not, label %._crit_edge, label %.preheader37.us.us.us, !llvm.loop !31
 
-._crit_edge:                                      ; preds = %._crit_edge43.split.us.us.us.split.us.us, %bb.a
+._crit_edge:                                      ; preds = %._crit_edge43.split.us.us.us.split.us.us, %.preheader37.lr.ph, %bb.a
   ret void
 }
 
