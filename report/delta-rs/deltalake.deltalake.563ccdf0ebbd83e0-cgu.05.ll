@@ -201,9 +201,9 @@ bb.a:
   br i1 %i.c, label %bb.b, label %_RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsReNtB7_9PartialEq2eqCs7p2uQeJxui2_9deltalake.exit
 
 bb.b:                                             ; preds = %bb.a
-  %.val.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
-  %.val2 = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
-  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val.a, ptr nonnull readonly %.val2, i64 %.val1), !alias.scope !11231
+  %.val.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
+  %.val2 = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
+  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val2, ptr nonnull readonly %.val.a, i64 %.val1), !alias.scope !11231
   %i.d = icmp eq i32 %bcmp.i.i, 0
   br label %_RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsReNtB7_9PartialEq2eqCs7p2uQeJxui2_9deltalake.exit
 
@@ -606,9 +606,9 @@ bb.a:
   br i1 %.not.i, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterReENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvXsf_NtB9_3cmpBQ_NtB1K_13SliceContains14slice_contains0ECs7p2uQeJxui2_9deltalake.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.val2.i.i = load ptr, ptr %0, align 8, !alias.scope !14539, !noalias !14542, !nonnull !4, !noundef !4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val3.i.i = load i64, ptr %i.b, align 8, !alias.scope !14539, !noalias !14542, !noundef !4 ; 2 uses
+  %.val2.i.i = load ptr, ptr %0, align 8, !alias.scope !14539, !noalias !14542, !nonnull !4
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNCNvXsf_NtNtCsbvkFyIu7lgC_4core5slice3cmpReNtB7_13SliceContains14slice_contains0Cs7p2uQeJxui2_9deltalake.exit.backedge.i, %.lr.ph.i

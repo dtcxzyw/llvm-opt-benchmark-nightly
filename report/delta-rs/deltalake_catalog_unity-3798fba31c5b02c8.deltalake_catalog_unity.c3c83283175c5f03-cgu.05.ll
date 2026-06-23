@@ -201,10 +201,10 @@ bb.a:
   br i1 %.not.i, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvXsf_NtB9_3cmpBQ_NtB2k_13SliceContains14slice_contains0ECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val3.i.i = load i64, ptr %3, align 8, !alias.scope !1273, !noalias !1276, !noundef !3 ; 2 uses
-  %.val2.i.i = load ptr, ptr %i.b, align 8, !alias.scope !1273, !noalias !1276, !nonnull !3
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.val3.i.i = load i64, ptr %i.b, align 8, !alias.scope !1273, !noalias !1276, !noundef !3 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.val2.i.i = load ptr, ptr %3, align 8, !alias.scope !1273, !noalias !1276, !nonnull !3
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNCNvXsf_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtB7_13SliceContains14slice_contains0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.backedge.i, %.lr.ph.i

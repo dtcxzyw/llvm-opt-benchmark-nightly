@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.e, %_RNvXs8_NtCs
   br i1 %i.g, label %_RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsReNtB7_9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.i, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTReINtNtB7_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.thread6
 
 _RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsReNtB7_9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.i: ; preds = %.lr.ph
-  %.val.i.a = load ptr, ptr %i.c, align 8, !alias.scope !14341, !noalias !14344, !nonnull !17, !noundef !17
-  %.val2.i = load ptr, ptr %i.d, align 8, !alias.scope !14344, !noalias !14341, !nonnull !17, !noundef !17
-  %bcmp.i.i.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val.i.a, ptr nonnull readonly %.val2.i, i64 %.val1.i), !alias.scope !14346, !noalias !14353
+  %.val.i.a = load ptr, ptr %i.d, align 8, !alias.scope !14344, !noalias !14341, !nonnull !17, !noundef !17
+  %.val2.i = load ptr, ptr %i.c, align 8, !alias.scope !14341, !noalias !14344, !nonnull !17, !noundef !17
+  %bcmp.i.i.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val2.i, ptr nonnull readonly %.val.i.a, i64 %.val1.i), !alias.scope !14346, !noalias !14353
   %.not.i = icmp eq i32 %bcmp.i.i.i.i, 0
   br i1 %.not.i, label %bb.c, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTReINtNtB7_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.thread6
 
