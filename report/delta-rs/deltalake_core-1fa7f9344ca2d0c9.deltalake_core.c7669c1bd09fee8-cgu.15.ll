@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %bb.a
   %i.n = tail call { ptr, ptr } %i.m(ptr noundef nonnull %.sroa.01.0.i, ptr noundef nonnull %i.d, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49), !noalias !36, !inline_history !43 ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.n, 0        ; 3 uses
   %i.p = extractvalue { ptr, ptr } %i.n, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !36
   store ptr %i.o, ptr %i.a, align 8, !noalias !36
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -605,8 +604,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   store i64 %i.s, ptr %i.c, align 8, !noalias !21493
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx6.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx2.i, i64 16, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !21514)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload), "nonnull"(ptr %.sroa.4.0.copyload) ]
   %i.y = load ptr, ptr %.sroa.4.0.copyload, align 8, !noalias !21517, !nonnull !3, !noundef !3
   %i.z = load i64, ptr %i.x, align 8, !noalias !21517, !noundef !3 ; 4 uses
   invoke void @_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VechE7reserveCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %.sroa.3.0.copyload, i64 noundef %i.z)
@@ -1009,8 +1007,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs5_NtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4exprNtB5_9SqlFormatNtNtCsbvkFyIu7lgC_4core3fmt7Display3fmt, ptr %.sroa.47.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.m = call noundef zeroext i1 @_RNvNtCsbvkFyIu7lgC_4core3fmt5write(ptr noundef nonnull %.0.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.8.val, ptr noundef nonnull @0, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -1049,8 +1046,7 @@ bb.j:                                             ; preds = %bb.b, %bb.b, %bb.b,
   store ptr %i.d, ptr %i.c, align 8
   %.sroa.426.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr @_RNvXs4_NtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4exprNtB5_16BinaryExprFormatNtNtCsbvkFyIu7lgC_4core3fmt7Display3fmt, ptr %.sroa.426.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.o = call noundef zeroext i1 @_RNvNtCsbvkFyIu7lgC_4core3fmt5write(ptr noundef nonnull %.0.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.8.val, ptr noundef nonnull @0, ptr noundef nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
@@ -1063,8 +1059,7 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.f, ptr %i.e, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr @_RNvXs4_NtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4exprNtB5_16BinaryExprFormatNtNtCsbvkFyIu7lgC_4core3fmt7Display3fmt, ptr %.sroa.411.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.p = call noundef zeroext i1 @_RNvNtCsbvkFyIu7lgC_4core3fmt5write(ptr noundef nonnull %.0.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.8.val, ptr noundef nonnull @189, ptr noundef nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -1467,8 +1462,7 @@ bb.u:                                             ; preds = %bb.s
   store ptr %i.c, ptr %i.gs, align 8, !noalias !35444
   %.sroa.411.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store ptr @_RNvXsq_NtCs6Po7BT7Nknu_5alloc6stringNtB5_6StringNtNtCsbvkFyIu7lgC_4core3fmt7Display3fmt, ptr %.sroa.411.0..sroa_idx.i, align 8, !noalias !35444
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val543) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val543) ]
   %i.gt = invoke noundef zeroext i1 @_RNvNtCsbvkFyIu7lgC_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val543, ptr noundef nonnull @160, ptr noundef nonnull %i.b)
           to label %bb.w unwind label %bb.v
 
@@ -1871,8 +1865,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.h
 
 bb.o:                                             ; preds = %bb.m
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.826.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload), "nonnull"(ptr %.sroa.826.0.copyload) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %.sroa.7.0.copyload, ptr %i.f, align 8
