@@ -201,7 +201,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.md = shl i32 %.021.i57.i, 3
   %i.me = sub i32 %.val4.i215685.i, %i.md         ; 2 uses
   store i32 %i.me, ptr %i.cz, align 8, !tbaa !91, !noalias !94
-  %.val.i219.i = load i64, ptr %i.mc, align 1, !tbaa !53, !noalias !94 ; 2 uses
+  %.val.i219.i = load i64, ptr %i.mc, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i219.i, ptr %13, align 8, !tbaa !87, !noalias !94
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit61.i
 
@@ -313,7 +313,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.om = shl i32 %.021.i64.i, 3
   %i.on = sub i32 %i.nk, %i.om                    ; 2 uses
   store i32 %i.on, ptr %i.cz, align 8, !tbaa !91, !noalias !94
-  %.val.i223.i = load i64, ptr %i.ol, align 1, !tbaa !53, !noalias !94 ; 2 uses
+  %.val.i223.i = load i64, ptr %i.ol, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i223.i, ptr %13, align 8, !tbaa !87, !noalias !94
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit.i
 
@@ -533,7 +533,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.tg = shl i32 %.021.i.i, 3
   %i.th = sub i32 %i.sm, %i.tg                    ; 2 uses
   store i32 %i.th, ptr %i.cz, align 8, !tbaa !91, !noalias !99
-  %.val.i231.i = load i64, ptr %i.tf, align 1, !tbaa !53, !noalias !99 ; 2 uses
+  %.val.i231.i = load i64, ptr %i.tf, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i231.i, ptr %13, align 8, !tbaa !87, !noalias !99
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
 
@@ -644,7 +644,7 @@ bb.cc:                                            ; preds = %bb.cb
   %i.vr = shl i32 %.021.i50.i, 3
   %i.vs = sub i32 %i.up, %i.vr                    ; 2 uses
   store i32 %i.vs, ptr %i.cz, align 8, !tbaa !91, !noalias !99
-  %.val.i235.i = load i64, ptr %i.vq, align 1, !tbaa !53, !noalias !99 ; 2 uses
+  %.val.i235.i = load i64, ptr %i.vq, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i235.i, ptr %13, align 8, !tbaa !87, !noalias !99
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit14.i
 
@@ -1047,7 +1047,7 @@ bb.at:                                            ; preds = %bb.as
   %i.kz = shl i32 %.021.i.i.i, 3
   %i.la = sub i32 %i.kf, %i.kz                    ; 2 uses
   store i32 %i.la, ptr %i.cp, align 8, !tbaa !91, !noalias !134
-  %.val.i31.i = load i64, ptr %i.ky, align 1, !tbaa !53, !noalias !134 ; 2 uses
+  %.val.i31.i = load i64, ptr %i.ky, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i31.i, ptr %9, align 8, !tbaa !87, !noalias !134
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i
 
@@ -1158,7 +1158,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.nk = shl i32 %.021.i216.i.i, 3
   %i.nl = sub i32 %i.mi, %i.nk                    ; 2 uses
   store i32 %i.nl, ptr %i.cp, align 8, !tbaa !91, !noalias !134
-  %.val.i35.i = load i64, ptr %i.nj, align 1, !tbaa !53, !noalias !134 ; 2 uses
+  %.val.i35.i = load i64, ptr %i.nj, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i35.i, ptr %9, align 8, !tbaa !87, !noalias !134
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i.i
 
@@ -1561,7 +1561,7 @@ bb.dp:                                            ; preds = %bb.do
   %i.adr = shl i32 %.021.i223.i.i, 3
   %i.ads = sub i32 %i.acx, %i.adr                 ; 2 uses
   store i32 %i.ads, ptr %i.cp, align 8, !tbaa !91, !noalias !153
-  %.val.i47.i = load i64, ptr %i.adq, align 1, !tbaa !53, !noalias !153 ; 2 uses
+  %.val.i47.i = load i64, ptr %i.adq, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i47.i, ptr %9, align 8, !tbaa !87, !noalias !153
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit227.i.i
 
@@ -1672,7 +1672,7 @@ bb.dx:                                            ; preds = %bb.dw
   %i.agc = shl i32 %.021.i230.i.i, 3
   %i.agd = sub i32 %i.afa, %i.agc                 ; 2 uses
   store i32 %i.agd, ptr %i.cp, align 8, !tbaa !91, !noalias !153
-  %.val.i51.i = load i64, ptr %i.agb, align 1, !tbaa !53, !noalias !153 ; 2 uses
+  %.val.i51.i = load i64, ptr %i.agb, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i51.i, ptr %9, align 8, !tbaa !87, !noalias !153
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit.i.i
 
@@ -2075,7 +2075,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.lh = shl i32 %.021.i.i.i, 3
   %i.li = sub i32 %i.kn, %i.lh                    ; 2 uses
   store i32 %i.li, ptr %i.cw, align 8, !tbaa !91, !noalias !164
-  %.val.i31.i = load i64, ptr %i.lg, align 1, !tbaa !53, !noalias !164 ; 2 uses
+  %.val.i31.i = load i64, ptr %i.lg, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i31.i, ptr %7, align 8, !tbaa !87, !noalias !164
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i
 
@@ -2186,7 +2186,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.ns = shl i32 %.021.i87.i.i, 3
   %i.nt = sub i32 %i.mq, %i.ns                    ; 2 uses
   store i32 %i.nt, ptr %i.cw, align 8, !tbaa !91, !noalias !164
-  %.val.i35.i = load i64, ptr %i.nr, align 1, !tbaa !53, !noalias !164 ; 2 uses
+  %.val.i35.i = load i64, ptr %i.nr, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i35.i, ptr %7, align 8, !tbaa !87, !noalias !164
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit.i.i
 
@@ -2589,7 +2589,7 @@ bb.au:                                            ; preds = %bb.at
   %i.mf = shl i32 %.021.i57, 3
   %i.mg = sub i32 %.val4.i215685, %i.mf           ; 2 uses
   store i32 %i.mg, ptr %i.cx, align 8, !tbaa !91, !noalias !171
-  %.val.i219 = load i64, ptr %i.me, align 1, !tbaa !53, !noalias !171 ; 2 uses
+  %.val.i219 = load i64, ptr %i.me, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i219, ptr %13, align 8, !tbaa !87, !noalias !171
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit61
 
@@ -2701,7 +2701,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.oo = shl i32 %.021.i64, 3
   %i.op = sub i32 %i.nm, %i.oo                    ; 2 uses
   store i32 %i.op, ptr %i.cx, align 8, !tbaa !91, !noalias !171
-  %.val.i223 = load i64, ptr %i.on, align 1, !tbaa !53, !noalias !171 ; 2 uses
+  %.val.i223 = load i64, ptr %i.on, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i223, ptr %13, align 8, !tbaa !87, !noalias !171
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit
 
@@ -2921,7 +2921,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.th = shl i32 %.021.i, 3
   %i.ti = sub i32 %i.sn, %i.th                    ; 2 uses
   store i32 %i.ti, ptr %i.cx, align 8, !tbaa !91, !noalias !174
-  %.val.i231 = load i64, ptr %i.tg, align 1, !tbaa !53, !noalias !174 ; 2 uses
+  %.val.i231 = load i64, ptr %i.tg, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i231, ptr %13, align 8, !tbaa !87, !noalias !174
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit
 
@@ -3032,7 +3032,7 @@ bb.ca:                                            ; preds = %bb.bz
   %i.vr = shl i32 %.021.i50, 3
   %i.vs = sub i32 %i.up, %i.vr                    ; 2 uses
   store i32 %i.vs, ptr %i.cx, align 8, !tbaa !91, !noalias !174
-  %.val.i235 = load i64, ptr %i.vq, align 1, !tbaa !53, !noalias !174 ; 2 uses
+  %.val.i235 = load i64, ptr %i.vq, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i235, ptr %13, align 8, !tbaa !87, !noalias !174
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit14
 
@@ -3435,7 +3435,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.la = shl i32 %.021.i.i, 3
   %i.lb = sub i32 %i.kg, %i.la                    ; 2 uses
   store i32 %i.lb, ptr %i.cn, align 8, !tbaa !91, !noalias !225
-  %.val.i31 = load i64, ptr %i.kz, align 1, !tbaa !53, !noalias !225 ; 2 uses
+  %.val.i31 = load i64, ptr %i.kz, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i31, ptr %9, align 8, !tbaa !87, !noalias !225
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
 
@@ -3546,7 +3546,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.nl = shl i32 %.021.i216.i, 3
   %i.nm = sub i32 %i.mj, %i.nl                    ; 2 uses
   store i32 %i.nm, ptr %i.cn, align 8, !tbaa !91, !noalias !225
-  %.val.i35 = load i64, ptr %i.nk, align 1, !tbaa !53, !noalias !225 ; 2 uses
+  %.val.i35 = load i64, ptr %i.nk, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i35, ptr %9, align 8, !tbaa !87, !noalias !225
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i
 
@@ -3949,7 +3949,7 @@ bb.dn:                                            ; preds = %bb.dm
   %i.adu = shl i32 %.021.i223.i, 3
   %i.adv = sub i32 %i.ada, %i.adu                 ; 2 uses
   store i32 %i.adv, ptr %i.cn, align 8, !tbaa !91, !noalias !238
-  %.val.i47 = load i64, ptr %i.adt, align 1, !tbaa !53, !noalias !238 ; 2 uses
+  %.val.i47 = load i64, ptr %i.adt, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i47, ptr %9, align 8, !tbaa !87, !noalias !238
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit227.i
 
@@ -4060,7 +4060,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.agf = shl i32 %.021.i230.i, 3
   %i.agg = sub i32 %i.afd, %i.agf                 ; 2 uses
   store i32 %i.agg, ptr %i.cn, align 8, !tbaa !91, !noalias !238
-  %.val.i51 = load i64, ptr %i.age, align 1, !tbaa !53, !noalias !238 ; 2 uses
+  %.val.i51 = load i64, ptr %i.age, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i51, ptr %9, align 8, !tbaa !87, !noalias !238
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit.i
 
@@ -4463,7 +4463,7 @@ bb.au:                                            ; preds = %bb.at
   %i.li = shl i32 %.021.i.i, 3
   %i.lj = sub i32 %i.ko, %i.li                    ; 2 uses
   store i32 %i.lj, ptr %i.cu, align 8, !tbaa !91, !noalias !243
-  %.val.i31 = load i64, ptr %i.lh, align 1, !tbaa !53, !noalias !243 ; 2 uses
+  %.val.i31 = load i64, ptr %i.lh, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i31, ptr %7, align 8, !tbaa !87, !noalias !243
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
 
@@ -4574,7 +4574,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.nt = shl i32 %.021.i87.i, 3
   %i.nu = sub i32 %i.mr, %i.nt                    ; 2 uses
   store i32 %i.nu, ptr %i.cu, align 8, !tbaa !91, !noalias !243
-  %.val.i35 = load i64, ptr %i.ns, align 1, !tbaa !53, !noalias !243 ; 2 uses
+  %.val.i35 = load i64, ptr %i.ns, align 1, !tbaa !53 ; 2 uses
   store i64 %.val.i35, ptr %7, align 8, !tbaa !87, !noalias !243
   br label %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit.i
 
