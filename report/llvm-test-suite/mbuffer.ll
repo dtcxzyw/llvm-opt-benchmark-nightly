@@ -201,9 +201,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %reorder_short_term.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.pre-phi, %reorder_short_term.exit ] ; 16 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %reorder_short_term.exit ] ; 15 uses
   %i.o = phi i32 [ %i.k, %.lr.ph ], [ %i.ey, %reorder_short_term.exit ] ; 2 uses
-  %6 = phi ptr [ %3, %.lr.ph ], [ %i.ex, %reorder_short_term.exit ]
   %.04894 = phi i32 [ %.050, %.lr.ph ], [ %.1, %reorder_short_term.exit ] ; 4 uses
   %smin127 = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %i.n)
   %i.p = sub i64 %i.l, %smin127                   ; 3 uses
@@ -213,6 +212,7 @@ bb.b:                                             ; preds = %.lr.ph, %reorder_sh
   br i1 %i.r, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   tail call void @error(ptr noundef nonnull @.str.13, i32 noundef 500) #16
   %.pr = load i32, ptr %6, align 4, !tbaa !4
   br label %bb.d
@@ -341,7 +341,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
 get_short_term_pic.exit.i:                        ; preds = %bb.q, %bb.p, %bb.m, %bb.k, %bb.j, %bb.h
   %.017.i.i = phi ptr [ null, %bb.k ], [ null, %bb.h ], [ %i.ar, %bb.j ], [ %i.bd, %bb.m ], [ null, %bb.q ], [ %i.bl, %bb.p ] ; 2 uses
   %.not43.i = icmp sgt i64 %indvars.iv, %i.m
-  br i1 %.not43.i, label %._crit_edge.thread.i, label %.lr.ph.i.preheader
+  br i1 %.not43.i, label %reorder_short_term.exit.sink.split, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %get_short_term_pic.exit.i
   %min.iters.check = icmp ult i64 %i.q, 4
@@ -376,12 +376,6 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv.i.ph = phi i64 [ %i.l, %.lr.ph.i.preheader ], [ %i.br, %middle.block ]
   br label %.lr.ph.i
 
-._crit_edge.thread.i:                             ; preds = %get_short_term_pic.exit.i
-  %7 = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv
-  store ptr %.017.i.i, ptr %7, align 8, !tbaa !58
-  %.pre = add nuw nsw i64 %indvars.iv, 1
-  br label %reorder_short_term.exit
-
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader141, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader141 ] ; 2 uses
   %i.bz = getelementptr [8 x i8], ptr %0, i64 %indvars.iv.i ; 2 uses
@@ -393,17 +387,16 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.cc, label %.lr.ph.i, label %.lr.ph41.preheader.i, !llvm.loop !163
 
 .lr.ph41.preheader.i:                             ; preds = %.lr.ph.i, %middle.block
-  %8 = add nuw nsw i64 %indvars.iv, 1             ; 3 uses
-  %i.cd = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv
+  %7 = trunc nsw i64 %indvars.iv to i32
+  %8 = add nuw i32 %7, 1                          ; 2 uses
+  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
   store ptr %.017.i.i, ptr %i.cd, align 8, !tbaa !58
-  %9 = trunc nuw i64 %8 to i32
-  %sext115 = shl i64 %8, 32
-  %10 = ashr exact i64 %sext115, 32
+  %9 = sext i32 %8 to i64
   br label %.lr.ph41.i
 
 .lr.ph41.i:                                       ; preds = %bb.u, %.lr.ph41.preheader.i
-  %indvars.iv48.i = phi i64 [ %10, %.lr.ph41.preheader.i ], [ %indvars.iv.next49.i, %bb.u ] ; 3 uses
-  %.02738.i = phi i32 [ %9, %.lr.ph41.preheader.i ], [ %.128.i, %bb.u ] ; 4 uses
+  %indvars.iv48.i = phi i64 [ %9, %.lr.ph41.preheader.i ], [ %indvars.iv.next49.i, %bb.u ] ; 3 uses
+  %.02738.i = phi i32 [ %8, %.lr.ph41.preheader.i ], [ %.128.i, %bb.u ] ; 4 uses
   %i.ce = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv48.i
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !58 ; 4 uses
   %.not31.i = icmp eq ptr %i.cf, null
@@ -529,7 +522,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
 get_long_term_pic.exit.i:                         ; preds = %bb.ae, %bb.ad, %bb.aa, %bb.y, %bb.x, %bb.v
   %.017.i.i71 = phi ptr [ null, %bb.y ], [ null, %bb.v ], [ %i.db, %bb.x ], [ %i.dv, %bb.ad ], [ null, %bb.ae ], [ %i.dn, %bb.aa ] ; 2 uses
   %.not39.i = icmp sgt i64 %indvars.iv, %i.m
-  br i1 %.not39.i, label %._crit_edge.thread.i77, label %.lr.ph.i73.preheader
+  br i1 %.not39.i, label %reorder_short_term.exit.sink.split, label %.lr.ph.i73.preheader
 
 .lr.ph.i73.preheader:                             ; preds = %get_long_term_pic.exit.i
   %min.iters.check129 = icmp ult i64 %i.p, 4
@@ -564,12 +557,6 @@ middle.block138:                                  ; preds = %vector.body133
   %indvars.iv.i74.ph = phi i64 [ %i.l, %.lr.ph.i73.preheader ], [ %i.eb, %middle.block138 ]
   br label %.lr.ph.i73
 
-._crit_edge.thread.i77:                           ; preds = %get_long_term_pic.exit.i
-  %11 = add nuw i64 %indvars.iv, 1
-  %12 = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv
-  store ptr %.017.i.i71, ptr %12, align 8, !tbaa !58
-  br label %reorder_short_term.exit
-
 .lr.ph.i73:                                       ; preds = %.lr.ph.i73.preheader145, %.lr.ph.i73
   %indvars.iv.i74 = phi i64 [ %indvars.iv.next.i75, %.lr.ph.i73 ], [ %indvars.iv.i74.ph, %.lr.ph.i73.preheader145 ] ; 2 uses
   %i.ej = getelementptr [8 x i8], ptr %0, i64 %indvars.iv.i74 ; 2 uses
@@ -581,17 +568,16 @@ middle.block138:                                  ; preds = %vector.body133
   br i1 %i.em, label %.lr.ph.i73, label %.lr.ph37.preheader.i, !llvm.loop !167
 
 .lr.ph37.preheader.i:                             ; preds = %.lr.ph.i73, %middle.block138
-  %13 = add nuw nsw i64 %indvars.iv, 1            ; 3 uses
-  %i.en = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv
+  %10 = trunc nsw i64 %indvars.iv to i32
+  %11 = add nuw i32 %10, 1                        ; 2 uses
+  %i.en = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
   store ptr %.017.i.i71, ptr %i.en, align 8, !tbaa !58
-  %14 = trunc nuw i64 %13 to i32
-  %sext = shl i64 %13, 32
-  %15 = ashr exact i64 %sext, 32
+  %12 = sext i32 %11 to i64
   br label %.lr.ph37.i
 
 .lr.ph37.i:                                       ; preds = %bb.ah, %.lr.ph37.preheader.i
-  %indvars.iv44.i = phi i64 [ %15, %.lr.ph37.preheader.i ], [ %indvars.iv.next45.i, %bb.ah ] ; 3 uses
-  %.02534.i = phi i32 [ %14, %.lr.ph37.preheader.i ], [ %.126.i, %bb.ah ] ; 3 uses
+  %indvars.iv44.i = phi i64 [ %12, %.lr.ph37.preheader.i ], [ %indvars.iv.next45.i, %bb.ah ] ; 3 uses
+  %.02534.i = phi i32 [ %11, %.lr.ph37.preheader.i ], [ %.126.i, %bb.ah ] ; 3 uses
   %i.eo = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv44.i
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !58 ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 6376
@@ -618,10 +604,17 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %.not.i76 = icmp sgt i64 %indvars.iv44.i, %i.m
   br i1 %.not.i76, label %reorder_short_term.exit, label %.lr.ph37.i, !llvm.loop !168
 
-reorder_short_term.exit:                          ; preds = %bb.ah, %bb.u, %._crit_edge.thread.i77, %._crit_edge.thread.i
-  %indvars.iv.next.pre-phi = phi i64 [ %8, %bb.u ], [ %.pre, %._crit_edge.thread.i ], [ %11, %._crit_edge.thread.i77 ], [ %13, %bb.ah ] ; 2 uses
-  %.1 = phi i32 [ %.049, %bb.u ], [ %.049, %._crit_edge.thread.i ], [ %.04894, %._crit_edge.thread.i77 ], [ %.04894, %bb.ah ]
-  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.next.pre-phi ; 2 uses
+reorder_short_term.exit.sink.split:               ; preds = %get_long_term_pic.exit.i, %get_short_term_pic.exit.i
+  %.017.i.i71.sink = phi ptr [ %.017.i.i, %get_short_term_pic.exit.i ], [ %.017.i.i71, %get_long_term_pic.exit.i ]
+  %.1.ph = phi i32 [ %.049, %get_short_term_pic.exit.i ], [ %.04894, %get_long_term_pic.exit.i ]
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
+  store ptr %.017.i.i71.sink, ptr %13, align 8, !tbaa !58
+  br label %reorder_short_term.exit
+
+reorder_short_term.exit:                          ; preds = %bb.ah, %bb.u, %reorder_short_term.exit.sink.split
+  %.1 = phi i32 [ %.1.ph, %reorder_short_term.exit.sink.split ], [ %.049, %bb.u ], [ %.04894, %bb.ah ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.next
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !4  ; 2 uses
   %.not = icmp eq i32 %i.ey, 3
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !169

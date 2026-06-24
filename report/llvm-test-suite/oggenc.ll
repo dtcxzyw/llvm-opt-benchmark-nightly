@@ -201,8 +201,8 @@ begin_hunk_0_@setup_tone_curves:bb.a
 bb.b:                                             ; preds = %bb.a, %pred.store.continue514.6
   %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %pred.store.continue514.6 ] ; 7 uses
   %i.cdm = mul nuw nsw i64 %indvar, 1792
-  %i.cdn = getelementptr i8, ptr %i.b, i64 %i.cdm
-  %scevgep = getelementptr i8, ptr %i.cdn, i64 448
+  %i.cdn = getelementptr nuw i8, ptr %i.b, i64 %i.cdm
+  %scevgep = getelementptr nuw i8, ptr %i.cdn, i64 448
   %i.cdo = mul nuw nsw i64 %indvar, 1344
   %scevgep352 = getelementptr i8, ptr @tonemasks, i64 %i.cdo
   %i.cdp = shl nuw nsw i64 %indvar, 2
@@ -605,7 +605,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.us96.
   %i.da = fcmp ogt float %i.cz, %.2.us.us.us.i
   %.2.us.us.us.i.1 = select i1 %i.da, float %i.cz, float %.2.us.us.us.i ; 3 uses
   %i.db = add nuw nsw i64 %.06170.us.us.us.i, 2   ; 2 uses
-  %niter69.next.1 = add i64 %niter69, 2           ; 2 uses
+  %niter69.next.1 = add nuw i64 %niter69, 2       ; 2 uses
   %niter69.ncmp.1 = icmp eq i64 %niter69.next.1, %unroll_iter68
   br i1 %niter69.ncmp.1, label %._crit_edge.us.us.us.i.unr-lcssa, label %.lr.ph.us.us.us.i.new, !llvm.loop !821
 
@@ -1008,18 +1008,12 @@ bb.a:
 
 vector.scevcheck:                                 ; preds = %.lr.ph
   %ident.check = icmp ne i32 %0, 1
-  %i.k = add nsw i32 %1, -1                       ; 3 uses
+  %i.k = add nsw i32 %1, -1                       ; 2 uses
   %mul.result = shl i32 %i.k, 2
   %mul.overflow = icmp ugt i32 %i.k, 1073741823
   %i.l = icmp ugt i32 %mul.result, 2147483643
-  %7 = or i1 %i.l, %mul.overflow
-  %scevgep = getelementptr i8, ptr %3, i64 12     ; 2 uses
-  %8 = zext i32 %i.k to i64
-  %mul322 = shl nuw nsw i64 %8, 4
-  %9 = getelementptr i8, ptr %scevgep, i64 %mul322
-  %10 = icmp ult ptr %9, %scevgep
-  %i.m = or i1 %ident.check, %7
-  %i.n = or i1 %i.m, %10
+  %i.m = or i1 %i.l, %mul.overflow
+  %i.n = or i1 %ident.check, %i.m
   br i1 %i.n, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
@@ -1422,21 +1416,14 @@ bb.a:
   %i.d = sext i32 %i.a to i64                     ; 5 uses
   %i.e = sext i32 %0 to i64                       ; 2 uses
   %i.f = zext nneg i32 %1 to i64                  ; 2 uses
-  %min.iters.check = icmp ult i32 %1, 24
+  %min.iters.check = icmp ult i32 %1, 16
   br i1 %min.iters.check, label %.lr.ph.preheader251, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   %ident.check = icmp ne i32 %0, 1
-  %5 = add nsw i32 %1, -1                         ; 2 uses
-  %mul.result = shl i32 %5, 1
-  %6 = icmp ugt i32 %mul.result, 2147483645
-  %scevgep = getelementptr i8, ptr %3, i64 4      ; 2 uses
-  %7 = zext i32 %5 to i64
-  %mul190 = shl nuw nsw i64 %7, 3
-  %8 = getelementptr i8, ptr %scevgep, i64 %mul190
-  %9 = icmp ult ptr %8, %scevgep
-  %10 = or i1 %ident.check, %6
-  %i.g = or i1 %10, %9
+  %mul.result = shl nuw i32 %1, 1
+  %5 = icmp slt i32 %mul.result, 2
+  %i.g = or i1 %ident.check, %5
   br i1 %i.g, label %.lr.ph.preheader251, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

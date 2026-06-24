@@ -201,7 +201,7 @@ bb.dz:                                            ; preds = %bb.dy
   %i.sa = getelementptr inbounds nuw i8, ptr %i.rx, i64 200
   %i.sb = getelementptr inbounds nuw i8, ptr %.1, i64 16
   %i.sc = load ptr, ptr %i.sb, align 8, !tbaa !31 ; 6 uses
-  %i.sd = load ptr, ptr %i.sa, align 8, !tbaa !136 ; 8 uses
+  %i.sd = load ptr, ptr %i.sa, align 8, !tbaa !136 ; 6 uses
   %.sroa.speculated.us.us = call i32 @llvm.smin.i32(i32 %i.rw, i32 0)
   %i.se = sext i32 %.sroa.speculated.us.us to i64
   %i.sf = getelementptr inbounds [8 x i8], ptr %i.sc, i64 %i.se
@@ -222,7 +222,7 @@ bb.dz:                                            ; preds = %bb.dy
   br i1 %min.iters.check313, label %.preheader.preheader330, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader.preheader
-  %i.sm = add nsw i64 %wide.trip.count188, -1     ; 4 uses
+  %i.sm = add nsw i64 %wide.trip.count188, -1     ; 2 uses
   %i.sn = trunc nsw i64 %i.sm to i32
   %mul = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.sn, i32 3) ; 2 uses
   %mul.result = extractvalue { i32, i1 } %mul, 0
@@ -230,23 +230,7 @@ vector.scevcheck:                                 ; preds = %.preheader.preheade
   %i.so = icmp slt i32 %mul.result, 0
   %i.sp = or i1 %i.so, %mul.overflow
   %i.sq = icmp ugt i64 %i.sm, 4294967295
-  %20 = or i1 %i.sp, %i.sq
-  %scevgep = getelementptr i8, ptr %i.sd, i64 4   ; 2 uses
-  %mul306 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.sm, i64 12) ; 2 uses
-  %mul.result307 = extractvalue { i64, i1 } %mul306, 0
-  %mul.overflow308 = extractvalue { i64, i1 } %mul306, 1
-  %21 = getelementptr i8, ptr %scevgep, i64 %mul.result307
-  %22 = icmp ult ptr %21, %scevgep
-  %23 = or i1 %22, %mul.overflow308
-  %scevgep309 = getelementptr i8, ptr %i.sd, i64 8 ; 2 uses
-  %mul310 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.sm, i64 12) ; 2 uses
-  %mul.result311 = extractvalue { i64, i1 } %mul310, 0
-  %mul.overflow312 = extractvalue { i64, i1 } %mul310, 1
-  %24 = getelementptr i8, ptr %scevgep309, i64 %mul.result311
-  %25 = icmp ult ptr %24, %scevgep309
-  %26 = or i1 %25, %mul.overflow312
-  %27 = or i1 %20, %23
-  %i.sr = or i1 %27, %26
+  %i.sr = or i1 %i.sp, %i.sq
   br i1 %i.sr, label %.preheader.preheader330, label %vector.ph314
 
 vector.ph314:                                     ; preds = %vector.scevcheck
@@ -648,9 +632,6 @@ declare i64 @llvm.umax.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

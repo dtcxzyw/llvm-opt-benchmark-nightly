@@ -150,7 +150,7 @@ define dso_local void @_ZNK6icu_789ParseData14parseReferenceERKNS_13UnicodeStrin
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.h = sext i32 %i.b to i64                     ; 3 uses
+  %i.h = sext i32 %i.b to i64                     ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 %4) ; 4 uses
   %wide.trip.count = sext i32 %smax to i64        ; 2 uses
   %exitcond.peel.not.not = icmp slt i32 %i.b, %4
@@ -198,8 +198,8 @@ bb.c:                                             ; preds = %_ZNK6icu_7813Unicod
   br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !5
 
 .lr.ph:                                           ; preds = %.peel.next.preheader, %.peel.next
-  %indvars.iv32 = phi i64 [ %indvars.iv, %.peel.next ], [ %indvars.iv30, %.peel.next.preheader ] ; 4 uses
-  %i.x = trunc i64 %indvars.iv32 to i32           ; 3 uses
+  %indvars.iv32 = phi i64 [ %indvars.iv, %.peel.next ], [ %indvars.iv30, %.peel.next.preheader ] ; 3 uses
+  %i.x = trunc i64 %indvars.iv32 to i32           ; 2 uses
   %i.y = load i16, ptr %i.d, align 8              ; 3 uses
   %i.z = icmp slt i16 %i.y, 0
   %i.aa = ashr i16 %i.y, 5
@@ -207,7 +207,7 @@ bb.c:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.ac = load i32, ptr %i.e, align 4
   %i.ad = select i1 %i.z, i32 %i.ac, i32 %i.ab
   %i.ae = icmp ugt i32 %i.ad, %i.x
-  br i1 %i.ae, label %bb.d, label %_ZNK6icu_7813UnicodeString6charAtEi.exit
+  br i1 %i.ae, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph
   %i.af = and i16 %i.y, 2
@@ -217,19 +217,10 @@ bb.d:                                             ; preds = %.lr.ph
   %i.ai = getelementptr inbounds [2 x i8], ptr %i.ah, i64 %indvars.iv32
   %i.aj = load i16, ptr %i.ai, align 2
   %i.ak = zext i16 %i.aj to i32
-  br label %_ZNK6icu_7813UnicodeString6charAtEi.exit
+  br label %bb.e
 
-_ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %.lr.ph, %bb.d
-  %.0.i.i = phi i32 [ %i.ak, %bb.d ], [ 65535, %.lr.ph ] ; 2 uses
-  %5 = icmp eq i64 %indvars.iv32, %i.h
-  br i1 %5, label %6, label %bb.e
-
-6:                                                ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
-  %7 = tail call signext i8 @u_isIDStart_78(i32 noundef %.0.i.i) #13
-  %.not = icmp eq i8 %7, 0
-  br i1 %.not, label %.thread, label %bb.e
-
-bb.e:                                             ; preds = %6, %_ZNK6icu_7813UnicodeString6charAtEi.exit
+bb.e:                                             ; preds = %bb.d, %.lr.ph
+  %.0.i.i = phi i32 [ %i.ak, %bb.d ], [ 65535, %.lr.ph ]
   %i.al = tail call signext i8 @u_isIDPart_78(i32 noundef %.0.i.i) #13
   %.not22 = icmp eq i8 %i.al, 0
   br i1 %.not22, label %..thread.loopexit_crit_edge34, label %.peel.next, !llvm.loop !5
@@ -237,8 +228,8 @@ bb.e:                                             ; preds = %6, %_ZNK6icu_7813Un
 ..thread.loopexit_crit_edge34:                    ; preds = %bb.e
   br label %.thread, !llvm.loop !5
 
-.thread:                                          ; preds = %.peel.next, %6, %.peel.next.preheader, %..thread.loopexit_crit_edge34, %.peel.begin
-  %.019.lcssa = phi i32 [ %smax, %.peel.begin ], [ %smax, %.peel.next.preheader ], [ %i.x, %..thread.loopexit_crit_edge34 ], [ %i.x, %6 ], [ %smax, %.peel.next ] ; 3 uses
+.thread:                                          ; preds = %.peel.next, %.peel.next.preheader, %..thread.loopexit_crit_edge34, %.peel.begin
+  %.019.lcssa = phi i32 [ %smax, %.peel.begin ], [ %i.x, %..thread.loopexit_crit_edge34 ], [ %smax, %.peel.next.preheader ], [ %smax, %.peel.next ] ; 3 uses
   %i.am = icmp eq i32 %.019.lcssa, %i.b
   br i1 %i.am, label %.thread.thread, label %bb.f
 

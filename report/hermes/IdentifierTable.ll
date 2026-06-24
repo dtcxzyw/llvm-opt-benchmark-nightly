@@ -201,21 +201,21 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not38.i.i.i.i, label %.critedge, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.o
-  %i.ek = load ptr, ptr %i.a, align 8, !tbaa !61  ; 3 uses
+  %i.ek = load ptr, ptr %i.a, align 8, !tbaa !61  ; 2 uses
   %i.el = and i32 %i.ef, 63                       ; 2 uses
   %i.em = sub nuw nsw i32 64, %i.el
-  %.not.i.i.i28 = icmp eq i32 %i.el, 0            ; 2 uses
+  %.not.i.i.i28 = icmp eq i32 %i.el, 0
   %i.en = zext nneg i32 %i.em to i64
   %i.eo = lshr i64 -1, %i.en
   %i.ep = xor i64 %i.eo, -1
   %i.eq = and i32 %i.ei, 63
   %i.er = xor i32 %i.eq, 63
   %i.es = zext nneg i32 %i.er to i64
-  %i.et = lshr i64 -1, %i.es                      ; 3 uses
+  %i.et = lshr i64 -1, %i.es                      ; 2 uses
   %i.eu = zext nneg i32 %i.eh to i64              ; 2 uses
-  %i.ev = zext nneg i32 %i.ej to i64              ; 2 uses
+  %i.ev = zext nneg i32 %i.ej to i64
   %i.ew = add nuw nsw i32 %i.ej, 1
-  %wide.trip.count.i.i.i.i = zext nneg i32 %i.ew to i64 ; 3 uses
+  %wide.trip.count.i.i.i.i = zext nneg i32 %i.ew to i64 ; 2 uses
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.eu
   %i.ey = load i64, ptr %i.ex, align 8, !tbaa !58
   %i.ez = select i1 %.not.i.i.i28, i64 -1, i64 %i.ep
@@ -224,33 +224,15 @@ bb.o:                                             ; preds = %bb.n
   %spec.select.peel.i.i.i.i = and i64 %i.fb, %i.ez
   %.128.peel.i.i.i.i = and i64 %spec.select.peel.i.i.i.i, %i.ey ; 2 uses
   %.not34.peel.i.i.i.i = icmp eq i64 %.128.peel.i.i.i.i, 0
-  br i1 %.not34.peel.i.i.i.i, label %3, label %_ZN4llvh28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit
+  br i1 %.not34.peel.i.i.i.i, label %bb.p, label %_ZN4llvh28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit
 
-3:                                                ; preds = %.lr.ph.i.i.i.i
-  %indvars.iv.next.peel.i.i.i.i = add nuw nsw i64 %i.eu, 1 ; 3 uses
-  %exitcond.peel.not.i.i.i.i = icmp eq i64 %indvars.iv.next.peel.i.i.i.i, %wide.trip.count.i.i.i.i
-  br i1 %exitcond.peel.not.i.i.i.i, label %.critedge, label %.peel.next.i.preheader.i.i.i
-
-.peel.next.i.preheader.i.i.i:                     ; preds = %3
-  br i1 %.not.i.i.i28, label %.peel.next.i.us.i.i.i, label %.peel.next.i.i.i.i
-
-.peel.next.i.us.i.i.i:                            ; preds = %.peel.next.i.preheader.i.i.i, %bb.p
-  %indvars.iv.i.us.i.i.i = phi i64 [ %indvars.iv.next.i.us.i.i.i, %bb.p ], [ %indvars.iv.next.peel.i.i.i.i, %.peel.next.i.preheader.i.i.i ] ; 4 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %indvars.iv.i.us.i.i.i
-  %5 = load i64, ptr %4, align 8, !tbaa !58
-  %6 = icmp eq i64 %indvars.iv.i.us.i.i.i, %i.ev
-  %7 = select i1 %6, i64 %i.et, i64 -1
-  %spec.select.i.us.i.i.i = and i64 %7, %5        ; 2 uses
-  %.not34.i.us.i.i.i = icmp eq i64 %spec.select.i.us.i.i.i, 0
-  br i1 %.not34.i.us.i.i.i, label %bb.p, label %.loopexit43.i.i.i.i
-
-bb.p:                                             ; preds = %.peel.next.i.us.i.i.i
-  %indvars.iv.next.i.us.i.i.i = add nuw nsw i64 %indvars.iv.i.us.i.i.i, 1 ; 2 uses
+bb.p:                                             ; preds = %.lr.ph.i.i.i.i
+  %indvars.iv.next.i.us.i.i.i = add nuw nsw i64 %i.eu, 1 ; 2 uses
   %exitcond.not.i.us.i.i.i = icmp eq i64 %indvars.iv.next.i.us.i.i.i, %wide.trip.count.i.i.i.i
-  br i1 %exitcond.not.i.us.i.i.i, label %.critedge, label %.peel.next.i.us.i.i.i, !llvm.loop !139
+  br i1 %exitcond.not.i.us.i.i.i, label %.critedge, label %.peel.next.i.i.i.i
 
-.peel.next.i.i.i.i:                               ; preds = %.peel.next.i.preheader.i.i.i, %bb.q
-  %indvars.iv.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i, %bb.q ], [ %indvars.iv.next.peel.i.i.i.i, %.peel.next.i.preheader.i.i.i ] ; 4 uses
+.peel.next.i.i.i.i:                               ; preds = %bb.p, %bb.q
+  %indvars.iv.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i, %bb.q ], [ %indvars.iv.next.i.us.i.i.i, %bb.p ] ; 4 uses
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %indvars.iv.i.i.i.i
   %i.fd = load i64, ptr %i.fc, align 8, !tbaa !58
   %i.fe = icmp eq i64 %indvars.iv.i.i.i.i, %i.ev
@@ -259,10 +241,8 @@ bb.p:                                             ; preds = %.peel.next.i.us.i.i
   %.not34.i.i.i.i = icmp eq i64 %spec.select.i.i.i.i, 0
   br i1 %.not34.i.i.i.i, label %bb.q, label %.loopexit43.i.i.i.i
 
-.loopexit43.i.i.i.i:                              ; preds = %.peel.next.i.i.i.i, %.peel.next.i.us.i.i.i
-  %.us-phi.i.i.i = phi i64 [ %indvars.iv.i.us.i.i.i, %.peel.next.i.us.i.i.i ], [ %indvars.iv.i.i.i.i, %.peel.next.i.i.i.i ]
-  %.us-phi3.i.i.i = phi i64 [ %spec.select.i.us.i.i.i, %.peel.next.i.us.i.i.i ], [ %spec.select.i.i.i.i, %.peel.next.i.i.i.i ]
-  %.pre.i.i.i.i = trunc nuw nsw i64 %.us-phi.i.i.i to i32
+.loopexit43.i.i.i.i:                              ; preds = %.peel.next.i.i.i.i
+  %.pre.i.i.i.i = trunc nuw nsw i64 %indvars.iv.i.i.i.i to i32
   br label %_ZN4llvh28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit
 
 bb.q:                                             ; preds = %.peel.next.i.i.i.i
@@ -272,7 +252,7 @@ bb.q:                                             ; preds = %.peel.next.i.i.i.i
 
 _ZN4llvh28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit: ; preds = %.lr.ph.i.i.i.i, %.loopexit43.i.i.i.i
   %.pre-phi.i.i.i.i = phi i32 [ %.pre.i.i.i.i, %.loopexit43.i.i.i.i ], [ %i.eh, %.lr.ph.i.i.i.i ]
-  %.128.lcssa.i.i.i.i = phi i64 [ %.us-phi3.i.i.i, %.loopexit43.i.i.i.i ], [ %.128.peel.i.i.i.i, %.lr.ph.i.i.i.i ]
+  %.128.lcssa.i.i.i.i = phi i64 [ %spec.select.i.i.i.i, %.loopexit43.i.i.i.i ], [ %.128.peel.i.i.i.i, %.lr.ph.i.i.i.i ]
   %i.fg = shl nuw i32 %.pre-phi.i.i.i.i, 6
   %i.fh = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.128.lcssa.i.i.i.i, i1 true)
   %i.fi = trunc nuw nsw i64 %i.fh to i32
@@ -282,7 +262,7 @@ _ZN4llvh28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit: ; preds = %.lr.
   %or.cond = select i1 %i.fk, i1 %.not, i1 false
   br i1 %or.cond, label %bb.i, label %.critedge
 
-.critedge:                                        ; preds = %bb.h, %3, %bb.o, %bb.n, %_ZN4llvh28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit, %bb.q, %bb.p, %bb.g, %_ZN4llvh9BitVector4flipEv.exit, %_ZNK4llvh9BitVector8set_bitsEv.exit
+.critedge:                                        ; preds = %bb.h, %bb.p, %bb.o, %bb.n, %_ZN4llvh28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit, %bb.q, %bb.g, %_ZN4llvh9BitVector4flipEv.exit, %_ZNK4llvh9BitVector8set_bitsEv.exit
   %.sroa.2.0.copyload.i30 = load i64, ptr %i.bj, align 8 ; 2 uses
   %.not.i.i = icmp eq i64 %.sroa.2.0.copyload.i30, 0
   br i1 %.not.i.i, label %_ZN4llvh9BitVector5resetEv.exit, label %bb.r

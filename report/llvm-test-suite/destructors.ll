@@ -199,17 +199,17 @@ entry:
   %i.m = sub i32 %i.l, %f8.s0.v3.min              ; 3 uses
   %i.n = tail call i32 @llvm.smax.i32(i32 %a684, i32 0) ; 2 uses
   %i.o = shl nsw i64 %i.j, 2
-  %i.p = shl i32 %f8.s0.v3.min, 1                 ; 12 uses
+  %i.p = shl i32 %f8.s0.v3.min, 1                 ; 9 uses
   %i.q = shl i32 %f7.stride.1, 1                  ; 4 uses
   %i.r = icmp slt i32 %f8.s0.v3.min, %i.l
   %i.s = add nsw i64 %promoted23, 1
   %i.t = sub nsw i32 %f8.s0.v6, %i.n
   %i.u = sext i32 %i.t to i64
   %t2133 = mul nsw i64 %i.s, %i.u                 ; 2 uses
-  %i.v = getelementptr [4 x i8], ptr %f7.host, i64 %t2133 ; 5 uses
+  %i.v = getelementptr [4 x i8], ptr %f7.host, i64 %t2133 ; 2 uses
   %sext = shl i64 %t2133, 32
   %i.w = ashr exact i64 %sext, 30
-  %i.x = getelementptr i8, ptr %f7.host, i64 %i.w ; 11 uses
+  %i.x = getelementptr i8, ptr %f7.host, i64 %i.w ; 8 uses
   br i1 %i.r, label %"for f8.s0.v4.preheader3", label %destructor_block, !prof !5
 
 "for f8.s0.v4.preheader3":                        ; preds = %"for f8.s0.v4.preheader"
@@ -276,20 +276,19 @@ entry:
   %i.by = zext i32 %i.bx to i64
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %i.ca = insertelement <4 x i32> poison, i32 %i.as, i64 0
-  %min.iters.check = icmp ult i32 %i.bx, 7
+  %min.iters.check = icmp ult i32 %i.bx, 8
   %i.cb = shl <4 x i32> %i.ca, <i32 1, i32 poison, i32 poison, i32 poison>
   %i.cc = shufflevector <4 x i32> %i.cb, <4 x i32> poison, <4 x i32> zeroinitializer
   %mul.overflow6 = icmp slt i32 %i.as, 0
   %invariant.op47 = add <4 x i32> %i.bw, %i.cc
-  %n.vec.a = and i64 %i.bz, 8589934588            ; 4 uses
-  %0 = trunc i64 %n.vec.a to i32                  ; 2 uses
-  %1 = shl i32 %0, 1                              ; 4 uses
-  %2 = shl nuw nsw i64 %n.vec.a, 2
-  %3 = sub i32 %i.m, %0
-  %invariant.op41 = add i32 2, %i.p
-  %invariant.op43 = add i32 4, %i.p
-  %invariant.op45 = add i32 6, %i.p
-  %cmp.n = icmp eq i64 %i.bz, %n.vec.a
+  %n.vec.a = and i64 %i.bz, 3                     ; 2 uses
+  %0 = icmp eq i64 %n.vec.a, 0
+  %1 = select i1 %0, i64 4, i64 %n.vec.a
+  %n.vec = sub nsw i64 %i.bz, %1                  ; 3 uses
+  %2 = trunc i64 %n.vec to i32                    ; 2 uses
+  %3 = shl i32 %2, 1                              ; 4 uses
+  %4 = shl nsw i64 %n.vec, 2
+  %5 = sub i32 %i.m, %2
   br label %"for f8.s0.v4"
 
 "for f8.s0.v4":                                   ; preds = %"for f8.s0.v4.preheader3", %"end for f8.s0.v3.loopexit"
@@ -320,76 +319,46 @@ vector.scevcheck:                                 ; preds = %"for f8.s0.v4"
   br i1 %i.cp, label %"for f8.s0.v3.preheader", label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %i.cq = add i32 %lsr.iv19, %1
-  %i.cr = add i32 %lsr.iv15, %1
-  %i.cs = add i32 %lsr.iv10, %1
-  %i.ct = add i32 %lsr.iv6, %1
-  %i.cu = getelementptr i8, ptr %lsr.iv1, i64 %2
+  %i.cq = add i32 %lsr.iv19, %3
+  %i.cr = add i32 %lsr.iv15, %3
+  %i.cs = add i32 %lsr.iv10, %3
+  %i.ct = add i32 %lsr.iv6, %3
+  %i.cu = getelementptr i8, ptr %lsr.iv1, i64 %4
   %invariant.op = add i32 %lsr.iv19, %i.p
   %invariant.op37 = add i32 %lsr.iv15, %i.p
   %invariant.op39 = add i32 %lsr.iv10, %i.p
+  %invariant.op45 = add i32 %lsr.iv6, %i.p
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.cv = trunc i64 %index to i32
   %i.cw = shl i32 %i.cv, 1                        ; 4 uses
-  %4 = add i32 %lsr.iv6, %i.cw                    ; 4 uses
   %i.cx = shl i64 %index, 2
   %next.gep = getelementptr i8, ptr %lsr.iv1, i64 %i.cx
-  %.reass = add i32 %i.cw, %invariant.op
-  %.reass38 = add i32 %i.cw, %invariant.op37
-  %.reass40 = add i32 %i.cw, %invariant.op39
-  %i.cy = add i32 %4, %i.p
-  %.reass42 = add i32 %4, %invariant.op41
-  %.reass44 = add i32 %4, %invariant.op43
-  %.reass46 = add i32 %4, %invariant.op45
-  %5 = sext i32 %i.cy to i64                      ; 2 uses
-  %6 = sext i32 %.reass42 to i64                  ; 2 uses
-  %7 = sext i32 %.reass44 to i64                  ; 2 uses
+  %i.cy = add i32 %i.cw, %invariant.op
+  %.reass42 = add i32 %i.cw, %invariant.op37
+  %.reass44 = add i32 %i.cw, %invariant.op39
+  %.reass46 = add i32 %i.cw, %invariant.op45
   %i.cz = sext i32 %.reass46 to i64               ; 2 uses
-  %8 = getelementptr [4 x i8], ptr %i.v, i64 %5
-  %9 = getelementptr [4 x i8], ptr %i.v, i64 %6
-  %10 = getelementptr [4 x i8], ptr %i.v, i64 %7
   %i.da = getelementptr [4 x i8], ptr %i.v, i64 %i.cz
-  %11 = getelementptr i8, ptr %8, i64 8
-  %12 = getelementptr i8, ptr %9, i64 8
-  %13 = getelementptr i8, ptr %10, i64 8
   %i.db = getelementptr i8, ptr %i.da, i64 8
-  %14 = load float, ptr %11, align 4, !tbaa !53
-  %15 = load float, ptr %12, align 4, !tbaa !53
-  %16 = load float, ptr %13, align 4, !tbaa !53
-  %17 = load float, ptr %i.db, align 4, !tbaa !53
-  %18 = insertelement <4 x float> poison, float %14, i64 0
-  %19 = insertelement <4 x float> %18, float %15, i64 1
-  %20 = insertelement <4 x float> %19, float %16, i64 2
-  %21 = insertelement <4 x float> %20, float %17, i64 3
-  %22 = getelementptr [4 x i8], ptr %i.x, i64 %5  ; 2 uses
-  %23 = getelementptr [4 x i8], ptr %i.x, i64 %6
-  %24 = getelementptr [4 x i8], ptr %i.x, i64 %7
-  %i.dc = getelementptr [4 x i8], ptr %i.x, i64 %i.cz
-  %25 = getelementptr i8, ptr %22, i64 4
-  %26 = getelementptr i8, ptr %23, i64 4
-  %27 = getelementptr i8, ptr %24, i64 4
+  %wide.vec = load <8 x float>, ptr %i.db, align 4, !tbaa !53
+  %strided.vec = shufflevector <8 x float> %wide.vec, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.dc = getelementptr [4 x i8], ptr %i.x, i64 %i.cz ; 2 uses
   %i.dd = getelementptr i8, ptr %i.dc, i64 4
-  %28 = load float, ptr %25, align 4, !tbaa !53
-  %29 = load float, ptr %26, align 4, !tbaa !53
-  %30 = load float, ptr %27, align 4, !tbaa !53
-  %31 = load float, ptr %i.dd, align 4, !tbaa !53
-  %32 = insertelement <4 x float> poison, float %28, i64 0
-  %33 = insertelement <4 x float> %32, float %29, i64 1
-  %34 = insertelement <4 x float> %33, float %30, i64 2
-  %35 = insertelement <4 x float> %34, float %31, i64 3
-  %i.de = getelementptr i8, ptr %22, i64 -4
+  %wide.vec13 = load <8 x float>, ptr %i.dd, align 4, !tbaa !53
+  %strided.vec14 = shufflevector <8 x float> %wide.vec13, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.de = getelementptr i8, ptr %i.dc, i64 -4
   %wide.vec.a = load <8 x float>, ptr %i.de, align 4, !tbaa !53 ; 2 uses
   %strided.vec.a = shufflevector <8 x float> %wide.vec.a, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %strided.vec13 = shufflevector <8 x float> %wide.vec.a, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %i.df = fadd <4 x float> %35, %strided.vec13
+  %i.df = fadd <4 x float> %strided.vec14, %strided.vec13
   %i.dg = fmul <4 x float> %i.df, splat (float 3.000000e+00)
   %i.dh = fadd <4 x float> %strided.vec.a, %i.dg
-  %i.di = fadd <4 x float> %21, %i.dh
+  %i.di = fadd <4 x float> %strided.vec, %i.dh
   %i.dj = fmul <4 x float> %i.di, splat (float 1.250000e-01)
-  %i.dk = sext i32 %.reass40 to i64
+  %i.dk = sext i32 %.reass44 to i64
   %i.dl = getelementptr [4 x i8], ptr %i.x, i64 %i.dk ; 2 uses
   %i.dm = getelementptr i8, ptr %i.dl, i64 4
   %wide.vec14 = load <8 x float>, ptr %i.dm, align 4, !tbaa !53 ; 2 uses
@@ -403,7 +372,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dp = fmul <4 x float> %i.do, splat (float 3.000000e+00)
   %i.dq = fadd <4 x float> %strided.vec18, %i.dp
   %i.dr = fadd <4 x float> %strided.vec16, %i.dq
-  %i.ds = sext i32 %.reass38 to i64
+  %i.ds = sext i32 %.reass42 to i64
   %i.dt = getelementptr [4 x i8], ptr %i.x, i64 %i.ds ; 2 uses
   %i.du = getelementptr i8, ptr %i.dt, i64 4
   %wide.vec20 = load <8 x float>, ptr %i.du, align 4, !tbaa !53 ; 2 uses
@@ -419,7 +388,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dz = fadd <4 x float> %strided.vec22, %i.dy
   %i.ea = fadd <4 x float> %i.dr, %i.dz
   %i.eb = fmul <4 x float> %i.ea, splat (float 3.750000e-01)
-  %i.ec = sext i32 %.reass to i64
+  %i.ec = sext i32 %i.cy to i64
   %i.ed = getelementptr [4 x i8], ptr %i.x, i64 %i.ec ; 2 uses
   %i.ee = getelementptr i8, ptr %i.ed, i64 4
   %wide.vec26 = load <8 x float>, ptr %i.ee, align 4, !tbaa !53 ; 2 uses
@@ -439,19 +408,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.en = fmul <4 x float> %i.em, splat (float 1.250000e-01)
   store <4 x float> %i.en, ptr %next.gep, align 4, !tbaa !35
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.eo = icmp eq i64 %index.next, %n.vec.a
-  br i1 %i.eo, label %middle.block, label %vector.body, !llvm.loop !57
+  %i.eo = icmp eq i64 %index.next, %n.vec
+  br i1 %i.eo, label %"for f8.s0.v3.preheader", label %vector.body, !llvm.loop !57
 
-middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %"end for f8.s0.v3.loopexit", label %"for f8.s0.v3.preheader"
-
-"for f8.s0.v3.preheader":                         ; preds = %vector.scevcheck, %"for f8.s0.v4", %middle.block
-  %lsr.iv21.ph = phi i32 [ %lsr.iv19, %vector.scevcheck ], [ %lsr.iv19, %"for f8.s0.v4" ], [ %i.cq, %middle.block ]
-  %lsr.iv17.ph = phi i32 [ %lsr.iv15, %vector.scevcheck ], [ %lsr.iv15, %"for f8.s0.v4" ], [ %i.cr, %middle.block ]
-  %lsr.iv13.ph = phi i32 [ %lsr.iv10, %vector.scevcheck ], [ %lsr.iv10, %"for f8.s0.v4" ], [ %i.cs, %middle.block ]
-  %lsr.iv8.ph = phi i32 [ %lsr.iv6, %vector.scevcheck ], [ %lsr.iv6, %"for f8.s0.v4" ], [ %i.ct, %middle.block ]
-  %lsr.iv4.ph = phi ptr [ %lsr.iv1, %vector.scevcheck ], [ %lsr.iv1, %"for f8.s0.v4" ], [ %i.cu, %middle.block ]
-  %lsr.iv.ph = phi i32 [ %i.m, %vector.scevcheck ], [ %i.m, %"for f8.s0.v4" ], [ %3, %middle.block ]
+"for f8.s0.v3.preheader":                         ; preds = %vector.body, %vector.scevcheck, %"for f8.s0.v4"
+  %lsr.iv21.ph = phi i32 [ %lsr.iv19, %vector.scevcheck ], [ %lsr.iv19, %"for f8.s0.v4" ], [ %i.cq, %vector.body ]
+  %lsr.iv17.ph = phi i32 [ %lsr.iv15, %vector.scevcheck ], [ %lsr.iv15, %"for f8.s0.v4" ], [ %i.cr, %vector.body ]
+  %lsr.iv13.ph = phi i32 [ %lsr.iv10, %vector.scevcheck ], [ %lsr.iv10, %"for f8.s0.v4" ], [ %i.cs, %vector.body ]
+  %lsr.iv8.ph = phi i32 [ %lsr.iv6, %vector.scevcheck ], [ %lsr.iv6, %"for f8.s0.v4" ], [ %i.ct, %vector.body ]
+  %lsr.iv4.ph = phi ptr [ %lsr.iv1, %vector.scevcheck ], [ %lsr.iv1, %"for f8.s0.v4" ], [ %i.cu, %vector.body ]
+  %lsr.iv.ph = phi i32 [ %i.m, %vector.scevcheck ], [ %i.m, %"for f8.s0.v4" ], [ %5, %vector.body ]
   br label %"for f8.s0.v3"
 
 "for f8.s0.v3":                                   ; preds = %"for f8.s0.v3.preheader", %"for f8.s0.v3"
@@ -535,7 +501,7 @@ middle.block:                                     ; preds = %vector.body
   %.not = icmp eq i32 %lsr.iv.next, 0
   br i1 %.not, label %"end for f8.s0.v3.loopexit", label %"for f8.s0.v3", !llvm.loop !58
 
-"end for f8.s0.v3.loopexit":                      ; preds = %"for f8.s0.v3", %middle.block
+"end for f8.s0.v3.loopexit":                      ; preds = %"for f8.s0.v3"
   %i.hb = add nsw i32 %f8.s0.v4, 1
   %i.hc = getelementptr i8, ptr %lsr.iv1, i64 %i.o
   %scevgep3 = getelementptr i8, ptr %i.hc, i64 4
