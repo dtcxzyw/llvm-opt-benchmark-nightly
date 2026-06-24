@@ -81,22 +81,16 @@ bb.e:                                             ; preds = %_ZN4absl13base_inte
   br label %_ZN4absl24synchronization_internalL17NewThreadIdentityEv.exit
 
 _ZN4absl24synchronization_internalL17NewThreadIdentityEv.exit: ; preds = %_ZN4absl13base_internal14SpinLockHolderD2Ev.exit.i, %bb.e
-  %.1.i = phi ptr [ %i.q, %bb.e ], [ %i.g, %_ZN4absl13base_internal14SpinLockHolderD2Ev.exit.i ] ; 16 uses
-  %0 = getelementptr inbounds nuw i8, ptr %.1.i, i64 32
-  %i.u = getelementptr inbounds nuw i8, ptr %.1.i, i64 20
-  store i8 0, ptr %i.u, align 4
+  %.1.i = phi ptr [ %i.q, %bb.e ], [ %i.g, %_ZN4absl13base_internal14SpinLockHolderD2Ev.exit.i ] ; 13 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %.1.i, i64 32
   %i.v = getelementptr inbounds nuw i8, ptr %.1.i, i64 24
   store i32 0, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %.1.i, i64 28
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %.1.i, i8 0, i64 17, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.u, i8 0, i64 24, i1 false)
   store atomic i32 0, ptr %i.w monotonic, align 4
-  %1 = getelementptr inbounds nuw i8, ptr %.1.i, i64 19
-  store i8 0, ptr %1, align 1
-  %2 = getelementptr inbounds nuw i8, ptr %.1.i, i64 17
-  store i8 0, ptr %2, align 1
-  %i.x = getelementptr inbounds nuw i8, ptr %.1.i, i64 18
-  store i8 0, ptr %i.x, align 2
+  %i.x = getelementptr inbounds nuw i8, ptr %.1.i, i64 17
+  store <4 x i8> zeroinitializer, ptr %i.x, align 1
   %i.y = getelementptr inbounds nuw i8, ptr %.1.i, i64 56
   store ptr null, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %.1.i, i64 320

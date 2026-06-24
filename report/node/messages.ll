@@ -201,7 +201,7 @@ _ZN2v88internal6String7FlattenIS1_NS0_6HandleEQsr3stdE16is_convertible_vIT0_IT_E
 define hidden ptr @_ZN2v88internal10ErrorUtils16FormatStackTraceEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS4_INS0_6ObjectEEE(ptr noundef %0, ptr %1, ptr nofree readonly captures(none) %2) local_unnamed_addr #2 align 2 {
 bb.a:
   %3 = alloca %"class.v8::TryCatch", align 8      ; 9 uses
-  %4 = alloca %"struct.std::array", align 8       ; 6 uses
+  %4 = alloca %"struct.std::array", align 8       ; 5 uses
   %5 = alloca %"class.v8::internal::IncrementalStringBuilder", align 8 ; 116 uses
   %6 = alloca %"class.v8::TryCatch", align 8      ; 5 uses
   %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1555), align 1, !range !7, !noundef !14
@@ -329,7 +329,6 @@ bb.l:                                             ; preds = %_ZN2v88internal12Is
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.bi = load i64, ptr %1, align 8               ; 2 uses
   %i.bj = add i64 %i.bi, -1
   %i.bk = inttoptr i64 %i.bj to ptr
@@ -732,7 +731,7 @@ define linkonce_odr hidden ptr @_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7I
 bb.a:
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 16 uses
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #17
-  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #14 ; 4 uses
+  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #14 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %.pre.pre.i = load i64, ptr %i.b, align 8
   %i.c = add i64 %.pre.pre.i, -1
@@ -766,8 +765,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.r, align 8
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.b, ptr %i.s, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -1170,8 +1168,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %2, ptr %i.q, align 8
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -1287,8 +1284,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %0, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %2, ptr %i.q, align 8
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 48

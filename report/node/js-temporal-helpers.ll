@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %_ZN2v88internal12Is
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.bg = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 56
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %_ZN2v88internal12Is
 bb.d:                                             ; preds = %.outer, %"_ZZN2v88internal8temporal16ToDurationRecordEPNS0_7IsolateENS0_12DirectHandleINS0_6ObjectEEERKNS1_14DurationRecordEEN3$_08__invokeES3_NS4_INS0_10JSReceiverEEENS4_INS0_6StringEEEPd.exit"
   %.0.idx39.i = phi i64 [ %.0.add.i, %"_ZZN2v88internal8temporal16ToDurationRecordEPNS0_7IsolateENS0_12DirectHandleINS0_6ObjectEEERKNS1_14DurationRecordEEN3$_08__invokeES3_NS4_INS0_10JSReceiverEEENS4_INS0_6StringEEEPd.exit" ], [ %.0.idx39.i.ph, %.outer ] ; 3 uses
   %.0.ptr.i = getelementptr inbounds nuw i8, ptr %7, i64 %.0.idx39.i ; 2 uses
-  %.sroa.0.0.copyload.i = load ptr, ptr %.0.ptr.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %.0.ptr.i, align 8 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.0.ptr.i, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
@@ -252,7 +252,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bc, align 4
   store i32 0, ptr %i.bd, align 8
   store ptr %1, ptr %i.be, align 8
-  store ptr %.sroa.0.0.copyload.i, ptr %i.bf, align 8
   store ptr null, ptr %i.bg, align 8
   store ptr %2, ptr %i.bh, align 8
   store ptr null, ptr %i.bi, align 8

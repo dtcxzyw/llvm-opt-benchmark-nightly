@@ -201,8 +201,7 @@ bb.a:
   %4 = alloca %"struct.v8::internal::CodeEvent", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
-  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.c = load i64, ptr %2, align 8                ; 5 uses
   %i.d = add i64 %i.c, -1
   %i.e = inttoptr i64 %i.d to ptr                 ; 4 uses
@@ -345,8 +344,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
-  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
+  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.f = load i64, ptr %2, align 8                ; 5 uses
   %i.g = add i64 %i.f, -1
   %i.h = inttoptr i64 %i.g to ptr                 ; 4 uses
@@ -491,8 +489,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
-  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
+  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.f = load i64, ptr %2, align 8                ; 5 uses
   %i.g = add i64 %i.f, -1
   %i.h = inttoptr i64 %i.g to ptr                 ; 4 uses
@@ -742,8 +739,7 @@ bb.i:                                             ; preds = %_ZNK2v88internal11M
 
 _ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit: ; preds = %_ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit10
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
-  %i.az = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.az, i8 0, i64 16, i1 false)
+  %i.az = getelementptr inbounds nuw i8, ptr %10, i64 24
   %i.ba = load i64, ptr %2, align 8               ; 5 uses
   %i.bb = add i64 %i.ba, -1
   %i.bc = inttoptr i64 %i.bb to ptr               ; 4 uses
@@ -878,8 +874,6 @@ define hidden void @_ZN2v88internal24ExternalLogEventListener21RegExpCodeCreateE
 bb.a:
   %4 = alloca %"struct.v8::internal::CodeEvent", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   %i.a = load i64, ptr %1, align 8                ; 5 uses
   %i.b = add i64 %i.a, -1
   %i.c = inttoptr i64 %i.b to ptr                 ; 4 uses
@@ -967,6 +961,7 @@ _ZN2v88internal12AbstractCode16GetBytecodeArrayEv.exit.i5: ; preds = %bb.h
 
 _ZN2v88internal12AbstractCode15InstructionSizeENS0_16PtrComprCageBaseE.exit: ; preds = %_ZN2v88internal12AbstractCode7GetCodeEv.exit.i7, %_ZN2v88internal12AbstractCode16GetBytecodeArrayEv.exit.i5
   %.0.i6 = phi i32 [ %i.af, %_ZN2v88internal12AbstractCode7GetCodeEv.exit.i7 ], [ %i.al, %_ZN2v88internal12AbstractCode16GetBytecodeArrayEv.exit.i5 ]
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.an = sext i32 %.0.i6 to i64
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 16

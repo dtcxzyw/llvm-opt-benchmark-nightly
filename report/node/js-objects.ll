@@ -201,14 +201,14 @@ bb.a:
   %i.a = icmp eq i32 %2, 0                        ; 2 uses
   %. = select i1 %i.a, i64 8840, i64 7624
   %.104 = select i1 %i.a, i64 7624, i64 8840
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %. ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.104 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %. ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.104 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
@@ -246,7 +246,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.f, align 4
   store i32 0, ptr %i.g, align 8
   store ptr %0, ptr %i.h, align 8
-  store ptr %i.b, ptr %i.i, align 8
   store ptr null, ptr %i.j, align 8
   store ptr %1, ptr %i.k, align 8
   store ptr null, ptr %i.l, align 8
@@ -376,7 +375,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.f, align 4
   store i32 0, ptr %i.g, align 8
   store ptr %0, ptr %i.h, align 8
-  store ptr %i.c, ptr %i.i, align 8
   store ptr null, ptr %i.j, align 8
   store ptr %1, ptr %i.k, align 8
   store ptr null, ptr %i.l, align 8
@@ -553,14 +551,14 @@ bb.a:
   %i.a = icmp eq i32 %2, 0                        ; 2 uses
   %. = select i1 %i.a, i64 8840, i64 7624
   %.102 = select i1 %i.a, i64 7624, i64 8840
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %. ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.102 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %. ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.102 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
@@ -598,7 +596,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.f, align 4
   store i32 0, ptr %i.g, align 8
   store ptr %0, ptr %i.h, align 8
-  store ptr %i.b, ptr %i.i, align 8
   store ptr null, ptr %i.j, align 8
   store ptr %1, ptr %i.k, align 8
   store ptr null, ptr %i.l, align 8
@@ -728,7 +725,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.f, align 4
   store i32 0, ptr %i.g, align 8
   store ptr %0, ptr %i.h, align 8
-  store ptr %i.c, ptr %i.i, align 8
   store ptr null, ptr %i.j, align 8
   store ptr %1, ptr %i.k, align 8
   store ptr null, ptr %i.l, align 8
@@ -1131,18 +1127,16 @@ _ZN2v88internal4Name9IsPrivateEv.exit.thread.i.i.i: ; preds = %_ZN2v88internal4N
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i: ; preds = %_ZN2v88internal4Name9IsPrivateEv.exit.thread.i.i.i, %_ZN2v88internal4Name9IsPrivateEv.exit.i.i.i
   %i.k = phi i32 [ 1, %_ZN2v88internal4Name9IsPrivateEv.exit.thread.i.i.i ], [ 0, %_ZN2v88internal4Name9IsPrivateEv.exit.i.i.i ]
   store i32 %i.k, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 0, ptr %5, align 4
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i8 0, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 0, ptr %i.m, align 4
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 0, ptr %i.n, align 8
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store ptr %0, ptr %i.o, align 8
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %2, ptr %i.p, align 8
+  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %i.l, align 4
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i8 0, ptr %i.m, align 8
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 12
+  store i32 0, ptr %i.n, align 4
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i32 0, ptr %i.o, align 8
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 24
+  store ptr %0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 48
@@ -1196,7 +1190,8 @@ _ZNK2v88internal7Isolate12string_tableEv.exit.i25.i.i: ; preds = %_ZNK2v88intern
 
 _ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEESG_NS1_13ConfigurationE.exit: ; preds = %_ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i, %_ZNK2v88internal7Isolate12string_tableEv.exit.i25.i.i
   %.sroa.05.0.i22.i.i = phi ptr [ %i.an, %_ZNK2v88internal7Isolate12string_tableEv.exit.i25.i.i ], [ %2, %_ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i ]
-  store ptr %.sroa.05.0.i22.i.i, ptr %i.p, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  store ptr %.sroa.05.0.i22.i.i, ptr %5, align 8
   call void @_ZN2v88internal14LookupIterator5StartILb0EEEvv(ptr noundef nonnull align 8 dereferenceable(88) %4) #21
   %i.ao = call i16 @_ZN2v88internal10JSReceiver14DeletePropertyEPNS0_14LookupIteratorENS0_12LanguageModeE(ptr noundef nonnull %4, i1 noundef zeroext %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
@@ -1599,7 +1594,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN2v88internal18g_current_isolate_E)
   %i.b = load ptr, ptr %i.a, align 8              ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 712 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 712 ; 3 uses
   %i.d = load i64, ptr %i.c, align 8
   %i.e = add i64 %i.d, -1
   %i.f = inttoptr i64 %i.e to ptr                 ; 2 uses
@@ -1615,8 +1610,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %1, i8 0, i64 9, i1 false)
   store ptr %i.b, ptr %i.n, align 8
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  store ptr %i.c, ptr %i.o, align 8
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40
   store ptr null, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -2019,7 +2013,7 @@ _ZNK2v88internal7Isolate12string_tableEv.exit.i:  ; preds = %_ZNK2v88internal7Is
   br label %_ZN2v88internal7Factory15InternalizeNameINS0_4NameEQsr3stdE16is_convertible_vINS0_12DirectHandleIT_EENS4_IS3_EEEEES7_S6_.exit
 
 _ZN2v88internal7Factory15InternalizeNameINS0_4NameEQsr3stdE16is_convertible_vINS0_12DirectHandleIT_EENS4_IS3_EEEEES7_S6_.exit: ; preds = %bb.a, %_ZNK2v88internal7Isolate12string_tableEv.exit.i
-  %.sroa.05.0.i = phi ptr [ %i.u, %_ZNK2v88internal7Isolate12string_tableEv.exit.i ], [ %2, %bb.a ] ; 5 uses
+  %.sroa.05.0.i = phi ptr [ %i.u, %_ZNK2v88internal7Isolate12string_tableEv.exit.i ], [ %2, %bb.a ] ; 4 uses
   %i.v = tail call fastcc noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_122TryFastAddDataPropertyEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS4_INS0_4NameEEENS4_INS0_6ObjectEEENS0_18PropertyAttributesE(ptr noundef nonnull %0, ptr %1, ptr %.sroa.05.0.i, ptr %3, i32 noundef %4)
   br i1 %i.v, label %bb.l, label %_ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i
 
@@ -2040,8 +2034,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.af = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %0, ptr %i.af, align 8
-  %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %.sroa.05.0.i, ptr %i.ag, align 8
+  %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ah, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -2417,18 +2410,16 @@ _ZN2v88internal4Name9IsPrivateEv.exit.thread.i.i.i: ; preds = %_ZN2v88internal4N
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i: ; preds = %_ZN2v88internal4Name9IsPrivateEv.exit.thread.i.i.i, %_ZN2v88internal4Name9IsPrivateEv.exit.i.i.i
   %i.m = phi i32 [ 1, %_ZN2v88internal4Name9IsPrivateEv.exit.thread.i.i.i ], [ 0, %_ZN2v88internal4Name9IsPrivateEv.exit.i.i.i ]
   store i32 %i.m, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 0, ptr %5, align 4
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i8 0, ptr %i.n, align 8
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 0, ptr %i.o, align 4
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 0, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store ptr %i.b, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %1, ptr %i.r, align 8
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %i.n, align 4
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i8 0, ptr %i.o, align 8
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 12
+  store i32 0, ptr %i.p, align 4
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i32 0, ptr %i.q, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 24
+  store ptr %i.b, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 48
@@ -2482,7 +2473,8 @@ _ZNK2v88internal7Isolate12string_tableEv.exit.i25.i.i: ; preds = %_ZNK2v88intern
 
 _ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEESG_NS1_13ConfigurationE.exit: ; preds = %_ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i, %_ZNK2v88internal7Isolate12string_tableEv.exit.i25.i.i
   %.sroa.05.0.i22.i.i = phi ptr [ %i.ap, %_ZNK2v88internal7Isolate12string_tableEv.exit.i25.i.i ], [ %1, %_ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i ]
-  store ptr %.sroa.05.0.i22.i.i, ptr %i.r, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  store ptr %.sroa.05.0.i22.i.i, ptr %5, align 8
   call void @_ZN2v88internal14LookupIterator5StartILb0EEEvv(ptr noundef nonnull align 8 dereferenceable(88) %4) #21
   %i.aq = call i16 @_ZN2v88internal8JSObject33DefineOwnPropertyIgnoreAttributesEPNS0_14LookupIteratorENS0_12DirectHandleINS0_6ObjectEEENS0_18PropertyAttributesENS_5MaybeINS0_11ShouldThrowEEENS1_20AccessorInfoHandlingENS0_22EnforceDefineSemanticsENS0_11StoreOriginENS0_17MaybeDirectHandleIS5_EE(ptr noundef nonnull %4, ptr %2, i32 noundef %3, i64 4294967297, i32 noundef 1, i32 noundef 0, i32 noundef 1, i64 0)
   %i.ar = trunc i16 %i.aq to i1
@@ -2885,8 +2877,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.x, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %2, ptr %i.y, align 8
-  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %1, ptr %i.z, align 8
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.aa, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 48

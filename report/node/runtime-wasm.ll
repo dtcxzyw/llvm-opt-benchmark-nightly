@@ -201,7 +201,7 @@ bb.x:                                             ; preds = %bb.w, %_ZN2v88inter
   %i.dc = inttoptr i64 %i.db to ptr
   store ptr %i.dc, ptr %i.a, align 8
   store i64 %.sroa.0.0.copyload.i.i81, ptr %.0.i.i, align 8
-  %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 5 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.de = load i64, ptr %i.dd, align 8
   %i.df = add i64 %i.de, -1
@@ -235,8 +235,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.dt, align 8
   %i.du = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %2, ptr %i.du, align 8
-  %i.dv = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.dd, ptr %i.dv, align 8
+  %i.dv = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.dw = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.dw, align 8
   %i.dx = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -595,7 +594,7 @@ bb.ad:                                            ; preds = %bb.ac, %_ZN2v88inte
   %i.dd = inttoptr i64 %i.dc to ptr
   store ptr %i.dd, ptr %i.a, align 8
   store i64 %.sroa.0.0.copyload.i.i74, ptr %.0.i.i4, align 8
-  %i.de = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 5 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.df = load i64, ptr %i.de, align 8
   %i.dg = add i64 %i.df, -1
@@ -629,8 +628,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.du, align 8
   %i.dv = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %2, ptr %i.dv, align 8
-  %i.dw = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.de, ptr %i.dw, align 8
+  %i.dw = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.dx = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.dx, align 8
   %i.dy = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -957,7 +955,7 @@ bb.u:                                             ; preds = %bb.t, %_ZN2v88inter
   %i.cw = inttoptr i64 %i.cv to ptr
   store ptr %i.cw, ptr %i.a, align 8
   store i64 %.sroa.0.0.copyload.i.i, ptr %.0.i.i, align 8
-  %i.cx = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 5 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.cy = load i64, ptr %i.cx, align 8
   %i.cz = add i64 %i.cy, -1
@@ -991,8 +989,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.dn, align 8
   %i.do = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %2, ptr %i.do, align 8
-  %i.dp = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.cx, ptr %i.dp, align 8
+  %i.dp = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.dq, align 8
   %i.dr = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -1317,7 +1314,7 @@ bb.x:                                             ; preds = %bb.w, %_ZN2v88inter
   %i.cs = inttoptr i64 %i.cr to ptr
   store ptr %i.cs, ptr %i.a, align 8
   store i64 %.sroa.0.0.copyload.i.i, ptr %.0.i.i4, align 8
-  %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 5 uses
+  %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 8136 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.cu = load i64, ptr %i.ct, align 8
   %i.cv = add i64 %i.cu, -1
@@ -1351,8 +1348,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.dj, align 8
   %i.dk = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %2, ptr %i.dk, align 8
-  %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.ct, ptr %i.dl, align 8
+  %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.dm = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.dm, align 8
   %i.dn = getelementptr inbounds nuw i8, ptr %3, i64 48

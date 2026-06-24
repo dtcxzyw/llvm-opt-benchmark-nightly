@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.c, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8168 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8168 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %.pre.pre.i = load i64, ptr %i.d, align 8
   %i.e = add i64 %.pre.pre.i, -1
@@ -235,8 +235,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %0, ptr %i.t, align 8
-  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %i.d, ptr %i.u, align 8
+  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 48
@@ -639,7 +638,7 @@ _ZNK2v85MaybeIiE2ToEPi.exit129:                   ; preds = %bb.a
   br label %.critedge124
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 2792 ; 5 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 2792 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25
   %.pre.pre.i = load i64, ptr %i.d, align 8
   %i.e = add i64 %.pre.pre.i, -1
@@ -673,8 +672,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses
   store ptr %1, ptr %i.t, align 8
-  %i.u = getelementptr inbounds nuw i8, ptr %13, i64 32 ; 2 uses
-  store ptr %i.d, ptr %i.u, align 8
+  %i.u = getelementptr inbounds nuw i8, ptr %13, i64 32
   %i.v = getelementptr inbounds nuw i8, ptr %13, i64 40
   store ptr null, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %13, i64 48
@@ -752,7 +750,7 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT
 
 bb.f:                                             ; preds = %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit.thread
   %.sroa.07.0.i385 = phi ptr [ %i.av, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit.thread ], [ %i.aw, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit ] ; 3 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 2744 ; 7 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 2744 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
   %.pre.pre.i135 = load i64, ptr %i.ax, align 8
   %i.ay = add i64 %.pre.pre.i135, -1
@@ -786,8 +784,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bm, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %12, i64 24 ; 2 uses
   store ptr %1, ptr %i.bn, align 8
-  %i.bo = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 2 uses
-  store ptr %i.ax, ptr %i.bo, align 8
+  %i.bo = getelementptr inbounds nuw i8, ptr %12, i64 32
   %i.bp = getelementptr inbounds nuw i8, ptr %12, i64 40
   store ptr null, ptr %i.bp, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %12, i64 48
@@ -864,7 +861,7 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT
 
 bb.j:                                             ; preds = %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit149, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit149.thread
   %.sroa.07.0.i142389 = phi ptr [ %i.co, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit149.thread ], [ %i.cp, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit149 ] ; 3 uses
-  %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 2808 ; 5 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 2808 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
   %.pre.pre.i150 = load i64, ptr %i.cq, align 8
   %i.cr = add i64 %.pre.pre.i150, -1
@@ -898,8 +895,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.df, align 8
   %i.dg = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 2 uses
   store ptr %1, ptr %i.dg, align 8
-  %i.dh = getelementptr inbounds nuw i8, ptr %11, i64 32 ; 2 uses
-  store ptr %i.cq, ptr %i.dh, align 8
+  %i.dh = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.di = getelementptr inbounds nuw i8, ptr %11, i64 40
   store ptr null, ptr %i.di, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %11, i64 48
@@ -976,7 +972,7 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT
 
 bb.n:                                             ; preds = %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit164, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit164.thread
   %.sroa.07.0.i157393 = phi ptr [ %i.eh, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit164.thread ], [ %i.ei, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit164 ] ; 2 uses
-  %i.ej = getelementptr inbounds nuw i8, ptr %1, i64 2752 ; 5 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %1, i64 2752 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   %.pre.pre.i165 = load i64, ptr %i.ej, align 8
   %i.ek = add i64 %.pre.pre.i165, -1
@@ -1010,8 +1006,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.ey, align 8
   %i.ez = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 2 uses
   store ptr %1, ptr %i.ez, align 8
-  %i.fa = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 2 uses
-  store ptr %i.ej, ptr %i.fa, align 8
+  %i.fa = getelementptr inbounds nuw i8, ptr %10, i64 32
   %i.fb = getelementptr inbounds nuw i8, ptr %10, i64 40
   store ptr null, ptr %i.fb, align 8
   %i.fc = getelementptr inbounds nuw i8, ptr %10, i64 48

@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %"class.std::unique_ptr.514", align 8 ; 5 uses
   %4 = alloca %"class.std::unique_ptr.514", align 8 ; 5 uses
   %5 = alloca %"class.std::unique_ptr.514", align 8 ; 5 uses
-  %6 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %6 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %i.d = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN2v88internal18g_current_isolate_E)
   %i.e = load ptr, ptr %i.d, align 8              ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 344
@@ -481,7 +481,6 @@ bb.l:                                             ; preds = %_ZN2v88internal8IsS
 bb.m:                                             ; preds = %bb.l, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit.thread
   %.0 = phi ptr [ %i.ej, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit.thread ], [ %i.eo, %bb.l ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
-  store ptr null, ptr %6, align 8
   %i.eq = load atomic volatile i8, ptr %.0 monotonic, align 1
   %i.er = and i8 %i.eq, 5
   %.not21 = icmp eq i8 %i.er, 0
@@ -607,10 +606,10 @@ bb.a:
   %i.h = alloca i8, align 1                       ; 4 uses
   %i.i = alloca i64, align 8                      ; 4 uses
   %4 = alloca %"class.std::unique_ptr.470", align 8 ; 10 uses
-  %5 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %5 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %6 = alloca %"class.std::unique_ptr.470", align 8 ; 10 uses
   %7 = alloca %"class.std::unique_ptr.514", align 8 ; 5 uses
-  %8 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %8 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %9 = alloca %"class.std::unique_ptr.514", align 8 ; 5 uses
   %10 = alloca %"class.std::unique_ptr.470", align 8 ; 11 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
@@ -674,7 +673,6 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.036 = phi ptr [ %i.am, %bb.c ], [ %i.ar, %bb.d ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
-  store ptr null, ptr %5, align 8
   %i.at = load atomic volatile i8, ptr %.036 monotonic, align 1
   %i.au = and i8 %i.at, 5
   %.not49 = icmp eq i8 %i.au, 0
@@ -819,7 +817,6 @@ bb.j:                                             ; preds = %_ZNSt10unique_ptrIA
 bb.k:                                             ; preds = %bb.j, %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit
   %.037 = phi ptr [ %i.cp, %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit ], [ %i.cu, %bb.j ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
-  store ptr null, ptr %8, align 8
   %i.cw = load atomic volatile i8, ptr %.037 monotonic, align 1
   %i.cx = and i8 %i.cw, 5
   %.not47 = icmp eq i8 %i.cx, 0

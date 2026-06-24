@@ -201,9 +201,9 @@ bb.a:
   %6 = alloca %"class.std::unique_ptr.954", align 8 ; 5 uses
   %7 = alloca [2 x %"class.std::unique_ptr.1143"], align 16 ; 6 uses
   %8 = alloca [2 x %"class.std::unique_ptr.1143"], align 16 ; 6 uses
-  %9 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %9 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %10 = alloca %"class.std::unique_ptr.7", align 8 ; 7 uses
-  %11 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %11 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %12 = alloca %"class.std::unique_ptr.7", align 8 ; 7 uses
   switch i32 %1, label %bb.k [
     i32 1, label %bb.b
@@ -304,7 +304,6 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.015 = phi ptr [ %i.ba, %bb.e ], [ %i.bf, %bb.f ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
-  store ptr null, ptr %9, align 8
   %i.bh = load atomic volatile i8, ptr %.015 monotonic, align 1
   %i.bi = and i8 %i.bh, 5
   %.not21 = icmp eq i8 %i.bi, 0
@@ -501,7 +500,6 @@ bb.l:                                             ; preds = %_ZNSt10unique_ptrIN
 bb.m:                                             ; preds = %bb.l, %_ZNSt10unique_ptrIN2v88internal17ConcurrentMarking17MinorMarkingStateESt14default_deleteIS3_EED2Ev.exit
   %.016 = phi ptr [ %i.en, %_ZNSt10unique_ptrIN2v88internal17ConcurrentMarking17MinorMarkingStateESt14default_deleteIS3_EED2Ev.exit ], [ %i.es, %bb.l ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
-  store ptr null, ptr %11, align 8
   %i.eu = load atomic volatile i8, ptr %.016 monotonic, align 1
   %i.ev = and i8 %i.eu, 5
   %.not19 = icmp eq i8 %i.ev, 0
@@ -686,7 +684,7 @@ declare noundef zeroext i1 @_ZNK2v88internal16MarkingWorklists7IsEmptyEv(ptr nou
 define hidden void @_ZN2v88internal17ConcurrentMarking21RescheduleJobIfNeededENS0_16GarbageCollectorENS_12TaskPriorityE(ptr noundef nonnull align 8 dereferenceable(112) %0, i32 noundef %1, i8 noundef zeroext %2) local_unnamed_addr #4 align 2 {
 bb.a:
   %3 = alloca [2 x %"class.std::unique_ptr.1143"], align 16 ; 6 uses
-  %4 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %4 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %i.a = icmp eq i32 %1, 1                        ; 2 uses
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -849,7 +847,6 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.0 = phi ptr [ %i.bu, %bb.p ], [ %i.bz, %bb.q ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  store ptr null, ptr %4, align 8
   %i.cb = load atomic volatile i8, ptr %.0 monotonic, align 1
   %i.cc = and i8 %i.cb, 5
   %.not16 = icmp eq i8 %i.cc, 0
@@ -1096,7 +1093,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 define hidden noundef zeroext i1 @_ZN2v88internal17ConcurrentMarking5PauseEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(112) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   %1 = alloca [2 x %"class.std::unique_ptr.1143"], align 16 ; 6 uses
-  %2 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %2 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %i.a = load ptr, ptr %0, align 8                ; 3 uses
   %.not14 = icmp eq ptr %i.a, null
   br i1 %.not14, label %bb.j, label %bb.b
@@ -1132,7 +1129,6 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.07 = phi ptr [ %i.k, %bb.c ], [ %i.p, %bb.d ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  store ptr null, ptr %2, align 8
   %i.r = load atomic volatile i8, ptr %.07 monotonic, align 1
   %i.s = and i8 %i.r, 5
   %.not9 = icmp eq i8 %i.s, 0
@@ -1236,7 +1232,7 @@ bb.j:                                             ; preds = %bb.a, %bb.b, %_ZN2v
 define hidden void @_ZN2v88internal17ConcurrentMarking6ResumeEv(ptr noundef nonnull align 8 dereferenceable(112) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   %1 = alloca [2 x %"class.std::unique_ptr.1143"], align 16 ; 6 uses
-  %2 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %2 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %i.a = load atomic volatile i64, ptr @_ZZN2v88internal17ConcurrentMarking6ResumeEvE28trace_event_unique_atomic839 acquire, align 8 ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr
   %.not = icmp eq i64 %i.a, 0
@@ -1255,7 +1251,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.0 = phi ptr [ %i.b, %bb.a ], [ %i.g, %bb.b ]  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  store ptr null, ptr %2, align 8
   %i.i = load atomic volatile i8, ptr %.0 monotonic, align 1
   %i.j = and i8 %i.i, 5
   %.not7 = icmp eq i8 %i.j, 0

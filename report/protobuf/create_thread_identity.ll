@@ -90,26 +90,20 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
   br label %_ZN4absl12lts_2025051224synchronization_internalL17NewThreadIdentityEv.exit
 
 _ZN4absl12lts_2025051224synchronization_internalL17NewThreadIdentityEv.exit: ; preds = %_ZN4absl12lts_2025051213base_internal14SpinLockHolderD2Ev.exit.i, %bb.f
-  %.1.i = phi ptr [ %i.s, %bb.f ], [ %i.g, %_ZN4absl12lts_2025051213base_internal14SpinLockHolderD2Ev.exit.i ] ; 16 uses
-  %0 = getelementptr inbounds nuw i8, ptr %.1.i, i64 32
-  %i.w = getelementptr inbounds nuw i8, ptr %.1.i, i64 20
-  store i8 0, ptr %i.w, align 4, !tbaa !26
+  %.1.i = phi ptr [ %i.s, %bb.f ], [ %i.g, %_ZN4absl12lts_2025051213base_internal14SpinLockHolderD2Ev.exit.i ] ; 13 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.1.i, i64 32
   %i.x = getelementptr inbounds nuw i8, ptr %.1.i, i64 24
-  store i32 0, ptr %i.x, align 8, !tbaa !27
+  store i32 0, ptr %i.x, align 8, !tbaa !26
   %i.y = getelementptr inbounds nuw i8, ptr %.1.i, i64 28
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %.1.i, i8 0, i64 17, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, i8 0, i64 24, i1 false)
   store atomic i32 0, ptr %i.y monotonic, align 4
-  %1 = getelementptr inbounds nuw i8, ptr %.1.i, i64 19
-  store i8 0, ptr %1, align 1, !tbaa !28
-  %2 = getelementptr inbounds nuw i8, ptr %.1.i, i64 17
-  store i8 0, ptr %2, align 1, !tbaa !29
-  %i.z = getelementptr inbounds nuw i8, ptr %.1.i, i64 18
-  store i8 0, ptr %i.z, align 2, !tbaa !30
+  %i.z = getelementptr inbounds nuw i8, ptr %.1.i, i64 17
+  store <4 x i8> zeroinitializer, ptr %i.z, align 1, !tbaa !27
   %i.aa = getelementptr inbounds nuw i8, ptr %.1.i, i64 56
-  store ptr null, ptr %i.aa, align 8, !tbaa !31
+  store ptr null, ptr %i.aa, align 8, !tbaa !28
   %i.ab = getelementptr inbounds nuw i8, ptr %.1.i, i64 320
-  store ptr null, ptr %i.ab, align 8, !tbaa !32
+  store ptr null, ptr %i.ab, align 8, !tbaa !29
   %i.ac = getelementptr inbounds nuw i8, ptr %.1.i, i64 328
   store atomic i32 0, ptr %i.ac monotonic, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %.1.i, i64 332
@@ -128,7 +122,7 @@ declare void @_ZN4absl12lts_2025051213base_internal24SetCurrentThreadIdentityEPN
 define internal void @_ZN4absl12lts_2025051224synchronization_internalL21ReclaimThreadIdentityEPv(ptr noundef initializes((344, 352)) %0) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !33   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !30   ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -253,12 +247,9 @@ attributes #8 = { nounwind }
 !23 = !{!"_ZTSSt13__atomic_baseIiE", !4, i64 0}
 !24 = !{!"_ZTSSt6atomicIbE", !25, i64 0}
 !25 = !{!"_ZTSSt13__atomic_baseIbE", !14, i64 0}
-!26 = !{!12, !14, i64 20}
-!27 = !{!12, !4, i64 24}
-!28 = !{!12, !14, i64 19}
-!29 = !{!12, !14, i64 17}
-!30 = !{!12, !14, i64 18}
-!31 = !{!12, !19, i64 56}
-!32 = !{!11, !21, i64 320}
-!33 = !{!11, !19, i64 56}
+!26 = !{!12, !4, i64 24}
+!27 = !{!14, !14, i64 0}
+!28 = !{!12, !19, i64 56}
+!29 = !{!11, !21, i64 320}
+!30 = !{!11, !19, i64 56}
 end_hunk_0

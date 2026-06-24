@@ -201,8 +201,8 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %i.jd = load atomic ptr, ptr %i.jc monotonic, align 8
   %i.je = getelementptr inbounds nuw i8, ptr %i.jd, i64 16
   %i.jf = load ptr, ptr %i.je, align 8, !tbaa !1885
-  %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
-  %i.jh = load i64, ptr %i.jg, align 8, !tbaa !1878 ; 2 uses
+  %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.jh = load i64, ptr %i.jg, align 8, !tbaa !1878 ; 3 uses
   %i.ji = getelementptr inbounds nuw [16 x i8], ptr %i.jf, i64 %i.jh ; 2 uses
   store i64 %i.b, ptr %i.ji, align 8, !tbaa !1893
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 8
@@ -210,8 +210,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %i.jk = load atomic ptr, ptr %i.jc monotonic, align 8
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 8
   store atomic i64 %i.jh, ptr %i.jl release, align 8
-  %2 = load i64, ptr %i.jg, align 8, !tbaa !1878
-  %i.jm = add i64 %2, 1
+  %i.jm = add i64 %i.jh, 1
   %i.jn = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.jo = load i64, ptr %i.jn, align 8, !tbaa !1877
   %i.jp = add i64 %i.jo, -1

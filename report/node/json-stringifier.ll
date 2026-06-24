@@ -201,7 +201,7 @@ bb.a:
   store i32 %i.h, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   %i.i = load ptr, ptr %0, align 8                ; 7 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 7616 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 7616 ; 3 uses
   %i.k = load i64, ptr %i.j, align 8
   %i.l = add i64 %i.k, -1
   %i.m = inttoptr i64 %i.l to ptr                 ; 3 uses
@@ -234,8 +234,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.z, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %i.i, ptr %i.aa, align 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.j, ptr %i.ab, align 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.ac, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -638,8 +637,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %2, ptr %i.q, align 8
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -1042,8 +1040,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.aa, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %0, ptr %i.ab, align 8
-  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %2, ptr %i.ac, align 8
+  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.ad, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 48

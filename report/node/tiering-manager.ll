@@ -201,7 +201,7 @@ declare void @_ZNK2v88internal18SharedFunctionInfo13DebugNameCStrEv(ptr dead_on_
 define hidden void @_ZN2v88internal14TieringManager20OnInterruptTickScopeC2Ev(ptr nofree nonnull readnone align 1 captures(none) %0) unnamed_addr #2 align 2 {
 bb.a:
   %1 = alloca [2 x %"class.std::unique_ptr.534"], align 16 ; 6 uses
-  %2 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %2 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %i.a = load atomic volatile i64, ptr @_ZZN2v88internal14TieringManager20OnInterruptTickScopeC1EvE28trace_event_unique_atomic546 acquire, align 8 ; 2 uses
   %i.b = inttoptr i64 %i.a to ptr
   %.not = icmp eq i64 %i.a, 0
@@ -220,7 +220,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.0 = phi ptr [ %i.b, %bb.a ], [ %i.g, %bb.b ]  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
-  store ptr null, ptr %2, align 8
   %i.i = load atomic volatile i8, ptr %.0 monotonic, align 1
   %i.j = and i8 %i.i, 5
   %.not7 = icmp eq i8 %i.j, 0

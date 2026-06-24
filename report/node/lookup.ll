@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %_ZNRSt8optionalIN2v
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZNRSt8optionalIN2v88internal6TaggedINS1_4NameEEEE5valueEv.exit
-  %.0.i.i20 = phi ptr [ %i.bj, %bb.g ], [ %i.bf, %_ZNRSt8optionalIN2v88internal6TaggedINS1_4NameEEEE5valueEv.exit ] ; 5 uses
+  %.0.i.i20 = phi ptr [ %i.bj, %bb.g ], [ %i.bf, %_ZNRSt8optionalIN2v88internal6TaggedINS1_4NameEEEE5valueEv.exit ] ; 4 uses
   %i.bk = ptrtoint ptr %.0.i.i20 to i64
   %i.bl = add i64 %i.bk, 8
   %i.bm = inttoptr i64 %i.bl to ptr
@@ -238,8 +238,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.cb, align 8
   %i.cc = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr %i.bc, ptr %i.cc, align 8
-  %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
-  store ptr %.0.i.i20, ptr %i.cd, align 8
+  %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.ce, align 8
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 48

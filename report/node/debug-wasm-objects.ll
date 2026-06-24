@@ -201,7 +201,7 @@ bb.w:                                             ; preds = %.lr.ph.i
 define internal fastcc ptr @_ZN2v88internal12_GLOBAL__N_115NamedDebugProxyINS0_11StructProxyELNS1_12DebugProxyIdE7ENS0_10WasmStructEE12GetNameTableENS0_12DirectHandleINS0_8JSObjectEEEPNS0_7IsolateE(ptr %0, ptr noundef %1) unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   %.pre.pre.i = load i64, ptr %i.a, align 8
   %i.b = add i64 %.pre.pre.i, -1
@@ -235,8 +235,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %1, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %i.a, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -639,7 +638,7 @@ _ZN2v811ReturnValueINS_5ArrayEE3SetIS1_EEvNS_5LocalIT_EE.exit: ; preds = %bb.a, 
 ; Function Attrs: mustprogress nounwind uwtable
 define internal noundef zeroext range(i8 0, 2) i8 @_ZN2v88internal12_GLOBAL__N_117IndexedDebugProxyINS1_11LocalsProxyELNS1_12DebugProxyIdE5ENS0_10FixedArrayEE17IndexedDescriptorEjRKNS_20PropertyCallbackInfoINS_5ValueEEE(i32 noundef %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(64) %1) #0 align 2 {
 bb.a:
-  %2 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 5 uses
+  %2 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %.val = load ptr, ptr %i.a, align 8             ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -712,8 +711,9 @@ _ZN2v88internal12_GLOBAL__N_117IndexedDebugProxyINS1_11LocalsProxyELNS1_12DebugP
 
 bb.e:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_117IndexedDebugProxyINS1_11LocalsProxyELNS1_12DebugProxyIdE5ENS0_10FixedArrayEE11GetProviderINS_5ValueEEENS0_12DirectHandleIS5_EERKNS_20PropertyCallbackInfoIT_EE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
-  %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ar, i8 0, i64 32, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ar, i8 0, i64 24, i1 false)
   store i8 43, ptr %2, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.at = sext i32 %0 to i64
@@ -737,7 +737,7 @@ _ZN2v88internal12_GLOBAL__N_111LocalsProxy3GetEPNS0_7IsolateENS0_12DirectHandleI
   %i.be = inttoptr i64 %i.bd to ptr
   store ptr %i.be, ptr %i.aw, align 8
   store i64 %i.av, ptr %.0.i.i.i, align 8
-  store ptr %.0.i.i.i, ptr %i.ar, align 8
+  store ptr %.0.i.i.i, ptr %3, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.bg = call ptr @_ZN2v88internal18PropertyDescriptor8ToObjectEPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %.val) #17 ; 2 uses
   %i.bh = icmp eq ptr %i.bg, null
@@ -1038,7 +1038,7 @@ define internal fastcc ptr @_ZN2v88internal12_GLOBAL__N_115NamedDebugProxyINS1_1
 bb.a:
   %2 = alloca %"class.v8::internal::wasm::StringBuilder", align 8 ; 13 uses
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %.pre.pre.i = load i64, ptr %i.a, align 8
   %i.b = add i64 %.pre.pre.i, -1
@@ -1072,8 +1072,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %1, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.a, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -1476,7 +1475,7 @@ _ZN2v811ReturnValueINS_5ArrayEE3SetIS1_EEvNS_5LocalIT_EE.exit: ; preds = %._crit
 ; Function Attrs: mustprogress nounwind uwtable
 define internal noundef zeroext range(i8 0, 2) i8 @_ZN2v88internal12_GLOBAL__N_117IndexedDebugProxyINS1_10StackProxyELNS1_12DebugProxyIdE6ENS0_10FixedArrayEE17IndexedDescriptorEjRKNS_20PropertyCallbackInfoINS_5ValueEEE(i32 noundef %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(64) %1) #0 align 2 {
 bb.a:
-  %2 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 5 uses
+  %2 = alloca %"class.v8::internal::PropertyDescriptor", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %.val = load ptr, ptr %i.a, align 8             ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -1548,8 +1547,9 @@ _ZN2v88internal12_GLOBAL__N_117IndexedDebugProxyINS1_10StackProxyELNS1_12DebugPr
 
 bb.e:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_117IndexedDebugProxyINS1_10StackProxyELNS1_12DebugProxyIdE6ENS0_10FixedArrayEE11GetProviderINS_5ValueEEENS0_12DirectHandleIS5_EERKNS_20PropertyCallbackInfoIT_EE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
-  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.aq, i8 0, i64 32, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i8 0, i64 24, i1 false)
   store i8 43, ptr %2, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.as = sext i32 %0 to i64
@@ -1573,7 +1573,7 @@ _ZN2v88internal12_GLOBAL__N_110StackProxy3GetEPNS0_7IsolateENS0_12DirectHandleIN
   %i.bd = inttoptr i64 %i.bc to ptr
   store ptr %i.bd, ptr %i.av, align 8
   store i64 %i.au, ptr %.0.i.i.i, align 8
-  store ptr %.0.i.i.i, ptr %i.aq, align 8
+  store ptr %.0.i.i.i, ptr %3, align 8
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.bf = call ptr @_ZN2v88internal18PropertyDescriptor8ToObjectEPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %.val) #17 ; 2 uses
   %i.bg = icmp eq ptr %i.bf, null
@@ -1783,7 +1783,7 @@ _ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit.i: ; preds = %bb.r, %b
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.bu = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 56
@@ -1837,7 +1837,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bq, align 4
   store i32 0, ptr %i.br, align 8
   store ptr %i.b, ptr %i.bs, align 8
-  store ptr %0, ptr %i.bt, align 8
   store ptr null, ptr %i.bu, align 8
   store ptr %i.cd, ptr %i.bv, align 8
   store ptr null, ptr %i.bw, align 8
@@ -1928,7 +1927,7 @@ define linkonce_odr hidden ptr @_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7I
 bb.a:
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 16 uses
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #19
-  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #17 ; 4 uses
+  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #17 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %.pre.pre.i = load i64, ptr %i.b, align 8
   %i.c = add i64 %.pre.pre.i, -1
@@ -1962,8 +1961,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.r, align 8
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.b, ptr %i.s, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -2058,7 +2056,7 @@ declare ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteEN
 define internal fastcc ptr @_ZN2v88internal12_GLOBAL__N_129GetOrCreateInstanceProxyCacheEPNS0_7IsolateENS0_12DirectHandleINS0_18WasmInstanceObjectEEE(ptr noundef %0, ptr %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8144 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8144 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   %.pre.pre.i = load i64, ptr %i.a, align 8
   %i.b = add i64 %.pre.pre.i, -1
@@ -2092,8 +2090,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %0, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %i.a, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -2496,7 +2493,7 @@ define internal fastcc ptr @_ZN2v88internal12_GLOBAL__N_115NamedDebugProxyINS1_1
 bb.a:
   %2 = alloca %"class.v8::internal::wasm::StringBuilder", align 8 ; 13 uses
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %.pre.pre.i = load i64, ptr %i.a, align 8
   %i.b = add i64 %.pre.pre.i, -1
@@ -2530,8 +2527,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %1, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.a, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -2934,7 +2930,7 @@ define internal fastcc ptr @_ZN2v88internal12_GLOBAL__N_115NamedDebugProxyINS1_1
 bb.a:
   %2 = alloca %"class.v8::internal::wasm::StringBuilder", align 8 ; 13 uses
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %.pre.pre.i = load i64, ptr %i.a, align 8
   %i.b = add i64 %.pre.pre.i, -1
@@ -2968,8 +2964,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %1, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.a, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -3372,7 +3367,7 @@ define internal fastcc ptr @_ZN2v88internal12_GLOBAL__N_115NamedDebugProxyINS1_1
 bb.a:
   %2 = alloca %"class.v8::internal::wasm::StringBuilder", align 8 ; 13 uses
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %.pre.pre.i = load i64, ptr %i.a, align 8
   %i.b = add i64 %.pre.pre.i, -1
@@ -3406,8 +3401,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %1, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.a, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -3810,7 +3804,7 @@ bb.w:                                             ; preds = %.lr.ph.i
 define internal fastcc ptr @_ZN2v88internal12_GLOBAL__N_115NamedDebugProxyINS1_14FunctionsProxyELNS1_12DebugProxyIdE0ENS0_18WasmInstanceObjectEE12GetNameTableENS0_12DirectHandleINS0_8JSObjectEEEPNS0_7IsolateE(ptr %0, ptr noundef %1) unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8152 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   %.pre.pre.i = load i64, ptr %i.a, align 8
   %i.b = add i64 %.pre.pre.i, -1
@@ -3844,8 +3838,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %1, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %i.a, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 48

@@ -201,8 +201,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bb, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %11, i64 24
   store ptr %0, ptr %i.bc, align 8
-  %i.bd = getelementptr inbounds nuw i8, ptr %11, i64 32 ; 2 uses
-  store ptr %2, ptr %i.bd, align 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.be = getelementptr inbounds nuw i8, ptr %11, i64 40
   store ptr null, ptr %i.be, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %11, i64 48
@@ -466,7 +465,7 @@ _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit72.thread: ; preds 
   br label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 bb.c:                                             ; preds = %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit72
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8200 ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8200 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   %.pre.pre.i = load i64, ptr %i.m, align 8
   %i.n = add i64 %.pre.pre.i, -1
@@ -500,8 +499,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.ab, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
   store ptr %0, ptr %i.ac, align 8
-  %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
-  store ptr %i.m, ptr %i.ad, align 8
+  %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 40
   store ptr null, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %8, i64 48
@@ -640,7 +638,7 @@ _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = 
   br label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 bb.j:                                             ; preds = %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit
-  %i.co = getelementptr inbounds nuw i8, ptr %0, i64 8208 ; 5 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %0, i64 8208 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
   %.pre.pre.i79 = load i64, ptr %i.co, align 8
   %i.cp = add i64 %.pre.pre.i79, -1
@@ -674,8 +672,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.dd, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   store ptr %0, ptr %i.de, align 8
-  %i.df = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
-  store ptr %i.co, ptr %i.df, align 8
+  %i.df = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.dg = getelementptr inbounds nuw i8, ptr %6, i64 40
   store ptr null, ptr %i.dg, align 8
   %i.dh = getelementptr inbounds nuw i8, ptr %6, i64 48
@@ -765,7 +762,7 @@ _ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRoots
   br i1 %i.er, label %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit71.thread, label %bb.u
 
 _ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit71.thread: ; preds = %bb.n, %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit71
-  %i.es = getelementptr inbounds nuw i8, ptr %0, i64 8200 ; 5 uses
+  %i.es = getelementptr inbounds nuw i8, ptr %0, i64 8200 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   %.pre.pre.i94 = load i64, ptr %i.es, align 8
   %i.et = add i64 %.pre.pre.i94, -1
@@ -799,8 +796,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.fh, align 8
   %i.fi = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   store ptr %0, ptr %i.fi, align 8
-  %i.fj = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.es, ptr %i.fj, align 8
+  %i.fj = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.fk = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.fk, align 8
   %i.fl = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -1203,8 +1199,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bs, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   store ptr %0, ptr %i.bt, align 8
-  %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %1, ptr %i.bu, align 8
+  %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.bv = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.bv, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %5, i64 48

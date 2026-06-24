@@ -201,8 +201,8 @@ bb.a:
   %i.du = alloca [16 x i8], align 8               ; 6 uses
   %i.dv = alloca [16 x i8], align 8               ; 6 uses
   %i.dw = alloca [32 x i8], align 8               ; 8 uses
-  %i.dx = alloca [112 x i8], align 8              ; 6 uses
-  %i.dy = alloca [112 x i8], align 8              ; 8 uses
+  %i.dx = alloca [112 x i8], align 8              ; 5 uses
+  %i.dy = alloca [112 x i8], align 8              ; 9 uses
   %i.dz = alloca [112 x i8], align 8              ; 7 uses
   %i.ea = alloca [16 x i8], align 8               ; 6 uses
   %i.eb = alloca [16 x i8], align 8               ; 6 uses
@@ -229,6 +229,7 @@ bb.a:
   %i.ew = alloca [16 x i8], align 8               ; 6 uses
   %i.ex = alloca [32 x i8], align 8               ; 8 uses
   %i.ey = alloca [16 x i8], align 16              ; 10 uses
+  %2 = alloca [48 x i8], align 8                  ; 4 uses
   %i.ez = alloca [112 x i8], align 8              ; 6 uses
   %i.fa = alloca [16 x i8], align 8               ; 6 uses
   %i.fb = alloca [16 x i8], align 8               ; 6 uses
@@ -237,8 +238,8 @@ bb.a:
   %i.fe = alloca [16 x i8], align 8               ; 6 uses
   %i.ff = alloca [16 x i8], align 8               ; 6 uses
   %i.fg = alloca [32 x i8], align 8               ; 8 uses
-  %i.fh = alloca [48 x i8], align 8               ; 6 uses
-  %i.fi = alloca [48 x i8], align 8               ; 7 uses
+  %i.fh = alloca [48 x i8], align 8               ; 5 uses
+  %i.fi = alloca [48 x i8], align 8               ; 4 uses
   %i.fj = alloca [112 x i8], align 8              ; 6 uses
   %i.fk = alloca [16 x i8], align 8               ; 6 uses
   %i.fl = alloca [16 x i8], align 8               ; 6 uses
@@ -247,8 +248,7 @@ bb.a:
   %i.fo = alloca [16 x i8], align 8               ; 6 uses
   %i.fp = alloca [16 x i8], align 8               ; 6 uses
   %i.fq = alloca [32 x i8], align 8               ; 8 uses
-  %2 = alloca [48 x i8], align 8                  ; 6 uses
-  %i.fr = alloca [48 x i8], align 8               ; 7 uses
+  %i.fr = alloca [48 x i8], align 8               ; 5 uses
   %i.fs = alloca [32 x i8], align 8               ; 5 uses
   %i.ft = alloca [120 x i8], align 8              ; 7 uses
   %i.fu = alloca [112 x i8], align 8              ; 5 uses
@@ -289,6 +289,7 @@ bb.a:
   %i.hb = alloca [32 x i8], align 8               ; 8 uses
   %i.hc = alloca [40 x i8], align 8               ; 12 uses
   %i.hd = alloca [40 x i8], align 8               ; 8 uses
+  %3 = alloca [48 x i8], align 8                  ; 4 uses
   %i.he = alloca [112 x i8], align 8              ; 6 uses
   %i.hf = alloca [16 x i8], align 8               ; 6 uses
   %i.hg = alloca [16 x i8], align 8               ; 6 uses
@@ -297,8 +298,8 @@ bb.a:
   %i.hj = alloca [16 x i8], align 8               ; 6 uses
   %i.hk = alloca [16 x i8], align 8               ; 6 uses
   %i.hl = alloca [32 x i8], align 8               ; 8 uses
-  %i.hm = alloca [48 x i8], align 8               ; 6 uses
-  %i.hn = alloca [48 x i8], align 8               ; 7 uses
+  %i.hm = alloca [48 x i8], align 8               ; 5 uses
+  %i.hn = alloca [48 x i8], align 8               ; 4 uses
   %i.ho = alloca [112 x i8], align 8              ; 6 uses
   %i.hp = alloca [16 x i8], align 8               ; 6 uses
   %i.hq = alloca [16 x i8], align 8               ; 6 uses
@@ -307,8 +308,7 @@ bb.a:
   %i.ht = alloca [16 x i8], align 8               ; 6 uses
   %i.hu = alloca [16 x i8], align 8               ; 6 uses
   %i.hv = alloca [32 x i8], align 8               ; 8 uses
-  %3 = alloca [48 x i8], align 8                  ; 6 uses
-  %i.hw = alloca [48 x i8], align 8               ; 7 uses
+  %i.hw = alloca [48 x i8], align 8               ; 5 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 3 uses
   %i.hy = load i8, ptr %i.hx, align 4, !range !516, !noundef !14
   switch i8 %i.hy, label %default.unreachable1524 [
@@ -335,7 +335,6 @@ bb.d:                                             ; preds = %bb.a
   %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 91 ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i32 0, ptr %i.ia, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.hw)
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.ic = load ptr, ptr %i.ib, align 8, !nonnull !14, !align !259, !noundef !14 ; 3 uses
   %i.id = getelementptr i8, ptr %i.ic, i64 8
@@ -347,22 +346,20 @@ bb.d:                                             ; preds = %bb.a
   %i.ih = load ptr, ptr %i.ig, align 8, !nonnull !14, !align !259, !noundef !14
   %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.ij = load ptr, ptr %i.ii, align 8, !nonnull !14, !align !259, !noundef !14
-  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE27modify_before_serializationCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.hw, ptr noundef nonnull %.val620, ptr noundef nonnull %i.if, ptr noalias noundef nonnull align 8 dereferenceable(1160) %i.ih, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.ic, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.ij)
+  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE27modify_before_serializationCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.hn, ptr noundef nonnull %.val620, ptr noundef nonnull %i.if, ptr noalias noundef nonnull align 8 dereferenceable(1160) %i.ih, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.ic, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.ij)
           to label %bb.f unwind label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.ik = landingpad { ptr, i32 }
           cleanup
-  br label %5
+  br label %bb.dn
 
 bb.f:                                             ; preds = %bb.d
-  %i.il = load i64, ptr %i.hw, align 8, !range !666, !noundef !14
+  %i.il = load i64, ptr %i.hn, align 8, !range !666, !noundef !14
   %.not = icmp eq i64 %i.il, -9223372036854775807
   br i1 %.not, label %bb.g, label %bb.eo
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.hw)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.hn)
   %i.im = load ptr, ptr %i.ib, align 8, !nonnull !14, !align !259, !noundef !14 ; 3 uses
   %i.in = getelementptr i8, ptr %i.im, i64 8
   %.val618 = load ptr, ptr %i.in, align 8, !nonnull !14, !noundef !14 ; 2 uses
@@ -371,21 +368,20 @@ bb.g:                                             ; preds = %bb.f
   %i.ip = getelementptr inbounds nuw [48 x i8], ptr %.val618, i64 %.val619
   %i.iq = load ptr, ptr %i.ig, align 8, !nonnull !14, !align !259, !noundef !14
   %i.ir = load ptr, ptr %i.ii, align 8, !nonnull !14, !align !259, !noundef !14
-  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE25read_before_serializationCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.hn, ptr noundef nonnull %.val618, ptr noundef nonnull %i.ip, ptr noundef nonnull align 8 %i.iq, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.im, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.ir)
+  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE25read_before_serializationCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %3, ptr noundef nonnull %.val618, ptr noundef nonnull %i.ip, ptr noundef nonnull align 8 %i.iq, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.im, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.ir)
           to label %bb.i unwind label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.is = landingpad { ptr, i32 }
           cleanup
-  br label %4
+  br label %bb.dn
 
 bb.i:                                             ; preds = %bb.g
-  %i.it = load i64, ptr %i.hn, align 8, !range !666, !noundef !14
+  %i.it = load i64, ptr %3, align 8, !range !666, !noundef !14
   %.not63 = icmp eq i64 %i.it, -9223372036854775807
   br i1 %.not63, label %bb.j, label %bb.do
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.hn)
   %i.iu = load ptr, ptr %i.ig, align 8, !nonnull !14, !align !259, !noundef !14
   invoke void @_RNvMs1_NtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors7contextNtB5_18InterceptorContext25enter_serialization_phaseCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(1160) %i.iu)
           to label %bb.l unwind label %bb.k
@@ -788,14 +784,14 @@ bb.dm:                                            ; preds = %bb.dl
   invoke void @_RNvMsn_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcDNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client6ser_de16SerializeRequestEL_E9drop_slowCs2HJ6gJZ22Qg_18aws_smithy_runtime(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.gy) #26
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client6ser_de23SharedRequestSerializerECs9rVkZwOUgsI_13deltalake_aws.exit715 unwind label %bb.af
 
-bb.dn:                                            ; preds = %bb.br, %bb.bx, %bb.bu, %bb.bd, %bb.cc, %bb.ca, %bb.bm, %bb.bk, %7, %6, %bb.nm, %bb.hu, %5, %4, %bb.ba, %bb.k
-  %.pn345.pn.pn.pn = phi { ptr, i32 } [ %.pn345.pn.pn, %5 ], [ %.pn333.pn.pn, %4 ], [ %.pn323, %bb.ba ], [ %i.iv, %bb.k ], [ %.pn288.pn.pn, %7 ], [ %.pn276.pn.pn, %6 ], [ %.pn262.pn.pn.pn, %bb.nm ], [ %i.wz, %bb.hu ], [ %.pn300.pn.pn.pn.pn, %bb.cc ], [ %i.nf, %bb.ca ], [ %i.mb, %bb.bk ], [ %i.lr, %bb.bd ], [ %i.na, %bb.bx ], [ %i.mu, %bb.bu ], [ %i.md, %bb.bm ], [ %i.mk, %bb.br ]
+bb.dn:                                            ; preds = %bb.pl, %bb.hw, %bb.ol, %bb.hz, %bb.fm, %bb.e, %bb.em, %bb.h, %bb.br, %bb.bx, %bb.bu, %bb.bd, %bb.cc, %bb.ca, %bb.bm, %bb.bk, %bb.nm, %bb.hu, %bb.ba, %bb.k
+  %.pn345.pn.pn.pn = phi { ptr, i32 } [ %i.is, %bb.h ], [ %i.mk, %bb.br ], [ %.pn323, %bb.ba ], [ %i.iv, %bb.k ], [ %i.xq, %bb.hz ], [ %i.ik, %bb.e ], [ %.pn262.pn.pn.pn, %bb.nm ], [ %i.wz, %bb.hu ], [ %.pn300.pn.pn.pn.pn, %bb.cc ], [ %i.nf, %bb.ca ], [ %i.mb, %bb.bk ], [ %i.lr, %bb.bd ], [ %i.na, %bb.bx ], [ %i.mu, %bb.bu ], [ %i.md, %bb.bm ], [ %.pn333.pn1342, %bb.em ], [ %.pn345.pn1348, %bb.fm ], [ %.pn276.pn1398, %bb.ol ], [ %.pn288.pn1404, %bb.pl ], [ %i.xi, %bb.hw ]
   store i8 2, ptr %i.hx, align 4
   resume { ptr, i32 } %.pn345.pn.pn.pn
 
 bb.do:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.hm)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.hm, ptr noundef nonnull align 8 dereferenceable(48) %i.hn, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.hm, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false)
   %i.po = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
   %i.pp = icmp ult i64 %i.po, 2
   br i1 %i.pp, label %bb.dp, label %bb.dw
@@ -956,7 +952,7 @@ bb.ej:                                            ; preds = %bb.ei, %bb.dw, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.he)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)
   %.sroa.4.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i, i64 6
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(48) %i.hm, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false)
   store i16 5, ptr %i.he, align 8, !alias.scope !1344, !noalias !1349
   %.sroa.4.0..sroa_idx.i.i723 = getelementptr inbounds nuw i8, ptr %i.he, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.0..sroa_idx.i.i723, ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.i.i, i64 54, i1 false), !noalias !1349
@@ -973,27 +969,21 @@ bb.ek:                                            ; preds = %bb.ej
 bb.el:                                            ; preds = %bb.ej
   call void @llvm.lifetime.end.p0(ptr nonnull %i.he)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.hm)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.hn)
   br label %common.ret
 
 bb.em:                                            ; preds = %bb.ek, %bb.en
   %.pn333.pn1342 = phi { ptr, i32 } [ %.pn333.pn.ph, %bb.en ], [ %i.qz, %bb.ek ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.hm)
-  br label %4
+  br label %bb.dn
 
 bb.en:                                            ; preds = %bb.eh, %bb.dt, %bb.dr, %bb.eb, %bb.ee, %bb.dy
   %.pn333.pn.ph = phi { ptr, i32 } [ %i.pv, %bb.dt ], [ %i.qx, %bb.eh ], [ %i.qc, %bb.dy ], [ %i.qm, %bb.eb ], [ %i.qs, %bb.ee ], [ %i.pt, %bb.dr ]
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors5error16InterceptorErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.hm) #23
           to label %bb.em unwind label %bb.af
 
-4:                                                ; preds = %bb.h, %bb.em
-  %.pn333.pn.pn = phi { ptr, i32 } [ %.pn333.pn1342, %bb.em ], [ %i.is, %bb.h ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.hn)
-  br label %bb.dn
-
 bb.eo:                                            ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %i.hw, i64 48, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.hw)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.hw, ptr noundef nonnull align 8 dereferenceable(48) %i.hn, i64 48, i1 false)
   %i.ra = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
   %i.rb = icmp ult i64 %i.ra, 2
   br i1 %i.rb, label %bb.ep, label %bb.ew
@@ -1154,7 +1144,7 @@ bb.fj:                                            ; preds = %bb.fi, %bb.ew, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ho)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i733)
   %.sroa.4.8..sroa_idx.i.i734 = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i733, i64 6
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i734, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i734, ptr noundef nonnull align 8 dereferenceable(48) %i.hn, i64 48, i1 false)
   store i16 5, ptr %i.ho, align 8, !alias.scope !1362, !noalias !1367
   %.sroa.4.0..sroa_idx.i.i735 = getelementptr inbounds nuw i8, ptr %i.ho, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.0..sroa_idx.i.i735, ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.i.i733, i64 54, i1 false), !noalias !1367
@@ -1170,24 +1160,18 @@ bb.fk:                                            ; preds = %bb.fj
 
 bb.fl:                                            ; preds = %bb.fj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ho)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.hw)
   br label %common.ret
 
 bb.fm:                                            ; preds = %bb.fk, %bb.fn
   %.pn345.pn1348 = phi { ptr, i32 } [ %.pn345.pn.ph, %bb.fn ], [ %i.sl, %bb.fk ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  br label %5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.hw)
+  br label %bb.dn
 
 bb.fn:                                            ; preds = %bb.fh, %bb.et, %bb.er, %bb.fb, %bb.fe, %bb.ey
   %.pn345.pn.ph = phi { ptr, i32 } [ %i.rh, %bb.et ], [ %i.sj, %bb.fh ], [ %i.ro, %bb.ey ], [ %i.ry, %bb.fb ], [ %i.se, %bb.fe ], [ %i.rf, %bb.er ]
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors5error16InterceptorErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(48) %3) #23
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors5error16InterceptorErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.hw) #23
           to label %bb.fm unwind label %bb.af
-
-5:                                                ; preds = %bb.e, %bb.fm
-  %.pn345.pn.pn = phi { ptr, i32 } [ %.pn345.pn1348, %bb.fm ], [ %i.ik, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.hw)
-  br label %bb.dn
 
 bb.fo:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCsbvkFyIu7lgC_4core9panicking11panic_const28panic_const_async_fn_resumed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @43) #25
@@ -1591,7 +1575,6 @@ bb.hu:                                            ; preds = %bb.bg
   br label %bb.dn
 
 bb.hv:                                            ; preds = %bb.bg
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.fr)
   %i.xa = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
   %i.xb = load ptr, ptr %i.xa, align 8, !nonnull !14, !align !259, !noundef !14 ; 3 uses
   %i.xc = getelementptr i8, ptr %i.xb, i64 8
@@ -1602,22 +1585,20 @@ bb.hv:                                            ; preds = %bb.bg
   %i.xf = load ptr, ptr %i.lu, align 8, !nonnull !14, !align !259, !noundef !14
   %i.xg = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.xh = load ptr, ptr %i.xg, align 8, !nonnull !14, !align !259, !noundef !14
-  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE24read_after_serializationCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.fr, ptr noundef nonnull %.val616, ptr noundef nonnull %i.xe, ptr noundef nonnull align 8 %i.xf, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.xb, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.xh)
+  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE24read_after_serializationCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.fi, ptr noundef nonnull %.val616, ptr noundef nonnull %i.xe, ptr noundef nonnull align 8 %i.xf, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.xb, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.xh)
           to label %bb.hx unwind label %bb.hw
 
 bb.hw:                                            ; preds = %bb.hv
   %i.xi = landingpad { ptr, i32 }
           cleanup
-  br label %7
+  br label %bb.dn
 
 bb.hx:                                            ; preds = %bb.hv
-  %i.xj = load i64, ptr %i.fr, align 8, !range !666, !noundef !14
+  %i.xj = load i64, ptr %i.fi, align 8, !range !666, !noundef !14
   %.not97 = icmp eq i64 %i.xj, -9223372036854775807
   br i1 %.not97, label %bb.hy, label %bb.on
 
 bb.hy:                                            ; preds = %bb.hx
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.fr)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.fi)
   %i.xk = load ptr, ptr %i.xa, align 8, !nonnull !14, !align !259, !noundef !14 ; 3 uses
   %i.xl = getelementptr i8, ptr %i.xk, i64 8
   %.val614 = load ptr, ptr %i.xl, align 8, !nonnull !14, !noundef !14 ; 2 uses
@@ -1626,21 +1607,20 @@ bb.hy:                                            ; preds = %bb.hx
   %i.xn = getelementptr inbounds nuw [48 x i8], ptr %.val614, i64 %.val615
   %i.xo = load ptr, ptr %i.lu, align 8, !nonnull !14, !align !259, !noundef !14
   %i.xp = load ptr, ptr %i.xg, align 8, !nonnull !14, !align !259, !noundef !14
-  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE24modify_before_retry_loopCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.fi, ptr noundef nonnull %.val614, ptr noundef nonnull %i.xn, ptr noalias noundef nonnull align 8 dereferenceable(1160) %i.xo, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.xk, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.xp)
+  invoke void @_RNvMNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12interceptorsINtB2_12InterceptorsINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client18runtime_components7TrackedNtNtB2D_12interceptors17SharedInterceptorEENCNvMs1_B2B_NtB2B_17RuntimeComponents12interceptors0EE24modify_before_retry_loopCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %2, ptr noundef nonnull %.val614, ptr noundef nonnull %i.xn, ptr noalias noundef nonnull align 8 dereferenceable(1160) %i.xo, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(392) %i.xk, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.xp)
           to label %bb.ia unwind label %bb.hz
 
 bb.hz:                                            ; preds = %bb.hy
   %i.xq = landingpad { ptr, i32 }
           cleanup
-  br label %6
+  br label %bb.dn
 
 bb.ia:                                            ; preds = %bb.hy
-  %i.xr = load i64, ptr %i.fi, align 8, !range !666, !noundef !14
+  %i.xr = load i64, ptr %2, align 8, !range !666, !noundef !14
   %.not98 = icmp eq i64 %i.xr, -9223372036854775807
   br i1 %.not98, label %bb.ib, label %bb.nn
 
 bb.ib:                                            ; preds = %bb.ia
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.fi)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ey)
   %i.xs = load ptr, ptr %i.xa, align 8, !nonnull !14, !align !259, !noundef !14
   %i.xt = getelementptr i8, ptr %i.xs, i64 280    ; 2 uses
@@ -2043,7 +2023,7 @@ bb.mf:                                            ; preds = %bb.md
 bb.mg:                                            ; preds = %bb.mf, %bb.lt, %bb.lu, %bb.lz, %bb.mc
   %i.afr = load ptr, ptr %i.lu, align 8, !nonnull !14, !align !259, !noundef !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dp)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.dp, ptr noundef nonnull align 8 dereferenceable(112) %i.dx, i64 112, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.dp, ptr noundef nonnull align 8 dereferenceable(112) %i.dy, i64 112, i1 false)
   invoke void @_RNvMs2_NtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors7contextNtB5_18InterceptorContext4failCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(1160) %i.afr, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(112) %i.dp)
           to label %bb.mi unwind label %bb.mh
 
@@ -2283,7 +2263,7 @@ bb.nm:                                            ; preds = %bb.ace, %bb.acd, %_
 
 bb.nn:                                            ; preds = %bb.ia
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fh)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.fh, ptr noundef nonnull align 8 dereferenceable(48) %i.fi, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.fh, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false)
   %i.ahl = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
   %i.ahm = icmp ult i64 %i.ahl, 2
   br i1 %i.ahm, label %bb.no, label %bb.nv
@@ -2444,7 +2424,7 @@ bb.oi:                                            ; preds = %bb.oh, %bb.nv, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ez)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i821)
   %.sroa.4.8..sroa_idx.i.i822 = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i821, i64 6
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i822, ptr noundef nonnull align 8 dereferenceable(48) %i.fh, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i822, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false)
   store i16 5, ptr %i.ez, align 8, !alias.scope !1530, !noalias !1535
   %.sroa.4.0..sroa_idx.i.i823 = getelementptr inbounds nuw i8, ptr %i.ez, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.0..sroa_idx.i.i823, ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.i.i821, i64 54, i1 false), !noalias !1535
@@ -2461,27 +2441,21 @@ bb.oj:                                            ; preds = %bb.oi
 bb.ok:                                            ; preds = %bb.oi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ez)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fh)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.fi)
   br label %common.ret
 
 bb.ol:                                            ; preds = %bb.oj, %bb.om
   %.pn276.pn1398 = phi { ptr, i32 } [ %.pn276.pn.ph, %bb.om ], [ %i.aiw, %bb.oj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fh)
-  br label %6
+  br label %bb.dn
 
 bb.om:                                            ; preds = %bb.og, %bb.ns, %bb.nq, %bb.oa, %bb.od, %bb.nx
   %.pn276.pn.ph = phi { ptr, i32 } [ %i.ahs, %bb.ns ], [ %i.aiu, %bb.og ], [ %i.ahz, %bb.nx ], [ %i.aij, %bb.oa ], [ %i.aip, %bb.od ], [ %i.ahq, %bb.nq ]
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors5error16InterceptorErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.fh) #23
           to label %bb.ol unwind label %bb.af
 
-6:                                                ; preds = %bb.hz, %bb.ol
-  %.pn276.pn.pn = phi { ptr, i32 } [ %.pn276.pn1398, %bb.ol ], [ %i.xq, %bb.hz ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.fi)
-  br label %bb.dn
-
 bb.on:                                            ; preds = %bb.hx
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %i.fr, i64 48, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.fr)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.fr, ptr noundef nonnull align 8 dereferenceable(48) %i.fi, i64 48, i1 false)
   %i.aix = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
   %i.aiy = icmp ult i64 %i.aix, 2
   br i1 %i.aiy, label %bb.oo, label %bb.ov
@@ -2642,7 +2616,7 @@ bb.pi:                                            ; preds = %bb.ph, %bb.ov, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fj)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i833)
   %.sroa.4.8..sroa_idx.i.i834 = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i833, i64 6
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i834, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(48) %.sroa.4.8..sroa_idx.i.i834, ptr noundef nonnull align 8 dereferenceable(48) %i.fi, i64 48, i1 false)
   store i16 5, ptr %i.fj, align 8, !alias.scope !1548, !noalias !1553
   %.sroa.4.0..sroa_idx.i.i835 = getelementptr inbounds nuw i8, ptr %i.fj, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.0..sroa_idx.i.i835, ptr noundef nonnull align 2 dereferenceable(54) %.sroa.4.i.i833, i64 54, i1 false), !noalias !1553
@@ -2658,24 +2632,18 @@ bb.pj:                                            ; preds = %bb.pi
 
 bb.pk:                                            ; preds = %bb.pi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fj)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fr)
   br label %common.ret
 
 bb.pl:                                            ; preds = %bb.pj, %bb.pm
   %.pn288.pn1404 = phi { ptr, i32 } [ %.pn288.pn.ph, %bb.pm ], [ %i.aki, %bb.pj ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  br label %7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.fr)
+  br label %bb.dn
 
 bb.pm:                                            ; preds = %bb.pg, %bb.os, %bb.oq, %bb.pa, %bb.pd, %bb.ox
   %.pn288.pn.ph = phi { ptr, i32 } [ %i.aje, %bb.os ], [ %i.akg, %bb.pg ], [ %i.ajl, %bb.ox ], [ %i.ajv, %bb.pa ], [ %i.akb, %bb.pd ], [ %i.ajc, %bb.oq ]
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors5error16InterceptorErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(48) %2) #23
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12interceptors5error16InterceptorErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.fr) #23
           to label %bb.pl unwind label %bb.af
-
-7:                                                ; preds = %bb.hw, %bb.pl
-  %.pn288.pn.pn = phi { ptr, i32 } [ %.pn288.pn1404, %bb.pl ], [ %i.xi, %bb.hw ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.fr)
-  br label %bb.dn
 
 bb.pn:                                            ; preds = %bb.hr, %.noexc754, %bb.hs
   %i.akj = landingpad { ptr, i32 }

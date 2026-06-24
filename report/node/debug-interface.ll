@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 56
@@ -235,7 +235,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN2v88internal6HandleINS0_6SymbolEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
 
 _ZN2v88internal6HandleINS0_6SymbolEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ; preds = %bb.c, %bb.d
-  %.0.i.i128 = phi ptr [ %i.ay, %bb.d ], [ %i.av, %bb.c ] ; 5 uses
+  %.0.i.i128 = phi ptr [ %i.ay, %bb.d ], [ %i.av, %bb.c ] ; 4 uses
   %i.az = ptrtoint ptr %.0.i.i128 to i64
   %i.ba = add i64 %i.az, 8
   %i.bb = inttoptr i64 %i.ba to ptr
@@ -268,7 +268,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.y, align 4
   store i32 0, ptr %i.z, align 8
   store ptr %i.e, ptr %i.aa, align 8
-  store ptr %.0.i.i128, ptr %i.ab, align 8
   store ptr null, ptr %i.ac, align 8
   store ptr %1, ptr %i.ad, align 8
   store ptr null, ptr %i.ae, align 8
@@ -671,7 +670,7 @@ bb.ai:                                            ; preds = %_ZNSt14_Function_ba
   %i.js = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.jt = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ju = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
-  %i.jv = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
+  %i.jv = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.jw = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.jx = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.jy = getelementptr inbounds nuw i8, ptr %5, i64 56
@@ -720,7 +719,7 @@ bb.al:                                            ; preds = %_ZN2v88internal11Ha
   br label %_ZN2v88internal6HandleINS0_6SymbolEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit130
 
 _ZN2v88internal6HandleINS0_6SymbolEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit130: ; preds = %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit121, %bb.al
-  %.0.i.i129 = phi ptr [ %i.kx, %bb.al ], [ %i.ku, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit121 ] ; 6 uses
+  %.0.i.i129 = phi ptr [ %i.kx, %bb.al ], [ %i.ku, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit121 ] ; 5 uses
   %i.ky = ptrtoint ptr %.0.i.i129 to i64
   %i.kz = add i64 %i.ky, 8
   %i.la = inttoptr i64 %i.kz to ptr
@@ -754,7 +753,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.js, align 4
   store i32 0, ptr %i.jt, align 8
   store ptr %i.e, ptr %i.ju, align 8
-  store ptr %.0.i.i129, ptr %i.jv, align 8
   store ptr null, ptr %i.jw, align 8
   store ptr %1, ptr %i.jx, align 8
   store ptr null, ptr %i.jy, align 8
@@ -1157,7 +1155,7 @@ bb.a:
   %1 = alloca %"class.v8::internal::LookupIterator", align 8 ; 16 uses
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN2v88internal18g_current_isolate_E)
   %i.b = load ptr, ptr %i.a, align 8              ; 7 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8000 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8000 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   %.pre.pre.i = load i64, ptr %i.c, align 8
   %i.d = add i64 %.pre.pre.i, -1
@@ -1191,8 +1189,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   store ptr %i.b, ptr %i.s, align 8
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  store ptr %i.c, ptr %i.t, align 8
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 40
   store ptr null, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 48

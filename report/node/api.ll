@@ -201,7 +201,7 @@ _ZN2v824PrepareForExecutionScopeC2ENS_5LocalINS_7ContextEEENS_8internal20Runtime
   store i16 5, ptr %i.ba, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 72
   store ptr %i.k, ptr %i.bc, align 8
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.k, i64 7400 ; 5 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.k, i64 7400 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @_ZN2v88internal11PropertyKeyC2INS0_12DirectHandleEQsr3stdE16is_convertible_vIT_INS0_4NameEENS3_IS5_EEEEEPNS0_7IsolateES6_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.k, ptr nonnull %i.bd)
   %i.be = load ptr, ptr %4, align 8
@@ -250,8 +250,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bx, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %i.k, ptr %i.by, align 8
-  %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %i.bd, ptr %i.bz, align 8
+  %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.ca, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -654,8 +653,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.ay, align 8
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 24
   store ptr %i.b, ptr %i.az, align 8
-  %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %2, ptr %i.ba, align 8
+  %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.bb, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 48

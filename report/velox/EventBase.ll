@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.n, ptr %i.u, align 16, !tbaa !14057
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 72
   store ptr %i.q, ptr %i.v, align 8, !tbaa !14060
-  %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 80 ; 3 uses
-  store ptr null, ptr %i.w, align 16, !tbaa !14063
+  %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 80 ; 2 uses
   %i.x = load atomic ptr, ptr %i.m monotonic, align 8 ; 4 uses
   %i.y = icmp eq ptr %i.x, inttoptr (i64 1 to ptr)
   %i.z = select i1 %i.y, ptr null, ptr %i.x
@@ -605,7 +604,7 @@ define linkonce_odr noundef zeroext i1 @_ZN5folly15SharedMutexImplILb0EvSt6atomi
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = load atomic i32, ptr @_ZZN5folly19shared_mutex_detail21getMaxDeferredReadersEvE5cache monotonic, align 4 ; 2 uses
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.b, label %_ZN5folly19shared_mutex_detail21getMaxDeferredReadersEv.exit, !prof !14078
@@ -688,8 +687,7 @@ _ZN5folly14AccessSpreaderISt6atomicE5stateEv.exit: ; preds = %bb.g, %bb.h
   %i.aj = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5folly14AccessSpreaderISt6atomicE5stateEvE5state, i64 65792) monotonic, align 8
   %i.ak = call noundef i32 %i.aj(ptr noundef nonnull %i.c, ptr noundef null, ptr noundef null), !inline_history !14343 ; 0 uses
   %i.al = load i32, ptr %i.c, align 4, !tbaa !7
-  %i.am = and i32 %i.al, 255                      ; 2 uses
-  store i32 %i.am, ptr %i.c, align 4, !tbaa !7
+  %i.am = and i32 %i.al, 255
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.an
   %i.ap = load atomic i8, ptr %i.ao monotonic, align 1
@@ -1092,8 +1090,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.ac, ptr %i.aj, align 16, !tbaa !14057
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 72
   store ptr %i.af, ptr %i.ak, align 8, !tbaa !14060
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 80 ; 3 uses
-  store ptr null, ptr %i.al, align 16, !tbaa !14063
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 80 ; 2 uses
   %i.am = load atomic ptr, ptr %i.ab monotonic, align 8 ; 4 uses
   %i.an = icmp eq ptr %i.am, inttoptr (i64 1 to ptr)
   %i.ao = select i1 %i.an, ptr null, ptr %i.am
@@ -1496,8 +1493,7 @@ _ZNSt12__shared_ptrIN5folly14RequestContextELN9__gnu_cxx12_Lock_policyE2EED2Ev.e
   store ptr %i.a, ptr %i.l, align 16, !tbaa !14057
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 72
   store ptr %i.d, ptr %i.m, align 8, !tbaa !14060
-  %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 80 ; 3 uses
-  store ptr null, ptr %i.n, align 16, !tbaa !14063
+  %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 80 ; 2 uses
   %i.o = load atomic ptr, ptr %0 monotonic, align 64 ; 4 uses
   %i.p = icmp eq ptr %i.o, inttoptr (i64 1 to ptr)
   %i.q = select i1 %i.p, ptr null, ptr %i.o

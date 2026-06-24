@@ -201,8 +201,8 @@ bb.n:                                             ; preds = %_mi_page_free_colle
   br label %.loopexit.i
 
 bb.o:                                             ; preds = %_mi_page_free_collect.exit.i
-  %i.cs = getelementptr i8, ptr %i.u, i64 14      ; 2 uses
-  %.val16.i.i = load i8, ptr %i.cs, align 2       ; 2 uses
+  %i.cs = getelementptr i8, ptr %i.u, i64 14
+  %.val16.i.i = load i8, ptr %i.cs, align 2
   %i.ct = trunc i8 %.val16.i.i to i1
   br i1 %i.ct, label %bb.p, label %.loopexit.i, !prof !17
 
@@ -249,7 +249,6 @@ _mi_page_unfull.exit:                             ; preds = %bb.p, %bb.r, %bb.s,
   %i.dr = phi i64 [ 73, %bb.s ], [ %i.dq, %bb.t ], [ %i.dg, %bb.r ], [ 1, %bb.p ]
   %i.ds = getelementptr i8, ptr %i.cw, i64 1040
   %i.dt = getelementptr [24 x i8], ptr %i.ds, i64 %i.dr
-  store i8 %.val16.i.i, ptr %i.cs, align 2
   tail call fastcc void @mi_page_queue_enqueue_from(ptr noundef %i.dt, ptr noundef %i.cx, ptr noundef nonnull %i.u)
   br label %.loopexit.i
 
@@ -290,8 +289,8 @@ _mi_heap_delayed_free_partial.exit.thread:        ; preds = %_mi_heap_delayed_fr
 ; Function Attrs: norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_mi_page_unfull(ptr noundef %0) local_unnamed_addr #35 {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 14         ; 2 uses
-  %.val = load i8, ptr %i.a, align 2              ; 2 uses
+  %i.a = getelementptr i8, ptr %0, i64 14
+  %.val = load i8, ptr %i.a, align 2
   %i.b = trunc i8 %.val to i1
   br i1 %i.b, label %bb.b, label %bb.g
 
@@ -338,7 +337,6 @@ mi_heap_page_queue_of.exit:                       ; preds = %bb.b, %bb.d, %bb.e,
   %i.z = phi i64 [ 73, %bb.e ], [ %i.y, %bb.f ], [ %i.o, %bb.d ], [ 1, %bb.b ]
   %i.aa = getelementptr i8, ptr %i.e, i64 1040
   %i.ab = getelementptr [24 x i8], ptr %i.aa, i64 %i.z
-  store i8 %.val, ptr %i.a, align 2
   tail call fastcc void @mi_page_queue_enqueue_from(ptr noundef %i.ab, ptr noundef %i.f, ptr noundef nonnull %0)
   br label %bb.g
 

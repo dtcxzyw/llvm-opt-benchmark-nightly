@@ -201,7 +201,7 @@ _ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHa
   br label %_ZN2v88internalL29__RT_impl_Runtime_RegExpSplitENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit
 
 .critedge.i:                                      ; preds = %_ZN2v88internal7Isolate15regexp_functionEv.exit
-  %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 6096 ; 4 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 6096 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %.pre.pre.i = load i64, ptr %i.ae, align 8
   %i.af = add i64 %.pre.pre.i, -1
@@ -235,8 +235,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.at, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %2, ptr %i.au, align 8
-  %i.av = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %i.ae, ptr %i.av, align 8
+  %i.av = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.aw, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 48
@@ -639,7 +638,7 @@ bb.el:                                            ; preds = %.critedge.i.thread,
   %i.aad = inttoptr i64 %i.aac to ptr
   %i.aae = getelementptr inbounds nuw i8, ptr %i.aad, i64 12
   %i.aaf = load i32, ptr %i.aae, align 4          ; 5 uses
-  %i.aag = getelementptr inbounds nuw i8, ptr %2, i64 6096 ; 4 uses
+  %i.aag = getelementptr inbounds nuw i8, ptr %2, i64 6096 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
   %.pre.pre.i = load i64, ptr %i.aag, align 8
   %i.aah = add i64 %.pre.pre.i, -1
@@ -673,8 +672,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.aav, align 8
   %i.aaw = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 2 uses
   store ptr %2, ptr %i.aaw, align 8
-  %i.aax = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
-  store ptr %i.aag, ptr %i.aax, align 8
+  %i.aax = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.aay = getelementptr inbounds nuw i8, ptr %9, i64 40
   store ptr null, ptr %i.aay, align 8
   %i.aaz = getelementptr inbounds nuw i8, ptr %9, i64 48
@@ -1077,13 +1075,13 @@ _ZN2v88internal23DirectHandleSmallVectorINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEN
   br i1 %i.aot, label %._crit_edge871.thread, label %.lr.ph870
 
 .lr.ph870:                                        ; preds = %.thread733
-  %i.aou = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 4 uses
+  %i.aou = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 3 uses
   %i.aov = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
   %i.aow = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.aox = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.aoy = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.aoz = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
-  %i.apa = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
+  %i.apa = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.apb = getelementptr inbounds nuw i8, ptr %7, i64 40
   %i.apc = getelementptr inbounds nuw i8, ptr %7, i64 48
   %i.apd = getelementptr inbounds nuw i8, ptr %7, i64 56
@@ -1103,13 +1101,13 @@ _ZN2v88internal23DirectHandleSmallVectorINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEN
   %i.apr = getelementptr inbounds nuw i8, ptr %6, i64 64
   %i.aps = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.apt = getelementptr inbounds nuw i8, ptr %6, i64 80
-  %i.apu = getelementptr inbounds nuw i8, ptr %2, i64 6352 ; 4 uses
+  %i.apu = getelementptr inbounds nuw i8, ptr %2, i64 6352 ; 3 uses
   %i.apv = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
   %i.apw = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.apx = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.apy = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.apz = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
-  %i.aqa = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
+  %i.aqa = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.aqb = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.aqc = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.aqd = getelementptr inbounds nuw i8, ptr %5, i64 56
@@ -1122,13 +1120,13 @@ _ZN2v88internal23DirectHandleSmallVectorINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEN
   %i.aqk = getelementptr inbounds nuw i8, ptr %23, i64 32 ; 2 uses
   %i.aql = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.aqm = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %i.aqn = getelementptr inbounds nuw i8, ptr %2, i64 6256 ; 4 uses
+  %i.aqn = getelementptr inbounds nuw i8, ptr %2, i64 6256 ; 3 uses
   %i.aqo = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.aqp = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aqq = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.aqr = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.aqs = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
-  %i.aqt = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
+  %i.aqt = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.aqu = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.aqv = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.aqw = getelementptr inbounds nuw i8, ptr %3, i64 56
@@ -1189,7 +1187,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.aox, align 4
   store i32 0, ptr %i.aoy, align 8
   store ptr %2, ptr %i.aoz, align 8
-  store ptr %i.aou, ptr %i.apa, align 8
   store ptr null, ptr %i.apb, align 8
   store ptr %.sroa.0133.0.copyload.i, ptr %i.apc, align 8
   store ptr null, ptr %i.apd, align 8
@@ -1430,7 +1427,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.apx, align 4
   store i32 0, ptr %i.apy, align 8
   store ptr %2, ptr %i.apz, align 8
-  store ptr %i.apu, ptr %i.aqa, align 8
   store ptr null, ptr %i.aqb, align 8
   store ptr %.sroa.0113.0.copyload.i, ptr %i.aqc, align 8
   store ptr null, ptr %i.aqd, align 8
@@ -1668,7 +1664,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.aqq, align 4
   store i32 0, ptr %i.aqr, align 8
   store ptr %2, ptr %i.aqs, align 8
-  store ptr %i.aqn, ptr %i.aqt, align 8
   store ptr null, ptr %i.aqu, align 8
   store ptr %.sroa.085.0.copyload.i, ptr %i.aqv, align 8
   store ptr null, ptr %i.aqw, align 8
@@ -2071,8 +2066,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %2, ptr %i.q, align 8
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -2475,8 +2469,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %i.q, ptr %i.af, align 8
-  %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %1, ptr %i.ag, align 8
+  %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.ah, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 48

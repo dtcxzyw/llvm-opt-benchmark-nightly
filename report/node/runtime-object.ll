@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE2atINS0_6SymbolEEENS0_6HandleIT_EEi.exit: ; preds = %bb.a
   %i.h = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.i = add i64 %i.h, -8                         ; 2 uses
-  %i.j = inttoptr i64 %i.i to ptr                 ; 5 uses
+  %i.j = inttoptr i64 %i.i to ptr                 ; 4 uses
   %.not59 = icmp eq i32 %0, 1
   br i1 %.not59, label %bb.c, label %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE2atINS0_7ContextEEENS0_6HandleIT_EEi.exit, !prof !10
 
@@ -260,8 +260,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %2, ptr %i.af, align 8
-  %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %i.j, ptr %i.ag, align 8
+  %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.ah, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 48
@@ -664,7 +663,7 @@ _ZN2v88internal6HandleINS0_7ContextEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i: 
   %i.bh = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.bi = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.bj = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
-  %i.bk = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.bl = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.bm = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.bn = getelementptr inbounds nuw i8, ptr %6, i64 56
@@ -710,7 +709,7 @@ bb.k:                                             ; preds = %_ZN2v88internal6Han
   br label %_ZN2v88internal6HandleINS0_6SymbolEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i
 
 _ZN2v88internal6HandleINS0_6SymbolEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i: ; preds = %bb.k, %_ZN2v88internal6HandleINS0_6ObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i
-  %.0.i.i59.i = phi ptr [ %i.ck, %bb.k ], [ %i.ch, %_ZN2v88internal6HandleINS0_6ObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ] ; 9 uses
+  %.0.i.i59.i = phi ptr [ %i.ck, %bb.k ], [ %i.ch, %_ZN2v88internal6HandleINS0_6ObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ] ; 8 uses
   %i.cl = ptrtoint ptr %.0.i.i59.i to i64
   %i.cm = add i64 %i.cl, 8
   %i.cn = inttoptr i64 %i.cm to ptr
@@ -744,7 +743,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bh, align 4
   store i32 0, ptr %i.bi, align 8
   store ptr %0, ptr %i.bj, align 8
-  store ptr %.0.i.i59.i, ptr %i.bk, align 8
   store ptr null, ptr %i.bl, align 8
   store ptr %1, ptr %i.bm, align 8
   store ptr null, ptr %i.bn, align 8

@@ -201,7 +201,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -259,7 +259,7 @@ bb.e:                                             ; preds = %.lr.ph
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %.lr.ph, %bb.e
-  %.0.i = phi ptr [ %i.aq, %bb.e ], [ %i.am, %.lr.ph ] ; 6 uses
+  %.0.i = phi ptr [ %i.aq, %bb.e ], [ %i.am, %.lr.ph ] ; 5 uses
   %i.ar = ptrtoint ptr %.0.i to i64
   %i.as = add i64 %i.ar, 8
   %i.at = inttoptr i64 %i.as to ptr
@@ -294,7 +294,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.j, align 4
   store i32 0, ptr %i.k, align 8
   store ptr %i.au, ptr %i.l, align 8
-  store ptr %.0.i, ptr %i.m, align 8
   store ptr null, ptr %i.n, align 8
   store ptr %.sroa.03.0.copyload, ptr %i.o, align 8
   store ptr null, ptr %i.p, align 8

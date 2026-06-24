@@ -201,8 +201,8 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal18PretenuringHandler26ProcessPretenuringFeedbackEm(ptr noundef nonnull align 8 dereferenceable(72) %0, i64 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca i8, align 1                       ; 7 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
+  %i.a = alloca i8, align 1                       ; 6 uses
+  %i.b = alloca i32, align 4                      ; 5 uses
   %2 = alloca %"class.std::function", align 8     ; 9 uses
   %i.c = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 225), align 1, !range !8, !noundef !9
   %i.d = trunc nuw i8 %i.c to i1
@@ -218,9 +218,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = tail call noundef i64 %i.j(ptr noundef nonnull align 8 dereferenceable(96) %i.g) #14
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.k, i64 16777216) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  store i8 0, ptr %i.a, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
-  store i32 0, ptr %i.b, align 4
   %i.l = icmp uge i64 %1, %.sroa.speculated       ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -236,11 +234,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.l, %bb.b
-  %i.s = phi i8 [ 0, %bb.b ], [ %i.cc, %bb.l ]    ; 3 uses
+  %i.s = phi i8 [ 0, %bb.b ], [ %i.cc, %bb.l ]    ; 4 uses
+  %.lcssa52 = phi i32 [ 0, %bb.b ], [ %i.ac, %bb.l ]
   %.036.lcssa = phi i32 [ 0, %bb.b ], [ %.137, %bb.l ]
   %.034.lcssa = phi i32 [ 0, %bb.b ], [ %.135, %bb.l ] ; 2 uses
   %.032.lcssa = phi i32 [ 0, %bb.b ], [ %.133, %bb.l ] ; 2 uses
   %.0.lcssa = phi i32 [ 0, %bb.b ], [ %.1, %bb.l ] ; 2 uses
+  store i32 %.lcssa52, ptr %i.b, align 4
+  store i8 %i.s, ptr %i.a, align 1
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.u = load ptr, ptr %i.t, align 8              ; 4 uses
   %.not50 = icmp eq ptr %i.u, null
@@ -255,16 +256,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.z, label %._crit_edge63, label %.lr.ph62
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
-  %3 = phi i8 [ 0, %.lr.ph ], [ %i.cc, %bb.l ]    ; 2 uses
-  %i.aa = phi i32 [ 0, %.lr.ph ], [ %i.ac, %bb.l ]
-  %.sroa.043.057 = phi ptr [ %.sroa.043.052, %.lr.ph ], [ %.sroa.043.0, %bb.l ] ; 2 uses
-  %.056 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.l ]  ; 3 uses
-  %.03255 = phi i32 [ 0, %.lr.ph ], [ %.133, %bb.l ] ; 3 uses
-  %.03454 = phi i32 [ 0, %.lr.ph ], [ %.135, %bb.l ] ; 2 uses
-  %.03653 = phi i32 [ 0, %.lr.ph ], [ %.137, %bb.l ] ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.043.057, i64 8
-  %i.ac = add nuw nsw i32 %i.aa, 1                ; 2 uses
-  store i32 %i.ac, ptr %i.b, align 4
+  %.sroa.043.060 = phi ptr [ %.sroa.043.052, %.lr.ph ], [ %.sroa.043.0, %bb.l ] ; 2 uses
+  %i.aa = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.l ]  ; 3 uses
+  %.03258 = phi i32 [ 0, %.lr.ph ], [ %.133, %bb.l ] ; 3 uses
+  %.056 = phi i32 [ 0, %.lr.ph ], [ %.135, %bb.l ] ; 2 uses
+  %.03255 = phi i32 [ 0, %.lr.ph ], [ %.137, %bb.l ] ; 2 uses
+  %.03454 = phi i32 [ 0, %.lr.ph ], [ %i.ac, %bb.l ]
+  %3 = phi i8 [ 0, %.lr.ph ], [ %i.cc, %bb.l ]    ; 5 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.043.060, i64 8
+  %i.ac = add nuw nsw i32 %.03454, 1              ; 2 uses
   %i.ad = load i64, ptr %i.ab, align 8            ; 2 uses
   %i.ae = add i64 %i.ad, -1
   %i.af = inttoptr i64 %i.ae to ptr               ; 5 uses
@@ -275,8 +275,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.l
   br i1 %.not, label %bb.l, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.aj = add nsw i32 %.03653, 1                  ; 2 uses
-  %i.ak = add nuw nsw i32 %i.ai, %.03454          ; 2 uses
+  %i.aj = add nsw i32 %.03255, 1                  ; 2 uses
+  %i.ak = add nuw nsw i32 %i.ai, %.056            ; 2 uses
   %i.al = load ptr, ptr %0, align 8
   %i.am = ptrtoint ptr %i.al to i64
   %i.an = add i64 %i.am, -55464
@@ -319,7 +319,7 @@ _ZN2v88internal12_GLOBAL__N_128GetPretenuringRatioThresholdEm.exit.i.i: ; preds 
   %.0.i.i.i = select i1 %i.bh, double %.mux, double 8.500000e-01
   %i.bi = fcmp oge double %i.bd, %.0.i.i.i        ; 2 uses
   %i.bj = load atomic i32, ptr %i.ag monotonic, align 4 ; 2 uses
-  %brmerge.not.i.i = and i1 %i.l, %i.bi           ; 2 uses
+  %brmerge.not.i.i = and i1 %i.l, %i.bi
   %.mux.i.i = select i1 %i.bi, i32 134217728, i32 67108864
   br i1 %brmerge.not.i.i, label %bb.h, label %.sink.split.i.i
 
@@ -330,6 +330,7 @@ bb.h:                                             ; preds = %_ZN2v88internal12_G
   br label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.h, %_ZN2v88internal12_GLOBAL__N_128GetPretenuringRatioThresholdEm.exit.i.i
+  %4 = phi i8 [ %3, %_ZN2v88internal12_GLOBAL__N_128GetPretenuringRatioThresholdEm.exit.i.i ], [ 1, %bb.h ]
   %.sink.i.i = phi i32 [ %i.bj, %_ZN2v88internal12_GLOBAL__N_128GetPretenuringRatioThresholdEm.exit.i.i ], [ %i.bl, %bb.h ]
   %.sink11.i.i = phi i32 [ %.mux.i.i, %_ZN2v88internal12_GLOBAL__N_128GetPretenuringRatioThresholdEm.exit.i.i ], [ 201326592, %bb.h ]
   %i.bm = and i32 %.sink.i.i, -469762049
@@ -340,7 +341,7 @@ bb.h:                                             ; preds = %_ZN2v88internal12_G
 _ZN2v88internal12_GLOBAL__N_121MakePretenureDecisionENS0_6TaggedINS0_14AllocationSiteEEENS3_17PretenureDecisionEdbm.exit.i: ; preds = %.sink.split.i.i, %bb.g, %bb.f, %.thread.i
   %.in.in.i = phi i32 [ %i.aw, %.thread.i ], [ %i.ba, %bb.f ], [ %i.be, %bb.g ], [ %i.be, %.sink.split.i.i ]
   %i.bo = phi double [ 0.000000e+00, %.thread.i ], [ %i.az, %bb.f ], [ %i.bd, %bb.g ], [ %i.bd, %.sink.split.i.i ]
-  %.0.i = phi i1 [ false, %.thread.i ], [ false, %bb.f ], [ false, %bb.g ], [ %brmerge.not.i.i, %.sink.split.i.i ]
+  %.0.i = phi i8 [ %3, %.thread.i ], [ %3, %bb.f ], [ %3, %bb.g ], [ %4, %.sink.split.i.i ] ; 2 uses
   %i.bp = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 246), align 2, !range !8, !noundef !9
   %i.bq = trunc nuw i8 %i.bp to i1
   br i1 %i.bq, label %bb.i, label %_ZN2v88internal12_GLOBAL__N_125DigestPretenuringFeedbackEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEEbm.exit, !prof !5
@@ -362,43 +363,35 @@ _ZN2v88internal12_GLOBAL__N_125DigestPretenuringFeedbackEPNS0_7IsolateENS0_6Tagg
   %i.bz = and i32 %i.by, -67108864
   store atomic i32 %i.bz, ptr %i.ag monotonic, align 4
   store i32 0, ptr %i.ap, align 4
-  br i1 %.0.i, label %4, label %5
+  %5 = tail call noundef zeroext i8 @_ZNK2v88internal14AllocationSite17GetAllocationTypeEv(ptr noundef nonnull align 4 dereferenceable(40) %i.af) #14
+  %6 = icmp eq i8 %5, 1
+  br i1 %6, label %bb.j, label %bb.k
 
-4:                                                ; preds = %_ZN2v88internal12_GLOBAL__N_125DigestPretenuringFeedbackEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEEbm.exit
-  store i8 1, ptr %i.a, align 1
-  br label %5
-
-5:                                                ; preds = %4, %_ZN2v88internal12_GLOBAL__N_125DigestPretenuringFeedbackEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEEbm.exit
-  %6 = phi i8 [ 1, %4 ], [ %3, %_ZN2v88internal12_GLOBAL__N_125DigestPretenuringFeedbackEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEEbm.exit ] ; 2 uses
-  %7 = tail call noundef zeroext i8 @_ZNK2v88internal14AllocationSite17GetAllocationTypeEv(ptr noundef nonnull align 4 dereferenceable(40) %i.af) #14
-  %8 = icmp eq i8 %7, 1
-  br i1 %8, label %bb.j, label %bb.k
-
-bb.j:                                             ; preds = %5
-  %i.ca = add nsw i32 %.056, 1
+bb.j:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_125DigestPretenuringFeedbackEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEEbm.exit
+  %i.ca = add nsw i32 %i.aa, 1
   br label %bb.l
 
-bb.k:                                             ; preds = %5
-  %i.cb = add nsw i32 %.03255, 1
+bb.k:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_125DigestPretenuringFeedbackEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEEbm.exit
+  %i.cb = add nsw i32 %.03258, 1
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k, %bb.c
-  %i.cc = phi i8 [ %6, %bb.j ], [ %6, %bb.k ], [ %3, %bb.c ] ; 2 uses
-  %.137 = phi i32 [ %i.aj, %bb.j ], [ %i.aj, %bb.k ], [ %.03653, %bb.c ] ; 2 uses
-  %.135 = phi i32 [ %i.ak, %bb.j ], [ %i.ak, %bb.k ], [ %.03454, %bb.c ] ; 2 uses
-  %.133 = phi i32 [ %.03255, %bb.j ], [ %i.cb, %bb.k ], [ %.03255, %bb.c ] ; 2 uses
-  %.1 = phi i32 [ %i.ca, %bb.j ], [ %.056, %bb.k ], [ %.056, %bb.c ] ; 2 uses
-  %.sroa.043.0 = load ptr, ptr %.sroa.043.057, align 8 ; 2 uses
+  %i.cc = phi i8 [ %.0.i, %bb.j ], [ %.0.i, %bb.k ], [ %3, %bb.c ] ; 2 uses
+  %.137 = phi i32 [ %i.aj, %bb.j ], [ %i.aj, %bb.k ], [ %.03255, %bb.c ] ; 2 uses
+  %.135 = phi i32 [ %i.ak, %bb.j ], [ %i.ak, %bb.k ], [ %.056, %bb.c ] ; 2 uses
+  %.133 = phi i32 [ %.03258, %bb.j ], [ %i.cb, %bb.k ], [ %.03258, %bb.c ] ; 2 uses
+  %.1 = phi i32 [ %i.ca, %bb.j ], [ %i.aa, %bb.k ], [ %i.aa, %bb.c ] ; 2 uses
+  %.sroa.043.0 = load ptr, ptr %.sroa.043.060, align 8 ; 2 uses
   %i.cd = icmp eq ptr %.sroa.043.0, null
   br i1 %i.cd, label %._crit_edge, label %bb.c
 
 .lr.ph62:                                         ; preds = %.preheader, %bb.p
-  %9 = phi i8 [ %15, %bb.p ], [ %i.s, %.preheader ]
-  %i.ce = phi ptr [ %i.dj, %bb.p ], [ %i.y, %.preheader ]
-  %10 = phi ptr [ %i.di, %bb.p ], [ %i.x, %.preheader ]
-  %i.cf = getelementptr inbounds i8, ptr %i.ce, i64 -8 ; 2 uses
+  %7 = phi ptr [ %i.dj, %bb.p ], [ %i.y, %.preheader ]
+  %i.ce = phi ptr [ %i.di, %bb.p ], [ %i.x, %.preheader ]
+  %8 = phi i8 [ %spec.select74, %bb.p ], [ %i.s, %.preheader ]
+  %i.cf = getelementptr inbounds i8, ptr %7, i64 -8 ; 2 uses
   %i.cg = load i64, ptr %i.cf, align 8            ; 2 uses
-  store ptr %i.cf, ptr %10, align 8
+  store ptr %i.cf, ptr %i.ce, align 8
   %i.ch = load ptr, ptr %0, align 8
   %i.ci = ptrtoint ptr %i.ch to i64
   %i.cj = add i64 %i.ci, -55464
@@ -426,7 +419,7 @@ bb.m:                                             ; preds = %.lr.ph62
 bb.n:                                             ; preds = %bb.m, %.lr.ph62
   %i.cx = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 246), align 2, !range !8, !noundef !9
   %i.cy = trunc nuw i8 %i.cx to i1
-  br i1 %i.cy, label %bb.o, label %_ZN2v88internal12_GLOBAL__N_131PretenureAllocationSiteManuallyEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEE.exit
+  br i1 %i.cy, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.cz = inttoptr i64 %i.cg to ptr
@@ -436,22 +429,15 @@ bb.o:                                             ; preds = %bb.n
   %i.dd = and i32 %i.dc, 7
   %i.de = tail call noundef ptr @_ZN2v88internal14AllocationSite21PretenureDecisionNameENS1_17PretenureDecisionE(ptr noundef nonnull align 4 dereferenceable(40) %i.cm, i32 noundef %i.dd) #14
   tail call void (ptr, ptr, ...) @_ZN2v88internal12PrintIsolateEPvPKcz(ptr noundef %i.ck, ptr noundef nonnull @.str.2, ptr noundef %i.cz, ptr noundef %i.da, ptr noundef %i.de) #14
-  br label %_ZN2v88internal12_GLOBAL__N_131PretenureAllocationSiteManuallyEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEE.exit
-
-_ZN2v88internal12_GLOBAL__N_131PretenureAllocationSiteManuallyEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEE.exit: ; preds = %bb.n, %bb.o
-  %11 = load atomic i32, ptr %i.cn monotonic, align 4
-  %12 = and i32 %11, -67108864
-  store atomic i32 %12, ptr %i.cn monotonic, align 4
-  %13 = getelementptr inbounds nuw i8, ptr %i.cm, i64 36
-  store i32 0, ptr %13, align 4
-  br i1 %or.cond.i, label %14, label %bb.p
-
-14:                                               ; preds = %_ZN2v88internal12_GLOBAL__N_131PretenureAllocationSiteManuallyEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEE.exit
-  store i8 1, ptr %i.a, align 1
   br label %bb.p
 
-bb.p:                                             ; preds = %14, %_ZN2v88internal12_GLOBAL__N_131PretenureAllocationSiteManuallyEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEE.exit
-  %15 = phi i8 [ 1, %14 ], [ %9, %_ZN2v88internal12_GLOBAL__N_131PretenureAllocationSiteManuallyEPNS0_7IsolateENS0_6TaggedINS0_14AllocationSiteEEE.exit ] ; 2 uses
+bb.p:                                             ; preds = %bb.n, %bb.o
+  %9 = load atomic i32, ptr %i.cn monotonic, align 4
+  %10 = and i32 %9, -67108864
+  store atomic i32 %10, ptr %i.cn monotonic, align 4
+  %11 = getelementptr inbounds nuw i8, ptr %i.cm, i64 36
+  store i32 0, ptr %11, align 4
+  %spec.select74 = select i1 %or.cond.i, i8 1, i8 %8 ; 2 uses
   %i.df = load ptr, ptr %i.t, align 8             ; 3 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 8
   %i.dh = load ptr, ptr %i.dg, align 8
@@ -461,8 +447,9 @@ bb.p:                                             ; preds = %14, %_ZN2v88interna
   br i1 %i.dk, label %._crit_edge63, label %.lr.ph62, !llvm.loop !10
 
 ._crit_edge63:                                    ; preds = %bb.p, %.preheader
-  %i.dl = phi i8 [ %i.s, %.preheader ], [ %15, %bb.p ]
+  %i.dl = phi i8 [ %i.s, %.preheader ], [ %spec.select74, %bb.p ] ; 2 uses
   %.lcssa61 = phi ptr [ %i.u, %.preheader ], [ %i.df, %bb.p ] ; 4 uses
+  store i8 %i.dl, ptr %i.a, align 1
   %i.dm = getelementptr inbounds nuw i8, ptr %.lcssa61, i64 8
   store ptr null, ptr %i.t, align 8
   %i.dn = load ptr, ptr %i.dm, align 8            ; 3 uses

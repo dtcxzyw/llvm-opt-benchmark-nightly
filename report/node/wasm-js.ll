@@ -201,7 +201,7 @@ begin_hunk_0
 define dso_local void @_ZN2v813WasmStreamingC2ESt10unique_ptrINS0_17WasmStreamingImplESt14default_deleteIS2_EE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr nofree noundef captures(none) %1) unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca [2 x %"class.std::unique_ptr.700"], align 16 ; 6 uses
-  %3 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %3 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %i.a = load i64, ptr %1, align 8
   store i64 %i.a, ptr %0, align 8
   store ptr null, ptr %1, align 8
@@ -223,7 +223,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.0 = phi ptr [ %i.c, %bb.a ], [ %i.h, %bb.b ]  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr null, ptr %3, align 8
   %i.j = load atomic volatile i8, ptr %.0 monotonic, align 1
   %i.k = and i8 %i.j, 5
   %.not7 = icmp eq i8 %i.k, 0
@@ -626,7 +625,7 @@ bb.a:
   %1 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 5 uses
   %2 = alloca %"class.v8::internal::PrototypeIterator", align 8 ; 10 uses
   %3 = alloca %"class.v8::(anonymous namespace)::(anonymous namespace)::WasmJSApiScope", align 8 ; 13 uses
-  %4 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 5 uses
+  %4 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %5 = alloca %"class.std::optional.1269", align 8 ; 6 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
@@ -746,7 +745,6 @@ bb.i:                                             ; preds = %bb.g
 _ZNK2v820FunctionCallbackInfoINS_5ValueEEixEi.exit122.i: ; preds = %bb.i, %bb.h
   %.sroa.0199.0.i = phi ptr [ %i.bg, %bb.i ], [ %i.be, %bb.h ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
-  store i32 2, ptr %4, align 4
   %i.bh = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteENS_4base6VectorIKhEENS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, ptr nonnull @.str.219, i64 7, i8 noundef zeroext 0) #20 ; 2 uses
   %i.bi = icmp eq ptr %i.bh, null
   br i1 %i.bi, label %bb.j, label %_ZN2v812_GLOBAL__N_16v8_strEPNS_7IsolateEPKc.exit.i, !prof !17
@@ -1149,7 +1147,7 @@ _ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit54.thread: ; preds = %_Z
   br i1 %exitcond.not, label %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.thread, label %bb.v, !llvm.loop !83
 
 _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit54.thread, %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit, %bb.q, %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit
-  %i.cp = call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull @.str.81, i64 23) #20 ; 5 uses
+  %i.cp = call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull @.str.81, i64 23) #20 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @_ZN2v88internal11PropertyKeyC2INS0_12DirectHandleEQsr3stdE16is_convertible_vIT_INS0_4NameEENS3_IS5_EEEEEPNS0_7IsolateES6_(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull %2, ptr %i.cp)
   %i.cq = load ptr, ptr %6, align 8
@@ -1198,8 +1196,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.dk, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %2, ptr %i.dl, align 8
-  %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %i.cp, ptr %i.dm, align 8
+  %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.dn = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.dn, align 8
   %i.do = getelementptr inbounds nuw i8, ptr %4, i64 48
@@ -1602,7 +1599,7 @@ define linkonce_odr hidden ptr @_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7I
 bb.a:
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 16 uses
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #24
-  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #20 ; 4 uses
+  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #20 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %.pre.pre.i = load i64, ptr %i.b, align 8
   %i.c = add i64 %.pre.pre.i, -1
@@ -1636,8 +1633,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.r, align 8
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.b, ptr %i.s, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 48

@@ -201,7 +201,7 @@ bb.a:
   %i.c = alloca i64, align 8                      ; 4 uses
   %4 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 11 uses
   %i.d = alloca ptr, align 8                      ; 4 uses
-  %5 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %5 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %6 = alloca %"class.std::function", align 8     ; 6 uses
   %7 = alloca %"class.std::function", align 8     ; 6 uses
   %i.e = load ptr, ptr %1, align 8
@@ -469,7 +469,6 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.033 = phi ptr [ %i.dn, %bb.o ], [ %i.ds, %bb.p ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  store ptr null, ptr %5, align 8
   %i.du = load atomic volatile i8, ptr %.033 monotonic, align 1
   %i.dv = and i8 %i.du, 5
   %.not38 = icmp eq i8 %i.dv, 0
@@ -872,7 +871,7 @@ bb.a:
   %2 = alloca %"class.v8::SourceLocation", align 8 ; 4 uses
   %3 = alloca %"class.std::unique_ptr.496", align 8 ; 5 uses
   %4 = alloca [2 x %"class.std::unique_ptr.886"], align 16 ; 6 uses
-  %5 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 10 uses
+  %5 = alloca %"class.v8::internal::tracing::ScopedTracer", align 8 ; 9 uses
   %6 = alloca %"class.std::unique_ptr", align 8   ; 7 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #28, !noalias !165 ; 17 uses
   %i.b = load ptr, ptr %0, align 8, !noalias !165 ; 2 uses
@@ -971,7 +970,6 @@ bb.d:                                             ; preds = %_ZSt11make_uniqueIN
 bb.e:                                             ; preds = %bb.d, %_ZSt11make_uniqueIN2v88internal18ScavengerCollector22QuarantinedPageSweeper7JobTaskEJRKPNS1_4HeapEKSt6vectorINS2_17PinnedObjectEntryESaISA_EEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
   %.0 = phi ptr [ %i.an, %_ZSt11make_uniqueIN2v88internal18ScavengerCollector22QuarantinedPageSweeper7JobTaskEJRKPNS1_4HeapEKSt6vectorINS2_17PinnedObjectEntryESaISA_EEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit ], [ %i.as, %bb.d ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  store ptr null, ptr %5, align 8
   %i.au = load atomic volatile i8, ptr %.0 monotonic, align 1
   %i.av = and i8 %i.au, 5
   %.not8 = icmp eq i8 %i.av, 0

@@ -201,9 +201,9 @@ _ZTWN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE.exit: ; preds = %bb.a
   %i.e = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   tail call fastcc void @__cxx_global_var_init.1()
   %.pre = load i8, ptr @__tls_guard, align 1
-  %1 = icmp eq i8 %.pre, 0
   %i.f = tail call noundef nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE) ; 3 uses
   %i.g = load atomic ptr, ptr %i.f monotonic, align 8 ; 2 uses
+  %1 = icmp eq i8 %.pre, 0
   br i1 %1, label %bb.b, label %_ZTWN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE.exit2, !prof !17
 
 bb.b:                                             ; preds = %_ZTWN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE.exit
@@ -244,11 +244,11 @@ _ZTWN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE.exit: ; preds = %bb.a
   %i.h = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   tail call fastcc void @__cxx_global_var_init.1()
   %.pre = load i8, ptr @__tls_guard, align 1
-  %3 = icmp eq i8 %.pre, 0
   %i.i = tail call noundef nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE) ; 3 uses
   %i.j = load atomic ptr, ptr %i.i monotonic, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.j, ptr %i.k, align 8, !tbaa !24
+  %3 = icmp eq i8 %.pre, 0
   br i1 %3, label %bb.b, label %_ZTWN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE.exit3, !prof !17
 
 bb.b:                                             ; preds = %_ZTWN5folly12_GLOBAL__N_127currentThreadAsyncStackRootE.exit
@@ -648,7 +648,7 @@ define linkonce_odr noundef zeroext i1 @_ZN5folly15SharedMutexImplILb0EvSt6atomi
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = load atomic i32, ptr @_ZZN5folly19shared_mutex_detail21getMaxDeferredReadersEvE5cache monotonic, align 4 ; 2 uses
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.b, label %_ZN5folly19shared_mutex_detail21getMaxDeferredReadersEv.exit, !prof !69
@@ -731,8 +731,7 @@ _ZN5folly14AccessSpreaderISt6atomicE5stateEv.exit: ; preds = %bb.g, %bb.h
   %i.aj = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5folly14AccessSpreaderISt6atomicE5stateEvE5state, i64 65792) monotonic, align 8
   %i.ak = call noundef i32 %i.aj(ptr noundef nonnull %i.c, ptr noundef null, ptr noundef null), !inline_history !72 ; 0 uses
   %i.al = load i32, ptr %i.c, align 4, !tbaa !7
-  %i.am = and i32 %i.al, 255                      ; 2 uses
-  store i32 %i.am, ptr %i.c, align 4, !tbaa !7
+  %i.am = and i32 %i.al, 255
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.an
   %i.ap = load atomic i8, ptr %i.ao monotonic, align 1

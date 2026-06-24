@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %_ZN2v88internal6Obj
   br label %bb.n
 
 bb.g:                                             ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit.i, %_ZN2v88internal8IsNumberENS0_6TaggedINS0_6ObjectEEE.exit.i
-  %i.bf = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteENS_4base6VectorIKhEENS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull @.str.28, i64 11, i8 noundef zeroext 0) #11 ; 6 uses
+  %i.bf = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteENS_4base6VectorIKhEENS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull @.str.28, i64 11, i8 noundef zeroext 0) #11 ; 5 uses
   %i.bg = icmp eq ptr %i.bf, null
   br i1 %i.bg, label %bb.h, label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit.i, !prof !5
 
@@ -243,8 +243,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bv, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %2, ptr %i.bw, align 8
-  %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %i.bf, ptr %i.bx, align 8
+  %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.by = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.by, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %4, i64 48

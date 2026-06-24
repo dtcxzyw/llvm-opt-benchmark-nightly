@@ -201,8 +201,6 @@ bb.a:
   call void (ptr, ptr, ptr, ...) @_mi_fprintf(ptr noundef nonnull @mi_buffered_out, ptr noundef nonnull %4, ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.24, i32 noundef %i.ar) #11
   %i.as = call ptr @_mi_subproc() #11             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %5, i8 0, i64 56, i1 false)
   %i.at = load i64, ptr @mi_process_start, align 8, !tbaa !23
   %i.au = call i64 @_mi_prim_clock_now() #11
   %i.av = load i64, ptr @mi_clock_diff, align 8, !tbaa !23
@@ -221,6 +219,7 @@ bb.a:
   store i64 %i.az, ptr %i.be, align 8, !tbaa !28
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   store i64 %i.bc, ptr %i.bf, align 8, !tbaa !29
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
   store i64 0, ptr %i.bh, align 8, !tbaa !30
@@ -434,11 +433,9 @@ declare i32 @_mi_os_numa_node_count() local_unnamed_addr #6
 ; Function Attrs: nounwind uwtable
 define hidden void @mi_process_info(ptr nofree noundef writeonly captures(address_is_null) %0, ptr nofree noundef writeonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4, ptr nofree noundef writeonly captures(address_is_null) %5, ptr nofree noundef writeonly captures(address_is_null) %6, ptr nofree noundef writeonly captures(address_is_null) %7) local_unnamed_addr #3 {
 bb.a:
-  %8 = alloca %struct.mi_process_info_s, align 8  ; 13 uses
+  %8 = alloca %struct.mi_process_info_s, align 8  ; 12 uses
   %i.a = tail call ptr @_mi_subproc() #11         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #11
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %9, i8 0, i64 56, i1 false)
   %i.b = load i64, ptr @mi_process_start, align 8, !tbaa !23
   %i.c = tail call i64 @_mi_prim_clock_now() #11
   %i.d = load i64, ptr @mi_clock_diff, align 8, !tbaa !23
@@ -841,8 +838,6 @@ mi_heap_buf_print.exit99:                         ; preds = %thread-pre-split.i8
   %.sroa.572.6 = phi i64 [ %i.dk, %._crit_edge.loopexit.i95 ], [ %.sroa.572.27, %mi_heap_buf_print.exit303 ], [ %.sroa.572.5, %bb.s ], [ %.sroa.572.5, %.thread.i98 ], [ %.sroa.572.5, %thread-pre-split.i87 ] ; 3 uses
   %i.dv = call ptr @_mi_subproc() #11             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %3, i8 0, i64 56, i1 false)
   %i.dw = load i64, ptr @mi_process_start, align 8, !tbaa !23
   %i.dx = call i64 @_mi_prim_clock_now() #11
   %i.dy = load i64, ptr @mi_clock_diff, align 8, !tbaa !23
@@ -861,6 +856,7 @@ mi_heap_buf_print.exit99:                         ; preds = %thread-pre-split.i8
   store i64 %i.ec, ptr %i.eh, align 8, !tbaa !28
   %i.ei = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   store i64 %i.ef, ptr %i.ei, align 8, !tbaa !29
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ek = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   store i64 0, ptr %i.ek, align 8, !tbaa !30

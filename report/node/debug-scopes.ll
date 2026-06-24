@@ -201,7 +201,7 @@ _ZNK2v88internal11MaybeHandleINS0_10FixedArrayEE5CheckEv.exit.preheader: ; preds
   %i.cz = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.da = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.db = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
-  %i.dc = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.dd = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.de = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.df = getelementptr inbounds nuw i8, ptr %6, i64 56
@@ -245,7 +245,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.t, %bb.u
-  %.0.i = phi ptr [ %i.eb, %bb.u ], [ %i.dx, %bb.t ] ; 6 uses
+  %.0.i = phi ptr [ %i.eb, %bb.u ], [ %i.dx, %bb.t ] ; 5 uses
   %i.ec = ptrtoint ptr %.0.i to i64
   %i.ed = add i64 %i.ec, 8
   %i.ee = inttoptr i64 %i.ed to ptr
@@ -279,7 +279,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.cz, align 4
   store i32 0, ptr %i.da, align 8
   store ptr %i.ef, ptr %i.db, align 8
-  store ptr %.0.i, ptr %i.dc, align 8
   store ptr null, ptr %i.dd, align 8
   store ptr %.0.i.i, ptr %i.de, align 8
   store ptr null, ptr %i.df, align 8
@@ -682,8 +681,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.ar, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %5, i64 24
   store ptr %i.ac, ptr %i.as, align 8
-  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %1, ptr %i.at, align 8
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.au, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %5, i64 48

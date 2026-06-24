@@ -201,7 +201,7 @@ _ZN2v88internal7Isolate14native_contextEv.exit:   ; preds = %bb.a, %bb.b
   br i1 %.not, label %_ZNK2v88internal11MaybeHandleINS0_10JSFunctionEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN2v88internal7Isolate14native_contextEv.exit
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 696 ; 4 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 696 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   %.pre.pre.i = load i64, ptr %i.u, align 8
   %i.v = add i64 %.pre.pre.i, -1
@@ -235,8 +235,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.aj, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %0, ptr %i.ak, align 8
-  %i.al = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %i.u, ptr %i.al, align 8
+  %i.al = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.am, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 48

@@ -201,7 +201,7 @@ _ZNK2v88internal21DebugPropertyIterator8raw_nameEv.exit: ; preds = %bb.c, %bb.d
 
 bb.e:                                             ; preds = %_ZNK2v88internal21DebugPropertyIterator8raw_nameEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %1, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %1, align 8 ; 3 uses
   %.pre.pre = load i64, ptr %.sroa.0.0.copyload.i.i.i, align 8
   %i.ah = add i64 %.pre.pre, -1
   %i.ai = inttoptr i64 %i.ah to ptr               ; 3 uses
@@ -234,8 +234,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.av, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr %i.ae, ptr %i.aw, align 8
-  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %.sroa.0.0.copyload.i.i.i, ptr %i.ax, align 8
+  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.ay, align 8
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 48

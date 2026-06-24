@@ -201,7 +201,7 @@ bb.a:
   %i.m = inttoptr i64 %i.l to ptr
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 648
   %.sroa.0.0.i.i = select i1 %.not.i156.i, ptr %i.m, ptr %i.n ; 3 uses
-  %i.o = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteENS_4base6VectorIKhEENS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull @.str.4, i64 3, i8 noundef zeroext 0) #15 ; 5 uses
+  %i.o = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE20NewStringFromOneByteENS_4base6VectorIKhEENS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull @.str.4, i64 3, i8 noundef zeroext 0) #15 ; 4 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.b, label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit.i, !prof !9
 
@@ -269,8 +269,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.aq, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   store ptr %2, ptr %i.ar, align 8
-  %i.as = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
-  store ptr %i.o, ptr %i.as, align 8
+  %i.as = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.at = getelementptr inbounds nuw i8, ptr %6, i64 40
   store ptr null, ptr %i.at, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 48
@@ -375,7 +374,7 @@ _ZNK2v88internal11MaybeHandleINS0_10JSReceiverEE8ToHandleINS0_5UnionIJNS0_3SmiEN
 
 .critedge125.i:                                   ; preds = %_ZN2v88internal6Object8ToObjectINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEENS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENSE_ISG_EEEEENSF_ISC_E9MaybeTypeEPNS0_7IsolateESH_PKc.exit.i, %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.i160.i
   %.sroa.09.0.i326.i = phi ptr [ %i.cg, %_ZN2v88internal6Object8ToObjectINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEENS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENSE_ISG_EEEEENSF_ISC_E9MaybeTypeEPNS0_7IsolateESH_PKc.exit.i ], [ %.sroa.0.0.i158322.i, %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.i160.i ] ; 5 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 4 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   %.pre.pre.i161.i = load i64, ptr %i.cj, align 8
   %i.ck = add i64 %.pre.pre.i161.i, -1
@@ -409,8 +408,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.cy, align 8
   %i.cz = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   store ptr %2, ptr %i.cz, align 8
-  %i.da = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.cj, ptr %i.da, align 8
+  %i.da = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.db = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.db, align 8
   %i.dc = getelementptr inbounds nuw i8, ptr %5, i64 48

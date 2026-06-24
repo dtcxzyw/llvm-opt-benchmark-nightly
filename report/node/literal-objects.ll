@@ -108,7 +108,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN2v88internal12_GLOBAL__N_123AddToDictionaryTemplateINS0_7IsolateENS0_14NameDictionaryENS0_6HandleINS0_4NameEEEEEvPT_NS5_IT0_EET1_iNS0_16ClassBoilerplate9ValueKindENS0_6TaggedINS0_3SmiEEE(ptr noundef %0, ptr %1, ptr %2, i32 noundef %3, i32 noundef %4, i64 %5) unnamed_addr #0 {
 bb.a:
-  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 5 uses
+  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.a = load i64, ptr %1, align 8
   %i.b = add i64 %i.a, -1
@@ -138,7 +138,7 @@ _ZN2v88internal23BaseNameDictionaryShape4HashENS0_13ReadOnlyRootsENS0_12DirectHa
   %i.r = add i32 %i.p, -1                         ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %.sroa.06.0.in32.i.i = and i32 %i.r, %.0.i.i.i  ; 2 uses
-  %.sroa.06.033.i.i = zext nneg i32 %.sroa.06.0.in32.i.i to i64 ; 2 uses
+  %.sroa.06.033.i.i = zext nneg i32 %.sroa.06.0.in32.i.i to i64
   %i.t = mul nuw i64 %.sroa.06.033.i.i, 12884901888 ; 2 uses
   %sext.i34.i.i = add nuw i64 %i.t, 25769803776
   %i.u = ashr exact i64 %sext.i34.i.i, 29
@@ -162,7 +162,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %.sroa.06.0.in37.i10.i = phi i32 [ %.sroa.06.0.in.i.i, %bb.c ], [ %.sroa.06.0.in32.i.i, %.lr.ph.i.i ]
   %i.aa = add i32 %.sroa.06.0.in37.i10.i, %.035.i11.i
   %.sroa.06.0.in.i.i = and i32 %i.aa, %i.r        ; 2 uses
-  %.sroa.06.0.i.i = zext i32 %.sroa.06.0.in.i.i to i64 ; 2 uses
+  %.sroa.06.0.i.i = zext i32 %.sroa.06.0.in.i.i to i64
   %i.ab = mul i64 %.sroa.06.0.i.i, 12884901888    ; 2 uses
   %sext.i.i.i = add i64 %i.ab, 25769803776
   %i.ac = ashr exact i64 %sext.i.i.i, 29
@@ -226,8 +226,6 @@ bb.i:                                             ; preds = %bb.h
 
 .loopexit:                                        ; preds = %bb.c, %.lr.ph.i.i
   %.pre-phi = phi i64 [ %i.t, %.lr.ph.i.i ], [ %i.ab, %bb.c ] ; 2 uses
-  %.sroa.052.0.copyload = phi i64 [ %.sroa.06.033.i.i, %.lr.ph.i.i ], [ %.sroa.06.0.i.i, %bb.c ]
-  store i64 %.sroa.052.0.copyload, ptr %6, align 8
   %i.bb = load i64, ptr %1, align 8
   %i.bc = add i64 %i.bb, -1
   %i.bd = inttoptr i64 %i.bc to ptr
@@ -630,7 +628,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN2v88internal12_GLOBAL__N_123AddToDictionaryTemplateINS0_12LocalIsolateENS0_14NameDictionaryENS0_6HandleINS0_4NameEEEEEvPT_NS5_IT0_EET1_iNS0_16ClassBoilerplate9ValueKindENS0_6TaggedINS0_3SmiEEE(ptr noundef %0, ptr %1, ptr %2, i32 noundef %3, i32 noundef %4, i64 %5) unnamed_addr #0 {
 bb.a:
-  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 5 uses
+  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.a = load i64, ptr %1, align 8
   %i.b = add i64 %i.a, -1
@@ -660,7 +658,7 @@ _ZN2v88internal23BaseNameDictionaryShape4HashENS0_13ReadOnlyRootsENS0_12DirectHa
   %i.q = add i32 %i.o, -1                         ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %.sroa.06.0.in32.i.i = and i32 %i.q, %.0.i.i.i  ; 2 uses
-  %.sroa.06.033.i.i = zext nneg i32 %.sroa.06.0.in32.i.i to i64 ; 2 uses
+  %.sroa.06.033.i.i = zext nneg i32 %.sroa.06.0.in32.i.i to i64
   %i.s = mul nuw i64 %.sroa.06.033.i.i, 12884901888 ; 2 uses
   %sext.i34.i.i = add nuw i64 %i.s, 25769803776
   %i.t = ashr exact i64 %sext.i34.i.i, 29
@@ -684,7 +682,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %.sroa.06.0.in37.i9.i = phi i32 [ %.sroa.06.0.in.i.i, %bb.c ], [ %.sroa.06.0.in32.i.i, %.lr.ph.i.i ]
   %i.z = add i32 %.sroa.06.0.in37.i9.i, %.035.i10.i
   %.sroa.06.0.in.i.i = and i32 %i.z, %i.q         ; 2 uses
-  %.sroa.06.0.i.i = zext i32 %.sroa.06.0.in.i.i to i64 ; 2 uses
+  %.sroa.06.0.i.i = zext i32 %.sroa.06.0.in.i.i to i64
   %i.aa = mul i64 %.sroa.06.0.i.i, 12884901888    ; 2 uses
   %sext.i.i.i = add i64 %i.aa, 25769803776
   %i.ab = ashr exact i64 %sext.i.i.i, 29
@@ -760,8 +758,6 @@ bb.k:                                             ; preds = %_ZN2v88internal16Lo
 
 .loopexit:                                        ; preds = %bb.c, %.lr.ph.i.i
   %.pre-phi = phi i64 [ %i.s, %.lr.ph.i.i ], [ %i.aa, %bb.c ] ; 2 uses
-  %.sroa.052.0.copyload = phi i64 [ %.sroa.06.033.i.i, %.lr.ph.i.i ], [ %.sroa.06.0.i.i, %bb.c ]
-  store i64 %.sroa.052.0.copyload, ptr %6, align 8
   %i.bf = load i64, ptr %1, align 8
   %i.bg = add i64 %i.bf, -1
   %i.bh = inttoptr i64 %i.bg to ptr
@@ -1164,7 +1160,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN2v88internal12_GLOBAL__N_123AddToDictionaryTemplateINS0_7IsolateENS0_16NumberDictionaryEjEEvPT_NS0_6HandleIT0_EET1_iNS0_16ClassBoilerplate9ValueKindENS0_6TaggedINS0_3SmiEEE(ptr noundef %0, ptr %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i64 %5) unnamed_addr #0 {
 bb.a:
-  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 5 uses
+  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.a = load i64, ptr %1, align 8
   %i.b = add i64 %i.a, -1
@@ -1198,7 +1194,7 @@ bb.a:
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.e
   %i.z = phi i64 [ %i.ar, %bb.e ], [ %i.x, %bb.a ] ; 4 uses
-  %.sroa.042.0.copyload = phi i64 [ %.sroa.06.0.i.i, %bb.e ], [ %.sroa.06.034.i.i, %bb.a ] ; 2 uses
+  %.sroa.042.0.copyload = phi i64 [ %.sroa.06.0.i.i, %bb.e ], [ %.sroa.06.034.i.i, %bb.a ]
   %.sroa.06.0.in37.i.i = phi i32 [ %.sroa.06.0.in.i.i, %bb.e ], [ %.sroa.06.0.in33.i.i, %bb.a ]
   %.036.i.i = phi i32 [ %i.am, %bb.e ], [ 1, %bb.a ] ; 2 uses
   %i.aa = icmp eq i64 %i.z, %i.r
@@ -1300,7 +1296,6 @@ bb.k:                                             ; preds = %bb.i
   br label %_ZN2v88internal10DictionaryINS0_16NumberDictionaryENS0_21NumberDictionaryShapeEE10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit
 
 bb.l:                                             ; preds = %_ZN2v88internal25NumberDictionaryBaseShape7IsMatchEjNS0_6TaggedINS0_6ObjectEEE.exit.i.i
-  store i64 %.sroa.042.0.copyload, ptr %6, align 8
   %i.br = load i64, ptr %1, align 8
   %i.bs = add i64 %i.br, -1
   %i.bt = inttoptr i64 %i.bs to ptr
@@ -1665,7 +1660,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN2v88internal12_GLOBAL__N_123AddToDictionaryTemplateINS0_12LocalIsolateENS0_16NumberDictionaryEjEEvPT_NS0_6HandleIT0_EET1_iNS0_16ClassBoilerplate9ValueKindENS0_6TaggedINS0_3SmiEEE(ptr noundef %0, ptr %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i64 %5) unnamed_addr #0 {
 bb.a:
-  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 5 uses
+  %6 = alloca %"class.v8::internal::InternalIndex", align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.a = load i64, ptr %1, align 8
   %i.b = add i64 %i.a, -1
@@ -1699,7 +1694,7 @@ bb.a:
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.e
   %i.y = phi i64 [ %i.aq, %bb.e ], [ %i.w, %bb.a ] ; 4 uses
-  %.sroa.042.0.copyload = phi i64 [ %.sroa.06.0.i.i, %bb.e ], [ %.sroa.06.034.i.i, %bb.a ] ; 2 uses
+  %.sroa.042.0.copyload = phi i64 [ %.sroa.06.0.i.i, %bb.e ], [ %.sroa.06.034.i.i, %bb.a ]
   %.sroa.06.0.in37.i.i = phi i32 [ %.sroa.06.0.in.i.i, %bb.e ], [ %.sroa.06.0.in33.i.i, %bb.a ]
   %.036.i.i = phi i32 [ %i.al, %bb.e ], [ 1, %bb.a ] ; 2 uses
   %i.z = icmp eq i64 %i.y, %i.q
@@ -1813,7 +1808,6 @@ bb.m:                                             ; preds = %_ZN2v88internal16Lo
   br label %_ZN2v88internal10DictionaryINS0_16NumberDictionaryENS0_21NumberDictionaryShapeEE10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit
 
 bb.n:                                             ; preds = %_ZN2v88internal25NumberDictionaryBaseShape7IsMatchEjNS0_6TaggedINS0_6ObjectEEE.exit.i.i
-  store i64 %.sroa.042.0.copyload, ptr %6, align 8
   %i.bv = load i64, ptr %1, align 8
   %i.bw = add i64 %i.bv, -1
   %i.bx = inttoptr i64 %i.bw to ptr

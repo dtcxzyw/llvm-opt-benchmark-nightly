@@ -201,7 +201,7 @@ _ZNK2v85MaybeIPhE2ToEPS1_.exit.i.i56:             ; preds = %_ZNK2v85MaybeIbE2To
 
 bb.p:                                             ; preds = %.thread, %_ZN2v88internal18PropertyDescriptor16IsDataDescriptorEPS1_.exit, %_ZNKR2v85MaybeIbE8FromJustEv.exit36
   %i.db = load ptr, ptr %0, align 8               ; 7 uses
-  %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 7400 ; 4 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 7400 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   %.pre.pre.i = load i64, ptr %i.dc, align 8
   %i.dd = add i64 %.pre.pre.i, -1
@@ -235,8 +235,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.dr, align 8
   %i.ds = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %i.db, ptr %i.ds, align 8
-  %i.dt = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %i.dc, ptr %i.dt, align 8
+  %i.dt = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.du = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.du, align 8
   %i.dv = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -639,8 +638,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %2, ptr %i.q, align 8
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -966,7 +964,7 @@ define linkonce_odr hidden ptr @_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7I
 bb.a:
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 16 uses
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #30
-  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #26 ; 4 uses
+  %i.b = tail call ptr @_ZN2v88internal7Factory21InternalizeUtf8StringENS_4base6VectorIKcEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %2, i64 %i.a) #26 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   %.pre.pre.i = load i64, ptr %i.b, align 8
   %i.c = add i64 %.pre.pre.i, -1
@@ -1000,8 +998,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %0, ptr %i.r, align 8
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.b, ptr %i.s, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 48

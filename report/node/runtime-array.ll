@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %_ZN2v88internal12Is
   br i1 %i.az, label %_ZN2v88internal6Object13ToArrayLengthENS0_6TaggedIS1_EEPj.exit, label %_ZN2v88internal6Object13ToArrayLengthENS0_6TaggedIS1_EEPj.exit.thread
 
 bb.i:                                             ; preds = %.critedge112.i
-  %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 4 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   %.pre.pre.i = load i64, ptr %i.bb, align 8
   %i.bc = add i64 %.pre.pre.i, -1
@@ -235,8 +235,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bq, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %2, ptr %i.br, align 8
-  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.bb, ptr %i.bs, align 8
+  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.bt, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -639,7 +638,7 @@ bb.g:                                             ; preds = %_ZN2v88internal12Is
   br i1 %i.au, label %_ZN2v88internal6Object13ToArrayLengthENS0_6TaggedIS1_EEPj.exit, label %_ZN2v88internalL30__RT_impl_Runtime_ArrayIndexOfENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit.thread
 
 bb.h:                                             ; preds = %.critedge112.i
-  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 4 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   %.pre.pre.i = load i64, ptr %i.aw, align 8
   %i.ax = add i64 %.pre.pre.i, -1
@@ -673,8 +672,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.bl, align 8
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %2, ptr %i.bm, align 8
-  %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.aw, ptr %i.bn, align 8
+  %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr null, ptr %i.bo, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %3, i64 48

@@ -201,8 +201,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.do, align 8
   %i.dp = getelementptr inbounds nuw i8, ptr %5, i64 24
   store ptr %2, ptr %i.dp, align 8
-  %i.dq = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
-  store ptr %1, ptr %i.dq, align 8
+  %i.dq = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.dr, align 8
   %i.ds = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -425,7 +424,7 @@ bb.c:                                             ; preds = %_ZNK2v88internal9Ar
 
 _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE2atINS0_8JSObjectEEENS0_6HandleIT_EEi.exit
   %i.k = add i64 %i.h, -16                        ; 2 uses
-  %i.l = inttoptr i64 %i.k to ptr                 ; 5 uses
+  %i.l = inttoptr i64 %i.k to ptr                 ; 4 uses
   %i.m = load i64, ptr %i.j, align 8              ; 2 uses
   %i.n = add i64 %i.m, -1
   %i.o = inttoptr i64 %i.n to ptr                 ; 4 uses
@@ -756,8 +755,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.gg, align 8
   %i.gh = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %2, ptr %i.gh, align 8
-  %i.gi = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %i.l, ptr %i.gi, align 8
+  %i.gi = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.gj = getelementptr inbounds nuw i8, ptr %4, i64 40
   store ptr null, ptr %i.gj, align 8
   %i.gk = getelementptr inbounds nuw i8, ptr %4, i64 48

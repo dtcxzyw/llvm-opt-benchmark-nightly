@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 40
   %i.af = getelementptr inbounds nuw i8, ptr %9, i64 48
   %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 56
@@ -212,7 +212,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.al = getelementptr inbounds nuw i8, ptr %8, i64 12
   %i.am = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.an = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.ap = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.ar = getelementptr inbounds nuw i8, ptr %8, i64 56
@@ -554,7 +554,7 @@ _ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJN
 
 bb.w:                                             ; preds = %_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEESG_NS1_13ConfigurationE.exit
   %.sroa.0.0.copyload.i.i190 = load ptr, ptr %i.r, align 8 ; 2 uses
-  %i.ht = getelementptr inbounds nuw i8, ptr %i.hp, i64 8192 ; 4 uses
+  %i.ht = getelementptr inbounds nuw i8, ptr %i.hp, i64 8192 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
   %.pre.pre.i.i = load i64, ptr %i.ht, align 8
   %i.hu = add i64 %.pre.pre.i.i, -1
@@ -583,7 +583,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.aa, align 4
   store i32 0, ptr %i.ab, align 8
   store ptr %i.hp, ptr %i.ac, align 8
-  store ptr %i.ht, ptr %i.ad, align 8
   store ptr null, ptr %i.ae, align 8
   store ptr %.sroa.0.0.copyload.i.i190, ptr %i.af, align 8
   store ptr null, ptr %i.ag, align 8
@@ -667,7 +666,7 @@ _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.i: ; preds = %bb.a
   br i1 %i.jk, label %bb.ab, label %.thread684.thread
 
 bb.ab:                                            ; preds = %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.i
-  %.sroa.0.0.copyload.i18.i = load ptr, ptr %i.p, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i18.i = load ptr, ptr %i.p, align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
   %.pre.pre.i19.i = load i64, ptr %.sroa.0.0.copyload.i18.i, align 8
   %i.jl = add i64 %.pre.pre.i19.i, -1
@@ -696,7 +695,6 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   store i32 0, ptr %i.al, align 4
   store i32 0, ptr %i.am, align 8
   store ptr %i.hp, ptr %i.an, align 8
-  store ptr %.sroa.0.0.copyload.i18.i, ptr %i.ao, align 8
   store ptr null, ptr %i.ap, align 8
   store ptr %.sroa.07.0.i73.i, ptr %i.aq, align 8
   store ptr null, ptr %i.ar, align 8

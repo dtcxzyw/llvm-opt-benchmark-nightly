@@ -141,7 +141,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -157,8 +157,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -357,7 +356,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -373,8 +372,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -567,7 +565,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -583,8 +581,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -777,7 +774,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -793,8 +790,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -966,7 +962,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit30.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -982,8 +978,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -1160,7 +1155,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit59.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -1176,8 +1171,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %8, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %8, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %8, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %8, i64 48
@@ -1474,7 +1468,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -1490,8 +1484,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -1662,7 +1655,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -1678,8 +1671,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -1872,7 +1864,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -1888,8 +1880,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -2060,7 +2051,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -2076,8 +2067,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -2252,7 +2242,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit35.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -2268,8 +2258,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -2476,7 +2465,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit33.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -2492,8 +2481,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -2665,7 +2653,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit30.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -2681,8 +2669,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -2861,7 +2848,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit53.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -2877,8 +2864,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %8, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %8, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %8, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %8, i64 48
@@ -3171,7 +3157,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -3187,8 +3173,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -3359,7 +3344,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -3375,8 +3360,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -3558,7 +3542,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -3574,8 +3558,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -3758,7 +3741,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -3774,8 +3757,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -3957,7 +3939,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -3973,8 +3955,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -4156,7 +4137,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -4172,8 +4153,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -4355,7 +4335,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit32.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -4371,8 +4351,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -4553,7 +4532,7 @@ _ZNK2v88internal16BuiltinArguments8receiverEv.exit38.i: ; preds = %_ZN2v88intern
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i.i: ; preds = %_ZN2v88internal10IsJSObjectENS0_6TaggedINS0_6ObjectEEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 7904 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, -1
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
@@ -4569,8 +4548,7 @@ _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13Config
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %5, i8 0, i64 9, i1 false)
   store ptr %2, ptr %i.am, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store ptr %i.ab, ptr %i.an, align 8
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr null, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 48

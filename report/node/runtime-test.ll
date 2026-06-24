@@ -201,7 +201,7 @@ _ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %bb.b, %bb.a
 define hidden noundef i64 @_ZN2v88internal39Runtime_EnsureFeedbackVectorForFunctionEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %"class.v8::internal::IsCompiledScope", align 8 ; 5 uses
-  %4 = alloca %"class.v8::internal::IsCompiledScope", align 8 ; 7 uses
+  %4 = alloca %"class.v8::internal::IsCompiledScope", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -294,9 +294,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal10J
 
 _ZNK2v88internal10JSFunction19has_feedback_vectorEv.exit.thread: ; preds = %bb.c, %_ZNK2v88internal18SharedFunctionInfo11is_compiledEv.exit.i.i, %_ZNK2v88internal10JSFunction19has_feedback_vectorEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
-  store ptr null, ptr %4, align 8
-  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store i8 0, ptr %i.bc, align 8
+  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.bd = load i64, ptr %1, align 8
   %i.be = add i64 %i.bd, 31
   %i.bf = inttoptr i64 %i.be to ptr
@@ -375,7 +373,7 @@ _ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %bb.i, %_ZN2v88inter
 define hidden noundef i64 @_ZN2v88internal38Runtime_PrepareFunctionForOptimizationEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %"class.v8::internal::IsCompiledScope", align 8 ; 5 uses
-  %4 = alloca %"class.v8::internal::IsCompiledScope", align 8 ; 8 uses
+  %4 = alloca %"class.v8::internal::IsCompiledScope", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 3 uses
@@ -422,9 +420,7 @@ _ZN2v88internalL48__RT_impl_Runtime_PrepareFunctionForOptimizationENS0_9Argument
 
 bb.c:                                             ; preds = %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
-  store ptr null, ptr %4, align 8
-  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store i8 0, ptr %i.v, align 8
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.w = add i64 %i.h, 31
   %i.x = inttoptr i64 %i.w to ptr
   %i.y = load atomic volatile i64, ptr %i.x monotonic, align 8
