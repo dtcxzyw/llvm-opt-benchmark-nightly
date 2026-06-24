@@ -96,7 +96,7 @@ bb.a:
   %i.e = load i32, ptr %i.d, align 8
   %i.f = add i32 %i.e, -4
   %spec.select = icmp ult i32 %i.f, -2
-  %i.g = tail call ptr @__errno_location() #16    ; 31 uses
+  %i.g = tail call ptr @__errno_location() #16    ; 34 uses
   %i.h = getelementptr inbounds i8, ptr %0, i64 -44 ; 8 uses
   %i.i = getelementptr inbounds i8, ptr %0, i64 -40 ; 9 uses
   %i.j = getelementptr i8, ptr %0, i64 -56        ; 12 uses
@@ -499,7 +499,11 @@ bb.dw:                                            ; preds = %bb.b
   %i.qq = load i64, ptr %i.av, align 8            ; 2 uses
   %i.qr = load atomic i32, ptr @uv__fs_try_copy_file_range.no_copy_file_range_support monotonic, align 4
   %.not.i.i109 = icmp eq i32 %i.qr, 0
-  br i1 %.not.i.i109, label %bb.dx, label %.critedge.sink.split.i
+  br i1 %.not.i.i109, label %bb.dx, label %18
+
+18:                                               ; preds = %bb.dw
+  store i32 38, ptr %i.g, align 4
+  br label %.critedge.i
 
 bb.dx:                                            ; preds = %bb.dw
   %i.qs = call i64 @uv__fs_copy_file_range(i32 noundef %i.qn, ptr noundef nonnull %i.b, i32 noundef %i.qo, ptr noundef null, i64 noundef %i.qq, i32 noundef 0) #15
@@ -512,8 +516,8 @@ bb.dy:                                            ; preds = %bb.dx
     i32 13, label %bb.dz
     i32 38, label %bb.ea
     i32 1, label %bb.eb
-    i32 95, label %.critedge.sink.split.i
-    i32 18, label %.critedge.sink.split.i
+    i32 95, label %20
+    i32 18, label %20
   ]
 
 bb.dz:                                            ; preds = %bb.dy
@@ -533,11 +537,15 @@ uv__is_buggy_cephfs.exit.i.i:                     ; preds = %bb.dz
   %i.qx = call i32 @uv__kernel_version() #15
   %i.qy = icmp ugt i32 %i.qx, 267263
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
-  br i1 %i.qy, label %thread-pre-split.i, label %.critedge.sink.split.i
+  br i1 %i.qy, label %thread-pre-split.i, label %19
+
+19:                                               ; preds = %uv__is_buggy_cephfs.exit.i.i
+  store i32 38, ptr %i.g, align 4
+  br label %.critedge.i
 
 bb.ea:                                            ; preds = %bb.dy
   store atomic i32 1, ptr @uv__fs_try_copy_file_range.no_copy_file_range_support monotonic, align 4
-  br label %thread-pre-split.i
+  br label %.critedge.i
 
 bb.eb:                                            ; preds = %bb.dy
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
@@ -560,9 +568,14 @@ uv__is_cifs_or_smb.exit.thread.i.i:               ; preds = %bb.ec, %bb.eb
 
 bb.ed:                                            ; preds = %bb.ec, %bb.ec, %bb.ec
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
-  br label %.critedge.sink.split.i
+  store i32 38, ptr %i.g, align 4
+  br label %.critedge.i
 
-thread-pre-split.i:                               ; preds = %uv__is_cifs_or_smb.exit.thread.i.i, %bb.ea, %uv__is_buggy_cephfs.exit.i.i, %uv__is_buggy_cephfs.exit.thread.i.i
+20:                                               ; preds = %bb.dy, %bb.dy
+  store i32 38, ptr %i.g, align 4
+  br label %.critedge.i
+
+thread-pre-split.i:                               ; preds = %uv__is_cifs_or_smb.exit.thread.i.i, %uv__is_buggy_cephfs.exit.i.i, %uv__is_buggy_cephfs.exit.thread.i.i
   %.pr.i = load i32, ptr %i.g, align 4
   br label %bb.ee
 
@@ -571,11 +584,7 @@ bb.ee:                                            ; preds = %thread-pre-split.i,
   %i.re = icmp eq i32 %i.rd, 38
   br i1 %i.re, label %.critedge.i, label %.critedge.thread.i
 
-.critedge.sink.split.i:                           ; preds = %bb.dw, %bb.ed, %uv__is_buggy_cephfs.exit.i.i, %bb.dy, %bb.dy
-  store i32 38, ptr %i.g, align 4
-  br label %.critedge.i
-
-.critedge.i:                                      ; preds = %.critedge.sink.split.i, %bb.ee
+.critedge.i:                                      ; preds = %bb.ee, %20, %bb.ed, %bb.ea, %19, %18
   %i.rf = call i64 @sendfile64(i32 noundef %i.qo, i32 noundef %i.qn, ptr noundef nonnull %i.b, i64 noundef %i.qq) #15
   %.not.i111 = icmp eq i64 %i.rf, -1
   br i1 %.not.i111, label %.critedge.thread.i, label %.critedge.thread25.i

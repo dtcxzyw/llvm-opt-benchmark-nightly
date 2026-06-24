@@ -201,7 +201,7 @@ _ZN2v88internal19TransitionsAccessor19GetSimpleTransitionEPNS0_7IsolateENS0_12Di
 bb.aj:                                            ; preds = %_ZN2v88internal19TransitionsAccessor19GetSimpleTransitionEPNS0_7IsolateENS0_12DirectHandleINS0_3MapEEE.exit178
   %i.ib = load i64, ptr %i.fn, align 8
   %i.ic = add i64 %i.ib, -1
-  %i.id = inttoptr i64 %i.ic to ptr               ; 4 uses
+  %i.id = inttoptr i64 %i.ic to ptr               ; 5 uses
   %i.ie = load i64, ptr %2, align 8               ; 3 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.id, i64 8
   %i.ig = load i64, ptr %i.if, align 8
@@ -219,9 +219,11 @@ _ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i: ; preds = %bb
   %i.io = icmp ult i64 %i.il, 4294967296
   br i1 %i.io, label %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i, label %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit12.i
 
-_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i: ; preds = %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i, %bb.aj
+_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i: ; preds = %bb.aj, %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i
   store i32 0, ptr %i.a, align 4
-  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
+  %6 = getelementptr inbounds nuw i8, ptr %i.id, i64 32
+  store atomic volatile i64 8589934592, ptr %6 monotonic, align 8
+  br label %bb.be
 
 _ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit12.i: ; preds = %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i
   %i.ip = load atomic volatile i64, ptr %i.ik monotonic, align 8 ; 2 uses
@@ -239,7 +241,7 @@ _ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i.i265: ; preds 
   %i.ix = icmp eq i64 %i.iw, 0
   call void @llvm.assume(i1 %i.ix)
   %i.iy = lshr i64 %i.iv, 32                      ; 2 uses
-  %i.iz = trunc nuw i64 %i.iy to i32              ; 2 uses
+  %i.iz = trunc nuw i64 %i.iy to i32              ; 3 uses
   %i.ja = add i64 %i.ie, -1
   %i.jb = inttoptr i64 %i.ja to ptr               ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
@@ -265,7 +267,7 @@ _ZNK2v88internal4Name4hashEv.exit.i.i:            ; preds = %bb.ak, %_ZNK2v88int
   %i.ji = getelementptr i8, ptr %i.jh, i64 40
   %i.jj = load atomic volatile i64, ptr %i.ji monotonic, align 8 ; 2 uses
   %i.jk = icmp eq i64 %i.jj, %i.ie
-  br i1 %i.jk, label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit, label %bb.al
+  br i1 %i.jk, label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split, label %bb.al
 
 bb.al:                                            ; preds = %.lr.ph.i.i266
   %i.jl = add i64 %i.jj, -1
@@ -287,7 +289,7 @@ _ZNK2v88internal4Name4hashEv.exit34.i.i:          ; preds = %bb.am, %bb.al
   br i1 %i.js, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %_ZNK2v88internal4Name4hashEv.exit34.i.i
-  %i.jt = trunc nuw nsw i64 %indvars.iv.i.i267 to i32
+  %i.jt = trunc nuw nsw i64 %indvars.iv.i.i267 to i32 ; 2 uses
   store i32 %i.jt, ptr %i.a, align 4
   br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
 
@@ -302,7 +304,7 @@ bb.ao:                                            ; preds = %_ZNK2v88internal4Na
 
 bb.ap:                                            ; preds = %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit12.i
   %i.ju = call noundef i32 @_ZN2v88internal15TransitionArray16BinarySearchNameENS0_6TaggedINS0_4NameEEEPi(ptr noundef nonnull align 4 dereferenceable(16) %i.id, i64 %i.ie, ptr noundef nonnull %i.a) ; 0 uses
-  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
+  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split
 
 bb.aq:                                            ; preds = %_ZN2v88internal19TransitionsAccessor19GetSimpleTransitionEPNS0_7IsolateENS0_12DirectHandleINS0_3MapEEE.exit178
   %i.jv = load i64, ptr %3, align 8               ; 2 uses
@@ -350,7 +352,7 @@ _ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i272: ; preds = 
 
 _ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i290: ; preds = %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i272, %bb.aq
   store i32 0, ptr %i.a, align 4
-  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
+  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split
 
 _ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit12.i273: ; preds = %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i272
   %i.lf = load atomic volatile i64, ptr %i.la monotonic, align 8 ; 2 uses
@@ -418,7 +420,7 @@ _ZNK2v88internal4Name4hashEv.exit34.i.i284:       ; preds = %bb.at, %bb.as
 bb.au:                                            ; preds = %_ZNK2v88internal4Name4hashEv.exit34.i.i284
   %i.mj = trunc nuw nsw i64 %indvars.iv.i.i282 to i32
   store i32 %i.mj, ptr %i.a, align 4
-  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
+  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split
 
 bb.av:                                            ; preds = %_ZNK2v88internal4Name4hashEv.exit34.i.i284
   %indvars.iv.next.i.i287 = add nuw nsw i64 %indvars.iv.i.i282, 1 ; 2 uses
@@ -427,7 +429,7 @@ bb.av:                                            ; preds = %_ZNK2v88internal4Na
 
 ._crit_edge.i.i280:                               ; preds = %bb.av, %_ZNK2v88internal4Name4hashEv.exit.i.i276
   store i32 %i.lp, ptr %i.a, align 4
-  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
+  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split
 
 .thread42.loopexit54.i.i289:                      ; preds = %.lr.ph.i.i281
   %i.mk = trunc nuw nsw i64 %indvars.iv.i.i282 to i32
@@ -440,7 +442,7 @@ bb.aw:                                            ; preds = %_ZNK2v88internal15T
 _ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit292: ; preds = %.thread42.loopexit54.i.i289, %bb.aw
   %.1.i274 = phi i32 [ %i.ml, %bb.aw ], [ %i.mk, %.thread42.loopexit54.i.i289 ] ; 5 uses
   %i.mm = icmp eq i32 %.1.i274, -1
-  br i1 %i.mm, label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit, label %bb.ax
+  br i1 %i.mm, label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split, label %bb.ax
 
 bb.ax:                                            ; preds = %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit292
   %i.mn = load i64, ptr %i.kv, align 8
@@ -516,7 +518,7 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.az
   %.not13.i.i.i = icmp eq i32 %i.ku, %i.oe
-  br i1 %.not13.i.i.i, label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit, label %bb.bc
+  br i1 %.not13.i.i.i, label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.og = icmp samesign ult i32 %i.ku, %i.oe
@@ -541,21 +543,25 @@ bb.bd:                                            ; preds = %bb.bc, %bb.ba
   br label %.critedge.i.i
 
 .critedge.i.i:                                    ; preds = %bb.bd, %.critedge.loopexit.split.loop.exit57.i.i, %.critedge.loopexit.split.loop.exit53.i.i, %.critedge.loopexit.split.loop.exit.i.i, %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i.i
-  %.022.lcssa.i.i = phi i32 [ %.1.i274, %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i.i ], [ %i.oj, %.critedge.loopexit.split.loop.exit57.i.i ], [ %i.oh, %.critedge.loopexit.split.loop.exit.i.i ], [ %i.oi, %.critedge.loopexit.split.loop.exit53.i.i ], [ %.0.i.i.i, %bb.bd ]
+  %.022.lcssa.i.i = phi i32 [ %.1.i274, %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.i.i ], [ %i.oj, %.critedge.loopexit.split.loop.exit57.i.i ], [ %i.oh, %.critedge.loopexit.split.loop.exit.i.i ], [ %i.oi, %.critedge.loopexit.split.loop.exit53.i.i ], [ %.0.i.i.i, %bb.bd ] ; 2 uses
   store i32 %.022.lcssa.i.i, ptr %i.a, align 4
   br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
 
-_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit: ; preds = %bb.bb, %.lr.ph.i.i266, %._crit_edge.i.i280, %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i290, %bb.au, %.critedge.i.i, %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit292, %bb.ap, %._crit_edge.i.i, %bb.an, %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i
+_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split: ; preds = %bb.bb, %.lr.ph.i.i266, %._crit_edge.i.i280, %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i290, %bb.au, %bb.ap, %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit292
+  %.pr = load i32, ptr %i.a, align 4
+  br label %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
+
+_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit: ; preds = %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split, %.critedge.i.i, %._crit_edge.i.i, %bb.an
+  %7 = phi i32 [ %.pr, %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exitthread-pre-split ], [ %.022.lcssa.i.i, %.critedge.i.i ], [ %i.iz, %._crit_edge.i.i ], [ %i.jt, %bb.an ] ; 2 uses
   %i.ok = load i64, ptr %i.fn, align 8
   %i.ol = add i64 %i.ok, -1
   %i.om = inttoptr i64 %i.ol to ptr
   %i.on = getelementptr inbounds nuw i8, ptr %i.om, i64 32
   store atomic volatile i64 8589934592, ptr %i.on monotonic, align 8
-  %6 = load i32, ptr %i.a, align 4                ; 2 uses
-  %i.oo = icmp eq i32 %6, 0
+  %i.oo = icmp eq i32 %7, 0
   br i1 %i.oo, label %bb.be, label %bb.bf
 
-bb.be:                                            ; preds = %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
+bb.be:                                            ; preds = %_ZNK2v88internal15TransitionArray21number_of_transitionsEv.exit.thread.i, %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
   %i.op = load i64, ptr %i.fn, align 8
   %i.oq = add i64 %i.op, -1
   %i.or = inttoptr i64 %i.oq to ptr
@@ -577,7 +583,7 @@ bb.be:                                            ; preds = %_ZN2v88internal15Tr
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit
-  %i.pe = phi i32 [ %.pre, %bb.be ], [ %6, %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit ]
+  %i.pe = phi i32 [ %.pre, %bb.be ], [ %7, %_ZN2v88internal15TransitionArray10SearchNameENS0_6TaggedINS0_4NameEEEbPi.exit ]
   %i.pf = load i64, ptr %i.fn, align 8
   %i.pg = add i64 %i.pf, -1                       ; 3 uses
   %i.ph = inttoptr i64 %i.pg to ptr
