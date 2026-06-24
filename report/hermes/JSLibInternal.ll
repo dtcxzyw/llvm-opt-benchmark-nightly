@@ -201,11 +201,10 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph97, %.loopexit
   %.sroa.8.096 = phi i64 [ %2, %.lr.ph97 ], [ %i.j, %.loopexit ] ; 2 uses
-  %.sroa.073.095 = phi ptr [ %1, %.lr.ph97 ], [ %4, %.loopexit ] ; 2 uses
-  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.sroa.8.096, i64 255) ; 3 uses
+  %.sroa.073.095 = phi ptr [ %1, %.lr.ph97 ], [ %4, %.loopexit ] ; 3 uses
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.sroa.8.096, i64 255) ; 4 uses
   %i.j = sub i64 %.sroa.8.096, %.sroa.speculated  ; 3 uses
-  %.idx = shl nuw nsw i64 %.sroa.speculated, 2
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.073.095, i64 %.idx ; 3 uses
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.073.095, i64 %.sroa.speculated ; 2 uses
   %i.k = load i8, ptr %i.f, align 8, !tbaa !558, !range !486, !noundef !583
   %i.l = trunc nuw i8 %i.k to i1
   %i.m = trunc nuw i64 %.sroa.speculated to i8
@@ -308,6 +307,8 @@ _ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_15MatchNChar8InsnE
   %i.al = phi ptr [ %i.v, %_ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_20MatchNCharICase8InsnEEptEv.exit ], [ %i.ae, %_ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_15MatchNChar8InsnEEptEv.exit ]
   %i.am = getelementptr inbounds nuw i8, ptr %.sink177, i64 1
   store i8 %i.m, ptr %i.am, align 1, !tbaa !32
+  %.idx = shl nuw nsw i64 %.sroa.speculated, 2
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.073.095, i64 %.idx
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
@@ -375,7 +376,7 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS
 _ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit: ; preds = %bb.m, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i
   %i.bh = phi ptr [ %i.as, %bb.m ], [ %i.bf, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ]
   %i.bi = getelementptr inbounds nuw i8, ptr %.094, i64 4 ; 2 uses
-  %.not40 = icmp eq ptr %i.bi, %4
+  %.not40 = icmp eq ptr %i.bi, %5
   br i1 %.not40, label %.loopexit, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.a
