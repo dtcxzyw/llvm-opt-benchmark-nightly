@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %_ZNK2v88internal13M
   unreachable
 
 _ZNK2v88internal13MainAllocator12ComputeLimitEmmm.exit.thread: ; preds = %bb.j, %_ZNK2v88internal13MainAllocator12ComputeLimitEmmm.exit
-  %.01940 = phi i64 [ %.019, %_ZNK2v88internal13MainAllocator12ComputeLimitEmmm.exit ], [ %.sroa.speculated, %bb.j ] ; 3 uses
+  %.01940 = phi i64 [ %.sroa.speculated, %bb.j ], [ %.019, %_ZNK2v88internal13MainAllocator12ComputeLimitEmmm.exit ] ; 3 uses
   %.not = icmp eq i64 %.01940, %i.ad
   br i1 %.not, label %_ZNK2v88internal13MainAllocator12ComputeLimitEmmm.exit.thread.thread, label %bb.q
 
@@ -604,7 +604,7 @@ attributes #22 = { builtin nounwind }
 !11 = distinct !{!11, !12}
 !12 = !{!"llvm.loop.mustprogress"}
 !13 = !{ptr @_ZN2v88internal13MainAllocator24FreeLinearAllocationAreaEv}
-!14 = !{!"branch_weights", !"expected", i32 3434256, i32 2144049392}
+!14 = !{!"branch_weights", !"expected", i32 3434252, i32 2144049396}
 !15 = distinct !{null, null}
 !16 = !{!17}
 !17 = distinct !{!17, !18, !"_ZN2v88internal15WritableJitPage9FreeRangeEmm: argument 0"}

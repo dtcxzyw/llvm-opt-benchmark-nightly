@@ -201,14 +201,14 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %2 = icmp sgt i64 %i.a, %i.g
   %i.h = tail call i64 @llvm.smin.i64(i64 %i.a, i64 %i.g) ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.d, ptr nonnull align 1 %0, i64 %i.h, i1 false)
   %i.i = load ptr, ptr %1, align 8, !tbaa !61
   %i.j = getelementptr inbounds i8, ptr %i.i, i64 %i.h ; 2 uses
   store ptr %i.j, ptr %1, align 8, !tbaa !61
   store i8 0, ptr %i.j, align 1, !tbaa !11
-  br i1 %2, label %bb.b, label %bb.c
+  %.not.not = icmp sgt i64 %i.a, %i.g
+  br i1 %.not.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.k = tail call ptr @err(ptr noundef nonnull @.str.237, ptr noundef null) ; 0 uses
