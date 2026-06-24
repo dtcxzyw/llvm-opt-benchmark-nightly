@@ -170,10 +170,10 @@ bb.c:                                             ; preds = %._crit_edge.thread,
   br i1 %min.iters.check, label %.lr.ph87.preheader105, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph87.preheader
+  %ident.check = icmp ne i32 %5, 1
   %i.bk = add i32 %0, -715827883
   %i.bl = icmp ult i32 %i.bk, -715827882
-  %ident.check = icmp ne i32 %5, 1
-  %i.bm = or i1 %i.bl, %ident.check
+  %i.bm = or i1 %ident.check, %i.bl
   br i1 %i.bm, label %.lr.ph87.preheader105, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
@@ -566,10 +566,10 @@ bb.c:                                             ; preds = %._crit_edge, %.thre
   br i1 %min.iters.check, label %.lr.ph119.preheader145, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph119.preheader
+  %ident.check = icmp ne i32 %6, 1
   %i.cs = add i32 %0, -536870913
   %i.ct = icmp ult i32 %i.cs, -536870912
-  %ident.check = icmp ne i32 %6, 1
-  %i.cu = or i1 %i.ct, %ident.check
+  %i.cu = or i1 %ident.check, %i.ct
   br i1 %i.cu, label %.lr.ph119.preheader145, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
