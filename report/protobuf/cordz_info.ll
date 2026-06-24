@@ -201,10 +201,10 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK4absl12lts_2025051213cord_internal9CordzInfo18GetCordzStatisticsEv(ptr dead_on_unwind noalias writable sret(%"struct.absl::lts_20250512::cord_internal::CordzStatistics") align 8 initializes((0, 336)) %0, ptr noundef nonnull align 8 dereferenceable(1344) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK4absl12lts_2025051213cord_internal9CordzInfo18GetCordzStatisticsEv(ptr dead_on_unwind noalias writable sret(%"struct.absl::lts_20250512::cord_internal::CordzStatistics") align 8 initializes((0, 136)) %0, ptr noundef nonnull align 8 dereferenceable(1344) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.absl::lts_20250512::cord_internal::(anonymous namespace)::CordRepAnalyzer", align 8 ; 10 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(336) %0, i8 0, i64 336, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(336) %0, i8 0, i64 128, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 1112
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.c = load <2 x i32>, ptr %i.a, align 8, !tbaa !40

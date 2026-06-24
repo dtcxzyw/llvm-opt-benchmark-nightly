@@ -201,7 +201,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [120 x i8], align 8               ; 7 uses
-  %i.g = alloca [128 x i8], align 8               ; 7 uses
+  %i.g = alloca [128 x i8], align 8               ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -257,12 +257,12 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !305
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.f, ptr noundef nonnull align 8 dereferenceable(128) %i.g, i64 120, i1 false), !noalias !300
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.f, ptr noundef nonnull align 8 dereferenceable(120) %2, i64 120, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !307)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !305
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.v, ptr noundef nonnull align 8 dereferenceable(88) %i.w, i64 88, i1 false), !noalias !300
+  %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.v, ptr noundef nonnull align 8 dereferenceable(88) %i.w, i64 88, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 128
   store ptr null, ptr %i.x, align 8, !noalias !310
   store i64 0, ptr %i.c, align 8, !noalias !310

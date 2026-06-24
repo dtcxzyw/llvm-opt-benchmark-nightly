@@ -201,10 +201,10 @@ bb.a:
   %i.at = alloca [16 x i8], align 8               ; 6 uses
   %i.au = alloca [32 x i8], align 8               ; 8 uses
   %i.av = alloca [32 x i8], align 8               ; 8 uses
-  %.sroa.6136.i.i = alloca [24 x i8], align 8     ; 6 uses
+  %.sroa.6136.i.i = alloca [24 x i8], align 8     ; 7 uses
   %.sroa.11.i.i = alloca [32 x i8], align 8       ; 5 uses
   %.sroa.10132.i.i = alloca [24 x i8], align 8    ; 7 uses
-  %i.aw = alloca [32 x i8], align 8               ; 13 uses
+  %i.aw = alloca [32 x i8], align 8               ; 12 uses
   %i.ax = alloca [192 x i8], align 8              ; 6 uses
   %.sroa.5.i = alloca [24 x i8], align 8          ; 7 uses
   %.sroa.6.i = alloca [32 x i8], align 16         ; 7 uses
@@ -607,7 +607,7 @@ bb.me:                                            ; preds = %bb.mc
 
 bb.mf:                                            ; preds = %bb.mi, %bb.me, %bb.mb, %bb.lw, %bb.lv
   %.sroa.4193.0.copyload.i.i = load ptr, ptr %.sroa.4142.0..sroa_idx.i.i, align 8, !noalias !2157
-  %.sroa.5194.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  %.sroa.5194.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.6136.i.i, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10186.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5194.0..sroa_idx.i.i, i64 16, i1 false), !noalias !2157
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw), !noalias !2157
   br label %bb.ex

@@ -201,7 +201,7 @@ bb.a:
   %i.c = alloca [16 x i8], align 8                ; 5 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [48 x i8], align 8                ; 12 uses
-  %i.f = alloca [56 x i8], align 8                ; 6 uses
+  %i.f = alloca [56 x i8], align 8                ; 5 uses
   %i.g = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -257,7 +257,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !379
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %i.f, i64 48, i1 false), !noalias !373
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.e, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !381)
   %i.u = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.v = load ptr, ptr %i.u, align 8, !alias.scope !381, !noalias !384, !nonnull !12, !noundef !12
@@ -463,7 +463,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [112 x i8], align 8               ; 6 uses
-  %i.g = alloca [120 x i8], align 8               ; 7 uses
+  %i.g = alloca [120 x i8], align 8               ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -519,11 +519,11 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !428
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.f, ptr noundef nonnull align 8 dereferenceable(120) %i.g, i64 112, i1 false), !noalias !423
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.f, ptr noundef nonnull align 8 dereferenceable(112) %2, i64 112, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !430)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !428
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.v, ptr noundef nonnull align 8 dereferenceable(120) %i.g, i64 88, i1 false), !noalias !423
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.v, ptr noundef nonnull align 8 dereferenceable(88) %2, i64 88, i1 false)
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 128
   store ptr null, ptr %i.w, align 8, !noalias !433
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -687,7 +687,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [32 x i8], align 8                ; 7 uses
-  %i.g = alloca [40 x i8], align 8                ; 6 uses
+  %i.g = alloca [40 x i8], align 8                ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -742,8 +742,8 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !462
-  %i.u = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %i.u, i64 32, i1 false), !noalias !457
+  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %i.u, i64 32, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !464)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !462
   %i.v = load ptr, ptr %i.f, align 8, !alias.scope !464, !noalias !467, !nonnull !12, !noundef !12
@@ -913,7 +913,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [120 x i8], align 8               ; 7 uses
-  %i.g = alloca [128 x i8], align 8               ; 7 uses
+  %i.g = alloca [128 x i8], align 8               ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -969,12 +969,12 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !496
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.f, ptr noundef nonnull align 8 dereferenceable(128) %i.g, i64 120, i1 false), !noalias !491
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.f, ptr noundef nonnull align 8 dereferenceable(120) %2, i64 120, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !498)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !496
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.v, ptr noundef nonnull align 8 dereferenceable(88) %i.w, i64 88, i1 false), !noalias !491
+  %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.v, ptr noundef nonnull align 8 dereferenceable(88) %i.w, i64 88, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 128
   store ptr null, ptr %i.x, align 8, !noalias !501
   store i64 0, ptr %i.c, align 8, !noalias !501
@@ -1377,7 +1377,7 @@ bb.a:
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [264 x i8], align 16              ; 13 uses
-  %i.i = alloca [272 x i8], align 8               ; 6 uses
+  %i.i = alloca [272 x i8], align 8               ; 5 uses
   %i.j = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.j, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -1434,7 +1434,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !611
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(264) %i.h, ptr noundef nonnull align 8 dereferenceable(272) %i.i, i64 264, i1 false), !noalias !603
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(264) %i.h, ptr noundef nonnull align 8 dereferenceable(264) %2, i64 264, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !613)
   call void @llvm.experimental.noalias.scope.decl(metadata !616)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i)
@@ -1812,7 +1812,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [176 x i8], align 8               ; 13 uses
-  %i.g = alloca [184 x i8], align 8               ; 7 uses
+  %i.g = alloca [184 x i8], align 8               ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -1868,7 +1868,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !699
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 8 dereferenceable(184) %i.g, i64 176, i1 false), !noalias !694
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 8 dereferenceable(176) %2, i64 176, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !701)
   %i.v = getelementptr inbounds nuw i8, ptr %i.f, i64 144
   %i.w = load ptr, ptr %i.v, align 8, !alias.scope !701, !noalias !704, !nonnull !12, !noundef !12
@@ -1885,8 +1885,8 @@ _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4
   %i.ah = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ag
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !706
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.g, i64 104
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(40) %i.aj, i64 40, i1 false), !noalias !694
+  %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 104
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(40) %i.aj, i64 40, i1 false)
   invoke void @_RNvMs_NtCs8ulvy0Wg6Ot_12delta_kernel10checkpointNtB4_16CheckpointWriter8finalize(ptr noalias noundef nonnull sret([96 x i8]) align 16 captures(none) dereferenceable(96) %0, ptr noundef nonnull %i.w, i64 noundef %i.y, ptr noundef nonnull %i.ai, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.ac, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(176) %i.f, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.c)
           to label %bb.h unwind label %bb.f, !noalias !691
 

@@ -201,19 +201,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i64 0, ptr @duckdb_je_opt_oversize_threshold, align 8, !tbaa !10
-  store i64 8070450532247932928, ptr @duckdb_je_oversize_threshold, align 8, !tbaa !10
   br label %bb.c
 
 atomic_store_zu.exit:                             ; preds = %bb.a
   %i.c = tail call i32 @duckdb_je_narenas_total_get() #18
   store i32 %i.c, ptr @huge_arena_ind, align 4, !tbaa !3
   %i.d = load i64, ptr @duckdb_je_opt_oversize_threshold, align 8, !tbaa !10 ; 2 uses
-  store i64 %i.d, ptr @duckdb_je_oversize_threshold, align 8, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 69328
   store atomic i64 %i.d, ptr %i.e monotonic, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %atomic_store_zu.exit, %bb.b
+  %.sink = phi i64 [ %i.d, %atomic_store_zu.exit ], [ 8070450532247932928, %bb.b ]
+  store i64 %.sink, ptr @duckdb_je_oversize_threshold, align 8, !tbaa !10
   ret i1 %or.cond
 }
 

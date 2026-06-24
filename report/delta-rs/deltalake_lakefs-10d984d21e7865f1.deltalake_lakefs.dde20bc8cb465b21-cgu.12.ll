@@ -201,7 +201,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [112 x i8], align 8               ; 6 uses
-  %i.g = alloca [120 x i8], align 8               ; 7 uses
+  %i.g = alloca [120 x i8], align 8               ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvNtCs2y6mmZ7bjoM_12tracing_core10dispatcher11set_default(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
@@ -257,7 +257,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4.i, %bb.d, %.noexc3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !52
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.f, ptr noundef nonnull align 8 dereferenceable(120) %i.g, i64 112, i1 false), !noalias !47
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.f, ptr noundef nonnull align 8 dereferenceable(112) %2, i64 112, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !54)
   %i.v = getelementptr inbounds nuw i8, ptr %i.f, i64 88 ; 3 uses
   %i.w = load ptr, ptr %i.v, align 8, !alias.scope !54, !noalias !57, !nonnull !3, !noundef !3 ; 3 uses
@@ -270,7 +270,7 @@ _RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i: ; preds = %.noexc4
   %i.ad = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !60
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.c, ptr noundef nonnull align 8 dereferenceable(120) %i.g, i64 88, i1 false), !noalias !47
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.c, ptr noundef nonnull align 8 dereferenceable(88) %2, i64 88, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %i.f, i64 104
   %i.ag = load i64, ptr %i.af, align 8, !alias.scope !54, !noalias !57, !noundef !3
   invoke void @_RINvMNtCs8ulvy0Wg6Ot_12delta_kernel11log_segmentNtB3_10LogSegment17for_table_changesINtNtCsbvkFyIu7lgC_4core6option6OptionyEECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull sret([544 x i8]) align 16 captures(address) dereferenceable(544) %0, ptr noundef nonnull %i.ae, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.y, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.c, i64 noundef %i.ag, i64 noundef 0, i64 undef)
