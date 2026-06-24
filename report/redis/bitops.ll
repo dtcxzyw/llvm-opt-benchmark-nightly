@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   %i.cn = bitcast <32 x i8> %i.cm to <4 x i64>
   %i.co = xor <4 x i64> %i.ch, %i.cn              ; 3 uses
   %i.cp = add nuw i64 %.2133237.us, 4             ; 2 uses
-  %niter400.next.3 = add i64 %niter400, 4         ; 2 uses
+  %niter400.next.3 = add nuw i64 %niter400, 4     ; 2 uses
   %niter400.ncmp.3 = icmp eq i64 %niter400.next.3, %unroll_iter399
   br i1 %niter400.ncmp.3, label %._crit_edge.us245.unr-lcssa, label %.lr.ph238.us.new, !llvm.loop !117
 
@@ -292,7 +292,7 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %i.eg = bitcast <32 x i8> %i.ef to <4 x i64>
   %i.eh = and <4 x i64> %i.ea, %i.eg              ; 3 uses
   %i.ei = add nuw i64 %.0131260.us, 4             ; 2 uses
-  %niter416.next.3 = add i64 %niter416, 4         ; 2 uses
+  %niter416.next.3 = add nuw i64 %niter416, 4     ; 2 uses
   %niter416.ncmp.3 = icmp eq i64 %niter416.next.3, %unroll_iter415
   br i1 %niter416.ncmp.3, label %._crit_edge.us268.unr-lcssa, label %.lr.ph261.us.new, !llvm.loop !120
 
@@ -395,7 +395,7 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   %i.ge = bitcast <32 x i8> %i.gd to <4 x i64>
   %i.gf = or <4 x i64> %i.fy, %i.ge               ; 3 uses
   %i.gg = add nuw i64 %.1132248.us, 4             ; 2 uses
-  %niter408.next.3 = add i64 %niter408, 4         ; 2 uses
+  %niter408.next.3 = add nuw i64 %niter408, 4     ; 2 uses
   %niter408.ncmp.3 = icmp eq i64 %niter408.next.3, %unroll_iter407
   br i1 %niter408.ncmp.3, label %._crit_edge.us257.unr-lcssa, label %.lr.ph249.us.new, !llvm.loop !123
 

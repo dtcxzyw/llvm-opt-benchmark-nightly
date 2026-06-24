@@ -201,10 +201,8 @@ _ZN9benchmark5State3endEv.exit.preheader:         ; preds = %bb.a
   %i.ao = sext i32 %i.ak to i64
   %i.ap = sext i32 %i.ai to i64
   %i.aq = sext i32 %i.y to i64
-  %2 = sext i32 %i.al to i64
-  %3 = sext i32 %i.aj to i64
-  %wide.trip.count435 = sext i32 %i.aa to i64
-  %wide.trip.count = sext i32 %i.w to i64
+  %wide.trip.count435 = sext i32 %i.al to i64
+  %wide.trip.count = sext i32 %i.aj to i64
   br label %.preheader411
 
 .preheader411:                                    ; preds = %.preheader411.preheader, %._crit_edge417
@@ -239,8 +237,8 @@ bb.c:                                             ; preds = %_ZN9benchmark5State
 
 .preheader:                                       ; preds = %.preheader411, %._crit_edge415
   %indvars.iv432 = phi i64 [ %i.aq, %.preheader411 ], [ %indvars.iv.next433, %._crit_edge415 ] ; 3 uses
-  %i.aw = mul nsw i64 %indvars.iv432, %2
-  %i.ax = mul nsw i64 %indvars.iv432, %3
+  %i.aw = mul nsw i64 %indvars.iv432, %wide.trip.count435
+  %i.ax = mul nsw i64 %indvars.iv432, %wide.trip.count
   br label %.lr.ph
 
 ._crit_edge417:                                   ; preds = %._crit_edge415
@@ -250,7 +248,8 @@ bb.c:                                             ; preds = %_ZN9benchmark5State
 
 ._crit_edge415:                                   ; preds = %._crit_edge
   %indvars.iv.next433 = add nsw i64 %indvars.iv432, 1 ; 2 uses
-  %exitcond436.not = icmp eq i64 %indvars.iv.next433, %wide.trip.count435
+  %lftr.wideiv436 = trunc i64 %indvars.iv.next433 to i32
+  %exitcond436.not = icmp eq i32 %i.aa, %lftr.wideiv436
   br i1 %exitcond436.not, label %._crit_edge417, label %.preheader, !llvm.loop !140
 
 .lr.ph:                                           ; preds = %.preheader, %._crit_edge
@@ -264,7 +263,8 @@ bb.c:                                             ; preds = %_ZN9benchmark5State
 
 ._crit_edge:                                      ; preds = %bb.ak
   %indvars.iv.next429 = add nsw i64 %indvars.iv428, 1 ; 2 uses
-  %exitcond431.not = icmp eq i64 %indvars.iv.next429, %wide.trip.count
+  %lftr.wideiv431 = trunc i64 %indvars.iv.next429 to i32
+  %exitcond431.not = icmp eq i32 %i.w, %lftr.wideiv431
   br i1 %exitcond431.not, label %._crit_edge415, label %.lr.ph, !llvm.loop !141
 
 bb.d:                                             ; preds = %.lr.ph, %bb.ak

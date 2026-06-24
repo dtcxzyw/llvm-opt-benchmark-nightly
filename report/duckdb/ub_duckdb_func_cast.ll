@@ -201,7 +201,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit114.thread.us: ; preds =
   %i.bd = zext i32 %.sroa.0.0.copyload.us.3 to i64
   %i.be = add i64 %i.bc, %i.bd                    ; 3 uses
   %i.bf = add nuw i64 %.090124.us, 4              ; 2 uses
-  %niter169.next.3 = add i64 %niter169, 4         ; 2 uses
+  %niter169.next.3 = add nuw i64 %niter169, 4     ; 2 uses
   %niter169.ncmp.3 = icmp eq i64 %niter169.next.3, %unroll_iter168
   br i1 %niter169.ncmp.3, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit114.thread.us, !llvm.loop !95
 

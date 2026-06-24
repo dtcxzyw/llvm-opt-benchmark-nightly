@@ -201,7 +201,7 @@ bb.o:                                             ; preds = %bb.m
   %.0.copyload.i.i.i.i.us.1 = load i128, ptr %i.dd, align 1
   %spec.select.us.1 = call i128 @llvm.smin.i128(i128 %.0.copyload.i.i.i.i.us.1, i128 %spec.select.us) ; 3 uses
   %indvars.iv.next161.1 = add nuw nsw i64 %indvars.iv160, 2 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2         ; 2 uses
+  %niter210.next.1 = add nuw i64 %niter210, 2     ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209
   br i1 %niter210.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit198.unr-lcssa, label %.noexc13.us, !llvm.loop !4314
 
@@ -604,7 +604,7 @@ bb.h:                                             ; preds = %bb.f
   %.0.copyload.i.i.i.i.us.1 = load i128, ptr %i.cj, align 1
   %spec.select.us.1 = call i128 @llvm.smin.i128(i128 %.0.copyload.i.i.i.i.us.1, i128 %spec.select.us) ; 3 uses
   %indvars.iv.next163.1 = add nuw nsw i64 %indvars.iv162, 2 ; 2 uses
-  %niter204.next.1 = add i64 %niter204, 2         ; 2 uses
+  %niter204.next.1 = add nuw i64 %niter204, 2     ; 2 uses
   %niter204.ncmp.1 = icmp eq i64 %niter204.next.1, %unroll_iter203
   br i1 %niter204.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit192.unr-lcssa, label %.noexc20.us, !llvm.loop !4314
 
@@ -1007,7 +1007,7 @@ bb.i:                                             ; preds = %bb.g
   %.0.copyload.i.i.i.i.us.1 = load i128, ptr %i.cl, align 1
   %spec.select.us.1 = call i128 @llvm.smin.i128(i128 %.0.copyload.i.i.i.i.us.1, i128 %spec.select.us) ; 3 uses
   %indvars.iv.next385.1 = add nuw nsw i64 %indvars.iv384, 2 ; 2 uses
-  %niter478.next.1 = add i64 %niter478, 2         ; 2 uses
+  %niter478.next.1 = add nuw i64 %niter478, 2     ; 2 uses
   %niter478.ncmp.1 = icmp eq i64 %niter478.next.1, %unroll_iter477
   br i1 %niter478.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSN_.exit.thread.loopexit463.unr-lcssa, label %.noexc47.us, !llvm.loop !4314
 
@@ -1410,7 +1410,7 @@ bb.bb:                                            ; preds = %bb.az
   %.0.copyload.i.i.i.i124.us.1 = load i128, ptr %i.mc, align 1
   %spec.select319.us.1 = call i128 @llvm.smin.i128(i128 %.0.copyload.i.i.i.i124.us.1, i128 %spec.select319.us) ; 3 uses
   %indvars.iv.next398.1 = add nuw nsw i64 %indvars.iv397, 2 ; 2 uses
-  %niter490.next.1 = add i64 %niter490, 2         ; 2 uses
+  %niter490.next.1 = add nuw i64 %niter490, 2     ; 2 uses
   %niter490.ncmp.1 = icmp eq i64 %niter490.next.1, %unroll_iter489
   br i1 %niter490.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit458.unr-lcssa, label %.noexc26.us, !llvm.loop !4314
 
@@ -1813,7 +1813,7 @@ bb.o:                                             ; preds = %bb.m
   %.0.copyload.i.i.i.i.us.1 = load i128, ptr %i.dd, align 1
   %spec.select.us.1 = call i128 @llvm.smax.i128(i128 %.0.copyload.i.i.i.i.us.1, i128 %spec.select.us) ; 3 uses
   %indvars.iv.next161.1 = add nuw nsw i64 %indvars.iv160, 2 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2         ; 2 uses
+  %niter210.next.1 = add nuw i64 %niter210, 2     ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209
   br i1 %niter210.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit198.unr-lcssa, label %.noexc13.us, !llvm.loop !4431
 
@@ -2216,7 +2216,7 @@ bb.h:                                             ; preds = %bb.f
   %.0.copyload.i.i.i.i.us.1 = load i128, ptr %i.cj, align 1
   %spec.select.us.1 = call i128 @llvm.smax.i128(i128 %.0.copyload.i.i.i.i.us.1, i128 %spec.select.us) ; 3 uses
   %indvars.iv.next163.1 = add nuw nsw i64 %indvars.iv162, 2 ; 2 uses
-  %niter204.next.1 = add i64 %niter204, 2         ; 2 uses
+  %niter204.next.1 = add nuw i64 %niter204, 2     ; 2 uses
   %niter204.ncmp.1 = icmp eq i64 %niter204.next.1, %unroll_iter203
   br i1 %niter204.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit192.unr-lcssa, label %.noexc20.us, !llvm.loop !4431
 
@@ -2619,7 +2619,7 @@ bb.i:                                             ; preds = %bb.g
   %.0.copyload.i.i.i.i.us.1 = load i128, ptr %i.cl, align 1
   %spec.select.us.1 = call i128 @llvm.smax.i128(i128 %.0.copyload.i.i.i.i.us.1, i128 %spec.select.us) ; 3 uses
   %indvars.iv.next385.1 = add nuw nsw i64 %indvars.iv384, 2 ; 2 uses
-  %niter478.next.1 = add i64 %niter478, 2         ; 2 uses
+  %niter478.next.1 = add nuw i64 %niter478, 2     ; 2 uses
   %niter478.ncmp.1 = icmp eq i64 %niter478.next.1, %unroll_iter477
   br i1 %niter478.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSN_.exit.thread.loopexit463.unr-lcssa, label %.noexc47.us, !llvm.loop !4431
 
@@ -3022,7 +3022,7 @@ bb.bb:                                            ; preds = %bb.az
   %.0.copyload.i.i.i.i124.us.1 = load i128, ptr %i.mc, align 1
   %spec.select319.us.1 = call i128 @llvm.smax.i128(i128 %.0.copyload.i.i.i.i124.us.1, i128 %spec.select319.us) ; 3 uses
   %indvars.iv.next398.1 = add nuw nsw i64 %indvars.iv397, 2 ; 2 uses
-  %niter490.next.1 = add i64 %niter490, 2         ; 2 uses
+  %niter490.next.1 = add nuw i64 %niter490, 2     ; 2 uses
   %niter490.ncmp.1 = icmp eq i64 %niter490.next.1, %unroll_iter489
   br i1 %niter490.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_nNS0_15ConstantCheckerIJNS0_5ArrayInEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit458.unr-lcssa, label %.noexc26.us, !llvm.loop !4431
 
@@ -3425,7 +3425,7 @@ bb.o:                                             ; preds = %bb.m
   %.0.i.i33.us.1 = select i1 %or.cond.i.i.us.1, i1 true, i1 %i.df
   %spec.select.us.1 = select i1 %.0.i.i33.us.1, float %i.dc, float %spec.select.us ; 3 uses
   %indvars.iv.next163.1 = add nuw nsw i64 %indvars.iv162, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit196.unr-lcssa, label %.noexc13.us, !llvm.loop !4631
 
@@ -3828,7 +3828,7 @@ bb.h:                                             ; preds = %bb.f
   %.0.i.i38.us.1 = select i1 %or.cond.i.i.us.1, i1 true, i1 %i.cl
   %spec.select.us.1 = select i1 %.0.i.i38.us.1, float %i.ci, float %spec.select.us ; 3 uses
   %indvars.iv.next165.1 = add nuw nsw i64 %indvars.iv164, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit190.unr-lcssa, label %.noexc20.us, !llvm.loop !4631
 
@@ -4231,7 +4231,7 @@ bb.i:                                             ; preds = %bb.g
   %.0.i.i70.us.1 = select i1 %or.cond.i.i.us.1, i1 true, i1 %i.cn
   %spec.select.us.1 = select i1 %.0.i.i70.us.1, float %i.ck, float %spec.select.us ; 3 uses
   %indvars.iv.next389.1 = add nuw nsw i64 %indvars.iv388, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSN_.exit.thread.loopexit461.unr-lcssa, label %.noexc49.us, !llvm.loop !4631
 
@@ -4634,7 +4634,7 @@ bb.az:                                            ; preds = %bb.ax
   %.0.i.i130.us.1 = select i1 %or.cond.i.i129.us.1, i1 true, i1 %i.ma
   %spec.select323.us.1 = select i1 %.0.i.i130.us.1, float %i.lx, float %spec.select323.us ; 3 uses
   %indvars.iv.next402.1 = add nuw nsw i64 %indvars.iv401, 2 ; 2 uses
-  %niter476.next.1 = add i64 %niter476, 2         ; 2 uses
+  %niter476.next.1 = add nuw i64 %niter476, 2     ; 2 uses
   %niter476.ncmp.1 = icmp eq i64 %niter476.next.1, %unroll_iter475
   br i1 %niter476.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit456.unr-lcssa, label %.noexc26.us, !llvm.loop !4631
 
@@ -5037,7 +5037,7 @@ bb.o:                                             ; preds = %bb.m
   %.0.i.i33.us.1 = select i1 %or.cond.not.i.i.us.1, i1 true, i1 %i.df
   %spec.select.us.1 = select i1 %.0.i.i33.us.1, float %i.dc, float %spec.select.us ; 3 uses
   %indvars.iv.next163.1 = add nuw nsw i64 %indvars.iv162, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit196.unr-lcssa, label %.noexc13.us, !llvm.loop !4748
 
@@ -5440,7 +5440,7 @@ bb.h:                                             ; preds = %bb.f
   %.0.i.i38.us.1 = select i1 %or.cond.not.i.i.us.1, i1 true, i1 %i.cl
   %spec.select.us.1 = select i1 %.0.i.i38.us.1, float %i.ci, float %spec.select.us ; 3 uses
   %indvars.iv.next165.1 = add nuw nsw i64 %indvars.iv164, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit190.unr-lcssa, label %.noexc20.us, !llvm.loop !4748
 
@@ -5843,7 +5843,7 @@ bb.i:                                             ; preds = %bb.g
   %.0.i.i70.us.1 = select i1 %or.cond.not.i.i.us.1, i1 true, i1 %i.cn
   %spec.select.us.1 = select i1 %.0.i.i70.us.1, float %i.ck, float %spec.select.us ; 3 uses
   %indvars.iv.next389.1 = add nuw nsw i64 %indvars.iv388, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSN_.exit.thread.loopexit461.unr-lcssa, label %.noexc49.us, !llvm.loop !4748
 
@@ -6246,7 +6246,7 @@ bb.az:                                            ; preds = %bb.ax
   %.0.i.i130.us.1 = select i1 %or.cond.not.i.i129.us.1, i1 true, i1 %i.ma
   %spec.select323.us.1 = select i1 %.0.i.i130.us.1, float %i.lx, float %spec.select323.us ; 3 uses
   %indvars.iv.next402.1 = add nuw nsw i64 %indvars.iv401, 2 ; 2 uses
-  %niter476.next.1 = add i64 %niter476, 2         ; 2 uses
+  %niter476.next.1 = add nuw i64 %niter476, 2     ; 2 uses
   %niter476.ncmp.1 = icmp eq i64 %niter476.next.1, %unroll_iter475
   br i1 %niter476.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_fNS0_15ConstantCheckerIJNS0_5ArrayIfEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit456.unr-lcssa, label %.noexc26.us, !llvm.loop !4748
 
@@ -6649,7 +6649,7 @@ bb.o:                                             ; preds = %bb.m
   %.0.i.i33.us.1 = select i1 %or.cond.i.i.us.1, i1 true, i1 %i.df
   %spec.select.us.1 = select i1 %.0.i.i33.us.1, double %i.dc, double %spec.select.us ; 3 uses
   %indvars.iv.next163.1 = add nuw nsw i64 %indvars.iv162, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit196.unr-lcssa, label %.noexc13.us, !llvm.loop !4949
 
@@ -7052,7 +7052,7 @@ bb.h:                                             ; preds = %bb.f
   %.0.i.i38.us.1 = select i1 %or.cond.i.i.us.1, i1 true, i1 %i.cl
   %spec.select.us.1 = select i1 %.0.i.i38.us.1, double %i.ci, double %spec.select.us ; 3 uses
   %indvars.iv.next165.1 = add nuw nsw i64 %indvars.iv164, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit190.unr-lcssa, label %.noexc20.us, !llvm.loop !4949
 
@@ -7455,7 +7455,7 @@ bb.i:                                             ; preds = %bb.g
   %.0.i.i70.us.1 = select i1 %or.cond.i.i.us.1, i1 true, i1 %i.cn
   %spec.select.us.1 = select i1 %.0.i.i70.us.1, double %i.ck, double %spec.select.us ; 3 uses
   %indvars.iv.next389.1 = add nuw nsw i64 %indvars.iv388, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSN_.exit.thread.loopexit461.unr-lcssa, label %.noexc49.us, !llvm.loop !4949
 
@@ -7858,7 +7858,7 @@ bb.az:                                            ; preds = %bb.ax
   %.0.i.i130.us.1 = select i1 %or.cond.i.i129.us.1, i1 true, i1 %i.ma
   %spec.select323.us.1 = select i1 %.0.i.i130.us.1, double %i.lx, double %spec.select323.us ; 3 uses
   %indvars.iv.next402.1 = add nuw nsw i64 %indvars.iv401, 2 ; 2 uses
-  %niter476.next.1 = add i64 %niter476, 2         ; 2 uses
+  %niter476.next.1 = add nuw i64 %niter476, 2     ; 2 uses
   %niter476.ncmp.1 = icmp eq i64 %niter476.next.1, %unroll_iter475
   br i1 %niter476.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit456.unr-lcssa, label %.noexc26.us, !llvm.loop !4949
 
@@ -8261,7 +8261,7 @@ bb.o:                                             ; preds = %bb.m
   %.0.i.i33.us.1 = select i1 %or.cond.not.i.i.us.1, i1 true, i1 %i.df
   %spec.select.us.1 = select i1 %.0.i.i33.us.1, double %i.dc, double %spec.select.us ; 3 uses
   %indvars.iv.next163.1 = add nuw nsw i64 %indvars.iv162, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit196.unr-lcssa, label %.noexc13.us, !llvm.loop !5066
 
@@ -8664,7 +8664,7 @@ bb.h:                                             ; preds = %bb.f
   %.0.i.i38.us.1 = select i1 %or.cond.not.i.i.us.1, i1 true, i1 %i.cl
   %spec.select.us.1 = select i1 %.0.i.i38.us.1, double %i.ci, double %spec.select.us ; 3 uses
   %indvars.iv.next165.1 = add nuw nsw i64 %indvars.iv164, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit190.unr-lcssa, label %.noexc20.us, !llvm.loop !5066
 
@@ -9067,7 +9067,7 @@ bb.i:                                             ; preds = %bb.g
   %.0.i.i70.us.1 = select i1 %or.cond.not.i.i.us.1, i1 true, i1 %i.cn
   %spec.select.us.1 = select i1 %.0.i.i70.us.1, double %i.ck, double %spec.select.us ; 3 uses
   %indvars.iv.next389.1 = add nuw nsw i64 %indvars.iv388, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSN_.exit.thread.loopexit461.unr-lcssa, label %.noexc49.us, !llvm.loop !5066
 
@@ -9470,7 +9470,7 @@ bb.az:                                            ; preds = %bb.ax
   %.0.i.i130.us.1 = select i1 %or.cond.not.i.i129.us.1, i1 true, i1 %i.ma
   %spec.select323.us.1 = select i1 %.0.i.i130.us.1, double %i.lx, double %spec.select323.us ; 3 uses
   %indvars.iv.next402.1 = add nuw nsw i64 %indvars.iv401, 2 ; 2 uses
-  %niter476.next.1 = add i64 %niter476, 2         ; 2 uses
+  %niter476.next.1 = add nuw i64 %niter476, 2     ; 2 uses
   %niter476.ncmp.1 = icmp eq i64 %niter476.next.1, %unroll_iter475
   br i1 %niter476.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_dNS0_15ConstantCheckerIJNS0_5ArrayIdEEEEEJSB_EEEE7iterateIJNS1_12VectorReaderISB_EEEEEvRNSE_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSN_.exit.thread.loopexit456.unr-lcssa, label %.noexc26.us, !llvm.loop !5066
 
@@ -9873,7 +9873,7 @@ bb.o:                                             ; preds = %bb.m
   %spec.select.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.0.0.copyload.i.i.i.us.1, i64 %spec.select.us ; 3 uses
   %spec.select144.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.2.0.copyload.i.i.i.us.1, i64 %spec.select144.us ; 3 uses
   %indvars.iv.next183.1 = add nuw nsw i64 %indvars.iv182, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.thread.loopexit225.unr-lcssa, label %.noexc13.us, !llvm.loop !5888
 
@@ -10276,7 +10276,7 @@ bb.h:                                             ; preds = %bb.f
   %spec.select.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.0.0.copyload.i.i.i.us.1, i64 %spec.select.us ; 3 uses
   %spec.select149.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.2.0.copyload.i.i.i.us.1, i64 %spec.select149.us ; 3 uses
   %indvars.iv.next185.1 = add nuw nsw i64 %indvars.iv184, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.thread.loopexit219.unr-lcssa, label %.noexc20.us, !llvm.loop !5888
 
@@ -10679,7 +10679,7 @@ bb.i:                                             ; preds = %bb.g
   %spec.select.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.0.0.copyload.i.i.i.us.1, i64 %spec.select.us ; 3 uses
   %spec.select358.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.2.0.copyload.i.i.i.us.1, i64 %spec.select358.us ; 3 uses
   %indvars.iv.next441.1 = add nuw nsw i64 %indvars.iv440, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSO_.exit.thread.loopexit531.unr-lcssa, label %.noexc51.us, !llvm.loop !5888
 
@@ -11082,7 +11082,7 @@ bb.az:                                            ; preds = %bb.ax
   %spec.select361.us.1 = select i1 %.sroa.09.2.i.i147.us.1, i64 %.sroa.0.0.copyload.i.i.i141.us.1, i64 %spec.select361.us ; 3 uses
   %spec.select362.us.1 = select i1 %.sroa.09.2.i.i147.us.1, i64 %.sroa.2.0.copyload.i.i.i143.us.1, i64 %spec.select362.us ; 3 uses
   %indvars.iv.next454.1 = add nuw nsw i64 %indvars.iv453, 2 ; 2 uses
-  %niter548.next.1 = add i64 %niter548, 2         ; 2 uses
+  %niter548.next.1 = add nuw i64 %niter548, 2     ; 2 uses
   %niter548.ncmp.1 = icmp eq i64 %niter548.next.1, %unroll_iter547
   br i1 %niter548.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMinFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.thread.loopexit526.unr-lcssa, label %.noexc26.us, !llvm.loop !5888
 
@@ -11485,7 +11485,7 @@ bb.o:                                             ; preds = %bb.m
   %spec.select.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.0.0.copyload.i.i.i.us.1, i64 %spec.select.us ; 3 uses
   %spec.select144.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.2.0.copyload.i.i.i.us.1, i64 %spec.select144.us ; 3 uses
   %indvars.iv.next183.1 = add nuw nsw i64 %indvars.iv182, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.thread.loopexit225.unr-lcssa, label %.noexc13.us, !llvm.loop !6005
 
@@ -11888,7 +11888,7 @@ bb.h:                                             ; preds = %bb.f
   %spec.select.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.0.0.copyload.i.i.i.us.1, i64 %spec.select.us ; 3 uses
   %spec.select149.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.2.0.copyload.i.i.i.us.1, i64 %spec.select149.us ; 3 uses
   %indvars.iv.next185.1 = add nuw nsw i64 %indvars.iv184, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.thread.loopexit219.unr-lcssa, label %.noexc20.us, !llvm.loop !6005
 
@@ -12291,7 +12291,7 @@ bb.i:                                             ; preds = %bb.g
   %spec.select.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.0.0.copyload.i.i.i.us.1, i64 %spec.select.us ; 3 uses
   %spec.select358.us.1 = select i1 %.sroa.09.2.i.i.us.1, i64 %.sroa.2.0.copyload.i.i.i.us.1, i64 %spec.select358.us ; 3 uses
   %indvars.iv.next441.1 = add nuw nsw i64 %indvars.iv440, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clImEEDaSO_.exit.thread.loopexit531.unr-lcssa, label %.noexc51.us, !llvm.loop !6005
 
@@ -12694,7 +12694,7 @@ bb.az:                                            ; preds = %bb.ax
   %spec.select361.us.1 = select i1 %.sroa.09.2.i.i147.us.1, i64 %.sroa.0.0.copyload.i.i.i141.us.1, i64 %spec.select361.us ; 3 uses
   %spec.select362.us.1 = select i1 %.sroa.09.2.i.i147.us.1, i64 %.sroa.2.0.copyload.i.i.i143.us.1, i64 %spec.select362.us ; 3 uses
   %indvars.iv.next454.1 = add nuw nsw i64 %indvars.iv453, 2 ; 2 uses
-  %niter548.next.1 = add i64 %niter548, 2         ; 2 uses
+  %niter548.next.1 = add nuw i64 %niter548, 2     ; 2 uses
   %niter548.ncmp.1 = icmp eq i64 %niter548.next.1, %unroll_iter547
   br i1 %niter548.ncmp.1, label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16ArrayMaxFunctionINS1_10VectorExecEEES7_NS0_9TimestampENS0_15ConstantCheckerIJNS0_5ArrayIS9_EEEEEJSC_EEEE7iterateIJNS1_12VectorReaderISC_EEEEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit.thread.loopexit526.unr-lcssa, label %.noexc26.us, !llvm.loop !6005
 

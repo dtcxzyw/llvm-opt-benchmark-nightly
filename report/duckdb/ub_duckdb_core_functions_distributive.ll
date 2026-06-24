@@ -201,7 +201,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIaNS0_8BitStateIhEENS0_15Bit
   %.val.i31.i.3 = load i8, ptr %i.ft, align 1, !alias.scope !8113, !noalias !8116
   %i.fu = and i8 %.val.i31.i.3, %i.fo             ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIaNS0_8BitStateIhEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8123
 
@@ -604,7 +604,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIsNS0_8BitStateItEENS0_15Bit
   %.val.i31.i.3 = load i16, ptr %i.ft, align 2, !alias.scope !8193, !noalias !8196
   %i.fu = and i16 %.val.i31.i.3, %i.fo            ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIsNS0_8BitStateItEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8203
 
@@ -1007,7 +1007,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIiNS0_8BitStateIjEENS0_15Bit
   %.val.i31.i.3 = load i32, ptr %i.ey, align 4, !alias.scope !8270, !noalias !8273
   %i.ez = and i32 %.val.i31.i.3, %i.et            ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIiNS0_8BitStateIjEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8279
 
@@ -1410,7 +1410,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIlNS0_8BitStateImEENS0_15Bit
   %.val.i31.i.3 = load i64, ptr %i.ey, align 8, !alias.scope !8346, !noalias !8349
   %i.ez = and i64 %.val.i31.i.3, %i.et            ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIlNS0_8BitStateImEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8355
 
@@ -1813,7 +1813,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIhNS0_8BitStateIhEENS0_15Bit
   %.val.i31.i.3 = load i8, ptr %i.ft, align 1, !alias.scope !8487, !noalias !8490
   %i.fu = and i8 %.val.i31.i.3, %i.fo             ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIhNS0_8BitStateIhEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8497
 
@@ -2216,7 +2216,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationItNS0_8BitStateItEENS0_15Bit
   %.val.i31.i.3 = load i16, ptr %i.ft, align 2, !alias.scope !8560, !noalias !8563
   %i.fu = and i16 %.val.i31.i.3, %i.fo            ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationItNS0_8BitStateItEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8570
 
@@ -2619,7 +2619,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIjNS0_8BitStateIjEENS0_15Bit
   %.val.i31.i.3 = load i32, ptr %i.ey, align 4, !alias.scope !8631, !noalias !8634
   %i.ez = and i32 %.val.i31.i.3, %i.et            ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIjNS0_8BitStateIjEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8640
 
@@ -3022,7 +3022,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationImNS0_8BitStateImEENS0_15Bit
   %.val.i31.i.3 = load i64, ptr %i.ey, align 8, !alias.scope !8701, !noalias !8704
   %i.ez = and i64 %.val.i31.i.3, %i.et            ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationImNS0_8BitStateImEENS0_15BitAndOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8710
 
@@ -3425,7 +3425,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIaNS0_8BitStateIhEENS0_14Bit
   %.val.i31.i.3 = load i8, ptr %i.ft, align 1, !alias.scope !8913, !noalias !8916
   %i.fu = or i8 %.val.i31.i.3, %i.fo              ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIaNS0_8BitStateIhEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8923
 
@@ -3828,7 +3828,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIsNS0_8BitStateItEENS0_14Bit
   %.val.i31.i.3 = load i16, ptr %i.ft, align 2, !alias.scope !8987, !noalias !8990
   %i.fu = or i16 %.val.i31.i.3, %i.fo             ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIsNS0_8BitStateItEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !8997
 
@@ -4231,7 +4231,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIiNS0_8BitStateIjEENS0_14Bit
   %.val.i31.i.3 = load i32, ptr %i.ey, align 4, !alias.scope !9059, !noalias !9062
   %i.ez = or i32 %.val.i31.i.3, %i.et             ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIiNS0_8BitStateIjEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9068
 
@@ -4634,7 +4634,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIlNS0_8BitStateImEENS0_14Bit
   %.val.i31.i.3 = load i64, ptr %i.ey, align 8, !alias.scope !9130, !noalias !9133
   %i.ez = or i64 %.val.i31.i.3, %i.et             ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIlNS0_8BitStateImEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9139
 
@@ -5037,7 +5037,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIhNS0_8BitStateIhEENS0_14Bit
   %.val.i31.i.3 = load i8, ptr %i.ft, align 1, !alias.scope !9267, !noalias !9270
   %i.fu = or i8 %.val.i31.i.3, %i.fo              ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIhNS0_8BitStateIhEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9277
 
@@ -5440,7 +5440,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationItNS0_8BitStateItEENS0_14Bit
   %.val.i31.i.3 = load i16, ptr %i.ft, align 2, !alias.scope !9340, !noalias !9343
   %i.fu = or i16 %.val.i31.i.3, %i.fo             ; 3 uses
   %i.fv = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit125.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationItNS0_8BitStateItEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9350
 
@@ -5843,7 +5843,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIjNS0_8BitStateIjEENS0_14Bit
   %.val.i31.i.3 = load i32, ptr %i.ey, align 4, !alias.scope !9411, !noalias !9414
   %i.ez = or i32 %.val.i31.i.3, %i.et             ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIjNS0_8BitStateIjEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9420
 
@@ -6246,7 +6246,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationImNS0_8BitStateImEENS0_14Bit
   %.val.i31.i.3 = load i64, ptr %i.ey, align 8, !alias.scope !9481, !noalias !9484
   %i.ez = or i64 %.val.i31.i.3, %i.et             ; 3 uses
   %i.fa = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit81.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationImNS0_8BitStateImEENS0_14BitOrOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9490
 
@@ -6649,7 +6649,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIaNS0_8BitStateIhEENS0_15Bit
   %.val.i36.i.3 = load i8, ptr %i.hn, align 1, !alias.scope !9723, !noalias !9726
   %i.ho = xor i8 %.val.i36.i.3, %i.hi             ; 3 uses
   %i.hp = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit208.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIaNS0_8BitStateIhEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9733
 
@@ -7052,7 +7052,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIsNS0_8BitStateItEENS0_15Bit
   %.val.i36.i.3 = load i16, ptr %i.hn, align 2, !alias.scope !9833, !noalias !9836
   %i.ho = xor i16 %.val.i36.i.3, %i.hi            ; 3 uses
   %i.hp = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit208.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIsNS0_8BitStateItEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9843
 
@@ -7455,7 +7455,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIiNS0_8BitStateIjEENS0_15Bit
   %.val.i36.i.3 = load i32, ptr %i.gh, align 4, !alias.scope !9937, !noalias !9940
   %i.gi = xor i32 %.val.i36.i.3, %i.gc            ; 3 uses
   %i.gj = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit128.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIiNS0_8BitStateIjEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !9946
 
@@ -7858,7 +7858,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIlNS0_8BitStateImEENS0_15Bit
   %.val.i36.i.3 = load i64, ptr %i.gh, align 8, !alias.scope !10040, !noalias !10043
   %i.gi = xor i64 %.val.i36.i.3, %i.gc            ; 3 uses
   %i.gj = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit128.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIlNS0_8BitStateImEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !10049
 
@@ -8261,7 +8261,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIhNS0_8BitStateIhEENS0_15Bit
   %.val.i36.i.3 = load i8, ptr %i.hn, align 1, !alias.scope !10214, !noalias !10217
   %i.ho = xor i8 %.val.i36.i.3, %i.hi             ; 3 uses
   %i.hp = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit208.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIhNS0_8BitStateIhEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !10224
 
@@ -8664,7 +8664,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationItNS0_8BitStateItEENS0_15Bit
   %.val.i36.i.3 = load i16, ptr %i.hn, align 2, !alias.scope !10323, !noalias !10326
   %i.ho = xor i16 %.val.i36.i.3, %i.hi            ; 3 uses
   %i.hp = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit208.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationItNS0_8BitStateItEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !10333
 
@@ -9067,7 +9067,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIjNS0_8BitStateIjEENS0_15Bit
   %.val.i36.i.3 = load i32, ptr %i.gh, align 4, !alias.scope !10426, !noalias !10429
   %i.gi = xor i32 %.val.i36.i.3, %i.gc            ; 3 uses
   %i.gj = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit128.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationIjNS0_8BitStateIjEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !10435
 
@@ -9470,7 +9470,7 @@ _ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationImNS0_8BitStateImEENS0_15Bit
   %.val.i36.i.3 = load i64, ptr %i.gh, align 8, !alias.scope !10528, !noalias !10531
   %i.gi = xor i64 %.val.i36.i.3, %i.gc            ; 3 uses
   %i.gj = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.sink.split.i.i.loopexit128.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_116BitwiseOperation9OperationImNS0_8BitStateImEENS0_15BitXorOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !10537
 
@@ -9873,7 +9873,7 @@ _ZN6duckdb12_GLOBAL__N_115ProductFunction9OperationIdNS0_12ProductStateES1_EEvRT
   %.val.i36.i.3 = load double, ptr %i.ho, align 8, !alias.scope !10742, !noalias !10745
   %i.hp = fmul double %i.hj, %.val.i36.i.3        ; 3 uses
   %i.hq = add nuw i64 %.04.i.i, 4                 ; 2 uses
-  %niter82.next.3 = add i64 %niter82, 4           ; 2 uses
+  %niter82.next.3 = add nuw i64 %niter82, 4       ; 2 uses
   %niter82.ncmp.3 = icmp eq i64 %niter82.next.3, %unroll_iter81
   br i1 %niter82.ncmp.3, label %..loopexit_crit_edge.i37.i.loopexit50.unr-lcssa, label %_ZN6duckdb12_GLOBAL__N_115ProductFunction9OperationIdNS0_12ProductStateES1_EEvRT0_RKT_RNS_19AggregateUnaryInputE.exit23.i.i, !llvm.loop !10750
 

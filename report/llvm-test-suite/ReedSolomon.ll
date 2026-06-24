@@ -201,8 +201,8 @@ bb.o:                                             ; preds = %._crit_edge.i, %bb.
   %i.gc = phi i32 [ %i.lj, %._crit_edge.i ], [ %i.fx, %bb.n ] ; 2 uses
   %indvars.iv400.i = phi i64 [ %indvars.iv.next401.i, %._crit_edge.i ], [ 0, %bb.n ] ; 9 uses
   %i.gd = shl nuw nsw i64 %indvars.iv400.i, 6
-  %i.ge = getelementptr i8, ptr %i.a, i64 %i.gd
-  %scevgep410.i = getelementptr i8, ptr %i.ge, i64 128
+  %i.ge = getelementptr nuw i8, ptr %i.a, i64 %i.gd
+  %scevgep410.i = getelementptr nuw i8, ptr %i.ge, i64 128
   %indvars.iv.next401.i = add nuw nsw i64 %indvars.iv400.i, 1 ; 7 uses
   %i.gf = icmp eq i32 %i.gc, -1
   br i1 %i.gf, label %bb.p, label %.preheader328.i

@@ -201,7 +201,7 @@ bb.dm:                                            ; preds = %bb.dk
   %i.mw = zext i8 %i.mv to i32
   %i.mx = or i32 %i.mn, %i.mw                     ; 3 uses
   %i.my = add nuw i64 %.026.i, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !277
 
@@ -604,7 +604,7 @@ bb.a:
   %i.an = zext i8 %i.am to i32
   %i.ao = or i32 %i.ae, %i.an                     ; 3 uses
   %i.ap = add nuw i64 %.026, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !277
 
@@ -1007,7 +1007,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cu = zext i8 %i.ct to i32
   %i.cv = or i32 %i.cl, %i.cu                     ; 3 uses
   %i.cw = add nuw i64 %.026.i.i, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !277
 
@@ -1109,7 +1109,7 @@ bb.y:                                             ; preds = %.lr.ph.us.i
   %i.en = zext i8 %i.em to i32
   %i.eo = or i32 %i.ee, %i.en                     ; 3 uses
   %i.ep = add nuw i64 %.026.i60.us.i, 2           ; 2 uses
-  %niter158.next.1 = add i64 %niter158, 2         ; 2 uses
+  %niter158.next.1 = add nuw i64 %niter158, 2     ; 2 uses
   %niter158.ncmp.1 = icmp eq i64 %niter158.next.1, %unroll_iter157
   br i1 %niter158.ncmp.1, label %._crit_edge.i63.us.i.loopexit.unr-lcssa, label %.lr.ph.i59.us.i, !llvm.loop !277
 
@@ -1264,7 +1264,7 @@ bb.ad:                                            ; preds = %.lr.ph.i
   %i.hd = zext i8 %i.hc to i32
   %i.he = or i32 %i.gu, %i.hd                     ; 3 uses
   %i.hf = add nuw i64 %.026.i60.i, 2              ; 2 uses
-  %niter152.next.1 = add i64 %niter152, 2         ; 2 uses
+  %niter152.next.1 = add nuw i64 %niter152, 2     ; 2 uses
   %niter152.ncmp.1 = icmp eq i64 %niter152.next.1, %unroll_iter151
   br i1 %niter152.ncmp.1, label %._crit_edge.i63.i.loopexit.unr-lcssa, label %.lr.ph.i59.i, !llvm.loop !277
 

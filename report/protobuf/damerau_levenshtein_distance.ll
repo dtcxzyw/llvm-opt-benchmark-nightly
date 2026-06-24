@@ -144,11 +144,11 @@ bb.g:                                             ; preds = %_ZSt4iotaIPhiEvT_S1
   %indvar = phi i64 [ 0, %_ZSt4iotaIPhiEvT_S1_T0_.exit ], [ %indvar.next, %._crit_edge ] ; 3 uses
   %.05794 = phi i64 [ 1, %_ZSt4iotaIPhiEvT_S1_T0_.exit ], [ %i.bv, %._crit_edge ] ; 12 uses
   %i.ad = mul nuw nsw i64 %indvar, 102
-  %i.ae = getelementptr i8, ptr %5, i64 %i.ad
-  %scevgep139 = getelementptr i8, ptr %i.ae, i64 101
+  %i.ae = getelementptr nuw i8, ptr %5, i64 %i.ad
+  %scevgep139 = getelementptr nuw i8, ptr %i.ae, i64 101
   %i.af = mul nuw nsw i64 %indvar, 102
-  %i.ag = getelementptr i8, ptr %5, i64 %i.af
-  %scevgep = getelementptr i8, ptr %i.ag, i64 101
+  %i.ag = getelementptr nuw i8, ptr %5, i64 %i.af
+  %scevgep = getelementptr nuw i8, ptr %i.ag, i64 101
   %i.ah = icmp ugt i64 %.05794, %i.z
   %i.ai = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %.05794 ; 2 uses
   br i1 %i.ah, label %bb.h, label %bb.i

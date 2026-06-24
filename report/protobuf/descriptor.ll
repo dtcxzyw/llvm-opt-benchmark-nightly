@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i8 %i.bq, ptr %i.bv, align 1, !tbaa !22
   store ptr %0, ptr %i.bs, align 8, !tbaa !684
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.b, !llvm.loop !2373
 
@@ -461,7 +461,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   store i8 %i.de, ptr %i.dd, align 1, !tbaa !22
   store ptr %2, ptr %i.db, align 8, !tbaa !684
   %indvars.iv.next60.1 = add nuw nsw i64 %indvars.iv59, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !2378
 
@@ -864,7 +864,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   store i8 %i.bf, ptr %i.bk, align 1, !tbaa !22
   store ptr %0, ptr %i.bh, align 8, !tbaa !1822
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.b, !llvm.loop !3533
 
@@ -1124,7 +1124,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   store i8 %i.de, ptr %i.dd, align 1, !tbaa !22
   store ptr %2, ptr %i.db, align 8, !tbaa !1822
   %indvars.iv.next59.1 = add nuw nsw i64 %indvars.iv58, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !3538
 

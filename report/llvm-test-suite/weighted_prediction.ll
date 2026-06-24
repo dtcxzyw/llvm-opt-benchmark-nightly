@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %.lr.ph315, %bb.g
 .preheader259:                                    ; preds = %.preheader260, %bb.i
   %indvar374 = phi i64 [ 0, %.preheader260 ], [ %indvar.next375, %bb.i ] ; 5 uses
   %i.gp = mul nuw nsw i64 %indvar374, 384
-  %scevgep395 = getelementptr i8, ptr %i.b, i64 %i.gp ; 2 uses
+  %scevgep395 = getelementptr nuw i8, ptr %i.b, i64 %i.gp ; 2 uses
   %i.gq = getelementptr inbounds nuw [4 x i8], ptr @listXsize, i64 %indvar374
   %i.gr = load i32, ptr %i.gq, align 4, !tbaa !4  ; 5 uses
   %i.gs = icmp sgt i32 %i.gr, 0
@@ -216,7 +216,7 @@ bb.g:                                             ; preds = %.lr.ph315, %bb.g
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.gw = zext nneg i32 %i.gr to i64              ; 3 uses
   %i.gx = mul nuw nsw i64 %i.gw, 12
-  call void @llvm.memset.p0.i64(ptr align 16 %scevgep395, i8 0, i64 %i.gx, i1 false), !tbaa !4
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %scevgep395, i8 0, i64 %i.gx, i1 false), !tbaa !4
   %xtraiter509 = and i64 %i.gw, 1
   %i.gy = icmp eq i32 %i.gr, 1
   br i1 %i.gy, label %.lr.ph.split.epil.preheader, label %.lr.ph.split.preheader.new
@@ -232,7 +232,7 @@ bb.g:                                             ; preds = %.lr.ph315, %bb.g
   %smax = tail call i32 @llvm.smax.i32(i32 %i.hb, i32 20)
   %i.hc = zext nneg i32 %i.gr to i64              ; 2 uses
   %i.hd = mul nuw nsw i64 %i.hc, 12
-  call void @llvm.memset.p0.i64(ptr align 16 %scevgep395, i8 0, i64 %i.hd, i1 false), !tbaa !4
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %scevgep395, i8 0, i64 %i.hd, i1 false), !tbaa !4
   %i.he = zext nneg i32 %smax to i64
   %i.hf = add nsw i64 %i.he, -19                  ; 2 uses
   %xtraiter517 = and i64 %i.hf, 3                 ; 3 uses
@@ -635,7 +635,7 @@ bb.g:                                             ; preds = %.lr.ph351, %bb.g
 .preheader296:                                    ; preds = %.preheader297, %bb.i
   %indvar406 = phi i64 [ 0, %.preheader297 ], [ %indvar.next407, %bb.i ] ; 5 uses
   %i.gi = mul nuw nsw i64 %indvar406, 384
-  %scevgep427 = getelementptr i8, ptr %i.b, i64 %i.gi ; 2 uses
+  %scevgep427 = getelementptr nuw i8, ptr %i.b, i64 %i.gi ; 2 uses
   %i.gj = getelementptr inbounds nuw [4 x i8], ptr @listXsize, i64 %indvar406
   %i.gk = load i32, ptr %i.gj, align 4, !tbaa !4  ; 5 uses
   %i.gl = icmp sgt i32 %i.gk, 0
@@ -650,7 +650,7 @@ bb.g:                                             ; preds = %.lr.ph351, %bb.g
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.gp = zext nneg i32 %i.gk to i64              ; 3 uses
   %i.gq = mul nuw nsw i64 %i.gp, 12
-  call void @llvm.memset.p0.i64(ptr align 16 %scevgep427, i8 0, i64 %i.gq, i1 false), !tbaa !4
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %scevgep427, i8 0, i64 %i.gq, i1 false), !tbaa !4
   %xtraiter561 = and i64 %i.gp, 1
   %i.gr = icmp eq i32 %i.gk, 1
   br i1 %i.gr, label %.lr.ph.split.epil.preheader, label %.lr.ph.split.preheader.new
@@ -666,7 +666,7 @@ bb.g:                                             ; preds = %.lr.ph351, %bb.g
   %smax = tail call i32 @llvm.smax.i32(i32 %i.gu, i32 20)
   %i.gv = zext nneg i32 %i.gk to i64              ; 2 uses
   %i.gw = mul nuw nsw i64 %i.gv, 12
-  call void @llvm.memset.p0.i64(ptr align 16 %scevgep427, i8 0, i64 %i.gw, i1 false), !tbaa !4
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %scevgep427, i8 0, i64 %i.gw, i1 false), !tbaa !4
   %i.gx = zext nneg i32 %smax to i64
   %i.gy = add nsw i64 %i.gx, -19                  ; 2 uses
   %xtraiter569 = and i64 %i.gy, 3                 ; 3 uses

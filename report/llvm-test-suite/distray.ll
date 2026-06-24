@@ -97,7 +97,7 @@ bb.c:                                             ; preds = %bb.a
 
 .split.us.i:                                      ; preds = %.split45.i
   %i.ag = mul nuw nsw i64 %indvar.i, 1920
-  %scevgep.i = getelementptr i8, ptr @memory, i64 %i.ag
+  %scevgep.i = getelementptr nuw i8, ptr @memory, i64 %i.ag
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1920) %scevgep.i, i8 0, i64 1920, i1 false), !tbaa !13
   br label %.split43.us.i
 

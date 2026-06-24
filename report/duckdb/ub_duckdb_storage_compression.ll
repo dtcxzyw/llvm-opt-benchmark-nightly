@@ -201,7 +201,7 @@ bb.a:
   %i.ad = add i32 %i.y, %i.ab                     ; 3 uses
   store i32 %i.ad, ptr %i.ac, align 4, !tbaa !3
   %i.ae = add nuw i64 %.012, 4                    ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1009
 }
@@ -439,7 +439,7 @@ bb.f:                                             ; preds = %_ZNSt10unique_ptrIA
   %i.cs = add i32 %i.cn, %i.cq                    ; 3 uses
   store i32 %i.cs, ptr %i.cr, align 4, !tbaa !3
   %i.ct = add nuw i64 %.012.i, 4                  ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb18DeltaDecodeIndicesEPjS0_mj.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1009
 
@@ -842,7 +842,7 @@ bb.q:                                             ; preds = %_ZN6duckdb14BitUnpa
   %i.cg = add i32 %i.cb, %i.ce                    ; 3 uses
   store i32 %i.cg, ptr %i.cf, align 4, !tbaa !3
   %i.ch = add nuw i64 %.012.i, 4                  ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb18DeltaDecodeIndicesEPjS0_mj.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1009
 
@@ -1245,7 +1245,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph34.new
   %i.bj = call noundef i8 @llvm.smin.i8(i8 %i.bd, i8 %i.bi) ; 4 uses
   store i8 %i.bj, ptr %i.au, align 1, !tbaa !2188
   %i.bk = add nuw i64 %.033, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.h, !llvm.loop !2196
 
@@ -1648,7 +1648,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph34.new
   %i.db = call noundef i16 @llvm.smin.i16(i16 %i.cv, i16 %i.da) ; 4 uses
   store i16 %i.db, ptr %i.cm, align 2, !tbaa !2339
   %i.dc = add nuw i64 %.033, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.g, !llvm.loop !2359
 
@@ -2051,7 +2051,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph34.new
   %i.cw = call noundef i32 @llvm.smin.i32(i32 %i.cq, i32 %i.cv) ; 4 uses
   store i32 %i.cw, ptr %i.ch, align 4, !tbaa !2452
   %i.cx = add nuw i64 %.033, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.g, !llvm.loop !2469
 
@@ -2454,7 +2454,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph34.new
   %i.bj = call noundef i64 @llvm.smin.i64(i64 %i.bd, i64 %i.bi) ; 4 uses
   store i64 %i.bj, ptr %i.au, align 8, !tbaa !2502
   %i.bk = add nuw i64 %.033, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.h, !llvm.loop !2566
 
@@ -2857,7 +2857,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph27.new
   %i.ar = tail call noundef i8 @llvm.smin.i8(i8 %i.al, i8 %i.aq) ; 4 uses
   store i8 %i.ar, ptr %i.ac, align 1, !tbaa !2648
   %i.as = add nuw i64 %.025, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge28.loopexit.unr-lcssa, label %bb.d, !llvm.loop !2654
 
@@ -3260,7 +3260,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph27.new
   %i.cg = tail call noundef i16 @llvm.smin.i16(i16 %i.ca, i16 %i.cf) ; 4 uses
   store i16 %i.cg, ptr %i.br, align 2, !tbaa !2743
   %i.ch = add nuw i64 %.025, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge28.unr-lcssa, label %bb.c, !llvm.loop !2760
 
@@ -3663,7 +3663,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph27.new
   %i.cb = tail call noundef i32 @llvm.smin.i32(i32 %i.bv, i32 %i.ca) ; 4 uses
   store i32 %i.cb, ptr %i.bm, align 4, !tbaa !2851
   %i.cc = add nuw i64 %.025, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge28.unr-lcssa, label %bb.c, !llvm.loop !2865
 
@@ -4066,7 +4066,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph27.new
   %i.ar = tail call noundef i64 @llvm.smin.i64(i64 %i.al, i64 %i.aq) ; 4 uses
   store i64 %i.ar, ptr %i.ac, align 8, !tbaa !2897
   %i.as = add nuw i64 %.025, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge28.loopexit.unr-lcssa, label %bb.d, !llvm.loop !2957
 

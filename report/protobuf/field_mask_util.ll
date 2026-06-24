@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.new
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   store i8 %i.ed, ptr %i.ei, align 1, !tbaa !15
   store ptr %0, ptr %i.ef, align 8, !tbaa !103
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.j, !llvm.loop !215
 
@@ -604,7 +604,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph5.new
   store i8 %i.fo, ptr %i.fn, align 1, !tbaa !15
   store ptr %2, ptr %i.fl, align 8, !tbaa !103
   %indvars.iv.next8.1 = add nuw nsw i64 %indvars.iv7, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.k, !llvm.loop !218
 
