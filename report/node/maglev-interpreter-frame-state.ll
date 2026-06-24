@@ -201,8 +201,7 @@ _ZN2v88internal14ZoneCompactSetINS0_8compiler6MapRefEE5UnionERKS4_PNS0_4ZoneE.ex
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i8 %i.av, ptr %i.aw, align 4
   %i.ax = load i8, ptr %3, align 1, !range !5, !noundef !6
-  %4 = trunc nuw i8 %i.ax to i1
-  %spec.select = select i1 %4, i8 1, i8 %i.av
+  %spec.select = or i8 %i.ax, %i.av
   store i8 %spec.select, ptr %3, align 1
   ret void
 }

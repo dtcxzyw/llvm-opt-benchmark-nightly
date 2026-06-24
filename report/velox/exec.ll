@@ -201,8 +201,7 @@ bb.bk:                                            ; preds = %_ZN5arrow9is_nested
   %i.gt = load ptr, ptr %i.fm, align 8, !tbaa !605, !noalias !648
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 80
   %i.gv = load i8, ptr %i.gu, align 8, !tbaa !677, !range !240, !noalias !648, !noundef !241
-  %32 = trunc nuw i8 %i.gv to i1
-  %spec.select.i = select i1 %32, i8 %i.go, i8 0
+  %spec.select.i = and i8 %i.gv, %i.go
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %_ZN5arrow9is_nestedENS_4Type4typeE.exit.thread.i
