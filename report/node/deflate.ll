@@ -201,7 +201,7 @@ bb.ap:                                            ; preds = %bb.ao
   store i64 %i.iz, ptr %i.ix, align 8, !tbaa !72
   br label %read_buf.exit271
 
-read_buf.exit271:                                 ; preds = %bb.an, %bb.ao, %bb.ap
+read_buf.exit271:                                 ; preds = %bb.ap, %bb.ao, %bb.an
   %.pre-phi.i270 = phi i64 [ %i.is, %bb.ao ], [ %i.is, %bb.ap ], [ %i.iq, %bb.an ] ; 2 uses
   %i.ja = load ptr, ptr %i.ie, align 8, !tbaa !74
   %i.jb = getelementptr inbounds nuw i8, ptr %i.ja, i64 %.pre-phi.i270
