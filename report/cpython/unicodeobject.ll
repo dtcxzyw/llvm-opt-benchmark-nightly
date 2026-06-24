@@ -201,7 +201,6 @@ bb.gq:                                            ; preds = %bb.gp, %bb.gl, %bb.
   %i.su = sub i64 %.neg478.i, %.2318.i            ; 2 uses
   %i.sv = call i64 @llvm.smax.i64(i64 %i.su, i64 0) ; 4 uses
   %i.sw = sub i64 %.2318.i, %i.sn                 ; 2 uses
-  %4 = icmp sgt i64 %i.sw, 0
   %i.sx = call i64 @llvm.smax.i64(i64 %i.sw, i64 0) ; 2 uses
   %i.sy = load i32, ptr %i.w, align 4, !tbaa !276
   %i.sz = icmp ugt i32 %i.sy, 126
@@ -253,7 +252,8 @@ bb.gx:                                            ; preds = %bb.gw
   br i1 %i.to, label %.critedge422.i, label %bb.gy
 
 bb.gy:                                            ; preds = %bb.gx, %bb.gw
-  br i1 %4, label %bb.gz, label %bb.hb
+  %.not416.i = icmp slt i64 %i.sw, 1
+  br i1 %.not416.i, label %bb.hb, label %bb.gz
 
 bb.gz:                                            ; preds = %bb.gy
   %i.tp = load ptr, ptr %0, align 8, !tbaa !352
@@ -656,11 +656,12 @@ bb.g:                                             ; preds = %.thread, %bb.f
 
 .critedge:                                        ; preds = %.thread, %bb.f, %bb.g
   %i.w = sub i64 %2, %.058                        ; 2 uses
-  %5 = icmp sgt i64 %i.w, 0                       ; 2 uses
-  %6 = tail call i64 @llvm.smax.i64(i64 %i.w, i64 0) ; 4 uses
+  %5 = tail call i64 @llvm.smax.i64(i64 %i.w, i64 0) ; 4 uses
+  %.not66 = icmp slt i64 %i.w, 1                  ; 2 uses
+  %.not66.not = xor i1 %.not66, true
   %i.x = and i32 %4, 1
   %.not64 = icmp eq i32 %i.x, 0                   ; 2 uses
-  %or.cond68 = and i1 %.not64, %5
+  %or.cond68 = and i1 %.not64, %.not66.not
   br i1 %or.cond68, label %bb.h, label %.critedge._crit_edge
 
 .critedge._crit_edge:                             ; preds = %.critedge
@@ -672,13 +673,13 @@ bb.h:                                             ; preds = %.critedge
   %i.y = load ptr, ptr %0, align 8, !tbaa !352
   %i.z = getelementptr i8, ptr %0, i64 32         ; 3 uses
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !279
-  %i.ab = tail call i64 @PyUnicode_Fill(ptr noundef %i.y, i64 noundef %i.aa, i64 noundef %6, i32 noundef 32)
+  %i.ab = tail call i64 @PyUnicode_Fill(ptr noundef %i.y, i64 noundef %i.aa, i64 noundef %5, i32 noundef 32)
   %i.ac = icmp eq i64 %i.ab, -1
   br i1 %i.ac, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ad = load i64, ptr %i.z, align 8, !tbaa !279
-  %i.ae = add i64 %i.ad, %6                       ; 2 uses
+  %i.ae = add i64 %i.ad, %5                       ; 2 uses
   store i64 %i.ae, ptr %i.z, align 8, !tbaa !279
   br label %bb.j
 
@@ -690,19 +691,18 @@ bb.j:                                             ; preds = %.critedge._crit_edg
   %i.aj = load i64, ptr %i.ah, align 8, !tbaa !279
   %i.ak = add i64 %i.aj, %.058                    ; 2 uses
   store i64 %i.ak, ptr %i.ah, align 8, !tbaa !279
-  %.not69 = xor i1 %5, true
-  %or.cond70 = or i1 %.not64, %.not69
+  %or.cond70 = or i1 %.not64, %.not66
   br i1 %or.cond70, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.al = load ptr, ptr %0, align 8, !tbaa !352
-  %i.am = tail call i64 @PyUnicode_Fill(ptr noundef %i.al, i64 noundef %i.ak, i64 noundef %6, i32 noundef 32)
+  %i.am = tail call i64 @PyUnicode_Fill(ptr noundef %i.al, i64 noundef %i.ak, i64 noundef %5, i32 noundef 32)
   %i.an = icmp eq i64 %i.am, -1
   br i1 %i.an, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ao = load i64, ptr %i.ah, align 8, !tbaa !279
-  %i.ap = add i64 %i.ao, %6
+  %i.ap = add i64 %i.ao, %5
   store i64 %i.ap, ptr %i.ah, align 8, !tbaa !279
   br label %bb.m
 

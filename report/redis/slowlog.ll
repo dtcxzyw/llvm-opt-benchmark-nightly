@@ -43,7 +43,6 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local noalias noundef ptr @slowlogCreateEntry(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(56) ptr @zmalloc(i64 noundef 56) #7 ; 8 uses
-  %4 = icmp sgt i32 %2, 32
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %2, i32 32) ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 %spec.store.select, ptr %i.b, align 8, !tbaa !13
@@ -55,6 +54,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
+  %.not55 = icmp samesign ugt i32 %2, 32
   %i.g = add nsw i32 %spec.store.select, -1
   %i.h = add nuw i32 %2, 1
   %i.i = sub i32 %i.h, %spec.store.select
@@ -66,7 +66,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.s
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 6 uses
   %i.l = icmp eq i64 %indvars.iv, %i.j
-  %or.cond = select i1 %4, i1 %i.l, i1 false
+  %or.cond = select i1 %.not55, i1 %i.l, i1 false
   br i1 %or.cond, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b

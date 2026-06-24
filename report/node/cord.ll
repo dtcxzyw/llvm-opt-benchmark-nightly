@@ -201,7 +201,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.g
   %i.m = icmp eq i32 %bcmp.i, 0
   br i1 %i.m, label %bb.h, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit.thread8
 
-bb.h:                                             ; preds = %bb.g, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+bb.h:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.g
   %.not.i.i18 = icmp ult i64 %i.i, %.sroa.speculated
   br i1 %.not.i.i18, label %bb.i, label %bb.j
 
