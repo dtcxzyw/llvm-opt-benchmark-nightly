@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.a
 
 .outer:                                           ; preds = %.outer.outer, %bb.by
   %.ph = phi i64 [ %i.hj, %bb.by ], [ %.ph.ph, %.outer.outer ] ; 9 uses
-  %.0115.ph = phi i32 [ %.0115269, %bb.by ], [ %.0115.ph.ph, %.outer.outer ] ; 6 uses
+  %.0115.ph = phi i32 [ %.0115269, %bb.by ], [ %.0115.ph.ph, %.outer.outer ] ; 7 uses
   %.0113.ph = phi i64 [ %.0113259, %bb.by ], [ %.0113.ph.ph, %.outer.outer ] ; 5 uses
   %.0108.ph = phi i32 [ %.0108249, %bb.by ], [ %.0108.ph.ph, %.outer.outer ] ; 11 uses
   %.0103.ph = phi i1 [ true, %bb.by ], [ %i.q, %.outer.outer ] ; 3 uses
@@ -277,7 +277,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %.thre
   br i1 %i.as, label %bb.n, label %.thread217.loopexit
 
 bb.n:                                             ; preds = %bb.m
-  %indvars.iv.next.peel = add nsw i64 %i.u, -10   ; 3 uses
+  %indvars.iv.next.peel = add nsw i64 %i.u, -10   ; 2 uses
   %indvars.peel = trunc nuw i64 %indvars.iv.next.peel to i32 ; 6 uses
   %i.at = lshr i64 %i.ap, %indvars.iv.next.peel   ; 4 uses
   %i.au = trunc i64 %i.at to i32                  ; 4 uses
@@ -407,10 +407,10 @@ bb.ae:                                            ; preds = %bb.ab, %.thread209,
   %i.cl = phi i32 [ %i.cc, %bb.z ], [ %i.cd, %bb.ab ], [ %i.cg, %bb.ad ], [ %i.cj, %.thread209 ]
   %i.cm = zext nneg i32 %i.cl to i64
   %i.cn = or i64 %i.ck, %i.cm                     ; 3 uses
-  %5 = add nuw i32 %indvars.peel, 6
-  %6 = getelementptr i8, ptr %.promoted, i64 2    ; 2 uses
-  %7 = icmp ugt i64 %indvars.iv.next.peel, 9
-  br i1 %7, label %.loopexit233.loopexit, label %.thread217.loopexit
+  %5 = getelementptr i8, ptr %.promoted, i64 2    ; 2 uses
+  %6 = add i32 %.0115.ph, -20
+  %7 = icmp ult i32 %6, -16
+  br i1 %7, label %.loopexit233.loopexit, label %.thread217.loopexit.loopexit
 
 .loopexit476:                                     ; preds = %bb.o
   store ptr %i.ar, ptr %i.a, align 8
@@ -483,7 +483,7 @@ _PyUnicodeWriter_WriteCharInline.exit152:         ; preds = %bb.ah, %bb.ai, %bb.
   %.lcssa417 = phi i64 [ %i.dj, %.loopexit233.loopexit ], [ %i.at, %bb.n ]
   %.lcssa413 = phi i32 [ %i.dk, %.loopexit233.loopexit ], [ %i.au, %bb.n ] ; 2 uses
   %.lcssa409 = phi i64 [ %i.dh, %.loopexit233.loopexit ], [ %i.ax, %bb.n ]
-  %.lcssa395 = phi ptr [ %6, %.loopexit233.loopexit ], [ %i.ar, %bb.n ]
+  %.lcssa395 = phi ptr [ %5, %.loopexit233.loopexit ], [ %i.ar, %bb.n ]
   store ptr %.lcssa395, ptr %i.a, align 8
   %.pre486 = and i32 %.lcssa413, -1024
   br label %bb.ak
@@ -819,11 +819,15 @@ bb.bx:                                            ; preds = %bb.bq
   %i.hi = getelementptr i8, ptr %i.fh, i64 1
   br label %bb.by
 
-.thread217.loopexit:                              ; preds = %bb.m, %bb.ae
-  %.lcssa404 = phi i64 [ %i.cn, %bb.ae ], [ %i.ap, %bb.m ]
-  %.lcssa399 = phi i32 [ %5, %bb.ae ], [ %i.aq, %bb.m ]
-  %.lcssa394 = phi ptr [ %6, %bb.ae ], [ %i.ar, %bb.m ]
-  %.0108348.lcssa389 = phi i32 [ 0, %bb.ae ], [ %.0108.ph, %bb.m ]
+.thread217.loopexit.loopexit:                     ; preds = %bb.ae
+  %8 = add nuw nsw i32 %indvars.peel, 6
+  br label %.thread217.loopexit
+
+.thread217.loopexit:                              ; preds = %bb.m, %.thread217.loopexit.loopexit
+  %.lcssa404 = phi i64 [ %i.cn, %.thread217.loopexit.loopexit ], [ %i.ap, %bb.m ]
+  %.lcssa399 = phi i32 [ %8, %.thread217.loopexit.loopexit ], [ %i.aq, %bb.m ]
+  %.lcssa394 = phi ptr [ %5, %.thread217.loopexit.loopexit ], [ %i.ar, %bb.m ]
+  %.0108348.lcssa389 = phi i32 [ 0, %.thread217.loopexit.loopexit ], [ %.0108.ph, %bb.m ]
   store ptr %.lcssa394, ptr %i.a, align 8
   br label %.outer.outer.backedge
 
