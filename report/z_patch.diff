@@ -1,0 +1,36 @@
+diff --git a/llvm/include/llvm/IR/PatternMatch.h b/llvm/include/llvm/IR/PatternMatch.h
+index 4ff324deeb026..b0ad292f783db 100644
+--- a/llvm/include/llvm/IR/PatternMatch.h
++++ b/llvm/include/llvm/IR/PatternMatch.h
+@@ -2473,30 +2473,7 @@ struct MaxMin_match {
+                (Commutable && L.match(RHS) && R.match(LHS));
+       }
+     }
+-    // Look for "(x pred y) ? x : y" or "(x pred y) ? y : x".
+-    auto *SI = dyn_cast<SelectInst>(V);
+-    if (!SI)
+-      return false;
+-    auto *Cmp = dyn_cast<CmpInst_t>(SI->getCondition());
+-    if (!Cmp)
+-      return false;
+-    // At this point we have a select conditioned on a comparison.  Check that
+-    // it is the values returned by the select that are being compared.
+-    auto *TrueVal = SI->getTrueValue();
+-    auto *FalseVal = SI->getFalseValue();
+-    auto *LHS = Cmp->getOperand(0);
+-    auto *RHS = Cmp->getOperand(1);
+-    if ((TrueVal != LHS || FalseVal != RHS) &&
+-        (TrueVal != RHS || FalseVal != LHS))
+-      return false;
+-    typename CmpInst_t::Predicate Pred =
+-        LHS == TrueVal ? Cmp->getPredicate() : Cmp->getInversePredicate();
+-    // Does "(x pred y) ? x : y" represent the desired max/min operation?
+-    if (!Pred_t::match(Pred))
+-      return false;
+-    // It does!  Bind the operands.
+-    return (L.match(LHS) && R.match(RHS)) ||
+-           (Commutable && L.match(RHS) && R.match(LHS));
++    return false;
+   }
+ };
+ 

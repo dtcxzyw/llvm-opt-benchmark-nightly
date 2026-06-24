@@ -201,7 +201,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %.lr.ph, %bb.aj
   %.039.i245 = phi i64 [ %i.db, %.lr.ph ], [ %i.ge, %bb.aj ] ; 2 uses
   %.041.i244 = phi i64 [ 0, %.lr.ph ], [ %i.gf, %bb.aj ] ; 4 uses
-  %i.ds = tail call i64 @llvm.umin.i64(i64 %.039.i245, i64 %i.cz) ; 4 uses
+  %i.ds = tail call i64 @llvm.smin.i64(i64 %.039.i245, i64 %i.cz) ; 4 uses
   %i.dt = getelementptr [4 x i8], ptr %i.dm, i64 %.041.i244
   %i.du = shl nuw nsw i64 %i.ds, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.dl, ptr align 4 %i.dt, i64 %i.du, i1 false)
