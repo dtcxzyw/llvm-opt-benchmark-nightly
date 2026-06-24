@@ -201,22 +201,23 @@ bb.be:                                            ; preds = %bb.bc, %bb.ax
   %.0250455 = phi i32 [ 0, %.lr.ph457.preheader ], [ %.1251, %bb.cj ] ; 3 uses
   %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %indvars.iv515 ; 3 uses
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !71
-  %i.fb = call i64 @kvobjGetExpire(ptr noundef %i.fa) #21 ; 2 uses
+  %i.fb = call i64 @kvobjGetExpire(ptr noundef %i.fa) #21 ; 3 uses
   %.not317 = icmp eq i64 %i.fb, -1
   br i1 %.not317, label %bb.bh, label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph457
-  %i.fc = call i64 @commandTimeSnapshot() #21
+  %i.fc = call i64 @commandTimeSnapshot() #21     ; 2 uses
   %i.fd = sub nsw i64 %i.fb, %i.fc                ; 2 uses
   %i.fe = icmp slt i64 %i.fd, 0
   br i1 %i.fe, label %bb.cj, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  %3 = call i64 @llvm.umax.i64(i64 %i.fd, i64 1)
+  %3 = icmp eq i64 %i.fb, %i.fc
+  %spec.store.select = select i1 %3, i64 1, i64 %i.fd
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %.lr.ph457
-  %.0249 = phi i64 [ %3, %bb.bg ], [ 0, %.lr.ph457 ]
+  %.0249 = phi i64 [ %spec.store.select, %bb.bg ], [ 0, %.lr.ph457 ]
   %i.ff = load ptr, ptr %i.ez, align 8, !tbaa !71
   %i.fg = sext i32 %.0250455 to i64               ; 2 uses
   %i.fh = getelementptr inbounds [8 x i8], ptr %i.bz, i64 %i.fg
@@ -617,9 +618,6 @@ declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i16(i16, i16) #19

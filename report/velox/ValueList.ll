@@ -201,13 +201,14 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !67
   %i.l = trunc i64 %i.i to i32
-  %i.m = add i32 %i.k, %i.l                       ; 2 uses
+  %i.m = add i32 %i.k, %i.l                       ; 3 uses
   store i32 %i.m, ptr %i.j, align 4, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   %i.n = sdiv i32 %i.m, 2
+  %6 = icmp sgt i32 %i.m, 2049
   %.sroa.speculate.load.false.sroa.speculated = call i32 @llvm.smax.i32(i32 %i.n, i32 24)
-  %6 = call i32 @llvm.umin.i32(i32 %.sroa.speculate.load.false.sroa.speculated, i32 1024)
-  invoke void @_ZN8facebook5velox19HashStringAllocator11finishWriteERNS0_16ByteOutputStreamEi(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair") align 8 %5, ptr noundef nonnull align 8 dereferenceable(37384) %3, ptr noundef nonnull align 8 dereferenceable(64) %4, i32 noundef %6)
+  %.sroa.speculated = select i1 %6, i32 1024, i32 %.sroa.speculate.load.false.sroa.speculated
+  invoke void @_ZN8facebook5velox19HashStringAllocator11finishWriteERNS0_16ByteOutputStreamEi(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair") align 8 %5, ptr noundef nonnull align 8 dereferenceable(37384) %3, ptr noundef nonnull align 8 dereferenceable(64) %4, i32 noundef %.sroa.speculated)
           to label %bb.f unwind label %bb.j
 
 bb.f:                                             ; preds = %bb.e
@@ -608,9 +609,6 @@ declare void @_ZN8facebook5velox16ByteOutputStream16appendStringViewESt17basic_s
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #12
