@@ -201,7 +201,7 @@ bb.a:
   %.sroa.535.i.i = alloca [16 x i8], align 8      ; 8 uses
   %i.j = alloca [32 x i8], align 8                ; 10 uses
   %i.k = alloca [40 x i8], align 8                ; 11 uses
-  %i.l = alloca [40 x i8], align 8                ; 10 uses
+  %i.l = alloca [40 x i8], align 8                ; 11 uses
   %.sroa.713.i = alloca [16 x i8], align 8        ; 7 uses
   %.sroa.10.i = alloca [16 x i8], align 8         ; 8 uses
   %.sroa.4.i.i734 = alloca [54 x i8], align 2     ; 4 uses
@@ -604,7 +604,8 @@ bb.gq:                                            ; preds = %_RNvXsp_NtCsbvkFyIu
   br label %bb.gf
 
 bb.gr:                                            ; preds = %bb.go
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.sroa.2.0.copyload.i.i), "nonnull"(ptr %.sroa.2.sroa.3.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.sroa.2.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.sroa.3.0.copyload.i.i) ]
   %i.ul = getelementptr inbounds nuw i8, ptr %0, i64 616
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2DiVQAxFeQE_16aws_smithy_types4body7SdkBodyECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(120) %i.ul)
           to label %bb.gu unwind label %bb.gt, !noalias !1195
@@ -711,7 +712,7 @@ bb.hd:                                            ; preds = %bb.hc, %.thread18.i
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs5_NtCs2DiVQAxFeQE_16aws_smithy_types11byte_streamNtBO_5Inner7collect0ECs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull align 8 %i.tn)
           to label %bb.hf unwind label %bb.he, !noalias !1188
 
-bb.he:                                            ; preds = %3, %bb.hd
+bb.he:                                            ; preds = %.thread1297, %bb.hd
   %i.vi = landingpad { ptr, i32 }
           cleanup
   br label %bb.fw
@@ -719,26 +720,14 @@ bb.he:                                            ; preds = %3, %bb.hd
 bb.hf:                                            ; preds = %bb.hd
   call void @llvm.experimental.noalias.scope.decl(metadata !1198)
   %i.vj = icmp eq i64 %.sroa.027.0.i22.i, -9223372036854775808
-  %2 = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 4 uses
-  br i1 %i.vj, label %3, label %_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream15AggregatedBytesNtNtBK_5error5ErrorE7map_errINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestrator17OrchestratorErrorNtNtNtB2j_12interceptors7context5ErrorEINvMs0_B2h_B2e_5otherB1M_EECs9rVkZwOUgsI_13deltalake_aws.exit.thread
+  br i1 %i.vj, label %.thread1297, label %_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream15AggregatedBytesNtNtBK_5error5ErrorE7map_errINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestrator17OrchestratorErrorNtNtNtB2j_12interceptors7context5ErrorEINvMs0_B2h_B2e_5otherB1M_EECs9rVkZwOUgsI_13deltalake_aws.exit.thread
 
-3:                                                ; preds = %bb.hf
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.329.0.i23.i), "nonnull"(ptr %.sroa.432.0.i24.i) ]
+.thread1297:                                      ; preds = %bb.hf
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.329.0.i23.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.432.0.i24.i) ]
+  %2 = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   invoke void @_RINvMNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream5errorNtB3_5Error9streamingINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCsbvkFyIu7lgC_4core5error5ErrorNtNtB1V_6marker4SyncNtB2s_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %2, ptr noundef nonnull %.sroa.329.0.i23.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.432.0.i24.i)
-          to label %.thread1297 unwind label %bb.he, !noalias !1188
-
-.thread1297:                                      ; preds = %3
-  store i64 -9223372036854775808, ptr %i.l, align 8, !alias.scope !1201, !noalias !1203
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.81055, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !noalias !1204
-  store i8 1, ptr %i.tk, align 8, !noalias !1177
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.713.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.81055, i64 32, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.81055)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !1205
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.3, i64 24, i1 false), !noalias !1209
-  invoke void @_RINvMs0_NtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestratorINtB6_17OrchestratorErrorNtNtNtB8_12interceptors7context5ErrorE5otherNtNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream5error5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %i.fx, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.i)
-          to label %_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream15AggregatedBytesNtNtBK_5error5ErrorE7map_errINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestrator17OrchestratorErrorNtNtNtB2j_12interceptors7context5ErrorEINvMs0_B2h_B2e_5otherB1M_EECs9rVkZwOUgsI_13deltalake_aws.exit unwind label %bb.hj
+          to label %3 unwind label %bb.he, !noalias !1188
 
 .body.i:                                          ; preds = %bb.hb, %bb.gz
   %i.vk = phi ptr [ %i.sj, %bb.gz ], [ %i.sc, %bb.hb ]
@@ -770,19 +759,33 @@ bb.hi:                                            ; preds = %bb.hc, %.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fx)
   br label %common.ret
 
-bb.hj:                                            ; preds = %.thread1297, %bb.hk
+bb.hj:                                            ; preds = %3, %bb.hk
   %i.vp = landingpad { ptr, i32 }
           cleanup
   br label %bb.cl
 
+3:                                                ; preds = %.thread1297
+  store i64 -9223372036854775808, ptr %i.l, align 8, !alias.scope !1201, !noalias !1203
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.81055, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !noalias !1204
+  store i8 1, ptr %i.tk, align 8, !noalias !1177
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.713.i)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.81055, i64 32, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.81055)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !1205
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.3, i64 24, i1 false), !noalias !1209
+  invoke void @_RINvMs0_NtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestratorINtB6_17OrchestratorErrorNtNtNtB8_12interceptors7context5ErrorE5otherNtNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream5error5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %i.fx, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.i)
+          to label %_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream15AggregatedBytesNtNtBK_5error5ErrorE7map_errINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestrator17OrchestratorErrorNtNtNtB2j_12interceptors7context5ErrorEINvMs0_B2h_B2e_5otherB1M_EECs9rVkZwOUgsI_13deltalake_aws.exit unwind label %bb.hj
+
 _RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream15AggregatedBytesNtNtBK_5error5ErrorE7map_errINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestrator17OrchestratorErrorNtNtNtB2j_12interceptors7context5ErrorEINvMs0_B2h_B2e_5otherB1M_EECs9rVkZwOUgsI_13deltalake_aws.exit.thread: ; preds = %bb.hf
   store i64 %.sroa.027.0.i22.i, ptr %i.l, align 8, !alias.scope !1210, !noalias !1177
-  store ptr %.sroa.329.0.i23.i, ptr %2, align 8, !alias.scope !1210, !noalias !1177
+  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  store ptr %.sroa.329.0.i23.i, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !1210, !noalias !1177
   %.sroa.512.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store ptr %.sroa.432.0.i24.i, ptr %.sroa.512.0..sroa_idx.i, align 8, !alias.scope !1210, !noalias !1177
   %.sroa.713.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.713.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.713.i, i64 16, i1 false), !alias.scope !1210, !noalias !1177
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.81055, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !noalias !1204
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.81055, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3.0..sroa_idx.i, i64 32, i1 false), !noalias !1204
   store i8 1, ptr %i.tk, align 8, !noalias !1177
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.713.i)
@@ -796,7 +799,7 @@ _RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_ty
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3, i64 32, i1 false), !alias.scope !1205
   br label %bb.hk
 
-_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream15AggregatedBytesNtNtBK_5error5ErrorE7map_errINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestrator17OrchestratorErrorNtNtNtB2j_12interceptors7context5ErrorEINvMs0_B2h_B2e_5otherB1M_EECs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %.thread1297
+_RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultNtNtCs2DiVQAxFeQE_16aws_smithy_types11byte_stream15AggregatedBytesNtNtBK_5error5ErrorE7map_errINtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestrator17OrchestratorErrorNtNtNtB2j_12interceptors7context5ErrorEINvMs0_B2h_B2e_5otherB1M_EECs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !1205
   %.pr1299 = load i16, ptr %i.fx, align 8
   %.not89 = icmp eq i16 %.pr1299, 11
@@ -1199,7 +1202,7 @@ begin_hunk_2_@_RNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator1
   %i.mk = alloca [16 x i8], align 8               ; 6 uses
   %i.ml = alloca [32 x i8], align 8               ; 8 uses
   %i.mm = alloca [112 x i8], align 8              ; 5 uses
-  %i.mn = alloca [240 x i8], align 8              ; 6 uses
+  %i.mn = alloca [240 x i8], align 8              ; 7 uses
   %.sroa.7974 = alloca [216 x i8], align 8        ; 4 uses
   %.sroa.13 = alloca [216 x i8], align 8          ; 8 uses
   %i.mo = alloca [48 x i8], align 8               ; 4 uses
@@ -1602,7 +1605,8 @@ bb.bj:                                            ; preds = %bb.lv, %bb.lu, %bb.
   unreachable
 
 bb.bk:                                            ; preds = %bb.bg
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i), "nonnull"(ptr %.sroa.5.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ek)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client4auth16AuthSchemeOptionEECs9rVkZwOUgsI_13deltalake_aws.exit226.i
 
@@ -2005,7 +2009,8 @@ bb.kv:                                            ; preds = %bb.ku, %bb.hp
   br label %bb.hq
 
 bb.kw:                                            ; preds = %bb.jn
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0306.0.copyload.i), "nonnull"(ptr %.sroa.3307.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0306.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3307.0.copyload.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dl)
   br label %bb.ks
 
@@ -2255,17 +2260,19 @@ bb.ma:                                            ; preds = %bb.mc, %bb.lz
 
 bb.mb:                                            ; preds = %bb.lz
   %i.ant = icmp eq i64 %.sroa.0328.1.i1269, -9223372036854775807
-  %2 = getelementptr inbounds nuw i8, ptr %i.mn, i64 8 ; 2 uses
   br i1 %i.ant, label %bb.mc, label %bb.md
 
 bb.mc:                                            ; preds = %bb.mb
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7330.1.i1270), "nonnull"(ptr %.sroa.12333.1.i1271) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7330.1.i1270) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12333.1.i1271) ]
+  %2 = getelementptr inbounds nuw i8, ptr %i.mn, i64 8
   invoke void @_RINvMs0_NtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client12orchestratorINtB6_17OrchestratorErrorNtNtNtB8_12interceptors7context5ErrorE5otherINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCsbvkFyIu7lgC_4core5error5ErrorNtNtB2R_6marker4SyncNtB3o_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %2, ptr noundef nonnull %.sroa.7330.1.i1270, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.12333.1.i1271)
           to label %bb.ot unwind label %bb.ma
 
 bb.md:                                            ; preds = %bb.mb
   store i64 %.sroa.0328.1.i1269, ptr %i.mn, align 8
-  store ptr %.sroa.7330.1.i1270, ptr %2, align 8
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.mn, i64 8
+  store ptr %.sroa.7330.1.i1270, ptr %.sroa.3.0..sroa_idx, align 8
   %.sroa.5973.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.mn, i64 16
   store ptr %.sroa.12333.1.i1271, ptr %.sroa.5973.0..sroa_idx, align 8
   %.sroa.7974.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.mn, i64 24
@@ -2668,7 +2675,8 @@ bb.tj:                                            ; preds = %bb.tm, %bb.sz, %bb.
   unreachable
 
 bb.tk:                                            ; preds = %bb.sx
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.i678), "nonnull"(ptr %.sroa.5.0.copyload.i.i680) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.i678) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i.i680) ]
   %i.bay = insertvalue { ptr, ptr } poison, ptr %.sroa.3.0.copyload.i.i678, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap)
   br label %bb.ti
@@ -3071,7 +3079,8 @@ bb.apv:                                           ; preds = %bb.apw, %bb.apt
   br label %bb.apu
 
 bb.apw:                                           ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs3eCsZ2Mx498_14http_body_util11combinators7collect7CollectINtNtB4_3pin3PinQNtNtCs2DiVQAxFeQE_16aws_smithy_types4body7SdkBodyEEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.i.i.i.i), "nonnull"(ptr %.sroa.520.0.copyload.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.520.0.copyload.i.i.i.i.i) ]
   %i.ckm = getelementptr inbounds nuw i8, ptr %0, i64 640
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2DiVQAxFeQE_16aws_smithy_types4body7SdkBodyECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(120) %i.ckm)
           to label %bb.aqa unwind label %bb.apv, !noalias !2468
@@ -3176,7 +3185,8 @@ bb.aqk:                                           ; preds = %bb.aqm, %.body.i.i.
   unreachable
 
 bb.aql:                                           ; preds = %bb.aqc
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.824.0.ph.i.i.i.i), "nonnull"(ptr %.sroa.925.0.ph.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.824.0.ph.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.925.0.ph.i.i.i.i) ]
   br label %bb.aqj
 
 .body.i.i.i.i:                                    ; preds = %bb.apy, %bb.apu
