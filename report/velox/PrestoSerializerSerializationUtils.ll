@@ -201,8 +201,8 @@ _ZZNK8facebook5velox10FlatVectorINS0_12UnknownValueEE11sortIndicesERSt6vectorIiS
   %i.r = or disjoint i64 %i.p, 1                  ; 2 uses
   %i.s = getelementptr inbounds [4 x i8], ptr %0, i64 %i.r
   %i.t = getelementptr inbounds [4 x i8], ptr %0, i64 %i.q
-  %i.u = load i32, ptr %i.s, align 4, !tbaa !3
-  %i.v = load i32, ptr %i.t, align 4, !tbaa !3    ; 3 uses
+  %i.u = load i32, ptr %i.s, align 4, !tbaa !3    ; 2 uses
+  %i.v = load i32, ptr %i.t, align 4, !tbaa !3    ; 4 uses
   %i.w = zext i32 %i.v to i64                     ; 2 uses
   %i.x = lshr i64 %i.w, 6
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.x
@@ -256,14 +256,13 @@ bb.d:                                             ; preds = %bb.b
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEENS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SC_EUliE2_EEvT0_T1_SB_SC_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESM_EEbT_SF_.exit: ; preds = %bb.d
   %i.am = trunc i64 %.sroa.0.0.copyload.i.i to i1
   %i.an = xor i1 %.not.i.i.i.i.i, %i.am
-  %.fr = freeze i1 %i.an
-  %spec.select = select i1 %.fr, i64 %i.q, i64 %i.r ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds [4 x i8], ptr %0, i64 %spec.select
-  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !3
+  %.fr = freeze i1 %i.an                          ; 2 uses
+  %spec.select = select i1 %.fr, i64 %i.q, i64 %i.r
+  %6 = select i1 %.fr, i32 %i.v, i32 %i.u
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEENS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SC_EUliE2_EEvT0_T1_SB_SC_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESM_EEbT_SF_.exit.thread
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEENS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SC_EUliE2_EEvT0_T1_SB_SC_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESM_EEbT_SF_.exit.thread: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEENS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SC_EUliE2_EEvT0_T1_SB_SC_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESM_EEbT_SF_.exit, %_ZZNK8facebook5velox10FlatVectorINS0_12UnknownValueEE11sortIndicesERSt6vectorIiSaIiEENS0_12CompareFlagsEENKUliE2_clEi.exit12.i.i, %bb.d
-  %i.ao = phi i32 [ %i.v, %_ZZNK8facebook5velox10FlatVectorINS0_12UnknownValueEE11sortIndicesERSt6vectorIiSaIiEENS0_12CompareFlagsEENKUliE2_clEi.exit12.i.i ], [ %.pre, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEENS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SC_EUliE2_EEvT0_T1_SB_SC_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESM_EEbT_SF_.exit ], [ %i.v, %bb.d ]
+  %i.ao = phi i32 [ %i.v, %_ZZNK8facebook5velox10FlatVectorINS0_12UnknownValueEE11sortIndicesERSt6vectorIiSaIiEENS0_12CompareFlagsEENKUliE2_clEi.exit12.i.i ], [ %6, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEENS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SC_EUliE2_EEvT0_T1_SB_SC_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESM_EEbT_SF_.exit ], [ %i.v, %bb.d ]
   %i.ap = phi i64 [ %i.q, %_ZZNK8facebook5velox10FlatVectorINS0_12UnknownValueEE11sortIndicesERSt6vectorIiSaIiEENS0_12CompareFlagsEENKUliE2_clEi.exit12.i.i ], [ %spec.select, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEENS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SC_EUliE2_EEvT0_T1_SB_SC_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESM_EEbT_SF_.exit ], [ %i.q, %bb.d ] ; 3 uses
   %i.aq = getelementptr inbounds [4 x i8], ptr %0, i64 %.039
   store i32 %i.ao, ptr %i.aq, align 4, !tbaa !3
@@ -666,8 +665,8 @@ bb.a:                                             ; preds = %.lr.ph, %_ZSt10__po
   %i.ab = or disjoint i64 %i.z, 1                 ; 2 uses
   %i.ac = getelementptr inbounds [4 x i8], ptr %0, i64 %i.ab
   %i.ad = getelementptr inbounds [4 x i8], ptr %0, i64 %i.aa
-  %i.ae = load i32, ptr %i.ac, align 4, !tbaa !3
-  %i.af = load i32, ptr %i.ad, align 4, !tbaa !3  ; 3 uses
+  %i.ae = load i32, ptr %i.ac, align 4, !tbaa !3  ; 2 uses
+  %i.af = load i32, ptr %i.ad, align 4, !tbaa !3  ; 4 uses
   %i.ag = sext i32 %i.af to i64
   %i.ah = getelementptr inbounds [4 x i8], ptr %i.y, i64 %i.ag
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !3
@@ -727,14 +726,13 @@ bb.d:                                             ; preds = %bb.b
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit: ; preds = %bb.d
   %i.bc = trunc i64 %.sroa.0.0.copyload.i.i10 to i1
   %i.bd = xor i1 %.not.i.i.i.i.i5, %i.bc
-  %.fr = freeze i1 %i.bd
-  %spec.select = select i1 %.fr, i64 %i.aa, i64 %i.ab ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds [4 x i8], ptr %0, i64 %spec.select
-  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !3
+  %.fr = freeze i1 %i.bd                          ; 2 uses
+  %spec.select = select i1 %.fr, i64 %i.aa, i64 %i.ab
+  %3 = select i1 %.fr, i32 %i.af, i32 %i.ae
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit.thread
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit.thread: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit, %.lr.ph.i.i, %bb.d
-  %i.be = phi i32 [ %i.af, %.lr.ph.i.i ], [ %.pre, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit ], [ %i.af, %bb.d ]
+  %i.be = phi i32 [ %i.af, %.lr.ph.i.i ], [ %3, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit ], [ %i.af, %bb.d ]
   %i.bf = phi i64 [ %i.aa, %.lr.ph.i.i ], [ %spec.select, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit ], [ %i.aa, %bb.d ] ; 3 uses
   %i.bg = getelementptr inbounds [4 x i8], ptr %0, i64 %.034.i.i
   store i32 %i.be, ptr %i.bg, align 4, !tbaa !3
@@ -931,8 +929,8 @@ bb.b:                                             ; preds = %_ZSt13__adjust_heap
   %i.ag = or disjoint i64 %i.ae, 1                ; 2 uses
   %i.ah = getelementptr inbounds [4 x i8], ptr %0, i64 %i.ag
   %i.ai = getelementptr inbounds [4 x i8], ptr %0, i64 %i.af
-  %i.aj = load i32, ptr %i.ah, align 4, !tbaa !3
-  %i.ak = load i32, ptr %i.ai, align 4, !tbaa !3  ; 3 uses
+  %i.aj = load i32, ptr %i.ah, align 4, !tbaa !3  ; 2 uses
+  %i.ak = load i32, ptr %i.ai, align 4, !tbaa !3  ; 4 uses
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds [4 x i8], ptr %i.ad, i64 %i.al
   %i.an = load i32, ptr %i.am, align 4, !tbaa !3
@@ -992,14 +990,13 @@ bb.e:                                             ; preds = %bb.c
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit: ; preds = %bb.e
   %i.bh = trunc i64 %.sroa.0.0.copyload.i.i15 to i1
   %i.bi = xor i1 %.not.i.i.i.i.i10, %i.bh
-  %.fr = freeze i1 %i.bi
-  %spec.select = select i1 %.fr, i64 %i.af, i64 %i.ag ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds [4 x i8], ptr %0, i64 %spec.select
-  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !3
+  %.fr = freeze i1 %i.bi                          ; 2 uses
+  %spec.select = select i1 %.fr, i64 %i.af, i64 %i.ag
+  %3 = select i1 %.fr, i32 %i.ak, i32 %i.aj
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit.thread
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit.thread: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit, %.lr.ph.i, %bb.e
-  %i.bj = phi i32 [ %i.ak, %.lr.ph.i ], [ %.pre, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit ], [ %i.ak, %bb.e ]
+  %i.bj = phi i32 [ %i.ak, %.lr.ph.i ], [ %3, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit ], [ %i.ak, %bb.e ]
   %i.bk = phi i64 [ %i.af, %.lr.ph.i ], [ %spec.select, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorINS3_12UnknownValueEE11sortIndicesILb0EZNKS6_11sortIndicesERSt6vectorIiSaIiEEPKiNS3_12CompareFlagsEEUliE1_ZNKS6_11sortIndicesESB_SD_SE_EUliE2_EEvT0_T1_SB_SE_EUliiE0_EclINS_17__normal_iteratorIPiSA_EESO_EEbT_SH_.exit ], [ %i.af, %bb.e ] ; 3 uses
   %i.bl = getelementptr inbounds [4 x i8], ptr %0, i64 %.034.i
   store i32 %i.bj, ptr %i.bl, align 4, !tbaa !3

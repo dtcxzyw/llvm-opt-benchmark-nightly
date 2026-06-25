@@ -201,11 +201,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.r = load i32, ptr %i.q, align 4, !tbaa !90
-  %.not33 = icmp eq i32 %i.r, 0
+  %.not33 = icmp eq i32 %i.r, 0                   ; 2 uses
   %i.s = select i1 %.not33, ptr %3, ptr %2
+  %4 = select i1 %.not33, i64 72, i64 28
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %5 = phi i64 [ 28, %bb.b ], [ %4, %bb.c ]
   %. = phi ptr [ %2, %bb.b ], [ %i.s, %bb.c ]     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 96
   store i32 0, ptr %i.t, align 8, !tbaa !78
@@ -226,26 +228,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %., i64 8 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !tbaa !88       ; 2 uses
-  %.not18.i = icmp eq i64 %5, 0
-  br i1 %.not18.i, label %bb.f, label %6
+  %6 = call ptr @WebPMalloc(i64 noundef %5) #14   ; 3 uses
+  store ptr %6, ptr %i.h, align 8, !tbaa !55
+  %.not18.i = icmp eq ptr %6, null
+  br i1 %.not18.i, label %.critedge, label %bb.f
 
-6:                                                ; preds = %bb.e
-  %7 = call ptr @WebPMalloc(i64 noundef %5) #14   ; 3 uses
-  store ptr %7, ptr %i.h, align 8, !tbaa !55
-  %8 = icmp eq ptr %7, null
-  br i1 %8, label %.critedge, label %9
-
-9:                                                ; preds = %6
-  %10 = load ptr, ptr %., align 8, !tbaa !55
-  %11 = load i64, ptr %4, align 8, !tbaa !88      ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %7, ptr align 1 %10, i64 %11, i1 false)
-  %12 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  store i64 %11, ptr %12, align 8, !tbaa !88
-  br label %bb.f
-
-bb.f:                                             ; preds = %9, %bb.e
+bb.f:                                             ; preds = %bb.e
+  %7 = getelementptr inbounds nuw i8, ptr %., i64 8
+  %8 = load ptr, ptr %., align 8, !tbaa !55
+  %9 = load i64, ptr %7, align 8, !tbaa !88       ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %8, i64 %9, i1 false)
+  %10 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  store i64 %9, ptr %10, align 8, !tbaa !88
   %i.ab = load i64, ptr %i.c, align 8, !tbaa !67  ; 2 uses
   %i.ac = add i64 %i.ab, 1
   store i64 %i.ac, ptr %i.c, align 8, !tbaa !67
@@ -271,7 +265,7 @@ bb.g:                                             ; preds = %bb.a
   store i32 %i.k, ptr %i.aj, align 8, !tbaa !97
   br label %bb.h
 
-.critedge:                                        ; preds = %6, %bb.d
+.critedge:                                        ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14

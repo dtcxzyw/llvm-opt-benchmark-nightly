@@ -201,12 +201,13 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.not.i.i.i.i.i.i.i.i.i.i.not.i = icmp eq i32 %i.f, 1032
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.not.i, label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i.i, label %_ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit.thread
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.not.i, label %_ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit, label %_ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit.thread
 
 bb.e:                                             ; preds = %bb.b
-  %.not.i6.i.i.i.i.i.i.i.not.i = icmp eq i32 %i.f, 1027
+  %.not.i6.i.i.i.i.i.i.i.not.i = icmp eq i32 %i.f, 1027 ; 2 uses
   %.add15.i.i.i = select i1 %.not.i6.i.i.i.i.i.i.i.not.i, i64 136, i64 152
-  br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i.i
+  %11 = select i1 %.not.i6.i.i.i.i.i.i.i.not.i, i32 1027, i32 1028
+  br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i
 
 bb.f:                                             ; preds = %bb.a
   %.not.i6.i.i.i.i.i.i.i = icmp sgt i32 %i.f, 3   ; 2 uses
@@ -221,19 +222,15 @@ bb.f:                                             ; preds = %bb.a
   %i.i = load i32, ptr %.ptr22.i.i.i, align 8
   %.not.i.i.i.i.i.i.i.i.i.i = icmp slt i32 %i.i, %i.f
   %.idx.i.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i.i.i, i64 16, i64 0
-  %.add17.i.i.i = or disjoint i64 %.add16.i.i.i, %.idx.i.i.i.i.i.i.i.i.i.i
-  br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i.i
-
-_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i.i: ; preds = %bb.f, %bb.e, %bb.d
-  %.0.i.i.i.i.idx.ph.i.i.i = phi i64 [ 184, %bb.d ], [ %.add15.i.i.i, %bb.e ], [ %.add17.i.i.i, %bb.f ] ; 2 uses
-  %.0.i.i.i.i.ptr.i.i.ptr.i = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.0.i.i.i.i.idx.ph.i.i.i
-  %.pre.i.i.i = load i32, ptr %.0.i.i.i.i.ptr.i.i.ptr.i, align 4
+  %.add17.i.i.i = or disjoint i64 %.add16.i.i.i, %.idx.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %.0.i.i.i.i.ptr.i.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.add17.i.i.i
+  %.pre.i.pre.i.i = load i32, ptr %.0.i.i.i.i.ptr.i.phi.trans.insert.i.i, align 8
   br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i
 
-_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i: ; preds = %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i.i, %bb.c
-  %11 = phi i32 [ %.pre.i.i.i, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i.i ], [ 1031, %bb.c ]
-  %.0.i.i.i.i14.i.i.idx.i = phi i64 [ %.0.i.i.i.i.idx.ph.i.i.i, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i.i ], [ 168, %bb.c ]
-  %.not26.i.i.i = icmp slt i32 %i.f, %11
+_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i: ; preds = %bb.f, %bb.e, %bb.c
+  %12 = phi i32 [ 1031, %bb.c ], [ %.pre.i.pre.i.i, %bb.f ], [ %11, %bb.e ]
+  %.0.i.i.i.i14.i.i.idx.i = phi i64 [ 168, %bb.c ], [ %.add17.i.i.i, %bb.f ], [ %.add15.i.i.i, %bb.e ]
+  %.not26.i.i.i = icmp slt i32 %i.f, %12
   br i1 %.not26.i.i.i, label %_ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit.thread, label %_ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit
 
 _ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit.thread: ; preds = %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i, %bb.d
@@ -241,8 +238,9 @@ _ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit.thread: ; preds = %_
   store ptr %i.j, ptr %8, align 8
   br label %bb.h
 
-_ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit: ; preds = %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i
-  %.0.i.i.i.i14.i.i.ptr.i = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.0.i.i.i.i14.i.i.idx.i
+_ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.exit: ; preds = %bb.d, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i
+  %.0.i.i.i.i14.i.i.idx15.i = phi i64 [ %.0.i.i.i.i14.i.i.idx.i, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.i ], [ 184, %bb.d ]
+  %.0.i.i.i.i14.i.i.ptr.i = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.0.i.i.i.i14.i.i.idx15.i
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i14.i.i.ptr.i, i64 8
   %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
@@ -578,12 +576,13 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.not.i.i.i.i.i.i.i.i.i.i.not = icmp eq i32 %0, 1032
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.not, label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i, label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.not, label %bb.g, label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread
 
 bb.e:                                             ; preds = %bb.b
-  %.not.i6.i.i.i.i.i.i.i.not = icmp eq i32 %0, 1027
+  %.not.i6.i.i.i.i.i.i.i.not = icmp eq i32 %0, 1027 ; 2 uses
   %.add15.i.i = select i1 %.not.i6.i.i.i.i.i.i.i.not, i64 136, i64 152
-  br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i
+  %1 = select i1 %.not.i6.i.i.i.i.i.i.i.not, i32 1027, i32 1028
+  br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
 
 bb.f:                                             ; preds = %bb.a
   %.not.i6.i.i.i.i.i.i = icmp sgt i32 %0, 3       ; 2 uses
@@ -598,23 +597,20 @@ bb.f:                                             ; preds = %bb.a
   %i.c = load i32, ptr %.ptr22.i.i, align 8
   %.not.i.i.i.i.i.i.i.i.i = icmp slt i32 %i.c, %0
   %.idx.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i.i, i64 16, i64 0
-  %.add17.i.i = or disjoint i64 %.add16.i.i, %.idx.i.i.i.i.i.i.i.i.i
-  br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i
-
-_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i: ; preds = %bb.f, %bb.e, %bb.d
-  %.0.i.i.i.i.idx.ph.i.i = phi i64 [ 184, %bb.d ], [ %.add15.i.i, %bb.e ], [ %.add17.i.i, %bb.f ] ; 2 uses
-  %.0.i.i.i.i.ptr.i.i.ptr = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.0.i.i.i.i.idx.ph.i.i
-  %.pre.i.i = load i32, ptr %.0.i.i.i.i.ptr.i.i.ptr, align 4
+  %.add17.i.i = or disjoint i64 %.add16.i.i, %.idx.i.i.i.i.i.i.i.i.i ; 2 uses
+  %.0.i.i.i.i.ptr.i.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.add17.i.i
+  %.pre.i.pre.i = load i32, ptr %.0.i.i.i.i.ptr.i.phi.trans.insert.i, align 8
   br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
 
-_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit: ; preds = %bb.c, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i
-  %1 = phi i32 [ %.pre.i.i, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i ], [ 1031, %bb.c ]
-  %.0.i.i.i.i14.i.i.idx = phi i64 [ %.0.i.i.i.i.idx.ph.i.i, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE11lower_boundIS4_EEPKSt4pairIS4_S6_ERKT_.exit._crit_edge.i.i ], [ 168, %bb.c ]
-  %.not26.i.i = icmp slt i32 %0, %1
+_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit: ; preds = %bb.e, %bb.f, %bb.c
+  %2 = phi i32 [ 1031, %bb.c ], [ %.pre.i.pre.i, %bb.f ], [ %1, %bb.e ]
+  %.0.i.i.i.i14.i.i.idx = phi i64 [ 168, %bb.c ], [ %.add17.i.i, %bb.f ], [ %.add15.i.i, %bb.e ]
+  %.not26.i.i = icmp slt i32 %0, %2
   br i1 %.not26.i.i, label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread, label %bb.g
 
-bb.g:                                             ; preds = %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
-  %.0.i.i.i.i14.i.i.ptr = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.0.i.i.i.i14.i.i.idx
+bb.g:                                             ; preds = %bb.d, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
+  %.0.i.i.i.i14.i.i.idx15 = phi i64 [ %.0.i.i.i.i14.i.i.idx, %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit ], [ 184, %bb.d ]
+  %.0.i.i.i.i14.i.i.ptr = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF5MachO9to_stringENS0_16BuildToolVersion5TOOLSE.enums2str, i64 %.0.i.i.i.i14.i.i.idx15
   %i.d = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i14.i.i.ptr, i64 8
   %i.e = load ptr, ptr %i.d, align 8
   br label %_ZNK6frozen3mapIN4LIEF5MachO16BuildToolVersion5TOOLSEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread
