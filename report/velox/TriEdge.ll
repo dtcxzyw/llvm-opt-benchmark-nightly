@@ -6,8 +6,6 @@ target triple = "x86_64-pc-linux-gnu"
 
 module asm ".globl _ZSt21ios_base_library_initv"
 
-%"class.geos::geom::Coordinate" = type { double, double, double }
-
 $__clang_call_terminate = comdat any
 
 @.str = private unnamed_addr constant [13 x i8] c"LINESTRING (\00", align 1
@@ -17,7 +15,6 @@ $__clang_call_terminate = comdat any
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4geos11triangulate3tri7TriEdge9normalizeEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(48) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %1 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.b = load double, ptr %0, align 8, !tbaa !7   ; 2 uses
   %i.c = load double, ptr %i.a, align 8, !tbaa !7 ; 2 uses
@@ -37,11 +34,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %_ZNK4geos4geom10Coordinate9compareToERKS1_.exit
 
 bb.d:                                             ; preds = %bb.c, %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !11
+  %.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !tbaa.struct !11
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !11
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  store <3 x double> %.sroa.0.0.copyload, ptr %i.a, align 8
   br label %_ZNK4geos4geom10Coordinate9compareToERKS1_.exit
 
 _ZNK4geos4geom10Coordinate9compareToERKS1_.exit:  ; preds = %bb.c, %bb.b, %bb.d

@@ -201,7 +201,6 @@ begin_hunk_0
 %"class.v8::base::PointerWithPayload" = type { i64 }
 %class.anon.1955 = type { ptr }
 %"class.v8::base::Vector" = type { ptr, i64 }
-%"class.v8::internal::compiler::turboshaft::OperationBuffer" = type { ptr, ptr, ptr, ptr, ptr }
 %class.anon.1958 = type { ptr }
 %class.anon.1960 = type { ptr }
 %class.anon.1962 = type { ptr }
@@ -604,7 +603,6 @@ define linkonce_odr hidden void @_ZN2v88internal8compiler10turboshaft5Graph17Swa
 bb.a:
   %1 = alloca %class.anon.1955, align 8           ; 4 uses
   %2 = alloca %"class.v8::base::Vector", align 8  ; 4 uses
-  %3 = alloca %"class.v8::internal::compiler::turboshaft::OperationBuffer", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -647,11 +645,9 @@ _ZN2v88internal4Zone3NewINS0_8compiler10turboshaft5GraphEJRPS1_jEEEPT_DpOT0_.exi
 
 _ZN2v88internal8compiler10turboshaft5Graph20GetOrCreateCompanionEv.exit: ; preds = %bb.a, %_ZN2v88internal4Zone3NewINS0_8compiler10turboshaft5GraphEJRPS1_jEEEPT_DpOT0_.exit.i
   %i.x = phi ptr [ %i.t, %_ZN2v88internal4Zone3NewINS0_8compiler10turboshaft5GraphEJRPS1_jEEEPT_DpOT0_.exit.i ], [ %i.b, %bb.a ] ; 29 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 40, i1 false)
+  %.sroa.0.0.copyload = load <5 x ptr>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.x, i64 40, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.x, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <5 x ptr> %.sroa.0.0.copyload, ptr %i.x, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 40 ; 3 uses
   %i.aa = load ptr, ptr %i.y, align 8             ; 2 uses

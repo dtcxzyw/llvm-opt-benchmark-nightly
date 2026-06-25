@@ -5,7 +5,6 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 %struct.Basic_Info = type { i32, i32, i32 }
-%struct.Move = type { i32, i32, i32 }
 
 @g_board = external local_unnamed_addr global [2 x [32 x i32]], align 16
 @g_board_size = external local_unnamed_addr global [2 x i32], align 4
@@ -408,16 +407,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
-
 ; Function Attrs: nounwind uwtable
 define dso_local void @score_and_get_first(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i64 %3, i32 %4) local_unnamed_addr #2 {
 bb.a:
-  %5 = alloca %struct.Move, align 4               ; 4 uses
   %.sroa.044.0.extract.trunc = trunc i64 %3 to i32 ; 2 uses
   %.sroa.3.0.extract.shift = lshr i64 %3, 32
   %.sroa.3.0.extract.trunc = trunc nuw i64 %.sroa.3.0.extract.shift to i32
@@ -504,10 +496,9 @@ bb.f:                                             ; preds = %.loopexit.thread, %
   br i1 %i.p, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.q = sext i32 %.477 to i64
   %i.r = getelementptr inbounds [12 x i8], ptr %0, i64 %i.q
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %5, ptr noundef nonnull align 4 dereferenceable(12) %i.r, i64 12, i1 false), !tbaa.struct !15
+  %.sroa.0.0.copyload82 = load <3 x i32>, ptr %i.r, align 4
   %i.s = icmp sgt i32 %.477, 0
   br i1 %i.s, label %.lr.ph64.preheader, label %._crit_edge
 
@@ -555,8 +546,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ai, label %.lr.ph64, label %._crit_edge, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.lr.ph64.prol.loopexit, %.lr.ph64, %bb.g
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %0, ptr noundef nonnull align 4 dereferenceable(12) %5, i64 12, i1 false), !tbaa.struct !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <3 x i32> %.sroa.0.0.copyload82, ptr %0, align 4
   br label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge, %bb.f

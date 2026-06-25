@@ -4,8 +4,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%struct.Run = type { i32, i32, i32 }
-
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @ubidi_setLine_78(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(address_is_null) %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
@@ -305,18 +303,12 @@ bb.ak:                                            ; preds = %bb.a, %bb.b, %.thre
   ret void
 }
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+declare i32 @ubidi_getParagraph_78(ptr noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
-declare i32 @ubidi_getParagraph_78(ptr noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
-
-declare zeroext i8 @ubidi_getParaLevelAtIndex_78(ptr noundef, i32 noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+declare zeroext i8 @ubidi_getParaLevelAtIndex_78(ptr noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc void @_ZL18setTrailingWSStartP5UBiDi(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #3 {
+define internal fastcc void @_ZL18setTrailingWSStartP5UBiDi(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
@@ -553,10 +545,10 @@ bb.r:                                             ; preds = %bb.a, %bb.b, %bb.q,
   ret ptr %.0
 }
 
-declare signext i8 @ubidi_getMemory_78(ptr noundef, ptr noundef, i8 noundef signext, i32 noundef) local_unnamed_addr #2
+declare signext i8 @ubidi_getMemory_78(ptr noundef, ptr noundef, i8 noundef signext, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
@@ -747,7 +739,6 @@ bb.j:                                             ; preds = %bb.h, %bb.a, %bb.b,
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local signext range(i8 0, 2) i8 @ubidi_getRuns_78(ptr noundef %0, ptr nofree readnone captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.Run, align 4                ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 6 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = icmp sgt i32 %i.b, -1
@@ -966,7 +957,6 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge2
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 304
   store ptr %i.be, ptr %i.ck, align 8
   store i32 %spec.select155, ptr %i.a, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.cl = or i8 %.2141, 1
   %.not.i = icmp ugt i8 %.1145.lcssa, %i.cl
   br i1 %.not.i, label %bb.k, label %_ZL11reorderLineP5UBiDihh.exit
@@ -1046,10 +1036,10 @@ bb.l:                                             ; preds = %.lr.ph.us.i, %bb.m
   %indvars.iv102.i = phi i64 [ %indvars.iv.next103.i, %.lr.ph81.us.i ], [ %indvars.iv.i, %.critedge2.us.i ] ; 2 uses
   %indvars.iv98.i = phi i64 [ %indvars.iv.next99.i, %.lr.ph81.us.i ], [ %indvars.iv92.i271, %.critedge2.us.i ] ; 2 uses
   %i.dn = getelementptr inbounds [12 x i8], ptr %i.be, i64 %indvars.iv102.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %i.dn, i64 12, i1 false)
+  %.sroa.0.0.copyload331 = load <3 x i32>, ptr %i.dn, align 4
   %i.do = getelementptr inbounds [12 x i8], ptr %i.be, i64 %indvars.iv98.i ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.dn, ptr noundef nonnull align 4 dereferenceable(12) %i.do, i64 12, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.do, ptr noundef nonnull align 4 dereferenceable(12) %2, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.0.copyload331, ptr %i.do, align 4
   %indvars.iv.next103.i = add nsw i64 %indvars.iv102.i, 1 ; 2 uses
   %indvars.iv.next99.i = add nsw i64 %indvars.iv98.i, -1 ; 2 uses
   %i.dp = icmp slt i64 %indvars.iv.next103.i, %indvars.iv.next99.i
@@ -1093,17 +1083,16 @@ bb.n:                                             ; preds = %._crit_edge84.i
   %indvars.iv109.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next110.i, %.lr.ph.i ] ; 2 uses
   %indvars.iv107.i = phi i64 [ %i.dz, %.lr.ph.preheader.i ], [ %indvars.iv.next108.i, %.lr.ph.i ] ; 2 uses
   %i.ea = getelementptr inbounds nuw [12 x i8], ptr %i.be, i64 %indvars.iv109.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %i.ea, i64 12, i1 false)
+  %.sroa.0.0.copyload = load <3 x i32>, ptr %i.ea, align 4
   %i.eb = getelementptr inbounds [12 x i8], ptr %i.be, i64 %indvars.iv107.i ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ea, ptr noundef nonnull align 4 dereferenceable(12) %i.eb, i64 12, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.eb, ptr noundef nonnull align 4 dereferenceable(12) %2, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.0.copyload, ptr %i.eb, align 4
   %indvars.iv.next110.i = add nuw nsw i64 %indvars.iv109.i, 1 ; 2 uses
   %indvars.iv.next108.i = add nsw i64 %indvars.iv107.i, -1 ; 2 uses
   %i.ec = icmp slt i64 %indvars.iv.next110.i, %indvars.iv.next108.i
   br i1 %i.ec, label %.lr.ph.i, label %_ZL11reorderLineP5UBiDihh.exit, !llvm.loop !21
 
 _ZL11reorderLineP5UBiDihh.exit:                   ; preds = %.lr.ph.i, %bb.j, %._crit_edge84.i, %bb.n
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %.not209 = icmp eq i32 %spec.select155, 0
   br i1 %.not209, label %._crit_edge202, label %.lr.ph201.preheader
 
@@ -1506,9 +1495,9 @@ declare void @llvm.assume(i1 noundef) #8
 declare i64 @llvm.smax.i64(i64, i64) #7
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { cold nofree noreturn nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

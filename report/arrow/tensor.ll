@@ -201,8 +201,6 @@ bb.a:
   %13 = alloca %"class.std::shared_ptr.18", align 8 ; 7 uses
   %14 = alloca %"class.std::shared_ptr.27", align 16 ; 15 uses
   %15 = alloca %"class.std::shared_ptr", align 16 ; 14 uses
-  %.sroa.6381 = alloca { i8, i8, i8 }, align 8    ; 6 uses
-  %.sroa.10 = alloca { i8, i8, i8, i8, i8 }, align 8 ; 6 uses
   %16 = alloca %"class.std::shared_ptr.18", align 8 ; 6 uses
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %18 = alloca %"class.std::shared_ptr.18", align 8 ; 7 uses
@@ -605,10 +603,6 @@ bb.ba:                                            ; preds = %bb.ay
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit: ; preds = %_ZNSt10shared_ptrIN5arrow5FieldEEC2ERKS2_.exit, %bb.az, %bb.ba
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6381)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %.sroa.6381, i8 0, i64 3, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %.sroa.10, i8 0, i64 5, i1 false)
   %i.gc = invoke noundef i32 @_ZNK5arrow11RecordBatch11num_columnsEv(ptr noundef nonnull align 8 dereferenceable(32) %1)
           to label %bb.bb unwind label %bb.be
 
@@ -997,11 +991,11 @@ bb.cs:                                            ; preds = %bb.cr
 
 bb.ct:                                            ; preds = %bb.cs
   store i8 1, ptr %23, align 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.6381.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(3) %.sroa.6381, i64 3, i1 false)
+  store <3 x i8> zeroinitializer, ptr %.sroa.6381.0..sroa_idx, align 1
   store i8 1, ptr %.sroa.7.0..sroa_idx, align 1
   store i8 1, ptr %.sroa.8.0..sroa_idx, align 1
   store i8 1, ptr %.sroa.9.0..sroa_idx, align 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(5) %.sroa.10, i64 5, i1 false)
+  store <5 x i8> zeroinitializer, ptr %.sroa.10.0..sroa_idx, align 1
   invoke void @_ZNK5arrow5Field9MergeWithERKSt10shared_ptrIS0_ENS0_12MergeOptionsE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result") align 8 %21, ptr noundef nonnull align 8 dereferenceable(96) %i.kx, ptr noundef nonnull align 8 dereferenceable(16) %22, ptr noundef nonnull %23)
           to label %bb.cu unwind label %bb.dd
 
@@ -1404,7 +1398,7 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit248: ; preds = %bb.em, %bb.eo, 
 bb.eq:                                            ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit248
   store i8 1, ptr %29, align 1
   %.sroa.6381.0..sroa_idx382 = getelementptr inbounds nuw i8, ptr %29, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.6381.0..sroa_idx382, ptr noundef nonnull align 8 dereferenceable(3) %.sroa.6381, i64 3, i1 false)
+  store <3 x i8> zeroinitializer, ptr %.sroa.6381.0..sroa_idx382, align 1
   %.sroa.7.0..sroa_idx383 = getelementptr inbounds nuw i8, ptr %29, i64 4
   store i8 1, ptr %.sroa.7.0..sroa_idx383, align 1
   %.sroa.8.0..sroa_idx385 = getelementptr inbounds nuw i8, ptr %29, i64 5
@@ -1412,7 +1406,7 @@ bb.eq:                                            ; preds = %_ZNSt10shared_ptrIN
   %.sroa.9.0..sroa_idx387 = getelementptr inbounds nuw i8, ptr %29, i64 6
   store i8 1, ptr %.sroa.9.0..sroa_idx387, align 1
   %.sroa.10.0..sroa_idx389 = getelementptr inbounds nuw i8, ptr %29, i64 7
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %.sroa.10.0..sroa_idx389, ptr noundef nonnull align 8 dereferenceable(5) %.sroa.10, i64 5, i1 false)
+  store <5 x i8> zeroinitializer, ptr %.sroa.10.0..sroa_idx389, align 1
   invoke void @_ZNK5arrow5Field9MergeWithERKSt10shared_ptrIS0_ENS0_12MergeOptionsE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result") align 8 %24, ptr noundef nonnull align 8 dereferenceable(96) %i.op, ptr noundef nonnull align 8 dereferenceable(16) %25, ptr noundef nonnull %29)
           to label %bb.er unwind label %bb.fo
 
@@ -1815,8 +1809,6 @@ bb.jm:                                            ; preds = %bb.jj, %bb.gx
   br label %bb.jz
 
 _ZN5arrow6Status14NotImplementedIJRA47_KcEEES0_DpOT_.exit: ; preds = %_ZN5arrow6ResultISt10shared_ptrINS_5FieldEEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit211, %bb.cn, %_ZN5arrow6ResultISt10shared_ptrINS_5FieldEEED2Ev.exit299, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6381)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
   %i.afz = load ptr, ptr %i.ft, align 8, !tbaa !109 ; 8 uses
   %.not.i.i360 = icmp eq ptr %i.afz, null
   br i1 %.not.i.i360, label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit364, label %bb.jn
@@ -1921,8 +1913,6 @@ _ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit369: ; 
 
 bb.jz:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.gw, %bb.jm, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit269, %bb.fr, %bb.br, %bb.bv, %bb.cq, %bb.df, %bb.de, %bb.be
   %.pn164.pn.pn = phi { ptr, i32 } [ %.pn140.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit269 ], [ %.pn131, %bb.de ], [ %i.gl, %bb.be ], [ %.pn136.pn, %bb.bv ], [ %i.ve, %bb.gw ], [ %i.ia, %bb.br ], [ %.pn, %bb.cq ], [ %i.lw, %bb.df ], [ %i.sa, %bb.fr ], [ %.pn164, %bb.jm ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6381)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
   call void @_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %15) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
   call void @_ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %14) #22

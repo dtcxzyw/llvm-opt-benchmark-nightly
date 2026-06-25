@@ -201,10 +201,8 @@ define linkonce_odr hidden i64 @_ZN4LIEF5MachO12BinaryParser21parse_chained_payl
 bb.a:
   %2 = alloca %"struct.LIEF::MachO::details::dyld_chained_fixups_header", align 4 ; 7 uses
   %3 = alloca %"struct.LIEF::MachO::details::dyld_chained_fixups_header", align 4 ; 9 uses
-  %.sroa.618 = alloca { i32, i32, i32, i32, i32, i32 }, align 8 ; 5 uses
   %4 = alloca %"class.LIEF::SpanStream", align 8  ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.618)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !noalias !593 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17, !noalias !593
@@ -222,19 +220,17 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17, !noalias !593
   %i.h = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses
   %i.i = call noundef ptr @_Z9to_string11lief_errors(i32 noundef 1) #17 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.618)
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
   %.sroa.016.0.copyload = load i32, ptr %2, align 4
   %.sroa.618.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.618, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.618.0..sroa_idx, i64 24, i1 false)
+  %.sroa.618.sroa.0.0.copyload = load <6 x i32>, ptr %.sroa.618.0..sroa_idx, align 4
   store i64 %i.b, ptr %i.a, align 8, !noalias !593
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17, !noalias !593
   store i32 %.sroa.016.0.copyload, ptr %3, align 4
   %.sroa.618.0..sroa_idx19 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.618.0..sroa_idx19, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.618, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.618)
+  store <6 x i32> %.sroa.618.sroa.0.0.copyload, ptr %.sroa.618.0..sroa_idx19, align 4
   %i.j = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses
   %i.k = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses
   %i.l = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses
@@ -637,10 +633,8 @@ define linkonce_odr hidden i64 @_ZN4LIEF5MachO12BinaryParser21parse_chained_payl
 bb.a:
   %2 = alloca %"struct.LIEF::MachO::details::dyld_chained_fixups_header", align 4 ; 7 uses
   %3 = alloca %"struct.LIEF::MachO::details::dyld_chained_fixups_header", align 4 ; 9 uses
-  %.sroa.618 = alloca { i32, i32, i32, i32, i32, i32 }, align 8 ; 5 uses
   %4 = alloca %"class.LIEF::SpanStream", align 8  ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.618)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !noalias !1233 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17, !noalias !1233
@@ -658,19 +652,17 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17, !noalias !1233
   %i.h = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses
   %i.i = call noundef ptr @_Z9to_string11lief_errors(i32 noundef 1) #17 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.618)
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
   %.sroa.016.0.copyload = load i32, ptr %2, align 4
   %.sroa.618.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.618, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.618.0..sroa_idx, i64 24, i1 false)
+  %.sroa.618.sroa.0.0.copyload = load <6 x i32>, ptr %.sroa.618.0..sroa_idx, align 4
   store i64 %i.b, ptr %i.a, align 8, !noalias !1233
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17, !noalias !1233
   store i32 %.sroa.016.0.copyload, ptr %3, align 4
   %.sroa.618.0..sroa_idx19 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.618.0..sroa_idx19, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.618, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.618)
+  store <6 x i32> %.sroa.618.sroa.0.0.copyload, ptr %.sroa.618.0..sroa_idx19, align 4
   %i.j = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses
   %i.k = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses
   %i.l = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.35) #17 ; 0 uses

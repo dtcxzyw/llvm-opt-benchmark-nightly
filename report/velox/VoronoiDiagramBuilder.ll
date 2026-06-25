@@ -47,7 +47,6 @@ module asm ".globl _ZSt21ios_base_library_initv"
 %"struct.std::_Tuple_impl.55" = type { %"struct.std::_Head_base.58" }
 %"struct.std::_Head_base.58" = type { ptr }
 %"struct.__gnu_cxx::__ops::_Iter_less_iter" = type { i8 }
-%"class.geos::geom::Coordinate" = type { double, double, double }
 
 $_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EED2Ev = comdat any
 
@@ -450,7 +449,6 @@ declare noundef zeroext i1 @_ZNK4geos4geom8Envelope6coversERKS1_(ptr noundef non
 define linkonce_odr void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_less_iterEEvT_SD_T0_T1_(ptr %0, ptr %1, i64 noundef %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
-  %.sroa.0.i.i.i.i = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %1 to i64
@@ -544,11 +542,9 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangul
   br i1 %i.ac, label %bb.j, label %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEET_SD_SD_T0_.exit
 
 bb.j:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit9.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.012.1.i.i, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.i.i.i.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.012.1.i.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.012.1.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.1.i.i, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.1.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i.i.i, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i)
+  store <3 x double> %.sroa.0.i.i.i.i.sroa.0.0.copyload, ptr %.sroa.0.1.i.i, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 24
   br label %bb.c, !llvm.loop !118
 
@@ -567,8 +563,6 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4geos11triang
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_(ptr %0, ptr %1) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i15 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %.sroa.0.i = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.c = sub i64 %i.a, %i.b
@@ -601,11 +595,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %.loopexit.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i
 
 .loopexit.i:                                      ; preds = %bb.d, %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.021.i.ptr, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.07.021.i.ptr, align 8
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %.sroa.07.021.i.idx, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  store <3 x double> %.sroa.0.i.sroa.0.0.copyload, ptr %0, align 8
   br label %bb.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i: ; preds = %bb.d, %bb.c
@@ -723,8 +715,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.aj, label %bb.r, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i24
 
 bb.r:                                             ; preds = %bb.q, %bb.o
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i15)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i15, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.021.i20, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i15.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.07.021.i20, align 8
   %i.ak = ptrtoint ptr %.sroa.07.021.i20 to i64
   %i.al = sub i64 %i.ak, %i.b                     ; 2 uses
   %i.am = icmp sgt i64 %i.al, 0
@@ -747,8 +738,7 @@ bb.r:                                             ; preds = %bb.q, %bb.o
   br i1 %i.as, label %.lr.ph.i.i.i.i.i.i36, label %.loopexit.i34, !llvm.loop !122
 
 .loopexit.i34:                                    ; preds = %.lr.ph.i.i.i.i.i.i36, %bb.r
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i15, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i15)
+  store <3 x double> %.sroa.0.i15.sroa.0.0.copyload, ptr %0, align 8
   br label %bb.w
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i24: ; preds = %bb.q, %bb.p
@@ -1050,12 +1040,6 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph.i.i
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_(ptr %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #1 comdat {
 bb.a:
-  %.sroa.0.i.i38 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %.sroa.0.i.i37 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %.sroa.0.i.i34 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %.sroa.0.i.i31 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %.sroa.0.i.i30 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %.sroa.0.i.i = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %i.a = load double, ptr %1, align 8, !tbaa !112 ; 6 uses
   %i.b = load double, ptr %2, align 8, !tbaa !112 ; 6 uses
   %i.c = fcmp olt double %i.a, %i.b
@@ -1091,11 +1075,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.q, label %bb.g, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit27
 
 bb.g:                                             ; preds = %bb.f, %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.i.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
+  store <3 x double> %.sroa.0.i.i.sroa.0.0.copyload, ptr %2, align 8
   br label %bb.q
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit27: ; preds = %bb.f, %bb.e
@@ -1115,19 +1097,15 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.x, label %bb.j, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit29
 
 bb.j:                                             ; preds = %bb.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit27
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i30)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i30, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.i30.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i30, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i30)
+  store <3 x double> %.sroa.0.i.i30.sroa.0.0.copyload, ptr %3, align 8
   br label %bb.q
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit29: ; preds = %bb.i, %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i31)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i31, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.i31.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i31, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i31)
+  store <3 x double> %.sroa.0.i.i31.sroa.0.0.copyload, ptr %1, align 8
   br label %bb.q
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit: ; preds = %bb.c, %bb.b
@@ -1148,11 +1126,9 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.af, label %bb.m, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit33
 
 bb.m:                                             ; preds = %bb.l, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i34)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i34, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.i34.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i34, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i34)
+  store <3 x double> %.sroa.0.i.i34.sroa.0.0.copyload, ptr %1, align 8
   br label %bb.q
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit33: ; preds = %bb.l, %bb.k
@@ -1172,19 +1148,15 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.am, label %bb.p, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit36
 
 bb.p:                                             ; preds = %bb.o, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit33
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i37)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i37, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.i37.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i37, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i37)
+  store <3 x double> %.sroa.0.i.i37.sroa.0.0.copyload, ptr %3, align 8
   br label %bb.q
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit36: ; preds = %bb.o, %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i38)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i38, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !117
+  %.sroa.0.i.i38.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i38, i64 24, i1 false), !tbaa.struct !117
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i38)
+  store <3 x double> %.sroa.0.i.i38.sroa.0.0.copyload, ptr %2, align 8
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.m, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit36, %bb.p, %bb.g, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit29, %bb.j

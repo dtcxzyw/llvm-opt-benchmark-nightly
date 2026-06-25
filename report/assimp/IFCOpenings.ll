@@ -7,7 +7,6 @@ target triple = "x86_64-pc-linux-gnu"
 %class.aiVector2t = type { double, double }
 %"struct.std::piecewise_construct_t" = type { i8 }
 %"struct.std::pair.3" = type { %class.aiVector2t, %class.aiVector2t }
-%class.aiVector3t = type { double, double, double }
 %"class.std::set" = type { %"class.std::_Rb_tree.24" }
 %"class.std::_Rb_tree.24" = type { %"struct.std::_Rb_tree<aiVector2t<double>, aiVector2t<double>, std::_Identity<aiVector2t<double>>, Assimp::IFC::XYSorter>::_Rb_tree_impl" }
 %"struct.std::_Rb_tree<aiVector2t<double>, aiVector2t<double>, std::_Identity<aiVector2t<double>>, Assimp::IFC::XYSorter>::_Rb_tree_impl" = type { [8 x i8], %"struct.std::_Rb_tree_header" }
@@ -62,6 +61,7 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
 %union.anon = type { i64, [8 x i8] }
 %"class.std::allocator.86" = type { i8 }
+%class.aiVector3t = type { double, double, double }
 %"class.std::tuple" = type { %"struct.std::_Tuple_impl" }
 %"struct.std::_Tuple_impl" = type { %"struct.std::_Head_base" }
 %"struct.std::_Head_base" = type { ptr }
@@ -464,9 +464,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp3IFC20InsertWindowContoursERKSt6vectorINS0_22ProjectedWindowContourESaIS2_EERKS1_INS0_11TempOpeningESaIS7_EERNS0_8TempMeshE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(48) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %class.aiVector3t, align 8          ; 4 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %4 = alloca %"class.std::set", align 8          ; 12 uses
+  %3 = alloca %"class.std::set", align 8          ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = load ptr, ptr %0, align 8                ; 2 uses
@@ -474,11 +473,11 @@ bb.a:
   br i1 %.not314, label %._crit_edge313, label %.lr.ph312
 
 .lr.ph312:                                        ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 22 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 9 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 22 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 9 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
@@ -536,7 +535,7 @@ _ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE
   br i1 %i.aj, label %.critedge155, label %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit
 
 _ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit.i: ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   store i32 0, ptr %i.e, align 8
   store ptr null, ptr %i.f, align 8
   store ptr %i.e, ptr %i.g, align 8
@@ -847,8 +846,8 @@ bb.t:                                             ; preds = %.noexc.3, %bb.r
 bb.u:                                             ; preds = %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit.i.3, %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit.i.2, %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit.i.1, %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit.i
   %i.ez = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %4) #27
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
+  call void @_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %3) #27
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   resume { ptr, i32 } %i.ez
 
 _ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit: ; preds = %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i
@@ -977,7 +976,7 @@ _ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit203: ; pr
   br i1 %.0.i.i.i200, label %.critedge155, label %bb.x
 
 .critedge155:                                     ; preds = %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i199, %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i184, %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i169, %_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i, %bb.t, %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit188, %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit173, %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit, %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit203
-  invoke void @_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef %i.ey)
+  invoke void @_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef %i.ey)
           to label %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev.exit unwind label %bb.w
 
 bb.w:                                             ; preds = %.critedge155
@@ -988,7 +987,7 @@ bb.w:                                             ; preds = %.critedge155
   unreachable
 
 _ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev.exit: ; preds = %.critedge155
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   %.pre333 = load ptr, ptr %i.s, align 8          ; 2 uses
   %.pre334 = load ptr, ptr %i.p, align 8          ; 2 uses
   %.pre337 = ptrtoint ptr %.pre333 to i64
@@ -998,7 +997,7 @@ _ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev.exit: ; preds = %.cr
   br label %bb.z
 
 bb.x:                                             ; preds = %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EE4findERKS1_.exit203
-  invoke void @_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull %i.ey)
+  invoke void @_ZNSt8_Rb_treeI10aiVector2tIdES1_St9_IdentityIS1_EN6Assimp3IFC8XYSorterESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull %i.ey)
           to label %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev.exit204 unwind label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -1009,7 +1008,7 @@ bb.y:                                             ; preds = %bb.x
   unreachable
 
 _ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev.exit204: ; preds = %bb.x
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   br label %_ZN6Assimp12LogFunctionsINS_11IFCImporterEE8LogErrorIJRA64_KcEEEvDpOT_.exit
 
 bb.z:                                             ; preds = %_ZNSt3setI10aiVector2tIdEN6Assimp3IFC8XYSorterESaIS1_EED2Ev.exit, %bb.c
@@ -1412,11 +1411,9 @@ _ZNSt6vectorIjSaIjEE9push_backEOj.exit:           ; preds = %bb.bc, %_ZNSt6vecto
   %.sroa.0.0.i = phi ptr [ %storemerge.i.i, %.lr.ph.i.i ], [ %storemerge4.i.i, %.lr.ph.i.i.preheader ] ; 2 uses
   %i.no = phi ptr [ %.sroa.0.0.i, %.lr.ph.i.i ], [ %i.nn, %.lr.ph.i.i.preheader ] ; 2 uses
   %i.np = getelementptr inbounds i8, ptr %.sroa.01.0.i, i64 -24 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.np, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <3 x double>, ptr %i.np, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.np, ptr noundef nonnull align 8 dereferenceable(24) %i.no, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.no, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <3 x double> %.sroa.0.0.copyload, ptr %i.no, align 8
   %storemerge.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 24 ; 2 uses
   %i.nq = icmp ult ptr %storemerge.i.i, %i.np
   br i1 %i.nq, label %.lr.ph.i.i, label %_ZSt7reverseISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS4_SaIS4_EEEEEEvT_SB_.exit, !llvm.loop !74

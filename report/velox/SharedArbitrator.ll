@@ -201,7 +201,6 @@ _ZSt8_DestroyIN8facebook5velox6memory20ArbitrationCandidateEEvPT_.exit: ; preds 
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator39sortCandidatesByReclaimableFreeCapacityERS9_E3$_0EEEvT_SH_T0_T1_"(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16.i = alloca { i64, i64, i64 }, align 8 ; 4 uses
   %3 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
   %4 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -549,7 +548,6 @@ bb.ah:                                            ; preds = %.preheader.i.i
   br i1 %.not.i.i, label %bb.ai, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator39sortCandidatesByReclaimableFreeCapacityERS9_E3$_0EEET_SH_SH_T0_.exit"
 
 bb.ai:                                            ; preds = %bb.ah
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16.i)
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 8
   %i.ds = load <2 x ptr>, ptr %.sroa.014.1.i.i, align 8, !tbaa !118
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 16 ; 3 uses
@@ -558,7 +556,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.dv = load <2 x ptr>, ptr %i.dt, align 8, !tbaa !118
   %i.dw = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dt, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, ptr noundef nonnull align 8 dereferenceable(24) %i.dw, i64 24, i1 false)
+  %.sroa.16.i.sroa.0.0.copyload = load <3 x i64>, ptr %i.dw, align 8
   %i.dx = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -48
   %i.dy = load <2 x ptr>, ptr %.sroa.0.1.i.i, align 8, !tbaa !118
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.1.i.i, i8 0, i64 16, i1 false)
@@ -768,8 +766,7 @@ bb.bg:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit
 
 _ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i.i, %bb.bc, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i.i, %bb.bg
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fi, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16.i)
+  store <3 x i64> %.sroa.16.i.sroa.0.0.copyload, ptr %i.fi, align 8
   br label %bb.af, !llvm.loop !997
 
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator39sortCandidatesByReclaimableFreeCapacityERS9_E3$_0EEET_SH_SH_T0_.exit": ; preds = %bb.ah
@@ -1149,8 +1146,6 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %1) local_unnamed_addr #7 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16 = alloca { i64, i64, i64 }, align 8   ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1158,7 +1153,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   %i.e = load <2 x ptr>, ptr %i.a, align 8, !tbaa !118
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
+  %.sroa.16.sroa.0.0.copyload = load <3 x i64>, ptr %i.b, align 8
   %i.f = tail call noundef nonnull align 8 dereferenceable(56) ptr @_ZN8facebook5velox6memory20ArbitrationCandidateaSEOS2_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %1) #28 ; 0 uses
   %i.g = load ptr, ptr %i.c, align 8, !tbaa !139  ; 8 uses
   store <2 x ptr> %i.d, ptr %1, align 8, !tbaa !118
@@ -1263,15 +1258,13 @@ bb.m:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i, %bb.i, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i, %bb.m
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ao, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
+  store <3 x i64> %.sroa.16.sroa.0.0.copyload, ptr %i.ao, align 8
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator39sortCandidatesByReclaimableFreeCapacityERS9_E3$_0EEEvT_SH_T0_"(ptr %0, ptr nofree readnone captures(address) %1) unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16 = alloca { i64, i64, i64 }, align 8   ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit26, label %.preheader
 
@@ -1299,7 +1292,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ac
   br i1 %i.j, label %bb.c, label %bb.ab
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
   %i.k = getelementptr inbounds nuw i8, ptr %.pn28, i64 64
   %i.l = load <2 x ptr>, ptr %.sroa.0.029, align 8, !tbaa !118
   store ptr null, ptr %i.k, align 8, !tbaa !139
@@ -1308,7 +1300,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load <2 x ptr>, ptr %i.m, align 8, !tbaa !118
   %i.o = getelementptr inbounds nuw i8, ptr %.pn28, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false)
+  %.sroa.16.sroa.0.0.copyload = load <3 x i64>, ptr %i.o, align 8
   %i.p = ptrtoint ptr %.sroa.0.029 to i64
   %i.q = sub i64 %i.p, %i.d                       ; 2 uses
   %i.r = icmp sgt i64 %i.q, 0
@@ -1541,8 +1533,7 @@ bb.aa:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit
 
 _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i, %bb.w, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i, %bb.aa
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
+  store <3 x i64> %.sroa.16.sroa.0.0.copyload, ptr %i.h, align 8
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.b
@@ -1709,7 +1700,6 @@ _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %_ZNSt10shar
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_0EEEvT_SH_T0_T1_"(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16.i = alloca { i64, i64, i64 }, align 8 ; 4 uses
   %3 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
   %4 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -2057,7 +2047,6 @@ bb.ah:                                            ; preds = %.preheader.i.i
   br i1 %.not.i.i, label %bb.ai, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_0EEET_SH_SH_T0_.exit"
 
 bb.ai:                                            ; preds = %bb.ah
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16.i)
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 8
   %i.ds = load <2 x ptr>, ptr %.sroa.014.1.i.i, align 8, !tbaa !118
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 16 ; 3 uses
@@ -2066,7 +2055,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.dv = load <2 x ptr>, ptr %i.dt, align 8, !tbaa !118
   %i.dw = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dt, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, ptr noundef nonnull align 8 dereferenceable(24) %i.dw, i64 24, i1 false)
+  %.sroa.16.i.sroa.0.0.copyload = load <3 x i64>, ptr %i.dw, align 8
   %i.dx = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -48
   %i.dy = load <2 x ptr>, ptr %.sroa.0.1.i.i, align 8, !tbaa !118
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.1.i.i, i8 0, i64 16, i1 false)
@@ -2276,8 +2265,7 @@ bb.bg:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit
 
 _ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i.i, %bb.bc, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i.i, %bb.bg
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fi, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16.i)
+  store <3 x i64> %.sroa.16.i.sroa.0.0.copyload, ptr %i.fi, align 8
   br label %bb.af, !llvm.loop !1015
 
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_0EEET_SH_SH_T0_.exit": ; preds = %bb.ah
@@ -2486,7 +2474,6 @@ _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %bb.q, %_ZN9
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_0EEEvT_SH_T0_"(ptr %0, ptr nofree readnone captures(address) %1) unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16 = alloca { i64, i64, i64 }, align 8   ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit26, label %.preheader
 
@@ -2514,7 +2501,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ac
   br i1 %i.j, label %bb.c, label %bb.ab
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
   %i.k = getelementptr inbounds nuw i8, ptr %.pn28, i64 64
   %i.l = load <2 x ptr>, ptr %.sroa.0.029, align 8, !tbaa !118
   store ptr null, ptr %i.k, align 8, !tbaa !139
@@ -2523,7 +2509,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load <2 x ptr>, ptr %i.m, align 8, !tbaa !118
   %i.o = getelementptr inbounds nuw i8, ptr %.pn28, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false)
+  %.sroa.16.sroa.0.0.copyload = load <3 x i64>, ptr %i.o, align 8
   %i.p = ptrtoint ptr %.sroa.0.029 to i64
   %i.q = sub i64 %i.p, %i.d                       ; 2 uses
   %i.r = icmp sgt i64 %i.q, 0
@@ -2756,8 +2742,7 @@ bb.aa:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit
 
 _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i, %bb.w, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i, %bb.aa
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
+  store <3 x i64> %.sroa.16.sroa.0.0.copyload, ptr %i.h, align 8
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.b
@@ -3021,7 +3006,6 @@ _ZNSt12_Vector_baseISt6vectorIN8facebook5velox6memory20ArbitrationCandidateESaIS
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_1EEEvT_SH_T0_T1_"(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16.i = alloca { i64, i64, i64 }, align 8 ; 4 uses
   %3 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
   %4 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 9 uses
   %5 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
@@ -3424,7 +3408,6 @@ bb.bh:                                            ; preds = %.preheader.i.i
   br i1 %.not.i.i, label %bb.bi, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_1EEET_SH_SH_T0_.exit"
 
 bb.bi:                                            ; preds = %bb.bh
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16.i)
   %i.ge = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 8
   %i.gf = load <2 x ptr>, ptr %.sroa.012.1.i.i, align 8, !tbaa !118
   %i.gg = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 16 ; 3 uses
@@ -3433,7 +3416,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.gi = load <2 x ptr>, ptr %i.gg, align 8, !tbaa !118
   %i.gj = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gg, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, ptr noundef nonnull align 8 dereferenceable(24) %i.gj, i64 24, i1 false)
+  %.sroa.16.i.sroa.0.0.copyload = load <3 x i64>, ptr %i.gj, align 8
   %i.gk = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -48
   %i.gl = load <2 x ptr>, ptr %.sroa.0.1.i.i, align 8, !tbaa !118
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.1.i.i, i8 0, i64 16, i1 false)
@@ -3643,8 +3626,7 @@ bb.cg:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit
 
 _ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i.i, %bb.cc, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i.i, %bb.cg
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hv, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16.i)
+  store <3 x i64> %.sroa.16.i.sroa.0.0.copyload, ptr %i.hv, align 8
   br label %bb.bf, !llvm.loop !1040
 
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_1EEET_SH_SH_T0_.exit": ; preds = %bb.bh
@@ -4047,7 +4029,6 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupSpillCandidatesEOS9_E3$_1EEEvT_SH_T0_"(ptr %0, ptr nofree readnone captures(address) %1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16 = alloca { i64, i64, i64 }, align 8   ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit26, label %.preheader
 
@@ -4071,7 +4052,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ac
   br i1 %i.h, label %bb.c, label %bb.ab
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
   %i.i = getelementptr inbounds nuw i8, ptr %.pn28, i64 64
   %i.j = load <2 x ptr>, ptr %.sroa.0.029, align 8, !tbaa !118
   store ptr null, ptr %i.i, align 8, !tbaa !139
@@ -4080,7 +4060,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load <2 x ptr>, ptr %i.k, align 8, !tbaa !118
   %i.m = getelementptr inbounds nuw i8, ptr %.pn28, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
+  %.sroa.16.sroa.0.0.copyload = load <3 x i64>, ptr %i.m, align 8
   %i.n = ptrtoint ptr %.sroa.0.029 to i64
   %i.o = sub i64 %i.n, %i.c                       ; 2 uses
   %i.p = icmp sgt i64 %i.o, 0
@@ -4313,8 +4293,7 @@ bb.aa:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit
 
 _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i, %bb.w, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i, %bb.aa
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
+  store <3 x i64> %.sroa.16.sroa.0.0.copyload, ptr %i.g, align 8
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.b
@@ -4583,7 +4562,6 @@ _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %_ZNSt12__sh
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupAbortCandidatesEOS9_E3$_0EEEvT_SH_T0_T1_"(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16.i = alloca { i64, i64, i64 }, align 8 ; 4 uses
   %3 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
   %4 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 9 uses
   %5 = alloca %"struct.facebook::velox::memory::ArbitrationCandidate", align 8 ; 8 uses
@@ -4986,7 +4964,6 @@ bb.bu:                                            ; preds = %"_ZN9__gnu_cxx5__op
   br i1 %.not.i.i, label %bb.bv, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupAbortCandidatesEOS9_E3$_0EEET_SH_SH_T0_.exit"
 
 bb.bv:                                            ; preds = %bb.bu
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16.i)
   %i.mr = getelementptr inbounds nuw i8, ptr %.sroa.017.1.i.i, i64 8
   %i.ms = load <2 x ptr>, ptr %.sroa.017.1.i.i, align 8, !tbaa !118
   %i.mt = getelementptr inbounds nuw i8, ptr %.sroa.017.1.i.i, i64 16 ; 3 uses
@@ -4995,7 +4972,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.mv = load <2 x ptr>, ptr %i.mt, align 8, !tbaa !118
   %i.mw = getelementptr inbounds nuw i8, ptr %.sroa.017.1.i.i, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.mt, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, ptr noundef nonnull align 8 dereferenceable(24) %i.mw, i64 24, i1 false)
+  %.sroa.16.i.sroa.0.0.copyload = load <3 x i64>, ptr %i.mw, align 8
   %i.mx = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -48
   %i.my = load <2 x ptr>, ptr %.sroa.0.1.i.i, align 8, !tbaa !118
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.1.i.i, i8 0, i64 16, i1 false)
@@ -5205,8 +5182,7 @@ bb.ct:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit
 
 _ZSt4swapIN8facebook5velox6memory20ArbitrationCandidateEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS7_ESt18is_move_assignableIS7_EEE5valueEvE4typeERS7_SG_.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i.i, %bb.cp, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i.i, %bb.ct
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.oi, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16.i, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16.i)
+  store <3 x i64> %.sroa.16.i.sroa.0.0.copyload, ptr %i.oi, align 8
   %i.pp = getelementptr inbounds nuw i8, ptr %.sroa.017.1.i.i, i64 56
   br label %bb.bo, !llvm.loop !1059
 
@@ -5602,7 +5578,6 @@ bb.ah:                                            ; preds = %.noexc26, %"_ZN9__g
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox6memory20ArbitrationCandidateESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS4_16SharedArbitrator27sortAndGroupAbortCandidatesEOS9_E3$_0EEEvT_SH_T0_"(ptr %0, ptr nofree readnone captures(address) %1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.16 = alloca { i64, i64, i64 }, align 8   ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit26, label %.preheader
 
@@ -5659,7 +5634,6 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.af, label %bb.d, label %bb.ac
 
 bb.d:                                             ; preds = %bb.c, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN8facebook5velox6memory16SharedArbitrator27sortAndGroupAbortCandidatesEOSt6vectorINS4_20ArbitrationCandidateESaIS7_EEE3$_0EclINS_17__normal_iteratorIPS7_S9_EESG_EEbT_T0_.exit"
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
   %i.ag = getelementptr inbounds nuw i8, ptr %.pn28, i64 64
   %i.ah = load <2 x ptr>, ptr %.sroa.0.029, align 8, !tbaa !118
   store ptr null, ptr %i.ag, align 8, !tbaa !139
@@ -5668,7 +5642,7 @@ bb.d:                                             ; preds = %bb.c, %"_ZN9__gnu_c
   %i.aj = load <2 x ptr>, ptr %i.ai, align 8, !tbaa !118
   %i.ak = getelementptr inbounds nuw i8, ptr %.pn28, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, ptr noundef nonnull align 8 dereferenceable(24) %i.ak, i64 24, i1 false)
+  %.sroa.16.sroa.0.0.copyload = load <3 x i64>, ptr %i.ak, align 8
   %i.al = ptrtoint ptr %.sroa.0.029 to i64
   %i.am = sub i64 %i.al, %i.c                     ; 2 uses
   %i.an = icmp sgt i64 %i.am, 0
@@ -5901,8 +5875,7 @@ bb.ab:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit
 
 _ZN8facebook5velox6memory20ArbitrationCandidateD2Ev.exit: ; preds = %_ZNSt10shared_ptrIN8facebook5velox6memory22ArbitrationParticipantEEaSEOS4_.exit.i.i, %bb.x, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i5.i.i, %bb.ab
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.16, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
+  store <3 x i64> %.sroa.16.sroa.0.0.copyload, ptr %i.g, align 8
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.c, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN8facebook5velox6memory16SharedArbitrator27sortAndGroupAbortCandidatesEOSt6vectorINS4_20ArbitrationCandidateESaIS7_EEE3$_0EclINS_17__normal_iteratorIPS7_S9_EESG_EEbT_T0_.exit"

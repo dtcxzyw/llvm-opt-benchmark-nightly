@@ -201,7 +201,6 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZNK6Assimp3IFC12_GLOBAL__N_114CompositeCurve14SampleDiscreteERNS0_8TempMeshEdd(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, double noundef %2, double noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %class.aiVector3t, align 8          ; 4 uses
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.c = load ptr, ptr %i.b, align 8
@@ -315,11 +314,9 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.i.i:                                       ; preds = %bb.f, %.lr.ph.i.i
   %.sroa.0.010.i.i = phi ptr [ %.sroa.0.0.i.i, %.lr.ph.i.i ], [ %.sroa.0.08.i.i, %bb.f ] ; 3 uses
   %.sroa.05.09.i.i = phi ptr [ %i.bd, %.lr.ph.i.i ], [ %i.ba, %bb.f ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.05.09.i.i, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.05.09.i.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.05.09.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.010.i.i, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.010.i.i, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <3 x double> %.sroa.0.0.copyload, ptr %.sroa.0.010.i.i, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i.i, i64 24 ; 2 uses
   %.sroa.0.0.i.i = getelementptr inbounds i8, ptr %.sroa.0.010.i.i, i64 -24 ; 2 uses
   %i.be = icmp ult ptr %i.bd, %.sroa.0.0.i.i
