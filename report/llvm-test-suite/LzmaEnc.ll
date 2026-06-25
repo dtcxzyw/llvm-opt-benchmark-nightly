@@ -201,7 +201,7 @@ bb.cm:                                            ; preds = %.lr.ph.2.i
 
 bb.cn:                                            ; preds = %.critedge.2.i, %bb.cl
   %i.xd = phi i32 [ 0, %bb.cl ], [ %.0730.lcssa.2.i, %.critedge.2.i ] ; 2 uses
-  %.2699.2.i = phi i32 [ %.2699.1.i, %bb.cl ], [ %spec.select.2.i, %.critedge.2.i ] ; 3 uses
+  %.2699.2.i = phi i32 [ %.2699.1.i, %bb.cl ], [ %spec.select.2.i, %.critedge.2.i ] ; 4 uses
   %i.xe = load i32, ptr %i.du, align 4, !tbaa !4
   %i.xf = add i32 %i.xe, 1
   %i.xg = zext i32 %i.xf to i64
@@ -220,6 +220,9 @@ bb.co:                                            ; preds = %bb.cn
 
 bb.cp:                                            ; preds = %bb.co, %bb.cn
   store i32 0, ptr %i.ec, align 4, !tbaa !4
+  %.phi.trans.insert.i = zext nneg i32 %.2699.2.i to i64
+  %.phi.trans.insert1167.i = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.phi.trans.insert.i
+  %.pre.i = load i32, ptr %.phi.trans.insert1167.i, align 4, !tbaa !4
   br label %bb.cr
 
 .preheader973.3.i:                                ; preds = %bb.co
@@ -248,27 +251,26 @@ bb.cq:                                            ; preds = %.lr.ph.3.i
   br label %.critedge.3.i
 
 .critedge.3.i:                                    ; preds = %bb.cq, %.critedge.3.loopexit.split.loop.exit1250.i, %.preheader973.3.i
-  %.0730.lcssa.3.i = phi i32 [ 2, %.preheader973.3.i ], [ %i.xs, %.critedge.3.loopexit.split.loop.exit1250.i ], [ %umax.i231, %bb.cq ] ; 3 uses
+  %.0730.lcssa.3.i = phi i32 [ 2, %.preheader973.3.i ], [ %i.xs, %.critedge.3.loopexit.split.loop.exit1250.i ], [ %umax.i231, %bb.cq ] ; 4 uses
   store i32 %.0730.lcssa.3.i, ptr %i.ec, align 4, !tbaa !4
   %i.xt = zext nneg i32 %.2699.2.i to i64
   %i.xu = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.xt
-  %i.xv = load i32, ptr %i.xu, align 4, !tbaa !4
+  %i.xv = load i32, ptr %i.xu, align 4, !tbaa !4  ; 2 uses
   %i.xw = icmp ugt i32 %.0730.lcssa.3.i, %i.xv
   %spec.select.3.i = select i1 %i.xw, i32 3, i32 %.2699.2.i
+  %4 = tail call i32 @llvm.umax.i32(i32 %.0730.lcssa.3.i, i32 %i.xv)
   br label %bb.cr
 
 bb.cr:                                            ; preds = %.critedge.3.i, %bb.cp
-  %i.xx = phi i32 [ 0, %bb.cp ], [ %.0730.lcssa.3.i, %.critedge.3.i ] ; 2 uses
-  %.2699.3.i.a = phi i32 [ %.2699.2.i, %bb.cp ], [ %spec.select.3.i, %.critedge.3.i ] ; 3 uses
-  %4 = zext nneg i32 %.2699.3.i.a to i64
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %4
-  %6 = load i32, ptr %5, align 4, !tbaa !4        ; 5 uses
+  %i.xx = phi i32 [ %.pre.i, %bb.cp ], [ %4, %.critedge.3.i ] ; 5 uses
+  %.2699.3.i.a = phi i32 [ 0, %bb.cp ], [ %.0730.lcssa.3.i, %.critedge.3.i ] ; 2 uses
+  %.2699.3.i = phi i32 [ %.2699.2.i, %bb.cp ], [ %spec.select.3.i, %.critedge.3.i ] ; 2 uses
   %i.xy = load i32, ptr %i.dp, align 8, !tbaa !52 ; 2 uses
-  %.not806.i = icmp ult i32 %6, %i.xy
+  %.not806.i = icmp ult i32 %i.xx, %i.xy
   br i1 %.not806.i, label %bb.cu, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.xz = add i32 %6, -1                          ; 3 uses
+  %i.xz = add i32 %i.xx, -1                       ; 3 uses
   %.not.i841.i = icmp eq i32 %i.xz, 0
   br i1 %.not.i841.i, label %GetOptimum.exit, label %bb.ct
 
@@ -312,7 +314,7 @@ bb.cx:                                            ; preds = %bb.cu
   %i.ys = getelementptr inbounds i8, ptr %i.vb, i64 %i.yr
   %i.yt = load i8, ptr %i.ys, align 1, !tbaa !21  ; 2 uses
   %.not808.i = icmp ne i8 %i.vc, %i.yt            ; 2 uses
-  %i.yu = or i32 %6, %.0696.i
+  %i.yu = or i32 %i.xx, %.0696.i
   %i.yv = icmp ult i32 %i.yu, 2
   %or.cond832.i = select i1 %i.yv, i1 %.not808.i, i1 false
   br i1 %or.cond832.i, label %GetOptimum.exit, label %bb.cy
@@ -424,7 +426,7 @@ bb.dd:                                            ; preds = %bb.dc
 
 bb.de:                                            ; preds = %bb.dd, %bb.dc, %LitEnc_GetPrice.exit.i
   %i.abs = phi i32 [ -1, %bb.dc ], [ 0, %bb.dd ], [ -1, %LitEnc_GetPrice.exit.i ]
-  %..0696.i = tail call i32 @llvm.umax.i32(i32 %.0696.i, i32 %6) ; 7 uses
+  %..0696.i = tail call i32 @llvm.umax.i32(i32 %.0696.i, i32 %i.xx) ; 7 uses
   %i.abt = icmp ult i32 %..0696.i, 2
   br i1 %i.abt, label %GetOptimum.exit, label %.preheader972.preheader.i
 
@@ -636,7 +638,7 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dl
   br i1 %.not564, label %.loopexit970.2.i, label %bb.dl, !llvm.loop !162
 
 .loopexit970.2.i:                                 ; preds = %bb.dn, %.loopexit970.1.i
-  %i.afw = icmp ult i32 %i.xx, 2
+  %i.afw = icmp ult i32 %.2699.3.i.a, 2
   br i1 %i.afw, label %.loopexit970.3.i, label %GetPureRepPrice.exit.3.i
 
 GetPureRepPrice.exit.3.i:                         ; preds = %.loopexit970.2.i
@@ -664,7 +666,7 @@ GetPureRepPrice.exit.3.i:                         ; preds = %.loopexit970.2.i
   %i.ags = add i32 %i.agd, %i.abb
   %i.agt = add i32 %i.ags, %i.agk
   %i.agu = add i32 %i.agt, %i.agr
-  %i.agv = zext i32 %i.xx to i64
+  %i.agv = zext i32 %.2699.3.i.a to i64
   br label %bb.do
 
 bb.do:                                            ; preds = %bb.dq, %GetPureRepPrice.exit.3.i
@@ -1067,8 +1069,8 @@ bb.gq:                                            ; preds = %bb.gp
   br i1 %i.bqj, label %._crit_edge1058.i, label %.lr.ph1057.i
 
 GetOptimum.exit:                                  ; preds = %bb.de, %bb.cx, %bb.cc, %bb.bv, %bb.cs, %bb.ct, %bb.cv, %bb.cw, %Backward.exit.i, %Backward.exit871.i
-  %.3343 = phi i32 [ %i.ti, %bb.bv ], [ -1, %bb.cc ], [ -1, %bb.cx ], [ %i.ako, %Backward.exit.i ], [ %i.ana, %Backward.exit871.i ], [ %i.yi, %bb.cv ], [ %i.yi, %bb.cw ], [ %.2699.3.i.a, %bb.cs ], [ %.2699.3.i.a, %bb.ct ], [ %i.abs, %bb.de ]
-  %.2.i = phi i32 [ %i.tg, %bb.bv ], [ 1, %bb.cc ], [ 1, %bb.cx ], [ %i.akp, %Backward.exit.i ], [ %i.anb, %Backward.exit871.i ], [ 1, %bb.cv ], [ %.0696.i, %bb.cw ], [ 1, %bb.cs ], [ %6, %bb.ct ], [ 1, %bb.de ]
+  %.3343 = phi i32 [ %i.ti, %bb.bv ], [ -1, %bb.cc ], [ -1, %bb.cx ], [ %i.ako, %Backward.exit.i ], [ %i.ana, %Backward.exit871.i ], [ %i.yi, %bb.cv ], [ %i.yi, %bb.cw ], [ %.2699.3.i, %bb.cs ], [ %.2699.3.i, %bb.ct ], [ %i.abs, %bb.de ]
+  %.2.i = phi i32 [ %i.tg, %bb.bv ], [ 1, %bb.cc ], [ 1, %bb.cx ], [ %i.akp, %Backward.exit.i ], [ %i.anb, %Backward.exit871.i ], [ 1, %bb.cv ], [ %.0696.i, %bb.cw ], [ 1, %bb.cs ], [ %i.xx, %bb.ct ], [ 1, %bb.de ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %GetOptimumFast.exit

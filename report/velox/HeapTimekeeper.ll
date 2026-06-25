@@ -201,38 +201,43 @@ bb.bj:                                            ; preds = %_ZN5folly19Saturati
 
 bb.bk:                                            ; preds = %.lr.ph
   %i.gg = getelementptr inbounds nuw i8, ptr %.sroa.0165.0301, i64 8 ; 2 uses
-  %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !20 ; 4 uses
+  %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !20 ; 5 uses
   store ptr null, ptr %i.gg, align 8, !tbaa !20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gh, i8 0, i64 24, i1 false)
   %i.gi = load ptr, ptr %i.y, align 8, !tbaa !361 ; 2 uses
   %i.gj = icmp eq ptr %i.gi, null
-  br i1 %i.gj, label %bb.bl, label %.preheader.i
+  br i1 %i.gj, label %bb.bl, label %.preheader.preheader.i
+
+.preheader.preheader.i:                           ; preds = %bb.bk
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.gh, i64 24
+  %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !75
+  br label %.preheader.i
 
 bb.bl:                                            ; preds = %bb.bk
   store ptr %i.gh, ptr %i.y, align 8, !tbaa !367
   store ptr null, ptr %i.gh, align 8, !tbaa !136
   br label %_ZN5folly13IntrusiveHeapINS_14HeapTimekeeper7TimeoutESt4lessIvEvNS_17DerivedNodeTraitsIS2_vEEE4pushEPS2_.exit
 
-.preheader.i:                                     ; preds = %bb.bk, %.preheader.i
-  %.032.i.i = phi ptr [ %i.gn, %.preheader.i ], [ %i.gi, %bb.bk ] ; 3 uses
-  %.030.i.i.a = phi ptr [ %.032..0.i.i, %.preheader.i ], [ null, %bb.bk ]
-  %.029.i.i.a = phi ptr [ %i.go, %.preheader.i ], [ %i.y, %bb.bk ]
-  %.0.i.i78.a = phi ptr [ %.0..032.i.i, %.preheader.i ], [ %i.gh, %bb.bk ] ; 3 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.0.i.i78.a, i64 24
-  %i.gk = getelementptr inbounds nuw i8, ptr %.032.i.i, i64 24
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i64, ptr %23, align 8, !tbaa !75
-  %.sroa.0.0.copyload.i2.i.i.i.i.i.i = load i64, ptr %i.gk, align 8, !tbaa !75
+.preheader.i:                                     ; preds = %.preheader.i, %.preheader.preheader.i
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i = phi i64 [ %23, %.preheader.i ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i, %.preheader.preheader.i ] ; 2 uses
+  %.030.i.i.a = phi ptr [ %i.gn, %.preheader.i ], [ %i.gi, %.preheader.preheader.i ] ; 3 uses
+  %.029.i.i.a = phi ptr [ %.032..0.i.i, %.preheader.i ], [ null, %.preheader.preheader.i ]
+  %.0.i.i78.a = phi ptr [ %i.go, %.preheader.i ], [ %i.y, %.preheader.preheader.i ]
+  %.0.i.i78 = phi ptr [ %.0..032.i.i, %.preheader.i ], [ %i.gh, %.preheader.preheader.i ] ; 2 uses
+  %i.gk = getelementptr inbounds nuw i8, ptr %.030.i.i.a, i64 24
+  %.sroa.0.0.copyload.i2.i.i.i.i.i.i = load i64, ptr %i.gk, align 8, !tbaa !75 ; 2 uses
   %i.gl = icmp sgt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, %.sroa.0.0.copyload.i2.i.i.i.i.i.i ; 2 uses
-  %.032..0.i.i = select i1 %i.gl, ptr %.032.i.i, ptr %.0.i.i78.a, !unpredictable !27 ; 6 uses
-  %.0..032.i.i = select i1 %i.gl, ptr %.0.i.i78.a, ptr %.032.i.i, !unpredictable !27 ; 3 uses
+  %.032..0.i.i = select i1 %i.gl, ptr %.030.i.i.a, ptr %.0.i.i78, !unpredictable !27 ; 6 uses
+  %.0..032.i.i = select i1 %i.gl, ptr %.0.i.i78, ptr %.030.i.i.a, !unpredictable !27 ; 3 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %.032..0.i.i, i64 16 ; 2 uses
   %i.gn = load ptr, ptr %i.gm, align 8, !tbaa !368 ; 2 uses
-  store ptr %.032..0.i.i, ptr %.029.i.i.a, align 8, !tbaa !367
+  store ptr %.032..0.i.i, ptr %.0.i.i78.a, align 8, !tbaa !367
   %i.go = getelementptr inbounds nuw i8, ptr %.032..0.i.i, i64 8 ; 3 uses
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !369
   store ptr %i.gp, ptr %i.gm, align 8, !tbaa !368
-  store ptr %.030.i.i.a, ptr %.032..0.i.i, align 8, !tbaa !136
+  store ptr %.029.i.i.a, ptr %.032..0.i.i, align 8, !tbaa !136
   %.not.i.i = icmp eq ptr %i.gn, null
+  %23 = call i64 @llvm.smax.i64(i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 %.sroa.0.0.copyload.i2.i.i.i.i.i.i)
   br i1 %.not.i.i, label %bb.bm, label %.preheader.i, !llvm.loop !370
 
 bb.bm:                                            ; preds = %.preheader.i
@@ -261,13 +266,18 @@ bb.bo:                                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %bb.bn, %bb.bo
   %.0.i79 = phi ptr [ %spec.select.i, %bb.bo ], [ %i.y, %bb.bn ] ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
-  %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !369 ; 3 uses
+  %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !369 ; 4 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gr, i64 16
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !368 ; 3 uses
   %i.hb = icmp eq ptr %i.gy, null                 ; 2 uses
   %i.hc = icmp eq ptr %i.ha, null
   %or.cond.i.i80 = or i1 %i.hb, %i.hc
-  br i1 %or.cond.i.i80, label %bb.bq, label %.preheader.i81
+  br i1 %or.cond.i.i80, label %bb.bq, label %.preheader.preheader.i81
+
+.preheader.preheader.i81:                         ; preds = %bb.bp
+  %.phi.trans.insert.i82 = getelementptr inbounds nuw i8, ptr %i.gy, i64 24
+  %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i83 = load i64, ptr %.phi.trans.insert.i82, align 8, !tbaa !75
+  br label %.preheader.i81
 
 bb.bq:                                            ; preds = %bb.bp
   %i.hd = select i1 %i.hb, ptr %i.ha, ptr %i.gy   ; 3 uses
@@ -279,26 +289,26 @@ bb.br:                                            ; preds = %bb.bq
   store ptr %i.gs, ptr %i.hd, align 8, !tbaa !136
   br label %bb.bt
 
-.preheader.i81:                                   ; preds = %bb.bp, %.preheader.i81
-  %.032.i.i82 = phi ptr [ %i.hh, %.preheader.i81 ], [ %i.ha, %bb.bp ] ; 3 uses
-  %.030.i.i83 = phi ptr [ %.032..0.i.i88, %.preheader.i81 ], [ %i.gs, %bb.bp ]
-  %.029.i.i84 = phi ptr [ %i.hi, %.preheader.i81 ], [ %.0.i79, %bb.bp ]
-  %.0.i.i85 = phi ptr [ %.0..032.i.i89, %.preheader.i81 ], [ %i.gy, %bb.bp ] ; 3 uses
-  %24 = getelementptr inbounds nuw i8, ptr %.0.i.i85, i64 24
-  %i.he = getelementptr inbounds nuw i8, ptr %.032.i.i82, i64 24
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i86 = load i64, ptr %24, align 8, !tbaa !75
-  %.sroa.0.0.copyload.i2.i.i.i.i.i.i87 = load i64, ptr %i.he, align 8, !tbaa !75
-  %i.hf = icmp sgt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i86, %.sroa.0.0.copyload.i2.i.i.i.i.i.i87 ; 2 uses
-  %.032..0.i.i88 = select i1 %i.hf, ptr %.032.i.i82, ptr %.0.i.i85, !unpredictable !27 ; 6 uses
-  %.0..032.i.i89 = select i1 %i.hf, ptr %.0.i.i85, ptr %.032.i.i82, !unpredictable !27 ; 3 uses
+.preheader.i81:                                   ; preds = %.preheader.i81, %.preheader.preheader.i81
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i85 = phi i64 [ %24, %.preheader.i81 ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i83, %.preheader.preheader.i81 ] ; 2 uses
+  %.030.i.i83 = phi ptr [ %i.hh, %.preheader.i81 ], [ %i.ha, %.preheader.preheader.i81 ] ; 3 uses
+  %.029.i.i84 = phi ptr [ %.032..0.i.i88, %.preheader.i81 ], [ %i.gs, %.preheader.preheader.i81 ]
+  %.0.i.i85 = phi ptr [ %i.hi, %.preheader.i81 ], [ %.0.i79, %.preheader.preheader.i81 ]
+  %.0.i.i89 = phi ptr [ %.0..032.i.i89, %.preheader.i81 ], [ %i.gy, %.preheader.preheader.i81 ] ; 2 uses
+  %i.he = getelementptr inbounds nuw i8, ptr %.030.i.i83, i64 24
+  %.sroa.0.0.copyload.i2.i.i.i.i.i.i87 = load i64, ptr %i.he, align 8, !tbaa !75 ; 2 uses
+  %i.hf = icmp sgt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i85, %.sroa.0.0.copyload.i2.i.i.i.i.i.i87 ; 2 uses
+  %.032..0.i.i88 = select i1 %i.hf, ptr %.030.i.i83, ptr %.0.i.i89, !unpredictable !27 ; 6 uses
+  %.0..032.i.i89 = select i1 %i.hf, ptr %.0.i.i89, ptr %.030.i.i83, !unpredictable !27 ; 3 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %.032..0.i.i88, i64 16 ; 2 uses
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !368 ; 2 uses
-  store ptr %.032..0.i.i88, ptr %.029.i.i84, align 8, !tbaa !367
+  store ptr %.032..0.i.i88, ptr %.0.i.i85, align 8, !tbaa !367
   %i.hi = getelementptr inbounds nuw i8, ptr %.032..0.i.i88, i64 8 ; 3 uses
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !369
   store ptr %i.hj, ptr %i.hg, align 8, !tbaa !368
-  store ptr %.030.i.i83, ptr %.032..0.i.i88, align 8, !tbaa !136
+  store ptr %.029.i.i84, ptr %.032..0.i.i88, align 8, !tbaa !136
   %.not.i.i90 = icmp eq ptr %i.hh, null
+  %24 = call i64 @llvm.smax.i64(i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i85, i64 %.sroa.0.0.copyload.i2.i.i.i.i.i.i87)
   br i1 %.not.i.i90, label %bb.bs, label %.preheader.i81, !llvm.loop !370
 
 bb.bs:                                            ; preds = %.preheader.i81
@@ -366,13 +376,18 @@ bb.bz:                                            ; preds = %.lr.ph302
 
 bb.ca:                                            ; preds = %bb.bz
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hz, i64 8
-  %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !369 ; 3 uses
+  %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !369 ; 4 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.hz, i64 16
   %i.ie = load ptr, ptr %i.id, align 8, !tbaa !368 ; 3 uses
   %i.if = icmp eq ptr %i.ic, null                 ; 2 uses
   %i.ig = icmp eq ptr %i.ie, null
   %or.cond.i.i94 = or i1 %i.if, %i.ig
-  br i1 %or.cond.i.i94, label %bb.cb, label %.preheader.i95
+  br i1 %or.cond.i.i94, label %bb.cb, label %.preheader.preheader.i98
+
+.preheader.preheader.i98:                         ; preds = %bb.ca
+  %.phi.trans.insert.i99 = getelementptr inbounds nuw i8, ptr %i.ic, i64 24
+  %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i100 = load i64, ptr %.phi.trans.insert.i99, align 8, !tbaa !75
+  br label %.preheader.i95
 
 bb.cb:                                            ; preds = %bb.ca
   %i.ih = select i1 %i.if, ptr %i.ie, ptr %i.ic   ; 3 uses
@@ -384,26 +399,26 @@ bb.cc:                                            ; preds = %bb.cb
   store ptr null, ptr %i.ih, align 8, !tbaa !136
   br label %_ZN5folly13IntrusiveHeapINS_14HeapTimekeeper7TimeoutESt4lessIvEvNS_17DerivedNodeTraitsIS2_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESA_SA_PSA_.exit.i
 
-.preheader.i95:                                   ; preds = %bb.ca, %.preheader.i95
-  %.032.i.i96 = phi ptr [ %i.il, %.preheader.i95 ], [ %i.ie, %bb.ca ] ; 3 uses
-  %.030.i.i97 = phi ptr [ %.032..0.i.i102, %.preheader.i95 ], [ null, %bb.ca ]
-  %.029.i.i98 = phi ptr [ %i.im, %.preheader.i95 ], [ %i.y, %bb.ca ]
-  %.0.i.i99 = phi ptr [ %.0..032.i.i103, %.preheader.i95 ], [ %i.ic, %bb.ca ] ; 3 uses
-  %25 = getelementptr inbounds nuw i8, ptr %.0.i.i99, i64 24
-  %i.ii = getelementptr inbounds nuw i8, ptr %.032.i.i96, i64 24
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i100 = load i64, ptr %25, align 8, !tbaa !75
-  %.sroa.0.0.copyload.i2.i.i.i.i.i.i101 = load i64, ptr %i.ii, align 8, !tbaa !75
-  %i.ij = icmp sgt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i100, %.sroa.0.0.copyload.i2.i.i.i.i.i.i101 ; 2 uses
-  %.032..0.i.i102 = select i1 %i.ij, ptr %.032.i.i96, ptr %.0.i.i99, !unpredictable !27 ; 6 uses
-  %.0..032.i.i103 = select i1 %i.ij, ptr %.0.i.i99, ptr %.032.i.i96, !unpredictable !27 ; 3 uses
+.preheader.i95:                                   ; preds = %.preheader.i95, %.preheader.preheader.i98
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i102 = phi i64 [ %25, %.preheader.i95 ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i100, %.preheader.preheader.i98 ] ; 2 uses
+  %.030.i.i97 = phi ptr [ %i.il, %.preheader.i95 ], [ %i.ie, %.preheader.preheader.i98 ] ; 3 uses
+  %.029.i.i98 = phi ptr [ %.032..0.i.i102, %.preheader.i95 ], [ null, %.preheader.preheader.i98 ]
+  %.0.i.i99 = phi ptr [ %i.im, %.preheader.i95 ], [ %i.y, %.preheader.preheader.i98 ]
+  %.0.i.i106 = phi ptr [ %.0..032.i.i103, %.preheader.i95 ], [ %i.ic, %.preheader.preheader.i98 ] ; 2 uses
+  %i.ii = getelementptr inbounds nuw i8, ptr %.030.i.i97, i64 24
+  %.sroa.0.0.copyload.i2.i.i.i.i.i.i101 = load i64, ptr %i.ii, align 8, !tbaa !75 ; 2 uses
+  %i.ij = icmp sgt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i102, %.sroa.0.0.copyload.i2.i.i.i.i.i.i101 ; 2 uses
+  %.032..0.i.i102 = select i1 %i.ij, ptr %.030.i.i97, ptr %.0.i.i106, !unpredictable !27 ; 6 uses
+  %.0..032.i.i103 = select i1 %i.ij, ptr %.0.i.i106, ptr %.030.i.i97, !unpredictable !27 ; 3 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %.032..0.i.i102, i64 16 ; 2 uses
   %i.il = load ptr, ptr %i.ik, align 8, !tbaa !368 ; 2 uses
-  store ptr %.032..0.i.i102, ptr %.029.i.i98, align 8, !tbaa !367
+  store ptr %.032..0.i.i102, ptr %.0.i.i99, align 8, !tbaa !367
   %i.im = getelementptr inbounds nuw i8, ptr %.032..0.i.i102, i64 8 ; 3 uses
   %i.in = load ptr, ptr %i.im, align 8, !tbaa !369
   store ptr %i.in, ptr %i.ik, align 8, !tbaa !368
-  store ptr %.030.i.i97, ptr %.032..0.i.i102, align 8, !tbaa !136
+  store ptr %.029.i.i98, ptr %.032..0.i.i102, align 8, !tbaa !136
   %.not.i.i104 = icmp eq ptr %i.il, null
+  %25 = call i64 @llvm.smax.i64(i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i102, i64 %.sroa.0.0.copyload.i2.i.i.i.i.i.i101)
   br i1 %.not.i.i104, label %bb.cd, label %.preheader.i95, !llvm.loop !370
 
 bb.cd:                                            ; preds = %.preheader.i95
@@ -647,13 +662,18 @@ bb.da:                                            ; preds = %bb.cz
 bb.db:                                            ; preds = %.lr.ph306, %_ZN5folly14HeapTimekeeper7Timeout6decRefEv.exit148
   %i.km = phi ptr [ %i.ki, %.lr.ph306 ], [ %i.me, %_ZN5folly14HeapTimekeeper7Timeout6decRefEv.exit148 ] ; 10 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %i.km, i64 8
-  %i.ko = load ptr, ptr %i.kn, align 8, !tbaa !369 ; 3 uses
+  %i.ko = load ptr, ptr %i.kn, align 8, !tbaa !369 ; 4 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %i.km, i64 16
   %i.kq = load ptr, ptr %i.kp, align 8, !tbaa !368 ; 3 uses
   %i.kr = icmp eq ptr %i.ko, null                 ; 2 uses
   %i.ks = icmp eq ptr %i.kq, null
   %or.cond.i.i118 = or i1 %i.kr, %i.ks
-  br i1 %or.cond.i.i118, label %bb.dc, label %.preheader.i119
+  br i1 %or.cond.i.i118, label %bb.dc, label %.preheader.preheader.i125
+
+.preheader.preheader.i125:                        ; preds = %bb.db
+  %.phi.trans.insert.i126 = getelementptr inbounds nuw i8, ptr %i.ko, i64 24
+  %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i127 = load i64, ptr %.phi.trans.insert.i126, align 8, !tbaa !75
+  br label %.preheader.i119
 
 bb.dc:                                            ; preds = %bb.db
   %i.kt = select i1 %i.kr, ptr %i.kq, ptr %i.ko   ; 3 uses
@@ -665,26 +685,26 @@ bb.dd:                                            ; preds = %bb.dc
   store ptr null, ptr %i.kt, align 8, !tbaa !136
   br label %bb.df
 
-.preheader.i119:                                  ; preds = %bb.db, %.preheader.i119
-  %.032.i.i120 = phi ptr [ %i.kx, %.preheader.i119 ], [ %i.kq, %bb.db ] ; 3 uses
-  %.030.i.i121 = phi ptr [ %.032..0.i.i126, %.preheader.i119 ], [ null, %bb.db ]
-  %.029.i.i122 = phi ptr [ %i.ky, %.preheader.i119 ], [ %i.y, %bb.db ]
-  %.0.i.i123 = phi ptr [ %.0..032.i.i127, %.preheader.i119 ], [ %i.ko, %bb.db ] ; 3 uses
-  %26 = getelementptr inbounds nuw i8, ptr %.0.i.i123, i64 24
-  %i.ku = getelementptr inbounds nuw i8, ptr %.032.i.i120, i64 24
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i124 = load i64, ptr %26, align 8, !tbaa !75
-  %.sroa.0.0.copyload.i2.i.i.i.i.i.i125 = load i64, ptr %i.ku, align 8, !tbaa !75
-  %i.kv = icmp sgt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i124, %.sroa.0.0.copyload.i2.i.i.i.i.i.i125 ; 2 uses
-  %.032..0.i.i126 = select i1 %i.kv, ptr %.032.i.i120, ptr %.0.i.i123, !unpredictable !27 ; 6 uses
-  %.0..032.i.i127 = select i1 %i.kv, ptr %.0.i.i123, ptr %.032.i.i120, !unpredictable !27 ; 3 uses
+.preheader.i119:                                  ; preds = %.preheader.i119, %.preheader.preheader.i125
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i129 = phi i64 [ %26, %.preheader.i119 ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.pre.i127, %.preheader.preheader.i125 ] ; 2 uses
+  %.030.i.i121 = phi ptr [ %i.kx, %.preheader.i119 ], [ %i.kq, %.preheader.preheader.i125 ] ; 3 uses
+  %.029.i.i122 = phi ptr [ %.032..0.i.i126, %.preheader.i119 ], [ null, %.preheader.preheader.i125 ]
+  %.0.i.i123 = phi ptr [ %i.ky, %.preheader.i119 ], [ %i.y, %.preheader.preheader.i125 ]
+  %.0.i.i133 = phi ptr [ %.0..032.i.i127, %.preheader.i119 ], [ %i.ko, %.preheader.preheader.i125 ] ; 2 uses
+  %i.ku = getelementptr inbounds nuw i8, ptr %.030.i.i121, i64 24
+  %.sroa.0.0.copyload.i2.i.i.i.i.i.i125 = load i64, ptr %i.ku, align 8, !tbaa !75 ; 2 uses
+  %i.kv = icmp sgt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i129, %.sroa.0.0.copyload.i2.i.i.i.i.i.i125 ; 2 uses
+  %.032..0.i.i126 = select i1 %i.kv, ptr %.030.i.i121, ptr %.0.i.i133, !unpredictable !27 ; 6 uses
+  %.0..032.i.i127 = select i1 %i.kv, ptr %.0.i.i133, ptr %.030.i.i121, !unpredictable !27 ; 3 uses
   %i.kw = getelementptr inbounds nuw i8, ptr %.032..0.i.i126, i64 16 ; 2 uses
   %i.kx = load ptr, ptr %i.kw, align 8, !tbaa !368 ; 2 uses
-  store ptr %.032..0.i.i126, ptr %.029.i.i122, align 8, !tbaa !367
+  store ptr %.032..0.i.i126, ptr %.0.i.i123, align 8, !tbaa !367
   %i.ky = getelementptr inbounds nuw i8, ptr %.032..0.i.i126, i64 8 ; 3 uses
   %i.kz = load ptr, ptr %i.ky, align 8, !tbaa !369
   store ptr %i.kz, ptr %i.kw, align 8, !tbaa !368
-  store ptr %.030.i.i121, ptr %.032..0.i.i126, align 8, !tbaa !136
+  store ptr %.029.i.i122, ptr %.032..0.i.i126, align 8, !tbaa !136
   %.not.i.i128 = icmp eq ptr %i.kx, null
+  %26 = call i64 @llvm.smax.i64(i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i129, i64 %.sroa.0.0.copyload.i2.i.i.i.i.i.i125)
   br i1 %.not.i.i128, label %bb.de, label %.preheader.i119, !llvm.loop !370
 
 bb.de:                                            ; preds = %.preheader.i119
