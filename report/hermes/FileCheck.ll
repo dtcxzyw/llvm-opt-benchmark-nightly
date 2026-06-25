@@ -201,7 +201,8 @@ bb.c:                                             ; preds = %_ZNK4llvh9StringRef
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %.sroa.9.0, i64 2) ; 2 uses
+  %6 = icmp eq i64 %.sroa.9.0, 1
+  %.sroa.speculated = select i1 %6, i64 1, i64 2  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.025.0, i64 %.sroa.speculated
   %i.j = sub i64 %.sroa.9.0, %.sroa.speculated
   br label %bb.j

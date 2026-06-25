@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.f, %bb.i
 .thread:                                          ; preds = %bb.e, %bb.j
   %i.ak = phi i64 [ %i.ai, %bb.j ], [ %.pre, %bb.e ] ; 2 uses
   %.186 = phi ptr [ %i.x, %bb.j ], [ %.062, %bb.e ]
-  %.16485 = phi i32 [ %i.y, %bb.j ], [ %.063, %bb.e ]
+  %.16485 = phi i32 [ %i.y, %bb.j ], [ %.063, %bb.e ] ; 2 uses
   %.16784 = phi i32 [ %i.w, %bb.j ], [ %.066, %bb.e ] ; 3 uses
   %i.al = trunc i64 %i.ak to i32
   %i.am = sub i32 4292, %i.al
@@ -442,7 +442,9 @@ bb.ag:                                            ; preds = %bb.ad, %bb.ac, %bb.
 bb.ah:                                            ; preds = %block_in.exit.thread, %bb.y
   %i.dp = load i32, ptr %i.p, align 8, !tbaa !23
   %i.dq = icmp sgt i32 %i.dp, 0
-  br i1 %i.dq, label %bb.e, label %.loopexit, !llvm.loop !29
+  %3 = icmp ne i32 %.16485, 0
+  %or.cond3 = and i1 %3, %i.dq
+  br i1 %or.cond3, label %bb.e, label %.loopexit, !llvm.loop !29
 
 .loopexit:                                        ; preds = %bb.ah, %.thread, %bb.j, %bb.d
   %.2 = phi i32 [ 0, %bb.d ], [ %.16784, %bb.ah ], [ %.16784, %.thread ], [ %i.w, %bb.j ]
