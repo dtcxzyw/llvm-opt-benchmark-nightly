@@ -201,12 +201,13 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %bb.m
 
 bb.j:                                             ; preds = %bb.i
-  %i.ba = load ptr, ptr %3, align 8, !tbaa !7     ; 7 uses
+  %i.ba = load ptr, ptr %3, align 8, !tbaa !7     ; 8 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !7  ; 2 uses
-  %i.bd = getelementptr inbounds i8, ptr %i.bc, i64 -24 ; 3 uses
+  %9 = getelementptr inbounds i8, ptr %i.bc, i64 -24 ; 3 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   %i.be = load <2 x double>, ptr %i.ba, align 8
-  %i.bf = load <2 x double>, ptr %i.bd, align 8
+  %i.bf = load <2 x double>, ptr %9, align 8
   %i.bg = fcmp oeq <2 x double> %i.be, %i.bf      ; 2 uses
   %i.bh = extractelement <2 x i1> %i.bg, i64 0
   %i.bi = extractelement <2 x i1> %i.bg, i64 1
@@ -214,7 +215,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.0.i, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  store ptr %i.bd, ptr %i.bb, align 8, !tbaa !41
+  store ptr %9, ptr %i.bb, align 8, !tbaa !41
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.h
@@ -228,7 +229,7 @@ bb.m:                                             ; preds = %bb.o, %bb.i
   br label %bb.bd
 
 bb.n:                                             ; preds = %bb.k, %bb.j
-  %i.bl = phi ptr [ %i.bd, %bb.k ], [ %i.bc, %bb.j ] ; 4 uses
+  %i.bl = phi ptr [ %9, %bb.k ], [ %i.bc, %bb.j ] ; 4 uses
   %i.bm = ptrtoint ptr %i.bl to i64
   %i.bn = ptrtoint ptr %i.ba to i64
   %i.bo = sub i64 %i.bm, %i.bn
@@ -244,7 +245,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %.not11.i = icmp eq ptr %i.ba, %i.bl
-  br i1 %.not11.i, label %_ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE.exit.thread, label %.lr.ph.i
+  br i1 %.not11.i, label %_ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE.exit.thread, label %.lr.ph.preheader.i
 
 _ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE.exit.thread: ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.ba, i64 24, i1 false), !tbaa.struct !54
@@ -255,17 +256,21 @@ _ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10Coor
   store double +qnan, ptr %i.bt, align 16, !tbaa !71, !alias.scope !82
   br label %_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit
 
-.lr.ph.i:                                         ; preds = %bb.p, %.lr.ph.i
-  %.013.i = phi ptr [ %.1.i, %.lr.ph.i ], [ %i.ba, %bb.p ] ; 2 uses
-  %.sroa.08.012.i.a = phi ptr [ %i.by, %.lr.ph.i ], [ %i.ba, %bb.p ] ; 3 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.a, i64 8
-  %10 = load double, ptr %9, align 8, !tbaa !53, !noalias !85
-  %i.bv = getelementptr inbounds nuw i8, ptr %.013.i, i64 8
-  %i.bw = load double, ptr %i.bv, align 8, !tbaa !53, !noalias !85
-  %i.bx = fcmp olt double %10, %i.bw
-  %.1.i = select i1 %i.bx, ptr %.sroa.08.012.i.a, ptr %.013.i ; 2 uses
-  %i.by = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.a, i64 24 ; 2 uses
+.lr.ph.preheader.i:                               ; preds = %bb.p
+  %.pre.i = load double, ptr %i.bd, align 8, !tbaa !53, !noalias !85
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
+  %10 = phi double [ %11, %.lr.ph.i ], [ %.pre.i, %.lr.ph.preheader.i ] ; 2 uses
+  %.sroa.08.012.i.a = phi ptr [ %.1.i, %.lr.ph.i ], [ %i.ba, %.lr.ph.preheader.i ]
+  %.sroa.08.012.i = phi ptr [ %i.by, %.lr.ph.i ], [ %i.ba, %.lr.ph.preheader.i ] ; 3 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i, i64 8
+  %i.bw = load double, ptr %i.bv, align 8, !tbaa !53, !noalias !85 ; 2 uses
+  %i.bx = fcmp olt double %i.bw, %10              ; 2 uses
+  %.1.i = select i1 %i.bx, ptr %.sroa.08.012.i, ptr %.sroa.08.012.i.a ; 2 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i, i64 24 ; 2 uses
   %.not.i22 = icmp eq ptr %i.by, %i.bl
+  %11 = select i1 %i.bx, double %i.bw, double %10
   br i1 %.not.i22, label %.lr.ph.i23, label %.lr.ph.i
 
 .lr.ph.i23:                                       ; preds = %.lr.ph.i
@@ -668,28 +673,33 @@ bb.o:                                             ; preds = %_ZSt4copyIN9__gnu_c
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.geos::geom::Coordinate") align 8 captures(none) %0, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(64) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %2, align 8, !tbaa !13     ; 4 uses
+  %i.a = load ptr, ptr %2, align 8, !tbaa !13     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !7    ; 2 uses
   %.not11 = icmp eq ptr %i.a, %i.c
-  br i1 %.not11, label %._crit_edge, label %.lr.ph
+  br i1 %.not11, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %.pre = load double, ptr %.phi.trans.insert, align 8, !tbaa !53
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi ptr [ %i.a, %bb.a ], [ %.1, %.lr.ph ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.0.lcssa, i64 24, i1 false), !tbaa.struct !54
   ret void
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.013 = phi ptr [ %.1, %.lr.ph ], [ %i.a, %bb.a ] ; 2 uses
-  %.sroa.08.012.a = phi ptr [ %i.g, %.lr.ph ], [ %i.a, %bb.a ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.08.012.a, i64 8
-  %4 = load double, ptr %3, align 8, !tbaa !53
-  %i.d = getelementptr inbounds nuw i8, ptr %.013, i64 8
-  %i.e = load double, ptr %i.d, align 8, !tbaa !53
-  %i.f = fcmp olt double %4, %i.e
-  %.1 = select i1 %i.f, ptr %.sroa.08.012.a, ptr %.013 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.08.012.a, i64 24 ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %3 = phi double [ %4, %.lr.ph ], [ %.pre, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.08.012.a = phi ptr [ %.1, %.lr.ph ], [ %i.a, %.lr.ph.preheader ]
+  %.sroa.08.012 = phi ptr [ %i.g, %.lr.ph ], [ %i.a, %.lr.ph.preheader ] ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %.sroa.08.012, i64 8
+  %i.e = load double, ptr %i.d, align 8, !tbaa !53 ; 2 uses
+  %i.f = fcmp olt double %i.e, %3                 ; 2 uses
+  %.1 = select i1 %i.f, ptr %.sroa.08.012, ptr %.sroa.08.012.a ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.08.012, i64 24 ; 2 uses
   %.not = icmp eq ptr %i.g, %i.c
+  %4 = select i1 %i.f, double %i.e, double %3
   br i1 %.not, label %._crit_edge, label %.lr.ph
 }
 

@@ -201,25 +201,30 @@ bb.h:                                             ; preds = %._crit_edge36, %cla
   %i.ar = add i32 %i.aq, %.val27                  ; 2 uses
   %i.as = sext i32 %.val27 to i64
   %i.at = getelementptr inbounds [8 x i8], ptr %.val24, i64 %i.as
-  %i.au = load ptr, ptr %i.at, align 8            ; 2 uses
+  %i.au = load ptr, ptr %i.at, align 8            ; 3 uses
   %.02032 = add i32 %.val27, 1                    ; 2 uses
   %.not2233 = icmp ugt i32 %.02032, %i.ar
-  br i1 %.not2233, label %._crit_edge, label %.lr.ph
+  br i1 %.not2233, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.h, %.lr.ph
-  %.02035.a = phi i32 [ %.020, %.lr.ph ], [ %.02032, %bb.h ] ; 2 uses
-  %.034 = phi ptr [ %spec.select, %.lr.ph ], [ %i.au, %bb.h ] ; 2 uses
-  %2 = getelementptr i8, ptr %.034, i64 4
-  %.0.val = load i32, ptr %2, align 4
-  %i.av = sext i32 %.02035.a to i64
+.lr.ph.preheader:                                 ; preds = %bb.h
+  %.phi.trans.insert40 = getelementptr i8, ptr %i.au, i64 4
+  %.0.val.pre = load i32, ptr %.phi.trans.insert40, align 4
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.02035.a = phi i32 [ %2, %.lr.ph ], [ %.0.val.pre, %.lr.ph.preheader ] ; 2 uses
+  %.02035 = phi i32 [ %.020, %.lr.ph ], [ %.02032, %.lr.ph.preheader ] ; 2 uses
+  %.034 = phi ptr [ %spec.select, %.lr.ph ], [ %i.au, %.lr.ph.preheader ]
+  %i.av = sext i32 %.02035 to i64
   %i.aw = getelementptr inbounds [8 x i8], ptr %.val24, i64 %i.av
   %i.ax = load ptr, ptr %i.aw, align 8            ; 2 uses
   %i.ay = getelementptr i8, ptr %i.ax, i64 4
-  %.val29 = load i32, ptr %i.ay, align 4
-  %i.az = icmp ult i32 %.0.val, %.val29
+  %.val29 = load i32, ptr %i.ay, align 4          ; 2 uses
+  %i.az = icmp ult i32 %.02035.a, %.val29
   %spec.select = select i1 %i.az, ptr %i.ax, ptr %.034 ; 2 uses
-  %.020 = add i32 %.02035.a, 1                    ; 2 uses
+  %.020 = add i32 %.02035, 1                      ; 2 uses
   %.not22 = icmp ugt i32 %.020, %i.ar
+  %2 = tail call i32 @llvm.umax.i32(i32 %.02035.a, i32 %.val29)
   br i1 %.not22, label %._crit_edge, label %.lr.ph, !llvm.loop !125
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.h

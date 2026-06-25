@@ -201,34 +201,35 @@ LoadNumArrayWithRand.exit:                        ; preds = %..loopexit_crit_edg
   %i.ay = phi i64 [ %i.bh, %bb.e ], [ %i.ax, %.lr.ph.i11 ] ; 5 uses
   %.032.i.i = phi i64 [ %.1.i.i, %bb.e ], [ %.028.i, %.lr.ph.i11 ]
   %i.az = icmp ult i64 %i.ay, %i.at
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ay
+  %4 = load i64, ptr %3, align 8, !tbaa !15       ; 3 uses
   br i1 %i.az, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph.i.i
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ay
-  %4 = load i64, ptr %3, align 8, !tbaa !15
   %i.ba = or disjoint i64 %i.ay, 1                ; 2 uses
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ba
-  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !15
+  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !15 ; 2 uses
   %i.bd = icmp slt i64 %4, %i.bc
   %spec.select.i.i = select i1 %i.bd, i64 %i.ba, i64 %i.ay
+  %5 = tail call i64 @llvm.smax.i64(i64 %4, i64 %i.bc)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
-  %.026.i.i.a = phi i64 [ %i.ay, %.lr.ph.i.i ], [ %spec.select.i.i, %bb.b ] ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.032.i.i ; 2 uses
-  %6 = load i64, ptr %5, align 8, !tbaa !15       ; 2 uses
-  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.026.i.i.a ; 2 uses
+  %.026.i.i.a = phi i64 [ %5, %bb.b ], [ %4, %.lr.ph.i.i ] ; 2 uses
+  %.026.i.i = phi i64 [ %spec.select.i.i, %bb.b ], [ %i.ay, %.lr.ph.i.i ] ; 2 uses
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.032.i.i ; 2 uses
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !15 ; 2 uses
-  %i.bg = icmp slt i64 %6, %i.bf
+  %i.bg = icmp slt i64 %i.bf, %.026.i.i.a
   br i1 %i.bg, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store i64 %6, ptr %i.be, align 8, !tbaa !15
-  store i64 %i.bf, ptr %5, align 8, !tbaa !15
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.026.i.i
+  store i64 %i.bf, ptr %6, align 8, !tbaa !15
+  store i64 %.026.i.i.a, ptr %i.be, align 8, !tbaa !15
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.1.i.i = phi i64 [ %.026.i.i.a, %bb.d ], [ %1, %bb.c ] ; 2 uses
+  %.1.i.i = phi i64 [ %.026.i.i, %bb.d ], [ %1, %bb.c ] ; 2 uses
   %i.bh = shl i64 %.1.i.i, 1                      ; 2 uses
   %.not.i.i = icmp ugt i64 %i.bh, %i.at
   br i1 %.not.i.i, label %NumSift.exit.i, label %.lr.ph.i.i, !llvm.loop !27
@@ -250,34 +251,35 @@ bb.f:                                             ; preds = %bb.j, %.lr.ph31.i
   %i.bk = phi i64 [ 0, %.lr.ph31.i ], [ %i.bt, %bb.j ] ; 5 uses
   %.032.i21.i = phi i64 [ 0, %.lr.ph31.i ], [ %.1.i23.i, %bb.j ]
   %i.bl = icmp ult i64 %i.bk, %.130.i
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.bk
+  %8 = load i64, ptr %7, align 8, !tbaa !15       ; 3 uses
   br i1 %i.bl, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.bk
-  %8 = load i64, ptr %7, align 8, !tbaa !15
   %i.bm = or disjoint i64 %i.bk, 1                ; 2 uses
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.bm
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !15
+  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !15 ; 2 uses
   %i.bp = icmp slt i64 %8, %i.bo
   %spec.select.i25.i = select i1 %i.bp, i64 %i.bm, i64 %i.bk
+  %9 = tail call i64 @llvm.smax.i64(i64 %8, i64 %i.bo)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.026.i22.i = phi i64 [ %i.bk, %bb.f ], [ %spec.select.i25.i, %bb.g ] ; 2 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.032.i21.i ; 2 uses
-  %10 = load i64, ptr %9, align 8, !tbaa !15      ; 2 uses
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.026.i22.i ; 2 uses
+  %.026.i22.i = phi i64 [ %9, %bb.g ], [ %8, %bb.f ] ; 2 uses
+  %.026.i23.i = phi i64 [ %spec.select.i25.i, %bb.g ], [ %i.bk, %bb.f ] ; 2 uses
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.032.i21.i ; 2 uses
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !15 ; 2 uses
-  %i.bs = icmp slt i64 %10, %i.br
+  %i.bs = icmp slt i64 %i.br, %.026.i22.i
   br i1 %i.bs, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  store i64 %10, ptr %i.bq, align 8, !tbaa !15
-  store i64 %i.br, ptr %9, align 8, !tbaa !15
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.026.i23.i
+  store i64 %i.br, ptr %10, align 8, !tbaa !15
+  store i64 %.026.i22.i, ptr %i.bq, align 8, !tbaa !15
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.1.i23.i = phi i64 [ %.026.i22.i, %bb.i ], [ %i.bj, %bb.h ] ; 2 uses
+  %.1.i23.i = phi i64 [ %.026.i23.i, %bb.i ], [ %i.bj, %bb.h ] ; 2 uses
   %i.bt = shl i64 %.1.i23.i, 1                    ; 2 uses
   %.not.i24.i = icmp ugt i64 %i.bt, %.130.i
   br i1 %.not.i24.i, label %NumSift.exit26.i, label %bb.f, !llvm.loop !27
@@ -680,21 +682,28 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.j
-  %i.g = phi i64 [ %i.b, %.lr.ph ], [ %i.el, %bb.j ] ; 5 uses
+  %i.g = phi i64 [ %i.b, %.lr.ph ], [ %i.el, %bb.j ] ; 6 uses
   %.075 = phi i64 [ %3, %.lr.ph ], [ %.1, %bb.j ] ; 4 uses
   %i.h = icmp ult i64 %i.g, %4
-  br i1 %i.h, label %bb.c, label %bb.d
+  br i1 %i.h, label %bb.c, label %._crit_edge78
+
+._crit_edge78:                                    ; preds = %bb.b
+  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.g
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !15 ; 2 uses
+  %.phi.trans.insert79 = getelementptr inbounds nuw i8, ptr %1, i64 %.pre
+  %.pre80 = load i8, ptr %.phi.trans.insert79, align 1, !tbaa !32
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.i = or disjoint i64 %i.g, 1                  ; 2 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.g
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !15
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !15   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 %i.k ; 2 uses
-  %i.m = load i8, ptr %i.l, align 1, !tbaa !32    ; 2 uses
+  %i.m = load i8, ptr %i.l, align 1, !tbaa !32    ; 3 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.i
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !15
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !15   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %i.o ; 2 uses
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !32    ; 2 uses
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !32    ; 3 uses
   %i.r = icmp ugt i8 %i.m, %i.q
   %spec.select.i = call i8 @llvm.umin.i8(i8 %i.m, i8 %i.q)
   %i.s = zext i8 %spec.select.i to i64
@@ -703,20 +712,22 @@ bb.c:                                             ; preds = %bb.b
   %..i = zext i1 %i.r to i32
   %.lobit.i = lshr i32 %i.t, 31
   %.025.i = select i1 %i.u, i32 %..i, i32 %.lobit.i
-  %.not53 = icmp eq i32 %.025.i, 0
-  %spec.select.a = select i1 %.not53, i64 %i.g, i64 %i.i
+  %.not53 = icmp eq i32 %.025.i, 0                ; 3 uses
+  %spec.select = select i1 %.not53, i64 %i.g, i64 %i.i
+  %spec.select.a = select i1 %.not53, i64 %i.k, i64 %i.o
+  %5 = select i1 %.not53, i8 %i.m, i8 %i.q
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.050 = phi i64 [ %i.g, %bb.b ], [ %spec.select.a, %bb.c ] ; 5 uses
+bb.d:                                             ; preds = %._crit_edge78, %bb.c
+  %6 = phi i8 [ %.pre80, %._crit_edge78 ], [ %5, %bb.c ] ; 3 uses
+  %7 = phi i64 [ %.pre, %._crit_edge78 ], [ %spec.select.a, %bb.c ]
+  %.050 = phi i64 [ %i.g, %._crit_edge78 ], [ %spec.select, %bb.c ] ; 5 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.075 ; 7 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !15
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 2 uses
   %i.y = load i8, ptr %i.x, align 1, !tbaa !32    ; 2 uses
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.050 ; 5 uses
-  %5 = load i64, ptr %i.z, align 8, !tbaa !15
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 %5 ; 3 uses
-  %6 = load i8, ptr %i.aa, align 1, !tbaa !32     ; 3 uses
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.050 ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 %7 ; 2 uses
   %i.ab = icmp ugt i8 %i.y, %6
   %spec.select.i55 = call i8 @llvm.umin.i8(i8 %i.y, i8 %6)
   %i.ac = zext i8 %spec.select.i55 to i64
@@ -1073,6 +1084,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.fshl.i16(i16, i16, i16) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #4

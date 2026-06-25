@@ -201,53 +201,58 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.o
   %.val2 = phi ptr [ %.val, %bb.o ], [ %.val1, %bb.a ] ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val2, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !3588 ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !3588 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !3590 ; 3 uses
   %i.g = icmp eq ptr %i.d, null                   ; 2 uses
   %i.h = icmp eq ptr %i.f, null
   %or.cond.i.i = or i1 %i.g, %i.h
-  br i1 %or.cond.i.i, label %bb.b, label %.preheader.i
+  br i1 %or.cond.i.i, label %bb.b, label %.preheader.preheader.i
+
+.preheader.preheader.i:                           ; preds = %.lr.ph
+  %.phi.trans.insert.i = getelementptr i8, ptr %i.d, i64 160
+  %.0.i.val.pre.i = load i64, ptr %.phi.trans.insert.i, align 16, !tbaa !3591
+  br label %.preheader.i
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = select i1 %i.g, ptr %i.f, ptr %i.d       ; 3 uses
-  store ptr %i.i, ptr %i.a, align 8, !tbaa !3591
+  store ptr %i.i, ptr %i.a, align 8, !tbaa !3593
   %.not38.i.i = icmp eq ptr %i.i, null
   br i1 %.not38.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store ptr null, ptr %i.i, align 8, !tbaa !3592
+  store ptr null, ptr %i.i, align 8, !tbaa !3594
   br label %bb.e
 
-.preheader.i:                                     ; preds = %.lr.ph, %.preheader.i
-  %.032.i.i = phi ptr [ %i.m, %.preheader.i ], [ %i.f, %.lr.ph ] ; 3 uses
-  %.030.i.i.a = phi ptr [ %.032..0.i.i, %.preheader.i ], [ null, %.lr.ph ]
-  %.029.i.i.a = phi ptr [ %i.n, %.preheader.i ], [ %i.a, %.lr.ph ]
-  %.0.i.i.a = phi ptr [ %.0..032.i.i, %.preheader.i ], [ %i.d, %.lr.ph ] ; 3 uses
-  %1 = getelementptr i8, ptr %.0.i.i.a, i64 160
-  %.0.i.val.i = load i64, ptr %1, align 16, !tbaa !3593
-  %i.j = getelementptr i8, ptr %.032.i.i, i64 160
-  %.032.i.val.i = load i64, ptr %i.j, align 16, !tbaa !3593
+.preheader.i:                                     ; preds = %.preheader.i, %.preheader.preheader.i
+  %.0.i.val.i = phi i64 [ %1, %.preheader.i ], [ %.0.i.val.pre.i, %.preheader.preheader.i ] ; 2 uses
+  %.030.i.i.a = phi ptr [ %i.m, %.preheader.i ], [ %i.f, %.preheader.preheader.i ] ; 3 uses
+  %.029.i.i.a = phi ptr [ %.032..0.i.i, %.preheader.i ], [ null, %.preheader.preheader.i ]
+  %.0.i.i.a = phi ptr [ %i.n, %.preheader.i ], [ %i.a, %.preheader.preheader.i ]
+  %.0.i.i = phi ptr [ %.0..032.i.i, %.preheader.i ], [ %i.d, %.preheader.preheader.i ] ; 2 uses
+  %i.j = getelementptr i8, ptr %.030.i.i.a, i64 160
+  %.032.i.val.i = load i64, ptr %i.j, align 16, !tbaa !3591 ; 2 uses
   %i.k = icmp ugt i64 %.0.i.val.i, %.032.i.val.i  ; 2 uses
-  %.032..0.i.i = select i1 %i.k, ptr %.032.i.i, ptr %.0.i.i.a, !unpredictable !107 ; 6 uses
-  %.0..032.i.i = select i1 %i.k, ptr %.0.i.i.a, ptr %.032.i.i, !unpredictable !107 ; 3 uses
+  %.032..0.i.i = select i1 %i.k, ptr %.030.i.i.a, ptr %.0.i.i, !unpredictable !107 ; 6 uses
+  %.0..032.i.i = select i1 %i.k, ptr %.0.i.i, ptr %.030.i.i.a, !unpredictable !107 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.032..0.i.i, i64 16 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !3590 ; 2 uses
-  store ptr %.032..0.i.i, ptr %.029.i.i.a, align 8, !tbaa !3591
+  store ptr %.032..0.i.i, ptr %.0.i.i.a, align 8, !tbaa !3593
   %i.n = getelementptr inbounds nuw i8, ptr %.032..0.i.i, i64 8 ; 3 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !3588
   store ptr %i.o, ptr %i.l, align 8, !tbaa !3590
-  store ptr %.030.i.i.a, ptr %.032..0.i.i, align 8, !tbaa !3592
+  store ptr %.029.i.i.a, ptr %.032..0.i.i, align 8, !tbaa !3594
   %.not.i.i = icmp eq ptr %i.m, null
+  %1 = tail call i64 @llvm.umax.i64(i64 %.0.i.val.i, i64 %.032.i.val.i)
   br i1 %.not.i.i, label %bb.d, label %.preheader.i, !llvm.loop !3595
 
 bb.d:                                             ; preds = %.preheader.i
-  store ptr %.0..032.i.i, ptr %i.n, align 8, !tbaa !3591
-  store ptr %.032..0.i.i, ptr %.0..032.i.i, align 8, !tbaa !3592
+  store ptr %.0..032.i.i, ptr %i.n, align 8, !tbaa !3593
+  store ptr %.032..0.i.i, ptr %.0..032.i.i, align 8, !tbaa !3594
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
-  store ptr inttoptr (i64 1 to ptr), ptr %.val2, align 8, !tbaa !3592
+  store ptr inttoptr (i64 1 to ptr), ptr %.val2, align 8, !tbaa !3594
   %i.p = getelementptr inbounds nuw i8, ptr %.val2, i64 32
   %i.q = getelementptr inbounds nuw i8, ptr %.val2, i64 120
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !98   ; 4 uses
@@ -650,53 +655,58 @@ bb.k:                                             ; preds = %_ZN5folly6detail17d
 
 bb.l:                                             ; preds = %bb.k
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 8
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !3588 ; 3 uses
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !3588 ; 4 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !3590 ; 3 uses
   %i.bf = icmp eq ptr %i.bc, null                 ; 2 uses
   %i.bg = icmp eq ptr %i.be, null
   %or.cond.i.i.i.i = or i1 %i.bf, %i.bg
-  br i1 %or.cond.i.i.i.i, label %bb.m, label %.preheader.i.i.i
+  br i1 %or.cond.i.i.i.i, label %bb.m, label %.preheader.preheader.i.i.i
+
+.preheader.preheader.i.i.i:                       ; preds = %bb.l
+  %.phi.trans.insert.i.i.i = getelementptr i8, ptr %i.bc, i64 160
+  %.0.i.val.pre.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 16, !tbaa !3591
+  br label %.preheader.i.i.i
 
 bb.m:                                             ; preds = %bb.l
   %i.bh = select i1 %i.bf, ptr %i.be, ptr %i.bc   ; 3 uses
-  store ptr %i.bh, ptr %i.ay, align 8, !tbaa !3591
+  store ptr %i.bh, ptr %i.ay, align 8, !tbaa !3593
   %.not38.i.i.i.i = icmp eq ptr %i.bh, null
   br i1 %.not38.i.i.i.i, label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  store ptr null, ptr %i.bh, align 8, !tbaa !3592
+  store ptr null, ptr %i.bh, align 8, !tbaa !3594
   br label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i
 
-.preheader.i.i.i:                                 ; preds = %bb.l, %.preheader.i.i.i
-  %.032.i.i.i.i = phi ptr [ %i.bl, %.preheader.i.i.i ], [ %i.be, %bb.l ] ; 3 uses
-  %.030.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %bb.l ]
-  %.029.i.i.i.i.a = phi ptr [ %i.bm, %.preheader.i.i.i ], [ %i.ay, %bb.l ]
-  %.0.i.i.i.i.a = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.bc, %bb.l ] ; 3 uses
-  %8 = getelementptr i8, ptr %.0.i.i.i.i.a, i64 160
-  %.0.i.val.i.i.i = load i64, ptr %8, align 16, !tbaa !3593
-  %i.bi = getelementptr i8, ptr %.032.i.i.i.i, i64 160
-  %.032.i.val.i.i.i = load i64, ptr %i.bi, align 16, !tbaa !3593
+.preheader.i.i.i:                                 ; preds = %.preheader.i.i.i, %.preheader.preheader.i.i.i
+  %.0.i.val.i.i.i = phi i64 [ %8, %.preheader.i.i.i ], [ %.0.i.val.pre.i.i.i, %.preheader.preheader.i.i.i ] ; 2 uses
+  %.030.i.i.i.i.a = phi ptr [ %i.bl, %.preheader.i.i.i ], [ %i.be, %.preheader.preheader.i.i.i ] ; 3 uses
+  %.029.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i.a = phi ptr [ %i.bm, %.preheader.i.i.i ], [ %i.ay, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.bc, %.preheader.preheader.i.i.i ] ; 2 uses
+  %i.bi = getelementptr i8, ptr %.030.i.i.i.i.a, i64 160
+  %.032.i.val.i.i.i = load i64, ptr %i.bi, align 16, !tbaa !3591 ; 2 uses
   %i.bj = icmp ugt i64 %.0.i.val.i.i.i, %.032.i.val.i.i.i ; 2 uses
-  %.032..0.i.i.i.i = select i1 %i.bj, ptr %.032.i.i.i.i, ptr %.0.i.i.i.i.a, !unpredictable !107 ; 6 uses
-  %.0..032.i.i.i.i = select i1 %i.bj, ptr %.0.i.i.i.i.a, ptr %.032.i.i.i.i, !unpredictable !107 ; 3 uses
+  %.032..0.i.i.i.i = select i1 %i.bj, ptr %.030.i.i.i.i.a, ptr %.0.i.i.i.i, !unpredictable !107 ; 6 uses
+  %.0..032.i.i.i.i = select i1 %i.bj, ptr %.0.i.i.i.i, ptr %.030.i.i.i.i.a, !unpredictable !107 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 16 ; 2 uses
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !3590 ; 2 uses
-  store ptr %.032..0.i.i.i.i, ptr %.029.i.i.i.i.a, align 8, !tbaa !3591
+  store ptr %.032..0.i.i.i.i, ptr %.0.i.i.i.i.a, align 8, !tbaa !3593
   %i.bm = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 8 ; 3 uses
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !3588
   store ptr %i.bn, ptr %i.bk, align 8, !tbaa !3590
-  store ptr %.030.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.029.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3594
   %.not.i.i.i8.i = icmp eq ptr %i.bl, null
+  %8 = call i64 @llvm.umax.i64(i64 %.0.i.val.i.i.i, i64 %.032.i.val.i.i.i)
   br i1 %.not.i.i.i8.i, label %bb.o, label %.preheader.i.i.i, !llvm.loop !3595
 
 bb.o:                                             ; preds = %.preheader.i.i.i
-  store ptr %.0..032.i.i.i.i, ptr %i.bm, align 8, !tbaa !3591
-  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.0..032.i.i.i.i, ptr %i.bm, align 8, !tbaa !3593
+  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3594
   br label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i
 
 _ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i: ; preds = %bb.o, %bb.n, %bb.m
-  store ptr inttoptr (i64 1 to ptr), ptr %i.az, align 8, !tbaa !3592
+  store ptr inttoptr (i64 1 to ptr), ptr %i.az, align 8, !tbaa !3594
   br label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE3popEv.exit.i.i
 
 _ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE3popEv.exit.i.i: ; preds = %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i, %bb.k
@@ -1099,53 +1109,58 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !3588 ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !3588 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !3590 ; 3 uses
   %i.i = icmp eq ptr %i.f, null                   ; 2 uses
   %i.j = icmp eq ptr %i.h, null
   %or.cond.i.i.i.i = or i1 %i.i, %i.j
-  br i1 %or.cond.i.i.i.i, label %bb.c, label %.preheader.i.i.i
+  br i1 %or.cond.i.i.i.i, label %bb.c, label %.preheader.preheader.i.i.i
+
+.preheader.preheader.i.i.i:                       ; preds = %bb.b
+  %.phi.trans.insert.i.i.i = getelementptr i8, ptr %i.f, i64 160
+  %.0.i.val.pre.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 16, !tbaa !3591
+  br label %.preheader.i.i.i
 
 bb.c:                                             ; preds = %bb.b
   %i.k = select i1 %i.i, ptr %i.h, ptr %i.f       ; 3 uses
-  store ptr %i.k, ptr %i.b, align 8, !tbaa !3591
+  store ptr %i.k, ptr %i.b, align 8, !tbaa !3593
   %.not38.i.i.i.i = icmp eq ptr %i.k, null
   br i1 %.not38.i.i.i.i, label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store ptr null, ptr %i.k, align 8, !tbaa !3592
+  store ptr null, ptr %i.k, align 8, !tbaa !3594
   br label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i
 
-.preheader.i.i.i:                                 ; preds = %bb.b, %.preheader.i.i.i
-  %.032.i.i.i.i = phi ptr [ %i.o, %.preheader.i.i.i ], [ %i.h, %bb.b ] ; 3 uses
-  %.030.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %bb.b ]
-  %.029.i.i.i.i.a = phi ptr [ %i.p, %.preheader.i.i.i ], [ %i.b, %bb.b ]
-  %.0.i.i.i.i.a = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.f, %bb.b ] ; 3 uses
-  %1 = getelementptr i8, ptr %.0.i.i.i.i.a, i64 160
-  %.0.i.val.i.i.i = load i64, ptr %1, align 16, !tbaa !3593
-  %i.l = getelementptr i8, ptr %.032.i.i.i.i, i64 160
-  %.032.i.val.i.i.i = load i64, ptr %i.l, align 16, !tbaa !3593
+.preheader.i.i.i:                                 ; preds = %.preheader.i.i.i, %.preheader.preheader.i.i.i
+  %.0.i.val.i.i.i = phi i64 [ %1, %.preheader.i.i.i ], [ %.0.i.val.pre.i.i.i, %.preheader.preheader.i.i.i ] ; 2 uses
+  %.030.i.i.i.i.a = phi ptr [ %i.o, %.preheader.i.i.i ], [ %i.h, %.preheader.preheader.i.i.i ] ; 3 uses
+  %.029.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i.a = phi ptr [ %i.p, %.preheader.i.i.i ], [ %i.b, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.f, %.preheader.preheader.i.i.i ] ; 2 uses
+  %i.l = getelementptr i8, ptr %.030.i.i.i.i.a, i64 160
+  %.032.i.val.i.i.i = load i64, ptr %i.l, align 16, !tbaa !3591 ; 2 uses
   %i.m = icmp ugt i64 %.0.i.val.i.i.i, %.032.i.val.i.i.i ; 2 uses
-  %.032..0.i.i.i.i = select i1 %i.m, ptr %.032.i.i.i.i, ptr %.0.i.i.i.i.a, !unpredictable !107 ; 6 uses
-  %.0..032.i.i.i.i = select i1 %i.m, ptr %.0.i.i.i.i.a, ptr %.032.i.i.i.i, !unpredictable !107 ; 3 uses
+  %.032..0.i.i.i.i = select i1 %i.m, ptr %.030.i.i.i.i.a, ptr %.0.i.i.i.i, !unpredictable !107 ; 6 uses
+  %.0..032.i.i.i.i = select i1 %i.m, ptr %.0.i.i.i.i, ptr %.030.i.i.i.i.a, !unpredictable !107 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 16 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !3590 ; 2 uses
-  store ptr %.032..0.i.i.i.i, ptr %.029.i.i.i.i.a, align 8, !tbaa !3591
+  store ptr %.032..0.i.i.i.i, ptr %.0.i.i.i.i.a, align 8, !tbaa !3593
   %i.p = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 8 ; 3 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !3588
   store ptr %i.q, ptr %i.n, align 8, !tbaa !3590
-  store ptr %.030.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.029.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3594
   %.not.i.i.i.i = icmp eq ptr %i.o, null
+  %1 = tail call i64 @llvm.umax.i64(i64 %.0.i.val.i.i.i, i64 %.032.i.val.i.i.i)
   br i1 %.not.i.i.i.i, label %bb.e, label %.preheader.i.i.i, !llvm.loop !3595
 
 bb.e:                                             ; preds = %.preheader.i.i.i
-  store ptr %.0..032.i.i.i.i, ptr %i.p, align 8, !tbaa !3591
-  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.0..032.i.i.i.i, ptr %i.p, align 8, !tbaa !3593
+  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3594
   br label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i
 
 _ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i: ; preds = %bb.e, %bb.d, %bb.c
-  store ptr inttoptr (i64 1 to ptr), ptr %i.c, align 8, !tbaa !3592
+  store ptr inttoptr (i64 1 to ptr), ptr %i.c, align 8, !tbaa !3594
   br label %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE3popEv.exit.i.i
 
 _ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE3popEv.exit.i.i: ; preds = %_ZN5folly13IntrusiveHeapINS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeESt4lessIvEvNS_17DerivedNodeTraitsIS6_vEEE5mergeEPNS_17IntrusiveHeapNodeIvEESE_SE_PSE_.exit.i.i.i, %bb.a
@@ -1276,7 +1291,7 @@ bb.a:
   %7 = alloca %"class.std::unique_ptr.203", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #34
   %i.b = tail call noalias noundef nonnull dereferenceable(176) ptr @_Znwm(i64 noundef 176) #43 ; 10 uses
-  store ptr inttoptr (i64 1 to ptr), ptr %i.b, align 8, !tbaa !3592
+  store ptr inttoptr (i64 1 to ptr), ptr %i.b, align 8, !tbaa !3594
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   store ptr null, ptr %i.c, align 16, !tbaa !59
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 80
@@ -1319,7 +1334,7 @@ _ZN5folly12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4N
   %i.x = load i64, ptr %i.w, align 16, !tbaa !79
   store i64 %i.x, ptr %i.v, align 16, !tbaa !79
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  store i64 %2, ptr %i.y, align 16, !tbaa !3593
+  store i64 %2, ptr %i.y, align 16, !tbaa !3591
   store ptr %i.b, ptr %7, align 8, !tbaa !3614
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3673)
@@ -1509,43 +1524,48 @@ _ZN5folly6detail17distributed_mutex18lockImplementationISt6atomicLb1ES3_ImENS1_2
 
 bb.l:                                             ; preds = %_ZN5folly6detail17distributed_mutex18lockImplementationISt6atomicLb1ES3_ImENS1_20RequestWithoutReturnIZNS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS9_mEUlvE_EEEENS1_16DistributedMutexIT_XT0_EE26DistributedMutexStateProxyERSG_RT1_RT2_.exit.i, %_ZN5folly6detail17distributed_mutex18lockImplementationISt6atomicLb1ES3_ImENS1_20RequestWithoutReturnIZNS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS9_mEUlvE_EEEENS1_16DistributedMutexIT_XT0_EE26DistributedMutexStateProxyERSG_RT1_RT2_.exit.thread.i
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.bx = load ptr, ptr %7, align 8, !tbaa !3614  ; 4 uses
+  %i.bx = load ptr, ptr %7, align 8, !tbaa !3614  ; 5 uses
   store ptr null, ptr %7, align 8, !tbaa !3614
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bx, i8 0, i64 24, i1 false)
   %i.by = load ptr, ptr %i.bw, align 8, !tbaa !3380 ; 2 uses
   %i.bz = icmp eq ptr %i.by, null
-  br i1 %i.bz, label %bb.m, label %.preheader.i.i.i
+  br i1 %i.bz, label %bb.m, label %.preheader.preheader.i.i.i
+
+.preheader.preheader.i.i.i:                       ; preds = %bb.l
+  %.phi.trans.insert.i.i.i = getelementptr i8, ptr %i.bx, i64 160
+  %.0.i.val.pre.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 16, !tbaa !3591
+  br label %.preheader.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  store ptr %i.bx, ptr %i.bw, align 8, !tbaa !3591
-  store ptr null, ptr %i.bx, align 8, !tbaa !3592
+  store ptr %i.bx, ptr %i.bw, align 8, !tbaa !3593
+  store ptr null, ptr %i.bx, align 8, !tbaa !3594
   br label %_ZZN5folly12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS3_mENKUlvE_clEv.exit.i
 
-.preheader.i.i.i:                                 ; preds = %bb.l, %.preheader.i.i.i
-  %.032.i.i.i.i = phi ptr [ %i.cd, %.preheader.i.i.i ], [ %i.by, %bb.l ] ; 3 uses
-  %.030.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %bb.l ]
-  %.029.i.i.i.i.a = phi ptr [ %i.ce, %.preheader.i.i.i ], [ %i.bw, %bb.l ]
-  %.0.i.i.i.i.a = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.bx, %bb.l ] ; 3 uses
-  %8 = getelementptr i8, ptr %.0.i.i.i.i.a, i64 160
-  %.0.i.val.i.i.i = load i64, ptr %8, align 16, !tbaa !3593
-  %i.ca = getelementptr i8, ptr %.032.i.i.i.i, i64 160
-  %.032.i.val.i.i.i = load i64, ptr %i.ca, align 16, !tbaa !3593
+.preheader.i.i.i:                                 ; preds = %.preheader.i.i.i, %.preheader.preheader.i.i.i
+  %.0.i.val.i.i.i = phi i64 [ %8, %.preheader.i.i.i ], [ %.0.i.val.pre.i.i.i, %.preheader.preheader.i.i.i ] ; 2 uses
+  %.030.i.i.i.i.a = phi ptr [ %i.cd, %.preheader.i.i.i ], [ %i.by, %.preheader.preheader.i.i.i ] ; 3 uses
+  %.029.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i.a = phi ptr [ %i.ce, %.preheader.i.i.i ], [ %i.bw, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.bx, %.preheader.preheader.i.i.i ] ; 2 uses
+  %i.ca = getelementptr i8, ptr %.030.i.i.i.i.a, i64 160
+  %.032.i.val.i.i.i = load i64, ptr %i.ca, align 16, !tbaa !3591 ; 2 uses
   %i.cb = icmp ugt i64 %.0.i.val.i.i.i, %.032.i.val.i.i.i ; 2 uses
-  %.032..0.i.i.i.i = select i1 %i.cb, ptr %.032.i.i.i.i, ptr %.0.i.i.i.i.a, !unpredictable !107 ; 6 uses
-  %.0..032.i.i.i.i = select i1 %i.cb, ptr %.0.i.i.i.i.a, ptr %.032.i.i.i.i, !unpredictable !107 ; 3 uses
+  %.032..0.i.i.i.i = select i1 %i.cb, ptr %.030.i.i.i.i.a, ptr %.0.i.i.i.i, !unpredictable !107 ; 6 uses
+  %.0..032.i.i.i.i = select i1 %i.cb, ptr %.0.i.i.i.i, ptr %.030.i.i.i.i.a, !unpredictable !107 ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 16 ; 2 uses
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !3590 ; 2 uses
-  store ptr %.032..0.i.i.i.i, ptr %.029.i.i.i.i.a, align 8, !tbaa !3591
+  store ptr %.032..0.i.i.i.i, ptr %.0.i.i.i.i.a, align 8, !tbaa !3593
   %i.ce = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 8 ; 3 uses
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !3588
   store ptr %i.cf, ptr %i.cc, align 8, !tbaa !3590
-  store ptr %.030.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.029.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3594
   %.not.i.i.i8.i = icmp eq ptr %i.cd, null
+  %8 = call i64 @llvm.umax.i64(i64 %.0.i.val.i.i.i, i64 %.032.i.val.i.i.i)
   br i1 %.not.i.i.i8.i, label %bb.n, label %.preheader.i.i.i, !llvm.loop !3595
 
 bb.n:                                             ; preds = %.preheader.i.i.i
-  store ptr %.0..032.i.i.i.i, ptr %i.ce, align 8, !tbaa !3591
-  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.0..032.i.i.i.i, ptr %i.ce, align 8, !tbaa !3593
+  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3594
   br label %_ZZN5folly12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS3_mENKUlvE_clEv.exit.i
 
 _ZZN5folly12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS3_mENKUlvE_clEv.exit.i: ; preds = %bb.n, %bb.m
@@ -1623,43 +1643,48 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.a, align 8, !tbaa !3680 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 3 uses
-  %i.c = load ptr, ptr %.val1, align 8, !tbaa !3614 ; 4 uses
+  %i.c = load ptr, ptr %.val1, align 8, !tbaa !3614 ; 5 uses
   store ptr null, ptr %.val1, align 8, !tbaa !3614
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !3380 ; 2 uses
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %bb.b, label %.preheader.i.i.i
+  br i1 %i.e, label %bb.b, label %.preheader.preheader.i.i.i
+
+.preheader.preheader.i.i.i:                       ; preds = %bb.a
+  %.phi.trans.insert.i.i.i = getelementptr i8, ptr %i.c, i64 160
+  %.0.i.val.pre.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 16, !tbaa !3591
+  br label %.preheader.i.i.i
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.c, ptr %i.b, align 8, !tbaa !3591
-  store ptr null, ptr %i.c, align 8, !tbaa !3592
+  store ptr %i.c, ptr %i.b, align 8, !tbaa !3593
+  store ptr null, ptr %i.c, align 8, !tbaa !3594
   br label %_ZNK5folly6detail17distributed_mutex19TaskWithoutCoalesceIZNS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS6_mEUlvE_NS1_6WaiterISt6atomicEEEclEv.exit
 
-.preheader.i.i.i:                                 ; preds = %bb.a, %.preheader.i.i.i
-  %.032.i.i.i.i = phi ptr [ %i.i, %.preheader.i.i.i ], [ %i.d, %bb.a ] ; 3 uses
-  %.030.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %bb.a ]
-  %.029.i.i.i.i.a = phi ptr [ %i.j, %.preheader.i.i.i ], [ %i.b, %bb.a ]
-  %.0.i.i.i.i.a = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.c, %bb.a ] ; 3 uses
-  %1 = getelementptr i8, ptr %.0.i.i.i.i.a, i64 160
-  %.0.i.val.i.i.i = load i64, ptr %1, align 16, !tbaa !3593
-  %i.f = getelementptr i8, ptr %.032.i.i.i.i, i64 160
-  %.032.i.val.i.i.i = load i64, ptr %i.f, align 16, !tbaa !3593
+.preheader.i.i.i:                                 ; preds = %.preheader.i.i.i, %.preheader.preheader.i.i.i
+  %.0.i.val.i.i.i = phi i64 [ %1, %.preheader.i.i.i ], [ %.0.i.val.pre.i.i.i, %.preheader.preheader.i.i.i ] ; 2 uses
+  %.030.i.i.i.i.a = phi ptr [ %i.i, %.preheader.i.i.i ], [ %i.d, %.preheader.preheader.i.i.i ] ; 3 uses
+  %.029.i.i.i.i.a = phi ptr [ %.032..0.i.i.i.i, %.preheader.i.i.i ], [ null, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i.a = phi ptr [ %i.j, %.preheader.i.i.i ], [ %i.b, %.preheader.preheader.i.i.i ]
+  %.0.i.i.i.i = phi ptr [ %.0..032.i.i.i.i, %.preheader.i.i.i ], [ %i.c, %.preheader.preheader.i.i.i ] ; 2 uses
+  %i.f = getelementptr i8, ptr %.030.i.i.i.i.a, i64 160
+  %.032.i.val.i.i.i = load i64, ptr %i.f, align 16, !tbaa !3591 ; 2 uses
   %i.g = icmp ugt i64 %.0.i.val.i.i.i, %.032.i.val.i.i.i ; 2 uses
-  %.032..0.i.i.i.i = select i1 %i.g, ptr %.032.i.i.i.i, ptr %.0.i.i.i.i.a, !unpredictable !107 ; 6 uses
-  %.0..032.i.i.i.i = select i1 %i.g, ptr %.0.i.i.i.i.a, ptr %.032.i.i.i.i, !unpredictable !107 ; 3 uses
+  %.032..0.i.i.i.i = select i1 %i.g, ptr %.030.i.i.i.i.a, ptr %.0.i.i.i.i, !unpredictable !107 ; 6 uses
+  %.0..032.i.i.i.i = select i1 %i.g, ptr %.0.i.i.i.i, ptr %.030.i.i.i.i.a, !unpredictable !107 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 16 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !3590 ; 2 uses
-  store ptr %.032..0.i.i.i.i, ptr %.029.i.i.i.i.a, align 8, !tbaa !3591
+  store ptr %.032..0.i.i.i.i, ptr %.0.i.i.i.i.a, align 8, !tbaa !3593
   %i.j = getelementptr inbounds nuw i8, ptr %.032..0.i.i.i.i, i64 8 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !3588
   store ptr %i.k, ptr %i.h, align 8, !tbaa !3590
-  store ptr %.030.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.029.i.i.i.i.a, ptr %.032..0.i.i.i.i, align 8, !tbaa !3594
   %.not.i.i.i.i = icmp eq ptr %i.i, null
+  %1 = tail call i64 @llvm.umax.i64(i64 %.0.i.val.i.i.i, i64 %.032.i.val.i.i.i)
   br i1 %.not.i.i.i.i, label %bb.c, label %.preheader.i.i.i, !llvm.loop !3595
 
 bb.c:                                             ; preds = %.preheader.i.i.i
-  store ptr %.0..032.i.i.i.i, ptr %i.j, align 8, !tbaa !3591
-  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3592
+  store ptr %.0..032.i.i.i.i, ptr %i.j, align 8, !tbaa !3593
+  store ptr %.032..0.i.i.i.i, ptr %.0..032.i.i.i.i, align 8, !tbaa !3594
   br label %_ZNK5folly6detail17distributed_mutex19TaskWithoutCoalesceIZNS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS6_mEUlvE_NS1_6WaiterISt6atomicEEEclEv.exit
 
 _ZNK5folly6detail17distributed_mutex19TaskWithoutCoalesceIZNS_12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE7enqueueEOS6_mEUlvE_NS1_6WaiterISt6atomicEEEclEv.exit: ; preds = %bb.b, %bb.c
@@ -2062,10 +2087,10 @@ begin_hunk_3_@llvm.smax.i64
 !3588 = !{!3589, !3382, i64 8}
 !3589 = !{!"_ZTSN5folly17IntrusiveHeapNodeIvEE", !3382, i64 0, !3382, i64 8, !3382, i64 16}
 !3590 = !{!3589, !3382, i64 16}
-!3591 = !{!3382, !3382, i64 0}
-!3592 = !{!3589, !3382, i64 0}
-!3593 = !{!3594, !34, i64 160}
-!3594 = !{!"_ZTSN5folly12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeE", !3589, i64 0, !80, i64 32, !34, i64 160}
+!3591 = !{!3592, !34, i64 160}
+!3592 = !{!"_ZTSN5folly12_GLOBAL__N_116EDFPriorityQueueINS_21CPUThreadPoolExecutor7CPUTaskEE4NodeE", !3589, i64 0, !80, i64 32, !34, i64 160}
+!3593 = !{!3382, !3382, i64 0}
+!3594 = !{!3589, !3382, i64 0}
 !3595 = distinct !{!3595, !3379}
 !3596 = distinct !{null, ptr @_ZN5folly18ThreadPoolExecutor4TaskD2Ev, null, null, null, null, null}
 !3597 = distinct !{null, ptr @_ZN5folly18ThreadPoolExecutor4TaskD2Ev, null, null, null}

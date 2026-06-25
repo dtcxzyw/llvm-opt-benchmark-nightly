@@ -46,7 +46,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
-  %i.q = phi ptr [ %i.p, %bb.d ], [ null, %bb.c ], [ null, %bb.b ] ; 2 uses
+  %i.q = phi ptr [ %i.p, %bb.d ], [ null, %bb.c ], [ null, %bb.b ] ; 3 uses
   %.041.in52 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %.04153 = load ptr, ptr %.041.in52, align 8, !tbaa !26 ; 2 uses
   %.not4854 = icmp eq ptr %.04153, null
@@ -55,11 +55,14 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
 .lr.ph:                                           ; preds = %bb.e
   %i.r = load i32, ptr %i.c, align 8, !tbaa !23
   %i.s = load ptr, ptr %i.d, align 8, !tbaa !24
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.q, i64 4
+  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !27
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
+  %1 = phi i32 [ %.pre, %.lr.ph ], [ %2, %bb.f ]  ; 2 uses
   %.04156 = phi ptr [ %.04153, %.lr.ph ], [ %.041, %bb.f ] ; 2 uses
-  %.04055 = phi ptr [ %i.q, %.lr.ph ], [ %.1, %bb.f ] ; 2 uses
+  %.04055 = phi ptr [ %i.q, %.lr.ph ], [ %.1, %bb.f ]
   %i.t = getelementptr inbounds nuw i8, ptr %.04156, i64 4
   %i.u = load i32, ptr %i.t, align 4, !tbaa !21   ; 3 uses
   %i.v = icmp sgt i32 %i.u, -1
@@ -69,15 +72,14 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.x = zext nneg i32 %i.u to i64
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.x
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !25   ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.z, i64 4
-  %2 = load i32, ptr %1, align 4, !tbaa !27
-  %i.aa = getelementptr inbounds nuw i8, ptr %.04055, i64 4
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !27
-  %i.ac = icmp slt i32 %2, %i.ab
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !27 ; 2 uses
+  %i.ac = icmp slt i32 %i.ab, %1
   %.1 = select i1 %i.ac, ptr %i.z, ptr %.04055    ; 2 uses
   %.041.in = getelementptr inbounds nuw i8, ptr %.04156, i64 24
   %.041 = load ptr, ptr %.041.in, align 8, !tbaa !26 ; 2 uses
   %.not48 = icmp eq ptr %.041, null
+  %2 = tail call i32 @llvm.smin.i32(i32 %i.ab, i32 %1)
   br i1 %.not48, label %._crit_edge, label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e
@@ -122,13 +124,13 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ax, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i, %bb.g
-  %i.ay = tail call i32 (ptr, ptr, ...) @sm_row_contains(ptr noundef nonnull %.064, ptr noundef nonnull %i.ap) #3
+  %i.ay = tail call i32 (ptr, ptr, ...) @sm_row_contains(ptr noundef nonnull %.064, ptr noundef nonnull %i.ap) #4
   %.not50 = icmp eq i32 %i.ay, 0
   br i1 %.not50, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.az = load i32, ptr %i.ap, align 8, !tbaa !35
-  tail call void (ptr, i32, ...) @sm_delrow(ptr noundef nonnull %0, i32 noundef %i.az) #3
+  tail call void (ptr, i32, ...) @sm_delrow(ptr noundef nonnull %0, i32 noundef %i.az) #4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.h, %bb.i, %bb.k, %bb.j
@@ -189,7 +191,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
-  %i.t = phi ptr [ %i.s, %bb.d ], [ null, %bb.c ], [ null, %bb.b ] ; 2 uses
+  %i.t = phi ptr [ %i.s, %bb.d ], [ null, %bb.c ], [ null, %bb.b ] ; 3 uses
   %.045.in58 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %.04559 = load ptr, ptr %.045.in58, align 8, !tbaa !30 ; 2 uses
   %.not5460 = icmp eq ptr %.04559, null
@@ -198,11 +200,14 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
 .lr.ph:                                           ; preds = %bb.e
   %i.u = load i32, ptr %i.e, align 8, !tbaa !32
   %i.v = load ptr, ptr %0, align 8, !tbaa !33
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.t, i64 4
+  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !34
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
+  %2 = phi i32 [ %.pre, %.lr.ph ], [ %3, %bb.f ]  ; 2 uses
   %.04562 = phi ptr [ %.04559, %.lr.ph ], [ %.045, %bb.f ] ; 2 uses
-  %.04661 = phi ptr [ %i.t, %.lr.ph ], [ %.147, %bb.f ] ; 2 uses
+  %.04661 = phi ptr [ %i.t, %.lr.ph ], [ %.147, %bb.f ]
   %i.w = load i32, ptr %.04562, align 8, !tbaa !31 ; 3 uses
   %i.x = icmp sgt i32 %i.w, -1
   tail call void @llvm.assume(i1 %i.x)
@@ -211,15 +216,14 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.z = zext nneg i32 %i.w to i64
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.z
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !17 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
-  %3 = load i32, ptr %2, align 4, !tbaa !34
-  %i.ac = getelementptr inbounds nuw i8, ptr %.04661, i64 4
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !34
-  %i.ae = icmp slt i32 %3, %i.ad
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
+  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !34 ; 2 uses
+  %i.ae = icmp slt i32 %i.ad, %2
   %.147 = select i1 %i.ae, ptr %i.ab, ptr %.04661 ; 2 uses
   %.045.in = getelementptr inbounds nuw i8, ptr %.04562, i64 8
   %.045 = load ptr, ptr %.045.in, align 8, !tbaa !30 ; 2 uses
   %.not54 = icmp eq ptr %.045, null
+  %3 = tail call i32 @llvm.smin.i32(i32 %i.ad, i32 %2)
   br i1 %.not54, label %._crit_edge, label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e
@@ -286,13 +290,13 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bh, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n, %bb.l
-  %i.bi = tail call i32 (ptr, ptr, ...) @sm_col_contains(ptr noundef nonnull %.069, ptr noundef nonnull %i.aq) #3
+  %i.bi = tail call i32 (ptr, ptr, ...) @sm_col_contains(ptr noundef nonnull %.069, ptr noundef nonnull %i.aq) #4
   %.not57 = icmp eq i32 %i.bi, 0
   br i1 %.not57, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bj = load i32, ptr %.069, align 8, !tbaa !40
-  tail call void (ptr, i32, ...) @sm_delcol(ptr noundef %0, i32 noundef %i.bj) #3
+  tail call void (ptr, i32, ...) @sm_delcol(ptr noundef %0, i32 noundef %i.bj) #4
   br label %.loopexit
 
 bb.q:                                             ; preds = %bb.m, %bb.n, %bb.o, %bb.k
@@ -322,10 +326,14 @@ declare void @sm_delcol(...) local_unnamed_addr #1
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

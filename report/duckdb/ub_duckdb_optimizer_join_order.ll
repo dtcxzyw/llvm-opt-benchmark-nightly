@@ -201,26 +201,31 @@ bb.w:                                             ; preds = %.preheader140, %._c
 .lr.ph39.i:                                       ; preds = %bb.w, %._crit_edge35.i
   %.sroa.010.037.i = phi ptr [ %i.dk, %._crit_edge35.i ], [ %.val, %bb.w ] ; 5 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.010.037.i, i64 16 ; 3 uses
-  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !167, !noalias !701 ; 4 uses
+  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !167, !noalias !701 ; 5 uses
   %i.cz = icmp eq ptr %i.cy, null
   br i1 %i.cz, label %_ZSt11max_elementINSt8__detail20_Node_const_iteratorImLb1ELb0EEEET_S3_S3_.exit.i, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %.lr.ph39.i
   %i.da = load ptr, ptr %i.cy, align 8, !tbaa !33 ; 2 uses
   %.not9.i.i.i = icmp eq ptr %i.da, null
-  br i1 %.not9.i.i.i, label %_ZSt11max_elementINSt8__detail20_Node_const_iteratorImLb1ELb0EEEET_S3_S3_.exit.i, label %.lr.ph.i.i.i
+  br i1 %.not9.i.i.i, label %_ZSt11max_elementINSt8__detail20_Node_const_iteratorImLb1ELb0EEEET_S3_S3_.exit.i, label %.lr.ph.preheader.i.i.i
 
-.lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i
-  %15 = phi ptr [ %i.de, %.lr.ph.i.i.i ], [ %i.da, %.preheader.i.i.i ] ; 3 uses
-  %.sroa.02.010.i.i.i.a = phi ptr [ %spec.select.i.i.i, %.lr.ph.i.i.i ], [ %i.cy, %.preheader.i.i.i ] ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.02.010.i.i.i.a, i64 8
-  %17 = load i64, ptr %16, align 8, !tbaa !19
-  %i.db = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %i.dc = load i64, ptr %i.db, align 8, !tbaa !19
-  %i.dd = icmp ult i64 %17, %i.dc
-  %spec.select.i.i.i = select i1 %i.dd, ptr %15, ptr %.sroa.02.010.i.i.i.a ; 2 uses
-  %i.de = load ptr, ptr %15, align 8, !tbaa !33   ; 2 uses
+.lr.ph.preheader.i.i.i:                           ; preds = %.preheader.i.i.i
+  %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
+  %.pre.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 8, !tbaa !19
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
+  %15 = phi i64 [ %16, %.lr.ph.i.i.i ], [ %.pre.i.i.i, %.lr.ph.preheader.i.i.i ] ; 2 uses
+  %.sroa.02.010.i.i.i.a = phi ptr [ %i.de, %.lr.ph.i.i.i ], [ %i.da, %.lr.ph.preheader.i.i.i ] ; 3 uses
+  %.sroa.02.010.i.i.i = phi ptr [ %spec.select.i.i.i, %.lr.ph.i.i.i ], [ %i.cy, %.lr.ph.preheader.i.i.i ]
+  %i.db = getelementptr inbounds nuw i8, ptr %.sroa.02.010.i.i.i.a, i64 8
+  %i.dc = load i64, ptr %i.db, align 8, !tbaa !19 ; 2 uses
+  %i.dd = icmp ult i64 %15, %i.dc
+  %spec.select.i.i.i = select i1 %i.dd, ptr %.sroa.02.010.i.i.i.a, ptr %.sroa.02.010.i.i.i ; 2 uses
+  %i.de = load ptr, ptr %.sroa.02.010.i.i.i.a, align 8, !tbaa !33 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.de, null
+  %16 = call i64 @llvm.umax.i64(i64 %15, i64 %i.dc)
   br i1 %.not.i.i.i, label %_ZSt11max_elementINSt8__detail20_Node_const_iteratorImLb1ELb0EEEET_S3_S3_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !704
 
 _ZSt11max_elementINSt8__detail20_Node_const_iteratorImLb1ELb0EEEET_S3_S3_.exit.i: ; preds = %.lr.ph.i.i.i, %.preheader.i.i.i, %.lr.ph39.i
