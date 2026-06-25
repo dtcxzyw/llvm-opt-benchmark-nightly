@@ -201,7 +201,7 @@ bb.ak:                                            ; preds = %bb.ai
   store i64 %i.ik, ptr %i.ii, align 8, !tbaa !70
   br label %read_buf.exit250
 
-read_buf.exit250:                                 ; preds = %bb.ai, %bb.aj, %bb.ak
+read_buf.exit250:                                 ; preds = %bb.ak, %bb.aj, %bb.ai
   %i.il = load ptr, ptr %i.ht, align 8, !tbaa !72
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 %i.ia
   store ptr %i.im, ptr %i.ht, align 8, !tbaa !72

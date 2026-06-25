@@ -201,8 +201,8 @@ _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i: ; preds = %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph.i
-  %.029.i = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph.i ], [ %5, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i ]
-  %.01828.i = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph.i ], [ %6, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i ] ; 2 uses
+  %.029.i = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph.i ], [ %8, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i ]
+  %.01828.i = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph.i ], [ %7, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i ] ; 2 uses
   %.sroa.6.027.i = phi ptr [ %.sroa.11.1135, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph.i ], [ %i.gq, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i ] ; 2 uses
   %.sroa.0.026.i = phi i64 [ %.sroa.0.1136, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph.i ], [ %i.gp, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i ] ; 3 uses
   %i.fv = add i64 %.sroa.0.026.i, %3              ; 2 uses
@@ -236,25 +236,25 @@ _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8
   %i.go = sext i32 %narrow.i.i.i to i64
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %.sroa.0.026.i, i64 %i.go) ; 5 uses
   store i64 %.sroa.speculated.i, ptr %i.gd, align 8, !tbaa !8
-  %5 = add i64 %.sroa.speculated.i, %.029.i       ; 8 uses
-  %6 = add nuw nsw i64 %.01828.i, 1               ; 3 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.fu, i64 %.01828.i
-  store ptr %i.gd, ptr %7, align 8, !tbaa !17
-  %8 = getelementptr inbounds nuw i8, ptr %i.gd, i64 13
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %8, ptr align 1 %.sroa.6.027.i, i64 %.sroa.speculated.i, i1 false)
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.fu, i64 %.01828.i
+  store ptr %i.gd, ptr %5, align 8, !tbaa !17
+  %6 = getelementptr inbounds nuw i8, ptr %i.gd, i64 13
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %.sroa.6.027.i, i64 %.sroa.speculated.i, i1 false)
+  %7 = add nuw nsw i64 %.01828.i, 1               ; 3 uses
+  %8 = add i64 %.sroa.speculated.i, %.029.i       ; 8 uses
   %i.gp = sub nuw i64 %.sroa.0.026.i, %.sroa.speculated.i ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %.sroa.6.027.i, i64 %.sroa.speculated.i
   %i.gr = icmp eq i64 %i.gp, 0
-  %i.gs = icmp eq i64 %6, 6
+  %i.gs = icmp eq i64 %7, 6
   %.not19.i = select i1 %i.gr, i1 true, i1 %i.gs
   br i1 %.not19.i, label %_ZN4absl12lts_2025051213cord_internal12CordRepBtree7NewLeafILNS2_8EdgeTypeE1EEEPS2_St17basic_string_viewIcSt11char_traitsIcEEm.exit, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i, !llvm.loop !57
 
 _ZN4absl12lts_2025051213cord_internal12CordRepBtree7NewLeafILNS2_8EdgeTypeE1EEEPS2_St17basic_string_viewIcSt11char_traitsIcEEm.exit: ; preds = %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.i
-  %i.gt = trunc i64 %6 to i8
+  %i.gt = trunc i64 %7 to i8
   %i.gu = getelementptr inbounds nuw i8, ptr %i.ft, i64 15
-  store i64 %5, ptr %i.ft, align 8, !tbaa !8
+  store i64 %8, ptr %i.ft, align 8, !tbaa !8
   store i8 %i.gt, ptr %i.gu, align 1, !tbaa !7
-  %.not = icmp eq i64 %5, %.sroa.0.1136
+  %.not = icmp eq i64 %8, %.sroa.0.1136
   br i1 %.not, label %.thread100, label %bb.n
 
 .thread100:                                       ; preds = %_ZN4absl12lts_2025051213cord_internal12CordRepBtree7NewLeafILNS2_8EdgeTypeE1EEEPS2_St17basic_string_viewIcSt11char_traitsIcEEm.exit
@@ -262,17 +262,17 @@ _ZN4absl12lts_2025051213cord_internal12CordRepBtree7NewLeafILNS2_8EdgeTypeE1EEEP
   br label %bb.s
 
 bb.n:                                             ; preds = %_ZN4absl12lts_2025051213cord_internal12CordRepBtree7NewLeafILNS2_8EdgeTypeE1EEEPS2_St17basic_string_viewIcSt11char_traitsIcEEm.exit
-  %i.gw = icmp ugt i64 %5, %.sroa.0.1136
+  %i.gw = icmp ugt i64 %8, %.sroa.0.1136
   br i1 %i.gw, label %bb.o, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEES9_m.exit
 
 bb.o:                                             ; preds = %bb.n
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.40, ptr noundef nonnull @.str.39, i64 noundef %5, i64 noundef %.sroa.0.1136) #19
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.40, ptr noundef nonnull @.str.39, i64 noundef %8, i64 noundef %.sroa.0.1136) #19
   unreachable
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEES9_m.exit: ; preds = %bb.n
-  %i.gx = sub nuw i64 %.sroa.0.1136, %5
-  %i.gy = getelementptr inbounds nuw i8, ptr %.sroa.11.1135, i64 %5
-  %i.gz = call fastcc noundef ptr @_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_115StackOperationsILNS1_12CordRepBtree8EdgeTypeE1EE6UnwindILb0EEEPS4_S8_imNS4_8OpResultE(ptr noundef nonnull align 8 dereferenceable(104) %4, ptr noundef %.261138, i32 noundef %.063137, i64 noundef %5, ptr nonnull %i.ft, i32 2) ; 4 uses
+  %i.gx = sub nuw i64 %.sroa.0.1136, %8
+  %i.gy = getelementptr inbounds nuw i8, ptr %.sroa.11.1135, i64 %8
+  %i.gz = call fastcc noundef ptr @_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_115StackOperationsILNS1_12CordRepBtree8EdgeTypeE1EE6UnwindILb0EEEPS4_S8_imNS4_8OpResultE(ptr noundef nonnull align 8 dereferenceable(104) %4, ptr noundef %.261138, i32 noundef %.063137, i64 noundef %8, ptr nonnull %i.ft, i32 2) ; 4 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 13
   %i.hb = load i8, ptr %i.ha, align 1, !tbaa !7   ; 4 uses
   %i.hc = zext i8 %i.hb to i32                    ; 2 uses
@@ -530,8 +530,8 @@ _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit: ; preds = %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit
-  %.029 = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph ], [ %3, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit ]
-  %.01828 = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph ], [ %4, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit ] ; 2 uses
+  %.029 = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph ], [ %6, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit ]
+  %.01828 = phi i64 [ 0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph ], [ %5, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit ] ; 2 uses
   %.sroa.6.027 = phi ptr [ %1, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph ], [ %i.ad, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit ] ; 2 uses
   %.sroa.0.026 = phi i64 [ %0, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit.lr.ph ], [ %i.ac, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit ] ; 3 uses
   %i.h = add i64 %.sroa.0.026, %2                 ; 2 uses
@@ -567,26 +567,26 @@ _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8
   %i.ab = sext i32 %narrow.i.i to i64
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %.sroa.0.026, i64 %i.ab) ; 5 uses
   store i64 %.sroa.speculated, ptr %i.p, align 8, !tbaa !8
-  %3 = add i64 %.sroa.speculated, %.029           ; 2 uses
-  %4 = add nuw nsw i64 %.01828, 1                 ; 3 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.01828
-  store ptr %i.p, ptr %5, align 8, !tbaa !17
-  %6 = getelementptr inbounds nuw i8, ptr %i.p, i64 13
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %.sroa.6.027, i64 %.sroa.speculated, i1 false)
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.01828
+  store ptr %i.p, ptr %3, align 8, !tbaa !17
+  %4 = getelementptr inbounds nuw i8, ptr %i.p, i64 13
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %.sroa.6.027, i64 %.sroa.speculated, i1 false)
+  %5 = add nuw nsw i64 %.01828, 1                 ; 3 uses
+  %6 = add i64 %.sroa.speculated, %.029           ; 2 uses
   %i.ac = sub nuw i64 %.sroa.0.026, %.sroa.speculated ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.6.027, i64 %.sroa.speculated
   %i.ae = icmp eq i64 %i.ac, 0
-  %i.af = icmp eq i64 %4, 6
+  %i.af = icmp eq i64 %5, 6
   %.not19 = select i1 %i.ae, i1 true, i1 %i.af
   br i1 %.not19, label %._crit_edge.loopexit, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit, !llvm.loop !57
 
 ._crit_edge.loopexit:                             ; preds = %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_17ConsumeILNS1_12CordRepBtree8EdgeTypeE1EEESt17basic_string_viewIcSt11char_traitsIcEEPcS9_m.exit
-  %i.ag = trunc i64 %4 to i8
+  %i.ag = trunc i64 %5 to i8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
   %.018.lcssa = phi i8 [ 0, %bb.a ], [ %i.ag, %._crit_edge.loopexit ]
-  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %3, %._crit_edge.loopexit ]
+  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %6, %._crit_edge.loopexit ]
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 15
   store i64 %.0.lcssa, ptr %i.a, align 8, !tbaa !8
   store i8 %.018.lcssa, ptr %i.ah, align 1, !tbaa !7
