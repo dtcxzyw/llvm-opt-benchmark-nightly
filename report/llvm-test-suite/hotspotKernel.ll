@@ -199,12 +199,12 @@ vector.body273:                                   ; preds = %vector.memcheck256,
   %i.jm = fadd <2 x double> %i.jl, %i.jj
   %i.jn = fmul <2 x double> %broadcast.splat272, %i.jm
   %i.jo = fadd <2 x double> %i.ix, %i.jn          ; 2 uses
-  %9 = extractelement <2 x double> %i.jo, i64 1
-  %i.jp = getelementptr inbounds nuw [4096 x i8], ptr %0, i64 %i.hn ; 2 uses
-  %10 = getelementptr inbounds nuw [4096 x i8], ptr %0, i64 %i.ho
+  %9 = getelementptr inbounds nuw [4096 x i8], ptr %0, i64 %i.hn ; 2 uses
+  %i.jp = getelementptr inbounds nuw [4096 x i8], ptr %0, i64 %i.ho
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 4088
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 4088
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4088
-  store double %9, ptr %11, align 8, !tbaa !8, !alias.scope !39, !noalias !41
+  %11 = extractelement <2 x double> %i.jo, i64 1
+  store double %11, ptr %i.jq, align 8, !tbaa !8, !alias.scope !39, !noalias !41
   %i.jr = load double, ptr %i.hp, align 8, !tbaa !8, !alias.scope !34
   %i.js = load double, ptr %i.hq, align 8, !tbaa !8, !alias.scope !34
   %i.jt = insertelement <2 x double> poison, double %i.jr, i64 0
@@ -240,9 +240,9 @@ vector.body273:                                   ; preds = %vector.memcheck256,
   %i.kx = fmul <2 x double> %broadcast.splat272, %i.kw
   %i.ky = fadd <2 x double> %i.kh, %i.kx          ; 2 uses
   %i.kz = extractelement <2 x double> %i.ky, i64 0
-  store double %i.kz, ptr %i.jp, align 8, !tbaa !8, !alias.scope !39, !noalias !41
+  store double %i.kz, ptr %9, align 8, !tbaa !8, !alias.scope !39, !noalias !41
   %i.la = shufflevector <2 x double> %i.jo, <2 x double> %i.ky, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %i.la, ptr %i.jq, align 8, !tbaa !8, !alias.scope !39, !noalias !41
+  store <2 x double> %i.la, ptr %10, align 8, !tbaa !8, !alias.scope !39, !noalias !41
   %index.next275 = add nuw i64 %index274, 2       ; 2 uses
   %i.lb = icmp eq i64 %index.next275, 510
   br i1 %i.lb, label %.preheader.preheader, label %vector.body273, !llvm.loop !42

@@ -200,18 +200,18 @@ vector.body478:                                   ; preds = %vector.body478, %ve
   %i.nn = add <4 x i32> %i.nm, splat (i32 1)
   %i.no = uitofp nneg <4 x i32> %i.nn to <4 x float>
   %i.np = fmul <4 x float> %broadcast.splat477, %i.no ; 4 uses
-  %3 = extractelement <4 x float> %i.np, i64 0
-  %4 = extractelement <4 x float> %i.np, i64 1
-  %5 = extractelement <4 x float> %i.np, i64 2
-  %6 = extractelement <4 x float> %i.np, i64 3
-  %7 = getelementptr inbounds nuw i8, ptr %i.ni, i64 4
-  %8 = getelementptr inbounds nuw i8, ptr %i.nj, i64 44
-  %9 = getelementptr inbounds nuw i8, ptr %i.nk, i64 84
-  %10 = getelementptr inbounds nuw i8, ptr %i.nl, i64 124
-  store float %3, ptr %7, align 4, !tbaa !28
-  store float %4, ptr %8, align 4, !tbaa !28
-  store float %5, ptr %9, align 4, !tbaa !28
-  store float %6, ptr %10, align 4, !tbaa !28
+  %3 = getelementptr inbounds nuw i8, ptr %i.ni, i64 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.nj, i64 44
+  %5 = getelementptr inbounds nuw i8, ptr %i.nk, i64 84
+  %6 = getelementptr inbounds nuw i8, ptr %i.nl, i64 124
+  %7 = extractelement <4 x float> %i.np, i64 0
+  store float %7, ptr %3, align 4, !tbaa !28
+  %8 = extractelement <4 x float> %i.np, i64 1
+  store float %8, ptr %4, align 4, !tbaa !28
+  %9 = extractelement <4 x float> %i.np, i64 2
+  store float %9, ptr %5, align 4, !tbaa !28
+  %10 = extractelement <4 x float> %i.np, i64 3
+  store float %10, ptr %6, align 4, !tbaa !28
   %index.next481 = add nuw i64 %index479, 4       ; 2 uses
   %vec.ind.next482 = add nuw nsw <4 x i64> %vec.ind480, splat (i64 4)
   %i.nq = icmp eq i64 %index.next481, %n.vec475
@@ -243,18 +243,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.nu = getelementptr inbounds nuw [40 x i8], ptr %i.nf, i64 %index
   %i.nv = uitofp nneg <4 x i32> %vec.ind to <4 x float>
   %i.nw = fmul <4 x float> %broadcast.splat, %i.nv ; 4 uses
-  %11 = extractelement <4 x float> %i.nw, i64 0
-  %12 = extractelement <4 x float> %i.nw, i64 1
-  %13 = extractelement <4 x float> %i.nw, i64 2
-  %14 = extractelement <4 x float> %i.nw, i64 3
-  %15 = getelementptr inbounds nuw i8, ptr %i.nr, i64 4
-  %16 = getelementptr inbounds nuw i8, ptr %i.ns, i64 44
-  %17 = getelementptr inbounds nuw i8, ptr %i.nt, i64 84
-  %18 = getelementptr inbounds nuw i8, ptr %i.nu, i64 124
-  store float %11, ptr %15, align 4, !tbaa !28
-  store float %12, ptr %16, align 4, !tbaa !28
-  store float %13, ptr %17, align 4, !tbaa !28
-  store float %14, ptr %18, align 4, !tbaa !28
+  %11 = getelementptr inbounds nuw i8, ptr %i.nr, i64 4
+  %12 = getelementptr inbounds nuw i8, ptr %i.ns, i64 44
+  %13 = getelementptr inbounds nuw i8, ptr %i.nt, i64 84
+  %14 = getelementptr inbounds nuw i8, ptr %i.nu, i64 124
+  %15 = extractelement <4 x float> %i.nw, i64 0
+  store float %15, ptr %11, align 4, !tbaa !28
+  %16 = extractelement <4 x float> %i.nw, i64 1
+  store float %16, ptr %12, align 4, !tbaa !28
+  %17 = extractelement <4 x float> %i.nw, i64 2
+  store float %17, ptr %13, align 4, !tbaa !28
+  %18 = extractelement <4 x float> %i.nw, i64 3
+  store float %18, ptr %14, align 4, !tbaa !28
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %i.nx = icmp eq i64 %index.next, %n.vec

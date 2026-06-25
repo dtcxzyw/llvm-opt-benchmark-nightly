@@ -201,36 +201,36 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cc = select <16 x i1> %i.by, <16 x i32> %i.bz, <16 x i32> %i.cb
   %i.cd = trunc <16 x i32> %i.cc to <16 x i8>     ; 16 uses
   %i.ce = extractelement <16 x i8> %i.cd, i64 0
-  %5 = extractelement <16 x i8> %i.cd, i64 1
-  %i.cf = extractelement <16 x i8> %i.cd, i64 2
-  %6 = extractelement <16 x i8> %i.cd, i64 3
-  %i.cg = extractelement <16 x i8> %i.cd, i64 4
-  %7 = extractelement <16 x i8> %i.cd, i64 5
-  %i.ch = extractelement <16 x i8> %i.cd, i64 6
-  %8 = extractelement <16 x i8> %i.cd, i64 7
-  %i.ci = extractelement <16 x i8> %i.cd, i64 8
-  %9 = extractelement <16 x i8> %i.cd, i64 9
-  %i.cj = extractelement <16 x i8> %i.cd, i64 10
-  %10 = extractelement <16 x i8> %i.cd, i64 11
-  %i.ck = extractelement <16 x i8> %i.cd, i64 12
-  %11 = extractelement <16 x i8> %i.cd, i64 13
-  %i.cl = extractelement <16 x i8> %i.cd, i64 14
-  %12 = extractelement <16 x i8> %i.cd, i64 15
   store i8 %i.ce, ptr %i.bc, align 1, !tbaa !10
-  store i8 %5, ptr %i.bd, align 1, !tbaa !10
-  store i8 %i.cf, ptr %i.be, align 1, !tbaa !10
-  store i8 %6, ptr %i.bf, align 1, !tbaa !10
-  store i8 %i.cg, ptr %i.bg, align 1, !tbaa !10
-  store i8 %7, ptr %i.bh, align 1, !tbaa !10
-  store i8 %i.ch, ptr %i.bi, align 1, !tbaa !10
-  store i8 %8, ptr %i.bj, align 1, !tbaa !10
-  store i8 %i.ci, ptr %i.bk, align 1, !tbaa !10
-  store i8 %9, ptr %i.bl, align 1, !tbaa !10
-  store i8 %i.cj, ptr %i.bm, align 1, !tbaa !10
-  store i8 %10, ptr %i.bn, align 1, !tbaa !10
-  store i8 %i.ck, ptr %i.bo, align 1, !tbaa !10
-  store i8 %11, ptr %i.bp, align 1, !tbaa !10
-  store i8 %i.cl, ptr %i.bq, align 1, !tbaa !10
+  %i.cf = extractelement <16 x i8> %i.cd, i64 1
+  store i8 %i.cf, ptr %i.bd, align 1, !tbaa !10
+  %i.cg = extractelement <16 x i8> %i.cd, i64 2
+  store i8 %i.cg, ptr %i.be, align 1, !tbaa !10
+  %i.ch = extractelement <16 x i8> %i.cd, i64 3
+  store i8 %i.ch, ptr %i.bf, align 1, !tbaa !10
+  %i.ci = extractelement <16 x i8> %i.cd, i64 4
+  store i8 %i.ci, ptr %i.bg, align 1, !tbaa !10
+  %i.cj = extractelement <16 x i8> %i.cd, i64 5
+  store i8 %i.cj, ptr %i.bh, align 1, !tbaa !10
+  %i.ck = extractelement <16 x i8> %i.cd, i64 6
+  store i8 %i.ck, ptr %i.bi, align 1, !tbaa !10
+  %i.cl = extractelement <16 x i8> %i.cd, i64 7
+  store i8 %i.cl, ptr %i.bj, align 1, !tbaa !10
+  %5 = extractelement <16 x i8> %i.cd, i64 8
+  store i8 %5, ptr %i.bk, align 1, !tbaa !10
+  %6 = extractelement <16 x i8> %i.cd, i64 9
+  store i8 %6, ptr %i.bl, align 1, !tbaa !10
+  %7 = extractelement <16 x i8> %i.cd, i64 10
+  store i8 %7, ptr %i.bm, align 1, !tbaa !10
+  %8 = extractelement <16 x i8> %i.cd, i64 11
+  store i8 %8, ptr %i.bn, align 1, !tbaa !10
+  %9 = extractelement <16 x i8> %i.cd, i64 12
+  store i8 %9, ptr %i.bo, align 1, !tbaa !10
+  %10 = extractelement <16 x i8> %i.cd, i64 13
+  store i8 %10, ptr %i.bp, align 1, !tbaa !10
+  %11 = extractelement <16 x i8> %i.cd, i64 14
+  store i8 %11, ptr %i.bq, align 1, !tbaa !10
+  %12 = extractelement <16 x i8> %i.cd, i64 15
   store i8 %12, ptr %i.br, align 1, !tbaa !10
   %i.cm = mul nuw nsw <16 x i32> %i.ba, splat (i32 6419)
   %i.cn = lshr <16 x i32> %i.cm, splat (i32 8)
@@ -245,22 +245,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cw = select <16 x i1> %i.cv, <16 x i32> zeroinitializer, <16 x i32> splat (i32 255)
   %i.cx = select <16 x i1> %i.ct, <16 x i32> %i.cu, <16 x i32> %i.cw
   %i.cy = trunc <16 x i32> %i.cx to <16 x i8>     ; 16 uses
-  %13 = extractelement <16 x i8> %i.cy, i64 0
-  %14 = extractelement <16 x i8> %i.cy, i64 1
-  %15 = extractelement <16 x i8> %i.cy, i64 2
-  %16 = extractelement <16 x i8> %i.cy, i64 3
-  %17 = extractelement <16 x i8> %i.cy, i64 4
-  %18 = extractelement <16 x i8> %i.cy, i64 5
-  %19 = extractelement <16 x i8> %i.cy, i64 6
-  %20 = extractelement <16 x i8> %i.cy, i64 7
-  %21 = extractelement <16 x i8> %i.cy, i64 8
-  %22 = extractelement <16 x i8> %i.cy, i64 9
-  %23 = extractelement <16 x i8> %i.cy, i64 10
-  %24 = extractelement <16 x i8> %i.cy, i64 11
-  %25 = extractelement <16 x i8> %i.cy, i64 12
-  %26 = extractelement <16 x i8> %i.cy, i64 13
-  %27 = extractelement <16 x i8> %i.cy, i64 14
-  %28 = extractelement <16 x i8> %i.cy, i64 15
   %i.cz = getelementptr inbounds nuw i8, ptr %i.u, i64 2
   %i.da = getelementptr inbounds nuw i8, ptr %i.v, i64 6
   %i.db = getelementptr inbounds nuw i8, ptr %i.x, i64 10
@@ -277,48 +261,48 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dm = getelementptr inbounds nuw i8, ptr %i.at, i64 54
   %i.dn = getelementptr inbounds nuw i8, ptr %i.av, i64 58
   %i.do = getelementptr inbounds nuw i8, ptr %i.ax, i64 62
+  %13 = extractelement <16 x i8> %i.cy, i64 0
   store i8 %13, ptr %i.cz, align 1, !tbaa !10
+  %14 = extractelement <16 x i8> %i.cy, i64 1
   store i8 %14, ptr %i.da, align 1, !tbaa !10
+  %15 = extractelement <16 x i8> %i.cy, i64 2
   store i8 %15, ptr %i.db, align 1, !tbaa !10
+  %16 = extractelement <16 x i8> %i.cy, i64 3
   store i8 %16, ptr %i.dc, align 1, !tbaa !10
+  %17 = extractelement <16 x i8> %i.cy, i64 4
   store i8 %17, ptr %i.dd, align 1, !tbaa !10
+  %18 = extractelement <16 x i8> %i.cy, i64 5
   store i8 %18, ptr %i.de, align 1, !tbaa !10
+  %19 = extractelement <16 x i8> %i.cy, i64 6
   store i8 %19, ptr %i.df, align 1, !tbaa !10
+  %20 = extractelement <16 x i8> %i.cy, i64 7
   store i8 %20, ptr %i.dg, align 1, !tbaa !10
+  %21 = extractelement <16 x i8> %i.cy, i64 8
   store i8 %21, ptr %i.dh, align 1, !tbaa !10
+  %22 = extractelement <16 x i8> %i.cy, i64 9
   store i8 %22, ptr %i.di, align 1, !tbaa !10
+  %23 = extractelement <16 x i8> %i.cy, i64 10
   store i8 %23, ptr %i.dj, align 1, !tbaa !10
+  %24 = extractelement <16 x i8> %i.cy, i64 11
   store i8 %24, ptr %i.dk, align 1, !tbaa !10
+  %25 = extractelement <16 x i8> %i.cy, i64 12
   store i8 %25, ptr %i.dl, align 1, !tbaa !10
-  store i8 %26, ptr %i.dm, align 1, !tbaa !10
-  store i8 %27, ptr %i.dn, align 1, !tbaa !10
-  store i8 %28, ptr %i.do, align 1, !tbaa !10
-  %29 = mul nuw nsw <16 x i32> %i.ba, splat (i32 33050)
-  %30 = lshr <16 x i32> %29, splat (i32 8)
-  %31 = add nuw nsw <16 x i32> %30, %i.bt         ; 2 uses
-  %32 = add nsw <16 x i32> %31, splat (i32 -17685) ; 2 uses
-  %33 = icmp ult <16 x i32> %32, splat (i32 16384)
-  %34 = lshr <16 x i32> %32, splat (i32 6)
-  %35 = icmp samesign ult <16 x i32> %31, splat (i32 17685)
-  %36 = select <16 x i1> %35, <16 x i32> zeroinitializer, <16 x i32> splat (i32 255)
-  %37 = select <16 x i1> %33, <16 x i32> %34, <16 x i32> %36
-  %38 = trunc <16 x i32> %37 to <16 x i8>         ; 16 uses
-  %i.dp = extractelement <16 x i8> %38, i64 0
-  %39 = extractelement <16 x i8> %38, i64 1
-  %i.dq = extractelement <16 x i8> %38, i64 2
-  %40 = extractelement <16 x i8> %38, i64 3
-  %i.dr = extractelement <16 x i8> %38, i64 4
-  %41 = extractelement <16 x i8> %38, i64 5
-  %42 = extractelement <16 x i8> %38, i64 6
-  %43 = extractelement <16 x i8> %38, i64 7
-  %44 = extractelement <16 x i8> %38, i64 8
-  %45 = extractelement <16 x i8> %38, i64 9
-  %46 = extractelement <16 x i8> %38, i64 10
-  %47 = extractelement <16 x i8> %38, i64 11
-  %48 = extractelement <16 x i8> %38, i64 12
-  %49 = extractelement <16 x i8> %38, i64 13
-  %50 = extractelement <16 x i8> %38, i64 14
-  %51 = extractelement <16 x i8> %38, i64 15
+  %i.dp = extractelement <16 x i8> %i.cy, i64 13
+  store i8 %i.dp, ptr %i.dm, align 1, !tbaa !10
+  %i.dq = extractelement <16 x i8> %i.cy, i64 14
+  store i8 %i.dq, ptr %i.dn, align 1, !tbaa !10
+  %i.dr = extractelement <16 x i8> %i.cy, i64 15
+  store i8 %i.dr, ptr %i.do, align 1, !tbaa !10
+  %26 = mul nuw nsw <16 x i32> %i.ba, splat (i32 33050)
+  %27 = lshr <16 x i32> %26, splat (i32 8)
+  %28 = add nuw nsw <16 x i32> %27, %i.bt         ; 2 uses
+  %29 = add nsw <16 x i32> %28, splat (i32 -17685) ; 2 uses
+  %30 = icmp ult <16 x i32> %29, splat (i32 16384)
+  %31 = lshr <16 x i32> %29, splat (i32 6)
+  %32 = icmp samesign ult <16 x i32> %28, splat (i32 17685)
+  %33 = select <16 x i1> %32, <16 x i32> zeroinitializer, <16 x i32> splat (i32 255)
+  %34 = select <16 x i1> %30, <16 x i32> %31, <16 x i32> %33
+  %35 = trunc <16 x i32> %34 to <16 x i8>         ; 16 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.u, i64 3
   %i.dt = getelementptr inbounds nuw i8, ptr %i.v, i64 7
   %i.du = getelementptr inbounds nuw i8, ptr %i.x, i64 11
@@ -335,21 +319,37 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ef = getelementptr inbounds nuw i8, ptr %i.at, i64 55
   %i.eg = getelementptr inbounds nuw i8, ptr %i.av, i64 59
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ax, i64 63
-  store i8 %i.dp, ptr %i.ds, align 1, !tbaa !10
-  store i8 %39, ptr %i.dt, align 1, !tbaa !10
-  store i8 %i.dq, ptr %i.du, align 1, !tbaa !10
-  store i8 %40, ptr %i.dv, align 1, !tbaa !10
-  store i8 %i.dr, ptr %i.dw, align 1, !tbaa !10
+  %36 = extractelement <16 x i8> %35, i64 0
+  store i8 %36, ptr %i.ds, align 1, !tbaa !10
+  %37 = extractelement <16 x i8> %35, i64 1
+  store i8 %37, ptr %i.dt, align 1, !tbaa !10
+  %38 = extractelement <16 x i8> %35, i64 2
+  store i8 %38, ptr %i.du, align 1, !tbaa !10
+  %39 = extractelement <16 x i8> %35, i64 3
+  store i8 %39, ptr %i.dv, align 1, !tbaa !10
+  %40 = extractelement <16 x i8> %35, i64 4
+  store i8 %40, ptr %i.dw, align 1, !tbaa !10
+  %41 = extractelement <16 x i8> %35, i64 5
   store i8 %41, ptr %i.dx, align 1, !tbaa !10
+  %42 = extractelement <16 x i8> %35, i64 6
   store i8 %42, ptr %i.dy, align 1, !tbaa !10
+  %43 = extractelement <16 x i8> %35, i64 7
   store i8 %43, ptr %i.dz, align 1, !tbaa !10
+  %44 = extractelement <16 x i8> %35, i64 8
   store i8 %44, ptr %i.ea, align 1, !tbaa !10
+  %45 = extractelement <16 x i8> %35, i64 9
   store i8 %45, ptr %i.eb, align 1, !tbaa !10
+  %46 = extractelement <16 x i8> %35, i64 10
   store i8 %46, ptr %i.ec, align 1, !tbaa !10
+  %47 = extractelement <16 x i8> %35, i64 11
   store i8 %47, ptr %i.ed, align 1, !tbaa !10
+  %48 = extractelement <16 x i8> %35, i64 12
   store i8 %48, ptr %i.ee, align 1, !tbaa !10
+  %49 = extractelement <16 x i8> %35, i64 13
   store i8 %49, ptr %i.ef, align 1, !tbaa !10
+  %50 = extractelement <16 x i8> %35, i64 14
   store i8 %50, ptr %i.eg, align 1, !tbaa !10
+  %51 = extractelement <16 x i8> %35, i64 15
   store i8 %51, ptr %i.eh, align 1, !tbaa !10
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ei = icmp eq i64 %index.next, %n.vec
@@ -411,12 +411,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.fo = select <4 x i1> %i.fk, <4 x i32> %i.fl, <4 x i32> %i.fn
   %i.fp = trunc <4 x i32> %i.fo to <4 x i8>       ; 4 uses
   %i.fq = extractelement <4 x i8> %i.fp, i64 0
-  %52 = extractelement <4 x i8> %i.fp, i64 1
-  %i.fr = extractelement <4 x i8> %i.fp, i64 2
-  %53 = extractelement <4 x i8> %i.fp, i64 3
   store i8 %i.fq, ptr %i.fa, align 1, !tbaa !10
-  store i8 %52, ptr %i.fb, align 1, !tbaa !10
-  store i8 %i.fr, ptr %i.fc, align 1, !tbaa !10
+  %i.fr = extractelement <4 x i8> %i.fp, i64 1
+  store i8 %i.fr, ptr %i.fb, align 1, !tbaa !10
+  %52 = extractelement <4 x i8> %i.fp, i64 2
+  store i8 %52, ptr %i.fc, align 1, !tbaa !10
+  %53 = extractelement <4 x i8> %i.fp, i64 3
   store i8 %53, ptr %i.fd, align 1, !tbaa !10
   %i.fs = mul nuw nsw <4 x i32> %i.ey, splat (i32 6419)
   %i.ft = lshr <4 x i32> %i.fs, splat (i32 8)
@@ -431,18 +431,18 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.gc = select <4 x i1> %i.gb, <4 x i32> zeroinitializer, <4 x i32> splat (i32 255)
   %i.gd = select <4 x i1> %i.fz, <4 x i32> %i.ga, <4 x i32> %i.gc
   %i.ge = trunc <4 x i32> %i.gd to <4 x i8>       ; 4 uses
-  %54 = extractelement <4 x i8> %i.ge, i64 0
-  %55 = extractelement <4 x i8> %i.ge, i64 1
-  %56 = extractelement <4 x i8> %i.ge, i64 2
-  %57 = extractelement <4 x i8> %i.ge, i64 3
-  %58 = getelementptr inbounds nuw i8, ptr %i.eq, i64 2
-  %59 = getelementptr inbounds nuw i8, ptr %i.er, i64 6
-  %60 = getelementptr inbounds nuw i8, ptr %i.et, i64 10
-  %61 = getelementptr inbounds nuw i8, ptr %i.ev, i64 14
-  store i8 %54, ptr %58, align 1, !tbaa !10
-  store i8 %55, ptr %59, align 1, !tbaa !10
-  store i8 %56, ptr %60, align 1, !tbaa !10
-  store i8 %57, ptr %61, align 1, !tbaa !10
+  %54 = getelementptr inbounds nuw i8, ptr %i.eq, i64 2
+  %55 = getelementptr inbounds nuw i8, ptr %i.er, i64 6
+  %56 = getelementptr inbounds nuw i8, ptr %i.et, i64 10
+  %57 = getelementptr inbounds nuw i8, ptr %i.ev, i64 14
+  %58 = extractelement <4 x i8> %i.ge, i64 0
+  store i8 %58, ptr %54, align 1, !tbaa !10
+  %59 = extractelement <4 x i8> %i.ge, i64 1
+  store i8 %59, ptr %55, align 1, !tbaa !10
+  %60 = extractelement <4 x i8> %i.ge, i64 2
+  store i8 %60, ptr %56, align 1, !tbaa !10
+  %61 = extractelement <4 x i8> %i.ge, i64 3
+  store i8 %61, ptr %57, align 1, !tbaa !10
   %i.gf = mul nuw nsw <4 x i32> %i.ey, splat (i32 33050)
   %i.gg = lshr <4 x i32> %i.gf, splat (i32 8)
   %i.gh = add nuw nsw <4 x i32> %i.gg, %i.ff      ; 2 uses
@@ -453,18 +453,18 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.gm = select <4 x i1> %i.gl, <4 x i32> zeroinitializer, <4 x i32> splat (i32 255)
   %i.gn = select <4 x i1> %i.gj, <4 x i32> %i.gk, <4 x i32> %i.gm
   %i.go = trunc <4 x i32> %i.gn to <4 x i8>       ; 4 uses
-  %62 = extractelement <4 x i8> %i.go, i64 0
-  %63 = extractelement <4 x i8> %i.go, i64 1
-  %64 = extractelement <4 x i8> %i.go, i64 2
-  %65 = extractelement <4 x i8> %i.go, i64 3
-  %66 = getelementptr inbounds nuw i8, ptr %i.eq, i64 3
-  %67 = getelementptr inbounds nuw i8, ptr %i.er, i64 7
-  %68 = getelementptr inbounds nuw i8, ptr %i.et, i64 11
-  %69 = getelementptr inbounds nuw i8, ptr %i.ev, i64 15
-  store i8 %62, ptr %66, align 1, !tbaa !10
-  store i8 %63, ptr %67, align 1, !tbaa !10
-  store i8 %64, ptr %68, align 1, !tbaa !10
-  store i8 %65, ptr %69, align 1, !tbaa !10
+  %62 = getelementptr inbounds nuw i8, ptr %i.eq, i64 3
+  %63 = getelementptr inbounds nuw i8, ptr %i.er, i64 7
+  %64 = getelementptr inbounds nuw i8, ptr %i.et, i64 11
+  %65 = getelementptr inbounds nuw i8, ptr %i.ev, i64 15
+  %66 = extractelement <4 x i8> %i.go, i64 0
+  store i8 %66, ptr %62, align 1, !tbaa !10
+  %67 = extractelement <4 x i8> %i.go, i64 1
+  store i8 %67, ptr %63, align 1, !tbaa !10
+  %68 = extractelement <4 x i8> %i.go, i64 2
+  store i8 %68, ptr %64, align 1, !tbaa !10
+  %69 = extractelement <4 x i8> %i.go, i64 3
+  store i8 %69, ptr %65, align 1, !tbaa !10
   %index.next23 = add nuw i64 %index19, 4         ; 2 uses
   %i.gp = icmp eq i64 %index.next23, %n.vec18
   br i1 %i.gp, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !28

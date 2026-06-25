@@ -201,12 +201,12 @@ vector.body118:                                   ; preds = %.lr.ph219.i.i.prehe
   %i.um = ashr <4 x i32> %i.ul, splat (i32 2)
   %i.un = sub nsw <4 x i32> %strided.vec123, %i.um ; 4 uses
   %i.uo = extractelement <4 x i32> %i.un, i64 0
-  %5 = extractelement <4 x i32> %i.un, i64 1
-  %i.up = extractelement <4 x i32> %i.un, i64 2
-  %6 = extractelement <4 x i32> %i.un, i64 3
   store i32 %i.uo, ptr %i.ud, align 4, !tbaa !3, !alias.scope !145, !noalias !147
-  store i32 %5, ptr %i.uf, align 4, !tbaa !3, !alias.scope !145, !noalias !147
-  store i32 %i.up, ptr %i.uh, align 4, !tbaa !3, !alias.scope !145, !noalias !147
+  %i.up = extractelement <4 x i32> %i.un, i64 1
+  store i32 %i.up, ptr %i.uf, align 4, !tbaa !3, !alias.scope !145, !noalias !147
+  %5 = extractelement <4 x i32> %i.un, i64 2
+  store i32 %5, ptr %i.uh, align 4, !tbaa !3, !alias.scope !145, !noalias !147
+  %6 = extractelement <4 x i32> %i.un, i64 3
   store i32 %6, ptr %i.uj, align 4, !tbaa !3, !alias.scope !145, !noalias !147
   %index.next125 = add nuw i64 %index119, 4       ; 2 uses
   %i.uq = icmp eq i64 %index.next125, %n.vec117
@@ -349,12 +349,12 @@ vector.body:                                      ; preds = %.lr.ph225.i.i.prehe
   %i.xe = getelementptr i8, ptr %i.wv, i64 28
   %i.xf = add nsw <4 x i32> %i.xa, %strided.vec93 ; 4 uses
   %i.xg = extractelement <4 x i32> %i.xf, i64 0
-  %7 = extractelement <4 x i32> %i.xf, i64 1
-  %i.xh = extractelement <4 x i32> %i.xf, i64 2
-  %8 = extractelement <4 x i32> %i.xf, i64 3
   store i32 %i.xg, ptr %i.xb, align 4, !tbaa !3
-  store i32 %7, ptr %i.xc, align 4, !tbaa !3
-  store i32 %i.xh, ptr %i.xd, align 4, !tbaa !3
+  %i.xh = extractelement <4 x i32> %i.xf, i64 1
+  store i32 %i.xh, ptr %i.xc, align 4, !tbaa !3
+  %7 = extractelement <4 x i32> %i.xf, i64 2
+  store i32 %7, ptr %i.xd, align 4, !tbaa !3
+  %8 = extractelement <4 x i32> %i.xf, i64 3
   store i32 %8, ptr %i.xe, align 4, !tbaa !3
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.xi = icmp eq i64 %index.next, %n.vec
@@ -757,12 +757,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.br = insertelement <4 x float> %i.bq, float %i.bn, i64 3
   %i.bs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bf, <4 x float> splat (float f0xBFCB0673), <4 x float> %i.br) ; 4 uses
   %i.bt = extractelement <4 x float> %i.bs, i64 0
-  %4 = extractelement <4 x float> %i.bs, i64 1
-  %i.bu = extractelement <4 x float> %i.bs, i64 2
-  %5 = extractelement <4 x float> %i.bs, i64 3
   store float %i.bt, ptr %i.bg, align 4, !tbaa !188
-  store float %4, ptr %i.bh, align 4, !tbaa !188
-  store float %i.bu, ptr %i.bi, align 4, !tbaa !188
+  %i.bu = extractelement <4 x float> %i.bs, i64 1
+  store float %i.bu, ptr %i.bh, align 4, !tbaa !188
+  %4 = extractelement <4 x float> %i.bs, i64 2
+  store float %4, ptr %i.bi, align 4, !tbaa !188
+  %5 = extractelement <4 x float> %i.bs, i64 3
   store float %5, ptr %i.bj, align 4, !tbaa !188
   %i.bv = getelementptr inbounds nuw i8, ptr %next.gep, i64 8
   %i.bw = getelementptr i8, ptr %i.ai, i64 40
@@ -791,12 +791,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ct = insertelement <4 x float> %i.cs, float %i.cp, i64 3
   %i.cu = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ch, <4 x float> splat (float f0xBFCB0673), <4 x float> %i.ct) ; 4 uses
   %i.cv = extractelement <4 x float> %i.cu, i64 0
-  %6 = extractelement <4 x float> %i.cu, i64 1
-  %i.cw = extractelement <4 x float> %i.cu, i64 2
-  %7 = extractelement <4 x float> %i.cu, i64 3
   store float %i.cv, ptr %i.ci, align 4, !tbaa !188
-  store float %6, ptr %i.cj, align 4, !tbaa !188
-  store float %i.cw, ptr %i.ck, align 4, !tbaa !188
+  %i.cw = extractelement <4 x float> %i.cu, i64 1
+  store float %i.cw, ptr %i.cj, align 4, !tbaa !188
+  %6 = extractelement <4 x float> %i.cu, i64 2
+  store float %6, ptr %i.ck, align 4, !tbaa !188
+  %7 = extractelement <4 x float> %i.cu, i64 3
   store float %7, ptr %i.cl, align 4, !tbaa !188
   %i.cx = getelementptr inbounds nuw i8, ptr %next.gep, i64 16
   %i.cy = getelementptr i8, ptr %i.ai, i64 48
@@ -825,12 +825,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dv = insertelement <4 x float> %i.du, float %i.dr, i64 3
   %i.dw = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dj, <4 x float> splat (float f0xBFCB0673), <4 x float> %i.dv) ; 4 uses
   %i.dx = extractelement <4 x float> %i.dw, i64 0
-  %8 = extractelement <4 x float> %i.dw, i64 1
-  %i.dy = extractelement <4 x float> %i.dw, i64 2
-  %9 = extractelement <4 x float> %i.dw, i64 3
   store float %i.dx, ptr %i.dk, align 4, !tbaa !188
-  store float %8, ptr %i.dl, align 4, !tbaa !188
-  store float %i.dy, ptr %i.dm, align 4, !tbaa !188
+  %i.dy = extractelement <4 x float> %i.dw, i64 1
+  store float %i.dy, ptr %i.dl, align 4, !tbaa !188
+  %8 = extractelement <4 x float> %i.dw, i64 2
+  store float %8, ptr %i.dm, align 4, !tbaa !188
+  %9 = extractelement <4 x float> %i.dw, i64 3
   store float %9, ptr %i.dn, align 4, !tbaa !188
   %i.dz = getelementptr inbounds nuw i8, ptr %next.gep, i64 24
   %i.ea = getelementptr i8, ptr %i.ai, i64 56
@@ -859,12 +859,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ex = insertelement <4 x float> %i.ew, float %i.et, i64 3
   %i.ey = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.el, <4 x float> splat (float f0xBFCB0673), <4 x float> %i.ex) ; 4 uses
   %i.ez = extractelement <4 x float> %i.ey, i64 0
-  %10 = extractelement <4 x float> %i.ey, i64 1
-  %i.fa = extractelement <4 x float> %i.ey, i64 2
-  %11 = extractelement <4 x float> %i.ey, i64 3
   store float %i.ez, ptr %i.em, align 4, !tbaa !188
-  store float %10, ptr %i.en, align 4, !tbaa !188
-  store float %i.fa, ptr %i.eo, align 4, !tbaa !188
+  %i.fa = extractelement <4 x float> %i.ey, i64 1
+  store float %i.fa, ptr %i.en, align 4, !tbaa !188
+  %10 = extractelement <4 x float> %i.ey, i64 2
+  store float %10, ptr %i.eo, align 4, !tbaa !188
+  %11 = extractelement <4 x float> %i.ey, i64 3
   store float %11, ptr %i.ep, align 4, !tbaa !188
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.fb = icmp eq i64 %index.next, %n.vec
@@ -927,12 +927,12 @@ vector.body78:                                    ; preds = %vector.body78, %vec
   %i.ga = getelementptr i8, ptr %i.ft, i64 20
   %i.gb = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fw, <4 x float> splat (float f0xBFCB0673), <4 x float> %strided.vec85) ; 4 uses
   %i.gc = extractelement <4 x float> %i.gb, i64 0
-  %12 = extractelement <4 x float> %i.gb, i64 1
-  %i.gd = extractelement <4 x float> %i.gb, i64 2
-  %13 = extractelement <4 x float> %i.gb, i64 3
   store float %i.gc, ptr %i.fx, align 4, !tbaa !188
-  store float %12, ptr %i.fy, align 4, !tbaa !188
-  store float %i.gd, ptr %i.fz, align 4, !tbaa !188
+  %i.gd = extractelement <4 x float> %i.gb, i64 1
+  store float %i.gd, ptr %i.fy, align 4, !tbaa !188
+  %12 = extractelement <4 x float> %i.gb, i64 2
+  store float %12, ptr %i.fz, align 4, !tbaa !188
+  %13 = extractelement <4 x float> %i.gb, i64 3
   store float %13, ptr %i.ga, align 4, !tbaa !188
   %index.next87 = add nuw i64 %index79, 4         ; 2 uses
   %i.ge = icmp eq i64 %index.next87, %n.vec77
@@ -1096,12 +1096,12 @@ vector.body96:                                    ; preds = %vector.body96, %vec
   %i.kd = insertelement <4 x float> %i.kc, float %i.jz, i64 3
   %i.ke = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.jr, <4 x float> splat (float f0xBD5901AE), <4 x float> %i.kd) ; 4 uses
   %i.kf = extractelement <4 x float> %i.ke, i64 0
-  %14 = extractelement <4 x float> %i.ke, i64 1
-  %i.kg = extractelement <4 x float> %i.ke, i64 2
-  %15 = extractelement <4 x float> %i.ke, i64 3
   store float %i.kf, ptr %i.js, align 4, !tbaa !188
-  store float %14, ptr %i.jt, align 4, !tbaa !188
-  store float %i.kg, ptr %i.ju, align 4, !tbaa !188
+  %i.kg = extractelement <4 x float> %i.ke, i64 1
+  store float %i.kg, ptr %i.jt, align 4, !tbaa !188
+  %14 = extractelement <4 x float> %i.ke, i64 2
+  store float %14, ptr %i.ju, align 4, !tbaa !188
+  %15 = extractelement <4 x float> %i.ke, i64 3
   store float %15, ptr %i.jv, align 4, !tbaa !188
   %i.kh = getelementptr inbounds nuw i8, ptr %next.gep98, i64 8
   %i.ki = getelementptr i8, ptr %i.iu, i64 40
@@ -1130,12 +1130,12 @@ vector.body96:                                    ; preds = %vector.body96, %vec
   %i.lf = insertelement <4 x float> %i.le, float %i.lb, i64 3
   %i.lg = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.kt, <4 x float> splat (float f0xBD5901AE), <4 x float> %i.lf) ; 4 uses
   %i.lh = extractelement <4 x float> %i.lg, i64 0
-  %16 = extractelement <4 x float> %i.lg, i64 1
-  %i.li = extractelement <4 x float> %i.lg, i64 2
-  %17 = extractelement <4 x float> %i.lg, i64 3
   store float %i.lh, ptr %i.ku, align 4, !tbaa !188
-  store float %16, ptr %i.kv, align 4, !tbaa !188
-  store float %i.li, ptr %i.kw, align 4, !tbaa !188
+  %i.li = extractelement <4 x float> %i.lg, i64 1
+  store float %i.li, ptr %i.kv, align 4, !tbaa !188
+  %16 = extractelement <4 x float> %i.lg, i64 2
+  store float %16, ptr %i.kw, align 4, !tbaa !188
+  %17 = extractelement <4 x float> %i.lg, i64 3
   store float %17, ptr %i.kx, align 4, !tbaa !188
   %i.lj = getelementptr inbounds nuw i8, ptr %next.gep98, i64 16
   %i.lk = getelementptr i8, ptr %i.iu, i64 48
@@ -1164,12 +1164,12 @@ vector.body96:                                    ; preds = %vector.body96, %vec
   %i.mh = insertelement <4 x float> %i.mg, float %i.md, i64 3
   %i.mi = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.lv, <4 x float> splat (float f0xBD5901AE), <4 x float> %i.mh) ; 4 uses
   %i.mj = extractelement <4 x float> %i.mi, i64 0
-  %18 = extractelement <4 x float> %i.mi, i64 1
-  %i.mk = extractelement <4 x float> %i.mi, i64 2
-  %19 = extractelement <4 x float> %i.mi, i64 3
   store float %i.mj, ptr %i.lw, align 4, !tbaa !188
-  store float %18, ptr %i.lx, align 4, !tbaa !188
-  store float %i.mk, ptr %i.ly, align 4, !tbaa !188
+  %i.mk = extractelement <4 x float> %i.mi, i64 1
+  store float %i.mk, ptr %i.lx, align 4, !tbaa !188
+  %18 = extractelement <4 x float> %i.mi, i64 2
+  store float %18, ptr %i.ly, align 4, !tbaa !188
+  %19 = extractelement <4 x float> %i.mi, i64 3
   store float %19, ptr %i.lz, align 4, !tbaa !188
   %i.ml = getelementptr inbounds nuw i8, ptr %next.gep98, i64 24
   %i.mm = getelementptr i8, ptr %i.iu, i64 56
@@ -1198,12 +1198,12 @@ vector.body96:                                    ; preds = %vector.body96, %vec
   %i.nj = insertelement <4 x float> %i.ni, float %i.nf, i64 3
   %i.nk = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.mx, <4 x float> splat (float f0xBD5901AE), <4 x float> %i.nj) ; 4 uses
   %i.nl = extractelement <4 x float> %i.nk, i64 0
-  %20 = extractelement <4 x float> %i.nk, i64 1
-  %i.nm = extractelement <4 x float> %i.nk, i64 2
-  %21 = extractelement <4 x float> %i.nk, i64 3
   store float %i.nl, ptr %i.my, align 4, !tbaa !188
-  store float %20, ptr %i.mz, align 4, !tbaa !188
-  store float %i.nm, ptr %i.na, align 4, !tbaa !188
+  %i.nm = extractelement <4 x float> %i.nk, i64 1
+  store float %i.nm, ptr %i.mz, align 4, !tbaa !188
+  %20 = extractelement <4 x float> %i.nk, i64 2
+  store float %20, ptr %i.na, align 4, !tbaa !188
+  %21 = extractelement <4 x float> %i.nk, i64 3
   store float %21, ptr %i.nb, align 4, !tbaa !188
   %index.next102 = add nuw i64 %index97, 4        ; 2 uses
   %i.nn = icmp eq i64 %index.next102, %n.vec95
@@ -1266,12 +1266,12 @@ vector.body111:                                   ; preds = %vector.body111, %ve
   %i.om = getelementptr i8, ptr %i.of, i64 20
   %i.on = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.oi, <4 x float> splat (float f0xBD5901AE), <4 x float> %strided.vec120) ; 4 uses
   %i.oo = extractelement <4 x float> %i.on, i64 0
-  %22 = extractelement <4 x float> %i.on, i64 1
-  %i.op = extractelement <4 x float> %i.on, i64 2
-  %23 = extractelement <4 x float> %i.on, i64 3
   store float %i.oo, ptr %i.oj, align 4, !tbaa !188
-  store float %22, ptr %i.ok, align 4, !tbaa !188
-  store float %i.op, ptr %i.ol, align 4, !tbaa !188
+  %i.op = extractelement <4 x float> %i.on, i64 1
+  store float %i.op, ptr %i.ok, align 4, !tbaa !188
+  %22 = extractelement <4 x float> %i.on, i64 2
+  store float %22, ptr %i.ol, align 4, !tbaa !188
+  %23 = extractelement <4 x float> %i.on, i64 3
   store float %23, ptr %i.om, align 4, !tbaa !188
   %index.next122 = add nuw i64 %index112, 4       ; 2 uses
   %i.oq = icmp eq i64 %index.next122, %n.vec110
@@ -1430,12 +1430,12 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %i.sl = insertelement <4 x float> %i.sk, float %i.sh, i64 3
   %i.sm = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.rz, <4 x float> splat (float f0x3F620676), <4 x float> %i.sl) ; 4 uses
   %i.sn = extractelement <4 x float> %i.sm, i64 0
-  %24 = extractelement <4 x float> %i.sm, i64 1
-  %i.so = extractelement <4 x float> %i.sm, i64 2
-  %25 = extractelement <4 x float> %i.sm, i64 3
   store float %i.sn, ptr %i.sa, align 4, !tbaa !188
-  store float %24, ptr %i.sb, align 4, !tbaa !188
-  store float %i.so, ptr %i.sc, align 4, !tbaa !188
+  %i.so = extractelement <4 x float> %i.sm, i64 1
+  store float %i.so, ptr %i.sb, align 4, !tbaa !188
+  %24 = extractelement <4 x float> %i.sm, i64 2
+  store float %24, ptr %i.sc, align 4, !tbaa !188
+  %25 = extractelement <4 x float> %i.sm, i64 3
   store float %25, ptr %i.sd, align 4, !tbaa !188
   %i.sp = getelementptr inbounds nuw i8, ptr %next.gep133, i64 8
   %i.sq = getelementptr i8, ptr %i.rc, i64 40
@@ -1464,12 +1464,12 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %i.tn = insertelement <4 x float> %i.tm, float %i.tj, i64 3
   %i.to = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.tb, <4 x float> splat (float f0x3F620676), <4 x float> %i.tn) ; 4 uses
   %i.tp = extractelement <4 x float> %i.to, i64 0
-  %26 = extractelement <4 x float> %i.to, i64 1
-  %i.tq = extractelement <4 x float> %i.to, i64 2
-  %27 = extractelement <4 x float> %i.to, i64 3
   store float %i.tp, ptr %i.tc, align 4, !tbaa !188
-  store float %26, ptr %i.td, align 4, !tbaa !188
-  store float %i.tq, ptr %i.te, align 4, !tbaa !188
+  %i.tq = extractelement <4 x float> %i.to, i64 1
+  store float %i.tq, ptr %i.td, align 4, !tbaa !188
+  %26 = extractelement <4 x float> %i.to, i64 2
+  store float %26, ptr %i.te, align 4, !tbaa !188
+  %27 = extractelement <4 x float> %i.to, i64 3
   store float %27, ptr %i.tf, align 4, !tbaa !188
   %i.tr = getelementptr inbounds nuw i8, ptr %next.gep133, i64 16
   %i.ts = getelementptr i8, ptr %i.rc, i64 48
@@ -1498,12 +1498,12 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %i.up = insertelement <4 x float> %i.uo, float %i.ul, i64 3
   %i.uq = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ud, <4 x float> splat (float f0x3F620676), <4 x float> %i.up) ; 4 uses
   %i.ur = extractelement <4 x float> %i.uq, i64 0
-  %28 = extractelement <4 x float> %i.uq, i64 1
-  %i.us = extractelement <4 x float> %i.uq, i64 2
-  %29 = extractelement <4 x float> %i.uq, i64 3
   store float %i.ur, ptr %i.ue, align 4, !tbaa !188
-  store float %28, ptr %i.uf, align 4, !tbaa !188
-  store float %i.us, ptr %i.ug, align 4, !tbaa !188
+  %i.us = extractelement <4 x float> %i.uq, i64 1
+  store float %i.us, ptr %i.uf, align 4, !tbaa !188
+  %28 = extractelement <4 x float> %i.uq, i64 2
+  store float %28, ptr %i.ug, align 4, !tbaa !188
+  %29 = extractelement <4 x float> %i.uq, i64 3
   store float %29, ptr %i.uh, align 4, !tbaa !188
   %i.ut = getelementptr inbounds nuw i8, ptr %next.gep133, i64 24
   %i.uu = getelementptr i8, ptr %i.rc, i64 56
@@ -1532,12 +1532,12 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %i.vr = insertelement <4 x float> %i.vq, float %i.vn, i64 3
   %i.vs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.vf, <4 x float> splat (float f0x3F620676), <4 x float> %i.vr) ; 4 uses
   %i.vt = extractelement <4 x float> %i.vs, i64 0
-  %30 = extractelement <4 x float> %i.vs, i64 1
-  %i.vu = extractelement <4 x float> %i.vs, i64 2
-  %31 = extractelement <4 x float> %i.vs, i64 3
   store float %i.vt, ptr %i.vg, align 4, !tbaa !188
-  store float %30, ptr %i.vh, align 4, !tbaa !188
-  store float %i.vu, ptr %i.vi, align 4, !tbaa !188
+  %i.vu = extractelement <4 x float> %i.vs, i64 1
+  store float %i.vu, ptr %i.vh, align 4, !tbaa !188
+  %30 = extractelement <4 x float> %i.vs, i64 2
+  store float %30, ptr %i.vi, align 4, !tbaa !188
+  %31 = extractelement <4 x float> %i.vs, i64 3
   store float %31, ptr %i.vj, align 4, !tbaa !188
   %index.next137 = add nuw i64 %index132, 4       ; 2 uses
   %i.vv = icmp eq i64 %index.next137, %n.vec130
@@ -1600,12 +1600,12 @@ vector.body146:                                   ; preds = %vector.body146, %ve
   %i.wu = getelementptr i8, ptr %i.wn, i64 20
   %i.wv = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.wq, <4 x float> splat (float f0x3F620676), <4 x float> %strided.vec155) ; 4 uses
   %i.ww = extractelement <4 x float> %i.wv, i64 0
-  %32 = extractelement <4 x float> %i.wv, i64 1
-  %i.wx = extractelement <4 x float> %i.wv, i64 2
-  %33 = extractelement <4 x float> %i.wv, i64 3
   store float %i.ww, ptr %i.wr, align 4, !tbaa !188
-  store float %32, ptr %i.ws, align 4, !tbaa !188
-  store float %i.wx, ptr %i.wt, align 4, !tbaa !188
+  %i.wx = extractelement <4 x float> %i.wv, i64 1
+  store float %i.wx, ptr %i.ws, align 4, !tbaa !188
+  %32 = extractelement <4 x float> %i.wv, i64 2
+  store float %32, ptr %i.wt, align 4, !tbaa !188
+  %33 = extractelement <4 x float> %i.wv, i64 3
   store float %33, ptr %i.wu, align 4, !tbaa !188
   %index.next157 = add nuw i64 %index147, 4       ; 2 uses
   %i.wy = icmp eq i64 %index.next157, %n.vec145
@@ -1763,12 +1763,12 @@ vector.body166:                                   ; preds = %vector.body166, %ve
   %i.aas = insertelement <4 x float> %i.aar, float %i.aao, i64 3
   %i.aat = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aag, <4 x float> splat (float f0x3EE31355), <4 x float> %i.aas) ; 4 uses
   %i.aau = extractelement <4 x float> %i.aat, i64 0
-  %34 = extractelement <4 x float> %i.aat, i64 1
-  %i.aav = extractelement <4 x float> %i.aat, i64 2
-  %35 = extractelement <4 x float> %i.aat, i64 3
   store float %i.aau, ptr %i.aah, align 4, !tbaa !188
-  store float %34, ptr %i.aai, align 4, !tbaa !188
-  store float %i.aav, ptr %i.aaj, align 4, !tbaa !188
+  %i.aav = extractelement <4 x float> %i.aat, i64 1
+  store float %i.aav, ptr %i.aai, align 4, !tbaa !188
+  %34 = extractelement <4 x float> %i.aat, i64 2
+  store float %34, ptr %i.aaj, align 4, !tbaa !188
+  %35 = extractelement <4 x float> %i.aat, i64 3
   store float %35, ptr %i.aak, align 4, !tbaa !188
   %i.aaw = getelementptr inbounds nuw i8, ptr %next.gep168, i64 8
   %i.aax = getelementptr i8, ptr %i.zj, i64 40
@@ -1797,12 +1797,12 @@ vector.body166:                                   ; preds = %vector.body166, %ve
   %i.abu = insertelement <4 x float> %i.abt, float %i.abq, i64 3
   %i.abv = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.abi, <4 x float> splat (float f0x3EE31355), <4 x float> %i.abu) ; 4 uses
   %i.abw = extractelement <4 x float> %i.abv, i64 0
-  %36 = extractelement <4 x float> %i.abv, i64 1
-  %i.abx = extractelement <4 x float> %i.abv, i64 2
-  %37 = extractelement <4 x float> %i.abv, i64 3
   store float %i.abw, ptr %i.abj, align 4, !tbaa !188
-  store float %36, ptr %i.abk, align 4, !tbaa !188
-  store float %i.abx, ptr %i.abl, align 4, !tbaa !188
+  %i.abx = extractelement <4 x float> %i.abv, i64 1
+  store float %i.abx, ptr %i.abk, align 4, !tbaa !188
+  %36 = extractelement <4 x float> %i.abv, i64 2
+  store float %36, ptr %i.abl, align 4, !tbaa !188
+  %37 = extractelement <4 x float> %i.abv, i64 3
   store float %37, ptr %i.abm, align 4, !tbaa !188
   %i.aby = getelementptr inbounds nuw i8, ptr %next.gep168, i64 16
   %i.abz = getelementptr i8, ptr %i.zj, i64 48
@@ -1831,12 +1831,12 @@ vector.body166:                                   ; preds = %vector.body166, %ve
   %i.acw = insertelement <4 x float> %i.acv, float %i.acs, i64 3
   %i.acx = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ack, <4 x float> splat (float f0x3EE31355), <4 x float> %i.acw) ; 4 uses
   %i.acy = extractelement <4 x float> %i.acx, i64 0
-  %38 = extractelement <4 x float> %i.acx, i64 1
-  %i.acz = extractelement <4 x float> %i.acx, i64 2
-  %39 = extractelement <4 x float> %i.acx, i64 3
   store float %i.acy, ptr %i.acl, align 4, !tbaa !188
-  store float %38, ptr %i.acm, align 4, !tbaa !188
-  store float %i.acz, ptr %i.acn, align 4, !tbaa !188
+  %i.acz = extractelement <4 x float> %i.acx, i64 1
+  store float %i.acz, ptr %i.acm, align 4, !tbaa !188
+  %38 = extractelement <4 x float> %i.acx, i64 2
+  store float %38, ptr %i.acn, align 4, !tbaa !188
+  %39 = extractelement <4 x float> %i.acx, i64 3
   store float %39, ptr %i.aco, align 4, !tbaa !188
   %i.ada = getelementptr inbounds nuw i8, ptr %next.gep168, i64 24
   %i.adb = getelementptr i8, ptr %i.zj, i64 56
@@ -1865,12 +1865,12 @@ vector.body166:                                   ; preds = %vector.body166, %ve
   %i.ady = insertelement <4 x float> %i.adx, float %i.adu, i64 3
   %i.adz = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.adm, <4 x float> splat (float f0x3EE31355), <4 x float> %i.ady) ; 4 uses
   %i.aea = extractelement <4 x float> %i.adz, i64 0
-  %40 = extractelement <4 x float> %i.adz, i64 1
-  %i.aeb = extractelement <4 x float> %i.adz, i64 2
-  %41 = extractelement <4 x float> %i.adz, i64 3
   store float %i.aea, ptr %i.adn, align 4, !tbaa !188
-  store float %40, ptr %i.ado, align 4, !tbaa !188
-  store float %i.aeb, ptr %i.adp, align 4, !tbaa !188
+  %i.aeb = extractelement <4 x float> %i.adz, i64 1
+  store float %i.aeb, ptr %i.ado, align 4, !tbaa !188
+  %40 = extractelement <4 x float> %i.adz, i64 2
+  store float %40, ptr %i.adp, align 4, !tbaa !188
+  %41 = extractelement <4 x float> %i.adz, i64 3
   store float %41, ptr %i.adq, align 4, !tbaa !188
   %index.next172 = add nuw i64 %index167, 4       ; 2 uses
   %i.aec = icmp eq i64 %index.next172, %n.vec165
@@ -1933,12 +1933,12 @@ vector.body181:                                   ; preds = %vector.body181, %ve
   %i.afb = getelementptr i8, ptr %i.aeu, i64 20
   %i.afc = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aex, <4 x float> splat (float f0x3EE31355), <4 x float> %strided.vec190) ; 4 uses
   %i.afd = extractelement <4 x float> %i.afc, i64 0
-  %42 = extractelement <4 x float> %i.afc, i64 1
-  %i.afe = extractelement <4 x float> %i.afc, i64 2
-  %43 = extractelement <4 x float> %i.afc, i64 3
   store float %i.afd, ptr %i.aey, align 4, !tbaa !188
-  store float %42, ptr %i.aez, align 4, !tbaa !188
-  store float %i.afe, ptr %i.afa, align 4, !tbaa !188
+  %i.afe = extractelement <4 x float> %i.afc, i64 1
+  store float %i.afe, ptr %i.aez, align 4, !tbaa !188
+  %42 = extractelement <4 x float> %i.afc, i64 2
+  store float %42, ptr %i.afa, align 4, !tbaa !188
+  %43 = extractelement <4 x float> %i.afc, i64 3
   store float %43, ptr %i.afb, align 4, !tbaa !188
   %index.next192 = add nuw i64 %index182, 4       ; 2 uses
   %i.aff = icmp eq i64 %index.next192, %n.vec180

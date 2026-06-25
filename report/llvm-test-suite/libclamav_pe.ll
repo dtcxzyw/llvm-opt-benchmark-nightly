@@ -201,21 +201,21 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ams = getelementptr inbounds nuw i8, ptr %i.akz, i64 %i.amr
   %wide.load = load <4 x i32>, ptr %i.ams, align 1, !alias.scope !81
   %i.amt = add <4 x i32> %wide.load, %broadcast.splat ; 4 uses
-  %5 = extractelement <4 x i32> %i.amt, i64 0
-  %6 = extractelement <4 x i32> %i.amt, i64 1
-  %7 = extractelement <4 x i32> %i.amt, i64 2
-  %8 = extractelement <4 x i32> %i.amt, i64 3
-  %9 = getelementptr inbounds nuw [36 x i8], ptr %i.ama, i64 %i.amp
-  %i.amu = getelementptr inbounds nuw [36 x i8], ptr %i.ama, i64 %index
-  %i.amv = getelementptr inbounds nuw i8, ptr %i.amu, i64 72
-  %10 = getelementptr inbounds nuw [36 x i8], ptr %i.ama, i64 %index
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 108
-  %12 = getelementptr [36 x i8], ptr %i.ama, i64 %index
-  %13 = getelementptr i8, ptr %12, i64 144
-  store i32 %5, ptr %9, align 4, !tbaa !45, !alias.scope !83, !noalias !85
-  store i32 %6, ptr %i.amv, align 4, !tbaa !45, !alias.scope !83, !noalias !85
-  store i32 %7, ptr %11, align 4, !tbaa !45, !alias.scope !83, !noalias !85
-  store i32 %8, ptr %13, align 4, !tbaa !45, !alias.scope !83, !noalias !85
+  %5 = getelementptr inbounds nuw [36 x i8], ptr %i.ama, i64 %i.amp
+  %6 = getelementptr inbounds nuw [36 x i8], ptr %i.ama, i64 %index
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 72
+  %8 = getelementptr inbounds nuw [36 x i8], ptr %i.ama, i64 %index
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 108
+  %i.amu = getelementptr [36 x i8], ptr %i.ama, i64 %index
+  %i.amv = getelementptr i8, ptr %i.amu, i64 144
+  %10 = extractelement <4 x i32> %i.amt, i64 0
+  store i32 %10, ptr %5, align 4, !tbaa !45, !alias.scope !83, !noalias !85
+  %11 = extractelement <4 x i32> %i.amt, i64 1
+  store i32 %11, ptr %7, align 4, !tbaa !45, !alias.scope !83, !noalias !85
+  %12 = extractelement <4 x i32> %i.amt, i64 2
+  store i32 %12, ptr %9, align 4, !tbaa !45, !alias.scope !83, !noalias !85
+  %13 = extractelement <4 x i32> %i.amt, i64 3
+  store i32 %13, ptr %i.amv, align 4, !tbaa !45, !alias.scope !83, !noalias !85
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.amw = icmp eq i64 %index.next, %n.vec
   br i1 %i.amw, label %middle.block, label %vector.body, !llvm.loop !86

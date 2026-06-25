@@ -201,20 +201,20 @@ vector.body:                                      ; preds = %vector.body, %.noex
   %i.ai = insertelement <8 x i8> %i.ah, i8 %i.aa, i64 7
   %i.aj = and <8 x i8> %i.ai, splat (i8 3)        ; 8 uses
   %i.ak = extractelement <8 x i8> %i.aj, i64 0
-  %2 = extractelement <8 x i8> %i.aj, i64 1
-  %i.al = extractelement <8 x i8> %i.aj, i64 2
-  %3 = extractelement <8 x i8> %i.aj, i64 3
-  %i.am = extractelement <8 x i8> %i.aj, i64 4
-  %4 = extractelement <8 x i8> %i.aj, i64 5
-  %i.an = extractelement <8 x i8> %i.aj, i64 6
-  %5 = extractelement <8 x i8> %i.aj, i64 7
   store i8 %i.ak, ptr %i.e, align 1, !noalias !304
-  store i8 %2, ptr %i.g, align 1, !noalias !304
-  store i8 %i.al, ptr %i.i, align 1, !noalias !304
-  store i8 %3, ptr %i.k, align 1, !noalias !304
-  store i8 %i.am, ptr %i.m, align 1, !noalias !304
-  store i8 %4, ptr %i.o, align 1, !noalias !304
-  store i8 %i.an, ptr %i.q, align 1, !noalias !304
+  %i.al = extractelement <8 x i8> %i.aj, i64 1
+  store i8 %i.al, ptr %i.g, align 1, !noalias !304
+  %i.am = extractelement <8 x i8> %i.aj, i64 2
+  store i8 %i.am, ptr %i.i, align 1, !noalias !304
+  %i.an = extractelement <8 x i8> %i.aj, i64 3
+  store i8 %i.an, ptr %i.k, align 1, !noalias !304
+  %2 = extractelement <8 x i8> %i.aj, i64 4
+  store i8 %2, ptr %i.m, align 1, !noalias !304
+  %3 = extractelement <8 x i8> %i.aj, i64 5
+  store i8 %3, ptr %i.o, align 1, !noalias !304
+  %4 = extractelement <8 x i8> %i.aj, i64 6
+  store i8 %4, ptr %i.q, align 1, !noalias !304
+  %5 = extractelement <8 x i8> %i.aj, i64 7
   store i8 %5, ptr %i.s, align 1, !noalias !304
   %i.ao = and <8 x i8> %vec.ind8, splat (i8 1)
   %i.ap = shl <8 x i8> %vec.ind8, splat (i8 1)

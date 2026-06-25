@@ -201,18 +201,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %strided.vec = shufflevector <8 x i16> %wide.vec, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.t = icmp ne <4 x i16> %strided.vec, %broadcast.splat
   %i.u = sext <4 x i1> %i.t to <4 x i16>          ; 4 uses
-  %2 = extractelement <4 x i16> %i.u, i64 0
-  %3 = extractelement <4 x i16> %i.u, i64 1
-  %4 = extractelement <4 x i16> %i.u, i64 2
-  %5 = extractelement <4 x i16> %i.u, i64 3
-  %6 = getelementptr inbounds nuw i8, ptr %next.gep, i64 2
-  %7 = getelementptr i8, ptr %i.q, i64 6
-  %8 = getelementptr i8, ptr %i.r, i64 10
-  %9 = getelementptr i8, ptr %i.s, i64 14
-  store i16 %2, ptr %6, align 2, !alias.scope !178, !noalias !175
-  store i16 %3, ptr %7, align 2, !alias.scope !178, !noalias !175
-  store i16 %4, ptr %8, align 2, !alias.scope !178, !noalias !175
-  store i16 %5, ptr %9, align 2, !alias.scope !178, !noalias !175
+  %2 = getelementptr inbounds nuw i8, ptr %next.gep, i64 2
+  %3 = getelementptr i8, ptr %i.q, i64 6
+  %4 = getelementptr i8, ptr %i.r, i64 10
+  %5 = getelementptr i8, ptr %i.s, i64 14
+  %6 = extractelement <4 x i16> %i.u, i64 0
+  store i16 %6, ptr %2, align 2, !alias.scope !178, !noalias !175
+  %7 = extractelement <4 x i16> %i.u, i64 1
+  store i16 %7, ptr %3, align 2, !alias.scope !178, !noalias !175
+  %8 = extractelement <4 x i16> %i.u, i64 2
+  store i16 %8, ptr %4, align 2, !alias.scope !178, !noalias !175
+  %9 = extractelement <4 x i16> %i.u, i64 3
+  store i16 %9, ptr %5, align 2, !alias.scope !178, !noalias !175
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.v = icmp eq i64 %index.next, %n.vec
   br i1 %i.v, label %.lr.ph7.preheader7, label %vector.body, !llvm.loop !180

@@ -199,11 +199,11 @@ begin_hunk_0_@Reference_IDCT:vector.ph
   %i.lk = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %i.lj)
   %i.ll = tail call <2 x i9> @llvm.fptosi.sat.v2i9.v2f64(<2 x double> %i.lk)
   %i.lm = sext <2 x i9> %i.ll to <2 x i16>        ; 2 uses
-  %1 = extractelement <2 x i16> %i.lm, i64 0
-  %i.ln = extractelement <2 x i16> %i.lm, i64 1
-  %2 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 16
-  store i16 %1, ptr %invariant.gep, align 2, !tbaa !10
-  store i16 %i.ln, ptr %2, align 2, !tbaa !10
+  %1 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 16
+  %i.ln = extractelement <2 x i16> %i.lm, i64 0
+  store i16 %i.ln, ptr %invariant.gep, align 2, !tbaa !10
+  %2 = extractelement <2 x i16> %i.lm, i64 1
+  store i16 %2, ptr %1, align 2, !tbaa !10
   %i.lo = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load.1, <2 x double> %broadcast.splat196, <2 x double> zeroinitializer)
   %i.lp = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load213.1, <2 x double> %broadcast.splat198, <2 x double> %i.lo)
   %i.lq = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load214.1, <2 x double> %broadcast.splat200, <2 x double> %i.lp)
@@ -216,12 +216,12 @@ begin_hunk_0_@Reference_IDCT:vector.ph
   %i.lx = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %i.lw)
   %i.ly = tail call <2 x i9> @llvm.fptosi.sat.v2i9.v2f64(<2 x double> %i.lx)
   %i.lz = sext <2 x i9> %i.ly to <2 x i16>        ; 2 uses
-  %3 = extractelement <2 x i16> %i.lz, i64 0
-  %4 = extractelement <2 x i16> %i.lz, i64 1
-  %5 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 48
-  store i16 %3, ptr %5, align 2, !tbaa !10
-  store i16 %4, ptr %6, align 2, !tbaa !10
+  %3 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 32
+  %4 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 48
+  %5 = extractelement <2 x i16> %i.lz, i64 0
+  store i16 %5, ptr %3, align 2, !tbaa !10
+  %6 = extractelement <2 x i16> %i.lz, i64 1
+  store i16 %6, ptr %4, align 2, !tbaa !10
   %i.ma = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load.2, <2 x double> %broadcast.splat196, <2 x double> zeroinitializer)
   %i.mb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load213.2, <2 x double> %broadcast.splat198, <2 x double> %i.ma)
   %i.mc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load214.2, <2 x double> %broadcast.splat200, <2 x double> %i.mb)
@@ -234,12 +234,12 @@ begin_hunk_0_@Reference_IDCT:vector.ph
   %i.mj = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %i.mi)
   %i.mk = tail call <2 x i9> @llvm.fptosi.sat.v2i9.v2f64(<2 x double> %i.mj)
   %i.ml = sext <2 x i9> %i.mk to <2 x i16>        ; 2 uses
-  %7 = extractelement <2 x i16> %i.ml, i64 0
-  %8 = extractelement <2 x i16> %i.ml, i64 1
-  %9 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 64
-  %10 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 80
-  store i16 %7, ptr %9, align 2, !tbaa !10
-  store i16 %8, ptr %10, align 2, !tbaa !10
+  %7 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 64
+  %8 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 80
+  %9 = extractelement <2 x i16> %i.ml, i64 0
+  store i16 %9, ptr %7, align 2, !tbaa !10
+  %10 = extractelement <2 x i16> %i.ml, i64 1
+  store i16 %10, ptr %8, align 2, !tbaa !10
   %i.mm = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load.3, <2 x double> %broadcast.splat196, <2 x double> zeroinitializer)
   %i.mn = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load213.3, <2 x double> %broadcast.splat198, <2 x double> %i.mm)
   %i.mo = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %wide.load214.3, <2 x double> %broadcast.splat200, <2 x double> %i.mn)
@@ -252,12 +252,12 @@ begin_hunk_0_@Reference_IDCT:vector.ph
   %i.mv = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %i.mu)
   %i.mw = tail call <2 x i9> @llvm.fptosi.sat.v2i9.v2f64(<2 x double> %i.mv)
   %i.mx = sext <2 x i9> %i.mw to <2 x i16>        ; 2 uses
-  %11 = extractelement <2 x i16> %i.mx, i64 0
-  %12 = extractelement <2 x i16> %i.mx, i64 1
-  %13 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 96
-  %14 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 112
-  store i16 %11, ptr %13, align 2, !tbaa !10
-  store i16 %12, ptr %14, align 2, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 96
+  %12 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 112
+  %13 = extractelement <2 x i16> %i.mx, i64 0
+  store i16 %13, ptr %11, align 2, !tbaa !10
+  %14 = extractelement <2 x i16> %i.mx, i64 1
+  store i16 %14, ptr %12, align 2, !tbaa !10
   %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1 ; 2 uses
   %exitcond67.not = icmp eq i64 %indvars.iv.next65, 8
   br i1 %exitcond67.not, label %bb.a, label %.preheader38, !llvm.loop !16

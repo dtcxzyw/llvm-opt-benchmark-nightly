@@ -200,12 +200,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bd = or <4 x i32> %i.bc, %i.ap
   %i.be = or <4 x i32> %i.bd, %i.bb               ; 4 uses
   %i.bf = extractelement <4 x i32> %i.be, i64 0
-  %5 = extractelement <4 x i32> %i.be, i64 1
-  %i.bg = extractelement <4 x i32> %i.be, i64 2
-  %6 = extractelement <4 x i32> %i.be, i64 3
   store i32 %i.bf, ptr %next.gep, align 4, !tbaa !3
-  store i32 %5, ptr %next.gep22, align 4, !tbaa !3
-  store i32 %i.bg, ptr %next.gep23, align 4, !tbaa !3
+  %i.bg = extractelement <4 x i32> %i.be, i64 1
+  store i32 %i.bg, ptr %next.gep22, align 4, !tbaa !3
+  %5 = extractelement <4 x i32> %i.be, i64 2
+  store i32 %5, ptr %next.gep23, align 4, !tbaa !3
+  %6 = extractelement <4 x i32> %i.be, i64 3
   store i32 %6, ptr %next.gep24, align 4, !tbaa !3
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bh = icmp eq i64 %index.next, %n.vec
@@ -407,12 +407,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bx = shl <4 x i32> %i.bw, splat (i32 16)
   %i.by = or <4 x i32> %i.bm, %i.bx               ; 4 uses
   %i.bz = extractelement <4 x i32> %i.by, i64 0
-  %5 = extractelement <4 x i32> %i.by, i64 1
-  %i.ca = extractelement <4 x i32> %i.by, i64 2
-  %6 = extractelement <4 x i32> %i.by, i64 3
   store i32 %i.bz, ptr %next.gep34, align 4, !tbaa !3
-  store i32 %5, ptr %next.gep35, align 4, !tbaa !3
-  store i32 %i.ca, ptr %next.gep36, align 4, !tbaa !3
+  %i.ca = extractelement <4 x i32> %i.by, i64 1
+  store i32 %i.ca, ptr %next.gep35, align 4, !tbaa !3
+  %5 = extractelement <4 x i32> %i.by, i64 2
+  store i32 %5, ptr %next.gep36, align 4, !tbaa !3
+  %6 = extractelement <4 x i32> %i.by, i64 3
   store i32 %6, ptr %next.gep37, align 4, !tbaa !3
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.cb = icmp eq i64 %index.next, %n.vec

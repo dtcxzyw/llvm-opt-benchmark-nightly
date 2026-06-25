@@ -201,12 +201,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.au = insertelement <4 x float> %i.at, float %i.aq, i64 3
   %i.av = fdiv <4 x float> splat (float 1.000000e+00), %i.au ; 4 uses
   %i.aw = extractelement <4 x float> %i.av, i64 0
-  %3 = extractelement <4 x float> %i.av, i64 1
-  %i.ax = extractelement <4 x float> %i.av, i64 2
-  %4 = extractelement <4 x float> %i.av, i64 3
   store float %i.aw, ptr %i.aj, align 8, !tbaa !198
-  store float %3, ptr %i.ak, align 8, !tbaa !198
-  store float %i.ax, ptr %i.al, align 8, !tbaa !198
+  %i.ax = extractelement <4 x float> %i.av, i64 1
+  store float %i.ax, ptr %i.ak, align 8, !tbaa !198
+  %3 = extractelement <4 x float> %i.av, i64 2
+  store float %3, ptr %i.al, align 8, !tbaa !198
+  %4 = extractelement <4 x float> %i.av, i64 3
   store float %4, ptr %i.am, align 8, !tbaa !198
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ay = icmp eq i64 %index.next, %n.vec
@@ -385,12 +385,12 @@ vector.body68:                                    ; preds = %vector.body68, %vec
   %i.eu = insertelement <4 x float> %i.et, float %i.eq, i64 3
   %i.ev = fdiv <4 x float> %i.eu, %broadcast.splat ; 4 uses
   %i.ew = extractelement <4 x float> %i.ev, i64 0
-  %5 = extractelement <4 x float> %i.ev, i64 1
-  %i.ex = extractelement <4 x float> %i.ev, i64 2
-  %6 = extractelement <4 x float> %i.ev, i64 3
   store float %i.ew, ptr %i.ej, align 8, !tbaa !198
-  store float %5, ptr %i.ek, align 8, !tbaa !198
-  store float %i.ex, ptr %i.el, align 8, !tbaa !198
+  %i.ex = extractelement <4 x float> %i.ev, i64 1
+  store float %i.ex, ptr %i.ek, align 8, !tbaa !198
+  %5 = extractelement <4 x float> %i.ev, i64 2
+  store float %5, ptr %i.el, align 8, !tbaa !198
+  %6 = extractelement <4 x float> %i.ev, i64 3
   store float %6, ptr %i.em, align 8, !tbaa !198
   %index.next70 = add nuw i64 %index69, 4         ; 2 uses
   %i.ey = icmp eq i64 %index.next70, %n.vec67
@@ -793,12 +793,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.es = insertelement <4 x float> %i.er, float %i.eo, i64 3
   %i.et = fdiv <4 x float> %i.es, %broadcast.splat ; 4 uses
   %i.eu = extractelement <4 x float> %i.et, i64 0
-  %2 = extractelement <4 x float> %i.et, i64 1
-  %i.ev = extractelement <4 x float> %i.et, i64 2
-  %3 = extractelement <4 x float> %i.et, i64 3
   store float %i.eu, ptr %i.eh, align 8, !tbaa !198
-  store float %2, ptr %i.ei, align 8, !tbaa !198
-  store float %i.ev, ptr %i.ej, align 8, !tbaa !198
+  %i.ev = extractelement <4 x float> %i.et, i64 1
+  store float %i.ev, ptr %i.ei, align 8, !tbaa !198
+  %2 = extractelement <4 x float> %i.et, i64 2
+  store float %2, ptr %i.ej, align 8, !tbaa !198
+  %3 = extractelement <4 x float> %i.et, i64 3
   store float %3, ptr %i.ek, align 8, !tbaa !198
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ew = icmp eq i64 %index.next, %n.vec

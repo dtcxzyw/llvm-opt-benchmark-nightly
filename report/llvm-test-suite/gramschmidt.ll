@@ -201,12 +201,12 @@ vector.body34:                                    ; preds = %vector.body34, %vec
   %i.bv = insertelement <2 x double> poison, double %i.bt, i64 0
   %i.bw = insertelement <2 x double> %i.bv, double %i.bu, i64 1
   %i.bx = fdiv <2 x double> %i.bw, %broadcast.splat37 ; 2 uses
-  %2 = extractelement <2 x double> %i.bx, i64 0
-  %3 = extractelement <2 x double> %i.bx, i64 1
-  %4 = getelementptr inbounds nuw [9600 x i8], ptr %invariant.gep72.i, i64 %index35
-  %5 = getelementptr inbounds nuw [9600 x i8], ptr %invariant.gep72.i, i64 %i.bq
-  store double %2, ptr %4, align 8, !tbaa !8, !alias.scope !27, !noalias !29
-  store double %3, ptr %5, align 8, !tbaa !8, !alias.scope !27, !noalias !29
+  %2 = getelementptr inbounds nuw [9600 x i8], ptr %invariant.gep72.i, i64 %index35
+  %3 = getelementptr inbounds nuw [9600 x i8], ptr %invariant.gep72.i, i64 %i.bq
+  %4 = extractelement <2 x double> %i.bx, i64 0
+  store double %4, ptr %2, align 8, !tbaa !8, !alias.scope !27, !noalias !29
+  %5 = extractelement <2 x double> %i.bx, i64 1
+  store double %5, ptr %3, align 8, !tbaa !8, !alias.scope !27, !noalias !29
   %index.next38 = add nuw i64 %index35, 2         ; 2 uses
   %i.by = icmp eq i64 %index.next38, 1000
   br i1 %i.by, label %middle.block39, label %vector.body34, !llvm.loop !30

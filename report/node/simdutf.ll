@@ -201,20 +201,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rn = lshr <8 x i32> %i.rm, splat (i32 8)
   %i.ro = trunc nuw <8 x i32> %i.rn to <8 x i24>  ; 8 uses
   %i.rp = extractelement <8 x i24> %i.ro, i64 0
-  %5 = extractelement <8 x i24> %i.ro, i64 1
-  %i.rq = extractelement <8 x i24> %i.ro, i64 2
-  %6 = extractelement <8 x i24> %i.ro, i64 3
-  %i.rr = extractelement <8 x i24> %i.ro, i64 4
-  %7 = extractelement <8 x i24> %i.ro, i64 5
-  %i.rs = extractelement <8 x i24> %i.ro, i64 6
-  %8 = extractelement <8 x i24> %i.ro, i64 7
   store i24 %i.rp, ptr %next.gep, align 1, !alias.scope !887, !noalias !884
-  store i24 %5, ptr %next.gep11, align 1, !alias.scope !887, !noalias !884
-  store i24 %i.rq, ptr %next.gep12, align 1, !alias.scope !887, !noalias !884
-  store i24 %6, ptr %next.gep13, align 1, !alias.scope !887, !noalias !884
-  store i24 %i.rr, ptr %next.gep14, align 1, !alias.scope !887, !noalias !884
-  store i24 %7, ptr %next.gep15, align 1, !alias.scope !887, !noalias !884
-  store i24 %i.rs, ptr %next.gep16, align 1, !alias.scope !887, !noalias !884
+  %i.rq = extractelement <8 x i24> %i.ro, i64 1
+  store i24 %i.rq, ptr %next.gep11, align 1, !alias.scope !887, !noalias !884
+  %i.rr = extractelement <8 x i24> %i.ro, i64 2
+  store i24 %i.rr, ptr %next.gep12, align 1, !alias.scope !887, !noalias !884
+  %i.rs = extractelement <8 x i24> %i.ro, i64 3
+  store i24 %i.rs, ptr %next.gep13, align 1, !alias.scope !887, !noalias !884
+  %5 = extractelement <8 x i24> %i.ro, i64 4
+  store i24 %5, ptr %next.gep14, align 1, !alias.scope !887, !noalias !884
+  %6 = extractelement <8 x i24> %i.ro, i64 5
+  store i24 %6, ptr %next.gep15, align 1, !alias.scope !887, !noalias !884
+  %7 = extractelement <8 x i24> %i.ro, i64 6
+  store i24 %7, ptr %next.gep16, align 1, !alias.scope !887, !noalias !884
+  %8 = extractelement <8 x i24> %i.ro, i64 7
   store i24 %8, ptr %next.gep17, align 1, !alias.scope !887, !noalias !884
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.rt = icmp eq i64 %index.next, %n.vec
@@ -617,20 +617,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.sj = lshr <8 x i32> %i.si, splat (i32 8)
   %i.sk = trunc nuw <8 x i32> %i.sj to <8 x i24>  ; 8 uses
   %i.sl = extractelement <8 x i24> %i.sk, i64 0
-  %7 = extractelement <8 x i24> %i.sk, i64 1
-  %i.sm = extractelement <8 x i24> %i.sk, i64 2
-  %8 = extractelement <8 x i24> %i.sk, i64 3
-  %i.sn = extractelement <8 x i24> %i.sk, i64 4
-  %9 = extractelement <8 x i24> %i.sk, i64 5
-  %i.so = extractelement <8 x i24> %i.sk, i64 6
-  %10 = extractelement <8 x i24> %i.sk, i64 7
   store i24 %i.sl, ptr %next.gep, align 1, !alias.scope !900, !noalias !897
-  store i24 %7, ptr %next.gep790, align 1, !alias.scope !900, !noalias !897
-  store i24 %i.sm, ptr %next.gep791, align 1, !alias.scope !900, !noalias !897
-  store i24 %8, ptr %next.gep792, align 1, !alias.scope !900, !noalias !897
-  store i24 %i.sn, ptr %next.gep793, align 1, !alias.scope !900, !noalias !897
-  store i24 %9, ptr %next.gep794, align 1, !alias.scope !900, !noalias !897
-  store i24 %i.so, ptr %next.gep795, align 1, !alias.scope !900, !noalias !897
+  %i.sm = extractelement <8 x i24> %i.sk, i64 1
+  store i24 %i.sm, ptr %next.gep790, align 1, !alias.scope !900, !noalias !897
+  %i.sn = extractelement <8 x i24> %i.sk, i64 2
+  store i24 %i.sn, ptr %next.gep791, align 1, !alias.scope !900, !noalias !897
+  %i.so = extractelement <8 x i24> %i.sk, i64 3
+  store i24 %i.so, ptr %next.gep792, align 1, !alias.scope !900, !noalias !897
+  %7 = extractelement <8 x i24> %i.sk, i64 4
+  store i24 %7, ptr %next.gep793, align 1, !alias.scope !900, !noalias !897
+  %8 = extractelement <8 x i24> %i.sk, i64 5
+  store i24 %8, ptr %next.gep794, align 1, !alias.scope !900, !noalias !897
+  %9 = extractelement <8 x i24> %i.sk, i64 6
+  store i24 %9, ptr %next.gep795, align 1, !alias.scope !900, !noalias !897
+  %10 = extractelement <8 x i24> %i.sk, i64 7
   store i24 %10, ptr %next.gep796, align 1, !alias.scope !900, !noalias !897
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.sp = icmp eq i64 %index.next, %n.vec
@@ -1033,20 +1033,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rl = lshr <8 x i32> %i.rk, splat (i32 8)
   %i.rm = trunc nuw <8 x i32> %i.rl to <8 x i24>  ; 8 uses
   %i.rn = extractelement <8 x i24> %i.rm, i64 0
-  %5 = extractelement <8 x i24> %i.rm, i64 1
-  %i.ro = extractelement <8 x i24> %i.rm, i64 2
-  %6 = extractelement <8 x i24> %i.rm, i64 3
-  %i.rp = extractelement <8 x i24> %i.rm, i64 4
-  %7 = extractelement <8 x i24> %i.rm, i64 5
-  %i.rq = extractelement <8 x i24> %i.rm, i64 6
-  %8 = extractelement <8 x i24> %i.rm, i64 7
   store i24 %i.rn, ptr %next.gep, align 1, !alias.scope !916, !noalias !913
-  store i24 %5, ptr %next.gep11, align 1, !alias.scope !916, !noalias !913
-  store i24 %i.ro, ptr %next.gep12, align 1, !alias.scope !916, !noalias !913
-  store i24 %6, ptr %next.gep13, align 1, !alias.scope !916, !noalias !913
-  store i24 %i.rp, ptr %next.gep14, align 1, !alias.scope !916, !noalias !913
-  store i24 %7, ptr %next.gep15, align 1, !alias.scope !916, !noalias !913
-  store i24 %i.rq, ptr %next.gep16, align 1, !alias.scope !916, !noalias !913
+  %i.ro = extractelement <8 x i24> %i.rm, i64 1
+  store i24 %i.ro, ptr %next.gep11, align 1, !alias.scope !916, !noalias !913
+  %i.rp = extractelement <8 x i24> %i.rm, i64 2
+  store i24 %i.rp, ptr %next.gep12, align 1, !alias.scope !916, !noalias !913
+  %i.rq = extractelement <8 x i24> %i.rm, i64 3
+  store i24 %i.rq, ptr %next.gep13, align 1, !alias.scope !916, !noalias !913
+  %5 = extractelement <8 x i24> %i.rm, i64 4
+  store i24 %5, ptr %next.gep14, align 1, !alias.scope !916, !noalias !913
+  %6 = extractelement <8 x i24> %i.rm, i64 5
+  store i24 %6, ptr %next.gep15, align 1, !alias.scope !916, !noalias !913
+  %7 = extractelement <8 x i24> %i.rm, i64 6
+  store i24 %7, ptr %next.gep16, align 1, !alias.scope !916, !noalias !913
+  %8 = extractelement <8 x i24> %i.rm, i64 7
   store i24 %8, ptr %next.gep17, align 1, !alias.scope !916, !noalias !913
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.rr = icmp eq i64 %index.next, %n.vec
@@ -1449,20 +1449,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.sh = lshr <8 x i32> %i.sg, splat (i32 8)
   %i.si = trunc nuw <8 x i32> %i.sh to <8 x i24>  ; 8 uses
   %i.sj = extractelement <8 x i24> %i.si, i64 0
-  %7 = extractelement <8 x i24> %i.si, i64 1
-  %i.sk = extractelement <8 x i24> %i.si, i64 2
-  %8 = extractelement <8 x i24> %i.si, i64 3
-  %i.sl = extractelement <8 x i24> %i.si, i64 4
-  %9 = extractelement <8 x i24> %i.si, i64 5
-  %i.sm = extractelement <8 x i24> %i.si, i64 6
-  %10 = extractelement <8 x i24> %i.si, i64 7
   store i24 %i.sj, ptr %next.gep, align 1, !alias.scope !929, !noalias !926
-  store i24 %7, ptr %next.gep782, align 1, !alias.scope !929, !noalias !926
-  store i24 %i.sk, ptr %next.gep783, align 1, !alias.scope !929, !noalias !926
-  store i24 %8, ptr %next.gep784, align 1, !alias.scope !929, !noalias !926
-  store i24 %i.sl, ptr %next.gep785, align 1, !alias.scope !929, !noalias !926
-  store i24 %9, ptr %next.gep786, align 1, !alias.scope !929, !noalias !926
-  store i24 %i.sm, ptr %next.gep787, align 1, !alias.scope !929, !noalias !926
+  %i.sk = extractelement <8 x i24> %i.si, i64 1
+  store i24 %i.sk, ptr %next.gep782, align 1, !alias.scope !929, !noalias !926
+  %i.sl = extractelement <8 x i24> %i.si, i64 2
+  store i24 %i.sl, ptr %next.gep783, align 1, !alias.scope !929, !noalias !926
+  %i.sm = extractelement <8 x i24> %i.si, i64 3
+  store i24 %i.sm, ptr %next.gep784, align 1, !alias.scope !929, !noalias !926
+  %7 = extractelement <8 x i24> %i.si, i64 4
+  store i24 %7, ptr %next.gep785, align 1, !alias.scope !929, !noalias !926
+  %8 = extractelement <8 x i24> %i.si, i64 5
+  store i24 %8, ptr %next.gep786, align 1, !alias.scope !929, !noalias !926
+  %9 = extractelement <8 x i24> %i.si, i64 6
+  store i24 %9, ptr %next.gep787, align 1, !alias.scope !929, !noalias !926
+  %10 = extractelement <8 x i24> %i.si, i64 7
   store i24 %10, ptr %next.gep788, align 1, !alias.scope !929, !noalias !926
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.sn = icmp eq i64 %index.next, %n.vec
@@ -1865,20 +1865,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rl = lshr <8 x i32> %i.rk, splat (i32 8)
   %i.rm = trunc nuw <8 x i32> %i.rl to <8 x i24>  ; 8 uses
   %i.rn = extractelement <8 x i24> %i.rm, i64 0
-  %5 = extractelement <8 x i24> %i.rm, i64 1
-  %i.ro = extractelement <8 x i24> %i.rm, i64 2
-  %6 = extractelement <8 x i24> %i.rm, i64 3
-  %i.rp = extractelement <8 x i24> %i.rm, i64 4
-  %7 = extractelement <8 x i24> %i.rm, i64 5
-  %i.rq = extractelement <8 x i24> %i.rm, i64 6
-  %8 = extractelement <8 x i24> %i.rm, i64 7
   store i24 %i.rn, ptr %next.gep, align 1, !alias.scope !945, !noalias !942
-  store i24 %5, ptr %next.gep11, align 1, !alias.scope !945, !noalias !942
-  store i24 %i.ro, ptr %next.gep12, align 1, !alias.scope !945, !noalias !942
-  store i24 %6, ptr %next.gep13, align 1, !alias.scope !945, !noalias !942
-  store i24 %i.rp, ptr %next.gep14, align 1, !alias.scope !945, !noalias !942
-  store i24 %7, ptr %next.gep15, align 1, !alias.scope !945, !noalias !942
-  store i24 %i.rq, ptr %next.gep16, align 1, !alias.scope !945, !noalias !942
+  %i.ro = extractelement <8 x i24> %i.rm, i64 1
+  store i24 %i.ro, ptr %next.gep11, align 1, !alias.scope !945, !noalias !942
+  %i.rp = extractelement <8 x i24> %i.rm, i64 2
+  store i24 %i.rp, ptr %next.gep12, align 1, !alias.scope !945, !noalias !942
+  %i.rq = extractelement <8 x i24> %i.rm, i64 3
+  store i24 %i.rq, ptr %next.gep13, align 1, !alias.scope !945, !noalias !942
+  %5 = extractelement <8 x i24> %i.rm, i64 4
+  store i24 %5, ptr %next.gep14, align 1, !alias.scope !945, !noalias !942
+  %6 = extractelement <8 x i24> %i.rm, i64 5
+  store i24 %6, ptr %next.gep15, align 1, !alias.scope !945, !noalias !942
+  %7 = extractelement <8 x i24> %i.rm, i64 6
+  store i24 %7, ptr %next.gep16, align 1, !alias.scope !945, !noalias !942
+  %8 = extractelement <8 x i24> %i.rm, i64 7
   store i24 %8, ptr %next.gep17, align 1, !alias.scope !945, !noalias !942
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.rr = icmp eq i64 %index.next, %n.vec
@@ -2281,20 +2281,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.sh = lshr <8 x i32> %i.sg, splat (i32 8)
   %i.si = trunc nuw <8 x i32> %i.sh to <8 x i24>  ; 8 uses
   %i.sj = extractelement <8 x i24> %i.si, i64 0
-  %7 = extractelement <8 x i24> %i.si, i64 1
-  %i.sk = extractelement <8 x i24> %i.si, i64 2
-  %8 = extractelement <8 x i24> %i.si, i64 3
-  %i.sl = extractelement <8 x i24> %i.si, i64 4
-  %9 = extractelement <8 x i24> %i.si, i64 5
-  %i.sm = extractelement <8 x i24> %i.si, i64 6
-  %10 = extractelement <8 x i24> %i.si, i64 7
   store i24 %i.sj, ptr %next.gep, align 1, !alias.scope !958, !noalias !955
-  store i24 %7, ptr %next.gep782, align 1, !alias.scope !958, !noalias !955
-  store i24 %i.sk, ptr %next.gep783, align 1, !alias.scope !958, !noalias !955
-  store i24 %8, ptr %next.gep784, align 1, !alias.scope !958, !noalias !955
-  store i24 %i.sl, ptr %next.gep785, align 1, !alias.scope !958, !noalias !955
-  store i24 %9, ptr %next.gep786, align 1, !alias.scope !958, !noalias !955
-  store i24 %i.sm, ptr %next.gep787, align 1, !alias.scope !958, !noalias !955
+  %i.sk = extractelement <8 x i24> %i.si, i64 1
+  store i24 %i.sk, ptr %next.gep782, align 1, !alias.scope !958, !noalias !955
+  %i.sl = extractelement <8 x i24> %i.si, i64 2
+  store i24 %i.sl, ptr %next.gep783, align 1, !alias.scope !958, !noalias !955
+  %i.sm = extractelement <8 x i24> %i.si, i64 3
+  store i24 %i.sm, ptr %next.gep784, align 1, !alias.scope !958, !noalias !955
+  %7 = extractelement <8 x i24> %i.si, i64 4
+  store i24 %7, ptr %next.gep785, align 1, !alias.scope !958, !noalias !955
+  %8 = extractelement <8 x i24> %i.si, i64 5
+  store i24 %8, ptr %next.gep786, align 1, !alias.scope !958, !noalias !955
+  %9 = extractelement <8 x i24> %i.si, i64 6
+  store i24 %9, ptr %next.gep787, align 1, !alias.scope !958, !noalias !955
+  %10 = extractelement <8 x i24> %i.si, i64 7
   store i24 %10, ptr %next.gep788, align 1, !alias.scope !958, !noalias !955
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.sn = icmp eq i64 %index.next, %n.vec
@@ -2697,20 +2697,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rr = lshr <8 x i32> %i.rq, splat (i32 8)
   %i.rs = trunc nuw <8 x i32> %i.rr to <8 x i24>  ; 8 uses
   %i.rt = extractelement <8 x i24> %i.rs, i64 0
-  %6 = extractelement <8 x i24> %i.rs, i64 1
-  %i.ru = extractelement <8 x i24> %i.rs, i64 2
-  %7 = extractelement <8 x i24> %i.rs, i64 3
-  %i.rv = extractelement <8 x i24> %i.rs, i64 4
-  %8 = extractelement <8 x i24> %i.rs, i64 5
-  %i.rw = extractelement <8 x i24> %i.rs, i64 6
-  %9 = extractelement <8 x i24> %i.rs, i64 7
   store i24 %i.rt, ptr %next.gep, align 1, !alias.scope !971, !noalias !968
-  store i24 %6, ptr %next.gep11, align 1, !alias.scope !971, !noalias !968
-  store i24 %i.ru, ptr %next.gep12, align 1, !alias.scope !971, !noalias !968
-  store i24 %7, ptr %next.gep13, align 1, !alias.scope !971, !noalias !968
-  store i24 %i.rv, ptr %next.gep14, align 1, !alias.scope !971, !noalias !968
-  store i24 %8, ptr %next.gep15, align 1, !alias.scope !971, !noalias !968
-  store i24 %i.rw, ptr %next.gep16, align 1, !alias.scope !971, !noalias !968
+  %i.ru = extractelement <8 x i24> %i.rs, i64 1
+  store i24 %i.ru, ptr %next.gep11, align 1, !alias.scope !971, !noalias !968
+  %i.rv = extractelement <8 x i24> %i.rs, i64 2
+  store i24 %i.rv, ptr %next.gep12, align 1, !alias.scope !971, !noalias !968
+  %i.rw = extractelement <8 x i24> %i.rs, i64 3
+  store i24 %i.rw, ptr %next.gep13, align 1, !alias.scope !971, !noalias !968
+  %6 = extractelement <8 x i24> %i.rs, i64 4
+  store i24 %6, ptr %next.gep14, align 1, !alias.scope !971, !noalias !968
+  %7 = extractelement <8 x i24> %i.rs, i64 5
+  store i24 %7, ptr %next.gep15, align 1, !alias.scope !971, !noalias !968
+  %8 = extractelement <8 x i24> %i.rs, i64 6
+  store i24 %8, ptr %next.gep16, align 1, !alias.scope !971, !noalias !968
+  %9 = extractelement <8 x i24> %i.rs, i64 7
   store i24 %9, ptr %next.gep17, align 1, !alias.scope !971, !noalias !968
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.rx = icmp eq i64 %index.next, %n.vec
@@ -3113,20 +3113,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.tb = lshr <8 x i32> %i.ta, splat (i32 8)
   %i.tc = trunc nuw <8 x i32> %i.tb to <8 x i24>  ; 8 uses
   %i.td = extractelement <8 x i24> %i.tc, i64 0
-  %7 = extractelement <8 x i24> %i.tc, i64 1
-  %i.te = extractelement <8 x i24> %i.tc, i64 2
-  %8 = extractelement <8 x i24> %i.tc, i64 3
-  %i.tf = extractelement <8 x i24> %i.tc, i64 4
-  %9 = extractelement <8 x i24> %i.tc, i64 5
-  %i.tg = extractelement <8 x i24> %i.tc, i64 6
-  %10 = extractelement <8 x i24> %i.tc, i64 7
   store i24 %i.td, ptr %next.gep, align 1, !alias.scope !982, !noalias !979
-  store i24 %7, ptr %next.gep795, align 1, !alias.scope !982, !noalias !979
-  store i24 %i.te, ptr %next.gep796, align 1, !alias.scope !982, !noalias !979
-  store i24 %8, ptr %next.gep797, align 1, !alias.scope !982, !noalias !979
-  store i24 %i.tf, ptr %next.gep798, align 1, !alias.scope !982, !noalias !979
-  store i24 %9, ptr %next.gep799, align 1, !alias.scope !982, !noalias !979
-  store i24 %i.tg, ptr %next.gep800, align 1, !alias.scope !982, !noalias !979
+  %i.te = extractelement <8 x i24> %i.tc, i64 1
+  store i24 %i.te, ptr %next.gep795, align 1, !alias.scope !982, !noalias !979
+  %i.tf = extractelement <8 x i24> %i.tc, i64 2
+  store i24 %i.tf, ptr %next.gep796, align 1, !alias.scope !982, !noalias !979
+  %i.tg = extractelement <8 x i24> %i.tc, i64 3
+  store i24 %i.tg, ptr %next.gep797, align 1, !alias.scope !982, !noalias !979
+  %7 = extractelement <8 x i24> %i.tc, i64 4
+  store i24 %7, ptr %next.gep798, align 1, !alias.scope !982, !noalias !979
+  %8 = extractelement <8 x i24> %i.tc, i64 5
+  store i24 %8, ptr %next.gep799, align 1, !alias.scope !982, !noalias !979
+  %9 = extractelement <8 x i24> %i.tc, i64 6
+  store i24 %9, ptr %next.gep800, align 1, !alias.scope !982, !noalias !979
+  %10 = extractelement <8 x i24> %i.tc, i64 7
   store i24 %10, ptr %next.gep801, align 1, !alias.scope !982, !noalias !979
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.th = icmp eq i64 %index.next, %n.vec
@@ -3529,20 +3529,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rp = lshr <8 x i32> %i.ro, splat (i32 8)
   %i.rq = trunc nuw <8 x i32> %i.rp to <8 x i24>  ; 8 uses
   %i.rr = extractelement <8 x i24> %i.rq, i64 0
-  %6 = extractelement <8 x i24> %i.rq, i64 1
-  %i.rs = extractelement <8 x i24> %i.rq, i64 2
-  %7 = extractelement <8 x i24> %i.rq, i64 3
-  %i.rt = extractelement <8 x i24> %i.rq, i64 4
-  %8 = extractelement <8 x i24> %i.rq, i64 5
-  %i.ru = extractelement <8 x i24> %i.rq, i64 6
-  %9 = extractelement <8 x i24> %i.rq, i64 7
   store i24 %i.rr, ptr %next.gep, align 1, !alias.scope !994, !noalias !991
-  store i24 %6, ptr %next.gep11, align 1, !alias.scope !994, !noalias !991
-  store i24 %i.rs, ptr %next.gep12, align 1, !alias.scope !994, !noalias !991
-  store i24 %7, ptr %next.gep13, align 1, !alias.scope !994, !noalias !991
-  store i24 %i.rt, ptr %next.gep14, align 1, !alias.scope !994, !noalias !991
-  store i24 %8, ptr %next.gep15, align 1, !alias.scope !994, !noalias !991
-  store i24 %i.ru, ptr %next.gep16, align 1, !alias.scope !994, !noalias !991
+  %i.rs = extractelement <8 x i24> %i.rq, i64 1
+  store i24 %i.rs, ptr %next.gep11, align 1, !alias.scope !994, !noalias !991
+  %i.rt = extractelement <8 x i24> %i.rq, i64 2
+  store i24 %i.rt, ptr %next.gep12, align 1, !alias.scope !994, !noalias !991
+  %i.ru = extractelement <8 x i24> %i.rq, i64 3
+  store i24 %i.ru, ptr %next.gep13, align 1, !alias.scope !994, !noalias !991
+  %6 = extractelement <8 x i24> %i.rq, i64 4
+  store i24 %6, ptr %next.gep14, align 1, !alias.scope !994, !noalias !991
+  %7 = extractelement <8 x i24> %i.rq, i64 5
+  store i24 %7, ptr %next.gep15, align 1, !alias.scope !994, !noalias !991
+  %8 = extractelement <8 x i24> %i.rq, i64 6
+  store i24 %8, ptr %next.gep16, align 1, !alias.scope !994, !noalias !991
+  %9 = extractelement <8 x i24> %i.rq, i64 7
   store i24 %9, ptr %next.gep17, align 1, !alias.scope !994, !noalias !991
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.rv = icmp eq i64 %index.next, %n.vec
@@ -3945,20 +3945,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.sz = lshr <8 x i32> %i.sy, splat (i32 8)
   %i.ta = trunc nuw <8 x i32> %i.sz to <8 x i24>  ; 8 uses
   %i.tb = extractelement <8 x i24> %i.ta, i64 0
-  %7 = extractelement <8 x i24> %i.ta, i64 1
-  %i.tc = extractelement <8 x i24> %i.ta, i64 2
-  %8 = extractelement <8 x i24> %i.ta, i64 3
-  %i.td = extractelement <8 x i24> %i.ta, i64 4
-  %9 = extractelement <8 x i24> %i.ta, i64 5
-  %i.te = extractelement <8 x i24> %i.ta, i64 6
-  %10 = extractelement <8 x i24> %i.ta, i64 7
   store i24 %i.tb, ptr %next.gep, align 1, !alias.scope !1005, !noalias !1002
-  store i24 %7, ptr %next.gep787, align 1, !alias.scope !1005, !noalias !1002
-  store i24 %i.tc, ptr %next.gep788, align 1, !alias.scope !1005, !noalias !1002
-  store i24 %8, ptr %next.gep789, align 1, !alias.scope !1005, !noalias !1002
-  store i24 %i.td, ptr %next.gep790, align 1, !alias.scope !1005, !noalias !1002
-  store i24 %9, ptr %next.gep791, align 1, !alias.scope !1005, !noalias !1002
-  store i24 %i.te, ptr %next.gep792, align 1, !alias.scope !1005, !noalias !1002
+  %i.tc = extractelement <8 x i24> %i.ta, i64 1
+  store i24 %i.tc, ptr %next.gep787, align 1, !alias.scope !1005, !noalias !1002
+  %i.td = extractelement <8 x i24> %i.ta, i64 2
+  store i24 %i.td, ptr %next.gep788, align 1, !alias.scope !1005, !noalias !1002
+  %i.te = extractelement <8 x i24> %i.ta, i64 3
+  store i24 %i.te, ptr %next.gep789, align 1, !alias.scope !1005, !noalias !1002
+  %7 = extractelement <8 x i24> %i.ta, i64 4
+  store i24 %7, ptr %next.gep790, align 1, !alias.scope !1005, !noalias !1002
+  %8 = extractelement <8 x i24> %i.ta, i64 5
+  store i24 %8, ptr %next.gep791, align 1, !alias.scope !1005, !noalias !1002
+  %9 = extractelement <8 x i24> %i.ta, i64 6
+  store i24 %9, ptr %next.gep792, align 1, !alias.scope !1005, !noalias !1002
+  %10 = extractelement <8 x i24> %i.ta, i64 7
   store i24 %10, ptr %next.gep793, align 1, !alias.scope !1005, !noalias !1002
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.tf = icmp eq i64 %index.next, %n.vec
@@ -4361,20 +4361,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rp = lshr <8 x i32> %i.ro, splat (i32 8)
   %i.rq = trunc nuw <8 x i32> %i.rp to <8 x i24>  ; 8 uses
   %i.rr = extractelement <8 x i24> %i.rq, i64 0
-  %6 = extractelement <8 x i24> %i.rq, i64 1
-  %i.rs = extractelement <8 x i24> %i.rq, i64 2
-  %7 = extractelement <8 x i24> %i.rq, i64 3
-  %i.rt = extractelement <8 x i24> %i.rq, i64 4
-  %8 = extractelement <8 x i24> %i.rq, i64 5
-  %i.ru = extractelement <8 x i24> %i.rq, i64 6
-  %9 = extractelement <8 x i24> %i.rq, i64 7
   store i24 %i.rr, ptr %next.gep, align 1, !alias.scope !1017, !noalias !1014
-  store i24 %6, ptr %next.gep11, align 1, !alias.scope !1017, !noalias !1014
-  store i24 %i.rs, ptr %next.gep12, align 1, !alias.scope !1017, !noalias !1014
-  store i24 %7, ptr %next.gep13, align 1, !alias.scope !1017, !noalias !1014
-  store i24 %i.rt, ptr %next.gep14, align 1, !alias.scope !1017, !noalias !1014
-  store i24 %8, ptr %next.gep15, align 1, !alias.scope !1017, !noalias !1014
-  store i24 %i.ru, ptr %next.gep16, align 1, !alias.scope !1017, !noalias !1014
+  %i.rs = extractelement <8 x i24> %i.rq, i64 1
+  store i24 %i.rs, ptr %next.gep11, align 1, !alias.scope !1017, !noalias !1014
+  %i.rt = extractelement <8 x i24> %i.rq, i64 2
+  store i24 %i.rt, ptr %next.gep12, align 1, !alias.scope !1017, !noalias !1014
+  %i.ru = extractelement <8 x i24> %i.rq, i64 3
+  store i24 %i.ru, ptr %next.gep13, align 1, !alias.scope !1017, !noalias !1014
+  %6 = extractelement <8 x i24> %i.rq, i64 4
+  store i24 %6, ptr %next.gep14, align 1, !alias.scope !1017, !noalias !1014
+  %7 = extractelement <8 x i24> %i.rq, i64 5
+  store i24 %7, ptr %next.gep15, align 1, !alias.scope !1017, !noalias !1014
+  %8 = extractelement <8 x i24> %i.rq, i64 6
+  store i24 %8, ptr %next.gep16, align 1, !alias.scope !1017, !noalias !1014
+  %9 = extractelement <8 x i24> %i.rq, i64 7
   store i24 %9, ptr %next.gep17, align 1, !alias.scope !1017, !noalias !1014
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.rv = icmp eq i64 %index.next, %n.vec
@@ -4777,20 +4777,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.sz = lshr <8 x i32> %i.sy, splat (i32 8)
   %i.ta = trunc nuw <8 x i32> %i.sz to <8 x i24>  ; 8 uses
   %i.tb = extractelement <8 x i24> %i.ta, i64 0
-  %7 = extractelement <8 x i24> %i.ta, i64 1
-  %i.tc = extractelement <8 x i24> %i.ta, i64 2
-  %8 = extractelement <8 x i24> %i.ta, i64 3
-  %i.td = extractelement <8 x i24> %i.ta, i64 4
-  %9 = extractelement <8 x i24> %i.ta, i64 5
-  %i.te = extractelement <8 x i24> %i.ta, i64 6
-  %10 = extractelement <8 x i24> %i.ta, i64 7
   store i24 %i.tb, ptr %next.gep, align 1, !alias.scope !1028, !noalias !1025
-  store i24 %7, ptr %next.gep787, align 1, !alias.scope !1028, !noalias !1025
-  store i24 %i.tc, ptr %next.gep788, align 1, !alias.scope !1028, !noalias !1025
-  store i24 %8, ptr %next.gep789, align 1, !alias.scope !1028, !noalias !1025
-  store i24 %i.td, ptr %next.gep790, align 1, !alias.scope !1028, !noalias !1025
-  store i24 %9, ptr %next.gep791, align 1, !alias.scope !1028, !noalias !1025
-  store i24 %i.te, ptr %next.gep792, align 1, !alias.scope !1028, !noalias !1025
+  %i.tc = extractelement <8 x i24> %i.ta, i64 1
+  store i24 %i.tc, ptr %next.gep787, align 1, !alias.scope !1028, !noalias !1025
+  %i.td = extractelement <8 x i24> %i.ta, i64 2
+  store i24 %i.td, ptr %next.gep788, align 1, !alias.scope !1028, !noalias !1025
+  %i.te = extractelement <8 x i24> %i.ta, i64 3
+  store i24 %i.te, ptr %next.gep789, align 1, !alias.scope !1028, !noalias !1025
+  %7 = extractelement <8 x i24> %i.ta, i64 4
+  store i24 %7, ptr %next.gep790, align 1, !alias.scope !1028, !noalias !1025
+  %8 = extractelement <8 x i24> %i.ta, i64 5
+  store i24 %8, ptr %next.gep791, align 1, !alias.scope !1028, !noalias !1025
+  %9 = extractelement <8 x i24> %i.ta, i64 6
+  store i24 %9, ptr %next.gep792, align 1, !alias.scope !1028, !noalias !1025
+  %10 = extractelement <8 x i24> %i.ta, i64 7
   store i24 %10, ptr %next.gep793, align 1, !alias.scope !1028, !noalias !1025
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.tf = icmp eq i64 %index.next, %n.vec

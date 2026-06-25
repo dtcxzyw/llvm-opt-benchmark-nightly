@@ -201,12 +201,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dc = sitofp <4 x i8> %i.db to <4 x float>
   %i.dd = fmul nnan <4 x float> %i.dc, splat (float 7.812500e-03) ; 7 uses
   %i.de = extractelement <4 x float> %i.dd, i64 0
-  %1 = extractelement <4 x float> %i.dd, i64 1
-  %i.df = extractelement <4 x float> %i.dd, i64 2
-  %2 = extractelement <4 x float> %i.dd, i64 3
   store float %i.de, ptr %next.gep107, align 4, !alias.scope !22, !noalias !23
-  store float %1, ptr %next.gep108, align 4, !alias.scope !22, !noalias !23
-  store float %i.df, ptr %next.gep109, align 4, !alias.scope !22, !noalias !23
+  %i.df = extractelement <4 x float> %i.dd, i64 1
+  store float %i.df, ptr %next.gep108, align 4, !alias.scope !22, !noalias !23
+  %1 = extractelement <4 x float> %i.dd, i64 2
+  store float %1, ptr %next.gep109, align 4, !alias.scope !22, !noalias !23
+  %2 = extractelement <4 x float> %i.dd, i64 3
   store float %2, ptr %next.gep110, align 4, !alias.scope !22, !noalias !23
   %i.dg = getelementptr i8, ptr %i.cb, i64 7
   %i.dh = getelementptr i8, ptr %i.cc, i64 11

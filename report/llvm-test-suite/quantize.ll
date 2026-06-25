@@ -200,17 +200,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.iv = getelementptr inbounds nuw i8, ptr %i.ii, i64 20
   %i.iw = getelementptr inbounds nuw i8, ptr %i.ik, i64 28
   %i.ix = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.ir, <2 x i32> splat (i32 125)) ; 3 uses
-  %12 = extractelement <2 x i32> %i.ix, i64 0
-  %i.iy = extractelement <2 x i32> %i.ix, i64 1
-  %13 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.is, <2 x i32> splat (i32 125)) ; 3 uses
-  %i.iz = extractelement <2 x i32> %13, i64 0
-  %14 = extractelement <2 x i32> %13, i64 1
-  store i32 %12, ptr %i.it, align 4, !tbaa !4
-  store i32 %i.iy, ptr %i.iu, align 4, !tbaa !4
-  store i32 %i.iz, ptr %i.iv, align 4, !tbaa !4
+  %12 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.is, <2 x i32> splat (i32 125)) ; 3 uses
+  %i.iy = extractelement <2 x i32> %i.ix, i64 0
+  store i32 %i.iy, ptr %i.it, align 4, !tbaa !4
+  %i.iz = extractelement <2 x i32> %i.ix, i64 1
+  store i32 %i.iz, ptr %i.iu, align 4, !tbaa !4
+  %13 = extractelement <2 x i32> %12, i64 0
+  store i32 %13, ptr %i.iv, align 4, !tbaa !4
+  %14 = extractelement <2 x i32> %12, i64 1
   store i32 %14, ptr %i.iw, align 4, !tbaa !4
   %i.ja = add <2 x i32> %i.ix, %vec.phi           ; 2 uses
-  %i.jb = add <2 x i32> %13, %vec.phi580          ; 2 uses
+  %i.jb = add <2 x i32> %12, %vec.phi580          ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.jc = icmp eq i64 %index.next, %n.vec
   br i1 %i.jc, label %middle.block, label %vector.body, !llvm.loop !52

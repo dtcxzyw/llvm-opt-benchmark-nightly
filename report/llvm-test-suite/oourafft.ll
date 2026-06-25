@@ -201,10 +201,10 @@ begin_hunk_0_@cft1st:bb.a
   store <2 x double> %i.ky, ptr %i.je, align 8, !tbaa !8, !alias.scope !53, !noalias !55
   %i.kz = fmul <2 x double> %i.hn, %i.ks
   %i.la = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hl, <2 x double> %i.kt, <2 x double> %i.kz) ; 2 uses
-  %3 = extractelement <2 x double> %i.la, i64 1
-  %4 = shufflevector <2 x double> %i.la, <2 x double> %i.fp, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %4, ptr %i.jj, align 8, !tbaa !8, !alias.scope !53, !noalias !55
-  store double %3, ptr %i.jk, align 8, !tbaa !8, !alias.scope !53, !noalias !55
+  %3 = shufflevector <2 x double> %i.la, <2 x double> %i.fp, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %3, ptr %i.jj, align 8, !tbaa !8, !alias.scope !53, !noalias !55
+  %4 = extractelement <2 x double> %i.la, i64 1
+  store double %4, ptr %i.jk, align 8, !tbaa !8, !alias.scope !53, !noalias !55
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.lb = icmp eq i64 %index.next, %n.vec
   br i1 %i.lb, label %middle.block, label %vector.body, !llvm.loop !56

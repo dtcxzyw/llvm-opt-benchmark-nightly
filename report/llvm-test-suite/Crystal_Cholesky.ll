@@ -96,8 +96,8 @@ vector.body240:                                   ; preds = %vector.body240, %ve
   %i.aa = insertelement <2 x double> %i.z, double %i.y, i64 1
   %i.ab = fdiv <2 x double> %i.aa, %broadcast.splat ; 2 uses
   %i.ac = extractelement <2 x double> %i.ab, i64 0
-  %4 = extractelement <2 x double> %i.ab, i64 1
   store double %i.ac, ptr %i.u, align 8, !tbaa !8
+  %4 = extractelement <2 x double> %i.ab, i64 1
   store double %4, ptr %i.w, align 8, !tbaa !8
   %index.next242 = add nuw i64 %index241, 2       ; 2 uses
   %i.ad = icmp eq i64 %index.next242, %n.vec239
