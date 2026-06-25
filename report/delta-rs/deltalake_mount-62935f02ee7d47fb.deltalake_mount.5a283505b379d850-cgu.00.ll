@@ -201,8 +201,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2472, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -605,8 +604,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2503, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -1009,8 +1007,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2532, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -1413,8 +1410,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2561, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -1817,8 +1813,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2590, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -2221,8 +2216,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2619, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -2625,8 +2619,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2648, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -3029,8 +3022,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2677, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -3433,8 +3425,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2706, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -3837,8 +3828,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2735, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -4241,8 +4231,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2768, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -4645,8 +4634,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2801, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -5049,8 +5037,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2830, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -5453,8 +5440,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2859, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -5857,8 +5843,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2888, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -6261,8 +6246,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2917, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -6665,8 +6649,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2946, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -7069,8 +7052,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !2975, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -7473,8 +7455,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3008, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -7877,8 +7858,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3041, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -8281,8 +8261,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3074, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -8685,8 +8664,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3107, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -9089,8 +9067,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3140, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -9493,8 +9470,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3173, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -9897,8 +9873,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3203, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -10301,8 +10276,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3232, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -10705,8 +10679,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3261, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -11109,8 +11082,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3290, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -11513,8 +11485,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3319, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -11917,8 +11888,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3348, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -12321,8 +12291,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3377, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -12725,8 +12694,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3406, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -13129,8 +13097,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3435, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -13533,8 +13500,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3464, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -13937,8 +13903,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3493, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -14341,8 +14306,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3522, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -14745,8 +14709,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3555, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -15149,8 +15112,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3588, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -15553,8 +15515,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3617, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -15957,8 +15918,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3646, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -16361,8 +16321,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3675, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -16765,8 +16724,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3704, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -17169,8 +17127,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3733, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -17573,8 +17530,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3762, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -17977,8 +17933,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3795, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -18381,8 +18336,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3828, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -18785,8 +18739,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3861, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -19189,8 +19142,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3894, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -19593,8 +19545,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3927, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64
@@ -19997,8 +19948,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %.thread.i.i
   %.sroa.8.0104.i.i = phi ptr [ %i.r, %.thread.i.i ], [ %.sroa.483.0.copyload.i.i, %bb.f ] ; 2 uses
   %.sroa.10.0103.i.i = phi ptr [ %i.s, %.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %bb.f ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0103.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0104.i.i), "nonnull"(ptr %.sroa.10.0103.i.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.v = load i64, ptr %i.u, align 8, !range !2475, !noalias !3960, !noundef !4
   %i.w = ptrtoint ptr %.sroa.10.0103.i.i to i64

@@ -201,8 +201,7 @@ bb.m:                                             ; preds = %bb.g
 bb.n:                                             ; preds = %bb.m, %.thread.i.i.i
   %.sroa.8.0123.i.i.i = phi ptr [ %i.ak, %.thread.i.i.i ], [ %.sroa.5.0.copyload.i.i.i, %bb.m ] ; 2 uses
   %.sroa.10.0122.i.i.i = phi ptr [ %i.al, %.thread.i.i.i ], [ %.sroa.698.0.copyload.i.i.i, %bb.m ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0123.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0122.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0123.i.i.i), "nonnull"(ptr %.sroa.10.0122.i.i.i) ]
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ao = load i64, ptr %i.an, align 8, !range !323, !noalias !3704, !noundef !3
   %i.ap = ptrtoint ptr %.sroa.10.0122.i.i.i to i64
@@ -605,8 +604,7 @@ bb.m:                                             ; preds = %bb.g
 bb.n:                                             ; preds = %bb.m, %.thread.i.i.i
   %.sroa.8.0123.i.i.i = phi ptr [ %i.ak, %.thread.i.i.i ], [ %.sroa.5.0.copyload.i.i.i, %bb.m ] ; 2 uses
   %.sroa.10.0122.i.i.i = phi ptr [ %i.al, %.thread.i.i.i ], [ %.sroa.698.0.copyload.i.i.i, %bb.m ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0123.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0122.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0123.i.i.i), "nonnull"(ptr %.sroa.10.0122.i.i.i) ]
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ao = load i64, ptr %i.an, align 8, !range !323, !noalias !3735, !noundef !3
   %i.ap = ptrtoint ptr %.sroa.10.0122.i.i.i to i64
@@ -1009,8 +1007,7 @@ bb.q:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 bb.r:                                             ; preds = %bb.q, %.thread.i.i.i
   %.sroa.8.0125.i.i.i = phi ptr [ %i.am, %.thread.i.i.i ], [ %.sroa.5.0.copyload.i.i.i, %bb.q ] ; 2 uses
   %.sroa.10.0124.i.i.i = phi ptr [ %i.an, %.thread.i.i.i ], [ %.sroa.6100.0.copyload.i.i.i, %bb.q ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0125.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0124.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0125.i.i.i), "nonnull"(ptr %.sroa.10.0124.i.i.i) ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.aq = load i64, ptr %i.ap, align 8, !range !323, !noalias !3764, !noundef !3 ; 2 uses
   %i.ar = ptrtoint ptr %.sroa.10.0124.i.i.i to i64
@@ -1413,8 +1410,7 @@ bb.q:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 bb.r:                                             ; preds = %bb.q, %.thread.i.i.i
   %.sroa.8.0125.i.i.i = phi ptr [ %i.am, %.thread.i.i.i ], [ %.sroa.5.0.copyload.i.i.i, %bb.q ] ; 2 uses
   %.sroa.10.0124.i.i.i = phi ptr [ %i.an, %.thread.i.i.i ], [ %.sroa.6100.0.copyload.i.i.i, %bb.q ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0125.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0124.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0125.i.i.i), "nonnull"(ptr %.sroa.10.0124.i.i.i) ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.aq = load i64, ptr %i.ap, align 8, !range !323, !noalias !3805, !noundef !3 ; 2 uses
   %i.ar = ptrtoint ptr %.sroa.10.0124.i.i.i to i64
@@ -1817,8 +1813,7 @@ bb.ad:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 bb.ae:                                            ; preds = %bb.ad, %.thread.i.i.i
   %.sroa.8.0105.i.i.i = phi ptr [ %i.be, %.thread.i.i.i ], [ %.sroa.484.0.copyload.i.i.i, %bb.ad ] ; 2 uses
   %.sroa.10.0104.i.i.i = phi ptr [ %i.bf, %.thread.i.i.i ], [ %.sroa.5.0.copyload.i.i.i, %bb.ad ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0105.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0104.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0105.i.i.i), "nonnull"(ptr %.sroa.10.0104.i.i.i) ]
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.bi = load i64, ptr %i.bh, align 16, !range !323, !noundef !3 ; 2 uses
   %i.bj = ptrtoint ptr %.sroa.10.0104.i.i.i to i64
@@ -2221,14 +2216,13 @@ bb.w:                                             ; preds = %bb.v
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.u, %bb.t
   %.not.i22 = icmp eq i64 %i.ap, 20
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 7 uses
   br i1 %.not.i22, label %bb.x, label %bb.ac
 
 bb.x:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECsdJxlLsGgtXr_16delta_benchmarks.exit
   %i.be = extractelement <2 x ptr> %i.ar, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.be) ]
   %i.bf = extractelement <2 x ptr> %i.ar, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bf) ]
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.be), "nonnull"(ptr %i.bf) ]
   %i.bg = load i64, ptr %3, align 8, !range !38, !alias.scope !4190, !noundef !3
   %i.bh = icmp eq i64 %i.bg, -9223372036854775808
   br i1 %i.bh, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECsdJxlLsGgtXr_16delta_benchmarks.exit, label %bb.y
@@ -2264,19 +2258,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT
 
 bb.ac:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB11_4sync3ArcDNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECsdJxlLsGgtXr_16delta_benchmarks.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, i64 16, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
-  %i.bl = load i64, ptr %4, align 8, !range !38, !alias.scope !4193, !noundef !3
+  %i.bl = load i64, ptr %3, align 8, !range !38, !alias.scope !4193, !noundef !3
   %i.bm = icmp eq i64 %i.bl, -9223372036854775808
   br i1 %i.bm, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECsdJxlLsGgtXr_16delta_benchmarks.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(24) %4)
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEECsdJxlLsGgtXr_16delta_benchmarks.exit.i27.invoke unwind label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.bn = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(24) %4)
+  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %.body23 unwind label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
@@ -2286,8 +2279,7 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEECsdJxlLsGgtXr_16delta_benchmarks.exit.i27.invoke: ; preds = %bb.y, %bb.ad
-  %5 = phi ptr [ %4, %bb.ad ], [ %3, %bb.y ]
-  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(24) %5)
+  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecjENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEEECsdJxlLsGgtXr_16delta_benchmarks.exit unwind label %bb.ab
 
 bb.ag:                                            ; preds = %bb.o, %.body
