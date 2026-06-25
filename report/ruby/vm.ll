@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = inttoptr i64 %0 to ptr                   ; 5 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !77   ; 4 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !77   ; 5 uses
   %i.e = and i64 %i.d, 31
   %i.f = icmp eq i64 %i.e, 28
   br i1 %i.f, label %bb.b, label %rbimpl_RB_TYPE_P_fastpath.exit.thread
@@ -217,22 +217,22 @@ bb.b:                                             ; preds = %bb.a
 
 rbimpl_RB_TYPE_P_fastpath.exit:                   ; preds = %bb.b
   %i.m = inttoptr i64 %i.h to ptr
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !77   ; 2 uses
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !77   ; 3 uses
   %i.o = and i64 %i.n, 31
   %i.p = icmp eq i64 %i.o, 3
   br i1 %i.p, label %bb.c, label %rbimpl_RB_TYPE_P_fastpath.exit.thread
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit
   %i.q = and i64 %i.n, 8192
-  %.not = icmp eq i64 %i.q, 0
+  %.not = icmp eq i64 %i.q, 0                     ; 2 uses
   %spec.select = select i1 %.not, i64 %0, i64 %i.h
-  %.phi.trans.insert = inttoptr i64 %spec.select to ptr ; 2 uses
-  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !77
+  %1 = select i1 %.not, i64 %i.d, i64 %i.n
+  %.pre = inttoptr i64 %spec.select to ptr
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %bb.b, %bb.c, %rbimpl_RB_TYPE_P_fastpath.exit, %bb.a
-  %.pre-phi = phi ptr [ %i.c, %bb.b ], [ %.phi.trans.insert, %bb.c ], [ %i.c, %rbimpl_RB_TYPE_P_fastpath.exit ], [ %i.c, %bb.a ] ; 6 uses
-  %i.r = phi i64 [ %i.d, %bb.b ], [ %.pre, %bb.c ], [ %i.d, %rbimpl_RB_TYPE_P_fastpath.exit ], [ %i.d, %bb.a ]
+  %.pre-phi = phi ptr [ %i.c, %bb.b ], [ %.pre, %bb.c ], [ %i.c, %rbimpl_RB_TYPE_P_fastpath.exit ], [ %i.c, %bb.a ] ; 6 uses
+  %i.r = phi i64 [ %i.d, %bb.b ], [ %1, %bb.c ], [ %i.d, %rbimpl_RB_TYPE_P_fastpath.exit ], [ %i.d, %bb.a ]
   %i.s = and i64 %i.r, 65536
   %.not.i.i = icmp eq i64 %i.s, 0
   br i1 %.not.i.i, label %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.thread.i, label %RCLASS_PRIME_CLASSEXT_READABLE_P.exit.i

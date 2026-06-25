@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.i
   br label %_ZSt6uniqueIPjET_S1_S1_.exit
 
 _ZSt6uniqueIPjET_S1_S1_.exit:                     ; preds = %.preheader.i.i.i, %_ZN2v84base4sortINS0_11SmallVectorIjLm16ESaIjEEEEEvRT_.exit, %._crit_edge.i.i
-  %i.z = phi ptr [ %.pre9, %._crit_edge.i.i ], [ %i.l, %_ZN2v84base4sortINS0_11SmallVectorIjLm16ESaIjEEEEEvRT_.exit ], [ %i.l, %.preheader.i.i.i ] ; 17 uses
+  %i.z = phi ptr [ %.pre9, %._crit_edge.i.i ], [ %i.l, %_ZN2v84base4sortINS0_11SmallVectorIjLm16ESaIjEEEEEvRT_.exit ], [ %i.l, %.preheader.i.i.i ] ; 15 uses
   %i.aa = phi ptr [ %.pre8, %._crit_edge.i.i ], [ %i.k, %_ZN2v84base4sortINS0_11SmallVectorIjLm16ESaIjEEEEEvRT_.exit ], [ %i.k, %.preheader.i.i.i ] ; 2 uses
   %.015.i.i = phi ptr [ %i.y, %._crit_edge.i.i ], [ %i.k, %_ZN2v84base4sortINS0_11SmallVectorIjLm16ESaIjEEEEEvRT_.exit ], [ %i.k, %.preheader.i.i.i ]
   %i.ab = ptrtoint ptr %i.aa to i64
@@ -376,32 +376,32 @@ _ZN2v88internal8compiler10turboshaft8WordTypeILm32EE3SetILm16EEES4_RKNS_4base11S
 bb.l:                                             ; preds = %_ZSt6uniqueIPjET_S1_S1_.exit
   %i.cs = add nsw i64 %i.ak, -1                   ; 2 uses
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.cs
-  %i.cu = load i32, ptr %i.ct, align 4            ; 2 uses
-  %i.cv = load i32, ptr %i.z, align 4             ; 2 uses
+  %i.cu = load i32, ptr %i.ct, align 4            ; 3 uses
+  %i.cv = load i32, ptr %i.z, align 4             ; 3 uses
   %i.cw = sub i32 %i.cu, %i.cv
   %i.cx = icmp sgt i32 %i.cw, -1
   br i1 %i.cx, label %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeENS_4base6VectorIKjEE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.l, %.lr.ph.i
-  %3 = phi i64 [ %i.dg, %.lr.ph.i ], [ 1, %bb.l ] ; 2 uses
-  %.026.i = phi i64 [ %.1.i, %.lr.ph.i ], [ 0, %bb.l ] ; 2 uses
-  %.01025.i.a = phi i64 [ %.111.i, %.lr.ph.i ], [ %i.cs, %bb.l ] ; 3 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %3
-  %5 = load i32, ptr %4, align 4
-  %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %.026.i
-  %i.cz = load i32, ptr %i.cy, align 4
-  %i.da = sub i32 %5, %i.cz
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %.01025.i.a
-  %7 = load i32, ptr %6, align 4
-  %i.db = add i64 %.01025.i.a, -1                 ; 2 uses
+  %3 = phi i32 [ %6, %.lr.ph.i ], [ %i.cu, %bb.l ] ; 2 uses
+  %4 = phi i32 [ %5, %.lr.ph.i ], [ %i.cv, %bb.l ] ; 2 uses
+  %.01025.i.a = phi i64 [ %i.dg, %.lr.ph.i ], [ 1, %bb.l ] ; 2 uses
+  %.026.i = phi i64 [ %.1.i, %.lr.ph.i ], [ 0, %bb.l ]
+  %.01025.i = phi i64 [ %.111.i, %.lr.ph.i ], [ %i.cs, %bb.l ] ; 2 uses
+  %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %.01025.i.a
+  %i.cz = load i32, ptr %i.cy, align 4            ; 2 uses
+  %i.da = sub i32 %i.cz, %4
+  %i.db = add i64 %.01025.i, -1                   ; 2 uses
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.db
-  %i.dd = load i32, ptr %i.dc, align 4
-  %i.de = sub i32 %7, %i.dd
-  %i.df = icmp ult i32 %i.da, %i.de               ; 2 uses
-  %.111.i = select i1 %i.df, i64 %.01025.i.a, i64 %i.db ; 3 uses
-  %.1.i = select i1 %i.df, i64 %3, i64 %.026.i    ; 3 uses
+  %i.dd = load i32, ptr %i.dc, align 4            ; 2 uses
+  %i.de = sub i32 %3, %i.dd
+  %i.df = icmp ult i32 %i.da, %i.de               ; 4 uses
+  %.111.i = select i1 %i.df, i64 %.01025.i, i64 %i.db ; 3 uses
+  %.1.i = select i1 %i.df, i64 %.01025.i.a, i64 %.026.i ; 3 uses
   %i.dg = add i64 %.1.i, 1                        ; 2 uses
   %i.dh = icmp ult i64 %i.dg, %.111.i
+  %5 = select i1 %i.df, i32 %i.cz, i32 %4
+  %6 = select i1 %i.df, i32 %3, i32 %i.dd
   br i1 %i.dh, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !70
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
