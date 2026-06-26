@@ -125,13 +125,14 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
   %.040102142 = phi i32 [ %i.hf, %bb.h ], [ %.1.ph, %.lr.ph.i51.preheader ] ; 2 uses
   %i.as = add i32 %.043101143, 1
   %i.at = add i32 %.043101143, 26
+  %3 = zext nneg i32 %.07298146 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.o, %.lr.ph.i51
   %.02551.i = phi i64 [ 1, %.lr.ph.i51 ], [ %i.bl, %bb.o ] ; 2 uses
   %.03350.i = phi i32 [ 36, %.lr.ph.i51 ], [ %i.bm, %bb.o ] ; 4 uses
   %i.au = phi ptr [ %.07497147, %.lr.ph.i51 ], [ %i.av, %bb.o ] ; 2 uses
-  %3 = phi i32 [ %.07298146, %.lr.ph.i51 ], [ %5, %bb.o ]
+  %4 = phi i64 [ %3, %.lr.ph.i51 ], [ %i.bg, %bb.o ]
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 1 ; 4 uses
   %i.aw = load i8, ptr %i.au, align 1, !tbaa !14  ; 4 uses
   %i.ax = sext i8 %i.aw to i32                    ; 3 uses
@@ -160,15 +161,13 @@ bb.m:                                             ; preds = %bb.k
 
 _ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i: ; preds = %bb.m, %bb.l, %bb.j
   %.0.i41.i = phi i32 [ %i.bc, %bb.m ], [ %i.bb, %bb.l ], [ %i.az, %bb.j ] ; 2 uses
-  %4 = zext nneg i32 %3 to i64
   %i.be = zext nneg i32 %.0.i41.i to i64
   %i.bf = mul i64 %.02551.i, %i.be
-  %i.bg = add i64 %i.bf, %4                       ; 2 uses
+  %i.bg = add i64 %i.bf, %4                       ; 3 uses
   %i.bh = icmp ugt i64 %i.bg, 1073741824
   br i1 %i.bh, label %.critedge, label %bb.n
 
 bb.n:                                             ; preds = %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i
-  %5 = trunc nuw nsw i64 %i.bg to i32             ; 4 uses
   %.not37.i = icmp ugt i32 %.03350.i, %i.as
   %.not38.i = icmp ult i32 %.03350.i, %i.at
   %i.bi = sub i32 %.03350.i, %.043101143
@@ -186,6 +185,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not.not.i, label %.critedge, label %bb.i, !llvm.loop !20
 
 _ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS4_jRj.exit: ; preds = %bb.n
+  %5 = trunc nuw nsw i64 %i.bg to i32             ; 3 uses
   %i.bn = sub nsw i32 %5, %.07298146
   %i.bo = icmp eq i32 %.07298146, 0
   %i.bp = select i1 %i.bo, i32 700, i32 2

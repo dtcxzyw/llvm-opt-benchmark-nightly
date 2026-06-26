@@ -201,7 +201,7 @@ bb.bnk:                                           ; preds = %.lr.ph57446
   %i.rsc = shl i64 %.14318557443, 32
   %sext46547 = shl nuw i32 %i.rsb, 24
   %i.rsd = ashr i32 %sext46547, 31
-  %.pre55771 = shl i64 %.04318257444, 32
+  %.pre55771 = shl nuw i64 %.04318257444, 32
   br label %bb.bnl
 
 bb.bnl:                                           ; preds = %bb.bnh, %bb.bnk
