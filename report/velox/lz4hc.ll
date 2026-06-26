@@ -201,8 +201,8 @@ LZ4HC_FindLongerMatch.exit920:                    ; preds = %LZ4HC_InsertAndGetW
   %i.tp = add nsw i32 %.22.i.i707, -19
   %i.tq = icmp ult i32 %i.tp, 18
   %or.cond.i720 = and i1 %.not.i.i760, %i.tq
-  %.sroa.03.sroa.4.0.insert.shift.i722 = select i1 %or.cond.i720, i64 18, i64 %.sroa.2313.0.insert.ext.i.i708 ; 13 uses
-  %.sroa.0162.4.extract.trunc = trunc nuw nsw i64 %.sroa.03.sroa.4.0.insert.shift.i722 to i32 ; 3 uses
+  %.sroa.03.sroa.4.0.insert.shift.i722 = select i1 %or.cond.i720, i64 18, i64 %.sroa.2313.0.insert.ext.i.i708 ; 15 uses
+  %.sroa.0162.4.extract.trunc = trunc nuw nsw i64 %.sroa.03.sroa.4.0.insert.shift.i722 to i32
   %i.tr = icmp samesign ugt i64 %.sroa.03.sroa.4.0.insert.shift.i722, %spec.store.select
   br i1 %i.tr, label %bb.cr, label %.preheader1709.preheader
 
@@ -605,15 +605,15 @@ bb.ln:                                            ; preds = %bb.ln, %bb.lm
 
 .lr.ph1976:                                       ; preds = %.preheader1704, %bb.lz
   %.03641975 = phi i32 [ %.1365, %bb.lz ], [ 0, %.preheader1704 ] ; 3 uses
-  %.113161974 = phi ptr [ %.21317, %bb.lz ], [ %.013151997, %.preheader1704 ] ; 11 uses
-  %.113211973 = phi ptr [ %.21322, %bb.lz ], [ %.013201996, %.preheader1704 ] ; 7 uses
-  %.113281972 = phi ptr [ %.21329, %bb.lz ], [ %.013271995, %.preheader1704 ] ; 5 uses
+  %.113161974 = phi ptr [ %.21317, %bb.lz ], [ %.013151997, %.preheader1704 ] ; 10 uses
+  %.113211973 = phi ptr [ %.21322, %bb.lz ], [ %.013201996, %.preheader1704 ] ; 6 uses
+  %.113281972 = phi ptr [ %.21329, %bb.lz ], [ %.013271995, %.preheader1704 ] ; 4 uses
   %i.bph = sext i32 %.03641975 to i64
   %i.bpi = getelementptr inbounds [16 x i8], ptr %i.g, i64 %i.bph ; 2 uses
   %i.bpj = getelementptr inbounds nuw i8, ptr %i.bpi, i64 8
-  %i.bpk = load i32, ptr %i.bpj, align 4, !tbaa !89 ; 5 uses
+  %i.bpk = load i32, ptr %i.bpj, align 4, !tbaa !89 ; 4 uses
   %i.bpl = getelementptr inbounds nuw i8, ptr %i.bpi, i64 4
-  %i.bpm = load i32, ptr %i.bpl, align 4, !tbaa !91 ; 3 uses
+  %i.bpm = load i32, ptr %i.bpl, align 4, !tbaa !91 ; 2 uses
   %i.bpn = icmp eq i32 %i.bpk, 1
   br i1 %i.bpn, label %bb.lo, label %bb.lp
 
@@ -634,7 +634,7 @@ bb.lp:                                            ; preds = %.lr.ph1976
   %i.bpy = getelementptr inbounds nuw i8, ptr %i.bpx, i64 8
   %i.bpz = icmp ugt ptr %i.bpy, %spec.select
   %or.cond.i = select i1 %.not.i, i1 %i.bpz, i1 false
-  br i1 %or.cond.i, label %.thread1601, label %bb.lq
+  br i1 %or.cond.i, label %.thread1601.loopexit, label %bb.lq
 
 bb.lq:                                            ; preds = %bb.lp
   %i.bqa = icmp ugt i64 %i.bpu, 14
@@ -743,7 +743,7 @@ LZ4_wildCopy8.exit449:                            ; preds = %scalar.ph2793, %mid
   %i.brl = getelementptr inbounds nuw i8, ptr %i.brk, i64 6
   %i.brm = icmp ugt ptr %i.brl, %spec.select
   %or.cond64.i = select i1 %.not.i, i1 %i.brm, i1 false
-  br i1 %or.cond64.i, label %.thread1601, label %bb.lu
+  br i1 %or.cond64.i, label %.thread1601.loopexit, label %bb.lu
 
 bb.lu:                                            ; preds = %LZ4_wildCopy8.exit449
   %i.brn = icmp ugt i64 %i.bri, 14
@@ -926,12 +926,16 @@ bb.me:                                            ; preds = %._crit_edge2021, %b
   %i.bud = trunc i64 %i.buc to i32
   br label %bb.mp
 
-.thread1601:                                      ; preds = %LZ4_wildCopy8.exit, %bb.cr, %LZ4_wildCopy8.exit449, %bb.lp
-  %.31330.ph = phi ptr [ %.113281972, %LZ4_wildCopy8.exit449 ], [ %.113281972, %bb.lp ], [ %.013271995, %bb.cr ], [ %.013271995, %LZ4_wildCopy8.exit ] ; 2 uses
-  %.31323.ph = phi ptr [ %.113211973, %LZ4_wildCopy8.exit449 ], [ %.113211973, %bb.lp ], [ %.013201996, %bb.cr ], [ %.013201996, %LZ4_wildCopy8.exit ] ; 6 uses
-  %.5352.ph = phi i32 [ %i.bpm, %LZ4_wildCopy8.exit449 ], [ %i.bpm, %bb.lp ], [ %.22373.i.i706, %bb.cr ], [ %.22373.i.i706, %LZ4_wildCopy8.exit ]
-  %.5.ph = phi i32 [ %i.bpk, %LZ4_wildCopy8.exit449 ], [ %i.bpk, %bb.lp ], [ %.sroa.0162.4.extract.trunc, %bb.cr ], [ %.sroa.0162.4.extract.trunc, %LZ4_wildCopy8.exit ]
-  %.4.ph = phi ptr [ %.113161974, %LZ4_wildCopy8.exit449 ], [ %.113161974, %bb.lp ], [ %.013151997, %bb.cr ], [ %.013151997, %LZ4_wildCopy8.exit ] ; 12 uses
+.thread1601.loopexit:                             ; preds = %bb.lp, %LZ4_wildCopy8.exit449
+  %11 = sext i32 %i.bpk to i64
+  br label %.thread1601
+
+.thread1601:                                      ; preds = %LZ4_wildCopy8.exit, %bb.cr, %.thread1601.loopexit
+  %.31330.ph = phi ptr [ %.113281972, %.thread1601.loopexit ], [ %.013271995, %bb.cr ], [ %.013271995, %LZ4_wildCopy8.exit ] ; 2 uses
+  %.31323.ph = phi ptr [ %.113211973, %.thread1601.loopexit ], [ %.013201996, %bb.cr ], [ %.013201996, %LZ4_wildCopy8.exit ] ; 6 uses
+  %.5352.ph = phi i32 [ %i.bpm, %.thread1601.loopexit ], [ %.22373.i.i706, %bb.cr ], [ %.22373.i.i706, %LZ4_wildCopy8.exit ]
+  %.5.ph = phi i64 [ %11, %.thread1601.loopexit ], [ %.sroa.03.sroa.4.0.insert.shift.i722, %bb.cr ], [ %.sroa.03.sroa.4.0.insert.shift.i722, %LZ4_wildCopy8.exit ]
+  %.4.ph = phi ptr [ %.113161974, %.thread1601.loopexit ], [ %.013151997, %bb.cr ], [ %.013151997, %LZ4_wildCopy8.exit ] ; 12 uses
   br i1 %i.p, label %bb.mf, label %bb.mp
 
 bb.mf:                                            ; preds = %.thread1601
@@ -953,8 +957,7 @@ bb.mg:                                            ; preds = %bb.mf
   %i.bup = sub i64 %i.bun, %i.buo
   %i.buq = mul i64 %i.bup, 255
   %i.bur = add i64 %i.buq, 18
-  %11 = sext i32 %.5.ph to i64
-  %spec.select4291691 = tail call i64 @llvm.umin.i64(i64 %i.bur, i64 %11)
+  %spec.select4291691 = tail call i64 @llvm.umin.i64(i64 %i.bur, i64 %.5.ph)
   %i.bus = getelementptr inbounds nuw i8, ptr %i.bum, i64 2
   %i.but = ptrtoint ptr %i.o to i64
   %i.buu = ptrtoint ptr %i.bus to i64

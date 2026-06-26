@@ -201,49 +201,94 @@ define hidden noundef zeroext i1 @_ZN10ClipperLib11OrientationERKSt6vectorINS_8I
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = load ptr, ptr %0, align 8                ; 3 uses
+  %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = lshr exact i64 %i.f, 4                   ; 3 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 3 uses
+  %i.g = lshr exact i64 %i.f, 4                   ; 4 uses
   %i.h = trunc i64 %i.g to i32
   %i.i = icmp slt i32 %i.h, 3
   br i1 %i.i, label %_ZN10ClipperLib4AreaERKSt6vectorINS_8IntPointESaIS1_EE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = add nsw i64 %i.g, -1
-  %wide.trip.count.i = and i64 %i.g, 2147483647
+  %i.j = add nuw nsw i64 %i.g, 4294967295
+  %.phi.trans.insert.i = and i64 %i.j, 4294967295
+  %.phi.trans.insert25.i = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %.phi.trans.insert.i ; 2 uses
+  %.pre.i = load i64, ptr %.phi.trans.insert25.i, align 8 ; 2 uses
+  %.phi.trans.insert26.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert25.i, i64 8
+  %.pre27.i = load i64, ptr %.phi.trans.insert26.i, align 8 ; 2 uses
+  %wide.trip.count.i = and i64 %i.f, 34359738352
+  %1 = icmp eq i64 %wide.trip.count.i, 16
+  br i1 %1, label %.epil.preheader, label %.new
+
+.new:                                             ; preds = %bb.b
+  %unroll_iter = and i64 %i.g, 2147483646
   br label %bb.d
 
-bb.c:                                             ; preds = %bb.d
-  %i.k = fmul double %i.x, -5.000000e-01
+.unr-lcssa:                                       ; preds = %bb.d
+  %2 = and i64 %i.f, 16
+  %lcmp.mod.not = icmp eq i64 %2, 0
+  br i1 %lcmp.mod.not, label %bb.c, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.unr-lcssa, %bb.b
+  %.epil.init = phi i64 [ %.pre27.i, %bb.b ], [ %i.u, %.unr-lcssa ]
+  %.epil.init2 = phi i64 [ %.pre.i, %bb.b ], [ %i.r, %.unr-lcssa ]
+  %indvars.iv.i.epil.init = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.i.1, %.unr-lcssa ]
+  %.01821.i.epil.init = phi double [ 0.000000e+00, %bb.b ], [ %i.x, %.unr-lcssa ]
+  %lcmp.mod4 = trunc i64 %i.g to i1
+  tail call void @llvm.assume(i1 %lcmp.mod4)
+  %3 = sitofp i64 %.epil.init2 to double
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv.i.epil.init ; 2 uses
+  %5 = load i64, ptr %4, align 8
+  %6 = sitofp i64 %5 to double
+  %7 = fadd nnan double %3, %6
+  %8 = sitofp i64 %.epil.init to double
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %10 = load i64, ptr %9, align 8
+  %11 = sitofp i64 %10 to double
+  %12 = fsub nnan double %8, %11
+  %13 = tail call double @llvm.fmuladd.f64(double %7, double %12, double %.01821.i.epil.init)
+  br label %bb.c
+
+bb.c:                                             ; preds = %.unr-lcssa, %.epil.preheader
+  %.lcssa = phi double [ %i.x, %.unr-lcssa ], [ %13, %.epil.preheader ]
+  %i.k = fmul double %.lcssa, -5.000000e-01
   %i.l = fcmp oge double %i.k, 0.000000e+00
   br label %_ZN10ClipperLib4AreaERKSt6vectorINS_8IntPointESaIS1_EE.exit
 
-bb.d:                                             ; preds = %bb.d, %bb.b
-  %indvars.iv.i.a = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.i, %bb.d ] ; 3 uses
-  %.023.i = phi i64 [ %i.j, %bb.b ], [ %indvars.iv.i.a, %bb.d ]
-  %.01821.i = phi double [ 0.000000e+00, %bb.b ], [ %i.x, %bb.d ]
-  %sext.i = shl i64 %.023.i, 32
-  %1 = ashr exact i64 %sext.i, 28
-  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 %1 ; 2 uses
-  %i.n = load i64, ptr %i.m, align 8
+bb.d:                                             ; preds = %bb.d, %.new
+  %14 = phi i64 [ %.pre27.i, %.new ], [ %i.u, %bb.d ]
+  %indvars.iv.i.a = phi i64 [ %.pre.i, %.new ], [ %i.r, %bb.d ]
+  %.023.i = phi i64 [ 0, %.new ], [ %indvars.iv.next.i.1, %bb.d ] ; 3 uses
+  %.01821.i = phi double [ 0.000000e+00, %.new ], [ %i.x, %bb.d ]
+  %niter = phi i64 [ 0, %.new ], [ %indvars.iv.next.i, %bb.d ]
+  %15 = sitofp i64 %indvars.iv.i.a to double
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %.023.i ; 2 uses
+  %17 = load i64, ptr %16, align 8                ; 2 uses
+  %18 = sitofp i64 %17 to double
+  %19 = fadd double %15, %18
+  %20 = sitofp i64 %14 to double
+  %i.m = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %i.n = load i64, ptr %i.m, align 8              ; 2 uses
   %i.o = sitofp i64 %i.n to double
-  %2 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv.i.a ; 2 uses
-  %3 = load i64, ptr %2, align 8
-  %i.p = sitofp i64 %3 to double
-  %4 = fadd double %i.o, %i.p
-  %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.r = load i64, ptr %i.q, align 8
-  %i.s = sitofp i64 %i.r to double
-  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.u = load i64, ptr %i.t, align 8
+  %21 = fsub double %20, %i.o
+  %22 = tail call double @llvm.fmuladd.f64(double %19, double %21, double %.01821.i)
+  %i.p = sitofp i64 %17 to double
+  %23 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %.023.i ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %23, i64 16
+  %i.r = load i64, ptr %i.q, align 8              ; 3 uses
+  %24 = sitofp i64 %i.r to double
+  %25 = fadd double %i.p, %24
+  %i.s = sitofp i64 %i.n to double
+  %i.t = getelementptr inbounds nuw i8, ptr %23, i64 24
+  %i.u = load i64, ptr %i.t, align 8              ; 3 uses
   %i.v = sitofp i64 %i.u to double
   %i.w = fsub double %i.s, %i.v
-  %i.x = tail call double @llvm.fmuladd.f64(double %4, double %i.w, double %.01821.i) ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %bb.c, label %bb.d, !llvm.loop !8
+  %i.x = tail call double @llvm.fmuladd.f64(double %25, double %i.w, double %22) ; 3 uses
+  %indvars.iv.next.i.1 = add nuw nsw i64 %.023.i, 2 ; 2 uses
+  %indvars.iv.next.i = add i64 %niter, 2          ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %unroll_iter
+  br i1 %exitcond.not.i, label %.unr-lcssa, label %bb.d, !llvm.loop !8
 
 _ZN10ClipperLib4AreaERKSt6vectorINS_8IntPointESaIS1_EE.exit: ; preds = %bb.a, %bb.c
   %.019.i = phi i1 [ %i.l, %bb.c ], [ true, %bb.a ]
@@ -255,48 +300,93 @@ define hidden noundef double @_ZN10ClipperLib4AreaERKSt6vectorINS_8IntPointESaIS
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = load ptr, ptr %0, align 8                ; 3 uses
+  %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = lshr exact i64 %i.f, 4                   ; 3 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 3 uses
+  %i.g = lshr exact i64 %i.f, 4                   ; 4 uses
   %i.h = trunc i64 %i.g to i32
   %i.i = icmp slt i32 %i.h, 3
   br i1 %i.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = add nsw i64 %i.g, -1
-  %wide.trip.count = and i64 %i.g, 2147483647
+  %i.j = add nuw nsw i64 %i.g, 4294967295
+  %.phi.trans.insert = and i64 %i.j, 4294967295
+  %.phi.trans.insert25 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %.phi.trans.insert ; 2 uses
+  %.pre = load i64, ptr %.phi.trans.insert25, align 8 ; 2 uses
+  %.phi.trans.insert26 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert25, i64 8
+  %.pre27 = load i64, ptr %.phi.trans.insert26, align 8 ; 2 uses
+  %wide.trip.count = and i64 %i.f, 34359738352
+  %1 = icmp eq i64 %wide.trip.count, 16
+  br i1 %1, label %.epil.preheader, label %.new
+
+.new:                                             ; preds = %bb.b
+  %unroll_iter = and i64 %i.g, 2147483646
   br label %bb.d
 
-bb.c:                                             ; preds = %bb.d
-  %i.k = fmul double %i.w, -5.000000e-01
+.unr-lcssa:                                       ; preds = %bb.d
+  %2 = and i64 %i.f, 16
+  %lcmp.mod.not = icmp eq i64 %2, 0
+  br i1 %lcmp.mod.not, label %bb.c, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.unr-lcssa, %bb.b
+  %.epil.init = phi i64 [ %.pre27, %bb.b ], [ %i.t, %.unr-lcssa ]
+  %.epil.init29 = phi i64 [ %.pre, %bb.b ], [ %i.q, %.unr-lcssa ]
+  %indvars.iv.epil.init = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.1, %.unr-lcssa ]
+  %.01821.epil.init = phi double [ 0.000000e+00, %bb.b ], [ %i.w, %.unr-lcssa ]
+  %lcmp.mod31 = trunc i64 %i.g to i1
+  tail call void @llvm.assume(i1 %lcmp.mod31)
+  %3 = sitofp i64 %.epil.init29 to double
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv.epil.init ; 2 uses
+  %5 = load i64, ptr %4, align 8
+  %6 = sitofp i64 %5 to double
+  %7 = fadd nnan double %3, %6
+  %8 = sitofp i64 %.epil.init to double
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %10 = load i64, ptr %9, align 8
+  %11 = sitofp i64 %10 to double
+  %12 = fsub nnan double %8, %11
+  %13 = tail call double @llvm.fmuladd.f64(double %7, double %12, double %.01821.epil.init)
+  br label %bb.c
+
+bb.c:                                             ; preds = %.unr-lcssa, %.epil.preheader
+  %.lcssa = phi double [ %i.w, %.unr-lcssa ], [ %13, %.epil.preheader ]
+  %i.k = fmul double %.lcssa, -5.000000e-01
   br label %bb.e
 
-bb.d:                                             ; preds = %bb.b, %bb.d
-  %indvars.iv.a = phi i64 [ 0, %bb.b ], [ %indvars.iv.next, %bb.d ] ; 3 uses
-  %.023 = phi i64 [ %i.j, %bb.b ], [ %indvars.iv.a, %bb.d ]
-  %.01821 = phi double [ 0.000000e+00, %bb.b ], [ %i.w, %bb.d ]
-  %sext = shl i64 %.023, 32
-  %1 = ashr exact i64 %sext, 28
-  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 %1 ; 2 uses
-  %i.m = load i64, ptr %i.l, align 8
+bb.d:                                             ; preds = %bb.d, %.new
+  %14 = phi i64 [ %.pre27, %.new ], [ %i.t, %bb.d ]
+  %indvars.iv.a = phi i64 [ %.pre, %.new ], [ %i.q, %bb.d ]
+  %.023 = phi i64 [ 0, %.new ], [ %indvars.iv.next.1, %bb.d ] ; 3 uses
+  %.01821 = phi double [ 0.000000e+00, %.new ], [ %i.w, %bb.d ]
+  %niter = phi i64 [ 0, %.new ], [ %indvars.iv.next, %bb.d ]
+  %15 = sitofp i64 %indvars.iv.a to double
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %.023 ; 2 uses
+  %17 = load i64, ptr %16, align 8                ; 2 uses
+  %18 = sitofp i64 %17 to double
+  %19 = fadd double %15, %18
+  %20 = sitofp i64 %14 to double
+  %i.l = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %i.m = load i64, ptr %i.l, align 8              ; 2 uses
   %i.n = sitofp i64 %i.m to double
-  %2 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv.a ; 2 uses
-  %3 = load i64, ptr %2, align 8
-  %i.o = sitofp i64 %3 to double
-  %4 = fadd double %i.n, %i.o
-  %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %i.q = load i64, ptr %i.p, align 8
-  %i.r = sitofp i64 %i.q to double
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.t = load i64, ptr %i.s, align 8
+  %21 = fsub double %20, %i.n
+  %22 = tail call double @llvm.fmuladd.f64(double %19, double %21, double %.01821)
+  %i.o = sitofp i64 %17 to double
+  %23 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %.023 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %23, i64 16
+  %i.q = load i64, ptr %i.p, align 8              ; 3 uses
+  %24 = sitofp i64 %i.q to double
+  %25 = fadd double %i.o, %24
+  %i.r = sitofp i64 %i.m to double
+  %i.s = getelementptr inbounds nuw i8, ptr %23, i64 24
+  %i.t = load i64, ptr %i.s, align 8              ; 3 uses
   %i.u = sitofp i64 %i.t to double
   %i.v = fsub double %i.r, %i.u
-  %i.w = tail call double @llvm.fmuladd.f64(double %4, double %i.v, double %.01821) ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !8
+  %i.w = tail call double @llvm.fmuladd.f64(double %25, double %i.v, double %22) ; 3 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %.023, 2   ; 2 uses
+  %indvars.iv.next = add i64 %niter, 2            ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %unroll_iter
+  br i1 %exitcond.not, label %.unr-lcssa, label %bb.d, !llvm.loop !8
 
 bb.e:                                             ; preds = %bb.a, %bb.c
   %.019 = phi double [ %i.k, %bb.c ], [ 0.000000e+00, %bb.a ]
@@ -699,47 +789,92 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = load ptr, ptr %i.i, align 8              ; 3 uses
+  %i.l = load ptr, ptr %i.i, align 8              ; 5 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
-  %i.o = sub i64 %i.m, %i.n
-  %i.p = lshr exact i64 %i.o, 4                   ; 3 uses
+  %i.o = sub i64 %i.m, %i.n                       ; 3 uses
+  %i.p = lshr exact i64 %i.o, 4                   ; 4 uses
   %i.q = trunc i64 %i.p to i32
   %i.r = icmp slt i32 %i.q, 3
   br i1 %i.r, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.s = add nsw i64 %i.p, -1
-  %wide.trip.count.i.i = and i64 %i.p, 2147483647
+  %i.s = add nuw nsw i64 %i.p, 4294967295
+  %.phi.trans.insert.i.i = and i64 %i.s, 4294967295
+  %.phi.trans.insert25.i.i = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.phi.trans.insert.i.i ; 2 uses
+  %.pre.i.i = load i64, ptr %.phi.trans.insert25.i.i, align 8 ; 2 uses
+  %.phi.trans.insert26.i.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert25.i.i, i64 8
+  %.pre27.i.i = load i64, ptr %.phi.trans.insert26.i.i, align 8 ; 2 uses
+  %wide.trip.count.i.i = and i64 %i.o, 34359738352
+  %1 = icmp eq i64 %wide.trip.count.i.i, 16
+  br i1 %1, label %.epil.preheader, label %.new
+
+.new:                                             ; preds = %bb.c
+  %unroll_iter = and i64 %i.p, 2147483646
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.d, %bb.c
-  %indvars.iv.i.i.a = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.i.i, %bb.d ] ; 3 uses
-  %.023.i.i = phi i64 [ %i.s, %bb.c ], [ %indvars.iv.i.i.a, %bb.d ]
-  %.01821.i.i = phi double [ 0.000000e+00, %bb.c ], [ %i.ae, %bb.d ]
-  %sext.i.i = shl i64 %.023.i.i, 32
-  %1 = ashr exact i64 %sext.i.i, 28
-  %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 %1 ; 2 uses
-  %i.u = load i64, ptr %i.t, align 8
+bb.d:                                             ; preds = %bb.d, %.new
+  %2 = phi i64 [ %.pre27.i.i, %.new ], [ %i.ab, %bb.d ]
+  %indvars.iv.i.i.a = phi i64 [ %.pre.i.i, %.new ], [ %i.y, %bb.d ]
+  %.023.i.i = phi i64 [ 0, %.new ], [ %indvars.iv.next.i.i.1, %bb.d ] ; 3 uses
+  %.01821.i.i = phi double [ 0.000000e+00, %.new ], [ %i.ae, %bb.d ]
+  %niter = phi i64 [ 0, %.new ], [ %indvars.iv.next.i.i, %bb.d ]
+  %3 = sitofp i64 %indvars.iv.i.i.a to double
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.023.i.i ; 2 uses
+  %5 = load i64, ptr %4, align 8                  ; 2 uses
+  %6 = sitofp i64 %5 to double
+  %7 = fadd double %3, %6
+  %8 = sitofp i64 %2 to double
+  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.u = load i64, ptr %i.t, align 8              ; 2 uses
   %i.v = sitofp i64 %i.u to double
-  %2 = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %indvars.iv.i.i.a ; 2 uses
-  %3 = load i64, ptr %2, align 8
-  %i.w = sitofp i64 %3 to double
-  %4 = fadd double %i.v, %i.w
-  %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %i.y = load i64, ptr %i.x, align 8
-  %i.z = sitofp i64 %i.y to double
-  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ab = load i64, ptr %i.aa, align 8
+  %9 = fsub double %8, %i.v
+  %10 = tail call double @llvm.fmuladd.f64(double %7, double %9, double %.01821.i.i)
+  %i.w = sitofp i64 %5 to double
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.023.i.i ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %i.y = load i64, ptr %i.x, align 8              ; 3 uses
+  %12 = sitofp i64 %i.y to double
+  %13 = fadd double %i.w, %12
+  %i.z = sitofp i64 %i.u to double
+  %i.aa = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %i.ab = load i64, ptr %i.aa, align 8            ; 3 uses
   %i.ac = sitofp i64 %i.ab to double
   %i.ad = fsub double %i.z, %i.ac
-  %i.ae = tail call double @llvm.fmuladd.f64(double %4, double %i.ad, double %.01821.i.i) ; 2 uses
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i.a, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit, label %bb.d, !llvm.loop !8
+  %i.ae = tail call double @llvm.fmuladd.f64(double %13, double %i.ad, double %10) ; 3 uses
+  %indvars.iv.next.i.i.1 = add nuw nsw i64 %.023.i.i, 2 ; 2 uses
+  %indvars.iv.next.i.i = add i64 %niter, 2        ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %unroll_iter
+  br i1 %exitcond.not.i.i, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa, label %bb.d, !llvm.loop !8
 
-_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit: ; preds = %bb.d
-  %i.af = fmul double %i.ae, -5.000000e-01
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa: ; preds = %bb.d
+  %14 = and i64 %i.o, 16
+  %lcmp.mod.not = icmp eq i64 %14, 0
+  br i1 %lcmp.mod.not, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa, %bb.c
+  %.epil.init = phi i64 [ %.pre27.i.i, %bb.c ], [ %i.ab, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %.epil.init85 = phi i64 [ %.pre.i.i, %bb.c ], [ %i.y, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %indvars.iv.i.i.epil.init = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.i.i.1, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %.01821.i.i.epil.init = phi double [ 0.000000e+00, %bb.c ], [ %i.ae, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %lcmp.mod87 = trunc i64 %i.p to i1
+  tail call void @llvm.assume(i1 %lcmp.mod87)
+  %15 = sitofp i64 %.epil.init85 to double
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %indvars.iv.i.i.epil.init ; 2 uses
+  %17 = load i64, ptr %16, align 8
+  %18 = sitofp i64 %17 to double
+  %19 = fadd nnan double %15, %18
+  %20 = sitofp i64 %.epil.init to double
+  %21 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %22 = load i64, ptr %21, align 8
+  %23 = sitofp i64 %22 to double
+  %24 = fsub nnan double %20, %23
+  %25 = tail call double @llvm.fmuladd.f64(double %19, double %24, double %.01821.i.i.epil.init)
+  br label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit
+
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit: ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa, %.epil.preheader
+  %.lcssa83 = phi double [ %i.ae, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ], [ %25, %.epil.preheader ]
+  %i.af = fmul double %.lcssa83, -5.000000e-01
   %i.ag = fcmp ult double %i.af, 0.000000e+00
   br i1 %i.ag, label %.preheader, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.thread
 
@@ -778,47 +913,92 @@ bb.e:                                             ; preds = %.lr.ph
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8            ; 3 uses
-  %i.ay = load ptr, ptr %i.av, align 8            ; 5 uses
+  %i.ay = load ptr, ptr %i.av, align 8            ; 7 uses
   %i.az = ptrtoint ptr %i.ax to i64
   %i.ba = ptrtoint ptr %i.ay to i64
-  %i.bb = sub i64 %i.az, %i.ba
-  %i.bc = lshr exact i64 %i.bb, 4                 ; 3 uses
+  %i.bb = sub i64 %i.az, %i.ba                    ; 3 uses
+  %i.bc = lshr exact i64 %i.bb, 4                 ; 4 uses
   %i.bd = trunc i64 %i.bc to i32
   %i.be = icmp slt i32 %i.bd, 3
   br i1 %i.be, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit24.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.bf = add nsw i64 %i.bc, -1
-  %wide.trip.count.i.i16 = and i64 %i.bc, 2147483647
+  %i.bf = add nuw nsw i64 %i.bc, 4294967295
+  %.phi.trans.insert.i.i17 = and i64 %i.bf, 4294967295
+  %.phi.trans.insert25.i.i18 = getelementptr inbounds nuw [16 x i8], ptr %i.ay, i64 %.phi.trans.insert.i.i17 ; 2 uses
+  %.pre.i.i19 = load i64, ptr %.phi.trans.insert25.i.i18, align 8 ; 2 uses
+  %.phi.trans.insert26.i.i20 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert25.i.i18, i64 8
+  %.pre27.i.i21 = load i64, ptr %.phi.trans.insert26.i.i20, align 8 ; 2 uses
+  %wide.trip.count.i.i16 = and i64 %i.bb, 34359738352
+  %26 = icmp eq i64 %wide.trip.count.i.i16, 16
+  br i1 %26, label %.epil.preheader89, label %.new88
+
+.new88:                                           ; preds = %bb.f
+  %unroll_iter98 = and i64 %i.bc, 2147483646
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.g, %bb.f
-  %indvars.iv.i.i17 = phi i64 [ 0, %bb.f ], [ %indvars.iv.next.i.i21, %bb.g ] ; 3 uses
-  %.023.i.i18 = phi i64 [ %i.bf, %bb.f ], [ %indvars.iv.i.i17, %bb.g ]
-  %.01821.i.i19 = phi double [ 0.000000e+00, %bb.f ], [ %i.br, %bb.g ]
-  %sext.i.i20 = shl i64 %.023.i.i18, 32
-  %5 = ashr exact i64 %sext.i.i20, 28
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.ay, i64 %5 ; 2 uses
-  %i.bh = load i64, ptr %i.bg, align 8
+bb.g:                                             ; preds = %bb.g, %.new88
+  %27 = phi i64 [ %.pre27.i.i21, %.new88 ], [ %i.bo, %bb.g ]
+  %indvars.iv.i.i17 = phi i64 [ %.pre.i.i19, %.new88 ], [ %i.bl, %bb.g ]
+  %.023.i.i18 = phi i64 [ 0, %.new88 ], [ %indvars.iv.next.i.i24.1, %bb.g ] ; 3 uses
+  %.01821.i.i19 = phi double [ 0.000000e+00, %.new88 ], [ %i.br, %bb.g ]
+  %niter99 = phi i64 [ 0, %.new88 ], [ %indvars.iv.next.i.i21, %bb.g ]
+  %28 = sitofp i64 %indvars.iv.i.i17 to double
+  %29 = getelementptr inbounds nuw [16 x i8], ptr %i.ay, i64 %.023.i.i18 ; 2 uses
+  %30 = load i64, ptr %29, align 8                ; 2 uses
+  %31 = sitofp i64 %30 to double
+  %32 = fadd double %28, %31
+  %33 = sitofp i64 %27 to double
+  %i.bg = getelementptr inbounds nuw i8, ptr %29, i64 8
+  %i.bh = load i64, ptr %i.bg, align 8            ; 2 uses
   %i.bi = sitofp i64 %i.bh to double
-  %6 = getelementptr inbounds nuw [16 x i8], ptr %i.ay, i64 %indvars.iv.i.i17 ; 2 uses
-  %7 = load i64, ptr %6, align 8
-  %i.bj = sitofp i64 %7 to double
-  %8 = fadd double %i.bi, %i.bj
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  %i.bl = load i64, ptr %i.bk, align 8
-  %i.bm = sitofp i64 %i.bl to double
-  %i.bn = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.bo = load i64, ptr %i.bn, align 8
+  %34 = fsub double %33, %i.bi
+  %35 = tail call double @llvm.fmuladd.f64(double %32, double %34, double %.01821.i.i19)
+  %i.bj = sitofp i64 %30 to double
+  %36 = getelementptr inbounds nuw [16 x i8], ptr %i.ay, i64 %.023.i.i18 ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %36, i64 16
+  %i.bl = load i64, ptr %i.bk, align 8            ; 3 uses
+  %37 = sitofp i64 %i.bl to double
+  %38 = fadd double %i.bj, %37
+  %i.bm = sitofp i64 %i.bh to double
+  %i.bn = getelementptr inbounds nuw i8, ptr %36, i64 24
+  %i.bo = load i64, ptr %i.bn, align 8            ; 3 uses
   %i.bp = sitofp i64 %i.bo to double
   %i.bq = fsub double %i.bm, %i.bp
-  %i.br = tail call double @llvm.fmuladd.f64(double %8, double %i.bq, double %.01821.i.i19) ; 2 uses
-  %indvars.iv.next.i.i21 = add nuw nsw i64 %indvars.iv.i.i17, 1 ; 2 uses
-  %exitcond.not.i.i22 = icmp eq i64 %indvars.iv.next.i.i21, %wide.trip.count.i.i16
-  br i1 %exitcond.not.i.i22, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit24, label %bb.g, !llvm.loop !8
+  %i.br = tail call double @llvm.fmuladd.f64(double %38, double %i.bq, double %35) ; 3 uses
+  %indvars.iv.next.i.i24.1 = add nuw nsw i64 %.023.i.i18, 2 ; 2 uses
+  %indvars.iv.next.i.i21 = add i64 %niter99, 2    ; 2 uses
+  %exitcond.not.i.i22 = icmp eq i64 %indvars.iv.next.i.i21, %unroll_iter98
+  br i1 %exitcond.not.i.i22, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa, label %bb.g, !llvm.loop !8
 
-_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit24: ; preds = %bb.g
-  %i.bs = fmul double %i.br, -5.000000e-01
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa: ; preds = %bb.g
+  %39 = and i64 %i.bb, 16
+  %lcmp.mod95.not = icmp eq i64 %39, 0
+  br i1 %lcmp.mod95.not, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit24, label %.epil.preheader89
+
+.epil.preheader89:                                ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa, %bb.f
+  %.epil.init92 = phi i64 [ %.pre27.i.i21, %bb.f ], [ %i.bo, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa ]
+  %.epil.init94 = phi i64 [ %.pre.i.i19, %bb.f ], [ %i.bl, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa ]
+  %indvars.iv.i.i22.epil.init = phi i64 [ 0, %bb.f ], [ %indvars.iv.next.i.i24.1, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa ]
+  %.01821.i.i23.epil.init = phi double [ 0.000000e+00, %bb.f ], [ %i.br, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa ]
+  %lcmp.mod97 = trunc i64 %i.bc to i1
+  tail call void @llvm.assume(i1 %lcmp.mod97)
+  %40 = sitofp i64 %.epil.init94 to double
+  %41 = getelementptr inbounds nuw [16 x i8], ptr %i.ay, i64 %indvars.iv.i.i22.epil.init ; 2 uses
+  %42 = load i64, ptr %41, align 8
+  %43 = sitofp i64 %42 to double
+  %44 = fadd nnan double %40, %43
+  %45 = sitofp i64 %.epil.init92 to double
+  %46 = getelementptr inbounds nuw i8, ptr %41, i64 8
+  %47 = load i64, ptr %46, align 8
+  %48 = sitofp i64 %47 to double
+  %49 = fsub nnan double %45, %48
+  %50 = tail call double @llvm.fmuladd.f64(double %44, double %49, double %.01821.i.i23.epil.init)
+  br label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit24
+
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit24: ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa, %.epil.preheader89
+  %.lcssa82 = phi double [ %i.br, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit27.unr-lcssa ], [ %50, %.epil.preheader89 ]
+  %i.bs = fmul double %.lcssa82, -5.000000e-01
   %i.bt = fcmp ult double %i.bs, 0.000000e+00
   br i1 %i.bt, label %_ZN10ClipperLib11ReversePathERSt6vectorINS_8IntPointESaIS1_EE.exit, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit24.thread
 
@@ -887,47 +1067,92 @@ bb.h:                                             ; preds = %.lr.ph49
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
   %i.da = load ptr, ptr %i.cz, align 8            ; 3 uses
-  %i.db = load ptr, ptr %i.cy, align 8            ; 6 uses
+  %i.db = load ptr, ptr %i.cy, align 8            ; 8 uses
   %i.dc = ptrtoint ptr %i.da to i64
   %i.dd = ptrtoint ptr %i.db to i64
-  %i.de = sub i64 %i.dc, %i.dd
-  %i.df = lshr exact i64 %i.de, 4                 ; 3 uses
+  %i.de = sub i64 %i.dc, %i.dd                    ; 3 uses
+  %i.df = lshr exact i64 %i.de, 4                 ; 4 uses
   %i.dg = trunc i64 %i.df to i32
   %i.dh = icmp slt i32 %i.dg, 3
   br i1 %i.dh, label %_ZN10ClipperLib11ReversePathERSt6vectorINS_8IntPointESaIS1_EE.exit40, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.di = add nsw i64 %i.df, -1
-  %wide.trip.count.i.i25 = and i64 %i.df, 2147483647
+  %i.di = add nuw nsw i64 %i.df, 4294967295
+  %.phi.trans.insert.i.i29 = and i64 %i.di, 4294967295
+  %.phi.trans.insert25.i.i30 = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %.phi.trans.insert.i.i29 ; 2 uses
+  %.pre.i.i31 = load i64, ptr %.phi.trans.insert25.i.i30, align 8 ; 2 uses
+  %.phi.trans.insert26.i.i32 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert25.i.i30, i64 8
+  %.pre27.i.i33 = load i64, ptr %.phi.trans.insert26.i.i32, align 8 ; 2 uses
+  %wide.trip.count.i.i25 = and i64 %i.de, 34359738352
+  %51 = icmp eq i64 %wide.trip.count.i.i25, 16
+  br i1 %51, label %.epil.preheader101, label %.new100
+
+.new100:                                          ; preds = %bb.i
+  %unroll_iter110 = and i64 %i.df, 2147483646
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.j, %bb.i
-  %indvars.iv.i.i26 = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.i.i30, %bb.j ] ; 3 uses
-  %.023.i.i27 = phi i64 [ %i.di, %bb.i ], [ %indvars.iv.i.i26, %bb.j ]
-  %.01821.i.i28 = phi double [ 0.000000e+00, %bb.i ], [ %i.du, %bb.j ]
-  %sext.i.i29 = shl i64 %.023.i.i27, 32
-  %9 = ashr exact i64 %sext.i.i29, 28
-  %i.dj = getelementptr inbounds nuw i8, ptr %i.db, i64 %9 ; 2 uses
-  %i.dk = load i64, ptr %i.dj, align 8
+bb.j:                                             ; preds = %bb.j, %.new100
+  %52 = phi i64 [ %.pre27.i.i33, %.new100 ], [ %i.dr, %bb.j ]
+  %indvars.iv.i.i26 = phi i64 [ %.pre.i.i31, %.new100 ], [ %i.do, %bb.j ]
+  %.023.i.i27 = phi i64 [ 0, %.new100 ], [ %indvars.iv.next.i.i36.1, %bb.j ] ; 3 uses
+  %.01821.i.i28 = phi double [ 0.000000e+00, %.new100 ], [ %i.du, %bb.j ]
+  %niter111 = phi i64 [ 0, %.new100 ], [ %indvars.iv.next.i.i30, %bb.j ]
+  %53 = sitofp i64 %indvars.iv.i.i26 to double
+  %54 = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %.023.i.i27 ; 2 uses
+  %55 = load i64, ptr %54, align 8                ; 2 uses
+  %56 = sitofp i64 %55 to double
+  %57 = fadd double %53, %56
+  %58 = sitofp i64 %52 to double
+  %i.dj = getelementptr inbounds nuw i8, ptr %54, i64 8
+  %i.dk = load i64, ptr %i.dj, align 8            ; 2 uses
   %i.dl = sitofp i64 %i.dk to double
-  %10 = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %indvars.iv.i.i26 ; 2 uses
-  %11 = load i64, ptr %10, align 8
-  %i.dm = sitofp i64 %11 to double
-  %12 = fadd double %i.dl, %i.dm
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
-  %i.do = load i64, ptr %i.dn, align 8
-  %i.dp = sitofp i64 %i.do to double
-  %i.dq = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.dr = load i64, ptr %i.dq, align 8
+  %59 = fsub double %58, %i.dl
+  %60 = tail call double @llvm.fmuladd.f64(double %57, double %59, double %.01821.i.i28)
+  %i.dm = sitofp i64 %55 to double
+  %61 = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %.023.i.i27 ; 2 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %61, i64 16
+  %i.do = load i64, ptr %i.dn, align 8            ; 3 uses
+  %62 = sitofp i64 %i.do to double
+  %63 = fadd double %i.dm, %62
+  %i.dp = sitofp i64 %i.dk to double
+  %i.dq = getelementptr inbounds nuw i8, ptr %61, i64 24
+  %i.dr = load i64, ptr %i.dq, align 8            ; 3 uses
   %i.ds = sitofp i64 %i.dr to double
   %i.dt = fsub double %i.dp, %i.ds
-  %i.du = tail call double @llvm.fmuladd.f64(double %12, double %i.dt, double %.01821.i.i28) ; 2 uses
-  %indvars.iv.next.i.i30 = add nuw nsw i64 %indvars.iv.i.i26, 1 ; 2 uses
-  %exitcond.not.i.i31 = icmp eq i64 %indvars.iv.next.i.i30, %wide.trip.count.i.i25
-  br i1 %exitcond.not.i.i31, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit33, label %bb.j, !llvm.loop !8
+  %i.du = tail call double @llvm.fmuladd.f64(double %63, double %i.dt, double %60) ; 3 uses
+  %indvars.iv.next.i.i36.1 = add nuw nsw i64 %.023.i.i27, 2 ; 2 uses
+  %indvars.iv.next.i.i30 = add i64 %niter111, 2   ; 2 uses
+  %exitcond.not.i.i31 = icmp eq i64 %indvars.iv.next.i.i30, %unroll_iter110
+  br i1 %exitcond.not.i.i31, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa, label %bb.j, !llvm.loop !8
 
-_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit33: ; preds = %bb.j
-  %i.dv = fmul double %i.du, -5.000000e-01
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa: ; preds = %bb.j
+  %64 = and i64 %i.de, 16
+  %lcmp.mod107.not = icmp eq i64 %64, 0
+  br i1 %lcmp.mod107.not, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit33, label %.epil.preheader101
+
+.epil.preheader101:                               ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa, %bb.i
+  %.epil.init104 = phi i64 [ %.pre27.i.i33, %bb.i ], [ %i.dr, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa ]
+  %.epil.init106 = phi i64 [ %.pre.i.i31, %bb.i ], [ %i.do, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa ]
+  %indvars.iv.i.i34.epil.init = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.i.i36.1, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa ]
+  %.01821.i.i35.epil.init = phi double [ 0.000000e+00, %bb.i ], [ %i.du, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa ]
+  %lcmp.mod109 = trunc i64 %i.df to i1
+  tail call void @llvm.assume(i1 %lcmp.mod109)
+  %65 = sitofp i64 %.epil.init106 to double
+  %66 = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %indvars.iv.i.i34.epil.init ; 2 uses
+  %67 = load i64, ptr %66, align 8
+  %68 = sitofp i64 %67 to double
+  %69 = fadd nnan double %65, %68
+  %70 = sitofp i64 %.epil.init104 to double
+  %71 = getelementptr inbounds nuw i8, ptr %66, i64 8
+  %72 = load i64, ptr %71, align 8
+  %73 = sitofp i64 %72 to double
+  %74 = fsub nnan double %70, %73
+  %75 = tail call double @llvm.fmuladd.f64(double %69, double %74, double %.01821.i.i35.epil.init)
+  br label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit33
+
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit33: ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa, %.epil.preheader101
+  %.lcssa = phi double [ %i.du, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit39.unr-lcssa ], [ %75, %.epil.preheader101 ]
+  %i.dv = fmul double %.lcssa, -5.000000e-01
   %i.dw = fcmp ult double %i.dv, 0.000000e+00
   br i1 %i.dw, label %bb.k, label %_ZN10ClipperLib11ReversePathERSt6vectorINS_8IntPointESaIS1_EE.exit40
 
@@ -1330,48 +1555,93 @@ _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gn
   br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit227
 
 _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit227: ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i224, %bb.af
-  %i.kj = phi ptr [ %i.kd, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i224 ], [ %.pre335, %bb.af ] ; 6 uses
+  %i.kj = phi ptr [ %i.kd, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i224 ], [ %.pre335, %bb.af ] ; 8 uses
   %i.kk = phi ptr [ %i.kh, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i224 ], [ %i.jr, %bb.af ] ; 3 uses
   %i.kl = ptrtoint ptr %i.kk to i64
   %i.km = ptrtoint ptr %i.kj to i64
-  %i.kn = sub i64 %i.kl, %i.km
-  %i.ko = lshr exact i64 %i.kn, 4                 ; 3 uses
+  %i.kn = sub i64 %i.kl, %i.km                    ; 3 uses
+  %i.ko = lshr exact i64 %i.kn, 4                 ; 4 uses
   %i.kp = trunc i64 %i.ko to i32
   %i.kq = icmp slt i32 %i.kp, 3
   br i1 %i.kq, label %_ZN10ClipperLib11ReversePathERSt6vectorINS_8IntPointESaIS1_EE.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit227
-  %i.kr = add nsw i64 %i.ko, -1
-  %wide.trip.count.i.i = and i64 %i.ko, 2147483647
+  %i.kr = add nuw nsw i64 %i.ko, 4294967295
+  %.phi.trans.insert.i.i = and i64 %i.kr, 4294967295
+  %.phi.trans.insert25.i.i = getelementptr inbounds nuw [16 x i8], ptr %i.kj, i64 %.phi.trans.insert.i.i ; 2 uses
+  %.pre.i.i = load i64, ptr %.phi.trans.insert25.i.i, align 8 ; 2 uses
+  %.phi.trans.insert26.i.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert25.i.i, i64 8
+  %.pre27.i.i = load i64, ptr %.phi.trans.insert26.i.i, align 8 ; 2 uses
+  %wide.trip.count.i.i = and i64 %i.kn, 34359738352
+  %9 = icmp eq i64 %wide.trip.count.i.i, 16
+  br i1 %9, label %.epil.preheader, label %.new
+
+.new:                                             ; preds = %bb.ai
+  %unroll_iter = and i64 %i.ko, 2147483646
   br label %bb.aj
 
-bb.aj:                                            ; preds = %bb.aj, %bb.ai
-  %indvars.iv.i.i.a = phi i64 [ 0, %bb.ai ], [ %indvars.iv.next.i.i, %bb.aj ] ; 3 uses
-  %.023.i.i = phi i64 [ %i.kr, %bb.ai ], [ %indvars.iv.i.i.a, %bb.aj ]
-  %.01821.i.i = phi double [ 0.000000e+00, %bb.ai ], [ %i.ld, %bb.aj ]
-  %sext.i.i = shl i64 %.023.i.i, 32
-  %9 = ashr exact i64 %sext.i.i, 28
-  %i.ks = getelementptr inbounds nuw i8, ptr %i.kj, i64 %9 ; 2 uses
-  %i.kt = load i64, ptr %i.ks, align 8
+bb.aj:                                            ; preds = %bb.aj, %.new
+  %10 = phi i64 [ %.pre27.i.i, %.new ], [ %i.la, %bb.aj ]
+  %indvars.iv.i.i.a = phi i64 [ %.pre.i.i, %.new ], [ %i.kx, %bb.aj ]
+  %.023.i.i = phi i64 [ 0, %.new ], [ %indvars.iv.next.i.i.1, %bb.aj ] ; 3 uses
+  %.01821.i.i = phi double [ 0.000000e+00, %.new ], [ %i.ld, %bb.aj ]
+  %niter = phi i64 [ 0, %.new ], [ %indvars.iv.next.i.i, %bb.aj ]
+  %11 = sitofp i64 %indvars.iv.i.i.a to double
+  %12 = getelementptr inbounds nuw [16 x i8], ptr %i.kj, i64 %.023.i.i ; 2 uses
+  %13 = load i64, ptr %12, align 8                ; 2 uses
+  %14 = sitofp i64 %13 to double
+  %15 = fadd double %11, %14
+  %16 = sitofp i64 %10 to double
+  %i.ks = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.kt = load i64, ptr %i.ks, align 8            ; 2 uses
   %i.ku = sitofp i64 %i.kt to double
-  %10 = getelementptr inbounds nuw [16 x i8], ptr %i.kj, i64 %indvars.iv.i.i.a ; 2 uses
-  %11 = load i64, ptr %10, align 8
-  %i.kv = sitofp i64 %11 to double
-  %12 = fadd double %i.ku, %i.kv
-  %i.kw = getelementptr inbounds nuw i8, ptr %i.ks, i64 8
-  %i.kx = load i64, ptr %i.kw, align 8
-  %i.ky = sitofp i64 %i.kx to double
-  %i.kz = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.la = load i64, ptr %i.kz, align 8
+  %17 = fsub double %16, %i.ku
+  %18 = call double @llvm.fmuladd.f64(double %15, double %17, double %.01821.i.i)
+  %i.kv = sitofp i64 %13 to double
+  %19 = getelementptr inbounds nuw [16 x i8], ptr %i.kj, i64 %.023.i.i ; 2 uses
+  %i.kw = getelementptr inbounds nuw i8, ptr %19, i64 16
+  %i.kx = load i64, ptr %i.kw, align 8            ; 3 uses
+  %20 = sitofp i64 %i.kx to double
+  %21 = fadd double %i.kv, %20
+  %i.ky = sitofp i64 %i.kt to double
+  %i.kz = getelementptr inbounds nuw i8, ptr %19, i64 24
+  %i.la = load i64, ptr %i.kz, align 8            ; 3 uses
   %i.lb = sitofp i64 %i.la to double
   %i.lc = fsub double %i.ky, %i.lb
-  %i.ld = call double @llvm.fmuladd.f64(double %12, double %i.lc, double %.01821.i.i) ; 2 uses
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i.a, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit, label %bb.aj, !llvm.loop !8
+  %i.ld = call double @llvm.fmuladd.f64(double %21, double %i.lc, double %18) ; 3 uses
+  %indvars.iv.next.i.i.1 = add nuw nsw i64 %.023.i.i, 2 ; 2 uses
+  %indvars.iv.next.i.i = add i64 %niter, 2        ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %unroll_iter
+  br i1 %exitcond.not.i.i, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa, label %bb.aj, !llvm.loop !8
 
-_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit: ; preds = %bb.aj
-  %i.le = fmul double %i.ld, -5.000000e-01
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa: ; preds = %bb.aj
+  %22 = and i64 %i.kn, 16
+  %lcmp.mod.not = icmp eq i64 %22, 0
+  br i1 %lcmp.mod.not, label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa, %bb.ai
+  %.epil.init = phi i64 [ %.pre27.i.i, %bb.ai ], [ %i.la, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %.epil.init442 = phi i64 [ %.pre.i.i, %bb.ai ], [ %i.kx, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %indvars.iv.i.i.epil.init = phi i64 [ 0, %bb.ai ], [ %indvars.iv.next.i.i.1, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %.01821.i.i.epil.init = phi double [ 0.000000e+00, %bb.ai ], [ %i.ld, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ]
+  %lcmp.mod444 = trunc i64 %i.ko to i1
+  call void @llvm.assume(i1 %lcmp.mod444)
+  %23 = sitofp i64 %.epil.init442 to double
+  %24 = getelementptr inbounds nuw [16 x i8], ptr %i.kj, i64 %indvars.iv.i.i.epil.init ; 2 uses
+  %25 = load i64, ptr %24, align 8
+  %26 = sitofp i64 %25 to double
+  %27 = fadd nnan double %23, %26
+  %28 = sitofp i64 %.epil.init to double
+  %29 = getelementptr inbounds nuw i8, ptr %24, i64 8
+  %30 = load i64, ptr %29, align 8
+  %31 = sitofp i64 %30 to double
+  %32 = fsub nnan double %28, %31
+  %33 = call double @llvm.fmuladd.f64(double %27, double %32, double %.01821.i.i.epil.init)
+  br label %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit
+
+_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit: ; preds = %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa, %.epil.preheader
+  %.lcssa432 = phi double [ %i.ld, %_ZN10ClipperLib11OrientationERKSt6vectorINS_8IntPointESaIS1_EE.exit.unr-lcssa ], [ %33, %.epil.preheader ]
+  %i.le = fmul double %.lcssa432, -5.000000e-01
   %i.lf = fcmp ult double %i.le, 0.000000e+00
   br i1 %i.lf, label %bb.ak, label %_ZN10ClipperLib11ReversePathERSt6vectorINS_8IntPointESaIS1_EE.exit
 
