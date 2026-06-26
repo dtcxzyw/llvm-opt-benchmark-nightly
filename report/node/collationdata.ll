@@ -201,8 +201,6 @@ bb.ab:                                            ; preds = %.lr.ph224, %_ZNK6ic
 
 .lr.ph229:                                        ; preds = %.preheader200
   %i.jq = zext nneg i32 %2 to i64
-  %sext = shl i64 %indvars.iv.next262, 32
-  %6 = ashr exact i64 %sext, 32
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph229, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread
@@ -286,7 +284,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 _ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread: ; preds = %bb.ae, %bb.ah, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit, %bb.ak
   %.2126 = phi i32 [ %i.kr, %bb.ak ], [ %.1125227, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit ], [ %.1125227, %bb.ah ], [ %.1125227, %bb.ae ] ; 2 uses
-  %i.ku = icmp slt i64 %6, %indvars.iv.next267
+  %i.ku = icmp slt i64 %indvars.iv.next262, %indvars.iv.next267
   br i1 %i.ku, label %bb.ac, label %.thread182
 
 bb.al:                                            ; preds = %bb.ab

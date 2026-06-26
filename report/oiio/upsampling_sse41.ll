@@ -201,12 +201,11 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
   %i.hb = trunc nuw nsw i64 %indvars.iv to i32
-  %9 = and i64 %indvars.iv.next273, 4294967280
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
   %.0255.lcssa = phi i32 [ 1, %bb.c ], [ %i.hb, %._crit_edge.loopexit ] ; 5 uses
-  %.0.lcssa = phi i64 [ 0, %bb.c ], [ %9, %._crit_edge.loopexit ] ; 4 uses
+  %.0.lcssa = phi i64 [ 0, %bb.c ], [ %indvars.iv.next273, %._crit_edge.loopexit ] ; 4 uses
   %i.hc = icmp sgt i32 %8, 1
   br i1 %i.hc, label %bb.g, label %bb.i
 
@@ -609,12 +608,11 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
   %i.hb = trunc nuw nsw i64 %indvars.iv to i32
-  %9 = and i64 %indvars.iv.next273, 4294967280
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
   %.0255.lcssa = phi i32 [ 1, %bb.c ], [ %i.hb, %._crit_edge.loopexit ] ; 5 uses
-  %.0.lcssa = phi i64 [ 0, %bb.c ], [ %9, %._crit_edge.loopexit ] ; 4 uses
+  %.0.lcssa = phi i64 [ 0, %bb.c ], [ %indvars.iv.next273, %._crit_edge.loopexit ] ; 4 uses
   %i.hc = icmp sgt i32 %8, 1
   br i1 %i.hc, label %bb.g, label %bb.i
 

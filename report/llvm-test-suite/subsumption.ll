@@ -201,11 +201,9 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   br i1 %i.ao, label %.lr.ph.i, label %subs_TestlitsEqExcept.exit.thread
 
 .lr.ph.i:                                         ; preds = %.preheader106.i, %bb.x
-  %.140107.i = phi i64 [ %indvars.iv.next112.i, %bb.x ], [ %indvars.iv.i, %.preheader106.i ]
+  %.140107.i = phi i64 [ %indvars.iv.next112.i, %bb.x ], [ %indvars.iv.i, %.preheader106.i ] ; 3 uses
   %.val56.i = load ptr, ptr %i.m, align 8
-  %sext.i = shl i64 %.140107.i, 32
-  %4 = ashr exact i64 %sext.i, 32                 ; 3 uses
-  %i.ap = getelementptr inbounds [8 x i8], ptr %.val56.i, i64 %4
+  %i.ap = getelementptr inbounds [8 x i8], ptr %.val56.i, i64 %.140107.i
   %i.aq = load ptr, ptr %i.ap, align 8
   %i.ar = getelementptr i8, ptr %i.aq, i64 24
   %.val1.i.i = load ptr, ptr %i.ar, align 8       ; 7 uses
@@ -280,7 +278,7 @@ fol_Atom.exit77.i:                                ; preds = %fol_Atom.exit.i
 
 fol_Atom.exit77.thread.i:                         ; preds = %fol_Atom.exit77.i, %fol_Atom.exit.thread.i
   %.val54.i = load ptr, ptr %i.m, align 8
-  %i.bq = getelementptr inbounds [8 x i8], ptr %.val54.i, i64 %4
+  %i.bq = getelementptr inbounds [8 x i8], ptr %.val54.i, i64 %.140107.i
   %i.br = load ptr, ptr %i.bq, align 8
   %i.bs = getelementptr i8, ptr %i.br, i64 8
   %.val64.i = load i32, ptr %i.bs, align 8
@@ -539,7 +537,7 @@ bb.v:                                             ; preds = %cont_BackTrack.exit
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %.preheader.i
-  %indvars.iv111.i = phi i64 [ %4, %.preheader.i ], [ %indvars.iv.next112.i, %bb.w ]
+  %indvars.iv111.i = phi i64 [ %.140107.i, %.preheader.i ], [ %indvars.iv.next112.i, %bb.w ]
   %indvars.iv.next112.i = add nsw i64 %indvars.iv111.i, 1 ; 5 uses
   %i.ev = getelementptr inbounds [4 x i8], ptr @multvec_i, i64 %indvars.iv.next112.i
   %i.ew = load i32, ptr %i.ev, align 4

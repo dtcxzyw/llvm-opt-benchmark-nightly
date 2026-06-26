@@ -201,12 +201,10 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.au, %.preheader.i
   %.012.i = phi i64 [ %indvars.iv.i.i, %bb.au ], [ 18, %.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #18
-  %sext.i17 = shl i64 %.012.i, 32
-  %6 = ashr exact i64 %sext.i17, 32
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ai, %bb.ae
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ai ], [ %6, %bb.ae ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ai ], [ %.012.i, %bb.ae ] ; 5 uses
   %.0.i.i = phi i32 [ %.1.i.i, %bb.ai ], [ 0, %bb.ae ] ; 2 uses
   %i.bd = getelementptr inbounds i8, ptr %.146.i, i64 %indvars.iv.i.i
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !16
@@ -230,13 +228,11 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   br label %bb.af, !llvm.loop !18
 
 next_valid_pos.exit.i:                            ; preds = %bb.ah, %bb.af
-  %sext49.i = shl i64 %indvars.iv.i.i, 32
-  %7 = ashr exact i64 %sext49.i, 32               ; 2 uses
-  %.not23.i = icmp ugt i64 %i.ak, %7
+  %.not23.i = icmp ugt i64 %i.ak, %indvars.iv.i.i
   br i1 %.not23.i, label %bb.aj, label %bb.av
 
 bb.aj:                                            ; preds = %next_valid_pos.exit.i
-  %i.bg = getelementptr inbounds nuw i8, ptr %.146.i, i64 %7
+  %i.bg = getelementptr inbounds i8, ptr %.146.i, i64 %indvars.iv.i.i
   %i.bh = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef nonnull %i.bg, ptr noundef nonnull @.str.29, ptr noundef nonnull %i.m, ptr noundef nonnull %i.p, ptr noundef nonnull %i.n, ptr noundef nonnull %i.o) #18
   %.not24.i = icmp eq i32 %i.bh, 4
   br i1 %.not24.i, label %bb.ak, label %bb.av

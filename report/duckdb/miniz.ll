@@ -201,10 +201,9 @@ bb.ag:                                            ; preds = %bb.af
   %.sroa.gep.sroa.gep366 = getelementptr inbounds nuw i8, ptr %i.d, i64 7 ; 2 uses
   %.sroa.gep.sroa.gep366.val = load i8, ptr %.sroa.gep.sroa.gep366, align 1
   %i.ff = lshr i32 %i.eo, 24
-  %4 = trunc nuw i32 %i.ff to i8
-  %5 = select i1 %i.ep, i8 %.sroa.gep.sroa.gep366.val, i8 %4
-  %6 = zext i8 %5 to i32
-  %i.fg = shl nuw i32 %6, 24
+  %4 = zext i8 %.sroa.gep.sroa.gep366.val to i32
+  %5 = select i1 %i.ep, i32 %4, i32 %i.ff
+  %i.fg = shl nuw i32 %5, 24
   %i.fh = or disjoint i32 %i.fg, %i.fe            ; 2 uses
   %i.fi = load i32, ptr %i.eg, align 4, !tbaa !225
   %i.fj = icmp ne i32 %i.fi, 0
@@ -607,8 +606,7 @@ bb.w:                                             ; preds = %bb.v
   %i.nw = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next52.i
   %i.nx = add nsw i32 %i.nv, -1
   store i32 %i.nx, ptr %i.nw, align 4, !tbaa !3
-  %7 = and i64 %indvars.iv51.i178, 4294967295
-  %i.ny = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %7 ; 2 uses
+  %i.ny = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv51.i178 ; 2 uses
   %i.nz = load i32, ptr %i.ny, align 4, !tbaa !3
   %i.oa = add nsw i32 %i.nz, 2
   store i32 %i.oa, ptr %i.ny, align 4, !tbaa !3

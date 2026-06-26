@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca [12 x i8], align 1                ; 6 uses
   %3 = alloca %"struct.absl::lts_20250512::debugging_internal::DecodeRustPunycodeOptions", align 8 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !7    ; 7 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !7    ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 9 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !17   ; 3 uses
   %i.f = sext i32 %i.e to i64                     ; 2 uses
@@ -234,19 +234,19 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20250
   %i.p = sext i8 %i.o to i32
   %i.q = add nsw i32 %i.p, -48                    ; 3 uses
   %i.r = icmp eq i32 %i.q, 0
+  %.phi.trans.insert89 = sext i32 %i.n to i64     ; 2 uses
+  %.phi.trans.insert90 = getelementptr inbounds i8, ptr %i.c, i64 %.phi.trans.insert89 ; 2 uses
+  %.pre91 = load i8, ptr %.phi.trans.insert90, align 1, !tbaa !13 ; 3 uses
   br i1 %i.r, label %.loopexit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.c
-  %4 = sext i32 %i.n to i64                       ; 2 uses
-  %5 = getelementptr inbounds i8, ptr %i.c, i64 %4 ; 2 uses
-  %6 = load i8, ptr %5, align 1, !tbaa !13
-  %i.s = add i8 %6, -48
+  %i.s = add i8 %.pre91, -48
   %i.t = icmp ult i8 %i.s, 10
   br i1 %i.t, label %.lr.ph.i, label %.loopexit
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.d
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ %4, %.preheader.i ]
-  %i.u = phi ptr [ %i.ac, %bb.d ], [ %5, %.preheader.i ]
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ %.phi.trans.insert89, %.preheader.i ]
+  %i.u = phi ptr [ %i.ac, %bb.d ], [ %.phi.trans.insert90, %.preheader.i ]
   %.018.i = phi i32 [ %i.ab, %bb.d ], [ %i.q, %.preheader.i ] ; 2 uses
   %i.v = icmp slt i32 %.018.i, 214748364
   br i1 %i.v, label %bb.d, label %.critedge
@@ -261,18 +261,16 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.aa = add i32 %i.w, -48
   %i.ab = add i32 %i.aa, %i.z                     ; 2 uses
   %i.ac = getelementptr inbounds i8, ptr %i.c, i64 %indvars.iv.next.i ; 2 uses
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !13
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !13  ; 2 uses
   %i.ae = add i8 %i.ad, -48
   %i.af = icmp ult i8 %i.ae, 10
   br i1 %i.af, label %.lr.ph.i, label %.loopexit, !llvm.loop !28
 
-.loopexit:                                        ; preds = %bb.d, %.preheader.i, %bb.c
-  %i.ag = phi i32 [ %i.n, %bb.c ], [ %i.n, %.preheader.i ], [ %i.x, %bb.d ] ; 3 uses
+.loopexit:                                        ; preds = %bb.d, %bb.c, %.preheader.i
+  %4 = phi i8 [ %.pre91, %bb.c ], [ %.pre91, %.preheader.i ], [ %i.ad, %bb.d ]
+  %i.ag = phi i32 [ %i.n, %bb.c ], [ %i.n, %.preheader.i ], [ %i.x, %bb.d ] ; 2 uses
   %.0.ph = phi i32 [ 0, %bb.c ], [ %i.q, %.preheader.i ], [ %i.ab, %bb.d ] ; 5 uses
-  %7 = sext i32 %i.ag to i64
-  %8 = getelementptr inbounds i8, ptr %i.c, i64 %7
-  %9 = load i8, ptr %8, align 1, !tbaa !13
-  %.not.i29 = icmp eq i8 %9, 95
+  %.not.i29 = icmp eq i8 %4, 95
   br i1 %.not.i29, label %bb.e, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_116RustSymbolParser3EatEc.exit30
 
 bb.e:                                             ; preds = %.loopexit

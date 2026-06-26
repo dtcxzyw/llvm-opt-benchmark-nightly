@@ -201,9 +201,8 @@ bb.c:                                             ; preds = %rb_long2int_inline.
   unreachable
 
 rbimpl_size_mul_or_raise.exit:                    ; preds = %rb_long2int_inline.exit
-  %i.e = shl nuw i64 %i.a, 4
-  %1 = and i64 %i.e, 68719476720
-  %i.f = alloca i8, i64 %1, align 16              ; 2 uses
+  %i.e = shl nuw nsw i64 %i.a, 4
+  %i.f = alloca i8, i64 %i.e, align 16            ; 2 uses
   %i.g = call i64 @EC_get_builtin_curves(ptr noundef nonnull %i.f, i64 noundef %i.a) #8
   %.not = icmp eq i64 %i.g, 0
   br i1 %.not, label %bb.d, label %bb.e

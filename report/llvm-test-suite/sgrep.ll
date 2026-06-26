@@ -200,9 +200,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   br i1 %.not14, label %.preheader, label %bb.f, !llvm.loop !17
 
 .preheader:                                       ; preds = %bb.f
-  %sext = shl i64 %indvars.iv24, 32
-  %2 = ashr exact i64 %sext, 32
-  %i.p = getelementptr inbounds i8, ptr %0, i64 %2
+  %i.p = getelementptr inbounds i8, ptr %0, i64 %indvars.iv24
   %i.q = load i8, ptr %i.p, align 1, !tbaa !8     ; 2 uses
   %.not1520 = icmp eq i8 %i.q, 10
   br i1 %.not1520, label %._crit_edge, label %.lr.ph21
@@ -605,9 +603,7 @@ bb.t:                                             ; preds = %bb.t, %bb.s
   br i1 %.not14.i, label %.preheader.i, label %bb.t, !llvm.loop !17
 
 .preheader.i:                                     ; preds = %bb.t
-  %sext.i = shl i64 %indvars.iv24.i, 32
-  %5 = ashr exact i64 %sext.i, 32
-  %i.hv = getelementptr inbounds i8, ptr %2, i64 %5
+  %i.hv = getelementptr inbounds i8, ptr %2, i64 %indvars.iv24.i
   %i.hw = load i8, ptr %i.hv, align 1, !tbaa !8   ; 2 uses
   %.not1520.i = icmp eq i8 %i.hw, 10
   br i1 %.not1520.i, label %._crit_edge.i, label %.lr.ph21.i
@@ -798,9 +794,7 @@ bb.ab:                                            ; preds = %bb.ab, %bb.aa
   br i1 %.not14.i200, label %.preheader.i201, label %bb.ab, !llvm.loop !17
 
 .preheader.i201:                                  ; preds = %bb.ab
-  %sext.i202 = shl i64 %indvars.iv24.i198, 32
-  %6 = ashr exact i64 %sext.i202, 32
-  %i.kr = getelementptr inbounds i8, ptr %2, i64 %6
+  %i.kr = getelementptr inbounds i8, ptr %2, i64 %indvars.iv24.i198
   %i.ks = load i8, ptr %i.kr, align 1, !tbaa !8   ; 2 uses
   %.not1520.i203 = icmp eq i8 %i.ks, 10
   br i1 %.not1520.i203, label %._crit_edge.i208, label %.lr.ph21.i204

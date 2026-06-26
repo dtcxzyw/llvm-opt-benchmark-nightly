@@ -161,7 +161,7 @@ start_decoding.exit:                              ; preds = %input_bit.exit.i, %
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %start_decoding.exit
-  %indvars.iv.i8 = phi i64 [ %indvars.iv.next.i9, %bb.f ], [ 1, %start_decoding.exit ] ; 7 uses
+  %indvars.iv.i8 = phi i64 [ %indvars.iv.next.i9, %bb.f ], [ 1, %start_decoding.exit ] ; 8 uses
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr @cum_freq, i64 %indvars.iv.i8
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !4  ; 2 uses
   %i.bp = icmp sgt i32 %i.bo, %i.bm
@@ -273,9 +273,7 @@ decode_symbol.exit:                               ; preds = %bb.j
   br i1 %i.du, label %bb.t, label %bb.p
 
 bb.p:                                             ; preds = %decode_symbol.exit
-  %sext = shl i64 %indvars.iv.i8, 32
-  %1 = ashr exact i64 %sext, 32                   ; 2 uses
-  %i.dv = getelementptr inbounds i8, ptr @index_to_char, i64 %1 ; 2 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr @index_to_char, i64 %indvars.iv.i8 ; 2 uses
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !8   ; 3 uses
   %i.dx = load ptr, ptr @deari, align 8, !tbaa !19
   %i.dy = load i32, ptr @deari_pos, align 4, !tbaa !4 ; 2 uses
@@ -316,7 +314,7 @@ bb.p:                                             ; preds = %decode_symbol.exit
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.loopexit.i.preheader, %.loopexit.i
-  %indvars.iv38.i = phi i64 [ %indvars.iv.next39.i, %.loopexit.i ], [ %1, %.loopexit.i.preheader ] ; 9 uses
+  %indvars.iv38.i = phi i64 [ %indvars.iv.next39.i, %.loopexit.i ], [ %indvars.iv.i8, %.loopexit.i.preheader ] ; 9 uses
   %i.eq = getelementptr inbounds [4 x i8], ptr @freq, i64 %indvars.iv38.i ; 3 uses
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !4  ; 2 uses
   %i.es = getelementptr i8, ptr %i.eq, i64 -4

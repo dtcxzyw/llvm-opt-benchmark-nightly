@@ -201,13 +201,11 @@ create_method.exit:                               ; preds = %bb.l, %bb.m
   %i.be = getelementptr inbounds nuw i8, ptr %i.w, i64 9
   %i.bf = load i8, ptr %i.be, align 1
   %i.bg = getelementptr inbounds nuw i8, ptr %i.x, i64 52
-  %5 = and i8 %i.bf, 1
-  store i8 %5, ptr %i.bg, align 4, !tbaa !23
+  store i8 %i.bf, ptr %i.bg, align 4, !tbaa !23
   %i.bh = getelementptr inbounds nuw i8, ptr %i.w, i64 10
   %i.bi = load i8, ptr %i.bh, align 1
   %i.bj = getelementptr inbounds nuw i8, ptr %i.x, i64 53
-  %6 = and i8 %i.bi, 1
-  store i8 %6, ptr %i.bj, align 1, !tbaa !26
+  store i8 %i.bi, ptr %i.bj, align 1, !tbaa !26
   %i.bk = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %.sroa.013.0.copyload14.i40.i = load ptr, ptr %i.bk, align 1
   %.sroa.9.0..sroa_idx15.i41.i = getelementptr inbounds nuw i8, ptr %i.w, i64 40

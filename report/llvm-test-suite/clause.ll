@@ -201,9 +201,7 @@ clause_CheckSplitLevel.exit:                      ; preds = %bb.j, %bb.i, %bb.h,
   %.0.lcssa.i = phi i64 [ %indvars.iv20.i, %bb.f ], [ -1, %bb.j ], [ %indvars.iv.next21.i, %bb.g ], [ %indvars.iv.next21.i.2, %bb.i ], [ %indvars.iv.next21.i.1, %bb.h ]
   %i.ab = zext i32 %i.b to i64
   %i.ac = shl nsw i64 %i.q, 6
-  %sext.i = shl i64 %.0.lcssa.i, 32
-  %1 = ashr exact i64 %sext.i, 32
-  %i.ad = add nsw i64 %1, %i.ac
+  %i.ad = add nsw i64 %.0.lcssa.i, %i.ac
   %i.ae = icmp eq i64 %i.ad, %i.ab
   br i1 %i.ae, label %bb.k, label %clause_DependsOnSplitLevel.exit
 

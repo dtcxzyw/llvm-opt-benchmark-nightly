@@ -201,15 +201,11 @@ bb.ae:                                            ; preds = %bb.ae, %bb.ad
   %i.hh = add i32 %.71035, 4                      ; 2 uses
   %i.hi = add nuw nsw i32 %.11015, 4              ; 2 uses
   %.not1065 = icmp eq i32 %i.hi, %i.go
-  br i1 %.not1065, label %.loopexit1232.loopexit, label %bb.ae
+  br i1 %.not1065, label %.loopexit1232, label %bb.ae
 
-.loopexit1232.loopexit:                           ; preds = %bb.ae
-  %3 = and i64 %indvars.iv.next1281, 4294967295
-  br label %.loopexit1232
-
-.loopexit1232:                                    ; preds = %.loopexit1232.loopexit, %bb.ac
-  %.81036 = phi i32 [ %i.fx, %bb.ac ], [ %i.hh, %.loopexit1232.loopexit ] ; 2 uses
-  %.8 = phi i64 [ 1, %bb.ac ], [ %3, %.loopexit1232.loopexit ]
+.loopexit1232:                                    ; preds = %bb.ae, %bb.ac
+  %.81036 = phi i32 [ %i.fx, %bb.ac ], [ %i.hh, %bb.ae ] ; 2 uses
+  %.8 = phi i64 [ 1, %bb.ac ], [ %indvars.iv.next1281, %bb.ae ]
   %.not1066 = icmp eq i32 %i.gm, 0
   br i1 %.not1066, label %.loopexit1231, label %.preheader1230
 
@@ -612,9 +608,9 @@ bb.aq:                                            ; preds = %bb.ao, %bb.an, %bb.
   %i.io = shl i32 %.0.copyload.i1251, 3           ; 2 uses
   %i.ip = shl nuw nsw i64 %i.ii, 29
   %i.iq = add nuw nsw i64 %i.ip, 33822867456      ; 2 uses
-  %i.ir = lshr i64 %i.iq, 32
+  %i.ir = lshr i64 %i.iq, 32                      ; 2 uses
   %i.is = trunc nuw nsw i64 %i.ir to i32
-  %i.it = and i32 %i.is, 1073741816               ; 4 uses
+  %i.it = and i32 %i.is, 1073741816               ; 3 uses
   %.not1130 = icmp eq i32 %i.it, 0
   %i.iu = and i64 %i.iq, 4611685984067649536      ; 3 uses
   br i1 %.not1130, label %bb.ax, label %bb.ar
@@ -645,6 +641,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.ji = add nuw nsw i64 %i.iv, 4294967288
   %i.jj = and i64 %i.ji, 4294967288
   %i.jk = or disjoint i64 %i.jj, 7
+  %4 = and i64 %i.ir, 1073741816
   br label %bb.as
 
 .preheader:                                       ; preds = %bb.as
@@ -652,8 +649,8 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.not1131, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %.preheader.preheader, %.preheader
-  %.011041293 = phi i32 [ %i.it, %.preheader.preheader ], [ %4, %.preheader ]
-  %indvars.iv1292 = phi i64 [ %i.jk, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 3 uses
+  %.011041293 = phi i64 [ %4, %.preheader.preheader ], [ %indvars.iv1292, %.preheader ]
+  %indvars.iv1292 = phi i64 [ %i.jk, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 4 uses
   %indvars.iv.next = add nsw i64 %indvars.iv1292, -1 ; 3 uses
   %indvars = trunc i64 %indvars.iv.next to i32
   %i.jl = add i32 %i.ik, %indvars
@@ -663,20 +660,19 @@ bb.as:                                            ; preds = %.preheader.preheade
   %.0.copyload.i1254 = load i8, ptr %i.jn, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1254) #7, !srcloc !20
   %i.jo = icmp eq i8 %.0.copyload.i1252, %.0.copyload.i1254
-  %4 = trunc nuw i64 %indvars.iv1292 to i32       ; 2 uses
   br i1 %i.jo, label %.preheader, label %bb.au
 
 bb.at:                                            ; preds = %.preheader
-  %i.jp = shl i64 %indvars.iv1292, 32
+  %i.jp = shl nuw i64 %indvars.iv1292, 32
   br label %bb.aw
 
 bb.au:                                            ; preds = %bb.as
-  %5 = zext i32 %.011041293 to i64
-  %i.jq = shl nuw i64 %5, 32
+  %5 = trunc nuw i64 %indvars.iv1292 to i32
+  %i.jq = shl nuw i64 %.011041293, 32
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.ar
-  %.11105 = phi i32 [ %4, %bb.au ], [ %i.it, %bb.ar ]
+  %.11105 = phi i32 [ %5, %bb.au ], [ %i.it, %bb.ar ]
   %.01097.in = phi i8 [ %.0.copyload.i1254, %bb.au ], [ %.0.copyload.i1252, %bb.ar ]
   %.01094 = phi i64 [ %i.jq, %bb.au ], [ %i.iu, %bb.ar ]
   %.01097 = zext i8 %.01097.in to i32

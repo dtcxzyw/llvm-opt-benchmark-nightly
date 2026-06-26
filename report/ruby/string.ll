@@ -201,9 +201,8 @@ bb.k:                                             ; preds = %bb.i
 
 rb_long2num_inline.exit:                          ; preds = %.thread48, %bb.k, %RSTRING_LENINT.exit
   %.030 = phi i64 [ %i.bj, %RSTRING_LENINT.exit ], [ %i.br, %bb.k ], [ %i.bs, %.thread48 ] ; 2 uses
-  %sext = shl i64 %i.bg, 32
-  %5 = ashr exact i64 %sext, 31
-  %i.bt = or disjoint i64 %5, 1
+  %sext = shl i64 %i.bg, 1
+  %i.bt = or disjoint i64 %sext, 1
   store i64 %i.bt, ptr %i.b, align 16, !tbaa !27
   %i.bu = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store i64 %.030, ptr %i.bu, align 8, !tbaa !27

@@ -201,6 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !noalias !26094, !nonnull !3, !align !42, !noundef !3
+  %1 = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.e, 1
   br label %_RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerINtNtB8_4read6IoReadRShEENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1n_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -214,11 +215,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = call { i64, ptr } @_RINvXs3s_NtNtCs1gOyXocuPRE_10serde_core2de5implsINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaENtB9_11Deserialize11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerINtNtB2E_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(104) %0) ; 2 uses
-  %1 = extractvalue { i64, ptr } %i.l, 0
-  %2 = extractvalue { i64, ptr } %i.l, 1          ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
-  %..i.i = and i64 %1, 1
+  %i.l = call { i64, ptr } @_RINvXs3s_NtNtCs1gOyXocuPRE_10serde_core2de5implsINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaENtB9_11Deserialize11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerINtNtB2E_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(104) %0)
   br label %_RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerINtNtB8_4read6IoReadRShEENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1n_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -227,15 +224,14 @@ bb.e:                                             ; preds = %bb.c
   %i.n = call noundef align 8 ptr @_RNvMs3_NtCseqDwI8vvjGQ_10serde_json2deINtB5_12DeserializerINtNtB7_4read6IoReadRShEE11parse_identCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(104) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) @65, i64 noundef 3) ; 2 uses
   %.not.i = icmp ne ptr %i.n, null
   %spec.select9.i = zext i1 %.not.i to i64
+  %2 = insertvalue { i64, ptr } poison, i64 %spec.select9.i, 0
+  %3 = insertvalue { i64, ptr } %2, ptr %i.n, 1
   br label %_RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerINtNtB8_4read6IoReadRShEENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1n_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit
 
 _RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerINtNtB8_4read6IoReadRShEENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1n_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.b, %bb.d, %bb.e
-  %.sroa.5.2.i = phi ptr [ %i.n, %bb.e ], [ %2, %bb.d ], [ %i.e, %bb.b ]
-  %.sroa.0.2.i = phi i64 [ %spec.select9.i, %bb.e ], [ %..i.i, %bb.d ], [ 1, %bb.b ]
+  %.merged.i = phi { i64, ptr } [ %3, %bb.e ], [ %i.l, %bb.d ], [ %1, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !26094
-  %3 = insertvalue { i64, ptr } poison, i64 %.sroa.0.2.i, 0
-  %4 = insertvalue { i64, ptr } %3, ptr %.sroa.5.2.i, 1
-  ret { i64, ptr } %4
+  ret { i64, ptr } %.merged.i
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -252,6 +248,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !noalias !26097, !nonnull !3, !align !42, !noundef !3
+  %1 = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.e, 1
   br label %_RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1l_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -265,11 +262,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = call { i64, ptr } @_RINvXs3s_NtNtCs1gOyXocuPRE_10serde_core2de5implsINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaENtB9_11Deserialize11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB2E_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(64) %0) ; 2 uses
-  %1 = extractvalue { i64, ptr } %i.l, 0
-  %2 = extractvalue { i64, ptr } %i.l, 1          ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
-  %..i.i = and i64 %1, 1
+  %i.l = call { i64, ptr } @_RINvXs3s_NtNtCs1gOyXocuPRE_10serde_core2de5implsINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaENtB9_11Deserialize11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB2E_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(64) %0)
   br label %_RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1l_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -280,15 +273,14 @@ bb.e:                                             ; preds = %bb.c
   %i.p = call noundef align 8 ptr @_RNvMs3_NtCseqDwI8vvjGQ_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE11parse_identCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(64) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) @65, i64 noundef 3) ; 2 uses
   %.not.i = icmp ne ptr %i.p, null
   %spec.select9.i = zext i1 %.not.i to i64
+  %2 = insertvalue { i64, ptr } poison, i64 %spec.select9.i, 0
+  %3 = insertvalue { i64, ptr } %2, ptr %i.p, 1
   br label %_RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1l_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit
 
 _RINvXs5_NtCseqDwI8vvjGQ_10serde_json2deQINtB6_12DeserializerNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de12Deserializer18deserialize_optionINtNtB1l_5impls13OptionVisitorINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEEECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.b, %bb.d, %bb.e
-  %.sroa.5.2.i = phi ptr [ %i.p, %bb.e ], [ %2, %bb.d ], [ %i.e, %bb.b ]
-  %.sroa.0.2.i = phi i64 [ %spec.select9.i, %bb.e ], [ %..i.i, %bb.d ], [ 1, %bb.b ]
+  %.merged.i = phi { i64, ptr } [ %3, %bb.e ], [ %i.l, %bb.d ], [ %1, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !26097
-  %3 = insertvalue { i64, ptr } poison, i64 %.sroa.0.2.i, 0
-  %4 = insertvalue { i64, ptr } %3, ptr %.sroa.5.2.i, 1
-  ret { i64, ptr } %4
+  ret { i64, ptr } %.merged.i
 }
 
 ; Function Attrs: nonlazybind uwtable

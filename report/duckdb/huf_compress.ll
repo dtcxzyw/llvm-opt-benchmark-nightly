@@ -201,7 +201,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 %i.f ; 7 uses
   %storemerge.i = tail call i64 @llvm.usub.sat.i64(i64 %5, i64 %i.f)
   %.0.i = select i1 %.not.i, ptr null, ptr %i.g   ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 58 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 57 uses
   %i.i = icmp ult i64 %storemerge.i, 4864
   br i1 %i.i, label %bb.aa, label %bb.b
 
@@ -436,7 +436,7 @@ bb.g:                                             ; preds = %bb.g, %_ZN11duckdb_
   %indvars.iv = phi i32 [ %indvars.iv.next, %bb.g ], [ %i.ds, %_ZN11duckdb_zstdL8HUF_sortEPNS_9nodeElt_sEPKjjPNS_7rankPosE.exit ] ; 3 uses
   %indvars.iv121.i = phi i32 [ %indvars.iv.next122.i, %bb.g ], [ %i.l, %_ZN11duckdb_zstdL8HUF_sortEPNS_9nodeElt_sEPKjjPNS_7rankPosE.exit ] ; 3 uses
   %indvars.iv113.i = phi i32 [ %indvars.iv.next114.i, %bb.g ], [ %i.dr, %_ZN11duckdb_zstdL8HUF_sortEPNS_9nodeElt_sEPKjjPNS_7rankPosE.exit ] ; 2 uses
-  %indvars.iv.i24 = phi i64 [ %indvars.iv.next.i25, %bb.g ], [ %i.dq, %_ZN11duckdb_zstdL8HUF_sortEPNS_9nodeElt_sEPKjjPNS_7rankPosE.exit ] ; 10 uses
+  %indvars.iv.i24 = phi i64 [ %indvars.iv.next.i25, %bb.g ], [ %i.dq, %_ZN11duckdb_zstdL8HUF_sortEPNS_9nodeElt_sEPKjjPNS_7rankPosE.exit ] ; 11 uses
   %i.dt = getelementptr inbounds [8 x i8], ptr %i.h, i64 %indvars.iv.i24
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !41 ; 2 uses
   %i.dv = icmp eq i32 %i.du, 0
@@ -447,7 +447,7 @@ bb.g:                                             ; preds = %bb.g, %_ZN11duckdb_
   br i1 %i.dv, label %bb.g, label %bb.h, !llvm.loop !46
 
 bb.h:                                             ; preds = %bb.g
-  %i.dw = getelementptr inbounds [8 x i8], ptr %i.h, i64 %indvars.iv.i24 ; 3 uses
+  %i.dw = getelementptr inbounds [8 x i8], ptr %i.h, i64 %indvars.iv.i24 ; 4 uses
   %i.dx = icmp eq i32 %3, 0
   %spec.store.select = select i1 %i.dx, i32 11, i32 %3 ; 15 uses
   %i.dy = trunc nsw i64 %indvars.iv.i24 to i32    ; 3 uses
@@ -714,10 +714,7 @@ _ZN11duckdb_zstdL13HUF_buildTreeEPNS_9nodeElt_sEj.exit: ; preds = %_ZN11duckdb_z
 bb.i:                                             ; preds = %_ZN11duckdb_zstdL13HUF_buildTreeEPNS_9nodeElt_sEj.exit
   %i.iy = sub nuw nsw i32 %i.ix, %spec.store.select ; 2 uses
   %i.iz = shl nuw i32 1, %i.iy
-  %sext = shl i64 %indvars.iv.i24, 32
-  %6 = ashr exact i64 %sext, 32                   ; 3 uses
-  %7 = getelementptr inbounds [8 x i8], ptr %i.h, i64 %6
-  %i.ja = getelementptr inbounds nuw i8, ptr %7, i64 7 ; 2 uses
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.dw, i64 7 ; 2 uses
   %i.jb = load i8, ptr %i.ja, align 1, !tbaa !51
   %i.jc = zext i8 %i.jb to i32                    ; 2 uses
   %i.jd = icmp samesign ult i32 %spec.store.select, %i.jc
@@ -729,18 +726,16 @@ bb.i:                                             ; preds = %_ZN11duckdb_zstdL13
 
 .preheader113.loopexit.i:                         ; preds = %bb.j
   %i.jf = trunc nsw i64 %indvars.iv.next.i37 to i32
-  %sext.i = shl i64 %indvars.iv.next.i37, 32
-  %.pre.i38 = ashr exact i64 %sext.i, 32
   br label %.preheader113.i
 
 .preheader113.i:                                  ; preds = %.preheader113.loopexit.i, %bb.i
-  %.pre-phi.i = phi i64 [ %.pre.i38, %.preheader113.loopexit.i ], [ %6, %bb.i ]
+  %.pre-phi.i = phi i64 [ %indvars.iv.next.i37, %.preheader113.loopexit.i ], [ %indvars.iv.i24, %bb.i ]
   %.088.lcssa.i = phi i32 [ %i.jf, %.preheader113.loopexit.i ], [ %i.dy, %bb.i ]
   %.086.lcssa.i = phi i32 [ %i.jk, %.preheader113.loopexit.i ], [ 0, %bb.i ]
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.j, %.lr.ph.i35
-  %indvars.iv.i36 = phi i64 [ %6, %.lr.ph.i35 ], [ %indvars.iv.next.i37, %bb.j ] ; 2 uses
+  %indvars.iv.i36 = phi i64 [ %indvars.iv.i24, %.lr.ph.i35 ], [ %indvars.iv.next.i37, %bb.j ] ; 2 uses
   %i.jg = phi i32 [ %i.jc, %.lr.ph.i35 ], [ %i.jo, %bb.j ]
   %i.jh = phi ptr [ %i.ja, %.lr.ph.i35 ], [ %i.jm, %bb.j ]
   %.086116.i = phi i32 [ 0, %.lr.ph.i35 ], [ %i.jk, %bb.j ]
@@ -974,15 +969,10 @@ bb.v:                                             ; preds = %bb.x, %.lr.ph137.i
   %i.mv = phi i32 [ %i.nl, %.lr.ph137.i ], [ %i.nm, %bb.x ] ; 2 uses
   %.2136.i = phi i32 [ %.2.ph142.i, %.lr.ph137.i ], [ %i.ns, %bb.x ] ; 4 uses
   %i.mw = icmp eq i32 %i.mv, -252645136
-  br i1 %i.mw, label %.preheader.i32, label %bb.x
+  br i1 %i.mw, label %bb.w, label %bb.x
 
-.preheader.i32:                                   ; preds = %bb.v
-  %sext184.i = shl i64 %.290.ph141.i, 32
-  %8 = ashr exact i64 %sext184.i, 32
-  br label %bb.w
-
-bb.w:                                             ; preds = %bb.w, %.preheader.i32
-  %indvars.iv167.i = phi i64 [ %indvars.iv.next168.i, %bb.w ], [ %8, %.preheader.i32 ] ; 4 uses
+bb.w:                                             ; preds = %bb.v, %bb.w
+  %indvars.iv167.i = phi i64 [ %indvars.iv.next168.i, %bb.w ], [ %.290.ph141.i, %bb.v ] ; 4 uses
   %i.mx = getelementptr inbounds [8 x i8], ptr %i.h, i64 %indvars.iv167.i
   %i.my = getelementptr inbounds nuw i8, ptr %i.mx, i64 7
   %i.mz = load i8, ptr %i.my, align 1, !tbaa !51
@@ -1385,8 +1375,8 @@ bb.c:                                             ; preds = %.lr.ph.preheader
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.c, %.lr.ph.preheader
-  %.0.in.i.lcssa = phi i64 [ 8, %.lr.ph.preheader ], [ 0, %bb.c ]
-  %3 = getelementptr inbounds i8, ptr %i.e, i64 %.0.in.i.lcssa
+  %.0.in.i.lcssa = phi i64 [ 1, %.lr.ph.preheader ], [ 0, %bb.c ]
+  %3 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa
   store <2 x i32> %i.i, ptr %3, align 4
   %exitcond.not = icmp eq i32 %i.g, 2
   br i1 %exitcond.not, label %_ZN11duckdb_zstdL17HUF_insertionSortEPNS_9nodeElt_sEii.exit, label %.lr.ph.1
@@ -1415,8 +1405,8 @@ bb.e:                                             ; preds = %bb.d
   br label %.critedge.i.1
 
 .critedge.i.1:                                    ; preds = %bb.e, %bb.d, %.lr.ph.1
-  %.0.in.i.lcssa.1 = phi i64 [ 16, %.lr.ph.1 ], [ 0, %bb.e ], [ 8, %bb.d ]
-  %4 = getelementptr inbounds i8, ptr %i.e, i64 %.0.in.i.lcssa.1
+  %.0.in.i.lcssa.1 = phi i64 [ 2, %.lr.ph.1 ], [ 0, %bb.e ], [ 1, %bb.d ]
+  %4 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.1
   store <2 x i32> %i.o, ptr %4, align 4
   %exitcond.not.1 = icmp eq i32 %i.g, 3
   br i1 %exitcond.not.1, label %_ZN11duckdb_zstdL17HUF_insertionSortEPNS_9nodeElt_sEii.exit, label %.lr.ph.2
@@ -1454,8 +1444,8 @@ bb.h:                                             ; preds = %bb.g
   br label %.critedge.i.2
 
 .critedge.i.2:                                    ; preds = %bb.h, %bb.g, %bb.f, %.lr.ph.2
-  %.0.in.i.lcssa.2 = phi i64 [ 24, %.lr.ph.2 ], [ 8, %bb.g ], [ 16, %bb.f ], [ 0, %bb.h ]
-  %5 = getelementptr inbounds i8, ptr %i.e, i64 %.0.in.i.lcssa.2
+  %.0.in.i.lcssa.2 = phi i64 [ 3, %.lr.ph.2 ], [ 1, %bb.g ], [ 2, %bb.f ], [ 0, %bb.h ]
+  %5 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.2
   store <2 x i32> %i.z, ptr %5, align 4
   %exitcond.not.2 = icmp eq i32 %i.g, 4
   br i1 %exitcond.not.2, label %_ZN11duckdb_zstdL17HUF_insertionSortEPNS_9nodeElt_sEii.exit, label %.lr.ph.3
@@ -1502,8 +1492,8 @@ bb.l:                                             ; preds = %bb.k
   br label %.critedge.i.3
 
 .critedge.i.3:                                    ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %.lr.ph.3
-  %.0.in.i.lcssa.3 = phi i64 [ 32, %.lr.ph.3 ], [ 0, %bb.l ], [ 24, %bb.i ], [ 8, %bb.k ], [ 16, %bb.j ]
-  %6 = getelementptr inbounds i8, ptr %i.e, i64 %.0.in.i.lcssa.3
+  %.0.in.i.lcssa.3 = phi i64 [ 4, %.lr.ph.3 ], [ 0, %bb.l ], [ 3, %bb.i ], [ 1, %bb.k ], [ 2, %bb.j ]
+  %6 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.3
   store <2 x i32> %i.ap, ptr %6, align 4
   %exitcond.not.3 = icmp eq i32 %i.g, 5
   br i1 %exitcond.not.3, label %_ZN11duckdb_zstdL17HUF_insertionSortEPNS_9nodeElt_sEii.exit, label %.lr.ph.4
@@ -1559,8 +1549,8 @@ bb.q:                                             ; preds = %bb.p
   br label %.critedge.i.4
 
 .critedge.i.4:                                    ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %.lr.ph.4
-  %.0.in.i.lcssa.4 = phi i64 [ 40, %.lr.ph.4 ], [ 16, %bb.o ], [ 32, %bb.m ], [ 0, %bb.q ], [ 24, %bb.n ], [ 8, %bb.p ]
-  %7 = getelementptr inbounds i8, ptr %i.e, i64 %.0.in.i.lcssa.4
+  %.0.in.i.lcssa.4 = phi i64 [ 5, %.lr.ph.4 ], [ 2, %bb.o ], [ 4, %bb.m ], [ 0, %bb.q ], [ 3, %bb.n ], [ 1, %bb.p ]
+  %7 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.4
   store <2 x i32> %i.bk, ptr %7, align 4
   %exitcond.not.4 = icmp eq i32 %i.g, 6
   br i1 %exitcond.not.4, label %_ZN11duckdb_zstdL17HUF_insertionSortEPNS_9nodeElt_sEii.exit, label %.lr.ph.5
@@ -1625,8 +1615,8 @@ bb.w:                                             ; preds = %bb.v
   br label %.critedge.i.5
 
 .critedge.i.5:                                    ; preds = %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %.lr.ph.5
-  %.0.in.i.lcssa.5 = phi i64 [ 48, %.lr.ph.5 ], [ 8, %bb.v ], [ 40, %bb.r ], [ 16, %bb.u ], [ 32, %bb.s ], [ 0, %bb.w ], [ 24, %bb.t ]
-  %8 = getelementptr inbounds i8, ptr %i.e, i64 %.0.in.i.lcssa.5
+  %.0.in.i.lcssa.5 = phi i64 [ 6, %.lr.ph.5 ], [ 1, %bb.v ], [ 5, %bb.r ], [ 2, %bb.u ], [ 4, %bb.s ], [ 0, %bb.w ], [ 3, %bb.t ]
+  %8 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.5
   store <2 x i32> %i.ck, ptr %8, align 4
   %exitcond.not.5 = icmp eq i32 %i.g, 7
   br i1 %exitcond.not.5, label %_ZN11duckdb_zstdL17HUF_insertionSortEPNS_9nodeElt_sEii.exit, label %.lr.ph.6
@@ -1700,8 +1690,8 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.critedge.i.6
 
 .critedge.i.6:                                    ; preds = %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %.lr.ph.6
-  %.0.in.i.lcssa.6 = phi i64 [ 56, %.lr.ph.6 ], [ 0, %bb.ad ], [ 48, %bb.x ], [ 8, %bb.ac ], [ 40, %bb.y ], [ 24, %bb.aa ], [ 32, %bb.z ], [ 16, %bb.ab ]
-  %9 = getelementptr inbounds i8, ptr %i.e, i64 %.0.in.i.lcssa.6
+  %.0.in.i.lcssa.6 = phi i64 [ 7, %.lr.ph.6 ], [ 0, %bb.ad ], [ 6, %bb.x ], [ 1, %bb.ac ], [ 5, %bb.y ], [ 3, %bb.aa ], [ 4, %bb.z ], [ 2, %bb.ab ]
+  %9 = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.6
   store <2 x i32> %i.dp, ptr %9, align 4
   br label %_ZN11duckdb_zstdL17HUF_insertionSortEPNS_9nodeElt_sEii.exit
 

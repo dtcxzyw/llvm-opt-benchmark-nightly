@@ -201,18 +201,17 @@ bb.bb:                                            ; preds = %.lr.ph136, %bb.bl
   br i1 %.not90, label %bb.bf, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %14 = trunc nuw nsw i64 %indvars.iv140 to i32
   br i1 %.not, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %.070, i64 %indvars.iv140
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !3
+  %14 = sext i32 %i.hd to i64
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bc, %bb.bd
-  %15 = phi i32 [ %i.hd, %bb.bd ], [ %14, %bb.bc ]
-  %16 = sext i32 %15 to i64
-  %i.he = getelementptr inbounds [8 x i8], ptr %5, i64 %16
+  %15 = phi i64 [ %14, %bb.bd ], [ %indvars.iv140, %bb.bc ]
+  %i.he = getelementptr inbounds [8 x i8], ptr %5, i64 %15
   %i.hf = load ptr, ptr %i.he, align 8, !tbaa !444 ; 2 uses
   %i.hg = load i32, ptr %i.hf, align 4, !tbaa !3
   %i.hh = add i32 %i.hg, 4
@@ -236,18 +235,17 @@ bb.bg:                                            ; preds = %bb.bf
   br label %bb.bk
 
 bb.bh:                                            ; preds = %bb.bg
-  %17 = trunc nuw nsw i64 %indvars.iv140 to i32
   br i1 %.not, label %bb.bj, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
   %i.ho = getelementptr inbounds nuw [4 x i8], ptr %.070, i64 %indvars.iv140
   %i.hp = load i32, ptr %i.ho, align 4, !tbaa !3
+  %16 = sext i32 %i.hp to i64
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bh, %bb.bi
-  %18 = phi i32 [ %i.hp, %bb.bi ], [ %17, %bb.bh ]
-  %19 = sext i32 %18 to i64
-  %i.hq = getelementptr inbounds [8 x i8], ptr %5, i64 %19
+  %17 = phi i64 [ %16, %bb.bi ], [ %indvars.iv140, %bb.bh ]
+  %i.hq = getelementptr inbounds [8 x i8], ptr %5, i64 %17
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !444
   %i.hs = sext i32 %.066133 to i64                ; 2 uses
   %i.ht = getelementptr inbounds [8 x i8], ptr %.068, i64 %i.hs

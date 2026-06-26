@@ -201,12 +201,10 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i14.n
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.g, !llvm.loop !549
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %sext.i18 = shl i64 %indvars.iv.next.i16.lcssa, 32
-  %2 = ashr exact i64 %sext.i18, 30
-  %3 = getelementptr inbounds i8, ptr %i.cq, i64 %2 ; 2 uses
-  %i.ea = load i32, ptr %3, align 4, !tbaa !3
+  %2 = getelementptr inbounds [4 x i8], ptr %i.cq, i64 %indvars.iv.next.i16.lcssa ; 2 uses
+  %i.ea = load i32, ptr %2, align 4, !tbaa !3
   %i.eb = add i32 %i.ea, -1
-  store i32 %i.eb, ptr %3, align 4, !tbaa !3
+  store i32 %i.eb, ptr %2, align 4, !tbaa !3
   br label %._crit_edge.thread.i
 
 ._crit_edge.thread.i:                             ; preds = %bb.h, %._crit_edge.i, %_ZN3fmt3v126detail7compareERKNS1_6bigintES4_.exit32

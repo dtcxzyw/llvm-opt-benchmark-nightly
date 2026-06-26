@@ -201,12 +201,10 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i14.n
   br i1 %niter.ncmp.1, label %._crit_edge.i18.unr-lcssa, label %bb.g, !llvm.loop !1479
 
 bb.h:                                             ; preds = %._crit_edge.i18
-  %sext.i19 = shl i64 %indvars.iv.next.i16.lcssa, 32
-  %2 = ashr exact i64 %sext.i19, 30
-  %3 = getelementptr inbounds i8, ptr %i.cz, i64 %2 ; 2 uses
-  %i.ej = load i32, ptr %3, align 4, !tbaa !3
+  %2 = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %indvars.iv.next.i16.lcssa ; 2 uses
+  %i.ej = load i32, ptr %2, align 4, !tbaa !3
   %i.ek = add i32 %i.ej, -1
-  store i32 %i.ek, ptr %3, align 4, !tbaa !3
+  store i32 %i.ek, ptr %2, align 4, !tbaa !3
   br label %._crit_edge.thread.i
 
 ._crit_edge.thread.i:                             ; preds = %bb.h, %._crit_edge.i18, %_ZN3fmt3v116detail7compareERKNS1_6bigintES4_.exit33
@@ -609,9 +607,8 @@ bb.fn:                                            ; preds = %bb.fl
 bb.fo:                                            ; preds = %bb.fn
   %i.wf = getelementptr inbounds nuw i8, ptr %i.vm, i64 8
   %i.wg = load ptr, ptr %i.wf, align 8, !tbaa !655
-  %63 = shl nsw i64 %indvars.iv.i4.i.i.i, 2
-  %64 = getelementptr inbounds i8, ptr %i.wg, i64 %63
-  %i.wh = load i32, ptr %64, align 4, !tbaa !3
+  %63 = getelementptr inbounds [4 x i8], ptr %i.wg, i64 %indvars.iv.i4.i.i.i
+  %i.wh = load i32, ptr %63, align 4, !tbaa !3
   %i.wi = zext i32 %i.wh to i64                   ; 2 uses
   %i.wj = lshr i64 %i.wi, 6
   %i.wk = getelementptr inbounds nuw [8 x i8], ptr %i.vo, i64 %i.wj
@@ -659,9 +656,8 @@ bb.fr:                                            ; preds = %bb.fq
 bb.fs:                                            ; preds = %bb.fq
   %i.xg = getelementptr inbounds nuw i8, ptr %i.vm, i64 8
   %i.xh = load ptr, ptr %i.xg, align 8, !tbaa !655
-  %65 = shl nsw i64 %indvars.iv.i4.i.i.i, 2
-  %66 = getelementptr inbounds i8, ptr %i.xh, i64 %65
-  %i.xi = load i32, ptr %66, align 4, !tbaa !3
+  %64 = getelementptr inbounds [4 x i8], ptr %i.xh, i64 %indvars.iv.i4.i.i.i
+  %i.xi = load i32, ptr %64, align 4, !tbaa !3
   br label %_ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit.i.i.i
 
 _ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit.i.i.i: ; preds = %bb.fs, %bb.fr, %bb.fp
@@ -699,9 +695,8 @@ bb.fv:                                            ; preds = %bb.fu
 bb.fw:                                            ; preds = %bb.fu
   %i.xx = getelementptr inbounds nuw i8, ptr %i.vm, i64 8
   %i.xy = load ptr, ptr %i.xx, align 8, !tbaa !655
-  %67 = shl nsw i64 %indvars.iv.i4.i.i.i, 2
-  %68 = getelementptr inbounds i8, ptr %i.xy, i64 %67
-  %i.xz = load i32, ptr %68, align 4, !tbaa !3
+  %65 = getelementptr inbounds [4 x i8], ptr %i.xy, i64 %indvars.iv.i4.i.i.i
+  %i.xz = load i32, ptr %65, align 4, !tbaa !3
   br label %_ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit13.i.i.i
 
 _ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit13.i.i.i: ; preds = %bb.fw, %bb.fv, %bb.ft
@@ -1104,9 +1099,8 @@ bb.hb:                                            ; preds = %bb.gz
 bb.hc:                                            ; preds = %bb.hb
   %i.adw = getelementptr inbounds nuw i8, ptr %i.add, i64 8
   %i.adx = load ptr, ptr %i.adw, align 8, !tbaa !655
-  %69 = shl nsw i64 %indvars.iv.i.i.i.i.i.i.i.i, 2
-  %70 = getelementptr inbounds i8, ptr %i.adx, i64 %69
-  %i.ady = load i32, ptr %70, align 4, !tbaa !3
+  %66 = getelementptr inbounds [4 x i8], ptr %i.adx, i64 %indvars.iv.i.i.i.i.i.i.i.i
+  %i.ady = load i32, ptr %66, align 4, !tbaa !3
   %i.adz = zext i32 %i.ady to i64                 ; 2 uses
   %i.aea = lshr i64 %i.adz, 6
   %i.aeb = getelementptr inbounds nuw [8 x i8], ptr %i.adf, i64 %i.aea
@@ -1154,9 +1148,8 @@ bb.hf:                                            ; preds = %bb.he
 bb.hg:                                            ; preds = %bb.he
   %i.aex = getelementptr inbounds nuw i8, ptr %i.add, i64 8
   %i.aey = load ptr, ptr %i.aex, align 8, !tbaa !655
-  %71 = shl nsw i64 %indvars.iv.i.i.i.i.i.i.i.i, 2
-  %72 = getelementptr inbounds i8, ptr %i.aey, i64 %71
-  %i.aez = load i32, ptr %72, align 4, !tbaa !3
+  %67 = getelementptr inbounds [4 x i8], ptr %i.aey, i64 %indvars.iv.i.i.i.i.i.i.i.i
+  %i.aez = load i32, ptr %67, align 4, !tbaa !3
   br label %_ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit.i50.i.i.i.i.i.i
 
 _ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit.i50.i.i.i.i.i.i: ; preds = %bb.hg, %bb.hf, %bb.hd
@@ -1194,9 +1187,8 @@ bb.hj:                                            ; preds = %bb.hi
 bb.hk:                                            ; preds = %bb.hi
   %i.afo = getelementptr inbounds nuw i8, ptr %i.add, i64 8
   %i.afp = load ptr, ptr %i.afo, align 8, !tbaa !655
-  %73 = shl nsw i64 %indvars.iv.i.i.i.i.i.i.i.i, 2
-  %74 = getelementptr inbounds i8, ptr %i.afp, i64 %73
-  %i.afq = load i32, ptr %74, align 4, !tbaa !3
+  %68 = getelementptr inbounds [4 x i8], ptr %i.afp, i64 %indvars.iv.i.i.i.i.i.i.i.i
+  %i.afq = load i32, ptr %68, align 4, !tbaa !3
   br label %_ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit13.i44.i.i.i.i.i.i
 
 _ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit13.i44.i.i.i.i.i.i: ; preds = %bb.hk, %bb.hj, %bb.hh
@@ -1521,9 +1513,8 @@ bb.ij:                                            ; preds = %bb.ih
 bb.ik:                                            ; preds = %bb.ij
   %i.akd = getelementptr inbounds nuw i8, ptr %i.ajk, i64 8
   %i.ake = load ptr, ptr %i.akd, align 8, !tbaa !655
-  %75 = shl nsw i64 %indvars.iv.i33.i.i.i.i.i.i.i, 2
-  %76 = getelementptr inbounds i8, ptr %i.ake, i64 %75
-  %i.akf = load i32, ptr %76, align 4, !tbaa !3
+  %69 = getelementptr inbounds [4 x i8], ptr %i.ake, i64 %indvars.iv.i33.i.i.i.i.i.i.i
+  %i.akf = load i32, ptr %69, align 4, !tbaa !3
   %i.akg = zext i32 %i.akf to i64                 ; 2 uses
   %i.akh = lshr i64 %i.akg, 6
   %i.aki = getelementptr inbounds nuw [8 x i8], ptr %i.ajm, i64 %i.akh
@@ -1571,9 +1562,8 @@ bb.in:                                            ; preds = %bb.im
 bb.io:                                            ; preds = %bb.im
   %i.ale = getelementptr inbounds nuw i8, ptr %i.ajk, i64 8
   %i.alf = load ptr, ptr %i.ale, align 8, !tbaa !655
-  %77 = shl nsw i64 %indvars.iv.i33.i.i.i.i.i.i.i, 2
-  %78 = getelementptr inbounds i8, ptr %i.alf, i64 %77
-  %i.alg = load i32, ptr %78, align 4, !tbaa !3
+  %70 = getelementptr inbounds [4 x i8], ptr %i.alf, i64 %indvars.iv.i33.i.i.i.i.i.i.i
+  %i.alg = load i32, ptr %70, align 4, !tbaa !3
   br label %_ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit.i.i.i.i.i.i.i
 
 _ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit.i.i.i.i.i.i.i: ; preds = %bb.io, %bb.in, %bb.il
@@ -1611,9 +1601,8 @@ bb.ir:                                            ; preds = %bb.iq
 bb.is:                                            ; preds = %bb.iq
   %i.alv = getelementptr inbounds nuw i8, ptr %i.ajk, i64 8
   %i.alw = load ptr, ptr %i.alv, align 8, !tbaa !655
-  %79 = shl nsw i64 %indvars.iv.i33.i.i.i.i.i.i.i, 2
-  %80 = getelementptr inbounds i8, ptr %i.alw, i64 %79
-  %i.alx = load i32, ptr %80, align 4, !tbaa !3
+  %71 = getelementptr inbounds [4 x i8], ptr %i.alw, i64 %indvars.iv.i33.i.i.i.i.i.i.i
+  %i.alx = load i32, ptr %71, align 4, !tbaa !3
   br label %_ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit13.i.i.i.i.i.i.i
 
 _ZNK8facebook5velox12_GLOBAL__N_16AsJson2atEi.exit13.i.i.i.i.i.i.i: ; preds = %bb.is, %bb.ir, %bb.ip
@@ -2016,11 +2005,11 @@ _ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit.thread: ; pre
   %i.ds = getelementptr inbounds nuw i8, ptr %i.de, i64 4
   store ptr %i.ds, ptr %i.r, align 8, !tbaa !9617
   store i32 %.sroa.0341.sroa.4.0.copyload, ptr %i.ba, align 4, !tbaa !9615
-  br label %bb.m
+  br label %_ZN8simdjson8fallback8ondemand14value_iterator7is_nullEv.exit
 
-_ZN8simdjson8fallback8ondemand14value_iterator7is_nullEv.exit: ; preds = %bb.k, %.critedge.i, %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit
-  %.sroa.0331.0.insert.insert1189 = phi i64 [ 73014444032, %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit ], [ %.sroa.0331.0.insert.insert1188, %.critedge.i ], [ 73014444032, %bb.k ]
-  %.sroa.0323.0 = phi i64 [ 0, %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit ], [ %.sroa.0331.0.insert.insert1188, %.critedge.i ], [ 0, %bb.k ]
+_ZN8simdjson8fallback8ondemand14value_iterator7is_nullEv.exit: ; preds = %bb.k, %.critedge.i, %_ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit.thread, %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit
+  %.sroa.0331.0.insert.insert1189 = phi i64 [ 73014444032, %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit ], [ 1, %_ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit.thread ], [ %.sroa.0331.0.insert.insert1188, %.critedge.i ], [ 73014444032, %bb.k ]
+  %.sroa.0323.0 = phi i64 [ 0, %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit ], [ 1, %_ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit.thread ], [ %.sroa.0331.0.insert.insert1188, %.critedge.i ], [ 0, %bb.k ]
   %.sroa.5262.0.extract.shift = lshr i64 %.sroa.0331.0.insert.insert1189, 32 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.5262.0.extract.shift, 0
   br i1 %.not.i, label %_ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit, label %bb.l
@@ -2038,7 +2027,7 @@ _ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit: ; preds = %_
   %i.dv = trunc i64 %.sroa.0323.0 to i1
   br i1 %i.dv, label %bb.m, label %.critedge
 
-bb.m:                                             ; preds = %_ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit.thread, %_ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit
+bb.m:                                             ; preds = %_ZNO8simdjson8internal20simdjson_result_baseIbE10take_valueEv.exit
   %i.dw = load ptr, ptr %i.h, align 8, !tbaa !7
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 16
   %i.dy = load i8, ptr %i.dx, align 8, !tbaa !13  ; 2 uses

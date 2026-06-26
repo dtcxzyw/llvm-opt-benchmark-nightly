@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   %i.f = sext i32 %2 to i64                       ; 2 uses
-  %i.g = add nsw i64 %i.f, 1                      ; 4 uses
+  %i.g = add nsw i64 %i.f, 1                      ; 8 uses
   %.not.i.not = icmp eq i32 %2, 2147483647
   br i1 %.not.i.not, label %bb.d, label %rb_long2int_inline.exit
 
@@ -211,28 +211,26 @@ bb.d:                                             ; preds = %bb.c
 
 rb_long2int_inline.exit:                          ; preds = %bb.c
   %i.h = trunc nsw i64 %i.g to i32
-  %sext = shl i64 %i.g, 32                        ; 3 uses
-  %5 = ashr exact i64 %sext, 32                   ; 3 uses
   %i.i = icmp ult i64 %i.g, 128
   br i1 %i.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %rb_long2int_inline.exit
   store i64 0, ptr %i.b, align 8, !tbaa !11
-  %6 = lshr exact i64 %sext, 29
-  %i.j = alloca i8, i64 %6, align 16
+  %5 = shl nuw nsw i64 %i.g, 3
+  %i.j = alloca i8, i64 %5, align 16
   br label %bb.h
 
 bb.f:                                             ; preds = %rb_long2int_inline.exit
-  %i.k = icmp ugt i64 %5, 2305843009213693951
+  %i.k = icmp ugt i64 %i.g, 2305843009213693951
   br i1 %i.k, label %bb.g, label %rb_alloc_tmp_buffer2.exit, !prof !120
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @ruby_malloc_size_overflow(i64 noundef %5, i64 noundef 8) #17
+  tail call void @ruby_malloc_size_overflow(i64 noundef %i.g, i64 noundef 8) #17
   unreachable
 
 rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.f
-  %7 = ashr exact i64 %sext, 29
-  %i.l = call noalias nonnull ptr @rb_alloc_tmp_buffer_with_count(ptr noundef nonnull %i.b, i64 noundef %7, i64 noundef %5) #22
+  %6 = shl nuw nsw i64 %i.g, 3
+  %i.l = call noalias nonnull ptr @rb_alloc_tmp_buffer_with_count(ptr noundef nonnull %i.b, i64 noundef %6, i64 noundef %i.g) #22
   br label %bb.h
 
 bb.h:                                             ; preds = %rb_alloc_tmp_buffer2.exit, %bb.e
@@ -635,9 +633,8 @@ bb.j:                                             ; preds = %RARRAY_LENINT.exit
 
 rbimpl_size_mul_or_raise.exit:                    ; preds = %RARRAY_LENINT.exit
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.al = shl nuw i64 %.0.i.i, 3
-  %3 = and i64 %i.al, 34359738360
-  %i.am = alloca i8, i64 %3, align 16
+  %i.al = shl nuw nsw i64 %.0.i.i, 3
+  %i.am = alloca i8, i64 %i.al, align 16
   store ptr %i.am, ptr %i.ak, align 8, !tbaa !138
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 32
   store i32 0, ptr %i.an, align 8, !tbaa !139

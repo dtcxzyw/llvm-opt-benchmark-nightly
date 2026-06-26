@@ -201,9 +201,7 @@ bb.q:                                             ; preds = %.critedge
   %i.ef = trunc nsw i64 %indvars.iv184 to i32
   %i.eg = trunc i32 %.1103156 to i8
   %i.eh = add nsw i32 %i.ef, 1                    ; 2 uses
-  %sext = shl i64 %indvars.iv184, 32
-  %3 = ashr exact i64 %sext, 32
-  %i.ei = getelementptr inbounds i8, ptr %i.h, i64 %3
+  %i.ei = getelementptr inbounds i8, ptr %i.h, i64 %indvars.iv184
   store i8 %i.eg, ptr %i.ei, align 1, !tbaa !24
   %i.ej = icmp ne i32 %i.eh, 0
   %i.ek = icmp slt i32 %.2169, %2

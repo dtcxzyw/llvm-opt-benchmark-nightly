@@ -201,7 +201,6 @@ _ZNKSt14default_deleteIN6hermes11StringTableEEclEPS1_.exit.i.i.i: ; preds = %_ZN
 _ZN6hermes6parser10JSONParserD2Ev.exit:           ; preds = %_ZN4llvh11SmallVectorIcLj256EED2Ev.exit2.i.i, %_ZNKSt14default_deleteIN6hermes11StringTableEEclEPS1_.exit.i.i.i
   %i.ak = extractvalue { i64, i8 } %i.j, 1        ; 2 uses
   %i.al = trunc nuw i8 %i.ak to i1
-  %.sroa.26.0 = and i8 %i.ak, 1
   %i.am = extractvalue { i64, i8 } %i.j, 0
   %i.an = inttoptr i64 %i.am to ptr
   %.sroa.05.0 = select i1 %i.al, ptr %i.an, ptr undef
@@ -211,7 +210,7 @@ _ZN6hermes6parser10JSONParserD2Ev.exit:           ; preds = %_ZN4llvh11SmallVect
   call void @_ZN6hermes18SourceErrorManagerD2Ev(ptr noundef nonnull align 8 dead_on_return(464) dereferenceable(464) %3) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.05.0, 0
-  %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.26.0, 1
+  %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %i.ak, 1
   ret { ptr, i8 } %.fca.1.insert
 }
 

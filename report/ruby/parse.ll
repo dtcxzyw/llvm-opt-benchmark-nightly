@@ -201,8 +201,7 @@ vtable_included.exit43.i:                         ; preds = %bb.j
 
 local_id_ref.exit:                                ; preds = %vtable_included.exit43.i
   %i.aq = load ptr, ptr %.02952.i, align 8, !tbaa !197
-  %2 = and i64 %indvars.iv73.i, 4294967295
-  %i.ar = getelementptr [8 x i8], ptr %i.aq, i64 %2 ; 3 uses
+  %i.ar = getelementptr [8 x i8], ptr %i.aq, i64 %indvars.iv73.i ; 3 uses
   %.not42 = icmp eq ptr %i.ar, null
   br i1 %.not42, label %local_id_ref.exit.thread, label %bb.l
 
@@ -605,8 +604,7 @@ vtable_included.exit43:                           ; preds = %bb.h
 
 bb.j:                                             ; preds = %vtable_included.exit43
   %i.al = load ptr, ptr %.02952, align 8, !tbaa !197
-  %3 = and i64 %indvars.iv73, 4294967295
-  %i.am = getelementptr [8 x i8], ptr %i.al, i64 %3
+  %i.am = getelementptr [8 x i8], ptr %i.al, i64 %indvars.iv73
   store ptr %i.am, ptr %2, align 8, !tbaa !26
   br label %vtable_included.exit
 

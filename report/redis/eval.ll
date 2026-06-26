@@ -201,7 +201,7 @@ sdslen.exit:                                      ; preds = %.lr.ph214, %bb.l, %
   %i.bf = getelementptr inbounds nuw i8, ptr %.0121208, i64 16 ; 2 uses
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !107 ; 2 uses
   %.not94 = icmp eq i64 %i.bg, 0
-  br i1 %.not94, label %.preheader._crit_edge.loopexit, label %bb.q, !llvm.loop !110
+  br i1 %.not94, label %.preheader._crit_edge, label %bb.q, !llvm.loop !110
 
 bb.q:                                             ; preds = %.lr.ph210
   %i.bh = getelementptr inbounds nuw i8, ptr %.0121208, i64 24
@@ -210,12 +210,8 @@ bb.q:                                             ; preds = %.lr.ph210
   %.not95 = icmp eq i32 %i.bj, 0
   br i1 %.not95, label %._crit_edge, label %.lr.ph210, !llvm.loop !110
 
-.preheader._crit_edge.loopexit:                   ; preds = %.lr.ph210
-  %4 = and i64 %indvars.iv, 4294967295
-  br label %.preheader._crit_edge
-
-.preheader._crit_edge:                            ; preds = %.preheader.lr.ph, %.preheader._crit_edge.loopexit
-  %.066.lcssa110 = phi i64 [ %4, %.preheader._crit_edge.loopexit ], [ 0, %.preheader.lr.ph ]
+.preheader._crit_edge:                            ; preds = %.preheader.lr.ph, %.lr.ph210
+  %.066.lcssa110 = phi i64 [ %indvars.iv, %.lr.ph210 ], [ 0, %.preheader.lr.ph ]
   %.not97 = icmp eq ptr %3, null
   br i1 %.not97, label %bb.s, label %bb.r
 

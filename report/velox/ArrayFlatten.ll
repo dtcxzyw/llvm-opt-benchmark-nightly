@@ -201,7 +201,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !250
   %i.c = sext i32 %0 to i64                       ; 4 uses
   %i.d = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.c
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !3    ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !3    ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 32
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !252
   %i.h = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.c ; 5 uses
@@ -234,7 +234,7 @@ bb.a:
   %i.ac = getelementptr inbounds [4 x i8], ptr %i.ab, i64 %i.c ; 4 uses
   %i.ad = load i8, ptr %i.r, align 2, !tbaa !654, !range !69, !noundef !70
   %i.ae = trunc nuw i8 %i.ad to i1                ; 2 uses
-  br i1 %.not.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  br i1 %.not.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.split.preheader.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
   br i1 %i.ae, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i, label %.lr.ph.split.us.split.i
@@ -334,22 +334,15 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %i.bl = icmp slt i32 %i.bj, %i.bk
   br i1 %i.bl, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i, label %_ZNK8facebook5velox9functions12_GLOBAL__N_120ArrayFlattenFunction20processOneInputArrayEiiRNS3_12ProcessStateE.exit, !llvm.loop !655
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i
-  br i1 %i.ae, label %.lr.ph.split.split.us.preheader.i, label %.lr.ph.split.split.preheader.i
+.lr.ph.split.split.preheader.i:                   ; preds = %.lr.ph.i
+  %i.bm = sext i32 %i.e to i64                    ; 2 uses
+  br i1 %i.ae, label %.lr.ph.split.split.us.i, label %.lr.ph.split.split.i
 
-.lr.ph.split.split.preheader.i:                   ; preds = %.lr.ph.split.i
-  %i.bm = sext i32 %i.e to i64
-  br label %.lr.ph.split.split.i
-
-.lr.ph.split.split.us.preheader.i:                ; preds = %.lr.ph.split.i
-  %1 = zext i32 %i.e to i64
-  br label %.lr.ph.split.split.us.i
-
-.lr.ph.split.split.us.i:                          ; preds = %bb.o, %.lr.ph.split.split.us.preheader.i
-  %i.bn = phi i32 [ %i.i, %.lr.ph.split.split.us.preheader.i ], [ %i.cf, %bb.o ]
-  %indvars.iv22.i = phi i64 [ %1, %.lr.ph.split.split.us.preheader.i ], [ %indvars.iv.next23.i, %bb.o ] ; 4 uses
-  %.09.us10.i = phi i32 [ -1, %.lr.ph.split.split.us.preheader.i ], [ %.1.us17.i, %bb.o ] ; 3 uses
-  %.0268.us11.i = phi i32 [ 0, %.lr.ph.split.split.us.preheader.i ], [ %i.cg, %bb.o ]
+.lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.split.preheader.i, %bb.o
+  %i.bn = phi i32 [ %i.cf, %bb.o ], [ %i.i, %.lr.ph.split.split.preheader.i ]
+  %indvars.iv22.i = phi i64 [ %indvars.iv.next23.i, %bb.o ], [ %i.bm, %.lr.ph.split.split.preheader.i ] ; 5 uses
+  %.09.us10.i = phi i32 [ %.1.us17.i, %bb.o ], [ -1, %.lr.ph.split.split.preheader.i ] ; 3 uses
+  %.0268.us11.i = phi i32 [ %i.cg, %bb.o ], [ 0, %.lr.ph.split.split.preheader.i ]
   %i.bo = lshr i64 %indvars.iv22.i, 6
   %i.bp = and i64 %i.bo, 67108863
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.bp
@@ -361,10 +354,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br i1 %.not.i.i.us.i, label %bb.o, label %_ZNK8facebook5velox13DecodedVector5indexEi.exit.us14.i, !prof !658
 
 _ZNK8facebook5velox13DecodedVector5indexEi.exit.us14.i: ; preds = %.lr.ph.split.split.us.i
-  %sext.i = shl i64 %indvars.iv22.i, 32
-  %2 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  %i.bv = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %2
-  %i.bw = getelementptr inbounds [4 x i8], ptr %.val28.i, i64 %2
+  %i.bv = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %indvars.iv22.i
+  %i.bw = getelementptr inbounds [4 x i8], ptr %.val28.i, i64 %indvars.iv22.i
   %i.bx = load i32, ptr %i.bv, align 4, !tbaa !3  ; 3 uses
   %i.by = load i32, ptr %i.bw, align 4, !tbaa !3  ; 3 uses
   %i.bz = load i32, ptr %i.v, align 4, !tbaa !331
@@ -397,15 +388,15 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.split
   %i.cf = phi i32 [ %i.bn, %.lr.ph.split.split.us.i ], [ %.pre31.i, %bb.n ] ; 2 uses
   %.1.us17.i = phi i32 [ %.09.us10.i, %.lr.ph.split.split.us.i ], [ %i.ce, %bb.n ]
   %i.cg = add nuw nsw i32 %.0268.us11.i, 1        ; 2 uses
-  %indvars.iv.next23.i = add nuw nsw i64 %indvars.iv22.i, 1
+  %indvars.iv.next23.i = add nsw i64 %indvars.iv22.i, 1
   %i.ch = icmp slt i32 %i.cg, %i.cf
   br i1 %i.ch, label %.lr.ph.split.split.us.i, label %_ZNK8facebook5velox9functions12_GLOBAL__N_120ArrayFlattenFunction20processOneInputArrayEiiRNS3_12ProcessStateE.exit, !llvm.loop !655
 
-.lr.ph.split.split.i:                             ; preds = %bb.w, %.lr.ph.split.split.preheader.i
-  %i.ci = phi i32 [ %i.i, %.lr.ph.split.split.preheader.i ], [ %i.du, %bb.w ] ; 3 uses
-  %indvars.iv.i = phi i64 [ %i.bm, %.lr.ph.split.split.preheader.i ], [ %indvars.iv.next.i, %bb.w ] ; 5 uses
-  %.09.i = phi i32 [ -1, %.lr.ph.split.split.preheader.i ], [ %.1.i, %bb.w ] ; 5 uses
-  %.0268.i = phi i32 [ 0, %.lr.ph.split.split.preheader.i ], [ %i.dv, %bb.w ]
+.lr.ph.split.split.i:                             ; preds = %.lr.ph.split.split.preheader.i, %bb.w
+  %i.ci = phi i32 [ %i.du, %bb.w ], [ %i.i, %.lr.ph.split.split.preheader.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.w ], [ %i.bm, %.lr.ph.split.split.preheader.i ] ; 5 uses
+  %.09.i = phi i32 [ %.1.i, %bb.w ], [ -1, %.lr.ph.split.split.preheader.i ] ; 5 uses
+  %.0268.i = phi i32 [ %i.dv, %bb.w ], [ 0, %.lr.ph.split.split.preheader.i ]
   %i.cj = load i8, ptr %i.o, align 1, !range !69
   %i.ck = trunc nuw i8 %i.cj to i1
   br i1 %i.ck, label %bb.p, label %bb.q
@@ -808,7 +799,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !250
   %i.h = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.d
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !3    ; 4 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !3    ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.8.val, i64 32
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !252
   %i.l = getelementptr inbounds [4 x i8], ptr %i.k, i64 %i.d ; 6 uses
@@ -835,7 +826,7 @@ bb.a:
   %i.aa = load ptr, ptr %i.z, align 8             ; 5 uses
   %i.ab = load i8, ptr %i.v, align 2, !tbaa !654, !range !69, !noundef !70
   %i.ac = trunc nuw i8 %i.ab to i1                ; 2 uses
-  br i1 %.not.i.i, label %.lr.ph14.split.us.i, label %.lr.ph14.split.i
+  br i1 %.not.i.i, label %.lr.ph14.split.us.i, label %.lr.ph14.split.split.preheader.i
 
 .lr.ph14.split.us.i:                              ; preds = %.lr.ph14.i
   br i1 %i.ac, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.us.preheader.i, label %.lr.ph14.split.us.split.i
@@ -968,23 +959,16 @@ _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i: ; preds = %._cri
   %i.cl = icmp slt i32 %i.ck, %i.ca
   br i1 %i.cl, label %.lr.ph.us.i, label %._crit_edge.us.loopexit.i, !llvm.loop !697
 
-.lr.ph14.split.i:                                 ; preds = %.lr.ph14.i
-  br i1 %i.ac, label %.lr.ph14.split.split.us.preheader.i, label %.lr.ph14.split.split.preheader.i
+.lr.ph14.split.split.preheader.i:                 ; preds = %.lr.ph14.i
+  %i.cm = sext i32 %i.i to i64                    ; 2 uses
+  br i1 %i.ac, label %.lr.ph14.split.split.us.i, label %.lr.ph14.split.split.i
 
-.lr.ph14.split.split.preheader.i:                 ; preds = %.lr.ph14.split.i
-  %i.cm = sext i32 %i.i to i64
-  br label %.lr.ph14.split.split.i
-
-.lr.ph14.split.split.us.preheader.i:              ; preds = %.lr.ph14.split.i
-  %3 = zext i32 %i.i to i64
-  br label %.lr.ph14.split.split.us.i
-
-.lr.ph14.split.split.us.i:                        ; preds = %bb.b, %.lr.ph14.split.split.us.preheader.i
-  %.pre5663.i = phi i32 [ %i.m, %.lr.ph14.split.split.us.preheader.i ], [ %.pre5664.i, %bb.b ] ; 2 uses
-  %i.cn = phi i32 [ %i.m, %.lr.ph14.split.split.us.preheader.i ], [ %i.dc, %bb.b ]
-  %indvars.iv47.i = phi i64 [ %3, %.lr.ph14.split.split.us.preheader.i ], [ %indvars.iv.next48.i, %bb.b ] ; 4 uses
-  %.012.us16.i = phi i32 [ 0, %.lr.ph14.split.split.us.preheader.i ], [ %i.dd, %bb.b ]
-  %.069.us18.i = phi i32 [ 0, %.lr.ph14.split.split.us.preheader.i ], [ %.1.us22.i, %bb.b ] ; 2 uses
+.lr.ph14.split.split.us.i:                        ; preds = %.lr.ph14.split.split.preheader.i, %bb.b
+  %.pre5663.i = phi i32 [ %.pre5664.i, %bb.b ], [ %i.m, %.lr.ph14.split.split.preheader.i ] ; 2 uses
+  %i.cn = phi i32 [ %i.dc, %bb.b ], [ %i.m, %.lr.ph14.split.split.preheader.i ]
+  %indvars.iv47.i = phi i64 [ %indvars.iv.next48.i, %bb.b ], [ %i.cm, %.lr.ph14.split.split.preheader.i ] ; 5 uses
+  %.012.us16.i = phi i32 [ %i.dd, %bb.b ], [ 0, %.lr.ph14.split.split.preheader.i ]
+  %.069.us18.i = phi i32 [ %.1.us22.i, %bb.b ], [ 0, %.lr.ph14.split.split.preheader.i ] ; 2 uses
   %i.co = lshr i64 %indvars.iv47.i, 6
   %i.cp = and i64 %i.co, 67108863
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.cp
@@ -996,10 +980,8 @@ _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.us.i: ; preds = %._cri
   br i1 %.not.i.i.us.i, label %bb.b, label %_ZNK8facebook5velox13DecodedVector5indexEi.exit.us20.i, !prof !658
 
 _ZNK8facebook5velox13DecodedVector5indexEi.exit.us20.i: ; preds = %.lr.ph14.split.split.us.i
-  %sext.i = shl i64 %indvars.iv47.i, 32
-  %4 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  %i.cv = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %4
-  %i.cw = getelementptr inbounds [4 x i8], ptr %.val32.i, i64 %4
+  %i.cv = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %indvars.iv47.i
+  %i.cw = getelementptr inbounds [4 x i8], ptr %.val32.i, i64 %indvars.iv47.i
   %i.cx = load i32, ptr %i.cv, align 4, !tbaa !3  ; 2 uses
   %i.cy = load i32, ptr %i.cw, align 4, !tbaa !3  ; 3 uses
   %i.cz = add nsw i32 %i.cy, %i.cx
@@ -1020,7 +1002,7 @@ bb.b:                                             ; preds = %._crit_edge.us25.i,
   %i.dc = phi i32 [ %i.cn, %.lr.ph14.split.split.us.i ], [ %.pre56.i, %._crit_edge.us25.i ] ; 2 uses
   %.1.us22.i = phi i32 [ %.069.us18.i, %.lr.ph14.split.split.us.i ], [ %i.db, %._crit_edge.us25.i ] ; 2 uses
   %i.dd = add nuw nsw i32 %.012.us16.i, 1         ; 2 uses
-  %indvars.iv.next48.i = add nuw nsw i64 %indvars.iv47.i, 1
+  %indvars.iv.next48.i = add nsw i64 %indvars.iv47.i, 1
   %i.de = icmp slt i32 %i.dd, %i.dc
   br i1 %i.de, label %.lr.ph14.split.split.us.i, label %._crit_edge15.i, !llvm.loop !696
 
@@ -1045,12 +1027,12 @@ bb.b:                                             ; preds = %._crit_edge.us25.i,
   %.not.i = icmp eq i32 %.06.lcssa.i, %i.do
   br i1 %.not.i, label %_ZNK8facebook5velox9functions12_GLOBAL__N_120ArrayFlattenFunction19processOneOutputRowEiiRKNS3_12ProcessStateERi.exit, label %bb.g, !prof !82
 
-.lr.ph14.split.split.i:                           ; preds = %bb.f, %.lr.ph14.split.split.preheader.i
-  %.pre60.i = phi i32 [ %i.m, %.lr.ph14.split.split.preheader.i ], [ %.pre61.i, %bb.f ] ; 4 uses
-  %i.dp = phi i32 [ %i.m, %.lr.ph14.split.split.preheader.i ], [ %i.fe, %bb.f ] ; 3 uses
-  %indvars.iv.i = phi i64 [ %i.cm, %.lr.ph14.split.split.preheader.i ], [ %indvars.iv.next.i, %bb.f ] ; 5 uses
-  %.012.i = phi i32 [ 0, %.lr.ph14.split.split.preheader.i ], [ %i.ff, %bb.f ]
-  %.069.i = phi i32 [ 0, %.lr.ph14.split.split.preheader.i ], [ %.1.i, %bb.f ] ; 4 uses
+.lr.ph14.split.split.i:                           ; preds = %.lr.ph14.split.split.preheader.i, %bb.f
+  %.pre60.i = phi i32 [ %.pre61.i, %bb.f ], [ %i.m, %.lr.ph14.split.split.preheader.i ] ; 4 uses
+  %i.dp = phi i32 [ %i.fe, %bb.f ], [ %i.m, %.lr.ph14.split.split.preheader.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.f ], [ %i.cm, %.lr.ph14.split.split.preheader.i ] ; 5 uses
+  %.012.i = phi i32 [ %i.ff, %bb.f ], [ 0, %.lr.ph14.split.split.preheader.i ]
+  %.069.i = phi i32 [ %.1.i, %bb.f ], [ 0, %.lr.ph14.split.split.preheader.i ] ; 4 uses
   %i.dq = load i8, ptr %i.s, align 1, !range !69
   %i.dr = trunc nuw i8 %i.dq to i1
   br i1 %i.dr, label %bb.c, label %bb.d

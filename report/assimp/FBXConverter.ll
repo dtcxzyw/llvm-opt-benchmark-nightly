@@ -201,8 +201,7 @@ bb.b:                                             ; preds = %bb.a, %bb.m
 switch.lookup:                                    ; preds = %bb.b
   %i.i = icmp eq i64 %.03062, 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #27
-  %3 = and i64 %.03062, 4294967295
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp3FBX12FBXConverter31NeedsComplexTransformationChainERKNS0_5ModelE, i64 %3
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp3FBX12FBXConverter31NeedsComplexTransformationChainERKNS0_5ModelE, i64 %.03062
   %switch.load = load ptr, ptr %switch.gep, align 8 ; 3 uses
   store ptr %i.d, ptr %2, align 8
   %i.j = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %switch.load) #27 ; 4 uses
@@ -605,8 +604,7 @@ bb.n:                                             ; preds = %bb.m
   store i32 %i.fa, ptr %i.ev, align 4
   %i.fb = add nuw nsw i64 %indvars.iv, 1          ; 3 uses
   %i.fc = icmp eq i64 %i.fb, %i.av
-  %4 = and i64 %i.fb, 4294967295
-  %i.fd = select i1 %i.fc, i64 0, i64 %4
+  %i.fd = select i1 %i.fc, i64 0, i64 %i.fb
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.ey, i64 %i.fd
   %i.ff = load i32, ptr %i.fe, align 4            ; 2 uses
   %.lobit = ashr i32 %i.ff, 31
@@ -1009,8 +1007,7 @@ bb.r:                                             ; preds = %bb.q
 
 switch.lookup:                                    ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
-  %15 = and i64 %.0122302, 4294967295
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp3FBX12FBXConverter22GenerateNodeAnimationsERSt6vectorIP10aiNodeAnimSaIS4_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS2_IPKNS0_18AnimationCurveNodeESaISI_EERKSt3mapISI_PKNS0_14AnimationLayerESt4lessISI_ESaISt4pairIKSI_SQ_EEEllRdS10_, i64 %15
+  %switch.gep = getelementptr inbounds [8 x i8], ptr @switch.table._ZN6Assimp3FBX12FBXConverter22GenerateNodeAnimationsERSt6vectorIP10aiNodeAnimSaIS4_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS2_IPKNS0_18AnimationCurveNodeESaISI_EERKSt3mapISI_PKNS0_14AnimationLayerESt4lessISI_ESaISt4pairIKSI_SQ_EEEllRdS10_, i64 %.0122302
   %switch.load = load ptr, ptr %switch.gep, align 8 ; 3 uses
   store ptr %i.s, ptr %11, align 8
   %i.bp = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %switch.load) #27 ; 4 uses

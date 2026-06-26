@@ -201,7 +201,7 @@ bb.al:                                            ; preds = %bb.af
   %i.je = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.jf = load i32, ptr %i.je, align 8, !tbaa !33
   %i.jg = icmp sgt i32 %i.jf, 0
-  br i1 %i.jg, label %.lr.ph.i49.preheader.i, label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a
+  br i1 %i.jg, label %.lr.ph.i49.preheader.i, label %bb.av
 
 .lr.ph.i49.preheader.i:                           ; preds = %.preheader.i.i
   %i.jh = getelementptr inbounds nuw i8, ptr %67, i64 8 ; 2 uses
@@ -215,7 +215,7 @@ bb.am:                                            ; preds = %bb.ag
   %i.jk = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !92 ; 2 uses
   %i.jm = icmp eq ptr %i.jj, %i.jl
-  br i1 %i.jm, label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a, label %.lr.ph43.i.preheader.i
+  br i1 %i.jm, label %bb.av, label %.lr.ph43.i.preheader.i
 
 .lr.ph43.i.preheader.i:                           ; preds = %bb.am
   %i.jn = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -618,16 +618,10 @@ _ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_11ArrayVectorEEEvRKT_RKNS1_
   %i.pj = load i32, ptr %i.je, align 8, !tbaa !33
   %i.pk = sext i32 %i.pj to i64
   %i.pl = icmp slt i64 %indvars.iv.next.i51.i, %i.pk
-  br i1 %i.pl, label %.lr.ph.i49.i, label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i, !llvm.loop !185
+  br i1 %i.pl, label %.lr.ph.i49.i, label %bb.av, !llvm.loop !185
 
-_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i: ; preds = %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_11ArrayVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i
-  %70 = trunc nuw nsw i64 %indvars.iv.next.i51.i to i32
-  br label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a
-
-_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a: ; preds = %._crit_edge.i.i, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i, %bb.am, %.preheader.i.i
-  %.489.i = phi i32 [ 0, %bb.am ], [ 0, %.preheader.i.i ], [ %70, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i ], [ %.287.i, %._crit_edge.i.i ]
-  %.6.i = phi i32 [ 0, %bb.am ], [ 0, %.preheader.i.i ], [ %.1.i, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i ], [ %.3.i, %._crit_edge.i.i ]
-  %i.pm = sext i32 %.489.i to i64
+_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a: ; preds = %._crit_edge.i.i
+  %i.pm = sext i32 %.287.i to i64
   br label %bb.av
 
 .loopexit.i:                                      ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %.lr.ph40.i.i
@@ -645,10 +639,10 @@ _ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11Arr
           cleanup
   br label %.loopexit.split-lp.i
 
-bb.av:                                            ; preds = %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a, %bb.ak, %.loopexit97.i
-  %.sink159.i = phi i64 [ %i.pm, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ 0, %.loopexit97.i ], [ %i.iq, %bb.ak ]
-  %.6.sink.i = phi i32 [ %.6.i, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ 0, %.loopexit97.i ], [ %i.jc, %bb.ak ]
-  %i.pn = getelementptr inbounds [4 x i8], ptr %i.ib, i64 %.sink159.i
+bb.av:                                            ; preds = %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_11ArrayVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a, %bb.am, %.preheader.i.i, %bb.ak, %.loopexit97.i
+  %.489.sink.i = phi i64 [ %i.iq, %bb.ak ], [ 0, %.loopexit97.i ], [ 0, %bb.am ], [ 0, %.preheader.i.i ], [ %i.pm, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ %indvars.iv.next.i51.i, %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_11ArrayVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i ]
+  %.6.sink.i = phi i32 [ %i.jc, %bb.ak ], [ 0, %.loopexit97.i ], [ 0, %bb.am ], [ 0, %.preheader.i.i ], [ %.3.i, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_11ArrayVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ %.1.i, %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_11ArrayVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i ]
+  %i.pn = getelementptr inbounds [4 x i8], ptr %i.ib, i64 %.489.sink.i
   store i32 %.6.sink.i, ptr %i.pn, align 4, !tbaa !3
   %i.po = load ptr, ptr %i.e, align 8, !tbaa !84
   %i.pp = getelementptr inbounds nuw i8, ptr %i.po, i64 8 ; 2 uses
@@ -1051,7 +1045,7 @@ bb.fc:                                            ; preds = %bb.ew
   %i.ajb = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.ajc = load i32, ptr %i.ajb, align 8, !tbaa !33
   %i.ajd = icmp sgt i32 %i.ajc, 0
-  br i1 %i.ajd, label %.lr.ph.i49.preheader.i201, label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a
+  br i1 %i.ajd, label %.lr.ph.i49.preheader.i201, label %bb.fm
 
 .lr.ph.i49.preheader.i201:                        ; preds = %.preheader.i.i182
   %i.aje = getelementptr inbounds nuw i8, ptr %66, i64 8 ; 2 uses
@@ -1065,7 +1059,7 @@ bb.fd:                                            ; preds = %bb.ex
   %i.ajh = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aji = load ptr, ptr %i.ajh, align 8, !tbaa !92 ; 2 uses
   %i.ajj = icmp eq ptr %i.ajg, %i.aji
-  br i1 %i.ajj, label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a, label %.lr.ph43.i.preheader.i231
+  br i1 %i.ajj, label %bb.fm, label %.lr.ph43.i.preheader.i231
 
 .lr.ph43.i.preheader.i231:                        ; preds = %bb.fd
   %i.ajk = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -1468,16 +1462,10 @@ _ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_9MapVectorEEEvRKT_RKNS1_9Se
   %i.apg = load i32, ptr %i.ajb, align 8, !tbaa !33
   %i.aph = sext i32 %i.apg to i64
   %i.api = icmp slt i64 %indvars.iv.next.i51.i205, %i.aph
-  br i1 %i.api, label %.lr.ph.i49.i202, label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i, !llvm.loop !257
+  br i1 %i.api, label %.lr.ph.i49.i202, label %bb.fm, !llvm.loop !257
 
-_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i: ; preds = %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_9MapVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i
-  %71 = trunc nuw nsw i64 %indvars.iv.next.i51.i205 to i32
-  br label %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a
-
-_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a: ; preds = %._crit_edge.i.i238, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i, %bb.fd, %.preheader.i.i182
-  %.489.i183 = phi i32 [ 0, %bb.fd ], [ 0, %.preheader.i.i182 ], [ %71, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i ], [ %.287.i239, %._crit_edge.i.i238 ]
-  %.6.i184 = phi i32 [ 0, %bb.fd ], [ 0, %.preheader.i.i182 ], [ %.1.i211, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.loopexit107.i ], [ %.3.i240, %._crit_edge.i.i238 ]
-  %i.apj = sext i32 %.489.i183 to i64
+_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a: ; preds = %._crit_edge.i.i238
+  %i.apj = sext i32 %.287.i239 to i64
   br label %bb.fm
 
 .loopexit.i248:                                   ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i257, %.lr.ph40.i.i243
@@ -1495,11 +1483,11 @@ _ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapV
           cleanup
   br label %.loopexit.split-lp.i167
 
-bb.fm:                                            ; preds = %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a, %bb.fb, %.loopexit97.i275
-  %.sink159.i185 = phi i64 [ %i.apj, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ 0, %.loopexit97.i275 ], [ %i.ain, %bb.fb ]
-  %.6.sink.i186 = phi i32 [ %.6.i184, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ 0, %.loopexit97.i275 ], [ %i.aiz, %bb.fb ]
-  %i.apk = getelementptr inbounds [4 x i8], ptr %i.ahy, i64 %.sink159.i185
-  store i32 %.6.sink.i186, ptr %i.apk, align 4, !tbaa !3
+bb.fm:                                            ; preds = %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_9MapVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a, %bb.fd, %.preheader.i.i182, %bb.fb, %.loopexit97.i275
+  %.489.sink.i183 = phi i64 [ %i.ain, %bb.fb ], [ 0, %.loopexit97.i275 ], [ 0, %bb.fd ], [ 0, %.preheader.i.i182 ], [ %i.apj, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ %indvars.iv.next.i51.i205, %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_9MapVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i ]
+  %.6.sink.i184 = phi i32 [ %i.aiz, %bb.fb ], [ 0, %.loopexit97.i275 ], [ 0, %bb.fd ], [ 0, %.preheader.i.i182 ], [ %.3.i240, %_ZNK8facebook5velox12_GLOBAL__N_19Selection5applyIZNS1_13exportOffsetsINS0_9MapVectorEEEvRKT_RKS2_R10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS2_EUliE_EEvOS6_.exit.i.a ], [ %.1.i211, %_ZZN8facebook5velox12_GLOBAL__N_113exportOffsetsINS0_9MapVectorEEEvRKT_RKNS1_9SelectionER10ArrowArrayPNS0_6memory10MemoryPoolERNS1_24VeloxToArrowBridgeHolderERS7_ENKUliE_clEi.exit31.i.i ]
+  %i.apk = getelementptr inbounds [4 x i8], ptr %i.ahy, i64 %.489.sink.i183
+  store i32 %.6.sink.i184, ptr %i.apk, align 4, !tbaa !3
   %i.apl = load ptr, ptr %i.e, align 8, !tbaa !84
   %i.apm = getelementptr inbounds nuw i8, ptr %i.apl, i64 8 ; 2 uses
   %i.apn = load ptr, ptr %39, align 8, !tbaa !85  ; 3 uses

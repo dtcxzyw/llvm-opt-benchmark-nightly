@@ -201,13 +201,8 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.f,
 ; Function Attrs: nonlazybind uwtable
 define hidden { i64, ptr } @_RINvNtNtCs2pqxYH9ZEk8_3std2io4copy4copyINtB4_4TakeNtNtNtCs4tdlwR1I4n2_7parquet5arrow12arrow_writer22ArrowColumnChunkReaderEQINtNtNtBS_4file6writer12TrackedWriteINtNtCs6Po7BT7Nknu_5alloc3vec3VechEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 dereferenceable(88) %0, ptr noalias noundef align 8 dereferenceable(8) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call { i64, ptr } @_RINvXs2_NtNtCs2pqxYH9ZEk8_3std2io4copyQINtNtNtCs4tdlwR1I4n2_7parquet4file6writer12TrackedWriteINtNtCs6Po7BT7Nknu_5alloc3vec3VechEENtB6_18BufferedWriterSpec9copy_fromINtB8_4TakeNtNtNtBI_5arrow12arrow_writer22ArrowColumnChunkReaderEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(8) %1, ptr noalias noundef nonnull align 8 dereferenceable(88) %0) ; 2 uses
-  %2 = extractvalue { i64, ptr } %i.a, 0
-  %3 = extractvalue { i64, ptr } %i.a, 1
-  %spec.select9 = and i64 %2, 1
-  %4 = insertvalue { i64, ptr } poison, i64 %spec.select9, 0
-  %5 = insertvalue { i64, ptr } %4, ptr %3, 1
-  ret { i64, ptr } %5
+  %i.a = tail call { i64, ptr } @_RINvXs2_NtNtCs2pqxYH9ZEk8_3std2io4copyQINtNtNtCs4tdlwR1I4n2_7parquet4file6writer12TrackedWriteINtNtCs6Po7BT7Nknu_5alloc3vec3VechEENtB6_18BufferedWriterSpec9copy_fromINtB8_4TakeNtNtNtBI_5arrow12arrow_writer22ArrowColumnChunkReaderEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(8) %1, ptr noalias noundef nonnull align 8 dereferenceable(88) %0)
+  ret { i64, ptr } %i.a
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable

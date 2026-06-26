@@ -201,12 +201,10 @@ bb.au:                                            ; preds = %bb.at
 .preheader.i.i:                                   ; preds = %bb.aw, %.preheader.lr.ph.i.i
   %.03.i.i = phi i64 [ 0, %.preheader.lr.ph.i.i ], [ %indvars.iv.i.i, %bb.aw ]
   %.0192.i.i = phi i32 [ 0, %.preheader.lr.ph.i.i ], [ %i.pp, %bb.aw ] ; 3 uses
-  %sext.i.i = shl i64 %.03.i.i, 32
-  %1 = ashr exact i64 %sext.i.i, 32
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.av, %.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %1, %.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.av ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ %.03.i.i, %.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.av ] ; 3 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.pi = getelementptr inbounds [4 x i8], ptr %i.pf, i64 %indvars.iv.next.i.i
   %i.pj = load i32, ptr %i.pi, align 4, !tbaa !3
@@ -272,8 +270,7 @@ bb.az:                                            ; preds = %bb.ay
   store i32 %i.qr, ptr %i.qp, align 4, !tbaa !62
   %i.qs = getelementptr inbounds nuw i8, ptr %i.ov, i64 8
   store i32 %i.qg, ptr %i.qs, align 8, !tbaa !130
-  %2 = and i64 %indvars.iv.i, 4294967295
-  %i.qt = getelementptr inbounds nuw [4 x i8], ptr %i.py, i64 %2
+  %i.qt = getelementptr inbounds nuw [4 x i8], ptr %i.py, i64 %indvars.iv.i
   %i.qu = load i32, ptr %i.qt, align 4, !tbaa !3
   %i.qv = sub nsw i32 %i.ou, %i.qu
   %i.qw = getelementptr inbounds nuw i8, ptr %i.ov, i64 12
@@ -676,12 +673,10 @@ bb.ar:                                            ; preds = %bb.aq
 .preheader.i.i:                                   ; preds = %bb.at, %.preheader.lr.ph.i.i
   %.03.i.i = phi i64 [ 0, %.preheader.lr.ph.i.i ], [ %indvars.iv.i.i, %bb.at ]
   %.0192.i.i = phi i32 [ 0, %.preheader.lr.ph.i.i ], [ %i.sk, %bb.at ] ; 3 uses
-  %sext.i.i = shl i64 %.03.i.i, 32
-  %1 = ashr exact i64 %sext.i.i, 32
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.as, %.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %1, %.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.as ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ %.03.i.i, %.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.as ] ; 3 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.sd = getelementptr inbounds [4 x i8], ptr %i.sa, i64 %indvars.iv.next.i.i
   %i.se = load i32, ptr %i.sd, align 4, !tbaa !3
@@ -747,8 +742,7 @@ bb.aw:                                            ; preds = %bb.av
   store i32 %i.tm, ptr %i.tk, align 4, !tbaa !62
   %i.tn = getelementptr inbounds nuw i8, ptr %i.rq, i64 8
   store i32 %i.tb, ptr %i.tn, align 8, !tbaa !130
-  %2 = and i64 %indvars.iv.i, 4294967295
-  %i.to = getelementptr inbounds nuw [4 x i8], ptr %i.st, i64 %2
+  %i.to = getelementptr inbounds nuw [4 x i8], ptr %i.st, i64 %indvars.iv.i
   %i.tp = load i32, ptr %i.to, align 4, !tbaa !3
   %i.tq = sub nsw i32 %i.rp, %i.tp
   %i.tr = getelementptr inbounds nuw i8, ptr %i.rq, i64 12

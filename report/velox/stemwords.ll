@@ -201,14 +201,12 @@ bb.ak:                                            ; preds = %bb.ai
   ]
 
 bb.al:                                            ; preds = %bb.ak
-  %2 = and i64 %indvars.iv.i, 4294967295
-  %i.dq = tail call i64 @fwrite(ptr noundef %.165.i.ph, i64 noundef %2, i64 noundef 1, ptr noundef nonnull %i.ch) ; 0 uses
+  %i.dq = tail call i64 @fwrite(ptr noundef %.165.i.ph, i64 noundef %indvars.iv.i, i64 noundef 1, ptr noundef nonnull %i.ch) ; 0 uses
   %i.dr = tail call i64 @fwrite(ptr nonnull @.str.19, i64 4, i64 1, ptr nonnull %i.ch) ; 0 uses
   br label %.critedge.i
 
 bb.am:                                            ; preds = %bb.ak
-  %3 = and i64 %indvars.iv.i, 4294967295
-  %i.ds = tail call i64 @fwrite(ptr noundef %.165.i.ph, i64 noundef %3, i64 noundef 1, ptr noundef nonnull %i.ch) ; 0 uses
+  %i.ds = tail call i64 @fwrite(ptr noundef %.165.i.ph, i64 noundef %indvars.iv.i, i64 noundef 1, ptr noundef nonnull %i.ch) ; 0 uses
   %i.dt = tail call i32 @sb_stemmer_length(ptr noundef nonnull %i.cl) #14
   %i.du = icmp sgt i32 %i.dt, 0
   br i1 %i.du, label %bb.an, label %.critedge.i

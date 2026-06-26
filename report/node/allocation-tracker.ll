@@ -201,9 +201,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not23, label %._crit_edge, label %bb.b, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %bb.b
-  %i.ae = shl i64 %indvars.iv.next, 2
-  %5 = and i64 %i.ae, 17179869180
-  %i.af = add nuw nsw i64 %5, 72
+  %i.ae = shl nuw nsw i64 %indvars.iv.next, 2
+  %i.af = add nuw nsw i64 %i.ae, 72
   br label %.lr.ph.preheader.i
 
 ._crit_edge.thread:                               ; preds = %bb.a, %_ZN2v88internal28JavaScriptStackFrameIteratorC2EPNS0_7IsolateE.exit

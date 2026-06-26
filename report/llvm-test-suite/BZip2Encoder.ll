@@ -201,10 +201,8 @@ bb.v:                                             ; preds = %_ZN9NCompress12CMtf
   %i.gp = zext i32 %.sink635 to i64
   %i.gq = getelementptr inbounds nuw i8, ptr %i.fe, i64 %i.gp
   store i8 %i.gn, ptr %i.gq, align 1, !tbaa !54
-  %sext = shl i64 %indvars.iv.i, 32
-  %4 = ashr exact i64 %sext, 30
-  %5 = getelementptr i8, ptr %i.c, i64 %4
-  %i.gr = getelementptr i8, ptr %5, i64 4         ; 2 uses
+  %4 = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv.i
+  %i.gr = getelementptr i8, ptr %4, i64 4         ; 2 uses
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !4
   %i.gt = add i32 %i.gs, 1
   store i32 %i.gt, ptr %i.gr, align 4, !tbaa !4
