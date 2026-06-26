@@ -201,9 +201,8 @@ bb.w:                                             ; preds = %bb.u
   %i.ek = zext i8 %i.ej to i32
   %i.el = or disjoint i32 %i.eh, %i.ek            ; 3 uses
   %i.em = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %4 = load <4 x i8>, ptr %i.em, align 1
-  %5 = tail call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %4)
-  %i.en = icmp eq i8 %5, 0
+  %4 = load i32, ptr %i.em, align 1
+  %i.en = icmp eq i32 %4, 0
   br i1 %i.en, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
@@ -604,9 +603,6 @@ declare void @llvm.assume(i1 noundef) #61
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #30
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.umax.v4i8(<4 x i8>) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #30

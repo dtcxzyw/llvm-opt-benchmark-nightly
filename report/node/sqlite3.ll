@@ -201,15 +201,13 @@ bb.av:                                            ; preds = %bb.at, %bb.as
   store i16 %i.fw, ptr %i.aa, align 8, !tbaa !717
   store i32 %i.fj, ptr %i.bl, align 8, !tbaa !749
   %i.fx = getelementptr inbounds nuw i8, ptr %i.dd, i64 52
-  %3 = load <4 x i8>, ptr %i.fx, align 1, !tbaa !227
-  %4 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %3)
-  %i.fy = icmp ne i8 %4, 0
+  %3 = load i32, ptr %i.fx, align 1, !tbaa !227
+  %i.fy = icmp ne i32 %3, 0
   %i.fz = zext i1 %i.fy to i8
   store i8 %i.fz, ptr %i.bn, align 1, !tbaa !742
   %i.ga = getelementptr inbounds nuw i8, ptr %i.dd, i64 64
-  %5 = load <4 x i8>, ptr %i.ga, align 1, !tbaa !227
-  %6 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %5)
-  %i.gb = icmp ne i8 %6, 0
+  %4 = load i32, ptr %i.ga, align 1, !tbaa !227
+  %i.gb = icmp ne i32 %4, 0
   %i.gc = zext i1 %i.gb to i8
   store i8 %i.gc, ptr %i.bo, align 2, !tbaa !691
   br label %lockBtree.exit.thread.thread
@@ -612,9 +610,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 80
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !659
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 36
-  %4 = load <4 x i8>, ptr %i.af, align 1, !tbaa !227
-  %5 = tail call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %4)
-  %i.ag = icmp eq i8 %5, 0
+  %4 = load i32, ptr %i.af, align 1, !tbaa !227
+  %i.ag = icmp eq i32 %4, 0
   br i1 %i.ag, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1017,9 +1014,8 @@ bb.apw:                                           ; preds = %bb.apu
   %i.gfs = getelementptr inbounds nuw i8, ptr %i.gfr, i64 80
   %i.gft = load ptr, ptr %i.gfs, align 8, !tbaa !659
   %i.gfu = getelementptr inbounds nuw i8, ptr %i.gft, i64 64
-  %20 = load <4 x i8>, ptr %i.gfu, align 1, !tbaa !227
-  %21 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %20)
-  %i.gfv = icmp eq i8 %21, 0
+  %20 = load i32, ptr %i.gfu, align 1, !tbaa !227
+  %i.gfv = icmp eq i32 %20, 0
   br i1 %i.gfv, label %bb.apy, label %bb.apx
 
 bb.apx:                                           ; preds = %bb.apw
@@ -1422,16 +1418,14 @@ bb.cz:                                            ; preds = %bb.cw
   %i.po = or i16 %i.pn, 2
   store i16 %i.po, ptr %i.pm, align 8, !tbaa !717
   %i.pp = getelementptr inbounds nuw i8, ptr %i.d, i64 52
-  %6 = load <4 x i8>, ptr %i.pp, align 4, !tbaa !227
-  %7 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %6)
-  %i.pq = icmp ne i8 %7, 0
+  %6 = load i32, ptr %i.pp, align 4, !tbaa !227
+  %i.pq = icmp ne i32 %6, 0
   %i.pr = zext i1 %i.pq to i8
   %i.ps = getelementptr inbounds nuw i8, ptr %i.db, i64 33
   store i8 %i.pr, ptr %i.ps, align 1, !tbaa !742
   %i.pt = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  %8 = load <4 x i8>, ptr %i.pt, align 16, !tbaa !227
-  %9 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %8)
-  %i.pu = icmp ne i8 %9, 0
+  %7 = load i32, ptr %i.pt, align 16, !tbaa !227
+  %i.pu = icmp ne i32 %7, 0
   %i.pv = zext i1 %i.pu to i8
   %i.pw = getelementptr inbounds nuw i8, ptr %i.db, i64 34
   store i8 %i.pv, ptr %i.pw, align 2, !tbaa !691
@@ -1834,8 +1828,8 @@ sqlite3BtreeGetMeta.exit.4:                       ; preds = %.thread265, %bb.aq,
 
 bb.ar:                                            ; preds = %sqlite3BtreeGetMeta.exit.4
   store i32 %i.dl, ptr %i.iw, align 8, !tbaa !941
-  %5 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %i.ir)
-  %i.ix = icmp eq i8 %5, 0
+  %.scalar = bitcast <4 x i8> %i.ir to i32
+  %i.ix = icmp eq i32 %.scalar, 0
   br i1 %i.ix, label %sqlite3SetTextEncoding.exit, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
@@ -2238,9 +2232,8 @@ bb.r:                                             ; preds = %bb.q
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 53
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 54
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 55
-  %4 = load <4 x i8>, ptr %i.bn, align 1, !tbaa !227
-  %5 = tail call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %4)
-  %i.br = icmp ne i8 %5, 0
+  %4 = load i32, ptr %i.bn, align 1, !tbaa !227
+  %i.br = icmp ne i32 %4, 0
   store i8 0, ptr %i.bn, align 1, !tbaa !227
   store i8 0, ptr %i.bo, align 1, !tbaa !227
   store i8 0, ptr %i.bp, align 1, !tbaa !227
@@ -2641,9 +2634,6 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #47
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.umax.v4i8(<4 x i8>) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #47
