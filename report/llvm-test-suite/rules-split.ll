@@ -65,7 +65,7 @@ clause_DependsOnSplitLevel.exit.i:                ; preds = %bb.c
 clause_DependsOnSplitLevel.exit.thread.i:         ; preds = %clause_DependsOnSplitLevel.exit.i, %bb.c
   %i.y = getelementptr i8, ptr %.0.val56.i, i64 8 ; 2 uses
   %.val58.i = load ptr, ptr %i.y, align 8
-  tail call void @clause_DeleteClauseList(ptr noundef %.val58.i) #3
+  tail call void @clause_DeleteClauseList(ptr noundef %.val58.i) #4
   store ptr null, ptr %i.y, align 8
   %i.z = getelementptr i8, ptr %.0.val56.i, i64 16 ; 2 uses
   %.val60.i = load ptr, ptr %i.z, align 8         ; 4 uses
@@ -95,7 +95,7 @@ list_Nconc.exit.i:                                ; preds = %bb.e, %bb.d, %claus
   br i1 %.not50.i, label %bb.f, label %.thread
 
 .thread:                                          ; preds = %list_Nconc.exit.i
-  %i.ab = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.ab = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   store ptr %.val64.i, ptr %i.ac, align 8
   store ptr %.0.i.i, ptr %i.ab, align 8
@@ -173,7 +173,7 @@ list_Nconc.exit.i159:                             ; preds = %bb.h, %bb.g
 
 bb.i:                                             ; preds = %list_Nconc.exit.i159, %prfs_GetSplitOfLevel.exit.i
   %.2163 = phi ptr [ %.0161, %prfs_GetSplitOfLevel.exit.i ], [ %.val18.i152, %list_Nconc.exit.i159 ]
-  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i144) #3
+  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i144) #4
   store ptr null, ptr %i.ah, align 8
   br label %clause_DependsOnSplitLevel.exit.thread.i145
 
@@ -186,7 +186,7 @@ clause_DependsOnSplitLevel.exit.thread.i145:      ; preds = %bb.i, %clause_Depen
 split_DeleteClausesDependingOnLevelFromList.exit: ; preds = %clause_DependsOnSplitLevel.exit.thread.i145, %bb.f
   %.1.i169 = phi ptr [ null, %bb.f ], [ %.1.i168, %clause_DependsOnSplitLevel.exit.thread.i145 ]
   %.5 = phi ptr [ null, %bb.f ], [ %.1162, %clause_DependsOnSplitLevel.exit.thread.i145 ] ; 2 uses
-  %i.at = tail call ptr @list_PointerDeleteElement(ptr noundef %.1.i169, ptr noundef null) #3 ; 2 uses
+  %i.at = tail call ptr @list_PointerDeleteElement(ptr noundef %.1.i169, ptr noundef null) #4 ; 2 uses
   %.046170.i = load ptr, ptr %i.a, align 8        ; 2 uses
   %.not171.i = icmp eq ptr %.046170.i, null
   br i1 %.not171.i, label %.critedge.i, label %.lr.ph.i
@@ -273,7 +273,7 @@ list_Nconc.exit.i.i:                              ; preds = %bb.m, %bb.l
 
 bb.n:                                             ; preds = %list_Nconc.exit.i.i, %prfs_GetSplitOfLevel.exit.i.i
   %.val18.i165.i = phi ptr [ %.val18.i.i, %list_Nconc.exit.i.i ], [ %.val18.i166.i, %prfs_GetSplitOfLevel.exit.i.i ]
-  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i.i) #3
+  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i.i) #4
   store ptr null, ptr %i.bb, align 8
   br label %clause_DependsOnSplitLevel.exit.thread.i.i
 
@@ -285,7 +285,7 @@ clause_DependsOnSplitLevel.exit.thread.i.i:       ; preds = %bb.n, %clause_Depen
 
 split_DeleteClausesDependingOnLevelFromList.exit.i: ; preds = %clause_DependsOnSplitLevel.exit.thread.i.i, %bb.k
   %.val18.i164.lcssa168.i = phi ptr [ %.val18.i164.lcssa169172.i, %bb.k ], [ %.val18.i164.i, %clause_DependsOnSplitLevel.exit.thread.i.i ] ; 2 uses
-  %i.bn = tail call ptr @list_PointerDeleteElement(ptr noundef %.val59.i, ptr noundef null) #3
+  %i.bn = tail call ptr @list_PointerDeleteElement(ptr noundef %.val59.i, ptr noundef null) #4
   store ptr %i.bn, ptr %i.ba, align 8
   %.046.i = load ptr, ptr %.046173.i, align 8     ; 2 uses
   %.not.i = icmp eq ptr %.046.i, null
@@ -367,7 +367,7 @@ list_Nconc.exit.i100.i:                           ; preds = %bb.p, %bb.o
 
 bb.q:                                             ; preds = %list_Nconc.exit.i100.i, %prfs_GetSplitOfLevel.exit.i92.i
   %.2152.i = phi ptr [ %.0150.i, %prfs_GetSplitOfLevel.exit.i92.i ], [ %.val18.i93.i, %list_Nconc.exit.i100.i ]
-  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i78.i) #3
+  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i78.i) #4
   store ptr null, ptr %i.bt, align 8
   br label %clause_DependsOnSplitLevel.exit.thread.i80.i
 
@@ -378,7 +378,7 @@ clause_DependsOnSplitLevel.exit.thread.i80.i:     ; preds = %bb.q, %clause_Depen
   br i1 %.not.i82.i, label %split_DeleteClausesDependingOnLevelFromList.exit122.i, label %.lr.ph.split.i76.i, !llvm.loop !7
 
 split_DeleteClausesDependingOnLevelFromList.exit122.i: ; preds = %clause_DependsOnSplitLevel.exit.thread.i80.i
-  %i.cf = tail call ptr @list_PointerDeleteElement(ptr noundef nonnull %i.bs, ptr noundef null) #3 ; 4 uses
+  %i.cf = tail call ptr @list_PointerDeleteElement(ptr noundef nonnull %i.bs, ptr noundef null) #4 ; 4 uses
   %.not.i123.i = icmp eq ptr %i.cf, null
   br i1 %.not.i123.i, label %list_Nconc.exit130.i, label %bb.r
 
@@ -502,7 +502,7 @@ bb.x:                                             ; preds = %.lr.ph
   br i1 %.not69, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cy = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.cy = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
   store ptr %.val93, ptr %i.cz, align 8
   store ptr %.0178, ptr %i.cy, align 8
@@ -534,7 +534,7 @@ list_Nconc.exit:                                  ; preds = %bb.z, %bb.aa, %bb.a
   %.0.i = phi ptr [ %.val87, %bb.ab ], [ %.1, %bb.z ], [ %.val87, %bb.aa ] ; 2 uses
   %i.db = getelementptr i8, ptr %.val101.val, i64 8
   %.val84 = load ptr, ptr %i.db, align 8
-  tail call void @clause_DeleteClauseList(ptr noundef %.val84) #3
+  tail call void @clause_DeleteClauseList(ptr noundef %.val84) #4
   %i.dc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @memory_ARRAY, i64 256), align 8 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 32
   %i.de = load i32, ptr %i.dd, align 8
@@ -583,7 +583,7 @@ bb.ac:                                            ; preds = %.lr.ph186
   br i1 %.not72, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.dx = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.dx = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   store ptr %.val91, ptr %i.dy, align 8
   store ptr %.2184, ptr %i.dx, align 8
@@ -674,7 +674,7 @@ list_Nconc.exit121:                               ; preds = %bb.ah
   br i1 %.not11.i, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %.lr.ph.i122
-  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i) #3
+  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.0.val.i) #4
   store ptr null, ptr %i.en, align 8
   br label %bb.al
 
@@ -685,7 +685,7 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph.i122
 
 split_DeleteInvalidClausesFromList.exit:          ; preds = %bb.al, %list_Nconc.exit121
   %.0.i120214 = phi ptr [ null, %list_Nconc.exit121 ], [ %.0.i120213, %bb.al ]
-  %i.ep = tail call ptr @list_PointerDeleteElement(ptr noundef %.0.i120214, ptr noundef null) #3 ; 3 uses
+  %i.ep = tail call ptr @list_PointerDeleteElement(ptr noundef %.0.i120214, ptr noundef null) #4 ; 3 uses
   %.val82 = load ptr, ptr %i.ek, align 8          ; 5 uses
   store ptr null, ptr %i.ek, align 8
   %cond = icmp eq ptr %.val82, null
@@ -716,7 +716,7 @@ bb.an:                                            ; preds = %bb.am, %.lr.ph190
   %i.ev = inttoptr i64 %i.eu to ptr
   %i.ew = getelementptr inbounds nuw i8, ptr %.067.val78, i64 32 ; 2 uses
   %i.ex = load ptr, ptr %i.ew, align 8
-  %i.ey = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.ey = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
   store ptr %i.ev, ptr %i.ez, align 8
   store ptr %i.ex, ptr %i.ey, align 8
@@ -724,7 +724,7 @@ bb.an:                                            ; preds = %bb.am, %.lr.ph190
   %.067.val = load ptr, ptr %i.eq, align 8
   %i.fa = getelementptr inbounds nuw i8, ptr %.067.val, i64 40 ; 2 uses
   %i.fb = load ptr, ptr %i.fa, align 8
-  %i.fc = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.fc = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 8
   store ptr null, ptr %i.fd, align 8
   store ptr %i.fb, ptr %i.fc, align 8
@@ -752,7 +752,7 @@ list_Nconc.exit132:                               ; preds = %split_DeleteInvalid
   %i.fe = load i32, ptr %i.b, align 8
   %i.ff = add nsw i32 %i.fe, -1
   store i32 %i.ff, ptr %i.b, align 8
-  tail call void @prfs_MoveInvalidClausesDocProof(ptr noundef %0) #3
+  tail call void @prfs_MoveInvalidClausesDocProof(ptr noundef %0) #4
   %.val18.i = load i32, ptr %i.b, align 8         ; 2 uses
   %.028.i = load ptr, ptr %i.a, align 8           ; 2 uses
   %.not29.i = icmp eq ptr %.028.i, null
@@ -777,7 +777,7 @@ list_Nconc.exit132:                               ; preds = %split_DeleteInvalid
   br i1 %.not25.i, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %.lr.ph.i133
-  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.015.val.i) #3
+  tail call void @prfs_InsertDocProofClause(ptr noundef %0, ptr noundef nonnull %.015.val.i) #4
   store ptr null, ptr %i.fi, align 8
   br label %bb.aq
 
@@ -792,7 +792,7 @@ bb.aq:                                            ; preds = %bb.ap, %.lr.ph.i133
 
 ._crit_edge.i134:                                 ; preds = %._crit_edge.loopexit.i, %.lr.ph32.i
   %.0.val.i135 = phi ptr [ %.0.val.pre.i, %._crit_edge.loopexit.i ], [ %.0.val19.i, %.lr.ph32.i ]
-  %i.fk = tail call ptr @list_PointerDeleteElement(ptr noundef %.val20.i, ptr noundef null) #3
+  %i.fk = tail call ptr @list_PointerDeleteElement(ptr noundef %.val20.i, ptr noundef null) #4
   %i.fl = getelementptr inbounds nuw i8, ptr %.0.val.i135, i64 16
   store ptr %i.fk, ptr %i.fl, align 8
   %.0.i136 = load ptr, ptr %.030.i, align 8       ; 2 uses
@@ -811,7 +811,7 @@ split_DeleteInvalidClausesFromStack.exit:         ; preds = %split_DeleteInvalid
 
 .critedge2:                                       ; preds = %list_Nconc.exit, %list_Nconc.exit113, %split_RemoveUnnecessarySplits.exit
   %.2.lcssa = phi ptr [ %.045.lcssa.i, %split_RemoveUnnecessarySplits.exit ], [ %.0.i112, %list_Nconc.exit113 ], [ %.0.i, %list_Nconc.exit ] ; 3 uses
-  tail call void @prfs_MoveInvalidClausesDocProof(ptr noundef nonnull %0) #3
+  tail call void @prfs_MoveInvalidClausesDocProof(ptr noundef nonnull %0) #4
   %cond196 = icmp eq ptr %.2.lcssa, null
   br i1 %cond196, label %list_Delete.exit, label %.lr.ph193
 
@@ -819,7 +819,7 @@ split_DeleteInvalidClausesFromStack.exit:         ; preds = %split_DeleteInvalid
   %.168192 = phi ptr [ %.168.val88, %.lr.ph193 ], [ %.2.lcssa, %.critedge2 ] ; 2 uses
   %i.fo = getelementptr i8, ptr %.168192, i64 8
   %.168.val = load ptr, ptr %i.fo, align 8
-  tail call void @prfs_InsertDocProofClause(ptr noundef nonnull %0, ptr noundef %.168.val) #3
+  tail call void @prfs_InsertDocProofClause(ptr noundef nonnull %0, ptr noundef %.168.val) #4
   %.168.val88 = load ptr, ptr %.168192, align 8   ; 2 uses
   %.not171 = icmp eq ptr %.168.val88, null
   br i1 %.not171, label %.lr.ph.i138, label %.lr.ph193, !llvm.loop !17
@@ -864,11 +864,11 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @prfs_ExtractWorkedOff(ptr noundef %0, ptr noundef nonnull %1) #3
+  tail call void @prfs_ExtractWorkedOff(ptr noundef %0, ptr noundef nonnull %1) #4
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @prfs_ExtractUsable(ptr noundef %0, ptr noundef nonnull %1) #3
+  tail call void @prfs_ExtractUsable(ptr noundef %0, ptr noundef nonnull %1) #4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -887,7 +887,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 split_KeepClauseAtLevel.exit:                     ; preds = %.lr.ph.i.i
   %i.f = getelementptr i8, ptr %.0.val6.i.i, i64 16 ; 2 uses
   %.val.i = load ptr, ptr %i.f, align 8
-  %i.g = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.g = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %1, ptr %i.h, align 8
   store ptr %.val.i, ptr %i.g, align 8
@@ -917,7 +917,7 @@ bb.a:
 prfs_GetSplitOfLevel.exit:                        ; preds = %.lr.ph.i
   %i.d = getelementptr i8, ptr %.0.val6.i, i64 16 ; 2 uses
   %.val = load ptr, ptr %i.d, align 8
-  %i.e = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.e = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %1, ptr %i.f, align 8
   store ptr %.val, ptr %i.e, align 8
@@ -958,7 +958,7 @@ clause_IsEmptyClause.exit:                        ; preds = %bb.c
 
 bb.d:                                             ; preds = %clause_IsEmptyClause.exit
   %i.e = load ptr, ptr %1, align 8
-  %i.f = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.f = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %.0.val, ptr %i.g, align 8
   store ptr %i.e, ptr %i.f, align 8
@@ -972,7 +972,7 @@ clause_IsEmptyClause.exit.thread:                 ; preds = %.lr.ph, %bb.b, %bb.
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %clause_IsEmptyClause.exit.thread, %bb.a
-  %i.h = tail call ptr @list_PointerDeleteElement(ptr noundef %0, ptr noundef null) #3
+  %i.h = tail call ptr @list_PointerDeleteElement(ptr noundef %0, ptr noundef null) #4
   ret ptr %i.h
 }
 
@@ -982,24 +982,29 @@ declare ptr @list_PointerDeleteElement(ptr noundef, ptr noundef) local_unnamed_a
 define dso_local ptr @split_SmallestSplitLevelClause(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
-  %.val = load ptr, ptr %i.a, align 8             ; 2 uses
+  %.val = load ptr, ptr %i.a, align 8             ; 3 uses
   %.0813 = load ptr, ptr %0, align 8              ; 2 uses
   %.not14 = icmp eq ptr %.0813, null
-  br i1 %.not14, label %._crit_edge, label %.lr.ph
+  br i1 %.not14, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.0816 = phi ptr [ %.08, %.lr.ph ], [ %.0813, %bb.a ] ; 2 uses
-  %.015.a = phi ptr [ %spec.select, %.lr.ph ], [ %.val, %bb.a ] ; 2 uses
-  %1 = getelementptr i8, ptr %.015.a, i64 12
-  %.0.val = load i32, ptr %1, align 4
-  %i.b = getelementptr i8, ptr %.0816, i64 8
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %.phi.trans.insert = getelementptr i8, ptr %.val, i64 12
+  %.0.val.pre = load i32, ptr %.phi.trans.insert, align 4
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.0.val = phi i32 [ %1, %.lr.ph ], [ %.0.val.pre, %.lr.ph.preheader ] ; 2 uses
+  %.015.a = phi ptr [ %.08, %.lr.ph ], [ %.0813, %.lr.ph.preheader ] ; 2 uses
+  %.015 = phi ptr [ %spec.select, %.lr.ph ], [ %.val, %.lr.ph.preheader ]
+  %i.b = getelementptr i8, ptr %.015.a, i64 8
   %.08.val9 = load ptr, ptr %i.b, align 8         ; 2 uses
   %i.c = getelementptr i8, ptr %.08.val9, i64 12
-  %.val12 = load i32, ptr %i.c, align 4
+  %.val12 = load i32, ptr %i.c, align 4           ; 2 uses
   %i.d = icmp ugt i32 %.0.val, %.val12
-  %spec.select = select i1 %i.d, ptr %.08.val9, ptr %.015.a ; 2 uses
-  %.08 = load ptr, ptr %.0816, align 8            ; 2 uses
+  %spec.select = select i1 %i.d, ptr %.08.val9, ptr %.015 ; 2 uses
+  %.08 = load ptr, ptr %.015.a, align 8           ; 2 uses
   %.not = icmp eq ptr %.08, null
+  %1 = tail call i32 @llvm.umin.i32(i32 %.0.val, i32 %.val12)
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
@@ -1071,7 +1076,7 @@ bb.c:                                             ; preds = %.preheader.i.us
 list_Nconc.exit.us:                               ; preds = %bb.c, %bb.b, %prfs_GetSplitOfLevel.exit.us
   %.0.i.us = phi ptr [ %.val.us, %bb.c ], [ %.02140.us, %prfs_GetSplitOfLevel.exit.us ], [ %.val.us, %bb.b ] ; 2 uses
   store ptr null, ptr %i.o, align 8
-  %i.p = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 4 uses
+  %i.p = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store ptr %.0.val.us, ptr %i.q, align 8
   store ptr %.02239.us, ptr %i.p, align 8
@@ -1145,7 +1150,7 @@ bb.e:                                             ; preds = %.preheader.i
 list_Nconc.exit:                                  ; preds = %prfs_GetSplitOfLevel.exit, %bb.d, %bb.e
   %.0.i = phi ptr [ %.val, %bb.e ], [ %.02140, %prfs_GetSplitOfLevel.exit ], [ %.val, %bb.d ]
   store ptr null, ptr %i.ac, align 8
-  %i.ad = tail call noundef ptr @memory_Malloc(i32 noundef 16) #3 ; 3 uses
+  %i.ad = tail call noundef ptr @memory_Malloc(i32 noundef 16) #4 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store ptr %.0.val, ptr %i.ae, align 8
   store ptr %.02239, ptr %i.ad, align 8
@@ -1169,11 +1174,11 @@ clause_DependsOnSplitLevel.exit.thread:           ; preds = %.lr.ph.split, %clau
   br i1 %.not25, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph46
-  tail call void @prfs_MoveWorkedOffDocProof(ptr noundef %0, ptr noundef nonnull %.2.val) #3
+  tail call void @prfs_MoveWorkedOffDocProof(ptr noundef %0, ptr noundef nonnull %.2.val) #4
   br label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph46
-  tail call void @prfs_MoveUsableDocProof(ptr noundef %0, ptr noundef nonnull %.2.val) #3
+  tail call void @prfs_MoveUsableDocProof(ptr noundef %0, ptr noundef nonnull %.2.val) #4
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
@@ -1201,10 +1206,14 @@ declare void @prfs_MoveWorkedOffDocProof(ptr noundef, ptr noundef) local_unnamed
 
 declare void @prfs_MoveUsableDocProof(ptr noundef, ptr noundef) local_unnamed_addr #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

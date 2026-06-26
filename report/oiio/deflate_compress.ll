@@ -201,41 +201,48 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.i, %.lr.ph.i.preheader.i.i.i
-  %i.bx = phi i32 [ %i.cj, %bb.i ], [ %i.bv, %.lr.ph.i.preheader.i.i.i ] ; 5 uses
+  %i.bx = phi i32 [ %i.cj, %bb.i ], [ %i.bv, %.lr.ph.i.preheader.i.i.i ] ; 6 uses
   %.028.i.i.i.i = phi i32 [ %.022.i.i.i.i, %bb.i ], [ %i.bw, %.lr.ph.i.preheader.i.i.i ]
   %i.by = icmp ult i32 %i.bx, %i.bn
-  br i1 %i.by, label %bb.g, label %bb.h
+  br i1 %i.by, label %bb.g, label %.lr.ph._crit_edge.i.i.i.i
+
+.lr.ph._crit_edge.i.i.i.i:                        ; preds = %.lr.ph.i.i.i.i
+  %.phi.trans.insert.i.i.i.i = zext i32 %i.bx to i64 ; 2 uses
+  %.phi.trans.insert31.i.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.phi.trans.insert.i.i.i.i
+  %.pre.i.i.i.i = load i32, ptr %.phi.trans.insert31.i.i.i.i, align 4, !tbaa !3
+  br label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph.i.i.i.i
   %i.bz = or disjoint i32 %i.bx, 1                ; 2 uses
   %i.ca = zext i32 %i.bz to i64
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.ca
-  %i.cc = load i32, ptr %i.cb, align 4, !tbaa !3
+  %i.cc = load i32, ptr %i.cb, align 4, !tbaa !3  ; 2 uses
   %i.cd = zext i32 %i.bx to i64
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.cd
-  %i.cf = load i32, ptr %i.ce, align 4, !tbaa !3
+  %i.cf = load i32, ptr %i.ce, align 4, !tbaa !3  ; 2 uses
   %i.cg = icmp ugt i32 %i.cc, %i.cf
-  %spec.select.i.i.i.i = select i1 %i.cg, i32 %i.bz, i32 %i.bx
+  %spec.select.i.i.i.i = select i1 %i.cg, i32 %i.bz, i32 %i.bx ; 2 uses
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.cc, i32 %i.cf)
+  %.pre33.i.i.i.i = zext i32 %spec.select.i.i.i.i to i64
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %.lr.ph.i.i.i.i
-  %.022.i.i.i.i = phi i32 [ %i.bx, %.lr.ph.i.i.i.i ], [ %spec.select.i.i.i.i, %bb.g ] ; 3 uses
-  %5 = zext i32 %.022.i.i.i.i to i64              ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %5
-  %7 = load i32, ptr %6, align 4, !tbaa !3        ; 2 uses
-  %.not26.i.i.i.i = icmp ult i32 %i.bt, %7
+bb.h:                                             ; preds = %bb.g, %.lr.ph._crit_edge.i.i.i.i
+  %.pre-phi34.i.i.i.i = phi i64 [ %.phi.trans.insert.i.i.i.i, %.lr.ph._crit_edge.i.i.i.i ], [ %.pre33.i.i.i.i, %bb.g ]
+  %6 = phi i32 [ %.pre.i.i.i.i, %.lr.ph._crit_edge.i.i.i.i ], [ %5, %bb.g ] ; 2 uses
+  %.022.i.i.i.i = phi i32 [ %i.bx, %.lr.ph._crit_edge.i.i.i.i ], [ %spec.select.i.i.i.i, %bb.g ] ; 2 uses
+  %.not26.i.i.i.i = icmp ult i32 %i.bt, %6
   %i.ch = zext i32 %.028.i.i.i.i to i64           ; 2 uses
   br i1 %.not26.i.i.i.i, label %bb.i, label %heapify_subtree.exit.i.i.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.ch
-  store i32 %7, ptr %i.ci, align 4, !tbaa !3
+  store i32 %6, ptr %i.ci, align 4, !tbaa !3
   %i.cj = shl i32 %.022.i.i.i.i, 1                ; 2 uses
   %.not.i.i.i.i = icmp ugt i32 %i.cj, %i.bn
   br i1 %.not.i.i.i.i, label %heapify_subtree.exit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !111
 
 heapify_subtree.exit.i.i.i:                       ; preds = %bb.i, %bb.h, %.lr.ph.i.i.i
-  %.pre-phi.i.i.i.i = phi i64 [ %indvars.iv.i.i.i, %.lr.ph.i.i.i ], [ %5, %bb.i ], [ %i.ch, %bb.h ]
+  %.pre-phi.i.i.i.i = phi i64 [ %indvars.iv.i.i.i, %.lr.ph.i.i.i ], [ %.pre-phi34.i.i.i.i, %bb.i ], [ %i.ch, %bb.h ]
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.pre-phi.i.i.i.i
   store i32 %i.bt, ptr %i.ck, align 4, !tbaa !3
   %i.cl = add nsw i32 %.08.i.i.i, -1              ; 2 uses
@@ -264,41 +271,48 @@ heapify_array.exit.i.i:                           ; preds = %heapify_subtree.exi
   br i1 %.not27.i.i.i, label %sort_symbols.exit, label %.lr.ph.i13.i.i
 
 .lr.ph.i13.i.i:                                   ; preds = %.lr.ph.i.i, %bb.l
-  %i.cr = phi i32 [ %i.dd, %bb.l ], [ 2, %.lr.ph.i.i ] ; 5 uses
+  %i.cr = phi i32 [ %i.dd, %bb.l ], [ 2, %.lr.ph.i.i ] ; 6 uses
   %.028.i.i.i = phi i32 [ %.022.i.i.i, %bb.l ], [ 1, %.lr.ph.i.i ]
   %i.cs = icmp ult i32 %i.cr, %indvars.i.i
-  br i1 %i.cs, label %bb.j, label %bb.k
+  br i1 %i.cs, label %bb.j, label %.lr.ph._crit_edge.i.i.i
+
+.lr.ph._crit_edge.i.i.i:                          ; preds = %.lr.ph.i13.i.i
+  %.phi.trans.insert.i.i.i = zext i32 %i.cr to i64 ; 2 uses
+  %.phi.trans.insert31.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.phi.trans.insert.i.i.i
+  %.pre.i.i.i = load i32, ptr %.phi.trans.insert31.i.i.i, align 4, !tbaa !3
+  br label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph.i13.i.i
   %i.ct = or disjoint i32 %i.cr, 1                ; 2 uses
   %i.cu = zext i32 %i.ct to i64
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.cu
-  %i.cw = load i32, ptr %i.cv, align 4, !tbaa !3
+  %i.cw = load i32, ptr %i.cv, align 4, !tbaa !3  ; 2 uses
   %i.cx = zext i32 %i.cr to i64
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.cx
-  %i.cz = load i32, ptr %i.cy, align 4, !tbaa !3
+  %i.cz = load i32, ptr %i.cy, align 4, !tbaa !3  ; 2 uses
   %i.da = icmp ugt i32 %i.cw, %i.cz
-  %spec.select.i.i.i = select i1 %i.da, i32 %i.ct, i32 %i.cr
+  %spec.select.i.i.i = select i1 %i.da, i32 %i.ct, i32 %i.cr ; 2 uses
+  %7 = tail call i32 @llvm.umax.i32(i32 %i.cw, i32 %i.cz)
+  %.pre33.i.i.i = zext i32 %spec.select.i.i.i to i64
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %.lr.ph.i13.i.i
-  %.022.i.i.i = phi i32 [ %i.cr, %.lr.ph.i13.i.i ], [ %spec.select.i.i.i, %bb.j ] ; 3 uses
-  %8 = zext i32 %.022.i.i.i to i64                ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %8
-  %10 = load i32, ptr %9, align 4, !tbaa !3       ; 2 uses
-  %.not26.i.i.i = icmp ult i32 %i.cp, %10
+bb.k:                                             ; preds = %bb.j, %.lr.ph._crit_edge.i.i.i
+  %.pre-phi34.i.i.i = phi i64 [ %.phi.trans.insert.i.i.i, %.lr.ph._crit_edge.i.i.i ], [ %.pre33.i.i.i, %bb.j ]
+  %8 = phi i32 [ %.pre.i.i.i, %.lr.ph._crit_edge.i.i.i ], [ %7, %bb.j ] ; 2 uses
+  %.022.i.i.i = phi i32 [ %i.cr, %.lr.ph._crit_edge.i.i.i ], [ %spec.select.i.i.i, %bb.j ] ; 2 uses
+  %.not26.i.i.i = icmp ult i32 %i.cp, %8
   %i.db = zext i32 %.028.i.i.i to i64             ; 2 uses
   br i1 %.not26.i.i.i, label %bb.l, label %heapify_subtree.exit.i.i
 
 bb.l:                                             ; preds = %bb.k
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.db
-  store i32 %10, ptr %i.dc, align 4, !tbaa !3
+  store i32 %8, ptr %i.dc, align 4, !tbaa !3
   %i.dd = shl i32 %.022.i.i.i, 1                  ; 2 uses
   %.not.i14.i.i = icmp ugt i32 %i.dd, %indvars.i.i
   br i1 %.not.i14.i.i, label %heapify_subtree.exit.i.i, label %.lr.ph.i13.i.i, !llvm.loop !111
 
 heapify_subtree.exit.i.i:                         ; preds = %bb.l, %bb.k
-  %.pre-phi.i.i.i = phi i64 [ %i.db, %bb.k ], [ %8, %bb.l ]
+  %.pre-phi.i.i.i = phi i64 [ %i.db, %bb.k ], [ %.pre-phi34.i.i.i, %bb.l ]
   %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.pre-phi.i.i.i
   store i32 %i.cp, ptr %i.de, align 4, !tbaa !3
   %i.df = icmp ugt i32 %indvars.i.i, 1

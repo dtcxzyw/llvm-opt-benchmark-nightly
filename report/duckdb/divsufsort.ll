@@ -201,22 +201,23 @@ _ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit54.i.i.i: ; preds = %bb.gz, %_ZN11
   %i.bcq = load i32, ptr %i.bco, align 4, !tbaa !3 ; 3 uses
   %i.bcr = sext i32 %i.bcq to i64
   %i.bcs = getelementptr inbounds [4 x i8], ptr %.0452.ph.i.i, i64 %i.bcr
-  %i.bct = load i32, ptr %i.bcs, align 4, !tbaa !3
+  %i.bct = load i32, ptr %i.bcs, align 4, !tbaa !3 ; 2 uses
   %i.bcu = load i32, ptr %i.bcp, align 4, !tbaa !3 ; 3 uses
   %i.bcv = sext i32 %i.bcu to i64
   %i.bcw = getelementptr inbounds [4 x i8], ptr %.0452.ph.i.i, i64 %i.bcv
-  %i.bcx = load i32, ptr %i.bcw, align 4, !tbaa !3
+  %i.bcx = load i32, ptr %i.bcw, align 4, !tbaa !3 ; 2 uses
   %i.bcy = icmp sgt i32 %i.bct, %i.bcx            ; 4 uses
   %spec.select.i55.i.i.i = select i1 %i.bcy, ptr %i.bco, ptr %i.bcp
   %i.bcz = select i1 %i.bcy, i32 %i.bcq, i32 %i.bcu
   %i.bda = sext i32 %i.bcz to i64
   %i.bdb = getelementptr inbounds [4 x i8], ptr %.0452.ph.i.i, i64 %i.bda
-  %i.bdc = load i32, ptr %i.bdb, align 4, !tbaa !3 ; 2 uses
+  %i.bdc = load i32, ptr %i.bdb, align 4, !tbaa !3
   %i.bdd = load i32, ptr %i.tr, align 4, !tbaa !3
   %i.bde = sext i32 %i.bdd to i64
   %i.bdf = getelementptr inbounds [4 x i8], ptr %.0452.ph.i.i, i64 %i.bde
   %i.bdg = load i32, ptr %i.bdf, align 4, !tbaa !3 ; 2 uses
   %i.bdh = icmp sgt i32 %i.bdc, %i.bdg
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.bct, i32 %i.bcx)
   br i1 %i.bdh, label %bb.ha, label %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit59.i.i.i
 
 bb.ha:                                            ; preds = %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit54.i.i.i
@@ -234,8 +235,8 @@ bb.ha:                                            ; preds = %_ZN11duckdb_zstdL10
   br label %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit59.i.i.i
 
 _ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit59.i.i.i: ; preds = %bb.ha, %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit54.i.i.i
-  %i.bdn = phi i32 [ %i.bdc, %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit54.i.i.i ], [ %.pre66.i.i.i, %bb.ha ] ; 2 uses
-  %.0.i56.i.i.i = phi ptr [ %spec.select.i55.i.i.i, %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit54.i.i.i ], [ %spec.select22..i58.i.i.i, %bb.ha ]
+  %i.bdn = phi i32 [ %.pre66.i.i.i, %bb.ha ], [ %6, %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit54.i.i.i ] ; 2 uses
+  %.0.i56.i.i.i = phi ptr [ %spec.select22..i58.i.i.i, %bb.ha ], [ %spec.select.i55.i.i.i, %_ZN11duckdb_zstdL10tr_median3EPKiPiS2_S2_.exit54.i.i.i ]
   %i.bdo = load i32, ptr %.0.i46.i.i.i, align 4, !tbaa !3 ; 3 uses
   %i.bdp = sext i32 %i.bdo to i64
   %i.bdq = getelementptr inbounds [4 x i8], ptr %.0452.ph.i.i, i64 %i.bdp
@@ -638,23 +639,22 @@ _ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60.i: ; preds = %bb.ax, %_ZN11d
   %i.vo = load i32, ptr %i.vn, align 4, !tbaa !3
   %i.vp = sext i32 %i.vo to i64
   %i.vq = getelementptr inbounds i8, ptr %i.ce, i64 %i.vp
-  %i.vr = load i8, ptr %i.vq, align 1, !tbaa !7
+  %i.vr = load i8, ptr %i.vq, align 1, !tbaa !7   ; 2 uses
   %i.vs = load i32, ptr %i.vk, align 4, !tbaa !3  ; 3 uses
   %i.vt = sext i32 %i.vs to i64
   %i.vu = getelementptr inbounds [4 x i8], ptr %1, i64 %i.vt
   %i.vv = load i32, ptr %i.vu, align 4, !tbaa !3
   %i.vw = sext i32 %i.vv to i64
   %i.vx = getelementptr inbounds i8, ptr %i.ce, i64 %i.vw
-  %i.vy = load i8, ptr %i.vx, align 1, !tbaa !7
+  %i.vy = load i8, ptr %i.vx, align 1, !tbaa !7   ; 2 uses
   %i.vz = icmp ugt i8 %i.vr, %i.vy                ; 4 uses
-  %spec.select.i61.i = select i1 %i.vz, ptr %i.vj, ptr %i.vk
   %i.wa = select i1 %i.vz, i32 %i.vl, i32 %i.vs
   %i.wb = sext i32 %i.wa to i64
   %i.wc = getelementptr inbounds [4 x i8], ptr %1, i64 %i.wb
   %i.wd = load i32, ptr %i.wc, align 4, !tbaa !3
   %i.we = sext i32 %i.wd to i64
   %i.wf = getelementptr inbounds i8, ptr %i.ce, i64 %i.we
-  %i.wg = load i8, ptr %i.wf, align 1, !tbaa !7   ; 2 uses
+  %i.wg = load i8, ptr %i.wf, align 1, !tbaa !7
   %i.wh = load i32, ptr %i.vh, align 4, !tbaa !3
   %i.wi = sext i32 %i.wh to i64
   %i.wj = getelementptr inbounds [4 x i8], ptr %1, i64 %i.wi
@@ -663,7 +663,12 @@ _ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60.i: ; preds = %bb.ax, %_ZN11d
   %i.wm = getelementptr inbounds i8, ptr %i.ce, i64 %i.wl
   %i.wn = load i8, ptr %i.wm, align 1, !tbaa !7   ; 2 uses
   %i.wo = icmp ugt i8 %i.wg, %i.wn
-  br i1 %i.wo, label %bb.ay, label %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65.i
+  br i1 %i.wo, label %bb.ay, label %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60._ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65_crit_edge.i
+
+_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60._ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65_crit_edge.i: ; preds = %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60.i
+  %5 = tail call i8 @llvm.umax.i8(i8 %i.vr, i8 %i.vy)
+  %spec.select.i61.i = select i1 %i.vz, ptr %i.vj, ptr %i.vk
+  br label %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65.i
 
 bb.ay:                                            ; preds = %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60.i
   %spec.select28.i63.i = select i1 %i.vz, ptr %i.vk, ptr %i.vj
@@ -685,9 +690,9 @@ bb.ay:                                            ; preds = %_ZN11duckdb_zstdL10
   %.pre75.i = load i8, ptr %.phi.trans.insert74.i, align 1, !tbaa !7
   br label %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65.i
 
-_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65.i: ; preds = %bb.ay, %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60.i
-  %i.wx = phi i8 [ %i.wg, %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60.i ], [ %.pre75.i, %bb.ay ] ; 2 uses
-  %.0.i62.i = phi ptr [ %spec.select.i61.i, %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60.i ], [ %spec.select28..i64.i, %bb.ay ]
+_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65.i: ; preds = %bb.ay, %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60._ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65_crit_edge.i
+  %i.wx = phi i8 [ %.pre75.i, %bb.ay ], [ %5, %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60._ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65_crit_edge.i ] ; 2 uses
+  %.0.i62.i = phi ptr [ %spec.select28..i64.i, %bb.ay ], [ %spec.select.i61.i, %_ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit60._ZN11duckdb_zstdL10ss_median3EPKhPKiPiS4_S4_.exit65_crit_edge.i ]
   %i.wy = load i32, ptr %.0.i52.i, align 4, !tbaa !3 ; 3 uses
   %i.wz = sext i32 %i.wy to i64
   %i.xa = getelementptr inbounds [4 x i8], ptr %1, i64 %i.wz
