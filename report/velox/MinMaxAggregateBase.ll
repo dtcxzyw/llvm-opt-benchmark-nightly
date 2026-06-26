@@ -201,18 +201,17 @@ bb.bt:                                            ; preds = %_ZNK8facebook5velox
 
 bb.bu:                                            ; preds = %_ZN8facebook5velox9functions9aggregate12_GLOBAL__N_125SimpleNumericMinAggregateIbE11updateGroupERbb.exit120.i, %.lr.ph.i40.i
   %indvars.iv.i41.i = phi i64 [ %i.tq, %.lr.ph.i40.i ], [ %indvars.iv.next.i46.i, %_ZN8facebook5velox9functions9aggregate12_GLOBAL__N_125SimpleNumericMinAggregateIbE11updateGroupERbb.exit120.i ] ; 3 uses
-  %6 = trunc nsw i64 %indvars.iv.i41.i to i32
   br i1 %i.ts, label %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
   %i.tu = getelementptr inbounds [4 x i8], ptr %i.tt, i64 %indvars.iv.i41.i
   %i.tv = load i32, ptr %i.tu, align 4, !tbaa !3
+  %6 = sext i32 %i.tv to i64
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i: ; preds = %bb.bv, %bb.bu
-  %.0.i.i.i.i43.i = phi i32 [ %i.tv, %bb.bv ], [ %6, %bb.bu ]
-  %7 = sext i32 %.0.i.i.i.i43.i to i64            ; 2 uses
-  %i.tw = lshr i64 %7, 6
+  %.0.i.i.i.i43.i = phi i64 [ %6, %bb.bv ], [ %indvars.iv.i41.i, %bb.bu ] ; 2 uses
+  %i.tw = lshr i64 %.0.i.i.i.i43.i, 6
   %i.tx = getelementptr inbounds nuw [8 x i8], ptr %i.tr, i64 %i.tw
   %i.ty = load i64, ptr %i.tx, align 8, !tbaa !272
   %i.tz = load i64, ptr %i.tm, align 8, !tbaa !316
@@ -239,7 +238,7 @@ bb.bx:                                            ; preds = %bb.bw
   br label %_ZZN8facebook5velox9functions9aggregate22SimpleNumericAggregateIbbbE14updateOneGroupIbbPFvRbbEZNS2_12_GLOBAL__N_125SimpleNumericMinAggregateIbE22addSingleGroupRawInputEPcRKNS0_17SelectivityVectorERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISJ_EEbEUlS6_biE_EEvSC_SF_RKSJ_T1_T2_bT_ENKUliE1_clEi.exit.i.i
 
 _ZZN8facebook5velox9functions9aggregate22SimpleNumericAggregateIbbbE14updateOneGroupIbbPFvRbbEZNS2_12_GLOBAL__N_125SimpleNumericMinAggregateIbE22addSingleGroupRawInputEPcRKNS0_17SelectivityVectorERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISJ_EEbEUlS6_biE_EEvSC_SF_RKSJ_T1_T2_bT_ENKUliE1_clEi.exit.i.i: ; preds = %bb.bx, %bb.bw, %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i
-  %i.uk = and i64 %7, 63
+  %i.uk = and i64 %.0.i.i.i.i43.i, 63
   %i.ul = load i32, ptr %i.tp, align 8, !tbaa !248
   %i.um = sext i32 %i.ul to i64
   %i.un = getelementptr inbounds i8, ptr %1, i64 %i.um ; 2 uses
@@ -642,18 +641,17 @@ bb.bt:                                            ; preds = %_ZNK8facebook5velox
 
 bb.bu:                                            ; preds = %_ZN8facebook5velox9functions9aggregate12_GLOBAL__N_125SimpleNumericMaxAggregateIbE11updateGroupERbb.exit120.i, %.lr.ph.i40.i
   %indvars.iv.i41.i = phi i64 [ %i.tx, %.lr.ph.i40.i ], [ %indvars.iv.next.i46.i, %_ZN8facebook5velox9functions9aggregate12_GLOBAL__N_125SimpleNumericMaxAggregateIbE11updateGroupERbb.exit120.i ] ; 3 uses
-  %6 = trunc nsw i64 %indvars.iv.i41.i to i32
   br i1 %i.tz, label %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
   %i.ub = getelementptr inbounds [4 x i8], ptr %i.ua, i64 %indvars.iv.i41.i
   %i.uc = load i32, ptr %i.ub, align 4, !tbaa !3
+  %6 = sext i32 %i.uc to i64
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i: ; preds = %bb.bv, %bb.bu
-  %.0.i.i.i.i43.i = phi i32 [ %i.uc, %bb.bv ], [ %6, %bb.bu ]
-  %7 = sext i32 %.0.i.i.i.i43.i to i64            ; 2 uses
-  %i.ud = lshr i64 %7, 6
+  %.0.i.i.i.i43.i = phi i64 [ %6, %bb.bv ], [ %indvars.iv.i41.i, %bb.bu ] ; 2 uses
+  %i.ud = lshr i64 %.0.i.i.i.i43.i, 6
   %i.ue = getelementptr inbounds nuw [8 x i8], ptr %i.ty, i64 %i.ud
   %i.uf = load i64, ptr %i.ue, align 8, !tbaa !272
   %i.ug = load i64, ptr %i.tt, align 8, !tbaa !316
@@ -680,7 +678,7 @@ bb.bx:                                            ; preds = %bb.bw
   br label %_ZZN8facebook5velox9functions9aggregate22SimpleNumericAggregateIbbbE14updateOneGroupIbbPFvRbbEZNS2_12_GLOBAL__N_125SimpleNumericMaxAggregateIbE22addSingleGroupRawInputEPcRKNS0_17SelectivityVectorERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISJ_EEbEUlS6_biE_EEvSC_SF_RKSJ_T1_T2_bT_ENKUliE1_clEi.exit.i.i
 
 _ZZN8facebook5velox9functions9aggregate22SimpleNumericAggregateIbbbE14updateOneGroupIbbPFvRbbEZNS2_12_GLOBAL__N_125SimpleNumericMaxAggregateIbE22addSingleGroupRawInputEPcRKNS0_17SelectivityVectorERKSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISJ_EEbEUlS6_biE_EEvSC_SF_RKSJ_T1_T2_bT_ENKUliE1_clEi.exit.i.i: ; preds = %bb.bx, %bb.bw, %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i.i42.i
-  %i.ur = and i64 %7, 63
+  %i.ur = and i64 %.0.i.i.i.i43.i, 63
   %i.us = shl nuw i64 1, %i.ur
   %i.ut = and i64 %i.us, %i.uf
   %i.uu = icmp ne i64 %i.ut, 0

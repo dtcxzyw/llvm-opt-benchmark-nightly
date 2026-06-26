@@ -201,8 +201,12 @@ bb.d:                                             ; preds = %bb.c
   %i.q = icmp sgt i64 %i.p, 0
   br i1 %i.q, label %.lr.ph.i, label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.d
-  %.016.lcssa.i = phi i16 [ 0, %bb.d ], [ %spec.select20.i, %.lr.ph.i ]
+._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
+  %5 = zext i16 %spec.select20.i to i64
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.d
+  %.016.lcssa.i = phi i64 [ 0, %bb.d ], [ %5, %._crit_edge.i.loopexit ]
   %i.r = sdiv i16 %i.o, 8
   %i.s = sext i16 %i.r to i64                     ; 2 uses
   %i.t = getelementptr inbounds i8, ptr %.sroa.0.0, i64 %i.s
@@ -235,7 +239,7 @@ bb.d:                                             ; preds = %bb.c
   %spec.select20.i = add i16 %.01631.i, %i.ao     ; 2 uses
   %i.ap = add nuw nsw i64 %.01532.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ap, %i.p
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !16
+  br i1 %exitcond.not.i, label %._crit_edge.i.loopexit, label %.lr.ph.i, !llvm.loop !16
 
 bb.e:                                             ; preds = %bb.c
   %i.aq = load i64, ptr %.sroa.0.0, align 1       ; 2 uses
@@ -263,7 +267,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 8
   %i.bc = add nsw i64 %.sroa.17.0, -64
-  %5 = trunc nuw nsw i64 %i.az to i16
   br label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit
 
 _ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit: ; preds = %._crit_edge.i, %bb.h
@@ -271,9 +274,10 @@ _ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS
   %.sroa.17.1 = phi i64 [ %i.v, %._crit_edge.i ], [ %i.bc, %bb.h ]
   %.sroa.0.1 = phi ptr [ %i.t, %._crit_edge.i ], [ %i.ba, %bb.h ]
   %.sroa.0.0.i = phi i1 [ %i.x, %._crit_edge.i ], [ false, %bb.h ]
-  %.sroa.4.0.i = phi i16 [ %.016.lcssa.i, %._crit_edge.i ], [ %5, %bb.h ]
-  %6 = sext i16 %.sroa.4.0.i to i64
-  %i.bd = add nsw i64 %.07, %6
+  %.sroa.4.0.i = phi i64 [ %.016.lcssa.i, %._crit_edge.i ], [ %i.az, %bb.h ]
+  %sext = shl nuw i64 %.sroa.4.0.i, 48
+  %6 = ashr exact i64 %sext, 48
+  %i.bd = add nsw i64 %6, %.07
   br i1 %.sroa.0.0.i, label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit.thread, label %bb.b
 
 _ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit.thread: ; preds = %bb.b, %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit

@@ -201,8 +201,7 @@ _ZN8facebook5velox10FlatVectorIiE7setNullEib.exit.i: ; preds = %.noexc121
   %i.dj = getelementptr inbounds nuw i8, ptr %i.df, i64 16
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !254, !noalias !356
   %i.dl = lshr i64 %indvars.iv.i4.i, 3
-  %49 = and i64 %i.dl, 536870911
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.dk, i64 %49 ; 2 uses
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.dl ; 2 uses
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !102, !noalias !356
   %i.do = and i64 %indvars.iv.i4.i, 7
   %i.dp = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.do
@@ -235,10 +234,8 @@ bb.u:                                             ; preds = %bb.t
 
 _ZN8facebook5velox10FlatVectorIiE12ensureValuesEv.exit.i.i: ; preds = %.noexc123, %bb.t
   %i.ed = phi ptr [ %i.ea, %bb.t ], [ %.pre.i.i119, %.noexc123 ]
-  %sext261 = shl i64 %indvars.iv.i4.i, 32
-  %50 = ashr exact i64 %sext261, 30
-  %51 = getelementptr inbounds i8, ptr %i.ed, i64 %50
-  store i32 %.0.copyload.i115, ptr %51, align 4, !tbaa !3, !noalias !356
+  %49 = getelementptr inbounds [4 x i8], ptr %i.ed, i64 %indvars.iv.i4.i
+  store i32 %.0.copyload.i115, ptr %49, align 4, !tbaa !3, !noalias !356
   %i.ee = load ptr, ptr %i.cw, align 8, !tbaa !245, !noalias !356
   %.not.i.i116 = icmp eq ptr %i.ee, null
   br i1 %.not.i.i116, label %_ZN8facebook5velox3row12_GLOBAL__N_119readFixedWidthValueIiEEvbPKcPNS0_10FlatVectorIT_EEi.exit, label %bb.v
@@ -367,8 +364,7 @@ _ZN8facebook5velox10FlatVectorIaE7setNullEib.exit.i: ; preds = %.noexc110
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fu, i64 16
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !254, !noalias !392
   %i.ga = lshr i64 %indvars.iv.i10.i, 3
-  %52 = and i64 %i.ga, 536870911
-  %i.gb = getelementptr inbounds nuw i8, ptr %i.fz, i64 %52 ; 2 uses
+  %i.gb = getelementptr inbounds nuw i8, ptr %i.fz, i64 %i.ga ; 2 uses
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !102, !noalias !392
   %i.gd = and i64 %indvars.iv.i10.i, 7
   %i.ge = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.gd
@@ -401,9 +397,7 @@ bb.aa:                                            ; preds = %bb.z
 
 _ZN8facebook5velox10FlatVectorIaE12ensureValuesEv.exit.i.i: ; preds = %.noexc112, %bb.z
   %i.gs = phi ptr [ %i.gp, %bb.z ], [ %.pre.i.i108, %.noexc112 ]
-  %sext260 = shl i64 %indvars.iv.i10.i, 32
-  %53 = ashr exact i64 %sext260, 32
-  %i.gt = getelementptr inbounds i8, ptr %i.gs, i64 %53
+  %i.gt = getelementptr inbounds i8, ptr %i.gs, i64 %indvars.iv.i10.i
   store i8 %.0.copyload.i104, ptr %i.gt, align 1, !tbaa !102, !noalias !392
   %i.gu = load ptr, ptr %i.fl, align 8, !tbaa !245, !noalias !392
   %.not.i.i105 = icmp eq ptr %i.gu, null
@@ -533,8 +527,7 @@ _ZN8facebook5velox10FlatVectorIsE7setNullEib.exit.i: ; preds = %.noexc99
   %i.io = getelementptr inbounds nuw i8, ptr %i.ik, i64 16
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !254, !noalias !417
   %i.iq = lshr i64 %indvars.iv.i16.i, 3
-  %54 = and i64 %i.iq, 536870911
-  %i.ir = getelementptr inbounds nuw i8, ptr %i.ip, i64 %54 ; 2 uses
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.ip, i64 %i.iq ; 2 uses
   %i.is = load i8, ptr %i.ir, align 1, !tbaa !102, !noalias !417
   %i.it = and i64 %indvars.iv.i16.i, 7
   %i.iu = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.it
@@ -567,10 +560,8 @@ bb.ag:                                            ; preds = %bb.af
 
 _ZN8facebook5velox10FlatVectorIsE12ensureValuesEv.exit.i.i: ; preds = %.noexc101, %bb.af
   %i.ji = phi ptr [ %i.jf, %bb.af ], [ %.pre.i.i97, %.noexc101 ]
-  %sext259 = shl i64 %indvars.iv.i16.i, 32
-  %55 = ashr exact i64 %sext259, 31
-  %56 = getelementptr inbounds i8, ptr %i.ji, i64 %55
-  store i16 %.0.copyload.i93, ptr %56, align 2, !tbaa !439, !noalias !417
+  %50 = getelementptr inbounds [2 x i8], ptr %i.ji, i64 %indvars.iv.i16.i
+  store i16 %.0.copyload.i93, ptr %50, align 2, !tbaa !439, !noalias !417
   %i.jj = load ptr, ptr %i.ib, align 8, !tbaa !245, !noalias !417
   %.not.i.i94 = icmp eq ptr %i.jj, null
   br i1 %.not.i.i94, label %_ZN8facebook5velox3row12_GLOBAL__N_119readFixedWidthValueIsEEvbPKcPNS0_10FlatVectorIT_EEi.exit, label %bb.ah
@@ -699,8 +690,7 @@ _ZN8facebook5velox10FlatVectorIlE7setNullEib.exit.i: ; preds = %.noexc88
   %i.ld = getelementptr inbounds nuw i8, ptr %i.kz, i64 16
   %i.le = load ptr, ptr %i.ld, align 8, !tbaa !254, !noalias !445
   %i.lf = lshr i64 %indvars.iv.i22.i, 3
-  %57 = and i64 %i.lf, 536870911
-  %i.lg = getelementptr inbounds nuw i8, ptr %i.le, i64 %57 ; 2 uses
+  %i.lg = getelementptr inbounds nuw i8, ptr %i.le, i64 %i.lf ; 2 uses
   %i.lh = load i8, ptr %i.lg, align 1, !tbaa !102, !noalias !445
   %i.li = and i64 %indvars.iv.i22.i, 7
   %i.lj = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.li
@@ -733,10 +723,8 @@ bb.am:                                            ; preds = %bb.al
 
 _ZN8facebook5velox10FlatVectorIlE12ensureValuesEv.exit.i.i: ; preds = %.noexc90, %bb.al
   %i.lx = phi ptr [ %i.lu, %bb.al ], [ %.pre.i.i86, %.noexc90 ]
-  %sext258 = shl i64 %indvars.iv.i22.i, 32
-  %58 = ashr exact i64 %sext258, 29
-  %59 = getelementptr inbounds i8, ptr %i.lx, i64 %58
-  store i64 %.0.copyload.i82, ptr %59, align 8, !tbaa !88, !noalias !445
+  %51 = getelementptr inbounds [8 x i8], ptr %i.lx, i64 %indvars.iv.i22.i
+  store i64 %.0.copyload.i82, ptr %51, align 8, !tbaa !88, !noalias !445
   %i.ly = load ptr, ptr %i.kq, align 8, !tbaa !245, !noalias !445
   %.not.i.i83 = icmp eq ptr %i.ly, null
   br i1 %.not.i.i83, label %_ZN8facebook5velox3row12_GLOBAL__N_119readFixedWidthValueIlEEvbPKcPNS0_10FlatVectorIT_EEi.exit, label %bb.an
@@ -865,8 +853,7 @@ _ZN8facebook5velox10FlatVectorInE7setNullEib.exit.i: ; preds = %.noexc77
   %i.ns = getelementptr inbounds nuw i8, ptr %i.no, i64 16
   %i.nt = load ptr, ptr %i.ns, align 8, !tbaa !254, !noalias !470
   %i.nu = lshr i64 %indvars.iv.i28.i, 3
-  %60 = and i64 %i.nu, 536870911
-  %i.nv = getelementptr inbounds nuw i8, ptr %i.nt, i64 %60 ; 2 uses
+  %i.nv = getelementptr inbounds nuw i8, ptr %i.nt, i64 %i.nu ; 2 uses
   %i.nw = load i8, ptr %i.nv, align 1, !tbaa !102, !noalias !470
   %i.nx = and i64 %indvars.iv.i28.i, 7
   %i.ny = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.nx
@@ -899,10 +886,8 @@ bb.as:                                            ; preds = %bb.ar
 
 _ZN8facebook5velox10FlatVectorInE12ensureValuesEv.exit.i.i: ; preds = %.noexc79, %bb.ar
   %i.om = phi ptr [ %i.oj, %bb.ar ], [ %.pre.i.i75, %.noexc79 ]
-  %sext257 = shl i64 %indvars.iv.i28.i, 32
-  %61 = ashr exact i64 %sext257, 28
-  %62 = getelementptr inbounds i8, ptr %i.om, i64 %61
-  store i128 %.0.copyload.i71, ptr %62, align 16, !tbaa !492, !noalias !470
+  %52 = getelementptr inbounds [16 x i8], ptr %i.om, i64 %indvars.iv.i28.i
+  store i128 %.0.copyload.i71, ptr %52, align 16, !tbaa !492, !noalias !470
   %i.on = load ptr, ptr %i.nf, align 8, !tbaa !245, !noalias !470
   %.not.i.i72 = icmp eq ptr %i.on, null
   br i1 %.not.i.i72, label %_ZN8facebook5velox3row12_GLOBAL__N_119readFixedWidthValueInEEvbPKcPNS0_10FlatVectorIT_EEi.exit, label %bb.at
@@ -1031,8 +1016,7 @@ _ZN8facebook5velox10FlatVectorIfE7setNullEib.exit.i: ; preds = %.noexc66
   %i.qh = getelementptr inbounds nuw i8, ptr %i.qd, i64 16
   %i.qi = load ptr, ptr %i.qh, align 8, !tbaa !254, !noalias !498
   %i.qj = lshr i64 %indvars.iv.i34.i, 3
-  %63 = and i64 %i.qj, 536870911
-  %i.qk = getelementptr inbounds nuw i8, ptr %i.qi, i64 %63 ; 2 uses
+  %i.qk = getelementptr inbounds nuw i8, ptr %i.qi, i64 %i.qj ; 2 uses
   %i.ql = load i8, ptr %i.qk, align 1, !tbaa !102, !noalias !498
   %i.qm = and i64 %indvars.iv.i34.i, 7
   %i.qn = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.qm
@@ -1065,10 +1049,8 @@ bb.ay:                                            ; preds = %bb.ax
 
 _ZN8facebook5velox10FlatVectorIfE12ensureValuesEv.exit.i.i: ; preds = %.noexc68, %bb.ax
   %i.rb = phi ptr [ %i.qy, %bb.ax ], [ %.pre.i.i64, %.noexc68 ]
-  %sext256 = shl i64 %indvars.iv.i34.i, 32
-  %64 = ashr exact i64 %sext256, 30
-  %65 = getelementptr inbounds i8, ptr %i.rb, i64 %64
-  store float %.0.copyload.i60, ptr %65, align 4, !tbaa !520, !noalias !498
+  %53 = getelementptr inbounds [4 x i8], ptr %i.rb, i64 %indvars.iv.i34.i
+  store float %.0.copyload.i60, ptr %53, align 4, !tbaa !520, !noalias !498
   %i.rc = load ptr, ptr %i.pu, align 8, !tbaa !245, !noalias !498
   %.not.i.i61 = icmp eq ptr %i.rc, null
   br i1 %.not.i.i61, label %_ZN8facebook5velox3row12_GLOBAL__N_119readFixedWidthValueIfEEvbPKcPNS0_10FlatVectorIT_EEi.exit, label %bb.az
@@ -1197,8 +1179,7 @@ _ZN8facebook5velox10FlatVectorIdE7setNullEib.exit.i: ; preds = %.noexc55
   %i.sw = getelementptr inbounds nuw i8, ptr %i.ss, i64 16
   %i.sx = load ptr, ptr %i.sw, align 8, !tbaa !254, !noalias !526
   %i.sy = lshr i64 %indvars.iv.i40.i, 3
-  %66 = and i64 %i.sy, 536870911
-  %i.sz = getelementptr inbounds nuw i8, ptr %i.sx, i64 %66 ; 2 uses
+  %i.sz = getelementptr inbounds nuw i8, ptr %i.sx, i64 %i.sy ; 2 uses
   %i.ta = load i8, ptr %i.sz, align 1, !tbaa !102, !noalias !526
   %i.tb = and i64 %indvars.iv.i40.i, 7
   %i.tc = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.tb
@@ -1231,10 +1212,8 @@ bb.be:                                            ; preds = %bb.bd
 
 _ZN8facebook5velox10FlatVectorIdE12ensureValuesEv.exit.i.i: ; preds = %.noexc57, %bb.bd
   %i.tq = phi ptr [ %i.tn, %bb.bd ], [ %.pre.i.i53, %.noexc57 ]
-  %sext255 = shl i64 %indvars.iv.i40.i, 32
-  %67 = ashr exact i64 %sext255, 29
-  %68 = getelementptr inbounds i8, ptr %i.tq, i64 %67
-  store double %.0.copyload.i50, ptr %68, align 8, !tbaa !548, !noalias !526
+  %54 = getelementptr inbounds [8 x i8], ptr %i.tq, i64 %indvars.iv.i40.i
+  store double %.0.copyload.i50, ptr %54, align 8, !tbaa !548, !noalias !526
   %i.tr = load ptr, ptr %i.sj, align 8, !tbaa !245, !noalias !526
   %.not.i.i51 = icmp eq ptr %i.tr, null
   br i1 %.not.i.i51, label %_ZN8facebook5velox3row12_GLOBAL__N_119readFixedWidthValueIdEEvbPKcPNS0_10FlatVectorIT_EEi.exit, label %bb.bf
@@ -1605,8 +1584,7 @@ _ZN8facebook5velox10FlatVectorINS0_9TimestampEE7setNullEib.exit.i: ; preds = %.n
   %i.zb = getelementptr inbounds nuw i8, ptr %i.yx, i64 16
   %i.zc = load ptr, ptr %i.zb, align 8, !tbaa !254, !noalias !585
   %i.zd = lshr i64 %indvars.iv.i81.i, 3
-  %69 = and i64 %i.zd, 536870911
-  %i.ze = getelementptr inbounds nuw i8, ptr %i.zc, i64 %69 ; 2 uses
+  %i.ze = getelementptr inbounds nuw i8, ptr %i.zc, i64 %i.zd ; 2 uses
   %i.zf = load i8, ptr %i.ze, align 1, !tbaa !102, !noalias !585
   %i.zg = and i64 %indvars.iv.i81.i, 7
   %i.zh = getelementptr inbounds nuw i8, ptr @_ZN8facebook5velox4bitsL13kZeroBitmasksE, i64 %i.zg
@@ -1659,11 +1637,9 @@ bb.bv:                                            ; preds = %_ZN8facebook5velox9
 
 _ZN8facebook5velox10FlatVectorINS0_9TimestampEE12ensureValuesEv.exit.i.i: ; preds = %.noexc47, %_ZN8facebook5velox9Timestamp10fromMicrosEl.exit.i
   %i.aad = phi ptr [ %i.aaa, %_ZN8facebook5velox9Timestamp10fromMicrosEl.exit.i ], [ %.pre.i.i, %.noexc47 ]
-  %sext = shl i64 %indvars.iv.i81.i, 32
-  %70 = ashr exact i64 %sext, 28
-  %71 = getelementptr inbounds i8, ptr %i.aad, i64 %70 ; 2 uses
-  store i64 %.sroa.0.0.i.i, ptr %71, align 8, !tbaa !88, !noalias !585
-  %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %71, i64 8
+  %55 = getelementptr inbounds [16 x i8], ptr %i.aad, i64 %indvars.iv.i81.i ; 2 uses
+  store i64 %.sroa.0.0.i.i, ptr %55, align 8, !tbaa !88, !noalias !585
+  %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %55, i64 8
   store i64 %.sroa.3.0.i.i, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !88, !noalias !585
   %i.aae = load ptr, ptr %i.yo, align 8, !tbaa !245, !noalias !585
   %.not.i.i44 = icmp eq ptr %i.aae, null

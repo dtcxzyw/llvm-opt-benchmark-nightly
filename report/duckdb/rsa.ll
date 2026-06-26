@@ -201,17 +201,17 @@ bb.e:                                             ; preds = %bb.d
   %i.cb = or i64 %i.ba, %.neg.i10.i.i.i           ; 5 uses
   %i.cc = add nuw nsw i64 %i.c, 4294967293
   %i.cd = sub i64 %i.cc, %i.af
+  %7 = and i64 %i.cd, 4294967295
   %i.ce = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !10
   %i.cf = xor i64 %i.ce, %i.cb
   %i.cg = xor i64 %i.cf, -1
   %i.ch = and i64 %i.cb, %i.ai
-  %i.ci = and i64 %i.cd, %i.cg
+  %i.ci = and i64 %7, %i.cg
   %i.cj = or i64 %i.ci, %i.ch                     ; 2 uses
-  %7 = and i64 %i.cj, 4294967295
   %i.ck = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !10
   %i.cl = xor i64 %i.ck, %i.ai                    ; 2 uses
   %i.cm = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !10 ; 3 uses
-  %i.cn = xor i64 %7, %i.cm
+  %i.cn = xor i64 %i.cj, %i.cm
   %i.co = xor i64 %i.cl, %i.cm
   %i.cp = lshr i64 %i.co, 63
   %i.cq = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !10 ; 2 uses
@@ -245,12 +245,11 @@ bb.e:                                             ; preds = %bb.d
   %i.dp = xor i64 %i.do, -1
   %i.dq = and i64 %.neg.i10.i.i53.i, %i.ai
   %i.dr = and i64 %i.cj, %i.dp
-  %i.ds = or i64 %i.dr, %i.dq
-  %8 = and i64 %i.ds, 4294967295                  ; 2 uses
+  %i.ds = or i64 %i.dr, %i.dq                     ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c
   %i.du = sub nsw i64 0, %i.ai
   %i.dv = getelementptr inbounds i8, ptr %i.dt, i64 %i.du ; 2 uses
-  %i.dw = sub nsw i64 %i.ai, %8
+  %i.dw = sub nsw i64 %i.ai, %i.ds
   call void @_Z23mbedtls_ct_memmove_leftPvmm(ptr noundef nonnull %i.dv, i64 noundef %i.ai, i64 noundef %i.dw)
   %.not.i = icmp eq i64 %6, 0
   br i1 %.not.i, label %_ZL36mbedtls_ct_rsaes_pkcs1_v15_unpaddingPhmS_mPm.exit, label %bb.f
@@ -268,7 +267,7 @@ _ZL36mbedtls_ct_rsaes_pkcs1_v15_unpaddingPhmS_mPm.exit: ; preds = %bb.e, %bb.f
   %i.ec = or i64 %i.ea, %i.eb
   %i.ed = trunc nuw nsw i64 %i.ec to i32
   %i.ee = sub nsw i32 0, %i.ed
-  store i64 %8, ptr %3, align 8, !tbaa !10
+  store i64 %i.ds, ptr %3, align 8, !tbaa !10
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %_ZL36mbedtls_ct_rsaes_pkcs1_v15_unpaddingPhmS_mPm.exit

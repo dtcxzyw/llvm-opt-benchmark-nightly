@@ -201,8 +201,6 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = %_ZN6icu_
 
 .lr.ph52:                                         ; preds = %.preheader
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %sext = shl i64 %indvars.iv.next59, 32
-  %2 = ashr exact i64 %sext, 32
   br label %bb.h
 
 bb.e:                                             ; preds = %.lr.ph47, %bb.g
@@ -237,7 +235,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %i.ce, label %bb.e, label %.preheader, !llvm.loop !25
 
 bb.h:                                             ; preds = %.lr.ph52, %bb.j
-  %indvars.iv63 = phi i64 [ %2, %.lr.ph52 ], [ %indvars.iv.next64, %bb.j ] ; 4 uses
+  %indvars.iv63 = phi i64 [ %indvars.iv.next59, %.lr.ph52 ], [ %indvars.iv.next64, %bb.j ] ; 4 uses
   %.151 = phi i32 [ %i.cb, %.lr.ph52 ], [ %i.co, %bb.j ]
   %i.cf = load i16, ptr %0, align 4
   %i.cg = sext i16 %i.cf to i64
@@ -507,7 +505,6 @@ _ZN6icu_7817double_conversion6Bignum5AlignERKS1_.exit: ; preds = %bb.a, %.lr.ph2
   br i1 %i.ax, label %._crit_edge, label %.lr.ph32
 
 .lr.ph32:                                         ; preds = %.preheader
-  %2 = and i64 %indvars.iv.next, 4294967295
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.az = sext i32 %i.ar to i64
   %invariant.gep47 = getelementptr [4 x i8], ptr %i.ay, i64 %i.az
@@ -532,7 +529,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   br i1 %i.bj, label %bb.d, label %.preheader, !llvm.loop !31
 
 bb.e:                                             ; preds = %.lr.ph32, %bb.e
-  %indvars.iv36 = phi i64 [ %2, %.lr.ph32 ], [ %indvars.iv.next37, %bb.e ] ; 2 uses
+  %indvars.iv36 = phi i64 [ %indvars.iv.next, %.lr.ph32 ], [ %indvars.iv.next37, %bb.e ] ; 2 uses
   %gep48 = getelementptr [4 x i8], ptr %invariant.gep47, i64 %indvars.iv36 ; 2 uses
   %i.bk = load i32, ptr %gep48, align 4
   %i.bl = add i32 %i.bk, -1                       ; 2 uses

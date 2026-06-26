@@ -201,9 +201,8 @@ bb.ab:                                            ; preds = %bb.aa
   unreachable
 
 rbimpl_size_mul_or_raise.exit55:                  ; preds = %bb.aa
-  %i.dj = shl nuw i64 %.0.i.i, 3
-  %1 = and i64 %i.dj, 34359738360                 ; 2 uses
-  %i.dk = alloca i8, i64 %1, align 16             ; 2 uses
+  %i.dj = shl nuw nsw i64 %.0.i.i, 3              ; 2 uses
+  %i.dk = alloca i8, i64 %i.dj, align 16          ; 2 uses
   br i1 %.not.i.i, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %rbimpl_size_mul_or_raise.exit55
@@ -221,7 +220,7 @@ rbimpl_size_mul_or_raise.exit58:                  ; preds = %bb.ad, %bb.ac
   br i1 %.not.i59, label %ruby_nonempty_memcpy.exit, label %bb.ae
 
 bb.ae:                                            ; preds = %rbimpl_size_mul_or_raise.exit58
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.dk, ptr readonly align 1 %.0.i57, i64 range(i64 -17179869184, 17179869177) %1, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.dk, ptr readonly align 1 %.0.i57, i64 range(i64 -17179869184, 17179869177) %i.dj, i1 false)
   br label %ruby_nonempty_memcpy.exit
 
 ruby_nonempty_memcpy.exit:                        ; preds = %rbimpl_size_mul_or_raise.exit58, %bb.ae

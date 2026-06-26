@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.c = load ptr, ptr %1, align 8, !tbaa !11
-  %i.d = tail call i64 @PyLong_AsLong(ptr noundef %i.c) #11 ; 5 uses
+  %i.d = tail call i64 @PyLong_AsLong(ptr noundef %i.c) #11 ; 4 uses
   %i.e = icmp eq i64 %i.d, -1
   br i1 %i.e, label %bb.e, label %bb.f
 
@@ -229,7 +229,7 @@ bb.i:                                             ; preds = %bb.h
   br label %short_converter_impl.exit
 
 .thread20:                                        ; preds = %bb.h, %bb.e, %bb.c
-  %.1 = phi i64 [ 12, %bb.c ], [ %i.d, %bb.e ], [ %i.d, %bb.h ]
+  %.1 = phi i64 [ 12, %bb.c ], [ -1, %bb.e ], [ %i.d, %bb.h ]
   %i.k = tail call ptr @PyErr_Occurred() #11
   %.not.i = icmp eq ptr %i.k, null
   br i1 %.not.i, label %bb.k, label %bb.j

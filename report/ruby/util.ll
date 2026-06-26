@@ -201,16 +201,11 @@ bb.bh:                                            ; preds = %.lr.ph1128, %bb.bg
   %indvars.iv.next1268 = add nuw nsw i64 %indvars.iv1267, 1 ; 2 uses
   %i.ii = lshr i32 %.05751124, 1
   %i.ij = icmp samesign ugt i32 %.05751124, 3
-  br i1 %i.ij, label %.lr.ph1128, label %._crit_edge1129.loopexit, !llvm.loop !41
+  br i1 %i.ij, label %.lr.ph1128, label %._crit_edge1129, !llvm.loop !41
 
-._crit_edge1129.loopexit:                         ; preds = %bb.bh
-  %sext = shl i64 %indvars.iv.next1268, 32
-  %2 = ashr exact i64 %sext, 32
-  br label %._crit_edge1129
-
-._crit_edge1129:                                  ; preds = %._crit_edge1129.loopexit, %bb.bf
-  %.0568.lcssa = phi i64 [ 0, %bb.bf ], [ %2, %._crit_edge1129.loopexit ]
-  %.sroa.067.3.lcssa = phi double [ %.sroa.067.1, %bb.bf ], [ %.sroa.067.4, %._crit_edge1129.loopexit ]
+._crit_edge1129:                                  ; preds = %bb.bh, %bb.bf
+  %.0568.lcssa = phi i64 [ 0, %bb.bf ], [ %indvars.iv.next1268, %bb.bh ]
+  %.sroa.067.3.lcssa = phi double [ %.sroa.067.1, %bb.bf ], [ %.sroa.067.4, %bb.bh ]
   %i.ik = bitcast double %.sroa.067.3.lcssa to i64 ; 2 uses
   %i.il = and i64 %i.ik, -4294967296
   %.sroa.067.4.insert.ext = add i64 %i.il, -238690780250636288

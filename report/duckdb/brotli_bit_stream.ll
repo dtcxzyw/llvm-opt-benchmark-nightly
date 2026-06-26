@@ -201,18 +201,17 @@ bb.ag:                                            ; preds = %_ZL16StoreBlockSwit
   br i1 %.not.i.i.i, label %_ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i, label %bb.af, !llvm.loop !248
 
 _ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i:     ; preds = %bb.ag, %bb.af
-  %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i290, %bb.ag ], [ %indvars.iv.next.i, %bb.af ]
-  %15 = and i64 %indvars.iv.i.lcssa, 4294967295   ; 3 uses
-  %i.lx = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %15 ; 2 uses
+  %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i290, %bb.ag ], [ %indvars.iv.next.i, %bb.af ] ; 3 uses
+  %i.lx = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %indvars.iv.i.lcssa ; 2 uses
   %i.ly = getelementptr inbounds nuw i8, ptr %i.lx, i64 2
   %i.lz = load i8, ptr %i.ly, align 2, !tbaa !251
   %i.ma = load i16, ptr %i.lx, align 4, !tbaa !249
   %i.mb = zext i16 %i.ma to i32
   %i.mc = sub i32 %i.kj, %i.mb
-  %i.md = getelementptr inbounds nuw i8, ptr %i.gv, i64 %15
+  %i.md = getelementptr inbounds nuw i8, ptr %i.gv, i64 %indvars.iv.i.lcssa
   %i.me = load i8, ptr %i.md, align 1, !tbaa !9
   %i.mf = zext i8 %i.me to i64
-  %i.mg = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %15
+  %i.mg = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %indvars.iv.i.lcssa
   %i.mh = load i16, ptr %i.mg, align 2, !tbaa !35
   %i.mi = zext i16 %i.mh to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !252)
@@ -370,18 +369,17 @@ bb.ak:                                            ; preds = %_ZL16StoreBlockSwit
   br i1 %.not.i.i.i216, label %_ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i217, label %bb.aj, !llvm.loop !248
 
 _ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i217:  ; preds = %bb.ak, %bb.aj
-  %indvars.iv.i213.lcssa = phi i64 [ %indvars.iv.i213289, %bb.ak ], [ %indvars.iv.next.i215, %bb.aj ]
-  %16 = and i64 %indvars.iv.i213.lcssa, 4294967295 ; 3 uses
-  %i.qe = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %16 ; 2 uses
+  %indvars.iv.i213.lcssa = phi i64 [ %indvars.iv.i213289, %bb.ak ], [ %indvars.iv.next.i215, %bb.aj ] ; 3 uses
+  %i.qe = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %indvars.iv.i213.lcssa ; 2 uses
   %i.qf = getelementptr inbounds nuw i8, ptr %i.qe, i64 2
   %i.qg = load i8, ptr %i.qf, align 2, !tbaa !251
   %i.qh = load i16, ptr %i.qe, align 4, !tbaa !249
   %i.qi = zext i16 %i.qh to i32
   %i.qj = sub i32 %i.or, %i.qi
-  %i.qk = getelementptr inbounds nuw i8, ptr %i.gv, i64 %16
+  %i.qk = getelementptr inbounds nuw i8, ptr %i.gv, i64 %indvars.iv.i213.lcssa
   %i.ql = load i8, ptr %i.qk, align 1, !tbaa !9
   %i.qm = zext i8 %i.ql to i64
-  %i.qn = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %16
+  %i.qn = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %indvars.iv.i213.lcssa
   %i.qo = load i16, ptr %i.qn, align 2, !tbaa !35
   %i.qp = zext i16 %i.qo to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !273)
@@ -577,18 +575,17 @@ bb.as:                                            ; preds = %_ZL16StoreBlockSwit
   br i1 %.not.i.i.i223, label %_ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i224, label %bb.ar, !llvm.loop !248
 
 _ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i224:  ; preds = %bb.as, %bb.ar
-  %indvars.iv.i220.lcssa = phi i64 [ %indvars.iv.i220291, %bb.as ], [ %indvars.iv.next.i222, %bb.ar ]
-  %17 = and i64 %indvars.iv.i220.lcssa, 4294967295 ; 3 uses
-  %i.vg = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %17 ; 2 uses
+  %indvars.iv.i220.lcssa = phi i64 [ %indvars.iv.i220291, %bb.as ], [ %indvars.iv.next.i222, %bb.ar ] ; 3 uses
+  %i.vg = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %indvars.iv.i220.lcssa ; 2 uses
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vg, i64 2
   %i.vi = load i8, ptr %i.vh, align 2, !tbaa !251
   %i.vj = load i16, ptr %i.vg, align 4, !tbaa !249
   %i.vk = zext i16 %i.vj to i32
   %i.vl = sub i32 %i.tt, %i.vk
-  %i.vm = getelementptr inbounds nuw i8, ptr %i.hb, i64 %17
+  %i.vm = getelementptr inbounds nuw i8, ptr %i.hb, i64 %indvars.iv.i220.lcssa
   %i.vn = load i8, ptr %i.vm, align 1, !tbaa !9
   %i.vo = zext i8 %i.vn to i64
-  %i.vp = getelementptr inbounds nuw [2 x i8], ptr %i.hc, i64 %17
+  %i.vp = getelementptr inbounds nuw [2 x i8], ptr %i.hc, i64 %indvars.iv.i220.lcssa
   %i.vq = load i16, ptr %i.vp, align 2, !tbaa !35
   %i.vr = zext i16 %i.vq to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !299)
@@ -927,8 +924,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 _ZL21BlockLengthPrefixCodej.exit.i:               ; preds = %bb.e, %bb.d
   %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i10, %bb.e ], [ %indvars.iv.next.i, %bb.d ]
-  %4 = and i64 %indvars.iv.i.lcssa, 4294967295
-  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %4 ; 2 uses
+  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.i.lcssa ; 2 uses
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !3
   %i.am = add i32 %i.al, 1
   store i32 %i.am, ptr %i.ak, align 4, !tbaa !3
@@ -1034,18 +1030,17 @@ bb.g:                                             ; preds = %_ZL16StoreBlockSwit
   br i1 %.not.i.i.i, label %_ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i, label %bb.f, !llvm.loop !248
 
 _ZL24GetBlockLengthPrefixCodejPmPjS0_.exit.i:     ; preds = %bb.g, %bb.f
-  %indvars.iv40.i.lcssa = phi i64 [ %indvars.iv40.i11, %bb.g ], [ %indvars.iv.next41.i, %bb.f ]
-  %5 = and i64 %indvars.iv40.i.lcssa, 4294967295  ; 3 uses
-  %i.ct = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %5 ; 2 uses
+  %indvars.iv40.i.lcssa = phi i64 [ %indvars.iv40.i11, %bb.g ], [ %indvars.iv.next41.i, %bb.f ] ; 3 uses
+  %i.ct = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %indvars.iv40.i.lcssa ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 2
   %i.cv = load i8, ptr %i.cu, align 2, !tbaa !251
   %i.cw = load i16, ptr %i.ct, align 4, !tbaa !249
   %i.cx = zext i16 %i.cw to i32
   %i.cy = sub i32 %i.cf, %i.cx
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cd, i64 %5
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.cd, i64 %indvars.iv40.i.lcssa
   %i.da = load i8, ptr %i.cz, align 1, !tbaa !9
   %i.db = zext i8 %i.da to i64
-  %i.dc = getelementptr inbounds nuw [2 x i8], ptr %i.ce, i64 %5
+  %i.dc = getelementptr inbounds nuw [2 x i8], ptr %i.ce, i64 %indvars.iv40.i.lcssa
   %i.dd = load i16, ptr %i.dc, align 2, !tbaa !35
   %i.de = zext i16 %i.dd to i64
   call void @llvm.experimental.noalias.scope.decl(metadata !371)
@@ -1448,20 +1443,19 @@ bb.e:                                             ; preds = %_ZL16StoreBlockSwit
   br i1 %.not.i.i, label %_ZL24GetBlockLengthPrefixCodejPmPjS0_.exit, label %bb.d, !llvm.loop !248
 
 _ZL24GetBlockLengthPrefixCodejPmPjS0_.exit:       ; preds = %bb.d, %bb.e
-  %indvars.iv.lcssa = phi i64 [ %indvars.iv.next, %bb.d ], [ %indvars.iv28, %bb.e ]
-  %4 = and i64 %indvars.iv.lcssa, 4294967295      ; 3 uses
-  %i.be = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %4 ; 2 uses
+  %indvars.iv.lcssa = phi i64 [ %indvars.iv.next, %bb.d ], [ %indvars.iv28, %bb.e ] ; 3 uses
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr @_ZN13duckdb_brotli24_kBrotliPrefixCodeRangesE, i64 %indvars.iv.lcssa ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 2
   %i.bg = load i8, ptr %i.bf, align 2, !tbaa !251
   %i.bh = load i16, ptr %i.be, align 4, !tbaa !249
   %i.bi = zext i16 %i.bh to i32
   %i.bj = sub i32 %i.j, %i.bi
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 830
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %4
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %indvars.iv.lcssa
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !9
   %i.bn = zext i8 %i.bm to i64
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 856
-  %i.bp = getelementptr inbounds nuw [2 x i8], ptr %i.bo, i64 %4
+  %i.bp = getelementptr inbounds nuw [2 x i8], ptr %i.bo, i64 %indvars.iv.lcssa
   %i.bq = load i16, ptr %i.bp, align 2, !tbaa !35
   %i.br = zext i16 %i.bq to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !523)

@@ -201,7 +201,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .outer.split.us.lr.ph:                            ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 824
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
-  %wide.trip.count = and i64 %.fr54, 4294967295
   br label %.outer.split.us
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -388,7 +387,7 @@ malloc_mutex_lock.exit31.us:                      ; preds = %bb.k, %bb.j
 
 bb.l:                                             ; preds = %malloc_mutex_lock.exit31.us, %.lr.ph.i.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %.fr54
   br i1 %exitcond.not, label %check_background_thread_creation.exit.thread38.loopexit.us, label %.lr.ph.i.us
 
 check_background_thread_creation.exit.thread.us:  ; preds = %check_background_thread_creation.exit.thread38.loopexit.us, %bb.h

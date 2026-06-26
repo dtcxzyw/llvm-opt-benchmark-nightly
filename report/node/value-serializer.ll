@@ -201,7 +201,7 @@ _ZNK2v88internal10HandleBase15is_identical_toERKS1_.exit.thread: ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden range(i64 0, -4294967294) i64 @_ZN2v88internal17ValueDeserializer22ReadJSObjectPropertiesENS0_12DirectHandleINS0_8JSObjectEEENS0_16SerializationTagEb(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr %1, i8 noundef zeroext %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
+define hidden range(i64 0, -536870910) i64 @_ZN2v88internal17ValueDeserializer22ReadJSObjectPropertiesENS0_12DirectHandleINS0_8JSObjectEEENS0_16SerializationTagEb(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr %1, i8 noundef zeroext %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.503", align 8 ; 4 uses
   %5 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.503", align 8 ; 4 uses
@@ -354,9 +354,8 @@ bb.h:                                             ; preds = %_ZN2v88internalL16C
   unreachable
 
 _ZN2v88internalL16CommitPropertiesEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS3_INS0_3MapEEENS_4base6VectorIKNS3_INS0_6ObjectEEEEE.exit.thread: ; preds = %_ZN2v88internal17ValueDeserializer10ConsumeTagENS0_16SerializationTagE.exit, %_ZN2v88internalL16CommitPropertiesEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS3_INS0_3MapEEENS_4base6VectorIKNS3_INS0_6ObjectEEEEE.exit
-  %.sroa.21.0.insert.ext.i = shl i64 %i.ap, 29
-  %.sroa.21.0.insert.shift.i = and i64 %.sroa.21.0.insert.ext.i, -4294967296
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.21.0.insert.shift.i, 1
+  %.sroa.21.0.insert.ext.i = shl nuw i64 %i.ap, 29
+  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.21.0.insert.ext.i, 1
   br label %_ZN2v88internal18DirectHandleVectorINS0_6ObjectEED2Ev.exit.thread
 
 .preheader531:                                    ; preds = %.lr.ph980

@@ -201,7 +201,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload = load i64, ptr %1, align 8 ; 2 uses
   %.sroa.0.sroa.3.0.extract.shift = lshr i64 %.sroa.0.0.copyload, 32
-  %.sroa.0.sroa.3.0.extract.trunc = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift to i32
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !31
   %.pre = and i64 %.sroa.0.0.copyload, 4294967295
@@ -278,14 +277,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 
 _ZN8facebook5velox10StringViewC2EPKci.exit:       ; preds = %_ZN8facebook5velox19HashStringAllocator8allocateEi.exit
   %i.aa = load i32, ptr %i.l, align 1
+  %4 = zext i32 %i.aa to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN8facebook5velox10StringViewC2EPKci.exit, %bb.b
   %.sroa.0.sroa.0.0.insert.ext.pre-phi = phi i64 [ %i.c, %_ZN8facebook5velox10StringViewC2EPKci.exit ], [ %.pre, %bb.b ]
-  %.sroa.0.sroa.3.0 = phi i32 [ %i.aa, %_ZN8facebook5velox10StringViewC2EPKci.exit ], [ %.sroa.0.sroa.3.0.extract.trunc, %bb.b ]
+  %.sroa.0.sroa.3.0 = phi i64 [ %4, %_ZN8facebook5velox10StringViewC2EPKci.exit ], [ %.sroa.0.sroa.3.0.extract.shift, %bb.b ]
   %.sroa.4.0 = phi ptr [ %i.l, %_ZN8facebook5velox10StringViewC2EPKci.exit ], [ %.sroa.4.0.copyload, %bb.b ]
-  %.sroa.0.sroa.3.0.insert.ext = zext i32 %.sroa.0.sroa.3.0 to i64
-  %.sroa.0.sroa.3.0.insert.shift = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext, 32
+  %.sroa.0.sroa.3.0.insert.shift = shl nuw i64 %.sroa.0.sroa.3.0, 32
   %.sroa.0.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift, %.sroa.0.sroa.0.0.insert.ext.pre-phi
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.0.sroa.0.0.insert.insert, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %.sroa.4.0, 1

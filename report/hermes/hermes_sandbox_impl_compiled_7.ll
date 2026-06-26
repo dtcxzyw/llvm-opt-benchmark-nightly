@@ -201,8 +201,8 @@ bb.bh:                                            ; preds = %bb.bg
   unreachable
 
 bb.bi:                                            ; preds = %.split.split
-  %i.la = add i64 %indvars.iv, %i.kk
-  %i.lb = trunc i64 %i.la to i32                  ; 2 uses
+  %i.la = add nsw i64 %indvars.iv, %i.kk
+  %i.lb = trunc nsw i64 %i.la to i32              ; 2 uses
   %i.lc = icmp uge i32 %i.lb, %i.kd
   %.not1979 = icmp ugt i32 %i.ke, %i.lb
   %or.cond2014 = select i1 %i.lc, i1 %.not1979, i1 false

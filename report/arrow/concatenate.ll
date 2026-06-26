@@ -201,36 +201,37 @@ bb.jx:                                            ; preds = %bb.jw, %bb.ju, %bb.
   %.sroa.speculated.i.i.i = call i64 @llvm.smin.i64(i64 %i.ahh, i64 32767) ; 2 uses
   %i.ahi = trunc i64 %.sroa.speculated.i.i.i to i16
   %sext.i.i.i = shl i64 %.sroa.speculated.i.i.i, 48
-  %i.ahj = ashr exact i64 %sext.i.i.i, 48         ; 2 uses
+  %i.ahj = ashr exact i64 %sext.i.i.i, 48
   %i.ahk = add nsw i64 %i.ahj, %i.ahg
   store i64 %i.ahk, ptr %i.aca, align 8, !tbaa !331, !noalias !307
   br label %.preheader.i.i.i
 
 .noexc83.i.i:                                     ; preds = %bb.jx, %bb.jo
-  %.sroa.0.0.insert.insert.i.i.i.i = phi i32 [ %i.ahe, %bb.jx ], [ 0, %bb.jo ] ; 2 uses
-  %.sroa.0.0.extract.trunc.i98.i.i = trunc i32 %.sroa.0.0.insert.insert.i.i.i.i to i16 ; 4 uses
+  %.sroa.0.0.insert.insert.i.i.i.i = phi i32 [ %i.ahe, %bb.jx ], [ 0, %bb.jo ] ; 4 uses
+  %.sroa.0.0.extract.trunc.i98.i.i = zext i32 %.sroa.0.0.insert.insert.i.i.i.i to i64
   %.sroa.4.0.extract.shift.i.i.i = lshr i32 %.sroa.0.0.insert.insert.i.i.i.i, 16 ; 2 uses
-  %.sroa.4.0.extract.trunc.i.i.i = trunc nuw i32 %.sroa.4.0.extract.shift.i.i.i to i16
-  %118 = sext i16 %.sroa.0.0.extract.trunc.i98.i.i to i64 ; 5 uses
+  %sext4.i.i.i = shl i64 %.sroa.0.0.extract.trunc.i98.i.i, 48
+  %118 = ashr exact i64 %sext4.i.i.i, 48
   %i.ahl = load i64, ptr %i.aca, align 8, !tbaa !331, !noalias !307
-  %i.ahm = add nsw i64 %i.ahl, %118
+  %i.ahm = add nsw i64 %118, %i.ahl
   store i64 %i.ahm, ptr %i.aca, align 8, !tbaa !331, !noalias !307
-  %i.ahn = icmp eq i16 %.sroa.0.0.extract.trunc.i98.i.i, %.sroa.4.0.extract.trunc.i.i.i
+  %.pre.i.i155.i = and i32 %.sroa.0.0.insert.insert.i.i.i.i, 65535
+  %.sroa.0.0.extract.trunc.i.i.i = trunc i32 %.sroa.0.0.insert.insert.i.i.i.i to i16 ; 4 uses
+  %i.ahn = icmp eq i32 %.pre.i.i155.i, %.sroa.4.0.extract.shift.i.i.i
   br i1 %i.ahn, label %.preheader.i.i.i, label %bb.ka
 
 .preheader.i.i.i:                                 ; preds = %.noexc83.i.i, %.noexc83.thread.i.i
-  %.pre-phi.i = phi i64 [ %118, %.noexc83.i.i ], [ %i.ahj, %.noexc83.thread.i.i ] ; 4 uses
-  %.sroa.0.0.i36.i.i = phi i16 [ %.sroa.0.0.extract.trunc.i98.i.i, %.noexc83.i.i ], [ %i.ahi, %.noexc83.thread.i.i ]
+  %.sroa.0.0.i36.i.i = phi i16 [ %i.ahi, %.noexc83.thread.i.i ], [ %.sroa.0.0.extract.trunc.i.i.i, %.noexc83.i.i ] ; 5 uses
   %i.aho = icmp sgt i16 %.sroa.0.0.i36.i.i, 0
   br i1 %i.aho, label %.lr.ph68.i.i.i.preheader, label %.loopexit.i.i.i
 
 .lr.ph68.i.i.i.preheader:                         ; preds = %.preheader.i.i.i
-  %xtraiter1193 = and i64 %.pre-phi.i, 1
-  %i.ahp = icmp eq i64 %.pre-phi.i, 1
+  %i.ahp = icmp eq i16 %.sroa.0.0.i36.i.i, 1
   br i1 %i.ahp, label %.lr.ph68.i.i.i.epil.preheader, label %.lr.ph68.i.i.i.preheader.new
 
 .lr.ph68.i.i.i.preheader.new:                     ; preds = %.lr.ph68.i.i.i.preheader
-  %unroll_iter1197 = and i64 %.pre-phi.i, -2
+  %119 = and i16 %.sroa.0.0.i36.i.i, 32766
+  %unroll_iter1195 = zext nneg i16 %119 to i64
   br label %.lr.ph68.i.i.i
 
 .lr.ph68.i.i.i:                                   ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1, %.lr.ph68.i.i.i.preheader.new
@@ -267,7 +268,7 @@ bb.jz:                                            ; preds = %_ZZN5arrow12_GLOBAL
 _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1: ; preds = %bb.jz, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i
   %i.aif = add nsw i64 %.166.i.i.i, 2             ; 3 uses
   %niter1198.next.1 = add i64 %niter1198, 2       ; 2 uses
-  %niter1198.ncmp.1 = icmp eq i64 %niter1198.next.1, %unroll_iter1197
+  %niter1198.ncmp.1 = icmp eq i64 %niter1198.next.1, %unroll_iter1195
   br i1 %niter1198.ncmp.1, label %.loopexit.i.i.i.loopexit.unr-lcssa, label %.lr.ph68.i.i.i, !llvm.loop !332
 
 bb.ka:                                            ; preds = %.noexc83.i.i
@@ -275,7 +276,8 @@ bb.ka:                                            ; preds = %.noexc83.i.i
   br i1 %i.aig, label %bb.kb, label %.preheader62.i.i.i
 
 .preheader62.i.i.i:                               ; preds = %bb.ka
-  %i.aih = icmp sgt i16 %.sroa.0.0.extract.trunc.i98.i.i, 0
+  %120 = sext i16 %.sroa.0.0.extract.trunc.i.i.i to i64
+  %i.aih = icmp sgt i16 %.sroa.0.0.extract.trunc.i.i.i, 0
   br i1 %i.aih, label %.lr.ph.i77.i.i, label %.loopexit.i.i.i
 
 .lr.ph.i77.i.i:                                   ; preds = %.preheader62.i.i.i
@@ -284,9 +286,10 @@ bb.ka:                                            ; preds = %.noexc83.i.i
 
 bb.kb:                                            ; preds = %bb.ka
   %i.aij = getelementptr inbounds [4 x i8], ptr %i.acv, i64 %.03170.i.i.i
-  %i.aik = shl nsw i64 %118, 2
+  %121 = sext i16 %.sroa.0.0.extract.trunc.i.i.i to i64 ; 2 uses
+  %i.aik = shl nsw i64 %121, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.aij, i8 0, i64 %i.aik, i1 false), !noalias !319
-  %i.ail = add nsw i64 %.03170.i.i.i, %118
+  %i.ail = add nsw i64 %.03170.i.i.i, %121
   br label %.loopexit.i.i.i
 
 bb.kc:                                            ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit40.i.i.i, %.lr.ph.i77.i.i
@@ -323,16 +326,17 @@ bb.kf:                                            ; preds = %bb.kc
 _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit40.i.i.i: ; preds = %bb.kf, %bb.ke, %bb.kd
   %i.ajb = add nuw nsw i64 %.065.i.i.i, 1         ; 2 uses
   %i.ajc = add nsw i64 %.264.i.i.i, 1             ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %i.ajb, %118
+  %exitcond.not.i.i.i = icmp eq i64 %i.ajb, %120
   br i1 %exitcond.not.i.i.i, label %.loopexit.i.i.i, label %bb.kc, !llvm.loop !337
 
 .loopexit.i.i.i.loopexit.unr-lcssa:               ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1
-  %lcmp.mod1194.not = icmp eq i64 %xtraiter1193, 0
+  %122 = and i16 %.sroa.0.0.i36.i.i, 1
+  %lcmp.mod1194.not = icmp eq i16 %122, 0
   br i1 %lcmp.mod1194.not, label %.loopexit.i.i.i, label %.lr.ph68.i.i.i.epil.preheader
 
 .lr.ph68.i.i.i.epil.preheader:                    ; preds = %.loopexit.i.i.i.loopexit.unr-lcssa, %.lr.ph68.i.i.i.preheader
   %.166.i.i.i.epil.init = phi i64 [ %.03170.i.i.i, %.lr.ph68.i.i.i.preheader ], [ %i.aif, %.loopexit.i.i.i.loopexit.unr-lcssa ] ; 4 uses
-  %lcmp.mod1196 = trunc i64 %.pre-phi.i to i1
+  %lcmp.mod1196 = trunc i16 %.sroa.0.0.i36.i.i to i1
   call void @llvm.assume(i1 %lcmp.mod1196)
   %i.ajd = getelementptr inbounds [4 x i8], ptr %i.acv, i64 %.166.i.i.i.epil.init
   %i.aje = load i32, ptr %i.ajd, align 4, !tbaa !3, !noalias !319
@@ -735,36 +739,37 @@ bb.tl:                                            ; preds = %bb.tk, %bb.ti, %bb.
   %.sroa.speculated.i.i.i221 = call i64 @llvm.smin.i64(i64 %i.bms, i64 32767) ; 2 uses
   %i.bmt = trunc i64 %.sroa.speculated.i.i.i221 to i16
   %sext.i.i.i222 = shl i64 %.sroa.speculated.i.i.i221, 48
-  %i.bmu = ashr exact i64 %sext.i.i.i222, 48      ; 2 uses
+  %i.bmu = ashr exact i64 %sext.i.i.i222, 48
   %i.bmv = add nsw i64 %i.bmu, %i.bmr
   store i64 %i.bmv, ptr %i.bhk, align 8, !tbaa !331, !noalias !413
   br label %.preheader.i.i.i224
 
 .noexc83.i.i236:                                  ; preds = %bb.tl, %bb.tc
-  %.sroa.0.0.insert.insert.i.i.i.i237 = phi i32 [ %i.bmp, %bb.tl ], [ 0, %bb.tc ] ; 2 uses
-  %.sroa.0.0.extract.trunc.i98.i.i238 = trunc i32 %.sroa.0.0.insert.insert.i.i.i.i237 to i16 ; 4 uses
+  %.sroa.0.0.insert.insert.i.i.i.i237 = phi i32 [ %i.bmp, %bb.tl ], [ 0, %bb.tc ] ; 4 uses
+  %.sroa.0.0.extract.trunc.i98.i.i236 = zext i32 %.sroa.0.0.insert.insert.i.i.i.i237 to i64
   %.sroa.4.0.extract.shift.i.i.i239 = lshr i32 %.sroa.0.0.insert.insert.i.i.i.i237, 16 ; 2 uses
-  %.sroa.4.0.extract.trunc.i.i.i240 = trunc nuw i32 %.sroa.4.0.extract.shift.i.i.i239 to i16
-  %119 = sext i16 %.sroa.0.0.extract.trunc.i98.i.i238 to i64 ; 5 uses
+  %sext4.i.i.i238 = shl i64 %.sroa.0.0.extract.trunc.i98.i.i236, 48
+  %123 = ashr exact i64 %sext4.i.i.i238, 48
   %i.bmw = load i64, ptr %i.bhk, align 8, !tbaa !331, !noalias !413
-  %i.bmx = add nsw i64 %i.bmw, %119
+  %i.bmx = add nsw i64 %123, %i.bmw
   store i64 %i.bmx, ptr %i.bhk, align 8, !tbaa !331, !noalias !413
-  %i.bmy = icmp eq i16 %.sroa.0.0.extract.trunc.i98.i.i238, %.sroa.4.0.extract.trunc.i.i.i240
+  %.pre.i.i148.i = and i32 %.sroa.0.0.insert.insert.i.i.i.i237, 65535
+  %.sroa.0.0.extract.trunc.i.i.i239 = trunc i32 %.sroa.0.0.insert.insert.i.i.i.i237 to i16 ; 4 uses
+  %i.bmy = icmp eq i32 %.pre.i.i148.i, %.sroa.4.0.extract.shift.i.i.i239
   br i1 %i.bmy, label %.preheader.i.i.i224, label %bb.to
 
 .preheader.i.i.i224:                              ; preds = %.noexc83.i.i236, %.noexc83.thread.i.i220
-  %.pre-phi.i225 = phi i64 [ %119, %.noexc83.i.i236 ], [ %i.bmu, %.noexc83.thread.i.i220 ] ; 4 uses
-  %.sroa.0.0.i33.i.i = phi i16 [ %.sroa.0.0.extract.trunc.i98.i.i238, %.noexc83.i.i236 ], [ %i.bmt, %.noexc83.thread.i.i220 ]
+  %.sroa.0.0.i33.i.i = phi i16 [ %i.bmt, %.noexc83.thread.i.i220 ], [ %.sroa.0.0.extract.trunc.i.i.i239, %.noexc83.i.i236 ] ; 5 uses
   %i.bmz = icmp sgt i16 %.sroa.0.0.i33.i.i, 0
   br i1 %i.bmz, label %.lr.ph68.i.i.i228.preheader, label %.loopexit.i.i.i226
 
 .lr.ph68.i.i.i228.preheader:                      ; preds = %.preheader.i.i.i224
-  %xtraiter1181 = and i64 %.pre-phi.i225, 1
-  %i.bna = icmp eq i64 %.pre-phi.i225, 1
+  %i.bna = icmp eq i16 %.sroa.0.0.i33.i.i, 1
   br i1 %i.bna, label %.lr.ph68.i.i.i228.epil.preheader, label %.lr.ph68.i.i.i228.preheader.new
 
 .lr.ph68.i.i.i228.preheader.new:                  ; preds = %.lr.ph68.i.i.i228.preheader
-  %unroll_iter1185 = and i64 %.pre-phi.i225, -2
+  %124 = and i16 %.sroa.0.0.i33.i.i, 32766
+  %unroll_iter1183 = zext nneg i16 %124 to i64
   br label %.lr.ph68.i.i.i228
 
 .lr.ph68.i.i.i228:                                ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1, %.lr.ph68.i.i.i228.preheader.new
@@ -801,7 +806,7 @@ bb.tn:                                            ; preds = %_ZZN5arrow12_GLOBAL
 _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1: ; preds = %bb.tn, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i
   %i.bnq = add nsw i64 %.166.i.i.i230, 2          ; 3 uses
   %niter1186.next.1 = add i64 %niter1186, 2       ; 2 uses
-  %niter1186.ncmp.1 = icmp eq i64 %niter1186.next.1, %unroll_iter1185
+  %niter1186.ncmp.1 = icmp eq i64 %niter1186.next.1, %unroll_iter1183
   br i1 %niter1186.ncmp.1, label %.loopexit.i.i.i226.loopexit.unr-lcssa, label %.lr.ph68.i.i.i228, !llvm.loop !431
 
 bb.to:                                            ; preds = %.noexc83.i.i236
@@ -809,14 +814,16 @@ bb.to:                                            ; preds = %.noexc83.i.i236
   br i1 %i.bnr, label %bb.tp, label %.preheader62.i.i.i241
 
 .preheader62.i.i.i241:                            ; preds = %bb.to
-  %i.bns = icmp sgt i16 %.sroa.0.0.extract.trunc.i98.i.i238, 0
+  %125 = sext i16 %.sroa.0.0.extract.trunc.i.i.i239 to i64
+  %i.bns = icmp sgt i16 %.sroa.0.0.extract.trunc.i.i.i239, 0
   br i1 %i.bns, label %.lr.ph.i77.i.i242, label %.loopexit.i.i.i226
 
 bb.tp:                                            ; preds = %bb.to
   %i.bnt = getelementptr inbounds [8 x i8], ptr %i.bie, i64 %.03170.i.i.i219
-  %i.bnu = shl nsw i64 %119, 3
+  %126 = sext i16 %.sroa.0.0.extract.trunc.i.i.i239 to i64 ; 2 uses
+  %i.bnu = shl nsw i64 %126, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.bnt, i8 0, i64 %i.bnu, i1 false), !noalias !424
-  %i.bnv = add nsw i64 %.03170.i.i.i219, %119
+  %i.bnv = add nsw i64 %.03170.i.i.i219, %126
   br label %.loopexit.i.i.i226
 
 .lr.ph.i77.i.i242:                                ; preds = %.preheader62.i.i.i241, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit40.i.i.i
@@ -854,16 +861,17 @@ bb.ts:                                            ; preds = %.lr.ph.i77.i.i242
 _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit40.i.i.i: ; preds = %bb.ts, %bb.tr, %bb.tq
   %i.bom = add nuw nsw i64 %.065.i.i.i243, 1      ; 2 uses
   %i.bon = add nsw i64 %.264.i.i.i244, 1          ; 2 uses
-  %exitcond.not.i.i.i245 = icmp eq i64 %i.bom, %119
+  %exitcond.not.i.i.i245 = icmp eq i64 %i.bom, %125
   br i1 %exitcond.not.i.i.i245, label %.loopexit.i.i.i226, label %.lr.ph.i77.i.i242, !llvm.loop !433
 
 .loopexit.i.i.i226.loopexit.unr-lcssa:            ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1
-  %lcmp.mod1182.not = icmp eq i64 %xtraiter1181, 0
+  %127 = and i16 %.sroa.0.0.i33.i.i, 1
+  %lcmp.mod1182.not = icmp eq i16 %127, 0
   br i1 %lcmp.mod1182.not, label %.loopexit.i.i.i226, label %.lr.ph68.i.i.i228.epil.preheader
 
 .lr.ph68.i.i.i228.epil.preheader:                 ; preds = %.loopexit.i.i.i226.loopexit.unr-lcssa, %.lr.ph68.i.i.i228.preheader
   %.166.i.i.i230.epil.init = phi i64 [ %.03170.i.i.i219, %.lr.ph68.i.i.i228.preheader ], [ %i.bnq, %.loopexit.i.i.i226.loopexit.unr-lcssa ] ; 4 uses
-  %lcmp.mod1184 = trunc i64 %.pre-phi.i225 to i1
+  %lcmp.mod1184 = trunc i16 %.sroa.0.0.i33.i.i to i1
   call void @llvm.assume(i1 %lcmp.mod1184)
   %i.boo = getelementptr inbounds [8 x i8], ptr %i.bie, i64 %.166.i.i.i230.epil.init
   %i.bop = load i64, ptr %i.boo, align 8, !tbaa !175, !noalias !424
@@ -1266,15 +1274,16 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.e
   br label %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit
 
 _ZN5arrow8internal15BitBlockCounter8NextWordEv.exit: ; preds = %bb.b, %bb.k
-  %.sroa.0.0.insert.insert.i = phi i32 [ %i.aa, %bb.k ], [ 0, %bb.b ] ; 2 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %.sroa.0.0.insert.insert.i to i16 ; 2 uses
+  %.sroa.0.0.insert.insert.i = phi i32 [ %i.aa, %bb.k ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.0.0.extract.trunc = zext i32 %.sroa.0.0.insert.insert.i to i64
   %.sroa.4.0.extract.shift = lshr i32 %.sroa.0.0.insert.insert.i, 16
-  %.sroa.4.0.extract.trunc = trunc nuw i32 %.sroa.4.0.extract.shift to i16
-  %1 = sext i16 %.sroa.0.0.extract.trunc to i64
+  %sext4 = shl i64 %.sroa.0.0.extract.trunc, 48
+  %1 = ashr exact i64 %sext4, 48
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !331
-  %i.ad = add nsw i64 %i.ac, %1
+  %i.ad = add nsw i64 %1, %i.ac
   store i64 %i.ad, ptr %i.ab, align 8, !tbaa !331
+  %.pre = and i32 %.sroa.0.0.insert.insert.i, 65535
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.a
@@ -1284,20 +1293,19 @@ bb.l:                                             ; preds = %bb.a
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !331 ; 2 uses
   %i.ai = sub nsw i64 %i.af, %i.ah
   %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.ai, i64 32767) ; 2 uses
-  %2 = trunc i64 %.sroa.speculated to i16         ; 2 uses
+  %2 = trunc i64 %.sroa.speculated to i32
   %sext = shl i64 %.sroa.speculated, 48
   %i.aj = ashr exact i64 %sext, 48
   %i.ak = add nsw i64 %i.aj, %i.ah
   store i64 %i.ak, ptr %i.ag, align 8, !tbaa !331
+  %3 = and i32 %2, 65535                          ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit
-  %.sroa.0.0 = phi i16 [ %.sroa.0.0.extract.trunc, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ], [ %2, %bb.l ]
-  %.sroa.4.0 = phi i16 [ %.sroa.4.0.extract.trunc, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ], [ %2, %bb.l ]
-  %.sroa.4.0.insert.ext = zext i16 %.sroa.4.0 to i32
-  %.sroa.4.0.insert.shift = shl nuw i32 %.sroa.4.0.insert.ext, 16
-  %.sroa.0.0.insert.ext = zext i16 %.sroa.0.0 to i32
-  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.ext.pre-phi = phi i32 [ %3, %bb.l ], [ %.pre, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ]
+  %.sroa.4.0 = phi i32 [ %3, %bb.l ], [ %.sroa.4.0.extract.shift, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ]
+  %.sroa.4.0.insert.shift = shl nuw i32 %.sroa.4.0, 16
+  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext.pre-phi
   ret i32 %.sroa.0.0.insert.insert
 }
 

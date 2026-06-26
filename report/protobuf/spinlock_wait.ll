@@ -52,8 +52,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 3 uses
-  %i.e = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %indvars.iv
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 2 uses
+  %i.e = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %indvars.iv ; 3 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9
   %.not24 = icmp eq i32 %i.d, %i.f
   br i1 %.not24, label %.critedge, label %bb.c
@@ -73,9 +73,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.outer32
 
 .critedge:                                        ; preds = %bb.b
-  %4 = and i64 %indvars.iv, 4294967295
-  %5 = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.i = load i32, ptr %i.h, align 4, !tbaa !13   ; 2 uses
   %i.j = icmp eq i32 %i.i, %i.d
   br i1 %i.j, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread, label %bb.d
@@ -86,7 +84,7 @@ bb.d:                                             ; preds = %.critedge
   br i1 %i.l, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread, label %.lr.ph, !llvm.loop !7
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread: ; preds = %bb.d, %.critedge
-  %i.m = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.n = load i8, ptr %i.m, align 4, !tbaa !14, !range !15, !noundef !16
   %i.o = trunc nuw i8 %i.n to i1
   br i1 %i.o, label %bb.e, label %.outer32, !llvm.loop !7

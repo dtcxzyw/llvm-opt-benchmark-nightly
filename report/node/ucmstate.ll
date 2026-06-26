@@ -201,10 +201,9 @@ bb.al:                                            ; preds = %.lr.ph.i198.us.us.i
   br i1 %exitcond.not.i201.us.us.i, label %ucm_findFallback.exit203.thread.us234.us.i, label %.lr.ph.i198.us.us.i, !llvm.loop !27
 
 ucm_findFallback.exit203.us.us.i:                 ; preds = %.lr.ph.i198.us.us.i
-  %5 = or disjoint i32 %i.ku, -2147483648
-  %6 = and i64 %indvars.iv.i199.us.us.i, 4294967295
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %6
-  store i32 %5, ptr %7, align 4
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i199.us.us.i
+  %6 = or disjoint i32 %i.ku, -2147483648
+  store i32 %6, ptr %5, align 4
   br label %ucm_findFallback.exit203.thread.us234.us.i
 
 ucm_findFallback.exit203.thread.us234.us.i:       ; preds = %bb.al, %ucm_findFallback.exit203.us.us.i, %bb.ak, %bb.aj, %bb.ai

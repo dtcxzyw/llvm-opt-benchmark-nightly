@@ -201,9 +201,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN6hermes5Value18replaceAllUsesWithEPS0_.exit
   %i.d = phi ptr [ %i.az, %_ZN6hermes5Value18replaceAllUsesWithEPS0_.exit ], [ %i.c, %bb.a ] ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !21   ; 3 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !21   ; 2 uses
   %.not4.i = icmp eq i32 %i.g, 0
   br i1 %.not4.i, label %_ZN6hermes5Value18replaceAllUsesWithEPS0_.exit, label %.lr.ph.i
 
@@ -213,8 +213,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, %.lr.ph.i
-  %.pre.i14 = phi i32 [ %i.g, %.lr.ph.i ], [ %.pre.i15, %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i ] ; 4 uses
-  %i.j = phi i32 [ %i.g, %.lr.ph.i ], [ %6, %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i ] ; 3 uses
+  %i.j = phi i32 [ %i.g, %.lr.ph.i ], [ %1, %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i ] ; 3 uses
   %i.k = zext i32 %i.j to i64
   %i.l = getelementptr [8 x i8], ptr %i.i, i64 %i.k
   %i.m = getelementptr i8, ptr %i.l, i64 -8
@@ -226,30 +225,23 @@ bb.b:                                             ; preds = %_ZN6hermes11Instruc
 
 .lr.ph.i.i:                                       ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 64
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !19   ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !19
   %wide.trip.count.i.i = zext nneg i32 %i.p to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 3 uses
-  %i.t = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %indvars.iv.i.i
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !76
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 2 uses
+  %i.t = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %indvars.iv.i.i ; 3 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !76   ; 4 uses
   %i.v = icmp eq ptr %i.e, %i.u
-  br i1 %i.v, label %1, label %bb.e
+  br i1 %i.v, label %bb.d, label %bb.e
 
-1:                                                ; preds = %bb.c
-  %2 = and i64 %indvars.iv.i.i, 4294967295
-  %3 = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %2 ; 3 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !76       ; 6 uses
-  %5 = icmp eq ptr %4, null
-  br i1 %5, label %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, label %bb.d
-
-bb.d:                                             ; preds = %1
-  %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+bb.d:                                             ; preds = %bb.c
+  %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   %.sroa.22.0.copyload.i = load i32, ptr %.sroa.22.0..sroa_idx.i, align 8 ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !19   ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 2 uses
   %i.z = load i32, ptr %i.y, align 8, !tbaa !21   ; 2 uses
   %i.aa = zext i32 %i.z to i64
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.aa
@@ -270,7 +262,7 @@ bb.d:                                             ; preds = %1
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !19 ; 4 uses
   %wide.trip.count.i.i3 = zext nneg i32 %i.ai to i64
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !76
-  %i.am = icmp eq ptr %i.al, %4
+  %i.am = icmp eq ptr %i.al, %i.e
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.ao = load i32, ptr %i.an, align 8
   %i.ap = icmp eq i32 %i.ao, %i.ag
@@ -284,7 +276,7 @@ bb.d:                                             ; preds = %1
   tail call void @llvm.assume(i1 %exitcond.not.i.i6)
   %i.ar = getelementptr inbounds nuw [16 x i8], ptr %i.ak, i64 %indvars.iv.next.i.i5 ; 3 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !76
-  %i.at = icmp eq ptr %i.as, %4
+  %i.at = icmp eq ptr %i.as, %i.e
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %i.av = load i32, ptr %i.au, align 8
   %i.aw = icmp eq i32 %i.av, %i.ag
@@ -294,14 +286,14 @@ bb.d:                                             ; preds = %1
 .loopexit.i.i:                                    ; preds = %.lr.ph.i4, %.lr.ph.i.i2
   %.lcssa18.i = phi ptr [ %i.ak, %.lr.ph.i.i2 ], [ %i.ar, %.lr.ph.i4 ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.lcssa18.i, i64 8
-  store ptr %4, ptr %.lcssa18.i, align 8, !tbaa !76
+  store ptr %i.u, ptr %.lcssa18.i, align 8, !tbaa !76
   store i32 %.sroa.22.0.copyload.i, ptr %i.ay, align 8, !tbaa !79
   br label %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i
 
 _ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i: ; preds = %.loopexit.i.i, %bb.d
-  store ptr null, ptr %3, align 8, !tbaa !76
+  store ptr null, ptr %i.t, align 8, !tbaa !76
   store i32 0, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !79
-  %.pre.i.pre = load i32, ptr %i.f, align 8, !tbaa !21 ; 2 uses
+  %.pre.i.pre = load i32, ptr %i.f, align 8, !tbaa !21
   br label %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -309,10 +301,9 @@ bb.e:                                             ; preds = %bb.c
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, label %bb.c, !llvm.loop !82
 
-_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i: ; preds = %bb.e, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i, %1, %bb.b
-  %.pre.i15 = phi i32 [ %.pre.i.pre, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i ], [ %.pre.i14, %bb.b ], [ %.pre.i14, %1 ], [ %.pre.i14, %bb.e ]
-  %6 = phi i32 [ %.pre.i.pre, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i ], [ %i.j, %bb.b ], [ %.pre.i14, %1 ], [ %i.j, %bb.e ] ; 2 uses
-  %.not.i = icmp eq i32 %6, 0
+_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i: ; preds = %bb.e, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i, %bb.b
+  %1 = phi i32 [ %.pre.i.pre, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i ], [ %i.j, %bb.b ], [ %i.j, %bb.e ] ; 2 uses
+  %.not.i = icmp eq i32 %1, 0
   br i1 %.not.i, label %_ZN6hermes5Value18replaceAllUsesWithEPS0_.exit, label %bb.b, !llvm.loop !83
 
 _ZN6hermes5Value18replaceAllUsesWithEPS0_.exit:   ; preds = %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, %.lr.ph
@@ -343,9 +334,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN6hermes11Instruction15eraseFromParentEv.exit
   %i.d = phi ptr [ %i.cr, %_ZN6hermes11Instruction15eraseFromParentEv.exit ], [ %i.c, %bb.a ] ; 8 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !21   ; 3 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !21   ; 2 uses
   %.not4.i = icmp eq i32 %i.g, 0
   br i1 %.not4.i, label %_ZN6hermes5Value18replaceAllUsesWithEPS0_.exit, label %.lr.ph.i
 
@@ -355,8 +346,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, %.lr.ph.i
-  %.pre.i20 = phi i32 [ %i.g, %.lr.ph.i ], [ %.pre.i21, %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i ] ; 4 uses
-  %i.j = phi i32 [ %i.g, %.lr.ph.i ], [ %6, %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i ] ; 3 uses
+  %i.j = phi i32 [ %i.g, %.lr.ph.i ], [ %1, %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i ] ; 3 uses
   %i.k = zext i32 %i.j to i64
   %i.l = getelementptr [8 x i8], ptr %i.i, i64 %i.k
   %i.m = getelementptr i8, ptr %i.l, i64 -8
@@ -368,30 +358,23 @@ bb.b:                                             ; preds = %_ZN6hermes11Instruc
 
 .lr.ph.i.i:                                       ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 64
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !19   ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !19
   %wide.trip.count.i.i = zext nneg i32 %i.p to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 3 uses
-  %i.t = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %indvars.iv.i.i
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !76
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 2 uses
+  %i.t = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %indvars.iv.i.i ; 3 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !76   ; 4 uses
   %i.v = icmp eq ptr %i.e, %i.u
-  br i1 %i.v, label %1, label %bb.e
+  br i1 %i.v, label %bb.d, label %bb.e
 
-1:                                                ; preds = %bb.c
-  %2 = and i64 %indvars.iv.i.i, 4294967295
-  %3 = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %2 ; 3 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !76       ; 6 uses
-  %5 = icmp eq ptr %4, null
-  br i1 %5, label %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, label %bb.d
-
-bb.d:                                             ; preds = %1
-  %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+bb.d:                                             ; preds = %bb.c
+  %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   %.sroa.22.0.copyload.i = load i32, ptr %.sroa.22.0..sroa_idx.i, align 8 ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !19   ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 2 uses
   %i.z = load i32, ptr %i.y, align 8, !tbaa !21   ; 2 uses
   %i.aa = zext i32 %i.z to i64
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.aa
@@ -412,7 +395,7 @@ bb.d:                                             ; preds = %1
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !19 ; 4 uses
   %wide.trip.count.i.i8 = zext nneg i32 %i.ai to i64
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !76
-  %i.am = icmp eq ptr %i.al, %4
+  %i.am = icmp eq ptr %i.al, %i.e
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.ao = load i32, ptr %i.an, align 8
   %i.ap = icmp eq i32 %i.ao, %i.ag
@@ -426,7 +409,7 @@ bb.d:                                             ; preds = %1
   tail call void @llvm.assume(i1 %exitcond.not.i.i11)
   %i.ar = getelementptr inbounds nuw [16 x i8], ptr %i.ak, i64 %indvars.iv.next.i.i10 ; 3 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !76
-  %i.at = icmp eq ptr %i.as, %4
+  %i.at = icmp eq ptr %i.as, %i.e
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %i.av = load i32, ptr %i.au, align 8
   %i.aw = icmp eq i32 %i.av, %i.ag
@@ -436,14 +419,14 @@ bb.d:                                             ; preds = %1
 .loopexit.i.i:                                    ; preds = %.lr.ph.i9, %.lr.ph.i.i7
   %.lcssa18.i = phi ptr [ %i.ak, %.lr.ph.i.i7 ], [ %i.ar, %.lr.ph.i9 ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.lcssa18.i, i64 8
-  store ptr %4, ptr %.lcssa18.i, align 8, !tbaa !76
+  store ptr %i.u, ptr %.lcssa18.i, align 8, !tbaa !76
   store i32 %.sroa.22.0.copyload.i, ptr %i.ay, align 8, !tbaa !79
   br label %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i
 
 _ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i: ; preds = %.loopexit.i.i, %bb.d
-  store ptr null, ptr %3, align 8, !tbaa !76
+  store ptr null, ptr %i.t, align 8, !tbaa !76
   store i32 0, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !79
-  %.pre.i.pre = load i32, ptr %i.f, align 8, !tbaa !21 ; 2 uses
+  %.pre.i.pre = load i32, ptr %i.f, align 8, !tbaa !21
   br label %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -451,10 +434,9 @@ bb.e:                                             ; preds = %bb.c
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, label %bb.c, !llvm.loop !82
 
-_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i: ; preds = %bb.e, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i, %1, %bb.b
-  %.pre.i21 = phi i32 [ %.pre.i.pre, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i ], [ %.pre.i20, %bb.b ], [ %.pre.i20, %1 ], [ %.pre.i20, %bb.e ]
-  %6 = phi i32 [ %.pre.i.pre, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i ], [ %i.j, %bb.b ], [ %.pre.i20, %1 ], [ %i.j, %bb.e ] ; 2 uses
-  %.not.i = icmp eq i32 %6, 0
+_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i: ; preds = %bb.e, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i, %bb.b
+  %1 = phi i32 [ %.pre.i.pre, %_ZN6hermes5Value9removeUseESt4pairIPS0_jE.exit.i ], [ %i.j, %bb.b ], [ %i.j, %bb.e ] ; 2 uses
+  %.not.i = icmp eq i32 %1, 0
   br i1 %.not.i, label %_ZN6hermes5Value18replaceAllUsesWithEPS0_.exit, label %bb.b, !llvm.loop !83
 
 _ZN6hermes5Value18replaceAllUsesWithEPS0_.exit:   ; preds = %_ZN6hermes11Instruction23replaceFirstOperandWithEPNS_5ValueES2_.exit.i, %.lr.ph

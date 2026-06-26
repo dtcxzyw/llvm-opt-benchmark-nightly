@@ -201,12 +201,13 @@ bb.jr:                                            ; preds = %bb.jq
   %spec.select.i.i = select i1 %i.afc, i32 %.sroa.8152.0.copyload.i.i, i32 3
   %.sroa.0169.0.copyload.i.i = load i64, ptr %i.fo, align 8, !noalias !2587 ; 2 uses
   %.sroa.6170.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
-  %.sroa.6170.0.copyload.i.i = load i8, ptr %.sroa.6170.0..sroa_idx.i.i, align 8, !noalias !2587 ; 2 uses
+  %.sroa.6170.0.copyload.i.i = load i8, ptr %.sroa.6170.0..sroa_idx.i.i, align 8, !noalias !2587 ; 3 uses
   %.not.i31.i.i = icmp eq i64 %.sroa.0169.0.copyload.i.i, -9223372036854775808
   br i1 %.not.i31.i.i, label %bb.js, label %.thread.i.i
 
 bb.js:                                            ; preds = %bb.jr
-  %3 = and i8 %.sroa.6170.0.copyload.i.i, 1
+  %.not16.i.i = icmp eq i8 %.sroa.6170.0.copyload.i.i, 2
+  %spec.select260.i.i = select i1 %.not16.i.i, i8 0, i8 %.sroa.6170.0.copyload.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fo), !noalias !2587
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fs), !noalias !2587
   call void @llvm.experimental.noalias.scope.decl(metadata !2599)
@@ -394,7 +395,7 @@ bb.kk:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   %.sroa.13191.0.i.i = phi i32 [ 0, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.13191.1246.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses
   %.sroa.14192.0.i.i = phi i32 [ undef, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.14192.1247.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses
   %.sroa.15193.0.i.i = phi i32 [ %spec.select.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.15193.1248.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses
-  %.sroa.16.0.i.i = phi i8 [ %3, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.16.1249.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses
+  %.sroa.16.0.i.i = phi i8 [ %spec.select260.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.16.1249.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses
   %.sroa.17194.0.i.i = phi i8 [ 0, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.17194.1250.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses
   %.sroa.18.0.i.i = phi i8 [ 0, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.18.1251.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses
   %.sroa.19195.0.i.i = phi i8 [ undef, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit.i.i ], [ %.sroa.19195.1252.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit36.i.i ] ; 2 uses

@@ -201,14 +201,10 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.ae = load i32, ptr %2, align 4, !tbaa !4
   %i.af = sext i32 %i.ae to i64
   %i.ag = icmp slt i64 %indvars.iv.next, %i.af
-  br i1 %i.ag, label %bb.g, label %._crit_edge.loopexit, !llvm.loop !83
+  br i1 %i.ag, label %bb.g, label %._crit_edge, !llvm.loop !83
 
-._crit_edge.loopexit:                             ; preds = %bb.g
-  %3 = and i64 %indvars.iv.next, 4294967295
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.f
-  %.0.lcssa = phi i64 [ 0, %bb.f ], [ %3, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %bb.g, %bb.f
+  %.0.lcssa = phi i64 [ 0, %bb.f ], [ %indvars.iv.next, %bb.g ]
   %i.ah = getelementptr inbounds nuw i8, ptr %i.m, i64 64
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.0.lcssa
   store i8 0, ptr %i.ai, align 1, !tbaa !8

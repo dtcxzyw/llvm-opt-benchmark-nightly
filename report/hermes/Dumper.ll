@@ -201,8 +201,8 @@ bb.p:                                             ; preds = %bb.n
   store ptr %i.bh, ptr %i.bc, align 8, !tbaa !80
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit27
 
-_ZN4llvh11raw_ostreamlsEPKc.exit27:               ; preds = %bb.b, %._crit_edge, %bb.o, %bb.p, %bb.a
-  %.3 = phi i8 [ 0, %bb.a ], [ %.2, %._crit_edge ], [ %.2, %bb.p ], [ %.2, %bb.o ], [ 0, %bb.b ]
+_ZN4llvh11raw_ostreamlsEPKc.exit27:               ; preds = %bb.b, %bb.p, %bb.o, %._crit_edge, %bb.a
+  %.3 = phi i8 [ 0, %bb.a ], [ %.2, %._crit_edge ], [ %.2, %bb.o ], [ %.2, %bb.p ], [ 0, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store i8 %.3, ptr %i.a, align 1, !tbaa !193
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 72

@@ -201,15 +201,11 @@ bb.bd:                                            ; preds = %.lr.ph261.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph261.i
   %.not170266.i = icmp samesign ugt i64 %indvars.iv289.i, 1
-  br i1 %.not170266.i, label %._crit_edge.i..lr.ph270.preheader.i_crit_edge, label %._crit_edge271.i
+  br i1 %.not170266.i, label %.lr.ph270.preheader.i, label %._crit_edge271.i
 
-._crit_edge.i..lr.ph270.preheader.i_crit_edge:    ; preds = %._crit_edge.i
-  %.pre = and i64 %indvars.iv289.i, 4294967295
-  br label %.lr.ph270.preheader.i
-
-.lr.ph270.preheader.i:                            ; preds = %bb.bd, %._crit_edge.i..lr.ph270.preheader.i_crit_edge
-  %wide.trip.count297.i.pre-phi = phi i64 [ %.pre, %._crit_edge.i..lr.ph270.preheader.i_crit_edge ], [ %wide.trip.count.i218.i, %bb.bd ]
-  %.0147.lcssa.ph324.i = phi i32 [ %.0147259.i, %._crit_edge.i..lr.ph270.preheader.i_crit_edge ], [ %i.aac, %bb.bd ]
+.lr.ph270.preheader.i:                            ; preds = %bb.bd, %._crit_edge.i
+  %wide.trip.count297.i.pre-phi = phi i64 [ %indvars.iv289.i, %._crit_edge.i ], [ %wide.trip.count.i218.i, %bb.bd ]
+  %.0147.lcssa.ph324.i = phi i32 [ %.0147259.i, %._crit_edge.i ], [ %i.aac, %bb.bd ]
   %i.aaf = getelementptr inbounds nuw i8, ptr %0, i64 %1
   br label %.lr.ph270.i
 

@@ -201,8 +201,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
   br i1 %i.bg, label %.lr.ph.i, label %.thread99.i
 
 bb.m:                                             ; preds = %bb.k
-  %4 = and i64 %indvars.iv.i, 4294967295
-  %i.bh = add i64 %4, %i.al                       ; 2 uses
+  %i.bh = add i64 %indvars.iv.i, %i.al            ; 2 uses
   %.not72.i = icmp eq i64 %i.bh, -1
   br i1 %.not72.i, label %.thread99.i, label %bb.n
 
@@ -605,8 +604,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   br i1 %i.jj, label %.lr.ph.i99, label %.thread60.i
 
 bb.av:                                            ; preds = %bb.at
-  %5 = and i64 %indvars.iv.i100, 4294967295
-  %i.jk = add i64 %5, %i.io                       ; 2 uses
+  %i.jk = add i64 %indvars.iv.i100, %i.io         ; 2 uses
   %.not57.i = icmp eq i64 %i.jk, -1
   br i1 %.not57.i, label %.thread60.i, label %unz64local_SearchCentralDir.exit.thread.sink.split
 

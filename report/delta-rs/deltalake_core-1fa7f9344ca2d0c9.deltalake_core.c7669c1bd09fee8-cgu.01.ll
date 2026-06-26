@@ -201,7 +201,7 @@ bb.ae:                                            ; preds = %bb.ab
   %i.cz = extractvalue { i64, ptr } %i.cw, 0
   %i.da = extractvalue { i64, ptr } %i.cw, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.da) ]
-  %i.db = trunc i64 %i.cz to i1
+  %i.db = trunc nuw i64 %i.cz to i1
   br i1 %i.db, label %bb.ah, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
@@ -604,6 +604,7 @@ bb.i:                                             ; preds = %bb.h
   %i.an = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !noalias !13246, !nonnull !8, !align !216, !noundef !8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !13246
+  %5 = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.ao, 1
   br label %_RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.j:                                             ; preds = %bb.h
@@ -615,20 +616,19 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.as = load ptr, ptr %i.j, align 8, !alias.scope !13250, !noalias !13251, !nonnull !8, !align !216, !noundef !8
-  %i.at = tail call fastcc { i64, ptr } @_RINvXs3_NtCs1gOyXocuPRE_10serde_core2deINtNtCsbvkFyIu7lgC_4core6marker11PhantomDatayENtB6_15DeserializeSeed11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB20_4read7StrReadEECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 dereferenceable(80) %i.as), !noalias !13252 ; 2 uses
-  %5 = extractvalue { i64, ptr } %i.at, 0
-  %6 = extractvalue { i64, ptr } %i.at, 1
-  %spec.select.i = and i64 %5, 1
+  %i.at = tail call fastcc { i64, ptr } @_RINvXs3_NtCs1gOyXocuPRE_10serde_core2deINtNtCsbvkFyIu7lgC_4core6marker11PhantomDatayENtB6_15DeserializeSeed11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB20_4read7StrReadEECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 dereferenceable(80) %i.as), !noalias !13252
   br label %_RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit
 
 _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9SeqAccess12next_elementyECs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %bb.j
   %i.au = tail call noundef nonnull align 8 ptr @_RNvYNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error14invalid_lengthCs14kWLkQVSKO_14deltalake_core(i64 noundef 0, ptr noundef nonnull @193, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @166)
+  %6 = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.au, 1
   br label %_RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit
 
 _RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.i, %bb.k, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9SeqAccess12next_elementyECs14kWLkQVSKO_14deltalake_core.exit.i
-  %.sroa.4.1.i = phi ptr [ %6, %bb.k ], [ %i.au, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9SeqAccess12next_elementyECs14kWLkQVSKO_14deltalake_core.exit.i ], [ %i.ao, %bb.i ] ; 2 uses
-  %.sroa.0.1.i = phi i64 [ %spec.select.i, %bb.k ], [ 1, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9SeqAccess12next_elementyECs14kWLkQVSKO_14deltalake_core.exit.i ], [ 1, %bb.i ] ; 2 uses
+  %.merged.i = phi { i64, ptr } [ %i.at, %bb.k ], [ %6, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9SeqAccess12next_elementyECs14kWLkQVSKO_14deltalake_core.exit.i ], [ %5, %bb.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
+  %7 = extractvalue { i64, ptr } %.merged.i, 0    ; 2 uses
+  %8 = extractvalue { i64, ptr } %.merged.i, 1    ; 2 uses
   %i.av = load i8, ptr %i.aa, align 8, !noundef !8
   %i.aw = add i8 %i.av, 1
   store i8 %i.aw, ptr %i.aa, align 8
@@ -638,12 +638,12 @@ _RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gO
 bb.l:                                             ; preds = %_RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit
   %i.ay = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state5StatsNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorEECs14kWLkQVSKO_14deltalake_core(i64 %.sroa.0.1.i, ptr %.sroa.4.1.i) #42
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state5StatsNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorEECs14kWLkQVSKO_14deltalake_core(i64 %7, ptr %8) #42
           to label %common.resume unwind label %bb.p
 
 bb.m:                                             ; preds = %_RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit
-  %i.az = trunc nuw i64 %.sroa.0.1.i to i1
-  %i.ba = ptrtoint ptr %.sroa.4.1.i to i64        ; 3 uses
+  %i.az = trunc nuw i64 %7 to i1
+  %i.ba = ptrtoint ptr %8 to i64                  ; 3 uses
   %.not79 = icmp eq ptr %i.ax, null               ; 2 uses
   br i1 %i.az, label %bb.o, label %bb.n
 
@@ -911,12 +911,11 @@ bb.an:                                            ; preds = %_RINvYINtNtCseqDwI8
   %i.do = extractvalue { i64, ptr } %i.dn, 0
   %i.dp = extractvalue { i64, ptr } %i.dn, 1
   %i.dq = ptrtoint ptr %i.dp to i64
-  %spec.select.i23 = and i64 %i.do, 1
   br label %_RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_mapINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit
 
 _RINvXs0_NvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtBb_5StatsNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB18_7Visitor9visit_mapINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB2M_4read7StrReadEECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess10next_valueyECs14kWLkQVSKO_14deltalake_core.exit.i, %bb.ab, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess8next_keyNtNvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtB23_5StatsNtB18_11Deserialize11deserialize7___FieldECs14kWLkQVSKO_14deltalake_core.exit.thread33.i, %bb.ae, %bb.am, %bb.an
   %.sroa.7.1.i = phi i64 [ %.sroa.4.056.i, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess8next_keyNtNvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtB23_5StatsNtB18_11Deserialize11deserialize7___FieldECs14kWLkQVSKO_14deltalake_core.exit.thread33.i ], [ %i.dq, %bb.an ], [ %i.ce, %bb.ab ], [ %i.dm, %bb.am ], [ %i.cs, %bb.ae ], [ %i.di, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess10next_valueyECs14kWLkQVSKO_14deltalake_core.exit.i ] ; 4 uses
-  %.sroa.0.1.i25 = phi i64 [ 0, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess8next_keyNtNvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtB23_5StatsNtB18_11Deserialize11deserialize7___FieldECs14kWLkQVSKO_14deltalake_core.exit.thread33.i ], [ %spec.select.i23, %bb.an ], [ 1, %bb.ab ], [ 1, %bb.am ], [ 1, %bb.ae ], [ 1, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess10next_valueyECs14kWLkQVSKO_14deltalake_core.exit.i ] ; 2 uses
+  %.sroa.0.1.i25 = phi i64 [ 0, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess8next_keyNtNvXNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5state1__NtB23_5StatsNtB18_11Deserialize11deserialize7___FieldECs14kWLkQVSKO_14deltalake_core.exit.thread33.i ], [ %i.do, %bb.an ], [ 1, %bb.ab ], [ 1, %bb.am ], [ 1, %bb.ae ], [ 1, %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess10next_valueyECs14kWLkQVSKO_14deltalake_core.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   %i.dr = load i8, ptr %i.ae, align 8, !noundef !8
   %i.ds = add i8 %i.dr, 1
@@ -1319,7 +1318,7 @@ bb.y:                                             ; preds = %bb.v
   %i.dr = extractvalue { i64, ptr } %i.do, 0
   %i.ds = extractvalue { i64, ptr } %i.do, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ds) ]
-  %i.dt = trunc i64 %i.dr to i1
+  %i.dt = trunc nuw i64 %i.dr to i1
   br i1 %i.dt, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEECs14kWLkQVSKO_14deltalake_core.exit98.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -1381,7 +1380,7 @@ bb.af:                                            ; preds = %bb.ab
   %i.ei = extractvalue { i64, ptr } %i.ec, 0
   %i.ej = extractvalue { i64, ptr } %i.ec, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ej) ]
-  %i.ek = trunc i64 %i.ei to i1
+  %i.ek = trunc nuw i64 %i.ei to i1
   br i1 %i.ek, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEECs14kWLkQVSKO_14deltalake_core.exit96.i, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -1784,12 +1783,11 @@ bb.d:                                             ; preds = %bb.c
   %i.k = extractvalue { i64, ptr } %i.j, 0
   %i.l = extractvalue { i64, ptr } %i.j, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
-  %. = and i64 %i.k, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.sroa.5.0 = phi ptr [ %i.e, %bb.b ], [ %i.l, %bb.d ], [ null, %bb.c ]
-  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %., %bb.d ], [ 0, %bb.c ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %i.k, %bb.d ], [ 0, %bb.c ]
   %i.m = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %i.n = insertvalue { i64, ptr } %i.m, ptr %.sroa.5.0, 1
   ret { i64, ptr } %i.n
@@ -1988,7 +1986,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB8_4read6IoReadRShEENtNtC
   %i.bm = extractvalue { i64, ptr } %i.bl, 0
   %i.bn = extractvalue { i64, ptr } %i.bl, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bn) ]
-  %i.bo = trunc i64 %i.bm to i1
+  %i.bo = trunc nuw i64 %i.bm to i1
   br i1 %i.bo, label %_RINvXNvXs30_NtNtCs1gOyXocuPRE_10serde_core2de5implsTppENtBc_11Deserialize11deserializeINtB3_12TupleVisitoraINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENtBc_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB3r_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i, label %bb.t
 
 bb.r:                                             ; preds = %bb.o
@@ -2391,12 +2389,11 @@ bb.d:                                             ; preds = %bb.c
   %i.k = extractvalue { i64, ptr } %i.j, 0
   %i.l = extractvalue { i64, ptr } %i.j, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
-  %. = and i64 %i.k, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.sroa.5.0 = phi ptr [ %i.e, %bb.b ], [ %i.l, %bb.d ], [ null, %bb.c ]
-  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %., %bb.d ], [ 0, %bb.c ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %i.k, %bb.d ], [ 0, %bb.c ]
   %i.m = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %i.n = insertvalue { i64, ptr } %i.m, ptr %.sroa.5.0, 1
   ret { i64, ptr } %i.n
@@ -2431,12 +2428,11 @@ bb.d:                                             ; preds = %bb.c
   %i.k = extractvalue { i64, ptr } %i.j, 0
   %i.l = extractvalue { i64, ptr } %i.j, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
-  %. = and i64 %i.k, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.sroa.5.0 = phi ptr [ %i.e, %bb.b ], [ %i.l, %bb.d ], [ null, %bb.c ]
-  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %., %bb.d ], [ 0, %bb.c ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %i.k, %bb.d ], [ 0, %bb.c ]
   %i.m = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %i.n = insertvalue { i64, ptr } %i.m, ptr %.sroa.5.0, 1
   ret { i64, ptr } %i.n
@@ -2839,7 +2835,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read9SliceReadENtNtCs1
   %i.be = extractvalue { i64, ptr } %i.bd, 0
   %i.bf = extractvalue { i64, ptr } %i.bd, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bf) ]
-  %i.bg = trunc i64 %i.be to i1
+  %i.bg = trunc nuw i64 %i.be to i1
   br i1 %i.bg, label %_RINvXNvXs30_NtNtCs1gOyXocuPRE_10serde_core2de5implsTppENtBc_11Deserialize11deserializeINtB3_12TupleVisitoraINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENtBc_7Visitor9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3r_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i, label %bb.r
 
 bb.p:                                             ; preds = %bb.m
@@ -3242,7 +3238,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB8_4read6IoReadRShEENtNtC
   %i.av = extractvalue { i64, ptr } %i.au, 0
   %i.aw = extractvalue { i64, ptr } %i.au, 1      ; 7 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
-  %i.ax = trunc i64 %i.av to i1
+  %i.ax = trunc nuw i64 %i.av to i1
   br i1 %i.ax, label %_RINvXs1_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s1_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB3s_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.n
 
 common.resume.i:                                  ; preds = %bb.ag, %bb.x, %bb.v, %bb.r
@@ -3294,7 +3290,7 @@ bb.s:                                             ; preds = %bb.p
   %i.bj = extractvalue { i64, ptr } %i.bg, 0
   %i.bk = extractvalue { i64, ptr } %i.bg, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
-  %i.bl = trunc i64 %i.bj to i1
+  %i.bl = trunc nuw i64 %i.bj to i1
   br i1 %i.bl, label %bb.u, label %_RINvXs1_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s1_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB3s_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core.exit.i
 
 bb.t:                                             ; preds = %bb.o
@@ -3697,7 +3693,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB8_4read6IoReadRShEENtNtC
   %i.aw = extractvalue { i64, ptr } %i.av, 0
   %i.ax = extractvalue { i64, ptr } %i.av, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ax) ]
-  %i.ay = trunc i64 %i.aw to i1
+  %i.ay = trunc nuw i64 %i.aw to i1
   br i1 %i.ay, label %_RINvXs6_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s6_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB3s_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.n
 
 common.resume.i:                                  ; preds = %bb.aj, %bb.aa, %bb.u, %bb.t
@@ -4075,7 +4071,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB8_4read6IoReadRShEENtNtC
   %i.av = extractvalue { i64, ptr } %i.au, 0
   %i.aw = extractvalue { i64, ptr } %i.au, 1      ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
-  %i.ax = trunc i64 %i.av to i1
+  %i.ax = trunc nuw i64 %i.av to i1
   br i1 %i.ax, label %_RINvXs7_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s7_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB3s_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.n
 
 common.resume.i:                                  ; preds = %bb.ah, %bb.y, %bb.s, %bb.r
@@ -4136,7 +4132,7 @@ bb.t:                                             ; preds = %bb.p
   %i.bm = extractvalue { i64, ptr } %i.bg, 0
   %i.bn = extractvalue { i64, ptr } %i.bg, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bn) ]
-  %i.bo = trunc i64 %i.bm to i1
+  %i.bo = trunc nuw i64 %i.bm to i1
   %.pre1 = load ptr, ptr %i.d, align 8, !noalias !20724 ; 2 uses
   br i1 %i.bo, label %bb.v, label %_RINvXs7_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s7_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB3s_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core.exit.i
 
@@ -4447,7 +4443,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB8_4read6IoReadRShEENtNtC
   %i.aw = extractvalue { i64, ptr } %i.av, 0
   %i.ax = extractvalue { i64, ptr } %i.av, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ax) ]
-  %i.ay = trunc i64 %i.aw to i1
+  %i.ay = trunc nuw i64 %i.aw to i1
   br i1 %i.ay, label %_RINvXs_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBg_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBb_9___VisitorNtB1e_7Visitor10visit_enumNtB5_s_9___VisitorB2p_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessINtNtB3q_4read6IoReadRShEEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.n
 
 common.resume.i:                                  ; preds = %bb.aj, %bb.aa, %bb.u, %bb.t
@@ -4850,7 +4846,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read9SliceReadENtNtCs1
   %i.an = extractvalue { i64, ptr } %i.am, 0
   %i.ao = extractvalue { i64, ptr } %i.am, 1      ; 7 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  %i.ap = trunc i64 %i.an to i1
+  %i.ap = trunc nuw i64 %i.an to i1
   br i1 %i.ap, label %_RINvXs1_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s1_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3s_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.i
 
 common.resume.i:                                  ; preds = %bb.ab, %bb.s, %bb.q, %bb.m
@@ -4902,7 +4898,7 @@ bb.n:                                             ; preds = %bb.k
   %i.bb = extractvalue { i64, ptr } %i.ay, 0
   %i.bc = extractvalue { i64, ptr } %i.ay, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bc) ]
-  %i.bd = trunc i64 %i.bb to i1
+  %i.bd = trunc nuw i64 %i.bb to i1
   br i1 %i.bd, label %bb.p, label %_RINvXs1_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s1_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3s_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core.exit.i
 
 bb.o:                                             ; preds = %bb.j
@@ -5305,7 +5301,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read9SliceReadENtNtCs1
   %i.ao = extractvalue { i64, ptr } %i.an, 0
   %i.ap = extractvalue { i64, ptr } %i.an, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
-  %i.aq = trunc i64 %i.ao to i1
+  %i.aq = trunc nuw i64 %i.ao to i1
   br i1 %i.aq, label %_RINvXs6_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s6_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3s_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.i
 
 common.resume.i:                                  ; preds = %bb.ae, %bb.v, %bb.p, %bb.o
@@ -5641,7 +5637,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read9SliceReadENtNtCs1
   %i.an = extractvalue { i64, ptr } %i.am, 0
   %i.ao = extractvalue { i64, ptr } %i.am, 1      ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  %i.ap = trunc i64 %i.an to i1
+  %i.ap = trunc nuw i64 %i.an to i1
   br i1 %i.ap, label %_RINvXs7_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s7_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3s_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.i
 
 common.resume.i:                                  ; preds = %bb.ac, %bb.t, %bb.n, %bb.m
@@ -5702,7 +5698,7 @@ bb.o:                                             ; preds = %bb.k
   %i.be = extractvalue { i64, ptr } %i.ay, 0
   %i.bf = extractvalue { i64, ptr } %i.ay, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bf) ]
-  %i.bg = trunc i64 %i.be to i1
+  %i.bg = trunc nuw i64 %i.be to i1
   %.pre5 = load ptr, ptr %i.d, align 8, !noalias !21338 ; 2 uses
   br i1 %i.bg, label %bb.q, label %_RINvXs7_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBh_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBc_9___VisitorNtB1f_7Visitor10visit_enumNtB6_s7_9___VisitorB2q_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3s_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core.exit.i
 
@@ -5971,7 +5967,7 @@ _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB8_4read9SliceReadENtNtCs1
   %i.ao = extractvalue { i64, ptr } %i.an, 0
   %i.ap = extractvalue { i64, ptr } %i.an, 1      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
-  %i.aq = trunc i64 %i.ao to i1
+  %i.aq = trunc nuw i64 %i.ao to i1
   br i1 %i.aq, label %_RINvXs_NvXs0_NvXNvNtCsfYVtenZkBsn_12arrow_schema8datatypes_1__NtBg_8DataTypeNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtBb_9___VisitorNtB1e_7Visitor10visit_enumNtB5_s_9___VisitorB2p_9visit_seqINtNtCseqDwI8vvjGQ_10serde_json2de9SeqAccessNtNtB3q_4read9SliceReadEECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.i
 
 common.resume.i:                                  ; preds = %bb.ae, %bb.v, %bb.p, %bb.o
@@ -6374,7 +6370,7 @@ bb.oc:                                            ; preds = %bb.oa
   %i.ahf = load i64, ptr %i.cf, align 16, !range !296, !alias.scope !23340, !noalias !23337, !noundef !8 ; 2 uses
   %.not.i302 = icmp eq i64 %i.ahf, -9223372036854775711
   %i.ahg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
-  %i.ahh = load i8, ptr %i.ahg, align 8, !alias.scope !23342 ; 3 uses
+  %i.ahh = load i8, ptr %i.ahg, align 8, !alias.scope !23342 ; 2 uses
   br i1 %.not.i302, label %bb.od, label %bb.qi
 
 bb.od:                                            ; preds = %bb.oc
@@ -6391,6 +6387,7 @@ bb.oe:                                            ; preds = %bb.od
 
 bb.of:                                            ; preds = %bb.pl, %bb.oe
   %.sroa.06.sroa.0.0 = phi i64 [ %i.ajq, %bb.pl ], [ %.sroa.0682.0.copyload, %bb.oe ]
+  %.sroa.7.0 = phi i8 [ 1, %bb.pl ], [ 0, %bb.oe ]
   %i.ahj = getelementptr inbounds nuw i8, ptr %1, i64 1616 ; 2 uses
   store i64 %.sroa.06.sroa.0.0, ptr %i.ahj, align 16
   %.sroa.06.sroa.7.0..sroa_idx680 = getelementptr inbounds nuw i8, ptr %1, i64 1624
@@ -6398,7 +6395,7 @@ bb.of:                                            ; preds = %bb.pl, %bb.oe
   %.sroa.06.sroa.8.0..sroa_idx681 = getelementptr inbounds nuw i8, ptr %1, i64 1664
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %.sroa.06.sroa.8.0..sroa_idx681, ptr noundef nonnull align 16 dereferenceable(272) %.sroa.06.sroa.8, i64 272, i1 false)
   %i.ahk = getelementptr inbounds nuw i8, ptr %1, i64 2081
-  store i8 %i.ahh, ptr %i.ahk, align 1
+  store i8 %.sroa.7.0, ptr %i.ahk, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.06.sroa.7)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.06.sroa.8)
   %i.ahl = getelementptr inbounds nuw i8, ptr %1, i64 160
@@ -6801,6 +6798,7 @@ bb.bo:                                            ; preds = %bb.bq, %bb.bk
   %.sroa.6180.sroa.0.1.i = phi i8 [ %.sroa.6180.sroa.0.0.extract.trunc.i, %bb.bq ], [ %.sroa.6180.sroa.0.0.i, %bb.bk ]
   %.sroa.6180.sroa.6.sroa.0.1.i = phi i56 [ %.sroa.6180.sroa.6.0.extract.trunc.i, %bb.bq ], [ %.sroa.6180.sroa.6.sroa.0.0.i, %bb.bk ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bo), !noalias !26651
+  %3 = zext i56 %.sroa.6180.sroa.6.sroa.0.1.i to i64
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_EECs14kWLkQVSKO_14deltalake_core.exit114.i
 
 .thread.i:                                        ; preds = %bb.bi, %.thread261.i, %bb.ax
@@ -6830,7 +6828,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcD
   %.sroa.13.2.i = phi ptr [ %.sroa.13.1.i, %bb.bo ], [ %.sroa.36.sroa.4.0.copyload.i, %bb.dv ], [ %.sroa.36.sroa.4.0.copyload.i, %bb.du ]
   %.sroa.14.2.i = phi ptr [ %.sroa.14.1.i, %bb.bo ], [ %.sroa.36.sroa.5.0.copyload.i, %bb.dv ], [ %.sroa.36.sroa.5.0.copyload.i, %bb.du ]
   %.sroa.6180.sroa.0.2.i = phi i8 [ %.sroa.6180.sroa.0.1.i, %bb.bo ], [ %.sroa.6180.sroa.0.0.extract.trunc197.i, %bb.dv ], [ %.sroa.6180.sroa.0.0.extract.trunc197.i, %bb.du ]
-  %.sroa.6180.sroa.6.sroa.0.2.i = phi i56 [ %.sroa.6180.sroa.6.sroa.0.1.i, %bb.bo ], [ %.sroa.6180.sroa.6.0.extract.trunc202.i, %bb.dv ], [ %.sroa.6180.sroa.6.0.extract.trunc202.i, %bb.du ]
+  %.sroa.6180.sroa.6.sroa.0.2.i = phi i64 [ %3, %bb.bo ], [ %.sroa.6180.sroa.6.0.extract.shift201.i, %bb.dv ], [ %.sroa.6180.sroa.6.0.extract.shift201.i, %bb.du ]
   %i.gz = getelementptr inbounds nuw i8, ptr %1, i64 352
   %.val88.i = load ptr, ptr %i.gz, align 8, !noalias !26651 ; 5 uses
   %i.ha = getelementptr i8, ptr %1, i64 360
@@ -7206,8 +7204,7 @@ bb.dm:                                            ; preds = %bb.dh
 bb.dn:                                            ; preds = %bb.cz
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %.sroa.15.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.36.sroa.6.i, i64 32, i1 false), !noalias !26651
   %.sroa.6180.sroa.0.0.extract.trunc197.i = trunc i64 %.sroa.36.sroa.0.0.copyload.i to i8 ; 2 uses
-  %.sroa.6180.sroa.6.0.extract.shift201.i = lshr i64 %.sroa.36.sroa.0.0.copyload.i, 8
-  %.sroa.6180.sroa.6.0.extract.trunc202.i = trunc nuw i64 %.sroa.6180.sroa.6.0.extract.shift201.i to i56 ; 2 uses
+  %.sroa.6180.sroa.6.0.extract.shift201.i = lshr i64 %.sroa.36.sroa.0.0.copyload.i, 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be), !noalias !26651
   %i.kr = getelementptr inbounds nuw i8, ptr %1, i64 464
   %.val82.i = load ptr, ptr %i.kr, align 8, !noalias !26651 ; 5 uses
@@ -7540,7 +7537,6 @@ bb.ey:                                            ; preds = %bb.ew
   %.sroa.09.sroa.5.0.copyload.i = load i64, ptr %.sroa.09.sroa.5.0..sroa_idx.i, align 8, !noalias !26651
   %.sroa.6180.sroa.0.0.extract.trunc198.i = trunc i64 %.sroa.09.sroa.0.0.copyload.i to i8
   %.sroa.6180.sroa.6.0.extract.shift203.i = lshr i64 %.sroa.09.sroa.0.0.copyload.i, 8
-  %.sroa.6180.sroa.6.0.extract.trunc204.i = trunc nuw i64 %.sroa.6180.sroa.6.0.extract.shift203.i to i56
   %i.nx = getelementptr inbounds nuw i8, ptr %1, i64 464
   %.val80.i = load ptr, ptr %i.nx, align 8, !noalias !26651 ; 5 uses
   %i.ny = getelementptr i8, ptr %1, i64 472
@@ -7695,9 +7691,8 @@ bb.fp:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   %.sroa.13.3.i = phi ptr [ %i.nu, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream5MapOkINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewNtNtB3O_6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EENCNCNvMs_NtNtB3O_10operations16filesystem_checkNtB63_22FileSystemCheckBuilder16create_fsck_plan00EEB3O_.exit139.i ], [ %.sroa.13.2.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddEEB2l_.exit.i ] ; 2 uses
   %.sroa.14.3.i = phi ptr [ %i.nw, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream5MapOkINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewNtNtB3O_6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EENCNCNvMs_NtNtB3O_10operations16filesystem_checkNtB63_22FileSystemCheckBuilder16create_fsck_plan00EEB3O_.exit139.i ], [ %.sroa.14.2.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddEEB2l_.exit.i ] ; 2 uses
   %.sroa.6180.sroa.0.3.i = phi i8 [ %.sroa.6180.sroa.0.0.extract.trunc198.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream5MapOkINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewNtNtB3O_6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EENCNCNvMs_NtNtB3O_10operations16filesystem_checkNtB63_22FileSystemCheckBuilder16create_fsck_plan00EEB3O_.exit139.i ], [ %.sroa.6180.sroa.0.2.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddEEB2l_.exit.i ]
-  %.sroa.6180.sroa.6.sroa.0.3.i = phi i56 [ %.sroa.6180.sroa.6.0.extract.trunc204.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream5MapOkINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewNtNtB3O_6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EENCNCNvMs_NtNtB3O_10operations16filesystem_checkNtB63_22FileSystemCheckBuilder16create_fsck_plan00EEB3O_.exit139.i ], [ %.sroa.6180.sroa.6.sroa.0.2.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddEEB2l_.exit.i ]
-  %.sroa.6180.sroa.6.0.insert.ext.i = zext i56 %.sroa.6180.sroa.6.sroa.0.3.i to i64
-  %.sroa.6180.sroa.6.0.insert.shift.i = shl nuw i64 %.sroa.6180.sroa.6.0.insert.ext.i, 8
+  %.sroa.6180.sroa.6.sroa.0.3.i = phi i64 [ %.sroa.6180.sroa.6.0.extract.shift203.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream5MapOkINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewNtNtB3O_6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EENCNCNvMs_NtNtB3O_10operations16filesystem_checkNtB63_22FileSystemCheckBuilder16create_fsck_plan00EEB3O_.exit139.i ], [ %.sroa.6180.sroa.6.sroa.0.2.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddEEB2l_.exit.i ]
+  %.sroa.6180.sroa.6.0.insert.shift.i = shl nuw i64 %.sroa.6180.sroa.6.sroa.0.3.i, 8
   %.sroa.6180.sroa.0.0.insert.ext.i = zext i8 %.sroa.6180.sroa.0.3.i to i64
   %.sroa.6180.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.6180.sroa.6.0.insert.shift.i, %.sroa.6180.sroa.0.0.insert.ext.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.14266, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.15.i, i64 48, i1 false), !noalias !26758
@@ -8100,7 +8095,7 @@ _RNvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs4lawaffTVVK
   store ptr %i.cy, ptr %.sroa.56.0..sroa_idx, align 8, !alias.scope !29390, !noalias !29393
   %.sroa.0227.0.copyload = load i64, ptr %i.cx, align 8, !noalias !29390 ; 4 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cx, i64 1312
-  %.sroa.10.0.copyload = load i8, ptr %.sroa.10.0..sroa_idx, align 8, !noalias !29390
+  %.sroa.10.0.copyload = load i8, ptr %.sroa.10.0..sroa_idx, align 8, !noalias !29390 ; 2 uses
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cx, i64 1313
   %.sroa.11.0.copyload = load i8, ptr %.sroa.11.0..sroa_idx, align 1, !noalias !29390 ; 2 uses
   %.not127 = icmp eq i64 %.sroa.0227.0.copyload, 69
@@ -8503,13 +8498,10 @@ bb.ck:                                            ; preds = %bb.df, %_RINvNtCsbv
   %.sroa.036.0 = phi i64 [ %i.ii, %bb.df ], [ 5, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs14kWLkQVSKO_14deltalake_core.exit195 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @llvm.experimental.noalias.scope.decl(metadata !29420)
-  %.sroa.04.0.i = icmp ne i8 %.sroa.10.0.copyload, 0 ; 3 uses
+  %.not.i196 = icmp eq i8 %.sroa.10.0.copyload, 2
+  %..i197 = select i1 %.not.i196, i8 1, i8 %.sroa.10.0.copyload ; 3 uses
   %.not7.i = icmp eq i8 %.sroa.11.0.copyload, 2
-  br i1 %.not7.i, label %bb.cl, label %7
-
-7:                                                ; preds = %bb.ck
-  %8 = trunc nuw i8 %.sroa.11.0.copyload to i1
-  br label %bb.dg
+  br i1 %.not7.i, label %bb.cl, label %bb.dg
 
 bb.cl:                                            ; preds = %bb.ck
   switch i8 %i.cr, label %default.unreachable [
@@ -8523,7 +8515,7 @@ default.unreachable:                              ; preds = %bb.cl
   unreachable
 
 bb.cm:                                            ; preds = %bb.cl
-  %9 = xor i1 %.sroa.04.0.i, true
+  %7 = xor i8 %..i197, 1
   br label %bb.dg
 
 bb.cn:                                            ; preds = %bb.cl
@@ -8715,14 +8707,12 @@ bb.df:                                            ; preds = %bb.dd
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.834)
   br label %bb.ck
 
-bb.dg:                                            ; preds = %bb.co, %bb.cn, %bb.cm, %bb.cl, %7
-  %.sroa.06.0.i = phi i1 [ %8, %7 ], [ %9, %bb.cm ], [ false, %bb.co ], [ true, %bb.cn ], [ %.sroa.04.0.i, %bb.cl ]
+bb.dg:                                            ; preds = %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck
+  %.sroa.06.0.i = phi i8 [ 0, %bb.co ], [ %7, %bb.cm ], [ %.sroa.11.0.copyload, %bb.ck ], [ 1, %bb.cn ], [ %..i197, %bb.cl ]
   store i64 %.sroa.036.0, ptr %i.p, align 16, !alias.scope !29423
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.4251.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.337, i64 104, i1 false)
-  %10 = zext i1 %.sroa.04.0.i to i8
-  store i8 %10, ptr %i.cs, align 16, !alias.scope !29425, !noalias !29420
-  %11 = zext i1 %.sroa.06.0.i to i8
-  store i8 %11, ptr %i.ct, align 1, !alias.scope !29425, !noalias !29420
+  store i8 %..i197, ptr %i.cs, align 16, !alias.scope !29425, !noalias !29420
+  store i8 %.sroa.06.0.i, ptr %i.ct, align 1, !alias.scope !29425, !noalias !29420
   %i.ik = load i64, ptr %i.bx, align 8, !alias.scope !29426, !noalias !29429, !noundef !8 ; 3 uses
   %i.il = load i64, ptr %i.ap, align 8, !range !231, !alias.scope !29426, !noalias !29429, !noundef !8
   %i.im = icmp eq i64 %i.ik, %i.il
@@ -9125,7 +9115,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.7398.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hk, i64 248
   %.sroa.7398.0.copyload = load ptr, ptr %.sroa.7398.0..sroa_idx, align 8 ; 9 uses
   %.sroa.8399.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hk, i64 256
-  %.sroa.8399.0.copyload = load i8, ptr %.sroa.8399.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.8399.0.copyload = load i8, ptr %.sroa.8399.0..sroa_idx, align 8 ; 4 uses
   %.sroa.9400.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hk, i64 257
   %.sroa.9400.0.copyload = load i8, ptr %.sroa.9400.0..sroa_idx, align 1
   %.sroa.10401.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hk, i64 258
@@ -9528,8 +9518,7 @@ bb.fu:                                            ; preds = %bb.fq, %bb.ft
   %i.va = getelementptr inbounds nuw i8, ptr %i.ef, i64 80
   store i128 1, ptr %i.va, align 16
   %i.vb = getelementptr inbounds nuw i8, ptr %i.ef, i64 160
-  %5 = and i8 %i.un, 1
-  store i8 %5, ptr %i.vb, align 16
+  store i8 %i.un, ptr %i.vb, align 16
   br label %bb.fr
 
 bb.fv:                                            ; preds = %bb.fs
@@ -9849,7 +9838,6 @@ bb.ha:                                            ; preds = %bb.gs, %_RNvMNtCs6P
   %.sroa.01635.0.copyload = load i128, ptr %i.ef, align 16 ; 2 uses
   %.sroa.41636.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ef, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %.sroa.61631, ptr noundef nonnull align 16 dereferenceable(160) %.sroa.41636.0..sroa_idx, i64 160, i1 false)
-  %6 = and i8 %.sroa.8399.0.copyload, 1           ; 2 uses
   %i.xb = getelementptr inbounds nuw i8, ptr %i.lq, i64 1688
   %i.xc = load ptr, ptr %i.xb, align 8, !alias.scope !31834, !nonnull !8, !noundef !8 ; 2 uses
   %i.xd = getelementptr inbounds nuw i8, ptr %i.lq, i64 1696
@@ -9886,7 +9874,7 @@ bb.ha:                                            ; preds = %bb.gs, %_RNvMNtCs6P
 
 bb.hb:                                            ; preds = %.lr.ph1617, %bb.hf
   %.sroa.21.0 = phi i8 [ %.sroa.10401.0.copyload, %.lr.ph1617 ], [ %.sroa.6672.sroa.12.0.copyload, %bb.hf ]
-  %.sroa.19.0 = phi i8 [ %6, %.lr.ph1617 ], [ %.sroa.6672.sroa.11.0.copyload, %bb.hf ]
+  %.sroa.19.0 = phi i8 [ %.sroa.8399.0.copyload, %.lr.ph1617 ], [ %.sroa.6672.sroa.11.0.copyload, %bb.hf ]
   %.sroa.17.0 = phi ptr [ %.sroa.0178.0, %.lr.ph1617 ], [ %.sroa.6672.sroa.10.0.copyload, %bb.hf ]
   %.sroa.9.0 = phi ptr [ %i.xa, %.lr.ph1617 ], [ %.sroa.6672.sroa.6.0.copyload, %bb.hf ]
   %.sroa.71634.0 = phi i64 [ %i.wz, %.lr.ph1617 ], [ %.sroa.6672.sroa.5.0.copyload, %bb.hf ]
@@ -9923,7 +9911,7 @@ bb.hb:                                            ; preds = %.lr.ph1617, %bb.hf
 
 ._crit_edge1618:                                  ; preds = %bb.hf, %bb.ha
   %.sroa.21.1 = phi i8 [ %.sroa.10401.0.copyload, %bb.ha ], [ %.sroa.6672.sroa.12.0.copyload, %bb.hf ]
-  %.sroa.19.1 = phi i8 [ %6, %bb.ha ], [ %.sroa.6672.sroa.11.0.copyload, %bb.hf ]
+  %.sroa.19.1 = phi i8 [ %.sroa.8399.0.copyload, %bb.ha ], [ %.sroa.6672.sroa.11.0.copyload, %bb.hf ]
   %.sroa.17.1 = phi ptr [ %.sroa.0178.0, %bb.ha ], [ %.sroa.6672.sroa.10.0.copyload, %bb.hf ]
   %.sroa.9.1 = phi ptr [ %i.xa, %bb.ha ], [ %.sroa.6672.sroa.6.0.copyload, %bb.hf ]
   %.sroa.71634.1 = phi i64 [ %i.wz, %bb.ha ], [ %.sroa.6672.sroa.5.0.copyload, %bb.hf ]
@@ -10326,7 +10314,6 @@ bb.mu:                                            ; preds = %_RINvXs2J_NtNtCsbvk
   %.sroa.41664.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   %.sroa.41664.0.copyload = load i64, ptr %.sroa.41664.0..sroa_idx, align 8 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.01639.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %i.bx, i64 24, i1 false)
-  %7 = and i8 %.sroa.8399.0.copyload, 1           ; 2 uses
   %i.aeo = getelementptr inbounds nuw i8, ptr %i.lq, i64 1688
   %i.aep = load ptr, ptr %i.aeo, align 8, !alias.scope !31877, !nonnull !8, !noundef !8 ; 2 uses
   %i.aeq = getelementptr inbounds nuw i8, ptr %i.lq, i64 1696
@@ -10356,7 +10343,7 @@ bb.mu:                                            ; preds = %_RINvXs2J_NtNtCsbvk
 bb.mv:                                            ; preds = %.lr.ph1621, %bb.mz
   %.sroa.8.0 = phi ptr [ %i.aen, %.lr.ph1621 ], [ %.sroa.6779.sroa.5.0.copyload, %bb.mz ]
   %.sroa.101643.0 = phi ptr [ %storemerge, %.lr.ph1621 ], [ %.sroa.6779.sroa.6.0.copyload, %bb.mz ]
-  %.sroa.12.0 = phi i8 [ %7, %.lr.ph1621 ], [ %.sroa.6779.sroa.7.0.copyload, %bb.mz ]
+  %.sroa.12.0 = phi i8 [ %.sroa.8399.0.copyload, %.lr.ph1621 ], [ %.sroa.6779.sroa.7.0.copyload, %bb.mz ]
   %.sroa.141648.0 = phi i8 [ %.sroa.10401.0.copyload, %.lr.ph1621 ], [ %.sroa.6779.sroa.8.0.copyload, %bb.mz ]
   %.sroa.01639.sroa.8.0 = phi i64 [ %.sroa.41664.0.copyload, %.lr.ph1621 ], [ %.sroa.6779.sroa.0.0.copyload, %bb.mz ]
   %.sroa.0310.01619 = phi ptr [ %i.aep, %.lr.ph1621 ], [ %i.aeu, %bb.mz ] ; 3 uses
@@ -10387,7 +10374,7 @@ bb.mv:                                            ; preds = %.lr.ph1621, %bb.mz
 ._crit_edge1622:                                  ; preds = %bb.mz, %bb.mu
   %.sroa.8.1 = phi ptr [ %i.aen, %bb.mu ], [ %.sroa.6779.sroa.5.0.copyload, %bb.mz ] ; 2 uses
   %.sroa.101643.1 = phi ptr [ %storemerge, %bb.mu ], [ %.sroa.6779.sroa.6.0.copyload, %bb.mz ]
-  %.sroa.12.1 = phi i8 [ %7, %bb.mu ], [ %.sroa.6779.sroa.7.0.copyload, %bb.mz ]
+  %.sroa.12.1 = phi i8 [ %.sroa.8399.0.copyload, %bb.mu ], [ %.sroa.6779.sroa.7.0.copyload, %bb.mz ]
   %.sroa.141648.1 = phi i8 [ %.sroa.10401.0.copyload, %bb.mu ], [ %.sroa.6779.sroa.8.0.copyload, %bb.mz ]
   %.sroa.01639.sroa.8.1 = phi i64 [ %.sroa.41664.0.copyload, %bb.mu ], [ %.sroa.6779.sroa.0.0.copyload, %bb.mz ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0772.sroa.0)

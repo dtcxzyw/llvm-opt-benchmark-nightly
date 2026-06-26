@@ -201,10 +201,9 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.gep.sroa.gep362 = getelementptr inbounds nuw i8, ptr %i.d, i64 7 ; 2 uses
   %.sroa.gep.sroa.gep362.val = load i8, ptr %.sroa.gep.sroa.gep362, align 1
   %i.ff = lshr i32 %i.eo, 24
-  %4 = trunc nuw i32 %i.ff to i8
-  %5 = select i1 %i.ep, i8 %.sroa.gep.sroa.gep362.val, i8 %4
-  %6 = zext i8 %5 to i32
-  %i.fg = shl nuw i32 %6, 24
+  %4 = zext i8 %.sroa.gep.sroa.gep362.val to i32
+  %5 = select i1 %i.ep, i32 %4, i32 %i.ff
+  %i.fg = shl nuw i32 %5, 24
   %i.fh = or disjoint i32 %i.fg, %i.fe            ; 2 uses
   %i.fi = load i32, ptr %i.eg, align 4
   %i.fj = icmp ne i32 %i.fi, 0
@@ -607,18 +606,13 @@ bb.d:                                             ; preds = %.lr.ph231
   %.187126.lcssa = phi i64 [ %.086152, %.preheader ], [ %i.y, %bb.d ] ; 2 uses
   %i.aa = trunc nsw i64 %indvars.iv.lcssa to i32  ; 2 uses
   %i.ab = icmp sgt i32 %2, %i.aa
-  br i1 %i.ab, label %.lr.ph.preheader, label %.critedge2
+  br i1 %i.ab, label %.lr.ph, label %.critedge2
 
-.lr.ph.preheader:                                 ; preds = %.critedge
-  %sext = shl i64 %indvars.iv.lcssa, 32
-  %3 = ashr exact i64 %sext, 32
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %indvars.iv162 = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next163, %bb.e ] ; 4 uses
-  %.288131 = phi i64 [ %.187126.lcssa, %.lr.ph.preheader ], [ %i.aj, %bb.e ] ; 2 uses
-  %.195130 = phi i64 [ %.094151, %.lr.ph.preheader ], [ %i.al, %bb.e ] ; 2 uses
-  %.1104128 = phi i64 [ %.0103148, %.lr.ph.preheader ], [ %i.ak, %bb.e ] ; 2 uses
+.lr.ph:                                           ; preds = %.critedge, %bb.e
+  %indvars.iv162 = phi i64 [ %indvars.iv.next163, %bb.e ], [ %indvars.iv.lcssa, %.critedge ] ; 4 uses
+  %.288131 = phi i64 [ %i.aj, %bb.e ], [ %.187126.lcssa, %.critedge ] ; 2 uses
+  %.195130 = phi i64 [ %i.al, %bb.e ], [ %.094151, %.critedge ] ; 2 uses
+  %.1104128 = phi i64 [ %i.ak, %bb.e ], [ %.0103148, %.critedge ] ; 2 uses
   %i.ac = getelementptr inbounds [32 x i8], ptr %1, i64 %indvars.iv162 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = load i32, ptr %i.ad, align 8
@@ -1021,8 +1015,7 @@ bb.w:                                             ; preds = %bb.v
   %i.nw = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next52.i
   %i.nx = add nsw i32 %i.nv, -1
   store i32 %i.nx, ptr %i.nw, align 4
-  %7 = and i64 %indvars.iv51.i178, 4294967295
-  %i.ny = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %7 ; 2 uses
+  %i.ny = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv51.i178 ; 2 uses
   %i.nz = load i32, ptr %i.ny, align 4
   %i.oa = add nsw i32 %i.nz, 2
   store i32 %i.oa, ptr %i.ny, align 4
@@ -1425,15 +1418,10 @@ bb.c:                                             ; preds = %bb.b
 .critedge:                                        ; preds = %bb.b
   %i.l = trunc nsw i64 %indvars.iv to i32         ; 5 uses
   %i.m = icmp sgt i32 %2, %i.l
-  br i1 %i.m, label %.lr.ph.preheader, label %.critedge2
+  br i1 %i.m, label %.lr.ph, label %.critedge2
 
-.lr.ph.preheader:                                 ; preds = %.critedge
-  %sext = shl i64 %indvars.iv, 32
-  %3 = ashr exact i64 %sext, 32
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %indvars.iv95 = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next96, %bb.d ] ; 3 uses
+.lr.ph:                                           ; preds = %.critedge, %bb.d
+  %indvars.iv95 = phi i64 [ %indvars.iv.next96, %bb.d ], [ %indvars.iv, %.critedge ] ; 3 uses
   %i.n = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv95
   %i.o = load i32, ptr %i.n, align 4
   %.not61 = icmp eq i32 %i.o, 0

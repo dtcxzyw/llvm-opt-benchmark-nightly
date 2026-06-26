@@ -201,7 +201,7 @@ define dso_local noundef i32 @_ZN8NArchive3N7z10CInArchive13ReadDatabase2ERNS0_1
 bb.a:
   %i.a = alloca i64, align 8                      ; 8 uses
   %i.b = alloca i64, align 8                      ; 8 uses
-  %i.c = alloca [500 x i8], align 16              ; 6 uses
+  %i.c = alloca [500 x i8], align 16              ; 5 uses
   %4 = alloca %"class.NArchive::N7z::CStreamSwitch", align 8 ; 8 uses
   %5 = alloca %class.CObjectVector.6, align 8     ; 13 uses
   tail call void @_ZN8NArchive3N7z16CArchiveDatabase5ClearEv(ptr noundef nonnull align 8 dereferenceable(696) %1)
@@ -312,7 +312,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.thread
   %indvars.iv = phi i64 [ %i.bc, %.lr.ph.preheader ], [ %indvars.iv.next, %.thread ] ; 5 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv ; 3 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv ; 4 uses
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !58
   %i.bf = trunc nuw i64 %indvars.iv to i32
   switch i8 %i.be, label %.thread [
@@ -350,11 +350,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bo = ashr exact i64 %sext, 32                ; 2 uses
   %i.bp = load i64, ptr %i.b, align 8, !tbaa !60
   %i.bq = load i64, ptr %i.a, align 8, !tbaa !60
-  %6 = and i64 %indvars.iv, 4294967295            ; 2 uses
-  %i.br = add i64 %i.bp, %6
+  %i.br = add i64 %i.bp, %indvars.iv
   %i.bs = sub i64 %i.br, %i.bq
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 %6
-  %i.bt = call i32 @CrcCalc(ptr noundef nonnull %7, i64 noundef %i.bo)
+  %i.bt = call i32 @CrcCalc(ptr noundef nonnull %i.bd, i64 noundef %i.bo)
   %i.bu = load ptr, ptr %0, align 8, !tbaa !86    ; 2 uses
   %i.bv = load i64, ptr %i.a, align 8, !tbaa !60
   %i.bw = load ptr, ptr %i.bu, align 8, !tbaa !13

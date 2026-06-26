@@ -201,18 +201,17 @@ middle.block:                                     ; preds = %vector.body
   %.265.us.i.i = phi i32 [ %i.dm, %bb.p ], [ %i.cz, %.peel.next.i.preheader.i ] ; 2 uses
   %i.da = load i32, ptr %i.as, align 8, !tbaa !55 ; 2 uses
   %i.db = icmp eq i32 %i.da, 2
-  %1 = trunc nuw nsw i64 %indvars.iv87.i.i to i32
   br i1 %i.db, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.peel.next.i.i
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv87.i.i
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !3
+  %1 = sext i32 %i.dd to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.peel.next.i.i
-  %2 = phi i32 [ %i.dd, %bb.n ], [ %1, %.peel.next.i.i ]
-  %3 = sext i32 %2 to i64
-  %i.de = getelementptr inbounds [4 x i8], ptr %i.aq, i64 %3 ; 2 uses
+  %2 = phi i64 [ %1, %bb.n ], [ %indvars.iv87.i.i, %.peel.next.i.i ]
+  %i.de = getelementptr inbounds [4 x i8], ptr %i.aq, i64 %2 ; 2 uses
   %i.df = load i32, ptr %i.de, align 4, !tbaa !3  ; 2 uses
   %i.dg = sdiv i32 %.265.us.i.i, %i.df
   %i.dh = sext i32 %i.dg to i64

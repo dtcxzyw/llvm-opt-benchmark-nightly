@@ -201,8 +201,7 @@ bb.t:                                             ; preds = %_ZN4llvh11SmallVect
   %_ZN2clL15TrackBytecodeIOE.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL15TrackBytecodeIOE, i64 8), align 8, !tbaa !8
   %_ZN2clL15TrackBytecodeIOE.val77 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL15TrackBytecodeIOE, i64 152), align 8
   %i.db = icmp sgt i32 %_ZN2clL15TrackBytecodeIOE.val, 0
-  %13 = and i8 %_ZN2clL15TrackBytecodeIOE.val77, 1
-  %i.dc = zext nneg i8 %13 to i16
+  %i.dc = zext i8 %_ZN2clL15TrackBytecodeIOE.val77 to i16
   %i.dd = or disjoint i16 %i.dc, 256
   %.sroa.0.0.insert.insert.i97 = select i1 %i.db, i16 %i.dd, i16 0
   %i.de = getelementptr inbounds nuw i8, ptr %3, i64 304 ; 2 uses
@@ -273,8 +272,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br i1 %i.cz, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %14 = and i8 %_ZN2clL12GCAllocYoungE.val79, 1
-  store i8 %14, ptr %i.s, align 8, !tbaa !198
+  store i8 %_ZN2clL12GCAllocYoungE.val79, ptr %i.s, align 8, !tbaa !198
   %i.ds = getelementptr inbounds nuw i8, ptr %3, i64 210
   store i8 1, ptr %i.ds, align 2, !tbaa !199
   br label %bb.af
@@ -283,8 +281,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br i1 %i.da, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %15 = and i8 %_ZN2clL17GCRevertToYGAtTTIE.val78, 1
-  store i8 %15, ptr %i.t, align 2, !tbaa !200
+  store i8 %_ZN2clL17GCRevertToYGAtTTIE.val78, ptr %i.t, align 2, !tbaa !200
   %i.dt = getelementptr inbounds nuw i8, ptr %3, i64 212
   store i8 1, ptr %i.dt, align 4, !tbaa !201
   br label %bb.ah

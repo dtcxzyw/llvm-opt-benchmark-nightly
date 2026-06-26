@@ -201,11 +201,9 @@ bb.i:                                             ; preds = %bb.a, %bb.b, %bb.d,
 .preheader64:                                     ; preds = %bb.i, %bb.k
   %indvars.iv87 = phi i64 [ 0, %bb.i ], [ %indvars.iv.next88, %bb.k ] ; 6 uses
   %indvars.iv85 = phi i64 [ 1, %bb.i ], [ %indvars.iv.next86, %bb.k ] ; 4 uses
-  %.05568 = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.lcssa, %bb.k ]
+  %.05568 = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.lcssa, %bb.k ] ; 2 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv87
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !16   ; 3 uses
-  %sext = shl i64 %.05568, 32
-  %5 = ashr exact i64 %sext, 32                   ; 2 uses
   %xtraiter = and i64 %indvars.iv85, 1
   %i.f = icmp eq i64 %indvars.iv87, 0
   br i1 %i.f, label %.epil.preheader, label %.preheader64.new
@@ -216,7 +214,7 @@ bb.i:                                             ; preds = %bb.a, %bb.b, %bb.d,
 
 bb.j:                                             ; preds = %bb.j, %.preheader64.new
   %indvars.iv78 = phi i64 [ 0, %.preheader64.new ], [ %indvars.iv.next79.1, %bb.j ] ; 4 uses
-  %indvars.iv = phi i64 [ %5, %.preheader64.new ], [ %indvars.iv.next.1, %bb.j ] ; 3 uses
+  %indvars.iv = phi i64 [ %.05568, %.preheader64.new ], [ %indvars.iv.next.1, %bb.j ] ; 3 uses
   %niter = phi i64 [ 0, %.preheader64.new ], [ %niter.next.1, %bb.j ]
   %i.g = getelementptr inbounds [8 x i8], ptr %.0, i64 %indvars.iv
   %i.h = load double, ptr %i.g, align 8, !tbaa !8 ; 2 uses
@@ -248,7 +246,7 @@ bb.j:                                             ; preds = %bb.j, %.preheader64
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.preheader64
   %indvars.iv78.epil.init = phi i64 [ 0, %.preheader64 ], [ %indvars.iv.next79.1, %.unr-lcssa ] ; 2 uses
-  %indvars.iv.epil.init = phi i64 [ %5, %.preheader64 ], [ %indvars.iv.next.1, %.unr-lcssa ] ; 2 uses
+  %indvars.iv.epil.init = phi i64 [ %.05568, %.preheader64 ], [ %indvars.iv.next.1, %.unr-lcssa ] ; 2 uses
   %lcmp.mod117 = trunc i64 %indvars.iv85 to i1
   tail call void @llvm.assume(i1 %lcmp.mod117)
   %indvars.iv.next.epil = add nsw i64 %indvars.iv.epil.init, 1

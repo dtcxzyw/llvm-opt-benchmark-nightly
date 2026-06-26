@@ -201,9 +201,8 @@ bb.bx:                                            ; preds = %bb.bu
 
 bb.by:                                            ; preds = %bb.bu
   %i.lq = trunc i64 %.sroa.2221.0.copyload to i8
-  %153 = and i8 %i.lq, 1
   store i32 2, ptr %17, align 8, !tbaa !69, !alias.scope !503
-  store i8 %153, ptr %i.cc, align 8, !tbaa !74, !alias.scope !503
+  store i8 %i.lq, ptr %i.cc, align 8, !tbaa !74, !alias.scope !503
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit
 
 bb.bz:                                            ; preds = %bb.bu
@@ -606,9 +605,8 @@ bb.gs:                                            ; preds = %bb.gp
 
 bb.gt:                                            ; preds = %bb.gp
   %i.abz = trunc i64 %.sroa.2161.0.copyload to i8
-  %154 = and i8 %i.abz, 1
   store i32 2, ptr %49, align 8, !tbaa !69, !alias.scope !594
-  store i8 %154, ptr %i.bp, align 8, !tbaa !74, !alias.scope !594
+  store i8 %i.abz, ptr %i.bp, align 8, !tbaa !74, !alias.scope !594
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit938.thread
 
 bb.gu:                                            ; preds = %bb.gp
@@ -1011,9 +1009,8 @@ bb.ka:                                            ; preds = %bb.jx
 
 bb.kb:                                            ; preds = %bb.jx
   %i.amz = trunc i64 %.sroa.2133.0.copyload to i8
-  %155 = and i8 %i.amz, 1
   store i32 2, ptr %69, align 8, !tbaa !69, !alias.scope !661
-  store i8 %155, ptr %i.bl, align 8, !tbaa !74, !alias.scope !661
+  store i8 %i.amz, ptr %i.bl, align 8, !tbaa !74, !alias.scope !661
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1047
 
 bb.kc:                                            ; preds = %bb.jx
@@ -1286,9 +1283,8 @@ bb.ku:                                            ; preds = %bb.kr
 
 bb.kv:                                            ; preds = %bb.kr
   %i.aqe = trunc i64 %.sroa.2121.0.copyload to i8
-  %156 = and i8 %i.aqe, 1
   store i32 2, ptr %75, align 8, !tbaa !69, !alias.scope !685
-  store i8 %156, ptr %i.bi, align 8, !tbaa !74, !alias.scope !685
+  store i8 %i.aqe, ptr %i.bi, align 8, !tbaa !74, !alias.scope !685
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1084
 
 bb.kw:                                            ; preds = %bb.kr
@@ -1509,9 +1505,8 @@ bb.lo:                                            ; preds = %bb.ll
 
 bb.lp:                                            ; preds = %bb.ll
   %i.asq = trunc i64 %.sroa.2118.0.copyload to i8
-  %157 = and i8 %i.asq, 1
   store i32 2, ptr %77, align 8, !tbaa !69, !alias.scope !701
-  store i8 %157, ptr %i.bh, align 8, !tbaa !74, !alias.scope !701
+  store i8 %i.asq, ptr %i.bh, align 8, !tbaa !74, !alias.scope !701
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1111
 
 bb.lq:                                            ; preds = %bb.ll
@@ -1647,9 +1642,8 @@ bb.mb:                                            ; preds = %bb.ly
 
 bb.mc:                                            ; preds = %bb.ly
   %i.atw = trunc i64 %.sroa.2115.0.copyload to i8
-  %158 = and i8 %i.atw, 1
   store i32 2, ptr %78, align 8, !tbaa !69, !alias.scope !714
-  store i8 %158, ptr %i.bj, align 8, !tbaa !74, !alias.scope !714
+  store i8 %i.atw, ptr %i.bj, align 8, !tbaa !74, !alias.scope !714
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1128
 
 bb.md:                                            ; preds = %bb.ly
@@ -1728,9 +1722,8 @@ bb.mh:                                            ; preds = %_ZN8facebook6hermes
 
 bb.mi:                                            ; preds = %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1128
   %i.aut = trunc i64 %.sroa.2112.0.copyload to i8
-  %159 = and i8 %i.aut, 1
   store i32 2, ptr %79, align 8, !tbaa !69, !alias.scope !726
-  store i8 %159, ptr %i.bk, align 8, !tbaa !74, !alias.scope !726
+  store i8 %i.aut, ptr %i.bk, align 8, !tbaa !74, !alias.scope !726
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1140
 
 bb.mj:                                            ; preds = %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1128
@@ -1937,9 +1930,8 @@ bb.mz:                                            ; preds = %bb.mw
 
 bb.na:                                            ; preds = %bb.mw
   %i.awy = trunc i64 %.sroa.2107.0.copyload to i8
-  %160 = and i8 %i.awy, 1
   store i32 2, ptr %82, align 8, !tbaa !69, !alias.scope !747
-  store i8 %160, ptr %i.bg, align 8, !tbaa !74, !alias.scope !747
+  store i8 %i.awy, ptr %i.bg, align 8, !tbaa !74, !alias.scope !747
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1167
 
 bb.nb:                                            ; preds = %bb.mw
@@ -2342,9 +2334,8 @@ bb.op:                                            ; preds = %bb.om
 
 bb.oq:                                            ; preds = %bb.om
   %i.bdn = trunc i64 %.sroa.297.0.copyload to i8
-  %161 = and i8 %i.bdn, 1
   store i32 2, ptr %91, align 8, !tbaa !69, !alias.scope !785
-  store i8 %161, ptr %i.bd, align 8, !tbaa !74, !alias.scope !785
+  store i8 %i.bdn, ptr %i.bd, align 8, !tbaa !74, !alias.scope !785
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1239
 
 bb.or:                                            ; preds = %bb.om
@@ -2747,9 +2738,8 @@ bb.px:                                            ; preds = %bb.pu
 
 bb.py:                                            ; preds = %bb.pu
   %i.bit = trunc i64 %.sroa.288.0.copyload to i8
-  %162 = and i8 %i.bit, 1
   store i32 2, ptr %97, align 8, !tbaa !69, !alias.scope !814
-  store i8 %162, ptr %i.bc, align 8, !tbaa !74, !alias.scope !814
+  store i8 %i.bit, ptr %i.bc, align 8, !tbaa !74, !alias.scope !814
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1296
 
 bb.pz:                                            ; preds = %bb.pu
@@ -3152,9 +3142,8 @@ bb.rq:                                            ; preds = %bb.rn
 
 bb.rr:                                            ; preds = %bb.rn
   %i.bot = trunc i64 %.sroa.277.0.copyload to i8
-  %163 = and i8 %i.bot, 1
   store i32 2, ptr %110, align 8, !tbaa !69, !alias.scope !856
-  store i8 %163, ptr %i.ay, align 8, !tbaa !74, !alias.scope !856
+  store i8 %i.bot, ptr %i.ay, align 8, !tbaa !74, !alias.scope !856
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1366
 
 bb.rs:                                            ; preds = %bb.rn
@@ -3467,9 +3456,8 @@ bb.sr:                                            ; preds = %.lr.ph2548
 
 bb.ss:                                            ; preds = %.lr.ph2548
   %i.brw = trunc i64 %.sroa.267.0.copyload to i8
-  %164 = and i8 %i.brw, 1
   store i32 2, ptr %115, align 8, !tbaa !69, !alias.scope !883
-  store i8 %164, ptr %i.au, align 8, !tbaa !74, !alias.scope !883
+  store i8 %i.brw, ptr %i.au, align 8, !tbaa !74, !alias.scope !883
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1401
 
 bb.st:                                            ; preds = %.lr.ph2548
@@ -3872,9 +3860,8 @@ bb.ue:                                            ; preds = %.lr.ph
 
 bb.uf:                                            ; preds = %.lr.ph
   %i.bxm = trunc i64 %.sroa.257.0.copyload to i8
-  %165 = and i8 %i.bxm, 1
   store i32 2, ptr %124, align 8, !tbaa !69, !alias.scope !917
-  store i8 %165, ptr %i.ar, align 8, !tbaa !74, !alias.scope !917
+  store i8 %i.bxm, ptr %i.ar, align 8, !tbaa !74, !alias.scope !917
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit1454
 
 bb.ug:                                            ; preds = %.lr.ph
@@ -4277,10 +4264,9 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.a
   %i.b = trunc i64 %3 to i8
-  %4 = and i8 %i.b, 1
   store i32 2, ptr %0, align 8, !tbaa !69
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %4, ptr %i.c, align 8, !tbaa !74
+  store i8 %i.b, ptr %i.c, align 8, !tbaa !74
   br label %bb.j
 
 bb.f:                                             ; preds = %bb.a
@@ -4683,10 +4669,9 @@ bb.q:                                             ; preds = %bb.n
 
 bb.r:                                             ; preds = %bb.n
   %i.au = trunc i64 %.sroa.21.0.copyload.i.i.i to i8
-  %9 = and i8 %i.au, 1
   store i32 2, ptr %0, align 8, !tbaa !69, !alias.scope !1114
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %9, ptr %i.av, align 8, !tbaa !74, !alias.scope !1114
+  store i8 %i.au, ptr %i.av, align 8, !tbaa !74, !alias.scope !1114
   br label %"_ZSt10__invoke_rIN8facebook3jsi5ValueERZNS0_6hermes7tracing16TraceInterpreter18createHostFunctionERKNS4_10SynthTrace24CreateHostFunctionRecordERKNS1_10PropNameIDEE3$_0JRNS1_7RuntimeERKS2_PSH_mEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESL_E4typeEOSM_DpOSN_.exit"
 
 bb.s:                                             ; preds = %bb.n
@@ -4987,10 +4972,9 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.g
   %i.ar = trunc i64 %.sroa.21.0.copyload to i8
-  %5 = and i8 %i.ar, 1
   store i32 2, ptr %0, align 8, !tbaa !69, !alias.scope !1129
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %5, ptr %i.as, align 8, !tbaa !74, !alias.scope !1129
+  store i8 %i.ar, ptr %i.as, align 8, !tbaa !74, !alias.scope !1129
   br label %_ZN8facebook6hermes7tracing16TraceInterpreter20traceValueToJSIValueENS1_10SynthTrace10TraceValueE.exit
 
 bb.l:                                             ; preds = %bb.g

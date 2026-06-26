@@ -201,8 +201,7 @@ bb.bh:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   %.sroa.3.0..sroa_idx4.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 10
   store i40 %.sroa.05.2.extract.trunc.i.i.i.i, ptr %.sroa.3.0..sroa_idx4.i.i.i.i, align 2, !alias.scope !17939, !noalias !17942
   %i.mk = getelementptr inbounds nuw i8, ptr %i.bs, i64 15
-  %3 = and i8 %.sroa.05.1.extract.trunc.i.i.i.i, 1
-  store i8 %3, ptr %i.mk, align 1, !alias.scope !17939, !noalias !17942
+  store i8 %.sroa.05.1.extract.trunc.i.i.i.i, ptr %i.mk, align 1, !alias.scope !17939, !noalias !17942
   call void @llvm.lifetime.start.p0(ptr nonnull %i.br), !noalias !17877
   %i.ml = getelementptr inbounds nuw i8, ptr %1, i64 2539 ; 2 uses
   store i8 0, ptr %i.ml, align 1, !noalias !17877
@@ -605,7 +604,7 @@ bb.a:
   %i.ai = alloca [56 x i8], align 8               ; 10 uses
   %.sroa.0203.i = alloca [56 x i8], align 8       ; 7 uses
   %i.aj = alloca [336 x i8], align 16             ; 10 uses
-  %.val = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17 ; 76 uses
+  %.val = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17 ; 72 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20085)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
@@ -631,8 +630,6 @@ default.unreachable:                              ; preds = %bb.aj, %bb.b, %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %.val, i64 524
-  %4 = getelementptr inbounds nuw i8, ptr %.val, i64 523
   %i.am = getelementptr inbounds nuw i8, ptr %.val, i64 104
   %i.an = getelementptr inbounds nuw i8, ptr %.val, i64 96
   %i.ao = load ptr, ptr %i.an, align 8, !noalias !20088, !nonnull !17, !align !187, !noundef !17 ; 2 uses
@@ -640,24 +637,18 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 80
   %.sroa.9.0.copyload.i = load ptr, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !20088, !nonnull !17, !noundef !17
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 88
-  %.sroa.10.0.copyload.i = load i8, ptr %.sroa.10.0..sroa_idx.i, align 8, !noalias !20088
-  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 89
-  %.sroa.11.0.copyload.i = load i8, ptr %.sroa.11.0..sroa_idx.i, align 1, !noalias !20088
-  store i8 1, ptr %3, align 4, !noalias !20088
   %i.ap = getelementptr inbounds nuw i8, ptr %.val, i64 112 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ap, ptr noundef nonnull align 8 dereferenceable(56) %.val, i64 56, i1 false), !noalias !20088
   %i.aq = getelementptr inbounds nuw i8, ptr %.val, i64 168
   store ptr %.sroa.9.0.copyload.i, ptr %i.aq, align 8, !noalias !20088
   %i.ar = getelementptr inbounds nuw i8, ptr %.val, i64 521
-  %5 = and i8 %.sroa.10.0.copyload.i, 1
-  store i8 %5, ptr %i.ar, align 1, !noalias !20088
-  store i8 1, ptr %4, align 1, !noalias !20088
   %i.as = getelementptr inbounds nuw i8, ptr %.val, i64 176
   %i.at = getelementptr inbounds nuw i8, ptr %.val, i64 56
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, ptr noundef nonnull align 8 dereferenceable(24) %i.at, i64 24, i1 false), !noalias !20088
-  %6 = getelementptr inbounds nuw i8, ptr %.val, i64 522
-  %7 = and i8 %.sroa.11.0.copyload.i, 1
-  store i8 %7, ptr %6, align 2, !noalias !20088
+  %3 = load <2 x i8>, ptr %.sroa.10.0..sroa_idx.i, align 8, !noalias !20088
+  %4 = shufflevector <2 x i8> %3, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %5 = shufflevector <4 x i8> %4, <4 x i8> <i8 poison, i8 poison, i8 1, i8 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i8> %5, ptr %i.ar, align 1, !noalias !20088
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !noalias !20088
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0203.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !noalias !20088
@@ -1060,11 +1051,9 @@ bb.b:                                             ; preds = %bb.a
   %i.bq = getelementptr inbounds nuw i8, ptr %.val, i64 1000 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.bq, ptr noundef nonnull align 8 dereferenceable(56) %i.bp, i64 56, i1 false), !noalias !20932
   %i.br = getelementptr inbounds nuw i8, ptr %.val, i64 1232
-  %3 = and i8 %.sroa.15.0.copyload.i, 1
-  store i8 %3, ptr %i.br, align 16, !noalias !20932
+  store i8 %.sroa.15.0.copyload.i, ptr %i.br, align 16, !noalias !20932
   %i.bs = getelementptr inbounds nuw i8, ptr %.val, i64 1233
-  %4 = and i8 %.sroa.16.0.copyload.i, 1
-  store i8 %4, ptr %i.bs, align 1, !noalias !20932
+  store i8 %.sroa.16.0.copyload.i, ptr %i.bs, align 1, !noalias !20932
   store i8 1, ptr %i.bj, align 4, !noalias !20932
   %i.bt = getelementptr inbounds nuw i8, ptr %.val, i64 1056
   %i.bu = getelementptr inbounds nuw i8, ptr %.val, i64 1168

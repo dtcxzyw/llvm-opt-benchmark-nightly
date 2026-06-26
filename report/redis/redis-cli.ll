@@ -201,30 +201,29 @@ bb.u:                                             ; preds = %.lr.ph533, %bb.v
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !29
   %i.de = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.dd, ptr noundef nonnull dereferenceable(1) %i.db) #34
   %.not355 = icmp eq i32 %i.de, 0
-  br i1 %.not355, label %.loopexit, label %bb.v
+  br i1 %.not355, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %indvars.iv.next655 = add nuw nsw i64 %indvars.iv654, 1 ; 2 uses
   %exitcond658.not = icmp eq i64 %indvars.iv.next655, %wide.trip.count657
-  br i1 %exitcond658.not, label %.critedge463.loopexit, label %bb.u, !llvm.loop !104
+  br i1 %exitcond658.not, label %.critedge463.loopexit.loopexit, label %bb.u, !llvm.loop !104
 
-.critedge463.loopexit:                            ; preds = %bb.v, %.lr.ph537
-  %.1229.lcssa = phi i32 [ 0, %.lr.ph537 ], [ %.0274535, %bb.v ]
+.critedge463.loopexit.loopexit:                   ; preds = %bb.v
+  %5 = zext nneg i32 %.0274535 to i64
+  br label %.critedge463.loopexit
+
+.critedge463.loopexit:                            ; preds = %.lr.ph537, %.critedge463.loopexit.loopexit
+  %.1229.lcssa = phi i64 [ %5, %.critedge463.loopexit.loopexit ], [ 0, %.lr.ph537 ]
   %i.df = add nsw i32 %.0274535, 1
   %i.dg = sext i32 %.0274535 to i64
   %i.dh = getelementptr inbounds [8 x i8], ptr %i.bz, i64 %i.dg
   store ptr %i.db, ptr %i.dh, align 8, !tbaa !29
   br label %bb.w
 
-.loopexit:                                        ; preds = %bb.u
-  %5 = trunc nuw nsw i64 %indvars.iv654 to i32
-  br label %bb.w
-
-bb.w:                                             ; preds = %.loopexit, %.critedge463.loopexit
-  %.1229484 = phi i32 [ %.1229.lcssa, %.critedge463.loopexit ], [ %5, %.loopexit ]
-  %.1275 = phi i32 [ %i.df, %.critedge463.loopexit ], [ %.0274535, %.loopexit ] ; 5 uses
-  %6 = zext nneg i32 %.1229484 to i64
-  %i.di = getelementptr inbounds nuw [24 x i8], ptr %i.cb, i64 %6 ; 7 uses
+bb.w:                                             ; preds = %bb.u, %.critedge463.loopexit
+  %.1229484 = phi i64 [ %.1229.lcssa, %.critedge463.loopexit ], [ %indvars.iv654, %bb.u ]
+  %.1275 = phi i32 [ %i.df, %.critedge463.loopexit ], [ %.0274535, %bb.u ] ; 5 uses
+  %i.di = getelementptr inbounds nuw [24 x i8], ptr %i.cb, i64 %.1229484 ; 7 uses
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !98 ; 2 uses
   %i.dk = icmp eq ptr %i.dj, null
   br i1 %i.dk, label %bb.x, label %._crit_edge699

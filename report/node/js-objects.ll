@@ -201,14 +201,12 @@ bb.f:                                             ; preds = %bb.e
   %i.w = tail call i16 @_ZN2v88internal8JSObject31PreventExtensionsWithTransitionILNS0_18PropertyAttributesE4EEENS_5MaybeIbEEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE(ptr noundef %0, ptr nonnull %1, i32 noundef %3) ; 2 uses
   %.sroa.0110.0.extract.trunc = trunc i16 %i.w to i8
   %.sroa.12.0.extract.shift = lshr i16 %i.w, 8
-  %.sroa.12.0.extract.trunc = trunc nuw i16 %.sroa.12.0.extract.shift to i8
   br label %_ZNK2v88internal17MaybeDirectHandleINS0_10FixedArrayEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 bb.g:                                             ; preds = %bb.e
   %i.x = tail call i16 @_ZN2v88internal8JSObject31PreventExtensionsWithTransitionILNS0_18PropertyAttributesE5EEENS_5MaybeIbEEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE(ptr noundef %0, ptr nonnull %1, i32 noundef %3) ; 2 uses
   %.sroa.0110.0.extract.trunc111 = trunc i16 %i.x to i8
   %.sroa.12.0.extract.shift115 = lshr i16 %i.x, 8
-  %.sroa.12.0.extract.trunc116 = trunc nuw i16 %.sroa.12.0.extract.shift115 to i8
   br label %_ZNK2v88internal17MaybeDirectHandleINS0_10FixedArrayEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 .critedge:                                        ; preds = %bb.c, %bb.b, %bb.a
@@ -406,13 +404,13 @@ bb.r:                                             ; preds = %_ZNKR2v85MaybeIbE8F
   %.sroa.0110.3 = phi i8 [ 0, %.critedge59 ], [ 1, %bb.m ], [ 1, %.preheader ], [ 1, %.preheader167 ], [ 0, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit ], [ 1, %.critedge57 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
+  %10 = zext nneg i8 %.sroa.0110.3 to i16
   br label %_ZNK2v88internal17MaybeDirectHandleINS0_10FixedArrayEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 _ZNK2v88internal17MaybeDirectHandleINS0_10FixedArrayEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit: ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit62, %bb.f, %bb.g, %bb.d, %.critedge55, %bb.k, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit.thread
   %.sroa.0110.5 = phi i8 [ 0, %bb.k ], [ 0, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit ], [ 0, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit.thread ], [ %.sroa.0110.3, %.critedge55 ], [ %.sroa.0110.0.extract.trunc, %bb.f ], [ 0, %bb.d ], [ %.sroa.0110.0.extract.trunc111, %bb.g ], [ 1, %_ZNKR2v85MaybeIbE8FromJustEv.exit62 ]
-  %.sroa.12.6 = phi i8 [ undef, %bb.k ], [ 0, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit ], [ 0, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit.thread ], [ %.sroa.0110.3, %.critedge55 ], [ %.sroa.12.0.extract.trunc, %bb.f ], [ 0, %bb.d ], [ %.sroa.12.0.extract.trunc116, %bb.g ], [ 1, %_ZNKR2v85MaybeIbE8FromJustEv.exit62 ]
-  %.sroa.12.0.insert.ext = zext i8 %.sroa.12.6 to i16
-  %.sroa.12.0.insert.shift = shl nuw i16 %.sroa.12.0.insert.ext, 8
+  %.sroa.12.6 = phi i16 [ 0, %bb.k ], [ 0, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit ], [ 0, %_ZN2v88internal10JSReceiver17PreventExtensionsEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_11ShouldThrowE.exit.thread ], [ %10, %.critedge55 ], [ %.sroa.12.0.extract.shift, %bb.f ], [ 0, %bb.d ], [ %.sroa.12.0.extract.shift115, %bb.g ], [ 1, %_ZNKR2v85MaybeIbE8FromJustEv.exit62 ]
+  %.sroa.12.0.insert.shift = shl nuw i16 %.sroa.12.6, 8
   %.sroa.0110.0.insert.ext = zext i8 %.sroa.0110.5 to i16
   %.sroa.0110.0.insert.insert = or disjoint i16 %.sroa.12.0.insert.shift, %.sroa.0110.0.insert.ext
   ret i16 %.sroa.0110.0.insert.insert

@@ -201,9 +201,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %1 = shl nsw i64 %i.g, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.i = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.g
+  %i.i = getelementptr i8, ptr %1, i64 160
   br label %bb.e
 
 .thread:                                          ; preds = %bb.a, %bb.b
@@ -235,9 +234,8 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %1 = shl nsw i64 %0, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.b = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %0
+  %i.b = getelementptr i8, ptr %1, i64 160
   br label %_PyLong_FromMedium.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -640,9 +638,8 @@ bb.m:                                             ; preds = %bb.j
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %_PyFreeList_Push.exit.i.i.i.i, %bb.i, %bb.e, %bb.d
-  %1 = shl nsw i64 %i.g, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.w = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.g
+  %i.w = getelementptr i8, ptr %1, i64 160
   br label %.thread
 
 .thread:                                          ; preds = %bb.c, %bb.a, %bb.b, %bb.n
@@ -1045,9 +1042,8 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %1 = shl nsw i64 %0, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.b = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %0
+  %i.b = getelementptr i8, ptr %1, i64 160
   br label %_PyLong_FromMedium.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -1149,9 +1145,8 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %1 = shl nsw i64 %0, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.b = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %0
+  %i.b = getelementptr i8, ptr %1, i64 160
   br label %_PyLong_FromMedium.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -1554,9 +1549,8 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = shl nsw i64 %i.m, 5
-  %3 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %2
-  %i.o = getelementptr i8, ptr %3, i64 160
+  %2 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.m
+  %i.o = getelementptr i8, ptr %2, i64 160
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = or disjoint i64 %i.p, 1
   br label %medium_from_stwodigits.exit
@@ -1645,9 +1639,8 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = shl nsw i64 %i.k, 5
-  %3 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %2
-  %i.m = getelementptr i8, ptr %3, i64 160
+  %2 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.k
+  %i.m = getelementptr i8, ptr %2, i64 160
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = or disjoint i64 %i.n, 1
   br label %medium_from_stwodigits.exit
@@ -1736,9 +1729,8 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = shl nsw i64 %i.m, 5
-  %3 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %2
-  %i.o = getelementptr i8, ptr %3, i64 160
+  %2 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.m
+  %i.o = getelementptr i8, ptr %2, i64 160
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = or disjoint i64 %i.p, 1
   br label %medium_from_stwodigits.exit
@@ -2141,9 +2133,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond.i.i, label %.thread.i.i6, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %1 = shl nsw i64 %i.y, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.aa = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.y
+  %i.aa = getelementptr i8, ptr %1, i64 160
   br label %long_neg.exit
 
 .thread.i.i6:                                     ; preds = %bb.h, %bb.g
@@ -2400,9 +2391,8 @@ _PyLong_Negate.exit.i:                            ; preds = %bb.y, %bb.z, %bb.x
   br i1 %i.cn, label %long_rem.exit.thread, label %long_rem.exit.thread30
 
 long_rem.exit:                                    ; preds = %bb.m
-  %3 = shl nsw i64 %i.as, 5
-  %4 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %3
-  %i.co = getelementptr i8, ptr %4, i64 160       ; 2 uses
+  %3 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.as
+  %i.co = getelementptr i8, ptr %3, i64 160       ; 2 uses
   %i.cp = icmp eq ptr %i.co, null
   br i1 %i.cp, label %long_rem.exit.thread, label %long_rem.exit.thread30
 
@@ -2805,9 +2795,8 @@ long_long.exit.thread:                            ; preds = %bb.h, %bb.g, %bb.k
   br label %bb.l
 
 long_long.exit:                                   ; preds = %bb.j
-  %4 = shl nsw i64 %i.y, 5
-  %5 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %4
-  %i.ah = getelementptr i8, ptr %5, i64 160       ; 2 uses
+  %4 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.y
+  %i.ah = getelementptr i8, ptr %4, i64 160       ; 2 uses
   store ptr %i.ah, ptr %3, align 8, !tbaa !207
   %i.ai = icmp eq ptr %i.ah, null
   br i1 %i.ai, label %Py_DECREF.exit51, label %bb.l
@@ -2838,11 +2827,10 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.i.i
   %.01113.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.az, %bb.o ]
   %i.ar = add nsw i64 %.014.i.i, -1               ; 3 uses
   %i.as = shl nuw nsw i64 %.01113.i.i, 30
-  %6 = and i64 %i.as, 4611686017353646080
   %i.at = getelementptr [4 x i8], ptr %i.ap, i64 %i.ar
   %i.au = load i32, ptr %i.at, align 4, !tbaa !7
   %i.av = zext i32 %i.au to i64
-  %i.aw = or i64 %6, %i.av                        ; 2 uses
+  %i.aw = or i64 %i.as, %i.av                     ; 2 uses
   %i.ax = udiv i64 %i.aw, %i.aq
   %i.ay = trunc i64 %i.ax to i32
   %i.az = urem i64 %i.aw, %i.aq                   ; 2 uses
@@ -3245,9 +3233,8 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %1 = shl nsw i64 %0, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.b = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %0
+  %i.b = getelementptr i8, ptr %1, i64 160
   br label %_PyLong_FromMedium.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -3650,9 +3637,8 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %1 = shl nsw i64 %0, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.b = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %0
+  %i.b = getelementptr i8, ptr %1, i64 160
   br label %_PyLong_FromMedium.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -3782,9 +3768,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond.i, label %.thread.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %1 = shl nsw i64 %i.k, 5
-  %2 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %1
-  %i.m = getelementptr i8, ptr %2, i64 160
+  %1 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.k
+  %i.m = getelementptr i8, ptr %1, i64 160
   br label %_Py_NewRef.exit
 
 .thread.i:                                        ; preds = %bb.e, %bb.d
@@ -4187,11 +4172,10 @@ _PyLong_Copy.exit.thread423:                      ; preds = %.thread.i
   br label %bb.v
 
 _PyLong_Copy.exit:                                ; preds = %bb.u
-  %3 = shl nuw nsw i32 %.val26.i, 5
-  %i.bf = zext nneg i32 %3 to i64
+  %i.bf = zext nneg i32 %.val26.i to i64
   %i.bg = sub nsw i64 0, %i.bf
-  %4 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.bg
-  %i.bh = getelementptr i8, ptr %4, i64 160       ; 3 uses
+  %3 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.bg
+  %i.bh = getelementptr i8, ptr %3, i64 160       ; 3 uses
   store ptr %i.bh, ptr %i.c, align 8, !tbaa !207
   %i.bi = icmp eq ptr %i.bh, null
   br i1 %i.bi, label %._crit_edge582, label %bb.v
@@ -4594,11 +4578,10 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph.i205
   %.01113.i = phi i64 [ 0, %.lr.ph.i205 ], [ %.fr224, %bb.u ]
   %i.gw = add nsw i64 %.014.i206, -1              ; 2 uses
   %i.gx = shl nuw nsw i64 %.01113.i, 30
-  %2 = and i64 %i.gx, 4611686017353646080
   %i.gy = getelementptr [4 x i8], ptr %i.gr, i64 %i.gw ; 2 uses
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !7
   %i.ha = zext i32 %i.gz to i64
-  %i.hb = or i64 %2, %i.ha                        ; 2 uses
+  %i.hb = or i64 %i.gx, %i.ha                     ; 2 uses
   %i.hc = udiv i64 %i.hb, %i.gv
   %i.hd = trunc i64 %i.hc to i32
   %i.he = urem i64 %i.hb, %i.gv
@@ -5001,9 +4984,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond.i.i, label %.thread.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %2 = shl nsw i64 %i.k, 5
-  %3 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %2
-  %i.m = getelementptr i8, ptr %3, i64 160
+  %2 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.k
+  %i.m = getelementptr i8, ptr %2, i64 160
   br label %long_long.exit
 
 .thread.i.i:                                      ; preds = %bb.e, %bb.d
@@ -5406,9 +5388,8 @@ bb.f:                                             ; preds = %.thread.i.i.i
   br label %long_long.exit.thread.i
 
 long_long.exit.i:                                 ; preds = %bb.e
-  %2 = shl nsw i64 %i.k, 5
-  %3 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %2
-  %i.u = getelementptr i8, ptr %3, i64 160        ; 2 uses
+  %2 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.k
+  %i.u = getelementptr i8, ptr %2, i64 160        ; 2 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %int_as_integer_ratio_impl.exit, label %long_long.exit.thread.i
 
@@ -5488,9 +5469,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond.i.i.i, label %.thread.i.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %3 = shl nsw i64 %i.o, 5
-  %4 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %3
-  %i.q = getelementptr i8, ptr %4, i64 160
+  %3 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.o
+  %i.q = getelementptr i8, ptr %3, i64 160
   br label %int___round___impl.exit
 
 .thread.i.i.i:                                    ; preds = %bb.h, %bb.g
@@ -5570,9 +5550,8 @@ bb.s:                                             ; preds = %bb.r
   br i1 %or.cond.i.i70.i, label %.thread.i.i72.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %5 = shl nsw i64 %i.ar, 5
-  %6 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %5
-  %i.at = getelementptr i8, ptr %6, i64 160
+  %4 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.ar
+  %i.at = getelementptr i8, ptr %4, i64 160
   br label %int___round___impl.exit
 
 .thread.i.i72.i:                                  ; preds = %bb.s, %bb.r
@@ -5738,9 +5717,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.i.i, label %.thread.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = shl nsw i64 %i.g, 5
-  %3 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %2
-  %i.i = getelementptr i8, ptr %3, i64 160
+  %2 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.g
+  %i.i = getelementptr i8, ptr %2, i64 160
   br label %int___getnewargs___impl.exit
 
 .thread.i.i:                                      ; preds = %bb.b, %bb.a
@@ -5926,9 +5904,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond.i.i, label %.thread.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %2 = shl nsw i64 %i.k, 5
-  %3 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %2
-  %i.m = getelementptr i8, ptr %3, i64 160
+  %2 = getelementptr [32 x i8], ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14136), i64 %i.k
+  %i.m = getelementptr i8, ptr %2, i64 160
   br label %long_long.exit
 
 .thread.i.i:                                      ; preds = %bb.e, %bb.d

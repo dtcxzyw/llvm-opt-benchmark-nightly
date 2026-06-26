@@ -201,7 +201,8 @@ _ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit65:  ; preds = %.critedge.i.i.i64, 
 
 bb.t:                                             ; preds = %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit65, %bb.p
   %.157 = phi ptr [ %i.cb, %bb.p ], [ %.0.i.i.i63, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit65 ] ; 3 uses
-  %i.dn = tail call noundef zeroext i1 @_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(2824) %0, i32 noundef 91, i32 noundef 3) #4 ; 2 uses
+  %i.dn = tail call noundef zeroext i1 @_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(2824) %0, i32 noundef 91, i32 noundef 3) #4
+  %.252 = zext i1 %i.dn to i8                     ; 2 uses
   %i.do = load ptr, ptr %i.a, align 8, !tbaa !11  ; 2 uses
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !62
   switch i32 %i.dp, label %bb.ae [
@@ -259,7 +260,6 @@ bb.w:                                             ; preds = %bb.v
 _ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit75:  ; preds = %.critedge.i.i.i74, %bb.w
   %.0.i.i.i73 = phi ptr [ %i.eq, %.critedge.i.i.i74 ], [ %i.es, %bb.w ] ; 15 uses
   %i.et = inttoptr i64 %i.dv to ptr
-  %3 = zext i1 %i.dn to i8
   %i.eu = zext i1 %i.bm to i8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(77) %.0.i.i.i73, i8 0, i64 16, i1 false)
   %i.ev = getelementptr inbounds nuw i8, ptr %.0.i.i.i73, i64 16
@@ -273,7 +273,7 @@ _ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit75:  ; preds = %.critedge.i.i.i74, 
   %i.ez = getelementptr inbounds nuw i8, ptr %.0.i.i.i73, i64 64
   store ptr null, ptr %i.ez, align 8, !tbaa !198
   %i.fa = getelementptr inbounds nuw i8, ptr %.0.i.i.i73, i64 72
-  store i8 %3, ptr %i.fa, align 8, !tbaa !199
+  store i8 %.252, ptr %i.fa, align 8, !tbaa !199
   %i.fb = getelementptr inbounds nuw i8, ptr %.0.i.i.i73, i64 73
   store i8 %i.eu, ptr %i.fb, align 1, !tbaa !200
   %i.fc = getelementptr inbounds nuw i8, ptr %.0.i.i.i73, i64 74
@@ -410,7 +410,6 @@ bb.af:                                            ; preds = %bb.ae
 
 _ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit93:  ; preds = %.critedge.i.i.i92, %bb.af
   %.0.i.i.i91 = phi ptr [ %i.hj, %.critedge.i.i.i92 ], [ %i.hl, %bb.af ] ; 14 uses
-  %4 = zext i1 %i.dn to i8
   %i.hm = zext i1 %i.bm to i8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(77) %.0.i.i.i91, i8 0, i64 16, i1 false)
   %i.hn = getelementptr inbounds nuw i8, ptr %.0.i.i.i91, i64 16
@@ -422,7 +421,7 @@ _ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit93:  ; preds = %.critedge.i.i.i92, 
   %i.hq = getelementptr inbounds nuw i8, ptr %.0.i.i.i91, i64 56
   %i.hr = getelementptr inbounds nuw i8, ptr %.0.i.i.i91, i64 72
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hq, i8 0, i64 16, i1 false)
-  store i8 %4, ptr %i.hr, align 8, !tbaa !199
+  store i8 %.252, ptr %i.hr, align 8, !tbaa !199
   %i.hs = getelementptr inbounds nuw i8, ptr %.0.i.i.i91, i64 73
   store i8 %i.hm, ptr %i.hs, align 1, !tbaa !200
   %i.ht = getelementptr inbounds nuw i8, ptr %.0.i.i.i91, i64 74
@@ -825,7 +824,6 @@ bb.ad:                                            ; preds = %bb.ab
   %i.hl = extractvalue { i64, i8 } %i.hj, 1       ; 2 uses
   %i.hm = trunc nuw i8 %i.hl to i1
   %spec.select = select i1 %i.hm, i64 %i.hk, i64 undef
-  %spec.select232 = and i8 %i.hl, 1
   br label %bb.ay
 
 bb.ae:                                            ; preds = %_ZN6hermes6parser6detail12JSParserImpl19recursionDepthCheckEv.exit.thread
@@ -1228,7 +1226,6 @@ bb.aw:                                            ; preds = %bb.av
   %i.sa = extractvalue { i64, i8 } %i.ry, 1       ; 2 uses
   %i.sb = trunc nuw i8 %i.sa to i1
   %spec.select233 = select i1 %i.sb, i64 %i.rz, i64 undef
-  %spec.select234 = and i8 %i.sa, 1
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.av
@@ -1246,7 +1243,7 @@ bb.ax:                                            ; preds = %bb.av
 
 bb.ay:                                            ; preds = %bb.aw, %bb.ad, %_ZN6hermes6parser6detail12JSParserImpl19recursionDepthCheckEv.exit, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit95, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit103, %bb.o, %bb.q, %bb.s, %bb.u, %bb.w, %bb.y, %bb.aa, %bb.ac, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit154, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit162, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit173, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit184, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit195, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit206, %bb.ax
   %.sroa.0230.2 = phi i64 [ %i.rw, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit206 ], [ %spec.select, %bb.ad ], [ undef, %bb.ax ], [ %i.ak, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit ], [ %i.am, %bb.d ], [ %i.ap, %bb.e ], [ %i.as, %bb.f ], [ %i.av, %bb.g ], [ %i.ay, %bb.h ], [ %i.cb, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit95 ], [ %i.di, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit103 ], [ %i.dv, %bb.o ], [ %i.ei, %bb.q ], [ %i.ev, %bb.s ], [ %i.fi, %bb.u ], [ %i.fv, %bb.w ], [ %i.gi, %bb.y ], [ %i.gv, %bb.aa ], [ %i.hi, %bb.ac ], [ undef, %_ZN6hermes6parser6detail12JSParserImpl19recursionDepthCheckEv.exit ], [ %i.jg, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit154 ], [ %i.ki, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit162 ], [ %i.mf, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit173 ], [ %i.oc, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit184 ], [ %i.pz, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit195 ], [ %spec.select233, %bb.aw ]
-  %.sroa.25.2 = phi i8 [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit206 ], [ %spec.select232, %bb.ad ], [ 0, %bb.ax ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit ], [ %i.an, %bb.d ], [ %i.aq, %bb.e ], [ %i.at, %bb.f ], [ %i.aw, %bb.g ], [ %i.az, %bb.h ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit95 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit103 ], [ 1, %bb.o ], [ 1, %bb.q ], [ 1, %bb.s ], [ 1, %bb.u ], [ 1, %bb.w ], [ 1, %bb.y ], [ 1, %bb.aa ], [ 1, %bb.ac ], [ 0, %_ZN6hermes6parser6detail12JSParserImpl19recursionDepthCheckEv.exit ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit154 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit162 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit173 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit184 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit195 ], [ %spec.select234, %bb.aw ]
+  %.sroa.25.2 = phi i8 [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit206 ], [ %i.hl, %bb.ad ], [ 0, %bb.ax ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit ], [ %i.an, %bb.d ], [ %i.aq, %bb.e ], [ %i.at, %bb.f ], [ %i.aw, %bb.g ], [ %i.az, %bb.h ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit95 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit103 ], [ 1, %bb.o ], [ 1, %bb.q ], [ 1, %bb.s ], [ 1, %bb.u ], [ 1, %bb.w ], [ 1, %bb.y ], [ 1, %bb.aa ], [ 1, %bb.ac ], [ 0, %_ZN6hermes6parser6detail12JSParserImpl19recursionDepthCheckEv.exit ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit154 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit162 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit173 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit184 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit195 ], [ %i.sa, %bb.aw ]
   %i.sg = load i32, ptr %i.a, align 8, !tbaa !103
   %i.sh = add i32 %i.sg, -1
   store i32 %i.sh, ptr %i.a, align 8, !tbaa !103

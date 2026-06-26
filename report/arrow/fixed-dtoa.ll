@@ -201,11 +201,10 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
 .lr.ph30.preheader.i:                             ; preds = %.lr.ph.preheader.i, %.critedge.i
   %indvars.iv.i119.lcssa161 = phi i64 [ %indvars.iv.next.i120145172, %.critedge.i ], [ %i.hh, %.lr.ph.preheader.i ] ; 2 uses
   %.lcssa139160 = phi i32 [ %i.hm, %.critedge.i ], [ %.pr.i, %.lr.ph.preheader.i ] ; 3 uses
-  %wide.trip.count.i = and i64 %indvars.iv.i119.lcssa161, 4294967295
   br label %.lr.ph30.i
 
-.lr.ph30.i:                                       ; preds = %bb.r, %.lr.ph30.preheader.i
-  %indvars.iv39.i = phi i64 [ 0, %.lr.ph30.preheader.i ], [ %indvars.iv.next40.i, %bb.r ] ; 3 uses
+.lr.ph30.i:                                       ; preds = %.lr.ph30.preheader.i, %bb.r
+  %indvars.iv39.i = phi i64 [ %indvars.iv.next40.i, %bb.r ], [ 0, %.lr.ph30.preheader.i ] ; 3 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv39.i
   %i.hu = load i8, ptr %i.ht, align 1, !tbaa !7
   %i.hv = icmp eq i8 %i.hu, 48
@@ -213,7 +212,7 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
 
 bb.r:                                             ; preds = %.lr.ph30.i
   %indvars.iv.next40.i = add nuw nsw i64 %indvars.iv39.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next40.i, %wide.trip.count.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next40.i, %indvars.iv.i119.lcssa161
   br i1 %exitcond.not.i, label %.critedge2.i, label %.lr.ph30.i, !llvm.loop !12
 
 .critedge2.i:                                     ; preds = %.lr.ph30.i, %bb.r

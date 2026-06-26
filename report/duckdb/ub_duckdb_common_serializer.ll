@@ -201,39 +201,51 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb16BinarySerializer10WriteValueEa(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1328) %0, i8 noundef signext %1) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 8 uses
+  %i.a = alloca [16 x i8], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
+  %2 = sext i8 %1 to i32                          ; 2 uses
+  %3 = ashr i32 %2, 7                             ; 2 uses
+  %4 = icmp eq i32 %3, 0
   %i.b = icmp ult i8 %1, 64
-  %.014.lcssa.i.i.sroa.gep3.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  br i1 %i.b, label %_ZN6duckdb16BinarySerializer12VarIntEncodeIaEEvT_.exit, label %.lr.ph.i.preheader.i.i
+  %or.cond20.i.i.i = and i1 %i.b, %4
+  br i1 %or.cond20.i.i.i, label %_ZN6duckdb16BinarySerializer12VarIntEncodeIaEEvT_.exit, label %.lr.ph.i.preheader.i.i
 
-.lr.ph.i.preheader.i.i:                           ; preds = %bb.a
-  %2 = ashr i8 %1, 7                              ; 2 uses
-  %i.c = icmp ne i8 %2, -1
-  %3 = and i8 %1, 64
-  %.not.i.peel.i.i = icmp eq i8 %3, 0
+.lr.ph.i.preheader.i.i:                           ; preds = %bb.a, %bb.b
+  %5 = phi i32 [ %10, %bb.b ], [ %3, %bb.a ]      ; 5 uses
+  %6 = phi i8 [ %9, %bb.b ], [ %1, %bb.a ]        ; 2 uses
+  %.01422.i.i.i = phi i64 [ %.1.i.i.i, %bb.b ], [ 0, %bb.a ] ; 3 uses
+  %.01521.i.i.i = phi i32 [ %5, %bb.b ], [ %2, %bb.a ]
+  %i.c = icmp ne i32 %5, -1
+  %7 = and i32 %.01521.i.i.i, 64
+  %.not.i.peel.i.i = icmp eq i32 %7, 0
   %or.cond16.i.peel.i.i = or i1 %i.c, %.not.i.peel.i.i
   br i1 %or.cond16.i.peel.i.i, label %bb.b, label %_ZN6duckdb16BinarySerializer12VarIntEncodeIaEEvT_.exit
 
 bb.b:                                             ; preds = %.lr.ph.i.preheader.i.i
-  %i.d = or i8 %1, -128
-  store i8 %i.d, ptr %i.a, align 16, !tbaa !98
-  %4 = icmp ugt i8 %2, 63
-  %spec.select.i.i = sext i1 %4 to i8
-  br label %_ZN6duckdb16BinarySerializer12VarIntEncodeIaEEvT_.exit
+  %i.d = or i8 %6, -128
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.01422.i.i.i
+  store i8 %i.d, ptr %8, align 1, !tbaa !98
+  %.1.i.i.i = add i64 %.01422.i.i.i, 1            ; 2 uses
+  %9 = trunc nsw i32 %5 to i8                     ; 2 uses
+  %10 = ashr i32 %5, 7                            ; 2 uses
+  %11 = icmp eq i32 %10, 0
+  %12 = icmp ult i32 %5, 64
+  %or.cond.i.i.i = and i1 %12, %11
+  br i1 %or.cond.i.i.i, label %_ZN6duckdb16BinarySerializer12VarIntEncodeIaEEvT_.exit, label %.lr.ph.i.preheader.i.i
 
-_ZN6duckdb16BinarySerializer12VarIntEncodeIaEEvT_.exit: ; preds = %bb.a, %.lr.ph.i.preheader.i.i, %bb.b
-  %.015.lcssa.i.i.i = phi i8 [ %1, %bb.a ], [ %1, %.lr.ph.i.preheader.i.i ], [ %spec.select.i.i, %bb.b ]
-  %.014.lcssa.i.i.sroa.phi.i = phi ptr [ %i.a, %bb.a ], [ %i.a, %.lr.ph.i.preheader.i.i ], [ %.014.lcssa.i.i.sroa.gep3.i, %bb.b ]
-  %.014.lcssa.i.i.i = phi i64 [ 1, %bb.a ], [ 1, %.lr.ph.i.preheader.i.i ], [ 2, %bb.b ]
-  %5 = and i8 %.015.lcssa.i.i.i, 127
-  store i8 %5, ptr %.014.lcssa.i.i.sroa.phi.i, align 1, !tbaa !98
+_ZN6duckdb16BinarySerializer12VarIntEncodeIaEEvT_.exit: ; preds = %.lr.ph.i.preheader.i.i, %bb.b, %bb.a
+  %.014.lcssa.i.i.i = phi i64 [ 0, %bb.a ], [ %.01422.i.i.i, %.lr.ph.i.preheader.i.i ], [ %.1.i.i.i, %bb.b ] ; 2 uses
+  %.015.lcssa.i.i.i = phi i8 [ %1, %bb.a ], [ %6, %.lr.ph.i.preheader.i.i ], [ %9, %bb.b ]
+  %13 = and i8 %.015.lcssa.i.i.i, 127
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.014.lcssa.i.i.i
+  store i8 %13, ptr %14, align 1, !tbaa !98
+  %.118.i.i.i = add i64 %.014.lcssa.i.i.i, 1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !9, !nonnull !92, !align !93 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !94
   %i.h = load ptr, ptr %i.g, align 8
-  call void %i.h(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull %i.a, i64 noundef %.014.lcssa.i.i.i), !inline_history !107
+  call void %i.h(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull %i.a, i64 noundef %.118.i.i.i), !inline_history !107
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   ret void
 }
@@ -276,21 +288,22 @@ bb.a:
   %i.a = alloca [16 x i8], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
+  %2 = sext i16 %1 to i32                         ; 2 uses
   %i.b = trunc i16 %1 to i8                       ; 2 uses
-  %2 = ashr i16 %1, 7                             ; 2 uses
-  %i.c = icmp eq i16 %2, 0
+  %3 = ashr i32 %2, 7                             ; 2 uses
+  %i.c = icmp eq i32 %3, 0
   %i.d = icmp ult i16 %1, 64
   %or.cond20.i.i.i = and i1 %i.d, %i.c
   br i1 %or.cond20.i.i.i, label %_ZN6duckdb16BinarySerializer12VarIntEncodeIsEEvT_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.b
-  %3 = phi i16 [ %5, %bb.b ], [ %2, %bb.a ]       ; 5 uses
+  %4 = phi i32 [ %6, %bb.b ], [ %3, %bb.a ]       ; 5 uses
   %i.e = phi i8 [ %i.i, %bb.b ], [ %i.b, %bb.a ]  ; 2 uses
   %.01422.i.i.i = phi i64 [ %.1.i.i.i, %bb.b ], [ 0, %bb.a ] ; 3 uses
-  %.01521.i.i.i = phi i16 [ %3, %bb.b ], [ %1, %bb.a ]
-  %i.f = icmp ne i16 %3, -1
-  %4 = and i16 %.01521.i.i.i, 64
-  %.not.i.i.i = icmp eq i16 %4, 0
+  %.01521.i.i.i = phi i32 [ %4, %bb.b ], [ %2, %bb.a ]
+  %i.f = icmp ne i32 %4, -1
+  %5 = and i32 %.01521.i.i.i, 64
+  %.not.i.i.i = icmp eq i32 %5, 0
   %or.cond16.i.i.i = or i1 %i.f, %.not.i.i.i
   br i1 %or.cond16.i.i.i, label %bb.b, label %_ZN6duckdb16BinarySerializer12VarIntEncodeIsEEvT_.exit
 
@@ -299,10 +312,10 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %.01422.i.i.i
   store i8 %i.g, ptr %i.h, align 1, !tbaa !98
   %.1.i.i.i = add i64 %.01422.i.i.i, 1            ; 2 uses
-  %i.i = trunc i16 %3 to i8                       ; 2 uses
-  %5 = ashr i16 %3, 7                             ; 2 uses
-  %i.j = icmp eq i16 %5, 0
-  %i.k = icmp ult i16 %3, 64
+  %i.i = trunc i32 %4 to i8                       ; 2 uses
+  %6 = ashr i32 %4, 7                             ; 2 uses
+  %i.j = icmp eq i32 %6, 0
+  %i.k = icmp ult i32 %4, 64
   %or.cond.i.i.i = and i1 %i.k, %i.j
   br i1 %or.cond.i.i.i, label %_ZN6duckdb16BinarySerializer12VarIntEncodeIsEEvT_.exit, label %.lr.ph.i.i.i
 

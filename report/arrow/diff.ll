@@ -201,13 +201,13 @@ _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37: ; preds = %
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.y = load i8, ptr %i.x, align 4, !tbaa !746   ; 2 uses
   %i.z = icmp ult i8 %i.y, 7
-  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread: ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ab = load i8, ptr %i.aa, align 4, !tbaa !746 ; 2 uses
   %i.ac = icmp ult i8 %i.ab, 7
-  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread
   %i.ad = load ptr, ptr %0, align 8, !tbaa !446
@@ -225,7 +225,7 @@ bb.f:                                             ; preds = %_ZNK14arrow_vendore
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 3
   %i.am = load i8, ptr %i.al, align 1, !tbaa !732 ; 3 uses
   %.not8.i12 = icmp eq i8 %i.am, 0
-  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.g
+  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.g
 
 bb.g:                                             ; preds = %.thread
   %.not.i.i13 = icmp eq i8 %i.c, 2
@@ -253,7 +253,7 @@ bb.h:                                             ; preds = %bb.g
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20: ; preds = %bb.h, %.thread.i.i15
   %.sroa.03.0.i.i17 = phi i8 [ %i.aw, %.thread.i.i15 ], [ 29, %bb.h ]
   %.not = icmp ult i8 %.sroa.03.0.i.i17, %i.am
-  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.i
+  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.ax = sext i16 %i.a to i32
@@ -287,8 +287,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bw = icmp sgt i32 %i.bv, -5
   %i.bx = add nsw i32 %i.bv, 4
   %.in.i.i = select i1 %i.bw, i32 %i.bx, i32 %i.bv
-  %i.by = urem i32 %.in.i.i, 7
-  %i.bz = trunc nuw nsw i32 %i.by to i8           ; 2 uses
+  %i.by = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bz = trunc nuw nsw i32 %i.by to i8
   %i.ca = icmp ult i8 %i.ak, 7
   %i.cb = icmp ne i8 %i.ak, %i.bz
   %or.cond32 = select i1 %i.ca, i1 %i.cb, i1 false
@@ -305,15 +305,19 @@ bb.j:                                             ; preds = %bb.i
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.cf, i32 noundef %i.ci)
   br label %bb.k
 
-_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %bb.i
-  %.sroa.023.0 = phi i8 [ %i.bz, %bb.i ], [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
+  %2 = phi i8 [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
+  %3 = zext i8 %2 to i32
+  br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a
+
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
+  %.sroa.023.0 = phi i32 [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.by, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %4 = srem i32 %.fr.i, 7
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, %bb.f
-  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
+  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %4, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
   ret i32 %.1
 }
 
@@ -716,13 +720,13 @@ _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37: ; preds = %
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.y = load i8, ptr %i.x, align 4, !tbaa !746   ; 2 uses
   %i.z = icmp ult i8 %i.y, 7
-  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread: ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ab = load i8, ptr %i.aa, align 4, !tbaa !746 ; 2 uses
   %i.ac = icmp ult i8 %i.ab, 7
-  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread
   %i.ad = load ptr, ptr %0, align 8, !tbaa !446
@@ -740,7 +744,7 @@ bb.f:                                             ; preds = %_ZNK14arrow_vendore
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 3
   %i.am = load i8, ptr %i.al, align 1, !tbaa !732 ; 3 uses
   %.not8.i12 = icmp eq i8 %i.am, 0
-  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.g
+  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.g
 
 bb.g:                                             ; preds = %.thread
   %.not.i.i13 = icmp eq i8 %i.c, 2
@@ -768,7 +772,7 @@ bb.h:                                             ; preds = %bb.g
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20: ; preds = %bb.h, %.thread.i.i15
   %.sroa.03.0.i.i17 = phi i8 [ %i.aw, %.thread.i.i15 ], [ 29, %bb.h ]
   %.not = icmp ult i8 %.sroa.03.0.i.i17, %i.am
-  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.i
+  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.ax = sext i16 %i.a to i32
@@ -802,8 +806,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bw = icmp sgt i32 %i.bv, -5
   %i.bx = add nsw i32 %i.bv, 4
   %.in.i.i = select i1 %i.bw, i32 %i.bx, i32 %i.bv
-  %i.by = urem i32 %.in.i.i, 7
-  %i.bz = trunc nuw nsw i32 %i.by to i8           ; 2 uses
+  %i.by = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bz = trunc nuw nsw i32 %i.by to i8
   %i.ca = icmp ult i8 %i.ak, 7
   %i.cb = icmp ne i8 %i.ak, %i.bz
   %or.cond32 = select i1 %i.ca, i1 %i.cb, i1 false
@@ -820,15 +824,19 @@ bb.j:                                             ; preds = %bb.i
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.cf, i32 noundef %i.ci)
   br label %bb.k
 
-_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %bb.i
-  %.sroa.023.0 = phi i8 [ %i.bz, %bb.i ], [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
+  %2 = phi i8 [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
+  %3 = zext i8 %2 to i32
+  br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a
+
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
+  %.sroa.023.0 = phi i32 [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.by, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %4 = srem i32 %.fr.i, 7
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, %bb.f
-  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
+  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %4, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
   ret i32 %.1
 }
 
@@ -1231,13 +1239,13 @@ _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37: ; preds = %
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.y = load i8, ptr %i.x, align 4, !tbaa !746   ; 2 uses
   %i.z = icmp ult i8 %i.y, 7
-  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread: ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ab = load i8, ptr %i.aa, align 4, !tbaa !746 ; 2 uses
   %i.ac = icmp ult i8 %i.ab, 7
-  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread
   %i.ad = load ptr, ptr %0, align 8, !tbaa !446
@@ -1255,7 +1263,7 @@ bb.f:                                             ; preds = %_ZNK14arrow_vendore
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 3
   %i.am = load i8, ptr %i.al, align 1, !tbaa !732 ; 3 uses
   %.not8.i12 = icmp eq i8 %i.am, 0
-  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.g
+  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.g
 
 bb.g:                                             ; preds = %.thread
   %.not.i.i13 = icmp eq i8 %i.c, 2
@@ -1283,7 +1291,7 @@ bb.h:                                             ; preds = %bb.g
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20: ; preds = %bb.h, %.thread.i.i15
   %.sroa.03.0.i.i17 = phi i8 [ %i.aw, %.thread.i.i15 ], [ 29, %bb.h ]
   %.not = icmp ult i8 %.sroa.03.0.i.i17, %i.am
-  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.i
+  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.ax = sext i16 %i.a to i32
@@ -1317,8 +1325,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bw = icmp sgt i32 %i.bv, -5
   %i.bx = add nsw i32 %i.bv, 4
   %.in.i.i = select i1 %i.bw, i32 %i.bx, i32 %i.bv
-  %i.by = urem i32 %.in.i.i, 7
-  %i.bz = trunc nuw nsw i32 %i.by to i8           ; 2 uses
+  %i.by = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bz = trunc nuw nsw i32 %i.by to i8
   %i.ca = icmp ult i8 %i.ak, 7
   %i.cb = icmp ne i8 %i.ak, %i.bz
   %or.cond32 = select i1 %i.ca, i1 %i.cb, i1 false
@@ -1335,15 +1343,19 @@ bb.j:                                             ; preds = %bb.i
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.cf, i32 noundef %i.ci)
   br label %bb.k
 
-_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %bb.i
-  %.sroa.023.0 = phi i8 [ %i.bz, %bb.i ], [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
+  %2 = phi i8 [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
+  %3 = zext i8 %2 to i32
+  br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a
+
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
+  %.sroa.023.0 = phi i32 [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.by, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %4 = srem i32 %.fr.i, 7
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, %bb.f
-  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
+  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %4, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
   ret i32 %.1
 }
 
@@ -1746,13 +1758,13 @@ _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37: ; preds = %
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.y = load i8, ptr %i.x, align 4, !tbaa !746   ; 2 uses
   %i.z = icmp ult i8 %i.y, 7
-  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.z, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread: ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ab = load i8, ptr %i.aa, align 4, !tbaa !746 ; 2 uses
   %i.ac = icmp ult i8 %i.ab, 7
-  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.f
+  br i1 %i.ac, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread
   %i.ad = load ptr, ptr %0, align 8, !tbaa !446
@@ -1770,7 +1782,7 @@ bb.f:                                             ; preds = %_ZNK14arrow_vendore
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 3
   %i.am = load i8, ptr %i.al, align 1, !tbaa !732 ; 3 uses
   %.not8.i12 = icmp eq i8 %i.am, 0
-  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.g
+  br i1 %.not8.i12, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.g
 
 bb.g:                                             ; preds = %.thread
   %.not.i.i13 = icmp eq i8 %i.c, 2
@@ -1798,7 +1810,7 @@ bb.h:                                             ; preds = %bb.g
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20: ; preds = %bb.h, %.thread.i.i15
   %.sroa.03.0.i.i17 = phi i8 [ %i.aw, %.thread.i.i15 ], [ 29, %bb.h ]
   %.not = icmp ult i8 %.sroa.03.0.i.i17, %i.am
-  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, label %bb.i
+  br i1 %.not, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.ax = sext i16 %i.a to i32
@@ -1832,8 +1844,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bw = icmp sgt i32 %i.bv, -5
   %i.bx = add nsw i32 %i.bv, 4
   %.in.i.i = select i1 %i.bw, i32 %i.bx, i32 %i.bv
-  %i.by = urem i32 %.in.i.i, 7
-  %i.bz = trunc nuw nsw i32 %i.by to i8           ; 2 uses
+  %i.by = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bz = trunc nuw nsw i32 %i.by to i8
   %i.ca = icmp ult i8 %i.ak, 7
   %i.cb = icmp ne i8 %i.ak, %i.bz
   %or.cond32 = select i1 %i.ca, i1 %i.cb, i1 false
@@ -1850,15 +1862,19 @@ bb.j:                                             ; preds = %bb.i
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.cf, i32 noundef %i.ci)
   br label %bb.k
 
-_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %bb.i
-  %.sroa.023.0 = phi i8 [ %i.bz, %bb.i ], [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
+  %2 = phi i8 [ %i.ab, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread ], [ %i.ak, %.thread ], [ %i.ak, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20 ], [ %i.y, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread37 ]
+  %3 = zext i8 %2 to i32
+  br label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a
+
+_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a: ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
+  %.sroa.023.0 = phi i32 [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.by, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %4 = srem i32 %.fr.i, 7
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a, %bb.f
-  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %3, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
+  %.1 = phi i32 [ 8, %bb.f ], [ 8, %bb.j ], [ %4, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread.a ]
   ret i32 %.1
 }
 

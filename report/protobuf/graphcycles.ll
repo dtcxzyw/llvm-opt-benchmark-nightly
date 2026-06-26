@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .lr.ph169:                                        ; preds = %.lr.ph169.lr.ph, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit
   %wide.trip.count176 = phi i64 [ %wide.trip.count173, %.lr.ph169.lr.ph ], [ %wide.trip.count, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit ]
-  %i.af = phi i64 [ 0, %.lr.ph169.lr.ph ], [ %2, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit ]
+  %i.af = phi i64 [ 0, %.lr.ph169.lr.ph ], [ %indvars.iv.next, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit ]
   %.val10.i175 = load ptr, ptr %i.ac, align 8
   br label %bb.d
 
@@ -225,7 +225,7 @@ bb.d:                                             ; preds = %.lr.ph169, %bb.c
   %indvars.iv167 = phi i64 [ %i.af, %.lr.ph169 ], [ %indvars.iv.next, %bb.c ] ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %.val10.i175, i64 %indvars.iv167
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3  ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv167, 1 ; 4 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv167, 1 ; 5 uses
   %i.ak = icmp sgt i32 %i.aj, -1
   br i1 %i.ak, label %bb.e, label %bb.c
 
@@ -285,15 +285,14 @@ _ZNK4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet9FindInde
 
 _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit: ; preds = %_ZNK4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet9FindIndexEi.exit.i, %_ZNK4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet9FindIndexEi.exit.thread.i
   %.val.i16 = load i32, ptr %i.ad, align 8, !tbaa !27
-  %2 = and i64 %indvars.iv.next, 4294967295       ; 2 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.al, i32 %.val.i16)
   %wide.trip.count = zext i32 %umax to i64        ; 2 uses
-  %exitcond.not166 = icmp eq i64 %2, %wide.trip.count
+  %exitcond.not166 = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not166, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit.preheader, label %.lr.ph169, !llvm.loop !53
 
 .lr.ph179:                                        ; preds = %.lr.ph179.lr.ph, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit45
   %wide.trip.count116186 = phi i64 [ %wide.trip.count116183, %.lr.ph179.lr.ph ], [ %wide.trip.count116, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit45 ]
-  %i.bj = phi i64 [ 0, %.lr.ph179.lr.ph ], [ %3, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit45 ]
+  %i.bj = phi i64 [ 0, %.lr.ph179.lr.ph ], [ %indvars.iv.next113, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit45 ]
   %.val10.i19185 = phi ptr [ %.val10.i19181, %.lr.ph179.lr.ph ], [ %.val10.i19, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit45 ] ; 2 uses
   br label %bb.h
 
@@ -305,7 +304,7 @@ bb.h:                                             ; preds = %.lr.ph179, %bb.g
   %indvars.iv112178 = phi i64 [ %i.bj, %.lr.ph179 ], [ %indvars.iv.next113, %bb.g ] ; 2 uses
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %.val10.i19185, i64 %indvars.iv112178
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !3  ; 2 uses
-  %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112178, 1 ; 4 uses
+  %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112178, 1 ; 5 uses
   %i.bm = icmp sgt i32 %i.bl, -1
   br i1 %i.bm, label %bb.m, label %bb.g
 
@@ -432,10 +431,9 @@ _ZNK4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet9FindInde
 _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5eraseEi.exit45: ; preds = %_ZNK4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet9FindIndexEi.exit.i41, %_ZNK4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet9FindIndexEi.exit.thread.i39
   %.val10.i19 = load ptr, ptr %i.ag, align 8      ; 2 uses
   %.val.i21 = load i32, ptr %i.ah, align 8, !tbaa !27
-  %3 = and i64 %indvars.iv.next113, 4294967295    ; 2 uses
   %umax115 = tail call i32 @llvm.umax.i32(i32 %i.ce, i32 %.val.i21)
   %wide.trip.count116 = zext i32 %umax115 to i64  ; 2 uses
-  %exitcond117.not177 = icmp eq i64 %3, %wide.trip.count116
+  %exitcond117.not177 = icmp eq i64 %indvars.iv.next113, %wide.trip.count116
   br i1 %exitcond117.not177, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit23, label %.lr.ph179, !llvm.loop !54
 
 bb.o:                                             ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet5clearEv.exit29
@@ -838,7 +836,7 @@ _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backE
 
 .lr.ph202:                                        ; preds = %.lr.ph202.lr.ph, %bb.y
   %wide.trip.count.i209 = phi i64 [ %wide.trip.count.i206, %.lr.ph202.lr.ph ], [ %wide.trip.count.i, %bb.y ]
-  %i.bx = phi i64 [ 0, %.lr.ph202.lr.ph ], [ %3, %bb.y ]
+  %i.bx = phi i64 [ 0, %.lr.ph202.lr.ph ], [ %indvars.iv.next.i, %bb.y ]
   %.val10.i.i208 = load ptr, ptr %i.bv, align 8
   br label %bb.p
 
@@ -850,7 +848,7 @@ bb.p:                                             ; preds = %.lr.ph202, %bb.o
   %indvars.iv.i201 = phi i64 [ %i.bx, %.lr.ph202 ], [ %indvars.iv.next.i, %bb.o ] ; 2 uses
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %.val10.i.i208, i64 %indvars.iv.i201
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !3  ; 3 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i201, 1 ; 4 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i201, 1 ; 5 uses
   %i.ca = icmp sgt i32 %i.bz, -1
   br i1 %i.ca, label %bb.q, label %bb.o
 
@@ -949,10 +947,9 @@ _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backE
 
 bb.y:                                             ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit63.i, %bb.r
   %.val.i.i = load i32, ptr %i.bw, align 8, !tbaa !27
-  %3 = and i64 %indvars.iv.next.i, 4294967295     ; 2 uses
   %umax.i = tail call i32 @llvm.umax.i32(i32 %i.cb, i32 %.val.i.i)
   %wide.trip.count.i = zext i32 %umax.i to i64    ; 2 uses
-  %exitcond.not.i200 = icmp eq i64 %3, %wide.trip.count.i
+  %exitcond.not.i200 = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i200, label %thread-pre-split.loopexit.i, label %.lr.ph202, !llvm.loop !56
 
 _ZN4absl12lts_2025051224synchronization_internalL10ForwardDFSEPNS1_11GraphCycles3RepEii.exit: ; preds = %bb.q
@@ -1288,7 +1285,7 @@ _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backE
 
 .lr.ph212:                                        ; preds = %.lr.ph212.lr.ph, %bb.av
   %wide.trip.count.i78219 = phi i64 [ %wide.trip.count.i78216, %.lr.ph212.lr.ph ], [ %wide.trip.count.i78, %bb.av ]
-  %i.ir = phi i64 [ 0, %.lr.ph212.lr.ph ], [ %4, %bb.av ]
+  %i.ir = phi i64 [ 0, %.lr.ph212.lr.ph ], [ %indvars.iv.next.i81, %bb.av ]
   %.val10.i.i75218 = load ptr, ptr %i.ip, align 8
   br label %bb.am
 
@@ -1300,7 +1297,7 @@ bb.am:                                            ; preds = %.lr.ph212, %bb.al
   %indvars.iv.i79211 = phi i64 [ %i.ir, %.lr.ph212 ], [ %indvars.iv.next.i81, %bb.al ] ; 2 uses
   %i.is = getelementptr inbounds nuw [4 x i8], ptr %.val10.i.i75218, i64 %indvars.iv.i79211
   %i.it = load i32, ptr %i.is, align 4, !tbaa !3  ; 3 uses
-  %indvars.iv.next.i81 = add nuw nsw i64 %indvars.iv.i79211, 1 ; 4 uses
+  %indvars.iv.next.i81 = add nuw nsw i64 %indvars.iv.i79211, 1 ; 5 uses
   %i.iu = icmp sgt i32 %i.it, -1
   br i1 %i.iu, label %bb.an, label %bb.al
 
@@ -1397,10 +1394,9 @@ _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backE
 
 bb.av:                                            ; preds = %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit50.i, %bb.ao, %bb.an
   %.val.i.i76 = load i32, ptr %i.iq, align 8, !tbaa !27
-  %4 = and i64 %indvars.iv.next.i81, 4294967295   ; 2 uses
   %umax.i77 = tail call i32 @llvm.umax.i32(i32 %i.iv, i32 %.val.i.i76)
   %wide.trip.count.i78 = zext i32 %umax.i77 to i64 ; 2 uses
-  %exitcond.not.i80210 = icmp eq i64 %4, %wide.trip.count.i78
+  %exitcond.not.i80210 = icmp eq i64 %indvars.iv.next.i81, %wide.trip.count.i78
   br i1 %exitcond.not.i80210, label %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit.loopexit.i, label %.lr.ph212, !llvm.loop !60
 
 _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit.loopexit.i: ; preds = %bb.av, %bb.al, %_ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit36.i
@@ -1803,7 +1799,7 @@ bb.q:                                             ; preds = %bb.o, %bb.l
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %bb.ac
   %wide.trip.count142 = phi i64 [ %wide.trip.count139, %.lr.ph.lr.ph ], [ %wide.trip.count, %bb.ac ]
-  %i.cc = phi i64 [ 0, %.lr.ph.lr.ph ], [ %6, %bb.ac ]
+  %i.cc = phi i64 [ 0, %.lr.ph.lr.ph ], [ %indvars.iv.next, %bb.ac ]
   %.pn = phi ptr [ %i.bz, %.lr.ph.lr.ph ], [ %i.dg, %bb.ac ]
   %.val10.i141.in = getelementptr inbounds nuw i8, ptr %.pn, i64 80
   %.val10.i141 = load ptr, ptr %.val10.i141.in, align 8
@@ -1817,7 +1813,7 @@ bb.s:                                             ; preds = %.lr.ph, %bb.r
   %indvars.iv134 = phi i64 [ %i.cc, %.lr.ph ], [ %indvars.iv.next, %bb.r ] ; 2 uses
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %.val10.i141, i64 %indvars.iv134
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !3  ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv134, 1 ; 4 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv134, 1 ; 5 uses
   %i.cf = icmp sgt i32 %i.ce, -1
   br i1 %i.cf, label %bb.u, label %bb.r
 
@@ -1918,10 +1914,9 @@ bb.ac:                                            ; preds = %_ZN4absl12lts_20250
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !22 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 120
   %.val.i = load i32, ptr %i.dh, align 8, !tbaa !27
-  %6 = and i64 %indvars.iv.next, 4294967295       ; 2 uses
   %umax = call i32 @llvm.umax.i32(i32 %i.ch, i32 %.val.i)
   %wide.trip.count = zext i32 %umax to i64        ; 2 uses
-  %exitcond.not133 = icmp eq i64 %6, %wide.trip.count
+  %exitcond.not133 = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not133, label %thread-pre-split.loopexit, label %.lr.ph, !llvm.loop !67
 
 _ZN4absl12lts_2025051224synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit: ; preds = %bb.p, %thread-pre-split

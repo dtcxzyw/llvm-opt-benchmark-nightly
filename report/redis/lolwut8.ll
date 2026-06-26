@@ -151,7 +151,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 bb.i:                                             ; preds = %bb.h, %bb.g
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %indvars.iv124
-  br i1 %exitcond.not, label %.critedge.loopexit, label %bb.e, !llvm.loop !48
+  br i1 %exitcond.not, label %.lr.ph103, label %bb.e, !llvm.loop !48
 
 ._crit_edge:                                      ; preds = %.lr.ph97.prol.loopexit, %.lr.ph97, %.lr.ph.split.us
   %indvars.iv.next127 = add nuw nsw i64 %indvars.iv126, 1 ; 2 uses
@@ -159,12 +159,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %exitcond133.not = icmp eq i64 %indvars.iv.next127, 10
   br i1 %exitcond133.not, label %.lr.ph103, label %.lr.ph, !llvm.loop !49
 
-.critedge.loopexit:                               ; preds = %bb.i
-  %3 = and i64 %indvars.iv126, 4294967295
-  br label %.lr.ph103
-
-.lr.ph103:                                        ; preds = %._crit_edge, %.critedge.loopexit
-  %.07792 = phi i64 [ %3, %.critedge.loopexit ], [ 10, %._crit_edge ] ; 2 uses
+.lr.ph103:                                        ; preds = %._crit_edge, %bb.i
+  %.07792 = phi i64 [ %indvars.iv126, %bb.i ], [ 10, %._crit_edge ] ; 2 uses
   tail call void @zfree(ptr noundef nonnull %i.k) #10
   %i.ay = tail call ptr @sdsempty() #10           ; 2 uses
   br i1 %.not83, label %.lr.ph103.split.us, label %.lr.ph103.split

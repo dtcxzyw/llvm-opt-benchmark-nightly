@@ -201,11 +201,10 @@ bb.h:                                             ; preds = %.body
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB1s_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -214,11 +213,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs1N9T06jgEdt_11arrow_array12record_batch17RecordBatchReaderp4ItemINtNtCsbvkFyIu7lgC_4core6result6ResultNtB1Z_11RecordBatchNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorENtNtB3a_6marker4SendEL_EENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -227,11 +225,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCs2aRboSwuR0Z_18opentelemetry_http10HttpClientEL_EEENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -240,11 +237,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtNtB6_6thread11join_handle10JoinHandleuEEENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -253,11 +249,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardINtNtNtCs6Po7BT7Nknu_5alloc11collections9vec_deque8VecDequejEENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -266,11 +261,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardNtNtCs14kWLkQVSKO_14deltalake_core5table10DeltaTableENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -279,11 +273,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardNtNtNtB4_4mpmc4zero5InnerENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -292,11 +285,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardNtNtNtB4_4mpmc5waker5WakerENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -305,11 +297,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_5mutex10MutexGuardNtNtNtCskFSgV2vI2Ct_13opentelemetry6global5trace9BoxedSpanENCNvMs9_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -318,11 +309,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_6rwlock16RwLockWriteGuardINtNtNtNtB6_11collections4hash3map7HashMapNtNtCs2y6mmZ7bjoM_12tracing_core4span2IdINtNtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter3env9directive8MatchSetNtNtB2T_5field9SpanMatchEEENCNvMse_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }
@@ -331,11 +321,10 @@ bb.a:
 define hidden void @_RINvNtNtCs2pqxYH9ZEk8_3std4sync6poison10map_resultNtB2_5GuardINtNtB2_6rwlock16RwLockWriteGuardNtNtNtCskFSgV2vI2Ct_13opentelemetry6global5trace20GlobalTracerProviderENCNvMse_B10_BX_3new0ECs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 17)) %0, i1 noundef zeroext %1, i8 noundef %2, ptr noundef nonnull align 8 %3) unnamed_addr #1 {
 bb.a:
   %spec.select = zext i1 %1 to i64
-  %.sink = and i8 %2, 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sink, ptr %i.b, align 8
+  store i8 %2, ptr %i.b, align 8
   store i64 %spec.select, ptr %0, align 8
   ret void
 }

@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %_RNvYNvYNtNtCs2DiVQ
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
-  %.sroa.5.0 = phi i8 [ %i.t, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 2 uses
+  %.sroa.5.0 = phi i8 [ %i.t, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 3 uses
   %.sroa.0.0 = phi i64 [ -9223372036854775808, %bb.i ], [ %.sroa.014.0.copyload, %bb.k ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !63
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsat9blWvDIpa_11aws_runtime10env_config15EnvConfigSourceECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.e)
@@ -286,9 +286,10 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.t
 
 bb.w:                                             ; preds = %bb.u
-  %4 = and i8 %.sroa.5.0, 1
+  %4 = icmp ult i8 %.sroa.5.0, 2
+  call void @llvm.assume(i1 %4)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %4, ptr %i.ab, align 8
+  store i8 %.sroa.5.0, ptr %i.ab, align 8
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.t
 
@@ -389,7 +390,7 @@ bb.i:                                             ; preds = %_RNvYNvYNtNtCs2DiVQ
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
-  %.sroa.5.0 = phi i8 [ %i.t, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 2 uses
+  %.sroa.5.0 = phi i8 [ %i.t, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 3 uses
   %.sroa.0.0 = phi i64 [ -9223372036854775808, %bb.i ], [ %.sroa.014.0.copyload, %bb.k ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !78
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsat9blWvDIpa_11aws_runtime10env_config15EnvConfigSourceECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.e)
@@ -474,9 +475,10 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.t
 
 bb.w:                                             ; preds = %bb.u
-  %4 = and i8 %.sroa.5.0, 1
+  %4 = icmp ult i8 %.sroa.5.0, 2
+  call void @llvm.assume(i1 %4)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %4, ptr %i.ab, align 8
+  store i8 %.sroa.5.0, ptr %i.ab, align 8
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.t
 
@@ -584,7 +586,7 @@ bb.i:                                             ; preds = %.noexc.i
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
-  %.sroa.5.0 = phi i8 [ %i.q, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 2 uses
+  %.sroa.5.0 = phi i8 [ %i.q, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 3 uses
   %.sroa.0.0 = phi i64 [ -9223372036854775808, %bb.i ], [ %.sroa.014.0.copyload, %bb.k ] ; 2 uses
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsat9blWvDIpa_11aws_runtime10env_config15EnvConfigSourceECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.n unwind label %bb.m, !noalias !93
@@ -668,9 +670,10 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.t
 
 bb.w:                                             ; preds = %bb.u
-  %4 = and i8 %.sroa.5.0, 1
+  %4 = icmp ult i8 %.sroa.5.0, 2
+  call void @llvm.assume(i1 %4)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %4, ptr %i.ab, align 8
+  store i8 %.sroa.5.0, ptr %i.ab, align 8
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.t
 
@@ -1073,7 +1076,7 @@ bb.i:                                             ; preds = %_RNvYNvNtCsaB04DkjC
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
-  %.sroa.5.0 = phi i8 [ %i.t, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 2 uses
+  %.sroa.5.0 = phi i8 [ %i.t, %bb.i ], [ %.sroa.4.0.copyload, %bb.k ] ; 3 uses
   %.sroa.0.0 = phi i64 [ -9223372036854775808, %bb.i ], [ %.sroa.014.0.copyload, %bb.k ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !178
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsat9blWvDIpa_11aws_runtime10env_config15EnvConfigSourceECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.e)
@@ -1158,9 +1161,10 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.t
 
 bb.w:                                             ; preds = %bb.u
-  %4 = and i8 %.sroa.5.0, 1
+  %4 = icmp ult i8 %.sroa.5.0, 2
+  call void @llvm.assume(i1 %4)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %4, ptr %i.ab, align 8
+  store i8 %.sroa.5.0, ptr %i.ab, align 8
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.t
 
