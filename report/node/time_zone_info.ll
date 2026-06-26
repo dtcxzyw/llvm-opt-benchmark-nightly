@@ -201,7 +201,7 @@ declare void @_ZN4absl13time_internal4cctz10TimeZoneIfD2Ev(ptr noundef nonnull a
 define internal void @"_ZNSt17_Function_handlerIFSt10unique_ptrIN4absl13time_internal4cctz14ZoneInfoSourceESt14default_deleteIS4_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEZNS3_12TimeZoneInfo4LoadESF_E3$_0E9_M_invokeERKSt9_Any_dataSF_"(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) #0 align 2 {
 bb.a:
   %3 = alloca %"class.std::allocator.5", align 1  ; 3 uses
-  %i.a = alloca [4 x ptr], align 8                ; 7 uses
+  %i.a = alloca [4 x ptr], align 8                ; 6 uses
   %i.b = alloca [1 x ptr], align 8                ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
@@ -604,25 +604,21 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i32.i.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24, !noalias !168
   store ptr @.str.28, ptr %i.b, align 8, !noalias !168
   %.not.i34.i.i.i = icmp eq i64 %.0.i.i33.i.i.i, %i.gm
-  br i1 %.not.i34.i.i.i, label %.thread.i.i.i.i, label %bb.as
-
-.thread.i.i.i.i:                                  ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i32.i.i.i
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  br label %.lr.ph.i35.i.i.i
+  br i1 %.not.i34.i.i.i, label %.lr.ph.i35.i.i.i, label %bb.as
 
 bb.as:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i32.i.i.i
   %i.gq = load ptr, ptr %2, align 8, !noalias !168
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 %.0.i.i33.i.i.i
   %i.gs = load i8, ptr %i.gr, align 1, !noalias !168
   %i.gt = icmp eq i8 %i.gs, 47                    ; 2 uses
-  %i.gu = select i1 %i.gt, ptr %i.b, ptr %i.a     ; 2 uses
+  %i.gu = select i1 %i.gt, ptr %i.b, ptr %i.a
   %.sroa.5.0.copyload.pre.i.sroa.speculated.i.i.i = select i1 %i.gt, i64 8, i64 32
-  %13 = getelementptr inbounds nuw i8, ptr %i.gu, i64 %.sroa.5.0.copyload.pre.i.sroa.speculated.i.i.i
   br label %.lr.ph.i35.i.i.i
 
-.lr.ph.i35.i.i.i:                                 ; preds = %bb.as, %.thread.i.i.i.i
-  %14 = phi ptr [ %12, %.thread.i.i.i.i ], [ %13, %bb.as ]
-  %.sroa.060.0.copyload136.i.i.i.i = phi ptr [ %i.a, %.thread.i.i.i.i ], [ %i.gu, %bb.as ]
+.lr.ph.i35.i.i.i:                                 ; preds = %bb.as, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i32.i.i.i
+  %.sroa.5.0.copyload.i.i.i.i = phi i64 [ 32, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i32.i.i.i ], [ %.sroa.5.0.copyload.pre.i.sroa.speculated.i.i.i, %bb.as ]
+  %.sroa.060.0.copyload136.i.i.i.i = phi ptr [ %i.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i32.i.i.i ], [ %i.gu, %bb.as ] ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.060.0.copyload136.i.i.i.i, i64 %.sroa.5.0.copyload.i.i.i.i
   %i.gv = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 11 uses
@@ -1025,7 +1021,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i52
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i53.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit51.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i52.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24, !noalias !168
   %i.mh = getelementptr inbounds nuw i8, ptr %.01690.i.i.i.i, i64 8 ; 2 uses
-  %.not18.i.i.i.i = icmp eq ptr %i.mh, %14
+  %.not18.i.i.i.i = icmp eq ptr %i.mh, %12
   br i1 %.not18.i.i.i.i, label %bb.cf, label %bb.at
 
 _ZN4absl13time_internal4cctz12_GLOBAL__N_121FuchsiaZoneInfoSource4OpenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i44.i.i.i.i
