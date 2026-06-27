@@ -201,7 +201,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 32 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 16 uses
-  %.not501.not = icmp eq i32 %1, 0
+  %.not501 = trunc nuw i32 %1 to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
@@ -535,7 +535,7 @@ bb.z:                                             ; preds = %bb.y, %.fold.split1
   %i.cb = phi i1 [ false, %bb.y ], [ false, %.fold.split ], [ true, %.fold.split1693 ]
   %.0365701.lcssa.wide = phi i64 [ 20, %bb.y ], [ 21, %.fold.split ], [ 22, %.fold.split1693 ]
   %.lcssa804 = phi ptr [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 120), %bb.y ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 126), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 132), %.fold.split1693 ]
-  br i1 %.not501.not, label %.thread610, label %.thread1008
+  br i1 %.not501, label %.thread1008, label %.thread610
 
 .thread1008:                                      ; preds = %.thread1008.fold.split, %.thread1008.fold.split1675, %.thread1008.fold.split1676, %.thread1008.fold.split1677, %.thread1008.fold.split1678, %.thread1008.fold.split1679, %.thread1008.fold.split1680, %.thread1008.fold.split1681, %.thread1008.fold.split1682, %.thread1008.fold.split1683, %.thread1008.fold.split1684, %.thread1008.fold.split1685, %.thread1008.fold.split1686, %.thread1008.fold.split1687, %.thread1008.fold.split1688, %.thread1008.fold.split1689, %.thread1008.fold.split1690, %.thread1008.fold.split1691, %.thread1008.fold.split1692, %bb.y, %bb.z
   %.lcssa8041039 = phi ptr [ %.lcssa804, %bb.z ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 108), %.thread1008.fold.split1691 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 102), %.thread1008.fold.split1690 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 96), %.thread1008.fold.split1689 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 90), %.thread1008.fold.split1688 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 84), %.thread1008.fold.split1687 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 78), %.thread1008.fold.split1686 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 72), %.thread1008.fold.split1685 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 66), %.thread1008.fold.split1684 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 60), %.thread1008.fold.split1683 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 54), %.thread1008.fold.split1682 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 48), %.thread1008.fold.split1681 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 42), %.thread1008.fold.split1680 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 36), %.thread1008.fold.split1679 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 30), %.thread1008.fold.split1678 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 24), %.thread1008.fold.split1677 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 18), %.thread1008.fold.split1676 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 12), %.thread1008.fold.split1675 ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 6), %.thread1008.fold.split ], [ @fmtinfo, %bb.y ], [ getelementptr inbounds nuw (i8, ptr @fmtinfo, i64 114), %.thread1008.fold.split1692 ] ; 5 uses
@@ -938,7 +938,7 @@ et_getdigit.exit556.1:                            ; preds = %bb.cm, %et_getdigit
 
 ._crit_edge765:                                   ; preds = %.lr.ph764.prol.loopexit, %et_getdigit.exit556.1, %.preheader652
   %.15.lcssa = phi ptr [ %.14.lcssa, %.preheader652 ], [ %.lcssa1787.unr, %.lr.ph764.prol.loopexit ], [ %i.nd, %et_getdigit.exit556.1 ] ; 2 uses
-  %4 = icmp ne i8 %i.kl, 0
+  %4 = trunc nuw i8 %i.kl to i1
   %or.cond7 = select i1 %.0406, i1 %4, i1 false
   br i1 %or.cond7, label %.preheader650, label %.loopexit651
 
@@ -1341,7 +1341,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   br i1 %i.am, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !142
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.l
-  %5 = icmp ne i32 %.155.i, 0
+  %5 = trunc nuw i32 %.155.i to i1
   %i.an = icmp eq i32 %.157.i, 0
   %.not91 = select i1 %5, i1 %i.an, i1 false
   br label %._crit_edge.i
@@ -1744,7 +1744,7 @@ bb.l:                                             ; preds = %.lr.ph.split.split,
   %i.bb = phi ptr [ null, %sqlite3HashFind.exit ], [ %i.ab, %bb.l ], [ %i.ab, %bb.g ], [ null, %bb.b ], [ null, %bb.a ], [ null, %bb.d ]
   %.062.lcssa = phi ptr [ null, %sqlite3HashFind.exit ], [ %.264, %bb.l ], [ %spec.select76.us, %bb.g ], [ null, %bb.b ], [ null, %bb.a ], [ null, %bb.d ] ; 2 uses
   %.060.lcssa = phi i32 [ 0, %sqlite3HashFind.exit ], [ %.2, %bb.l ], [ %spec.select77.us, %bb.g ], [ 0, %bb.b ], [ 0, %bb.a ], [ 0, %bb.d ]
-  %6 = icmp ne i32 %5, 0                          ; 2 uses
+  %6 = trunc nuw i32 %5 to i1                     ; 2 uses
   %i.bc = icmp slt i32 %.060.lcssa, 6
   %or.cond5 = select i1 %6, i1 %i.bc, i1 false
   br i1 %or.cond5, label %bb.m, label %bb.r
@@ -1821,7 +1821,7 @@ bb.s:                                             ; preds = %.thread82
   %i.cb = getelementptr inbounds nuw i8, ptr %.385, i64 24
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !485
   %i.cd = icmp ne ptr %i.cc, null
-  %or.cond7 = or i1 %6, %i.cd
+  %or.cond7 = or i1 %i.cd, %6
   br i1 %or.cond7, label %bb.t, label %.thread
 
 .thread:                                          ; preds = %sqlite3DbMallocRaw.exit.i, %bb.p, %bb.n, %bb.s, %bb.r
@@ -2224,6 +2224,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i64 0, ptr %i.ab, align 8, !tbaa !649
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 3 uses
+  %2 = trunc nuw i32 %1 to i1
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 18
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
@@ -2257,11 +2258,11 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.au = phi i32 [ %i.at, %bb.g ], [ %i.ak, %bb.f ] ; 3 uses
-  %2 = or i32 %i.au, %1
-  %or.cond4.not = icmp eq i32 %2, 0
+  %i.au = phi i32 [ %i.at, %bb.g ], [ %i.ak, %bb.f ] ; 2 uses
+  %3 = icmp ne i32 %i.au, 0
+  %or.cond4 = or i1 %3, %2
   %.pre = load i64, ptr %i.ab, align 8, !tbaa !649 ; 3 uses
-  br i1 %or.cond4.not, label %bb.i, label %._crit_edge
+  br i1 %or.cond4, label %._crit_edge, label %bb.i
 
 ._crit_edge:                                      ; preds = %bb.h
   %.pre100 = sext i32 %.pre99.pre to i64
@@ -2287,7 +2288,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %._crit_edge, %bb.j, %bb.i
   %.pre-phi = phi i64 [ %.pre100, %._crit_edge ], [ %i.aw, %bb.j ], [ %i.aw, %bb.i ]
-  %i.bg = phi i32 [ %i.au, %._crit_edge ], [ %i.bf, %bb.j ], [ %i.au, %bb.i ] ; 2 uses
+  %i.bg = phi i32 [ %i.au, %._crit_edge ], [ %i.bf, %bb.j ], [ 0, %bb.i ] ; 2 uses
   %i.bh = icmp eq i64 %.pre, %.pre-phi
   br i1 %i.bh, label %bb.l, label %bb.q
 
@@ -2690,7 +2691,7 @@ bb.s:                                             ; preds = %.epil.preheader
   %.1111.lcssa = phi i32 [ %.1111.1, %._crit_edge.loopexit.unr-lcssa ], [ %.0110156.epil.init, %.epil.preheader ], [ %i.bd, %bb.s ], [ %.0110156.epil.init, %bb.r ]
   %.1109.lcssa = phi i32 [ %.1109.1, %._crit_edge.loopexit.unr-lcssa ], [ %.0108157.epil.init, %.epil.preheader ], [ %.0108157.epil.init, %bb.s ], [ 1, %bb.r ]
   %i.be = icmp ne i32 %.1111.lcssa, 0
-  %1 = icmp ne i32 %.1109.lcssa, 0
+  %1 = trunc nuw i32 %.1109.lcssa to i1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %switch.edge
@@ -3093,7 +3094,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.b, ptr %i.e, align 8, !tbaa !449
   store ptr null, ptr %5, align 8, !tbaa !326
-  %6 = icmp ne i32 %2, 0                          ; 2 uses
+  %6 = trunc nuw i32 %2 to i1                     ; 2 uses
   br i1 %6, label %bb.b, label %checkReadLocks.exit.thread.i
 
 bb.b:                                             ; preds = %bb.a
@@ -3197,7 +3198,7 @@ bb.n:                                             ; preds = %bb.m, %bb.k
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 33
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !778
   %i.as = icmp ne i8 %i.ar, 0
-  %or.cond.i = and i1 %6, %i.as
+  %or.cond.i = and i1 %i.as, %6
   br i1 %or.cond.i, label %btreeCursor.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %checkReadLocks.exit.thread.i
@@ -3600,7 +3601,7 @@ bb.q:                                             ; preds = %.thread189.i
   store ptr %i.bk, ptr %i.bm, align 8, !tbaa !1042
   %i.bn = trunc nuw i32 %2 to i1
   %i.bo = and i32 %i.d, 4096
-  %6 = icmp ne i32 %i.bo, 0
+  %.not31 = icmp eq i32 %i.bo, 0
   %i.bp = getelementptr inbounds nuw i8, ptr %i.r, i64 4 ; 3 uses
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !714 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 3 uses
@@ -3787,7 +3788,6 @@ bb.ab:                                            ; preds = %bb.aa
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !715
   %i.fi = call i32 %i.fh(ptr noundef nonnull %i.r, ptr noundef %i.fd, ptr noundef %i.fe, i32 noundef %i.ff, ptr noundef nonnull %i.a) #43, !inline_history !1047 ; 3 uses
   %i.fj = load i32, ptr %i.a, align 4, !tbaa !4   ; 2 uses
-  %7 = and i32 %i.fj, 1                           ; 3 uses
   %i.fk = icmp ne i32 %i.fi, 0
   %i.fl = trunc i32 %i.fj to i1
   %or.cond3.i.i = select i1 %i.fk, i1 true, i1 %i.fl
@@ -3823,13 +3823,15 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #43
+  %6 = trunc i32 %i.fj to i8
+  %7 = and i8 %6, 1                               ; 2 uses
   %i.fu = icmp eq i32 %i.fi, 0
   br i1 %i.fu, label %.thread201.i.i, label %.thread214.i.i
 
 .thread201.i.i:                                   ; preds = %bb.af, %.thread220.i.i, %bb.ae, %bb.ad
   %.2210.i.i = phi i32 [ %.1155.ph.i.i, %.thread220.i.i ], [ 1024, %bb.af ], [ 1024, %bb.ad ], [ 1024, %bb.ae ] ; 2 uses
   %.0156209.i.i = phi i8 [ 0, %.thread220.i.i ], [ 0, %bb.af ], [ 0, %bb.ad ], [ 1, %bb.ae ]
-  %.0158207.i.i = phi i32 [ %7, %.thread220.i.i ], [ %7, %bb.af ], [ 0, %bb.ad ], [ 0, %bb.ae ]
+  %.0158207.i.i = phi i8 [ 0, %.thread220.i.i ], [ %7, %bb.af ], [ 0, %bb.ad ], [ 0, %bb.ae ]
   %i.fv = call ptr @sqlite3_malloc(i32 noundef %.2210.i.i)
   %i.fw = getelementptr inbounds nuw i8, ptr %i.dl, i64 296
   store ptr %i.fv, ptr %i.fw, align 8, !tbaa !705
@@ -3839,7 +3841,7 @@ bb.af:                                            ; preds = %bb.ab
   %i.fx = phi i32 [ %i.fi, %bb.af ], [ 7, %.thread201.i.i ], [ 14, %bb.aa ]
   %.2211.i.i = phi i32 [ 1024, %bb.af ], [ %.2210.i.i, %.thread201.i.i ], [ 1024, %bb.aa ]
   %.0156208.i.i = phi i8 [ 0, %bb.af ], [ %.0156209.i.i, %.thread201.i.i ], [ 0, %bb.aa ] ; 3 uses
-  %.0158206.i.i = phi i32 [ %7, %bb.af ], [ %.0158207.i.i, %.thread201.i.i ], [ 0, %bb.aa ] ; 2 uses
+  %.0158206.i.i = phi i8 [ %7, %bb.af ], [ %.0158207.i.i, %.thread201.i.i ], [ 0, %bb.aa ] ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.dl, i64 296
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !705
   %.not176.i.i = icmp eq ptr %i.fz, null
@@ -3911,11 +3913,9 @@ bb.aj:                                            ; preds = %.lr.ph.i.i
   %spec.select.i.i = zext i1 %narrow.i.i to i8
   %i.hc = getelementptr inbounds nuw i8, ptr %i.dl, i64 10
   store i8 %spec.select.i.i, ptr %i.hc, align 2, !tbaa !858
-  %8 = icmp ne i32 %.0158206.i.i, 0
-  %9 = select i1 %6, i1 %8, i1 false
-  %10 = zext i1 %9 to i8
+  %8 = select i1 %.not31, i8 0, i8 %.0158206.i.i
   %i.hd = getelementptr inbounds nuw i8, ptr %i.dl, i64 11
-  store i8 %10, ptr %i.hd, align 1, !tbaa !849
+  store i8 %8, ptr %i.hd, align 1, !tbaa !849
   %i.he = add nsw i32 %.0157199.i.i, -1
   %i.hf = getelementptr inbounds nuw i8, ptr %i.dl, i64 40
   store i32 %i.he, ptr %i.hf, align 8, !tbaa !664
@@ -3932,9 +3932,8 @@ bb.aj:                                            ; preds = %.lr.ph.i.i
   %i.hl = trunc nuw nsw i32 %.0157199.i.i to i8
   %i.hm = getelementptr inbounds nuw i8, ptr %i.dl, i64 24
   store i8 %i.hl, ptr %i.hm, align 8, !tbaa !652
-  %11 = trunc nuw nsw i32 %.0158206.i.i to i8
   %i.hn = getelementptr inbounds nuw i8, ptr %i.dl, i64 20
-  store i8 %11, ptr %i.hn, align 4, !tbaa !882
+  store i8 %.0158206.i.i, ptr %i.hn, align 4, !tbaa !882
   %.not180.i.i = icmp eq i8 %.0156208.i.i, 0
   %i.ho = trunc nuw nsw i32 %2 to i8
   %i.hp = select i1 %.not180.i.i, i8 %i.ho, i8 1  ; 2 uses
@@ -4337,7 +4336,7 @@ sqlite3AuthCheck.exit:                            ; preds = %bb.r
   br i1 %.not126, label %sqlite3AuthCheck.exit.thread, label %sqlite3_free.exit
 
 sqlite3AuthCheck.exit.thread:                     ; preds = %bb.n, %bb.m, %bb.o, %sqlite3AuthCheck.exit
-  %.not130 = icmp eq i32 %5, 0                    ; 2 uses
+  %.not130 = icmp eq i32 %5, 0
   br i1 %.not130, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %sqlite3AuthCheck.exit.thread
@@ -4471,7 +4470,8 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   tail call fastcc void @sqlite3BeginWriteOperation(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %spec.select)
-  br i1 %.not130, label %bb.ap, label %bb.ao
+  %7 = trunc nuw i32 %5 to i1
+  br i1 %7, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
   %i.di = tail call fastcc i32 @sqlite3VdbeAddOp0(ptr noundef nonnull %i.dh, i32 noundef 117) ; 0 uses
@@ -4874,9 +4874,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   %i.n = load i8, ptr %i.m, align 8, !tbaa !1292
-  %5 = or i8 %i.n, %3
-  %6 = icmp ne i8 %5, 0
-  %7 = zext i1 %6 to i8
+  %5 = icmp ne i8 %i.n, 0
+  %6 = zext i1 %5 to i8
+  %7 = or i8 %3, %6
   store i8 %7, ptr %i.m, align 8, !tbaa !1292
   br label %bb.l
 
@@ -5279,7 +5279,7 @@ bb.pa:                                            ; preds = %bb.oz, %bb.oy, %bb.
   %or.cond7 = phi i1 [ false, %bb.ow ], [ %spec.select797, %bb.oz ], [ false, %bb.oy ], [ false, %bb.ox ]
   %i.caj = phi i1 [ true, %bb.ow ], [ %not., %bb.oz ], [ true, %bb.oy ], [ true, %bb.ox ] ; 3 uses
   %i.cak = load i32, ptr %i.aza, align 4, !tbaa !1756 ; 5 uses
-  %7 = icmp ne i32 %.lobit..lobit757, 0           ; 2 uses
+  %7 = trunc nuw i32 %.lobit..lobit757 to i1      ; 2 uses
   br i1 %7, label %bb.pb, label %disableTerm.exit1120
 
 bb.pb:                                            ; preds = %bb.pa
@@ -5443,7 +5443,7 @@ disableTerm.exit1120.thread:                      ; preds = %disableTerm.exit112
   %.06691485 = phi i32 [ %i.cdd, %disableTerm.exit1120 ], [ 58, %disableTerm.exit1120.thread.loopexit ] ; 3 uses
   %.06771483.shrunk = phi i32 [ 1, %disableTerm.exit1120 ], [ %i.cde, %disableTerm.exit1120.thread.loopexit ]
   %i.cdf = add nsw i32 %.lobit..lobit757, %i.bzl  ; 3 uses
-  %or.cond9 = or i1 %7, %i.caj
+  %or.cond9 = or i1 %i.caj, %7
   %.pre1767 = load i32, ptr %i.axd, align 8, !tbaa !135 ; 4 uses
   %.pre1769 = load i32, ptr %i.axh, align 4, !tbaa !147 ; 7 uses
   br i1 %or.cond9, label %bb.pt, label %bb.po
@@ -5761,7 +5761,7 @@ sqlite3VdbeAddOp3.exit1151.sink.split:            ; preds = %bb.qe, %bb.ql
 sqlite3VdbeAddOp3.exit1151:                       ; preds = %sqlite3VdbeAddOp3.exit1151.sink.split, %resizeOpArray.exit.i.i1155, %resizeOpArray.exit.i1144, %buildIndexProbe.exit, %bb.qf
   %.06691484 = phi i32 [ 22, %bb.qf ], [ 22, %resizeOpArray.exit.i.i1155 ], [ %.06691485, %buildIndexProbe.exit ], [ %.06691485, %resizeOpArray.exit.i1144 ], [ %.06691484.ph, %sqlite3VdbeAddOp3.exit1151.sink.split ] ; 4 uses
   %.2679 = phi i32 [ 1, %bb.qf ], [ 1, %resizeOpArray.exit.i.i1155 ], [ %.1678, %buildIndexProbe.exit ], [ %.1678, %resizeOpArray.exit.i1144 ], [ %.2679.ph, %sqlite3VdbeAddOp3.exit1151.sink.split ]
-  %8 = icmp ne i32 %.lobit757..lobit, 0           ; 3 uses
+  %8 = trunc nuw i32 %.lobit757..lobit to i1      ; 3 uses
   br i1 %8, label %bb.qm, label %disableTerm.exit1181
 
 bb.qm:                                            ; preds = %sqlite3VdbeAddOp3.exit1151
@@ -5926,7 +5926,7 @@ disableTerm.exit1181:                             ; preds = %disableTerm.exit118
 
 bb.qz:                                            ; preds = %disableTerm.exit1181
   %i.ckk = add nsw i32 %.lobit757..lobit, %i.bzl  ; 3 uses
-  %or.cond15 = or i1 %8, %i.caj
+  %or.cond15 = or i1 %i.caj, %8
   br i1 %or.cond15, label %bb.rg, label %bb.ra
 
 bb.ra:                                            ; preds = %bb.qz
@@ -6329,7 +6329,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bj, label %.lr.ph95, label %._crit_edge, !llvm.loop !1816
 
 ._crit_edge:                                      ; preds = %.lr.ph95._crit_edge
-  %3 = icmp ne i32 %.363, 0
+  %3 = trunc nuw i32 %.363 to i1
   %i.bk = getelementptr inbounds nuw i8, ptr %.15796, i64 64
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !1449 ; 2 uses
   %i.bm = icmp ne ptr %i.bl, null
@@ -6732,7 +6732,7 @@ bb.f:                                             ; preds = %resizeOpArray.exit.
 sqlite3VdbeAddOp3.exit:                           ; preds = %resizeOpArray.exit.i, %bb.f
   %.0.i = phi i32 [ %i.d, %bb.f ], [ 0, %resizeOpArray.exit.i ] ; 3 uses
   tail call fastcc void @sqlite3GenerateRowIndexDelete(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2, ptr noundef null)
-  %.not.not = icmp eq i32 %4, 0
+  %.not = trunc nuw i32 %4 to i1
   %i.ak = load i32, ptr %i.c, align 8, !tbaa !135 ; 3 uses
   %i.al = load i32, ptr %i.e, align 4, !tbaa !147 ; 6 uses
   %.not.i.i = icmp sgt i32 %i.al, %i.ak
@@ -6810,7 +6810,7 @@ bb.k:                                             ; preds = %resizeOpArray.exit.
   br label %sqlite3VdbeAddOp2.exit
 
 sqlite3VdbeAddOp2.exit:                           ; preds = %resizeOpArray.exit.i.i, %bb.k
-  br i1 %.not.not, label %sqlite3VdbeChangeP4.exit, label %bb.l
+  br i1 %.not, label %bb.l, label %sqlite3VdbeChangeP4.exit
 
 bb.l:                                             ; preds = %sqlite3VdbeAddOp2.exit
   %i.bq = load ptr, ptr %1, align 8, !tbaa !402   ; 2 uses
@@ -7213,10 +7213,9 @@ define internal fastcc void @sqlite3GenerateConstraintChecks(ptr noundef %0, ptr
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca [200 x i8], align 16              ; 11 uses
-  %9 = icmp ne i32 %6, 0                          ; 3 uses
-  %10 = icmp ne i32 %5, 0                         ; 2 uses
-  %11 = and i1 %10, %9
-  %.neg = sext i1 %11 to i32
+  %9 = trunc nuw i32 %6 to i1                     ; 2 uses
+  %10 = trunc nuw i32 %5 to i1
+  %11 = and i32 %6, %5
   %i.c = tail call fastcc ptr @sqlite3GetVdbe(ptr noundef %0) ; 82 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load i32, ptr %i.d, align 8, !tbaa !254  ; 2 uses
@@ -7619,7 +7618,7 @@ sqlite3VdbeJumpHere.exit310:                      ; preds = %bb.cu, %bb.ct, %bb.
   %.not215 = icmp eq i32 %7, 99
   %i.qs = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 4 uses
   %i.qt = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %12 = add nsw i32 %3, %.neg
+  %12 = sub nsw i32 %3, %11
   %i.qu = add i32 %2, 1
   %i.qv = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   br label %bb.cv
@@ -8022,7 +8021,7 @@ sqlite3SchemaToIndex.exit:                        ; preds = %bb.ae, %bb.ac, %.pr
 bb.af:                                            ; preds = %sqlite3SchemaToIndex.exit
   %i.cy = load ptr, ptr %i.br, align 8, !tbaa !386
   %i.cz = icmp ne ptr %i.cy, null
-  %5 = icmp ne i32 %.0185.lcssa, 0
+  %5 = trunc nuw i32 %.0185.lcssa to i1
   %or.cond3 = select i1 %i.cz, i1 true, i1 %5
   br i1 %or.cond3, label %bb.ah, label %sqlite3VdbeJumpHere.exit
 

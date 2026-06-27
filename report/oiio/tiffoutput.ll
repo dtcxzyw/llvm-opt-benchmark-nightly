@@ -201,14 +201,14 @@ bb.g:                                             ; preds = %bb.e, %bb.c
   %i.ab = call noundef i64 @_ZNK11OpenImageIO4v3_19ImageSpec11image_bytesEb(ptr noundef nonnull align 8 dereferenceable(160) %i.l, i1 noundef zeroext false) #34
   %i.ac = icmp ugt i64 %i.ab, 4194304000
   %i.ad = load i8, ptr %i.x, align 1, !tbaa !75, !range !79, !noundef !80
-  %75 = zext i1 %i.ac to i8
-  %76 = or i8 %i.ad, %75                          ; 2 uses
-  %.not105 = icmp eq i8 %76, 0
-  store i8 %76, ptr %i.x, align 1, !tbaa !75
+  %75 = trunc nuw i8 %i.ad to i1
+  %76 = or i1 %i.ac, %75                          ; 2 uses
+  %77 = zext i1 %76 to i8
+  store i8 %77, ptr %i.x, align 1, !tbaa !75
   %i.ae = icmp eq i32 %3, 1                       ; 2 uses
   %.str.19..str.20 = select i1 %i.ae, ptr @.str.19, ptr @.str.20
   %.str.21..str.22 = select i1 %i.ae, ptr @.str.21, ptr @.str.22
-  %i.af = select i1 %.not105, ptr %.str.21..str.22, ptr %.str.19..str.20 ; 2 uses
+  %i.af = select i1 %76, ptr %.str.19..str.20, ptr %.str.21..str.22 ; 2 uses
   %i.ag = call ptr @TIFFOpenOptionsAlloc()        ; 5 uses
   call void @TIFFOpenOptionsSetErrorHandlerExtR(ptr noundef %i.ag, ptr noundef nonnull @_ZN11OpenImageIO4v3_110TIFFOutput16my_error_handlerEP4tiffPvPKcS6_P13__va_list_tag, ptr noundef nonnull %0)
   call void @TIFFOpenOptionsSetWarningHandlerExtR(ptr noundef %i.ag, ptr noundef nonnull @_ZN11OpenImageIO4v3_110TIFFOutput18my_warning_handlerEP4tiffPvPKcS6_P13__va_list_tag, ptr noundef nonnull %0)
@@ -611,13 +611,12 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
 
 bb.cb:                                            ; preds = %.lr.ph256
   %i.jt = load i8, ptr %i.e, align 1, !tbaa !155, !range !79, !noundef !80
-  %18 = icmp ne i8 %i.jt, 0
-  %19 = and i1 %i.js, %18                         ; 3 uses
-  %20 = zext i1 %19 to i8
-  store i8 %20, ptr %i.e, align 1, !tbaa !155
+  %18 = select i1 %i.js, i8 %i.jt, i8 0           ; 2 uses
+  store i8 %18, ptr %i.e, align 1, !tbaa !155
   %i.ju = getelementptr inbounds i8, ptr %.186254, i64 %i.dc
   %i.jv = add nsw i32 %i.jr, 1                    ; 3 uses
   store i32 %i.jv, ptr %i.d, align 4, !tbaa !3
+  %19 = trunc nuw i8 %18 to i1                    ; 2 uses
   %i.jw = icmp slt i32 %i.jv, %2
   %i.jx = select i1 %19, i1 %i.jw, i1 false
   br i1 %i.jx, label %.lr.ph256, label %.critedge, !llvm.loop !376

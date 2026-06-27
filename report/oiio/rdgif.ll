@@ -201,7 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %bb.h
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.h ] ; 7 uses
-  %.030 = phi i32 [ 1, %bb.a ], [ %.1, %bb.h ]
+  %.030 = phi i1 [ true, %bb.a ], [ %.1, %bb.h ]
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !50
   %i.f = tail call i32 @getc(ptr noundef %i.e)    ; 2 uses
   %i.g = icmp eq i32 %i.f, -1
@@ -279,7 +279,7 @@ bb.g:                                             ; preds = %bb.f, %ReadByte.exi
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
-  %.1 = phi i32 [ 0, %bb.g ], [ %.030, %bb.f ]    ; 2 uses
+  %.1 = phi i1 [ false, %bb.g ], [ %.030, %bb.f ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %bb.i, label %bb.b, !llvm.loop !89
@@ -289,8 +289,7 @@ bb.i:                                             ; preds = %bb.h
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 60 ; 2 uses
   %i.at = load i32, ptr %i.as, align 4, !tbaa !81
   %i.au = icmp eq i32 %i.at, 2
-  %3 = icmp ne i32 %.1, 0
-  %or.cond = select i1 %i.au, i1 %3, i1 false
+  %or.cond = select i1 %i.au, i1 %.1, i1 false
   br i1 %or.cond, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i

@@ -201,11 +201,10 @@ _ZNK6hermes6parser6detail12JSParserImpl6checkNINS0_9TokenKindEJPNS_12UniqueStrin
 
 bb.g:                                             ; preds = %_ZNK6hermes6parser6detail12JSParserImpl6checkNINS0_9TokenKindEJPNS_12UniqueStringEEEEbT_DpT0_.exit65.thread82
   %i.br = icmp ne ptr %.0.lcssa, null
-  %i.bs = or i8 %.030, %.031
-  %1 = icmp ne i8 %i.bs, 0
-  %or.cond3 = or i1 %i.br, %1
-  %i.bt = trunc nuw i8 %.032 to i1
-  %or.cond5 = or i1 %or.cond3, %i.bt
+  %i.bs = or i8 %.031, %.032
+  %1 = or i8 %i.bs, %.030
+  %i.bt = trunc nuw i8 %1 to i1
+  %or.cond5 = or i1 %i.br, %i.bt
   br i1 %or.cond5, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g

@@ -201,10 +201,8 @@ bb.cx:                                            ; preds = %.lr.ph3533
 
 bb.cy:                                            ; preds = %bb.cx
   %i.oq = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %197 = icmp ne i8 %i.oq, 0
-  %198 = and i1 %i.op, %197
-  %199 = zext i1 %198 to i8
-  store i8 %199, ptr %3, align 1, !tbaa !340
+  %197 = select i1 %i.op, i8 %i.oq, i8 0
+  store i8 %197, ptr %3, align 1, !tbaa !340
   %i.or = getelementptr inbounds nuw i8, ptr %.sroa.02883.03531, i64 8 ; 2 uses
   %.not3048 = icmp eq ptr %i.or, %i.oi
   br i1 %.not3048, label %._crit_edge3534, label %.lr.ph3533
@@ -226,12 +224,10 @@ bb.db:                                            ; preds = %bb.da
 bb.dc:                                            ; preds = %bb.db
   %i.ow = getelementptr inbounds nuw i8, ptr %i.ov, i64 8
   %i.ox = load i8, ptr %i.ow, align 8, !tbaa !75
-  %.not840 = icmp ne i8 %i.ox, 57
+  %.not840.not = icmp eq i8 %i.ox, 57
   %i.oy = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %200 = icmp ne i8 %i.oy, 0
-  %201 = and i1 %.not840, %200
-  %202 = zext i1 %201 to i8
-  store i8 %202, ptr %3, align 1, !tbaa !340
+  %198 = select i1 %.not840.not, i8 0, i8 %i.oy
+  store i8 %198, ptr %3, align 1, !tbaa !340
   br i1 %i.at, label %bb.dp, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
@@ -634,10 +630,8 @@ bb.ex:                                            ; preds = %.lr.ph3503
 
 bb.ey:                                            ; preds = %bb.ex
   %i.wv = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %203 = icmp ne i8 %i.wv, 0
-  %204 = and i1 %i.wu, %203
-  %205 = zext i1 %204 to i8
-  store i8 %205, ptr %3, align 1, !tbaa !340
+  %199 = select i1 %i.wu, i8 %i.wv, i8 0
+  store i8 %199, ptr %3, align 1, !tbaa !340
   %i.ww = getelementptr inbounds nuw i8, ptr %.sroa.02873.03501, i64 8 ; 2 uses
   %.not3044 = icmp eq ptr %i.ww, %i.wm
   br i1 %.not3044, label %._crit_edge3504, label %.lr.ph3503

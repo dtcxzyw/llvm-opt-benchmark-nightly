@@ -201,7 +201,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %vtable_included.exit.thread
   %.03586 = phi ptr [ %i.e, %vtable_included.exit.thread ], [ %.03582, %bb.a ]
   %.03485 = phi ptr [ %.034, %vtable_included.exit.thread ], [ %.03481, %bb.a ] ; 5 uses
-  %.03684 = phi i1 [ %6, %vtable_included.exit.thread ], [ false, %bb.a ] ; 3 uses
+  %.03684 = phi i1 [ %3, %vtable_included.exit.thread ], [ false, %bb.a ] ; 6 uses
   %i.d = getelementptr i8, ptr %.03586, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !148  ; 4 uses
   %i.f = icmp ult ptr %i.e, inttoptr (i64 2 to ptr)
@@ -247,10 +247,7 @@ bb.e:                                             ; preds = %.lr.ph.i51
   br i1 %exitcond.not.i53, label %vtable_included.exit.thread, label %.lr.ph.i51, !llvm.loop !214
 
 vtable_included.exit.thread:                      ; preds = %bb.d, %bb.e, %.lr.ph.i51, %.preheader.i, %bb.b
-  %3 = phi i32 [ 1, %bb.e ], [ 0, %.preheader.i ], [ 0, %bb.b ], [ 0, %.lr.ph.i51 ], [ 0, %bb.d ]
-  %4 = zext i1 %.03684 to i32
-  %5 = or i32 %3, %4
-  %6 = icmp ne i32 %5, 0                          ; 2 uses
+  %3 = phi i1 [ true, %bb.e ], [ %.03684, %.preheader.i ], [ %.03684, %bb.b ], [ %.03684, %.lr.ph.i51 ], [ %.03684, %bb.d ] ; 2 uses
   %i.s = getelementptr i8, ptr %.03485, i64 16
   %.034 = load ptr, ptr %i.s, align 8, !tbaa !390 ; 2 uses
   %.not = icmp eq ptr %i.e, null
@@ -274,7 +271,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not41, label %.thread, label %.sink.split
 
 .critedge46:                                      ; preds = %vtable_included.exit.thread, %bb.a, %.critedge
-  %.03679 = phi i1 [ %.03684, %.critedge ], [ false, %bb.a ], [ %6, %vtable_included.exit.thread ]
+  %.03679 = phi i1 [ %.03684, %.critedge ], [ false, %bb.a ], [ %3, %vtable_included.exit.thread ]
   %.03476 = phi ptr [ %.03485, %.critedge ], [ %.03481, %bb.a ], [ %.034, %vtable_included.exit.thread ] ; 3 uses
   %i.y = icmp ult ptr %.03476, inttoptr (i64 2 to ptr)
   br i1 %i.y, label %.sink.split, label %.preheader.i55
@@ -677,7 +674,7 @@ bb.mg:                                            ; preds = %bb.md
   %i.bfe = load i32, ptr %i.aik, align 8, !tbaa !67 ; 3 uses
   %i.bff = and i32 %i.bfe, 48
   %i.bfg = icmp ne i32 %i.bff, 0
-  %3 = icmp ne i32 %.0694, 0                      ; 2 uses
+  %3 = trunc nuw i32 %.0694 to i1                 ; 2 uses
   %or.cond5 = select i1 %i.bfg, i1 %3, i1 false
   br i1 %or.cond5, label %bb.mh, label %bb.mi
 
@@ -735,7 +732,7 @@ bb.mn:                                            ; preds = %bb.mc
   %i.bfs = load i32, ptr %i.aik, align 8, !tbaa !67 ; 3 uses
   %i.bft = and i32 %i.bfs, 48
   %i.bfu = icmp ne i32 %i.bft, 0
-  %4 = icmp ne i32 %.0694, 0                      ; 2 uses
+  %4 = trunc nuw i32 %.0694 to i1                 ; 2 uses
   %or.cond9 = select i1 %i.bfu, i1 %4, i1 false
   br i1 %or.cond9, label %bb.mo, label %bb.mp
 
@@ -1138,7 +1135,7 @@ bb.ob:                                            ; preds = %bb.oa
 bb.oc:                                            ; preds = %bb.ob
   %i.bkb = and i32 %.pre1966.a, 2048
   %i.bkc = icmp ne i32 %i.bkb, 0
-  %5 = icmp ne i32 %.0694, 0
+  %5 = trunc nuw i32 %.0694 to i1
   %or.cond13 = select i1 %i.bkc, i1 true, i1 %5
   br i1 %or.cond13, label %bb.od, label %bb.oe
 
@@ -1233,7 +1230,7 @@ bb.or:                                            ; preds = %bb.oo
   call fastcc void @pushback(ptr noundef nonnull %0, i32 noundef %i.bks)
   %i.bkz = and i32 %i.aiz, 904
   %i.bla = icmp eq i32 %i.bkz, 0
-  %6 = icmp ne i32 %.0694, 0
+  %6 = trunc nuw i32 %.0694 to i1
   %or.cond15 = select i1 %i.bla, i1 %6, i1 false
   br i1 %or.cond15, label %bb.os, label %pushback.exit1038
 
@@ -1314,7 +1311,7 @@ bb.pc:                                            ; preds = %bb.hw
   %i.blu = load i32, ptr %i.aik, align 8, !tbaa !67 ; 2 uses
   %i.blv = and i32 %i.blu, 1032
   %i.blw = icmp eq i32 %i.blv, 0
-  %7 = icmp ne i32 %.0697, 0
+  %7 = trunc nuw i32 %.0697 to i1
   %or.cond17 = select i1 %i.blw, i1 true, i1 %7
   %i.blx = and i32 %i.blu, 48
   %.not819 = icmp eq i32 %i.blx, 0
@@ -1402,7 +1399,7 @@ bb.pn:                                            ; preds = %bb.hw
   %i.bmu = load i32, ptr %i.aik, align 8, !tbaa !67 ; 2 uses
   %i.bmv = and i32 %i.bmu, 1032
   %i.bmw = icmp eq i32 %i.bmv, 0
-  %8 = icmp ne i32 %.0697, 0
+  %8 = trunc nuw i32 %.0697 to i1
   %or.cond19 = select i1 %i.bmw, i1 true, i1 %8
   %i.bmx = and i32 %i.bmu, 48
   %.not815 = icmp eq i32 %i.bmx, 0
@@ -1510,7 +1507,7 @@ bb.pz:                                            ; preds = %bb.pp
   %i.bod = load i32, ptr %i.aik, align 8, !tbaa !67 ; 3 uses
   %i.boe = and i32 %i.bod, 48
   %i.bof = icmp ne i32 %i.boe, 0
-  %9 = icmp ne i32 %.0694, 0                      ; 2 uses
+  %9 = trunc nuw i32 %.0694 to i1                 ; 2 uses
   %or.cond21 = select i1 %i.bof, i1 %9, i1 false
   br i1 %or.cond21, label %bb.qa, label %bb.qf
 
@@ -1777,7 +1774,7 @@ bb.rf:                                            ; preds = %bb.rc
 bb.rg:                                            ; preds = %bb.rf
   %i.brg = and i32 %i.bqr, 48
   %i.brh = icmp ne i32 %i.brg, 0
-  %10 = icmp ne i32 %.0694, 0                     ; 2 uses
+  %10 = trunc nuw i32 %.0694 to i1                ; 2 uses
   %or.cond27 = select i1 %i.brh, i1 %10, i1 false
   br i1 %or.cond27, label %bb.rh, label %bb.rm
 
@@ -1935,7 +1932,7 @@ bb.rz:                                            ; preds = %bb.ru
 bb.sa:                                            ; preds = %bb.rz
   %i.bsx = and i32 %i.bsb, 48
   %i.bsy = icmp ne i32 %i.bsx, 0
-  %11 = icmp ne i32 %.0694, 0                     ; 2 uses
+  %11 = trunc nuw i32 %.0694 to i1                ; 2 uses
   %or.cond31 = select i1 %i.bsy, i1 %11, i1 false
   br i1 %or.cond31, label %bb.sb, label %bb.sf
 
@@ -2136,7 +2133,7 @@ bb.sx:                                            ; preds = %bb.sw
   %i.bve = load i32, ptr %i.aik, align 8, !tbaa !67 ; 2 uses
   %i.bvf = and i32 %i.bve, 1032
   %i.bvg = icmp eq i32 %i.bvf, 0
-  %12 = icmp ne i32 %.0697, 0
+  %12 = trunc nuw i32 %.0697 to i1
   %or.cond35 = select i1 %i.bvg, i1 true, i1 %12
   %i.bvh = and i32 %i.bve, 48
   %.not792 = icmp eq i32 %i.bvh, 0
@@ -2503,7 +2500,7 @@ bb.uj:                                            ; preds = %bb.ui
 bb.uk:                                            ; preds = %bb.uj
   %i.can = and i32 %i.caj, 48
   %i.cao = icmp ne i32 %i.can, 0
-  %13 = icmp ne i32 %.0694, 0
+  %13 = trunc nuw i32 %.0694 to i1
   %or.cond37 = select i1 %i.cao, i1 %13, i1 false
   br i1 %or.cond37, label %bb.ul, label %bb.un
 
@@ -2560,7 +2557,7 @@ bb.ur:                                            ; preds = %bb.uq, %bb.uq, %bb.
   call fastcc void @pushback(ptr noundef nonnull %0, i32 noundef %i.cah)
   %i.cay = and i32 %i.aiz, 904
   %i.caz = icmp eq i32 %i.cay, 0
-  %14 = icmp ne i32 %.0694, 0
+  %14 = trunc nuw i32 %.0694 to i1
   %or.cond41 = select i1 %i.caz, i1 %14, i1 false
   br i1 %or.cond41, label %bb.us, label %bb.uu
 
@@ -2686,7 +2683,7 @@ bb.vg:                                            ; preds = %bb.vd
   %i.ccj = load i32, ptr %i.aik, align 8, !tbaa !67 ; 3 uses
   %i.cck = and i32 %i.ccj, 48
   %i.ccl = icmp ne i32 %i.cck, 0
-  %15 = icmp ne i32 %.0694, 0                     ; 2 uses
+  %15 = trunc nuw i32 %.0694 to i1                ; 2 uses
   %or.cond43 = select i1 %i.ccl, i1 %15, i1 false
   br i1 %or.cond43, label %bb.vh, label %bb.vj
 
@@ -3089,8 +3086,8 @@ nextc0.exit124.thread:                            ; preds = %bb.as, %bb.at, %bb.
   %i.fp = load i32, ptr %i.d, align 8, !tbaa !67  ; 4 uses
   %i.fq = and i32 %i.fp, 48
   %i.fr = icmp ne i32 %i.fq, 0
-  %4 = icmp ne i32 %1, 0                          ; 2 uses
-  %or.cond = and i1 %4, %i.fr
+  %4 = trunc nuw i32 %1 to i1                     ; 2 uses
+  %or.cond = and i1 %i.fr, %4
   br i1 %or.cond, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %nextc0.exit124.thread
@@ -3160,7 +3157,7 @@ bb.bc:                                            ; preds = %bb.bb
 pushback.exit130:                                 ; preds = %parser_set_lex_state.exit129, %bb.az, %bb.ba, %bb.bb, %bb.bc
   %i.go = and i32 %2, 904
   %i.gp = icmp eq i32 %i.go, 0
-  %or.cond5 = and i1 %4, %i.gp
+  %or.cond5 = and i1 %i.gp, %4
   br i1 %or.cond5, label %bb.bd, label %switch.lookup
 
 bb.bd:                                            ; preds = %pushback.exit130
@@ -3563,8 +3560,8 @@ tokadd.exit:                                      ; preds = %parser_is_identchar
   %i.da = load i32, ptr %i.a, align 8, !tbaa !67  ; 5 uses
   %i.db = and i32 %i.da, 1032
   %i.dc = icmp eq i32 %i.db, 0
-  %3 = icmp ne i32 %2, 0                          ; 2 uses
-  %or.cond3 = or i1 %3, %i.dc
+  %3 = trunc nuw i32 %2 to i1                     ; 2 uses
+  %or.cond3 = or i1 %i.dc, %3
   %i.dd = and i32 %i.da, 48
   %.not162 = icmp eq i32 %i.dd, 0
   %or.cond = and i1 %.not162, %or.cond3

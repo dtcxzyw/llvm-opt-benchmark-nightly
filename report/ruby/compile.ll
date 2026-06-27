@@ -201,14 +201,13 @@ RARRAY_AREF.exit.i.i:                             ; preds = %bb.gu, %bb.gt
   %.14052.i.i = phi ptr [ %i.agu, %._crit_edge.i.i ], [ null, %bb.go ], [ null, %bb.gh ] ; 2 uses
   %.015.i.i.i = phi i32 [ %i.ahh, %._crit_edge.i.i ], [ %.037.i.i, %bb.go ], [ 0, %bb.gh ] ; 3 uses
   %.0.i.i194.i = phi i32 [ %i.ahi, %._crit_edge.i.i ], [ %.035.i.i, %bb.go ], [ 0, %bb.gh ] ; 3 uses
-  %.in.in.i.i = lshr i32 %.in.in.in.i.i, 4
-  %.in.i.i = and i32 %.in.in.i.i, 1
-  %7 = xor i32 %.in.i.i, 1
-  %i.ahj = and i32 %.015.i.i.i, 8291
-  %8 = or i32 %i.ahj, %7
-  %or.cond.not.i.i.i = icmp eq i32 %8, 0
+  %.in.i.i = and i32 %.015.i.i.i, 8291
+  %7 = icmp ne i32 %.in.i.i, 0
+  %i.ahj = and i32 %.in.in.in.i.i, 16
+  %.not.i195.i = icmp eq i32 %i.ahj, 0
+  %or.cond.i.i.i = or i1 %.not.i195.i, %7
   %i.ahk = or i32 %.015.i.i.i, 16
-  %spec.select.i.i195.i = select i1 %or.cond.not.i.i.i, i32 %i.ahk, i32 %.015.i.i.i ; 3 uses
+  %spec.select.i.i195.i = select i1 %or.cond.i.i.i, i32 %.015.i.i.i, i32 %i.ahk ; 3 uses
   %i.ahl = load ptr, ptr %i.ad, align 8, !tbaa !43
   %i.ahm = getelementptr i8, ptr %i.ahl, i64 260  ; 2 uses
   %i.ahn = load i32, ptr %i.ahm, align 4, !tbaa !109
@@ -611,10 +610,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.015 = phi i32 [ %i.a, %bb.b ], [ %3, %bb.a ]  ; 3 uses
   %.0 = phi i32 [ %i.c, %bb.b ], [ %2, %bb.a ]    ; 3 uses
   %i.d = and i32 %.015, 8291
-  %6 = or i32 %i.d, %5
-  %or.cond.not = icmp eq i32 %6, 0
+  %6 = icmp ne i32 %i.d, 0
+  %7 = trunc nuw i32 %5 to i1
+  %or.cond = or i1 %6, %7
   %i.e = or i32 %.015, 16
-  %spec.select = select i1 %or.cond.not, i32 %i.e, i32 %.015 ; 3 uses
+  %spec.select = select i1 %or.cond, i32 %.015, i32 %i.e ; 3 uses
   %i.f = getelementptr i8, ptr %0, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !43
   %i.h = getelementptr i8, ptr %i.g, i64 260      ; 2 uses
@@ -1017,7 +1017,6 @@ APPEND_LIST.exit:                                 ; preds = %iseq_set_use_block.
   %i.jq = load i32, ptr %i.a, align 4, !tbaa !7   ; 2 uses
   %i.jr = load ptr, ptr %i.b, align 8, !tbaa !1058 ; 4 uses
   %i.js = icmp ne ptr %i.i, null
-  %6 = zext i1 %i.js to i32
   %.not.i236 = icmp eq ptr %i.jr, null
   br i1 %.not.i236, label %bb.ah, label %bb.ag
 
@@ -1031,10 +1030,10 @@ bb.ah:                                            ; preds = %bb.ag, %APPEND_LIST
   %.015.i = phi i32 [ %i.jt, %bb.ag ], [ %i.jq, %APPEND_LIST.exit ] ; 3 uses
   %.0.i237 = phi i32 [ %i.jv, %bb.ag ], [ %.6, %APPEND_LIST.exit ] ; 3 uses
   %i.jw = and i32 %.015.i, 8291
-  %7 = or i32 %i.jw, %6
-  %or.cond.not.i = icmp eq i32 %7, 0
+  %6 = icmp ne i32 %i.jw, 0
+  %or.cond.i = or i1 %i.js, %6
   %i.jx = or i32 %.015.i, 16
-  %spec.select.i = select i1 %or.cond.not.i, i32 %i.jx, i32 %.015.i ; 3 uses
+  %spec.select.i = select i1 %or.cond.i, i32 %.015.i, i32 %i.jx ; 3 uses
   %i.jy = load ptr, ptr %i.c, align 8, !tbaa !43
   %i.jz = getelementptr i8, ptr %i.jy, i64 260    ; 2 uses
   %i.ka = load i32, ptr %i.jz, align 4, !tbaa !109
@@ -1437,7 +1436,7 @@ bb.e:                                             ; preds = %.critedge279
   %i.ad = getelementptr i8, ptr %1, i64 24        ; 52 uses
   %i.ae = getelementptr i8, ptr %2, i64 24        ; 25 uses
   %i.af = ptrtoint ptr %0 to i64
-  %6 = icmp ne i32 %3, 0                          ; 2 uses
+  %6 = trunc nuw i32 %3 to i1                     ; 2 uses
   br label %.backedge
 
 .loopexit:                                        ; preds = %bb.ar, %rb_obj_written.exit
@@ -1840,7 +1839,7 @@ bb.ap:                                            ; preds = %bb.an
 .critedge281:                                     ; preds = %bb.ao, %bb.ap
   %i.ma = phi i1 [ %i.lu, %bb.ao ], [ %i.ly, %bb.ap ]
   %i.mb = phi i1 [ %i.lr, %bb.ao ], [ %i.lv, %bb.ap ]
-  %or.cond7 = and i1 %6, %i.ma
+  %or.cond7 = and i1 %i.ma, %6
   br i1 %or.cond7, label %iseq_compile_each.exit385, label %bb.aq
 
 iseq_compile_each.exit385:                        ; preds = %.critedge281
@@ -1867,7 +1866,7 @@ nd_line.exit388:                                  ; preds = %bb.aq
 .thread458:                                       ; preds = %bb.ao, %bb.ap
   %i.ml = phi i1 [ %i.lv, %bb.ap ], [ %i.lr, %bb.ao ]
   %i.mm = phi i1 [ %i.ly, %bb.ap ], [ %i.lu, %bb.ao ]
-  %or.cond9 = and i1 %6, %i.mm
+  %or.cond9 = and i1 %i.mm, %6
   br i1 %or.cond9, label %iseq_compile_each.exit394, label %nd_line.exit397
 
 iseq_compile_each.exit394:                        ; preds = %.thread458
@@ -2270,7 +2269,6 @@ compile_data_calloc2.exit:                        ; preds = %bb.c, %._crit_edge.
   %i.aj = tail call i64 @rb_fix2int(i64 noundef %6) #37
   %i.ak = trunc i64 %i.aj to i32                  ; 2 uses
   %i.al = icmp ne ptr %5, null                    ; 2 uses
-  %8 = zext i1 %i.al to i32
   %.not.i = icmp eq ptr %7, null
   br i1 %.not.i, label %bb.g, label %bb.f
 
@@ -2284,10 +2282,10 @@ bb.g:                                             ; preds = %bb.f, %compile_data
   %.015.i = phi i32 [ %i.am, %bb.f ], [ %i.ak, %compile_data_calloc2.exit ] ; 3 uses
   %.0.i = phi i32 [ %i.ao, %bb.f ], [ %i.ai, %compile_data_calloc2.exit ] ; 3 uses
   %i.ap = and i32 %.015.i, 8291
-  %9 = or i32 %i.ap, %8
-  %or.cond.not.i = icmp eq i32 %9, 0
+  %8 = icmp ne i32 %i.ap, 0
+  %or.cond.i = or i1 %i.al, %8
   %i.aq = or i32 %.015.i, 16
-  %spec.select.i = select i1 %or.cond.not.i, i32 %i.aq, i32 %.015.i ; 3 uses
+  %spec.select.i = select i1 %or.cond.i, i32 %.015.i, i32 %i.aq ; 3 uses
   %i.ar = getelementptr i8, ptr %0, i64 16
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !43
   %i.at = getelementptr i8, ptr %i.as, i64 260    ; 2 uses
@@ -2690,8 +2688,8 @@ nd_line.exit2079:                                 ; preds = %nd_line.exit2068
   %i.crw = getelementptr i8, ptr %2, i64 40
   %i.crx = load ptr, ptr %i.crw, align 8, !tbaa !833
   %i.cry = tail call fastcc i32 @iseq_compile_pattern_each(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %i.crx, ptr noundef %3, ptr noundef %4, i1 noundef zeroext %5, i1 noundef zeroext true, i32 noundef %7, i1 noundef zeroext %8)
-  %.not1203.not = icmp eq i32 %i.cry, 0
-  br i1 %.not1203.not, label %.critedge1252, label %bb.cx
+  %.not1203 = trunc nuw i32 %i.cry to i1
+  br i1 %.not1203, label %bb.cx, label %.critedge1252
 
 nd_line.exit2083:                                 ; preds = %nd_line.exit
   %i.crz = lshr i64 %.pre, 15
@@ -3094,12 +3092,11 @@ bb.ao:                                            ; preds = %bb.an
 
 APPEND_LIST.exit:                                 ; preds = %bb.an, %bb.ao
   %i.nu = icmp ne ptr %.0, null
-  %8 = zext i1 %i.nu to i32
   %i.nv = and i32 %.1, 8291
-  %9 = or i32 %i.nv, %8
-  %or.cond.not.i = icmp eq i32 %9, 0
+  %8 = icmp ne i32 %i.nv, 0
+  %or.cond.i = or i1 %i.nu, %8
   %i.nw = or i32 %.1, 16
-  %spec.select.i279 = select i1 %or.cond.not.i, i32 %i.nw, i32 %.1 ; 2 uses
+  %spec.select.i279 = select i1 %or.cond.i, i32 %.1, i32 %i.nw ; 2 uses
   %i.nx = load ptr, ptr %i.fa, align 8, !tbaa !43
   %i.ny = getelementptr i8, ptr %i.nx, i64 260    ; 2 uses
   %i.nz = load i32, ptr %i.ny, align 4, !tbaa !109
@@ -3502,7 +3499,6 @@ new_callinfo.exit:                                ; preds = %vm_ci_new_.exit.i, 
 APPEND_LIST.exit._crit_edge:                      ; preds = %APPEND_LIST.exit, %bb.s
   %i.hh = load ptr, ptr %i.c, align 8, !tbaa !1058 ; 4 uses
   %i.hi = icmp ne ptr %.0150, null
-  %8 = zext i1 %i.hi to i32
   %.not.i119 = icmp eq ptr %i.hh, null
   br i1 %.not.i119, label %bb.ab, label %bb.aa
 
@@ -3516,10 +3512,10 @@ bb.ab:                                            ; preds = %bb.aa, %APPEND_LIST
   %.015.i120 = phi i32 [ %i.hj, %bb.aa ], [ %i.cz, %APPEND_LIST.exit._crit_edge ] ; 3 uses
   %.0.i121 = phi i32 [ %i.hl, %bb.aa ], [ %i.cr, %APPEND_LIST.exit._crit_edge ] ; 3 uses
   %i.hm = and i32 %.015.i120, 8291
-  %9 = or i32 %i.hm, %8
-  %or.cond.not.i122 = icmp eq i32 %9, 0
+  %8 = icmp ne i32 %i.hm, 0
+  %or.cond.i122 = or i1 %i.hi, %8
   %i.hn = or i32 %.015.i120, 16
-  %spec.select.i123 = select i1 %or.cond.not.i122, i32 %i.hn, i32 %.015.i120 ; 3 uses
+  %spec.select.i123 = select i1 %or.cond.i122, i32 %.015.i120, i32 %i.hn ; 3 uses
   %i.ho = getelementptr i8, ptr %0, i64 16
   %i.hp = load ptr, ptr %i.ho, align 8, !tbaa !43
   %i.hq = getelementptr i8, ptr %i.hp, i64 260    ; 2 uses

@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   %.0441 = phi ptr [ null, %bb.a ], [ %.0441.be, %.backedge ] ; 51 uses
   %.0439 = phi ptr [ null, %bb.a ], [ %.0439.be, %.backedge ] ; 52 uses
   %.0436 = phi i32 [ -2, %bb.a ], [ %.0436.be, %.backedge ] ; 53 uses
-  %.0431 = phi i32 [ 0, %bb.a ], [ %.0431.be, %.backedge ] ; 51 uses
+  %.0431 = phi i32 [ 0, %bb.a ], [ %.0431.be, %.backedge ] ; 52 uses
   %.0424 = phi i32 [ 0, %bb.a ], [ %.0424.be, %.backedge ] ; 49 uses
   %.0422 = phi i32 [ 0, %bb.a ], [ %.0422.be, %.backedge ] ; 54 uses
   %.0420 = phi i32 [ 1, %bb.a ], [ %.0420.be, %.backedge ] ; 49 uses
@@ -604,7 +604,7 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %.not564, label %.thread706, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %6 = icmp ne i32 %.0431, 0                      ; 9 uses
+  %6 = trunc nuw i32 %.0431 to i1                 ; 8 uses
   br i1 %6, label %bb.ch, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by
@@ -1007,9 +1007,8 @@ bb.fw:                                            ; preds = %bb.fv
   br i1 %i.mb, label %.thread706, label %bb.fx
 
 bb.fx:                                            ; preds = %bb.fw
-  %7 = xor i1 %6, true
-  %8 = zext i1 %7 to i32
-  %i.mc = call fastcc i32 @make_REQ(ptr noundef %i.ma, ptr noundef %.1386732, ptr noundef %.0455, i32 noundef %8, i64 noundef %.2396)
+  %7 = xor i32 %.0431, 1
+  %i.mc = call fastcc i32 @make_REQ(ptr noundef %i.ma, ptr noundef %.1386732, ptr noundef %.0455, i32 noundef %7, i64 noundef %.2396)
   %.not609 = icmp eq i32 %i.mc, 0
   br i1 %.not609, label %bb.fy, label %bb.fz
 
@@ -1337,15 +1336,15 @@ bb.ig:                                            ; preds = %bb.ie
 
 bb.ih:                                            ; preds = %bb.ig, %.thread753
   %i.pf = icmp eq i32 %.0412, 0                   ; 2 uses
-  %.not3174 = icmp eq i32 %.0410, 0
-  %.not3175 = icmp eq i32 %.0418, 0               ; 3 uses
+  %8 = trunc nuw i32 %.0410 to i1
+  %9 = trunc nuw i32 %.0418 to i1                 ; 3 uses
   %i.pg = or i32 %.0418, %.0410
-  %.not3176 = icmp eq i32 %.0404, 0               ; 3 uses
+  %10 = trunc nuw i32 %.0404 to i1                ; 3 uses
   %i.ph = or i32 %.0404, %i.pg
-  %.not3177 = icmp eq i32 %.0402, 0
+  %11 = trunc nuw i32 %.0402 to i1
   %i.pi = or i32 %.0402, %i.ph
-  %9 = icmp ne i32 %i.pi, 0
-  %or.cond31 = or i1 %i.pf, %9
+  %12 = trunc nuw i32 %i.pi to i1
+  %or.cond31 = or i1 %i.pf, %12
   br i1 %or.cond31, label %bb.ii, label %bb.jt
 
 bb.ii:                                            ; preds = %bb.ih
@@ -1367,7 +1366,7 @@ bb.ik:                                            ; preds = %bb.ij, %bb.ii
   br i1 %i.pq, label %.thread706, label %bb.il
 
 bb.il:                                            ; preds = %bb.ik
-  br i1 %.not3177, label %bb.io, label %bb.im
+  br i1 %11, label %bb.im, label %bb.io
 
 bb.im:                                            ; preds = %bb.il
   %i.pr = call ptr @X509_REQ_get0_pubkey(ptr noundef %.2500761) #12 ; 2 uses
@@ -1384,7 +1383,7 @@ bb.in:                                            ; preds = %bb.im
   br label %.thread706
 
 bb.io:                                            ; preds = %.thread770, %bb.il
-  br i1 %.not3174, label %bb.is, label %bb.ip
+  br i1 %8, label %bb.ip, label %bb.is
 
 bb.ip:                                            ; preds = %bb.io
   %i.pw = call i64 @get_nameopt() #12             ; 2 uses
@@ -1412,13 +1411,13 @@ bb.ir:                                            ; preds = %bb.iq
   br label %bb.jt
 
 bb.is:                                            ; preds = %bb.io
-  br i1 %.not3176, label %bb.iv, label %bb.it
+  br i1 %10, label %bb.it, label %bb.iv
 
 .thread855:                                       ; preds = %bb.iq
-  br i1 %.not3176, label %.thread860, label %.thread857
+  br i1 %10, label %.thread857, label %.thread860
 
 .thread775:                                       ; preds = %.thread772
-  br i1 %.not3176, label %.thread785, label %.thread781
+  br i1 %10, label %.thread781, label %.thread785
 
 bb.it:                                            ; preds = %bb.is
   br i1 %6, label %.thread857, label %.thread781
@@ -1441,13 +1440,13 @@ bb.iu:                                            ; preds = %.thread781, %.threa
 
 bb.iv:                                            ; preds = %bb.iu, %bb.is
   %.1434779 = phi i32 [ %.1434780783, %bb.iu ], [ 1, %bb.is ] ; 3 uses
-  br i1 %.not3175, label %bb.jf, label %bb.iw
+  br i1 %9, label %bb.iw, label %bb.jf
 
 .thread860:                                       ; preds = %.thread855
-  br i1 %.not3175, label %bb.jf, label %.thread862
+  br i1 %9, label %.thread862, label %bb.jf
 
 .thread785:                                       ; preds = %.thread775
-  br i1 %.not3175, label %bb.jf, label %.thread789
+  br i1 %9, label %.thread789, label %bb.jf
 
 bb.iw:                                            ; preds = %bb.iv
   br i1 %6, label %.thread862, label %.thread789
@@ -1550,7 +1549,7 @@ bb.jm:                                            ; preds = %bb.jl
 
 bb.jn:                                            ; preds = %bb.jl, %bb.jf
   %i.rf = icmp ne ptr %.0504757, null
-  %i.rg = and i1 %6, %i.rf
+  %i.rg = and i1 %i.rf, %6
   %or.cond39 = and i1 %i.pf, %i.rg
   br i1 %or.cond39, label %bb.jo, label %bb.jt
 
