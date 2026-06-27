@@ -201,7 +201,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %.lr.p
   %.1117 = phi i32 [ %i.bk, %bb.t ], [ %.0116162, %.lr.ph165 ], [ %spec.select, %bb.u ] ; 2 uses
   %indvars.iv.next185 = add nuw nsw i64 %indvars.iv184, 1 ; 2 uses
   %exitcond188.not = icmp eq i64 %indvars.iv.next185, %wide.trip.count187
-  br i1 %exitcond188.not, label %._crit_edge166, label %.lr.ph165, !llvm.loop !30
+  br i1 %exitcond188.not, label %._crit_edge166, label %.lr.ph165, !llvm.loop !31
 
 ._crit_edge166:                                   ; preds = %bb.v, %bb.r
   %.0116.lcssa = phi i32 [ 0, %bb.r ], [ %.1117, %bb.v ]
@@ -234,7 +234,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.bu = sext i32 %.0119174 to i64
   %i.bv = getelementptr inbounds i8, ptr %.sink, i64 %i.bu ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.x, i64 16 ; 2 uses
-  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !31
+  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !32
   %i.by = icmp eq i32 %.0110175, %i.bx
   %i.bz = select i1 %i.by, i8 43, i8 47
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bv, i64 1 ; 2 uses
@@ -300,17 +300,17 @@ bb.ag:                                            ; preds = %bb.ac, %bb.af, %.lr
   %.3 = phi ptr [ %i.cr, %bb.ac ], [ %i.cu, %bb.af ], [ %.1107168, %.lr.ph170 ] ; 2 uses
   %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
   %exitcond193.not = icmp eq i64 %indvars.iv.next190, %wide.trip.count192
-  br i1 %exitcond193.not, label %._crit_edge171, label %.lr.ph170, !llvm.loop !32
+  br i1 %exitcond193.not, label %._crit_edge171, label %.lr.ph170, !llvm.loop !33
 
 ._crit_edge171:                                   ; preds = %bb.ag, %bb.aa
   %.1107.lcssa = phi ptr [ %i.ce, %bb.aa ], [ %.3, %bb.ag ]
   store i8 0, ptr %.1107.lcssa, align 1, !tbaa !14
-  %i.cv = load i32, ptr %i.bw, align 8, !tbaa !31
+  %i.cv = load i32, ptr %i.bw, align 8, !tbaa !32
   %i.cw = add nuw nsw i32 %.0120173, 1            ; 3 uses
   %i.cx = load ptr, ptr %0, align 8, !tbaa !15
   %i.cy = call i32 @OPENSSL_sk_num(ptr noundef %i.cx) #6
   %i.cz = icmp slt i32 %i.cw, %i.cy
-  br i1 %i.cz, label %bb.g, label %._crit_edge177, !llvm.loop !33
+  br i1 %i.cz, label %bb.g, label %._crit_edge177, !llvm.loop !34
 
 ._crit_edge177:                                   ; preds = %._crit_edge171, %.preheader
   %.0120.lcssa = phi i32 [ 0, %.preheader ], [ %i.cw, %._crit_edge171 ] ; 2 uses
@@ -435,10 +435,11 @@ attributes #7 = { nounwind willreturn memory(read) }
 !25 = !{!"asn1_string_st", !6, i64 0, !6, i64 4, !12, i64 8, !11, i64 16}
 !26 = !{!25, !6, i64 4}
 !27 = !{!25, !12, i64 8}
-!28 = distinct !{!28, !29}
+!28 = distinct !{!28, !29, !30}
 !29 = !{!"llvm.loop.mustprogress"}
-!30 = distinct !{!30, !29}
-!31 = !{!20, !6, i64 16}
-!32 = distinct !{!32, !29}
+!30 = !{!"llvm.loop.isvectorized", i32 1}
+!31 = distinct !{!31, !29}
+!32 = !{!20, !6, i64 16}
 !33 = distinct !{!33, !29}
+!34 = distinct !{!34, !29}
 end_hunk_0
