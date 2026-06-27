@@ -201,7 +201,7 @@ bb.a:
   %i.c = icmp ne i32 %i.b, 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.e = load i8, ptr %i.d, align 4, !range !36
-  %8 = icmp ne i8 %i.e, 0
+  %8 = trunc nuw i8 %i.e to i1
   %or.cond.not.i = select i1 %i.c, i1 true, i1 %8
   br i1 %or.cond.not.i, label %bb.b, label %bb.k
 
@@ -604,7 +604,7 @@ _ZN22btRotationalLimitMotor14testLimitValueEf.exit: ; preds = %bb.b, %bb.d, %bb.
   %i.x = phi i1 [ false, %bb.b ], [ true, %bb.d ], [ true, %bb.f ], [ false, %bb.g ]
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 36
   %i.z = load i8, ptr %i.y, align 8, !range !36
-  %2 = icmp ne i8 %i.z, 0
+  %2 = trunc nuw i8 %i.z to i1
   %or.cond.not.i = select i1 %i.x, i1 true, i1 %2
   ret i1 %or.cond.not.i
 }
@@ -909,8 +909,8 @@ bb.q:                                             ; preds = %bb.o
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit: ; preds = %bb.l, %bb.q
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bq, i64 36
   %i.cf = load i8, ptr %i.ce, align 8, !range !36
-  %.not = icmp eq i8 %i.cf, 0
-  br i1 %.not, label %bb.r, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread
+  %4 = trunc nuw i8 %i.cf to i1
+  br i1 %4, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread, label %bb.r
 
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.sink.split: ; preds = %bb.n, %bb.p
   %.sink65 = phi float [ %i.bx, %bb.p ], [ %i.bw, %bb.n ]
@@ -1186,8 +1186,8 @@ bb.l:                                             ; preds = %bb.j
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit: ; preds = %bb.g, %bb.l
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 904
   %i.bc = load i8, ptr %i.bb, align 8, !range !36
-  %.not = icmp eq i8 %i.bc, 0
-  br i1 %.not, label %bb.m, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread
+  %2 = trunc nuw i8 %i.bc to i1
+  br i1 %2, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread, label %bb.m
 
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.sink.split: ; preds = %bb.i, %bb.k
   %.sink38 = phi float [ %i.au, %bb.k ], [ %i.at, %bb.i ]
@@ -1247,8 +1247,8 @@ bb.s:                                             ; preds = %bb.m
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.1: ; preds = %bb.s, %bb.p
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 960
   %i.by = load i8, ptr %i.bx, align 8, !range !36
-  %.not.1 = icmp eq i8 %i.by, 0
-  br i1 %.not.1, label %bb.t, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.1
+  %3 = trunc nuw i8 %i.by to i1
+  br i1 %3, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.1, label %bb.t
 
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.1.sink.split: ; preds = %bb.q, %bb.r
   %.sink40 = phi float [ %i.bp, %bb.r ], [ %i.bq, %bb.q ]
@@ -1308,8 +1308,8 @@ bb.z:                                             ; preds = %bb.t
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.2: ; preds = %bb.z, %bb.w
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 1016
   %i.cu = load i8, ptr %i.ct, align 8, !range !36
-  %.not.2 = icmp eq i8 %i.cu, 0
-  br i1 %.not.2, label %.loopexit, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.2
+  %4 = trunc nuw i8 %i.cu to i1
+  br i1 %4, label %_ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.2, label %.loopexit
 
 _ZN23btGeneric6DofConstraint21testAngularLimitMotorEi.exit.thread.2.sink.split: ; preds = %bb.x, %bb.y
   %.sink42 = phi float [ %i.cl, %bb.y ], [ %i.cm, %bb.x ]
@@ -1712,7 +1712,7 @@ bb.a:
   %i.d = icmp ne i32 %i.c, 0
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 904
   %i.f = load i8, ptr %i.e, align 8, !range !36
-  %10 = icmp ne i8 %i.f, 0
+  %10 = trunc nuw i8 %i.f to i1
   %or.cond.not.i = select i1 %i.d, i1 true, i1 %10
   br i1 %or.cond.not.i, label %bb.b, label %bb.c
 
@@ -1737,7 +1737,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.m = icmp ne i32 %i.l, 0
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 960
   %i.o = load i8, ptr %i.n, align 8, !range !36
-  %11 = icmp ne i8 %i.o, 0
+  %11 = trunc nuw i8 %i.o to i1
   %or.cond.not.i.1 = select i1 %i.m, i1 true, i1 %11
   br i1 %or.cond.not.i.1, label %bb.d, label %bb.e
 
@@ -1762,7 +1762,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.v = icmp ne i32 %i.u, 0
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 1016
   %i.x = load i8, ptr %i.w, align 8, !range !36
-  %12 = icmp ne i8 %i.x, 0
+  %12 = trunc nuw i8 %i.x to i1
   %or.cond.not.i.2 = select i1 %i.v, i1 true, i1 %12
   br i1 %or.cond.not.i.2, label %bb.f, label %bb.g
 
@@ -2165,7 +2165,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bv = icmp ne i32 %i.bu, 0
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 904
   %i.bx = load i8, ptr %i.bw, align 8, !range !36
-  %8 = icmp ne i8 %i.bx, 0
+  %8 = trunc nuw i8 %i.bx to i1
   %or.cond.not.i = select i1 %i.bv, i1 true, i1 %8
   br i1 %or.cond.not.i, label %bb.l, label %bb.m
 
@@ -2192,7 +2192,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.cj = icmp ne i32 %i.ci, 0
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 960
   %i.cl = load i8, ptr %i.ck, align 8, !range !36
-  %9 = icmp ne i8 %i.cl, 0
+  %9 = trunc nuw i8 %i.cl to i1
   %or.cond.not.i.1 = select i1 %i.cj, i1 true, i1 %9
   br i1 %or.cond.not.i.1, label %bb.n, label %bb.o
 
@@ -2219,7 +2219,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.cx = icmp ne i32 %i.cw, 0
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 1016
   %i.cz = load i8, ptr %i.cy, align 8, !range !36
-  %10 = icmp ne i8 %i.cz, 0
+  %10 = trunc nuw i8 %i.cz to i1
   %or.cond.not.i.2 = select i1 %i.cx, i1 true, i1 %10
   br i1 %or.cond.not.i.2, label %bb.p, label %bb.q
 

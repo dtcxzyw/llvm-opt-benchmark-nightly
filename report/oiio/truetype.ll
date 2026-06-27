@@ -201,8 +201,8 @@ bb.bn:                                            ; preds = %bb.bm, %.thread192.
   %i.qm = phi i8 [ 0, %bb.bm ], [ %i.qg, %.thread192.i ]
   %i.qn = load i32, ptr %i.pg, align 8, !tbaa !7
   %i.qo = icmp eq i32 %i.qn, 40                   ; 2 uses
-  %6 = icmp ne i8 %.0109.i.i, 0
-  %or.cond4.i.i = and i1 %6, %i.qo
+  %6 = trunc nuw i8 %.0109.i.i to i1
+  %or.cond4.i.i = and i1 %i.qo, %6
   br i1 %or.cond4.i.i, label %bb.bo, label %bb.bq
 
 bb.bo:                                            ; preds = %bb.bn
@@ -605,8 +605,8 @@ tt_get_metrics.exit:                              ; preds = %bb.af, %bb.ag, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   store i32 0, ptr %i.e, align 4, !tbaa !3
-  %.not372 = icmp eq i8 %3, 0
-  br i1 %.not372, label %bb.ai, label %.thread355
+  %13 = trunc nuw i8 %3 to i1
+  br i1 %13, label %.thread355, label %bb.ai
 
 bb.ai:                                            ; preds = %tt_get_metrics.exit
   %i.fr = load i32, ptr %i.cp, align 8, !tbaa !743

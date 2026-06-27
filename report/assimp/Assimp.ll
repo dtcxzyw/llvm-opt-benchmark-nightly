@@ -201,7 +201,7 @@ _ZL16stbi__start_fileP13stbi__contextP8_IO_FILE.exit: ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #47
   store ptr %2, ptr %1, align 8
   %i.z = call fastcc noundef i32 @_ZL20stbi__parse_png_fileP9stbi__pngii(ptr noundef nonnull %1, i32 noundef 2, i32 noundef 0)
-  %.not.i.i.i = icmp ne i32 %i.z, 0
+  %.not.i.i.i = trunc nuw i32 %i.z to i1
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ab = load i32, ptr %i.aa, align 8
   %.not1.i.i = icmp eq i32 %i.ab, 16
@@ -442,7 +442,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
   store ptr %3, ptr %2, align 8
   %i.j = call fastcc noundef i32 @_ZL20stbi__parse_png_fileP9stbi__pngii(ptr noundef nonnull %2, i32 noundef 2, i32 noundef 0)
-  %.not.i.i.i = icmp ne i32 %i.j, 0
+  %.not.i.i.i = trunc nuw i32 %i.j to i1
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.l = load i32, ptr %i.k, align 8
   %.not1.i.i = icmp eq i32 %i.l, 16
@@ -520,7 +520,7 @@ _ZL21stbi__start_callbacksP13stbi__contextP17stbi_io_callbacksPv.exit: ; preds =
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
   store ptr %3, ptr %2, align 8
   %i.y = call fastcc noundef i32 @_ZL20stbi__parse_png_fileP9stbi__pngii(ptr noundef nonnull %2, i32 noundef 2, i32 noundef 0)
-  %.not.i.i.i = icmp ne i32 %i.y, 0
+  %.not.i.i.i = trunc nuw i32 %i.y to i1
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.aa = load i32, ptr %i.z, align 8
   %.not1.i.i = icmp eq i32 %i.aa, 16

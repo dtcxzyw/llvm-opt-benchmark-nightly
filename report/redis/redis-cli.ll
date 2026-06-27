@@ -201,8 +201,8 @@ bb.gw:                                            ; preds = %bb.gv
 
 bb.gx:                                            ; preds = %bb.gw
   %i.agp = call fastcc i32 @clusterManagerMoveSlot(ptr noundef nonnull %i.afy, ptr noundef nonnull %.038.i, i32 noundef range(i32 -2147483648, 16384) %i.aex, i32 noundef 130, ptr noundef null)
-  %.not51.not.not.i = icmp eq i32 %i.agp, 0
-  br i1 %.not51.not.not.i, label %clusterManagerFixMultipleSlotOwners.exit.thread.sink.split, label %.backedge.i
+  %.not51.not.i = trunc nuw i32 %i.agp to i1
+  br i1 %.not51.not.i, label %.backedge.i, label %clusterManagerFixMultipleSlotOwners.exit.thread.sink.split
 
 .backedge.i:                                      ; preds = %bb.gx, %bb.gw, %bb.gr, %.lr.ph377
   %.033.be.i = phi i32 [ 1, %bb.gx ], [ %.033.i375, %bb.gr ], [ %.033.i375, %.lr.ph377 ], [ 1, %bb.gw ] ; 2 uses
@@ -605,7 +605,7 @@ bb.a:
   br i1 %.not65, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.not66 = icmp eq i32 %3, 0
+  %5 = trunc nuw i32 %3 to i1
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -619,7 +619,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.u = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  br i1 %.not66, label %.lr.ph.split, label %.lr.ph.split.us
+  br i1 %5, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.w = icmp eq i64 %4, -1
@@ -749,13 +749,13 @@ bb.j:                                             ; preds = %hi_sdslen.exit.us, 
   %i.bw = icmp ugt i64 %i.bt, %i.bv
   br i1 %i.bw, label %.lr.ph.split.us.split, label %.preheader, !llvm.loop !566
 
-.preheader:                                       ; preds = %bb.j, %bb.c, %bb.m
-  %i.bx = phi i64 [ %i.ak, %bb.c ], [ %i.cq, %bb.m ], [ %i.bt, %bb.j ] ; 2 uses
+.preheader:                                       ; preds = %bb.m, %bb.j, %bb.c
+  %i.bx = phi i64 [ %i.bt, %bb.j ], [ %i.ak, %bb.c ], [ %i.cq, %bb.m ] ; 2 uses
   %.not68 = icmp eq i64 %i.bx, 0
   br i1 %.not68, label %._crit_edge, label %.lr.ph64
 
 .lr.ph64:                                         ; preds = %.preheader
-  %5 = icmp ne i32 %3, 0                          ; 2 uses
+  %6 = trunc nuw i32 %3 to i1                     ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   br label %bb.n
 
@@ -817,7 +817,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !365
   %i.da = icmp ne ptr %i.cz, null
-  %or.cond3 = or i1 %5, %i.da
+  %or.cond3 = or i1 %i.da, %6
   br i1 %or.cond3, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -854,7 +854,7 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.dr = load ptr, ptr @stderr, align 8, !tbaa !13
-  br i1 %5, label %bb.v, label %bb.u
+  br i1 %6, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.ds = load ptr, ptr %i.cw, align 8, !tbaa !28

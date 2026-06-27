@@ -201,7 +201,7 @@ bb.a:
   %i.r = sub nsw i64 0, %i.q
   %i.s = getelementptr i8, ptr %4, i64 %i.r       ; 6 uses
   %i.t = call fastcc i32 @parsePseudoAttribute(ptr noundef %2, ptr noundef %i.o, ptr noundef %i.s, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %i.h, ptr noundef %i.g)
-  %11 = icmp ne i32 %i.t, 0
+  %11 = trunc nuw i32 %i.t to i1
   %i.u = load ptr, ptr %i.i, align 8              ; 4 uses
   %i.v = icmp ne ptr %i.u, null
   %or.cond = select i1 %11, i1 %i.v, i1 false
@@ -604,8 +604,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d
   %i.h = icmp eq i8 %i.f, 0
-  %6 = icmp ne i32 %2, 0
-  %or.cond = and i1 %6, %i.h
+  %6 = trunc nuw i32 %2 to i1
+  %or.cond = and i1 %i.h, %6
   br i1 %or.cond, label %bb.y, label %bb.z
 
 bb.f:                                             ; preds = %bb.b
@@ -626,8 +626,8 @@ bb.g:                                             ; preds = %bb.f
   %i.n = getelementptr i8, ptr %1, i64 133
   %i.o = load i8, ptr %i.n, align 1, !tbaa !39
   %i.p = icmp eq i8 %i.o, 0
-  %7 = icmp ne i32 %2, 0
-  %or.cond3 = and i1 %7, %i.p
+  %7 = trunc nuw i32 %2 to i1
+  %or.cond3 = and i1 %i.p, %7
   br i1 %or.cond3, label %bb.y, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -646,8 +646,8 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.i
   %i.w = icmp eq i8 %i.u, 3
-  %8 = icmp ne i32 %2, 0
-  %or.cond5 = and i1 %8, %i.w
+  %8 = trunc nuw i32 %2 to i1
+  %or.cond5 = and i1 %i.w, %8
   br i1 %or.cond5, label %bb.y, label %bb.l
 
 bb.k:                                             ; preds = %bb.i
@@ -668,8 +668,8 @@ bb.m:                                             ; preds = %bb.f
   %i.ad = getelementptr i8, ptr %1, i64 133
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !39
   %i.af = icmp eq i8 %i.ae, 0
-  %9 = icmp ne i32 %2, 0
-  %or.cond8 = and i1 %9, %i.af
+  %9 = trunc nuw i32 %2 to i1
+  %or.cond8 = and i1 %i.af, %9
   br i1 %or.cond8, label %bb.y, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -738,8 +738,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 
 bb.w:                                             ; preds = %bb.s
   %i.bc = icmp ne i8 %i.l, 0
-  %10 = icmp ne i32 %2, 0
-  %or.cond20 = or i1 %10, %i.bc
+  %10 = trunc nuw i32 %2 to i1
+  %or.cond20 = or i1 %i.bc, %10
   br i1 %or.cond20, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w

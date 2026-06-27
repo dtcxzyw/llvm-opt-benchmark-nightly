@@ -201,13 +201,13 @@ bb.e:                                             ; preds = %bb.d
 .split149.i:                                      ; preds = %bb.e
   %i.e = xor i32 %2, 1                            ; 8 uses
   %i.f = tail call ptr @__errno_location() #7     ; 12 uses
-  %.not.i = icmp eq i32 %3, 0
+  %5 = trunc nuw i32 %3 to i1
   %i.g = or i32 %3, %2
-  %.not196.i = icmp eq i32 %i.g, 0                ; 2 uses
-  br i1 %.not.i, label %.split149.split.us.i, label %.split149.split.i
+  %6 = trunc nuw i32 %i.g to i1                   ; 2 uses
+  br i1 %5, label %.split149.split.us.i, label %.split149.split.i
 
 .split149.split.us.i:                             ; preds = %.split149.i
-  br i1 %.not196.i, label %.lr.ph.split.us.split.split.split.us.us.i, label %.lr.ph.split.us.split.split.us.split.us.us.us.i
+  br i1 %6, label %.lr.ph.split.us.split.split.us.split.us.us.us.i, label %.lr.ph.split.us.split.split.split.us.us.i
 
 .split.us.split.us.us.us.i:                       ; preds = %bb.f, %.lr.ph.split.us.split.split.us.split.us.us.us.i
   %.us-phi128.us.us.i = phi i64 [ %i.k, %.lr.ph.split.us.split.split.us.split.us.us.us.i ], [ %i.m, %bb.f ] ; 2 uses
@@ -220,23 +220,32 @@ bb.e:                                             ; preds = %bb.d
   %.026.ph158.us.us.i = phi ptr [ %i.h, %.split.us.split.us.us.us.i ], [ %0, %.split149.split.us.i ] ; 3 uses
   %.027.ph150.us.us.i = phi i64 [ %i.i, %.split.us.split.us.us.us.i ], [ %1, %.split149.split.us.i ] ; 3 uses
   store i32 0, ptr %i.f, align 4, !tbaa !7
+  %7 = tail call ptr @PyEval_SaveThread() #6
   %i.k = tail call i64 @getrandom(ptr noundef %.026.ph158.us.us.i, i64 noundef %.027.ph150.us.us.i, i32 noundef %i.e) #6 ; 2 uses
+  tail call void @PyEval_RestoreThread(ptr noundef %7) #6
   %i.l = icmp slt i64 %i.k, 0
   br i1 %i.l, label %.lr.ph147.us.us.i, label %.split.us.split.us.us.us.i
 
-bb.f:                                             ; preds = %.lr.ph147.us.us.i
+bb.f:                                             ; preds = %9
   store i32 0, ptr %i.f, align 4, !tbaa !7
+  %8 = tail call ptr @PyEval_SaveThread() #6
   %i.m = tail call i64 @getrandom(ptr noundef %.026.ph158.us.us.i, i64 noundef %.027.ph150.us.us.i, i32 noundef %i.e) #6 ; 2 uses
+  tail call void @PyEval_RestoreThread(ptr noundef %8) #6
   %i.n = icmp slt i64 %i.m, 0
   br i1 %i.n, label %.lr.ph147.us.us.i, label %.split.us.split.us.us.us.i
 
 .lr.ph147.us.us.i:                                ; preds = %.lr.ph.split.us.split.split.us.split.us.us.us.i, %bb.f
   %i.o = load i32, ptr %i.f, align 4, !tbaa !7
-  switch i32 %i.o, label %py_getrandom.exit [
+  switch i32 %i.o, label %.split44.us.i [
     i32 38, label %.split41.us.i
     i32 1, label %.split41.us.i
-    i32 4, label %bb.f
+    i32 4, label %9
   ]
+
+9:                                                ; preds = %.lr.ph147.us.us.i
+  %10 = tail call i32 @PyErr_CheckSignals() #6
+  %.not.us.us.us.us.us.i = icmp eq i32 %10, 0
+  br i1 %.not.us.us.us.us.us.i, label %bb.f, label %py_getrandom.exit
 
 .split.us.split.us170.i:                          ; preds = %bb.g, %.lr.ph.split.us.split.split.split.us.us.i
   %.us-phi105.us.i = phi i64 [ %i.s, %.lr.ph.split.us.split.split.split.us.us.i ], [ %i.u, %bb.g ] ; 2 uses
@@ -249,27 +258,36 @@ bb.f:                                             ; preds = %.lr.ph147.us.us.i
   %.026.ph158.us.i = phi ptr [ %i.p, %.split.us.split.us170.i ], [ %0, %.split149.split.us.i ] ; 3 uses
   %.027.ph150.us.i = phi i64 [ %i.q, %.split.us.split.us170.i ], [ %1, %.split149.split.us.i ] ; 3 uses
   store i32 0, ptr %i.f, align 4, !tbaa !7
+  %11 = tail call ptr @PyEval_SaveThread() #6
   %i.s = tail call i64 @getrandom(ptr noundef %.026.ph158.us.i, i64 noundef %.027.ph150.us.i, i32 noundef %i.e) #6 ; 2 uses
+  tail call void @PyEval_RestoreThread(ptr noundef %11) #6
   %i.t = icmp slt i64 %i.s, 0
   br i1 %i.t, label %.lr.ph126.us.i, label %.split.us.split.us170.i
 
-bb.g:                                             ; preds = %.lr.ph126.us.i
+bb.g:                                             ; preds = %13
   store i32 0, ptr %i.f, align 4, !tbaa !7
+  %12 = tail call ptr @PyEval_SaveThread() #6
   %i.u = tail call i64 @getrandom(ptr noundef %.026.ph158.us.i, i64 noundef %.027.ph150.us.i, i32 noundef %i.e) #6 ; 2 uses
+  tail call void @PyEval_RestoreThread(ptr noundef %12) #6
   %i.v = icmp slt i64 %i.u, 0
   br i1 %i.v, label %.lr.ph126.us.i, label %.split.us.split.us170.i
 
 .lr.ph126.us.i:                                   ; preds = %.lr.ph.split.us.split.split.split.us.us.i, %bb.g
   %i.w = load i32, ptr %i.f, align 4, !tbaa !7
-  switch i32 %i.w, label %py_getrandom.exit [
+  switch i32 %i.w, label %.split44.us.i [
     i32 38, label %.split41.us.i
     i32 1, label %.split41.us.i
     i32 11, label %.loopexit
-    i32 4, label %bb.g
+    i32 4, label %13
   ]
 
+13:                                               ; preds = %.lr.ph126.us.i
+  %14 = tail call i32 @PyErr_CheckSignals() #6
+  %.not.us.us95.us.i = icmp eq i32 %14, 0
+  br i1 %.not.us.us95.us.i, label %bb.g, label %py_getrandom.exit
+
 .split149.split.i:                                ; preds = %.split149.i
-  br i1 %.not196.i, label %.lr.ph.split.split.split.us.i, label %.lr.ph.split.split.us.split.us.us.i
+  br i1 %6, label %.lr.ph.split.split.us.split.us.us.i, label %.lr.ph.split.split.split.us.i
 
 .split.split.us.us.i:                             ; preds = %bb.h, %.lr.ph.split.split.us.split.us.us.i
   %.us-phi82.us.i = phi i64 [ %i.aa, %.lr.ph.split.split.us.split.us.us.i ], [ %i.ac, %bb.h ] ; 2 uses
@@ -282,70 +300,52 @@ bb.g:                                             ; preds = %.lr.ph126.us.i
   %.026.ph158.us183.i = phi ptr [ %i.x, %.split.split.us.us.i ], [ %0, %.split149.split.i ] ; 3 uses
   %.027.ph150.us184.i = phi i64 [ %i.y, %.split.split.us.us.i ], [ %1, %.split149.split.i ] ; 3 uses
   store i32 0, ptr %i.f, align 4, !tbaa !7
-  %5 = tail call ptr @PyEval_SaveThread() #6
   %i.aa = tail call i64 @getrandom(ptr noundef %.026.ph158.us183.i, i64 noundef %.027.ph150.us184.i, i32 noundef %i.e) #6 ; 2 uses
-  tail call void @PyEval_RestoreThread(ptr noundef %5) #6
   %i.ab = icmp slt i64 %i.aa, 0
   br i1 %i.ab, label %.lr.ph99.us.i, label %.split.split.us.us.i
 
-bb.h:                                             ; preds = %7
+bb.h:                                             ; preds = %.lr.ph99.us.i
   store i32 0, ptr %i.f, align 4, !tbaa !7
-  %6 = tail call ptr @PyEval_SaveThread() #6
   %i.ac = tail call i64 @getrandom(ptr noundef %.026.ph158.us183.i, i64 noundef %.027.ph150.us184.i, i32 noundef %i.e) #6 ; 2 uses
-  tail call void @PyEval_RestoreThread(ptr noundef %6) #6
   %i.ad = icmp slt i64 %i.ac, 0
   br i1 %i.ad, label %.lr.ph99.us.i, label %.split.split.us.us.i
 
 .lr.ph99.us.i:                                    ; preds = %.lr.ph.split.split.us.split.us.us.i, %bb.h
   %i.ae = load i32, ptr %i.f, align 4, !tbaa !7
-  switch i32 %i.ae, label %.split44.us.i [
+  switch i32 %i.ae, label %py_getrandom.exit [
     i32 38, label %.split41.us.i
     i32 1, label %.split41.us.i
-    i32 4, label %7
+    i32 4, label %bb.h
   ]
-
-7:                                                ; preds = %.lr.ph99.us.i
-  %8 = tail call i32 @PyErr_CheckSignals() #6
-  %.not30.us49.us.us.i = icmp eq i32 %8, 0
-  br i1 %.not30.us49.us.us.i, label %bb.h, label %py_getrandom.exit
 
 .lr.ph.split.split.split.us.i:                    ; preds = %.split149.split.i, %.split.split.i
   %.026.ph158.i = phi ptr [ %i.am, %.split.split.i ], [ %0, %.split149.split.i ] ; 3 uses
   %.027.ph150.i = phi i64 [ %i.an, %.split.split.i ], [ %1, %.split149.split.i ] ; 3 uses
   store i32 0, ptr %i.f, align 4, !tbaa !7
-  %9 = tail call ptr @PyEval_SaveThread() #6
   %i.af = tail call i64 @getrandom(ptr noundef %.026.ph158.i, i64 noundef %.027.ph150.i, i32 noundef %i.e) #6 ; 2 uses
-  tail call void @PyEval_RestoreThread(ptr noundef %9) #6
   %i.ag = icmp slt i64 %i.af, 0
   br i1 %i.ag, label %.lr.ph80.i, label %.split.split.i
 
-bb.i:                                             ; preds = %11
+bb.i:                                             ; preds = %.lr.ph80.i
   store i32 0, ptr %i.f, align 4, !tbaa !7
-  %10 = tail call ptr @PyEval_SaveThread() #6
   %i.ah = tail call i64 @getrandom(ptr noundef %.026.ph158.i, i64 noundef %.027.ph150.i, i32 noundef %i.e) #6 ; 2 uses
-  tail call void @PyEval_RestoreThread(ptr noundef %10) #6
   %i.ai = icmp slt i64 %i.ah, 0
   br i1 %i.ai, label %.lr.ph80.i, label %.split.split.i
 
 .lr.ph80.i:                                       ; preds = %.lr.ph.split.split.split.us.i, %bb.i
   %i.aj = load i32, ptr %i.f, align 4, !tbaa !7
-  switch i32 %i.aj, label %.split44.us.i [
+  switch i32 %i.aj, label %py_getrandom.exit [
     i32 38, label %.split41.us.i
     i32 1, label %.split41.us.i
     i32 11, label %.loopexit
-    i32 4, label %11
+    i32 4, label %bb.i
   ]
 
-11:                                               ; preds = %.lr.ph80.i
-  %12 = tail call i32 @PyErr_CheckSignals() #6
-  %.not30.us58.i = icmp eq i32 %12, 0
-  br i1 %.not30.us58.i, label %bb.i, label %py_getrandom.exit
-
-.split41.us.i:                                    ; preds = %.lr.ph99.us.i, %.lr.ph99.us.i, %.lr.ph80.i, %.lr.ph80.i, %.lr.ph147.us.us.i, %.lr.ph147.us.us.i, %.lr.ph126.us.i, %.lr.ph126.us.i
+.split41.us.i:                                    ; preds = %.lr.ph80.i, %.lr.ph80.i, %.lr.ph99.us.i, %.lr.ph99.us.i, %.lr.ph126.us.i, %.lr.ph126.us.i, %.lr.ph147.us.us.i, %.lr.ph147.us.us.i
   store i1 true, ptr @py_getrandom.getrandom_works, align 4
   br label %.loopexit
 
-.split44.us.i:                                    ; preds = %.lr.ph99.us.i, %.lr.ph80.i
+.split44.us.i:                                    ; preds = %.lr.ph126.us.i, %.lr.ph147.us.us.i
   %i.ak = load ptr, ptr @PyExc_OSError, align 8, !tbaa !11
   %i.al = tail call ptr @PyErr_SetFromErrno(ptr noundef %i.ak) #6 ; 0 uses
   br label %py_getrandom.exit
@@ -513,8 +513,8 @@ bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
   br label %py_getrandom.exit
 
-py_getrandom.exit:                                ; preds = %.split.split.us.us.i, %7, %.split.split.i, %11, %.split.us.split.us.us.us.i, %.lr.ph147.us.us.i, %.split.us.split.us170.i, %.lr.ph126.us.i, %.critedge50.i, %bb.af, %.critedge.thread.i, %bb.ab, %bb.aa, %.split44.us.i, %bb.d, %bb.b, %bb.c
-  %.0 = phi i32 [ 0, %bb.af ], [ -1, %bb.b ], [ 0, %bb.d ], [ 0, %.split.split.i ], [ -1, %bb.c ], [ -1, %7 ], [ 0, %.split.us.split.us.us.us.i ], [ 0, %.split.us.split.us170.i ], [ -1, %.split44.us.i ], [ -1, %bb.ab ], [ -1, %.critedge50.i ], [ -1, %.critedge.thread.i ], [ 0, %bb.aa ], [ -1, %11 ], [ -1, %.lr.ph126.us.i ], [ -1, %.lr.ph147.us.us.i ], [ 0, %.split.split.us.us.i ]
+py_getrandom.exit:                                ; preds = %.split.split.i, %.lr.ph80.i, %.split.split.us.us.i, %.lr.ph99.us.i, %.split.us.split.us170.i, %13, %.split.us.split.us.us.us.i, %9, %.critedge50.i, %bb.af, %.critedge.thread.i, %bb.ab, %bb.aa, %.split44.us.i, %bb.d, %bb.b, %bb.c
+  %.0 = phi i32 [ -1, %.split44.us.i ], [ -1, %bb.b ], [ 0, %bb.d ], [ 0, %bb.af ], [ -1, %bb.c ], [ -1, %13 ], [ -1, %.lr.ph80.i ], [ 0, %.split.us.split.us.us.us.i ], [ 0, %.split.us.split.us170.i ], [ -1, %bb.ab ], [ -1, %.critedge50.i ], [ -1, %.critedge.thread.i ], [ 0, %bb.aa ], [ -1, %.lr.ph99.us.i ], [ -1, %9 ], [ 0, %.split.split.us.us.i ], [ 0, %.split.split.i ]
   ret i32 %.0
 }
 

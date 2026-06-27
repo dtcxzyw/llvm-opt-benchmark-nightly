@@ -201,7 +201,7 @@ bb.w:                                             ; preds = %_RINvXs2_NtNtCsbvkF
   %.pn29.i.i.i.i.i.i = phi { ptr, i32 } [ %lpad.thr_comm.i.i.i.i.i.i, %.thread45.i.i.i.i.i.i ], [ %eh.lpad-body38.i.i.i.i.i.i, %bb.x ], [ %eh.lpad-body38.i.i.i.i.i.i, %.thread31.i.i.i.i.i.i ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.i, i64 256
   %i.dp = load i128, ptr %i.do, align 16, !range !1482, !alias.scope !13996, !noalias !13997, !noundef !3
-  %2 = icmp ne i128 %i.dp, 0
+  %2 = trunc nuw i128 %i.dp to i1
   %or.cond.i.i.i.i.i.i = and i1 %.sroa.04.230.i.i.i.i.i.i, %2
   br i1 %or.cond.i.i.i.i.i.i, label %bb.y, label %.body
 

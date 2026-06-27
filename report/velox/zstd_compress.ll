@@ -201,8 +201,8 @@ ZSTD_allocateChainTable.exit.thread32.i:          ; preds = %ZSTD_allocateChainT
 ZSTD_allocateChainTable.exit.thread.i:            ; preds = %ZSTD_allocateChainTable.exit.thread32.i, %ZSTD_allocateChainTable.exit.i, %.thread
   %i.r = phi i64 [ %i.q, %ZSTD_allocateChainTable.exit.thread32.i ], [ 0, %ZSTD_allocateChainTable.exit.i ], [ 0, %.thread ]
   %i.s = icmp eq i32 %i.h, 3                      ; 2 uses
-  %11 = icmp ne i32 %7, 0
-  %i.t = or i1 %11, %i.s
+  %11 = trunc nuw i32 %7 to i1
+  %i.t = or i1 %i.s, %11
   %i.u = select i1 %i.t, i64 3, i64 4
   %i.v = udiv i64 %i.f, %i.u                      ; 2 uses
   %i.w = shl i64 %i.v, 3
@@ -605,7 +605,7 @@ bb.a:
   %i.a = add i32 %0, -6
   %i.b = icmp ult i32 %i.a, -3
   %i.c = icmp ne i32 %1, 1
-  %.not8 = or i1 %i.b, %i.c
+  %.not8 = or i1 %i.c, %i.b
   %i.d = sext i32 %2 to i64                       ; 2 uses
   %i.e = getelementptr inbounds [24 x i8], ptr @ZSTD_selectBlockCompressor.rowBasedBlockCompressors, i64 %i.d
   %i.f = zext nneg i32 %0 to i64
@@ -1008,9 +1008,9 @@ bb.a:
   br i1 %i.c, label %ZSTD_compress_frameChunk.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.not = icmp ne i32 %5, 0                       ; 2 uses
+  %.not = trunc nuw i32 %5 to i1                  ; 2 uses
   %i.d = icmp eq i32 %i.b, 1
-  %or.cond = and i1 %.not, %i.d
+  %or.cond = and i1 %i.d, %.not
   br i1 %or.cond, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
@@ -1413,7 +1413,7 @@ ZSTD_compressBlock_targetCBlockSize.exit.i:       ; preds = %bb.cf, %ZSTD_noComp
   br i1 %.not138.i, label %bb.cg, label %bb.u, !llvm.loop !258
 
 bb.cg:                                            ; preds = %ZSTD_compressBlock_targetCBlockSize.exit.i
-  %.not139.i = icmp ne i32 %6, 0
+  %.not139.i = trunc nuw i32 %6 to i1
   %i.nv = icmp ugt ptr %i.nt, %.065
   %or.cond.i89 = select i1 %.not139.i, i1 %i.nv, i1 false
   br i1 %or.cond.i89, label %bb.ch, label %bb.ci
@@ -1816,7 +1816,7 @@ ZSTD_copyCDictTableIntoCCtx.exit69.i.i:           ; preds = %.lr.ph.i66.i.i.prol
   %i.in = add i32 %i.il, -6
   %i.io = icmp ult i32 %i.in, -3
   %i.ip = icmp ne i32 %i.im, 1
-  %.not75.i.i = or i1 %i.io, %i.ip
+  %.not75.i.i = or i1 %i.ip, %i.io
   br i1 %.not75.i.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %ZSTD_copyCDictTableIntoCCtx.exit69.i.i
@@ -2219,8 +2219,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 140
   %i.d = load i32, ptr %i.c, align 4, !tbaa !412
   %i.e = icmp eq i32 %i.d, 0
-  %7 = icmp ne i32 %6, 0                          ; 4 uses
-  %.not153 = or i1 %7, %i.e
+  %7 = trunc nuw i32 %6 to i1                     ; 4 uses
+  %.not153 = or i1 %i.e, %7
   br i1 %.not153, label %bb.b, label %ZSTD_allocateChainTable.exit.thread148
 
 bb.b:                                             ; preds = %bb.a
@@ -2623,7 +2623,7 @@ ZSTD_allocateChainTable.exit.i:                   ; preds = %bb.c
   %i.bh = add i32 %i.bc, -3
   %i.bi = icmp ult i32 %i.bh, 3
   %i.bj = icmp eq i32 %i.be, 1
-  %.not8.i.not.i = and i1 %i.bi, %i.bj
+  %.not8.i.not.i = and i1 %i.bj, %i.bi
   br i1 %.not8.i.not.i, label %ZSTD_reduceTable_btlazy2.exit.i, label %ZSTD_allocateChainTable.exit.thread21.i
 
 ZSTD_allocateChainTable.exit.thread21.i:          ; preds = %ZSTD_allocateChainTable.exit.i, %bb.b
@@ -3026,7 +3026,7 @@ bb.x:                                             ; preds = %ZSTD_postProcessSeq
   %i.fk = add i32 %i.fh, -6
   %i.fl = icmp ult i32 %i.fk, -3
   %i.fm = icmp ne i32 %i.fj, 1
-  %.not8.i = or i1 %i.fl, %i.fm
+  %.not8.i = or i1 %i.fm, %i.fl
   %i.fn = getelementptr inbounds nuw [24 x i8], ptr @ZSTD_selectBlockCompressor.rowBasedBlockCompressors, i64 %i.ap
   %i.fo = zext nneg i32 %i.fh to i64
   %i.fp = getelementptr [8 x i8], ptr %i.fn, i64 %i.fo
@@ -3051,7 +3051,7 @@ bb.y:                                             ; preds = %bb.p
   %i.gc = add i32 %i.fz, -6
   %i.gd = icmp ult i32 %i.gc, -3
   %i.ge = icmp ne i32 %i.gb, 1
-  %.not8.i148 = or i1 %i.gd, %i.ge
+  %.not8.i148 = or i1 %i.ge, %i.gd
   %i.gf = getelementptr inbounds nuw [24 x i8], ptr @ZSTD_selectBlockCompressor.rowBasedBlockCompressors, i64 %i.ap
   %i.gg = zext nneg i32 %i.fz to i64
   %i.gh = getelementptr [8 x i8], ptr %i.gf, i64 %i.gg
@@ -3454,12 +3454,12 @@ bb.a:
   %i.f = and i1 %i.e, %i.d                        ; 2 uses
   %i.g = getelementptr i8, ptr %3, i64 28         ; 3 uses
   %.val = load i32, ptr %i.g, align 4, !tbaa !73  ; 3 uses
-  %i.h = add i32 %.val, -1
-  %narrow.i = icmp ult i32 %i.h, 2
-  %8 = icmp ne i32 %7, 0
-  %or.cond = and i1 %8, %narrow.i                 ; 2 uses
-  %spec.select.neg = select i1 %or.cond, i64 -16777214, i64 -3758096382
-  %spec.select = select i1 %or.cond, i64 16777214, i64 3758096382 ; 2 uses
+  %i.h = add i32 %.val, -3
+  %narrow.i = icmp ult i32 %i.h, -2
+  %or.cond.not119 = icmp eq i32 %7, 0
+  %or.cond.not = or i1 %or.cond.not119, %narrow.i ; 2 uses
+  %spec.select.neg = select i1 %or.cond.not, i64 -3758096382, i64 -16777214
+  %spec.select = select i1 %or.cond.not, i64 3758096382, i64 16777214 ; 2 uses
   %i.i = icmp ugt i64 %5, %spec.select
   %i.j = getelementptr inbounds i8, ptr %i.a, i64 %spec.select.neg
   %.093 = tail call i64 @llvm.umin.i64(i64 %5, i64 %spec.select) ; 4 uses

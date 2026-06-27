@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.0130 = phi i32 [ %i.o, %bb.b ], [ 0, %bb.a ]  ; 4 uses
-  %.0129 = phi i32 [ %i.p, %bb.b ], [ 0, %bb.a ]  ; 3 uses
+  %.0129 = phi i32 [ %i.p, %bb.b ], [ 0, %bb.a ]  ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !29
   %.not = icmp eq i32 %i.r, 0
@@ -604,14 +604,15 @@ III_get_side_info_2.exit:                         ; preds = %bb.p, %bb.ae, %bb.r
   %i.ox = icmp eq i32 %i.c, 2
   %i.oy = getelementptr inbounds nuw i8, ptr %3, i64 248
   %i.oz = getelementptr inbounds nuw i8, ptr %i.a, i64 156 ; 11 uses
-  %.not139 = icmp eq i32 %.0130, 0                ; 5 uses
-  %.not140 = icmp eq i32 %.0129, 0
+  %4 = icmp ne i32 %.0130, 0                      ; 2 uses
+  %5 = trunc nuw i32 %.0129 to i1                 ; 2 uses
   %i.pa = sext i32 %i.g to i64
   %i.pb = getelementptr inbounds [144 x i8], ptr @bandInfo, i64 %i.pa ; 8 uses
-  %.0148.v.i = select i1 %.not139, ptr @pow2_1, ptr @pow2_2
-  %.0.v.i = select i1 %.not139, ptr @pow1_1, ptr @pow1_2
-  %tan2_1.tan2_2.i = select i1 %.not139, ptr @tan2_1, ptr @tan2_2
-  %tan1_1.tan1_2.i = select i1 %.not139, ptr @tan1_1, ptr @tan1_2
+  %.not174.i = icmp eq i32 %.0130, 0              ; 4 uses
+  %.0148.v.i = select i1 %.not174.i, ptr @pow2_1, ptr @pow2_2
+  %.0.v.i = select i1 %.not174.i, ptr @pow1_1, ptr @pow1_2
+  %tan2_1.tan2_2.i = select i1 %.not174.i, ptr @tan2_1, ptr @tan2_2
+  %tan1_1.tan1_2.i = select i1 %.not174.i, ptr @tan1_1, ptr @tan1_2
   %i.pc = getelementptr inbounds nuw i8, ptr %i.pb, i64 46 ; 2 uses
   %i.pd = getelementptr inbounds nuw i8, ptr %i.a, i64 236
   %i.pe = getelementptr inbounds nuw i8, ptr %i.pb, i64 88
@@ -619,8 +620,7 @@ III_get_side_info_2.exit:                         ; preds = %bb.p, %bb.ae, %bb.r
   %i.pg = getelementptr inbounds nuw i8, ptr %i.pb, i64 90 ; 3 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %i.pb, i64 114 ; 3 uses
   %i.pi = getelementptr inbounds nuw i8, ptr %i.pb, i64 142 ; 3 uses
-  %4 = or disjoint i32 %.0129, %.0130
-  %or.cond = icmp ne i32 %4, 0
+  %or.cond = or i1 %4, %5
   %i.pj = icmp eq i32 %.0128, 3
   %or.cond4 = select i1 %or.cond, i1 true, i1 %i.pj
   %i.pk = icmp sgt i32 %.0128, -1
@@ -672,7 +672,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %.not138, label %bb.ao, label %.thread
 
 bb.ao:                                            ; preds = %bb.an
-  br i1 %.not139, label %.loopexit176, label %vector.body332
+  br i1 %4, label %vector.body332, label %.loopexit176
 
 vector.body332:                                   ; preds = %bb.ao, %vector.body332
   %index333 = phi i64 [ %index.next338, %vector.body332 ], [ 0, %bb.ao ] ; 3 uses
@@ -697,7 +697,7 @@ vector.body332:                                   ; preds = %bb.ao, %vector.body
   br i1 %i.qd, label %.loopexit176, label %vector.body332, !llvm.loop !56
 
 .loopexit176:                                     ; preds = %vector.body332, %bb.ao
-  br i1 %.not140, label %III_i_stereo.exit, label %bb.ap
+  br i1 %5, label %bb.ap, label %III_i_stereo.exit
 
 bb.ap:                                            ; preds = %.loopexit176
   %i.qe = load i32, ptr %i.q, align 4, !tbaa !29

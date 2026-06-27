@@ -201,9 +201,9 @@ bb.g:                                             ; preds = %bb.f
   %i.aw = ptrtoint ptr %.1 to i64                 ; 2 uses
   %i.ax = sub i64 %i.av, %i.aw
   %i.ay = getelementptr inbounds nuw i8, ptr %.161, i64 %.0 ; 2 uses
-  %5 = icmp ne i32 %4, 0
+  %5 = trunc nuw i32 %4 to i1
   %i.az = icmp slt i64 %i.ax, 16
-  %or.cond.i21 = and i1 %5, %i.az
+  %or.cond.i21 = and i1 %i.az, %5
   br i1 %or.cond.i21, label %.preheader67.preheader, label %bb.h
 
 .preheader67.preheader:                           ; preds = %bb.g
@@ -296,9 +296,9 @@ bb.l:                                             ; preds = %bb.k
   %i.ca = ptrtoint ptr %.1 to i64                 ; 2 uses
   %i.cb = sub i64 %i.by, %i.ca
   %i.cc = getelementptr inbounds i8, ptr %.161, i64 %i.bz
-  %6 = icmp ne i32 %4, 0
+  %6 = trunc nuw i32 %4 to i1
   %i.cd = icmp slt i64 %i.cb, 16
-  %or.cond.i = and i1 %6, %i.cd
+  %or.cond.i = and i1 %i.cd, %6
   br i1 %or.cond.i, label %.preheader65.preheader, label %bb.m
 
 .preheader65.preheader:                           ; preds = %bb.l
