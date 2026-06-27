@@ -201,6 +201,7 @@ _ZN2v88internal8compiler10turboshaft12_GLOBAL__N_112GraphBuilder3MapEPNS1_4NodeE
   %i.mam = load i8, ptr %i.mal, align 4, !range !5, !noundef !6
   %i.man = getelementptr inbounds nuw i8, ptr %0, i64 1160
   %i.mao = load i8, ptr %i.man, align 8, !range !5, !noundef !6
+  %spec.store.select = and i8 %i.mao, %i.mam
   %.sroa.012926.0.insert.insert = select i1 %i.mak, i16 2568, i16 %i.mai
   %i.map = tail call i8 @_ZN2v88internal8compiler10turboshaft20MemoryRepresentation15FromMachineTypeENS0_11MachineTypeE(i16 %.sroa.012926.0.insert.insert) ; 2 uses
   %i.maq = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -243,14 +244,13 @@ bb.asg:                                           ; preds = %bb.ase, %bb.asf, %_
 bb.ash:                                           ; preds = %bb.asg
   %i.mbg = getelementptr inbounds nuw i8, ptr %i.mae, i64 64
   %i.mbh = load i64, ptr %i.mbg, align 8
-  %209 = and i8 %i.mao, %i.mam
-  %210 = icmp ne i8 %209, 0
+  %209 = trunc nuw i8 %spec.store.select to i1
   %i.mbi = getelementptr inbounds nuw i8, ptr %i.mae, i64 4
   %i.mbj = load i32, ptr %i.mbi, align 4
   %i.mbk = getelementptr inbounds nuw i8, ptr %i.mae, i64 34
   %i.mbl = load i8, ptr %i.mbk, align 2
   %i.mbm = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.mbn = tail call i32 @_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE78ENS2_21UniformReducerAdapterIS3_SH_E23ReduceStoreContinuationEJNS2_7OpIndexENS2_15OptionalOpIndexESO_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagEEEESO_DpT1_(ptr noundef nonnull align 8 dereferenceable(816) %i.mbm, i32 %.sroa.0.0.i.i.i8372, i32 -1, i32 %.sroa.01384.0, i8 %spec.select.i8381, i8 %i.map, i8 noundef zeroext %i.mbl, i32 noundef %i.mbj, i8 noundef zeroext 0, i1 noundef zeroext %210, i64 noundef %i.mbh) ; 0 uses
+  %i.mbn = tail call i32 @_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE78ENS2_21UniformReducerAdapterIS3_SH_E23ReduceStoreContinuationEJNS2_7OpIndexENS2_15OptionalOpIndexESO_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagEEEESO_DpT1_(ptr noundef nonnull align 8 dereferenceable(816) %i.mbm, i32 %.sroa.0.0.i.i.i8372, i32 -1, i32 %.sroa.01384.0, i8 %spec.select.i8381, i8 %i.map, i8 noundef zeroext %i.mbl, i32 noundef %i.mbj, i8 noundef zeroext 0, i1 noundef zeroext %209, i64 noundef %i.mbh) ; 0 uses
   br label %.critedge
 
 bb.asi:                                           ; preds = %bb.b, %bb.b
