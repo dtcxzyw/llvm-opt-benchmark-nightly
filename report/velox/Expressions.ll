@@ -201,7 +201,7 @@ bb.bb:                                            ; preds = %bb.b
   %i.iq = load ptr, ptr %i.ip, align 8, !tbaa !31
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 384
   %i.is = load ptr, ptr %i.ir, align 8
-  %i.it = tail call noundef float %i.is(ptr noundef nonnull align 8 dereferenceable(120) %i.ip, i32 noundef %1), !inline_history !265 ; 4 uses
+  %i.it = tail call noundef float %i.is(ptr noundef nonnull align 8 dereferenceable(120) %i.ip, i32 noundef %1), !inline_history !265 ; 5 uses
   store float %i.it, ptr %i.p, align 4, !tbaa !266
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #34
   %i.iu = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -223,8 +223,9 @@ bb.bd:                                            ; preds = %_ZNK8facebook5velox
   unreachable
 
 _ZNK8facebook5velox7Variant5valueILNS0_8TypeKindE5EEERKDav.exit.i.i: ; preds = %_ZNK8facebook5velox7Variant11checkIsKindENS0_8TypeKindE.exit.i.i14.i
-  %i.iy = load float, ptr %i.iw, align 4, !tbaa !266 ; 4 uses
-  store float %i.iy, ptr %i.q, align 4, !tbaa !266
+  %i.iy = load float, ptr %i.iw, align 4, !tbaa !266
+  %.fr.i.i = freeze float %i.iy                   ; 5 uses
+  store float %.fr.i.i, ptr %i.q, align 4, !tbaa !266
   %i.iz = load ptr, ptr %0, align 8, !tbaa !195
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 8
   %i.jb = load ptr, ptr %i.ja, align 8, !tbaa !26 ; 2 uses
@@ -248,16 +249,16 @@ bb.be:                                            ; preds = %_ZNK8facebook5velox
   br label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE5EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i
 
 bb.bf:                                            ; preds = %_ZNK8facebook5velox7Variant5valueILNS0_8TypeKindE5EEERKDav.exit.i.i
-  %38 = fcmp ord float %i.it, 0.000000e+00        ; 2 uses
-  %i.ji = fcmp ord float %i.iy, 0.000000e+00      ; 2 uses
+  %38 = fcmp uno float %i.it, 0.000000e+00
+  %i.ji = fcmp ord float %.fr.i.i, 0.000000e+00
   %i.jj = zext i1 %i.ji to i32
-  %.010.i.i.i = select i1 %38, i32 -1, i32 %i.jj
-  %.0.i.not.i.i = select i1 %38, i1 %i.ji, i1 false
-  br i1 %.0.i.not.i.i, label %bb.bg, label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE5EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i
+  %.010.i.i.i = select i1 %38, i32 %i.jj, i32 -1
+  %.0.i.i.i = fcmp ord float %i.it, %.fr.i.i
+  br i1 %.0.i.i.i, label %bb.bg, label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE5EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.jk = fcmp olt float %i.it, %i.iy
-  %i.jl = fcmp une float %i.it, %i.iy
+  %i.jk = fcmp olt float %i.it, %.fr.i.i
+  %i.jl = fcmp une float %i.it, %.fr.i.i
   %i.jm = zext i1 %i.jl to i32
   %i.jn = select i1 %i.jk, i32 -1, i32 %i.jm
   br label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE5EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i
@@ -275,7 +276,7 @@ bb.bh:                                            ; preds = %bb.b
   %i.jr = load ptr, ptr %i.jq, align 8, !tbaa !31
   %i.js = getelementptr inbounds nuw i8, ptr %i.jr, i64 384
   %i.jt = load ptr, ptr %i.js, align 8
-  %i.ju = tail call noundef double %i.jt(ptr noundef nonnull align 8 dereferenceable(136) %i.jq, i32 noundef %1), !inline_history !270 ; 4 uses
+  %i.ju = tail call noundef double %i.jt(ptr noundef nonnull align 8 dereferenceable(136) %i.jq, i32 noundef %1), !inline_history !270 ; 5 uses
   store double %i.ju, ptr %i.m, align 8, !tbaa !91
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #34
   %i.jv = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -297,8 +298,9 @@ bb.bj:                                            ; preds = %_ZNK8facebook5velox
   unreachable
 
 _ZNK8facebook5velox7Variant5valueILNS0_8TypeKindE6EEERKDav.exit.i.i: ; preds = %_ZNK8facebook5velox7Variant11checkIsKindENS0_8TypeKindE.exit.i.i16.i
-  %i.jz = load double, ptr %i.jx, align 8, !tbaa !91 ; 4 uses
-  store double %i.jz, ptr %i.n, align 8, !tbaa !91
+  %i.jz = load double, ptr %i.jx, align 8, !tbaa !91
+  %.fr.i17.i = freeze double %i.jz                ; 5 uses
+  store double %.fr.i17.i, ptr %i.n, align 8, !tbaa !91
   %i.ka = load ptr, ptr %0, align 8, !tbaa !195
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 8
   %i.kc = load ptr, ptr %i.kb, align 8, !tbaa !26 ; 2 uses
@@ -322,16 +324,16 @@ bb.bk:                                            ; preds = %_ZNK8facebook5velox
   br label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE6EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i
 
 bb.bl:                                            ; preds = %_ZNK8facebook5velox7Variant5valueILNS0_8TypeKindE6EEERKDav.exit.i.i
-  %39 = fcmp ord double %i.ju, 0.000000e+00       ; 2 uses
-  %i.kj = fcmp ord double %i.jz, 0.000000e+00     ; 2 uses
+  %39 = fcmp uno double %i.ju, 0.000000e+00
+  %i.kj = fcmp ord double %.fr.i17.i, 0.000000e+00
   %i.kk = zext i1 %i.kj to i32
-  %.010.i.i17.i = select i1 %39, i32 -1, i32 %i.kk
-  %.0.i.not.i18.i = select i1 %39, i1 %i.kj, i1 false
-  br i1 %.0.i.not.i18.i, label %bb.bm, label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE6EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i
+  %.010.i.i17.i = select i1 %39, i32 %i.kk, i32 -1
+  %.0.i.i19.i = fcmp ord double %i.ju, %.fr.i17.i
+  br i1 %.0.i.i19.i, label %bb.bm, label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE6EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.kl = fcmp olt double %i.ju, %i.jz
-  %i.km = fcmp une double %i.ju, %i.jz
+  %i.kl = fcmp olt double %i.ju, %.fr.i17.i
+  %i.km = fcmp une double %i.ju, %.fr.i17.i
   %i.kn = zext i1 %i.km to i32
   %i.ko = select i1 %i.kl, i32 -1, i32 %i.kn
   br label %_ZN8facebook5velox4core12_GLOBAL__N_113equalsNoNullsILNS0_8TypeKindE6EEEbRKSt10shared_ptrINS0_10BaseVectorEEiRKNS0_7VariantE.exit.i

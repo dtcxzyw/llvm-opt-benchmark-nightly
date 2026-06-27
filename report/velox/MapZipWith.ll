@@ -201,13 +201,14 @@ bb.q:                                             ; preds = %bb.x, %.lr.ph.i
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !2041
   %i.fs = sext i32 %i.fl to i64
   %i.ft = getelementptr inbounds [4 x i8], ptr %i.fr, i64 %i.fs
-  %i.fu = load float, ptr %i.ft, align 4, !tbaa !2050 ; 4 uses
+  %i.fu = load float, ptr %i.ft, align 4, !tbaa !2050 ; 5 uses
   store float %i.fu, ptr %i.b, align 4, !tbaa !2050
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   %i.fv = sext i32 %i.fo to i64
   %i.fw = getelementptr inbounds [4 x i8], ptr %.val62.val.val.i, i64 %i.fv
-  %i.fx = load float, ptr %i.fw, align 4, !tbaa !2050 ; 4 uses
-  store float %i.fx, ptr %i.c, align 4, !tbaa !2050
+  %i.fx = load float, ptr %i.fw, align 4, !tbaa !2050
+  %.fr.i.i.i = freeze float %i.fx                 ; 5 uses
+  store float %.fr.i.i.i, ptr %i.c, align 4, !tbaa !2050
   %i.fy = getelementptr inbounds nuw i8, ptr %.val.val.i, i64 25
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !969, !range !71, !noundef !72
   %i.ga = trunc nuw i8 %i.fz to i1
@@ -228,16 +229,16 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
 bb.s:                                             ; preds = %bb.q
-  %3 = fcmp ord float %i.fu, 0.000000e+00         ; 2 uses
-  %i.ge = fcmp ord float %i.fx, 0.000000e+00      ; 2 uses
+  %3 = fcmp uno float %i.fu, 0.000000e+00
+  %i.ge = fcmp ord float %.fr.i.i.i, 0.000000e+00
   %i.gf = zext i1 %i.ge to i32
-  %.010.i.i.i.i = select i1 %3, i32 -1, i32 %i.gf
-  %.0.i.not.i.i.i = select i1 %3, i1 %i.ge, i1 false
-  br i1 %.0.i.not.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
+  %.010.i.i.i.i = select i1 %3, i32 %i.gf, i32 -1
+  %.0.i.i.i.i = fcmp ord float %i.fu, %.fr.i.i.i
+  br i1 %.0.i.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.gg = fcmp olt float %i.fu, %i.fx
-  %i.gh = fcmp une float %i.fu, %i.fx
+  %i.gg = fcmp olt float %i.fu, %.fr.i.i.i
+  %i.gh = fcmp une float %i.fu, %.fr.i.i.i
   %i.gi = zext i1 %i.gh to i32
   br i1 %i.gg, label %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
@@ -640,15 +641,16 @@ bb.q:                                             ; preds = %bb.x, %.lr.ph.i
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !2041
   %i.gb = sext i32 %i.fu to i64
   %i.gc = getelementptr inbounds [4 x i8], ptr %i.ga, i64 %i.gb
-  %i.gd = load float, ptr %i.gc, align 4, !tbaa !2050 ; 4 uses
+  %i.gd = load float, ptr %i.gc, align 4, !tbaa !2050 ; 5 uses
   store float %i.gd, ptr %i.b, align 4, !tbaa !2050
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fq, i64 128
   %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !2041
   %i.gg = sext i32 %i.fy to i64
   %i.gh = getelementptr inbounds [4 x i8], ptr %i.gf, i64 %i.gg
-  %i.gi = load float, ptr %i.gh, align 4, !tbaa !2050 ; 4 uses
-  store float %i.gi, ptr %i.c, align 4, !tbaa !2050
+  %i.gi = load float, ptr %i.gh, align 4, !tbaa !2050
+  %.fr.i.i.i = freeze float %i.gi                 ; 5 uses
+  store float %.fr.i.i.i, ptr %i.c, align 4, !tbaa !2050
   %i.gj = getelementptr inbounds nuw i8, ptr %i.fp, i64 25
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !969, !range !71, !noundef !72
   %i.gl = trunc nuw i8 %i.gk to i1
@@ -669,16 +671,16 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 
 bb.s:                                             ; preds = %bb.q
-  %3 = fcmp ord float %i.gd, 0.000000e+00         ; 2 uses
-  %i.gp = fcmp ord float %i.gi, 0.000000e+00      ; 2 uses
+  %3 = fcmp uno float %i.gd, 0.000000e+00
+  %i.gp = fcmp ord float %.fr.i.i.i, 0.000000e+00
   %i.gq = zext i1 %i.gp to i32
-  %.010.i.i.i.i = select i1 %3, i32 -1, i32 %i.gq
-  %.0.i.not.i.i.i = select i1 %3, i1 %i.gp, i1 false
-  br i1 %.0.i.not.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
+  %.010.i.i.i.i = select i1 %3, i32 %i.gq, i32 -1
+  %.0.i.i.i.i = fcmp ord float %i.gd, %.fr.i.i.i
+  br i1 %.0.i.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.gr = fcmp olt float %i.gd, %i.gi
-  %i.gs = fcmp une float %i.gd, %i.gi
+  %i.gr = fcmp olt float %i.gd, %.fr.i.i.i
+  %i.gs = fcmp une float %i.gd, %.fr.i.i.i
   %i.gt = zext i1 %i.gs to i32
   br i1 %i.gr, label %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE5EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 
@@ -1081,13 +1083,14 @@ bb.q:                                             ; preds = %bb.x, %.lr.ph.i
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !2173
   %i.fs = sext i32 %i.fl to i64
   %i.ft = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %i.fs
-  %i.fu = load double, ptr %i.ft, align 8, !tbaa !2182 ; 4 uses
+  %i.fu = load double, ptr %i.ft, align 8, !tbaa !2182 ; 5 uses
   store double %i.fu, ptr %i.b, align 8, !tbaa !2182
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   %i.fv = sext i32 %i.fo to i64
   %i.fw = getelementptr inbounds [8 x i8], ptr %.val62.val.val.i, i64 %i.fv
-  %i.fx = load double, ptr %i.fw, align 8, !tbaa !2182 ; 4 uses
-  store double %i.fx, ptr %i.c, align 8, !tbaa !2182
+  %i.fx = load double, ptr %i.fw, align 8, !tbaa !2182
+  %.fr.i.i.i = freeze double %i.fx                ; 5 uses
+  store double %.fr.i.i.i, ptr %i.c, align 8, !tbaa !2182
   %i.fy = getelementptr inbounds nuw i8, ptr %.val.val.i, i64 25
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !969, !range !71, !noundef !72
   %i.ga = trunc nuw i8 %i.fz to i1
@@ -1108,16 +1111,16 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
 bb.s:                                             ; preds = %bb.q
-  %3 = fcmp ord double %i.fu, 0.000000e+00        ; 2 uses
-  %i.ge = fcmp ord double %i.fx, 0.000000e+00     ; 2 uses
+  %3 = fcmp uno double %i.fu, 0.000000e+00
+  %i.ge = fcmp ord double %.fr.i.i.i, 0.000000e+00
   %i.gf = zext i1 %i.ge to i32
-  %.010.i.i.i.i = select i1 %3, i32 -1, i32 %i.gf
-  %.0.i.not.i.i.i = select i1 %3, i1 %i.ge, i1 false
-  br i1 %.0.i.not.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
+  %.010.i.i.i.i = select i1 %3, i32 %i.gf, i32 -1
+  %.0.i.i.i.i = fcmp ord double %i.fu, %.fr.i.i.i
+  br i1 %.0.i.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.gg = fcmp olt double %i.fu, %i.fx
-  %i.gh = fcmp une double %i.fu, %i.fx
+  %i.gg = fcmp olt double %i.fu, %.fr.i.i.i
+  %i.gh = fcmp une double %i.fu, %.fr.i.i.i
   %i.gi = zext i1 %i.gh to i32
   br i1 %i.gg, label %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
@@ -1520,15 +1523,16 @@ bb.q:                                             ; preds = %bb.x, %.lr.ph.i
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !2173
   %i.gb = sext i32 %i.fu to i64
   %i.gc = getelementptr inbounds [8 x i8], ptr %i.ga, i64 %i.gb
-  %i.gd = load double, ptr %i.gc, align 8, !tbaa !2182 ; 4 uses
+  %i.gd = load double, ptr %i.gc, align 8, !tbaa !2182 ; 5 uses
   store double %i.gd, ptr %i.b, align 8, !tbaa !2182
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fq, i64 144
   %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !2173
   %i.gg = sext i32 %i.fy to i64
   %i.gh = getelementptr inbounds [8 x i8], ptr %i.gf, i64 %i.gg
-  %i.gi = load double, ptr %i.gh, align 8, !tbaa !2182 ; 4 uses
-  store double %i.gi, ptr %i.c, align 8, !tbaa !2182
+  %i.gi = load double, ptr %i.gh, align 8, !tbaa !2182
+  %.fr.i.i.i = freeze double %i.gi                ; 5 uses
+  store double %.fr.i.i.i, ptr %i.c, align 8, !tbaa !2182
   %i.gj = getelementptr inbounds nuw i8, ptr %i.fp, i64 25
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !969, !range !71, !noundef !72
   %i.gl = trunc nuw i8 %i.gk to i1
@@ -1549,16 +1553,16 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 
 bb.s:                                             ; preds = %bb.q
-  %3 = fcmp ord double %i.gd, 0.000000e+00        ; 2 uses
-  %i.gp = fcmp ord double %i.gi, 0.000000e+00     ; 2 uses
+  %3 = fcmp uno double %i.gd, 0.000000e+00
+  %i.gp = fcmp ord double %.fr.i.i.i, 0.000000e+00
   %i.gq = zext i1 %i.gp to i32
-  %.010.i.i.i.i = select i1 %3, i32 -1, i32 %i.gq
-  %.0.i.not.i.i.i = select i1 %3, i1 %i.gp, i1 false
-  br i1 %.0.i.not.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
+  %.010.i.i.i.i = select i1 %3, i32 %i.gq, i32 -1
+  %.0.i.i.i.i = fcmp ord double %i.gd, %.fr.i.i.i
+  br i1 %.0.i.i.i.i, label %bb.t, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.gr = fcmp olt double %i.gd, %i.gi
-  %i.gs = fcmp une double %i.gd, %i.gi
+  %i.gr = fcmp olt double %i.gd, %.fr.i.i.i
+  %i.gs = fcmp une double %i.gd, %.fr.i.i.i
   %i.gt = zext i1 %i.gs to i32
   br i1 %i.gr, label %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE6EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 

@@ -201,18 +201,19 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 152
-  %i.ad = load float, ptr %i.ab, align 8, !tbaa !2585 ; 3 uses
-  %6 = fcmp ord float %i.ad, 0.000000e+00         ; 2 uses
-  %i.ae = load float, ptr %i.ac, align 4, !tbaa !2585 ; 3 uses
-  %i.af = fcmp ord float %i.ae, 0.000000e+00      ; 2 uses
+  %i.ad = load float, ptr %i.ab, align 8, !tbaa !2585 ; 4 uses
+  %6 = fcmp uno float %i.ad, 0.000000e+00
+  %i.ae = load float, ptr %i.ac, align 4, !tbaa !2585
+  %.fr = freeze float %i.ae                       ; 4 uses
+  %i.af = fcmp ord float %.fr, 0.000000e+00
   %i.ag = zext i1 %i.af to i32
-  %.010.i = select i1 %6, i32 -1, i32 %i.ag
-  %.0.i.not = select i1 %6, i1 %i.af, i1 false
-  br i1 %.0.i.not, label %bb.o, label %_ZN8facebook5velox12SimpleVectorIfE19comparePrimitiveAscERKfS4_.exit
+  %.010.i = select i1 %6, i32 %i.ag, i32 -1
+  %.0.i = fcmp ord float %i.ad, %.fr
+  br i1 %.0.i, label %bb.o, label %_ZN8facebook5velox12SimpleVectorIfE19comparePrimitiveAscERKfS4_.exit
 
 bb.o:                                             ; preds = %bb.n
-  %i.ah = fcmp olt float %i.ad, %i.ae
-  %i.ai = fcmp une float %i.ad, %i.ae
+  %i.ah = fcmp olt float %i.ad, %.fr
+  %i.ai = fcmp une float %i.ad, %.fr
   %i.aj = zext i1 %i.ai to i32
   %i.ak = select i1 %i.ah, i32 -1, i32 %i.aj
   br label %_ZN8facebook5velox12SimpleVectorIfE19comparePrimitiveAscERKfS4_.exit
@@ -615,18 +616,19 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 168
-  %i.ad = load double, ptr %i.ab, align 8, !tbaa !2801 ; 3 uses
-  %6 = fcmp ord double %i.ad, 0.000000e+00        ; 2 uses
-  %i.ae = load double, ptr %i.ac, align 8, !tbaa !2801 ; 3 uses
-  %i.af = fcmp ord double %i.ae, 0.000000e+00     ; 2 uses
+  %i.ad = load double, ptr %i.ab, align 8, !tbaa !2801 ; 4 uses
+  %6 = fcmp uno double %i.ad, 0.000000e+00
+  %i.ae = load double, ptr %i.ac, align 8, !tbaa !2801
+  %.fr = freeze double %i.ae                      ; 4 uses
+  %i.af = fcmp ord double %.fr, 0.000000e+00
   %i.ag = zext i1 %i.af to i32
-  %.010.i = select i1 %6, i32 -1, i32 %i.ag
-  %.0.i.not = select i1 %6, i1 %i.af, i1 false
-  br i1 %.0.i.not, label %bb.o, label %_ZN8facebook5velox12SimpleVectorIdE19comparePrimitiveAscERKdS4_.exit
+  %.010.i = select i1 %6, i32 %i.ag, i32 -1
+  %.0.i = fcmp ord double %i.ad, %.fr
+  br i1 %.0.i, label %bb.o, label %_ZN8facebook5velox12SimpleVectorIdE19comparePrimitiveAscERKdS4_.exit
 
 bb.o:                                             ; preds = %bb.n
-  %i.ah = fcmp olt double %i.ad, %i.ae
-  %i.ai = fcmp une double %i.ad, %i.ae
+  %i.ah = fcmp olt double %i.ad, %.fr
+  %i.ai = fcmp une double %i.ad, %.fr
   %i.aj = zext i1 %i.ai to i32
   %i.ak = select i1 %i.ah, i32 -1, i32 %i.aj
   br label %_ZN8facebook5velox12SimpleVectorIdE19comparePrimitiveAscERKdS4_.exit
