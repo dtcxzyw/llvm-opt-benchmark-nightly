@@ -201,18 +201,17 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal ptr @cmath_isnan(ptr nofree readnone captures(none) %0, ptr noundef %1) #0 {
 bb.a:
-  %i.a = tail call { double, double } @PyComplex_AsCComplex(ptr noundef %1) #7 ; 2 uses
+  %i.a = tail call { double, double } @PyComplex_AsCComplex(ptr noundef %1) #7
   %i.b = tail call ptr @PyErr_Occurred() #7
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = extractvalue { double, double } %i.a, 1
-  %3 = extractvalue { double, double } %i.a, 0
-  %4 = fcmp uno double %3, 0.000000e+00
-  %i.c = fcmp uno double %2, 0.000000e+00
-  %5 = select i1 %4, i1 true, i1 %i.c
-  %i.d = zext i1 %5 to i64
+  %.fr = freeze { double, double } %i.a           ; 2 uses
+  %2 = extractvalue { double, double } %.fr, 1
+  %3 = extractvalue { double, double } %.fr, 0
+  %i.c = fcmp uno double %3, %2
+  %i.d = zext i1 %i.c to i64
   %i.e = tail call ptr @PyBool_FromLong(i64 noundef %i.d) #7
   br label %bb.c
 

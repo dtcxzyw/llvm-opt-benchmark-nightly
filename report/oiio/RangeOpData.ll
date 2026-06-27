@@ -201,11 +201,10 @@ bb.a:
   %3 = alloca %"class.std::shared_ptr", align 8   ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.b = load double, ptr %i.a, align 8, !tbaa !35
-  %4 = fcmp uno double %i.b, 0.000000e+00
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 176
   %i.d = load double, ptr %i.c, align 8
-  %5 = fcmp uno double %i.d, 0.000000e+00
-  %or.cond = select i1 %4, i1 true, i1 %5
+  %.fr = freeze double %i.d
+  %or.cond = fcmp uno double %i.b, %.fr
   br i1 %or.cond, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
