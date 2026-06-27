@@ -201,11 +201,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIdEEEC2EPKNS0_13DecodedVectorE.e
   %i.bn = load ptr, ptr %i.av, align 8, !tbaa !4941, !nonnull !797, !align !916
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 56
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.bp to i1
-  %14 = select i1 %13, i8 1, i8 %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !20531, !range !796, !noundef !797
-  %i.bs = or i8 %14, %i.br                        ; 2 uses
+  %13 = or i8 %i.bp, %i.br
+  %i.bs = or i8 %13, %i.bl                        ; 2 uses
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !20531
   %i.bt = trunc nuw i8 %i.bs to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -608,11 +607,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1526, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !41645, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !41645
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -1015,11 +1013,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3232, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !41873, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !41873
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -1422,11 +1419,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3586, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !42101, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !42101
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -1829,11 +1825,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3944, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !42329, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !42329
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -2236,11 +2231,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !4306, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !42557, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !42557
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -2643,11 +2637,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !4623, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !42785, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !42785
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -3050,11 +3043,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !4941, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !42965, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !42965
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -3457,11 +3449,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !43197, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !43165, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !43165
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -3864,11 +3855,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !43476, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.i to i1
-  %14 = select i1 %13, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !43444, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %14                          ; 2 uses
+  %13 = or i8 %i.i, %i.k
+  %i.l = or i8 %13, %i.d                          ; 2 uses
   store i8 %i.l, ptr %i.j, align 1, !tbaa !43444
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -4271,11 +4261,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !1526, !nonnull !797, !align !916
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.k = load i8, ptr %i.j, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.k to i1
-  %14 = select i1 %13, i8 1, i8 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !43704, !range !796, !noundef !797
-  %i.n = or i8 %i.m, %14                          ; 2 uses
+  %13 = or i8 %i.k, %i.m
+  %i.n = or i8 %13, %i.f                          ; 2 uses
   store i8 %i.n, ptr %i.l, align 1, !tbaa !43704
   %i.o = trunc nuw i8 %i.n to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -4678,11 +4667,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !3232, !nonnull !797, !align !916
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.k = load i8, ptr %i.j, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.k to i1
-  %14 = select i1 %13, i8 1, i8 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !43908, !range !796, !noundef !797
-  %i.n = or i8 %i.m, %14                          ; 2 uses
+  %13 = or i8 %i.k, %i.m
+  %i.n = or i8 %13, %i.f                          ; 2 uses
   store i8 %i.n, ptr %i.l, align 1, !tbaa !43908
   %i.o = trunc nuw i8 %i.n to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -5085,11 +5073,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !3586, !nonnull !797, !align !916
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.k = load i8, ptr %i.j, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.k to i1
-  %14 = select i1 %13, i8 1, i8 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !44112, !range !796, !noundef !797
-  %i.n = or i8 %i.m, %14                          ; 2 uses
+  %13 = or i8 %i.k, %i.m
+  %i.n = or i8 %13, %i.f                          ; 2 uses
   store i8 %i.n, ptr %i.l, align 1, !tbaa !44112
   %i.o = trunc nuw i8 %i.n to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -5492,11 +5479,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !3944, !nonnull !797, !align !916
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.k = load i8, ptr %i.j, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.k to i1
-  %14 = select i1 %13, i8 1, i8 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !44316, !range !796, !noundef !797
-  %i.n = or i8 %i.m, %14                          ; 2 uses
+  %13 = or i8 %i.k, %i.m
+  %i.n = or i8 %13, %i.f                          ; 2 uses
   store i8 %i.n, ptr %i.l, align 1, !tbaa !44316
   %i.o = trunc nuw i8 %i.n to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -5899,11 +5885,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !4306, !nonnull !797, !align !916
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.k = load i8, ptr %i.j, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.k to i1
-  %14 = select i1 %13, i8 1, i8 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !44520, !range !796, !noundef !797
-  %i.n = or i8 %i.m, %14                          ; 2 uses
+  %13 = or i8 %i.k, %i.m
+  %i.n = or i8 %13, %i.f                          ; 2 uses
   store i8 %i.n, ptr %i.l, align 1, !tbaa !44520
   %i.o = trunc nuw i8 %i.n to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -6306,11 +6291,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !5518, !nonnull !797, !align !916
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.k = load i8, ptr %i.j, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.k to i1
-  %14 = select i1 %13, i8 1, i8 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !44724, !range !796, !noundef !797
-  %i.n = or i8 %i.m, %14                          ; 2 uses
+  %13 = or i8 %i.k, %i.m
+  %i.n = or i8 %13, %i.f                          ; 2 uses
   store i8 %i.n, ptr %i.l, align 1, !tbaa !44724
   %i.o = trunc nuw i8 %i.n to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -6713,11 +6697,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !19304, !nonnull !797, !align !916
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
   %i.k = load i8, ptr %i.j, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.k to i1
-  %14 = select i1 %13, i8 1, i8 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 49 ; 3 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !45072, !range !796, !noundef !797
-  %i.n = or i8 %i.m, %14                          ; 2 uses
+  %13 = or i8 %i.k, %i.m
+  %i.n = or i8 %13, %i.f                          ; 2 uses
   store i8 %i.n, ptr %i.l, align 1, !tbaa !45072
   %i.o = trunc nuw i8 %i.n to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -7120,16 +7103,15 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1526, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !48451, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !20748
   %i.o = icmp ne ptr %i.n, null
   %i.p = zext i1 %i.o to i8
-  %i.q = or i8 %i.l, %i.p                         ; 2 uses
+  %14 = or i8 %i.l, %i.p
+  %i.q = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.q, ptr %i.j, align 1, !tbaa !48451
   %i.r = trunc nuw i8 %i.q to i1
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -7532,15 +7514,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1526, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !48451, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = load ptr, ptr %3, align 8, !tbaa !1531, !nonnull !797, !align !916
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.o = load i8, ptr %i.n, align 8, !tbaa !1546, !range !796, !noundef !797
-  %i.p = or i8 %i.o, %i.l                         ; 2 uses
+  %14 = or i8 %i.l, %i.o
+  %i.p = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.p, ptr %i.j, align 1, !tbaa !48451
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -7943,16 +7924,15 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3232, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !48846, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !21027
   %i.o = icmp ne ptr %i.n, null
   %i.p = zext i1 %i.o to i8
-  %i.q = or i8 %i.l, %i.p                         ; 2 uses
+  %14 = or i8 %i.l, %i.p
+  %i.q = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.q, ptr %i.j, align 1, !tbaa !48846
   %i.r = trunc nuw i8 %i.q to i1
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -8355,15 +8335,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3232, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !48846, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = load ptr, ptr %3, align 8, !tbaa !3233, !nonnull !797, !align !916
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.o = load i8, ptr %i.n, align 8, !tbaa !1546, !range !796, !noundef !797
-  %i.p = or i8 %i.o, %i.l                         ; 2 uses
+  %14 = or i8 %i.l, %i.o
+  %i.p = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.p, ptr %i.j, align 1, !tbaa !48846
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -8766,16 +8745,15 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3586, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !49241, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !21306
   %i.o = icmp ne ptr %i.n, null
   %i.p = zext i1 %i.o to i8
-  %i.q = or i8 %i.l, %i.p                         ; 2 uses
+  %14 = or i8 %i.l, %i.p
+  %i.q = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.q, ptr %i.j, align 1, !tbaa !49241
   %i.r = trunc nuw i8 %i.q to i1
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -9178,15 +9156,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3586, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !49241, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = load ptr, ptr %3, align 8, !tbaa !3587, !nonnull !797, !align !916
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.o = load i8, ptr %i.n, align 8, !tbaa !1546, !range !796, !noundef !797
-  %i.p = or i8 %i.o, %i.l                         ; 2 uses
+  %14 = or i8 %i.l, %i.o
+  %i.p = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.p, ptr %i.j, align 1, !tbaa !49241
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -9589,16 +9566,15 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3944, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !49636, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !21585
   %i.o = icmp ne ptr %i.n, null
   %i.p = zext i1 %i.o to i8
-  %i.q = or i8 %i.l, %i.p                         ; 2 uses
+  %14 = or i8 %i.l, %i.p
+  %i.q = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.q, ptr %i.j, align 1, !tbaa !49636
   %i.r = trunc nuw i8 %i.q to i1
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -10001,15 +9977,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !3944, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !49636, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = load ptr, ptr %3, align 8, !tbaa !3945, !nonnull !797, !align !916
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.o = load i8, ptr %i.n, align 8, !tbaa !1546, !range !796, !noundef !797
-  %i.p = or i8 %i.o, %i.l                         ; 2 uses
+  %14 = or i8 %i.l, %i.o
+  %i.p = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.p, ptr %i.j, align 1, !tbaa !49636
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -10412,16 +10387,15 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !4623, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !50031, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !22144
   %i.o = icmp ne ptr %i.n, null
   %i.p = zext i1 %i.o to i8
-  %i.q = or i8 %i.l, %i.p                         ; 2 uses
+  %14 = or i8 %i.l, %i.p
+  %i.q = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.q, ptr %i.j, align 1, !tbaa !50031
   %i.r = trunc nuw i8 %i.q to i1
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -10824,15 +10798,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !4623, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !50031, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = load ptr, ptr %3, align 8, !tbaa !4624, !nonnull !797, !align !916
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.o = load i8, ptr %i.n, align 8, !tbaa !1546, !range !796, !noundef !797
-  %i.p = or i8 %i.o, %i.l                         ; 2 uses
+  %14 = or i8 %i.l, %i.o
+  %i.p = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.p, ptr %i.j, align 1, !tbaa !50031
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -11235,16 +11208,15 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !4941, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !50588, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !22423
   %i.o = icmp ne ptr %i.n, null
   %i.p = zext i1 %i.o to i8
-  %i.q = or i8 %i.l, %i.p                         ; 2 uses
+  %14 = or i8 %i.l, %i.p
+  %i.q = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.q, ptr %i.j, align 1, !tbaa !50588
   %i.r = trunc nuw i8 %i.q to i1
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -11647,15 +11619,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !4941, !nonnull !797, !align !916
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i8, ptr %i.h, align 8, !tbaa !1546, !range !796, !noundef !797
-  %14 = trunc nuw i8 %i.i to i1
-  %15 = select i1 %14, i8 1, i8 %i.d
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 121 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !50588, !range !796, !noundef !797
-  %i.l = or i8 %i.k, %15
+  %i.l = or i8 %i.i, %i.k
   %i.m = load ptr, ptr %3, align 8, !tbaa !4942, !nonnull !797, !align !916
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.o = load i8, ptr %i.n, align 8, !tbaa !1546, !range !796, !noundef !797
-  %i.p = or i8 %i.o, %i.l                         ; 2 uses
+  %14 = or i8 %i.l, %i.o
+  %i.p = or i8 %14, %i.d                          ; 2 uses
   store i8 %i.p, ptr %i.j, align 1, !tbaa !50588
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -12058,11 +12029,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIaEEEC2EPKNS0_13DecodedVectorE.e
   %i.bn = load ptr, ptr %i.av, align 8, !tbaa !1526, !nonnull !797, !align !916
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 56
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.bp to i1
-  %14 = select i1 %13, i8 1, i8 %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !53696, !range !796, !noundef !797
-  %i.bs = or i8 %14, %i.br                        ; 2 uses
+  %13 = or i8 %i.bp, %i.br
+  %i.bs = or i8 %13, %i.bl                        ; 2 uses
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !53696
   %i.bt = trunc nuw i8 %i.bs to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -12465,11 +12435,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIsEEEC2EPKNS0_13DecodedVectorE.e
   %i.bn = load ptr, ptr %i.av, align 8, !tbaa !3232, !nonnull !797, !align !916
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 56
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.bp to i1
-  %14 = select i1 %13, i8 1, i8 %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !53834, !range !796, !noundef !797
-  %i.bs = or i8 %14, %i.br                        ; 2 uses
+  %13 = or i8 %i.bp, %i.br
+  %i.bs = or i8 %13, %i.bl                        ; 2 uses
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !53834
   %i.bt = trunc nuw i8 %i.bs to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -12872,11 +12841,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIiEEEC2EPKNS0_13DecodedVectorE.e
   %i.bn = load ptr, ptr %i.av, align 8, !tbaa !3586, !nonnull !797, !align !916
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 56
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.bp to i1
-  %14 = select i1 %13, i8 1, i8 %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !53972, !range !796, !noundef !797
-  %i.bs = or i8 %14, %i.br                        ; 2 uses
+  %13 = or i8 %i.bp, %i.br
+  %i.bs = or i8 %13, %i.bl                        ; 2 uses
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !53972
   %i.bt = trunc nuw i8 %i.bs to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -13279,11 +13247,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIlEEEC2EPKNS0_13DecodedVectorE.e
   %i.bn = load ptr, ptr %i.av, align 8, !tbaa !3944, !nonnull !797, !align !916
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 56
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.bp to i1
-  %14 = select i1 %13, i8 1, i8 %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !54110, !range !796, !noundef !797
-  %i.bs = or i8 %14, %i.br                        ; 2 uses
+  %13 = or i8 %i.bp, %i.br
+  %i.bs = or i8 %13, %i.bl                        ; 2 uses
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !54110
   %i.bt = trunc nuw i8 %i.bs to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -13686,11 +13653,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIfEEEC2EPKNS0_13DecodedVectorE.e
   %i.bn = load ptr, ptr %i.av, align 8, !tbaa !4623, !nonnull !797, !align !916
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 56
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.bp to i1
-  %14 = select i1 %13, i8 1, i8 %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !54248, !range !796, !noundef !797
-  %i.bs = or i8 %14, %i.br                        ; 2 uses
+  %13 = or i8 %i.bp, %i.br
+  %i.bs = or i8 %13, %i.bl                        ; 2 uses
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !54248
   %i.bt = trunc nuw i8 %i.bs to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
@@ -14093,11 +14059,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIdEEEC2EPKNS0_13DecodedVectorE.e
   %i.bn = load ptr, ptr %i.av, align 8, !tbaa !4941, !nonnull !797, !align !916
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 56
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !1546, !range !796, !noundef !797
-  %13 = trunc nuw i8 %i.bp to i1
-  %14 = select i1 %13, i8 1, i8 %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !54386, !range !796, !noundef !797
-  %i.bs = or i8 %14, %i.br                        ; 2 uses
+  %13 = or i8 %i.bp, %i.br
+  %i.bs = or i8 %13, %i.bl                        ; 2 uses
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !54386
   %i.bt = trunc nuw i8 %i.bs to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33

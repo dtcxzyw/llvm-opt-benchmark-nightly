@@ -201,10 +201,7 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIdEEEC2EPKNS0_13DecodedVectorE.e
   %i.fh = load ptr, ptr %i.cb, align 8, !tbaa !20502, !nonnull !393, !align !891
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 56
   %i.fj = load i8, ptr %i.fi, align 8, !tbaa !20162, !range !392, !noundef !393
-  %43 = trunc nuw i8 %i.fj to i1
-  %44 = select i1 %43, i8 1, i8 %i.ff
   %i.fk = load i8, ptr %i.m, align 1, !tbaa !20494, !range !392, !noundef !393
-  %45 = or i8 %44, %i.fk
   %i.fl = getelementptr inbounds nuw i8, ptr %38, i64 56
   %i.fm = load i8, ptr %i.fl, align 8, !tbaa !20162, !range !392, !noundef !393 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %38, i64 160
@@ -214,9 +211,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIdEEEC2EPKNS0_13DecodedVectorE.e
   %i.fo = load ptr, ptr %i.en, align 8, !tbaa !20502, !nonnull !393, !align !891
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 56
   %i.fq = load i8, ptr %i.fp, align 8, !tbaa !20162, !range !392, !noundef !393
-  %46 = trunc nuw i8 %i.fq to i1
-  %47 = select i1 %46, i8 1, i8 %i.fm
-  %i.fr = or i8 %45, %47                          ; 2 uses
+  %43 = or i8 %i.fj, %i.fk
+  %44 = or i8 %43, %i.fq
+  %45 = or i8 %44, %i.ff
+  %i.fr = or i8 %45, %i.fm                        ; 2 uses
   store i8 %i.fr, ptr %i.m, align 1, !tbaa !20494
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #37
   store ptr null, ptr %i.g, align 8, !tbaa !898
@@ -619,10 +617,7 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIdEEEC2EPKNS0_13DecodedVectorE.e
   %i.fh = load ptr, ptr %i.cb, align 8, !tbaa !20502, !nonnull !393, !align !891
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 56
   %i.fj = load i8, ptr %i.fi, align 8, !tbaa !20162, !range !392, !noundef !393
-  %43 = trunc nuw i8 %i.fj to i1
-  %44 = select i1 %43, i8 1, i8 %i.ff
   %i.fk = load i8, ptr %i.m, align 1, !tbaa !20694, !range !392, !noundef !393
-  %45 = or i8 %44, %i.fk
   %i.fl = getelementptr inbounds nuw i8, ptr %38, i64 56
   %i.fm = load i8, ptr %i.fl, align 8, !tbaa !20162, !range !392, !noundef !393 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %38, i64 160
@@ -632,9 +627,10 @@ _ZN8facebook5velox4exec12VectorReaderINS0_5ArrayIdEEEC2EPKNS0_13DecodedVectorE.e
   %i.fo = load ptr, ptr %i.en, align 8, !tbaa !20502, !nonnull !393, !align !891
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 56
   %i.fq = load i8, ptr %i.fp, align 8, !tbaa !20162, !range !392, !noundef !393
-  %46 = trunc nuw i8 %i.fq to i1
-  %47 = select i1 %46, i8 1, i8 %i.fm
-  %i.fr = or i8 %45, %47                          ; 2 uses
+  %43 = or i8 %i.fj, %i.fk
+  %44 = or i8 %43, %i.fq
+  %45 = or i8 %44, %i.ff
+  %i.fr = or i8 %45, %i.fm                        ; 2 uses
   store i8 %i.fr, ptr %i.m, align 1, !tbaa !20694
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #37
   store ptr null, ptr %i.g, align 8, !tbaa !898
