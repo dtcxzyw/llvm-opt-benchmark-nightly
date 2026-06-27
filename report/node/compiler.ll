@@ -201,7 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit
   %i.g = phi ptr [ %i.c, %.lr.ph ], [ %i.ao, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ]
   %.031 = phi i8 [ 0, %.lr.ph ], [ %.3, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 4 uses
-  %.0730 = phi i1 [ false, %.lr.ph ], [ %.310, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 4 uses
+  %.0730 = phi i8 [ 0, %.lr.ph ], [ %.310, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 4 uses
   %i.h = load i8, ptr %i.g, align 1
   %.not = icmp eq i8 %i.h, -107
   br i1 %.not, label %bb.c, label %bb.f
@@ -226,15 +226,17 @@ bb.e:                                             ; preds = %bb.d
   %i.r = load atomic volatile i32, ptr %i.o monotonic, align 4
   %i.s = trunc i32 %i.r to i8
   %i.t = lshr i8 %i.s, 4
-  %i.u = or i8 %i.t, %.031
+  %4 = and i8 %i.t, 1
+  %i.u = or i8 %.031, %4
   %i.v = load atomic volatile i32, ptr %i.o monotonic, align 4
   %i.w = and i32 %i.v, 15
   %i.x = icmp eq i32 %i.w, 11
-  %4 = or i1 %.0730, %i.x
+  %5 = zext i1 %i.x to i8
+  %6 = or i8 %.0730, %5
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c, %bb.b
-  %.310 = phi i1 [ %.0730, %bb.b ], [ %.0730, %bb.d ], [ %4, %bb.e ], [ %.0730, %bb.c ] ; 2 uses
+  %.310 = phi i8 [ %.0730, %bb.b ], [ %.0730, %bb.d ], [ %6, %bb.e ], [ %.0730, %bb.c ] ; 2 uses
   %.3 = phi i8 [ %.031, %bb.b ], [ %.031, %bb.d ], [ %i.u, %bb.e ], [ %.031, %bb.c ] ; 2 uses
   %i.y = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.z = load i8, ptr %i.y, align 1
@@ -283,8 +285,9 @@ _ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit: ; preds = %b
   br i1 %.not23, label %bb.b, label %._crit_edge, !llvm.loop !230
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit
-  %i.ap = trunc i8 %.3 to i1                      ; 2 uses
-  br i1 %.310, label %bb.k, label %._crit_edge.thread
+  %7 = trunc nuw i8 %.310 to i1
+  %i.ap = trunc nuw i8 %.3 to i1                  ; 2 uses
+  br i1 %7, label %bb.k, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
   %.0.lcssa40 = phi i1 [ %i.ap, %._crit_edge ], [ false, %bb.a ] ; 2 uses

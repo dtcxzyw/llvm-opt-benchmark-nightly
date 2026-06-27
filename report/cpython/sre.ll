@@ -201,13 +201,14 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af
   %i.ca = tail call i32 @_PyUnicode_IsNumeric(i32 noundef %1) #13
   %i.cb = icmp ne i32 %i.ca, 0
+  %2 = zext i1 %i.cb to i32
   br label %Py_UNICODE_ISALNUM.exit
 
 Py_UNICODE_ISALNUM.exit:                          ; preds = %bb.ad, %bb.ae, %bb.af, %bb.ag
-  %2 = phi i1 [ true, %bb.af ], [ true, %bb.ae ], [ true, %bb.ad ], [ %i.cb, %bb.ag ]
+  %3 = phi i32 [ 1, %bb.af ], [ 1, %bb.ae ], [ 1, %bb.ad ], [ %2, %bb.ag ]
   %i.cc = icmp eq i32 %1, 95
-  %3 = or i1 %i.cc, %2
-  %4 = zext i1 %3 to i32
+  %4 = zext i1 %i.cc to i32
+  %5 = or i32 %3, %4
   br label %Py_UNICODE_ISSPACE.exit
 
 bb.ah:                                            ; preds = %bb.a
@@ -227,14 +228,15 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %i.cg = tail call i32 @_PyUnicode_IsNumeric(i32 noundef %1) #13
-  %.not56 = icmp eq i32 %i.cg, 0
+  %6 = icmp ne i32 %i.cg, 0
   br label %Py_UNICODE_ISALNUM.exit55
 
 Py_UNICODE_ISALNUM.exit55:                        ; preds = %bb.ah, %bb.ai, %bb.aj, %bb.ak
-  %i.ch = phi i1 [ false, %bb.aj ], [ false, %bb.ai ], [ false, %bb.ah ], [ %.not56, %bb.ak ]
-  %5 = icmp ne i32 %1, 95
-  %.not37 = and i1 %5, %i.ch
-  %i.ci = zext i1 %.not37 to i32
+  %i.ch = phi i1 [ true, %bb.aj ], [ true, %bb.ai ], [ true, %bb.ah ], [ %6, %bb.ak ]
+  %7 = icmp eq i32 %1, 95
+  %8 = or i1 %7, %i.ch
+  %9 = xor i1 %8, true
+  %i.ci = zext i1 %9 to i32
   br label %Py_UNICODE_ISSPACE.exit
 
 bb.al:                                            ; preds = %bb.a
@@ -248,7 +250,7 @@ bb.am:                                            ; preds = %bb.a
   br label %Py_UNICODE_ISSPACE.exit
 
 Py_UNICODE_ISSPACE.exit:                          ; preds = %bb.z, %bb.y, %bb.a, %bb.t, %bb.u, %bb.q, %bb.r, %bb.l, %bb.m, %bb.j, %bb.k, %bb.h, %bb.i, %bb.f, %bb.g, %bb.d, %bb.e, %bb.b, %bb.c, %bb.am, %bb.al, %Py_UNICODE_ISALNUM.exit55, %Py_UNICODE_ISALNUM.exit, %Py_UNICODE_ISSPACE.exit51, %bb.w, %bb.v, %bb.o, %bb.n
-  %.0 = phi i32 [ 0, %bb.t ], [ %i.cl, %bb.am ], [ %.lobit49, %bb.c ], [ %i.k, %bb.e ], [ %.lobit47, %bb.g ], [ %i.v, %bb.i ], [ %i.ae, %bb.k ], [ %i.ao, %bb.n ], [ %i.aq, %bb.o ], [ %i.am, %bb.m ], [ 1, %bb.q ], [ %i.bh, %bb.v ], [ %i.bj, %bb.w ], [ 0, %bb.a ], [ %i.bw, %Py_UNICODE_ISSPACE.exit51 ], [ %4, %Py_UNICODE_ISALNUM.exit ], [ %i.ci, %Py_UNICODE_ISALNUM.exit55 ], [ %i.cj, %bb.al ], [ 0, %bb.b ], [ 1, %bb.d ], [ 0, %bb.f ], [ 1, %bb.h ], [ 0, %bb.j ], [ 1, %bb.l ], [ %i.ay, %bb.r ], [ %i.bg, %bb.u ], [ %i.bo, %bb.y ], [ %i.bp, %bb.z ]
+  %.0 = phi i32 [ 0, %bb.t ], [ %i.cl, %bb.am ], [ %.lobit49, %bb.c ], [ %i.k, %bb.e ], [ %.lobit47, %bb.g ], [ %i.v, %bb.i ], [ %i.ae, %bb.k ], [ %i.ao, %bb.n ], [ %i.aq, %bb.o ], [ %i.am, %bb.m ], [ 1, %bb.q ], [ %i.bh, %bb.v ], [ %i.bj, %bb.w ], [ 0, %bb.a ], [ %i.bw, %Py_UNICODE_ISSPACE.exit51 ], [ %5, %Py_UNICODE_ISALNUM.exit ], [ %i.ci, %Py_UNICODE_ISALNUM.exit55 ], [ %i.cj, %bb.al ], [ 0, %bb.b ], [ 1, %bb.d ], [ 0, %bb.f ], [ 1, %bb.h ], [ 0, %bb.j ], [ 1, %bb.l ], [ %i.ay, %bb.r ], [ %i.bg, %bb.u ], [ %i.bo, %bb.y ], [ %i.bp, %bb.z ]
   ret i32 %.0
 }
 

@@ -201,22 +201,29 @@ _ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit: ; preds = 
 
 .lr.ph110:                                        ; preds = %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit, %bb.g
   %.sroa.080.0109 = phi ptr [ %i.ag, %bb.g ], [ %i.q, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ] ; 2 uses
-  %storemerge107108 = phi i8 [ %storemerge, %bb.g ], [ %.0.i, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ]
+  %storemerge107108 = phi i8 [ %storemerge, %bb.g ], [ %.0.i, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ] ; 2 uses
   %i.ac = load ptr, ptr %.sroa.080.0109, align 8, !tbaa !113 ; 2 uses
   %i.ad = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(482) %i.ac, ptr nonnull @_ZTIN8facebook5velox4exec4ExprE, ptr nonnull @_ZTIN8facebook5velox4exec10LambdaExprE, i64 0) #30 ; 2 uses
   %.not = icmp eq ptr %i.ad, null
-  br i1 %.not, label %bb.g, label %bb.f
+  br i1 %.not, label %7, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph110
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 504
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !113
+  %3 = getelementptr inbounds nuw i8, ptr %i.af, i64 281
+  %4 = load i8, ptr %3, align 1, !tbaa !182, !range !53, !noundef !57
+  %5 = trunc nuw i8 %4 to i1
+  %6 = select i1 %5, i8 %storemerge107108, i8 0
   br label %bb.g
 
-bb.g:                                             ; preds = %.lr.ph110, %bb.f
-  %.pn124 = phi ptr [ %i.af, %bb.f ], [ %i.ac, %.lr.ph110 ]
-  %.pn123.in = getelementptr inbounds nuw i8, ptr %.pn124, i64 281
-  %.pn123 = load i8, ptr %.pn123.in, align 1, !tbaa !182, !range !53, !noundef !57
-  %storemerge = and i8 %storemerge107108, %.pn123 ; 2 uses
+7:                                                ; preds = %.lr.ph110
+  %8 = getelementptr inbounds nuw i8, ptr %i.ac, i64 281
+  %9 = load i8, ptr %8, align 1, !tbaa !182, !range !53, !noundef !57
+  %10 = and i8 %storemerge107108, %9
+  br label %bb.g
+
+bb.g:                                             ; preds = %7, %bb.f
+  %storemerge = phi i8 [ %10, %7 ], [ %6, %bb.f ] ; 2 uses
   store i8 %storemerge, ptr %i.p, align 1, !tbaa !182
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.080.0109, i64 16 ; 2 uses
   %i.ah = icmp eq ptr %i.ag, %i.r

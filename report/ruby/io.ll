@@ -201,7 +201,7 @@ bb.w:                                             ; preds = %rb_enc_asciicompat.
   %.1114 = phi i64 [ %i.ac, %bb.v ], [ %i.ac, %RSTRING_PTR.exit153 ], [ %i.ap, %RSTRING_PTR.exit ], [ 2, %rb_enc_asciicompat.exit150 ] ; 3 uses
   %.0111 = phi i32 [ 0, %bb.v ], [ 0, %RSTRING_PTR.exit153 ], [ 1, %RSTRING_PTR.exit ], [ 1, %rb_enc_asciicompat.exit150 ] ; 2 uses
   %.1 = phi i64 [ %i.bb, %bb.v ], [ %0, %RSTRING_PTR.exit153 ], [ %i.ah, %RSTRING_PTR.exit ], [ 0, %rb_enc_asciicompat.exit150 ] ; 2 uses
-  %4 = icmp ne i32 %2, 0
+  %4 = trunc nuw i32 %2 to i1
   %i.bp = icmp eq i32 %.0119, 10
   %or.cond5 = select i1 %4, i1 %i.bp, i1 false
   br i1 %or.cond5, label %bb.x, label %bb.y
@@ -604,9 +604,9 @@ bb.bv:                                            ; preds = %rscheck.exit
   br i1 %.not130, label %.loopexit, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %.not131 = icmp ne i32 %.0107, 0
+  %.not131 = trunc nuw i32 %.0107 to i1
   %i.id = icmp ugt ptr %i.ht, %i.hr
-  %or.cond132 = and i1 %.not131, %i.id
+  %or.cond132 = and i1 %i.id, %.not131
   br i1 %or.cond132, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
@@ -1009,8 +1009,7 @@ rb_io_ext_int_to_encs.exit82:                     ; preds = %bb.q, %bb.r
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.k, %rb_io_ext_int_to_encs.exit82, %rb_num2int_inline.exit, %bb.f
-  %6 = phi i1 [ false, %bb.f ], [ false, %rb_num2int_inline.exit ], [ true, %bb.k ], [ false, %rb_io_ext_int_to_encs.exit82 ]
-  %.259 = phi i32 [ 0, %bb.f ], [ 0, %rb_num2int_inline.exit ], [ 1, %bb.k ], [ 0, %rb_io_ext_int_to_encs.exit82 ] ; 3 uses
+  %.259 = phi i32 [ 0, %bb.f ], [ 0, %rb_num2int_inline.exit ], [ 1, %bb.k ], [ 0, %rb_io_ext_int_to_encs.exit82 ] ; 4 uses
   %.051 = phi i32 [ 0, %bb.f ], [ %i.t, %rb_num2int_inline.exit ], [ %.4.i76, %bb.k ], [ %.4.i76, %rb_io_ext_int_to_encs.exit82 ] ; 3 uses
   br i1 %i.m, label %._crit_edge138, label %bb.y
 
@@ -1024,6 +1023,7 @@ bb.s:                                             ; preds = %bb.k, %rb_io_ext_in
   %i.bh = select i1 %.not, i32 %i.bf, i32 0       ; 2 uses
   store i64 4, ptr %i.e, align 8, !tbaa !13
   %i.bi = icmp eq i32 %.pre139, 0
+  %6 = trunc nuw i32 %.259 to i1
   %or.cond = or i1 %i.bi, %6
   br i1 %or.cond, label %thread-pre-split, label %bb.t
 
@@ -1079,7 +1079,7 @@ bb.z:                                             ; preds = %bb.y
   unreachable
 
 bb.aa:                                            ; preds = %rb_io_ext_int_to_encs.exit82.1, %bb.au, %rb_num2int_inline.exit.1, %bb.y
-  %.259.lcssa130 = phi i32 [ %.259, %bb.y ], [ %.259, %rb_io_ext_int_to_encs.exit82.1 ], [ %.259, %rb_num2int_inline.exit.1 ], [ 1, %bb.au ]
+  %.259.lcssa130 = phi i32 [ %.259, %bb.y ], [ %.259, %rb_io_ext_int_to_encs.exit82.1 ], [ %.259, %rb_num2int_inline.exit.1 ], [ 1, %bb.au ] ; 2 uses
   %.051.lcssa128 = phi i32 [ %.051, %bb.y ], [ %.4.i76.1, %rb_io_ext_int_to_encs.exit82.1 ], [ %i.ds, %rb_num2int_inline.exit.1 ], [ %.4.i76.1, %bb.au ] ; 2 uses
   %i.bu = load i64, ptr @sym_flags, align 8, !tbaa !13
   %i.bv = call i64 @rb_hash_aref(i64 noundef %2, i64 noundef %i.bu) #28 ; 2 uses
@@ -1133,8 +1133,8 @@ bb.ae:                                            ; preds = %rb_num2int_inline.e
   %i.cq = load i32, ptr %i.b, align 4, !tbaa !7   ; 4 uses
   %i.cr = and i32 %i.cq, 4
   %i.cs = icmp eq i32 %i.cr, 0
-  %7 = icmp ne i32 %.259.lcssa130, 0              ; 2 uses
-  %or.cond3 = or i1 %i.cs, %7
+  %7 = trunc nuw i32 %.259.lcssa130 to i1
+  %or.cond3 = select i1 %i.cs, i1 true, i1 %7
   br i1 %or.cond3, label %bb.ak, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
@@ -1196,9 +1196,9 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.an, %bb.ak
   %i.dg = call i32 @rb_io_extract_encoding_option(i64 noundef %2, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %i.b)
-  %8 = icmp ne i32 %i.dg, 0
-  %or.cond7 = and i1 %8, %7
-  br i1 %or.cond7, label %bb.ap, label %.thread117
+  %8 = and i32 %i.dg, %.259.lcssa130
+  %or.cond7.not = icmp eq i32 %8, 0
+  br i1 %or.cond7.not, label %.thread117, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   %i.dh = load i64, ptr @rb_eArgError, align 8, !tbaa !13
@@ -1601,8 +1601,8 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %0, i64 192
   %i.k = load i64, ptr %i.j, align 8, !tbaa !41   ; 2 uses
   %i.l = icmp eq i64 %i.k, 4
-  %3 = icmp ne i32 %1, 0
-  %or.cond = or i1 %3, %i.l
+  %3 = trunc nuw i32 %1 to i1
+  %or.cond = or i1 %i.l, %3
   br i1 %or.cond, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
@@ -1714,10 +1714,10 @@ maygvl_fclose.exit:                               ; preds = %bb.k
   %i.ba = call ptr @rb_nogvl(ptr noundef nonnull @nogvl_fclose, ptr noundef nonnull %i.e, ptr noundef nonnull inttoptr (i64 -1 to ptr), ptr noundef null, i32 noundef 4) #28
   %i.bb = ptrtoint ptr %i.ba to i64
   %i.bc = and i64 %i.bb, 2147483648
-  %4 = icmp ne i64 %i.bc, 0
-  %5 = icmp eq i64 %.1, 4
-  %or.cond99 = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond99, label %bb.l, label %bb.m
+  %4 = icmp eq i64 %i.bc, 0
+  %5 = icmp ne i64 %.1, 4
+  %or.cond99 = select i1 %4, i1 true, i1 %5
+  br i1 %or.cond99, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %maygvl_fclose.exit
   %i.bd = call ptr @rb_errno_ptr() #28
@@ -1729,7 +1729,7 @@ bb.l:                                             ; preds = %maygvl_fclose.exit
 
 bb.m:                                             ; preds = %maygvl_fclose.exit.thread, %maygvl_fclose.exit, %bb.l, %io_flush_buffer_sync.exit
   %.169 = phi i32 [ %spec.select, %io_flush_buffer_sync.exit ], [ 1, %bb.l ], [ 1, %maygvl_fclose.exit ], [ 1, %maygvl_fclose.exit.thread ] ; 2 uses
-  %.3 = phi i64 [ %.1, %io_flush_buffer_sync.exit ], [ %i.bh, %bb.l ], [ %.1, %maygvl_fclose.exit ], [ %.1, %maygvl_fclose.exit.thread ] ; 4 uses
+  %.3 = phi i64 [ %.1, %io_flush_buffer_sync.exit ], [ %i.bh, %bb.l ], [ %.1, %maygvl_fclose.exit ], [ %.1, %maygvl_fclose.exit.thread ] ; 3 uses
   %i.bi = call i64 @rb_fiber_scheduler_current() #28 ; 2 uses
   %i.bj = icmp eq i32 %.169, 0
   %i.bk = icmp sgt i32 %i.c, -1                   ; 2 uses
@@ -1756,7 +1756,11 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %bb.m
   %.371 = phi i32 [ %.169, %bb.m ], [ 0, %bb.n ], [ %i.bt, %bb.o ]
   %i.bu = icmp eq i32 %.371, 0
   %or.cond11 = select i1 %i.bu, i1 %i.bk, i1 false
-  br i1 %or.cond11, label %bb.q, label %bb.u
+  br i1 %or.cond11, label %bb.q, label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.p
+  %.pre = trunc nuw i32 %1 to i1
+  br label %bb.u
 
 bb.q:                                             ; preds = %bb.p
   %i.bv = lshr i32 %i.g, 1
@@ -1781,16 +1785,14 @@ bb.s:                                             ; preds = %bb.q
 maygvl_close.exit:                                ; preds = %bb.r, %bb.s
   %.0.i86 = phi i32 [ %i.by, %bb.r ], [ %i.cb, %bb.s ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %6 = icmp slt i32 %.0.i86, 0
-  br i1 %6, label %7, label %bb.u
+  %6 = icmp sgt i32 %.0.i86, -1
+  %7 = icmp ne i64 %.3, 4
+  %8 = trunc nuw i32 %1 to i1                     ; 2 uses
+  %or.cond18 = or i1 %7, %8
+  %or.cond102 = select i1 %6, i1 true, i1 %or.cond18
+  br i1 %or.cond102, label %bb.u, label %bb.t
 
-7:                                                ; preds = %maygvl_close.exit
-  %8 = icmp eq i64 %.3, 4
-  %9 = icmp eq i32 %1, 0
-  %or.cond18.not = and i1 %9, %8
-  br i1 %or.cond18.not, label %bb.t, label %bb.u
-
-bb.t:                                             ; preds = %7
+bb.t:                                             ; preds = %maygvl_close.exit
   %i.cc = call ptr @rb_errno_ptr() #28
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !7
   %i.ce = sext i32 %i.cd to i64
@@ -1798,11 +1800,11 @@ bb.t:                                             ; preds = %7
   %i.cg = or disjoint i64 %i.cf, 1
   br label %bb.u
 
-bb.u:                                             ; preds = %maygvl_close.exit, %7, %bb.t, %bb.p
-  %.5 = phi i64 [ %.3, %bb.p ], [ %.3, %7 ], [ %i.cg, %bb.t ], [ %.3, %maygvl_close.exit ] ; 7 uses
-  %10 = icmp eq i64 %.5, 4
-  %11 = icmp ne i32 %1, 0
-  %or.cond13 = or i1 %11, %10
+bb.u:                                             ; preds = %._crit_edge, %maygvl_close.exit, %bb.t
+  %.pre-phi = phi i1 [ %.pre, %._crit_edge ], [ %8, %maygvl_close.exit ], [ false, %bb.t ]
+  %.5 = phi i64 [ %.3, %._crit_edge ], [ %.3, %maygvl_close.exit ], [ %i.cg, %bb.t ] ; 7 uses
+  %9 = icmp eq i64 %.5, 4
+  %or.cond13 = or i1 %9, %.pre-phi
   br i1 %or.cond13, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u

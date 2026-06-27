@@ -201,17 +201,18 @@ bb.i:                                             ; preds = %bb.h, %switch.looku
   %i.bm = phi i8 [ %i.bl, %bb.h ], [ %i.bf, %switch.lookup ]
   %i.bn = load i8, ptr %i.m, align 8, !range !6, !noundef !7
   %i.bo = and i8 %i.bn, %i.at
-  %6 = icmp ne i8 %i.bo, 0
+  %6 = trunc nuw i8 %i.bo to i1
   %i.bp = load i8, ptr %i.u, align 2, !range !6, !noundef !7
   %i.bq = trunc nuw i8 %i.bp to i1
   br i1 %i.bq, label %bb.j, label %bb.l, !prof !5
 
 bb.j:                                             ; preds = %bb.i
-  %i.br = shl nuw nsw i8 %i.bh, 3
+  %7 = xor i8 %i.bh, -1
+  %i.br = shl nsw i8 %7, 3
+  %8 = and i8 %i.br, 8
   %i.bs = shl nuw nsw i8 %i.bh, 1
-  %i.bt = or disjoint i8 %i.br, %i.bs
-  %7 = xor i8 %i.bt, 8
-  %i.bu = select i1 %switch.masked, i8 0, i8 %7
+  %i.bt = or disjoint i8 %8, %i.bs
+  %i.bu = select i1 %switch.masked, i8 0, i8 %i.bt
   %i.bv = or i8 %i.bu, %i.bm
   store i8 %i.bv, ptr %i.s, align 1
   %i.bw = load ptr, ptr %0, align 8

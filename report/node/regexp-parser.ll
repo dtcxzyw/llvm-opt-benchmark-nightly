@@ -201,7 +201,7 @@ _ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit210: ; pre
   br label %bb.gh
 
 bb.gh:                                            ; preds = %.lr.ph, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit174
-  %i.yn = phi i8 [ %i.wo, %.lr.ph ], [ %7, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit174 ] ; 2 uses
+  %i.yn = phi i8 [ %i.wo, %.lr.ph ], [ %4, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit174 ] ; 2 uses
   %.val11.i110 = load i32, ptr %i.cj, align 4     ; 3 uses
   switch i32 %.val11.i110, label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE4NextEv.exit203.thread [
     i32 93, label %bb.hj
@@ -358,13 +358,7 @@ bb.gv:                                            ; preds = %bb.gu, %bb.gu
   %i.aac = getelementptr inbounds nuw i8, ptr %i.aab, i64 16
   %i.aad = load ptr, ptr %i.aac, align 8          ; 2 uses
   %.not.i.i176 = icmp eq ptr %i.aad, null
-  br i1 %.not.i.i176, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a, label %1
-
-1:                                                ; preds = %bb.gv
-  %2 = getelementptr inbounds nuw i8, ptr %i.aad, i64 48
-  %3 = load i64, ptr %2, align 8
-  %4 = icmp ne i64 %3, 0
-  br label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a
+  br i1 %.not.i.i176, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177
 
 bb.gw:                                            ; preds = %bb.gu
   %i.aae = load ptr, ptr %i.zu, align 8
@@ -381,17 +375,24 @@ bb.gx:                                            ; preds = %bb.gw
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aal, i64 13
   %i.aan = load i8, ptr %i.aam, align 1, !range !5, !noundef !6
   %i.aao = trunc nuw i8 %i.aan to i1
-  br label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a
+  br i1 %i.aao, label %3, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a
 
 bb.gy:                                            ; preds = %bb.gu
   unreachable
 
-_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a: ; preds = %bb.gu, %bb.gu, %bb.gv, %1, %bb.gw, %bb.gx
-  %.0.i175 = phi i1 [ %i.aao, %bb.gx ], [ false, %bb.gw ], [ false, %bb.gu ], [ false, %bb.gu ], [ false, %bb.gv ], [ %4, %1 ]
-  %5 = icmp ne i8 %i.yn, 0
-  %6 = and i1 %5, %.0.i175
-  %7 = zext i1 %6 to i8                           ; 2 uses
-  store i8 %7, ptr %i.k, align 1
+_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177: ; preds = %bb.gv
+  %1 = getelementptr inbounds nuw i8, ptr %i.aad, i64 48
+  %2 = load i64, ptr %1, align 8
+  %.fr = freeze i64 %2
+  %.not356 = icmp eq i64 %.fr, 0
+  br i1 %.not356, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a, label %3
+
+3:                                                ; preds = %bb.gx, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177
+  br label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a
+
+_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177.a: ; preds = %bb.gv, %bb.gu, %bb.gu, %bb.gw, %bb.gx, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177, %3
+  %4 = phi i8 [ %i.yn, %3 ], [ 0, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177 ], [ 0, %bb.gx ], [ 0, %bb.gw ], [ 0, %bb.gu ], [ 0, %bb.gu ], [ 0, %bb.gv ] ; 2 uses
+  store i8 %4, ptr %i.k, align 1
   %.val13.i116 = load ptr, ptr %i.ck, align 8     ; 3 uses
   %i.aap = load i32, ptr %i.wz, align 4           ; 2 uses
   %i.aaq = load i32, ptr %i.wy, align 8           ; 3 uses
@@ -794,7 +795,7 @@ _ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176: ; pre
   br i1 %i.uc, label %.lr.ph, label %.critedge.i76
 
 .lr.ph:                                           ; preds = %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit143
-  %i.ud = phi i8 [ %7, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit143 ], [ %i.sh, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176 ] ; 2 uses
+  %i.ud = phi i8 [ %4, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit143 ], [ %i.sh, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176 ] ; 2 uses
   %.val11.i81 = load i32, ptr %i.ae, align 4      ; 3 uses
   switch i32 %.val11.i81, label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE4NextEv.exit169.thread [
     i32 93, label %bb.fr
@@ -903,13 +904,7 @@ bb.fd:                                            ; preds = %bb.fc, %bb.fc
   %i.vj = getelementptr inbounds nuw i8, ptr %i.vi, i64 16
   %i.vk = load ptr, ptr %i.vj, align 8            ; 2 uses
   %.not.i.i145 = icmp eq ptr %i.vk, null
-  br i1 %.not.i.i145, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a, label %1
-
-1:                                                ; preds = %bb.fd
-  %2 = getelementptr inbounds nuw i8, ptr %i.vk, i64 48
-  %3 = load i64, ptr %2, align 8
-  %4 = icmp ne i64 %3, 0
-  br label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a
+  br i1 %.not.i.i145, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146
 
 bb.fe:                                            ; preds = %bb.fc
   %i.vl = load ptr, ptr %i.vb, align 8
@@ -926,17 +921,24 @@ bb.ff:                                            ; preds = %bb.fe
   %i.vt = getelementptr inbounds nuw i8, ptr %i.vs, i64 13
   %i.vu = load i8, ptr %i.vt, align 1, !range !5, !noundef !6
   %i.vv = trunc nuw i8 %i.vu to i1
-  br label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a
+  br i1 %i.vv, label %3, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a
 
 bb.fg:                                            ; preds = %bb.fc
   unreachable
 
-_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a: ; preds = %bb.fc, %bb.fc, %bb.fd, %1, %bb.fe, %bb.ff
-  %.0.i144 = phi i1 [ %i.vv, %bb.ff ], [ false, %bb.fe ], [ false, %bb.fc ], [ false, %bb.fc ], [ false, %bb.fd ], [ %4, %1 ]
-  %5 = icmp ne i8 %i.ud, 0
-  %6 = and i1 %5, %.0.i144
-  %7 = zext i1 %6 to i8                           ; 2 uses
-  store i8 %7, ptr %i.k, align 1
+_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146: ; preds = %bb.fd
+  %1 = getelementptr inbounds nuw i8, ptr %i.vk, i64 48
+  %2 = load i64, ptr %1, align 8
+  %.fr = freeze i64 %2
+  %.not321 = icmp eq i64 %.fr, 0
+  br i1 %.not321, label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a, label %3
+
+3:                                                ; preds = %bb.ff, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146
+  br label %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a
+
+_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146.a: ; preds = %bb.fd, %bb.fc, %bb.fc, %bb.fe, %bb.ff, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146, %3
+  %4 = phi i8 [ %i.ud, %3 ], [ 0, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146 ], [ 0, %bb.ff ], [ 0, %bb.fe ], [ 0, %bb.fc ], [ 0, %bb.fc ], [ 0, %bb.fd ] ; 2 uses
+  store i8 %4, ptr %i.k, align 1
   %.val13.i87 = load ptr, ptr %i.ag, align 8      ; 3 uses
   %i.vw = load i32, ptr %i.ss, align 4            ; 2 uses
   %i.vx = load i32, ptr %i.sr, align 8            ; 3 uses
@@ -1339,7 +1341,7 @@ bb.a:
   %.val28 = load i32, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 76
   %.val29 = load i32, ptr %i.c, align 4           ; 3 uses
-  %2 = icmp ne i32 %1, 0
+  %2 = trunc nuw i32 %1 to i1
   %.not36 = icmp eq i32 %.val27, 2097152          ; 2 uses
   %or.cond = select i1 %2, i1 true, i1 %.not36
   br i1 %or.cond, label %.loopexit33, label %.lr.ph

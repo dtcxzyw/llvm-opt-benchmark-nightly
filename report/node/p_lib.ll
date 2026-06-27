@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !38
   %i.g = call i32 @evp_keymgmt_get_params(ptr noundef nonnull %i.d, ptr noundef %i.f, ptr noundef nonnull %5) #10
   %i.h = icmp sgt i32 %i.g, 0
-  br i1 %i.h, label %bb.f, label %.thread41
+  br i1 %i.h, label %bb.f, label %bb.j
 
 bb.e:                                             ; preds = %bb.c
   %i.i = load i32, ptr %0, align 8, !tbaa !29
@@ -212,16 +212,17 @@ EVP_PKEY_get_params.exit.thread:                  ; preds = %bb.b, %bb.e
   call void @ERR_new() #10
   call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 2466, ptr noundef nonnull @__func__.EVP_PKEY_get_params) #10
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 6, i32 noundef 163, ptr noundef null) #10
-  br label %.thread41
+  br label %bb.j
 
 EVP_PKEY_get_params.exit:                         ; preds = %bb.e
   %i.j = call i32 @evp_pkey_get_params_to_ctrl(ptr noundef nonnull %0, ptr noundef nonnull %5) #10
   %i.k = icmp sgt i32 %i.j, 0
-  br i1 %i.k, label %bb.f, label %.thread41
+  br i1 %i.k, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %EVP_PKEY_get_params.exit, %bb.d
   %i.l = call i32 @OSSL_PARAM_modified(ptr noundef nonnull %5) #10
-  %i.m = icmp ne i32 %i.l, 0                      ; 4 uses
+  %.fr = freeze i32 %i.l
+  %i.m = icmp ne i32 %.fr, 0                      ; 4 uses
   %i.n = icmp ne ptr %4, null
   %or.cond = and i1 %i.n, %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 32
@@ -240,20 +241,21 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %._crit_edge
   %i.r = icmp ne ptr %2, null
   %or.cond3 = and i1 %i.r, %i.m
-  br i1 %or.cond3, label %bb.i, label %.thread41
+  br i1 %or.cond3, label %bb.i, label %7
 
 bb.i:                                             ; preds = %bb.h
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %i.p
   store i8 0, ptr %i.s, align 1, !tbaa !44
   br label %.thread41
 
-.thread41:                                        ; preds = %bb.d, %EVP_PKEY_get_params.exit.thread, %EVP_PKEY_get_params.exit, %bb.i, %bb.h
-  %.0.shrunk.i27334045 = phi i1 [ %i.m, %bb.h ], [ true, %bb.i ], [ false, %EVP_PKEY_get_params.exit ], [ false, %EVP_PKEY_get_params.exit.thread ], [ false, %bb.d ]
-  %7 = zext i1 %.0.shrunk.i27334045 to i32
+7:                                                ; preds = %bb.h
+  br i1 %i.m, label %.thread41, label %bb.j
+
+.thread41:                                        ; preds = %bb.i, %7
   br label %bb.j
 
-bb.j:                                             ; preds = %._crit_edge, %bb.a, %.thread41
-  %.018 = phi i32 [ %7, %.thread41 ], [ 0, %bb.a ], [ 0, %._crit_edge ]
+bb.j:                                             ; preds = %EVP_PKEY_get_params.exit, %EVP_PKEY_get_params.exit.thread, %bb.d, %.thread41, %7, %._crit_edge, %bb.a
+  %.018 = phi i32 [ 0, %._crit_edge ], [ 0, %bb.a ], [ 1, %.thread41 ], [ 0, %7 ], [ 0, %EVP_PKEY_get_params.exit ], [ 0, %bb.d ], [ 0, %EVP_PKEY_get_params.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   ret i32 %.018
 }
@@ -482,7 +484,7 @@ bb.d:                                             ; preds = %bb.c
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !38
   %i.g = call i32 @evp_keymgmt_get_params(ptr noundef nonnull %i.d, ptr noundef %i.f, ptr noundef nonnull %5) #10
   %i.h = icmp sgt i32 %i.g, 0
-  br i1 %i.h, label %bb.f, label %.thread
+  br i1 %i.h, label %bb.f, label %bb.h
 
 bb.e:                                             ; preds = %bb.c
   %i.i = load i32, ptr %0, align 8, !tbaa !29
@@ -493,16 +495,17 @@ EVP_PKEY_get_params.exit.thread:                  ; preds = %bb.b, %bb.e
   call void @ERR_new() #10
   call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 2466, ptr noundef nonnull @__func__.EVP_PKEY_get_params) #10
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 6, i32 noundef 163, ptr noundef null) #10
-  br label %.thread
+  br label %bb.h
 
 EVP_PKEY_get_params.exit:                         ; preds = %bb.e
   %i.j = call i32 @evp_pkey_get_params_to_ctrl(ptr noundef nonnull %0, ptr noundef nonnull %5) #10
   %i.k = icmp sgt i32 %i.j, 0
-  br i1 %i.k, label %bb.f, label %.thread
+  br i1 %i.k, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %EVP_PKEY_get_params.exit, %bb.d
   %i.l = call i32 @OSSL_PARAM_modified(ptr noundef nonnull %5) #10
-  %i.m = icmp ne i32 %i.l, 0                      ; 2 uses
+  %.fr = freeze i32 %i.l
+  %i.m = icmp ne i32 %.fr, 0                      ; 2 uses
   %i.n = icmp ne ptr %4, null
   %or.cond = and i1 %i.n, %i.m
   br i1 %or.cond, label %bb.g, label %.thread
@@ -511,15 +514,14 @@ bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.p = load i64, ptr %i.o, align 16, !tbaa !99
   store i64 %i.p, ptr %4, align 8, !tbaa !77
-  br label %.thread
-
-.thread:                                          ; preds = %bb.d, %EVP_PKEY_get_params.exit.thread, %EVP_PKEY_get_params.exit, %bb.g, %bb.f
-  %.0.shrunk.i1622 = phi i1 [ %i.m, %bb.f ], [ true, %bb.g ], [ false, %EVP_PKEY_get_params.exit ], [ false, %EVP_PKEY_get_params.exit.thread ], [ false, %bb.d ]
-  %i.q = zext i1 %.0.shrunk.i1622 to i32
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.a, %.thread
-  %.011 = phi i32 [ %i.q, %.thread ], [ 0, %bb.a ]
+.thread:                                          ; preds = %bb.f
+  %i.q = zext i1 %i.m to i32
+  br label %bb.h
+
+bb.h:                                             ; preds = %.thread, %bb.g, %EVP_PKEY_get_params.exit, %EVP_PKEY_get_params.exit.thread, %bb.d, %bb.a
+  %.011 = phi i32 [ 0, %bb.a ], [ 0, %EVP_PKEY_get_params.exit.thread ], [ %i.q, %.thread ], [ 0, %EVP_PKEY_get_params.exit ], [ 0, %bb.d ], [ 1, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   ret i32 %.011
 }
