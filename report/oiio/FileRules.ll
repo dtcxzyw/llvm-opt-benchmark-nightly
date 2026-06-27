@@ -201,14 +201,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !571
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb0EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !443, !range !334, !noundef !166
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !74
@@ -611,14 +611,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !616
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb1EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !484, !range !334, !noundef !166
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !74
@@ -1021,14 +1021,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !643
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb0EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !497, !range !334, !noundef !166
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !74
@@ -1431,14 +1431,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !662
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb1EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !503, !range !334, !noundef !166
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !74

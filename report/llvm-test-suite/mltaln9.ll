@@ -201,9 +201,9 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph48.spl
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 1 ; 2 uses
   %i.ao = load i8, ptr %i.aj, align 1, !tbaa !8
   %i.ap = icmp eq i8 %i.ao, 45                    ; 5 uses
-  %i.aq = xor i1 %i.am, true
-  %mulbool.prol = and i1 %i.ap, %i.aq
-  br i1 %mulbool.prol, label %bb.e, label %.prol.loopexit
+  %i.aq = xor i1 %i.ap, true
+  %7 = select i1 %i.aq, i1 true, i1 %i.am
+  br i1 %7, label %.prol.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %.prol.preheader
   %i.ar = load float, ptr %0, align 4, !tbaa !21
@@ -227,8 +227,8 @@ bb.e:                                             ; preds = %.prol.preheader
   %i.at = getelementptr inbounds nuw i8, ptr %.044, i64 1
   %i.au = load i8, ptr %.044, align 1, !tbaa !8
   %i.av = icmp ne i8 %i.au, 45                    ; 2 uses
-  %mulbool.not = or i1 %i.av, %.03242
-  br i1 %mulbool.not, label %bb.g, label %bb.f
+  %8 = select i1 %i.av, i1 true, i1 %.03242
+  br i1 %8, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph45.new
   %i.aw = load float, ptr %.143, align 4, !tbaa !21
@@ -241,7 +241,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph45.new
   %i.az = getelementptr inbounds nuw i8, ptr %.044, i64 2
   %i.ba = load i8, ptr %i.at, align 1, !tbaa !8
   %i.bb = icmp eq i8 %i.ba, 45                    ; 3 uses
-  %mulbool.1 = and i1 %i.bb, %i.av
+  %mulbool.1 = and i1 %i.av, %i.bb
   br i1 %mulbool.1, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g

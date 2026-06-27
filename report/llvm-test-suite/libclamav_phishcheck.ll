@@ -201,10 +201,10 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
-  %.not.not = icmp eq i32 %3, 0                   ; 4 uses
-  %.idx = select i1 %.not.not, i64 24, i64 0
+  %.not = trunc nuw i32 %3 to i1                  ; 4 uses
+  %.idx = select i1 %.not, i64 0, i64 24
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 8 uses
-  %. = select i1 %.not.not, i64 40, i64 16
+  %. = select i1 %.not, i64 16, i64 40
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !29   ; 2 uses
   %i.f = call fastcc i32 @get_host(ptr noundef %0, ptr noundef %i.e, i32 noundef %3, ptr noundef %4, ptr noundef %i.a, ptr noundef %i.b) ; 2 uses
@@ -291,7 +291,7 @@ string_assign_null.exit:                          ; preds = %.preheader.i, %bb.g
   store ptr null, ptr %i.ae, align 8, !tbaa !48
   %i.af = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.28, ptr noundef nonnull %.sink80) #14
-  br i1 %.not.not, label %bb.j, label %bb.k
+  br i1 %.not, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %string_assign_null.exit
   %i.ag = ptrtoint ptr %i.g to i64
@@ -368,7 +368,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %._crit_edge, %bb.q
   %.pre = phi ptr [ %.pre.pre, %._crit_edge ], [ %i.an, %bb.q ] ; 2 uses
-  br i1 %.not.not, label %bb.v, label %bb.u
+  br i1 %.not, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.bc = load i8, ptr %.pre, align 1, !tbaa !49
@@ -771,10 +771,10 @@ bb.h:                                             ; preds = %bb.c
 
 bb.i:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 7 ; 4 uses
-  %.not114 = icmp eq i32 %2, 0
-  br i1 %.not114, label %.preheader, label %bb.n
+  %6 = trunc nuw i32 %2 to i1
+  br i1 %6, label %bb.n, label %.preheader
 
-.preheader:                                       ; preds = %.critedge, %bb.h, %bb.g, %bb.f, %bb.i
+.preheader:                                       ; preds = %bb.g, %bb.f, %.critedge, %bb.h, %bb.i
   %.164113 = phi ptr [ %i.k, %bb.i ], [ %1, %bb.f ], [ %spec.select, %bb.g ], [ %1, %.critedge ], [ %i.j, %bb.h ] ; 5 uses
   %i.l = tail call i64 @strcspn(ptr noundef nonnull %.164113, ptr noundef nonnull @.str.32) #15 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.164113, i64 %i.l ; 3 uses

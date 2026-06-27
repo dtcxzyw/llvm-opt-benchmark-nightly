@@ -201,11 +201,11 @@ bb.bi:                                            ; preds = %bb.bh
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
-  %.not378 = icmp ne i32 %.0314, 0                ; 6 uses
+  %.not378 = trunc nuw i32 %.0314 to i1           ; 6 uses
   %i.dd = or i1 %.not375, %.not378
   %.0300 = select i1 %i.dd, i32 2, i32 32771      ; 2 uses
   %i.de = xor i1 %.not378, true
-  %3 = or i1 %.not375, %i.de
+  %3 = select i1 %.not375, i1 true, i1 %i.de
   %.0299 = select i1 %3, i32 2, i32 32771
   %i.df = call ptr @app_malloc(i64 noundef 512, ptr noundef nonnull @.str.96) #9 ; 38 uses
   %i.dg = add nuw nsw i32 %spec.store.select33, 2

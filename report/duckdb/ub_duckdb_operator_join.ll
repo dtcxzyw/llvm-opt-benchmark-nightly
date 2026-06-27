@@ -201,7 +201,7 @@ bb.a:
   %i.i = add i64 %i.h, %.014.i                    ; 2 uses
   %i.j = load i8, ptr %i.f, align 1, !tbaa !696
   %i.k = tail call noundef zeroext i1 @_ZN6duckdb18TypeIsConstantSizeENS_12PhysicalTypeE(i8 noundef zeroext %i.j)
-  %4 = and i1 %.0, %i.k                           ; 2 uses
+  %4 = select i1 %i.k, i1 %.0, i1 false           ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.09.013.i, i64 24 ; 2 uses
   %.not.i = icmp eq ptr %i.l, %i.d
   br i1 %.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i

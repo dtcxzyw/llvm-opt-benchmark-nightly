@@ -201,7 +201,6 @@ clause_LiteralAtom.exit:                          ; preds = %bb.a, %bb.b
 .lr.ph106:                                        ; preds = %clause_LiteralAtom.exit
   %i.j = load i32, ptr @symbol_TYPEMASK, align 4  ; 2 uses
   %i.k = load i32, ptr @symbol_TYPESTATBITS, align 4
-  %7 = icmp ne i32 %4, 0
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph106, %.loopexit
@@ -355,15 +354,16 @@ clause_LiteralGetIndex.exit:                      ; preds = %bb.n
 bb.o:                                             ; preds = %clause_LiteralGetIndex.exit
   %.0.val56 = load ptr, ptr %i.l, align 8
   %.val66 = load i32, ptr %.0.val56, align 8
-  %i.av = icmp sgt i32 %.val66, 0                 ; 2 uses
-  %i.aw = zext i1 %i.av to i32
+  %i.av = icmp sgt i32 %.val66, 0
+  %i.aw = zext i1 %i.av to i32                    ; 2 uses
   %i.ax = or i32 %4, %i.aw
   %or.cond.not = icmp eq i32 %i.ax, 0
   br i1 %or.cond.not, label %.sink.split, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %or.cond3 = and i1 %7, %i.av
-  br i1 %or.cond3, label %bb.q, label %bb.r
+  %7 = and i32 %4, %i.aw
+  %or.cond3.not = icmp eq i32 %7, 0
+  br i1 %or.cond3.not, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ay = tail call i32 @clause_HasOnlyVarsInConstraint(ptr noundef nonnull %.val68, ptr noundef %5, ptr noundef %6) #12

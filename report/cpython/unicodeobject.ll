@@ -201,14 +201,14 @@ _PyUnicode_DATA.exit271:                          ; preds = %bb.e, %bb.f
   br i1 %i.p, label %bb.g, label %bb.m
 
 bb.g:                                             ; preds = %_PyUnicode_DATA.exit271
-  %.not259 = icmp eq i32 %5, 0
+  %.not259 = trunc nuw i32 %5 to i1
   %i.q = and i32 %i.c, 64
-  %.not260 = icmp ne i32 %i.q, 0
-  %or.cond427.not494 = or i1 %.not259, %.not260
+  %.not260 = icmp eq i32 %i.q, 0
+  %or.cond427 = and i1 %.not260, %.not259
   %i.r = and i32 %i.j, 64
-  %.not261 = icmp eq i32 %i.r, 0
-  %or.cond428 = or i1 %or.cond427.not494, %.not261
-  br i1 %or.cond428, label %ucs1lib_find_max_char.exit.thread, label %bb.h
+  %.not261 = icmp ne i32 %i.r, 0
+  %or.cond428.not = and i1 %.not261, %or.cond427
+  br i1 %or.cond428.not, label %bb.h, label %ucs1lib_find_max_char.exit.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.s = getelementptr i8, ptr %.0.i, i64 %4      ; 3 uses
@@ -611,14 +611,14 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.p, label %.split.i.preheader, label %.split.us.i.preheader.a
 
 .split.us.i.preheader.a:                          ; preds = %bb.r
-  br i1 %i.bf, label %.lr.ph228.a, label %asciilib_utf16_decode.exit
-
-.split.i.preheader:                               ; preds = %bb.r
   br i1 %i.bf, label %.lr.ph240, label %asciilib_utf16_decode.exit
 
-.lr.ph228.a:                                      ; preds = %.split.us.i.preheader.a, %.split.us.i
-  %.067.us.i227 = phi ptr [ %i.bt, %.split.us.i ], [ %i.bd, %.split.us.i.preheader.a ] ; 3 uses
-  %.070.us.i226 = phi ptr [ %i.bq, %.split.us.i ], [ %i.ar, %.split.us.i.preheader.a ] ; 5 uses
+.split.i.preheader:                               ; preds = %bb.r
+  br i1 %i.bf, label %.lr.ph228.a, label %asciilib_utf16_decode.exit
+
+.lr.ph228.a:                                      ; preds = %.split.i.preheader, %.split.us.i
+  %.067.us.i227 = phi ptr [ %i.bt, %.split.us.i ], [ %i.bd, %.split.i.preheader ] ; 3 uses
+  %.070.us.i226 = phi ptr [ %i.bq, %.split.us.i ], [ %i.ar, %.split.i.preheader ] ; 5 uses
   %i.bg = ptrtoint ptr %.070.us.i226 to i64
   %i.bh = and i64 %i.bg, 7
   %.not81.us.i = icmp eq i64 %i.bh, 0
@@ -666,23 +666,22 @@ bb.t:                                             ; preds = %bb.s
   %.060129.us.us.i.a = phi ptr [ %i.bw, %bb.u ], [ %.070.us.i226, %.preheader.us.i ] ; 2 uses
   %.168128.us.us.i.a = phi ptr [ %i.cj, %bb.u ], [ %.067.us.i227, %.preheader.us.i ] ; 6 uses
   %i.bx = load i64, ptr %.060129.us.us.i.a, align 8, !tbaa !193 ; 5 uses
-  %i.by = and i64 %i.bx, -9151454082924314369
+  %i.by = and i64 %i.bx, -35747867511423104
   %.not83.us.us.i = icmp eq i64 %i.by, 0
   br i1 %.not83.us.us.i, label %bb.u, label %.thread.us.i
 
 bb.u:                                             ; preds = %.lr.ph.us.i
-  %6 = lshr exact i64 %i.bx, 8
-  %i.bz = trunc i64 %6 to i8
+  %i.bz = trunc i64 %i.bx to i8
   store i8 %i.bz, ptr %.168128.us.us.i.a, align 1, !tbaa !205
-  %i.ca = lshr i64 %i.bx, 24
+  %i.ca = lshr i64 %i.bx, 16
   %i.cb = trunc i64 %i.ca to i8
   %i.cc = getelementptr i8, ptr %.168128.us.us.i.a, i64 1
   store i8 %i.cb, ptr %i.cc, align 1, !tbaa !205
-  %i.cd = lshr i64 %i.bx, 40
+  %i.cd = lshr i64 %i.bx, 32
   %i.ce = trunc i64 %i.cd to i8
   %i.cf = getelementptr i8, ptr %.168128.us.us.i.a, i64 2
   store i8 %i.ce, ptr %i.cf, align 1, !tbaa !205
-  %i.cg = lshr i64 %i.bx, 56
+  %i.cg = lshr i64 %i.bx, 48
   %i.ch = trunc nuw nsw i64 %i.cg to i8
   %i.ci = getelementptr i8, ptr %.168128.us.us.i.a, i64 3
   store i8 %i.ch, ptr %i.ci, align 1, !tbaa !205
@@ -691,9 +690,9 @@ bb.u:                                             ; preds = %.lr.ph.us.i
   %.not82.us.us.i = icmp ugt ptr %i.ck, %i.be
   br i1 %.not82.us.us.i, label %.thread.us.i, label %.lr.ph.us.i
 
-.lr.ph240:                                        ; preds = %.split.i.preheader, %.split.i
-  %.067.i239 = phi ptr [ %i.ed, %.split.i ], [ %i.bd, %.split.i.preheader ] ; 3 uses
-  %.070.i238 = phi ptr [ %i.dl, %.split.i ], [ %i.ar, %.split.i.preheader ] ; 5 uses
+.lr.ph240:                                        ; preds = %.split.us.i.preheader.a, %.split.i
+  %.067.i239 = phi ptr [ %i.ed, %.split.i ], [ %i.bd, %.split.us.i.preheader.a ] ; 3 uses
+  %.070.i238 = phi ptr [ %i.dl, %.split.i ], [ %i.ar, %.split.us.i.preheader.a ] ; 5 uses
   %i.cl = ptrtoint ptr %.070.i238 to i64
   %i.cm = and i64 %i.cl, 7
   %.not81.i.a = icmp eq i64 %i.cm, 0
@@ -709,22 +708,23 @@ bb.u:                                             ; preds = %.lr.ph.us.i
   %.060129.i.a = phi ptr [ %i.co, %bb.v ], [ %.070.i238, %.preheader.i ] ; 2 uses
   %.168128.i.a = phi ptr [ %i.db, %bb.v ], [ %.067.i239, %.preheader.i ] ; 6 uses
   %i.cp = load i64, ptr %.060129.i.a, align 8, !tbaa !193 ; 5 uses
-  %i.cq = and i64 %i.cp, -35747867511423104
+  %i.cq = and i64 %i.cp, -9151454082924314369
   %.not84.i.a = icmp eq i64 %i.cq, 0
   br i1 %.not84.i.a, label %bb.v, label %.thread.i
 
 bb.v:                                             ; preds = %.lr.ph.i
-  %i.cr = trunc i64 %i.cp to i8
+  %6 = lshr exact i64 %i.cp, 8
+  %i.cr = trunc i64 %6 to i8
   store i8 %i.cr, ptr %.168128.i.a, align 1, !tbaa !205
-  %i.cs = lshr i64 %i.cp, 16
+  %i.cs = lshr i64 %i.cp, 24
   %i.ct = trunc i64 %i.cs to i8
   %i.cu = getelementptr i8, ptr %.168128.i.a, i64 1
   store i8 %i.ct, ptr %i.cu, align 1, !tbaa !205
-  %i.cv = lshr i64 %i.cp, 32
+  %i.cv = lshr i64 %i.cp, 40
   %i.cw = trunc i64 %i.cv to i8
   %i.cx = getelementptr i8, ptr %.168128.i.a, i64 2
   store i8 %i.cw, ptr %i.cx, align 1, !tbaa !205
-  %i.cy = lshr i64 %i.cp, 48
+  %i.cy = lshr i64 %i.cp, 56
   %i.cz = trunc nuw nsw i64 %i.cy to i8
   %i.da = getelementptr i8, ptr %.168128.i.a, i64 3
   store i8 %i.cz, ptr %i.da, align 1, !tbaa !205
@@ -759,12 +759,12 @@ bb.x:                                             ; preds = %bb.w
   %i.dn = icmp samesign ugt i32 %i.dk, 127
   br i1 %i.dn, label %asciilib_utf16_decode.exit, label %.split.i
 
-.split143.us.i:                                   ; preds = %bb.s, %bb.w
-  %.us-phi144.i.a = phi ptr [ %.171.i, %bb.w ], [ %.171.us.i, %bb.s ]
-  %.us-phi145.i.a = phi ptr [ %.4.i, %bb.w ], [ %.4.us.i, %bb.s ] ; 4 uses
-  %.us-phi147.i = phi i32 [ %i.df, %bb.w ], [ %i.bk, %bb.s ]
-  %.us-phi149.i.a = phi i32 [ %i.dk, %bb.w ], [ %i.bp, %bb.s ]
-  %.us-phi150.i = phi ptr [ %i.dl, %bb.w ], [ %i.bq, %bb.s ] ; 5 uses
+.split143.us.i:                                   ; preds = %bb.w, %bb.s
+  %.us-phi144.i.a = phi ptr [ %.171.us.i, %bb.s ], [ %.171.i, %bb.w ]
+  %.us-phi145.i.a = phi ptr [ %.4.us.i, %bb.s ], [ %.4.i, %bb.w ] ; 4 uses
+  %.us-phi147.i = phi i32 [ %i.bk, %bb.s ], [ %i.df, %bb.w ]
+  %.us-phi149.i.a = phi i32 [ %i.bp, %bb.s ], [ %i.dk, %bb.w ]
+  %.us-phi150.i = phi ptr [ %i.bq, %bb.s ], [ %i.dl, %bb.w ] ; 5 uses
   %i.do = and i32 %.us-phi147.i, 220
   %.not121.i.a = icmp eq i32 %i.do, 216
   br i1 %.not121.i.a, label %bb.y, label %asciilib_utf16_decode.exit
@@ -801,10 +801,10 @@ bb.aa:                                            ; preds = %bb.z
   %i.ee = icmp ult ptr %i.dl, %i.be
   br i1 %i.ee, label %.lr.ph240, label %asciilib_utf16_decode.exit
 
-asciilib_utf16_decode.exit:                       ; preds = %bb.t, %.thread.us.i, %.split.us.i, %bb.x, %.thread.i, %.split.i, %.split.us.i.preheader.a, %.split.i.preheader, %.split143.us.i, %bb.y, %bb.z, %bb.aa
-  %.474.i = phi ptr [ %.us-phi150.i, %bb.y ], [ %i.ds, %bb.aa ], [ %i.ds, %bb.z ], [ %.us-phi150.i, %.split143.us.i ], [ %i.dl, %.split.i ], [ %i.ar, %.split.i.preheader ], [ %i.ar, %.split.us.i.preheader.a ], [ %.060.lcssa.i, %.thread.i ], [ %i.dl, %bb.x ], [ %i.bq, %bb.t ], [ %i.bq, %.split.us.i ], [ %.060.lcssa.us.i, %.thread.us.i ] ; 2 uses
-  %.7.i = phi ptr [ %.us-phi145.i.a, %bb.y ], [ %.us-phi145.i.a, %bb.aa ], [ %.us-phi145.i.a, %bb.z ], [ %.us-phi145.i.a, %.split143.us.i ], [ %i.ed, %.split.i ], [ %i.bd, %.split.i.preheader ], [ %i.bd, %.split.us.i.preheader.a ], [ %.168.lcssa.i, %.thread.i ], [ %.4.i, %bb.x ], [ %.4.us.i, %bb.t ], [ %i.bt, %.split.us.i ], [ %.168.lcssa.us.i, %.thread.us.i ]
-  %.266.i = phi i32 [ 1, %bb.y ], [ %i.ec, %bb.aa ], [ 3, %bb.z ], [ 2, %.split143.us.i ], [ 0, %.split.i ], [ 0, %.split.i.preheader ], [ 0, %.split.us.i.preheader.a ], [ 0, %.thread.i ], [ %i.dk, %bb.x ], [ %i.bp, %bb.t ], [ 0, %.split.us.i ], [ 0, %.thread.us.i ]
+asciilib_utf16_decode.exit:                       ; preds = %bb.x, %.thread.i, %.split.i, %bb.t, %.thread.us.i, %.split.us.i, %.split.us.i.preheader.a, %.split.i.preheader, %.split143.us.i, %bb.y, %bb.z, %bb.aa
+  %.474.i = phi ptr [ %.us-phi150.i, %bb.y ], [ %i.ds, %bb.aa ], [ %i.ds, %bb.z ], [ %.us-phi150.i, %.split143.us.i ], [ %i.ar, %.split.i.preheader ], [ %i.ar, %.split.us.i.preheader.a ], [ %i.bq, %.split.us.i ], [ %.060.lcssa.us.i, %.thread.us.i ], [ %i.bq, %bb.t ], [ %.060.lcssa.i, %.thread.i ], [ %i.dl, %bb.x ], [ %i.dl, %.split.i ] ; 2 uses
+  %.7.i = phi ptr [ %.us-phi145.i.a, %bb.y ], [ %.us-phi145.i.a, %bb.aa ], [ %.us-phi145.i.a, %bb.z ], [ %.us-phi145.i.a, %.split143.us.i ], [ %i.bd, %.split.i.preheader ], [ %i.bd, %.split.us.i.preheader.a ], [ %i.bt, %.split.us.i ], [ %.168.lcssa.us.i, %.thread.us.i ], [ %.4.us.i, %bb.t ], [ %.168.lcssa.i, %.thread.i ], [ %.4.i, %bb.x ], [ %i.ed, %.split.i ]
+  %.266.i = phi i32 [ 1, %bb.y ], [ %i.ec, %bb.aa ], [ 3, %bb.z ], [ 2, %.split143.us.i ], [ 0, %.split.i.preheader ], [ 0, %.split.us.i.preheader.a ], [ 0, %.split.us.i ], [ 0, %.thread.us.i ], [ %i.bp, %bb.t ], [ 0, %.thread.i ], [ %i.dk, %bb.x ], [ 0, %.split.i ]
   store ptr %.474.i, ptr %i.d, align 8, !tbaa !355
   %i.ef = ptrtoint ptr %.7.i to i64
   %i.eg = ptrtoint ptr %i.bb to i64
@@ -815,14 +815,14 @@ bb.ab:                                            ; preds = %bb.q
   br i1 %i.p, label %.split.i59.preheader, label %.split.us.i79.preheader
 
 .split.us.i79.preheader:                          ; preds = %bb.ab
-  br i1 %i.bf, label %.lr.ph252.a, label %ucs1lib_utf16_decode.exit
-
-.split.i59.preheader:                             ; preds = %bb.ab
   br i1 %i.bf, label %.lr.ph259, label %ucs1lib_utf16_decode.exit
 
-.lr.ph252.a:                                      ; preds = %.split.us.i79.preheader, %.split.us.i79
-  %.067.us.i81251 = phi ptr [ %i.er, %.split.us.i79 ], [ %i.bd, %.split.us.i79.preheader ] ; 3 uses
-  %.070.us.i80250 = phi ptr [ %i.ep, %.split.us.i79 ], [ %i.ar, %.split.us.i79.preheader ] ; 5 uses
+.split.i59.preheader:                             ; preds = %bb.ab
+  br i1 %i.bf, label %.lr.ph252.a, label %ucs1lib_utf16_decode.exit
+
+.lr.ph252.a:                                      ; preds = %.split.i59.preheader, %.split.us.i79
+  %.067.us.i81251 = phi ptr [ %i.er, %.split.us.i79 ], [ %i.bd, %.split.i59.preheader ] ; 3 uses
+  %.070.us.i80250 = phi ptr [ %i.ep, %.split.us.i79 ], [ %i.ar, %.split.i59.preheader ] ; 5 uses
   %i.ei = ptrtoint ptr %.070.us.i80250 to i64
   %i.ej = and i64 %i.ei, 7
   %.not81.us.i82 = icmp eq i64 %i.ej, 0
@@ -867,23 +867,22 @@ bb.ad:                                            ; preds = %bb.ac
   %.060130.us.us.i = phi ptr [ %i.eu, %bb.ae ], [ %.070.us.i80250, %.preheader.us.i85 ] ; 2 uses
   %.168129.us.us.i = phi ptr [ %i.fh, %bb.ae ], [ %.067.us.i81251, %.preheader.us.i85 ] ; 6 uses
   %i.ev = load i64, ptr %.060130.us.us.i, align 8, !tbaa !193 ; 5 uses
-  %i.ew = and i64 %i.ev, 71777214294589695
+  %i.ew = and i64 %i.ev, -71777214294589696
   %.not83.us.us.i87 = icmp eq i64 %i.ew, 0
   br i1 %.not83.us.us.i87, label %bb.ae, label %.thread.us.i88
 
 bb.ae:                                            ; preds = %.lr.ph.us.i86
-  %7 = lshr exact i64 %i.ev, 8
-  %i.ex = trunc i64 %7 to i8
+  %i.ex = trunc i64 %i.ev to i8
   store i8 %i.ex, ptr %.168129.us.us.i, align 1, !tbaa !205
-  %i.ey = lshr i64 %i.ev, 24
+  %i.ey = lshr i64 %i.ev, 16
   %i.ez = trunc i64 %i.ey to i8
   %i.fa = getelementptr i8, ptr %.168129.us.us.i, i64 1
   store i8 %i.ez, ptr %i.fa, align 1, !tbaa !205
-  %i.fb = lshr i64 %i.ev, 40
+  %i.fb = lshr i64 %i.ev, 32
   %i.fc = trunc i64 %i.fb to i8
   %i.fd = getelementptr i8, ptr %.168129.us.us.i, i64 2
   store i8 %i.fc, ptr %i.fd, align 1, !tbaa !205
-  %i.fe = lshr i64 %i.ev, 56
+  %i.fe = lshr i64 %i.ev, 48
   %i.ff = trunc nuw i64 %i.fe to i8
   %i.fg = getelementptr i8, ptr %.168129.us.us.i, i64 3
   store i8 %i.ff, ptr %i.fg, align 1, !tbaa !205
@@ -892,9 +891,9 @@ bb.ae:                                            ; preds = %.lr.ph.us.i86
   %.not82.us.us.i92 = icmp ugt ptr %i.fi, %i.be
   br i1 %.not82.us.us.i92, label %.thread.us.i88, label %.lr.ph.us.i86
 
-.lr.ph259:                                        ; preds = %.split.i59.preheader, %.split.i59
-  %.067.i61258 = phi ptr [ %i.gz, %.split.i59 ], [ %i.bd, %.split.i59.preheader ] ; 3 uses
-  %.070.i60257 = phi ptr [ %i.gg, %.split.i59 ], [ %i.ar, %.split.i59.preheader ] ; 5 uses
+.lr.ph259:                                        ; preds = %.split.us.i79.preheader, %.split.i59
+  %.067.i61258 = phi ptr [ %i.gz, %.split.i59 ], [ %i.bd, %.split.us.i79.preheader ] ; 3 uses
+  %.070.i60257 = phi ptr [ %i.gg, %.split.i59 ], [ %i.ar, %.split.us.i79.preheader ] ; 5 uses
   %i.fj = ptrtoint ptr %.070.i60257 to i64
   %i.fk = and i64 %i.fj, 7
   %.not81.i65 = icmp eq i64 %i.fk, 0
@@ -910,22 +909,23 @@ bb.ae:                                            ; preds = %.lr.ph.us.i86
   %.060130.i = phi ptr [ %i.fm, %bb.af ], [ %.070.i60257, %.preheader.i71 ] ; 2 uses
   %.168129.i = phi ptr [ %i.fz, %bb.af ], [ %.067.i61258, %.preheader.i71 ] ; 6 uses
   %i.fn = load i64, ptr %.060130.i, align 8, !tbaa !193 ; 5 uses
-  %i.fo = and i64 %i.fn, -71777214294589696
+  %i.fo = and i64 %i.fn, 71777214294589695
   %.not84.i73 = icmp eq i64 %i.fo, 0
   br i1 %.not84.i73, label %bb.af, label %.thread.i74
 
 bb.af:                                            ; preds = %.lr.ph.i72
-  %i.fp = trunc i64 %i.fn to i8
+  %7 = lshr exact i64 %i.fn, 8
+  %i.fp = trunc i64 %7 to i8
   store i8 %i.fp, ptr %.168129.i, align 1, !tbaa !205
-  %i.fq = lshr i64 %i.fn, 16
+  %i.fq = lshr i64 %i.fn, 24
   %i.fr = trunc i64 %i.fq to i8
   %i.fs = getelementptr i8, ptr %.168129.i, i64 1
   store i8 %i.fr, ptr %i.fs, align 1, !tbaa !205
-  %i.ft = lshr i64 %i.fn, 32
+  %i.ft = lshr i64 %i.fn, 40
   %i.fu = trunc i64 %i.ft to i8
   %i.fv = getelementptr i8, ptr %.168129.i, i64 2
   store i8 %i.fu, ptr %i.fv, align 1, !tbaa !205
-  %i.fw = lshr i64 %i.fn, 48
+  %i.fw = lshr i64 %i.fn, 56
   %i.fx = trunc nuw i64 %i.fw to i8
   %i.fy = getelementptr i8, ptr %.168129.i, i64 3
   store i8 %i.fx, ptr %i.fy, align 1, !tbaa !205
@@ -957,12 +957,12 @@ bb.ah:                                            ; preds = %bb.ag
   %.not87.i = icmp eq i8 %i.gc, 0
   br i1 %.not87.i, label %.split.i59, label %.thread107.loopexit.split.loop.exit141.i
 
-.split160.us.i:                                   ; preds = %bb.ac, %bb.ag
-  %.us-phi161.i.a = phi i32 [ %i.gd, %bb.ag ], [ %i.em, %bb.ac ] ; 2 uses
-  %.us-phi162.i.a = phi i8 [ %i.gf, %bb.ag ], [ %i.eo, %bb.ac ]
-  %.us-phi163.i.a = phi ptr [ %.171.i66, %bb.ag ], [ %.171.us.i83, %bb.ac ]
-  %.us-phi164.i = phi ptr [ %.4.i67, %bb.ag ], [ %.4.us.i84, %bb.ac ] ; 4 uses
-  %.us-phi168.i.a = phi ptr [ %i.gg, %bb.ag ], [ %i.ep, %bb.ac ] ; 5 uses
+.split160.us.i:                                   ; preds = %bb.ag, %bb.ac
+  %.us-phi161.i.a = phi i32 [ %i.em, %bb.ac ], [ %i.gd, %bb.ag ] ; 2 uses
+  %.us-phi162.i.a = phi i8 [ %i.eo, %bb.ac ], [ %i.gf, %bb.ag ]
+  %.us-phi163.i.a = phi ptr [ %.171.us.i83, %bb.ac ], [ %.171.i66, %bb.ag ]
+  %.us-phi164.i = phi ptr [ %.4.us.i84, %bb.ac ], [ %.4.i67, %bb.ag ] ; 4 uses
+  %.us-phi168.i.a = phi ptr [ %i.ep, %bb.ac ], [ %i.gg, %bb.ag ] ; 5 uses
   %i.gi = zext i8 %.us-phi162.i.a to i32
   %i.gj = and i32 %.us-phi161.i.a, 220
   %.not122.i69 = icmp eq i32 %i.gj, 216
@@ -1002,20 +1002,20 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ha = icmp ult ptr %i.gg, %i.be
   br i1 %i.ha, label %.lr.ph259, label %ucs1lib_utf16_decode.exit
 
-.thread107.loopexit.split.loop.exit141.i:         ; preds = %bb.ad, %bb.ah
-  %.us-phi169.i.a = phi i32 [ %i.gd, %bb.ah ], [ %i.em, %bb.ad ]
-  %.us-phi170.i.a = phi i8 [ %i.gf, %bb.ah ], [ %i.eo, %bb.ad ]
-  %.us-phi171.i.a = phi ptr [ %i.gg, %bb.ah ], [ %i.ep, %bb.ad ]
-  %.us-phi172.i = phi ptr [ %.4.i67, %bb.ah ], [ %.4.us.i84, %bb.ad ]
+.thread107.loopexit.split.loop.exit141.i:         ; preds = %bb.ah, %bb.ad
+  %.us-phi169.i.a = phi i32 [ %i.em, %bb.ad ], [ %i.gd, %bb.ah ]
+  %.us-phi170.i.a = phi i8 [ %i.eo, %bb.ad ], [ %i.gf, %bb.ah ]
+  %.us-phi171.i.a = phi ptr [ %i.ep, %bb.ad ], [ %i.gg, %bb.ah ]
+  %.us-phi172.i = phi ptr [ %.4.us.i84, %bb.ad ], [ %.4.i67, %bb.ah ]
   %i.hb = shl nuw nsw i32 %.us-phi169.i.a, 8
   %i.hc = zext i8 %.us-phi170.i.a to i32
   %i.hd = or disjoint i32 %i.hb, %i.hc
   br label %ucs1lib_utf16_decode.exit
 
-ucs1lib_utf16_decode.exit:                        ; preds = %.thread.us.i88, %.split.us.i79, %.thread.i74, %.split.i59, %.split.us.i79.preheader, %.split.i59.preheader, %.split160.us.i, %bb.ai, %bb.aj, %bb.ak, %.thread107.loopexit.split.loop.exit141.i
-  %.474.i62 = phi ptr [ %.us-phi168.i.a, %bb.ai ], [ %i.gn, %bb.ak ], [ %i.gn, %bb.aj ], [ %.us-phi168.i.a, %.split160.us.i ], [ %.us-phi171.i.a, %.thread107.loopexit.split.loop.exit141.i ], [ %i.ar, %.split.us.i79.preheader ], [ %i.ar, %.split.i59.preheader ], [ %i.gg, %.split.i59 ], [ %.060.lcssa.i76, %.thread.i74 ], [ %.060.lcssa.us.i90, %.thread.us.i88 ], [ %i.ep, %.split.us.i79 ] ; 2 uses
-  %.7.i63 = phi ptr [ %.us-phi164.i, %bb.ai ], [ %.us-phi164.i, %bb.ak ], [ %.us-phi164.i, %bb.aj ], [ %.us-phi164.i, %.split160.us.i ], [ %.us-phi172.i, %.thread107.loopexit.split.loop.exit141.i ], [ %i.bd, %.split.us.i79.preheader ], [ %i.bd, %.split.i59.preheader ], [ %i.gz, %.split.i59 ], [ %.168.lcssa.i75, %.thread.i74 ], [ %.168.lcssa.us.i89, %.thread.us.i88 ], [ %i.er, %.split.us.i79 ]
-  %.266.i64 = phi i32 [ 1, %bb.ai ], [ %i.gy, %bb.ak ], [ 3, %bb.aj ], [ 2, %.split160.us.i ], [ %i.hd, %.thread107.loopexit.split.loop.exit141.i ], [ 0, %.split.us.i79.preheader ], [ 0, %.split.i59.preheader ], [ 0, %.thread.i74 ], [ 0, %.split.i59 ], [ 0, %.split.us.i79 ], [ 0, %.thread.us.i88 ]
+ucs1lib_utf16_decode.exit:                        ; preds = %.thread.i74, %.split.i59, %.thread.us.i88, %.split.us.i79, %.split.us.i79.preheader, %.split.i59.preheader, %.split160.us.i, %bb.ai, %bb.aj, %bb.ak, %.thread107.loopexit.split.loop.exit141.i
+  %.474.i62 = phi ptr [ %.us-phi168.i.a, %bb.ai ], [ %i.gn, %bb.ak ], [ %i.gn, %bb.aj ], [ %.us-phi168.i.a, %.split160.us.i ], [ %.us-phi171.i.a, %.thread107.loopexit.split.loop.exit141.i ], [ %i.ar, %.split.us.i79.preheader ], [ %i.ar, %.split.i59.preheader ], [ %i.ep, %.split.us.i79 ], [ %.060.lcssa.us.i90, %.thread.us.i88 ], [ %.060.lcssa.i76, %.thread.i74 ], [ %i.gg, %.split.i59 ] ; 2 uses
+  %.7.i63 = phi ptr [ %.us-phi164.i, %bb.ai ], [ %.us-phi164.i, %bb.ak ], [ %.us-phi164.i, %bb.aj ], [ %.us-phi164.i, %.split160.us.i ], [ %.us-phi172.i, %.thread107.loopexit.split.loop.exit141.i ], [ %i.bd, %.split.us.i79.preheader ], [ %i.bd, %.split.i59.preheader ], [ %i.er, %.split.us.i79 ], [ %.168.lcssa.us.i89, %.thread.us.i88 ], [ %.168.lcssa.i75, %.thread.i74 ], [ %i.gz, %.split.i59 ]
+  %.266.i64 = phi i32 [ 1, %bb.ai ], [ %i.gy, %bb.ak ], [ 3, %bb.aj ], [ 2, %.split160.us.i ], [ %i.hd, %.thread107.loopexit.split.loop.exit141.i ], [ 0, %.split.us.i79.preheader ], [ 0, %.split.i59.preheader ], [ 0, %.thread.us.i88 ], [ 0, %.split.us.i79 ], [ 0, %.split.i59 ], [ 0, %.thread.i74 ]
   store ptr %.474.i62, ptr %i.d, align 8, !tbaa !355
   %i.he = ptrtoint ptr %.7.i63 to i64
   %i.hf = ptrtoint ptr %i.bb to i64
@@ -1031,14 +1031,14 @@ bb.al:                                            ; preds = %bb.p
   br i1 %i.p, label %.split.i94.preheader, label %.split.us.i110.preheader
 
 .split.us.i110.preheader:                         ; preds = %bb.al
-  br i1 %i.hl, label %.lr.ph.a, label %ucs2lib_utf16_decode.exit
-
-.split.i94.preheader:                             ; preds = %bb.al
   br i1 %i.hl, label %.lr.ph221, label %ucs2lib_utf16_decode.exit
 
-.lr.ph.a:                                         ; preds = %.split.us.i110.preheader, %.split.us.i110
-  %.067.us.i112215 = phi ptr [ %i.hz, %.split.us.i110 ], [ %i.hj, %.split.us.i110.preheader ] ; 3 uses
-  %.070.us.i111214 = phi ptr [ %i.hw, %.split.us.i110 ], [ %i.ar, %.split.us.i110.preheader ] ; 5 uses
+.split.i94.preheader:                             ; preds = %bb.al
+  br i1 %i.hl, label %.lr.ph.a, label %ucs2lib_utf16_decode.exit
+
+.lr.ph.a:                                         ; preds = %.split.i94.preheader, %.split.us.i110
+  %.067.us.i112215 = phi ptr [ %i.hz, %.split.us.i110 ], [ %i.hj, %.split.i94.preheader ] ; 3 uses
+  %.070.us.i111214 = phi ptr [ %i.hw, %.split.us.i110 ], [ %i.ar, %.split.i94.preheader ] ; 5 uses
   %i.hm = ptrtoint ptr %.070.us.i111214 to i64
   %i.hn = and i64 %i.hm, 7
   %.not79.us.i = icmp eq i64 %i.hn, 0
@@ -1082,26 +1082,21 @@ bb.am:                                            ; preds = %.thread.us.i117, %.
   %i.ic = phi ptr [ %i.ig, %bb.an ], [ %i.ib, %.preheader.us.i115 ] ; 3 uses
   %.060126.us.us.i = phi ptr [ %i.ic, %bb.an ], [ %.070.us.i111214, %.preheader.us.i115 ] ; 2 uses
   %.168125.us.us.i = phi ptr [ %i.if, %bb.an ], [ %.067.us.i112215, %.preheader.us.i115 ] ; 3 uses
-  %i.id = load i64, ptr %.060126.us.us.i, align 8, !tbaa !193 ; 3 uses
-  %i.ie = and i64 %i.id, 36029346783166592
+  %i.id = load i64, ptr %.060126.us.us.i, align 8, !tbaa !193 ; 2 uses
+  %i.ie = and i64 %i.id, -9223231297218904064
   %.not81.us.us.i = icmp eq i64 %i.ie, 0
   br i1 %.not81.us.us.i, label %bb.an, label %.thread.us.i117
 
 bb.an:                                            ; preds = %.lr.ph.us.i116
-  %8 = lshr i64 %i.id, 8
-  %9 = and i64 %8, 71777214294589695
-  %10 = shl i64 %i.id, 8
-  %11 = and i64 %10, 9151454082924314368
-  %12 = or disjoint i64 %9, %11
-  store i64 %12, ptr %.168125.us.us.i, align 2
+  store i64 %i.id, ptr %.168125.us.us.i, align 2
   %i.if = getelementptr i8, ptr %.168125.us.us.i, i64 8 ; 2 uses
   %i.ig = getelementptr i8, ptr %i.ic, i64 8      ; 2 uses
   %.not80.us.us.i = icmp ugt ptr %i.ig, %i.hk
   br i1 %.not80.us.us.i, label %.thread.us.i117, label %.lr.ph.us.i116
 
-.lr.ph221:                                        ; preds = %.split.i94.preheader, %.split.i94
-  %.067.i96220 = phi ptr [ %i.jp, %.split.i94 ], [ %i.hj, %.split.i94.preheader ] ; 3 uses
-  %.070.i95219 = phi ptr [ %i.ix, %.split.i94 ], [ %i.ar, %.split.i94.preheader ] ; 5 uses
+.lr.ph221:                                        ; preds = %.split.us.i110.preheader, %.split.i94
+  %.067.i96220 = phi ptr [ %i.jp, %.split.i94 ], [ %i.hj, %.split.us.i110.preheader ] ; 3 uses
+  %.070.i95219 = phi ptr [ %i.ix, %.split.i94 ], [ %i.ar, %.split.us.i110.preheader ] ; 5 uses
   %i.ih = ptrtoint ptr %.070.i95219 to i64
   %i.ii = and i64 %i.ih, 7
   %.not79.i.a = icmp eq i64 %i.ii, 0
@@ -1116,13 +1111,18 @@ bb.an:                                            ; preds = %.lr.ph.us.i116
   %i.ik = phi ptr [ %i.io, %bb.ao ], [ %i.ij, %.preheader.i104 ] ; 3 uses
   %.060126.i = phi ptr [ %i.ik, %bb.ao ], [ %.070.i95219, %.preheader.i104 ] ; 2 uses
   %.168125.i = phi ptr [ %i.in, %bb.ao ], [ %.067.i96220, %.preheader.i104 ] ; 3 uses
-  %i.il = load i64, ptr %.060126.i, align 8, !tbaa !193 ; 2 uses
-  %i.im = and i64 %i.il, -9223231297218904064
+  %i.il = load i64, ptr %.060126.i, align 8, !tbaa !193 ; 3 uses
+  %i.im = and i64 %i.il, 36029346783166592
   %.not82.i106 = icmp eq i64 %i.im, 0
   br i1 %.not82.i106, label %bb.ao, label %.thread.i107
 
 bb.ao:                                            ; preds = %.lr.ph.i105
-  store i64 %i.il, ptr %.168125.i, align 2
+  %8 = lshr i64 %i.il, 8
+  %9 = and i64 %8, 71777214294589695
+  %10 = shl i64 %i.il, 8
+  %11 = and i64 %10, 9151454082924314368
+  %12 = or disjoint i64 %9, %11
+  store i64 %12, ptr %.168125.i, align 2
   %i.in = getelementptr i8, ptr %.168125.i, i64 8 ; 2 uses
   %i.io = getelementptr i8, ptr %i.ik, i64 8      ; 2 uses
   %.not80.i = icmp ugt ptr %i.io, %i.hk
@@ -1150,12 +1150,12 @@ bb.ap:                                            ; preds = %.thread.i107, %.lr.
   %.not117.i.a = icmp eq i32 %i.iy, 216
   br i1 %.not117.i.a, label %.split139.us.i, label %.split.i94
 
-.split139.us.i:                                   ; preds = %bb.am, %bb.ap
-  %.us-phi140.i.a = phi ptr [ %.171.i100, %bb.ap ], [ %.171.us.i113, %bb.am ]
-  %.us-phi141.i = phi ptr [ %.4.i101, %bb.ap ], [ %.4.us.i114, %bb.am ] ; 4 uses
-  %.us-phi143.i = phi i32 [ %i.ir, %bb.ap ], [ %i.hq, %bb.am ]
-  %.us-phi145.i102 = phi i32 [ %i.iw, %bb.ap ], [ %i.hv, %bb.am ]
-  %.us-phi146.i = phi ptr [ %i.ix, %bb.ap ], [ %i.hw, %bb.am ] ; 5 uses
+.split139.us.i:                                   ; preds = %bb.ap, %bb.am
+  %.us-phi140.i.a = phi ptr [ %.171.us.i113, %bb.am ], [ %.171.i100, %bb.ap ]
+  %.us-phi141.i = phi ptr [ %.4.us.i114, %bb.am ], [ %.4.i101, %bb.ap ] ; 4 uses
+  %.us-phi143.i = phi i32 [ %i.hq, %bb.am ], [ %i.ir, %bb.ap ]
+  %.us-phi145.i102 = phi i32 [ %i.hv, %bb.am ], [ %i.iw, %bb.ap ]
+  %.us-phi146.i = phi ptr [ %i.hw, %bb.am ], [ %i.ix, %bb.ap ] ; 5 uses
   %i.iz = and i32 %.us-phi143.i, 220
   %.not118.i.a = icmp eq i32 %i.iz, 216
   br i1 %.not118.i.a, label %bb.aq, label %ucs2lib_utf16_decode.exit
@@ -1193,10 +1193,10 @@ bb.ar:                                            ; preds = %bb.aq
   %i.jq = icmp ult ptr %i.ix, %i.hk
   br i1 %i.jq, label %.lr.ph221, label %ucs2lib_utf16_decode.exit
 
-ucs2lib_utf16_decode.exit:                        ; preds = %.thread.us.i117, %.split.us.i110, %.thread.i107, %.split.i94, %.split.us.i110.preheader, %.split.i94.preheader, %.split139.us.i, %bb.aq, %bb.ar, %.thread91.i
-  %.474.i97 = phi ptr [ %.us-phi146.i, %.split139.us.i ], [ %i.jd, %bb.ar ], [ %i.jd, %.thread91.i ], [ %.us-phi146.i, %bb.aq ], [ %i.ar, %.split.us.i110.preheader ], [ %i.ix, %.split.i94 ], [ %i.ar, %.split.i94.preheader ], [ %.060.lcssa.i109, %.thread.i107 ], [ %.060.lcssa.us.i119, %.thread.us.i117 ], [ %i.hw, %.split.us.i110 ] ; 2 uses
-  %.7.i98 = phi ptr [ %.us-phi141.i, %.split139.us.i ], [ %.us-phi141.i, %bb.ar ], [ %.us-phi141.i, %.thread91.i ], [ %.us-phi141.i, %bb.aq ], [ %i.hj, %.split.us.i110.preheader ], [ %i.jp, %.split.i94 ], [ %i.hj, %.split.i94.preheader ], [ %.168.lcssa.i108, %.thread.i107 ], [ %.168.lcssa.us.i118, %.thread.us.i117 ], [ %i.hz, %.split.us.i110 ]
-  %.266.i99 = phi i32 [ 2, %.split139.us.i ], [ 3, %bb.ar ], [ %i.jn, %.thread91.i ], [ 1, %bb.aq ], [ 0, %.split.us.i110.preheader ], [ 0, %.thread.i107 ], [ 0, %.split.i94.preheader ], [ 0, %.split.i94 ], [ 0, %.split.us.i110 ], [ 0, %.thread.us.i117 ]
+ucs2lib_utf16_decode.exit:                        ; preds = %.thread.i107, %.split.i94, %.thread.us.i117, %.split.us.i110, %.split.us.i110.preheader, %.split.i94.preheader, %.split139.us.i, %bb.aq, %bb.ar, %.thread91.i
+  %.474.i97 = phi ptr [ %.us-phi146.i, %.split139.us.i ], [ %i.jd, %bb.ar ], [ %i.jd, %.thread91.i ], [ %.us-phi146.i, %bb.aq ], [ %i.ar, %.split.us.i110.preheader ], [ %i.ar, %.split.i94.preheader ], [ %i.hw, %.split.us.i110 ], [ %.060.lcssa.us.i119, %.thread.us.i117 ], [ %i.ix, %.split.i94 ], [ %.060.lcssa.i109, %.thread.i107 ] ; 2 uses
+  %.7.i98 = phi ptr [ %.us-phi141.i, %.split139.us.i ], [ %.us-phi141.i, %bb.ar ], [ %.us-phi141.i, %.thread91.i ], [ %.us-phi141.i, %bb.aq ], [ %i.hj, %.split.us.i110.preheader ], [ %i.hj, %.split.i94.preheader ], [ %i.hz, %.split.us.i110 ], [ %.168.lcssa.us.i118, %.thread.us.i117 ], [ %i.jp, %.split.i94 ], [ %.168.lcssa.i108, %.thread.i107 ]
+  %.266.i99 = phi i32 [ 2, %.split139.us.i ], [ 3, %bb.ar ], [ %i.jn, %.thread91.i ], [ 1, %bb.aq ], [ 0, %.split.us.i110.preheader ], [ 0, %.split.i94.preheader ], [ 0, %.thread.us.i117 ], [ 0, %.split.us.i110 ], [ 0, %.split.i94 ], [ 0, %.thread.i107 ]
   store ptr %.474.i97, ptr %i.d, align 8, !tbaa !355
   %i.jr = ptrtoint ptr %.7.i98 to i64
   %i.js = ptrtoint ptr %i.hh to i64
@@ -1213,14 +1213,14 @@ bb.as:                                            ; preds = %bb.p
   br i1 %i.p, label %.split.i121.preheader, label %.split.us.i136.preheader.a
 
 .split.us.i136.preheader.a:                       ; preds = %bb.as
-  br i1 %i.jz, label %.lr.ph266.a, label %ucs4lib_utf16_decode.exit
-
-.split.i121.preheader:                            ; preds = %bb.as
   br i1 %i.jz, label %.lr.ph286, label %ucs4lib_utf16_decode.exit
 
-.lr.ph266.a:                                      ; preds = %.split.us.i136.preheader.a, %.split.us.i136
-  %.067.us.i138265 = phi ptr [ %i.lb, %.split.us.i136 ], [ %i.jx, %.split.us.i136.preheader.a ] ; 3 uses
-  %.070.us.i137264 = phi ptr [ %.272.us.i, %.split.us.i136 ], [ %i.ar, %.split.us.i136.preheader.a ] ; 5 uses
+.split.i121.preheader:                            ; preds = %bb.as
+  br i1 %i.jz, label %.lr.ph266.a, label %ucs4lib_utf16_decode.exit
+
+.lr.ph266.a:                                      ; preds = %.split.i121.preheader, %.split.us.i136
+  %.067.us.i138265 = phi ptr [ %i.lb, %.split.us.i136 ], [ %i.jx, %.split.i121.preheader ] ; 3 uses
+  %.070.us.i137264 = phi ptr [ %.272.us.i, %.split.us.i136 ], [ %i.ar, %.split.i121.preheader ] ; 5 uses
   %i.ka = ptrtoint ptr %.070.us.i137264 to i64
   %i.kb = and i64 %i.ka, 7
   %.not79.us.i139 = icmp eq i64 %i.kb, 0
@@ -1296,29 +1296,24 @@ bb.ax:                                            ; preds = %bb.aw
   %i.le = phi ptr [ %i.lt, %bb.ay ], [ %i.ld, %.preheader.us.i142 ] ; 3 uses
   %.062115.us.us.i = phi ptr [ %i.le, %bb.ay ], [ %.070.us.i137264, %.preheader.us.i142 ] ; 2 uses
   %.168114.us.us.i = phi ptr [ %i.ls, %bb.ay ], [ %.067.us.i138265, %.preheader.us.i142 ] ; 6 uses
-  %i.lf = load i64, ptr %.062115.us.us.i, align 8, !tbaa !193 ; 3 uses
-  %i.lg = and i64 %i.lf, 36029346783166592
+  %i.lf = load i64, ptr %.062115.us.us.i, align 8, !tbaa !193 ; 4 uses
+  %i.lg = and i64 %i.lf, -9223231297218904064
   %.not81.us.us.i144 = icmp eq i64 %i.lg, 0
   br i1 %.not81.us.us.i144, label %bb.ay, label %.thread.us.i145
 
 bb.ay:                                            ; preds = %.lr.ph.us.i143
-  %13 = lshr i64 %i.lf, 8
-  %14 = and i64 %13, 71777214294589695
-  %15 = shl i64 %i.lf, 8
-  %16 = and i64 %15, 9151454082924314368
-  %17 = or disjoint i64 %14, %16                  ; 3 uses
-  %i.lh = trunc i64 %17 to i32                    ; 2 uses
+  %i.lh = trunc i64 %i.lf to i32                  ; 2 uses
   %i.li = and i32 %i.lh, 32767
   store i32 %i.li, ptr %.168114.us.us.i, align 4, !tbaa !7
   %i.lj = lshr i32 %i.lh, 16
   %i.lk = getelementptr i8, ptr %.168114.us.us.i, i64 4
   store i32 %i.lj, ptr %i.lk, align 4, !tbaa !7
-  %i.ll = lshr i64 %17, 32
+  %i.ll = lshr i64 %i.lf, 32
   %i.lm = trunc nuw nsw i64 %i.ll to i32
   %i.ln = and i32 %i.lm, 32767
   %i.lo = getelementptr i8, ptr %.168114.us.us.i, i64 8
   store i32 %i.ln, ptr %i.lo, align 4, !tbaa !7
-  %i.lp = lshr i64 %17, 48
+  %i.lp = lshr i64 %i.lf, 48
   %i.lq = trunc nuw nsw i64 %i.lp to i32
   %i.lr = getelementptr i8, ptr %.168114.us.us.i, i64 12
   store i32 %i.lq, ptr %i.lr, align 4, !tbaa !7
@@ -1327,9 +1322,9 @@ bb.ay:                                            ; preds = %.lr.ph.us.i143
   %.not80.us.us.i148 = icmp ugt ptr %i.lt, %i.jy
   br i1 %.not80.us.us.i148, label %.thread.us.i145, label %.lr.ph.us.i143
 
-.lr.ph286:                                        ; preds = %.split.i121.preheader, %.split.i121
-  %.067.i123285 = phi ptr [ %i.nm, %.split.i121 ], [ %i.jx, %.split.i121.preheader ] ; 3 uses
-  %.070.i122284 = phi ptr [ %.272.i, %.split.i121 ], [ %i.ar, %.split.i121.preheader ] ; 5 uses
+.lr.ph286:                                        ; preds = %.split.us.i136.preheader.a, %.split.i121
+  %.067.i123285 = phi ptr [ %i.nm, %.split.i121 ], [ %i.jx, %.split.us.i136.preheader.a ] ; 3 uses
+  %.070.i122284 = phi ptr [ %.272.i, %.split.i121 ], [ %i.ar, %.split.us.i136.preheader.a ] ; 5 uses
   %i.lu = ptrtoint ptr %.070.i122284 to i64
   %i.lv = and i64 %i.lu, 7
   %.not79.i124 = icmp eq i64 %i.lv, 0
@@ -1344,24 +1339,29 @@ bb.ay:                                            ; preds = %.lr.ph.us.i143
   %i.lx = phi ptr [ %i.mm, %bb.az ], [ %i.lw, %.preheader.i129 ] ; 3 uses
   %.062115.i = phi ptr [ %i.lx, %bb.az ], [ %.070.i122284, %.preheader.i129 ] ; 2 uses
   %.168114.i = phi ptr [ %i.ml, %bb.az ], [ %.067.i123285, %.preheader.i129 ] ; 6 uses
-  %i.ly = load i64, ptr %.062115.i, align 8, !tbaa !193 ; 4 uses
-  %i.lz = and i64 %i.ly, -9223231297218904064
+  %i.ly = load i64, ptr %.062115.i, align 8, !tbaa !193 ; 3 uses
+  %i.lz = and i64 %i.ly, 36029346783166592
   %.not82.i131 = icmp eq i64 %i.lz, 0
   br i1 %.not82.i131, label %bb.az, label %.thread.i132
 
 bb.az:                                            ; preds = %.lr.ph.i130
-  %i.ma = trunc i64 %i.ly to i32                  ; 2 uses
+  %13 = lshr i64 %i.ly, 8
+  %14 = and i64 %13, 71777214294589695
+  %15 = shl i64 %i.ly, 8
+  %16 = and i64 %15, 9151454082924314368
+  %17 = or disjoint i64 %14, %16                  ; 3 uses
+  %i.ma = trunc i64 %17 to i32                    ; 2 uses
   %i.mb = and i32 %i.ma, 32767
   store i32 %i.mb, ptr %.168114.i, align 4, !tbaa !7
   %i.mc = lshr i32 %i.ma, 16
   %i.md = getelementptr i8, ptr %.168114.i, i64 4
   store i32 %i.mc, ptr %i.md, align 4, !tbaa !7
-  %i.me = lshr i64 %i.ly, 32
+  %i.me = lshr i64 %17, 32
   %i.mf = trunc nuw nsw i64 %i.me to i32
   %i.mg = and i32 %i.mf, 32767
   %i.mh = getelementptr i8, ptr %.168114.i, i64 8
   store i32 %i.mg, ptr %i.mh, align 4, !tbaa !7
-  %i.mi = lshr i64 %i.ly, 48
+  %i.mi = lshr i64 %17, 48
   %i.mj = trunc nuw nsw i64 %i.mi to i32
   %i.mk = getelementptr i8, ptr %.168114.i, i64 12
   store i32 %i.mj, ptr %i.mk, align 4, !tbaa !7
@@ -1431,10 +1431,10 @@ bb.be:                                            ; preds = %bb.bd
   %i.nn = icmp ult ptr %.272.i, %i.jy
   br i1 %i.nn, label %.lr.ph286, label %ucs4lib_utf16_decode.exit
 
-ucs4lib_utf16_decode.exit:                        ; preds = %bb.aw, %bb.av, %bb.au, %.thread.us.i145, %.split.us.i136, %bb.bd, %bb.bc, %bb.bb, %.thread.i132, %.split.i121, %.split.us.i136.preheader.a, %.split.i121.preheader
-  %.us-phi.i = phi ptr [ %i.ar, %.split.us.i136.preheader.a ], [ %i.ar, %.split.i121.preheader ], [ %.272.i, %.split.i121 ], [ %i.mv, %bb.bc ], [ %i.nb, %bb.bd ], [ %i.mv, %bb.bb ], [ %.062.lcssa.i, %.thread.i132 ], [ %.062.lcssa.us.i, %.thread.us.i145 ], [ %i.kq, %bb.aw ], [ %i.kk, %bb.au ], [ %i.kk, %bb.av ], [ %.272.us.i, %.split.us.i136 ] ; 2 uses
-  %.us-phi126.i.a = phi ptr [ %i.jx, %.split.us.i136.preheader.a ], [ %i.jx, %.split.i121.preheader ], [ %i.nm, %.split.i121 ], [ %.4.i126, %bb.bc ], [ %.4.i126, %bb.bd ], [ %.4.i126, %bb.bb ], [ %.168.lcssa.i133, %.thread.i132 ], [ %.168.lcssa.us.i146, %.thread.us.i145 ], [ %.4.us.i141, %bb.aw ], [ %.4.us.i141, %bb.au ], [ %.4.us.i141, %bb.av ], [ %i.lb, %.split.us.i136 ]
-  %.us-phi127.i = phi i32 [ 0, %.split.us.i136.preheader.a ], [ 0, %.split.i121.preheader ], [ 0, %.split.i121 ], [ 1, %bb.bc ], [ 3, %bb.bd ], [ 2, %bb.bb ], [ 0, %.thread.i132 ], [ 0, %.thread.us.i145 ], [ 3, %bb.aw ], [ 2, %bb.au ], [ 1, %bb.av ], [ 0, %.split.us.i136 ]
+ucs4lib_utf16_decode.exit:                        ; preds = %bb.bd, %bb.bc, %bb.bb, %.thread.i132, %.split.i121, %bb.aw, %bb.av, %bb.au, %.thread.us.i145, %.split.us.i136, %.split.us.i136.preheader.a, %.split.i121.preheader
+  %.us-phi.i = phi ptr [ %i.ar, %.split.us.i136.preheader.a ], [ %i.ar, %.split.i121.preheader ], [ %.272.us.i, %.split.us.i136 ], [ %.062.lcssa.us.i, %.thread.us.i145 ], [ %i.kq, %bb.aw ], [ %i.kk, %bb.au ], [ %i.kk, %bb.av ], [ %i.nb, %bb.bd ], [ %i.mv, %bb.bb ], [ %.062.lcssa.i, %.thread.i132 ], [ %.272.i, %.split.i121 ], [ %i.mv, %bb.bc ] ; 2 uses
+  %.us-phi126.i.a = phi ptr [ %i.jx, %.split.us.i136.preheader.a ], [ %i.jx, %.split.i121.preheader ], [ %i.lb, %.split.us.i136 ], [ %.168.lcssa.us.i146, %.thread.us.i145 ], [ %.4.us.i141, %bb.aw ], [ %.4.us.i141, %bb.au ], [ %.4.us.i141, %bb.av ], [ %.4.i126, %bb.bd ], [ %.4.i126, %bb.bb ], [ %.168.lcssa.i133, %.thread.i132 ], [ %i.nm, %.split.i121 ], [ %.4.i126, %bb.bc ]
+  %.us-phi127.i = phi i32 [ 0, %.split.us.i136.preheader.a ], [ 0, %.split.i121.preheader ], [ 0, %.split.us.i136 ], [ 0, %.thread.us.i145 ], [ 3, %bb.aw ], [ 2, %bb.au ], [ 1, %bb.av ], [ 3, %bb.bd ], [ 2, %bb.bb ], [ 0, %.thread.i132 ], [ 0, %.split.i121 ], [ 1, %bb.bc ]
   store ptr %.us-phi.i, ptr %i.d, align 8, !tbaa !355
   %i.no = ptrtoint ptr %.us-phi126.i.a to i64
   %i.np = ptrtoint ptr %i.jv to i64
@@ -1837,7 +1837,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 .lr.ph:                                           ; preds = %bb.n, %bb.s
   %.1220 = phi ptr [ %i.am, %bb.s ], [ %i.w, %bb.n ]
-  %.0112219 = phi i32 [ %.2114.ph, %bb.s ], [ %.2114.ph.peel, %bb.n ]
+  %.0112219 = phi i32 [ %.2114.ph, %bb.s ], [ %.2114.ph.peel, %bb.n ] ; 2 uses
   %.2120218 = phi i32 [ %i.az, %bb.s ], [ %i.af, %bb.n ]
   %.0125217 = phi i64 [ %i.bi, %bb.s ], [ 1, %bb.n ] ; 3 uses
   %.0128216 = phi i64 [ %i.bd, %bb.s ], [ %.val158.peel, %bb.n ] ; 2 uses
@@ -1893,8 +1893,8 @@ PyUnicode_MAX_CHAR_VALUE.exit169:                 ; preds = %bb.o, %bb.p
 
 bb.q:                                             ; preds = %PyUnicode_MAX_CHAR_VALUE.exit169
   %i.bd = add i64 %spec.select, %.0128216         ; 2 uses
-  %.not310 = icmp eq i32 %.0112219, 0
-  br i1 %.not310, label %bb.s, label %bb.r
+  %3 = trunc nuw i32 %.0112219 to i1
+  br i1 %3, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.be = getelementptr i8, ptr %.1220, i64 32
@@ -1906,7 +1906,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.r
-  %.2114.ph = phi i32 [ %spec.select149, %bb.r ], [ 0, %bb.q ] ; 2 uses
+  %.2114.ph = phi i32 [ %spec.select149, %bb.r ], [ %.0112219, %bb.q ] ; 2 uses
   %i.bi = add nuw nsw i64 %.0125217, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.bi, %2
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !542

@@ -201,6 +201,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %7 = add nuw nsw i32 %6, 1
   %i.j = zext nneg i32 %6 to i64
   br label %bb.b
 
@@ -261,8 +262,8 @@ bb.g:                                             ; preds = %bb.f
   br label %.thread173
 
 bb.h:                                             ; preds = %bb.f
-  %7 = shl i32 %i.z, %6
-  %i.ai = add i32 %7, -1
+  %8 = mul nsw i32 %7, %i.z
+  %i.ai = add i32 %8, -1
   %i.aj = add i32 %i.ai, %i.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #13
   br label %bb.bh

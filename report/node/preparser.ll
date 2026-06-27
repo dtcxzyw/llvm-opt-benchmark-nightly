@@ -201,11 +201,12 @@ _ZN2v88internal10ParserBaseINS0_9PreParserEE15GetVariableModeENS0_20ClassLiteral
   %.sink = phi i1 [ false, %bb.o ], [ false, %bb.l ], [ false, %bb.n ], [ false, %bb.m ], [ true, %.thread68 ], [ true, %bb.p ]
   %.sink74 = phi i8 [ %i.ce, %bb.o ], [ %i.bv, %bb.l ], [ %i.cb, %bb.n ], [ %i.by, %bb.m ], [ %i.cj, %.thread68 ], [ %i.bl, %bb.p ]
   %.0.i40 = phi i8 [ 11, %bb.o ], [ 12, %bb.l ], [ 10, %bb.n ], [ 9, %bb.m ], [ 1, %.thread68 ], [ 1, %bb.p ]
-  %i.cm = shl nuw nsw i8 %.sink80, 3
-  %7 = shl nuw nsw i8 %.sink80, 1
-  %8 = or disjoint i8 %i.cm, %7
-  %9 = xor i8 %8, 8
-  %i.cn = select i1 %.sink, i8 0, i8 %9
+  %7 = xor i8 %.sink80, -1
+  %i.cm = shl nsw i8 %7, 3
+  %8 = and i8 %i.cm, 8
+  %9 = shl nuw nsw i8 %.sink80, 1
+  %10 = or disjoint i8 %8, %9
+  %i.cn = select i1 %.sink, i8 0, i8 %10
   %i.co = or i8 %i.cn, %.sink74
   store i8 %i.co, ptr %i.p, align 1
   %i.cp = load ptr, ptr %0, align 8

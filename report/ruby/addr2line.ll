@@ -201,8 +201,8 @@ bb.dx:                                            ; preds = %bb.dw, %bb.dt, %bb.
 
 bb.dy:                                            ; preds = %.loopexit359
   %i.aby = icmp ne ptr %.0208.lcssa, null
-  %20 = icmp ne i32 %2, 0                         ; 2 uses
-  %or.cond7 = and i1 %20, %i.aby
+  %20 = trunc nuw i32 %2 to i1                    ; 2 uses
+  %or.cond7 = and i1 %i.aby, %20
   br i1 %or.cond7, label %bb.dz, label %bb.ea
 
 bb.dz:                                            ; preds = %bb.dy
@@ -214,7 +214,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 bb.ea:                                            ; preds = %bb.dz, %bb.dy
   %i.acc = icmp ne ptr %.0211.lcssa, null
-  %or.cond9 = and i1 %20, %i.acc
+  %or.cond9 = and i1 %i.acc, %20
   br i1 %or.cond9, label %bb.eb, label %bb.ed
 
 bb.eb:                                            ; preds = %bb.ea

@@ -201,10 +201,10 @@ bb.a:
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.not43 = icmp ne i32 %4, 0                     ; 2 uses
+  %.not43 = trunc nuw i32 %4 to i1                ; 2 uses
   %i.f = and i32 %.val57, 2
   %.not44 = icmp eq i32 %i.f, 0
-  %or.cond66 = and i1 %.not43, %.not44
+  %or.cond66 = and i1 %.not44, %.not43
   br i1 %or.cond66, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -270,7 +270,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = tail call i32 @ord_LiteralCompare(ptr noundef %i.p, i32 noundef %.val62, ptr noundef %i.z, i32 noundef %.val61, i32 noundef 1, ptr noundef %5, ptr noundef %6) #14 ; 2 uses
   %i.ah = icmp eq i32 %i.ag, 1
   %i.ai = icmp eq i32 %i.ag, 2
-  %or.cond64 = and i1 %.not43, %i.ai
+  %or.cond64 = and i1 %i.ai, %.not43
   %or.cond68 = or i1 %i.ah, %or.cond64
   br i1 %or.cond68, label %bb.g, label %bb.h
 
@@ -673,10 +673,10 @@ bb.a:
   br i1 %.not, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.not48 = icmp ne i32 %4, 0                     ; 2 uses
+  %.not48 = trunc nuw i32 %4 to i1                ; 2 uses
   %i.f = and i32 %.val63, 2
   %.not49 = icmp eq i32 %i.f, 0
-  %or.cond73 = and i1 %.not48, %.not49
+  %or.cond73 = and i1 %.not49, %.not48
   br i1 %or.cond73, label %bb.k, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -747,7 +747,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = tail call i32 @ord_LiteralCompare(ptr noundef %i.q, i32 noundef %.val68, ptr noundef %i.ab, i32 noundef %.val67, i32 noundef 1, ptr noundef %5, ptr noundef %6) #14 ; 2 uses
   %i.aj = icmp eq i32 %i.ai, 1
   %i.ak = icmp eq i32 %i.ai, 2
-  %or.cond70 = and i1 %.not48, %i.ak
+  %or.cond70 = and i1 %i.ak, %.not48
   %or.cond75 = or i1 %i.aj, %or.cond70
   br i1 %or.cond75, label %bb.h, label %bb.i
 
