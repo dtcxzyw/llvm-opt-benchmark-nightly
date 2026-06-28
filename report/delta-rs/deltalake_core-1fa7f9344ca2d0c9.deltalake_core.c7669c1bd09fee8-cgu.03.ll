@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -504,7 +504,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -804,7 +804,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -1104,7 +1104,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -1404,7 +1404,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -1704,7 +1704,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -2004,7 +2004,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 48) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 48) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -2302,7 +2302,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.4.0.i.ph.i = phi i64 [ %i.ab, %bb.g ], [ %..i.i, %bb.f ] ; 5 uses
-  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 24) ; 2 uses
+  %i.ac = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 24) ; 2 uses
   %i.ad = extractvalue { i64, i1 } %i.ac, 1
   br i1 %i.ad, label %bb.j, label %bb.i, !prof !98
 
@@ -2705,7 +2705,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 
@@ -2800,7 +2800,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 
@@ -2895,7 +2895,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 
@@ -2990,7 +2990,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 
@@ -3085,7 +3085,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 
@@ -3180,7 +3180,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 104) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 104) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 
@@ -3275,7 +3275,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 48) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 48) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 
@@ -3368,7 +3368,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.4.0.i.ph.i = phi i64 [ %i.j, %bb.e ], [ %..i.i, %bb.d ] ; 5 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 24, 105) %.sroa.4.0.i.ph.i, i64 24) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 24, 105) 24) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.h, label %bb.g, !prof !98
 

@@ -203,12 +203,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f
   %i.by = tail call i64 @llvm.usub.sat.i64(i64 %i.i, i64 %i.al)
   %i.bz = sub i64 0, %i.by                        ; 2 uses
   %i.ca = getelementptr inbounds [32 x i8], ptr %.sroa.0.0.lcssa327, i64 %i.bz
-  %.sroa.speculated5.i.i = tail call i64 @llvm.umax.i64(i64 range(i64 -1, 65536) %i.i, i64 255)
+  %.sroa.speculated5.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 range(i64 -1, 65536) 255)
   %.sroa.speculated.i.i117 = tail call i64 @llvm.umin.i64(i64 %i.al, i64 %.sroa.speculated5.i.i)
   %i.cb = sub i64 %.sroa.speculated.i.i117, %i.i  ; 2 uses
   %i.cc = getelementptr inbounds [32 x i8], ptr %.sroa.0.0.lcssa327, i64 %i.cb ; 2 uses
   tail call fastcc void @_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPZN6hermes3hbc32UniquingStringLiteralAccumulator7toTableES4_bE5IndexSt6vectorIS5_SaIS5_EEEEEvT_SB_(ptr %i.ca, ptr %i.cc)
-  %.sroa.speculated5.i.i120 = tail call i64 @llvm.umax.i64(i64 range(i64 -1, 65536) %i.i, i64 65535)
+  %.sroa.speculated5.i.i120 = tail call i64 @llvm.umax.i64(i64 %i.i, i64 range(i64 -1, 65536) 65535)
   %.sroa.speculated.i.i121 = tail call i64 @llvm.umin.i64(i64 %i.al, i64 %.sroa.speculated5.i.i120)
   %i.cd = sub i64 %.sroa.speculated.i.i121, %i.i  ; 2 uses
   %i.ce = getelementptr inbounds [32 x i8], ptr %.sroa.0.0.lcssa327, i64 %i.cd ; 2 uses

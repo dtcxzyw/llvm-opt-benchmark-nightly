@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.g
   %i.eb = add i32 %i.ea, %i.dy                    ; 3 uses
   %i.ec = icmp ne i32 %i.eb, 0
   tail call void @llvm.assume(i1 %i.ec)
-  %i.ed = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.eb, i1 true) ; 2 uses
+  %i.ed = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.eb, i1 true) ; 2 uses
   %i.ee = and i32 %i.ed, 24
   %i.ef = add i32 %i.eb, 808464432
   %i.eg = lshr i32 %i.ef, %i.ee
@@ -443,7 +443,7 @@ bb.k:                                             ; preds = %bb.i
   %i.ee = add i32 %i.ed, %i.eb                    ; 3 uses
   %i.ef = icmp ne i32 %i.ee, 0
   tail call void @llvm.assume(i1 %i.ef)
-  %i.eg = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.ee, i1 true) ; 2 uses
+  %i.eg = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.ee, i1 true) ; 2 uses
   %i.eh = and i32 %i.eg, 24
   %i.ei = add i32 %i.ee, 808464432
   %i.ej = lshr i32 %i.ei, %i.eh
@@ -682,7 +682,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 _ZN4absl12lts_20250512L7PowFiveEmi.exit.i:        ; preds = %bb.q
-  %i.ck = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.cf, i1 true)
+  %i.ck = tail call range(i64 32, 64) i64 @llvm.ctlz.i64(i64 %i.cf, i1 true)
   %i.cl = shl i64 %i.cf, %i.ck
   %i.cm = sub nsw i32 5, %.16.i
   %i.cn = tail call fastcc { i64, i64 } @_ZN4absl12lts_20250512L7PowFiveEmi(i64 noundef %i.cb, i32 noundef %i.cm) ; 2 uses
@@ -1085,7 +1085,7 @@ bb.a:
   br i1 %i.w, label %_ZN4absl12lts_20250512L5Mul32ESt4pairImmEj.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.x = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.v, i1 true) ; 3 uses
+  %i.x = tail call range(i64 31, 65) i64 @llvm.ctlz.i64(i64 %i.v, i1 true) ; 3 uses
   %i.y = sub nuw nsw i64 64, %i.x                 ; 2 uses
   %i.z = lshr i64 %i.k, %i.y
   %i.aa = shl i64 %i.r, %i.x
@@ -1135,7 +1135,7 @@ _ZN4absl12lts_20250512L5Mul32ESt4pairImmEj.exit:  ; preds = %.lr.ph, %bb.b
   br i1 %i.bg, label %_ZN4absl12lts_20250512L5Mul32ESt4pairImmEj.exit14, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.bh = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.bf, i1 true) ; 3 uses
+  %i.bh = tail call range(i64 31, 65) i64 @llvm.ctlz.i64(i64 %i.bf, i1 true) ; 3 uses
   %i.bi = sub nuw nsw i64 64, %i.bh               ; 2 uses
   %i.bj = lshr i64 %i.au, %i.bi
   %i.bk = shl i64 %i.bb, %i.bh

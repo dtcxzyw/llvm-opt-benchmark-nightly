@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZN3ada11serializer
   br i1 %i.ao, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ap = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.an, i1 true)
+  %i.ap = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.an, i1 true)
   %i.aq = sub nuw nsw i32 35, %i.ap
   %i.ar = lshr i32 %i.aq, 2                       ; 2 uses
   %i.as = zext nneg i32 %i.ar to i64              ; 2 uses
@@ -270,7 +270,7 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   br i1 %i.bu, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.bv = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bt, i1 true)
+  %i.bv = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.bt, i1 true)
   %i.bw = sub nuw nsw i32 35, %i.bv
   %i.bx = lshr i32 %i.bw, 2                       ; 2 uses
   %i.by = zext nneg i32 %i.bx to i64              ; 2 uses
@@ -335,7 +335,7 @@ bb.l:                                             ; preds = %bb.k, %bb.h
   br i1 %i.cz, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.da = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cy, i1 true)
+  %i.da = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.cy, i1 true)
   %i.db = sub nuw nsw i32 35, %i.da
   %i.dc = lshr i32 %i.db, 2                       ; 2 uses
   %i.dd = zext nneg i32 %i.dc to i64              ; 2 uses
@@ -400,7 +400,7 @@ bb.p:                                             ; preds = %bb.o, %bb.l
   br i1 %i.ee, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ef = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ed, i1 true)
+  %i.ef = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.ed, i1 true)
   %i.eg = sub nuw nsw i32 35, %i.ef
   %i.eh = lshr i32 %i.eg, 2                       ; 2 uses
   %i.ei = zext nneg i32 %i.eh to i64              ; 2 uses
@@ -465,7 +465,7 @@ bb.t:                                             ; preds = %bb.s, %bb.p
   br i1 %i.fj, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.fk = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.fi, i1 true)
+  %i.fk = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.fi, i1 true)
   %i.fl = sub nuw nsw i32 35, %i.fk
   %i.fm = lshr i32 %i.fl, 2                       ; 2 uses
   %i.fn = zext nneg i32 %i.fm to i64              ; 2 uses
@@ -530,7 +530,7 @@ bb.x:                                             ; preds = %bb.w, %bb.t
   br i1 %i.go, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.gp = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.gn, i1 true)
+  %i.gp = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.gn, i1 true)
   %i.gq = sub nuw nsw i32 35, %i.gp
   %i.gr = lshr i32 %i.gq, 2                       ; 2 uses
   %i.gs = zext nneg i32 %i.gr to i64              ; 2 uses
@@ -595,7 +595,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.x
   br i1 %i.ht, label %bb.af, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.hu = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.hs, i1 true)
+  %i.hu = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.hs, i1 true)
   %i.hv = sub nuw nsw i32 35, %i.hu
   %i.hw = lshr i32 %i.hv, 2                       ; 2 uses
   %i.hx = zext nneg i32 %i.hw to i64              ; 2 uses
@@ -660,7 +660,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ab
   br i1 %i.iy, label %.split.loop.exit.loopexit42, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %i.iz = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ix, i1 true)
+  %i.iz = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.ix, i1 true)
   %i.ja = sub nuw nsw i32 35, %i.iz
   %i.jb = lshr i32 %i.ja, 2                       ; 2 uses
   %i.jc = zext nneg i32 %i.jb to i64              ; 2 uses
@@ -747,7 +747,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.kf, label %_ZNSt8__detail13__to_chars_16IjEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES3_IS7_sES3_IS7_iES3_IS7_lES3_IS7_xES3_IS7_nEEES2_IJS3_IS7_hES3_IS7_tES3_IS7_jES3_IS7_mES3_IS7_yES3_IS7_oEEES3_IcS7_EEE5valueESt15to_chars_resultE4typeEPcSQ_S5_.exit.sink.split.i, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.kg = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.kd, i1 true)
+  %i.kg = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.kd, i1 true)
   %i.kh = sub nuw nsw i32 35, %i.kg
   %i.ki = lshr i32 %i.kh, 2                       ; 2 uses
   %gepdiff = sub nsw i64 41, %.2.idx
@@ -1150,9 +1150,9 @@ bb.uj:                                            ; preds = %bb.ah
   unreachable
 
 .critedge326:                                     ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit915.thread, %bb.nf, %.sink.split.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i923, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1062, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit858, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit863
-  %.sroa.01476.2 = phi i16 [ %.sroa.01476.023822855, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i923 ], [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01476.023822855, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit915.thread ], [ %.sroa.01476.02382, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit858 ], [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01476.023822855, %.sink.split.i.i ], [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1062 ], [ %.sroa.01476.023822855, %bb.nf ], [ %.sroa.01476.02382, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit863 ]
-  %.15283 = phi i64 [ %.11279291429222932, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i923 ], [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279291429222932, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit915.thread ], [ %.92772904, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit858 ], [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279291429222932, %.sink.split.i.i ], [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1062 ], [ %.11279291429222932, %bb.nf ], [ %.92772897, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit863 ] ; 2 uses
-  %.18 = phi i32 [ %.12291529212937, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i923 ], [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12291529212937, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit915.thread ], [ %.82905, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit858 ], [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12291529212937, %.sink.split.i.i ], [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1062 ], [ %.12291529212937, %bb.nf ], [ %.82898, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit863 ]
+  %.sroa.01476.2 = phi i16 [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01476.02382, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit858 ], [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.sroa.01476.023822855, %bb.nf ], [ %.sroa.01476.023822855, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit915.thread ], [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01476.023822855, %.sink.split.i.i ], [ %.sroa.01476.023822855, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1062 ], [ %.sroa.01476.023822855, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i923 ], [ %.sroa.01476.02382, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit863 ]
+  %.15283 = phi i64 [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.92772904, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit858 ], [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.11279291429222932, %bb.nf ], [ %.11279291429222932, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit915.thread ], [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279291429222932, %.sink.split.i.i ], [ %.11279291429222932, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1062 ], [ %.11279291429222932, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i923 ], [ %.92772897, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit863 ] ; 2 uses
+  %.18 = phi i32 [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.82905, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit858 ], [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.12291529212937, %bb.nf ], [ %.12291529212937, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit915.thread ], [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12291529212937, %.sink.split.i.i ], [ %.12291529212937, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1062 ], [ %.12291529212937, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i923 ], [ %.82898, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit863 ]
   %.not = icmp ugt i64 %.15283, %.sroa.01320.1
   br i1 %.not, label %.loopexit3038, label %bb.ah, !llvm.loop !94
 
@@ -1555,8 +1555,8 @@ bb.pv:                                            ; preds = %bb.ah
   br label %bb.by, !llvm.loop !136
 
 .critedge369:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit901, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit906
-  %.15326 = phi i64 [ %.93202625, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit901 ], [ %.93202618, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit906 ] ; 2 uses
-  %.18 = phi i32 [ %.82626, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit901 ], [ %.82619, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit906 ]
+  %.15326 = phi i64 [ %.93202618, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit906 ], [ %.93202625, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit901 ] ; 2 uses
+  %.18 = phi i32 [ %.82619, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit906 ], [ %.82626, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit901 ]
   %.not = icmp ugt i64 %.15326, %.sroa.01255.1
   br i1 %.not, label %.loopexit2652, label %bb.ah, !llvm.loop !136
 
@@ -1959,8 +1959,8 @@ bb.po:                                            ; preds = %bb.ah
   br label %bb.bu, !llvm.loop !165
 
 .critedge334:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit835, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit840
-  %.15292 = phi i64 [ %.92862469, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit835 ], [ %.92862462, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit840 ] ; 2 uses
-  %.18 = phi i32 [ %.82470, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit835 ], [ %.82463, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit840 ]
+  %.15292 = phi i64 [ %.92862462, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit840 ], [ %.92862469, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit835 ] ; 2 uses
+  %.18 = phi i32 [ %.82463, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit840 ], [ %.82470, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit835 ]
   %.not = icmp ugt i64 %.15292, %.sroa.01179.1
   br i1 %.not, label %.critedge354.critedge, label %bb.ah, !llvm.loop !165
 

@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not23, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %i.bz = call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.by, i1 true)
+  %i.bz = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.by, i1 true)
   %i.ca = xor i32 %i.bz, 31
   br label %.lr.ph
 

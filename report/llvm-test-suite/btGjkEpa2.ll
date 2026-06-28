@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %._crit_edge, %_ZNK1
   %i.fk = extractelement <2 x float> %foldExtExtBinop190, i64 1
   %i.fl = extractelement <2 x float> %i.fe, i64 0 ; 2 uses
   %i.fm = call float @llvm.fmuladd.f32(float %i.fl, float %i.fl, float %i.fk)
-  %i.fn = call noundef float @llvm.fmuladd.f32(float %i.fc, float %i.fc, float %i.fm)
+  %i.fn = call float @llvm.fmuladd.f32(float %i.fc, float %i.fc, float %i.fm)
   %sqrt.i = call noundef float @llvm.sqrt.f32(float %i.fn) ; 5 uses
   %i.fo = fcmp olt float %sqrt.i, f0x38D1B717
   br i1 %i.fo, label %bb.g, label %bb.h
@@ -606,7 +606,7 @@ bb.ab:                                            ; preds = %bb.y, %_ZN12gjkepa2
   %i.ly = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.lz = extractelement <2 x float> %i.lu, i64 0 ; 2 uses
   %i.ma = tail call float @llvm.fmuladd.f32(float %i.lz, float %i.lz, float %i.ly)
-  %i.mb = tail call noundef float @llvm.fmuladd.f32(float %i.lw, float %i.lw, float %i.ma) ; 2 uses
+  %i.mb = tail call float @llvm.fmuladd.f32(float %i.lw, float %i.lw, float %i.ma) ; 2 uses
   %i.mc = fcmp ogt float %i.mb, 0.000000e+00
   br i1 %i.mc, label %bb.ac, label %bb.ad
 
@@ -1009,7 +1009,7 @@ bb.b:                                             ; preds = %.preheader, %.crite
   %i.at = extractelement <2 x float> %i.ar, i64 0 ; 2 uses
   %i.au = call float @llvm.fmuladd.f32(float %i.at, float %i.at, float %i.as)
   %i.av = load float, ptr %i.e, align 8, !tbaa !24 ; 4 uses
-  %i.aw = call noundef float @llvm.fmuladd.f32(float %i.av, float %i.av, float %i.au)
+  %i.aw = call float @llvm.fmuladd.f32(float %i.av, float %i.av, float %i.au)
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.aw)
   %i.ax = fdiv float 1.000000e+00, %sqrt.i.i      ; 3 uses
   %i.ay = insertelement <2 x float> poison, float %i.ax, i64 0
@@ -1372,7 +1372,7 @@ bb.n:                                             ; preds = %bb.m, %bb.z
   %i.kd = extractelement <2 x float> %foldExtExtBinop270, i64 1
   %i.ke = extractelement <2 x float> %i.jy, i64 0 ; 2 uses
   %i.kf = call float @llvm.fmuladd.f32(float %i.ke, float %i.ke, float %i.kd)
-  %i.kg = call noundef float @llvm.fmuladd.f32(float %i.kc, float %i.kc, float %i.kf) ; 2 uses
+  %i.kg = call float @llvm.fmuladd.f32(float %i.kc, float %i.kc, float %i.kf) ; 2 uses
   %i.kh = fcmp ogt float %i.kg, 0.000000e+00
   br i1 %i.kh, label %bb.o, label %bb.z
 
@@ -1733,7 +1733,7 @@ bb.ab:                                            ; preds = %bb.a
   %i.tk = tail call float @llvm.fmuladd.f32(float %i.sg, float %i.sy, float %i.tj) ; 4 uses
   %i.tl = fmul float %i.th, %i.th
   %i.tm = tail call float @llvm.fmuladd.f32(float %i.te, float %i.te, float %i.tl)
-  %i.tn = tail call noundef float @llvm.fmuladd.f32(float %i.tk, float %i.tk, float %i.tm) ; 2 uses
+  %i.tn = tail call float @llvm.fmuladd.f32(float %i.tk, float %i.tk, float %i.tm) ; 2 uses
   %i.to = fcmp ogt float %i.tn, 0.000000e+00
   br i1 %i.to, label %bb.ac, label %.thread
 

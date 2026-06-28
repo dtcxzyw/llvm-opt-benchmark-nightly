@@ -203,7 +203,7 @@ bb.m:                                             ; preds = %.lr.ph.i
   br i1 %.not, label %bb.n, label %_ZNSt8optionalIN2v88internal4wasm15LiftoffRegisterEEaSIS3_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS4_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS3_ES8_IS3_NSt5decayISB_E4typeEEEEESt16is_constructibleIS3_JSB_EESt13is_assignableIRS3_SB_EEERS4_E4typeEOSB_.exit94
 
 _ZNSt8optionalIN2v88internal4wasm15LiftoffRegisterEEaSIS3_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS4_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS3_ES8_IS3_NSt5decayISB_E4typeEEEEESt16is_constructibleIS3_JSB_EESt13is_assignableIRS3_SB_EEERS4_E4typeEOSB_.exit94: ; preds = %.thread137
-  %i.bf = call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.be, i1 true)
+  %i.bf = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.be, i1 true)
   %i.bg = trunc nuw nsw i32 %i.bf to i8
   br label %bb.n
 
@@ -606,7 +606,7 @@ bb.a:
   br i1 %.not.i.i, label %bb.c, label %bb.b, !prof !7
 
 bb.b:                                             ; preds = %bb.a
-  %i.n = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.m, i1 true)
+  %i.n = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.m, i1 true)
   %i.o = trunc nuw nsw i32 %i.n to i8
   br label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit
 
@@ -771,7 +771,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.g, label %bb.f, !prof !7
 
 bb.f:                                             ; preds = %bb.e
-  %i.j = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.i, i1 true)
+  %i.j = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.i, i1 true)
   %i.k = trunc nuw nsw i32 %i.j to i8
   br label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit
 
@@ -1174,7 +1174,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not94, label %bb.s, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.aq = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.ap, i1 true) ; 4 uses
+  %i.aq = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.ap, i1 true) ; 4 uses
   %i.ar = trunc nuw nsw i32 %i.aq to i8           ; 3 uses
   %i.as = icmp samesign ult i32 %i.aq, 16
   br i1 %i.as, label %bb.g, label %bb.h
@@ -1314,7 +1314,7 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %.not92, label %_ZNK2v88internal4wasm15LiftoffVarState8constantEv.exit80, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.cp = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.co, i1 true) ; 3 uses
+  %i.cp = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.co, i1 true) ; 3 uses
   %i.cq = trunc nuw nsw i32 %i.cp to i8           ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
   %i.cr = icmp eq i8 %i.ce, 1
@@ -1717,7 +1717,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i.i, label %bb.n, label %bb.m, !prof !7
 
 bb.m:                                             ; preds = %bb.l
-  %i.au = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.at, i1 true)
+  %i.au = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.at, i1 true)
   %i.av = trunc nuw nsw i32 %i.au to i8
   br label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit
 
@@ -2120,7 +2120,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.au = xor i32 %i.as, 37839
-  %i.av = call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.au, i1 true) ; 3 uses
+  %i.av = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.au, i1 true) ; 3 uses
   %i.aw = trunc nuw nsw i32 %i.av to i8           ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 336 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 8            ; 2 uses
@@ -2523,7 +2523,7 @@ bb.k:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not.i.i, label %bb.m, label %bb.l, !prof !7
 
 bb.l:                                             ; preds = %bb.k
-  %i.bc = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.bb, i1 true)
+  %i.bc = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.bb, i1 true)
   %i.bd = trunc nuw nsw i32 %i.bc to i8
   br label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit
 
@@ -2926,7 +2926,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit:   ; preds = %bb.a
 
 bb.b:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit
   %i.g = xor i32 %i.f, 37839
-  %i.h = call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.g, i1 true)
+  %i.h = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.g, i1 true)
   %i.i = trunc nuw nsw i32 %i.h to i8
   br label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit
 
@@ -3064,7 +3064,7 @@ _ZN2v88internal4wasm16LiftoffAssembler10CacheState15GetNextSpillRegENS1_14Liftof
   %.sroa.02.0.i = phi i32 [ %1, %bb.f ], [ %i.aa, %_ZN2v88internal4wasm16LiftoffAssembler10CacheState21has_volatile_registerENS1_14LiftoffRegListE.exit.thread10 ] ; 2 uses
   %i.ac = icmp ne i32 %.sroa.02.0.i, 0
   tail call void @llvm.assume(i1 %i.ac)
-  %i.ad = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.02.0.i, i1 true)
+  %i.ad = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.02.0.i, i1 true)
   %i.ae = trunc nuw nsw i32 %i.ad to i8           ; 2 uses
   tail call preserve_mostcc void @_ZN2v88internal4wasm16LiftoffAssembler13SpillRegisterENS1_15LiftoffRegisterE(ptr noundef nonnull align 8 dereferenceable(824) %0, i8 %i.ae)
   br label %bb.g
@@ -3467,7 +3467,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.sroa.021.044 = phi i32 [ %i.g, %.lr.ph ], [ %i.a, %bb.a ] ; 2 uses
-  %i.c = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.021.044, i1 true) ; 2 uses
+  %i.c = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.021.044, i1 true) ; 2 uses
   %i.d = trunc nuw nsw i32 %i.c to i8
   tail call void @_ZN2v88internal9Assembler5pushqENS0_8RegisterE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 %i.d) #20
   %i.e = shl nuw nsw i32 1, %i.c
@@ -3491,7 +3491,7 @@ _ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit: ; preds = %._crit_ed
 bb.b:                                             ; preds = %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit, %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit
   %.046 = phi i32 [ 0, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit ], [ %i.y, %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit ] ; 6 uses
   %.sroa.015.045 = phi i32 [ %i.i, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit ], [ %i.x, %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_7OperandENS0_11XMMRegisterEJEEEvT_T0_DpT1_.exit ] ; 2 uses
-  %i.l = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.015.045, i1 true) ; 2 uses
+  %i.l = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.015.045, i1 true) ; 2 uses
   %i.m = trunc nuw nsw i32 %i.l to i8
   %i.n = icmp eq i32 %.046, 0
   br i1 %i.n, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit, label %bb.c
@@ -3563,7 +3563,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit
   %.045 = phi i32 [ %i.p, %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit ], [ 0, %bb.a ] ; 6 uses
   %.sroa.021.044 = phi i32 [ %i.o, %_ZN2v88internal24SharedMacroAssemblerBase6MovdquINS0_11XMMRegisterENS0_7OperandEJEEEvT_T0_DpT1_.exit ], [ %i.a, %bb.a ] ; 2 uses
-  %i.c = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.021.044, i1 true) ; 2 uses
+  %i.c = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.021.044, i1 true) ; 2 uses
   %i.d = trunc nuw nsw i32 %i.c to i8
   %i.e = add nsw i8 %i.d, -16                     ; 2 uses
   %i.f = icmp eq i32 %.045, 0
@@ -3627,7 +3627,7 @@ bb.f:                                             ; preds = %._crit_edge
 
 .lr.ph48:                                         ; preds = %._crit_edge.thread, %.lr.ph48
   %.sroa.015.046 = phi i32 [ %i.z, %.lr.ph48 ], [ %i.r, %._crit_edge.thread ] ; 2 uses
-  %i.t = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.sroa.015.046, i1 true)
+  %i.t = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.sroa.015.046, i1 true)
   %i.u = trunc nuw nsw i32 %i.t to i8
   %i.v = xor i8 %i.u, 31                          ; 2 uses
   tail call void @_ZN2v88internal9Assembler4popqENS0_8RegisterE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 %i.v) #20

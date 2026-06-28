@@ -201,7 +201,7 @@ _ZNK2v88internal8compiler12ValueMatcherIiLNS1_8IrOpcode5ValueE27EE13ResolvedValu
   br i1 %or.cond, label %bb.m, label %_ZN2v84base4bits12IsPowerOfTwoIjEEbT_Qoosr3stdE13is_integral_vIS3_Esr3stdE9is_enum_vIS3_E.exit.thread
 
 bb.m:                                             ; preds = %_ZNK2v88internal8compiler12ValueMatcherIiLNS1_8IrOpcode5ValueE27EE13ResolvedValueEv.exit29
-  %i.bi = call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.o, i1 true) ; 3 uses
+  %i.bi = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.o, i1 true) ; 3 uses
   %i.bj = icmp samesign ugt i32 %i.bi, 1
   br i1 %i.bj, label %bb.n, label %bb.o
 
@@ -604,7 +604,7 @@ _ZNK2v88internal8compiler12ValueMatcherIjLNS1_8IrOpcode5ValueE27EE13ResolvedValu
   %i.dc = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.dd = load i32, ptr %i.dc, align 8
   %i.de = and i32 %i.dd, 31
-  %i.df = call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.co, i1 true)
+  %i.df = call range(i32 0, 32) i32 @llvm.cttz.i32(i32 %i.co, i1 true)
   %.not = icmp samesign ult i32 %i.de, %i.df
   br i1 %.not, label %.thread137, label %bb.w
 
@@ -756,7 +756,7 @@ bb.af:                                            ; preds = %.thread144, %bb.ac
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
   call void @_ZN2v88internal8compiler12BinopMatcherINS1_10IntMatcherIiLNS1_8IrOpcode5ValueE27EEES6_LNS0_21MachineRepresentationE4EEC2EPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(40) %8, ptr noundef nonnull %i.ft)
-  %i.fy = call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.co, i1 true)
+  %i.fy = call range(i32 0, 32) i32 @llvm.cttz.i32(i32 %i.co, i1 true)
   %i.fz = getelementptr inbounds nuw i8, ptr %8, i64 36
   %i.ga = load i8, ptr %i.fz, align 4, !range !5, !noundef !6
   %i.gb = trunc nuw i8 %i.ga to i1
@@ -804,7 +804,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.af
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
   call void @_ZN2v88internal8compiler12BinopMatcherINS1_10IntMatcherIiLNS1_8IrOpcode5ValueE27EEES6_LNS0_21MachineRepresentationE4EEC2EPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(40) %9, ptr noundef nonnull %i.gq)
-  %i.gv = call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.co, i1 true)
+  %i.gv = call range(i32 0, 32) i32 @llvm.cttz.i32(i32 %i.co, i1 true)
   %i.gw = getelementptr inbounds nuw i8, ptr %9, i64 36
   %i.gx = load i8, ptr %i.gw, align 4, !range !5, !noundef !6
   %i.gy = trunc nuw i8 %i.gx to i1
@@ -1207,7 +1207,7 @@ _ZNK2v88internal8compiler12ValueMatcherImLNS1_8IrOpcode5ValueE28EE13ResolvedValu
   %i.dj = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.dk = load i64, ptr %i.dj, align 8
   %i.dl = and i64 %i.dk, 63
-  %i.dm = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cv, i1 true)
+  %i.dm = call range(i64 0, 64) i64 @llvm.cttz.i64(i64 %i.cv, i1 true)
   %.not = icmp samesign ult i64 %i.dl, %i.dm
   br i1 %.not, label %.thread123, label %bb.w
 
@@ -1359,7 +1359,7 @@ bb.af:                                            ; preds = %.thread130, %bb.ac
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
   call void @_ZN2v88internal8compiler12BinopMatcherINS1_10IntMatcherIlLNS1_8IrOpcode5ValueE28EEES6_LNS0_21MachineRepresentationE5EEC2EPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(56) %9, ptr noundef nonnull %i.ga)
-  %i.gf = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cv, i1 true)
+  %i.gf = call range(i64 0, 64) i64 @llvm.cttz.i64(i64 %i.cv, i1 true)
   %i.gg = getelementptr inbounds nuw i8, ptr %9, i64 48
   %i.gh = load i8, ptr %i.gg, align 8, !range !5, !noundef !6
   %i.gi = trunc nuw i8 %i.gh to i1
@@ -1407,7 +1407,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.af
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
   call void @_ZN2v88internal8compiler12BinopMatcherINS1_10IntMatcherIlLNS1_8IrOpcode5ValueE28EEES6_LNS0_21MachineRepresentationE5EEC2EPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(56) %10, ptr noundef nonnull %i.gx)
-  %i.hc = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cv, i1 true)
+  %i.hc = call range(i64 0, 64) i64 @llvm.cttz.i64(i64 %i.cv, i1 true)
   %i.hd = getelementptr inbounds nuw i8, ptr %10, i64 48
   %i.he = load i8, ptr %i.hd, align 8, !range !5, !noundef !6
   %i.hf = trunc nuw i8 %i.he to i1

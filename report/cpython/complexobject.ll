@@ -201,9 +201,9 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c,
   br i1 %or.cond43, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.aa = tail call double @llvm.fabs.f64(double %1) #12
+  %i.aa = tail call double @llvm.fabs.f64(double %1)
   %i.ab = fcmp oeq double %i.aa, +inf             ; 2 uses
-  %i.ac = tail call double @llvm.fabs.f64(double %2) #12
+  %i.ac = tail call double @llvm.fabs.f64(double %2)
   %i.ad = fcmp oeq double %i.ac, +inf             ; 2 uses
   %or.cond45 = or i1 %i.ab, %i.ad
   br i1 %or.cond45, label %bb.i, label %bb.j
@@ -606,9 +606,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   br i1 %or.cond43.i, label %_Py_rc_quot.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.aw = call double @llvm.fabs.f64(double %i.j) #12
+  %i.aw = call double @llvm.fabs.f64(double %i.j)
   %i.ax = fcmp oeq double %i.aw, +inf             ; 2 uses
-  %i.ay = call double @llvm.fabs.f64(double %i.i) #12
+  %i.ay = call double @llvm.fabs.f64(double %i.i)
   %i.az = fcmp oeq double %i.ay, +inf             ; 2 uses
   %or.cond45.i = or i1 %i.ax, %i.az
   br i1 %or.cond45.i, label %bb.k, label %_Py_rc_quot.exit

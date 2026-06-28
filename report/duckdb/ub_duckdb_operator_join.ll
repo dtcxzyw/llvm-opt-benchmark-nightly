@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not53.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bk = call noundef range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bj, i1 true)
+  %i.bk = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bj, i1 true)
   %i.bl = and i64 %i.bc, 18014398509481920
   %i.bm = or disjoint i64 %i.bk, %i.bl
   br label %_ZN6duckdbL9NextValidERKNS_12ValidityMaskEmm.exit
@@ -289,7 +289,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s,
   %i.cr = sub i64 %.lcssa34.i, %i.bf
   %i.cs = shl i64 %i.cr, 6
   %i.ct = add i64 %i.cs, %i.bn
-  %i.cu = call noundef range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa32.i, i1 true)
+  %i.cu = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa32.i, i1 true)
   %i.cv = or disjoint i64 %i.ct, %i.cu
   br label %_ZN6duckdbL9NextValidERKNS_12ValidityMaskEmm.exit
 
@@ -304,7 +304,7 @@ bb.w:                                             ; preds = %.lr.ph.i
   %i.cy = sub i64 %.11127.i, %i.bf
   %i.cz = shl i64 %i.cy, 6
   %i.da = add i64 %i.cz, %i.bn
-  %i.db = call noundef range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cx, i1 true)
+  %i.db = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cx, i1 true)
   %i.dc = or disjoint i64 %i.da, %i.db
   br label %_ZN6duckdbL9NextValidERKNS_12ValidityMaskEmm.exit
 
@@ -350,7 +350,7 @@ bb.z:                                             ; preds = %_ZN6duckdbL9NextVal
   br i1 %.not53.i41, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.dw = call noundef range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.dv, i1 true)
+  %i.dw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.dv, i1 true)
   %i.dx = and i64 %i.do, -64
   %i.dy = or disjoint i64 %i.dw, %i.dx
   br label %_ZN6duckdbL9NextValidERKNS_12ValidityMaskEmm.exit65
@@ -438,7 +438,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.
   %i.fg = sub i64 %.lcssa34.i55, %i.dr
   %i.fh = shl i64 %i.fg, 6
   %i.fi = add i64 %i.fh, %i.dz
-  %i.fj = call noundef range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa32.i56, i1 true)
+  %i.fj = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa32.i56, i1 true)
   %i.fk = or disjoint i64 %i.fi, %i.fj
   br label %_ZN6duckdbL9NextValidERKNS_12ValidityMaskEmm.exit65
 
@@ -453,7 +453,7 @@ bb.ak:                                            ; preds = %.lr.ph.i48
   %i.fn = sub i64 %.11127.i49, %i.dr
   %i.fo = shl i64 %i.fn, 6
   %i.fp = add i64 %i.fo, %i.dz
-  %i.fq = call noundef range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.fm, i1 true)
+  %i.fq = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.fm, i1 true)
   %i.fr = or disjoint i64 %i.fp, %i.fq
   br label %_ZN6duckdbL9NextValidERKNS_12ValidityMaskEmm.exit65
 

@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6366
   %i.i = add i64 %i.g, 1                          ; 2 uses
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.i, i64 48) ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 range(i64 8, 353) 48) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.d, !prof !229
 
@@ -414,7 +414,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6398
   %i.i = add i64 %i.g, 1                          ; 2 uses
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.i, i64 40) ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 range(i64 8, 353) 40) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.d, !prof !229
 
@@ -627,7 +627,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6437
   %i.i = add i64 %i.g, 1                          ; 2 uses
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.i, i64 40) ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 range(i64 8, 353) 40) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.d, !prof !229
 
@@ -1030,7 +1030,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6710
   %i.i = add i64 %i.g, 1                          ; 2 uses
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.i, i64 48) ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 range(i64 8, 353) 48) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.d, !prof !229
 
@@ -1256,7 +1256,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6756
   %i.i = add i64 %i.g, 1                          ; 2 uses
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.i, i64 144) ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 range(i64 8, 353) 144) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.d, !prof !229
 
@@ -1470,7 +1470,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !6788
   %i.j = add i64 %i.h, 1                          ; 2 uses
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.j, i64 56) ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.j, i64 range(i64 8, 353) 56) ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.e, label %bb.d, !prof !229
 
@@ -1783,7 +1783,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !6844
   %i.m = add i64 %i.k, 1                          ; 2 uses
-  %i.n = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.m, i64 136) ; 2 uses
+  %i.n = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.m, i64 range(i64 8, 353) 136) ; 2 uses
   %i.o = extractvalue { i64, i1 } %i.n, 1
   br i1 %i.o, label %bb.e, label %bb.d, !prof !229
 
@@ -2109,7 +2109,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6892
   %i.i = add i64 %i.g, 1                          ; 2 uses
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.i, i64 48) ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 range(i64 8, 353) 48) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.d, !prof !229
 
@@ -2325,7 +2325,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !6924
   %i.k = add i64 %i.i, 1                          ; 2 uses
-  %i.l = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.k, i64 72) ; 2 uses
+  %i.l = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.k, i64 range(i64 8, 353) 72) ; 2 uses
   %i.m = extractvalue { i64, i1 } %i.l, 1
   br i1 %i.m, label %bb.e, label %bb.d, !prof !229
 
@@ -2588,7 +2588,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6972
   %i.i = add i64 %i.g, 1                          ; 2 uses
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 8, 353) %i.i, i64 112) ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 range(i64 8, 353) 112) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.d, !prof !229
 

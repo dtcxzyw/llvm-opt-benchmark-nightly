@@ -201,7 +201,7 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZStssImmENSt26common_comparison_categoryIJDTclL_ZNSt8__detail11__synth3wayEEclsr3stdE7declvalIRT_EEclsr3stdE7declvalIS3_EEEEDTclL_ZNS1_11__synth3wayEEclsr3stdE7declvalIRT0_EEclsr3stdE7declvalIS6_EEEEEE4typeERKSt4pairIS2_S5_ESD_.exit.i
 
 _ZN4absl12lts_20240116L7PowFiveEmi.exit.i:        ; preds = %bb.q
-  %i.ck = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.cf, i1 true)
+  %i.ck = tail call range(i64 32, 64) i64 @llvm.ctlz.i64(i64 %i.cf, i1 true)
   %i.cl = shl i64 %i.cf, %i.ck
   %i.cm = sub nsw i32 5, %.16.i
   %i.cn = tail call fastcc { i64, i64 } @_ZN4absl12lts_20240116L7PowFiveEmi(i64 noundef %i.cb, i32 noundef %i.cm) ; 2 uses
@@ -604,7 +604,7 @@ bb.a:
   br i1 %i.w, label %_ZN4absl12lts_20240116L5Mul32ESt4pairImmEj.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.x = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.v, i1 true) ; 3 uses
+  %i.x = tail call range(i64 31, 65) i64 @llvm.ctlz.i64(i64 %i.v, i1 true) ; 3 uses
   %i.y = sub nuw nsw i64 64, %i.x                 ; 2 uses
   %i.z = lshr i64 %i.k, %i.y
   %i.aa = shl i64 %i.r, %i.x
@@ -654,7 +654,7 @@ _ZN4absl12lts_20240116L5Mul32ESt4pairImmEj.exit:  ; preds = %.lr.ph, %bb.b
   br i1 %i.bg, label %_ZN4absl12lts_20240116L5Mul32ESt4pairImmEj.exit14, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.bh = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.bf, i1 true) ; 3 uses
+  %i.bh = tail call range(i64 31, 65) i64 @llvm.ctlz.i64(i64 %i.bf, i1 true) ; 3 uses
   %i.bi = sub nuw nsw i64 64, %i.bh               ; 2 uses
   %i.bj = lshr i64 %i.au, %i.bi
   %i.bk = shl i64 %i.bb, %i.bh

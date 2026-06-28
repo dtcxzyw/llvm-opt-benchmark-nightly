@@ -203,7 +203,7 @@ bb.a:
 
 "_ZZN6google8protobuf8internal8TcParser11FieldNumberEPKNS1_16TcParseTableBaseEPKNS3_10FieldEntryEENK3$_0clEji.exit.i": ; preds = %.lr.ph.i.i, %.lr.ph.i.preheader.i
   %.03.i.i.lcssa = phi i32 [ %i.v, %.lr.ph.i.preheader.i ], [ %i.ab, %.lr.ph.i.i ]
-  %i.ac = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i.i.lcssa, i1 true)
+  %i.ac = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i.i.lcssa, i1 true)
   %i.ad = add nuw nsw i32 %i.ac, 1
   br label %_ZN6google8protobuf8internal8TcParser11FieldNumberEPKNS1_16TcParseTableBaseEPKNS3_10FieldEntryE.exit
 
@@ -270,7 +270,7 @@ bb.a:
   %i.ax = zext i16 %.0100.i to i32
   %i.ay = shl nuw nsw i32 %i.ax, 4
   %i.az = add i32 %i.ay, %i.aw
-  %i.ba = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i42.i.lcssa, i1 true)
+  %i.ba = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i42.i.lcssa, i1 true)
   %i.bb = add nsw i32 %i.az, %i.ba
   br label %_ZN6google8protobuf8internal8TcParser11FieldNumberEPKNS1_16TcParseTableBaseEPKNS3_10FieldEntryE.exit
 
@@ -654,7 +654,7 @@ bb.a:
 
 "_ZZN6google8protobuf8internal8TcParser11FieldNumberEPKNS1_16TcParseTableBaseEPKNS3_10FieldEntryEENK3$_0clEji.exit": ; preds = %.lr.ph.i, %.lr.ph.i.preheader
   %.03.i.lcssa = phi i32 [ %i.k, %.lr.ph.i.preheader ], [ %i.q, %.lr.ph.i ]
-  %i.r = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i.lcssa, i1 true)
+  %i.r = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i.lcssa, i1 true)
   %i.s = add nuw nsw i32 %i.r, 1
   br label %.thread
 
@@ -736,7 +736,7 @@ bb.c:                                             ; preds = %bb.b
   %i.as = zext i16 %.0100 to i32
   %i.at = shl nuw nsw i32 %i.as, 4
   %i.au = add i32 %i.at, %i.ar
-  %i.av = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i42.lcssa, i1 true)
+  %i.av = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.03.i42.lcssa, i1 true)
   %i.aw = add nsw i32 %i.au, %i.av
   br label %.thread
 

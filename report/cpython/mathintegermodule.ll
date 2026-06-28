@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_Py_NewRef.exit.i
 
 _Py_NewRef.exit.i:                                ; preds = %bb.k, %bb.j
-  %i.u = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 21, -9223372036854775808) %i.b, i1 true)
+  %i.u = call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 range(i64 21, -9223372036854775808) %i.b, i1 true)
   %i.v = sub nuw nsw i64 62, %i.u
   br label %bb.l
 
@@ -220,7 +220,7 @@ bb.m:                                             ; preds = %bb.l
   %i.y = add nuw i64 %i.w, 1
   %i.z = or i64 %i.y, 1                           ; 5 uses
   %i.aa = add i64 %i.z, -2
-  %i.ab = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 -1, -2) %i.aa, i1 true)
+  %i.ab = call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %i.aa, i1 true)
   %i.ac = sub nuw nsw i64 64, %i.ab
   %i.ad = call fastcc ptr @factorial_partial_product(i64 noundef %.02564.i, i64 noundef %i.z, i64 noundef %i.ac) ; 5 uses
   %i.ae = icmp eq ptr %i.ad, null
@@ -623,7 +623,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = add i64 %i.b, %0
   %i.k = or i64 %i.j, 1                           ; 3 uses
   %i.l = add i64 %i.k, -2
-  %i.m = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 -1, -2) %i.l, i1 true)
+  %i.m = tail call range(i64 0, 64) i64 @llvm.ctlz.i64(i64 %i.l, i1 true)
   %i.n = sub nuw nsw i64 64, %i.m
   %i.o = tail call fastcc ptr @factorial_partial_product(i64 noundef %0, i64 noundef %i.k, i64 noundef %i.n) ; 5 uses
   %i.p = icmp eq ptr %i.o, null
