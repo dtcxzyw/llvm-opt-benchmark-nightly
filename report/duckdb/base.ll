@@ -201,20 +201,19 @@ bb.z:                                             ; preds = %bb.y
   %i.dl = icmp ne i64 %i.ai, 0
   call void @llvm.assume(i1 %i.dl)
   %i.dm = add nsw i64 %i.ai, -1                   ; 2 uses
-  %i.dn = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.dm, i1 true)
+  %i.dn = call range(i64 0, 44) i64 @llvm.ctlz.i64(i64 %i.dm, i1 true) ; 2 uses
   %i.do = trunc nuw nsw i64 %i.dn to i32
-  %7 = call i32 @llvm.usub.sat.i32(i32 50, i32 %i.do) ; 2 uses
-  %8 = add nuw nsw i32 %7, 11
-  %9 = zext nneg i32 %8 to i64
-  %i.dp = lshr i64 %i.dm, %9
+  %7 = sub nuw nsw i64 61, %i.dn
+  %i.dp = lshr i64 %i.dm, %7
   %i.dq = trunc i64 %i.dp to i32
   %i.dr = and i32 %i.dq, 3
-  %i.ds = shl nuw nsw i32 %7, 2
-  %10 = or disjoint i32 %i.dr, %i.ds
+  %i.ds = shl nuw nsw i32 %i.do, 2
+  %reass.sub = sub nsw i32 %i.dr, %i.ds
+  %8 = add nsw i32 %reass.sub, 200
   br label %sz_psz2ind.exit
 
 sz_psz2ind.exit:                                  ; preds = %bb.y, %bb.z
-  %.0.i = phi i32 [ %10, %bb.z ], [ 199, %bb.y ]
+  %.0.i = phi i32 [ %8, %bb.z ], [ 199, %bb.y ]
   store i32 %.0.i, ptr %3, align 4, !tbaa !3
   store i64 %i.ai, ptr %.0.i55, align 8, !tbaa !17
   %i.dt = getelementptr inbounds nuw i8, ptr %.0.i55, i64 8
@@ -616,9 +615,6 @@ declare void @duckdb_je_edata_heap_insert(ptr noundef, ptr noundef) local_unname
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
