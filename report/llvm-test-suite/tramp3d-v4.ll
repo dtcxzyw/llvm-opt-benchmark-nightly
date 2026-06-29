@@ -204,20 +204,20 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i9.i: ; preds = %bb.c
   %i.o = phi ptr [ %i.l, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i9.i ], [ %i.i, %.thread ] ; 3 uses
   %.0.i.i.i.i.i.ph.i6 = phi ptr [ %i.k, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i9.i ], [ %i.f, %.thread ]
   %.0.i.i.i.i.i11.ph.i = phi ptr [ %i.n, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i9.i ], [ %i.j, %.thread ]
+  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.a
   %wide.trip.count.i = zext nneg i32 %0 to i64
   %i.p = shl nuw nsw i64 %wide.trip.count.i, 2    ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.d, i8 0, i64 %i.p, i1 false), !tbaa !4
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 %i.p, i1 false), !tbaa !4
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.a
   br label %_ZN12TagGeneratorC2Ei.exit
 
-_ZN12TagGeneratorC2Ei.exit:                       ; preds = %.lr.ph.i, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %.sroa.0.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.d, %.lr.ph.i ]
-  %.sroa.7.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %.0.i.i.i.i.i.ph.i6, %.lr.ph.i ]
-  %.sroa.9.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.e, %.lr.ph.i ]
-  %.sroa.12.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.o, %.lr.ph.i ]
-  %.sroa.16.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %.0.i.i.i.i.i11.ph.i, %.lr.ph.i ]
-  %.sroa.18.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %1, %.lr.ph.i ]
+_ZN12TagGeneratorC2Ei.exit:                       ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i, %.lr.ph.i
+  %.sroa.0.0 = phi ptr [ %i.d, %.lr.ph.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+  %.sroa.7.0 = phi ptr [ %.0.i.i.i.i.i.ph.i6, %.lr.ph.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+  %.sroa.9.0 = phi ptr [ %i.e, %.lr.ph.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+  %.sroa.12.0 = phi ptr [ %i.o, %.lr.ph.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+  %.sroa.16.0 = phi ptr [ %.0.i.i.i.i.i11.ph.i, %.lr.ph.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+  %.sroa.18.0 = phi ptr [ %1, %.lr.ph.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
   %i.q = load ptr, ptr @tagGenerator_g, align 8, !tbaa !141 ; 3 uses
   %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @tagGenerator_g, i64 16), align 8, !tbaa !143
   store ptr %.sroa.0.0, ptr @tagGenerator_g, align 8, !tbaa !141

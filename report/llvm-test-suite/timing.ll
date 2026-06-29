@@ -1,5 +1,3 @@
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@hypre_FinalizeTiming:bb.a
   %i.az = load ptr, ptr @hypre_global_timing, align 8, !tbaa !8 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 32
@@ -201,8 +199,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   ret i32 0
 }
 
-; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef i32 @hypre_ClearTiming() local_unnamed_addr #6 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local noundef i32 @hypre_ClearTiming() local_unnamed_addr #5 {
 bb.a:
   %i.a = load ptr, ptr @hypre_global_timing, align 8, !tbaa !8 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
@@ -210,102 +208,24 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 52
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !10   ; 3 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !10   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 0
-  br i1 %i.e, label %.lr.ph, label %.loopexit
+  br i1 %i.e, label %vector.body, label %.loopexit
 
-.lr.ph:                                           ; preds = %.preheader
-  %0 = load ptr, ptr %i.a, align 8, !tbaa !24     ; 5 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = load ptr, ptr %1, align 8, !tbaa !25       ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %4 = load ptr, ptr %3, align 8, !tbaa !26       ; 5 uses
-  %wide.trip.count = zext nneg i32 %i.d to i64    ; 5 uses
-  %min.iters.check = icmp ult i32 %i.d, 10
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
+vector.body:                                      ; preds = %.preheader
+  %0 = load ptr, ptr %i.a, align 8, !tbaa !24
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %1 = load ptr, ptr %i.f, align 8, !tbaa !25
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %2 = load ptr, ptr %i.g, align 8, !tbaa !26
+  %3 = zext nneg i32 %i.d to i64
+  %4 = shl nuw nsw i64 %3, 3                      ; 3 uses
+  tail call void @llvm.memset.p0.i64(ptr align 8 %0, i8 0, i64 %4, i1 false), !tbaa !28
+  tail call void @llvm.memset.p0.i64(ptr align 8 %1, i8 0, i64 %4, i1 false), !tbaa !28
+  tail call void @llvm.memset.p0.i64(ptr align 8 %2, i8 0, i64 %4, i1 false), !tbaa !28
+  br label %.loopexit
 
-vector.memcheck:                                  ; preds = %.lr.ph
-  %5 = ptrtoaddr ptr %4 to i64                    ; 2 uses
-  %6 = ptrtoaddr ptr %2 to i64                    ; 2 uses
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
-  %8 = sub i64 %6, %7
-  %diff.check = icmp ult i64 %8, 32
-  %9 = sub i64 %5, %7
-  %diff.check12 = icmp ult i64 %9, 32
-  %conflict.rdx = or i1 %diff.check, %diff.check12
-  %10 = sub i64 %5, %6
-  %diff.check13 = icmp ult i64 %10, 32
-  %conflict.rdx14 = or i1 %conflict.rdx, %diff.check13
-  br i1 %conflict.rdx14, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %index ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %11, i64 16
-  store <2 x double> zeroinitializer, ptr %11, align 8, !tbaa !28
-  store <2 x double> zeroinitializer, ptr %i.f, align 8, !tbaa !28
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %index ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %12, i64 16
-  store <2 x double> zeroinitializer, ptr %12, align 8, !tbaa !28
-  store <2 x double> zeroinitializer, ptr %i.g, align 8, !tbaa !28
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %index ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 16
-  store <2 x double> zeroinitializer, ptr %13, align 8, !tbaa !28
-  store <2 x double> zeroinitializer, ptr %14, align 8, !tbaa !28
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %15 = icmp eq i64 %index.next, %n.vec
-  br i1 %15, label %middle.block, label %vector.body, !llvm.loop !35
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
-
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 6 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
-
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.ph
-  store double 0.000000e+00, ptr %16, align 8, !tbaa !28
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.ph
-  store double 0.000000e+00, ptr %17, align 8, !tbaa !28
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.ph
-  store double 0.000000e+00, ptr %18, align 8, !tbaa !28
-  %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
-  br label %scalar.ph.prol.loopexit
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
-  %19 = add nsw i64 %wide.trip.count, -1
-  %20 = icmp eq i64 %indvars.iv.ph, %19
-  br i1 %20, label %.loopexit, label %scalar.ph
-
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 5 uses
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
-  store double 0.000000e+00, ptr %21, align 8, !tbaa !28
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
-  store double 0.000000e+00, ptr %22, align 8, !tbaa !28
-  %23 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
-  store double 0.000000e+00, ptr %23, align 8, !tbaa !28
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %24 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next
-  store double 0.000000e+00, ptr %24, align 8, !tbaa !28
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next
-  store double 0.000000e+00, ptr %25, align 8, !tbaa !28
-  %26 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next
-  store double 0.000000e+00, ptr %26, align 8, !tbaa !28
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
-  br i1 %exitcond.not.1, label %.loopexit, label %scalar.ph, !llvm.loop !38
-
-.loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.preheader, %bb.a
+.loopexit:                                        ; preds = %vector.body, %.preheader, %bb.a
   ret i32 0
 }
 
@@ -392,7 +312,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph, %bb.
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !10
   %i.as = sext i32 %i.ar to i64
   %i.at = icmp slt i64 %indvars.iv.next, %i.as
-  br i1 %i.at, label %.lr.ph, label %.loopexit, !llvm.loop !39
+  br i1 %i.at, label %.lr.ph, label %.loopexit, !llvm.loop !35
 
 .loopexit:                                        ; preds = %bb.g, %bb.d, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
@@ -406,12 +326,15 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph, %bb.
 declare i32 @hypre_MPI_Comm_rank(i32 noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unnamed_addr #7
+declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unnamed_addr #6
 
 declare i32 @hypre_MPI_Allreduce(ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #8
+declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #7
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -419,9 +342,9 @@ attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nofree nounwind }
+attributes #6 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nofree nounwind }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #9 = { nounwind }
 attributes #10 = { nounwind willreturn memory(read) }
 
@@ -464,9 +387,5 @@ attributes #10 = { nounwind willreturn memory(read) }
 !32 = !{!11, !16, i64 72}
 !33 = !{!11, !16, i64 56}
 !34 = !{!11, !16, i64 64}
-!35 = distinct !{!35, !22, !36, !37}
-!36 = !{!"llvm.loop.isvectorized", i32 1}
-!37 = !{!"llvm.loop.unroll.runtime.disable"}
-!38 = distinct !{!38, !22, !36}
-!39 = distinct !{!39, !22}
+!35 = distinct !{!35, !22}
 end_hunk_0
