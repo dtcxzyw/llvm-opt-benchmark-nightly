@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.q = lshr i64 %i.p, 3
   %i.r = and i64 %i.q, 1073741816                 ; 2 uses
   %i.s = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.r) #22, !noalias !95 ; 17 uses
-  %i.t = load ptr, ptr %1, align 8                ; 2 uses
+  %i.t = load ptr, ptr %1, align 8, !noalias !95  ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr align 8 %i.t, i64 %i.r, i1 false), !noalias !95
   %i.u = lshr i64 %i.p, 6                         ; 6 uses
   %i.v = trunc nuw nsw i64 %i.u to i32            ; 4 uses
@@ -315,7 +315,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bz, label %.lr.ph.i, label %.loopexit29
 
 _ZN4llvh5APIntD2Ev.exit.thread:                   ; preds = %bb.e
-  %i.ca = load i64, ptr %1, align 8               ; 2 uses
+  %i.ca = load i64, ptr %1, align 8, !noalias !95 ; 2 uses
   %i.cb = zext nneg i32 %i.c to i64
   %i.cc = shl i64 %i.ca, %i.cb
   %i.cd = sub nsw i32 0, %i.b
@@ -718,7 +718,7 @@ bb.a:
 
 _ZN4llvh5APInt5tcAddEPmPKmmj.exit.thread.i.i:     ; preds = %bb.a
   %i.d = load i64, ptr %1, align 8                ; 2 uses
-  %i.e = load i64, ptr %2, align 8                ; 2 uses
+  %i.e = load i64, ptr %2, align 8, !noalias !590 ; 2 uses
   %i.f = add i64 %i.e, %i.d
   %i.g = sub nsw i32 0, %i.b
   %i.h = and i32 %i.g, 63
@@ -1012,7 +1012,7 @@ bb.a:
 
 _ZN4llvh5APInt10tcSubtractEPmPKmmj.exit.thread.i.i: ; preds = %bb.a
   %i.d = load i64, ptr %1, align 8                ; 2 uses
-  %i.e = load i64, ptr %2, align 8                ; 2 uses
+  %i.e = load i64, ptr %2, align 8, !noalias !597 ; 2 uses
   %i.f = sub i64 %i.d, %i.e
   %i.g = sub nsw i32 0, %i.b
   %i.h = and i32 %i.g, 63
@@ -1382,8 +1382,8 @@ bb.a:
   br i1 %i.c, label %_ZNK4llvh5APIntmlERKS0_.exit.thread, label %_ZN4llvh5APInt5tcSetEPmmj.exit.thread.i.i
 
 _ZNK4llvh5APIntmlERKS0_.exit.thread:              ; preds = %bb.a
-  %i.d = load i64, ptr %1, align 8                ; 2 uses
-  %i.e = load i64, ptr %2, align 8                ; 2 uses
+  %i.d = load i64, ptr %1, align 8, !noalias !603 ; 2 uses
+  %i.e = load i64, ptr %2, align 8, !noalias !603 ; 2 uses
   %i.f = mul i64 %i.e, %i.d
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.b, ptr %i.g, align 8, !tbaa !7, !alias.scope !603
@@ -1644,8 +1644,8 @@ bb.a:
   br i1 %i.c, label %_ZNK4llvh5APIntmlERKS0_.exit.thread, label %_ZN4llvh5APInt5tcSetEPmmj.exit.thread.i.i
 
 _ZNK4llvh5APIntmlERKS0_.exit.thread:              ; preds = %bb.a
-  %i.d = load i64, ptr %1, align 8                ; 2 uses
-  %i.e = load i64, ptr %2, align 8                ; 2 uses
+  %i.d = load i64, ptr %1, align 8, !noalias !606 ; 2 uses
+  %i.e = load i64, ptr %2, align 8, !noalias !606 ; 2 uses
   %i.f = mul i64 %i.e, %i.d
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.b, ptr %i.g, align 8, !tbaa !7, !alias.scope !606
@@ -2048,7 +2048,7 @@ bb.f:                                             ; preds = %.loopexit914, %_ZNK
   br i1 %i.ao, label %_ZN4llvh5APIntC2Ejmb.exit.i, label %_ZN4llvh5APInt15clearUnusedBitsEv.exit.i13
 
 _ZN4llvh5APIntC2Ejmb.exit.i:                      ; preds = %bb.f
-  %i.ap = load i64, ptr %1, align 8               ; 2 uses
+  %i.ap = load i64, ptr %1, align 8, !noalias !670 ; 2 uses
   %i.aq = load i32, ptr %i.a, align 8, !tbaa !7, !noalias !670 ; 2 uses
   %i.ar = sub i32 64, %i.aq
   %i.as = zext i32 %i.ar to i64                   ; 2 uses
@@ -2136,7 +2136,7 @@ _ZN4llvh5APIntD2Ev.exit15:                        ; preds = %bb.g, %_ZNK4llvh5AP
   br i1 %i.ao, label %_ZN4llvh5APIntC2Ejmb.exit.i20, label %_ZN4llvh5APInt15clearUnusedBitsEv.exit.i16
 
 _ZN4llvh5APIntC2Ejmb.exit.i20:                    ; preds = %_ZN4llvh5APIntD2Ev.exit15
-  %i.cz = load i64, ptr %2, align 8               ; 2 uses
+  %i.cz = load i64, ptr %2, align 8, !noalias !673 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.db = load i32, ptr %i.da, align 8, !tbaa !7, !noalias !673 ; 2 uses
   %i.dc = sub i32 64, %i.db
@@ -2227,7 +2227,7 @@ _ZN4llvh5APIntD2Ev.exit23:                        ; preds = %bb.h, %_ZNK4llvh5AP
   br i1 %i.ao, label %_ZN4llvh5APIntC2Ejmb.exit.i28, label %_ZN4llvh5APInt15clearUnusedBitsEv.exit.i24
 
 _ZN4llvh5APIntC2Ejmb.exit.i28:                    ; preds = %_ZN4llvh5APIntD2Ev.exit23
-  %i.fm = load i64, ptr %3, align 8               ; 2 uses
+  %i.fm = load i64, ptr %3, align 8, !noalias !676 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.fo = load i32, ptr %i.fn, align 8, !tbaa !7, !noalias !676 ; 2 uses
   %i.fp = sub i32 64, %i.fo
@@ -2630,7 +2630,7 @@ _ZN4llvh5APIntD2Ev.exit62:                        ; preds = %_ZN4llvh5APInt14tcM
   br i1 %i.qe, label %_ZN4llvh5APIntC2Ejmb.exit.i66, label %_ZN4llvh5APInt5tcSetEPmmj.exit.thread.i.i
 
 _ZN4llvh5APIntC2Ejmb.exit.i66:                    ; preds = %_ZN4llvh5APIntD2Ev.exit62
-  %i.qg = load i64, ptr %2, align 8               ; 3 uses
+  %i.qg = load i64, ptr %2, align 8, !noalias !691 ; 3 uses
   %i.qh = mul i64 %i.qg, %i.qg
   %i.qi = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 %i.qd, ptr %i.qi, align 8, !tbaa !7, !alias.scope !691
@@ -3033,7 +3033,7 @@ _ZN4llvhngENS_5APIntE.exit:                       ; preds = %.thread681, %_ZN4ll
   br i1 %i.acl, label %_ZN4llvh5APInt11tcIncrementEPmj.exit.thread1.i.i.i116, label %bb.ao
 
 bb.ao:                                            ; preds = %_ZN4llvhngENS_5APIntE.exit
-  %i.acm = load ptr, ptr %14, align 8             ; 7 uses
+  %i.acm = load ptr, ptr %14, align 8, !noalias !707 ; 7 uses
   %i.acn = zext i32 %i.ack to i64
   %i.aco = add nuw nsw i64 %i.acn, 63
   %i.acp = lshr i64 %i.aco, 6                     ; 5 uses
@@ -3436,7 +3436,7 @@ _ZN4llvh5APInt5tcSetEPmmj.exit.thread.i.i186:     ; preds = %_ZN4llvh5APIntD2Ev.
   %i.all = trunc nuw nsw i64 %i.alk to i32        ; 2 uses
   %i.alm = shl nuw nsw i64 %i.alk, 3              ; 2 uses
   %i.aln = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.alm) #22, !noalias !723 ; 8 uses
-  %i.alo = load ptr, ptr %17, align 8             ; 12 uses
+  %i.alo = load ptr, ptr %17, align 8, !noalias !723 ; 12 uses
   store i64 0, ptr %i.aln, align 8, !tbaa !10, !noalias !723
   %scevgep.i.i.i187 = getelementptr i8, ptr %i.aln, i64 8
   %i.alp = add nuw nsw i64 %i.alm, 34359738360
@@ -3520,7 +3520,7 @@ _ZNK4llvh5APInt3sgtERKS0_.exit201:                ; preds = %.lr.ph962
   br i1 %.not767, label %.lr.ph.preheader.i.i202, label %_ZN4llvh5APIntmIEm.exit
 
 _ZNK4llvh5APInt3sgtERKS0_.exit201.thread718:      ; preds = %_ZN4llvh5APIntD2Ev.exit185
-  %i.anj = load i64, ptr %17, align 8             ; 5 uses
+  %i.anj = load i64, ptr %17, align 8, !noalias !723 ; 5 uses
   %i.ank = mul i64 %i.anj, %i.anj
   %i.anl = sub nsw i32 0, %i.alg
   %i.anm = and i32 %i.anl, 63
@@ -3923,7 +3923,7 @@ _ZN4llvh5APInt5tcSetEPmmj.exit.thread.i.i358:     ; preds = %_ZN4llvh5APIntD2Ev.
   %i.bbo = shl nuw nsw i64 %i.bbm, 3              ; 2 uses
   %i.bbp = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bbo) #22, !noalias !759 ; 14 uses
   %i.bbq = load ptr, ptr %7, align 8, !tbaa !9, !noalias !759
-  %i.bbr = load ptr, ptr %18, align 8             ; 3 uses
+  %i.bbr = load ptr, ptr %18, align 8, !noalias !759 ; 3 uses
   store i64 0, ptr %i.bbp, align 8, !tbaa !10, !noalias !759
   %scevgep.i.i.i359 = getelementptr i8, ptr %i.bbp, i64 8
   %i.bbs = add nuw nsw i64 %i.bbo, 34359738360
@@ -4063,7 +4063,7 @@ _ZN4llvh5APInt5tcSetEPmmj.exit.thread.i.i358:     ; preds = %_ZN4llvh5APIntD2Ev.
 
 _ZN4llvh5APInt5tcAddEPmPKmmj.exit.thread.i.i400:  ; preds = %_ZN4llvh5APIntD2Ev.exit357
   %i.bee = load i64, ptr %7, align 8, !tbaa !9, !noalias !759
-  %i.bef = load i64, ptr %18, align 8             ; 3 uses
+  %i.bef = load i64, ptr %18, align 8, !noalias !759 ; 3 uses
   %i.beg = mul i64 %i.bef, %i.bee
   %i.beh = sub nsw i32 0, %i.og
   %i.bei = and i32 %i.beh, 63

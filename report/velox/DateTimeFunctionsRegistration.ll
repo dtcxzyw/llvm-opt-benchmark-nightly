@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit45: ; preds = %bb.aj
-  %i.eb = load <2 x i64>, ptr %5, align 16
+  %i.eb = load <2 x i64>, ptr %5, align 16, !noalias !40590
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit45
@@ -607,7 +607,7 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit51: ; preds = %bb.ac
-  %i.di = load <2 x i64>, ptr %6, align 16
+  %i.di = load <2 x i64>, ptr %6, align 16, !noalias !40615
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit51
@@ -1010,7 +1010,7 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit72: ; preds = %bb.ad
-  %i.dt = load <2 x i64>, ptr %5, align 16
+  %i.dt = load <2 x i64>, ptr %5, align 16, !noalias !40631
   br label %_ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit76.thread
 
 _ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit76.thread: ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit72
@@ -1413,7 +1413,7 @@ bb.cf:                                            ; preds = %bb.ce
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit142: ; preds = %bb.ce
-  %i.jl = load <2 x i64>, ptr %16, align 16
+  %i.jl = load <2 x i64>, ptr %16, align 16, !noalias !40644
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit120, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit142
@@ -1816,7 +1816,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit40: ; preds = %bb.aj
-  %i.ed = load <2 x i64>, ptr %5, align 16
+  %i.ed = load <2 x i64>, ptr %5, align 16, !noalias !40662
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit40
@@ -2219,7 +2219,7 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit46: ; preds = %bb.ac
-  %i.dl = load <2 x i64>, ptr %6, align 16
+  %i.dl = load <2 x i64>, ptr %6, align 16, !noalias !40683
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit46
@@ -2622,7 +2622,7 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit67: ; preds = %bb.ad
-  %i.dx = load <2 x i64>, ptr %5, align 16
+  %i.dx = load <2 x i64>, ptr %5, align 16, !noalias !40699
   br label %_ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit71.thread
 
 _ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit71.thread: ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit67
@@ -3025,7 +3025,7 @@ bb.cf:                                            ; preds = %bb.ce
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit137: ; preds = %bb.ce
-  %i.jp = load <2 x i64>, ptr %16, align 16
+  %i.jp = load <2 x i64>, ptr %16, align 16, !noalias !40712
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit115, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit137
@@ -3428,7 +3428,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit39: ; preds = %bb.aj
-  %i.ed = load <2 x i64>, ptr %5, align 16
+  %i.ed = load <2 x i64>, ptr %5, align 16, !noalias !40730
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit39
@@ -3831,7 +3831,7 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit45: ; preds = %bb.ac
-  %i.dl = load <2 x i64>, ptr %6, align 16
+  %i.dl = load <2 x i64>, ptr %6, align 16, !noalias !40751
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit45
@@ -4234,7 +4234,7 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit66: ; preds = %bb.ad
-  %i.dx = load <2 x i64>, ptr %5, align 16
+  %i.dx = load <2 x i64>, ptr %5, align 16, !noalias !40767
   br label %_ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit70.thread
 
 _ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit70.thread: ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit66
@@ -4637,7 +4637,7 @@ bb.cf:                                            ; preds = %bb.ce
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit136: ; preds = %bb.ce
-  %i.jp = load <2 x i64>, ptr %16, align 16
+  %i.jp = load <2 x i64>, ptr %16, align 16, !noalias !40780
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit114, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit136
@@ -5040,7 +5040,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit39: ; preds = %bb.aj
-  %i.ef = load <2 x i64>, ptr %5, align 16
+  %i.ef = load <2 x i64>, ptr %5, align 16, !noalias !40798
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit39
@@ -5443,7 +5443,7 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit45: ; preds = %bb.ac
-  %i.dn = load <2 x i64>, ptr %6, align 16
+  %i.dn = load <2 x i64>, ptr %6, align 16, !noalias !40819
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit45
@@ -5846,7 +5846,7 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit66: ; preds = %bb.ad
-  %i.dz = load <2 x i64>, ptr %5, align 16
+  %i.dz = load <2 x i64>, ptr %5, align 16, !noalias !40835
   br label %_ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit70.thread
 
 _ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit70.thread: ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit66
@@ -6249,7 +6249,7 @@ bb.cf:                                            ; preds = %bb.ce
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit136: ; preds = %bb.ce
-  %i.jt = load <2 x i64>, ptr %16, align 16
+  %i.jt = load <2 x i64>, ptr %16, align 16, !noalias !40848
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit114, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit136
@@ -6652,7 +6652,7 @@ bb.aq:                                            ; preds = %bb.ap
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit41: ; preds = %bb.ap
-  %i.fm = load <2 x i64>, ptr %5, align 16
+  %i.fm = load <2 x i64>, ptr %5, align 16, !noalias !40868
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit41
@@ -7055,7 +7055,7 @@ bb.aj:                                            ; preds = %bb.ai
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit47: ; preds = %bb.ai
-  %i.et = load <2 x i64>, ptr %6, align 16
+  %i.et = load <2 x i64>, ptr %6, align 16, !noalias !40889
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit47
@@ -7458,7 +7458,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit70: ; preds = %bb.aj
-  %i.fe = load <2 x i64>, ptr %5, align 16
+  %i.fe = load <2 x i64>, ptr %5, align 16, !noalias !40905
   br label %_ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit74.thread
 
 _ZN5folly15expected_detail15ExpectedStorageIN8facebook5velox9functions14DateTimeResultENS3_6StatusELNS0_11StorageTypeE2EED2Ev.exit74.thread: ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit70
@@ -7861,7 +7861,7 @@ bb.cr:                                            ; preds = %bb.cq
   unreachable
 
 _ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit146: ; preds = %bb.cq
-  %i.me = load <2 x i64>, ptr %16, align 16
+  %i.me = load <2 x i64>, ptr %16, align 16, !noalias !40918
   br label %.noexc.thread
 
 .noexc.thread:                                    ; preds = %_ZNR5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEE5errorEv.exit124, %_ZN5folly8ExpectedIN8facebook5velox9functions14DateTimeResultENS2_6StatusEEptEv.exit146

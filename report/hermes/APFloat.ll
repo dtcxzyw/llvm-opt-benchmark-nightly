@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = sext i16 %i.l to i32
   %i.n = add nsw i32 %i.m, 15                     ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.p = load ptr, ptr %i.o, align 8
+  %i.p = load ptr, ptr %i.o, align 8, !noalias !100
   %i.q = ptrtoint ptr %i.p to i64
   %i.r = trunc i64 %i.q to i32                    ; 3 uses
   %i.s = icmp eq i32 %i.n, 1
@@ -225,7 +225,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.v = load ptr, ptr %i.u, align 8
+  %i.v = load ptr, ptr %i.u, align 8, !noalias !100
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = trunc i64 %i.w to i32
   br label %_ZNK4llvh6detail9IEEEFloat25convertHalfAPFloatToAPIntEv.exit
@@ -269,7 +269,7 @@ bb.j:                                             ; preds = %bb.i
   %i.aq = sext i16 %i.ap to i32
   %i.ar = add nsw i32 %i.aq, 127                  ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.at = load ptr, ptr %i.as, align 8
+  %i.at = load ptr, ptr %i.as, align 8, !noalias !103
   %i.au = ptrtoint ptr %i.at to i64
   %i.av = trunc i64 %i.au to i32                  ; 3 uses
   %i.aw = icmp eq i32 %i.ar, 1
@@ -291,7 +291,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.az = load ptr, ptr %i.ay, align 8
+  %i.az = load ptr, ptr %i.ay, align 8, !noalias !103
   %i.ba = ptrtoint ptr %i.az to i64
   %i.bb = trunc i64 %i.ba to i32
   br label %_ZNK4llvh6detail9IEEEFloat26convertFloatAPFloatToAPIntEv.exit
@@ -335,7 +335,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bw = sext i16 %i.bv to i64
   %i.bx = add nsw i64 %i.bw, 1023                 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.bz = load ptr, ptr %i.by, align 8
+  %i.bz = load ptr, ptr %i.by, align 8, !noalias !106
   %i.ca = ptrtoint ptr %i.bz to i64               ; 3 uses
   %i.cb = icmp eq i64 %i.bx, 1
   br i1 %i.cb, label %bb.r, label %_ZNK4llvh6detail9IEEEFloat27convertDoubleAPFloatToAPIntEv.exit
@@ -356,7 +356,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ce = load ptr, ptr %i.cd, align 8
+  %i.ce = load ptr, ptr %i.cd, align 8, !noalias !106
   %i.cf = ptrtoint ptr %i.ce to i64
   br label %_ZNK4llvh6detail9IEEEFloat27convertDoubleAPFloatToAPIntEv.exit
 

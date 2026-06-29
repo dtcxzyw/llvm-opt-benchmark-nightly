@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bi = load ptr, ptr %.phi.trans.insert.i, align 8, !noalias !62 ; 2 uses
+  %i.bi = load ptr, ptr %.phi.trans.insert.i, align 8, !noalias !65 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 40
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !68, !noalias !65 ; 2 uses
   %i.bl = ptrtoint ptr %i.bh to i64

@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %_ZN6duckdb12_GLOBAL
           to label %bb.at unwind label %bb.au, !noalias !4038, !inline_history !4042
 
 bb.at:                                            ; preds = %bb.as
-  %.val15.i = load ptr, ptr %8, align 8           ; 4 uses
+  %.val15.i = load ptr, ptr %8, align 8, !noalias !4038 ; 4 uses
   %.not246 = icmp eq ptr %.val15.i, null
   %i.fp = ptrtoint ptr %.val15.i to i64           ; 2 uses
   br i1 %.not246, label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_18WKTValueESt14default_deleteIS2_EED2Ev.exit147, label %bb.av
@@ -539,7 +539,7 @@ bb.bl:                                            ; preds = %_ZN6duckdb12_GLOBAL
           to label %bb.bm unwind label %bb.bn, !noalias !4038, !inline_history !4042
 
 bb.bm:                                            ; preds = %bb.bl
-  %.val.i14 = load ptr, ptr %9, align 8           ; 4 uses
+  %.val.i14 = load ptr, ptr %9, align 8, !noalias !4038 ; 4 uses
   %.not = icmp eq ptr %.val.i14, null
   %i.jg = ptrtoint ptr %.val.i14 to i64           ; 2 uses
   br i1 %.not, label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_18WKTValueESt14default_deleteIS2_EED2Ev.exit99, label %bb.bo

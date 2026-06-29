@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.aq = load ptr, ptr %.phi.trans.insert.i, align 8, !noalias !10988 ; 2 uses
+  %i.aq = load ptr, ptr %.phi.trans.insert.i, align 8, !noalias !10981 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !10531, !noalias !10981 ; 2 uses
   %i.at = ptrtoint ptr %i.ao to i64
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i, label %_ZN5folly10IOBufQueue4moveEv.exit.i.i, label %_ZN5folly10IOBufQueue4moveEv.exit.thread.i.i
 
 _ZN5folly10IOBufQueue4moveEv.exit.thread.i.i:     ; preds = %bb.b
-  %i.j = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !noalias !12324 ; 2 uses
+  %i.j = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !noalias !12319 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !10531, !noalias !12319 ; 2 uses
   %i.m = ptrtoint ptr %i.i to i64
@@ -771,7 +771,7 @@ bb.i:                                             ; preds = %_ZN5folly2io10Curso
   br i1 %.not.i.i.i.i.i125, label %_ZN5folly10IOBufQueue4moveEv.exit.i.i129, label %_ZN5folly10IOBufQueue4moveEv.exit.thread.i.i127
 
 _ZN5folly10IOBufQueue4moveEv.exit.thread.i.i127:  ; preds = %.noexc133
-  %i.bw = load ptr, ptr %.phi.trans.insert.i.i.i126, align 8, !noalias !12331 ; 2 uses
+  %i.bw = load ptr, ptr %.phi.trans.insert.i.i.i126, align 8, !noalias !12326 ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !10531, !noalias !12326 ; 2 uses
   %i.bz = ptrtoint ptr %i.bv to i64
@@ -1174,7 +1174,7 @@ bb.ek:                                            ; preds = %.loopexit365, %.cri
   br i1 %.not.i.i.i.i.i328, label %_ZN5folly10IOBufQueue4moveEv.exit.i.i332, label %_ZN5folly10IOBufQueue4moveEv.exit.thread.i.i330
 
 _ZN5folly10IOBufQueue4moveEv.exit.thread.i.i330:  ; preds = %bb.ek
-  %i.ua = load ptr, ptr %.phi.trans.insert.i.i.i329, align 8, !noalias !12392 ; 2 uses
+  %i.ua = load ptr, ptr %.phi.trans.insert.i.i.i329, align 8, !noalias !12387 ; 2 uses
   %i.ub = getelementptr inbounds nuw i8, ptr %i.ua, i64 40
   %i.uc = load ptr, ptr %i.ub, align 8, !tbaa !10531, !noalias !12387 ; 2 uses
   %i.ud = ptrtoint ptr %i.tz to i64
@@ -1577,7 +1577,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %_ZN5folly10IOBufQueue4moveEv.exit.i, label %_ZN5folly10IOBufQueue4moveEv.exit.thread.i
 
 _ZN5folly10IOBufQueue4moveEv.exit.thread.i:       ; preds = %bb.a
-  %i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !noalias !12445 ; 2 uses
+  %i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !noalias !12440 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !10531, !noalias !12440 ; 2 uses
   %i.l = ptrtoint ptr %i.h to i64
