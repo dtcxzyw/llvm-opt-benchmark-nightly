@@ -203,9 +203,9 @@ _ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit26: ; preds =
 define linkonce_odr dso_local void @_ZN9benchmark8heapsortISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvT_SB_(ptr noundef dead_on_return %0, ptr noundef dead_on_return %1) local_unnamed_addr #10 comdat {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8              ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !noalias !194 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !33, !noalias !194
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !33, !noalias !197
   %i.e = sub i64 %i.d, %i.b
   %i.f = ashr exact i64 %i.e, 3                   ; 7 uses
   %i.g = icmp sgt i64 %i.f, 1
@@ -219,7 +219,7 @@ bb.a:
   br label %bb.b
 
 .lr.ph46:                                         ; preds = %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit
-  %i.l = load ptr, ptr %i.a, align 8, !tbaa !197, !noalias !199 ; 10 uses
+  %i.l = load ptr, ptr %i.a, align 8, !tbaa !200, !noalias !202 ; 10 uses
   br label %bb.f
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit
@@ -249,7 +249,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN9benchm
   store double %i.z, ptr %i.aa, align 8, !tbaa !32
   %i.ab = shl nsw i64 %.128.i, 1                  ; 3 uses
   %i.ac = icmp slt i64 %i.ab, %i.f
-  br i1 %i.ac, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !204
+  br i1 %i.ac, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !207
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.b
   %.027.lcssa.i = phi i64 [ %i.p, %bb.b ], [ %i.ab, %.lr.ph.i ]
@@ -281,14 +281,14 @@ bb.e:                                             ; preds = %.lr.ph56.i
   %i.aj = getelementptr inbounds [8 x i8], ptr %i.h, i64 %.253.i
   store double %i.ah, ptr %i.aj, align 8, !tbaa !32
   %.not40 = icmp slt i64 %.22954.i, %.0.in44
-  br i1 %.not40, label %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit, label %.lr.ph56.i, !llvm.loop !205
+  br i1 %.not40, label %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit, label %.lr.ph56.i, !llvm.loop !208
 
 _ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit: ; preds = %.lr.ph56.i, %bb.e, %bb.d
   %.2.lcssa.i = phi i64 [ %.1.i, %bb.d ], [ %.253.i, %.lr.ph56.i ], [ %.22954.i, %bb.e ]
   %i.ak = getelementptr inbounds [8 x i8], ptr %i.h, i64 %.2.lcssa.i
   store double %i.n, ptr %i.ak, align 8, !tbaa !32
   %i.al = icmp sgt i64 %.0.in44, 1
-  br i1 %i.al, label %bb.b, label %.lr.ph46, !llvm.loop !206
+  br i1 %i.al, label %bb.b, label %.lr.ph46, !llvm.loop !209
 
 bb.f:                                             ; preds = %.lr.ph46, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26
   %.1.in45 = phi i64 [ %i.f, %.lr.ph46 ], [ %.1, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26 ] ; 4 uses
@@ -317,7 +317,7 @@ bb.f:                                             ; preds = %.lr.ph46, %_ZN9benc
   store double %i.ay, ptr %i.az, align 8, !tbaa !32
   %i.ba = shl nsw i64 %.128.i25, 1                ; 3 uses
   %i.bb = icmp slt i64 %i.ba, %.1
-  br i1 %i.bb, label %.lr.ph.i22, label %._crit_edge.i13, !llvm.loop !204
+  br i1 %i.bb, label %.lr.ph.i22, label %._crit_edge.i13, !llvm.loop !207
 
 ._crit_edge.i13:                                  ; preds = %.lr.ph.i22, %bb.f
   %.027.lcssa.i14 = phi i64 [ 2, %bb.f ], [ %i.ba, %.lr.ph.i22 ]
@@ -354,14 +354,14 @@ bb.h:                                             ; preds = %.lr.ph56.i18
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.253.i19
   store double %i.bj, ptr %i.bl, align 8, !tbaa !32
   %.not = icmp eq i64 %.22954.i213738, 0
-  br i1 %.not, label %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26, label %.lr.ph56.i18, !llvm.loop !205
+  br i1 %.not, label %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26, label %.lr.ph56.i18, !llvm.loop !208
 
 _ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26: ; preds = %.lr.ph56.i18, %bb.h, %bb.g
   %.2.lcssa.i17 = phi i64 [ %.0.lcssa.i15, %bb.g ], [ %.253.i19, %.lr.ph56.i18 ], [ 0, %bb.h ]
   %i.bm = getelementptr inbounds [8 x i8], ptr %i.l, i64 %.2.lcssa.i17
   store double %i.an, ptr %i.bm, align 8, !tbaa !32
   %i.bn = icmp sgt i64 %.1.in45, 2
-  br i1 %i.bn, label %bb.f, label %._crit_edge, !llvm.loop !207
+  br i1 %i.bn, label %bb.f, label %._crit_edge, !llvm.loop !210
 
 ._crit_edge:                                      ; preds = %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26, %bb.a
   ret void
@@ -601,15 +601,18 @@ attributes #22 = { builtin nounwind }
 !194 = !{!195}
 !195 = distinct !{!195, !196, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEE4baseEv: argument 0"}
 !196 = distinct !{!196, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEE4baseEv"}
-!197 = !{!198, !34, i64 0}
-!198 = !{!"_ZTSN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEE", !34, i64 0}
-!199 = !{!200, !202}
-!200 = distinct !{!200, !201, !"_ZNKSt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEmiEl: argument 0"}
-!201 = distinct !{!201, !"_ZNKSt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEmiEl"}
-!202 = distinct !{!202, !203, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEplEl: argument 0"}
-!203 = distinct !{!203, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEplEl"}
-!204 = distinct !{!204, !17}
-!205 = distinct !{!205, !17}
-!206 = distinct !{!206, !17}
+!197 = !{!198}
+!198 = distinct !{!198, !199, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEE4baseEv: argument 0"}
+!199 = distinct !{!199, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEE4baseEv"}
+!200 = !{!201, !34, i64 0}
+!201 = !{!"_ZTSN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEE", !34, i64 0}
+!202 = !{!203, !205}
+!203 = distinct !{!203, !204, !"_ZNKSt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEmiEl: argument 0"}
+!204 = distinct !{!204, !"_ZNKSt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEmiEl"}
+!205 = distinct !{!205, !206, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEplEl: argument 0"}
+!206 = distinct !{!206, !"_ZNKSt16reverse_iteratorIS_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEplEl"}
 !207 = distinct !{!207, !17}
+!208 = distinct !{!208, !17}
+!209 = distinct !{!209, !17}
+!210 = distinct !{!210, !17}
 end_hunk_0
