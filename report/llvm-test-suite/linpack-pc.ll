@@ -203,9 +203,9 @@ bb.a:
 
 .lr.ph103.preheader:                              ; preds = %bb.a
   %i.c = sext i32 %1 to i64                       ; 4 uses
-  %i.d = zext nneg i32 %2 to i64                  ; 3 uses
+  %i.d = zext nneg i32 %2 to i64                  ; 5 uses
   %wide.trip.count110 = zext nneg i32 %i.a to i64
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
+  %wide.trip.count = zext nneg i32 %2 to i64
   %i.e = shl nsw i64 %i.c, 2
   %i.f = add nsw i64 %i.e, 4
   %i.g = shl nuw nsw i64 %i.d, 2                  ; 3 uses
@@ -214,8 +214,8 @@ bb.a:
   %i.j = getelementptr i8, ptr %0, i64 %i.i
   %scevgep117 = getelementptr i8, ptr %i.j, i64 %i.g
   %scevgep120 = getelementptr i8, ptr %0, i64 %i.g
-  %i.k = add nsw i64 %wide.trip.count, -1         ; 2 uses
-  %i.l = add nsw i64 %wide.trip.count, -2         ; 2 uses
+  %i.k = add nsw i64 %i.d, -1                     ; 2 uses
+  %i.l = add nsw i64 %i.d, -2                     ; 2 uses
   %stride.check = icmp slt i32 %1, 0
   br label %.lr.ph103
 
