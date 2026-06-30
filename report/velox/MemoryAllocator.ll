@@ -204,7 +204,7 @@ begin_hunk_0_@_ZNSt5arrayIN8facebook5velox6memory14SizeClassStatsELm20EEaSEOS4_:
 ; Function Attrs: mustprogress uwtable
 define internal void @"_ZNSt17_Function_handlerIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvEZN8facebook5velox6memory15MemoryAllocator15getTracingHooksERSt8functionIFvvEERSB_IS6_ESB_IFlvEEE3$_1E9_M_invokeERKSt9_Any_data"(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.fmt::v11::detail::format_arg_store.84", align 16 ; 7 uses
+  %2 = alloca %"struct.fmt::v11::detail::format_arg_store.84", align 16 ; 4 uses
   %3 = alloca %struct.rusage, align 8             ; 6 uses
   %4 = alloca %"struct.facebook::velox::memory::Stats", align 8 ; 5 uses
   %5 = alloca %"struct.facebook::velox::memory::Stats", align 8 ; 4 uses
@@ -380,6 +380,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i72.i.i.i: ; preds = %.noexc7
 _ZNSolsEPFRSoS_E.exit44.i.i.i:                    ; preds = %.noexc77.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19, !noalias !405
   %i.bu = fmul nnan <2 x float> %i.k, splat (float 1.000000e+02)
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #19, !noalias !426
   %i.bv = insertelement <2 x float> poison, float %i.ac, i64 0
   %i.bw = shufflevector <2 x float> %i.bv, <2 x float> poison, <4 x i32> zeroinitializer
   %i.bx = fdiv <4 x float> %i.bw, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+06, float 1.000000e+00>
@@ -387,19 +388,9 @@ _ZNSolsEPFRSoS_E.exit44.i.i.i:                    ; preds = %.noexc77.i.i.i
   %i.bz = insertelement <4 x float> %i.by, float %.0.i.i.i, i64 3
   %i.ca = shufflevector <2 x float> %i.bu, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.cb = shufflevector <4 x float> %i.ca, <4 x float> %i.bz, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.cc = fdiv <4 x float> %i.cb, %i.bx           ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #19, !noalias !426
-  %12 = extractelement <4 x float> %i.cc, i64 0
-  store float %12, ptr %2, align 16, !tbaa !11, !noalias !426
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %14 = extractelement <4 x float> %i.cc, i64 1
-  store float %14, ptr %13, align 16, !tbaa !11, !noalias !426
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %16 = extractelement <4 x float> %i.cc, i64 2
-  store float %16, ptr %15, align 16, !tbaa !11, !noalias !426
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %18 = extractelement <4 x float> %i.cc, i64 3
-  store float %18, ptr %17, align 16, !tbaa !11, !noalias !426
+  %i.cc = fdiv <4 x float> %i.cb, %i.bx
+  %12 = shufflevector <4 x float> %i.cc, <4 x float> poison, <13 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 1, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 poison, i32 poison, i32 3>
+  call void @llvm.masked.store.v13f32.p0(<13 x float> %12, ptr align 16 %2, <13 x i1> <i1 true, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 true>), !tbaa !11, !noalias !426
   invoke void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %9, ptr nonnull @.str.61, i64 41, i64 39321, ptr nonnull %2)
           to label %bb.g unwind label %bb.t, !noalias !405
 
@@ -801,6 +792,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #28
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.store.v13f32.p0(<13 x float>, ptr captures(none), <13 x i1>) #12
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
