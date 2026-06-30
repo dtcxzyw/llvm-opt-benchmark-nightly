@@ -1,7 +1,7 @@
 inline.NumInlined: 494
 inline.NumDeleted: 147
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN16btRaycastVehicle14updateFrictionEf:bb.a
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %indvars.iv.next.i.i.i152
   %i.cg = load float, ptr %i.cf, align 4, !tbaa !50
@@ -203,105 +203,28 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i167: ; preds = %bb.l, %_ZNK20
 
 _ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit177: ; preds = %.lr.ph.i154, %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit
   store i32 %i.b, ptr %i.cv, align 4, !tbaa !30
-  %i.eo = load i32, ptr %i.a, align 4, !tbaa !43  ; 4 uses
+  %i.eo = load i32, ptr %i.a, align 4, !tbaa !43  ; 3 uses
   %i.ep = icmp sgt i32 %i.eo, 0
-  br i1 %i.ep, label %.lr.ph, label %.loopexit
+  br i1 %i.ep, label %scalar.ph290, label %.loopexit
 
-.lr.ph:                                           ; preds = %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit177
+scalar.ph290:                                     ; preds = %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit177
   %9 = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %10 = load ptr, ptr %9, align 8, !tbaa !29      ; 7 uses
+  %10 = load ptr, ptr %9, align 8, !tbaa !29
   %11 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %12 = load ptr, ptr %11, align 8, !tbaa !29     ; 7 uses
-  %wide.trip.count = zext nneg i32 %i.eo to i64   ; 5 uses
-  %min.iters.check291 = icmp ult i32 %i.eo, 8
-  %13 = ptrtoaddr ptr %12 to i64
-  %14 = ptrtoaddr ptr %10 to i64
-  %15 = sub i64 %13, %14
-  %diff.check289 = icmp ult i64 %15, 32
-  %or.cond305 = select i1 %min.iters.check291, i1 true, i1 %diff.check289
-  br i1 %or.cond305, label %scalar.ph290.preheader, label %vector.ph292
-
-vector.ph292:                                     ; preds = %.lr.ph
-  %n.vec294 = and i64 %wide.trip.count, 2147483640 ; 3 uses
-  br label %vector.body295
-
-vector.body295:                                   ; preds = %vector.body295, %vector.ph292
-  %index296 = phi i64 [ 0, %vector.ph292 ], [ %index.next297, %vector.body295 ] ; 3 uses
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %index296 ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 16
-  store <4 x float> zeroinitializer, ptr %16, align 4, !tbaa !50
-  store <4 x float> zeroinitializer, ptr %17, align 4, !tbaa !50
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %index296 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 16
-  store <4 x float> zeroinitializer, ptr %18, align 4, !tbaa !50
-  store <4 x float> zeroinitializer, ptr %19, align 4, !tbaa !50
-  %index.next297 = add nuw i64 %index296, 8       ; 2 uses
-  %20 = icmp eq i64 %index.next297, %n.vec294
-  br i1 %20, label %middle.block298, label %vector.body295, !llvm.loop !101
-
-middle.block298:                                  ; preds = %vector.body295
-  %cmp.n299 = icmp eq i64 %n.vec294, %wide.trip.count
-  br i1 %cmp.n299, label %.lr.ph219, label %scalar.ph290.preheader
-
-scalar.ph290.preheader:                           ; preds = %.lr.ph, %middle.block298
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec294, %middle.block298 ] ; 3 uses
-  %xtraiter319 = and i64 %wide.trip.count, 3      ; 2 uses
-  %lcmp.mod320.not = icmp eq i64 %xtraiter319, 0
-  br i1 %lcmp.mod320.not, label %scalar.ph290.prol.loopexit, label %scalar.ph290.prol
-
-scalar.ph290.prol:                                ; preds = %scalar.ph290.preheader, %scalar.ph290.prol
-  %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %scalar.ph290.prol ], [ %indvars.iv.ph, %scalar.ph290.preheader ] ; 3 uses
-  %prol.iter321 = phi i64 [ %prol.iter321.next, %scalar.ph290.prol ], [ 0, %scalar.ph290.preheader ]
-  %21 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.prol
-  store float 0.000000e+00, ptr %21, align 4, !tbaa !50
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %indvars.iv.prol
-  store float 0.000000e+00, ptr %22, align 4, !tbaa !50
-  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
-  %prol.iter321.next = add i64 %prol.iter321, 1   ; 2 uses
-  %prol.iter321.cmp.not = icmp eq i64 %prol.iter321.next, %xtraiter319
-  br i1 %prol.iter321.cmp.not, label %scalar.ph290.prol.loopexit, label %scalar.ph290.prol, !llvm.loop !102
-
-scalar.ph290.prol.loopexit:                       ; preds = %scalar.ph290.prol, %scalar.ph290.preheader
-  %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph290.preheader ], [ %indvars.iv.next.prol, %scalar.ph290.prol ]
-  %23 = sub nsw i64 %indvars.iv.ph, %wide.trip.count
-  %24 = icmp ugt i64 %23, -4
-  br i1 %24, label %.lr.ph219, label %scalar.ph290
-
-.lr.ph219:                                        ; preds = %scalar.ph290.prol.loopexit, %scalar.ph290, %middle.block298
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %26 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %28 = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %31 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
+  %12 = load ptr, ptr %11, align 8, !tbaa !29
+  %13 = zext nneg i32 %i.eo to i64
+  %14 = shl nuw nsw i64 %13, 2                    ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %10, i8 0, i64 %14, i1 false), !tbaa !50
+  tail call void @llvm.memset.p0.i64(ptr align 4 %12, i8 0, i64 %14, i1 false), !tbaa !50
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %16 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   br label %bb.m
-
-scalar.ph290:                                     ; preds = %scalar.ph290.prol.loopexit, %scalar.ph290
-  %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph290 ], [ %indvars.iv.unr, %scalar.ph290.prol.loopexit ] ; 6 uses
-  %33 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv
-  store float 0.000000e+00, ptr %33, align 4, !tbaa !50
-  %34 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %indvars.iv
-  store float 0.000000e+00, ptr %34, align 4, !tbaa !50
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next
-  store float 0.000000e+00, ptr %35, align 4, !tbaa !50
-  %36 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %indvars.iv.next
-  store float 0.000000e+00, ptr %36, align 4, !tbaa !50
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %37 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.1
-  store float 0.000000e+00, ptr %37, align 4, !tbaa !50
-  %38 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %indvars.iv.next.1
-  store float 0.000000e+00, ptr %38, align 4, !tbaa !50
-  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %39 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next.2
-  store float 0.000000e+00, ptr %39, align 4, !tbaa !50
-  %40 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %indvars.iv.next.2
-  store float 0.000000e+00, ptr %40, align 4, !tbaa !50
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
-  br i1 %exitcond.not.3, label %.lr.ph219, label %scalar.ph290, !llvm.loop !103
 
 .preheader215:                                    ; preds = %bb.o
   %i.eq = icmp sgt i32 %i.in, 0
@@ -325,10 +248,10 @@ scalar.ph290:                                     ; preds = %scalar.ph290.prol.l
   %.pre249 = load ptr, ptr %i.er, align 8, !tbaa !42 ; 2 uses
   br label %bb.p
 
-bb.m:                                             ; preds = %.lr.ph219, %bb.o
-  %i.ff = phi i32 [ %i.eo, %.lr.ph219 ], [ %i.in, %bb.o ]
-  %indvars.iv232 = phi i64 [ 0, %.lr.ph219 ], [ %indvars.iv.next233, %bb.o ] ; 9 uses
-  %i.fg = load ptr, ptr %25, align 8, !tbaa !42
+bb.m:                                             ; preds = %scalar.ph290, %bb.o
+  %i.ff = phi i32 [ %i.eo, %scalar.ph290 ], [ %i.in, %bb.o ]
+  %indvars.iv232 = phi i64 [ 0, %scalar.ph290 ], [ %indvars.iv.next233, %bb.o ] ; 9 uses
+  %i.fg = load ptr, ptr %15, align 8, !tbaa !42
   %i.fh = getelementptr inbounds nuw [288 x i8], ptr %i.fg, i64 %indvars.iv232 ; 9 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 88
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !76 ; 2 uses
@@ -340,18 +263,18 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %2, ptr noundef nonnull align 4 dereferenceable(48) %i.fk, i64 16, i1 false), !tbaa.struct !57
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fh, i64 112
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %26, ptr noundef nonnull align 4 dereferenceable(16) %i.fl, i64 16, i1 false), !tbaa.struct !57
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %16, ptr noundef nonnull align 4 dereferenceable(16) %i.fl, i64 16, i1 false), !tbaa.struct !57
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fh, i64 128
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %27, ptr noundef nonnull align 4 dereferenceable(16) %i.fm, i64 16, i1 false), !tbaa.struct !57
-  %i.fn = load i32, ptr %28, align 8, !tbaa !46
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %17, ptr noundef nonnull align 4 dereferenceable(16) %i.fm, i64 16, i1 false), !tbaa.struct !57
+  %i.fn = load i32, ptr %18, align 8, !tbaa !46
   %i.fo = sext i32 %i.fn to i64                   ; 3 uses
   %i.fp = getelementptr inbounds [4 x i8], ptr %2, i64 %i.fo
-  %i.fq = getelementptr inbounds [4 x i8], ptr %26, i64 %i.fo
-  %i.fr = getelementptr inbounds [4 x i8], ptr %27, i64 %i.fo
+  %i.fq = getelementptr inbounds [4 x i8], ptr %16, i64 %i.fo
+  %i.fr = getelementptr inbounds [4 x i8], ptr %17, i64 %i.fo
   %i.fs = load float, ptr %i.fp, align 4, !tbaa !50
   %i.ft = load float, ptr %i.fq, align 4, !tbaa !50
   %i.fu = load float, ptr %i.fr, align 4, !tbaa !50
-  %i.fv = load ptr, ptr %29, align 8, !tbaa !22
+  %i.fv = load ptr, ptr %19, align 8, !tbaa !22
   %i.fw = getelementptr inbounds nuw [16 x i8], ptr %i.fv, i64 %indvars.iv232 ; 3 uses
   store float %i.fs, ptr %i.fw, align 4
   %.sroa.4.0..sroa_idx210 = getelementptr inbounds nuw i8, ptr %i.fw, i64 4
@@ -359,7 +282,7 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.5211.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
   %i.fx = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.fu, i64 0
   store <2 x float> %i.fx, ptr %.sroa.5211.0..sroa_idx, align 4
-  %i.fy = load ptr, ptr %29, align 8, !tbaa !22
+  %i.fy = load ptr, ptr %19, align 8, !tbaa !22
   %i.fz = getelementptr inbounds nuw [16 x i8], ptr %i.fy, i64 %indvars.iv232 ; 4 uses
   %i.ga = load float, ptr %i.fz, align 4, !tbaa !50 ; 2 uses
   %i.gb = load float, ptr %i.fh, align 8, !tbaa !50 ; 2 uses
@@ -406,12 +329,12 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.0.0.vec.insert.i178 = insertelement <2 x float> poison, float %i.he, i64 0
   %.sroa.0.4.vec.insert.i179 = insertelement <2 x float> %.sroa.0.0.vec.insert.i178, float %i.hi, i64 1
   %.sroa.3.12.vec.insert.i180 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.hl, i64 0
-  %i.hm = load ptr, ptr %30, align 8, !tbaa !22
+  %i.hm = load ptr, ptr %20, align 8, !tbaa !22
   %i.hn = getelementptr inbounds nuw [16 x i8], ptr %i.hm, i64 %indvars.iv232 ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i179, ptr %i.hn, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hn, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i180, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !54
-  %i.ho = load ptr, ptr %30, align 8, !tbaa !22
+  %i.ho = load ptr, ptr %20, align 8, !tbaa !22
   %i.hp = getelementptr inbounds nuw [16 x i8], ptr %i.ho, i64 %indvars.iv232 ; 4 uses
   %i.hq = load float, ptr %i.hp, align 4, !tbaa !50 ; 3 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hp, i64 4 ; 2 uses
@@ -429,15 +352,15 @@ bb.n:                                             ; preds = %bb.m
   store float %i.ia, ptr %i.hr, align 4, !tbaa !50
   %i.ib = fmul float %i.hw, %i.hy
   store float %i.ib, ptr %i.hv, align 4, !tbaa !50
-  %i.ic = load ptr, ptr %31, align 8, !tbaa !45
+  %i.ic = load ptr, ptr %21, align 8, !tbaa !45
   %i.id = getelementptr inbounds nuw i8, ptr %i.fh, i64 16 ; 2 uses
-  %i.ie = load ptr, ptr %29, align 8, !tbaa !22
+  %i.ie = load ptr, ptr %19, align 8, !tbaa !22
   %i.if = getelementptr inbounds nuw [16 x i8], ptr %i.ie, i64 %indvars.iv232
-  %i.ig = load ptr, ptr %32, align 8, !tbaa !29
+  %i.ig = load ptr, ptr %22, align 8, !tbaa !29
   %i.ih = getelementptr inbounds nuw [4 x i8], ptr %i.ig, i64 %indvars.iv232
   tail call void @_Z22resolveSingleBilateralR11btRigidBodyRK9btVector3S0_S3_fS3_Rff(ptr noundef nonnull align 8 dereferenceable(564) %i.ic, ptr noundef nonnull align 4 dereferenceable(16) %i.id, ptr noundef nonnull align 8 dereferenceable(564) %i.fj, ptr noundef nonnull align 4 dereferenceable(16) %i.id, float noundef 0.000000e+00, ptr noundef nonnull align 4 dereferenceable(16) %i.if, ptr noundef nonnull align 4 dereferenceable(4) %i.ih, float noundef %1)
   %i.ii = load float, ptr @sideFrictionStiffness2, align 4, !tbaa !50
-  %i.ij = load ptr, ptr %32, align 8, !tbaa !29
+  %i.ij = load ptr, ptr %22, align 8, !tbaa !29
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.ij, i64 %indvars.iv232 ; 2 uses
   %i.il = load float, ptr %i.ik, align 4, !tbaa !50
   %i.im = fmul float %i.ii, %i.il
@@ -598,12 +521,12 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   store float 0.000000e+00, ptr %i.mu, align 4, !tbaa !50
   %i.mv = getelementptr inbounds nuw [288 x i8], ptr %i.ms, i64 %indvars.iv235.a
   %i.mw = getelementptr inbounds nuw i8, ptr %i.mv, i64 284 ; 3 uses
-  store float 1.000000e+00, ptr %i.mw, align 4, !tbaa !104
+  store float 1.000000e+00, ptr %i.mw, align 4, !tbaa !101
   %i.mx = getelementptr inbounds nuw i8, ptr %i.iw, i64 280
   %i.my = load float, ptr %i.mx, align 8, !tbaa !83
   %i.mz = fmul float %1, %i.my
   %i.na = getelementptr inbounds nuw i8, ptr %i.iw, i64 232
-  %i.nb = load float, ptr %i.na, align 8, !tbaa !105
+  %i.nb = load float, ptr %i.na, align 8, !tbaa !102
   %i.nc = fmul float %i.mz, %i.nb                 ; 3 uses
   %i.nd = fmul float %i.nc, %i.nc
   store float %.0111, ptr %i.mu, align 4, !tbaa !50
@@ -619,9 +542,9 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 bb.u:                                             ; preds = %bb.t
   %sqrt = call float @llvm.sqrt.f32(float %i.nj)
   %i.nl = fdiv float %i.nc, %sqrt
-  %i.nm = load float, ptr %i.mw, align 4, !tbaa !104
+  %i.nm = load float, ptr %i.mw, align 4, !tbaa !101
   %i.nn = fmul float %i.nl, %i.nm
-  store float %i.nn, ptr %i.mw, align 4, !tbaa !104
+  store float %i.nn, ptr %i.mw, align 4, !tbaa !101
   br label %bb.v
 
 .critedge:                                        ; preds = %bb.p
@@ -629,7 +552,7 @@ bb.u:                                             ; preds = %bb.t
   %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.no, i64 %indvars.iv235.a
   store float 0.000000e+00, ptr %i.np, align 4, !tbaa !50
   %i.nq = getelementptr inbounds nuw i8, ptr %i.iw, i64 284
-  store float 1.000000e+00, ptr %i.nq, align 4, !tbaa !104
+  store float 1.000000e+00, ptr %i.nq, align 4, !tbaa !101
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.u, %.critedge
@@ -652,7 +575,7 @@ bb.w:                                             ; preds = %.lr.ph225, %bb.z
 bb.x:                                             ; preds = %bb.w
   %i.nz = getelementptr inbounds nuw [288 x i8], ptr %i.is, i64 %indvars.iv237
   %i.oa = getelementptr inbounds nuw i8, ptr %i.nz, i64 284 ; 2 uses
-  %i.ob = load float, ptr %i.oa, align 4, !tbaa !104 ; 2 uses
+  %i.ob = load float, ptr %i.oa, align 4, !tbaa !101 ; 2 uses
   %i.oc = fcmp olt float %i.ob, 1.000000e+00
   br i1 %i.oc, label %bb.y, label %bb.z
 
@@ -661,7 +584,7 @@ bb.y:                                             ; preds = %bb.x
   %i.oe = load float, ptr %i.od, align 4, !tbaa !50
   %i.of = fmul float %i.ob, %i.oe
   store float %i.of, ptr %i.od, align 4, !tbaa !50
-  %i.og = load float, ptr %i.oa, align 4, !tbaa !104
+  %i.og = load float, ptr %i.oa, align 4, !tbaa !101
   %i.oh = load float, ptr %i.nw, align 4, !tbaa !50
   %i.oi = fmul float %i.og, %i.oh
   store float %i.oi, ptr %i.nw, align 4, !tbaa !50
@@ -773,7 +696,7 @@ bb.ad:                                            ; preds = %bb.ac
   store <2 x float> %i.qs, ptr %7, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i201, ptr %i.ot, align 8
   %i.qw = getelementptr inbounds nuw i8, ptr %i.ox, i64 248
-  %i.qx = load float, ptr %i.qw, align 8, !tbaa !106
+  %i.qx = load float, ptr %i.qw, align 8, !tbaa !103
   %i.qy = load i32, ptr %i.ou, align 4, !tbaa !47
   %i.qz = sext i32 %i.qy to i64
   %i.ra = getelementptr inbounds [4 x i8], ptr %4, i64 %i.qz ; 2 uses
@@ -1042,36 +965,36 @@ bb.a:
   %4 = alloca %"struct.btCollisionWorld::ClosestRayResultCallback", align 8 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store float 1.000000e+00, ptr %i.a, align 8, !tbaa !107
+  store float 1.000000e+00, ptr %i.a, align 8, !tbaa !104
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  store ptr null, ptr %i.b, align 8, !tbaa !111
+  store ptr null, ptr %i.b, align 8, !tbaa !108
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i16 1, ptr %i.c, align 8, !tbaa !112
+  store i16 1, ptr %i.c, align 8, !tbaa !109
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 26
-  store i16 -1, ptr %i.d, align 2, !tbaa !113
+  store i16 -1, ptr %i.d, align 2, !tbaa !110
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 28
-  store i32 0, ptr %i.e, align 4, !tbaa !114
+  store i32 0, ptr %i.e, align 4, !tbaa !111
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN16btCollisionWorld24ClosestRayResultCallbackE, i64 16), ptr %4, align 8, !tbaa !8
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !57
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !57
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !115
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !112
   call void @_ZNK16btCollisionWorld7rayTestERK9btVector3S2_RNS_17RayResultCallbackE(ptr noundef nonnull align 8 dereferenceable(129) %i.i, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(32) %4)
-  %i.j = load ptr, ptr %i.b, align 8, !tbaa !111  ; 4 uses
+  %i.j = load ptr, ptr %i.b, align 8, !tbaa !108  ; 4 uses
   %.not20 = icmp eq ptr %i.j, null
   br i1 %.not20, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 256
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !119
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !116
   %.not = icmp eq i32 %i.l, 2
   br i1 %.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 216
-  %i.n = load i32, ptr %i.m, align 8, !tbaa !120
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !117
   %i.o = and i32 %i.n, 4
   %i.p = icmp eq i32 %i.o, 0
   br i1 %i.p, label %.critedge, label %bb.d
@@ -1098,7 +1021,7 @@ bb.c:                                             ; preds = %bb.b
   store float %i.ad, ptr %i.u, align 4, !tbaa !50
   %i.ae = fmul float %i.z, %i.ab
   store float %i.ae, ptr %i.y, align 4, !tbaa !50
-  %i.af = load float, ptr %i.a, align 8, !tbaa !107
+  %i.af = load float, ptr %i.a, align 8, !tbaa !104
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 32
   store float %i.af, ptr %i.ag, align 4, !tbaa !74
   br label %bb.d
@@ -1173,18 +1096,18 @@ bb.a:
 define linkonce_odr dso_local noundef zeroext i1 @_ZNK16btCollisionWorld17RayResultCallback14needsCollisionEP17btBroadphaseProxy(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1) unnamed_addr #14 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i16, ptr %i.a, align 8, !tbaa !121
+  %i.b = load i16, ptr %i.a, align 8, !tbaa !118
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 26
-  %i.d = load i16, ptr %i.c, align 2, !tbaa !113
+  %i.d = load i16, ptr %i.c, align 2, !tbaa !110
   %i.e = and i16 %i.d, %i.b
   %.not = icmp eq i16 %i.e, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.g = load i16, ptr %i.f, align 8, !tbaa !112
+  %i.g = load i16, ptr %i.f, align 8, !tbaa !109
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %i.i = load i16, ptr %i.h, align 2, !tbaa !123
+  %i.i = load i16, ptr %i.h, align 2, !tbaa !120
   %i.j = and i16 %i.i, %i.g
   %i.k = icmp ne i16 %i.j, 0
   br label %bb.c
@@ -1198,12 +1121,12 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define linkonce_odr dso_local noundef float @_ZN16btCollisionWorld24ClosestRayResultCallback15addSingleResultERNS_14LocalRayResultEb(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(36) %1, i1 noundef zeroext %2) unnamed_addr #8 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
-  %i.b = load float, ptr %i.a, align 8, !tbaa !124
+  %i.b = load float, ptr %i.a, align 8, !tbaa !121
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store float %i.b, ptr %i.c, align 8, !tbaa !107
-  %i.d = load ptr, ptr %1, align 8, !tbaa !127    ; 10 uses
+  store float %i.b, ptr %i.c, align 8, !tbaa !104
+  %i.d = load ptr, ptr %1, align 8, !tbaa !124    ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !111
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !108
   br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -1259,7 +1182,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.as = load float, ptr %i.a, align 8, !tbaa !124 ; 3 uses
+  %i.as = load float, ptr %i.a, align 8, !tbaa !121 ; 3 uses
   %i.at = fsub float 1.000000e+00, %i.as          ; 2 uses
   %i.au = load <2 x float>, ptr %i.aq, align 8, !tbaa !50
   %i.av = load <2 x float>, ptr %i.ar, align 8, !tbaa !50
@@ -1278,7 +1201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bh = tail call float @llvm.fmuladd.f32(float %i.at, float %i.bd, float %i.bg)
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 88
   store float %i.bh, ptr %i.bi, align 8, !tbaa !50
-  %i.bj = load float, ptr %i.a, align 8, !tbaa !124
+  %i.bj = load float, ptr %i.a, align 8, !tbaa !121
   ret float %i.bj
 }
 
@@ -1436,31 +1359,28 @@ attributes #21 = { builtin nounwind }
 !98 = distinct !{!98, !93, !94}
 !99 = distinct !{!99, !96}
 !100 = distinct !{!100, !93}
-!101 = distinct !{!101, !93, !94}
-!102 = distinct !{!102, !96}
-!103 = distinct !{!103, !93}
-!104 = !{!59, !35, i64 284}
-!105 = !{!59, !35, i64 232}
-!106 = !{!59, !35, i64 248}
-!107 = !{!108, !35, i64 8}
-!108 = !{!"_ZTSN16btCollisionWorld17RayResultCallbackE", !35, i64 8, !109, i64 16, !110, i64 24, !110, i64 26, !5, i64 28}
-!109 = !{!"p1 _ZTS17btCollisionObject", !15, i64 0}
-!110 = !{!"short", !6, i64 0}
-!111 = !{!108, !109, i64 16}
-!112 = !{!108, !110, i64 24}
-!113 = !{!108, !110, i64 26}
-!114 = !{!108, !5, i64 28}
-!115 = !{!116, !118, i64 8}
-!116 = !{!"_ZTS25btDefaultVehicleRaycaster", !117, i64 0, !118, i64 8}
-!117 = !{!"_ZTS18btVehicleRaycaster"}
-!118 = !{!"p1 _ZTS15btDynamicsWorld", !15, i64 0}
-!119 = !{!66, !5, i64 256}
-!120 = !{!66, !5, i64 216}
-!121 = !{!122, !110, i64 8}
-!122 = !{!"_ZTS17btBroadphaseProxy", !15, i64 0, !110, i64 8, !110, i64 10, !15, i64 16, !5, i64 24, !61, i64 28, !61, i64 44}
-!123 = !{!122, !110, i64 10}
-!124 = !{!125, !35, i64 32}
-!125 = !{!"_ZTSN16btCollisionWorld14LocalRayResultE", !109, i64 0, !126, i64 8, !61, i64 16, !35, i64 32}
-!126 = !{!"p1 _ZTSN16btCollisionWorld14LocalShapeInfoE", !15, i64 0}
-!127 = !{!125, !109, i64 0}
+!101 = !{!59, !35, i64 284}
+!102 = !{!59, !35, i64 232}
+!103 = !{!59, !35, i64 248}
+!104 = !{!105, !35, i64 8}
+!105 = !{!"_ZTSN16btCollisionWorld17RayResultCallbackE", !35, i64 8, !106, i64 16, !107, i64 24, !107, i64 26, !5, i64 28}
+!106 = !{!"p1 _ZTS17btCollisionObject", !15, i64 0}
+!107 = !{!"short", !6, i64 0}
+!108 = !{!105, !106, i64 16}
+!109 = !{!105, !107, i64 24}
+!110 = !{!105, !107, i64 26}
+!111 = !{!105, !5, i64 28}
+!112 = !{!113, !115, i64 8}
+!113 = !{!"_ZTS25btDefaultVehicleRaycaster", !114, i64 0, !115, i64 8}
+!114 = !{!"_ZTS18btVehicleRaycaster"}
+!115 = !{!"p1 _ZTS15btDynamicsWorld", !15, i64 0}
+!116 = !{!66, !5, i64 256}
+!117 = !{!66, !5, i64 216}
+!118 = !{!119, !107, i64 8}
+!119 = !{!"_ZTS17btBroadphaseProxy", !15, i64 0, !107, i64 8, !107, i64 10, !15, i64 16, !5, i64 24, !61, i64 28, !61, i64 44}
+!120 = !{!119, !107, i64 10}
+!121 = !{!122, !35, i64 32}
+!122 = !{!"_ZTSN16btCollisionWorld14LocalRayResultE", !106, i64 0, !123, i64 8, !61, i64 16, !35, i64 32}
+!123 = !{!"p1 _ZTSN16btCollisionWorld14LocalShapeInfoE", !15, i64 0}
+!124 = !{!122, !106, i64 0}
 end_hunk_0

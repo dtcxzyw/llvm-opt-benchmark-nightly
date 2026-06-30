@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local ptr @hypre_SMG2CreateRAPOp(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readnone captures(none) %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [6 x i32], align 16               ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef nonnull align 16 dereferenceable(24) @__const.hypre_SMG2CreateRAPOp.RAP_num_ghost, i64 24, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !8
@@ -19,7 +19,7 @@ bb.a:
   br i1 %.not, label %.preheader, label %.loopexit.loopexit59
 
 .preheader:                                       ; preds = %bb.a
-  %i.d = tail call ptr @hypre_CAlloc(i32 noundef 9, i32 noundef 12) #5 ; 9 uses
+  %i.d = tail call ptr @hypre_CAlloc(i32 noundef 9, i32 noundef 12) #6 ; 9 uses
   store <4 x i32> <i32 -1, i32 -1, i32 0, i32 0>, ptr %i.d, align 4, !tbaa !4
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store <4 x i32> <i32 -1, i32 0, i32 1, i32 -1>, ptr %i.e, align 4, !tbaa !4
@@ -38,7 +38,7 @@ bb.a:
   br label %.loopexit
 
 .loopexit.loopexit59:                             ; preds = %bb.a
-  %i.l = tail call ptr @hypre_CAlloc(i32 noundef 5, i32 noundef 12) #5 ; 6 uses
+  %i.l = tail call ptr @hypre_CAlloc(i32 noundef 5, i32 noundef 12) #6 ; 6 uses
   store <4 x i32> <i32 -1, i32 -1, i32 0, i32 0>, ptr %i.l, align 4, !tbaa !4
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store <4 x i32> <i32 -1, i32 0, i32 1, i32 -1>, ptr %i.m, align 4, !tbaa !4
@@ -53,10 +53,10 @@ bb.a:
 .loopexit:                                        ; preds = %.loopexit.loopexit59, %.preheader
   %.047 = phi i32 [ 9, %.preheader ], [ 5, %.loopexit.loopexit59 ]
   %.046 = phi ptr [ %i.d, %.preheader ], [ %i.l, %.loopexit.loopexit59 ]
-  %i.q = tail call ptr @hypre_StructStencilCreate(i32 noundef 2, i32 noundef %.047, ptr noundef nonnull %.046) #5 ; 2 uses
+  %i.q = tail call ptr @hypre_StructStencilCreate(i32 noundef 2, i32 noundef %.047, ptr noundef nonnull %.046) #6 ; 2 uses
   %i.r = load i32, ptr %1, align 8, !tbaa !19
-  %i.s = tail call ptr @hypre_StructMatrixCreate(i32 noundef %i.r, ptr noundef %3, ptr noundef %i.q) #5 ; 3 uses
-  %i.t = tail call i32 @hypre_StructStencilDestroy(ptr noundef %i.q) #5 ; 0 uses
+  %i.s = tail call ptr @hypre_StructMatrixCreate(i32 noundef %i.r, ptr noundef %3, ptr noundef %i.q) #6 ; 3 uses
+  %i.t = tail call i32 @hypre_StructStencilDestroy(ptr noundef %i.q) #6 ; 0 uses
   %i.u = load i32, ptr %i.b, align 8, !tbaa !8    ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 72
   store i32 %i.u, ptr %i.v, align 8, !tbaa !8
@@ -71,8 +71,8 @@ bb.b:                                             ; preds = %.loopexit
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.loopexit
-  %i.y = call i32 @hypre_StructMatrixSetNumGhost(ptr noundef nonnull %i.s, ptr noundef nonnull %i.a) #5 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  %i.y = call i32 @hypre_StructMatrixSetNumGhost(ptr noundef nonnull %i.s, ptr noundef nonnull %i.a) #6 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret ptr %i.s
 }
 
@@ -101,9 +101,9 @@ bb.a:
   %i.a = alloca [3 x i32], align 4                ; 40 uses
   %i.b = alloca [3 x i32], align 4                ; 7 uses
   %i.c = alloca [3 x i32], align 4                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !20
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
@@ -164,7 +164,7 @@ bb.c:                                             ; preds = %bb.b
   %i.am = trunc nsw i64 %indvars.iv to i32        ; 12 uses
   %i.an = load ptr, ptr %i.k, align 8, !tbaa !33
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr %i.an, i64 %indvars.iv1127 ; 5 uses
-  %i.ap = call i32 @hypre_StructMapCoarseToFine(ptr noundef %i.ao, ptr noundef %4, ptr noundef %5, ptr noundef nonnull %i.b) #5 ; 0 uses
+  %i.ap = call i32 @hypre_StructMapCoarseToFine(ptr noundef %i.ao, ptr noundef %4, ptr noundef %5, ptr noundef nonnull %i.b) #6 ; 0 uses
   %i.aq = load ptr, ptr %i.u, align 8, !tbaa !34
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !33
   %i.as = getelementptr inbounds [24 x i8], ptr %i.ar, i64 %indvars.iv ; 8 uses
@@ -180,54 +180,54 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bc = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 13 uses
+  %i.bc = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 13 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bd = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bd = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.be = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.be = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bf = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.bf = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bg = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 15 uses
+  %i.bg = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 15 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bh = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 15 uses
+  %i.bh = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 15 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bi = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.bi = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bj = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 15 uses
+  %i.bj = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 15 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bk = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 10 uses
+  %i.bk = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 10 uses
   br i1 %i.aa, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bl = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5
+  %i.bl = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bm = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5
+  %i.bm = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bn = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5
+  %i.bn = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -238,23 +238,23 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
   %i.bo = trunc nuw nsw i64 %indvars.iv1127 to i32 ; 5 uses
-  %i.bp = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.bp = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bq = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.bq = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.br = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.br = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bs = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.bs = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bt = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #5 ; 5 uses
+  %i.bt = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bo, ptr noundef nonnull %i.a) #6 ; 5 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
@@ -277,7 +277,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.ck = call i32 @hypre_BoxGetSize(ptr noundef %i.ao, ptr noundef nonnull %i.c) #5 ; 0 uses
+  %i.ck = call i32 @hypre_BoxGetSize(ptr noundef %i.ao, ptr noundef nonnull %i.c) #6 ; 0 uses
   %i.cl = load i32, ptr %i.ao, align 4, !tbaa !4  ; 5 uses
   %i.cm = load i32, ptr %i.av, align 4, !tbaa !4  ; 3 uses
   %i.cn = sub i32 %i.cl, %i.cm                    ; 2 uses
@@ -680,9 +680,9 @@ bb.ab:                                            ; preds = %bb.ab, %.preheader9
   br i1 %i.yh, label %.preheader959, label %._crit_edge, !llvm.loop !96
 
 ._crit_edge:                                      ; preds = %.loopexit957, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 0
 }
 
@@ -701,9 +701,9 @@ bb.a:
   %i.a = alloca [3 x i32], align 4                ; 36 uses
   %i.b = alloca [3 x i32], align 4                ; 7 uses
   %i.c = alloca [3 x i32], align 4                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !20
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
@@ -764,7 +764,7 @@ bb.c:                                             ; preds = %bb.b
   %i.am = trunc nsw i64 %indvars.iv to i32        ; 11 uses
   %i.an = load ptr, ptr %i.k, align 8, !tbaa !33
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr %i.an, i64 %indvars.iv1059 ; 5 uses
-  %i.ap = call i32 @hypre_StructMapCoarseToFine(ptr noundef %i.ao, ptr noundef %4, ptr noundef %5, ptr noundef nonnull %i.b) #5 ; 0 uses
+  %i.ap = call i32 @hypre_StructMapCoarseToFine(ptr noundef %i.ao, ptr noundef %4, ptr noundef %5, ptr noundef nonnull %i.b) #6 ; 0 uses
   %i.aq = load ptr, ptr %i.u, align 8, !tbaa !34
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !33
   %i.as = getelementptr inbounds [24 x i8], ptr %i.ar, i64 %indvars.iv ; 8 uses
@@ -780,50 +780,50 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bc = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bc = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bd = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 14 uses
+  %i.bd = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %1, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 14 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.be = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.be = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bf = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bf = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %2, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bg = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bg = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bh = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bh = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bi = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 24 uses
+  %i.bi = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 24 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bj = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5 ; 16 uses
+  %i.bj = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6 ; 16 uses
   br i1 %i.aa, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bk = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5
+  %i.bk = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bl = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5
+  %i.bl = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bm = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #5
+  %i.bm = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.am, ptr noundef nonnull %i.a) #6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -834,19 +834,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
   %i.bn = trunc nuw nsw i64 %indvars.iv1059 to i32 ; 4 uses
-  %i.bo = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bo = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bp = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bp = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.bq = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.bq = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.br = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #5 ; 8 uses
+  %i.br = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %3, i32 noundef %i.bn, ptr noundef nonnull %i.a) #6 ; 8 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
@@ -869,7 +869,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.y, align 4, !tbaa !4
   store i32 0, ptr %i.z, align 4, !tbaa !4
-  %i.ci = call i32 @hypre_BoxGetSize(ptr noundef %i.ao, ptr noundef nonnull %i.c) #5 ; 0 uses
+  %i.ci = call i32 @hypre_BoxGetSize(ptr noundef %i.ao, ptr noundef nonnull %i.c) #6 ; 0 uses
   %i.cj = load i32, ptr %i.ao, align 4, !tbaa !4  ; 5 uses
   %i.ck = load i32, ptr %i.av, align 4, !tbaa !4  ; 3 uses
   %i.cl = sub i32 %i.cj, %i.ck                    ; 2 uses
@@ -1272,9 +1272,9 @@ scalar.ph1832:                                    ; preds = %scalar.ph1832.prehe
   br i1 %i.ya, label %.preheader891, label %._crit_edge, !llvm.loop !194
 
 ._crit_edge:                                      ; preds = %.loopexit889, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 0
 }
 
@@ -1283,8 +1283,8 @@ define dso_local noundef i32 @hypre_SMG2RAPPeriodicSym(ptr noundef %0, ptr nofre
 bb.a:
   %i.a = alloca [3 x i32], align 4                ; 14 uses
   %i.b = alloca [3 x i32], align 4                ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !20   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -1295,7 +1295,7 @@ bb.a:
   br i1 %i.i, label %bb.b, label %.loopexit335
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = tail call i32 @hypre_StructMatrixAssemble(ptr noundef nonnull %0) #5 ; 0 uses
+  %i.j = tail call i32 @hypre_StructMatrixAssemble(ptr noundef nonnull %0) #6 ; 0 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.l = load i32, ptr %i.k, align 8, !tbaa !26
   %i.m = icmp sgt i32 %i.l, 0
@@ -1321,27 +1321,24 @@ bb.c:                                             ; preds = %.lr.ph, %._crit_edg
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 4
   %i.aa = trunc nuw nsw i64 %indvars.iv390 to i32 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.a, i8 0, i64 12, i1 false)
-  %i.ab = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.ab = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
   store i32 0, ptr %i.p, align 4, !tbaa !4
-  %i.ac = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.ac = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.o, align 4, !tbaa !4
   store i32 0, ptr %i.p, align 4, !tbaa !4
-  %i.ad = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #5 ; 9 uses
-  %3 = ptrtoaddr ptr %i.ad to i64                 ; 2 uses
+  %i.ad = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #6 ; 7 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.o, align 4, !tbaa !4
   store i32 0, ptr %i.p, align 4, !tbaa !4
-  %i.ae = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #5 ; 9 uses
-  %4 = ptrtoaddr ptr %i.ae to i64                 ; 2 uses
+  %i.ae = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #6 ; 7 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.o, align 4, !tbaa !4
   store i32 0, ptr %i.p, align 4, !tbaa !4
-  %i.af = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #5 ; 9 uses
-  %5 = ptrtoaddr ptr %i.af to i64                 ; 2 uses
-  %i.ag = call i32 @hypre_BoxGetSize(ptr noundef %i.t, ptr noundef nonnull %i.b) #5 ; 0 uses
+  %i.af = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef nonnull %0, i32 noundef %i.aa, ptr noundef nonnull %i.a) #6 ; 7 uses
+  %i.ag = call i32 @hypre_BoxGetSize(ptr noundef %i.t, ptr noundef nonnull %i.b) #6 ; 0 uses
   %i.ah = load i32, ptr %i.t, align 4, !tbaa !4
   %i.ai = load i32, ptr %i.w, align 4, !tbaa !4   ; 2 uses
   %i.aj = sub nsw i32 %i.ah, %i.ai                ; 2 uses
@@ -1375,11 +1372,11 @@ bb.e:                                             ; preds = %._crit_edge, %bb.d
   %i.ba = sub i32 %i.az, %i.ai                    ; 2 uses
   %i.bb = icmp sgt i32 %i.ba, -1                  ; 3 uses
   %i.bc = add i32 %i.ba, 1                        ; 3 uses
-  %i.bd = select i1 %i.bb, i32 %i.bc, i32 0       ; 5 uses
+  %i.bd = select i1 %i.bb, i32 %i.bc, i32 0       ; 7 uses
   %i.be = mul nsw i32 %i.bd, %.pre-phi
   %i.bf = select i1 %i.as, i32 %i.be, i32 0       ; 2 uses
-  %i.bg = load i32, ptr %i.b, align 4, !tbaa !4   ; 14 uses
-  %i.bh = load i32, ptr %i.q, align 4, !tbaa !4   ; 7 uses
+  %i.bg = load i32, ptr %i.b, align 4, !tbaa !4   ; 9 uses
+  %i.bh = load i32, ptr %i.q, align 4, !tbaa !4   ; 10 uses
   %i.bi = load i32, ptr %i.r, align 4, !tbaa !4   ; 5 uses
   %.0303 = call i32 @llvm.smax.i32(i32 %i.bh, i32 %i.bg)
   %.1304 = call i32 @llvm.smax.i32(i32 %i.bi, i32 %.0303)
@@ -1559,13 +1556,16 @@ bb.f:                                             ; preds = %._crit_edge.split
 
 bb.g:                                             ; preds = %._crit_edge.split, %bb.f
   %i.dk = phi i32 [ %i.dj, %bb.f ], [ 0, %._crit_edge.split ]
+  %3 = add nsw i32 %i.dk, %i.an
+  %4 = mul nsw i32 %3, %i.bc
+  %5 = select i1 %i.bb, i32 %4, i32 0
+  %6 = add nsw i32 %5, %i.aj
   br i1 %i.bj, label %.preheader332.lr.ph, label %._crit_edge363.split
 
 .preheader332.lr.ph:                              ; preds = %bb.g
   %factor.op.mul361 = mul i32 %i.bd, %i.bh
   %i.dl = icmp sgt i32 %i.bi, 0
   %i.dm = icmp sgt i32 %i.bh, 0
-  %6 = sub i32 %i.bd, %i.bg
   %i.dn = sub i32 %i.bf, %factor.op.mul361
   %brmerge373.not408 = and i1 %i.dl, %i.dm
   %i.do = icmp sgt i32 %i.bg, 0
@@ -1573,135 +1573,79 @@ bb.g:                                             ; preds = %._crit_edge.split, 
   br i1 %or.cond404, label %.preheader330.us.us.preheader, label %._crit_edge363.split
 
 .preheader330.us.us.preheader:                    ; preds = %.preheader332.lr.ph
-  %7 = add nsw i32 %i.dk, %i.an
-  %8 = mul nsw i32 %7, %i.bc
-  %9 = select i1 %i.bb, i32 %8, i32 0
-  %10 = add nsw i32 %9, %i.aj
-  %11 = sub i64 %3, %4
-  %12 = sub i64 %5, %4
-  %13 = sub i64 %5, %3
-  %i.dp = zext nneg i32 %i.bg to i64              ; 2 uses
-  %min.iters.check = icmp ult i32 %i.bg, 4
-  %diff.check = icmp ult i64 %11, 32
-  %diff.check410 = icmp ult i64 %12, 32
-  %conflict.rdx = or i1 %diff.check, %diff.check410
-  %diff.check411 = icmp ult i64 %13, 32
-  %conflict.rdx412 = or i1 %conflict.rdx, %diff.check411
-  %n.vec = and i64 %i.dp, 2147483644              ; 4 uses
-  %14 = trunc nuw nsw i64 %n.vec to i32
-  %cmp.n = icmp eq i64 %n.vec, %i.dp
-  br label %.preheader330.us.us
-
-.preheader330.us.us:                              ; preds = %.preheader330.us.us.preheader, %._crit_edge355.split.us.us.us
-  %.3290358.us.us = phi i32 [ %35, %._crit_edge355.split.us.us.us ], [ 0, %.preheader330.us.us.preheader ]
-  %.3294357.us.us = phi i32 [ %34, %._crit_edge355.split.us.us.us ], [ %10, %.preheader330.us.us.preheader ]
+  %i.dp = zext nneg i32 %i.bg to i64
+  %7 = shl nuw nsw i64 %i.dp, 3                   ; 9 uses
+  %xtraiter = and i32 %i.bh, 1
+  %8 = icmp eq i32 %i.bh, 1
+  %unroll_iter = and i32 %i.bh, 2147483646
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod462 = trunc i32 %i.bh to i1
   br label %.preheader.us.us.us.a
 
-.preheader.us.us.us.a:                            ; preds = %._crit_edge352.us.us.us, %.preheader330.us.us
-  %.3283354.us.us.us = phi i32 [ 0, %.preheader330.us.us ], [ %i.dw, %._crit_edge352.us.us.us ]
-  %.4353.us.us.us.a = phi i32 [ %.3294357.us.us, %.preheader330.us.us ], [ %i.dv, %._crit_edge352.us.us.us ]
-  %15 = sext i32 %.4353.us.us.us.a to i64         ; 3 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx412
-  br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
+.preheader.us.us.us.a:                            ; preds = %.preheader330.us.us.preheader, %._crit_edge352.us.us.us
+  %.3283354.us.us.us = phi i32 [ %i.dw, %._crit_edge352.us.us.us ], [ 0, %.preheader330.us.us.preheader ]
+  %.4353.us.us.us.a = phi i32 [ %i.dv, %._crit_edge352.us.us.us ], [ %6, %.preheader330.us.us.preheader ] ; 2 uses
+  br i1 %8, label %scalar.ph, label %vector.body
 
-vector.ph:                                        ; preds = %.preheader.us.us.us.a
-  %16 = add nsw i64 %n.vec, %15                   ; 2 uses
-  br label %vector.body
+vector.body:                                      ; preds = %.preheader.us.us.us.a, %vector.body
+  %.4353.us.us.us = phi i32 [ %14, %vector.body ], [ %.4353.us.us.us.a, %.preheader.us.us.us.a ] ; 2 uses
+  %niter = phi i32 [ %niter.next.1, %vector.body ], [ 0, %.preheader.us.us.us.a ]
+  %9 = sext i32 %.4353.us.us.us to i64
+  %10 = shl nsw i64 %9, 3                         ; 3 uses
+  %scevgep = getelementptr i8, ptr %i.ae, i64 %10
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %7, i1 false), !tbaa !35
+  %scevgep384 = getelementptr i8, ptr %i.ad, i64 %10
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep384, i8 0, i64 %7, i1 false), !tbaa !35
+  %i.dq = getelementptr i8, ptr %i.af, i64 %10
+  call void @llvm.memset.p0.i64(ptr align 8 %i.dq, i8 0, i64 %7, i1 false), !tbaa !35
+  %11 = add i32 %i.bd, %.4353.us.us.us            ; 2 uses
+  %12 = sext i32 %11 to i64
+  %13 = shl nsw i64 %12, 3                        ; 3 uses
+  %i.dr = getelementptr i8, ptr %i.ae, i64 %13
+  call void @llvm.memset.p0.i64(ptr align 8 %i.dr, i8 0, i64 %7, i1 false), !tbaa !35
+  %scevgep384.1 = getelementptr i8, ptr %i.ad, i64 %13
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep384.1, i8 0, i64 %7, i1 false), !tbaa !35
+  %i.ds = getelementptr i8, ptr %i.af, i64 %13
+  call void @llvm.memset.p0.i64(ptr align 8 %i.ds, i8 0, i64 %7, i1 false), !tbaa !35
+  %14 = add i32 %i.bd, %11                        ; 3 uses
+  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %i.dt = icmp eq i32 %niter.next.1, %unroll_iter
+  br i1 %i.dt, label %scalar.ph.prol.loopexit, label %vector.body, !llvm.loop !212
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %17 = add i64 %index, %15                       ; 3 uses
-  %18 = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %17 ; 2 uses
-  %i.dq = getelementptr inbounds nuw i8, ptr %18, i64 16
-  store <2 x double> zeroinitializer, ptr %18, align 8, !tbaa !35
-  store <2 x double> zeroinitializer, ptr %i.dq, align 8, !tbaa !35
-  %19 = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %17 ; 2 uses
-  %i.dr = getelementptr inbounds nuw i8, ptr %19, i64 16
-  store <2 x double> zeroinitializer, ptr %19, align 8, !tbaa !35
-  store <2 x double> zeroinitializer, ptr %i.dr, align 8, !tbaa !35
-  %20 = getelementptr inbounds [8 x i8], ptr %i.af, i64 %17 ; 2 uses
-  %i.ds = getelementptr inbounds nuw i8, ptr %20, i64 16
-  store <2 x double> zeroinitializer, ptr %20, align 8, !tbaa !35
-  store <2 x double> zeroinitializer, ptr %i.ds, align 8, !tbaa !35
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.dt = icmp eq i64 %index.next, %n.vec
-  br i1 %i.dt, label %middle.block, label %vector.body, !llvm.loop !212
+scalar.ph.prol.loopexit:                          ; preds = %vector.body
+  br i1 %lcmp.mod.not, label %._crit_edge352.us.us.us, label %scalar.ph
 
-middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %._crit_edge352.us.us.us, label %scalar.ph.preheader
+scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %.preheader.us.us.us.a
+  %.3351.us.us.us = phi i32 [ %.4353.us.us.us.a, %.preheader.us.us.us.a ], [ %14, %scalar.ph.prol.loopexit ] ; 2 uses
+  call void @llvm.assume(i1 %lcmp.mod462)
+  %15 = sext i32 %.3351.us.us.us to i64
+  %16 = shl nsw i64 %15, 3                        ; 3 uses
+  %scevgep.epil = getelementptr i8, ptr %i.ae, i64 %16
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.epil, i8 0, i64 %7, i1 false), !tbaa !35
+  %scevgep384.epil = getelementptr i8, ptr %i.ad, i64 %16
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep384.epil, i8 0, i64 %7, i1 false), !tbaa !35
+  %scevgep385.epil = getelementptr i8, ptr %i.af, i64 %16
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep385.epil, i8 0, i64 %7, i1 false), !tbaa !35
+  %i.du = add i32 %i.bd, %.3351.us.us.us
+  br label %._crit_edge352.us.us.us
 
-scalar.ph.preheader:                              ; preds = %.preheader.us.us.us.a, %middle.block
-  %indvars.iv384.ph = phi i64 [ %16, %middle.block ], [ %15, %.preheader.us.us.us.a ] ; 5 uses
-  %.3351.us.us.us.ph = phi i32 [ %14, %middle.block ], [ 0, %.preheader.us.us.us.a ] ; 4 uses
-  %21 = sub i32 %i.bg, %.3351.us.us.us.ph
-  %.neg = add i32 %.3351.us.us.us.ph, 1
-  %xtraiter = and i32 %21, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
-
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
-  %22 = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %indvars.iv384.ph
-  store double 0.000000e+00, ptr %22, align 8, !tbaa !35
-  %23 = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %indvars.iv384.ph
-  store double 0.000000e+00, ptr %23, align 8, !tbaa !35
-  %24 = getelementptr inbounds [8 x i8], ptr %i.af, i64 %indvars.iv384.ph
-  store double 0.000000e+00, ptr %24, align 8, !tbaa !35
-  %indvars.iv.next385.prol = add nsw i64 %indvars.iv384.ph, 1 ; 2 uses
-  %25 = add nuw nsw i32 %.3351.us.us.us.ph, 1
-  br label %scalar.ph.prol.loopexit
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %indvars.iv.next385.lcssa475.unr = phi i64 [ poison, %scalar.ph.preheader ], [ %indvars.iv.next385.prol, %scalar.ph.prol ]
-  %indvars.iv384.unr = phi i64 [ %indvars.iv384.ph, %scalar.ph.preheader ], [ %indvars.iv.next385.prol, %scalar.ph.prol ]
-  %.3351.us.us.us.unr = phi i32 [ %.3351.us.us.us.ph, %scalar.ph.preheader ], [ %25, %scalar.ph.prol ]
-  %26 = icmp eq i32 %i.bg, %.neg
-  br i1 %26, label %._crit_edge352.us.us.us, label %scalar.ph
-
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %indvars.iv384 = phi i64 [ %indvars.iv.next385.1, %scalar.ph ], [ %indvars.iv384.unr, %scalar.ph.prol.loopexit ] ; 5 uses
-  %.3351.us.us.us = phi i32 [ %i.du, %scalar.ph ], [ %.3351.us.us.us.unr, %scalar.ph.prol.loopexit ]
-  %27 = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %indvars.iv384
-  store double 0.000000e+00, ptr %27, align 8, !tbaa !35
-  %28 = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %indvars.iv384
-  store double 0.000000e+00, ptr %28, align 8, !tbaa !35
-  %29 = getelementptr inbounds [8 x i8], ptr %i.af, i64 %indvars.iv384
-  store double 0.000000e+00, ptr %29, align 8, !tbaa !35
-  %indvars.iv.next385 = add nsw i64 %indvars.iv384, 1 ; 3 uses
-  %30 = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %indvars.iv.next385
-  store double 0.000000e+00, ptr %30, align 8, !tbaa !35
-  %31 = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %indvars.iv.next385
-  store double 0.000000e+00, ptr %31, align 8, !tbaa !35
-  %32 = getelementptr inbounds [8 x i8], ptr %i.af, i64 %indvars.iv.next385
-  store double 0.000000e+00, ptr %32, align 8, !tbaa !35
-  %indvars.iv.next385.1 = add nsw i64 %indvars.iv384, 2 ; 2 uses
-  %i.du = add nuw nsw i32 %.3351.us.us.us, 2      ; 2 uses
-  %exitcond387.not.1 = icmp eq i32 %i.du, %i.bg
-  br i1 %exitcond387.not.1, label %._crit_edge352.us.us.us, label %scalar.ph, !llvm.loop !213
-
-._crit_edge352.us.us.us:                          ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
-  %indvars.iv.next385.lcssa = phi i64 [ %16, %middle.block ], [ %indvars.iv.next385.lcssa475.unr, %scalar.ph.prol.loopexit ], [ %indvars.iv.next385.1, %scalar.ph ]
-  %33 = trunc nsw i64 %indvars.iv.next385.lcssa to i32
-  %i.dv = add nsw i32 %6, %33                     ; 2 uses
+._crit_edge352.us.us.us:                          ; preds = %scalar.ph.prol.loopexit, %scalar.ph
+  %.lcssa460 = phi i32 [ %14, %scalar.ph.prol.loopexit ], [ %i.du, %scalar.ph ]
+  %i.dv = add nsw i32 %i.dn, %.lcssa460
   %i.dw = add nuw nsw i32 %.3283354.us.us.us, 1   ; 2 uses
-  %exitcond388.not = icmp eq i32 %i.dw, %i.bh
-  br i1 %exitcond388.not, label %._crit_edge355.split.us.us.us, label %.preheader.us.us.us.a, !llvm.loop !214
+  %exitcond388.not = icmp eq i32 %i.dw, %i.bi
+  br i1 %exitcond388.not, label %._crit_edge363.split, label %.preheader.us.us.us.a, !llvm.loop !213
 
-._crit_edge355.split.us.us.us:                    ; preds = %._crit_edge352.us.us.us
-  %34 = add nsw i32 %i.dn, %i.dv
-  %35 = add nuw nsw i32 %.3290358.us.us, 1        ; 2 uses
-  %exitcond389.not = icmp eq i32 %35, %i.bi
-  br i1 %exitcond389.not, label %._crit_edge363.split, label %.preheader330.us.us, !llvm.loop !215
-
-._crit_edge363.split:                             ; preds = %._crit_edge355.split.us.us.us, %.preheader332.lr.ph, %bb.g
+._crit_edge363.split:                             ; preds = %._crit_edge352.us.us.us, %.preheader332.lr.ph, %bb.g
   %indvars.iv.next391 = add nuw nsw i64 %indvars.iv390, 1 ; 2 uses
   %i.dx = load i32, ptr %i.k, align 8, !tbaa !26
   %i.dy = sext i32 %i.dx to i64
   %i.dz = icmp slt i64 %indvars.iv.next391, %i.dy
-  br i1 %i.dz, label %bb.c, label %.loopexit335, !llvm.loop !216
+  br i1 %i.dz, label %bb.c, label %.loopexit335, !llvm.loop !214
 
 .loopexit335:                                     ; preds = %._crit_edge363.split, %bb.b, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 0
 }
 
@@ -1712,8 +1656,8 @@ define dso_local noundef i32 @hypre_SMG2RAPPeriodicNoSym(ptr noundef %0, ptr nof
 bb.a:
   %i.a = alloca [3 x i32], align 4                ; 22 uses
   %i.b = alloca [3 x i32], align 4                ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !20   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -1748,40 +1692,40 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   store i32 0, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
   %i.w = trunc nuw nsw i64 %indvars.iv230 to i32  ; 9 uses
-  %i.x = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.x = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.y = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.y = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.z = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.z = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.aa = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.aa = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 -1, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.ab = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.ab = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 0, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.ac = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.ac = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 0, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.ad = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.ad = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 1, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.ae = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
+  %i.ae = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
   store i32 -1, ptr %i.a, align 4, !tbaa !4
   store i32 1, ptr %i.n, align 4, !tbaa !4
   store i32 0, ptr %i.o, align 4, !tbaa !4
-  %i.af = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #5 ; 4 uses
-  %i.ag = call i32 @hypre_BoxGetSize(ptr noundef %i.s, ptr noundef nonnull %i.b) #5 ; 0 uses
+  %i.af = call ptr @hypre_StructMatrixExtractPointerByIndex(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull %i.a) #6 ; 4 uses
+  %i.ag = call i32 @hypre_BoxGetSize(ptr noundef %i.s, ptr noundef nonnull %i.b) #6 ; 0 uses
   %i.ah = load i32, ptr %i.s, align 4, !tbaa !4
   %i.ai = load i32, ptr %i.v, align 4, !tbaa !4   ; 2 uses
   %i.aj = sub i32 %i.ah, %i.ai
@@ -2053,41 +1997,41 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.cf = add i64 %index, %i.cc                   ; 9 uses
   %i.cg = getelementptr inbounds [8 x i8], ptr %i.af, i64 %i.cf ; 2 uses
-  %wide.load = load <2 x double>, ptr %i.cg, align 8, !tbaa !35, !alias.scope !217, !noalias !220
+  %wide.load = load <2 x double>, ptr %i.cg, align 8, !tbaa !35, !alias.scope !215, !noalias !218
   %i.ch = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.cf ; 2 uses
-  %wide.load414 = load <2 x double>, ptr %i.ch, align 8, !tbaa !35, !alias.scope !228, !noalias !229
+  %wide.load414 = load <2 x double>, ptr %i.ch, align 8, !tbaa !35, !alias.scope !226, !noalias !227
   %i.ci = fadd <2 x double> %wide.load, %wide.load414
   %i.cj = getelementptr inbounds [8 x i8], ptr %i.y, i64 %i.cf ; 2 uses
-  %wide.load415 = load <2 x double>, ptr %i.cj, align 8, !tbaa !35, !alias.scope !230, !noalias !232
+  %wide.load415 = load <2 x double>, ptr %i.cj, align 8, !tbaa !35, !alias.scope !228, !noalias !230
   %i.ck = fadd <2 x double> %wide.load415, %i.ci
-  store <2 x double> %i.ck, ptr %i.cj, align 8, !tbaa !35, !alias.scope !230, !noalias !232
-  store <2 x double> zeroinitializer, ptr %i.cg, align 8, !tbaa !35, !alias.scope !217, !noalias !220
-  store <2 x double> zeroinitializer, ptr %i.ch, align 8, !tbaa !35, !alias.scope !228, !noalias !229
+  store <2 x double> %i.ck, ptr %i.cj, align 8, !tbaa !35, !alias.scope !228, !noalias !230
+  store <2 x double> zeroinitializer, ptr %i.cg, align 8, !tbaa !35, !alias.scope !215, !noalias !218
+  store <2 x double> zeroinitializer, ptr %i.ch, align 8, !tbaa !35, !alias.scope !226, !noalias !227
   %i.cl = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.cf ; 2 uses
-  %wide.load416 = load <2 x double>, ptr %i.cl, align 8, !tbaa !35, !alias.scope !233, !noalias !234
+  %wide.load416 = load <2 x double>, ptr %i.cl, align 8, !tbaa !35, !alias.scope !231, !noalias !232
   %i.cm = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.cf ; 2 uses
-  %wide.load417 = load <2 x double>, ptr %i.cm, align 8, !tbaa !35, !alias.scope !235, !noalias !236
+  %wide.load417 = load <2 x double>, ptr %i.cm, align 8, !tbaa !35, !alias.scope !233, !noalias !234
   %i.cn = fadd <2 x double> %wide.load416, %wide.load417
   %i.co = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.cf ; 2 uses
-  %wide.load418 = load <2 x double>, ptr %i.co, align 8, !tbaa !35, !alias.scope !237, !noalias !238
+  %wide.load418 = load <2 x double>, ptr %i.co, align 8, !tbaa !35, !alias.scope !235, !noalias !236
   %i.cp = fadd <2 x double> %wide.load418, %i.cn
-  store <2 x double> %i.cp, ptr %i.co, align 8, !tbaa !35, !alias.scope !237, !noalias !238
-  store <2 x double> zeroinitializer, ptr %i.cl, align 8, !tbaa !35, !alias.scope !233, !noalias !234
-  store <2 x double> zeroinitializer, ptr %i.cm, align 8, !tbaa !35, !alias.scope !235, !noalias !236
+  store <2 x double> %i.cp, ptr %i.co, align 8, !tbaa !35, !alias.scope !235, !noalias !236
+  store <2 x double> zeroinitializer, ptr %i.cl, align 8, !tbaa !35, !alias.scope !231, !noalias !232
+  store <2 x double> zeroinitializer, ptr %i.cm, align 8, !tbaa !35, !alias.scope !233, !noalias !234
   %i.cq = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.cf ; 2 uses
-  %wide.load419 = load <2 x double>, ptr %i.cq, align 8, !tbaa !35, !alias.scope !239, !noalias !240
+  %wide.load419 = load <2 x double>, ptr %i.cq, align 8, !tbaa !35, !alias.scope !237, !noalias !238
   %i.cr = getelementptr inbounds [8 x i8], ptr %i.ab, i64 %i.cf ; 2 uses
-  %wide.load420 = load <2 x double>, ptr %i.cr, align 8, !tbaa !35, !alias.scope !240
+  %wide.load420 = load <2 x double>, ptr %i.cr, align 8, !tbaa !35, !alias.scope !238
   %i.cs = fadd <2 x double> %wide.load419, %wide.load420
   %i.ct = getelementptr inbounds [8 x i8], ptr %i.ac, i64 %i.cf ; 2 uses
-  %wide.load421 = load <2 x double>, ptr %i.ct, align 8, !tbaa !35, !alias.scope !241, !noalias !242
+  %wide.load421 = load <2 x double>, ptr %i.ct, align 8, !tbaa !35, !alias.scope !239, !noalias !240
   %i.cu = fadd <2 x double> %wide.load421, %i.cs
-  store <2 x double> %i.cu, ptr %i.ct, align 8, !tbaa !35, !alias.scope !241, !noalias !242
-  store <2 x double> zeroinitializer, ptr %i.cq, align 8, !tbaa !35, !alias.scope !239, !noalias !240
-  store <2 x double> zeroinitializer, ptr %i.cr, align 8, !tbaa !35, !alias.scope !240
+  store <2 x double> %i.cu, ptr %i.ct, align 8, !tbaa !35, !alias.scope !239, !noalias !240
+  store <2 x double> zeroinitializer, ptr %i.cq, align 8, !tbaa !35, !alias.scope !237, !noalias !238
+  store <2 x double> zeroinitializer, ptr %i.cr, align 8, !tbaa !35, !alias.scope !238
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.cv = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cv, label %middle.block, label %vector.body, !llvm.loop !243
+  br i1 %i.cv, label %middle.block, label %vector.body, !llvm.loop !241
 
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.us.us.us, label %scalar.ph.preheader
@@ -2136,7 +2080,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.du = add nuw nsw i32 %.1183209.us.us.us, 1   ; 2 uses
   %exitcond.not = icmp eq i32 %i.du, %i.bc
-  br i1 %exitcond.not, label %._crit_edge.us.us.us, label %scalar.ph, !llvm.loop !244
+  br i1 %exitcond.not, label %._crit_edge.us.us.us, label %scalar.ph, !llvm.loop !242
 
 ._crit_edge.us.us.us:                             ; preds = %scalar.ph, %middle.block
   %indvars.iv.next.lcssa = phi i64 [ %i.ce, %middle.block ], [ %indvars.iv.next, %scalar.ph ]
@@ -2144,24 +2088,24 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dw = add nsw i32 %i.bq, %i.dv                ; 2 uses
   %i.dx = add nuw nsw i32 %.1185211.us.us.us, 1   ; 2 uses
   %exitcond228.not = icmp eq i32 %i.dx, %i.bd
-  br i1 %exitcond228.not, label %._crit_edge212.split.us.us.us, label %.preheader.us.us.us, !llvm.loop !245
+  br i1 %exitcond228.not, label %._crit_edge212.split.us.us.us, label %.preheader.us.us.us, !llvm.loop !243
 
 ._crit_edge212.split.us.us.us:                    ; preds = %._crit_edge.us.us.us
   %i.dy = add nsw i32 %i.br, %i.dw
   %i.dz = add nuw nsw i32 %.1190215.us.us, 1      ; 2 uses
   %exitcond229.not = icmp eq i32 %i.dz, %i.be
-  br i1 %exitcond229.not, label %._crit_edge.split, label %.preheader204.us.us, !llvm.loop !246
+  br i1 %exitcond229.not, label %._crit_edge.split, label %.preheader204.us.us, !llvm.loop !244
 
 ._crit_edge.split:                                ; preds = %._crit_edge212.split.us.us.us, %.preheader205.lr.ph, %bb.d
   %indvars.iv.next231 = add nuw nsw i64 %indvars.iv230, 1 ; 2 uses
   %i.ea = load i32, ptr %i.j, align 8, !tbaa !26
   %i.eb = sext i32 %i.ea to i64
   %i.ec = icmp slt i64 %indvars.iv.next231, %i.eb
-  br i1 %i.ec, label %bb.b, label %.loopexit207, !llvm.loop !247
+  br i1 %i.ec, label %bb.b, label %.loopexit207, !llvm.loop !245
 
 .loopexit207:                                     ; preds = %._crit_edge.split, %.preheader206, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 0
 }
 
@@ -2174,12 +2118,16 @@ declare i32 @llvm.smax.i32(i32, i32) #3
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #5
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
@@ -2397,40 +2345,38 @@ attributes #5 = { nounwind }
 !209 = distinct !{!209, !32, !88}
 !210 = distinct !{!210, !32}
 !211 = distinct !{!211, !32}
-!212 = distinct !{!212, !32, !88, !89}
-!213 = distinct !{!213, !32, !88}
+!212 = distinct !{!212, !32}
+!213 = distinct !{!213, !32}
 !214 = distinct !{!214, !32}
-!215 = distinct !{!215, !32}
-!216 = distinct !{!216, !32}
-!217 = !{!218}
-!218 = distinct !{!218, !219}
-!219 = distinct !{!219, !"LVerDomain"}
-!220 = !{!221, !222, !223, !224, !225, !226, !227}
-!221 = distinct !{!221, !219}
-!222 = distinct !{!222, !219}
-!223 = distinct !{!223, !219}
-!224 = distinct !{!224, !219}
-!225 = distinct !{!225, !219}
-!226 = distinct !{!226, !219}
-!227 = distinct !{!227, !219}
-!228 = !{!221}
-!229 = !{!222, !223, !224, !225, !226, !227}
-!230 = !{!231}
-!231 = distinct !{!231, !219}
-!232 = !{!218, !221, !222, !223, !224, !225, !226, !227}
-!233 = !{!223}
-!234 = !{!224, !225, !226, !227}
-!235 = !{!224}
-!236 = !{!225, !226, !227}
-!237 = !{!222}
-!238 = !{!223, !224, !225, !226, !227}
-!239 = !{!226}
-!240 = !{!227}
-!241 = !{!225}
-!242 = !{!226, !227}
-!243 = distinct !{!243, !32, !88, !89}
-!244 = distinct !{!244, !32, !88}
+!215 = !{!216}
+!216 = distinct !{!216, !217}
+!217 = distinct !{!217, !"LVerDomain"}
+!218 = !{!219, !220, !221, !222, !223, !224, !225}
+!219 = distinct !{!219, !217}
+!220 = distinct !{!220, !217}
+!221 = distinct !{!221, !217}
+!222 = distinct !{!222, !217}
+!223 = distinct !{!223, !217}
+!224 = distinct !{!224, !217}
+!225 = distinct !{!225, !217}
+!226 = !{!219}
+!227 = !{!220, !221, !222, !223, !224, !225}
+!228 = !{!229}
+!229 = distinct !{!229, !217}
+!230 = !{!216, !219, !220, !221, !222, !223, !224, !225}
+!231 = !{!221}
+!232 = !{!222, !223, !224, !225}
+!233 = !{!222}
+!234 = !{!223, !224, !225}
+!235 = !{!220}
+!236 = !{!221, !222, !223, !224, !225}
+!237 = !{!224}
+!238 = !{!225}
+!239 = !{!223}
+!240 = !{!224, !225}
+!241 = distinct !{!241, !32, !88, !89}
+!242 = distinct !{!242, !32, !88}
+!243 = distinct !{!243, !32}
+!244 = distinct !{!244, !32}
 !245 = distinct !{!245, !32}
-!246 = distinct !{!246, !32}
-!247 = distinct !{!247, !32}
 end_hunk_2
