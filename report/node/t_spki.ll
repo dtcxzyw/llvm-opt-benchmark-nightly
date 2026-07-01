@@ -87,7 +87,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br i1 %i.ak, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %i.al = zext nneg i32 %i.ah to i64              ; 3 uses
+  %i.al = zext nneg i32 %i.ah to i64              ; 2 uses
   %.not43 = icmp eq i32 %i.ah, 1
   br i1 %.not43, label %.lr.ph.peel, label %.lr.ph.preheader.split
 
@@ -110,10 +110,8 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aj, i64 %indvars.iv
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !29
   %i.at = zext i8 %i.as to i32
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %2 = icmp eq i64 %indvars.iv.next, %i.al
-  %3 = select i1 %2, ptr @.str.8, ptr @.str.9
-  %i.au = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.7, i32 noundef %i.at, ptr noundef nonnull %3) #3 ; 0 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.au = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.7, i32 noundef %i.at, ptr noundef nonnull @.str.9) #3 ; 0 uses
   %exitcond.not = icmp eq i64 %indvars.iv, %i.am
   br i1 %exitcond.not, label %.lr.ph.peel, label %.lr.ph, !llvm.loop !30
 

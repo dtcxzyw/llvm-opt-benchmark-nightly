@@ -201,7 +201,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
-  %i.g = sdiv exact i64 %i.f, 24                  ; 7 uses
+  %i.g = sdiv exact i64 %i.f, 24                  ; 6 uses
   %.not = icmp eq ptr %i.b, %i.c                  ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
@@ -268,10 +268,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader.split, %.lr.ph
   %.0217 = phi double [ %i.bu, %.lr.ph ], [ 0.000000e+00, %.lr.ph.preheader.split ]
   %.086216 = phi i64 [ %i.ay, %.lr.ph ], [ 0, %.lr.ph.preheader.split ] ; 4 uses
-  %i.ay = add nuw i64 %.086216, 1                 ; 4 uses
-  %6 = icmp eq i64 %i.ay, %i.g
-  %7 = select i1 %6, i64 0, i64 %i.ay
-  %i.az = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %7 ; 2 uses
+  %i.ay = add nuw i64 %.086216, 1                 ; 3 uses
+  %i.az = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %i.ay ; 2 uses
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %.086216 ; 2 uses
   %i.bb = load double, ptr %i.az, align 8, !noalias !69 ; 2 uses
   %i.bc = load double, ptr %i.ba, align 8, !noalias !69

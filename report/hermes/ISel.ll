@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %_ZL33basicBlocksWit
   br i1 %i.ft, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.t
-  %i.fu = zext nneg i32 %i.fs to i64              ; 3 uses
+  %i.fu = zext nneg i32 %i.fs to i64              ; 2 uses
   %.not = icmp eq i32 %i.fs, 1
   br i1 %.not, label %.lr.ph.peel, label %.lr.ph.preheader.split
 
@@ -212,8 +212,8 @@ bb.t:                                             ; preds = %_ZL33basicBlocksWit
   %i.fv = add nsw i64 %i.fu, -2
   br label %.lr.ph
 
-.lr.ph.peel:                                      ; preds = %.lr.ph.preheader, %13
-  %i.fw = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %13 ] ; 2 uses
+.lr.ph.peel:                                      ; preds = %.lr.ph.preheader, %.lr.ph
+  %i.fw = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.fx = load ptr, ptr %8, align 8, !tbaa !75    ; 2 uses
   %i.fy = getelementptr inbounds nuw [8 x i8], ptr %i.fx, i64 %i.fw
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !86
@@ -275,25 +275,17 @@ _ZN6hermes17PostOrderAnalysisD2Ev.exit:           ; preds = %_ZN4llvh11SmallVect
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20
   ret void
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader.split, %13
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.split ], [ %indvars.iv.next, %13 ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader.split, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.split ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
   %i.gu = load ptr, ptr %8, align 8, !tbaa !75    ; 2 uses
   %i.gv = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %indvars.iv
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !86
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
-  %i.gx = icmp eq i64 %indvars.iv.next, %i.fu
-  br i1 %i.gx, label %13, label %10
-
-10:                                               ; preds = %.lr.ph
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %indvars.iv.next
-  %12 = load ptr, ptr %11, align 8, !tbaa !86
-  br label %13
-
-13:                                               ; preds = %.lr.ph, %10
-  %14 = phi ptr [ %12, %10 ], [ null, %.lr.ph ]
-  call void @_ZN6hermes3hbc7HBCISel8generateEPNS_10BasicBlockES3_(ptr noundef nonnull align 8 dereferenceable(392) %0, ptr noundef %i.gw, ptr noundef %14)
-  %exitcond.not = icmp eq i64 %indvars.iv, %i.fv
-  br i1 %exitcond.not, label %.lr.ph.peel, label %.lr.ph, !llvm.loop !464
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %indvars.iv.next
+  %11 = load ptr, ptr %10, align 8, !tbaa !86
+  call void @_ZN6hermes3hbc7HBCISel8generateEPNS_10BasicBlockES3_(ptr noundef nonnull align 8 dereferenceable(392) %0, ptr noundef %i.gw, ptr noundef %11)
+  %i.gx = icmp eq i64 %indvars.iv, %i.fv
+  br i1 %i.gx, label %.lr.ph.peel, label %.lr.ph, !llvm.loop !464
 }
 
 declare void @_ZN6hermes17PostOrderAnalysisC1EPNS_8FunctionE(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef) unnamed_addr #3

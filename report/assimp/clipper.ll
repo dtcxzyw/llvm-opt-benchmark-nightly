@@ -204,7 +204,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
-  %i.g = ashr exact i64 %i.f, 4                   ; 7 uses
+  %i.g = ashr exact i64 %i.f, 4                   ; 6 uses
   %i.h = icmp eq ptr %i.b, %i.c
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -270,10 +270,8 @@ bb.d:                                             ; preds = %bb.c, %bb.d
   %i.ak = getelementptr inbounds nuw [40 x i8], ptr %i.p, i64 %.06674 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i64 16, i1 false)
-  %i.am = add nuw i64 %.06674, 1                  ; 4 uses
-  %3 = icmp eq i64 %i.am, %i.g
-  %4 = select i1 %3, i64 0, i64 %i.am
-  %i.an = getelementptr inbounds nuw [40 x i8], ptr %i.p, i64 %4 ; 2 uses
+  %i.am = add nuw i64 %.06674, 1                  ; 3 uses
+  %i.an = getelementptr inbounds nuw [40 x i8], ptr %i.p, i64 %i.am ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   store ptr %i.an, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 32

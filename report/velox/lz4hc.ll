@@ -204,7 +204,7 @@ LZ4HC_sequencePrice.exit938:                      ; preds = %LZ4HC_literalsPrice
 bb.dd:                                            ; preds = %.lr.ph1954, %.loopexit
   %indvar = phi i32 [ 0, %.lr.ph1954 ], [ %indvar.next, %.loopexit ] ; 3 uses
   %indvars.iv2175 = phi i64 [ 1, %.lr.ph1954 ], [ %indvars.iv.next2176, %.loopexit ] ; 12 uses
-  %.03681951 = phi i32 [ %.sroa.0162.4.extract.trunc, %.lr.ph1954 ], [ %.4372.ph, %.loopexit ] ; 10 uses
+  %.03681951 = phi i32 [ %.sroa.0162.4.extract.trunc, %.lr.ph1954 ], [ %.4372.ph, %.loopexit ] ; 13 uses
   %i.zn = add i32 %i.zm, %indvar
   %i.zo = zext i32 %i.zn to i64                   ; 2 uses
   %i.zp = add i32 %i.zm, %indvar
@@ -607,7 +607,7 @@ LZ4HC_FindLongerMatch.exit687:                    ; preds = %LZ4HC_InsertAndGetW
   %or.cond.i454 = and i1 %.not.i.i760, %i.biu
   %i.biv = shl nuw i64 %.sroa.2313.0.insert.ext.i.i, 32
   %.sroa.03.sroa.4.0.insert.shift.i = select i1 %or.cond.i454, i64 77309411328, i64 %i.biv ; 4 uses
-  %.sroa.0104.4.extract.shift = lshr exact i64 %.sroa.03.sroa.4.0.insert.shift.i, 32 ; 4 uses
+  %.sroa.0104.4.extract.shift = lshr exact i64 %.sroa.03.sroa.4.0.insert.shift.i, 32 ; 3 uses
   %.sroa.0104.4.extract.trunc = trunc nuw i64 %.sroa.0104.4.extract.shift to i32 ; 3 uses
   %.not415 = icmp eq i64 %.sroa.03.sroa.4.0.insert.shift.i, 0
   br i1 %.not415, label %.loopexit, label %bb.km
@@ -650,6 +650,7 @@ LZ4HC_literalsPrice.exit925:                      ; preds = %bb.km
   br i1 %.not2965, label %.preheader.loopexit.peel.begin, label %.lr.ph1948.split
 
 .lr.ph1948.split:                                 ; preds = %.lr.ph1948
+  %11 = add i32 %.03681951, 3
   %spec.select2553 = select i1 %i.bje, i32 %i.bji, i32 %i.bjd
   %i.bju = add nsw i32 %spec.select2553, 3        ; 2 uses
   %invariant.op3087 = add i32 1, %i.bju
@@ -750,7 +751,6 @@ bb.ks:                                            ; preds = %LZ4HC_literalsPrice
 
 .preheader.loopexit.peel.begin:                   ; preds = %.lr.ph1948, %bb.lk
   %i.blk = phi i64 [ 4, %.lr.ph1948 ], [ %indvars.iv.next2167, %bb.lk ] ; 7 uses
-  %11 = phi i32 [ %.03681951, %.lr.ph1948 ], [ %.3371, %bb.lk ] ; 4 uses
   %i.bll = add nuw nsw i64 %i.blk, %indvars.iv2175 ; 3 uses
   br i1 %i.bjp, label %bb.kv, label %bb.kt
 
@@ -800,7 +800,7 @@ LZ4HC_sequencePrice.exit934.peel:                 ; preds = %bb.kx, %LZ4HC_liter
 bb.ky:                                            ; preds = %LZ4HC_sequencePrice.exit934.peel, %LZ4HC_sequencePrice.exit.peel
   %.0381.peel = phi i32 [ %i.bmb, %LZ4HC_sequencePrice.exit934.peel ], [ %i.blr, %LZ4HC_sequencePrice.exit.peel ] ; 2 uses
   %.0380.peel = phi i32 [ %i.bjd, %LZ4HC_sequencePrice.exit934.peel ], [ 0, %LZ4HC_sequencePrice.exit.peel ]
-  %i.bmc = add nuw nsw i32 %11, 3
+  %i.bmc = add nuw nsw i32 %.03681951, 3
   %i.bmd = trunc nuw i64 %i.bll to i32            ; 2 uses
   %i.bme = icmp slt i32 %i.bmc, %i.bmd
   br i1 %i.bme, label %bb.la, label %bb.kz
@@ -814,8 +814,8 @@ bb.kz:                                            ; preds = %bb.ky
 
 bb.la:                                            ; preds = %bb.kz, %bb.ky
   %i.bmi = icmp eq i64 %i.blk, %.sroa.0104.4.extract.shift
-  %i.bmj = tail call i32 @llvm.smax.i32(i32 %11, i32 %i.bmd)
-  %.2370.peel = select i1 %i.bmi, i32 %i.bmj, i32 %11
+  %i.bmj = tail call i32 @llvm.smax.i32(i32 %.03681951, i32 %i.bmd)
+  %.2370.peel = select i1 %i.bmi, i32 %i.bmj, i32 %.03681951
   %i.bmk = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %i.bll ; 4 uses
   %i.bml = getelementptr inbounds nuw i8, ptr %i.bmk, i64 8
   %i.bmm = trunc nuw nsw i64 %i.blk to i32
@@ -828,7 +828,7 @@ bb.la:                                            ; preds = %bb.kz, %bb.ky
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.la, %bb.kz, %.preheader1703
-  %.1369.lcssa = phi i32 [ %.03681951, %.preheader1703 ], [ %.2370.peel, %bb.la ], [ %11, %bb.kz ] ; 2 uses
+  %.1369.lcssa = phi i32 [ %.03681951, %.preheader1703 ], [ %.2370.peel, %bb.la ], [ %.03681951, %bb.kz ] ; 2 uses
   %i.bmp = zext nneg i32 %.1369.lcssa to i64      ; 4 uses
   %i.bmq = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %i.bmp ; 3 uses
   %i.bmr = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %i.bmp ; 4 uses
@@ -867,8 +867,7 @@ bb.la:                                            ; preds = %bb.kz, %bb.ky
   br label %.loopexit
 
 bb.lb:                                            ; preds = %.lr.ph1948.split, %bb.lk
-  %indvars.iv2166 = phi i64 [ 4, %.lr.ph1948.split ], [ %indvars.iv.next2167, %bb.lk ] ; 9 uses
-  %.13691947 = phi i32 [ %.03681951, %.lr.ph1948.split ], [ %.3371, %bb.lk ] ; 4 uses
+  %indvars.iv2166 = phi i64 [ 4, %.lr.ph1948.split ], [ %indvars.iv.next2167, %bb.lk ] ; 8 uses
   %i.bnm = add nuw nsw i64 %indvars.iv2166, %indvars.iv2175 ; 3 uses
   br i1 %i.bjp, label %bb.lc, label %bb.lf
 
@@ -915,9 +914,8 @@ LZ4HC_sequencePrice.exit:                         ; preds = %bb.lf, %bb.lg
 bb.lh:                                            ; preds = %LZ4HC_sequencePrice.exit, %LZ4HC_sequencePrice.exit934
   %.0381 = phi i32 [ %i.bnt, %LZ4HC_sequencePrice.exit934 ], [ %i.bnz, %LZ4HC_sequencePrice.exit ] ; 2 uses
   %.0380 = phi i32 [ %i.bjd, %LZ4HC_sequencePrice.exit934 ], [ 0, %LZ4HC_sequencePrice.exit ]
-  %12 = add nuw nsw i32 %.13691947, 3
-  %i.boa = trunc nuw i64 %i.bnm to i32            ; 2 uses
-  %i.bob = icmp slt i32 %12, %i.boa
+  %i.boa = trunc nuw i64 %i.bnm to i32
+  %i.bob = icmp slt i32 %11, %i.boa
   br i1 %i.bob, label %bb.lj, label %bb.li
 
 bb.li:                                            ; preds = %bb.lh
@@ -928,9 +926,6 @@ bb.li:                                            ; preds = %bb.lh
   br i1 %.not417, label %bb.lk, label %bb.lj
 
 bb.lj:                                            ; preds = %bb.li, %bb.lh
-  %13 = icmp eq i64 %indvars.iv2166, %.sroa.0104.4.extract.shift
-  %14 = tail call i32 @llvm.smax.i32(i32 %.13691947, i32 %i.boa)
-  %.2370 = select i1 %13, i32 %14, i32 %.13691947
   %i.bof = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %i.bnm ; 4 uses
   %i.bog = getelementptr inbounds nuw i8, ptr %i.bof, i64 8
   %i.boh = trunc nuw nsw i64 %indvars.iv2166 to i32
@@ -943,7 +938,6 @@ bb.lj:                                            ; preds = %bb.li, %bb.lh
   br label %bb.lk
 
 bb.lk:                                            ; preds = %bb.lj, %bb.li
-  %.3371 = phi i32 [ %.2370, %bb.lj ], [ %.13691947, %bb.li ] ; 2 uses
   %indvars.iv.next2167 = add nuw nsw i64 %indvars.iv2166, 1 ; 2 uses
   %exitcond2170.not = icmp eq i64 %indvars.iv2166, %i.bjv
   br i1 %exitcond2170.not, label %.preheader.loopexit.peel.begin, label %bb.lb, !llvm.loop !95
