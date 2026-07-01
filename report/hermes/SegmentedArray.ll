@@ -203,7 +203,8 @@ bb.q:                                             ; preds = %_ZN6hermes2vm18Segm
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 1632
   %narrow104 = add nuw nsw i32 %i.ao, 1
   %i.df = zext nneg i32 %narrow104 to i64
-  %i.dg = zext nneg i32 %i.ar to i64
+  %3 = add nuw nsw i32 %i.ar, 1
+  %i.dg = zext nneg i32 %3 to i64
   br label %bb.r
 
 .preheader:                                       ; preds = %_ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66, %bb.q
@@ -222,7 +223,7 @@ bb.q:                                             ; preds = %_ZN6hermes2vm18Segm
   br label %bb.w
 
 bb.r:                                             ; preds = %.lr.ph, %_ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66
-  %indvars.iv = phi i64 [ %i.df, %.lr.ph ], [ %indvars.iv.next, %_ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66 ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.df, %.lr.ph ], [ %indvars.iv.next, %_ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66 ] ; 2 uses
   %i.dp = load ptr, ptr %i.db, align 8, !tbaa !7  ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 8200 ; 2 uses
   %i.dr = load ptr, ptr %i.dc, align 8, !tbaa !13
@@ -293,9 +294,9 @@ bb.v:                                             ; preds = %_ZN6hermes2vm18Segm
 
 _ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66: ; preds = %_ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE7Segment6createERNS0_7RuntimeE.exit.i64, %bb.v
   store i64 %i.eh, ptr %i.ef, align 8, !tbaa !43
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %.not50.not = icmp samesign ult i64 %indvars.iv, %i.dg
-  br i1 %.not50.not, label %bb.r, label %.preheader, !llvm.loop !87
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %i.dg
+  br i1 %exitcond, label %.preheader, label %bb.r, !llvm.loop !87
 
 ._crit_edge:                                      ; preds = %_ZN6hermes2vm18SegmentedArrayBaseINS0_11HermesValueEE7Segment9setLengthERNS0_7RuntimeEj.exit, %.preheader
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !15
@@ -698,7 +699,8 @@ bb.p:                                             ; preds = %_ZN6hermes2vm18Segm
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 1632
   %narrow105 = add nuw nsw i32 %i.ao, 1
   %i.dy = zext nneg i32 %narrow105 to i64
-  %i.dz = zext nneg i32 %i.ar to i64
+  %3 = add nuw nsw i32 %i.ar, 1
+  %i.dz = zext nneg i32 %3 to i64
   br label %bb.q
 
 .preheader:                                       ; preds = %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66, %bb.p
@@ -718,7 +720,7 @@ bb.p:                                             ; preds = %_ZN6hermes2vm18Segm
   br label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph, %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66
-  %indvars.iv = phi i64 [ %i.dy, %.lr.ph ], [ %indvars.iv.next, %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66 ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.dy, %.lr.ph ], [ %indvars.iv.next, %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66 ] ; 2 uses
   %i.ej = load ptr, ptr %i.dt, align 8, !tbaa !7  ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 4104 ; 2 uses
   %i.el = load ptr, ptr %i.du, align 8, !tbaa !13
@@ -792,9 +794,9 @@ bb.t:                                             ; preds = %_ZN6hermes2vm18Segm
 
 _ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE15allocateSegmentERNS0_7RuntimeENS0_6HandleIS3_EEj.exit66: ; preds = %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE7Segment6createERNS0_7RuntimeE.exit.i64, %bb.t
   store i32 %i.fj, ptr %i.fg, align 4, !tbaa !154
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %.not50.not = icmp samesign ult i64 %indvars.iv, %i.dz
-  br i1 %.not50.not, label %bb.q, label %.preheader, !llvm.loop !177
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %i.dz
+  br i1 %exitcond, label %.preheader, label %bb.q, !llvm.loop !177
 
 ._crit_edge:                                      ; preds = %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE7Segment9setLengthERNS0_7RuntimeEj.exit, %.preheader
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !15
