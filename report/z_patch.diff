@@ -1,0 +1,109 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 3cd7515eb7670..a445b1ad42462 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3845,12 +3845,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+         uint64_t Offset = 0;
+         match(A, m_Add(m_Value(A), m_ConstantInt(Offset)));
+         if (match(A, m_PtrToIntOrAddr(m_Value(A)))) {
+-          /// Note: this doesn't preserve the offset information but merges
+-          /// offset and alignment.
+-          /// TODO: we can generate a GEP instead of merging the alignment with
+-          /// the offset.
+-          Builder.CreateAlignmentAssumption(getDataLayout(), A,
+-                                            MinAlign(Offset, AlignMask + 1));
++          Builder.CreateAlignmentAssumption(
++              getDataLayout(), A, AlignMask + 1,
++              Offset == 0 ? nullptr : Builder.getInt64(-Offset));
+           return eraseInstFromFunction(*II);
+         }
+       }
+diff --git a/llvm/test/Transforms/InstCombine/assume-i32.ll b/llvm/test/Transforms/InstCombine/assume-i32.ll
+index 6789b73e3d84e..955622fe8ae02 100644
+--- a/llvm/test/Transforms/InstCombine/assume-i32.ll
++++ b/llvm/test/Transforms/InstCombine/assume-i32.ll
+@@ -4,6 +4,7 @@
+ target datalayout = "p:16:16"
+ 
+ declare ptr @get_ptr()
++declare void @use_i32(i32)
+ 
+ define void @align_on_i128_offset(ptr %p) {
+ ; CHECK-LABEL: define void @align_on_i128_offset(
+@@ -37,3 +38,21 @@ define void @align_greater_than_ptr_size() {
+   call void @llvm.assume(i1 true) [ "align"(ptr %p, i64 8589934592) ]
+   ret void
+ }
++
++define void @align_with_negative_offset(ptr %ptr) {
++; CHECK-LABEL: define void @align_with_negative_offset(
++; CHECK-SAME: ptr [[PTR:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 -5) ]
++; CHECK-NEXT:    call void @use_i32(i32 0)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %int = ptrtoint ptr %ptr to i32
++  %add = add i32 %int, -3
++  %and = and i32 %add, 7
++  %cmp = icmp eq i32 0, %and
++  call void @llvm.assume(i1 %cmp)
++  call void @use_i32(i32 %and)
++  ret void
++}
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index e5dc6f0d637df..ba4688500f991 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -83,10 +83,8 @@ entry:
+ define void @align_with_offset_less_than_align(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_offset_less_than_align(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[INT:%.*]] = ptrtoint ptr [[PTR:%.*]] to i64
+-; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[INT]], 3
+-; CHECK-NEXT:    [[AND:%.*]] = and i64 [[ADD]], 7
+-; CHECK-NEXT:    call void @use_i64(i64 [[AND]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 8, i64 -3) ]
++; CHECK-NEXT:    call void @use_i64(i64 0)
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -102,11 +100,8 @@ entry:
+ define void @align_with_offset_greater_than_align(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_offset_greater_than_align(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[INT:%.*]] = ptrtoint ptr [[PTR:%.*]] to i64
+-; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[INT]], 6
+-; CHECK-NEXT:    [[AND:%.*]] = and i64 [[ADD]], 6
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 2) ]
+-; CHECK-NEXT:    call void @use_i64(i64 [[AND]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 8, i64 -6) ]
++; CHECK-NEXT:    call void @use_i64(i64 0)
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -119,6 +114,23 @@ entry:
+   ret void
+ }
+ 
++define void @align_with_negative_offset(ptr %ptr) {
++; CHECK-LABEL: @align_with_negative_offset(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 8, i64 -5) ]
++; CHECK-NEXT:    call void @use_i64(i64 0)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %int = ptrtoint ptr %ptr to i64
++  %add = add i64 %int, -3
++  %and = and i64 %add, 7
++  %cmp = icmp eq i64 0, %and
++  call void @llvm.assume(i1 %cmp)
++  call void @use_i64(i64 %and)
++  ret void
++}
++
+ define i1 @align_with_offset_on_gep(ptr %base) {
+ ; CHECK-LABEL: @align_with_offset_on_gep(
+ ; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[BASE:%.*]], i64 8, i64 2) ]
