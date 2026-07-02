@@ -204,17 +204,16 @@ bb.h:                                             ; preds = %_ZNK8facebook5velox
 .lr.ph:                                           ; preds = %bb.h
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.aj = sext i32 %i.ag to i64
-  %.pre132 = load ptr, ptr %1, align 8, !tbaa !15832
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions20DistinctFromFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEESF_EEEJSF_SF_EEEE7iterateIJNS1_12VectorReaderISF_EESL_EEEvRNSI_12ApplyContextEDpRT_EUlT_E2_ZNS2_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_ENKUlSR_E_clIiEEDaSR_.exit
-  %5 = phi ptr [ %.pre132, %.lr.ph ], [ %6, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions20DistinctFromFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEESF_EEEJSF_SF_EEEE7iterateIJNS1_12VectorReaderISF_EESL_EEEvRNSI_12ApplyContextEDpRT_EUlT_E2_ZNS2_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_ENKUlSR_E_clIiEEDaSR_.exit ] ; 7 uses
   %indvars.iv = phi i64 [ %i.aj, %.lr.ph ], [ %indvars.iv.next, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions20DistinctFromFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEESF_EEEJSF_SF_EEEE7iterateIJNS1_12VectorReaderISF_EESL_EEEvRNSI_12ApplyContextEDpRT_EUlT_E2_ZNS2_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_ENKUlSR_E_clIiEEDaSR_.exit ] ; 18 uses
-  %i.ak = load ptr, ptr %i.ai, align 8, !tbaa !15774 ; 2 uses
+  %5 = load ptr, ptr %i.ai, align 8, !tbaa !15774 ; 2 uses
+  %i.ak = load ptr, ptr %1, align 8, !tbaa !15832, !nonnull !168, !align !289 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
-  %i.al = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !15833, !nonnull !168, !align !289
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !15835, !nonnull !168, !align !289 ; 2 uses
   %i.ap = load ptr, ptr %i.am, align 8, !tbaa !3290, !nonnull !168, !align !289 ; 10 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
@@ -462,7 +461,7 @@ bb.af:                                            ; preds = %bb.ad
 
 .noexc.thread.thread111:                          ; preds = %.noexc13
   store ptr null, ptr %2, align 8, !tbaa !873, !alias.scope !15837
-  %i.fp = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !15840, !nonnull !168, !align !289
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 16
   %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !15792, !nonnull !168, !align !289
@@ -476,7 +475,7 @@ bb.af:                                            ; preds = %bb.ad
   %i.fx = and i64 %i.eh, 4294967295
   %.not = icmp eq i64 %i.fx, 0
   store ptr null, ptr %2, align 8, !tbaa !873, !alias.scope !15841
-  %i.fy = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.fy = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !15840, !nonnull !168, !align !289
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 16
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !15792, !nonnull !168, !align !289
@@ -488,7 +487,7 @@ bb.af:                                            ; preds = %bb.ad
 
 .sink.split:                                      ; preds = %bb.aa, %.noexc13, %.noexc9
   store ptr null, ptr %2, align 8, !tbaa !873
-  %i.gg = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.gg = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !15840, !nonnull !168, !align !289
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 16
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !15792, !nonnull !168, !align !289
@@ -522,7 +521,6 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   store i8 %.sink.i79, ptr %i.ha, align 1, !tbaa !26
   %i.hb = load ptr, ptr %2, align 8, !tbaa !873
   %.not.i83 = icmp eq ptr %i.hb, null
-  %.pre = load ptr, ptr %1, align 8, !tbaa !15832
   br i1 %.not.i83, label %_ZN8facebook5velox6StatusD2Ev.exit84, label %bb.ai, !prof !319
 
 bb.ai:                                            ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions20DistinctFromFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEESD_EEEJSD_SD_EEEE7iterateIJNS1_12VectorReaderISD_EESJ_EEEvRNSG_12ApplyContextEDpRT_ENKUlT_E2_clIiEEDaSP_.exit
@@ -580,7 +578,7 @@ tailrecurse.i.i.i.i.2:                            ; preds = %tailrecurse.i.i.i.i
 tailrecurse.i.i.i.i.3:                            ; preds = %tailrecurse.i.i.i.i.2
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %4) #28
-  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.ak, i32 noundef %i.di, ptr noundef nonnull align 8 dereferenceable(8) %4)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %5, i32 noundef %i.di, ptr noundef nonnull align 8 dereferenceable(8) %4)
           to label %bb.ar unwind label %bb.at
 
 .loopexit:                                        ; preds = %bb.aj, %.lr.ph.i.i.i.preheader.i.preheader, %tailrecurse.i.i.i.i, %tailrecurse.i.i.i.i.1, %tailrecurse.i.i.i.i.2
@@ -596,7 +594,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.hy = call ptr @__cxa_begin_catch(ptr %i.hd) #28 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %3) #28
-  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.ak, i32 noundef %i.di, ptr noundef nonnull align 8 dereferenceable(8) %3)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %5, i32 noundef %i.di, ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.am unwind label %bb.ao
 
 bb.am:                                            ; preds = %bb.al
@@ -683,7 +681,6 @@ bb.ax:                                            ; preds = %.loopexit
   unreachable
 
 _ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions20DistinctFromFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEESF_EEEJSF_SF_EEEE7iterateIJNS1_12VectorReaderISF_EESL_EEEvRNSI_12ApplyContextEDpRT_EUlT_E2_ZNS2_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_ENKUlSR_E_clIiEEDaSR_.exit: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit84, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit89
-  %6 = phi ptr [ %.pre, %_ZN8facebook5velox6StatusD2Ev.exit84 ], [ %5, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit ], [ %5, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit89 ]
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.ae, %lftr.wideiv
@@ -1086,19 +1083,18 @@ bb.h:                                             ; preds = %_ZNK8facebook5velox
   %.sroa.2.0..sroa_idx.i9 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.2.0..sroa_idx.i14 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aj = sext i32 %i.ag to i64
-  %.pre74 = load ptr, ptr %1, align 8, !tbaa !29721
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15BetweenFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEESE_SE_EEEJSE_SE_SE_EEEE7iterateIJNS1_12VectorReaderISE_EESK_SK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_ENKUlSQ_E_clIiEEDaSQ_.exit
-  %8 = phi ptr [ %.pre74, %.lr.ph ], [ %9, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15BetweenFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEESE_SE_EEEJSE_SE_SE_EEEE7iterateIJNS1_12VectorReaderISE_EESK_SK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_ENKUlSQ_E_clIiEEDaSQ_.exit ] ; 7 uses
   %indvars.iv = phi i64 [ %i.aj, %.lr.ph ], [ %indvars.iv.next, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15BetweenFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEESE_SE_EEEJSE_SE_SE_EEEE7iterateIJNS1_12VectorReaderISE_EESK_SK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_ENKUlSQ_E_clIiEEDaSQ_.exit ] ; 9 uses
-  %i.ak = load ptr, ptr %i.ai, align 8, !tbaa !29719 ; 2 uses
+  %8 = load ptr, ptr %i.ai, align 8, !tbaa !29719 ; 2 uses
+  %i.ak = load ptr, ptr %1, align 8, !tbaa !29721, !nonnull !168, !align !289 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
-  %i.al = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !29722, !nonnull !168, !align !289 ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !29726, !nonnull !168, !align !289 ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !29727, !nonnull !168, !align !289 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28, !noalias !29728
   %i.ar = load ptr, ptr %i.am, align 8, !tbaa !29731, !nonnull !168, !align !289 ; 4 uses
@@ -1219,7 +1215,7 @@ bb.r:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28, !noalias !29735
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28, !noalias !29732
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #28, !noalias !29728
-  %i.cp = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !29741, !nonnull !168, !align !289
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 16
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !29742, !nonnull !168, !align !289
@@ -1245,7 +1241,7 @@ bb.t:                                             ; preds = %.noexc39
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28, !noalias !29735
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28, !noalias !29732
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #28, !noalias !29728
-  %i.da = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.da = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !29741, !nonnull !168, !align !289
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 16
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !29742, !nonnull !168, !align !289
@@ -1277,7 +1273,6 @@ _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functi
   store i8 %.sink.i, ptr %i.ds, align 1, !tbaa !26
   %i.dt = load ptr, ptr %5, align 8, !tbaa !873
   %.not.i48 = icmp eq ptr %i.dt, null
-  %.pre = load ptr, ptr %1, align 8, !tbaa !29721
   br i1 %.not.i48, label %_ZN8facebook5velox6StatusD2Ev.exit49, label %bb.w, !prof !319
 
 bb.w:                                             ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15BetweenFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEESC_SC_EEEJSC_SC_SC_EEEE7iterateIJNS1_12VectorReaderISC_EESI_SI_EEEvRNSF_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSO_.exit
@@ -1335,7 +1330,7 @@ tailrecurse.i.i.i.i.2:                            ; preds = %tailrecurse.i.i.i.i
 tailrecurse.i.i.i.i.3:                            ; preds = %tailrecurse.i.i.i.i.2
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %7) #28
-  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.ak, i32 noundef %i.av, ptr noundef nonnull align 8 dereferenceable(8) %7)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %8, i32 noundef %i.av, ptr noundef nonnull align 8 dereferenceable(8) %7)
           to label %bb.af unwind label %bb.ah
 
 .loopexit:                                        ; preds = %bb.x, %.lr.ph.i.i.i.preheader.i.preheader, %tailrecurse.i.i.i.i, %tailrecurse.i.i.i.i.1, %tailrecurse.i.i.i.i.2
@@ -1351,7 +1346,7 @@ bb.z:                                             ; preds = %bb.y
   %i.eq = call ptr @__cxa_begin_catch(ptr %i.dv) #28 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %6) #28
-  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.ak, i32 noundef %i.av, ptr noundef nonnull align 8 dereferenceable(8) %6)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %8, i32 noundef %i.av, ptr noundef nonnull align 8 dereferenceable(8) %6)
           to label %bb.aa unwind label %bb.ac
 
 bb.aa:                                            ; preds = %bb.z
@@ -1438,7 +1433,6 @@ bb.al:                                            ; preds = %.loopexit
   unreachable
 
 _ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15BetweenFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEESE_SE_EEEJSE_SE_SE_EEEE7iterateIJNS1_12VectorReaderISE_EESK_SK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_ENKUlSQ_E_clIiEEDaSQ_.exit: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit49, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit54
-  %9 = phi ptr [ %.pre, %_ZN8facebook5velox6StatusD2Ev.exit49 ], [ %8, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit ], [ %8, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit54 ]
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.ae, %lftr.wideiv

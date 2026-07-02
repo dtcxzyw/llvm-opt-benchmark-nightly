@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %.lr.ph
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %.lr.ph
-  %i.as = phi i64 [ %i.ae, %.lr.ph ], [ %.pre43, %._crit_edge ] ; 3 uses
-  %i.at = phi ptr [ %i.af, %.lr.ph ], [ %.pre, %._crit_edge ]
+  %i.as = phi i64 [ %.pre43, %._crit_edge ], [ %i.ae, %.lr.ph ] ; 3 uses
+  %i.at = phi ptr [ %.pre, %._crit_edge ], [ %i.af, %.lr.ph ]
   %i.au = add i64 %i.as, 9
   %i.av = inttoptr i64 %i.au to ptr
   %i.aw = load i8, ptr %i.av, align 1
@@ -608,8 +608,8 @@ bb.e:                                             ; preds = %.lr.ph
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %.lr.ph
-  %i.as = phi i64 [ %i.ae, %.lr.ph ], [ %.pre43, %._crit_edge ] ; 3 uses
-  %i.at = phi ptr [ %i.af, %.lr.ph ], [ %.pre, %._crit_edge ]
+  %i.as = phi i64 [ %.pre43, %._crit_edge ], [ %i.ae, %.lr.ph ] ; 3 uses
+  %i.at = phi ptr [ %.pre, %._crit_edge ], [ %i.af, %.lr.ph ]
   %i.au = add i64 %i.as, 9
   %i.av = inttoptr i64 %i.au to ptr
   %i.aw = load i8, ptr %i.av, align 1

@@ -204,20 +204,19 @@ bb.h:                                             ; preds = %_ZNK8facebook5velox
   %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.am = sext i32 %i.ag to i64
-  %.pre69 = load ptr, ptr %1, align 8, !tbaa !3651
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSR_SV_EUlSV_E_ZNKSK_IS10_EEvSR_SV_EUlSV_E0_EEvRKNS0_17SelectivityVectorESV_SX_ENKUlSV_E_clIiEEDaSV_.exit
-  %10 = phi ptr [ %.pre69, %.lr.ph ], [ %16, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSR_SV_EUlSV_E_ZNKSK_IS10_EEvSR_SV_EUlSV_E0_EEvRKNS0_17SelectivityVectorESV_SX_ENKUlSV_E_clIiEEDaSV_.exit ] ; 7 uses
   %indvars.iv = phi i64 [ %i.am, %.lr.ph ], [ %indvars.iv.next, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSR_SV_EUlSV_E_ZNKSK_IS10_EEvSR_SV_EUlSV_E0_EEvRKNS0_17SelectivityVectorESV_SX_ENKUlSV_E_clIiEEDaSV_.exit ] ; 4 uses
-  %i.an = load ptr, ptr %i.ai, align 8, !tbaa !3590 ; 2 uses
+  %10 = load ptr, ptr %i.ai, align 8, !tbaa !3590 ; 2 uses
+  %i.an = load ptr, ptr %1, align 8, !tbaa !3651, !nonnull !105, !align !608 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  %i.ao = load ptr, ptr %10, align 8, !tbaa !3652, !nonnull !105, !align !608 ; 2 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !3652, !nonnull !105, !align !608 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 116
   %i.aq = trunc nsw i64 %indvars.iv to i32        ; 5 uses
   store i32 %i.aq, ptr %i.ap, align 4, !tbaa !3597
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
-  %i.ar = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !3655, !nonnull !105, !align !608 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 8
@@ -334,7 +333,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.cm = load atomic i64, ptr %i.cl acquire, align 8 ; 2 uses
   %i.cn = icmp eq i64 %i.cm, 4294967297
   %i.co = trunc i64 %i.cm to i32                  ; 2 uses
-  %.pre = load ptr, ptr %1, align 8, !tbaa !3651  ; 7 uses
   br i1 %i.cn, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
@@ -381,7 +379,7 @@ bb.v:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br i1 %i.da, label %bb.ac, label %bb.w, !prof !3683
 
 bb.w:                                             ; preds = %.noexc
-  %i.db = load ptr, ptr %10, align 8, !tbaa !3652, !nonnull !105, !align !608
+  %i.db = load ptr, ptr %i.an, align 8, !tbaa !3652, !nonnull !105, !align !608
   invoke void @_ZN8facebook5velox6StatusC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %6)
           to label %bb.x unwind label %bb.z
 
@@ -401,7 +399,7 @@ bb.y:                                             ; preds = %_ZN8facebook5velox4
   br label %_ZN8facebook5velox6StatusD2Ev.exit
 
 _ZN8facebook5velox6StatusD2Ev.exit:               ; preds = %_ZN8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE12ApplyContext8setErrorEiNS0_6StatusE.exit, %bb.y
-  %i.df = load ptr, ptr %10, align 8, !tbaa !3652, !nonnull !105, !align !608 ; 3 uses
+  %i.df = load ptr, ptr %i.an, align 8, !tbaa !3652, !nonnull !105, !align !608 ; 3 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 120
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !3561 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.df, i64 116
@@ -421,7 +419,6 @@ _ZN8facebook5velox6StatusD2Ev.exit:               ; preds = %_ZN8facebook5velox4
           to label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSP_ST_ENKUlST_E_clIiEEDaST_.exit unwind label %bb.z, !inline_history !3598
 
 bb.z:                                             ; preds = %bb.ac, %.noexc21, %_ZN8facebook5velox6StatusD2Ev.exit, %bb.w
-  %11 = phi ptr [ %12, %bb.ac ], [ %.pre, %.noexc21 ], [ %.pre, %_ZN8facebook5velox6StatusD2Ev.exit ], [ %.pre, %bb.w ]
   %i.dr = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTIN8facebook5velox14VeloxExceptionE
@@ -442,8 +439,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZN8facebook5velox6StatusD2Ev.exit24
 
 bb.ac:                                            ; preds = %.noexc, %.noexc.thread
-  %12 = phi ptr [ %.pre, %.noexc ], [ %10, %.noexc.thread ] ; 2 uses
-  %i.du = load ptr, ptr %10, align 8, !tbaa !3652, !nonnull !105, !align !608 ; 2 uses
+  %i.du = load ptr, ptr %i.an, align 8, !tbaa !3652, !nonnull !105, !align !608 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 120
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !3561 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.du, i64 116
@@ -455,7 +451,6 @@ bb.ac:                                            ; preds = %.noexc, %.noexc.thr
           to label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSP_ST_ENKUlST_E_clIiEEDaST_.exit unwind label %bb.z, !inline_history !3684
 
 _ZN8facebook5velox6StatusD2Ev.exit24:             ; preds = %bb.ab, %bb.aa, %bb.z
-  %13 = phi ptr [ %11, %bb.z ], [ %.pre, %bb.aa ], [ %.pre, %bb.ab ]
   %.pn.i4 = phi { ptr, i32 } [ %i.dr, %bb.z ], [ %i.ds, %bb.aa ], [ %i.ds, %bb.ab ]
   %i.ec = load ptr, ptr %6, align 8, !tbaa !720
   %.not.i28 = icmp eq ptr %i.ec, null
@@ -470,7 +465,6 @@ _ZN8facebook5velox6StatusD2Ev.exit29:             ; preds = %_ZN8facebook5velox6
   br label %.body
 
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSP_ST_ENKUlST_E_clIiEEDaST_.exit: ; preds = %bb.ac, %.noexc21
-  %14 = phi ptr [ %12, %bb.ac ], [ %.pre, %.noexc21 ]
   %i.ed = load ptr, ptr %6, align 8, !tbaa !720
   %.not.i30 = icmp eq ptr %i.ed, null
   br i1 %.not.i30, label %_ZN8facebook5velox6StatusD2Ev.exit31, label %bb.ae, !prof !221
@@ -485,7 +479,6 @@ _ZN8facebook5velox6StatusD2Ev.exit31:             ; preds = %_ZZNK8facebook5velo
   br label %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSR_SV_EUlSV_E_ZNKSK_IS10_EEvSR_SV_EUlSV_E0_EEvRKNS0_17SelectivityVectorESV_SX_ENKUlSV_E_clIiEEDaSV_.exit
 
 .body:                                            ; preds = %bb.p, %_ZN8facebook5velox6StatusD2Ev.exit29
-  %15 = phi ptr [ %13, %_ZN8facebook5velox6StatusD2Ev.exit29 ], [ %10, %bb.p ] ; 2 uses
   %eh.lpad-body = phi { ptr, i32 } [ %.pn.i4, %_ZN8facebook5velox6StatusD2Ev.exit29 ], [ %i.cj, %bb.p ] ; 3 uses
   %i.ee = extractvalue { ptr, i32 } %eh.lpad-body, 0 ; 2 uses
   %i.ef = extractvalue { ptr, i32 } %eh.lpad-body, 1 ; 2 uses
@@ -574,7 +567,7 @@ bb.ah:                                            ; preds = %bb.ag
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSP_ST_ENKUlST_E0_clIiEEDaST_.exit7: ; preds = %.noexc32
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #34
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %8) #34
-  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.an, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %8)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %10, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %8)
           to label %bb.ai unwind label %bb.al
 
 bb.ai:                                            ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSP_ST_ENKUlST_E0_clIiEEDaST_.exit7
@@ -637,7 +630,7 @@ bb.an:                                            ; preds = %_ZNSt15__exception_
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSP_ST_ENKUlST_E0_clIiEEDaST_.exit: ; preds = %.noexc38
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #34
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %9) #34
-  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.an, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %9)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %10, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %9)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSP_ST_ENKUlST_E0_clIiEEDaST_.exit
@@ -689,7 +682,6 @@ bb.au:                                            ; preds = %.loopexit
   unreachable
 
 _ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENS1_24ConstantFlatVectorReaderIlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSR_SV_EUlSV_E_ZNKSK_IS10_EEvSR_SV_EUlSV_E0_EEvRKNS0_17SelectivityVectorESV_SX_ENKUlSV_E_clIiEEDaSV_.exit: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit31, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit42
-  %16 = phi ptr [ %14, %_ZN8facebook5velox6StatusD2Ev.exit31 ], [ %15, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit ], [ %15, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit42 ]
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.ae, %lftr.wideiv
@@ -1092,20 +1084,19 @@ bb.h:                                             ; preds = %_ZNK8facebook5velox
   %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.am = sext i32 %i.ag to i64
-  %.pre67 = load ptr, ptr %1, align 8, !tbaa !3756
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENSM_IlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSQ_SU_EUlSU_E_ZNKSK_ISZ_EEvSQ_SU_EUlSU_E0_EEvRKNS0_17SelectivityVectorESU_SW_ENKUlSU_E_clIiEEDaSU_.exit
-  %10 = phi ptr [ %.pre67, %.lr.ph ], [ %16, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENSM_IlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSQ_SU_EUlSU_E_ZNKSK_ISZ_EEvSQ_SU_EUlSU_E0_EEvRKNS0_17SelectivityVectorESU_SW_ENKUlSU_E_clIiEEDaSU_.exit ] ; 7 uses
   %indvars.iv = phi i64 [ %i.am, %.lr.ph ], [ %indvars.iv.next, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENSM_IlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSQ_SU_EUlSU_E_ZNKSK_ISZ_EEvSQ_SU_EUlSU_E0_EEvRKNS0_17SelectivityVectorESU_SW_ENKUlSU_E_clIiEEDaSU_.exit ] ; 4 uses
-  %i.an = load ptr, ptr %i.ai, align 8, !tbaa !3753 ; 2 uses
+  %10 = load ptr, ptr %i.ai, align 8, !tbaa !3753 ; 2 uses
+  %i.an = load ptr, ptr %1, align 8, !tbaa !3756, !nonnull !105, !align !608 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  %i.ao = load ptr, ptr %10, align 8, !tbaa !3757, !nonnull !105, !align !608 ; 2 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !3757, !nonnull !105, !align !608 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 116
   %i.aq = trunc nsw i64 %indvars.iv to i32        ; 6 uses
   store i32 %i.aq, ptr %i.ap, align 4, !tbaa !3597
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
-  %i.ar = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !3759, !nonnull !105, !align !608 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 8
@@ -1247,7 +1238,6 @@ bb.t:                                             ; preds = %_ZNK8facebook5velox
   %i.cy = load atomic i64, ptr %i.cx acquire, align 8 ; 2 uses
   %i.cz = icmp eq i64 %i.cy, 4294967297
   %i.da = trunc i64 %i.cy to i32                  ; 2 uses
-  %.pre = load ptr, ptr %1, align 8, !tbaa !3756  ; 7 uses
   br i1 %i.cz, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
@@ -1294,7 +1284,7 @@ bb.y:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br i1 %i.dm, label %bb.af, label %bb.z, !prof !3683
 
 bb.z:                                             ; preds = %.noexc
-  %i.dn = load ptr, ptr %10, align 8, !tbaa !3757, !nonnull !105, !align !608
+  %i.dn = load ptr, ptr %i.an, align 8, !tbaa !3757, !nonnull !105, !align !608
   invoke void @_ZN8facebook5velox6StatusC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %6)
           to label %bb.aa unwind label %bb.ac
 
@@ -1314,7 +1304,7 @@ bb.ab:                                            ; preds = %_ZN8facebook5velox4
   br label %_ZN8facebook5velox6StatusD2Ev.exit
 
 _ZN8facebook5velox6StatusD2Ev.exit:               ; preds = %_ZN8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE12ApplyContext8setErrorEiNS0_6StatusE.exit, %bb.ab
-  %i.dr = load ptr, ptr %10, align 8, !tbaa !3757, !nonnull !105, !align !608 ; 3 uses
+  %i.dr = load ptr, ptr %i.an, align 8, !tbaa !3757, !nonnull !105, !align !608 ; 3 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 120
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !3561 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dr, i64 116
@@ -1334,7 +1324,6 @@ _ZN8facebook5velox6StatusD2Ev.exit:               ; preds = %_ZN8facebook5velox4
           to label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENSK_IlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSO_SS_ENKUlSS_E_clIiEEDaSS_.exit unwind label %bb.ac, !inline_history !3598
 
 bb.ac:                                            ; preds = %bb.af, %.noexc19, %_ZN8facebook5velox6StatusD2Ev.exit, %bb.z
-  %11 = phi ptr [ %12, %bb.af ], [ %.pre, %.noexc19 ], [ %.pre, %_ZN8facebook5velox6StatusD2Ev.exit ], [ %.pre, %bb.z ]
   %i.ed = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTIN8facebook5velox14VeloxExceptionE
@@ -1355,8 +1344,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %_ZN8facebook5velox6StatusD2Ev.exit22
 
 bb.af:                                            ; preds = %.noexc, %.noexc.thread
-  %12 = phi ptr [ %.pre, %.noexc ], [ %10, %.noexc.thread ] ; 2 uses
-  %i.eg = load ptr, ptr %10, align 8, !tbaa !3757, !nonnull !105, !align !608 ; 2 uses
+  %i.eg = load ptr, ptr %i.an, align 8, !tbaa !3757, !nonnull !105, !align !608 ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 120
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !3561 ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.eg, i64 116
@@ -1368,7 +1356,6 @@ bb.af:                                            ; preds = %.noexc, %.noexc.thr
           to label %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENSK_IlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSO_SS_ENKUlSS_E_clIiEEDaSS_.exit unwind label %bb.ac, !inline_history !3684
 
 _ZN8facebook5velox6StatusD2Ev.exit22:             ; preds = %bb.ae, %bb.ad, %bb.ac
-  %13 = phi ptr [ %11, %bb.ac ], [ %.pre, %bb.ad ], [ %.pre, %bb.ae ]
   %.pn.i4 = phi { ptr, i32 } [ %i.ed, %bb.ac ], [ %i.ee, %bb.ad ], [ %i.ee, %bb.ae ]
   %i.eo = load ptr, ptr %6, align 8, !tbaa !720
   %.not.i26 = icmp eq ptr %i.eo, null
@@ -1383,7 +1370,6 @@ _ZN8facebook5velox6StatusD2Ev.exit27:             ; preds = %_ZN8facebook5velox6
   br label %.body
 
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENSK_IlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSO_SS_ENKUlSS_E_clIiEEDaSS_.exit: ; preds = %bb.af, %.noexc19
-  %14 = phi ptr [ %12, %bb.af ], [ %.pre, %.noexc19 ]
   %i.ep = load ptr, ptr %6, align 8, !tbaa !720
   %.not.i28 = icmp eq ptr %i.ep, null
   br i1 %.not.i28, label %_ZN8facebook5velox6StatusD2Ev.exit29, label %bb.ah, !prof !221
@@ -1398,7 +1384,6 @@ _ZN8facebook5velox6StatusD2Ev.exit29:             ; preds = %_ZZNK8facebook5velo
   br label %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENSM_IlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSQ_SU_EUlSU_E_ZNKSK_ISZ_EEvSQ_SU_EUlSU_E0_EEvRKNS0_17SelectivityVectorESU_SW_ENKUlSU_E_clIiEEDaSU_.exit
 
 .body:                                            ; preds = %bb.s, %_ZN8facebook5velox6StatusD2Ev.exit27
-  %15 = phi ptr [ %13, %_ZN8facebook5velox6StatusD2Ev.exit27 ], [ %10, %bb.s ] ; 2 uses
   %eh.lpad-body = phi { ptr, i32 } [ %.pn.i4, %_ZN8facebook5velox6StatusD2Ev.exit27 ], [ %i.cv, %bb.s ] ; 3 uses
   %i.eq = extractvalue { ptr, i32 } %eh.lpad-body, 0 ; 2 uses
   %i.er = extractvalue { ptr, i32 } %eh.lpad-body, 1 ; 2 uses
@@ -1487,7 +1472,7 @@ bb.ak:                                            ; preds = %bb.aj
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENSK_IlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSO_SS_ENKUlSS_E0_clIiEEDaSS_.exit7: ; preds = %.noexc30
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #34
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %8) #34
-  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.an, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %8)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %10, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %8)
           to label %bb.al unwind label %bb.ao
 
 bb.al:                                            ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENSK_IlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSO_SS_ENKUlSS_E0_clIiEEDaSS_.exit7
@@ -1550,7 +1535,7 @@ bb.aq:                                            ; preds = %_ZNSt15__exception_
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENSK_IlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSO_SS_ENKUlSS_E0_clIiEEDaSS_.exit: ; preds = %.noexc36
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #34
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %9) #34
-  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.an, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %9)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %10, i32 noundef %i.aq, ptr noundef nonnull align 8 dereferenceable(8) %9)
           to label %bb.ar unwind label %bb.at
 
 bb.ar:                                            ; preds = %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES7_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNS9_INS0_10IPAddressTELb1EEElEEEJSE_lEEEE8applyUdfIZNKSH_7iterateIJNS1_12VectorReaderISE_EENSK_IlEEEEEvRNSH_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSO_SS_ENKUlSS_E0_clIiEEDaSS_.exit
@@ -1602,7 +1587,6 @@ bb.ax:                                            ; preds = %.loopexit
   unreachable
 
 _ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16IPPrefixFunctionINS1_10VectorExecEEES9_NS0_10CustomTypeINS0_9IPPrefixTELb0EEENS0_15ConstantCheckerIJNSB_INS0_10IPAddressTELb1EEElEEEJSG_lEEEE8applyUdfIZNKSJ_7iterateIJNS1_12VectorReaderISG_EENSM_IlEEEEEvRNSJ_12ApplyContextEDpRT_EUlRT_RT0_T1_E1_EEvSQ_SU_EUlSU_E_ZNKSK_ISZ_EEvSQ_SU_EUlSU_E0_EEvRKNS0_17SelectivityVectorESU_SW_ENKUlSU_E_clIiEEDaSU_.exit: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit29, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit40
-  %16 = phi ptr [ %14, %_ZN8facebook5velox6StatusD2Ev.exit29 ], [ %15, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit ], [ %15, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit40 ]
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.ae, %lftr.wideiv
@@ -2005,18 +1989,17 @@ bb.h:                                             ; preds = %_ZNK8facebook5velox
 .lr.ph:                                           ; preds = %bb.h
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.aj = sext i32 %i.ag to i64
-  %.pre49 = load ptr, ptr %1, align 8, !tbaa !4901
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSC_INS0_10IPAddressTELb1EEEEEEJSE_SG_EEEE7iterateIJNS1_12VectorReaderISE_EENSL_ISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_ENKUlST_E_clIiEEDaST_.exit
-  %6 = phi ptr [ %.pre49, %.lr.ph ], [ %9, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSC_INS0_10IPAddressTELb1EEEEEEJSE_SG_EEEE7iterateIJNS1_12VectorReaderISE_EENSL_ISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_ENKUlST_E_clIiEEDaST_.exit ] ; 5 uses
   %indvars.iv = phi i64 [ %i.aj, %.lr.ph ], [ %indvars.iv.next, %_ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSC_INS0_10IPAddressTELb1EEEEEEJSE_SG_EEEE7iterateIJNS1_12VectorReaderISE_EENSL_ISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_ENKUlST_E_clIiEEDaST_.exit ] ; 7 uses
-  %i.ak = load ptr, ptr %i.ai, align 8, !tbaa !4899 ; 2 uses
+  %6 = load ptr, ptr %i.ai, align 8, !tbaa !4899  ; 2 uses
+  %i.ak = load ptr, ptr %1, align 8, !tbaa !4901, !nonnull !105, !align !608 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
-  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !4902, !nonnull !105, !align !608 ; 3 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !4905, !nonnull !105, !align !608 ; 2 uses
   %i.ap = load ptr, ptr %i.am, align 8, !tbaa !4572, !nonnull !105, !align !608 ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 58
@@ -2233,7 +2216,6 @@ bb.af:                                            ; preds = %_ZNK8facebook5velox
   %i.ev = load atomic i64, ptr %i.eu acquire, align 8 ; 2 uses
   %i.ew = icmp eq i64 %i.ev, 4294967297
   %i.ex = trunc i64 %i.ev to i32                  ; 2 uses
-  %.pre = load ptr, ptr %1, align 8, !tbaa !4901  ; 5 uses
   br i1 %i.ew, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
@@ -2279,7 +2261,7 @@ bb.ak:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br i1 %i.fj, label %.noexc.thread, label %bb.al, !prof !3735
 
 bb.al:                                            ; preds = %.noexc
-  %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.fk = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !4912, !nonnull !105, !align !608
   invoke void @_ZN8facebook5velox6StatusC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %2)
           to label %bb.am unwind label %bb.ao
@@ -2320,8 +2302,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %_ZN8facebook5velox6StatusD2Ev.exit19
 
 .noexc.thread:                                    ; preds = %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSA_INS0_10IPAddressTELb1EEEEEEJSC_SE_EEEE14doApplyNotNullILm1EKNS1_12VectorReaderISE_EEJNS1_7RowViewILb1EJnaEEEETnNSt9enable_ifIXneT_L_ZNSG_8num_argsEEEiE4typeELi0EEENS0_6StatusEmRbSS_RT0_DpRKT1_.exit, %.noexc
-  %7 = phi ptr [ %.pre, %.noexc ], [ %6, %_ZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSA_INS0_10IPAddressTELb1EEEEEEJSC_SE_EEEE14doApplyNotNullILm1EKNS1_12VectorReaderISE_EEJNS1_7RowViewILb1EJnaEEEETnNSt9enable_ifIXneT_L_ZNSG_8num_argsEEEiE4typeELi0EEENS0_6StatusEmRbSS_RT0_DpRKT1_.exit ]
-  %i.fs = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.fs = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !4913, !nonnull !105, !align !608
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 16
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !4914, !nonnull !105, !align !608
@@ -2369,7 +2350,6 @@ _ZN8facebook5velox6StatusD2Ev.exit22:             ; preds = %_ZN8facebook5velox6
   br i1 %i.gm, label %bb.av, label %bb.aw
 
 _ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSA_INS0_10IPAddressTELb1EEEEEEJSC_SE_EEEE7iterateIJNS1_12VectorReaderISC_EENSJ_ISE_EEEEEvRNSH_12ApplyContextEDpRT_ENKUlT_E1_clIiEEDaSR_.exit: ; preds = %bb.an, %_ZN8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSA_INS0_10IPAddressTELb1EEEEEEJSC_SE_EEEE12ApplyContext8setErrorEiNS0_6StatusE.exit, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSA_INS0_10IPAddressTELb1EEEEEEJSC_SE_EEEE7iterateIJNS1_12VectorReaderISC_EENSJ_ISE_EEEEEvRNSH_12ApplyContextEDpRT_ENKUlT_bT0_E_clIibEEDaSR_bSS_.exit.i
-  %8 = phi ptr [ %.pre, %bb.an ], [ %.pre, %_ZN8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSA_INS0_10IPAddressTELb1EEEEEEJSC_SE_EEEE12ApplyContext8setErrorEiNS0_6StatusE.exit ], [ %7, %_ZZNK8facebook5velox4exec21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES7_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSA_INS0_10IPAddressTELb1EEEEEEJSC_SE_EEEE7iterateIJNS1_12VectorReaderISC_EENSJ_ISE_EEEEEvRNSH_12ApplyContextEDpRT_ENKUlT_bT0_E_clIibEEDaSR_bSS_.exit.i ]
   %i.gn = load ptr, ptr %2, align 8, !tbaa !720
   %.not.i23 = icmp eq ptr %i.gn, null
   br i1 %.not.i23, label %_ZN8facebook5velox6StatusD2Ev.exit24, label %bb.au, !prof !221
@@ -2420,7 +2400,7 @@ tailrecurse.i.i.i.i.2:                            ; preds = %tailrecurse.i.i.i.i
 tailrecurse.i.i.i.i.3:                            ; preds = %tailrecurse.i.i.i.i.2
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %5) #34
-  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.ak, i32 noundef %i.at, ptr noundef nonnull align 8 dereferenceable(8) %5)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx22setVeloxExceptionErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %6, i32 noundef %i.at, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.bd unwind label %bb.bf
 
 .loopexit:                                        ; preds = %bb.av, %.lr.ph.i.i.i.preheader.i.preheader, %tailrecurse.i.i.i.i, %tailrecurse.i.i.i.i.1, %tailrecurse.i.i.i.i.2
@@ -2436,7 +2416,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.hf = call ptr @__cxa_begin_catch(ptr %i.gj) #34 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %4) #34
-  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %i.ak, i32 noundef %i.at, ptr noundef nonnull align 8 dereferenceable(8) %4)
+  invoke void @_ZN8facebook5velox4exec7EvalCtx8setErrorEiRKNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 dereferenceable(104) %6, i32 noundef %i.at, ptr noundef nonnull align 8 dereferenceable(8) %4)
           to label %bb.ay unwind label %bb.ba
 
 bb.ay:                                            ; preds = %bb.ax
@@ -2523,7 +2503,6 @@ bb.bj:                                            ; preds = %.loopexit
   unreachable
 
 _ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS1_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions18IPSubnetOfFunctionINS1_10VectorExecEEES9_bNS0_15ConstantCheckerIJNS0_10CustomTypeINS0_9IPPrefixTELb0EEENSC_INS0_10IPAddressTELb1EEEEEEJSE_SG_EEEE7iterateIJNS1_12VectorReaderISE_EENSL_ISG_EEEEEvRNSJ_12ApplyContextEDpRT_EUlT_E1_ZNS2_22applyToSelectedNoThrowISU_EEvRKNS0_17SelectivityVectorEST_EUlST_E_EEvSY_ST_T0_ENKUlST_E_clIiEEDaST_.exit: ; preds = %_ZN8facebook5velox6StatusD2Ev.exit24, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit29
-  %9 = phi ptr [ %8, %_ZN8facebook5velox6StatusD2Ev.exit24 ], [ %.pre, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit ], [ %.pre, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit29 ]
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.ae, %lftr.wideiv

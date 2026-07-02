@@ -200,7 +200,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.r
   %i.al = call i32 @processRESP(ptr noundef nonnull %i.f, ptr noundef %1, ptr noundef nonnull %i.a)
   %.not58 = icmp eq i32 %i.al, 0
-  %.pre = load i32, ptr %i.a, align 4, !tbaa !9   ; 2 uses
+  %.pre = load i32, ptr %i.a, align 4             ; 2 uses
   br i1 %.not58, label %.loopexit, label %.outer
 
 bb.v:                                             ; preds = %bb.r

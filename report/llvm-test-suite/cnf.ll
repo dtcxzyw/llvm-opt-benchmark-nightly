@@ -204,38 +204,32 @@ bb.a:
   %.val1584088 = load i32, ptr %0, align 8        ; 2 uses
   %i.c = icmp eq i32 %.val1584088, %i.a           ; 2 uses
   %or.cond4189 = and i1 %i.b, %i.c
-  br i1 %or.cond4189, label %.critedge145, label %.lr.ph.preheader
+  br i1 %or.cond4189, label %.critedge145, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %.pre173 = load i32, ptr @fol_OR, align 4
-  %.pre175 = load i32, ptr @fol_ALL, align 4
-  %.pre177 = load i32, ptr @fol_EXIST, align 4
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %tailrecurse.outer.backedge
-  %i.d = phi i32 [ %8, %tailrecurse.outer.backedge ], [ %i.a, %.lr.ph.preheader ] ; 7 uses
-  %3 = phi i32 [ %9, %tailrecurse.outer.backedge ], [ %.pre177, %.lr.ph.preheader ] ; 7 uses
-  %i.e = phi i32 [ %10, %tailrecurse.outer.backedge ], [ %.pre175, %.lr.ph.preheader ] ; 7 uses
-  %4 = phi i32 [ %i.ap, %tailrecurse.outer.backedge ], [ %.pre173, %.lr.ph.preheader ] ; 6 uses
-  %5 = phi i1 [ %i.ar, %tailrecurse.outer.backedge ], [ %i.c, %.lr.ph.preheader ] ; 3 uses
-  %.val1584093 = phi i32 [ %.val15840, %tailrecurse.outer.backedge ], [ %.val1584088, %.lr.ph.preheader ] ; 9 uses
-  %6 = phi i1 [ %i.aq, %tailrecurse.outer.backedge ], [ %i.b, %.lr.ph.preheader ] ; 2 uses
-  %.tr17.ph91 = phi i32 [ %.tr17.ph.be, %tailrecurse.outer.backedge ], [ %1, %.lr.ph.preheader ] ; 6 uses
-  %.tr.ph90 = phi ptr [ %.tr.ph.be, %tailrecurse.outer.backedge ], [ %0, %.lr.ph.preheader ] ; 9 uses
-  %7 = icmp eq i32 %.tr17.ph91, -1
-  %i.f = icmp eq i32 %.val1584093, %4             ; 3 uses
-  br i1 %7, label %.lr.ph.split, label %.lr.ph.split.us
+.lr.ph:                                           ; preds = %bb.a, %tailrecurse.outer.backedge
+  %i.d = phi i32 [ %i.ap, %tailrecurse.outer.backedge ], [ %i.a, %bb.a ] ; 7 uses
+  %3 = phi i1 [ %i.ar, %tailrecurse.outer.backedge ], [ %i.c, %bb.a ] ; 3 uses
+  %i.e = phi i32 [ %.val15840, %tailrecurse.outer.backedge ], [ %.val1584088, %bb.a ] ; 9 uses
+  %4 = phi i1 [ %i.aq, %tailrecurse.outer.backedge ], [ %i.b, %bb.a ] ; 2 uses
+  %.tr17.ph91 = phi i32 [ %.tr17.ph.be, %tailrecurse.outer.backedge ], [ %1, %bb.a ] ; 6 uses
+  %.tr.ph90 = phi ptr [ %.tr.ph.be, %tailrecurse.outer.backedge ], [ %0, %bb.a ] ; 9 uses
+  %5 = load i32, ptr @fol_OR, align 4             ; 5 uses
+  %6 = icmp eq i32 %.tr17.ph91, -1
+  %7 = load i32, ptr @fol_ALL, align 4            ; 6 uses
+  %8 = load i32, ptr @fol_EXIST, align 4          ; 6 uses
+  %i.f = icmp eq i32 %i.e, %5                     ; 3 uses
+  br i1 %6, label %.lr.ph.split, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
-  %or.cond5.demorgan.us.peel = or i1 %5, %i.f     ; 2 uses
-  br i1 %6, label %.lr.ph.split.us.split.preheader, label %.lr.ph.split.us.split.us
+  %or.cond5.demorgan.us.peel = or i1 %3, %i.f     ; 2 uses
+  br i1 %4, label %.lr.ph.split.us.split.preheader, label %.lr.ph.split.us.split.us
 
 .lr.ph.split.us.split.preheader:                  ; preds = %.lr.ph.split.us
   br i1 %or.cond5.demorgan.us.peel, label %.split.us, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split.us.split.preheader
-  %.not.i.us.peel = icmp ne i32 %i.e, %.val1584093
-  %i.g = icmp ne i32 %3, %.val1584093
+  %.not.i.us.peel = icmp ne i32 %7, %i.e
+  %i.g = icmp ne i32 %8, %i.e
   %narrow.i.not.us.peel = select i1 %.not.i.us.peel, i1 %i.g, i1 false
   br i1 %narrow.i.not.us.peel, label %.split46.us, label %tailrecurse.us.peel
 
@@ -254,9 +248,9 @@ tailrecurse.us.peel:                              ; preds = %bb.b
 
 .lr.ph84:                                         ; preds = %.lr.ph.split.us.split.us, %tailrecurse.us.us
   %.tr42.us.us83 = phi ptr [ %.val172.val.val.us.us, %tailrecurse.us.us ], [ %.tr.ph90, %.lr.ph.split.us.split.us ] ; 2 uses
-  %.val15843.us.us82 = phi i32 [ %.val158.us.us, %tailrecurse.us.us ], [ %.val1584093, %.lr.ph.split.us.split.us ] ; 3 uses
-  %.not.i.us.us = icmp ne i32 %i.e, %.val15843.us.us82
-  %i.k = icmp ne i32 %3, %.val15843.us.us82
+  %.val15843.us.us82 = phi i32 [ %.val158.us.us, %tailrecurse.us.us ], [ %i.e, %.lr.ph.split.us.split.us ] ; 3 uses
+  %.not.i.us.us = icmp ne i32 %7, %.val15843.us.us82
+  %i.k = icmp ne i32 %8, %.val15843.us.us82
   %narrow.i.not.us.us = select i1 %.not.i.us.us, i1 %i.k, i1 false
   br i1 %narrow.i.not.us.us, label %.split46.us, label %tailrecurse.us.us
 
@@ -268,19 +262,19 @@ tailrecurse.us.us:                                ; preds = %.lr.ph84
   %.val172.val.val.us.us = load ptr, ptr %i.m, align 8 ; 3 uses
   %.val158.us.us = load i32, ptr %.val172.val.val.us.us, align 8 ; 3 uses
   %i.n = icmp eq i32 %.val158.us.us, %i.d
-  %i.o = icmp eq i32 %.val158.us.us, %4
+  %i.o = icmp eq i32 %.val158.us.us, %5
   %or.cond5.demorgan.us.us = or i1 %i.n, %i.o
   br i1 %or.cond5.demorgan.us.us, label %.split.us, label %.lr.ph84
 
 .lr.ph.split.us.split:                            ; preds = %tailrecurse.us.peel, %tailrecurse.us
   %.val15843.us = phi i32 [ %.val158.us, %tailrecurse.us ], [ %.val158.us.peel, %tailrecurse.us.peel ] ; 4 uses
   %.tr42.us = phi ptr [ %.val172.val.val.us, %tailrecurse.us ], [ %.val172.val.val.us.peel, %tailrecurse.us.peel ] ; 3 uses
-  %i.p = icmp eq i32 %.val15843.us, %4
+  %i.p = icmp eq i32 %.val15843.us, %5
   br i1 %i.p, label %.split.us, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split.us.split
-  %.not.i.us = icmp ne i32 %i.e, %.val15843.us
-  %i.q = icmp ne i32 %3, %.val15843.us
+  %.not.i.us = icmp ne i32 %7, %.val15843.us
+  %i.q = icmp ne i32 %8, %.val15843.us
   %narrow.i.not.us = select i1 %.not.i.us, i1 %i.q, i1 false
   br i1 %narrow.i.not.us, label %.split46.us, label %tailrecurse.us
 
@@ -295,17 +289,17 @@ tailrecurse.us:                                   ; preds = %bb.c
   br i1 %i.t, label %.critedge145, label %.lr.ph.split.us.split, !llvm.loop !4
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  br i1 %6, label %.lr.ph.split.split.preheader, label %.lr.ph.split.split.us
+  br i1 %4, label %.lr.ph.split.split.preheader, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split
   br i1 %i.f, label %.critedge145, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.split.split.preheader
-  br i1 %5, label %.split.us, label %bb.e
+  br i1 %3, label %.split.us, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not.i.peel = icmp ne i32 %i.e, %.val1584093
-  %i.u = icmp ne i32 %3, %.val1584093
+  %.not.i.peel = icmp ne i32 %7, %i.e
+  %i.u = icmp ne i32 %8, %i.e
   %narrow.i.not.peel = select i1 %.not.i.peel, i1 %i.u, i1 false
   br i1 %narrow.i.not.peel, label %.split46.us, label %tailrecurse.peel
 
@@ -324,13 +318,13 @@ tailrecurse.peel:                                 ; preds = %bb.e
 
 .lr.ph74:                                         ; preds = %.lr.ph.split.split.us, %tailrecurse.us55
   %.tr42.us5173 = phi ptr [ %.val172.val.val.us58, %tailrecurse.us55 ], [ %.tr.ph90, %.lr.ph.split.split.us ] ; 3 uses
-  %.val15843.us5072 = phi i32 [ %.val158.us59, %tailrecurse.us55 ], [ %.val1584093, %.lr.ph.split.split.us ] ; 3 uses
-  %i.y = phi i1 [ %i.ac, %tailrecurse.us55 ], [ %5, %.lr.ph.split.split.us ]
+  %.val15843.us5072 = phi i32 [ %.val158.us59, %tailrecurse.us55 ], [ %i.e, %.lr.ph.split.split.us ] ; 3 uses
+  %i.y = phi i1 [ %i.ac, %tailrecurse.us55 ], [ %3, %.lr.ph.split.split.us ]
   br i1 %i.y, label %.split.us, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph74
-  %.not.i.us53 = icmp ne i32 %i.e, %.val15843.us5072
-  %i.z = icmp ne i32 %3, %.val15843.us5072
+  %.not.i.us53 = icmp ne i32 %7, %.val15843.us5072
+  %i.z = icmp ne i32 %8, %.val15843.us5072
   %narrow.i.not.us54 = select i1 %.not.i.us53, i1 %i.z, i1 false
   br i1 %narrow.i.not.us54, label %.split46.us, label %tailrecurse.us55
 
@@ -342,13 +336,13 @@ tailrecurse.us55:                                 ; preds = %bb.f
   %.val172.val.val.us58 = load ptr, ptr %i.ab, align 8 ; 2 uses
   %.val158.us59 = load i32, ptr %.val172.val.val.us58, align 8 ; 3 uses
   %i.ac = icmp eq i32 %.val158.us59, %i.d
-  %i.ad = icmp eq i32 %.val158.us59, %4
+  %i.ad = icmp eq i32 %.val158.us59, %5
   br i1 %i.ad, label %.critedge145, label %.lr.ph74
 
 .lr.ph.split.split:                               ; preds = %tailrecurse.peel, %tailrecurse
   %.val15843 = phi i32 [ %.val158, %tailrecurse ], [ %.val158.peel, %tailrecurse.peel ] ; 4 uses
   %.tr42 = phi ptr [ %.val172.val.val, %tailrecurse ], [ %.val172.val.val.peel, %tailrecurse.peel ] ; 2 uses
-  %i.ae = icmp eq i32 %.val15843, %4
+  %i.ae = icmp eq i32 %.val15843, %5
   br i1 %i.ae, label %.critedge145, label %bb.i
 
 .split.us:                                        ; preds = %.lr.ph.split.us.split.us, %.lr.ph.split.us.split.preheader, %bb.d, %tailrecurse.us.us, %.lr.ph.split.us.split, %.lr.ph74
@@ -371,8 +365,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not141, label %bb.g, label %.critedge145, !llvm.loop !6
 
 bb.i:                                             ; preds = %.lr.ph.split.split
-  %.not.i = icmp ne i32 %i.e, %.val15843
-  %i.ai = icmp ne i32 %3, %.val15843
+  %.not.i = icmp ne i32 %7, %.val15843
+  %i.ai = icmp ne i32 %8, %.val15843
   %narrow.i.not = select i1 %.not.i, i1 %i.ai, i1 false
   br i1 %narrow.i.not, label %.split46.us, label %tailrecurse
 
@@ -388,7 +382,7 @@ tailrecurse:                                      ; preds = %bb.i
 
 .split46.us:                                      ; preds = %.lr.ph84, %bb.c, %bb.f, %bb.i, %bb.b, %bb.e
   %.us-phi47 = phi ptr [ %.tr42, %bb.i ], [ %.tr42.us5173, %bb.f ], [ %.tr42.us, %bb.c ], [ %.tr.ph90, %bb.e ], [ %.tr.ph90, %bb.b ], [ %.tr42.us.us83, %.lr.ph84 ] ; 4 uses
-  %.us-phi48 = phi i32 [ %.val15843, %bb.i ], [ %.val15843.us5072, %bb.f ], [ %.val15843.us, %bb.c ], [ %.val1584093, %bb.e ], [ %.val1584093, %bb.b ], [ %.val15843.us.us82, %.lr.ph84 ] ; 3 uses
+  %.us-phi48 = phi i32 [ %.val15843, %bb.i ], [ %.val15843.us5072, %bb.f ], [ %.val15843.us, %bb.c ], [ %i.e, %bb.e ], [ %i.e, %bb.b ], [ %.val15843.us.us82, %.lr.ph84 ] ; 3 uses
   %.us-phi49 = phi i1 [ true, %bb.i ], [ false, %bb.f ], [ true, %bb.c ], [ true, %bb.e ], [ true, %bb.b ], [ false, %.lr.ph84 ] ; 2 uses
   %i.am = load i32, ptr @fol_NOT, align 4
   %.not7 = icmp eq i32 %.us-phi48, %i.am
@@ -400,10 +394,7 @@ bb.j:                                             ; preds = %.split46.us
   br label %tailrecurse.outer.backedge
 
 tailrecurse.outer.backedge:                       ; preds = %bb.j, %bb.n
-  %8 = phi i32 [ %.pre178, %bb.n ], [ %i.d, %bb.j ] ; 2 uses
-  %9 = phi i32 [ %.pre176, %bb.n ], [ %3, %bb.j ]
-  %10 = phi i32 [ %.pre174, %bb.n ], [ %i.e, %bb.j ]
-  %i.ap = phi i32 [ %.pre, %bb.n ], [ %4, %bb.j ]
+  %i.ap = phi i32 [ %.pre178, %bb.n ], [ %i.d, %bb.j ] ; 2 uses
   %.val171.val.pn.in = phi ptr [ %.val171, %bb.n ], [ %i.an, %bb.j ]
   %.tr17.ph.be = phi i32 [ 1, %bb.n ], [ %i.ao, %bb.j ] ; 2 uses
   %.val171.val.pn = load ptr, ptr %.val171.val.pn.in, align 8
@@ -411,7 +402,7 @@ tailrecurse.outer.backedge:                       ; preds = %bb.j, %bb.n
   %.tr.ph.be = load ptr, ptr %.tr.ph.be.in, align 8 ; 2 uses
   %i.aq = icmp eq i32 %.tr17.ph.be, 1             ; 2 uses
   %.val15840 = load i32, ptr %.tr.ph.be, align 8  ; 2 uses
-  %i.ar = icmp eq i32 %.val15840, %8              ; 2 uses
+  %i.ar = icmp eq i32 %.val15840, %i.ap           ; 2 uses
   %or.cond41 = and i1 %i.aq, %i.ar
   br i1 %or.cond41, label %.critedge145, label %.lr.ph
 
@@ -433,9 +424,6 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not139, label %bb.n, label %.critedge145
 
 bb.n:                                             ; preds = %bb.m
-  %.pre176 = load i32, ptr @fol_EXIST, align 4
-  %.pre174 = load i32, ptr @fol_ALL, align 4
-  %.pre = load i32, ptr @fol_OR, align 4
   %.val171 = load ptr, ptr %i.at, align 8
   %.pre178 = load i32, ptr @fol_AND, align 4
   br label %tailrecurse.outer.backedge

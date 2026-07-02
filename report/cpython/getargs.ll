@@ -203,8 +203,11 @@ bb.u:                                             ; preds = %bb.t
   %i.ae = getelementptr [8 x i8], ptr %i.f, i64 %.04599
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !20
   %i.af = icmp eq ptr %i.ad, null
+  br i1 %i.af, label %_Py_NewRef.exit87, label %._crit_edge109
+
+._crit_edge109:                                   ; preds = %bb.u
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !15
-  br i1 %i.af, label %_Py_NewRef.exit87, label %bb.x
+  br label %bb.x
 
 bb.v:                                             ; preds = %bb.t
   %i.ag = and i64 %.val71, 134217728
@@ -222,8 +225,8 @@ bb.w:                                             ; preds = %bb.v
   call void @PyErr_SetString(ptr noundef %i.aj, ptr noundef nonnull @.str.114) #7
   br label %_Py_NewRef.exit87
 
-bb.x:                                             ; preds = %bb.u, %PyBytes_AS_STRING.exit
-  %i.ak = phi ptr [ %.pre, %bb.u ], [ %i.r, %PyBytes_AS_STRING.exit ]
+bb.x:                                             ; preds = %._crit_edge109, %PyBytes_AS_STRING.exit
+  %i.ak = phi ptr [ %.pre, %._crit_edge109 ], [ %i.r, %PyBytes_AS_STRING.exit ]
   %i.al = add nuw nsw i64 %.04599, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.al, %i.n
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !51

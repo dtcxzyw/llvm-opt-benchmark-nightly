@@ -204,7 +204,6 @@ _ZN11OpenImageIO4v3_18task_setC2EPNS0_11thread_poolE.exit: ; preds = %bb.f, %bb.
   %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %.pre45 = load i32, ptr %4, align 8
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %bb.ac, %_ZN11OpenImageIO4v3_18task_setC2EPNS0_11thread_poolE.exit
@@ -216,13 +215,13 @@ _ZN11OpenImageIO4v3_18task_setC2EPNS0_11thread_poolE.exit: ; preds = %bb.f, %bb.
   ret void
 
 bb.h:                                             ; preds = %.lr.ph, %bb.ac
-  %7 = phi i32 [ %.pre45, %.lr.ph ], [ %9, %bb.ac ] ; 3 uses
   %i.aj = phi i64 [ %i.j, %.lr.ph ], [ %i.di, %bb.ac ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #30
   %i.ak = add nsw i64 %i.aj, %.0                  ; 2 uses
   %.sroa.speculated = call i64 @llvm.smin.i64(i64 %i.ak, i64 %1) ; 2 uses
   store i64 %.sroa.speculated, ptr %i.e, align 8, !tbaa !77
   %i.al = icmp sle i64 %1, %i.ak
+  %7 = load i32, ptr %4, align 8
   %i.am = icmp eq i32 %7, 1
   %or.cond = select i1 %i.al, i1 true, i1 %i.am
   br i1 %or.cond, label %bb.m, label %bb.i
@@ -394,7 +393,6 @@ bb.t:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cr = load atomic i64, ptr %i.cq acquire, align 8 ; 2 uses
   %i.cs = icmp eq i64 %i.cr, 4294967297
   %i.ct = trunc i64 %i.cr to i32                  ; 2 uses
-  %.pre = load i32, ptr %4, align 8               ; 3 uses
   br i1 %i.cs, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
@@ -435,7 +433,6 @@ bb.y:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt14__basic_futureIvED2Ev.exit
 
 _ZNSt14__basic_futureIvED2Ev.exit:                ; preds = %_ZN11OpenImageIO4v3_18task_set4pushEOSt6futureIvE.exit, %bb.u, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.y
-  %8 = phi i32 [ %7, %_ZN11OpenImageIO4v3_18task_set4pushEOSt6futureIvE.exit ], [ %.pre, %bb.u ], [ %.pre, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i ], [ %.pre, %bb.y ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30
   br label %bb.ac
 
@@ -456,7 +453,6 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br label %bb.ad
 
 bb.ac:                                            ; preds = %_ZNKSt8functionIFvillEEclEill.exit, %_ZNSt14__basic_futureIvED2Ev.exit
-  %9 = phi i32 [ %7, %_ZNKSt8functionIFvillEEclEill.exit ], [ %8, %_ZNSt14__basic_futureIvED2Ev.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #30
   %i.dh = load i64, ptr %i.d, align 8, !tbaa !77
   %i.di = add nsw i64 %i.dh, %.0                  ; 3 uses

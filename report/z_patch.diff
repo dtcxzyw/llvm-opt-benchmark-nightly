@@ -1,0 +1,140 @@
+diff --git a/llvm/lib/Transforms/Scalar/GVN.cpp b/llvm/lib/Transforms/Scalar/GVN.cpp
+index 517d33bfba103..4f1a99c4f4beb 100644
+--- a/llvm/lib/Transforms/Scalar/GVN.cpp
++++ b/llvm/lib/Transforms/Scalar/GVN.cpp
+@@ -2018,9 +2018,42 @@ bool GVNPass::performLoopLoadPRE(LoadInst *Load,
+   if (LoadPtr->canBeFreed())
+     return false;
+ 
+-  // TODO: Support critical edge splitting if blocker has more than 1 successor.
++  // The reload is inserted at the end of the chosen in-loop block so its value
++  // reaches the header along the path back to the latch. If that block has
++  // multiple successors, inserting there would also run the load on paths that
++  // leave the loop. Split the critical edge to the unique in-loop successor so
++  // the reload only runs on the path that feeds the header.
++  BasicBlock *InsertBlock = LoopBlock;
++  if (LoopBlock->getTerminator()->getNumSuccessors() != 1) {
++    if (isa<IndirectBrInst>(LoopBlock->getTerminator()))
++      return false;
++
++    BasicBlock *InLoopSucc = nullptr;
++    for (BasicBlock *Succ : successors(LoopBlock)) {
++      if (!L->contains(Succ))
++        continue;
++      // Bail if there is more than one in-loop successor: it is unclear which
++      // edge feeds the header.
++      if (InLoopSucc)
++        return false;
++      InLoopSucc = Succ;
++    }
++    if (!InLoopSucc)
++      return false;
++
++    // Do not split a backedge unless explicitly enabled; it would break
++    // canonical loop form.
++    if (!isLoadPRESplitBackedgeEnabled() &&
++        DT->dominates(InLoopSucc, LoopBlock))
++      return false;
++
++    InsertBlock = splitCriticalEdges(LoopBlock, InLoopSucc);
++    if (!InsertBlock)
++      return false;
++  }
++
+   MapVector<BasicBlock *, Value *> AvailableLoads;
+-  AvailableLoads[LoopBlock] = LoadPtr;
++  AvailableLoads[InsertBlock] = LoadPtr;
+   AvailableLoads[Preheader] = LoadPtr;
+ 
+   LLVM_DEBUG(dbgs() << "GVN REMOVING PRE LOOP LOAD: " << *Load << '\n');
+diff --git a/llvm/test/Transforms/GVN/PRE/pre-loop-load.ll b/llvm/test/Transforms/GVN/PRE/pre-loop-load.ll
+index 5a10d7ec5d04b..d2284693f8349 100644
+--- a/llvm/test/Transforms/GVN/PRE/pre-loop-load.ll
++++ b/llvm/test/Transforms/GVN/PRE/pre-loop-load.ll
+@@ -355,7 +355,8 @@ exit:
+   ret i32 %x
+ }
+ 
+-; TODO: We can PRE via splitting of the critical edge in the cold path.
++; TODO: not PRE'd because the pointer may be freed, so reloading is unsafe.
++; The cold-path critical edge is split once the pointer is known non-freeable.
+ define i32 @test_load_on_exiting_cold_path_01(ptr %p) {
+ ; CHECK-LABEL: @test_load_on_exiting_cold_path_01(
+ ; CHECK-NEXT:  entry:
+@@ -407,7 +408,8 @@ cold_exit:
+   ret i32 -1
+ }
+ 
+-; TODO: We can PRE via splitting of the critical edge in the cold path.
++; TODO: not PRE'd because the pointer may be freed, so reloading is unsafe.
++; The cold-path critical edge is split once the pointer is known non-freeable.
+ define i32 @test_load_on_exiting_cold_path_02(ptr %p) gc "statepoint-example" personality ptr @personality_function {
+ ; CHECK-LABEL: @test_load_on_exiting_cold_path_02(
+ ; CHECK-NEXT:  entry:
+@@ -462,9 +464,9 @@ cold_exit:
+   ret i32 -1
+ }
+ 
+-; The gc-managed pointer cannot be freed, so loop-load PRE fires, but the
+-; reload is sunk into the cold path and also runs on the loop side-exit.
+-; TODO: split the critical edge so it only runs on the path back to the header.
++; PRE the load from gc-managed memory by splitting the critical edge in the
++; cold path. The reload runs only on the path back to the header, not on the
++; loop side-exit. The pointer is gc-managed so it cannot be freed.
+ define i32 @test_load_on_exiting_cold_path_gc(ptr addrspace(1) %p) gc "statepoint-example" personality ptr @personality_function {
+ ; CHECK-LABEL: @test_load_on_exiting_cold_path_gc(
+ ; CHECK-NEXT:  entry:
+@@ -479,10 +481,12 @@ define i32 @test_load_on_exiting_cold_path_gc(ptr addrspace(1) %p) gc "statepoin
+ ; CHECK-NEXT:    br label [[BACKEDGE]]
+ ; CHECK:       cold_path:
+ ; CHECK-NEXT:    [[SIDE_COND:%.*]] = call i1 @side_effect_cond() #[[ATTR0]]
++; CHECK-NEXT:    br i1 [[SIDE_COND]], label [[COLD_PATH_BACKEDGE_CRIT_EDGE:%.*]], label [[COLD_EXIT:%.*]]
++; CHECK:       cold_path.backedge_crit_edge:
+ ; CHECK-NEXT:    [[X_PRE:%.*]] = load i32, ptr addrspace(1) [[P]], align 4
+-; CHECK-NEXT:    br i1 [[SIDE_COND]], label [[BACKEDGE]], label [[COLD_EXIT:%.*]]
++; CHECK-NEXT:    br label [[BACKEDGE]]
+ ; CHECK:       backedge:
+-; CHECK-NEXT:    [[X3]] = phi i32 [ [[X_PRE]], [[COLD_PATH]] ], [ [[X]], [[HOT_PATH]] ]
++; CHECK-NEXT:    [[X3]] = phi i32 [ [[X_PRE]], [[COLD_PATH_BACKEDGE_CRIT_EDGE]] ], [ [[X]], [[HOT_PATH]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], [[X]]
+ ; CHECK-NEXT:    [[LOOP_COND:%.*]] = icmp ult i32 [[IV_NEXT]], 1000
+ ; CHECK-NEXT:    br i1 [[LOOP_COND]], label [[LOOP]], label [[EXIT:%.*]]
+@@ -519,9 +523,9 @@ cold_exit:
+   ret i32 -1
+ }
+ 
+-; The function is nofree, so the pointer cannot be freed and loop-load PRE
+-; fires, but the reload is sunk into the cold path and also runs on the loop
+-; side-exit. TODO: split the critical edge so it only runs on the backedge.
++; PRE the load when the pointer cannot be freed because the enclosing function
++; is nofree. The cold-path critical edge is split so the reload runs only on
++; the path back to the header.
+ define i32 @test_load_on_exiting_cold_path_nofree_fn(ptr %p) nofree {
+ ; CHECK-LABEL: @test_load_on_exiting_cold_path_nofree_fn(
+ ; CHECK-NEXT:  entry:
+@@ -536,10 +540,12 @@ define i32 @test_load_on_exiting_cold_path_nofree_fn(ptr %p) nofree {
+ ; CHECK-NEXT:    br label [[BACKEDGE]]
+ ; CHECK:       cold_path:
+ ; CHECK-NEXT:    [[SIDE_COND:%.*]] = call i1 @side_effect_cond() #[[ATTR0]]
++; CHECK-NEXT:    br i1 [[SIDE_COND]], label [[COLD_PATH_BACKEDGE_CRIT_EDGE:%.*]], label [[COLD_EXIT:%.*]]
++; CHECK:       cold_path.backedge_crit_edge:
+ ; CHECK-NEXT:    [[X_PRE:%.*]] = load i32, ptr [[P]], align 4
+-; CHECK-NEXT:    br i1 [[SIDE_COND]], label [[BACKEDGE]], label [[COLD_EXIT:%.*]]
++; CHECK-NEXT:    br label [[BACKEDGE]]
+ ; CHECK:       backedge:
+-; CHECK-NEXT:    [[X3]] = phi i32 [ [[X_PRE]], [[COLD_PATH]] ], [ [[X]], [[HOT_PATH]] ]
++; CHECK-NEXT:    [[X3]] = phi i32 [ [[X_PRE]], [[COLD_PATH_BACKEDGE_CRIT_EDGE]] ], [ [[X]], [[HOT_PATH]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], [[X]]
+ ; CHECK-NEXT:    [[LOOP_COND:%.*]] = icmp ult i32 [[IV_NEXT]], 1000
+ ; CHECK-NEXT:    br i1 [[LOOP_COND]], label [[LOOP]], label [[EXIT:%.*]]
+@@ -684,7 +690,9 @@ exit:
+   ret i32 %x
+ }
+ 
+-; TODO: We can PRE via splitting of the critical edge in the cold path. Make sure we only insert 1 load.
++; TODO: not PRE'd because the pointer may be freed, so reloading is unsafe.
++; The cold-path critical edge is split once the pointer is known non-freeable,
++; inserting a single reload before the latch.
+ define i32 @test_load_on_multi_exiting_cold_path(ptr %p) {
+ ; CHECK-LABEL: @test_load_on_multi_exiting_cold_path(
+ ; CHECK-NEXT:  entry:

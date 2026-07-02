@@ -202,7 +202,7 @@ bb.ek:                                            ; preds = %bb.ej
   br label %.thread921
 
 bb.el:                                            ; preds = %bb.ej
-  %i.py = load i32, ptr @xformOp, align 4, !tbaa !4 ; 5 uses
+  %i.py = load i32, ptr @xformOp, align 4, !tbaa !4 ; 4 uses
   switch i32 %i.py, label %bb.en [
     i32 7, label %bb.em
     i32 5, label %bb.em
@@ -274,13 +274,7 @@ bb.et:                                            ; preds = %bb.er, %bb.es
   %i.qq = icmp sgt i32 %i.qp, 0
   %i.qr = icmp sgt i32 %i.qm, 0
   %or.cond1055 = select i1 %i.qq, i1 %i.qr, i1 false
-  br i1 %or.cond1055, label %.preheader977.preheader, label %.preheader978
-
-.preheader977.preheader:                          ; preds = %bb.et
-  %.pre1138.pre = load i32, ptr @xformOpt, align 4, !tbaa !4
-  %.pre1140.pre = load ptr, ptr @customFilter, align 8, !tbaa !8
-  %.b.pre1141.pre = load i1, ptr @noRealloc, align 4
-  br label %.preheader977
+  br i1 %or.cond1055, label %.preheader977, label %.preheader978
 
 .preheader978:                                    ; preds = %._crit_edge, %bb.et
   %i.qs = mul i32 %i.qp, %i.qm                    ; 5 uses
@@ -291,13 +285,9 @@ bb.et:                                            ; preds = %bb.er, %bb.es
   %i.qx = shl nuw nsw i64 %i.qw, 3
   br label %.outer
 
-.preheader977:                                    ; preds = %.preheader977.preheader, %._crit_edge
-  %.b.pre1141 = phi i1 [ %.b.pre11411153, %._crit_edge ], [ %.b.pre1141.pre, %.preheader977.preheader ] ; 2 uses
-  %.pre1140 = phi ptr [ %.pre11401150, %._crit_edge ], [ %.pre1140.pre, %.preheader977.preheader ] ; 2 uses
-  %.pre1138 = phi i32 [ %.pre11381147, %._crit_edge ], [ %.pre1138.pre, %.preheader977.preheader ] ; 2 uses
-  %.pre1136 = phi i32 [ %.pre11361144, %._crit_edge ], [ %i.py, %.preheader977.preheader ] ; 2 uses
-  %.06291041 = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.preheader977.preheader ]
-  %.06321040 = phi i32 [ %i.sl, %._crit_edge ], [ 0, %.preheader977.preheader ] ; 2 uses
+.preheader977:                                    ; preds = %bb.et, %._crit_edge
+  %.06291041 = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %bb.et ]
+  %.06321040 = phi i32 [ %i.sl, %._crit_edge ], [ 0, %bb.et ] ; 2 uses
   %i.qy = mul nsw i32 %.06321040, %.0661          ; 2 uses
   %i.qz = sub nsw i32 %.1656, %i.qy
   %i.ra = call i32 @llvm.smin.i32(i32 %.0661, i32 %i.qz)
@@ -306,14 +296,6 @@ bb.et:                                            ; preds = %bb.er, %bb.es
   br label %bb.eu
 
 bb.eu:                                            ; preds = %.preheader977, %bb.fd
-  %.b.pre11411154 = phi i1 [ %.b.pre1141, %.preheader977 ], [ %.b.pre11411153, %bb.fd ]
-  %.pre11401151 = phi ptr [ %.pre1140, %.preheader977 ], [ %.pre11401150, %bb.fd ]
-  %.pre11381148 = phi i32 [ %.pre1138, %.preheader977 ], [ %.pre11381147, %bb.fd ]
-  %.pre11361145 = phi i32 [ %.pre1136, %.preheader977 ], [ %.pre11361144, %bb.fd ]
-  %.b = phi i1 [ %.b.pre1141, %.preheader977 ], [ %.b1142, %bb.fd ] ; 2 uses
-  %1 = phi ptr [ %.pre1140, %.preheader977 ], [ %4, %bb.fd ] ; 2 uses
-  %2 = phi i32 [ %.pre1138, %.preheader977 ], [ %5, %bb.fd ] ; 3 uses
-  %3 = phi i32 [ %.pre1136, %.preheader977 ], [ %6, %bb.fd ] ; 2 uses
   %indvars.iv = phi i64 [ %i.rb, %.preheader977 ], [ %indvars.iv.next, %bb.fd ] ; 4 uses
   %.06331038 = phi i32 [ 0, %.preheader977 ], [ %i.sk, %bb.fd ] ; 2 uses
   %i.rc = mul nsw i32 %.06331038, %.0658          ; 2 uses
@@ -327,15 +309,19 @@ bb.eu:                                            ; preds = %.preheader977, %bb.
   store i32 %i.rc, ptr %i.re, align 8, !tbaa !48
   %i.rh = getelementptr inbounds nuw i8, ptr %i.re, i64 4
   store i32 %i.qy, ptr %i.rh, align 4, !tbaa !49
+  %1 = load i32, ptr @xformOp, align 4, !tbaa !4
   %i.ri = getelementptr inbounds nuw i8, ptr %i.re, i64 16
-  store i32 %3, ptr %i.ri, align 8, !tbaa !50
+  store i32 %1, ptr %i.ri, align 8, !tbaa !50
+  %2 = load i32, ptr @xformOpt, align 4, !tbaa !4 ; 2 uses
   %i.rj = or i32 %2, 2
   %i.rk = getelementptr inbounds nuw i8, ptr %i.re, i64 20
   store i32 %i.rj, ptr %i.rk, align 4, !tbaa !51
+  %3 = load ptr, ptr @customFilter, align 8, !tbaa !8
   %i.rl = getelementptr inbounds nuw i8, ptr %i.re, i64 32
-  store ptr %1, ptr %i.rl, align 8, !tbaa !52
+  store ptr %3, ptr %i.rl, align 8, !tbaa !52
   %i.rm = and i32 %2, 16
   %i.rn = icmp ne i32 %i.rm, 0
+  %.b = load i1, ptr @noRealloc, align 4
   %or.cond135.not = select i1 %i.rn, i1 true, i1 %.b
   br i1 %or.cond135.not, label %bb.fd, label %bb.ev
 
@@ -393,23 +379,11 @@ bb.fb:                                            ; preds = %.thread917
   br label %.thread921
 
 bb.fc:                                            ; preds = %.thread917
-  %.b.pre = load i1, ptr @noRealloc, align 4      ; 2 uses
-  %.pre1139 = load ptr, ptr @customFilter, align 8, !tbaa !8 ; 2 uses
-  %.pre1137 = load i32, ptr @xformOpt, align 4, !tbaa !4 ; 2 uses
-  %.pre1135 = load i32, ptr @xformOp, align 4, !tbaa !4 ; 2 uses
   %i.sj = getelementptr inbounds [8 x i8], ptr %.1, i64 %indvars.iv
   store i64 %i.ro, ptr %i.sj, align 8, !tbaa !43
   br label %bb.fd
 
 bb.fd:                                            ; preds = %bb.fc, %bb.eu
-  %.b.pre11411153 = phi i1 [ %.b.pre, %bb.fc ], [ %.b.pre11411154, %bb.eu ] ; 2 uses
-  %.pre11401150 = phi ptr [ %.pre1139, %bb.fc ], [ %.pre11401151, %bb.eu ] ; 2 uses
-  %.pre11381147 = phi i32 [ %.pre1137, %bb.fc ], [ %.pre11381148, %bb.eu ] ; 2 uses
-  %.pre11361144 = phi i32 [ %.pre1135, %bb.fc ], [ %.pre11361145, %bb.eu ] ; 2 uses
-  %.b1142 = phi i1 [ %.b.pre, %bb.fc ], [ %.b, %bb.eu ]
-  %4 = phi ptr [ %.pre1139, %bb.fc ], [ %1, %bb.eu ]
-  %5 = phi i32 [ %.pre1137, %bb.fc ], [ %2, %bb.eu ]
-  %6 = phi i32 [ %.pre1135, %bb.fc ], [ %3, %bb.eu ]
   %i.sk = add nuw nsw i32 %.06331038, 1           ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i32 %i.sk, %i.qm

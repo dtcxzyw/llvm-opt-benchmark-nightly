@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4346
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !4338
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -372,8 +372,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4346
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !4338
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -776,8 +776,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4413   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !4401
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -961,8 +961,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4413   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !4401
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -1365,8 +1365,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4756
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !4748
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -1533,8 +1533,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4756
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !4748
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -1937,8 +1937,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4823   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !4811
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -2122,8 +2122,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !4823   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !4811
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -2526,8 +2526,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5133
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !5125
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -2694,8 +2694,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5133
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !5125
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -3098,8 +3098,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5200   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !5188
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -3283,8 +3283,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5200   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !5188
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -3687,8 +3687,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5499
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !5491
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -3855,8 +3855,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5499
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !5491
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -4259,8 +4259,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5566   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !5554
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -4444,8 +4444,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5566   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !5554
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -4848,8 +4848,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5895
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !5887
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -5016,8 +5016,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5895
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !5887
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -5420,8 +5420,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5962   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !5950
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -5605,8 +5605,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !5962   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !5950
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -6009,8 +6009,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6287
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !6277
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -6177,8 +6177,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6287
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !6277
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -6581,8 +6581,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6356   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !6344
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -6766,8 +6766,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6356   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !6344
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -7170,8 +7170,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6670
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !6662
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -7338,8 +7338,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6670
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !6662
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -7742,8 +7742,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6737   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !6725
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -7927,8 +7927,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !6737   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !6725
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -8331,8 +8331,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !7071
   %i.ag = load ptr, ptr %.ph, align 8, !tbaa !7063
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
@@ -8499,8 +8499,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !7071
   %i.q = load ptr, ptr %.ph, align 8, !tbaa !7063
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -8903,8 +8903,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !7138   ; 2 uses
   %i.ac = load ptr, ptr %.ph, align 8, !tbaa !7126
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -9088,8 +9088,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %4, align 8, !tbaa !7138   ; 2 uses
   %i.m = load ptr, ptr %.ph, align 8, !tbaa !7126
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -9492,8 +9492,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %6, align 8, !tbaa !7532
   %i.ae = load ptr, ptr %.ph, align 8, !tbaa !7522
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 40
@@ -9660,8 +9660,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %6, align 8, !tbaa !7532
   %i.o = load ptr, ptr %.ph, align 8, !tbaa !7522
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 40
@@ -10064,8 +10064,8 @@ bb.g:                                             ; preds = %bb.b
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.n, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.n ], [ %.pn24, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.n ], [ %.sroa.08.025, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.pn24, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.n ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.08.025, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.n ]
   %.ph = load ptr, ptr %6, align 8, !tbaa !7601   ; 2 uses
   %i.aa = load ptr, ptr %.ph, align 8, !tbaa !7589
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 40
@@ -10249,8 +10249,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt25__un
   br label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.i, %.lr.ph.i.preheader
-  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.0.i, %bb.i ], [ %.sroa.0.07.i, %.lr.ph.i.preheader ]
-  %.sroa.04.08.i.ph = phi ptr [ %.sroa.0.09.i, %bb.i ], [ %.sroa.03.012, %.lr.ph.i.preheader ]
+  %.sroa.0.09.i.ph = phi ptr [ %.sroa.0.07.i, %.lr.ph.i.preheader ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.04.08.i.ph = phi ptr [ %.sroa.03.012, %.lr.ph.i.preheader ], [ %.sroa.0.09.i, %bb.i ]
   %.ph = load ptr, ptr %6, align 8, !tbaa !7601   ; 2 uses
   %i.k = load ptr, ptr %.ph, align 8, !tbaa !7589
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 40

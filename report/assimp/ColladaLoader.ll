@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %7 = alloca %"class.std::unique_ptr", align 8   ; 21 uses
-  %8 = alloca %"class.std::vector.257", align 8   ; 9 uses
+  %8 = alloca %"class.std::vector.257", align 8   ; 10 uses
   %9 = alloca %"class.std::vector.262", align 8   ; 11 uses
   %10 = alloca %"class.__gnu_cxx::__normal_iterator.267", align 8 ; 6 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -607,7 +607,7 @@ _ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EE17_S_check_init_lenEmRKS3_.exit.
   br label %_ZNSt12_Vector_baseISt6vectorI14aiVertexWeightSaIS1_EESaIS3_EEC2EmRKS4_.exit.thread.i
 
 _ZNSt12_Vector_baseISt6vectorI14aiVertexWeightSaIS1_EESaIS3_EEC2EmRKS4_.exit.thread.i: ; preds = %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i, %.noexc523
-  %.pre1094 = phi ptr [ %i.zc, %.noexc523 ], [ null, %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 5 uses
+  %.pre1094 = phi ptr [ %i.zc, %.noexc523 ], [ null, %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 3 uses
   %.sink.i = phi ptr [ %i.zd, %.noexc523 ], [ null, %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
   %i.ze = phi ptr [ %scevgep.i.i.i.i.i, %.noexc523 ], [ null, %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 3 uses
   %i.zf = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
@@ -958,7 +958,6 @@ bb.gd:                                            ; preds = %bb.gb
   br label %bb.gi
 
 ._crit_edge973:                                   ; preds = %bb.hg, %bb.gd
-  %.pr.i = phi ptr [ %.pre1094, %bb.gd ], [ %15, %bb.hg ] ; 5 uses
   %i.aen = load ptr, ptr %9, align 8              ; 3 uses
   %.not.i.i.i532 = icmp eq ptr %i.aen, null
   br i1 %.not.i.i.i532, label %_ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt4pairImmES_IS3_SaIS3_EEEESaIS8_EED2Ev.exit, label %bb.ge
@@ -974,12 +973,13 @@ bb.ge:                                            ; preds = %._crit_edge973
 
 _ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt4pairImmES_IS3_SaIS3_EEEESaIS8_EED2Ev.exit: ; preds = %._crit_edge973, %bb.ge
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
+  %14 = load ptr, ptr %8, align 8                 ; 5 uses
   %i.aet = load ptr, ptr %i.zf, align 8           ; 2 uses
-  %.not4.i.i.i = icmp eq ptr %.pr.i, %i.aet
+  %.not4.i.i.i = icmp eq ptr %14, %i.aet
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt6vectorI14aiVertexWeightSaIS1_EES3_EvT_S5_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt4pairImmES_IS3_SaIS3_EEEESaIS8_EED2Ev.exit, %_ZSt8_DestroyISt6vectorI14aiVertexWeightSaIS1_EEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.afa, %_ZSt8_DestroyISt6vectorI14aiVertexWeightSaIS1_EEEvPT_.exit.i.i.i ], [ %.pr.i, %_ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt4pairImmES_IS3_SaIS3_EEEESaIS8_EED2Ev.exit ] ; 3 uses
+  %.05.i.i.i = phi ptr [ %i.afa, %_ZSt8_DestroyISt6vectorI14aiVertexWeightSaIS1_EEEvPT_.exit.i.i.i ], [ %14, %_ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt4pairImmES_IS3_SaIS3_EEEESaIS8_EED2Ev.exit ] ; 3 uses
   %i.aeu = load ptr, ptr %.05.i.i.i, align 8      ; 3 uses
   %.not.i.i.i.i.i.i.i533 = icmp eq ptr %i.aeu, null
   br i1 %.not.i.i.i.i.i.i.i533, label %_ZSt8_DestroyISt6vectorI14aiVertexWeightSaIS1_EEEvPT_.exit.i.i.i, label %bb.gf
@@ -999,15 +999,15 @@ _ZSt8_DestroyISt6vectorI14aiVertexWeightSaIS1_EEEvPT_.exit.i.i.i: ; preds = %bb.
   br i1 %.not.i.i.i534, label %_ZSt8_DestroyIPSt6vectorI14aiVertexWeightSaIS1_EES3_EvT_S5_RSaIT0_E.exit.i, label %.lr.ph.i.i.i, !llvm.loop !102
 
 _ZSt8_DestroyIPSt6vectorI14aiVertexWeightSaIS1_EES3_EvT_S5_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyISt6vectorI14aiVertexWeightSaIS1_EEEvPT_.exit.i.i.i, %_ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt4pairImmES_IS3_SaIS3_EEEESaIS8_EED2Ev.exit
-  %.not.i.i1.i = icmp eq ptr %.pr.i, null
+  %.not.i.i1.i = icmp eq ptr %14, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EED2Ev.exit, label %bb.gg
 
 bb.gg:                                            ; preds = %_ZSt8_DestroyIPSt6vectorI14aiVertexWeightSaIS1_EES3_EvT_S5_RSaIT0_E.exit.i
   %i.afb = load ptr, ptr %i.zg, align 8
   %i.afc = ptrtoint ptr %i.afb to i64
-  %i.afd = ptrtoint ptr %.pr.i to i64
+  %i.afd = ptrtoint ptr %14 to i64
   %i.afe = sub i64 %i.afc, %i.afd
-  call void @_ZdlPvm(ptr noundef nonnull %.pr.i, i64 noundef %i.afe) #27
+  call void @_ZdlPvm(ptr noundef nonnull %14, i64 noundef %i.afe) #27
   br label %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EED2Ev.exit
 
 _ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPSt6vectorI14aiVertexWeightSaIS1_EES3_EvT_S5_RSaIT0_E.exit.i, %bb.gg
@@ -1020,10 +1020,10 @@ bb.gh:                                            ; preds = %bb.gb
   br label %bb.hh
 
 bb.gi:                                            ; preds = %.lr.ph972, %bb.hg
-  %14 = phi ptr [ %.pre1094, %.lr.ph972 ], [ %15, %bb.hg ] ; 2 uses
-  %.0355970.a = phi i64 [ 0, %.lr.ph972 ], [ %i.anv, %bb.hg ] ; 15 uses
-  %.0356969 = phi i64 [ 0, %.lr.ph972 ], [ %.1357, %bb.hg ] ; 3 uses
-  %i.afg = getelementptr inbounds nuw [24 x i8], ptr %14, i64 %.0355970.a ; 4 uses
+  %.0355970 = phi i64 [ 0, %.lr.ph972 ], [ %i.anv, %bb.hg ] ; 15 uses
+  %.0355970.a = phi i64 [ 0, %.lr.ph972 ], [ %.1357, %bb.hg ] ; 3 uses
+  %15 = load ptr, ptr %8, align 8
+  %i.afg = getelementptr inbounds nuw [24 x i8], ptr %15, i64 %.0355970 ; 4 uses
   %i.afh = load ptr, ptr %i.afg, align 8
   %i.afi = getelementptr inbounds nuw i8, ptr %i.afg, i64 8 ; 3 uses
   %i.afj = load ptr, ptr %i.afi, align 8
@@ -1054,7 +1054,7 @@ bb.gk:                                            ; preds = %bb.gj
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.aft, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.afu, align 4
   %i.afv = load i64, ptr %i.adx, align 8
-  %i.afw = mul i64 %i.afv, %.0355970.a
+  %i.afw = mul i64 %i.afv, %.0355970
   %i.afx = load i64, ptr %i.ady, align 8
   %i.afy = load ptr, ptr %i.ys, align 8
   %i.afz = getelementptr [32 x i8], ptr %i.afy, i64 %i.afw
@@ -1078,7 +1078,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val481 = load i64, ptr %i.adz, align 8
   %.val482 = load i64, ptr %i.aea, align 8
   %.val483 = load ptr, ptr %i.aeb, align 8
-  %i.agi = mul i64 %.val482, %.0355970.a
+  %i.agi = mul i64 %.val482, %.0355970
   %i.agj = getelementptr [4 x i8], ptr %.val483, i64 %i.agi
   %i.agk = getelementptr [4 x i8], ptr %i.agj, i64 %.val481
   %i.agl = load float, ptr %i.agk, align 4
@@ -1086,7 +1086,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val478 = load i64, ptr %i.adz, align 8
   %.val479 = load i64, ptr %i.aea, align 8
   %.val480 = load ptr, ptr %i.aeb, align 8
-  %i.agm = mul i64 %.val479, %.0355970.a
+  %i.agm = mul i64 %.val479, %.0355970
   %i.agn = getelementptr [4 x i8], ptr %.val480, i64 %i.agm
   %i.ago = getelementptr [4 x i8], ptr %i.agn, i64 %.val478
   %i.agp = getelementptr i8, ptr %i.ago, i64 4
@@ -1095,7 +1095,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val475 = load i64, ptr %i.adz, align 8
   %.val476 = load i64, ptr %i.aea, align 8
   %.val477 = load ptr, ptr %i.aeb, align 8
-  %i.agr = mul i64 %.val476, %.0355970.a
+  %i.agr = mul i64 %.val476, %.0355970
   %i.ags = getelementptr [4 x i8], ptr %.val477, i64 %i.agr
   %i.agt = getelementptr [4 x i8], ptr %i.ags, i64 %.val475
   %i.agu = getelementptr i8, ptr %i.agt, i64 8
@@ -1105,7 +1105,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val472 = load i64, ptr %i.adz, align 8
   %.val473 = load i64, ptr %i.aea, align 8
   %.val474 = load ptr, ptr %i.aeb, align 8
-  %i.agx = mul i64 %.val473, %.0355970.a
+  %i.agx = mul i64 %.val473, %.0355970
   %i.agy = getelementptr [4 x i8], ptr %.val474, i64 %i.agx
   %i.agz = getelementptr [4 x i8], ptr %i.agy, i64 %.val472
   %i.aha = getelementptr i8, ptr %i.agz, i64 12
@@ -1115,7 +1115,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val469 = load i64, ptr %i.adz, align 8
   %.val470 = load i64, ptr %i.aea, align 8
   %.val471 = load ptr, ptr %i.aeb, align 8
-  %i.ahd = mul i64 %.val470, %.0355970.a
+  %i.ahd = mul i64 %.val470, %.0355970
   %i.ahe = getelementptr [4 x i8], ptr %.val471, i64 %i.ahd
   %i.ahf = getelementptr [4 x i8], ptr %i.ahe, i64 %.val469
   %i.ahg = getelementptr i8, ptr %i.ahf, i64 16
@@ -1125,7 +1125,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val466 = load i64, ptr %i.adz, align 8
   %.val467 = load i64, ptr %i.aea, align 8
   %.val468 = load ptr, ptr %i.aeb, align 8
-  %i.ahj = mul i64 %.val467, %.0355970.a
+  %i.ahj = mul i64 %.val467, %.0355970
   %i.ahk = getelementptr [4 x i8], ptr %.val468, i64 %i.ahj
   %i.ahl = getelementptr [4 x i8], ptr %i.ahk, i64 %.val466
   %i.ahm = getelementptr i8, ptr %i.ahl, i64 20
@@ -1134,7 +1134,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val463 = load i64, ptr %i.adz, align 8
   %.val464 = load i64, ptr %i.aea, align 8
   %.val465 = load ptr, ptr %i.aeb, align 8
-  %i.aho = mul i64 %.val464, %.0355970.a
+  %i.aho = mul i64 %.val464, %.0355970
   %i.ahp = getelementptr [4 x i8], ptr %.val465, i64 %i.aho
   %i.ahq = getelementptr [4 x i8], ptr %i.ahp, i64 %.val463
   %i.ahr = getelementptr i8, ptr %i.ahq, i64 24
@@ -1143,7 +1143,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val460 = load i64, ptr %i.adz, align 8
   %.val461 = load i64, ptr %i.aea, align 8
   %.val462 = load ptr, ptr %i.aeb, align 8
-  %i.aht = mul i64 %.val461, %.0355970.a
+  %i.aht = mul i64 %.val461, %.0355970
   %i.ahu = getelementptr [4 x i8], ptr %.val462, i64 %i.aht
   %i.ahv = getelementptr [4 x i8], ptr %i.ahu, i64 %.val460
   %i.ahw = getelementptr i8, ptr %i.ahv, i64 28
@@ -1153,7 +1153,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val457 = load i64, ptr %i.adz, align 8
   %.val458 = load i64, ptr %i.aea, align 8
   %.val459 = load ptr, ptr %i.aeb, align 8
-  %i.ahz = mul i64 %.val458, %.0355970.a
+  %i.ahz = mul i64 %.val458, %.0355970
   %i.aia = getelementptr [4 x i8], ptr %.val459, i64 %i.ahz
   %i.aib = getelementptr [4 x i8], ptr %i.aia, i64 %.val457
   %i.aic = getelementptr i8, ptr %i.aib, i64 32
@@ -1163,7 +1163,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val454 = load i64, ptr %i.adz, align 8
   %.val455 = load i64, ptr %i.aea, align 8
   %.val456 = load ptr, ptr %i.aeb, align 8
-  %i.aif = mul i64 %.val455, %.0355970.a
+  %i.aif = mul i64 %.val455, %.0355970
   %i.aig = getelementptr [4 x i8], ptr %.val456, i64 %i.aif
   %i.aih = getelementptr [4 x i8], ptr %i.aig, i64 %.val454
   %i.aii = getelementptr i8, ptr %i.aih, i64 36
@@ -1173,7 +1173,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val451 = load i64, ptr %i.adz, align 8
   %.val452 = load i64, ptr %i.aea, align 8
   %.val453 = load ptr, ptr %i.aeb, align 8
-  %i.ail = mul i64 %.val452, %.0355970.a
+  %i.ail = mul i64 %.val452, %.0355970
   %i.aim = getelementptr [4 x i8], ptr %.val453, i64 %i.ail
   %i.ain = getelementptr [4 x i8], ptr %i.aim, i64 %.val451
   %i.aio = getelementptr i8, ptr %i.ain, i64 40
@@ -1182,7 +1182,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit535: ;
   %.val448 = load i64, ptr %i.adz, align 8
   %.val449 = load i64, ptr %i.aea, align 8
   %.val450 = load ptr, ptr %i.aeb, align 8
-  %i.aiq = mul i64 %.val449, %.0355970.a
+  %i.aiq = mul i64 %.val449, %.0355970
   %i.air = getelementptr [4 x i8], ptr %.val450, i64 %i.aiq
   %i.ais = getelementptr [4 x i8], ptr %i.air, i64 %.val448
   %i.ait = getelementptr i8, ptr %i.ais, i64 44
@@ -1305,7 +1305,6 @@ bb.gq:                                            ; preds = %bb.gn, %bb.go, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
   store i64 %i.aly, ptr %i.b, align 8
   %i.alz = icmp ugt i64 %i.aly, 15
-  %.pre1093 = load ptr, ptr %8, align 8
   br i1 %i.alz, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.gq
@@ -1495,15 +1494,14 @@ bb.hf:                                            ; preds = %bb.hd, %_ZNSt7__cxx
   %i.anq = load ptr, ptr %7, align 8
   %i.anr = getelementptr inbounds nuw i8, ptr %i.anq, i64 224
   %i.ans = load ptr, ptr %i.anr, align 8
-  %i.ant = add i64 %.0356969, 1
-  %i.anu = getelementptr inbounds nuw [8 x i8], ptr %i.ans, i64 %.0356969
+  %i.ant = add i64 %.0355970.a, 1
+  %i.anu = getelementptr inbounds nuw [8 x i8], ptr %i.ans, i64 %.0355970.a
   store ptr %i.afn, ptr %i.anu, align 8
   br label %bb.hg
 
 bb.hg:                                            ; preds = %bb.gi, %bb.hf
-  %15 = phi ptr [ %14, %bb.gi ], [ %.pre1093, %bb.hf ] ; 2 uses
-  %.1357 = phi i64 [ %.0356969, %bb.gi ], [ %i.ant, %bb.hf ]
-  %i.anv = add nuw i64 %.0355970.a, 1             ; 2 uses
+  %.1357 = phi i64 [ %.0355970.a, %bb.gi ], [ %i.ant, %bb.hf ]
+  %i.anv = add nuw i64 %.0355970, 1               ; 2 uses
   %exitcond1089.not = icmp eq i64 %i.anv, %i.yz
   br i1 %exitcond1089.not, label %._crit_edge973, label %bb.gi, !llvm.loop !103
 

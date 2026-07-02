@@ -201,11 +201,14 @@ bb.p:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.do = load ptr, ptr %i.dn, align 8
   %i.dp = call noundef i32 %i.do(ptr noundef nonnull align 8 dereferenceable(8) %i.db, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 4 dereferenceable(4) %i.a, i32 noundef %3, i8 noundef signext %4) #7 ; 2 uses
   %.not57 = icmp eq i32 %i.dp, 2
-  %.pre = load i32, ptr %i.a, align 4
-  br i1 %.not57, label %bb.q, label %.thread
+  br i1 %.not57, label %._crit_edge92, label %.thread
 
-bb.q:                                             ; preds = %.thread70, %bb.p
-  %i.dq = phi i32 [ %i.dl, %.thread70 ], [ %.pre, %bb.p ] ; 2 uses
+._crit_edge92:                                    ; preds = %bb.p
+  %.pre = load i32, ptr %i.a, align 4
+  br label %bb.q
+
+bb.q:                                             ; preds = %._crit_edge92, %.thread70
+  %i.dq = phi i32 [ %.pre, %._crit_edge92 ], [ %i.dl, %.thread70 ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dr = load i16, ptr %i.d, align 8             ; 3 uses
   %i.ds = icmp slt i16 %i.dr, 0

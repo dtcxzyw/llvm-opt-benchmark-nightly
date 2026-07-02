@@ -201,8 +201,8 @@ bb.ak:                                            ; preds = %.lr.ph19, %.lr.ph19
   br label %bb.al
 
 bb.al:                                            ; preds = %._crit_edge, %.lr.ph19
-  %i.fx = phi i64 [ %i.ft, %.lr.ph19 ], [ %.pre29, %._crit_edge ] ; 3 uses
-  %i.fy = phi ptr [ %i.fu, %.lr.ph19 ], [ %.pre, %._crit_edge ] ; 2 uses
+  %i.fx = phi i64 [ %.pre29, %._crit_edge ], [ %i.ft, %.lr.ph19 ] ; 3 uses
+  %i.fy = phi ptr [ %.pre, %._crit_edge ], [ %i.fu, %.lr.ph19 ] ; 2 uses
   %i.fz = add nuw i64 %.06618, 1                  ; 2 uses
   %.not84 = icmp ult i64 %i.fz, %i.fx
   br i1 %.not84, label %.lr.ph19, label %.critedge, !llvm.loop !47

@@ -204,16 +204,11 @@ bb.b:                                             ; preds = %bb.a
   tail call void @qsort(ptr noundef nonnull @pocs_in_dpb, i64 noundef %i.d, i64 noundef 4, ptr noundef nonnull @comp) #23
   %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !151 ; 2 uses
   %.not = icmp eq i32 %i.e, %0
-  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.b
-  %.pre30 = load ptr, ptr @img, align 8, !tbaa !14
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.r
-  %1 = phi ptr [ %.pre30, %.lr.ph.preheader ], [ %2, %bb.r ] ; 6 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.r ] ; 2 uses
-  %i.f = phi i32 [ %i.e, %.lr.ph.preheader ], [ %i.cl, %bb.r ]
+.lr.ph:                                           ; preds = %bb.b, %bb.r
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.r ], [ 0, %bb.b ] ; 2 uses
+  %i.f = phi i32 [ %i.cl, %bb.r ], [ %i.e, %bb.b ]
   store i32 %i.f, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 28), align 4, !tbaa !95
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr @pocs_in_dpb, i64 %indvars.iv.next
@@ -221,6 +216,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw [4 x i8], ptr @pocs_in_dpb, i64 %indvars.iv ; 2 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !4
   %i.k = sub nsw i32 %i.h, %i.j
+  %1 = load ptr, ptr @img, align 8, !tbaa !14     ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 6064
   %i.m = load i32, ptr %i.l, align 8, !tbaa !76
   %i.n = icmp sgt i32 %i.k, %i.m
@@ -237,7 +233,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.v = load i32, ptr %i.u, align 8, !tbaa !85
   %i.w = tail call ptr @alloc_storable_picture(i32 noundef 0, i32 noundef %i.p, i32 noundef %i.r, i32 noundef %i.t, i32 noundef %i.v) #23 ; 3 uses
   %i.x = load i32, ptr %i.i, align 4, !tbaa !4    ; 2 uses
-  %i.y = load ptr, ptr @img, align 8, !tbaa !14   ; 7 uses
+  %i.y = load ptr, ptr @img, align 8, !tbaa !14   ; 6 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 6064
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !76  ; 2 uses
   %i.ab = add nsw i32 %i.aa, %i.x                 ; 5 uses
@@ -384,7 +380,6 @@ update_ref_list_for_concealment.exit:             ; preds = %.epil.preheader, %b
   tail call fastcc void @copy_to_conceal(ptr noundef %i.aw, ptr noundef %i.w, ptr noundef %i.y)
   %i.ce = tail call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 1, i64 noundef 24) #25 ; 6 uses
   %i.cf = icmp eq ptr %i.ce, null
-  %.pre = load ptr, ptr @img, align 8, !tbaa !14
   br i1 %i.cf, label %init_node.exit, label %bb.o
 
 bb.o:                                             ; preds = %update_ref_list_for_concealment.exit
@@ -413,7 +408,6 @@ add_node.exit:                                    ; preds = %bb.p, %bb.q
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph, %add_node.exit, %bb.c
-  %2 = phi ptr [ %1, %.lr.ph ], [ %.pre, %add_node.exit ], [ %i.y, %bb.c ]
   %i.cl = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !151 ; 2 uses
   %i.cm = sub i32 %i.cl, %0
   %i.cn = zext i32 %i.cm to i64
