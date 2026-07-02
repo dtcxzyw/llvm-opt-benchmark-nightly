@@ -201,7 +201,7 @@ define hidden { ptr, i64 } @_ZN4llvh3sys6detail22getHostCPUNameForS390xENS_9Stri
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"class.llvh::StringRef", align 8   ; 3 uses
-  %3 = alloca %"class.llvh::SmallVector", align 8 ; 12 uses
+  %3 = alloca %"class.llvh::SmallVector", align 8 ; 13 uses
   %4 = alloca %"class.llvh::SmallVector", align 8 ; 9 uses
   %5 = alloca %"class.llvh::StringRef", align 8   ; 5 uses
   store ptr %0, ptr %2, align 8
@@ -251,12 +251,16 @@ _ZNK4llvh9StringRef10startswithES0_.exit48:       ; preds = %.lr.ph
 _ZNK4llvh9StringRef10startswithES0_.exit48.thread98: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit48
   %i.t = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %i.l, ptr nonnull @.str.98, i64 1, i64 noundef 0) #20 ; 2 uses
   %.not39 = icmp eq i64 %i.t, -1
-  %.pre = load ptr, ptr %3, align 8, !tbaa !29    ; 2 uses
-  br i1 %.not39, label %.critedge, label %bb.b
+  br i1 %.not39, label %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98..critedge_crit_edge, label %bb.b
+
+_ZNK4llvh9StringRef10startswithES0_.exit48.thread98..critedge_crit_edge: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98
+  %.pre = load ptr, ptr %3, align 8, !tbaa !29
+  br label %.critedge
 
 bb.b:                                             ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
-  %i.u = getelementptr inbounds nuw [16 x i8], ptr %.pre, i64 %indvars.iv ; 2 uses
+  %6 = load ptr, ptr %3, align 8, !tbaa !29
+  %i.u = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %indvars.iv ; 2 uses
   %i.v = add nuw i64 %i.t, 1
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.x = load i64, ptr %i.w, align 8, !tbaa !19   ; 2 uses
@@ -271,8 +275,8 @@ bb.b:                                             ; preds = %_ZNK4llvh9StringRef
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   br label %.loopexit
 
-.critedge:                                        ; preds = %.lr.ph, %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98, %_ZNK4llvh9StringRef10startswithES0_.exit48
-  %i.ac = phi ptr [ %i.k, %.lr.ph ], [ %.pre, %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98 ], [ %i.k, %_ZNK4llvh9StringRef10startswithES0_.exit48 ]
+.critedge:                                        ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98..critedge_crit_edge, %.lr.ph, %_ZNK4llvh9StringRef10startswithES0_.exit48
+  %i.ac = phi ptr [ %.pre, %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98..critedge_crit_edge ], [ %i.k, %.lr.ph ], [ %i.k, %_ZNK4llvh9StringRef10startswithES0_.exit48 ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not = icmp eq i64 %indvars.iv.next, %i.j
   br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !42

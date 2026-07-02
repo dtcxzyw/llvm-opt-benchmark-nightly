@@ -201,8 +201,11 @@ bb.ak:                                            ; preds = %bb.aj
   store ptr %i.dk, ptr %i.b, align 8, !tbaa !9
   %i.dl = call i32 @BIO_write(ptr noundef %0, ptr noundef nonnull @.str.34, i32 noundef 1) #5
   %i.dm = icmp slt i32 %i.dl, 1
+  br i1 %i.dm, label %.thread264, label %..loopexit316_crit_edge
+
+..loopexit316_crit_edge:                          ; preds = %bb.ak
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !9
-  br i1 %i.dm, label %.thread264, label %.loopexit316
+  br label %.loopexit316
 
 bb.al:                                            ; preds = %bb.aj
   %i.dn = load i32, ptr %i.e, align 4, !tbaa !5
@@ -605,8 +608,8 @@ bb.cg:                                            ; preds = %bb.bg
   %or.cond19 = select i1 %i.jg, i1 %i.ji, i1 false
   br i1 %or.cond19, label %.thread264, label %.loopexit316
 
-.loopexit316:                                     ; preds = %bb.ai, %.preheader315, %split, %bb.ak, %.thread563
-  %i.jj = phi ptr [ %i.je, %.thread563 ], [ %.pre523, %.preheader315 ], [ %i.cr, %split ], [ %.pre, %bb.ak ], [ %i.de, %bb.ai ]
+.loopexit316:                                     ; preds = %bb.ai, %..loopexit316_crit_edge, %.preheader315, %split, %.thread563
+  %i.jj = phi ptr [ %.pre, %..loopexit316_crit_edge ], [ %i.je, %.thread563 ], [ %.pre523, %.preheader315 ], [ %i.cr, %split ], [ %i.de, %bb.ai ]
   %i.jk = load i64, ptr %i.d, align 8, !tbaa !14
   %i.jl = sub nsw i64 %i.ad, %i.jk                ; 2 uses
   %i.jm = icmp sgt i64 %i.jl, 0

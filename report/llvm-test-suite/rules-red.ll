@@ -204,8 +204,11 @@ bb.n:                                             ; preds = %bb.l
   %i.bp = load ptr, ptr @cont_LEFTCONTEXT, align 8 ; 2 uses
   %i.bq = tail call i32 @ord_ContGreater(ptr noundef %i.bp, ptr noundef nonnull %.0129259.i, ptr noundef %i.bp, ptr noundef %.0102.i, ptr noundef %2, ptr noundef %3) #14
   %i.br = icmp eq i32 %i.bq, 0
+  br i1 %i.br, label %._crit_edge311, label %bb.o
+
+._crit_edge311:                                   ; preds = %bb.n
   %.pre = load i32, ptr @fol_NOT, align 4
-  br i1 %i.br, label %bb.ar, label %bb.o
+  br label %bb.ar
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.5136206.i = phi i32 [ 1, %bb.n ], [ %.4135232.i, %bb.m ]
@@ -608,9 +611,9 @@ bb.aq:                                            ; preds = %clause_UpdateSplitD
   tail call void @st_CancelExistRetrieval() #14
   br label %.loopexit404
 
-bb.ar:                                            ; preds = %bb.n, %bb.m, %bb.k, %.lr.ph.i
-  %i.hy = phi i32 [ %.pre, %bb.n ], [ %i.bb, %bb.m ], [ %i.bb, %bb.k ], [ %i.bb, %.lr.ph.i ]
-  %.6137.i = phi i32 [ 1, %bb.n ], [ %.4135232.i, %bb.m ], [ %.4135232.i, %bb.k ], [ %.4135232.i, %.lr.ph.i ] ; 2 uses
+bb.ar:                                            ; preds = %._crit_edge311, %bb.m, %bb.k, %.lr.ph.i
+  %i.hy = phi i32 [ %.pre, %._crit_edge311 ], [ %i.bb, %bb.m ], [ %i.bb, %bb.k ], [ %i.bb, %.lr.ph.i ]
+  %.6137.i = phi i32 [ 1, %._crit_edge311 ], [ %.4135232.i, %bb.m ], [ %.4135232.i, %bb.k ], [ %.4135232.i, %.lr.ph.i ] ; 2 uses
   %.0119.val178.i = load ptr, ptr %.0119235.i, align 8 ; 2 uses
   %.not393.i = icmp eq ptr %.0119.val178.i, null
   br i1 %.not393.i, label %.critedge4.i, label %.lr.ph.i, !llvm.loop !70
@@ -1013,11 +1016,14 @@ clause_LiteralGetIndex.exit39.i:                  ; preds = %bb.i
   %i.aq = trunc nuw nsw i64 %indvars.iv.i36.i to i32
   %i.ar = tail call i32 @subs_SubsumesBasic(ptr noundef nonnull %.val27.i, ptr noundef %.val28.i, i32 noundef %i.aq, i32 noundef %i.w) #14
   %.not23.i = icmp eq i32 %i.ar, 0
-  %.pre.i = load i32, ptr @fol_NOT, align 4
-  br i1 %.not23.i, label %clause_LiteralsAreComplementary.exit.thread.i, label %bb.j
+  br i1 %.not23.i, label %clause_LiteralGetIndex.exit39.clause_LiteralsAreComplementary.exit.thread_crit_edge.i, label %bb.j
 
-clause_LiteralsAreComplementary.exit.thread.i:    ; preds = %clause_LiteralGetIndex.exit39.i, %bb.g, %bb.f
-  %i.as = phi i32 [ %i.ad, %bb.f ], [ %i.ad, %bb.g ], [ %.pre.i, %clause_LiteralGetIndex.exit39.i ]
+clause_LiteralGetIndex.exit39.clause_LiteralsAreComplementary.exit.thread_crit_edge.i: ; preds = %clause_LiteralGetIndex.exit39.i
+  %.pre.i = load i32, ptr @fol_NOT, align 4
+  br label %clause_LiteralsAreComplementary.exit.thread.i
+
+clause_LiteralsAreComplementary.exit.thread.i:    ; preds = %clause_LiteralGetIndex.exit39.clause_LiteralsAreComplementary.exit.thread_crit_edge.i, %bb.g, %bb.f
+  %i.as = phi i32 [ %.pre.i, %clause_LiteralGetIndex.exit39.clause_LiteralsAreComplementary.exit.thread_crit_edge.i ], [ %i.ad, %bb.f ], [ %i.ad, %bb.g ]
   %.0.val24.i = load ptr, ptr %.048.i, align 8    ; 2 uses
   %.not43.i = icmp eq ptr %.0.val24.i, null
   br i1 %.not43.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !91

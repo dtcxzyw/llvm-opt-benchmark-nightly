@@ -203,11 +203,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %.preheader
   %i.h = tail call i32 %1(ptr noundef nonnull %i.g, ptr noundef %2) #16 ; 2 uses
   %.not32 = icmp eq i32 %i.h, 0
-  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 10296), align 8, !tbaa !195
-  br i1 %.not32, label %bb.e, label %.loopexit
+  br i1 %.not32, label %._crit_edge, label %.loopexit
 
-bb.e:                                             ; preds = %.preheader, %bb.d
-  %i.i = phi ptr [ %i.d, %.preheader ], [ %.pre, %bb.d ]
+._crit_edge:                                      ; preds = %bb.d
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 10296), align 8, !tbaa !195
+  br label %bb.e
+
+bb.e:                                             ; preds = %._crit_edge, %.preheader
+  %i.i = phi ptr [ %.pre, %._crit_edge ], [ %i.d, %.preheader ]
   %i.j = add nuw nsw i64 %.02438, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.j, 65
   br i1 %exitcond.not, label %.thread, label %.preheader, !llvm.loop !211
