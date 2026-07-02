@@ -203,14 +203,14 @@ bb.a:
   %.sroa.6.16.copyload.i = load ptr, ptr %1, align 8, !alias.scope !2679, !noalias !2682 ; 2 uses
   %.sroa.8.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.8.16.copyload.i = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !alias.scope !2679, !noalias !2682 ; 3 uses
-  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.10.16.copyload.i = load ptr, ptr %.sroa.10.16..sroa_idx.i, align 8, !alias.scope !2679, !noalias !2682
   %i.a = icmp ule i64 %.sroa.0.0.copyload, %.sroa.4.0.copyload
   tail call void @llvm.assume(i1 %i.a)
   %.not6.i.i = icmp eq i64 %.sroa.0.0.copyload, %.sroa.4.0.copyload
   br i1 %.not6.i.i, label %_RINvXs2_NtNtCsbvkFyIu7lgC_4core5array4iterINtB6_8IntoIterNtNtNtCs4s1dLWtJWRF_12clap_builder7builder3str3StrKj1_ENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtB1S_8adapters3map8map_foldBT_BT_uNCINvMs_NtBX_3argNtB3l_3Arg11value_namesBT_ABT_B1I_E0NCINvNvB1M_8for_each4callBT_NCINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB4F_3VecBT_E14extend_trustedINtB2C_3MapBE_B3d_EE0E0E0ECs2VbMhdeEr66_16delta_benchmarks.exit, label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
+  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.10.16.copyload.i = load ptr, ptr %.sroa.10.16..sroa_idx.i, align 8, !alias.scope !2679, !noalias !2682
   %.not.i.i = icmp eq i64 %.sroa.4.0.copyload, 1
   %i.b = icmp eq i64 %.sroa.0.0.copyload, 0
   tail call void @llvm.assume(i1 %i.b)
@@ -244,14 +244,14 @@ bb.a:
   %.sroa.6.16.copyload.i = load ptr, ptr %1, align 8, !alias.scope !2704, !noalias !2707 ; 2 uses
   %.sroa.8.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.8.16.copyload.i = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !alias.scope !2704, !noalias !2707 ; 3 uses
-  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.10.16.copyload.i = load ptr, ptr %.sroa.10.16..sroa_idx.i, align 8, !alias.scope !2704, !noalias !2707
   %i.a = icmp ule i64 %.sroa.0.0.copyload, %.sroa.4.0.copyload
   tail call void @llvm.assume(i1 %i.a)
   %.not6.i.i = icmp eq i64 %.sroa.0.0.copyload, %.sroa.4.0.copyload
   br i1 %.not6.i.i, label %_RINvXs2_NtNtCsbvkFyIu7lgC_4core5array4iterINtB6_8IntoIterNtNtNtCs4s1dLWtJWRF_12clap_builder7builder6os_str5OsStrKj1_ENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtB1X_8adapters3map8map_foldBT_BT_uNCINvMs_NtBX_3argNtB3q_3Arg14default_valuesBT_ABT_B1N_E0NCINvNvB1R_8for_each4callBT_NCINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB4N_3VecBT_E14extend_trustedINtB2H_3MapBE_B3i_EE0E0E0ECs2VbMhdeEr66_16delta_benchmarks.exit, label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
+  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.10.16.copyload.i = load ptr, ptr %.sroa.10.16..sroa_idx.i, align 8, !alias.scope !2704, !noalias !2707
   %.not.i.i = icmp eq i64 %.sroa.4.0.copyload, 1
   %i.b = icmp eq i64 %.sroa.0.0.copyload, 0
   tail call void @llvm.assume(i1 %i.b)
@@ -654,12 +654,12 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %i.bj, label %bb.n, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.bk = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bk = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val.a = load ptr, ptr %i.bk, align 8, !nonnull !17, !noundef !17
-  %i.bl = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bl = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val21 = load ptr, ptr %i.bl, align 8, !nonnull !17, !noundef !17
-  %i.bm = getelementptr inbounds nuw i8, ptr %.val21, i64 16
-  %i.bn = getelementptr inbounds nuw i8, ptr %.val.a, i64 16
+  %i.bm = getelementptr inbounds nuw i8, ptr %.val.a, i64 16
+  %i.bn = getelementptr inbounds nuw i8, ptr %.val21, i64 16
   %i.bo = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull readonly align 8 %i.bn, ptr noundef nonnull readonly align 8 %i.bm, i64 noundef range(i64 0, 1152921504606846976) %.val20)
   br label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -672,12 +672,12 @@ bb.o:                                             ; preds = %.lr.ph
   br i1 %i.br, label %_RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 _RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit: ; preds = %bb.o
-  %i.bs = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bs = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val23.a = load ptr, ptr %i.bs, align 8, !nonnull !17, !noundef !17
-  %i.bt = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val25 = load ptr, ptr %i.bt, align 8, !nonnull !17, !noundef !17
-  %i.bu = getelementptr inbounds nuw i8, ptr %.val25, i64 16
-  %i.bv = getelementptr inbounds nuw i8, ptr %.val23.a, i64 16
+  %i.bu = getelementptr inbounds nuw i8, ptr %.val23.a, i64 16
+  %i.bv = getelementptr inbounds nuw i8, ptr %.val25, i64 16
   %i.bw = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull readonly align 8 %i.bv, ptr noundef nonnull readonly align 8 %i.bu, i64 noundef range(i64 0, 576460752303423488) %.val24)
   br i1 %i.bw, label %bb.af, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 

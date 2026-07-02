@@ -201,18 +201,18 @@ bb.a:
   br i1 %i.e, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1p_8adapters3map8map_foldRBQ_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesuNCNCINvNtCsjyY8HP3IvQ6_12object_store4util15coalesce_rangesNCNCNvYNtCs9JG0qWP2oqR_24hdfs_native_object_store15HdfsObjectStoreNtB3r_11ObjectStore10get_ranges00NtB3r_5ErrorINtNtBb_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBb_6future6future6Futurep6OutputINtNtBb_6result6ResultB2H_B5Q_ENtNtBb_6marker4SendEL_EEE00NCINvNvB1j_8for_each4callB2H_NCINvMsj_NtB6n_3vecINtB92_3VecB2H_E14extend_trustedINtB29_3MapBF_B3i_EE0E0E0ECs6KaIMXx2hZw_14deltalake_hdfs.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !22, !noundef !4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !align !22, !noundef !4 ; 2 uses
   %i.j = ptrtoint ptr %i.d to i64
   %i.k = ptrtoint ptr %i.b to i64
   %i.l = sub nuw i64 %i.j, %i.k
   %i.m = lshr exact i64 %i.l, 4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %bb.b

@@ -204,12 +204,10 @@ bb.b:                                             ; preds = %bb.a
 _ZN2v88internal11interpreter22BytecodeHandlerReducerINS0_15BuiltinsReducerINS0_24FeedbackCollectorReducerINS0_8compiler10turboshaft22MachineLoweringReducerINS6_15VariableReducerINS6_21EmitProjectionReducerINS6_18GenericReducerBaseINS6_13TSReducerBaseINS6_11StackBottomINS_4base3tmp5list1IJNS0_21NumberBuiltinsReducerES2_S3_S4_S7_S8_SB_EEEEEEEEEEEEEEEEEEEE10GetContextEv.exit: ; preds = %bb.a, %bb.b
   %.sroa.011.0.i.i.i.i.i.i.i = phi i32 [ %i.m, %bb.b ], [ -1, %bb.a ]
   %i.n = load ptr, ptr %i.b, align 8, !nonnull !5 ; 2 uses
-  %2 = load i8, ptr %i.n, align 1                 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.n, i64 1
-  %i.o = load i8, ptr %3, align 1
-  %i.p = icmp ult i8 %2, -44
+  %i.o = load i8, ptr %i.n, align 1               ; 2 uses
+  %i.p = icmp ult i8 %i.o, -44
   tail call void @llvm.assume(i1 %i.p)
-  %i.q = zext i8 %2 to i64                        ; 2 uses
+  %i.q = zext i8 %i.o to i64                      ; 2 uses
   %i.r = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandCountE, i64 %i.q
   %i.s = load i32, ptr %i.r, align 4
   %i.t = icmp sgt i32 %i.s, 0
@@ -220,7 +218,9 @@ bb.c:                                             ; preds = %_ZN2v88internal11in
   unreachable
 
 _ZN2v88internal11interpreter22BytecodeHandlerReducerINS0_15BuiltinsReducerINS0_24FeedbackCollectorReducerINS0_8compiler10turboshaft22MachineLoweringReducerINS6_15VariableReducerINS6_21EmitProjectionReducerINS6_18GenericReducerBaseINS6_13TSReducerBaseINS6_11StackBottomINS_4base3tmp5list1IJNS0_21NumberBuiltinsReducerES2_S3_S4_S7_S8_SB_EEEEEEEEEEEEEEEEEEEE23BytecodeOperandIdxInt32Ei.exit: ; preds = %_ZN2v88internal11interpreter22BytecodeHandlerReducerINS0_15BuiltinsReducerINS0_24FeedbackCollectorReducerINS0_8compiler10turboshaft22MachineLoweringReducerINS6_15VariableReducerINS6_21EmitProjectionReducerINS6_18GenericReducerBaseINS6_13TSReducerBaseINS6_11StackBottomINS_4base3tmp5list1IJNS0_21NumberBuiltinsReducerES2_S3_S4_S7_S8_SB_EEEEEEEEEEEEEEEEEEEE10GetContextEv.exit
-  %i.u = lshr i8 %i.o, 1
+  %2 = getelementptr inbounds nuw i8, ptr %i.n, i64 1
+  %3 = load i8, ptr %2, align 1
+  %i.u = lshr i8 %3, 1
   %i.v = zext nneg i8 %i.u to i64
   %i.w = getelementptr inbounds nuw [1696 x i8], ptr @_ZN2v88internal11interpreter9Bytecodes13kOperandSizesE, i64 %i.v
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.q

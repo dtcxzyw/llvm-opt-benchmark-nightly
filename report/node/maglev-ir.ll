@@ -204,8 +204,6 @@ bb.a:
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %i.i, i64 20
-  %6 = load i32, ptr %5, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.o = load ptr, ptr %i.n, align 8
   %.sroa.0.0.copyload.i.i.i37 = load i64, ptr %i.o, align 8
@@ -227,6 +225,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 switch.lookup:                                    ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %i.i, i64 20
+  %6 = load i32, ptr %5, align 4
   %i.y = zext nneg i8 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal6maglev20BranchIfInt32Compare12GenerateCodeEPNS1_15MaglevAssemblerERKNS1_15ProcessingStateE, i64 %i.y
   %switch.load = load i8, ptr %switch.gep, align 1
