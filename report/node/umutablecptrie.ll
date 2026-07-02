@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
 
 bb.i:                                             ; preds = %.critedge.thread.i, %bb.c
   %i.ab = add nuw nsw i32 %2, 1                   ; 4 uses
-  %i.ac = and i32 %1, 15                          ; 5 uses
+  %i.ac = and i32 %1, 15                          ; 4 uses
   %.not57 = icmp eq i32 %i.ac, 0
   br i1 %.not57, label %_ZN6icu_7812_GLOBAL__N_19fillBlockEPjiij.exit, label %bb.j
 
@@ -227,10 +227,11 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.an = shl nuw nsw i32 %i.ac, 2
-  %.idx = zext nneg i32 %i.an to i64              ; 4 uses
-  %5 = lshr exact i64 %.idx, 2
-  %6 = sub nuw nsw i64 16, %5                     ; 2 uses
-  %min.iters.check = icmp samesign ugt i32 %i.ac, 8
+  %.idx = zext nneg i32 %i.an to i64              ; 3 uses
+  %5 = and i32 %1, 15                             ; 2 uses
+  %narrow = sub nuw nsw i32 16, %5
+  %6 = zext nneg i32 %narrow to i64               ; 2 uses
+  %min.iters.check = icmp samesign ugt i32 %5, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.body
 
 vector.body:                                      ; preds = %bb.l
@@ -243,7 +244,7 @@ vector.body:                                      ; preds = %bb.l
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.aq, align 4
   store <4 x i32> %broadcast.splat, ptr %i.ar, align 4
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %6
   br i1 %cmp.n, label %_ZN6icu_7812_GLOBAL__N_19fillBlockEPjiij.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.l, %vector.body
@@ -646,9 +647,9 @@ _ZN6icu_7812_GLOBAL__N_117getAllSameOverlapEPKjiji.exit.i.i.i: ; preds = %bb.cl,
 
 .lr.ph198.preheader.i.i.i:                        ; preds = %_ZN6icu_7812_GLOBAL__N_117getAllSameOverlapEPKjiji.exit.i.i.i
   %i.sd = zext i32 %.199206.i.i.i to i64          ; 3 uses
-  %i.se = add i32 %.0.lcssa.i.i.i.i, -1
-  %7 = add i32 %i.se, %.1104.i.i.i
-  %8 = sub i32 %7, %.199206.i.i.i                 ; 2 uses
+  %i.se = add i32 %.0.lcssa.i.i.i.i, %.1104.i.i.i
+  %7 = xor i32 %.199206.i.i.i, -1
+  %8 = add i32 %i.se, %7                          ; 2 uses
   %i.sf = zext i32 %8 to i64
   %i.sg = add nuw nsw i64 %i.sf, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %8, 7

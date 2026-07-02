@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.o = add nuw nsw i32 %2, 1                    ; 4 uses
-  %i.p = and i32 %1, 31                           ; 5 uses
+  %i.p = and i32 %1, 31                           ; 4 uses
   %.not119 = icmp eq i32 %i.p, 0
   br i1 %.not119, label %_ZL9fillBlockPjiijja.exit, label %bb.h
 
@@ -228,11 +228,12 @@ bb.j:                                             ; preds = %bb.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.g, i64 144136
   %i.aa = load i32, ptr %i.z, align 8             ; 2 uses
   %i.ab = shl nuw nsw i32 %i.p, 2
-  %.idx = zext nneg i32 %i.ab to i64              ; 18 uses
+  %.idx = zext nneg i32 %i.ab to i64              ; 17 uses
   %.not.i = icmp eq i8 %4, 0
-  %6 = lshr exact i64 %.idx, 2
-  %7 = sub nuw nsw i64 32, %6                     ; 4 uses
-  %min.iters.check205 = icmp samesign ugt i32 %i.p, 24 ; 2 uses
+  %6 = and i32 %1, 31                             ; 2 uses
+  %narrow340 = sub nuw nsw i32 32, %6
+  %7 = zext nneg i32 %narrow340 to i64            ; 4 uses
+  %min.iters.check205 = icmp samesign ugt i32 %6, 24 ; 2 uses
   br i1 %.not.i, label %.lr.ph19.i.preheader, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.j
@@ -269,7 +270,7 @@ vector.body.2:                                    ; preds = %vector.body.1
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.2, %vector.body.1, %vector.ph
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %7
   br i1 %cmp.n, label %_ZL9fillBlockPjiijja.exit, label %.lr.ph.i.preheader348
 
 .lr.ph.i.preheader348:                            ; preds = %.lr.ph.i.preheader, %middle.block
@@ -547,7 +548,7 @@ pred.store.if226.2:                               ; preds = %pred.store.continue
   br label %middle.block229
 
 middle.block229:                                  ; preds = %pred.store.continue225.2, %pred.store.if226.2, %pred.store.continue227.1, %pred.store.continue227
-  %cmp.n230 = icmp eq i64 %7, %n.vec208
+  %cmp.n230 = icmp eq i64 %n.vec208, %7
   br i1 %cmp.n230, label %_ZL9fillBlockPjiijja.exit, label %.lr.ph19.i.preheader347
 
 .lr.ph19.i.preheader347:                          ; preds = %.lr.ph19.i.preheader, %middle.block229

@@ -203,12 +203,11 @@ bb.a:
   %i.b = ptrtoaddr ptr %1 to i64
   %i.c = sdiv i32 %0, 2                           ; 2 uses
   %i.d = sext i32 %i.c to i64                     ; 4 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %0, i32 1) ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %0, i32 1) ; 3 uses
   %i.e = add nuw i32 %smax, 1
   %invariant.gep = getelementptr [8 x i8], ptr %1, i64 %i.d ; 2 uses
   %wide.trip.count = zext i32 %i.e to i64
   %i.f = sub i64 %i.b, %i.a
-  %5 = zext nneg i32 %smax to i64                 ; 4 uses
   %scevgep119 = getelementptr i8, ptr %2, i64 4
   %i.g = shl nsw i64 %i.d, 3                      ; 2 uses
   %scevgep128 = getelementptr i8, ptr %1, i64 %i.g
@@ -224,13 +223,15 @@ bb.a:
   %scevgep150 = getelementptr i8, ptr %1, i64 4
   %scevgep152 = getelementptr i8, ptr %1, i64 8
   %scevgep154 = getelementptr i8, ptr %3, i64 16
+  %5 = zext nneg i32 %smax to i64                 ; 2 uses
   %i.i = add nuw nsw i64 %5, 1
+  %6 = zext nneg i32 %smax to i64                 ; 2 uses
   %min.iters.check = icmp slt i32 %0, 4
   %diff.check = icmp ult i64 %i.f, 32
   %or.cond = or i1 %min.iters.check, %diff.check
-  %n.vec = and i64 %5, 2147483644                 ; 3 uses
+  %n.vec = and i64 %6, 2147483644                 ; 3 uses
   %i.j = or disjoint i64 %n.vec, 1
-  %cmp.n = icmp eq i64 %n.vec, %5
+  %cmp.n = icmp eq i64 %n.vec, %6
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
