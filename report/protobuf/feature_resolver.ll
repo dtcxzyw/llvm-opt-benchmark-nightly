@@ -203,13 +203,11 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google
 
 .lr.ph.i47.preheader:                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE10transfer_nEmmmPSB_PS9_.exit
   %i.ay = zext i8 %i.ar to i64
-  %4 = shl nuw nsw i64 %i.ay, 2
-  %i.az = add nsw i64 %4, -4
-  %5 = shl nuw nsw i64 %i.av, 2
-  %6 = sub nsw i64 %i.az, %5                      ; 2 uses
-  %7 = lshr exact i64 %6, 2
-  %i.ba = add nuw nsw i64 %7, 1                   ; 2 uses
-  %min.iters.check66 = icmp ult i64 %6, 28
+  %4 = sub nsw i64 %i.ay, %i.av
+  %i.az = add nsw i64 %4, 4611686018427387903
+  %5 = and i64 %i.az, 4611686018427387903         ; 2 uses
+  %i.ba = add nuw nsw i64 %5, 1                   ; 2 uses
+  %min.iters.check66 = icmp samesign ult i64 %5, 7
   br i1 %min.iters.check66, label %.lr.ph.i47.preheader81, label %vector.ph67
 
 vector.ph67:                                      ; preds = %.lr.ph.i47.preheader

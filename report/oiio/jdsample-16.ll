@@ -202,19 +202,19 @@ bb.a:
   %i.g = add nsw i32 %i.c, -1
   %i.h = lshr i32 %i.g, 1
   %i.i = add nuw nsw i32 %i.h, 1
-  %wide.trip.count = zext nneg i32 %i.i to i64
-  %i.j = zext i32 %i.f to i64                     ; 2 uses
+  %i.j = zext nneg i32 %i.i to i64
   %i.k = zext i32 %i.f to i64                     ; 2 uses
   %min.iters.check59 = icmp ult i32 %i.f, 8
   %n.vec62 = and i64 %i.k, 4294967288             ; 4 uses
   %i.l = trunc nuw i64 %n.vec62 to i32
   %i.m = shl nuw nsw i64 %n.vec62, 1              ; 3 uses
   %cmp.n72 = icmp eq i64 %n.vec62, %i.k
+  %4 = zext i32 %i.f to i64                       ; 2 uses
   %min.iters.check = icmp ult i32 %i.f, 8
-  %n.vec = and i64 %i.j, 4294967288               ; 4 uses
+  %n.vec = and i64 %4, 4294967288                 ; 4 uses
   %i.n = trunc nuw i64 %n.vec to i32
   %i.o = shl nuw nsw i64 %n.vec, 1                ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %i.j
+  %cmp.n = icmp eq i64 %n.vec, %4
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us.us.1
@@ -462,7 +462,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 ._crit_edge.us.us.1:                              ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next.1 = add nsw i64 %i.s, 2
   %indvars.iv.next41 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond43.not = icmp eq i64 %indvars.iv.next41, %wide.trip.count
+  %exitcond43.not = icmp eq i64 %indvars.iv.next41, %i.j
   br i1 %exitcond43.not, label %._crit_edge, label %.preheader.us, !llvm.loop !103
 
 ._crit_edge:                                      ; preds = %._crit_edge.us.us.1, %.preheader.lr.ph, %bb.a
@@ -480,7 +480,7 @@ bb.a:
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !63   ; 3 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !63   ; 2 uses
   %i.g = add i32 %i.f, -2                         ; 11 uses
   %.not53 = icmp eq i32 %i.g, 0
   %i.h = add nsw i32 %i.c, -1
@@ -490,14 +490,12 @@ bb.a:
   br i1 %.not53, label %.preheader.us, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.k = add i32 %i.f, -3
+  %i.k = add i32 %i.f, -3                         ; 2 uses
   %i.l = zext i32 %i.k to i64                     ; 2 uses
   %i.m = shl nuw nsw i64 %i.l, 2
   %i.n = shl nuw nsw i64 %i.l, 1
   %i.o = add nuw nsw i64 %i.n, 6                  ; 2 uses
-  %4 = zext i32 %i.g to i64                       ; 2 uses
-  %5 = add i32 %i.f, -3
-  %i.p = zext i32 %5 to i64                       ; 2 uses
+  %i.p = zext i32 %i.k to i64                     ; 2 uses
   %i.q = shl nuw nsw i64 %i.p, 2
   %i.r = shl nuw nsw i64 %i.p, 1
   %i.s = add nuw nsw i64 %i.r, 6                  ; 2 uses
@@ -509,6 +507,7 @@ bb.a:
   %i.w = sub i32 %i.g, %i.v
   %i.x = shl nuw nsw i64 %n.vec120, 1             ; 2 uses
   %cmp.n138 = icmp eq i64 %n.vec120, %i.t
+  %4 = zext i32 %i.g to i64                       ; 2 uses
   %min.iters.check = icmp ult i32 %i.g, 8
   %n.vec = and i64 %4, 4294967292                 ; 5 uses
   %i.y = shl nuw nsw i64 %n.vec, 2                ; 2 uses
