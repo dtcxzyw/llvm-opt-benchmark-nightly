@@ -43,7 +43,7 @@ bb.a:
   %i.l = zext i32 %1 to i64                       ; 2 uses
   %i.m = icmp ugt i64 %i.h, %i.l
   tail call void @llvm.assume(i1 %i.m)
-  %i.n = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %i.l ; 6 uses
+  %i.n = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %i.l ; 9 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 20
   %i.p = load i8, ptr %i.o, align 4               ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 20
@@ -65,7 +65,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.z = load ptr, ptr %i.k, align 8              ; 14 uses
-  %3 = load ptr, ptr %i.n, align 8                ; 13 uses
   switch i8 %i.p, label %bb.z [
     i8 1, label %bb.d
     i8 2, label %bb.h
@@ -74,6 +73,7 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %3 = load ptr, ptr %i.n, align 8                ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8            ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -171,8 +171,9 @@ _ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.thr
   br i1 %.not39.not.i, label %bb.g, label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit, !llvm.loop !10
 
 bb.h:                                             ; preds = %bb.c
+  %4 = load ptr, ptr %i.n, align 8                ; 4 uses
   %i.bl = load i16, ptr %i.z, align 8
-  %i.bm = load i16, ptr %3, align 8               ; 3 uses
+  %i.bm = load i16, ptr %4, align 8               ; 3 uses
   %i.bn = icmp ult i16 %i.bl, %i.bm
   br i1 %i.bn, label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit, label %.preheader.i36
 
@@ -182,9 +183,9 @@ bb.h:                                             ; preds = %bb.c
 
 .lr.ph.i37:                                       ; preds = %.preheader.i36
   %i.bo = getelementptr inbounds nuw i8, ptr %i.z, i64 24
-  %i.bp = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.bq = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %i.br = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.br = getelementptr inbounds nuw i8, ptr %4, i64 16
   br label %bb.i
 
 bb.i:                                             ; preds = %.critedge56.i, %.lr.ph.i37
@@ -222,7 +223,7 @@ _ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i38
   br i1 %i.cg, label %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit..critedge56_crit_edge.i, label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit
 
 _ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit..critedge56_crit_edge.i: ; preds = %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i38
-  %.pre.i39 = load i16, ptr %3, align 8
+  %.pre.i39 = load i16, ptr %4, align 8
   br label %.critedge56.i
 
 .critedge56.i:                                    ; preds = %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit..critedge56_crit_edge.i, %.critedge.i, %bb.k
@@ -320,8 +321,9 @@ _ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.
   br label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit
 
 bb.q:                                             ; preds = %bb.c
+  %5 = load ptr, ptr %i.n, align 8                ; 3 uses
   %i.eh = load i8, ptr %i.z, align 1, !range !5, !noundef !6 ; 2 uses
-  %i.ei = load i8, ptr %3, align 1, !range !5, !noundef !6 ; 2 uses
+  %i.ei = load i8, ptr %5, align 1, !range !5, !noundef !6 ; 2 uses
   %i.ej = and i8 %i.ei, %i.eh
   %or.cond.not.i = icmp eq i8 %i.ej, 0
   br i1 %or.cond.not.i, label %bb.s, label %bb.r
@@ -329,7 +331,7 @@ bb.q:                                             ; preds = %bb.c
 bb.r:                                             ; preds = %bb.q
   %i.ek = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.ek, align 4
-  %i.el = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.el = getelementptr inbounds nuw i8, ptr %5, i64 4
   %.sroa.0.0.copyload.i23.i = load i32, ptr %i.el, align 4
   %i.em = tail call noundef zeroext i1 @_ZN2v88internal4wasm15EquivalentTypesENS1_9ValueTypeES2_PKNS1_10WasmModuleE(i32 %.sroa.0.0.copyload.i.i, i32 %.sroa.0.0.copyload.i23.i, ptr noundef nonnull readonly %2)
   br label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit
@@ -342,7 +344,7 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.s
   %i.eo = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %.sroa.0.0.copyload.i24.i = load i32, ptr %i.eo, align 4 ; 2 uses
-  %i.ep = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.ep = getelementptr inbounds nuw i8, ptr %5, i64 4
   %.sroa.0.0.copyload.i25.i = load i32, ptr %i.ep, align 4 ; 2 uses
   %i.eq = icmp eq i32 %.sroa.0.0.copyload.i24.i, %.sroa.0.0.copyload.i25.i
   br i1 %i.eq, label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit, label %bb.u, !prof !7
@@ -364,6 +366,7 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 _ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit.i43: ; preds = %bb.v
+  %6 = load ptr, ptr %i.n, align 8
   %i.ev = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %i.es ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 20
   %i.ex = load i8, ptr %i.ew, align 4
@@ -377,7 +380,7 @@ _ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit.i43: ; p
   %i.ff = or disjoint i32 %i.fe, %i.fc
   %i.fg = shl nuw nsw i32 %.sroa.0.0.copyload.i.i42, 8
   %i.fh = or i32 %i.ff, %i.fg                     ; 2 uses
-  %.sroa.0.0.copyload.i14.i = load i32, ptr %3, align 4 ; 3 uses
+  %.sroa.0.0.copyload.i14.i = load i32, ptr %6, align 4 ; 3 uses
   %i.fi = zext i32 %.sroa.0.0.copyload.i14.i to i64 ; 2 uses
   %i.fj = icmp ugt i64 %i.h, %i.fi
   tail call void @llvm.assume(i1 %i.fj)
