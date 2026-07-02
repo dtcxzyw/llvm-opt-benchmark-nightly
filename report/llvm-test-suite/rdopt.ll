@@ -203,7 +203,6 @@ bb.a:
 
 .split330.preheader:                              ; preds = %.preheader
   %i.u = sext i32 %i.k to i64                     ; 3 uses
-  %.pre435 = load ptr, ptr @enc_picture, align 8, !tbaa !81
   %i.v = or disjoint i32 %i.k, 1
   %i.w = or disjoint i64 %i.u, 1                  ; 2 uses
   br label %.split330
@@ -606,7 +605,6 @@ bb.s:                                             ; preds = %.thread293.us.3
   br label %.split311.us
 
 .split:                                           ; preds = %bb.o
-  %.pre419 = load ptr, ptr @enc_picture, align 8, !tbaa !81
   %i.bdo = load ptr, ptr @img, align 8, !tbaa !16 ; 2 uses
   %i.bdp = getelementptr inbounds nuw i8, ptr %i.bdo, i64 168
   %i.bdq = load i32, ptr %i.bdp, align 8, !tbaa !57
@@ -619,8 +617,9 @@ bb.s:                                             ; preds = %.thread293.us.3
   %i.bdx = getelementptr inbounds [8 x i8], ptr %i.bdw, i64 %i.c
   %i.bdy = load ptr, ptr %i.bdx, align 8, !tbaa !64
   %i.bdz = getelementptr inbounds nuw i8, ptr %i.bdy, i64 16
-  %i.bea = load ptr, ptr %i.bdz, align 8, !tbaa !66 ; 2 uses
-  %i.beb = getelementptr inbounds nuw i8, ptr %.pre419, i64 6488
+  %7 = load ptr, ptr %i.bdz, align 8, !tbaa !66   ; 2 uses
+  %i.bea = load ptr, ptr @enc_picture, align 8, !tbaa !81
+  %i.beb = getelementptr inbounds nuw i8, ptr %i.bea, i64 6488
   %i.bec = load ptr, ptr %i.beb, align 8, !tbaa !135
   %i.bed = load ptr, ptr %i.bec, align 8, !tbaa !44
   %i.bee = getelementptr inbounds [8 x i8], ptr %i.bed, i64 %i.asy
@@ -628,7 +627,7 @@ bb.s:                                             ; preds = %.thread293.us.3
   %i.beg = sext i32 %i.bdq to i64                 ; 8 uses
   %i.beh = getelementptr inbounds i8, ptr %i.bef, i64 %i.beg
   store i8 %i.d, ptr %i.beh, align 1, !tbaa !46
-  %i.bei = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
+  %i.bei = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 4 uses
   %i.bej = getelementptr inbounds nuw i8, ptr %i.bei, i64 24
   %i.bek = getelementptr inbounds [264 x i8], ptr %i.bej, i64 %i.e
   %i.bel = getelementptr inbounds [8 x i8], ptr %i.bek, i64 %i.c
@@ -640,7 +639,7 @@ bb.s:                                             ; preds = %.thread293.us.3
   %i.ber = load ptr, ptr %i.beq, align 8, !tbaa !144
   %i.bes = getelementptr inbounds [8 x i8], ptr %i.ber, i64 %i.beg
   store i64 %i.bem, ptr %i.bes, align 8, !tbaa !147
-  %i.bet = load i16, ptr %i.bea, align 2, !tbaa !68
+  %i.bet = load i16, ptr %7, align 2, !tbaa !68
   %i.beu = getelementptr inbounds nuw i8, ptr %i.bei, i64 6512
   %i.bev = load ptr, ptr %i.beu, align 8, !tbaa !163
   %i.bew = load ptr, ptr %i.bev, align 8, !tbaa !62
@@ -649,7 +648,7 @@ bb.s:                                             ; preds = %.thread293.us.3
   %i.bez = getelementptr inbounds [8 x i8], ptr %i.bey, i64 %i.beg
   %i.bfa = load ptr, ptr %i.bez, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bet, ptr %i.bfa, align 2, !tbaa !68
-  %i.bfb = getelementptr inbounds nuw i8, ptr %i.bea, i64 2
+  %i.bfb = getelementptr inbounds nuw i8, ptr %7, i64 2
   %i.bfc = load i16, ptr %i.bfb, align 2, !tbaa !68
   %i.bfd = getelementptr inbounds nuw i8, ptr %i.bfa, i64 2
   store i16 %i.bfc, ptr %i.bfd, align 2, !tbaa !68
@@ -667,7 +666,7 @@ bb.t:                                             ; preds = %.split
 
 bb.u:                                             ; preds = %bb.t
   store i8 -1, ptr %i.bfk, align 1, !tbaa !46
-  %i.bfl = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bfl = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 2 uses
   %i.bfm = getelementptr inbounds nuw i8, ptr %i.bfl, i64 6496
   %i.bfn = load ptr, ptr %i.bfm, align 8, !tbaa !141
   %i.bfo = getelementptr inbounds nuw i8, ptr %i.bfn, i64 8
@@ -689,7 +688,6 @@ bb.u:                                             ; preds = %bb.t
 
 .thread293:                                       ; preds = %bb.t
   store i8 %i.g, ptr %i.bfk, align 1, !tbaa !46
-  %.pre = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
   br i1 %i.h, label %bb.v, label %.split.1
 
 bb.v:                                             ; preds = %.thread293
@@ -704,12 +702,13 @@ bb.v:                                             ; preds = %.thread293
   %i.bgj = getelementptr inbounds nuw [8 x i8], ptr %i.bgi, i64 %i.i
   %i.bgk = load ptr, ptr %i.bgj, align 8, !tbaa !64
   %i.bgl = getelementptr inbounds nuw i8, ptr %i.bgk, i64 16
-  %i.bgm = load ptr, ptr %i.bgl, align 8, !tbaa !66 ; 2 uses
-  %i.bgn = getelementptr [264 x i8], ptr %.pre, i64 %i.e
+  %8 = load ptr, ptr %i.bgl, align 8, !tbaa !66   ; 2 uses
+  %i.bgm = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bgn = getelementptr [264 x i8], ptr %i.bgm, i64 %i.e
   %i.bgo = getelementptr i8, ptr %i.bgn, i64 288
   %i.bgp = getelementptr inbounds nuw [8 x i8], ptr %i.bgo, i64 %i.i
   %i.bgq = load i64, ptr %i.bgp, align 8, !tbaa !147
-  %i.bgr = getelementptr inbounds nuw i8, ptr %.pre, i64 6496
+  %i.bgr = getelementptr inbounds nuw i8, ptr %i.bgm, i64 6496
   %i.bgs = load ptr, ptr %i.bgr, align 8, !tbaa !141
   %i.bgt = getelementptr inbounds nuw i8, ptr %i.bgs, i64 8
   %i.bgu = load ptr, ptr %i.bgt, align 8, !tbaa !142
@@ -717,8 +716,8 @@ bb.v:                                             ; preds = %.thread293
   %i.bgw = load ptr, ptr %i.bgv, align 8, !tbaa !144
   %i.bgx = getelementptr inbounds [8 x i8], ptr %i.bgw, i64 %i.beg
   store i64 %i.bgq, ptr %i.bgx, align 8, !tbaa !147
-  %i.bgy = load i16, ptr %i.bgm, align 2, !tbaa !68
-  %i.bgz = getelementptr inbounds nuw i8, ptr %.pre, i64 6512
+  %i.bgy = load i16, ptr %8, align 2, !tbaa !68
+  %i.bgz = getelementptr inbounds nuw i8, ptr %i.bgm, i64 6512
   %i.bha = load ptr, ptr %i.bgz, align 8, !tbaa !163
   %i.bhb = getelementptr inbounds nuw i8, ptr %i.bha, i64 8
   %i.bhc = load ptr, ptr %i.bhb, align 8, !tbaa !62
@@ -727,20 +726,18 @@ bb.v:                                             ; preds = %.thread293
   %i.bhf = getelementptr inbounds [8 x i8], ptr %i.bhe, i64 %i.beg
   %i.bhg = load ptr, ptr %i.bhf, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bgy, ptr %i.bhg, align 2, !tbaa !68
-  %i.bhh = getelementptr inbounds nuw i8, ptr %i.bgm, i64 2
+  %i.bhh = getelementptr inbounds nuw i8, ptr %8, i64 2
   %i.bhi = load i16, ptr %i.bhh, align 2, !tbaa !68
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.u, %bb.v
   %.sink463.a = phi ptr [ %i.bhg, %bb.v ], [ %i.bga, %bb.u ]
   %.sink = phi i16 [ %i.bhi, %bb.v ], [ 0, %bb.u ]
-  %.ph = phi ptr [ %.pre, %bb.v ], [ %i.bfl, %bb.u ]
   %i.bhj = getelementptr inbounds nuw i8, ptr %.sink463.a, i64 2
   store i16 %.sink, ptr %i.bhj, align 2, !tbaa !68
   br label %.split.1
 
 .split.1:                                         ; preds = %.sink.split, %.split, %.thread293
-  %7 = phi ptr [ %i.bei, %.split ], [ %.pre, %.thread293 ], [ %.ph, %.sink.split ]
   %i.bhk = load ptr, ptr @img, align 8, !tbaa !16 ; 2 uses
   %i.bhl = getelementptr inbounds nuw i8, ptr %i.bhk, i64 168
   %i.bhm = load i32, ptr %i.bhl, align 8, !tbaa !57
@@ -755,8 +752,9 @@ bb.v:                                             ; preds = %.thread293
   %i.bhv = getelementptr inbounds [8 x i8], ptr %i.bhu, i64 %i.c
   %i.bhw = load ptr, ptr %i.bhv, align 8, !tbaa !64
   %i.bhx = getelementptr inbounds nuw i8, ptr %i.bhw, i64 16
-  %i.bhy = load ptr, ptr %i.bhx, align 8, !tbaa !66 ; 2 uses
-  %i.bhz = getelementptr inbounds nuw i8, ptr %7, i64 6488
+  %9 = load ptr, ptr %i.bhx, align 8, !tbaa !66   ; 2 uses
+  %i.bhy = load ptr, ptr @enc_picture, align 8, !tbaa !81
+  %i.bhz = getelementptr inbounds nuw i8, ptr %i.bhy, i64 6488
   %i.bia = load ptr, ptr %i.bhz, align 8, !tbaa !135
   %i.bib = load ptr, ptr %i.bia, align 8, !tbaa !44
   %i.bic = getelementptr inbounds [8 x i8], ptr %i.bib, i64 %i.asy
@@ -764,7 +762,7 @@ bb.v:                                             ; preds = %.thread293
   %i.bie = sext i32 %i.bhn to i64                 ; 8 uses
   %i.bif = getelementptr inbounds i8, ptr %i.bid, i64 %i.bie
   store i8 %i.d, ptr %i.bif, align 1, !tbaa !46
-  %i.big = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
+  %i.big = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 4 uses
   %i.bih = getelementptr inbounds nuw i8, ptr %i.big, i64 24
   %i.bii = getelementptr inbounds [264 x i8], ptr %i.bih, i64 %i.e
   %i.bij = getelementptr inbounds [8 x i8], ptr %i.bii, i64 %i.c
@@ -776,7 +774,7 @@ bb.v:                                             ; preds = %.thread293
   %i.bip = load ptr, ptr %i.bio, align 8, !tbaa !144
   %i.biq = getelementptr inbounds [8 x i8], ptr %i.bip, i64 %i.bie
   store i64 %i.bik, ptr %i.biq, align 8, !tbaa !147
-  %i.bir = load i16, ptr %i.bhy, align 2, !tbaa !68
+  %i.bir = load i16, ptr %9, align 2, !tbaa !68
   %i.bis = getelementptr inbounds nuw i8, ptr %i.big, i64 6512
   %i.bit = load ptr, ptr %i.bis, align 8, !tbaa !163
   %i.biu = load ptr, ptr %i.bit, align 8, !tbaa !62
@@ -785,7 +783,7 @@ bb.v:                                             ; preds = %.thread293
   %i.bix = getelementptr inbounds [8 x i8], ptr %i.biw, i64 %i.bie
   %i.biy = load ptr, ptr %i.bix, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bir, ptr %i.biy, align 2, !tbaa !68
-  %i.biz = getelementptr inbounds nuw i8, ptr %i.bhy, i64 2
+  %i.biz = getelementptr inbounds nuw i8, ptr %9, i64 2
   %i.bja = load i16, ptr %i.biz, align 2, !tbaa !68
   %i.bjb = getelementptr inbounds nuw i8, ptr %i.biy, i64 2
   store i16 %i.bja, ptr %i.bjb, align 2, !tbaa !68
@@ -803,7 +801,6 @@ bb.w:                                             ; preds = %.split.1
 
 .thread293.1:                                     ; preds = %bb.w
   store i8 %i.g, ptr %i.bji, align 1, !tbaa !46
-  %.pre.1 = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
   br i1 %i.h, label %bb.x, label %.split.2
 
 bb.x:                                             ; preds = %.thread293.1
@@ -819,12 +816,13 @@ bb.x:                                             ; preds = %.thread293.1
   %i.bjs = getelementptr inbounds nuw [8 x i8], ptr %i.bjr, i64 %i.i
   %i.bjt = load ptr, ptr %i.bjs, align 8, !tbaa !64
   %i.bju = getelementptr inbounds nuw i8, ptr %i.bjt, i64 16
-  %i.bjv = load ptr, ptr %i.bju, align 8, !tbaa !66 ; 2 uses
-  %i.bjw = getelementptr [264 x i8], ptr %.pre.1, i64 %i.e
+  %10 = load ptr, ptr %i.bju, align 8, !tbaa !66  ; 2 uses
+  %i.bjv = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bjw = getelementptr [264 x i8], ptr %i.bjv, i64 %i.e
   %i.bjx = getelementptr i8, ptr %i.bjw, i64 288
   %i.bjy = getelementptr inbounds nuw [8 x i8], ptr %i.bjx, i64 %i.i
   %i.bjz = load i64, ptr %i.bjy, align 8, !tbaa !147
-  %i.bka = getelementptr inbounds nuw i8, ptr %.pre.1, i64 6496
+  %i.bka = getelementptr inbounds nuw i8, ptr %i.bjv, i64 6496
   %i.bkb = load ptr, ptr %i.bka, align 8, !tbaa !141
   %i.bkc = getelementptr inbounds nuw i8, ptr %i.bkb, i64 8
   %i.bkd = load ptr, ptr %i.bkc, align 8, !tbaa !142
@@ -832,8 +830,8 @@ bb.x:                                             ; preds = %.thread293.1
   %i.bkf = load ptr, ptr %i.bke, align 8, !tbaa !144
   %i.bkg = getelementptr inbounds [8 x i8], ptr %i.bkf, i64 %i.bie
   store i64 %i.bjz, ptr %i.bkg, align 8, !tbaa !147
-  %i.bkh = load i16, ptr %i.bjv, align 2, !tbaa !68
-  %i.bki = getelementptr inbounds nuw i8, ptr %.pre.1, i64 6512
+  %i.bkh = load i16, ptr %10, align 2, !tbaa !68
+  %i.bki = getelementptr inbounds nuw i8, ptr %i.bjv, i64 6512
   %i.bkj = load ptr, ptr %i.bki, align 8, !tbaa !163
   %i.bkk = getelementptr inbounds nuw i8, ptr %i.bkj, i64 8
   %i.bkl = load ptr, ptr %i.bkk, align 8, !tbaa !62
@@ -842,13 +840,13 @@ bb.x:                                             ; preds = %.thread293.1
   %i.bko = getelementptr inbounds [8 x i8], ptr %i.bkn, i64 %i.bie
   %i.bkp = load ptr, ptr %i.bko, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bkh, ptr %i.bkp, align 2, !tbaa !68
-  %i.bkq = getelementptr inbounds nuw i8, ptr %i.bjv, i64 2
+  %i.bkq = getelementptr inbounds nuw i8, ptr %10, i64 2
   %i.bkr = load i16, ptr %i.bkq, align 2, !tbaa !68
   br label %.sink.split.1
 
 bb.y:                                             ; preds = %bb.w
   store i8 -1, ptr %i.bji, align 1, !tbaa !46
-  %i.bks = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bks = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 2 uses
   %i.bkt = getelementptr inbounds nuw i8, ptr %i.bks, i64 6496
   %i.bku = load ptr, ptr %i.bkt, align 8, !tbaa !141
   %i.bkv = getelementptr inbounds nuw i8, ptr %i.bku, i64 8
@@ -871,13 +869,11 @@ bb.y:                                             ; preds = %bb.w
 .sink.split.1:                                    ; preds = %bb.y, %bb.x
   %.sink463.1 = phi ptr [ %i.bkp, %bb.x ], [ %i.blh, %bb.y ]
   %.sink.1 = phi i16 [ %i.bkr, %bb.x ], [ 0, %bb.y ]
-  %.ph.1 = phi ptr [ %.pre.1, %bb.x ], [ %i.bks, %bb.y ]
   %i.bli = getelementptr inbounds nuw i8, ptr %.sink463.1, i64 2
   store i16 %.sink.1, ptr %i.bli, align 2, !tbaa !68
   br label %.split.2
 
 .split.2:                                         ; preds = %.sink.split.1, %.thread293.1, %.split.1
-  %8 = phi ptr [ %i.big, %.split.1 ], [ %.pre.1, %.thread293.1 ], [ %.ph.1, %.sink.split.1 ]
   %i.blj = load ptr, ptr @img, align 8, !tbaa !16 ; 2 uses
   %i.blk = getelementptr inbounds nuw i8, ptr %i.blj, i64 168
   %i.bll = load i32, ptr %i.blk, align 8, !tbaa !57
@@ -892,8 +888,9 @@ bb.y:                                             ; preds = %bb.w
   %i.blu = getelementptr inbounds [8 x i8], ptr %i.blt, i64 %i.c
   %i.blv = load ptr, ptr %i.blu, align 8, !tbaa !64
   %i.blw = getelementptr inbounds nuw i8, ptr %i.blv, i64 16
-  %i.blx = load ptr, ptr %i.blw, align 8, !tbaa !66 ; 2 uses
-  %i.bly = getelementptr inbounds nuw i8, ptr %8, i64 6488
+  %11 = load ptr, ptr %i.blw, align 8, !tbaa !66  ; 2 uses
+  %i.blx = load ptr, ptr @enc_picture, align 8, !tbaa !81
+  %i.bly = getelementptr inbounds nuw i8, ptr %i.blx, i64 6488
   %i.blz = load ptr, ptr %i.bly, align 8, !tbaa !135
   %i.bma = load ptr, ptr %i.blz, align 8, !tbaa !44
   %i.bmb = getelementptr inbounds [8 x i8], ptr %i.bma, i64 %i.asy
@@ -901,7 +898,7 @@ bb.y:                                             ; preds = %bb.w
   %i.bmd = sext i32 %i.blm to i64                 ; 8 uses
   %i.bme = getelementptr inbounds i8, ptr %i.bmc, i64 %i.bmd
   store i8 %i.d, ptr %i.bme, align 1, !tbaa !46
-  %i.bmf = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
+  %i.bmf = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 4 uses
   %i.bmg = getelementptr inbounds nuw i8, ptr %i.bmf, i64 24
   %i.bmh = getelementptr inbounds [264 x i8], ptr %i.bmg, i64 %i.e
   %i.bmi = getelementptr inbounds [8 x i8], ptr %i.bmh, i64 %i.c
@@ -913,7 +910,7 @@ bb.y:                                             ; preds = %bb.w
   %i.bmo = load ptr, ptr %i.bmn, align 8, !tbaa !144
   %i.bmp = getelementptr inbounds [8 x i8], ptr %i.bmo, i64 %i.bmd
   store i64 %i.bmj, ptr %i.bmp, align 8, !tbaa !147
-  %i.bmq = load i16, ptr %i.blx, align 2, !tbaa !68
+  %i.bmq = load i16, ptr %11, align 2, !tbaa !68
   %i.bmr = getelementptr inbounds nuw i8, ptr %i.bmf, i64 6512
   %i.bms = load ptr, ptr %i.bmr, align 8, !tbaa !163
   %i.bmt = load ptr, ptr %i.bms, align 8, !tbaa !62
@@ -922,7 +919,7 @@ bb.y:                                             ; preds = %bb.w
   %i.bmw = getelementptr inbounds [8 x i8], ptr %i.bmv, i64 %i.bmd
   %i.bmx = load ptr, ptr %i.bmw, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bmq, ptr %i.bmx, align 2, !tbaa !68
-  %i.bmy = getelementptr inbounds nuw i8, ptr %i.blx, i64 2
+  %i.bmy = getelementptr inbounds nuw i8, ptr %11, i64 2
   %i.bmz = load i16, ptr %i.bmy, align 2, !tbaa !68
   %i.bna = getelementptr inbounds nuw i8, ptr %i.bmx, i64 2
   store i16 %i.bmz, ptr %i.bna, align 2, !tbaa !68
@@ -940,7 +937,6 @@ bb.z:                                             ; preds = %.split.2
 
 .thread293.2:                                     ; preds = %bb.z
   store i8 %i.g, ptr %i.bnh, align 1, !tbaa !46
-  %.pre.2 = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
   br i1 %i.h, label %bb.aa, label %.split.3
 
 bb.aa:                                            ; preds = %.thread293.2
@@ -956,12 +952,13 @@ bb.aa:                                            ; preds = %.thread293.2
   %i.bnr = getelementptr inbounds nuw [8 x i8], ptr %i.bnq, i64 %i.i
   %i.bns = load ptr, ptr %i.bnr, align 8, !tbaa !64
   %i.bnt = getelementptr inbounds nuw i8, ptr %i.bns, i64 16
-  %i.bnu = load ptr, ptr %i.bnt, align 8, !tbaa !66 ; 2 uses
-  %i.bnv = getelementptr [264 x i8], ptr %.pre.2, i64 %i.e
+  %12 = load ptr, ptr %i.bnt, align 8, !tbaa !66  ; 2 uses
+  %i.bnu = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bnv = getelementptr [264 x i8], ptr %i.bnu, i64 %i.e
   %i.bnw = getelementptr i8, ptr %i.bnv, i64 288
   %i.bnx = getelementptr inbounds nuw [8 x i8], ptr %i.bnw, i64 %i.i
   %i.bny = load i64, ptr %i.bnx, align 8, !tbaa !147
-  %i.bnz = getelementptr inbounds nuw i8, ptr %.pre.2, i64 6496
+  %i.bnz = getelementptr inbounds nuw i8, ptr %i.bnu, i64 6496
   %i.boa = load ptr, ptr %i.bnz, align 8, !tbaa !141
   %i.bob = getelementptr inbounds nuw i8, ptr %i.boa, i64 8
   %i.boc = load ptr, ptr %i.bob, align 8, !tbaa !142
@@ -969,8 +966,8 @@ bb.aa:                                            ; preds = %.thread293.2
   %i.boe = load ptr, ptr %i.bod, align 8, !tbaa !144
   %i.bof = getelementptr inbounds [8 x i8], ptr %i.boe, i64 %i.bmd
   store i64 %i.bny, ptr %i.bof, align 8, !tbaa !147
-  %i.bog = load i16, ptr %i.bnu, align 2, !tbaa !68
-  %i.boh = getelementptr inbounds nuw i8, ptr %.pre.2, i64 6512
+  %i.bog = load i16, ptr %12, align 2, !tbaa !68
+  %i.boh = getelementptr inbounds nuw i8, ptr %i.bnu, i64 6512
   %i.boi = load ptr, ptr %i.boh, align 8, !tbaa !163
   %i.boj = getelementptr inbounds nuw i8, ptr %i.boi, i64 8
   %i.bok = load ptr, ptr %i.boj, align 8, !tbaa !62
@@ -979,13 +976,13 @@ bb.aa:                                            ; preds = %.thread293.2
   %i.bon = getelementptr inbounds [8 x i8], ptr %i.bom, i64 %i.bmd
   %i.boo = load ptr, ptr %i.bon, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bog, ptr %i.boo, align 2, !tbaa !68
-  %i.bop = getelementptr inbounds nuw i8, ptr %i.bnu, i64 2
+  %i.bop = getelementptr inbounds nuw i8, ptr %12, i64 2
   %i.boq = load i16, ptr %i.bop, align 2, !tbaa !68
   br label %.sink.split.2
 
 bb.ab:                                            ; preds = %bb.z
   store i8 -1, ptr %i.bnh, align 1, !tbaa !46
-  %i.bor = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bor = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 2 uses
   %i.bos = getelementptr inbounds nuw i8, ptr %i.bor, i64 6496
   %i.bot = load ptr, ptr %i.bos, align 8, !tbaa !141
   %i.bou = getelementptr inbounds nuw i8, ptr %i.bot, i64 8
@@ -1008,13 +1005,11 @@ bb.ab:                                            ; preds = %bb.z
 .sink.split.2:                                    ; preds = %bb.ab, %bb.aa
   %.sink463.2 = phi ptr [ %i.boo, %bb.aa ], [ %i.bpg, %bb.ab ]
   %.sink.2 = phi i16 [ %i.boq, %bb.aa ], [ 0, %bb.ab ]
-  %.ph.2 = phi ptr [ %.pre.2, %bb.aa ], [ %i.bor, %bb.ab ]
   %i.bph = getelementptr inbounds nuw i8, ptr %.sink463.2, i64 2
   store i16 %.sink.2, ptr %i.bph, align 2, !tbaa !68
   br label %.split.3
 
 .split.3:                                         ; preds = %.sink.split.2, %.thread293.2, %.split.2
-  %9 = phi ptr [ %i.bmf, %.split.2 ], [ %.pre.2, %.thread293.2 ], [ %.ph.2, %.sink.split.2 ]
   %i.bpi = load ptr, ptr @img, align 8, !tbaa !16 ; 2 uses
   %i.bpj = getelementptr inbounds nuw i8, ptr %i.bpi, i64 168
   %i.bpk = load i32, ptr %i.bpj, align 8, !tbaa !57
@@ -1029,8 +1024,9 @@ bb.ab:                                            ; preds = %bb.z
   %i.bpt = getelementptr inbounds [8 x i8], ptr %i.bps, i64 %i.c
   %i.bpu = load ptr, ptr %i.bpt, align 8, !tbaa !64
   %i.bpv = getelementptr inbounds nuw i8, ptr %i.bpu, i64 16
-  %i.bpw = load ptr, ptr %i.bpv, align 8, !tbaa !66 ; 2 uses
-  %i.bpx = getelementptr inbounds nuw i8, ptr %9, i64 6488
+  %13 = load ptr, ptr %i.bpv, align 8, !tbaa !66  ; 2 uses
+  %i.bpw = load ptr, ptr @enc_picture, align 8, !tbaa !81
+  %i.bpx = getelementptr inbounds nuw i8, ptr %i.bpw, i64 6488
   %i.bpy = load ptr, ptr %i.bpx, align 8, !tbaa !135
   %i.bpz = load ptr, ptr %i.bpy, align 8, !tbaa !44
   %i.bqa = getelementptr inbounds [8 x i8], ptr %i.bpz, i64 %i.asy
@@ -1050,7 +1046,7 @@ bb.ab:                                            ; preds = %bb.z
   %i.bqn = load ptr, ptr %i.bqm, align 8, !tbaa !144
   %i.bqo = getelementptr inbounds [8 x i8], ptr %i.bqn, i64 %i.bqc
   store i64 %i.bqi, ptr %i.bqo, align 8, !tbaa !147
-  %i.bqp = load i16, ptr %i.bpw, align 2, !tbaa !68
+  %i.bqp = load i16, ptr %13, align 2, !tbaa !68
   %i.bqq = getelementptr inbounds nuw i8, ptr %i.bqe, i64 6512
   %i.bqr = load ptr, ptr %i.bqq, align 8, !tbaa !163
   %i.bqs = load ptr, ptr %i.bqr, align 8, !tbaa !62
@@ -1059,7 +1055,7 @@ bb.ab:                                            ; preds = %bb.z
   %i.bqv = getelementptr inbounds [8 x i8], ptr %i.bqu, i64 %i.bqc
   %i.bqw = load ptr, ptr %i.bqv, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bqp, ptr %i.bqw, align 2, !tbaa !68
-  %i.bqx = getelementptr inbounds nuw i8, ptr %i.bpw, i64 2
+  %i.bqx = getelementptr inbounds nuw i8, ptr %13, i64 2
   %i.bqy = load i16, ptr %i.bqx, align 2, !tbaa !68
   %i.bqz = getelementptr inbounds nuw i8, ptr %i.bqw, i64 2
   store i16 %i.bqy, ptr %i.bqz, align 2, !tbaa !68
@@ -1080,7 +1076,6 @@ bb.ac:                                            ; preds = %.split.3
   br i1 %i.h, label %bb.ad, label %.split311.us
 
 bb.ad:                                            ; preds = %.thread293.3
-  %.pre.3 = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
   %i.brh = load ptr, ptr @img, align 8, !tbaa !16
   %i.bri = getelementptr inbounds nuw i8, ptr %i.brh, i64 14384
   %i.brj = load ptr, ptr %i.bri, align 8, !tbaa !55
@@ -1093,12 +1088,13 @@ bb.ad:                                            ; preds = %.thread293.3
   %i.brq = getelementptr inbounds nuw [8 x i8], ptr %i.brp, i64 %i.i
   %i.brr = load ptr, ptr %i.brq, align 8, !tbaa !64
   %i.brs = getelementptr inbounds nuw i8, ptr %i.brr, i64 16
-  %i.brt = load ptr, ptr %i.brs, align 8, !tbaa !66 ; 2 uses
-  %i.bru = getelementptr [264 x i8], ptr %.pre.3, i64 %i.e
+  %14 = load ptr, ptr %i.brs, align 8, !tbaa !66  ; 2 uses
+  %i.brt = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bru = getelementptr [264 x i8], ptr %i.brt, i64 %i.e
   %i.brv = getelementptr i8, ptr %i.bru, i64 288
   %i.brw = getelementptr inbounds nuw [8 x i8], ptr %i.brv, i64 %i.i
   %i.brx = load i64, ptr %i.brw, align 8, !tbaa !147
-  %i.bry = getelementptr inbounds nuw i8, ptr %.pre.3, i64 6496
+  %i.bry = getelementptr inbounds nuw i8, ptr %i.brt, i64 6496
   %i.brz = load ptr, ptr %i.bry, align 8, !tbaa !141
   %i.bsa = getelementptr inbounds nuw i8, ptr %i.brz, i64 8
   %i.bsb = load ptr, ptr %i.bsa, align 8, !tbaa !142
@@ -1106,8 +1102,8 @@ bb.ad:                                            ; preds = %.thread293.3
   %i.bsd = load ptr, ptr %i.bsc, align 8, !tbaa !144
   %i.bse = getelementptr inbounds [8 x i8], ptr %i.bsd, i64 %i.bqc
   store i64 %i.brx, ptr %i.bse, align 8, !tbaa !147
-  %i.bsf = load i16, ptr %i.brt, align 2, !tbaa !68
-  %i.bsg = getelementptr inbounds nuw i8, ptr %.pre.3, i64 6512
+  %i.bsf = load i16, ptr %14, align 2, !tbaa !68
+  %i.bsg = getelementptr inbounds nuw i8, ptr %i.brt, i64 6512
   %i.bsh = load ptr, ptr %i.bsg, align 8, !tbaa !163
   %i.bsi = getelementptr inbounds nuw i8, ptr %i.bsh, i64 8
   %i.bsj = load ptr, ptr %i.bsi, align 8, !tbaa !62
@@ -1116,7 +1112,7 @@ bb.ad:                                            ; preds = %.thread293.3
   %i.bsm = getelementptr inbounds [8 x i8], ptr %i.bsl, i64 %i.bqc
   %i.bsn = load ptr, ptr %i.bsm, align 8, !tbaa !66 ; 2 uses
   store i16 %i.bsf, ptr %i.bsn, align 2, !tbaa !68
-  %i.bso = getelementptr inbounds nuw i8, ptr %i.brt, i64 2
+  %i.bso = getelementptr inbounds nuw i8, ptr %14, i64 2
   %i.bsp = load i16, ptr %i.bso, align 2, !tbaa !68
   br label %.sink.split.3
 
@@ -1153,7 +1149,6 @@ bb.ae:                                            ; preds = %bb.ac
   br i1 %i.asq, label %bb.o, label %.loopexit, !llvm.loop !288
 
 .split330:                                        ; preds = %.split330.preheader, %.split332
-  %10 = phi ptr [ %.pre435, %.split330.preheader ], [ %11, %.split332 ]
   %indvars.iv407 = phi i64 [ 0, %.split330.preheader ], [ %indvars.iv.next408, %.split332 ] ; 6 uses
   %i.bth = load ptr, ptr @img, align 8, !tbaa !16 ; 3 uses
   %i.bti = getelementptr inbounds nuw i8, ptr %i.bth, i64 172
@@ -1174,8 +1169,9 @@ bb.ae:                                            ; preds = %bb.ac
   %i.btx = getelementptr inbounds [8 x i8], ptr %i.btw, i64 %i.m
   %i.bty = load ptr, ptr %i.btx, align 8, !tbaa !64
   %i.btz = getelementptr inbounds [8 x i8], ptr %i.bty, i64 %i.n
-  %i.bua = load ptr, ptr %i.btz, align 8, !tbaa !66 ; 2 uses
-  %i.bub = getelementptr inbounds nuw i8, ptr %10, i64 6488
+  %15 = load ptr, ptr %i.btz, align 8, !tbaa !66  ; 2 uses
+  %i.bua = load ptr, ptr @enc_picture, align 8, !tbaa !81
+  %i.bub = getelementptr inbounds nuw i8, ptr %i.bua, i64 6488
   %i.buc = load ptr, ptr %i.bub, align 8, !tbaa !135
   %i.bud = load ptr, ptr %i.buc, align 8, !tbaa !44
   %i.bue = getelementptr inbounds [8 x i8], ptr %i.bud, i64 %i.btm
@@ -1195,7 +1191,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.bur = load ptr, ptr %i.buq, align 8, !tbaa !144
   %i.bus = getelementptr inbounds [8 x i8], ptr %i.bur, i64 %i.bug
   store i64 %i.bum, ptr %i.bus, align 8, !tbaa !147
-  %i.but = load i16, ptr %i.bua, align 2, !tbaa !68
+  %i.but = load i16, ptr %15, align 2, !tbaa !68
   %i.buu = getelementptr inbounds nuw i8, ptr %i.bui, i64 6512
   %i.buv = load ptr, ptr %i.buu, align 8, !tbaa !163
   %i.buw = load ptr, ptr %i.buv, align 8, !tbaa !62
@@ -1204,7 +1200,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.buz = getelementptr inbounds [8 x i8], ptr %i.buy, i64 %i.bug
   %i.bva = load ptr, ptr %i.buz, align 8, !tbaa !66 ; 2 uses
   store i16 %i.but, ptr %i.bva, align 2, !tbaa !68
-  %i.bvb = getelementptr inbounds nuw i8, ptr %i.bua, i64 2
+  %i.bvb = getelementptr inbounds nuw i8, ptr %15, i64 2
   %i.bvc = load i16, ptr %i.bvb, align 2, !tbaa !68
   %i.bvd = getelementptr inbounds nuw i8, ptr %i.bva, i64 2
   store i16 %i.bvc, ptr %i.bvd, align 2, !tbaa !68
@@ -1320,7 +1316,7 @@ bb.ai:                                            ; preds = %.sink.split464, %.s
   %i.byg = sext i32 %i.bxp to i64                 ; 8 uses
   %i.byh = getelementptr inbounds i8, ptr %i.byf, i64 %i.byg
   store i8 %i.o, ptr %i.byh, align 1, !tbaa !46
-  %i.byi = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
+  %i.byi = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 4 uses
   %i.byj = getelementptr inbounds nuw i8, ptr %i.byi, i64 24
   %i.byk = getelementptr inbounds [264 x i8], ptr %i.byj, i64 %i.p
   %i.byl = getelementptr inbounds [8 x i8], ptr %i.byk, i64 %i.m
@@ -1359,7 +1355,6 @@ bb.aj:                                            ; preds = %bb.ai
 
 .thread296.1:                                     ; preds = %bb.aj
   store i8 %i.r, ptr %i.bzk, align 1, !tbaa !46
-  %.pre434 = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 5 uses
   br i1 %i.s, label %bb.ak, label %.split332
 
 bb.ak:                                            ; preds = %.thread296.1
@@ -1375,12 +1370,13 @@ bb.ak:                                            ; preds = %.thread296.1
   %i.bzu = getelementptr inbounds nuw [8 x i8], ptr %i.bzt, i64 %i.t
   %i.bzv = load ptr, ptr %i.bzu, align 8, !tbaa !64
   %i.bzw = getelementptr inbounds [8 x i8], ptr %i.bzv, i64 %i.n
-  %i.bzx = load ptr, ptr %i.bzw, align 8, !tbaa !66 ; 2 uses
-  %i.bzy = getelementptr [264 x i8], ptr %.pre434, i64 %i.p
+  %16 = load ptr, ptr %i.bzw, align 8, !tbaa !66  ; 2 uses
+  %i.bzx = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.bzy = getelementptr [264 x i8], ptr %i.bzx, i64 %i.p
   %i.bzz = getelementptr i8, ptr %i.bzy, i64 288
   %i.caa = getelementptr inbounds nuw [8 x i8], ptr %i.bzz, i64 %i.t
   %i.cab = load i64, ptr %i.caa, align 8, !tbaa !147
-  %i.cac = getelementptr inbounds nuw i8, ptr %.pre434, i64 6496
+  %i.cac = getelementptr inbounds nuw i8, ptr %i.bzx, i64 6496
   %i.cad = load ptr, ptr %i.cac, align 8, !tbaa !141
   %i.cae = getelementptr inbounds nuw i8, ptr %i.cad, i64 8
   %i.caf = load ptr, ptr %i.cae, align 8, !tbaa !142
@@ -1388,8 +1384,8 @@ bb.ak:                                            ; preds = %.thread296.1
   %i.cah = load ptr, ptr %i.cag, align 8, !tbaa !144
   %i.cai = getelementptr inbounds [8 x i8], ptr %i.cah, i64 %i.byg
   store i64 %i.cab, ptr %i.cai, align 8, !tbaa !147
-  %i.caj = load i16, ptr %i.bzx, align 2, !tbaa !68
-  %i.cak = getelementptr inbounds nuw i8, ptr %.pre434, i64 6512
+  %i.caj = load i16, ptr %16, align 2, !tbaa !68
+  %i.cak = getelementptr inbounds nuw i8, ptr %i.bzx, i64 6512
   %i.cal = load ptr, ptr %i.cak, align 8, !tbaa !163
   %i.cam = getelementptr inbounds nuw i8, ptr %i.cal, i64 8
   %i.can = load ptr, ptr %i.cam, align 8, !tbaa !62
@@ -1398,13 +1394,13 @@ bb.ak:                                            ; preds = %.thread296.1
   %i.caq = getelementptr inbounds [8 x i8], ptr %i.cap, i64 %i.byg
   %i.car = load ptr, ptr %i.caq, align 8, !tbaa !66 ; 2 uses
   store i16 %i.caj, ptr %i.car, align 2, !tbaa !68
-  %i.cas = getelementptr inbounds nuw i8, ptr %i.bzx, i64 2
+  %i.cas = getelementptr inbounds nuw i8, ptr %16, i64 2
   %i.cat = load i16, ptr %i.cas, align 2, !tbaa !68
   br label %.split332.sink.split
 
 bb.al:                                            ; preds = %bb.aj
   store i8 -1, ptr %i.bzk, align 1, !tbaa !46
-  %i.cau = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 3 uses
+  %i.cau = load ptr, ptr @enc_picture, align 8, !tbaa !81 ; 2 uses
   %i.cav = getelementptr inbounds nuw i8, ptr %i.cau, i64 6496
   %i.caw = load ptr, ptr %i.cav, align 8, !tbaa !141
   %i.cax = getelementptr inbounds nuw i8, ptr %i.caw, i64 8
@@ -1427,13 +1423,11 @@ bb.al:                                            ; preds = %bb.aj
 .split332.sink.split:                             ; preds = %bb.ak, %bb.al
   %.sink472 = phi ptr [ %i.cbj, %bb.al ], [ %i.car, %bb.ak ]
   %.sink470 = phi i16 [ 0, %bb.al ], [ %i.cat, %bb.ak ]
-  %.ph469 = phi ptr [ %i.cau, %bb.al ], [ %.pre434, %bb.ak ]
   %i.cbk = getelementptr inbounds nuw i8, ptr %.sink472, i64 2
   store i16 %.sink470, ptr %i.cbk, align 2, !tbaa !68
   br label %.split332
 
 .split332:                                        ; preds = %.split332.sink.split, %.thread296.1, %bb.ai
-  %11 = phi ptr [ %.pre434, %.thread296.1 ], [ %i.byi, %bb.ai ], [ %.ph469, %.split332.sink.split ]
   %indvars.iv.next408 = add nuw nsw i64 %indvars.iv407, 1 ; 2 uses
   %exitcond410.not = icmp eq i64 %indvars.iv.next408, 4
   br i1 %exitcond410.not, label %.loopexit, label %.split330, !llvm.loop !282

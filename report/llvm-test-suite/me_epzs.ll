@@ -203,11 +203,9 @@ EPZSBlockTypePredictors.exit:                     ; preds = %bb.bx, %.thread.i58
 
 .lr.ph.preheader:                                 ; preds = %EPZSBlockTypePredictors.exit
   %wide.trip.count = zext nneg i32 %.3608 to i64
-  %.pre655 = load ptr, ptr @predictor, align 8, !tbaa !59
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ch
-  %18 = phi ptr [ %.pre655, %.lr.ph.preheader ], [ %19, %bb.ch ] ; 5 uses
   %indvars.iv652 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next653, %bb.ch ] ; 2 uses
   %.0470641 = phi i32 [ %i.ft, %.lr.ph.preheader ], [ %.1471, %bb.ch ] ; 8 uses
   %.0489640 = phi i8 [ 0, %.lr.ph.preheader ], [ %.1490, %bb.ch ] ; 5 uses
@@ -216,6 +214,7 @@ EPZSBlockTypePredictors.exit:                     ; preds = %bb.bx, %.thread.i58
   %.sroa.0154.0637 = phi i32 [ %i.as, %.lr.ph.preheader ], [ %.sroa.0154.1, %bb.ch ] ; 7 uses
   %.sroa.0153.0636 = phi i32 [ 0, %.lr.ph.preheader ], [ %.sroa.0153.1, %bb.ch ] ; 5 uses
   %.sroa.6.0635 = phi i32 [ 0, %.lr.ph.preheader ], [ %.sroa.6.1, %bb.ch ] ; 5 uses
+  %18 = load ptr, ptr @predictor, align 8, !tbaa !59
   %i.adu = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.adv = load ptr, ptr %i.adu, align 8, !tbaa !23
   %i.adw = getelementptr inbounds nuw [16 x i8], ptr %i.adv, i64 %indvars.iv652 ; 2 uses
@@ -304,7 +303,6 @@ bb.ce:                                            ; preds = %bb.cd, %bb.cc, %bb.
   %i.agb = call i32 %i.afx(ptr noundef %0, i32 noundef %i.q, i32 noundef %i.o, i32 noundef %i.afy, i32 noundef %i.afz, i32 noundef %i.aga) #13
   %i.agc = add nsw i32 %i.agb, %i.afl             ; 4 uses
   %i.agd = icmp slt i32 %i.agc, %.0470641
-  %.pre654 = load ptr, ptr @predictor, align 8, !tbaa !59 ; 3 uses
   br i1 %i.agd, label %bb.ch, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
@@ -315,7 +313,6 @@ bb.cg:                                            ; preds = %bb.cf
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.ce, %bb.cg, %bb.cf, %bb.ca, %bb.bz, %.lr.ph, %bb.by
-  %19 = phi ptr [ %18, %.lr.ph ], [ %18, %bb.by ], [ %18, %bb.bz ], [ %18, %bb.ca ], [ %.pre654, %bb.cf ], [ %.pre654, %bb.cg ], [ %.pre654, %bb.ce ]
   %.sroa.6.1 = phi i32 [ %.sroa.6.0635, %.lr.ph ], [ %.sroa.6.0635, %bb.by ], [ %.sroa.6.0635, %bb.bz ], [ %.sroa.6.0635, %bb.ca ], [ %.sroa.6.0635, %bb.cf ], [ %i.adz, %bb.cg ], [ %.sroa.19.0639, %bb.ce ] ; 2 uses
   %.sroa.0153.1 = phi i32 [ %.sroa.0153.0636, %.lr.ph ], [ %.sroa.0153.0636, %bb.by ], [ %.sroa.0153.0636, %bb.bz ], [ %.sroa.0153.0636, %bb.ca ], [ %.sroa.0153.0636, %bb.cf ], [ %i.adx, %bb.cg ], [ %.sroa.0154.0637, %bb.ce ] ; 2 uses
   %.sroa.0154.1 = phi i32 [ %.sroa.0154.0637, %.lr.ph ], [ %.sroa.0154.0637, %bb.by ], [ %.sroa.0154.0637, %bb.bz ], [ %.sroa.0154.0637, %bb.ca ], [ %.sroa.0154.0637, %bb.cf ], [ %.sroa.0154.0637, %bb.cg ], [ %i.adx, %bb.ce ] ; 2 uses
@@ -408,11 +405,9 @@ bb.cs:                                            ; preds = %bb.co, %bb.cn, %bb.
   %i.ahj = sext i16 %i.aa to i64
   %i.ahk = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.ahj
   %i.ahl = icmp slt i32 %8, 5
-  %.pre657.pre.pre = load i32, ptr @mv_rescale, align 4, !tbaa !4
   br label %bb.ct
 
 bb.ct:                                            ; preds = %bb.dy, %bb.cs
-  %.pre657.pre = phi i32 [ %.pre657.pre.pre, %bb.cs ], [ %.pre657.pre663, %bb.dy ] ; 2 uses
   %.sroa.0154.2 = phi i32 [ %.sroa.0154.0.lcssa, %bb.cs ], [ %.sroa.0154.6, %bb.dy ]
   %.sroa.19.2 = phi i32 [ %.sroa.19.0.lcssa, %bb.cs ], [ %.sroa.19.6, %bb.dy ]
   %.2491 = phi i1 [ %.0489.lcssa, %bb.cs ], [ false, %bb.dy ]
@@ -423,8 +418,6 @@ bb.ct:                                            ; preds = %bb.dy, %bb.cs
   br label %bb.cu
 
 bb.cu:                                            ; preds = %bb.dj, %bb.ct
-  %.pre657.pre666 = phi i32 [ %.pre657.pre, %bb.ct ], [ %.pre657.pre663, %bb.dj ]
-  %.pre657 = phi i32 [ %.pre657.pre, %bb.ct ], [ %.pre657659, %bb.dj ] ; 2 uses
   %.sroa.0154.3 = phi i32 [ %.sroa.0154.2, %bb.ct ], [ %.sroa.0154.6, %bb.dj ]
   %.sroa.19.3 = phi i32 [ %.sroa.19.2, %bb.ct ], [ %.sroa.19.6, %bb.dj ]
   %.2486 = phi ptr [ %.1485, %bb.ct ], [ %.3487, %bb.dj ] ; 5 uses
@@ -441,9 +434,6 @@ bb.cu:                                            ; preds = %bb.dj, %bb.ct
   br label %bb.cv
 
 bb.cv:                                            ; preds = %bb.de, %bb.cu
-  %.pre657.pre665 = phi i32 [ %.pre657.pre666, %bb.cu ], [ %.pre657.pre663, %bb.de ] ; 4 uses
-  %.pre657661 = phi i32 [ %.pre657, %bb.cu ], [ %.pre657659, %bb.de ] ; 4 uses
-  %20 = phi i32 [ %.pre657, %bb.cu ], [ %21, %bb.de ] ; 6 uses
   %.sroa.0154.4 = phi i32 [ %.sroa.0154.3, %bb.cu ], [ %.sroa.0154.6, %bb.de ] ; 5 uses
   %.sroa.19.4 = phi i32 [ %.sroa.19.3, %bb.cu ], [ %.sroa.19.6, %bb.de ] ; 5 uses
   %.4474 = phi i32 [ %.3473, %bb.cu ], [ %.6476, %bb.de ] ; 8 uses
@@ -459,9 +449,10 @@ bb.cv:                                            ; preds = %bb.de, %bb.cu
   %i.aht = load i32, ptr %i.ahs, align 4, !tbaa !4
   %i.ahu = add nsw i32 %i.aht, %.1481             ; 4 uses
   %i.ahv = add nsw i32 %i.ahr, %i.aq
-  %i.ahw = shl i32 %i.ahv, %20                    ; 4 uses
+  %19 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 2 uses
+  %i.ahw = shl i32 %i.ahv, %19                    ; 4 uses
   %i.ahx = add nsw i32 %i.ahu, %i.au
-  %i.ahy = shl i32 %i.ahx, %20                    ; 4 uses
+  %i.ahy = shl i32 %i.ahx, %19                    ; 4 uses
   %i.ahz = load i16, ptr %10, align 2, !tbaa !119
   %i.aia = sext i16 %i.ahz to i32
   %i.aib = sub nsw i32 %i.ahr, %i.aia
@@ -539,16 +530,12 @@ bb.dc:                                            ; preds = %bb.db, %bb.da, %bb.
   %i.ajt = call i32 %i.ajp(ptr noundef %0, i32 noundef %i.q, i32 noundef %i.o, i32 noundef %i.ajq, i32 noundef %i.ajr, i32 noundef %i.ajs) #13
   %i.aju = add nsw i32 %i.ajt, %i.ajc             ; 2 uses
   %i.ajv = icmp slt i32 %i.aju, %.4474
-  %.pre656 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 6 uses
   br i1 %i.ajv, label %bb.dd, label %bb.de
 
 bb.dd:                                            ; preds = %bb.dc
   br label %bb.de
 
 bb.de:                                            ; preds = %bb.cv, %bb.cw, %bb.dc, %bb.dd, %bb.cy, %bb.cx
-  %.pre657.pre663 = phi i32 [ %.pre657.pre665, %bb.cx ], [ %.pre656, %bb.dd ], [ %.pre656, %bb.dc ], [ %.pre657.pre665, %bb.cy ], [ %.pre657.pre665, %bb.cw ], [ %.pre657.pre665, %bb.cv ] ; 3 uses
-  %.pre657659 = phi i32 [ %.pre657661, %bb.cx ], [ %.pre656, %bb.dd ], [ %.pre656, %bb.dc ], [ %.pre657661, %bb.cy ], [ %.pre657661, %bb.cw ], [ %.pre657661, %bb.cv ] ; 2 uses
-  %21 = phi i32 [ %20, %bb.cx ], [ %.pre656, %bb.dd ], [ %.pre656, %bb.dc ], [ %20, %bb.cy ], [ %20, %bb.cw ], [ %20, %bb.cv ] ; 2 uses
   %.sroa.0154.6 = phi i32 [ %.sroa.0154.4, %bb.cx ], [ %i.ahr, %bb.dd ], [ %.sroa.0154.4, %bb.dc ], [ %.sroa.0154.4, %bb.cy ], [ %.sroa.0154.4, %bb.cw ], [ %.sroa.0154.4, %bb.cv ] ; 12 uses
   %.sroa.19.6 = phi i32 [ %.sroa.19.4, %bb.cx ], [ %i.ahu, %bb.dd ], [ %.sroa.19.4, %bb.dc ], [ %.sroa.19.4, %bb.cy ], [ %.sroa.19.4, %bb.cw ], [ %.sroa.19.4, %bb.cv ] ; 12 uses
   %.6476 = phi i32 [ %.4474, %bb.cx ], [ %i.aju, %bb.dd ], [ %.4474, %bb.dc ], [ %.4474, %bb.cy ], [ %.4474, %bb.cw ], [ %.4474, %bb.cv ] ; 10 uses
@@ -683,7 +670,8 @@ bb.dv:                                            ; preds = %bb.du
 ._crit_edge669:                                   ; preds = %bb.dt, %bb.dv
   %i.als = sub nsw i32 %.sroa.0154.6, %.pre670
   %i.alt = call range(i32 0, -2147483648) i32 @llvm.abs.i32(i32 %i.als, i1 true)
-  %i.alu = lshr exact i32 8, %21                  ; 2 uses
+  %20 = load i32, ptr @mv_rescale, align 4, !tbaa !4
+  %i.alu = lshr exact i32 8, %20                  ; 2 uses
   %i.alv = icmp samesign ult i32 %i.alt, %i.alu
   br i1 %i.alv, label %bb.dw, label %bb.dx
 
@@ -1086,11 +1074,9 @@ bb.ag:                                            ; preds = %.sink.split585, %bb
   %i.kk = getelementptr i8, ptr %i.kj, i64 8
   %.val = load ptr, ptr %i.kk, align 8, !tbaa !23
   %i.kl = call fastcc signext i16 @EPZSSpatialPredictors(ptr noundef nonnull byval(%struct.pix_pos) align 8 %16, ptr noundef nonnull byval(%struct.pix_pos) align 8 %17, ptr noundef nonnull byval(%struct.pix_pos) align 8 %18, ptr noundef nonnull byval(%struct.pix_pos) align 8 %19, i32 noundef %2, i32 noundef %3, i16 noundef signext %1, ptr noundef %i.kg, ptr noundef %i.ki, ptr %.val) ; 0 uses
-  %.pre525 = load ptr, ptr @predictor, align 8, !tbaa !59
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.ao
-  %20 = phi ptr [ %.pre525, %bb.ag ], [ %21, %bb.ao ] ; 5 uses
   %indvars.iv = phi i64 [ 0, %bb.ag ], [ %indvars.iv.next, %bb.ao ] ; 2 uses
   %.0392519 = phi i8 [ 0, %bb.ag ], [ %.1393, %bb.ao ] ; 5 uses
   %.0395517 = phi i32 [ %i.je, %bb.ag ], [ %.1396, %bb.ao ] ; 8 uses
@@ -1099,6 +1085,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.ao
   %.0408511 = phi i32 [ 2147483647, %bb.ag ], [ %.1409, %bb.ao ] ; 8 uses
   %.sroa.0128.0509 = phi i32 [ 0, %bb.ag ], [ %.sroa.0128.1, %bb.ao ] ; 5 uses
   %.sroa.6.0507 = phi i32 [ 0, %bb.ag ], [ %.sroa.6.1, %bb.ao ] ; 5 uses
+  %20 = load ptr, ptr @predictor, align 8, !tbaa !59
   %i.km = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.kn = load ptr, ptr %i.km, align 8, !tbaa !23
   %i.ko = getelementptr inbounds nuw [16 x i8], ptr %i.kn, i64 %indvars.iv ; 2 uses
@@ -1195,7 +1182,6 @@ bb.al:                                            ; preds = %.thread499.thread
   %i.nc = call i32 %i.mw(ptr noundef %0, i32 noundef %.pre-phi, i32 noundef %.pre-phi542, i32 noundef %i.mx, i32 noundef %i.my, i32 noundef %i.mz, i32 noundef %i.na, i32 noundef %i.nb) #13
   %i.nd = add nsw i32 %i.nc, %i.mv                ; 4 uses
   %i.ne = icmp slt i32 %i.nd, %.0395517
-  %.pre = load ptr, ptr @predictor, align 8, !tbaa !59 ; 3 uses
   br i1 %i.ne, label %bb.ao, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
@@ -1206,7 +1192,6 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.thread500, %bb.al, %bb.an, %bb.am, %.thread499.thread, %.thread499, %bb.aj
-  %21 = phi ptr [ %20, %bb.aj ], [ %20, %.thread499 ], [ %20, %.thread499.thread ], [ %.pre, %bb.am ], [ %.pre, %bb.an ], [ %.pre, %bb.al ], [ %20, %.thread500 ]
   %.sroa.6.1 = phi i32 [ %.sroa.6.0507, %bb.aj ], [ %.sroa.6.0507, %.thread499 ], [ %.sroa.6.0507, %.thread499.thread ], [ %.sroa.6.0507, %bb.am ], [ %i.kr, %bb.an ], [ %.sroa.15.0515, %bb.al ], [ %.sroa.6.0507, %.thread500 ] ; 2 uses
   %.sroa.0128.1 = phi i32 [ %.sroa.0128.0509, %bb.aj ], [ %.sroa.0128.0509, %.thread499 ], [ %.sroa.0128.0509, %.thread499.thread ], [ %.sroa.0128.0509, %bb.am ], [ %i.kp, %bb.an ], [ %.sroa.0129.0513, %bb.al ], [ %.sroa.0128.0509, %.thread500 ] ; 2 uses
   %.1409 = phi i32 [ %.0408511, %bb.aj ], [ %.0408511, %.thread499 ], [ %.0408511, %.thread499.thread ], [ %.0408511, %bb.am ], [ %i.nd, %bb.an ], [ %.0395517, %bb.al ], [ %.0408511, %.thread500 ]
@@ -1294,11 +1279,9 @@ bb.bb:                                            ; preds = %bb.aw, %bb.av, %bb.
   %i.om = icmp ne i8 %.1393, 0
   %i.on = icmp slt i32 %8, 5
   %i.oo = and i1 %i.on, %i.om
-  %.pre527.pre.pre = load i32, ptr @mv_rescale, align 4, !tbaa !4
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bx, %bb.bb
-  %.pre527.pre = phi i32 [ %.pre527.pre.pre, %bb.bb ], [ %.pre527.pre533, %bb.bx ] ; 2 uses
   %.sroa.0129.2 = phi i32 [ %.sroa.0129.1, %bb.bb ], [ %.sroa.0129.6, %bb.bx ]
   %.sroa.15.2 = phi i32 [ %.sroa.15.1, %bb.bb ], [ %.sroa.15.6, %bb.bx ]
   %.0405 = phi i32 [ %.sroa.15.1, %bb.bb ], [ %.sroa.6.1, %bb.bx ]
@@ -1309,8 +1292,6 @@ bb.bc:                                            ; preds = %bb.bx, %bb.bb
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bp, %bb.bc
-  %.pre527.pre536 = phi i32 [ %.pre527.pre, %bb.bc ], [ %.pre527.pre533, %bb.bp ]
-  %.pre527 = phi i32 [ %.pre527.pre, %bb.bc ], [ %.pre527529, %bb.bp ] ; 2 uses
   %.sroa.0129.3 = phi i32 [ %.sroa.0129.2, %bb.bc ], [ %.sroa.0129.6, %bb.bp ]
   %.sroa.15.3 = phi i32 [ %.sroa.15.2, %bb.bc ], [ %.sroa.15.6, %bb.bp ]
   %.1406 = phi i32 [ %.0405, %bb.bc ], [ %.2407, %bb.bp ] ; 3 uses
@@ -1327,9 +1308,6 @@ bb.bd:                                            ; preds = %bb.bp, %bb.bc
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bk, %bb.bd
-  %.pre527.pre535 = phi i32 [ %.pre527.pre536, %bb.bd ], [ %.pre527.pre533, %bb.bk ] ; 4 uses
-  %.pre527531 = phi i32 [ %.pre527, %bb.bd ], [ %.pre527529, %bb.bk ] ; 4 uses
-  %22 = phi i32 [ %.pre527, %bb.bd ], [ %23, %bb.bk ] ; 8 uses
   %.sroa.0129.4 = phi i32 [ %.sroa.0129.3, %bb.bd ], [ %.sroa.0129.6, %bb.bk ] ; 5 uses
   %.sroa.15.4 = phi i32 [ %.sroa.15.3, %bb.bd ], [ %.sroa.15.6, %bb.bk ] ; 5 uses
   %.4399 = phi i32 [ %.3398, %bb.bd ], [ %.6401, %bb.bk ] ; 8 uses
@@ -1345,9 +1323,10 @@ bb.be:                                            ; preds = %bb.bk, %bb.bd
   %i.ow = load i32, ptr %i.ov, align 4, !tbaa !4
   %i.ox = add nsw i32 %i.ow, %.1406               ; 4 uses
   %i.oy = add nsw i32 %i.ou, %i.co
-  %i.oz = shl i32 %i.oy, %22                      ; 2 uses
+  %21 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 4 uses
+  %i.oz = shl i32 %i.oy, %21                      ; 2 uses
   %i.pa = add nsw i32 %i.ox, %i.cp
-  %i.pb = shl i32 %i.pa, %22                      ; 2 uses
+  %i.pb = shl i32 %i.pa, %21                      ; 2 uses
   %i.pc = load i16, ptr %11, align 2, !tbaa !119
   %i.pd = sext i16 %i.pc to i32
   %i.pe = sub nsw i32 %i.ou, %i.pd
@@ -1380,12 +1359,12 @@ bb.bg:                                            ; preds = %bb.bf
 bb.bh:                                            ; preds = %bb.bg
   store i16 %i.pt, ptr %i.pr, align 2, !tbaa !119
   %i.pu = load ptr, ptr @mvbits, align 8, !tbaa !145 ; 4 uses
-  %i.pv = shl i32 %i.as, %22                      ; 2 uses
+  %i.pv = shl i32 %i.as, %21                      ; 2 uses
   %i.pw = sub nsw i32 %i.pv, %i.r
   %i.px = sext i32 %i.pw to i64
   %i.py = getelementptr inbounds [4 x i8], ptr %i.pu, i64 %i.px
   %i.pz = load i32, ptr %i.py, align 4, !tbaa !4
-  %i.qa = shl i32 %i.aw, %22                      ; 2 uses
+  %i.qa = shl i32 %i.aw, %21                      ; 2 uses
   %i.qb = sub nsw i32 %i.qa, %i.w
   %i.qc = sext i32 %i.qb to i64
   %i.qd = getelementptr inbounds [4 x i8], ptr %i.pu, i64 %i.qc
@@ -1418,16 +1397,12 @@ bb.bi:                                            ; preds = %bb.bh
   %i.rb = call i32 %i.qv(ptr noundef %0, i32 noundef %.pre-phi, i32 noundef %.pre-phi542, i32 noundef %i.qw, i32 noundef %i.qx, i32 noundef %i.qy, i32 noundef %i.qz, i32 noundef %i.ra) #13
   %i.rc = add nsw i32 %i.rb, %i.qt                ; 2 uses
   %i.rd = icmp slt i32 %i.rc, %.4399
-  %.pre526 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 6 uses
   br i1 %i.rd, label %bb.bj, label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bi
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.be, %bb.bf, %bb.bi, %bb.bj, %bb.bh, %bb.bg
-  %.pre527.pre533 = phi i32 [ %.pre527.pre535, %bb.bg ], [ %.pre526, %bb.bj ], [ %.pre526, %bb.bi ], [ %.pre527.pre535, %bb.bh ], [ %.pre527.pre535, %bb.bf ], [ %.pre527.pre535, %bb.be ] ; 3 uses
-  %.pre527529 = phi i32 [ %.pre527531, %bb.bg ], [ %.pre526, %bb.bj ], [ %.pre526, %bb.bi ], [ %.pre527531, %bb.bh ], [ %.pre527531, %bb.bf ], [ %.pre527531, %bb.be ] ; 2 uses
-  %23 = phi i32 [ %22, %bb.bg ], [ %.pre526, %bb.bj ], [ %.pre526, %bb.bi ], [ %22, %bb.bh ], [ %22, %bb.bf ], [ %22, %bb.be ] ; 2 uses
   %.sroa.0129.6 = phi i32 [ %.sroa.0129.4, %bb.bg ], [ %i.ou, %bb.bj ], [ %.sroa.0129.4, %bb.bi ], [ %.sroa.0129.4, %bb.bh ], [ %.sroa.0129.4, %bb.bf ], [ %.sroa.0129.4, %bb.be ] ; 10 uses
   %.sroa.15.6 = phi i32 [ %.sroa.15.4, %bb.bg ], [ %i.ox, %bb.bj ], [ %.sroa.15.4, %bb.bi ], [ %.sroa.15.4, %bb.bh ], [ %.sroa.15.4, %bb.bf ], [ %.sroa.15.4, %bb.be ] ; 10 uses
   %.6401 = phi i32 [ %.4399, %bb.bg ], [ %i.rc, %bb.bj ], [ %.4399, %bb.bi ], [ %.4399, %bb.bh ], [ %.4399, %bb.bf ], [ %.4399, %bb.be ] ; 6 uses
@@ -1514,7 +1489,8 @@ bb.bu:                                            ; preds = %bb.bt
 ._crit_edge543:                                   ; preds = %bb.bs, %bb.bu
   %i.sh = sub nsw i32 %.sroa.0129.6, %.pre544
   %i.si = call range(i32 0, -2147483648) i32 @llvm.abs.i32(i32 %i.sh, i1 true)
-  %i.sj = lshr exact i32 8, %23                   ; 2 uses
+  %22 = load i32, ptr @mv_rescale, align 4, !tbaa !4
+  %i.sj = lshr exact i32 8, %22                   ; 2 uses
   %i.sk = icmp samesign ult i32 %i.si, %i.sj
   br i1 %i.sk, label %bb.bv, label %bb.bw
 

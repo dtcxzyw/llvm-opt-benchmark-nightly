@@ -203,21 +203,19 @@ bb.p:                                             ; preds = %.lr.ph89
 define dso_local ptr @fol_BoundVariables(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i32, ptr @stack_POINTER, align 4    ; 3 uses
-  %.pre37 = load i32, ptr @fol_ALL, align 4
-  %.pre39 = load i32, ptr @fol_EXIST, align 4
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge, %bb.a
-  %stack_POINTER.promoted40 = phi i32 [ %i.a, %bb.a ], [ %stack_POINTER.promoted41, %.critedge ] ; 2 uses
-  %i.b = phi i32 [ %.pre39, %bb.a ], [ %2, %.critedge ] ; 3 uses
-  %1 = phi i32 [ %.pre37, %bb.a ], [ %i.l, %.critedge ] ; 3 uses
-  %.010.a = phi ptr [ %0, %bb.a ], [ %.val, %.critedge ] ; 2 uses
-  %.0 = phi ptr [ null, %bb.a ], [ %.1, %.critedge ] ; 6 uses
-  %.010.val.a = load i32, ptr %.010.a, align 8    ; 2 uses
-  %.not.i = icmp ne i32 %1, %.010.val.a
-  %i.c = icmp ne i32 %i.b, %.010.val.a
+  %i.b = phi i32 [ %i.a, %bb.a ], [ %stack_POINTER.promoted41, %.critedge ] ; 2 uses
+  %.010 = phi ptr [ %0, %bb.a ], [ %.val, %.critedge ] ; 2 uses
+  %.010.a = phi ptr [ null, %bb.a ], [ %.1, %.critedge ] ; 6 uses
+  %.010.val = load i32, ptr %.010, align 8        ; 2 uses
+  %.010.val.a = load i32, ptr @fol_ALL, align 4
+  %.not.i = icmp ne i32 %.010.val.a, %.010.val
+  %1 = load i32, ptr @fol_EXIST, align 4
+  %i.c = icmp ne i32 %1, %.010.val
   %narrow.i.not = select i1 %.not.i, i1 %i.c, i1 false
-  %i.d = getelementptr i8, ptr %.010.a, i64 16    ; 2 uses
+  %i.d = getelementptr i8, ptr %.010, i64 16      ; 2 uses
   %.010.val21 = load ptr, ptr %i.d, align 8       ; 3 uses
   br i1 %narrow.i.not, label %bb.f, label %bb.c
 
@@ -227,9 +225,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr i8, ptr %.010.val22.val, i64 16
   %.010.val22.val.val = load ptr, ptr %i.f, align 8
   %i.g = tail call ptr @list_Copy(ptr noundef %.010.val22.val.val) #17 ; 3 uses
-  %.not.i23 = icmp eq ptr %.0, null
-  %.pre = load i32, ptr @fol_ALL, align 4
-  %.pre38 = load i32, ptr @fol_EXIST, align 4
+  %.not.i23 = icmp eq ptr %.010.a, null
   br i1 %.not.i23, label %list_Nconc.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -237,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not16.i, label %list_Nconc.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.d, %.preheader.i
-  %.012.i = phi ptr [ %.012.val15.i, %.preheader.i ], [ %.0, %bb.d ] ; 2 uses
+  %.012.i = phi ptr [ %.012.val15.i, %.preheader.i ], [ %.010.a, %bb.d ] ; 2 uses
   %.012.val15.i = load ptr, ptr %.012.i, align 8  ; 2 uses
   %.not17.i = icmp eq ptr %.012.val15.i, null
   br i1 %.not17.i, label %bb.e, label %.preheader.i, !llvm.loop !6
@@ -247,7 +243,7 @@ bb.e:                                             ; preds = %.preheader.i
   br label %list_Nconc.exit
 
 list_Nconc.exit:                                  ; preds = %bb.c, %bb.d, %bb.e
-  %.0.i = phi ptr [ %.0, %bb.e ], [ %i.g, %bb.c ], [ %.0, %bb.d ]
+  %.0.i = phi ptr [ %.010.a, %bb.e ], [ %i.g, %bb.c ], [ %.010.a, %bb.d ]
   %.010.val20 = load ptr, ptr %i.d, align 8
   %.val18 = load ptr, ptr %.010.val20, align 8
   %i.h = load i32, ptr @stack_POINTER, align 4
@@ -258,11 +254,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %.not, label %bb.g, label %.sink.split
 
 .sink.split:                                      ; preds = %bb.f, %list_Nconc.exit
-  %stack_POINTER.promoted40.sink58 = phi i32 [ %i.h, %list_Nconc.exit ], [ %stack_POINTER.promoted40, %bb.f ] ; 2 uses
+  %stack_POINTER.promoted40.sink58 = phi i32 [ %i.h, %list_Nconc.exit ], [ %i.b, %bb.f ] ; 2 uses
   %.010.val21.sink = phi ptr [ %.val18, %list_Nconc.exit ], [ %.010.val21, %bb.f ]
-  %.ph = phi i32 [ %.pre38, %list_Nconc.exit ], [ %i.b, %bb.f ]
-  %.ph56 = phi i32 [ %.pre, %list_Nconc.exit ], [ %1, %bb.f ]
-  %.1.ph = phi ptr [ %.0.i, %list_Nconc.exit ], [ %.0, %bb.f ]
+  %.1.ph = phi ptr [ %.0.i, %list_Nconc.exit ], [ %.010.a, %bb.f ]
   %i.i = add i32 %stack_POINTER.promoted40.sink58, 1 ; 2 uses
   store i32 %i.i, ptr @stack_POINTER, align 4
   %i.j = zext i32 %stack_POINTER.promoted40.sink58 to i64
@@ -271,15 +265,13 @@ bb.f:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.g:                                             ; preds = %.sink.split, %bb.f
-  %stack_POINTER.promoted = phi i32 [ %stack_POINTER.promoted40, %bb.f ], [ %i.i, %.sink.split ] ; 2 uses
-  %2 = phi i32 [ %i.b, %bb.f ], [ %.ph, %.sink.split ]
-  %i.l = phi i32 [ %1, %bb.f ], [ %.ph56, %.sink.split ]
-  %.1 = phi ptr [ %.0, %bb.f ], [ %.1.ph, %.sink.split ] ; 2 uses
-  %.not2730 = icmp eq i32 %stack_POINTER.promoted, %i.a
+  %i.l = phi i32 [ %i.b, %bb.f ], [ %i.i, %.sink.split ] ; 2 uses
+  %.1 = phi ptr [ %.010.a, %bb.f ], [ %.1.ph, %.sink.split ] ; 2 uses
+  %.not2730 = icmp eq i32 %i.l, %i.a
   br i1 %.not2730, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g, %bb.h
-  %stack_POINTER.promoted41 = phi i32 [ %i.m, %bb.h ], [ %stack_POINTER.promoted, %bb.g ] ; 2 uses
+  %stack_POINTER.promoted41 = phi i32 [ %i.m, %bb.h ], [ %i.l, %bb.g ] ; 2 uses
   %i.m = add i32 %stack_POINTER.promoted41, -1    ; 4 uses
   %i.n = zext i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr @stack_STACK, i64 %i.n ; 2 uses

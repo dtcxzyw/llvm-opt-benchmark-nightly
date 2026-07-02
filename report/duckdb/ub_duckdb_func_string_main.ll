@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %8 = alloca %"class.duckdb::vector.237", align 8 ; 16 uses
   %9 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
-  %10 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %10 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %11 = alloca %"struct.duckdb::string_t", align 8 ; 7 uses
   %12 = alloca %"struct.duckdb::string_t", align 8 ; 5 uses
   %13 = alloca %"struct.duckdb::string_t", align 8 ; 5 uses
@@ -607,11 +607,7 @@ _ZN6duckdb19UnifiedVectorFormat7GetDataINS_8string_tEEEPKT_RKS0_.exit156.i: ; pr
   %i.atk = load ptr, ptr %i.aqb, align 8, !tbaa !89
   %i.atl = load i64, ptr %i.ie, align 8, !tbaa !30 ; 2 uses
   %.not48.i = icmp eq i64 %i.atl, 0
-  br i1 %.not48.i, label %._crit_edge35.i, label %.lr.ph34.preheader.i
-
-.lr.ph34.preheader.i:                             ; preds = %_ZN6duckdb19UnifiedVectorFormat7GetDataINS_8string_tEEEPKT_RKS0_.exit156.i
-  %.pre56.i = load ptr, ptr %10, align 8, !tbaa !98
-  br label %.lr.ph34.i
+  br i1 %.not48.i, label %._crit_edge35.i, label %.lr.ph34.i
 
 ._crit_edge35.i:                                  ; preds = %bb.jl, %_ZN6duckdb19UnifiedVectorFormat7GetDataINS_8string_tEEEPKT_RKS0_.exit156.i
   %i.atm = load ptr, ptr %i.aqd, align 8, !tbaa !76 ; 8 uses
@@ -730,10 +726,10 @@ bb.iz:                                            ; preds = %bb.ik
           cleanup
   br label %.body179.i
 
-.lr.ph34.i:                                       ; preds = %bb.jl, %.lr.ph34.preheader.i
-  %i.auv = phi i64 [ %i.axj, %bb.jl ], [ %i.atl, %.lr.ph34.preheader.i ]
-  %52 = phi ptr [ %53, %bb.jl ], [ %.pre56.i, %.lr.ph34.preheader.i ] ; 2 uses
-  %.09833.i = phi i64 [ %i.axk, %bb.jl ], [ 0, %.lr.ph34.preheader.i ] ; 10 uses
+.lr.ph34.i:                                       ; preds = %_ZN6duckdb19UnifiedVectorFormat7GetDataINS_8string_tEEEPKT_RKS0_.exit156.i, %bb.jl
+  %i.auv = phi i64 [ %i.axj, %bb.jl ], [ %i.atl, %_ZN6duckdb19UnifiedVectorFormat7GetDataINS_8string_tEEEPKT_RKS0_.exit156.i ]
+  %.09833.i = phi i64 [ %i.axk, %bb.jl ], [ 0, %_ZN6duckdb19UnifiedVectorFormat7GetDataINS_8string_tEEEPKT_RKS0_.exit156.i ] ; 10 uses
+  %52 = load ptr, ptr %10, align 8, !tbaa !98
   %i.auw = load ptr, ptr %52, align 8, !tbaa !107 ; 2 uses
   %.not.i167.i = icmp eq ptr %i.auw, null
   br i1 %.not.i167.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit168.i, label %bb.ja
@@ -926,7 +922,6 @@ bb.jj:                                            ; preds = %bb.jg
   unreachable
 
 bb.jk:                                            ; preds = %bb.jf
-  %.pre55.i = load ptr, ptr %10, align 8, !tbaa !98
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   %i.axg = getelementptr inbounds nuw [8 x i8], ptr %i.awr, i64 %.09833.i ; 2 uses
@@ -938,7 +933,6 @@ bb.jk:                                            ; preds = %bb.jf
 
 bb.jl:                                            ; preds = %bb.jk, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit171.i
   %i.axj = phi i64 [ %i.auv, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit171.i ], [ %.pre57.i, %bb.jk ] ; 2 uses
-  %53 = phi ptr [ %52, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit171.i ], [ %.pre55.i, %bb.jk ]
   %i.axk = add nuw i64 %.09833.i, 1               ; 2 uses
   %i.axl = icmp ult i64 %i.axk, %i.axj
   br i1 %i.axl, label %.lr.ph34.i, label %._crit_edge35.i, !llvm.loop !317

@@ -203,19 +203,15 @@ bb.a:
   store i32 0, ptr @rrc_total, align 4, !tbaa !4
   %i.a = load i32, ptr @nstates, align 4, !tbaa !4 ; 2 uses
   %i.b = icmp sgt i32 %i.a, 0
-  br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.b, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %.pre7 = load ptr, ptr @conflicts, align 8, !tbaa !8
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
-  %i.c = phi i32 [ %i.a, %.lr.ph.preheader ], [ %i.bf, %bb.g ]
-  %0 = phi ptr [ %.pre7, %.lr.ph.preheader ], [ %2, %bb.g ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.g ] ; 4 uses
-  %i.d = phi i32 [ 0, %.lr.ph.preheader ], [ %i.bh, %bb.g ] ; 2 uses
-  %1 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.bg, %bb.g ] ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
+.lr.ph:                                           ; preds = %bb.a, %bb.g
+  %i.c = phi i32 [ %i.bf, %bb.g ], [ %i.a, %bb.a ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %bb.a ] ; 4 uses
+  %0 = phi i32 [ %i.bh, %bb.g ], [ 0, %bb.a ]     ; 2 uses
+  %i.d = phi i32 [ %i.bg, %bb.g ], [ 0, %bb.a ]   ; 2 uses
+  %1 = load ptr, ptr @conflicts, align 8, !tbaa !8
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   %i.f = load i8, ptr %i.e, align 1, !tbaa !16
   %.not = icmp eq i8 %i.f, 0
   br i1 %.not, label %bb.g, label %bb.b
@@ -233,7 +229,6 @@ bb.b:                                             ; preds = %.lr.ph
   %i.n = sext i16 %i.m to i32                     ; 2 uses
   %i.o = sub nsw i32 %i.n, %i.k                   ; 3 uses
   %i.p = icmp slt i32 %i.o, 2
-  %.pre = load ptr, ptr @conflicts, align 8, !tbaa !8
   br i1 %i.p, label %count_rr_conflicts.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -342,18 +337,17 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
 count_rr_conflicts.exit:                          ; preds = %bb.e, %bb.b, %bb.c
   %i.bb = phi i32 [ 0, %bb.c ], [ 0, %bb.b ], [ %i.ac, %bb.e ]
   %i.bc = load i32, ptr @src_count, align 4, !tbaa !4
-  %i.bd = add nsw i32 %i.d, %i.bc                 ; 2 uses
+  %i.bd = add nsw i32 %0, %i.bc                   ; 2 uses
   store i32 %i.bd, ptr @src_total, align 4, !tbaa !4
-  %i.be = add nsw i32 %1, %i.bb                   ; 2 uses
+  %i.be = add nsw i32 %i.d, %i.bb                 ; 2 uses
   store i32 %i.be, ptr @rrc_total, align 4, !tbaa !4
   %.pre8 = load i32, ptr @nstates, align 4, !tbaa !4
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %count_rr_conflicts.exit
   %i.bf = phi i32 [ %i.c, %.lr.ph ], [ %.pre8, %count_rr_conflicts.exit ] ; 2 uses
-  %2 = phi ptr [ %0, %.lr.ph ], [ %.pre, %count_rr_conflicts.exit ]
-  %i.bg = phi i32 [ %1, %.lr.ph ], [ %i.be, %count_rr_conflicts.exit ]
-  %i.bh = phi i32 [ %i.d, %.lr.ph ], [ %i.bd, %count_rr_conflicts.exit ]
+  %i.bg = phi i32 [ %i.d, %.lr.ph ], [ %i.be, %count_rr_conflicts.exit ]
+  %i.bh = phi i32 [ %0, %.lr.ph ], [ %i.bd, %count_rr_conflicts.exit ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bi = sext i32 %i.bf to i64
   %i.bj = icmp slt i64 %indvars.iv.next, %i.bi

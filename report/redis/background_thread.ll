@@ -201,7 +201,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph44.preheader:                               ; preds = %._crit_edge
   %wide.trip.count = zext i32 %i.o to i64
-  %.pre57 = load i64, ptr @je_max_background_threads, align 8, !tbaa !21
   br label %.lr.ph44
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -215,25 +214,25 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.u, label %.lr.ph, label %._crit_edge, !llvm.loop !45
 
 .lr.ph44:                                         ; preds = %.lr.ph44.preheader, %bb.f
-  %i.v = phi i64 [ %.pre57, %.lr.ph44.preheader ], [ %1, %bb.f ] ; 2 uses
-  %indvars.iv = phi i64 [ 1, %.lr.ph44.preheader ], [ %indvars.iv.next, %bb.f ] ; 5 uses
+  %i.v = phi i64 [ 1, %.lr.ph44.preheader ], [ %indvars.iv.next, %bb.f ] ; 5 uses
   %.03242 = phi i32 [ 0, %.lr.ph44.preheader ], [ %.1, %bb.f ] ; 3 uses
-  %i.w = urem i64 %indvars.iv, %i.v
+  %1 = load i64, ptr @je_max_background_threads, align 8, !tbaa !21
+  %i.w = urem i64 %i.v, %1
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.w
   %i.y = load i8, ptr %i.x, align 1, !tbaa !38, !range !24, !noundef !25
   %i.z = trunc nuw i8 %i.y to i1
   br i1 %i.z, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph44
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %indvars.iv
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %i.v
   %i.ab = load atomic ptr, ptr %i.aa acquire, align 8
   %i.ac = icmp eq ptr %i.ab, null
-  %.pre = load i64, ptr @je_max_background_threads, align 8, !tbaa !21 ; 2 uses
   br i1 %i.ac, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.ad = load ptr, ptr @je_background_thread_info, align 8, !tbaa !22
-  %i.ae = urem i64 %indvars.iv, %.pre
+  %2 = load i64, ptr @je_max_background_threads, align 8, !tbaa !21
+  %i.ae = urem i64 %i.v, %2
   %i.af = getelementptr inbounds nuw [208 x i8], ptr %i.ad, i64 %i.ae ; 12 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 120 ; 2 uses
   %i.ah = tail call i32 @pthread_mutex_trylock(ptr noundef nonnull %i.ag) #12
@@ -282,8 +281,8 @@ malloc_mutex_lock.exit:                           ; preds = %bb.d, %bb.e
   %i.az = getelementptr inbounds nuw i8, ptr %i.af, i64 160
   store atomic i8 0, ptr %i.az monotonic, align 8
   %i.ba = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.ag) #12 ; 0 uses
-  %i.bb = load i64, ptr @je_max_background_threads, align 8, !tbaa !21 ; 3 uses
-  %i.bc = urem i64 %indvars.iv, %i.bb
+  %i.bb = load i64, ptr @je_max_background_threads, align 8, !tbaa !21 ; 2 uses
+  %i.bc = urem i64 %i.v, %i.bb
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bc
   store i8 1, ptr %i.bd, align 1, !tbaa !38
   %i.be = add i32 %.03242, 1                      ; 2 uses
@@ -292,9 +291,8 @@ malloc_mutex_lock.exit:                           ; preds = %bb.d, %bb.e
   br i1 %.not, label %._crit_edge45, label %bb.f
 
 bb.f:                                             ; preds = %malloc_mutex_lock.exit, %.lr.ph44, %bb.b
-  %1 = phi i64 [ %i.v, %.lr.ph44 ], [ %.pre, %bb.b ], [ %i.bb, %malloc_mutex_lock.exit ]
   %.1 = phi i32 [ %.03242, %.lr.ph44 ], [ %.03242, %bb.b ], [ %i.be, %malloc_mutex_lock.exit ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %i.v, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge45, label %.lr.ph44, !llvm.loop !46
 

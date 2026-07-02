@@ -204,25 +204,20 @@ bb.ec:                                            ; preds = %bb.dx, %bb.dz, %bb.
 bb.ed:                                            ; preds = %._crit_edge
   %i.amo = fmul float %.0883, %i.aml
   %i.amp = fcmp ogt float %i.amo, %i.amk
-  br i1 %i.amp, label %.loopexit1022, label %.preheader1024.preheader
+  br i1 %i.amp, label %.loopexit1022, label %.preheader1024
 
-.preheader1024.preheader:                         ; preds = %bb.ed
-  %.pre1160 = load ptr, ptr @spiral_search_x, align 8, !tbaa !87
-  %.pre1162 = load ptr, ptr @spiral_search_y, align 8, !tbaa !87
-  br label %.preheader1024
-
-.preheader1024:                                   ; preds = %.preheader1024.preheader, %bb.ej
-  %13 = phi ptr [ %.pre1162, %.preheader1024.preheader ], [ %15, %bb.ej ] ; 5 uses
-  %14 = phi ptr [ %.pre1160, %.preheader1024.preheader ], [ %16, %bb.ej ] ; 5 uses
-  %indvars.iv1125 = phi i64 [ 1, %.preheader1024.preheader ], [ %indvars.iv.next1126, %bb.ej ] ; 3 uses
-  %.171062.a = phi i32 [ %.14.lcssa, %.preheader1024.preheader ], [ %.18, %bb.ej ] ; 8 uses
-  %.178361061 = phi i32 [ %.14833.lcssa, %.preheader1024.preheader ], [ %.18837, %bb.ej ] ; 5 uses
-  %.178671060 = phi i32 [ %.14864.lcssa, %.preheader1024.preheader ], [ %.18868, %bb.ej ] ; 5 uses
-  %i.amq = getelementptr inbounds nuw [2 x i8], ptr %14, i64 %indvars.iv1125
+.preheader1024:                                   ; preds = %bb.ed, %bb.ej
+  %indvars.iv1125 = phi i64 [ %indvars.iv.next1126, %bb.ej ], [ 1, %bb.ed ] ; 3 uses
+  %.171062 = phi i32 [ %.18, %bb.ej ], [ %.14.lcssa, %bb.ed ] ; 8 uses
+  %.171062.a = phi i32 [ %.18837, %bb.ej ], [ %.14833.lcssa, %bb.ed ] ; 5 uses
+  %.178361061 = phi i32 [ %.18868, %bb.ej ], [ %.14864.lcssa, %bb.ed ] ; 5 uses
+  %13 = load ptr, ptr @spiral_search_x, align 8, !tbaa !87
+  %i.amq = getelementptr inbounds nuw [2 x i8], ptr %13, i64 %indvars.iv1125
   %i.amr = load i16, ptr %i.amq, align 2, !tbaa !50
   %i.ams = sext i16 %i.amr to i32
   %i.amt = add nsw i32 %.14833.lcssa, %i.ams      ; 3 uses
-  %i.amu = getelementptr inbounds nuw [2 x i8], ptr %13, i64 %indvars.iv1125
+  %14 = load ptr, ptr @spiral_search_y, align 8, !tbaa !87
+  %i.amu = getelementptr inbounds nuw [2 x i8], ptr %14, i64 %indvars.iv1125
   %i.amv = load i16, ptr %i.amu, align 2, !tbaa !50
   %i.amw = sext i16 %i.amv to i32
   %i.amx = add nsw i32 %.14864.lcssa, %i.amw      ; 3 uses
@@ -265,7 +260,7 @@ bb.eg:                                            ; preds = %bb.ef
   %i.anw = add nsw i32 %i.anv, %i.anq
   %i.anx = mul nsw i32 %i.anw, %12
   %i.any = ashr i32 %i.anx, 16                    ; 3 uses
-  %i.anz = icmp slt i32 %i.any, %.171062.a
+  %i.anz = icmp slt i32 %i.any, %.171062
   br i1 %i.anz, label %bb.eh, label %bb.ej
 
 bb.eh:                                            ; preds = %bb.eg
@@ -273,7 +268,7 @@ bb.eh:                                            ; preds = %bb.eg
   %i.aob = zext nneg i32 %i.aoa to i64
   %i.aoc = getelementptr inbounds nuw [8 x i8], ptr @computeUniPred, i64 %i.aob
   %i.aod = load ptr, ptr %i.aoc, align 8, !tbaa !10
-  %i.aoe = sub nsw i32 %.171062.a, %i.any
+  %i.aoe = sub nsw i32 %.171062, %i.any
   %i.aof = add nsw i32 %i.anm, 80
   %i.aog = add nsw i32 %i.anr, 80
   %i.aoh = tail call i32 %i.aod(ptr noundef %0, i32 noundef %i.v, i32 noundef %i.w, i32 noundef %i.aoe, i32 noundef %i.aof, i32 noundef %i.aog) #13
@@ -283,20 +278,16 @@ bb.eh:                                            ; preds = %bb.eg
   %i.aol = load ptr, ptr %i.aok, align 8, !tbaa !34
   %i.aom = getelementptr inbounds i8, ptr %i.aol, i64 %i.ani
   store i8 1, ptr %i.aom, align 1, !tbaa !81
-  %i.aon = icmp slt i32 %i.aoi, %.171062.a
-  %.pre1159 = load ptr, ptr @spiral_search_x, align 8, !tbaa !87 ; 2 uses
-  %.pre1161 = load ptr, ptr @spiral_search_y, align 8, !tbaa !87 ; 2 uses
+  %i.aon = icmp slt i32 %i.aoi, %.171062
   br i1 %i.aon, label %bb.ei, label %bb.ej
 
 bb.ei:                                            ; preds = %bb.eh
   br label %bb.ej
 
 bb.ej:                                            ; preds = %.preheader1024, %bb.ee, %bb.eg, %bb.ei, %bb.eh, %bb.ef
-  %15 = phi ptr [ %13, %bb.ef ], [ %.pre1161, %bb.ei ], [ %.pre1161, %bb.eh ], [ %13, %bb.eg ], [ %13, %bb.ee ], [ %13, %.preheader1024 ]
-  %16 = phi ptr [ %14, %bb.ef ], [ %.pre1159, %bb.ei ], [ %.pre1159, %bb.eh ], [ %14, %bb.eg ], [ %14, %bb.ee ], [ %14, %.preheader1024 ]
-  %.18868 = phi i32 [ %.178671060, %bb.ef ], [ %i.amx, %bb.ei ], [ %.178671060, %bb.eh ], [ %.178671060, %bb.eg ], [ %.178671060, %bb.ee ], [ %.178671060, %.preheader1024 ] ; 5 uses
-  %.18837 = phi i32 [ %.178361061, %bb.ef ], [ %i.amt, %bb.ei ], [ %.178361061, %bb.eh ], [ %.178361061, %bb.eg ], [ %.178361061, %bb.ee ], [ %.178361061, %.preheader1024 ] ; 5 uses
-  %.18 = phi i32 [ %.171062.a, %bb.ef ], [ %i.aoi, %bb.ei ], [ %.171062.a, %bb.eh ], [ %.171062.a, %bb.eg ], [ %.171062.a, %bb.ee ], [ %.171062.a, %.preheader1024 ] ; 6 uses
+  %.18868 = phi i32 [ %.178361061, %bb.ef ], [ %i.amx, %bb.ei ], [ %.178361061, %bb.eh ], [ %.178361061, %bb.eg ], [ %.178361061, %bb.ee ], [ %.178361061, %.preheader1024 ] ; 5 uses
+  %.18837 = phi i32 [ %.171062.a, %bb.ef ], [ %i.amt, %bb.ei ], [ %.171062.a, %bb.eh ], [ %.171062.a, %bb.eg ], [ %.171062.a, %bb.ee ], [ %.171062.a, %.preheader1024 ] ; 5 uses
+  %.18 = phi i32 [ %.171062, %bb.ef ], [ %i.aoi, %bb.ei ], [ %.171062, %bb.eh ], [ %.171062, %bb.eg ], [ %.171062, %bb.ee ], [ %.171062, %.preheader1024 ] ; 6 uses
   %indvars.iv.next1126 = add nuw nsw i64 %indvars.iv1125, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next1126, 25
   br i1 %exitcond.not, label %bb.ek, label %.preheader1024, !llvm.loop !89
@@ -699,25 +690,20 @@ bb.dv:                                            ; preds = %bb.dq, %bb.ds, %bb.
 bb.dw:                                            ; preds = %._crit_edge
   %i.art = fmul float %.01075, %i.arq
   %i.aru = fcmp ogt float %i.art, %i.arp
-  br i1 %i.aru, label %.loopexit1237, label %.preheader1239.preheader
+  br i1 %i.aru, label %.loopexit1237, label %.preheader1239
 
-.preheader1239.preheader:                         ; preds = %bb.dw
-  %.pre1362 = load ptr, ptr @spiral_search_x, align 8, !tbaa !87
-  %.pre1364 = load ptr, ptr @spiral_search_y, align 8, !tbaa !87
-  br label %.preheader1239
-
-.preheader1239:                                   ; preds = %.preheader1239.preheader, %bb.ec
-  %17 = phi ptr [ %.pre1364, %.preheader1239.preheader ], [ %19, %bb.ec ] ; 5 uses
-  %18 = phi ptr [ %.pre1362, %.preheader1239.preheader ], [ %20, %bb.ec ] ; 5 uses
-  %indvars.iv1339 = phi i64 [ 1, %.preheader1239.preheader ], [ %indvars.iv.next1340, %bb.ec ] ; 3 uses
-  %.161277.a = phi i32 [ %.13.lcssa, %.preheader1239.preheader ], [ %.17, %bb.ec ] ; 8 uses
-  %.1610181276 = phi i32 [ %.131015.lcssa, %.preheader1239.preheader ], [ %.171019, %bb.ec ] ; 5 uses
-  %.1610481275 = phi i32 [ %.131045.lcssa, %.preheader1239.preheader ], [ %.171049, %bb.ec ] ; 5 uses
-  %i.arv = getelementptr inbounds nuw [2 x i8], ptr %18, i64 %indvars.iv1339
+.preheader1239:                                   ; preds = %bb.dw, %bb.ec
+  %indvars.iv1339 = phi i64 [ %indvars.iv.next1340, %bb.ec ], [ 1, %bb.dw ] ; 3 uses
+  %.161277 = phi i32 [ %.17, %bb.ec ], [ %.13.lcssa, %bb.dw ] ; 8 uses
+  %.161277.a = phi i32 [ %.171019, %bb.ec ], [ %.131015.lcssa, %bb.dw ] ; 5 uses
+  %.1610181276 = phi i32 [ %.171049, %bb.ec ], [ %.131045.lcssa, %bb.dw ] ; 5 uses
+  %17 = load ptr, ptr @spiral_search_x, align 8, !tbaa !87
+  %i.arv = getelementptr inbounds nuw [2 x i8], ptr %17, i64 %indvars.iv1339
   %i.arw = load i16, ptr %i.arv, align 2, !tbaa !50
   %i.arx = sext i16 %i.arw to i32
   %i.ary = add nsw i32 %.131045.lcssa, %i.arx     ; 3 uses
-  %i.arz = getelementptr inbounds nuw [2 x i8], ptr %17, i64 %indvars.iv1339
+  %18 = load ptr, ptr @spiral_search_y, align 8, !tbaa !87
+  %i.arz = getelementptr inbounds nuw [2 x i8], ptr %18, i64 %indvars.iv1339
   %i.asa = load i16, ptr %i.arz, align 2, !tbaa !50
   %i.asb = sext i16 %i.asa to i32
   %i.asc = add nsw i32 %.131015.lcssa, %i.asb     ; 3 uses
@@ -768,12 +754,12 @@ bb.dz:                                            ; preds = %bb.dy
   %i.atj = mul nsw i32 %i.ati, %16
   %i.atk = ashr i32 %i.atj, 16
   %i.atl = add nsw i32 %i.atk, %i.asx             ; 3 uses
-  %i.atm = icmp slt i32 %i.atl, %.161277.a
+  %i.atm = icmp slt i32 %i.atl, %.161277
   br i1 %i.atm, label %bb.ea, label %bb.ec
 
 bb.ea:                                            ; preds = %bb.dz
   %i.atn = load ptr, ptr @computeBiPred, align 8, !tbaa !10
-  %i.ato = sub nsw i32 %.161277.a, %i.atl
+  %i.ato = sub nsw i32 %.161277, %i.atl
   %i.atp = add nsw i32 %i.asy, 80
   %i.atq = add nsw i32 %i.atd, 80
   %i.atr = tail call i32 %i.atn(ptr noundef %0, i32 noundef %i.q, i32 noundef %i.r, i32 noundef %i.ato, i32 noundef %i.ja, i32 noundef %i.jb, i32 noundef %i.atp, i32 noundef %i.atq) #13
@@ -783,20 +769,16 @@ bb.ea:                                            ; preds = %bb.dz
   %i.atv = load ptr, ptr %i.atu, align 8, !tbaa !34
   %i.atw = getelementptr inbounds i8, ptr %i.atv, i64 %i.asn
   store i8 1, ptr %i.atw, align 1, !tbaa !81
-  %i.atx = icmp slt i32 %i.ats, %.161277.a
-  %.pre = load ptr, ptr @spiral_search_x, align 8, !tbaa !87 ; 2 uses
-  %.pre1363 = load ptr, ptr @spiral_search_y, align 8, !tbaa !87 ; 2 uses
+  %i.atx = icmp slt i32 %i.ats, %.161277
   br i1 %i.atx, label %bb.eb, label %bb.ec
 
 bb.eb:                                            ; preds = %bb.ea
   br label %bb.ec
 
 bb.ec:                                            ; preds = %.preheader1239, %bb.dx, %bb.dz, %bb.eb, %bb.ea, %bb.dy
-  %19 = phi ptr [ %17, %bb.dy ], [ %.pre1363, %bb.eb ], [ %.pre1363, %bb.ea ], [ %17, %bb.dz ], [ %17, %bb.dx ], [ %17, %.preheader1239 ]
-  %20 = phi ptr [ %18, %bb.dy ], [ %.pre, %bb.eb ], [ %.pre, %bb.ea ], [ %18, %bb.dz ], [ %18, %bb.dx ], [ %18, %.preheader1239 ]
-  %.171049 = phi i32 [ %.1610481275, %bb.dy ], [ %i.ary, %bb.eb ], [ %.1610481275, %bb.ea ], [ %.1610481275, %bb.dz ], [ %.1610481275, %bb.dx ], [ %.1610481275, %.preheader1239 ] ; 5 uses
-  %.171019 = phi i32 [ %.1610181276, %bb.dy ], [ %i.asc, %bb.eb ], [ %.1610181276, %bb.ea ], [ %.1610181276, %bb.dz ], [ %.1610181276, %bb.dx ], [ %.1610181276, %.preheader1239 ] ; 5 uses
-  %.17 = phi i32 [ %.161277.a, %bb.dy ], [ %i.ats, %bb.eb ], [ %.161277.a, %bb.ea ], [ %.161277.a, %bb.dz ], [ %.161277.a, %bb.dx ], [ %.161277.a, %.preheader1239 ] ; 6 uses
+  %.171049 = phi i32 [ %.1610181276, %bb.dy ], [ %i.ary, %bb.eb ], [ %.1610181276, %bb.ea ], [ %.1610181276, %bb.dz ], [ %.1610181276, %bb.dx ], [ %.1610181276, %.preheader1239 ] ; 5 uses
+  %.171019 = phi i32 [ %.161277.a, %bb.dy ], [ %i.asc, %bb.eb ], [ %.161277.a, %bb.ea ], [ %.161277.a, %bb.dz ], [ %.161277.a, %bb.dx ], [ %.161277.a, %.preheader1239 ] ; 5 uses
+  %.17 = phi i32 [ %.161277, %bb.dy ], [ %i.ats, %bb.eb ], [ %.161277, %bb.ea ], [ %.161277, %bb.dz ], [ %.161277, %bb.dx ], [ %.161277, %.preheader1239 ] ; 6 uses
   %indvars.iv.next1340 = add nuw nsw i64 %indvars.iv1339, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next1340, 25
   br i1 %exitcond.not, label %bb.ed, label %.preheader1239, !llvm.loop !124

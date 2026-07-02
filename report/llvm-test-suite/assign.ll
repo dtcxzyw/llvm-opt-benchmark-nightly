@@ -202,53 +202,47 @@ bb.s:                                             ; preds = %bb.r
 .thread91:                                        ; preds = %._crit_edge, %._crit_edge105, %bb.r, %bb.s, %._crit_edge110
   %i.br = phi i64 [ %i.z, %._crit_edge ], [ %i.ap, %._crit_edge105 ], [ %i.bh, %bb.r ], [ %.pre123, %bb.s ], [ %i.bd, %._crit_edge110 ]
   %.not79112 = icmp eq i64 %i.br, 0
-  br i1 %.not79112, label %._crit_edge118, label %.lr.ph117.preheader
+  br i1 %.not79112, label %._crit_edge118, label %.lr.ph117
 
-.lr.ph117.preheader:                              ; preds = %.thread91
-  %.pre125 = load ptr, ptr @tracksAssign, align 8, !tbaa !14
-  br label %.lr.ph117
-
-.lr.ph117:                                        ; preds = %.lr.ph117.preheader, %bb.x
-  %3 = phi ptr [ %4, %bb.x ], [ %.pre125, %.lr.ph117.preheader ] ; 2 uses
-  %.057116.a = phi i64 [ %.1, %bb.x ], [ 1000000, %.lr.ph117.preheader ] ; 5 uses
-  %.058115 = phi i64 [ %.159, %bb.x ], [ undef, %.lr.ph117.preheader ] ; 4 uses
-  %.4114 = phi i64 [ %i.cb, %bb.x ], [ 1, %.lr.ph117.preheader ] ; 7 uses
-  %.062113 = phi i64 [ %.163, %bb.x ], [ 0, %.lr.ph117.preheader ] ; 3 uses
-  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.4114
+.lr.ph117:                                        ; preds = %.thread91, %bb.x
+  %.057116 = phi i64 [ %.1, %bb.x ], [ 1000000, %.thread91 ] ; 5 uses
+  %.057116.a = phi i64 [ %.159, %bb.x ], [ undef, %.thread91 ] ; 4 uses
+  %.058115 = phi i64 [ %i.cb, %bb.x ], [ 1, %.thread91 ] ; 7 uses
+  %.4114 = phi i64 [ %.163, %bb.x ], [ 0, %.thread91 ] ; 3 uses
+  %3 = load ptr, ptr @tracksAssign, align 8, !tbaa !14
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.058115
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !8
   %.not80 = icmp eq i64 %i.bt, 0
   br i1 %.not80, label %bb.x, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph117
   %i.bu = load ptr, ptr @netsAssign, align 8, !tbaa !14
-  %i.bv = tail call i64 @VCV(ptr noundef %0, i64 noundef %2, i64 noundef %.4114, ptr noundef %i.bu) #11 ; 3 uses
-  %i.bw = icmp ult i64 %i.bv, %.057116.a
-  %.pre124 = load ptr, ptr @tracksAssign, align 8, !tbaa !14 ; 3 uses
+  %i.bv = tail call i64 @VCV(ptr noundef %0, i64 noundef %2, i64 noundef %.058115, ptr noundef %i.bu) #11 ; 3 uses
+  %i.bw = icmp ult i64 %i.bv, %.057116
   br i1 %i.bw, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  %i.bx = sub i64 %.4114, %storemerge.i
+  %i.bx = sub i64 %.058115, %storemerge.i
   %spec.select = tail call i64 @llvm.abs.i64(i64 %i.bx, i1 true)
   br label %bb.x
 
 bb.v:                                             ; preds = %bb.t
-  %i.by = icmp eq i64 %i.bv, %.057116.a
+  %i.by = icmp eq i64 %i.bv, %.057116
   br i1 %i.by, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %i.bz = sub i64 %.4114, %storemerge.i
+  %i.bz = sub i64 %.058115, %storemerge.i
   %spec.select88 = tail call i64 @llvm.abs.i64(i64 %i.bz, i1 true) ; 2 uses
-  %i.ca = icmp slt i64 %spec.select88, %.058115
-  %spec.select151 = select i1 %i.ca, i64 %.4114, i64 %.062113
-  %spec.select152 = tail call i64 @llvm.smin.i64(i64 %spec.select88, i64 %.058115)
+  %i.ca = icmp slt i64 %spec.select88, %.057116.a
+  %spec.select151 = select i1 %i.ca, i64 %.058115, i64 %.4114
+  %spec.select152 = tail call i64 @llvm.smin.i64(i64 %spec.select88, i64 %.057116.a)
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.u, %.lr.ph117, %bb.v
-  %4 = phi ptr [ %3, %.lr.ph117 ], [ %.pre124, %bb.u ], [ %.pre124, %bb.v ], [ %.pre124, %bb.w ]
-  %.163 = phi i64 [ %.062113, %.lr.ph117 ], [ %.4114, %bb.u ], [ %.062113, %bb.v ], [ %spec.select151, %bb.w ] ; 2 uses
-  %.159 = phi i64 [ %.058115, %.lr.ph117 ], [ %spec.select, %bb.u ], [ %.058115, %bb.v ], [ %spec.select152, %bb.w ]
-  %.1 = phi i64 [ %.057116.a, %.lr.ph117 ], [ %i.bv, %bb.u ], [ %.057116.a, %bb.v ], [ %.057116.a, %bb.w ]
-  %i.cb = add i64 %.4114, 1                       ; 2 uses
+  %.163 = phi i64 [ %.4114, %.lr.ph117 ], [ %.058115, %bb.u ], [ %.4114, %bb.v ], [ %spec.select151, %bb.w ] ; 2 uses
+  %.159 = phi i64 [ %.057116.a, %.lr.ph117 ], [ %spec.select, %bb.u ], [ %.057116.a, %bb.v ], [ %spec.select152, %bb.w ]
+  %.1 = phi i64 [ %.057116, %.lr.ph117 ], [ %i.bv, %bb.u ], [ %.057116, %bb.v ], [ %.057116, %bb.w ]
+  %i.cb = add i64 %.058115, 1                     ; 2 uses
   %i.cc = load i64, ptr @channelTracks, align 8, !tbaa !8
   %.not79 = icmp ugt i64 %i.cb, %i.cc
   br i1 %.not79, label %._crit_edge118, label %.lr.ph117, !llvm.loop !52

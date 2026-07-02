@@ -203,13 +203,9 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   %i.du = getelementptr inbounds [2 x i8], ptr @block_type_shift_factor, i64 %i.o
   %i.dv = sext i32 %i.x to i64
   %.pre229.a = load ptr, ptr @spiral_hpel_search_x, align 8, !tbaa !80
-  %.pre231 = load ptr, ptr @spiral_hpel_search_y, align 8, !tbaa !80
-  %.pre233 = load ptr, ptr @mvbits, align 8, !tbaa !67
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph, %bb.u
-  %14 = phi ptr [ %.pre233, %.lr.ph ], [ %16, %bb.u ] ; 3 uses
-  %15 = phi ptr [ %.pre231, %.lr.ph ], [ %17, %bb.u ] ; 2 uses
   %i.dw = phi ptr [ %.pre229.a, %.lr.ph ], [ %i.fn, %bb.u ] ; 2 uses
   %indvars.iv = phi i64 [ %i.dv, %.lr.ph ], [ %indvars.iv.next, %bb.u ] ; 5 uses
   %.0165206 = phi i32 [ %12, %.lr.ph ], [ %.2, %bb.u ] ; 5 uses
@@ -222,17 +218,19 @@ bb.s:                                             ; preds = %.lr.ph, %bb.u
   %i.ec = add nsw i32 %i.eb, %i.dy                ; 2 uses
   %i.ed = load i16, ptr %9, align 2, !tbaa !8
   %i.ee = sext i16 %i.ed to i32
-  %i.ef = getelementptr inbounds [2 x i8], ptr %15, i64 %indvars.iv
+  %14 = load ptr, ptr @spiral_hpel_search_y, align 8, !tbaa !80
+  %i.ef = getelementptr inbounds [2 x i8], ptr %14, i64 %indvars.iv
   %i.eg = load i16, ptr %i.ef, align 2, !tbaa !8
   %i.eh = sext i16 %i.eg to i32
   %i.ei = add nsw i32 %i.eh, %i.ee                ; 2 uses
+  %15 = load ptr, ptr @mvbits, align 8, !tbaa !67 ; 2 uses
   %i.ej = sub nsw i32 %i.ec, %i.dr
   %i.ek = sext i32 %i.ej to i64
-  %i.el = getelementptr inbounds [4 x i8], ptr %14, i64 %i.ek
+  %i.el = getelementptr inbounds [4 x i8], ptr %15, i64 %i.ek
   %i.em = load i32, ptr %i.el, align 4, !tbaa !4
   %i.en = sub nsw i32 %i.ei, %i.ds
   %i.eo = sext i32 %i.en to i64
-  %i.ep = getelementptr inbounds [4 x i8], ptr %14, i64 %i.eo
+  %i.ep = getelementptr inbounds [4 x i8], ptr %15, i64 %i.eo
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !4
   %i.er = add nsw i32 %i.eq, %i.em
   %i.es = mul nsw i32 %i.er, %13
@@ -264,17 +262,16 @@ bb.t:                                             ; preds = %bb.s
   %i.fk = zext nneg i16 %i.fj to i32
   %i.fl = lshr i32 %i.fi, %i.fk
   %i.fm = icmp slt i32 %.1, %i.fl
-  %.pre228 = load ptr, ptr @spiral_hpel_search_x, align 8, !tbaa !80
-  %.pre230 = load ptr, ptr @spiral_hpel_search_y, align 8, !tbaa !80
-  %.pre232 = load ptr, ptr @mvbits, align 8, !tbaa !67
-  br i1 %i.fm, label %._crit_edge, label %bb.u
+  br i1 %i.fm, label %._crit_edge, label %._crit_edge228
 
-bb.u:                                             ; preds = %bb.t, %bb.s
-  %16 = phi ptr [ %14, %bb.s ], [ %.pre232, %bb.t ]
-  %17 = phi ptr [ %15, %bb.s ], [ %.pre230, %bb.t ]
-  %i.fn = phi ptr [ %i.dw, %bb.s ], [ %.pre228, %bb.t ]
-  %.2170 = phi i32 [ %.0168204, %bb.s ], [ %.1169, %bb.t ] ; 2 uses
-  %.2 = phi i32 [ %.0165206, %bb.s ], [ %.1, %bb.t ] ; 2 uses
+._crit_edge228:                                   ; preds = %bb.t
+  %.pre229 = load ptr, ptr @spiral_hpel_search_x, align 8, !tbaa !80
+  br label %bb.u
+
+bb.u:                                             ; preds = %._crit_edge228, %bb.s
+  %i.fn = phi ptr [ %i.dw, %bb.s ], [ %.pre229, %._crit_edge228 ]
+  %.2170 = phi i32 [ %.0168204, %bb.s ], [ %.1169, %._crit_edge228 ] ; 2 uses
+  %.2 = phi i32 [ %.0165206, %bb.s ], [ %.1, %._crit_edge228 ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.z, %lftr.wideiv
@@ -361,13 +358,9 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   %i.gx = getelementptr inbounds [2 x i8], ptr @block_type_shift_factor, i64 %i.o
   %i.gy = sext i32 %i.gk to i64
   %.pre237 = load ptr, ptr @spiral_search_x, align 8, !tbaa !80
-  %.pre239 = load ptr, ptr @spiral_search_y, align 8, !tbaa !80
-  %.pre241 = load ptr, ptr @mvbits, align 8, !tbaa !67
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph215, %bb.ae
-  %18 = phi ptr [ %.pre241, %.lr.ph215 ], [ %20, %bb.ae ] ; 3 uses
-  %19 = phi ptr [ %.pre239, %.lr.ph215 ], [ %21, %bb.ae ] ; 2 uses
   %i.gz = phi ptr [ %.pre237, %.lr.ph215 ], [ %i.io, %bb.ae ] ; 2 uses
   %indvars.iv223 = phi i64 [ %i.gy, %.lr.ph215 ], [ %indvars.iv.next224, %bb.ae ] ; 4 uses
   %.5213 = phi i32 [ %spec.select, %.lr.ph215 ], [ %.7, %bb.ae ] ; 5 uses
@@ -380,17 +373,19 @@ bb.ac:                                            ; preds = %.lr.ph215, %bb.ae
   %i.hf = add nsw i32 %i.he, %i.hb                ; 2 uses
   %i.hg = load i16, ptr %9, align 2, !tbaa !8
   %i.hh = sext i16 %i.hg to i32
-  %i.hi = getelementptr inbounds [2 x i8], ptr %19, i64 %indvars.iv223
+  %16 = load ptr, ptr @spiral_search_y, align 8, !tbaa !80
+  %i.hi = getelementptr inbounds [2 x i8], ptr %16, i64 %indvars.iv223
   %i.hj = load i16, ptr %i.hi, align 2, !tbaa !8
   %i.hk = sext i16 %i.hj to i32
   %i.hl = add nsw i32 %i.hk, %i.hh                ; 2 uses
+  %17 = load ptr, ptr @mvbits, align 8, !tbaa !67 ; 2 uses
   %i.hm = sub nsw i32 %i.hf, %i.gv
   %i.hn = sext i32 %i.hm to i64
-  %i.ho = getelementptr inbounds [4 x i8], ptr %18, i64 %i.hn
+  %i.ho = getelementptr inbounds [4 x i8], ptr %17, i64 %i.hn
   %i.hp = load i32, ptr %i.ho, align 4, !tbaa !4
   %i.hq = sub nsw i32 %i.hl, %i.gw
   %i.hr = sext i32 %i.hq to i64
-  %i.hs = getelementptr inbounds [4 x i8], ptr %18, i64 %i.hr
+  %i.hs = getelementptr inbounds [4 x i8], ptr %17, i64 %i.hr
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !4
   %i.hu = add nsw i32 %i.ht, %i.hp
   %i.hv = mul nsw i32 %i.hu, %13
@@ -418,17 +413,16 @@ bb.ad:                                            ; preds = %bb.ac
   %i.il = zext nneg i16 %i.ik to i32
   %i.im = lshr i32 %i.ij, %i.il
   %i.in = icmp slt i32 %spec.select202, %i.im
-  %.pre236 = load ptr, ptr @spiral_search_x, align 8, !tbaa !80
-  %.pre238 = load ptr, ptr @spiral_search_y, align 8, !tbaa !80
-  %.pre240 = load ptr, ptr @mvbits, align 8, !tbaa !67
-  br i1 %i.in, label %._crit_edge216, label %bb.ae
+  br i1 %i.in, label %._crit_edge216, label %._crit_edge233
 
-bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %20 = phi ptr [ %18, %bb.ac ], [ %.pre240, %bb.ad ]
-  %21 = phi ptr [ %19, %bb.ac ], [ %.pre238, %bb.ad ]
-  %i.io = phi ptr [ %i.gz, %bb.ac ], [ %.pre236, %bb.ad ]
-  %.6174 = phi i32 [ %.4172211, %bb.ac ], [ %spec.select201, %bb.ad ] ; 2 uses
-  %.7 = phi i32 [ %.5213, %bb.ac ], [ %spec.select202, %bb.ad ] ; 2 uses
+._crit_edge233:                                   ; preds = %bb.ad
+  %.pre234 = load ptr, ptr @spiral_search_x, align 8, !tbaa !80
+  br label %bb.ae
+
+bb.ae:                                            ; preds = %._crit_edge233, %bb.ac
+  %i.io = phi ptr [ %i.gz, %bb.ac ], [ %.pre234, %._crit_edge233 ]
+  %.6174 = phi i32 [ %.4172211, %bb.ac ], [ %spec.select201, %._crit_edge233 ] ; 2 uses
+  %.7 = phi i32 [ %.5213, %bb.ac ], [ %spec.select202, %._crit_edge233 ] ; 2 uses
   %indvars.iv.next224 = add nsw i64 %indvars.iv223, 1 ; 2 uses
   %lftr.wideiv226 = trunc i64 %indvars.iv.next224 to i32
   %exitcond227.not = icmp eq i32 %11, %lftr.wideiv226

@@ -203,7 +203,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer20AllocationIsEscapingENS2_7OpIndexE(ptr noundef nonnull align 8 dereferenceable(88) %0, i32 %1) local_unnamed_addr #1 align 2 {
 bb.a:
-  %2 = alloca %"class.v8::internal::compiler::turboshaft::OpIndex", align 4 ; 4 uses
+  %2 = alloca %"class.v8::internal::compiler::turboshaft::OpIndex", align 4 ; 3 uses
   store i32 %1, ptr %2, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8              ; 3 uses
@@ -327,21 +327,17 @@ bb.k:                                             ; preds = %_ZN4absl18container
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.ba = load ptr, ptr %i.az, align 8            ; 2 uses
   %.not21 = icmp eq ptr %i.ay, %i.ba
-  br i1 %.not21, label %.thread, label %.lr.ph.preheader
+  br i1 %.not21, label %.thread, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.k
-  %.sroa.01.0.copyload.pre26 = load i32, ptr %2, align 4
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread
-  %.sroa.01.0.copyload = phi i32 [ %.sroa.01.0.copyload28, %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread ], [ %.sroa.01.0.copyload.pre26, %.lr.ph.preheader ] ; 4 uses
-  %.01122 = phi ptr [ %i.bv, %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread ], [ %i.ay, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.02.0.copyload.a = load i32, ptr %.01122, align 4
+.lr.ph:                                           ; preds = %bb.k, %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread
+  %.01122 = phi ptr [ %i.bv, %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread ], [ %i.ay, %bb.k ] ; 2 uses
+  %.sroa.02.0.copyload = load i32, ptr %.01122, align 4
+  %.sroa.02.0.copyload.a = load i32, ptr %2, align 4 ; 2 uses
   %i.bb = load ptr, ptr %0, align 8, !nonnull !5, !align !6
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.bd = load ptr, ptr %i.bc, align 8
   %i.be = ptrtoint ptr %i.bd to i64               ; 2 uses
-  %i.bf = zext i32 %.sroa.01.0.copyload to i64
+  %i.bf = zext i32 %.sroa.02.0.copyload.a to i64
   %i.bg = add i64 %i.be, %i.bf
   %i.bh = inttoptr i64 %i.bg to ptr               ; 3 uses
   %i.bi = load i8, ptr %i.bh, align 4
@@ -358,7 +354,6 @@ _ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit
   %i.bn = call i32 @_ZNK2v88internal8compiler10turboshaft9Operation7EffectsEv(ptr noundef nonnull align 4 dereferenceable(4) %i.bh)
   %i.bo = and i32 %i.bn, 262144
   %.not15.i = icmp eq i32 %i.bo, 0
-  %.sroa.01.0.copyload.pre = load i32, ptr %2, align 4 ; 2 uses
   br i1 %.not15.i, label %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread, label %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit._ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13_crit_edge.i
 
 _ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit._ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13_crit_edge.i: ; preds = %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.i
@@ -369,9 +364,8 @@ _ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit
   br label %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13.i
 
 _ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13.i: ; preds = %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit._ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13_crit_edge.i, %bb.l
-  %.sroa.01.0.copyload27 = phi i32 [ %.sroa.01.0.copyload.pre, %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit._ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13_crit_edge.i ], [ %.sroa.01.0.copyload, %bb.l ]
   %.pre-phi.i = phi i64 [ %.pre18.i, %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit._ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13_crit_edge.i ], [ %i.be, %bb.l ]
-  %i.bp = zext i32 %.sroa.02.0.copyload.a to i64
+  %i.bp = zext i32 %.sroa.02.0.copyload to i64
   %i.bq = add i64 %.pre-phi.i, %i.bp
   %i.br = inttoptr i64 %i.bq to ptr               ; 2 uses
   %i.bs = load i8, ptr %i.br, align 4
@@ -381,11 +375,10 @@ _ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit
 _ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit: ; preds = %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.thread13.i
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 20
   %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.bt, align 4
-  %i.bu = icmp eq i32 %.sroa.0.0.copyload.i.i.i, %.sroa.01.0.copyload
+  %i.bu = icmp eq i32 %.sroa.0.0.copyload.i.i.i, %.sroa.02.0.copyload.a
   br i1 %i.bu, label %.thread, label %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread
 
 _ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit.thread: ; preds = %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.i, %.lr.ph, %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit
-  %.sroa.01.0.copyload28 = phi i32 [ %.sroa.01.0.copyload.pre, %_ZN2v88internal8compiler10turboshaft19ShouldSkipOperationERKNS2_9OperationE.exit.i ], [ %.sroa.01.0.copyload, %.lr.ph ], [ %.sroa.01.0.copyload27, %_ZN2v88internal8compiler10turboshaft26LateEscapeAnalysisAnalyzer17EscapesThroughUseENS2_7OpIndexES4_.exit ]
   %i.bv = getelementptr inbounds nuw i8, ptr %.01122, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.bv, %i.ba
   br i1 %.not, label %.thread, label %.lr.ph

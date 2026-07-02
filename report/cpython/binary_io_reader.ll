@@ -203,7 +203,7 @@ bb.ag:                                            ; preds = %.lr.ph
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cz = load ptr, ptr %i.u, align 8, !tbaa !40
-  %i.da = add nuw i64 %i.cw, 1                    ; 2 uses
+  %i.da = add nuw i64 %i.cw, 1
   store i64 %i.da, ptr %i.a, align 8, !tbaa !43
   %i.db = getelementptr i8, ptr %i.cz, i64 %i.cw
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !27  ; 2 uses
@@ -228,11 +228,11 @@ bb.ai:                                            ; preds = %._crit_edge493
   br i1 %exitcond.peel.not, label %.loopexit567, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.ai, %bb.ay
-  %3 = phi i64 [ %5, %bb.ay ], [ %i.da, %bb.ai ]
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ay ], [ 1, %bb.ai ] ; 2 uses
   %.0185423 = phi ptr [ %.1186, %bb.ay ], [ %i.df, %bb.ai ] ; 14 uses
   %.0190422 = phi i8 [ %.1191, %bb.ay ], [ %i.dc, %bb.ai ] ; 3 uses
   %.0195421 = phi i64 [ %i.ev, %bb.ay ], [ 1, %bb.ai ] ; 2 uses
+  %3 = load i64, ptr %i.a, align 8, !tbaa !43
   %i.di = load ptr, ptr %i.u, align 8, !tbaa !40
   %i.dj = load i64, ptr %i.r, align 8, !tbaa !41
   %i.dk = call fastcc i64 @decode_varint_u64(ptr noundef %i.di, ptr noundef %i.a, i64 noundef %i.dj)
@@ -291,7 +291,7 @@ Py_XDECREF.exit262:                               ; preds = %bb.ag, %.loopexit48
 
 bb.ap:                                            ; preds = %bb.al
   %i.dw = load ptr, ptr %i.u, align 8, !tbaa !40
-  %i.dx = add nuw i64 %i.dl, 1                    ; 3 uses
+  %i.dx = add nuw i64 %i.dl, 1
   store i64 %i.dx, ptr %i.a, align 8, !tbaa !43
   %i.dy = getelementptr i8, ptr %i.dw, i64 %i.dl
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !27  ; 2 uses
@@ -325,7 +325,6 @@ bb.as:                                            ; preds = %emit_batch.exit
   %i.ek = add nsw i32 %i.ej, -1                   ; 2 uses
   store i32 %i.ek, ptr %.0185423, align 8, !tbaa !27
   %i.el = icmp eq i32 %i.ek, 0
-  %.pre495 = load i64, ptr %i.a, align 8, !tbaa !43 ; 2 uses
   br i1 %i.el, label %bb.at, label %Py_DECREF.exit245
 
 bb.at:                                            ; preds = %bb.as
@@ -333,7 +332,6 @@ bb.at:                                            ; preds = %bb.as
   br label %Py_DECREF.exit245
 
 Py_DECREF.exit245:                                ; preds = %emit_batch.exit, %bb.as, %bb.at
-  %4 = phi i64 [ %i.dx, %emit_batch.exit ], [ %.pre495, %bb.as ], [ %.pre495, %bb.at ]
   br i1 %.0.i263, label %bb.au, label %.critedge
 
 bb.au:                                            ; preds = %Py_DECREF.exit245
@@ -350,7 +348,6 @@ bb.au:                                            ; preds = %Py_DECREF.exit245
 
 bb.av:                                            ; preds = %._crit_edge497, %bb.ap
   %i.eq = phi i64 [ %i.eb, %bb.ap ], [ %.pre498, %._crit_edge497 ]
-  %5 = phi i64 [ %i.dx, %bb.ap ], [ %4, %._crit_edge497 ]
   %.1196 = phi i64 [ %.0195421, %bb.ap ], [ 0, %._crit_edge497 ] ; 2 uses
   %.1191 = phi i8 [ %.0190422, %bb.ap ], [ %i.dz, %._crit_edge497 ] ; 2 uses
   %.1186 = phi ptr [ %.0185423, %bb.ap ], [ %i.ep, %._crit_edge497 ] ; 4 uses
