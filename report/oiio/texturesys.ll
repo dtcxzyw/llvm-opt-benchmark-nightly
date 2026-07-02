@@ -204,18 +204,16 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 .lr.ph334:                                        ; preds = %.preheader330
   %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.di = tail call i32 @llvm.umin.i32(i32 %10, i32 %spec.select.i) ; 4 uses
+  %i.di = tail call i32 @llvm.umin.i32(i32 %10, i32 %spec.select.i) ; 2 uses
   %i.dj = zext nneg i32 %i.di to i64              ; 3 uses
   %i.dk = add nuw nsw i32 %10, %i.di
   %i.dl = sub i32 %i.dk, %.1.i
   %.pre = load float, ptr %i.dh, align 8, !tbaa !258 ; 2 uses
-  %18 = add i32 %10, %i.di
   %i.dm = xor i32 %.1.i, -1
-  %i.dn = add i32 %18, %i.dm
-  %19 = sub i32 %i.dn, %i.di                      ; 2 uses
-  %i.do = zext i32 %19 to i64
+  %i.dn = add i32 %10, %i.dm                      ; 2 uses
+  %i.do = zext i32 %i.dn to i64
   %i.dp = add nuw nsw i64 %i.do, 1                ; 2 uses
-  %min.iters.check362 = icmp ult i32 %19, 7
+  %min.iters.check362 = icmp ult i32 %i.dn, 7
   br i1 %min.iters.check362, label %scalar.ph361.preheader, label %vector.ph363
 
 vector.ph363:                                     ; preds = %.lr.ph334

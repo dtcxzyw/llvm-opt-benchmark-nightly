@@ -204,12 +204,12 @@ _ZN2v84base11SmallVectorINS_8internal4wasm32TurboshaftGraphBuildingInterface5Val
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.l, %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit
   %.ph = phi ptr [ %i.cw, %_ZN2v88internal4wasm14FastZoneVectorINS1_32TurboshaftGraphBuildingInterface5ValueEE3popEj.exit ], [ %.pre60, %bb.l ] ; 5 uses
-  %sext = shl i64 %i.bd, 32
-  %3 = ashr exact i64 %sext, 29
-  %4 = add nsw i64 %3, -8
-  %sext76 = shl i64 %i.bg, 32
-  %5 = ashr exact i64 %sext76, 29
-  %6 = sub nsw i64 %4, %5                         ; 2 uses
+  %sext = shl i64 %i.bg, 32
+  %sext76 = shl i64 %i.bd, 32
+  %3 = ashr exact i64 %sext76, 29
+  %4 = ashr exact i64 %sext, 29
+  %5 = sub nsw i64 %3, %4
+  %6 = add nsw i64 %5, -8                         ; 2 uses
   %i.df = lshr exact i64 %6, 3
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 216

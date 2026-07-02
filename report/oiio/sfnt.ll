@@ -204,17 +204,17 @@ bb.n:                                             ; preds = %bb.l
   %i.el = shl nuw nsw i64 %i.ek, 24
   %i.em = zext i8 %i.dw to i64
   %i.en = shl nuw nsw i64 %i.em, 16
-  %3 = or disjoint i64 %i.el, %i.en
   %i.eo = zext i8 %i.eb to i64
   %i.ep = shl nuw nsw i64 %i.eo, 8
-  %i.eq = or disjoint i64 %3, %i.ep
-  %4 = zext i8 %i.eg to i64                       ; 2 uses
-  %i.er = or disjoint i64 %i.eq, %4               ; 2 uses
+  %3 = zext i8 %i.eg to i64                       ; 2 uses
+  %i.eq = or disjoint i64 %i.el, %i.en
+  %4 = or disjoint i64 %i.eq, %i.ep
+  %i.er = or disjoint i64 %4, %3                  ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.er, 9
   br i1 %min.iters.check, label %.lr.ph.i185.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i184
-  %n.mod.vf = and i64 %4, 7                       ; 2 uses
+  %n.mod.vf = and i64 %3, 7                       ; 2 uses
   %i.es = icmp eq i64 %n.mod.vf, 0
   %i.et = select i1 %i.es, i64 8, i64 %n.mod.vf
   %n.vec = sub nsw i64 %i.er, %i.et               ; 3 uses
@@ -617,17 +617,17 @@ bb.a:
   %i.u = shl nuw nsw i64 %i.t, 24
   %i.v = zext i8 %i.f to i64
   %i.w = shl nuw nsw i64 %i.v, 16
-  %3 = or disjoint i64 %i.u, %i.w
   %i.x = zext i8 %i.k to i64
   %i.y = shl nuw nsw i64 %i.x, 8
-  %i.z = or disjoint i64 %3, %i.y
-  %4 = zext i8 %i.p to i64                        ; 2 uses
-  %i.aa = or disjoint i64 %i.z, %4                ; 2 uses
+  %3 = zext i8 %i.p to i64                        ; 2 uses
+  %i.z = or disjoint i64 %i.u, %i.w
+  %4 = or disjoint i64 %i.z, %i.y
+  %i.aa = or disjoint i64 %4, %3                  ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.aa, 9
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.mod.vf = and i64 %4, 7                       ; 2 uses
+  %n.mod.vf = and i64 %3, 7                       ; 2 uses
   %i.ab = icmp eq i64 %n.mod.vf, 0
   %i.ac = select i1 %i.ab, i64 8, i64 %n.mod.vf
   %n.vec = sub nsw i64 %i.aa, %i.ac               ; 3 uses

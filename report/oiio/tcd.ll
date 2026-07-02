@@ -204,17 +204,17 @@ bb.cf:                                            ; preds = %bb.ce
   %i.yo = add i32 %i.yn, -1
   %i.yp = zext i32 %i.yo to i64
   %i.yq = shl nuw nsw i64 %i.yp, 2
-  %12 = zext i32 %i.yn to i64                     ; 2 uses
-  %13 = extractelement <2 x i32> %i.xw, i64 1
+  %12 = extractelement <2 x i32> %i.xw, i64 1
+  %13 = zext i32 %i.yn to i64                     ; 2 uses
   %min.iters.check = icmp ult i32 %i.yn, 8
-  %n.vec = and i64 %12, 4294967288                ; 4 uses
+  %n.vec = and i64 %13, 4294967288                ; 4 uses
   %i.yr = shl nuw nsw i64 %n.vec, 2
   %i.ys = trunc nuw i64 %n.vec to i32
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.077.i, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert382 = insertelement <4 x i32> poison, i32 %.076.i, i64 0
   %broadcast.splat383 = shufflevector <4 x i32> %broadcast.splatinsert382, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %12
+  %cmp.n = icmp eq i64 %n.vec, %13
   br label %.preheader.i229
 
 .preheader96.preheader.i:                         ; preds = %bb.cf
@@ -323,7 +323,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.lcssa374 = phi ptr [ %i.yx, %middle.block ], [ %.lcssa389.unr, %scalar.ph.prol.loopexit ], [ %i.aab, %scalar.ph ]
   %i.aad = getelementptr inbounds nuw [4 x i8], ptr %.lcssa374, i64 %.075.i
   %i.aae = add nuw i32 %.079108.i, 1              ; 2 uses
-  %exitcond125.not.i = icmp eq i32 %i.aae, %13
+  %exitcond125.not.i = icmp eq i32 %i.aae, %12
   br i1 %exitcond125.not.i, label %.loopexit.i, label %.preheader.i229, !llvm.loop !272
 
 .preheader96.i:                                   ; preds = %._crit_edge.i227, %.preheader96.preheader.i

@@ -203,7 +203,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q, %.preh
   %.1103.fr = freeze i32 %.1103                   ; 3 uses
   %i.dz = zext nneg i32 %.1107 to i64
   %i.ea = getelementptr inbounds nuw [2 x i8], ptr %.3119, i64 %i.dz ; 4 uses
-  %i.eb = sub nsw i32 %.2131, %.1107              ; 7 uses
+  %i.eb = sub i32 %.2131, %.1107                  ; 7 uses
   %i.ec = and i32 %.1103.fr, -4
   %i.ed = icmp eq i32 %i.ec, 8204
   br i1 %i.ed, label %bb.x, label %switch.early.test165

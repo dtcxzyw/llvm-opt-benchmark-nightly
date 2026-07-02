@@ -202,19 +202,19 @@ bb.a:
   %i.g = add nsw i32 %i.c, -1
   %i.h = lshr i32 %i.g, 1
   %i.i = add nuw nsw i32 %i.h, 1
-  %wide.trip.count = zext nneg i32 %i.i to i64
-  %i.j = zext i32 %i.f to i64                     ; 2 uses
+  %i.j = zext nneg i32 %i.i to i64
   %i.k = zext i32 %i.f to i64                     ; 2 uses
   %min.iters.check59 = icmp ult i32 %i.f, 8
   %n.vec62 = and i64 %i.k, 4294967288             ; 4 uses
   %i.l = trunc nuw i64 %n.vec62 to i32
   %i.m = shl nuw nsw i64 %n.vec62, 1              ; 3 uses
   %cmp.n72 = icmp eq i64 %n.vec62, %i.k
+  %4 = zext i32 %i.f to i64                       ; 2 uses
   %min.iters.check = icmp ult i32 %i.f, 8
-  %n.vec = and i64 %i.j, 4294967288               ; 4 uses
+  %n.vec = and i64 %4, 4294967288                 ; 4 uses
   %i.n = trunc nuw i64 %n.vec to i32
   %i.o = shl nuw nsw i64 %n.vec, 1                ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %i.j
+  %cmp.n = icmp eq i64 %n.vec, %4
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us.us.1
@@ -462,7 +462,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 ._crit_edge.us.us.1:                              ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next.1 = add nsw i64 %i.s, 2
   %indvars.iv.next41 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond43.not = icmp eq i64 %indvars.iv.next41, %wide.trip.count
+  %exitcond43.not = icmp eq i64 %indvars.iv.next41, %i.j
   br i1 %exitcond43.not, label %._crit_edge, label %.preheader.us, !llvm.loop !103
 
 ._crit_edge:                                      ; preds = %._crit_edge.us.us.1, %.preheader.lr.ph, %bb.a
