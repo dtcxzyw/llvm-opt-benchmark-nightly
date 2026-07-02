@@ -204,7 +204,7 @@ bb.kz:                                            ; preds = %bb.ky
   %i.bhu = fmul float %i.bht, 5.000000e-01        ; 3 uses
   %i.bhv = insertelement <4 x float> poison, float %i.bhu, i64 0
   %i.bhw = shufflevector <4 x float> %i.bhv, <4 x float> poison, <4 x i32> zeroinitializer ; 4 uses
-  %i.bhx = and i32 %i.bhg, -16                    ; 3 uses
+  %i.bhx = and i32 %i.bhg, -16                    ; 2 uses
   %.not396 = icmp eq i32 %i.bhx, 0
   br i1 %.not396, label %.preheader288, label %.lr.ph
 
@@ -219,8 +219,8 @@ bb.kz:                                            ; preds = %bb.ky
   br i1 %i.bhz, label %.lr.ph375.preheader, label %.loopexit
 
 .lr.ph375.preheader:                              ; preds = %.preheader288
-  %2 = xor i32 %i.bhx, -1
-  %i.bia = add i32 %i.bhg, %2                     ; 2 uses
+  %2 = and i32 %i.bhg, 15
+  %i.bia = add nsw i32 %2, -1                     ; 2 uses
   %i.bib = zext i32 %i.bia to i64
   %i.bic = add nuw nsw i64 %i.bib, 1              ; 2 uses
   %min.iters.check795 = icmp ult i32 %i.bia, 7
