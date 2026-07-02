@@ -204,17 +204,17 @@ vector.ph:                                        ; preds = %.lr.ph.i49.i.i.i.pr
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %i.eg = phi i32 [ %i.ef, %vector.ph ], [ %i.eh, %vector.body ] ; 2 uses
-  %18 = add i32 %i.eg, 25
   %index.next = add nuw i32 %index, 32            ; 2 uses
   %i.eh = add i32 %i.eg, 32
   %i.ei = icmp eq i32 %index.next, %n.vec
   br i1 %i.ei, label %.lr.ph.i49.i.i.i.i.preheader.loopexit, label %vector.body, !llvm.loop !693
 
 .lr.ph.i49.i.i.i.i.preheader.loopexit:            ; preds = %vector.body
+  %18 = add i32 %i.eg, 25
   store i32 %18, ptr %i.d, align 4, !tbaa !3
   br label %.lr.ph.i49.i.i.i.i.preheader
 
-.lr.ph.i49.i.i.i.i.preheader:                     ; preds = %.lr.ph.i49.i.i.i.i.preheader.loopexit, %.lr.ph.i49.i.i.i.preheader.i
+.lr.ph.i49.i.i.i.i.preheader:                     ; preds = %.lr.ph.i49.i.i.i.preheader.i, %.lr.ph.i49.i.i.i.i.preheader.loopexit
   %.ph = phi i32 [ %.promoted.i.i.i.i.i, %.lr.ph.i49.i.i.i.preheader.i ], [ %i.ee, %.lr.ph.i49.i.i.i.i.preheader.loopexit ]
   br label %.lr.ph.i49.i.i.i.i
 

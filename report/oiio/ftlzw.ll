@@ -201,17 +201,17 @@ vector.ph:                                        ; preds = %.split.us
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %i.fe = phi i32 [ %i.fd, %vector.ph ], [ %i.ff, %vector.body ] ; 2 uses
-  %3 = add i32 %i.fe, -5
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ff = add i32 %i.fe, -8
   %i.fg = icmp eq i64 %index.next, %n.vec
   br i1 %i.fg, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !55
 
 scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %3 = add i32 %i.fe, -5
   store i32 %3, ptr %i.es, align 8, !tbaa !36
   br label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %.split.us
+scalar.ph.preheader:                              ; preds = %.split.us, %scalar.ph.preheader.loopexit
   %.ph = phi i32 [ %.promoted, %.split.us ], [ %i.fb, %scalar.ph.preheader.loopexit ]
   %.4.us.ph = phi i64 [ %.3, %.split.us ], [ %i.fc, %scalar.ph.preheader.loopexit ]
   br label %scalar.ph
