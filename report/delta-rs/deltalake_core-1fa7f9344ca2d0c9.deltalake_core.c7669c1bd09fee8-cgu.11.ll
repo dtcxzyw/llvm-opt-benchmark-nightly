@@ -203,12 +203,12 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %i.bj, label %bb.n, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.bk = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bk = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val.a = load ptr, ptr %i.bk, align 8, !nonnull !3, !noundef !3
-  %i.bl = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bl = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val21 = load ptr, ptr %i.bl, align 8, !nonnull !3, !noundef !3
-  %i.bm = getelementptr inbounds nuw i8, ptr %.val21, i64 16
-  %i.bn = getelementptr inbounds nuw i8, ptr %.val.a, i64 16
+  %i.bm = getelementptr inbounds nuw i8, ptr %.val.a, i64 16
+  %i.bn = getelementptr inbounds nuw i8, ptr %.val21, i64 16
   %i.bo = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 %i.bn, ptr noundef nonnull readonly align 8 %i.bm, i64 noundef range(i64 0, 1152921504606846976) %.val20)
   br label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -221,12 +221,12 @@ bb.o:                                             ; preds = %.lr.ph
   br i1 %i.br, label %_RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 _RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit: ; preds = %bb.o
-  %i.bs = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bs = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val23.a = load ptr, ptr %i.bs, align 8, !nonnull !3, !noundef !3
-  %i.bt = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val25 = load ptr, ptr %i.bt, align 8, !nonnull !3, !noundef !3
-  %i.bu = getelementptr inbounds nuw i8, ptr %.val25, i64 16
-  %i.bv = getelementptr inbounds nuw i8, ptr %.val23.a, i64 16
+  %i.bu = getelementptr inbounds nuw i8, ptr %.val23.a, i64 16
+  %i.bv = getelementptr inbounds nuw i8, ptr %.val25, i64 16
   %i.bw = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 %i.bv, ptr noundef nonnull readonly align 8 %i.bu, i64 noundef range(i64 0, 576460752303423488) %.val24)
   br i1 %i.bw, label %bb.af, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 

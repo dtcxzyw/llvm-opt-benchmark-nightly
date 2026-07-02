@@ -201,10 +201,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
+  %.val15 = load ptr, ptr %i.af, align 8, !nonnull !17, !noundef !17
   %.val13 = load ptr, ptr %i.ac, align 8, !nonnull !17, !noundef !17
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.val13, i64 %i.ab
   %i.ah = load i64, ptr %i.ag, align 8, !noundef !17
-  %.val15 = load ptr, ptr %i.af, align 8, !nonnull !17, !noundef !17
   %i.ai = getelementptr inbounds nuw [16 x i8], ptr %.val15, i64 %i.ab
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %i.ak = load i64, ptr %i.aj, align 8, !noundef !17

@@ -203,8 +203,8 @@ bb.a:
   br i1 %.not20, label %.lr.ph21, label %._crit_edge
 
 .lr.ph21:                                         ; preds = %.preheader
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 640
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 664 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 664 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 640
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 596
   br label %bb.c
@@ -240,9 +240,8 @@ bb.c:                                             ; preds = %.lr.ph21, %_ZN2v88i
 
 bb.d:                                             ; preds = %bb.c
   %i.ai = call noundef i32 @_ZNK2v88internal11interpreter21BytecodeArrayIterator19GetJumpTargetOffsetEv(ptr noundef nonnull align 8 dereferenceable(48) %i.g) #16 ; 4 uses
-  %4 = load ptr, ptr %i.l, align 8
   %i.aj = shl nuw nsw i32 %i.ai, 1
-  %i.ak = load ptr, ptr %i.m, align 8             ; 2 uses
+  %i.ak = load ptr, ptr %i.l, align 8             ; 2 uses
   %i.al = icmp sgt i32 %i.ai, -1
   call void @llvm.assume(i1 %i.al)
   %i.am = lshr i32 %i.ai, 5
@@ -252,17 +251,18 @@ bb.d:                                             ; preds = %bb.c
   %i.aq = and i32 %i.aj, 62                       ; 2 uses
   %i.ar = zext nneg i32 %i.aq to i64
   %i.as = shl nuw nsw i64 1, %i.ar                ; 2 uses
-  %i.at = and i64 %i.ap, %i.as
+  %i.at = and i64 %i.as, %i.ap
   %.not.i.i = icmp eq i64 %i.at, 0
   br i1 %.not.i.i, label %bb.e, label %_ZN2v88internal8baseline16BaselineCompiler11EnsureLabelEiNS2_24MarkAsIndirectJumpTargetE.exit.i
 
 bb.e:                                             ; preds = %bb.d
+  %4 = load ptr, ptr %i.m, align 8
   %i.au = zext nneg i32 %i.ai to i64
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.au
-  %i.aw = or i64 %i.ap, %i.as
+  %i.aw = or i64 %i.as, %i.ap
   store i64 %i.aw, ptr %i.ao, align 8
   store i64 0, ptr %i.av, align 4
-  %.pre.i = load ptr, ptr %i.m, align 8           ; 2 uses
+  %.pre.i = load ptr, ptr %i.l, align 8           ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw [8 x i8], ptr %.pre.i, i64 %i.an
   %.pre1.i = load i64, ptr %.phi.trans.insert.i, align 8
   br label %_ZN2v88internal8baseline16BaselineCompiler11EnsureLabelEiNS2_24MarkAsIndirectJumpTargetE.exit.i
@@ -467,8 +467,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.e = tail call noundef i32 @_ZNK2v88internal11interpreter21BytecodeArrayIterator19GetJumpTargetOffsetEv(ptr noundef nonnull align 8 dereferenceable(48) %i.d) #16 ; 4 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 640
-  %2 = load ptr, ptr %1, align 8
   %i.f = shl nuw nsw i32 %i.e, 1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 664 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 2 uses
@@ -481,14 +479,16 @@ bb.b:                                             ; preds = %bb.a
   %i.n = and i32 %i.f, 62                         ; 2 uses
   %i.o = zext nneg i32 %i.n to i64
   %i.p = shl nuw nsw i64 1, %i.o                  ; 2 uses
-  %i.q = and i64 %i.m, %i.p
+  %i.q = and i64 %i.p, %i.m
   %.not.i = icmp eq i64 %i.q, 0
   br i1 %.not.i, label %bb.c, label %_ZN2v88internal8baseline16BaselineCompiler11EnsureLabelEiNS2_24MarkAsIndirectJumpTargetE.exit
 
 bb.c:                                             ; preds = %bb.b
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 640
+  %2 = load ptr, ptr %1, align 8
   %i.r = zext nneg i32 %i.e to i64
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.r
-  %i.t = or i64 %i.m, %i.p
+  %i.t = or i64 %i.p, %i.m
   store i64 %i.t, ptr %i.l, align 8
   store i64 0, ptr %i.s, align 4
   %.pre = load ptr, ptr %i.g, align 8             ; 2 uses
