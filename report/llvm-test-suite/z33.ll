@@ -201,10 +201,14 @@ bb.q:                                             ; preds = %.loopexit87
   %.not.us.i = icmp sgt i32 %.125.us.i, %.1.us.i
   br i1 %.not.us.i, label %._crit_edge.i, label %.lr.ph.split.us.i, !llvm.loop !43
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.v
-  %i.cf = phi i32 [ %11, %bb.v ], [ 1, %.lr.ph.i ]
-  %.02331.i = phi i32 [ %.1.i, %bb.v ], [ %i.bt, %.lr.ph.i ] ; 2 uses
-  %.02430.i = phi i32 [ %.125.i, %bb.v ], [ 0, %.lr.ph.i ] ; 2 uses
+.lr.ph.splitthread-pre-split.i:                   ; preds = %bb.v
+  %.pr.i = load i32, ptr @UseCollate, align 4, !tbaa !4
+  br label %.lr.ph.split.i
+
+.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.lr.ph.splitthread-pre-split.i
+  %i.cf = phi i32 [ %.pr.i, %.lr.ph.splitthread-pre-split.i ], [ 1, %.lr.ph.i ]
+  %.02331.i = phi i32 [ %.1.i, %.lr.ph.splitthread-pre-split.i ], [ %i.bt, %.lr.ph.i ] ; 2 uses
+  %.02430.i = phi i32 [ %.125.i, %.lr.ph.splitthread-pre-split.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.cg = add nsw i32 %.02430.i, %.02331.i
   %i.ch = sdiv i32 %i.cg, 2                       ; 3 uses
   %.not28.i = icmp eq i32 %i.cf, 0
@@ -216,7 +220,6 @@ bb.q:                                             ; preds = %.loopexit87
 bb.r:                                             ; preds = %.lr.ph.split.i
   %i.cl = call i32 @strcollcmp(ptr noundef nonnull %i.d, ptr noundef %i.ck) #11
   %i.cm = icmp slt i32 %i.cl, 1
-  %.pre.i = load i32, ptr @UseCollate, align 4, !tbaa !4 ; 2 uses
   br i1 %i.cm, label %bb.t, label %bb.u
 
 bb.s:                                             ; preds = %.lr.ph.split.i
@@ -225,21 +228,18 @@ bb.s:                                             ; preds = %.lr.ph.split.i
   br i1 %i.co, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %9 = phi i32 [ 0, %bb.s ], [ %.pre.i, %bb.r ]
   %i.cp = add nsw i32 %i.ch, -1
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.s, %bb.r
-  %10 = phi i32 [ 0, %bb.s ], [ %.pre.i, %bb.r ]
   %i.cq = add nsw i32 %i.ch, 1
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %11 = phi i32 [ %9, %bb.t ], [ %10, %bb.u ]
   %.125.i = phi i32 [ %.02430.i, %bb.t ], [ %i.cq, %bb.u ] ; 3 uses
   %.1.i = phi i32 [ %i.cp, %bb.t ], [ %.02331.i, %bb.u ] ; 2 uses
   %.not.i = icmp sgt i32 %.125.i, %.1.i
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.split.i, !llvm.loop !44
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.splitthread-pre-split.i, !llvm.loop !44
 
 ._crit_edge.i:                                    ; preds = %bb.v, %.lr.ph.split.us.i, %bb.q
   %.024.lcssa.i = phi i32 [ 0, %bb.q ], [ %.125.us.i, %.lr.ph.split.us.i ], [ %.125.i, %bb.v ] ; 2 uses
