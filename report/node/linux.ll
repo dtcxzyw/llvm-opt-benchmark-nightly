@@ -53,6 +53,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.27 = private unnamed_addr constant [14 x i8] c"MemAvailable:\00", align 1
 @.str.28 = private unnamed_addr constant [10 x i8] c"MemTotal:\00", align 1
 @.str.29 = private unnamed_addr constant [18 x i8] c"/proc/self/cgroup\00", align 1
+@.str.30 = private unnamed_addr constant [5 x i8] c"0::/\00", align 1
 @.str.31 = private unnamed_addr constant [14 x i8] c"/proc/loadavg\00", align 1
 @.str.32 = private unnamed_addr constant [12 x i8] c"%lf %lf %lf\00", align 1
 @.str.33 = private unnamed_addr constant [10 x i8] c"w != NULL\00", align 1
@@ -455,10 +456,8 @@ bb.a:
   %i.l = alloca [32 x i8], align 16               ; 6 uses
   %i.m = alloca i64, align 8                      ; 6 uses
   %i.n = alloca [4097 x i8], align 16             ; 6 uses
-  %1 = load i32, ptr %0, align 1
-  %2 = icmp ne i32 %1, 792345136
-  %3 = zext i1 %2 to i32
-  %.not = icmp eq i32 %3, 0
+  %1 = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(5) @.str.30, i64 noundef 4) #17
+  %.not = icmp eq i32 %1, 0
   br i1 %.not, label %bb.r, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

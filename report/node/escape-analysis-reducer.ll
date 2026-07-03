@@ -203,14 +203,12 @@ _ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashC
 _ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.thread7.i: ; preds = %bb.e, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.i
   %.sroa.06.1.i.i9.i = phi ptr [ %i.ag, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.i ], [ %.sroa.06.0.i.i.i, %bb.e ]
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i9.i, i64 8
-  %i.aj = load ptr, ptr %i.ai, align 8
-  br label %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit
+  %i.aj = load ptr, ptr %i.ai, align 8            ; 2 uses
+  %.not8 = icmp eq ptr %i.aj, null
+  br i1 %.not8, label %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit, label %bb.t
 
 _ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit: ; preds = %_ZNKSt8__detail15_Hashtable_baseIPN2v88internal8compiler4NodeES5_NS_9_IdentityENS3_13NodeHashCache10NodeEqualsENS7_12NodeHashCodeENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE9_M_equalsERKS5_mRKNS_16_Hash_node_valueIS5_Lb1EEE.exit.thread.i.i.i.i.i, %bb.i, %bb.d, %bb.f, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.i, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.thread7.i
-  %.0.i = phi ptr [ %i.aj, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.thread7.i ], [ null, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.i ], [ null, %bb.f ], [ null, %bb.d ], [ null, %bb.i ], [ null, %_ZNKSt8__detail15_Hashtable_baseIPN2v88internal8compiler4NodeES5_NS_9_IdentityENS3_13NodeHashCache10NodeEqualsENS7_12NodeHashCodeENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE9_M_equalsERKS5_mRKNS_16_Hash_node_valueIS5_Lb1EEE.exit.thread.i.i.i.i.i ] ; 2 uses
-  %.not8 = icmp eq ptr %.0.i, null
   %i.ak = load ptr, ptr %i.e, align 8
-  %spec.select = select i1 %.not8, ptr %i.ak, ptr %.0.i
   br label %bb.t
 
 bb.j:                                             ; preds = %bb.a
@@ -334,8 +332,8 @@ _ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit26.thread: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.t
 
-bb.t:                                             ; preds = %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit, %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE9push_backERKS4_.exit, %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit26.thread
-  %.0 = phi ptr [ %i.bo, %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE9push_backERKS4_.exit ], [ %i.cg, %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit26.thread ], [ %spec.select, %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit ]
+bb.t:                                             ; preds = %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE9push_backERKS4_.exit, %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit26.thread, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.thread7.i, %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit
+  %.0 = phi ptr [ %i.bo, %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE9push_backERKS4_.exit ], [ %i.cg, %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit26.thread ], [ %i.aj, %_ZNSt13unordered_setIPN2v88internal8compiler4NodeENS2_13NodeHashCache12NodeHashCodeENS5_10NodeEqualsENS1_13ZoneAllocatorIS4_EEE4findERKS4_.exit.thread7.i ], [ %i.ak, %_ZN2v88internal8compiler13NodeHashCache5QueryEPNS1_4NodeE.exit ]
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ck, i8 0, i64 16, i1 false)
   ret ptr %.0

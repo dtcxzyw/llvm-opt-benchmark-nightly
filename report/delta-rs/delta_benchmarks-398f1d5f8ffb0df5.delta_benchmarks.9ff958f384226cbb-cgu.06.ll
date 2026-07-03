@@ -203,8 +203,8 @@ bb.a:
   %.sroa.47.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.411.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %.sroa.2.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 4 uses
+  %.sroa.2.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %.val3, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %.val3, i64 16
@@ -407,8 +407,8 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechE
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsdJxlLsGgtXr_16delta_benchmarks.exit30.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECsdJxlLsGgtXr_16delta_benchmarks.exit.i26.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !2345
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.2.0..sroa_idx.i.i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !2334
-  store i64 7, ptr %i.t, align 8, !noalias !2334
+  store i64 7, ptr %.sroa.2.0..sroa_idx.i.i.a, align 8, !noalias !2334
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !2334
   store i64 37, ptr %i.i, align 16, !noalias !2334
   br label %bb.i
 
@@ -440,16 +440,16 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.bd = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %i.t, i64 40, i1 false), !noalias !2334
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false), !noalias !2334
   br label %common.resume.i
 
 _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map12map_try_foldINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs4lawaffTVVK_9sqlparser3ast4ExprEINtNtBa_6result6ResultNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4e_B2u_EENCNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr12grouping_setINtNtB5c_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE16sql_cube_to_expr0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB12_9into_iter8IntoIterBZ_EB53_EIB29_NtNtBa_7convert10InfallibleB3d_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB9S_12try_for_each4callB2u_B4S_NcNtB4S_5Break0E0B4S_E0E0CsdJxlLsGgtXr_16delta_benchmarks.exit.thread: ; preds = %bb.v, %bb.w
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %i.t, i64 40, i1 false), !noalias !2334
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false), !noalias !2334
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %.loopexit19
 
 _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map12map_try_foldINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs4lawaffTVVK_9sqlparser3ast4ExprEINtNtBa_6result6ResultNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4e_B2u_EENCNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr12grouping_setINtNtB5c_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE16sql_cube_to_expr0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB12_9into_iter8IntoIterBZ_EB53_EIB29_NtNtBa_7convert10InfallibleB3d_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB9S_12try_for_each4callB2u_B4S_NcNtB4S_5Break0E0B4S_E0E0CsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %_RNCNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr12grouping_setINtNtB8_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE16sql_cube_to_expr0CsdJxlLsGgtXr_16delta_benchmarks.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.t, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.4.48..sroa_idx.i.i, ptr noundef nonnull align 16 dereferenceable(64) %.sroa.7.0..sroa_idx.i, i64 64, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %.not.i = icmp eq i64 %.sroa.0.0.copyload.i, 38
@@ -505,8 +505,8 @@ bb.a:
   %.sroa.47.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.411.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %.sroa.2.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 4 uses
+  %.sroa.2.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %.val3, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %.val3, i64 16
@@ -709,8 +709,8 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechE
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsdJxlLsGgtXr_16delta_benchmarks.exit30.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECsdJxlLsGgtXr_16delta_benchmarks.exit.i26.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !2380
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.2.0..sroa_idx.i.i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !2369
-  store i64 7, ptr %i.t, align 8, !noalias !2369
+  store i64 7, ptr %.sroa.2.0..sroa_idx.i.i.a, align 8, !noalias !2369
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !2369
   store i64 37, ptr %i.i, align 16, !noalias !2369
   br label %bb.i
 
@@ -742,16 +742,16 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.bd = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %i.t, i64 40, i1 false), !noalias !2369
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false), !noalias !2369
   br label %common.resume.i
 
 _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map12map_try_foldINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs4lawaffTVVK_9sqlparser3ast4ExprEINtNtBa_6result6ResultNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4e_B2u_EENCNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr12grouping_setINtNtB5c_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE18sql_rollup_to_expr0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB12_9into_iter8IntoIterBZ_EB53_EIB29_NtNtBa_7convert10InfallibleB3d_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB9U_12try_for_each4callB2u_B4S_NcNtB4S_5Break0E0B4S_E0E0CsdJxlLsGgtXr_16delta_benchmarks.exit.thread: ; preds = %bb.v, %bb.w
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %i.t, i64 40, i1 false), !noalias !2369
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false), !noalias !2369
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %.loopexit19
 
 _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map12map_try_foldINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs4lawaffTVVK_9sqlparser3ast4ExprEINtNtBa_6result6ResultNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4e_B2u_EENCNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr12grouping_setINtNtB5c_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE18sql_rollup_to_expr0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB12_9into_iter8IntoIterBZ_EB53_EIB29_NtNtBa_7convert10InfallibleB3d_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB9U_12try_for_each4callB2u_B4S_NcNtB4S_5Break0E0B4S_E0E0CsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %_RNCNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr12grouping_setINtNtB8_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE18sql_rollup_to_expr0CsdJxlLsGgtXr_16delta_benchmarks.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.t, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.4.48..sroa_idx.i.i, ptr noundef nonnull align 16 dereferenceable(64) %.sroa.7.0..sroa_idx.i, i64 64, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %.not.i = icmp eq i64 %.sroa.0.0.copyload.i, 38
@@ -1154,8 +1154,8 @@ bb.a:
   %.sroa.411.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.415.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %.sroa.2.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
+  %.sroa.2.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %.val3, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %.val3, i64 16
   %i.v = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 6 uses
@@ -1348,8 +1348,8 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechE
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsdJxlLsGgtXr_16delta_benchmarks.exit32.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECsdJxlLsGgtXr_16delta_benchmarks.exit.i29.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !2671
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.2.0..sroa_idx.i.i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !2660
-  store i64 7, ptr %i.s, align 8, !noalias !2660
+  store i64 7, ptr %.sroa.2.0..sroa_idx.i.i.a, align 8, !noalias !2660
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !2660
   store i64 37, ptr %i.j, align 16, !noalias !2660
   br label %bb.i
 
@@ -1499,16 +1499,16 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %bb.al
   %i.cb = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %i.s, i64 40, i1 false), !noalias !2660
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false), !noalias !2660
   br label %common.resume.i
 
 _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map12map_try_foldNtNtCs4lawaffTVVK_9sqlparser3ast11FunctionArgINtNtBa_6result6ResultNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB3O_B24_EENCNvMs_NtCsjHlmExTLNuX_14datafusion_sql8relationINtNtB4M_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE23create_default_relations0_0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterBZ_EB4D_EIB1J_NtNtBa_7convert10InfallibleB2N_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB9O_12try_for_each4callB24_B4s_NcNtB4s_5Break0E0B4s_E0E0CsdJxlLsGgtXr_16delta_benchmarks.exit.thread: ; preds = %bb.ak, %bb.al
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %i.s, i64 40, i1 false), !noalias !2660
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.val.le, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false), !noalias !2660
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %.loopexit14
 
 _RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map12map_try_foldNtNtCs4lawaffTVVK_9sqlparser3ast11FunctionArgINtNtBa_6result6ResultNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB3O_B24_EENCNvMs_NtCsjHlmExTLNuX_14datafusion_sql8relationINtNtB4M_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE23create_default_relations0_0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterBZ_EB4D_EIB1J_NtNtBa_7convert10InfallibleB2N_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB9O_12try_for_each4callB24_B4s_NcNtB4s_5Break0E0B4s_E0E0CsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %_RNCNvMs_NtCsjHlmExTLNuX_14datafusion_sql8relationINtNtB8_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE23create_default_relations0_0CsdJxlLsGgtXr_16delta_benchmarks.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.s, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.a, i64 40, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.4.48..sroa_idx.i.i, ptr noundef nonnull align 16 dereferenceable(64) %.sroa.7.0..sroa_idx.i, i64 64, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   %.not.i = icmp eq i64 %.sroa.0.0.copyload.i, 38
@@ -1911,20 +1911,19 @@ define internal fastcc void @_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql5queryINtNtB
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = alloca [328 x i8], align 8               ; 2 uses
-  %3 = alloca [112 x i8], align 16                ; 5 uses
-  %i.c = alloca [112 x i8], align 16              ; 7 uses
-  %.sroa.6 = alloca [40 x i8], align 8            ; 6 uses
+  %.sroa.6 = alloca [40 x i8], align 8            ; 3 uses
+  %i.c = alloca [112 x i8], align 16              ; 5 uses
+  %3 = alloca [112 x i8], align 16                ; 7 uses
   %i.d = alloca [64 x i8], align 8                ; 10 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(328) %i.b, ptr noundef nonnull align 8 dereferenceable(328) %1, i64 328, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull align 8 dereferenceable(64) %i.e, i64 64, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.f = load ptr, ptr %.8.val, align 8, !nonnull !7, !noundef !7
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  invoke void @_RNvMNtCsjHlmExTLNuX_14datafusion_sql4exprINtNtB4_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE11sql_to_exprCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull sret([112 x i8]) align 16 captures(none) dereferenceable(112) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.0.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(328) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.g, ptr noalias noundef nonnull align 8 dereferenceable(80) %2)
+  invoke void @_RNvMNtCsjHlmExTLNuX_14datafusion_sql4exprINtNtB4_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE11sql_to_exprCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull sret([112 x i8]) align 16 captures(none) dereferenceable(112) %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.0.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(328) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.g, ptr noalias noundef nonnull align 8 dereferenceable(80) %2)
           to label %bb.c unwind label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1935,18 +1934,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not3, label %common.resume, label %bb.k
 
 bb.c:                                             ; preds = %bb.a
-  %i.j = load i64, ptr %i.c, align 16, !range !2505, !noundef !7 ; 2 uses
+  %i.j = load i64, ptr %3, align 16, !range !2505, !noundef !7 ; 2 uses
   %i.k = icmp eq i64 %i.j, 37
-  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(40) %i.l, i64 40, i1 false)
   br i1 %i.k, label %bb.d, label %bb.h
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.m, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6, i64 40, i1 false)
   store i64 37, ptr %0, align 16
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %i.n = load i64, ptr %i.d, align 8, !range !3, !alias.scope !3544, !noundef !7
   %i.o = icmp eq i64 %i.n, -9223372036854775808
   br i1 %i.o, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs4lawaffTVVK_9sqlparser3ast5IdentEECsdJxlLsGgtXr_16delta_benchmarks.exit, label %bb.e
@@ -1976,25 +1974,24 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser3ast5Id
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs4lawaffTVVK_9sqlparser3ast5IdentEECsdJxlLsGgtXr_16delta_benchmarks.exit
 
 bb.h:                                             ; preds = %bb.c
-  %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  %.sroa.8.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %3, i64 48
+  %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 48
+  %.sroa.8.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %.sroa.8.0..sroa_idx4, ptr noundef nonnull align 16 dereferenceable(64) %.sroa.67.0..sroa_idx, i64 64, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  store i64 %i.j, ptr %3, align 16
-  %.sroa.6.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store i64 %i.j, ptr %i.c, align 16
+  %.sroa.6.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.0..sroa_idx3, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %i.r = load i64, ptr %i.d, align 8, !range !3, !noundef !7
   %.not = icmp eq i64 %i.r, -9223372036854775808
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
-  call void @_RNvMsC_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB5_4Expr16alias_if_changed(ptr noalias noundef nonnull sret([112 x i8]) align 16 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(112) %3, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
+  call void @_RNvMsC_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB5_4Expr16alias_if_changed(ptr noalias noundef nonnull sret([112 x i8]) align 16 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(112) %i.c, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs4lawaffTVVK_9sqlparser3ast5IdentEECsdJxlLsGgtXr_16delta_benchmarks.exit
 
 bb.j:                                             ; preds = %bb.h
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %0, ptr noundef nonnull align 16 dereferenceable(112) %3, i64 112, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %0, ptr noundef nonnull align 16 dereferenceable(112) %i.c, i64 112, i1 false)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs4lawaffTVVK_9sqlparser3ast5IdentEECsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs4lawaffTVVK_9sqlparser3ast5IdentEECsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.j, %bb.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser3ast5IdentECsdJxlLsGgtXr_16delta_benchmarks.exit.i, %bb.d

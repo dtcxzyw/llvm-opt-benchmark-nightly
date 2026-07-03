@@ -82,7 +82,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.f, %bb.g
 bb.g:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.t = add i64 %.01116.i.i, 1                   ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %.sroa.034.076
-  br i1 %exitcond.not.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, !llvm.loop !10
+  br i1 %exitcond.not.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %.not14 = icmp eq i64 %.01116.i.i, -1
@@ -130,7 +130,7 @@ bb.j:                                             ; preds = %_ZNSt11char_traitsI
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = sub i64 %i.x, %i.ac                     ; 2 uses
   %.not25.i.i = icmp ult i64 %i.ad, %.sroa.0.0
-  br i1 %.not25.i.i, label %.critedge, label %bb.i, !llvm.loop !11
+  br i1 %.not25.i.i, label %.critedge, label %bb.i, !llvm.loop !10
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   %i.ae = ptrtoint ptr %i.z to i64
@@ -167,7 +167,7 @@ bb.m:                                             ; preds = %_ZNKSt17basic_strin
   %.sroa.023.1 = phi i64 [ %i.al, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread51 ], [ %i.aq, %bb.l ], [ %.sroa.023.078, %bb.d ], [ %i.p, %bb.e ] ; 2 uses
   %.210 = phi i8 [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread51 ], [ 0, %bb.l ], [ 1, %bb.d ], [ %.0879, %bb.e ] ; 2 uses
   %i.ar = icmp eq i64 %.sroa.034.1, 0
-  br i1 %i.ar, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !12
+  br i1 %i.ar, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !11
 
 .critedge:                                        ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, %bb.k, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i17, %bb.j, %bb.i, %._crit_edge, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit
   %.3 = phi i1 [ %spec.select, %._crit_edge ], [ %i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ false, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i17 ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread ]
@@ -207,5 +207,4 @@ attributes #4 = { nounwind }
 !9 = !{!"llvm.loop.mustprogress"}
 !10 = distinct !{!10, !9}
 !11 = distinct !{!11, !9}
-!12 = distinct !{!12, !9}
 end_hunk_0

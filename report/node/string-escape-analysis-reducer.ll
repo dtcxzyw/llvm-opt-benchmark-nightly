@@ -152,14 +152,10 @@ bb.f:                                             ; preds = %_ZN2v88internal8com
   %.idx.i = shl nuw nsw i64 %i.bk, 2
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bh, i64 %.idx.i
   %.not2228.i = icmp eq i16 %i.bj, 0
-  br i1 %.not2228.i, label %_ZN2v88internal8compiler10turboshaft20StringEscapeAnalyzer32RecursiveMarkAsShouldReconstructENS2_1VINS2_10FrameStateEEE.exit.i, label %.lr.ph.i5
+  br i1 %.not2228.i, label %_ZN2v88internal8compiler10turboshaft20StringEscapeAnalyzer32RecursiveMarkAsShouldReconstructENS2_1VINS2_10FrameStateEEE.exit.i, label %bb.g
 
-.lr.ph.i5:                                        ; preds = %bb.f
-  %1 = load ptr, ptr %i.az, align 8               ; 2 uses
-  br label %bb.g
-
-bb.g:                                             ; preds = %bb.i, %.lr.ph.i5
-  %.02129.i = phi ptr [ %i.bh, %.lr.ph.i5 ], [ %i.cv, %bb.i ] ; 2 uses
+bb.g:                                             ; preds = %bb.f, %bb.i
+  %.02129.i = phi ptr [ %i.cv, %bb.i ], [ %i.bh, %bb.f ] ; 2 uses
   %.sroa.03.0.copyload.i = load i32, ptr %.02129.i, align 4 ; 2 uses
   %i.bm = zext i32 %.sroa.03.0.copyload.i to i64
   %i.bn = add i64 %i.bm, %i.bd
@@ -171,6 +167,7 @@ bb.g:                                             ; preds = %bb.i, %.lr.ph.i5
 bb.h:                                             ; preds = %bb.g
   %i.br = lshr i32 %.sroa.03.0.copyload.i, 4
   %i.bs = zext nneg i32 %i.br to i64
+  %1 = load ptr, ptr %i.az, align 8               ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 %i.bs
   %i.bu = load i8, ptr %i.bt, align 1, !range !7, !noundef !5
   %i.bv = trunc nuw i8 %i.bu to i1
@@ -573,7 +570,7 @@ bb.b:                                             ; preds = %.lr.ph32, %_ZN2v88i
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.a, %bb.e
-  %.02129 = phi ptr [ %i.m, %.lr.ph.a ], [ %i.bb, %bb.e ] ; 2 uses
+  %.02129 = phi ptr [ %i.bb, %bb.e ], [ %i.m, %.lr.ph.a ] ; 2 uses
   %.sroa.03.0.copyload = load i32, ptr %.02129, align 4 ; 2 uses
   %i.s = zext i32 %.sroa.03.0.copyload to i64
   %i.t = add i64 %i.s, %i.i

@@ -201,22 +201,9 @@ bb.a:
   %i.w = insertelement <4 x float> %i.v, float %i.u, i64 1
   %i.x = shufflevector <4 x float> %i.w, <4 x float> %i.s, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %5 = load <4 x float>, ptr %4, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %7 = load float, ptr %6, align 4, !tbaa !56
-  %i.z = load <4 x float>, ptr %i.y, align 8
-  %8 = insertelement <4 x float> %i.z, float %7, i64 1
-  %9 = shufflevector <4 x float> %8, <4 x float> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.z = load <4 x float>, ptr %i.y, align 8, !tbaa !56
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %11 = load <2 x float>, ptr %10, align 8, !tbaa !56
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %13 = load float, ptr %12, align 4, !tbaa !56
-  %i.ab = load <4 x float>, ptr %i.aa, align 8
-  %14 = insertelement <4 x float> %i.ab, float %13, i64 1
-  %15 = shufflevector <2 x float> %11, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %16 = shufflevector <4 x float> %14, <4 x float> %15, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.ab = load <4 x float>, ptr %i.aa, align 8, !tbaa !56
   %i.ac = icmp sgt i64 %3, 0
   br i1 %i.ac, label %.lr.ph, label %._crit_edge
 
@@ -245,11 +232,11 @@ bb.a:
   %i.as = fmul <4 x float> %i.h, %i.af
   %i.at = fmul <4 x float> %i.p, %i.aj
   %i.au = fmul <4 x float> %i.x, %i.an
-  %i.av = fmul <4 x float> %9, %i.ar
+  %i.av = fmul <4 x float> %i.z, %i.ar
   %i.aw = fadd <4 x float> %i.as, %i.at
   %i.ax = fadd <4 x float> %i.au, %i.av
   %i.ay = fadd <4 x float> %i.aw, %i.ax
-  %i.az = fadd <4 x float> %16, %i.ay
+  %i.az = fadd <4 x float> %i.ab, %i.ay
   store <4 x float> %i.az, ptr %.02730, align 1, !tbaa !76
   %i.ba = getelementptr inbounds nuw i8, ptr %.031, i64 16
   %i.bb = getelementptr inbounds nuw i8, ptr %.02730, i64 16
@@ -361,14 +348,7 @@ bb.a:
   %i.w = insertelement <4 x float> %i.v, float %i.u, i64 1
   %i.x = shufflevector <4 x float> %i.w, <4 x float> %i.s, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %5 = load <2 x float>, ptr %4, align 8, !tbaa !56
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %7 = load float, ptr %6, align 4, !tbaa !56
-  %i.z = load <4 x float>, ptr %i.y, align 8
-  %8 = insertelement <4 x float> %i.z, float %7, i64 1
-  %9 = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %10 = shufflevector <4 x float> %8, <4 x float> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.z = load <4 x float>, ptr %i.y, align 8, !tbaa !56
   %i.aa = icmp sgt i64 %3, 0
   br i1 %i.aa, label %.lr.ph, label %._crit_edge
 
@@ -397,7 +377,7 @@ bb.a:
   %i.aq = fmul <4 x float> %i.h, %i.ad
   %i.ar = fmul <4 x float> %i.p, %i.ah
   %i.as = fmul <4 x float> %i.x, %i.al
-  %i.at = fmul <4 x float> %10, %i.ap
+  %i.at = fmul <4 x float> %i.z, %i.ap
   %i.au = fadd <4 x float> %i.aq, %i.ar
   %i.av = fadd <4 x float> %i.as, %i.at
   %i.aw = fadd <4 x float> %i.au, %i.av
