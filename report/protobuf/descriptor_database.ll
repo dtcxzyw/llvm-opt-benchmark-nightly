@@ -203,8 +203,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cm = lshr exact i64 %i.cl, 2
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.cl, 28
-  %i.co = sub i64 %i.cj, %i.br
-  %diff.check = icmp ult i64 %i.co, 32
+  %i.co = sub i64 %i.br, %i.cj
+  %diff.check = icmp ugt i64 %i.co, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i4.i.preheader, label %vector.ph
 
@@ -607,9 +607,9 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.x = shl nuw nsw i64 %i.e, 2
   %i.y = add i64 %i.x, %i.b
-  %4 = add i64 %i.y, 4
-  %5 = sub i64 %4, %i.a
-  %diff.check = icmp ult i64 %5, 32
+  %4 = sub i64 %i.y, %i.a
+  %5 = add i64 %4, 3
+  %diff.check = icmp ult i64 %5, 31
   br i1 %diff.check, label %.lr.ph.i.preheader82, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -940,19 +940,19 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4less
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
-  %min.iters.check69 = icmp samesign ult i64 %i.au, 27
+  %min.iters.check69 = icmp samesign ult i64 %i.au, 31
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader84, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
   %i.aw = zext i8 %1 to i64
   %i.ax = shl nuw nsw i64 %i.aw, 2
-  %4 = add i64 %i.ax, %i.b
-  %i.ay = add i64 %4, -4
+  %i.ay = add i64 %i.ax, %i.b
   %i.az = zext i8 %i.al to i64
   %i.ba = shl nuw nsw i64 %i.az, 2
   %i.bb = add i64 %i.ba, %i.a
   %i.bc = sub i64 %i.ay, %i.bb
-  %diff.check = icmp ult i64 %i.bc, 32
+  %4 = add i64 %i.bc, -5
+  %diff.check = icmp ult i64 %4, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader84, label %vector.ph70
 
 vector.ph70:                                      ; preds = %vector.memcheck
@@ -1216,14 +1216,14 @@ bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
   %i.u = add nsw i64 %.idx.i, -4                  ; 2 uses
   %i.v = lshr exact i64 %i.u, 2
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.u, 60
+  %min.iters.check = icmp ult i64 %i.u, 76
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
   %i.x = shl nuw nsw i64 %i.p, 2
   %i.y = add i64 %i.x, %i.a
-  %i.z = sub i64 %i.b, %i.y
-  %diff.check = icmp ult i64 %i.z, 32
+  %i.z = sub i64 %i.y, %i.b
+  %diff.check = icmp ugt i64 %i.z, -32
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

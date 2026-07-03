@@ -204,7 +204,8 @@ iter.check:                                       ; preds = %bb.dd
   %i.yy = add i64 %umax, -2
   %i.yz = sub i64 %i.yy, %i.xf                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.yz, 4
-  %diff.check = icmp ult i32 %i.yi, 32
+  %7 = add i32 %i.yi, -1
+  %diff.check = icmp ult i32 %7, 31
   %or.cond1159 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond1159, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -607,7 +608,8 @@ iter.check:                                       ; preds = %bb.dd
   %i.yy = add i64 %umax, -2
   %i.yz = sub i64 %i.yy, %i.xf                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.yz, 4
-  %diff.check = icmp ult i32 %i.yi, 32
+  %7 = add i32 %i.yi, -1
+  %diff.check = icmp ult i32 %7, 31
   %or.cond1159 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond1159, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

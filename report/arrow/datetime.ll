@@ -203,8 +203,8 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
   %i.ry = lshr i64 %i.rx, 3
   %i.rz = add nuw nsw i64 %i.ry, 1                ; 2 uses
   %min.iters.check520 = icmp ult i64 %i.rx, 24
-  %i.sa = sub i64 %i.rv, %i.rj
-  %diff.check518 = icmp ult i64 %i.sa, 32
+  %i.sa = sub i64 %i.rj, %i.rv
+  %diff.check518 = icmp ugt i64 %i.sa, -32
   %or.cond = or i1 %min.iters.check520, %diff.check518
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader536, label %vector.ph521
 
@@ -607,8 +607,8 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
   %i.abn = lshr i64 %i.abm, 3
   %i.abo = add nuw nsw i64 %i.abn, 1              ; 2 uses
   %min.iters.check = icmp ult i64 %i.abm, 24
-  %i.abp = sub i64 %i.abk, %i.aay
-  %diff.check = icmp ult i64 %i.abp, 32
+  %i.abp = sub i64 %i.aay, %i.abk
+  %diff.check = icmp ugt i64 %i.abp, -32
   %or.cond535 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond535, label %.lr.ph.i.i.i.i.i.i208.i.preheader537, label %vector.ph
 
@@ -1011,9 +1011,9 @@ _ZNSt16allocator_traitsISaIN14arrow_vendored4date11leap_secondEEE9constructIS2_J
   %i.u = sub i64 %i.t, %i.f                       ; 2 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.u, 56
-  %i.x = sub i64 %i.r, %i.f
-  %diff.check = icmp ult i64 %i.x, 32
+  %min.iters.check = icmp ult i64 %i.u, 72
+  %i.x = sub i64 %i.f, %i.r
+  %diff.check = icmp ugt i64 %i.x, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader71, label %vector.ph
 
@@ -1074,13 +1074,13 @@ _ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5
   %i.ak = sub i64 %i.aj, %i.a                     ; 2 uses
   %i.al = lshr i64 %i.ak, 3
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
-  %min.iters.check55 = icmp ult i64 %i.ak, 72
+  %min.iters.check55 = icmp ult i64 %i.ak, 104
   br i1 %min.iters.check55, label %.lr.ph.i.i.i28.preheader70, label %vector.memcheck51
 
 vector.memcheck51:                                ; preds = %.lr.ph.i.i.i28.preheader
-  %4 = add i64 %.0.lcssa.i.i.i52, 8
-  %5 = sub i64 %4, %i.a
-  %diff.check53 = icmp ult i64 %5, 32
+  %4 = sub i64 %.0.lcssa.i.i.i52, %i.a
+  %5 = add i64 %4, 7
+  %diff.check53 = icmp ult i64 %5, 31
   br i1 %diff.check53, label %.lr.ph.i.i.i28.preheader70, label %vector.ph56
 
 vector.ph56:                                      ; preds = %vector.memcheck51

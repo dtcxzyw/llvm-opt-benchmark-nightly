@@ -15,7 +15,7 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local range(i32 0, 2) i32 @fft(i32 noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp sgt i32 %0, -1
-  %.0100 = tail call i32 @llvm.abs.i32(i32 %0, i1 true) ; 29 uses
+  %.0100 = tail call i32 @llvm.abs.i32(i32 %0, i1 true) ; 28 uses
   %i.b = lshr i32 %.0100, 2                       ; 5 uses
   %i.c = load i32, ptr @fft.last_n, align 4, !tbaa !4
   %i.d = icmp ne i32 %.0100, %i.c
@@ -144,15 +144,19 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   br i1 %.not69.i, label %make_sintbl.exit, label %.lr.ph66.preheader.i
 
 .lr.ph66.preheader.i:                             ; preds = %.preheader.i
-  %i.ay = zext nneg i32 %i.r to i64
+  %i.ay = zext nneg i32 %i.r to i64               ; 2 uses
   %wide.trip.count79.i = zext nneg i32 %i.ax to i64 ; 5 uses
   %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ay ; 6 uses
   %min.iters.check = icmp samesign ult i32 %i.ax, 8
-  %diff.check = icmp samesign ult i32 %.0100, 16
-  %or.cond187 = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond187, label %.lr.ph66.i.preheader, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph66.i.preheader, label %vector.memcheck
 
-vector.ph:                                        ; preds = %.lr.ph66.preheader.i
+vector.memcheck:                                  ; preds = %.lr.ph66.preheader.i
+  %3 = shl nuw nsw i64 %i.ay, 2
+  %4 = add nsw i64 %3, -1
+  %diff.check = icmp ult i64 %4, 31
+  br i1 %diff.check, label %.lr.ph66.i.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count79.i, 2147483640 ; 3 uses
   br label %vector.body
 
@@ -176,8 +180,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count79.i
   br i1 %cmp.n, label %make_sintbl.exit, label %.lr.ph66.i.preheader
 
-.lr.ph66.i.preheader:                             ; preds = %.lr.ph66.preheader.i, %middle.block
-  %indvars.iv76.i.ph = phi i64 [ 0, %.lr.ph66.preheader.i ], [ %n.vec, %middle.block ] ; 3 uses
+.lr.ph66.i.preheader:                             ; preds = %vector.memcheck, %.lr.ph66.preheader.i, %middle.block
+  %indvars.iv76.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph66.preheader.i ], [ %n.vec, %middle.block ] ; 3 uses
   %xtraiter191 = and i64 %wide.trip.count79.i, 3  ; 2 uses
   %lcmp.mod192.not = icmp eq i64 %xtraiter191, 0
   br i1 %lcmp.mod192.not, label %.lr.ph66.i.prol.loopexit, label %.lr.ph66.i.prol

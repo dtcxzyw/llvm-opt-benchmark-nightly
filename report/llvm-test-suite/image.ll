@@ -204,8 +204,8 @@ iter.check:                                       ; preds = %._crit_edge67.i, %.
   %i.re = load ptr, ptr %i.rb, align 8, !tbaa !44 ; 8 uses
   %i.rf = ptrtoaddr ptr %i.re to i64
   %i.rg = ptrtoaddr ptr %i.rd to i64
-  %i.rh = sub i64 %i.rf, %i.rg
-  %diff.check = icmp ult i64 %i.rh, 32
+  %i.rh = sub i64 %i.rg, %i.rf
+  %diff.check = icmp ugt i64 %i.rh, -32
   %or.cond478 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond478, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -492,19 +492,19 @@ vector.memcheck423:                               ; preds = %iter.check448
   %i.uy = ptrtoaddr ptr %i.uu to i64              ; 2 uses
   %i.uz = ptrtoaddr ptr %i.us to i64              ; 3 uses
   %i.va = ptrtoaddr ptr %i.uq to i64              ; 2 uses
-  %i.vb = sub i64 %i.ux, %i.uz
-  %diff.check424 = icmp ult i64 %i.vb, 32
-  %i.vc = sub i64 %i.uz, %i.va
-  %diff.check425 = icmp ult i64 %i.vc, 32
+  %i.vb = sub i64 %i.uz, %i.ux
+  %diff.check424 = icmp ugt i64 %i.vb, -32
+  %i.vc = sub i64 %i.va, %i.uz
+  %diff.check425 = icmp ugt i64 %i.vc, -32
   %conflict.rdx = or i1 %diff.check424, %diff.check425
-  %i.vd = sub i64 %i.uy, %i.uz
-  %diff.check426 = icmp ult i64 %i.vd, 32
+  %i.vd = sub i64 %i.uz, %i.uy
+  %diff.check426 = icmp ugt i64 %i.vd, -32
   %conflict.rdx427 = or i1 %conflict.rdx, %diff.check426
-  %i.ve = sub i64 %i.ux, %i.va
-  %diff.check428 = icmp ult i64 %i.ve, 32
+  %i.ve = sub i64 %i.va, %i.ux
+  %diff.check428 = icmp ugt i64 %i.ve, -32
   %conflict.rdx429 = or i1 %conflict.rdx427, %diff.check428
-  %i.vf = sub i64 %i.ux, %i.uy
-  %diff.check430 = icmp ult i64 %i.vf, 32
+  %i.vf = sub i64 %i.uy, %i.ux
+  %diff.check430 = icmp ugt i64 %i.vf, -32
   %conflict.rdx431 = or i1 %conflict.rdx429, %diff.check430
   br i1 %conflict.rdx431, label %vec.epilog.scalar.ph449.preheader, label %vector.main.loop.iter.check433
 
@@ -907,8 +907,9 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.be = ptrtoaddr ptr %i.bd to i64
   %i.bf = mul i64 %i.p, %indvars.iv118
   %i.bg = sub i64 %i.bf, %i.a
-  %i.bh = add i64 %i.bg, %i.be
-  %diff.check = icmp ult i64 %i.bh, 32
+  %5 = add i64 %i.bg, %i.be
+  %i.bh = add i64 %5, -1
+  %diff.check = icmp ult i64 %i.bh, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

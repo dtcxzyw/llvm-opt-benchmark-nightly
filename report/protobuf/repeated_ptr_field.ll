@@ -203,9 +203,9 @@ bb.d:                                             ; preds = %bb.a
   %i.o = sext i32 %2 to i64                       ; 3 uses
   %i.p = sext i32 %i.k to i64                     ; 2 uses
   %i.q = sub nsw i64 %i.p, %i.n                   ; 3 uses
-  %min.iters.check = icmp ult i64 %i.q, 6
-  %3 = mul nsw i64 %i.o, -8
-  %diff.check = icmp ult i64 %3, 32
+  %min.iters.check = icmp ult i64 %i.q, 8
+  %3 = shl nsw i64 %i.o, 3
+  %diff.check = icmp ugt i64 %3, -32
   %or.cond23 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond23, label %scalar.ph.preheader, label %vector.ph
 

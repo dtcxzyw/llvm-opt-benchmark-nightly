@@ -204,9 +204,9 @@ vector.memcheck32:                                ; preds = %vector.scevcheck31
   %i.am = zext nneg i32 %.0.i.i to i64
   %i.an = shl nuw nsw i64 %i.am, 3
   %i.ao = add i64 %i.an, %i.q
-  %5 = add i64 %i.ao, 8
-  %6 = sub i64 %5, %i.ad
-  %diff.check33 = icmp ult i64 %6, 32
+  %5 = sub i64 %i.ao, %i.ad
+  %6 = add i64 %5, 7
+  %diff.check33 = icmp ult i64 %6, 31
   br i1 %diff.check33, label %vtable_included.exit.thread.us.i.preheader, label %vector.ph36
 
 vector.ph36:                                      ; preds = %vector.memcheck32
@@ -324,9 +324,9 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.cm = zext nneg i32 %.0.i.i to i64
   %i.cn = shl nuw nsw i64 %i.cm, 3
   %i.co = add i64 %i.cn, %i.q
-  %7 = add i64 %i.co, 8
-  %8 = sub i64 %7, %i.ad
-  %diff.check = icmp ult i64 %8, 32
+  %7 = sub i64 %i.co, %i.ad
+  %8 = add i64 %7, 7
+  %diff.check = icmp ult i64 %8, 31
   br i1 %diff.check, label %.preheader.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -729,8 +729,8 @@ iter.check:                                       ; preds = %.thread
   %i.cz = ptrtoaddr ptr %i.cx to i64
   %i.da = call i64 @llvm.usub.sat.i64(i64 %.0136212, i64 %.2129211) ; 7 uses
   %min.iters.check = icmp ult i64 %i.da, 8
-  %i.db = sub i64 %i.cz, %i.cp
-  %diff.check = icmp ult i64 %i.db, 32
+  %i.db = sub i64 %i.cp, %i.cz
+  %diff.check = icmp ugt i64 %i.db, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph188.preheader, label %vector.main.loop.iter.check
 

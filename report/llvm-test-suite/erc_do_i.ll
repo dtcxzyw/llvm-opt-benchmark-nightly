@@ -202,6 +202,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.ey = sub i64 %i.ex, %.sroa.11.0140
   %i.ez = shl nsw i64 %i.ay, 1
   %min.iters.check = icmp eq i32 %i.ao, 0
+  %invariant.op = add i64 %i.ey, -1
   %min.iters.check141 = icmp ult i32 %i.ao, 16
   %n.mod.vf = and i64 %wide.trip.count141.i, 8
   %n.vec = and i64 %wide.trip.count141.i, 4294967280 ; 4 uses
@@ -222,8 +223,8 @@ iter.check:                                       ; preds = %.preheader.us.us.i.
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.fb = mul i64 %i.ez, %indvar
-  %i.fc = add i64 %i.ey, %i.fb
-  %diff.check = icmp ult i64 %i.fc, 32
+  %i.fc = add i64 %i.fb, %invariant.op
+  %diff.check = icmp ult i64 %i.fc, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -318,6 +319,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gg = sub i64 %i.gd, %i.gf
   %i.gh = shl nsw i64 %i.ay, 1
   %min.iters.check154 = icmp eq i32 %i.ao, 0
+  %invariant.op196 = add i64 %i.gg, -1
   %min.iters.check156 = icmp ult i32 %i.ao, 16
   %n.mod.vf158 = and i64 %wide.trip.count141.i, 8
   %n.vec159 = and i64 %wide.trip.count141.i, 4294967280 ; 4 uses
@@ -379,8 +381,8 @@ iter.check168:                                    ; preds = %.lr.ph.split.us.us.
 
 vector.memcheck149:                               ; preds = %iter.check168
   %i.gy = mul i64 %i.gh, %indvar151
-  %i.gz = add i64 %i.gg, %i.gy
-  %diff.check153 = icmp ult i64 %i.gz, 32
+  %i.gz = add i64 %i.gy, %invariant.op196
+  %diff.check153 = icmp ult i64 %i.gz, 31
   br i1 %diff.check153, label %.lr.ph.split.us.us.split.us.us.split.us.split.split.us.us.i.preheader, label %vector.main.loop.iter.check155
 
 vector.main.loop.iter.check155:                   ; preds = %vector.memcheck149

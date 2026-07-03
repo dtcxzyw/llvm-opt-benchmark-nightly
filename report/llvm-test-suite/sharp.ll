@@ -200,15 +200,17 @@ bb.b:                                             ; preds = %bb.a
   %i.as = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.at = getelementptr inbounds nuw i8, ptr %i.g, i64 12 ; 2 uses
   %scevgep107 = getelementptr i8, ptr %i.c, i64 4
-  %2 = sub i64 %i.a, %i.d
   %i.au = sub i64 %i.aq, %i.d                     ; 2 uses
   %scevgep148 = getelementptr i8, ptr %i.c, i64 4
-  %i.av = sub i64 %i.ar, %i.d
-  %diff.check176 = icmp ult i64 %i.av, 32
-  %diff.check177 = icmp ult i64 %i.au, 32
+  %i.av = sub i64 %i.d, %i.ar
+  %diff.check176 = icmp ugt i64 %i.av, -32
+  %2 = add i64 %i.au, -1
+  %diff.check177 = icmp ult i64 %2, 31
   %conflict.rdx178 = or i1 %diff.check176, %diff.check177
-  %diff.check = icmp ult i64 %2, 32
-  %diff.check119 = icmp ult i64 %i.au, 32
+  %3 = sub i64 %i.d, %i.a
+  %diff.check = icmp ugt i64 %3, -32
+  %4 = add i64 %i.au, -1
+  %diff.check119 = icmp ult i64 %4, 31
   %conflict.rdx = or i1 %diff.check, %diff.check119
   br label %bb.c
 

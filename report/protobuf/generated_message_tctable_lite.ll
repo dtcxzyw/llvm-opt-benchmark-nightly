@@ -203,9 +203,9 @@ iter.check:                                       ; preds = %_ZN6google8protobuf
 vector.memcheck:                                  ; preds = %iter.check
   %.0.v.i.i.i57129 = ptrtoaddr ptr %.0.v.i.i.i57 to i64
   %i.au = add i64 %.0.v.i.i.i57129, %i.ar
-  %4 = add i64 %i.au, 8
-  %5 = sub i64 %4, %i.c
-  %diff.check = icmp ult i64 %5, 32
+  %4 = sub i64 %i.au, %i.c
+  %5 = add i64 %4, 7
+  %diff.check = icmp ult i64 %5, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -608,9 +608,9 @@ iter.check:                                       ; preds = %_ZN6google8protobuf
 vector.memcheck:                                  ; preds = %iter.check
   %.0.v.i.i.i57129 = ptrtoaddr ptr %.0.v.i.i.i57 to i64
   %i.au = add i64 %.0.v.i.i.i57129, %i.ar
-  %4 = add i64 %i.au, 8
-  %5 = sub i64 %4, %i.c
-  %diff.check = icmp ult i64 %5, 32
+  %4 = sub i64 %i.au, %i.c
+  %5 = add i64 %4, 7
+  %diff.check = icmp ult i64 %5, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

@@ -204,8 +204,8 @@ _ZN2v88internal4Zone13AllocateArrayIjA_jEEPT_m.exit.i.i: ; preds = %bb.k, %bb.j
   %i.bj = add i64 %i.bh, %i.ba
   store i64 %i.bj, ptr %i.bd, align 8, !noalias !177
   %min.iters.check.not = icmp ne i64 %i.aj, 32
-  %i.bk = sub i64 %i.bh, %i.ai
-  %diff.check = icmp ult i64 %i.bk, 32
+  %i.bk = sub i64 %i.ai, %i.bh
+  %diff.check = icmp ugt i64 %i.bk, -32
   %or.cond = select i1 %min.iters.check.not, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.body
 
@@ -608,8 +608,8 @@ _ZSt6uniqueIPmET_S1_S1_.exit:                     ; preds = %.preheader.i.i.i, %
   store ptr %i.ag, ptr %i.b, align 8
   %i.ah = ptrtoint ptr %i.ag to i64
   %i.ai = ptrtoint ptr %i.z to i64                ; 2 uses
-  %i.aj = sub i64 %i.ah, %i.ai                    ; 5 uses
-  %i.ak = ashr exact i64 %i.aj, 3                 ; 10 uses
+  %i.aj = sub i64 %i.ah, %i.ai                    ; 7 uses
+  %i.ak = ashr exact i64 %i.aj, 3                 ; 7 uses
   %i.al = icmp ult i64 %i.ak, 9
   br i1 %i.al, label %bb.f, label %bb.k
 
@@ -648,18 +648,23 @@ _ZN2v88internal4Zone13AllocateArrayImA_mEEPT_m.exit.i.i: ; preds = %bb.j, %bb.i
   %i.ay = inttoptr i64 %i.ax to ptr               ; 6 uses
   %i.az = add i64 %i.ax, %i.aj
   store i64 %i.az, ptr %i.at, align 8, !noalias !535
-  %min.iters.check = icmp ult i64 %i.ak, 6
-  %i.ba = sub i64 %i.ax, %i.ai
-  %diff.check = icmp ult i64 %i.ba, 32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  %min.iters.check.not = icmp ne i64 %i.aj, 64
+  %i.ba = sub i64 %i.ai, %i.ax
+  %diff.check = icmp ugt i64 %i.ba, -32
+  %or.cond = select i1 %min.iters.check.not, i1 true, i1 %diff.check
+  br i1 %or.cond, label %scalar.ph.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %_ZN2v88internal4Zone13AllocateArrayImA_mEEPT_m.exit.i.i
-  %n.vec = and i64 %i.ak, 12                      ; 3 uses
-  br label %vector.body
+scalar.ph.preheader:                              ; preds = %_ZN2v88internal4Zone13AllocateArrayImA_mEEPT_m.exit.i.i
+  %xtraiter = and i64 %i.ak, 3                    ; 3 uses
+  %3 = icmp eq i64 %i.aj, 24
+  br i1 %3, label %scalar.ph.prol.loopexit, label %vector.ph
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+vector.ph:                                        ; preds = %scalar.ph.preheader
+  %n.vec = and i64 %i.ak, 12
+  br label %scalar.ph.prol
+
+vector.body:                                      ; preds = %_ZN2v88internal4Zone13AllocateArrayImA_mEEPT_m.exit.i.i, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %_ZN2v88internal4Zone13AllocateArrayImA_mEEPT_m.exit.i.i ] ; 3 uses
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %index ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %wide.load = load <2 x i64>, ptr %i.bb, align 8, !noalias !535
@@ -669,65 +674,61 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load, ptr %i.bd, align 8, !noalias !535
   store <2 x i64> %wide.load29, ptr %i.be, align 8, !noalias !535
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.bf = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !536
+  %i.bf = icmp eq i64 %index.next, %i.ak
+  br i1 %i.bf, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit, label %vector.body, !llvm.loop !536
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.ak, %n.vec
-  br i1 %cmp.n, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit, label %scalar.ph.preheader
-
-scalar.ph.preheader:                              ; preds = %_ZN2v88internal4Zone13AllocateArrayImA_mEEPT_m.exit.i.i, %middle.block
-  %.014.i.i.ph = phi i64 [ 0, %_ZN2v88internal4Zone13AllocateArrayImA_mEEPT_m.exit.i.i ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %i.ak, 3                    ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
-
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
-  %.014.i.i.prol = phi i64 [ %i.bj, %scalar.ph.prol ], [ %.014.i.i.ph, %scalar.ph.preheader ] ; 3 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.014.i.i.prol
+scalar.ph.prol:                                   ; preds = %scalar.ph.prol, %vector.ph
+  %.014.i.i.prol = phi i64 [ 0, %vector.ph ], [ %i.bj, %scalar.ph.prol ] ; 6 uses
+  %prol.iter = phi i64 [ 0, %vector.ph ], [ %prol.iter.next, %scalar.ph.prol ]
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.014.i.i.prol
+  %5 = load i64, ptr %4, align 8, !noalias !535
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %.014.i.i.prol
+  store i64 %5, ptr %6, align 8, !noalias !535
+  %7 = or disjoint i64 %.014.i.i.prol, 1          ; 2 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %7
+  %9 = load i64, ptr %8, align 8, !noalias !535
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %7
+  store i64 %9, ptr %10, align 8, !noalias !535
+  %11 = or disjoint i64 %.014.i.i.prol, 2         ; 2 uses
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %11
+  %13 = load i64, ptr %12, align 8, !noalias !535
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %11
+  store i64 %13, ptr %14, align 8, !noalias !535
+  %15 = or disjoint i64 %.014.i.i.prol, 3         ; 2 uses
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %15
   %i.bh = load i64, ptr %i.bg, align 8, !noalias !535
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %.014.i.i.prol
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %15
   store i64 %i.bh, ptr %i.bi, align 8, !noalias !535
-  %i.bj = add nuw i64 %.014.i.i.prol, 1           ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !537
+  %i.bj = add nuw i64 %.014.i.i.prol, 4           ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 4         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %n.vec
+  br i1 %prol.iter.cmp.not, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %scalar.ph.prol, !llvm.loop !537
 
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %.014.i.i.unr = phi i64 [ %.014.i.i.ph, %scalar.ph.preheader ], [ %i.bj, %scalar.ph.prol ]
-  %3 = sub nsw i64 %.014.i.i.ph, %i.ak
-  %4 = icmp ugt i64 %3, -4
-  br i1 %4, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit, label %scalar.ph
+_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit.loopexit.unr-lcssa: ; preds = %scalar.ph.prol
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit, label %scalar.ph.prol.loopexit
 
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %.014.i.i = phi i64 [ %i.bo, %scalar.ph ], [ %.014.i.i.unr, %scalar.ph.prol.loopexit ] ; 6 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.014.i.i
-  %6 = load i64, ptr %5, align 8, !noalias !535
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %.014.i.i
-  store i64 %6, ptr %7, align 8, !noalias !535
-  %8 = add nuw i64 %.014.i.i, 1                   ; 2 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %8
-  %10 = load i64, ptr %9, align 8, !noalias !535
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %8
-  store i64 %10, ptr %11, align 8, !noalias !535
-  %12 = add nuw i64 %.014.i.i, 2                  ; 2 uses
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %12
+scalar.ph.prol.loopexit:                          ; preds = %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit.loopexit.unr-lcssa, %scalar.ph.preheader
+  %.014.i.i.unr = phi i64 [ 0, %scalar.ph.preheader ], [ %i.bj, %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit.loopexit.unr-lcssa ]
+  %lcmp.mod32 = icmp ne i64 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod32)
+  br label %scalar.ph
+
+scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.prol.loopexit
+  %.014.i.i = phi i64 [ %i.bn, %scalar.ph ], [ %.014.i.i.unr, %scalar.ph.prol.loopexit ] ; 3 uses
+  %epil.iter = phi i64 [ %i.bo, %scalar.ph ], [ 0, %scalar.ph.prol.loopexit ]
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.014.i.i
   %i.bl = load i64, ptr %i.bk, align 8, !noalias !535
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %12
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %.014.i.i
   store i64 %i.bl, ptr %i.bm, align 8, !noalias !535
-  %i.bn = add nuw i64 %.014.i.i, 3                ; 2 uses
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.bn
-  %14 = load i64, ptr %13, align 8, !noalias !535
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.bn
-  store i64 %14, ptr %15, align 8, !noalias !535
-  %i.bo = add nuw i64 %.014.i.i, 4                ; 2 uses
-  %exitcond.not.i.i.3 = icmp eq i64 %i.bo, %i.ak
+  %i.bn = add nuw i64 %.014.i.i, 1
+  %i.bo = add i64 %epil.iter, 1                   ; 2 uses
+  %exitcond.not.i.i.3 = icmp eq i64 %i.bo, %xtraiter
   br i1 %exitcond.not.i.i.3, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit, label %scalar.ph, !llvm.loop !538
 
-_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.g, %bb.h
-  %.sink17.i.i = phi i64 [ %i.an, %bb.g ], [ %i.an, %bb.h ], [ %i.ax, %middle.block ], [ %i.ax, %scalar.ph ], [ %i.ax, %scalar.ph.prol.loopexit ]
-  %.sink.i.i = phi i64 [ undef, %bb.g ], [ %i.aq, %bb.h ], [ 0, %middle.block ], [ 0, %scalar.ph ], [ 0, %scalar.ph.prol.loopexit ]
+_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit: ; preds = %vector.body, %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit.loopexit.unr-lcssa, %scalar.ph, %bb.g, %bb.h
+  %.sink17.i.i = phi i64 [ %i.an, %bb.g ], [ %i.an, %bb.h ], [ %i.ax, %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit.loopexit.unr-lcssa ], [ %i.ax, %scalar.ph ], [ %i.ax, %vector.body ]
+  %.sink.i.i = phi i64 [ undef, %bb.g ], [ %i.aq, %bb.h ], [ 0, %_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetILm16EEES4_RKNS_4base11SmallVectorImXT_ESaImEEEPNS0_4ZoneE.exit.loopexit.unr-lcssa ], [ 0, %scalar.ph ], [ 0, %vector.body ]
   %i.bp = trunc nuw nsw i64 %i.ak to i8
   store i8 3, ptr %0, align 8, !alias.scope !535
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -1130,9 +1131,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -1535,9 +1536,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -1940,9 +1941,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -2345,9 +2346,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -2750,9 +2751,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -3155,9 +3156,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -3560,9 +3561,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -3965,8 +3966,8 @@ begin_hunk_9_@llvm.fshl.i32
 !534 = distinct !{!534, !"_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE3SetENS_4base6VectorIKmEEPNS0_4ZoneE"}
 !535 = !{!533, !530}
 !536 = distinct !{!536, !10, !179, !180}
-!537 = distinct !{!537, !15}
-!538 = distinct !{!538, !10, !179}
+!537 = distinct !{!537, !10, !179}
+!538 = distinct !{!538, !15}
 !539 = !{!540, !542}
 !540 = distinct !{!540, !541, !"_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE5RangeEmmPNS0_4ZoneE: argument 0"}
 !541 = distinct !{!541, !"_ZN2v88internal8compiler10turboshaft8WordTypeILm64EE5RangeEmmPNS0_4ZoneE"}

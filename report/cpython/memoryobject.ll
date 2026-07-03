@@ -203,10 +203,10 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.ca = load ptr, ptr %i.x, align 8, !tbaa !56  ; 7 uses
-  %min.iters.check = icmp ult i32 %i.bx, 6
+  %min.iters.check = icmp ult i32 %i.bx, 8
   %i.cb = ptrtoaddr ptr %i.ca to i64
-  %i.cc = sub i64 %i.cb, %i.bv
-  %diff.check = icmp ult i64 %i.cc, 32
+  %i.cc = sub i64 %i.bv, %i.cb
+  %diff.check = icmp ugt i64 %i.cc, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
@@ -609,11 +609,11 @@ bb.t:                                             ; preds = %Py_DECREF.exit39.i
   %i.bd = getelementptr i8, ptr %i.aq, i64 104
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !64 ; 7 uses
   %wide.trip.count.i = zext nneg i32 %i.az to i64 ; 5 uses
-  %min.iters.check = icmp ult i32 %i.az, 6
+  %min.iters.check = icmp ult i32 %i.az, 8
   %i.bf = ptrtoaddr ptr %i.be to i64
   %i.bg = ptrtoaddr ptr %i.bc to i64
-  %i.bh = sub i64 %i.bf, %i.bg
-  %diff.check = icmp ult i64 %i.bh, 32
+  %i.bh = sub i64 %i.bg, %i.bf
+  %diff.check = icmp ugt i64 %i.bh, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
@@ -1016,10 +1016,10 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.ar = load ptr, ptr %i.r, align 8, !tbaa !56  ; 7 uses
-  %min.iters.check = icmp ult i32 %i.ao, 6
+  %min.iters.check = icmp ult i32 %i.ao, 8
   %i.as = ptrtoaddr ptr %i.ar to i64
-  %i.at = sub i64 %i.as, %i.am
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.am, %i.as
+  %diff.check = icmp ugt i64 %i.at, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
@@ -1133,11 +1133,11 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !64   ; 7 uses
   %i.g = getelementptr i8, ptr %0, i64 48
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !64   ; 7 uses
-  %min.iters.check = icmp ult i32 %i.b, 6
+  %min.iters.check = icmp ult i32 %i.b, 8
   %i.i = ptrtoaddr ptr %i.h to i64
   %i.j = ptrtoaddr ptr %i.f to i64
-  %i.k = sub i64 %i.i, %i.j
-  %diff.check = icmp ult i64 %i.k, 32
+  %i.k = sub i64 %i.j, %i.i
+  %diff.check = icmp ugt i64 %i.k, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
@@ -1268,10 +1268,10 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bj = ptrtoaddr ptr %i.bg to i64
   %i.bk = getelementptr i8, ptr %0, i64 56
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !65 ; 7 uses
-  %min.iters.check49 = icmp ult i32 %i.b, 6
+  %min.iters.check49 = icmp ult i32 %i.b, 8
   %i.bm = ptrtoaddr ptr %i.bl to i64
-  %i.bn = sub i64 %i.bm, %i.bj
-  %diff.check47 = icmp ult i64 %i.bn, 32
+  %i.bn = sub i64 %i.bj, %i.bm
+  %diff.check47 = icmp ugt i64 %i.bn, -32
   %or.cond64 = select i1 %min.iters.check49, i1 true, i1 %diff.check47
   br i1 %or.cond64, label %scalar.ph48.preheader, label %vector.ph50
 

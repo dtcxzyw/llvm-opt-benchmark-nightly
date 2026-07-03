@@ -204,8 +204,8 @@ iter.check:                                       ; preds = %_RNvMs_NtCs6Po7BT7N
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.am = add i64 %i.ac, %i.ad
-  %i.an = sub i64 %i.am, %i.ag
-  %diff.check = icmp ult i64 %i.an, 32
+  %i.an = sub i64 %i.ag, %i.am
+  %diff.check = icmp ugt i64 %i.an, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

@@ -204,7 +204,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph120.ne
 vector.memcheck:                                  ; preds = %.lr.ph129
   %i.dg = add i64 %indvar, %i.da
   %i.dh = mul i64 %i.dg, 52
-  %diff.check = icmp ult i64 %i.dh, 32
+  %6 = add i64 %i.dh, -1
+  %diff.check = icmp ult i64 %6, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

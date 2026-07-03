@@ -204,6 +204,14 @@ bb.bh:                                            ; preds = %bb.b
   %lcmp.mod1361 = trunc i32 %i.c to i1
   %lcmp.mod1369 = trunc i32 %i.c to i1
   %lcmp.mod1377 = trunc i32 %i.c to i1
+  %invariant.op = add i64 %i.hh, -1
+  %invariant.op1411 = add i64 %i.hf, -1
+  %invariant.op1413 = add i64 %i.hc, -1
+  %invariant.op1415 = add i64 %i.gw, -1
+  %invariant.op1417 = add i64 %i.gs, -1
+  %invariant.op1419 = add i64 %i.gm, -1
+  %invariant.op1421 = add i64 %i.gi, -1
+  %invariant.op1423 = add i64 %i.gd, -1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %SmoothenBlock.exit189
@@ -217,21 +225,13 @@ bb.bh:                                            ; preds = %bb.b
   %.0117281 = phi ptr [ %i.ff, %.preheader.lr.ph ], [ %i.btn, %SmoothenBlock.exit189 ] ; 3 uses
   %.0118280 = phi ptr [ %i.fc, %.preheader.lr.ph ], [ %i.btm, %SmoothenBlock.exit189 ] ; 3 uses
   %i.hj = mul i64 %i.hg, %indvar
-  %1 = add i64 %i.hh, %i.hj
   %i.hk = mul i64 %i.hg, %indvar
-  %2 = add i64 %i.hf, %i.hk
   %i.hl = mul i64 %i.gx, %indvar
-  %3 = add i64 %i.hc, %i.hl
   %i.hm = mul i64 %i.gx, %indvar
-  %4 = add i64 %i.gw, %i.hm
   %i.hn = mul i64 %i.gn, %indvar
-  %5 = add i64 %i.gs, %i.hn
   %i.ho = mul i64 %i.gn, %indvar
-  %6 = add i64 %i.gm, %i.ho
   %i.hp = mul i64 %i.ge, %indvar
-  %7 = add i64 %i.gi, %i.hp
   %i.hq = mul i64 %i.ge, %indvar
-  %8 = add i64 %i.gd, %i.hq
   br i1 %.not141268, label %._crit_edge274, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %Flatten.exit160
@@ -634,7 +634,8 @@ iter.check1160:                                   ; preds = %._crit_edge.us.i176
   %i.ach = sdiv i32 %.2.us.i173.7.lcssa, %.251.us.i172.7.lcssa
   %i.aci = trunc i32 %i.ach to i8                 ; 344 uses
   %min.iters.check1082 = icmp ult i32 %i.uu, 8
-  %diff.check1081 = icmp ult i64 %1, 32
+  %.reass = add i64 %i.hj, %invariant.op
+  %diff.check1081 = icmp ult i64 %.reass, 31
   %or.cond = select i1 %min.iters.check1082, i1 true, i1 %diff.check1081
   br i1 %or.cond, label %vec.epilog.scalar.ph1161.preheader, label %vector.main.loop.iter.check1083
 
@@ -1037,7 +1038,8 @@ bb.io:                                            ; preds = %bb.in, %vec.epilog.
 
 iter.check1050:                                   ; preds = %vec.epilog.scalar.ph1161.prol.loopexit, %bb.io, %vec.epilog.middle.block1187, %middle.block1157
   %min.iters.check972 = icmp ult i32 %i.uu, 8
-  %diff.check971 = icmp ult i64 %2, 32
+  %.reass1412 = add i64 %i.hk, %invariant.op1411
+  %diff.check971 = icmp ult i64 %.reass1412, 31
   %or.cond1304 = select i1 %min.iters.check972, i1 true, i1 %diff.check971
   br i1 %or.cond1304, label %._crit_edge.i187.preheader, label %vector.main.loop.iter.check973
 
@@ -1440,7 +1442,8 @@ bb.is:                                            ; preds = %bb.ir, %._crit_edge
 
 iter.check940:                                    ; preds = %._crit_edge.i187.prol.loopexit, %bb.is, %vec.epilog.middle.block1077, %middle.block1047
   %min.iters.check862 = icmp ult i32 %i.uu, 8
-  %diff.check861 = icmp ult i64 %3, 32
+  %.reass1414 = add i64 %i.hl, %invariant.op1413
+  %diff.check861 = icmp ult i64 %.reass1414, 31
   %or.cond1305 = select i1 %min.iters.check862, i1 true, i1 %diff.check861
   br i1 %or.cond1305, label %._crit_edge.i187.1.preheader, label %vector.main.loop.iter.check863
 
@@ -1843,7 +1846,8 @@ bb.iw:                                            ; preds = %bb.iv, %._crit_edge
 
 iter.check830:                                    ; preds = %._crit_edge.i187.1.prol.loopexit, %bb.iw, %vec.epilog.middle.block967, %middle.block937
   %min.iters.check752 = icmp ult i32 %i.uu, 8
-  %diff.check751 = icmp ult i64 %4, 32
+  %.reass1416 = add i64 %i.hm, %invariant.op1415
+  %diff.check751 = icmp ult i64 %.reass1416, 31
   %or.cond1306 = select i1 %min.iters.check752, i1 true, i1 %diff.check751
   br i1 %or.cond1306, label %._crit_edge.i187.2.preheader, label %vector.main.loop.iter.check753
 
@@ -2246,7 +2250,8 @@ bb.ja:                                            ; preds = %bb.iz, %._crit_edge
 
 iter.check720:                                    ; preds = %._crit_edge.i187.2.prol.loopexit, %bb.ja, %vec.epilog.middle.block857, %middle.block827
   %min.iters.check642 = icmp ult i32 %i.uu, 8
-  %diff.check641 = icmp ult i64 %5, 32
+  %.reass1418 = add i64 %i.hn, %invariant.op1417
+  %diff.check641 = icmp ult i64 %.reass1418, 31
   %or.cond1307 = select i1 %min.iters.check642, i1 true, i1 %diff.check641
   br i1 %or.cond1307, label %._crit_edge.i187.3.preheader, label %vector.main.loop.iter.check643
 
@@ -2649,7 +2654,8 @@ bb.je:                                            ; preds = %bb.jd, %._crit_edge
 
 iter.check610:                                    ; preds = %._crit_edge.i187.3.prol.loopexit, %bb.je, %vec.epilog.middle.block747, %middle.block717
   %min.iters.check532 = icmp ult i32 %i.uu, 8
-  %diff.check531 = icmp ult i64 %6, 32
+  %.reass1420 = add i64 %i.ho, %invariant.op1419
+  %diff.check531 = icmp ult i64 %.reass1420, 31
   %or.cond1308 = select i1 %min.iters.check532, i1 true, i1 %diff.check531
   br i1 %or.cond1308, label %._crit_edge.i187.4.preheader, label %vector.main.loop.iter.check533
 
@@ -3052,7 +3058,8 @@ bb.ji:                                            ; preds = %bb.jh, %._crit_edge
 
 iter.check500:                                    ; preds = %._crit_edge.i187.4.prol.loopexit, %bb.ji, %vec.epilog.middle.block637, %middle.block607
   %min.iters.check422 = icmp ult i32 %i.uu, 8
-  %diff.check421 = icmp ult i64 %7, 32
+  %.reass1422 = add i64 %i.hp, %invariant.op1421
+  %diff.check421 = icmp ult i64 %.reass1422, 31
   %or.cond1309 = select i1 %min.iters.check422, i1 true, i1 %diff.check421
   br i1 %or.cond1309, label %._crit_edge.i187.5.preheader, label %vector.main.loop.iter.check423
 
@@ -3455,7 +3462,8 @@ bb.jm:                                            ; preds = %bb.jl, %._crit_edge
 
 iter.check:                                       ; preds = %._crit_edge.i187.5.prol.loopexit, %bb.jm, %vec.epilog.middle.block527, %middle.block497
   %min.iters.check = icmp ult i32 %i.uu, 8
-  %diff.check = icmp ult i64 %8, 32
+  %.reass1424 = add i64 %i.hq, %invariant.op1423
+  %diff.check = icmp ult i64 %.reass1424, 31
   %or.cond1310 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond1310, label %._crit_edge.i187.6.preheader, label %vector.main.loop.iter.check
 

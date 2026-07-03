@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 56
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 72
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -609,15 +609,15 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ac = add nsw i64 %i.m, -4                    ; 2 uses
   %i.ad = lshr exact i64 %i.ac, 2
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
-  %min.iters.check95 = icmp ult i64 %i.ac, 44
+  %min.iters.check95 = icmp ult i64 %i.ac, 60
   br i1 %min.iters.check95, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
   %i.af = sub i64 %i.g, %i.h
   %i.ag = and i64 %i.af, 17179869180
   %i.ah = add i64 %i.ag, %i.o
-  %i.ai = sub i64 %i.g, %i.ah
-  %diff.check = icmp ult i64 %i.ai, 32
+  %i.ai = sub i64 %i.ah, %i.g
+  %diff.check = icmp ugt i64 %i.ai, -32
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.ph96
 
 vector.ph96:                                      ; preds = %vector.memcheck
@@ -1020,7 +1020,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.ar = zext nneg i32 %i.m to i64               ; 6 uses
   %i.as = sext i32 %i.n to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.aq, i64 %i.as ; 2 uses
-  %min.iters.check = icmp ult i32 %i.m, 24
+  %min.iters.check = icmp ult i32 %i.m, 28
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.c
@@ -1031,8 +1031,9 @@ vector.memcheck:                                  ; preds = %bb.c
   %i.ax = sext i32 %i.aw to i64
   %i.ay = sext i32 %1 to i64
   %i.az = sub nsw i64 %i.ax, %i.ay
-  %2 = and i64 %i.az, 4611686018427387896
-  %diff.check = icmp eq i64 %2, 0
+  %2 = shl nsw i64 %i.az, 2
+  %3 = add nsw i64 %2, -1
+  %diff.check = icmp ult i64 %3, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

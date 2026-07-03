@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -609,9 +609,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -1014,9 +1014,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -1276,9 +1276,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -1681,9 +1681,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -2086,9 +2086,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -2491,9 +2491,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -2896,9 +2896,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 56
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 72
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -3301,7 +3301,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.at = zext nneg i32 %i.n to i64               ; 6 uses
   %i.au = sext i32 %i.o to i64
   %invariant.gep = getelementptr [8 x i8], ptr %i.as, i64 %i.au ; 2 uses
-  %min.iters.check = icmp ult i32 %i.n, 24
+  %min.iters.check = icmp ult i32 %i.n, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.c
@@ -3312,8 +3312,9 @@ vector.memcheck:                                  ; preds = %bb.c
   %i.az = sext i32 %i.ay to i64
   %i.ba = sext i32 %1 to i64
   %i.bb = sub nsw i64 %i.az, %i.ba
-  %2 = and i64 %i.bb, 2305843009213693948
-  %diff.check = icmp eq i64 %2, 0
+  %2 = shl nsw i64 %i.bb, 3
+  %3 = add nsw i64 %2, -1
+  %diff.check = icmp ult i64 %3, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -3716,9 +3717,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -4121,9 +4122,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -4526,9 +4527,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
@@ -4931,9 +4932,9 @@ bb.e:                                             ; preds = %bb.a
   %i.t = sub i64 %i.s, %i.h                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 28
-  %i.w = sub i64 %i.r, %i.h
-  %diff.check = icmp ult i64 %i.w, 32
+  %min.iters.check = icmp ult i64 %i.t, 44
+  %i.w = sub i64 %i.h, %i.r
+  %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 

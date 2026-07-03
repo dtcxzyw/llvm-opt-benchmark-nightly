@@ -124,6 +124,7 @@ bb.a:
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod90 = trunc i32 %2 to i1
   %min.iters.check = icmp ult i32 %2, 4
+  %invariant.op93 = add i64 %i.f, -1
   %n.vec = and i64 %wide.trip.count67, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count67
   %xtraiter91 = and i64 %wide.trip.count67, 3     ; 2 uses
@@ -133,15 +134,14 @@ bb.a:
 .preheader37.us.us:                               ; preds = %.preheader37.us.us.preheader, %._crit_edge43.split.us.split.us.us.us
   %indvars.iv81 = phi i64 [ 0, %.preheader37.us.us.preheader ], [ %indvars.iv.next82, %._crit_edge43.split.us.split.us.us.us ] ; 3 uses
   %i.h = mul nuw nsw i64 %indvars.iv81, 179200
-  %6 = add i64 %i.f, %i.h
-  %7 = getelementptr inbounds nuw [179200 x i8], ptr %3, i64 %indvars.iv81
+  %6 = getelementptr inbounds nuw [179200 x i8], ptr %3, i64 %indvars.iv81
+  %invariant.op.reass = add i64 %i.h, %invariant.op93
   br label %.preheader36.us.us.us.us
 
 .preheader36.us.us.us.us:                         ; preds = %._crit_edge.us45.us.us.us, %.preheader37.us.us
   %indvars.iv76 = phi i64 [ %indvars.iv.next77, %._crit_edge.us45.us.us.us ], [ 0, %.preheader37.us.us ] ; 3 uses
   %i.i = mul nuw nsw i64 %indvars.iv76, 1280
-  %8 = add i64 %6, %i.i
-  %i.j = getelementptr inbounds nuw [1280 x i8], ptr %7, i64 %indvars.iv76 ; 9 uses
+  %i.j = getelementptr inbounds nuw [1280 x i8], ptr %6, i64 %indvars.iv76 ; 9 uses
   br label %.lr.ph.us.us.us.us.us
 
 ..preheader_crit_edge.split.us.us.us.us.us:       ; preds = %..preheader_crit_edge.split.us.us.us.us.us.prol.loopexit, %..preheader_crit_edge.split.us.us.us.us.us
@@ -219,7 +219,8 @@ bb.a:
   br i1 %exitcond68.not, label %..preheader_crit_edge.split.us.us.us.us.us.preheader, label %.lr.ph.us.us.us.us.us, !llvm.loop !18
 
 ..preheader_crit_edge.split.us.us.us.us.us.preheader: ; preds = %._crit_edge.us.us.us.us.us
-  %diff.check = icmp ult i64 %8, 32
+  %.reass = add i64 %i.i, %invariant.op.reass
+  %diff.check = icmp ult i64 %.reass, 31
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %..preheader_crit_edge.split.us.us.us.us.us.preheader89, label %vector.body
 
@@ -304,6 +305,7 @@ bb.a:
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod90 = trunc i32 %2 to i1
   %min.iters.check = icmp ult i32 %2, 4
+  %invariant.op93 = add i64 %i.f, -1
   %n.vec = and i64 %wide.trip.count67, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count67
   %xtraiter91 = and i64 %wide.trip.count67, 3     ; 2 uses
@@ -313,15 +315,14 @@ bb.a:
 .preheader37.us.us:                               ; preds = %.preheader37.us.us.preheader, %._crit_edge43.split.us.split.us.us.us
   %indvars.iv81 = phi i64 [ 0, %.preheader37.us.us.preheader ], [ %indvars.iv.next82, %._crit_edge43.split.us.split.us.us.us ] ; 3 uses
   %i.h = mul nuw nsw i64 %indvars.iv81, 179200
-  %6 = add i64 %i.f, %i.h
-  %7 = getelementptr inbounds nuw [179200 x i8], ptr %3, i64 %indvars.iv81
+  %6 = getelementptr inbounds nuw [179200 x i8], ptr %3, i64 %indvars.iv81
+  %invariant.op.reass = add i64 %i.h, %invariant.op93
   br label %.preheader36.us.us.us.us
 
 .preheader36.us.us.us.us:                         ; preds = %._crit_edge.us45.us.us.us, %.preheader37.us.us
   %indvars.iv76 = phi i64 [ %indvars.iv.next77, %._crit_edge.us45.us.us.us ], [ 0, %.preheader37.us.us ] ; 3 uses
   %i.i = mul nuw nsw i64 %indvars.iv76, 1280
-  %8 = add i64 %6, %i.i
-  %i.j = getelementptr inbounds nuw [1280 x i8], ptr %7, i64 %indvars.iv76 ; 9 uses
+  %i.j = getelementptr inbounds nuw [1280 x i8], ptr %6, i64 %indvars.iv76 ; 9 uses
   br label %.lr.ph.us.us.us.us.us
 
 ..preheader_crit_edge.split.us.us.us.us.us:       ; preds = %..preheader_crit_edge.split.us.us.us.us.us.prol.loopexit, %..preheader_crit_edge.split.us.us.us.us.us
@@ -402,7 +403,8 @@ bb.a:
   br i1 %exitcond68.not, label %..preheader_crit_edge.split.us.us.us.us.us.preheader, label %.lr.ph.us.us.us.us.us, !llvm.loop !27
 
 ..preheader_crit_edge.split.us.us.us.us.us.preheader: ; preds = %._crit_edge.us.us.us.us.us
-  %diff.check = icmp ult i64 %8, 32
+  %.reass = add i64 %i.i, %invariant.op.reass
+  %diff.check = icmp ult i64 %.reass, 31
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %..preheader_crit_edge.split.us.us.us.us.us.preheader89, label %vector.body
 
@@ -537,8 +539,8 @@ bb.e:                                             ; preds = %polybench_alloc_dat
 
 polybench_alloc_data.exit36:                      ; preds = %polybench_alloc_data.exit34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
-  %i.af = sub i64 %i.n, %i.g
-  %diff.check = icmp ult i64 %i.af, 16
+  %i.af = sub i64 %i.g, %i.n
+  %diff.check = icmp ugt i64 %i.af, -16
   br label %.preheader41.i
 
 .preheader41.i:                                   ; preds = %bb.f, %polybench_alloc_data.exit36
@@ -640,6 +642,7 @@ middle.block111:                                  ; preds = %vector.body106
 
 .preheader37.us.us.i.preheader:                   ; preds = %middle.block111
   %i.bp = sub i64 %i.g, %i.u
+  %invariant.op142 = add i64 %i.bp, -1
   %i.bq = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.br = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.bs = getelementptr inbounds nuw i8, ptr %i.t, i64 48
@@ -724,15 +727,14 @@ middle.block111:                                  ; preds = %vector.body106
 .preheader37.us.us.i:                             ; preds = %.preheader37.us.us.i.preheader, %._crit_edge43.split.us.split.us.us.us.i
   %indvars.iv81.i = phi i64 [ %indvars.iv.next82.i, %._crit_edge43.split.us.split.us.us.us.i ], [ 0, %.preheader37.us.us.i.preheader ] ; 3 uses
   %i.er = mul nuw nsw i64 %indvars.iv81.i, 179200
-  %2 = add i64 %i.bp, %i.er
-  %3 = getelementptr inbounds nuw [179200 x i8], ptr %i.f, i64 %indvars.iv81.i
+  %2 = getelementptr inbounds nuw [179200 x i8], ptr %i.f, i64 %indvars.iv81.i
+  %invariant.op.reass = add i64 %i.er, %invariant.op142
   br label %.preheader36.us.us.us.us.i
 
 .preheader36.us.us.us.us.i:                       ; preds = %._crit_edge.us45.us.us.us.i, %.preheader37.us.us.i
   %indvars.iv76.i = phi i64 [ %indvars.iv.next77.i, %._crit_edge.us45.us.us.us.i ], [ 0, %.preheader37.us.us.i ] ; 3 uses
   %i.es = mul nuw nsw i64 %indvars.iv76.i, 1280
-  %4 = add i64 %2, %i.es
-  %i.et = getelementptr inbounds nuw [1280 x i8], ptr %3, i64 %indvars.iv76.i ; 87 uses
+  %i.et = getelementptr inbounds nuw [1280 x i8], ptr %2, i64 %indvars.iv76.i ; 87 uses
   br label %.lr.ph.us.us.us.us.us.i
 
 ..preheader_crit_edge.split.us.us.us.us.us.i:     ; preds = %vector.memcheck112, %..preheader_crit_edge.split.us.us.us.us.us.i
@@ -798,7 +800,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.us.us
   br i1 %exitcond68.not.i, label %vector.memcheck112, label %.lr.ph.us.us.us.us.us.i, !llvm.loop !18
 
 vector.memcheck112:                               ; preds = %._crit_edge.us.us.us.us.us.i
-  %diff.check113 = icmp ult i64 %4, 32
+  %.reass = add i64 %i.es, %invariant.op.reass
+  %diff.check113 = icmp ult i64 %.reass, 31
   br i1 %diff.check113, label %..preheader_crit_edge.split.us.us.us.us.us.i, label %vector.body116
 
 vector.body116:                                   ; preds = %vector.memcheck112
@@ -1055,6 +1058,7 @@ vector.body116:                                   ; preds = %vector.memcheck112
 
 .preheader37.us.us.i40.preheader:                 ; preds = %._crit_edge43.split.us.split.us.us.us.i
   %i.iu = sub i64 %i.n, %i.u
+  %invariant.op144 = add i64 %i.iu, -1
   %i.iv = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.iw = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.ix = getelementptr inbounds nuw i8, ptr %i.t, i64 48
@@ -1139,15 +1143,14 @@ vector.body116:                                   ; preds = %vector.memcheck112
 .preheader37.us.us.i40:                           ; preds = %.preheader37.us.us.i40.preheader, %._crit_edge43.split.us.split.us.us.us.i61
   %indvars.iv81.i41 = phi i64 [ %indvars.iv.next82.i62, %._crit_edge43.split.us.split.us.us.us.i61 ], [ 0, %.preheader37.us.us.i40.preheader ] ; 3 uses
   %i.lw = mul nuw nsw i64 %indvars.iv81.i41, 179200
-  %5 = add i64 %i.iu, %i.lw
-  %6 = getelementptr inbounds nuw [179200 x i8], ptr %i.m, i64 %indvars.iv81.i41
+  %3 = getelementptr inbounds nuw [179200 x i8], ptr %i.m, i64 %indvars.iv81.i41
+  %invariant.op.reass145 = add i64 %i.lw, %invariant.op144
   br label %.preheader36.us.us.us.us.i42
 
 .preheader36.us.us.us.us.i42:                     ; preds = %._crit_edge.us45.us.us.us.i58, %.preheader37.us.us.i40
   %indvars.iv76.i43 = phi i64 [ %indvars.iv.next77.i59, %._crit_edge.us45.us.us.us.i58 ], [ 0, %.preheader37.us.us.i40 ] ; 3 uses
   %i.lx = mul nuw nsw i64 %indvars.iv76.i43, 1280
-  %7 = add i64 %5, %i.lx
-  %i.ly = getelementptr inbounds nuw [1280 x i8], ptr %6, i64 %indvars.iv76.i43 ; 87 uses
+  %i.ly = getelementptr inbounds nuw [1280 x i8], ptr %3, i64 %indvars.iv76.i43 ; 87 uses
   br label %.lr.ph.us.us.us.us.us.i44
 
 ..preheader_crit_edge.split.us.us.us.us.us.i54:   ; preds = %vector.memcheck121, %..preheader_crit_edge.split.us.us.us.us.us.i54
@@ -1215,7 +1218,8 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us.us
   br i1 %exitcond68.not.i53, label %vector.memcheck121, label %.lr.ph.us.us.us.us.us.i44, !llvm.loop !27
 
 vector.memcheck121:                               ; preds = %._crit_edge.us.us.us.us.us.i51
-  %diff.check122 = icmp ult i64 %7, 32
+  %.reass143 = add i64 %i.lx, %invariant.op.reass145
+  %diff.check122 = icmp ult i64 %.reass143, 31
   br i1 %diff.check122, label %..preheader_crit_edge.split.us.us.us.us.us.i54, label %vector.body125
 
 vector.body125:                                   ; preds = %vector.memcheck121

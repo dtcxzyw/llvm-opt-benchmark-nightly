@@ -203,8 +203,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 1
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -498,8 +498,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 1
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -902,8 +902,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 1
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -1306,8 +1306,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %.promoted27 = ptrtoaddr ptr %.promoted to i64
   %i.am = shl i64 %i.m, 1
   %i.an = add i64 %i.am, %i.l
-  %i.ao = sub i64 %.promoted27, %i.an
-  %diff.check = icmp ult i64 %i.ao, 32
+  %i.ao = sub i64 %i.an, %.promoted27
+  %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -1710,15 +1710,15 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
   %i.aj = add i64 %.idx, -4                       ; 2 uses
   %i.ak = lshr exact i64 %i.aj, 2
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aj, 60
+  %min.iters.check = icmp ult i64 %i.aj, 76
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
   %.promoted27 = ptrtoaddr ptr %.promoted to i64
   %i.am = shl i64 %i.m, 2
   %i.an = add i64 %i.am, %i.l
-  %i.ao = sub i64 %.promoted27, %i.an
-  %diff.check = icmp ult i64 %i.ao, 32
+  %i.ao = sub i64 %i.an, %.promoted27
+  %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -2121,15 +2121,15 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
   %i.aj = add i64 %.idx, -8                       ; 2 uses
   %i.ak = lshr exact i64 %i.aj, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aj, 104
+  %min.iters.check = icmp ult i64 %i.aj, 136
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
   %.promoted27 = ptrtoaddr ptr %.promoted to i64
   %i.am = shl i64 %i.m, 3
   %i.an = add i64 %i.am, %i.l
-  %i.ao = sub i64 %.promoted27, %i.an
-  %diff.check = icmp ult i64 %i.ao, 32
+  %i.ao = sub i64 %i.an, %.promoted27
+  %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -2532,8 +2532,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 1
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -2827,8 +2827,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 1
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -3231,8 +3231,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 1
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -3635,8 +3635,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %.promoted27 = ptrtoaddr ptr %.promoted to i64
   %i.am = shl i64 %i.m, 1
   %i.an = add i64 %i.am, %i.l
-  %i.ao = sub i64 %.promoted27, %i.an
-  %diff.check = icmp ult i64 %i.ao, 32
+  %i.ao = sub i64 %i.an, %.promoted27
+  %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -4039,8 +4039,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %.promoted27 = ptrtoaddr ptr %.promoted to i64
   %i.am = shl i64 %i.m, 1
   %i.an = add i64 %i.am, %i.l
-  %i.ao = sub i64 %.promoted27, %i.an
-  %diff.check = icmp ult i64 %i.ao, 32
+  %i.ao = sub i64 %i.an, %.promoted27
+  %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -4443,15 +4443,15 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
   %i.aj = add i64 %.idx, -4                       ; 2 uses
   %i.ak = lshr exact i64 %i.aj, 2
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aj, 60
+  %min.iters.check = icmp ult i64 %i.aj, 76
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
   %.promoted27 = ptrtoaddr ptr %.promoted to i64
   %i.am = shl i64 %i.m, 2
   %i.an = add i64 %i.am, %i.l
-  %i.ao = sub i64 %.promoted27, %i.an
-  %diff.check = icmp ult i64 %i.ao, 32
+  %i.ao = sub i64 %i.an, %.promoted27
+  %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -4854,15 +4854,15 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
   %i.aj = add i64 %.idx, -8                       ; 2 uses
   %i.ak = lshr exact i64 %i.aj, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aj, 104
+  %min.iters.check = icmp ult i64 %i.aj, 136
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
   %.promoted27 = ptrtoaddr ptr %.promoted to i64
   %i.am = shl i64 %i.m, 3
   %i.an = add i64 %i.am, %i.l
-  %i.ao = sub i64 %.promoted27, %i.an
-  %diff.check = icmp ult i64 %i.ao, 32
+  %i.ao = sub i64 %i.an, %.promoted27
+  %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -5265,8 +5265,8 @@ vector.memcheck:                                  ; preds = %.lr.ph18
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 2
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -5669,7 +5669,7 @@ _ZN5arrow9ArraySpanD2Ev.exit:                     ; preds = %_ZSt8_DestroyIPN5ar
   %i.am = load i32, ptr %i.al, align 4, !tbaa !247
   %i.an = sext i32 %i.am to i64                   ; 2 uses
   %invariant.gep = getelementptr [8 x i8], ptr %i.ah, i64 %i.an ; 6 uses
-  %min.iters.check = icmp ugt i64 %i.ac, 17
+  %min.iters.check = icmp ugt i64 %i.ac, 19
   %ident.check.not = icmp eq i32 %i.aj, 1
   %or.cond = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
@@ -5680,8 +5680,8 @@ vector.memcheck:                                  ; preds = %.lr.ph18
   %i.aq = add i64 %i.ap, %i.ao
   %i.ar = shl i64 %i.j, 3
   %i.as = add i64 %i.ar, %i.i
-  %i.at = sub i64 %i.aq, %i.as
-  %diff.check = icmp ult i64 %i.at, 32
+  %i.at = sub i64 %i.as, %i.aq
+  %diff.check = icmp ugt i64 %i.at, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

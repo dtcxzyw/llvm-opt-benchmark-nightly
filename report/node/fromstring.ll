@@ -203,6 +203,7 @@ bb.m:                                             ; preds = %.lr.ph598, %.crited
   %i.di = sub i32 %i.dg, %i.df
   %i.dj = zext i32 %i.di to i64
   %i.dk = sub nsw i64 %i.dh, %i.dj
+  %6 = shl nsw i64 %i.dk, 3
   %i.dl = trunc nuw nsw i64 %indvars.iv510 to i32 ; 2 uses
   %i.dm = mul i32 %.0213596, %i.dl                ; 5 uses
   %i.dn = zext i32 %i.dm to i64                   ; 3 uses
@@ -473,8 +474,8 @@ _ZN2v86bigint7CompareENS0_6DigitsES1_.exit279:    ; preds = %.preheader.i.i259
   br i1 %.not475, label %.critedge232, label %vector.memcheck620
 
 vector.memcheck620:                               ; preds = %_ZN2v86bigint7CompareENS0_6DigitsES1_.exit279
-  %6 = and i64 %i.dk, 2305843009213693948
-  %diff.check621 = icmp eq i64 %6, 0
+  %7 = add nsw i64 %6, -1
+  %diff.check621 = icmp ult i64 %7, 31
   br i1 %diff.check621, label %.lr.ph453, label %vector.body627
 
 vector.body627:                                   ; preds = %vector.memcheck620, %vector.body627
@@ -555,8 +556,8 @@ bb.x:                                             ; preds = %bb.w
 .lr.ph459.preheader:                              ; preds = %bb.x
   %i.hb = zext i32 %.sroa.speculated.i281 to i64  ; 3 uses
   %min.iters.check608 = icmp ult i32 %.sroa.speculated.i281, 4
-  %i.hc = sub i64 %.sroa.0367.0590605, %.sroa.0393.0594601
-  %diff.check606 = icmp ult i64 %i.hc, 32
+  %i.hc = sub i64 %.sroa.0393.0594601, %.sroa.0367.0590605
+  %diff.check606 = icmp ugt i64 %i.hc, -32
   %or.cond = select i1 %min.iters.check608, i1 true, i1 %diff.check606
   br i1 %or.cond, label %.lr.ph459.preheader657, label %vector.ph609
 
@@ -627,8 +628,8 @@ middle.block617:                                  ; preds = %vector.body612
 .lr.ph464.preheader:                              ; preds = %.preheader434
   %i.hv = zext i32 %.sroa.speculated.i282 to i64  ; 3 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated.i282, 4
-  %i.hw = sub i64 %.sroa.0393.0594601, %.sroa.0383.0592602
-  %diff.check = icmp ult i64 %i.hw, 32
+  %i.hw = sub i64 %.sroa.0383.0592602, %.sroa.0393.0594601
+  %diff.check = icmp ugt i64 %i.hw, -32
   %or.cond651 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond651, label %.lr.ph464.preheader656, label %vector.ph
 
@@ -717,9 +718,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph470.preheader:                              ; preds = %.preheader431
   %wide.trip.count534 = and i64 %.sroa.15.0.lcssa, 4294967295
-  %min.iters.check639 = icmp ult i64 %.sroa.15.0.lcssa, 6
-  %i.is = sub i64 %i.a, %.sroa.0393.0.lcssa636
-  %diff.check637 = icmp ult i64 %i.is, 32
+  %min.iters.check639 = icmp ult i64 %.sroa.15.0.lcssa, 8
+  %i.is = sub i64 %.sroa.0393.0.lcssa636, %i.a
+  %diff.check637 = icmp ugt i64 %i.is, -32
   %or.cond652 = select i1 %min.iters.check639, i1 true, i1 %diff.check637
   br i1 %or.cond652, label %.lr.ph470.preheader653, label %vector.ph640
 

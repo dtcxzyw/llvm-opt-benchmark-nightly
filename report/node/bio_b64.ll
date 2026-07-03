@@ -201,7 +201,6 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 3 uses
-  %3 = add i64 %i.d, 1542
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph262, %select.unfold
@@ -337,15 +336,18 @@ bb.ab:                                            ; preds = %bb.aa
   %.neg232 = add nuw i32 %i.bd, 1542
   %i.by = sub i32 %.neg232, %i.bx                 ; 9 uses
   %i.bz = icmp sgt i32 %i.by, 0
-  br i1 %i.bz, label %iter.check367.a, label %.sink.split
+  br i1 %i.bz, label %iter.check367, label %.sink.split
 
-iter.check367.a:                                  ; preds = %bb.ab
+iter.check367:                                    ; preds = %bb.ab
   %wide.trip.count285 = zext nneg i32 %i.by to i64 ; 8 uses
   %min.iters.check353 = icmp ult i32 %i.by, 4
-  %i.ca = sub i64 %3, %.0161.ptr248351.le
-  %diff.check352 = icmp ult i64 %i.ca, 32
-  %or.cond383 = select i1 %min.iters.check353, i1 true, i1 %diff.check352
-  br i1 %or.cond383, label %.lr.ph252.preheader, label %vector.main.loop.iter.check354
+  br i1 %min.iters.check353, label %.lr.ph252.preheader, label %iter.check367.a
+
+iter.check367.a:                                  ; preds = %iter.check367
+  %i.ca = sub i64 %i.d, %.0161.ptr248351.le
+  %3 = add i64 %i.ca, 1541
+  %diff.check352 = icmp ult i64 %3, 31
+  br i1 %diff.check352, label %.lr.ph252.preheader, label %vector.main.loop.iter.check354
 
 vector.main.loop.iter.check354:                   ; preds = %iter.check367.a
   %min.iters.check355 = icmp ult i32 %i.by, 32
@@ -397,8 +399,8 @@ vec.epilog.middle.block378:                       ; preds = %vec.epilog.vector.b
   %cmp.n379 = icmp eq i64 %n.vec373, %wide.trip.count285
   br i1 %cmp.n379, label %.sink.split, label %.lr.ph252.preheader
 
-.lr.ph252.preheader:                              ; preds = %iter.check367.a, %vec.epilog.iter.check369, %vec.epilog.middle.block378
-  %indvars.iv.ph = phi i64 [ 0, %iter.check367.a ], [ %n.vec358, %vec.epilog.iter.check369 ], [ %n.vec373, %vec.epilog.middle.block378 ] ; 3 uses
+.lr.ph252.preheader:                              ; preds = %iter.check367.a, %iter.check367, %vec.epilog.iter.check369, %vec.epilog.middle.block378
+  %indvars.iv.ph = phi i64 [ 0, %iter.check367 ], [ 0, %iter.check367.a ], [ %n.vec358, %vec.epilog.iter.check369 ], [ %n.vec373, %vec.epilog.middle.block378 ] ; 3 uses
   %xtraiter = and i64 %wide.trip.count285, 3      ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph252.prol.loopexit, label %.lr.ph252.prol
@@ -484,7 +486,7 @@ iter.check:                                       ; preds = %bb.ah
   %wide.trip.count290 = and i64 %gepdiff, 2147483647 ; 6 uses
   %min.iters.check = icmp samesign ult i64 %wide.trip.count290, 4
   %i.df = add i64 %.1162.idx, -1511
-  %diff.check = icmp ult i64 %i.df, 32
+  %diff.check = icmp ult i64 %i.df, 31
   %or.cond384 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond384, label %.lr.ph254.preheader, label %vector.main.loop.iter.check
 

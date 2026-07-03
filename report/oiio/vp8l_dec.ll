@@ -204,8 +204,8 @@ iter.check109:                                    ; preds = %._crit_edge.i.i166.
   %wide.trip.count46.i.i.i = zext nneg i32 %.019.lcssa.i.i.i to i64 ; 4 uses
   %i.im = sub nsw i64 %wide.trip.count46.i.i.i, %i.il ; 7 uses
   %min.iters.check94 = icmp ult i64 %i.im, 8
-  %i.in = sub i64 %.020.lcssa.i.i.i91, %.021.lcssa.i.i.i92
-  %diff.check93 = icmp ult i64 %i.in, 32
+  %i.in = sub i64 %.021.lcssa.i.i.i92, %.020.lcssa.i.i.i91
+  %diff.check93 = icmp ugt i64 %i.in, -32
   %or.cond = select i1 %min.iters.check94, i1 true, i1 %diff.check93
   br i1 %or.cond, label %.lr.ph35.i.i.i.preheader, label %vector.main.loop.iter.check95
 
@@ -320,7 +320,8 @@ bb.ae:                                            ; preds = %bb.aa, %bb.z
 iter.check:                                       ; preds = %bb.ae
   %wide.trip.count.i.i = zext i32 %.0.i.i154.i to i64 ; 8 uses
   %min.iters.check = icmp ult i32 %.0.i.i154.i, 4
-  %diff.check = icmp ult i32 %.0.i163.i, 32
+  %2 = add i32 %.0.i163.i, -1
+  %diff.check = icmp ult i32 %2, 31
   %or.cond133 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond133, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -723,7 +724,7 @@ declare void @VP8LColorIndexInverseTransformAlpha(ptr noundef, i32 noundef, i32 
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @CopyBlock32b(ptr noundef %0, i32 noundef %1, i32 noundef %2) unnamed_addr #5 {
 bb.a:
-  %i.a = sext i32 %1 to i64
+  %i.a = sext i32 %1 to i64                       ; 2 uses
   %i.b = sub nsw i64 0, %i.a
   %i.c = getelementptr inbounds [4 x i8], ptr %0, i64 %i.b ; 11 uses
   %i.d = icmp slt i32 %1, 3
@@ -833,11 +834,15 @@ bb.h:                                             ; preds = %bb.a
 .lr.ph.preheader:                                 ; preds = %.preheader
   %wide.trip.count = zext nneg i32 %2 to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %2, 8
-  %diff.check = icmp ult i32 %1, 8
-  %or.cond47 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond47, label %.lr.ph.preheader48, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph.preheader48, label %vector.memcheck
 
-vector.ph:                                        ; preds = %.lr.ph.preheader
+vector.memcheck:                                  ; preds = %.lr.ph.preheader
+  %3 = shl nsw i64 %i.a, 2
+  %4 = add nsw i64 %3, -1
+  %diff.check = icmp ult i64 %4, 31
+  br i1 %diff.check, label %.lr.ph.preheader48, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
   br label %vector.body
 
@@ -859,8 +864,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %CopySmallPattern32b.exit, label %.lr.ph.preheader48
 
-.lr.ph.preheader48:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 3 uses
+.lr.ph.preheader48:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol

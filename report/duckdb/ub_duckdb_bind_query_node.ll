@@ -201,10 +201,10 @@ _ZNSt15__new_allocatorISt17reference_wrapperIN6duckdb6BinderEEE8allocateEmPKv.ex
   %i.mr = add i64 %i.mq, -8                       ; 2 uses
   %i.ms = lshr i64 %i.mr, 3
   %i.mt = add nuw nsw i64 %i.ms, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.mr, 56
+  %min.iters.check = icmp ult i64 %i.mr, 72
   %i.mu = ptrtoaddr ptr %i.mm to i64
-  %i.mv = sub i64 %i.mu, %i.mg
-  %diff.check = icmp ult i64 %i.mv, 32
+  %i.mv = sub i64 %i.mg, %i.mu
+  %diff.check = icmp ugt i64 %i.mv, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.ph
 
@@ -607,8 +607,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb6BinderEESaIS3_EE12_M_check_lenEmPKc
   %i.af = lshr i64 %i.ae, 3
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ae, 24
-  %i.ah = sub i64 %i.ac, %i.q
-  %diff.check = icmp ult i64 %i.ah, 32
+  %i.ah = sub i64 %i.q, %i.ac
+  %diff.check = icmp ugt i64 %i.ah, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader38, label %vector.ph
 
@@ -1011,8 +1011,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb16ExpressionBinderEESaIS3_EE12_M_che
   %i.by = lshr i64 %i.bx, 3
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bx, 24
-  %i.ca = sub i64 %i.bv, %i.bj
-  %diff.check = icmp ult i64 %i.ca, 32
+  %i.ca = sub i64 %i.bj, %i.bv
+  %diff.check = icmp ugt i64 %i.ca, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader181, label %vector.ph
 
@@ -1329,8 +1329,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb16ExpressionBinderEESaIS3_EE12_M_che
   %i.fe = lshr i64 %i.fd, 3
   %i.ff = add nuw nsw i64 %i.fe, 1                ; 2 uses
   %min.iters.check164 = icmp ult i64 %i.fd, 24
-  %i.fg = sub i64 %i.fb, %i.ep
-  %diff.check162 = icmp ult i64 %i.fg, 32
+  %i.fg = sub i64 %i.ep, %i.fb
+  %diff.check162 = icmp ugt i64 %i.fg, -32
   %or.cond179 = or i1 %min.iters.check164, %diff.check162
   br i1 %or.cond179, label %.lr.ph.i.i.i.i.i.i42.preheader180, label %vector.ph165
 

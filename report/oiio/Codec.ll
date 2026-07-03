@@ -203,6 +203,7 @@ _ZNK3dpx13GenericHeader16EndOfLinePaddingEi.exit: ; preds = %bb.b, %bb.a
   %i.ae = sub i64 %i.b, %i.a
   %i.af = shl nuw nsw i64 %i.ab, 1
   %min.iters.check = icmp ult i32 %i.i, 4
+  %invariant.op = add i64 %i.ae, -1
   %min.iters.check58 = icmp ult i32 %i.i, 16
   %n.mod.vf = and i64 %i.ab, 12
   %n.vec = and i64 %i.ab, 2147483632              ; 4 uses
@@ -237,8 +238,8 @@ iter.check:                                       ; preds = %.lr.ph.us.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.aw = mul i64 %i.af, %indvars.iv50
-  %i.ax = add i64 %i.ae, %i.aw
-  %diff.check = icmp ult i64 %i.ax, 32
+  %i.ax = add i64 %i.aw, %invariant.op
+  %diff.check = icmp ult i64 %i.ax, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

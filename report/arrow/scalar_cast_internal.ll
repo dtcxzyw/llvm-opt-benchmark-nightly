@@ -203,8 +203,8 @@ vector.memcheck1942:                              ; preds = %iter.check1964
   %i.ub = add i64 %i.ua, %.val32.i451943
   %i.uc = shl i64 %i.tx, 1
   %i.ud = add i64 %i.uc, %i.tz
-  %i.ue = sub i64 %i.ub, %i.ud
-  %diff.check1944 = icmp ult i64 %i.ue, 32
+  %i.ue = sub i64 %i.ud, %i.ub
+  %diff.check1944 = icmp ugt i64 %i.ue, -32
   br i1 %diff.check1944, label %.lr.ph.i59.i.preheader, label %vector.main.loop.iter.check1947
 
 vector.main.loop.iter.check1947:                  ; preds = %vector.memcheck1942
@@ -607,7 +607,7 @@ bb.ag:                                            ; preds = %bb.z
   %i.afi = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.afj = load i64, ptr %i.afi, align 8, !tbaa !33 ; 2 uses
   %i.afk = getelementptr inbounds [4 x i8], ptr %i.afh, i64 %i.afj ; 4 uses
-  %min.iters.check1841 = icmp ult i64 %i.afb, 16
+  %min.iters.check1841 = icmp ult i64 %i.afb, 20
   br i1 %min.iters.check1841, label %.lr.ph.i65.i101.preheader, label %vector.memcheck1837
 
 vector.memcheck1837:                              ; preds = %.lr.ph.preheader.i64.i98
@@ -617,8 +617,8 @@ vector.memcheck1837:                              ; preds = %.lr.ph.preheader.i6
   %i.afn = add i64 %i.afm, %.val34.i991838
   %i.afo = shl i64 %i.afj, 2
   %i.afp = add i64 %i.afo, %i.afl
-  %i.afq = sub i64 %i.afn, %i.afp
-  %diff.check1839 = icmp ult i64 %i.afq, 32
+  %i.afq = sub i64 %i.afp, %i.afn
+  %diff.check1839 = icmp ugt i64 %i.afq, -32
   br i1 %diff.check1839, label %.lr.ph.i65.i101.preheader, label %vector.ph1842
 
 vector.ph1842:                                    ; preds = %vector.memcheck1837
@@ -1021,8 +1021,8 @@ vector.memcheck1564:                              ; preds = %iter.check
   %i.bno = add i64 %i.bnn, %.val24.i3631565
   %i.bnp = shl i64 %i.bnk, 1
   %i.bnq = add i64 %i.bnp, %i.bnm
-  %i.bnr = sub i64 %i.bno, %i.bnq
-  %diff.check1566 = icmp ult i64 %i.bnr, 32
+  %i.bnr = sub i64 %i.bnq, %i.bno
+  %diff.check1566 = icmp ugt i64 %i.bnr, -32
   br i1 %diff.check1566, label %.lr.ph.i44.i365.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck1564
@@ -1425,7 +1425,7 @@ bb.by:                                            ; preds = %bb.bv
   %i.byv = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.byw = load i64, ptr %i.byv, align 8, !tbaa !33 ; 2 uses
   %i.byx = getelementptr inbounds [4 x i8], ptr %i.byu, i64 %i.byw ; 4 uses
-  %min.iters.check1463 = icmp ult i64 %i.byo, 16
+  %min.iters.check1463 = icmp ult i64 %i.byo, 20
   br i1 %min.iters.check1463, label %.lr.ph.i49.i434.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i48.i431
@@ -1435,8 +1435,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader.i4
   %i.bza = add i64 %i.byz, %.val26.i4321461
   %i.bzb = shl i64 %i.byw, 2
   %i.bzc = add i64 %i.bzb, %i.byy
-  %i.bzd = sub i64 %i.bza, %i.bzc
-  %diff.check = icmp ult i64 %i.bzd, 32
+  %i.bzd = sub i64 %i.bzc, %i.bza
+  %diff.check = icmp ugt i64 %i.bzd, -32
   br i1 %diff.check, label %.lr.ph.i49.i434.preheader, label %vector.ph1464
 
 vector.ph1464:                                    ; preds = %vector.memcheck

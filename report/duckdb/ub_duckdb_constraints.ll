@@ -201,8 +201,8 @@ _ZNKSt6vectorIN6duckdb12LogicalIndexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; p
   %i.ai = lshr i64 %i.ah, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ah, 24
-  %i.ak = sub i64 %i.af, %i.u
-  %diff.check = icmp ult i64 %i.ak, 32
+  %i.ak = sub i64 %i.u, %i.af
+  %diff.check = icmp ugt i64 %i.ak, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader54, label %vector.ph
 
@@ -605,9 +605,9 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i: ;
   %i.bc = sub i64 %i.bb, %i.ba                    ; 2 uses
   %i.bd = lshr i64 %i.bc, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bc, 56
-  %i.bf = sub i64 %i.ay, %i.ax
-  %diff.check = icmp ult i64 %i.bf, 32
+  %min.iters.check = icmp ult i64 %i.bc, 72
+  %i.bf = sub i64 %i.ax, %i.ay
+  %diff.check = icmp ugt i64 %i.bf, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader67, label %vector.ph
 
@@ -704,9 +704,9 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i17:
   %i.cl = sub i64 %i.ck, %i.cj                    ; 2 uses
   %i.cm = lshr i64 %i.cl, 3
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
-  %min.iters.check50 = icmp ult i64 %i.cl, 56
-  %i.co = sub i64 %i.ch, %i.cg
-  %diff.check48 = icmp ult i64 %i.co, 32
+  %min.iters.check50 = icmp ult i64 %i.cl, 72
+  %i.co = sub i64 %i.cg, %i.ch
+  %diff.check48 = icmp ugt i64 %i.co, -32
   %or.cond65 = or i1 %min.iters.check50, %diff.check48
   br i1 %or.cond65, label %.lr.ph.i.i.i.i.i.i19.preheader66, label %vector.ph51
 

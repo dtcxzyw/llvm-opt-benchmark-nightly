@@ -204,15 +204,15 @@ ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.f, %rbimpl_size_
 vtable_included.exit.thread.us.preheader.i:       ; preds = %.lr.ph.i
   %i.ag = zext nneg i32 %.0.i.i to i64            ; 5 uses
   %wide.trip.count63.i = zext nneg i32 %.0.i30.i to i64 ; 5 uses
-  %min.iters.check21 = icmp ult i32 %.0.i30.i, 10
+  %min.iters.check21 = icmp ult i32 %.0.i30.i, 12
   br i1 %min.iters.check21, label %vtable_included.exit.thread.us.i.preheader, label %vector.memcheck18
 
 vector.memcheck18:                                ; preds = %vtable_included.exit.thread.us.preheader.i
   %i.ah = shl nuw nsw i64 %i.ag, 3
   %i.ai = add i64 %i.ah, %i.q
-  %5 = add i64 %i.ai, 8
-  %6 = sub i64 %5, %i.ad
-  %diff.check19 = icmp ult i64 %6, 32
+  %5 = sub i64 %i.ai, %i.ad
+  %6 = add i64 %5, 7
+  %diff.check19 = icmp ult i64 %6, 31
   br i1 %diff.check19, label %vtable_included.exit.thread.us.i.preheader, label %vector.ph22
 
 vector.ph22:                                      ; preds = %vector.memcheck18
@@ -308,15 +308,15 @@ vtable_included.exit.thread.us.i:                 ; preds = %vtable_included.exi
 
 .preheader.i.preheader.i:                         ; preds = %.lr.ph.split.i
   %i.bo = zext nneg i32 %.0.i.i to i64            ; 5 uses
-  %min.iters.check = icmp ult i32 %.0.i30.i, 10
+  %min.iters.check = icmp ult i32 %.0.i30.i, 12
   br i1 %min.iters.check, label %.preheader.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.i.preheader.i
   %i.bp = shl nuw nsw i64 %i.bo, 3
   %i.bq = add i64 %i.bp, %i.q
-  %7 = add i64 %i.bq, 8
-  %8 = sub i64 %7, %i.ad
-  %diff.check = icmp ult i64 %8, 32
+  %7 = sub i64 %i.bq, %i.ad
+  %8 = add i64 %7, 7
+  %diff.check = icmp ult i64 %8, 31
   br i1 %diff.check, label %.preheader.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

@@ -204,11 +204,11 @@ _ZN4llvh5APIntC2Ejmb.exit:                        ; preds = %bb.a
   %i.s = lshr i32 %2, 6                           ; 2 uses
   %i.t = load ptr, ptr %1, align 8, !tbaa !9      ; 7 uses
   %i.u = zext nneg i32 %i.s to i64                ; 5 uses
-  %min.iters.check = icmp ult i32 %2, 384
+  %min.iters.check = icmp ult i32 %2, 512
   %i.v = ptrtoaddr ptr %i.t to i64
   %i.w = ptrtoaddr ptr %i.q to i64
-  %i.x = sub i64 %i.w, %i.v
-  %diff.check = icmp ult i64 %i.x, 32
+  %i.x = sub i64 %i.v, %i.w
+  %diff.check = icmp ugt i64 %i.x, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
@@ -527,11 +527,11 @@ _ZN4llvh5APIntC2Ejmb.exit.i5:                     ; preds = %bb.e
   %i.as = lshr i32 %2, 6
   %i.at = load ptr, ptr %1, align 8, !tbaa !9, !noalias !181 ; 8 uses
   %i.au = zext nneg i32 %i.as to i64              ; 7 uses
-  %min.iters.check = icmp ult i32 %2, 384
+  %min.iters.check = icmp ult i32 %2, 512
   %i.av = ptrtoaddr ptr %i.at to i64
   %i.aw = ptrtoaddr ptr %i.aq to i64
-  %i.ax = sub i64 %i.aw, %i.av
-  %diff.check = icmp ult i64 %i.ax, 32
+  %i.ax = sub i64 %i.av, %i.aw
+  %diff.check = icmp ugt i64 %i.ax, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
@@ -696,11 +696,11 @@ _ZN4llvh5APIntC2Ejmb.exit.i:                      ; preds = %bb.d
   %i.u = lshr i32 %2, 6
   %i.v = load ptr, ptr %1, align 8, !tbaa !9, !noalias !187 ; 8 uses
   %i.w = zext nneg i32 %i.u to i64                ; 7 uses
-  %min.iters.check = icmp ult i32 %2, 384
+  %min.iters.check = icmp ult i32 %2, 512
   %i.x = ptrtoaddr ptr %i.v to i64
   %i.y = ptrtoaddr ptr %i.s to i64
-  %i.z = sub i64 %i.y, %i.x
-  %diff.check = icmp ult i64 %i.z, 32
+  %i.z = sub i64 %i.x, %i.y
+  %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
@@ -1103,8 +1103,8 @@ bb.ag:                                            ; preds = %bb.af
 .lr.ph197.i.preheader:                            ; preds = %.preheader.i
   %i.la = add nuw nsw i64 %i.fv, 1                ; 2 uses
   %min.iters.check324 = icmp ult i32 %i.fu, 7
-  %i.lb = sub i64 %.0145321, %.0149322
-  %diff.check = icmp ult i64 %i.lb, 32
+  %i.lb = sub i64 %.0149322, %.0145321
+  %diff.check = icmp ugt i64 %i.lb, -32
   %or.cond380 = select i1 %min.iters.check324, i1 true, i1 %diff.check
   br i1 %or.cond380, label %.lr.ph197.i.preheader385, label %vector.ph325
 
@@ -1507,9 +1507,9 @@ bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64
   %wide.trip.count = zext i32 %2 to i64           ; 5 uses
-  %min.iters.check = icmp ult i32 %2, 6
-  %i.c = sub i64 %i.a, %i.b
-  %diff.check = icmp ult i64 %i.c, 32
+  %min.iters.check = icmp ult i32 %2, 8
+  %i.c = sub i64 %i.b, %i.a
+  %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader9, label %vector.ph
 
@@ -1744,14 +1744,14 @@ _ZN4llvh5APInt8tcAssignEPmPKmj.exit.thread:       ; preds = %bb.a
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
   %wide.trip.count.i = zext nneg i32 %i.d to i64  ; 5 uses
-  %min.iters.check = icmp ult i32 %i.c, 640
+  %min.iters.check = icmp ult i32 %i.c, 896
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
   %i.i = shl nuw nsw i64 %i.f, 3
   %i.j = add i64 %i.i, %i.a
-  %i.k = sub i64 %i.b, %i.j
-  %diff.check = icmp ult i64 %i.k, 32
+  %i.k = sub i64 %i.j, %i.b
+  %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -2150,9 +2150,9 @@ bb.d:                                             ; preds = %_ZN4llvh5APInt5tcMS
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
   %wide.trip.count.i = zext i32 %4 to i64         ; 5 uses
-  %min.iters.check = icmp ult i32 %4, 6
-  %i.v = sub i64 %i.d, %i.c
-  %diff.check = icmp ult i64 %i.v, 32
+  %min.iters.check = icmp ult i32 %4, 8
+  %i.v = sub i64 %i.c, %i.d
+  %diff.check = icmp ugt i64 %i.v, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.ph
 
@@ -2356,9 +2356,9 @@ _ZN4llvh5APInt8tcAssignEPmPKmj.exit57.thread:     ; preds = %_ZN4llvh5APInt11tcS
 
 .lr.ph.preheader.i51:                             ; preds = %_ZN4llvh5APInt11tcShiftLeftEPmjj.exit
   %wide.trip.count.i52 = zext i32 %4 to i64       ; 6 uses
-  %min.iters.check130 = icmp ult i32 %4, 6
-  %i.cx = sub i64 %i.b, %i.a
-  %diff.check128 = icmp ult i64 %i.cx, 32
+  %min.iters.check130 = icmp ult i32 %4, 8
+  %i.cx = sub i64 %i.a, %i.b
+  %diff.check128 = icmp ugt i64 %i.cx, -32
   %or.cond142 = or i1 %min.iters.check130, %diff.check128
   br i1 %or.cond142, label %.lr.ph.i53.preheader, label %vector.ph131
 

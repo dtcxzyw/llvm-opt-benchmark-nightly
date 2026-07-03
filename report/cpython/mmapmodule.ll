@@ -203,8 +203,8 @@ iter.check:                                       ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.d = add i64 %2, %i.b
-  %i.e = sub i64 %i.d, %i.a
-  %diff.check = icmp ult i64 %i.e, 32
+  %i.e = sub i64 %i.a, %i.d
+  %diff.check = icmp ugt i64 %i.e, -32
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -345,8 +345,8 @@ iter.check:                                       ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.d = add i64 %2, %i.a
-  %i.e = sub i64 %i.b, %i.d
-  %diff.check = icmp ult i64 %i.e, 32
+  %i.e = sub i64 %i.d, %i.b
+  %diff.check = icmp ugt i64 %i.e, -32
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -749,8 +749,8 @@ iter.check:                                       ; preds = %bb.s
 vector.memcheck:                                  ; preds = %iter.check
   %i.ay = ptrtoaddr ptr %i.av to i64
   %i.az = add i64 %i.aw, %i.ay
-  %i.ba = sub i64 %i.as, %i.az
-  %diff.check = icmp ult i64 %i.ba, 32
+  %i.ba = sub i64 %i.az, %i.as
+  %diff.check = icmp ugt i64 %i.ba, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

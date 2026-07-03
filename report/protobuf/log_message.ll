@@ -203,10 +203,10 @@ _ZN4absl12lts_2025051223inlined_vector_internal13MallocAdapterISaIPNS0_7LogSinkE
 .lr.ph.i.preheader:                               ; preds = %_ZN4absl12lts_2025051223inlined_vector_internal13MallocAdapterISaIPNS0_7LogSinkEELb0EE8AllocateERS5_m.exit.i
   %i.o = ptrtoaddr ptr %i.l to i64
   %.sink2.i = select i1 %i.b, ptr %i.d, ptr %i.c  ; 4 uses
-  %min.iters.check = icmp ult i64 %i.a, 12
+  %min.iters.check = icmp ult i64 %i.a, 16
   %.sink2.i30 = ptrtoaddr ptr %.sink2.i to i64
-  %i.p = sub i64 %i.o, %.sink2.i30
-  %diff.check = icmp ult i64 %i.p, 32
+  %i.p = sub i64 %.sink2.i30, %i.o
+  %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader33, label %vector.ph
 

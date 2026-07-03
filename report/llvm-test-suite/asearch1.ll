@@ -201,8 +201,9 @@ vector.memcheck424:                               ; preds = %vector.scevcheck421
   %i.ec = sub i32 %i.cc, %i.dv
   %i.ed = zext i32 %i.ec to i64
   %i.ee = sub nsw i64 %i.bq, %i.ed
-  %3 = and i64 %i.ee, 4611686018427387900
-  %diff.check425 = icmp eq i64 %3, 0
+  %3 = shl nsw i64 %i.ee, 2
+  %4 = add nsw i64 %3, -1
+  %diff.check425 = icmp ult i64 %4, 15
   br i1 %diff.check425, label %scalar.ph426.preheader, label %vector.ph428
 
 vector.ph428:                                     ; preds = %vector.memcheck424
@@ -421,8 +422,9 @@ vector.memcheck384:                               ; preds = %vector.scevcheck381
   %i.hq = sub i32 %i.by, %i.hj
   %i.hr = zext i32 %i.hq to i64
   %i.hs = sub nsw i64 %i.bq, %i.hr
-  %4 = and i64 %i.hs, 4611686018427387900
-  %diff.check385 = icmp eq i64 %4, 0
+  %5 = shl nsw i64 %i.hs, 2
+  %6 = add nsw i64 %5, -1
+  %diff.check385 = icmp ult i64 %6, 15
   br i1 %diff.check385, label %scalar.ph386.preheader, label %vector.ph388
 
 vector.ph388:                                     ; preds = %vector.memcheck384
@@ -549,8 +551,9 @@ vector.memcheck358:                               ; preds = %vector.scevcheck355
   %i.kk = sub i32 %i.bx, %i.kd
   %i.kl = zext i32 %i.kk to i64
   %i.km = sub nsw i64 %i.bq, %i.kl
-  %5 = and i64 %i.km, 4611686018427387900
-  %diff.check359 = icmp eq i64 %5, 0
+  %7 = shl nsw i64 %i.km, 2
+  %8 = add nsw i64 %7, -1
+  %diff.check359 = icmp ult i64 %8, 15
   br i1 %diff.check359, label %scalar.ph360.preheader, label %vector.ph362
 
 vector.ph362:                                     ; preds = %vector.memcheck358
@@ -769,8 +772,9 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.ny = sub i32 %i.bt, %i.nr
   %i.nz = zext i32 %i.ny to i64
   %i.oa = sub nsw i64 %i.bq, %i.nz
-  %6 = and i64 %i.oa, 4611686018427387900
-  %diff.check = icmp eq i64 %6, 0
+  %9 = shl nsw i64 %i.oa, 2
+  %10 = add nsw i64 %9, -1
+  %diff.check = icmp ult i64 %10, 15
   br i1 %diff.check, label %scalar.ph321.preheader, label %vector.ph323
 
 vector.ph323:                                     ; preds = %vector.memcheck

@@ -203,7 +203,8 @@ bb.p:                                             ; preds = %bb.m
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.ax = icmp ne ptr %2, null
   %i.ay = sub i64 %i.a, %.0200420                 ; 2 uses
-  %diff.check551 = icmp ult i64 %i.ay, 32
+  %6 = add i64 %i.ay, -1
+  %diff.check551 = icmp ult i64 %6, 31
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %.2253, i64 0
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert442 = insertelement <8 x i16> poison, i16 %.2259, i64 0
@@ -606,8 +607,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.jy = shl nsw i64 %i.jt, 1
   %i.jz = add i64 %i.ay, %i.jy
   %i.ka = shl nsw i64 %i.jw, 1
-  %i.kb = sub i64 %i.jz, %i.ka
-  %diff.check = icmp ult i64 %i.kb, 32
+  %i.kb = sub i64 %i.ka, %i.jz
+  %diff.check = icmp ugt i64 %i.kb, -32
   br i1 %diff.check, label %.lr.ph359.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

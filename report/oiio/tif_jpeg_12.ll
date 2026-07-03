@@ -203,8 +203,8 @@ vector.memcheck272:                               ; preds = %iter.check289
   %.1124166.us273 = ptrtoaddr ptr %.1124166.us to i64
   %i.dv = mul i64 %i.al, %indvar
   %i.dw = add i64 %i.dd, %i.dv
-  %i.dx = sub i64 %i.dw, %.1124166.us273
-  %diff.check = icmp ult i64 %i.dx, 32
+  %i.dx = sub i64 %.1124166.us273, %i.dw
+  %diff.check = icmp ugt i64 %i.dx, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph290.preheader, label %vector.main.loop.iter.check275
 
 vector.main.loop.iter.check275:                   ; preds = %vector.memcheck272
@@ -607,8 +607,9 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.fy = mul i64 %i.as, %indvar239
   %i.fz = add i64 %i.fu, %i.fy
   %.185112.us238 = ptrtoaddr ptr %.185112.us to i64
-  %i.ga = add i64 %i.fz, %.185112.us238
-  %diff.check = icmp ult i64 %i.ga, 32
+  %4 = add i64 %i.fz, %.185112.us238
+  %i.ga = add i64 %4, -1
+  %diff.check = icmp ult i64 %i.ga, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

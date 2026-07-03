@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph235.preheader:                              ; preds = %bb.l
   %i.ge = zext i32 %.sroa.speculated139 to i64    ; 3 uses
   %i.gf = add nsw i64 %i.ge, -1                   ; 2 uses
-  %min.iters.check339 = icmp ult i32 %.sroa.speculated139, 25
+  %min.iters.check339 = icmp ult i32 %.sroa.speculated139, 27
   br i1 %min.iters.check339, label %.lr.ph235.preheader367, label %vector.scevcheck337
 
 vector.scevcheck337:                              ; preds = %.lr.ph235.preheader
@@ -221,8 +221,9 @@ vector.memcheck:                                  ; preds = %vector.scevcheck337
   %i.go = add i32 %.0112, 1
   %i.gp = zext i32 %i.go to i64
   %i.gq = shl nuw nsw i64 %i.gp, 3
-  %i.gr = add i64 %i.gn, %i.gq
-  %diff.check = icmp ult i64 %i.gr, 32
+  %5 = add i64 %i.gn, %i.gq
+  %i.gr = add i64 %5, -1
+  %diff.check = icmp ult i64 %i.gr, 31
   br i1 %diff.check, label %.lr.ph235.preheader367, label %vector.ph340
 
 vector.ph340:                                     ; preds = %vector.memcheck

@@ -203,8 +203,9 @@ iter.check237:                                    ; preds = %.preheader112
 
 vector.memcheck217:                               ; preds = %iter.check237
   %i.be = sub nsw i64 %i.av, %i.aq
-  %6 = and i64 %i.be, 2305843009213693936
-  %diff.check218 = icmp eq i64 %6, 0
+  %6 = shl nsw i64 %i.be, 3
+  %7 = add nsw i64 %6, -1
+  %diff.check218 = icmp ult i64 %7, 127
   br i1 %diff.check218, label %.lr.ph.preheader, label %vector.main.loop.iter.check220
 
 vector.main.loop.iter.check220:                   ; preds = %vector.memcheck217
@@ -434,8 +435,9 @@ iter.check:                                       ; preds = %bb.s
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.dn = sub nsw i64 %i.dl, %i.dk
-  %7 = and i64 %i.dn, 2305843009213693936
-  %diff.check = icmp eq i64 %7, 0
+  %8 = shl nsw i64 %i.dn, 3
+  %9 = add nsw i64 %8, -1
+  %diff.check = icmp ult i64 %9, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

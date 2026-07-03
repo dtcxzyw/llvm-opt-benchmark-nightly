@@ -1,7 +1,7 @@
 inline.NumInlined: 14
 inline.NumDeleted: 8
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@kdf_scrypt_dup:bb.a
   %i.p = icmp eq ptr %i.n, null
   br i1 %i.p, label %kdf_scrypt_free.exit, label %bb.g
@@ -203,11 +203,11 @@ set_digest.exit:                                  ; preds = %.set_digest.exit_cr
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.w = load i64, ptr %i.v, align 8, !tbaa !23
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !16   ; 12 uses
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !16   ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !17  ; 17 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !17  ; 14 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !18 ; 6 uses
+  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !18 ; 5 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !19
   %i.af = load ptr, ptr %0, align 8, !tbaa !9     ; 2 uses
@@ -273,7 +273,7 @@ bb.p:                                             ; preds = %bb.o
   br label %scrypt_alg.exit
 
 bb.q:                                             ; preds = %bb.o
-  %i.aw = shl i64 %i.aa, 5                        ; 12 uses
+  %i.aw = shl i64 %i.aa, 5                        ; 10 uses
   %i.ax = shl nuw nsw i64 %i.at, 2
   %i.ay = mul i64 %i.ax, %i.aw                    ; 2 uses
   %i.az = xor i64 %i.ay, -1
@@ -307,8 +307,8 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bf, label %scrypt_alg.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.ar ; 20 uses
-  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %i.aw ; 9 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.ar ; 8 uses
+  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %i.aw ; 5 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.aw ; 4 uses
   %i.bj = trunc i64 %i.u to i32                   ; 2 uses
   %i.bk = trunc i64 %i.w to i32
@@ -318,7 +318,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.bn, label %.thread.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.w
-  %i.bo = shl i64 %i.aa, 7                        ; 3 uses
+  %i.bo = shl i64 %i.aa, 7                        ; 2 uses
   %.not.i.i = icmp eq i64 %i.aw, 0
   %i.bp = sub i64 0, %i.aw
   %i.bq = shl nuw nsw i64 %i.y, 5
@@ -327,15 +327,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %i.bs ; 2 uses
   %i.bu = getelementptr i8, ptr %i.bg, i64 %i.bo
   %i.bv = getelementptr i8, ptr %i.bu, i64 -64
-  br i1 %.not.i.i, label %.preheader69.i.us.i, label %.lr.ph.i.preheader.i.preheader
-
-.lr.ph.i.preheader.i.preheader:                   ; preds = %.preheader.i
-  %4 = mul i64 %i.ac, %i.aa
-  %5 = shl i64 %i.aa, 7
-  %6 = shl i64 %i.y, 7
-  %7 = shl i64 %4, 7
-  %diff.check49 = icmp eq i64 %i.bo, 0
-  br label %.lr.ph.i.preheader.i
+  br i1 %.not.i.i, label %.preheader69.i.us.i, label %.lr.ph.i.preheader.i
 
 .preheader69.i.us.i:                              ; preds = %.preheader.i, %scryptROMix.exit.loopexit.us.i
   %.07195.us.i = phi i64 [ %i.by, %scryptROMix.exit.loopexit.us.i ], [ 0, %.preheader.i ]
@@ -364,11 +356,10 @@ scryptROMix.exit.loopexit.us.i:                   ; preds = %.split.i.us.i
   %exitcond97.not.i = icmp eq i64 %i.by, %i.ac
   br i1 %exitcond97.not.i, label %.split.us.i, label %.preheader69.i.us.i, !llvm.loop !30
 
-.lr.ph.i.preheader.i:                             ; preds = %.lr.ph.i.preheader.i.preheader, %scryptROMix.exit.loopexit94.i
-  %.07195.i = phi i64 [ %i.ds, %scryptROMix.exit.loopexit94.i ], [ 0, %.lr.ph.i.preheader.i.preheader ] ; 3 uses
-  %8 = mul i64 %5, %.07195.i
+.lr.ph.i.preheader.i:                             ; preds = %.preheader.i, %scryptROMix.exit.loopexit94.i
+  %.07195.i = phi i64 [ %i.ds, %scryptROMix.exit.loopexit94.i ], [ 0, %.preheader.i ] ; 2 uses
   %i.bz = mul i64 %.07195.i, %i.bo
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bz ; 3 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bz ; 2 uses
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.preheader.i
@@ -419,22 +410,14 @@ scryptROMix.exit.loopexit.us.i:                   ; preds = %.split.i.us.i
 .lr.ph78.us.i.i:                                  ; preds = %._crit_edge.us.i.i, %.lr.ph78.us.i.preheader.i
   %.26679.us.i.i = phi i64 [ %i.dm, %._crit_edge.us.i.i ], [ 0, %.lr.ph78.us.i.preheader.i ]
   %i.cy = load i32, ptr %i.bv, align 4, !tbaa !5
-  %i.cz = zext i32 %i.cy to i64                   ; 3 uses
+  %i.cz = zext i32 %i.cy to i64
   %i.da = urem i64 %i.cz, %i.y
   %i.db = mul i64 %i.da, %i.aw
-  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %i.db ; 2 uses
-  %9 = udiv i64 %i.cz, %i.y
-  %10 = mul i64 %6, %9
-  %11 = add i64 %10, -128
-  %12 = shl nuw nsw i64 %i.cz, 7
-  %13 = sub i64 %11, %12
-  %14 = mul i64 %i.aa, %13
-  %diff.check50 = icmp eq i64 %14, 0
-  %conflict.rdx = or i1 %diff.check49, %diff.check50
-  br i1 %conflict.rdx, label %scalar.ph51, label %vector.body56
+  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %i.db
+  br label %vector.body56
 
-vector.body56:                                    ; preds = %.lr.ph78.us.i.i, %vector.body56
-  %index57 = phi i64 [ %index.next63, %vector.body56 ], [ 0, %.lr.ph78.us.i.i ] ; 4 uses
+vector.body56:                                    ; preds = %vector.body56, %.lr.ph78.us.i.i
+  %index57 = phi i64 [ 0, %.lr.ph78.us.i.i ], [ %index.next63, %vector.body56 ] ; 4 uses
   %i.dd = shl i64 %index57, 2
   %next.gep58 = getelementptr i8, ptr %i.dc, i64 %i.dd ; 2 uses
   %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %index57 ; 2 uses
@@ -454,56 +437,14 @@ vector.body56:                                    ; preds = %.lr.ph78.us.i.i, %v
   %i.dl = icmp eq i64 %index.next63, %i.aw
   br i1 %i.dl, label %._crit_edge.us.i.i, label %vector.body56, !llvm.loop !33
 
-scalar.ph51:                                      ; preds = %.lr.ph78.us.i.i, %scalar.ph51
-  %.277.us.i.i = phi ptr [ %38, %scalar.ph51 ], [ %i.dc, %.lr.ph78.us.i.i ] ; 5 uses
-  %.06376.us.i.i = phi i64 [ %42, %scalar.ph51 ], [ 0, %.lr.ph78.us.i.i ] ; 6 uses
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.06376.us.i.i
-  %16 = load i32, ptr %15, align 4, !tbaa !5
-  %17 = getelementptr inbounds nuw i8, ptr %.277.us.i.i, i64 4
-  %18 = load i32, ptr %.277.us.i.i, align 4, !tbaa !5
-  %19 = xor i32 %18, %16
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %.06376.us.i.i
-  store i32 %19, ptr %20, align 4, !tbaa !5
-  %21 = or disjoint i64 %.06376.us.i.i, 1         ; 2 uses
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %21
-  %23 = load i32, ptr %22, align 4, !tbaa !5
-  %24 = getelementptr inbounds nuw i8, ptr %.277.us.i.i, i64 8
-  %25 = load i32, ptr %17, align 4, !tbaa !5
-  %26 = xor i32 %25, %23
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %21
-  store i32 %26, ptr %27, align 4, !tbaa !5
-  %28 = or disjoint i64 %.06376.us.i.i, 2         ; 2 uses
-  %29 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %28
-  %30 = load i32, ptr %29, align 4, !tbaa !5
-  %31 = getelementptr inbounds nuw i8, ptr %.277.us.i.i, i64 12
-  %32 = load i32, ptr %24, align 4, !tbaa !5
-  %33 = xor i32 %32, %30
-  %34 = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %28
-  store i32 %33, ptr %34, align 4, !tbaa !5
-  %35 = or disjoint i64 %.06376.us.i.i, 3         ; 2 uses
-  %36 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %35
-  %37 = load i32, ptr %36, align 4, !tbaa !5
-  %38 = getelementptr inbounds nuw i8, ptr %.277.us.i.i, i64 16
-  %39 = load i32, ptr %31, align 4, !tbaa !5
-  %40 = xor i32 %39, %37
-  %41 = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %35
-  store i32 %40, ptr %41, align 4, !tbaa !5
-  %42 = add nuw i64 %.06376.us.i.i, 4             ; 2 uses
-  %exitcond87.not.i.i.3 = icmp eq i64 %42, %i.aw
-  br i1 %exitcond87.not.i.i.3, label %._crit_edge.us.i.i, label %scalar.ph51, !llvm.loop !36
-
-._crit_edge.us.i.i:                               ; preds = %vector.body56, %scalar.ph51
+._crit_edge.us.i.i:                               ; preds = %vector.body56
   tail call fastcc void @scryptBlockMix(ptr noundef nonnull %i.bg, ptr noundef nonnull %i.bh, i64 noundef range(i64 1, 0) %i.aa)
   %i.dm = add nuw i64 %.26679.us.i.i, 1           ; 2 uses
   %exitcond88.not.i.i = icmp eq i64 %i.dm, %i.y
-  br i1 %exitcond88.not.i.i, label %vector.memcheck, label %.lr.ph78.us.i.i, !llvm.loop !29
+  br i1 %exitcond88.not.i.i, label %vector.body, label %.lr.ph78.us.i.i, !llvm.loop !29
 
-vector.memcheck:                                  ; preds = %._crit_edge.us.i.i
-  %diff.check = icmp eq i64 %8, %7
-  br i1 %diff.check, label %.lr.ph82.i.i, label %vector.body
-
-vector.body:                                      ; preds = %vector.memcheck, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
+vector.body:                                      ; preds = %._crit_edge.us.i.i, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %._crit_edge.us.i.i ] ; 3 uses
   %i.dn = shl i64 %index, 2
   %next.gep = getelementptr i8, ptr %i.ca, i64 %i.dn ; 2 uses
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %index ; 2 uses
@@ -515,55 +456,9 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   store <4 x i32> %wide.load46, ptr %i.dq, align 1
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.dr = icmp eq i64 %index.next, %i.aw
-  br i1 %i.dr, label %scryptROMix.exit.loopexit94.i, label %vector.body, !llvm.loop !37
+  br i1 %i.dr, label %scryptROMix.exit.loopexit94.i, label %vector.body, !llvm.loop !36
 
-.lr.ph82.i.i:                                     ; preds = %vector.memcheck, %.lr.ph82.i.i
-  %.181.i.i = phi ptr [ %73, %.lr.ph82.i.i ], [ %i.ca, %vector.memcheck ] ; 9 uses
-  %.380.i.i = phi i64 [ %74, %.lr.ph82.i.i ], [ 0, %vector.memcheck ] ; 9 uses
-  %43 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %44 = load i32, ptr %43, align 4, !tbaa !5
-  store i32 %44, ptr %.181.i.i, align 1
-  %45 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 4
-  %46 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %47 = getelementptr inbounds nuw i8, ptr %46, i64 4
-  %48 = load i32, ptr %47, align 4, !tbaa !5
-  store i32 %48, ptr %45, align 1
-  %49 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 8
-  %50 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %51 = getelementptr inbounds nuw i8, ptr %50, i64 8
-  %52 = load i32, ptr %51, align 4, !tbaa !5
-  store i32 %52, ptr %49, align 1
-  %53 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 12
-  %54 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %55 = getelementptr inbounds nuw i8, ptr %54, i64 12
-  %56 = load i32, ptr %55, align 4, !tbaa !5
-  store i32 %56, ptr %53, align 1
-  %57 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 16
-  %58 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %59 = getelementptr inbounds nuw i8, ptr %58, i64 16
-  %60 = load i32, ptr %59, align 4, !tbaa !5
-  store i32 %60, ptr %57, align 1
-  %61 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 20
-  %62 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %63 = getelementptr inbounds nuw i8, ptr %62, i64 20
-  %64 = load i32, ptr %63, align 4, !tbaa !5
-  store i32 %64, ptr %61, align 1
-  %65 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 24
-  %66 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %67 = getelementptr inbounds nuw i8, ptr %66, i64 24
-  %68 = load i32, ptr %67, align 4, !tbaa !5
-  store i32 %68, ptr %65, align 1
-  %69 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 28
-  %70 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.380.i.i
-  %71 = getelementptr inbounds nuw i8, ptr %70, i64 28
-  %72 = load i32, ptr %71, align 4, !tbaa !5
-  store i32 %72, ptr %69, align 1
-  %73 = getelementptr inbounds nuw i8, ptr %.181.i.i, i64 32
-  %74 = add nuw i64 %.380.i.i, 8                  ; 2 uses
-  %exitcond90.not.i.i.7 = icmp eq i64 %74, %i.aw
-  br i1 %exitcond90.not.i.i.7, label %scryptROMix.exit.loopexit94.i, label %.lr.ph82.i.i, !llvm.loop !38
-
-scryptROMix.exit.loopexit94.i:                    ; preds = %vector.body, %.lr.ph82.i.i
+scryptROMix.exit.loopexit94.i:                    ; preds = %vector.body
   %i.ds = add nuw i64 %.07195.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.ac
   br i1 %exitcond.not.i, label %.split.us.i, label %.lr.ph.i.preheader.i, !llvm.loop !30
@@ -605,7 +500,7 @@ bb.a:
   br i1 %i.b, label %ossl_param_is_empty.exit.thread, label %ossl_param_is_empty.exit
 
 ossl_param_is_empty.exit:                         ; preds = %bb.a
-  %i.c = load ptr, ptr %1, align 8, !tbaa !39
+  %i.c = load ptr, ptr %1, align 8, !tbaa !37
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %ossl_param_is_empty.exit.thread, label %bb.b
 
@@ -617,24 +512,24 @@ bb.b:                                             ; preds = %ossl_param_is_empty
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.g = load ptr, ptr %i.e, align 8, !tbaa !41
+  %i.g = load ptr, ptr %i.e, align 8, !tbaa !39
   %i.h = load i64, ptr %i.f, align 8, !tbaa !26
   tail call void @CRYPTO_clear_free(ptr noundef %i.g, i64 noundef %i.h, ptr noundef nonnull @.str, i32 noundef 148) #6
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !42
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !40
   %i.k = icmp eq i64 %i.j, 0
   br i1 %i.k, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.l = tail call noalias ptr @CRYPTO_malloc(i64 noundef 1, ptr noundef nonnull @.str, i32 noundef 153) #6 ; 2 uses
-  store ptr %i.l, ptr %i.e, align 8, !tbaa !41
+  store ptr %i.l, ptr %i.e, align 8, !tbaa !39
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %ossl_param_is_empty.exit.thread, label %scrypt_set_membuf.exit
 
 bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !43
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !41
   %.not.i = icmp eq ptr %i.o, null
   br i1 %.not.i, label %scrypt_set_membuf.exit, label %bb.f
 
@@ -651,24 +546,24 @@ scrypt_set_membuf.exit:                           ; preds = %bb.f, %bb.e, %bb.d,
 bb.g:                                             ; preds = %scrypt_set_membuf.exit
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.t = load ptr, ptr %i.r, align 8, !tbaa !41
+  %i.t = load ptr, ptr %i.r, align 8, !tbaa !39
   %i.u = load i64, ptr %i.s, align 8, !tbaa !26
   tail call void @CRYPTO_clear_free(ptr noundef %i.t, i64 noundef %i.u, ptr noundef nonnull @.str, i32 noundef 148) #6
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  %i.w = load i64, ptr %i.v, align 8, !tbaa !42
+  %i.w = load i64, ptr %i.v, align 8, !tbaa !40
   %i.x = icmp eq i64 %i.w, 0
   br i1 %i.x, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.y = tail call noalias ptr @CRYPTO_malloc(i64 noundef 1, ptr noundef nonnull @.str, i32 noundef 153) #6 ; 2 uses
-  store ptr %i.y, ptr %i.r, align 8, !tbaa !41
+  store ptr %i.y, ptr %i.r, align 8, !tbaa !39
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %ossl_param_is_empty.exit.thread, label %scrypt_set_membuf.exit62
 
 bb.i:                                             ; preds = %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !43
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !41
   %.not.i59 = icmp eq ptr %i.ab, null
   br i1 %.not.i59, label %scrypt_set_membuf.exit62, label %bb.j
 
@@ -759,13 +654,13 @@ bb.v:                                             ; preds = %bb.u, %bb.s
 
 bb.w:                                             ; preds = %bb.v
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
-  %i.bf = load i32, ptr %i.be, align 8, !tbaa !44
+  %i.bf = load i32, ptr %i.be, align 8, !tbaa !42
   %.not56 = icmp eq i32 %i.bf, 4
   br i1 %.not56, label %bb.x, label %ossl_param_is_empty.exit.thread
 
 bb.x:                                             ; preds = %bb.w
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
-  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !43
+  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !41
   %i.bi = call fastcc i32 @set_property_query(ptr noundef %0, ptr noundef %i.bh)
   %.not57 = icmp eq i32 %i.bi, 0
   br i1 %.not57, label %ossl_param_is_empty.exit.thread, label %bb.y
@@ -1076,7 +971,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader
   %i.fj = xor i32 %i.fi, %i.dn                    ; 3 uses
   %i.fk = add nsw i32 %.037.i, -2
   %i.fl = icmp samesign ugt i32 %.037.i, 2
-  br i1 %i.fl, label %bb.b, label %salsa208_word_specification.exit, !llvm.loop !45
+  br i1 %i.fl, label %bb.b, label %salsa208_word_specification.exit, !llvm.loop !43
 
 salsa208_word_specification.exit:                 ; preds = %bb.b
   %i.fm = getelementptr inbounds nuw i8, ptr %.034, i64 64
@@ -1163,7 +1058,7 @@ salsa208_word_specification.exit:                 ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.hf, ptr noundef nonnull align 16 dereferenceable(64) %i.b, i64 64, i1 false)
   %i.hg = add nuw i64 %.01433, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.hg, %i.c
-  br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !46
+  br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !44
 
 ._crit_edge:                                      ; preds = %salsa208_word_specification.exit, %bb.a
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.b, i64 noundef 64) #6
@@ -1267,15 +1162,13 @@ attributes #6 = { nounwind }
 !33 = distinct !{!33, !28, !34, !35}
 !34 = !{!"llvm.loop.isvectorized", i32 1}
 !35 = !{!"llvm.loop.unroll.runtime.disable"}
-!36 = distinct !{!36, !28, !34}
-!37 = distinct !{!37, !28, !34, !35}
-!38 = distinct !{!38, !28, !34}
-!39 = !{!40, !13, i64 0}
-!40 = !{!"ossl_param_st", !13, i64 0, !6, i64 8, !12, i64 16, !14, i64 24, !14, i64 32}
-!41 = !{!13, !13, i64 0}
-!42 = !{!40, !14, i64 24}
-!43 = !{!40, !12, i64 16}
-!44 = !{!40, !6, i64 8}
-!45 = distinct !{!45, !28}
-!46 = distinct !{!46, !28}
+!36 = distinct !{!36, !28, !34, !35}
+!37 = !{!38, !13, i64 0}
+!38 = !{!"ossl_param_st", !13, i64 0, !6, i64 8, !12, i64 16, !14, i64 24, !14, i64 32}
+!39 = !{!13, !13, i64 0}
+!40 = !{!38, !14, i64 24}
+!41 = !{!38, !12, i64 16}
+!42 = !{!38, !6, i64 8}
+!43 = distinct !{!43, !28}
+!44 = distinct !{!44, !28}
 end_hunk_0

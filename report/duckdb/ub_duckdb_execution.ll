@@ -204,7 +204,7 @@ _ZN6duckdbL16ProbeForPointersILb1EEEmRNS_13JoinHashTable10ProbeStateERS1_PNS_10h
 
 bb.az:                                            ; preds = %_ZN6duckdbL16ProbeForPointersILb1EEEmRNS_13JoinHashTable10ProbeStateERS1_PNS_10ht_entry_tERNS_6VectorEPKNS_15SelectionVectorEmb.exit.i
   store i64 0, ptr %i.j, align 8, !tbaa !39
-  %i.gz = call noundef i64 @_ZN6duckdb10RowMatcher5MatchERNS_9DataChunkERKNS_6vectorINS_21TupleDataVectorFormatELb1ESaIS4_EEERNS_15SelectionVectorEmRNS_6VectorEPS9_Rm(ptr noundef nonnull align 8 dereferenceable(80) %i.df, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(488) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.de, i64 noundef %.0.i.i, ptr noundef nonnull align 8 dereferenceable(104) %7, ptr noundef nonnull %i.dg, ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 10 uses
+  %i.gz = call noundef i64 @_ZN6duckdb10RowMatcher5MatchERNS_9DataChunkERKNS_6vectorINS_21TupleDataVectorFormatELb1ESaIS4_EEERNS_15SelectionVectorEmRNS_6VectorEPS9_Rm(ptr noundef nonnull align 8 dereferenceable(80) %i.df, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(488) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.de, i64 noundef %.0.i.i, ptr noundef nonnull align 8 dereferenceable(104) %7, ptr noundef nonnull %i.dg, ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 11 uses
   %.not128.i = icmp eq i64 %i.gz, 0
   br i1 %.not128.i, label %._crit_edge121.i, label %.lr.ph120.i
 
@@ -214,17 +214,17 @@ bb.az:                                            ; preds = %_ZN6duckdbL16ProbeF
   %.not.i83.i = icmp eq ptr %i.ha, null
   %i.hc = load ptr, ptr %8, align 8, !tbaa !424   ; 9 uses
   %i.hd = ptrtoaddr ptr %i.hc to i64
-  %min.iters.check194 = icmp ult i64 %i.gz, 8     ; 2 uses
   br i1 %.not.i83.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i.preheader
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit84.i.preheader: ; preds = %.lr.ph120.i
-  br i1 %min.iters.check194, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i.preheader225, label %vector.memcheck208
+  %min.iters.check211 = icmp ult i64 %i.gz, 12
+  br i1 %min.iters.check211, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i.preheader225, label %vector.memcheck208
 
 vector.memcheck208:                               ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i.preheader
   %i.he = shl i64 %.070.i, 2
   %i.hf = add i64 %i.he, %i.hd
-  %i.hg = sub i64 %i.hf, %i.hb
-  %diff.check209 = icmp ult i64 %i.hg, 32
+  %i.hg = sub i64 %i.hb, %i.hf
+  %diff.check209 = icmp ugt i64 %i.hg, -32
   br i1 %diff.check209, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i.preheader225, label %vector.ph212
 
 vector.ph212:                                     ; preds = %vector.memcheck208
@@ -281,6 +281,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit84.i.prol.loopexit: ; preds = %_ZNK
   br i1 %i.hu, label %._crit_edge121.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i.preheader: ; preds = %.lr.ph120.i
+  %min.iters.check194 = icmp ult i64 %i.gz, 8
   br i1 %min.iters.check194, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i.preheader224, label %vector.ph195
 
 vector.ph195:                                     ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i.preheader
@@ -683,7 +684,7 @@ _ZN6duckdbL16ProbeForPointersILb0EEEmRNS_13JoinHashTable10ProbeStateERS1_PNS_10h
 
 bb.cg:                                            ; preds = %_ZN6duckdbL16ProbeForPointersILb0EEEmRNS_13JoinHashTable10ProbeStateERS1_PNS_10ht_entry_tERNS_6VectorEPKNS_15SelectionVectorEmb.exit.i
   store i64 0, ptr %i.a, align 8, !tbaa !39
-  %i.pa = call noundef i64 @_ZN6duckdb10RowMatcher5MatchERNS_9DataChunkERKNS_6vectorINS_21TupleDataVectorFormatELb1ESaIS4_EEERNS_15SelectionVectorEmRNS_6VectorEPS9_Rm(ptr noundef nonnull align 8 dereferenceable(80) %i.nf, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(488) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.ne, i64 noundef %.0.i.i25, ptr noundef nonnull align 8 dereferenceable(104) %7, ptr noundef nonnull %i.ng, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 10 uses
+  %i.pa = call noundef i64 @_ZN6duckdb10RowMatcher5MatchERNS_9DataChunkERKNS_6vectorINS_21TupleDataVectorFormatELb1ESaIS4_EEERNS_15SelectionVectorEmRNS_6VectorEPS9_Rm(ptr noundef nonnull align 8 dereferenceable(80) %i.nf, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(488) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.ne, i64 noundef %.0.i.i25, ptr noundef nonnull align 8 dereferenceable(104) %7, ptr noundef nonnull %i.ng, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 11 uses
   %.not114.i = icmp eq i64 %i.pa, 0
   br i1 %.not114.i, label %._crit_edge107.i, label %.lr.ph106.i
 
@@ -693,17 +694,17 @@ bb.cg:                                            ; preds = %_ZN6duckdbL16ProbeF
   %.not.i83.i26 = icmp eq ptr %i.pb, null
   %i.pd = load ptr, ptr %8, align 8, !tbaa !424   ; 9 uses
   %i.pe = ptrtoaddr ptr %i.pd to i64
-  %min.iters.check = icmp ult i64 %i.pa, 8        ; 2 uses
   br i1 %.not.i83.i26, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i34.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27.preheader
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27.preheader: ; preds = %.lr.ph106.i
-  br i1 %min.iters.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27.preheader240, label %vector.memcheck
+  %min.iters.check181 = icmp ult i64 %i.pa, 12
+  br i1 %min.iters.check181, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27.preheader240, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27.preheader
   %i.pf = shl i64 %.070.i19, 2
   %i.pg = add i64 %i.pf, %i.pe
-  %i.ph = sub i64 %i.pg, %i.pc
-  %diff.check = icmp ult i64 %i.ph, 32
+  %i.ph = sub i64 %i.pc, %i.pg
+  %diff.check = icmp ugt i64 %i.ph, -32
   br i1 %diff.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27.preheader240, label %vector.ph182
 
 vector.ph182:                                     ; preds = %vector.memcheck
@@ -760,6 +761,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27.prol.loopexit: ; preds = %_Z
   br i1 %i.pv, label %._crit_edge107.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.i27
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i34.preheader: ; preds = %.lr.ph106.i
+  %min.iters.check = icmp ult i64 %i.pa, 8
   br i1 %min.iters.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i34.preheader239, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit84.us.i34.preheader
@@ -1162,8 +1164,8 @@ bb.f:                                             ; preds = %.noexc18
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us146.i.preheader: ; preds = %.lr.ph.us.i
   %i.ay = ptrtoaddr ptr %i.ax to i64
   %i.az = ptrtoaddr ptr %i.aw to i64
-  %i.ba = sub i64 %i.ay, %i.az
-  %diff.check255 = icmp ult i64 %i.ba, 32
+  %i.ba = sub i64 %i.az, %i.ay
+  %diff.check255 = icmp ugt i64 %i.ba, -32
   %or.cond = select i1 %min.iters.check241, i1 true, i1 %diff.check255
   br i1 %or.cond, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us146.i.preheader309, label %vector.ph258
 
@@ -1566,8 +1568,8 @@ bb.w:                                             ; preds = %.noexc70
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us133.i.preheader: ; preds = %.lr.ph.us.i57
   %i.ph = ptrtoaddr ptr %i.pg to i64
   %i.pi = ptrtoaddr ptr %i.pf to i64
-  %i.pj = sub i64 %i.ph, %i.pi
-  %diff.check = icmp ult i64 %i.pj, 32
+  %i.pj = sub i64 %i.pi, %i.ph
+  %diff.check = icmp ugt i64 %i.pj, -32
   %or.cond301 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond301, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us133.i.preheader322, label %vector.ph200
 
@@ -1970,8 +1972,8 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader: ; preds = %.lr.ph.i
 vector.memcheck:                                  ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader
   %i.hj = shl i64 %.095, 2
   %i.hk = add i64 %i.hj, %i.hh
-  %i.hl = sub i64 %i.hk, %i.hf
-  %diff.check = icmp ult i64 %i.hl, 32
+  %i.hl = sub i64 %i.hf, %i.hk
+  %diff.check = icmp ugt i64 %i.hl, -32
   br i1 %diff.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader169, label %vector.ph155
 
 vector.ph155:                                     ; preds = %vector.memcheck
@@ -2374,8 +2376,8 @@ bb.a:
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader: ; preds = %.lr.ph.i
   %i.n = ptrtoaddr ptr %i.m to i64
   %i.o = ptrtoaddr ptr %i.l to i64
-  %i.p = sub i64 %i.n, %i.o
-  %diff.check = icmp ult i64 %i.p, 32
+  %i.p = sub i64 %i.o, %i.n
+  %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader77, label %vector.ph65
 
@@ -2778,8 +2780,8 @@ bb.b:                                             ; preds = %bb.a
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader: ; preds = %.lr.ph.i
   %i.t = ptrtoaddr ptr %i.s to i64
   %i.u = ptrtoaddr ptr %i.r to i64
-  %i.v = sub i64 %i.t, %i.u
-  %diff.check = icmp ult i64 %i.v, 32
+  %i.v = sub i64 %i.u, %i.t
+  %diff.check = icmp ugt i64 %i.v, -32
   %or.cond269 = select i1 %min.iters.check215, i1 true, i1 %diff.check
   br i1 %or.cond269, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader280, label %vector.ph230
 
@@ -3182,8 +3184,8 @@ bb.aj:                                            ; preds = %_ZNK6duckdb15Select
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.i100.preheader: ; preds = %.lr.ph.i98
   %i.lp = ptrtoaddr ptr %i.lo to i64
   %i.lq = ptrtoaddr ptr %i.ln to i64
-  %i.lr = sub i64 %i.lp, %i.lq
-  %diff.check241 = icmp ult i64 %i.lr, 32
+  %i.lr = sub i64 %i.lq, %i.lp
+  %diff.check241 = icmp ugt i64 %i.lr, -32
   %or.cond270 = select i1 %min.iters.check256, i1 true, i1 %diff.check241
   br i1 %or.cond270, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i100.preheader272, label %vector.ph244
 
@@ -3485,8 +3487,8 @@ bb.a:
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader: ; preds = %.lr.ph
   %i.g = ptrtoaddr ptr %i.f to i64
   %i.h = ptrtoaddr ptr %i.e to i64
-  %i.i = sub i64 %i.g, %i.h
-  %diff.check = icmp ult i64 %i.i, 32
+  %i.i = sub i64 %i.h, %i.g
+  %diff.check = icmp ugt i64 %i.i, -32
   %or.cond = select i1 %min.iters.check24, i1 true, i1 %diff.check
   br i1 %or.cond, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader35, label %vector.ph
 
@@ -3657,8 +3659,8 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader: ; preds = %.lr.ph.i
   %i.k = ptrtoaddr ptr %i.j to i64
   %i.l = ptrtoaddr ptr %i.i to i64
-  %i.m = sub i64 %i.k, %i.l
-  %diff.check = icmp ult i64 %i.m, 32
+  %i.m = sub i64 %i.l, %i.k
+  %diff.check = icmp ugt i64 %i.m, -32
   %or.cond66 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond66, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader69, label %vector.ph56
 
@@ -4061,14 +4063,14 @@ bb.a:
   br i1 %.not.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader: ; preds = %.lr.ph
-  %min.iters.check = icmp ult i64 %3, 12
+  %min.iters.check = icmp ult i64 %3, 16
   br i1 %min.iters.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader30, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader
   %i.g = shl i64 %1, 2
   %i.h = add i64 %i.g, %i.e
-  %i.i = sub i64 %i.h, %i.c
-  %diff.check = icmp ult i64 %i.i, 32
+  %i.i = sub i64 %i.c, %i.h
+  %diff.check = icmp ugt i64 %i.i, -32
   br i1 %diff.check, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader30, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -4221,8 +4223,8 @@ bb.a:
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader: ; preds = %.lr.ph.i
   %i.n = ptrtoaddr ptr %i.m to i64
   %i.o = ptrtoaddr ptr %i.l to i64
-  %i.p = sub i64 %i.n, %i.o
-  %diff.check = icmp ult i64 %i.p, 32
+  %i.p = sub i64 %i.o, %i.n
+  %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i.preheader52, label %vector.ph40
 
@@ -4625,8 +4627,8 @@ iter.check:                                       ; preds = %.preheader55
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !317 ; 8 uses
   %min.iters.check = icmp ult i64 %i.ae, 4
   %i.ah = ptrtoaddr ptr %i.ag to i64
-  %i.ai = sub i64 %i.j, %i.ah
-  %diff.check = icmp ult i64 %i.ai, 32
+  %i.ai = sub i64 %i.ah, %i.j
+  %diff.check = icmp ugt i64 %i.ai, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -5029,9 +5031,9 @@ bb.i:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.noexc.i.i.i.i.i
   %i.ad = ptrtoaddr ptr %i.ac to i64
-  %min.iters.check = icmp ult i64 %i.z, 384
-  %i.ae = sub i64 %i.ad, %i.c
-  %diff.check = icmp ult i64 %i.ae, 32
+  %min.iters.check = icmp ult i64 %i.z, 512
+  %i.ae = sub i64 %i.c, %i.ad
+  %diff.check = icmp ugt i64 %i.ae, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.preheader25, label %vector.ph
 
@@ -5396,6 +5398,7 @@ bb.a:
   %i.d = tail call noundef ptr @_ZN6duckdb22TupleDataChunkIterator15GetRowLocationsEv(ptr noundef nonnull align 8 dereferenceable(624) %0) ; 7 uses
   %i.e = ptrtoaddr ptr %i.d to i64
   %i.f = sub i64 %i.c, %i.e
+  %invariant.op = add i64 %i.f, -1
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
@@ -5406,13 +5409,13 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.h = getelementptr [8 x i8], ptr %i.b, i64 %.015 ; 6 uses
-  %min.iters.check = icmp ult i64 %i.g, 4
+  %min.iters.check = icmp ult i64 %i.g, 6
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.i = shl i64 %.015, 3
-  %i.j = add i64 %i.f, %i.i
-  %diff.check = icmp ult i64 %i.j, 32
+  %i.j = add i64 %i.i, %invariant.op
+  %diff.check = icmp ult i64 %i.j, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -5526,6 +5529,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = ptrtoaddr ptr %i.j to i64
   %i.m = ptrtoaddr ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
+  %invariant.op = add i64 %i.n, -1
   br label %.noexc16
 
 .noexc16:                                         ; preds = %.noexc16.preheader, %.noexc18
@@ -5539,13 +5543,13 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i:                                         ; preds = %.noexc17
   %i.p = getelementptr [8 x i8], ptr %i.j, i64 %.015.i ; 6 uses
-  %min.iters.check = icmp ult i64 %i.o, 4
+  %min.iters.check = icmp ult i64 %i.o, 6
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.q = shl i64 %.015.i, 3
-  %i.r = add i64 %i.n, %i.q
-  %diff.check = icmp ult i64 %i.r, 32
+  %i.r = add i64 %i.q, %invariant.op
+  %diff.check = icmp ult i64 %i.r, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -5948,8 +5952,8 @@ _ZNKSt6vectorISt17reference_wrapperIKN6duckdb16PhysicalOperatorEESaIS4_EE12_M_ch
   %i.aa = lshr i64 %i.z, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.z, 24
-  %i.ac = sub i64 %i.x, %i.l
-  %diff.check = icmp ult i64 %i.ac, 32
+  %i.ac = sub i64 %i.l, %i.x
+  %diff.check = icmp ugt i64 %i.ac, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader42, label %vector.ph
 
@@ -6352,9 +6356,9 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EE12_M_che
   %i.aa = add i64 %i.z, -8                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 56
-  %i.ad = sub i64 %i.y, %i.m
-  %diff.check = icmp ult i64 %i.ad, 32
+  %min.iters.check = icmp ult i64 %i.aa, 72
+  %i.ad = sub i64 %i.m, %i.y
+  %diff.check = icmp ugt i64 %i.ad, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader11, label %vector.ph
 
