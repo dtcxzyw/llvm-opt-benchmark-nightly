@@ -203,8 +203,8 @@ iter.check:                                       ; preds = %_ZNSt12_Vector_base
   %i.m = ptrtoint ptr %i.h to i64
   %i.n = sub i64 %i.l, %i.m                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.n, 8
-  %i.o = sub i64 %i.k, %i.j
-  %diff.check = icmp ult i64 %i.o, 128
+  %i.o = sub i64 %i.j, %i.k
+  %diff.check = icmp ugt i64 %i.o, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -604,8 +604,8 @@ iter.check:                                       ; preds = %_ZSt9__advanceIPKcl
   %i.aw = add i64 %i.k, %i.c
   %i.ax = sub i64 %i.av, %i.aw                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.ax, 8
-  %i.ay = sub i64 %i.m, %i.c
-  %diff.check = icmp ult i64 %i.ay, 128
+  %i.ay = sub i64 %i.c, %i.m
+  %diff.check = icmp ugt i64 %i.ay, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -757,8 +757,8 @@ iter.check150:                                    ; preds = %_ZSt22__uninitializ
 vector.memcheck129:                               ; preds = %iter.check150
   %i.cu = add i64 %i.cq, %i.b
   %i.cv = add i64 %i.k, %i.c
-  %i.cw = sub i64 %i.cu, %i.cv
-  %diff.check130 = icmp ult i64 %i.cw, 128
+  %i.cw = sub i64 %i.cv, %i.cu
+  %diff.check130 = icmp ugt i64 %i.cw, -128
   br i1 %diff.check130, label %.lr.ph.i.i55.preheader, label %vector.main.loop.iter.check132
 
 vector.main.loop.iter.check132:                   ; preds = %vector.memcheck129
@@ -947,8 +947,8 @@ iter.check224:                                    ; preds = %_ZNSt12_Vector_base
   %i.ff = ptrtoaddr ptr %i.fd to i64
   %i.fg = sub i64 %i.a, %i.eu                     ; 7 uses
   %min.iters.check205 = icmp ult i64 %i.fg, 8
-  %i.fh = sub i64 %i.ff, %i.eu
-  %diff.check204 = icmp ult i64 %i.fh, 128
+  %i.fh = sub i64 %i.eu, %i.ff
+  %diff.check204 = icmp ugt i64 %i.fh, -128
   %or.cond319 = or i1 %min.iters.check205, %diff.check204
   br i1 %or.cond319, label %.lr.ph.i.i62.preheader, label %vector.main.loop.iter.check206
 
@@ -1085,8 +1085,8 @@ iter.check263:                                    ; preds = %.lr.ph.i.i62.prol.l
   %.0.lcssa.i.i65 = phi ptr [ %i.fd, %_ZNSt12_Vector_baseIcN5folly19reentrant_allocatorIcEEE11_M_allocateEm.exit ], [ %i.fr, %vec.epilog.middle.block237 ], [ %i.fi, %middle.block220 ], [ %.lcssa323.unr, %.lr.ph.i.i62.prol.loopexit ], [ %i.gx, %.lr.ph.i.i62 ] ; 6 uses
   %min.iters.check244 = icmp ult i64 %i.d, 8
   %.0.lcssa.i.i65242 = ptrtoaddr ptr %.0.lcssa.i.i65 to i64
-  %i.gz = sub i64 %.0.lcssa.i.i65242, %i.c
-  %diff.check243 = icmp ult i64 %i.gz, 128
+  %i.gz = sub i64 %i.c, %.0.lcssa.i.i65242
+  %diff.check243 = icmp ugt i64 %i.gz, -128
   %or.cond320 = select i1 %min.iters.check244, i1 true, i1 %diff.check243
   br i1 %or.cond320, label %.lr.ph.i67.preheader, label %vector.main.loop.iter.check245
 
@@ -1228,8 +1228,8 @@ iter.check302:                                    ; preds = %_ZSt22__uninitializ
   %.lcssa111281 = ptrtoaddr ptr %.lcssa111 to i64
   %i.ir = sub i64 %i.k, %i.a                      ; 7 uses
   %min.iters.check283 = icmp ult i64 %i.ir, 8
-  %i.is = sub i64 %.lcssa111281, %i.a
-  %diff.check282 = icmp ult i64 %i.is, 128
+  %i.is = sub i64 %i.a, %.lcssa111281
+  %diff.check282 = icmp ugt i64 %i.is, -128
   %or.cond321 = select i1 %min.iters.check283, i1 true, i1 %diff.check282
   br i1 %or.cond321, label %.lr.ph.i.i73.preheader, label %vector.main.loop.iter.check284
 
@@ -1457,7 +1457,7 @@ _ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE13_M_insert_auxIcEEvN9__gnu_cxx17
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.a
-  %i.ab = getelementptr inbounds i8, ptr %i.b, i64 %i.e ; 6 uses
+  %i.ab = getelementptr inbounds i8, ptr %i.b, i64 %i.e ; 5 uses
   %i.ac = ptrtoint ptr %i.g to i64                ; 4 uses
   %i.ad = sub i64 %i.ac, %i.d                     ; 4 uses
   %i.ae = icmp eq i64 %i.ad, 9223372036854775807
@@ -1485,8 +1485,8 @@ _ZNKSt6vectorIcN5folly19reentrant_allocatorIcEEE12_M_check_lenEmPKc.exit.i: ; pr
 iter.check:                                       ; preds = %_ZNKSt6vectorIcN5folly19reentrant_allocatorIcEEE12_M_check_lenEmPKc.exit.i
   %i.am = ptrtoaddr ptr %i.aj to i64
   %min.iters.check = icmp ult i64 %i.e, 8
-  %i.an = sub i64 %i.am, %i.d
-  %diff.check = icmp ult i64 %i.an, 128
+  %i.an = sub i64 %i.d, %i.am
+  %diff.check = icmp ugt i64 %i.an, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -1643,21 +1643,18 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i: ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %middle.block, %vec.epilog.middle.block, %_ZNKSt6vectorIcN5folly19reentrant_allocatorIcEEE12_M_check_lenEmPKc.exit.i
   %.0.lcssa.i.i.i.i = phi ptr [ %i.aj, %_ZNKSt6vectorIcN5folly19reentrant_allocatorIcEEE12_M_check_lenEmPKc.exit.i ], [ %i.ax, %vec.epilog.middle.block ], [ %i.ao, %middle.block ], [ %.lcssa77.unr, %.lr.ph.i.i.i.i.prol.loopexit ], [ %i.cd, %.lr.ph.i.i.i.i ] ; 2 uses
-  %.0.lcssa.i.i.i.i39 = ptrtoaddr ptr %.0.lcssa.i.i.i.i to i64
-  %i.ce = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 1 ; 7 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 1 ; 6 uses
   %.not10.i.i.i16.i = icmp eq ptr %1, %i.g
-  br i1 %.not10.i.i.i16.i, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit22.i, label %iter.check60
+  br i1 %.not10.i.i.i16.i, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit22.i, label %vector.memcheck38
 
-iter.check60:                                     ; preds = %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i
+vector.memcheck38:                                ; preds = %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i
+  %.0.lcssa.i.i.i.i39 = ptrtoaddr ptr %.0.lcssa.i.i.i.i to i64
   %3 = sub i64 %i.ac, %i.c                        ; 7 uses
   %min.iters.check41 = icmp ult i64 %3, 8
-  br i1 %min.iters.check41, label %.lr.ph.i.i.i17.i.preheader, label %vector.memcheck38
-
-vector.memcheck38:                                ; preds = %iter.check60
-  %4 = add i64 %.0.lcssa.i.i.i.i39, 1
-  %i.cf = sub i64 %4, %i.c
-  %diff.check40 = icmp ult i64 %i.cf, 128
-  br i1 %diff.check40, label %.lr.ph.i.i.i17.i.preheader, label %vector.main.loop.iter.check42
+  %i.cf = sub i64 %.0.lcssa.i.i.i.i39, %i.c
+  %diff.check40 = icmp ult i64 %i.cf, 127
+  %or.cond77 = select i1 %min.iters.check41, i1 true, i1 %diff.check40
+  br i1 %or.cond77, label %.lr.ph.i.i.i17.i.preheader, label %vector.main.loop.iter.check42
 
 vector.main.loop.iter.check42:                    ; preds = %vector.memcheck38
   %min.iters.check43 = icmp ult i64 %3, 128
@@ -1725,9 +1722,9 @@ vec.epilog.middle.block73:                        ; preds = %vec.epilog.vector.b
   %cmp.n74 = icmp eq i64 %3, %n.vec66
   br i1 %cmp.n74, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit22.i, label %.lr.ph.i.i.i17.i.preheader
 
-.lr.ph.i.i.i17.i.preheader:                       ; preds = %vector.memcheck38, %iter.check60, %vec.epilog.iter.check62, %vec.epilog.middle.block73
-  %.012.i.i.i18.i.ph = phi ptr [ %i.ce, %iter.check60 ], [ %i.ce, %vector.memcheck38 ], [ %i.cg, %vec.epilog.iter.check62 ], [ %i.cp, %vec.epilog.middle.block73 ] ; 2 uses
-  %.0911.i.i.i19.i.ph = phi ptr [ %i.ab, %iter.check60 ], [ %i.ab, %vector.memcheck38 ], [ %i.ch, %vec.epilog.iter.check62 ], [ %i.cq, %vec.epilog.middle.block73 ] ; 3 uses
+.lr.ph.i.i.i17.i.preheader:                       ; preds = %vector.memcheck38, %vec.epilog.iter.check62, %vec.epilog.middle.block73
+  %.012.i.i.i18.i.ph = phi ptr [ %i.ce, %vector.memcheck38 ], [ %i.cg, %vec.epilog.iter.check62 ], [ %i.cp, %vec.epilog.middle.block73 ] ; 2 uses
+  %.0911.i.i.i19.i.ph = phi ptr [ %i.ab, %vector.memcheck38 ], [ %i.ch, %vec.epilog.iter.check62 ], [ %i.cq, %vec.epilog.middle.block73 ] ; 3 uses
   %.0911.i.i.i19.i.ph79 = ptrtoint ptr %.0911.i.i.i19.i.ph to i64 ; 2 uses
   %i.cs = sub i64 %i.ac, %.0911.i.i.i19.i.ph79
   %xtraiter80 = and i64 %i.cs, 7                  ; 2 uses

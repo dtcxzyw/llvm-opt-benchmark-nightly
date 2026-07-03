@@ -204,10 +204,9 @@ iter.check291:                                    ; preds = %.lr.ph236.i
   br i1 %min.iters.check277, label %PyUnicode_READ.exit203.us.i.preheader, label %vector.memcheck275
 
 vector.memcheck275:                               ; preds = %iter.check291
-  %5 = add i64 %i.tu, 32
   %i.ut = add i64 %3, %.0.i.i209276
-  %i.uu = sub i64 %5, %i.ut
-  %diff.check = icmp ult i64 %i.uu, 32
+  %i.uu = sub i64 %i.tu, %i.ut
+  %diff.check = icmp ugt i64 %i.uu, -32
   br i1 %diff.check, label %PyUnicode_READ.exit203.us.i.preheader, label %vector.main.loop.iter.check278
 
 vector.main.loop.iter.check278:                   ; preds = %vector.memcheck275

@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d
 tuple_alloc.exit:                                 ; preds = %.critedge.i
   %i.p = tail call ptr @PyErr_NoMemory() #9, !inline_history !11 ; 2 uses
   %i.q = icmp eq ptr %i.p, null
-  br i1 %i.q, label %.lr.ph27.preheader, label %.lr.ph.preheader
+  br i1 %i.q, label %.lr.ph27.preheader, label %vector.memcheck
 
 .preheader:                                       ; preds = %bb.b
   tail call void @_PyErr_BadInternalCall(ptr noundef nonnull @.str, i32 noundef 40) #9, !inline_history !11
@@ -236,20 +236,17 @@ Py_DECREF.exit:                                   ; preds = %.lr.ph27, %bb.f, %b
   %.sink36 = phi ptr [ %i.i, %bb.e ], [ %i.o, %.critedge.thread.i ] ; 2 uses
   %i.x = getelementptr i8, ptr %.sink36, i64 24
   store i64 -1, ptr %i.x, align 8, !tbaa !20
-  br label %.lr.ph.preheader
+  br label %vector.memcheck
 
-.lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.sink.split, %tuple_alloc.exit
+vector.memcheck:                                  ; preds = %.lr.ph.preheader.sink.split, %tuple_alloc.exit
   %.2.i24 = phi ptr [ %i.p, %tuple_alloc.exit ], [ %.sink36, %.lr.ph.preheader.sink.split ] ; 6 uses
   %2 = getelementptr i8, ptr %.2.i24, i64 32      ; 6 uses
-  %min.iters.check = icmp ult i64 %1, 8
-  br i1 %min.iters.check, label %.lr.ph.preheader39, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
+  %min.iters.check = icmp ult i64 %1, 10
   %.2.i2437 = ptrtoaddr ptr %.2.i24 to i64
-  %3 = add i64 %.2.i2437, 32
-  %4 = sub i64 %3, %i.a
-  %diff.check = icmp ult i64 %4, 32
-  br i1 %diff.check, label %.lr.ph.preheader39, label %vector.ph
+  %3 = sub i64 %.2.i2437, %i.a
+  %diff.check = icmp ugt i64 %3, -32
+  %or.cond = or i1 %min.iters.check, %diff.check
+  br i1 %or.cond, label %.lr.ph.preheader39, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %1, 9223372036854775804        ; 3 uses
@@ -273,8 +270,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader39
 
-.lr.ph.preheader39:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.01925.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 3 uses
+.lr.ph.preheader39:                               ; preds = %vector.memcheck, %middle.block
+  %.01925.ph = phi i64 [ 0, %vector.memcheck ], [ %n.vec, %middle.block ] ; 3 uses
   %xtraiter = and i64 %1, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol

@@ -202,12 +202,11 @@ iter.check:                                       ; preds = %bb.aw
   br i1 %min.iters.check, label %.preheader.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %4 = add nuw nsw i64 %i.du, 1
   %i.eh = and i8 %i.d, 31
   %i.ei = zext nneg i8 %i.eh to i64
   %.neg = shl nuw nsw i64 %i.ei, 8
-  %5 = add nuw nsw i64 %.neg, %4
-  %diff.check = icmp samesign ult i64 %5, 32
+  %4 = or disjoint i64 %.neg, %i.du
+  %diff.check = icmp samesign ult i64 %4, 31
   br i1 %diff.check, label %.preheader.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

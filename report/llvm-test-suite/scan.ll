@@ -203,7 +203,7 @@ define internal fastcc range(i32 0, 3) i32 @yy_get_next_buffer() unnamed_addr #2
 bb.a:
   %i.a = load ptr, ptr @yy_current_buffer, align 8, !tbaa !11 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !16   ; 8 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !16   ; 7 uses
   %i.d = ptrtoaddr ptr %i.c to i64
   %i.e = load ptr, ptr @yy_c_buf_p, align 8, !tbaa !21 ; 2 uses
   %i.f = load i32, ptr @yy_n_chars, align 4, !tbaa !4
@@ -231,18 +231,15 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.t, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.c
-  %i.u = getelementptr inbounds i8, ptr %i.o, i64 -1 ; 6 uses
+  %i.u = getelementptr inbounds i8, ptr %i.o, i64 -1 ; 5 uses
   %i.v = and i64 %i.r, 2147483647                 ; 4 uses
-  %min.iters.check.a = icmp samesign ult i64 %i.v, 4
-  br i1 %min.iters.check.a, label %.lr.ph.preheader, label %vector.memcheck
+  %min.iters.check = icmp samesign ult i64 %i.v, 4
+  %0 = sub i64 %i.d, %i.q
+  %min.iters.check.a = icmp ult i64 %0, 31
+  %or.cond = or i1 %min.iters.check, %min.iters.check.a
+  br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %iter.check
-  %0 = add i64 %i.d, 1
-  %1 = sub i64 %0, %i.q
-  %diff.check = icmp ult i64 %1, 32
-  br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check32 = icmp samesign ult i64 %i.v, 32
   br i1 %min.iters.check32, label %vec.epilog.ph, label %vector.ph
 
@@ -298,10 +295,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n44 = icmp eq i64 %i.v, %n.vec38
   br i1 %cmp.n44, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.01323.ph = phi i32 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.ac, %vec.epilog.middle.block ] ; 4 uses
-  %.01422.ph = phi ptr [ %i.c, %iter.check ], [ %i.c, %vector.memcheck ], [ %i.x, %vec.epilog.iter.check ], [ %i.ad, %vec.epilog.middle.block ] ; 2 uses
-  %.01521.ph = phi ptr [ %i.u, %iter.check ], [ %i.u, %vector.memcheck ], [ %i.y, %vec.epilog.iter.check ], [ %i.ae, %vec.epilog.middle.block ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.01323.ph = phi i32 [ 0, %iter.check ], [ %i.w, %vec.epilog.iter.check ], [ %i.ac, %vec.epilog.middle.block ] ; 4 uses
+  %.01422.ph = phi ptr [ %i.c, %iter.check ], [ %i.x, %vec.epilog.iter.check ], [ %i.ad, %vec.epilog.middle.block ] ; 2 uses
+  %.01521.ph = phi ptr [ %i.u, %iter.check ], [ %i.y, %vec.epilog.iter.check ], [ %i.ae, %vec.epilog.middle.block ] ; 2 uses
   %i.ag = trunc i64 %i.p to i32                   ; 2 uses
   %i.ah = trunc i64 %i.q to i32                   ; 2 uses
   %i.ai = add i32 %.01323.ph, %i.ah

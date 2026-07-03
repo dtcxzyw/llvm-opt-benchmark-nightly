@@ -203,10 +203,8 @@ iter.check:                                       ; preds = %.preheader.preheade
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %6 = add nsw i64 %.pn, 31
-  %diff.check = icmp ult i64 %6, 32
-  %7 = add nsw i64 %.pn58, 31
-  %diff.check86 = icmp ult i64 %7, 32
+  %diff.check = icmp ugt i64 %.pn, -32
+  %diff.check86 = icmp ugt i64 %.pn58, -32
   %conflict.rdx = or i1 %diff.check, %diff.check86
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

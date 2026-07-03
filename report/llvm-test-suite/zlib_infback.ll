@@ -203,8 +203,7 @@ iter.check:                                       ; preds = %._crit_edge1273, %.
   %i.vs = zext i32 %i.vr to i64
   %i.vt = add nuw nsw i64 %i.vs, 1                ; 5 uses
   %min.iters.check = icmp ult i32 %i.vr, 3
-  %5 = add nsw i64 %.pn, 31
-  %diff.check = icmp ult i64 %5, 32
+  %diff.check = icmp ugt i64 %.pn, -32
   %or.cond1566 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond1566, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

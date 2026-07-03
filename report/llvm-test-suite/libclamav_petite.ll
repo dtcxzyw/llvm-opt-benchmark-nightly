@@ -203,7 +203,7 @@ bb.br:                                            ; preds = %bb.bl
 bb.bs:                                            ; preds = %bb.br, %bb.bq
   %.3973 = phi ptr [ %.13983, %bb.bq ], [ %.11981, %bb.br ] ; 5 uses
   %.3 = phi i8 [ %.016.i910, %bb.bq ], [ %.016.i903, %bb.br ] ; 3 uses
-  %.1674 = phi i32 [ %i.ib, %bb.bq ], [ %.06731262, %bb.br ] ; 5 uses
+  %.1674 = phi i32 [ %i.ib, %bb.bq ], [ %.06731262, %bb.br ] ; 6 uses
   %.1669 = phi i32 [ 0, %bb.bq ], [ %i.ii, %bb.br ]
   %.0667 = phi i32 [ %i.ig, %bb.bq ], [ 0, %bb.br ]
   %i.ij = shl i8 %.3, 1
@@ -341,7 +341,7 @@ bb.cd:                                            ; preds = %bb.cc
   br i1 %or.cond870, label %bb.ce, label %.thread1057.sink.split
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.kd = sext i32 %.1674 to i64                  ; 13 uses
+  %i.kd = sext i32 %.1674 to i64                  ; 12 uses
   %i.ke = getelementptr inbounds i8, ptr %.06901260, i64 %i.kd ; 2 uses
   %.not835 = icmp ult ptr %i.ke, %0
   br i1 %.not835, label %.thread1057.sink.split, label %bb.cf
@@ -355,8 +355,7 @@ bb.cf:                                            ; preds = %bb.ce
 
 iter.check:                                       ; preds = %bb.cf
   %min.iters.check = icmp ult i32 %i.jx, 4
-  %11 = add nsw i64 %i.kd, 31
-  %diff.check = icmp ult i64 %11, 32
+  %diff.check = icmp ugt i32 %.1674, -32
   %or.cond1803 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond1803, label %.lr.ph1256.preheader, label %vector.main.loop.iter.check
 
