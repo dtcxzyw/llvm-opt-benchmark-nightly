@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %_ZN6icu_7812LocalPo
   %i.h = call ptr @ures_getByKey_78(ptr noundef %i.g, ptr noundef nonnull @.str.2, ptr noundef %i.g, ptr noundef nonnull %i.a) #12 ; 4 uses
   %i.i = load i32, ptr %i.a, align 4              ; 2 uses
   %i.j = icmp slt i32 %i.i, 1
-  br i1 %i.j, label %.preheader.a, label %.thread47
+  br i1 %i.j, label %.preheader, label %.thread47
 
 .thread47:                                        ; preds = %bb.d
   %i.k = icmp eq i32 %i.i, 7
@@ -210,13 +210,15 @@ bb.d:                                             ; preds = %_ZN6icu_7812LocalPo
   call void @ures_close_78(ptr noundef %i.h) #12
   br label %.thread42.sink.split
 
-.preheader.a:                                     ; preds = %bb.d, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
+.preheader:                                       ; preds = %bb.d, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
   %1 = call signext i8 @ures_hasNext_78(ptr noundef %i.h) #12
   %.not22 = icmp eq i8 %1, 0
+  br i1 %.not22, label %.critedge, label %.preheader.a
+
+.preheader.a:                                     ; preds = %.preheader
   %i.l = load i32, ptr %0, align 4
   %i.m = icmp sgt i32 %i.l, 0
-  %or.cond = select i1 %.not22, i1 true, i1 %i.m
-  br i1 %or.cond, label %.critedge, label %bb.e
+  br i1 %i.m, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %.preheader.a
   %i.n = call ptr @ures_getNextResource_78(ptr noundef %i.h, ptr noundef null, ptr noundef nonnull %i.a) #12 ; 3 uses
@@ -260,9 +262,9 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
 
 _ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit: ; preds = %bb.j, %bb.k
-  br i1 %.not, label %.critedge, label %.preheader.a
+  br i1 %.not, label %.critedge, label %.preheader
 
-.critedge:                                        ; preds = %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit, %.preheader.a
+.critedge:                                        ; preds = %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit, %.preheader, %.preheader.a
   call void @ures_close_78(ptr noundef %i.h) #12
   %i.u = load i32, ptr %0, align 4
   %i.v = icmp sgt i32 %i.u, 0

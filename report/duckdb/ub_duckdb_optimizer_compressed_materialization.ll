@@ -203,13 +203,15 @@ bb.l:                                             ; preds = %.lr.ph, %bb.bn
   %i.bq = ptrtoint ptr %i.bo to i64
   %i.br = ptrtoint ptr %i.bp to i64
   %i.bs = sub i64 %i.bq, %i.br
-  %13 = icmp ne i64 %i.bs, 24
-  %14 = load i8, ptr %i.bj, align 8
-  %.not.a = icmp eq i8 %14, 51
-  %or.cond = select i1 %13, i1 true, i1 %.not.a
-  br i1 %or.cond, label %.critedge.thread, label %bb.m
+  %.not.a = icmp eq i64 %i.bs, 24
+  br i1 %.not.a, label %13, label %.critedge.thread
 
-bb.m:                                             ; preds = %bb.l
+13:                                               ; preds = %bb.l
+  %14 = load i8, ptr %i.bj, align 8, !tbaa !121
+  %.not = icmp eq i8 %14, 51
+  br i1 %.not, label %.critedge.thread, label %bb.m
+
+bb.m:                                             ; preds = %13
   %i.bt = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0165.0193)
           to label %bb.n unwind label %bb.ay
 
@@ -612,7 +614,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
   br label %bb.bn
 
-.critedge.thread:                                 ; preds = %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_10unique_ptrINS1_14BaseStatisticsESt14default_deleteIS6_ELb1EEEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i102, %bb.ai, %bb.ad, %bb.af, %bb.ak, %_ZNSt10unique_ptrIN6duckdb18CompressExpressionESt14default_deleteIS1_EED2Ev.exit, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisticsESt14default_deleteIS3_ELb1EEENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S6_EEE4findERSA_.exit110, %bb.aj, %bb.n, %bb.p, %bb.l
+.critedge.thread:                                 ; preds = %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_10unique_ptrINS1_14BaseStatisticsESt14default_deleteIS6_ELb1EEEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i102, %bb.ai, %bb.ad, %bb.af, %bb.ak, %_ZNSt10unique_ptrIN6duckdb18CompressExpressionESt14default_deleteIS1_EED2Ev.exit, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisticsESt14default_deleteIS3_ELb1EEENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S6_EEE4findERSA_.exit110, %bb.aj, %bb.n, %bb.p, %13, %bb.l
   %i.hu = invoke noundef nonnull align 8 dereferenceable(88) ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0165.0193)
           to label %bb.bk unwind label %bb.ay
 

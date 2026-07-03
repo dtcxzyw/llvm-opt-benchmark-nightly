@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !1138 ; 6 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !1138 ; 5 uses
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %..thread50_crit_edge, label %bb.b
 
@@ -233,27 +233,26 @@ _ZN5arrow8internal19BaseSetBitRunReaderILb0EE14FindCurrentRunEv.exit: ; preds = 
   %i.n = sub nsw i64 %i.j, %i.g                   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load i64, ptr %i.o, align 8, !tbaa !1134
-  %i.q = sub nsw i64 %i.p, %i.n                   ; 5 uses
+  %i.q = sub nsw i64 %i.p, %i.n                   ; 4 uses
   %i.r = xor i64 %i.m, -1
-  %i.s = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.r, i1 false) ; 9 uses
+  %i.s = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.r, i1 false) ; 8 uses
   %i.t = trunc nuw nsw i64 %i.s to i32
   %i.u = lshr i64 %i.m, %i.s
   store i64 %i.u, ptr %i.e, align 8, !tbaa !1137
-  %i.v = add nuw nsw i32 %i.t, %i.h               ; 3 uses
+  %i.v = add nuw nsw i32 %i.h, %i.t               ; 2 uses
   %i.w = sub nsw i32 %i.d, %i.v
   store i32 %i.w, ptr %i.c, align 8, !tbaa !1138
   %i.x = sub nsw i64 %i.n, %i.s                   ; 7 uses
   store i64 %i.x, ptr %i.i, align 8, !tbaa !1136
-  %.not25 = icmp eq i64 %i.s, 0                   ; 2 uses
-  %.not26.a = icmp eq i32 %i.d, %i.v
-  %or.cond = select i1 %.not25, i1 true, i1 %.not26.a
-  br i1 %or.cond, label %bb.c, label %bb.n
+  %.not26.a = icmp eq i64 %i.s, 0
+  br i1 %.not26.a, label %.thread50, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE14FindCurrentRunEv.exit
-  br i1 %.not25, label %.thread50, label %1
+  %.not26 = icmp eq i32 %i.d, %i.v
+  br i1 %.not26, label %bb.h, label %bb.n
 
-.thread50:                                        ; preds = %..thread50_crit_edge, %.thread56, %bb.c
-  %.promoted.i = phi i64 [ %.promoted.i.pre, %..thread50_crit_edge ], [ %i.l, %.thread56 ], [ %i.x, %bb.c ] ; 3 uses
+.thread50:                                        ; preds = %..thread50_crit_edge, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE14FindCurrentRunEv.exit, %.thread56
+  %.promoted.i = phi i64 [ %.promoted.i.pre, %..thread50_crit_edge ], [ %i.x, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE14FindCurrentRunEv.exit ], [ %i.l, %.thread56 ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.z = icmp sgt i64 %.promoted.i, 63
   br i1 %i.z, label %.lr.ph.i, label %._crit_edge.i, !prof !1140
@@ -336,11 +335,7 @@ bb.g:                                             ; preds = %_ZN5arrow8internal1
   %i.bd = sub nsw i64 %i.bc, %i.az
   br label %bb.m
 
-1:                                                ; preds = %bb.c
-  %.not28 = icmp eq i32 %i.d, %i.v
-  br i1 %.not28, label %bb.h, label %bb.m
-
-bb.h:                                             ; preds = %1
+bb.h:                                             ; preds = %bb.c
   %i.be = icmp sgt i64 %i.x, 63
   br i1 %i.be, label %bb.i, label %bb.j, !prof !99
 
@@ -382,16 +377,16 @@ bb.l:                                             ; preds = %bb.k, %bb.i
   %.not29 = icmp eq i64 %i.bq, 0
   br i1 %.not29, label %bb.n, label %bb.m
 
-bb.m:                                             ; preds = %1, %bb.l, %bb.g
-  %.12154 = phi i64 [ %i.s, %1 ], [ %i.s, %bb.l ], [ 0, %bb.g ]
-  %.2 = phi i64 [ %i.q, %1 ], [ %i.q, %bb.l ], [ %i.bd, %bb.g ]
+bb.m:                                             ; preds = %bb.l, %bb.g
+  %.12152 = phi i64 [ 0, %bb.g ], [ %i.s, %bb.l ]
+  %.2 = phi i64 [ %i.bd, %bb.g ], [ %i.q, %bb.l ]
   %i.br = tail call noundef i64 @_ZN5arrow8internal19BaseSetBitRunReaderILb0EE13CountNextOnesEv(ptr noundef nonnull align 8 dereferenceable(36) %0)
-  %i.bs = add nsw i64 %i.br, %.12154
+  %i.bs = add nsw i64 %i.br, %.12152
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.l, %bb.j, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE14FindCurrentRunEv.exit, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE13SkipNextZerosEv.exit, %bb.m
-  %.sroa.019.1 = phi i64 [ %.2, %bb.m ], [ %i.q, %bb.j ], [ %i.q, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE14FindCurrentRunEv.exit ], [ 0, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE13SkipNextZerosEv.exit ], [ %i.q, %bb.l ]
-  %.sroa.6.1 = phi i64 [ %i.bs, %bb.m ], [ %i.s, %bb.j ], [ %i.s, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE14FindCurrentRunEv.exit ], [ 0, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE13SkipNextZerosEv.exit ], [ %i.s, %bb.l ]
+bb.n:                                             ; preds = %bb.l, %bb.j, %bb.c, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE13SkipNextZerosEv.exit, %bb.m
+  %.sroa.019.1 = phi i64 [ %.2, %bb.m ], [ %i.q, %bb.j ], [ %i.q, %bb.c ], [ 0, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE13SkipNextZerosEv.exit ], [ %i.q, %bb.l ]
+  %.sroa.6.1 = phi i64 [ %i.bs, %bb.m ], [ %i.s, %bb.j ], [ %i.s, %bb.c ], [ 0, %_ZN5arrow8internal19BaseSetBitRunReaderILb0EE13SkipNextZerosEv.exit ], [ %i.s, %bb.l ]
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.019.1, 0
   %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sroa.6.1, 1
   ret { i64, i64 } %.fca.1.insert
@@ -441,19 +436,18 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %.promoted = phi i64 [ %i.i, %bb.b ], [ %i.p, %bb.c ]
   %.123 = phi i64 [ %i.e, %bb.b ], [ 64, %bb.c ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.promoted38 = load ptr, ptr %0, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %bb.d
-  %1 = phi ptr [ %.promoted38, %bb.d ], [ %i.u, %bb.f ] ; 4 uses
   %i.s = phi i64 [ %.promoted, %bb.d ], [ %i.y, %bb.f ] ; 7 uses
   %.224 = phi i64 [ %.123, %bb.d ], [ %i.x, %bb.f ] ; 3 uses
   %i.t = icmp sgt i64 %i.s, 63
   br i1 %i.t, label %bb.f, label %bb.g, !prof !99
 
 bb.f:                                             ; preds = %bb.e
+  %1 = load ptr, ptr %0, align 8, !tbaa !1139     ; 2 uses
   %.0.copyload.i = load i64, ptr %1, align 1      ; 3 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %i.u, ptr %0, align 8, !tbaa !1139
   store i64 %.0.copyload.i, ptr %i.b, align 8, !tbaa !1137
   %i.v = xor i64 %.0.copyload.i, -1
@@ -482,8 +476,9 @@ bb.h:                                             ; preds = %bb.g
   store i64 0, ptr %i.a, align 8, !tbaa !228
   %i.af = add nuw nsw i64 %i.s, 7
   %i.ag = lshr i64 %i.af, 3                       ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.a, ptr align 1 %1, i64 %i.ag, i1 false)
-  %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 %i.ag
+  %2 = load ptr, ptr %0, align 8, !tbaa !1139     ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.a, ptr align 1 %2, i64 %i.ag, i1 false)
+  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %i.ag
   store ptr %i.ah, ptr %0, align 8, !tbaa !1139
   %.0..0..0..0..0..0..i = load i64, ptr %i.a, align 8, !tbaa !228
   %notmask.i.i = shl nsw i64 -1, %i.s

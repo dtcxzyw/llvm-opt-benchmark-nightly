@@ -203,12 +203,14 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.e = load i8, ptr %i.d, align 8, !range !5, !noundef !6
   %i.f = trunc nuw i8 %i.e to i1
-  %1 = load i32, ptr %i.a, align 8
-  %2 = icmp eq i32 %1, 2
-  %or.cond = select i1 %i.f, i1 %2, i1 false
-  br i1 %or.cond, label %bb.c, label %_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit.thread
+  br i1 %i.f, label %1, label %_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit.thread
 
-bb.c:                                             ; preds = %bb.b
+1:                                                ; preds = %bb.b
+  %2 = load i32, ptr %i.a, align 8
+  %3 = icmp eq i32 %2, 2
+  br i1 %3, label %bb.c, label %_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit.thread
+
+bb.c:                                             ; preds = %1
   %i.g = load ptr, ptr %0, align 8                ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 2040
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
@@ -234,7 +236,7 @@ bb.e:                                             ; preds = %bb.d, %_ZNK2v88inte
   tail call void @_ZN2v88internal4Heap36FinalizeIncrementalMarkingAtomicallyENS0_23GarbageCollectionReasonE(ptr noundef nonnull align 8 dereferenceable(2992) %i.r, i32 noundef 8) #17
   br label %_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit.thread
 
-_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit.thread: ; preds = %bb.d, %bb.a, %bb.e, %_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit, %bb.b
+_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit.thread: ; preds = %1, %bb.d, %bb.a, %bb.e, %_ZNK2v88internal18IncrementalMarking22IsMajorMarkingCompleteEv.exit, %bb.b
   ret void
 }
 

@@ -201,8 +201,6 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 584
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 576
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -254,12 +252,12 @@ _ZN5folly6fibers12thread_clock3nowEv.exit:        ; preds = %bb.e, %bb.f
   store i8 3, ptr %0, align 64, !tbaa !11
   %i.ae = load ptr, ptr %i.l, align 8, !tbaa !122
   %.not = icmp eq ptr %i.ae, null                 ; 2 uses
-  %12 = load ptr, ptr %11, align 32
-  %13 = load ptr, ptr %10, align 64
-  %.v = select i1 %.not, i64 176, i64 528
+  %..v = select i1 %.not, i64 176, i64 528
+  %. = getelementptr inbounds nuw i8, ptr %0, i64 %..v
+  %.v = select i1 %.not, i64 224, i64 576
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 %.v
-  %14 = select i1 %.not, ptr %12, ptr %13
-  invoke void %14(ptr noundef nonnull align 16 dereferenceable(48) %i.af)
+  %10 = load ptr, ptr %i.af, align 32, !tbaa !121
+  invoke void %10(ptr noundef nonnull align 16 dereferenceable(48) %.)
           to label %_ZN5folly6detail8function14FunctionTraitsIFvvEEclEv.exit unwind label %bb.g, !inline_history !134
 
 bb.g:                                             ; preds = %.invoke

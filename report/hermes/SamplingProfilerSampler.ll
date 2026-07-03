@@ -203,11 +203,14 @@ _ZN6hermes2vm17sampling_profiler7Sampler12sampleStacksEv.exit: ; preds = %_ZNSt1
   %i.bb = sdiv i64 %i.ba, 1000000000              ; 2 uses
   %.neg.i.i.i.i.i.i = mul nsw i64 %i.bb, -1000000000
   %i.bc = add i64 %.neg.i.i.i.i.i.i, %i.ba
-  %.val4.val.i.i.old = load i8, ptr %i.af, align 8, !tbaa !102, !range !103, !noundef !104
-  %.old = trunc nuw i8 %.val4.val.i.i.old to i1
-  br i1 %.old, label %.preheader, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
+  br label %7
 
-.preheader:                                       ; preds = %.loopexit, %.preheader
+7:                                                ; preds = %.preheader, %.loopexit
+  %.val4.val.i.i = load i8, ptr %i.af, align 8, !tbaa !102, !range !103, !noundef !104
+  %8 = trunc nuw i8 %.val4.val.i.i to i1
+  br i1 %8, label %.preheader, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
+
+.preheader:                                       ; preds = %7
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   store i64 %i.bb, ptr %2, align 8, !tbaa !105
   store i64 %i.bc, ptr %i.ak, align 8, !tbaa !107
@@ -215,16 +218,14 @@ _ZN6hermes2vm17sampling_profiler7Sampler12sampleStacksEv.exit: ; preds = %_ZNSt1
   %i.be = call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #14
   %.not.i.i = icmp slt i64 %i.be, %i.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
-  %.val4.val.i.i = load i8, ptr %i.af, align 8, !range !103 ; 2 uses
-  %7 = trunc nuw i8 %.val4.val.i.i to i1
-  %or.cond = select i1 %.not.i.i, i1 %7, i1 false
-  br i1 %or.cond, label %.preheader, label %"_ZNSt18condition_variable8wait_forIdSt5ratioILl1ELl1EEZN6hermes2vm17sampling_profiler7Sampler9timerLoopEdE3$_0EEbRSt11unique_lockISt5mutexERKNSt6chrono8durationIT_T0_EET1_.exit", !llvm.loop !108
+  br i1 %.not.i.i, label %7, label %"_ZNSt18condition_variable8wait_forIdSt5ratioILl1ELl1EEZN6hermes2vm17sampling_profiler7Sampler9timerLoopEdE3$_0EEbRSt11unique_lockISt5mutexERKNSt6chrono8durationIT_T0_EET1_.exit", !llvm.loop !108
 
 "_ZNSt18condition_variable8wait_forIdSt5ratioILl1ELl1EEZN6hermes2vm17sampling_profiler7Sampler9timerLoopEdE3$_0EEbRSt11unique_lockISt5mutexERKNSt6chrono8durationIT_T0_EET1_.exit": ; preds = %.preheader
-  %i.bf = trunc nuw i8 %.val4.val.i.i to i1
+  %.pre = load i8, ptr %i.af, align 8, !tbaa !102, !range !103
+  %i.bf = trunc nuw i8 %.pre to i1
   br i1 %i.bf, label %bb.e, label %_ZNSt11unique_lockISt5mutexED2Ev.exit, !llvm.loop !109
 
-_ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %.loopexit, %"_ZNSt18condition_variable8wait_forIdSt5ratioILl1ELl1EEZN6hermes2vm17sampling_profiler7Sampler9timerLoopEdE3$_0EEbRSt11unique_lockISt5mutexERKNSt6chrono8durationIT_T0_EET1_.exit", %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.preheader, %_ZN6hermes2vm17sampling_profiler7Sampler12sampleStacksEv.exit
+_ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %"_ZNSt18condition_variable8wait_forIdSt5ratioILl1ELl1EEZN6hermes2vm17sampling_profiler7Sampler9timerLoopEdE3$_0EEbRSt11unique_lockISt5mutexERKNSt6chrono8durationIT_T0_EET1_.exit", %7, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.preheader, %_ZN6hermes2vm17sampling_profiler7Sampler12sampleStacksEv.exit
   %i.bg = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.ad) #14 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14

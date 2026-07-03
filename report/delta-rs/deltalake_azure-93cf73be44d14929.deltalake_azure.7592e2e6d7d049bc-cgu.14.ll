@@ -201,12 +201,12 @@ bb.f:                                             ; preds = %bb.c
 define hidden { i64, i64 } @_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCsa5Qem16B4JI_15deltalake_azure(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0, i64 noundef %1, i64 noundef %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
-  %i.b = icmp eq i64 %4, 0                        ; 2 uses
-  %i.c = load i64, ptr %0, align 8, !range !15    ; 3 uses
+  %i.b = icmp eq i64 %4, 0                        ; 3 uses
+  %i.c = load i64, ptr %0, align 8, !range !15    ; 4 uses
   %.sroa.05.0 = select i1 %i.b, i64 -1, i64 %i.c
   %i.d = sub i64 %.sroa.05.0, %1
   %i.e = icmp ugt i64 %2, %i.d
-  br i1 %i.e, label %bb.b, label %bb.f
+  br i1 %i.e, label %bb.b, label %5
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1616)
@@ -224,7 +224,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = icmp ult i64 %4, 1025
   %..i = select i1 %i.j, i64 4, i64 1
   %.sroa.08.0.i = select i1 %i.i, i64 8, i64 %..i
-  %.sroa.0.0.i14.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i, i64 range(i64 0, -1) %.sroa.08.0.i) ; 3 uses
+  %.sroa.0.0.i14.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i, i64 range(i64 0, -1) %.sroa.08.0.i) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1616
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13.i = load ptr, ptr %i.k, align 8, !alias.scope !1616
@@ -248,11 +248,22 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCsa5Qem1
   %i.s = icmp sgt i64 %.sroa.0.0.i14.i, -1
   tail call void @llvm.assume(i1 %i.s)
   store i64 %.sroa.0.0.i14.i, ptr %0, align 8, !alias.scope !1616
+  br label %6
+
+5:                                                ; preds = %bb.a
+  %spec.select = select i1 %i.b, i64 -1, i64 %i.c
+  br label %6
+
+6:                                                ; preds = %5, %_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCsa5Qem16B4JI_15deltalake_azure.exit
+  %.sroa.06.0 = phi i64 [ %spec.select, %5 ], [ %.sroa.0.0.i14.i, %_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCsa5Qem16B4JI_15deltalake_azure.exit ]
+  %7 = sub i64 %.sroa.06.0, %1
+  %8 = icmp ule i64 %2, %7
+  tail call void @llvm.assume(i1 %8)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.a, %_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCsa5Qem16B4JI_15deltalake_azure.exit, %bb.c, %bb.e, %bb.b
-  %.sroa.3.0 = phi i64 [ undef, %bb.b ], [ undef, %bb.c ], [ %i.q, %bb.e ], [ undef, %_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCsa5Qem16B4JI_15deltalake_azure.exit ], [ undef, %bb.a ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.c ], [ %i.o, %bb.e ], [ -9223372036854775807, %_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCsa5Qem16B4JI_15deltalake_azure.exit ], [ -9223372036854775807, %bb.a ]
+bb.f:                                             ; preds = %bb.c, %bb.e, %bb.b, %6
+  %.sroa.3.0 = phi i64 [ undef, %6 ], [ undef, %bb.c ], [ %i.q, %bb.e ], [ undef, %bb.b ]
+  %.sroa.0.0 = phi i64 [ -9223372036854775807, %6 ], [ 0, %bb.c ], [ %i.o, %bb.e ], [ 0, %bb.b ]
   %i.t = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.u = insertvalue { i64, i64 } %i.t, i64 %.sroa.3.0, 1
   ret { i64, i64 } %i.u

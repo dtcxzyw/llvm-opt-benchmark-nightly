@@ -204,7 +204,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.d = load i8, ptr %i.c, align 8, !tbaa !1064, !range !190, !noundef !122
   %i.e = icmp eq i8 %i.b, %i.d
-  br i1 %i.e, label %bb.b, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit
+  br i1 %i.e, label %bb.b, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit.thread
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.k = load i64, ptr %i.j, align 8, !tbaa !15
   %i.l = icmp eq i64 %i.i, %i.k
-  br i1 %i.l, label %bb.c, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit
+  br i1 %i.l, label %bb.c, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp eq i64 %i.i, 0
@@ -225,25 +225,27 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.o = load ptr, ptr %i.f, align 8, !tbaa !29
   %bcmp.i.i = tail call i32 @bcmp(ptr %i.o, ptr %i.n, i64 %i.i)
   %i.p = icmp eq i32 %bcmp.i.i, 0
-  br i1 %i.p, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit
+  br i1 %i.p, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit.thread
 
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %bb.c
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i: ; preds = %bb.c, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 27
   %.val.i = load i8, ptr %i.q, align 1, !tbaa !1068, !range !190, !noundef !122
   %i.r = getelementptr i8, ptr %1, i64 27
   %.val5.i = load i8, ptr %i.r, align 1, !tbaa !1068, !range !190, !noundef !122
   %.not.i = icmp eq i8 %.val5.i, %.val.i
-  br label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit
+  br i1 %.not.i, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit.thread
 
-_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit: ; preds = %bb.a, %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i
-  %2 = phi i1 [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i ], [ false, %bb.a ], [ %.not.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i ], [ false, %bb.b ]
+_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 65
-  %i.t = load i8, ptr %i.s, align 1, !range !190
+  %i.t = load i8, ptr %i.s, align 1, !tbaa !1103, !range !190, !noundef !122
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 65
-  %i.v = load i8, ptr %i.u, align 1, !range !190
+  %i.v = load i8, ptr %i.u, align 1, !tbaa !1103, !range !190, !noundef !122
   %i.w = icmp eq i8 %i.t, %i.v
-  %3 = select i1 %2, i1 %i.w, i1 false
-  ret i1 %3
+  br label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit.thread
+
+_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit.thread: ; preds = %bb.b, %bb.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i
+  %2 = phi i1 [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i ], [ %i.w, %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i ], [ false, %bb.a ], [ false, %bb.b ]
+  ret i1 %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
@@ -646,17 +648,22 @@ _ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_118ConcatFunctionDataESt14default_deleteI
 
 ; Function Attrs: mustprogress uwtable
 define internal noundef zeroext i1 @_ZNK6duckdb12_GLOBAL__N_118ConcatFunctionData6EqualsERKNS_12FunctionDataE(ptr noundef nonnull align 8 dereferenceable(33) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #0 align 2 {
-bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %4 = tail call noundef zeroext i1 @_ZNK6duckdb11LogicalTypeeqERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3)
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = tail call noundef zeroext i1 @_ZNK6duckdb11LogicalTypeeqERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4)
+  br i1 %5, label %bb.a, label %6
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load i8, ptr %i.a, align 8, !range !190
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !186, !range !190, !noundef !122
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.d = load i8, ptr %i.c, align 8, !range !190
+  %i.d = load i8, ptr %i.c, align 8, !tbaa !186, !range !190, !noundef !122
   %i.e = icmp eq i8 %i.b, %i.d
-  %5 = select i1 %4, i1 %i.e, i1 false
-  ret i1 %5
+  br label %6
+
+6:                                                ; preds = %bb.a, %2
+  %7 = phi i1 [ false, %2 ], [ %i.e, %bb.a ]
+  ret i1 %7
 }
 
 ; Function Attrs: mustprogress uwtable

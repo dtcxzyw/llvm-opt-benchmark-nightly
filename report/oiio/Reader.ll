@@ -203,17 +203,14 @@ bb.e:                                             ; preds = %bb.d
   %i.x = icmp eq i8 %i.i, 64
   %i.y = icmp eq i32 %i.m, 4
   %or.cond9 = and i1 %i.x, %i.y
-  %4 = load i32, ptr %3, align 4
-  %5 = icmp eq i32 %4, 0
-  %or.cond57 = select i1 %or.cond9, i1 %5, i1 false
-  br i1 %or.cond57, label %bb.g, label %bb.k
+  br i1 %or.cond9, label %bb.f, label %bb.k
 
-bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b
+bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
   %.old = load i32, ptr %3, align 4, !tbaa !24
   %.old56 = icmp eq i32 %.old, 0
   br i1 %.old56, label %bb.g, label %bb.k
 
-bb.g:                                             ; preds = %bb.e, %bb.f
+bb.g:                                             ; preds = %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !27
   %i.ab = tail call noundef i32 @_ZNK3dpx6Header5WidthEv(ptr noundef nonnull align 4 dereferenceable(2049) %i.a)

@@ -201,14 +201,16 @@ bb.c:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 376 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 400 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 2 uses
-  %2 = load i64, ptr %i.z, align 8, !range !30, !noalias !1184, !noundef !3
-  %.not23.i = icmp eq i64 %2, -9223372036854775808
-  %i.ac = load i64, ptr %i.aa, align 8, !range !30
+  %i.ac = load i64, ptr %i.z, align 8, !range !30, !noalias !1184, !noundef !3
   %.not24.i.a = icmp eq i64 %i.ac, -9223372036854775808
-  %or.cond = select i1 %.not23.i, i1 true, i1 %.not24.i.a
-  br i1 %or.cond, label %.thread.i, label %bb.d
+  br i1 %.not24.i.a, label %.thread.i, label %2
 
-bb.d:                                             ; preds = %bb.c
+2:                                                ; preds = %bb.c
+  %3 = load i64, ptr %i.aa, align 8, !range !30, !noalias !1184, !noundef !3
+  %.not24.i = icmp eq i64 %3, -9223372036854775808
+  br i1 %.not24.i, label %.thread.i, label %bb.d
+
+bb.d:                                             ; preds = %2
   %i.ad = load i64, ptr %i.ab, align 8, !range !30, !noalias !1184, !noundef !3
   %.not25.i = icmp eq i64 %i.ad, -9223372036854775808
   br i1 %.not25.i, label %bb.m, label %bb.e
@@ -281,7 +283,7 @@ bb.m:                                             ; preds = %bb.d
   %.not29.i = icmp eq i64 %i.al, -9223372036854775808
   br i1 %.not29.i, label %.thread.i, label %bb.n
 
-.thread.i:                                        ; preds = %bb.m, %bb.c
+.thread.i:                                        ; preds = %bb.m, %2, %bb.c
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 632
   %i.an = load i8, ptr %i.am, align 8, !range !327, !noalias !1184, !noundef !3
   %i.ao = trunc nuw i8 %i.an to i1

@@ -204,18 +204,13 @@ _ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESa
   %i.x = urem i64 %i.s, %i.w                      ; 4 uses
   %i.y = load i64, ptr %i.a, align 8
   %i.z = icmp ugt i64 %i.y, 20
-  br i1 %i.z, label %bb.d, label %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit..critedge_crit_edge
-
-_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit..critedge_crit_edge: ; preds = %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit
-  %.pre54 = load ptr, ptr %1, align 8
-  br label %.critedge
+  br i1 %i.z, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit
   %i.aa = load ptr, ptr %0, align 8
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.x
   %i.ac = load ptr, ptr %i.ab, align 8            ; 2 uses
   %.not.i.i = icmp eq ptr %i.ac, null
-  %.pre55 = load ptr, ptr %1, align 8             ; 6 uses
   br i1 %.not.i.i, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -223,6 +218,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = load i64, ptr %i.q, align 8
   %.fr22.i.i = freeze i64 %i.ae                   ; 3 uses
   %i.af = icmp eq i64 %.fr22.i.i, 0
+  %5 = load ptr, ptr %1, align 8
   %.phi.trans.insert25.i.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 40
   %.pre26.i.i = load i64, ptr %.phi.trans.insert25.i.i, align 8 ; 2 uses
   br i1 %i.af, label %.split.us.i.i, label %.split.i.i
@@ -266,7 +262,7 @@ bb.h:                                             ; preds = %.split.i.i
 
 _ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.i.i: ; preds = %bb.h
   %i.av = load ptr, ptr %i.aq, align 8
-  %bcmp.i.i.i.i.i.i = tail call i32 @bcmp(ptr %.pre55, ptr %i.av, i64 %.fr22.i.i)
+  %bcmp.i.i.i.i.i.i = tail call i32 @bcmp(ptr %5, ptr %i.av, i64 %.fr22.i.i)
   %i.aw = icmp eq i32 %bcmp.i.i.i.i.i.i, 0
   br i1 %i.aw, label %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_key_equals_trIS6_EEbRKT_RKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread, label %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.i.i
 
@@ -282,16 +278,16 @@ bb.i:                                             ; preds = %_ZNKSt8__detail15_H
   %.not19.i.i = icmp eq i64 %i.ba, %i.x
   br i1 %.not19.i.i, label %.split.i.i, label %.critedge, !llvm.loop !423
 
-.critedge:                                        ; preds = %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.i.i, %bb.i, %bb.g, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.us.i.i, %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit..critedge_crit_edge, %bb.d
-  %5 = phi ptr [ %.pre54, %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit..critedge_crit_edge ], [ %.pre55, %bb.g ], [ %.pre55, %bb.d ], [ %.pre55, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.us.i.i ], [ %.pre55, %bb.i ], [ %.pre55, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.i.i ] ; 2 uses
+.critedge:                                        ; preds = %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.i.i, %bb.i, %bb.g, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.us.i.i, %bb.d, %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   %i.bb = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #34 ; 6 uses
   store ptr null, ptr %i.bb, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 24 ; 3 uses
   store ptr %i.bd, ptr %i.bc, align 8
+  %6 = load ptr, ptr %1, align 8                  ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
-  %i.bf = icmp eq ptr %5, %i.be
+  %i.bf = icmp eq ptr %6, %i.be
   br i1 %i.bf, label %bb.j, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 bb.j:                                             ; preds = %.critedge
@@ -303,7 +299,7 @@ bb.j:                                             ; preds = %.critedge
   br label %_ZNSt8__detail12_NodeBuilderINS_9_IdentityEE8_S_buildINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_NS_10_AllocNodeISaINS_10_Hash_nodeIS9_Lb1EEEEEEEEPNT1_11__node_typeEOT_OT0_RKSF_.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %.critedge
-  store ptr %5, ptr %i.bc, align 8
+  store ptr %6, ptr %i.bc, align 8
   %i.bj = load i64, ptr %i.be, align 8
   store i64 %i.bj, ptr %i.bd, align 8
   %.pre.i.i.i = load i64, ptr %i.q, align 8
@@ -618,14 +614,16 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.e = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.d, ptr noundef null, i32 noundef 10) #31, !inline_history !425 ; 2 uses
   %i.f = trunc i64 %i.e to i32                    ; 3 uses
-  %2 = icmp sgt i32 %i.f, -1
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %4 = load i32, ptr %3, align 8
-  %.not24 = icmp ugt i32 %4, %i.f
-  %or.cond = select i1 %2, i1 %.not24, i1 false
-  br i1 %or.cond, label %bb.d, label %.critedge27
+  %2 = icmp slt i32 %i.f, 0
+  br i1 %2, label %.critedge27, label %3
 
-bb.d:                                             ; preds = %bb.c
+3:                                                ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %5 = load i32, ptr %4, align 8
+  %.not24 = icmp ugt i32 %5, %i.f
+  br i1 %.not24, label %bb.d, label %.critedge27
+
+bb.d:                                             ; preds = %3
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = and i64 %i.e, 2147483647
@@ -677,10 +675,10 @@ bb.f:                                             ; preds = %.lr.ph, %.critedge
   %i.ad = trunc nuw i64 %indvars.iv to i32
   br label %.critedge27
 
-.critedge27:                                      ; preds = %.critedge, %.critedge27.loopexit.split.loop.exit61, %bb.e, %bb.c, %bb.a, %bb.d
-  %.sroa.051.1 = phi ptr [ %i.k, %bb.d ], [ null, %bb.c ], [ null, %bb.a ], [ null, %bb.e ], [ %i.v, %.critedge27.loopexit.split.loop.exit61 ], [ null, %.critedge ]
-  %.sroa.7.1 = phi i32 [ %i.f, %bb.d ], [ -1, %bb.c ], [ -1, %bb.a ], [ -1, %bb.e ], [ %i.ad, %.critedge27.loopexit.split.loop.exit61 ], [ -1, %.critedge ]
-  %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.051.1, 0
+.critedge27:                                      ; preds = %.critedge, %.critedge27.loopexit.split.loop.exit61, %bb.e, %bb.c, %3, %bb.a, %bb.d
+  %.sroa.050.1 = phi ptr [ null, %bb.a ], [ null, %3 ], [ %i.k, %bb.d ], [ null, %bb.c ], [ null, %bb.e ], [ %i.v, %.critedge27.loopexit.split.loop.exit61 ], [ null, %.critedge ]
+  %.sroa.7.1 = phi i32 [ -1, %bb.a ], [ -1, %3 ], [ %i.f, %bb.d ], [ -1, %bb.c ], [ -1, %bb.e ], [ %i.ad, %.critedge27.loopexit.split.loop.exit61 ], [ -1, %.critedge ]
+  %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.050.1, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.7.1, 1
   ret { ptr, i32 } %.fca.1.insert
 }

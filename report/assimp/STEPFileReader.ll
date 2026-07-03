@@ -203,17 +203,20 @@ bb.aj:                                            ; preds = %_ZN6Assimp12StreamR
   %i.dv = load i64, ptr %i.q, align 8             ; 4 uses
   %i.dw = add i64 %i.dv, 1                        ; 3 uses
   %i.dx = load ptr, ptr %i.p, align 8             ; 2 uses
-  %i.dy = icmp eq ptr %i.dx, %i.ab                ; 2 uses
-  br i1 %i.dy, label %bb.ak, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+  %i.dy = icmp eq ptr %i.dx, %i.ab
+  br i1 %i.dy, label %bb.ak, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 bb.ak:                                            ; preds = %bb.aj
   %i.dz = icmp ult i64 %i.dv, 16
   tail call void @llvm.assume(i1 %i.dz)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %bb.ak, %bb.aj
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.aj
   %1 = load i64, ptr %i.ab, align 8
-  %2 = select i1 %i.dy, i64 15, i64 %1
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.ak
+  %2 = phi i64 [ %1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ 15, %bb.ak ]
   %i.ea = icmp ugt i64 %i.dw, %2
   br i1 %i.ea, label %bb.al, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit
 

@@ -204,13 +204,13 @@ _RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr6
   store i64 %i.f, ptr %0, align 8, !alias.scope !18914
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.b, %bb.c, %bb.e
-  %.sroa.3.0.i.ph = phi i64 [ %i.n, %bb.e ], [ undef, %bb.c ], [ undef, %bb.b ]
-  %.sroa.0.0.i.ph = phi i64 [ %i.l, %bb.e ], [ 0, %bb.c ], [ 0, %bb.b ]
+bb.f:                                             ; preds = %bb.c, %bb.e, %bb.b
+  %.sroa.3.0.i.ph = phi i64 [ undef, %bb.b ], [ %i.n, %bb.e ], [ undef, %bb.c ]
+  %.sroa.0.0.i.ph = phi i64 [ 0, %bb.b ], [ %i.l, %bb.e ], [ 0, %bb.c ]
   tail call void @_RNvNtCs6Po7BT7Nknu_5alloc7raw_vec12handle_error(i64 noundef %.sroa.0.0.i.ph, i64 %.sroa.3.0.i.ph) #40
   unreachable
 
-bb.g:                                             ; preds = %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr66_16delta_benchmarks.exit.i, %bb.a
+bb.g:                                             ; preds = %bb.a, %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr66_16delta_benchmarks.exit.i
   ret void
 }
 
@@ -218,19 +218,19 @@ bb.g:                                             ; preds = %_RNvMs2_NtCs6Po7BT7
 define hidden { i64, i64 } @_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner17try_reserve_exactCs2VbMhdeEr66_16delta_benchmarks(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0, i64 noundef %1, i64 noundef %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
-  %i.b = icmp eq i64 %4, 0                        ; 2 uses
-  %i.c = load i64, ptr %0, align 8                ; 2 uses
+  %i.b = icmp eq i64 %4, 0                        ; 3 uses
+  %i.c = load i64, ptr %0, align 8                ; 3 uses
   %.sroa.05.0 = select i1 %i.b, i64 -1, i64 %i.c
   %i.d = sub i64 %.sroa.05.0, %1
   %i.e = icmp ugt i64 %2, %i.d
-  br i1 %i.e, label %bb.b, label %bb.f
+  br i1 %i.e, label %bb.b, label %5
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !18915)
   br i1 %i.b, label %bb.f, label %bb.c, !prof !84
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = add i64 %2, %1                           ; 4 uses
+  %i.f = add i64 %2, %1                           ; 5 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %bb.f, label %bb.d
 
@@ -258,11 +258,22 @@ _RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr6
   %i.p = icmp sgt i64 %i.f, -1
   tail call void @llvm.assume(i1 %i.p)
   store i64 %i.f, ptr %0, align 8, !alias.scope !18915
+  br label %6
+
+5:                                                ; preds = %bb.a
+  %spec.select = select i1 %i.b, i64 -1, i64 %i.c
+  br label %6
+
+6:                                                ; preds = %5, %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr66_16delta_benchmarks.exit
+  %.sroa.06.0 = phi i64 [ %spec.select, %5 ], [ %i.f, %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr66_16delta_benchmarks.exit ]
+  %7 = sub i64 %.sroa.06.0, %1
+  %8 = icmp ule i64 %2, %7
+  tail call void @llvm.assume(i1 %8)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.a, %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr66_16delta_benchmarks.exit, %bb.c, %bb.e, %bb.b
-  %.sroa.3.0 = phi i64 [ undef, %bb.b ], [ undef, %bb.c ], [ %i.n, %bb.e ], [ undef, %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr66_16delta_benchmarks.exit ], [ undef, %bb.a ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.c ], [ %i.l, %bb.e ], [ -9223372036854775807, %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCs2VbMhdeEr66_16delta_benchmarks.exit ], [ -9223372036854775807, %bb.a ]
+bb.f:                                             ; preds = %bb.c, %bb.e, %bb.b, %6
+  %.sroa.3.0 = phi i64 [ undef, %6 ], [ undef, %bb.c ], [ %i.n, %bb.e ], [ undef, %bb.b ]
+  %.sroa.0.0 = phi i64 [ -9223372036854775807, %6 ], [ 0, %bb.c ], [ %i.l, %bb.e ], [ 0, %bb.b ]
   %i.q = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.r = insertvalue { i64, i64 } %i.q, i64 %.sroa.3.0, 1
   ret { i64, i64 } %i.r

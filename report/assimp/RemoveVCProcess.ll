@@ -203,17 +203,19 @@ bb.v:                                             ; preds = %bb.u
 
 .split.6:                                         ; preds = %bb.v, %._crit_edge.5
   %.pre-phi239 = phi i64 [ %.pre238, %bb.v ], [ %.pre-phi237, %._crit_edge.5 ] ; 8 uses
-  %.4.5 = phi i1 [ %.4.4, %bb.v ], [ true, %._crit_edge.5 ]
+  %.4.5 = phi i1 [ %.4.4, %bb.v ], [ true, %._crit_edge.5 ] ; 2 uses
   %.161.5 = phi i32 [ %i.gw, %bb.v ], [ %.161.4, %._crit_edge.5 ]
   %i.gx = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.pre-phi239 ; 2 uses
   %i.gy = load ptr, ptr %i.gx, align 8            ; 2 uses
   %.not73.6 = icmp eq ptr %i.gy, null
-  %2 = load i32, ptr %i.a, align 8
-  %.not114.6 = icmp sgt i32 %2, -1
-  %or.cond = select i1 %.not73.6, i1 true, i1 %.not114.6
-  br i1 %or.cond, label %.split85.us, label %.lr.ph.preheader.6
+  br i1 %.not73.6, label %.split85.us, label %2
 
-.lr.ph.preheader.6:                               ; preds = %.split.6
+2:                                                ; preds = %.split.6
+  %3 = load i32, ptr %i.a, align 8
+  %.not114.6 = icmp sgt i32 %3, -1
+  br i1 %.not114.6, label %.split85.us, label %.lr.ph.preheader.6
+
+.lr.ph.preheader.6:                               ; preds = %2
   tail call void @_ZdaPv(ptr noundef nonnull %i.gy) #14
   store ptr null, ptr %i.gx, align 8
   %.05878.6 = add nuw nsw i32 %.161.5, 1
@@ -288,8 +290,8 @@ bb.v:                                             ; preds = %bb.u
   store ptr null, ptr %i.s, align 8
   br label %.split85.us
 
-.split85.us:                                      ; preds = %._crit_edge.6, %.lr.ph89.preheader, %.lr.ph89.1, %.lr.ph89.2, %.lr.ph89.3, %.lr.ph89.4, %.lr.ph89.5, %.lr.ph89.6, %.split.preheader, %.split.1, %.split.2, %.split.3, %.split.4, %.split.5, %.split.6, %.split.us, %..split85.us_crit_edge
-  %.us-phi = phi i1 [ true, %.lr.ph89.preheader ], [ %.163, %.split.us ], [ true, %..split85.us_crit_edge ], [ %.4.3, %.split.4 ], [ %.163, %.split.preheader ], [ %.4, %.split.1 ], [ true, %.lr.ph89.1 ], [ %.4.1, %.split.2 ], [ %.4.4, %.split.5 ], [ %.4.2, %.split.3 ], [ %.4.5, %.split.6 ], [ true, %.lr.ph89.6 ], [ true, %.lr.ph89.5 ], [ true, %.lr.ph89.4 ], [ true, %.lr.ph89.3 ], [ true, %.lr.ph89.2 ], [ true, %._crit_edge.6 ] ; 3 uses
+.split85.us:                                      ; preds = %._crit_edge.6, %2, %.lr.ph89.preheader, %.lr.ph89.1, %.lr.ph89.2, %.lr.ph89.3, %.lr.ph89.4, %.lr.ph89.5, %.lr.ph89.6, %.split.preheader, %.split.1, %.split.2, %.split.3, %.split.4, %.split.5, %.split.6, %.split.us, %..split85.us_crit_edge
+  %.us-phi = phi i1 [ true, %.lr.ph89.preheader ], [ %.163, %.split.us ], [ true, %..split85.us_crit_edge ], [ %.4.3, %.split.4 ], [ %.163, %.split.preheader ], [ %.4, %.split.1 ], [ true, %.lr.ph89.1 ], [ %.4.1, %.split.2 ], [ %.4.4, %.split.5 ], [ %.4.2, %.split.3 ], [ %.4.5, %.split.6 ], [ true, %.lr.ph89.6 ], [ true, %.lr.ph89.5 ], [ true, %.lr.ph89.4 ], [ true, %.lr.ph89.3 ], [ true, %.lr.ph89.2 ], [ true, %._crit_edge.6 ], [ %.4.5, %2 ] ; 3 uses
   %i.ib = load i32, ptr %i.a, align 8
   %.fr116 = freeze i32 %i.ib                      ; 2 uses
   %i.ic = and i32 %.fr116, 8

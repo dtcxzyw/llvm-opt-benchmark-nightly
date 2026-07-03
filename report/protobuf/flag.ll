@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = icmp ne i64 %i.g, %i.j                   ; 2 uses
   br i1 %i.k, label %.invoke.a, label %bb.g
 
-bb.d:                                             ; preds = %.invoke.a
+bb.d:                                             ; preds = %.invoke
   %i.l = landingpad { ptr, i32 }
           cleanup
   invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.e)
@@ -225,12 +225,18 @@ _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %bb.d
   %i.q = and i8 %i.p, 4
   %switch.not.not = icmp eq i8 %i.q, 0
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %2 = load ptr, ptr %i.r, align 8
-  %3 = select i1 %switch.not.not, ptr %i.r, ptr %2
-  invoke void @_ZN4absl12lts_2025051214flags_internal8FlagImpl10StoreValueEPKvNS1_11ValueSourceE(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef %3, i32 noundef 1)
+  br i1 %switch.not.not, label %.invoke, label %2
+
+2:                                                ; preds = %.invoke.a
+  %3 = load ptr, ptr %i.r, align 8, !tbaa !24
+  br label %.invoke
+
+.invoke:                                          ; preds = %.invoke.a, %2
+  %4 = phi ptr [ %3, %2 ], [ %i.r, %.invoke.a ]
+  invoke void @_ZN4absl12lts_2025051214flags_internal8FlagImpl10StoreValueEPKvNS1_11ValueSourceE(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef %4, i32 noundef 1)
           to label %bb.f unwind label %bb.d
 
-bb.f:                                             ; preds = %.invoke.a
+bb.f:                                             ; preds = %.invoke
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.t = load i8, ptr %i.s, align 8, !tbaa !117, !range !128, !noundef !120
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 49 ; 3 uses

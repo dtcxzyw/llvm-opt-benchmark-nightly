@@ -203,7 +203,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !123  ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !123  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !123
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -250,14 +250,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeIN4YAML5TokenESaIS1_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8, !tbaa !145
   br label %_ZNSt5dequeIN4YAML5TokenESaIS1_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeIN4YAML5TokenESaIS1_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(440) ptr @_Znwm(i64 noundef 440) #20
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %3, ptr %i.am, align 8, !tbaa !124
+  %2 = tail call noalias noundef nonnull dereferenceable(440) ptr @_Znwm(i64 noundef 440) #20
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !145
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %2, ptr %i.am, align 8, !tbaa !124
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !109 ; 7 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(84) %i.an, ptr noundef nonnull align 8 dereferenceable(84) %1, i64 20, i1 false)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 24 ; 2 uses
@@ -485,7 +484,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !91   ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !91   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !91
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -532,14 +531,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeIN4YAML7Scanner9SimpleKeyESaIS2_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8, !tbaa !133
   br label %_ZNSt5dequeIN4YAML7Scanner9SimpleKeyESaIS2_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeIN4YAML7Scanner9SimpleKeyESaIS2_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(480) ptr @_Znwm(i64 noundef 480) #20
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %3, ptr %i.am, align 8, !tbaa !92
+  %2 = tail call noalias noundef nonnull dereferenceable(480) ptr @_Znwm(i64 noundef 480) #20
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !133
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %2, ptr %i.am, align 8, !tbaa !92
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !125
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.an, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false), !tbaa.struct !127
   %i.ao = load ptr, ptr %i.c, align 8, !tbaa !133

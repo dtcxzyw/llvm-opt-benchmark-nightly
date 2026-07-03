@@ -203,16 +203,18 @@ bb.v:                                             ; preds = %.thread61, %bb.e
   %.535 = phi i64 [ %.13171, %.thread61 ], [ %.030, %bb.e ]
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1160
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !35
-  %3 = icmp eq i32 %i.ay, %.541
+  %i.az = icmp eq i32 %i.ay, %.541
+  br i1 %i.az, label %3, label %bb.w
+
+3:                                                ; preds = %bb.v
   %4 = getelementptr inbounds nuw i8, ptr %0, i64 1152
-  %5 = load i64, ptr %4, align 8
-  %i.az = icmp eq i64 %.535, %5
-  %6 = select i1 %3, i1 %i.az, i1 false
+  %5 = load i64, ptr %4, align 8, !tbaa !34
+  %6 = icmp eq i64 %.535, %5
   %7 = select i1 %6, i32 0, i32 -2147467259
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.t, %bb.v, %bb.c, %bb.a
-  %.8 = phi i32 [ -2147467259, %bb.a ], [ %7, %bb.v ], [ %.6, %bb.t ], [ %i.i, %bb.c ]
+bb.w:                                             ; preds = %bb.t, %bb.c, %3, %bb.v, %bb.a
+  %.8 = phi i32 [ -2147467259, %bb.a ], [ %i.i, %bb.c ], [ %.6, %bb.t ], [ -2147467259, %bb.v ], [ %7, %3 ]
   ret i32 %.8
 }
 

@@ -203,11 +203,8 @@ _ZN12_GLOBAL__N_121ultag_getVariantsSizeEPKNS_12ULanguageTagE.exit.thread: ; pre
 bb.dg:                                            ; preds = %_ZN12_GLOBAL__N_121ultag_getVariantsSizeEPKNS_12ULanguageTagE.exit.thread
   %.val75 = load ptr, ptr %i.lv, align 8
   %char0 = load i8, ptr %.val75, align 1
-  %.not58 = icmp ne i8 %char0, 0
-  %14 = load i32, ptr %4, align 4
-  %15 = icmp slt i32 %14, 1
-  %or.cond = select i1 %.not58, i1 %15, i1 false
-  br i1 %or.cond, label %bb.di, label %_ZN12_GLOBAL__N_115_appendKeywordsEPNS_12ULanguageTagERN6icu_788ByteSinkER10UErrorCode.exit.thread
+  %.not58 = icmp eq i8 %char0, 0
+  br i1 %.not58, label %_ZN12_GLOBAL__N_115_appendKeywordsEPNS_12ULanguageTagERN6icu_788ByteSinkER10UErrorCode.exit.thread, label %.thread
 
 bb.dh:                                            ; preds = %.lr.ph.i88.preheader
   %i.lw = load ptr, ptr %2, align 8
@@ -216,12 +213,12 @@ bb.dh:                                            ; preds = %.lr.ph.i88.preheade
   call void %i.ly(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @_ZN12_GLOBAL__N_18LANG_UNDE, i32 noundef 3) #12
   br label %.thread
 
-.thread:                                          ; preds = %bb.dh, %.lr.ph.i88.preheader
+.thread:                                          ; preds = %bb.dg, %bb.dh, %.lr.ph.i88.preheader
   %.old = load i32, ptr %4, align 4
   %.old695 = icmp slt i32 %.old, 1
   br i1 %.old695, label %bb.di, label %_ZN12_GLOBAL__N_115_appendKeywordsEPNS_12ULanguageTagERN6icu_788ByteSinkER10UErrorCode.exit.thread
 
-bb.di:                                            ; preds = %bb.dg, %.thread
+bb.di:                                            ; preds = %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #12
   store i32 0, ptr %10, align 8
   %i.lz = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 23 uses

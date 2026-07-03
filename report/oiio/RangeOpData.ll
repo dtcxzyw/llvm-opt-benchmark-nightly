@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %_ZNK16OpenColorIO_v
   %i.r = fcmp uge double %i.q, 1.000000e+00
   br label %_ZNK16OpenColorIO_v2_511RangeOpData6scalesEv.exit.thread
 
-_ZNK16OpenColorIO_v2_511RangeOpData6scalesEv.exit.thread: ; preds = %bb.a, %bb.b, %_ZNK16OpenColorIO_v2_511RangeOpData6scalesEv.exit
-  %.0 = phi i1 [ false, %_ZNK16OpenColorIO_v2_511RangeOpData6scalesEv.exit ], [ %i.r, %bb.b ], [ false, %bb.a ]
+_ZNK16OpenColorIO_v2_511RangeOpData6scalesEv.exit.thread: ; preds = %bb.b, %bb.a, %_ZNK16OpenColorIO_v2_511RangeOpData6scalesEv.exit
+  %.0 = phi i1 [ false, %_ZNK16OpenColorIO_v2_511RangeOpData6scalesEv.exit ], [ false, %bb.a ], [ %i.r, %bb.b ]
   ret i1 %.0
 }
 
@@ -403,15 +403,17 @@ bb.k:                                             ; preds = %bb.e, %bb.i, %bb.j,
   %.043 = phi double [ %i.d, %bb.i ], [ %i.ar, %bb.j ], [ %i.d, %bb.g ], [ %i.ap, %bb.h ], [ %i.d, %bb.e ]
   %.041 = phi double [ %i.g, %bb.i ], [ %i.g, %bb.j ], [ %i.aj, %bb.g ], [ %i.g, %bb.h ], [ %i.o, %bb.e ]
   %i.au = fcmp uno double %i.c, 0.000000e+00
-  br i1 %i.au, label %bb.s, label %bb.l
+  br i1 %i.au, label %bb.s, label %3
 
-bb.l:                                             ; preds = %bb.k
-  %3 = fcmp uno double %i.at, 0.000000e+00
+3:                                                ; preds = %bb.k
+  %4 = fcmp uno double %i.at, 0.000000e+00
+  br i1 %4, label %bb.o, label %bb.l
+
+bb.l:                                             ; preds = %3
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 192
-  %i.aw = load double, ptr %i.av, align 8         ; 4 uses
+  %i.aw = load double, ptr %i.av, align 8, !tbaa !38
   %i.ax = fcmp ugt double %i.aw, %i.at
-  %or.cond48 = select i1 %3, i1 true, i1 %i.ax
-  br i1 %or.cond48, label %bb.o, label %bb.m
+  br i1 %i.ax, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64)
@@ -452,14 +454,16 @@ bb.n:                                             ; preds = %bb.m
           cleanup
   br label %common.resume
 
-bb.o:                                             ; preds = %bb.l
+bb.o:                                             ; preds = %bb.l, %3
   %i.bj = getelementptr inbounds nuw i8, ptr %i.e, i64 176
   %i.bk = load double, ptr %i.bj, align 8, !tbaa !36 ; 3 uses
   %i.bl = fcmp uno double %i.bk, 0.000000e+00
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 192
+  %6 = load double, ptr %5, align 8, !tbaa !38    ; 3 uses
   br i1 %i.bl, label %bb.u, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bm = fcmp ugt double %i.aw, %i.bk
+  %i.bm = fcmp ugt double %6, %i.bk
   br i1 %i.bm, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -467,7 +471,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bo = load double, ptr %i.bn, align 8, !tbaa !11
   %i.bp = getelementptr inbounds nuw i8, ptr %i.e, i64 208
   %i.bq = load double, ptr %i.bp, align 8, !tbaa !57
-  %i.br = tail call double @llvm.fmuladd.f64(double %i.aw, double %i.bo, double %i.bq)
+  %i.br = tail call double @llvm.fmuladd.f64(double %6, double %i.bo, double %i.bq)
   br label %bb.u
 
 bb.r:                                             ; preds = %bb.p
@@ -490,7 +494,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.o, %bb.s, %bb.t, %bb.q, %bb.r
   %.042 = phi double [ %i.c, %bb.s ], [ %i.bz, %bb.t ], [ %i.c, %bb.q ], [ %i.bx, %bb.r ], [ %i.c, %bb.o ]
-  %.0 = phi double [ %i.i, %bb.s ], [ %i.i, %bb.t ], [ %i.br, %bb.q ], [ %i.i, %bb.r ], [ %i.aw, %bb.o ]
+  %.0 = phi double [ %i.i, %bb.s ], [ %i.i, %bb.t ], [ %i.br, %bb.q ], [ %i.i, %bb.r ], [ %6, %bb.o ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !67)
   store ptr null, ptr %0, align 8, !tbaa !47, !alias.scope !67
   %i.cb = tail call noalias noundef nonnull dereferenceable(248) ptr @_Znwm(i64 noundef 248) #20, !noalias !67 ; 13 uses

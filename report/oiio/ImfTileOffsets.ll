@@ -203,7 +203,7 @@ _ZNSt6vectorImSaImEE6resizeEm.exit:               ; preds = %_ZSt8_DestroyIPmmEv
 bb.s:                                             ; preds = %bb.a
   %i.cx = mul nsw i32 %3, %2                      ; 2 uses
   %.not227 = icmp eq i32 %i.cx, 0
-  br i1 %.not227, label %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a, label %bb.t
+  br i1 %.not227, label %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.cy = sext i32 %i.cx to i64
@@ -212,15 +212,17 @@ bb.t:                                             ; preds = %bb.s
 
 ._ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73_crit_edge143: ; preds = %bb.t
   %.pre = load i32, ptr %i.b, align 8, !tbaa !17
-  br label %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a
+  br label %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73
 
-_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a: ; preds = %bb.s, %._ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73_crit_edge143
+_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73: ; preds = %bb.s, %._ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73_crit_edge143
   %6 = phi i32 [ %.pre, %._ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73_crit_edge143 ], [ %3, %bb.s ] ; 2 uses
   %7 = icmp sgt i32 %6, 0
-  %i.cz = load i32, ptr %i.a, align 4             ; 2 uses
+  br i1 %7, label %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a, label %.loopexit113
+
+_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a: ; preds = %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73
+  %i.cz = load i32, ptr %i.a, align 4, !tbaa !16  ; 2 uses
   %i.da = icmp sgt i32 %i.cz, 0
-  %or.cond = select i1 %7, i1 %i.da, i1 false
-  br i1 %or.cond, label %.preheader, label %.loopexit113
+  br i1 %i.da, label %.preheader, label %.loopexit113
 
 .preheader:                                       ; preds = %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a, %._crit_edge128
   %i.db = phi i32 [ %i.dg, %._crit_edge128 ], [ %6, %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a ]
@@ -579,7 +581,7 @@ bb.an:                                            ; preds = %bb.al
   tail call void @__cxa_free_exception(ptr nonnull %i.hw) #20
   br label %bb.ao
 
-.loopexit113:                                     ; preds = %._crit_edge128, %._crit_edge132, %bb.b, %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a, %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit, %bb.a
+.loopexit113:                                     ; preds = %._crit_edge128, %._crit_edge132, %bb.b, %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73.a, %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit73, %_ZNSt6vectorIS_IS_ImSaImEESaIS1_EESaIS3_EE6resizeEm.exit, %bb.a
   ret void
 
 bb.ao:                                            ; preds = %.loopexit114, %.loopexit.split-lp115, %.loopexit119, %.loopexit.split-lp120, %.loopexit, %.loopexit.split-lp, %bb.i, %bb.an, %bb.d

@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %.thread.a, %bb.h
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.c, %.preheader49, %bb.d, %.critedge, %bb.i, %bb.a
-  %.2 = phi i1 [ false, %bb.a ], [ false, %.critedge ], [ true, %bb.i ], [ false, %bb.d ], [ false, %.preheader49 ], [ false, %bb.c ]
+  %.2 = phi i1 [ false, %bb.a ], [ false, %.critedge ], [ false, %bb.d ], [ true, %bb.i ], [ false, %.preheader49 ], [ false, %bb.c ]
   ret i1 %.2
 }
 
@@ -221,18 +221,15 @@ bb.a:
   %i.f = load i16, ptr %i.e, align 2              ; 2 uses
   %.not = icmp eq i16 %i.f, 0
   %or.cond = select i1 %i.d, i1 true, i1 %.not
-  br i1 %or.cond, label %.preheader, label %3
+  br i1 %or.cond, label %.preheader, label %.sink.split
 
-3:                                                ; preds = %bb.a
-  %4 = icmp ult i16 %i.f, 2
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %3, %bb.e
-  %.sink43.a = phi ptr [ %i.p, %bb.e ], [ %0, %3 ]
-  %.sink = phi i1 [ %5, %bb.e ], [ %4, %3 ]
+.sink.split:                                      ; preds = %bb.d, %bb.a
+  %.sink43 = phi i16 [ %i.f, %bb.a ], [ %i.t, %bb.d ]
+  %.sink43.a = phi ptr [ %0, %bb.a ], [ %i.p, %bb.d ]
+  %3 = icmp eq i16 %.sink43, 1
   %i.g = getelementptr inbounds nuw i8, ptr %.sink43.a, i64 8 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8
-  %.0.i29 = select i1 %.sink, ptr %i.g, ptr %i.h
+  %.0.i29 = select i1 %3, ptr %i.g, ptr %i.h
   %i.i = load ptr, ptr %.0.i29, align 8, !tbaa !42
   br label %.preheader
 
@@ -240,8 +237,8 @@ bb.a:
   %.022.ph = phi ptr [ %i.i, %.sink.split ], [ %0, %bb.a ]
   br label %bb.b
 
-bb.b:                                             ; preds = %.backedge, %.preheader
-  %.022 = phi ptr [ %.022.ph, %.preheader ], [ %i.p, %.backedge ] ; 7 uses
+bb.b:                                             ; preds = %bb.e, %.preheader
+  %.022 = phi ptr [ %.022.ph, %.preheader ], [ %i.p, %bb.e ] ; 7 uses
   %i.j = load i8, ptr %.022, align 8, !tbaa !7    ; 2 uses
   switch i8 %i.j, label %.loopexit [
     i8 11, label %bb.c
@@ -259,20 +256,16 @@ bb.c:                                             ; preds = %bb.b
   %i.p = load ptr, ptr %.0.i28, align 8, !tbaa !42 ; 4 uses
   %i.q = load i8, ptr %i.p, align 8, !tbaa !7
   %i.r = icmp eq i8 %i.q, 5
-  br i1 %i.r, label %bb.d, label %.backedge
+  br i1 %i.r, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 6
   %i.t = load i16, ptr %i.s, align 2, !tbaa !15   ; 2 uses
   %.not26 = icmp eq i16 %i.t, 0
-  br i1 %.not26, label %.backedge, label %bb.e
+  br i1 %.not26, label %bb.e, label %.sink.split, !llvm.loop !124
 
-.backedge:                                        ; preds = %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.d, %bb.c
   br label %bb.b, !llvm.loop !124
-
-bb.e:                                             ; preds = %bb.d
-  %5 = icmp eq i16 %i.t, 1
-  br label %.sink.split, !llvm.loop !124
 
 bb.f:                                             ; preds = %bb.b, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %.022, i64 2 ; 2 uses
@@ -676,7 +669,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !171  ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !171  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !171
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -723,14 +716,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeIN10duckdb_re29WalkStateIiEESaIS2_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8, !tbaa !109
   br label %_ZNSt5dequeIN10duckdb_re29WalkStateIiEESaIS2_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeIN10duckdb_re29WalkStateIiEESaIS2_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #30
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %3, ptr %i.am, align 8, !tbaa !110
+  %2 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #30
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !109
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %2, ptr %i.am, align 8, !tbaa !110
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !175
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.an, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !212
   %i.ao = load ptr, ptr %i.c, align 8, !tbaa !109

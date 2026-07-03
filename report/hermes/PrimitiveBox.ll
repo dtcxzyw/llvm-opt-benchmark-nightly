@@ -203,8 +203,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8489
   %i.ap = load i8, ptr %i.ao, align 1, !range !44
   %i.aq = trunc nuw i8 %i.ap to i1
-  %i.ar = select i1 %i.an, i1 %i.aq, i1 false
-  br i1 %i.ar, label %bb.g, label %_ZN6hermes2vm13GCPointerBase7setNullERNS0_7HadesGCE.exit, !prof !12
+  %i.ar = select i1 %i.an, i1 %i.aq, i1 false, !prof !88
+  br i1 %i.ar, label %bb.g, label %_ZN6hermes2vm13GCPointerBase7setNullERNS0_7HadesGCE.exit, !prof !88
 
 bb.g:                                             ; preds = %bb.f
   %i.as = load i32, ptr %i.ag, align 4, !tbaa !3  ; 2 uses
@@ -607,7 +607,7 @@ _ZN6hermes2vm7Runtime10makeAFixedINS0_8JSNumberELNS0_12HasFinalizerE0ELNS0_9Long
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i32 0, ptr %i.t, align 4
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  store double %1, ptr %i.u, align 8, !tbaa !88
+  store double %1, ptr %i.u, align 8, !tbaa !89
   store i32 939524136, ptr %i.h, align 8, !tbaa !20
   %.01320.i.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   store i32 14, ptr %.01320.i.ptr.i.i, align 8, !tbaa !3
@@ -683,7 +683,7 @@ _ZN6hermes2vm7Runtime10makeAFixedINS0_9JSBooleanELNS0_12HasFinalizerE0ELNS0_9Lon
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i32 0, ptr %i.u, align 4
   %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 20
-  store i8 %i.j, ptr %i.v, align 4, !tbaa !90
+  store i8 %i.j, ptr %i.v, align 4, !tbaa !91
   store i32 905969704, ptr %i.h, align 4, !tbaa !20
   %.01320.i.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store <4 x i32> splat (i32 14), ptr %.01320.i.ptr.i.i, align 4, !tbaa !3
@@ -881,8 +881,9 @@ attributes #4 = { nounwind }
 !85 = !{!"_ZTSN6hermes2vm9GCPointerINS0_11HiddenClassEEE", !82, i64 0}
 !86 = !{!"_ZTSN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_13HermesValue32EEEEE", !82, i64 0}
 !87 = !{!"_ZTSN6hermes2vm9GCPointerINS0_15StringPrimitiveEEE", !82, i64 0}
-!88 = !{!89, !72, i64 24}
-!89 = !{!"_ZTSN6hermes2vm8JSNumberE", !79, i64 0, !72, i64 24}
-!90 = !{!91, !43, i64 20}
-!91 = !{!"_ZTSN6hermes2vm9JSBooleanE", !79, i64 0, !43, i64 20}
+!88 = !{!"branch_weights", i32 1, i32 4001}
+!89 = !{!90, !72, i64 24}
+!90 = !{!"_ZTSN6hermes2vm8JSNumberE", !79, i64 0, !72, i64 24}
+!91 = !{!92, !43, i64 20}
+!92 = !{!"_ZTSN6hermes2vm9JSBooleanE", !79, i64 0, !43, i64 20}
 end_hunk_1

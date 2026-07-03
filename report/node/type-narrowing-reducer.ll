@@ -177,12 +177,7 @@ _ZNK2v88internal8compiler4Type2IsES2_.exit219.thread: ; preds = %_ZNK2v88interna
   %i.w = call noundef double @_ZNK2v88internal8compiler4Type3MaxEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #6
   %i.x = call noundef double @_ZNK2v88internal8compiler4Type3MinEv(ptr noundef nonnull align 8 dereferenceable(8) %3) #6
   %i.y = fcmp olt double %i.w, %i.x
-  br i1 %i.y, label %5, label %bb.d
-
-5:                                                ; preds = %_ZNK2v88internal8compiler4Type2IsES2_.exit219.thread
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.0.0.copyload.i = load i64, ptr %6, align 8
-  br label %bb.f
+  br i1 %i.y, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_ZNK2v88internal8compiler4Type2IsES2_.exit219.thread
   %i.z = call noundef double @_ZNK2v88internal8compiler4Type3MinEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #6
@@ -190,13 +185,14 @@ bb.d:                                             ; preds = %_ZNK2v88internal8co
   %i.ab = fcmp ult double %i.z, %i.aa
   br i1 %i.ab, label %bb.f, label %bb.e
 
-bb.e:                                             ; preds = %bb.d
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 72
+bb.e:                                             ; preds = %bb.d, %_ZNK2v88internal8compiler4Type2IsES2_.exit219.thread
+  %.sink596 = phi i64 [ 80, %_ZNK2v88internal8compiler4Type2IsES2_.exit219.thread ], [ 72, %bb.d ]
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 %.sink596
   %.sroa.0.0.copyload.i220 = load i64, ptr %i.ac, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %5, %bb.e, %bb.d, %_ZNK2v88internal8compiler4Type2IsES2_.exit219, %_ZNK2v88internal8compiler4Type2IsES2_.exit
-  %.sroa.0135.0 = phi i64 [ %.sroa.0.0.copyload.i, %5 ], [ %.sroa.0.0.copyload.i220, %bb.e ], [ -1, %bb.d ], [ -1, %_ZNK2v88internal8compiler4Type2IsES2_.exit219 ], [ -1, %_ZNK2v88internal8compiler4Type2IsES2_.exit ]
+bb.f:                                             ; preds = %bb.e, %bb.d, %_ZNK2v88internal8compiler4Type2IsES2_.exit219, %_ZNK2v88internal8compiler4Type2IsES2_.exit
+  %.sroa.0135.0 = phi i64 [ -1, %_ZNK2v88internal8compiler4Type2IsES2_.exit219 ], [ -1, %_ZNK2v88internal8compiler4Type2IsES2_.exit ], [ -1, %bb.d ], [ %.sroa.0.0.copyload.i220, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   br label %bb.dk

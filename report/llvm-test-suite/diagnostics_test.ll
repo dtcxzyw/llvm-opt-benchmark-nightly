@@ -158,14 +158,16 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   call void @_ZN9benchmark5State16StartKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
   %i.i = load i32, ptr %i.c, align 4, !tbaa !8
-  %.not = icmp ne i32 %i.i, 0
-  %1 = load i64, ptr %0, align 64                 ; 2 uses
-  %.not14.i = icmp slt i64 %1, 1
-  %or.cond = select i1 %.not, i1 true, i1 %.not14.i
-  br i1 %or.cond, label %bb.g, label %bb.e
+  %.not = icmp eq i32 %i.i, 0
+  br i1 %.not, label %1, label %bb.g
 
-bb.e:                                             ; preds = %bb.d, %bb.b
-  %storemerge.in = phi i64 [ %i.f, %bb.b ], [ %1, %bb.d ]
+1:                                                ; preds = %bb.d
+  %2 = load i64, ptr %0, align 64, !tbaa !42      ; 2 uses
+  %.not14.i = icmp slt i64 %2, 1
+  br i1 %.not14.i, label %bb.g, label %bb.e
+
+bb.e:                                             ; preds = %1, %bb.b
+  %storemerge.in = phi i64 [ %i.f, %bb.b ], [ %2, %1 ]
   %storemerge = add nsw i64 %storemerge.in, -1    ; 2 uses
   store i64 %storemerge, ptr %0, align 64, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
@@ -189,7 +191,7 @@ _ZNK9benchmark5State10iterationsEv.exit:          ; preds = %bb.e, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.b, !llvm.loop !48
 
-bb.g:                                             ; preds = %bb.d, %bb.c
+bb.g:                                             ; preds = %1, %bb.d, %bb.c
   call void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
   ret void
 }

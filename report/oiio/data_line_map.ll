@@ -124,20 +124,22 @@ bb.b:                                             ; preds = %.lr.ph, %.critedge
   %.01840 = phi i64 [ %i.c, %.lr.ph ], [ %i.ay, %.critedge ] ; 3 uses
   %.01939 = phi i64 [ %i.l, %.lr.ph ], [ %.1, %.critedge ] ; 7 uses
   %i.q = tail call noundef i64 @_ZNK22photos_editing_formats8image_io11DataSegment4FindEmh(ptr noundef nonnull align 8 dereferenceable(28) %2, i64 noundef %.01840, i8 noundef zeroext 10) ; 6 uses
+  %3 = icmp ult i64 %i.q, %i.b
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.q, i64 %i.b) ; 7 uses
   %i.r = load i8, ptr %i.m, align 8, !tbaa !21, !range !27, !noundef !28
   %i.s = trunc nuw i8 %i.r to i1
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !7   ; 10 uses
-  %3 = load ptr, ptr %0, align 8
-  %4 = icmp ne ptr %3, %.pre
-  %or.cond.not = select i1 %i.s, i1 %4, i1 false
-  br i1 %or.cond.not, label %bb.c, label %bb.f
+  br i1 %i.s, label %4, label %bb.f
 
-bb.c:                                             ; preds = %bb.b
-  %5 = icmp ult i64 %i.q, %i.b
+4:                                                ; preds = %bb.b
+  %5 = load ptr, ptr %0, align 8, !tbaa !7
+  %6 = icmp eq ptr %5, %.pre
+  br i1 %6, label %bb.f, label %bb.c
+
+bb.c:                                             ; preds = %4
   %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %.pre, i64 -8
   store i64 %.sroa.speculated, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !17
-  br i1 %5, label %bb.d, label %.critedge
+  br i1 %3, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.t = load i64, ptr %2, align 8, !tbaa !10     ; 2 uses
@@ -159,7 +161,7 @@ bb.e:                                             ; preds = %_ZNK22photos_editin
   store i8 0, ptr %i.m, align 8, !tbaa !21
   br label %.critedge
 
-bb.f:                                             ; preds = %bb.b
+bb.f:                                             ; preds = %4, %bb.b
   %i.ac = add i64 %.01939, 1                      ; 2 uses
   %i.ad = load ptr, ptr %i.p, align 8, !tbaa !34
   %.not.i = icmp eq ptr %.pre, %i.ad

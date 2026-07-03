@@ -163,7 +163,7 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.n = load i32, ptr %i.m, align 4              ; 2 uses
   %.not62 = icmp eq i32 %i.n, 0
-  br i1 %.not62, label %.critedge, label %bb.g
+  br i1 %.not62, label %.critedge, label %3
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt14_Bit_referenceaSEb.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt14_Bit_referenceaSEb.exit ] ; 4 uses
@@ -195,7 +195,7 @@ _ZNSt14_Bit_referenceaSEb.exit:                   ; preds = %bb.d, %bb.e
   %storemerge = phi i64 [ %i.aa, %bb.e ], [ %i.x, %bb.d ]
   store i64 %storemerge, ptr %i.t, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.ab = load i32, ptr %i.d, align 8             ; 7 uses
+  %i.ab = load i32, ptr %i.d, align 8             ; 8 uses
   %i.ac = zext i32 %i.ab to i64
   %i.ad = icmp samesign ult i64 %indvars.iv.next, %i.ac
   br i1 %i.ad, label %bb.b, label %._crit_edge, !llvm.loop !3
@@ -205,19 +205,25 @@ bb.f:                                             ; preds = %bb.b
           cleanup
   br label %_ZNSt13_Bvector_baseISaIbEED2Ev.exit126
 
-bb.g:                                             ; preds = %._crit_edge
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %4 = load i8, ptr %3, align 4, !range !5, !noundef !6
-  %5 = trunc nuw i8 %4 to i1
+3:                                                ; preds = %._crit_edge
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %5 = load i8, ptr %4, align 4, !range !5, !noundef !6
+  %6 = trunc nuw i8 %5 to i1
+  br i1 %6, label %bb.g, label %7
+
+bb.g:                                             ; preds = %3
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ag = load i32, ptr %i.af, align 8
   %i.ah = icmp ne i32 %i.n, %i.ag
-  %or.cond.not = select i1 %5, i1 %i.ah, i1 false
   %.not280 = icmp eq i32 %i.ab, 0
-  %or.cond = or i1 %or.cond.not, %.not280
+  %or.cond = or i1 %i.ah, %.not280
   br i1 %or.cond, label %.critedge, label %.lr.ph257.preheader
 
-.lr.ph257.preheader:                              ; preds = %bb.g
+7:                                                ; preds = %3
+  %.not277.old = icmp eq i32 %i.ab, 0
+  br i1 %.not277.old, label %.critedge, label %.lr.ph257.preheader
+
+.lr.ph257.preheader:                              ; preds = %bb.g, %7
   %min.iters.check = icmp ult i32 %i.ab, 4
   br i1 %min.iters.check, label %.lr.ph257.preheader546, label %vector.ph
 
@@ -620,7 +626,7 @@ bb.bg:                                            ; preds = %bb.bf
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0143.4, i64 noundef %i.ja) #21
   br label %_ZNSt13_Bvector_baseISaIbEED2Ev.exit126
 
-.critedge:                                        ; preds = %bb.bd, %bb.bc, %bb.g, %._crit_edge, %._crit_edge258
+.critedge:                                        ; preds = %7, %bb.bd, %bb.bc, %bb.g, %._crit_edge, %._crit_edge258
   %i.jb = invoke noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
           to label %bb.bh unwind label %bb.m
 

@@ -111,20 +111,22 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.027.039, i64 16, i1 false), !tbaa.struct !25
   %i.p = load i64, ptr %6, align 8, !tbaa !26     ; 6 uses
   %.not32 = icmp eq i64 %i.p, 0
-  br i1 %.not32, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a
+  br i1 %.not32, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a:   ; preds = %bb.c
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.c
   %9 = load ptr, ptr %i.e, align 8, !tbaa !28     ; 4 uses
   %10 = call ptr @memchr(ptr noundef %9, i32 noundef 61, i64 noundef %i.p) #16 ; 2 uses
   %.not.i.i = icmp eq ptr %10, null
+  br i1 %.not.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a
+
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a:   ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.q = ptrtoint ptr %10 to i64
   %i.r = ptrtoint ptr %9 to i64
   %i.s = sub i64 %i.q, %i.r                       ; 4 uses
   %i.t = icmp eq i64 %i.s, -1
-  %or.cond = or i1 %.not.i.i, %i.t
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %bb.g
+  br i1 %i.t, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %bb.g
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a, %bb.c
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %bb.c, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a
   %i.u = load ptr, ptr %i.h, align 8, !tbaa !29   ; 3 uses
   %i.v = load ptr, ptr %i.i, align 8, !tbaa !32
   %.not.i = icmp eq ptr %i.u, %i.v

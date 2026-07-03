@@ -203,17 +203,20 @@ bb.bf:                                            ; preds = %_ZL16needsAnotherLi
   %i.kq = load i64, ptr %i.p, align 8, !tbaa !47  ; 4 uses
   %i.kr = add i64 %i.kq, 1                        ; 3 uses
   %i.ks = load ptr, ptr %10, align 8, !tbaa !10   ; 2 uses
-  %i.kt = icmp eq ptr %i.ks, %i.o                 ; 2 uses
-  br i1 %i.kt, label %bb.bg, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+  %i.kt = icmp eq ptr %i.ks, %i.o
+  br i1 %i.kt, label %bb.bg, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 bb.bg:                                            ; preds = %bb.bf
   %i.ku = icmp ult i64 %i.kq, 16
   call void @llvm.assume(i1 %i.ku)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %bb.bg, %bb.bf
-  %14 = load i64, ptr %i.o, align 8
-  %15 = select i1 %i.kt, i64 15, i64 %14
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.bf
+  %14 = load i64, ptr %i.o, align 8, !tbaa !16
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.bg
+  %15 = phi i64 [ %14, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ 15, %bb.bg ]
   %i.kv = icmp ugt i64 %i.kr, %15
   br i1 %i.kv, label %bb.bh, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit
 
@@ -616,7 +619,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !93   ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !93   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !93
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -663,14 +666,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeIN6hermes6parser9TokenKindESaIS2_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8, !tbaa !111
   br label %_ZNSt5dequeIN6hermes6parser9TokenKindESaIS2_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeIN6hermes6parser9TokenKindESaIS2_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #24
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %3, ptr %i.am, align 8, !tbaa !92
+  %2 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #24
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !111
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %2, ptr %i.am, align 8, !tbaa !92
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !97
   %i.ao = load i32, ptr %1, align 4, !tbaa !110
   store i32 %i.ao, ptr %i.an, align 4, !tbaa !110

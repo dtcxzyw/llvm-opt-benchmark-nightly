@@ -204,12 +204,13 @@ bb.o:                                             ; preds = %bb.n
 ._crit_edge160:                                   ; preds = %.lr.ph159, %._crit_edge156
   %i.es = tail call noundef i32 @Event_Reset(ptr noundef nonnull align 8 dereferenceable(104) %i.dp) ; 0 uses
   %i.et = load i32, ptr %i.dw, align 4, !tbaa !75 ; 2 uses
-  %.not114 = icmp eq i32 %i.et, 0                 ; 2 uses
-  %3 = load i32, ptr %i.dx, align 8               ; 2 uses
-  %.not115.a = icmp eq i32 %3, 0
-  %.890 = select i1 %.not114, i1 %.not115.a, i1 false
-  %.10 = select i1 %.not114, i32 %3, i32 %i.et
-  br i1 %.890, label %bb.ab, label %.thread128
+  %.not115.a = icmp eq i32 %i.et, 0
+  br i1 %.not115.a, label %3, label %.thread128
+
+3:                                                ; preds = %._crit_edge160
+  %4 = load i32, ptr %i.dx, align 8, !tbaa !76    ; 2 uses
+  %.not115 = icmp eq i32 %4, 0
+  br i1 %.not115, label %bb.ab, label %.thread128
 
 bb.p:                                             ; preds = %bb.n
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 28696
@@ -428,7 +429,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #20
   br i1 %.not113, label %bb.q, label %.thread128, !llvm.loop !86
 
-bb.ab:                                            ; preds = %._crit_edge160
+bb.ab:                                            ; preds = %3
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 376
   %i.ip = load i64, ptr %i.io, align 8, !tbaa !79
   %i.iq = load ptr, ptr %i.ag, align 8, !tbaa !28
@@ -470,8 +471,8 @@ _ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit120: ; preds = %bb.ab, %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %.thread128
 
-.thread128:                                       ; preds = %bb.c, %bb.d, %_ZN9NCompress6NBZip26CState5AllocEv.exit, %bb.e, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit, %bb.aa, %_ZN9NCompress6NBZip28CDecoder8ReadByteEv.exit.3, %._crit_edge160, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit120, %.thread136, %.thread139.a, %bb.a
-  %.20 = phi i32 [ %i.fv, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit ], [ %i.k, %bb.a ], [ 0, %_ZN9NCompress6NBZip28CDecoder8ReadByteEv.exit.3 ], [ %.0.i119, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit120 ], [ %.10, %._crit_edge160 ], [ %.16.ph, %.thread136 ], [ 1, %.thread139.a ], [ 1, %bb.aa ], [ %i.w, %bb.c ], [ %i.aa, %bb.e ], [ -2147024882, %_ZN9NCompress6NBZip26CState5AllocEv.exit ], [ %i.y, %bb.d ]
+.thread128:                                       ; preds = %bb.c, %bb.d, %_ZN9NCompress6NBZip26CState5AllocEv.exit, %bb.e, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit, %bb.aa, %_ZN9NCompress6NBZip28CDecoder8ReadByteEv.exit.3, %3, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit120, %.thread136, %.thread139.a, %._crit_edge160, %bb.a
+  %.20 = phi i32 [ %i.fv, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit ], [ %i.k, %bb.a ], [ 0, %_ZN9NCompress6NBZip28CDecoder8ReadByteEv.exit.3 ], [ %.0.i119, %_ZN9NCompress6NBZip28CDecoder16SetRatioProgressEy.exit120 ], [ %4, %3 ], [ %.16.ph, %.thread136 ], [ %i.et, %._crit_edge160 ], [ 1, %.thread139.a ], [ 1, %bb.aa ], [ %i.w, %bb.c ], [ %i.aa, %bb.e ], [ -2147024882, %_ZN9NCompress6NBZip26CState5AllocEv.exit ], [ %i.y, %bb.d ]
   ret i32 %.20
 }
 

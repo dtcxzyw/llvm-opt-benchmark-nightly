@@ -203,20 +203,26 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.be = select i1 %i.bc, i1 %i.bd, i1 false     ; 2 uses
   %i.bf = load i8, ptr %i.o, align 8, !tbaa !12, !range !49, !noundef !50
   %i.bg = trunc nuw i8 %i.bf to i1
-  %6 = load i64, ptr %i.p, align 8
-  %7 = icmp uge i64 %i.bb, %6
-  %8 = select i1 %i.bg, i1 %7, i1 false           ; 2 uses
+  br i1 %i.bg, label %6, label %9
+
+6:                                                ; preds = %bb.g
+  %7 = load i64, ptr %i.p, align 8, !tbaa !44
+  %8 = icmp uge i64 %i.bb, %7
+  br label %9
+
+9:                                                ; preds = %6, %bb.g
+  %10 = phi i1 [ false, %bb.g ], [ %8, %6 ]       ; 2 uses
   %.not52 = icmp eq i32 %i.ar, 0
   br i1 %.not52, label %bb.h, label %.critedge
 
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %9
   %i.bh = load i64, ptr %i.n, align 8, !tbaa !48
   %i.bi = icmp eq i64 %i.ay, %i.bh
   %or.cond = select i1 %i.bi, i1 true, i1 %i.be
-  %or.cond5 = select i1 %or.cond, i1 true, i1 %8
+  %or.cond5 = select i1 %or.cond, i1 true, i1 %10
   br i1 %or.cond5, label %bb.i, label %.thread
 
-.critedge:                                        ; preds = %bb.g
+.critedge:                                        ; preds = %9
   %i.bj = load ptr, ptr %i.s, align 8, !tbaa !53
   %i.bk = call noundef i32 @_Z11WriteStreamP20ISequentialOutStreamPKvm(ptr noundef %2, ptr noundef %i.bj, i64 noundef %i.ay) ; 0 uses
   br label %.thread62
@@ -225,7 +231,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bl = load ptr, ptr %i.s, align 8, !tbaa !53
   %i.bm = call noundef i32 @_Z11WriteStreamP20ISequentialOutStreamPKvm(ptr noundef %2, ptr noundef %i.bl, i64 noundef %i.ay) ; 2 uses
   %.not53 = icmp ne i32 %i.bm, 0
-  %brmerge = select i1 %.not53, i1 true, i1 %8    ; 2 uses
+  %brmerge = select i1 %.not53, i1 true, i1 %10   ; 2 uses
   %.not56 = xor i1 %i.be, true
   %brmerge57 = select i1 %brmerge, i1 true, i1 %.not56
   br i1 %brmerge57, label %bb.k, label %bb.j

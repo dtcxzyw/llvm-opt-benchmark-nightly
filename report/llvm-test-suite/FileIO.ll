@@ -203,26 +203,23 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   switch i32 %2, label %.thread [
     i32 0, label %bb.f
-    i32 1, label %bb.d
-    i32 2, label %bb.e
+    i32 1, label %bb.e
+    i32 2, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1080
-  %5 = load i32, ptr %4, align 8, !tbaa !20
-  %6 = sext i32 %5 to i64
-  %7 = add nsw i64 %1, %6
-  br label %bb.f
+  br label %bb.e
 
-bb.e:                                             ; preds = %bb.c
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !19
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %.sink24 = phi i64 [ 48, %bb.d ], [ 1080, %bb.c ]
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %.sink24
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !4
   %i.f = sext i32 %i.e to i64
   %i.g = add nsw i64 %1, %i.f
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
-  %.016 = phi i64 [ %1, %bb.c ], [ %i.g, %bb.e ], [ %7, %bb.d ] ; 2 uses
+bb.f:                                             ; preds = %bb.e, %bb.c
+  %.016 = phi i64 [ %1, %bb.c ], [ %i.g, %bb.e ]  ; 2 uses
   %i.h = icmp sgt i64 %.016, -1
   br i1 %i.h, label %bb.g, label %.thread
 

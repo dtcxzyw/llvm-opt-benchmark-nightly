@@ -203,15 +203,21 @@ bb.b:                                             ; preds = %bb.a
   %i.k = add i64 %i.j, 28
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.m = load i64, ptr %i.l, align 8, !tbaa !202  ; 2 uses
-  %i.n = add i64 %i.k, %i.m                       ; 2 uses
+  %i.n = add i64 %i.k, %i.m                       ; 3 uses
   %.not = icmp eq ptr %2, null
-  %7 = load i64, ptr %3, align 8
-  %8 = icmp ugt i64 %i.n, %7
-  %or.cond = select i1 %.not, i1 true, i1 %8
-  store i64 %i.n, ptr %3, align 8, !tbaa !81
-  br i1 %or.cond, label %bb.j, label %bb.c
+  br i1 %.not, label %10, label %7
 
-bb.c:                                             ; preds = %bb.b
+7:                                                ; preds = %bb.b
+  %8 = load i64, ptr %3, align 8, !tbaa !81
+  %9 = icmp ugt i64 %i.n, %8
+  br i1 %9, label %10, label %bb.c
+
+10:                                               ; preds = %7, %bb.b
+  store i64 %i.n, ptr %3, align 8, !tbaa !81
+  br label %bb.j
+
+bb.c:                                             ; preds = %7
+  store i64 %i.n, ptr %3, align 8, !tbaa !81
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.p = load i32, ptr %i.o, align 8, !tbaa !165
   store i32 %i.p, ptr %2, align 1, !tbaa !203
@@ -289,7 +295,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %bb.q
 
-bb.j:                                             ; preds = %bb.b, %bb.c
+bb.j:                                             ; preds = %bb.c, %10
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   ret void
 
