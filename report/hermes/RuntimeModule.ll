@@ -203,9 +203,9 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.eu = add i64 %i.et, -4                       ; 2 uses
   %i.ev = lshr i64 %i.eu, 2
   %i.ew = add nuw nsw i64 %i.ev, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.eu, 28
-  %i.ex = sub i64 %i.es, %i.eh
-  %diff.check = icmp ult i64 %i.ex, 32
+  %min.iters.check = icmp ult i64 %i.eu, 44
+  %i.ex = sub i64 %i.eh, %i.es
+  %diff.check = icmp ugt i64 %i.ex, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader103, label %vector.ph
 
@@ -608,9 +608,9 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.w = add i64 %i.v, -4                         ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.w, 28
-  %i.z = sub i64 %i.u, %i.j
-  %diff.check = icmp ult i64 %i.z, 32
+  %min.iters.check = icmp ult i64 %i.w, 44
+  %i.z = sub i64 %i.j, %i.u
+  %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader18, label %vector.ph
 
@@ -868,9 +868,9 @@ _ZN6hermes14checkedMalloc2Emm.exit.i:             ; preds = %bb.a
   %i.v = add i64 %umax, %i.u                      ; 2 uses
   %i.w = lshr i64 %i.v, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.v, 56
-  %i.y = sub i64 %i.q, %i.p
-  %diff.check = icmp ult i64 %i.y, 32
+  %min.iters.check = icmp ult i64 %i.v, 72
+  %i.y = sub i64 %i.p, %i.q
+  %diff.check = icmp ugt i64 %i.y, -32
   %or.cond9 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond9, label %.lr.ph.i.preheader10, label %vector.ph
 
@@ -1220,9 +1220,9 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
   %i.bi = add i64 %i.bh, -4                       ; 2 uses
   %i.bj = lshr i64 %i.bi, 2
   %i.bk = add nuw nsw i64 %i.bj, 1                ; 2 uses
-  %min.iters.check120 = icmp ult i64 %i.bi, 28
-  %i.bl = sub i64 %i.bg, %i.j
-  %diff.check = icmp ult i64 %i.bl, 32
+  %min.iters.check120 = icmp ult i64 %i.bi, 44
+  %i.bl = sub i64 %i.j, %i.bg
+  %diff.check = icmp ugt i64 %i.bl, -32
   %or.cond = select i1 %min.iters.check120, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i51.preheader236, label %vector.ph121
 
@@ -1401,9 +1401,9 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
   %i.dj = add i64 %i.di, -4                       ; 2 uses
   %i.dk = lshr i64 %i.dj, 2
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
-  %min.iters.check196 = icmp ult i64 %i.dj, 28
-  %i.dm = sub i64 %i.cy, %i.ck
-  %diff.check194 = icmp ult i64 %i.dm, 32
+  %min.iters.check196 = icmp ult i64 %i.dj, 44
+  %i.dm = sub i64 %i.ck, %i.cy
+  %diff.check194 = icmp ugt i64 %i.dm, -32
   %or.cond230 = or i1 %min.iters.check196, %diff.check194
   br i1 %or.cond230, label %.lr.ph.i.i.i.i.i74.preheader232, label %vector.ph197
 
@@ -1460,14 +1460,14 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET
   %i.dz = add i64 %i.dy, -4                       ; 2 uses
   %i.ea = lshr i64 %i.dz, 2
   %i.eb = add nuw nsw i64 %i.ea, 1                ; 2 uses
-  %min.iters.check215 = icmp ult i64 %i.dz, 60
+  %min.iters.check215 = icmp ult i64 %i.dz, 76
   br i1 %min.iters.check215, label %.lr.ph.i.i.i.i.i80.preheader231, label %vector.memcheck211
 
 vector.memcheck211:                               ; preds = %.lr.ph.i.i.i.i.i80.preheader
   %i.ec = shl i64 %2, 2
   %i.ed = add i64 %i.ec, %.0.lcssa.i.i.i.i.i78212
-  %i.ee = sub i64 %i.ed, %i.ct
-  %diff.check213 = icmp ult i64 %i.ee, 32
+  %i.ee = sub i64 %i.ct, %i.ed
+  %diff.check213 = icmp ugt i64 %i.ee, -32
   br i1 %diff.check213, label %.lr.ph.i.i.i.i.i80.preheader231, label %vector.ph216
 
 vector.ph216:                                     ; preds = %vector.memcheck211

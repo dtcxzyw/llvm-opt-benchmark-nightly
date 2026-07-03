@@ -201,9 +201,9 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x312IfcFaceBoundEEESaIS
   %i.ao = sub i64 %i.an, %i.ac                    ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ao, 56
-  %i.ar = sub i64 %i.am, %i.ac
-  %diff.check = icmp ult i64 %i.ar, 32
+  %min.iters.check = icmp ult i64 %i.ao, 72
+  %i.ar = sub i64 %i.ac, %i.am
+  %diff.check = icmp ugt i64 %i.ar, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader118, label %vector.ph
 
@@ -333,8 +333,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x312IfcFaceBoundEEESaIS6_EE12
   %i.cc = lshr i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %i.cb, 24
-  %i.ce = sub i64 %i.bz, %i.bo
-  %diff.check99 = icmp ult i64 %i.ce, 32
+  %i.ce = sub i64 %i.bo, %i.bz
+  %diff.check99 = icmp ugt i64 %i.ce, -32
   %or.cond116 = or i1 %min.iters.check101, %diff.check99
   br i1 %or.cond116, label %.lr.ph.i.i.i.i.i.i.preheader117, label %vector.ph102
 
@@ -737,9 +737,9 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEE
   %i.ao = sub i64 %i.an, %i.ac                    ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ao, 56
-  %i.ar = sub i64 %i.am, %i.ac
-  %diff.check = icmp ult i64 %i.ar, 32
+  %min.iters.check = icmp ult i64 %i.ao, 72
+  %i.ar = sub i64 %i.ac, %i.am
+  %diff.check = icmp ugt i64 %i.ar, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader122, label %vector.ph
 
@@ -869,8 +869,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEEESaIS6
   %i.cc = lshr i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check105 = icmp ult i64 %i.cb, 24
-  %i.ce = sub i64 %i.bz, %i.bo
-  %diff.check103 = icmp ult i64 %i.ce, 32
+  %i.ce = sub i64 %i.bo, %i.bz
+  %diff.check103 = icmp ugt i64 %i.ce, -32
   %or.cond120 = or i1 %min.iters.check105, %diff.check103
   br i1 %or.cond120, label %.lr.ph.i.i.i.i.i.i.preheader121, label %vector.ph106
 
@@ -1273,9 +1273,9 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEE
   %i.ao = sub i64 %i.an, %i.ac                    ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ao, 56
-  %i.ar = sub i64 %i.am, %i.ac
-  %diff.check = icmp ult i64 %i.ar, 32
+  %min.iters.check = icmp ult i64 %i.ao, 72
+  %i.ar = sub i64 %i.ac, %i.am
+  %diff.check = icmp ugt i64 %i.ar, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader122, label %vector.ph
 
@@ -1405,8 +1405,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEEESaIS6
   %i.cc = lshr i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check105 = icmp ult i64 %i.cb, 24
-  %i.ce = sub i64 %i.bz, %i.bo
-  %diff.check103 = icmp ult i64 %i.ce, 32
+  %i.ce = sub i64 %i.bo, %i.bz
+  %diff.check103 = icmp ugt i64 %i.ce, -32
   %or.cond120 = or i1 %min.iters.check105, %diff.check103
   br i1 %or.cond120, label %.lr.ph.i.i.i.i.i.i.preheader121, label %vector.ph106
 
@@ -1809,9 +1809,9 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x319IfcConnectedFaceSet
   %i.ao = sub i64 %i.an, %i.ac                    ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ao, 56
-  %i.ar = sub i64 %i.am, %i.ac
-  %diff.check = icmp ult i64 %i.ar, 32
+  %min.iters.check = icmp ult i64 %i.ao, 72
+  %i.ar = sub i64 %i.ac, %i.am
+  %diff.check = icmp ugt i64 %i.ar, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader118, label %vector.ph
 
@@ -1941,8 +1941,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x319IfcConnectedFaceSetEEESaI
   %i.cc = lshr i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %i.cb, 24
-  %i.ce = sub i64 %i.bz, %i.bo
-  %diff.check99 = icmp ult i64 %i.ce, 32
+  %i.ce = sub i64 %i.bo, %i.bz
+  %diff.check99 = icmp ugt i64 %i.ce, -32
   %or.cond116 = or i1 %min.iters.check101, %diff.check99
   br i1 %or.cond116, label %.lr.ph.i.i.i.i.i.i.preheader117, label %vector.ph102
 
@@ -2345,9 +2345,9 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x311IfcPropertyEEESaIS6
   %i.ao = sub i64 %i.an, %i.ac                    ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ao, 56
-  %i.ar = sub i64 %i.am, %i.ac
-  %diff.check = icmp ult i64 %i.ar, 32
+  %min.iters.check = icmp ult i64 %i.ao, 72
+  %i.ar = sub i64 %i.ac, %i.am
+  %diff.check = icmp ugt i64 %i.ar, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader118, label %vector.ph
 
@@ -2477,8 +2477,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x311IfcPropertyEEESaIS6_EE12_
   %i.cc = lshr i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %i.cb, 24
-  %i.ce = sub i64 %i.bz, %i.bo
-  %diff.check99 = icmp ult i64 %i.ce, 32
+  %i.ce = sub i64 %i.bo, %i.bz
+  %diff.check99 = icmp ugt i64 %i.ce, -32
   %or.cond116 = or i1 %min.iters.check101, %diff.check99
   br i1 %or.cond116, label %.lr.ph.i.i.i.i.i.i.preheader117, label %vector.ph102
 
@@ -2881,9 +2881,9 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x314NotImplementedEEESa
   %i.ao = sub i64 %i.an, %i.ac                    ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ao, 56
-  %i.ar = sub i64 %i.am, %i.ac
-  %diff.check = icmp ult i64 %i.ar, 32
+  %min.iters.check = icmp ult i64 %i.ao, 72
+  %i.ar = sub i64 %i.ac, %i.am
+  %diff.check = icmp ugt i64 %i.ar, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader118, label %vector.ph
 
@@ -3013,8 +3013,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x314NotImplementedEEESaIS6_EE
   %i.cc = lshr i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %i.cb, 24
-  %i.ce = sub i64 %i.bz, %i.bo
-  %diff.check99 = icmp ult i64 %i.ce, 32
+  %i.ce = sub i64 %i.bo, %i.bz
+  %diff.check99 = icmp ugt i64 %i.ce, -32
   %or.cond116 = or i1 %min.iters.check101, %diff.check99
   br i1 %or.cond116, label %.lr.ph.i.i.i.i.i.i.preheader117, label %vector.ph102
 

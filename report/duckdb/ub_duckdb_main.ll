@@ -203,8 +203,8 @@ _ZNKSt6vectorIN6duckdb12optional_ptrIKNS0_16ParsedExpressionELb1EEESaIS4_EE12_M_
   %i.dk = lshr i64 %i.dj, 3
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dj, 24
-  %i.dm = sub i64 %i.dh, %i.cv
-  %diff.check = icmp ult i64 %i.dm, 32
+  %i.dm = sub i64 %i.cv, %i.dh
+  %diff.check = icmp ugt i64 %i.dm, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader169, label %vector.ph
 
@@ -607,9 +607,9 @@ _ZNKSt6vectorIN6duckdb12LogicalIndexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; p
   %i.bg = add i64 %i.bf, -8                       ; 2 uses
   %i.bh = lshr i64 %i.bg, 3
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bg, 56
-  %i.bj = sub i64 %i.be, %i.at
-  %diff.check = icmp ult i64 %i.bj, 32
+  %min.iters.check = icmp ult i64 %i.bg, 72
+  %i.bj = sub i64 %i.at, %i.be
+  %diff.check = icmp ugt i64 %i.bj, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader108, label %vector.ph
 
@@ -1012,8 +1012,8 @@ _ZNKSt6vectorISt17reference_wrapperIKN6duckdb15LogicalOperatorEESaIS4_EE12_M_che
   %i.ax = lshr i64 %i.aw, 3
   %i.ay = add nuw nsw i64 %i.ax, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aw, 24
-  %i.az = sub i64 %i.au, %i.ai
-  %diff.check = icmp ult i64 %i.az, 32
+  %i.az = sub i64 %i.ai, %i.au
+  %diff.check = icmp ugt i64 %i.az, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i31.preheader95, label %vector.ph
 

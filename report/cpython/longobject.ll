@@ -204,8 +204,8 @@ PyUnicode_READ.exit.us78.i.prol.loopexit:         ; preds = %PyUnicode_READ.exit
 
 iter.check557:                                    ; preds = %.lr.ph.i
   %min.iters.check542 = icmp ult i64 %.val64.i, 4
-  %i.by = sub i64 %i.bb, %.0.i.i541
-  %diff.check = icmp ult i64 %i.by, 32
+  %i.by = sub i64 %.0.i.i541, %i.bb
+  %diff.check = icmp ugt i64 %i.by, -32
   %or.cond593 = select i1 %min.iters.check542, i1 true, i1 %diff.check
   br i1 %or.cond593, label %PyUnicode_READ.exit.us.i.preheader, label %vector.main.loop.iter.check543
 
@@ -608,10 +608,10 @@ bb.x:                                             ; preds = %bb.p
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.ck = sub i64 %i.bz, %.1114198
-  %diff.check = icmp ult i64 %i.ck, 32
-  %i.cl = sub i64 %i.bz, %.1112199
-  %diff.check200 = icmp ult i64 %i.cl, 32
+  %i.ck = sub i64 %.1114198, %i.bz
+  %diff.check = icmp ugt i64 %i.ck, -32
+  %i.cl = sub i64 %.1112199, %i.bz
+  %diff.check200 = icmp ugt i64 %i.cl, -32
   %conflict.rdx = or i1 %diff.check, %diff.check200
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
 
@@ -681,10 +681,10 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %min.iters.check224, label %scalar.ph223.preheader, label %vector.memcheck219
 
 vector.memcheck219:                               ; preds = %.lr.ph159
-  %i.dh = sub i64 %i.bz, %.1114198
-  %diff.check220 = icmp ult i64 %i.dh, 32
-  %i.di = sub i64 %i.bz, %.1112199
-  %diff.check221 = icmp ult i64 %i.di, 32
+  %i.dh = sub i64 %.1114198, %i.bz
+  %diff.check220 = icmp ugt i64 %i.dh, -32
+  %i.di = sub i64 %.1112199, %i.bz
+  %diff.check221 = icmp ugt i64 %i.di, -32
   %conflict.rdx222 = or i1 %diff.check220, %diff.check221
   br i1 %conflict.rdx222, label %scalar.ph223.preheader, label %vector.ph225
 
@@ -754,10 +754,10 @@ scalar.ph223.prol.loopexit:                       ; preds = %scalar.ph223.prol, 
   br i1 %min.iters.check243, label %scalar.ph242.preheader, label %vector.memcheck238
 
 vector.memcheck238:                               ; preds = %.lr.ph162
-  %i.ee = sub i64 %i.bz, %.1114198
-  %diff.check239 = icmp ult i64 %i.ee, 32
-  %i.ef = sub i64 %i.bz, %.1112199
-  %diff.check240 = icmp ult i64 %i.ef, 32
+  %i.ee = sub i64 %.1114198, %i.bz
+  %diff.check239 = icmp ugt i64 %i.ee, -32
+  %i.ef = sub i64 %.1112199, %i.bz
+  %diff.check240 = icmp ugt i64 %i.ef, -32
   %conflict.rdx241 = or i1 %diff.check239, %diff.check240
   br i1 %conflict.rdx241, label %scalar.ph242.preheader, label %vector.ph244
 
@@ -942,8 +942,8 @@ bb.y:                                             ; preds = %bb.x
   %i.ig = getelementptr i8, ptr %i.by, i64 24     ; 6 uses
   %i.ih = sub nuw nsw i64 %.0106, %.0107          ; 3 uses
   %min.iters.check207 = icmp ult i64 %i.ih, 8
-  %i.ii = sub i64 %i.bz, %.1112199
-  %diff.check205 = icmp ult i64 %i.ii, 32
+  %i.ii = sub i64 %.1112199, %i.bz
+  %diff.check205 = icmp ugt i64 %i.ii, -32
   %or.cond = or i1 %min.iters.check207, %diff.check205
   br i1 %or.cond, label %scalar.ph206.preheader, label %vector.ph208
 
@@ -1346,8 +1346,8 @@ bb.g:                                             ; preds = %bb.c
   %i.q = getelementptr i8, ptr %i.a, i64 24       ; 6 uses
   %i.r = getelementptr i8, ptr %i.h, i64 24       ; 6 uses
   %min.iters.check = icmp ult i64 %.val.i, 64
-  %i.s = sub i64 %i.m, %i.b
-  %diff.check = icmp ult i64 %i.s, 32
+  %i.s = sub i64 %i.b, %i.m
+  %diff.check = icmp ugt i64 %i.s, -32
   %or.cond64 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond64, label %scalar.ph.preheader, label %vector.ph
 

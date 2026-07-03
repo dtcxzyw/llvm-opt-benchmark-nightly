@@ -204,9 +204,9 @@ bb.j:                                             ; preds = %_ZL14aes_gen_tables
   br i1 %min.iters.check, label %.lr.ph.preheader130, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %3 = add i64 %i.b, 16
-  %4 = sub i64 %3, %i.a
-  %diff.check = icmp ult i64 %4, 32
+  %3 = sub i64 %i.b, %i.a
+  %4 = add i64 %3, 15
+  %diff.check = icmp ult i64 %4, 31
   br i1 %diff.check, label %.lr.ph.preheader130, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -609,11 +609,11 @@ bb.a:
   br i1 %.not, label %._crit_edge57, label %.lr.ph56.preheader
 
 .lr.ph56.preheader:                               ; preds = %.preheader49
-  %7 = sub i64 %i.c, %i.b
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
-  %diff.check = icmp ult i64 %7, 32
+  %7 = sub i64 %i.b, %i.c
+  %diff.check = icmp ugt i64 %7, -32
   br label %.lr.ph56
 
 .lr.ph56:                                         ; preds = %.lr.ph56.preheader, %._crit_edge
@@ -685,8 +685,8 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.ag = add i64 %.03255, %i.c
   %i.ah = add i64 %.03654, %i.a
-  %i.ai = sub i64 %i.ag, %i.ah
-  %diff.check61 = icmp ult i64 %i.ai, 32
+  %i.ai = sub i64 %i.ah, %i.ag
+  %diff.check61 = icmp ugt i64 %i.ai, -32
   %conflict.rdx = or i1 %diff.check, %diff.check61
   br i1 %conflict.rdx, label %.lr.ph53.preheader, label %vec.epilog.ph
 

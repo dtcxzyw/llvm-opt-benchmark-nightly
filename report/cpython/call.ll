@@ -203,13 +203,13 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.s, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.g
-  %min.iters.check = icmp ult i64 %2, 8
+  %min.iters.check = icmp ult i64 %2, 10
   br i1 %min.iters.check, label %.lr.ph.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %5 = add i64 %i.m, 8
-  %6 = sub i64 %5, %i.a
-  %diff.check = icmp ult i64 %6, 32
+  %5 = sub i64 %i.m, %i.a
+  %6 = add i64 %5, 7
+  %diff.check = icmp ult i64 %6, 31
   br i1 %diff.check, label %.lr.ph.preheader62, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

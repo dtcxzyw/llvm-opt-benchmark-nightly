@@ -204,9 +204,9 @@ _ZNSt12_Vector_baseIN6hermes2vm17PinnedHermesValueESaIS2_EE11_M_allocateEm.exit.
   %i.aa = sub i64 %i.z, %i.q                      ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 56
-  %i.ad = sub i64 %i.y, %i.q
-  %diff.check = icmp ult i64 %i.ad, 32
+  %min.iters.check = icmp ult i64 %i.aa, 72
+  %i.ad = sub i64 %i.q, %i.y
+  %diff.check = icmp ugt i64 %i.ad, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader41, label %vector.ph
 
@@ -337,8 +337,8 @@ _ZNKSt6vectorIN6hermes2vm17PinnedHermesValueESaIS2_EE12_M_check_lenEmPKc.exit.i.
   %i.bp = lshr i64 %i.bo, 3
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check24 = icmp ult i64 %i.bo, 24
-  %i.br = sub i64 %i.bm, %i.bb
-  %diff.check22 = icmp ult i64 %i.br, 32
+  %i.br = sub i64 %i.bb, %i.bm
+  %diff.check22 = icmp ugt i64 %i.br, -32
   %or.cond39 = or i1 %min.iters.check24, %diff.check22
   br i1 %or.cond39, label %.lr.ph.i.i.i.i.i.i.preheader40, label %vector.ph25
 
@@ -741,9 +741,9 @@ _ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i.i: ;
   %i.x = add i64 %i.w, -4                         ; 2 uses
   %i.y = lshr i64 %i.x, 2
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.x, 28
-  %i.aa = sub i64 %i.v, %i.k
-  %diff.check = icmp ult i64 %i.aa, 32
+  %min.iters.check = icmp ult i64 %i.x, 44
+  %i.aa = sub i64 %i.k, %i.v
+  %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.preheader44, label %vector.ph
 
@@ -872,9 +872,9 @@ _ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i8.i.i.i: 
   %i.bp = add i64 %i.bo, -4                       ; 2 uses
   %i.bq = lshr i64 %i.bp, 2
   %i.br = add nuw nsw i64 %i.bq, 1                ; 2 uses
-  %min.iters.check27 = icmp ult i64 %i.bp, 28
-  %i.bs = sub i64 %i.bn, %i.bc
-  %diff.check25 = icmp ult i64 %i.bs, 32
+  %min.iters.check27 = icmp ult i64 %i.bp, 44
+  %i.bs = sub i64 %i.bc, %i.bn
+  %diff.check25 = icmp ugt i64 %i.bs, -32
   %or.cond42 = or i1 %min.iters.check27, %diff.check25
   br i1 %or.cond42, label %.lr.ph.i.i.i.i.i12.i.i.i.preheader43, label %vector.ph28
 

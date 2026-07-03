@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ao
   %i.ev = shl i64 %4, 3
   %i.ew = add i64 %i.c, 24
   %i.ex = shl i64 %4, 3
-  %min.iters.check = icmp ult i64 %.0214, 10
+  %min.iters.check = icmp ult i64 %.0214, 12
   %n.vec = and i64 %.0214, -4                     ; 3 uses
   %cmp.n = icmp eq i64 %.0214, %n.vec
   %xtraiter850 = and i64 %.0214, 1
@@ -501,17 +501,17 @@ vector.memcheck:                                  ; preds = %.lr.ph570
   %i.je = add i64 %i.es, %i.jd
   %i.jf = mul i64 %i.et, %.1248.2
   %i.jg = add i64 %i.jf, %i.jc
-  %i.jh = sub i64 %i.je, %i.jg
-  %diff.check = icmp ult i64 %i.jh, 32
+  %i.jh = sub i64 %i.jg, %i.je
+  %diff.check = icmp ugt i64 %i.jh, -32
   %i.ji = add i64 %i.eu, %i.jd
   %i.jj = add i64 %i.gt, %i.jc
-  %i.jk = sub i64 %i.ji, %i.jj
-  %diff.check785 = icmp ult i64 %i.jk, 32
+  %i.jk = sub i64 %i.jj, %i.ji
+  %diff.check785 = icmp ugt i64 %i.jk, -32
   %conflict.rdx = or i1 %diff.check, %diff.check785
   %i.jl = add i64 %i.ew, %i.jd
   %i.jm = add i64 %i.gu, %i.jc
-  %i.jn = sub i64 %i.jl, %i.jm
-  %diff.check786 = icmp ult i64 %i.jn, 32
+  %i.jn = sub i64 %i.jm, %i.jl
+  %diff.check786 = icmp ugt i64 %i.jn, -32
   %conflict.rdx787 = or i1 %conflict.rdx, %diff.check786
   br i1 %conflict.rdx787, label %scalar.ph.preheader, label %vector.body
 
@@ -914,7 +914,7 @@ bb.at:                                            ; preds = %_ZN5o3dgc13SC3DMCEn
   %i.iu = shl i64 %4, 3
   %i.iv = add i64 %i.a, 624
   %i.iw = shl i64 %4, 3
-  %min.iters.check1018 = icmp ult i64 %3, 10
+  %min.iters.check1018 = icmp ult i64 %3, 12
   %n.vec1021 = and i64 %3, -4                     ; 3 uses
   %cmp.n1032 = icmp eq i64 %3, %n.vec1021
   %xtraiter1081 = and i64 %3, 1
@@ -1235,17 +1235,17 @@ vector.memcheck1012:                              ; preds = %.lr.ph631
   %i.no = add i64 %i.ir, %i.nn
   %i.np = mul i64 %i.is, %.1302.2
   %i.nq = add i64 %i.np, %i.nm
-  %i.nr = sub i64 %i.no, %i.nq
-  %diff.check1013 = icmp ult i64 %i.nr, 32
+  %i.nr = sub i64 %i.nq, %i.no
+  %diff.check1013 = icmp ugt i64 %i.nr, -32
   %i.ns = add i64 %i.it, %i.nn
   %i.nt = add i64 %i.ku, %i.nm
-  %i.nu = sub i64 %i.ns, %i.nt
-  %diff.check1014 = icmp ult i64 %i.nu, 32
+  %i.nu = sub i64 %i.nt, %i.ns
+  %diff.check1014 = icmp ugt i64 %i.nu, -32
   %conflict.rdx = or i1 %diff.check1013, %diff.check1014
   %i.nv = add i64 %i.iv, %i.nn
   %i.nw = add i64 %i.kv, %i.nm
-  %i.nx = sub i64 %i.nv, %i.nw
-  %diff.check1015 = icmp ult i64 %i.nx, 32
+  %i.nx = sub i64 %i.nw, %i.nv
+  %diff.check1015 = icmp ugt i64 %i.nx, -32
   %conflict.rdx1016 = or i1 %conflict.rdx, %diff.check1015
   br i1 %conflict.rdx1016, label %scalar.ph1017.preheader, label %vector.body1022
 
@@ -1464,8 +1464,8 @@ vector.memcheck997:                               ; preds = %.lr.ph637
   %i.rj = add i64 %i.ip, %i.ri
   %i.rk = mul i64 %i.iq, %i.pt
   %i.rl = add i64 %i.rk, %i.rh
-  %i.rm = sub i64 %i.rj, %i.rl
-  %diff.check998 = icmp ult i64 %i.rm, 32
+  %i.rm = sub i64 %i.rl, %i.rj
+  %diff.check998 = icmp ugt i64 %i.rm, -32
   br i1 %diff.check998, label %scalar.ph999.preheader, label %vector.body1004
 
 vector.body1004:                                  ; preds = %vector.memcheck997, %vector.body1004
@@ -1660,8 +1660,8 @@ vector.memcheck982:                               ; preds = %.lr.ph637.1
   %i.ug = add i64 %i.in, %i.uf
   %i.uh = mul i64 %i.io, %i.sq
   %i.ui = add i64 %i.uh, %i.ue
-  %i.uj = sub i64 %i.ug, %i.ui
-  %diff.check983 = icmp ult i64 %i.uj, 32
+  %i.uj = sub i64 %i.ui, %i.ug
+  %diff.check983 = icmp ugt i64 %i.uj, -32
   br i1 %diff.check983, label %scalar.ph984.preheader, label %vector.body989
 
 vector.body989:                                   ; preds = %vector.memcheck982, %vector.body989
@@ -1856,8 +1856,8 @@ vector.memcheck:                                  ; preds = %.lr.ph637.2
   %i.xd = add i64 %i.il, %i.xc
   %i.xe = mul i64 %i.im, %i.vn
   %i.xf = add i64 %i.xe, %i.xb
-  %i.xg = sub i64 %i.xd, %i.xf
-  %diff.check = icmp ult i64 %i.xg, 32
+  %i.xg = sub i64 %i.xf, %i.xd
+  %diff.check = icmp ugt i64 %i.xg, -32
   br i1 %diff.check, label %scalar.ph969.preheader, label %vector.body974
 
 vector.body974:                                   ; preds = %vector.memcheck, %vector.body974
@@ -2260,17 +2260,17 @@ _ZN5o3dgc12BinaryStream11WriteUInt32EmNS_15O3DGCStreamTypeE.exit: ; preds = %bb.
   %i.bx = shl i64 %4, 3
   %i.by = add i64 %i.b, 624
   %i.bz = shl i64 %4, 3
-  %min.iters.check684 = icmp ult i64 %3, 8
+  %min.iters.check684 = icmp ult i64 %3, 10
   %n.vec687 = and i64 %3, -4                      ; 3 uses
   %cmp.n694 = icmp eq i64 %3, %n.vec687
   %xtraiter732 = and i64 %3, 3                    ; 2 uses
   %lcmp.mod733.not = icmp eq i64 %xtraiter732, 0
-  %min.iters.check669 = icmp ult i64 %3, 8
+  %min.iters.check669 = icmp ult i64 %3, 10
   %n.vec672 = and i64 %3, -4                      ; 3 uses
   %cmp.n679 = icmp eq i64 %3, %n.vec672
   %xtraiter742 = and i64 %3, 3                    ; 2 uses
   %lcmp.mod743.not = icmp eq i64 %xtraiter742, 0
-  %min.iters.check = icmp ult i64 %3, 8
+  %min.iters.check = icmp ult i64 %3, 10
   %n.vec = and i64 %3, -4                         ; 3 uses
   %cmp.n = icmp eq i64 %3, %n.vec
   %xtraiter751 = and i64 %3, 3                    ; 2 uses
@@ -2455,8 +2455,8 @@ vector.memcheck681:                               ; preds = %.lr.ph
   %i.el = mul i64 %i.bz, %i.cx
   %i.em = add i64 %i.by, %i.ek
   %i.en = add i64 %i.el, %i.a
-  %i.eo = sub i64 %i.em, %i.en
-  %diff.check682 = icmp ult i64 %i.eo, 32
+  %i.eo = sub i64 %i.en, %i.em
+  %diff.check682 = icmp ugt i64 %i.eo, -32
   br i1 %diff.check682, label %scalar.ph683.preheader, label %vector.body688
 
 vector.body688:                                   ; preds = %vector.memcheck681, %vector.body688
@@ -2649,8 +2649,8 @@ vector.memcheck666:                               ; preds = %.lr.ph.1
   %i.hg = mul i64 %i.bx, %i.fs
   %i.hh = add i64 %i.bw, %i.hf
   %i.hi = add i64 %i.hg, %i.a
-  %i.hj = sub i64 %i.hh, %i.hi
-  %diff.check667 = icmp ult i64 %i.hj, 32
+  %i.hj = sub i64 %i.hi, %i.hh
+  %diff.check667 = icmp ugt i64 %i.hj, -32
   br i1 %diff.check667, label %scalar.ph668.preheader, label %vector.body673
 
 vector.body673:                                   ; preds = %vector.memcheck666, %vector.body673
@@ -2843,8 +2843,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.2
   %i.kb = mul i64 %i.bv, %i.in
   %i.kc = add i64 %i.bu, %i.ka
   %i.kd = add i64 %i.kb, %i.a
-  %i.ke = sub i64 %i.kc, %i.kd
-  %diff.check = icmp ult i64 %i.ke, 32
+  %i.ke = sub i64 %i.kd, %i.kc
+  %diff.check = icmp ugt i64 %i.ke, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body

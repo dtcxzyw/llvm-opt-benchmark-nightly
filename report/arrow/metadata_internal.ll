@@ -203,8 +203,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
   %i.ao = lshr i64 %i.an, 2
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.an, 28
-  %i.aq = sub i64 %i.al, %i.z
-  %diff.check = icmp ult i64 %i.aq, 32
+  %i.aq = sub i64 %i.z, %i.al
+  %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader195, label %vector.ph
 
@@ -607,8 +607,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
   %i.fz = lshr i64 %i.fy, 2
   %i.ga = add nuw nsw i64 %i.fz, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.fy, 28
-  %i.gb = sub i64 %i.fw, %i.fl
-  %diff.check = icmp ult i64 %i.gb, 32
+  %i.gb = sub i64 %i.fl, %i.fw
+  %diff.check = icmp ugt i64 %i.gb, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i69.preheader154, label %vector.ph
 
@@ -1011,8 +1011,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
   %i.er = lshr i64 %i.eq, 2
   %i.es = add nuw nsw i64 %i.er, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.eq, 28
-  %i.et = sub i64 %i.eo, %i.ed
-  %diff.check = icmp ult i64 %i.et, 32
+  %i.et = sub i64 %i.ed, %i.eo
+  %diff.check = icmp ugt i64 %i.et, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i70.i.preheader175, label %vector.ph
 
@@ -1415,8 +1415,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
   %i.eb = lshr i64 %i.ea, 2
   %i.ec = add nuw nsw i64 %i.eb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ea, 28
-  %i.ed = sub i64 %i.dy, %i.dn
-  %diff.check = icmp ult i64 %i.ed, 32
+  %i.ed = sub i64 %i.dn, %i.dy
+  %diff.check = icmp ugt i64 %i.ed, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader152, label %vector.ph
 
@@ -1819,9 +1819,9 @@ _ZNSt12_Vector_baseIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5a
   %i.s = sub i64 %i.r, %i.g                       ; 2 uses
   %i.t = lshr i64 %i.s, 2
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.s, 28
-  %i.v = sub i64 %i.q, %i.g
-  %diff.check = icmp ult i64 %i.v, 32
+  %min.iters.check = icmp ult i64 %i.s, 44
+  %i.v = sub i64 %i.g, %i.q
+  %diff.check = icmp ugt i64 %i.v, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader45, label %vector.ph
 
@@ -1960,8 +1960,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
   %i.bo = lshr i64 %i.bn, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check28 = icmp ult i64 %i.bn, 28
-  %i.bq = sub i64 %i.bl, %i.ba
-  %diff.check26 = icmp ult i64 %i.bq, 32
+  %i.bq = sub i64 %i.ba, %i.bl
+  %diff.check26 = icmp ugt i64 %i.bq, -32
   %or.cond43 = or i1 %min.iters.check28, %diff.check26
   br i1 %or.cond43, label %.lr.ph.i.i.i.i.i.i.preheader44, label %vector.ph29
 
@@ -2364,8 +2364,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
   %i.bc = lshr i64 %i.bb, 2
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bb, 28
-  %i.be = sub i64 %i.az, %i.an
-  %diff.check = icmp ult i64 %i.be, 32
+  %i.be = sub i64 %i.an, %i.az
+  %diff.check = icmp ugt i64 %i.be, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader72, label %vector.ph
 

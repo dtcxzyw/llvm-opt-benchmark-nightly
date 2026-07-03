@@ -201,9 +201,9 @@ _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb
   %i.ch = sub i64 %i.cg, %i.bv                    ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
-  %min.iters.check273 = icmp ult i64 %i.ch, 56
-  %i.ck = sub i64 %i.cf, %i.bv
-  %diff.check271 = icmp ult i64 %i.ck, 32
+  %min.iters.check273 = icmp ult i64 %i.ch, 72
+  %i.ck = sub i64 %i.bv, %i.cf
+  %diff.check271 = icmp ugt i64 %i.ck, -32
   %or.cond = or i1 %min.iters.check273, %diff.check271
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader332, label %vector.ph274
 
@@ -343,8 +343,8 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   %i.dw = lshr i64 %i.dv, 3
   %i.dx = add nuw nsw i64 %i.dw, 1                ; 2 uses
   %min.iters.check309 = icmp ult i64 %i.dv, 24
-  %i.dy = sub i64 %i.dt, %i.di
-  %diff.check307 = icmp ult i64 %i.dy, 32
+  %i.dy = sub i64 %i.di, %i.dt
+  %diff.check307 = icmp ugt i64 %i.dy, -32
   %or.cond324 = or i1 %min.iters.check309, %diff.check307
   br i1 %or.cond324, label %.lr.ph.i.i.i.i.i.preheader328, label %vector.ph310
 
@@ -490,8 +490,8 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i97: ; preds = %
   %i.fl = lshr i64 %i.fk, 3
   %i.fm = add nuw nsw i64 %i.fl, 1                ; 2 uses
   %min.iters.check291 = icmp ult i64 %i.fk, 24
-  %i.fn = sub i64 %i.fi, %i.ex
-  %diff.check289 = icmp ult i64 %i.fn, 32
+  %i.fn = sub i64 %i.ex, %i.fi
+  %diff.check289 = icmp ugt i64 %i.fn, -32
   %or.cond325 = or i1 %min.iters.check291, %diff.check289
   br i1 %or.cond325, label %.lr.ph.i.i.i.i.i101.preheader329, label %vector.ph292
 
@@ -656,9 +656,9 @@ _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i113: ; preds = 
   %i.hh = sub i64 %i.hg, %i.gv                    ; 2 uses
   %i.hi = lshr i64 %i.hh, 3
   %i.hj = add nuw nsw i64 %i.hi, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.hh, 56
-  %i.hk = sub i64 %i.hf, %i.gv
-  %diff.check = icmp ult i64 %i.hk, 32
+  %min.iters.check = icmp ult i64 %i.hh, 72
+  %i.hk = sub i64 %i.gv, %i.hf
+  %diff.check = icmp ugt i64 %i.hk, -32
   %or.cond326 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond326, label %.lr.ph.i.i.i.i115.preheader335, label %vector.ph
 
@@ -916,8 +916,8 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i138: ; preds = 
   %i.ki = lshr i64 %i.kh, 3
   %i.kj = add nuw nsw i64 %i.ki, 1                ; 2 uses
   %min.iters.check255 = icmp ult i64 %i.kh, 24
-  %i.kk = sub i64 %i.kf, %i.ju
-  %diff.check253 = icmp ult i64 %i.kk, 32
+  %i.kk = sub i64 %i.ju, %i.kf
+  %diff.check253 = icmp ugt i64 %i.kk, -32
   %or.cond327 = or i1 %min.iters.check255, %diff.check253
   br i1 %or.cond327, label %.lr.ph.i.i.i.i.i142.preheader333, label %vector.ph256
 
@@ -1052,9 +1052,9 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.c
   %i.ab = add i64 %i.aa, -8                       ; 2 uses
   %i.ac = lshr i64 %i.ab, 3
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ab, 56
-  %i.ae = sub i64 %i.z, %i.e
-  %diff.check = icmp ult i64 %i.ae, 32
+  %min.iters.check = icmp ult i64 %i.ab, 72
+  %i.ae = sub i64 %i.e, %i.z
+  %diff.check = icmp ugt i64 %i.ae, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 

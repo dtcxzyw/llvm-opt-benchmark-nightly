@@ -204,10 +204,10 @@ bb.ax:                                            ; preds = %bb.aw
   %i.gm = sext i32 %i.gl to i64
   %wide.trip.count = and i64 %i.fy, 2147483647    ; 4 uses
   %invariant.gep = getelementptr i8, ptr %i.gc, i64 %i.gm ; 7 uses
-  %min.iters.check = icmp samesign ult i64 %wide.trip.count, 4
+  %min.iters.check = icmp samesign ult i64 %wide.trip.count, 6
   %i.gn = ptrtoaddr ptr %i.ge to i64
-  %i.go = sub i64 %i.gb, %i.gn
-  %diff.check = icmp ult i64 %i.go, 32
+  %i.go = sub i64 %i.gn, %i.gb
+  %diff.check = icmp ugt i64 %i.go, -32
   %or.cond270 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond270, label %scalar.ph.preheader, label %vector.ph
 
@@ -393,10 +393,10 @@ bb.bc:                                            ; preds = %bb.bb
   %i.jo = sext i32 %i.jn to i64
   %wide.trip.count211 = and i64 %i.ja, 2147483647 ; 4 uses
   %invariant.gep243 = getelementptr i8, ptr %i.je, i64 %i.jo ; 7 uses
-  %min.iters.check253 = icmp samesign ult i64 %wide.trip.count211, 4
+  %min.iters.check253 = icmp samesign ult i64 %wide.trip.count211, 6
   %i.jp = ptrtoaddr ptr %i.jg to i64
-  %i.jq = sub i64 %i.jd, %i.jp
-  %diff.check251 = icmp ult i64 %i.jq, 32
+  %i.jq = sub i64 %i.jp, %i.jd
+  %diff.check251 = icmp ugt i64 %i.jq, -32
   %or.cond272 = select i1 %min.iters.check253, i1 true, i1 %diff.check251
   br i1 %or.cond272, label %scalar.ph252.preheader, label %vector.ph254
 

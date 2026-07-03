@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr i8, ptr %0, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !24   ; 5 uses
   %wide.trip.count = zext nneg i32 %i.e to i64    ; 5 uses
-  %min.iters.check = icmp ult i32 %i.e, 24
+  %min.iters.check = icmp ult i32 %i.e, 32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
@@ -211,19 +211,19 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.p = ptrtoaddr ptr %i.l to i64                ; 2 uses
   %i.q = ptrtoaddr ptr %i.j to i64                ; 3 uses
   %i.r = ptrtoaddr ptr %i.h to i64                ; 2 uses
-  %i.s = sub i64 %i.o, %i.q
-  %diff.check = icmp ult i64 %i.s, 32
-  %i.t = sub i64 %i.q, %i.r
-  %diff.check24 = icmp ult i64 %i.t, 32
+  %i.s = sub i64 %i.q, %i.o
+  %diff.check = icmp ugt i64 %i.s, -32
+  %i.t = sub i64 %i.r, %i.q
+  %diff.check24 = icmp ugt i64 %i.t, -32
   %conflict.rdx = or i1 %diff.check, %diff.check24
-  %i.u = sub i64 %i.p, %i.q
-  %diff.check25 = icmp ult i64 %i.u, 32
+  %i.u = sub i64 %i.q, %i.p
+  %diff.check25 = icmp ugt i64 %i.u, -32
   %conflict.rdx26 = or i1 %conflict.rdx, %diff.check25
-  %i.v = sub i64 %i.o, %i.r
-  %diff.check27 = icmp ult i64 %i.v, 32
+  %i.v = sub i64 %i.r, %i.o
+  %diff.check27 = icmp ugt i64 %i.v, -32
   %conflict.rdx28 = or i1 %conflict.rdx26, %diff.check27
-  %i.w = sub i64 %i.o, %i.p
-  %diff.check29 = icmp ult i64 %i.w, 32
+  %i.w = sub i64 %i.p, %i.o
+  %diff.check29 = icmp ugt i64 %i.w, -32
   %conflict.rdx30 = or i1 %conflict.rdx28, %diff.check29
   br i1 %conflict.rdx30, label %scalar.ph.preheader, label %vector.ph
 

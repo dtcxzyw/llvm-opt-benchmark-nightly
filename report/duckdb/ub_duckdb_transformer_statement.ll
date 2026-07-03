@@ -203,9 +203,9 @@ _ZNKSt6vectorISt17reference_wrapperIN17duckdb_libpgquery6PGNodeEESaIS3_EE12_M_ch
   %i.aq = add i64 %i.ap, -8                       ; 2 uses
   %i.ar = lshr i64 %i.aq, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aq, 56
-  %i.at = sub i64 %i.ao, %i.c
-  %diff.check = icmp ult i64 %i.at, 32
+  %min.iters.check = icmp ult i64 %i.aq, 72
+  %i.at = sub i64 %i.c, %i.ao
+  %diff.check = icmp ugt i64 %i.at, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader44, label %vector.ph
 
@@ -266,13 +266,13 @@ _ZNSt6vectorISt17reference_wrapperIN17duckdb_libpgquery6PGNodeEESaIS3_EE11_S_rel
   %i.bg = add i64 %i.bf, -8                       ; 2 uses
   %i.bh = lshr i64 %i.bg, 3
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
-  %min.iters.check28 = icmp ult i64 %i.bg, 72
+  %min.iters.check28 = icmp ult i64 %i.bg, 104
   br i1 %min.iters.check28, label %.lr.ph.i.i.i.i17.i.preheader43, label %vector.memcheck24
 
 vector.memcheck24:                                ; preds = %.lr.ph.i.i.i.i17.i.preheader
-  %3 = add i64 %.0.lcssa.i.i.i.i.i25, 8
-  %4 = sub i64 %3, %i.b
-  %diff.check26 = icmp ult i64 %4, 32
+  %3 = sub i64 %.0.lcssa.i.i.i.i.i25, %i.b
+  %4 = add i64 %3, 7
+  %diff.check26 = icmp ult i64 %4, 31
   br i1 %diff.check26, label %.lr.ph.i.i.i.i17.i.preheader43, label %vector.ph29
 
 vector.ph29:                                      ; preds = %vector.memcheck24

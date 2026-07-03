@@ -203,9 +203,9 @@ _ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_ch
   %i.ac = add i64 %i.ab, -8                       ; 2 uses
   %i.ad = lshr i64 %i.ac, 3
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
-  %min.iters.check77 = icmp ult i64 %i.ac, 56
-  %i.af = sub i64 %i.aa, %i.n
-  %diff.check75 = icmp ult i64 %i.af, 32
+  %min.iters.check77 = icmp ult i64 %i.ac, 72
+  %i.af = sub i64 %i.n, %i.aa
+  %diff.check75 = icmp ugt i64 %i.af, -32
   %or.cond = or i1 %min.iters.check77, %diff.check75
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader94, label %vector.ph78
 
@@ -319,9 +319,9 @@ _ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_ch
   %i.bn = add i64 %i.bm, -8                       ; 2 uses
   %i.bo = lshr i64 %i.bn, 3
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
-  %min.iters.check59 = icmp ult i64 %i.bn, 56
-  %i.bq = sub i64 %i.bl, %i.ay
-  %diff.check57 = icmp ult i64 %i.bq, 32
+  %min.iters.check59 = icmp ult i64 %i.bn, 72
+  %i.bq = sub i64 %i.ay, %i.bl
+  %diff.check57 = icmp ugt i64 %i.bq, -32
   %or.cond92 = or i1 %min.iters.check59, %diff.check57
   br i1 %or.cond92, label %.lr.ph.i.i.i.i.i15.preheader95, label %vector.ph60
 
@@ -435,9 +435,9 @@ _ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_ch
   %i.cy = add i64 %i.cx, -8                       ; 2 uses
   %i.cz = lshr i64 %i.cy, 3
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cy, 56
-  %i.db = sub i64 %i.cw, %i.cj
-  %diff.check = icmp ult i64 %i.db, 32
+  %min.iters.check = icmp ult i64 %i.cy, 72
+  %i.db = sub i64 %i.cj, %i.cw
+  %diff.check = icmp ugt i64 %i.db, -32
   %or.cond93 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond93, label %.lr.ph.i.i.i.i.i26.preheader97, label %vector.ph
 

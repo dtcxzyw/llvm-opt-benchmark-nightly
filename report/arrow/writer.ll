@@ -203,8 +203,8 @@ bb.ng:                                            ; preds = %.noexc41.i
   %i.aym = ptrtoaddr ptr %i.aye to i64
   %i.ayn = add nuw i64 %i.ayk, 1                  ; 2 uses
   %min.iters.check3006 = icmp ult i64 %i.ayk, 7
-  %i.ayo = sub i64 %i.ayl, %i.aym
-  %diff.check3004 = icmp ult i64 %i.ayo, 32
+  %i.ayo = sub i64 %i.aym, %i.ayl
+  %diff.check3004 = icmp ugt i64 %i.ayo, -32
   %or.cond = select i1 %min.iters.check3006, i1 true, i1 %diff.check3004
   br i1 %or.cond, label %.lr.ph.i.i.preheader3025, label %vector.ph3007
 
@@ -607,8 +607,8 @@ bb.ru:                                            ; preds = %.noexc41.i492
   %i.boh = ptrtoaddr ptr %i.bnz to i64
   %i.boi = add nuw i64 %i.bof, 1                  ; 2 uses
   %min.iters.check2989 = icmp ult i64 %i.bof, 7
-  %i.boj = sub i64 %i.bog, %i.boh
-  %diff.check2987 = icmp ult i64 %i.boj, 32
+  %i.boj = sub i64 %i.boh, %i.bog
+  %diff.check2987 = icmp ugt i64 %i.boj, -32
   %or.cond3020 = select i1 %min.iters.check2989, i1 true, i1 %diff.check2987
   br i1 %or.cond3020, label %.lr.ph.i.i503.preheader3026, label %vector.ph2990
 
@@ -1011,8 +1011,8 @@ bb.avz:                                           ; preds = %.noexc1258
   %i.fkv = ptrtoaddr ptr %i.fkn to i64
   %i.fkw = add nuw i64 %i.fkt, 1                  ; 2 uses
   %min.iters.check2972 = icmp ult i64 %i.fkt, 7
-  %i.fkx = sub i64 %i.fku, %i.fkv
-  %diff.check2970 = icmp ult i64 %i.fkx, 32
+  %i.fkx = sub i64 %i.fkv, %i.fku
+  %diff.check2970 = icmp ugt i64 %i.fkx, -32
   %or.cond3021 = select i1 %min.iters.check2972, i1 true, i1 %diff.check2970
   br i1 %or.cond3021, label %.lr.ph.i.preheader3027, label %vector.ph2973
 
@@ -1415,8 +1415,8 @@ scalar.ph2929:                                    ; preds = %scalar.ph2929.prehe
   %i.ggt = load ptr, ptr %i.ggs, align 8, !noalias !1394 ; 7 uses
   %min.iters.check2955 = icmp ult i64 %i.gfs, 8
   %i.ggu = ptrtoaddr ptr %i.ggt to i64
-  %i.ggv = sub i64 %i.ggu, %i.gfx
-  %diff.check2953 = icmp ult i64 %i.ggv, 32
+  %i.ggv = sub i64 %i.gfx, %i.ggu
+  %diff.check2953 = icmp ugt i64 %i.ggv, -32
   %or.cond3023 = select i1 %min.iters.check2955, i1 true, i1 %diff.check2953
   br i1 %or.cond3023, label %scalar.ph2954.preheader, label %vector.ph2956
 
@@ -1819,8 +1819,8 @@ bb.bhx:                                           ; preds = %.noexc1624
   %i.had = ptrtoaddr ptr %i.gzv to i64
   %i.hae = add nuw i64 %i.hab, 1                  ; 2 uses
   %min.iters.check2893 = icmp ult i64 %i.hab, 7
-  %i.haf = sub i64 %i.hac, %i.had
-  %diff.check = icmp ult i64 %i.haf, 32
+  %i.haf = sub i64 %i.had, %i.hac
+  %diff.check = icmp ugt i64 %i.haf, -32
   %or.cond3024 = select i1 %min.iters.check2893, i1 true, i1 %diff.check
   br i1 %or.cond3024, label %.lr.ph.i1595.preheader3039, label %vector.ph2894
 

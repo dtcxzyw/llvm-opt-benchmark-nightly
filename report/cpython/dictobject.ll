@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i:                               ; preds = %bb.g
   %wide.trip.count.i = zext i8 %i.ad to i64       ; 5 uses
-  %min.iters.check = icmp ult i8 %i.ad, 6
-  %i.ae = sub i64 %i.r, %i.i
-  %diff.check = icmp ult i64 %i.ae, 32
+  %min.iters.check = icmp ult i8 %i.ad, 8
+  %i.ae = sub i64 %i.i, %i.r
+  %diff.check = icmp ugt i64 %i.ae, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.ph
 
@@ -609,9 +609,9 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.m
   %wide.trip.count.i.i.i = zext i8 %i.ba to i64   ; 5 uses
-  %min.iters.check = icmp ult i8 %i.ba, 6
-  %i.bb = sub i64 %i.ao, %i.ac
-  %diff.check = icmp ult i64 %i.bb, 32
+  %min.iters.check = icmp ult i8 %i.ba, 8
+  %i.bb = sub i64 %i.ac, %i.ao
+  %diff.check = icmp ugt i64 %i.bb, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.ph
 
@@ -827,9 +827,9 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.c
   %wide.trip.count.i.i = zext i8 %i.ab to i64     ; 5 uses
-  %min.iters.check = icmp ult i8 %i.ab, 6
-  %i.ac = sub i64 %i.p, %i.c
-  %diff.check = icmp ult i64 %i.ac, 32
+  %min.iters.check = icmp ult i8 %i.ab, 8
+  %i.ac = sub i64 %i.c, %i.p
+  %diff.check = icmp ugt i64 %i.ac, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.ph
 
@@ -1043,9 +1043,9 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.k
   %wide.trip.count.i.i = zext i8 %i.aw to i64     ; 5 uses
-  %min.iters.check = icmp ult i8 %i.aw, 6
-  %i.ax = sub i64 %i.ak, %i.x
-  %diff.check = icmp ult i64 %i.ax, 32
+  %min.iters.check = icmp ult i8 %i.aw, 8
+  %i.ax = sub i64 %i.x, %i.ak
+  %diff.check = icmp ugt i64 %i.ax, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.ph
 

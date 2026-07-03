@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %.loopexit34.us
   br i1 %.not.i.i.i.i, label %.loopexit.us, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %bb.b
-  %i.as = sub i64 %.01838.us8, %i.r
-  %diff.check9 = icmp ult i64 %i.as, 32
+  %i.as = sub i64 %i.r, %.01838.us8
+  %diff.check9 = icmp ugt i64 %i.as, -32
   %or.cond = select i1 %min.iters.check11, i1 true, i1 %diff.check9
   br i1 %or.cond, label %.lr.ph.us.preheader42, label %vector.ph12
 
@@ -384,8 +384,8 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
 .lr.ph.us59:                                      ; preds = %.lr.ph40.split.split.us
   %.01838.us424 = ptrtoaddr ptr %.01838.us42 to i64
   store i8 %i.dt, ptr %.01937.us43, align 1, !tbaa !7
-  %i.du = sub i64 %.01838.us424, %i.r
-  %diff.check = icmp ult i64 %i.du, 32
+  %i.du = sub i64 %i.r, %.01838.us424
+  %diff.check = icmp ugt i64 %i.du, -32
   %or.cond41 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond41, label %scalar.ph.preheader, label %vector.ph
 
@@ -762,8 +762,8 @@ bb.b:                                             ; preds = %.loopexit34.us.us
   br i1 %.not.i.i.i.i, label %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %bb.b
-  %i.bc = sub i64 %.01838.us.us13, %i.r
-  %diff.check14 = icmp ult i64 %i.bc, 32
+  %i.bc = sub i64 %i.r, %.01838.us.us13
+  %diff.check14 = icmp ugt i64 %i.bc, -32
   %or.cond = select i1 %min.iters.check16, i1 true, i1 %diff.check14
   br i1 %or.cond, label %.lr.ph.us.us.preheader111, label %vector.ph17
 
@@ -934,8 +934,8 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
 .lr.ph.us.us73:                                   ; preds = %.lr.ph40.split.us.split.split.us
   %.01838.us.us639 = ptrtoaddr ptr %.01838.us.us63 to i64
   store i16 %i.dm, ptr %.01937.us.us64, align 2, !tbaa !8
-  %i.dn = sub i64 %.01838.us.us639, %i.r
-  %diff.check = icmp ult i64 %i.dn, 32
+  %i.dn = sub i64 %i.r, %.01838.us.us639
+  %diff.check = icmp ugt i64 %i.dn, -32
   %or.cond101 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond101, label %scalar.ph.preheader, label %vector.ph
 
@@ -1167,8 +1167,8 @@ bb.c:                                             ; preds = %.loopexit34.us57
   br i1 %.not.i.i.i.i, label %.loopexit.us55, label %.lr.ph.us59.preheader
 
 .lr.ph.us59.preheader:                            ; preds = %bb.c
-  %i.gv = sub i64 %.01838.us4265, %i.r
-  %diff.check66 = icmp ult i64 %i.gv, 32
+  %i.gv = sub i64 %i.r, %.01838.us4265
+  %diff.check66 = icmp ugt i64 %i.gv, -32
   %or.cond102 = select i1 %min.iters.check68, i1 true, i1 %diff.check66
   br i1 %or.cond102, label %.lr.ph.us59.preheader104, label %vector.ph69
 
@@ -1352,8 +1352,8 @@ bb.g:                                             ; preds = %.lr.ph40.split.spli
   br i1 %.not.i.i.i.i, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.g
-  %i.jq = sub i64 %.0183847, %i.r
-  %diff.check48 = icmp ult i64 %i.jq, 32
+  %i.jq = sub i64 %i.r, %.0183847
+  %diff.check48 = icmp ugt i64 %i.jq, -32
   %or.cond103 = select i1 %min.iters.check50, i1 true, i1 %diff.check48
   br i1 %or.cond103, label %.lr.ph.preheader109, label %vector.ph51
 
@@ -1630,8 +1630,8 @@ bb.b:                                             ; preds = %.loopexit35.us.us
   br i1 %.not.i.i.i.i, label %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %bb.b
-  %i.bc = sub i64 %.01839.us.us13, %i.r
-  %diff.check14 = icmp ult i64 %i.bc, 32
+  %i.bc = sub i64 %i.r, %.01839.us.us13
+  %diff.check14 = icmp ugt i64 %i.bc, -32
   %or.cond = select i1 %min.iters.check16, i1 true, i1 %diff.check14
   br i1 %or.cond, label %.lr.ph.us.us.preheader111, label %vector.ph17
 
@@ -1802,8 +1802,8 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
 .lr.ph.us.us74:                                   ; preds = %.lr.ph41.split.us.split.split.us
   %.01839.us.us649 = ptrtoaddr ptr %.01839.us.us64 to i64
   store i32 %i.dm, ptr %.01938.us.us65, align 4, !tbaa !3
-  %i.dn = sub i64 %.01839.us.us649, %i.r
-  %diff.check = icmp ult i64 %i.dn, 32
+  %i.dn = sub i64 %i.r, %.01839.us.us649
+  %diff.check = icmp ugt i64 %i.dn, -32
   %or.cond101 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond101, label %scalar.ph.preheader, label %vector.ph
 
@@ -2035,8 +2035,8 @@ bb.c:                                             ; preds = %.loopexit35.us58
   br i1 %.not.i.i.i.i, label %.loopexit.us56, label %.lr.ph.us60.preheader
 
 .lr.ph.us60.preheader:                            ; preds = %bb.c
-  %i.gv = sub i64 %.01839.us4365, %i.r
-  %diff.check66 = icmp ult i64 %i.gv, 32
+  %i.gv = sub i64 %i.r, %.01839.us4365
+  %diff.check66 = icmp ugt i64 %i.gv, -32
   %or.cond102 = select i1 %min.iters.check68, i1 true, i1 %diff.check66
   br i1 %or.cond102, label %.lr.ph.us60.preheader104, label %vector.ph69
 
@@ -2220,8 +2220,8 @@ bb.g:                                             ; preds = %.lr.ph41.split.spli
   br i1 %.not.i.i.i.i, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.g
-  %i.jq = sub i64 %.0183947, %i.r
-  %diff.check48 = icmp ult i64 %i.jq, 32
+  %i.jq = sub i64 %i.r, %.0183947
+  %diff.check48 = icmp ugt i64 %i.jq, -32
   %or.cond103 = select i1 %min.iters.check50, i1 true, i1 %diff.check48
   br i1 %or.cond103, label %.lr.ph.preheader109, label %vector.ph51
 
@@ -2498,8 +2498,8 @@ bb.b:                                             ; preds = %.loopexit35.us.us
   br i1 %.not.i.i.i.i, label %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us.us, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %bb.b
-  %i.bc = sub i64 %.01839.us.us13, %i.r
-  %diff.check14 = icmp ult i64 %i.bc, 32
+  %i.bc = sub i64 %i.r, %.01839.us.us13
+  %diff.check14 = icmp ugt i64 %i.bc, -32
   %or.cond = select i1 %min.iters.check16, i1 true, i1 %diff.check14
   br i1 %or.cond, label %.lr.ph.us.us.preheader111, label %vector.ph17
 
@@ -2670,8 +2670,8 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
 .lr.ph.us.us74:                                   ; preds = %.lr.ph41.split.us.split.split.us
   %.01839.us.us649 = ptrtoaddr ptr %.01839.us.us64 to i64
   store i64 %i.dm, ptr %.01938.us.us65, align 8, !tbaa !10
-  %i.dn = sub i64 %.01839.us.us649, %i.r
-  %diff.check = icmp ult i64 %i.dn, 32
+  %i.dn = sub i64 %i.r, %.01839.us.us649
+  %diff.check = icmp ugt i64 %i.dn, -32
   %or.cond101 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond101, label %scalar.ph.preheader, label %vector.ph
 
@@ -2903,8 +2903,8 @@ bb.c:                                             ; preds = %.loopexit35.us58
   br i1 %.not.i.i.i.i, label %.loopexit.us56, label %.lr.ph.us60.preheader
 
 .lr.ph.us60.preheader:                            ; preds = %bb.c
-  %i.gv = sub i64 %.01839.us4365, %i.r
-  %diff.check66 = icmp ult i64 %i.gv, 32
+  %i.gv = sub i64 %i.r, %.01839.us4365
+  %diff.check66 = icmp ugt i64 %i.gv, -32
   %or.cond102 = select i1 %min.iters.check68, i1 true, i1 %diff.check66
   br i1 %or.cond102, label %.lr.ph.us60.preheader104, label %vector.ph69
 
@@ -3088,8 +3088,8 @@ bb.g:                                             ; preds = %.lr.ph41.split.spli
   br i1 %.not.i.i.i.i, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.g
-  %i.jq = sub i64 %.0183947, %i.r
-  %diff.check48 = icmp ult i64 %i.jq, 32
+  %i.jq = sub i64 %i.r, %.0183947
+  %diff.check48 = icmp ugt i64 %i.jq, -32
   %or.cond103 = select i1 %min.iters.check50, i1 true, i1 %diff.check48
   br i1 %or.cond103, label %.lr.ph.preheader109, label %vector.ph51
 
