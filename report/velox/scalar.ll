@@ -203,7 +203,7 @@ bb.a:
   %70 = alloca %"class.std::shared_ptr.2", align 16 ; 10 uses
   %71 = alloca %"class.arrow::Result.56", align 8 ; 12 uses
   %72 = alloca %"class.std::shared_ptr", align 16 ; 7 uses
-  %73 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
+  %73 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.k = alloca i64, align 8                      ; 6 uses
   %74 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.l = alloca i64, align 8                      ; 6 uses
@@ -217,7 +217,7 @@ bb.a:
   %81 = alloca %"class.std::shared_ptr.2", align 16 ; 14 uses
   %82 = alloca %"class.arrow::Result.56", align 8 ; 12 uses
   %83 = alloca %"class.std::shared_ptr", align 16 ; 7 uses
-  %84 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
+  %84 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.n = alloca i64, align 8                      ; 6 uses
   %85 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.o = alloca i64, align 8                      ; 6 uses
@@ -620,52 +620,37 @@ bb.atl:                                           ; preds = %bb.atk
   %.neg.i6.i.i.i62.i.i.i.i.i = mul nsw i64 %i.fqc, -60
   %i.fqe = add nsw i64 %i.fqd, %.neg.i6.i.i.i62.i.i.i.i.i
   %i.fqf = shl nsw i64 %i.fqe, 1
-  %213 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fqf ; 2 uses
-  %i.fqg = getelementptr inbounds nuw i8, ptr %213, i64 1
-  %214 = load i8, ptr %i.fqg, align 1, !tbaa !57, !noalias !21298
-  %215 = load i8, ptr %213, align 1, !tbaa !57, !noalias !21298
+  %i.fqg = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fqf
   %i.fqh = shl nsw i64 %i.fqc, 1
-  %216 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fqh ; 2 uses
-  %i.fqi = getelementptr inbounds nuw i8, ptr %216, i64 1
-  %217 = load i8, ptr %i.fqi, align 1, !tbaa !57, !noalias !21298
-  %218 = load i8, ptr %216, align 1, !tbaa !57, !noalias !21298
+  %i.fqi = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fqh
   %i.fqj = shl nuw nsw i64 %.zext.i59.i.i.i.i.i, 1
   %i.fqk = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fqj ; 2 uses
   %i.fql = getelementptr inbounds nuw i8, ptr %i.fqk, i64 1
   %i.fqm = load i8, ptr %i.fql, align 1, !tbaa !57, !noalias !21298
   %i.fqn = load i8, ptr %i.fqk, align 1, !tbaa !57, !noalias !21298
   call void @llvm.lifetime.start.p0(ptr nonnull %84), !noalias !21282
-  %219 = getelementptr inbounds nuw i8, ptr %84, i64 16 ; 6 uses
-  store ptr %219, ptr %84, align 8, !tbaa !188, !noalias !21301
-  store i8 %i.fqn, ptr %219, align 8, !noalias !21301
-  %.sroa.4.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 17
-  store i8 %i.fqm, ptr %.sroa.4.1..sroa_idx.i.i.i.i.i, align 1, !noalias !21301
-  %.sroa.5.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 18
-  store i8 58, ptr %.sroa.5.1..sroa_idx.i.i.i.i.i, align 2, !noalias !21301
-  %.sroa.6.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 19
-  store i8 %218, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i, align 1, !noalias !21301
-  %.sroa.7.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 20
-  store i8 %217, ptr %.sroa.7.1..sroa_idx.i.i.i.i.i, align 4, !noalias !21301
-  %.sroa.8.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 21
-  store i8 58, ptr %.sroa.8.1..sroa_idx.i.i.i.i.i, align 1, !noalias !21301
-  %.sroa.9.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 22
-  store i8 %215, ptr %.sroa.9.1..sroa_idx.i.i.i.i.i, align 2, !noalias !21301
-  %.sroa.10.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 23
-  store i8 %214, ptr %.sroa.10.1..sroa_idx.i.i.i.i.i, align 1, !noalias !21301
-  %220 = getelementptr inbounds nuw i8, ptr %84, i64 8
-  store i64 8, ptr %220, align 8, !tbaa !56, !noalias !21301
-  %221 = getelementptr inbounds nuw i8, ptr %84, i64 24
-  store i8 0, ptr %221, align 8, !tbaa !57, !noalias !21301
+  %.sroa.6.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 16 ; 6 uses
+  store ptr %.sroa.6.1..sroa_idx.i.i.i.i.i, ptr %84, align 8, !tbaa !188, !noalias !21301
+  store i8 %i.fqn, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i, align 8, !noalias !21301
+  %.sroa.8.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 17
+  %.sroa.9.1..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %84, i64 8
+  store i64 8, ptr %.sroa.9.1..sroa_idx.i.i.i.i.i, align 8, !tbaa !56, !noalias !21301
+  %213 = load <2 x i8>, ptr %i.fqg, align 1, !tbaa !57, !noalias !21298
+  %214 = load <2 x i8>, ptr %i.fqi, align 1, !tbaa !57, !noalias !21298
+  %215 = shufflevector <2 x i8> %214, <2 x i8> %213, <8 x i32> <i32 poison, i32 poison, i32 0, i32 1, i32 poison, i32 2, i32 3, i32 poison>
+  %216 = shufflevector <8 x i8> %215, <8 x i8> <i8 poison, i8 58, i8 poison, i8 poison, i8 58, i8 poison, i8 poison, i8 0>, <8 x i32> <i32 poison, i32 9, i32 2, i32 3, i32 12, i32 5, i32 6, i32 15>
+  %217 = insertelement <8 x i8> %216, i8 %i.fqm, i64 0
+  store <8 x i8> %217, ptr %.sroa.8.1..sroa_idx.i.i.i.i.i, align 1, !noalias !21301
   invoke void @_ZN5arrow6Buffer10FromStringENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.2") align 8 %92, ptr noundef nonnull %84)
           to label %bb.atm unwind label %bb.atn, !noalias !21271
 
 bb.atm:                                           ; preds = %bb.atl
   %i.fqo = load ptr, ptr %84, align 8, !tbaa !51, !noalias !21301 ; 2 uses
-  %i.fqp = icmp eq ptr %i.fqo, %219
+  %i.fqp = icmp eq ptr %i.fqo, %.sroa.6.1..sroa_idx.i.i.i.i.i
   br i1 %i.fqp, label %_ZZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time32TypeEvEENS_12Time32ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_ENKUlSt17basic_string_viewIcSt11char_traitsIcEEE_clESI_.exit88.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i85.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i85.i.i.i.i.i: ; preds = %bb.atm
-  %i.fqq = load i64, ptr %219, align 8, !tbaa !57, !noalias !21301
+  %i.fqq = load i64, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i, align 8, !tbaa !57, !noalias !21301
   %i.fqr = add i64 %i.fqq, 1
   call void @_ZdlPvm(ptr noundef %i.fqo, i64 noundef %i.fqr) #29, !noalias !21271
   br label %_ZZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time32TypeEvEENS_12Time32ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_ENKUlSt17basic_string_viewIcSt11char_traitsIcEEE_clESI_.exit88.i.i.i.i.i
@@ -674,11 +659,11 @@ bb.atn:                                           ; preds = %bb.atl
   %i.fqs = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.fqt = load ptr, ptr %84, align 8, !tbaa !51, !noalias !21301 ; 2 uses
-  %i.fqu = icmp eq ptr %i.fqt, %219
+  %i.fqu = icmp eq ptr %i.fqt, %.sroa.6.1..sroa_idx.i.i.i.i.i
   br i1 %i.fqu, label %.body.i1191, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i82.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i82.i.i.i.i.i: ; preds = %bb.atn
-  %i.fqv = load i64, ptr %219, align 8, !tbaa !57, !noalias !21301
+  %i.fqv = load i64, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i, align 8, !tbaa !57, !noalias !21301
   %i.fqw = add i64 %i.fqv, 1
   call void @_ZdlPvm(ptr noundef %i.fqt, i64 noundef %i.fqw) #29, !noalias !21271
   br label %.body.i1191
@@ -1081,52 +1066,37 @@ bb.awm:                                           ; preds = %bb.awl
   %.neg.i6.i.i.i66.i.i.i.i.i = mul nsw i64 %i.gfn, -60
   %i.gfp = add nsw i64 %i.gfo, %.neg.i6.i.i.i66.i.i.i.i.i
   %i.gfq = shl nsw i64 %i.gfp, 1
-  %222 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.gfq ; 2 uses
-  %i.gfr = getelementptr inbounds nuw i8, ptr %222, i64 1
-  %223 = load i8, ptr %i.gfr, align 1, !tbaa !57, !noalias !21353
-  %224 = load i8, ptr %222, align 1, !tbaa !57, !noalias !21353
+  %i.gfr = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.gfq
   %i.gfs = shl nsw i64 %i.gfn, 1
-  %225 = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.gfs ; 2 uses
-  %i.gft = getelementptr inbounds nuw i8, ptr %225, i64 1
-  %226 = load i8, ptr %i.gft, align 1, !tbaa !57, !noalias !21353
-  %227 = load i8, ptr %225, align 1, !tbaa !57, !noalias !21353
+  %i.gft = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.gfs
   %i.gfu = shl nuw nsw i64 %.zext.i63.i.i.i.i.i, 1
   %i.gfv = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.gfu ; 2 uses
   %i.gfw = getelementptr inbounds nuw i8, ptr %i.gfv, i64 1
   %i.gfx = load i8, ptr %i.gfw, align 1, !tbaa !57, !noalias !21353
   %i.gfy = load i8, ptr %i.gfv, align 1, !tbaa !57, !noalias !21353
   call void @llvm.lifetime.start.p0(ptr nonnull %73), !noalias !21337
-  %228 = getelementptr inbounds nuw i8, ptr %73, i64 16 ; 6 uses
-  store ptr %228, ptr %73, align 8, !tbaa !188, !noalias !21356
-  store i8 %i.gfy, ptr %228, align 8, !noalias !21356
-  %.sroa.4.1..sroa_idx.i.i.i.i.i1358 = getelementptr inbounds nuw i8, ptr %73, i64 17
-  store i8 %i.gfx, ptr %.sroa.4.1..sroa_idx.i.i.i.i.i1358, align 1, !noalias !21356
-  %.sroa.5.1..sroa_idx.i.i.i.i.i1359 = getelementptr inbounds nuw i8, ptr %73, i64 18
-  store i8 58, ptr %.sroa.5.1..sroa_idx.i.i.i.i.i1359, align 2, !noalias !21356
-  %.sroa.6.1..sroa_idx.i.i.i.i.i1360 = getelementptr inbounds nuw i8, ptr %73, i64 19
-  store i8 %227, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i1360, align 1, !noalias !21356
-  %.sroa.7.1..sroa_idx.i.i.i.i.i1361 = getelementptr inbounds nuw i8, ptr %73, i64 20
-  store i8 %226, ptr %.sroa.7.1..sroa_idx.i.i.i.i.i1361, align 4, !noalias !21356
-  %.sroa.8.1..sroa_idx.i.i.i.i.i1362 = getelementptr inbounds nuw i8, ptr %73, i64 21
-  store i8 58, ptr %.sroa.8.1..sroa_idx.i.i.i.i.i1362, align 1, !noalias !21356
-  %.sroa.9.1..sroa_idx.i.i.i.i.i1363 = getelementptr inbounds nuw i8, ptr %73, i64 22
-  store i8 %224, ptr %.sroa.9.1..sroa_idx.i.i.i.i.i1363, align 2, !noalias !21356
-  %.sroa.10.1..sroa_idx.i.i.i.i.i1364 = getelementptr inbounds nuw i8, ptr %73, i64 23
-  store i8 %223, ptr %.sroa.10.1..sroa_idx.i.i.i.i.i1364, align 1, !noalias !21356
-  %229 = getelementptr inbounds nuw i8, ptr %73, i64 8
-  store i64 8, ptr %229, align 8, !tbaa !56, !noalias !21356
-  %230 = getelementptr inbounds nuw i8, ptr %73, i64 24
-  store i8 0, ptr %230, align 8, !tbaa !57, !noalias !21356
+  %.sroa.6.1..sroa_idx.i.i.i.i.i1360 = getelementptr inbounds nuw i8, ptr %73, i64 16 ; 6 uses
+  store ptr %.sroa.6.1..sroa_idx.i.i.i.i.i1360, ptr %73, align 8, !tbaa !188, !noalias !21356
+  store i8 %i.gfy, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i1360, align 8, !noalias !21356
+  %.sroa.8.1..sroa_idx.i.i.i.i.i1362 = getelementptr inbounds nuw i8, ptr %73, i64 17
+  %.sroa.9.1..sroa_idx.i.i.i.i.i1363 = getelementptr inbounds nuw i8, ptr %73, i64 8
+  store i64 8, ptr %.sroa.9.1..sroa_idx.i.i.i.i.i1363, align 8, !tbaa !56, !noalias !21356
+  %218 = load <2 x i8>, ptr %i.gfr, align 1, !tbaa !57, !noalias !21353
+  %219 = load <2 x i8>, ptr %i.gft, align 1, !tbaa !57, !noalias !21353
+  %220 = shufflevector <2 x i8> %219, <2 x i8> %218, <8 x i32> <i32 poison, i32 poison, i32 0, i32 1, i32 poison, i32 2, i32 3, i32 poison>
+  %221 = shufflevector <8 x i8> %220, <8 x i8> <i8 poison, i8 58, i8 poison, i8 poison, i8 58, i8 poison, i8 poison, i8 0>, <8 x i32> <i32 poison, i32 9, i32 2, i32 3, i32 12, i32 5, i32 6, i32 15>
+  %222 = insertelement <8 x i8> %221, i8 %i.gfx, i64 0
+  store <8 x i8> %222, ptr %.sroa.8.1..sroa_idx.i.i.i.i.i1362, align 1, !noalias !21356
   invoke void @_ZN5arrow6Buffer10FromStringENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.2") align 8 %81, ptr noundef nonnull %73)
           to label %bb.awn unwind label %bb.awo, !noalias !21326
 
 bb.awn:                                           ; preds = %bb.awm
   %i.gfz = load ptr, ptr %73, align 8, !tbaa !51, !noalias !21356 ; 2 uses
-  %i.gga = icmp eq ptr %i.gfz, %228
+  %i.gga = icmp eq ptr %i.gfz, %.sroa.6.1..sroa_idx.i.i.i.i.i1360
   br i1 %i.gga, label %_ZZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time64TypeEvEENS_12Time64ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_ENKUlSt17basic_string_viewIcSt11char_traitsIcEEE_clESI_.exit92.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i89.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i89.i.i.i.i.i: ; preds = %bb.awn
-  %i.ggb = load i64, ptr %228, align 8, !tbaa !57, !noalias !21356
+  %i.ggb = load i64, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i1360, align 8, !tbaa !57, !noalias !21356
   %i.ggc = add i64 %i.ggb, 1
   call void @_ZdlPvm(ptr noundef %i.gfz, i64 noundef %i.ggc) #29, !noalias !21326
   br label %_ZZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time64TypeEvEENS_12Time64ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_ENKUlSt17basic_string_viewIcSt11char_traitsIcEEE_clESI_.exit92.i.i.i.i.i
@@ -1135,11 +1105,11 @@ bb.awo:                                           ; preds = %bb.awm
   %i.ggd = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.gge = load ptr, ptr %73, align 8, !tbaa !51, !noalias !21356 ; 2 uses
-  %i.ggf = icmp eq ptr %i.gge, %228
+  %i.ggf = icmp eq ptr %i.gge, %.sroa.6.1..sroa_idx.i.i.i.i.i1360
   br i1 %i.ggf, label %.body.i1255, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i86.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i86.i.i.i.i.i: ; preds = %bb.awo
-  %i.ggg = load i64, ptr %228, align 8, !tbaa !57, !noalias !21356
+  %i.ggg = load i64, ptr %.sroa.6.1..sroa_idx.i.i.i.i.i1360, align 8, !tbaa !57, !noalias !21356
   %i.ggh = add i64 %i.ggg, 1
   call void @_ZdlPvm(ptr noundef %i.gge, i64 noundef %i.ggh) #29, !noalias !21326
   br label %.body.i1255

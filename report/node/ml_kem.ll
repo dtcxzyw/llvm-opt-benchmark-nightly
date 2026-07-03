@@ -203,7 +203,6 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.tm = select <8 x i1> %i.tl, <8 x i16> %i.tk, <8 x i16> zeroinitializer
   %i.tn = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.tj, <8 x i16> zeroinitializer)
   %i.to = or <8 x i16> %i.tm, %i.tn               ; 8 uses
-  %1 = extractelement <8 x i16> %i.to, i64 2
   %i.tp = extractelement <8 x i16> %i.to, i64 4
   store i16 %i.tp, ptr %i.rl, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.tq = extractelement <8 x i16> %i.to, i64 5
@@ -226,7 +225,6 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.ue = getelementptr inbounds nuw i8, ptr %i.kr, i64 166 ; 2 uses
   %i.uf = getelementptr inbounds nuw i8, ptr %i.kt, i64 198 ; 2 uses
   %i.ug = getelementptr inbounds nuw i8, ptr %i.kv, i64 230 ; 2 uses
-  %2 = extractelement <8 x i16> %i.ty, i64 2
   %i.uh = extractelement <8 x i16> %i.ty, i64 4
   store i16 %i.uh, ptr %i.qz, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.ui = extractelement <8 x i16> %i.ty, i64 5
@@ -308,9 +306,10 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.xc = shufflevector <4 x i16> %i.xa, <4 x i16> %i.xb, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.xc, ptr %i.ky, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.xd = shufflevector <8 x i16> %i.ng, <8 x i16> %i.qk, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %3 = insertelement <4 x i16> %i.xd, i16 %1, i64 2
+  %1 = shufflevector <8 x i16> %i.to, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %2 = shufflevector <4 x i16> %i.xd, <4 x i16> %1, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.xe = shufflevector <8 x i16> %i.ws, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
-  %i.xf = shufflevector <4 x i16> %3, <4 x i16> %i.xe, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
+  %i.xf = shufflevector <4 x i16> %2, <4 x i16> %i.xe, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.xf, ptr %i.kz, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.xg = shufflevector <8 x i16> %i.ng, <8 x i16> %i.qk, <4 x i32> <i32 3, i32 11, i32 poison, i32 poison>
   %i.xh = shufflevector <8 x i16> %i.to, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 3>
@@ -353,7 +352,8 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.ym = shufflevector <4 x i16> %i.yk, <4 x i16> %i.yl, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.ym, ptr %i.kk, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.yn = shufflevector <8 x i16> %i.nq, <8 x i16> %i.qu, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %4 = insertelement <4 x i16> %i.yn, i16 %2, i64 2
+  %3 = shufflevector <8 x i16> %i.ty, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %4 = shufflevector <4 x i16> %i.yn, <4 x i16> %3, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.yo = shufflevector <8 x i16> %i.xu, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
   %i.yp = shufflevector <4 x i16> %4, <4 x i16> %i.yo, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.yp, ptr %i.km, align 2, !tbaa !38, !alias.scope !111, !noalias !108
@@ -611,7 +611,6 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.ahm = select <8 x i1> %i.ahl, <8 x i16> %i.ahk, <8 x i16> zeroinitializer
   %i.ahn = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.ahj, <8 x i16> zeroinitializer)
   %i.aho = or <8 x i16> %i.ahm, %i.ahn            ; 8 uses
-  %5 = extractelement <8 x i16> %i.aho, i64 2
   %i.ahp = extractelement <8 x i16> %i.aho, i64 4
   store i16 %i.ahp, ptr %i.afl, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.ahq = extractelement <8 x i16> %i.aho, i64 5
@@ -634,7 +633,6 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.aie = getelementptr inbounds nuw i8, ptr %i.kr, i64 174 ; 2 uses
   %i.aif = getelementptr inbounds nuw i8, ptr %i.kt, i64 206 ; 2 uses
   %i.aig = getelementptr inbounds nuw i8, ptr %i.kv, i64 238 ; 2 uses
-  %6 = extractelement <8 x i16> %i.ahy, i64 2
   %i.aih = extractelement <8 x i16> %i.ahy, i64 4
   store i16 %i.aih, ptr %i.aez, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.aii = extractelement <8 x i16> %i.ahy, i64 5
@@ -716,9 +714,10 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.alc = shufflevector <4 x i16> %i.ala, <4 x i16> %i.alb, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.alc, ptr %i.za, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.ald = shufflevector <8 x i16> %i.abg, <8 x i16> %i.aek, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %7 = insertelement <4 x i16> %i.ald, i16 %5, i64 2
+  %5 = shufflevector <8 x i16> %i.aho, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %6 = shufflevector <4 x i16> %i.ald, <4 x i16> %5, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.ale = shufflevector <8 x i16> %i.aks, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
-  %i.alf = shufflevector <4 x i16> %7, <4 x i16> %i.ale, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
+  %i.alf = shufflevector <4 x i16> %6, <4 x i16> %i.ale, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.alf, ptr %i.zb, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.alg = shufflevector <8 x i16> %i.abg, <8 x i16> %i.aek, <4 x i32> <i32 3, i32 11, i32 poison, i32 poison>
   %i.alh = shufflevector <8 x i16> %i.aho, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 3>
@@ -753,7 +752,8 @@ begin_hunk_0_@scalar_ntt:bb.a
   %i.ame = shufflevector <4 x i16> %i.amc, <4 x i16> %i.amd, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.ame, ptr %i.xw, align 2, !tbaa !38, !alias.scope !111, !noalias !108
   %i.amf = shufflevector <8 x i16> %i.abq, <8 x i16> %i.aeu, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %8 = insertelement <4 x i16> %i.amf, i16 %6, i64 2
+  %7 = shufflevector <8 x i16> %i.ahy, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %8 = shufflevector <4 x i16> %i.amf, <4 x i16> %7, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.amg = shufflevector <8 x i16> %i.alu, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
   %i.amh = shufflevector <4 x i16> %8, <4 x i16> %i.amg, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.amh, ptr %i.xx, align 2, !tbaa !38, !alias.scope !111, !noalias !108
@@ -1156,7 +1156,6 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.abs = select <8 x i1> %i.abr, <8 x i16> %i.abp, <8 x i16> zeroinitializer
   %i.abt = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.abq, <8 x i16> zeroinitializer)
   %i.abu = or <8 x i16> %i.abs, %i.abt            ; 8 uses
-  %1 = extractelement <8 x i16> %i.abu, i64 2
   %i.abv = extractelement <8 x i16> %i.abu, i64 4
   store i16 %i.abv, ptr %i.zu, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.abw = extractelement <8 x i16> %i.abu, i64 5
@@ -1179,7 +1178,6 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.ack = getelementptr i8, ptr %i.tg, i64 166   ; 2 uses
   %i.acl = getelementptr i8, ptr %i.ti, i64 198   ; 2 uses
   %i.acm = getelementptr i8, ptr %i.tk, i64 230   ; 2 uses
-  %2 = extractelement <8 x i16> %i.ace, i64 2
   %i.acn = extractelement <8 x i16> %i.ace, i64 4
   store i16 %i.acn, ptr %i.zi, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.aco = extractelement <8 x i16> %i.ace, i64 5
@@ -1258,9 +1256,10 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.aff = shufflevector <4 x i16> %i.afd, <4 x i16> %i.afe, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.aff, ptr %i.tn, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.afg = shufflevector <8 x i16> %i.vs, <8 x i16> %i.yt, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %3 = insertelement <4 x i16> %i.afg, i16 %1, i64 2
+  %1 = shufflevector <8 x i16> %i.abu, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %2 = shufflevector <4 x i16> %i.afg, <4 x i16> %1, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.afh = shufflevector <8 x i16> %i.aev, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
-  %i.afi = shufflevector <4 x i16> %3, <4 x i16> %i.afh, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
+  %i.afi = shufflevector <4 x i16> %2, <4 x i16> %i.afh, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.afi, ptr %i.to, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.afj = shufflevector <8 x i16> %i.vs, <8 x i16> %i.yt, <4 x i32> <i32 3, i32 11, i32 poison, i32 poison>
   %i.afk = shufflevector <8 x i16> %i.abu, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 3>
@@ -1303,7 +1302,8 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.agp = shufflevector <4 x i16> %i.agn, <4 x i16> %i.ago, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.agp, ptr %i.sz, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.agq = shufflevector <8 x i16> %i.wc, <8 x i16> %i.zd, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %4 = insertelement <4 x i16> %i.agq, i16 %2, i64 2
+  %3 = shufflevector <8 x i16> %i.ace, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %4 = shufflevector <4 x i16> %i.agq, <4 x i16> %3, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.agr = shufflevector <8 x i16> %i.afx, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
   %i.ags = shufflevector <4 x i16> %4, <4 x i16> %i.agr, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.ags, ptr %i.tb, align 2, !tbaa !38, !alias.scope !203, !noalias !200
@@ -1552,7 +1552,6 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.apg = select <8 x i1> %i.apf, <8 x i16> %i.apd, <8 x i16> zeroinitializer
   %i.aph = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.ape, <8 x i16> zeroinitializer)
   %i.api = or <8 x i16> %i.apg, %i.aph            ; 8 uses
-  %5 = extractelement <8 x i16> %i.api, i64 2
   %i.apj = extractelement <8 x i16> %i.api, i64 4
   store i16 %i.apj, ptr %i.ani, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.apk = extractelement <8 x i16> %i.api, i64 5
@@ -1575,7 +1574,6 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.apy = getelementptr i8, ptr %i.tg, i64 174   ; 2 uses
   %i.apz = getelementptr i8, ptr %i.ti, i64 206   ; 2 uses
   %i.aqa = getelementptr i8, ptr %i.tk, i64 238   ; 2 uses
-  %6 = extractelement <8 x i16> %i.aps, i64 2
   %i.aqb = extractelement <8 x i16> %i.aps, i64 4
   store i16 %i.aqb, ptr %i.amw, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.aqc = extractelement <8 x i16> %i.aps, i64 5
@@ -1654,9 +1652,10 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.ast = shufflevector <4 x i16> %i.asr, <4 x i16> %i.ass, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.ast, ptr %i.ahd, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.asu = shufflevector <8 x i16> %i.ajg, <8 x i16> %i.amh, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %7 = insertelement <4 x i16> %i.asu, i16 %5, i64 2
+  %5 = shufflevector <8 x i16> %i.api, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %6 = shufflevector <4 x i16> %i.asu, <4 x i16> %5, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.asv = shufflevector <8 x i16> %i.asj, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
-  %i.asw = shufflevector <4 x i16> %7, <4 x i16> %i.asv, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
+  %i.asw = shufflevector <4 x i16> %6, <4 x i16> %i.asv, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.asw, ptr %i.ahe, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.asx = shufflevector <8 x i16> %i.ajg, <8 x i16> %i.amh, <4 x i32> <i32 3, i32 11, i32 poison, i32 poison>
   %i.asy = shufflevector <8 x i16> %i.api, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 3>
@@ -1691,7 +1690,8 @@ begin_hunk_1_@scalar_inverse_ntt:vector.memcheck
   %i.atv = shufflevector <4 x i16> %i.att, <4 x i16> %i.atu, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   store <4 x i16> %i.atv, ptr %i.afz, align 2, !tbaa !38, !alias.scope !203, !noalias !200
   %i.atw = shufflevector <8 x i16> %i.ajq, <8 x i16> %i.amr, <4 x i32> <i32 2, i32 10, i32 poison, i32 poison>
-  %8 = insertelement <4 x i16> %i.atw, i16 %6, i64 2
+  %7 = shufflevector <8 x i16> %i.aps, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %8 = shufflevector <4 x i16> %i.atw, <4 x i16> %7, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.atx = shufflevector <8 x i16> %i.atl, <8 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
   %i.aty = shufflevector <4 x i16> %8, <4 x i16> %i.atx, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
   store <4 x i16> %i.aty, ptr %i.aga, align 2, !tbaa !38, !alias.scope !203, !noalias !200
