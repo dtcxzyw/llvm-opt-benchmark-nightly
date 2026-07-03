@@ -203,8 +203,9 @@ bb.a:
   %i.ao = alloca [64 x i8], align 8               ; 8 uses
   %i.ap = alloca [96 x i8], align 16              ; 7 uses
   %i.aq = alloca [16 x i8], align 8               ; 6 uses
-  %i.ar = alloca [24 x i8], align 8               ; 5 uses
-  %i.as = alloca [24 x i8], align 8               ; 6 uses
+  %3 = alloca [24 x i8], align 8                  ; 5 uses
+  %i.ar = alloca [24 x i8], align 8               ; 6 uses
+  %i.as = alloca [24 x i8], align 8               ; 5 uses
   %i.at = alloca [24 x i8], align 8               ; 12 uses
   %i.au = alloca [408 x i8], align 8              ; 13 uses
   %i.av = alloca [112 x i8], align 8              ; 5 uses
@@ -507,41 +508,43 @@ bb.ab:                                            ; preds = %bb.ac
   %i.dr = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !1006
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !1006
+  call void @llvm.lifetime.end.p0(ptr nonnull %3), !noalias !1006
   br label %bb.bb
 
 bb.ac:                                            ; preds = %bb.x
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.as), !noalias !1006
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.as)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar), !noalias !1006
+  call void @llvm.lifetime.start.p0(ptr nonnull %3), !noalias !1006
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq), !noalias !1006
   store ptr %i.dg, ptr %i.aq, align 8, !noalias !1006
   %.sroa.5.0..sroa_idx.i35.i = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   store ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtReNtB6_7Display3fmtCsfY7SmN0bPrO_14deltalake_test, ptr %.sroa.5.0..sroa_idx.i35.i, align 8, !noalias !1006
-  invoke void @_RNvNvNtCs6Po7BT7Nknu_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ar, ptr noundef nonnull @6, ptr noundef nonnull %i.aq)
+  invoke void @_RNvNvNtCs6Po7BT7Nknu_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %3, ptr noundef nonnull @6, ptr noundef nonnull %i.aq)
           to label %bb.ad unwind label %bb.ab, !noalias !984
 
 bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !1006
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.ar, i64 24, i1 false), !alias.scope !1010, !noalias !1006
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !1006
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ar, ptr noundef nonnull readonly align 8 dereferenceable(24) %3, i64 24, i1 false), !alias.scope !1010, !noalias !1006
+  call void @llvm.lifetime.end.p0(ptr nonnull %3), !noalias !1006
   %i.ds = invoke { i64, i64 } @_RINvMs2_NtNtCs2pqxYH9ZEk8_3std6thread5localINtB6_8LocalKeyINtNtCsbvkFyIu7lgC_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @36)
           to label %bb.af unwind label %bb.ae, !noalias !984 ; 2 uses
 
 bb.ae:                                            ; preds = %bb.ad
   %i.dt = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.as) #24
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ar) #24
           to label %bb.bb unwind label %bb.ba, !noalias !984
 
 bb.af:                                            ; preds = %bb.ad
   %i.du = extractvalue { i64, i64 } %i.ds, 0
   %i.dv = extractvalue { i64, i64 } %i.ds, 1
-  %.sroa.818.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.818.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.as, i64 24, i1 false), !noalias !984
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !noalias !1006
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, ptr noundef nonnull align 8 dereferenceable(24) %i.ar, i64 24, i1 false), !noalias !1006
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !1006
   store i64 0, ptr %i.do, align 8, !noalias !984
   %.sroa.616.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 16
   store i64 0, ptr %.sroa.616.0..sroa_idx.i.i, align 8, !noalias !984
+  %.sroa.818.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.818.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.as, i64 24, i1 false), !noalias !984
   %.sroa.919.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 56
   store i64 -9223372036854775808, ptr %.sroa.919.0..sroa_idx.i.i, align 8, !noalias !984
   %.sroa.1121.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 80
@@ -562,6 +565,7 @@ bb.af:                                            ; preds = %bb.ad
   store ptr null, ptr %.sroa.1727.0..sroa_idx.i.i, align 8, !noalias !984
   %.sroa.1828.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 264
   store i8 1, ptr %.sroa.1828.0..sroa_idx.i.i, align 8, !noalias !984
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   store i64 1, ptr %i.at, align 8, !alias.scope !1014, !noalias !1017
   %i.dw = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store ptr %i.do, ptr %i.dw, align 8, !alias.scope !1014, !noalias !1017
@@ -728,7 +732,8 @@ bb.ba:                                            ; preds = %bb.ky, %bb.kw, %bb.
 
 bb.bb:                                            ; preds = %bb.ae, %bb.ab
   %.pn39.i.i = phi { ptr, i32 } [ %i.dt, %bb.ae ], [ %i.dr, %bb.ab ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !noalias !1006
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !1006
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.do, i64 noundef 272, i64 noundef 8) #21, !noalias !984
   br label %bb.bc
 

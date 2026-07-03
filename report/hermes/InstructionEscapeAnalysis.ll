@@ -203,15 +203,17 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.o, ptr noundef nonnull align 8 dereferenceable(12) %i.p, i64 12, i1 false), !tbaa.struct !19
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.p, ptr noundef nonnull align 4 dereferenceable(12) %1, i64 12, i1 false), !tbaa.struct !19
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %2 = load i32, ptr %i.h, align 8, !tbaa !7      ; 2 uses
-  %3 = icmp eq i32 %2, 0
-  %i.q = load i32, ptr %i.i, align 4
+  %i.q = load i32, ptr %i.h, align 8, !tbaa !7    ; 2 uses
   %i.r = icmp eq i32 %i.q, 0
-  %or.cond = select i1 %3, i1 %i.r, i1 false
-  br i1 %or.cond, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIjN6hermes8OptValueIjEENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E5clearEv.exit, label %bb.b
+  br i1 %i.r, label %2, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
-  %i.s = shl i32 %2, 2
+2:                                                ; preds = %bb.a
+  %3 = load i32, ptr %i.i, align 4, !tbaa !15
+  %4 = icmp eq i32 %3, 0
+  br i1 %4, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIjN6hermes8OptValueIjEENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E5clearEv.exit, label %bb.b
+
+bb.b:                                             ; preds = %2, %bb.a
+  %i.s = shl i32 %i.q, 2
   %i.t = load i32, ptr %i.j, align 8, !tbaa !11   ; 4 uses
   %i.u = icmp ult i32 %i.s, %i.t
   %i.v = icmp ugt i32 %i.t, 64
@@ -278,7 +280,7 @@ bb.d:                                             ; preds = %bb.b
   %.not.i.7 = icmp eq ptr %i.al, %i.y
   br i1 %.not.i.7, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !16
 
-_ZN4llvh12DenseMapBaseINS_8DenseMapIjN6hermes8OptValueIjEENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E5clearEv.exit: ; preds = %bb.a, %bb.c, %._crit_edge.i
+_ZN4llvh12DenseMapBaseINS_8DenseMapIjN6hermes8OptValueIjEENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E5clearEv.exit: ; preds = %2, %bb.c, %._crit_edge.i
   %i.am = load i32, ptr %0, align 8, !tbaa !22
   %i.an = add i32 %i.am, -1
   store i32 %i.an, ptr %0, align 8, !tbaa !22

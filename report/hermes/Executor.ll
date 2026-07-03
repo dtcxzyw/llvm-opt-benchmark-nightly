@@ -203,7 +203,7 @@ declare void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden i16 @_ZN6hermes5regex7ContextINS0_16UTF16RegexTraitsEE9backtrackERN4llvh11SmallVectorINS3_13BacktrackInsnELj64EEEPNS0_5StateIS2_EE(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr noundef nonnull align 8 dereferenceable(1552) %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !55   ; 2 uses
   %.not.i73 = icmp eq i32 %i.b, 0
   br i1 %.not.i73, label %.thread48, label %.lr.ph
@@ -239,8 +239,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.o
   %i.r = load i64, ptr %i.l, align 4
   store i64 %i.r, ptr %i.q, align 4
-  %3 = load i32, ptr %i.a, align 8, !tbaa !55
-  br label %.sink.split
+  br label %.sink.split.sink.split
 
 bb.d:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds i8, ptr %i.i, i64 -20
@@ -251,8 +250,7 @@ bb.d:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.v
   %i.y = load i64, ptr %i.s, align 4
   store i64 %i.y, ptr %i.x, align 4
-  %4 = load i32, ptr %i.a, align 8, !tbaa !55
-  br label %.sink.split
+  br label %.sink.split.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds i8, ptr %i.i, i64 -16
@@ -333,8 +331,12 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   store i32 %i.bk, ptr %i.bl, align 8, !tbaa !39
   br label %.thread48
 
-.sink.split:                                      ; preds = %bb.g, %bb.d, %bb.c
-  %.sink108 = phi i32 [ %3, %bb.c ], [ %4, %bb.d ], [ %i.f, %bb.g ]
+.sink.split.sink.split:                           ; preds = %bb.c, %bb.d
+  %3 = load i32, ptr %i.a, align 8, !tbaa !55
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %.sink.split.sink.split, %bb.g
+  %.sink108 = phi i32 [ %i.f, %bb.g ], [ %3, %.sink.split.sink.split ]
   %i.bm = add i32 %.sink108, -1                   ; 2 uses
   store i32 %i.bm, ptr %i.a, align 8, !tbaa !55
   br label %bb.l
@@ -737,7 +739,7 @@ _ZN4llvh11SmallVectorIN6hermes5regex7ContextINS2_16ASCIIRegexTraitsEE13Backtrack
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden i16 @_ZN6hermes5regex7ContextINS0_16ASCIIRegexTraitsEE9backtrackERN4llvh11SmallVectorINS3_13BacktrackInsnELj64EEEPNS0_5StateIS2_EE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(1552) %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !55   ; 2 uses
   %.not.i73 = icmp eq i32 %i.b, 0
   br i1 %.not.i73, label %.thread48, label %.lr.ph
@@ -773,8 +775,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.o
   %i.r = load i64, ptr %i.l, align 4
   store i64 %i.r, ptr %i.q, align 4
-  %3 = load i32, ptr %i.a, align 8, !tbaa !55
-  br label %.sink.split
+  br label %.sink.split.sink.split
 
 bb.d:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds i8, ptr %i.i, i64 -20
@@ -785,8 +786,7 @@ bb.d:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.v
   %i.y = load i64, ptr %i.s, align 4
   store i64 %i.y, ptr %i.x, align 4
-  %4 = load i32, ptr %i.a, align 8, !tbaa !55
-  br label %.sink.split
+  br label %.sink.split.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds i8, ptr %i.i, i64 -16
@@ -867,8 +867,12 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   store i32 %i.bk, ptr %i.bl, align 8, !tbaa !75
   br label %.thread48
 
-.sink.split:                                      ; preds = %bb.g, %bb.d, %bb.c
-  %.sink108 = phi i32 [ %3, %bb.c ], [ %4, %bb.d ], [ %i.f, %bb.g ]
+.sink.split.sink.split:                           ; preds = %bb.c, %bb.d
+  %3 = load i32, ptr %i.a, align 8, !tbaa !55
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %.sink.split.sink.split, %bb.g
+  %.sink108 = phi i32 [ %i.f, %bb.g ], [ %3, %.sink.split.sink.split ]
   %i.bm = add i32 %.sink108, -1                   ; 2 uses
   store i32 %i.bm, ptr %i.a, align 8, !tbaa !55
   br label %bb.l

@@ -203,23 +203,25 @@ bb.k:                                             ; preds = %bb.n, %bb.i
 bb.l:                                             ; preds = %bb.h
   unreachable
 
-.thread:                                          ; preds = %bb.m, %bb.n, %bb.i
-  %.pn13 = phi { ptr, i32 } [ %lpad.thr_comm, %bb.m ], [ %i.ad, %bb.i ], [ %lpad.thr_comm, %bb.n ]
+.thread:                                          ; preds = %5, %bb.m, %bb.n, %bb.i
+  %.pn13 = phi { ptr, i32 } [ %lpad.thr_comm, %5 ], [ %i.ad, %bb.i ], [ %lpad.thr_comm, %bb.n ], [ %lpad.thr_comm, %bb.m ]
   resume { ptr, i32 } %.pn13
 
 bb.m:                                             ; preds = %bb.h, %_RINvMs2_NtNtCs2pqxYH9ZEk8_3std6thread5localINtB6_8LocalKeyNtNtNtCskQDtHcQtBkN_5tokio7runtime7context7ContextE8try_withNCINvNtBW_7runtime13enter_runtimeNCINvMNtNtBY_9scheduler12multi_threadNtB2v_11MultiThread8block_onNCNCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB3E_13RawDeltaTable5files000E0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCsjyY8HP3IvQ6_12object_store4path4PathENtNtCsgbCypRs12E4_4pyo33err5PyErrEE0INtNtB4D_6option6OptionNtB1X_17EnterRuntimeGuardEEB3E_.exit.thread.i, %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCs7p2uQeJxui2_9deltalake.exit.i.i, %bb.b, %bb.d, %_RINvMs2_NtNtCs2pqxYH9ZEk8_3std6thread5localINtB6_8LocalKeyNtNtNtCskQDtHcQtBkN_5tokio7runtime7context7ContextE8try_withNCINvNtBW_7runtime13enter_runtimeNCINvMNtNtBY_9scheduler12multi_threadNtB2v_11MultiThread8block_onNCNCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB3E_13RawDeltaTable5files000E0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCsjyY8HP3IvQ6_12object_store4path4PathENtNtCsgbCypRs12E4_4pyo33err5PyErrEE0INtNtB4D_6option6OptionNtB1X_17EnterRuntimeGuardEEB3E_.exit.i
   %lpad.thr_comm = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup                                 ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 88
-  %5 = load i8, ptr %i.af, align 8, !range !83, !noundef !3
-  %cond.i.i = icmp eq i8 %5, 3
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 80
-  %i.ag = load i8, ptr %6, align 8, !range !83
+  %i.ag = load i8, ptr %i.af, align 8, !range !83, !noundef !3
   %cond.i.i.i.a = icmp eq i8 %i.ag, 3
-  %or.cond = select i1 %cond.i.i, i1 %cond.i.i.i.a, i1 false
-  br i1 %or.cond, label %bb.n, label %.thread
+  br i1 %cond.i.i.i.a, label %5, label %.thread
 
-bb.n:                                             ; preds = %bb.m
+5:                                                ; preds = %bb.m
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 80
+  %7 = load i8, ptr %6, align 8, !range !83, !noundef !3
+  %cond.i.i.i = icmp eq i8 %7, 3
+  br i1 %cond.i.i.i, label %bb.n, label %.thread
+
+bb.n:                                             ; preds = %5
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 40
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream11try_collect10TryCollectINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot9iterators15LogicalFileViewNtNtB49_6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EEINtNtB2k_3vec3VecB41_EEECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 dereferenceable(40) %i.ah)
           to label %.thread unwind label %bb.k
@@ -622,9 +624,9 @@ _RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.y
 bb.aa:                                            ; preds = %_RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.de, ptr noundef nonnull align 8 dereferenceable(56) %i.bd, i64 56, i1 false)
   %4 = getelementptr inbounds nuw i8, ptr %i.de, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull align 8 dereferenceable(56) %i.bn, i64 56, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.de, ptr noundef nonnull align 8 dereferenceable(56) %i.bd, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bd)
   store i64 2, ptr %i.be, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %i.be, i64 8

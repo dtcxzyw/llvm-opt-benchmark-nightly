@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.n,
   %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 21
   store i8 0, ptr %i.cy, align 1, !tbaa !17
   %i.cz = invoke noundef double @_ZNK9InputFile9getDoubleERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEd(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(32) %4, double noundef f0x547D42AEA2879F2E)
-          to label %bb.o unwind label %bb.s       ; 2 uses
+          to label %bb.o unwind label %bb.s
 
 bb.o:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -214,19 +214,20 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43
   %i.dd = load i64, ptr %i.cw, align 8, !tbaa !17
   %i.de = add i64 %i.dd, 1
   call void @_ZdlPvm(ptr noundef %i.db, i64 noundef %i.de) #17
-  %.pre = load double, ptr %i.da, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45: ; preds = %bb.o, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43
-  %9 = phi double [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43 ], [ %i.cz, %bb.o ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   %i.df = load i32, ptr %i.cr, align 8, !tbaa !43
   %i.dg = icmp eq i32 %i.df, 999999
-  %10 = fcmp oeq double %9, f0x547D42AEA2879F2E
-  %or.cond = select i1 %i.dg, i1 %10, i1 false
-  br i1 %or.cond, label %bb.p, label %._crit_edge.i.i56
+  br i1 %i.dg, label %9, label %._crit_edge.i.i56
 
-bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45
+9:                                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45
+  %10 = load double, ptr %i.da, align 8, !tbaa !48
+  %11 = fcmp oeq double %10, f0x547D42AEA2879F2E
+  br i1 %11, label %bb.p, label %._crit_edge.i.i56
+
+bb.p:                                             ; preds = %9
   %i.dh = load i32, ptr @_ZN8Parallel4mypeE, align 4, !tbaa !4
   %i.di = icmp eq i32 %i.dh, 0
   br i1 %i.di, label %bb.q, label %_ZNSolsEPFRSoS_E.exit49
@@ -277,7 +278,7 @@ _ZNSolsEPFRSoS_E.exit49:                          ; preds = %_ZStlsISt11char_tra
   call void @exit(i32 noundef 1) #18
   unreachable
 
-._crit_edge.i.i56:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45
+._crit_edge.i.i56:                                ; preds = %9, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   %i.dv = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
   store ptr %i.dv, ptr %5, align 8, !tbaa !8

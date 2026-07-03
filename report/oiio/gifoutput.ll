@@ -204,7 +204,7 @@ define linkonce_odr hidden ptr @_ZN3fmt3v126detail5writeIcNS0_14basic_appenderIc
 bb.a:
   %4 = alloca %"class.fmt::v12::basic_string_view", align 8 ; 4 uses
   %i.a = alloca i8, align 1                       ; 5 uses
-  %i.b = alloca i64, align 8                      ; 4 uses
+  %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %i.d = alloca i64, align 8                      ; 5 uses
   %5 = alloca %class.anon.88, align 8             ; 6 uses
@@ -220,14 +220,20 @@ bb.a:
   store i8 %i.i, ptr %i.a, align 1, !tbaa !324
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.k = load i32, ptr %i.j, align 4, !tbaa !169  ; 3 uses
-  %i.l = icmp slt i32 %i.k, 0                     ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %8 = load i32, ptr %7, align 4
-  %9 = icmp eq i32 %8, 0
-  %or.cond = select i1 %i.l, i1 %9, i1 false
-  br i1 %or.cond, label %bb.b, label %bb.i
+  %i.l = icmp slt i32 %i.k, 0
+  br i1 %i.l, label %7, label %11
 
-bb.b:                                             ; preds = %bb.a
+7:                                                ; preds = %bb.a
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %9 = load i32, ptr %8, align 4, !tbaa !218
+  %10 = icmp eq i32 %9, 0
+  br i1 %10, label %bb.b, label %.thread
+
+.thread:                                          ; preds = %7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #34
+  br label %bb.i
+
+bb.b:                                             ; preds = %7
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !143
   %i.o = add i64 %i.n, %2                         ; 2 uses
@@ -410,17 +416,20 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i.i.i.3 = icmp eq i64 %i.bv, %.026.i.i.i
   br i1 %exitcond.not.i.i.i.3, label %._crit_edge.loopexit.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !679
 
-bb.i:                                             ; preds = %bb.a
+11:                                               ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #34
-  %10 = zext nneg i32 %i.k to i64
-  %spec.select = select i1 %i.l, i64 -1, i64 %10
-  store i64 %spec.select, ptr %i.b, align 8, !tbaa !144
+  %12 = zext nneg i32 %i.k to i64
+  br label %bb.i
+
+bb.i:                                             ; preds = %.thread, %11
+  %13 = phi i64 [ %12, %11 ], [ -1, %.thread ]
+  store i64 %13, ptr %i.b, align 8, !tbaa !144
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #34
   %i.bw = icmp ne i32 %i.k, 0
   %narrow = and i1 %i.h, %i.bw
   %not. = zext i1 %narrow to i64                  ; 2 uses
-  store i64 %not., ptr %i.c, align 8, !tbaa !144
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #34
+  store i64 %not., ptr %i.c, align 8, !tbaa !144
   store i64 %not., ptr %i.d, align 8, !tbaa !144
   store ptr %i.a, ptr %5, align 8, !tbaa !325
   %i.bx = getelementptr inbounds nuw i8, ptr %5, i64 8

@@ -204,7 +204,6 @@ _ZSt5countISt13_Bit_iteratorbENSt15iterator_traitsIT_E15difference_typeES2_S2_RK
   %i.qz = load ptr, ptr %i.y, align 8             ; 2 uses
   %i.ra = load ptr, ptr %i.x, align 8             ; 4 uses
   %.not663 = icmp eq ptr %i.qz, %i.ra
-  %.pre700 = load ptr, ptr %0, align 8            ; 2 uses
   br i1 %.not663, label %._crit_edge631, label %.lr.ph630.a
 
 .lr.ph630.a:                                      ; preds = %.preheader
@@ -217,9 +216,10 @@ _ZSt5countISt13_Bit_iteratorbENSt15iterator_traitsIT_E15difference_typeES2_S2_RK
 ._crit_edge631:                                   ; preds = %bb.bx, %.preheader
   %.0548.lcssa = phi i64 [ -1, %.preheader ], [ %.2, %bb.bx ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
+  %6 = load ptr, ptr %0, align 8
   %i.rf = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0501.0772776, i64 %.0548.lcssa ; 2 uses
   %i.rg = load i64, ptr %i.rf, align 8
-  %i.rh = getelementptr inbounds nuw [24 x i8], ptr %.pre700, i64 %i.rg
+  %i.rh = getelementptr inbounds nuw [24 x i8], ptr %6, i64 %i.rg
   %i.ri = getelementptr inbounds nuw [4 x i8], ptr %i.ra, i64 %.0548.lcssa
   %i.rj = load i32, ptr %i.ri, align 4
   %i.rk = zext i32 %i.rj to i64
@@ -232,9 +232,9 @@ bb.bt:                                            ; preds = %bb.aa
   br label %_ZNSt6vectorImSaImEED2Ev.exit335
 
 bb.bu:                                            ; preds = %.lr.ph630.a, %bb.bx
-  %.0147629 = phi double [ -1.000000e+00, %.lr.ph630.a ], [ %.2149, %bb.bx ] ; 3 uses
-  %.0150628 = phi i64 [ 0, %.lr.ph630.a ], [ %i.uc, %bb.bx ] ; 7 uses
-  %.0548627 = phi i64 [ -1, %.lr.ph630.a ], [ %.2, %bb.bx ] ; 2 uses
+  %.0147629 = phi double [ %.2149, %bb.bx ], [ -1.000000e+00, %.lr.ph630.a ] ; 3 uses
+  %.0150628 = phi i64 [ %i.uc, %bb.bx ], [ 0, %.lr.ph630.a ] ; 7 uses
+  %.0548627 = phi i64 [ %.2, %bb.bx ], [ -1, %.lr.ph630.a ] ; 2 uses
   %i.rm = sdiv i64 %.0150628, 64
   %i.rn = getelementptr inbounds [8 x i8], ptr %.sroa.0462.0, i64 %i.rm
   %i.ro = and i64 %.0150628, -9223372036854775745
@@ -249,9 +249,10 @@ bb.bu:                                            ; preds = %.lr.ph630.a, %bb.bx
   br i1 %.not562, label %bb.bv, label %bb.bx
 
 bb.bv:                                            ; preds = %bb.bu
+  %7 = load ptr, ptr %0, align 8
   %i.ru = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0501.0772776, i64 %.0150628
   %i.rv = load i64, ptr %i.ru, align 8
-  %i.rw = getelementptr inbounds [24 x i8], ptr %.pre700, i64 %i.rv ; 3 uses
+  %i.rw = getelementptr inbounds [24 x i8], ptr %7, i64 %i.rv ; 3 uses
   %i.rx = getelementptr inbounds nuw [4 x i8], ptr %i.ra, i64 %.0150628
   %i.ry = load i32, ptr %i.rx, align 4            ; 3 uses
   %i.rz = zext i32 %i.ry to i64
@@ -654,15 +655,21 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
   %i.by = getelementptr inbounds i8, ptr %1, i64 %i.bx
   %i.bz = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(24) %i.by, ptr nonnull @_ZTIN6Assimp4STEP6ObjectE, ptr nonnull @_ZTIN6Assimp3IFC10Schema_2x346IfcCartesianTransformationOperator3DnonUniformE, i64 -1) #25 ; 6 uses
   %.not26 = icmp eq ptr %i.bz, null
-  br i1 %.not26, label %bb.o, label %bb.k
+  br i1 %.not26, label %bb.o, label %5
 
-bb.k:                                             ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %i.bz, i64 96
-  %6 = load i8, ptr %5, align 8, !range !192, !noundef !187
-  %7 = trunc nuw i8 %6 to i1
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %9 = load double, ptr %8, align 8
-  %10 = select i1 %7, double %9, double 1.000000e+00 ; 2 uses
+5:                                                ; preds = %bb.j
+  %6 = getelementptr inbounds nuw i8, ptr %i.bz, i64 96
+  %7 = load i8, ptr %6, align 8, !range !192, !noundef !187
+  %8 = trunc nuw i8 %7 to i1
+  br i1 %8, label %9, label %bb.k
+
+9:                                                ; preds = %5
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %11 = load double, ptr %10, align 8
+  br label %bb.k
+
+bb.k:                                             ; preds = %5, %9
+  %12 = phi double [ %11, %9 ], [ 1.000000e+00, %5 ] ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 160
   %i.cb = load i8, ptr %i.ca, align 8, !range !192, !noundef !187
   %i.cc = trunc nuw i8 %i.cb to i1
@@ -699,7 +706,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m
   %.sroa.985.0 = phi double [ 1.000000e+00, %bb.m ], [ %i.ck, %bb.n ], [ %i.cp, %bb.p ], [ 1.000000e+00, %bb.o ] ; 4 uses
   %.sroa.684.0 = phi double [ %i.cf, %bb.m ], [ %i.cf, %bb.n ], [ %i.cp, %bb.p ], [ 1.000000e+00, %bb.o ] ; 4 uses
-  %.sroa.083.0 = phi double [ %10, %bb.m ], [ %10, %bb.n ], [ %i.cp, %bb.p ], [ 1.000000e+00, %bb.o ] ; 4 uses
+  %.sroa.083.0 = phi double [ %12, %bb.m ], [ %12, %bb.n ], [ %i.cp, %bb.p ], [ 1.000000e+00, %bb.o ] ; 4 uses
   %i.cq = fmul double %i.bh, 0.000000e+00         ; 2 uses
   %i.cr = fadd double %i.bg, %i.cq
   %i.cs = tail call double @llvm.fmuladd.f64(double %i.bj, double 0.000000e+00, double %i.cr)

@@ -203,19 +203,21 @@ bb.a:
   %11 = alloca %"class.duckdb::shared_ptr", align 16 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.b = tail call noundef zeroext i1 @_ZNK6duckdb12BufferHandle7IsValidEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
-  br i1 %i.b, label %bb.h, label %bb.b
+  br i1 %i.b, label %bb.h, label %12
 
-bb.b:                                             ; preds = %bb.a
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %13 = load i64, ptr %12, align 8, !tbaa !199
-  %.not47 = icmp eq i64 %13, -1
+12:                                               ; preds = %bb.a
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %14 = load i64, ptr %13, align 8, !tbaa !199
+  %.not = icmp eq i64 %14, -1
+  br i1 %.not, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %12
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.d = load i8, ptr %i.c, align 8, !range !137
+  %i.d = load i8, ptr %i.c, align 8, !tbaa !200, !range !137, !noundef !34
   %i.e = trunc nuw i8 %i.d to i1
-  %or.cond = select i1 %.not47, i1 true, i1 %i.e
-  br i1 %or.cond, label %bb.c, label %bb.ao
+  br i1 %i.e, label %bb.c, label %bb.ao
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %12
   %i.f = tail call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
@@ -611,7 +613,7 @@ _ZN6duckdb22PartialBlockAllocationD2Ev.exit34:    ; preds = %_ZN6duckdb10shared_
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   br label %bb.ao
 
-bb.ao:                                            ; preds = %bb.b, %bb.i, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit34
+bb.ao:                                            ; preds = %bb.i, %bb.b, %_ZN6duckdb22PartialBlockAllocationD2Ev.exit34
   ret void
 
 bb.ap:                                            ; preds = %_ZNSt10unique_ptrIN6duckdb20PartialBlockForIndexESt14default_deleteIS1_EED2Ev.exit

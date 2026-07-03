@@ -203,26 +203,28 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
   %i.aq = load i32, ptr %i.a, align 4, !tbaa !3   ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %5 = load i32, ptr %4, align 4, !tbaa !34
-  %.not.not = icmp sge i32 %5, %i.aq
-  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.as = load i32, ptr %i.ar, align 8
-  %.not = icmp sgt i32 %i.aq, %i.as
-  %or.cond17 = select i1 %.not.not, i1 true, i1 %.not
-  br i1 %or.cond17, label %bb.l, label %bb.k
+  %4 = add nsw i32 %i.aq, -1
+  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %i.as = load i32, ptr %i.ar, align 4, !tbaa !34
+  %.not.not = icmp slt i32 %i.as, %i.aq
+  br i1 %.not.not, label %5, label %bb.l
 
-bb.k:                                             ; preds = %bb.j
+5:                                                ; preds = %bb.j
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %7 = load i32, ptr %6, align 8, !tbaa !35
+  %.not = icmp sgt i32 %i.aq, %7
+  br i1 %.not, label %bb.l, label %bb.k
+
+bb.k:                                             ; preds = %5
   %i.at = load i32, ptr %i.d, align 4, !tbaa !3   ; 2 uses
   %i.au = sub nsw i32 %i.at, %i.aq
   %.sroa.speculated = call i32 @llvm.smax.i32(i32 %i.au, i32 0)
   call void @_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter27CreateDecimalRepresentationEPKciiiPNS0_13StringBuilderE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.c, i32 noundef %i.at, i32 noundef %i.aq, i32 noundef %.sroa.speculated, ptr noundef %2)
   br label %bb.m
 
-bb.l:                                             ; preds = %bb.j
-  %6 = add nsw i32 %i.aq, -1
+bb.l:                                             ; preds = %5, %bb.j
   %i.av = load i32, ptr %i.d, align 4, !tbaa !3
-  call void @_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter31CreateExponentialRepresentationEPKciiPNS0_13StringBuilderE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.c, i32 noundef %i.av, i32 noundef %6, ptr noundef %2)
+  call void @_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter31CreateExponentialRepresentationEPKciiPNS0_13StringBuilderE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.c, i32 noundef %i.av, i32 noundef %4, ptr noundef %2)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -625,7 +627,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l, %_ZN14
   %i.ay = add nsw i32 %i.ax, -1
   %i.az = sub i32 1, %i.ax
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !35
+  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !36
   %i.bc = icmp sgt i32 %i.az, %i.bb
   %i.bd = load i32, ptr %0, align 8, !tbaa !8     ; 3 uses
   br i1 %i.bc, label %.thread, label %bb.n
@@ -636,7 +638,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bf = sub i32 %i.ax, %2
   %i.bg = add nsw i32 %i.bf, %.lobit
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.bi = load i32, ptr %i.bh, align 8, !tbaa !36
+  %i.bi = load i32, ptr %i.bh, align 8, !tbaa !37
   %i.bj = icmp sgt i32 %i.bg, %i.bi               ; 2 uses
   %i.bk = and i32 %i.bd, 16
   %.not = icmp eq i32 %i.bk, 0
@@ -679,14 +681,14 @@ bb.p:                                             ; preds = %bb.o
   %i.bw = getelementptr i8, ptr %i.bv, i64 -1
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !20
   %i.by = icmp eq i8 %i.bx, 48
-  br i1 %i.by, label %.lr.ph78, label %.lr.ph..critedge.loopexit.split.loop.exit70_crit_edge, !llvm.loop !37
+  br i1 %i.by, label %.lr.ph78, label %.lr.ph..critedge.loopexit.split.loop.exit70_crit_edge, !llvm.loop !38
 
 .lr.ph78:                                         ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv77 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.bp, %.lr.ph.preheader ]
   %indvars.iv.next = add nsw i64 %indvars.iv77, -1 ; 5 uses
   %i.bz = trunc nuw nsw i64 %indvars.iv.next to i32 ; 4 uses
   %i.ca = icmp sgt i64 %indvars.iv.next, %i.bq
-  br i1 %i.ca, label %.lr.ph, label %.critedge.loopexit, !llvm.loop !37
+  br i1 %i.ca, label %.lr.ph, label %.critedge.loopexit, !llvm.loop !38
 
 .lr.ph..critedge.loopexit.split.loop.exit70_crit_edge: ; preds = %.lr.ph
   store i32 %i.bz, ptr %i.c, align 4, !tbaa !3
@@ -837,7 +839,8 @@ attributes #14 = { noreturn nounwind }
 !32 = !{i8 0, i8 2}
 !33 = !{}
 !34 = !{!9, !4, i64 28}
-!35 = !{!9, !4, i64 36}
-!36 = !{!9, !4, i64 40}
-!37 = distinct !{!37, !22}
+!35 = !{!9, !4, i64 32}
+!36 = !{!9, !4, i64 36}
+!37 = !{!9, !4, i64 40}
+!38 = distinct !{!38, !22}
 end_hunk_1

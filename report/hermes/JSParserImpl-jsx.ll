@@ -203,23 +203,26 @@ bb.h:                                             ; preds = %bb.e, %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %.sroa.0.0.copyload.i = load ptr, ptr %i.ae, align 8, !tbaa !58
   %i.af = call noundef zeroext i1 @_ZN6hermes6parser6detail12JSParserImpl4needENS0_9TokenKindEPKcS5_N4llvh5SMLocE(ptr noundef nonnull align 8 dereferenceable(2824) %0, i32 noundef 75, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, ptr %1) #8
-  br i1 %i.af, label %bb.i, label %.thread29
+  br i1 %i.af, label %3, label %.thread29
 
-bb.i:                                             ; preds = %bb.h
+3:                                                ; preds = %bb.h
+  br i1 %i.ac, label %bb.i, label %bb.k
+
+bb.i:                                             ; preds = %3
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 1232
-  %i.ah = load i32, ptr %i.ag, align 8
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !60
   %i.ai = icmp ult i32 %i.ah, 2
-  %or.cond = select i1 %i.ac, i1 %i.ai, i1 false
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  br i1 %or.cond, label %bb.j, label %bb.k
+  br i1 %i.ai, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.aj = call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %3, i32 noundef 0) #8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.aj = call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %4, i32 noundef 0) #8
   store ptr %i.aj, ptr %i.f, align 8, !tbaa !7
   br label %bb.l
 
-bb.k:                                             ; preds = %bb.i
-  %i.ak = call noundef ptr @_ZN6hermes6parser7JSLexer17advanceInJSXChildEv(ptr noundef nonnull align 8 dereferenceable(1160) %3) #8 ; 0 uses
+bb.k:                                             ; preds = %bb.i, %3
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.ak = call noundef ptr @_ZN6hermes6parser7JSLexer17advanceInJSXChildEv(ptr noundef nonnull align 8 dereferenceable(1160) %5) #8 ; 0 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j

@@ -201,7 +201,7 @@ bb.gv:                                            ; preds = %.loopexit3054
   %i.ajt = sub i64 %i.ajr, %i.ajs
   %i.aju = ashr exact i64 %i.ajt, 3
   %i.ajv = icmp eq i64 %i.aju, %i.ajh
-  br i1 %i.ajv, label %bb.gx, label %bb.jz
+  br i1 %i.ajv, label %198, label %bb.jz
 
 .preheader3053:                                   ; preds = %.loopexit3054, %.preheader3053
   %.05273518 = phi i1 [ %spec.select, %.preheader3053 ], [ false, %.loopexit3054 ]
@@ -212,20 +212,27 @@ bb.gv:                                            ; preds = %.loopexit3054
   %spec.select = select i1 %i.ajy, i1 true, i1 %.05273518 ; 2 uses
   %i.ajz = getelementptr inbounds nuw i8, ptr %.sroa.02849.03517, i64 48 ; 2 uses
   %.not3045 = icmp eq ptr %i.ajz, %i.ajl
-  br i1 %.not3045, label %bb.gw, label %.preheader3053
+  br i1 %.not3045, label %197, label %.preheader3053
 
-bb.gw:                                            ; preds = %.preheader3053
-  br i1 %spec.select, label %bb.gx, label %bb.jz
+197:                                              ; preds = %.preheader3053
+  br i1 %spec.select, label %198, label %bb.jz
 
-bb.gx:                                            ; preds = %bb.gv, %bb.gw
-  %197 = getelementptr inbounds nuw i8, ptr %1, i64 241
-  %198 = load i8, ptr %197, align 1, !tbaa !40, !range !101, !noundef !50
-  %199 = trunc nuw i8 %198 to i1
-  %.not870 = xor i1 %199, true
-  %200 = load i8, ptr %3, align 1, !range !101
+198:                                              ; preds = %bb.gv, %197
+  %199 = getelementptr inbounds nuw i8, ptr %1, i64 241
+  %200 = load i8, ptr %199, align 1, !tbaa !40, !range !101, !noundef !50
   %201 = trunc nuw i8 %200 to i1
-  %or.cond872 = select i1 %.not870, i1 %201, i1 false
-  %spec.store.select = select i1 %or.cond872, i8 3, i8 1 ; 2 uses
+  br i1 %201, label %204, label %bb.gw
+
+bb.gw:                                            ; preds = %198
+  %202 = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
+  %203 = trunc nuw i8 %202 to i1
+  br i1 %203, label %bb.gx, label %204
+
+204:                                              ; preds = %bb.gw, %198
+  br label %bb.gx
+
+bb.gx:                                            ; preds = %204, %bb.gw
+  %.02928 = phi i8 [ 1, %204 ], [ 3, %bb.gw ]     ; 2 uses
   %i.aka = getelementptr inbounds nuw i8, ptr %i.wn, i64 40 ; 4 uses
   %i.akb = load ptr, ptr %i.aka, align 8, !tbaa !264 ; 2 uses
   %i.akc = getelementptr inbounds nuw i8, ptr %i.wn, i64 48 ; 3 uses
@@ -263,7 +270,7 @@ bb.hb:                                            ; preds = %bb.ha, %bb.gz, %.lr
   br label %bb.kb
 
 .critedge874._crit_edge:                          ; preds = %bb.gy, %.critedge874, %bb.gx
-  %.02931 = phi i8 [ %spec.store.select, %bb.gx ], [ 1, %.critedge874 ], [ %spec.store.select, %bb.gy ]
+  %.02931 = phi i8 [ %.02928, %bb.gx ], [ 1, %.critedge874 ], [ %.02928, %bb.gy ]
   call void @llvm.lifetime.start.p0(ptr nonnull %61) #22
   call void @llvm.experimental.noalias.scope.decl(metadata !517)
   %i.akm = invoke noalias noundef nonnull dereferenceable(280) ptr @_Znwm(i64 noundef 280) #25
@@ -666,7 +673,7 @@ _ZNKSt14default_deleteIN6duckdb21LogicalComparisonJoinEEclEPS1_.exit.i1292: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %61) #22
   br label %bb.kb
 
-bb.jz:                                            ; preds = %bb.gv, %bb.gw
+bb.jz:                                            ; preds = %bb.gv, %197
   store i64 %.0524, ptr %i.ya, align 8, !tbaa !407
   store i64 %.0525, ptr %.sroa.2179.0..sroa_idx, align 8, !tbaa !408
   %i.awj = getelementptr inbounds nuw i8, ptr %1, i64 24

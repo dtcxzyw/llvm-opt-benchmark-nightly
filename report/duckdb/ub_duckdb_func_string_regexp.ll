@@ -201,11 +201,17 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN6duckdb10shared_ptrINS_12VectorBufferELb1EED2Ev.exit: ; preds = %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.j, %_ZN6duckdb6Vector12GetAuxiliaryEv.exit
   %i.an = invoke noundef zeroext i1 @_ZNK6duckdb9DataChunk11AllConstantEv(ptr noundef nonnull align 8 dereferenceable(72) %0)
-          to label %bb.o unwind label %bb.t
+          to label %15 unwind label %bb.t
 
-bb.o:                                             ; preds = %_ZN6duckdb10shared_ptrINS_12VectorBufferELb1EED2Ev.exit
-  %15 = load i64, ptr %i.j, align 8
-  %spec.select = select i1 %i.an, i64 1, i64 %15  ; 2 uses
+15:                                               ; preds = %_ZN6duckdb10shared_ptrINS_12VectorBufferELb1EED2Ev.exit
+  br i1 %i.an, label %bb.o, label %16
+
+16:                                               ; preds = %15
+  %17 = load i64, ptr %i.j, align 8, !tbaa !157
+  br label %bb.o
+
+bb.o:                                             ; preds = %15, %16
+  %18 = phi i64 [ %17, %16 ], [ 1, %15 ]          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
   store ptr null, ptr %8, align 8, !tbaa !226
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
@@ -320,7 +326,7 @@ bb.ac:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.cx
 
 bb.ad:                                            ; preds = %bb.w, %_ZNSt10unique_ptrIN6duckdb20RegexStringPieceArgsESt14default_deleteIS1_EED2Ev.exit
-  %.not183 = icmp eq i64 %spec.select, 0
+  %.not183 = icmp eq i64 %18, 0
   br i1 %.not183, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ad
@@ -701,7 +707,7 @@ bb.bn:                                            ; preds = %_ZN6duckdb15GetGrou
 bb.bo:                                            ; preds = %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit, %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   %i.fv = add nuw i64 %.080182, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fv, %spec.select
+  %exitcond.not = icmp eq i64 %i.fv, %18
   br i1 %exitcond.not, label %._crit_edge, label %bb.ae, !llvm.loop !237
 
 bb.bp:                                            ; preds = %bb.bk, %bb.bj
@@ -1104,11 +1110,17 @@ bb.l:                                             ; preds = %._crit_edge
 
 bb.m:                                             ; preds = %bb.l
   %i.ba = invoke noundef zeroext i1 @_ZNK6duckdb9DataChunk11AllConstantEv(ptr noundef nonnull align 8 dereferenceable(72) %0)
-          to label %bb.n unwind label %bb.t
+          to label %14 unwind label %bb.t
 
-bb.n:                                             ; preds = %bb.m
-  %14 = load i64, ptr %i.w, align 8
-  %spec.select = select i1 %i.ba, i64 1, i64 %14  ; 2 uses
+14:                                               ; preds = %bb.m
+  br i1 %i.ba, label %bb.n, label %15
+
+15:                                               ; preds = %14
+  %16 = load i64, ptr %i.w, align 8, !tbaa !157
+  br label %bb.n
+
+bb.n:                                             ; preds = %15, %14
+  %17 = phi i64 [ %16, %15 ], [ 1, %14 ]          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 184
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !190
@@ -1159,7 +1171,7 @@ _ZNSt6vectorIN10duckdb_re211StringPieceESaIS1_EE17_S_check_init_lenEmRKS2_.exit.
 _ZN6duckdb6vectorIN10duckdb_re211StringPieceELb1ESaIS2_EECI2St6vectorIS2_S3_EEmRKS3_.exit: ; preds = %.noexc60, %_ZNSt6vectorIN10duckdb_re211StringPieceESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
   %.sroa.0112.0 = phi ptr [ %i.bk, %.noexc60 ], [ null, %_ZNSt6vectorIN10duckdb_re211StringPieceESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i ] ; 11 uses
   %.0.lcssa.i.i.i.i.i.i = phi i64 [ %i.bl, %.noexc60 ], [ 0, %_ZNSt6vectorIN10duckdb_re211StringPieceESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i ]
-  %.not153 = icmp eq i64 %spec.select, 0
+  %.not153 = icmp eq i64 %17, 0
   br i1 %.not153, label %._crit_edge152, label %.lr.ph151
 
 .lr.ph151:                                        ; preds = %_ZN6duckdb6vectorIN10duckdb_re211StringPieceELb1ESaIS2_EECI2St6vectorIS2_S3_EEmRKS3_.exit
@@ -1562,7 +1574,7 @@ _ZN6duckdbL27ExtractStructAllSingleTupleERKNS_8string_tERN10duckdb_re23RE2ERNS_6
 
 bb.ce:                                            ; preds = %_ZN6duckdbL27ExtractStructAllSingleTupleERKNS_8string_tERN10duckdb_re23RE2ERNS_6vectorINS3_11StringPieceELb1ESaIS7_EEERNS6_INS_10unique_ptrINS_6VectorESt14default_deleteISC_ELb1EEELb1ESaISF_EEERSC_m.exit, %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit
   %i.lc = add nuw i64 %.048150, 1                 ; 2 uses
-  %exitcond165.not = icmp eq i64 %i.lc, %spec.select
+  %exitcond165.not = icmp eq i64 %i.lc, %17
   br i1 %exitcond165.not, label %._crit_edge152, label %bb.y, !llvm.loop !277
 
 .loopexit:                                        ; preds = %_ZNK6duckdb10unique_ptrINS_6VectorESt14default_deleteIS1_ELb1EEdeEv.exit.us.i, %bb.ap

@@ -204,13 +204,14 @@ bb.a:
   %i.e = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i8 noundef signext 95, i64 noundef -1) #24 ; 2 uses
   %i.f = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i8 noundef signext 46, i64 noundef -1) #24 ; 2 uses
   %i.g = icmp eq i64 %i.f, -1
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.i = load i64, ptr %i.h, align 8              ; 2 uses
   %.019 = select i1 %i.g, i64 %i.i, i64 %i.f      ; 2 uses
   %i.j = icmp eq i64 %i.e, -1
   %spec.select = select i1 %i.j, i64 %.019, i64 %i.e ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
   tail call void @llvm.experimental.noalias.scope.decl(metadata !145)
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
   store ptr %i.k, ptr %1, align 8, !alias.scope !145
   %i.l = load ptr, ptr %i.d, align 8, !noalias !145 ; 2 uses
@@ -253,7 +254,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24, !noalias !145
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !148)
-  %i.v = load i64, ptr %i.h, align 8, !noalias !148 ; 3 uses
+  %i.v = load i64, ptr %19, align 8, !noalias !148 ; 3 uses
   %i.w = icmp ugt i64 %spec.select, %i.v
   br i1 %i.w, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 

@@ -204,14 +204,16 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.e = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.d, ptr noundef null, i32 noundef 10) #47, !inline_history !79 ; 2 uses
   %i.f = trunc i64 %i.e to i32                    ; 3 uses
-  %2 = icmp sgt i32 %i.f, -1
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %4 = load i32, ptr %3, align 8
-  %.not24 = icmp ugt i32 %4, %i.f
-  %or.cond = select i1 %2, i1 %.not24, i1 false
-  br i1 %or.cond, label %bb.d, label %.critedge27
+  %2 = icmp slt i32 %i.f, 0
+  br i1 %2, label %.critedge27, label %3
 
-bb.d:                                             ; preds = %bb.c
+3:                                                ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %5 = load i32, ptr %4, align 8
+  %.not24 = icmp ugt i32 %5, %i.f
+  br i1 %.not24, label %bb.d, label %.critedge27
+
+bb.d:                                             ; preds = %3
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = and i64 %i.e, 2147483647
@@ -263,10 +265,10 @@ bb.f:                                             ; preds = %.lr.ph, %.critedge
   %i.ad = trunc nuw i64 %indvars.iv to i32
   br label %.critedge27
 
-.critedge27:                                      ; preds = %.critedge, %.critedge27.loopexit.split.loop.exit61, %bb.e, %bb.c, %bb.a, %bb.d
-  %.sroa.051.1 = phi ptr [ %i.k, %bb.d ], [ null, %bb.c ], [ null, %bb.a ], [ null, %bb.e ], [ %i.v, %.critedge27.loopexit.split.loop.exit61 ], [ null, %.critedge ]
-  %.sroa.7.1 = phi i32 [ %i.f, %bb.d ], [ -1, %bb.c ], [ -1, %bb.a ], [ -1, %bb.e ], [ %i.ad, %.critedge27.loopexit.split.loop.exit61 ], [ -1, %.critedge ]
-  %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.051.1, 0
+.critedge27:                                      ; preds = %.critedge, %.critedge27.loopexit.split.loop.exit61, %bb.e, %bb.c, %3, %bb.a, %bb.d
+  %.sroa.050.1 = phi ptr [ null, %bb.a ], [ null, %3 ], [ %i.k, %bb.d ], [ null, %bb.c ], [ null, %bb.e ], [ %i.v, %.critedge27.loopexit.split.loop.exit61 ], [ null, %.critedge ]
+  %.sroa.7.1 = phi i32 [ -1, %bb.a ], [ -1, %3 ], [ %i.f, %bb.d ], [ -1, %bb.c ], [ -1, %bb.e ], [ %i.ad, %.critedge27.loopexit.split.loop.exit61 ], [ -1, %.critedge ]
+  %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.050.1, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.7.1, 1
   ret { ptr, i32 } %.fca.1.insert
 }

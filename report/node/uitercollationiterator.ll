@@ -201,7 +201,7 @@ bb.a:
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.a
   %i.f = load i32, ptr %i.a, align 8              ; 3 uses
-  switch i32 %i.f, label %bb.r [
+  switch i32 %i.f, label %2 [
     i32 1, label %bb.b
     i32 2, label %bb.p
   ]
@@ -346,12 +346,14 @@ bb.q:                                             ; preds = %bb.p
   store i32 %i.bs, ptr %i.b, align 8
   br label %_ZN6icu_7812CollationFCD7hasLcccEi.exit.thread
 
-bb.r:                                             ; preds = %.backedge
-  %2 = icmp slt i32 %i.f, 3
+2:                                                ; preds = %.backedge
+  %3 = icmp sgt i32 %i.f, 2
+  br i1 %3, label %bb.r, label %bb.t
+
+bb.r:                                             ; preds = %2
   %i.bt = load i32, ptr %i.b, align 8             ; 2 uses
   %.not26 = icmp eq i32 %i.bt, 0
-  %or.cond = select i1 %2, i1 true, i1 %.not26
-  br i1 %or.cond, label %bb.t, label %bb.s
+  br i1 %.not26, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 424
@@ -364,7 +366,7 @@ bb.s:                                             ; preds = %bb.r
   store i32 %i.bz, ptr %i.b, align 8
   br label %_ZN6icu_7812CollationFCD7hasLcccEi.exit.thread
 
-bb.t:                                             ; preds = %bb.r
+bb.t:                                             ; preds = %bb.r, %2
   switch i32 %i.f, label %bb.w [
     i32 0, label %bb.u
     i32 3, label %bb.v

@@ -203,7 +203,7 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge.
   %.sroa.07.018.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i, i64 8 ; 2 uses
   %i.ac = icmp eq ptr %.sroa.07.018.i.i, %i.e
   %or.cond.i.i = select i1 %i.ab, i1 true, i1 %i.ac
-  br i1 %or.cond.i.i, label %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a", label %.lr.ph.i.i
+  br i1 %or.cond.i.i, label %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i", label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.i", %bb.l
   %.sroa.07.020.i.i = phi ptr [ %.sroa.07.0.i.i, %bb.l ], [ %.sroa.07.018.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.i" ] ; 3 uses
@@ -221,15 +221,17 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i.i
   %.sroa.013.1.i.i = phi ptr [ %.sroa.013.019.i.i, %.lr.ph.i.i ], [ %i.af, %bb.k ] ; 2 uses
   %.sroa.07.0.i.i = getelementptr inbounds nuw i8, ptr %.sroa.07.020.i.i, i64 8 ; 2 uses
   %i.ag = icmp eq ptr %.sroa.07.0.i.i, %i.e
-  br i1 %i.ag, label %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a", label %.lr.ph.i.i, !llvm.loop !7
+  br i1 %i.ag, label %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i", label %.lr.ph.i.i, !llvm.loop !7
 
-"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a": ; preds = %bb.l, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.i"
+"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i": ; preds = %bb.l, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.i"
   %.sroa.013.2.i.i = phi ptr [ %.sroa.08.0.in.sroa.speculated.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.i" ], [ %.sroa.013.1.i.i, %bb.l ] ; 3 uses
   %4 = icmp eq ptr %.sroa.013.2.i.i, %i.e
+  br i1 %4, label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit, label %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a"
+
+"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a": ; preds = %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i"
   %i.ah = load ptr, ptr %i.d, align 8
   %i.ai = icmp eq ptr %.sroa.013.2.i.i, %i.ah
-  %or.cond = select i1 %4, i1 true, i1 %i.ai
-  br i1 %or.cond, label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i
+  br i1 %i.ai, label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i: ; preds = %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a"
   %i.aj = ptrtoint ptr %.sroa.013.2.i.i to i64
@@ -240,7 +242,7 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6v
   store ptr %i.al, ptr %i.d, align 8
   br label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit
 
-_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit:      ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i, %._crit_edge.i.i.i.i, %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a"
+_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit:      ; preds = %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i.a", %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i, %._crit_edge.i.i.i.i, %"_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal17LargePageMetadataESt6vectorIS5_SaIS5_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZNS3_10MemoryPool17LargePagePoolImpl3AddERS9_mE3$_0EEEET_SK_SK_T0_.exit.i"
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.am = load i8, ptr %i.a, align 1, !range !8, !noundef !9
   %i.an = trunc nuw i8 %i.am to i1
