@@ -204,15 +204,14 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader32.us.i
-  %6 = shl i64 %indvars.iv50.i, 5
-  %7 = and i64 %6, 17179869152
-  %8 = add i64 %7, %i.b
   %i.s = trunc i64 %indvars.iv50.i to i32
   %i.t = mul i32 %4, %i.s
   %i.u = zext i32 %i.t to i64
   %i.v = shl nuw nsw i64 %i.u, 2
   %i.w = add i64 %i.v, %i.a
-  %9 = sub i64 %8, %i.w
+  %6 = shl i64 %indvars.iv50.i, 5
+  %7 = and i64 %6, 17179869152
+  %8 = add i64 %7, %i.b
   %i.x = trunc i64 %indvars.iv50.i to i32
   %i.y = mul i32 %4, %i.x
   %indvars.iv50.i.tr = trunc i64 %indvars.iv50.i to i32
@@ -223,7 +222,8 @@ vector.scevcheck:                                 ; preds = %.preheader32.us.i
   %i.ad = icmp ult i32 %i.ac, %i.m
   %i.ae = or i1 %i.ad, %i.n
   %i.af = or i1 %i.ab, %i.ae
-  %diff.check = icmp ult i64 %9, 32
+  %9 = sub i64 %i.w, %8
+  %diff.check = icmp ugt i64 %9, -32
   %or.cond = select i1 %i.af, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.body
 
@@ -626,15 +626,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader32.us.i
-  %6 = shl i64 %indvars.iv50.i, 5
-  %7 = and i64 %6, 17179869152
-  %8 = add i64 %7, %i.b
   %i.t = trunc i64 %indvars.iv50.i to i32
   %i.u = mul i32 %4, %i.t
   %i.v = zext i32 %i.u to i64
   %i.w = shl nuw nsw i64 %i.v, 2
   %i.x = add i64 %i.w, %i.a
-  %9 = sub i64 %8, %i.x
+  %6 = shl i64 %indvars.iv50.i, 5
+  %7 = and i64 %6, 17179869152
+  %8 = add i64 %7, %i.b
   %i.y = trunc i64 %indvars.iv50.i to i32
   %i.z = mul i32 %4, %i.y
   %indvars.iv50.i.tr = trunc i64 %indvars.iv50.i to i32
@@ -645,7 +644,8 @@ vector.scevcheck:                                 ; preds = %.preheader32.us.i
   %i.ae = icmp ult i32 %i.ad, %i.n
   %i.af = or i1 %i.ae, %i.o
   %i.ag = or i1 %i.ac, %i.af
-  %diff.check = icmp ult i64 %9, 32
+  %9 = sub i64 %i.x, %8
+  %diff.check = icmp ugt i64 %9, -32
   %or.cond = select i1 %i.ag, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.body
 
@@ -1048,6 +1048,7 @@ bb.g:                                             ; preds = %bb.b
   %min.iters.check254 = icmp ult i32 %i.f, 8
   %ident.check248.not = icmp ne i64 %2, 1
   %or.cond305.not311 = or i1 %min.iters.check254, %ident.check248.not
+  %invariant.op363 = add i64 %i.er, -1
   %n.vec257 = and i64 %i.ep, 2147483640           ; 3 uses
   %cmp.n264 = icmp eq i64 %n.vec257, %i.ep
   %xtraiter338 = and i64 %i.ep, 3                 ; 2 uses
@@ -1059,7 +1060,6 @@ bb.h:                                             ; preds = %.lr.ph143, %opj_idw
   %.070142 = phi ptr [ %1, %.lr.ph143 ], [ %i.ip, %opj_idwt3_v_cas0.exit ] ; 14 uses
   %.072141 = phi i32 [ 0, %.lr.ph143 ], [ %i.io, %opj_idwt3_v_cas0.exit ]
   %i.fm = shl nuw nsw i64 %indvar250, 2
-  %4 = add i64 %i.er, %i.fm
   %i.fn = load i32, ptr %.070142, align 4, !tbaa !3
   %i.fo = getelementptr inbounds nuw [4 x i8], ptr %.070142, i64 %i.ec
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !3  ; 6 uses
@@ -1185,7 +1185,8 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge.
   %i.hl = add nsw i32 %.0.lcssa.sink.i, %.058.lcssa.i
   %i.hm = getelementptr i8, ptr %i.eq, i64 %.sink82.i
   store i32 %i.hl, ptr %i.hm, align 4, !tbaa !3
-  %diff.check252 = icmp ult i64 %4, 32
+  %.reass364 = add i64 %i.fm, %invariant.op363
+  %diff.check252 = icmp ult i64 %.reass364, 31
   %or.cond306 = select i1 %or.cond305.not311, i1 true, i1 %diff.check252
   br i1 %or.cond306, label %scalar.ph253.preheader, label %vector.body258
 
@@ -1588,6 +1589,7 @@ bb.s:                                             ; preds = %bb.n
   %min.iters.check206 = icmp ult i32 %i.f, 8
   %ident.check.not = icmp ne i64 %2, 1
   %or.cond308.not310 = or i1 %min.iters.check206, %ident.check.not
+  %invariant.op = add i64 %i.pv, -1
   %n.vec209 = and i64 %i.ps, 2147483640           ; 3 uses
   %cmp.n216 = icmp eq i64 %n.vec209, %i.ps
   %xtraiter = and i64 %i.ps, 3                    ; 2 uses
@@ -1599,7 +1601,6 @@ bb.t:                                             ; preds = %.lr.ph140, %opj_idw
   %.0139 = phi i32 [ 0, %.lr.ph140 ], [ %i.ts, %opj_idwt3_v_cas1.exit ]
   %.3138 = phi ptr [ %1, %.lr.ph140 ], [ %i.tt, %opj_idwt3_v_cas1.exit ] ; 12 uses
   %i.qq = shl nuw nsw i64 %indvar, 2
-  %5 = add i64 %i.pv, %i.qq
   %i.qr = getelementptr inbounds nuw [4 x i8], ptr %.3138, i64 %i.pc ; 4 uses
   %i.qs = getelementptr inbounds nuw [4 x i8], ptr %i.qr, i64 %2
   %i.qt = load i32, ptr %i.qs, align 4, !tbaa !3  ; 5 uses
@@ -1725,7 +1726,8 @@ bb.v:                                             ; preds = %._crit_edge.i103
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.sink.i = phi i32 [ %i.sq, %bb.v ], [ %i.sm, %bb.u ]
   store i32 %.sink.i, ptr %i.pu, align 4, !tbaa !3
-  %diff.check = icmp ult i64 %5, 32
+  %.reass = add i64 %i.qq, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
   %or.cond309 = select i1 %or.cond308.not310, i1 true, i1 %diff.check
   br i1 %or.cond309, label %scalar.ph205.preheader, label %vector.body210
 

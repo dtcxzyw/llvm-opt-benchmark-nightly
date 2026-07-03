@@ -204,7 +204,8 @@ begin_hunk_0_@HUFv06_readDTableX4:bb.a
 vector.memcheck:                                  ; preds = %.lr.ph91
   %i.de = add i64 %indvar, %i.cz
   %i.df = mul i64 %i.de, 68
-  %diff.check = icmp ult i64 %i.df, 32
+  %4 = add i64 %i.df, -1
+  %diff.check = icmp ult i64 %4, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -607,8 +608,8 @@ bb.ch:                                            ; preds = %bb.cg
   %i.vx = lshr i64 %i.vw, 3
   %i.vy = add nuw nsw i64 %i.vx, 1                ; 2 uses
   %min.iters.check217 = icmp ult i64 %i.vw, 24
-  %i.vz = sub i64 %i.vj, %i.vm
-  %diff.check214 = icmp ult i64 %i.vz, 32
+  %i.vz = sub i64 %i.vm, %i.vj
+  %diff.check214 = icmp ugt i64 %i.vz, -32
   %or.cond = or i1 %min.iters.check217, %diff.check214
   br i1 %or.cond, label %.preheader123.i.i.preheader236, label %vector.ph218
 
@@ -835,7 +836,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.yt = sub i64 %i.yr, %i.ys                    ; 2 uses
   %i.yu = lshr i64 %i.yt, 3
   %i.yv = add nuw nsw i64 %i.yu, 1                ; 2 uses
-  %min.iters.check139 = icmp ult i64 %i.yt, 72
+  %min.iters.check139 = icmp ult i64 %i.yt, 104
   br i1 %min.iters.check139, label %.preheader.i.preheader233, label %vector.memcheck133
 
 vector.memcheck133:                               ; preds = %.preheader.i.preheader
@@ -844,8 +845,8 @@ vector.memcheck133:                               ; preds = %.preheader.i.prehea
   %i.yy = add i64 %i.yx, %i.sk
   %umax134 = tail call i64 @llvm.umax.i64(i64 %i.rq, i64 %i.yy)
   %i.yz = add i64 %umax134, %i.oz
-  %i.za = sub i64 %i.yz, %.395.i.i135
-  %diff.check136 = icmp ult i64 %i.za, 32
+  %i.za = sub i64 %.395.i.i135, %i.yz
+  %diff.check136 = icmp ugt i64 %i.za, -32
   br i1 %diff.check136, label %.preheader.i.preheader233, label %vector.ph140
 
 vector.ph140:                                     ; preds = %vector.memcheck133
@@ -921,8 +922,8 @@ vector.memcheck:                                  ; preds = %iter.check
   %umax = tail call i64 @llvm.umax.i64(i64 %i.rq, i64 %i.zx)
   %i.zy = add i64 %i.pf, %umax
   %umax115 = tail call i64 @llvm.umax.i64(i64 %i.pe, i64 %i.zy)
-  %i.zz = sub i64 %umax115, %.496.i.i116
-  %diff.check = icmp ult i64 %i.zz, 32
+  %i.zz = sub i64 %.496.i.i116, %umax115
+  %diff.check = icmp ugt i64 %i.zz, -32
   br i1 %diff.check, label %.lr.ph128.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -1010,7 +1011,7 @@ bb.cr:                                            ; preds = %bb.co
   %i.aav = sub i64 %i.aat, %i.aau                 ; 2 uses
   %i.aaw = lshr i64 %i.aav, 3
   %i.aax = add nuw nsw i64 %i.aaw, 1              ; 2 uses
-  %min.iters.check159 = icmp ult i64 %i.aav, 72
+  %min.iters.check159 = icmp ult i64 %i.aav, 104
   br i1 %min.iters.check159, label %scalar.ph158.preheader, label %vector.memcheck153
 
 vector.memcheck153:                               ; preds = %bb.cr
@@ -1019,8 +1020,8 @@ vector.memcheck153:                               ; preds = %bb.cr
   %i.aba = add i64 %i.aaz, %i.sk
   %umax154 = tail call i64 @llvm.umax.i64(i64 %i.rq, i64 %i.aba)
   %i.abb = add i64 %umax154, %i.oz
-  %i.abc = sub i64 %i.abb, %.395.i.i135
-  %diff.check155 = icmp ult i64 %i.abc, 32
+  %i.abc = sub i64 %.395.i.i135, %i.abb
+  %diff.check155 = icmp ugt i64 %i.abc, -32
   br i1 %diff.check155, label %scalar.ph158.preheader, label %vector.ph160
 
 vector.ph160:                                     ; preds = %vector.memcheck153

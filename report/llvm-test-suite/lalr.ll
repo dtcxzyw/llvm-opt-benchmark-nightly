@@ -202,8 +202,8 @@ iter.check:                                       ; preds = %bb.f, %iter.check.u
 vector.memcheck:                                  ; preds = %iter.check
   %i.bj = shl nsw i64 %i.o, 1
   %i.bk = add i64 %i.bj, %.pre92.pre108
-  %i.bl = sub i64 %i.bk, %i.m
-  %diff.check = icmp ult i64 %i.bl, 32
+  %i.bl = sub i64 %i.m, %i.bk
+  %diff.check = icmp ugt i64 %i.bl, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -606,8 +606,8 @@ iter.check:                                       ; preds = %bb.j
   %i.cl = ptrtoaddr ptr %i.ci to i64
   %wide.trip.count105 = zext nneg i32 %.256 to i64 ; 8 uses
   %min.iters.check = icmp ult i32 %.256, 4
-  %i.cm = sub i64 %i.cl, %i.o
-  %diff.check = icmp ult i64 %i.cm, 32
+  %i.cm = sub i64 %i.o, %i.cl
+  %diff.check = icmp ugt i64 %i.cm, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph84.preheader, label %vector.main.loop.iter.check
 
@@ -1010,8 +1010,8 @@ iter.check:                                       ; preds = %bb.l
   %i.el = ptrtoaddr ptr %i.eh to i64
   %wide.trip.count = zext nneg i32 %.272179 to i64 ; 8 uses
   %min.iters.check = icmp ult i32 %.272179, 4
-  %i.em = sub i64 %i.el, %i.n
-  %diff.check = icmp ult i64 %i.em, 32
+  %i.em = sub i64 %i.n, %i.el
+  %diff.check = icmp ugt i64 %i.em, -32
   %or.cond201 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond201, label %.lr.ph124.preheader, label %vector.main.loop.iter.check
 
@@ -1414,8 +1414,9 @@ bb.g:                                             ; preds = %bb.f
 
 vector.memcheck82:                                ; preds = %.lr.ph.us45
   %i.ea = sub nsw i64 %i.dy, %i.o
-  %1 = and i64 %i.ea, 4611686018427387896
-  %diff.check = icmp eq i64 %1, 0
+  %1 = shl nsw i64 %i.ea, 2
+  %2 = add nsw i64 %1, -1
+  %diff.check = icmp ult i64 %2, 31
   br i1 %diff.check, label %scalar.ph84.preheader, label %vector.ph86
 
 vector.ph86:                                      ; preds = %vector.memcheck82

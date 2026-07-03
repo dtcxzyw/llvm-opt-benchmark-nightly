@@ -203,7 +203,7 @@ iter.check:                                       ; preds = %._crit_edge
   %i.v = add nsw i64 %wide.trip.count, -1         ; 7 uses
   %min.iters.check = icmp ult i64 %i.v, 8
   %i.w = add nsw i64 %i.o, 30
-  %diff.check = icmp ult i64 %i.w, 32
+  %diff.check = icmp ult i64 %i.w, 31
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph67.preheader, label %vector.main.loop.iter.check
 
@@ -606,18 +606,21 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not55.not71, label %.lr.ph73.preheader, label %.lr.ph76
 
 .lr.ph73.preheader:                               ; preds = %.preheader56
-  %i.aj = sext i32 %0 to i64                      ; 5 uses
+  %i.aj = sext i32 %0 to i64                      ; 6 uses
   %i.ak = zext nneg i32 %i.w to i64               ; 4 uses
   %i.al = add nsw i64 %i.aj, -1
   %smin = tail call i64 @llvm.smin.i64(i64 %i.ak, i64 %i.al)
   %i.am = sub i64 %i.aj, %smin                    ; 3 uses
-  %min.iters.check = icmp ult i64 %i.am, 8
-  %5 = shl i64 %indvar, 2
-  %diff.check = icmp ugt i64 %5, -36
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph73.preheader104, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.am, 12
+  br i1 %min.iters.check, label %.lr.ph73.preheader104, label %vector.memcheck
 
-vector.ph:                                        ; preds = %.lr.ph73.preheader
+vector.memcheck:                                  ; preds = %.lr.ph73.preheader
+  %5 = shl i64 %indvar, 2
+  %6 = add i64 %5, 35
+  %diff.check = icmp ult i64 %6, 31
+  br i1 %diff.check, label %.lr.ph73.preheader104, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.am, -8                      ; 3 uses
   %i.an = sub i64 %i.aj, %n.vec
   br label %vector.body
@@ -644,8 +647,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.am, %n.vec
   br i1 %cmp.n, label %.lr.ph76, label %.lr.ph73.preheader104
 
-.lr.ph73.preheader104:                            ; preds = %.lr.ph73.preheader, %middle.block
-  %indvars.iv81.ph = phi i64 [ %i.aj, %.lr.ph73.preheader ], [ %i.an, %middle.block ]
+.lr.ph73.preheader104:                            ; preds = %vector.memcheck, %.lr.ph73.preheader, %middle.block
+  %indvars.iv81.ph = phi i64 [ %i.aj, %vector.memcheck ], [ %i.aj, %.lr.ph73.preheader ], [ %i.an, %middle.block ]
   br label %.lr.ph73
 
 .lr.ph68:                                         ; preds = %.lr.ph68.prol.loopexit, %.lr.ph68

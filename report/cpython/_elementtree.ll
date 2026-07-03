@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %bb.as
   %i.ep = getelementptr i8, ptr %i.eh, i64 24
   %.val212 = load ptr, ptr %i.ep, align 8, !tbaa !112 ; 7 uses
   %i.eq = load i64, ptr %i.c, align 8, !tbaa !119 ; 6 uses
-  %min.iters.check = icmp ugt i64 %i.cw, 9
+  %min.iters.check = icmp ugt i64 %i.cw, 11
   %ident.check.not = icmp eq i64 %i.eq, 1
   %or.cond341 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   br i1 %or.cond341, label %vector.memcheck, label %scalar.ph.preheader
@@ -214,8 +214,8 @@ vector.memcheck:                                  ; preds = %.lr.ph229
   %i.er = ptrtoaddr ptr %i.eo to i64
   %i.es = shl i64 %i.el, 3
   %i.et = add i64 %i.es, %i.er
-  %i.eu = sub i64 %.val212308, %i.et
-  %diff.check = icmp ult i64 %i.eu, 32
+  %i.eu = sub i64 %i.et, %.val212308
+  %diff.check = icmp ugt i64 %i.eu, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -319,13 +319,14 @@ bb.au:                                            ; preds = %.loopexit223
   %i.gl = sub i64 %i.ci, %i.cw
   %i.gm = getelementptr [8 x i8], ptr %i.gk, i64 %i.gl ; 6 uses
   %i.gn = sub i64 %i.gh, %i.ge                    ; 3 uses
-  %min.iters.check329 = icmp ult i64 %i.gn, 10
+  %min.iters.check329 = icmp ult i64 %i.gn, 14
   br i1 %min.iters.check329, label %scalar.ph328.preheader, label %vector.memcheck326
 
 vector.memcheck326:                               ; preds = %.lr.ph237
   %i.go = sub i64 %i.ci, %i.cw
-  %3 = and i64 %i.go, 2305843009213693948
-  %diff.check327 = icmp eq i64 %3, 0
+  %3 = shl i64 %i.go, 3
+  %4 = add i64 %3, -1
+  %diff.check327 = icmp ult i64 %4, 31
   br i1 %diff.check327, label %scalar.ph328.preheader, label %vector.ph330
 
 vector.ph330:                                     ; preds = %vector.memcheck326
@@ -423,13 +424,14 @@ bb.aw:                                            ; preds = %bb.av
   %i.ic = sub i64 1, %i.hv
   %i.id = call i64 @llvm.smax.i64(i64 %i.ib, i64 %i.ic)
   %i.ie = add i64 %i.id, %i.hv                    ; 3 uses
-  %min.iters.check314 = icmp ult i64 %i.ie, 10
+  %min.iters.check314 = icmp ult i64 %i.ie, 14
   br i1 %min.iters.check314, label %scalar.ph313.preheader, label %vector.memcheck311
 
 vector.memcheck311:                               ; preds = %.lr.ph234
   %i.if = sub i64 %i.cw, %i.ci
-  %4 = and i64 %i.if, 2305843009213693948
-  %diff.check312 = icmp eq i64 %4, 0
+  %5 = shl i64 %i.if, 3
+  %6 = add i64 %5, -1
+  %diff.check312 = icmp ult i64 %6, 31
   br i1 %diff.check312, label %scalar.ph313.preheader, label %vector.ph315
 
 vector.ph315:                                     ; preds = %vector.memcheck311

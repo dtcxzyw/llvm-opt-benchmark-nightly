@@ -204,8 +204,8 @@ bb.xk:                                            ; preds = %_ZNK8facebook5velox
   %i.dmv = load ptr, ptr %i.dmu, align 8, !tbaa !306
   %i.dmw = sext i32 %i.dmk to i64
   %wide.trip.count.i862 = sext i32 %i.dmi to i64
-  %i.dmx = sub i64 %i.dks, %i.dlc
-  %diff.check2254 = icmp ult i64 %i.dmx, 128
+  %i.dmx = sub i64 %i.dlc, %i.dks
+  %diff.check2254 = icmp ugt i64 %i.dmx, -128
   br label %bb.xl
 
 bb.xl:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i, %.lr.ph.i861
@@ -441,8 +441,8 @@ bb.xo:                                            ; preds = %bb.xn
   %i.dqp = load ptr, ptr %i.o, align 8, !tbaa !342
   %i.dqq = getelementptr inbounds nuw i8, ptr %i.dqo, i64 104
   %i.dqr = load ptr, ptr %i.dqq, align 8, !tbaa !306
-  %i.dqs = sub i64 %i.dks, %i.dlc
-  %diff.check2202 = icmp ult i64 %i.dqs, 128
+  %i.dqs = sub i64 %i.dlc, %i.dks
+  %diff.check2202 = icmp ugt i64 %i.dqs, -128
   br label %bb.xp
 
 bb.xp:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i, %.preheader.i.i.i.i.i856
@@ -664,8 +664,8 @@ bb.xr:                                            ; preds = %bb.xq
   %i.dub = load ptr, ptr %i.o, align 8, !tbaa !342
   %i.duc = getelementptr inbounds nuw i8, ptr %i.dua, i64 104
   %i.dud = load ptr, ptr %i.duc, align 8, !tbaa !306
-  %i.due = sub i64 %i.dks, %i.dlc
-  %diff.check = icmp ult i64 %i.due, 128
+  %i.due = sub i64 %i.dlc, %i.dks
+  %diff.check = icmp ugt i64 %i.due, -128
   br label %bb.xs
 
 bb.xs:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i, %.preheader.i37.i.i.i.i842
@@ -869,8 +869,10 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
   %i.dwz = load ptr, ptr %i.o, align 8            ; 2 uses
   %i.dxa = getelementptr inbounds nuw i8, ptr %i.dwy, i64 104 ; 2 uses
   %i.dxb = sub i64 %i.dks, %i.dlc                 ; 2 uses
-  %diff.check2098 = icmp ult i64 %i.dxb, 128
-  %diff.check2046 = icmp ult i64 %i.dxb, 128
+  %127 = add i64 %i.dxb, -1
+  %diff.check2098 = icmp ult i64 %127, 127
+  %128 = add i64 %i.dxb, -1
+  %diff.check2046 = icmp ult i64 %128, 127
   br label %.lr.ph.i.i.i.i845
 
 ._crit_edge.i.i.i.i847:                           ; preds = %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISD_EERKSB_IKNS0_4TypeEERNS0_4exec7EvalCtxERSD_EUliE2_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i, %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISD_EERKSB_IKNS0_4TypeEERNS0_4exec7EvalCtxERSD_EUliE2_EEvPKmiibT_ENKUlimE_clEim.exit45.i.i.i.i
@@ -1273,8 +1275,8 @@ bb.xw:                                            ; preds = %._crit_edge.i.i.i.i
   %i.edl = load ptr, ptr %i.o, align 8, !tbaa !342
   %i.edm = getelementptr inbounds nuw i8, ptr %i.edk, i64 104
   %i.edn = load ptr, ptr %i.edm, align 8, !tbaa !306
-  %i.edo = sub i64 %i.dks, %i.dlc
-  %diff.check2150 = icmp ult i64 %i.edo, 128
+  %i.edo = sub i64 %i.dlc, %i.dks
+  %diff.check2150 = icmp ugt i64 %i.edo, -128
   br label %bb.xx
 
 bb.xx:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i, %.preheader.i54.i.i.i.i
@@ -1677,8 +1679,8 @@ iter.check:                                       ; preds = %.loopexit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.al, 8
-  %i.an = sub i64 %i.c, %i.ak
-  %diff.check = icmp ult i64 %i.an, 128
+  %i.an = sub i64 %i.ak, %i.c
+  %diff.check = icmp ugt i64 %i.an, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -1948,8 +1950,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.aj = add i64 %i.ad, %i.ah
-  %i.ak = sub i64 %i.aj, %i.x
-  %diff.check = icmp ult i64 %i.ak, 128
+  %i.ak = sub i64 %i.x, %i.aj
+  %diff.check = icmp ugt i64 %i.ak, -128
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -2223,8 +2225,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.bc = add i64 %i.aw, %i.ba
-  %i.bd = sub i64 %i.bc, %i.aq
-  %diff.check = icmp ult i64 %i.bd, 128
+  %i.bd = sub i64 %i.aq, %i.bc
+  %diff.check = icmp ugt i64 %i.bd, -128
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -2479,8 +2481,8 @@ iter.check:                                       ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.bv, 8
-  %i.bx = sub i64 %i.c, %i.bu
-  %diff.check = icmp ult i64 %i.bx, 128
+  %i.bx = sub i64 %i.bu, %i.c
+  %diff.check = icmp ugt i64 %i.bx, -128
   %or.cond71 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond71, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -2883,8 +2885,8 @@ iter.check:                                       ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.bw, 8
-  %i.by = sub i64 %i.c, %i.bv
-  %diff.check = icmp ult i64 %i.by, 128
+  %i.by = sub i64 %i.bv, %i.c
+  %diff.check = icmp ugt i64 %i.by, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -3287,8 +3289,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.al = add i64 %i.af, %i.aj
-  %i.am = sub i64 %i.al, %i.z
-  %diff.check = icmp ult i64 %i.am, 128
+  %i.am = sub i64 %i.z, %i.al
+  %diff.check = icmp ugt i64 %i.am, -128
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -3691,8 +3693,8 @@ bb.xc:                                            ; preds = %_ZNK8facebook5velox
   %i.dkp = load ptr, ptr %i.dko, align 8, !tbaa !306
   %i.dkq = sext i32 %i.dke to i64
   %wide.trip.count.i843 = sext i32 %i.dkc to i64
-  %i.dkr = sub i64 %i.dim, %i.diw
-  %diff.check2216 = icmp ult i64 %i.dkr, 128
+  %i.dkr = sub i64 %i.diw, %i.dim
+  %diff.check2216 = icmp ugt i64 %i.dkr, -128
   br label %bb.xd
 
 bb.xd:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i, %.lr.ph.i842
@@ -3928,8 +3930,8 @@ bb.xg:                                            ; preds = %bb.xf
   %i.doj = load ptr, ptr %i.o, align 8, !tbaa !342
   %i.dok = getelementptr inbounds nuw i8, ptr %i.doi, i64 104
   %i.dol = load ptr, ptr %i.dok, align 8, !tbaa !306
-  %i.dom = sub i64 %i.dim, %i.diw
-  %diff.check2164 = icmp ult i64 %i.dom, 128
+  %i.dom = sub i64 %i.diw, %i.dim
+  %diff.check2164 = icmp ugt i64 %i.dom, -128
   br label %bb.xh
 
 bb.xh:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i.i.i.i.i, %.preheader.i.i.i.i.i837
@@ -4151,8 +4153,8 @@ bb.xj:                                            ; preds = %bb.xi
   %i.drv = load ptr, ptr %i.o, align 8, !tbaa !342
   %i.drw = getelementptr inbounds nuw i8, ptr %i.dru, i64 104
   %i.drx = load ptr, ptr %i.drw, align 8, !tbaa !306
-  %i.dry = sub i64 %i.dim, %i.diw
-  %diff.check = icmp ult i64 %i.dry, 128
+  %i.dry = sub i64 %i.diw, %i.dim
+  %diff.check = icmp ugt i64 %i.dry, -128
   br label %bb.xk
 
 bb.xk:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i40.i.i.i.i, %.preheader.i37.i.i.i.i823
@@ -4356,8 +4358,10 @@ _ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunction
   %i.dut = load ptr, ptr %i.o, align 8            ; 2 uses
   %i.duu = getelementptr inbounds nuw i8, ptr %i.dus, i64 104 ; 2 uses
   %i.duv = sub i64 %i.dim, %i.diw                 ; 2 uses
-  %diff.check2060 = icmp ult i64 %i.duv, 128
-  %diff.check2008 = icmp ult i64 %i.duv, 128
+  %124 = add i64 %i.duv, -1
+  %diff.check2060 = icmp ult i64 %124, 127
+  %125 = add i64 %i.duv, -1
+  %diff.check2008 = icmp ult i64 %125, 127
   br label %.lr.ph.i.i.i.i826
 
 ._crit_edge.i.i.i.i828:                           ; preds = %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISD_EERKSB_IKNS0_4TypeEERNS0_4exec7EvalCtxERSD_EUliE2_EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i, %_ZZN8facebook5velox4bits10forEachBitIZNKS0_9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISD_EERKSB_IKNS0_4TypeEERNS0_4exec7EvalCtxERSD_EUliE2_EEvPKmiibT_ENKUlimE_clEim.exit45.i.i.i.i
@@ -4760,8 +4764,8 @@ bb.xo:                                            ; preds = %._crit_edge.i.i.i.i
   %i.ebf = load ptr, ptr %i.o, align 8, !tbaa !342
   %i.ebg = getelementptr inbounds nuw i8, ptr %i.ebe, i64 104
   %i.ebh = load ptr, ptr %i.ebg, align 8, !tbaa !306
-  %i.ebi = sub i64 %i.dim, %i.diw
-  %diff.check2112 = icmp ult i64 %i.ebi, 128
+  %i.ebi = sub i64 %i.diw, %i.dim
+  %diff.check2112 = icmp ugt i64 %i.ebi, -128
   br label %bb.xp
 
 bb.xp:                                            ; preds = %_ZZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISB_EERKS9_IKNS0_4TypeEERNS0_4exec7EvalCtxERSB_ENKUliE2_clEi.exit.i57.i.i.i.i, %.preheader.i54.i.i.i.i

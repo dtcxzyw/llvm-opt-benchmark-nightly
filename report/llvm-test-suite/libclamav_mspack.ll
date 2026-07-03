@@ -204,8 +204,8 @@ iter.check:                                       ; preds = %.preheader508
   %i.ahu = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.aht ; 5 uses
   %i.ahv = zext i32 %.3373 to i64                 ; 5 uses
   %min.iters.check = icmp ult i32 %.3373, 4
-  %i.ahw = sub nsw i64 %i.aht, %i.ahr
-  %diff.check = icmp ult i64 %i.ahw, 32
+  %i.ahw = sub nsw i64 %i.ahr, %i.aht
+  %diff.check = icmp ugt i64 %i.ahw, -32
   %or.cond1394 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond1394, label %.lr.ph791.preheader, label %vector.main.loop.iter.check
 
@@ -608,8 +608,8 @@ bb.id:                                            ; preds = %bb.ic
 iter.check4082:                                   ; preds = %bb.id
   %i.akg = zext nneg i32 %i.ajy to i64            ; 5 uses
   %min.iters.check4064 = icmp ult i32 %i.ajy, 4
-  %i.akh = sub nsw i64 %i.ajv, %i.akb
-  %diff.check4063 = icmp ult i64 %i.akh, 32
+  %i.akh = sub nsw i64 %i.akb, %i.ajv
+  %diff.check4063 = icmp ugt i64 %i.akh, -32
   %or.cond4256 = select i1 %min.iters.check4064, i1 true, i1 %diff.check4063
   br i1 %or.cond4256, label %.lr.ph3078.preheader, label %vector.main.loop.iter.check4065
 
@@ -701,8 +701,8 @@ iter.check:                                       ; preds = %.loopexit1327
   %.29674044 = ptrtoaddr ptr %.2967 to i64
   %i.ala = zext nneg i32 %.6953 to i64            ; 5 uses
   %min.iters.check = icmp ult i32 %.6953, 4
-  %i.alb = sub i64 %.29674044, %.19774045
-  %diff.check = icmp ult i64 %i.alb, 32
+  %i.alb = sub i64 %.19774045, %.29674044
+  %diff.check = icmp ugt i64 %i.alb, -32
   %or.cond4257 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond4257, label %.lr.ph3084.preheader, label %vector.main.loop.iter.check
 
@@ -789,7 +789,8 @@ iter.check4120:                                   ; preds = %bb.hz
   %narrow4255 = add nuw nsw i32 %.01008, 2
   %i.alw = zext nneg i32 %narrow4255 to i64       ; 5 uses
   %min.iters.check4102 = icmp samesign ult i32 %.01008, 2
-  %diff.check4101 = icmp ult i32 %.4931, 32
+  %2 = add i32 %.4931, -1
+  %diff.check4101 = icmp ult i32 %2, 31
   %or.cond4258 = select i1 %min.iters.check4102, i1 true, i1 %diff.check4101
   br i1 %or.cond4258, label %.lr.ph3073.preheader, label %vector.main.loop.iter.check4103
 
@@ -1192,8 +1193,8 @@ bb.ma:                                            ; preds = %bb.lz
 iter.check4198:                                   ; preds = %bb.ma
   %i.bmb = zext nneg i32 %i.blt to i64            ; 5 uses
   %min.iters.check4180 = icmp ult i32 %i.blt, 4
-  %i.bmc = sub nsw i64 %i.blq, %i.blw
-  %diff.check4179 = icmp ult i64 %i.bmc, 32
+  %i.bmc = sub nsw i64 %i.blw, %i.blq
+  %diff.check4179 = icmp ugt i64 %i.bmc, -32
   %or.cond4259 = select i1 %min.iters.check4180, i1 true, i1 %diff.check4179
   br i1 %or.cond4259, label %.lr.ph3013.preheader, label %vector.main.loop.iter.check4181
 
@@ -1285,8 +1286,8 @@ iter.check4160:                                   ; preds = %.loopexit1337
   %.69714139 = ptrtoaddr ptr %.6971 to i64
   %i.bmv = zext nneg i32 %.13960 to i64           ; 5 uses
   %min.iters.check4142 = icmp ult i32 %.13960, 4
-  %i.bmw = sub i64 %.69714139, %.59814140
-  %diff.check4141 = icmp ult i64 %i.bmw, 32
+  %i.bmw = sub i64 %.59814140, %.69714139
+  %diff.check4141 = icmp ugt i64 %i.bmw, -32
   %or.cond4260 = select i1 %min.iters.check4142, i1 true, i1 %diff.check4141
   br i1 %or.cond4260, label %.lr.ph3019.preheader, label %vector.main.loop.iter.check4143
 
@@ -1373,7 +1374,8 @@ iter.check4236:                                   ; preds = %bb.lw
   %narrow4254 = add nuw nsw i32 %.11009, 2
   %i.bnr = zext nneg i32 %narrow4254 to i64       ; 5 uses
   %min.iters.check4218 = icmp samesign ult i32 %.11009, 2
-  %diff.check4217 = icmp ult i32 %.7934, 32
+  %3 = add i32 %.7934, -1
+  %diff.check4217 = icmp ult i32 %3, 31
   %or.cond4261 = select i1 %min.iters.check4218, i1 true, i1 %diff.check4217
   br i1 %or.cond4261, label %.lr.ph3008.preheader, label %vector.main.loop.iter.check4219
 
@@ -1776,8 +1778,8 @@ bb.fw:                                            ; preds = %bb.bk
   %.25 = phi i8 [ %.13, %bb.dh ], [ %.9, %bb.ce ], [ %.21, %bb.fm ], [ %i.ur, %bb.dq ], [ %i.pw, %bb.cn ], [ %i.aem, %bb.fv ]
   %i.aeo = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.sink
   %i.aep = load i32, ptr %i.aeo, align 4, !tbaa !4
-  %i.aeq = add i32 %i.aep, %.3790.lcssa.sink
-  %.0898 = add i32 %i.aeq, 1                      ; 4 uses
+  %i.aeq = add i32 %i.aep, %.3790.lcssa.sink      ; 2 uses
+  %.0898 = add i32 %i.aeq, 1                      ; 3 uses
   %i.aer = zext i32 %.19001562 to i64             ; 2 uses
   %i.aes = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.aer ; 13 uses
   %i.aet = icmp ugt i32 %.0898, %.19001562
@@ -1809,8 +1811,8 @@ bb.ga:                                            ; preds = %bb.fz
 iter.check2006:                                   ; preds = %bb.ga
   %i.afd = zext nneg i32 %i.aeu to i64            ; 5 uses
   %min.iters.check1988 = icmp ult i32 %i.aeu, 4
-  %i.afe = sub nsw i64 %i.aer, %i.aey
-  %diff.check1987 = icmp ult i64 %i.afe, 32
+  %i.afe = sub nsw i64 %i.aey, %i.aer
+  %diff.check1987 = icmp ugt i64 %i.afe, -32
   %or.cond2062 = select i1 %min.iters.check1988, i1 true, i1 %diff.check1987
   br i1 %or.cond2062, label %.lr.ph1548.preheader, label %vector.main.loop.iter.check1989
 
@@ -1902,8 +1904,8 @@ iter.check:                                       ; preds = %.loopexit1089
   %.18141968 = ptrtoaddr ptr %.1814 to i64
   %i.afx = zext nneg i32 %.13809 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %.13809, 4
-  %i.afy = sub i64 %.18141968, %.18181969
-  %diff.check = icmp ult i64 %i.afy, 32
+  %i.afy = sub i64 %.18181969, %.18141968
+  %diff.check = icmp ugt i64 %i.afy, -32
   %or.cond2063 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond2063, label %.lr.ph1554.preheader, label %vector.main.loop.iter.check
 
@@ -1993,7 +1995,7 @@ iter.check2044:                                   ; preds = %bb.gb
   %i.agt = getelementptr inbounds i8, ptr %i.aes, i64 %i.ags ; 5 uses
   %i.agu = zext nneg i32 %.0786 to i64            ; 5 uses
   %min.iters.check2026 = icmp ult i32 %.0786, 4
-  %diff.check2025 = icmp ult i32 %.0898, 32
+  %diff.check2025 = icmp ult i32 %i.aeq, 31
   %or.cond2064 = or i1 %min.iters.check2026, %diff.check2025
   br i1 %or.cond2064, label %.lr.ph1543.preheader, label %vector.main.loop.iter.check2027
 

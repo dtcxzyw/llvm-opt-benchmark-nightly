@@ -203,6 +203,7 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !76
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 320
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !77   ; 9 uses
+  %1 = ptrtoaddr ptr %i.o to i64                  ; 4 uses
   %i.p = sext i32 %i.g to i64                     ; 2 uses
   %i.q = shl nsw i64 %i.p, 4                      ; 4 uses
   %i.r = tail call noalias noundef ptr @malloc(i64 noundef %i.q) #25 ; 4 uses
@@ -229,18 +230,22 @@ bb.a:
   %i.ag = sext i32 %i.i to i64
   %i.ah = shl nsw i64 %i.ag, 3                    ; 10 uses
   %i.ai = tail call noalias noundef ptr @malloc(i64 noundef %i.ah) #25 ; 10 uses
+  %2 = ptrtoaddr ptr %i.ai to i64                 ; 8 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 296
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !84
   %i.ak = tail call noalias noundef ptr @malloc(i64 noundef %i.ah) #25 ; 15 uses
+  %3 = ptrtoaddr ptr %i.ak to i64                 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 304
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !85
   %i.am = tail call noalias noundef ptr @malloc(i64 noundef %i.ah) #25
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 312
   store ptr %i.am, ptr %i.an, align 8, !tbaa !86
   %i.ao = tail call noalias noundef ptr @malloc(i64 noundef %i.ah) #25 ; 15 uses
+  %4 = ptrtoaddr ptr %i.ao to i64                 ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 320
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !87
   %i.aq = tail call noalias noundef ptr @malloc(i64 noundef %i.ah) #25 ; 10 uses
+  %5 = ptrtoaddr ptr %i.aq to i64                 ; 8 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 328
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !88
   %i.as = tail call noalias noundef ptr @malloc(i64 noundef %i.ah) #25
@@ -275,11 +280,6 @@ bb.a:
   br i1 %i.bl, label %.lr.ph97, label %.preheader
 
 .lr.ph97:                                         ; preds = %bb.a
-  %1 = ptrtoaddr ptr %i.aq to i64                 ; 4 uses
-  %2 = ptrtoaddr ptr %i.ao to i64                 ; 2 uses
-  %3 = ptrtoaddr ptr %i.ak to i64                 ; 2 uses
-  %4 = ptrtoaddr ptr %i.ai to i64                 ; 4 uses
-  %5 = ptrtoaddr ptr %i.o to i64                  ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.a, i64 568
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !56 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 592
@@ -299,13 +299,6 @@ bb.a:
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 96
   %wide.trip.count123 = zext nneg i32 %i.e to i64 ; 2 uses
-  %6 = sub i64 %1, %4                             ; 2 uses
-  %7 = sub i64 %4, %3                             ; 2 uses
-  %8 = sub i64 %4, %5                             ; 2 uses
-  %9 = sub i64 %2, %4                             ; 2 uses
-  %10 = sub i64 %1, %3                            ; 2 uses
-  %11 = sub i64 %1, %5                            ; 2 uses
-  %12 = sub i64 %1, %2                            ; 2 uses
   br i1 %i.by, label %.lr.ph97.split.us.preheader, label %.lr.ph97.split.preheader
 
 .lr.ph97.split.preheader:                         ; preds = %.lr.ph97
@@ -315,18 +308,25 @@ bb.a:
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ce = load double, ptr %i.cc, align 8
   %i.cf = load double, ptr %i.cd, align 8
-  %diff.check = icmp ult i64 %6, 16
-  %diff.check146 = icmp ult i64 %7, 16
+  %6 = sub i64 %2, %5
+  %diff.check = icmp ugt i64 %6, -16
+  %7 = sub i64 %3, %2
+  %diff.check146 = icmp ugt i64 %7, -16
   %conflict.rdx = or i1 %diff.check, %diff.check146
-  %diff.check147 = icmp ult i64 %8, 16
+  %8 = sub i64 %1, %2
+  %diff.check147 = icmp ugt i64 %8, -16
   %conflict.rdx148 = or i1 %conflict.rdx, %diff.check147
-  %diff.check149 = icmp ult i64 %9, 16
+  %9 = sub i64 %2, %4
+  %diff.check149 = icmp ugt i64 %9, -16
   %conflict.rdx150 = or i1 %conflict.rdx148, %diff.check149
-  %diff.check151 = icmp ult i64 %10, 16
+  %10 = sub i64 %3, %5
+  %diff.check151 = icmp ugt i64 %10, -16
   %conflict.rdx152 = or i1 %conflict.rdx150, %diff.check151
-  %diff.check153 = icmp ult i64 %11, 16
+  %11 = sub i64 %1, %5
+  %diff.check153 = icmp ugt i64 %11, -16
   %conflict.rdx154 = or i1 %conflict.rdx152, %diff.check153
-  %diff.check155 = icmp ult i64 %12, 16
+  %12 = sub i64 %4, %5
+  %diff.check155 = icmp ugt i64 %12, -16
   %conflict.rdx156 = or i1 %conflict.rdx154, %diff.check155
   br label %.lr.ph97.split
 
@@ -335,18 +335,25 @@ bb.a:
   %broadcast.splat232 = shufflevector <2 x double> %broadcast.splatinsert231, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert217 = insertelement <2 x double> poison, double %i.bt, i64 0
   %broadcast.splat218 = shufflevector <2 x double> %broadcast.splatinsert217, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %diff.check185 = icmp ult i64 %6, 16
-  %diff.check186 = icmp ult i64 %7, 16
+  %13 = sub i64 %2, %5
+  %diff.check185 = icmp ugt i64 %13, -16
+  %14 = sub i64 %3, %2
+  %diff.check186 = icmp ugt i64 %14, -16
   %conflict.rdx187 = or i1 %diff.check185, %diff.check186
-  %diff.check188 = icmp ult i64 %8, 16
+  %15 = sub i64 %1, %2
+  %diff.check188 = icmp ugt i64 %15, -16
   %conflict.rdx189 = or i1 %conflict.rdx187, %diff.check188
-  %diff.check190 = icmp ult i64 %9, 16
+  %16 = sub i64 %2, %4
+  %diff.check190 = icmp ugt i64 %16, -16
   %conflict.rdx191 = or i1 %conflict.rdx189, %diff.check190
-  %diff.check192 = icmp ult i64 %10, 16
+  %17 = sub i64 %3, %5
+  %diff.check192 = icmp ugt i64 %17, -16
   %conflict.rdx193 = or i1 %conflict.rdx191, %diff.check192
-  %diff.check194 = icmp ult i64 %11, 16
+  %18 = sub i64 %1, %5
+  %diff.check194 = icmp ugt i64 %18, -16
   %conflict.rdx195 = or i1 %conflict.rdx193, %diff.check194
-  %diff.check196 = icmp ult i64 %12, 16
+  %19 = sub i64 %4, %5
+  %diff.check196 = icmp ugt i64 %19, -16
   %conflict.rdx197 = or i1 %conflict.rdx195, %diff.check196
   br label %.lr.ph97.split.us
 
@@ -458,7 +465,7 @@ _ZSt4fillIPddEvT_S1_RKT0_.exit85.us:              ; preds = %.lr.ph97.split.us, 
 
 .lr.ph94.us.preheader:                            ; preds = %_ZSt4fillIPddEvT_S1_RKT0_.exit85.us
   %i.do = sub nsw i64 %i.cl, %i.ck                ; 3 uses
-  %min.iters.check199 = icmp ult i64 %i.do, 6
+  %min.iters.check199 = icmp ult i64 %i.do, 10
   %brmerge = select i1 %min.iters.check199, i1 true, i1 %conflict.rdx197
   br i1 %brmerge, label %.lr.ph94.us.preheader241, label %vector.ph200
 
@@ -775,7 +782,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.c, %bb.
 
 .loopexit:                                        ; preds = %bb.g
   %i.ih = sub nsw i64 %i.gm, %i.gl                ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ih, 6
+  %min.iters.check = icmp ult i64 %i.ih, 10
   %brmerge252 = select i1 %min.iters.check, i1 true, i1 %conflict.rdx156
   br i1 %brmerge252, label %.lr.ph94.preheader, label %vector.ph
 
@@ -1178,10 +1185,10 @@ _ZSt4copyIPdS0_ET0_T_S2_S1_.exit:                 ; preds = %bb.d, %bb.e, %bb.f
   br i1 %min.iters.check391, label %.lr.ph.i166.preheader602, label %vector.memcheck387
 
 vector.memcheck387:                               ; preds = %.lr.ph.i166.preheader
-  %i.hf = sub i64 %i.hc, %i.ha
-  %diff.check = icmp ult i64 %i.hf, 16
-  %i.hg = sub i64 %i.hc, %i.ac
-  %diff.check388 = icmp ult i64 %i.hg, 16
+  %i.hf = sub i64 %i.ha, %i.hc
+  %diff.check = icmp ugt i64 %i.hf, -16
+  %i.hg = sub i64 %i.ac, %i.hc
+  %diff.check388 = icmp ugt i64 %i.hg, -16
   %conflict.rdx389 = or i1 %diff.check, %diff.check388
   br i1 %conflict.rdx389, label %.lr.ph.i166.preheader602, label %vector.ph392
 
@@ -1584,20 +1591,20 @@ bb.k:                                             ; preds = %.lr.ph236, %_ZN5Hyd
   %i.wb = sext i32 %i.vp to i64                   ; 15 uses
   %wide.trip.count.i196 = sext i32 %i.vt to i64   ; 12 uses
   %i.wc = sub nsw i64 %wide.trip.count.i196, %i.wb ; 3 uses
-  %min.iters.check579 = icmp ult i64 %i.wc, 4
+  %min.iters.check579 = icmp ult i64 %i.wc, 6
   br i1 %min.iters.check579, label %.lr.ph.i197.preheader, label %vector.memcheck570
 
 vector.memcheck570:                               ; preds = %.lr.ph.preheader.i195
-  %i.wd = sub i64 %i.vz, %i.t
-  %diff.check571 = icmp ult i64 %i.wd, 32
-  %i.we = sub i64 %i.vz, %i.af
-  %diff.check572 = icmp ult i64 %i.we, 32
+  %i.wd = sub i64 %i.t, %i.vz
+  %diff.check571 = icmp ugt i64 %i.wd, -32
+  %i.we = sub i64 %i.af, %i.vz
+  %diff.check572 = icmp ugt i64 %i.we, -32
   %conflict.rdx573 = or i1 %diff.check571, %diff.check572
-  %i.wf = sub i64 %i.vz, %i.vv
-  %diff.check574 = icmp ult i64 %i.wf, 32
+  %i.wf = sub i64 %i.vv, %i.vz
+  %diff.check574 = icmp ugt i64 %i.wf, -32
   %conflict.rdx575 = or i1 %conflict.rdx573, %diff.check574
-  %i.wg = sub i64 %i.vz, %i.vx
-  %diff.check576 = icmp ult i64 %i.wg, 32
+  %i.wg = sub i64 %i.vx, %i.vz
+  %diff.check576 = icmp ugt i64 %i.wg, -32
   %conflict.rdx577 = or i1 %conflict.rdx575, %diff.check576
   br i1 %conflict.rdx577, label %.lr.ph.i197.preheader, label %vector.ph580
 
@@ -1718,10 +1725,10 @@ middle.block596:                                  ; preds = %vector.body585
 vector.memcheck553:                               ; preds = %.lr.ph.preheader.i201
   %i.ys = ptrtoaddr ptr %i.yq to i64              ; 2 uses
   %i.yt = ptrtoaddr ptr %i.yn to i64
-  %i.yu = sub i64 %i.ys, %i.yt
-  %diff.check554 = icmp ult i64 %i.yu, 16
-  %i.yv = sub i64 %i.ys, %i.yp
-  %diff.check555 = icmp ult i64 %i.yv, 16
+  %i.yu = sub i64 %i.yt, %i.ys
+  %diff.check554 = icmp ugt i64 %i.yu, -16
+  %i.yv = sub i64 %i.yp, %i.ys
+  %diff.check555 = icmp ugt i64 %i.yv, -16
   %conflict.rdx556 = or i1 %diff.check554, %diff.check555
   br i1 %conflict.rdx556, label %.lr.ph.i203.preheader, label %vector.ph559
 
@@ -1805,10 +1812,10 @@ middle.block567:                                  ; preds = %vector.body562
 
 vector.memcheck536:                               ; preds = %.lr.ph.preheader.i207
   %i.aae = ptrtoaddr ptr %i.aac to i64            ; 2 uses
-  %i.aaf = sub i64 %i.aae, %i.yp
-  %diff.check537 = icmp ult i64 %i.aaf, 16
-  %i.aag = sub i64 %i.aae, %i.t
-  %diff.check538 = icmp ult i64 %i.aag, 16
+  %i.aaf = sub i64 %i.yp, %i.aae
+  %diff.check537 = icmp ugt i64 %i.aaf, -16
+  %i.aag = sub i64 %i.t, %i.aae
+  %diff.check538 = icmp ugt i64 %i.aag, -16
   %conflict.rdx539 = or i1 %diff.check537, %diff.check538
   br i1 %conflict.rdx539, label %.lr.ph.i209.preheader, label %vector.ph542
 
@@ -2082,10 +2089,10 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader14, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.g = sub i64 %i.c, %i.b
-  %diff.check = icmp ult i64 %i.g, 16
-  %i.h = sub i64 %i.c, %i.a
-  %diff.check12 = icmp ult i64 %i.h, 16
+  %i.g = sub i64 %i.b, %i.c
+  %diff.check = icmp ugt i64 %i.g, -16
+  %i.h = sub i64 %i.a, %i.c
+  %diff.check12 = icmp ugt i64 %i.h, -16
   %conflict.rdx = or i1 %diff.check, %diff.check12
   br i1 %conflict.rdx, label %.lr.ph.preheader14, label %vector.ph
 
@@ -2488,20 +2495,20 @@ bb.a:
   %i.h = sext i32 %7 to i64                       ; 5 uses
   %wide.trip.count = sext i32 %8 to i64           ; 4 uses
   %i.i = sub nsw i64 %wide.trip.count, %i.h       ; 3 uses
-  %min.iters.check = icmp ult i64 %i.i, 8
+  %min.iters.check = icmp ult i64 %i.i, 10
   br i1 %min.iters.check, label %.lr.ph.preheader31, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.j = sub i64 %i.e, %i.d
-  %diff.check = icmp ult i64 %i.j, 32
-  %i.k = sub i64 %i.e, %i.c
-  %diff.check19 = icmp ult i64 %i.k, 32
+  %i.j = sub i64 %i.d, %i.e
+  %diff.check = icmp ugt i64 %i.j, -32
+  %i.k = sub i64 %i.c, %i.e
+  %diff.check19 = icmp ugt i64 %i.k, -32
   %conflict.rdx = or i1 %diff.check, %diff.check19
-  %i.l = sub i64 %i.e, %i.b
-  %diff.check20 = icmp ult i64 %i.l, 32
+  %i.l = sub i64 %i.b, %i.e
+  %diff.check20 = icmp ugt i64 %i.l, -32
   %conflict.rdx21 = or i1 %conflict.rdx, %diff.check20
-  %i.m = sub i64 %i.e, %i.a
-  %diff.check22 = icmp ult i64 %i.m, 32
+  %i.m = sub i64 %i.a, %i.e
+  %diff.check22 = icmp ugt i64 %i.m, -32
   %conflict.rdx23 = or i1 %conflict.rdx21, %diff.check22
   br i1 %conflict.rdx23, label %.lr.ph.preheader31, label %vector.ph
 
@@ -2633,10 +2640,10 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader14, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.g = sub i64 %i.c, %i.b
-  %diff.check = icmp ult i64 %i.g, 16
-  %i.h = sub i64 %i.c, %i.a
-  %diff.check12 = icmp ult i64 %i.h, 16
+  %i.g = sub i64 %i.b, %i.c
+  %diff.check = icmp ugt i64 %i.g, -16
+  %i.h = sub i64 %i.a, %i.c
+  %diff.check12 = icmp ugt i64 %i.h, -16
   %conflict.rdx = or i1 %diff.check, %diff.check12
   br i1 %conflict.rdx, label %.lr.ph.preheader14, label %vector.ph
 

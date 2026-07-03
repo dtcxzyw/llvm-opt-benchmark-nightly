@@ -203,8 +203,9 @@ bb.kk:                                            ; preds = %.lr.ph472, %._crit_
 
 vector.memcheck233:                               ; preds = %.lr.ph464.preheader
   %i.bvt = sub nsw i64 %i.bvp, %i.bvo
-  %6 = and i64 %i.bvt, 4611686018427387896
-  %diff.check = icmp eq i64 %6, 0
+  %6 = shl nsw i64 %i.bvt, 2
+  %7 = add nsw i64 %6, -1
+  %diff.check = icmp ult i64 %7, 31
   br i1 %diff.check, label %.lr.ph464.preheader248, label %vector.ph236
 
 vector.ph236:                                     ; preds = %vector.memcheck233

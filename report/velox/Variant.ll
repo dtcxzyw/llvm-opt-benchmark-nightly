@@ -204,8 +204,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 vector.memcheck:                                  ; preds = %iter.check
   %i.bi = add i64 %i.bc, %i.bg
   %i.bj = add i64 %.01825.i.i.idx.i, %i.at
-  %i.bk = sub i64 %i.bi, %i.bj
-  %diff.check = icmp ult i64 %i.bk, 128
+  %i.bk = sub i64 %i.bj, %i.bi
+  %diff.check = icmp ugt i64 %i.bk, -128
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -444,8 +444,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.al = add i64 %i.af, %i.aj
-  %i.am = sub i64 %i.al, %i.z
-  %diff.check = icmp ult i64 %i.am, 128
+  %i.am = sub i64 %i.z, %i.al
+  %diff.check = icmp ugt i64 %i.am, -128
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -848,8 +848,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.r = add i64 %i.l, %i.p
-  %i.s = sub i64 %i.r, %i.f
-  %diff.check = icmp ult i64 %i.s, 128
+  %i.s = sub i64 %i.f, %i.r
+  %diff.check = icmp ugt i64 %i.s, -128
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -1252,8 +1252,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.br = add i64 %i.bl, %i.bp
-  %i.bs = sub i64 %i.br, %i.bf
-  %diff.check = icmp ult i64 %i.bs, 128
+  %i.bs = sub i64 %i.bf, %i.br
+  %diff.check = icmp ugt i64 %i.bs, -128
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -1656,8 +1656,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.cs = add i64 %i.cm, %i.cq
-  %i.ct = sub i64 %i.cs, %i.cg
-  %diff.check = icmp ult i64 %i.ct, 128
+  %i.ct = sub i64 %i.cg, %i.cs
+  %diff.check = icmp ugt i64 %i.ct, -128
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -2060,8 +2060,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v1119basic_
   %min.iters.check1519 = icmp ult i64 %i.dz, 28
   %i.ec = ptrtoaddr ptr %i.dx to i64
   %i.ed = ptrtoaddr ptr %i.du to i64
-  %i.ee = sub i64 %i.ec, %i.ed
-  %diff.check = icmp ult i64 %i.ee, 128
+  %i.ee = sub i64 %i.ed, %i.ec
+  %diff.check = icmp ugt i64 %i.ee, -128
   %or.cond1671 = select i1 %min.iters.check1519, i1 true, i1 %diff.check
   br i1 %or.cond1671, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -2198,8 +2198,8 @@ iter.check1569:                                   ; preds = %_ZN3fmt3v1119basic_
   %min.iters.check1549 = icmp ult i64 %i.fp, 28
   %i.fs = ptrtoaddr ptr %i.fn to i64
   %i.ft = ptrtoaddr ptr %i.fk to i64
-  %i.fu = sub i64 %i.fs, %i.ft
-  %diff.check1547 = icmp ult i64 %i.fu, 128
+  %i.fu = sub i64 %i.ft, %i.fs
+  %diff.check1547 = icmp ugt i64 %i.fu, -128
   %or.cond1674 = select i1 %min.iters.check1549, i1 true, i1 %diff.check1547
   br i1 %or.cond1674, label %.lr.ph.i.i175.preheader, label %vector.main.loop.iter.check1550
 
@@ -2602,8 +2602,9 @@ iter.check:                                       ; preds = %_ZN3fmt3v1119basic_
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ap = sub nsw i64 %i.an, %i.am
-  %2 = and i64 %i.ap, 4611686018427387872
-  %diff.check = icmp eq i64 %2, 0
+  %2 = shl nsw i64 %i.ap, 2
+  %3 = add nsw i64 %2, -1
+  %diff.check = icmp ult i64 %3, 127
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -3006,8 +3007,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ap = add i64 %i.aj, %i.an
-  %i.aq = sub i64 %i.ap, %i.ad
-  %diff.check = icmp ult i64 %i.aq, 128
+  %i.aq = sub i64 %i.ad, %i.ap
+  %diff.check = icmp ugt i64 %i.aq, -128
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -3410,8 +3411,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.r = add i64 %i.l, %i.p
-  %i.s = sub i64 %i.r, %i.f
-  %diff.check = icmp ult i64 %i.s, 128
+  %i.s = sub i64 %i.f, %i.r
+  %diff.check = icmp ugt i64 %i.s, -128
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -3814,8 +3815,8 @@ iter.check:                                       ; preds = %.loopexit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.al, 8
-  %i.an = sub i64 %i.c, %i.ak
-  %diff.check = icmp ult i64 %i.an, 128
+  %i.an = sub i64 %i.ak, %i.c
+  %diff.check = icmp ugt i64 %i.an, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -4085,8 +4086,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.aj = add i64 %i.ad, %i.ah
-  %i.ak = sub i64 %i.aj, %i.x
-  %diff.check = icmp ult i64 %i.ak, 128
+  %i.ak = sub i64 %i.x, %i.aj
+  %diff.check = icmp ugt i64 %i.ak, -128
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -4360,8 +4361,8 @@ iter.check:                                       ; preds = %_ZN3fmt3v116detail6
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.bc = add i64 %i.aw, %i.ba
-  %i.bd = sub i64 %i.bc, %i.aq
-  %diff.check = icmp ult i64 %i.bd, 128
+  %i.bd = sub i64 %i.aq, %i.bc
+  %diff.check = icmp ugt i64 %i.bd, -128
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -4616,8 +4617,8 @@ iter.check:                                       ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.bv, 8
-  %i.bx = sub i64 %i.c, %i.bu
-  %diff.check = icmp ult i64 %i.bx, 128
+  %i.bx = sub i64 %i.bu, %i.c
+  %diff.check = icmp ugt i64 %i.bx, -128
   %or.cond71 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond71, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -5020,8 +5021,8 @@ iter.check:                                       ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.bw, 8
-  %i.by = sub i64 %i.c, %i.bv
-  %diff.check = icmp ult i64 %i.by, 128
+  %i.by = sub i64 %i.bv, %i.c
+  %diff.check = icmp ugt i64 %i.by, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 

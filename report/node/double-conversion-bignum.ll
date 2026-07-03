@@ -204,15 +204,16 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader.i: ; preds
   %i.m = zext nneg i16 %.pre67 to i64             ; 6 uses
   %i.n = sext i32 %i.h to i64
   %invariant.gep.i = getelementptr [4 x i8], ptr %0, i64 %i.n ; 2 uses
-  %min.iters.check = icmp ult i16 %.pre67, 12
+  %min.iters.check = icmp ult i16 %.pre67, 16
   br i1 %min.iters.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.o = sext i16 %i.d to i64
   %i.p = sext i16 %i.b to i64
   %i.q = sub nsw i64 %i.o, %i.p
-  %2 = and i64 %i.q, 4611686018427387896
-  %diff.check = icmp eq i64 %2, 0
+  %2 = shl nsw i64 %i.q, 2
+  %3 = add nsw i64 %2, -1
+  %diff.check = icmp ult i64 %3, 31
   br i1 %diff.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -438,15 +439,16 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader: ; preds =
   %i.n = zext nneg i16 %i.i to i64                ; 6 uses
   %i.o = sext i32 %i.h to i64
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %i.o ; 2 uses
-  %min.iters.check = icmp ult i16 %i.i, 12
+  %min.iters.check = icmp ult i16 %i.i, 16
   br i1 %min.iters.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader29, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.p = sext i16 %i.d to i64
   %i.q = sext i16 %i.b to i64
   %i.r = sub nsw i64 %i.p, %i.q
-  %2 = and i64 %i.r, 4611686018427387896
-  %diff.check = icmp eq i64 %2, 0
+  %2 = shl nsw i64 %i.r, 2
+  %3 = add nsw i64 %2, -1
+  %diff.check = icmp ult i64 %3, 31
   br i1 %diff.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader29, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -546,15 +548,16 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader.i: ; preds
   %i.n = zext nneg i16 %i.i to i64                ; 6 uses
   %i.o = sext i32 %i.h to i64
   %invariant.gep.i = getelementptr [4 x i8], ptr %0, i64 %i.o ; 2 uses
-  %min.iters.check = icmp ult i16 %i.i, 12
+  %min.iters.check = icmp ult i16 %i.i, 16
   br i1 %min.iters.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.p = sext i16 %i.d to i64
   %i.q = sext i16 %i.b to i64
   %i.r = sub nsw i64 %i.p, %i.q
-  %2 = and i64 %i.r, 4611686018427387896
-  %diff.check = icmp eq i64 %2, 0
+  %2 = shl nsw i64 %i.r, 2
+  %3 = add nsw i64 %2, -1
+  %diff.check = icmp ult i64 %3, 31
   br i1 %diff.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -957,15 +960,16 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader.i: ; preds
   %i.s = zext nneg i16 %i.a to i64                ; 6 uses
   %i.t = sext i32 %i.o to i64
   %invariant.gep.i = getelementptr [4 x i8], ptr %0, i64 %i.t ; 2 uses
-  %min.iters.check = icmp ult i16 %i.a, 12
+  %min.iters.check = icmp ult i16 %i.a, 16
   br i1 %min.iters.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.u = sext i16 %i.j to i64
   %i.v = sext i16 %i.d to i64
   %i.w = sub nsw i64 %i.u, %i.v
-  %2 = and i64 %i.w, 4611686018427387896
-  %diff.check = icmp eq i64 %2, 0
+  %2 = shl nsw i64 %i.w, 2
+  %3 = add nsw i64 %2, -1
+  %diff.check = icmp ult i64 %3, 31
   br i1 %diff.check, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
