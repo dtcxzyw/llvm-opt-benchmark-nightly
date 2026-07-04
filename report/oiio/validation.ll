@@ -199,11 +199,11 @@ bb.a:
   %i.o = sext i32 %.sroa.11.0.copyload to i64
   %i.p = sext i32 %.sroa.077.0.copyload to i64
   %i.q = sub nsw i64 %i.o, %i.p                   ; 2 uses
-  %i.r = add nsw i64 %i.q, 1
+  %i.r = add nuw nsw i64 %i.q, 1
   %i.s = sext i32 %.sroa.15.0.copyload to i64
   %i.t = sext i32 %.sroa.7.0.copyload to i64
   %i.u = sub nsw i64 %i.s, %i.t                   ; 2 uses
-  %i.v = add nsw i64 %i.u, 1
+  %i.v = add nuw nsw i64 %i.u, 1
   %i.w = icmp sgt i32 %.sroa.0.0.copyload, %.sroa.9.0.copyload
   br i1 %i.w, label %bb.c, label %bb.b
 

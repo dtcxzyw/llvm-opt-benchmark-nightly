@@ -203,7 +203,7 @@ bb.bs:                                            ; preds = %._crit_edge1122
   %sum.shift = lshr i64 %i.jn, 52
   %i.jo = trunc nuw nsw i64 %sum.shift to i32
   %i.jp = and i32 %i.jo, 2047                     ; 5 uses
-  %i.jq = sub nsw i32 107, %i.jp
+  %i.jq = sub nuw nsw i32 107, %i.jp
   %i.jr = icmp samesign ult i32 %i.jp, 107
   br i1 %i.jr, label %bb.bt, label %bb.bx
 

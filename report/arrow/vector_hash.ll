@@ -204,7 +204,7 @@ bb.a:
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !1582, !noalias !1788 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1791)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1794)
-  %sext.i.i = shl nsw i64 %i.m, 24
+  %sext.i.i = shl nuw nsw i64 %i.m, 24
   %i.t = icmp slt i32 %i.l, 17
   br i1 %i.t, label %bb.b, label %bb.h, !prof !140
 
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.a
   %.val4 = load ptr, ptr %i.a, align 8, !tbaa !2153
   %i.af = getelementptr inbounds nuw i8, ptr %.val4, i64 104
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !1582, !noalias !2248 ; 4 uses
-  %sext.i.i5 = shl nsw i64 %i.ae, 24
+  %sext.i.i5 = shl nuw nsw i64 %i.ae, 24
   %i.ah = icmp ult i32 %i.f, 9
   br i1 %i.ah, label %bb.c, label %.thread
 
@@ -1010,7 +1010,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1582, !noalias !2319 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2322)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2325)
-  %sext.i.i = shl nsw i64 %i.f, 24
+  %sext.i.i = shl nuw nsw i64 %i.f, 24
   %i.l = icmp slt i32 %i.e, 17
   br i1 %i.l, label %bb.b, label %bb.h, !prof !140
 
@@ -1413,7 +1413,7 @@ bb.a:
   store ptr null, ptr %4, align 8, !tbaa !137, !alias.scope !3336, !noalias !3333
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 320
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !1582, !noalias !3333 ; 11 uses
-  %sext.i.i = shl nsw i64 %i.m, 24
+  %sext.i.i = shl nuw nsw i64 %i.m, 24
   %i.t = icmp slt i32 %i.l, 17
   br i1 %i.t, label %bb.b, label %bb.h, !prof !140
 
@@ -1816,7 +1816,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %5, align 8, !tbaa !137, !alias.scope !3503, !noalias !3506
   %i.af = getelementptr inbounds nuw i8, ptr %.val12, i64 320
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !1582, !noalias !3506 ; 4 uses
-  %sext.i.i13 = shl nsw i64 %i.ae, 24
+  %sext.i.i13 = shl nuw nsw i64 %i.ae, 24
   %i.ah = icmp ult i32 %i.f, 9
   br i1 %i.ah, label %bb.c, label %.thread
 
@@ -2219,7 +2219,7 @@ bb.a:
   store ptr null, ptr %4, align 8, !tbaa !137, !alias.scope !3581, !noalias !3578
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 320
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1582, !noalias !3578 ; 11 uses
-  %sext.i.i = shl nsw i64 %i.f, 24
+  %sext.i.i = shl nuw nsw i64 %i.f, 24
   %i.l = icmp slt i32 %i.e, 17
   br i1 %i.l, label %bb.b, label %bb.h, !prof !140
 
@@ -2622,7 +2622,7 @@ bb.a:
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !1582, !noalias !4435 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4438)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4441)
-  %sext.i.i = shl nsw i64 %i.m, 24
+  %sext.i.i = shl nuw nsw i64 %i.m, 24
   %i.t = icmp slt i32 %i.l, 17
   br i1 %i.t, label %bb.b, label %bb.h, !prof !140
 
@@ -3025,7 +3025,7 @@ bb.b:                                             ; preds = %bb.a
   %.val6 = load ptr, ptr %i.a, align 8, !tbaa !4594 ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.val6, i64 344
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !1582, !noalias !4627 ; 4 uses
-  %sext.i.i7 = shl nsw i64 %i.ae, 24
+  %sext.i.i7 = shl nuw nsw i64 %i.ae, 24
   %i.ah = icmp ult i32 %i.f, 9
   br i1 %i.ah, label %bb.c, label %.thread
 
@@ -3428,7 +3428,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1582, !noalias !4704 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4707)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4710)
-  %sext.i.i = shl nsw i64 %i.f, 24
+  %sext.i.i = shl nuw nsw i64 %i.f, 24
   %i.l = icmp slt i32 %i.e, 17
   br i1 %i.l, label %bb.b, label %bb.h, !prof !140
 

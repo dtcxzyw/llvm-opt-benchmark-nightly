@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.m, label %_RINvCs3fLsjMQPbhe_8smallvec10infallibleuECs7p2uQeJxui2_9deltalake.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.s = mul i64 %i.l, 56                         ; 3 uses
+  %i.s = mul nuw nsw i64 %i.l, 56                 ; 3 uses
   %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 164703072086692424
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCs3fLsjMQPbhe_8smallvec12layout_arrayNtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter9directive15StaticDirectiveECs7p2uQeJxui2_9deltalake.exit.i, !prof !6321
 
@@ -337,7 +337,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.m, label %_RINvCs3fLsjMQPbhe_8smallvec10infallibleuECs7p2uQeJxui2_9deltalake.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.s = mul i64 %i.l, 80                         ; 3 uses
+  %i.s = mul nuw nsw i64 %i.l, 80                 ; 3 uses
   %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 115292150460684696
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCs3fLsjMQPbhe_8smallvec12layout_arrayNtNtNtNtCsbG4i8A5DnWX_18tracing_subscriber6filter3env9directive9DirectiveECs7p2uQeJxui2_9deltalake.exit.i, !prof !6321
 

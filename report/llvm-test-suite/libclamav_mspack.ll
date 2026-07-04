@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @qtm_init(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = shl nuw i32 1, %2                        ; 2 uses
+  %i.a = shl nuw nsw i32 1, %2                    ; 2 uses
   %i.b = add i32 %2, -22
   %or.cond = icmp ult i32 %i.b, -7
   br i1 %or.cond, label %bb.j, label %bb.b
@@ -293,7 +293,7 @@ bb.f:                                             ; preds = %bb.e
   store i8 -2, ptr %i.as, align 2, !tbaa !31
   %i.at = getelementptr inbounds nuw i8, ptr %i.f, i64 363
   store i8 0, ptr %i.at, align 1, !tbaa !31
-  %i.au = zext i32 %i.a to i64
+  %i.au = zext nneg i32 %i.a to i64
   %i.av = tail call ptr @cli_malloc(i64 noundef %i.au) #11 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 3 uses
   store ptr %i.av, ptr %i.aw, align 8, !tbaa !187

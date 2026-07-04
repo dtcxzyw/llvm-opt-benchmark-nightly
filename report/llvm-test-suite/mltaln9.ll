@@ -204,7 +204,7 @@ bb.a:
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr102 = freeze i64 %i.b
   %i.c = trunc i64 %.fr102 to i32                 ; 3 uses
-  %i.d = add i32 %1, -1                           ; 2 uses
+  %i.d = add nsw i32 %1, -1                       ; 2 uses
   %i.e = icmp sgt i32 %1, 1
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
@@ -607,7 +607,7 @@ bb.a:
 ; Function Attrs: nofree nounwind uwtable
 define dso_local void @countnode(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = add i32 %0, -2
+  %i.a = add nsw i32 %0, -2
   %i.b = icmp slt i32 %0, 2
   br i1 %i.b, label %bb.b, label %.preheader89.preheader
 
@@ -1010,7 +1010,7 @@ bb.f:                                             ; preds = %.preheader179.us, %
   br i1 %exitcond.not, label %.preheader178, label %.preheader182, !llvm.loop !333
 
 .preheader176:                                    ; preds = %._crit_edge.us206, %.preheader177.lr.ph, %.preheader178
-  %i.ct = add i32 %0, -1                          ; 2 uses
+  %i.ct = add nsw i32 %0, -1                      ; 2 uses
   %i.cu = icmp sgt i32 %0, 1
   br i1 %i.cu, label %.lr.ph210, label %.loopexit
 
@@ -1413,7 +1413,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -1816,7 +1816,7 @@ bb.a:
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b
   %i.c = trunc i64 %.fr to i32                    ; 3 uses
-  %i.d = add i32 %0, -1
+  %i.d = add nsw i32 %0, -1
   %i.e = icmp sgt i32 %0, 1
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
@@ -2077,7 +2077,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -2208,7 +2208,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %1, -1
+  %i.c = add nsw i32 %1, -1
   %i.d = icmp sgt i32 %1, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -2323,7 +2323,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %0, -1
+  %i.c = add nsw i32 %0, -1
   %i.d = icmp sgt i32 %0, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -2535,7 +2535,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !12
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b                          ; 2 uses
-  %i.c = add i32 %0, -1
+  %i.c = add nsw i32 %0, -1
   %i.d = icmp sgt i32 %0, 1
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
@@ -2635,7 +2635,7 @@ bb.a:
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #29
   %.fr = freeze i64 %i.b
   %i.c = trunc i64 %.fr to i32                    ; 3 uses
-  %i.d = add i32 %0, -1
+  %i.d = add nsw i32 %0, -1
   %i.e = icmp sgt i32 %0, 1
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 

@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.j
   %i.be = add nsw i32 %.pre850, -1                ; 4 uses
   store i32 %i.be, ptr %i.ak, align 4, !tbaa !41
-  %.not6.i = icmp samesign ugt i32 %i.be, %i.w
+  %.not6.i = icmp sgt i32 %i.be, %i.w
   br i1 %.not6.i, label %bb.o, label %.loopexit791
 
 bb.l:                                             ; preds = %bb.j
@@ -223,7 +223,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l, %bb.j
   %i.bl = add nsw i32 %.pre850, -1                ; 4 uses
   store i32 %i.bl, ptr %i.ak, align 4, !tbaa !41
-  %.not7.i = icmp samesign ugt i32 %i.bl, %i.w
+  %.not7.i = icmp sgt i32 %i.bl, %i.w
   br i1 %.not7.i, label %bb.o, label %.loopexit791
 
 bb.o:                                             ; preds = %bb.j, %bb.j, %bb.j, %bb.j, %bb.n, %bb.m, %bb.k

@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.j, label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = shl nsw i32 %i.e, 1                      ; 3 uses
+  %i.k = shl nuw nsw i32 %i.e, 1                  ; 3 uses
   %i.l = icmp sgt i32 %i.e, 0
   br i1 %i.l, label %bb.f, label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit.thread
 
@@ -322,7 +322,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bo, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i123, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bp = shl nsw i32 %i.bl, 1                    ; 3 uses
+  %i.bp = shl nuw nsw i32 %i.bl, 1                ; 3 uses
   %i.bq = icmp sgt i32 %i.bl, 0
   br i1 %i.bq, label %bb.n, label %bb.q
 
@@ -406,7 +406,7 @@ bb.s:                                             ; preds = %_ZNK6icu_7813Unicod
   br i1 %i.cu, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i135, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.cv = shl nsw i32 %i.cr, 1                    ; 3 uses
+  %i.cv = shl nuw nsw i32 %i.cr, 1                ; 3 uses
   %i.cw = icmp sgt i32 %i.cr, 0
   br i1 %i.cw, label %bb.u, label %bb.x
 
@@ -495,7 +495,7 @@ bb.z:                                             ; preds = %switch.early.test, 
   br i1 %i.dy, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i144, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.dz = shl nsw i32 %i.dv, 1                    ; 3 uses
+  %i.dz = shl nuw nsw i32 %i.dv, 1                ; 3 uses
   %i.ea = icmp sgt i32 %i.dv, 0
   br i1 %i.ea, label %bb.ab, label %bb.ae
 
@@ -629,7 +629,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.gc, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i157, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.gd = shl nsw i32 %i.fx, 1                    ; 3 uses
+  %i.gd = shl nuw nsw i32 %i.fx, 1                ; 3 uses
   %i.ge = icmp sgt i32 %i.fx, 0
   br i1 %i.ge, label %bb.ak, label %bb.an
 
@@ -702,7 +702,7 @@ bb.ao:                                            ; preds = %_ZNK6icu_7813Unicod
   br i1 %i.he, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i166, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.hf = shl nsw i32 %i.gz, 1                    ; 3 uses
+  %i.hf = shl nuw nsw i32 %i.gz, 1                ; 3 uses
   %i.hg = icmp sgt i32 %i.gz, 0
   br i1 %i.hg, label %bb.aq, label %bb.at
 
@@ -781,7 +781,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.im, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i175, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.in = shl nsw i32 %i.ih, 1                    ; 3 uses
+  %i.in = shl nuw nsw i32 %i.ih, 1                ; 3 uses
   %i.io = icmp sgt i32 %i.ih, 0
   br i1 %i.io, label %bb.ax, label %bb.ba
 
@@ -863,7 +863,7 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.jn, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i184, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.jo = shl nsw i32 %i.jk, 1                    ; 3 uses
+  %i.jo = shl nuw nsw i32 %i.jk, 1                ; 3 uses
   %i.jp = icmp sgt i32 %i.jk, 0
   br i1 %i.jp, label %bb.bf, label %bb.bi
 
@@ -960,7 +960,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.kz, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i.i, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.la = shl nsw i32 %i.ko, 1                    ; 3 uses
+  %i.la = shl nuw nsw i32 %i.ko, 1                ; 3 uses
   %i.lb = icmp sgt i32 %i.ko, 0
   br i1 %i.lb, label %bb.bp, label %bb.bs
 
@@ -1075,7 +1075,7 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %i.mm, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i.i194, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.mn = shl nsw i32 %i.md, 1                    ; 3 uses
+  %i.mn = shl nuw nsw i32 %i.md, 1                ; 3 uses
   %i.mo = icmp sgt i32 %i.md, 0
   br i1 %i.mo, label %bb.by, label %bb.cb
 
@@ -1478,7 +1478,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ea, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.eb = shl nsw i32 %i.dv, 1                    ; 3 uses
+  %i.eb = shl nuw nsw i32 %i.dv, 1                ; 3 uses
   %i.ec = icmp sgt i32 %i.dv, 0
   br i1 %i.ec, label %bb.v, label %bb.y
 
@@ -1881,7 +1881,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.db, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.dc = shl nsw i32 %i.cw, 1                    ; 3 uses
+  %i.dc = shl nuw nsw i32 %i.cw, 1                ; 3 uses
   %i.dd = icmp sgt i32 %i.cw, 0
   br i1 %i.dd, label %bb.u, label %bb.x
 
@@ -2146,7 +2146,7 @@ bb.aq:                                            ; preds = %.thread189
   br i1 %i.gx, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i173, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.gy = shl nsw i32 %i.gs, 1                    ; 3 uses
+  %i.gy = shl nuw nsw i32 %i.gs, 1                ; 3 uses
   %i.gz = icmp sgt i32 %i.gs, 0
   br i1 %i.gz, label %bb.as, label %bb.av
 
@@ -2549,7 +2549,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = add nsw i32 %1, 1                        ; 3 uses
+  %i.a = add nuw nsw i32 %1, 1                    ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8
   %.fr53 = freeze i16 %i.c                        ; 3 uses
@@ -2851,7 +2851,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = shl nsw i32 %i.d, 1                      ; 3 uses
+  %i.j = shl nuw nsw i32 %i.d, 1                  ; 3 uses
   %i.k = icmp sgt i32 %i.d, 0
   br i1 %i.k, label %bb.d, label %bb.g
 
@@ -2934,7 +2934,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = shl nsw i32 %i.b, 1                      ; 3 uses
+  %i.j = shl nuw nsw i32 %i.b, 1                  ; 3 uses
   %i.k = icmp sgt i32 %i.b, 0
   br i1 %i.k, label %bb.d, label %bb.g
 
@@ -3151,7 +3151,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.di, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i158, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.dj = shl nsw i32 %i.dd, 1                    ; 3 uses
+  %i.dj = shl nuw nsw i32 %i.dd, 1                ; 3 uses
   %i.dk = icmp sgt i32 %i.dd, 0
   br i1 %i.dk, label %bb.w, label %bb.z
 
@@ -3554,7 +3554,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = shl nsw i32 %i.b, 1                      ; 3 uses
+  %i.o = shl nuw nsw i32 %i.b, 1                  ; 3 uses
   %i.p = icmp sgt i32 %i.b, 0
   br i1 %i.p, label %bb.d, label %bb.g
 
@@ -3957,7 +3957,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.au, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.av = shl nsw i32 %i.ap, 1                    ; 3 uses
+  %i.av = shl nuw nsw i32 %i.ap, 1                ; 3 uses
   %i.aw = icmp sgt i32 %i.ap, 0
   br i1 %i.aw, label %bb.m, label %bb.p
 
@@ -4314,7 +4314,7 @@ bb.k:                                             ; preds = %.lr.ph.split
   br i1 %i.bs, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.split.us
-  %i.bt = shl nsw i32 %i.bp, 1                    ; 3 uses
+  %i.bt = shl nuw nsw i32 %i.bp, 1                ; 3 uses
   %i.bu = icmp sgt i32 %i.bp, 0
   br i1 %i.bu, label %bb.m, label %bb.p
 
@@ -4497,7 +4497,7 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.o, label %_ZN6icu_7818MessagePatternListIdLi8EE24ensureCapacityForOneMoreEiR10UErrorCode.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.p = shl nsw i32 %i.d, 1                      ; 3 uses
+  %i.p = shl nuw nsw i32 %i.d, 1                  ; 3 uses
   %i.q = icmp sgt i32 %i.d, 0
   br i1 %i.q, label %bb.h, label %bb.k
 
@@ -4571,7 +4571,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ap, label %_ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityForOneMoreEiR10UErrorCode.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.aq = shl nsw i32 %i.ak, 1                    ; 3 uses
+  %i.aq = shl nuw nsw i32 %i.ak, 1                ; 3 uses
   %i.ar = icmp sgt i32 %i.ak, 0
   br i1 %i.ar, label %bb.p, label %bb.s
 

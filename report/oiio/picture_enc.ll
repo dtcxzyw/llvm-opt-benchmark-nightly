@@ -201,7 +201,7 @@ WebPValidatePicture.exit.thread:                  ; preds = %bb.b, %bb.b, %WebPV
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %i.u, i8 0, i64 44, i1 false)
   %.not63 = icmp eq i32 %i.r, 0
   %i.v = select i1 %.not63, i32 0, i32 %i.d       ; 2 uses
-  %i.w = mul nsw i64 %i.n, %i.g                   ; 2 uses
+  %i.w = mul nuw nsw i64 %i.n, %i.g               ; 2 uses
   %sext = shl i64 %i.i, 32
   %i.x = ashr exact i64 %sext, 32
   %sext64 = shl i64 %i.p, 32

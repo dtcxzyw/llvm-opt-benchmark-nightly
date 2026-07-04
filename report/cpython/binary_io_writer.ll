@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %bb.o
   br label %.critedge
 
 bb.q:                                             ; preds = %bb.o
-  %i.cf = shl nuw i64 %i.cc, 1
+  %i.cf = shl nuw nsw i64 %i.cc, 1
   %mul.ov.i.i.i = icmp samesign ugt i64 %i.cc, 115292150460684697
   br i1 %mul.ov.i.i.i, label %bb.r, label %bb.s
 
@@ -503,7 +503,7 @@ bb.bd:                                            ; preds = %bb.bc
   br label %.critedge84.i.i
 
 bb.be:                                            ; preds = %bb.bc
-  %i.ft = shl nuw i64 %i.fo, 1
+  %i.ft = shl nuw nsw i64 %i.fo, 1
   %mul.ov.i.i.i.i.i = icmp samesign ugt i64 %i.fo, 329406144173384850
   br i1 %mul.ov.i.i.i.i.i, label %bb.bf, label %bb.bg
 
@@ -705,7 +705,7 @@ bb.bw:                                            ; preds = %bb.bv
   br label %process_thread_sample.exit.thread49
 
 bb.bx:                                            ; preds = %bb.bv
-  %i.hz = shl nuw i64 %i.hv, 1
+  %i.hz = shl nuw nsw i64 %i.hv, 1
   %mul.ov.i.i57.i = icmp samesign ugt i64 %i.hv, 576460752303423487
   br i1 %mul.ov.i.i57.i, label %bb.by, label %bb.bz
 
@@ -1108,7 +1108,7 @@ bb.e:                                             ; preds = %bb.d
   br label %grow_parallel_arrays.exit.thread
 
 bb.f:                                             ; preds = %bb.d
-  %i.p = shl nuw i64 %i.k, 1
+  %i.p = shl nuw nsw i64 %i.k, 1
   %i.q = icmp samesign ugt i64 %i.k, 1152921504606846975
   br i1 %i.q, label %bb.g, label %bb.h
 

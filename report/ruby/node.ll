@@ -201,12 +201,12 @@ pm_node_list_grow.exit.thread:                    ; preds = %bb.d, %bb.e, %bb.c,
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden void @pm_node_list_prepend(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #1 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !11     ; 3 uses
-  %2 = add i64 %i.a, 1                            ; 2 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !11     ; 4 uses
   %i.b = icmp eq i64 %i.a, -1
   br i1 %i.b, label %pm_node_list_grow.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %2 = add nuw i64 %i.a, 1
   %i.c = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !17   ; 4 uses
   %i.e = icmp ult i64 %2, %i.d
@@ -226,8 +226,8 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c, %bb.d
   %.025.i = phi i64 [ %i.j, %bb.d ], [ %spec.select.i, %bb.c ] ; 5 uses
-  %3 = icmp ugt i64 %2, %.025.i
-  br i1 %3, label %bb.d, label %bb.e
+  %.not = icmp ult i64 %i.a, %.025.i
+  br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.preheader.i
   %i.i = icmp sgt i64 %.025.i, -1

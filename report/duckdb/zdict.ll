@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds i8, ptr %i.q, i64 %i.r ; 3 uses
   %i.t = tail call fastcc noundef i64 @_ZN11duckdb_zstdL20ZDICT_analyzeEntropyEPvmiPKvPKmjS2_mj(ptr noundef nonnull %i.o, i64 noundef %i.p, i32 noundef %i.c, ptr noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef %i.s, i64 noundef %1, i32 noundef %i.e) ; 3 uses
   %i.u = icmp ult i64 %i.t, -119
-  %i.v = add i64 %i.t, 8                          ; 2 uses
+  %i.v = add nuw i64 %i.t, 8                      ; 2 uses
   br i1 %i.u, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %.critedge

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = sub nsw i32 0, %i.c
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  %i.k = add i32 %i.c, -2                         ; 2 uses
+  %i.k = add nsw i32 %i.c, -2                     ; 2 uses
   br i1 %i.g, label %.preheader.us.preheader.i, label %.preheader.lr.ph.split.i
 
 .preheader.us.preheader.i:                        ; preds = %.preheader.lr.ph.i
@@ -443,7 +443,7 @@ compare_neighbor.exit35.i:                        ; preds = %bb.q, %bb.p, %bb.o
 first_pass.exit:                                  ; preds = %._crit_edge40.i, %._crit_edge40.us.i.loopexit, %.preheader.lr.ph.split.i
   %.pr = load i32, ptr %i.d, align 4, !tbaa !103  ; 2 uses
   %i.cu = load ptr, ptr %0, align 8, !tbaa !83    ; 2 uses
-  %i.cv = add i32 %.pr, -2                        ; 2 uses
+  %i.cv = add nsw i32 %.pr, -2                    ; 2 uses
   %i.cw = icmp sgt i32 %.pr, 1
   br i1 %i.cw, label %.preheader.lr.ph.i5, label %second_pass.exit
 
@@ -452,7 +452,7 @@ first_pass.exit:                                  ; preds = %._crit_edge40.i, %.
   %i.cy = icmp sgt i32 %i.cx, 2
   %i.cz = sext i32 %i.cx to i64                   ; 3 uses
   %i.da = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.db = add i32 %i.cx, -2                       ; 2 uses
+  %i.db = add nsw i32 %i.cx, -2                   ; 2 uses
   br i1 %i.cy, label %.preheader.us.preheader.i17, label %.preheader.lr.ph.split.i6
 
 .preheader.us.preheader.i17:                      ; preds = %.preheader.lr.ph.i5

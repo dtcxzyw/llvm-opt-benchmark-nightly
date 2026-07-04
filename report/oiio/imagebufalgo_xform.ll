@@ -204,7 +204,7 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIffEC2ERKS1_NS1_8WrapModeE.exit: ; 
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.do = icmp sgt i32 %i.g, 0                    ; 3 uses
   %i.dp = icmp slt <2 x i32> %i.ao, zeroinitializer ; 2 uses
-  %i.dq = add i32 %i.ap, 1
+  %i.dq = add nuw i32 %i.ap, 1
   %i.dr = add i32 %i.as, 1                        ; 2 uses
   %i.ds = sub i32 0, %i.as
   %i.dt = icmp slt i32 %i.g, 1
@@ -607,7 +607,7 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIhfEC2ERKS1_NS1_8WrapModeE.exit: ; 
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.do = icmp sgt i32 %i.g, 0                    ; 3 uses
   %i.dp = icmp slt <2 x i32> %i.ao, zeroinitializer ; 2 uses
-  %i.dq = add i32 %i.ap, 1
+  %i.dq = add nuw i32 %i.ap, 1
   %i.dr = add i32 %i.as, 1                        ; 2 uses
   %i.ds = sub i32 0, %i.as
   %i.dt = icmp slt i32 %i.g, 1
@@ -1010,7 +1010,7 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIN9Imath_3_14halfEfEC2ERKS1_NS1_8Wr
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.do = icmp sgt i32 %i.g, 0                    ; 3 uses
   %i.dp = icmp slt <2 x i32> %i.ao, zeroinitializer ; 2 uses
-  %i.dq = add i32 %i.ap, 1
+  %i.dq = add nuw i32 %i.ap, 1
   %i.dr = add i32 %i.as, 1                        ; 2 uses
   %i.ds = sub i32 0, %i.as
   %i.dt = icmp slt i32 %i.g, 1
@@ -1413,7 +1413,7 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorItfEC2ERKS1_NS1_8WrapModeE.exit: ; 
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.do = icmp sgt i32 %i.g, 0                    ; 3 uses
   %i.dp = icmp slt <2 x i32> %i.ao, zeroinitializer ; 2 uses
-  %i.dq = add i32 %i.ap, 1
+  %i.dq = add nuw i32 %i.ap, 1
   %i.dr = add i32 %i.as, 1                        ; 2 uses
   %i.ds = sub i32 0, %i.as
   %i.dt = icmp slt i32 %i.g, 1
@@ -1816,7 +1816,7 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIhfEC2ERKS1_NS1_8WrapModeE.exit: ; 
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.do = icmp sgt i32 %i.g, 0                    ; 3 uses
   %i.dp = icmp slt <2 x i32> %i.ao, zeroinitializer ; 2 uses
-  %i.dq = add i32 %i.ap, 1
+  %i.dq = add nuw i32 %i.ap, 1
   %i.dr = add i32 %i.as, 1                        ; 2 uses
   %i.ds = sub i32 0, %i.as
   %i.dt = icmp slt i32 %i.g, 1
@@ -2219,7 +2219,7 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorIN9Imath_3_14halfEfEC2ERKS1_NS1_8Wr
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.do = icmp sgt i32 %i.g, 0                    ; 3 uses
   %i.dp = icmp slt <2 x i32> %i.ao, zeroinitializer ; 2 uses
-  %i.dq = add i32 %i.ap, 1
+  %i.dq = add nuw i32 %i.ap, 1
   %i.dr = add i32 %i.as, 1                        ; 2 uses
   %i.ds = sub i32 0, %i.as
   %i.dt = icmp slt i32 %i.g, 1
@@ -2622,7 +2622,7 @@ _ZN11OpenImageIO4v3_18ImageBuf13ConstIteratorItfEC2ERKS1_NS1_8WrapModeE.exit: ; 
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.do = icmp sgt i32 %i.g, 0                    ; 3 uses
   %i.dp = icmp slt <2 x i32> %i.ao, zeroinitializer ; 2 uses
-  %i.dq = add i32 %i.ap, 1
+  %i.dq = add nuw i32 %i.ap, 1
   %i.dr = add i32 %i.as, 1                        ; 2 uses
   %i.ds = sub i32 0, %i.as
   %i.dt = icmp slt i32 %i.g, 1
