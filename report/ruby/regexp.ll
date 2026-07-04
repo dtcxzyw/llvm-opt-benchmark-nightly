@@ -201,14 +201,14 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16         ; 8 uses
   %i.b = getelementptr i8, ptr %0, i64 24
   %.val6 = load ptr, ptr %i.b, align 8, !tbaa !19 ; 7 uses
-  %.val625 = ptrtoint ptr %.val6 to i64           ; 2 uses
+  %.val625 = ptrtoaddr ptr %.val6 to i64          ; 2 uses
   %.promoted = load ptr, ptr %i.a, align 8, !tbaa !18 ; 2 uses
   %.not17 = icmp ult ptr %.promoted, %.val6
   br i1 %.not17, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %pm_regexp_parse_range_quantifier.exit
   %i.c = phi ptr [ %i.v, %pm_regexp_parse_range_quantifier.exit ], [ %.promoted, %bb.a ] ; 7 uses
-  %1 = ptrtoint ptr %i.c to i64
+  %1 = ptrtoaddr ptr %i.c to i64
   %i.d = load i8, ptr %i.c, align 1, !tbaa !48
   switch i8 %i.d, label %._crit_edge [
     i8 42, label %bb.b
@@ -298,7 +298,7 @@ bb.f:                                             ; preds = %.lr.ph.jt1.i
   br i1 %.not.jt2.i15, label %.lr.ph.jt2.i.preheader, label %pm_regexp_parse_range_quantifier.exit.sink.split
 
 .lr.ph.jt2.i.preheader:                           ; preds = %.preheader.i
-  %.lcssa51.sink.i28 = ptrtoint ptr %.lcssa51.sink.i to i64
+  %.lcssa51.sink.i28 = ptrtoaddr ptr %.lcssa51.sink.i to i64
   %scevgep27 = getelementptr i8, ptr %.lcssa51.sink.i, i64 %.val625
   %i.p = sub i64 0, %.lcssa51.sink.i28
   %scevgep29 = getelementptr i8, ptr %scevgep27, i64 %i.p

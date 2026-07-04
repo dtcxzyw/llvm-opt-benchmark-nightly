@@ -7,7 +7,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @lzf_compress(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = alloca [65536 x ptr], align 16           ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 3 uses
@@ -380,7 +380,7 @@ bb.af:                                            ; preds = %bb.ae
   %.5222.ph = phi ptr [ %.4221, %.thread ], [ %i.ew, %bb.ab ]
   %.4215.ph = phi ptr [ %.3214, %.thread ], [ %i.ez, %bb.ab ] ; 2 uses
   %.4206.ph = phi i32 [ %.3205, %.thread ], [ 0, %bb.ab ]
-  %.pre = ptrtoint ptr %.4215.ph to i64
+  %.pre = ptrtoaddr ptr %.4215.ph to i64
   br label %.thread.thread297
 
 .thread.thread297:                                ; preds = %.thread.thread297.loopexit, %bb.b
