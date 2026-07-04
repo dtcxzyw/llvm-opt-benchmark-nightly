@@ -204,7 +204,6 @@ bb.s:                                             ; preds = %bb.a
 bb.t:                                             ; preds = %bb.s
   %i.ck = getelementptr inbounds nuw i8, ptr %10, i64 8
   %.val41 = load i64, ptr %i.ck, align 8, !tbaa !272 ; 3 uses
-  %11 = add i64 %.val41, 1
   %i.cl = load i32, ptr %1, align 8, !tbaa !7     ; 3 uses
   %i.cm = icmp ult i32 %i.cl, 13
   %i.cn = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -220,7 +219,7 @@ bb.t:                                             ; preds = %bb.s
 
 .lr.ph.i:                                         ; preds = %bb.t, %_ZL20utf8proc_char_lengthPKc.exit.i
   %.0.i4.i = phi ptr [ %i.dc, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ %i.cq, %bb.t ] ; 2 uses
-  %.012.i3.i = phi i64 [ %i.dd, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ 0, %bb.t ]
+  %.012.i3.i = phi i64 [ %i.dd, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ 0, %bb.t ] ; 2 uses
   %.0.i.val.i = load i8, ptr %.0.i4.i, align 1, !tbaa !16 ; 4 uses
   %i.cw = icmp sgt i8 %.0.i.val.i, -1
   br i1 %i.cw, label %_ZL20utf8proc_char_lengthPKc.exit.i, label %bb.u
@@ -244,9 +243,9 @@ bb.w:                                             ; preds = %bb.v
 _ZL20utf8proc_char_lengthPKc.exit.i:              ; preds = %bb.w, %bb.v, %bb.u, %.lr.ph.i
   %i.db = phi i64 [ %i.da, %bb.w ], [ 3, %bb.v ], [ 2, %bb.u ], [ 1, %.lr.ph.i ]
   %i.dc = getelementptr inbounds nuw i8, ptr %.0.i4.i, i64 %i.db ; 2 uses
-  %i.dd = add nuw nsw i64 %.012.i3.i, 1           ; 3 uses
+  %i.dd = add nuw nsw i64 %.012.i3.i, 1           ; 2 uses
   %i.de = icmp ult ptr %i.dc, %i.cs
-  %i.df = icmp slt i64 %i.dd, %11
+  %i.df = icmp slt i64 %.012.i3.i, %.val41
   %i.dg = select i1 %i.de, i1 %i.df, i1 false
   br i1 %i.dg, label %.lr.ph.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE0EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit, !llvm.loop !3246
 
@@ -258,7 +257,6 @@ _ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE0EE
 bb.x:                                             ; preds = %bb.s
   %i.di = getelementptr inbounds nuw i8, ptr %10, i64 8
   %.val42 = load i64, ptr %i.di, align 8, !tbaa !272 ; 3 uses
-  %12 = add i64 %.val42, 1
   %i.dj = load i32, ptr %1, align 8, !tbaa !7     ; 3 uses
   %i.dk = icmp ult i32 %i.dj, 13
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -274,7 +272,7 @@ bb.x:                                             ; preds = %bb.s
 
 .lr.ph.i60:                                       ; preds = %bb.x, %_ZL20utf8proc_char_lengthPKc.exit.i67
   %.0.i4.i61 = phi ptr [ %i.ea, %_ZL20utf8proc_char_lengthPKc.exit.i67 ], [ %i.do, %bb.x ] ; 2 uses
-  %.012.i3.i62 = phi i64 [ %i.eb, %_ZL20utf8proc_char_lengthPKc.exit.i67 ], [ 0, %bb.x ]
+  %.012.i3.i62 = phi i64 [ %i.eb, %_ZL20utf8proc_char_lengthPKc.exit.i67 ], [ 0, %bb.x ] ; 2 uses
   %.0.i.val.i63 = load i8, ptr %.0.i4.i61, align 1, !tbaa !16 ; 4 uses
   %i.du = icmp sgt i8 %.0.i.val.i63, -1
   br i1 %i.du, label %_ZL20utf8proc_char_lengthPKc.exit.i67, label %bb.y
@@ -298,9 +296,9 @@ bb.aa:                                            ; preds = %bb.z
 _ZL20utf8proc_char_lengthPKc.exit.i67:            ; preds = %bb.aa, %bb.z, %bb.y, %.lr.ph.i60
   %i.dz = phi i64 [ %i.dy, %bb.aa ], [ 3, %bb.z ], [ 2, %bb.y ], [ 1, %.lr.ph.i60 ]
   %i.ea = getelementptr inbounds nuw i8, ptr %.0.i4.i61, i64 %i.dz ; 2 uses
-  %i.eb = add nuw nsw i64 %.012.i3.i62, 1         ; 3 uses
+  %i.eb = add nuw nsw i64 %.012.i3.i62, 1         ; 2 uses
   %i.ec = icmp ult ptr %i.ea, %i.dq
-  %i.ed = icmp slt i64 %i.eb, %12
+  %i.ed = icmp slt i64 %.012.i3.i62, %.val42
   %i.ee = select i1 %i.ec, i1 %i.ed, i1 false
   br i1 %i.ee, label %.lr.ph.i60, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE1EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit, !llvm.loop !3246
 
@@ -703,7 +701,6 @@ bb.ca:                                            ; preds = %_ZZN8facebook5velox
   %i.jh = getelementptr inbounds [16 x i8], ptr %i.jg, i64 %indvars.iv.i.i.i84 ; 3 uses
   %i.ji = getelementptr i8, ptr %i.jd, i64 16
   %.val.i.i.i.i85 = load i64, ptr %i.ji, align 8, !tbaa !272 ; 3 uses
-  %35 = add i64 %.val.i.i.i.i85, 1
   %i.jj = load i32, ptr %i.jh, align 8, !tbaa !7  ; 3 uses
   %i.jk = icmp ult i32 %i.jj, 13
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jh, i64 4
@@ -719,7 +716,7 @@ bb.ca:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.ca, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i
   %.0.i4.i.i.i.i.i = phi ptr [ %i.ka, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i ], [ %i.jo, %bb.ca ] ; 2 uses
-  %.012.i3.i.i.i.i.i = phi i64 [ %i.kb, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i ], [ 0, %bb.ca ]
+  %.012.i3.i.i.i.i.i = phi i64 [ %i.kb, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i ], [ 0, %bb.ca ] ; 2 uses
   %.0.i.val.i.i.i.i.i = load i8, ptr %.0.i4.i.i.i.i.i, align 1, !tbaa !16 ; 4 uses
   %i.ju = icmp sgt i8 %.0.i.val.i.i.i.i.i, -1
   br i1 %i.ju, label %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i, label %bb.cb
@@ -743,9 +740,9 @@ bb.cd:                                            ; preds = %bb.cc
 _ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i:      ; preds = %bb.cd, %bb.cc, %bb.cb, %.lr.ph.i.i.i.i.i
   %i.jz = phi i64 [ %i.jy, %bb.cd ], [ 3, %bb.cc ], [ 2, %bb.cb ], [ 1, %.lr.ph.i.i.i.i.i ]
   %i.ka = getelementptr inbounds nuw i8, ptr %.0.i4.i.i.i.i.i, i64 %i.jz ; 2 uses
-  %i.kb = add nuw nsw i64 %.012.i3.i.i.i.i.i, 1   ; 3 uses
+  %i.kb = add nuw nsw i64 %.012.i3.i.i.i.i.i, 1   ; 2 uses
   %i.kc = icmp ult ptr %i.ka, %i.jq
-  %i.kd = icmp slt i64 %i.kb, %35
+  %i.kd = icmp slt i64 %.012.i3.i.i.i.i.i, %.val.i.i.i.i85
   %i.ke = select i1 %i.kc, i1 %i.kd, i1 false
   br i1 %i.ke, label %.lr.ph.i.i.i.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE0EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i.i.i.i, !llvm.loop !3246
 
@@ -1017,7 +1014,6 @@ bb.da:                                            ; preds = %_ZZN8facebook5velox
   %i.nf = getelementptr inbounds i8, ptr %i.nd, i64 %i.ne ; 3 uses
   %i.ng = getelementptr i8, ptr %i.na, i64 16
   %.val.i.i.i.i.i.i.i.i55 = load i64, ptr %i.ng, align 8, !tbaa !272 ; 3 uses
-  %36 = add i64 %.val.i.i.i.i.i.i.i.i55, 1
   %i.nh = load i32, ptr %i.nf, align 8, !tbaa !7  ; 3 uses
   %i.ni = icmp ult i32 %i.nh, 13
   %i.nj = getelementptr inbounds nuw i8, ptr %i.nf, i64 4
@@ -1033,7 +1029,7 @@ bb.da:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %bb.da, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i
   %.0.i4.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ny, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i ], [ %i.nm, %bb.da ] ; 2 uses
-  %.012.i3.i.i.i.i.i.i.i.i.i = phi i64 [ %i.nz, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i ], [ 0, %bb.da ]
+  %.012.i3.i.i.i.i.i.i.i.i.i = phi i64 [ %i.nz, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i ], [ 0, %bb.da ] ; 2 uses
   %.0.i.val.i.i.i.i.i.i.i.i.i = load i8, ptr %.0.i4.i.i.i.i.i.i.i.i.i, align 1, !tbaa !16 ; 4 uses
   %i.ns = icmp sgt i8 %.0.i.val.i.i.i.i.i.i.i.i.i, -1
   br i1 %i.ns, label %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i, label %bb.db
@@ -1057,9 +1053,9 @@ bb.dd:                                            ; preds = %bb.dc
 _ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.dd, %bb.dc, %bb.db, %.lr.ph.i.i.i.i.i.i.i.i.i
   %i.nx = phi i64 [ %i.nw, %bb.dd ], [ 3, %bb.dc ], [ 2, %bb.db ], [ 1, %.lr.ph.i.i.i.i.i.i.i.i.i ]
   %i.ny = getelementptr inbounds nuw i8, ptr %.0.i4.i.i.i.i.i.i.i.i.i, i64 %i.nx ; 2 uses
-  %i.nz = add nuw nsw i64 %.012.i3.i.i.i.i.i.i.i.i.i, 1 ; 3 uses
+  %i.nz = add nuw nsw i64 %.012.i3.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.oa = icmp ult ptr %i.ny, %i.no
-  %i.ob = icmp slt i64 %i.nz, %36
+  %i.ob = icmp slt i64 %.012.i3.i.i.i.i.i.i.i.i.i, %.val.i.i.i.i.i.i.i.i55
   %i.oc = select i1 %i.oa, i1 %i.ob, i1 false
   br i1 %i.oc, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE0EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i.i.i.i.i.i.i.i, !llvm.loop !3246
 
@@ -1235,7 +1231,6 @@ bb.du:                                            ; preds = %_ZZN8facebook5velox
   %i.pu = getelementptr inbounds [16 x i8], ptr %i.ps, i64 %i.pt ; 3 uses
   %i.pv = getelementptr i8, ptr %i.pp, i64 16
   %.val.i25.i.i.i.i.i.i.i78 = load i64, ptr %i.pv, align 8, !tbaa !272 ; 3 uses
-  %37 = add i64 %.val.i25.i.i.i.i.i.i.i78, 1
   %i.pw = load i32, ptr %i.pu, align 8, !tbaa !7  ; 3 uses
   %i.px = icmp ult i32 %i.pw, 13
   %i.py = getelementptr inbounds nuw i8, ptr %i.pu, i64 4
@@ -1251,7 +1246,7 @@ bb.du:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i28.i.i.i.i.i.i.i:                       ; preds = %bb.du, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i
   %.0.i4.i.i29.i.i.i.i.i.i.i = phi ptr [ %i.qn, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i ], [ %i.qb, %bb.du ] ; 2 uses
-  %.012.i3.i.i30.i.i.i.i.i.i.i = phi i64 [ %i.qo, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i ], [ 0, %bb.du ]
+  %.012.i3.i.i30.i.i.i.i.i.i.i = phi i64 [ %i.qo, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i ], [ 0, %bb.du ] ; 2 uses
   %.0.i.val.i.i31.i.i.i.i.i.i.i = load i8, ptr %.0.i4.i.i29.i.i.i.i.i.i.i, align 1, !tbaa !16 ; 4 uses
   %i.qh = icmp sgt i8 %.0.i.val.i.i31.i.i.i.i.i.i.i, -1
   br i1 %i.qh, label %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i, label %bb.dv
@@ -1275,9 +1270,9 @@ bb.dx:                                            ; preds = %bb.dw
 _ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i: ; preds = %bb.dx, %bb.dw, %bb.dv, %.lr.ph.i.i28.i.i.i.i.i.i.i
   %i.qm = phi i64 [ %i.ql, %bb.dx ], [ 3, %bb.dw ], [ 2, %bb.dv ], [ 1, %.lr.ph.i.i28.i.i.i.i.i.i.i ]
   %i.qn = getelementptr inbounds nuw i8, ptr %.0.i4.i.i29.i.i.i.i.i.i.i, i64 %i.qm ; 2 uses
-  %i.qo = add nuw nsw i64 %.012.i3.i.i30.i.i.i.i.i.i.i, 1 ; 3 uses
+  %i.qo = add nuw nsw i64 %.012.i3.i.i30.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.qp = icmp ult ptr %i.qn, %i.qd
-  %i.qq = icmp slt i64 %i.qo, %37
+  %i.qq = icmp slt i64 %.012.i3.i.i30.i.i.i.i.i.i.i, %.val.i25.i.i.i.i.i.i.i78
   %i.qr = select i1 %i.qp, i1 %i.qq, i1 false
   br i1 %i.qr, label %.lr.ph.i.i28.i.i.i.i.i.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE0EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i26.i.i.i.i.i.i.i, !llvm.loop !3246
 
@@ -1532,7 +1527,6 @@ bb.es:                                            ; preds = %_ZNK8facebook5velox
   %i.su = trunc i64 %.sroa.0.0.copyload.i to i32  ; 2 uses
   %i.sv = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val30 = load i64, ptr %i.sv, align 8, !tbaa !272 ; 3 uses
-  %38 = add i64 %.val30, 1
   %i.sw = icmp ult i32 %i.su, 13
   %i.sx = getelementptr inbounds nuw i8, ptr %34, i64 4
   %i.sy = select i1 %i.sw, ptr %i.sx, ptr %.sroa.2.0.copyload.i ; 2 uses
@@ -1545,7 +1539,7 @@ bb.es:                                            ; preds = %_ZNK8facebook5velox
 
 .lr.ph.i:                                         ; preds = %bb.es, %_ZL20utf8proc_char_lengthPKc.exit.i
   %.0.i4.i = phi ptr [ %i.tk, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ %i.sy, %bb.es ] ; 2 uses
-  %.012.i3.i = phi i64 [ %i.tl, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ 0, %bb.es ]
+  %.012.i3.i = phi i64 [ %i.tl, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ 0, %bb.es ] ; 2 uses
   %.0.i.val.i = load i8, ptr %.0.i4.i, align 1, !tbaa !16 ; 4 uses
   %i.te = icmp sgt i8 %.0.i.val.i, -1
   br i1 %i.te, label %_ZL20utf8proc_char_lengthPKc.exit.i, label %bb.et
@@ -1569,9 +1563,9 @@ bb.ev:                                            ; preds = %bb.eu
 _ZL20utf8proc_char_lengthPKc.exit.i:              ; preds = %bb.ev, %bb.eu, %bb.et, %.lr.ph.i
   %i.tj = phi i64 [ %i.ti, %bb.ev ], [ 3, %bb.eu ], [ 2, %bb.et ], [ 1, %.lr.ph.i ]
   %i.tk = getelementptr inbounds nuw i8, ptr %.0.i4.i, i64 %i.tj ; 2 uses
-  %i.tl = add nuw nsw i64 %.012.i3.i, 1           ; 3 uses
+  %i.tl = add nuw nsw i64 %.012.i3.i, 1           ; 2 uses
   %i.tm = icmp ult ptr %i.tk, %i.ta
-  %i.tn = icmp slt i64 %i.tl, %38
+  %i.tn = icmp slt i64 %.012.i3.i, %.val30
   %i.to = select i1 %i.tm, i1 %i.tn, i1 false
   br i1 %i.to, label %.lr.ph.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE0EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit, !llvm.loop !3246
 
@@ -1974,7 +1968,6 @@ bb.b:                                             ; preds = %.preheader, %_ZZN8f
   %i.aa = getelementptr inbounds [16 x i8], ptr %i.y, i64 %i.z ; 3 uses
   %i.ab = getelementptr i8, ptr %i.u, i64 16
   %.val.i = load i64, ptr %i.ab, align 8, !tbaa !272 ; 3 uses
-  %5 = add i64 %.val.i, 1
   %i.ac = load i32, ptr %i.aa, align 8, !tbaa !7  ; 3 uses
   %i.ad = icmp ult i32 %i.ac, 13
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
@@ -1990,7 +1983,7 @@ bb.b:                                             ; preds = %.preheader, %_ZZN8f
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %_ZL20utf8proc_char_lengthPKc.exit.i.i
   %.0.i4.i.i = phi ptr [ %i.at, %_ZL20utf8proc_char_lengthPKc.exit.i.i ], [ %i.ah, %bb.b ] ; 2 uses
-  %.012.i3.i.i = phi i64 [ %i.au, %_ZL20utf8proc_char_lengthPKc.exit.i.i ], [ 0, %bb.b ]
+  %.012.i3.i.i = phi i64 [ %i.au, %_ZL20utf8proc_char_lengthPKc.exit.i.i ], [ 0, %bb.b ] ; 2 uses
   %.0.i.val.i.i = load i8, ptr %.0.i4.i.i, align 1, !tbaa !16 ; 4 uses
   %i.an = icmp sgt i8 %.0.i.val.i.i, -1
   br i1 %i.an, label %_ZL20utf8proc_char_lengthPKc.exit.i.i, label %bb.c
@@ -2014,9 +2007,9 @@ bb.e:                                             ; preds = %bb.d
 _ZL20utf8proc_char_lengthPKc.exit.i.i:            ; preds = %bb.e, %bb.d, %bb.c, %.lr.ph.i.i
   %i.as = phi i64 [ %i.ar, %bb.e ], [ 3, %bb.d ], [ 2, %bb.c ], [ 1, %.lr.ph.i.i ]
   %i.at = getelementptr inbounds nuw i8, ptr %.0.i4.i.i, i64 %i.as ; 2 uses
-  %i.au = add nuw nsw i64 %.012.i3.i.i, 1         ; 3 uses
+  %i.au = add nuw nsw i64 %.012.i3.i.i, 1         ; 2 uses
   %i.av = icmp ult ptr %i.at, %i.aj
-  %i.aw = icmp slt i64 %i.au, %5
+  %i.aw = icmp slt i64 %.012.i3.i.i, %.val.i
   %i.ax = select i1 %i.av, i1 %i.aw, i1 false
   br i1 %i.ax, label %.lr.ph.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE0EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i, !llvm.loop !3246
 
@@ -2419,7 +2412,6 @@ bb.ca:                                            ; preds = %_ZZN8facebook5velox
   %i.jh = getelementptr inbounds [16 x i8], ptr %i.jg, i64 %indvars.iv.i.i.i84 ; 3 uses
   %i.ji = getelementptr i8, ptr %i.jd, i64 16
   %.val.i.i.i.i85 = load i64, ptr %i.ji, align 8, !tbaa !272 ; 3 uses
-  %35 = add i64 %.val.i.i.i.i85, 1
   %i.jj = load i32, ptr %i.jh, align 8, !tbaa !7  ; 3 uses
   %i.jk = icmp ult i32 %i.jj, 13
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jh, i64 4
@@ -2435,7 +2427,7 @@ bb.ca:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.ca, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i
   %.0.i4.i.i.i.i.i = phi ptr [ %i.ka, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i ], [ %i.jo, %bb.ca ] ; 2 uses
-  %.012.i3.i.i.i.i.i = phi i64 [ %i.kb, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i ], [ 0, %bb.ca ]
+  %.012.i3.i.i.i.i.i = phi i64 [ %i.kb, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i ], [ 0, %bb.ca ] ; 2 uses
   %.0.i.val.i.i.i.i.i = load i8, ptr %.0.i4.i.i.i.i.i, align 1, !tbaa !16 ; 4 uses
   %i.ju = icmp sgt i8 %.0.i.val.i.i.i.i.i, -1
   br i1 %i.ju, label %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i, label %bb.cb
@@ -2459,9 +2451,9 @@ bb.cd:                                            ; preds = %bb.cc
 _ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i:      ; preds = %bb.cd, %bb.cc, %bb.cb, %.lr.ph.i.i.i.i.i
   %i.jz = phi i64 [ %i.jy, %bb.cd ], [ 3, %bb.cc ], [ 2, %bb.cb ], [ 1, %.lr.ph.i.i.i.i.i ]
   %i.ka = getelementptr inbounds nuw i8, ptr %.0.i4.i.i.i.i.i, i64 %i.jz ; 2 uses
-  %i.kb = add nuw nsw i64 %.012.i3.i.i.i.i.i, 1   ; 3 uses
+  %i.kb = add nuw nsw i64 %.012.i3.i.i.i.i.i, 1   ; 2 uses
   %i.kc = icmp ult ptr %i.ka, %i.jq
-  %i.kd = icmp slt i64 %i.kb, %35
+  %i.kd = icmp slt i64 %.012.i3.i.i.i.i.i, %.val.i.i.i.i85
   %i.ke = select i1 %i.kc, i1 %i.kd, i1 false
   br i1 %i.ke, label %.lr.ph.i.i.i.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE1EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i.i.i.i, !llvm.loop !3246
 
@@ -2733,7 +2725,6 @@ bb.da:                                            ; preds = %_ZZN8facebook5velox
   %i.nf = getelementptr inbounds i8, ptr %i.nd, i64 %i.ne ; 3 uses
   %i.ng = getelementptr i8, ptr %i.na, i64 16
   %.val.i.i.i.i.i.i.i.i55 = load i64, ptr %i.ng, align 8, !tbaa !272 ; 3 uses
-  %36 = add i64 %.val.i.i.i.i.i.i.i.i55, 1
   %i.nh = load i32, ptr %i.nf, align 8, !tbaa !7  ; 3 uses
   %i.ni = icmp ult i32 %i.nh, 13
   %i.nj = getelementptr inbounds nuw i8, ptr %i.nf, i64 4
@@ -2749,7 +2740,7 @@ bb.da:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %bb.da, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i
   %.0.i4.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ny, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i ], [ %i.nm, %bb.da ] ; 2 uses
-  %.012.i3.i.i.i.i.i.i.i.i.i = phi i64 [ %i.nz, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i ], [ 0, %bb.da ]
+  %.012.i3.i.i.i.i.i.i.i.i.i = phi i64 [ %i.nz, %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i ], [ 0, %bb.da ] ; 2 uses
   %.0.i.val.i.i.i.i.i.i.i.i.i = load i8, ptr %.0.i4.i.i.i.i.i.i.i.i.i, align 1, !tbaa !16 ; 4 uses
   %i.ns = icmp sgt i8 %.0.i.val.i.i.i.i.i.i.i.i.i, -1
   br i1 %i.ns, label %_ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i, label %bb.db
@@ -2773,9 +2764,9 @@ bb.dd:                                            ; preds = %bb.dc
 _ZL20utf8proc_char_lengthPKc.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.dd, %bb.dc, %bb.db, %.lr.ph.i.i.i.i.i.i.i.i.i
   %i.nx = phi i64 [ %i.nw, %bb.dd ], [ 3, %bb.dc ], [ 2, %bb.db ], [ 1, %.lr.ph.i.i.i.i.i.i.i.i.i ]
   %i.ny = getelementptr inbounds nuw i8, ptr %.0.i4.i.i.i.i.i.i.i.i.i, i64 %i.nx ; 2 uses
-  %i.nz = add nuw nsw i64 %.012.i3.i.i.i.i.i.i.i.i.i, 1 ; 3 uses
+  %i.nz = add nuw nsw i64 %.012.i3.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.oa = icmp ult ptr %i.ny, %i.no
-  %i.ob = icmp slt i64 %i.nz, %36
+  %i.ob = icmp slt i64 %.012.i3.i.i.i.i.i.i.i.i.i, %.val.i.i.i.i.i.i.i.i55
   %i.oc = select i1 %i.oa, i1 %i.ob, i1 false
   br i1 %i.oc, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE1EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i.i.i.i.i.i.i.i, !llvm.loop !3246
 
@@ -2951,7 +2942,6 @@ bb.du:                                            ; preds = %_ZZN8facebook5velox
   %i.pu = getelementptr inbounds [16 x i8], ptr %i.ps, i64 %i.pt ; 3 uses
   %i.pv = getelementptr i8, ptr %i.pp, i64 16
   %.val.i25.i.i.i.i.i.i.i78 = load i64, ptr %i.pv, align 8, !tbaa !272 ; 3 uses
-  %37 = add i64 %.val.i25.i.i.i.i.i.i.i78, 1
   %i.pw = load i32, ptr %i.pu, align 8, !tbaa !7  ; 3 uses
   %i.px = icmp ult i32 %i.pw, 13
   %i.py = getelementptr inbounds nuw i8, ptr %i.pu, i64 4
@@ -2967,7 +2957,7 @@ bb.du:                                            ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i.i28.i.i.i.i.i.i.i:                       ; preds = %bb.du, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i
   %.0.i4.i.i29.i.i.i.i.i.i.i = phi ptr [ %i.qn, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i ], [ %i.qb, %bb.du ] ; 2 uses
-  %.012.i3.i.i30.i.i.i.i.i.i.i = phi i64 [ %i.qo, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i ], [ 0, %bb.du ]
+  %.012.i3.i.i30.i.i.i.i.i.i.i = phi i64 [ %i.qo, %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i ], [ 0, %bb.du ] ; 2 uses
   %.0.i.val.i.i31.i.i.i.i.i.i.i = load i8, ptr %.0.i4.i.i29.i.i.i.i.i.i.i, align 1, !tbaa !16 ; 4 uses
   %i.qh = icmp sgt i8 %.0.i.val.i.i31.i.i.i.i.i.i.i, -1
   br i1 %i.qh, label %_ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i, label %bb.dv
@@ -2991,9 +2981,9 @@ bb.dx:                                            ; preds = %bb.dw
 _ZL20utf8proc_char_lengthPKc.exit.i.i35.i.i.i.i.i.i.i: ; preds = %bb.dx, %bb.dw, %bb.dv, %.lr.ph.i.i28.i.i.i.i.i.i.i
   %i.qm = phi i64 [ %i.ql, %bb.dx ], [ 3, %bb.dw ], [ 2, %bb.dv ], [ 1, %.lr.ph.i.i28.i.i.i.i.i.i.i ]
   %i.qn = getelementptr inbounds nuw i8, ptr %.0.i4.i.i29.i.i.i.i.i.i.i, i64 %i.qm ; 2 uses
-  %i.qo = add nuw nsw i64 %.012.i3.i.i30.i.i.i.i.i.i.i, 1 ; 3 uses
+  %i.qo = add nuw nsw i64 %.012.i3.i.i30.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.qp = icmp ult ptr %i.qn, %i.qd
-  %i.qq = icmp slt i64 %i.qo, %37
+  %i.qq = icmp slt i64 %.012.i3.i.i30.i.i.i.i.i.i.i, %.val.i25.i.i.i.i.i.i.i78
   %i.qr = select i1 %i.qp, i1 %i.qq, i1 false
   br i1 %i.qr, label %.lr.ph.i.i28.i.i.i.i.i.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE1EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i26.i.i.i.i.i.i.i, !llvm.loop !3246
 
@@ -3222,7 +3212,6 @@ bb.es:                                            ; preds = %_ZNK8facebook5velox
   %i.su = trunc i64 %.sroa.0.0.copyload.i to i32  ; 2 uses
   %i.sv = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val30 = load i64, ptr %i.sv, align 8, !tbaa !272 ; 3 uses
-  %38 = add i64 %.val30, 1
   %i.sw = icmp ult i32 %i.su, 13
   %i.sx = getelementptr inbounds nuw i8, ptr %34, i64 4
   %i.sy = select i1 %i.sw, ptr %i.sx, ptr %.sroa.2.0.copyload.i ; 2 uses
@@ -3235,7 +3224,7 @@ bb.es:                                            ; preds = %_ZNK8facebook5velox
 
 .lr.ph.i:                                         ; preds = %bb.es, %_ZL20utf8proc_char_lengthPKc.exit.i
   %.0.i4.i = phi ptr [ %i.tk, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ %i.sy, %bb.es ] ; 2 uses
-  %.012.i3.i = phi i64 [ %i.tl, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ 0, %bb.es ]
+  %.012.i3.i = phi i64 [ %i.tl, %_ZL20utf8proc_char_lengthPKc.exit.i ], [ 0, %bb.es ] ; 2 uses
   %.0.i.val.i = load i8, ptr %.0.i4.i, align 1, !tbaa !16 ; 4 uses
   %i.te = icmp sgt i8 %.0.i.val.i, -1
   br i1 %i.te, label %_ZL20utf8proc_char_lengthPKc.exit.i, label %bb.et
@@ -3259,9 +3248,9 @@ bb.ev:                                            ; preds = %bb.eu
 _ZL20utf8proc_char_lengthPKc.exit.i:              ; preds = %bb.ev, %bb.eu, %bb.et, %.lr.ph.i
   %i.tj = phi i64 [ %i.ti, %bb.ev ], [ 3, %bb.eu ], [ 2, %bb.et ], [ 1, %.lr.ph.i ]
   %i.tk = getelementptr inbounds nuw i8, ptr %.0.i4.i, i64 %i.tj ; 2 uses
-  %i.tl = add nuw nsw i64 %.012.i3.i, 1           ; 3 uses
+  %i.tl = add nuw nsw i64 %.012.i3.i, 1           ; 2 uses
   %i.tm = icmp ult ptr %i.tk, %i.ta
-  %i.tn = icmp slt i64 %i.tl, %38
+  %i.tn = icmp slt i64 %.012.i3.i, %.val30
   %i.to = select i1 %i.tm, i1 %i.tn, i1 false
   br i1 %i.to, label %.lr.ph.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE1EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit, !llvm.loop !3246
 
@@ -3664,7 +3653,6 @@ bb.b:                                             ; preds = %.preheader, %_ZZN8f
   %i.aa = getelementptr inbounds [16 x i8], ptr %i.y, i64 %i.z ; 3 uses
   %i.ab = getelementptr i8, ptr %i.u, i64 16
   %.val.i = load i64, ptr %i.ab, align 8, !tbaa !272 ; 3 uses
-  %5 = add i64 %.val.i, 1
   %i.ac = load i32, ptr %i.aa, align 8, !tbaa !7  ; 3 uses
   %i.ad = icmp ult i32 %i.ac, 13
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
@@ -3680,7 +3668,7 @@ bb.b:                                             ; preds = %.preheader, %_ZZN8f
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %_ZL20utf8proc_char_lengthPKc.exit.i.i
   %.0.i4.i.i = phi ptr [ %i.at, %_ZL20utf8proc_char_lengthPKc.exit.i.i ], [ %i.ah, %bb.b ] ; 2 uses
-  %.012.i3.i.i = phi i64 [ %i.au, %_ZL20utf8proc_char_lengthPKc.exit.i.i ], [ 0, %bb.b ]
+  %.012.i3.i.i = phi i64 [ %i.au, %_ZL20utf8proc_char_lengthPKc.exit.i.i ], [ 0, %bb.b ] ; 2 uses
   %.0.i.val.i.i = load i8, ptr %.0.i4.i.i, align 1, !tbaa !16 ; 4 uses
   %i.an = icmp sgt i8 %.0.i.val.i.i, -1
   br i1 %i.an, label %_ZL20utf8proc_char_lengthPKc.exit.i.i, label %bb.c
@@ -3704,9 +3692,9 @@ bb.e:                                             ; preds = %bb.d
 _ZL20utf8proc_char_lengthPKc.exit.i.i:            ; preds = %bb.e, %bb.d, %bb.c, %.lr.ph.i.i
   %i.as = phi i64 [ %i.ar, %bb.e ], [ 3, %bb.d ], [ 2, %bb.c ], [ 1, %.lr.ph.i.i ]
   %i.at = getelementptr inbounds nuw i8, ptr %.0.i4.i.i, i64 %i.as ; 2 uses
-  %i.au = add nuw nsw i64 %.012.i3.i.i, 1         ; 3 uses
+  %i.au = add nuw nsw i64 %.012.i3.i.i, 1         ; 2 uses
   %i.av = icmp ult ptr %i.at, %i.aj
-  %i.aw = icmp slt i64 %i.au, %5
+  %i.aw = icmp slt i64 %.012.i3.i.i, %.val.i
   %i.ax = select i1 %i.av, i1 %i.aw, i1 false
   br i1 %i.ax, label %.lr.ph.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_113OptimizedLikeILNS1_11PatternKindE1EE5matchILb0EEEbRKNS0_10StringViewERKNS1_15PatternMetadataE.exit.i, !llvm.loop !3246
 
