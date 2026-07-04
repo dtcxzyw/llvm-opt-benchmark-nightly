@@ -203,8 +203,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_E
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
-  %5 = sub i64 %i.bx, %i.by
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.bx, -8
+  %6 = sub i64 %5, %i.by                          ; 2 uses
   %i.ck = lshr i64 %6, 3
   %i.cl = add nuw nsw i64 %i.ck, 1                ; 2 uses
   %min.iters.check66 = icmp ult i64 %6, 152
@@ -607,8 +607,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_E
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc11
-  %3 = sub i64 %i.av, %i.aw
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.av, -8
+  %4 = sub i64 %3, %i.aw                          ; 2 uses
   %i.bi = lshr i64 %4, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
   %min.iters.check66 = icmp ult i64 %4, 152
@@ -771,8 +771,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_E
   br i1 %i.l, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i25, label %.lr.ph.i.i.i.i.i.i.i21.preheader
 
 .lr.ph.i.i.i.i.i.i.i21.preheader:                 ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i17
-  %5 = sub i64 %i.co, %i.cp
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.co, -8
+  %6 = sub i64 %5, %i.cp                          ; 2 uses
   %i.db = lshr i64 %6, 3
   %i.dc = add nuw nsw i64 %i.db, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 152
@@ -1175,10 +1175,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !54   ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !45     ; 8 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !54   ; 5 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !45     ; 9 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
   %i.g = ashr exact i64 %i.f, 4                   ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1191,6 +1191,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.o = icmp ugt i64 %i.g, 576460752303423487
   br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE11_M_allocateEm.exit.i, !prof !40
 
@@ -1204,8 +1206,8 @@ _ZNSt12_Vector_baseISt4pairIdmESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt4pairIdmESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE11_M_allocateEm.exit.i
-  %i.q = add i64 %i.d, -16
-  %i.r = sub i64 %i.q, %i.e
+  %i.q = add i64 %3, -16
+  %i.r = sub i64 %i.q, %2
   %i.s = and i64 %i.r, -16
   %i.t = add i64 %i.s, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr align 8 %i.c, i64 %i.t, i1 false)

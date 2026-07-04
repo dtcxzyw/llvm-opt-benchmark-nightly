@@ -204,8 +204,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb12_GLOBAL__N_115ApproxTopKValueEESaI
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorISt17reference_wrapperIN6duckdb12_GLOBAL__N_115ApproxTopKValueEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.z = ptrtoaddr ptr %i.x to i64
-  %4 = sub i64 %i.c, %i.d
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.c, -8
+  %5 = sub i64 %4, %i.d                           ; 2 uses
   %i.aa = lshr i64 %5, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 72
@@ -608,7 +608,7 @@ _ZSt16__insertion_sortIPaN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit: ; p
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt13__heap_selectIPaN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_S4_T0_(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %3 = ptrtoint ptr %2 to i64                     ; 6 uses
+  %3 = ptrtoaddr ptr %2 to i64                    ; 6 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1
   call void @_ZSt11__make_heapIPaN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 1 dereferenceable(1) %4)
   %i.a = icmp ult ptr %1, %2
@@ -1011,8 +1011,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -1415,8 +1415,8 @@ bb.a:
   br i1 %.not4.i, label %._crit_edge.thread, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
-  %.val.val3192 = ptrtoint ptr %.val.val31 to i64
-  %.val.val93 = ptrtoint ptr %.val.val to i64
+  %.val.val3192 = ptrtoaddr ptr %.val.val31 to i64
+  %.val.val93 = ptrtoaddr ptr %.val.val to i64
   %i.e = add i64 %.val.val3192, -16
   %i.f = sub i64 %i.e, %.val.val93                ; 2 uses
   %i.g = lshr i64 %i.f, 4
@@ -1819,10 +1819,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !2252 ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !2208   ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !2252 ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !2208   ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !2335
@@ -1834,6 +1834,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.n = icmp ugt i64 %i.f, 9223372036854775792
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN6duckdb11FrameBoundsESaIS1_EE11_M_allocateEm.exit.i, !prof !54
 
@@ -1847,8 +1849,8 @@ _ZNSt12_Vector_baseIN6duckdb11FrameBoundsESaIS1_EE11_M_allocateEm.exit.i: ; pred
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb11FrameBoundsESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN6duckdb11FrameBoundsESaIS1_EE11_M_allocateEm.exit.i
-  %i.p = add i64 %i.d, -16
-  %i.q = sub i64 %i.p, %i.e
+  %i.p = add i64 %3, -16
+  %i.q = sub i64 %i.p, %2
   %i.r = and i64 %i.q, -16
   %i.s = add i64 %i.r, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 8 %i.c, i64 %i.s, i1 false)
@@ -2251,8 +2253,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -2655,8 +2657,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -3059,8 +3061,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -3463,8 +3465,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -3867,8 +3869,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -4271,8 +4273,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -4675,8 +4677,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -5079,8 +5081,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -5483,7 +5485,7 @@ _ZSt16__insertion_sortIPaN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCo
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt13__heap_selectIPaN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_14QuantileDirectIaEEEEEEEvT_SA_SA_T0_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef byval(%"struct.__gnu_cxx::__ops::_Iter_comp_iter.1894") align 8 %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %4 = ptrtoint ptr %2 to i64                     ; 4 uses
+  %4 = ptrtoaddr ptr %2 to i64                    ; 4 uses
   call void @_ZSt11__make_heapIPaN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_14QuantileDirectIaEEEEEEEvT_SA_RT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(24) %3)
   %i.a = icmp ult ptr %1, %2
   br i1 %i.a, label %.lr.ph, label %._crit_edge
@@ -5886,8 +5888,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -6290,8 +6292,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4
@@ -6694,8 +6696,8 @@ bb.b:                                             ; preds = %_ZN6duckdb16Quantil
   br i1 %.not4461, label %.loopexit, label %.lr.ph65.preheader
 
 .lr.ph65.preheader:                               ; preds = %bb.b
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = ptrtoint ptr %i.m to i64
+  %7 = ptrtoaddr ptr %i.o to i64
+  %8 = ptrtoaddr ptr %i.m to i64
   %i.p = add i64 %7, -16
   %i.q = sub i64 %i.p, %8                         ; 2 uses
   %i.r = lshr i64 %i.q, 4

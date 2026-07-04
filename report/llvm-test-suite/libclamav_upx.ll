@@ -203,7 +203,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @pefromupx(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef nonnull readonly captures(none) %7, i32 noundef %8) unnamed_addr #0 {
 bb.a:
-  %9 = ptrtoint ptr %2 to i64                     ; 3 uses
+  %9 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %i.a = icmp eq ptr %2, null
   %i.b = icmp eq ptr %0, null
   %or.cond = or i1 %i.b, %i.a
@@ -535,8 +535,9 @@ checkpe.exit319:                                  ; preds = %select.unfold, %bb.
   %.3341 = phi i32 [ %.1339, %select.unfold.us.preheader ], [ %i.cx, %bb.z ], [ %.6344.ph, %select.unfold ]
   %.3334 = phi i32 [ %.1, %select.unfold.us.preheader ], [ %.val.i313, %bb.z ], [ %.6337.ph, %select.unfold ]
   %.2201 = phi ptr [ null, %select.unfold.us.preheader ], [ %i.ct, %bb.z ], [ null, %select.unfold ]
-  %i.dd = ptrtoint ptr %.4207.lcssa to i64
-  %i.de = sub i64 %i.dd, %9
+  %10 = ptrtoint ptr %.4207.lcssa to i64
+  %i.dd = ptrtoint ptr %2 to i64
+  %i.de = sub i64 %10, %i.dd
   %i.df = trunc i64 %i.de to i32                  ; 2 uses
   %.not272 = icmp eq i32 %i.df, 0
   br i1 %.not272, label %.thread355, label %bb.aa

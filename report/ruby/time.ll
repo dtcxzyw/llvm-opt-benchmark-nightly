@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %bb.c
   br label %RSTRING_END.exit
 
 RSTRING_END.exit:                                 ; preds = %bb.c, %bb.d
-  %i.n = phi ptr [ %i.m, %bb.d ], [ %i.l, %bb.c ] ; 6 uses
-  %6 = ptrtoint ptr %i.n to i64                   ; 5 uses
+  %i.n = phi ptr [ %i.m, %bb.d ], [ %i.l, %bb.c ] ; 7 uses
+  %6 = ptrtoaddr ptr %i.n to i64                  ; 4 uses
   %i.o = getelementptr i8, ptr %i.i, i64 16
   %i.p = load i64, ptr %i.o, align 8, !tbaa !56   ; 6 uses
   %i.q = getelementptr i8, ptr %i.n, i64 %i.p     ; 14 uses
@@ -257,6 +257,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.i, %rb_num2ull_inline.exit
   %i.aj = ptrtoint ptr %i.q to i64                ; 8 uses
+  %7 = ptrtoint ptr %i.n to i64
   %i.ak = call i64 @rb_int_parse_cstr(ptr noundef %i.n, i64 noundef %i.p, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef 10, i32 noundef 1) #18 ; 4 uses
   %i.al = icmp eq i64 %i.ak, 4
   br i1 %i.al, label %bb.l, label %bb.m
@@ -524,7 +525,7 @@ bb.as:                                            ; preds = %.lr.ph
   br i1 %i.eu, label %.lr.ph196.preheader, label %.critedge2
 
 .lr.ph196.preheader:                              ; preds = %.preheader
-  %.promoted210 = ptrtoint ptr %.promoted198.pre to i64
+  %.promoted210 = ptrtoaddr ptr %.promoted198.pre to i64
   %i.ev = add i64 %i.p, %6
   %i.ew = sub i64 %i.ev, %.promoted210
   %scevgep = getelementptr i8, ptr %.promoted198.pre, i64 %i.ew ; 2 uses
@@ -552,7 +553,7 @@ bb.at:                                            ; preds = %.lr.ph196
   %.095 = phi i32 [ -1, %bb.p ], [ %i.bm, %bb.y ], [ %i.bm, %bb.ap ], [ -1, %bb.u ], [ -1, %bb.t ], [ -1, %bb.q ], [ %i.bm, %bb.aa ], [ %i.bm, %.critedge.thread257 ], [ %i.bm, %bb.x ], [ %i.bm, %bb.z ], [ %i.bm, %bb.aq ], [ %i.bm, %.preheader ], [ %i.bm, %.lr.ph196 ], [ %i.bm, %bb.at ] ; 3 uses
   %.093 = phi i32 [ -1, %bb.p ], [ %i.bc, %bb.y ], [ %i.bc, %bb.ap ], [ %i.bc, %bb.u ], [ %i.bc, %bb.t ], [ -1, %bb.q ], [ %i.bc, %bb.aa ], [ %i.bc, %.critedge.thread257 ], [ %i.bc, %bb.x ], [ %i.bc, %bb.z ], [ %i.bc, %bb.aq ], [ %i.bc, %.preheader ], [ %i.bc, %.lr.ph196 ], [ %i.bc, %bb.at ] ; 3 uses
   %.2 = phi i64 [ 4, %bb.p ], [ 4, %bb.y ], [ 4, %bb.ap ], [ 4, %bb.u ], [ 4, %bb.t ], [ 4, %bb.q ], [ 4, %bb.aa ], [ 4, %.critedge.thread257 ], [ 4, %bb.x ], [ 4, %bb.z ], [ 4, %bb.aq ], [ %i.es, %.preheader ], [ %i.es, %.lr.ph196 ], [ %i.es, %bb.at ] ; 4 uses
-  %.promoted198211 = ptrtoint ptr %.promoted198 to i64 ; 2 uses
+  %.promoted198211 = ptrtoaddr ptr %.promoted198 to i64 ; 2 uses
   %i.fd = icmp ult ptr %.promoted198, %i.q
   br i1 %i.fd, label %.lr.ph199.preheader, label %.critedge4
 
@@ -581,7 +582,7 @@ bb.au:                                            ; preds = %.lr.ph199
 .critedge4.loopexit:                              ; preds = %bb.au, %.lr.ph199
   %.promoted203223 = phi ptr [ %i.fg, %.lr.ph199 ], [ %i.fm, %bb.au ] ; 2 uses
   %.lcssa191.ph = phi ptr [ %i.fg, %.lr.ph199 ], [ %scevgep212, %bb.au ]
-  %.pre = ptrtoint ptr %.promoted203223 to i64
+  %.pre = ptrtoaddr ptr %.promoted203223 to i64
   br label %.critedge4
 
 .critedge4:                                       ; preds = %.critedge4.loopexit, %.critedge2
@@ -616,7 +617,7 @@ bb.av:                                            ; preds = %.lr.ph204
 .critedge6.loopexit:                              ; preds = %bb.av, %.lr.ph204
   %.promoted208225 = phi ptr [ %i.fq, %.lr.ph204 ], [ %i.fw, %bb.av ] ; 2 uses
   %.lcssa.ph = phi ptr [ %i.fq, %.lr.ph204 ], [ %scevgep215, %bb.av ]
-  %.pre226 = ptrtoint ptr %.promoted208225 to i64
+  %.pre226 = ptrtoaddr ptr %.promoted208225 to i64
   br label %.critedge6
 
 .critedge6:                                       ; preds = %.critedge6.loopexit, %.critedge4
@@ -665,7 +666,7 @@ bb.ax:                                            ; preds = %.lr.ph209
 
 bb.ay:                                            ; preds = %.critedge8
   %i.gp = ptrtoint ptr %.lcssa191 to i64          ; 2 uses
-  %i.gq = sub i64 %i.gp, %6
+  %i.gq = sub i64 %i.gp, %7
   %i.gr = ptrtoint ptr %.lcssa to i64
   %i.gs = sub i64 %i.gr, %i.gp
   %i.gt = call i64 @rb_str_subseq(i64 noundef %i.c, i64 noundef %i.gq, i64 noundef %i.gs) #18

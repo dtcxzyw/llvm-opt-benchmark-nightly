@@ -201,12 +201,12 @@ define hidden noundef zeroext i1 @_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.c = load ptr, ptr %i.b, align 8              ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 6 uses
   %i.d = icmp eq ptr %i.a, %i.c
   br i1 %i.d, label %_ZNSt6vectorIcSaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS1_EES6_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %_ZNSt6vectorIcSaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS1_EES6_.exit, label %bb.c
 
@@ -214,6 +214,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.g
+  %1 = ptrtoaddr ptr %i.c to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.f, %bb.c
@@ -236,8 +237,8 @@ bb.f:                                             ; preds = %bb.e
 
 .critedge.i:                                      ; preds = %bb.e, %bb.d, %bb.d, %bb.d, %bb.d
   %.0.lcssa.i = phi ptr [ %.0.i, %bb.d ], [ %.0.i, %bb.d ], [ %.0.i, %bb.d ], [ %.0.i, %bb.d ], [ %i.h, %bb.e ] ; 3 uses
-  %.0.lcssa24.i = ptrtoint ptr %.0.lcssa.i to i64
-  %i.k = sub i64 %i.e, %.0.lcssa24.i
+  %.0.lcssa24.i = ptrtoaddr ptr %.0.lcssa.i to i64
+  %i.k = sub i64 %1, %.0.lcssa24.i
   %scevgep25.i = getelementptr i8, ptr %.0.lcssa.i, i64 %i.k ; 2 uses
   br label %bb.g
 
@@ -635,7 +636,7 @@ _ZN6Assimp3PLY3DOM10TokenMatchERSt6vectorIcSaIcEEPKcj.exit60: ; preds = %_ZSt8_D
   store i32 %i.cm, ptr %i.cn, align 4
   %i.co = icmp eq i32 %i.cm, 8
   %i.cp = load ptr, ptr %0, align 8               ; 19 uses
-  %i.cq = load ptr, ptr %i.b, align 8             ; 8 uses
+  %i.cq = load ptr, ptr %i.b, align 8             ; 9 uses
   %i.cr = icmp eq ptr %i.cp, %i.cq                ; 2 uses
   br i1 %i.co, label %bb.aj, label %bb.ax
 
@@ -643,7 +644,7 @@ bb.aj:                                            ; preds = %_ZN6Assimp3PLY3DOM1
   br i1 %i.cr, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.cs = ptrtoint ptr %i.cq to i64               ; 3 uses
+  %i.cs = ptrtoint ptr %i.cq to i64               ; 2 uses
   %.not.i61 = icmp eq ptr %i.cp, null
   br i1 %.not.i61, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit, label %bb.al
 
@@ -651,6 +652,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.ct = ptrtoint ptr %i.cp to i64               ; 2 uses
   %i.cu = sub i64 %i.cs, %i.ct
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cp, i64 %i.cu
+  %4 = ptrtoaddr ptr %i.cq to i64
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ao, %bb.al
@@ -673,8 +675,8 @@ bb.ao:                                            ; preds = %bb.an
 
 .critedge.i.i63:                                  ; preds = %bb.an, %bb.am, %bb.am, %bb.am, %bb.am
   %.0.lcssa.i.i64 = phi ptr [ %.0.i.i62, %bb.am ], [ %.0.i.i62, %bb.am ], [ %.0.i.i62, %bb.am ], [ %.0.i.i62, %bb.am ], [ %i.cv, %bb.an ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i64 to i64
-  %i.cy = sub i64 %i.cs, %.0.lcssa24.i.i
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i64 to i64
+  %i.cy = sub i64 %4, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i64, i64 %i.cy
   br label %bb.ap
 
@@ -839,12 +841,12 @@ bb.bk:                                            ; preds = %bb.ac, %bb.ad, %bb.
 
 bb.bl:                                            ; preds = %bb.bk
   %i.el = load ptr, ptr %0, align 8               ; 10 uses
-  %i.em = load ptr, ptr %i.b, align 8             ; 5 uses
+  %i.em = load ptr, ptr %i.b, align 8             ; 6 uses
   %i.en = icmp eq ptr %i.el, %i.em
   br i1 %i.en, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.eo = ptrtoint ptr %i.em to i64               ; 3 uses
+  %i.eo = ptrtoint ptr %i.em to i64               ; 2 uses
   %.not.i86 = icmp eq ptr %i.el, null
   br i1 %.not.i86, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit, label %bb.bn
 
@@ -852,6 +854,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.ep = ptrtoint ptr %i.el to i64               ; 2 uses
   %i.eq = sub i64 %i.eo, %i.ep
   %i.er = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.eq
+  %5 = ptrtoaddr ptr %i.em to i64
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bq, %bb.bn
@@ -874,8 +877,8 @@ bb.bq:                                            ; preds = %bb.bp
 
 .critedge.i.i88:                                  ; preds = %bb.bp, %bb.bo, %bb.bo, %bb.bo, %bb.bo
   %.0.lcssa.i.i89 = phi ptr [ %.0.i.i87, %bb.bo ], [ %.0.i.i87, %bb.bo ], [ %.0.i.i87, %bb.bo ], [ %.0.i.i87, %bb.bo ], [ %i.er, %bb.bp ] ; 3 uses
-  %.0.lcssa24.i.i90 = ptrtoint ptr %.0.lcssa.i.i89 to i64
-  %i.eu = sub i64 %i.eo, %.0.lcssa24.i.i90
+  %.0.lcssa24.i.i90 = ptrtoaddr ptr %.0.lcssa.i.i89 to i64
+  %i.eu = sub i64 %5, %.0.lcssa24.i.i90
   %scevgep25.i.i91 = getelementptr i8, ptr %.0.lcssa.i.i89, i64 %i.eu
   br label %bb.br
 
@@ -1278,14 +1281,15 @@ _ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25: ; preds = %_ZSt4moveIN
   br i1 %i.az, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit, label %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25.thread
 
 _ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25.thread: ; preds = %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i23, %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25
-  %i.bh = phi ptr [ %i.aq, %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25 ], [ %i.bg, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i23 ] ; 8 uses
+  %i.bh = phi ptr [ %i.aq, %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25 ], [ %i.bg, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i23 ] ; 9 uses
   %i.bi = icmp eq ptr %i.a, %i.bh
   br i1 %i.bi, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit68, label %bb.ad
 
 bb.ad:                                            ; preds = %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25.thread
-  %i.bj = ptrtoint ptr %i.bh to i64               ; 3 uses
+  %i.bj = ptrtoint ptr %i.bh to i64               ; 2 uses
   %i.bk = sub i64 %i.bj, %i.i
   %i.bl = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bk
+  %2 = ptrtoaddr ptr %i.bh to i64
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ag, %bb.ad
@@ -1308,8 +1312,8 @@ bb.ag:                                            ; preds = %bb.af
 
 .critedge.i.i28:                                  ; preds = %bb.af, %bb.ae, %bb.ae, %bb.ae, %bb.ae
   %.0.lcssa.i.i29 = phi ptr [ %.0.i.i27, %bb.ae ], [ %.0.i.i27, %bb.ae ], [ %.0.i.i27, %bb.ae ], [ %.0.i.i27, %bb.ae ], [ %i.bl, %bb.af ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i29 to i64
-  %i.bo = sub i64 %i.bj, %.0.lcssa24.i.i
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i29 to i64
+  %i.bo = sub i64 %2, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i29, i64 %i.bo
   br label %bb.ah
 
@@ -1370,7 +1374,7 @@ _ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i34:  ; preds = %_ZSt4moveIN9__gnu_c
   br label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit
 
 _ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit: ; preds = %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i34, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEES6_ET0_T_S8_S7_.exit.i.i.i32, %_ZN6Assimp8SkipLineIcEEbPKT_PS3_S3_.exit.i, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i23, %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25
-  %i.by = phi ptr [ %i.aq, %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25 ], [ %i.bx, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i34 ], [ %i.bh, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEES6_ET0_T_S8_S7_.exit.i.i.i32 ], [ %i.bh, %_ZN6Assimp8SkipLineIcEEbPKT_PS3_S3_.exit.i ], [ %i.bg, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i23 ] ; 9 uses
+  %i.by = phi ptr [ %i.aq, %_ZN6Assimp3PLY3DOM10SkipSpacesERSt6vectorIcSaIcEE.exit25 ], [ %i.bx, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i34 ], [ %i.bh, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEES6_ET0_T_S8_S7_.exit.i.i.i32 ], [ %i.bh, %_ZN6Assimp8SkipLineIcEEbPKT_PS3_S3_.exit.i ], [ %i.bg, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i23 ] ; 10 uses
   %i.bz = icmp eq ptr %i.a, %i.by
   br i1 %i.bz, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit68, label %bb.ap
 
@@ -1431,9 +1435,10 @@ _ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i.i.i47:  ; preds = %_ZSt4moveIN9__gnu_c
   br label %_ZN6Assimp3PLY3DOM10TokenMatchERSt6vectorIcSaIcEEPKcj.exit48.thread
 
 bb.av:                                            ; preds = %bb.ap, %bb.aq
-  %i.cl = ptrtoint ptr %i.by to i64               ; 3 uses
+  %i.cl = ptrtoint ptr %i.by to i64               ; 2 uses
   %i.cm = sub i64 %i.cl, %i.i
   %i.cn = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cm
+  %3 = ptrtoaddr ptr %i.by to i64
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.ay, %bb.av
@@ -1456,8 +1461,8 @@ bb.ay:                                            ; preds = %bb.ax
 
 .critedge.i.i51:                                  ; preds = %bb.ax, %bb.aw, %bb.aw, %bb.aw, %bb.aw
   %.0.lcssa.i.i52 = phi ptr [ %.0.i.i50, %bb.aw ], [ %.0.i.i50, %bb.aw ], [ %.0.i.i50, %bb.aw ], [ %.0.i.i50, %bb.aw ], [ %i.cn, %bb.ax ] ; 3 uses
-  %.0.lcssa24.i.i53 = ptrtoint ptr %.0.lcssa.i.i52 to i64
-  %i.cq = sub i64 %i.cl, %.0.lcssa24.i.i53
+  %.0.lcssa24.i.i53 = ptrtoaddr ptr %.0.lcssa.i.i52 to i64
+  %i.cq = sub i64 %3, %.0.lcssa24.i.i53
   %scevgep25.i.i54 = getelementptr i8, ptr %.0.lcssa.i.i52, i64 %i.cq
   br label %bb.az
 
@@ -1860,12 +1865,12 @@ bb.k:                                             ; preds = %bb.j
 
 _ZNSt6vectorIcSaIcEED2Ev.exit:                    ; preds = %bb.j, %bb.k
   %i.af = load ptr, ptr %1, align 8               ; 10 uses
-  %i.ag = load ptr, ptr %i.k, align 8             ; 5 uses
+  %i.ag = load ptr, ptr %i.k, align 8             ; 6 uses
   %i.ah = icmp eq ptr %i.af, %i.ag
   br i1 %i.ah, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt6vectorIcSaIcEED2Ev.exit
-  %i.ai = ptrtoint ptr %i.ag to i64               ; 3 uses
+  %i.ai = ptrtoint ptr %i.ag to i64               ; 2 uses
   %.not.i = icmp eq ptr %i.af, null
   br i1 %.not.i, label %_ZN6Assimp3PLY3DOM8SkipLineERSt6vectorIcSaIcEE.exit, label %bb.m
 
@@ -1873,6 +1878,7 @@ bb.m:                                             ; preds = %bb.l
   %i.aj = ptrtoint ptr %i.af to i64               ; 2 uses
   %i.ak = sub i64 %i.ai, %i.aj
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ak
+  %7 = ptrtoaddr ptr %i.ag to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.p, %bb.m
@@ -1895,8 +1901,8 @@ bb.p:                                             ; preds = %bb.o
 
 .critedge.i.i:                                    ; preds = %bb.o, %bb.n, %bb.n, %bb.n, %bb.n
   %.0.lcssa.i.i = phi ptr [ %.0.i.i, %bb.n ], [ %.0.i.i, %bb.n ], [ %.0.i.i, %bb.n ], [ %.0.i.i, %bb.n ], [ %i.al, %bb.o ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i to i64
-  %i.ao = sub i64 %i.ai, %.0.lcssa24.i.i
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i to i64
+  %i.ao = sub i64 %7, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.ao
   br label %bb.q
 
@@ -2299,7 +2305,7 @@ _ZNSt6vectorIcSaIcEED2Ev.exit10:                  ; preds = %bb.l, %bb.m
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef zeroext i1 @_ZN6Assimp3PLY15ElementInstance13ParseInstanceERPKcS3_PKNS0_7ElementEPS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noundef zeroext i1 @_ZN6Assimp3PLY15ElementInstance13ParseInstanceERPKcS3_PKNS0_7ElementEPS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.0.i = alloca double, align 8             ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -2611,13 +2617,13 @@ _ZNSt6vectorIN6Assimp3PLY16PropertyInstanceESaIS2_EE6resizeEm.exit: ; preds = %b
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef zeroext i1 @_ZN6Assimp3PLY16PropertyInstance13ParseInstanceERPKcS3_PKNS0_8PropertyEPS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noundef zeroext i1 @_ZN6Assimp3PLY16PropertyInstance13ParseInstanceERPKcS3_PKNS0_8PropertyEPS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"union.Assimp::PLY::PropertyInstance::ValueUnion", align 8 ; 5 uses
   %5 = alloca %"union.Assimp::PLY::PropertyInstance::ValueUnion", align 8 ; 5 uses
   %i.a = load ptr, ptr %0, align 8                ; 3 uses
-  %6 = ptrtoint ptr %i.a to i64
-  %7 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %6 = ptrtoaddr ptr %i.a to i64
+  %7 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.b = sub i64 %7, %6
   %scevgep.i.i = getelementptr i8, ptr %i.a, i64 %i.b
   br label %bb.b
@@ -2729,7 +2735,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit32.thread37: ; preds = %bb.p, %_ZNSt6vec
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN6Assimp3PLY16PropertyInstance10ValueUnionESaIS3_EE6resizeEm.exit, %bb.p
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.p ], [ 0, %_ZNSt6vectorIN6Assimp3PLY16PropertyInstance10ValueUnionESaIS3_EE6resizeEm.exit ] ; 2 uses
   %i.ad = load ptr, ptr %0, align 8               ; 3 uses
-  %8 = ptrtoint ptr %i.ad to i64
+  %8 = ptrtoaddr ptr %i.ad to i64
   %i.ae = sub i64 %7, %8
   %scevgep.i.i27 = getelementptr i8, ptr %i.ad, i64 %i.ae
   br label %bb.m
@@ -2848,7 +2854,7 @@ _ZNSt6vectorIN6Assimp3PLY16PropertyInstance10ValueUnionESaIS3_EE9push_backERKS3_
 
 bb.w:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit32.thread37, %_ZNSt6vectorIN6Assimp3PLY16PropertyInstance10ValueUnionESaIS3_EE9push_backERKS3_.exit
   %i.bm = load ptr, ptr %0, align 8               ; 3 uses
-  %9 = ptrtoint ptr %i.bm to i64
+  %9 = ptrtoaddr ptr %i.bm to i64
   %i.bn = sub i64 %7, %9
   %scevgep.i.i33 = getelementptr i8, ptr %i.bm, i64 %i.bn
   br label %bb.x

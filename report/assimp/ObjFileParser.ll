@@ -203,7 +203,7 @@ bb.ak:                                            ; preds = %bb.r, %bb.aj
 
 bb.al:                                            ; preds = %bb.r
   %.sroa.0.0.copyload.i = load ptr, ptr %i.g, align 8 ; 7 uses
-  %11 = ptrtoint ptr %.sroa.0.0.copyload.i to i64
+  %11 = ptrtoaddr ptr %.sroa.0.0.copyload.i to i64
   %.not.i.i78 = icmp ult ptr %i.bb, %.sroa.0.0.copyload.i
   br i1 %.not.i.i78, label %.preheader.i.i, label %_ZN6Assimp13ObjFileParser10getCommentEv.exit
 
@@ -247,7 +247,7 @@ bb.an:                                            ; preds = %bb.am, %.critedge.i
   br i1 %.not2030.i.i, label %_ZN6Assimp13ObjFileParser10getCommentEv.exit, label %.lr.ph32.preheader.i.i
 
 .lr.ph32.preheader.i.i:                           ; preds = %bb.an
-  %.sroa.010.136.i.i = ptrtoint ptr %.sroa.010.1.i.i to i64
+  %.sroa.010.136.i.i = ptrtoaddr ptr %.sroa.010.1.i.i to i64
   %i.ex = sub i64 %11, %.sroa.010.136.i.i
   %scevgep.i.i = getelementptr i8, ptr %.sroa.010.1.i.i, i64 %i.ex
   br label %.lr.ph32.i.i
@@ -650,7 +650,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit106.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit106
   %.sroa.01.0.copyload.i107 = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload.i108 = load ptr, ptr %i.g, align 8 ; 7 uses
-  %12 = ptrtoint ptr %.sroa.0.0.copyload.i108 to i64
+  %12 = ptrtoaddr ptr %.sroa.0.0.copyload.i108 to i64
   %.not.i.i109 = icmp ult ptr %.sroa.01.0.copyload.i107, %.sroa.0.0.copyload.i108
   br i1 %.not.i.i109, label %.preheader.i.i111, label %_ZN6Assimp13ObjFileParser27getGroupNumberAndResolutionEv.exit
 
@@ -694,7 +694,7 @@ bb.bt:                                            ; preds = %bb.bs, %.critedge.i
   br i1 %.not2030.i.i118, label %_ZN6Assimp13ObjFileParser27getGroupNumberAndResolutionEv.exit, label %.lr.ph32.preheader.i.i119
 
 .lr.ph32.preheader.i.i119:                        ; preds = %bb.bt
-  %.sroa.010.136.i.i120 = ptrtoint ptr %.sroa.010.1.i.i117 to i64
+  %.sroa.010.136.i.i120 = ptrtoaddr ptr %.sroa.010.1.i.i117 to i64
   %i.iw = sub i64 %12, %.sroa.010.136.i.i120
   %scevgep.i.i121 = getelementptr i8, ptr %.sroa.010.1.i.i117, i64 %i.iw
   br label %.lr.ph32.i.i122
@@ -778,7 +778,7 @@ bb.bw:                                            ; preds = %bb.r
 
 bb.bx:                                            ; preds = %bb.r
   %.sroa.0.0.copyload.i137 = load ptr, ptr %i.g, align 8 ; 7 uses
-  %13 = ptrtoint ptr %.sroa.0.0.copyload.i137 to i64
+  %13 = ptrtoaddr ptr %.sroa.0.0.copyload.i137 to i64
   %.not.i.i138 = icmp ult ptr %i.bb, %.sroa.0.0.copyload.i137
   br i1 %.not.i.i138, label %.preheader.i.i140, label %_ZN6Assimp13ObjFileParser14getGroupNumberEv.exit
 
@@ -822,7 +822,7 @@ bb.bz:                                            ; preds = %bb.by, %.critedge.i
   br i1 %.not2030.i.i147, label %_ZN6Assimp13ObjFileParser14getGroupNumberEv.exit, label %.lr.ph32.preheader.i.i148
 
 .lr.ph32.preheader.i.i148:                        ; preds = %bb.bz
-  %.sroa.010.136.i.i149 = ptrtoint ptr %.sroa.010.1.i.i146 to i64
+  %.sroa.010.136.i.i149 = ptrtoaddr ptr %.sroa.010.1.i.i146 to i64
   %i.kd = sub i64 %13, %.sroa.010.136.i.i149
   %scevgep.i.i150 = getelementptr i8, ptr %.sroa.010.1.i.i146, i64 %i.kd
   br label %.lr.ph32.i.i151
@@ -918,7 +918,7 @@ bb.cf:                                            ; preds = %bb.r, %_ZNSt7__cxx1
   %.144 = phi i1 [ %i.bp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ true, %bb.m ], [ false, %bb.r ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit132 ], [ %i.kt, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161 ]
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.g, align 8 ; 7 uses
-  %14 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %14 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i165 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i165, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -962,7 +962,7 @@ bb.ch:                                            ; preds = %bb.cg, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.ch
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.lm = sub i64 %14, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.lm
   br label %.lr.ph32.i
@@ -1251,7 +1251,7 @@ _ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit: ; preds = %bb.l, %._crit_ed
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden ptr @_ZN6Assimp14getNameNoSpaceIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcES5_EE(ptr %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #9 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %3 = ptrtoaddr ptr %0 to i64
   %i.a = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1284,7 +1284,7 @@ _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit:         ; preds = %.preheader
 
 .critedge:                                        ; preds = %.preheader, %.preheader, %.preheader, %.preheader, %.preheader, %.preheader, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit
   %.sroa.025.0.lcssa = phi ptr [ %.sroa.025.036, %.preheader ], [ %.sroa.025.036, %.preheader ], [ %.sroa.025.036, %.preheader ], [ %.sroa.025.036, %.preheader ], [ %.sroa.025.036, %.preheader ], [ %.sroa.025.036, %.preheader ], [ %i.i, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit ] ; 3 uses
-  %.sroa.025.0.lcssa37 = ptrtoint ptr %.sroa.025.0.lcssa to i64 ; 2 uses
+  %.sroa.025.0.lcssa37 = ptrtoaddr ptr %.sroa.025.0.lcssa to i64 ; 2 uses
   %i.l = add i64 %.sroa.025.0.lcssa37, 1
   br label %bb.b
 
@@ -1318,8 +1318,9 @@ _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit20.preheader: ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store i64 0, ptr %i.r, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
-  %i.s = ptrtoint ptr %scevgep38 to i64
-  %i.t = sub i64 %i.s, %3                         ; 4 uses
+  %5 = ptrtoint ptr %scevgep38 to i64
+  %i.s = ptrtoint ptr %0 to i64
+  %i.t = sub i64 %5, %i.s                         ; 4 uses
   store i64 %i.t, ptr %i.a, align 8
   %i.u = icmp ugt i64 %i.t, 15
   br i1 %i.u, label %.noexc.i, label %._crit_edge.i.i
@@ -1410,7 +1411,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4128
   %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
-  %1 = ptrtoint ptr %i.c to i64                   ; 3 uses
+  %1 = ptrtoaddr ptr %i.c to i64                  ; 3 uses
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit15
 
 _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit15:       ; preds = %.critedge.i.i13, %bb.a
@@ -1449,7 +1450,7 @@ bb.d:                                             ; preds = %bb.b, %bb.b, %bb.b,
 _ZN6Assimp9IsLineEndIcEEbT_.exit:                 ; preds = %bb.b, %bb.c, %bb.d, %_ZN6AssimpL19isDataDefinitionEndEPKc.exit
   %.1 = phi ptr [ %i.g, %_ZN6AssimpL19isDataDefinitionEndEPKc.exit ], [ %.024, %bb.d ], [ %.024, %bb.b ], [ %.024, %bb.c ] ; 3 uses
   %.17 = phi i1 [ false, %_ZN6AssimpL19isDataDefinitionEndEPKc.exit ], [ true, %bb.d ], [ false, %bb.b ], [ false, %bb.c ]
-  %2 = ptrtoint ptr %.1 to i64
+  %2 = ptrtoaddr ptr %.1 to i64
   %i.h = sub i64 %1, %2
   %scevgep.i.i = getelementptr i8, ptr %.1, i64 %i.h ; 2 uses
   br label %bb.e
@@ -1520,7 +1521,7 @@ _ZN6AssimpL10isNanOrInfEPKc.exit.fold.split:      ; preds = %switch.early.test
 
 _ZN6AssimpL10isNanOrInfEPKc.exit:                 ; preds = %switch.early.test, %switch.early.test, %_ZN6AssimpL10isNanOrInfEPKc.exit.fold.split, %bb.h, %bb.k, %bb.j, %bb.i
   %i.r = phi i64 [ 1, %switch.early.test ], [ 1, %bb.i ], [ 0, %bb.j ], [ %i.q, %bb.k ], [ 1, %switch.early.test ], [ 1, %bb.h ], [ 0, %_ZN6AssimpL10isNanOrInfEPKc.exit.fold.split ]
-  %3 = ptrtoint ptr %.0.lcssa.i.i to i64
+  %3 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.s = sub i64 %1, %3
   %scevgep.i.i.i = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.s
   br label %bb.l
@@ -1564,7 +1565,7 @@ _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i:       ; preds = %.critedge.i.i.i
 
 _ZN6Assimp9SkipTokenERPKcS1_.exit:                ; preds = %.critedge.i.i.i, %.critedge.i.i.i, %.critedge.i.i.i, %.critedge.i.i.i, %.critedge.i.i.i, %.critedge.i.i.i
   %spec.select8 = add i64 %i.r, %.05              ; 6 uses
-  %4 = ptrtoint ptr %storemerge.i to i64
+  %4 = ptrtoaddr ptr %storemerge.i to i64
   %i.x = sub i64 %1, %4
   %scevgep.i.i10 = getelementptr i8, ptr %storemerge.i, i64 %i.x ; 2 uses
   br label %bb.o
@@ -1967,7 +1968,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRfS5_S5_EEERS1_DpOT_.exit: ;
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.e, align 8 ; 7 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %2 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %2 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i51 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i51, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -2011,7 +2012,7 @@ bb.p:                                             ; preds = %bb.o, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.p
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.eo = sub i64 %2, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.eo
   br label %.lr.ph32.i
@@ -2414,7 +2415,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit: ; pred
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.f, align 8 ; 7 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %2 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %2 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i82 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i82, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -2458,7 +2459,7 @@ bb.w:                                             ; preds = %bb.v, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.w
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.gd = sub i64 %2, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.gd
   br label %.lr.ph32.i
@@ -2861,7 +2862,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRfS5_S5_EEERS1_DpOT_.exit134
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.h, align 8 ; 7 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %3 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %3 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i135 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i135, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -2905,7 +2906,7 @@ bb.ac:                                            ; preds = %bb.ab, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.ac
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.jq = sub i64 %3, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.jq
   br label %.lr.ph32.i
@@ -3308,7 +3309,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRfS5_S5_EEERS1_DpOT_.exit: ;
   %i.hh = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.0.0.copyload = load ptr, ptr %i.hh, align 8 ; 7 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %2 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %2 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i101 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i101, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -3352,7 +3353,7 @@ bb.ab:                                            ; preds = %bb.aa, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.ab
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.hs = sub i64 %2, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.hs
   br label %.lr.ph32.i
@@ -3745,7 +3746,7 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS
 bb.aa:                                            ; preds = %bb.h
   %.sroa.01.0.copyload.i = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload.i = load ptr, ptr %i.a, align 8 ; 7 uses
-  %4 = ptrtoint ptr %.sroa.0.0.copyload.i to i64
+  %4 = ptrtoaddr ptr %.sroa.0.0.copyload.i to i64
   %.not.i.i91 = icmp ult ptr %.sroa.01.0.copyload.i, %.sroa.0.0.copyload.i
   br i1 %.not.i.i91, label %.preheader.i.i, label %_ZN6Assimp13ObjFileParser22reportErrorTokenInFaceEv.exit
 
@@ -3789,7 +3790,7 @@ bb.ac:                                            ; preds = %bb.ab, %.critedge.i
   br i1 %.not2030.i.i, label %_ZN6Assimp13ObjFileParser22reportErrorTokenInFaceEv.exit, label %.lr.ph32.preheader.i.i
 
 .lr.ph32.preheader.i.i:                           ; preds = %bb.ac
-  %.sroa.010.136.i.i = ptrtoint ptr %.sroa.010.1.i.i to i64
+  %.sroa.010.136.i.i = ptrtoaddr ptr %.sroa.010.1.i.i to i64
   %i.ep = sub i64 %4, %.sroa.010.136.i.i
   %scevgep.i.i = getelementptr i8, ptr %.sroa.010.1.i.i, i64 %i.ep
   br label %.lr.ph32.i.i
@@ -4013,7 +4014,7 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS
 bb.ax:                                            ; preds = %bb.ae
   %.sroa.01.0.copyload.i119 = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload.i120 = load ptr, ptr %i.a, align 8 ; 7 uses
-  %5 = ptrtoint ptr %.sroa.0.0.copyload.i120 to i64
+  %5 = ptrtoaddr ptr %.sroa.0.0.copyload.i120 to i64
   %.not.i.i121 = icmp ult ptr %.sroa.01.0.copyload.i119, %.sroa.0.0.copyload.i120
   br i1 %.not.i.i121, label %.preheader.i.i123, label %_ZN6Assimp13ObjFileParser22reportErrorTokenInFaceEv.exit140
 
@@ -4057,7 +4058,7 @@ bb.az:                                            ; preds = %bb.ay, %.critedge.i
   br i1 %.not2030.i.i130, label %_ZN6Assimp13ObjFileParser22reportErrorTokenInFaceEv.exit140, label %.lr.ph32.preheader.i.i131
 
 .lr.ph32.preheader.i.i131:                        ; preds = %bb.az
-  %.sroa.010.136.i.i132 = ptrtoint ptr %.sroa.010.1.i.i129 to i64
+  %.sroa.010.136.i.i132 = ptrtoaddr ptr %.sroa.010.1.i.i129 to i64
   %i.hn = sub i64 %5, %.sroa.010.136.i.i132
   %scevgep.i.i133 = getelementptr i8, ptr %.sroa.010.1.i.i129, i64 %i.hn
   br label %.lr.ph32.i.i134
@@ -4129,7 +4130,7 @@ _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.thread:  ; preds = %bb.d, %bb.d, %bb.g,
   %.sroa.09.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.08.0.copyload = load ptr, ptr %i.a, align 8 ; 7 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %6 = ptrtoint ptr %.sroa.08.0.copyload to i64
+  %6 = ptrtoaddr ptr %.sroa.08.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.09.0.copyload, %.sroa.08.0.copyload
   br i1 %.not.i, label %.preheader.i, label %.loopexit
 
@@ -4173,7 +4174,7 @@ bb.be:                                            ; preds = %bb.bd, %.critedge.i
   br i1 %.not2030.i, label %.loopexit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.be
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.il = sub i64 %6, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.il
   br label %.lr.ph32.i
@@ -4475,7 +4476,7 @@ bb.bx:                                            ; preds = %bb.bw, %_ZNSt6vecto
   %.sroa.06.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.a, align 8 ; 7 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %7 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %7 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i156 = icmp ult ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i156, label %.preheader.i158, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit175
 
@@ -4519,7 +4520,7 @@ bb.bz:                                            ; preds = %bb.by, %.critedge.i
   br i1 %.not2030.i165, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit175, label %.lr.ph32.preheader.i166
 
 .lr.ph32.preheader.i166:                          ; preds = %bb.bz
-  %.sroa.010.136.i167 = ptrtoint ptr %.sroa.010.1.i164 to i64
+  %.sroa.010.136.i167 = ptrtoaddr ptr %.sroa.010.1.i164 to i64
   %i.nj = sub i64 %7, %.sroa.010.136.i167
   %scevgep.i168 = getelementptr i8, ptr %.sroa.010.1.i164, i64 %i.nj
   br label %.lr.ph32.i169
@@ -4557,7 +4558,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.0.0.copyload = load ptr, ptr %i.a, align 8 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %1 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %1 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -4601,7 +4602,7 @@ bb.c:                                             ; preds = %bb.b, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.c
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.l = sub i64 %1, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.l
   br label %.lr.ph32.i
@@ -5004,7 +5005,7 @@ bb.an:                                            ; preds = %_ZNK8aiStringeqERKS
   %.sroa.03.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.d, align 8 ; 7 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %5 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %5 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i41 = icmp ult ptr %.sroa.03.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i41, label %.preheader.i42, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -5048,7 +5049,7 @@ bb.ap:                                            ; preds = %bb.ao, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.ap
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.im = sub i64 %5, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.im
   br label %.lr.ph32.i
@@ -5110,7 +5111,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.0.0.copyload = load ptr, ptr %i.a, align 8 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %1 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %1 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -5154,7 +5155,7 @@ bb.c:                                             ; preds = %bb.b, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.c
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.l = sub i64 %1, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.l
   br label %.lr.ph32.i
@@ -5557,7 +5558,7 @@ bb.ag:                                            ; preds = %bb.af
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.d, align 8 ; 7 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %10 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %10 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i78 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i78, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -5601,7 +5602,7 @@ bb.ai:                                            ; preds = %bb.ah, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.ai
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.ft = sub i64 %10, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.ft
   br label %.lr.ph32.i
@@ -6004,7 +6005,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %.
   %.sroa.0.0.copyload = phi ptr [ %.sroa.0.0.copyload.pre, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit_crit_edge ], [ %.sroa.04.0.copyload, %bb.e ], [ %.sroa.04.0.copyload, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit ] ; 7 uses
   %.sroa.01.0.copyload = phi ptr [ %.sroa.01.0.copyload.pre, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit_crit_edge ], [ %i.q, %bb.e ], [ %i.q, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit ] ; 5 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %2 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %2 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -6048,7 +6049,7 @@ bb.q:                                             ; preds = %bb.p, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.q
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.by = sub i64 %2, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.by
   br label %.lr.ph32.i
@@ -6110,7 +6111,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.0.0.copyload = load ptr, ptr %i.a, align 8 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %1 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %1 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -6154,7 +6155,7 @@ bb.c:                                             ; preds = %bb.b, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.c
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.l = sub i64 %1, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.l
   br label %.lr.ph32.i
@@ -6370,7 +6371,7 @@ bb.i:                                             ; preds = %.loopexit, %bb.g, %
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.b, align 8 ; 7 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %2 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %2 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -6414,7 +6415,7 @@ bb.k:                                             ; preds = %bb.j, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.k
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.bq = sub i64 %2, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.bq
   br label %.lr.ph32.i
@@ -6817,8 +6818,8 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.cp = ptrtoaddr ptr %i.cm to i64
-  %2 = sub i64 %i.cc, %i.cd
-  %3 = add i64 %2, -8                             ; 2 uses
+  %2 = add i64 %i.cc, -8
+  %3 = sub i64 %2, %i.cd                          ; 2 uses
   %i.cq = lshr i64 %3, 3
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -6893,7 +6894,7 @@ _ZNSt6vectorI10aiVector2tIfESaIS1_EE12emplace_backIJRfS5_EEERS1_DpOT_.exit: ; pr
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.d, align 8 ; 7 uses
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %4 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %4 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i28 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i28, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -6937,7 +6938,7 @@ bb.m:                                             ; preds = %bb.l, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.m
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.dp = sub i64 %4, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.dp
   br label %.lr.ph32.i
@@ -6972,7 +6973,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.0.0.copyload = load ptr, ptr %i.a, align 8 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %1 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %1 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -7016,7 +7017,7 @@ bb.c:                                             ; preds = %bb.b, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.c
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.l = sub i64 %1, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.l
   br label %.lr.ph32.i
@@ -7419,7 +7420,7 @@ bb.r:                                             ; preds = %_ZN6Assimp13ObjFile
   %.sroa.01.0.copyload = load ptr, ptr %0, align 8 ; 5 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.b, align 8 ; 7 uses
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %2 = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %2 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
   %.not.i23 = icmp ult ptr %.sroa.01.0.copyload, %.sroa.0.0.copyload
   br i1 %.not.i23, label %.preheader.i24, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -7463,7 +7464,7 @@ bb.t:                                             ; preds = %bb.s, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.t
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.dy = sub i64 %2, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.dy
   br label %.lr.ph32.i
@@ -7614,7 +7615,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8: ; preds = %bb.f
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden ptr @_ZN6Assimp7getNameIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcES5_EE(ptr %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #9 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %3 = ptrtoaddr ptr %0 to i64
   %i.a = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -7645,7 +7646,7 @@ _ZN6Assimp9IsLineEndIcEEbT_.exit:                 ; preds = %.preheader26
 
 .critedge:                                        ; preds = %.preheader26, %.preheader26, %.preheader26, %.preheader26, %_ZN6Assimp9IsLineEndIcEEbT_.exit
   %.sroa.018.0.lcssa = phi ptr [ %.sroa.018.027, %.preheader26 ], [ %.sroa.018.027, %.preheader26 ], [ %.sroa.018.027, %.preheader26 ], [ %.sroa.018.027, %.preheader26 ], [ %i.i, %_ZN6Assimp9IsLineEndIcEEbT_.exit ] ; 3 uses
-  %.sroa.018.0.lcssa28 = ptrtoint ptr %.sroa.018.0.lcssa to i64 ; 2 uses
+  %.sroa.018.0.lcssa28 = ptrtoaddr ptr %.sroa.018.0.lcssa to i64 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.critedge
@@ -7668,8 +7669,9 @@ bb.b:                                             ; preds = %bb.c, %.critedge
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store i64 0, ptr %i.o, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
-  %i.p = ptrtoint ptr %scevgep29 to i64
-  %i.q = sub i64 %i.p, %3                         ; 4 uses
+  %5 = ptrtoint ptr %scevgep29 to i64
+  %i.p = ptrtoint ptr %0 to i64
+  %i.q = sub i64 %5, %i.p                         ; 4 uses
   store i64 %i.q, ptr %i.a, align 8
   %i.r = icmp ugt i64 %i.q, 15
   br i1 %i.r, label %.noexc.i, label %._crit_edge.i.i

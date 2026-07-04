@@ -204,7 +204,7 @@ declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr nounde
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr { ptr, i32 } @_ZN17duckdb_fast_float10from_charsIdEENS_17from_chars_resultEPKcS3_RT_bcNS_12chars_formatE(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, i1 noundef zeroext %3, i8 noundef signext %4, i32 noundef %5) local_unnamed_addr #8 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %6 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.bs, label %bb.b
 
@@ -227,11 +227,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond249, label %bb.e, label %_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  %.0176.i = phi ptr [ %i.d, %bb.d ], [ %0, %bb.b ] ; 6 uses
-  %.0176.i403 = ptrtoint ptr %.0176.i to i64      ; 3 uses
+  %.0176.i = phi ptr [ %i.d, %bb.d ], [ %0, %bb.b ] ; 8 uses
   br i1 %3, label %.split.us.preheader, label %.split
 
 .split.us.preheader:                              ; preds = %bb.e
+  %.0176.i403 = ptrtoaddr ptr %.0176.i to i64
   %i.i = sub i64 %6, %.0176.i403
   %scevgep = getelementptr i8, ptr %.0176.i, i64 %i.i
   br label %.split.us
@@ -261,8 +261,9 @@ bb.g:                                             ; preds = %bb.f
 .thread:                                          ; preds = %bb.l, %bb.f
   %.us-phi315 = phi i64 [ %i.p, %bb.f ], [ %i.ab, %bb.l ]
   %.us-phi316 = phi ptr [ %scevgep, %bb.f ], [ %.2.i, %bb.l ] ; 2 uses
-  %i.t = ptrtoint ptr %.us-phi316 to i64          ; 2 uses
-  %i.u = sub i64 %i.t, %.0176.i403
+  %7 = ptrtoint ptr %.us-phi316 to i64            ; 2 uses
+  %i.t = ptrtoint ptr %.0176.i to i64
+  %i.u = sub i64 %7, %i.t
   br label %bb.y
 
 .split:                                           ; preds = %bb.e, %bb.l
@@ -307,8 +308,9 @@ bb.l:                                             ; preds = %bb.k, %bb.i, %bb.h
   %i.ak = phi i8 [ %i.j, %.split.us ], [ %i.v, %.split ]
   %.us-phi = phi i64 [ %.0178.i310.us, %.split.us ], [ %.0178.i310, %.split ] ; 4 uses
   %.us-phi314 = phi ptr [ %.1177.i311.us, %.split.us ], [ %.1177.i311, %.split ] ; 5 uses
-  %i.al = ptrtoint ptr %.us-phi314 to i64         ; 3 uses
-  %i.am = sub i64 %i.al, %.0176.i403              ; 2 uses
+  %8 = ptrtoint ptr %.us-phi314 to i64            ; 3 uses
+  %i.al = ptrtoint ptr %.0176.i to i64
+  %i.am = sub i64 %8, %i.al                       ; 2 uses
   %i.an = icmp eq i8 %i.ak, %4
   br i1 %i.an, label %bb.m, label %bb.y
 
@@ -371,7 +373,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   %.1179.i = phi i64 [ %i.bw, %bb.q ], [ %i.bf, %bb.p ], [ %i.bf, %bb.o ], [ %.us-phi, %bb.n ], [ %.us-phi, %bb.m ] ; 3 uses
   %.3.i = phi ptr [ %i.bg, %bb.q ], [ %i.ap, %bb.p ], [ %i.ap, %bb.o ], [ %i.ao, %bb.n ], [ %i.ao, %bb.m ] ; 6 uses
-  %.3.i407 = ptrtoint ptr %.3.i to i64
+  %.3.i407 = ptrtoaddr ptr %.3.i to i64
   br i1 %3, label %.outer.us, label %.outer
 
 .outer.us:                                        ; preds = %bb.r
@@ -445,7 +447,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cv, label %.outer, label %_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread, !llvm.loop !609
 
 .outer._crit_edge.loopexit487.split.loop.exit527: ; preds = %bb.u
-  %.4.i.ph405.le = ptrtoint ptr %.4.i.ph to i64
+  %.4.i.ph405.le = ptrtoaddr ptr %.4.i.ph to i64
   %scevgep404.le = getelementptr i8, ptr %.4.i.ph, i64 %6
   %i.cw = sub i64 0, %.4.i.ph405.le
   %scevgep406.le = getelementptr i8, ptr %scevgep404.le, i64 %i.cw
@@ -463,7 +465,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %.thread, %.outer._crit_edge, %.split313.us
-  %i.dc = phi i64 [ %i.al, %.outer._crit_edge ], [ %i.al, %.split313.us ], [ %i.t, %.thread ]
+  %i.dc = phi i64 [ %8, %.outer._crit_edge ], [ %8, %.split313.us ], [ %7, %.thread ]
   %.1211.i = phi i64 [ %i.da, %.outer._crit_edge ], [ 0, %.split313.us ], [ 0, %.thread ] ; 3 uses
   %.1201.i = phi i64 [ %i.db, %.outer._crit_edge ], [ %i.am, %.split313.us ], [ %i.u, %.thread ] ; 3 uses
   %.4182.i = phi i64 [ %.2180.i.lcssa, %.outer._crit_edge ], [ %.us-phi, %.split313.us ], [ %.us-phi315, %.thread ] ; 3 uses
@@ -866,7 +868,7 @@ bb.h:                                             ; preds = %.lr.ph.i48, %bb.g
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr { i64, i32 } @_ZN17duckdb_fast_float19parse_long_mantissaINS_13binary_formatIdEEEENS_17adjusted_mantissaEPKcS5_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %3 = alloca %"struct.duckdb_fast_float::decimal", align 4 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !617)
@@ -884,7 +886,7 @@ bb.a:
   br i1 %.not.i9, label %.critedge.i, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.g = sub i64 %2, %4
   %scevgep = getelementptr i8, ptr %0, i64 %i.g
   br label %.lr.ph
@@ -902,7 +904,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph, %bb.a
   %.1.i.lcssa = phi ptr [ %spec.select.i, %bb.a ], [ %.1.i10, %.lr.ph ], [ %scevgep, %bb.b ] ; 5 uses
-  %.1.i.lcssa60 = ptrtoint ptr %.1.i.lcssa to i64
+  %.1.i.lcssa60 = ptrtoaddr ptr %.1.i.lcssa to i64
   %.not99.i15 = icmp eq ptr %.1.i.lcssa, %1
   br i1 %.not99.i15, label %.critedge106.i.loopexit, label %.lr.ph17
 

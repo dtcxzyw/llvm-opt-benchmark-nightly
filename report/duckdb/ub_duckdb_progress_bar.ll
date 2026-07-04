@@ -203,8 +203,10 @@ _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %bb.f, %bb.g
           to label %bb.k unwind label %bb.ae
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit74.4
-  %i.bi = add i64 %21, -8
-  %i.bj = sub i64 %i.bi, %20
+  %20 = ptrtoaddr ptr %i.cv to i64
+  %21 = ptrtoaddr ptr %i.ct to i64
+  %i.bi = add i64 %20, -8
+  %i.bj = sub i64 %i.bi, %21
   %i.bk = and i64 %i.bj, -8
   %i.bl = add i64 %i.bk, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.ct, i8 0, i64 %i.bl, i1 false), !tbaa !161
@@ -407,11 +409,9 @@ bb.ad:                                            ; preds = %_ZN6duckdb6vectorId
 _ZNSt6vectorIdSaIdEED2Ev.exit74.4:                ; preds = %bb.ac, %bb.ad, %_ZN6duckdb6vectorIdLb1ESaIdEEaSEOS2_.exit.4
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #22
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
-  %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !176 ; 11 uses
-  %20 = ptrtoint ptr %i.ct to i64                 ; 2 uses
+  %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !176 ; 12 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
-  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !176 ; 3 uses
-  %21 = ptrtoint ptr %i.cv to i64                 ; 2 uses
+  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !176 ; 4 uses
   %.not6.i.i.i.i = icmp eq ptr %i.ct, %i.cv
   br i1 %.not6.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit, label %.lr.ph.i.i.i.i.preheader
 
@@ -445,7 +445,9 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit
   %i.de = ptrtoint ptr %i.dc to i64
   %i.df = sub i64 %i.dd, %i.de                    ; 5 uses
   %i.dg = ashr exact i64 %i.df, 3                 ; 2 uses
-  %i.dh = sub i64 %21, %20                        ; 2 uses
+  %22 = ptrtoint ptr %i.cv to i64
+  %23 = ptrtoint ptr %i.ct to i64
+  %i.dh = sub i64 %22, %23                        ; 2 uses
   %i.di = ashr exact i64 %i.dh, 3                 ; 2 uses
   %i.dj = load ptr, ptr %17, align 8              ; 3 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
@@ -848,7 +850,7 @@ bb.ay:                                            ; preds = %bb.av
 
 bb.az:                                            ; preds = %.split.us.split.us.4
   %i.jc = load ptr, ptr %i.hn, align 8, !tbaa !176 ; 3 uses
-  %22 = ptrtoint ptr %i.jc to i64
+  %24 = ptrtoaddr ptr %i.jc to i64
   %i.jd = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZN6duckdb6vectorINS0_IdLb1ESaIdEEELb1ESaIS2_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.hm, i64 noundef 0)
           to label %bb.ba unwind label %bb.bd
 
@@ -859,9 +861,9 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not6.i.i.i.i109, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit113, label %.lr.ph.i.i.i.i110.preheader
 
 .lr.ph.i.i.i.i110.preheader:                      ; preds = %bb.ba
-  %23 = ptrtoint ptr %i.jf to i64
-  %i.jg = add i64 %23, -8
-  %i.jh = sub i64 %i.jg, %22
+  %25 = ptrtoaddr ptr %i.jf to i64
+  %i.jg = add i64 %25, -8
+  %i.jh = sub i64 %i.jg, %24
   %i.ji = and i64 %i.jh, -8
   %i.jj = add i64 %i.ji, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.jc, i8 0, i64 %i.jj, i1 false), !tbaa !161
@@ -873,7 +875,7 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit
 
 bb.bb:                                            ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit113
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !176 ; 3 uses
-  %24 = ptrtoint ptr %i.jl to i64
+  %26 = ptrtoaddr ptr %i.jl to i64
   %i.jm = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZN6duckdb6vectorINS0_IdLb1ESaIdEEELb1ESaIS2_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.hm, i64 noundef 1)
           to label %bb.bc unwind label %bb.bd
 
@@ -884,9 +886,9 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %.not6.i.i.i.i109.1, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_RKT0_.exit113.1, label %.lr.ph.i.i.i.i110.preheader.1
 
 .lr.ph.i.i.i.i110.preheader.1:                    ; preds = %bb.bc
-  %25 = ptrtoint ptr %i.jo to i64
-  %i.jp = add i64 %25, -8
-  %i.jq = sub i64 %i.jp, %24
+  %27 = ptrtoaddr ptr %i.jo to i64
+  %i.jp = add i64 %27, -8
+  %i.jq = sub i64 %i.jp, %26
   %i.jr = and i64 %i.jq, -8
   %i.js = add i64 %i.jr, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.jl, i8 0, i64 %i.js, i1 false), !tbaa !161

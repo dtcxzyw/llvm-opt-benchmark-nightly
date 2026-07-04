@@ -201,10 +201,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 5 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !131    ; 21 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 6 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !131    ; 22 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 8 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -217,6 +217,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.o = icmp ugt i64 %i.g, 1152921504606846975
   br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.i, !prof !133
 
@@ -230,8 +232,8 @@ _ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt4pairIjjESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EE11_M_allocateEm.exit.i
-  %i.q = add i64 %i.d, -8
-  %i.r = sub i64 %i.q, %i.e
+  %i.q = add i64 %3, -8
+  %i.r = sub i64 %i.q, %2
   %i.s = and i64 %i.r, -8
   %i.t = add i64 %i.s, 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.p, ptr align 4 %i.c, i64 %i.t, i1 false)
@@ -407,12 +409,12 @@ _ZSt4copyIPSt4pairIjjES2_ET0_T_S4_S3_.exit:       ; preds = %.lr.ph.i.i.i.i.i26,
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPSt4pairIjjES2_ET0_T_S4_S3_.exit
   %i.bd = add i64 %i.l, %i.d
-  %i.be = add i64 %i.e, %i.x
-  %2 = sub i64 %i.bd, %i.be
-  %3 = add i64 %2, -8                             ; 2 uses
-  %i.bf = lshr i64 %3, 3
+  %i.be = add i64 %i.bd, -8
+  %4 = add i64 %i.e, %i.x
+  %5 = sub i64 %i.be, %4                          ; 2 uses
+  %i.bf = lshr i64 %5, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check103 = icmp ult i64 %3, 72
+  %min.iters.check103 = icmp ult i64 %5, 72
   %i.bh = sub i64 %i.e, %i.l
   %diff.check = icmp ugt i64 %i.bh, -32
   %or.cond = or i1 %min.iters.check103, %diff.check

@@ -201,7 +201,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !158  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !160  ; 2 uses
-  %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 4 uses
@@ -214,18 +214,17 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 16
   tail call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.l, i64 noundef %i.g, i64 noundef 1) #18
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !160
-  %.pre51 = load ptr, ptr %i.a, align 8, !tbaa !158 ; 2 uses
-  %.pre52 = ptrtoint ptr %.pre51 to i64
+  %.pre51 = load ptr, ptr %i.a, align 8, !tbaa !158
   br label %_ZN4llvh15SmallVectorImplIcE7reserveEm.exit
 
 _ZN4llvh15SmallVectorImplIcE7reserveEm.exit:      ; preds = %bb.a, %bb.b
-  %.pre-phi = phi i64 [ %i.e, %bb.a ], [ %.pre52, %bb.b ]
-  %i.m = phi ptr [ %i.b, %bb.a ], [ %.pre51, %bb.b ] ; 5 uses
+  %i.m = phi ptr [ %i.b, %bb.a ], [ %.pre51, %bb.b ] ; 6 uses
   %i.n = phi ptr [ %i.d, %bb.a ], [ %.pre, %bb.b ] ; 2 uses
   %.not46 = icmp eq ptr %i.n, %i.m
   br i1 %.not46, label %._crit_edge, label %.lr.ph48
 
 .lr.ph48:                                         ; preds = %_ZN4llvh15SmallVectorImplIcE7reserveEm.exit
+  %3 = ptrtoaddr ptr %i.m to i64
   %i.o = getelementptr inbounds i8, ptr %i.m, i64 -2
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
@@ -263,7 +262,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit: ; preds = %._crit_e
 
 bb.d:                                             ; preds = %.lr.ph48, %.critedge
   %.047 = phi ptr [ %i.n, %.lr.ph48 ], [ %i.bk, %.critedge ] ; 12 uses
-  %.04749 = ptrtoint ptr %.047 to i64
+  %.04749 = ptrtoaddr ptr %.047 to i64
   %.not31 = icmp ugt ptr %.047, %i.o
   br i1 %.not31, label %bb.g, label %bb.e
 
@@ -338,7 +337,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit40: ; preds = %bb.k, 
   br i1 %.not3442, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit40
-  %i.bf = getelementptr i8, ptr %.047, i64 %.pre-phi
+  %i.bf = getelementptr i8, ptr %.047, i64 %3
   %scevgep = getelementptr i8, ptr %i.bf, i64 -1
   %i.bg = sub i64 0, %.04749
   %scevgep50 = getelementptr i8, ptr %scevgep, i64 %i.bg
@@ -741,10 +740,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !98   ; 3 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !100    ; 6 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !98   ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !100    ; 7 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !99
@@ -757,6 +756,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = sdiv exact i64 %i.f, 24
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.o = icmp ugt i64 %i.n, 384307168202282325
   br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseISt4pairIN4llvh9StringRefEjESaIS3_EE11_M_allocateEm.exit.i, !prof !172
 
@@ -770,8 +771,8 @@ _ZNSt12_Vector_baseISt4pairIN4llvh9StringRefEjESaIS3_EE11_M_allocateEm.exit.i: ;
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt4pairIN4llvh9StringRefEjESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseISt4pairIN4llvh9StringRefEjESaIS3_EE11_M_allocateEm.exit.i
-  %i.q = add i64 %i.d, -24
-  %i.r = sub i64 %i.q, %i.e
+  %i.q = add i64 %3, -24
+  %i.r = sub i64 %i.q, %2
   %.fr.i = freeze i64 %i.r                        ; 2 uses
   %i.s = urem i64 %.fr.i, 24
   %i.t = add i64 %.fr.i, 24

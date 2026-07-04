@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %.sink.split, %bb.c, %bb.f, %bb.j, %bb.h, %bb.d
   %.sroa.090.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.089.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %12 = ptrtoint ptr %.sroa.089.0.copyload to i64
+  %12 = ptrtoaddr ptr %.sroa.089.0.copyload to i64
   %.not.i = icmp ult ptr %.sroa.090.0.copyload, %.sroa.089.0.copyload
   br i1 %.not.i, label %.preheader.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit
 
@@ -249,7 +249,7 @@ bb.n:                                             ; preds = %bb.m, %.critedge.i
   br i1 %.not2030.i, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit, label %.lr.ph32.preheader.i
 
 .lr.ph32.preheader.i:                             ; preds = %bb.n
-  %.sroa.010.136.i = ptrtoint ptr %.sroa.010.1.i to i64
+  %.sroa.010.136.i = ptrtoaddr ptr %.sroa.010.1.i to i64
   %i.cp = sub i64 %12, %.sroa.010.136.i
   %scevgep.i = getelementptr i8, ptr %.sroa.010.1.i, i64 %i.cp
   br label %.lr.ph32.i
@@ -411,7 +411,7 @@ bb.v:                                             ; preds = %_ZN6Assimp18ObjFile
 bb.w:                                             ; preds = %bb.o, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit, %bb.v, %bb.p, %bb.q
   %.sroa.087.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.086.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %13 = ptrtoint ptr %.sroa.086.0.copyload to i64
+  %13 = ptrtoaddr ptr %.sroa.086.0.copyload to i64
   %.not.i155 = icmp ult ptr %.sroa.087.0.copyload, %.sroa.086.0.copyload
   br i1 %.not.i155, label %.preheader.i157, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit174
 
@@ -455,7 +455,7 @@ bb.y:                                             ; preds = %bb.x, %.critedge.i1
   br i1 %.not2030.i164, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit174, label %.lr.ph32.preheader.i165
 
 .lr.ph32.preheader.i165:                          ; preds = %bb.y
-  %.sroa.010.136.i166 = ptrtoint ptr %.sroa.010.1.i163 to i64
+  %.sroa.010.136.i166 = ptrtoaddr ptr %.sroa.010.1.i163 to i64
   %i.eo = sub i64 %13, %.sroa.010.136.i166
   %scevgep.i167 = getelementptr i8, ptr %.sroa.010.1.i163, i64 %i.eo
   br label %.lr.ph32.i168
@@ -616,7 +616,7 @@ _ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit192: ; preds = %_ZN6Assimp1
 bb.ah:                                            ; preds = %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit192, %.critedge
   %.sroa.083.0.copyload = phi ptr [ %.sroa.083.0.copyload.pre, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit192 ], [ %i.bh, %.critedge ] ; 7 uses
   %.sroa.084.0.copyload = phi ptr [ %.sroa.084.0.copyload.pre, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit192 ], [ %i.er, %.critedge ] ; 5 uses
-  %14 = ptrtoint ptr %.sroa.083.0.copyload to i64
+  %14 = ptrtoaddr ptr %.sroa.083.0.copyload to i64
   %.not.i193 = icmp ult ptr %.sroa.084.0.copyload, %.sroa.083.0.copyload
   br i1 %.not.i193, label %.preheader.i195, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit212
 
@@ -660,7 +660,7 @@ bb.aj:                                            ; preds = %bb.ai, %.critedge.i
   br i1 %.not2030.i202, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit212, label %.lr.ph32.preheader.i203
 
 .lr.ph32.preheader.i203:                          ; preds = %bb.aj
-  %.sroa.010.136.i204 = ptrtoint ptr %.sroa.010.1.i201 to i64
+  %.sroa.010.136.i204 = ptrtoaddr ptr %.sroa.010.1.i201 to i64
   %i.gn = sub i64 %14, %.sroa.010.136.i204
   %scevgep.i205 = getelementptr i8, ptr %.sroa.010.1.i201, i64 %i.gn
   br label %.lr.ph32.i206
@@ -930,7 +930,7 @@ bb.aw:                                            ; preds = %bb.ak
 bb.ax:                                            ; preds = %bb.aq, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit248, %bb.al, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit230, %bb.aw, %bb.av, %bb.ak
   %.sroa.081.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.080.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %15 = ptrtoint ptr %.sroa.080.0.copyload to i64
+  %15 = ptrtoaddr ptr %.sroa.080.0.copyload to i64
   %.not.i249 = icmp ult ptr %.sroa.081.0.copyload, %.sroa.080.0.copyload
   br i1 %.not.i249, label %.preheader.i251, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit268
 
@@ -974,7 +974,7 @@ bb.az:                                            ; preds = %bb.ay, %.critedge.i
   br i1 %.not2030.i258, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit268, label %.lr.ph32.preheader.i259
 
 .lr.ph32.preheader.i259:                          ; preds = %bb.az
-  %.sroa.010.136.i260 = ptrtoint ptr %.sroa.010.1.i257 to i64
+  %.sroa.010.136.i260 = ptrtoaddr ptr %.sroa.010.1.i257 to i64
   %i.jl = sub i64 %15, %.sroa.010.136.i260
   %scevgep.i261 = getelementptr i8, ptr %.sroa.010.1.i257, i64 %i.jl
   br label %.lr.ph32.i262
@@ -1377,7 +1377,7 @@ _ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit365: ; preds = 
 bb.cd:                                            ; preds = %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit325, %bb.bo, %bb.by, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit365, %bb.bt, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit345, %bb.bl, %bb.bm, %bb.bg, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit305, %bb.bb, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit, %bb.ba
   %.sroa.078.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.077.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %16 = ptrtoint ptr %.sroa.077.0.copyload to i64
+  %16 = ptrtoaddr ptr %.sroa.077.0.copyload to i64
   %.not.i366 = icmp ult ptr %.sroa.078.0.copyload, %.sroa.077.0.copyload
   br i1 %.not.i366, label %.preheader.i368, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit385
 
@@ -1421,7 +1421,7 @@ bb.cf:                                            ; preds = %bb.ce, %.critedge.i
   br i1 %.not2030.i375, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit385, label %.lr.ph32.preheader.i376
 
 .lr.ph32.preheader.i376:                          ; preds = %bb.cf
-  %.sroa.010.136.i377 = ptrtoint ptr %.sroa.010.1.i374 to i64
+  %.sroa.010.136.i377 = ptrtoaddr ptr %.sroa.010.1.i374 to i64
   %i.qi = sub i64 %16, %.sroa.010.136.i377
   %scevgep.i378 = getelementptr i8, ptr %.sroa.010.1.i374, i64 %i.qi
   br label %.lr.ph32.i379
@@ -1566,7 +1566,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i388.preheader:                        ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.07.i.i.i.ph = phi ptr [ %i.qy, %iter.check ], [ %i.rb, %vec.epilog.iter.check ], [ %i.rg, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.02.06.i.i.i.ph = phi ptr [ %i.bi, %iter.check ], [ %i.rc, %vec.epilog.iter.check ], [ %i.rh, %vec.epilog.middle.block ] ; 3 uses
-  %.sroa.02.06.i.i.i.ph1501 = ptrtoint ptr %.sroa.02.06.i.i.i.ph to i64 ; 2 uses
+  %.sroa.02.06.i.i.i.ph1501 = ptrtoaddr ptr %.sroa.02.06.i.i.i.ph to i64 ; 2 uses
   %i.rj = sub i64 %i.qr, %.sroa.02.06.i.i.i.ph1501
   %xtraiter1502 = and i64 %i.rj, 7                ; 2 uses
   %lcmp.mod1503.not = icmp eq i64 %xtraiter1502, 0
@@ -1842,7 +1842,7 @@ _ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i: ; preds = %
 _ZN6Assimp18ObjFileMtlImporter23getFloatIfMaterialValidEMNS_7ObjFile8MaterialENS_5MaybeIfEE.exit: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit398, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZN6Assimp11getNextWordIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.thread, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i, %bb.cl, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit401, %bb.ci
   %.sroa.064.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.063.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %17 = ptrtoint ptr %.sroa.063.0.copyload to i64
+  %17 = ptrtoaddr ptr %.sroa.063.0.copyload to i64
   %.not.i406 = icmp ult ptr %.sroa.064.0.copyload, %.sroa.063.0.copyload
   br i1 %.not.i406, label %.preheader.i408, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit425
 
@@ -1886,7 +1886,7 @@ bb.cr:                                            ; preds = %bb.cq, %.critedge.i
   br i1 %.not2030.i415, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit425, label %.lr.ph32.preheader.i416
 
 .lr.ph32.preheader.i416:                          ; preds = %bb.cr
-  %.sroa.010.136.i417 = ptrtoint ptr %.sroa.010.1.i414 to i64
+  %.sroa.010.136.i417 = ptrtoaddr ptr %.sroa.010.1.i414 to i64
   %i.uw = sub i64 %17, %.sroa.010.136.i417
   %scevgep.i418 = getelementptr i8, ptr %.sroa.010.1.i414, i64 %i.uw
   br label %.lr.ph32.i419
@@ -1936,7 +1936,7 @@ bb.cs:                                            ; preds = %bb.b
   call void @_ZN6Assimp18ObjFileMtlImporter10getTextureEv(ptr noundef nonnull align 8 dereferenceable(88) %0)
   %.sroa.061.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.060.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %18 = ptrtoint ptr %.sroa.060.0.copyload to i64
+  %18 = ptrtoaddr ptr %.sroa.060.0.copyload to i64
   %.not.i429 = icmp ult ptr %.sroa.061.0.copyload, %.sroa.060.0.copyload
   br i1 %.not.i429, label %.preheader.i431, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit448
 
@@ -1980,7 +1980,7 @@ bb.cu:                                            ; preds = %bb.ct, %.critedge.i
   br i1 %.not2030.i438, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit448, label %.lr.ph32.preheader.i439
 
 .lr.ph32.preheader.i439:                          ; preds = %bb.cu
-  %.sroa.010.136.i440 = ptrtoint ptr %.sroa.010.1.i437 to i64
+  %.sroa.010.136.i440 = ptrtoaddr ptr %.sroa.010.1.i437 to i64
   %i.vo = sub i64 %18, %.sroa.010.136.i440
   %scevgep.i441 = getelementptr i8, ptr %.sroa.010.1.i437, i64 %i.vo
   br label %.lr.ph32.i442
@@ -2125,7 +2125,7 @@ vec.epilog.middle.block1371:                      ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i458.preheader:                        ; preds = %iter.check1358, %vec.epilog.iter.check1360, %vec.epilog.middle.block1371
   %.07.i.i.i459.ph = phi ptr [ %i.we, %iter.check1358 ], [ %i.wh, %vec.epilog.iter.check1360 ], [ %i.wm, %vec.epilog.middle.block1371 ] ; 2 uses
   %.sroa.02.06.i.i.i460.ph = phi ptr [ %i.bi, %iter.check1358 ], [ %i.wi, %vec.epilog.iter.check1360 ], [ %i.wn, %vec.epilog.middle.block1371 ] ; 3 uses
-  %.sroa.02.06.i.i.i460.ph1497 = ptrtoint ptr %.sroa.02.06.i.i.i460.ph to i64 ; 2 uses
+  %.sroa.02.06.i.i.i460.ph1497 = ptrtoaddr ptr %.sroa.02.06.i.i.i460.ph to i64 ; 2 uses
   %i.wp = sub i64 %i.vx, %.sroa.02.06.i.i.i460.ph1497
   %xtraiter1498 = and i64 %i.wp, 7                ; 2 uses
   %lcmp.mod1499.not = icmp eq i64 %xtraiter1498, 0
@@ -2404,7 +2404,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZN6Assimp18ObjFileMtlImporter23getFloatIfMaterialValidEMNS_7ObjFile8MaterialENS_5MaybeIfEE.exit505: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit508, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit481, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit478, %_ZN6Assimp11getNextWordIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_.exit475, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i499, %bb.cx, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit478.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit511, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit508.thread
   %.sroa.048.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.047.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %19 = ptrtoint ptr %.sroa.047.0.copyload to i64
+  %19 = ptrtoaddr ptr %.sroa.047.0.copyload to i64
   %.not.i512 = icmp ult ptr %.sroa.048.0.copyload, %.sroa.047.0.copyload
   br i1 %.not.i512, label %.preheader.i514, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit531
 
@@ -2448,7 +2448,7 @@ bb.df:                                            ; preds = %bb.de, %.critedge.i
   br i1 %.not2030.i521, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit531, label %.lr.ph32.preheader.i522
 
 .lr.ph32.preheader.i522:                          ; preds = %bb.df
-  %.sroa.010.136.i523 = ptrtoint ptr %.sroa.010.1.i520 to i64
+  %.sroa.010.136.i523 = ptrtoaddr ptr %.sroa.010.1.i520 to i64
   %i.aai = sub i64 %19, %.sroa.010.136.i523
   %scevgep.i524 = getelementptr i8, ptr %.sroa.010.1.i520, i64 %i.aai
   br label %.lr.ph32.i525
@@ -2648,7 +2648,7 @@ _ZN6Assimp18ObjFileMtlImporter20getIlluminationModelERi.exit: ; preds = %_ZN6Ass
 bb.dk:                                            ; preds = %_ZN6Assimp18ObjFileMtlImporter20getIlluminationModelERi.exit, %_ZN6Assimp12getNextTokenIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_.exit
   %.sroa.041.0.copyload = phi ptr [ %.sroa.041.0.copyload.pre, %_ZN6Assimp18ObjFileMtlImporter20getIlluminationModelERi.exit ], [ %i.bh, %_ZN6Assimp12getNextTokenIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_.exit ] ; 7 uses
   %.sroa.042.0.copyload = phi ptr [ %.sroa.042.0.copyload.pre, %_ZN6Assimp18ObjFileMtlImporter20getIlluminationModelERi.exit ], [ %.sroa.0.0.lcssa.i11.i, %_ZN6Assimp12getNextTokenIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_.exit ] ; 5 uses
-  %20 = ptrtoint ptr %.sroa.041.0.copyload to i64
+  %20 = ptrtoaddr ptr %.sroa.041.0.copyload to i64
   %.not.i555 = icmp ult ptr %.sroa.042.0.copyload, %.sroa.041.0.copyload
   br i1 %.not.i555, label %.preheader.i557, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit574
 
@@ -2692,7 +2692,7 @@ bb.dm:                                            ; preds = %bb.dl, %.critedge.i
   br i1 %.not2030.i564, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit574, label %.lr.ph32.preheader.i565
 
 .lr.ph32.preheader.i565:                          ; preds = %bb.dm
-  %.sroa.010.136.i566 = ptrtoint ptr %.sroa.010.1.i563 to i64
+  %.sroa.010.136.i566 = ptrtoaddr ptr %.sroa.010.1.i563 to i64
   %i.aco = sub i64 %20, %.sroa.010.136.i566
   %scevgep.i567 = getelementptr i8, ptr %.sroa.010.1.i563, i64 %i.aco
   br label %.lr.ph32.i568
@@ -2837,7 +2837,7 @@ vec.epilog.middle.block1407:                      ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i584.preheader:                        ; preds = %iter.check1394, %vec.epilog.iter.check1396, %vec.epilog.middle.block1407
   %.07.i.i.i585.ph = phi ptr [ %i.ade, %iter.check1394 ], [ %i.adh, %vec.epilog.iter.check1396 ], [ %i.adm, %vec.epilog.middle.block1407 ] ; 2 uses
   %.sroa.02.06.i.i.i586.ph = phi ptr [ %i.bi, %iter.check1394 ], [ %i.adi, %vec.epilog.iter.check1396 ], [ %i.adn, %vec.epilog.middle.block1407 ] ; 3 uses
-  %.sroa.02.06.i.i.i586.ph1493 = ptrtoint ptr %.sroa.02.06.i.i.i586.ph to i64 ; 2 uses
+  %.sroa.02.06.i.i.i586.ph1493 = ptrtoaddr ptr %.sroa.02.06.i.i.i586.ph to i64 ; 2 uses
   %i.adp = sub i64 %i.acx, %.sroa.02.06.i.i.i586.ph1493
   %xtraiter1494 = and i64 %i.adp, 7               ; 2 uses
   %lcmp.mod1495.not = icmp eq i64 %xtraiter1494, 0
@@ -3240,7 +3240,7 @@ bb.em:                                            ; preds = %bb.el
 _ZN6Assimp18ObjFileMtlImporter23getFloatIfMaterialValidEMNS_7ObjFile8MaterialEf.exit: ; preds = %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i683, %bb.ef, %.critedge153.thread, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i647, %bb.dw, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit629.thread, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERf.exit.i, %bb.dp, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit604.thread, %bb.em
   %.sroa.028.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.027.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %21 = ptrtoint ptr %.sroa.027.0.copyload to i64
+  %21 = ptrtoaddr ptr %.sroa.027.0.copyload to i64
   %.not.i690 = icmp ult ptr %.sroa.028.0.copyload, %.sroa.027.0.copyload
   br i1 %.not.i690, label %.preheader.i692, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit709
 
@@ -3284,7 +3284,7 @@ bb.eo:                                            ; preds = %bb.en, %.critedge.i
   br i1 %.not2030.i699, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit709, label %.lr.ph32.preheader.i700
 
 .lr.ph32.preheader.i700:                          ; preds = %bb.eo
-  %.sroa.010.136.i701 = ptrtoint ptr %.sroa.010.1.i698 to i64
+  %.sroa.010.136.i701 = ptrtoaddr ptr %.sroa.010.1.i698 to i64
   %i.akv = sub i64 %21, %.sroa.010.136.i701
   %scevgep.i702 = getelementptr i8, ptr %.sroa.010.1.i698, i64 %i.akv
   br label %.lr.ph32.i703
@@ -3458,7 +3458,7 @@ vec.epilog.middle.block1443:                      ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i725.preheader:                        ; preds = %iter.check1430, %vec.epilog.iter.check1432, %vec.epilog.middle.block1443
   %.07.i.i.i726.ph = phi ptr [ %i.alt, %iter.check1430 ], [ %i.alw, %vec.epilog.iter.check1432 ], [ %i.amb, %vec.epilog.middle.block1443 ] ; 2 uses
   %.sroa.02.06.i.i.i727.ph = phi ptr [ %i.bi, %iter.check1430 ], [ %i.alx, %vec.epilog.iter.check1432 ], [ %i.amc, %vec.epilog.middle.block1443 ] ; 3 uses
-  %.sroa.02.06.i.i.i727.ph1489 = ptrtoint ptr %.sroa.02.06.i.i.i727.ph to i64 ; 2 uses
+  %.sroa.02.06.i.i.i727.ph1489 = ptrtoaddr ptr %.sroa.02.06.i.i.i727.ph to i64 ; 2 uses
   %i.ame = sub i64 %i.alm, %.sroa.02.06.i.i.i727.ph1489
   %xtraiter1490 = and i64 %i.ame, 7               ; 2 uses
   %lcmp.mod1491.not = icmp eq i64 %xtraiter1490, 0
@@ -3861,7 +3861,7 @@ bb.ga:                                            ; preds = %bb.fz
 _ZN6Assimp18ObjFileMtlImporter23getFloatIfMaterialValidEMNS_7ObjFile8MaterialENS_5MaybeIfEE.exit772: ; preds = %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i869, %bb.ft, %bb.fs, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i831, %bb.fk, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit813.thread, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i804, %bb.fd, %bb.fc, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i766, %bb.es, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit745.thread, %bb.ga
   %.sroa.016.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.015.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %22 = ptrtoint ptr %.sroa.015.0.copyload to i64
+  %22 = ptrtoaddr ptr %.sroa.015.0.copyload to i64
   %.not.i876 = icmp ult ptr %.sroa.016.0.copyload, %.sroa.015.0.copyload
   br i1 %.not.i876, label %.preheader.i878, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit895
 
@@ -3905,7 +3905,7 @@ bb.gc:                                            ; preds = %bb.gb, %.critedge.i
   br i1 %.not2030.i885, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit895, label %.lr.ph32.preheader.i886
 
 .lr.ph32.preheader.i886:                          ; preds = %bb.gc
-  %.sroa.010.136.i887 = ptrtoint ptr %.sroa.010.1.i884 to i64
+  %.sroa.010.136.i887 = ptrtoaddr ptr %.sroa.010.1.i884 to i64
   %i.aww = sub i64 %22, %.sroa.010.136.i887
   %scevgep.i888 = getelementptr i8, ptr %.sroa.010.1.i884, i64 %i.aww
   br label %.lr.ph32.i889
@@ -4079,7 +4079,7 @@ vec.epilog.middle.block1479:                      ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i911.preheader:                        ; preds = %iter.check1466, %vec.epilog.iter.check1468, %vec.epilog.middle.block1479
   %.07.i.i.i912.ph = phi ptr [ %i.axu, %iter.check1466 ], [ %i.axx, %vec.epilog.iter.check1468 ], [ %i.ayc, %vec.epilog.middle.block1479 ] ; 2 uses
   %.sroa.02.06.i.i.i913.ph = phi ptr [ %i.bi, %iter.check1466 ], [ %i.axy, %vec.epilog.iter.check1468 ], [ %i.ayd, %vec.epilog.middle.block1479 ] ; 3 uses
-  %.sroa.02.06.i.i.i913.ph1488 = ptrtoint ptr %.sroa.02.06.i.i.i913.ph to i64 ; 2 uses
+  %.sroa.02.06.i.i.i913.ph1488 = ptrtoaddr ptr %.sroa.02.06.i.i.i913.ph to i64 ; 2 uses
   %i.ayf = sub i64 %i.axn, %.sroa.02.06.i.i.i913.ph1488
   %xtraiter = and i64 %i.ayf, 7                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -4482,7 +4482,7 @@ bb.he:                                            ; preds = %bb.hd
 _ZN6Assimp18ObjFileMtlImporter23getFloatIfMaterialValidEMNS_7ObjFile8MaterialENS_5MaybeIfEE.exit966: ; preds = %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i998, %bb.gx, %bb.gw, %_ZN6Assimp18ObjFileMtlImporter13getFloatValueERNS_5MaybeIfEE.exit.i960, %bb.gk, %bb.gj, %bb.he
   %.sroa.04.0.copyload = load ptr, ptr %i.ae, align 8 ; 5 uses
   %.sroa.03.0.copyload = load ptr, ptr %i.af, align 8 ; 7 uses
-  %23 = ptrtoint ptr %.sroa.03.0.copyload to i64
+  %23 = ptrtoaddr ptr %.sroa.03.0.copyload to i64
   %.not.i1005 = icmp ult ptr %.sroa.04.0.copyload, %.sroa.03.0.copyload
   br i1 %.not.i1005, label %.preheader.i1007, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit1024
 
@@ -4526,7 +4526,7 @@ bb.hg:                                            ; preds = %bb.hf, %.critedge.i
   br i1 %.not2030.i1014, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit1024, label %.lr.ph32.preheader.i1015
 
 .lr.ph32.preheader.i1015:                         ; preds = %bb.hg
-  %.sroa.010.136.i1016 = ptrtoint ptr %.sroa.010.1.i1013 to i64
+  %.sroa.010.136.i1016 = ptrtoaddr ptr %.sroa.010.1.i1013 to i64
   %i.bfk = sub i64 %23, %.sroa.010.136.i1016
   %scevgep.i1017 = getelementptr i8, ptr %.sroa.010.1.i1013, i64 %i.bfk
   br label %.lr.ph32.i1018
@@ -4579,7 +4579,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1030: ; preds = %b
   br label %bb.hm
 
 bb.hi:                                            ; preds = %bb.b
-  %24 = ptrtoint ptr %i.bh to i64
+  %24 = ptrtoaddr ptr %i.bh to i64
   %.not.i1031 = icmp ult ptr %i.bi, %i.bh
   br i1 %.not.i1031, label %.preheader.i1033, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit1050
 
@@ -4623,7 +4623,7 @@ bb.hk:                                            ; preds = %bb.hj, %.critedge.i
   br i1 %.not2030.i1040, label %_ZN6Assimp8skipLineIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rj.exit1050, label %.lr.ph32.preheader.i1041
 
 .lr.ph32.preheader.i1041:                         ; preds = %bb.hk
-  %.sroa.010.136.i1042 = ptrtoint ptr %.sroa.010.1.i1039 to i64
+  %.sroa.010.136.i1042 = ptrtoaddr ptr %.sroa.010.1.i1039 to i64
   %i.bge = sub i64 %24, %.sroa.010.136.i1042
   %scevgep.i1043 = getelementptr i8, ptr %.sroa.010.1.i1039, i64 %i.bge
   br label %.lr.ph32.i1044
@@ -5026,7 +5026,7 @@ _ZN6Assimp12getNextTokenIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden ptr @_ZN6Assimp7getNameIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcES5_EE(ptr %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #8 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %3 = ptrtoaddr ptr %0 to i64
   %i.a = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -5057,7 +5057,7 @@ _ZN6Assimp9IsLineEndIcEEbT_.exit:                 ; preds = %.preheader26
 
 .critedge:                                        ; preds = %.preheader26, %.preheader26, %.preheader26, %.preheader26, %_ZN6Assimp9IsLineEndIcEEbT_.exit
   %.sroa.018.0.lcssa = phi ptr [ %.sroa.018.027, %.preheader26 ], [ %.sroa.018.027, %.preheader26 ], [ %.sroa.018.027, %.preheader26 ], [ %.sroa.018.027, %.preheader26 ], [ %i.i, %_ZN6Assimp9IsLineEndIcEEbT_.exit ] ; 3 uses
-  %.sroa.018.0.lcssa28 = ptrtoint ptr %.sroa.018.0.lcssa to i64 ; 2 uses
+  %.sroa.018.0.lcssa28 = ptrtoaddr ptr %.sroa.018.0.lcssa to i64 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.critedge
@@ -5080,8 +5080,9 @@ bb.b:                                             ; preds = %bb.c, %.critedge
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store i64 0, ptr %i.o, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  %i.p = ptrtoint ptr %scevgep29 to i64
-  %i.q = sub i64 %i.p, %3                         ; 4 uses
+  %5 = ptrtoint ptr %scevgep29 to i64
+  %i.p = ptrtoint ptr %0 to i64
+  %i.q = sub i64 %5, %i.p                         ; 4 uses
   store i64 %i.q, ptr %i.a, align 8
   %i.r = icmp ugt i64 %i.q, 15
   br i1 %i.r, label %.noexc.i, label %._crit_edge.i.i
