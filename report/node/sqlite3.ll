@@ -205,7 +205,7 @@ bb.a:
   %i.d = add i64 %i.a, 10
   %i.e = add i64 %i.d, %i.b
   %i.f = add i64 %i.e, %i.c                       ; 2 uses
-  %i.g = shl i32 %3, 1                            ; 2 uses
+  %i.g = shl nuw i32 %3, 1                        ; 2 uses
   %i.h = icmp sgt i32 %3, 0                       ; 2 uses
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
@@ -608,7 +608,7 @@ sessionAppendBlob.exit:                           ; preds = %sessionAppendVarint
   %i.df = load ptr, ptr %i.j, align 8, !tbaa !1687 ; 2 uses
   %i.dg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.df) #60
   %i.dh = trunc i64 %i.dg to i32                  ; 2 uses
-  %i.di = add nsw i32 %i.dh, 1                    ; 2 uses
+  %i.di = add nuw nsw i32 %i.dh, 1                ; 2 uses
   %i.dj = icmp sgt i32 %i.dh, -1
   br i1 %i.dj, label %bb.af, label %sessionAppendBlob.exit126
 
@@ -673,7 +673,7 @@ sessionBufferGrow.exit.thread10.i110:             ; preds = %sessionBufferGrow.e
   %.pre-phi.i111 = phi i64 [ %.pre13.i124, %sessionBufferGrow.exit.sessionBufferGrow.exit.thread10_crit_edge.i122 ], [ %i.dm, %.sessionBufferGrow.exit.thread10_crit_edge.i108 ]
   %i.eb = phi ptr [ %i.dy, %sessionBufferGrow.exit.sessionBufferGrow.exit.thread10_crit_edge.i122 ], [ %.pre.i109, %.sessionBufferGrow.exit.thread10_crit_edge.i108 ]
   %i.ec = getelementptr inbounds i8, ptr %i.eb, i64 %.pre-phi.i111
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ec, ptr nonnull readonly align 1 %i.df, i64 %i.dk, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ec, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.df, i64 %i.dk, i1 false)
   %i.ed = load i32, ptr %i.m, align 8, !tbaa !1616
   %i.ee = add nsw i32 %i.ed, %i.di
   store i32 %i.ee, ptr %i.m, align 8, !tbaa !1616
@@ -1076,7 +1076,7 @@ sessionAppendBlob.exit:                           ; preds = %sessionAppendByte.e
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !1559 ; 2 uses
   %i.az = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ay) #60
   %i.ba = trunc i64 %i.az to i32                  ; 2 uses
-  %i.bb = add nsw i32 %i.ba, 1                    ; 2 uses
+  %i.bb = add nuw nsw i32 %i.ba, 1                ; 2 uses
   %i.bc = icmp sgt i32 %i.ba, -1
   br i1 %i.bc, label %bb.o, label %sessionAppendBlob.exit44
 
@@ -1156,7 +1156,7 @@ sessionBufferGrow.exit.thread10.i28:              ; preds = %sessionBufferGrow.e
   %.pre-phi.i29 = phi i64 [ %.pre13.i42, %sessionBufferGrow.exit.sessionBufferGrow.exit.thread10_crit_edge.i40 ], [ %i.bf, %.sessionBufferGrow.exit.thread10_crit_edge.i26 ]
   %i.bw = phi ptr [ %i.bt, %sessionBufferGrow.exit.sessionBufferGrow.exit.thread10_crit_edge.i40 ], [ %.pre.i27, %.sessionBufferGrow.exit.thread10_crit_edge.i26 ]
   %i.bx = getelementptr inbounds i8, ptr %i.bw, i64 %.pre-phi.i29
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull readonly align 1 %i.ay, i64 %i.bd, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bx, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.ay, i64 %i.bd, i1 false)
   %i.by = load i32, ptr %i.b, align 8, !tbaa !1616
   %i.bz = add nsw i32 %i.by, %i.bb
   store i32 %i.bz, ptr %i.b, align 8, !tbaa !1616
@@ -1559,7 +1559,7 @@ sessionAppendBlob.exit.i:                         ; preds = %bb.af, %sqlite3_rea
   %.pre.pre.i = phi i32 [ %.pre.pre.pre.i, %sessionAppendByte.exit.i ], [ %.pre.pre.pre.i, %bb.z ], [ 0, %sessionBufferGrow.exit.thread10.i.i ], [ 7, %bb.ae ], [ 7, %sqlite3_realloc64.exit.i.i39.i ], [ 7, %bb.af ] ; 4 uses
   %i.dx = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.cg) #60
   %i.dy = trunc i64 %i.dx to i32                  ; 2 uses
-  %i.dz = add nsw i32 %i.dy, 1                    ; 2 uses
+  %i.dz = add nuw nsw i32 %i.dy, 1                ; 2 uses
   %i.ea = icmp sgt i32 %i.dy, -1
   br i1 %i.ea, label %bb.ag, label %bb.an
 
@@ -1624,7 +1624,7 @@ sessionBufferGrow.exit.sessionBufferGrow.exit.thread10_crit_edge.i58.i: ; preds 
   %.pre-phi.i47.i = phi i64 [ %.pre13.i60.i, %sessionBufferGrow.exit.sessionBufferGrow.exit.thread10_crit_edge.i58.i ], [ %i.ed, %.sessionBufferGrow.exit.thread10_crit_edge.i44.i ]
   %i.es = phi ptr [ %i.ep, %sessionBufferGrow.exit.sessionBufferGrow.exit.thread10_crit_edge.i58.i ], [ %.pre.i45.i, %.sessionBufferGrow.exit.thread10_crit_edge.i44.i ]
   %i.et = getelementptr inbounds i8, ptr %i.es, i64 %.pre-phi.i47.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.et, ptr nonnull readonly align 1 %i.cg, i64 %i.eb, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.et, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.cg, i64 %i.eb, i1 false)
   %i.eu = load i32, ptr %i.ca, align 8, !tbaa !1616
   %i.ev = add nsw i32 %i.eu, %i.dz                ; 3 uses
   store i32 %i.ev, ptr %i.ca, align 8, !tbaa !1616

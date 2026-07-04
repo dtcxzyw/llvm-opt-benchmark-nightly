@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %_ZN5arrow8internal1
   %i.as = add i8 %i.ar, -48                       ; 2 uses
   %narrow.i10.i = mul nuw nsw i8 %i.ao, 10
   %i.at = icmp ugt i8 %i.as, 9
-  %i.au = add i8 %i.as, %narrow.i10.i             ; 3 uses
+  %i.au = add nuw nsw i8 %i.as, %narrow.i10.i     ; 3 uses
   %i.av = add i8 %i.al, -13
   %spec.select.i.i.i = icmp ult i8 %i.av, -12
   %or.cond34.not38.i = select i1 %i.at, i1 true, i1 %spec.select.i.i.i, !prof !359
@@ -245,7 +245,7 @@ bb.l:                                             ; preds = %_ZNK14arrow_vendore
   %.neg.i.i.i = sext i1 %i.bh to i32
   %i.bi = add nsw i32 %.neg.i.i.i, %i.bg          ; 4 uses
   %i.bj = zext nneg i8 %i.al to i32
-  %i.bk = zext i8 %i.au to i32
+  %i.bk = zext nneg i8 %i.au to i32
   %i.bl = add nsw i32 %i.bi, 65137
   %i.bm = icmp slt i32 %i.bi, 0
   %i.bn = select i1 %i.bm, i32 %i.bl, i32 %i.bi
@@ -344,7 +344,7 @@ bb.u:                                             ; preds = %bb.t
   %i.dd = add i8 %i.ct, -48                       ; 2 uses
   %narrow.i.i = mul nuw nsw i8 %i.db, 10
   %i.de = icmp ugt i8 %i.dd, 9
-  %i.df = add i8 %i.dd, %narrow.i.i               ; 2 uses
+  %i.df = add nuw nsw i8 %i.dd, %narrow.i.i       ; 2 uses
   %i.dg = icmp ugt i8 %i.df, 23
   %or.cond.i = select i1 %i.de, i1 true, i1 %i.dg, !prof !364
   br i1 %or.cond.i, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, label %bb.v, !prof !364
@@ -381,7 +381,7 @@ bb.z:                                             ; preds = %bb.y
   %i.ds = add i8 %i.cy, -48                       ; 2 uses
   %narrow.i.i78 = mul nuw nsw i8 %i.dq, 10
   %i.dt = icmp ult i8 %i.ds, 10
-  %i.du = add i8 %i.ds, %narrow.i.i78             ; 2 uses
+  %i.du = add nuw nsw i8 %i.ds, %narrow.i.i78     ; 2 uses
   br i1 %i.dt, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i79, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i79: ; preds = %bb.z
@@ -395,7 +395,7 @@ bb.aa:                                            ; preds = %_ZN5arrow8internal1
   %i.dz = add i8 %i.ct, -48                       ; 2 uses
   %narrow.i8.i80 = mul nuw nsw i8 %i.dx, 10
   %i.ea = icmp ult i8 %i.dz, 10
-  %i.eb = add i8 %i.dz, %narrow.i8.i80            ; 2 uses
+  %i.eb = add nuw nsw i8 %i.dz, %narrow.i8.i80    ; 2 uses
   br i1 %i.ea, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit9.i, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit9.i: ; preds = %bb.aa
@@ -477,7 +477,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.fa = add i8 %i.ez, -48                       ; 2 uses
   %narrow.i.i82 = mul nuw nsw i8 %i.ew, 10
   %i.fb = icmp ugt i8 %i.fa, 9
-  %i.fc = add i8 %i.fa, %narrow.i.i82             ; 2 uses
+  %i.fc = add nuw nsw i8 %i.fa, %narrow.i.i82     ; 2 uses
   %i.fd = icmp ugt i8 %i.fc, 23
   %or.cond.i83 = select i1 %i.fb, i1 true, i1 %i.fd, !prof !364
   br i1 %or.cond.i83, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, label %_ZN5arrow8internal6detailL7ParseHHINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEEbPKcPT_.exit84, !prof !364
@@ -506,7 +506,7 @@ bb.an:                                            ; preds = %bb.am
   %i.fo = add i8 %i.fn, -48                       ; 2 uses
   %narrow.i.i87 = mul nuw nsw i8 %i.fk, 10
   %i.fp = icmp ult i8 %i.fo, 10
-  %i.fq = add i8 %i.fo, %narrow.i.i87             ; 2 uses
+  %i.fq = add nuw nsw i8 %i.fo, %narrow.i.i87     ; 2 uses
   br i1 %i.fp, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i88, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i88: ; preds = %bb.an
@@ -522,7 +522,7 @@ bb.ao:                                            ; preds = %_ZN5arrow8internal1
   %i.fx = add i8 %i.fw, -48                       ; 2 uses
   %narrow.i10.i89 = mul nuw nsw i8 %i.ft, 10
   %i.fy = icmp ult i8 %i.fx, 10
-  %i.fz = add i8 %i.fx, %narrow.i10.i89           ; 2 uses
+  %i.fz = add nuw nsw i8 %i.fx, %narrow.i10.i89   ; 2 uses
   br i1 %i.fy, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11.i, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11.i: ; preds = %bb.ao
@@ -564,7 +564,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.gr = add i8 %i.gq, -48                       ; 2 uses
   %narrow.i.i93 = mul nuw nsw i8 %i.gn, 10
   %i.gs = icmp ult i8 %i.gr, 10
-  %i.gt = add i8 %i.gr, %narrow.i.i93             ; 2 uses
+  %i.gt = add nuw nsw i8 %i.gr, %narrow.i.i93     ; 2 uses
   br i1 %i.gs, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i94, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i94: ; preds = %bb.as
@@ -580,7 +580,7 @@ bb.at:                                            ; preds = %_ZN5arrow8internal1
   %i.ha = add i8 %i.gz, -48                       ; 2 uses
   %narrow.i15.i = mul nuw nsw i8 %i.gw, 10
   %i.hb = icmp ult i8 %i.ha, 10
-  %i.hc = add i8 %i.ha, %narrow.i15.i             ; 2 uses
+  %i.hc = add nuw nsw i8 %i.ha, %narrow.i15.i     ; 2 uses
   br i1 %i.hb, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit16.i, label %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeElPl.exit100, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit16.i: ; preds = %bb.at
@@ -983,7 +983,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = add i8 %i.g, -48                         ; 2 uses
   %narrow.i = mul nuw nsw i8 %i.d, 10
   %i.i = icmp ult i8 %i.h, 10
-  %i.j = add i8 %i.h, %narrow.i                   ; 2 uses
+  %i.j = add nuw nsw i8 %i.h, %narrow.i           ; 2 uses
   br i1 %i.i, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.thread, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit:    ; preds = %bb.c
@@ -999,7 +999,7 @@ bb.d:                                             ; preds = %_ZN5arrow8internal1
   %i.q = add i8 %i.p, -48                         ; 2 uses
   %narrow.i10 = mul nuw nsw i8 %i.m, 10
   %i.r = icmp ult i8 %i.q, 10
-  %i.s = add i8 %i.q, %narrow.i10                 ; 2 uses
+  %i.s = add nuw nsw i8 %i.q, %narrow.i10         ; 2 uses
   br i1 %i.r, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.thread
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11:  ; preds = %bb.d
@@ -1402,7 +1402,7 @@ bb.i:                                             ; preds = %_ZN5arrow8internal1
   %i.ap = add i8 %i.ao, -48                       ; 2 uses
   %narrow.i10.i = mul nuw nsw i8 %i.al, 10
   %i.aq = icmp ugt i8 %i.ap, 9
-  %i.ar = add i8 %i.ap, %narrow.i10.i             ; 3 uses
+  %i.ar = add nuw nsw i8 %i.ap, %narrow.i10.i     ; 3 uses
   %i.as = add i8 %i.ai, -13
   %spec.select.i.i.i = icmp ult i8 %i.as, -12
   %or.cond35.not39.i = select i1 %i.aq, i1 true, i1 %spec.select.i.i.i, !prof !359
@@ -1444,7 +1444,7 @@ bb.l:                                             ; preds = %_ZNK14arrow_vendore
   %.neg.i.i.i = sext i1 %i.be to i32
   %i.bf = add nsw i32 %.neg.i.i.i, %i.bd          ; 4 uses
   %i.bg = zext nneg i8 %i.ai to i32
-  %i.bh = zext i8 %i.ar to i32
+  %i.bh = zext nneg i8 %i.ar to i32
   %i.bi = add nsw i32 %i.bf, 65137
   %i.bj = icmp slt i32 %i.bf, 0
   %i.bk = select i1 %i.bj, i32 %i.bi, i32 %i.bf
@@ -1632,7 +1632,7 @@ bb.i:                                             ; preds = %_ZN5arrow8internal1
   %i.ap = add i8 %i.ao, -48                       ; 2 uses
   %narrow.i10.i = mul nuw nsw i8 %i.al, 10
   %i.aq = icmp ugt i8 %i.ap, 9
-  %i.ar = add i8 %i.ap, %narrow.i10.i             ; 3 uses
+  %i.ar = add nuw nsw i8 %i.ap, %narrow.i10.i     ; 3 uses
   %i.as = add i8 %i.ai, -13
   %spec.select.i.i.i = icmp ult i8 %i.as, -12
   %or.cond34.not38.i = select i1 %i.aq, i1 true, i1 %spec.select.i.i.i, !prof !359
@@ -1674,7 +1674,7 @@ bb.l:                                             ; preds = %_ZNK14arrow_vendore
   %.neg.i.i.i = sext i1 %i.be to i32
   %i.bf = add nsw i32 %.neg.i.i.i, %i.bd          ; 4 uses
   %i.bg = zext nneg i8 %i.ai to i32
-  %i.bh = zext i8 %i.ar to i32
+  %i.bh = zext nneg i8 %i.ar to i32
   %i.bi = add nsw i32 %i.bf, 65137
   %i.bj = icmp slt i32 %i.bf, 0
   %i.bk = select i1 %i.bj, i32 %i.bi, i32 %i.bf
@@ -1881,7 +1881,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = add i8 %i.l, -48                         ; 2 uses
   %narrow.i.i = mul nuw nsw i8 %i.i, 10
   %i.n = icmp ult i8 %i.m, 10
-  %i.o = add i8 %i.m, %narrow.i.i                 ; 2 uses
+  %i.o = add nuw nsw i8 %i.m, %narrow.i.i         ; 2 uses
   br i1 %i.n, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i, label %_ZZN5arrow8internal15StringConverterINS_10Time32TypeEvE7ConvertERKS2_PKcmPiENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i:  ; preds = %bb.d
@@ -1897,7 +1897,7 @@ bb.e:                                             ; preds = %_ZN5arrow8internal1
   %i.v = add i8 %i.u, -48                         ; 2 uses
   %narrow.i10.i = mul nuw nsw i8 %i.r, 10
   %i.w = icmp ult i8 %i.v, 10
-  %i.x = add i8 %i.v, %narrow.i10.i               ; 2 uses
+  %i.x = add nuw nsw i8 %i.v, %narrow.i10.i       ; 2 uses
   br i1 %i.w, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11.i, label %_ZZN5arrow8internal15StringConverterINS_10Time32TypeEvE7ConvertERKS2_PKcmPiENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11.i: ; preds = %bb.e
@@ -1965,7 +1965,7 @@ bb.m:                                             ; preds = %bb.l
   %i.au = add i8 %i.at, -48                       ; 2 uses
   %narrow.i.i16 = mul nuw nsw i8 %i.aq, 10
   %i.av = icmp ult i8 %i.au, 10
-  %i.aw = add i8 %i.au, %narrow.i.i16             ; 2 uses
+  %i.aw = add nuw nsw i8 %i.au, %narrow.i.i16     ; 2 uses
   br i1 %i.av, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i17, label %_ZZN5arrow8internal15StringConverterINS_10Time32TypeEvE7ConvertERKS2_PKcmPiENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i17: ; preds = %bb.m
@@ -1981,7 +1981,7 @@ bb.n:                                             ; preds = %_ZN5arrow8internal1
   %i.bd = add i8 %i.bc, -48                       ; 2 uses
   %narrow.i15.i = mul nuw nsw i8 %i.az, 10
   %i.be = icmp ult i8 %i.bd, 10
-  %i.bf = add i8 %i.bd, %narrow.i15.i             ; 2 uses
+  %i.bf = add nuw nsw i8 %i.bd, %narrow.i15.i     ; 2 uses
   br i1 %i.be, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit16.i, label %_ZZN5arrow8internal15StringConverterINS_10Time32TypeEvE7ConvertERKS2_PKcmPiENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit16.i: ; preds = %bb.n
@@ -2232,7 +2232,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = add i8 %i.l, -48                         ; 2 uses
   %narrow.i.i = mul nuw nsw i8 %i.i, 10
   %i.n = icmp ult i8 %i.m, 10
-  %i.o = add i8 %i.m, %narrow.i.i                 ; 2 uses
+  %i.o = add nuw nsw i8 %i.m, %narrow.i.i         ; 2 uses
   br i1 %i.n, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i, label %_ZZN5arrow8internal15StringConverterINS_10Time64TypeEvE7ConvertERKS2_PKcmPlENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i:  ; preds = %bb.d
@@ -2248,7 +2248,7 @@ bb.e:                                             ; preds = %_ZN5arrow8internal1
   %i.v = add i8 %i.u, -48                         ; 2 uses
   %narrow.i10.i = mul nuw nsw i8 %i.r, 10
   %i.w = icmp ult i8 %i.v, 10
-  %i.x = add i8 %i.v, %narrow.i10.i               ; 2 uses
+  %i.x = add nuw nsw i8 %i.v, %narrow.i10.i       ; 2 uses
   br i1 %i.w, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11.i, label %_ZZN5arrow8internal15StringConverterINS_10Time64TypeEvE7ConvertERKS2_PKcmPlENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11.i: ; preds = %bb.e
@@ -2314,7 +2314,7 @@ bb.m:                                             ; preds = %bb.l
   %i.as = add i8 %i.ar, -48                       ; 2 uses
   %narrow.i.i15 = mul nuw nsw i8 %i.ao, 10
   %i.at = icmp ult i8 %i.as, 10
-  %i.au = add i8 %i.as, %narrow.i.i15             ; 2 uses
+  %i.au = add nuw nsw i8 %i.as, %narrow.i.i15     ; 2 uses
   br i1 %i.at, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i16, label %_ZZN5arrow8internal15StringConverterINS_10Time64TypeEvE7ConvertERKS2_PKcmPlENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i16: ; preds = %bb.m
@@ -2330,7 +2330,7 @@ bb.n:                                             ; preds = %_ZN5arrow8internal1
   %i.bb = add i8 %i.ba, -48                       ; 2 uses
   %narrow.i15.i = mul nuw nsw i8 %i.ax, 10
   %i.bc = icmp ult i8 %i.bb, 10
-  %i.bd = add i8 %i.bb, %narrow.i15.i             ; 2 uses
+  %i.bd = add nuw nsw i8 %i.bb, %narrow.i15.i     ; 2 uses
   br i1 %i.bc, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit16.i, label %_ZZN5arrow8internal15StringConverterINS_10Time64TypeEvE7ConvertERKS2_PKcmPlENKUlS8_E_clES8_.exit, !prof !358
 
 _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit16.i: ; preds = %bb.n

@@ -67,21 +67,21 @@ bb.b:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %.preheader
   %.032.lcssa = phi i64 [ 0, %.preheader ], [ %.03245, %.lr.ph ], [ %i.f, %bb.b ] ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !15   ; 4 uses
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !15   ; 5 uses
   %.not38 = icmp ult i64 %.032.lcssa, %i.m
   br i1 %.not38, label %rpb_ensure_alloc.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.n = shl i64 %i.m, 1                          ; 2 uses
+  %i.n = shl nuw i64 %i.m, 1
   %.not.i = icmp sgt i64 %i.m, 0
   br i1 %.not.i, label %bb.d, label %rpb_ensure_alloc.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = icmp ugt i64 %i.n, 2305843009213693951
+  %i.o = icmp ugt i64 %i.m, 1152921504606846975
   br i1 %i.o, label %rpb_ensure_alloc.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.0.i19.i = shl i64 %i.m, 4
+  %.0.i19.i = shl nuw i64 %i.m, 4
   %i.p = tail call ptr @CRYPTO_realloc(ptr noundef %i.a, i64 noundef %.0.i19.i, ptr noundef nonnull @.str, i32 noundef 58) #6 ; 4 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %rpb_ensure_alloc.exit.thread, label %bb.f

@@ -203,15 +203,14 @@ _ZN4absl24synchronization_internal12_GLOBAL__N_14NodeC2Ev.exit: ; preds = %.lr.p
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIPNS1_4NodeEE9push_backERKS4_.exit
 
 bb.e:                                             ; preds = %_ZN4absl24synchronization_internal12_GLOBAL__N_14NodeC2Ev.exit
-  %2 = add i32 %i.bb, 1
   %.not.i21 = icmp eq i32 %i.bb, -1
   br i1 %.not.i21, label %bb.f, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e, %.lr.ph.i.i
   %i.bf = phi i32 [ %i.bg, %.lr.ph.i.i ], [ %i.bb, %bb.e ]
   %i.bg = shl i32 %i.bf, 1                        ; 4 uses
-  %3 = icmp ult i32 %i.bg, %2
-  br i1 %3, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !5
+  %.not5.i = icmp ugt i32 %i.bg, %i.bb
+  br i1 %.not5.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !5
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
   store i32 %i.bg, ptr %i.bc, align 4
@@ -614,15 +613,14 @@ bb.m:                                             ; preds = %_ZN4absl24synchroni
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit
 
 bb.n:                                             ; preds = %bb.m
-  %2 = add i32 %i.ds, 1
   %.not.i48 = icmp eq i32 %i.ds, -1
   br i1 %.not.i48, label %bb.o, label %.lr.ph.i.i49
 
 .lr.ph.i.i49:                                     ; preds = %bb.n, %.lr.ph.i.i49
   %i.dw = phi i32 [ %i.dx, %.lr.ph.i.i49 ], [ %i.ds, %bb.n ]
   %i.dx = shl i32 %i.dw, 1                        ; 4 uses
-  %3 = icmp ult i32 %i.dx, %2
-  br i1 %3, label %.lr.ph.i.i49, label %._crit_edge.i.i, !llvm.loop !17
+  %.not5.i = icmp ugt i32 %i.dx, %i.ds
+  br i1 %.not5.i, label %._crit_edge.i.i, label %.lr.ph.i.i49, !llvm.loop !17
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i49
   store i32 %i.dx, ptr %i.dt, align 4
@@ -1025,15 +1023,14 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit48.i
 
 bb.j:                                             ; preds = %bb.i
-  %3 = add i32 %i.az, 1
   %.not.i39.i = icmp eq i32 %i.az, -1
   br i1 %.not.i39.i, label %bb.k, label %.lr.ph.i.i40.i
 
 .lr.ph.i.i40.i:                                   ; preds = %bb.j, %.lr.ph.i.i40.i
   %i.bc = phi i32 [ %i.bd, %.lr.ph.i.i40.i ], [ %i.az, %bb.j ]
   %i.bd = shl i32 %i.bc, 1                        ; 4 uses
-  %4 = icmp ult i32 %i.bd, %3
-  br i1 %4, label %.lr.ph.i.i40.i, label %._crit_edge.i.i41.i, !llvm.loop !17
+  %.not5.i41.i = icmp ugt i32 %i.bd, %i.az
+  br i1 %.not5.i41.i, label %._crit_edge.i.i41.i, label %.lr.ph.i.i40.i, !llvm.loop !17
 
 ._crit_edge.i.i41.i:                              ; preds = %.lr.ph.i.i40.i
   store i32 %i.bd, ptr %i.ai, align 4
@@ -1143,15 +1140,14 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit61.i
 
 bb.t:                                             ; preds = %bb.s
-  %5 = add i32 %i.ci, 1
   %.not.i52.i = icmp eq i32 %i.ci, -1
   br i1 %.not.i52.i, label %bb.u, label %.lr.ph.i.i53.i
 
 .lr.ph.i.i53.i:                                   ; preds = %bb.t, %.lr.ph.i.i53.i
   %i.cl = phi i32 [ %i.cm, %.lr.ph.i.i53.i ], [ %i.ci, %bb.t ]
   %i.cm = shl i32 %i.cl, 1                        ; 4 uses
-  %6 = icmp ult i32 %i.cm, %5
-  br i1 %6, label %.lr.ph.i.i53.i, label %._crit_edge.i.i54.i, !llvm.loop !17
+  %.not5.i55.i = icmp ugt i32 %i.cm, %i.ci
+  br i1 %.not5.i55.i, label %._crit_edge.i.i54.i, label %.lr.ph.i.i53.i, !llvm.loop !17
 
 ._crit_edge.i.i54.i:                              ; preds = %.lr.ph.i.i53.i
   store i32 %i.cm, ptr %i.an, align 4
@@ -1450,15 +1446,14 @@ bb.af:                                            ; preds = %bb.ae
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit35.i
 
 bb.ag:                                            ; preds = %bb.af
-  %7 = add i32 %i.gs, 1
   %.not.i26.i = icmp eq i32 %i.gs, -1
   br i1 %.not.i26.i, label %bb.ah, label %.lr.ph.i.i27.i
 
 .lr.ph.i.i27.i:                                   ; preds = %bb.ag, %.lr.ph.i.i27.i
   %i.gv = phi i32 [ %i.gw, %.lr.ph.i.i27.i ], [ %i.gs, %bb.ag ]
   %i.gw = shl i32 %i.gv, 1                        ; 4 uses
-  %8 = icmp ult i32 %i.gw, %7
-  br i1 %8, label %.lr.ph.i.i27.i, label %._crit_edge.i.i28.i, !llvm.loop !17
+  %.not5.i28.i = icmp ugt i32 %i.gw, %i.gs
+  br i1 %.not5.i28.i, label %._crit_edge.i.i28.i, label %.lr.ph.i.i27.i, !llvm.loop !17
 
 ._crit_edge.i.i28.i:                              ; preds = %.lr.ph.i.i27.i
   store i32 %i.gw, ptr %i.gg, align 4
@@ -1566,15 +1561,14 @@ bb.ap:                                            ; preds = %bb.ao
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit48.i85
 
 bb.aq:                                            ; preds = %bb.ap
-  %9 = add i32 %i.ib, 1
   %.not.i39.i86 = icmp eq i32 %i.ib, -1
   br i1 %.not.i39.i86, label %bb.ar, label %.lr.ph.i.i40.i87
 
 .lr.ph.i.i40.i87:                                 ; preds = %bb.aq, %.lr.ph.i.i40.i87
   %i.ie = phi i32 [ %i.if, %.lr.ph.i.i40.i87 ], [ %i.ib, %bb.aq ]
   %i.if = shl i32 %i.ie, 1                        ; 4 uses
-  %10 = icmp ult i32 %i.if, %9
-  br i1 %10, label %.lr.ph.i.i40.i87, label %._crit_edge.i.i41.i88, !llvm.loop !17
+  %.not5.i42.i = icmp ugt i32 %i.if, %i.ib
+  br i1 %.not5.i42.i, label %._crit_edge.i.i41.i88, label %.lr.ph.i.i40.i87, !llvm.loop !17
 
 ._crit_edge.i.i41.i88:                            ; preds = %.lr.ph.i.i40.i87
   store i32 %i.if, ptr %i.an, align 4
@@ -1977,15 +1971,14 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit57
 
 bb.j:                                             ; preds = %bb.i
-  %6 = add i32 %i.bd, 1
   %.not.i48 = icmp eq i32 %i.bd, -1
   br i1 %.not.i48, label %bb.k, label %.lr.ph.i.i49
 
 .lr.ph.i.i49:                                     ; preds = %bb.j, %.lr.ph.i.i49
   %i.bh = phi i32 [ %i.bi, %.lr.ph.i.i49 ], [ %i.bd, %bb.j ]
   %i.bi = shl i32 %i.bh, 1                        ; 4 uses
-  %7 = icmp ult i32 %i.bi, %6
-  br i1 %7, label %.lr.ph.i.i49, label %._crit_edge.i.i50, !llvm.loop !17
+  %.not5.i50 = icmp ugt i32 %i.bi, %i.bd
+  br i1 %.not5.i50, label %._crit_edge.i.i50, label %.lr.ph.i.i49, !llvm.loop !17
 
 ._crit_edge.i.i50:                                ; preds = %.lr.ph.i.i49
   store i32 %i.bi, ptr %i.aj, align 4
@@ -2091,15 +2084,14 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit70
 
 bb.s:                                             ; preds = %bb.r
-  %8 = add i32 %i.ck, 1
   %.not.i61 = icmp eq i32 %i.ck, -1
   br i1 %.not.i61, label %bb.t, label %.lr.ph.i.i62
 
 .lr.ph.i.i62:                                     ; preds = %bb.s, %.lr.ph.i.i62
   %i.cn = phi i32 [ %i.co, %.lr.ph.i.i62 ], [ %i.ck, %bb.s ]
   %i.co = shl i32 %i.cn, 1                        ; 4 uses
-  %9 = icmp ult i32 %i.co, %8
-  br i1 %9, label %.lr.ph.i.i62, label %._crit_edge.i.i63, !llvm.loop !17
+  %.not5.i64 = icmp ugt i32 %i.co, %i.ck
+  br i1 %.not5.i64, label %._crit_edge.i.i63, label %.lr.ph.i.i62, !llvm.loop !17
 
 ._crit_edge.i.i63:                                ; preds = %.lr.ph.i.i62
   store i32 %i.co, ptr %i.aj, align 4
@@ -2502,15 +2494,14 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4absl24
   br label %_ZN4absl24synchronization_internal12_GLOBAL__N_13VecIiE9push_backERKi.exit
 
 bb.c:                                             ; preds = %bb.b
-  %2 = add i32 %i.n, 1
   %.not.i = icmp eq i32 %i.n, -1
   br i1 %.not.i, label %bb.d, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %.lr.ph.i.i
   %i.q = phi i32 [ %i.r, %.lr.ph.i.i ], [ %i.n, %bb.c ]
   %i.r = shl i32 %i.q, 1                          ; 4 uses
-  %3 = icmp ult i32 %i.r, %2
-  br i1 %3, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !17
+  %.not5.i = icmp ugt i32 %i.r, %i.n
+  br i1 %.not5.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !17
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
   store i32 %i.r, ptr %i.d, align 4
