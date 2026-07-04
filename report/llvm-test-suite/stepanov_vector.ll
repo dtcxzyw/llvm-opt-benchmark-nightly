@@ -203,8 +203,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not4.i, label %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.thread
-  %26 = ptrtoint ptr %i.m to i64
-  %27 = ptrtoint ptr %i.l to i64
+  %26 = ptrtoaddr ptr %i.m to i64
+  %27 = ptrtoaddr ptr %i.l to i64
   %i.o = add i64 %26, -8
   %i.p = sub i64 %i.o, %27                        ; 2 uses
   %i.q = lshr i64 %i.p, 3
@@ -607,16 +607,15 @@ _ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit: ; preds = %.lr.ph.i142
 
 _ZN9benchmark11fill_randomIPddEEvT_S2_.exit:      ; preds = %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit, %bb.m
   %i.jz = phi ptr [ %.pre769, %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit ], [ %i.jv, %bb.m ] ; 4 uses
-  %i.ka = phi ptr [ %.pre768, %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit ], [ %i.ju, %bb.m ] ; 7 uses
+  %i.ka = phi ptr [ %.pre768, %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit ], [ %i.ju, %bb.m ] ; 6 uses
   %.not4.i145 = icmp eq ptr %i.ka, %i.jz
   br i1 %.not4.i145, label %_ZN9benchmark4copyIPdN9__gnu_cxx17__normal_iteratorIS1_St6vectorIdSaIdEEEEEEvT_S8_T0_.exit, label %.lr.ph.i146.preheader
 
 .lr.ph.i146.preheader:                            ; preds = %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit
-  %i.kb = ptrtoaddr ptr %i.ka to i64
-  %28 = ptrtoint ptr %i.ka to i64
-  %29 = ptrtoint ptr %i.jz to i64
-  %i.kc = add i64 %29, -8
-  %i.kd = sub i64 %i.kc, %28                      ; 2 uses
+  %i.kb = ptrtoaddr ptr %i.ka to i64              ; 2 uses
+  %28 = ptrtoaddr ptr %i.jz to i64
+  %i.kc = add i64 %28, -8
+  %i.kd = sub i64 %i.kc, %i.kb                    ; 2 uses
   %i.ke = lshr i64 %i.kd, 3
   %i.kf = add nuw nsw i64 %i.ke, 1                ; 2 uses
   %min.iters.check991 = icmp ult i64 %i.kd, 72
@@ -989,7 +988,7 @@ _Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vecto
   br i1 %i.oq, label %.lr.ph.i162, label %_Z19test_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEdEvT_S9_S9_S9_T0_PKc.exit187, !llvm.loop !64
 
 _Z19test_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEdEvT_S9_S9_S9_T0_PKc.exit187: ; preds = %_Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEvT_S9_.exit.i185
-  %i.or = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpb, i64 8), align 8, !tbaa !44 ; 6 uses
+  %i.or = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpb, i64 8), align 8, !tbaa !44 ; 5 uses
   %i.os = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpe, i64 8), align 8, !tbaa !44 ; 3 uses
   %i.ot = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdpb, i64 8), align 8, !tbaa !44 ; 8 uses
   %i.ou = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdpe, i64 8), align 8, !tbaa !44 ; 3 uses
@@ -998,14 +997,13 @@ _Z19test_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt
 
 .lr.ph.i188.preheader:                            ; preds = %_Z19test_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEdEvT_S9_S9_S9_T0_PKc.exit187
   %i.ow = ptrtoaddr ptr %i.ot to i64
-  %30 = ptrtoint ptr %i.os to i64
-  %i.ox = ptrtoaddr ptr %i.or to i64
-  %31 = ptrtoint ptr %i.or to i64
+  %29 = ptrtoaddr ptr %i.os to i64
+  %i.ox = ptrtoaddr ptr %i.or to i64              ; 2 uses
   %.not3.i.i = icmp eq ptr %i.or, %i.os
   %.sroa.215.023.i.i = getelementptr inbounds nuw i8, ptr %i.ot, i64 8 ; 2 uses
   %.not24.i.i = icmp eq ptr %.sroa.215.023.i.i, %i.ou
-  %i.oy = add i64 %30, -8
-  %i.oz = sub i64 %i.oy, %31                      ; 2 uses
+  %i.oy = add i64 %29, -8
+  %i.oz = sub i64 %i.oy, %i.ox                    ; 2 uses
   %i.pa = lshr i64 %i.oz, 3
   %i.pb = add nuw nsw i64 %i.pa, 1                ; 2 uses
   %min.iters.check1008 = icmp ult i64 %i.oz, 24
@@ -1408,7 +1406,7 @@ _Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vecto
 .loopexit727:                                     ; preds = %_Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEvT_S9_.exit.i282
   call void @llvm.lifetime.end.p0(ptr nonnull %20)
   call void @llvm.lifetime.end.p0(ptr nonnull %21)
-  %i.uq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpb, i64 8), align 8, !tbaa !44 ; 6 uses
+  %i.uq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpb, i64 8), align 8, !tbaa !44 ; 5 uses
   %i.ur = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpe, i64 8), align 8, !tbaa !44 ; 3 uses
   %i.us = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdpb, i64 8), align 8, !tbaa !44 ; 6 uses
   %i.ut = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdpe, i64 8), align 8, !tbaa !44 ; 2 uses
@@ -1426,14 +1424,13 @@ _Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vecto
 
 .lr.ph.i285:                                      ; preds = %.loopexit727
   %i.uv = ptrtoaddr ptr %i.us to i64
-  %32 = ptrtoint ptr %i.ur to i64
-  %i.uw = ptrtoaddr ptr %i.uq to i64
-  %33 = ptrtoint ptr %i.uq to i64
+  %30 = ptrtoaddr ptr %i.ur to i64
+  %i.uw = ptrtoaddr ptr %i.uq to i64              ; 2 uses
   %i.ux = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.uy = getelementptr inbounds nuw i8, ptr %19, i64 8
   %.not3.i.i287 = icmp eq ptr %i.uq, %i.ur
-  %i.uz = add i64 %32, -8
-  %i.va = sub i64 %i.uz, %33                      ; 2 uses
+  %i.uz = add i64 %30, -8
+  %i.va = sub i64 %i.uz, %i.uw                    ; 2 uses
   %i.vb = lshr i64 %i.va, 3
   %i.vc = add nuw nsw i64 %i.vb, 1                ; 2 uses
   %min.iters.check1026 = icmp ult i64 %i.va, 24
@@ -1836,7 +1833,7 @@ _Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vecto
 .loopexit708:                                     ; preds = %_Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEvT_S9_.exit.i368
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
-  %i.zx = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpb, i64 8), align 8, !tbaa !44 ; 6 uses
+  %i.zx = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpb, i64 8), align 8, !tbaa !44 ; 5 uses
   %i.zy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdMpe, i64 8), align 8, !tbaa !44 ; 3 uses
   %i.zz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdpb, i64 8), align 8, !tbaa !44 ; 6 uses
   %i.aaa = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rrdpe, i64 8), align 8, !tbaa !44 ; 2 uses
@@ -1854,14 +1851,13 @@ _Z13verify_sortedISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPdSt6vecto
 
 .lr.ph.i371:                                      ; preds = %.loopexit708
   %i.aac = ptrtoaddr ptr %i.zz to i64
-  %34 = ptrtoint ptr %i.zy to i64
-  %i.aad = ptrtoaddr ptr %i.zx to i64
-  %35 = ptrtoint ptr %i.zx to i64
+  %31 = ptrtoaddr ptr %i.zy to i64
+  %i.aad = ptrtoaddr ptr %i.zx to i64             ; 2 uses
   %i.aae = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.aaf = getelementptr inbounds nuw i8, ptr %7, i64 8
   %.not3.i.i373 = icmp eq ptr %i.zx, %i.zy
-  %i.aag = add i64 %34, -8
-  %i.aah = sub i64 %i.aag, %35                    ; 2 uses
+  %i.aag = add i64 %31, -8
+  %i.aah = sub i64 %i.aag, %i.aad                 ; 2 uses
   %i.aai = lshr i64 %i.aah, 3
   %i.aaj = add nuw nsw i64 %i.aai, 1              ; 2 uses
   %min.iters.check1044 = icmp ult i64 %i.aah, 24
@@ -2171,11 +2167,8 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortIPddEvT_S1_S1_S1_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5) local_unnamed_addr #10 comdat {
 bb.a:
-  %6 = ptrtoint ptr %0 to i64
-  %7 = ptrtoint ptr %1 to i64
-  %8 = ptrtoint ptr %0 to i64                     ; 2 uses
-  %9 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -2191,12 +2184,12 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %i.e = add i64 %7, -8
-  %i.f = sub i64 %i.e, %6                         ; 2 uses
+  %i.e = add i64 %6, -8
+  %i.f = sub i64 %i.e, %i.a                       ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check56 = icmp ult i64 %i.f, 24
-  %i.i = sub i64 %8, %i.b
+  %i.i = sub i64 %i.a, %i.b
   %diff.check54 = icmp ugt i64 %i.i, -32
   %or.cond = or i1 %min.iters.check56, %diff.check54
   %n.vec59 = and i64 %i.h, 4611686018427387900    ; 3 uses
@@ -2304,8 +2297,8 @@ _Z13verify_sortedIPdEvT_S1_.exit.us:              ; preds = %_ZN9benchmark4copyI
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us12, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %i.al = add i64 %9, -8
-  %i.am = sub i64 %i.al, %8                       ; 2 uses
+  %i.al = add i64 %6, -8
+  %i.am = sub i64 %i.al, %i.a                     ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.am, 24
@@ -2468,11 +2461,8 @@ _Z13verify_sortedIPdEvT_S1_.exit:                 ; preds = %_ZN9benchmark13inse
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_S7_S7_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double noundef %4, ptr noundef %5) local_unnamed_addr #10 comdat {
 bb.a:
-  %6 = ptrtoint ptr %0 to i64
-  %7 = ptrtoint ptr %1 to i64
-  %8 = ptrtoint ptr %0 to i64                     ; 2 uses
-  %9 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -2488,12 +2478,12 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEES7_EEvT_S8_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %i.e = add i64 %7, -8
-  %i.f = sub i64 %i.e, %6                         ; 2 uses
+  %i.e = add i64 %6, -8
+  %i.f = sub i64 %i.e, %i.a                       ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check63 = icmp ult i64 %i.f, 24
-  %i.i = sub i64 %8, %i.b
+  %i.i = sub i64 %i.a, %i.b
   %diff.check61 = icmp ugt i64 %i.i, -32
   %or.cond = select i1 %min.iters.check63, i1 true, i1 %diff.check61
   %n.vec66 = and i64 %i.h, 4611686018427387900    ; 3 uses
@@ -2601,8 +2591,8 @@ _Z13verify_sortedIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_.ex
   br i1 %.not6.i, label %_ZN9benchmark4copyIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEES7_EEvT_S8_T0_.exit.us16, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %i.an = add i64 %9, -8
-  %i.ao = sub i64 %i.an, %8                       ; 2 uses
+  %i.an = add i64 %6, -8
+  %i.ao = sub i64 %i.an, %i.a                     ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ao, 24
@@ -2765,9 +2755,8 @@ _Z13verify_sortedIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_.ex
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortIPddEvT_S1_S1_S1_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5) local_unnamed_addr #10 comdat {
 bb.a:
-  %6 = ptrtoint ptr %0 to i64
-  %7 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -2778,8 +2767,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %i.e = add i64 %7, -8
-  %i.f = sub i64 %i.e, %6                         ; 2 uses
+  %i.e = add i64 %6, -8
+  %i.f = sub i64 %i.e, %i.a                       ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 24
@@ -2892,9 +2881,8 @@ _Z13verify_sortedIPdEvT_S1_.exit:                 ; preds = %bb.d, %_ZN9benchmar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_S7_S7_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double noundef %4, ptr noundef %5) local_unnamed_addr #10 comdat {
 bb.a:
-  %6 = ptrtoint ptr %0 to i64
-  %7 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -2905,8 +2893,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEES7_EEvT_S8_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %i.e = add i64 %7, -8
-  %i.f = sub i64 %i.e, %6                         ; 2 uses
+  %i.e = add i64 %6, -8
+  %i.f = sub i64 %i.e, %i.a                       ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 24
@@ -3019,9 +3007,8 @@ _Z13verify_sortedIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_.ex
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortIPddEvT_S1_S1_S1_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5) local_unnamed_addr #10 comdat {
 bb.a:
-  %6 = ptrtoint ptr %0 to i64
-  %7 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3032,8 +3019,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %i.e = add i64 %7, -8
-  %i.f = sub i64 %i.e, %6                         ; 2 uses
+  %i.e = add i64 %6, -8
+  %i.f = sub i64 %i.e, %i.a                       ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 24
@@ -3146,9 +3133,8 @@ _Z13verify_sortedIPdEvT_S1_.exit:                 ; preds = %bb.d, %_ZN9benchmar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEvT_S7_S7_S7_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double noundef %4, ptr noundef %5) local_unnamed_addr #10 comdat {
 bb.a:
-  %6 = ptrtoint ptr %0 to i64
-  %7 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3159,8 +3145,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEES7_EEvT_S8_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %i.e = add i64 %7, -8
-  %i.f = sub i64 %i.e, %6                         ; 2 uses
+  %i.e = add i64 %6, -8
+  %i.f = sub i64 %i.e, %i.a                       ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 24

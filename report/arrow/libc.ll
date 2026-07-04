@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 24 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 12 uses
-  %4 = ptrtoint ptr %i.e to i64
+  %4 = ptrtoaddr ptr %i.e to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %mi_out_alignright.exit
@@ -607,8 +607,8 @@ mi_outs.exit:                                     ; preds = %.lr.ph.i, %.epil.pr
   %.2225 = phi i8 [ %.0223, %.epil.preheader ], [ %.0223, %bb.cw ], [ %.1224, %.epil.preheader488 ], [ %.0223, %mi_outc.exit312 ], [ %.0223, %mi_outc.exit281 ], [ %.0223, %bb.ag ], [ %.0223, %bb.ah ], [ %.1224, %bb.bn ], [ %.1224, %mi_outc.exit.i ], [ %.1224, %mi_outc.exit53.i ], [ %.0223, %bb.cr ], [ %.0223, %mi_outc.exit.i308 ], [ %.0223, %mi_outc.exit53.i294 ], [ %.0223, %bb.cx ], [ %.1224, %mi_outs.exit.loopexit.unr-lcssa ], [ %.0223, %mi_outs.exit.loopexit477.unr-lcssa ], [ %.0223, %.lr.ph.i ] ; 2 uses
   %.6222 = phi i64 [ %.2218, %.epil.preheader ], [ %.2218, %bb.cw ], [ %.5221, %.epil.preheader488 ], [ %.2218, %mi_outc.exit312 ], [ %.2218, %mi_outc.exit281 ], [ %.2218, %bb.ag ], [ %.2218, %bb.ah ], [ %.5221, %bb.bn ], [ %.5221, %mi_outc.exit.i ], [ %.5221, %mi_outc.exit53.i ], [ %.2218, %bb.cr ], [ %.2218, %mi_outc.exit.i308 ], [ %.2218, %mi_outc.exit53.i294 ], [ %.2218, %bb.cx ], [ %.5221, %mi_outs.exit.loopexit.unr-lcssa ], [ %.2218, %mi_outs.exit.loopexit477.unr-lcssa ], [ %.2218, %.lr.ph.i ] ; 7 uses
   %.1212 = phi ptr [ %.0337377, %.epil.preheader ], [ %.0337377, %bb.cw ], [ %.1338, %.epil.preheader488 ], [ %.0337377, %mi_outc.exit312 ], [ %.0337377, %mi_outc.exit281 ], [ %.0337377, %bb.ag ], [ %.0337377, %bb.ah ], [ %.1338, %bb.bn ], [ %.1338, %mi_outc.exit.i ], [ %.1338, %mi_outc.exit53.i ], [ %.0337377, %bb.cr ], [ %.0337377, %mi_outc.exit.i308 ], [ %.0337377, %mi_outc.exit53.i294 ], [ %.0337377, %bb.cx ], [ %.1338, %mi_outs.exit.loopexit.unr-lcssa ], [ %.0337377, %mi_outs.exit.loopexit477.unr-lcssa ], [ %.0337377, %.lr.ph.i ] ; 10 uses
-  %.fr.i = freeze ptr %.2339                      ; 7 uses
-  %i.jn = ptrtoint ptr %.fr.i to i64              ; 3 uses
+  %.fr.i = freeze ptr %.2339                      ; 8 uses
+  %i.jn = ptrtoint ptr %.fr.i to i64              ; 2 uses
   %i.jo = ptrtoint ptr %.1212 to i64              ; 2 uses
   %i.jp = sub i64 %i.jn, %i.jo                    ; 13 uses
   %i.jq = icmp ult i64 %i.jp, %.6222
@@ -620,7 +620,8 @@ bb.cy:                                            ; preds = %mi_outs.exit
   br i1 %i.js, label %.lr.ph.preheader.i, label %mi_out_fill.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.cy
-  %i.jt = xor i64 %i.jn, -1
+  %5 = ptrtoaddr ptr %.fr.i to i64
+  %i.jt = xor i64 %5, -1
   %i.ju = add i64 %i.jt, %4
   %i.jv = add i64 %i.jr, -1
   %umin.i = tail call i64 @llvm.umin.i64(i64 %i.ju, i64 %i.jv)

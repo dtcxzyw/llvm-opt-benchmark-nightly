@@ -204,7 +204,7 @@ seterr.exit95.i:                                  ; preds = %bb.am, %bb.al
 
 bb.an:                                            ; preds = %seterr.exit95.i, %bb.ak
   %i.fl = phi ptr [ @nuls, %seterr.exit95.i ], [ %i.ex, %bb.ak ] ; 3 uses
-  %i.fm = phi ptr [ @nuls, %seterr.exit95.i ], [ %i.fh, %bb.ak ] ; 7 uses
+  %i.fm = phi ptr [ @nuls, %seterr.exit95.i ], [ %i.fh, %bb.ak ] ; 9 uses
   %i.fn = load i8, ptr %i.fm, align 1, !tbaa !34
   switch i8 %i.fn, label %bb.aq [
     i8 93, label %bb.ao
@@ -225,15 +225,15 @@ bb.ap:                                            ; preds = %bb.ao
   br label %.critedge.i.i
 
 bb.aq:                                            ; preds = %bb.an
-  %1 = ptrtoint ptr %i.fm to i64                  ; 4 uses
   %i.fq = icmp ult ptr %i.fm, %i.fl
   br i1 %i.fq, label %.lr.ph.i.i, label %.critedge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.aq
-  %2 = ptrtoint ptr %i.fl to i64
+  %1 = ptrtoaddr ptr %i.fl to i64
+  %2 = ptrtoaddr ptr %i.fm to i64
   %i.fr = tail call ptr @__ctype_b_loc() #13
   %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !61
-  %i.ft = sub i64 %2, %1
+  %i.ft = sub i64 %1, %2
   %scevgep.i.i = getelementptr i8, ptr %i.fm, i64 %i.ft
   br label %bb.ar
 
@@ -245,92 +245,88 @@ bb.ar:                                            ; preds = %bb.as, %.lr.ph.i.i
   %i.fy = load i16, ptr %i.fx, align 2, !tbaa !63
   %i.fz = and i16 %i.fy, 1024
   %.not.i.i145 = icmp eq i16 %i.fz, 0
-  br i1 %.not.i.i145, label %.critedge.loopexit.i.i, label %bb.as
+  br i1 %.not.i.i145, label %.critedge.i.i, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fu, i64 1 ; 3 uses
   store ptr %i.ga, ptr %0, align 8, !tbaa !19
   %exitcond.not.i.i = icmp eq ptr %i.ga, %i.fl
-  br i1 %exitcond.not.i.i, label %.critedge.loopexit.i.i, label %bb.ar, !llvm.loop !77
+  br i1 %exitcond.not.i.i, label %.critedge.i.i, label %bb.ar, !llvm.loop !77
 
-.critedge.loopexit.i.i:                           ; preds = %bb.as, %bb.ar
-  %.lcssa37.ph.i.i = phi ptr [ %i.fu, %bb.ar ], [ %scevgep.i.i, %bb.as ]
-  %.pre.i.i = ptrtoint ptr %.lcssa37.ph.i.i to i64
-  br label %.critedge.i.i
-
-.critedge.i.i:                                    ; preds = %.critedge.loopexit.i.i, %bb.aq, %.thread.i
-  %3 = phi i64 [ %1, %.critedge.loopexit.i.i ], [ %1, %bb.aq ], [ ptrtoint (ptr @nuls to i64), %.thread.i ]
-  %4 = phi ptr [ %i.fm, %.critedge.loopexit.i.i ], [ %i.fm, %bb.aq ], [ @nuls, %.thread.i ] ; 12 uses
-  %.pre-phi.i.i = phi i64 [ %.pre.i.i, %.critedge.loopexit.i.i ], [ %1, %bb.aq ], [ ptrtoint (ptr @nuls to i64), %.thread.i ]
-  %i.gb = sub i64 %.pre-phi.i.i, %3               ; 14 uses
-  %i.gc = tail call i32 @strncmp(ptr noundef nonnull @.str.2, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+.critedge.i.i:                                    ; preds = %bb.as, %bb.ar, %bb.aq, %.thread.i
+  %3 = phi ptr [ %i.fm, %bb.aq ], [ @nuls, %.thread.i ], [ %i.fm, %bb.ar ], [ %i.fm, %bb.as ] ; 13 uses
+  %.lcssa37.i.i = phi ptr [ %i.fm, %bb.aq ], [ @nuls, %.thread.i ], [ %scevgep.i.i, %bb.as ], [ %i.fu, %bb.ar ]
+  %4 = ptrtoint ptr %.lcssa37.i.i to i64
+  %5 = ptrtoint ptr %3 to i64
+  %i.gb = sub i64 %4, %5                          ; 14 uses
+  %i.gc = tail call i32 @strncmp(ptr noundef nonnull @.str.2, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gd = icmp eq i32 %i.gc, 0
   %i.ge = icmp eq i64 %i.gb, 5                    ; 11 uses
   %or.cond.i.i = and i1 %i.gd, %i.ge
   br i1 %or.cond.i.i, label %bb.bg, label %bb.at
 
 bb.at:                                            ; preds = %.critedge.i.i
-  %i.gf = tail call i32 @strncmp(ptr noundef nonnull @.str.5, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gf = tail call i32 @strncmp(ptr noundef nonnull @.str.5, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gg = icmp eq i32 %i.gf, 0
   %or.cond53.i.i = and i1 %i.ge, %i.gg
   br i1 %or.cond53.i.i, label %bb.bg, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.gh = tail call i32 @strncmp(ptr noundef nonnull @.str.7, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gh = tail call i32 @strncmp(ptr noundef nonnull @.str.7, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gi = icmp eq i32 %i.gh, 0
   %or.cond54.i.i = and i1 %i.ge, %i.gi
   br i1 %or.cond54.i.i, label %bb.bg, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.gj = tail call i32 @strncmp(ptr noundef nonnull @.str.9, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gj = tail call i32 @strncmp(ptr noundef nonnull @.str.9, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gk = icmp eq i32 %i.gj, 0
   %or.cond55.i.i = and i1 %i.ge, %i.gk
   br i1 %or.cond55.i.i, label %bb.bg, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.gl = tail call i32 @strncmp(ptr noundef nonnull @.str.11, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gl = tail call i32 @strncmp(ptr noundef nonnull @.str.11, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gm = icmp eq i32 %i.gl, 0
   %or.cond56.i.i = and i1 %i.ge, %i.gm
   br i1 %or.cond56.i.i, label %bb.bg, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.gn = tail call i32 @strncmp(ptr noundef nonnull @.str.13, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gn = tail call i32 @strncmp(ptr noundef nonnull @.str.13, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.go = icmp eq i32 %i.gn, 0
   %or.cond57.i.i = and i1 %i.ge, %i.go
   br i1 %or.cond57.i.i, label %bb.bg, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.gp = tail call i32 @strncmp(ptr noundef nonnull @.str.15, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gp = tail call i32 @strncmp(ptr noundef nonnull @.str.15, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gq = icmp eq i32 %i.gp, 0
   %or.cond58.i.i = and i1 %i.ge, %i.gq
   br i1 %or.cond58.i.i, label %bb.bg, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.gr = tail call i32 @strncmp(ptr noundef nonnull @.str.17, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gr = tail call i32 @strncmp(ptr noundef nonnull @.str.17, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gs = icmp eq i32 %i.gr, 0
   %or.cond59.i.i = and i1 %i.ge, %i.gs
   br i1 %or.cond59.i.i, label %bb.bg, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.gt = tail call i32 @strncmp(ptr noundef nonnull @.str.19, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gt = tail call i32 @strncmp(ptr noundef nonnull @.str.19, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gu = icmp eq i32 %i.gt, 0
   %or.cond60.i.i = and i1 %i.ge, %i.gu
   br i1 %or.cond60.i.i, label %bb.bg, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.gv = tail call i32 @strncmp(ptr noundef nonnull @.str.21, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gv = tail call i32 @strncmp(ptr noundef nonnull @.str.21, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gw = icmp eq i32 %i.gv, 0
   %or.cond61.i.i = and i1 %i.ge, %i.gw
   br i1 %or.cond61.i.i, label %bb.bg, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.gx = tail call i32 @strncmp(ptr noundef nonnull @.str.23, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gx = tail call i32 @strncmp(ptr noundef nonnull @.str.23, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.gy = icmp eq i32 %i.gx, 0
   %or.cond62.i.i = and i1 %i.ge, %i.gy
   br i1 %or.cond62.i.i, label %bb.bg, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.gz = tail call i32 @strncmp(ptr noundef nonnull @.str.25, ptr noundef nonnull %4, i64 noundef %i.gb) #12
+  %i.gz = tail call i32 @strncmp(ptr noundef nonnull @.str.25, ptr noundef nonnull %3, i64 noundef %i.gb) #12
   %i.ha = icmp eq i32 %i.gz, 0
   %i.hb = icmp eq i64 %i.gb, 6
   %or.cond63.i.i = and i1 %i.hb, %i.ha
@@ -517,7 +513,6 @@ bb.by:                                            ; preds = %bb.bx, %bb.bx
   br i1 %i.jl, label %seterr.exit.i.i101.i.sink.split, label %seterr.exit.i.i101.i
 
 bb.bz:                                            ; preds = %bb.bx
-  %5 = ptrtoint ptr %i.ji to i64
   %i.jm = icmp ult ptr %i.ji, %i.jh
   br i1 %i.jm, label %.lr.ph.i.i.i, label %.critedge.i.i.i
 
@@ -558,7 +553,8 @@ seterr.exit.i.i101.i:                             ; preds = %seterr.exit.i.i101.
 
 bb.cc:                                            ; preds = %bb.cb
   %i.ju = ptrtoint ptr %i.jn to i64
-  %i.jv = sub i64 %i.ju, %5                       ; 2 uses
+  %6 = ptrtoint ptr %i.ji to i64
+  %i.jv = sub i64 %i.ju, %6                       ; 2 uses
   %sext.i.i.i = shl i64 %i.jv, 32
   %i.jw = ashr exact i64 %sext.i.i.i, 32          ; 2 uses
   br label %bb.cd
@@ -961,7 +957,6 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 6 uses
   store ptr %i.n, ptr %0, align 8, !tbaa !19
-  %1 = ptrtoint ptr %i.n to i64
   %i.o = icmp ult ptr %i.n, %i.c
   br i1 %i.o, label %.lr.ph.i, label %.critedge.i
 
@@ -998,6 +993,7 @@ bb.j:                                             ; preds = %.critedge.i
 
 bb.k:                                             ; preds = %bb.i
   %i.y = ptrtoint ptr %i.p to i64
+  %1 = ptrtoint ptr %i.n to i64
   %i.z = sub i64 %i.y, %1                         ; 2 uses
   %sext.i = shl i64 %i.z, 32
   %i.aa = ashr exact i64 %sext.i, 32              ; 2 uses

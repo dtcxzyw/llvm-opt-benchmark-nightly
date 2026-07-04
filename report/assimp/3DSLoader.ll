@@ -204,10 +204,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
-  %i.c = load ptr, ptr %1, align 8                ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = load ptr, ptr %1, align 8                ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8
@@ -220,6 +220,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = sdiv exact i64 %i.f, 12
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.o = icmp ugt i64 %i.n, 768614336404564650
   br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i, !prof !9
 
@@ -233,8 +235,8 @@ _ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i
-  %i.q = add i64 %i.d, -12
-  %i.r = sub i64 %i.q, %i.e
+  %i.q = add i64 %3, -12
+  %i.r = sub i64 %i.q, %2
   %.fr.i = freeze i64 %i.r                        ; 2 uses
   %i.s = urem i64 %.fr.i, 12
   %i.t = add i64 %.fr.i, 12
@@ -637,8 +639,8 @@ _ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPjjEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69
-  %4 = sub i64 %i.f, %i.j
-  %5 = add i64 %4, -4                             ; 2 uses
+  %4 = add i64 %i.f, -4
+  %5 = sub i64 %4, %i.j                           ; 2 uses
   %i.bg = lshr i64 %5, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check112 = icmp ult i64 %5, 28

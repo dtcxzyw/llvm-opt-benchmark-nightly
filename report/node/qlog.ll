@@ -201,7 +201,7 @@ is_term_sep_ws.exit.thread.i:                     ; preds = %is_term_sep_ws.exit
 .preheader.i:                                     ; preds = %is_term_sep_ws.exit.thread.i, %bb.b
   %i.i = phi i8 [ %.pre.i, %bb.b ], [ %i.e, %is_term_sep_ws.exit.thread.i ] ; 2 uses
   %.0.i36.idx = phi i64 [ %.0.i36.add, %bb.b ], [ 0, %is_term_sep_ws.exit.thread.i ] ; 4 uses
-  %.0.i36.ptr = getelementptr inbounds nuw i8, ptr %.022.i, i64 %.0.i36.idx ; 6 uses
+  %.0.i36.ptr = getelementptr inbounds nuw i8, ptr %.022.i, i64 %.0.i36.idx ; 7 uses
   switch i8 %i.i, label %is_term_sep_ws.exit25.i [
     i8 32, label %bb.c
     i8 13, label %bb.c
@@ -285,11 +285,11 @@ is_name_char.exit44:                              ; preds = %bb.f
   br i1 %or.cond8, label %.loopexit, label %is_name_char.exit.thread
 
 is_name_char.exit.thread:                         ; preds = %lex_peek_char.exit.thread, %bb.f, %lex_peek_char.exit40, %bb.e, %is_name_char.exit44, %is_name_char.exit
-  %.sroa.0105.0 = phi ptr [ %.022.i, %is_name_char.exit44 ], [ %i.o, %is_name_char.exit ], [ %i.o, %lex_peek_char.exit40 ], [ %i.o, %bb.e ], [ %.022.i, %bb.f ], [ %.022.i, %lex_peek_char.exit.thread ] ; 9 uses
+  %.sroa.0105.0 = phi ptr [ %.022.i, %is_name_char.exit44 ], [ %i.o, %is_name_char.exit ], [ %i.o, %lex_peek_char.exit40 ], [ %i.o, %bb.e ], [ %.022.i, %bb.f ], [ %.022.i, %lex_peek_char.exit.thread ] ; 10 uses
   %.0.shrunk = phi i1 [ true, %is_name_char.exit44 ], [ %i.n, %is_name_char.exit ], [ %i.n, %lex_peek_char.exit40 ], [ %i.n, %bb.e ], [ true, %bb.f ], [ true, %lex_peek_char.exit.thread ] ; 14 uses
   %i.ag = ptrtoint ptr %.0.i36.ptr to i64         ; 2 uses
   %i.ah = ptrtoint ptr %.sroa.0105.0 to i64       ; 2 uses
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
+  %i.ai = sub i64 %i.ag, %i.ah
   %.not.i45 = icmp eq i64 %i.ai, 1
   br i1 %.not.i45, label %lex_match.exit, label %lex_match.exit.thread
 
@@ -321,7 +321,10 @@ lex_match.exit.thread:                            ; preds = %is_name_char.exit.t
   br i1 %i.al, label %.lr.ph.preheader.i, label %.critedge.i
 
 .lr.ph.preheader.i:                               ; preds = %lex_match.exit.thread
-  %scevgep.i = getelementptr i8, ptr %.sroa.0105.0, i64 %i.ai
+  %2 = ptrtoaddr ptr %.0.i36.ptr to i64
+  %3 = ptrtoaddr ptr %.sroa.0105.0 to i64
+  %4 = sub i64 %2, %3
+  %scevgep.i = getelementptr i8, ptr %.sroa.0105.0, i64 %4
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i

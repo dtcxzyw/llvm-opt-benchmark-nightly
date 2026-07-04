@@ -204,7 +204,7 @@ define linkonce_odr void @_ZNSt6vectorIN6google8protobuf8internal17TailCallTable
 bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 10 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !138
   %i.f = load ptr, ptr %0, align 8, !tbaa !136    ; 8 uses
@@ -228,7 +228,10 @@ _ZNSt12_Vector_baseIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfo
   br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE20_M_allocate_and_copyIPS4_EES8_mT_S9_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE11_M_allocateEm.exit.i
-  %i.m = and i64 %i.c, 9223372036854775776
+  %3 = ptrtoaddr ptr %2 to i64
+  %4 = ptrtoaddr ptr %1 to i64
+  %reass.sub = sub i64 %3, %4
+  %i.m = and i64 %reass.sub, -32
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr align 8 %1, i64 %i.m, i1 false)
   br label %_ZNSt6vectorIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE20_M_allocate_and_copyIPS4_EES8_mT_S9_.exit
 

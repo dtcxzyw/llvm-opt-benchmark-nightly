@@ -201,7 +201,6 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #9
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EE17_M_realloc_insertIJRPhRmEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !32     ; 9 uses
@@ -222,7 +221,7 @@ _ZNKSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EE12_M_check_len
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -240,7 +239,7 @@ _ZNSt16allocator_traitsISaIN8facebook5velox6memory10Allocation7PageRunEEE9constr
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt16allocator_traitsISaIN8facebook5velox6memory10Allocation7PageRunEEE9constructIS4_JRPhRmEEEvRS5_PT_DpOT0_.exit
-  %i.u = add i64 %4, -8
+  %i.u = add i64 %i.m, -8
   %i.v = sub i64 %i.u, %i.e                       ; 3 uses
   %i.w = lshr i64 %i.v, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 5 uses
@@ -346,14 +345,14 @@ _ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EE11_S_relocateEP
 
 iter.check86:                                     ; preds = %_ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit
   %i.at = add i64 %i.d, -8
-  %i.au = sub i64 %i.at, %4                       ; 3 uses
+  %i.au = sub i64 %i.at, %i.m                     ; 3 uses
   %i.av = lshr i64 %i.au, 3
   %i.aw = add nuw nsw i64 %i.av, 1                ; 5 uses
   %min.iters.check67 = icmp ult i64 %i.au, 24
   br i1 %min.iters.check67, label %.lr.ph.i.i.i28.preheader, label %vector.memcheck64
 
 vector.memcheck64:                                ; preds = %iter.check86
-  %i.ax = sub i64 %.0.lcssa.i.i.i65, %4
+  %i.ax = sub i64 %.0.lcssa.i.i.i65, %i.m
   %i.ay = add i64 %i.ax, 7
   %diff.check66 = icmp ult i64 %i.ay, 127
   br i1 %diff.check66, label %.lr.ph.i.i.i28.preheader, label %vector.main.loop.iter.check68

@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i:
   %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.g = load i64, ptr %i.f, align 8              ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.g ; 12 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.g ; 13 uses
   %i.i = udiv i64 %i.g, 160
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 2 uses
   %i.j = mul nuw nsw i64 %.sroa.speculated, 3     ; 2 uses
@@ -219,7 +219,8 @@ _ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i92: ; preds = %
 
 _ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103: ; preds = %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i92
   %i.o = getelementptr inbounds nuw [12 x i8], ptr %i.n, i64 %i.j
-  %i.p = ptrtoint ptr %i.h to i64                 ; 11 uses
+  %i.p = ptrtoint ptr %i.h to i64
+  %7 = ptrtoaddr ptr %i.h to i64                  ; 11 uses
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
@@ -241,7 +242,7 @@ bb.a:                                             ; preds = %_ZNSt6vectorI10aiVe
   %.sroa.38.0 = phi ptr [ %i.o, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.38.2, %.noexc264 ] ; 14 uses
   %.sroa.20368.0 = phi ptr [ %i.l, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.20368.3, %.noexc264 ]
   %.sroa.0354.0 = phi ptr [ %i.l, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.0354.2, %.noexc264 ] ; 15 uses
-  %.0441 = phi ptr [ %i.e, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.6, %.noexc264 ] ; 6 uses
+  %.0441 = phi ptr [ %i.e, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.6, %.noexc264 ] ; 7 uses
   %.sroa.17.0 = phi ptr [ null, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.17.5, %.noexc264 ] ; 13 uses
   %.sroa.11.0 = phi ptr [ null, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.11.1, %.noexc264 ] ; 5 uses
   %.sroa.0416.0 = phi ptr [ null, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.0416.5, %.noexc264 ] ; 23 uses
@@ -249,7 +250,7 @@ bb.a:                                             ; preds = %_ZNSt6vectorI10aiVe
   %.sroa.12434.0 = phi ptr [ null, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.12434.1, %.noexc264 ] ; 6 uses
   %.sroa.0427.0 = phi ptr [ null, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit103 ], [ %.sroa.0427.4, %.noexc264 ] ; 20 uses
   %i.ac = ptrtoint ptr %.0441 to i64
-  %i.ad = sub i64 %i.p, %i.ac                     ; 3 uses
+  %i.ad = sub i64 %i.p, %i.ac                     ; 2 uses
   %i.ae = and i64 %i.ad, 4294967295               ; 2 uses
   %i.af = icmp samesign ult i64 %i.ae, 84
   br i1 %i.af, label %_ZN6Assimp12_GLOBAL__N_111IsBinarySTLEPKcm.exit.thread.i, label %_ZN6Assimp12_GLOBAL__N_111IsBinarySTLEPKcm.exit.i
@@ -463,7 +464,9 @@ _ZNSt6vectorIP6aiNodeSaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorIP6ai
   %.pn504 = phi ptr [ %i.cc, %_ZNSt6vectorIP6aiNodeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.11.0, %bb.o ]
   %.sroa.0416.5 = phi ptr [ %i.cb, %_ZNSt6vectorIP6aiNodeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.0416.0, %bb.o ] ; 14 uses
   %.sroa.11.1 = getelementptr inbounds nuw i8, ptr %.pn504, i64 8
-  %scevgep.i.i = getelementptr i8, ptr %.0441, i64 %i.ad
+  %8 = ptrtoaddr ptr %.0441 to i64
+  %9 = sub i64 %7, %8
+  %scevgep.i.i = getelementptr i8, ptr %.0441, i64 %9
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.v, %_ZNSt6vectorIP6aiNodeSaIS1_EE9push_backERKS1_.exit
@@ -485,8 +488,8 @@ bb.v:                                             ; preds = %bb.u
 _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit:         ; preds = %bb.t, %bb.u
   %.0.lcssa.i.i = phi ptr [ %.0.i.i, %bb.t ], [ %scevgep.i.i, %bb.u ]
   %i.ch = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 5 ; 3 uses
-  %7 = ptrtoint ptr %i.ch to i64
-  %i.ci = sub i64 %i.p, %7
+  %10 = ptrtoaddr ptr %i.ch to i64
+  %i.ci = sub i64 %7, %10
   %scevgep.i.i118 = getelementptr i8, ptr %i.ch, i64 %i.ci
   br label %bb.w
 
@@ -889,8 +892,8 @@ bb.bc:                                            ; preds = %.preheader, %_ZN6As
   %.sroa.0354.2 = phi ptr [ %.sroa.0354.3, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit255.thread ], [ %.sroa.0354.0, %.preheader ] ; 29 uses
   %.2 = phi ptr [ %.5, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit255.thread ], [ %.1, %.preheader ] ; 3 uses
   %.060 = phi i32 [ %.161, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit255.thread ], [ 3, %.preheader ] ; 9 uses
-  %8 = ptrtoint ptr %.2 to i64
-  %i.fm = sub i64 %i.p, %8
+  %11 = ptrtoaddr ptr %.2 to i64
+  %i.fm = sub i64 %7, %11
   %scevgep.i.i153 = getelementptr i8, ptr %.2, i64 %i.fm ; 2 uses
   br label %bb.bd
 
@@ -980,8 +983,8 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bm, %bb.bk
   %i.fv = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i156, i64 6 ; 3 uses
-  %9 = ptrtoint ptr %i.fv to i64
-  %i.fw = sub i64 %i.p, %9
+  %12 = ptrtoaddr ptr %i.fv to i64
+  %i.fw = sub i64 %7, %12
   %scevgep.i.i158 = getelementptr i8, ptr %i.fv, i64 %i.fw
   br label %bb.bo
 
@@ -1045,8 +1048,8 @@ bb.bw:                                            ; preds = %bb.bt
   store <2 x float> zeroinitializer, ptr %6, align 8
   store float 0.000000e+00, ptr %i.aa, align 8
   %i.gh = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i162, i64 7 ; 3 uses
-  %10 = ptrtoint ptr %i.gh to i64
-  %i.gi = sub i64 %i.p, %10
+  %13 = ptrtoaddr ptr %i.gh to i64
+  %i.gi = sub i64 %7, %13
   %scevgep.i.i164 = getelementptr i8, ptr %i.gh, i64 %i.gi
   br label %bb.bx
 
@@ -1072,8 +1075,8 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit169:      ; preds = %bb.bx, %bb.by
           to label %bb.ca unwind label %.loopexit512 ; 3 uses
 
 bb.ca:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit169
-  %11 = ptrtoint ptr %i.gl to i64
-  %i.gm = sub i64 %i.p, %11
+  %14 = ptrtoaddr ptr %i.gl to i64
+  %i.gm = sub i64 %7, %14
   %scevgep.i.i170 = getelementptr i8, ptr %i.gl, i64 %i.gm
   br label %bb.cb
 
@@ -1099,8 +1102,8 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit175:      ; preds = %bb.cb, %bb.cc
           to label %bb.ce unwind label %.loopexit512 ; 3 uses
 
 bb.ce:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit175
-  %12 = ptrtoint ptr %i.gp to i64
-  %i.gq = sub i64 %i.p, %12
+  %15 = ptrtoaddr ptr %i.gp to i64
+  %i.gq = sub i64 %7, %15
   %scevgep.i.i176 = getelementptr i8, ptr %i.gp, i64 %i.gq
   br label %bb.cf
 
@@ -1185,7 +1188,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRS1_EEES5_DpOT_.exit: ; pred
   %.sroa.0328.9 = phi ptr [ %i.he, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.0328.2, %bb.cj ] ; 8 uses
   %.0.lcssa.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.20.1, %bb.cj ] ; 4 uses
   %.sroa.38.9 = phi ptr [ %i.hi, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.38.2, %bb.cj ] ; 6 uses
-  %.0.lcssa.i.i.i.i.i.pn3442 = ptrtoint ptr %.0.lcssa.i.i.i.i.i.pn to i64
+  %.0.lcssa.i.i.i.i.i.pn3442 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i.pn to i64
   %.sroa.20.5 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.pn, i64 12 ; 2 uses
   %.not.i187 = icmp eq ptr %.sroa.20.5, %.sroa.38.9
   br i1 %.not.i187, label %bb.cn, label %bb.cm
@@ -1417,8 +1420,8 @@ bb.da:                                            ; preds = %bb.cz
 
 bb.db:                                            ; preds = %bb.cy
   %i.jk = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i156, i64 7 ; 3 uses
-  %13 = ptrtoint ptr %i.jk to i64
-  %i.jl = sub i64 %i.p, %13
+  %16 = ptrtoaddr ptr %i.jk to i64
+  %i.jl = sub i64 %7, %16
   %scevgep.i.i220 = getelementptr i8, ptr %i.jk, i64 %i.jl
   br label %bb.dc
 
@@ -1508,8 +1511,8 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJEEERS1_DpOT_.exit: ; preds =
           to label %bb.di unwind label %bb.dr     ; 3 uses
 
 bb.di:                                            ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJEEERS1_DpOT_.exit
-  %14 = ptrtoint ptr %i.kf to i64
-  %i.kg = sub i64 %i.p, %14
+  %17 = ptrtoaddr ptr %i.kf to i64
+  %i.kg = sub i64 %7, %17
   %scevgep.i.i238 = getelementptr i8, ptr %i.kf, i64 %i.kg
   br label %bb.dj
 
@@ -1536,8 +1539,8 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit243:      ; preds = %bb.dj, %bb.dk
           to label %bb.dm unwind label %bb.dr     ; 3 uses
 
 bb.dm:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit243
-  %15 = ptrtoint ptr %i.kk to i64
-  %i.kl = sub i64 %i.p, %15
+  %18 = ptrtoaddr ptr %i.kk to i64
+  %i.kl = sub i64 %7, %18
   %scevgep.i.i244 = getelementptr i8, ptr %i.kk, i64 %i.kl
   br label %bb.dn
 
@@ -1589,8 +1592,8 @@ _ZN6Assimp9IsLineEndIcEEbT_.exit:                 ; preds = %_ZN6Assimp16IsSpace
   ], !llvm.loop !35
 
 bb.ds:                                            ; preds = %_ZN6Assimp9IsLineEndIcEEbT_.exit, %_ZN6Assimp9IsLineEndIcEEbT_.exit, %_ZN6Assimp9IsLineEndIcEEbT_.exit, %_ZN6Assimp9IsLineEndIcEEbT_.exit
-  %16 = ptrtoint ptr %i.kt to i64
-  %i.kv = sub i64 %i.p, %16
+  %19 = ptrtoaddr ptr %i.kt to i64
+  %i.kv = sub i64 %7, %19
   %scevgep.i.i250 = getelementptr i8, ptr %i.kt, i64 %i.kv
   br label %bb.dt
 

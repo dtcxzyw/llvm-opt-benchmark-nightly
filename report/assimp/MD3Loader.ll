@@ -204,7 +204,7 @@ _ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit230.loopexit: ; preds = %bb.ea, %bb.eb
 _ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit230:         ; preds = %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit230.loopexit, %bb.i
   %.0276 = phi ptr [ %i.ae, %bb.i ], [ %.0276.ph, %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit230.loopexit ] ; 3 uses
   %.0 = phi ptr [ null, %bb.i ], [ %.1, %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit230.loopexit ] ; 6 uses
-  %9 = ptrtoint ptr %.0276 to i64
+  %9 = ptrtoaddr ptr %.0276 to i64
   %i.ba = sub i64 %i.an, %9
   %scevgep.i.i = getelementptr i8, ptr %.0276, i64 %i.ba ; 2 uses
   br label %bb.j
@@ -300,7 +300,7 @@ _ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit195.loopexit: ; preds = %bb.dd, %bb.de
 
 _ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit195:         ; preds = %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit195.loopexit, %.preheader
   %.1277 = phi ptr [ %i.be, %.preheader ], [ %.1277.ph, %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit195.loopexit ] ; 3 uses
-  %10 = ptrtoint ptr %.1277 to i64
+  %10 = ptrtoaddr ptr %.1277 to i64
   %i.bo = sub i64 %i.an, %10
   %scevgep.i.i79 = getelementptr i8, ptr %.1277, i64 %i.bo ; 2 uses
   br label %bb.s
@@ -374,7 +374,7 @@ _ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit.loopexit:   ; preds = %bb.ci, %bb.cj
 
 _ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit:            ; preds = %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit.loopexit, %bb.w
   %.2 = phi ptr [ %i.bt, %bb.w ], [ %.2.ph, %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit.loopexit ] ; 3 uses
-  %11 = ptrtoint ptr %.2 to i64
+  %11 = ptrtoaddr ptr %.2 to i64
   %i.cj = sub i64 %i.an, %11
   %scevgep.i.i85 = getelementptr i8, ptr %.2, i64 %i.cj ; 2 uses
   br label %bb.x
@@ -442,7 +442,7 @@ _ZN6Assimp11TokenMatchIERPKcS1_j.exit:            ; preds = %_ZN6Assimp15ASSIMP_
   %i.cv = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i88, i64 %.sink ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !6)
-  %12 = ptrtoint ptr %i.cv to i64
+  %12 = ptrtoaddr ptr %i.cv to i64
   %i.cw = sub i64 %i.an, %12
   %scevgep.i.i.i = getelementptr i8, ptr %i.cv, i64 %i.cw
   br label %bb.ac
@@ -638,7 +638,7 @@ bb.as:                                            ; preds = %_ZN6Assimp15ASSIMP_
   %i.ei = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i88, i64 10 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !11)
-  %13 = ptrtoint ptr %i.ei to i64
+  %13 = ptrtoaddr ptr %i.ei to i64
   %i.ej = sub i64 %i.an, %13
   %scevgep.i.i.i104 = getelementptr i8, ptr %i.ei, i64 %i.ej
   br label %bb.at
@@ -666,7 +666,7 @@ _ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i107: ; preds = %bb.au, %bb.a
   br label %bb.aw
 
 bb.aw:                                            ; preds = %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i112, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i107
-  %storemerge.i109 = phi ptr [ %.0.lcssa.i.i.i108, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i107 ], [ %i.en, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i112 ] ; 8 uses
+  %storemerge.i109 = phi ptr [ %.0.lcssa.i.i.i108, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i107 ], [ %i.en, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i112 ] ; 9 uses
   %i.em = load i8, ptr %storemerge.i109, align 1, !noalias !11
   switch i8 %i.em, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i112 [
     i8 32, label %bb.ax
@@ -682,7 +682,7 @@ _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i112:    ; preds = %bb.aw
   br label %bb.aw, !llvm.loop !9
 
 bb.ax:                                            ; preds = %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw
-  %i.eo = ptrtoint ptr %storemerge.i109 to i64    ; 2 uses
+  %i.eo = ptrtoint ptr %storemerge.i109 to i64
   %i.ep = ptrtoint ptr %.0.lcssa.i.i.i108 to i64
   %i.eq = sub i64 %i.eo, %i.ep                    ; 4 uses
   store ptr %i.aq, ptr %5, align 8, !alias.scope !11
@@ -790,7 +790,8 @@ bb.bd:                                            ; preds = %_ZSteqIcSt11char_tr
   store i32 %i.fp, ptr %i.cg, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !14)
-  %i.fq = sub i64 %i.an, %i.eo
+  %14 = ptrtoaddr ptr %storemerge.i109 to i64
+  %i.fq = sub i64 %i.an, %14
   %scevgep.i.i.i119 = getelementptr i8, ptr %storemerge.i109, i64 %i.fq
   br label %bb.be
 
@@ -972,8 +973,8 @@ bb.bs:                                            ; preds = %_ZN6Assimp15ASSIMP_
   %i.hc = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i88, i64 10 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !17)
-  %14 = ptrtoint ptr %i.hc to i64
-  %i.hd = sub i64 %i.an, %14
+  %15 = ptrtoaddr ptr %i.hc to i64
+  %i.hd = sub i64 %i.an, %15
   %scevgep.i.i.i147 = getelementptr i8, ptr %i.hc, i64 %i.hd
   br label %bb.bt
 
@@ -1144,8 +1145,8 @@ bb.cd:                                            ; preds = %bb.cc
 
 bb.ce:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit98, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit166, %bb.cc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit138
   %.5 = phi ptr [ %storemerge.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit98 ], [ %.4, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit138 ], [ %storemerge.i152, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit166 ], [ %.0.lcssa.i.i88, %bb.cc ] ; 3 uses
-  %15 = ptrtoint ptr %.5 to i64
-  %i.jf = sub i64 %i.an, %15
+  %16 = ptrtoaddr ptr %.5 to i64
+  %i.jf = sub i64 %i.an, %16
   %scevgep.i.i167 = getelementptr i8, ptr %.5, i64 %i.jf
   br label %bb.cf
 
@@ -1169,7 +1170,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 .critedge.i.i:                                    ; preds = %bb.cg, %bb.cf, %bb.cf, %bb.cf, %bb.cf
   %.0.lcssa.i.i169 = phi ptr [ %.0.i.i168, %bb.cf ], [ %.0.i.i168, %bb.cf ], [ %.0.i.i168, %bb.cf ], [ %.0.i.i168, %bb.cf ], [ %scevgep.i.i167, %bb.cg ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i169 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i169 to i64
   %i.ji = sub i64 %i.an, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i169, i64 %i.ji
   br label %bb.ci
@@ -1213,8 +1214,8 @@ _ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173: ; preds = %bb.cm
 
 bb.cn:                                            ; preds = %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173
   %i.jp = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i82, i64 5 ; 3 uses
-  %16 = ptrtoint ptr %i.jp to i64
-  %i.jq = sub i64 %i.an, %16
+  %17 = ptrtoaddr ptr %i.jp to i64
+  %i.jq = sub i64 %i.an, %17
   %scevgep.i.i175 = getelementptr i8, ptr %i.jp, i64 %i.jq
   br label %bb.co
 
@@ -1282,8 +1283,8 @@ bb.cz:                                            ; preds = %bb.cy
 
 _ZN6Assimp11TokenMatchIERPKcS1_j.exit174.thread:  ; preds = %.loopexit, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173, %bb.cm, %bb.cd, %bb.ct, %bb.cz, %bb.cx, %bb.cr
   %.6 = phi ptr [ %.0.lcssa.i.i179, %bb.cr ], [ %.0.lcssa.i.i179, %bb.ct ], [ %.0.lcssa.i.i179, %bb.cx ], [ %.0.lcssa.i.i179, %bb.cz ], [ %.0.lcssa.i.i82, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i173 ], [ %i.je, %bb.cd ], [ %.0.lcssa.i.i82, %bb.cm ], [ %.0.lcssa.i.i88, %.loopexit ] ; 3 uses
-  %17 = ptrtoint ptr %.6 to i64
-  %i.jz = sub i64 %i.an, %17
+  %18 = ptrtoaddr ptr %.6 to i64
+  %i.jz = sub i64 %i.an, %18
   %scevgep.i.i185 = getelementptr i8, ptr %.6, i64 %i.jz
   br label %bb.da
 
@@ -1307,7 +1308,7 @@ bb.dc:                                            ; preds = %bb.db
 
 .critedge.i.i187:                                 ; preds = %bb.db, %bb.da, %bb.da, %bb.da, %bb.da
   %.0.lcssa.i.i188 = phi ptr [ %.0.i.i186, %bb.da ], [ %.0.i.i186, %bb.da ], [ %.0.i.i186, %bb.da ], [ %.0.i.i186, %bb.da ], [ %scevgep.i.i185, %bb.db ] ; 3 uses
-  %.0.lcssa24.i.i189 = ptrtoint ptr %.0.lcssa.i.i188 to i64
+  %.0.lcssa24.i.i189 = ptrtoaddr ptr %.0.lcssa.i.i188 to i64
   %i.kc = sub i64 %i.an, %.0.lcssa24.i.i189
   %scevgep25.i.i190 = getelementptr i8, ptr %.0.lcssa.i.i188, i64 %i.kc
   br label %bb.dd
@@ -1355,8 +1356,8 @@ bb.dh:                                            ; preds = %bb.dg
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kp, i64 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !23)
-  %18 = ptrtoint ptr %.0.lcssa.i.i to i64
-  %i.kr = sub i64 %i.an, %18
+  %19 = ptrtoaddr ptr %.0.lcssa.i.i to i64
+  %i.kr = sub i64 %i.an, %19
   %scevgep.i.i.i197 = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.kr
   br label %bb.di
 
@@ -1538,8 +1539,8 @@ bb.dw:                                            ; preds = %.noexc.i.i204
 .loopexit311:                                     ; preds = %.loopexit310, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit219, %bb.cl
   %.7 = phi ptr [ %i.jl, %bb.cl ], [ %storemerge.i202, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit219 ], [ %.0.lcssa.i.i82, %.loopexit310 ] ; 3 uses
   %.1 = phi ptr [ null, %bb.cl ], [ %i.kq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit219 ], [ %.0, %.loopexit310 ]
-  %19 = ptrtoint ptr %.7 to i64
-  %i.me = sub i64 %i.an, %19
+  %20 = ptrtoaddr ptr %.7 to i64
+  %i.me = sub i64 %i.an, %20
   %scevgep.i.i220 = getelementptr i8, ptr %.7, i64 %i.me
   br label %bb.dx
 
@@ -1563,7 +1564,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 .critedge.i.i222:                                 ; preds = %bb.dy, %bb.dx, %bb.dx, %bb.dx, %bb.dx
   %.0.lcssa.i.i223 = phi ptr [ %.0.i.i221, %bb.dx ], [ %.0.i.i221, %bb.dx ], [ %.0.i.i221, %bb.dx ], [ %.0.i.i221, %bb.dx ], [ %scevgep.i.i220, %bb.dy ] ; 3 uses
-  %.0.lcssa24.i.i224 = ptrtoint ptr %.0.lcssa.i.i223 to i64
+  %.0.lcssa24.i.i224 = ptrtoaddr ptr %.0.lcssa.i.i223 to i64
   %i.mh = sub i64 %i.an, %.0.lcssa24.i.i224
   %scevgep25.i.i225 = getelementptr i8, ptr %.0.lcssa.i.i223, i64 %i.mh
   br label %bb.ea
@@ -1966,7 +1967,7 @@ _ZSt7replaceIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEcEvT_S7_RKT0_SA
 bb.k:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63
   %i.ed = phi i8 [ %i.dw, %.lr.ph ], [ %i.hh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63 ]
   %.0110 = phi ptr [ %i.ab, %.lr.ph ], [ %.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63 ] ; 3 uses
-  %6 = ptrtoint ptr %.0110 to i64
+  %6 = ptrtoaddr ptr %.0110 to i64
   %i.ee = sub i64 %i.af, %6
   %scevgep.i.i = getelementptr i8, ptr %.0110, i64 %i.ee
   br label %bb.l
@@ -1994,7 +1995,7 @@ bb.o:                                             ; preds = %bb.m, %bb.l
   %.0.lcssa.i.i = phi ptr [ %.0.i.i, %bb.l ], [ %scevgep.i.i, %bb.m ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !33)
-  %7 = ptrtoint ptr %.0.lcssa.i.i to i64
+  %7 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.eh = sub i64 %i.af, %7
   %scevgep.i.i.i = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.eh
   br label %bb.p
@@ -2022,7 +2023,7 @@ _ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i: ; preds = %bb.q, %bb.p
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i
-  %storemerge.i = phi ptr [ %.0.lcssa.i.i.i, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i ], [ %i.el, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i ] ; 6 uses
+  %storemerge.i = phi ptr [ %.0.lcssa.i.i.i, %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit.i ], [ %i.el, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i ] ; 7 uses
   %i.ek = load i8, ptr %storemerge.i, align 1, !noalias !33
   switch i8 %i.ek, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i [
     i8 32, label %bb.t
@@ -2038,7 +2039,7 @@ _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.i:       ; preds = %bb.s
   br label %bb.s, !llvm.loop !9
 
 bb.t:                                             ; preds = %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s
-  %i.em = ptrtoint ptr %storemerge.i to i64       ; 2 uses
+  %i.em = ptrtoint ptr %storemerge.i to i64
   %i.en = ptrtoint ptr %.0.lcssa.i.i.i to i64
   %i.eo = sub i64 %i.em, %i.en                    ; 4 uses
   store ptr %i.dx, ptr %4, align 8, !alias.scope !33
@@ -2143,7 +2144,8 @@ bb.ad:                                            ; preds = %bb.ac
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !37)
-  %i.fq = sub i64 %i.af, %i.em
+  %8 = ptrtoaddr ptr %storemerge.i to i64
+  %i.fq = sub i64 %i.af, %8
   %scevgep.i.i.i46 = getelementptr i8, ptr %storemerge.i, i64 %i.fq
   br label %bb.ae
 

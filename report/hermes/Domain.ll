@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
 _ZN6hermes14checkedMalloc2Emm.exit.i.i:           ; preds = %bb.k
   %mul.val.i.i.i = shl nuw i64 %i.t, 3
   %i.ba = tail call noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef %mul.val.i.i.i) #11 ; 5 uses
-  %i.bb = load ptr, ptr %i.aw, align 8, !tbaa !7  ; 7 uses
+  %i.bb = load ptr, ptr %i.aw, align 8, !tbaa !7  ; 6 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !13 ; 2 uses
   %.idx.i.i = shl i64 %i.bd, 3                    ; 2 uses
@@ -213,20 +213,19 @@ _ZN6hermes14checkedMalloc2Emm.exit.i.i:           ; preds = %bb.k
   br i1 %.not.i.i, label %_ZN6hermes2vm14CopyableVectorIPNS0_13RuntimeModuleEE11setCapacityEm.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN6hermes14checkedMalloc2Emm.exit.i.i
-  %i.bf = ptrtoaddr ptr %i.bb to i64
+  %i.bf = ptrtoaddr ptr %i.bb to i64              ; 4 uses
   %i.bg = ptrtoaddr ptr %i.ba to i64
-  %10 = ptrtoint ptr %i.bb to i64                 ; 3 uses
-  %i.bh = add i64 %.idx.i.i, %10
-  %i.bi = add i64 %10, 8
+  %i.bh = add i64 %.idx.i.i, %i.bf
+  %i.bi = add i64 %i.bf, 8
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bh, i64 %i.bi)
-  %i.bj = xor i64 %10, -1
+  %i.bj = xor i64 %i.bf, -1
   %i.bk = add i64 %umax, %i.bj                    ; 2 uses
   %i.bl = lshr i64 %i.bk, 3
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bk, 72
   %i.bn = sub i64 %i.bf, %i.bg
   %diff.check = icmp ugt i64 %i.bn, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
+  %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader386, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
@@ -629,7 +628,7 @@ bb.af:                                            ; preds = %bb.ae
 _ZN6hermes14checkedMalloc2Emm.exit.i.i161:        ; preds = %bb.ae
   %mul.val.i.i.i162 = shl nuw i64 %i.gq, 3
   %i.im = call noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef %mul.val.i.i.i162) #11 ; 5 uses
-  %i.in = load ptr, ptr %i.ii, align 8, !tbaa !7  ; 7 uses
+  %i.in = load ptr, ptr %i.ii, align 8, !tbaa !7  ; 6 uses
   %i.io = getelementptr inbounds nuw i8, ptr %i.ih, i64 16
   %i.ip = load i64, ptr %i.io, align 8, !tbaa !13 ; 2 uses
   %.idx.i.i163 = shl i64 %i.ip, 3                 ; 2 uses
@@ -638,20 +637,19 @@ _ZN6hermes14checkedMalloc2Emm.exit.i.i161:        ; preds = %bb.ae
   br i1 %.not.i.i164, label %_ZN6hermes2vm14CopyableVectorIPNS0_13RuntimeModuleEE11setCapacityEm.exit.i168, label %.lr.ph.i.i165.preheader
 
 .lr.ph.i.i165.preheader:                          ; preds = %_ZN6hermes14checkedMalloc2Emm.exit.i.i161
-  %i.ir = ptrtoaddr ptr %i.in to i64
+  %i.ir = ptrtoaddr ptr %i.in to i64              ; 4 uses
   %i.is = ptrtoaddr ptr %i.im to i64
-  %11 = ptrtoint ptr %i.in to i64                 ; 3 uses
-  %i.it = add i64 %.idx.i.i163, %11
-  %i.iu = add i64 %11, 8
+  %i.it = add i64 %.idx.i.i163, %i.ir
+  %i.iu = add i64 %i.ir, 8
   %umax367 = call i64 @llvm.umax.i64(i64 %i.it, i64 %i.iu)
-  %i.iv = xor i64 %11, -1
+  %i.iv = xor i64 %i.ir, -1
   %i.iw = add i64 %umax367, %i.iv                 ; 2 uses
   %i.ix = lshr i64 %i.iw, 3
   %i.iy = add nuw nsw i64 %i.ix, 1                ; 2 uses
   %min.iters.check369 = icmp ult i64 %i.iw, 72
   %i.iz = sub i64 %i.ir, %i.is
   %diff.check366 = icmp ugt i64 %i.iz, -32
-  %or.cond384 = select i1 %min.iters.check369, i1 true, i1 %diff.check366
+  %or.cond384 = or i1 %min.iters.check369, %diff.check366
   br i1 %or.cond384, label %.lr.ph.i.i165.preheader385, label %vector.ph370
 
 vector.ph370:                                     ; preds = %.lr.ph.i.i165.preheader
@@ -1054,7 +1052,7 @@ _ZN6hermes14checkedMalloc2Emm.exit.i:             ; preds = %bb.a
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.e, i64 1) ; 2 uses
   %mul.val.i.i = shl nuw i64 %.sroa.speculated, 3
   %i.k = tail call noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef %mul.val.i.i) #11 ; 5 uses
-  %i.l = load ptr, ptr %0, align 8, !tbaa !7      ; 7 uses
+  %i.l = load ptr, ptr %0, align 8, !tbaa !7      ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = load i64, ptr %i.m, align 8, !tbaa !13   ; 2 uses
   %.idx.i = shl i64 %i.n, 3                       ; 2 uses
@@ -1063,20 +1061,19 @@ _ZN6hermes14checkedMalloc2Emm.exit.i:             ; preds = %bb.a
   br i1 %.not.i, label %_ZN6hermes2vm14CopyableVectorIPNS0_13RuntimeModuleEE11setCapacityEm.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZN6hermes14checkedMalloc2Emm.exit.i
-  %i.p = ptrtoaddr ptr %i.l to i64
+  %i.p = ptrtoaddr ptr %i.l to i64                ; 4 uses
   %i.q = ptrtoaddr ptr %i.k to i64
-  %2 = ptrtoint ptr %i.l to i64                   ; 3 uses
-  %i.r = add i64 %.idx.i, %2
-  %i.s = add i64 %2, 8
+  %i.r = add i64 %.idx.i, %i.p
+  %i.s = add i64 %i.p, 8
   %umax = tail call i64 @llvm.umax.i64(i64 %i.r, i64 %i.s)
-  %i.t = xor i64 %2, -1
+  %i.t = xor i64 %i.p, -1
   %i.u = add i64 %umax, %i.t                      ; 2 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.u, 72
   %i.x = sub i64 %i.p, %i.q
   %diff.check = icmp ugt i64 %i.x, -32
-  %or.cond9 = select i1 %min.iters.check, i1 true, i1 %diff.check
+  %or.cond9 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond9, label %.lr.ph.i.preheader10, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader

@@ -201,10 +201,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !73   ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !54     ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !73   ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !54     ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !55
@@ -216,6 +216,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.n = icmp ugt i64 %i.f, 9223372036854775792
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE11_M_allocateEm.exit.i, !prof !116
 
@@ -229,8 +231,8 @@ _ZNSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE11_M_al
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE11_M_allocateEm.exit.i
-  %i.p = add i64 %i.d, -16
-  %i.q = sub i64 %i.p, %i.e
+  %i.p = add i64 %3, -16
+  %i.q = sub i64 %i.p, %2
   %i.r = and i64 %i.q, -16
   %i.s = add i64 %i.r, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 8 %i.c, i64 %i.s, i1 false)

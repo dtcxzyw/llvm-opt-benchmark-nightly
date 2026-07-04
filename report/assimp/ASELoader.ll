@@ -204,10 +204,10 @@ bb.bj:                                            ; preds = %_ZN10aiVector3tIfE9
 
 bb.bk:                                            ; preds = %bb.bj
   %i.nb = getelementptr inbounds nuw i8, ptr %i.mz, i64 8 ; 2 uses
-  %i.nc = load ptr, ptr %i.nb, align 8            ; 4 uses
-  %i.nd = load ptr, ptr %i.mz, align 8            ; 17 uses
-  %i.ne = ptrtoint ptr %i.nc to i64               ; 2 uses
-  %i.nf = ptrtoint ptr %i.nd to i64               ; 2 uses
+  %i.nc = load ptr, ptr %i.nb, align 8            ; 5 uses
+  %i.nd = load ptr, ptr %i.mz, align 8            ; 18 uses
+  %i.ne = ptrtoint ptr %i.nc to i64
+  %i.nf = ptrtoint ptr %i.nd to i64
   %i.ng = sub i64 %i.ne, %i.nf                    ; 7 uses
   %i.nh = ashr exact i64 %i.ng, 3                 ; 8 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %i.na, i64 16 ; 2 uses
@@ -220,6 +220,8 @@ bb.bk:                                            ; preds = %bb.bj
   br i1 %i.no, label %bb.bl, label %bb.bo
 
 bb.bl:                                            ; preds = %bb.bk
+  %7 = ptrtoaddr ptr %i.nd to i64
+  %8 = ptrtoaddr ptr %i.nc to i64
   %i.np = icmp ugt i64 %i.nh, 1152921504606846975
   br i1 %i.np, label %bb.bm, label %_ZNSt12_Vector_baseISt4pairIifESaIS1_EE11_M_allocateEm.exit.i.i, !prof !23
 
@@ -239,8 +241,8 @@ _ZNSt12_Vector_baseISt4pairIifESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %bb.b
   br i1 %.not7.i.i.i.i.i.i, label %_ZNSt6vectorISt4pairIifESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.i, label %.lr.ph.i.i.i.i.preheader.i.i
 
 .lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %.noexc150
-  %i.nr = add i64 %i.ne, -8
-  %i.ns = sub i64 %i.nr, %i.nf
+  %i.nr = add i64 %8, -8
+  %i.ns = sub i64 %i.nr, %7
   %i.nt = and i64 %i.ns, -8
   %i.nu = add i64 %i.nt, 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.nq, ptr align 4 %i.nd, i64 %i.nu, i1 false)
@@ -413,18 +415,17 @@ _ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i:     ; preds = %_ZSt4copyIPSt4pairI
   %.pre-phi39.i = phi i64 [ %.pre38.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nz, %bb.bq ] ; 3 uses
   %i.ph = phi ptr [ %.pre34.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nc, %bb.bq ] ; 3 uses
   %i.pi = phi ptr [ %.pre32.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nx, %bb.bq ] ; 5 uses
-  %i.pj = phi ptr [ %.pre.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nd, %bb.bq ] ; 3 uses
+  %i.pj = phi ptr [ %.pre.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nd, %bb.bq ] ; 2 uses
   %i.pk = ptrtoaddr ptr %i.pi to i64
-  %i.pl = ptrtoaddr ptr %i.pj to i64
+  %i.pl = ptrtoaddr ptr %i.pj to i64              ; 2 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pj, i64 %.pre-phi39.i ; 5 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.pm, %i.ph
   br i1 %.not9.i.i.i.i.i, label %_ZSt22__uninitialized_copy_aIPSt4pairIifES2_S1_ET0_T_S4_S3_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i
-  %7 = ptrtoint ptr %i.pj to i64
-  %8 = ptrtoint ptr %i.ph to i64
-  %i.pn = add i64 %8, -8
-  %i.po = add i64 %.pre-phi39.i, %7
+  %9 = ptrtoaddr ptr %i.ph to i64
+  %i.pn = add i64 %9, -8
+  %i.po = add i64 %.pre-phi39.i, %i.pl
   %i.pp = sub i64 %i.pn, %i.po                    ; 2 uses
   %i.pq = lshr i64 %i.pp, 3
   %i.pr = add nuw nsw i64 %i.pq, 1                ; 2 uses
@@ -827,8 +828,8 @@ _ZNKSt6vectorISt4pairIjfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ap
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc294
   %i.li = ptrtoaddr ptr %i.le to i64
-  %4 = sub i64 %i.ku, %i.kv
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.ku, -8
+  %5 = sub i64 %4, %i.kv                          ; 2 uses
   %i.lj = lshr i64 %5, 3
   %i.lk = add nuw nsw i64 %i.lj, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -1231,8 +1232,8 @@ _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %b
 
 .lr.ph.i.i.i.i.i319.preheader:                    ; preds = %.noexc325
   %i.akt = ptrtoaddr ptr %i.akr to i64
-  %6 = sub i64 %i.akh, %i.aki
-  %7 = add i64 %6, -8                             ; 2 uses
+  %6 = add i64 %i.akh, -8
+  %7 = sub i64 %6, %i.aki                         ; 2 uses
   %i.aku = lshr i64 %7, 3
   %i.akv = add nuw nsw i64 %i.aku, 1              ; 2 uses
   %min.iters.check684 = icmp ult i64 %7, 24
@@ -1635,10 +1636,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
-  %i.c = load ptr, ptr %1, align 8                ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = load ptr, ptr %1, align 8                ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8
@@ -1651,6 +1652,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = sdiv exact i64 %i.f, 12
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.o = icmp ugt i64 %i.n, 768614336404564650
   br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i, !prof !23
 
@@ -1664,8 +1667,8 @@ _ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE11_M_allocateEm.exit.i
-  %i.q = add i64 %i.d, -12
-  %i.r = sub i64 %i.q, %i.e
+  %i.q = add i64 %3, -12
+  %i.r = sub i64 %i.q, %2
   %.fr.i = freeze i64 %i.r                        ; 2 uses
   %i.s = urem i64 %.fr.i, 12
   %i.t = add i64 %.fr.i, 12
@@ -1767,10 +1770,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
-  %i.c = load ptr, ptr %1, align 8                ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = load ptr, ptr %1, align 8                ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8
@@ -1782,6 +1785,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.n = icmp ugt i64 %i.f, 9223372036854775792
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE11_M_allocateEm.exit.i, !prof !23
 
@@ -1795,8 +1800,8 @@ _ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE11_M_allocateEm.exit.i
-  %i.p = add i64 %i.d, -16
-  %i.q = sub i64 %i.p, %i.e
+  %i.p = add i64 %3, -16
+  %i.q = sub i64 %i.p, %2
   %i.r = and i64 %i.q, -16
   %i.s = add i64 %i.r, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.o, ptr align 4 %i.c, i64 %i.s, i1 false)

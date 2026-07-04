@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
 
 RSTRING_END.exit.i:                               ; preds = %bb.o, %bb.n
   %i.at = phi ptr [ %i.as, %bb.o ], [ %i.ar, %bb.n ] ; 5 uses
-  %4 = ptrtoint ptr %i.at to i64
+  %4 = ptrtoaddr ptr %i.at to i64
   %i.au = getelementptr i8, ptr %i.at, i64 %i.am  ; 4 uses
   %i.av = call ptr @rb_enc_get(i64 noundef %i.aj) #26
   %.not.i11 = icmp ult ptr %i.at, %i.au
@@ -238,12 +238,12 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
-  %.128.i = phi ptr [ %.027.i, %bb.q ], [ %spec.select.i, %bb.s ], [ %.027.i, %bb.r ] ; 7 uses
-  %.12843.i = ptrtoint ptr %.128.i to i64         ; 2 uses
+  %.128.i = phi ptr [ %.027.i, %bb.q ], [ %spec.select.i, %bb.s ], [ %.027.i, %bb.r ] ; 8 uses
   %i.bd = icmp ult ptr %.128.i, %i.au
   br i1 %i.bd, label %.lr.ph.preheader.i, label %.critedge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.t
+  %.12843.i = ptrtoaddr ptr %.128.i to i64
   %i.be = getelementptr i8, ptr %.128.i, i64 %i.am
   %scevgep.i = getelementptr i8, ptr %i.be, i64 %4
   %i.bf = sub i64 0, %.12843.i
@@ -268,7 +268,8 @@ bb.u:                                             ; preds = %.lr.ph.i
 
 bb.v:                                             ; preds = %.critedge.i
   %i.bj = ptrtoint ptr %.229.lcssa.i to i64
-  %i.bk = sub i64 %i.bj, %.12843.i
+  %5 = ptrtoint ptr %.128.i to i64
+  %i.bk = sub i64 %i.bj, %5
   %i.bl = call i32 @rb_enc_symname_type(ptr noundef %.128.i, i64 noundef %i.bk, ptr noundef %i.av, i32 noundef 0) #26
   %.not36.i = icmp eq i32 %i.bl, 10
   br i1 %.not36.i, label %.preheader.i, label %.loopexit, !llvm.loop !45
@@ -671,8 +672,8 @@ bb.b:                                             ; preds = %bb.a
   br label %RSTRING_PTR.exit
 
 RSTRING_PTR.exit:                                 ; preds = %bb.a, %bb.b
-  %i.i = phi ptr [ %i.h, %bb.b ], [ %i.g, %bb.a ] ; 5 uses
-  %1 = ptrtoint ptr %i.i to i64                   ; 2 uses
+  %i.i = phi ptr [ %i.h, %bb.b ], [ %i.g, %bb.a ] ; 6 uses
+  %1 = ptrtoaddr ptr %i.i to i64
   %i.j = load i64, ptr @rb_cObject, align 8, !tbaa !16
   %i.k = getelementptr i8, ptr %i.c, i64 20
   %.val.i = load i32, ptr %i.k, align 4, !tbaa !51
@@ -719,7 +720,7 @@ bb.f:                                             ; preds = %.preheader47, %rb_n
   br i1 %i.w, label %.preheader.preheader, label %bb.q
 
 .preheader.preheader:                             ; preds = %bb.f
-  %.03355 = ptrtoint ptr %.033 to i64
+  %.03355 = ptrtoaddr ptr %.033 to i64
   %i.x = getelementptr i8, ptr %.033, i64 %i.o
   %scevgep = getelementptr i8, ptr %i.x, i64 %1
   %i.y = sub i64 0, %.03355
@@ -833,8 +834,9 @@ bb.q:                                             ; preds = %bb.f
 rb_const_search.exit.thread:                      ; preds = %bb.n, %rb_const_search.exit, %bb.l, %bb.i, %bb.j
   %.3 = phi ptr [ %.13451, %bb.i ], [ %.13451, %bb.j ], [ %.2, %rb_const_search.exit ], [ %.2, %bb.l ], [ %.2, %bb.n ]
   %i.bl = load i64, ptr @rb_eArgError, align 8, !tbaa !16
-  %i.bm = ptrtoint ptr %.3 to i64
-  %i.bn = sub i64 %i.bm, %1
+  %2 = ptrtoint ptr %.3 to i64
+  %i.bm = ptrtoint ptr %i.i to i64
+  %i.bn = sub i64 %2, %i.bm
   %i.bo = tail call i64 @rb_str_subseq(i64 noundef %0, i64 noundef 0, i64 noundef %i.bn) #26
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.bl, ptr noundef nonnull @.str.8, i64 noundef %i.bo) #27
   unreachable

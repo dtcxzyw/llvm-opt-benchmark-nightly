@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define noundef range(i32 -4, 3) i32 @_ZN12duckdb_miniz16tinfl_decompressEPNS_22tinfl_decompressor_tagEPKhPmPhS5_S4_j(ptr nofree noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef captures(none) %5, i32 noundef %6) local_unnamed_addr #13 {
 bb.a:
-  %7 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %7 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = alloca [17 x i32], align 16              ; 18 uses
   %i.b = alloca [16 x i32], align 16              ; 21 uses
   %i.c = load i64, ptr %2, align 8, !tbaa !50     ; 4 uses
@@ -607,7 +607,7 @@ bb.fs:                                            ; preds = %bb.fo, %bb.fr
   br i1 %i.ahq, label %.lr.ph1787.preheader, label %._crit_edge1788
 
 .lr.ph1787.preheader:                             ; preds = %bb.fs
-  %.7312411881 = ptrtoint ptr %.731241 to i64
+  %.7312411881 = ptrtoaddr ptr %.731241 to i64
   %i.ahr = add i32 %i.ahn, -8                     ; 2 uses
   %i.ahs = lshr exact i32 %i.ahr, 3
   %i.aht = zext nneg i32 %i.ahs to i64
@@ -774,7 +774,7 @@ bb.gg:                                            ; preds = %bb.ft, %._crit_edge
   br i1 %i.aje, label %.lr.ph1794.preheader, label %.thread1645
 
 .lr.ph1794.preheader:                             ; preds = %bb.gg
-  %.8212501883 = ptrtoint ptr %.821250 to i64
+  %.8212501883 = ptrtoaddr ptr %.821250 to i64
   %i.ajf = add i32 %.84.fr, -8                    ; 2 uses
   %i.ajg = lshr i32 %i.ajf, 3
   %i.ajh = zext nneg i32 %i.ajg to i64
@@ -808,8 +808,9 @@ bb.gg:                                            ; preds = %bb.ft, %._crit_edge
   store i32 %.829881659, ptr %i.w, align 4, !tbaa !84
   store i32 %.8010751658, ptr %i.y, align 8, !tbaa !85
   store i64 %.7514161655, ptr %i.aa, align 8, !tbaa !86
-  %i.ajr = ptrtoint ptr %.841252 to i64
-  %i.ajs = sub i64 %i.ajr, %7
+  %8 = ptrtoint ptr %.841252 to i64
+  %i.ajr = ptrtoint ptr %1 to i64
+  %i.ajs = sub i64 %8, %i.ajr
   store i64 %i.ajs, ptr %2, align 8, !tbaa !50
   %i.ajt = ptrtoint ptr %.8013401656 to i64
   %i.aju = sub i64 %i.ajt, %i.h                   ; 4 uses

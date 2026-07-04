@@ -204,8 +204,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @messageAddArgument(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = icmp eq ptr %1, null
   br i1 %i.b, label %.loopexit, label %.preheader47
 
@@ -320,7 +319,7 @@ bb.l:                                             ; preds = %bb.k
 .thread.i:                                        ; preds = %bb.l, %bb.k
   %.073.i = phi i32 [ 0, %bb.l ], [ 2, %bb.k ]
   %.04872.i = phi ptr [ %i.ai, %bb.l ], [ %i.ah, %bb.k ] ; 4 uses
-  %.04872.i89 = ptrtoint ptr %.04872.i to i64     ; 3 uses
+  %.04872.i89 = ptrtoaddr ptr %.04872.i to i64    ; 3 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.114, ptr noundef nonnull %.0) #16
   %i.ak = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0) #18
   %i.al = add i64 %i.ak, 1
@@ -342,7 +341,7 @@ rfc2231.exit.thread:                              ; preds = %.thread.i
   br i1 %.not6075.i, label %._crit_edge.i, label %iter.check
 
 iter.check:                                       ; preds = %.preheader74.i
-  %i.at = add i64 %indvar, %2
+  %i.at = add i64 %indvar, %i.a
   %i.au = sub i64 %.04872.i89, %i.at              ; 7 uses
   %min.iters.check = icmp ult i64 %i.au, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
@@ -410,7 +409,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.preheader:                               ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.04377.i.ph = phi ptr [ %i.am, %iter.check ], [ %i.am, %vector.memcheck ], [ %i.ax, %vec.epilog.iter.check ], [ %i.bc, %vec.epilog.middle.block ] ; 2 uses
   %.05376.i.ph = phi ptr [ %.0, %iter.check ], [ %.0, %vector.memcheck ], [ %i.ay, %vec.epilog.iter.check ], [ %i.bd, %vec.epilog.middle.block ] ; 3 uses
-  %.05376.i.ph109 = ptrtoint ptr %.05376.i.ph to i64 ; 2 uses
+  %.05376.i.ph109 = ptrtoaddr ptr %.05376.i.ph to i64 ; 2 uses
   %i.bf = sub i64 %.04872.i89, %.05376.i.ph109
   %xtraiter = and i64 %i.bf, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

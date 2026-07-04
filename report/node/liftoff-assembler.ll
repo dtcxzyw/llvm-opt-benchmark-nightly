@@ -203,13 +203,12 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64                   ; 3 uses
-  %i.c = load ptr, ptr %0, align 8                ; 8 uses
-  %3 = ptrtoint ptr %i.c to i64
+  %2 = ptrtoaddr ptr %i.b to i64                  ; 3 uses
+  %i.c = load ptr, ptr %0, align 8                ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = ptrtoint ptr %i.e to i64
-  %i.g = ptrtoint ptr %i.c to i64                 ; 3 uses
+  %i.g = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.h = sub i64 %i.f, %i.g
   %i.i = shl i64 %i.h, 1
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.i)
@@ -231,7 +230,7 @@ bb.c:                                             ; preds = %bb.a
 
 iter.check:                                       ; preds = %bb.c
   %i.p = ptrtoaddr ptr %i.n to i64
-  %i.q = sub i64 %2, %3                           ; 7 uses
+  %i.q = sub i64 %2, %i.g                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.q, 4
   %i.r = sub i64 %i.g, %i.p
   %diff.check = icmp ugt i64 %i.r, -32
@@ -295,7 +294,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.preheader:                         ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.08.i.i.i.i.ph = phi ptr [ %i.n, %iter.check ], [ %i.s, %vec.epilog.iter.check ], [ %i.x, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.04.07.i.i.i.i.ph = phi ptr [ %i.c, %iter.check ], [ %i.t, %vec.epilog.iter.check ], [ %i.y, %vec.epilog.middle.block ] ; 3 uses
-  %.sroa.04.07.i.i.i.i.ph26 = ptrtoint ptr %.sroa.04.07.i.i.i.i.ph to i64 ; 2 uses
+  %.sroa.04.07.i.i.i.i.ph26 = ptrtoaddr ptr %.sroa.04.07.i.i.i.i.ph to i64 ; 2 uses
   %i.aa = sub i64 %2, %.sroa.04.07.i.i.i.i.ph26
   %xtraiter = and i64 %i.aa, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

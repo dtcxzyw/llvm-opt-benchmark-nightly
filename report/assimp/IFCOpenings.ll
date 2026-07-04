@@ -204,8 +204,8 @@ _ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit: ; preds = %bb.g, %_ZNSt12_V
   br i1 %.not136155, label %._crit_edge159, label %.lr.ph158.preheader
 
 .lr.ph158.preheader:                              ; preds = %._crit_edge
-  %6 = ptrtoint ptr %i.bm to i64
-  %7 = ptrtoint ptr %i.bl to i64
+  %6 = ptrtoaddr ptr %i.bm to i64
+  %7 = ptrtoaddr ptr %i.bl to i64
   %i.bx = add i64 %7, -16
   %i.by = sub i64 %i.bx, %6
   %i.bz = lshr i64 %i.by, 4                       ; 2 uses
@@ -608,8 +608,8 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %.not459655, label %._crit_edge659, label %.lr.ph658
 
 .lr.ph658:                                        ; preds = %bb.cu
-  %18 = ptrtoint ptr %i.tw to i64
-  %19 = ptrtoint ptr %i.tu to i64
+  %18 = ptrtoaddr ptr %i.tw to i64
+  %19 = ptrtoaddr ptr %i.tu to i64
   %i.tx = load double, ptr %9, align 8, !noalias !257 ; 2 uses
   %i.ty = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.tz = load double, ptr %i.ty, align 8, !noalias !257 ; 2 uses
@@ -1012,8 +1012,8 @@ _ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPjjEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69
-  %4 = sub i64 %i.f, %i.j
-  %5 = add i64 %4, -4                             ; 2 uses
+  %4 = add i64 %i.f, -4
+  %5 = sub i64 %4, %i.j                           ; 2 uses
   %i.bg = lshr i64 %5, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check112 = icmp ult i64 %5, 28
@@ -1416,10 +1416,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
-  %i.c = load ptr, ptr %1, align 8                ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.c = load ptr, ptr %1, align 8                ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8
@@ -1431,6 +1431,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.n = icmp ugt i64 %i.f, 9223372036854775792
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseI10aiVector2tIdESaIS1_EE11_M_allocateEm.exit.i, !prof !233
 
@@ -1444,8 +1446,8 @@ _ZNSt12_Vector_baseI10aiVector2tIdESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorI10aiVector2tIdESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseI10aiVector2tIdESaIS1_EE11_M_allocateEm.exit.i
-  %i.p = add i64 %i.d, -16
-  %i.q = sub i64 %i.p, %i.e
+  %i.p = add i64 %3, -16
+  %i.q = sub i64 %i.p, %2
   %i.r = and i64 %i.q, -16
   %i.s = add i64 %i.r, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 8 %i.c, i64 %i.s, i1 false)

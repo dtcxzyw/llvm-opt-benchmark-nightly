@@ -204,14 +204,15 @@ bb.ak:                                            ; preds = %bb.aj
 
 .loopexit298:                                     ; preds = %bb.ah, %bb.ak
   %.1194 = phi ptr [ %i.ee, %bb.ak ], [ %i.dg, %bb.ah ] ; 11 uses
-  %.5 = phi ptr [ %.4, %bb.ak ], [ %i.di, %bb.ah ] ; 12 uses
+  %.5 = phi ptr [ %.4, %bb.ak ], [ %i.di, %bb.ah ] ; 14 uses
   %i.ef = icmp eq ptr %.1194, null
   br i1 %i.ef, label %bb.al, label %bb.ar
 
 bb.al:                                            ; preds = %.loopexit298
-  %.0187543.le758 = ptrtoaddr ptr %.0187 to i64
-  %i.eg = ptrtoint ptr %.5 to i64                 ; 3 uses
-  %i.eh = ptrtoint ptr %.0187 to i64              ; 3 uses
+  %.0187543.le758 = ptrtoaddr ptr %.0187 to i64   ; 3 uses
+  %.5.lcssa718721 = ptrtoaddr ptr %.5 to i64      ; 2 uses
+  %i.eg = ptrtoint ptr %.5 to i64
+  %i.eh = ptrtoint ptr %.0187 to i64
   %i.ei = sub i64 %i.eg, %i.eh                    ; 14 uses
   %i.ej = shl i64 %i.ei, 32
   %sext258 = add i64 %i.ej, 292057776128
@@ -334,7 +335,7 @@ vec.epilog.middle.block669:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph659.preheader:                ; preds = %vector.memcheck642, %iter.check658, %vec.epilog.iter.check660, %vec.epilog.middle.block669
   %indvars.iv428.ph = phi i64 [ 0, %iter.check658 ], [ 0, %vector.memcheck642 ], [ %n.vec649, %vec.epilog.iter.check660 ], [ %n.vec664, %vec.epilog.middle.block669 ] ; 3 uses
-  %i.fv = sub i64 %i.eg, %i.eh
+  %i.fv = sub i64 %.5.lcssa718721, %.0187543.le758
   %xtraiter714 = and i64 %i.fv, 3                 ; 2 uses
   %lcmp.mod715.not = icmp eq i64 %xtraiter714, 0
   br i1 %lcmp.mod715.not, label %vec.epilog.scalar.ph659.prol.loopexit, label %vec.epilog.scalar.ph659.prol
@@ -353,8 +354,8 @@ vec.epilog.scalar.ph659.prol:                     ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph659.prol.loopexit:            ; preds = %vec.epilog.scalar.ph659.prol, %vec.epilog.scalar.ph659.preheader
   %indvars.iv428.unr = phi i64 [ %indvars.iv428.ph, %vec.epilog.scalar.ph659.preheader ], [ %indvars.iv.next429.prol, %vec.epilog.scalar.ph659.prol ]
-  %i.fz = sub i64 %indvars.iv428.ph, %i.eg
-  %i.ga = add i64 %i.fz, %i.eh
+  %i.fz = sub i64 %indvars.iv428.ph, %.5.lcssa718721
+  %i.ga = add i64 %i.fz, %.0187543.le758
   %i.gb = icmp ugt i64 %i.ga, -4
   br i1 %i.gb, label %._crit_edge360, label %vec.epilog.scalar.ph659
 
@@ -404,10 +405,11 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not255, label %bb.az, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %.0187543.le = ptrtoaddr ptr %.0187 to i64
+  %.0187543.le = ptrtoaddr ptr %.0187 to i64      ; 3 uses
+  %.5.lcssa715717 = ptrtoaddr ptr %.5 to i64      ; 2 uses
   %i.gw = call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 2, i32 noundef 8, ptr noundef nonnull @.str.31, i32 noundef 2, ptr noundef nonnull @file_pos) #10 ; 0 uses
-  %i.gx = ptrtoint ptr %.5 to i64                 ; 3 uses
-  %i.gy = ptrtoint ptr %.0187 to i64              ; 3 uses
+  %i.gx = ptrtoint ptr %.5 to i64
+  %i.gy = ptrtoint ptr %.0187 to i64
   %i.gz = sub i64 %i.gx, %i.gy                    ; 14 uses
   %i.ha = shl i64 %i.gz, 32
   %sext257 = add i64 %i.ha, 292057776128
@@ -530,7 +532,7 @@ vec.epilog.middle.block639:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph629.preheader:                ; preds = %vector.memcheck612, %iter.check628, %vec.epilog.iter.check630, %vec.epilog.middle.block639
   %indvars.iv419.ph = phi i64 [ 0, %iter.check628 ], [ 0, %vector.memcheck612 ], [ %n.vec619, %vec.epilog.iter.check630 ], [ %n.vec634, %vec.epilog.middle.block639 ] ; 3 uses
-  %i.im = sub i64 %i.gx, %i.gy
+  %i.im = sub i64 %.5.lcssa715717, %.0187543.le
   %xtraiter = and i64 %i.im, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph629.prol.loopexit, label %vec.epilog.scalar.ph629.prol
@@ -549,8 +551,8 @@ vec.epilog.scalar.ph629.prol:                     ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph629.prol.loopexit:            ; preds = %vec.epilog.scalar.ph629.prol, %vec.epilog.scalar.ph629.preheader
   %indvars.iv419.unr = phi i64 [ %indvars.iv419.ph, %vec.epilog.scalar.ph629.preheader ], [ %indvars.iv.next420.prol, %vec.epilog.scalar.ph629.prol ]
-  %i.iq = sub i64 %indvars.iv419.ph, %i.gx
-  %i.ir = add i64 %i.iq, %i.gy
+  %i.iq = sub i64 %indvars.iv419.ph, %.5.lcssa715717
+  %i.ir = add i64 %i.iq, %.0187543.le
   %i.is = icmp ugt i64 %i.ir, -4
   br i1 %i.is, label %._crit_edge355, label %vec.epilog.scalar.ph629
 

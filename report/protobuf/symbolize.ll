@@ -204,13 +204,13 @@ bb.i:                                             ; preds = %_ZNK4absl12lts_2025
   br label %bb.j
 
 bb.j:                                             ; preds = %.thread23.i, %_ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_110LineReader15HasCompleteLineEv.exit.i, %.thread.i
-  %.sroa.14.0 = phi ptr [ %1, %.thread.i ], [ %1, %.thread23.i ], [ %i.n, %_ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_110LineReader15HasCompleteLineEv.exit.i ] ; 9 uses
+  %.sroa.14.0 = phi ptr [ %1, %.thread.i ], [ %1, %.thread23.i ], [ %i.n, %_ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_110LineReader15HasCompleteLineEv.exit.i ] ; 10 uses
   %.sroa.23.1 = phi ptr [ %i.m, %.thread.i ], [ %i.w, %.thread23.i ], [ %.sroa.23.0, %_ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_110LineReader15HasCompleteLineEv.exit.i ] ; 2 uses
   %i.x = ptrtoint ptr %.sroa.23.1 to i64
-  %i.y = ptrtoint ptr %.sroa.14.0 to i64          ; 2 uses
+  %i.y = ptrtoint ptr %.sroa.14.0 to i64
   %i.z = sub i64 %i.x, %i.y
   %i.aa = tail call noundef ptr @memchr(ptr noundef nonnull %.sroa.14.0, i32 noundef 10, i64 noundef %i.z) #25 ; 20 uses
-  %2 = ptrtoint ptr %i.aa to i64                  ; 5 uses
+  %2 = ptrtoaddr ptr %i.aa to i64                 ; 5 uses
   %i.ab = icmp eq ptr %i.aa, null
   br i1 %i.ab, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110LineReader8ReadLineEPPKcS6_.exit.thread, label %bb.l
 
@@ -225,7 +225,8 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.ad, label %.lr.ph.preheader.i.i, label %switch.early.test._crit_edge.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.l
-  %i.ae = sub i64 %2, %i.y
+  %3 = ptrtoaddr ptr %.sroa.14.0 to i64
+  %i.ae = sub i64 %2, %3
   %scevgep.i.i = getelementptr i8, ptr %.sroa.14.0, i64 %i.ae
   br label %.lr.ph.i.i
 
@@ -307,8 +308,8 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.av, label %.lr.ph.preheader.i.i62, label %switch.early.test._crit_edge.i.i58
 
 .lr.ph.preheader.i.i62:                           ; preds = %bb.r
-  %3 = ptrtoint ptr %i.au to i64
-  %i.aw = sub i64 %2, %3
+  %4 = ptrtoaddr ptr %i.au to i64
+  %i.aw = sub i64 %2, %4
   %scevgep.i.i63 = getelementptr i8, ptr %i.au, i64 %i.aw
   br label %.lr.ph.i.i64
 
@@ -359,7 +360,7 @@ switch.early.test._crit_edge.i.loopexit.i71:      ; preds = %bb.s, %switch.early
 switch.early.test._crit_edge.i.i58:               ; preds = %switch.early.test._crit_edge.i.loopexit.i71, %bb.r
   %.026.lcssa.i.i59 = phi ptr [ %i.au, %bb.r ], [ %.026.lcssa.i.ph.i72, %switch.early.test._crit_edge.i.loopexit.i71 ] ; 8 uses
   %.025.lcssa.i.i60 = phi ptr [ null, %bb.r ], [ %i.bi, %switch.early.test._crit_edge.i.loopexit.i71 ] ; 5 uses
-  %.026.lcssa.i.i59114 = ptrtoint ptr %.026.lcssa.i.i59 to i64
+  %.026.lcssa.i.i59114 = ptrtoaddr ptr %.026.lcssa.i.i59 to i64
   %.not.i.i61 = icmp ugt ptr %.026.lcssa.i.i59, %i.aa
   br i1 %.not.i.i61, label %bb.t, label %_ZN4absl12lts_2025051218debugging_internalL6GetHexEPKcS3_PPKv.exit74
 
@@ -442,8 +443,8 @@ bb.ab:                                            ; preds = %_ZN4absl12lts_20250
   br i1 %i.by, label %.lr.ph.preheader.i, label %switch.early.test._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.ab
-  %4 = ptrtoint ptr %i.bx to i64
-  %i.bz = sub i64 %2, %4
+  %5 = ptrtoaddr ptr %i.bx to i64
+  %i.bz = sub i64 %2, %5
   %scevgep.i = getelementptr i8, ptr %i.bx, i64 %i.bz
   br label %.lr.ph.i
 
@@ -488,7 +489,7 @@ bb.ac:                                            ; preds = %switch.early.test.i
 switch.early.test._crit_edge.i:                   ; preds = %bb.ac, %switch.early.test.i, %bb.ab
   %.026.lcssa.i = phi ptr [ %i.bx, %bb.ab ], [ %scevgep.i, %bb.ac ], [ %.02635.i, %switch.early.test.i ] ; 4 uses
   %.025.lcssa.i = phi i64 [ 0, %bb.ab ], [ %i.cj, %bb.ac ], [ %.02536.i, %switch.early.test.i ] ; 4 uses
-  %.026.lcssa.i115 = ptrtoint ptr %.026.lcssa.i to i64
+  %.026.lcssa.i115 = ptrtoaddr ptr %.026.lcssa.i to i64
   %.not.i75 = icmp ugt ptr %.026.lcssa.i, %i.aa
   br i1 %.not.i75, label %bb.ad, label %_ZN4absl12lts_2025051218debugging_internalL6GetHexEPKcS3_Pm.exit.preheader
 

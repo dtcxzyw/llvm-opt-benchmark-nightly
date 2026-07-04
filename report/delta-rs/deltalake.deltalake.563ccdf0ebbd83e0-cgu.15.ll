@@ -204,16 +204,15 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !12, !noundef !12 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.promoted = load ptr, ptr %i.c, align 8        ; 8 uses
+  %.promoted = load ptr, ptr %i.c, align 8        ; 7 uses
   %.not12 = icmp eq ptr %.promoted, %i.b
   br i1 %.not12, label %bb.b, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %.promoted18 = ptrtoaddr ptr %.promoted to i64
+  %.promoted18 = ptrtoaddr ptr %.promoted to i64  ; 2 uses
   %i.d = ptrtoaddr ptr %2 to i64
-  %.promoted19 = ptrtoint ptr %.promoted to i64
-  %5 = ptrtoint ptr %i.b to i64                   ; 3 uses
-  %i.e = sub i64 %5, %.promoted19                 ; 7 uses
+  %5 = ptrtoaddr ptr %i.b to i64                  ; 3 uses
+  %i.e = sub i64 %5, %.promoted18                 ; 7 uses
   %min.iters.check = icmp ult i64 %i.e, 4
   %i.f = sub i64 %.promoted18, %i.d
   %diff.check = icmp ugt i64 %i.f, -32
@@ -277,8 +276,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.4.013.ph = phi ptr [ %2, %iter.check ], [ %i.g, %vec.epilog.iter.check ], [ %i.l, %vec.epilog.middle.block ] ; 2 uses
   %.ph = phi ptr [ %.promoted, %iter.check ], [ %i.h, %vec.epilog.iter.check ], [ %i.m, %vec.epilog.middle.block ] ; 3 uses
-  %.ph36 = ptrtoint ptr %.ph to i64               ; 2 uses
-  %i.o = sub i64 %5, %.ph36
+  %.ph35 = ptrtoaddr ptr %.ph to i64              ; 2 uses
+  %i.o = sub i64 %5, %.ph35
   %xtraiter = and i64 %i.o, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -300,7 +299,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.lcssa34.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.s, %.lr.ph.prol ]
   %.sroa.4.013.unr = phi ptr [ %.sroa.4.013.ph, %.lr.ph.preheader ], [ %i.s, %.lr.ph.prol ]
   %.unr = phi ptr [ %.ph, %.lr.ph.preheader ], [ %i.r, %.lr.ph.prol ]
-  %i.t = sub i64 %.ph36, %5
+  %i.t = sub i64 %.ph35, %5
   %i.u = icmp ugt i64 %i.t, -8
   br i1 %i.u, label %._crit_edge, label %.lr.ph
 
