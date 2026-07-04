@@ -162,11 +162,10 @@ bb.o:                                             ; preds = %bb.l
   br label %_ZNK6hermes2vm10StringView3endEv.exit
 
 _ZNK6hermes2vm10StringView3endEv.exit:            ; preds = %bb.i, %bb.k, %bb.m, %bb.n, %bb.o
-  %i.ap = phi ptr [ %i.z, %bb.i ], [ %i.ab, %bb.k ], [ %i.ab, %bb.m ], [ %i.ab, %bb.n ], [ %i.ab, %bb.o ] ; 9 uses
+  %i.ap = phi ptr [ %i.z, %bb.i ], [ %i.ab, %bb.k ], [ %i.ab, %bb.m ], [ %i.ab, %bb.n ], [ %i.ab, %bb.o ] ; 8 uses
   %i.aq = phi i64 [ %i.y, %bb.i ], [ %i.aa, %bb.k ], [ %i.aa, %bb.m ], [ %i.aa, %bb.n ], [ %i.aa, %bb.o ] ; 3 uses
   %.0.i.sink.i.i28 = phi ptr [ %i.e, %bb.i ], [ %i.ah, %bb.k ], [ %i.ai, %bb.m ], [ %i.aj, %bb.n ], [ %i.ao, %bb.o ] ; 3 uses
-  %.0.i.sink.i.i2858 = ptrtoint ptr %.0.i.sink.i.i28 to i64 ; 2 uses
-  %9 = ptrtoint ptr %i.ap to i64                  ; 2 uses
+  %.0.i.sink.i.i2858 = ptrtoaddr ptr %.0.i.sink.i.i28 to i64 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.0.i.sink.i.i28, i64 %i.aq
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.j ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 9 uses
@@ -176,7 +175,7 @@ _ZNK6hermes2vm10StringView3endEv.exit:            ; preds = %bb.i, %bb.k, %bb.m,
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %.not.i.i.i = icmp eq ptr %.0.i.sink.i.i28, null
   %i.av = ptrtoint ptr %i.as to i64
-  %i.aw = ptrtoint ptr %i.ap to i64               ; 2 uses
+  %i.aw = ptrtoint ptr %i.ap to i64               ; 4 uses
   %i.ax = sub i64 %i.av, %i.aw
   %.0.i.i.i = select i1 %.not.i.i.i, i64 0, i64 %i.ax ; 2 uses
   store i64 %.0.i.i.i, ptr %i.a, align 8, !tbaa !15
@@ -201,8 +200,8 @@ iter.check:                                       ; preds = %_ZNK6hermes2vm10Str
   %i.bc = ptrtoaddr ptr %i.bb to i64
   %i.bd = add i64 %i.j, %.0.i.sink.i.i2858
   %i.be = add i64 %i.bd, %i.aq
-  %i.bf = sub i64 %9, %i.be
-  %i.bg = call i64 @llvm.umax.i64(i64 %9, i64 %i.bf)
+  %i.bf = sub i64 %i.aw, %i.be
+  %i.bg = call i64 @llvm.umax.i64(i64 %i.aw, i64 %i.bf)
   %i.bh = sub i64 0, %i.bg                        ; 7 uses
   %min.iters.check = icmp ult i64 %i.bh, 4
   %i.bi = sub i64 %i.aw, %i.bc
@@ -269,7 +268,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEv.exit.i.i.i.preheader: ; preds = %i
   %.sroa.03.0.i.i.i56.ph = phi ptr [ %i.ap, %iter.check ], [ %i.bk, %vec.epilog.iter.check ], [ %i.bp, %vec.epilog.middle.block ] ; 3 uses
   %i.br = add i64 %i.j, %.0.i.sink.i.i2858
   %i.bs = add i64 %i.br, %i.aq                    ; 2 uses
-  %.sroa.03.0.i.i.i56.ph73 = ptrtoint ptr %.sroa.03.0.i.i.i56.ph to i64 ; 2 uses
+  %.sroa.03.0.i.i.i56.ph73 = ptrtoaddr ptr %.sroa.03.0.i.i.i56.ph to i64 ; 2 uses
   %i.bt = sub i64 %i.bs, %.sroa.03.0.i.i.i56.ph73
   %xtraiter = and i64 %i.bt, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

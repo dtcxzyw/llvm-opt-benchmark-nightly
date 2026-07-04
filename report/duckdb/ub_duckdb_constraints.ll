@@ -201,8 +201,8 @@ _ZNKSt6vectorIN6duckdb12LogicalIndexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; p
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc13
   %i.af = ptrtoaddr ptr %i.ad to i64
-  %3 = sub i64 %i.t, %i.u
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.t, -8
+  %4 = sub i64 %3, %i.u                           ; 2 uses
   %i.ag = lshr i64 %4, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 24
@@ -605,18 +605,17 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i: ;
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.ao
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 88
   store ptr %i.at, ptr %i.au, align 8, !tbaa !125
-  %i.av = load ptr, ptr %i.ai, align 8, !tbaa !124 ; 6 uses
+  %i.av = load ptr, ptr %i.ai, align 8, !tbaa !124 ; 5 uses
   %i.aw = load ptr, ptr %i.aj, align 8, !tbaa !124 ; 3 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.av, %i.aw
   br i1 %.not7.i.i.i.i.i.i, label %.loopexit31, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc15
-  %i.ax = ptrtoaddr ptr %i.av to i64
+  %i.ax = ptrtoaddr ptr %i.av to i64              ; 2 uses
   %i.ay = ptrtoaddr ptr %i.ar to i64
-  %2 = ptrtoint ptr %i.aw to i64
-  %3 = ptrtoint ptr %i.av to i64
+  %2 = ptrtoaddr ptr %i.aw to i64
   %i.az = add i64 %2, -8
-  %i.ba = sub i64 %i.az, %3                       ; 2 uses
+  %i.ba = sub i64 %i.az, %i.ax                    ; 2 uses
   %i.bb = lshr i64 %i.ba, 3
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ba, 72
@@ -704,18 +703,17 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i17:
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.bv
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %i.ca, ptr %i.cb, align 8, !tbaa !125
-  %i.cc = load ptr, ptr %i.bp, align 8, !tbaa !124 ; 6 uses
+  %i.cc = load ptr, ptr %i.bp, align 8, !tbaa !124 ; 5 uses
   %i.cd = load ptr, ptr %i.bq, align 8, !tbaa !124 ; 3 uses
   %.not7.i.i.i.i.i.i18 = icmp eq ptr %i.cc, %i.cd
   br i1 %.not7.i.i.i.i.i.i18, label %.loopexit, label %.lr.ph.i.i.i.i.i.i19.preheader
 
 .lr.ph.i.i.i.i.i.i19.preheader:                   ; preds = %.noexc26
-  %i.ce = ptrtoaddr ptr %i.cc to i64
+  %i.ce = ptrtoaddr ptr %i.cc to i64              ; 2 uses
   %i.cf = ptrtoaddr ptr %i.by to i64
-  %4 = ptrtoint ptr %i.cd to i64
-  %5 = ptrtoint ptr %i.cc to i64
-  %i.cg = add i64 %4, -8
-  %i.ch = sub i64 %i.cg, %5                       ; 2 uses
+  %3 = ptrtoaddr ptr %i.cd to i64
+  %i.cg = add i64 %3, -8
+  %i.ch = sub i64 %i.cg, %i.ce                    ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
   %min.iters.check50 = icmp ult i64 %i.ch, 72

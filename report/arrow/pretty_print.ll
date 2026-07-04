@@ -203,20 +203,17 @@ _ZN5arrow8internal15StringFormatterINS_13TimestampTypeEvEC2EPKNS_8DataTypeE.exit
   %i.gns = xor i64 %i.gnq, -1
   %i.gnt = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.gnu = getelementptr inbounds nuw i8, ptr %56, i64 29 ; 2 uses
-  %i.gnv = getelementptr inbounds nuw i8, ptr %56, i64 28 ; 3 uses
-  %i.gnw = ptrtoint ptr %i.gnu to i64             ; 2 uses
+  %i.gnv = getelementptr inbounds nuw i8, ptr %56, i64 28 ; 2 uses
+  %i.gnw = ptrtoint ptr %i.gnu to i64
   %i.gnx = getelementptr inbounds nuw i8, ptr %57, i64 26 ; 2 uses
-  %i.gny = getelementptr inbounds nuw i8, ptr %57, i64 25 ; 3 uses
-  %i.gnz = ptrtoint ptr %i.gnx to i64             ; 2 uses
+  %i.gny = getelementptr inbounds nuw i8, ptr %57, i64 25 ; 2 uses
+  %i.gnz = ptrtoint ptr %i.gnx to i64
   %i.goa = getelementptr inbounds nuw i8, ptr %55, i64 32 ; 2 uses
-  %i.gob = getelementptr inbounds nuw i8, ptr %55, i64 31 ; 3 uses
-  %i.goc = ptrtoint ptr %i.goa to i64             ; 2 uses
+  %i.gob = getelementptr inbounds nuw i8, ptr %55, i64 31 ; 2 uses
+  %i.goc = ptrtoint ptr %i.goa to i64
   %.sroa.gep.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %54, i64 23 ; 2 uses
   %.sroa.gep52.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %54, i64 22 ; 2 uses
-  %103 = ptrtoint ptr %.sroa.gep.i.i.i.i.i.i.i.i.i to i64
-  %.pre79.i.i.i.i.i = ptrtoint ptr %i.gnv to i64
-  %.pre78.i.i.i.i.i = ptrtoint ptr %i.gny to i64
-  %.pre77.i.i.i.i.i = ptrtoint ptr %i.gob to i64
+  %.pre77.i.i.i.i.i = ptrtoint ptr %.sroa.gep.i.i.i.i.i.i.i.i.i to i64
   %i.god = getelementptr inbounds nuw i8, ptr %1, i64 40
   br label %bb.abu
 
@@ -475,8 +472,8 @@ bb.acp:                                           ; preds = %bb.aco
   br label %bb.acq
 
 bb.acq:                                           ; preds = %bb.acp, %bb.aco
-  %.063.i.i.i.i.pre-phi.i.i.i.i.i = phi i64 [ %.pre78.i.i.i.i.i, %bb.acp ], [ %i.gnz, %bb.aco ] ; 3 uses
-  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.gny, %bb.acp ], [ %i.gnx, %bb.aco ] ; 5 uses
+  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.gnx, %bb.aco ], [ %i.gny, %bb.acp ] ; 6 uses
+  %.063.i.i.i.i.i.i.i.i.i = ptrtoaddr ptr %.0.i.i.i.i.i.i.i.i.i to i64 ; 3 uses
   %spec.select.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.abs.i64(i64 %.sroa.036.0.i.i.i.i.i.i.i.i.i, i1 true) ; 3 uses
   %i.gsb = udiv i64 %spec.select.i.i.i.i.i.i.i.i.i.i.i.i, 3600000 ; 3 uses
   %i.gsc = udiv i64 %spec.select.i.i.i.i.i.i.i.i.i.i.i.i, 60000
@@ -543,11 +540,11 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i.i.i.i:
   br i1 %i.gtb, label %.lr.ph.i.i.preheader.i.i.i.i.i.i.i.i.i, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.preheader.i.i.i.i.i.i.i.i.i:           ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i.i.i.i
-  %i.gtc = add i64 %.3.idx.i.i.i.i.i.i.i.i.i, %.063.i.i.i.i.pre-phi.i.i.i.i.i ; 2 uses
+  %i.gtc = add i64 %.3.idx.i.i.i.i.i.i.i.i.i, %.063.i.i.i.i.i.i.i.i.i ; 2 uses
   %i.gtd = add i64 %i.gtc, -2
-  %i.gte = add i64 %.063.i.i.i.i.pre-phi.i.i.i.i.i, -3
+  %i.gte = add i64 %.063.i.i.i.i.i.i.i.i.i, -3
   %umin.i.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.gtd, i64 %i.gte) ; 2 uses
-  %i.gtf = sub i64 %umin.i.i.i.i.i.i.i.i.i, %.063.i.i.i.i.pre-phi.i.i.i.i.i
+  %i.gtf = sub i64 %umin.i.i.i.i.i.i.i.i.i, %.063.i.i.i.i.i.i.i.i.i
   %scevgep.i.i.i.i.i.i.i.i.i = getelementptr i8, ptr %.0.i.i.i.i.i.i.i.i.i, i64 %i.gtf ; 2 uses
   %i.gtg = xor i64 %umin.i.i.i.i.i.i.i.i.i, -1
   %i.gth = add i64 %i.gtc, %i.gtg
@@ -734,8 +731,8 @@ bb.adc:                                           ; preds = %bb.adb
   br label %bb.add
 
 bb.add:                                           ; preds = %bb.adc, %bb.adb
-  %.063.i25.i.i.i.pre-phi.i.i.i.i.i = phi i64 [ %.pre79.i.i.i.i.i, %bb.adc ], [ %i.gnw, %bb.adb ] ; 3 uses
-  %.0.i24.i.i.i.i.i.i.i.i = phi ptr [ %i.gnv, %bb.adc ], [ %i.gnu, %bb.adb ] ; 5 uses
+  %.0.i24.i.i.i.i.i.i.i.i = phi ptr [ %i.gnu, %bb.adb ], [ %i.gnv, %bb.adc ] ; 6 uses
+  %.063.i25.i.i.i.i.i.i.i.i = ptrtoaddr ptr %.0.i24.i.i.i.i.i.i.i.i to i64 ; 3 uses
   %spec.select.i.i.i.i26.i.i.i.i.i.i.i.i = call i64 @llvm.abs.i64(i64 %.sroa.036.0.i21.i.i.i.i.i.i.i.i, i1 true) ; 3 uses
   %i.gxi = udiv i64 %spec.select.i.i.i.i26.i.i.i.i.i.i.i.i, 3600000000 ; 3 uses
   %i.gxj = udiv i64 %spec.select.i.i.i.i26.i.i.i.i.i.i.i.i, 60000000
@@ -802,11 +799,11 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i.i.i.i.i.
   br i1 %i.gyi, label %.lr.ph.i.i.preheader.i53.i.i.i.i.i.i.i.i, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.preheader.i53.i.i.i.i.i.i.i.i:         ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i.i.i.i.i.i
-  %i.gyj = add i64 %.3.idx.i35.i.i.i.i.i.i.i.i, %.063.i25.i.i.i.pre-phi.i.i.i.i.i ; 2 uses
+  %i.gyj = add i64 %.3.idx.i35.i.i.i.i.i.i.i.i, %.063.i25.i.i.i.i.i.i.i.i ; 2 uses
   %i.gyk = add i64 %i.gyj, -2
-  %i.gyl = add i64 %.063.i25.i.i.i.pre-phi.i.i.i.i.i, -6
+  %i.gyl = add i64 %.063.i25.i.i.i.i.i.i.i.i, -6
   %umin.i54.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.gyk, i64 %i.gyl) ; 2 uses
-  %i.gym = sub i64 %umin.i54.i.i.i.i.i.i.i.i, %.063.i25.i.i.i.pre-phi.i.i.i.i.i
+  %i.gym = sub i64 %umin.i54.i.i.i.i.i.i.i.i, %.063.i25.i.i.i.i.i.i.i.i
   %scevgep.i55.i.i.i.i.i.i.i.i = getelementptr i8, ptr %.0.i24.i.i.i.i.i.i.i.i, i64 %i.gym ; 2 uses
   %i.gyn = xor i64 %umin.i54.i.i.i.i.i.i.i.i, -1
   %i.gyo = add i64 %i.gyj, %i.gyn
@@ -988,8 +985,8 @@ bb.ado:                                           ; preds = %bb.adn
   br label %bb.adp
 
 bb.adp:                                           ; preds = %bb.ado, %bb.adn
-  %.063.i72.i.i.i.pre-phi.i.i.i.i.i = phi i64 [ %.pre77.i.i.i.i.i, %bb.ado ], [ %i.goc, %bb.adn ] ; 3 uses
-  %.0.i71.i.i.i.i.i.i.i.i = phi ptr [ %i.gob, %bb.ado ], [ %i.goa, %bb.adn ] ; 5 uses
+  %.0.i71.i.i.i.i.i.i.i.i = phi ptr [ %i.goa, %bb.adn ], [ %i.gob, %bb.ado ] ; 6 uses
+  %.063.i72.i.i.i.i.i.i.i.i = ptrtoaddr ptr %.0.i71.i.i.i.i.i.i.i.i to i64 ; 3 uses
   %spec.select.i.i.i.i73.i.i.i.i.i.i.i.i = call i64 @llvm.abs.i64(i64 %.sroa.036.0.i68.i.i.i.i.i.i.i.i, i1 true) ; 3 uses
   %i.hco = udiv i64 %spec.select.i.i.i.i73.i.i.i.i.i.i.i.i, 3600000000000 ; 3 uses
   %i.hcp = udiv i64 %spec.select.i.i.i.i73.i.i.i.i.i.i.i.i, 60000000000
@@ -1056,11 +1053,11 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i81.i.i.i.i.i.i.i.
   br i1 %i.hdo, label %.lr.ph.i.i.preheader.i99.i.i.i.i.i.i.i.i, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.preheader.i99.i.i.i.i.i.i.i.i:         ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i81.i.i.i.i.i.i.i.i
-  %i.hdp = add i64 %.3.idx.i82.i.i.i.i.i.i.i.i, %.063.i72.i.i.i.pre-phi.i.i.i.i.i ; 2 uses
+  %i.hdp = add i64 %.3.idx.i82.i.i.i.i.i.i.i.i, %.063.i72.i.i.i.i.i.i.i.i ; 2 uses
   %i.hdq = add i64 %i.hdp, -2
-  %i.hdr = add i64 %.063.i72.i.i.i.pre-phi.i.i.i.i.i, -9
+  %i.hdr = add i64 %.063.i72.i.i.i.i.i.i.i.i, -9
   %umin.i100.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.hdq, i64 %i.hdr) ; 2 uses
-  %i.hds = sub i64 %umin.i100.i.i.i.i.i.i.i.i, %.063.i72.i.i.i.pre-phi.i.i.i.i.i
+  %i.hds = sub i64 %umin.i100.i.i.i.i.i.i.i.i, %.063.i72.i.i.i.i.i.i.i.i
   %scevgep.i101.i.i.i.i.i.i.i.i = getelementptr i8, ptr %.0.i71.i.i.i.i.i.i.i.i, i64 %i.hds ; 2 uses
   %i.hdt = xor i64 %umin.i100.i.i.i.i.i.i.i.i, -1
   %i.hdu = add i64 %i.hdp, %i.hdt
@@ -1368,7 +1365,7 @@ bb.aef:                                           ; preds = %bb.aee
 _ZN5arrow8internal6detail16FormatYYYY_MM_DDEN14arrow_vendored4date14year_month_dayEPPc.exit.i127.i.i.i.i.i.i.i.i: ; preds = %bb.aef, %bb.aee
   %.2.i.i.i.i.i.i.i.i.i = phi ptr [ %i.hlc, %bb.aef ], [ %.1.i.i.i.i.i.i.i.i.i, %bb.aee ] ; 2 uses
   %i.hld = ptrtoint ptr %.2.i.i.i.i.i.i.i.i.i to i64
-  %i.hle = sub i64 %103, %i.hld                   ; 3 uses
+  %i.hle = sub i64 %.pre77.i.i.i.i.i, %i.hld      ; 3 uses
   %i.hlf = load ptr, ptr %2, align 8, !tbaa !194, !noalias !651, !nonnull !98, !align !192
   %i.hlg = getelementptr inbounds nuw i8, ptr %i.hlf, i64 52
   %i.hlh = load i32, ptr %i.hlg, align 4, !tbaa !47, !noalias !651
@@ -1717,17 +1714,17 @@ _ZN5arrow12_GLOBAL__N_113PrettyPrinter9OpenArrayERKNS_5ArrayE.exit.i1991: ; pred
   %i.hpv = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
   %i.hpw = xor i64 %i.hpu, -1
   %i.hpx = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %104 = ptrtoint ptr %50 to i64                  ; 3 uses
+  %103 = ptrtoaddr ptr %50 to i64                 ; 3 uses
   %.ptr24.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %50, i64 15
-  %i.hpy = add nuw i64 %104, 9
+  %i.hpy = add nuw i64 %103, 9
   %i.hpz = ptrtoint ptr %.ptr24.i.i.i.i.i.i.i.i.i to i64
-  %105 = ptrtoint ptr %51 to i64                  ; 3 uses
+  %104 = ptrtoaddr ptr %51 to i64                 ; 3 uses
   %.ptr26.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %51, i64 12
-  %i.hqa = add nuw i64 %105, 9
+  %i.hqa = add nuw i64 %104, 9
   %i.hqb = ptrtoint ptr %.ptr26.i.i.i.i.i.i.i.i.i to i64
-  %106 = ptrtoint ptr %49 to i64                  ; 3 uses
+  %105 = ptrtoaddr ptr %49 to i64                 ; 3 uses
   %.ptr23.i41.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %49, i64 18
-  %i.hqc = add nuw i64 %106, 9
+  %i.hqc = add nuw i64 %105, 9
   %i.hqd = ptrtoint ptr %.ptr23.i41.i.i.i.i.i.i.i.i to i64
   %i.hqe = getelementptr inbounds nuw i8, ptr %48, i64 8
   %i.hqf = getelementptr inbounds nuw i8, ptr %48, i64 7
@@ -2031,10 +2028,10 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i.i.i.i2
   br i1 %i.hvb, label %.lr.ph.i.i.preheader.i.i.i.i.i.i.i.i.i2041, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i2036
 
 .lr.ph.i.i.preheader.i.i.i.i.i.i.i.i.i2041:       ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i.i.i.i2032
-  %i.hvc = add i64 %.2.idx.i.i.i.i.i.i.i.i.i2033, %105 ; 2 uses
+  %i.hvc = add i64 %.2.idx.i.i.i.i.i.i.i.i.i2033, %104 ; 2 uses
   %i.hvd = add i64 %i.hvc, -2
   %umin.i.i.i.i.i.i.i.i.i2042 = call i64 @llvm.umin.i64(i64 %i.hvd, i64 %i.hqa) ; 2 uses
-  %i.hve = sub i64 %umin.i.i.i.i.i.i.i.i.i2042, %105
+  %i.hve = sub i64 %umin.i.i.i.i.i.i.i.i.i2042, %104
   %scevgep.i.i.i.i.i.i.i.i.i2043 = getelementptr i8, ptr %51, i64 %i.hve ; 2 uses
   %i.hvf = xor i64 %umin.i.i.i.i.i.i.i.i.i2042, -1
   %i.hvg = add i64 %i.hvc, %i.hvf
@@ -2165,10 +2162,10 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i.i.i.i.i.
   br i1 %i.hxk, label %.lr.ph.i.i.preheader.i30.i.i.i.i.i.i.i.i, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i2021
 
 .lr.ph.i.i.preheader.i30.i.i.i.i.i.i.i.i:         ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i.i.i.i.i.i
-  %i.hxl = add i64 %.2.idx.i24.i.i.i.i.i.i.i.i, %104 ; 2 uses
+  %i.hxl = add i64 %.2.idx.i24.i.i.i.i.i.i.i.i, %103 ; 2 uses
   %i.hxm = add i64 %i.hxl, -2
   %umin.i31.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.hxm, i64 %i.hpy) ; 2 uses
-  %i.hxn = sub i64 %umin.i31.i.i.i.i.i.i.i.i, %104
+  %i.hxn = sub i64 %umin.i31.i.i.i.i.i.i.i.i, %103
   %scevgep.i32.i.i.i.i.i.i.i.i = getelementptr i8, ptr %50, i64 %i.hxn ; 2 uses
   %i.hxo = xor i64 %umin.i31.i.i.i.i.i.i.i.i, -1
   %i.hxp = add i64 %i.hxl, %i.hxo
@@ -2291,10 +2288,10 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i47.i.i.i.i.i.i.i.
   br i1 %i.hzo, label %.lr.ph.i.i.preheader.i54.i.i.i.i.i.i.i.i, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i2047
 
 .lr.ph.i.i.preheader.i54.i.i.i.i.i.i.i.i:         ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i47.i.i.i.i.i.i.i.i
-  %i.hzp = add i64 %.2.idx.i48.i.i.i.i.i.i.i.i, %106 ; 2 uses
+  %i.hzp = add i64 %.2.idx.i48.i.i.i.i.i.i.i.i, %105 ; 2 uses
   %i.hzq = add i64 %i.hzp, -2
   %umin.i55.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.hzq, i64 %i.hqc) ; 2 uses
-  %i.hzr = sub i64 %umin.i55.i.i.i.i.i.i.i.i, %106
+  %i.hzr = sub i64 %umin.i55.i.i.i.i.i.i.i.i, %105
   %scevgep.i56.i.i.i.i.i.i.i.i = getelementptr i8, ptr %49, i64 %i.hzr ; 2 uses
   %i.hzs = xor i64 %umin.i55.i.i.i.i.i.i.i.i, -1
   %i.hzt = add i64 %i.hzp, %i.hzs
@@ -2695,17 +2692,17 @@ _ZN5arrow12_GLOBAL__N_113PrettyPrinter9OpenArrayERKNS_5ArrayE.exit.i2086: ; pred
   %i.ifs = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
   %i.ift = xor i64 %i.ifr, -1
   %i.ifu = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %107 = ptrtoint ptr %44 to i64                  ; 3 uses
+  %106 = ptrtoaddr ptr %44 to i64                 ; 3 uses
   %.ptr23.i.i.i.i.i.i.i.i.i2094 = getelementptr inbounds nuw i8, ptr %44, i64 15
-  %i.ifv = add nuw i64 %107, 9
+  %i.ifv = add nuw i64 %106, 9
   %i.ifw = ptrtoint ptr %.ptr23.i.i.i.i.i.i.i.i.i2094 to i64
-  %108 = ptrtoint ptr %45 to i64                  ; 3 uses
+  %107 = ptrtoaddr ptr %45 to i64                 ; 3 uses
   %.ptr26.i.i.i.i.i.i.i.i.i2095 = getelementptr inbounds nuw i8, ptr %45, i64 12
-  %i.ifx = add nuw i64 %108, 9
+  %i.ifx = add nuw i64 %107, 9
   %i.ify = ptrtoint ptr %.ptr26.i.i.i.i.i.i.i.i.i2095 to i64
-  %109 = ptrtoint ptr %43 to i64                  ; 3 uses
+  %108 = ptrtoaddr ptr %43 to i64                 ; 3 uses
   %.ptr23.i40.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %43, i64 18
-  %i.ifz = add nuw i64 %109, 9
+  %i.ifz = add nuw i64 %108, 9
   %i.iga = ptrtoint ptr %.ptr23.i40.i.i.i.i.i.i.i.i to i64
   %i.igb = getelementptr inbounds nuw i8, ptr %42, i64 8
   %i.igc = getelementptr inbounds nuw i8, ptr %42, i64 7
@@ -3009,10 +3006,10 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i.i.i.i2
   br i1 %i.ikx, label %.lr.ph.i.i.preheader.i.i.i.i.i.i.i.i.i2181, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i2176
 
 .lr.ph.i.i.preheader.i.i.i.i.i.i.i.i.i2181:       ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i.i.i.i2172
-  %i.iky = add i64 %.2.idx.i.i.i.i.i.i.i.i.i2173, %108 ; 2 uses
+  %i.iky = add i64 %.2.idx.i.i.i.i.i.i.i.i.i2173, %107 ; 2 uses
   %i.ikz = add i64 %i.iky, -2
   %umin.i.i.i.i.i.i.i.i.i2182 = call i64 @llvm.umin.i64(i64 %i.ikz, i64 %i.ifx) ; 2 uses
-  %i.ila = sub i64 %umin.i.i.i.i.i.i.i.i.i2182, %108
+  %i.ila = sub i64 %umin.i.i.i.i.i.i.i.i.i2182, %107
   %scevgep.i.i.i.i.i.i.i.i.i2183 = getelementptr i8, ptr %45, i64 %i.ila ; 2 uses
   %i.ilb = xor i64 %umin.i.i.i.i.i.i.i.i.i2182, -1
   %i.ilc = add i64 %i.iky, %i.ilb
@@ -3144,10 +3141,10 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i.i.i.i.i.
   br i1 %i.ini, label %.lr.ph.i.i.preheader.i30.i.i.i.i.i.i.i.i2147, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i2142
 
 .lr.ph.i.i.preheader.i30.i.i.i.i.i.i.i.i2147:     ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i.i.i.i.i.i2138
-  %i.inj = add i64 %.2.idx.i24.i.i.i.i.i.i.i.i2139, %107 ; 2 uses
+  %i.inj = add i64 %.2.idx.i24.i.i.i.i.i.i.i.i2139, %106 ; 2 uses
   %i.ink = add i64 %i.inj, -2
   %umin.i31.i.i.i.i.i.i.i.i2148 = call i64 @llvm.umin.i64(i64 %i.ink, i64 %i.ifv) ; 2 uses
-  %i.inl = sub i64 %umin.i31.i.i.i.i.i.i.i.i2148, %107
+  %i.inl = sub i64 %umin.i31.i.i.i.i.i.i.i.i2148, %106
   %scevgep.i32.i.i.i.i.i.i.i.i2149 = getelementptr i8, ptr %44, i64 %i.inl ; 2 uses
   %i.inm = xor i64 %umin.i31.i.i.i.i.i.i.i.i2148, -1
   %i.inn = add i64 %i.inj, %i.inm
@@ -3279,10 +3276,10 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i48.i.i.i.i.i.i.i.
   br i1 %i.ipt, label %.lr.ph.i.i.preheader.i55.i.i.i.i.i.i.i.i, label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i.i.i.i.i.i2193
 
 .lr.ph.i.i.preheader.i55.i.i.i.i.i.i.i.i:         ; preds = %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i48.i.i.i.i.i.i.i.i
-  %i.ipu = add i64 %.2.idx.i49.i.i.i.i.i.i.i.i, %109 ; 2 uses
+  %i.ipu = add i64 %.2.idx.i49.i.i.i.i.i.i.i.i, %108 ; 2 uses
   %i.ipv = add i64 %i.ipu, -2
   %umin.i56.i.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.ipv, i64 %i.ifz) ; 2 uses
-  %i.ipw = sub i64 %umin.i56.i.i.i.i.i.i.i.i, %109
+  %i.ipw = sub i64 %umin.i56.i.i.i.i.i.i.i.i, %108
   %scevgep.i57.i.i.i.i.i.i.i.i = getelementptr i8, ptr %43, i64 %i.ipw ; 2 uses
   %i.ipx = xor i64 %umin.i56.i.i.i.i.i.i.i.i, -1
   %i.ipy = add i64 %i.ipu, %i.ipx

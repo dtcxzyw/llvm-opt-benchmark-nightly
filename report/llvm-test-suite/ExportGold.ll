@@ -204,8 +204,8 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %.not5.i, label %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET0_T_S8_S7_.exit, label %.lr.ph.i309.preheader
 
 .lr.ph.i309.preheader:                            ; preds = %bb.bw
-  %6 = ptrtoint ptr %i.sj to i64
-  %7 = ptrtoint ptr %i.sh to i64
+  %6 = ptrtoaddr ptr %i.sj to i64
+  %7 = ptrtoaddr ptr %i.sh to i64
   %i.sk = add i64 %6, -4
   %i.sl = sub i64 %i.sk, %7                       ; 2 uses
   %i.sm = lshr i64 %i.sl, 2
@@ -265,8 +265,8 @@ _ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET0_T_S8_S
   br i1 %.not5.i312, label %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET0_T_S8_S7_.exit319, label %.lr.ph.i313.preheader
 
 .lr.ph.i313.preheader:                            ; preds = %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET0_T_S8_S7_.exit
-  %8 = ptrtoint ptr %i.tc to i64
-  %9 = ptrtoint ptr %i.ta to i64
+  %8 = ptrtoaddr ptr %i.tc to i64
+  %9 = ptrtoaddr ptr %i.ta to i64
   %i.td = add i64 %8, -4
   %i.te = sub i64 %i.td, %9                       ; 2 uses
   %i.tf = lshr i64 %i.te, 2
@@ -326,8 +326,8 @@ _ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET0_T_S8_S
   br i1 %.not5.i320, label %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET0_T_S8_S7_.exit327, label %.lr.ph.i321.preheader
 
 .lr.ph.i321.preheader:                            ; preds = %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET0_T_S8_S7_.exit319
-  %10 = ptrtoint ptr %i.tv to i64
-  %11 = ptrtoint ptr %i.tt to i64
+  %10 = ptrtoaddr ptr %i.tv to i64
+  %11 = ptrtoaddr ptr %i.tt to i64
   %i.tw = add i64 %10, -4
   %i.tx = sub i64 %i.tw, %11                      ; 2 uses
   %i.ty = lshr i64 %i.tx, 2
@@ -420,11 +420,10 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330: ; preds = %.noexc335
 
 _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit336:            ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330, %.noexc335, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328
   %.sroa.17.0 = phi ptr [ %i.uu, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.uu, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 2 uses
-  %.sroa.0889.0 = phi ptr [ %i.ut, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.ut, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 27 uses
+  %.sroa.0889.0 = phi ptr [ %i.ut, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.ut, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 26 uses
   %.0.i.i.i.i.i332 = phi ptr [ %i.uy, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.uv, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 3 uses
-  %.0.i.i.i.i.i3321459 = ptrtoint ptr %.0.i.i.i.i.i332 to i64
-  %.sroa.0889.01460 = ptrtoint ptr %.sroa.0889.0 to i64
-  %.sroa.0889.01430 = ptrtoaddr ptr %.sroa.0889.0 to i64 ; 2 uses
+  %.0.i.i.i.i.i3321459 = ptrtoaddr ptr %.0.i.i.i.i.i332 to i64
+  %.sroa.0889.01430 = ptrtoaddr ptr %.sroa.0889.0 to i64 ; 3 uses
   %i.uz = mul nsw i32 %i.pt, 3                    ; 2 uses
   %i.va = sext i32 %i.uz to i64                   ; 3 uses
   %i.vb = icmp slt i32 %i.pt, 0
@@ -827,7 +826,7 @@ bb.es:                                            ; preds = %bb.er
   %.not5.i442 = icmp ne ptr %.sroa.0889.0, %.0.i.i.i.i.i332
   call void @llvm.assume(i1 %.not5.i442)
   %i.aop = add i64 %.0.i.i.i.i.i3321459, -4
-  %i.aoq = sub i64 %i.aop, %.sroa.0889.01460      ; 2 uses
+  %i.aoq = sub i64 %i.aop, %.sroa.0889.01430      ; 2 uses
   %i.aor = lshr i64 %i.aoq, 2
   %i.aos = add nuw nsw i64 %i.aor, 1              ; 2 uses
   %min.iters.check1462 = icmp ult i64 %i.aoq, 28

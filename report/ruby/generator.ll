@@ -204,22 +204,19 @@ sse2_next_match.exit48:                           ; preds = %fbuffer_append_rese
 define internal zeroext range(i8 0, 2) i8 @search_escape_basic(ptr nofree noundef captures(none) %0) #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !72   ; 4 uses
-  %.promoted = load ptr, ptr %0, align 8, !tbaa !76 ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !72   ; 3 uses
+  %.promoted = load ptr, ptr %0, align 8, !tbaa !76 ; 6 uses
   %i.c = icmp ult ptr %.promoted, %i.b
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %.promoted24 = ptrtoint ptr %.promoted to i64
-  %1 = ptrtoint ptr %i.b to i64
-  %.promoted12 = ptrtoint ptr %.promoted to i64
-  %2 = ptrtoint ptr %i.b to i64
-  %i.d = sub i64 %2, %.promoted12
-  %scevgep = getelementptr i8, ptr %.promoted, i64 %i.d ; 2 uses
-  %3 = sub i64 %1, %.promoted24
-  %4 = freeze i64 %3                              ; 2 uses
-  %i.e = add i64 %4, -1
-  %xtraiter = and i64 %4, 3                       ; 2 uses
+  %.promoted12 = ptrtoaddr ptr %.promoted to i64
+  %1 = ptrtoaddr ptr %i.b to i64
+  %i.d = sub i64 %1, %.promoted12
+  %2 = freeze i64 %i.d                            ; 3 uses
+  %scevgep = getelementptr i8, ptr %.promoted, i64 %2 ; 2 uses
+  %i.e = add i64 %2, -1
+  %xtraiter = and i64 %2, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
@@ -622,8 +619,8 @@ bb.a:
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.preheader.i.lr.ph, %full_escape_UTF8_char.exit
   %.promoted.i25 = phi ptr [ %.promoted.i24, %.lr.ph.preheader.i.lr.ph ], [ %i.lv, %full_escape_UTF8_char.exit ] ; 5 uses
   %i.f = phi ptr [ %i.b, %.lr.ph.preheader.i.lr.ph ], [ %i.lw, %full_escape_UTF8_char.exit ] ; 3 uses
-  %2 = ptrtoint ptr %i.f to i64
-  %.promoted.i2593 = ptrtoint ptr %.promoted.i25 to i64
+  %2 = ptrtoaddr ptr %i.f to i64
+  %.promoted.i2593 = ptrtoaddr ptr %.promoted.i25 to i64
   %i.g = sub i64 %2, %.promoted.i2593
   %i.h = freeze i64 %i.g                          ; 2 uses
   %i.i = add i64 %i.h, -1
@@ -749,8 +746,8 @@ bb.e:                                             ; preds = %.lr.ph.i.3
   br i1 %exitcond.not.i.3, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
 ._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i.prol.loopexit, %bb.e
-  %.promoted23.i.le = ptrtoint ptr %.promoted.i25 to i64
-  %3 = ptrtoint ptr %i.f to i64
+  %.promoted23.i.le = ptrtoaddr ptr %.promoted.i25 to i64
+  %3 = ptrtoaddr ptr %i.f to i64
   %i.bh = sub i64 %3, %.promoted23.i.le
   %scevgep.i.le = getelementptr i8, ptr %.promoted.i25, i64 %i.bh
   br label %._crit_edge.i

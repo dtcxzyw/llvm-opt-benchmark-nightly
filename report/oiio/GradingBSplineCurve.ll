@@ -201,18 +201,17 @@ _ZNSt15__new_allocatorIN16OpenColorIO_v2_519GradingControlPointEE8allocateEmPKv.
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.g
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %i.l, ptr %i.m, align 8, !tbaa !52
-  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 8 uses
+  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 7 uses
   %i.o = load ptr, ptr %i.b, align 8, !tbaa !70   ; 3 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.n, %i.o
   br i1 %.not7.i.i.i.i.i, label %.loopexit10, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc6
-  %i.p = ptrtoaddr ptr %i.n to i64
+  %i.p = ptrtoaddr ptr %i.n to i64                ; 2 uses
   %i.q = ptrtoaddr ptr %i.j to i64
-  %2 = ptrtoint ptr %i.o to i64
-  %3 = ptrtoint ptr %i.n to i64
+  %2 = ptrtoaddr ptr %i.o to i64
   %i.r = add i64 %2, -8
-  %i.s = sub i64 %i.r, %3                         ; 2 uses
+  %i.s = sub i64 %i.r, %i.p                       ; 2 uses
   %i.t = lshr i64 %i.s, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.s, 72
@@ -363,18 +362,17 @@ _ZNSt15__new_allocatorIN16OpenColorIO_v2_519GradingControlPointEE8allocateEmPKv.
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.g
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %i.l, ptr %i.m, align 8, !tbaa !52
-  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 8 uses
+  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 7 uses
   %i.o = load ptr, ptr %i.b, align 8, !tbaa !70   ; 3 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.n, %i.o
   br i1 %.not7.i.i.i.i.i, label %.loopexit11, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc7
-  %i.p = ptrtoaddr ptr %i.n to i64
+  %i.p = ptrtoaddr ptr %i.n to i64                ; 2 uses
   %i.q = ptrtoaddr ptr %i.j to i64
-  %3 = ptrtoint ptr %i.o to i64
-  %4 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoaddr ptr %i.o to i64
   %i.r = add i64 %3, -8
-  %i.s = sub i64 %i.r, %4                         ; 2 uses
+  %i.s = sub i64 %i.r, %i.p                       ; 2 uses
   %i.t = lshr i64 %i.s, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.s, 72
@@ -618,10 +616,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !53   ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !49     ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !53   ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !49     ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !52
@@ -633,6 +631,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.n = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_M_allocateEm.exit.i, !prof !27
 
@@ -646,8 +646,8 @@ _ZNSt12_Vector_baseIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_M_alloca
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_M_allocateEm.exit.i
-  %i.p = add i64 %i.d, -8
-  %i.q = sub i64 %i.p, %i.e
+  %i.p = add i64 %3, -8
+  %i.q = sub i64 %i.p, %2
   %i.r = and i64 %i.q, -8
   %i.s = add i64 %i.r, 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.o, ptr align 4 %i.c, i64 %i.s, i1 false)
@@ -710,7 +710,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit
 
 _ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !49    ; 3 uses
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !49    ; 2 uses
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !53  ; 4 uses
   %i.ag = load ptr, ptr %0, align 8, !tbaa !49
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
@@ -722,12 +722,11 @@ _ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit: ; pred
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit
-  %i.am = ptrtoaddr ptr %i.ae to i64
-  %2 = ptrtoint ptr %i.al to i64
-  %3 = ptrtoint ptr %i.ae to i64
-  %i.an = add i64 %i.ai, %2
+  %i.am = ptrtoaddr ptr %i.ae to i64              ; 2 uses
+  %4 = ptrtoaddr ptr %i.al to i64
+  %i.an = add i64 %i.ai, %4
   %i.ao = add i64 %i.an, -8
-  %i.ap = add i64 %3, %i.ah
+  %i.ap = add i64 %i.am, %i.ah
   %i.aq = sub i64 %i.ao, %i.ap                    ; 2 uses
   %i.ar = lshr i64 %i.aq, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
@@ -1065,8 +1064,8 @@ _ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmPKc.exit.i
   %i.z = ptrtoaddr ptr %i.w to i64
-  %2 = sub i64 %i.d, %i.e
-  %3 = add i64 %2, -8                             ; 2 uses
+  %2 = add i64 %i.d, -8
+  %3 = sub i64 %2, %i.e                           ; 2 uses
   %i.aa = lshr i64 %3, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -1469,8 +1468,8 @@ _ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc116
   %i.cu = ptrtoaddr ptr %i.cs to i64
-  %7 = sub i64 %i.ci, %i.cj
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.ci, -8
+  %8 = sub i64 %7, %i.cj                          ; 2 uses
   %i.cv = lshr i64 %8, 3
   %i.cw = add nuw nsw i64 %i.cv, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 24
@@ -1594,8 +1593,8 @@ _ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.i109.i.preheader:                ; preds = %.noexc118
   %i.ee = ptrtoaddr ptr %i.ec to i64
-  %9 = sub i64 %i.ds, %i.dt
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.ds, -8
+  %10 = sub i64 %9, %i.dt                         ; 2 uses
   %i.ef = lshr i64 %10, 3
   %i.eg = add nuw nsw i64 %i.ef, 1                ; 2 uses
   %min.iters.check1183 = icmp ult i64 %10, 24
@@ -1707,8 +1706,8 @@ _ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.i123.i.preheader:                ; preds = %.noexc120
   %i.fk = ptrtoaddr ptr %i.fi to i64
-  %11 = sub i64 %i.ey, %i.ez
-  %12 = add i64 %11, -8                           ; 2 uses
+  %11 = add i64 %i.ey, -8
+  %12 = sub i64 %11, %i.ez                        ; 2 uses
   %i.fl = lshr i64 %12, 3
   %i.fm = add nuw nsw i64 %i.fl, 1                ; 2 uses
   %min.iters.check1201 = icmp ult i64 %12, 24
@@ -1997,8 +1996,8 @@ _ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc123
   %i.ki = ptrtoaddr ptr %i.kg to i64
-  %13 = sub i64 %i.jw, %i.jx
-  %14 = add i64 %13, -8                           ; 2 uses
+  %13 = add i64 %i.jw, -8
+  %14 = sub i64 %13, %i.jx                        ; 2 uses
   %i.kj = lshr i64 %14, 3
   %i.kk = add nuw nsw i64 %i.kj, 1                ; 2 uses
   %min.iters.check1219 = icmp ult i64 %14, 72
@@ -2401,14 +2400,14 @@ _ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE12_M_check_lenEmPKc.exit.i
   %i.ao = ptrtoaddr ptr %i.al to i64
-  %3 = sub i64 %i.b, %i.c
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.b, -8
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.ap = lshr i64 %4, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 72
   %i.ar = sub i64 %i.c, %i.ao
   %diff.check = icmp ugt i64 %i.ar, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
+  %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader52, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -2464,8 +2463,8 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_S_relocateEPS1_
   br i1 %.not10.i.i.i16.i, label %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i, label %.lr.ph.i.i.i17.i.preheader
 
 .lr.ph.i.i.i17.i.preheader:                       ; preds = %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i
-  %5 = sub i64 %i.ac, %i.b
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.ac, -8
+  %6 = sub i64 %5, %i.b                           ; 2 uses
   %i.bd = lshr i64 %6, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check36 = icmp ult i64 %6, 104
@@ -2868,8 +2867,8 @@ _ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not6.i.i.i70, label %_ZSt4fillIPffEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_.exit69
-  %4 = sub i64 %i.f, %i.j
-  %5 = add i64 %4, -4                             ; 2 uses
+  %4 = add i64 %i.f, -4
+  %5 = sub i64 %4, %i.j                           ; 2 uses
   %i.bg = lshr i64 %5, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %5, 28

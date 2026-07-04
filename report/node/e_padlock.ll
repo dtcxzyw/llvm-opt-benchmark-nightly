@@ -204,9 +204,9 @@ bb.a:
   %i.c = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #6 ; 2 uses
   %i.d = ptrtoaddr ptr %i.c to i64
   %i.e = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #6
-  %i.f = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.f = ptrtoint ptr %i.e to i64
   %i.g = sub i64 0, %i.f
-  %i.h = and i64 %i.g, 15
+  %i.h = and i64 %i.g, 15                         ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.h ; 12 uses
   %i.j = tail call i32 @EVP_CIPHER_CTX_get_num(ptr noundef %0) #6 ; 4 uses
   %.not = icmp eq i32 %i.j, 0
@@ -366,11 +366,9 @@ vector.memcheck110:                               ; preds = %iter.check138
   %i.bf = sub i64 %.256112, %.2111
   %diff.check113 = icmp ugt i64 %i.bf, -32
   %i.bg = add i64 %i.ay, %.2111
-  %i.bh = add i64 %i.f, 15
-  %4 = or i64 %i.bh, -16
-  %i.bi = sub i64 %4, %i.d
-  %5 = add i64 %i.bi, %i.bg
-  %diff.check114 = icmp ult i64 %5, 31
+  %i.bh = add i64 %i.h, %i.d
+  %i.bi = sub i64 %i.bh, %i.bg
+  %diff.check114 = icmp ugt i64 %i.bi, -32
   %conflict.rdx115 = or i1 %diff.check113, %diff.check114
   br i1 %conflict.rdx115, label %vec.epilog.scalar.ph139.preheader, label %vector.main.loop.iter.check117
 

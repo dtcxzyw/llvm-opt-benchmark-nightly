@@ -204,8 +204,8 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 8 uses
   %i.d = alloca ptr, align 8                      ; 8 uses
   %.not = icmp eq ptr %1, null
-  %5 = ptrtoint ptr %1 to i64
-  %6 = ptrtoint ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %0 to i64
   %i.e = sub i64 %5, %6                           ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
@@ -608,8 +608,8 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN14duckdb_httplib6detail12parse_headerIZNS0_12read_headersERNS_6StreamERSt18unordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_NS0_11case_ignore4hashENSB_8equal_toESaISt4pairIKSA_SA_EEEEUlRSF_SK_E_EEbPKcSN_T_(ptr noundef %0, ptr noundef %1, ptr %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %4 = ptrtoint ptr %0 to i64                     ; 4 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
@@ -642,12 +642,12 @@ bb.a:
 
 .critedge.loopexit:                               ; preds = %.lr.ph, %.backedge161
   %.046.lcssa.ph = phi ptr [ %scevgep, %.backedge161 ], [ %.046162, %.lr.ph ] ; 2 uses
-  %.pre182 = ptrtoint ptr %.046.lcssa.ph to i64
+  %.pre181 = ptrtoaddr ptr %.046.lcssa.ph to i64
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.046.lcssa176.pre-phi = phi i64 [ %.pre182, %.critedge.loopexit ], [ %3, %bb.a ] ; 3 uses
-  %.046.lcssa = phi ptr [ %.046.lcssa.ph, %.critedge.loopexit ], [ %1, %bb.a ] ; 4 uses
+  %.046.lcssa176.pre-phi = phi i64 [ %.pre181, %.critedge.loopexit ], [ %3, %bb.a ] ; 2 uses
+  %.046.lcssa = phi ptr [ %.046.lcssa.ph, %.critedge.loopexit ], [ %1, %bb.a ] ; 5 uses
   %i.i = icmp ult ptr %0, %.046.lcssa
   br i1 %i.i, label %.lr.ph166.preheader, label %.critedge2
 
@@ -660,28 +660,24 @@ bb.a:
   %.060165 = phi ptr [ %i.l, %bb.b ], [ %0, %.lr.ph166.preheader ] ; 3 uses
   %i.k = load i8, ptr %.060165, align 1, !tbaa !83
   %.not = icmp eq i8 %i.k, 58
-  br i1 %.not, label %.critedge2.loopexit, label %bb.b
+  br i1 %.not, label %.critedge2, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph166
   %i.l = getelementptr inbounds nuw i8, ptr %.060165, i64 1 ; 2 uses
   %exitcond.not = icmp eq ptr %i.l, %scevgep177
-  br i1 %exitcond.not, label %.critedge2.loopexit, label %.lr.ph166, !llvm.loop !432
+  br i1 %exitcond.not, label %.critedge2, label %.lr.ph166, !llvm.loop !432
 
-.critedge2.loopexit:                              ; preds = %bb.b, %.lr.ph166
-  %.060.lcssa.ph = phi ptr [ %.060165, %.lr.ph166 ], [ %scevgep177, %bb.b ] ; 2 uses
-  %.pre183 = ptrtoint ptr %.060.lcssa.ph to i64
-  br label %.critedge2
-
-.critedge2:                                       ; preds = %.critedge2.loopexit, %.critedge
-  %.060.lcssa178.pre-phi = phi i64 [ %.pre183, %.critedge2.loopexit ], [ %4, %.critedge ] ; 2 uses
-  %.060.lcssa = phi ptr [ %.060.lcssa.ph, %.critedge2.loopexit ], [ %0, %.critedge ] ; 5 uses
+.critedge2:                                       ; preds = %.lr.ph166, %bb.b, %.critedge
+  %.060.lcssa = phi ptr [ %0, %.critedge ], [ %scevgep177, %bb.b ], [ %.060165, %.lr.ph166 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
   store ptr %i.m, ptr %5, align 8, !tbaa !93
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   store i64 0, ptr %i.n, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
-  %i.o = sub i64 %.060.lcssa178.pre-phi, %4       ; 7 uses
+  %11 = ptrtoint ptr %.060.lcssa to i64           ; 2 uses
+  %12 = ptrtoint ptr %0 to i64
+  %i.o = sub i64 %11, %12                         ; 7 uses
   store i64 %i.o, ptr %i.c, align 8, !tbaa !10
   %i.p = icmp ugt i64 %i.o, 15                    ; 2 uses
   br i1 %i.p, label %.noexc.i, label %._crit_edge.i.i
@@ -766,7 +762,7 @@ bb.g:                                             ; preds = %_ZN14duckdb_httplib
   br i1 %i.ar, label %.lr.ph172.preheader, label %.critedge4
 
 .lr.ph172.preheader:                              ; preds = %.preheader
-  %i.as = sub i64 %.046.lcssa176.pre-phi, %.060.lcssa178.pre-phi
+  %i.as = sub i64 %.046.lcssa176.pre-phi, %11
   %scevgep179 = getelementptr i8, ptr %.060.lcssa, i64 %i.as ; 2 uses
   br label %.lr.ph172
 
@@ -837,8 +833,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.be = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   store i64 0, ptr %i.be, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
+  %13 = ptrtoint ptr %.046.lcssa to i64
   %i.bf = ptrtoint ptr %.161.lcssa to i64
-  %i.bg = sub i64 %.046.lcssa176.pre-phi, %i.bf   ; 4 uses
+  %i.bg = sub i64 %13, %i.bf                      ; 4 uses
   store i64 %i.bg, ptr %i.a, align 8, !tbaa !10
   %i.bh = icmp ugt i64 %i.bg, 15
   br i1 %i.bh, label %.noexc.i87, label %._crit_edge.i.i86
@@ -1241,8 +1238,8 @@ _ZN14duckdb_httplib6detail18stream_line_readerD2Ev.exit225: ; preds = %bb.eg, %_
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN14duckdb_httplib6detail12parse_headerIZNS0_20read_content_chunkedINS_8ResponseEEENS0_17ReadContentResultERNS_6StreamERT_mSt8functionIFbPKcmmmEEEUlRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESL_E_EEbSB_SB_S7_(ptr noundef %0, ptr noundef %1, ptr noundef byval(%class.anon.862) align 8 %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %4 = ptrtoint ptr %0 to i64                     ; 4 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
@@ -1275,12 +1272,12 @@ bb.a:
 
 .critedge.loopexit:                               ; preds = %.lr.ph, %.backedge162
   %.046.lcssa.ph = phi ptr [ %scevgep, %.backedge162 ], [ %.046163, %.lr.ph ] ; 2 uses
-  %.pre183 = ptrtoint ptr %.046.lcssa.ph to i64
+  %.pre182 = ptrtoaddr ptr %.046.lcssa.ph to i64
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.046.lcssa177.pre-phi = phi i64 [ %.pre183, %.critedge.loopexit ], [ %3, %bb.a ] ; 3 uses
-  %.046.lcssa = phi ptr [ %.046.lcssa.ph, %.critedge.loopexit ], [ %1, %bb.a ] ; 4 uses
+  %.046.lcssa177.pre-phi = phi i64 [ %.pre182, %.critedge.loopexit ], [ %3, %bb.a ] ; 2 uses
+  %.046.lcssa = phi ptr [ %.046.lcssa.ph, %.critedge.loopexit ], [ %1, %bb.a ] ; 5 uses
   %i.i = icmp ult ptr %0, %.046.lcssa
   br i1 %i.i, label %.lr.ph167.preheader, label %.critedge2
 
@@ -1293,28 +1290,24 @@ bb.a:
   %.060166 = phi ptr [ %i.l, %bb.b ], [ %0, %.lr.ph167.preheader ] ; 3 uses
   %i.k = load i8, ptr %.060166, align 1, !tbaa !83
   %.not = icmp eq i8 %i.k, 58
-  br i1 %.not, label %.critedge2.loopexit, label %bb.b
+  br i1 %.not, label %.critedge2, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph167
   %i.l = getelementptr inbounds nuw i8, ptr %.060166, i64 1 ; 2 uses
   %exitcond.not = icmp eq ptr %i.l, %scevgep178
-  br i1 %exitcond.not, label %.critedge2.loopexit, label %.lr.ph167, !llvm.loop !955
+  br i1 %exitcond.not, label %.critedge2, label %.lr.ph167, !llvm.loop !955
 
-.critedge2.loopexit:                              ; preds = %bb.b, %.lr.ph167
-  %.060.lcssa.ph = phi ptr [ %.060166, %.lr.ph167 ], [ %scevgep178, %bb.b ] ; 2 uses
-  %.pre184 = ptrtoint ptr %.060.lcssa.ph to i64
-  br label %.critedge2
-
-.critedge2:                                       ; preds = %.critedge2.loopexit, %.critedge
-  %.060.lcssa179.pre-phi = phi i64 [ %.pre184, %.critedge2.loopexit ], [ %4, %.critedge ] ; 2 uses
-  %.060.lcssa = phi ptr [ %.060.lcssa.ph, %.critedge2.loopexit ], [ %0, %.critedge ] ; 5 uses
+.critedge2:                                       ; preds = %.lr.ph167, %bb.b, %.critedge
+  %.060.lcssa = phi ptr [ %0, %.critedge ], [ %scevgep178, %bb.b ], [ %.060166, %.lr.ph167 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
   store ptr %i.m, ptr %5, align 8, !tbaa !93
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   store i64 0, ptr %i.n, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
-  %i.o = sub i64 %.060.lcssa179.pre-phi, %4       ; 7 uses
+  %11 = ptrtoint ptr %.060.lcssa to i64           ; 2 uses
+  %12 = ptrtoint ptr %0 to i64
+  %i.o = sub i64 %11, %12                         ; 7 uses
   store i64 %i.o, ptr %i.c, align 8, !tbaa !10
   %i.p = icmp ugt i64 %i.o, 15                    ; 2 uses
   br i1 %i.p, label %.noexc.i, label %._crit_edge.i.i
@@ -1399,7 +1392,7 @@ bb.g:                                             ; preds = %_ZN14duckdb_httplib
   br i1 %i.ar, label %.lr.ph173.preheader, label %.critedge4
 
 .lr.ph173.preheader:                              ; preds = %.preheader
-  %i.as = sub i64 %.046.lcssa177.pre-phi, %.060.lcssa179.pre-phi
+  %i.as = sub i64 %.046.lcssa177.pre-phi, %11
   %scevgep180 = getelementptr i8, ptr %.060.lcssa, i64 %i.as ; 2 uses
   br label %.lr.ph173
 
@@ -1470,8 +1463,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.be = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   store i64 0, ptr %i.be, align 8, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
+  %13 = ptrtoint ptr %.046.lcssa to i64
   %i.bf = ptrtoint ptr %.161.lcssa to i64
-  %i.bg = sub i64 %.046.lcssa177.pre-phi, %i.bf   ; 4 uses
+  %i.bg = sub i64 %13, %i.bf                      ; 4 uses
   store i64 %i.bg, ptr %i.a, align 8, !tbaa !10
   %i.bh = icmp ugt i64 %i.bg, 15
   br i1 %i.bh, label %.noexc.i87, label %._crit_edge.i.i86
@@ -1874,10 +1868,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !723  ; 5 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !346    ; 21 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !723  ; 6 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !346    ; 22 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
   %i.g = ashr exact i64 %i.f, 4                   ; 8 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1890,6 +1884,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.o = icmp ugt i64 %i.g, 576460752303423487
   br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseISt4pairIllESaIS1_EE11_M_allocateEm.exit.i, !prof !84
 
@@ -1903,8 +1899,8 @@ _ZNSt12_Vector_baseISt4pairIllESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt4pairIllESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseISt4pairIllESaIS1_EE11_M_allocateEm.exit.i
-  %i.q = add i64 %i.d, -16
-  %i.r = sub i64 %i.q, %i.e
+  %i.q = add i64 %3, -16
+  %i.r = sub i64 %i.q, %2
   %i.s = and i64 %i.r, -16
   %i.t = add i64 %i.s, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr align 8 %i.c, i64 %i.t, i1 false)
