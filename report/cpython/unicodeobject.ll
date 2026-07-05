@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32
   %i.b = load i32, ptr %i.a, align 8              ; 3 uses
   %i.c = lshr i32 %i.b, 2
-  %i.d = and i32 %i.c, 7                          ; 2 uses
+  %i.d = and i32 %i.c, 7
   %i.e = and i32 %i.b, 32
   %.not.i = icmp eq i32 %i.e, 0
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -263,9 +263,10 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f, %bb.e
   %.076 = phi ptr [ %1, %bb.f ], [ %i.m, %bb.e ]  ; 8 uses
-  switch i32 %i.d, label %bb.l [
+  switch i32 %i.d, label %.unreachabledefault [
     i32 1, label %bb.j
     i32 2, label %bb.k
+    i32 4, label %bb.l
   ]
 
 bb.j:                                             ; preds = %bb.i
@@ -456,9 +457,10 @@ middle.block:                                     ; preds = %vector.body
   %i.cl = icmp ult ptr %i.ch, %i.bf
   br i1 %i.cl, label %.lr.ph98, label %.loopexit, !llvm.loop !345
 
+.unreachabledefault:                              ; preds = %bb.i
+  unreachable
+
 bb.l:                                             ; preds = %bb.i
-  %4 = icmp eq i32 %i.d, 4
-  tail call void @llvm.assume(i1 %4)
   %i.cm = shl i64 %.val, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.076, ptr align 1 %.0.i, i64 %i.cm, i1 false)
   br label %.loopexit
@@ -861,9 +863,9 @@ asciilib_find.exit:                               ; preds = %bb.k, %bb.j, %bb.i,
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @unicode_adjust_maxchar(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #1 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !194    ; 9 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !194    ; 7 uses
   %i.b = getelementptr i8, ptr %i.a, i64 32
-  %.val = load i32, ptr %i.b, align 8             ; 5 uses
+  %.val = load i32, ptr %i.b, align 8             ; 3 uses
   %i.c = and i32 %.val, 64
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %ucs1lib_find_max_char.exit
@@ -872,16 +874,17 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %i.a, i64 16
   %.val39 = load i64, ptr %i.d, align 8, !tbaa !207 ; 7 uses
   %i.e = lshr i32 %.val, 2
-  %i.f = and i32 %i.e, 7                          ; 2 uses
-  switch i32 %i.f, label %bb.n [
+  %1 = and i32 %i.e, 7
+  %i.f = and i32 %.val, 32
+  %.not.i40 = icmp eq i32 %i.f, 0                 ; 3 uses
+  %2 = getelementptr i8, ptr %i.a, i64 56         ; 6 uses
+  switch i32 %1, label %.unreachabledefault [
     i32 1, label %bb.c
     i32 2, label %bb.i
+    i32 4, label %bb.n
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %1 = and i32 %.val, 32
-  %.not.i40 = icmp eq i32 %1, 0
-  %2 = getelementptr i8, ptr %i.a, i64 56         ; 2 uses
   br i1 %.not.i40, label %bb.d, label %_PyUnicode_DATA.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -928,17 +931,14 @@ bb.h:                                             ; preds = %.preheader.i
   br i1 %.not28.i, label %bb.e, label %ucs1lib_find_max_char.exit, !llvm.loop !221
 
 bb.i:                                             ; preds = %bb.b
-  %3 = and i32 %.val, 32
-  %.not.i43 = icmp eq i32 %3, 0
-  %4 = getelementptr i8, ptr %i.a, i64 56         ; 2 uses
-  br i1 %.not.i43, label %bb.j, label %_PyUnicode_DATA.exit49
+  br i1 %.not.i40, label %bb.j, label %_PyUnicode_DATA.exit49
 
 bb.j:                                             ; preds = %bb.i
-  %.val4.i48 = load ptr, ptr %4, align 8, !tbaa !205
+  %.val4.i48 = load ptr, ptr %2, align 8, !tbaa !205
   br label %_PyUnicode_DATA.exit49
 
 _PyUnicode_DATA.exit49:                           ; preds = %bb.i, %bb.j
-  %.0.i47 = phi ptr [ %.val4.i48, %bb.j ], [ %4, %bb.i ] ; 5 uses
+  %.0.i47 = phi ptr [ %.val4.i48, %bb.j ], [ %2, %bb.i ] ; 5 uses
   %i.q = getelementptr [2 x i8], ptr %.0.i47, i64 %.val39 ; 2 uses
   %.idx.a = shl i64 %.val39, 1
   %i.r = ashr exact i64 %.idx.a, 1
@@ -1038,20 +1038,18 @@ ucs2lib_find_max_char.exit:                       ; preds = %.outer.i, %.prehead
   %i.ao = icmp ult i32 %.2.i, 256
   br i1 %i.ao, label %ucs1lib_find_max_char.exit.thread, label %ucs1lib_find_max_char.exit
 
+.unreachabledefault:                              ; preds = %bb.b
+  unreachable
+
 bb.n:                                             ; preds = %bb.b
-  %5 = icmp eq i32 %i.f, 4
-  tail call void @llvm.assume(i1 %5)
-  %6 = and i32 %.val, 32
-  %.not.i52 = icmp eq i32 %6, 0
-  %7 = getelementptr i8, ptr %i.a, i64 56         ; 2 uses
-  br i1 %.not.i52, label %bb.o, label %_PyUnicode_DATA.exit58
+  br i1 %.not.i40, label %bb.o, label %_PyUnicode_DATA.exit58
 
 bb.o:                                             ; preds = %bb.n
-  %.val4.i57 = load ptr, ptr %7, align 8, !tbaa !205
+  %.val4.i57 = load ptr, ptr %2, align 8, !tbaa !205
   br label %_PyUnicode_DATA.exit58
 
 _PyUnicode_DATA.exit58:                           ; preds = %bb.n, %bb.o
-  %.0.i56 = phi ptr [ %.val4.i57, %bb.o ], [ %7, %bb.n ] ; 5 uses
+  %.0.i56 = phi ptr [ %.val4.i57, %bb.o ], [ %2, %bb.n ] ; 5 uses
   %i.ap = getelementptr [4 x i8], ptr %.0.i56, i64 %.val39 ; 2 uses
   %.idx89 = shl i64 %.val39, 2
   %i.aq = ashr exact i64 %.idx89, 2
@@ -1131,8 +1129,8 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph64.i69
   %.not.us.i73 = icmp eq i32 %i.be, 0
   br i1 %.not.us.i73, label %.outer.i74, label %.lr.ph64.i69
 
-ucs1lib_find_max_char.exit.thread:                ; preds = %bb.e, %bb.h, %.outer.i74, %.preheader.i59, %ucs2lib_find_max_char.exit
-  %.0 = phi i32 [ %.us-phi60.i76, %.outer.i74 ], [ %.2.i, %ucs2lib_find_max_char.exit ], [ %.026.lcssa.i62, %.preheader.i59 ], [ 127, %bb.h ], [ 127, %bb.e ]
+ucs1lib_find_max_char.exit.thread:                ; preds = %.outer.i74, %bb.e, %bb.h, %.preheader.i59, %ucs2lib_find_max_char.exit
+  %.0 = phi i32 [ 127, %bb.e ], [ %.2.i, %ucs2lib_find_max_char.exit ], [ %.026.lcssa.i62, %.preheader.i59 ], [ 127, %bb.h ], [ %.us-phi60.i76, %.outer.i74 ]
   %i.bf = tail call ptr @PyUnicode_New(i64 noundef %.val39, i32 noundef %.0) ; 3 uses
   %.not38 = icmp eq ptr %i.bf, null
   br i1 %.not38, label %bb.u, label %bb.t
@@ -1160,7 +1158,7 @@ Py_DECREF.exit:                                   ; preds = %bb.u, %bb.v, %bb.w
   store ptr %i.bf, ptr %0, align 8, !tbaa !194
   br label %ucs1lib_find_max_char.exit
 
-ucs1lib_find_max_char.exit:                       ; preds = %bb.k, %.lr.ph.jt4294967040.i, %.lr.ph.i.jt4294967040, %.lr.ph64.i, %.thread31.i, %bb.g, %bb.p, %.lr.ph.jt4294901760.i, %.lr.ph64.i69, %bb.a, %ucs2lib_find_max_char.exit, %Py_DECREF.exit
+ucs1lib_find_max_char.exit:                       ; preds = %bb.p, %.lr.ph.jt4294901760.i, %.lr.ph64.i69, %bb.k, %.lr.ph.jt4294967040.i, %.lr.ph.i.jt4294967040, %.lr.ph64.i, %.thread31.i, %bb.g, %bb.a, %ucs2lib_find_max_char.exit, %Py_DECREF.exit
   ret void
 }
 
