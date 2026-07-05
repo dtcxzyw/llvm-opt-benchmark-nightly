@@ -203,6 +203,7 @@ $_ZZN4node17BaseObjectPtrImplINS_19diagnostics_channel7ChannelELb1EEC1EPS2_E20er
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN4node8builtins11BuiltinInfo13parameter_mapB5cxx11E }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN4node8builtins11BuiltinInfo13parameter_mapB5cxx11E], section "llvm.metadata"
 @switch.table._ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE = private unnamed_addr constant [8 x ptr] [ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36], align 8
+@switch.table._ZN4node10permission23CreateAccessDeniedErrorEPNS_11EnvironmentENS0_15PermissionScopeERKSt17basic_string_viewIcSt11char_traitsIcEE = private unnamed_addr constant [9 x ptr] [ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36], align 8
 @switch.table._ZNK4node10permission10Permission16is_scope_grantedEPNS_11EnvironmentENS0_15PermissionScopeERKSt17basic_string_viewIcSt11char_traitsIcEE = private unnamed_addr constant [9 x ptr] [ptr @.str.10, ptr @.str.11, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.16, ptr @.str.17, ptr @.str.18], align 8
 @switch.table._ZNK4node10permission10Permission18GetOrCreateChannelEPNS_11EnvironmentENS0_15PermissionScopeE = private unnamed_addr constant [9 x ptr] [ptr @.str.51, ptr @.str.51, ptr @.str.51, ptr @.str.52, ptr @.str.56, ptr @.str.53, ptr @.str.55, ptr @.str.54, ptr @.str.57], align 8
 
@@ -605,82 +606,22 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local ptr @_ZN4node10permission23CreateAccessDeniedErrorEPNS_11EnvironmentENS0_15PermissionScopeERKSt17basic_string_viewIcSt11char_traitsIcEE(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2) local_unnamed_addr #0 {
-  %4 = alloca ptr, align 8                        ; 20 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 11 uses
-  switch i32 %1, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit [
-    i32 8, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread60
-    i32 1, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread
-    i32 2, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread48
-    i32 3, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread50
-    i32 4, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread52
-    i32 5, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread54
-    i32 6, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread56
-    i32 7, label %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread58
-  ]
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread: ; preds = %3
-  store ptr @.str.29, ptr %4, align 8
-  %6 = load ptr, ptr %5, align 8
-  %7 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %6, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread48: ; preds = %3
-  store ptr @.str.30, ptr %4, align 8
-  %8 = load ptr, ptr %5, align 8
-  %9 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %8, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread50: ; preds = %3
-  store ptr @.str.31, ptr %4, align 8
-  %10 = load ptr, ptr %5, align 8
-  %11 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %10, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread52: ; preds = %3
-  store ptr @.str.32, ptr %4, align 8
-  %12 = load ptr, ptr %5, align 8
-  %13 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %12, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread54: ; preds = %3
-  store ptr @.str.33, ptr %4, align 8
-  %14 = load ptr, ptr %5, align 8
-  %15 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %14, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread56: ; preds = %3
-  store ptr @.str.34, ptr %4, align 8
-  %16 = load ptr, ptr %5, align 8
-  %17 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %16, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread58: ; preds = %3
-  store ptr @.str.35, ptr %4, align 8
-  %18 = load ptr, ptr %5, align 8
-  %19 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %18, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread60: ; preds = %3
-  store ptr @.str.36, ptr %4, align 8
-  %20 = load ptr, ptr %5, align 8
-  %21 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %20, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit: ; preds = %3
-  store ptr @.str.28, ptr %4, align 8
-  %22 = load ptr, ptr %5, align 8
-  %23 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %22, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %4)
-  %cond = icmp eq i32 %1, 0
-  call void @llvm.assume(i1 %cond)
-  br label %_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit
-
-_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit: ; preds = %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread60, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread58, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread56, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread54, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread52, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread50, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread48, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread
-  %24 = phi ptr [ %7, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread ], [ %23, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit ], [ %9, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread48 ], [ %21, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread60 ], [ %19, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread58 ], [ %17, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread56 ], [ %15, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread54 ], [ %13, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread52 ], [ %11, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread50 ] ; 3 uses
-  %.0.i22 = phi ptr [ @.str.11, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread ], [ @.str.10, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit ], [ @.str.12, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread48 ], [ @.str.18, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread60 ], [ @.str.17, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread58 ], [ @.str.16, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread56 ], [ @.str.15, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread54 ], [ @.str.14, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread52 ], [ @.str.13, %_ZN4node10permission22GetErrorFlagSuggestionENS0_15PermissionScopeE.exit.thread50 ] ; 2 uses
-  %i.a = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i22) #26 ; 2 uses
+_ZN4node10permission10Permission18PermissionToStringENS0_15PermissionScopeE.exit:
+  %3 = alloca ptr, align 8                        ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
+  %5 = zext nneg i32 %1 to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4node10permission23CreateAccessDeniedErrorEPNS_11EnvironmentENS0_15PermissionScopeERKSt17basic_string_viewIcSt11char_traitsIcEE, i64 %5
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  %6 = zext nneg i32 %1 to i64
+  %switch.gep69 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4node10permission10Permission16is_scope_grantedEPNS_11EnvironmentENS0_15PermissionScopeERKSt17basic_string_viewIcSt11char_traitsIcEE, i64 %6
+  %switch.load70 = load ptr, ptr %switch.gep69, align 8 ; 2 uses
+  store ptr %switch.load, ptr %3, align 8
+  %7 = load ptr, ptr %4, align 8
+  %8 = call ptr @_ZN4node17ERR_ACCESS_DENIEDIJRPKcEEEN2v85LocalINS4_6ObjectEEEPNS4_7IsolateESt17basic_string_viewIcSt11char_traitsIcEEDpOT_(ptr noundef %7, i64 42, ptr nonnull @.str.37, ptr noundef nonnull align 8 dereferenceable(8) %3) ; 3 uses
+  %i.a = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %switch.load70) #26 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3008 ; 2 uses
-  %i.c = load ptr, ptr %5, align 8                ; 2 uses
+  %i.c = load ptr, ptr %4, align 8                ; 2 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.a, label %bb.b
 
@@ -699,7 +640,7 @@ _ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_tra
 
 _ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit: ; preds = %bb.b
   %i.g = trunc nuw nsw i64 %i.a to i32
-  %i.h = call ptr @_ZN2v86String11NewFromUtf8EPNS_7IsolateEPKcNS_13NewStringTypeEi(ptr noundef %.0.i23, ptr noundef nonnull %.0.i22, i32 noundef 0, i32 noundef %i.g) #26 ; 2 uses
+  %i.h = call ptr @_ZN2v86String11NewFromUtf8EPNS_7IsolateEPKcNS_13NewStringTypeEi(ptr noundef %.0.i23, ptr noundef nonnull %switch.load70, i32 noundef 0, i32 noundef %i.g) #26 ; 2 uses
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %.critedge, label %bb.c
 
@@ -707,7 +648,7 @@ bb.c:                                             ; preds = %_ZN4node9ToV8ValueE
   %.sroa.07.0.copyload = load i64, ptr %2, align 8 ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8
-  %i.i = load ptr, ptr %5, align 8                ; 2 uses
+  %i.i = load ptr, ptr %4, align 8                ; 2 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.d, label %bb.e
 
@@ -738,7 +679,7 @@ bb.f:                                             ; preds = %_ZN4node9ToV8ValueE
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 2136
   %i.t = load ptr, ptr %i.s, align 8
-  %i.u = call i16 @_ZN2v86Object3SetENS_5LocalINS_7ContextEEENS1_INS_5ValueEEES5_(ptr noundef nonnull align 1 dereferenceable(1) %24, ptr %.sroa.0.0.copyload.i.i.i29, ptr %i.t, ptr nonnull %i.h) #26
+  %i.u = call i16 @_ZN2v86Object3SetENS_5LocalINS_7ContextEEENS1_INS_5ValueEEES5_(ptr noundef nonnull align 1 dereferenceable(1) %8, ptr %.sroa.0.0.copyload.i.i.i29, ptr %i.t, ptr nonnull %i.h) #26
   %i.v = trunc i16 %i.u to i1
   br i1 %i.v, label %bb.g, label %.critedge
 
@@ -749,14 +690,14 @@ bb.g:                                             ; preds = %bb.f
   %i.y = load ptr, ptr %i.q, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 2360
   %i.aa = load ptr, ptr %i.z, align 8
-  %i.ab = call i16 @_ZN2v86Object3SetENS_5LocalINS_7ContextEEENS1_INS_5ValueEEES5_(ptr noundef nonnull align 1 dereferenceable(1) %24, ptr %.sroa.0.0.copyload.i.i.i30, ptr %i.aa, ptr nonnull %i.n) #26
+  %i.ab = call i16 @_ZN2v86Object3SetENS_5LocalINS_7ContextEEENS1_INS_5ValueEEES5_(ptr noundef nonnull align 1 dereferenceable(1) %8, ptr %.sroa.0.0.copyload.i.i.i30, ptr %i.aa, ptr nonnull %i.n) #26
   %i.ac = trunc i16 %i.ab to i1
-  %spec.select = select i1 %i.ac, ptr %24, ptr null
+  %spec.select = select i1 %i.ac, ptr %8, ptr null
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.g, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit28.thread, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit.thread, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit28, %bb.f
   %.sroa.043.0 = phi ptr [ %spec.select, %bb.g ], [ null, %bb.f ], [ null, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit28 ], [ null, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit ], [ null, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit.thread ], [ null, %_ZN4node9ToV8ValueEN2v85LocalINS0_7ContextEEESt17basic_string_viewIcSt11char_traitsIcEEPNS0_7IsolateE.exit28.thread ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
   ret ptr %.sroa.043.0
 }
 

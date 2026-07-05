@@ -201,18 +201,19 @@ bb.b:                                             ; preds = %.lr.ph, %.critedge
   %i.i = getelementptr inbounds nuw [12 x i8], ptr %.val, i64 %indvars.iv ; 24 uses
   %i.j = getelementptr i8, ptr %i.i, i64 11       ; 10 uses
   %.val155 = load i8, ptr %i.j, align 1, !tbaa !19 ; 9 uses
-  %i.k = and i8 %.val155, 3                       ; 2 uses
-  switch i8 %i.k, label %bb.ao [
+  %i.k = and i8 %.val155, 3
+  switch i8 %i.k, label %.unreachabledefault [
     i8 2, label %bb.c
     i8 0, label %bb.af
+    i8 1, label %bb.ao
   ]
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr i8, ptr %i.i, i64 10       ; 2 uses
-  %.val151 = load i8, ptr %i.l, align 2, !tbaa !16 ; 5 uses
+  %.val151 = load i8, ptr %i.l, align 2, !tbaa !16 ; 4 uses
   %i.m = zext i8 %.val151 to i64
-  %i.n = and i8 %.val155, 16
-  %.not.i.i = icmp eq i8 %i.n, 0                  ; 2 uses
+  %i.n = and i8 %.val155, 16                      ; 2 uses
+  %.not.i.i = icmp eq i8 %i.n, 0
   br i1 %.not.i.i, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -235,8 +236,8 @@ upb_MiniTableField_CType.exit:                    ; preds = %bb.d, %bb.e, %bb.f
   %i.r = load i32, ptr %i.q, align 4, !tbaa !3
   switch i32 %i.r, label %.critedge [
     i32 6, label %bb.g
-    i32 10, label %4
-    i32 11, label %4
+    i32 10, label %upb_MiniTableField_CType.exit.i
+    i32 11, label %upb_MiniTableField_CType.exit.i
   ]
 
 bb.g:                                             ; preds = %upb_MiniTableField_CType.exit
@@ -334,25 +335,18 @@ bb.p:                                             ; preds = %_upb_Message_SetPre
 default.unreachable:                              ; preds = %_upb_Message_SetPresence_dont_copy_me__upb_internal_use_only.exit.i201, %_upb_Message_SetPresence_dont_copy_me__upb_internal_use_only.exit.i, %_upb_Message_SetPresence_dont_copy_me__upb_internal_use_only.exit.i.i.i, %bb.t, %_upb_Message_SetPresence_dont_copy_me__upb_internal_use_only.exit.i.i
   unreachable
 
-4:                                                ; preds = %upb_MiniTableField_CType.exit, %upb_MiniTableField_CType.exit
-  br i1 %.not.i.i, label %upb_MiniTableField_CType.exit.i, label %5
-
-5:                                                ; preds = %4
-  switch i8 %.val151, label %.critedge17.i [
-    i8 9, label %upb_Message_GetString.exit
-    i8 12, label %upb_Message_GetString.exit
-  ]
-
-upb_MiniTableField_CType.exit.i:                  ; preds = %4
+upb_MiniTableField_CType.exit.i:                  ; preds = %upb_MiniTableField_CType.exit, %upb_MiniTableField_CType.exit
+  %.not.i.i.i = icmp ne i8 %i.n, 0
   %i.ba = icmp eq i8 %.val151, 9
-  br i1 %i.ba, label %upb_Message_GetString.exit, label %.critedge17.i
+  %or.cond.i = select i1 %.not.i.i.i, i1 true, i1 %i.ba
+  br i1 %or.cond.i, label %upb_Message_GetString.exit, label %.critedge17.i
 
-.critedge17.i:                                    ; preds = %upb_MiniTableField_CType.exit.i, %5
+.critedge17.i:                                    ; preds = %upb_MiniTableField_CType.exit.i
   %i.bb = icmp eq i8 %.val151, 12
   tail call void @llvm.assume(i1 %i.bb)
   br label %upb_Message_GetString.exit
 
-upb_Message_GetString.exit:                       ; preds = %5, %5, %upb_MiniTableField_CType.exit.i, %.critedge17.i
+upb_Message_GetString.exit:                       ; preds = %upb_MiniTableField_CType.exit.i, %.critedge17.i
   %i.bc = icmp slt i8 %.val155, -64
   tail call void @llvm.assume(i1 %i.bc)
   %i.bd = tail call fastcc { ptr, i64 } @upb_Message_GetField(ptr noundef %1, ptr noundef nonnull %i.i, ptr null, i64 0) ; 2 uses
@@ -388,30 +382,22 @@ upb_Clone_StringView.exit:                        ; preds = %bb.r, %bb.s
   %.val.i161 = load i8, ptr %i.j, align 1, !tbaa !19 ; 7 uses
   %i.bo = and i8 %.val.i161, 8
   %.not.i = icmp eq i8 %i.bo, 0
-  %.val7.i8.i = load i8, ptr %i.l, align 2, !tbaa !16 ; 6 uses
+  %.val7.i8.i = load i8, ptr %i.l, align 2, !tbaa !16 ; 3 uses
   %i.bp = and i8 %.val.i161, 16
-  %.not.i.i.i.i.a = icmp eq i8 %i.bp, 0           ; 2 uses
-  br i1 %.not.i, label %9, label %6
+  %.not.i.i.i.i = icmp ne i8 %i.bp, 0
+  %.not.i.i.i.i.a = icmp eq i8 %.val7.i8.i, 9
+  %or.cond.i10.i = select i1 %.not.i.i.i.i, i1 true, i1 %.not.i.i.i.i.a ; 2 uses
+  br i1 %.not.i, label %upb_MiniTableField_CType.exit.i.i, label %upb_MiniTableExtension_CType.exit.i.i
 
-6:                                                ; preds = %upb_Clone_StringView.exit
-  br i1 %.not.i.i.i.i.a, label %upb_MiniTableExtension_CType.exit.i.i, label %7
+upb_MiniTableExtension_CType.exit.i.i:            ; preds = %upb_Clone_StringView.exit
+  br i1 %or.cond.i10.i, label %.critedge.i.i, label %.critedge17.i.i
 
-7:                                                ; preds = %6
-  switch i8 %.val7.i8.i, label %.critedge17.i.i [
-    i8 9, label %.critedge.i.i
-    i8 12, label %.critedge.i.i
-  ]
-
-upb_MiniTableExtension_CType.exit.i.i:            ; preds = %6
-  %8 = icmp eq i8 %.val7.i8.i, 9
-  br i1 %8, label %.critedge.i.i, label %.critedge17.i.i
-
-.critedge17.i.i:                                  ; preds = %upb_MiniTableExtension_CType.exit.i.i, %7
+.critedge17.i.i:                                  ; preds = %upb_MiniTableExtension_CType.exit.i.i
   %i.bq = icmp eq i8 %.val7.i8.i, 12
   tail call void @llvm.assume(i1 %i.bq)
   br label %.critedge.i.i
 
-.critedge.i.i:                                    ; preds = %.critedge17.i.i, %upb_MiniTableExtension_CType.exit.i.i, %7, %7
+.critedge.i.i:                                    ; preds = %.critedge17.i.i, %upb_MiniTableExtension_CType.exit.i.i
   %i.br = icmp slt i8 %.val.i161, -64
   tail call void @llvm.assume(i1 %i.br)
   %i.bs = tail call ptr @_upb_Message_GetOrCreateExtension_dont_copy_me__upb_internal_use_only(ptr noundef %0, ptr noundef nonnull %i.i, ptr noundef nonnull %3) #7 ; 3 uses
@@ -452,25 +438,15 @@ bb.x:                                             ; preds = %bb.t
   store i64 %i.be, ptr %.sroa.5.0..sroa_idx.i.i, align 1
   br label %.critedge
 
-9:                                                ; preds = %upb_Clone_StringView.exit
-  br i1 %.not.i.i.i.i.a, label %upb_MiniTableField_CType.exit.i.i, label %10
+upb_MiniTableField_CType.exit.i.i:                ; preds = %upb_Clone_StringView.exit
+  br i1 %or.cond.i10.i, label %.critedge.i10.i, label %.critedge18.i.i
 
-10:                                               ; preds = %9
-  switch i8 %.val7.i8.i, label %.critedge18.i.i [
-    i8 9, label %.critedge.i10.i
-    i8 12, label %.critedge.i10.i
-  ]
-
-upb_MiniTableField_CType.exit.i.i:                ; preds = %9
-  %11 = icmp eq i8 %.val7.i8.i, 9
-  br i1 %11, label %.critedge.i10.i, label %.critedge18.i.i
-
-.critedge18.i.i:                                  ; preds = %upb_MiniTableField_CType.exit.i.i, %10
+.critedge18.i.i:                                  ; preds = %upb_MiniTableField_CType.exit.i.i
   %i.by = icmp eq i8 %.val7.i8.i, 12
   tail call void @llvm.assume(i1 %i.by)
   br label %.critedge.i10.i
 
-.critedge.i10.i:                                  ; preds = %.critedge18.i.i, %upb_MiniTableField_CType.exit.i.i, %10, %10
+.critedge.i10.i:                                  ; preds = %.critedge18.i.i, %upb_MiniTableField_CType.exit.i.i
   %i.bz = and i8 %.val.i161, 3
   %i.ca = icmp eq i8 %i.bz, 2
   tail call void @llvm.assume(i1 %i.ca)
@@ -638,12 +614,13 @@ bb.an:                                            ; preds = %_upb_Message_SetPre
   store ptr %i.dl, ptr %i.eb, align 1
   br label %.critedge
 
+.unreachabledefault:                              ; preds = %bb.b
+  unreachable
+
 bb.ao:                                            ; preds = %bb.b
   %i.eg = getelementptr i8, ptr %i.i, i64 6
   %i.eh = icmp ugt i8 %.val155, -65
   tail call void @llvm.assume(i1 %i.eh)
-  %12 = icmp eq i8 %i.k, 1
-  tail call void @llvm.assume(i1 %12)
   %i.ei = and i8 %.val155, 8
   %.not.i172 = icmp eq i8 %i.ei, 0
   tail call void @llvm.assume(i1 %.not.i172)
