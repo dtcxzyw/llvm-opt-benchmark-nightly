@@ -1,0 +1,187 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+index cca297a5b8dc2..26f5fb01a942c 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+@@ -12,6 +12,7 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "InstCombineInternal.h"
++#include "llvm/ADT/SmallBitVector.h"
+ #include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/IR/GetElementPtrTypeIterator.h"
+ #include "llvm/IR/IntrinsicInst.h"
+@@ -1459,6 +1460,58 @@ Value *InstCombinerImpl::simplifyShrShlDemandedBits(
+   return nullptr;
+ }
+ 
++/// Return true if the top-level all-lanes demanded-elements query can be
++/// skipped for an intermediate insertelement chain node. This is limited to a
++/// bounded one-use chain with distinct in-range constant indices, where SDVE
++/// cannot remove a dead insert before hitting its depth limit.
++static bool canSkipDemandedEltsInInsertChain(InsertElementInst &IE,
++                                             unsigned VWidth,
++                                             unsigned DepthLimit) {
++  // Only skip chain nodes that feed another insertelement; the final chain root
++  // still runs the full query.
++  if (!IE.hasOneUse())
++    return false;
++  auto *UserIE = dyn_cast<InsertElementInst>(IE.user_back());
++  if (!UserIE || UserIE->getOperand(0) != &IE)
++    return false;
++
++  SmallBitVector SeenIndices(VWidth);
++  auto HasNewIndexInRange = [&](InsertElementInst &Insert) {
++    auto *Idx = dyn_cast<ConstantInt>(Insert.getOperand(2));
++    // Let the normal SDVE path handle variable or out-of-range indices. The
++    // latter may simplify the chain and must not be passed to getZExtValue().
++    if (!Idx || Idx->getValue().uge(VWidth))
++      return false;
++
++    unsigned Index = Idx->getZExtValue();
++    if (SeenIndices.test(Index))
++      return false;
++
++    SeenIndices.set(Index);
++    return true;
++  };
++
++  auto *Cur = &IE;
++  for (unsigned I = 0; I != DepthLimit; ++I) {
++    // This loop scans the same base-chain window that the SDVE query would
++    // inspect before hitting its depth limit. With distinct insert indices in
++    // that window, the all-lanes query cannot remove a dead insert; with
++    // VWidth > DepthLimit, it also cannot narrow demand to a single lane.
++    if (!HasNewIndexInRange(*Cur))
++      return false;
++
++    Value *Base = Cur->getOperand(0);
++    if (match(Base, m_Poison()))
++      return true;
++
++    Cur = dyn_cast<InsertElementInst>(Base);
++    if (!Cur || !Cur->hasOneUse())
++      return false;
++  }
++
++  return true;
++}
++
+ /// The specified value produces a vector with any number of elements.
+ /// This method analyzes which elements of the operand are poison and
+ /// returns that information in PoisonElts.
+@@ -1607,6 +1660,13 @@ Value *InstCombinerImpl::SimplifyDemandedVectorElts(Value *V,
+     break;
+   }
+   case Instruction::InsertElement: {
++    unsigned DepthLimit = SimplifyDemandedVectorEltsDepthLimit;
++    auto *IE = cast<InsertElementInst>(I);
++    // Skip only when SDVE cannot simplify this insert chain before the limit.
++    if (Depth == 0 && DemandedElts.isAllOnes() && VWidth > DepthLimit &&
++        canSkipDemandedEltsInInsertChain(*IE, VWidth, DepthLimit))
++      return nullptr;
++
+     // If this is a variable index, we don't know which element it overwrites.
+     // demand exactly the same input as we produce.
+     ConstantInt *Idx = dyn_cast<ConstantInt>(I->getOperand(2));
+diff --git a/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll b/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll
+index 55755735a97cc..eef65cb273264 100644
+--- a/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll
++++ b/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll
+@@ -1251,3 +1251,97 @@ define <2 x i8> @common_binop_demand_via_splat_mask_poison_3(<2 x i8> %x, <2 x i
+   %res = add <2 x i8> %vv, %msplat
+   ret <2 x i8> %res
+ }
++
++; A wide insert chain with distinct in-range indices should keep all inserts
++; while skipping redundant all-lanes SDVE scans of intermediate chain nodes.
++define <11 x i32> @wide_distinct_insert_chain(i32 %a0, i32 %a1, i32 %a2, i32 %a3, i32 %a4, i32 %a5, i32 %a6, i32 %a7, i32 %a8, i32 %a9, i32 %a10) {
++; CHECK-LABEL: @wide_distinct_insert_chain(
++; CHECK-NEXT:    [[V0:%.*]] = insertelement <11 x i32> poison, i32 [[A0:%.*]], i64 0
++; CHECK-NEXT:    [[V1:%.*]] = insertelement <11 x i32> [[V0]], i32 [[A1:%.*]], i64 1
++; CHECK-NEXT:    [[V2:%.*]] = insertelement <11 x i32> [[V1]], i32 [[A2:%.*]], i64 2
++; CHECK-NEXT:    [[V3:%.*]] = insertelement <11 x i32> [[V2]], i32 [[A3:%.*]], i64 3
++; CHECK-NEXT:    [[V4:%.*]] = insertelement <11 x i32> [[V3]], i32 [[A4:%.*]], i64 4
++; CHECK-NEXT:    [[V5:%.*]] = insertelement <11 x i32> [[V4]], i32 [[A5:%.*]], i64 5
++; CHECK-NEXT:    [[V6:%.*]] = insertelement <11 x i32> [[V5]], i32 [[A6:%.*]], i64 6
++; CHECK-NEXT:    [[V7:%.*]] = insertelement <11 x i32> [[V6]], i32 [[A7:%.*]], i64 7
++; CHECK-NEXT:    [[V8:%.*]] = insertelement <11 x i32> [[V7]], i32 [[A8:%.*]], i64 8
++; CHECK-NEXT:    [[V9:%.*]] = insertelement <11 x i32> [[V8]], i32 [[A9:%.*]], i64 9
++; CHECK-NEXT:    [[V10:%.*]] = insertelement <11 x i32> [[V9]], i32 [[A10:%.*]], i64 10
++; CHECK-NEXT:    ret <11 x i32> [[V10]]
++;
++  %v0 = insertelement <11 x i32> poison, i32 %a0, i64 0
++  %v1 = insertelement <11 x i32> %v0, i32 %a1, i64 1
++  %v2 = insertelement <11 x i32> %v1, i32 %a2, i64 2
++  %v3 = insertelement <11 x i32> %v2, i32 %a3, i64 3
++  %v4 = insertelement <11 x i32> %v3, i32 %a4, i64 4
++  %v5 = insertelement <11 x i32> %v4, i32 %a5, i64 5
++  %v6 = insertelement <11 x i32> %v5, i32 %a6, i64 6
++  %v7 = insertelement <11 x i32> %v6, i32 %a7, i64 7
++  %v8 = insertelement <11 x i32> %v7, i32 %a8, i64 8
++  %v9 = insertelement <11 x i32> %v8, i32 %a9, i64 9
++  %v10 = insertelement <11 x i32> %v9, i32 %a10, i64 10
++  ret <11 x i32> %v10
++}
++
++; Duplicate insert indices must still use the normal SDVE path so overwritten
++; inserts can be removed.
++define <12 x i32> @wide_insert_chain_deep_duplicate(i32 %a0, i32 %a1, i32 %a2, i32 %a3, i32 %a4, i32 %a5, i32 %a6, i32 %a7, i32 %a8, i32 %a9, i32 %a10, i32 %a11) {
++; CHECK-LABEL: @wide_insert_chain_deep_duplicate(
++; CHECK-NEXT:    [[V1:%.*]] = insertelement <12 x i32> poison, i32 [[A1:%.*]], i64 0
++; CHECK-NEXT:    [[V2:%.*]] = insertelement <12 x i32> [[V1]], i32 [[A2:%.*]], i64 2
++; CHECK-NEXT:    [[V3:%.*]] = insertelement <12 x i32> [[V2]], i32 [[A3:%.*]], i64 3
++; CHECK-NEXT:    [[V4:%.*]] = insertelement <12 x i32> [[V3]], i32 [[A4:%.*]], i64 4
++; CHECK-NEXT:    [[V5:%.*]] = insertelement <12 x i32> [[V4]], i32 [[A5:%.*]], i64 5
++; CHECK-NEXT:    [[V6:%.*]] = insertelement <12 x i32> [[V5]], i32 [[A6:%.*]], i64 6
++; CHECK-NEXT:    [[V7:%.*]] = insertelement <12 x i32> [[V6]], i32 [[A7:%.*]], i64 7
++; CHECK-NEXT:    [[V8:%.*]] = insertelement <12 x i32> [[V7]], i32 [[A8:%.*]], i64 8
++; CHECK-NEXT:    [[V9:%.*]] = insertelement <12 x i32> [[V8]], i32 [[A9:%.*]], i64 9
++; CHECK-NEXT:    [[V10:%.*]] = insertelement <12 x i32> [[V9]], i32 [[A10:%.*]], i64 10
++; CHECK-NEXT:    [[V11:%.*]] = insertelement <12 x i32> [[V10]], i32 [[A11:%.*]], i64 11
++; CHECK-NEXT:    ret <12 x i32> [[V11]]
++;
++  %v0 = insertelement <12 x i32> poison, i32 %a0, i64 0
++  %v1 = insertelement <12 x i32> %v0, i32 %a1, i64 0
++  %v2 = insertelement <12 x i32> %v1, i32 %a2, i64 2
++  %v3 = insertelement <12 x i32> %v2, i32 %a3, i64 3
++  %v4 = insertelement <12 x i32> %v3, i32 %a4, i64 4
++  %v5 = insertelement <12 x i32> %v4, i32 %a5, i64 5
++  %v6 = insertelement <12 x i32> %v5, i32 %a6, i64 6
++  %v7 = insertelement <12 x i32> %v6, i32 %a7, i64 7
++  %v8 = insertelement <12 x i32> %v7, i32 %a8, i64 8
++  %v9 = insertelement <12 x i32> %v8, i32 %a9, i64 9
++  %v10 = insertelement <12 x i32> %v9, i32 %a10, i64 10
++  %v11 = insertelement <12 x i32> %v10, i32 %a11, i64 11
++  ret <12 x i32> %v11
++}
++
++; Out-of-range insert indices must still use the normal SDVE path; the skip
++; helper only accepts in-range constant indices.
++define <11 x i32> @wide_insert_chain_out_of_range(i32 %a0, i32 %bad, i32 %a1, i32 %a2, i32 %a3, i32 %a4, i32 %a5, i32 %a6, i32 %a7, i32 %a8, i32 %a9, i32 %a10) {
++; CHECK-LABEL: @wide_insert_chain_out_of_range(
++; CHECK-NEXT:    [[V1:%.*]] = insertelement <11 x i32> poison, i32 [[A1:%.*]], i64 1
++; CHECK-NEXT:    [[V2:%.*]] = insertelement <11 x i32> [[V1]], i32 [[A2:%.*]], i64 2
++; CHECK-NEXT:    [[V3:%.*]] = insertelement <11 x i32> [[V2]], i32 [[A3:%.*]], i64 3
++; CHECK-NEXT:    [[V4:%.*]] = insertelement <11 x i32> [[V3]], i32 [[A4:%.*]], i64 4
++; CHECK-NEXT:    [[V5:%.*]] = insertelement <11 x i32> [[V4]], i32 [[A5:%.*]], i64 5
++; CHECK-NEXT:    [[V6:%.*]] = insertelement <11 x i32> [[V5]], i32 [[A6:%.*]], i64 6
++; CHECK-NEXT:    [[V7:%.*]] = insertelement <11 x i32> [[V6]], i32 [[A7:%.*]], i64 7
++; CHECK-NEXT:    [[V8:%.*]] = insertelement <11 x i32> [[V7]], i32 [[A8:%.*]], i64 8
++; CHECK-NEXT:    [[V9:%.*]] = insertelement <11 x i32> [[V8]], i32 [[A9:%.*]], i64 9
++; CHECK-NEXT:    [[V10:%.*]] = insertelement <11 x i32> [[V9]], i32 [[A10:%.*]], i64 10
++; CHECK-NEXT:    ret <11 x i32> [[V10]]
++;
++  %v0 = insertelement <11 x i32> poison, i32 %a0, i64 0
++  %badins = insertelement <11 x i32> %v0, i32 %bad, i64 11
++  %v1 = insertelement <11 x i32> %badins, i32 %a1, i64 1
++  %v2 = insertelement <11 x i32> %v1, i32 %a2, i64 2
++  %v3 = insertelement <11 x i32> %v2, i32 %a3, i64 3
++  %v4 = insertelement <11 x i32> %v3, i32 %a4, i64 4
++  %v5 = insertelement <11 x i32> %v4, i32 %a5, i64 5
++  %v6 = insertelement <11 x i32> %v5, i32 %a6, i64 6
++  %v7 = insertelement <11 x i32> %v6, i32 %a7, i64 7
++  %v8 = insertelement <11 x i32> %v7, i32 %a8, i64 8
++  %v9 = insertelement <11 x i32> %v8, i32 %a9, i64 9
++  %v10 = insertelement <11 x i32> %v9, i32 %a10, i64 10
++  ret <11 x i32> %v10
++}
