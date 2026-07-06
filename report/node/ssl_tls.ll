@@ -203,15 +203,16 @@ bb.o:                                             ; preds = %bb.n
   br label %mbedtls_ssl_get_current_mtu.exit40
 
 mbedtls_ssl_get_current_mtu.exit40:               ; preds = %bb.j, %bb.m, %bb.n, %bb.o
-  %.0.shrunk.i36 = phi i16 [ %..i35, %bb.o ], [ %i.aw, %bb.m ], [ %i.at, %bb.n ], [ 0, %bb.j ]
-  %.0.i37 = zext i16 %.0.shrunk.i36 to i64        ; 2 uses
-  %i.ba = tail call i32 @mbedtls_ssl_get_record_expansion(ptr noundef nonnull %0) #24 ; 3 uses
-  %i.bb = sext i32 %i.ba to i64                   ; 2 uses
+  %.0.shrunk.i36 = phi i16 [ %..i35, %bb.o ], [ %i.aw, %bb.m ], [ %i.at, %bb.n ], [ 0, %bb.j ] ; 2 uses
+  %.0.i37 = zext i16 %.0.shrunk.i36 to i64
+  %i.ba = tail call i32 @mbedtls_ssl_get_record_expansion(ptr noundef nonnull %0) #24 ; 4 uses
+  %i.bb = sext i32 %i.ba to i64
   %i.bc = icmp slt i32 %i.ba, 0
   br i1 %i.bc, label %.thread, label %bb.p
 
 bb.p:                                             ; preds = %mbedtls_ssl_get_current_mtu.exit40
-  %.not33 = icmp samesign ugt i64 %.0.i37, %i.bb
+  %1 = zext i16 %.0.shrunk.i36 to i32
+  %.not33 = icmp samesign ult i32 %i.ba, %1
   br i1 %.not33, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p

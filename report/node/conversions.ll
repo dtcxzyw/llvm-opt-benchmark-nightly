@@ -203,8 +203,8 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.j = load i32, ptr %i.i, align 8              ; 2 uses
-  %i.k = sext i32 %i.j to i64                     ; 6 uses
+  %i.j = load i32, ptr %i.i, align 8              ; 4 uses
+  %i.k = sext i32 %i.j to i64                     ; 4 uses
   %gepdiff = sub nsw i64 %i.f, %i.c
   %i.l = trunc i64 %gepdiff to i32
   %i.m = icmp ult i32 %i.l, 100                   ; 2 uses
@@ -262,9 +262,10 @@ bb.d:                                             ; preds = %bb.g, %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ao = zext nneg i8 %i.am to i64
   %i.ap = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.ao
-  %i.aq = load i8, ptr %i.ap, align 1
-  %i.ar = zext i8 %i.aq to i64                    ; 2 uses
-  %.not.i5 = icmp ugt i64 %i.k, %i.ar
+  %i.aq = load i8, ptr %i.ap, align 1             ; 2 uses
+  %i.ar = zext i8 %i.aq to i64
+  %2 = zext i8 %i.aq to i32
+  %.not.i5 = icmp ugt i32 %i.j, %2
   br i1 %.not.i5, label %bb.f, label %select.unfold
 
 bb.f:                                             ; preds = %bb.e
@@ -511,9 +512,10 @@ bb.z:                                             ; preds = %bb.ac, %.backedge
 bb.aa:                                            ; preds = %bb.z
   %i.dp = zext nneg i8 %i.dn to i64
   %i.dq = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.dp
-  %i.dr = load i8, ptr %i.dq, align 1
-  %i.ds = zext i8 %i.dr to i64                    ; 2 uses
-  %.not.i = icmp ugt i64 %i.k, %i.ds
+  %i.dr = load i8, ptr %i.dq, align 1             ; 2 uses
+  %i.ds = zext i8 %i.dr to i64
+  %3 = zext i8 %i.dr to i32
+  %.not.i = icmp ugt i32 %i.j, %3
   br i1 %.not.i, label %bb.ab, label %select.unfold66
 
 bb.ab:                                            ; preds = %bb.aa
@@ -883,8 +885,8 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.i = load i32, ptr %i.h, align 8              ; 2 uses
-  %i.j = sext i32 %i.i to i64                     ; 6 uses
+  %i.i = load i32, ptr %i.h, align 8              ; 4 uses
+  %i.j = sext i32 %i.i to i64                     ; 4 uses
   %gepdiff = sub nsw i64 %.idx, %.idx83
   %i.k = lshr exact i64 %gepdiff, 1
   %i.l = trunc i64 %i.k to i32
@@ -934,9 +936,10 @@ bb.c:                                             ; preds = %.backedge238, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.am = zext nneg i16 %i.ak to i64
   %i.an = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.am
-  %i.ao = load i8, ptr %i.an, align 1
-  %i.ap = zext i8 %i.ao to i64                    ; 2 uses
-  %.not.i5 = icmp ugt i64 %i.j, %i.ap
+  %i.ao = load i8, ptr %i.an, align 1             ; 2 uses
+  %i.ap = zext i8 %i.ao to i64
+  %2 = zext i8 %i.ao to i32
+  %.not.i5 = icmp ugt i32 %i.i, %2
   br i1 %.not.i5, label %bb.e, label %select.unfold
 
 bb.e:                                             ; preds = %bb.d
@@ -1180,9 +1183,10 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %.backedge
   %i.dl = zext nneg i16 %i.dj to i64
   %i.dm = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.dl
-  %i.dn = load i8, ptr %i.dm, align 1
-  %i.do = zext i8 %i.dn to i64                    ; 2 uses
-  %.not.i = icmp ugt i64 %i.j, %i.do
+  %i.dn = load i8, ptr %i.dm, align 1             ; 2 uses
+  %i.do = zext i8 %i.dn to i64
+  %3 = zext i8 %i.dn to i32
+  %.not.i = icmp ugt i32 %i.i, %3
   br i1 %.not.i, label %bb.z, label %select.unfold62
 
 bb.z:                                             ; preds = %bb.y
@@ -1585,8 +1589,8 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.j = load i32, ptr %i.i, align 8              ; 2 uses
-  %i.k = sext i32 %i.j to i64                     ; 6 uses
+  %i.j = load i32, ptr %i.i, align 8              ; 4 uses
+  %i.k = sext i32 %i.j to i64                     ; 4 uses
   %gepdiff = sub nsw i64 %i.f, %i.c
   %i.l = trunc i64 %gepdiff to i32
   %i.m = icmp ult i32 %i.l, 100                   ; 2 uses
@@ -1644,9 +1648,10 @@ bb.d:                                             ; preds = %bb.g, %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ao = zext nneg i8 %i.am to i64
   %i.ap = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.ao
-  %i.aq = load i8, ptr %i.ap, align 1
-  %i.ar = zext i8 %i.aq to i64                    ; 2 uses
-  %.not.i5 = icmp ugt i64 %i.k, %i.ar
+  %i.aq = load i8, ptr %i.ap, align 1             ; 2 uses
+  %i.ar = zext i8 %i.aq to i64
+  %2 = zext i8 %i.aq to i32
+  %.not.i5 = icmp ugt i32 %i.j, %2
   br i1 %.not.i5, label %bb.f, label %select.unfold
 
 bb.f:                                             ; preds = %bb.e
@@ -1893,9 +1898,10 @@ bb.z:                                             ; preds = %bb.ac, %.backedge
 bb.aa:                                            ; preds = %bb.z
   %i.dp = zext nneg i8 %i.dn to i64
   %i.dq = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.dp
-  %i.dr = load i8, ptr %i.dq, align 1
-  %i.ds = zext i8 %i.dr to i64                    ; 2 uses
-  %.not.i = icmp ugt i64 %i.k, %i.ds
+  %i.dr = load i8, ptr %i.dq, align 1             ; 2 uses
+  %i.ds = zext i8 %i.dr to i64
+  %3 = zext i8 %i.dr to i32
+  %.not.i = icmp ugt i32 %i.j, %3
   br i1 %.not.i, label %bb.ab, label %select.unfold66
 
 bb.ab:                                            ; preds = %bb.aa
@@ -2245,8 +2251,8 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.i = load i32, ptr %i.h, align 8              ; 2 uses
-  %i.j = sext i32 %i.i to i64                     ; 6 uses
+  %i.i = load i32, ptr %i.h, align 8              ; 4 uses
+  %i.j = sext i32 %i.i to i64                     ; 4 uses
   %gepdiff = sub nsw i64 %.idx, %.idx83
   %i.k = lshr exact i64 %gepdiff, 1
   %i.l = trunc i64 %i.k to i32
@@ -2296,9 +2302,10 @@ bb.c:                                             ; preds = %.backedge238, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.am = zext nneg i16 %i.ak to i64
   %i.an = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.am
-  %i.ao = load i8, ptr %i.an, align 1
-  %i.ap = zext i8 %i.ao to i64                    ; 2 uses
-  %.not.i5 = icmp ugt i64 %i.j, %i.ap
+  %i.ao = load i8, ptr %i.an, align 1             ; 2 uses
+  %i.ap = zext i8 %i.ao to i64
+  %2 = zext i8 %i.ao to i32
+  %.not.i5 = icmp ugt i32 %i.i, %2
   br i1 %.not.i5, label %bb.e, label %select.unfold
 
 bb.e:                                             ; preds = %bb.d
@@ -2542,9 +2549,10 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %.backedge
   %i.dl = zext nneg i16 %i.dj to i64
   %i.dm = getelementptr inbounds nuw i8, ptr @_ZN2v86bigintL10kCharValueE, i64 %i.dl
-  %i.dn = load i8, ptr %i.dm, align 1
-  %i.do = zext i8 %i.dn to i64                    ; 2 uses
-  %.not.i = icmp ugt i64 %i.j, %i.do
+  %i.dn = load i8, ptr %i.dm, align 1             ; 2 uses
+  %i.do = zext i8 %i.dn to i64
+  %3 = zext i8 %i.dn to i32
+  %.not.i = icmp ugt i32 %i.i, %3
   br i1 %.not.i, label %bb.z, label %select.unfold62
 
 bb.z:                                             ; preds = %bb.y

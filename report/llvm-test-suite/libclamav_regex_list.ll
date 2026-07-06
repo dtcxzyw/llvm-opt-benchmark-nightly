@@ -204,8 +204,9 @@ bb.aa:                                            ; preds = %.thread150.i
 .lr.ph.i:                                         ; preds = %bb.aa
   %i.cn = zext nneg i8 %i.cm to i32
   %i.co = add nsw i32 %i.cn, -1
-  %i.cp = load i8, ptr %i.cl, align 1, !tbaa !17
-  %i.cq = sext i8 %i.cp to i32                    ; 2 uses
+  %i.cp = load i8, ptr %i.cl, align 1, !tbaa !17  ; 2 uses
+  %i.cq = sext i8 %i.cp to i32
+  %8 = sext i8 %i.cp to i16
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.ac, %.lr.ph.i
@@ -218,13 +219,14 @@ bb.ab:                                            ; preds = %bb.ac, %.lr.ph.i
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %.0111.i, i64 %i.cu
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !24 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
-  %i.cy = load i8, ptr %i.cx, align 8, !tbaa !29
-  %i.cz = zext i8 %i.cy to i32                    ; 2 uses
+  %i.cy = load i8, ptr %i.cx, align 8, !tbaa !29  ; 2 uses
+  %i.cz = zext i8 %i.cy to i32
   %i.da = icmp eq i32 %i.cz, %i.cq
   br i1 %i.da, label %.critedge141.thread.i.outer.backedge, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.db = icmp slt i32 %i.cz, %i.cq               ; 2 uses
+  %9 = zext i8 %i.cy to i16
+  %i.db = icmp slt i16 %9, %8                     ; 2 uses
   %i.dc = add nuw nsw i32 %i.ct, 1
   %i.dd = add nsw i32 %i.ct, -1
   %.188.i = select i1 %i.db, i32 %i.dc, i32 %.087186.i ; 2 uses
@@ -627,7 +629,7 @@ bb.ar:                                            ; preds = %.lr.ph.i109
   ]
 
 bb.as:                                            ; preds = %bb.ar
-  %i.dj = load i8, ptr %5, align 8, !tbaa !17     ; 2 uses
+  %i.dj = load i8, ptr %5, align 8, !tbaa !17     ; 3 uses
   %i.dk = load i32, ptr %i.df, align 4, !tbaa !25
   %i.dl = icmp eq i32 %i.dk, 2                    ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.088197.i, i64 24 ; 2 uses
@@ -642,7 +644,8 @@ bb.as:                                            ; preds = %bb.ar
 .lr.ph.i.i:                                       ; preds = %bb.as
   %i.dq = zext nneg i8 %i.dp to i32
   %i.dr = add nsw i32 %i.dq, -1
-  %i.ds = sext i8 %i.dj to i32                    ; 2 uses
+  %i.ds = sext i8 %i.dj to i32
+  %6 = sext i8 %i.dj to i16
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.au, %.lr.ph.i.i
@@ -656,13 +659,14 @@ bb.at:                                            ; preds = %bb.au, %.lr.ph.i.i
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i113.i, i64 %i.dx
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !24 ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
-  %i.eb = load i8, ptr %i.ea, align 8, !tbaa !29
-  %i.ec = zext i8 %i.eb to i32                    ; 2 uses
+  %i.eb = load i8, ptr %i.ea, align 8, !tbaa !29  ; 2 uses
+  %i.ec = zext i8 %i.eb to i32
   %.not29.i.i = icmp eq i32 %i.ec, %i.ds
   br i1 %.not29.i.i, label %tree_node_char_binsearch.exit.i, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.ed = icmp slt i32 %i.ec, %i.ds               ; 3 uses
+  %7 = zext i8 %i.eb to i16
+  %i.ed = icmp slt i16 %7, %6                     ; 3 uses
   %i.ee = add nuw nsw i32 %i.dw, 1                ; 2 uses
   %i.ef = add nsw i32 %i.dw, -1
   %.1.i111 = select i1 %i.ed, i32 %i.ee, i32 %.0.i110 ; 2 uses
