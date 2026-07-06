@@ -203,8 +203,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
 
 parse_http_line1.exit.thread:                     ; preds = %bb.bo, %bb.br
   %.057.lcssa.i = phi i64 [ 60, %bb.br ], [ %indvars.iv.i, %bb.bo ]
-  %1 = and i64 %.057.lcssa.i, 4294967295
-  %i.fi = getelementptr inbounds nuw i8, ptr %.058.i, i64 %1
+  %i.fi = getelementptr inbounds nuw i8, ptr %.058.i, i64 %.057.lcssa.i
   store i8 0, ptr %i.fi, align 1, !tbaa !30
   call void @ERR_new() #10
   call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 505, ptr noundef nonnull @__func__.parse_http_line1) #10

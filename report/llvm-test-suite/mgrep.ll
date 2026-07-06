@@ -203,13 +203,11 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.266 = phi ptr [ %i.o, %bb.h ], [ %.165, %bb.g ]
-  %sext = shl i64 %.06399, 32
-  %1 = ashr exact i64 %sext, 32
+  %.266 = phi ptr [ %.165, %bb.g ], [ %i.o, %bb.h ]
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.j, %bb.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ %1, %bb.i ] ; 2 uses
+bb.j:                                             ; preds = %bb.i, %bb.j
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ %.06399, %bb.i ] ; 2 uses
   %.367 = phi ptr [ %i.r, %bb.j ], [ %.266, %bb.i ] ; 4 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
   %i.p = getelementptr inbounds i8, ptr @buf, i64 %indvars.iv

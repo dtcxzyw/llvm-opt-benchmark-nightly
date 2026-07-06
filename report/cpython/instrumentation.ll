@@ -204,8 +204,7 @@ bb.a:
   %i.b = sext i32 %1 to i64                       ; 2 uses
   %i.c = getelementptr [2 x i8], ptr %i.a, i64 %i.b
   %i.d = load i16, ptr %i.c, align 2, !tbaa !11   ; 3 uses
-  %.sroa.7.0.extract.shift = lshr i16 %i.d, 8     ; 2 uses
-  %.sroa.7.0.extract.trunc = trunc nuw i16 %.sroa.7.0.extract.shift to i8 ; 3 uses
+  %.sroa.7.0.extract.shift = lshr i16 %i.d, 8     ; 4 uses
   %i.e = and i16 %i.d, 255                        ; 3 uses
   %i.f = icmp samesign ult i16 %i.e, 233
   br i1 %i.f, label %bb.b, label %bb.c
@@ -238,6 +237,7 @@ bb.d:                                             ; preds = %bb.c
   %i.u = load i8, ptr %i.t, align 1, !tbaa !39
   %i.v = getelementptr i8, ptr %i.p, i64 33
   %i.w = load i8, ptr %i.v, align 1, !tbaa !41
+  %2 = zext i8 %i.w to i16
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.c
@@ -285,9 +285,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.d, %bb.b
   %.sroa.0.1 = phi i8 [ %i.i, %bb.b ], [ %i.u, %bb.d ], [ %i.av, %bb.i ], [ %i.at, %bb.h ]
-  %.sroa.7.0 = phi i8 [ %.sroa.7.0.extract.trunc, %bb.b ], [ %i.w, %bb.d ], [ %.sroa.7.0.extract.trunc, %bb.i ], [ %.sroa.7.0.extract.trunc, %bb.h ]
-  %.sroa.7.0.insert.ext = zext i8 %.sroa.7.0 to i16
-  %.sroa.7.0.insert.shift = shl nuw i16 %.sroa.7.0.insert.ext, 8
+  %.sroa.7.0 = phi i16 [ %.sroa.7.0.extract.shift, %bb.b ], [ %2, %bb.d ], [ %.sroa.7.0.extract.shift, %bb.i ], [ %.sroa.7.0.extract.shift, %bb.h ]
+  %.sroa.7.0.insert.shift = shl nuw i16 %.sroa.7.0, 8
   %.sroa.0.0.insert.ext = zext i8 %.sroa.0.1 to i16
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.7.0.insert.shift, %.sroa.0.0.insert.ext
   ret i16 %.sroa.0.0.insert.insert
@@ -690,8 +689,7 @@ bb.bn:                                            ; preds = %bb.cy, %.lr.ph243.i
   %i.rd = sext i32 %.0103241.i.i to i64           ; 3 uses
   %i.re = getelementptr [2 x i8], ptr %i.lg, i64 %i.rd
   %i.rf = load i16, ptr %i.re, align 2, !tbaa !11 ; 4 uses
-  %.sroa.7.0.extract.shift.i119.i.i = lshr i16 %i.rf, 8 ; 3 uses
-  %.sroa.7.0.extract.trunc.i120.i.i = trunc nuw i16 %.sroa.7.0.extract.shift.i119.i.i to i8 ; 3 uses
+  %.sroa.7.0.extract.shift.i119.i.i = lshr i16 %i.rf, 8 ; 5 uses
   %i.rg = and i16 %i.rf, 255                      ; 4 uses
   %i.rh = icmp samesign ult i16 %i.rg, 233
   br i1 %i.rh, label %bb.bo, label %bb.bp
@@ -723,6 +721,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.rv = load i8, ptr %i.ru, align 1, !tbaa !39
   %i.rw = getelementptr i8, ptr %i.rq, i64 33
   %i.rx = load i8, ptr %i.rw, align 1, !tbaa !41
+  %6 = zext i8 %i.rx to i16
   br label %_Py_GetBaseCodeUnit.exit131.i.i
 
 bb.br:                                            ; preds = %bb.bp
@@ -768,27 +767,25 @@ bb.bv:                                            ; preds = %bb.bu
 
 _Py_GetBaseCodeUnit.exit131.i.i:                  ; preds = %bb.bv, %bb.bu, %bb.bq, %bb.bo
   %.sroa.0.1.i125.i.i = phi i8 [ %i.rk, %bb.bo ], [ %i.rv, %bb.bq ], [ %i.su, %bb.bv ], [ %i.ss, %bb.bu ] ; 2 uses
-  %.sroa.7.0.i126.i.i = phi i8 [ %.sroa.7.0.extract.trunc.i120.i.i, %bb.bo ], [ %i.rx, %bb.bq ], [ %.sroa.7.0.extract.trunc.i120.i.i, %bb.bv ], [ %.sroa.7.0.extract.trunc.i120.i.i, %bb.bu ]
-  %.sroa.7.0.insert.ext.i127.i.i = zext i8 %.sroa.7.0.i126.i.i to i16 ; 3 uses
-  %.sroa.7.0.insert.shift.i128.i.i = shl nuw i16 %.sroa.7.0.insert.ext.i127.i.i, 8
+  %.sroa.7.0.i125.i.i = phi i16 [ %.sroa.7.0.extract.shift.i119.i.i, %bb.bo ], [ %6, %bb.bq ], [ %.sroa.7.0.extract.shift.i119.i.i, %bb.bv ], [ %.sroa.7.0.extract.shift.i119.i.i, %bb.bu ] ; 3 uses
+  %.sroa.7.0.insert.shift.i128.i.i = shl nuw i16 %.sroa.7.0.i125.i.i, 8
   %.sroa.0.0.insert.ext.i129.i.i = zext i8 %.sroa.0.1.i125.i.i to i16
   %.sroa.0.0.insert.insert.i130.i.i = or disjoint i16 %.sroa.7.0.insert.shift.i128.i.i, %.sroa.0.0.insert.ext.i129.i.i
   %i.sv = icmp eq i8 %.sroa.0.1.i125.i.i, 69
   br i1 %i.sv, label %.lr.ph236.i.i, label %._crit_edge237.i.i
 
 .lr.ph236.i.i:                                    ; preds = %_Py_GetBaseCodeUnit.exit131.i.i, %_Py_GetBaseCodeUnit.exit144.i.i
-  %.sroa.6.0.in235.i.i = phi i16 [ %.sroa.7.0.insert.ext.i140.i.i, %_Py_GetBaseCodeUnit.exit144.i.i ], [ %.sroa.7.0.insert.ext.i127.i.i, %_Py_GetBaseCodeUnit.exit131.i.i ]
+  %.sroa.6.0.in235.i.i = phi i16 [ %.sroa.7.0.i136.i.i, %_Py_GetBaseCodeUnit.exit144.i.i ], [ %.sroa.7.0.i125.i.i, %_Py_GetBaseCodeUnit.exit131.i.i ]
   %.1104234.i.i = phi i32 [ %i.sx, %_Py_GetBaseCodeUnit.exit144.i.i ], [ %.0103241.i.i, %_Py_GetBaseCodeUnit.exit131.i.i ]
-  %.0107233.i.i = phi i32 [ %6, %_Py_GetBaseCodeUnit.exit144.i.i ], [ 0, %_Py_GetBaseCodeUnit.exit131.i.i ]
+  %.0107233.i.i = phi i32 [ %7, %_Py_GetBaseCodeUnit.exit144.i.i ], [ 0, %_Py_GetBaseCodeUnit.exit131.i.i ]
   %.sroa.6.0.i.i = zext nneg i16 %.sroa.6.0.in235.i.i to i32
   %i.sw = shl i32 %.0107233.i.i, 8
-  %6 = or disjoint i32 %i.sw, %.sroa.6.0.i.i      ; 2 uses
+  %7 = add nuw nsw i32 %i.sw, %.sroa.6.0.i.i      ; 2 uses
   %i.sx = add i32 %.1104234.i.i, 1                ; 4 uses
   %i.sy = sext i32 %i.sx to i64                   ; 3 uses
   %i.sz = getelementptr [2 x i8], ptr %i.lg, i64 %i.sy
   %i.ta = load i16, ptr %i.sz, align 2, !tbaa !11 ; 4 uses
-  %.sroa.7.0.extract.shift.i132.i.i = lshr i16 %i.ta, 8 ; 3 uses
-  %.sroa.7.0.extract.trunc.i133.i.i = trunc nuw i16 %.sroa.7.0.extract.shift.i132.i.i to i8 ; 3 uses
+  %.sroa.7.0.extract.shift.i132.i.i = lshr i16 %i.ta, 8 ; 5 uses
   %i.tb = and i16 %i.ta, 255                      ; 4 uses
   %i.tc = icmp samesign ult i16 %i.tb, 233
   br i1 %i.tc, label %bb.bw, label %bb.bx
@@ -820,6 +817,7 @@ bb.by:                                            ; preds = %bb.bx
   %i.tq = load i8, ptr %i.tp, align 1, !tbaa !39
   %i.tr = getelementptr i8, ptr %i.tl, i64 33
   %i.ts = load i8, ptr %i.tr, align 1, !tbaa !41
+  %8 = zext i8 %i.ts to i16
   br label %_Py_GetBaseCodeUnit.exit144.i.i
 
 bb.bz:                                            ; preds = %bb.bx
@@ -865,16 +863,15 @@ bb.cd:                                            ; preds = %bb.cc
 
 _Py_GetBaseCodeUnit.exit144.i.i:                  ; preds = %bb.cd, %bb.cc, %bb.by, %bb.bw
   %.sroa.0.1.i138.i.i = phi i8 [ %i.tf, %bb.bw ], [ %i.tq, %bb.by ], [ %i.up, %bb.cd ], [ %i.un, %bb.cc ] ; 2 uses
-  %.sroa.7.0.i139.i.i = phi i8 [ %.sroa.7.0.extract.trunc.i133.i.i, %bb.bw ], [ %i.ts, %bb.by ], [ %.sroa.7.0.extract.trunc.i133.i.i, %bb.cd ], [ %.sroa.7.0.extract.trunc.i133.i.i, %bb.cc ]
-  %.sroa.7.0.insert.ext.i140.i.i = zext i8 %.sroa.7.0.i139.i.i to i16 ; 3 uses
+  %.sroa.7.0.i136.i.i = phi i16 [ %.sroa.7.0.extract.shift.i132.i.i, %bb.bw ], [ %8, %bb.by ], [ %.sroa.7.0.extract.shift.i132.i.i, %bb.cd ], [ %.sroa.7.0.extract.shift.i132.i.i, %bb.cc ] ; 3 uses
   %i.uq = icmp eq i8 %.sroa.0.1.i138.i.i, 69
   br i1 %i.uq, label %.lr.ph236.i.i, label %._crit_edge237.loopexit.i.i, !llvm.loop !177
 
 ._crit_edge237.loopexit.i.i:                      ; preds = %_Py_GetBaseCodeUnit.exit144.i.i
-  %.sroa.7.0.insert.shift.i141.i.i = shl nuw i16 %.sroa.7.0.insert.ext.i140.i.i, 8
+  %.sroa.7.0.insert.shift.i141.i.i = shl nuw i16 %.sroa.7.0.i136.i.i, 8
   %.sroa.0.0.insert.ext.i142.i.i = zext i8 %.sroa.0.1.i138.i.i to i16
   %.sroa.0.0.insert.insert.i143.i.i = or disjoint i16 %.sroa.7.0.insert.shift.i141.i.i, %.sroa.0.0.insert.ext.i142.i.i
-  %i.ur = shl i32 %6, 8
+  %i.ur = shl i32 %7, 8
   br label %._crit_edge237.i.i
 
 ._crit_edge237.i.i:                               ; preds = %._crit_edge237.loopexit.i.i, %_Py_GetBaseCodeUnit.exit131.i.i
@@ -885,9 +882,9 @@ _Py_GetBaseCodeUnit.exit144.i.i:                  ; preds = %bb.cd, %bb.cc, %bb.
   %.0107.lcssa.i.i = phi i32 [ %i.ur, %._crit_edge237.loopexit.i.i ], [ 0, %_Py_GetBaseCodeUnit.exit131.i.i ]
   %.sroa.6.0.in.in.lcssa.i.i = phi i16 [ %.sroa.0.0.insert.insert.i143.i.i, %._crit_edge237.loopexit.i.i ], [ %.sroa.0.0.insert.insert.i130.i.i, %_Py_GetBaseCodeUnit.exit131.i.i ]
   %.1104.lcssa.i.i = phi i32 [ %i.sx, %._crit_edge237.loopexit.i.i ], [ %.0103241.i.i, %_Py_GetBaseCodeUnit.exit131.i.i ] ; 2 uses
-  %.sroa.6.0.in.lcssa.i.i = phi i16 [ %.sroa.7.0.insert.ext.i140.i.i, %._crit_edge237.loopexit.i.i ], [ %.sroa.7.0.insert.ext.i127.i.i, %_Py_GetBaseCodeUnit.exit131.i.i ]
+  %.sroa.6.0.in.lcssa.i.i = phi i16 [ %.sroa.7.0.i136.i.i, %._crit_edge237.loopexit.i.i ], [ %.sroa.7.0.i125.i.i, %_Py_GetBaseCodeUnit.exit131.i.i ]
   %i.ut = zext nneg i16 %.sroa.6.0.in.lcssa.i.i to i32
-  %7 = or disjoint i32 %.0107.lcssa.i.i, %i.ut    ; 3 uses
+  %9 = add nuw nsw i32 %.0107.lcssa.i.i, %i.ut    ; 3 uses
   %i.uu = icmp samesign ult i16 %.pre-phi255.i.i, 233
   br i1 %i.uu, label %bb.ce, label %bb.cf
 
@@ -978,16 +975,16 @@ _PyInstruction_GetLength.exit153.i.i:             ; preds = %_Py_GetBaseCodeUnit
   ], !llvm.loop !178
 
 bb.cl:                                            ; preds = %_PyInstruction_GetLength.exit153.i.i, %_PyInstruction_GetLength.exit153.i.i, %_PyInstruction_GetLength.exit153.i.i, %_PyInstruction_GetLength.exit153.i.i, %_PyInstruction_GetLength.exit153.i.i
-  %i.wi = add i32 %i.wh, %7
+  %i.wi = add i32 %i.wh, %9
   br label %bb.co
 
 bb.cm:                                            ; preds = %_PyInstruction_GetLength.exit153.i.i, %_PyInstruction_GetLength.exit153.i.i
-  %i.wj = add i32 %7, 1
+  %i.wj = add i32 %9, 1
   %i.wk = add i32 %i.wj, %i.wh
   br label %bb.co
 
 bb.cn:                                            ; preds = %_PyInstruction_GetLength.exit153.i.i, %_PyInstruction_GetLength.exit153.i.i
-  %i.wl = sub i32 %i.wh, %7
+  %i.wl = sub i32 %i.wh, %9
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cn, %bb.cm, %bb.cl
@@ -1390,8 +1387,7 @@ bb.ea:                                            ; preds = %.lr.ph, %_PyInstruc
   %i.ain = sext i32 %.0138334 to i64              ; 8 uses
   %i.aio = getelementptr [2 x i8], ptr %i.aih, i64 %i.ain ; 8 uses
   %i.aip = load i16, ptr %i.aio, align 2          ; 3 uses
-  %.sroa.7.0.extract.shift.i = lshr i16 %i.aip, 8 ; 2 uses
-  %.sroa.7.0.extract.trunc.i = trunc nuw i16 %.sroa.7.0.extract.shift.i to i8 ; 3 uses
+  %.sroa.7.0.extract.shift.i = lshr i16 %i.aip, 8 ; 4 uses
   %i.aiq = and i16 %i.aip, 255                    ; 3 uses
   %i.air = icmp samesign ult i16 %i.aiq, 233
   %i.ais = trunc i16 %i.aip to i8                 ; 2 uses
@@ -1423,6 +1419,7 @@ bb.ed:                                            ; preds = %bb.ec
   %i.ajg = load i8, ptr %i.ajf, align 1, !tbaa !39
   %i.ajh = getelementptr i8, ptr %i.ajb, i64 33
   %i.aji = load i8, ptr %i.ajh, align 1, !tbaa !41
+  %10 = zext i8 %i.aji to i16
   br label %_Py_GetBaseCodeUnit.exit
 
 bb.ee:                                            ; preds = %bb.ec
@@ -1468,7 +1465,7 @@ bb.ei:                                            ; preds = %bb.eh
 
 _Py_GetBaseCodeUnit.exit:                         ; preds = %bb.eb, %bb.ed, %bb.eh, %bb.ei
   %.sroa.0.1.i = phi i8 [ %i.aiv, %bb.eb ], [ %i.ajg, %bb.ed ], [ %i.akf, %bb.ei ], [ %i.akd, %bb.eh ] ; 3 uses
-  %.sroa.7.0.i = phi i8 [ %.sroa.7.0.extract.trunc.i, %bb.eb ], [ %i.aji, %bb.ed ], [ %.sroa.7.0.extract.trunc.i, %bb.ei ], [ %.sroa.7.0.extract.trunc.i, %bb.eh ]
+  %.sroa.7.0.i = phi i16 [ %.sroa.7.0.extract.shift.i, %bb.eb ], [ %10, %bb.ed ], [ %.sroa.7.0.extract.shift.i, %bb.ei ], [ %.sroa.7.0.extract.shift.i, %bb.eh ]
   %.not.i202 = icmp eq i8 %.sroa.0.1.i, -3
   br i1 %.not.i202, label %add_tools.exit, label %opcode_has_event.exit
 
@@ -1484,7 +1481,7 @@ bb.ej:                                            ; preds = %opcode_has_event.ex
   br i1 %i.akj, label %bb.ek, label %bb.el
 
 bb.ek:                                            ; preds = %bb.ej
-  %i.akk = icmp ne i8 %.sroa.7.0.i, 0
+  %i.akk = icmp ne i16 %.sroa.7.0.i, 0
   %i.akl = zext i1 %i.akk to i8
   br label %bb.em
 
@@ -1887,8 +1884,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
   %.04261 = phi i32 [ 0, %.lr.ph ], [ %.244, %bb.o ] ; 4 uses
   %i.l = getelementptr [2 x i8], ptr %i.h, i64 %i.k
   %i.m = load i16, ptr %i.l, align 2, !tbaa !11   ; 3 uses
-  %.sroa.7.0.extract.shift.i = lshr i16 %i.m, 8   ; 2 uses
-  %.sroa.7.0.extract.trunc.i = trunc nuw i16 %.sroa.7.0.extract.shift.i to i8 ; 3 uses
+  %.sroa.7.0.extract.shift.i = lshr i16 %i.m, 8   ; 4 uses
   %i.n = and i16 %i.m, 255                        ; 3 uses
   %i.o = icmp samesign ult i16 %i.n, 233
   br i1 %i.o, label %bb.c, label %bb.d
@@ -1920,6 +1916,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !39
   %i.ad = getelementptr i8, ptr %i.x, i64 33
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !41
+  %1 = zext i8 %i.ae to i16
   br label %_Py_GetBaseCodeUnit.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -1965,7 +1962,7 @@ bb.j:                                             ; preds = %bb.i
 
 _Py_GetBaseCodeUnit.exit:                         ; preds = %bb.c, %bb.e, %bb.i, %bb.j
   %.sroa.0.1.i = phi i8 [ %i.r, %bb.c ], [ %i.ac, %bb.e ], [ %i.bb, %bb.j ], [ %i.az, %bb.i ] ; 2 uses
-  %.sroa.7.0.i = phi i8 [ %.sroa.7.0.extract.trunc.i, %bb.c ], [ %i.ae, %bb.e ], [ %.sroa.7.0.extract.trunc.i, %bb.j ], [ %.sroa.7.0.extract.trunc.i, %bb.i ] ; 4 uses
+  %.sroa.7.0.i = phi i16 [ %.sroa.7.0.extract.shift.i, %bb.c ], [ %1, %bb.e ], [ %.sroa.7.0.extract.shift.i, %bb.j ], [ %.sroa.7.0.extract.shift.i, %bb.i ] ; 4 uses
   %i.bc = add i32 %.04062, 1
   %i.bd = zext i8 %.sroa.0.1.i to i64
   %i.be = getelementptr i8, ptr @_PyOpcode_Caches, i64 %i.bd
@@ -1983,14 +1980,14 @@ _Py_GetBaseCodeUnit.exit:                         ; preds = %bb.c, %bb.e, %bb.i,
   ]
 
 bb.k:                                             ; preds = %_Py_GetBaseCodeUnit.exit
-  %.sroa.5.0.extract.trunc = zext i8 %.sroa.7.0.i to i32
+  %.sroa.5.0.extract.trunc = zext nneg i16 %.sroa.7.0.i to i32
   %i.bi = shl i32 %.04261, 8
   %i.bj = or disjoint i32 %i.bi, %.sroa.5.0.extract.trunc
   br label %bb.o
 
 bb.l:                                             ; preds = %_Py_GetBaseCodeUnit.exit
   %i.bk = shl i32 %.04261, 8
-  %i.bl = zext i8 %.sroa.7.0.i to i32
+  %i.bl = zext nneg i16 %.sroa.7.0.i to i32
   %i.bm = or disjoint i32 %i.bk, %i.bl
   store i32 %i.bh, ptr %i.a, align 8, !tbaa !209
   %i.bn = add i32 %i.bm, %i.bh
@@ -2003,7 +2000,7 @@ bb.l:                                             ; preds = %_Py_GetBaseCodeUnit
 
 bb.m:                                             ; preds = %_Py_GetBaseCodeUnit.exit, %_Py_GetBaseCodeUnit.exit, %_Py_GetBaseCodeUnit.exit, %_Py_GetBaseCodeUnit.exit
   %i.bt = shl i32 %.04261, 8
-  %i.bu = zext i8 %.sroa.7.0.i to i32
+  %i.bu = zext nneg i16 %.sroa.7.0.i to i32
   %i.bv = or disjoint i32 %i.bt, %i.bu
   %i.bw = add i32 %i.bh, 1                        ; 2 uses
   store i32 %i.bw, ptr %i.a, align 8, !tbaa !209
@@ -2016,7 +2013,7 @@ bb.m:                                             ; preds = %_Py_GetBaseCodeUnit
 
 bb.n:                                             ; preds = %_Py_GetBaseCodeUnit.exit
   %.neg63 = mul i32 %.04261, 2147483392
-  %i.cc = zext i8 %.sroa.7.0.i to i32
+  %i.cc = zext nneg i16 %.sroa.7.0.i to i32
   %.neg50 = sub i32 %.neg63, %i.cc
   %i.cd = add i32 %.neg50, %i.bh
   store i32 %i.bh, ptr %i.a, align 8, !tbaa !209

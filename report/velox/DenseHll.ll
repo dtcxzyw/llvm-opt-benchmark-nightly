@@ -204,11 +204,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %exitcond.not.i, label %_ZNK8facebook5velox6common3hll8DenseHllINS0_19HashStringAllocatorEE17findOverflowEntryEi.exit.thread, label %bb.h, !llvm.loop !66
 
 _ZNK8facebook5velox6common3hll8DenseHllINS0_19HashStringAllocatorEE17findOverflowEntryEi.exit: ; preds = %bb.h
-  %sext = shl i64 %indvars.iv.i, 32
-  %3 = ashr exact i64 %sext, 32
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !47
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %3
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %indvars.iv.i
   store i8 %i.ak, ptr %i.aw, align 1, !tbaa !30
   br label %bb.r
 
@@ -611,13 +609,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 .critedge.split.loop.exit31.i:                    ; preds = %bb.d
   %i.n = trunc nuw nsw i64 %indvars.iv26.i27 to i32
-  %2 = shl i64 %indvars.iv.next27.i, 32
-  %3 = ashr exact i64 %2, 32
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.c, %.critedge.split.loop.exit31.i
   %.023.in.lcssa.i = phi i32 [ %i.n, %.critedge.split.loop.exit31.i ], [ 0, %bb.c ] ; 2 uses
-  %.023.lcssa.i = phi i64 [ %3, %.critedge.split.loop.exit31.i ], [ -1, %bb.c ] ; 2 uses
+  %.023.lcssa.i = phi i64 [ %indvars.iv.next27.i, %.critedge.split.loop.exit31.i ], [ -1, %bb.c ] ; 2 uses
   %i.o = sext i32 %.023.in.lcssa.i to i64         ; 3 uses
   %i.p = icmp sgt i64 %indvars.iv.i, %i.o
   br i1 %i.p, label %bb.e, label %bb.f
@@ -746,13 +742,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 .critedge.split.loop.exit31:                      ; preds = %bb.d
   %i.n = trunc nuw nsw i64 %indvars.iv2635 to i32
-  %1 = shl i64 %indvars.iv.next27, 32
-  %2 = ashr exact i64 %1, 32
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %.critedge.split.loop.exit31
   %.023.in.lcssa = phi i32 [ %i.n, %.critedge.split.loop.exit31 ], [ 0, %bb.c ] ; 2 uses
-  %.023.lcssa = phi i64 [ %2, %.critedge.split.loop.exit31 ], [ -1, %bb.c ] ; 2 uses
+  %.023.lcssa = phi i64 [ %indvars.iv.next27, %.critedge.split.loop.exit31 ], [ -1, %bb.c ] ; 2 uses
   %i.o = sext i32 %.023.in.lcssa to i64           ; 3 uses
   %i.p = icmp sgt i64 %indvars.iv, %i.o
   br i1 %i.p, label %bb.e, label %bb.f
@@ -1155,11 +1149,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %exitcond.not.i, label %_ZNK8facebook5velox6common3hll8DenseHllINS0_6memory10MemoryPoolEE17findOverflowEntryEi.exit.thread, label %bb.h, !llvm.loop !329
 
 _ZNK8facebook5velox6common3hll8DenseHllINS0_6memory10MemoryPoolEE17findOverflowEntryEi.exit: ; preds = %bb.h
-  %sext = shl i64 %indvars.iv.i, 32
-  %3 = ashr exact i64 %sext, 32
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !272
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %3
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %indvars.iv.i
   store i8 %i.ak, ptr %i.aw, align 1, !tbaa !30
   br label %bb.n
 
@@ -1562,13 +1554,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 .critedge.split.loop.exit31.i:                    ; preds = %bb.d
   %i.n = trunc nuw nsw i64 %indvars.iv26.i27 to i32
-  %2 = shl i64 %indvars.iv.next27.i, 32
-  %3 = ashr exact i64 %2, 32
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.c, %.critedge.split.loop.exit31.i
   %.023.in.lcssa.i = phi i32 [ %i.n, %.critedge.split.loop.exit31.i ], [ 0, %bb.c ] ; 2 uses
-  %.023.lcssa.i = phi i64 [ %3, %.critedge.split.loop.exit31.i ], [ -1, %bb.c ] ; 2 uses
+  %.023.lcssa.i = phi i64 [ %indvars.iv.next27.i, %.critedge.split.loop.exit31.i ], [ -1, %bb.c ] ; 2 uses
   %i.o = sext i32 %.023.in.lcssa.i to i64         ; 3 uses
   %i.p = icmp sgt i64 %indvars.iv.i, %i.o
   br i1 %i.p, label %bb.e, label %bb.f
@@ -1697,13 +1687,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 .critedge.split.loop.exit31:                      ; preds = %bb.d
   %i.n = trunc nuw nsw i64 %indvars.iv2635 to i32
-  %1 = shl i64 %indvars.iv.next27, 32
-  %2 = ashr exact i64 %1, 32
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %.critedge.split.loop.exit31
   %.023.in.lcssa = phi i32 [ %i.n, %.critedge.split.loop.exit31 ], [ 0, %bb.c ] ; 2 uses
-  %.023.lcssa = phi i64 [ %2, %.critedge.split.loop.exit31 ], [ -1, %bb.c ] ; 2 uses
+  %.023.lcssa = phi i64 [ %indvars.iv.next27, %.critedge.split.loop.exit31 ], [ -1, %bb.c ] ; 2 uses
   %i.o = sext i32 %.023.in.lcssa to i64           ; 3 uses
   %i.p = icmp sgt i64 %indvars.iv, %i.o
   br i1 %i.p, label %bb.e, label %bb.f

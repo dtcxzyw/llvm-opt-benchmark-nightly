@@ -204,10 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.us
   %i.l = add i64 %indvars.iv.lcssa, 2
-  %sext35 = shl i64 %indvars.iv.next.lcssa, 32
-  %2 = ashr exact i64 %sext35, 29
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 %2
-  %i.m = load ptr, ptr %3, align 8, !tbaa !791
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.next.lcssa
+  %i.m = load ptr, ptr %2, align 8, !tbaa !791
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   store i32 %.01722.us, ptr %i.n, align 4, !tbaa !4
   br label %bb.c

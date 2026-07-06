@@ -204,16 +204,11 @@ bb.ao:                                            ; preds = %.lr.ph885, %bb.an
   %indvars.iv.next1013 = add nuw nsw i64 %indvars.iv1012, 1 ; 2 uses
   %i.fq = lshr i32 %.0468882, 1
   %i.fr = icmp samesign ugt i32 %.0468882, 3
-  br i1 %i.fr, label %.lr.ph885, label %._crit_edge886.loopexit, !llvm.loop !29
+  br i1 %i.fr, label %.lr.ph885, label %._crit_edge886, !llvm.loop !29
 
-._crit_edge886.loopexit:                          ; preds = %bb.ao
-  %sext = shl i64 %indvars.iv.next1013, 32
-  %4 = ashr exact i64 %sext, 32
-  br label %._crit_edge886
-
-._crit_edge886:                                   ; preds = %._crit_edge886.loopexit, %bb.am
-  %.lcssa881 = phi double [ %.promoted880, %bb.am ], [ %i.fp, %._crit_edge886.loopexit ] ; 2 uses
-  %.0452.lcssa = phi i64 [ 0, %bb.am ], [ %4, %._crit_edge886.loopexit ]
+._crit_edge886:                                   ; preds = %bb.ao, %bb.am
+  %.lcssa881 = phi double [ %.promoted880, %bb.am ], [ %i.fp, %bb.ao ] ; 2 uses
+  %.0452.lcssa = phi i64 [ 0, %bb.am ], [ %indvars.iv.next1013, %bb.ao ]
   store double %.lcssa881, ptr %2, align 8
   %i.fs = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.ft = bitcast double %.lcssa881 to i64

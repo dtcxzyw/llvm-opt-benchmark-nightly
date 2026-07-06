@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.thread
   br i1 %.not116132, label %.loopexit, label %.lr.ph134
 
 .lr.ph134:                                        ; preds = %.preheader126, %bb.h
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 1, %.preheader126 ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 1, %.preheader126 ] ; 3 uses
   %i.u = phi i32 [ %i.x, %bb.h ], [ %i.t, %.preheader126 ]
   %i.v = icmp eq i32 %i.u, %.0140
   br i1 %i.v, label %.loopexit127.loopexit, label %bb.h
@@ -251,14 +251,13 @@ bb.j:                                             ; preds = %.loopexit
   br label %.loopexit127
 
 .loopexit127.loopexit:                            ; preds = %.lr.ph134
-  %.phi.trans.insert = and i64 %indvars.iv, 4294967295 ; 2 uses
-  %.phi.trans.insert172.a = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.phi.trans.insert
+  %.phi.trans.insert172.a = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv
   %.phi.trans.insert173 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert172.a, i64 4
   %.pre = load float, ptr %.phi.trans.insert173, align 4, !tbaa !528
   br label %.loopexit127
 
 .loopexit127:                                     ; preds = %.loopexit127.loopexit, %bb.j
-  %.pre-phi = phi i64 [ %.phi.trans.insert, %.loopexit127.loopexit ], [ %i.ah, %bb.j ]
+  %.pre-phi = phi i64 [ %indvars.iv, %.loopexit127.loopexit ], [ %i.ah, %bb.j ]
   %i.am = phi float [ %.pre, %.loopexit127.loopexit ], [ 0.000000e+00, %bb.j ]
   %i.an = phi ptr [ %i.r, %.loopexit127.loopexit ], [ %i.ac, %bb.j ]
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %.pre-phi

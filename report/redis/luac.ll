@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.bc, ptr %i.bd, align 8, !tbaa !44
   %i.be = getelementptr inbounds nuw i8, ptr %i.w, i64 88
   store i32 %i.b, ptr %i.be, align 8, !tbaa !45
-  %.pre55.i = load ptr, ptr %i.ay, align 8, !tbaa !42 ; 5 uses
+  %.pre55.i = load ptr, ptr %i.ay, align 8, !tbaa !42 ; 6 uses
   br i1 %i.f, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.h
@@ -260,7 +260,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.new
 
 ._crit_edge.loopexit.i.unr-lcssa:                 ; preds = %bb.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.i.unr-lcssa, %.lr.ph.i
   %indvars.iv50.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next51.i.1, %._crit_edge.loopexit.i.unr-lcssa ] ; 2 uses
@@ -281,16 +281,11 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.new
   %indvars.iv.next51.i.epil = add nuw nsw i64 %indvars.iv50.i.epil.init, 2
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
   store i32 8405020, ptr %i.ck, align 4, !tbaa !4
-  br label %._crit_edge.loopexit.i
-
-._crit_edge.loopexit.i:                           ; preds = %._crit_edge.loopexit.i.unr-lcssa, %.epil.preheader
-  %indvars.iv.next51.i.lcssa = phi i64 [ %indvars.iv.next51.i.1, %._crit_edge.loopexit.i.unr-lcssa ], [ %indvars.iv.next51.i.epil, %.epil.preheader ]
-  %1 = and i64 %indvars.iv.next51.i.lcssa, 4294967294
   br label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.h, %.thread.i
-  %.pre5558.i = phi ptr [ %.pre55.i, %bb.h ], [ %.pre55.i, %._crit_edge.loopexit.i ], [ %.pre5557.i, %.thread.i ]
-  %.046.lcssa.i = phi i64 [ 0, %bb.h ], [ %1, %._crit_edge.loopexit.i ], [ 0, %.thread.i ]
+._crit_edge.i:                                    ; preds = %.epil.preheader, %._crit_edge.loopexit.i.unr-lcssa, %bb.h, %.thread.i
+  %.pre5558.i = phi ptr [ %.pre55.i, %bb.h ], [ %.pre5557.i, %.thread.i ], [ %.pre55.i, %._crit_edge.loopexit.i.unr-lcssa ], [ %.pre55.i, %.epil.preheader ]
+  %.046.lcssa.i = phi i64 [ 0, %bb.h ], [ 0, %.thread.i ], [ %indvars.iv.next51.i.1, %._crit_edge.loopexit.i.unr-lcssa ], [ %indvars.iv.next51.i.epil, %.epil.preheader ]
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %.pre5558.i, i64 %.046.lcssa.i
   store i32 8388638, ptr %i.cl, align 4, !tbaa !4
   br label %combine.exit

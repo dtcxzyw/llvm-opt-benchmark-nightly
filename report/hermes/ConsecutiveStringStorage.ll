@@ -204,7 +204,6 @@ bb.f:                                             ; preds = %_ZN12_GLOBAL__N_112
   %i.bs = mul nuw nsw i64 %i.br, 48               ; 2 uses
   %i.bt = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bs) #19, !noalias !89 ; 5 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.bs
-  %18 = and i64 %i.bo, 4294967295
   %xtraiter = and i64 %i.br, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
@@ -224,7 +223,7 @@ bb.f:                                             ; preds = %_ZN12_GLOBAL__N_112
 
 .lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %bb.f
   %.08.i.i.i.i.i.unr = phi ptr [ %i.bt, %bb.f ], [ %i.bv, %.lr.ph.i.i.i.i.i.prol ]
-  %i.bw = icmp samesign ult i64 %18, 7
+  %i.bw = icmp samesign ult i64 %i.bo, 7
   br i1 %i.bw, label %.lr.ph179.i.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
@@ -627,7 +626,6 @@ bb.cu:                                            ; preds = %_ZN12_GLOBAL__N_112
   %i.aar = mul nuw nsw i64 %i.aaq, 48             ; 2 uses
   %i.aas = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aar) #19, !noalias !227 ; 5 uses
   %i.aat = getelementptr inbounds nuw i8, ptr %i.aas, i64 %i.aar
-  %19 = and i64 %i.aan, 4294967295
   %xtraiter1169 = and i64 %i.aaq, 7               ; 2 uses
   %lcmp.mod1170.not = icmp eq i64 %xtraiter1169, 0
   br i1 %lcmp.mod1170.not, label %.lr.ph.i.i.i.i.i26.prol.loopexit, label %.lr.ph.i.i.i.i.i26.prol
@@ -647,7 +645,7 @@ bb.cu:                                            ; preds = %_ZN12_GLOBAL__N_112
 
 .lr.ph.i.i.i.i.i26.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i26.prol, %bb.cu
   %.08.i.i.i.i.i27.unr = phi ptr [ %i.aas, %bb.cu ], [ %i.aau, %.lr.ph.i.i.i.i.i26.prol ]
-  %i.aav = icmp samesign ult i64 %19, 7
+  %i.aav = icmp samesign ult i64 %i.aan, 7
   br i1 %i.aav, label %.lr.ph181.i.i, label %.lr.ph.i.i.i.i.i26
 
 .lr.ph.i.i.i.i.i26:                               ; preds = %.lr.ph.i.i.i.i.i26.prol.loopexit, %.lr.ph.i.i.i.i.i26

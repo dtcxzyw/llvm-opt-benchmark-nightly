@@ -202,13 +202,11 @@ bb.e:                                             ; preds = %.lr.ph
 
 .critedge2:                                       ; preds = %.lr.ph
   %i.jm = trunc nuw nsw i64 %indvars.iv171 to i32 ; 2 uses
-  %sext = shl i64 %indvars.iv171, 32
-  %2 = ashr exact i64 %sext, 32
   %i.jn = icmp sgt i32 %.0127.lcssa.ph, %i.jm
   br i1 %i.jn, label %.lr.ph166.preheader, label %.backedge
 
 .lr.ph166.preheader:                              ; preds = %bb.e, %.critedge2
-  %i.jo = phi i64 [ %2, %.critedge2 ], [ 0, %bb.e ] ; 12 uses
+  %i.jo = phi i64 [ %indvars.iv171, %.critedge2 ], [ 0, %bb.e ] ; 12 uses
   %.1129.lcssa.ph189 = phi i32 [ %i.jm, %.critedge2 ], [ 0, %bb.e ]
   %.in = add nsw i32 %.0127.lcssa.ph, -1
   %i.jp = zext i32 %.in to i64                    ; 4 uses
@@ -243,9 +241,9 @@ bb.e:                                             ; preds = %.lr.ph
   %i.kr = fsub double %i.kc, %i.kq
   %i.ks = fsub double %i.jy, %i.kr
   %i.kt = add nsw i64 %i.jo, -1
-  %i.ku = trunc nsw i64 %i.jo to i32
+  %i.ku = trunc i64 %i.jo to i32
   %i.kv = add nsw i32 %i.ku, 2
-  %i.kw = trunc nsw i64 %i.jo to i32
+  %i.kw = trunc i64 %i.jo to i32
   %i.kx = add nsw i32 %i.kw, 2
   br label %.lr.ph166
 

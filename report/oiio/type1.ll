@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 6 uses
   %.05794 = phi i32 [ -1, %.lr.ph.preheader ], [ %i.af, %bb.i ] ; 2 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !107 ; 2 uses
@@ -245,13 +245,12 @@ bb.j:                                             ; preds = %.thread83
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.am
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !107 ; 2 uses
   %i.ap = sub nsw i64 %.067, %i.ao
-  %3 = and i64 %indvars.iv, 4294967295            ; 2 uses
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %3
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !107
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.am
   %i.at = load i64, ptr %i.as, align 8, !tbaa !107
   %i.au = sub nsw i64 %i.ar, %i.at
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %3
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !107
   %i.ax = sub nsw i64 %i.aw, %i.ao
   %i.ay = tail call i64 @FT_MulDiv(i64 noundef %i.ap, i64 noundef %i.au, i64 noundef %i.ax) #17

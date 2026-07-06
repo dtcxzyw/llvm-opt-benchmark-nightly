@@ -204,7 +204,6 @@ _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread: ; preds = %bb.b, %_
 
 bb.d:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
   %i.q = load i8, ptr %i.a, align 1, !tbaa !662, !range !130, !noundef !22
-  %9 = trunc nuw i8 %i.q to i1
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit
 
 bb.e:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
@@ -226,6 +225,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
+  %9 = zext i1 %i.s to i8
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -250,10 +250,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13.i.i: ; preds = 
   br label %common.resume
 
 _ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit: ; preds = %bb.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-  %.0.i.i60 = phi i1 [ %9, %bb.d ], [ %i.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ]
+  %.0.i.i60 = phi i8 [ %i.q, %bb.d ], [ %9, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
-  %10 = zext i1 %.0.i.i60 to i8
-  store i8 %10, ptr %i.d, align 1, !tbaa !662
+  store i8 %.0.i.i60, ptr %i.d, align 1, !tbaa !662
   br label %bb.ak
 
 bb.h:                                             ; preds = %bb.a
@@ -656,7 +655,6 @@ bb.ac:                                            ; preds = %.lr.ph103, %_ZN6duc
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ds = load i8, ptr %i.a, align 1, !tbaa !662, !range !130, !noundef !22
-  %10 = trunc nuw i8 %i.ds to i1
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit76
 
 bb.ae:                                            ; preds = %bb.ac
@@ -676,6 +674,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i73: ; preds = %bb.af, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i72
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #28
+  %10 = zext i1 %i.dt to i8
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit76
 
 bb.ag:                                            ; preds = %bb.ae
@@ -695,11 +694,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13.i.i70: ; preds 
   br label %common.resume
 
 _ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit76: ; preds = %bb.ad, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i73
-  %.0.i.i74 = phi i1 [ %10, %bb.ad ], [ %i.dt, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i73 ]
+  %.0.i.i74 = phi i8 [ %i.ds, %bb.ad ], [ %10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i73 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 %.059102
-  %11 = zext i1 %.0.i.i74 to i8
-  store i8 %11, ptr %i.dz, align 1, !tbaa !662
+  store i8 %.0.i.i74, ptr %i.dz, align 1, !tbaa !662
   %i.ea = add nuw i64 %.059102, 1                 ; 2 uses
   %exitcond111.not = icmp eq i64 %i.ea, %2
   br i1 %exitcond111.not, label %.loopexit, label %bb.ac, !llvm.loop !1238
@@ -772,19 +770,18 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39.us: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i38.us
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
+  %10 = zext i1 %i.q to i8
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit42.us
 
 bb.d:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit34.us
   %i.t = load i8, ptr %i.a, align 1, !tbaa !662, !range !130, !noundef !22
-  %10 = trunc nuw i8 %i.t to i1
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit42.us
 
 _ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit42.us: ; preds = %bb.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39.us
-  %.0.i.i40.us = phi i1 [ %10, %bb.d ], [ %i.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39.us ]
+  %.0.i.i40.us = phi i8 [ %i.t, %bb.d ], [ %10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39.us ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %.03046.us
-  %11 = zext i1 %.0.i.i40.us to i8
-  store i8 %11, ptr %i.u, align 1, !tbaa !662
+  store i8 %.0.i.i40.us, ptr %i.u, align 1, !tbaa !662
   %i.v = add nuw i64 %.03046.us, 1                ; 2 uses
   %exitcond53.not = icmp eq i64 %i.v, %2
   br i1 %exitcond53.not, label %.loopexit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit34.us, !llvm.loop !1239
@@ -831,7 +828,6 @@ bb.g:                                             ; preds = %_ZNK6duckdb15Select
 
 bb.h:                                             ; preds = %bb.g
   %i.ao = load i8, ptr %i.b, align 1, !tbaa !662, !range !130, !noundef !22
-  %12 = trunc nuw i8 %i.ao to i1
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -851,6 +847,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %bb.j, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
+  %11 = zext i1 %i.ap to i8
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -874,11 +871,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13.i.i: ; preds = 
   br label %common.resume
 
 _ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit: ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-  %.0.i.i = phi i1 [ %12, %bb.h ], [ %i.ap, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ]
+  %.0.i.i = phi i8 [ %i.ao, %bb.h ], [ %11, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 %.045
-  %13 = zext i1 %.0.i.i to i8
-  store i8 %13, ptr %i.av, align 1, !tbaa !662
+  store i8 %.0.i.i, ptr %i.av, align 1, !tbaa !662
   br label %bb.n
 
 bb.l:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
@@ -928,7 +924,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit34:  ; preds = %.lr.ph47, %_ZN6duck
 
 bb.o:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit34
   %i.bq = load i8, ptr %i.a, align 1, !tbaa !662, !range !130, !noundef !22
-  %14 = trunc nuw i8 %i.bq to i1
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit42
 
 bb.p:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit34
@@ -948,6 +943,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39: ; preds = %bb.q, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i38
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
+  %12 = zext i1 %i.br to i8
   br label %_ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit42
 
 .split:                                           ; preds = %bb.p
@@ -971,11 +967,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13.i.i36: ; preds 
   br label %common.resume
 
 _ZN6duckdb19GenericUnaryWrapper9OperationINS_27VectorTryCastStrictOperatorINS_7TryCastEEENS_8string_tEbEET1_T0_RNS_12ValidityMaskEmPv.exit42: ; preds = %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39
-  %.0.i.i40 = phi i1 [ %14, %bb.o ], [ %i.br, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39 ]
+  %.0.i.i40 = phi i8 [ %i.bq, %bb.o ], [ %12, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i39 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 %.03046
-  %15 = zext i1 %.0.i.i40 to i8
-  store i8 %15, ptr %i.bx, align 1, !tbaa !662
+  store i8 %.0.i.i40, ptr %i.bx, align 1, !tbaa !662
   %i.by = add nuw i64 %.03046, 1                  ; 2 uses
   %exitcond52.not = icmp eq i64 %i.by, %2
   br i1 %exitcond52.not, label %.loopexit, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit34, !llvm.loop !1239

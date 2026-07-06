@@ -203,7 +203,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.af = phi ptr [ %i.aj, %bb.n ], [ %i.ae, %.lr.ph72 ]
   %i.ag = call i32 @strcasecmp(ptr noundef nonnull %i.af, ptr noundef readonly %i.ad) #20
   %i.ah = icmp eq i32 %i.ag, 0
-  br i1 %i.ah, label %ParameterNameToMapIndex.exit.loopexit, label %bb.n
+  br i1 %i.ah, label %ParameterNameToMapIndex.exit, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -217,13 +217,8 @@ ParameterNameToMapIndex.exit.thread:              ; preds = %bb.n, %.lr.ph72
   call void @error(ptr noundef nonnull @errortext, i32 noundef 300) #21
   br label %ParameterNameToMapIndex.exit
 
-ParameterNameToMapIndex.exit.loopexit:            ; preds = %.lr.ph.i
-  %2 = shl i64 %indvars.iv.i, 32
-  %3 = ashr exact i64 %2, 32
-  br label %ParameterNameToMapIndex.exit
-
-ParameterNameToMapIndex.exit:                     ; preds = %ParameterNameToMapIndex.exit.loopexit, %ParameterNameToMapIndex.exit.thread
-  %.05.i63 = phi i64 [ -1, %ParameterNameToMapIndex.exit.thread ], [ %3, %ParameterNameToMapIndex.exit.loopexit ]
+ParameterNameToMapIndex.exit:                     ; preds = %.lr.ph.i, %ParameterNameToMapIndex.exit.thread
+  %.05.i63 = phi i64 [ -1, %ParameterNameToMapIndex.exit.thread ], [ %indvars.iv.i, %.lr.ph.i ]
   %i.al = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !21
   %i.an = call i32 @strcasecmp(ptr noundef nonnull @.str.243, ptr noundef %i.am) #20

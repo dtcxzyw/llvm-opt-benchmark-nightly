@@ -204,7 +204,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i:  ; preds = %bb.ae, %.noexc76
 bb.af:                                            ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i
   %.sroa.0.sroa.0.0.copyload.i = load i64, ptr %i.cz, align 8 ; 2 uses
   %.sroa.0.sroa.0.sroa.3.0.extract.shift.i = lshr i64 %.sroa.0.sroa.0.0.copyload.i, 32
-  %.sroa.0.sroa.0.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.0.sroa.0.sroa.3.0.extract.shift.i to i32
   %.sroa.0.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   %.sroa.0.sroa.4.0.copyload.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !tbaa !14
   %.pre.i = and i64 %.sroa.0.sroa.0.0.copyload.i, 4294967295
@@ -255,14 +254,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i:                ; preds = %.noexc77, %bb.ah
   %i.dx = select i1 %i.dt, ptr %i.du, ptr %i.dw
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dr, ptr align 1 %i.dx, i64 %i.dd, i1 false)
   %i.dy = load i32, ptr %i.dr, align 1
+  %11 = zext i32 %i.dy to i64
   br label %bb.aj
 
 bb.aj:                                            ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i, %bb.af
   %.sroa.0.sroa.0.sroa.0.0.insert.ext.pre-phi.i = phi i64 [ %i.dd, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.pre.i, %bb.af ]
-  %.sroa.0.sroa.0.sroa.3.0.i = phi i32 [ %i.dy, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.0.sroa.3.0.extract.trunc.i, %bb.af ]
+  %.sroa.0.sroa.0.sroa.3.0.i = phi i64 [ %11, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.0.sroa.3.0.extract.shift.i, %bb.af ]
   %.sroa.0.sroa.4.0.i = phi ptr [ %i.dr, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.4.0.copyload.i, %bb.af ] ; 2 uses
-  %.sroa.0.sroa.0.sroa.3.0.insert.ext.i = zext i32 %.sroa.0.sroa.0.sroa.3.0.i to i64
-  %.sroa.0.sroa.0.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.0.sroa.3.0.insert.ext.i, 32
+  %.sroa.0.sroa.0.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.0.sroa.3.0.i, 32
   %.sroa.0.sroa.0.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.sroa.0.sroa.3.0.insert.shift.i, %.sroa.0.sroa.0.sroa.0.0.insert.ext.pre-phi.i ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.cr, i64 8 ; 4 uses
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !1021 ; 4 uses
@@ -665,7 +664,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i:  ; preds = %bb.ai, %.noexc79
 bb.aj:                                            ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i
   %.sroa.0.sroa.0.0.copyload.i = load i64, ptr %i.db, align 8 ; 2 uses
   %.sroa.0.sroa.0.sroa.3.0.extract.shift.i = lshr i64 %.sroa.0.sroa.0.0.copyload.i, 32
-  %.sroa.0.sroa.0.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.0.sroa.0.sroa.3.0.extract.shift.i to i32
   %.sroa.0.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.db, i64 8
   %.sroa.0.sroa.4.0.copyload.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !tbaa !14
   %.pre.i = and i64 %.sroa.0.sroa.0.0.copyload.i, 4294967295
@@ -716,14 +714,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i:                ; preds = %.noexc80, %bb.al
   %i.dz = select i1 %i.dv, ptr %i.dw, ptr %i.dy
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dt, ptr align 1 %i.dz, i64 %i.df, i1 false)
   %i.ea = load i32, ptr %i.dt, align 1
+  %13 = zext i32 %i.ea to i64
   br label %bb.an
 
 bb.an:                                            ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i, %bb.aj
   %.sroa.0.sroa.0.sroa.0.0.insert.ext.pre-phi.i = phi i64 [ %i.df, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.pre.i, %bb.aj ]
-  %.sroa.0.sroa.0.sroa.3.0.i = phi i32 [ %i.ea, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.0.sroa.3.0.extract.trunc.i, %bb.aj ]
+  %.sroa.0.sroa.0.sroa.3.0.i = phi i64 [ %13, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.0.sroa.3.0.extract.shift.i, %bb.aj ]
   %.sroa.0.sroa.4.0.i = phi ptr [ %i.dt, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.4.0.copyload.i, %bb.aj ] ; 2 uses
-  %.sroa.0.sroa.0.sroa.3.0.insert.ext.i = zext i32 %.sroa.0.sroa.0.sroa.3.0.i to i64
-  %.sroa.0.sroa.0.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.0.sroa.3.0.insert.ext.i, 32
+  %.sroa.0.sroa.0.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.0.sroa.3.0.i, 32
   %.sroa.0.sroa.0.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.sroa.0.sroa.3.0.insert.shift.i, %.sroa.0.sroa.0.sroa.0.0.insert.ext.pre-phi.i ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ct, i64 8 ; 4 uses
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !1021 ; 4 uses

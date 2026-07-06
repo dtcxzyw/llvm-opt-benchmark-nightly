@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %.critedge79
   br i1 %i.cw, label %.critedge81, label %bb.ae, !prof !16
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cx = load ptr, ptr %i.cu, align 8, !tbaa !452 ; 8 uses
+  %i.cx = load ptr, ptr %i.cu, align 8, !tbaa !452 ; 6 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !452 ; 2 uses
   %i.da = icmp eq ptr %i.cx, %i.cz
@@ -215,6 +215,9 @@ bb.ae:                                            ; preds = %bb.ad
   %i.dc = ptrtoint ptr %i.cx to i64
   %i.dd = sub i64 %i.db, %i.dc                    ; 2 uses
   %i.de = sdiv exact i64 %i.dd, 56                ; 3 uses
+  %.pre153 = load ptr, ptr %i.cx, align 8, !tbaa !204
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre153, i64 16
+  %.pre154 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !373 ; 2 uses
   %xtraiter = and i64 %i.de, 1
   %i.df = icmp eq i64 %i.dd, 56
   br i1 %i.df, label %.lr.ph135.epil.preheader, label %.lr.ph135.preheader.new
@@ -240,20 +243,16 @@ bb.ag:                                            ; preds = %.critedge81
   br i1 %lcmp.mod.not, label %._crit_edge136, label %.lr.ph135.epil.preheader
 
 .lr.ph135.epil.preheader:                         ; preds = %._crit_edge136.unr-lcssa, %.lr.ph135.preheader
+  %.epil.init = phi i64 [ %.pre154, %.lr.ph135.preheader ], [ %9, %._crit_edge136.unr-lcssa ]
   %indvars.iv146.epil.init = phi i64 [ 0, %.lr.ph135.preheader ], [ %indvars.iv.next147.1, %._crit_edge136.unr-lcssa ] ; 2 uses
-  %.048133.epil.init = phi i32 [ 0, %.lr.ph135.preheader ], [ %spec.select82.1, %._crit_edge136.unr-lcssa ] ; 2 uses
+  %.048133.epil.init = phi i32 [ 0, %.lr.ph135.preheader ], [ %spec.select82.1, %._crit_edge136.unr-lcssa ]
   %lcmp.mod199 = trunc i64 %i.de to i1
   call void @llvm.assume(i1 %lcmp.mod199)
-  %8 = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %indvars.iv146.epil.init
-  %9 = load ptr, ptr %8, align 8, !tbaa !204
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %11 = load i64, ptr %10, align 8, !tbaa !373
-  %12 = zext nneg i32 %.048133.epil.init to i64
-  %i.dh = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %12
+  %i.dh = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %indvars.iv146.epil.init
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !204
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 16
   %i.dk = load i64, ptr %i.dj, align 8, !tbaa !373
-  %i.dl = icmp ugt i64 %11, %i.dk
+  %i.dl = icmp ugt i64 %i.dk, %.epil.init
   %i.dm = trunc nuw nsw i64 %indvars.iv146.epil.init to i32
   %spec.select82.epil = select i1 %i.dl, i32 %i.dm, i32 %.048133.epil.init
   br label %._crit_edge136
@@ -265,36 +264,29 @@ bb.ag:                                            ; preds = %.critedge81
           to label %bb.ah unwind label %bb.au
 
 .lr.ph135:                                        ; preds = %.lr.ph135, %.lr.ph135.preheader.new
-  %indvars.iv146.a = phi i64 [ 0, %.lr.ph135.preheader.new ], [ %indvars.iv.next147.1, %.lr.ph135 ] ; 4 uses
-  %.048133 = phi i32 [ 0, %.lr.ph135.preheader.new ], [ %spec.select82.1, %.lr.ph135 ] ; 2 uses
-  %niter.a = phi i64 [ 0, %.lr.ph135.preheader.new ], [ %niter.next.1, %.lr.ph135 ]
-  %13 = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %indvars.iv146.a
-  %14 = load ptr, ptr %13, align 8, !tbaa !204
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %16 = load i64, ptr %15, align 8, !tbaa !373
-  %17 = zext nneg i32 %.048133 to i64
-  %i.dn = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %17
+  %indvars.iv146.a = phi i64 [ %.pre154, %.lr.ph135.preheader.new ], [ %9, %.lr.ph135 ] ; 2 uses
+  %niter.a = phi i64 [ 0, %.lr.ph135.preheader.new ], [ %indvars.iv.next147.1, %.lr.ph135 ] ; 4 uses
+  %.048133 = phi i32 [ 0, %.lr.ph135.preheader.new ], [ %spec.select82.1, %.lr.ph135 ]
+  %niter = phi i64 [ 0, %.lr.ph135.preheader.new ], [ %niter.next.1, %.lr.ph135 ]
+  %i.dn = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %niter.a
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !204
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 16
-  %i.dq = load i64, ptr %i.dp, align 8, !tbaa !373
-  %i.dr = icmp ugt i64 %16, %i.dq
-  %i.ds = trunc nuw nsw i64 %indvars.iv146.a to i32
-  %spec.select82 = select i1 %i.dr, i32 %i.ds, i32 %.048133 ; 2 uses
-  %indvars.iv.next147 = or disjoint i64 %indvars.iv146.a, 1 ; 2 uses
-  %18 = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %indvars.iv.next147
-  %19 = load ptr, ptr %18, align 8, !tbaa !204
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 16
-  %21 = load i64, ptr %20, align 8, !tbaa !373
-  %22 = zext nneg i32 %spec.select82 to i64
-  %i.dt = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %22
+  %i.dq = load i64, ptr %i.dp, align 8, !tbaa !373 ; 2 uses
+  %i.dr = icmp ugt i64 %i.dq, %indvars.iv146.a
+  %i.ds = trunc nuw nsw i64 %niter.a to i32
+  %spec.select82 = select i1 %i.dr, i32 %i.ds, i32 %.048133
+  %indvars.iv.next147 = or disjoint i64 %niter.a, 1 ; 2 uses
+  %8 = call i64 @llvm.umax.i64(i64 %i.dq, i64 %indvars.iv146.a) ; 2 uses
+  %i.dt = getelementptr inbounds nuw [56 x i8], ptr %i.cx, i64 %indvars.iv.next147
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !204
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 16
-  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !373
-  %i.dx = icmp ugt i64 %21, %i.dw
+  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !373 ; 2 uses
+  %i.dx = icmp ugt i64 %i.dw, %8
   %i.dy = trunc nuw nsw i64 %indvars.iv.next147 to i32
   %spec.select82.1 = select i1 %i.dx, i32 %i.dy, i32 %spec.select82 ; 3 uses
-  %indvars.iv.next147.1 = add nuw nsw i64 %indvars.iv146.a, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter.a, 2             ; 2 uses
+  %indvars.iv.next147.1 = add nuw nsw i64 %niter.a, 2 ; 2 uses
+  %9 = call i64 @llvm.umax.i64(i64 %i.dw, i64 %8) ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge136.unr-lcssa, label %.lr.ph135, !llvm.loop !484
 

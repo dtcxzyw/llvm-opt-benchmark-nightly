@@ -69,20 +69,18 @@ bb.b:                                             ; preds = %bb.p, %bb.a
   %.2198.i = phi i32 [ 0, %bb.a ], [ %.4.i.lcssa, %bb.p ]
   %.6197.i = phi i32 [ 4, %bb.a ], [ %.8.i.lcssa, %bb.p ]
   %.6145196.i = phi i32 [ 0, %bb.a ], [ %.8147.i.lcssa, %bb.p ]
-  %.3151195.i = phi i64 [ 4, %bb.a ], [ %indvars.iv.next.i.lcssa, %bb.p ] ; 3 uses
+  %.3151195.i = phi i64 [ 4, %bb.a ], [ %indvars.iv.next.i.lcssa, %bb.p ] ; 7 uses
   %.0155194.i = phi i32 [ 0, %bb.a ], [ %.2157.i.lcssa, %bb.p ]
   %.0158193.i = phi i64 [ 0, %bb.a ], [ %.2160.i.lcssa, %bb.p ]
   %.0161192.i = phi i64 [ 0, %bb.a ], [ %.2163.i.lcssa, %bb.p ]
   %i.u = icmp eq i64 %indvars.iv212.i, 62
   %i.v = shl nuw nsw i64 1, %indvars.iv212.i      ; 4 uses
   %indvars.iv.next213.i = add nuw nsw i64 %indvars.iv212.i, 1 ; 3 uses
-  %sext.i = shl i64 %.3151195.i, 32
-  %1 = ashr exact i64 %sext.i, 32                 ; 5 uses
   %i.w = trunc nuw nsw i64 %indvars.iv210.i to i32 ; 8 uses
   %i.x = trunc nuw nsw i64 %indvars.iv212.i to i32 ; 4 uses
   %i.y = trunc nuw nsw i64 %indvars.iv.next213.i to i32 ; 2 uses
-  %i.z = getelementptr inbounds [28 x i8], ptr %i.a, i64 %1 ; 9 uses
-  %i.aa = trunc i64 %.3151195.i to i32
+  %i.z = getelementptr inbounds [28 x i8], ptr %i.a, i64 %.3151195.i ; 9 uses
+  %i.aa = trunc nsw i64 %.3151195.i to i32
   store i32 %i.aa, ptr %i.z, align 4, !tbaa !19
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   store i32 %i.x, ptr %i.ab, align 4, !tbaa !20
@@ -133,7 +131,7 @@ size_class.exit178.i:                             ; preds = %bb.e, %.thread.i175
   %i.av = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   store i32 %.sink.i176.i, ptr %i.av, align 4, !tbaa !18
   %.not174.i = icmp eq i32 %.sink.i176.i, 0       ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %1, 1          ; 3 uses
+  %indvars.iv.next.i = add nsw i64 %.3151195.i, 1 ; 3 uses
   %.2163.i = select i1 %.not174.i, i64 %.0161192.i, i64 %i.af
   %i.aw = trunc nsw i64 %indvars.iv.next.i to i32
   %.4.i = select i1 %.not174.i, i32 %.2198.i, i32 %i.aw
@@ -195,7 +193,7 @@ size_class.exit178.i.1:                           ; preds = %bb.h, %.thread.i175
   %i.bw = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
   store i32 %.sink.i176.i.1, ptr %i.bw, align 4, !tbaa !18
   %.not174.i.1 = icmp eq i32 %.sink.i176.i.1, 0   ; 2 uses
-  %indvars.iv.next.i.1 = add nsw i64 %1, 2        ; 4 uses
+  %indvars.iv.next.i.1 = add nsw i64 %.3151195.i, 2 ; 4 uses
   %.2163.i.1 = select i1 %.not174.i.1, i64 %.2163.i, i64 %i.bg
   %i.bx = trunc nsw i64 %indvars.iv.next.i.1 to i32
   %.4.i.1 = select i1 %.not174.i.1, i32 %.4.i, i32 %i.bx
@@ -259,7 +257,7 @@ size_class.exit178.i.2:                           ; preds = %bb.k, %.thread.i175
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
   store i32 %.sink.i176.i.2, ptr %i.cy, align 4, !tbaa !18
   %.not174.i.2 = icmp eq i32 %.sink.i176.i.2, 0   ; 2 uses
-  %indvars.iv.next.i.2 = add nsw i64 %1, 3        ; 5 uses
+  %indvars.iv.next.i.2 = add nsw i64 %.3151195.i, 3 ; 5 uses
   %.2163.i.2 = select i1 %.not174.i.2, i64 %.2163.i.1, i64 %i.ci ; 2 uses
   %i.cz = trunc nsw i64 %indvars.iv.next.i.2 to i32
   %.4.i.2 = select i1 %.not174.i.2, i32 %.4.i.1, i32 %i.cz ; 2 uses
@@ -326,7 +324,7 @@ size_class.exit178.i.3:                           ; preds = %bb.o, %.thread.i175
   %i.ea = getelementptr inbounds nuw i8, ptr %i.de, i64 24
   store i32 %.sink.i176.i.3, ptr %i.ea, align 4, !tbaa !18
   %.not174.i.3 = icmp eq i32 %.sink.i176.i.3, 0   ; 2 uses
-  %indvars.iv.next.i.3 = add nsw i64 %1, 4        ; 2 uses
+  %indvars.iv.next.i.3 = add nsw i64 %.3151195.i, 4 ; 2 uses
   %.2163.i.3 = select i1 %.not174.i.3, i64 %.2163.i.2, i64 %i.dk
   %i.eb = trunc nsw i64 %indvars.iv.next.i.3 to i32
   %.4.i.3 = select i1 %.not174.i.3, i32 %.4.i.2, i32 %i.eb
@@ -356,9 +354,7 @@ bb.p:                                             ; preds = %size_class.exit178.
 size_classes.exit:                                ; preds = %bb.p
   %i.ef = trunc i64 %.3151195.i to i32
   %i.eg = add i32 %i.ef, 3
-  %sext218.i = shl i64 %indvars.iv.i.lcssa, 32
-  %2 = ashr exact i64 %sext218.i, 32
-  %i.eh = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %2, i1 false)
+  %i.eh = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %indvars.iv.i.lcssa, i1 false)
   %i.ei = trunc nuw nsw i64 %i.eh to i32
   %i.ej = sub nuw nsw i32 64, %i.ei
   store i32 0, ptr %0, align 8, !tbaa !24

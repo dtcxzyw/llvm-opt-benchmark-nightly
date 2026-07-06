@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
 _RNvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB5_8IntoIterINtNtNtCs4j34XAPZOn0_4http6header3map6BucketNtNtB11_5value11HeaderValueEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i: ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 104 ; 3 uses
   store ptr %i.t, ptr %i.e, align 8, !alias.scope !386, !noalias !387
-  %.sroa.0.0.copyload.i.i = load i64, ptr %i.p, align 8, !noalias !389 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load i64, ptr %i.p, align 8, !noalias !389 ; 5 uses
   %.not.i.i = icmp eq i64 %.sroa.0.0.copyload.i.i, 2
   br i1 %.not.i.i, label %bb.l, label %bb.h
 
@@ -245,9 +245,8 @@ bb.h:                                             ; preds = %_RNvXs4_NtNtCs6Po7B
   %i.ab = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.510.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.ab, i64 40, i1 false), !noalias !377
   %i.ac = trunc nuw i64 %.sroa.0.0.copyload.i.i to i1
-  %.sroa.05.0.i.i = and i64 %.sroa.0.0.copyload.i.i, 1 ; 3 uses
   %.sroa.56.0.i.i = select i1 %i.ac, i64 %.sroa.7.0.copyload.i.i, i64 undef ; 3 uses
-  store i64 %.sroa.05.0.i.i, ptr %0, align 8, !alias.scope !377, !noalias !380
+  store i64 %.sroa.0.0.copyload.i.i, ptr %0, align 8, !alias.scope !377, !noalias !380
   store i64 %.sroa.56.0.i.i, ptr %i.b, align 8, !alias.scope !377, !noalias !380
   store i64 1, ptr %i.a, align 8, !alias.scope !380, !noalias !377
   call void @llvm.experimental.noalias.scope.decl(metadata !391)
@@ -294,7 +293,7 @@ bb.k:                                             ; preds = %bb.j
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionTIBH_NtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameENtNtB1b_5value11HeaderValueEEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i: ; preds = %bb.i, %bb.h, %.thread.i
   %i.aq = phi ptr [ %i.t, %bb.h ], [ %i.t, %bb.i ], [ %i.p, %.thread.i ]
   %.sroa.5.0.i11.i = phi i64 [ %.sroa.56.0.i.i, %bb.h ], [ %.sroa.56.0.i.i, %bb.i ], [ %.sroa.5.0.i.i, %.thread.i ]
-  %.sroa.0.0.i8.i = phi i64 [ %.sroa.05.0.i.i, %bb.h ], [ %.sroa.05.0.i.i, %bb.i ], [ %.sroa.0.0.i.i, %.thread.i ]
+  %.sroa.0.0.i8.i = phi i64 [ %.sroa.0.0.copyload.i.i, %bb.h ], [ %.sroa.0.0.copyload.i.i, %bb.i ], [ %.sroa.0.0.i.i, %.thread.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !433)
   call void @llvm.experimental.noalias.scope.decl(metadata !436)
   call void @llvm.experimental.noalias.scope.decl(metadata !439)
@@ -697,9 +696,8 @@ bb.ag:                                            ; preds = %_RNvXs4_NtNtCs6Po7B
   %.sroa.7.0.copyload.i.i = load i64, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !noalias !966
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dc, i64 24
   %i.do = trunc nuw i64 %.sroa.0.0.copyload.i.i to i1
-  %.sroa.05.0.i.i = and i64 %.sroa.0.0.copyload.i.i, 1
   %.sroa.56.0.i.i = select i1 %i.do, i64 %.sroa.7.0.copyload.i.i, i64 undef
-  store i64 %.sroa.05.0.i.i, ptr %i.q, align 8, !alias.scope !957, !noalias !959
+  store i64 %.sroa.0.0.copyload.i.i, ptr %i.q, align 8, !alias.scope !957, !noalias !959
   store i64 %.sroa.56.0.i.i, ptr %i.cv, align 8, !alias.scope !957, !noalias !959
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.9.0..sroa_idx.i.i, i64 32, i1 false), !noalias !941
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !930
@@ -1004,9 +1002,8 @@ bb.bg:                                            ; preds = %_RNvXs4_NtNtCs6Po7B
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.9.0..sroa_idx.i41.i, i64 32, i1 false), !noalias !941
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gn, i64 24
   %i.gy = trunc nuw i64 %.sroa.0.0.copyload.i39.i to i1
-  %.sroa.05.0.i46.i = and i64 %.sroa.0.0.copyload.i39.i, 1
   %.sroa.56.0.i47.i = select i1 %i.gy, i64 %.sroa.7.0.copyload.i43.i, i64 undef
-  store i64 %.sroa.05.0.i46.i, ptr %i.q, align 8, !alias.scope !1032, !noalias !1030
+  store i64 %.sroa.0.0.copyload.i39.i, ptr %i.q, align 8, !alias.scope !1032, !noalias !1030
   store i64 %.sroa.56.0.i47.i, ptr %i.cv, align 8, !alias.scope !1032, !noalias !1030
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.p, ptr noundef nonnull align 8 dereferenceable(40) %i.gx, i64 40, i1 false), !noalias !941
   br label %bb.am

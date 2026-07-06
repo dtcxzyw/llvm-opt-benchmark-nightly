@@ -203,18 +203,18 @@ bb.j:                                             ; preds = %.lr.ph90, %._crit_e
   %i.bw = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.bt ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bj, i64 28 ; 2 uses
   %i.by = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bt
+  %2 = sext i32 %i.bs to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph88, %bb.k
   %indvars.iv = phi i64 [ 0, %.lr.ph88 ], [ %indvars.iv.next, %bb.k ] ; 6 uses
-  %.07187 = phi i32 [ %i.bs, %.lr.ph88 ], [ %3, %bb.k ]
+  %.07187 = phi i64 [ %2, %.lr.ph88 ], [ %indvars.iv, %bb.k ]
   %i.bz = load ptr, ptr %i.bu, align 8, !tbaa !64
   %i.ca = load ptr, ptr %i.bv, align 8, !tbaa !54
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %indvars.iv
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !100
   %i.cd = load ptr, ptr %i.bw, align 8, !tbaa !54 ; 2 uses
-  %2 = sext i32 %.07187 to i64
-  %i.ce = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %2
+  %i.ce = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %.07187
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !100
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %indvars.iv
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !100
@@ -236,7 +236,6 @@ bb.k:                                             ; preds = %.lr.ph88, %bb.k
   %i.ct = load i32, ptr %.in, align 4, !tbaa !3
   %i.cu = sext i32 %i.ct to i64
   %i.cv = icmp slt i64 %indvars.iv.next, %i.cu
-  %3 = trunc nuw nsw i64 %indvars.iv to i32
   br i1 %i.cv, label %bb.k, label %._crit_edge.loopexit, !llvm.loop !103
 
 ._crit_edge.loopexit:                             ; preds = %bb.k

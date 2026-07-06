@@ -204,8 +204,6 @@ bb.e:                                             ; preds = %.epil.preheader
 
 .lr.ph52:                                         ; preds = %.preheader
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %sext = shl i64 %indvars.iv.next59.lcssa, 32
-  %2 = ashr exact i64 %sext, 32
   %i.ca = sext i16 %i.an to i64
   br label %bb.k
 
@@ -259,7 +257,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %niter.ncmp.1, label %.preheader.unr-lcssa, label %bb.f, !llvm.loop !34
 
 bb.k:                                             ; preds = %.lr.ph52, %bb.m
-  %indvars.iv63 = phi i64 [ %2, %.lr.ph52 ], [ %indvars.iv.next64, %bb.m ] ; 4 uses
+  %indvars.iv63 = phi i64 [ %indvars.iv.next59.lcssa, %.lr.ph52 ], [ %indvars.iv.next64, %bb.m ] ; 4 uses
   %.151 = phi i32 [ %.lcssa, %.lr.ph52 ], [ %i.df, %bb.m ]
   %i.cy = icmp slt i64 %indvars.iv63, %i.ca
   br i1 %i.cy, label %bb.l, label %bb.m

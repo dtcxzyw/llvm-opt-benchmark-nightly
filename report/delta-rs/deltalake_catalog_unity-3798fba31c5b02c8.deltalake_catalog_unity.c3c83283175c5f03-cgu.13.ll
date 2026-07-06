@@ -203,25 +203,15 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden { i64, ptr } @_RINvXNvXs0_NvXNvNtCsgO8S5jLFugx_23deltalake_catalog_unity10credentials0_1__NtBe_16MsiTokenResponseNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB9_9___VisitorNtB1A_7Visitor9visit_mapNtB3_17___DeserializeWithB1y_11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB3V_4read9SliceReadEEBg_(ptr noalias noundef align 8 dereferenceable(64) %0) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc { i64, ptr } @_RINvNtCsgO8S5jLFugx_23deltalake_catalog_unity10credential17expires_in_stringQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB1i_4read9SliceReadEEB4_(ptr noalias noundef align 8 dereferenceable(64) %0) ; 2 uses
-  %1 = extractvalue { i64, ptr } %i.a, 0
-  %. = and i64 %1, 1
-  %2 = extractvalue { i64, ptr } %i.a, 1
-  %3 = insertvalue { i64, ptr } poison, i64 %., 0
-  %4 = insertvalue { i64, ptr } %3, ptr %2, 1
-  ret { i64, ptr } %4
+  %i.a = tail call fastcc { i64, ptr } @_RINvNtCsgO8S5jLFugx_23deltalake_catalog_unity10credential17expires_in_stringQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB1i_4read9SliceReadEEB4_(ptr noalias noundef align 8 dereferenceable(64) %0)
+  ret { i64, ptr } %i.a
 }
 
 ; Function Attrs: nonlazybind uwtable
 define hidden { i64, ptr } @_RINvXNvXs0_NvXNvNtCsgO8S5jLFugx_23deltalake_catalog_unity10credentials0_1__NtBe_16MsiTokenResponseNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB9_9___VisitorNtB1A_7Visitor9visit_seqNtB3_17___DeserializeWithB1y_11deserializeQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB3V_4read9SliceReadEEBg_(ptr noalias noundef align 8 dereferenceable(64) %0) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc { i64, ptr } @_RINvNtCsgO8S5jLFugx_23deltalake_catalog_unity10credential17expires_in_stringQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB1i_4read9SliceReadEEB4_(ptr noalias noundef align 8 dereferenceable(64) %0) ; 2 uses
-  %1 = extractvalue { i64, ptr } %i.a, 0
-  %. = and i64 %1, 1
-  %2 = extractvalue { i64, ptr } %i.a, 1
-  %3 = insertvalue { i64, ptr } poison, i64 %., 0
-  %4 = insertvalue { i64, ptr } %3, ptr %2, 1
-  ret { i64, ptr } %4
+  %i.a = tail call fastcc { i64, ptr } @_RINvNtCsgO8S5jLFugx_23deltalake_catalog_unity10credential17expires_in_stringQINtNtCseqDwI8vvjGQ_10serde_json2de12DeserializerNtNtB1i_4read9SliceReadEEB4_(ptr noalias noundef align 8 dereferenceable(64) %0)
+  ret { i64, ptr } %i.a
 }
 
 ; Function Attrs: nonlazybind uwtable

@@ -204,9 +204,8 @@ hllPatLen.exit:                                   ; preds = %._crit_edge.i.i, %b
   %i.bs = xor i64 %i.br, %i.bq                    ; 2 uses
   %i.bt = lshr i64 %i.bs, 14
   %i.bu = or disjoint i64 %i.bt, 1125899906842624
-  %i.bv = tail call range(i64 0, 51) i64 @llvm.cttz.i64(i64 %i.bu, i1 true)
-  %3 = trunc nuw nsw i64 %i.bv to i8
-  %4 = add nuw nsw i8 %3, 1                       ; 2 uses
+  %i.bv = tail call range(i64 0, 51) i64 @llvm.cttz.i64(i64 %i.bu, i1 true) ; 2 uses
+  %3 = trunc nuw nsw i64 %i.bv to i32
   %i.bw = and i64 %i.bs, 16383
   %i.bx = mul nuw nsw i64 %i.bw, 6                ; 2 uses
   %.zext = lshr i64 %i.bx, 3
@@ -223,17 +222,16 @@ hllPatLen.exit:                                   ; preds = %._crit_edge.i.i, %b
   %i.ci = or i64 %i.ch, %i.cg
   %i.cj = trunc nuw nsw i64 %i.ci to i32
   %i.ck = and i32 %i.cj, 63
-  %5 = zext nneg i8 %4 to i32
-  %6 = icmp samesign ult i32 %i.ck, %5
-  br i1 %6, label %bb.i, label %hllDenseSet.exit
+  %.not = icmp samesign ugt i32 %i.ck, %3
+  br i1 %.not, label %hllDenseSet.exit, label %bb.i
 
 bb.i:                                             ; preds = %hllPatLen.exit
-  %7 = zext nneg i8 %4 to i64                     ; 2 uses
+  %4 = add nuw nsw i64 %i.bv, 1                   ; 2 uses
   %i.cl = trunc nuw nsw i64 %i.by to i8
   %i.cm = shl i8 63, %i.cl
   %i.cn = xor i8 %i.cm, -1
   %i.co = and i8 %i.cb, %i.cn
-  %i.cp = shl nuw nsw i64 %7, %i.by
+  %i.cp = shl nuw nsw i64 %4, %i.by
   %i.cq = trunc i64 %i.cp to i8
   %i.cr = or i8 %i.co, %i.cq
   store i8 %i.cr, ptr %i.ca, align 1, !tbaa !17
@@ -241,7 +239,7 @@ bb.i:                                             ; preds = %hllPatLen.exit
   %i.ct = ashr i16 -64, %i.cs
   %i.cu = trunc nsw i16 %i.ct to i8
   %i.cv = and i8 %i.ce, %i.cu
-  %i.cw = lshr i64 %7, %i.bz
+  %i.cw = lshr i64 %4, %i.bz
   %i.cx = trunc nuw nsw i64 %i.cw to i8
   %i.cy = or i8 %i.cv, %i.cx
   store i8 %i.cy, ptr %i.cd, align 1, !tbaa !17
@@ -644,9 +642,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ca = xor i64 %i.bz, %i.by                    ; 2 uses
   %i.cb = lshr i64 %i.ca, 14
   %i.cc = or disjoint i64 %i.cb, 1125899906842624
-  %i.cd = tail call range(i64 0, 51) i64 @llvm.cttz.i64(i64 %i.cc, i1 true)
-  %1 = trunc nuw nsw i64 %i.cd to i8
-  %2 = add nuw nsw i8 %1, 1                       ; 4 uses
+  %i.cd = tail call range(i64 0, 51) i64 @llvm.cttz.i64(i64 %i.cc, i1 true) ; 4 uses
+  %1 = trunc nuw nsw i64 %i.cd to i32             ; 2 uses
   %i.ce = and i64 %i.ca, 16383                    ; 2 uses
   %i.cf = mul nuw nsw i64 %i.ce, 6                ; 2 uses
   %.zext.i = lshr i64 %i.cf, 3                    ; 2 uses
@@ -663,17 +660,16 @@ bb.e:                                             ; preds = %bb.d
   %i.cq = or i64 %i.cp, %i.co
   %i.cr = trunc nuw nsw i64 %i.cq to i32
   %i.cs = and i32 %i.cr, 63
-  %3 = zext nneg i8 %2 to i32                     ; 2 uses
-  %4 = icmp samesign ult i32 %i.cs, %3
-  br i1 %4, label %bb.f, label %hllDenseAdd.exit
+  %.not.i = icmp samesign ugt i32 %i.cs, %1
+  br i1 %.not.i, label %hllDenseAdd.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
-  %5 = zext nneg i8 %2 to i64                     ; 2 uses
+  %2 = add nuw nsw i64 %i.cd, 1                   ; 2 uses
   %i.ct = trunc nuw nsw i64 %i.cg to i8
   %i.cu = shl i8 63, %i.ct
   %i.cv = xor i8 %i.cu, -1
   %i.cw = and i8 %i.cj, %i.cv
-  %i.cx = shl nuw nsw i64 %5, %i.cg
+  %i.cx = shl nuw nsw i64 %2, %i.cg
   %i.cy = trunc i64 %i.cx to i8
   %i.cz = or i8 %i.cw, %i.cy
   store i8 %i.cz, ptr %i.ci, align 1, !tbaa !17
@@ -681,7 +677,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i
   %i.db = ashr i16 -64, %i.da
   %i.dc = trunc nsw i16 %i.db to i8
   %i.dd = and i8 %i.cm, %i.dc
-  %i.de = lshr i64 %5, %i.ch
+  %i.de = lshr i64 %2, %i.ch
   %i.df = trunc nuw nsw i64 %i.de to i8
   %i.dg = or i8 %i.dd, %i.df
   store i8 %i.dg, ptr %i.cl, align 1, !tbaa !17
@@ -697,7 +693,9 @@ hllDenseAdd.exit:                                 ; preds = %.lr.ph.i.i.i, %bb.f
   ]
 
 .lr.ph.i.i.i102.preheader:                        ; preds = %hllDenseAdd.exit
-  %i.dk = tail call range(i32 -1, 2) i32 @hllSparseSet(ptr noundef nonnull %i.bf, i64 noundef %i.ce, i8 noundef zeroext %2) ; 0 uses
+  %3 = trunc nuw nsw i64 %i.cd to i8
+  %4 = add nuw nsw i8 %3, 1
+  %i.dk = tail call range(i32 -1, 2) i32 @hllSparseSet(ptr noundef nonnull %i.bf, i64 noundef %i.ce, i8 noundef zeroext %4) ; 0 uses
   br label %hllAdd.exit
 
 .lr.ph.i.i.i107:                                  ; preds = %hllDenseAdd.exit
@@ -713,16 +711,16 @@ hllDenseAdd.exit:                                 ; preds = %.lr.ph.i.i.i, %bb.f
   %i.du = or i64 %i.dt, %i.ds
   %i.dv = trunc nuw nsw i64 %i.du to i32
   %i.dw = and i32 %i.dv, 63
-  %6 = icmp samesign ult i32 %i.dw, %3
-  br i1 %6, label %bb.g, label %hllAdd.exit
+  %.not.i113 = icmp samesign ugt i32 %i.dw, %1
+  br i1 %.not.i113, label %hllAdd.exit, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i.i.i107
-  %7 = zext nneg i8 %2 to i64                     ; 2 uses
+  %5 = add nuw nsw i64 %i.cd, 1                   ; 2 uses
   %i.dx = trunc nuw nsw i64 %i.cg to i8
   %i.dy = shl i8 63, %i.dx
   %i.dz = xor i8 %i.dy, -1
   %i.ea = and i8 %i.dn, %i.dz
-  %i.eb = shl nuw nsw i64 %7, %i.cg
+  %i.eb = shl nuw nsw i64 %5, %i.cg
   %i.ec = trunc i64 %i.eb to i8
   %i.ed = or i8 %i.ea, %i.ec
   store i8 %i.ed, ptr %i.dm, align 1, !tbaa !17
@@ -730,7 +728,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i107
   %i.ef = ashr i16 -64, %i.ee
   %i.eg = trunc nsw i16 %i.ef to i8
   %i.eh = and i8 %i.dq, %i.eg
-  %i.ei = lshr i64 %7, %i.ch
+  %i.ei = lshr i64 %5, %i.ch
   %i.ej = trunc nuw nsw i64 %i.ei to i8
   %i.ek = or i8 %i.eh, %i.ej
   store i8 %i.ek, ptr %i.dp, align 1, !tbaa !17

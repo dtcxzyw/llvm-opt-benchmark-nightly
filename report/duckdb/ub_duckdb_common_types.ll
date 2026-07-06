@@ -204,9 +204,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %._crit_edge.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ %i.v, %._crit_edge.i ] ; 4 uses
-  %i.w = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !3
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ %i.v, %._crit_edge.i ] ; 3 uses
+  %i.w = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i ; 2 uses
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !3    ; 3 uses
   %i.y = icmp slt i32 %.1, %i.x
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   br i1 %i.y, label %bb.b, label %_ZN6duckdb4Date17ExtractYearOffsetERiS1_S1_.exit, !llvm.loop !783
@@ -215,20 +215,16 @@ _ZN6duckdb4Date17ExtractYearOffsetERiS1_S1_.exit: ; preds = %bb.b
   %i.z = trunc nsw i64 %indvars.iv.i to i32
   %i.aa = add nsw i32 %i.t, %i.z
   store i32 %i.aa, ptr %1, align 4, !tbaa !3
-  %sext = shl i64 %indvars.iv.i, 32
-  %4 = ashr exact i64 %sext, 30
-  %5 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %4 ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !3        ; 2 uses
-  %i.ab = sub nsw i32 %.1, %6                     ; 2 uses
+  %i.ab = sub nsw i32 %.1, %i.x                   ; 2 uses
   store i32 %i.ab, ptr %3, align 4, !tbaa !3
-  %i.ac = getelementptr i8, ptr %5, i64 4
+  %i.ac = getelementptr i8, ptr %i.w, i64 4
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !3
-  %i.ae = sub nsw i32 %i.ad, %6
+  %i.ae = sub nsw i32 %i.ad, %i.x
   %i.af = icmp eq i32 %i.ae, 366                  ; 2 uses
-  %7 = sext i32 %i.ab to i64
+  %4 = zext nneg i32 %i.ab to i64
   %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE = select i1 %i.af, ptr @_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE, ptr @_ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE
   %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE = select i1 %i.af, ptr @_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE, ptr @_ZN6duckdb4Date15CUMULATIVE_DAYSE
-  %i.ag = getelementptr inbounds i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE, i64 %7
+  %i.ag = getelementptr inbounds nuw i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE, i64 %4
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !153 ; 2 uses
   %i.ai = sext i8 %i.ah to i32
   store i32 %i.ai, ptr %2, align 4, !tbaa !3
@@ -631,9 +627,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %._crit_edge.i.i12
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.c ], [ %i.aa, %._crit_edge.i.i12 ] ; 4 uses
-  %i.ab = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !3
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.c ], [ %i.aa, %._crit_edge.i.i12 ] ; 3 uses
+  %i.ab = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i ; 2 uses
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !3  ; 3 uses
   %i.ad = icmp slt i32 %.1.i, %i.ac
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   br i1 %i.ad, label %bb.c, label %_ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit, !llvm.loop !783
@@ -641,26 +637,22 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge.
 _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.c
   %i.ae = trunc nsw i64 %indvars.iv.i.i to i32
   %i.af = add nsw i32 %i.y, %i.ae                 ; 3 uses
-  %sext.i = shl i64 %indvars.iv.i.i, 32
-  %2 = ashr exact i64 %sext.i, 30
-  %3 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %2 ; 2 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !3        ; 2 uses
-  %i.ag = sub nsw i32 %.1.i, %4                   ; 2 uses
-  %i.ah = getelementptr i8, ptr %3, i64 4
+  %i.ag = sub nsw i32 %.1.i, %i.ac                ; 2 uses
+  %i.ah = getelementptr i8, ptr %i.ab, i64 4
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !3
-  %i.aj = sub nsw i32 %i.ai, %4
+  %i.aj = sub nsw i32 %i.ai, %i.ac
   %i.ak = icmp eq i32 %i.aj, 366                  ; 2 uses
-  %5 = sext i32 %i.ag to i64
+  %2 = zext nneg i32 %i.ag to i64
   %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i = select i1 %i.ak, ptr @_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE, ptr @_ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE
   %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i = select i1 %i.ak, ptr @_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE, ptr @_ZN6duckdb4Date15CUMULATIVE_DAYSE
-  %i.al = getelementptr inbounds i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %5
+  %i.al = getelementptr inbounds nuw i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %2
   %i.am = load i8, ptr %i.al, align 1, !tbaa !153 ; 2 uses
   %i.an = sext i8 %i.am to i32
   %i.ao = sext i8 %i.am to i64
   %i.ap = getelementptr [4 x i8], ptr %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i, i64 %i.ao
   %i.aq = getelementptr i8, ptr %i.ap, i64 -4
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !3
-  %i.as = add i32 %i.ag, 1
+  %i.as = add nuw i32 %i.ag, 1
   %i.at = sub i32 %i.as, %i.ar
   %i.au = icmp slt i32 %i.af, 1                   ; 3 uses
   %i.av = sub i32 1, %i.af
@@ -1063,26 +1055,22 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %._crit_edge.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.q, %._crit_edge.i.i ] ; 3 uses
-  %i.r = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !3
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.q, %._crit_edge.i.i ] ; 2 uses
+  %i.r = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i ; 2 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !3    ; 3 uses
   %i.t = icmp slt i32 %.1.i, %i.s
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   br i1 %i.t, label %bb.b, label %_ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit, !llvm.loop !783
 
 _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.b
-  %sext.i = shl i64 %indvars.iv.i.i, 32
-  %1 = ashr exact i64 %sext.i, 30
-  %2 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %1 ; 2 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !3        ; 2 uses
-  %i.u = sub nsw i32 %.1.i, %3
-  %i.v = getelementptr i8, ptr %2, i64 4
+  %i.u = sub nsw i32 %.1.i, %i.s
+  %i.v = getelementptr i8, ptr %i.r, i64 4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !3
-  %i.x = sub nsw i32 %i.w, %3
+  %i.x = sub nsw i32 %i.w, %i.s
   %i.y = icmp eq i32 %i.x, 366
-  %4 = sext i32 %i.u to i64
+  %1 = zext nneg i32 %i.u to i64
   %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i = select i1 %i.y, ptr @_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE, ptr @_ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE
-  %i.z = getelementptr inbounds i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %4
+  %i.z = getelementptr inbounds nuw i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !153
   %i.ab = sext i8 %i.aa to i32
   ret i32 %i.ab
@@ -1128,33 +1116,29 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %._crit_edge.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.q, %._crit_edge.i.i ] ; 3 uses
-  %i.r = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !3
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.q, %._crit_edge.i.i ] ; 2 uses
+  %i.r = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i ; 2 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !3    ; 3 uses
   %i.t = icmp slt i32 %.1.i, %i.s
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   br i1 %i.t, label %bb.b, label %_ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit, !llvm.loop !783
 
 _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.b
-  %sext.i = shl i64 %indvars.iv.i.i, 32
-  %1 = ashr exact i64 %sext.i, 30
-  %2 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %1 ; 2 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !3        ; 2 uses
-  %i.u = sub nsw i32 %.1.i, %3                    ; 2 uses
-  %i.v = getelementptr i8, ptr %2, i64 4
+  %i.u = sub nsw i32 %.1.i, %i.s                  ; 2 uses
+  %i.v = getelementptr i8, ptr %i.r, i64 4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !3
-  %i.x = sub nsw i32 %i.w, %3
+  %i.x = sub nsw i32 %i.w, %i.s
   %i.y = icmp eq i32 %i.x, 366                    ; 2 uses
-  %4 = sext i32 %i.u to i64
+  %1 = zext nneg i32 %i.u to i64
   %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i = select i1 %i.y, ptr @_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE, ptr @_ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE
   %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i = select i1 %i.y, ptr @_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE, ptr @_ZN6duckdb4Date15CUMULATIVE_DAYSE
-  %i.z = getelementptr inbounds i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %4
+  %i.z = getelementptr inbounds nuw i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !153
   %i.ab = sext i8 %i.aa to i64
   %i.ac = getelementptr [4 x i8], ptr %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i, i64 %i.ab
   %i.ad = getelementptr i8, ptr %i.ac, i64 -4
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !3
-  %i.af = add i32 %i.u, 1
+  %i.af = add nuw i32 %i.u, 1
   %i.ag = sub i32 %i.af, %i.ae
   ret i32 %i.ag
 }
@@ -1199,20 +1183,16 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %._crit_edge.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ %i.r, %._crit_edge.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ %i.r, %._crit_edge.i ] ; 2 uses
   %i.s = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !3
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !3    ; 2 uses
   %i.u = icmp slt i32 %.sroa.0.1, %i.t
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   br i1 %i.u, label %bb.b, label %_ZN6duckdb4Date17ExtractYearOffsetERiS1_S1_.exit, !llvm.loop !783
 
 _ZN6duckdb4Date17ExtractYearOffsetERiS1_S1_.exit: ; preds = %bb.b
-  %sext = shl i64 %indvars.iv.i, 32
-  %1 = ashr exact i64 %sext, 30
-  %2 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %1
-  %3 = load i32, ptr %2, align 4, !tbaa !3
   %i.v = add i32 %.sroa.0.1, 1
-  %i.w = sub i32 %i.v, %3
+  %i.w = sub i32 %i.v, %i.t
   ret i32 %i.w
 }
 
@@ -1481,9 +1461,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %._crit_edge.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.t, %._crit_edge.i.i ] ; 4 uses
-  %i.u = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !3
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.t, %._crit_edge.i.i ] ; 3 uses
+  %i.u = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i ; 2 uses
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !3    ; 3 uses
   %i.w = icmp slt i32 %.1.i, %i.v
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   br i1 %i.w, label %bb.b, label %_ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit, !llvm.loop !783
@@ -1492,19 +1472,15 @@ _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.b
   %i.x = trunc nsw i64 %indvars.iv.i.i to i32
   %i.y = add nsw i32 %i.r, %i.x
   %.fr25 = freeze i32 %i.y                        ; 4 uses
-  %sext.i = shl i64 %indvars.iv.i.i, 32
-  %2 = ashr exact i64 %sext.i, 30
-  %3 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %2 ; 2 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !3        ; 2 uses
-  %i.z = sub nsw i32 %.1.i, %4                    ; 2 uses
-  %i.aa = getelementptr i8, ptr %3, i64 4
+  %i.z = sub nsw i32 %.1.i, %i.v                  ; 2 uses
+  %i.aa = getelementptr i8, ptr %i.u, i64 4
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !3
-  %i.ac = sub nsw i32 %i.ab, %4
+  %i.ac = sub nsw i32 %i.ab, %i.v
   %i.ad = icmp eq i32 %i.ac, 366                  ; 2 uses
-  %5 = sext i32 %i.z to i64
+  %2 = zext nneg i32 %i.z to i64
   %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i = select i1 %i.ad, ptr @_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE, ptr @_ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE
   %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i = select i1 %i.ad, ptr @_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE, ptr @_ZN6duckdb4Date15CUMULATIVE_DAYSE
-  %i.ae = getelementptr inbounds i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %5
+  %i.ae = getelementptr inbounds nuw i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %2
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !153 ; 2 uses
   %i.ag = sext i8 %i.af to i32
   %i.ah = sext i8 %i.af to i64
@@ -1907,9 +1883,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %._crit_edge.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.t, %._crit_edge.i.i ] ; 4 uses
-  %i.u = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !3
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ %i.t, %._crit_edge.i.i ] ; 3 uses
+  %i.u = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i ; 2 uses
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !3    ; 3 uses
   %i.w = icmp slt i32 %.1.i, %i.v
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   br i1 %i.w, label %bb.b, label %_ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit, !llvm.loop !783
@@ -1920,19 +1896,15 @@ _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.b
   %i.z = trunc nsw i64 %indvars.iv.i.i to i32
   %i.aa = add nsw i32 %i.r, %i.z
   store i32 %i.aa, ptr %0, align 4, !tbaa !3
-  %sext.i = shl i64 %indvars.iv.i.i, 32
-  %4 = ashr exact i64 %sext.i, 30
-  %5 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %4 ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !3        ; 2 uses
-  %i.ab = sub nsw i32 %.1.i, %6                   ; 2 uses
-  %i.ac = getelementptr i8, ptr %5, i64 4
+  %i.ab = sub nsw i32 %.1.i, %i.v                 ; 2 uses
+  %i.ac = getelementptr i8, ptr %i.u, i64 4
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !3
-  %i.ae = sub nsw i32 %i.ad, %6
+  %i.ae = sub nsw i32 %i.ad, %i.v
   %i.af = icmp eq i32 %i.ae, 366                  ; 2 uses
-  %7 = sext i32 %i.ab to i64
+  %4 = zext nneg i32 %i.ab to i64
   %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i = select i1 %i.af, ptr @_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE, ptr @_ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE
   %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i = select i1 %i.af, ptr @_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE, ptr @_ZN6duckdb4Date15CUMULATIVE_DAYSE
-  %i.ag = getelementptr inbounds i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %7
+  %i.ag = getelementptr inbounds nuw i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %4
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !153 ; 2 uses
   %i.ai = sext i8 %i.ah to i32
   store i32 %i.ai, ptr %i.y, align 4, !tbaa !3
@@ -1940,7 +1912,7 @@ _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.b
   %i.ak = getelementptr [4 x i8], ptr %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i, i64 %i.aj
   %i.al = getelementptr i8, ptr %i.ak, i64 -4
   %i.am = load i32, ptr %i.al, align 4, !tbaa !3
-  %i.an = add i32 %i.ab, 1
+  %i.an = add nuw i32 %i.ab, 1
   %i.ao = sub i32 %i.an, %i.am
   store i32 %i.ao, ptr %i.x, align 4, !tbaa !3
   %.sroa.0.0.copyload = load i64, ptr %3, align 8, !tbaa !108 ; 2 uses
@@ -2211,35 +2183,31 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %._crit_edge.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.d ], [ %i.t, %._crit_edge.i.i ] ; 4 uses
-  %i.u = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !3
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.d ], [ %i.t, %._crit_edge.i.i ] ; 3 uses
+  %i.u = getelementptr inbounds [4 x i8], ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %indvars.iv.i.i ; 2 uses
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !3    ; 3 uses
   %i.w = icmp slt i32 %.1.i, %i.v
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   br i1 %i.w, label %bb.d, label %_ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit, !llvm.loop !783
 
 _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.d
   %i.x = trunc nsw i64 %indvars.iv.i.i to i32
-  %sext.i = shl i64 %indvars.iv.i.i, 32
-  %10 = ashr exact i64 %sext.i, 30
-  %11 = getelementptr inbounds i8, ptr @_ZN6duckdb4Date20CUMULATIVE_YEAR_DAYSE, i64 %10 ; 2 uses
-  %12 = load i32, ptr %11, align 4, !tbaa !3      ; 2 uses
-  %i.y = sub nsw i32 %.1.i, %12                   ; 2 uses
-  %i.z = getelementptr i8, ptr %11, i64 4
+  %i.y = sub nsw i32 %.1.i, %i.v                  ; 2 uses
+  %i.z = getelementptr i8, ptr %i.u, i64 4
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !3
-  %i.ab = sub nsw i32 %i.aa, %12
+  %i.ab = sub nsw i32 %i.aa, %i.v
   %i.ac = icmp eq i32 %i.ab, 366                  ; 2 uses
-  %13 = sext i32 %i.y to i64
+  %10 = zext nneg i32 %i.y to i64
   %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i = select i1 %i.ac, ptr @_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE, ptr @_ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE
   %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i = select i1 %i.ac, ptr @_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE, ptr @_ZN6duckdb4Date15CUMULATIVE_DAYSE
-  %i.ad = getelementptr inbounds i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %13
+  %i.ad = getelementptr inbounds nuw i8, ptr %_ZN6duckdb4Date26LEAP_MONTH_PER_DAY_OF_YEARE._ZN6duckdb4Date21MONTH_PER_DAY_OF_YEARE.i, i64 %10
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !153 ; 2 uses
   %i.af = sext i8 %i.ae to i32
   %i.ag = sext i8 %i.ae to i64
   %i.ah = getelementptr [4 x i8], ptr %_ZN6duckdb4Date20CUMULATIVE_LEAP_DAYSE._ZN6duckdb4Date15CUMULATIVE_DAYSE.i, i64 %i.ag
   %i.ai = getelementptr i8, ptr %i.ah, i64 -4
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3
-  %i.ak = add i32 %i.y, 1
+  %i.ak = add nuw i32 %i.y, 1
   %i.al = sub i32 %i.ak, %i.aj
   %i.am = sdiv i32 %.sroa.09.0.extract.trunc, 12  ; 2 uses
   %i.an = add nsw i32 %i.r, %i.am

@@ -203,12 +203,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   store <16 x i8> %i.bs, ptr %i.g, align 16, !tbaa !7, !noalias !77
   %i.bt = shufflevector <16 x i8> %i.bk, <16 x i8> %i.bn, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
   store <16 x i8> %i.bt, ptr %i.h, align 16, !tbaa !7, !noalias !77
-  %sext = shl i64 %.03153, 32
-  %3 = ashr exact i64 %sext, 32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.c
-  %indvars.iv60 = phi i64 [ %3, %bb.b ], [ %indvars.iv.next61, %bb.c ] ; 2 uses
+  %indvars.iv60 = phi i64 [ %.03153, %bb.b ], [ %indvars.iv.next61, %bb.c ] ; 2 uses
   %i.bu = phi i1 [ true, %bb.b ], [ false, %bb.c ]
   %indvars.iv.sroa.phi = phi ptr [ %i.a, %bb.b ], [ %indvars.iv.sroa.gep72, %bb.c ] ; 3 uses
   %i.bv = load <16 x i8>, ptr %indvars.iv.sroa.phi, align 16, !tbaa !7 ; 2 uses
@@ -434,12 +432,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   store <16 x i8> %i.bs, ptr %i.g, align 16, !tbaa !7, !noalias !83
   %i.bt = shufflevector <16 x i8> %i.bk, <16 x i8> %i.bn, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
   store <16 x i8> %i.bt, ptr %i.h, align 16, !tbaa !7, !noalias !83
-  %sext = shl i64 %.03153, 32
-  %3 = ashr exact i64 %sext, 32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.c
-  %indvars.iv60 = phi i64 [ %3, %bb.b ], [ %indvars.iv.next61, %bb.c ] ; 2 uses
+  %indvars.iv60 = phi i64 [ %.03153, %bb.b ], [ %indvars.iv.next61, %bb.c ] ; 2 uses
   %i.bu = phi i1 [ true, %bb.b ], [ false, %bb.c ]
   %indvars.iv.sroa.phi = phi ptr [ %i.a, %bb.b ], [ %indvars.iv.sroa.gep72, %bb.c ] ; 3 uses
   %i.bv = load <16 x i8>, ptr %indvars.iv.sroa.phi, align 16, !tbaa !7 ; 2 uses

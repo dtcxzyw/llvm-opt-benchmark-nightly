@@ -203,7 +203,6 @@ bb.k:                                             ; preds = %_ZN6hermes6parser6d
   %i.bl = extractvalue { i64, i8 } %i.bj, 1       ; 2 uses
   %i.bm = trunc nuw i8 %i.bl to i1
   %spec.select = select i1 %i.bm, i64 %i.bk, i64 undef
-  %spec.select56 = and i8 %i.bl, 1
   br label %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread52
 
 bb.l:                                             ; preds = %_ZN6hermes6parser6detail12JSParserImpl24checkHookDeclarationFlowEv.exit.thread
@@ -299,7 +298,6 @@ bb.p:                                             ; preds = %.thread49
   %i.da = extractvalue { i64, i8 } %i.cy, 1       ; 2 uses
   %i.db = trunc nuw i8 %i.da to i1
   %spec.select57 = select i1 %i.db, i64 %i.cz, i64 undef
-  %spec.select58 = and i8 %i.da, 1
   br label %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread52
 
 bb.q:                                             ; preds = %.thread49
@@ -327,12 +325,11 @@ _ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKin
   %i.dm = extractvalue { i64, i8 } %i.dk, 1       ; 2 uses
   %i.dn = trunc nuw i8 %i.dm to i1
   %spec.select61 = select i1 %i.dn, i64 %i.dl, i64 undef
-  %spec.select62 = and i8 %i.dm, 1
   br label %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread52
 
 _ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread52: ; preds = %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread, %bb.p, %bb.k, %bb.q, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit.i33, %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJS5_NS0_9TokenKindEEEEbT_DpT0_.exit.thread48, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit27.thread, %bb.j, %bb.h, %bb.f, %bb.d
   %.sroa.042.3 = phi i64 [ %i.s, %bb.d ], [ %i.af, %bb.f ], [ %i.as, %bb.h ], [ %i.bf, %bb.j ], [ undef, %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJS5_NS0_9TokenKindEEEEbT_DpT0_.exit.thread48 ], [ undef, %bb.q ], [ %spec.select57, %bb.p ], [ %spec.select61, %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread ], [ undef, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit27.thread ], [ undef, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit.i33 ], [ %spec.select, %bb.k ]
-  %.sroa.8.3 = phi i8 [ %i.t, %bb.d ], [ %i.ag, %bb.f ], [ %i.at, %bb.h ], [ %i.bg, %bb.j ], [ 0, %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJS5_NS0_9TokenKindEEEEbT_DpT0_.exit.thread48 ], [ 0, %bb.q ], [ %spec.select58, %bb.p ], [ %spec.select62, %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread ], [ 0, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit27.thread ], [ 0, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit.i33 ], [ %spec.select56, %bb.k ]
+  %.sroa.8.3 = phi i8 [ %i.t, %bb.d ], [ %i.ag, %bb.f ], [ %i.at, %bb.h ], [ %i.bg, %bb.j ], [ 0, %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJS5_NS0_9TokenKindEEEEbT_DpT0_.exit.thread48 ], [ 0, %bb.q ], [ %i.da, %bb.p ], [ %i.dm, %_ZNK6hermes6parser6detail12JSParserImpl6checkNIPNS_12UniqueStringEJNS0_9TokenKindEEEEbT_DpT0_.exit.thread ], [ 0, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit27.thread ], [ 0, %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit.i33 ], [ %i.bl, %bb.k ]
   %.fca.0.insert = insertvalue { i64, i8 } poison, i64 %.sroa.042.3, 0
   %.fca.1.insert = insertvalue { i64, i8 } %.fca.0.insert, i8 %.sroa.8.3, 1
   ret { i64, i8 } %.fca.1.insert
@@ -735,10 +732,9 @@ _ZN6hermes6parser6detail12JSParserImpl23parseTypeAnnotationFlowEN4llvh8OptionalI
   %i.l = extractvalue { i64, i8 } %i.j, 1         ; 2 uses
   %i.m = trunc nuw i8 %i.l to i1
   %spec.select = select i1 %i.m, i64 %i.k, i64 undef
-  %spec.select13 = and i8 %i.l, 1
   store i8 %i.i, ptr %i.h, align 4, !tbaa !177
   %.fca.0.insert.i = insertvalue { i64, i8 } poison, i64 %spec.select, 0
-  %.fca.1.insert.i = insertvalue { i64, i8 } %.fca.0.insert.i, i8 %spec.select13, 1
+  %.fca.1.insert.i = insertvalue { i64, i8 } %.fca.0.insert.i, i8 %i.l, 1
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN6hermes6parser6detail12JSParserImpl23parseTypeAnnotationFlowEN4llvh8OptionalINS3_5SMLocEEENS2_21AllowAnonFunctionTypeE.exit, %bb.b
@@ -1141,10 +1137,9 @@ _ZN6hermes6parser6detail12JSParserImpl23parseTypeAnnotationFlowEN4llvh8OptionalI
   %i.cm = extractvalue { i64, i8 } %i.ck, 1       ; 2 uses
   %i.cn = trunc nuw i8 %i.cm to i1
   %spec.select = select i1 %i.cn, i64 %i.cl, i64 undef
-  %spec.select45 = and i8 %i.cm, 1
   store i8 %i.cj, ptr %i.ci, align 4, !tbaa !177
   %.fca.0.insert.i = insertvalue { i64, i8 } poison, i64 %spec.select, 0
-  %.fca.1.insert.i = insertvalue { i64, i8 } %.fca.0.insert.i, i8 %spec.select45, 1
+  %.fca.1.insert.i = insertvalue { i64, i8 } %.fca.0.insert.i, i8 %i.cm, 1
   br label %_ZN6hermes6parser6detail12JSParserImpl19parseTypeAnnotationEN4llvh8OptionalINS3_5SMLocEEENS2_21AllowAnonFunctionTypeE.exit
 
 bb.k:                                             ; preds = %bb.j
@@ -1547,13 +1542,12 @@ bb.q:                                             ; preds = %bb.p
   %i.fj = extractvalue { i64, i8 } %i.fh, 1       ; 2 uses
   %i.fk = trunc nuw i8 %i.fj to i1
   %spec.select = select i1 %i.fk, i64 %i.fi, i64 undef
-  %spec.select83 = and i8 %i.fj, 1
   store i8 %i.fg, ptr %i.ff, align 4, !tbaa !177
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.n, %bb.o, %bb.p, %bb.q, %bb.j, %.thread
   %.sroa.045.3 = phi i64 [ %spec.select, %.thread ], [ %i.cf, %bb.j ], [ %i.el, %bb.n ], [ undef, %bb.o ], [ %i.fe, %bb.q ], [ undef, %bb.p ]
-  %.sroa.546.3 = phi i8 [ %spec.select83, %.thread ], [ 1, %bb.j ], [ 1, %bb.n ], [ 0, %bb.o ], [ 1, %bb.q ], [ 0, %bb.p ]
+  %.sroa.546.3 = phi i8 [ %i.fj, %.thread ], [ 1, %bb.j ], [ 1, %bb.n ], [ 0, %bb.o ], [ 1, %bb.q ], [ 0, %bb.p ]
   %.fca.0.insert = insertvalue { i64, i8 } poison, i64 %.sroa.045.3, 0
   %.fca.1.insert = insertvalue { i64, i8 } %.fca.0.insert, i8 %.sroa.546.3, 1
   ret { i64, i8 } %.fca.1.insert
@@ -1956,7 +1950,6 @@ bb.s:                                             ; preds = %_ZNK6hermes6parser6
   %i.mr = extractvalue { i64, i8 } %i.mp, 1       ; 2 uses
   %i.ms = trunc nuw i8 %i.mr to i1
   %spec.select = select i1 %i.ms, i64 %i.mq, i64 undef
-  %spec.select278 = and i8 %i.mr, 1
   br label %.critedge
 
 bb.t:                                             ; preds = %_ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit148
@@ -2359,7 +2352,6 @@ bb.au:                                            ; preds = %bb.a, %bb.a
   %i.yq = extractvalue { i64, i8 } %i.yo, 1       ; 2 uses
   %i.yr = trunc nuw i8 %i.yq to i1
   %spec.select279 = select i1 %i.yr, i64 %i.yp, i64 undef
-  %spec.select280 = and i8 %i.yq, 1
   br label %.critedge
 
 bb.av:                                            ; preds = %bb.a
@@ -2409,7 +2401,7 @@ bb.az:                                            ; preds = %bb.a
 
 .critedge:                                        ; preds = %bb.w, %bb.ai, %bb.aw, %bb.au, %bb.s, %bb.av, %bb.al, %bb.ah, %bb.ar, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit249, %bb.az, %bb.ay, %bb.ax, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit128, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit111, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit94, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit77, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit65
   %.sroa.0277.4 = phi i64 [ undef, %bb.az ], [ %i.bk, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit65 ], [ %i.dv, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit77 ], [ %i.gg, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit94 ], [ %i.ir, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit111 ], [ %i.lc, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit128 ], [ %i.ml, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139 ], [ %i.ze, %bb.ay ], [ %spec.select279, %bb.au ], [ undef, %bb.ar ], [ %i.yn, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit249 ], [ %spec.select, %bb.s ], [ undef, %bb.av ], [ %i.zb, %bb.ax ], [ %spec.select281, %bb.aw ], [ %i.ur, %bb.al ], [ undef, %bb.ah ], [ undef, %bb.ai ], [ undef, %bb.w ]
-  %.sroa.14.4 = phi i8 [ 0, %bb.az ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit65 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit77 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit94 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit111 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit128 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139 ], [ %i.zf, %bb.ay ], [ %spec.select280, %bb.au ], [ 0, %bb.ar ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit249 ], [ %spec.select278, %bb.s ], [ 0, %bb.av ], [ %i.zc, %bb.ax ], [ %spec.select282, %bb.aw ], [ 1, %bb.al ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ 0, %bb.w ]
+  %.sroa.14.4 = phi i8 [ 0, %bb.az ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit65 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit77 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit94 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit111 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit128 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139 ], [ %i.zf, %bb.ay ], [ %i.yq, %bb.au ], [ 0, %bb.ar ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit249 ], [ %i.mr, %bb.s ], [ 0, %bb.av ], [ %i.zc, %bb.ax ], [ %spec.select282, %bb.aw ], [ 1, %bb.al ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ 0, %bb.w ]
   %.fca.0.insert = insertvalue { i64, i8 } poison, i64 %.sroa.0277.4, 0
   %.fca.1.insert = insertvalue { i64, i8 } %.fca.0.insert, i8 %.sroa.14.4, 1
   ret { i64, i8 } %.fca.1.insert
@@ -2812,7 +2804,6 @@ bb.aq:                                            ; preds = %bb.ap
   %i.lp = extractvalue { i64, i8 } %i.ln, 1       ; 2 uses
   %i.lq = trunc nuw i8 %i.lp to i1
   %spec.select = select i1 %i.lq, i64 %i.lo, i64 undef
-  %spec.select340 = and i8 %i.lp, 1
   br label %bb.ck
 
 bb.ar:                                            ; preds = %bb.ap
@@ -2827,7 +2818,6 @@ bb.as:                                            ; preds = %bb.ar
   %i.lw = extractvalue { i64, i8 } %i.lu, 1       ; 2 uses
   %i.lx = trunc nuw i8 %i.lw to i1
   %spec.select341 = select i1 %i.lx, i64 %i.lv, i64 undef
-  %spec.select342 = and i8 %i.lw, 1
   br label %bb.ck
 
 bb.at:                                            ; preds = %bb.al, %bb.ar
@@ -3062,7 +3052,6 @@ bb.bj:                                            ; preds = %bb.ay
   %i.qg = extractvalue { i64, i8 } %i.qe, 1       ; 2 uses
   %i.qh = trunc nuw i8 %i.qg to i1
   %spec.select344 = select i1 %i.qh, i64 %i.qf, i64 undef
-  %spec.select345 = and i8 %i.qg, 1
   br label %bb.ck
 
 bb.bk:                                            ; preds = %bb.a
@@ -3465,7 +3454,6 @@ bb.ci:                                            ; preds = %bb.ch
   %i.aaz = extractvalue { i64, i8 } %i.aax, 1     ; 2 uses
   %i.aba = trunc nuw i8 %i.aaz to i1
   %spec.select346 = select i1 %i.aba, i64 %i.aay, i64 undef
-  %spec.select347 = and i8 %i.aaz, 1
   br label %bb.ck
 
 bb.cj:                                            ; preds = %bb.ch
@@ -3483,7 +3471,7 @@ bb.cj:                                            ; preds = %bb.ch
 
 bb.ck:                                            ; preds = %bb.ci, %bb.bj, %bb.as, %bb.aq, %bb.az, %bb.ao, %bb.an, %bb.ak, %bb.aj, %bb.cj, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit276, %bb.ce, %bb.cd, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit262, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit246, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit238, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit226, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit218, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit210, %bb.bi, %bb.ax, %bb.ah, %bb.af, %bb.ad, %bb.ab, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit147, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit131, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit123, %bb.m, %bb.l, %bb.k, %bb.f, %bb.e, %bb.d, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit
   %.sroa.0338.8 = phi i64 [ %spec.select, %bb.aq ], [ undef, %bb.cj ], [ %i.ag, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit ], [ %i.ai, %bb.d ], [ %i.al, %bb.e ], [ %i.ao, %bb.f ], [ %.sroa.0338.0, %bb.k ], [ %i.ck, %bb.l ], [ %i.cn, %bb.m ], [ %i.dv, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit123 ], [ %i.fa, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit131 ], [ %i.gf, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139 ], [ %i.hn, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit147 ], [ %i.ia, %bb.ab ], [ %i.in, %bb.ad ], [ %i.ja, %bb.af ], [ %i.jn, %bb.ah ], [ %i.aav, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit276 ], [ undef, %bb.aj ], [ undef, %bb.an ], [ %spec.select344, %bb.bj ], [ %.sroa.0338.5, %bb.ax ], [ %i.qd, %bb.bi ], [ %spec.select341, %bb.as ], [ undef, %bb.az ], [ %i.rj, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit210 ], [ %i.sl, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit218 ], [ %i.ue, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit226 ], [ %i.vx, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit238 ], [ %i.xc, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit246 ], [ %i.yx, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit262 ], [ %i.zn, %bb.cd ], [ undef, %bb.ce ], [ %i.kh, %bb.ak ], [ %i.lj, %bb.ao ], [ %spec.select346, %bb.ci ]
-  %.sroa.32.8 = phi i8 [ %spec.select340, %bb.aq ], [ 0, %bb.cj ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit ], [ %i.aj, %bb.d ], [ %i.am, %bb.e ], [ %i.ap, %bb.f ], [ %.sroa.32.0, %bb.k ], [ %i.cl, %bb.l ], [ %i.co, %bb.m ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit123 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit131 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit147 ], [ 1, %bb.ab ], [ 1, %bb.ad ], [ 1, %bb.af ], [ 1, %bb.ah ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit276 ], [ 0, %bb.aj ], [ 0, %bb.an ], [ %spec.select345, %bb.bj ], [ %.sroa.32.5, %bb.ax ], [ 1, %bb.bi ], [ %spec.select342, %bb.as ], [ 0, %bb.az ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit210 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit218 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit226 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit238 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit246 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit262 ], [ 1, %bb.cd ], [ 0, %bb.ce ], [ 1, %bb.ak ], [ 1, %bb.ao ], [ %spec.select347, %bb.ci ]
+  %.sroa.32.8 = phi i8 [ %i.lp, %bb.aq ], [ 0, %bb.cj ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit ], [ %i.aj, %bb.d ], [ %i.am, %bb.e ], [ %i.ap, %bb.f ], [ %.sroa.32.0, %bb.k ], [ %i.cl, %bb.l ], [ %i.co, %bb.m ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit123 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit131 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit139 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit147 ], [ 1, %bb.ab ], [ 1, %bb.ad ], [ 1, %bb.af ], [ 1, %bb.ah ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit276 ], [ 0, %bb.aj ], [ 0, %bb.an ], [ %i.qg, %bb.bj ], [ %.sroa.32.5, %bb.ax ], [ 1, %bb.bi ], [ %i.lw, %bb.as ], [ 0, %bb.az ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit210 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit218 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit226 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit238 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit246 ], [ 1, %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit262 ], [ 1, %bb.cd ], [ 0, %bb.ce ], [ 1, %bb.ak ], [ 1, %bb.ao ], [ %i.aaz, %bb.ci ]
   %.fca.0.insert = insertvalue { i64, i8 } poison, i64 %.sroa.0338.8, 0
   %.fca.1.insert = insertvalue { i64, i8 } %.fca.0.insert, i8 %.sroa.32.8, 1
   ret { i64, i8 } %.fca.1.insert
@@ -3886,9 +3874,8 @@ bb.r:                                             ; preds = %_ZN6hermes6ESTree4N
   br label %_ZN6hermes6ESTree18EnumStringBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit
 
 _ZN6hermes6ESTree18EnumStringBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit: ; preds = %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit, %bb.r
-  %16 = and i8 %3, 1
   %i.dq = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 64
-  store i8 %16, ptr %i.dq, align 8, !tbaa !561
+  store i8 %3, ptr %i.dq, align 8, !tbaa !561
   %i.dr = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 65
   store i8 %.1, ptr %i.dr, align 1, !tbaa !563
   %i.ds = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 24
@@ -3952,9 +3939,8 @@ bb.v:                                             ; preds = %_ZN6hermes6ESTree4N
   br label %_ZN6hermes6ESTree18EnumStringBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit114
 
 _ZN6hermes6ESTree18EnumStringBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit114: ; preds = %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit112, %bb.v
-  %17 = and i8 %3, 1
   %i.ek = getelementptr inbounds nuw i8, ptr %.0.i.i.i110, i64 64
-  store i8 %17, ptr %i.ek, align 8, !tbaa !561
+  store i8 %3, ptr %i.ek, align 8, !tbaa !561
   %i.el = getelementptr inbounds nuw i8, ptr %.0.i.i.i110, i64 65
   store i8 %.1, ptr %i.el, align 1, !tbaa !563
   %i.em = getelementptr inbounds nuw i8, ptr %.0.i.i.i110, i64 24
@@ -4009,9 +3995,8 @@ bb.y:                                             ; preds = %_ZN6hermes6ESTree4N
   br label %_ZN6hermes6ESTree18EnumNumberBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit
 
 _ZN6hermes6ESTree18EnumNumberBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit: ; preds = %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit117, %bb.y
-  %18 = and i8 %3, 1
   %i.fe = getelementptr inbounds nuw i8, ptr %.0.i.i.i115, i64 64
-  store i8 %18, ptr %i.fe, align 8, !tbaa !564
+  store i8 %3, ptr %i.fe, align 8, !tbaa !564
   %i.ff = getelementptr inbounds nuw i8, ptr %.0.i.i.i115, i64 65
   store i8 %.1, ptr %i.ff, align 1, !tbaa !566
   %i.fg = getelementptr inbounds nuw i8, ptr %.0.i.i.i115, i64 24
@@ -4066,9 +4051,8 @@ bb.ab:                                            ; preds = %_ZN6hermes6ESTree4N
   br label %_ZN6hermes6ESTree18EnumBigIntBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit
 
 _ZN6hermes6ESTree18EnumBigIntBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit: ; preds = %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit121, %bb.ab
-  %19 = and i8 %3, 1
   %i.fy = getelementptr inbounds nuw i8, ptr %.0.i.i.i119, i64 64
-  store i8 %19, ptr %i.fy, align 8, !tbaa !567
+  store i8 %3, ptr %i.fy, align 8, !tbaa !567
   %i.fz = getelementptr inbounds nuw i8, ptr %.0.i.i.i119, i64 65
   store i8 %.1, ptr %i.fz, align 1, !tbaa !569
   %i.ga = getelementptr inbounds nuw i8, ptr %.0.i.i.i119, i64 24
@@ -4123,9 +4107,8 @@ bb.ae:                                            ; preds = %_ZN6hermes6ESTree4N
   br label %_ZN6hermes6ESTree19EnumBooleanBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit
 
 _ZN6hermes6ESTree19EnumBooleanBodyNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEEbb.exit: ; preds = %_ZN6hermes6ESTree4NodenwEmRNS_7ContextEm.exit125, %bb.ae
-  %20 = and i8 %3, 1
   %i.gs = getelementptr inbounds nuw i8, ptr %.0.i.i.i123, i64 64
-  store i8 %20, ptr %i.gs, align 8, !tbaa !570
+  store i8 %3, ptr %i.gs, align 8, !tbaa !570
   %i.gt = getelementptr inbounds nuw i8, ptr %.0.i.i.i123, i64 65
   store i8 %.1, ptr %i.gt, align 1, !tbaa !572
   %i.gu = getelementptr inbounds nuw i8, ptr %.0.i.i.i123, i64 24

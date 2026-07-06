@@ -204,7 +204,6 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.thread: ; preds =
 
 bb.d:                                             ; preds = %.lr.ph74
   %.sroa.0.sroa.3.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i, 32
-  %.sroa.0.sroa.3.0.extract.trunc.i.i = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift.i.i to i32
   %.pre.i.i = and i64 %.sroa.0.0.copyload.i, 15
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
@@ -244,14 +243,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i.i:              ; preds = %bb.g, %bb.f
   store i64 %.pre-phi.i.i.i, ptr %i.af, align 8, !tbaa !686
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ag, ptr align 1 %.sroa.2.0.copyload.i, i64 %i.s, i1 false)
   %i.ah = load i32, ptr %i.ag, align 1
+  %5 = zext i32 %i.ah to i64
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
 _ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i: ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i.i, %bb.d
   %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i = phi i64 [ %i.s, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.pre.i.i, %bb.d ]
-  %.sroa.0.sroa.3.0.i.i = phi i32 [ %i.ah, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.trunc.i.i, %bb.d ]
+  %.sroa.0.sroa.3.0.i.i = phi i64 [ %5, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.shift.i.i, %bb.d ]
   %.sroa.0.sroa.4.0.i.i = phi ptr [ %i.ag, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.2.0.copyload.i, %bb.d ] ; 2 uses
-  %.sroa.0.sroa.3.0.insert.ext.i.i = zext i32 %.sroa.0.sroa.3.0.i.i to i64
-  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext.i.i, 32
+  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.i.i, 32
   %.sroa.0.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift.i.i, %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 4 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !8893 ; 4 uses
@@ -456,7 +455,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.sroa.0.sroa.3.0.extract.shift.i = lshr i64 %1, 32
-  %.sroa.0.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift.i to i32
   %.pre.i = and i64 %1, 15
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit
 
@@ -497,14 +495,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i:                ; preds = %bb.e, %bb.d
   store i64 %.pre-phi.i.i, ptr %i.q, align 8, !tbaa !686
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.r, ptr align 1 %2, i64 %i.d, i1 false)
   %i.s = load i32, ptr %i.r, align 1
+  %4 = zext i32 %i.s to i64
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit
 
 _ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit: ; preds = %bb.b, %_ZN6duckdb8string_tC2EPKcj.exit.i
   %.sroa.0.sroa.0.0.insert.ext.pre-phi.i = phi i64 [ %i.d, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.pre.i, %bb.b ]
-  %.sroa.0.sroa.3.0.i = phi i32 [ %i.s, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.3.0.extract.trunc.i, %bb.b ]
+  %.sroa.0.sroa.3.0.i = phi i64 [ %4, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %.sroa.0.sroa.3.0.extract.shift.i, %bb.b ]
   %.sroa.0.sroa.4.0.i = phi ptr [ %i.r, %_ZN6duckdb8string_tC2EPKcj.exit.i ], [ %2, %bb.b ] ; 2 uses
-  %.sroa.0.sroa.3.0.insert.ext.i = zext i32 %.sroa.0.sroa.3.0.i to i64
-  %.sroa.0.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext.i, 32
+  %.sroa.0.sroa.3.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.3.0.i, 32
   %.sroa.0.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift.i, %.sroa.0.sroa.0.0.insert.ext.pre-phi.i ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !8893 ; 4 uses
@@ -907,7 +905,6 @@ bb.d:                                             ; preds = %bb.c, %.thread
 
 bb.e:                                             ; preds = %.lr.ph76
   %.sroa.0.sroa.3.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i, 32
-  %.sroa.0.sroa.3.0.extract.trunc.i.i = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift.i.i to i32
   %.pre.i.i = and i64 %.sroa.0.0.copyload.i, 15
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
@@ -947,14 +944,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i.i:              ; preds = %bb.h, %bb.g
   store i64 %.pre-phi.i.i.i, ptr %i.af, align 8, !tbaa !686
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ag, ptr align 1 %.sroa.2.0.copyload.i, i64 %i.s, i1 false)
   %i.ah = load i32, ptr %i.ag, align 1
+  %5 = zext i32 %i.ah to i64
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
 _ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i: ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i.i, %bb.e
   %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i = phi i64 [ %i.s, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.pre.i.i, %bb.e ]
-  %.sroa.0.sroa.3.0.i.i = phi i32 [ %i.ah, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.trunc.i.i, %bb.e ]
+  %.sroa.0.sroa.3.0.i.i = phi i64 [ %5, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.shift.i.i, %bb.e ]
   %.sroa.0.sroa.4.0.i.i = phi ptr [ %i.ag, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.2.0.copyload.i, %bb.e ] ; 2 uses
-  %.sroa.0.sroa.3.0.insert.ext.i.i = zext i32 %.sroa.0.sroa.3.0.i.i to i64
-  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext.i.i, 32
+  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.i.i, 32
   %.sroa.0.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift.i.i, %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i ; 2 uses
   %i.ai = load ptr, ptr %i.d, align 8, !tbaa !8893 ; 5 uses
   %i.aj = load ptr, ptr %i.e, align 8, !tbaa !8895
@@ -1043,7 +1040,6 @@ bb.n:                                             ; preds = %.lr.ph
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.sroa.3.0.extract.shift.i.i55 = lshr i64 %.sroa.0.0.copyload.i28, 32
-  %.sroa.0.sroa.3.0.extract.trunc.i.i56 = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift.i.i55 to i32
   %.pre.i.i57 = and i64 %.sroa.0.0.copyload.i28, 15
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i35
 
@@ -1083,14 +1079,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i.i33:            ; preds = %bb.r, %bb.q
   store i64 %.pre-phi.i.i.i34, ptr %i.bv, align 8, !tbaa !686
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bw, ptr align 1 %.sroa.2.0.copyload.i30, i64 %i.bi, i1 false)
   %i.bx = load i32, ptr %i.bw, align 1
+  %6 = zext i32 %i.bx to i64
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i35
 
 _ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i35: ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i.i33, %bb.o
   %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i36 = phi i64 [ %i.bi, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.pre.i.i57, %bb.o ]
-  %.sroa.0.sroa.3.0.i.i37 = phi i32 [ %i.bx, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.sroa.0.sroa.3.0.extract.trunc.i.i56, %bb.o ]
+  %.sroa.0.sroa.3.0.i.i37 = phi i64 [ %6, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.sroa.0.sroa.3.0.extract.shift.i.i55, %bb.o ]
   %.sroa.0.sroa.4.0.i.i38 = phi ptr [ %i.bw, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.sroa.2.0.copyload.i30, %bb.o ] ; 2 uses
-  %.sroa.0.sroa.3.0.insert.ext.i.i39 = zext i32 %.sroa.0.sroa.3.0.i.i37 to i64
-  %.sroa.0.sroa.3.0.insert.shift.i.i40 = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext.i.i39, 32
+  %.sroa.0.sroa.3.0.insert.shift.i.i40 = shl nuw i64 %.sroa.0.sroa.3.0.i.i37, 32
   %.sroa.0.sroa.0.0.insert.insert.i.i41 = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift.i.i40, %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i36 ; 2 uses
   %i.by = load ptr, ptr %i.d, align 8, !tbaa !8893 ; 5 uses
   %i.bz = load ptr, ptr %i.e, align 8, !tbaa !8895
@@ -1493,7 +1489,6 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.thread: ; preds =
 
 bb.d:                                             ; preds = %.lr.ph74
   %.sroa.0.sroa.3.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i, 32
-  %.sroa.0.sroa.3.0.extract.trunc.i.i = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift.i.i to i32
   %.pre.i.i = and i64 %.sroa.0.0.copyload.i, 15
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
@@ -1533,14 +1528,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i.i:              ; preds = %bb.g, %bb.f
   store i64 %.pre-phi.i.i.i, ptr %i.af, align 8, !tbaa !686
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ag, ptr align 1 %.sroa.2.0.copyload.i, i64 %i.s, i1 false)
   %i.ah = load i32, ptr %i.ag, align 1
+  %5 = zext i32 %i.ah to i64
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
 _ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i: ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i.i, %bb.d
   %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i = phi i64 [ %i.s, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.pre.i.i, %bb.d ]
-  %.sroa.0.sroa.3.0.i.i = phi i32 [ %i.ah, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.trunc.i.i, %bb.d ]
+  %.sroa.0.sroa.3.0.i.i = phi i64 [ %5, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.shift.i.i, %bb.d ]
   %.sroa.0.sroa.4.0.i.i = phi ptr [ %i.ag, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.2.0.copyload.i, %bb.d ] ; 2 uses
-  %.sroa.0.sroa.3.0.insert.ext.i.i = zext i32 %.sroa.0.sroa.3.0.i.i to i64
-  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext.i.i, 32
+  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.i.i, 32
   %.sroa.0.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift.i.i, %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 4 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !8893 ; 4 uses
@@ -1943,7 +1938,6 @@ bb.d:                                             ; preds = %bb.c, %.thread
 
 bb.e:                                             ; preds = %.lr.ph76
   %.sroa.0.sroa.3.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i, 32
-  %.sroa.0.sroa.3.0.extract.trunc.i.i = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift.i.i to i32
   %.pre.i.i = and i64 %.sroa.0.0.copyload.i, 15
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
@@ -1983,14 +1977,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i.i:              ; preds = %bb.h, %bb.g
   store i64 %.pre-phi.i.i.i, ptr %i.af, align 8, !tbaa !686
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ag, ptr align 1 %.sroa.2.0.copyload.i, i64 %i.s, i1 false)
   %i.ah = load i32, ptr %i.ag, align 1
+  %5 = zext i32 %i.ah to i64
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i
 
 _ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i: ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i.i, %bb.e
   %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i = phi i64 [ %i.s, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.pre.i.i, %bb.e ]
-  %.sroa.0.sroa.3.0.i.i = phi i32 [ %i.ah, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.trunc.i.i, %bb.e ]
+  %.sroa.0.sroa.3.0.i.i = phi i64 [ %5, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.0.sroa.3.0.extract.shift.i.i, %bb.e ]
   %.sroa.0.sroa.4.0.i.i = phi ptr [ %i.ag, %_ZN6duckdb8string_tC2EPKcj.exit.i.i ], [ %.sroa.2.0.copyload.i, %bb.e ] ; 2 uses
-  %.sroa.0.sroa.3.0.insert.ext.i.i = zext i32 %.sroa.0.sroa.3.0.i.i to i64
-  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext.i.i, 32
+  %.sroa.0.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.3.0.i.i, 32
   %.sroa.0.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift.i.i, %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i ; 2 uses
   %i.ai = load ptr, ptr %i.d, align 8, !tbaa !8893 ; 5 uses
   %i.aj = load ptr, ptr %i.e, align 8, !tbaa !8895
@@ -2079,7 +2073,6 @@ bb.n:                                             ; preds = %.lr.ph
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.sroa.3.0.extract.shift.i.i55 = lshr i64 %.sroa.0.0.copyload.i28, 32
-  %.sroa.0.sroa.3.0.extract.trunc.i.i56 = trunc nuw i64 %.sroa.0.sroa.3.0.extract.shift.i.i55 to i32
   %.pre.i.i57 = and i64 %.sroa.0.0.copyload.i28, 15
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i35
 
@@ -2119,14 +2112,14 @@ _ZN6duckdb8string_tC2EPKcj.exit.i.i33:            ; preds = %bb.r, %bb.q
   store i64 %.pre-phi.i.i.i34, ptr %i.bv, align 8, !tbaa !686
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bw, ptr align 1 %.sroa.2.0.copyload.i30, i64 %i.bi, i1 false)
   %i.bx = load i32, ptr %i.bw, align 1
+  %6 = zext i32 %i.bx to i64
   br label %_ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i35
 
 _ZN6duckdb18QuantileStringType9OperationINS_8string_tEEET_S3_RNS_18AggregateInputDataE.exit.i35: ; preds = %_ZN6duckdb8string_tC2EPKcj.exit.i.i33, %bb.o
   %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i36 = phi i64 [ %i.bi, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.pre.i.i57, %bb.o ]
-  %.sroa.0.sroa.3.0.i.i37 = phi i32 [ %i.bx, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.sroa.0.sroa.3.0.extract.trunc.i.i56, %bb.o ]
+  %.sroa.0.sroa.3.0.i.i37 = phi i64 [ %6, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.sroa.0.sroa.3.0.extract.shift.i.i55, %bb.o ]
   %.sroa.0.sroa.4.0.i.i38 = phi ptr [ %i.bw, %_ZN6duckdb8string_tC2EPKcj.exit.i.i33 ], [ %.sroa.2.0.copyload.i30, %bb.o ] ; 2 uses
-  %.sroa.0.sroa.3.0.insert.ext.i.i39 = zext i32 %.sroa.0.sroa.3.0.i.i37 to i64
-  %.sroa.0.sroa.3.0.insert.shift.i.i40 = shl nuw i64 %.sroa.0.sroa.3.0.insert.ext.i.i39, 32
+  %.sroa.0.sroa.3.0.insert.shift.i.i40 = shl nuw i64 %.sroa.0.sroa.3.0.i.i37, 32
   %.sroa.0.sroa.0.0.insert.insert.i.i41 = or disjoint i64 %.sroa.0.sroa.3.0.insert.shift.i.i40, %.sroa.0.sroa.0.0.insert.ext.pre-phi.i.i36 ; 2 uses
   %i.by = load ptr, ptr %i.d, align 8, !tbaa !8893 ; 5 uses
   %i.bz = load ptr, ptr %i.e, align 8, !tbaa !8895

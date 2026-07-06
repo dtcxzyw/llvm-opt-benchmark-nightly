@@ -204,16 +204,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
   %i.db = sext i32 %.0340.i.fr to i64
   %i.dc = sub nsw i64 0, %i.db
   %i.dd = icmp sgt i32 %.0340.i.fr, 0
-  br i1 %i.dd, label %.split.us.preheader, label %.split, !prof !77
+  br i1 %i.dd, label %.split.us, label %.split, !prof !77
 
-.split.us.preheader:                              ; preds = %.thread74
-  %.0348.i = trunc nuw nsw i64 %.0348.i.in to i32
-  br label %.split.us
-
-.split.us:                                        ; preds = %.split.us.preheader, %.loopexit.split.us205
-  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.split.us.preheader ] ; 2 uses
-  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.split.us.preheader ] ; 2 uses
-  %.1349.i.us = phi i32 [ %7, %.loopexit.split.us205 ], [ %.0348.i, %.split.us.preheader ]
+.split.us:                                        ; preds = %.thread74, %.loopexit.split.us205
+  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.thread74 ] ; 2 uses
+  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.thread74 ] ; 2 uses
+  %.1349.i.us = phi i64 [ %i.dl, %.loopexit.split.us205 ], [ %.0348.i.in, %.thread74 ]
   %i.de = lshr i32 %.0353.i.us, 5
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr %.0359.i.us, i64 %i.df ; 2 uses
@@ -223,13 +219,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
 .lr.ph186.us:                                     ; preds = %.split.us, %.critedge.backedge.us211
   %i.di = phi ptr [ %i.eo, %.critedge.backedge.us211 ], [ %i.dg, %.split.us ] ; 4 uses
   %.in276 = phi i32 [ %i.dj, %.critedge.backedge.us211 ], [ %.0353.i.us, %.split.us ]
-  %.2350.i184.us195 = phi i32 [ %7, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
+  %.2350.i184.us195 = phi i64 [ %i.dl, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
   %.1360.i183.us196 = phi ptr [ %i.di, %.critedge.backedge.us211 ], [ %.0359.i.us, %.split.us ] ; 8 uses
   %i.dj = add i32 %.in276, 1                      ; 3 uses
   %.0.copyload.i41.us197 = load i64, ptr %i.di, align 1
   %i.dk = mul i64 %.0.copyload.i41.us197, 8503243848024064
-  %i.dl = lshr i64 %i.dk, 55
-  %7 = trunc nuw nsw i64 %i.dl to i32             ; 2 uses
+  %i.dl = lshr i64 %i.dk, 55                      ; 2 uses
   %i.dm = getelementptr inbounds i8, ptr %.1360.i183.us196, i64 %i.dc ; 3 uses
   %.0.copyload.i47.us198 = load i32, ptr %.1360.i183.us196, align 1
   %.0.copyload.i46.us199 = load i32, ptr %i.dm, align 1
@@ -245,8 +240,7 @@ _ZL7IsMatchPKhS0_.exit7.us200:                    ; preds = %.lr.ph186.us
   br i1 %i.ds, label %bb.d, label %_ZL7IsMatchPKhS0_.exit7.thread.us201, !prof !77
 
 _ZL7IsMatchPKhS0_.exit7.thread.us201:             ; preds = %_ZL7IsMatchPKhS0_.exit7.us200, %.lr.ph186.us
-  %8 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %8 ; 2 uses
+  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195 ; 2 uses
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !3
   %i.dv = sext i32 %i.du to i64
   %i.dw = getelementptr inbounds i8, ptr %1, i64 %i.dv ; 3 uses
@@ -271,8 +265,7 @@ bb.d:                                             ; preds = %_ZL7IsMatchPKhS0_.e
   %i.ef = ptrtoint ptr %.1360.i183.us196 to i64   ; 2 uses
   %i.eg = sub i64 %i.ef, %i.ca
   %i.eh = trunc i64 %i.eg to i32
-  %9 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %9
+  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195
   store i32 %i.eh, ptr %i.ei, align 4, !tbaa !3
   br label %.loopexit.split.us205
 
@@ -675,16 +668,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
   %i.db = sext i32 %.0340.i.fr to i64
   %i.dc = sub nsw i64 0, %i.db
   %i.dd = icmp sgt i32 %.0340.i.fr, 0
-  br i1 %i.dd, label %.split.us.preheader, label %.split, !prof !77
+  br i1 %i.dd, label %.split.us, label %.split, !prof !77
 
-.split.us.preheader:                              ; preds = %.thread74
-  %.0348.i = trunc nuw nsw i64 %.0348.i.in to i32
-  br label %.split.us
-
-.split.us:                                        ; preds = %.split.us.preheader, %.loopexit.split.us205
-  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.split.us.preheader ] ; 2 uses
-  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.split.us.preheader ] ; 2 uses
-  %.1349.i.us = phi i32 [ %7, %.loopexit.split.us205 ], [ %.0348.i, %.split.us.preheader ]
+.split.us:                                        ; preds = %.thread74, %.loopexit.split.us205
+  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.thread74 ] ; 2 uses
+  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.thread74 ] ; 2 uses
+  %.1349.i.us = phi i64 [ %i.dl, %.loopexit.split.us205 ], [ %.0348.i.in, %.thread74 ]
   %i.de = lshr i32 %.0353.i.us, 5
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr %.0359.i.us, i64 %i.df ; 2 uses
@@ -694,13 +683,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
 .lr.ph186.us:                                     ; preds = %.split.us, %.critedge.backedge.us211
   %i.di = phi ptr [ %i.eo, %.critedge.backedge.us211 ], [ %i.dg, %.split.us ] ; 4 uses
   %.in276 = phi i32 [ %i.dj, %.critedge.backedge.us211 ], [ %.0353.i.us, %.split.us ]
-  %.2350.i184.us195 = phi i32 [ %7, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
+  %.2350.i184.us195 = phi i64 [ %i.dl, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
   %.1360.i183.us196 = phi ptr [ %i.di, %.critedge.backedge.us211 ], [ %.0359.i.us, %.split.us ] ; 8 uses
   %i.dj = add i32 %.in276, 1                      ; 3 uses
   %.0.copyload.i41.us197 = load i64, ptr %i.di, align 1
   %i.dk = mul i64 %.0.copyload.i41.us197, 8503243848024064
-  %i.dl = lshr i64 %i.dk, 53
-  %7 = trunc nuw nsw i64 %i.dl to i32             ; 2 uses
+  %i.dl = lshr i64 %i.dk, 53                      ; 2 uses
   %i.dm = getelementptr inbounds i8, ptr %.1360.i183.us196, i64 %i.dc ; 3 uses
   %.0.copyload.i47.us198 = load i32, ptr %.1360.i183.us196, align 1
   %.0.copyload.i46.us199 = load i32, ptr %i.dm, align 1
@@ -716,8 +704,7 @@ _ZL7IsMatchPKhS0_.exit7.us200:                    ; preds = %.lr.ph186.us
   br i1 %i.ds, label %bb.d, label %_ZL7IsMatchPKhS0_.exit7.thread.us201, !prof !77
 
 _ZL7IsMatchPKhS0_.exit7.thread.us201:             ; preds = %_ZL7IsMatchPKhS0_.exit7.us200, %.lr.ph186.us
-  %8 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %8 ; 2 uses
+  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195 ; 2 uses
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !3
   %i.dv = sext i32 %i.du to i64
   %i.dw = getelementptr inbounds i8, ptr %1, i64 %i.dv ; 3 uses
@@ -742,8 +729,7 @@ bb.d:                                             ; preds = %_ZL7IsMatchPKhS0_.e
   %i.ef = ptrtoint ptr %.1360.i183.us196 to i64   ; 2 uses
   %i.eg = sub i64 %i.ef, %i.ca
   %i.eh = trunc i64 %i.eg to i32
-  %9 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %9
+  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195
   store i32 %i.eh, ptr %i.ei, align 4, !tbaa !3
   br label %.loopexit.split.us205
 
@@ -1146,16 +1132,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
   %i.db = sext i32 %.0340.i.fr to i64
   %i.dc = sub nsw i64 0, %i.db
   %i.dd = icmp sgt i32 %.0340.i.fr, 0
-  br i1 %i.dd, label %.split.us.preheader, label %.split, !prof !77
+  br i1 %i.dd, label %.split.us, label %.split, !prof !77
 
-.split.us.preheader:                              ; preds = %.thread74
-  %.0348.i = trunc nuw nsw i64 %.0348.i.in to i32
-  br label %.split.us
-
-.split.us:                                        ; preds = %.split.us.preheader, %.loopexit.split.us205
-  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.split.us.preheader ] ; 2 uses
-  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.split.us.preheader ] ; 2 uses
-  %.1349.i.us = phi i32 [ %7, %.loopexit.split.us205 ], [ %.0348.i, %.split.us.preheader ]
+.split.us:                                        ; preds = %.thread74, %.loopexit.split.us205
+  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.thread74 ] ; 2 uses
+  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.thread74 ] ; 2 uses
+  %.1349.i.us = phi i64 [ %i.dl, %.loopexit.split.us205 ], [ %.0348.i.in, %.thread74 ]
   %i.de = lshr i32 %.0353.i.us, 5
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr %.0359.i.us, i64 %i.df ; 2 uses
@@ -1165,13 +1147,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
 .lr.ph186.us:                                     ; preds = %.split.us, %.critedge.backedge.us211
   %i.di = phi ptr [ %i.eo, %.critedge.backedge.us211 ], [ %i.dg, %.split.us ] ; 4 uses
   %.in276 = phi i32 [ %i.dj, %.critedge.backedge.us211 ], [ %.0353.i.us, %.split.us ]
-  %.2350.i184.us195 = phi i32 [ %7, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
+  %.2350.i184.us195 = phi i64 [ %i.dl, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
   %.1360.i183.us196 = phi ptr [ %i.di, %.critedge.backedge.us211 ], [ %.0359.i.us, %.split.us ] ; 8 uses
   %i.dj = add i32 %.in276, 1                      ; 3 uses
   %.0.copyload.i41.us197 = load i64, ptr %i.di, align 1
   %i.dk = mul i64 %.0.copyload.i41.us197, 8503243848024064
-  %i.dl = lshr i64 %i.dk, 51
-  %7 = trunc nuw nsw i64 %i.dl to i32             ; 2 uses
+  %i.dl = lshr i64 %i.dk, 51                      ; 2 uses
   %i.dm = getelementptr inbounds i8, ptr %.1360.i183.us196, i64 %i.dc ; 3 uses
   %.0.copyload.i47.us198 = load i32, ptr %.1360.i183.us196, align 1
   %.0.copyload.i46.us199 = load i32, ptr %i.dm, align 1
@@ -1187,8 +1168,7 @@ _ZL7IsMatchPKhS0_.exit7.us200:                    ; preds = %.lr.ph186.us
   br i1 %i.ds, label %bb.d, label %_ZL7IsMatchPKhS0_.exit7.thread.us201, !prof !77
 
 _ZL7IsMatchPKhS0_.exit7.thread.us201:             ; preds = %_ZL7IsMatchPKhS0_.exit7.us200, %.lr.ph186.us
-  %8 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %8 ; 2 uses
+  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195 ; 2 uses
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !3
   %i.dv = sext i32 %i.du to i64
   %i.dw = getelementptr inbounds i8, ptr %1, i64 %i.dv ; 3 uses
@@ -1213,8 +1193,7 @@ bb.d:                                             ; preds = %_ZL7IsMatchPKhS0_.e
   %i.ef = ptrtoint ptr %.1360.i183.us196 to i64   ; 2 uses
   %i.eg = sub i64 %i.ef, %i.ca
   %i.eh = trunc i64 %i.eg to i32
-  %9 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %9
+  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195
   store i32 %i.eh, ptr %i.ei, align 4, !tbaa !3
   br label %.loopexit.split.us205
 
@@ -1617,16 +1596,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
   %i.db = sext i32 %.0340.i.fr to i64
   %i.dc = sub nsw i64 0, %i.db
   %i.dd = icmp sgt i32 %.0340.i.fr, 0
-  br i1 %i.dd, label %.split.us.preheader, label %.split, !prof !77
+  br i1 %i.dd, label %.split.us, label %.split, !prof !77
 
-.split.us.preheader:                              ; preds = %.thread74
-  %.0348.i = trunc nuw nsw i64 %.0348.i.in to i32
-  br label %.split.us
-
-.split.us:                                        ; preds = %.split.us.preheader, %.loopexit.split.us205
-  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.split.us.preheader ] ; 2 uses
-  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.split.us.preheader ] ; 2 uses
-  %.1349.i.us = phi i32 [ %7, %.loopexit.split.us205 ], [ %.0348.i, %.split.us.preheader ]
+.split.us:                                        ; preds = %.thread74, %.loopexit.split.us205
+  %.0359.i.us = phi ptr [ %i.di, %.loopexit.split.us205 ], [ %.0335.i, %.thread74 ] ; 2 uses
+  %.0353.i.us = phi i32 [ %i.dj, %.loopexit.split.us205 ], [ 32, %.thread74 ] ; 2 uses
+  %.1349.i.us = phi i64 [ %i.dl, %.loopexit.split.us205 ], [ %.0348.i.in, %.thread74 ]
   %i.de = lshr i32 %.0353.i.us, 5
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr %.0359.i.us, i64 %i.df ; 2 uses
@@ -1636,13 +1611,12 @@ bb.c:                                             ; preds = %_ZL10UpdateBitsmjmP
 .lr.ph186.us:                                     ; preds = %.split.us, %.critedge.backedge.us211
   %i.di = phi ptr [ %i.eo, %.critedge.backedge.us211 ], [ %i.dg, %.split.us ] ; 4 uses
   %.in276 = phi i32 [ %i.dj, %.critedge.backedge.us211 ], [ %.0353.i.us, %.split.us ]
-  %.2350.i184.us195 = phi i32 [ %7, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
+  %.2350.i184.us195 = phi i64 [ %i.dl, %.critedge.backedge.us211 ], [ %.1349.i.us, %.split.us ] ; 2 uses
   %.1360.i183.us196 = phi ptr [ %i.di, %.critedge.backedge.us211 ], [ %.0359.i.us, %.split.us ] ; 8 uses
   %i.dj = add i32 %.in276, 1                      ; 3 uses
   %.0.copyload.i41.us197 = load i64, ptr %i.di, align 1
   %i.dk = mul i64 %.0.copyload.i41.us197, 8503243848024064
-  %i.dl = lshr i64 %i.dk, 49
-  %7 = trunc nuw nsw i64 %i.dl to i32             ; 2 uses
+  %i.dl = lshr i64 %i.dk, 49                      ; 2 uses
   %i.dm = getelementptr inbounds i8, ptr %.1360.i183.us196, i64 %i.dc ; 3 uses
   %.0.copyload.i47.us198 = load i32, ptr %.1360.i183.us196, align 1
   %.0.copyload.i46.us199 = load i32, ptr %i.dm, align 1
@@ -1658,8 +1632,7 @@ _ZL7IsMatchPKhS0_.exit7.us200:                    ; preds = %.lr.ph186.us
   br i1 %i.ds, label %bb.d, label %_ZL7IsMatchPKhS0_.exit7.thread.us201, !prof !77
 
 _ZL7IsMatchPKhS0_.exit7.thread.us201:             ; preds = %_ZL7IsMatchPKhS0_.exit7.us200, %.lr.ph186.us
-  %8 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %8 ; 2 uses
+  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195 ; 2 uses
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !3
   %i.dv = sext i32 %i.du to i64
   %i.dw = getelementptr inbounds i8, ptr %1, i64 %i.dv ; 3 uses
@@ -1684,8 +1657,7 @@ bb.d:                                             ; preds = %_ZL7IsMatchPKhS0_.e
   %i.ef = ptrtoint ptr %.1360.i183.us196 to i64   ; 2 uses
   %i.eg = sub i64 %i.ef, %i.ca
   %i.eh = trunc i64 %i.eg to i32
-  %9 = zext nneg i32 %.2350.i184.us195 to i64
-  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %9
+  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.2350.i184.us195
   store i32 %i.eh, ptr %i.ei, align 4, !tbaa !3
   br label %.loopexit.split.us205
 

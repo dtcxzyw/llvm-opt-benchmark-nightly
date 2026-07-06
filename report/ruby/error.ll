@@ -203,7 +203,7 @@ define internal fastcc ptr @bug_report_file(ptr noundef %0, i32 noundef %1, ptr 
 bb.a:
   %i.a = alloca ptr, align 8                      ; 10 uses
   %3 = alloca %struct.report_expansion, align 8   ; 7 uses
-  %i.b = alloca [16 x ptr], align 16              ; 6 uses
+  %i.b = alloca [16 x ptr], align 16              ; 5 uses
   %i.c = alloca [256 x i8], align 16              ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #32
   %i.d = load ptr, ptr @crash_report, align 8, !tbaa !31 ; 3 uses
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.f, %bb.d
-  %indvars.iv.i = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.i, %bb.f ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.i, %bb.f ] ; 2 uses
   %.02245.i = phi ptr [ %i.c, %bb.d ], [ %i.u, %bb.f ] ; 3 uses
   %.promoted.i = load ptr, ptr %i.a, align 8, !tbaa !31 ; 3 uses
   %i.j = load i8, ptr %.promoted.i, align 1, !tbaa !14 ; 2 uses
@@ -273,20 +273,17 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.t = sub i64 %i.i, %i.s
   %i.u = call fastcc ptr @expand_report_argument(ptr noundef %i.a, ptr noundef %3, ptr noundef %.02245.i, i64 noundef %i.t, i1 noundef zeroext true) ; 2 uses
   %.not30.i = icmp eq ptr %i.u, null
+  %4 = getelementptr [8 x i8], ptr %i.b, i64 %indvars.iv.i ; 2 uses
   br i1 %.not30.i, label %.thread.i, label %bb.f
 
 .thread.i:                                        ; preds = %.critedge.i
-  %sext.i = shl i64 %indvars.iv.i, 32
-  %4 = ashr exact i64 %sext.i, 29
-  %5 = getelementptr i8, ptr %i.b, i64 %4
-  store ptr null, ptr %5, align 8, !tbaa !31
+  store ptr null, ptr %4, align 8, !tbaa !31
   %i.v = call ptr @ruby_popen_writer(ptr noundef nonnull %i.b, ptr noundef nonnull %2) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #32
   br label %open_report_path.exit
 
 bb.f:                                             ; preds = %.critedge.i
-  %6 = getelementptr [8 x i8], ptr %i.b, i64 %indvars.iv.i
-  store ptr %.02245.i, ptr %6, align 8, !tbaa !31
+  store ptr %.02245.i, ptr %4, align 8, !tbaa !31
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 15
   br i1 %exitcond.not.i, label %bb.g, label %.preheader.i, !llvm.loop !40

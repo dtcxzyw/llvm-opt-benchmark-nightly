@@ -204,9 +204,8 @@ bb.dd:                                            ; preds = %bb.dc
 
 bb.de:                                            ; preds = %bb.dc
   %i.to = load ptr, ptr %i.oa, align 8, !tbaa !1922
-  %16 = shl nsw i64 %indvars.iv.i.i.i.i.i, 2
-  %17 = getelementptr inbounds i8, ptr %i.to, i64 %16
-  %i.tp = load i32, ptr %17, align 4, !tbaa !3
+  %16 = getelementptr inbounds [4 x i8], ptr %i.to, i64 %indvars.iv.i.i.i.i.i
+  %i.tp = load i32, ptr %16, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIfEET_i.exit.i.i.i.i.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIfEET_i.exit.i.i.i.i.i: ; preds = %bb.de, %bb.dd, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.i.i.i.i, %._ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i_crit_edge.i.i.i.i
@@ -609,9 +608,8 @@ bb.dd:                                            ; preds = %bb.dc
 
 bb.de:                                            ; preds = %bb.dc
   %i.tp = load ptr, ptr %i.oa, align 8, !tbaa !1922
-  %16 = shl nsw i64 %indvars.iv.i.i.i.i.i, 2
-  %17 = getelementptr inbounds i8, ptr %i.tp, i64 %16
-  %i.tq = load i32, ptr %17, align 4, !tbaa !3
+  %16 = getelementptr inbounds [4 x i8], ptr %i.tp, i64 %indvars.iv.i.i.i.i.i
+  %i.tq = load i32, ptr %16, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit.i.i.i.i.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit.i.i.i.i.i: ; preds = %bb.de, %bb.dd, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.i.i.i.i, %._ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i_crit_edge.i.i.i.i
@@ -1014,9 +1012,8 @@ bb.dl:                                            ; preds = %bb.dk
 
 bb.dm:                                            ; preds = %bb.dk
   %i.uz = load ptr, ptr %i.pl, align 8, !tbaa !1922
-  %29 = shl nsw i64 %indvars.iv.i.i.i.i.i, 2
-  %30 = getelementptr inbounds i8, ptr %i.uz, i64 %29
-  %i.va = load i32, ptr %30, align 4, !tbaa !3
+  %29 = getelementptr inbounds [4 x i8], ptr %i.uz, i64 %indvars.iv.i.i.i.i.i
+  %i.va = load i32, ptr %29, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIfEET_i.exit.i.i.i.i.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIfEET_i.exit.i.i.i.i.i: ; preds = %bb.dm, %bb.dl, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.i.i.i.i, %._ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i_crit_edge.i.i.i.i
@@ -1419,9 +1416,8 @@ bb.dl:                                            ; preds = %bb.dk
 
 bb.dm:                                            ; preds = %bb.dk
   %i.va = load ptr, ptr %i.pl, align 8, !tbaa !1922
-  %29 = shl nsw i64 %indvars.iv.i.i.i.i.i, 2
-  %30 = getelementptr inbounds i8, ptr %i.va, i64 %29
-  %i.vb = load i32, ptr %30, align 4, !tbaa !3
+  %29 = getelementptr inbounds [4 x i8], ptr %i.va, i64 %indvars.iv.i.i.i.i.i
+  %i.vb = load i32, ptr %29, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit.i.i.i.i.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit.i.i.i.i.i: ; preds = %bb.dm, %bb.dl, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.i.i.i.i, %._ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i_crit_edge.i.i.i.i
@@ -1824,9 +1820,8 @@ bb.dl:                                            ; preds = %bb.dk
 
 bb.dm:                                            ; preds = %bb.dk
   %i.uz = load ptr, ptr %i.pl, align 8, !tbaa !1922
-  %29 = shl nsw i64 %indvars.iv.i.i.i.i.i, 2
-  %30 = getelementptr inbounds i8, ptr %i.uz, i64 %29
-  %i.va = load i32, ptr %30, align 4, !tbaa !3
+  %29 = getelementptr inbounds [4 x i8], ptr %i.uz, i64 %indvars.iv.i.i.i.i.i
+  %i.va = load i32, ptr %29, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIfEET_i.exit.i.i.i.i.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIfEET_i.exit.i.i.i.i.i: ; preds = %bb.dm, %bb.dl, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.i.i.i.i, %._ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i_crit_edge.i.i.i.i
@@ -2229,9 +2224,8 @@ bb.dl:                                            ; preds = %bb.dk
 
 bb.dm:                                            ; preds = %bb.dk
   %i.va = load ptr, ptr %i.pl, align 8, !tbaa !1922
-  %29 = shl nsw i64 %indvars.iv.i.i.i.i.i, 2
-  %30 = getelementptr inbounds i8, ptr %i.va, i64 %29
-  %i.vb = load i32, ptr %30, align 4, !tbaa !3
+  %29 = getelementptr inbounds [4 x i8], ptr %i.va, i64 %indvars.iv.i.i.i.i.i
+  %i.vb = load i32, ptr %29, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit.i.i.i.i.i
 
 _ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit.i.i.i.i.i: ; preds = %bb.dm, %bb.dl, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.i.i.i.i, %._ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i_crit_edge.i.i.i.i

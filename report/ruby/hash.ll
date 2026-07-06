@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = and i32 %i.j, 15                         ; 2 uses
   %i.l = add i64 %0, 24
   %i.m = inttoptr i64 %i.l to ptr                 ; 2 uses
-  %i.n = getelementptr i8, ptr %i.m, i64 8        ; 2 uses
+  %i.n = getelementptr i8, ptr %i.m, i64 8
   %.not19.i.i = icmp eq i32 %i.k, 0
   br i1 %.not19.i.i, label %.thread, label %.lr.ph.preheader.i.i
 
@@ -212,14 +212,14 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e, %.lr.ph.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 6 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 5 uses
   %i.o = getelementptr i8, ptr %i.m, i64 %indvars.iv.i.i
   %i.p = load i8, ptr %i.o, align 1, !tbaa !24
   %i.q = icmp eq i8 %i.p, %i.i
   br i1 %i.q, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.i.i
-  %i.r = getelementptr [16 x i8], ptr %i.n, i64 %indvars.iv.i.i
+  %i.r = getelementptr [16 x i8], ptr %i.n, i64 %indvars.iv.i.i ; 3 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !45
   %i.t = tail call fastcc i32 @ar_equal(i64 noundef %1, i64 noundef %i.s)
   %.not.i.i = icmp eq i32 %i.t, 0
@@ -235,21 +235,18 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not31.not, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %4 = and i64 %indvars.iv.i.i, 4294967295
-  %5 = getelementptr [16 x i8], ptr %i.n, i64 %4  ; 2 uses
-  %i.u = load i64, ptr %5, align 8, !tbaa !45     ; 2 uses
+  %i.u = load i64, ptr %i.r, align 8, !tbaa !45   ; 2 uses
   store i64 %i.u, ptr %i.a, align 8, !tbaa !11
-  %i.v = getelementptr i8, ptr %5, i64 8
+  %i.v = getelementptr i8, ptr %i.r, i64 8
   %i.w = load i64, ptr %i.v, align 8, !tbaa !47
   store i64 %i.w, ptr %i.b, align 8, !tbaa !11
-  %6 = and i64 %indvars.iv.i.i, 4294967295
   br label %.thread
 
 .thread:                                          ; preds = %bb.e, %bb.c, %bb.b, %bb.g, %bb.f
   %i.x = phi i64 [ %1, %bb.b ], [ %i.u, %bb.g ], [ %1, %bb.f ], [ %1, %bb.c ], [ %1, %bb.e ]
   %.not3243 = phi i1 [ true, %bb.b ], [ false, %bb.g ], [ true, %bb.f ], [ true, %bb.c ], [ true, %bb.e ] ; 2 uses
   %.02842 = phi i32 [ 0, %bb.b ], [ 1, %bb.g ], [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.e ] ; 6 uses
-  %.02941 = phi i64 [ 8, %bb.b ], [ %6, %bb.g ], [ 8, %bb.f ], [ 8, %bb.c ], [ 8, %bb.e ] ; 3 uses
+  %.02941 = phi i64 [ 8, %bb.b ], [ %indvars.iv.i.i, %bb.g ], [ 8, %bb.f ], [ 8, %bb.c ], [ 8, %bb.e ] ; 3 uses
   %i.y = call i32 %2(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i64 noundef %3, i32 noundef %.02842) #29
   %i.z = load i64, ptr %i.d, align 8, !tbaa !13   ; 2 uses
   %i.aa = and i64 %i.z, 32768
@@ -652,8 +649,7 @@ bb.h:                                             ; preds = %ar_find_entry.exit.
   br i1 %.not.i7.i, label %hash_stlike_lookup.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %3 = and i64 %indvars.iv.i.i.i.i, 4294967295
-  %i.z = getelementptr [16 x i8], ptr %i.q, i64 %3
+  %i.z = getelementptr [16 x i8], ptr %i.q, i64 %indvars.iv.i.i.i.i
   %i.aa = getelementptr i8, ptr %i.z, i64 16
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !47
   store i64 %i.ab, ptr %2, align 8, !tbaa !11
@@ -733,8 +729,7 @@ ar_find_entry.exit.i.i:                           ; preds = %bb.e
   br i1 %i.x, label %hash_stlike_lookup.exit.thread, label %hash_stlike_lookup.exit.thread7
 
 hash_stlike_lookup.exit.thread7:                  ; preds = %ar_find_entry.exit.i.i
-  %2 = and i64 %indvars.iv.i.i.i.i, 4294967295
-  %i.y = getelementptr [16 x i8], ptr %i.p, i64 %2
+  %i.y = getelementptr [16 x i8], ptr %i.p, i64 %indvars.iv.i.i.i.i
   %i.z = getelementptr i8, ptr %i.y, i64 16
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !47
   br label %rb_hash_default_value.exit
@@ -861,8 +856,7 @@ ar_find_entry.exit.i.i:                           ; preds = %bb.e
   br i1 %i.w, label %hash_stlike_lookup.exit.thread, label %hash_stlike_lookup.exit.thread7
 
 hash_stlike_lookup.exit.thread7:                  ; preds = %ar_find_entry.exit.i.i
-  %3 = and i64 %indvars.iv.i.i.i.i, 4294967295
-  %i.x = getelementptr [16 x i8], ptr %i.o, i64 %3
+  %i.x = getelementptr [16 x i8], ptr %i.o, i64 %indvars.iv.i.i.i.i
   %i.y = getelementptr i8, ptr %i.x, i64 16
   %i.z = load i64, ptr %i.y, align 8, !tbaa !47
   br label %bb.g
@@ -984,8 +978,7 @@ ar_find_entry.exit.i.i:                           ; preds = %bb.h
   br i1 %i.ab, label %hash_stlike_lookup.exit.thread, label %hash_stlike_lookup.exit.thread21
 
 hash_stlike_lookup.exit.thread21:                 ; preds = %ar_find_entry.exit.i.i
-  %3 = and i64 %indvars.iv.i.i.i.i, 4294967295
-  %i.ac = getelementptr [16 x i8], ptr %i.t, i64 %3
+  %i.ac = getelementptr [16 x i8], ptr %i.t, i64 %indvars.iv.i.i.i.i
   %i.ad = getelementptr i8, ptr %i.ac, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !47
   br label %bb.p
@@ -1229,7 +1222,7 @@ bb.d:                                             ; preds = %bb.b
   %i.o = and i32 %i.n, 15                         ; 2 uses
   %i.p = add i64 %0, 24
   %i.q = inttoptr i64 %i.p to ptr                 ; 4 uses
-  %i.r = getelementptr i8, ptr %i.q, i64 8        ; 2 uses
+  %i.r = getelementptr i8, ptr %i.q, i64 8
   %.not19.i.i.i = icmp eq i32 %i.o, 0
   br i1 %.not19.i.i.i, label %ar_find_entry.exit.thread.i, label %.lr.ph.preheader.i.i.i
 
@@ -1238,14 +1231,14 @@ bb.d:                                             ; preds = %bb.b
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.f, %.lr.ph.preheader.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.f ] ; 5 uses
+  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.f ] ; 6 uses
   %i.s = getelementptr i8, ptr %i.q, i64 %indvars.iv.i.i.i
   %i.t = load i8, ptr %i.s, align 1, !tbaa !24
   %i.u = icmp eq i8 %i.t, %i.l
   br i1 %i.u, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i
-  %i.v = getelementptr [16 x i8], ptr %i.r, i64 %indvars.iv.i.i.i
+  %i.v = getelementptr [16 x i8], ptr %i.r, i64 %indvars.iv.i.i.i ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !45
   %i.x = tail call fastcc i32 @ar_equal(i64 noundef %i.k, i64 noundef %i.w)
   %.not.i.i.i = icmp eq i32 %i.x, 0
@@ -1257,6 +1250,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.i.i
   br i1 %exitcond.not.i.i.i, label %ar_find_entry.exit.thread.i, label %.lr.ph.i.i.i, !llvm.loop !57
 
 ar_find_entry.exit.i:                             ; preds = %bb.e
+  %3 = getelementptr i8, ptr %i.q, i64 %indvars.iv.i.i.i
   %i.y = icmp eq i64 %indvars.iv.i.i.i, 8
   br i1 %i.y, label %ar_find_entry.exit.thread.i, label %bb.h
 
@@ -1270,21 +1264,18 @@ bb.g:                                             ; preds = %ar_find_entry.exit.
 
 bb.h:                                             ; preds = %ar_find_entry.exit.i
   %.not.i7 = icmp eq ptr %2, null
-  %.pre.i = and i64 %indvars.iv.i.i.i, 4294967295 ; 3 uses
   br i1 %.not.i7, label %._crit_edge.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = getelementptr [16 x i8], ptr %i.q, i64 %.pre.i
+  %i.z = getelementptr [16 x i8], ptr %i.q, i64 %indvars.iv.i.i.i
   %i.aa = getelementptr i8, ptr %i.z, i64 16
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !47
   store i64 %i.ab, ptr %2, align 8, !tbaa !11
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.i, %bb.h
-  %3 = getelementptr [16 x i8], ptr %i.r, i64 %.pre.i
-  store i64 36, ptr %3, align 8, !tbaa !45
-  %4 = getelementptr i8, ptr %i.q, i64 %.pre.i
-  store i8 -1, ptr %4, align 1, !tbaa !24
+  store i64 36, ptr %i.v, align 8, !tbaa !45
+  store i8 -1, ptr %3, align 1, !tbaa !24
   %i.ac = load i64, ptr %i.a, align 8, !tbaa !13  ; 3 uses
   %i.ad = trunc i64 %i.ac to i32
   %i.ae = lshr i32 %i.ad, 16
@@ -1687,8 +1678,7 @@ ar_compact_table.exit:                            ; preds = %.ar_compact_table.e
   br label %bb.j
 
 bb.i:                                             ; preds = %ar_find_entry.exit
-  %3 = and i64 %indvars.iv.i.i, 4294967295
-  %i.bl = getelementptr [16 x i8], ptr %i.j, i64 %3
+  %i.bl = getelementptr [16 x i8], ptr %i.j, i64 %indvars.iv.i.i
   %i.bm = getelementptr i8, ptr %i.bl, i64 16
   store i64 %2, ptr %i.bm, align 8, !tbaa !47
   br label %bb.j
@@ -2091,8 +2081,7 @@ ar_find_entry.exit.i.i:                           ; preds = %bb.e
   br i1 %i.z, label %.sink.split, label %hash_stlike_lookup.exit.thread13
 
 hash_stlike_lookup.exit.thread13:                 ; preds = %ar_find_entry.exit.i.i
-  %3 = and i64 %indvars.iv.i.i.i.i, 4294967295
-  %i.aa = getelementptr [16 x i8], ptr %i.r, i64 %3
+  %i.aa = getelementptr [16 x i8], ptr %i.r, i64 %indvars.iv.i.i.i.i
   %i.ab = getelementptr i8, ptr %i.aa, i64 16
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !47
   store i64 %i.ac, ptr %i.a, align 8, !tbaa !11

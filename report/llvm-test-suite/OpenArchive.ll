@@ -204,7 +204,7 @@ bb.ej:                                            ; preds = %bb.ds
 
 .noexc430:                                        ; preds = %.lr.ph.i426
   %i.tf = icmp eq i32 %i.te, 0
-  br i1 %i.tf, label %._crit_edge.loopexit.split.loop.exit14.i429, label %bb.ek
+  br i1 %i.tf, label %_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit431, label %bb.ek
 
 bb.ek:                                            ; preds = %.noexc430
   %indvars.iv.next.i428 = add nuw nsw i64 %indvars.iv.i427, 1 ; 2 uses
@@ -213,12 +213,8 @@ bb.ek:                                            ; preds = %.noexc430
   %i.ti = icmp slt i64 %indvars.iv.next.i428, %i.th
   br i1 %i.ti, label %.lr.ph.i426, label %_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit431, !llvm.loop !54
 
-._crit_edge.loopexit.split.loop.exit14.i429:      ; preds = %.noexc430
-  %19 = and i64 %indvars.iv.i427, 4294967295
-  br label %_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit431
-
-_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit431: ; preds = %bb.ek, %._crit_edge.loopexit.split.loop.exit14.i429, %bb.ej
-  %spec.store.select = phi i64 [ 0, %bb.ej ], [ %19, %._crit_edge.loopexit.split.loop.exit14.i429 ], [ 0, %bb.ek ]
+_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit431: ; preds = %bb.ek, %.noexc430, %bb.ej
+  %spec.store.select = phi i64 [ 0, %bb.ej ], [ 0, %bb.ek ], [ %indvars.iv.i427, %.noexc430 ]
   %i.tj = load ptr, ptr %i.sy, align 8, !tbaa !52
   %i.tk = getelementptr inbounds nuw [8 x i8], ptr %i.tj, i64 %spec.store.select
   %i.tl = load ptr, ptr %i.tk, align 8, !tbaa !53 ; 2 uses

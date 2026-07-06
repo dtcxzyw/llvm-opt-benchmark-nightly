@@ -203,6 +203,7 @@ bb.a:
   %i.l = sext i32 %i.j to i64
   %i.m = sext i32 %i.i to i64
   %wide.trip.count = zext nneg i32 %i.b to i64
+  %2 = sext i32 %i.g to i64
   br label %.preheader110
 
 .preheader109:                                    ; preds = %bb.a
@@ -221,6 +222,7 @@ bb.a:
   %i.t = sext i32 %i.r to i64
   %i.u = sext i32 %i.q to i64
   %wide.trip.count127 = zext nneg i32 %i.b to i64
+  %3 = sext i32 %i.o to i64
   br label %.preheader
 
 .preheader110:                                    ; preds = %.preheader110.preheader, %._crit_edge
@@ -237,8 +239,6 @@ bb.b:                                             ; preds = %.preheader110, %bb.
   %i.y = tail call i32 @llvm.usub.sat.i32(i32 %i.w, i32 1)
   %i.z = icmp samesign ult i64 %indvars.iv, %i.k
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %2 = trunc nuw nsw i64 %indvars.iv.next to i32
-  %3 = select i1 %i.z, i32 %2, i32 %i.g
   %i.aa = icmp slt i64 %indvars.iv, %i.l
   %i.ab = trunc i64 %indvars.iv to i32
   %i.ac = add i32 %i.ab, 2
@@ -273,7 +273,7 @@ bb.b:                                             ; preds = %.preheader110, %bb.
   %i.be = add nuw nsw i32 %i.bd, %i.az
   %.neg108 = mul nsw i32 %i.be, -52
   %i.bf = zext i8 %i.aj to i32
-  %4 = sext i32 %3 to i64
+  %4 = select i1 %i.z, i64 %indvars.iv.next, i64 %2
   %i.bg = getelementptr inbounds i8, ptr %.0116, i64 %4
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !13
   %i.bi = zext i8 %i.bh to i32
@@ -316,8 +316,6 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.ce = tail call i32 @llvm.usub.sat.i32(i32 %i.cb, i32 1)
   %i.cf = icmp samesign ult i64 %indvars.iv124, %i.s
   %indvars.iv.next125 = add nuw nsw i64 %indvars.iv124, 1 ; 3 uses
-  %5 = trunc nuw nsw i64 %indvars.iv.next125 to i32
-  %6 = select i1 %i.cf, i32 %5, i32 %i.o
   %i.cg = icmp slt i64 %indvars.iv124, %i.t
   %i.ch = trunc i64 %indvars.iv124 to i32
   %i.ci = add i32 %i.ch, 2
@@ -346,8 +344,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !13
   %i.df = zext i8 %i.de to i32
   %i.dg = mul nuw nsw i32 %i.df, 228
-  %7 = sext i32 %6 to i64
-  %i.dh = getelementptr inbounds i8, ptr %.1121, i64 %7 ; 2 uses
+  %5 = select i1 %i.cf, i64 %indvars.iv.next125, i64 %3
+  %i.dh = getelementptr inbounds i8, ptr %.1121, i64 %5 ; 2 uses
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !13
   %i.dj = zext i8 %i.di to i32
   %.neg105 = mul nsw i32 %i.dj, -37

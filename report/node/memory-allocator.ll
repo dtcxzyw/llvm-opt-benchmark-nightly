@@ -201,9 +201,8 @@ _ZNK2v88internal15MemoryAllocator14page_allocatorENS0_15AllocationSpaceE.exit: ;
   %i.f = trunc nuw i8 %i.e to i1
   %.not54 = select i1 %i.d, i1 true, i1 %i.f
   %i.g = select i1 %.not54, i32 2, i32 3          ; 2 uses
-  %spec.select = and i8 %9, 1                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #16
-  call void @_ZN2v88internal13VirtualMemoryC1EPNS_13PageAllocatorEmNS2_14AllocationHintEmNS2_10PermissionE(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef %.0.i, i64 noundef %1, ptr %6, i8 %spec.select, i64 noundef %3, i32 noundef %i.g) #16
+  call void @_ZN2v88internal13VirtualMemoryC1EPNS_13PageAllocatorEmNS2_14AllocationHintEmNS2_10PermissionE(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef %.0.i, i64 noundef %1, ptr %6, i8 %9, i64 noundef %3, i32 noundef %i.g) #16
   %i.h = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 5 uses
   %i.i = load i64, ptr %i.h, align 8              ; 3 uses
   %.not = icmp eq i64 %i.i, 0
@@ -246,7 +245,7 @@ _ZNSt8optionalIN2v88internal13VirtualMemoryEEaSIS2_EENSt9enable_ifIX7__and_vISt6
   call void @_ZN2v88internal13VirtualMemory5ResetEv(ptr noundef nonnull align 8 dereferenceable(24) %10) #16
   store i8 1, ptr %i.r, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #16
-  call void @_ZN2v88internal13VirtualMemoryC1EPNS_13PageAllocatorEmNS2_14AllocationHintEmNS2_10PermissionE(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef %.0.i, i64 noundef %1, ptr %6, i8 %spec.select, i64 noundef %3, i32 noundef %i.g) #16
+  call void @_ZN2v88internal13VirtualMemoryC1EPNS_13PageAllocatorEmNS2_14AllocationHintEmNS2_10PermissionE(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef %.0.i, i64 noundef %1, ptr %6, i8 %9, i64 noundef %3, i32 noundef %i.g) #16
   %i.x = load ptr, ptr %11, align 8
   store ptr %i.x, ptr %10, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %11, i64 8

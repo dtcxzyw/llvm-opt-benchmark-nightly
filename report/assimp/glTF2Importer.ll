@@ -204,14 +204,14 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
 
 .lr.ph.i:                                         ; preds = %.loopexit55
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %i.au = load ptr, ptr %i.at, align 8            ; 2 uses
+  %i.au = load ptr, ptr %i.at, align 8
   %i.av = zext i32 %i.an to i64
   %wide.trip.count.i = zext i32 %i.as to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.i ] ; 4 uses
-  %i.aw = getelementptr inbounds nuw [56 x i8], ptr %i.au, i64 %indvars.iv.i ; 5 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.i ] ; 3 uses
+  %i.aw = getelementptr inbounds nuw [56 x i8], ptr %i.au, i64 %indvars.iv.i ; 6 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 14
   %i.ay = load i16, ptr %i.ax, align 2
   %i.az = and i16 %i.ay, 4096
@@ -246,9 +246,7 @@ bb.j:                                             ; preds = %bb.h
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.bp = load i32, ptr %i.bo, align 8            ; 3 uses
   %.not46 = icmp eq i32 %i.bp, 0
-  %6 = and i64 %indvars.iv.i, 4294967295
-  %7 = getelementptr inbounds nuw [56 x i8], ptr %i.au, i64 %6
-  %i.bq = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.br = load ptr, ptr %i.bq, align 8            ; 2 uses
   br i1 %.not46, label %bb.l, label %bb.k
 
@@ -276,8 +274,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   br i1 %.not47, label %bb.w, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %8 = and i64 %indvars.iv.i, 4294967295
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 %8
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 %indvars.iv.i
   store i8 1, ptr %i.cd, align 1
   br label %bb.w
 
@@ -680,7 +677,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZNK10aiMetadata3GetI8aiStringEEbjRT_.exit
 
 _ZNK10aiMetadata3GetI8aiStringEEbjRT_.exit:       ; preds = %bb.j, %bb.k
-  %i.do = phi i32 [ 0, %bb.j ], [ %spec.select.i.i, %bb.k ] ; 2 uses
+  %i.do = phi i32 [ %spec.select.i.i, %bb.k ], [ 0, %bb.j ] ; 2 uses
   %i.dp = call noalias noundef nonnull dereferenceable(1028) ptr @_Znwm(i64 noundef 1028) #37 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 4 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %i.dq, i8 0, i64 1024, i1 false)

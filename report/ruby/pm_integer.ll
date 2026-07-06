@@ -204,11 +204,10 @@ bb.ao:                                            ; preds = %bb.am
 .lr.ph263:                                        ; preds = %.lr.ph263.preheader, %.lr.ph263
   %.0171261 = phi i64 [ %i.hm, %.lr.ph263 ], [ %i.gs, %.lr.ph263.preheader ] ; 2 uses
   %.1174260.in = phi i64 [ %i.hl, %.lr.ph263 ], [ %i.hc, %.lr.ph263.preheader ]
-  %16 = and i64 %.1174260.in, 4294967295
   %i.hf = getelementptr [4 x i8], ptr %i.gn, i64 %.0171261 ; 2 uses
   %i.hg = load i32, ptr %i.hf, align 4, !tbaa !7
   %i.hh = zext i32 %i.hg to i64
-  %i.hi = add nuw nsw i64 %16, %i.hh              ; 3 uses
+  %i.hi = add nuw nsw i64 %.1174260.in, %i.hh     ; 3 uses
   %i.hj = urem i64 %i.hi, %3
   %i.hk = trunc nuw i64 %i.hj to i32
   store i32 %i.hk, ptr %i.hf, align 4, !tbaa !7

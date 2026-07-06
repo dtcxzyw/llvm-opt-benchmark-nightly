@@ -204,9 +204,8 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 rbimpl_size_mul_or_raise.exit:                    ; preds = %bb.h
-  %i.af = shl nuw i64 %.0.i.i, 3
-  %3 = and i64 %i.af, 34359738360                 ; 2 uses
-  %i.ag = alloca i8, i64 %3, align 16             ; 2 uses
+  %i.af = shl nuw nsw i64 %.0.i.i, 3              ; 2 uses
+  %i.ag = alloca i8, i64 %i.af, align 16          ; 2 uses
   br i1 %.not.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %rbimpl_size_mul_or_raise.exit
@@ -224,7 +223,7 @@ rbimpl_size_mul_or_raise.exit18:                  ; preds = %bb.k, %bb.j
   br i1 %.not.i19, label %ruby_nonempty_memcpy.exit, label %bb.l
 
 bb.l:                                             ; preds = %rbimpl_size_mul_or_raise.exit18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 %i.ag, ptr noundef nonnull readonly align 1 %.0.i16, i64 noundef %3, i1 noundef false) #23
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 %i.ag, ptr noundef nonnull readonly align 1 %.0.i16, i64 noundef %i.af, i1 noundef false) #23
   br label %ruby_nonempty_memcpy.exit
 
 ruby_nonempty_memcpy.exit:                        ; preds = %rbimpl_size_mul_or_raise.exit18, %bb.l
@@ -627,9 +626,8 @@ bb.e:                                             ; preds = %RARRAY_LENINT.exit
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !70   ; 2 uses
   %i.v = getelementptr i8, ptr %i.u, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !73
-  %4 = shl nsw i64 %.0.i.i, 3
-  %5 = getelementptr i8, ptr %i.w, i64 %4
-  %i.x = getelementptr i8, ptr %5, i64 56
+  %4 = getelementptr [8 x i8], ptr %i.w, i64 %.0.i.i
+  %i.x = getelementptr i8, ptr %4, i64 56
   %.not22 = icmp ugt ptr %i.u, %i.x
   br i1 %.not22, label %.preheader, label %bb.f, !prof !72
 
@@ -1032,9 +1030,8 @@ rb_array_const_ptr.exit.i:                        ; preds = %bb.n, %bb.m
   %i.am = getelementptr i8, ptr %2, i64 36
   store i8 0, ptr %i.am, align 4, !tbaa !231
   %i.an = getelementptr i8, ptr %i.b, i64 -16     ; 6 uses
-  %3 = shl nsw i64 %.0.i.i.i, 3
-  %4 = getelementptr i8, ptr %i.b, i64 %3
-  %i.ao = getelementptr i8, ptr %4, i64 56
+  %3 = getelementptr [8 x i8], ptr %i.b, i64 %.0.i.i.i
+  %i.ao = getelementptr i8, ptr %3, i64 56
   %.not.i21 = icmp ugt ptr %1, %i.ao
   br i1 %.not.i21, label %.preheader.i, label %bb.o, !prof !72
 
@@ -1302,9 +1299,8 @@ rb_array_const_ptr.exit.i:                        ; preds = %bb.m, %bb.l
   %i.am = getelementptr i8, ptr %2, i64 36
   store i8 0, ptr %i.am, align 4, !tbaa !231
   %i.an = getelementptr i8, ptr %i.b, i64 -24     ; 6 uses
-  %3 = shl nsw i64 %.0.i.i.i, 3
-  %4 = getelementptr i8, ptr %i.b, i64 %3
-  %i.ao = getelementptr i8, ptr %4, i64 56
+  %3 = getelementptr [8 x i8], ptr %i.b, i64 %.0.i.i.i
+  %i.ao = getelementptr i8, ptr %3, i64 56
   %.not.i = icmp ugt ptr %1, %i.ao
   br i1 %.not.i, label %.preheader.i, label %bb.n, !prof !72
 

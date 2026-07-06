@@ -203,8 +203,6 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph229.preheader:                              ; preds = %.preheader200
   %i.jq = zext nneg i32 %2 to i64
-  %sext = shl i64 %indvars.iv.next259, 32
-  %6 = ashr exact i64 %sext, 32
   %invariant.op304 = add i32 %i.i, -4096
   br label %.lr.ph229
 
@@ -289,7 +287,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 _ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread: ; preds = %bb.ac, %bb.af, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit, %bb.ai
   %.2126 = phi i32 [ %i.kr, %bb.ai ], [ %.1125227, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit ], [ %.1125227, %bb.af ], [ %.1125227, %bb.ac ] ; 2 uses
-  %i.ku = icmp slt i64 %6, %indvars.iv.next264
+  %i.ku = icmp slt i64 %indvars.iv.next259, %indvars.iv.next264
   br i1 %i.ku, label %.lr.ph229, label %.thread182
 
 bb.aj:                                            ; preds = %.lr.ph224

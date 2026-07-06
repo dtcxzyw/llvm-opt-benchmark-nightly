@@ -204,10 +204,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEEaNS1_15ConstantCheckerIJiaEEEJiaEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEEaNS0_15ConstantCheckerIJiaEEEJiaEEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !85
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !85
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
@@ -610,10 +609,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEEsNS1_15ConstantCheckerIJisEEEJisEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEEsNS0_15ConstantCheckerIJisEEEJisEEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !1436
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !1436
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
@@ -1016,10 +1014,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEEiNS1_15ConstantCheckerIJiiEEEJiiEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEEiNS0_15ConstantCheckerIJiiEEEJiiEEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !2003
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !2003
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
@@ -1422,10 +1419,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEElNS1_15ConstantCheckerIJilEEEJilEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEElNS0_15ConstantCheckerIJilEEEJilEEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !2546
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !2546
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
@@ -1828,10 +1824,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEENS1_7VarcharENS1_15ConstantCheckerIJiSB_EEEJiSB_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEENS0_7VarcharENS0_15ConstantCheckerIJiSA_EEEJiSA_EEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !3106
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !3106
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
@@ -2234,10 +2229,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEENS1_9VarbinaryENS1_15ConstantCheckerIJiSB_EEEJiSB_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEENS0_9VarbinaryENS0_15ConstantCheckerIJiSA_EEEJiSA_EEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !3792
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !3792
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
@@ -2640,10 +2634,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEENS1_11LongDecimalINS1_15IntegerVariableILm1EEENSC_ILm5EEEEENS1_15ConstantCheckerIJiSF_EEEJiSF_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEENS0_11LongDecimalINS0_15IntegerVariableILm1EEENSB_ILm5EEEEENS0_15ConstantCheckerIJiSE_EEEJiSE_EEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !4502
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !4502
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses
@@ -3046,10 +3039,9 @@ bb.a:
   store i32 1, ptr %i.c, align 4, !tbaa !35
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIKN8facebook5velox4core22SimpleFunctionMetadataINS1_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS1_4exec10VectorExecEEENS1_12ShortDecimalINS1_15IntegerVariableILm1EEENSC_ILm5EEEEENS1_15ConstantCheckerIJiSF_EEEJiSF_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !36
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %18 = and i8 %.0.val, 1
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN8facebook5velox4core22SimpleFunctionMetadataINS0_9functions7iceberg12_GLOBAL__N_116TruncateFunctionINS0_4exec10VectorExecEEENS0_12ShortDecimalINS0_15IntegerVariableILm1EEENSB_ILm5EEEEENS0_15ConstantCheckerIJiSE_EEEJiSE_EEE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i8 %18, ptr %i.e, align 8, !tbaa !5091
+  store i8 %.0.val, ptr %i.e, align 8, !tbaa !5091
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 3 uses

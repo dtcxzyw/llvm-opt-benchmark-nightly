@@ -201,7 +201,7 @@ bb.t:                                             ; preds = %bb.r, %bb.q, %bb.o,
 
 bb.u:                                             ; preds = %.lr.ph, %bb.v
   %indvars.iv272 = phi i32 [ %i.ba, %.lr.ph ], [ %indvars.iv.next273, %bb.v ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.bd, %.lr.ph ], [ %indvars.iv.next, %bb.v ] ; 7 uses
+  %indvars.iv = phi i64 [ %i.bd, %.lr.ph ], [ %indvars.iv.next, %bb.v ] ; 11 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.063, i64 %indvars.iv
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !15
   %i.bg = sext i8 %i.bf to i64
@@ -281,19 +281,18 @@ bb.ac:                                            ; preds = %bb.ab, %bb.w
 bb.ad:                                            ; preds = %bb.u
   %i.by = trunc nuw nsw i64 %indvars.iv to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
-  %10 = and i64 %indvars.iv, 4294967295           ; 5 uses
   store ptr %i.l, ptr %3, align 8, !tbaa !17
   %i.bz = icmp samesign ugt i64 %indvars.iv, 15
   br i1 %i.bz, label %bb.ae, label %._crit_edge.i.i106
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ca = add nuw nsw i64 %10, 1
+  %i.ca = add nuw nsw i64 %indvars.iv, 1
   %i.cb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ca) #26
           to label %._crit_edge.i.i106.thread unwind label %bb.aq ; 2 uses
 
 ._crit_edge.i.i106.thread:                        ; preds = %bb.ae
   store ptr %i.cb, ptr %3, align 8, !tbaa !10
-  store i64 %10, ptr %i.l, align 8, !tbaa !15
+  store i64 %indvars.iv, ptr %i.l, align 8, !tbaa !15
   br label %bb.ag
 
 ._crit_edge.i.i106:                               ; preds = %bb.ad
@@ -307,13 +306,13 @@ bb.af:                                            ; preds = %._crit_edge.i.i106
 
 bb.ag:                                            ; preds = %._crit_edge.i.i106.thread, %._crit_edge.i.i106
   %i.cd = phi ptr [ %i.cb, %._crit_edge.i.i106.thread ], [ %i.l, %._crit_edge.i.i106 ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cd, ptr nonnull align 1 %.063, i64 %10, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cd, ptr nonnull align 1 %.063, i64 %indvars.iv, i1 false)
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.ce = phi ptr [ %i.cd, %bb.ag ], [ %i.l, %bb.af ]
-  store i64 %10, ptr %i.m, align 8, !tbaa !18
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 %10
+  store i64 %indvars.iv, ptr %i.m, align 8, !tbaa !18
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 %indvars.iv
   store i8 0, ptr %i.cf, align 1, !tbaa !15
   %i.cg = load ptr, ptr %3, align 8, !tbaa !10    ; 3 uses
   %i.ch = load i64, ptr %i.m, align 8, !tbaa !18  ; 6 uses

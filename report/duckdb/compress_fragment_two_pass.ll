@@ -204,16 +204,12 @@ _ZL7IsMatchPKhS0_m.exit13.thread:                 ; preds = %_ZL7IsMatchPKhS0_m.
   %i.l = sext i32 %.0276.i.fr to i64
   %i.m = sub nsw i64 0, %i.l
   %i.n = icmp sgt i32 %.0276.i.fr, 0
-  br i1 %i.n, label %.split.us.preheader, label %.split, !prof !409
+  br i1 %i.n, label %.split.us, label %.split, !prof !409
 
-.split.us.preheader:                              ; preds = %_ZL7IsMatchPKhS0_m.exit13.thread
-  %.0281.i = trunc nuw nsw i64 %.0281.i.in to i32
-  br label %.split.us
-
-.split.us:                                        ; preds = %.split.us.preheader, %.loopexit.split.us206
-  %.0287.i.us = phi ptr [ %i.s, %.loopexit.split.us206 ], [ %.0.i9, %.split.us.preheader ] ; 2 uses
-  %.0285.i.us = phi i32 [ %i.t, %.loopexit.split.us206 ], [ 32, %.split.us.preheader ] ; 2 uses
-  %.1282.i.us = phi i32 [ %8, %.loopexit.split.us206 ], [ %.0281.i, %.split.us.preheader ]
+.split.us:                                        ; preds = %_ZL7IsMatchPKhS0_m.exit13.thread, %.loopexit.split.us206
+  %.0287.i.us = phi ptr [ %i.s, %.loopexit.split.us206 ], [ %.0.i9, %_ZL7IsMatchPKhS0_m.exit13.thread ] ; 2 uses
+  %.0285.i.us = phi i32 [ %i.t, %.loopexit.split.us206 ], [ 32, %_ZL7IsMatchPKhS0_m.exit13.thread ] ; 2 uses
+  %.1282.i.us = phi i64 [ %i.v, %.loopexit.split.us206 ], [ %.0281.i.in, %_ZL7IsMatchPKhS0_m.exit13.thread ]
   %i.o = lshr i32 %.0285.i.us, 5
   %i.p = zext nneg i32 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %.0287.i.us, i64 %i.p ; 2 uses
@@ -223,13 +219,12 @@ _ZL7IsMatchPKhS0_m.exit13.thread:                 ; preds = %_ZL7IsMatchPKhS0_m.
 .lr.ph.us:                                        ; preds = %.split.us, %.backedge.us212
   %i.s = phi ptr [ %i.bi, %.backedge.us212 ], [ %i.q, %.split.us ] ; 4 uses
   %.in285 = phi i32 [ %i.t, %.backedge.us212 ], [ %.0285.i.us, %.split.us ]
-  %.2283.i181.us195 = phi i32 [ %8, %.backedge.us212 ], [ %.1282.i.us, %.split.us ] ; 2 uses
+  %.2283.i181.us195 = phi i64 [ %i.v, %.backedge.us212 ], [ %.1282.i.us, %.split.us ] ; 2 uses
   %.1288.i180.us196 = phi ptr [ %i.s, %.backedge.us212 ], [ %.0287.i.us, %.split.us ] ; 10 uses
   %i.t = add i32 %.in285, 1                       ; 3 uses
   %.0.copyload.i41.us197 = load i64, ptr %i.s, align 1
   %i.u = mul i64 %.0.copyload.i41.us197, 33215796281344
-  %i.v = lshr i64 %i.u, 48
-  %8 = trunc nuw nsw i64 %i.v to i32              ; 2 uses
+  %i.v = lshr i64 %i.u, 48                        ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %.1288.i180.us196, i64 %i.m ; 4 uses
   %.0.copyload.i50.us198 = load i32, ptr %.1288.i180.us196, align 1
   %.0.copyload.i49.us199 = load i32, ptr %i.w, align 1
@@ -253,8 +248,7 @@ _ZL7IsMatchPKhS0_m.exit15.us200:                  ; preds = %bb.d
   br i1 %i.ah, label %bb.f, label %_ZL7IsMatchPKhS0_m.exit15.thread.us201, !prof !409
 
 _ZL7IsMatchPKhS0_m.exit15.thread.us201:           ; preds = %_ZL7IsMatchPKhS0_m.exit15.us200, %bb.d, %.lr.ph.us
-  %9 = zext nneg i32 %.2283.i181.us195 to i64
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %9 ; 2 uses
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.2283.i181.us195 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3
   %i.ak = sext i32 %i.aj to i64
   %i.al = getelementptr inbounds i8, ptr %1, i64 %i.ak ; 4 uses
@@ -287,8 +281,7 @@ bb.f:                                             ; preds = %_ZL7IsMatchPKhS0_m.
   %i.az = ptrtoint ptr %.1288.i180.us196 to i64   ; 2 uses
   %i.ba = sub i64 %i.az, %i.a
   %i.bb = trunc i64 %i.ba to i32
-  %10 = zext nneg i32 %.2283.i181.us195 to i64
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %10
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.2283.i181.us195
   store i32 %i.bb, ptr %i.bc, align 4, !tbaa !3
   br label %.loopexit.split.us206
 
@@ -691,16 +684,12 @@ _ZL7IsMatchPKhS0_m.exit13.thread:                 ; preds = %_ZL7IsMatchPKhS0_m.
   %i.l = sext i32 %.0276.i.fr to i64
   %i.m = sub nsw i64 0, %i.l
   %i.n = icmp sgt i32 %.0276.i.fr, 0
-  br i1 %i.n, label %.split.us.preheader, label %.split, !prof !409
+  br i1 %i.n, label %.split.us, label %.split, !prof !409
 
-.split.us.preheader:                              ; preds = %_ZL7IsMatchPKhS0_m.exit13.thread
-  %.0281.i = trunc nuw nsw i64 %.0281.i.in to i32
-  br label %.split.us
-
-.split.us:                                        ; preds = %.split.us.preheader, %.loopexit.split.us206
-  %.0287.i.us = phi ptr [ %i.s, %.loopexit.split.us206 ], [ %.0.i9, %.split.us.preheader ] ; 2 uses
-  %.0285.i.us = phi i32 [ %i.t, %.loopexit.split.us206 ], [ 32, %.split.us.preheader ] ; 2 uses
-  %.1282.i.us = phi i32 [ %8, %.loopexit.split.us206 ], [ %.0281.i, %.split.us.preheader ]
+.split.us:                                        ; preds = %_ZL7IsMatchPKhS0_m.exit13.thread, %.loopexit.split.us206
+  %.0287.i.us = phi ptr [ %i.s, %.loopexit.split.us206 ], [ %.0.i9, %_ZL7IsMatchPKhS0_m.exit13.thread ] ; 2 uses
+  %.0285.i.us = phi i32 [ %i.t, %.loopexit.split.us206 ], [ 32, %_ZL7IsMatchPKhS0_m.exit13.thread ] ; 2 uses
+  %.1282.i.us = phi i64 [ %i.v, %.loopexit.split.us206 ], [ %.0281.i.in, %_ZL7IsMatchPKhS0_m.exit13.thread ]
   %i.o = lshr i32 %.0285.i.us, 5
   %i.p = zext nneg i32 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %.0287.i.us, i64 %i.p ; 2 uses
@@ -710,13 +699,12 @@ _ZL7IsMatchPKhS0_m.exit13.thread:                 ; preds = %_ZL7IsMatchPKhS0_m.
 .lr.ph.us:                                        ; preds = %.split.us, %.backedge.us212
   %i.s = phi ptr [ %i.bi, %.backedge.us212 ], [ %i.q, %.split.us ] ; 4 uses
   %.in285 = phi i32 [ %i.t, %.backedge.us212 ], [ %.0285.i.us, %.split.us ]
-  %.2283.i181.us195 = phi i32 [ %8, %.backedge.us212 ], [ %.1282.i.us, %.split.us ] ; 2 uses
+  %.2283.i181.us195 = phi i64 [ %i.v, %.backedge.us212 ], [ %.1282.i.us, %.split.us ] ; 2 uses
   %.1288.i180.us196 = phi ptr [ %i.s, %.backedge.us212 ], [ %.0287.i.us, %.split.us ] ; 10 uses
   %i.t = add i32 %.in285, 1                       ; 3 uses
   %.0.copyload.i41.us197 = load i64, ptr %i.s, align 1
   %i.u = mul i64 %.0.copyload.i41.us197, 33215796281344
-  %i.v = lshr i64 %i.u, 47
-  %8 = trunc nuw nsw i64 %i.v to i32              ; 2 uses
+  %i.v = lshr i64 %i.u, 47                        ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %.1288.i180.us196, i64 %i.m ; 4 uses
   %.0.copyload.i50.us198 = load i32, ptr %.1288.i180.us196, align 1
   %.0.copyload.i49.us199 = load i32, ptr %i.w, align 1
@@ -740,8 +728,7 @@ _ZL7IsMatchPKhS0_m.exit15.us200:                  ; preds = %bb.d
   br i1 %i.ah, label %bb.f, label %_ZL7IsMatchPKhS0_m.exit15.thread.us201, !prof !409
 
 _ZL7IsMatchPKhS0_m.exit15.thread.us201:           ; preds = %_ZL7IsMatchPKhS0_m.exit15.us200, %bb.d, %.lr.ph.us
-  %9 = zext nneg i32 %.2283.i181.us195 to i64
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %9 ; 2 uses
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.2283.i181.us195 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3
   %i.ak = sext i32 %i.aj to i64
   %i.al = getelementptr inbounds i8, ptr %1, i64 %i.ak ; 4 uses
@@ -774,8 +761,7 @@ bb.f:                                             ; preds = %_ZL7IsMatchPKhS0_m.
   %i.az = ptrtoint ptr %.1288.i180.us196 to i64   ; 2 uses
   %i.ba = sub i64 %i.az, %i.a
   %i.bb = trunc i64 %i.ba to i32
-  %10 = zext nneg i32 %.2283.i181.us195 to i64
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %10
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.2283.i181.us195
   store i32 %i.bb, ptr %i.bc, align 4, !tbaa !3
   br label %.loopexit.split.us206
 

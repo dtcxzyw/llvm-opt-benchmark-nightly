@@ -204,7 +204,7 @@ declare void @_ZSt9terminatev() local_unnamed_addr #9
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZL17outputEscapedCharR12OutputStreamj(ptr nofree noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1) unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [17 x i8], align 16               ; 7 uses
+  %i.a = alloca [17 x i8], align 16               ; 6 uses
   switch i32 %1, label %bb.af [
     i32 39, label %bb.b
     i32 34, label %bb.e
@@ -607,9 +607,9 @@ bb.an:                                            ; preds = %bb.aj
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %bb.an
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 14, %bb.an ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 14, %bb.an ] ; 3 uses
   %.01226.i = phi i32 [ %i.fq, %.preheader.i ], [ %1, %bb.an ] ; 2 uses
-  %i.fc = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv
+  %i.fc = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv ; 3 uses
   %i.fd = trunc i32 %.01226.i to i8               ; 3 uses
   %i.fe = and i8 %i.fd, 15                        ; 3 uses
   %i.ff = icmp samesign ult i8 %i.fe, 10
@@ -626,11 +626,10 @@ bb.an:                                            ; preds = %bb.aj
   %i.fp = select i1 %i.fm, i8 %i.fn, i8 %i.fo
   store i8 %i.fp, ptr %i.fk, align 1, !tbaa !9
   %i.fq = lshr i32 %.01226.i, 8                   ; 2 uses
-  %2 = getelementptr i8, ptr %i.a, i64 %indvars.iv ; 2 uses
-  %i.fr = getelementptr i8, ptr %2, i64 -2
+  %i.fr = getelementptr i8, ptr %i.fc, i64 -2
   store i8 120, ptr %i.fr, align 2, !tbaa !9
   %indvars.iv.next = add nsw i64 %indvars.iv, -4  ; 2 uses
-  %i.fs = getelementptr i8, ptr %2, i64 -3
+  %i.fs = getelementptr i8, ptr %i.fc, i64 -3
   store i8 92, ptr %i.fs, align 1, !tbaa !9
   %.not.i = icmp eq i32 %i.fq, 0
   br i1 %.not.i, label %bb.ao, label %.preheader.i, !llvm.loop !168

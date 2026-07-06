@@ -204,8 +204,7 @@ bb.a:
   %i.g = trunc nuw i8 %i.f to i1
   %i.h = load ptr, ptr %0, align 8, !tbaa !825, !nonnull !77 ; 2 uses
   %i.i = load i8, ptr %i.h, align 1, !tbaa !74, !range !76, !noundef !77
-  %2 = and i8 %i.f, 1
-  %i.j = or i8 %i.i, %2
+  %i.j = or i8 %i.i, %i.f
   store i8 %i.j, ptr %i.h, align 1, !tbaa !74
   %.0.i.i.i.i = select i1 %i.g, i64 %i.e, i64 0
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %Check_Type.exit
   br label %rb_array_len.exit.i
 
 rb_array_len.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i64 [ %i.m, %bb.b ], [ %i.o, %bb.c ] ; 9 uses
+  %.0.i.i = phi i64 [ %i.m, %bb.b ], [ %i.o, %bb.c ] ; 10 uses
   %i.p = add i64 %.0.i.i, 2147483648
   %.not.i1.i = icmp ult i64 %i.p, 4294967296
   br i1 %.not.i1.i, label %RARRAY_LENINT.exit, label %bb.d
@@ -238,13 +238,12 @@ bb.f:                                             ; preds = %maxgroups.exit
   unreachable
 
 bb.g:                                             ; preds = %maxgroups.exit
-  %sext = shl nsw i64 %.0.i.i, 32                 ; 2 uses
   %i.aa = icmp ult i64 %.0.i.i, 256
   br i1 %i.aa, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   store i64 0, ptr %i.a, align 8, !tbaa !47
-  %2 = lshr exact i64 %sext, 30
+  %2 = shl nuw nsw i64 %.0.i.i, 2
   %i.ab = alloca i8, i64 %2, align 16
   br label %bb.k
 
@@ -257,7 +256,7 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.i
-  %3 = lshr exact i64 %sext, 30                   ; 2 uses
+  %3 = shl nuw nsw i64 %.0.i.i, 2                 ; 2 uses
   %i.ad = add nuw nsw i64 %3, 4
   %i.ae = lshr i64 %i.ad, 3
   %i.af = call noalias nonnull ptr @rb_alloc_tmp_buffer_with_count(ptr noundef nonnull %i.a, i64 noundef %3, i64 noundef %i.ae) #29
@@ -265,8 +264,8 @@ rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.i
 
 bb.k:                                             ; preds = %rb_alloc_tmp_buffer2.exit, %bb.h
   %i.ag = phi ptr [ %i.ab, %bb.h ], [ %i.af, %rb_alloc_tmp_buffer2.exit ] ; 2 uses
-  %4 = icmp sgt i64 %.0.i.i, 0
-  br i1 %4, label %.lr.ph, label %._crit_edge.thread
+  %.not28 = icmp eq i64 %.0.i.i, 0
+  br i1 %.not28, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.k
   %i.ah = getelementptr i8, ptr %i.g, i64 16

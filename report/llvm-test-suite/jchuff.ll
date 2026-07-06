@@ -15,7 +15,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local void @jpeg_make_c_derived_tbl(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [257 x i8], align 16              ; 25 uses
+  %i.a = alloca [257 x i8], align 16              ; 24 uses
   %i.b = alloca [257 x i32], align 16             ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
@@ -313,26 +313,22 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph48:                                         ; preds = %.lr.ph48.preheader, %.lr.ph48
   %indvars.iv = phi i64 [ %i.dg, %.lr.ph48.preheader ], [ %indvars.iv.next, %.lr.ph48 ] ; 2 uses
   %.147 = phi i32 [ %.055, %.lr.ph48.preheader ], [ %i.di, %.lr.ph48 ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 4 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
   %i.dh = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv
   store i32 %.147, ptr %i.dh, align 4, !tbaa !4
   %i.di = add i32 %.147, 1                        ; 2 uses
   %i.dj = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
-  %i.dk = load i8, ptr %i.dj, align 1, !tbaa !30
+  %i.dk = load i8, ptr %i.dj, align 1, !tbaa !30  ; 2 uses
   %i.dl = sext i8 %i.dk to i32
   %i.dm = icmp eq i32 %.03454, %i.dl
   br i1 %i.dm, label %.lr.ph48, label %._crit_edge49.loopexit, !llvm.loop !31
 
 ._crit_edge49.loopexit:                           ; preds = %.lr.ph48
   %i.dn = trunc nsw i64 %indvars.iv.next to i32
-  %sext = shl i64 %indvars.iv.next, 32
-  %.pre = ashr exact i64 %sext, 32
-  %.phi.trans.insert = getelementptr inbounds i8, ptr %i.a, i64 %.pre
-  %.pre69 = load i8, ptr %.phi.trans.insert, align 1, !tbaa !30
   br label %._crit_edge49
 
 ._crit_edge49:                                    ; preds = %._crit_edge49.loopexit, %.preheader
-  %i.do = phi i8 [ %.pre69, %._crit_edge49.loopexit ], [ %i.dd, %.preheader ] ; 2 uses
+  %i.do = phi i8 [ %i.dk, %._crit_edge49.loopexit ], [ %i.dd, %.preheader ] ; 2 uses
   %.3.lcssa = phi i32 [ %i.dn, %._crit_edge49.loopexit ], [ %.253, %.preheader ]
   %.1.lcssa = phi i32 [ %i.di, %._crit_edge49.loopexit ], [ %.055, %.preheader ]
   %i.dp = shl i32 %.1.lcssa, 1

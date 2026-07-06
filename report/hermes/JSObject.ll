@@ -203,8 +203,12 @@ bb.k:                                             ; preds = %bb.a, %bb.j, %bb.i,
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden range(i32 0, 65536) i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %2, i32 noundef %3, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(8) %5) local_unnamed_addr #1 align 2 {
-bb.a:
+define hidden range(i32 0, 65536) i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %2, i32 noundef %3, ptr nofree nonnull readnone align 8 captures(none) %4, ptr noundef nonnull align 4 dereferenceable(8) %5) local_unnamed_addr #1 align 2 {
+  %7 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  br label %bb.a
+
+bb.a:                                             ; preds = %bb.r, %6
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %2, align 8, !tbaa !40 ; 2 uses
   %i.a = icmp ult i64 %.sroa.0.0.copyload.i.i.i, -1970324836974592
   br i1 %i.a, label %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit, label %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit.thread
@@ -260,9 +264,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   %.sroa.0.0.copyload.i.i.i11 = load i32, ptr %i.ab, align 4, !tbaa !3
-  %6 = ptrtoint ptr %1 to i64
   %i.ac = zext i32 %.sroa.0.0.copyload.i.i.i11 to i64
-  %i.ad = add i64 %i.ac, %6
+  %i.ad = add i64 %i.ac, %7
   %i.ae = inttoptr i64 %i.ad to ptr
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 10
   %i.ag = load i8, ptr %i.af, align 2
@@ -286,7 +289,6 @@ bb.f:                                             ; preds = %_ZN6hermes2vm20toAr
   %i.ao = inttoptr i64 %i.an to ptr
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 12
   %.sroa.0.0.copyload.i.i8.i.i.i = load i32, ptr %i.ap, align 4, !tbaa !3
-  %7 = ptrtoint ptr %1 to i64
   %i.aq = zext i32 %.sroa.0.0.copyload.i.i8.i.i.i to i64
   %i.ar = add i64 %i.aq, %7
   %i.as = inttoptr i64 %i.ar to ptr
@@ -306,7 +308,6 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond, label %_ZN6hermes2vm12_GLOBAL__N_137getOwnComputedPrimitiveDescriptorImplENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeENS2_INS0_11HermesValueEEENS3_11IgnoreProxyERNS0_8SymbolIDERNS0_13MutableHandleISA_EERNS0_26ComputedPropertyDescriptorE.exit, label %.critedge.i, !prof !369
 
 .critedge.i:                                      ; preds = %bb.g
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ba = load ptr, ptr %8, align 8, !tbaa !43    ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 192 ; 2 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !46 ; 4 uses
@@ -427,8 +428,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cx = and i32 %i.bl, -73
   store i32 %i.cx, ptr %i.bk, align 4
   tail call void @_ZN6hermes2vm8Callable20defineLazyPropertiesENS0_6HandleIS1_EERNS0_7RuntimeE(ptr nonnull %0, ptr noundef nonnull align 8 dereferenceable(9816) %1) #17
-  %9 = tail call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(8) %5)
-  br label %_ZN6hermes2vm12_GLOBAL__N_137getOwnComputedPrimitiveDescriptorImplENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeENS2_INS0_11HermesValueEEENS3_11IgnoreProxyERNS0_8SymbolIDERNS0_13MutableHandleISA_EERNS0_26ComputedPropertyDescriptorE.exit
+  br label %bb.a
 
 bb.s:                                             ; preds = %bb.q
   %i.cy = icmp eq i32 %3, 1
@@ -436,12 +436,12 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.cz = tail call i32 @_ZN6hermes2vm7JSProxy14getOwnPropertyENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeENS2_INS0_11HermesValueEEERNS0_26ComputedPropertyDescriptorEPNS0_13MutableHandleIS7_EE(ptr nonnull %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %2, ptr noundef nonnull align 4 dereferenceable(8) %5, ptr noundef null) #17
+  %9 = and i32 %i.cz, 65535
   br label %_ZN6hermes2vm12_GLOBAL__N_137getOwnComputedPrimitiveDescriptorImplENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeENS2_INS0_11HermesValueEEENS3_11IgnoreProxyERNS0_8SymbolIDERNS0_13MutableHandleISA_EERNS0_26ComputedPropertyDescriptorE.exit
 
-_ZN6hermes2vm12_GLOBAL__N_137getOwnComputedPrimitiveDescriptorImplENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeENS2_INS0_11HermesValueEEENS3_11IgnoreProxyERNS0_8SymbolIDERNS0_13MutableHandleISA_EERNS0_26ComputedPropertyDescriptorE.exit: ; preds = %bb.m, %bb.s, %bb.n, %bb.o, %bb.g, %bb.f, %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit.thread, %bb.e, %bb.r, %bb.t, %bb.p, %bb.c, %bb.d
-  %.sroa.064.6 = phi i32 [ 0, %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit.thread ], [ 257, %bb.d ], [ 257, %bb.f ], [ 1, %bb.e ], [ 1, %bb.c ], [ 1, %bb.g ], [ %9, %bb.r ], [ 1, %bb.n ], [ %i.cz, %bb.t ], [ 257, %bb.p ], [ 1, %bb.o ], [ 1, %bb.s ], [ 1, %bb.m ]
-  %.sroa.064.0.insert.ext = and i32 %.sroa.064.6, 65535
-  ret i32 %.sroa.064.0.insert.ext
+_ZN6hermes2vm12_GLOBAL__N_137getOwnComputedPrimitiveDescriptorImplENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeENS2_INS0_11HermesValueEEENS3_11IgnoreProxyERNS0_8SymbolIDERNS0_13MutableHandleISA_EERNS0_26ComputedPropertyDescriptorE.exit: ; preds = %bb.g, %bb.f, %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit.thread, %bb.e, %bb.m, %bb.s, %bb.n, %bb.o, %bb.t, %bb.p, %bb.c, %bb.d
+  %.sroa.064.6 = phi i32 [ 1, %bb.n ], [ 257, %bb.d ], [ %9, %bb.t ], [ 257, %bb.p ], [ 1, %bb.c ], [ 1, %bb.o ], [ 1, %bb.s ], [ 1, %bb.m ], [ 1, %bb.e ], [ 1, %bb.g ], [ 257, %bb.f ], [ 0, %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit.thread ]
+  ret i32 %.sroa.064.6
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -461,7 +461,7 @@ _ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValue
   br i1 %.not, label %bb.d, label %bb.c, !prof !39
 
 bb.c:                                             ; preds = %_ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit
-  %i.d = tail call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.02.0.i, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 4 dereferenceable(8) %4)
+  %i.d = tail call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.02.0.i, i32 noundef 0, ptr nonnull align 8 poison, ptr noundef nonnull align 4 dereferenceable(8) %4)
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit, %bb.c
@@ -487,7 +487,7 @@ _ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValue
   br i1 %.not, label %bb.l, label %bb.c, !prof !39
 
 bb.c:                                             ; preds = %_ZN6hermes2vm21toPropertyKeyIfObjectERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE.exit
-  %i.d = tail call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.02.0.i, i32 noundef 1, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 4 dereferenceable(8) %4) ; 2 uses
+  %i.d = tail call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.02.0.i, i32 noundef 1, ptr nonnull align 8 poison, ptr noundef nonnull align 4 dereferenceable(8) %4) ; 2 uses
   %.mask = and i32 %i.d, 255
   %i.e = icmp eq i32 %.mask, 0
   br i1 %i.e, label %bb.l, label %bb.d, !prof !39
@@ -890,7 +890,7 @@ bb.u:                                             ; preds = %bb.t
   %i.dk = and i32 %i.bz, -73
   store i32 %i.dk, ptr %i.by, align 4
   tail call void @_ZN6hermes2vm8Callable20defineLazyPropertiesENS0_6HandleIS1_EERNS0_7RuntimeE(ptr nonnull %.sroa.04.0.copyload, ptr noundef nonnull align 8 dereferenceable(9816) %1) #17
-  %i.dl = tail call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.sroa.04.0.copyload, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %2, i32 noundef 1, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(8) %5)
+  %i.dl = tail call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.sroa.04.0.copyload, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %2, i32 noundef 1, ptr nonnull align 8 poison, ptr noundef nonnull align 4 dereferenceable(8) %5)
   %i.dm = trunc nuw i32 %i.dl to i16
   br label %_ZN6hermes2vm12_GLOBAL__N_137getOwnComputedPrimitiveDescriptorImplENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeENS2_INS0_11HermesValueEEENS3_11IgnoreProxyERNS0_8SymbolIDERNS0_13MutableHandleISA_EERNS0_26ComputedPropertyDescriptorE.exit
 
@@ -1293,14 +1293,13 @@ bb.a:
   %22 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 4 uses
   %23 = alloca %"class.hermes::vm::StringView", align 8 ; 5 uses
   %24 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
-  %25 = alloca %"class.hermes::vm::MutableHandle.209", align 8 ; 3 uses
-  %26 = alloca %"struct.hermes::vm::ComputedPropertyDescriptor", align 4 ; 5 uses
+  %25 = alloca %"struct.hermes::vm::ComputedPropertyDescriptor", align 4 ; 5 uses
+  %26 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 4 uses
   %27 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 4 uses
-  %28 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 4 uses
-  %29 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
-  %30 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 4 uses
-  %31 = alloca %"class.hermes::vm::StringView", align 8 ; 5 uses
-  %32 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
+  %28 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
+  %29 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 4 uses
+  %30 = alloca %"class.hermes::vm::StringView", align 8 ; 5 uses
+  %31 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
   store i32 0, ptr %6, align 8, !tbaa !41
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 4
@@ -1703,7 +1702,6 @@ _ZN6hermes2vm13MutableHandleINS0_8JSObjectEEC2ERNS0_15HandleRootOwnerEPS2_.exit:
   %i.gh = phi ptr [ %i.ge, %bb.an ], [ %.pre271, %bb.ao ] ; 3 uses
   %i.gi = phi ptr [ %i.fy, %bb.an ], [ %.pre270, %bb.ao ] ; 2 uses
   %.0.i.i.i.i.i.i135 = phi ptr [ %i.ga, %bb.an ], [ %i.gf, %bb.ao ] ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %25) #17
   %i.gj = icmp ult ptr %i.gh, %i.gg
   br i1 %i.gj, label %bb.ap, label %bb.aq, !prof !42
 
@@ -1760,7 +1758,7 @@ _ZN6hermes2vm10dyn_vmcastINS0_8JSObjectEEEPT_NS0_11HermesValueE.exit: ; preds = 
   %i.hd = icmp ugt i64 %i.hc, -844424930131969
   %i.he = icmp ne i64 %.pre-phi, 0
   %i.hf = and i1 %i.hd, %i.he
-  br i1 %i.hf, label %bb.at, label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152
+  br i1 %i.hf, label %bb.at, label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit
 
 bb.at:                                            ; preds = %.critedge.thread
   %i.hg = inttoptr i64 %.pre-phi to ptr
@@ -1779,7 +1777,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ho = load i16, ptr %6, align 8
   %i.hp = and i16 %i.ho, 20
   %.not267 = icmp eq i16 %i.hp, 4
-  br i1 %.not267, label %bb.av, label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152, !prof !42
+  br i1 %.not267, label %bb.av, label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit, !prof !42
 
 bb.av:                                            ; preds = %bb.au
   %.sroa.0.0.copyload.i.i.i142 = load i64, ptr %3, align 8, !tbaa !40 ; 9 uses
@@ -1903,7 +1901,7 @@ bb.bj:                                            ; preds = %bb.bi
 
 _ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i151: ; preds = %bb.bj, %bb.bi
   store i32 %.sroa.04.0.i143, ptr %i.jd, align 4, !tbaa !313
-  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152
+  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit
 
 bb.bk:                                            ; preds = %_ZN6hermes2vm13HermesValue3217encodeHermesValueENS0_11HermesValueERNS0_7RuntimeE.exit146
   %i.jl = getelementptr inbounds nuw i8, ptr %i.ja, i64 16
@@ -1930,7 +1928,7 @@ bb.bl:                                            ; preds = %bb.bk
 
 _ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i150: ; preds = %bb.bl, %bb.bk
   store i32 %.sroa.04.0.i143, ptr %i.js, align 4, !tbaa !313
-  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152
+  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit
 
 bb.bm:                                            ; preds = %bb.at
   %.sroa.0.0.copyload.i.i153 = load i64, ptr %.0.i.i.i.i.i.i135, align 8, !tbaa !40
@@ -1955,12 +1953,12 @@ bb.bo:                                            ; preds = %bb.bm
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 32
   %i.kk = load ptr, ptr %i.kj, align 8
   %i.kl = call i32 %i.kk(ptr noundef nonnull align 8 dereferenceable(8) %i.kh, i32 %2, i64 %.sroa.0.0.copyload.i.i.i157) #17, !inline_history !400
-  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152
+  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit
 
 .critedge114:                                     ; preds = %bb.bn
-  call void @llvm.lifetime.start.p0(ptr nonnull %26) #17
-  store i32 0, ptr %26, align 4, !tbaa !41
-  %i.km = getelementptr inbounds nuw i8, ptr %26, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %25) #17
+  store i32 0, ptr %25, align 4, !tbaa !41
+  %i.km = getelementptr inbounds nuw i8, ptr %25, i64 4
   store i32 -1, ptr %i.km, align 4, !tbaa !367
   %i.kn = and i32 %2, 268435456
   %.not.i = icmp eq i32 %i.kn, 0
@@ -2012,7 +2010,7 @@ bb.bu:                                            ; preds = %bb.bs
 
 _ZN6hermes2vm15HandleRootOwner10makeHandleENS0_11HermesValueE.exit: ; preds = %bb.bu, %bb.bt, %bb.br, %bb.bq
   %.sroa.0168.0 = phi ptr [ %i.kz, %bb.br ], [ %i.ku, %bb.bq ], [ %i.le, %bb.bt ], [ %i.lj, %bb.bu ] ; 2 uses
-  %i.lk = call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.0.i.i.i.i.i.i135, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.0168.0, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(8) %25, ptr noundef nonnull align 4 dereferenceable(8) %26) ; 2 uses
+  %i.lk = call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.0.i.i.i.i.i.i135, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.0168.0, i32 noundef 0, ptr nonnull align 8 poison, ptr noundef nonnull align 4 dereferenceable(8) %25) ; 2 uses
   %.mask265 = and i32 %i.lk, 255
   %i.ll = icmp eq i32 %.mask265, 0
   br i1 %i.ll, label %bb.bw, label %bb.bv, !prof !39
@@ -2026,8 +2024,8 @@ bb.bv:                                            ; preds = %_ZN6hermes2vm15Hand
 
 bb.bw:                                            ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_11HermesValueE.exit, %bb.bv
   %.sroa.0236.1 = phi i32 [ %i.ln, %bb.bv ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_11HermesValueE.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %26) #17
-  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152
+  call void @llvm.lifetime.end.p0(ptr nonnull %25) #17
+  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit
 
 bb.bx:                                            ; preds = %bb.ar, %bb.bn
   %i.lo = and i32 %5, 2
@@ -2035,61 +2033,56 @@ bb.bx:                                            ; preds = %bb.ar, %bb.bn
   br i1 %.not264, label %bb.by, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit162, !prof !42
 
 _ZN6hermes2vm11TwineChar16C2EPKc.exit162:         ; preds = %bb.bx
+  call void @llvm.lifetime.start.p0(ptr nonnull %26) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %29) #17
-  %i.lp = getelementptr inbounds nuw i8, ptr %29, i64 24
+  %i.lp = getelementptr inbounds nuw i8, ptr %28, i64 24
   store i32 1, ptr %i.lp, align 8, !tbaa !305
-  %i.lq = getelementptr inbounds nuw i8, ptr %29, i64 32
+  %i.lq = getelementptr inbounds nuw i8, ptr %28, i64 32
   store i64 10, ptr %i.lq, align 8, !tbaa !308
-  %i.lr = getelementptr inbounds nuw i8, ptr %29, i64 40
+  %i.lr = getelementptr inbounds nuw i8, ptr %28, i64 40
   store i64 0, ptr %i.lr, align 8, !tbaa !309
-  store ptr @.str.11, ptr %29, align 8, !tbaa !41
-  %i.ls = getelementptr inbounds nuw i8, ptr %29, i64 8
+  store ptr @.str.11, ptr %28, align 8, !tbaa !41
+  %i.ls = getelementptr inbounds nuw i8, ptr %28, i64 8
   store i32 3, ptr %i.ls, align 8, !tbaa !310
+  call void @llvm.lifetime.start.p0(ptr nonnull %29) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %31) #17
   %i.lt = getelementptr inbounds nuw i8, ptr %1, i64 9240
   %i.lu = call { ptr, i64 } @_ZNK6hermes2vm15IdentifierTable19getStringViewForDevERNS0_7RuntimeENS0_8SymbolIDE(ptr noundef nonnull align 8 dereferenceable(84) %i.lt, ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 %2) #17 ; 2 uses
   %i.lv = extractvalue { ptr, i64 } %i.lu, 0
-  store ptr %i.lv, ptr %31, align 8
-  %i.lw = getelementptr inbounds nuw i8, ptr %31, i64 8
+  store ptr %i.lv, ptr %30, align 8
+  %i.lw = getelementptr inbounds nuw i8, ptr %30, i64 8
   %i.lx = extractvalue { ptr, i64 } %i.lu, 1
   store i64 %i.lx, ptr %i.lw, align 8
-  call void @_ZNK6hermes2vm10StringViewcvNS0_11TwineChar16EEv(ptr dead_on_unwind nonnull writable sret(%"class.hermes::vm::TwineChar16") align 8 %30, ptr noundef nonnull align 8 dereferenceable(16) %31)
-  call void @_ZN6hermes2vmplERKNS0_11TwineChar16ES3_(ptr dead_on_unwind nonnull writable sret(%"class.hermes::vm::TwineChar16") align 8 %28, ptr noundef nonnull align 8 dereferenceable(48) %29, ptr noundef nonnull align 8 dereferenceable(48) %30)
-  call void @llvm.lifetime.start.p0(ptr nonnull %32) #17
-  %i.ly = getelementptr inbounds nuw i8, ptr %32, i64 24
+  call void @_ZNK6hermes2vm10StringViewcvNS0_11TwineChar16EEv(ptr dead_on_unwind nonnull writable sret(%"class.hermes::vm::TwineChar16") align 8 %29, ptr noundef nonnull align 8 dereferenceable(16) %30)
+  call void @_ZN6hermes2vmplERKNS0_11TwineChar16ES3_(ptr dead_on_unwind nonnull writable sret(%"class.hermes::vm::TwineChar16") align 8 %27, ptr noundef nonnull align 8 dereferenceable(48) %28, ptr noundef nonnull align 8 dereferenceable(48) %29)
+  call void @llvm.lifetime.start.p0(ptr nonnull %31) #17
+  %i.ly = getelementptr inbounds nuw i8, ptr %31, i64 24
   store i32 1, ptr %i.ly, align 8, !tbaa !305
-  %i.lz = getelementptr inbounds nuw i8, ptr %32, i64 32
+  %i.lz = getelementptr inbounds nuw i8, ptr %31, i64 32
   store i64 15, ptr %i.lz, align 8, !tbaa !308
-  %i.ma = getelementptr inbounds nuw i8, ptr %32, i64 40
+  %i.ma = getelementptr inbounds nuw i8, ptr %31, i64 40
   store i64 0, ptr %i.ma, align 8, !tbaa !309
-  store ptr @.str.12, ptr %32, align 8, !tbaa !41
-  %i.mb = getelementptr inbounds nuw i8, ptr %32, i64 8
+  store ptr @.str.12, ptr %31, align 8, !tbaa !41
+  %i.mb = getelementptr inbounds nuw i8, ptr %31, i64 8
   store i32 3, ptr %i.mb, align 8, !tbaa !310
-  call void @_ZN6hermes2vmplERKNS0_11TwineChar16ES3_(ptr dead_on_unwind nonnull writable sret(%"class.hermes::vm::TwineChar16") align 8 %27, ptr noundef nonnull align 8 dereferenceable(48) %28, ptr noundef nonnull align 8 dereferenceable(48) %32)
-  %i.mc = call noundef i32 @_ZN6hermes2vm7Runtime19raiseReferenceErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %27) #17
+  call void @_ZN6hermes2vmplERKNS0_11TwineChar16ES3_(ptr dead_on_unwind nonnull writable sret(%"class.hermes::vm::TwineChar16") align 8 %26, ptr noundef nonnull align 8 dereferenceable(48) %27, ptr noundef nonnull align 8 dereferenceable(48) %31)
+  %i.mc = call noundef i32 @_ZN6hermes2vm7Runtime19raiseReferenceErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull align 8 dereferenceable(48) %26) #17
   %i.md = and i32 %i.mc, 255
-  call void @llvm.lifetime.end.p0(ptr nonnull %32) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #17
-  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152
+  call void @llvm.lifetime.end.p0(ptr nonnull %26) #17
+  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit
 
 bb.by:                                            ; preds = %bb.bx
   %i.me = call i32 @_ZN6hermes2vm8JSObject14addOwnPropertyENS0_6HandleIS1_EERNS0_7RuntimeENS0_8SymbolIDENS0_19DefinePropertyFlagsENS2_INS0_11HermesValueEEENS0_11PropOpFlagsE(ptr nonnull %.0.i.i.i.i.i.i135, ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 %2, i32 319, ptr %3, i32 %5)
-  br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152
-
-_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152: ; preds = %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i150, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i151, %bb.au, %.critedge.thread, %bb.by, %_ZN6hermes2vm11TwineChar16C2EPKc.exit162, %bb.bw, %bb.bo
-  %.sroa.0236.2 = phi i32 [ 1, %.critedge.thread ], [ 1, %bb.au ], [ %i.kl, %bb.bo ], [ %.sroa.0236.1, %bb.bw ], [ %i.md, %_ZN6hermes2vm11TwineChar16C2EPKc.exit162 ], [ %i.me, %bb.by ], [ 257, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i151 ], [ 257, %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i150 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %25) #17
   br label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit
 
-_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit: ; preds = %bb.ad, %bb.y, %bb.aj, %_ZN6hermes2vm11TwineChar16C2EPKc.exit124, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEPS5_.exit, %bb.x, %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i, %_ZN6hermes2vm11TwineChar16C2EPKc.exit, %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152, %bb.al, %_ZN6hermes2vm11TwineChar16C2EPKc.exit129, %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_8SymbolIDE.exit
-  %.sroa.0236.3 = phi i32 [ %.sroa.0236.2, %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit152 ], [ 257, %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i ], [ %i.fs, %_ZN6hermes2vm11TwineChar16C2EPKc.exit129 ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEPS5_.exit ], [ %i.fc, %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_8SymbolIDE.exit ], [ %i.fv, %bb.al ], [ %spec.select, %bb.y ], [ 1, %bb.x ], [ 1, %bb.aj ], [ %i.dd, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ 257, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i ], [ %i.en, %_ZN6hermes2vm11TwineChar16C2EPKc.exit124 ], [ %i.du, %bb.ad ]
+_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit: ; preds = %bb.bo, %bb.bw, %_ZN6hermes2vm11TwineChar16C2EPKc.exit162, %bb.by, %.critedge.thread, %bb.au, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i151, %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i150, %bb.ad, %bb.y, %bb.aj, %_ZN6hermes2vm11TwineChar16C2EPKc.exit124, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEPS5_.exit, %bb.x, %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i, %_ZN6hermes2vm11TwineChar16C2EPKc.exit, %bb.al, %_ZN6hermes2vm11TwineChar16C2EPKc.exit129, %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_8SymbolIDE.exit
+  %.sroa.0236.3 = phi i32 [ %i.du, %bb.ad ], [ 257, %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i ], [ %i.fs, %_ZN6hermes2vm11TwineChar16C2EPKc.exit129 ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEPS5_.exit ], [ %i.fc, %_ZN6hermes2vm15HandleRootOwner10makeHandleENS0_8SymbolIDE.exit ], [ %i.fv, %bb.al ], [ %spec.select, %bb.y ], [ 1, %bb.x ], [ 1, %bb.aj ], [ %i.dd, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ 257, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i ], [ %i.en, %_ZN6hermes2vm11TwineChar16C2EPKc.exit124 ], [ 1, %.critedge.thread ], [ 1, %bb.au ], [ %i.kl, %bb.bo ], [ %.sroa.0236.1, %bb.bw ], [ %i.md, %_ZN6hermes2vm11TwineChar16C2EPKc.exit162 ], [ %i.me, %bb.by ], [ 257, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i.i151 ], [ 257, %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i.i150 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
   %.sroa.0236.0.insert.ext = and i32 %.sroa.0236.3, 65535
   ret i32 %.sroa.0236.0.insert.ext
@@ -2492,7 +2485,7 @@ bb.a:
   %6 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %7 = alloca %"struct.hermes::vm::ComputedPropertyDescriptor", align 8 ; 9 uses
   %8 = alloca %"class.hermes::vm::MutableHandle.214", align 8 ; 4 uses
-  %9 = alloca %"class.hermes::vm::MutableHandle.209", align 8 ; 5 uses
+  %9 = alloca %"class.hermes::vm::MutableHandle.209", align 8 ; 4 uses
   %10 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %11 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %12 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
@@ -2895,7 +2888,7 @@ bb.an:                                            ; preds = %.critedge.thread
   store i32 0, ptr %15, align 8, !tbaa !41
   %i.gc = getelementptr inbounds nuw i8, ptr %15, i64 4
   store i32 -1, ptr %i.gc, align 4, !tbaa !367
-  %i.gd = call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.0.i.i.i.i.i.i197, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.02.0.i, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(8) %9, ptr noundef nonnull align 4 dereferenceable(8) %15) ; 2 uses
+  %i.gd = call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.0.i.i.i.i.i.i197, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.sroa.02.0.i, i32 noundef 0, ptr nonnull align 8 poison, ptr noundef nonnull align 4 dereferenceable(8) %15) ; 2 uses
   %.mask443 = and i32 %i.gd, 255
   %i.ge = icmp eq i32 %.mask443, 0
   br i1 %i.ge, label %.critedge162, label %bb.ao, !prof !39
@@ -3298,8 +3291,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %_ZN6h
 define hidden range(i32 0, 65536) i32 @_ZN6hermes2vm8JSObject17updateOwnPropertyENS0_6HandleIS1_EERNS0_7RuntimeENS0_8SymbolIDENS0_15DictPropertyMap11PropertyPosENS0_23NamedPropertyDescriptorENS0_19DefinePropertyFlagsENS2_INS0_11HermesValueEEENS0_11PropOpFlagsE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 %2, i32 %3, i64 %4, i32 %5, i64 %6, i32 %7) local_unnamed_addr #1 align 2 {
 bb.a:
   %.sroa.041.0.extract.trunc = trunc i64 %4 to i16 ; 3 uses
-  %.sroa.11.0.extract.shift = lshr i64 %4, 16
-  %.sroa.11.0.extract.trunc = trunc nuw i64 %.sroa.11.0.extract.shift to i48 ; 2 uses
+  %.sroa.11.0.extract.shift = lshr i64 %4, 16     ; 2 uses
   %.sroa.0114.0.extract.trunc = trunc i32 %5 to i16 ; 2 uses
   %i.a = inttoptr i64 %6 to ptr                   ; 4 uses
   %.sroa.0.0.copyload.i.i = load i64, ptr %0, align 8, !tbaa !40
@@ -3436,7 +3428,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not127, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %.sroa.11.sroa.0.0.insert.mask = and i48 %.sroa.11.0.extract.trunc, -65536
+  %.sroa.11.sroa.0.0.insert.mask = and i64 %.sroa.11.0.extract.shift, 281474976645120
   %.sroa.0.0.copyload.i.i78 = load i64, ptr %0, align 8, !tbaa !40
   %i.ba = and i64 %.sroa.0.0.copyload.i.i78, 281474976710655
   %i.bb = inttoptr i64 %i.ba to ptr
@@ -3498,7 +3490,7 @@ _ZN6hermes2vm9GCPointerINS0_11HiddenClassEE10setNonNullERNS0_11PointerBaseEPS2_R
 
 bb.s:                                             ; preds = %_ZN6hermes2vm9GCPointerINS0_11HiddenClassEE10setNonNullERNS0_11PointerBaseEPS2_RNS0_7HadesGCE.exit, %bb.n
   %.sroa.041.0 = phi i16 [ %.sroa.0106.4.extract.trunc, %_ZN6hermes2vm9GCPointerINS0_11HiddenClassEE10setNonNullERNS0_11PointerBaseEPS2_RNS0_7HadesGCE.exit ], [ %.sroa.041.0.extract.trunc, %bb.n ]
-  %.sroa.11.sroa.0.0 = phi i48 [ %.sroa.11.sroa.0.0.insert.mask, %_ZN6hermes2vm9GCPointerINS0_11HiddenClassEE10setNonNullERNS0_11PointerBaseEPS2_RNS0_7HadesGCE.exit ], [ %.sroa.11.0.extract.trunc, %bb.n ] ; 6 uses
+  %.sroa.11.sroa.0.0 = phi i64 [ %.sroa.11.sroa.0.0.insert.mask, %_ZN6hermes2vm9GCPointerINS0_11HiddenClassEE10setNonNullERNS0_11PointerBaseEPS2_RNS0_7HadesGCE.exit ], [ %.sroa.11.0.extract.shift, %bb.n ] ; 6 uses
   %i.cg = icmp eq i32 %.sroa.0106.0.extract.trunc, 1
   br i1 %i.cg, label %_ZN6hermes2vm8JSObject23setNamedSlotValueUnsafeEPS1_RNS0_7RuntimeENS0_23NamedPropertyDescriptorENS0_13HermesValue32E.exit, label %bb.t
 
@@ -3615,9 +3607,8 @@ _ZN6hermes2vm13HermesValue3217encodeHermesValueENS0_11HermesValueERNS0_7RuntimeE
   %.sroa.0.0.copyload.i.i83 = load i64, ptr %0, align 8, !tbaa !40
   %i.dw = and i64 %.sroa.0.0.copyload.i.i83, 281474976710655
   %i.dx = inttoptr i64 %i.dw to ptr               ; 2 uses
-  %.sroa.11.0.insert.ext62 = zext i48 %.sroa.11.sroa.0.0 to i64
-  %.sroa.1.0.extract.shift.i84 = lshr i64 %.sroa.11.0.insert.ext62, 16 ; 2 uses
-  %i.dy = icmp ult i48 %.sroa.11.sroa.0.0, 327680
+  %.sroa.1.0.extract.shift.i84 = lshr i64 %.sroa.11.sroa.0.0, 16 ; 2 uses
+  %i.dy = icmp samesign ult i64 %.sroa.11.sroa.0.0, 327680
   br i1 %i.dy, label %bb.ai, label %bb.ak, !prof !42
 
 bb.ai:                                            ; preds = %_ZN6hermes2vm13HermesValue3217encodeHermesValueENS0_11HermesValueERNS0_7RuntimeE.exit
@@ -3781,9 +3772,8 @@ _ZN6hermes2vm13HermesValue3217encodeHermesValueENS0_11HermesValueERNS0_7RuntimeE
   %.sroa.0.0.copyload.i.i92 = load i64, ptr %0, align 8, !tbaa !40
   %i.go = and i64 %.sroa.0.0.copyload.i.i92, 281474976710655
   %i.gp = inttoptr i64 %i.go to ptr               ; 2 uses
-  %.sroa.11.0.insert.ext54 = zext i48 %.sroa.11.sroa.0.0 to i64
-  %.sroa.1.0.extract.shift.i93 = lshr i64 %.sroa.11.0.insert.ext54, 16 ; 2 uses
-  %i.gq = icmp ult i48 %.sroa.11.sroa.0.0, 327680
+  %.sroa.1.0.extract.shift.i93 = lshr i64 %.sroa.11.sroa.0.0, 16 ; 2 uses
+  %i.gq = icmp samesign ult i64 %.sroa.11.sroa.0.0, 327680
   br i1 %i.gq, label %bb.bb, label %bb.bd, !prof !42
 
 bb.bb:                                            ; preds = %_ZN6hermes2vm13HermesValue3217encodeHermesValueENS0_11HermesValueERNS0_7RuntimeE.exit91
@@ -3838,9 +3828,8 @@ bb.bf:                                            ; preds = %bb.an
   %.sroa.0.0.copyload.i.i98 = load i64, ptr %0, align 8, !tbaa !40
   %i.hq = and i64 %.sroa.0.0.copyload.i.i98, 281474976710655
   %i.hr = inttoptr i64 %i.hq to ptr               ; 2 uses
-  %.sroa.11.0.insert.ext = zext i48 %.sroa.11.sroa.0.0 to i64
-  %.sroa.1.0.extract.shift.i99 = lshr i64 %.sroa.11.0.insert.ext, 16 ; 2 uses
-  %i.hs = icmp ult i48 %.sroa.11.sroa.0.0, 327680
+  %.sroa.1.0.extract.shift.i99 = lshr i64 %.sroa.11.sroa.0.0, 16 ; 2 uses
+  %i.hs = icmp samesign ult i64 %.sroa.11.sroa.0.0, 327680
   br i1 %i.hs, label %bb.bg, label %bb.bi, !prof !42
 
 bb.bg:                                            ; preds = %bb.bf

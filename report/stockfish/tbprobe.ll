@@ -204,14 +204,14 @@ bb.bu:                                            ; preds = %bb.bt
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bv, %bb.bu
-  %indvars.iv.i18.i = phi i64 [ %indvars.iv.next.i19.i, %bb.bv ], [ 0, %bb.bu ] ; 4 uses
+  %indvars.iv.i18.i = phi i64 [ %indvars.iv.next.i19.i, %bb.bv ], [ 0, %bb.bu ] ; 5 uses
   %.0157.i.i = phi i64 [ %i.bgv, %bb.bv ], [ %i.bgq, %bb.bu ] ; 3 uses
   %i.bgs = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0157.i.i, i1 true)
   %i.bgt = trunc nuw nsw i64 %i.bgs to i8
   %i.bgu = add i64 %.0157.i.i, -1
   %i.bgv = and i64 %i.bgu, %.0157.i.i             ; 2 uses
   %i.bgw = xor i8 %i.bgt, %i.bgr
-  %indvars.iv.next.i19.i = add nuw i64 %indvars.iv.i18.i, 1 ; 3 uses
+  %indvars.iv.next.i19.i = add nuw nsw i64 %indvars.iv.i18.i, 1 ; 3 uses
   %i.bgx = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i18.i
   store i8 %i.bgw, ptr %i.bgx, align 1, !tbaa !95
   %.not.i20.i = icmp eq i64 %i.bgv, 0
@@ -219,8 +219,7 @@ bb.bv:                                            ; preds = %bb.bv, %bb.bu
 
 bb.bw:                                            ; preds = %bb.bv
   %i.bgy = trunc nuw i64 %indvars.iv.next.i19.i to i32
-  %17 = and i64 %indvars.iv.next.i19.i, 4294967295 ; 2 uses
-  %i.bgz = getelementptr inbounds nuw i8, ptr %i.a, i64 %17
+  %i.bgz = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next.i19.i
   %.not17.i.i.i.i = icmp eq i64 %indvars.iv.i18.i, 0
   %.pre297.i.i = load i8, ptr %i.a, align 1, !tbaa !95 ; 3 uses
   br i1 %.not17.i.i.i.i, label %_ZSt11max_elementIPN9Stockfish6SquareEPFbS1_S1_EET_S5_S5_T0_.exit.i.i, label %.lr.ph.i.i.preheader.i.i
@@ -230,7 +229,6 @@ bb.bw:                                            ; preds = %bb.bv
   %.phi.trans.insert.i.i = zext i8 %.pre297.i.i to i64
   %.phi.trans.insert295.i.i = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18MapPawnsE, i64 %.phi.trans.insert.i.i
   %.pre296.i.i = load i32, ptr %.phi.trans.insert295.i.i, align 4, !tbaa !89 ; 2 uses
-  %18 = add nsw i64 %17, -2
   %xtraiter510 = and i64 %indvars.iv.i18.i, 3     ; 2 uses
   %lcmp.mod511.not = icmp eq i64 %xtraiter510, 0
   br i1 %lcmp.mod511.not, label %.lr.ph.i.i.i21.i.prol.loopexit, label %.lr.ph.i.i.i21.i.prol
@@ -257,7 +255,7 @@ bb.bw:                                            ; preds = %bb.bv
   %.unr = phi i32 [ %.pre296.i.i, %.lr.ph.i.i.preheader.i.i ], [ %i.bhj, %.lr.ph.i.i.i21.i.prol ]
   %.unr513 = phi ptr [ %i.bha, %.lr.ph.i.i.preheader.i.i ], [ %i.bhi, %.lr.ph.i.i.i21.i.prol ]
   %.018.i.i.i.i.unr = phi ptr [ %i.a, %.lr.ph.i.i.preheader.i.i ], [ %spec.select.i.i.i.i.prol, %.lr.ph.i.i.i21.i.prol ]
-  %i.bhk = icmp ult i64 %18, 3
+  %i.bhk = icmp samesign ult i64 %indvars.iv.i18.i, 4
   br i1 %i.bhk, label %_ZSt11max_elementIPN9Stockfish6SquareEPFbS1_S1_EET_S5_S5_T0_.exit.loopexit.i.i, label %.lr.ph.i.i.i21.i
 
 .lr.ph.i.i.i21.i:                                 ; preds = %.lr.ph.i.i.i21.i.prol.loopexit, %.lr.ph.i.i.i21.i
@@ -660,14 +658,14 @@ bb.bt:                                            ; preds = %bb.bs
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bu, %bb.bt
-  %indvars.iv.i15 = phi i64 [ %indvars.iv.next.i17, %bb.bu ], [ 0, %bb.bt ] ; 4 uses
+  %indvars.iv.i15 = phi i64 [ %indvars.iv.next.i17, %bb.bu ], [ 0, %bb.bt ] ; 5 uses
   %.0.i16 = phi i64 [ %i.vn, %bb.bu ], [ %i.vi, %bb.bt ] ; 3 uses
   %i.vk = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0.i16, i1 true)
   %i.vl = trunc nuw nsw i64 %i.vk to i8
   %i.vm = add i64 %.0.i16, -1
   %i.vn = and i64 %i.vm, %.0.i16                  ; 2 uses
   %i.vo = xor i8 %i.vl, %i.vj
-  %indvars.iv.next.i17 = add nuw i64 %indvars.iv.i15, 1 ; 3 uses
+  %indvars.iv.next.i17 = add nuw nsw i64 %indvars.iv.i15, 1 ; 3 uses
   %i.vp = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i15
   store i8 %i.vo, ptr %i.vp, align 1, !tbaa !95
   %.not.i18 = icmp eq i64 %i.vn, 0
@@ -675,8 +673,7 @@ bb.bu:                                            ; preds = %bb.bu, %bb.bt
 
 bb.bv:                                            ; preds = %bb.bu
   %i.vq = trunc nuw i64 %indvars.iv.next.i17 to i32
-  %12 = and i64 %indvars.iv.next.i17, 4294967295  ; 2 uses
-  %i.vr = getelementptr inbounds nuw i8, ptr %i.a, i64 %12
+  %i.vr = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next.i17
   %.not17.i.i.i = icmp eq i64 %indvars.iv.i15, 0
   %.pre147.i = load i8, ptr %i.a, align 1, !tbaa !95 ; 3 uses
   br i1 %.not17.i.i.i, label %_ZSt11max_elementIPN9Stockfish6SquareEPFbS1_S1_EET_S5_S5_T0_.exit.i, label %.lr.ph.i.i.preheader.i
@@ -686,7 +683,6 @@ bb.bv:                                            ; preds = %bb.bu
   %.phi.trans.insert.i = zext i8 %.pre147.i to i64
   %.phi.trans.insert145.i = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18MapPawnsE, i64 %.phi.trans.insert.i
   %.pre146.i = load i32, ptr %.phi.trans.insert145.i, align 4, !tbaa !89 ; 2 uses
-  %13 = add nsw i64 %12, -2
   %xtraiter338 = and i64 %indvars.iv.i15, 3       ; 2 uses
   %lcmp.mod339.not = icmp eq i64 %xtraiter338, 0
   br i1 %lcmp.mod339.not, label %.lr.ph.i.i.i19.prol.loopexit, label %.lr.ph.i.i.i19.prol
@@ -713,7 +709,7 @@ bb.bv:                                            ; preds = %bb.bu
   %.unr = phi i32 [ %.pre146.i, %.lr.ph.i.i.preheader.i ], [ %i.wb, %.lr.ph.i.i.i19.prol ]
   %.unr341 = phi ptr [ %i.vs, %.lr.ph.i.i.preheader.i ], [ %i.wa, %.lr.ph.i.i.i19.prol ]
   %.018.i.i.i.unr = phi ptr [ %i.a, %.lr.ph.i.i.preheader.i ], [ %spec.select.i.i.i.prol, %.lr.ph.i.i.i19.prol ]
-  %i.wc = icmp ult i64 %13, 3
+  %i.wc = icmp samesign ult i64 %indvars.iv.i15, 4
   br i1 %i.wc, label %_ZSt11max_elementIPN9Stockfish6SquareEPFbS1_S1_EET_S5_S5_T0_.exit.loopexit.i, label %.lr.ph.i.i.i19
 
 .lr.ph.i.i.i19:                                   ; preds = %.lr.ph.i.i.i19.prol.loopexit, %.lr.ph.i.i.i19

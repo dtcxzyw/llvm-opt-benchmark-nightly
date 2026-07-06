@@ -201,9 +201,8 @@ _ZN6icu_786number9Precision13fixedFractionEi.exit: ; preds = %bb.c
   %.sink.i8 = select i1 %or.cond.i, i32 2, i32 9
   store i32 %.sink.i8, ptr %0, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.r = shl i32 %i.h, 16
-  %5 = and i32 %i.h, 65535
-  %i.s = or disjoint i32 %i.r, %5
+  %i.r = shl nuw nsw i32 %i.h, 16
+  %i.s = or i32 %i.r, %i.h
   %.sroa.49.sroa.0.0.insert.insert = select i1 %or.cond.i, i32 %i.s, i32 65810
   store i32 %.sroa.49.sroa.0.0.insert.insert, ptr %.sroa.49.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12

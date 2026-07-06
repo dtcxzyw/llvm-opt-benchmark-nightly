@@ -201,8 +201,7 @@ bb.m:                                             ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.al = load i8, ptr %i.ak, align 8
-  %3 = and i8 %i.al, 1
-  store i8 %3, ptr %i.j, align 1
+  store i8 %i.al, ptr %i.j, align 1
   %i.am = invoke { ptr, i64 } @_RNvXs7_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecNtNtB7_6string6StringENtNtNtCsbvkFyIu7lgC_4core3ops5deref5Deref5derefCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.ad)
           to label %bb.p unwind label %bb.o       ; 2 uses
 

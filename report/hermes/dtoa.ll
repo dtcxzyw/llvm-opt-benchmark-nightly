@@ -204,12 +204,11 @@ bb.bg:                                            ; preds = %bb.bf, %.lr.ph926.i
 
 ._crit_edge927.loopexit.i:                        ; preds = %bb.bg
   store double %i.is, ptr %2, align 8
-  %4 = and i64 %indvars.iv.next1058.i, 4294967295
   br label %._crit_edge927.i
 
 ._crit_edge927.i:                                 ; preds = %._crit_edge927.loopexit.i, %bb.be
   %i.ix = phi i32 [ %i.gs, %bb.be ], [ %i.it, %._crit_edge927.loopexit.i ]
-  %.0492.lcssa.i = phi i64 [ 0, %bb.be ], [ %4, %._crit_edge927.loopexit.i ]
+  %.0492.lcssa.i = phi i64 [ 0, %bb.be ], [ %indvars.iv.next1058.i, %._crit_edge927.loopexit.i ]
   %i.iy = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.iz = add i32 %i.ix, -55574528
   store i32 %i.iz, ptr %i.iy, align 4, !tbaa !19

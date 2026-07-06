@@ -203,12 +203,8 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resize
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
   br label %bb.e
 
-._crit_edge.loopexit:                             ; preds = %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit
-  %4 = and i64 %indvars.iv.next, 4294967295
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
-  %.0.lcssa = phi i64 [ 0, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit ], [ %4, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
+  %.0.lcssa = phi i64 [ 0, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit ], [ %indvars.iv.next, %_ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1_10set_paramsIN6google8protobuf25EncodedDescriptorDatabase15DescriptorIndex9FileEntryENS8_11FileCompareESaIS9_ELi256ELb0EEEEERKS9_PSF_EppEv.exit ]
   %i.aq = load ptr, ptr %i.f, align 8, !tbaa !168 ; 2 uses
   %i.ar = load ptr, ptr %i.g, align 8, !tbaa !168 ; 2 uses
   %.not76 = icmp eq ptr %i.aq, %i.ar
@@ -427,7 +423,7 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorIKNS1_10btree_nodeINS1
   %i.dk = icmp ne ptr %.sroa.063.1, %i.ai
   %i.dl = icmp ne i32 %.sroa.8.1, %i.al
   %.not3.i = select i1 %i.dk, i1 true, i1 %i.dl
-  br i1 %.not3.i, label %bb.e, label %._crit_edge.loopexit
+  br i1 %.not3.i, label %bb.e, label %._crit_edge
 
 ._crit_edge81:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52, %._crit_edge
   ret void

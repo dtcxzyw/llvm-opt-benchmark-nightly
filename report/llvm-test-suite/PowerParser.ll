@@ -204,8 +204,6 @@ bb.a:
   %i.ak = icmp eq i64 %i.aj, 0                    ; 2 uses
   %i.al = getelementptr inbounds [8 x i8], ptr %i.f, i64 %i.aj ; 2 uses
   %i.am = getelementptr inbounds nuw [520 x i8], ptr %i.w, i64 %indvars.iv21 ; 2 uses
-  %sext = shl i64 %.01114, 32
-  %2 = ashr exact i64 %sext, 32
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
@@ -213,7 +211,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader, %_ZN2PP12Restartblock7get_satEi.exit
   %indvars.iv16 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next17, %_ZN2PP12Restartblock7get_satEi.exit ] ; 4 uses
-  %indvars.iv = phi i64 [ %2, %.preheader ], [ %indvars.iv.next, %_ZN2PP12Restartblock7get_satEi.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ %.01114, %.preheader ], [ %indvars.iv.next, %_ZN2PP12Restartblock7get_satEi.exit ] ; 3 uses
   br i1 %i.ak, label %_ZNSt5dequeIN2PP12RestartblockESaIS1_EEixEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -616,7 +614,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph66, %bb.h
-  %indvars.iv77 = phi i64 [ 0, %.lr.ph66 ], [ %indvars.iv.next78, %bb.h ] ; 4 uses
+  %indvars.iv77 = phi i64 [ 0, %.lr.ph66 ], [ %indvars.iv.next78, %bb.h ] ; 5 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %indvars.iv77
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !33
   %.not42 = icmp eq i8 %i.ap, 32
@@ -632,8 +630,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not43, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %6 = and i64 %indvars.iv77, 4294967295          ; 2 uses
-  %i.aq = icmp samesign eq i64 %i.ak, %6
+  %i.aq = icmp samesign eq i64 %i.ak, %indvars.iv77
   br i1 %i.aq, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -642,7 +639,7 @@ bb.k:                                             ; preds = %bb.j
   br label %.thread
 
 bb.l:                                             ; preds = %bb.j
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(ptr noundef nonnull align 8 dereferenceable(32) %5, i64 noundef 0, i64 noundef %6)
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(ptr noundef nonnull align 8 dereferenceable(32) %5, i64 noundef 0, i64 noundef %indvars.iv77)
           to label %.thread unwind label %bb.m
 
 bb.m:                                             ; preds = %bb.l
