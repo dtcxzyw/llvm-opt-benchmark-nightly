@@ -201,20 +201,23 @@ bb.a:
 define void @_ZNK5folly35fmt_vformat_mangle_format_string_fnclB5cxx11ERKNS0_7optionsESt17basic_string_viewIcSt11char_traitsIcEE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree nonnull readnone align 1 captures(none) %1, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(1) %2, i64 %3, ptr %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %2, align 1, !tbaa !35, !range !38, !noundef !39
-  %5 = trunc nuw i8 %i.a to i1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   store ptr %i.b, ptr %0, align 8, !tbaa !11
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store i64 0, ptr %i.c, align 8, !tbaa !15
   store i8 0, ptr %i.b, align 8, !tbaa !18
   %.not43.i = icmp eq i64 %3, 0
-  br i1 %.not43.i, label %"_ZNK5folly35format_string_for_each_named_arg_fnclIcSt11char_traitsIcEZNKS_35fmt_vformat_mangle_format_string_fnclB5cxx11ERKNS4_7optionsESt17basic_string_viewIcS3_EE3$_0EEvRKNS0_7optionsES8_IT_T0_ET1_.exit", label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
+  br i1 %.not43.i, label %"_ZNK5folly35format_string_for_each_named_arg_fnclIcSt11char_traitsIcEZNKS_35fmt_vformat_mangle_format_string_fnclB5cxx11ERKNS4_7optionsESt17basic_string_viewIcS3_EE3$_0EEvRKNS0_7optionsES8_IT_T0_ET1_.exit", label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.lr.ph.i
 
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i
-  %.0 = phi ptr [ %.2, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ], [ %4, %bb.a ] ; 10 uses
-  %.sroa.11.045.i = phi ptr [ %.sroa.11.1.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ], [ %4, %bb.a ] ; 5 uses
-  %.sroa.06.044.i = phi i64 [ %.sroa.06.1.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ], [ %3, %bb.a ] ; 9 uses
-  %i.d = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) %.sroa.11.045.i, i32 noundef 123, i64 noundef %.sroa.06.044.i) #18 ; 2 uses
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.lr.ph.i: ; preds = %bb.a
+  %5 = trunc nuw i8 %i.a to i1
+  br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
+
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.lr.ph.i
+  %.0 = phi ptr [ %4, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.lr.ph.i ], [ %.2, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ] ; 10 uses
+  %.sroa.11.045.i = phi ptr [ %4, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.lr.ph.i ], [ %.sroa.11.1.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ] ; 5 uses
+  %.sroa.06.044.i = phi i64 [ %3, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.lr.ph.i ], [ %.sroa.06.1.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ] ; 9 uses
+  %i.d = tail call ptr @memchr(ptr noundef %.sroa.11.045.i, i32 noundef 123, i64 noundef %.sroa.06.044.i) #18 ; 2 uses
   %.not.i.i = icmp eq ptr %i.d, null
   br i1 %.not.i.i, label %"_ZNK5folly35format_string_for_each_named_arg_fnclIcSt11char_traitsIcEZNKS_35fmt_vformat_mangle_format_string_fnclB5cxx11ERKNS4_7optionsESt17basic_string_viewIcS3_EE3$_0EEvRKNS0_7optionsES8_IT_T0_ET1_.exit.loopexit", label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.i
 
@@ -256,12 +259,12 @@ bb.e:                                             ; preds = %bb.c
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i30.i:   ; preds = %bb.e
   %i.r = sub nuw i64 %.sroa.06.044.i, %i.g        ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.11.045.i, i64 %i.g ; 2 uses
-  %i.t = tail call ptr @memchr(ptr noundef nonnull %i.s, i32 noundef 125, i64 noundef %i.r) #18 ; 2 uses
+  %i.t = tail call ptr @memchr(ptr noundef %i.s, i32 noundef 125, i64 noundef %i.r) #18 ; 2 uses
   %.not.i31.i = icmp eq ptr %i.t, null
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = sub i64 %i.u, %i.f
   %.1.i29.ph.i = select i1 %.not.i31.i, i64 -1, i64 %i.v ; 2 uses
-  %i.w = tail call ptr @memchr(ptr noundef nonnull %i.s, i32 noundef 58, i64 noundef %i.r) #18 ; 2 uses
+  %i.w = tail call ptr @memchr(ptr noundef %i.s, i32 noundef 58, i64 noundef %i.r) #18 ; 2 uses
   %.not.i35.i = icmp eq ptr %i.w, null
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %i.x, %i.f

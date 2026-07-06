@@ -204,13 +204,13 @@ bb.cx:                                            ; preds = %bb.a
   %i.kv = getelementptr i8, ptr %1, i64 8
   %i.kw = load ptr, ptr %i.kv, align 8, !tbaa !24 ; 16 uses
   %i.kx = getelementptr i8, ptr %i.kw, i64 40     ; 2 uses
-  %i.ky = load i32, ptr %i.kx, align 8, !tbaa !18 ; 3 uses
+  %i.ky = load i32, ptr %i.kx, align 8, !tbaa !18 ; 2 uses
   %.sroa.09.0.insert.ext.i = zext i32 %i.ky to i64
   %i.kz = getelementptr i8, ptr %i.kw, i64 48     ; 3 uses
-  %i.la = load i32, ptr %i.kz, align 8, !tbaa !20 ; 4 uses
+  %i.la = load i32, ptr %i.kz, align 8, !tbaa !20 ; 3 uses
   %.sroa.09.4.insert.ext.i = zext i32 %i.la to i64
   %.sroa.09.4.insert.shift.i = shl nuw i64 %.sroa.09.4.insert.ext.i, 32
-  %.sroa.09.4.insert.insert.i = or disjoint i64 %.sroa.09.4.insert.shift.i, %.sroa.09.0.insert.ext.i ; 9 uses
+  %.sroa.09.4.insert.insert.i = or disjoint i64 %.sroa.09.4.insert.shift.i, %.sroa.09.0.insert.ext.i ; 10 uses
   %i.lb = getelementptr i8, ptr %i.kw, i64 44     ; 2 uses
   %i.lc = load i32, ptr %i.lb, align 4, !tbaa !21
   %.sroa.33.8.insert.ext.i = zext i32 %i.lc to i64
@@ -240,7 +240,7 @@ bb.cz:                                            ; preds = %bb.cy
   br i1 %i.lm, label %codegen_class.exit, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
-  %i.ln = load i32, ptr %i.kz, align 8, !tbaa !20 ; 5 uses
+  %i.ln = load i32, ptr %i.kz, align 8, !tbaa !20 ; 4 uses
   %.not.i.i185 = icmp eq i32 %i.ln, %i.ky
   br i1 %.not.i.i185, label %update_start_location_to_match_attr.exit.i, label %bb.db
 
@@ -256,9 +256,9 @@ bb.db:                                            ; preds = %bb.da
   %.sroa.11.8.insert.ext.i.i = zext i32 %i.lt to i64
   %.sroa.11.8.insert.insert.i.i = or disjoint i64 %.sroa.33.12.insert.shift.i, %.sroa.11.8.insert.ext.i.i
   %.sroa.11.0.i.i = select i1 %.not27.i.i, i64 -1, i64 %.sroa.11.8.insert.insert.i.i ; 4 uses
-  %i.lu = tail call i32 @llvm.smax.i32(i32 %i.ln, i32 %i.la) ; 2 uses
+  %i.lu = tail call i32 @llvm.smax.i32(i32 %i.ln, i32 %i.la)
   %.not28.i.i = icmp slt i32 %i.ln, %i.la
-  br i1 %.not28.i.i, label %update_start_location_to_match_attr.exit.i, label %bb.dc
+  br i1 %.not28.i.i, label %6, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
   %.sroa.11.8.extract.trunc.i.i = trunc i64 %.sroa.11.0.i.i to i32
@@ -269,22 +269,25 @@ bb.dc:                                            ; preds = %bb.db
   %.sroa.11.12.insert.shift.i.i = shl nuw i64 %.sroa.11.12.insert.ext.i.i, 32
   %.sroa.11.12.insert.mask23.i.i = and i64 %.sroa.11.0.i.i, 4294967295
   %.sroa.11.12.insert.insert24.i.i = or disjoint i64 %.sroa.11.12.insert.shift.i.i, %.sroa.11.12.insert.mask23.i.i
+  br label %6
+
+6:                                                ; preds = %bb.dc, %bb.db
+  %.sroa.11.1.i.i = phi i64 [ %.sroa.11.12.insert.insert24.i.i, %bb.dc ], [ %.sroa.11.0.i.i, %bb.db ]
+  %7 = zext i32 %i.lu to i64
+  %.pre.i = shl nuw i64 %7, 32
+  %.pre178.i = zext i32 %i.ln to i64
+  %.pre179.i = or disjoint i64 %.pre.i, %.pre178.i
   br label %update_start_location_to_match_attr.exit.i
 
-update_start_location_to_match_attr.exit.i:       ; preds = %bb.dc, %bb.db, %bb.da
-  %.sroa.11.2.i.i = phi i64 [ %.sroa.33.12.insert.insert.i, %bb.da ], [ %.sroa.11.12.insert.insert24.i.i, %bb.dc ], [ %.sroa.11.0.i.i, %bb.db ]
-  %.sroa.0.sroa.0.0.i.i = phi i32 [ %i.ky, %bb.da ], [ %i.ln, %bb.dc ], [ %i.ln, %bb.db ]
-  %.sroa.0.sroa.7.0.i.i = phi i32 [ %i.la, %bb.da ], [ %i.lu, %bb.dc ], [ %i.lu, %bb.db ]
-  %.sroa.0.sroa.7.0.insert.ext.i.i = zext i32 %.sroa.0.sroa.7.0.i.i to i64
-  %.sroa.0.sroa.7.0.insert.shift.i.i = shl nuw i64 %.sroa.0.sroa.7.0.insert.ext.i.i, 32
-  %.sroa.0.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.0.sroa.0.0.i.i to i64
-  %.sroa.0.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.0.sroa.7.0.insert.shift.i.i, %.sroa.0.sroa.0.0.insert.ext.i.i
+update_start_location_to_match_attr.exit.i:       ; preds = %6, %bb.da
+  %.sroa.0.sroa.0.0.insert.insert.i.pre-phi.i = phi i64 [ %.sroa.09.4.insert.insert.i, %bb.da ], [ %.pre179.i, %6 ]
+  %.sroa.11.2.i.i = phi i64 [ %.sroa.33.12.insert.insert.i, %bb.da ], [ %.sroa.11.1.i.i, %6 ]
   %i.lw = tail call ptr @_PyCompile_Metadata(ptr noundef %0) #10
   %i.lx = getelementptr i8, ptr %i.lw, i64 24
   %i.ly = load ptr, ptr %i.lx, align 8, !tbaa !34
   %i.lz = getelementptr i8, ptr %i.kw, i64 16
   %i.ma = load ptr, ptr %i.lz, align 8, !tbaa !24
-  %i.mb = tail call fastcc i32 @codegen_addop_name(ptr noundef %0, i64 %.sroa.0.sroa.0.0.insert.insert.i.i, i64 %.sroa.11.2.i.i, i32 noundef 80, ptr noundef %i.ly, ptr noundef %i.ma)
+  %i.mb = tail call fastcc i32 @codegen_addop_name(ptr noundef %0, i64 %.sroa.0.sroa.0.0.insert.insert.i.pre-phi.i, i64 %.sroa.11.2.i.i, i32 noundef 80, ptr noundef %i.ly, ptr noundef %i.ma)
   %i.mc = icmp eq i32 %i.mb, -1
   br i1 %i.mc, label %codegen_class.exit, label %bb.du
 
@@ -687,14 +690,14 @@ bb.o:                                             ; preds = %bb.b, %bb.n, %bb.m,
 define internal fastcc { i64, i64 } @update_start_location_to_match_attr(i64 %0, i64 %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #6 {
 bb.a:
   %.sroa.0.sroa.0.0.extract.trunc = trunc i64 %0 to i32 ; 2 uses
-  %.sroa.0.sroa.7.0.extract.shift = lshr i64 %0, 32
-  %.sroa.0.sroa.7.0.extract.trunc = trunc nuw i64 %.sroa.0.sroa.7.0.extract.shift to i32 ; 3 uses
+  %.sroa.0.sroa.7.0.extract.shift = lshr i64 %0, 32 ; 2 uses
   %i.a = getelementptr i8, ptr %2, i64 48
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !20   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !20   ; 4 uses
   %.not = icmp eq i32 %i.b, %.sroa.0.sroa.0.0.extract.trunc
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.0.sroa.7.0.extract.trunc = trunc nuw i64 %.sroa.0.sroa.7.0.extract.shift to i32 ; 2 uses
   %i.c = getelementptr i8, ptr %2, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !24
   %i.e = getelementptr i8, ptr %i.d, i64 16
@@ -708,9 +711,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.11.8.insert.mask = and i64 %1, -4294967296
   %.sroa.11.8.insert.insert = or disjoint i64 %.sroa.11.8.insert.mask, %.sroa.11.8.insert.ext
   %.sroa.11.0 = select i1 %.not27, i64 -1, i64 %.sroa.11.8.insert.insert ; 4 uses
-  %i.j = tail call i32 @llvm.smax.i32(i32 %i.b, i32 %.sroa.0.sroa.7.0.extract.trunc) ; 2 uses
+  %i.j = tail call i32 @llvm.smax.i32(i32 %i.b, i32 %.sroa.0.sroa.7.0.extract.trunc)
   %.not28 = icmp slt i32 %i.b, %.sroa.0.sroa.7.0.extract.trunc
-  br i1 %.not28, label %bb.d, label %bb.c
+  br i1 %.not28, label %3, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.sroa.11.8.extract.trunc = trunc i64 %.sroa.11.0 to i32
@@ -721,14 +724,18 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.11.12.insert.shift = shl nuw i64 %.sroa.11.12.insert.ext, 32
   %.sroa.11.12.insert.mask23 = and i64 %.sroa.11.0, 4294967295
   %.sroa.11.12.insert.insert24 = or disjoint i64 %.sroa.11.12.insert.shift, %.sroa.11.12.insert.mask23
+  br label %3
+
+3:                                                ; preds = %bb.c, %bb.b
+  %.sroa.11.1 = phi i64 [ %.sroa.11.12.insert.insert24, %bb.c ], [ %.sroa.11.0, %bb.b ]
+  %4 = zext i32 %i.j to i64
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  %.sroa.11.2 = phi i64 [ %1, %bb.a ], [ %.sroa.11.12.insert.insert24, %bb.c ], [ %.sroa.11.0, %bb.b ]
-  %.sroa.0.sroa.0.0 = phi i32 [ %.sroa.0.sroa.0.0.extract.trunc, %bb.a ], [ %i.b, %bb.c ], [ %i.b, %bb.b ]
-  %.sroa.0.sroa.7.0 = phi i32 [ %.sroa.0.sroa.7.0.extract.trunc, %bb.a ], [ %i.j, %bb.c ], [ %i.j, %bb.b ]
-  %.sroa.0.sroa.7.0.insert.ext = zext i32 %.sroa.0.sroa.7.0 to i64
-  %.sroa.0.sroa.7.0.insert.shift = shl nuw i64 %.sroa.0.sroa.7.0.insert.ext, 32
+bb.d:                                             ; preds = %3, %bb.a
+  %.sroa.11.2 = phi i64 [ %.sroa.11.1, %3 ], [ %1, %bb.a ]
+  %.sroa.0.sroa.0.0 = phi i32 [ %i.b, %3 ], [ %.sroa.0.sroa.0.0.extract.trunc, %bb.a ]
+  %.sroa.0.sroa.7.0 = phi i64 [ %4, %3 ], [ %.sroa.0.sroa.7.0.extract.shift, %bb.a ]
+  %.sroa.0.sroa.7.0.insert.shift = shl nuw i64 %.sroa.0.sroa.7.0, 32
   %.sroa.0.sroa.0.0.insert.ext = zext i32 %.sroa.0.sroa.0.0 to i64
   %.sroa.0.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.sroa.7.0.insert.shift, %.sroa.0.sroa.0.0.insert.ext
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.0.sroa.0.0.insert.insert, 0

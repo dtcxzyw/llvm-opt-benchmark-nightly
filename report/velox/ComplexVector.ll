@@ -204,12 +204,15 @@ bb.am:                                            ; preds = %.sink.split.i.i, %b
   br i1 %i.ff, label %bb.s, label %.preheader9.i.i, !llvm.loop !374
 
 .preheader.i.i:                                   ; preds = %"_ZZN8facebook5velox12_GLOBAL__N_112combineNullsERKSt6vectorINS1_15EncodingWrapperESaIS3_EEiPKmPNS0_6memory10MemoryPoolEENK3$_0clEiib.exit.i.i", %.preheader.preheader.i.i
-  %indvars.iv42.i.i = phi i64 [ 0, %.preheader.preheader.i.i ], [ %indvars.iv.next43.i.i, %"_ZZN8facebook5velox12_GLOBAL__N_112combineNullsERKSt6vectorINS1_15EncodingWrapperESaIS3_EEiPKmPNS0_6memory10MemoryPoolEENK3$_0clEiib.exit.i.i" ] ; 4 uses
+  %indvars.iv42.i.i = phi i64 [ 0, %.preheader.preheader.i.i ], [ %indvars.iv.next43.i.i, %"_ZZN8facebook5velox12_GLOBAL__N_112combineNullsERKSt6vectorINS1_15EncodingWrapperESaIS3_EEiPKmPNS0_6memory10MemoryPoolEENK3$_0clEiib.exit.i.i" ] ; 5 uses
   %.val20.i.i = load ptr, ptr %1, align 8, !tbaa !358, !noalias !348 ; 2 uses
   %.val6021.i.i = load ptr, ptr %i.af, align 8, !tbaa !360, !noalias !348
   %.not31.i.i = icmp eq ptr %.val6021.i.i, %.val20.i.i
-  %18 = trunc nuw nsw i64 %indvars.iv42.i.i to i32 ; 2 uses
-  br i1 %.not31.i.i, label %._crit_edge.i.i, label %.lr.ph25.i.i
+  br i1 %.not31.i.i, label %._crit_edge.i.i, label %.lr.ph25.preheader.i.i
+
+.lr.ph25.preheader.i.i:                           ; preds = %.preheader.i.i
+  %18 = trunc nuw nsw i64 %indvars.iv42.i.i to i32
+  br label %.lr.ph25.i.i
 
 ._crit_edge29.i.i:                                ; preds = %"_ZZN8facebook5velox12_GLOBAL__N_112combineNullsERKSt6vectorINS1_15EncodingWrapperESaIS3_EEiPKmPNS0_6memory10MemoryPoolEENK3$_0clEiib.exit.i.i", %.preheader9.i.i
   %i.fg = load ptr, ptr %7, align 8, !tbaa !375, !noalias !348 ; 3 uses
@@ -268,10 +271,10 @@ bb.ap:                                            ; preds = %_ZNSt6vectorIS_IiSa
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.03.075.i.i, i64 noundef %i.fy) #40
   br label %_ZN8facebook5velox12_GLOBAL__N_112combineNullsERKSt6vectorINS1_15EncodingWrapperESaIS3_EEiPKmPNS0_6memory10MemoryPoolE.exit
 
-.lr.ph25.i.i:                                     ; preds = %.preheader.i.i, %bb.as
-  %indvars.iv39.i.i = phi i64 [ %indvars.iv.next40.i.i, %bb.as ], [ 0, %.preheader.i.i ] ; 3 uses
-  %.val24.i.i = phi ptr [ %.val.i.i, %bb.as ], [ %.val20.i.i, %.preheader.i.i ]
-  %.03922.i.i = phi i32 [ %i.gl, %bb.as ], [ %18, %.preheader.i.i ] ; 2 uses
+.lr.ph25.i.i:                                     ; preds = %bb.as, %.lr.ph25.preheader.i.i
+  %indvars.iv39.i.i = phi i64 [ 0, %.lr.ph25.preheader.i.i ], [ %indvars.iv.next40.i.i, %bb.as ] ; 3 uses
+  %.val24.i.i = phi ptr [ %.val20.i.i, %.lr.ph25.preheader.i.i ], [ %.val.i.i, %bb.as ]
+  %.03922.i.i = phi i32 [ %18, %.lr.ph25.preheader.i.i ], [ %i.gl, %bb.as ] ; 2 uses
   %i.fz = getelementptr inbounds nuw [24 x i8], ptr %.val24.i.i, i64 %indvars.iv39.i.i
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !345, !nonnull !148, !align !347
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !47 ; 2 uses
@@ -303,18 +306,21 @@ bb.as:                                            ; preds = %bb.aq
   %i.go = sub i64 %i.gm, %i.gn
   %i.gp = sdiv exact i64 %i.go, 24
   %i.gq = icmp ugt i64 %i.gp, %indvars.iv.next40.i.i
-  br i1 %i.gq, label %.lr.ph25.i.i, label %._crit_edge.i.i, !llvm.loop !377
+  br i1 %i.gq, label %.lr.ph25.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !377
 
-._crit_edge.i.i:                                  ; preds = %bb.as, %.preheader.i.i
-  %.039.lcssa.i.i = phi i32 [ %18, %.preheader.i.i ], [ %i.gl, %bb.as ]
+._crit_edge.loopexit.i.i:                         ; preds = %bb.as
+  %19 = zext i32 %i.gl to i64
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %.preheader.i.i
+  %.039.lcssa.i.i = phi i64 [ %indvars.iv42.i.i, %.preheader.i.i ], [ %19, %._crit_edge.loopexit.i.i ] ; 2 uses
   br i1 %.not.i76.i.i, label %"_ZZN8facebook5velox12_GLOBAL__N_112combineNullsERKSt6vectorINS1_15EncodingWrapperESaIS3_EEiPKmPNS0_6memory10MemoryPoolEENK3$_0clEiib.exit.i.i", label %bb.at
 
 bb.at:                                            ; preds = %._crit_edge.i.i
-  %19 = zext i32 %.039.lcssa.i.i to i64           ; 2 uses
-  %i.gr = lshr i64 %19, 6
+  %i.gr = lshr i64 %.039.lcssa.i.i, 6
   %i.gs = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.gr
   %i.gt = load i64, ptr %i.gs, align 8, !tbaa !43, !noalias !348
-  %i.gu = and i64 %19, 63
+  %i.gu = and i64 %.039.lcssa.i.i, 63
   %i.gv = shl nuw i64 1, %i.gu
   %i.gw = and i64 %i.gt, %i.gv
   %.not.i.i.i.i = icmp eq i64 %i.gw, 0

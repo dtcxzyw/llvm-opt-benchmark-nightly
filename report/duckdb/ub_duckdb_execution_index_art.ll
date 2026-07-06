@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 6 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !45
   %i.g = icmp ult i8 %i.f, %2
@@ -213,10 +213,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit, label %.lr.ph.i, !llvm.loop !1379
+  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17, label %.lr.ph.i, !llvm.loop !1379
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 5 uses
+  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 2 uses
   %i.i = icmp ugt i8 %i.c, %i.h
   br i1 %i.i, label %.lr.ph31.i, label %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit
 
@@ -344,13 +344,16 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bk = icmp ult i8 %i.h, %indvars.i
   br i1 %i.bk, label %scalar.ph, label %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit, !llvm.loop !1392
 
-_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit: ; preds = %bb.c, %scalar.ph, %middle.block, %bb.b, %.critedge.i
-  %.023.lcssa37.i = phi i8 [ 0, %bb.b ], [ %i.h, %.critedge.i ], [ %i.h, %middle.block ], [ %i.h, %scalar.ph ], [ %i.c, %bb.c ]
-  %6 = zext i8 %.023.lcssa37.i to i64             ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.d, i64 %6
+_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17: ; preds = %bb.c
+  %6 = zext i8 %i.c to i64
+  br label %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit
+
+_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit: ; preds = %scalar.ph, %middle.block, %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17, %bb.b, %.critedge.i
+  %.023.lcssa37.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.i, %.critedge.i ], [ %6, %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17 ], [ %indvars.iv.i, %middle.block ], [ %indvars.iv.i, %scalar.ph ] ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.d, i64 %.023.lcssa37.i
   store i8 %2, ptr %i.bl, align 1, !tbaa !45
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %6
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %.023.lcssa37.i
   store i64 %3, ptr %i.bn, align 8
   %i.bo = add i8 %i.c, 1
   store i8 %i.bo, ptr %i.b, align 8, !tbaa !203
@@ -419,7 +422,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 5 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !45
   %i.g = icmp ult i8 %i.f, %2
@@ -428,10 +431,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit, label %.lr.ph.i, !llvm.loop !1396
+  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit.loopexit13, label %.lr.ph.i, !llvm.loop !1396
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 6 uses
+  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 2 uses
   %i.i = icmp ugt i8 %i.c, %i.h
   br i1 %i.i, label %iter.check, label %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit
 
@@ -541,10 +544,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ay = icmp ult i8 %i.h, %indvars.i
   br i1 %i.ay, label %.lr.ph25.i, label %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit, !llvm.loop !1400
 
-_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit: ; preds = %bb.c, %.lr.ph25.i, %middle.block, %vec.epilog.middle.block, %bb.b, %.critedge.i
-  %.017.lcssa31.i = phi i8 [ 0, %bb.b ], [ %i.h, %.critedge.i ], [ %i.h, %middle.block ], [ %i.h, %.lr.ph25.i ], [ %i.h, %vec.epilog.middle.block ], [ %i.c, %bb.c ]
-  %5 = zext i8 %.017.lcssa31.i to i64
-  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 %5
+_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit.loopexit13: ; preds = %bb.c
+  %5 = zext i8 %i.c to i64
+  br label %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit
+
+_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit: ; preds = %.lr.ph25.i, %middle.block, %vec.epilog.middle.block, %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit.loopexit13, %bb.b, %.critedge.i
+  %.017.lcssa31.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.i, %.critedge.i ], [ %5, %_ZN6duckdb8BaseLeafILh7ELNS_5NTypeE8EE18InsertByteInternalERS2_h.exit.loopexit13 ], [ %indvars.iv.i, %middle.block ], [ %indvars.iv.i, %vec.epilog.middle.block ], [ %indvars.iv.i, %.lr.ph25.i ]
+  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 %.017.lcssa31.i
   store i8 %2, ptr %i.az, align 1, !tbaa !45
   %i.ba = add i8 %i.c, 1
   store i8 %i.ba, ptr %i.b, align 1, !tbaa !177
@@ -890,7 +896,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 5 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !45
   %i.g = icmp ult i8 %i.f, %2
@@ -899,10 +905,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit, label %.lr.ph.i, !llvm.loop !1413
+  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit.loopexit13, label %.lr.ph.i, !llvm.loop !1413
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 6 uses
+  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 2 uses
   %i.i = icmp ugt i8 %i.c, %i.h
   br i1 %i.i, label %iter.check, label %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit
 
@@ -1012,10 +1018,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ay = icmp ult i8 %i.h, %indvars.i
   br i1 %i.ay, label %.lr.ph25.i, label %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit, !llvm.loop !1416
 
-_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit: ; preds = %bb.c, %.lr.ph25.i, %middle.block, %vec.epilog.middle.block, %bb.b, %.critedge.i
-  %.017.lcssa31.i = phi i8 [ 0, %bb.b ], [ %i.h, %.critedge.i ], [ %i.h, %middle.block ], [ %i.h, %.lr.ph25.i ], [ %i.h, %vec.epilog.middle.block ], [ %i.c, %bb.c ]
-  %6 = zext i8 %.017.lcssa31.i to i64
-  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 %6
+_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit.loopexit13: ; preds = %bb.c
+  %6 = zext i8 %i.c to i64
+  br label %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit
+
+_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit: ; preds = %.lr.ph25.i, %middle.block, %vec.epilog.middle.block, %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit.loopexit13, %bb.b, %.critedge.i
+  %.017.lcssa31.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.i, %.critedge.i ], [ %6, %_ZN6duckdb8BaseLeafILh15ELNS_5NTypeE9EE18InsertByteInternalERS2_h.exit.loopexit13 ], [ %indvars.iv.i, %middle.block ], [ %indvars.iv.i, %vec.epilog.middle.block ], [ %indvars.iv.i, %.lr.ph25.i ]
+  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 %.017.lcssa31.i
   store i8 %2, ptr %i.az, align 1, !tbaa !45
   %i.ba = add i8 %i.c, 1
   store i8 %i.ba, ptr %i.b, align 1, !tbaa !186
@@ -1418,7 +1427,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 6 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !45
   %i.g = icmp ult i8 %i.f, %2
@@ -1427,10 +1436,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit, label %.lr.ph.i, !llvm.loop !1472
+  br i1 %exitcond.not.i, label %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17, label %.lr.ph.i, !llvm.loop !1472
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 5 uses
+  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 2 uses
   %i.i = icmp ugt i8 %i.c, %i.h
   br i1 %i.i, label %.lr.ph31.i, label %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit
 
@@ -1558,13 +1567,16 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bk = icmp ult i8 %i.h, %indvars.i
   br i1 %i.bk, label %scalar.ph, label %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit, !llvm.loop !1485
 
-_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit: ; preds = %bb.c, %scalar.ph, %middle.block, %bb.b, %.critedge.i
-  %.023.lcssa37.i = phi i8 [ 0, %bb.b ], [ %i.h, %.critedge.i ], [ %i.h, %middle.block ], [ %i.h, %scalar.ph ], [ %i.c, %bb.c ]
-  %6 = zext i8 %.023.lcssa37.i to i64             ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.d, i64 %6
+_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17: ; preds = %bb.c
+  %6 = zext i8 %i.c to i64
+  br label %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit
+
+_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit: ; preds = %scalar.ph, %middle.block, %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17, %bb.b, %.critedge.i
+  %.023.lcssa37.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.i, %.critedge.i ], [ %6, %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17 ], [ %indvars.iv.i, %middle.block ], [ %indvars.iv.i, %scalar.ph ] ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.d, i64 %.023.lcssa37.i
   store i8 %2, ptr %i.bl, align 1, !tbaa !45
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %6
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %.023.lcssa37.i
   store i64 %3, ptr %i.bn, align 8
   %i.bo = add i8 %i.c, 1
   store i8 %i.bo, ptr %i.b, align 8, !tbaa !901

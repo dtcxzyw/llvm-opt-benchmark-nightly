@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 mi_span_queue_for.exit.i:                         ; preds = %bb.b, %bb.a
   %.1.i.i.i.i = phi i64 [ %i.f, %bb.a ], [ %i.r, %bb.b ]
   %i.s = getelementptr [24 x i8], ptr %3, i64 %.1.i.i.i.i ; 3 uses
-  %spec.store.select.i = tail call i64 @llvm.umax.i64(i64 range(i64 0, 281474976710656) %i.f, i64 1) ; 6 uses
+  %spec.store.select.i = tail call i64 @llvm.umax.i64(i64 range(i64 0, 281474976710656) %i.f, i64 1) ; 7 uses
   %i.t = getelementptr i8, ptr %3, i64 840        ; 3 uses
   %.not77.i = icmp ugt ptr %i.s, %i.t
   br i1 %.not77.i, label %.loopexit, label %.preheader.lr.ph.i
@@ -343,7 +343,11 @@ mi_span_queue_delete.exit.i:                      ; preds = %bb.l, %bb.k
   %i.bk = icmp samesign ult i64 %spec.store.select.i, %.us-phi61.i
   %reass.sub = sub i64 %.us-phi59.i, %.us-phi.i   ; 2 uses
   %i.bl = add i64 %reass.sub, -264
-  br i1 %i.bk, label %bb.m, label %mi_span_queue_delete.exit._crit_edge.i.a
+  br i1 %i.bk, label %bb.m, label %mi_span_queue_delete.exit._crit_edge.i
+
+mi_span_queue_delete.exit._crit_edge.i:           ; preds = %mi_span_queue_delete.exit.i
+  %5 = zext i32 %i.ay to i64
+  br label %mi_span_queue_delete.exit._crit_edge.i.a
 
 bb.m:                                             ; preds = %mi_span_queue_delete.exit.i
   %i.bm = sub nuw nsw i64 %.us-phi61.i, %spec.store.select.i ; 5 uses
@@ -429,14 +433,13 @@ bb.v:                                             ; preds = %bb.t
 mi_segment_slice_split.exit.i:                    ; preds = %bb.v, %bb.u, %bb.s
   %i.cv = getelementptr i8, ptr %i.cg, i64 28
   store i32 0, ptr %i.cv, align 4, !tbaa !21
-  %i.cw = trunc nuw nsw i64 %spec.store.select.i to i32 ; 2 uses
+  %i.cw = trunc nuw nsw i64 %spec.store.select.i to i32
   store i32 %i.cw, ptr %.us-phi62.i, align 8, !tbaa !52
   br label %mi_span_queue_delete.exit._crit_edge.i.a
 
-mi_span_queue_delete.exit._crit_edge.i.a:         ; preds = %mi_segment_slice_split.exit.i, %mi_span_queue_delete.exit.i
-  %5 = phi i32 [ %i.cw, %mi_segment_slice_split.exit.i ], [ %i.ay, %mi_span_queue_delete.exit.i ]
+mi_span_queue_delete.exit._crit_edge.i.a:         ; preds = %mi_segment_slice_split.exit.i, %mi_span_queue_delete.exit._crit_edge.i
+  %6 = phi i64 [ %5, %mi_span_queue_delete.exit._crit_edge.i ], [ %spec.store.select.i, %mi_segment_slice_split.exit.i ]
   %i.cx = sdiv exact i64 %i.bl, 80
-  %6 = zext i32 %5 to i64
   %i.cy = getelementptr i8, ptr %3, i64 896       ; 2 uses
   %.val.i = load ptr, ptr %i.cy, align 8, !tbaa !201
   %i.cz = tail call fastcc ptr @mi_segment_span_allocate(ptr noundef nonnull %.us-phi60.i, i64 noundef %i.cx, i64 noundef %6, ptr %.val.i) ; 3 uses

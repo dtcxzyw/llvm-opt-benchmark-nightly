@@ -1,7 +1,7 @@
 inline.NumInlined: 143
 inline.NumDeleted: 77
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN6hermes40convertUTF16ToUTF8BufferWithReplacementsEN4llvh15MutableArrayRefIhEENS0_8ArrayRefIDsEE:bb.a
   %i.a = alloca ptr, align 8                      ; 6 uses
   %.idx = shl nuw nsw i64 %3, 1
@@ -203,7 +203,7 @@ bb.a:
 .lr.ph.1:                                         ; preds = %.lr.ph
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
   %i.l = load i8, ptr %i.f, align 1, !tbaa !10
-  %i.m = or i8 %i.l, %i.g                         ; 2 uses
+  %i.m = or i8 %i.g, %i.l                         ; 2 uses
   %i.n = add i64 %i.c, -2
   %i.o = ptrtoint ptr %i.k to i64
   %i.p = and i64 %i.o, 3
@@ -213,7 +213,7 @@ bb.a:
 .lr.ph.2:                                         ; preds = %.lr.ph.1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
   %i.r = load i8, ptr %i.k, align 1, !tbaa !10
-  %i.s = or i8 %i.r, %i.m                         ; 2 uses
+  %i.s = or i8 %i.m, %i.r                         ; 2 uses
   %i.t = add i64 %i.c, -3
   %i.u = ptrtoint ptr %i.q to i64
   %i.v = and i64 %i.u, 3
@@ -223,7 +223,7 @@ bb.a:
 .lr.ph.3:                                         ; preds = %.lr.ph.2
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.x = load i8, ptr %i.q, align 1, !tbaa !10
-  %i.y = or i8 %i.x, %i.s
+  %i.y = or i8 %i.s, %i.x
   %i.z = add i64 %i.c, -4
   br label %._crit_edge
 
@@ -261,22 +261,24 @@ bb.a:
   br i1 %.not4051, label %.critedge, label %.lr.ph56
 
 .lr.ph56:                                         ; preds = %.loopexit, %.lr.ph56
-  %.054 = phi i8 [ %2, %.lr.ph56 ], [ 0, %.loopexit ]
+  %.054 = phi i32 [ %3, %.lr.ph56 ], [ 0, %.loopexit ]
   %.553 = phi i64 [ %i.ah, %.lr.ph56 ], [ %.429, %.loopexit ]
   %.53552 = phi ptr [ %i.ai, %.lr.ph56 ], [ %.434, %.loopexit ] ; 2 uses
   %i.ah = add i64 %.553, -1                       ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.53552, i64 1
   %i.aj = load i8, ptr %.53552, align 1, !tbaa !10
-  %2 = or i8 %i.aj, %.054                         ; 2 uses
+  %2 = zext i8 %i.aj to i32
+  %3 = or i32 %.054, %2                           ; 2 uses
   %.not40 = icmp eq i64 %i.ah, 0
   br i1 %.not40, label %._crit_edge57.loopexit.loopexit, label %.lr.ph56, !llvm.loop !23
 
 ._crit_edge57.loopexit.loopexit:                  ; preds = %.lr.ph56
-  %3 = icmp sgt i8 %2, -1
+  %4 = and i32 %3, 128
+  %5 = icmp eq i32 %4, 0
   br label %.critedge
 
 .critedge:                                        ; preds = %.lr.ph81, %.loopexit, %._crit_edge57.loopexit.loopexit, %._crit_edge
-  %.4 = phi i1 [ %3, %._crit_edge57.loopexit.loopexit ], [ false, %._crit_edge ], [ true, %.loopexit ], [ false, %.lr.ph81 ]
+  %.4 = phi i1 [ %5, %._crit_edge57.loopexit.loopexit ], [ false, %._crit_edge ], [ true, %.loopexit ], [ false, %.lr.ph81 ]
   ret i1 %.4
 }
 

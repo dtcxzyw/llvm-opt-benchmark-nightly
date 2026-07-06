@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e, %RCLASS_WRITA
   %i.u = phi i64 [ %i.t, %bb.e ], [ %i.r, %RCLASS_WRITABLE_FIELDS_OBJ.exit ] ; 7 uses
   %i.v = inttoptr i64 %i.u to ptr
   %i.w = load i64, ptr %i.v, align 8, !tbaa !20   ; 3 uses
-  %i.x = lshr i64 %i.w, 32                        ; 4 uses
-  %i.y = trunc nuw i64 %i.x to i32                ; 4 uses
+  %i.x = lshr i64 %i.w, 32                        ; 5 uses
+  %i.y = trunc nuw i64 %i.x to i32                ; 3 uses
   %i.z = and i32 %i.y, 134217728
   %.not76.i = icmp eq i32 %i.z, 0
   br i1 %.not76.i, label %bb.g, label %bb.t, !prof !97
@@ -247,6 +247,7 @@ generic_shape_ivar.exit.i:                        ; preds = %bb.j, %._crit_edge.
 
 bb.k:                                             ; preds = %generic_shape_ivar.exit.i
   %i.al = call fastcc i64 @imemo_fields_complex_from_obj(i64 noundef %0, i64 noundef %i.u, i32 noundef %i.aj)
+  %4 = zext i32 %i.aj to i64
   br label %bb.t
 
 bb.l:                                             ; preds = %generic_shape_ivar.exit.i
@@ -363,10 +364,14 @@ rb_obj_atomic_write.exit.sink.split.i:            ; preds = %bb.s, %bb.r
   br label %rb_obj_atomic_write.exit.i
 
 rb_obj_atomic_write.exit.i:                       ; preds = %rb_obj_atomic_write.exit.sink.split.i, %bb.s, %bb.r
-  br i1 %i.aa, label %class_fields_ivar_set.exit, label %.sink.split.i
+  br i1 %i.aa, label %class_fields_ivar_set.exit, label %5
+
+5:                                                ; preds = %rb_obj_atomic_write.exit.i
+  %6 = zext i32 %i.aj to i64
+  br label %.sink.split.i
 
 bb.t:                                             ; preds = %bb.k, %bb.f
-  %.055.i = phi i32 [ %i.y, %bb.f ], [ %i.aj, %bb.k ]
+  %.055.i = phi i64 [ %i.x, %bb.f ], [ %4, %bb.k ]
   %.1.i = phi i64 [ %i.u, %bb.f ], [ %i.al, %bb.k ] ; 2 uses
   %i.cj = icmp eq i64 %.1.i, %i.r
   %or.cond61.i = and i1 %.not.i, %i.cj
@@ -410,16 +415,15 @@ class_fields_ivar_set.exit.thread:                ; preds = %rb_obj_written.exit
   store i8 %.075.i23, ptr %3, align 1, !tbaa !18
   br label %RCLASS_WRITABLE_SET_FIELDS_OBJ.exit
 
-.sink.split.i:                                    ; preds = %rb_obj_written.exit.i, %rb_obj_atomic_write.exit.i
-  %.2.sink.i = phi i64 [ %.054.i, %rb_obj_atomic_write.exit.i ], [ %.2.i, %rb_obj_written.exit.i ] ; 2 uses
-  %.055.sink.i = phi i32 [ %i.aj, %rb_obj_atomic_write.exit.i ], [ %.055.i, %rb_obj_written.exit.i ]
-  %.075.shrunk.ph.i = phi i1 [ true, %rb_obj_atomic_write.exit.i ], [ %.not58.i, %rb_obj_written.exit.i ]
-  %.0.ph.i = phi i16 [ %i.as, %rb_obj_atomic_write.exit.i ], [ -1, %rb_obj_written.exit.i ]
-  %i.ct = inttoptr i64 %.2.sink.i to ptr          ; 2 uses
+.sink.split.i:                                    ; preds = %rb_obj_written.exit.i, %5
+  %.2.sink.i = phi i64 [ %6, %5 ], [ %.055.i, %rb_obj_written.exit.i ]
+  %.sink85.in.i = phi i64 [ %.054.i, %5 ], [ %.2.i, %rb_obj_written.exit.i ] ; 2 uses
+  %.075.shrunk.ph.i = phi i1 [ true, %5 ], [ %.not58.i, %rb_obj_written.exit.i ]
+  %.0.ph.i = phi i16 [ %i.as, %5 ], [ -1, %rb_obj_written.exit.i ]
+  %i.ct = inttoptr i64 %.sink85.in.i to ptr       ; 2 uses
   %i.cu = load i64, ptr %i.ct, align 8, !tbaa !20
   %i.cv = and i64 %i.cu, 4294967295
-  %4 = zext i32 %.055.sink.i to i64
-  %i.cw = shl nuw i64 %4, 32
+  %i.cw = shl nuw i64 %.2.sink.i, 32
   %i.cx = or disjoint i64 %i.cv, %i.cw
   store i64 %i.cx, ptr %i.ct, align 8, !tbaa !20
   %i.cy = zext i1 %.075.shrunk.ph.i to i8
@@ -427,7 +431,7 @@ class_fields_ivar_set.exit.thread:                ; preds = %rb_obj_written.exit
 
 class_fields_ivar_set.exit:                       ; preds = %rb_obj_atomic_write.exit.i, %.sink.split.i
   %.075.shrunk.i = phi i8 [ %i.cy, %.sink.split.i ], [ 0, %rb_obj_atomic_write.exit.i ]
-  %storemerge60.i = phi i64 [ %.2.sink.i, %.sink.split.i ], [ %.054.i, %rb_obj_atomic_write.exit.i ] ; 7 uses
+  %storemerge60.i = phi i64 [ %.sink85.in.i, %.sink.split.i ], [ %.054.i, %rb_obj_atomic_write.exit.i ] ; 7 uses
   %.0.i = phi i16 [ %.0.ph.i, %.sink.split.i ], [ %i.as, %rb_obj_atomic_write.exit.i ] ; 3 uses
   store i8 %.075.shrunk.i, ptr %3, align 1, !tbaa !18
   %.not = icmp eq i64 %storemerge60.i, %i.r

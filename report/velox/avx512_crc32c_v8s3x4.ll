@@ -130,7 +130,7 @@ bb.b:                                             ; preds = %._crit_edge
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
-  %.1236 = phi i32 [ %i.cb, %bb.b ], [ %.0235.lcssa, %._crit_edge ] ; 3 uses
+  %.1236 = phi i32 [ %i.cb, %bb.b ], [ %.0235.lcssa, %._crit_edge ] ; 2 uses
   %.1228 = phi i64 [ %i.cd, %bb.b ], [ %.0227.lcssa, %._crit_edge ] ; 4 uses
   %.1 = phi ptr [ %i.cc, %bb.b ], [ %.0.lcssa, %._crit_edge ] ; 4 uses
   %i.ce = icmp ugt i64 %.1228, 223
@@ -160,6 +160,7 @@ bb.d:                                             ; preds = %bb.c
   %.0243309 = getelementptr inbounds nuw i8, ptr %i.ci, i64 128 ; 2 uses
   %i.cy = icmp ugt i64 %.2229308, 223
   %i.cz = shl nuw nsw i64 %i.cf, 6                ; 2 uses
+  %3 = zext i32 %.1236 to i64                     ; 2 uses
   br i1 %i.cy, label %.lr.ph326, label %._crit_edge327
 
 .lr.ph326:                                        ; preds = %bb.d, %.lr.ph326
@@ -170,7 +171,7 @@ bb.d:                                             ; preds = %bb.c
   %.0226320 = phi <2 x i64> [ %i.ej, %.lr.ph326 ], [ %i.cv, %bb.d ] ; 2 uses
   %.0233319 = phi <2 x i64> [ %i.eg, %.lr.ph326 ], [ %i.ct, %bb.d ] ; 2 uses
   %.0234318 = phi <2 x i64> [ %i.ed, %.lr.ph326 ], [ %i.cr, %bb.d ] ; 2 uses
-  %.2237317 = phi i32 [ %4, %.lr.ph326 ], [ %.1236, %bb.d ]
+  %.2237317 = phi i64 [ %i.fp, %.lr.ph326 ], [ %3, %bb.d ]
   %.0241316 = phi <2 x i64> [ %i.ea, %.lr.ph326 ], [ %i.cp, %bb.d ] ; 2 uses
   %.0242315 = phi <2 x i64> [ %i.dx, %.lr.ph326 ], [ %i.cn, %bb.d ] ; 2 uses
   %.pn314 = phi ptr [ %.0243324, %.lr.ph326 ], [ %i.ci, %bb.d ] ; 7 uses
@@ -217,9 +218,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ek = getelementptr inbounds nuw i8, ptr %.pn314, i64 240
   %i.el = load <2 x i64>, ptr %i.ek, align 1, !tbaa !11
   %i.em = tail call <2 x i64> @llvm.x86.avx512.pternlog.q.128(<2 x i64> %i.dp, <2 x i64> %i.do, <2 x i64> %i.el, i32 150) ; 2 uses
-  %3 = zext i32 %.2237317 to i64
   %i.en = load i64, ptr %.2322, align 8, !tbaa !12
-  %i.eo = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %3, i64 %i.en)
+  %i.eo = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.2237317, i64 %i.en)
   %i.ep = getelementptr inbounds nuw i8, ptr %.2322, i64 %i.cg ; 4 uses
   %i.eq = load i64, ptr %i.ep, align 8, !tbaa !12
   %i.er = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.0246311, i64 %i.eq)
@@ -246,8 +246,7 @@ bb.d:                                             ; preds = %bb.c
   %i.fm = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.fd, i64 %i.fl)
   %i.fn = getelementptr inbounds nuw i8, ptr %.2322, i64 24
   %i.fo = load i64, ptr %i.fn, align 8, !tbaa !12
-  %i.fp = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.fg, i64 %i.fo)
-  %4 = trunc nuw i64 %i.fp to i32                 ; 2 uses
+  %i.fp = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.fg, i64 %i.fo) ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ep, i64 24
   %i.fr = load i64, ptr %i.fq, align 8, !tbaa !12
   %i.fs = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.fj, i64 %i.fr) ; 2 uses
@@ -267,7 +266,7 @@ bb.d:                                             ; preds = %bb.c
   %.0244.lcssa = phi <2 x i64> [ %i.cl, %bb.d ], [ %i.du, %.lr.ph326 ]
   %.0242.lcssa = phi <2 x i64> [ %i.cn, %bb.d ], [ %i.dx, %.lr.ph326 ] ; 2 uses
   %.0241.lcssa = phi <2 x i64> [ %i.cp, %bb.d ], [ %i.ea, %.lr.ph326 ]
-  %.2237.lcssa = phi i32 [ %.1236, %bb.d ], [ %4, %.lr.ph326 ]
+  %.2237.lcssa = phi i64 [ %3, %bb.d ], [ %i.fp, %.lr.ph326 ]
   %.0234.lcssa = phi <2 x i64> [ %i.cr, %bb.d ], [ %i.ed, %.lr.ph326 ] ; 2 uses
   %.0233.lcssa = phi <2 x i64> [ %i.ct, %bb.d ], [ %i.eg, %.lr.ph326 ]
   %.0226.lcssa = phi <2 x i64> [ %i.cv, %bb.d ], [ %i.ej, %.lr.ph326 ] ; 2 uses
@@ -335,8 +334,7 @@ bb.d:                                             ; preds = %bb.c
   %i.hv = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.ht, <2 x i64> <i64 1947135746, i64 poison>, i8 0)
   %i.hw = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.ht, <2 x i64> <i64 poison, i64 2655706616>, i8 17)
   %i.hx = tail call <2 x i64> @llvm.x86.avx512.pternlog.q.128(<2 x i64> %i.hw, <2 x i64> %i.hv, <2 x i64> %i.hu, i32 150) ; 2 uses
-  %5 = zext i32 %.2237.lcssa to i64
-  %i.hy = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %5, i64 %i.fy)
+  %i.hy = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.2237.lcssa, i64 %i.fy)
   %i.hz = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.0246.lcssa, i64 %i.ga)
   %i.ia = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.0247.lcssa, i64 %i.gc)
   %i.ib = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.hy, i64 %i.ge)
@@ -616,13 +614,14 @@ _ZN5folly6detailL6xnmodpEm.exit289:               ; preds = %.lr.ph36.i280, %.pr
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN5folly6detailL6xnmodpEm.exit289, %bb.c
-  %.3238 = phi i32 [ %i.nd, %_ZN5folly6detailL6xnmodpEm.exit289 ], [ %.1236, %bb.c ] ; 3 uses
+  %.3238 = phi i32 [ %i.nd, %_ZN5folly6detailL6xnmodpEm.exit289 ], [ %.1236, %bb.c ] ; 2 uses
   %.3230 = phi i64 [ %.2229.lcssa, %_ZN5folly6detailL6xnmodpEm.exit289 ], [ %.1228, %bb.c ] ; 5 uses
   %.3 = phi ptr [ %.0243.lcssa, %_ZN5folly6detailL6xnmodpEm.exit289 ], [ %.1, %bb.c ] ; 3 uses
   %i.ne = icmp samesign ugt i64 %.3230, 7
   br i1 %i.ne, label %.lr.ph346.preheader, label %.preheader
 
 .lr.ph346.preheader:                              ; preds = %bb.e
+  %4 = zext i32 %.3238 to i64                     ; 2 uses
   %i.nf = add i64 %.3230, -8                      ; 2 uses
   %i.ng = lshr i64 %i.nf, 3
   %i.nh = add nuw nsw i64 %i.ng, 1
@@ -633,32 +632,37 @@ bb.e:                                             ; preds = %_ZN5folly6detailL6x
 .lr.ph346.prol:                                   ; preds = %.lr.ph346.preheader, %.lr.ph346.prol
   %.4344.prol = phi ptr [ %i.nk, %.lr.ph346.prol ], [ %.3, %.lr.ph346.preheader ] ; 2 uses
   %.4231343.prol = phi i64 [ %i.nl, %.lr.ph346.prol ], [ %.3230, %.lr.ph346.preheader ]
-  %.4239342.prol = phi i32 [ %7, %.lr.ph346.prol ], [ %.3238, %.lr.ph346.preheader ]
-  %prol.iter505.a = phi i64 [ %prol.iter505.next, %.lr.ph346.prol ], [ 0, %.lr.ph346.preheader ]
-  %6 = zext i32 %.4239342.prol to i64
+  %prol.iter505.a = phi i64 [ %i.nj, %.lr.ph346.prol ], [ %4, %.lr.ph346.preheader ]
+  %prol.iter505 = phi i64 [ %prol.iter505.next, %.lr.ph346.prol ], [ 0, %.lr.ph346.preheader ]
   %i.ni = load i64, ptr %.4344.prol, align 8, !tbaa !12
-  %i.nj = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %6, i64 %i.ni)
-  %7 = trunc nuw i64 %i.nj to i32                 ; 3 uses
+  %i.nj = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %prol.iter505.a, i64 %i.ni) ; 3 uses
   %i.nk = getelementptr inbounds nuw i8, ptr %.4344.prol, i64 8 ; 3 uses
   %i.nl = add nsw i64 %.4231343.prol, -8          ; 3 uses
-  %prol.iter505.next = add i64 %prol.iter505.a, 1 ; 2 uses
+  %prol.iter505.next = add i64 %prol.iter505, 1   ; 2 uses
   %prol.iter505.cmp.not = icmp eq i64 %prol.iter505.next, %xtraiter503
   br i1 %prol.iter505.cmp.not, label %.lr.ph346.prol.loopexit, label %.lr.ph346.prol, !llvm.loop !23
 
 .lr.ph346.prol.loopexit:                          ; preds = %.lr.ph346.prol, %.lr.ph346.preheader
   %.4344.unr = phi ptr [ %.3, %.lr.ph346.preheader ], [ %i.nk, %.lr.ph346.prol ]
   %.4231343.unr = phi i64 [ %.3230, %.lr.ph346.preheader ], [ %i.nl, %.lr.ph346.prol ]
-  %.4239342.unr = phi i32 [ %.3238, %.lr.ph346.preheader ], [ %7, %.lr.ph346.prol ]
-  %.lcssa466.unr = phi i32 [ poison, %.lr.ph346.preheader ], [ %7, %.lr.ph346.prol ]
+  %.4239342.unr = phi i64 [ %4, %.lr.ph346.preheader ], [ %i.nj, %.lr.ph346.prol ]
+  %.lcssa466.unr = phi i64 [ poison, %.lr.ph346.preheader ], [ %i.nj, %.lr.ph346.prol ]
   %.lcssa465.unr = phi ptr [ poison, %.lr.ph346.preheader ], [ %i.nk, %.lr.ph346.prol ]
   %.lcssa464.unr = phi i64 [ poison, %.lr.ph346.preheader ], [ %i.nl, %.lr.ph346.prol ]
   %i.nm = icmp ult i64 %i.nf, 56
-  br i1 %i.nm, label %.preheader, label %.lr.ph346
+  br i1 %i.nm, label %.preheader.loopexit, label %.lr.ph346
 
-.preheader:                                       ; preds = %.lr.ph346.prol.loopexit, %.lr.ph346, %bb.e
-  %.4239.lcssa = phi i32 [ %.3238, %bb.e ], [ %.lcssa466.unr, %.lr.ph346.prol.loopexit ], [ %9, %.lr.ph346 ] ; 3 uses
-  %.4231.lcssa = phi i64 [ %.3230, %bb.e ], [ %.lcssa464.unr, %.lr.ph346.prol.loopexit ], [ %i.oq, %.lr.ph346 ] ; 5 uses
-  %.4.lcssa = phi ptr [ %.3, %bb.e ], [ %.lcssa465.unr, %.lr.ph346.prol.loopexit ], [ %i.op, %.lr.ph346 ] ; 2 uses
+.preheader.loopexit:                              ; preds = %.lr.ph346, %.lr.ph346.prol.loopexit
+  %.lcssa466 = phi i64 [ %.lcssa466.unr, %.lr.ph346.prol.loopexit ], [ %i.oo, %.lr.ph346 ]
+  %.lcssa465 = phi ptr [ %.lcssa465.unr, %.lr.ph346.prol.loopexit ], [ %i.op, %.lr.ph346 ]
+  %.lcssa464 = phi i64 [ %.lcssa464.unr, %.lr.ph346.prol.loopexit ], [ %i.oq, %.lr.ph346 ]
+  %5 = trunc nuw i64 %.lcssa466 to i32
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.loopexit, %bb.e
+  %.4239.lcssa = phi i32 [ %.3238, %bb.e ], [ %5, %.preheader.loopexit ] ; 3 uses
+  %.4231.lcssa = phi i64 [ %.3230, %bb.e ], [ %.lcssa464, %.preheader.loopexit ] ; 5 uses
+  %.4.lcssa = phi ptr [ %.3, %bb.e ], [ %.lcssa465, %.preheader.loopexit ] ; 2 uses
   %.not350 = icmp eq i64 %.4231.lcssa, 0
   br i1 %.not350, label %._crit_edge355, label %.lr.ph354.preheader
 
@@ -691,10 +695,9 @@ bb.e:                                             ; preds = %_ZN5folly6detailL6x
 .lr.ph346:                                        ; preds = %.lr.ph346.prol.loopexit, %.lr.ph346
   %.4344 = phi ptr [ %i.op, %.lr.ph346 ], [ %.4344.unr, %.lr.ph346.prol.loopexit ] ; 9 uses
   %.4231343 = phi i64 [ %i.oq, %.lr.ph346 ], [ %.4231343.unr, %.lr.ph346.prol.loopexit ]
-  %.4239342 = phi i32 [ %9, %.lr.ph346 ], [ %.4239342.unr, %.lr.ph346.prol.loopexit ]
-  %8 = zext i32 %.4239342 to i64
+  %.4239342 = phi i64 [ %i.oo, %.lr.ph346 ], [ %.4239342.unr, %.lr.ph346.prol.loopexit ]
   %i.ns = load i64, ptr %.4344, align 8, !tbaa !12
-  %i.nt = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %8, i64 %i.ns)
+  %i.nt = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.4239342, i64 %i.ns)
   %i.nu = getelementptr inbounds nuw i8, ptr %.4344, i64 8
   %i.nv = load i64, ptr %i.nu, align 8, !tbaa !12
   %i.nw = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.nt, i64 %i.nv)
@@ -715,12 +718,11 @@ bb.e:                                             ; preds = %_ZN5folly6detailL6x
   %i.ol = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.oi, i64 %i.ok)
   %i.om = getelementptr inbounds nuw i8, ptr %.4344, i64 56
   %i.on = load i64, ptr %i.om, align 8, !tbaa !12
-  %i.oo = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ol, i64 %i.on)
-  %9 = trunc nuw i64 %i.oo to i32                 ; 2 uses
+  %i.oo = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ol, i64 %i.on) ; 2 uses
   %i.op = getelementptr inbounds nuw i8, ptr %.4344, i64 64 ; 2 uses
   %i.oq = add nsw i64 %.4231343, -64              ; 3 uses
   %i.or = icmp ugt i64 %i.oq, 7
-  br i1 %i.or, label %.lr.ph346, label %.preheader, !llvm.loop !25
+  br i1 %i.or, label %.lr.ph346, label %.preheader.loopexit, !llvm.loop !25
 
 .lr.ph354:                                        ; preds = %.lr.ph354.prol.loopexit, %.lr.ph354
   %.5353 = phi ptr [ %i.pn, %.lr.ph354 ], [ %.5353.unr, %.lr.ph354.prol.loopexit ] ; 9 uses

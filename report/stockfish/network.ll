@@ -204,32 +204,34 @@ bb.c:                                             ; preds = %bb.g, %bb.a
   %.02858 = phi i64 [ 0, %bb.a ], [ %i.l, %bb.g ] ; 3 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.f = load i16, ptr %i.e, align 2, !tbaa !266
+  %2 = sext i16 %i.f to i32
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.029 = phi i16 [ %i.f, %bb.c ], [ %2, %bb.d ]  ; 2 uses
+  %.029 = phi i32 [ %2, %bb.c ], [ %3, %bb.d ]    ; 2 uses
   %.1 = phi i32 [ %.059, %bb.c ], [ %i.g, %bb.d ]
-  %2 = ashr i16 %.029, 7                          ; 2 uses
+  %3 = ashr i32 %.029, 7                          ; 2 uses
   %i.g = add i32 %.1, 1                           ; 2 uses
-  %3 = shl i16 %.029, 9
-  %sext = ashr i16 %3, 15
-  %.not = icmp eq i16 %2, %sext
+  %4 = shl i32 %.029, 25
+  %sext = ashr i32 %4, 31
+  %.not = icmp eq i32 %3, %sext
   br i1 %.not, label %bb.e, label %bb.d, !llvm.loop !356
 
 bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 2
   %i.j = load i16, ptr %i.i, align 2, !tbaa !266
+  %5 = sext i16 %i.j to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e
-  %.029.1 = phi i16 [ %i.j, %bb.e ], [ %4, %bb.f ] ; 2 uses
+  %.029.1 = phi i32 [ %5, %bb.e ], [ %6, %bb.f ]  ; 2 uses
   %.1.1 = phi i32 [ %i.g, %bb.e ], [ %i.k, %bb.f ]
-  %4 = ashr i16 %.029.1, 7                        ; 2 uses
+  %6 = ashr i32 %.029.1, 7                        ; 2 uses
   %i.k = add i32 %.1.1, 1                         ; 3 uses
-  %5 = shl i16 %.029.1, 9
-  %sext.1 = ashr i16 %5, 15
-  %.not.1 = icmp eq i16 %4, %sext.1
+  %7 = shl i32 %.029.1, 25
+  %sext.1 = ashr i32 %7, 31
+  %.not.1 = icmp eq i32 %6, %sext.1
   br i1 %.not.1, label %bb.g, label %bb.f, !llvm.loop !356
 
 bb.g:                                             ; preds = %bb.f
@@ -255,30 +257,32 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE
   %.05260 = phi i32 [ 0, %bb.b ], [ %.05260.be, %.backedge.backedge ]
   %i.o = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02761
   %i.p = load i16, ptr %i.o, align 2, !tbaa !266
+  %8 = sext i16 %i.p to i32
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
 
 _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit: ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge, %.backedge
   %.153 = phi i32 [ %.05260, %.backedge ], [ %.153.be, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 4 uses
-  %.025 = phi i16 [ %i.p, %.backedge ], [ %7, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 2 uses
-  %i.q = trunc i16 %.025 to i8                    ; 2 uses
-  %6 = and i8 %i.q, 127                           ; 2 uses
-  %7 = ashr i16 %.025, 7                          ; 3 uses
-  %8 = icmp samesign ult i8 %6, 64
-  br i1 %8, label %bb.j, label %bb.k
+  %.025 = phi i32 [ %8, %.backedge ], [ %9, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 3 uses
+  %i.q = trunc i32 %.025 to i8                    ; 2 uses
+  %9 = ashr i32 %.025, 7                          ; 3 uses
+  %10 = and i32 %.025, 64
+  %11 = icmp eq i32 %10, 0
+  br i1 %11, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.r = icmp eq i16 %7, 0
+  %i.r = icmp eq i32 %9, 0
   br i1 %i.r, label %bb.l, label %bb.m
 
 bb.k:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.s = icmp eq i16 %7, -1
+  %i.s = icmp eq i32 %9, -1
   br i1 %i.s, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k, %bb.j
+  %12 = and i8 %i.q, 127
   %i.t = add i32 %.153, 1                         ; 4 uses
   %i.u = zext i32 %.153 to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.u
-  store i8 %6, ptr %i.v, align 1, !tbaa !51
+  store i8 %12, ptr %i.v, align 1, !tbaa !51
   %i.w = icmp eq i32 %i.t, 4096
   br i1 %i.w, label %.thread, label %bb.o
 
@@ -337,32 +341,34 @@ bb.c:                                             ; preds = %bb.g, %bb.a
   %.02858 = phi i64 [ 0, %bb.a ], [ %i.l, %bb.g ] ; 3 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.f = load i16, ptr %i.e, align 2, !tbaa !266
+  %2 = sext i16 %i.f to i32
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.029 = phi i16 [ %i.f, %bb.c ], [ %2, %bb.d ]  ; 2 uses
+  %.029 = phi i32 [ %2, %bb.c ], [ %3, %bb.d ]    ; 2 uses
   %.1 = phi i32 [ %.059, %bb.c ], [ %i.g, %bb.d ]
-  %2 = ashr i16 %.029, 7                          ; 2 uses
+  %3 = ashr i32 %.029, 7                          ; 2 uses
   %i.g = add i32 %.1, 1                           ; 2 uses
-  %3 = shl i16 %.029, 9
-  %sext = ashr i16 %3, 15
-  %.not = icmp eq i16 %2, %sext
+  %4 = shl i32 %.029, 25
+  %sext = ashr i32 %4, 31
+  %.not = icmp eq i32 %3, %sext
   br i1 %.not, label %bb.e, label %bb.d, !llvm.loop !359
 
 bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 2
   %i.j = load i16, ptr %i.i, align 2, !tbaa !266
+  %5 = sext i16 %i.j to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e
-  %.029.1 = phi i16 [ %i.j, %bb.e ], [ %4, %bb.f ] ; 2 uses
+  %.029.1 = phi i32 [ %5, %bb.e ], [ %6, %bb.f ]  ; 2 uses
   %.1.1 = phi i32 [ %i.g, %bb.e ], [ %i.k, %bb.f ]
-  %4 = ashr i16 %.029.1, 7                        ; 2 uses
+  %6 = ashr i32 %.029.1, 7                        ; 2 uses
   %i.k = add i32 %.1.1, 1                         ; 3 uses
-  %5 = shl i16 %.029.1, 9
-  %sext.1 = ashr i16 %5, 15
-  %.not.1 = icmp eq i16 %4, %sext.1
+  %7 = shl i32 %.029.1, 25
+  %sext.1 = ashr i32 %7, 31
+  %.not.1 = icmp eq i32 %6, %sext.1
   br i1 %.not.1, label %bb.g, label %bb.f, !llvm.loop !359
 
 bb.g:                                             ; preds = %bb.f
@@ -388,30 +394,32 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENK
   %.05260 = phi i32 [ 0, %bb.b ], [ %.05260.be, %.backedge.backedge ]
   %i.o = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02761
   %i.p = load i16, ptr %i.o, align 2, !tbaa !266
+  %8 = sext i16 %i.p to i32
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
 
 _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit: ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge, %.backedge
   %.153 = phi i32 [ %.05260, %.backedge ], [ %.153.be, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 4 uses
-  %.025 = phi i16 [ %i.p, %.backedge ], [ %7, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 2 uses
-  %i.q = trunc i16 %.025 to i8                    ; 2 uses
-  %6 = and i8 %i.q, 127                           ; 2 uses
-  %7 = ashr i16 %.025, 7                          ; 3 uses
-  %8 = icmp samesign ult i8 %6, 64
-  br i1 %8, label %bb.j, label %bb.k
+  %.025 = phi i32 [ %8, %.backedge ], [ %9, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 3 uses
+  %i.q = trunc i32 %.025 to i8                    ; 2 uses
+  %9 = ashr i32 %.025, 7                          ; 3 uses
+  %10 = and i32 %.025, 64
+  %11 = icmp eq i32 %10, 0
+  br i1 %11, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.r = icmp eq i16 %7, 0
+  %i.r = icmp eq i32 %9, 0
   br i1 %i.r, label %bb.l, label %bb.m
 
 bb.k:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.s = icmp eq i16 %7, -1
+  %i.s = icmp eq i32 %9, -1
   br i1 %i.s, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k, %bb.j
+  %12 = and i8 %i.q, 127
   %i.t = add i32 %.153, 1                         ; 4 uses
   %i.u = zext i32 %.153 to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.u
-  store i8 %6, ptr %i.v, align 1, !tbaa !51
+  store i8 %12, ptr %i.v, align 1, !tbaa !51
   %i.w = icmp eq i32 %i.t, 4096
   br i1 %i.w, label %.thread, label %bb.o
 
@@ -814,32 +822,34 @@ bb.c:                                             ; preds = %bb.g, %bb.a
   %.02858 = phi i64 [ 0, %bb.a ], [ %i.l, %bb.g ] ; 3 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.f = load i16, ptr %i.e, align 2, !tbaa !266
+  %2 = sext i16 %i.f to i32
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.029 = phi i16 [ %i.f, %bb.c ], [ %2, %bb.d ]  ; 2 uses
+  %.029 = phi i32 [ %2, %bb.c ], [ %3, %bb.d ]    ; 2 uses
   %.1 = phi i32 [ %.059, %bb.c ], [ %i.g, %bb.d ]
-  %2 = ashr i16 %.029, 7                          ; 2 uses
+  %3 = ashr i32 %.029, 7                          ; 2 uses
   %i.g = add i32 %.1, 1                           ; 2 uses
-  %3 = shl i16 %.029, 9
-  %sext = ashr i16 %3, 15
-  %.not = icmp eq i16 %2, %sext
+  %4 = shl i32 %.029, 25
+  %sext = ashr i32 %4, 31
+  %.not = icmp eq i32 %3, %sext
   br i1 %.not, label %bb.e, label %bb.d, !llvm.loop !379
 
 bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 2
   %i.j = load i16, ptr %i.i, align 2, !tbaa !266
+  %5 = sext i16 %i.j to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e
-  %.029.1 = phi i16 [ %i.j, %bb.e ], [ %4, %bb.f ] ; 2 uses
+  %.029.1 = phi i32 [ %5, %bb.e ], [ %6, %bb.f ]  ; 2 uses
   %.1.1 = phi i32 [ %i.g, %bb.e ], [ %i.k, %bb.f ]
-  %4 = ashr i16 %.029.1, 7                        ; 2 uses
+  %6 = ashr i32 %.029.1, 7                        ; 2 uses
   %i.k = add i32 %.1.1, 1                         ; 3 uses
-  %5 = shl i16 %.029.1, 9
-  %sext.1 = ashr i16 %5, 15
-  %.not.1 = icmp eq i16 %4, %sext.1
+  %7 = shl i32 %.029.1, 25
+  %sext.1 = ashr i32 %7, 31
+  %.not.1 = icmp eq i32 %6, %sext.1
   br i1 %.not.1, label %bb.g, label %bb.f, !llvm.loop !379
 
 bb.g:                                             ; preds = %bb.f
@@ -865,30 +875,32 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_
   %.05260 = phi i32 [ 0, %bb.b ], [ %.05260.be, %.backedge.backedge ]
   %i.o = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02761
   %i.p = load i16, ptr %i.o, align 2, !tbaa !266
+  %8 = sext i16 %i.p to i32
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
 
 _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit: ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge, %.backedge
   %.153 = phi i32 [ %.05260, %.backedge ], [ %.153.be, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 4 uses
-  %.025 = phi i16 [ %i.p, %.backedge ], [ %7, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 2 uses
-  %i.q = trunc i16 %.025 to i8                    ; 2 uses
-  %6 = and i8 %i.q, 127                           ; 2 uses
-  %7 = ashr i16 %.025, 7                          ; 3 uses
-  %8 = icmp samesign ult i8 %6, 64
-  br i1 %8, label %bb.j, label %bb.k
+  %.025 = phi i32 [ %8, %.backedge ], [ %9, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 3 uses
+  %i.q = trunc i32 %.025 to i8                    ; 2 uses
+  %9 = ashr i32 %.025, 7                          ; 3 uses
+  %10 = and i32 %.025, 64
+  %11 = icmp eq i32 %10, 0
+  br i1 %11, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.r = icmp eq i16 %7, 0
+  %i.r = icmp eq i32 %9, 0
   br i1 %i.r, label %bb.l, label %bb.m
 
 bb.k:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.s = icmp eq i16 %7, -1
+  %i.s = icmp eq i32 %9, -1
   br i1 %i.s, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k, %bb.j
+  %12 = and i8 %i.q, 127
   %i.t = add i32 %.153, 1                         ; 4 uses
   %i.u = zext i32 %.153 to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.u
-  store i8 %6, ptr %i.v, align 1, !tbaa !51
+  store i8 %12, ptr %i.v, align 1, !tbaa !51
   %i.w = icmp eq i32 %i.t, 4096
   br i1 %i.w, label %.thread, label %bb.o
 
@@ -947,32 +959,34 @@ bb.c:                                             ; preds = %bb.g, %bb.a
   %.02858 = phi i64 [ 0, %bb.a ], [ %i.l, %bb.g ] ; 3 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.f = load i16, ptr %i.e, align 2, !tbaa !266
+  %2 = sext i16 %i.f to i32
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.029 = phi i16 [ %i.f, %bb.c ], [ %2, %bb.d ]  ; 2 uses
+  %.029 = phi i32 [ %2, %bb.c ], [ %3, %bb.d ]    ; 2 uses
   %.1 = phi i32 [ %.059, %bb.c ], [ %i.g, %bb.d ]
-  %2 = ashr i16 %.029, 7                          ; 2 uses
+  %3 = ashr i32 %.029, 7                          ; 2 uses
   %i.g = add i32 %.1, 1                           ; 2 uses
-  %3 = shl i16 %.029, 9
-  %sext = ashr i16 %3, 15
-  %.not = icmp eq i16 %2, %sext
+  %4 = shl i32 %.029, 25
+  %sext = ashr i32 %4, 31
+  %.not = icmp eq i32 %3, %sext
   br i1 %.not, label %bb.e, label %bb.d, !llvm.loop !382
 
 bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02858
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 2
   %i.j = load i16, ptr %i.i, align 2, !tbaa !266
+  %5 = sext i16 %i.j to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e
-  %.029.1 = phi i16 [ %i.j, %bb.e ], [ %4, %bb.f ] ; 2 uses
+  %.029.1 = phi i32 [ %5, %bb.e ], [ %6, %bb.f ]  ; 2 uses
   %.1.1 = phi i32 [ %i.g, %bb.e ], [ %i.k, %bb.f ]
-  %4 = ashr i16 %.029.1, 7                        ; 2 uses
+  %6 = ashr i32 %.029.1, 7                        ; 2 uses
   %i.k = add i32 %.1.1, 1                         ; 3 uses
-  %5 = shl i16 %.029.1, 9
-  %sext.1 = ashr i16 %5, 15
-  %.not.1 = icmp eq i16 %4, %sext.1
+  %7 = shl i32 %.029.1, 25
+  %sext.1 = ashr i32 %7, 31
+  %.not.1 = icmp eq i32 %6, %sext.1
   br i1 %.not.1, label %bb.g, label %bb.f, !llvm.loop !382
 
 bb.g:                                             ; preds = %bb.f
@@ -998,30 +1012,32 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKU
   %.05260 = phi i32 [ 0, %bb.b ], [ %.05260.be, %.backedge.backedge ]
   %i.o = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %.02761
   %i.p = load i16, ptr %i.o, align 2, !tbaa !266
+  %8 = sext i16 %i.p to i32
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
 
 _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit: ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge, %.backedge
   %.153 = phi i32 [ %.05260, %.backedge ], [ %.153.be, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 4 uses
-  %.025 = phi i16 [ %i.p, %.backedge ], [ %7, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 2 uses
-  %i.q = trunc i16 %.025 to i8                    ; 2 uses
-  %6 = and i8 %i.q, 127                           ; 2 uses
-  %7 = ashr i16 %.025, 7                          ; 3 uses
-  %8 = icmp samesign ult i8 %6, 64
-  br i1 %8, label %bb.j, label %bb.k
+  %.025 = phi i32 [ %8, %.backedge ], [ %9, %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit.backedge ] ; 3 uses
+  %i.q = trunc i32 %.025 to i8                    ; 2 uses
+  %9 = ashr i32 %.025, 7                          ; 3 uses
+  %10 = and i32 %.025, 64
+  %11 = icmp eq i32 %10, 0
+  br i1 %11, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.r = icmp eq i16 %7, 0
+  %i.r = icmp eq i32 %9, 0
   br i1 %i.r, label %bb.l, label %bb.m
 
 bb.k:                                             ; preds = %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_clEh.exit
-  %i.s = icmp eq i16 %7, -1
+  %i.s = icmp eq i32 %9, -1
   br i1 %i.s, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k, %bb.j
+  %12 = and i8 %i.q, 127
   %i.t = add i32 %.153, 1                         ; 4 uses
   %i.u = zext i32 %.153 to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.u
-  store i8 %6, ptr %i.v, align 1, !tbaa !51
+  store i8 %12, ptr %i.v, align 1, !tbaa !51
   %i.w = icmp eq i32 %i.t, 4096
   br i1 %i.w, label %.thread, label %bb.o
 
