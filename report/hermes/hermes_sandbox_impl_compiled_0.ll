@@ -204,7 +204,7 @@ bb.cu:                                            ; preds = %.loopexit
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sz, i64 4
   %.0.copyload.i3645 = load i32, ptr %i.ta, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3645) #16, !srcloc !22
-  %i.tb = add i32 %.0.copyload.i3645, %.0.copyload.i3644 ; 4 uses
+  %i.tb = add i32 %.0.copyload.i3645, %.0.copyload.i3644 ; 3 uses
   %i.tc = icmp ugt i32 %i.tb, %.0.copyload.i3630
   br i1 %i.tc, label %bb.dm, label %bb.cv
 
@@ -487,10 +487,8 @@ bb.dm:                                            ; preds = %bb.cu
   %.val3474 = load ptr, ptr %i.iy, align 8, !tbaa !21
   %i.xk = getelementptr inbounds nuw i8, ptr %.val3474, i64 272064
   store i32 %.0.copyload.i3662, ptr %i.xk, align 1
-  %2 = and i32 %i.tb, 7
-  %3 = xor i32 %2, 7
-  %4 = add i32 %i.tb, -47
-  %i.xl = add i32 %4, %3                          ; 2 uses
+  %2 = or i32 %i.tb, 7
+  %i.xl = add i32 %2, -47                         ; 2 uses
   %i.xm = add i32 %.0.copyload.i3630, 16
   %i.xn = icmp ult i32 %i.xl, %i.xm
   %i.xo = select i1 %i.xn, i32 %.0.copyload.i3630, i32 %i.xl ; 5 uses

@@ -204,18 +204,16 @@ bb.f:                                             ; preds = %bb.c
   store ptr %185, ptr %185, align 8, !tbaa !1238
   %i.ag = getelementptr inbounds nuw i8, ptr %185, i64 16 ; 15 uses
   store i64 0, ptr %i.ag, align 8, !tbaa !1239
-  %i.ah = icmp eq i64 %i.o, 1                     ; 3 uses
-  %not..i = xor i1 %i.ah, true                    ; 2 uses
-  %.neg64.i = sext i1 %not..i to i64
-  %.neg.i = sext i1 %i.ah to i64
-  %.neg40.i = add i64 %i.h, %.neg.i
-  %191 = add i64 %.neg40.i, %.neg64.i
-  %.not403.i.i.i = icmp ugt i64 %191, %i.ae
+  %i.ah = icmp eq i64 %i.o, 1                     ; 2 uses
+  %not..i = xor i1 %i.ah, true
+  %191 = zext i1 %not..i to i64                   ; 2 uses
+  %192 = zext i1 %i.ah to i64                     ; 3 uses
+  %193 = or i64 %191, %192
+  %194 = sub nuw i64 %i.h, %193
+  %.not403.i.i.i = icmp ugt i64 %194, %i.ae
   br i1 %.not403.i.i.i, label %.lr.ph411.i.i.i, label %._crit_edge412.i.i.i
 
 .lr.ph411.i.i.i:                                  ; preds = %bb.f
-  %192 = zext i1 %i.ah to i64                     ; 2 uses
-  %193 = zext i1 %not..i to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %187, i64 8 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %175, i64 8
   %i.ak = getelementptr inbounds nuw i8, ptr %175, i64 16
@@ -259,7 +257,7 @@ bb.h:                                             ; preds = %bb.am, %.lr.ph411.i
   %i.bg = phi i64 [ %192, %.lr.ph411.i.i.i ], [ %i.lb, %bb.am ]
   %.sroa.55.0409.i.i.i = phi i64 [ 0, %.lr.ph411.i.i.i ], [ %i.ku, %bb.am ] ; 11 uses
   %.sroa.25.0408.i.i.i = phi i64 [ 0, %.lr.ph411.i.i.i ], [ %i.kt, %bb.am ] ; 12 uses
-  %.sroa.29.0407.i.i.i = phi i64 [ %193, %.lr.ph411.i.i.i ], [ %i.kz, %bb.am ]
+  %.sroa.29.0407.i.i.i = phi i64 [ %191, %.lr.ph411.i.i.i ], [ %i.kz, %bb.am ]
   %.sroa.14.0406.i.i.i = phi i64 [ %192, %.lr.ph411.i.i.i ], [ %i.ky, %bb.am ]
   %.sroa.25.0389405.i.i.i = phi i64 [ %i.n, %.lr.ph411.i.i.i ], [ %.sroa.25.0384.i.i.i, %bb.am ] ; 10 uses
   %.sroa.55.0397404.i.i.i = phi i64 [ %i.q, %.lr.ph411.i.i.i ], [ %.sroa.55.0392.i.i.i, %bb.am ] ; 10 uses
@@ -662,18 +660,16 @@ bb.bj:                                            ; preds = %bb.bg
   store ptr %165, ptr %165, align 8, !tbaa !1238
   %i.pb = getelementptr inbounds nuw i8, ptr %165, i64 16 ; 15 uses
   store i64 0, ptr %i.pb, align 8, !tbaa !1239
-  %i.pc = icmp eq i64 %i.oi, 1                    ; 3 uses
-  %not.39.i = xor i1 %i.pc, true                  ; 2 uses
-  %.neg65.i = sext i1 %not.39.i to i64
-  %.neg.i48 = sext i1 %i.pc to i64
-  %.neg41.i = add i64 %i.ob, %.neg.i48
-  %194 = add i64 %.neg41.i, %.neg65.i
-  %.not438.i.i.i = icmp ugt i64 %194, %i.oz
+  %i.pc = icmp eq i64 %i.oi, 1                    ; 2 uses
+  %not.39.i = xor i1 %i.pc, true
+  %195 = zext i1 %not.39.i to i64                 ; 2 uses
+  %196 = zext i1 %i.pc to i64                     ; 3 uses
+  %197 = or i64 %195, %196
+  %198 = sub nuw i64 %i.ob, %197
+  %.not438.i.i.i = icmp ugt i64 %198, %i.oz
   br i1 %.not438.i.i.i, label %.lr.ph445.i.i.i, label %._crit_edge.i.i.i49
 
 .lr.ph445.i.i.i:                                  ; preds = %bb.bj
-  %195 = zext i1 %i.pc to i64                     ; 2 uses
-  %196 = zext i1 %not.39.i to i64
   %i.pd = getelementptr inbounds nuw i8, ptr %167, i64 8 ; 2 uses
   %i.pe = getelementptr inbounds nuw i8, ptr %155, i64 8
   %i.pf = getelementptr inbounds nuw i8, ptr %155, i64 16
@@ -714,11 +710,11 @@ bb.bk:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.bl:                                            ; preds = %bb.cq, %.lr.ph445.i.i.i
   %i.pz = phi i64 [ %i.oi, %.lr.ph445.i.i.i ], [ %i.aas, %bb.cq ] ; 27 uses
   %i.qa = phi i64 [ 0, %.lr.ph445.i.i.i ], [ %i.aan, %bb.cq ] ; 2 uses
-  %i.qb = phi i64 [ %195, %.lr.ph445.i.i.i ], [ %i.abd, %bb.cq ]
+  %i.qb = phi i64 [ %196, %.lr.ph445.i.i.i ], [ %i.abd, %bb.cq ]
   %.sroa.55.0444.i.i.i = phi i64 [ 0, %.lr.ph445.i.i.i ], [ %i.aaw, %bb.cq ] ; 15 uses
   %.sroa.25.0443.i.i.i = phi i64 [ 0, %.lr.ph445.i.i.i ], [ %i.aav, %bb.cq ] ; 16 uses
-  %.sroa.29.0442.i.i.i = phi i64 [ %196, %.lr.ph445.i.i.i ], [ %i.abb, %bb.cq ]
-  %.sroa.14.0441.i.i.i = phi i64 [ %195, %.lr.ph445.i.i.i ], [ %i.aba, %bb.cq ]
+  %.sroa.29.0442.i.i.i = phi i64 [ %195, %.lr.ph445.i.i.i ], [ %i.abb, %bb.cq ]
+  %.sroa.14.0441.i.i.i = phi i64 [ %196, %.lr.ph445.i.i.i ], [ %i.aba, %bb.cq ]
   %.sroa.25.0424440.i.i.i = phi i64 [ %i.oh, %.lr.ph445.i.i.i ], [ %.sroa.25.0419.i.i.i, %bb.cq ] ; 10 uses
   %.sroa.55.0432439.i.i.i = phi i64 [ %i.ok, %.lr.ph445.i.i.i ], [ %.sroa.55.0427.i.i.i, %bb.cq ] ; 10 uses
   %i.qc = add i64 %.sroa.55.0444.i.i.i, %i.oz     ; 3 uses
@@ -1121,18 +1117,16 @@ bb.dn:                                            ; preds = %bb.dk
   store ptr %145, ptr %145, align 8, !tbaa !1238
   %i.afd = getelementptr inbounds nuw i8, ptr %145, i64 16 ; 15 uses
   store i64 0, ptr %i.afd, align 8, !tbaa !1239
-  %i.afe = icmp eq i64 %i.aek, 1                  ; 3 uses
-  %not.56.i = xor i1 %i.afe, true                 ; 2 uses
-  %.neg98.i = sext i1 %not.56.i to i64
-  %.neg.i127 = sext i1 %i.afe to i64
-  %.neg58.i = add i64 %i.aed, %.neg.i127
-  %197 = add i64 %.neg58.i, %.neg98.i
-  %.not458.i.i.i = icmp ugt i64 %197, %i.afb
+  %i.afe = icmp eq i64 %i.aek, 1                  ; 2 uses
+  %not.56.i = xor i1 %i.afe, true
+  %199 = zext i1 %not.56.i to i64                 ; 2 uses
+  %200 = zext i1 %i.afe to i64                    ; 3 uses
+  %201 = or i64 %199, %200
+  %202 = sub nuw i64 %i.aed, %201
+  %.not458.i.i.i = icmp ugt i64 %202, %i.afb
   br i1 %.not458.i.i.i, label %.lr.ph469.i.i.i, label %._crit_edge.i.i.i128
 
 .lr.ph469.i.i.i:                                  ; preds = %bb.dn
-  %198 = zext i1 %i.afe to i64                    ; 2 uses
-  %199 = zext i1 %not.56.i to i64
   %i.aff = getelementptr inbounds nuw i8, ptr %147, i64 8 ; 2 uses
   %i.afg = getelementptr inbounds nuw i8, ptr %135, i64 8
   %i.afh = getelementptr inbounds nuw i8, ptr %135, i64 16
@@ -1173,11 +1167,11 @@ bb.do:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.dp:                                            ; preds = %bb.fe, %.lr.ph469.i.i.i
   %i.agb = phi i64 [ %i.aek, %.lr.ph469.i.i.i ], [ %i.asc, %bb.fe ] ; 27 uses
   %i.agc = phi i64 [ 0, %.lr.ph469.i.i.i ], [ %i.arx, %bb.fe ] ; 2 uses
-  %i.agd = phi i64 [ %198, %.lr.ph469.i.i.i ], [ %i.asn, %bb.fe ]
+  %i.agd = phi i64 [ %200, %.lr.ph469.i.i.i ], [ %i.asn, %bb.fe ]
   %.sroa.55.0467.i.i.i = phi i64 [ 0, %.lr.ph469.i.i.i ], [ %i.asg, %bb.fe ] ; 19 uses
   %.sroa.25.0465.i.i.i = phi i64 [ 0, %.lr.ph469.i.i.i ], [ %i.asf, %bb.fe ] ; 20 uses
   %.sroa.29.0464.i.i.i = phi i64 [ %199, %.lr.ph469.i.i.i ], [ %i.asl, %bb.fe ]
-  %.sroa.14.0463.i.i.i = phi i64 [ %198, %.lr.ph469.i.i.i ], [ %i.ask, %bb.fe ]
+  %.sroa.14.0463.i.i.i = phi i64 [ %200, %.lr.ph469.i.i.i ], [ %i.ask, %bb.fe ]
   %.sroa.25.0444461.i.i.i = phi i64 [ %i.aej, %.lr.ph469.i.i.i ], [ %.sroa.25.0439.i.i.i, %bb.fe ] ; 10 uses
   %.sroa.55.0452459.i.i.i = phi i64 [ %i.aem, %.lr.ph469.i.i.i ], [ %.sroa.55.0447.i.i.i, %bb.fe ] ; 10 uses
   %i.age = add i64 %.sroa.55.0467.i.i.i, %i.afb   ; 3 uses
@@ -1580,18 +1574,16 @@ bb.gb:                                            ; preds = %bb.fy
   store ptr %125, ptr %125, align 8, !tbaa !1238
   %i.awn = getelementptr inbounds nuw i8, ptr %125, i64 16 ; 15 uses
   store i64 0, ptr %i.awn, align 8, !tbaa !1239
-  %i.awo = icmp eq i64 %i.avu, 1                  ; 3 uses
-  %not.57.i = xor i1 %i.awo, true                 ; 2 uses
-  %.neg99.i = sext i1 %not.57.i to i64
-  %.neg.i232 = sext i1 %i.awo to i64
-  %.neg59.i = add i64 %i.avn, %.neg.i232
-  %200 = add i64 %.neg59.i, %.neg99.i
-  %.not470.i.i.i = icmp ugt i64 %200, %i.awl
+  %i.awo = icmp eq i64 %i.avu, 1                  ; 2 uses
+  %not.57.i = xor i1 %i.awo, true
+  %203 = zext i1 %not.57.i to i64                 ; 2 uses
+  %204 = zext i1 %i.awo to i64                    ; 3 uses
+  %205 = or i64 %203, %204
+  %206 = sub nuw i64 %i.avn, %205
+  %.not470.i.i.i = icmp ugt i64 %206, %i.awl
   br i1 %.not470.i.i.i, label %.lr.ph481.i.i.i, label %._crit_edge.i.i.i233
 
 .lr.ph481.i.i.i:                                  ; preds = %bb.gb
-  %201 = zext i1 %i.awo to i64                    ; 2 uses
-  %202 = zext i1 %not.57.i to i64
   %i.awp = getelementptr inbounds nuw i8, ptr %127, i64 8 ; 2 uses
   %i.awq = getelementptr inbounds nuw i8, ptr %115, i64 8
   %i.awr = getelementptr inbounds nuw i8, ptr %115, i64 16
@@ -1632,11 +1624,11 @@ bb.gc:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.gd:                                            ; preds = %bb.ic, %.lr.ph481.i.i.i
   %i.axl = phi i64 [ %i.avu, %.lr.ph481.i.i.i ], [ %i.bku, %bb.ic ] ; 27 uses
   %i.axm = phi i64 [ 0, %.lr.ph481.i.i.i ], [ %i.bkp, %bb.ic ] ; 2 uses
-  %i.axn = phi i64 [ %201, %.lr.ph481.i.i.i ], [ %i.blf, %bb.ic ]
+  %i.axn = phi i64 [ %204, %.lr.ph481.i.i.i ], [ %i.blf, %bb.ic ]
   %.sroa.55.0479.i.i.i = phi i64 [ 0, %.lr.ph481.i.i.i ], [ %i.bky, %bb.ic ] ; 23 uses
   %.sroa.25.0477.i.i.i = phi i64 [ 0, %.lr.ph481.i.i.i ], [ %i.bkx, %bb.ic ] ; 24 uses
-  %.sroa.29.0476.i.i.i = phi i64 [ %202, %.lr.ph481.i.i.i ], [ %i.bld, %bb.ic ]
-  %.sroa.14.0475.i.i.i = phi i64 [ %201, %.lr.ph481.i.i.i ], [ %i.blc, %bb.ic ]
+  %.sroa.29.0476.i.i.i = phi i64 [ %203, %.lr.ph481.i.i.i ], [ %i.bld, %bb.ic ]
+  %.sroa.14.0475.i.i.i = phi i64 [ %204, %.lr.ph481.i.i.i ], [ %i.blc, %bb.ic ]
   %.sroa.25.0456473.i.i.i = phi i64 [ %i.avt, %.lr.ph481.i.i.i ], [ %.sroa.25.0451.i.i.i, %bb.ic ] ; 10 uses
   %.sroa.55.0464471.i.i.i = phi i64 [ %i.avw, %.lr.ph481.i.i.i ], [ %.sroa.55.0459.i.i.i, %bb.ic ] ; 10 uses
   %i.axo = add i64 %.sroa.55.0479.i.i.i, %i.awl   ; 3 uses
@@ -2039,18 +2031,16 @@ bb.iz:                                            ; preds = %bb.iw
   store ptr %105, ptr %105, align 8, !tbaa !1238
   %i.bpf = getelementptr inbounds nuw i8, ptr %105, i64 16 ; 15 uses
   store i64 0, ptr %i.bpf, align 8, !tbaa !1239
-  %i.bpg = icmp eq i64 %i.bom, 1                  ; 3 uses
-  %not.39.i339 = xor i1 %i.bpg, true              ; 2 uses
-  %.neg65.i340 = sext i1 %not.39.i339 to i64
-  %.neg.i341 = sext i1 %i.bpg to i64
-  %.neg41.i342 = add i64 %i.bof, %.neg.i341
-  %203 = add i64 %.neg41.i342, %.neg65.i340
-  %.not501.i.i.i = icmp ugt i64 %203, %i.bpd
+  %i.bpg = icmp eq i64 %i.bom, 1                  ; 2 uses
+  %not.39.i339 = xor i1 %i.bpg, true
+  %207 = zext i1 %not.39.i339 to i64              ; 2 uses
+  %208 = zext i1 %i.bpg to i64                    ; 3 uses
+  %209 = or i64 %207, %208
+  %210 = sub nuw i64 %i.bof, %209
+  %.not501.i.i.i = icmp ugt i64 %210, %i.bpd
   br i1 %.not501.i.i.i, label %.lr.ph508.i.i.i, label %._crit_edge.i.i.i343
 
 .lr.ph508.i.i.i:                                  ; preds = %bb.iz
-  %204 = zext i1 %i.bpg to i64                    ; 2 uses
-  %205 = zext i1 %not.39.i339 to i64
   %i.bph = getelementptr inbounds nuw i8, ptr %107, i64 8 ; 2 uses
   %i.bpi = getelementptr inbounds nuw i8, ptr %94, i64 8
   %i.bpj = getelementptr inbounds nuw i8, ptr %94, i64 16
@@ -2091,11 +2081,11 @@ bb.ja:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.jb:                                            ; preds = %bb.ky, %.lr.ph508.i.i.i
   %i.bqd = phi i64 [ %i.bom, %.lr.ph508.i.i.i ], [ %i.cem, %bb.ky ] ; 27 uses
   %i.bqe = phi i64 [ 0, %.lr.ph508.i.i.i ], [ %i.ceh, %bb.ky ] ; 2 uses
-  %i.bqf = phi i64 [ %204, %.lr.ph508.i.i.i ], [ %i.cex, %bb.ky ]
+  %i.bqf = phi i64 [ %208, %.lr.ph508.i.i.i ], [ %i.cex, %bb.ky ]
   %.sroa.55.0507.i.i.i = phi i64 [ 0, %.lr.ph508.i.i.i ], [ %i.ceq, %bb.ky ] ; 19 uses
   %.sroa.25.0506.i.i.i = phi i64 [ 0, %.lr.ph508.i.i.i ], [ %i.cep, %bb.ky ] ; 20 uses
-  %.sroa.29.0505.i.i.i = phi i64 [ %205, %.lr.ph508.i.i.i ], [ %i.cev, %bb.ky ]
-  %.sroa.14.0504.i.i.i = phi i64 [ %204, %.lr.ph508.i.i.i ], [ %i.ceu, %bb.ky ]
+  %.sroa.29.0505.i.i.i = phi i64 [ %207, %.lr.ph508.i.i.i ], [ %i.cev, %bb.ky ]
+  %.sroa.14.0504.i.i.i = phi i64 [ %208, %.lr.ph508.i.i.i ], [ %i.ceu, %bb.ky ]
   %.sroa.25.0487503.i.i.i = phi i64 [ %i.bol, %.lr.ph508.i.i.i ], [ %.sroa.25.0482.i.i.i, %bb.ky ] ; 10 uses
   %.sroa.55.0495502.i.i.i = phi i64 [ %i.boo, %.lr.ph508.i.i.i ], [ %.sroa.55.0490.i.i.i, %bb.ky ] ; 10 uses
   %i.bqg = add i64 %.sroa.55.0507.i.i.i, %i.bpd   ; 3 uses
@@ -2498,18 +2488,16 @@ bb.lv:                                            ; preds = %bb.ls
   store ptr %84, ptr %84, align 8, !tbaa !1238
   %i.ciw = getelementptr inbounds nuw i8, ptr %84, i64 16 ; 15 uses
   store i64 0, ptr %i.ciw, align 8, !tbaa !1239
-  %i.cix = icmp eq i64 %i.cie, 1                  ; 3 uses
-  %not..i420 = xor i1 %i.cix, true                ; 2 uses
-  %.neg64.i421 = sext i1 %not..i420 to i64
-  %.neg.i422 = sext i1 %i.cix to i64
-  %.neg40.i423 = add i64 %i.chx, %.neg.i422
-  %206 = add i64 %.neg40.i423, %.neg64.i421
-  %.not403.i.i.i424 = icmp ugt i64 %206, %i.ciu
+  %i.cix = icmp eq i64 %i.cie, 1                  ; 2 uses
+  %not..i420 = xor i1 %i.cix, true
+  %211 = zext i1 %not..i420 to i64                ; 2 uses
+  %212 = zext i1 %i.cix to i64                    ; 3 uses
+  %213 = or i64 %211, %212
+  %214 = sub nuw i64 %i.chx, %213
+  %.not403.i.i.i424 = icmp ugt i64 %214, %i.ciu
   br i1 %.not403.i.i.i424, label %.lr.ph411.i.i.i465, label %._crit_edge412.i.i.i425
 
 .lr.ph411.i.i.i465:                               ; preds = %bb.lv
-  %207 = zext i1 %i.cix to i64                    ; 2 uses
-  %208 = zext i1 %not..i420 to i64
   %i.ciy = getelementptr inbounds nuw i8, ptr %86, i64 8 ; 2 uses
   %i.ciz = getelementptr inbounds nuw i8, ptr %73, i64 8
   %i.cja = getelementptr inbounds nuw i8, ptr %73, i64 16
@@ -2550,11 +2538,11 @@ bb.lw:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.lx:                                            ; preds = %bb.nc, %.lr.ph411.i.i.i465
   %i.cju = phi i64 [ %i.cie, %.lr.ph411.i.i.i465 ], [ %i.ctf, %bb.nc ] ; 27 uses
   %i.cjv = phi i64 [ 0, %.lr.ph411.i.i.i465 ], [ %i.cta, %bb.nc ] ; 2 uses
-  %i.cjw = phi i64 [ %207, %.lr.ph411.i.i.i465 ], [ %i.ctq, %bb.nc ]
+  %i.cjw = phi i64 [ %212, %.lr.ph411.i.i.i465 ], [ %i.ctq, %bb.nc ]
   %.sroa.55.0409.i.i.i466 = phi i64 [ 0, %.lr.ph411.i.i.i465 ], [ %i.ctj, %bb.nc ] ; 11 uses
   %.sroa.25.0408.i.i.i467 = phi i64 [ 0, %.lr.ph411.i.i.i465 ], [ %i.cti, %bb.nc ] ; 12 uses
-  %.sroa.29.0407.i.i.i468 = phi i64 [ %208, %.lr.ph411.i.i.i465 ], [ %i.cto, %bb.nc ]
-  %.sroa.14.0406.i.i.i469 = phi i64 [ %207, %.lr.ph411.i.i.i465 ], [ %i.ctn, %bb.nc ]
+  %.sroa.29.0407.i.i.i468 = phi i64 [ %211, %.lr.ph411.i.i.i465 ], [ %i.cto, %bb.nc ]
+  %.sroa.14.0406.i.i.i469 = phi i64 [ %212, %.lr.ph411.i.i.i465 ], [ %i.ctn, %bb.nc ]
   %.sroa.25.0389405.i.i.i470 = phi i64 [ %i.cid, %.lr.ph411.i.i.i465 ], [ %.sroa.25.0384.i.i.i508, %bb.nc ] ; 10 uses
   %.sroa.55.0397404.i.i.i471 = phi i64 [ %i.cig, %.lr.ph411.i.i.i465 ], [ %.sroa.55.0392.i.i.i507, %bb.nc ] ; 10 uses
   %i.cjx = add i64 %.sroa.55.0409.i.i.i466, %i.ciu ; 3 uses
@@ -2957,18 +2945,16 @@ bb.nz:                                            ; preds = %bb.nw
   store ptr %63, ptr %63, align 8, !tbaa !1238
   %i.cxq = getelementptr inbounds nuw i8, ptr %63, i64 16 ; 15 uses
   store i64 0, ptr %i.cxq, align 8, !tbaa !1239
-  %i.cxr = icmp eq i64 %i.cwx, 1                  ; 3 uses
-  %not.39.i588 = xor i1 %i.cxr, true              ; 2 uses
-  %.neg65.i589 = sext i1 %not.39.i588 to i64
-  %.neg.i590 = sext i1 %i.cxr to i64
-  %.neg41.i591 = add i64 %i.cwq, %.neg.i590
-  %209 = add i64 %.neg41.i591, %.neg65.i589
-  %.not438.i.i.i592 = icmp ugt i64 %209, %i.cxo
+  %i.cxr = icmp eq i64 %i.cwx, 1                  ; 2 uses
+  %not.39.i588 = xor i1 %i.cxr, true
+  %215 = zext i1 %not.39.i588 to i64              ; 2 uses
+  %216 = zext i1 %i.cxr to i64                    ; 3 uses
+  %217 = or i64 %215, %216
+  %218 = sub nuw i64 %i.cwq, %217
+  %.not438.i.i.i592 = icmp ugt i64 %218, %i.cxo
   br i1 %.not438.i.i.i592, label %.lr.ph445.i.i.i633, label %._crit_edge.i.i.i593
 
 .lr.ph445.i.i.i633:                               ; preds = %bb.nz
-  %210 = zext i1 %i.cxr to i64                    ; 2 uses
-  %211 = zext i1 %not.39.i588 to i64
   %i.cxs = getelementptr inbounds nuw i8, ptr %65, i64 8 ; 2 uses
   %i.cxt = getelementptr inbounds nuw i8, ptr %52, i64 8
   %i.cxu = getelementptr inbounds nuw i8, ptr %52, i64 16
@@ -3009,11 +2995,11 @@ bb.oa:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.ob:                                            ; preds = %bb.pg, %.lr.ph445.i.i.i633
   %i.cyo = phi i64 [ %i.cwx, %.lr.ph445.i.i.i633 ], [ %i.djh, %bb.pg ] ; 27 uses
   %i.cyp = phi i64 [ 0, %.lr.ph445.i.i.i633 ], [ %i.djc, %bb.pg ] ; 2 uses
-  %i.cyq = phi i64 [ %210, %.lr.ph445.i.i.i633 ], [ %i.djs, %bb.pg ]
+  %i.cyq = phi i64 [ %216, %.lr.ph445.i.i.i633 ], [ %i.djs, %bb.pg ]
   %.sroa.55.0444.i.i.i634 = phi i64 [ 0, %.lr.ph445.i.i.i633 ], [ %i.djl, %bb.pg ] ; 15 uses
   %.sroa.25.0443.i.i.i635 = phi i64 [ 0, %.lr.ph445.i.i.i633 ], [ %i.djk, %bb.pg ] ; 16 uses
-  %.sroa.29.0442.i.i.i636 = phi i64 [ %211, %.lr.ph445.i.i.i633 ], [ %i.djq, %bb.pg ]
-  %.sroa.14.0441.i.i.i637 = phi i64 [ %210, %.lr.ph445.i.i.i633 ], [ %i.djp, %bb.pg ]
+  %.sroa.29.0442.i.i.i636 = phi i64 [ %215, %.lr.ph445.i.i.i633 ], [ %i.djq, %bb.pg ]
+  %.sroa.14.0441.i.i.i637 = phi i64 [ %216, %.lr.ph445.i.i.i633 ], [ %i.djp, %bb.pg ]
   %.sroa.25.0424440.i.i.i638 = phi i64 [ %i.cww, %.lr.ph445.i.i.i633 ], [ %.sroa.25.0419.i.i.i669, %bb.pg ] ; 10 uses
   %.sroa.55.0432439.i.i.i639 = phi i64 [ %i.cwz, %.lr.ph445.i.i.i633 ], [ %.sroa.55.0427.i.i.i668, %bb.pg ] ; 10 uses
   %i.cyr = add i64 %.sroa.55.0444.i.i.i634, %i.cxo ; 3 uses
@@ -3416,18 +3402,16 @@ bb.qd:                                            ; preds = %bb.qa
   store ptr %42, ptr %42, align 8, !tbaa !1238
   %i.dns = getelementptr inbounds nuw i8, ptr %42, i64 16 ; 15 uses
   store i64 0, ptr %i.dns, align 8, !tbaa !1239
-  %i.dnt = icmp eq i64 %i.dmz, 1                  ; 3 uses
-  %not.56.i755 = xor i1 %i.dnt, true              ; 2 uses
-  %.neg98.i756 = sext i1 %not.56.i755 to i64
-  %.neg.i757 = sext i1 %i.dnt to i64
-  %.neg58.i758 = add i64 %i.dms, %.neg.i757
-  %212 = add i64 %.neg58.i758, %.neg98.i756
-  %.not458.i.i.i759 = icmp ugt i64 %212, %i.dnq
+  %i.dnt = icmp eq i64 %i.dmz, 1                  ; 2 uses
+  %not.56.i755 = xor i1 %i.dnt, true
+  %219 = zext i1 %not.56.i755 to i64              ; 2 uses
+  %220 = zext i1 %i.dnt to i64                    ; 3 uses
+  %221 = or i64 %219, %220
+  %222 = sub nuw i64 %i.dms, %221
+  %.not458.i.i.i759 = icmp ugt i64 %222, %i.dnq
   br i1 %.not458.i.i.i759, label %.lr.ph469.i.i.i800, label %._crit_edge.i.i.i760
 
 .lr.ph469.i.i.i800:                               ; preds = %bb.qd
-  %213 = zext i1 %i.dnt to i64                    ; 2 uses
-  %214 = zext i1 %not.56.i755 to i64
   %i.dnu = getelementptr inbounds nuw i8, ptr %44, i64 8 ; 2 uses
   %i.dnv = getelementptr inbounds nuw i8, ptr %31, i64 8
   %i.dnw = getelementptr inbounds nuw i8, ptr %31, i64 16
@@ -3468,11 +3452,11 @@ bb.qe:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.qf:                                            ; preds = %bb.ru, %.lr.ph469.i.i.i800
   %i.doq = phi i64 [ %i.dmz, %.lr.ph469.i.i.i800 ], [ %i.ear, %bb.ru ] ; 27 uses
   %i.dor = phi i64 [ 0, %.lr.ph469.i.i.i800 ], [ %i.eam, %bb.ru ] ; 2 uses
-  %i.dos = phi i64 [ %213, %.lr.ph469.i.i.i800 ], [ %i.ebc, %bb.ru ]
+  %i.dos = phi i64 [ %220, %.lr.ph469.i.i.i800 ], [ %i.ebc, %bb.ru ]
   %.sroa.55.0467.i.i.i801 = phi i64 [ 0, %.lr.ph469.i.i.i800 ], [ %i.eav, %bb.ru ] ; 19 uses
   %.sroa.25.0465.i.i.i802 = phi i64 [ 0, %.lr.ph469.i.i.i800 ], [ %i.eau, %bb.ru ] ; 20 uses
-  %.sroa.29.0464.i.i.i803 = phi i64 [ %214, %.lr.ph469.i.i.i800 ], [ %i.eba, %bb.ru ]
-  %.sroa.14.0463.i.i.i804 = phi i64 [ %213, %.lr.ph469.i.i.i800 ], [ %i.eaz, %bb.ru ]
+  %.sroa.29.0464.i.i.i803 = phi i64 [ %219, %.lr.ph469.i.i.i800 ], [ %i.eba, %bb.ru ]
+  %.sroa.14.0463.i.i.i804 = phi i64 [ %220, %.lr.ph469.i.i.i800 ], [ %i.eaz, %bb.ru ]
   %.sroa.25.0444461.i.i.i805 = phi i64 [ %i.dmy, %.lr.ph469.i.i.i800 ], [ %.sroa.25.0439.i.i.i837, %bb.ru ] ; 10 uses
   %.sroa.55.0452459.i.i.i806 = phi i64 [ %i.dnb, %.lr.ph469.i.i.i800 ], [ %.sroa.55.0447.i.i.i836, %bb.ru ] ; 10 uses
   %i.dot = add i64 %.sroa.55.0467.i.i.i801, %i.dnq ; 3 uses
@@ -3875,18 +3859,16 @@ bb.sr:                                            ; preds = %bb.so
   store ptr %21, ptr %21, align 8, !tbaa !1238
   %i.efc = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 15 uses
   store i64 0, ptr %i.efc, align 8, !tbaa !1239
-  %i.efd = icmp eq i64 %i.eej, 1                  ; 3 uses
-  %not.39.i925 = xor i1 %i.efd, true              ; 2 uses
-  %.neg65.i926 = sext i1 %not.39.i925 to i64
-  %.neg.i927 = sext i1 %i.efd to i64
-  %.neg41.i928 = add i64 %i.eec, %.neg.i927
-  %215 = add i64 %.neg41.i928, %.neg65.i926
-  %.not499.i.i.i = icmp ugt i64 %215, %i.efa
+  %i.efd = icmp eq i64 %i.eej, 1                  ; 2 uses
+  %not.39.i925 = xor i1 %i.efd, true
+  %223 = zext i1 %not.39.i925 to i64              ; 2 uses
+  %224 = zext i1 %i.efd to i64                    ; 3 uses
+  %225 = or i64 %223, %224
+  %226 = sub nuw i64 %i.eec, %225
+  %.not499.i.i.i = icmp ugt i64 %226, %i.efa
   br i1 %.not499.i.i.i, label %.lr.ph506.i.i.i, label %._crit_edge.i.i.i929
 
 .lr.ph506.i.i.i:                                  ; preds = %bb.sr
-  %216 = zext i1 %i.efd to i64                    ; 2 uses
-  %217 = zext i1 %not.39.i925 to i64
   %i.efe = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   %i.eff = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.efg = getelementptr inbounds nuw i8, ptr %10, i64 16
@@ -3927,11 +3909,11 @@ bb.ss:                                            ; preds = %_ZN15duckdb_ska_sor
 bb.st:                                            ; preds = %bb.uq, %.lr.ph506.i.i.i
   %i.ega = phi i64 [ %i.eej, %.lr.ph506.i.i.i ], [ %i.esv, %bb.uq ] ; 27 uses
   %i.egb = phi i64 [ 0, %.lr.ph506.i.i.i ], [ %i.esq, %bb.uq ] ; 2 uses
-  %i.egc = phi i64 [ %216, %.lr.ph506.i.i.i ], [ %i.etg, %bb.uq ]
+  %i.egc = phi i64 [ %224, %.lr.ph506.i.i.i ], [ %i.etg, %bb.uq ]
   %.sroa.55.0505.i.i.i = phi i64 [ 0, %.lr.ph506.i.i.i ], [ %i.esz, %bb.uq ] ; 19 uses
   %.sroa.25.0504.i.i.i = phi i64 [ 0, %.lr.ph506.i.i.i ], [ %i.esy, %bb.uq ] ; 20 uses
-  %.sroa.29.0503.i.i.i = phi i64 [ %217, %.lr.ph506.i.i.i ], [ %i.ete, %bb.uq ]
-  %.sroa.14.0502.i.i.i = phi i64 [ %216, %.lr.ph506.i.i.i ], [ %i.etd, %bb.uq ]
+  %.sroa.29.0503.i.i.i = phi i64 [ %223, %.lr.ph506.i.i.i ], [ %i.ete, %bb.uq ]
+  %.sroa.14.0502.i.i.i = phi i64 [ %224, %.lr.ph506.i.i.i ], [ %i.etd, %bb.uq ]
   %.sroa.25.0485501.i.i.i = phi i64 [ %i.eei, %.lr.ph506.i.i.i ], [ %.sroa.25.0480.i.i.i, %bb.uq ] ; 10 uses
   %.sroa.55.0493500.i.i.i = phi i64 [ %i.eel, %.lr.ph506.i.i.i ], [ %.sroa.55.0488.i.i.i, %bb.uq ] ; 10 uses
   %i.egd = add i64 %.sroa.55.0505.i.i.i, %i.efa   ; 3 uses
