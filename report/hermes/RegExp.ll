@@ -204,8 +204,8 @@ _ZNK6hermes2vm15StringPrimitive2atEj.exit19:      ; preds = %_ZNK6hermes2vm15Str
   %spec.select = select i1 %i.bw, i64 %i.bx, i64 %i.a
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %_ZNK6hermes2vm15StringPrimitive2atEj.exit19, %bb.a, %bb.b, %_ZNK6hermes2vm15StringPrimitive2atEj.exit, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread.thread, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread25
-  %.0 = phi i64 [ %i.a, %bb.a ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread25 ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread ], [ %spec.select, %_ZNK6hermes2vm15StringPrimitive2atEj.exit19 ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit ], [ %i.a, %bb.b ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread.thread ]
+._crit_edge:                                      ; preds = %_ZNK6hermes2vm15StringPrimitive2atEj.exit19, %bb.a, %bb.b, %_ZNK6hermes2vm15StringPrimitive2atEj.exit, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread25, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread.thread
+  %.0 = phi i64 [ %i.a, %bb.a ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread.thread ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread ], [ %spec.select, %_ZNK6hermes2vm15StringPrimitive2atEj.exit19 ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit ], [ %i.a, %bb.b ], [ %i.a, %_ZNK6hermes2vm15StringPrimitive2atEj.exit.thread25 ]
   ret i64 %.0
 }
 

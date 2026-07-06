@@ -204,15 +204,16 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.e
   br label %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit
 
 _ZN5arrow8internal15BitBlockCounter8NextWordEv.exit: ; preds = %bb.b, %bb.k
-  %.sroa.0.0.insert.insert.i = phi i32 [ %i.aa, %bb.k ], [ 0, %bb.b ] ; 2 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %.sroa.0.0.insert.insert.i to i16 ; 2 uses
+  %.sroa.0.0.insert.insert.i = phi i32 [ %i.aa, %bb.k ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.0.0.extract.trunc = zext i32 %.sroa.0.0.insert.insert.i to i64
   %.sroa.4.0.extract.shift = lshr i32 %.sroa.0.0.insert.insert.i, 16
-  %.sroa.4.0.extract.trunc = trunc nuw i32 %.sroa.4.0.extract.shift to i16
-  %1 = sext i16 %.sroa.0.0.extract.trunc to i64
+  %sext4 = shl i64 %.sroa.0.0.extract.trunc, 48
+  %1 = ashr exact i64 %sext4, 48
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !1459
-  %i.ad = add nsw i64 %i.ac, %1
+  %i.ad = add nsw i64 %1, %i.ac
   store i64 %i.ad, ptr %i.ab, align 8, !tbaa !1459
+  %.pre = and i32 %.sroa.0.0.insert.insert.i, 65535
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.a
@@ -222,20 +223,19 @@ bb.l:                                             ; preds = %bb.a
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !1459 ; 2 uses
   %i.ai = sub nsw i64 %i.af, %i.ah
   %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.ai, i64 64) ; 2 uses
-  %2 = trunc i64 %.sroa.speculated to i16         ; 2 uses
+  %2 = trunc i64 %.sroa.speculated to i32
   %sext = shl i64 %.sroa.speculated, 48
   %i.aj = ashr exact i64 %sext, 48
   %i.ak = add nsw i64 %i.aj, %i.ah
   store i64 %i.ak, ptr %i.ag, align 8, !tbaa !1459
+  %3 = and i32 %2, 65535                          ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit
-  %.sroa.0.0 = phi i16 [ %.sroa.0.0.extract.trunc, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ], [ %2, %bb.l ]
-  %.sroa.4.0 = phi i16 [ %.sroa.4.0.extract.trunc, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ], [ %2, %bb.l ]
-  %.sroa.4.0.insert.ext = zext i16 %.sroa.4.0 to i32
-  %.sroa.4.0.insert.shift = shl nuw i32 %.sroa.4.0.insert.ext, 16
-  %.sroa.0.0.insert.ext = zext i16 %.sroa.0.0 to i32
-  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.ext.pre-phi = phi i32 [ %3, %bb.l ], [ %.pre, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ]
+  %.sroa.4.0 = phi i32 [ %3, %bb.l ], [ %.sroa.4.0.extract.shift, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ]
+  %.sroa.4.0.insert.shift = shl nuw i32 %.sroa.4.0, 16
+  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext.pre-phi
   ret i32 %.sroa.0.0.insert.insert
 }
 
@@ -638,15 +638,16 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.e
   br label %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit
 
 _ZN5arrow8internal15BitBlockCounter8NextWordEv.exit: ; preds = %bb.b, %bb.k
-  %.sroa.0.0.insert.insert.i = phi i32 [ %i.aa, %bb.k ], [ 0, %bb.b ] ; 2 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %.sroa.0.0.insert.insert.i to i16 ; 2 uses
+  %.sroa.0.0.insert.insert.i = phi i32 [ %i.aa, %bb.k ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.0.0.extract.trunc = zext i32 %.sroa.0.0.insert.insert.i to i64
   %.sroa.4.0.extract.shift = lshr i32 %.sroa.0.0.insert.insert.i, 16
-  %.sroa.4.0.extract.trunc = trunc nuw i32 %.sroa.4.0.extract.shift to i16
-  %1 = sext i16 %.sroa.0.0.extract.trunc to i64
+  %sext4 = shl i64 %.sroa.0.0.extract.trunc, 48
+  %1 = ashr exact i64 %sext4, 48
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !1459
-  %i.ad = add nsw i64 %i.ac, %1
+  %i.ad = add nsw i64 %1, %i.ac
   store i64 %i.ad, ptr %i.ab, align 8, !tbaa !1459
+  %.pre = and i32 %.sroa.0.0.insert.insert.i, 65535
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.a
@@ -656,20 +657,19 @@ bb.l:                                             ; preds = %bb.a
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !1459 ; 2 uses
   %i.ai = sub nsw i64 %i.af, %i.ah
   %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.ai, i64 32767) ; 2 uses
-  %2 = trunc i64 %.sroa.speculated to i16         ; 2 uses
+  %2 = trunc i64 %.sroa.speculated to i32
   %sext = shl i64 %.sroa.speculated, 48
   %i.aj = ashr exact i64 %sext, 48
   %i.ak = add nsw i64 %i.aj, %i.ah
   store i64 %i.ak, ptr %i.ag, align 8, !tbaa !1459
+  %3 = and i32 %2, 65535                          ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit
-  %.sroa.0.0 = phi i16 [ %.sroa.0.0.extract.trunc, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ], [ %2, %bb.l ]
-  %.sroa.4.0 = phi i16 [ %.sroa.4.0.extract.trunc, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ], [ %2, %bb.l ]
-  %.sroa.4.0.insert.ext = zext i16 %.sroa.4.0 to i32
-  %.sroa.4.0.insert.shift = shl nuw i32 %.sroa.4.0.insert.ext, 16
-  %.sroa.0.0.insert.ext = zext i16 %.sroa.0.0 to i32
-  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.ext.pre-phi = phi i32 [ %3, %bb.l ], [ %.pre, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ]
+  %.sroa.4.0 = phi i32 [ %3, %bb.l ], [ %.sroa.4.0.extract.shift, %_ZN5arrow8internal15BitBlockCounter8NextWordEv.exit ]
+  %.sroa.4.0.insert.shift = shl nuw i32 %.sroa.4.0, 16
+  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext.pre-phi
   ret i32 %.sroa.0.0.insert.insert
 }
 

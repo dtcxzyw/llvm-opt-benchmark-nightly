@@ -203,8 +203,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bu = icmp sgt i32 %i.bt, -5
   %i.bv = add nsw i32 %i.bt, 4
   %.in.i.i = select i1 %i.bu, i32 %i.bv, i32 %i.bt
-  %i.bw = urem i32 %.in.i.i, 7
-  %i.bx = trunc nuw nsw i32 %i.bw to i8           ; 2 uses
+  %i.bw = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bx = trunc nuw nsw i32 %i.bw to i8
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bz = load i8, ptr %i.by, align 4, !tbaa !746 ; 2 uses
   %i.ca = icmp ult i8 %i.bz, 7
@@ -226,13 +226,13 @@ bb.j:                                             ; preds = %bb.i
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread33, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ck = load i8, ptr %i.cj, align 4, !tbaa !70
+  %2 = zext i8 %i.ck to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
-  %.sroa.023.0 = phi i8 [ %i.ck, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bx, %bb.i ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+  %.sroa.023.0 = phi i32 [ %2, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bw, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %3 = srem i32 %.fr.i, 7
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k, %bb.f
@@ -635,8 +635,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bu = icmp sgt i32 %i.bt, -5
   %i.bv = add nsw i32 %i.bt, 4
   %.in.i.i = select i1 %i.bu, i32 %i.bv, i32 %i.bt
-  %i.bw = urem i32 %.in.i.i, 7
-  %i.bx = trunc nuw nsw i32 %i.bw to i8           ; 2 uses
+  %i.bw = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bx = trunc nuw nsw i32 %i.bw to i8
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bz = load i8, ptr %i.by, align 4, !tbaa !746 ; 2 uses
   %i.ca = icmp ult i8 %i.bz, 7
@@ -658,13 +658,13 @@ bb.j:                                             ; preds = %bb.i
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread33, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ck = load i8, ptr %i.cj, align 4, !tbaa !70
+  %2 = zext i8 %i.ck to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
-  %.sroa.023.0 = phi i8 [ %i.ck, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bx, %bb.i ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+  %.sroa.023.0 = phi i32 [ %2, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bw, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %3 = srem i32 %.fr.i, 7
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k, %bb.f
@@ -1067,8 +1067,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bu = icmp sgt i32 %i.bt, -5
   %i.bv = add nsw i32 %i.bt, 4
   %.in.i.i = select i1 %i.bu, i32 %i.bv, i32 %i.bt
-  %i.bw = urem i32 %.in.i.i, 7
-  %i.bx = trunc nuw nsw i32 %i.bw to i8           ; 2 uses
+  %i.bw = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bx = trunc nuw nsw i32 %i.bw to i8
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bz = load i8, ptr %i.by, align 4, !tbaa !746 ; 2 uses
   %i.ca = icmp ult i8 %i.bz, 7
@@ -1090,13 +1090,13 @@ bb.j:                                             ; preds = %bb.i
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread33, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ck = load i8, ptr %i.cj, align 4, !tbaa !70
+  %2 = zext i8 %i.ck to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
-  %.sroa.023.0 = phi i8 [ %i.ck, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bx, %bb.i ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+  %.sroa.023.0 = phi i32 [ %2, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bw, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %3 = srem i32 %.fr.i, 7
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k, %bb.f
@@ -1499,8 +1499,8 @@ bb.i:                                             ; preds = %_ZNK14arrow_vendore
   %i.bu = icmp sgt i32 %i.bt, -5
   %i.bv = add nsw i32 %i.bt, 4
   %.in.i.i = select i1 %i.bu, i32 %i.bv, i32 %i.bt
-  %i.bw = urem i32 %.in.i.i, 7
-  %i.bx = trunc nuw nsw i32 %i.bw to i8           ; 2 uses
+  %i.bw = urem i32 %.in.i.i, 7                    ; 2 uses
+  %i.bx = trunc nuw nsw i32 %i.bw to i8
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bz = load i8, ptr %i.by, align 4, !tbaa !746 ; 2 uses
   %i.ca = icmp ult i8 %i.bz, 7
@@ -1522,13 +1522,13 @@ bb.j:                                             ; preds = %bb.i
 _ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread: ; preds = %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread33, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread.thread, %.thread, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ck = load i8, ptr %i.cj, align 4, !tbaa !70
+  %2 = zext i8 %i.ck to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread
-  %.sroa.023.0 = phi i8 [ %i.ck, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bx, %bb.i ]
-  %.sroa.023.0.fr = freeze i8 %.sroa.023.0
-  %2 = urem i8 %.sroa.023.0.fr, 7
-  %3 = zext nneg i8 %2 to i32
+  %.sroa.023.0 = phi i32 [ %2, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit20.thread ], [ %i.bw, %bb.i ]
+  %.fr.i = freeze i32 %.sroa.023.0
+  %3 = srem i32 %.fr.i, 7
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k, %bb.f

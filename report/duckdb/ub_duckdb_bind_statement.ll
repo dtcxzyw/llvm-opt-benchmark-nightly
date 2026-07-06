@@ -204,7 +204,7 @@ bb.gn:                                            ; preds = %bb.gg
           cleanup
   br label %bb.nq
 
-bb.go:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit462, %bb.gj, %bb.gk, %bb.gb
+bb.go:                                            ; preds = %bb.gk, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit462, %bb.gj, %bb.gb
   %.3213 = phi i8 [ 0, %bb.gb ], [ %.0210.lcssa1305131813451355, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit462 ], [ %spec.select772, %bb.gk ], [ 0, %bb.gj ]
   %i.ow = getelementptr inbounds nuw i8, ptr %3, i64 144 ; 2 uses
   %i.ox = load ptr, ptr %i.ow, align 8, !tbaa !316

@@ -201,10 +201,10 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN5arrow6ResultIbED2Ev.exit15:                   ; preds = %bb.d
   %i.ae = load i8, ptr %i.c, align 8, !tbaa !151, !range !52, !noundef !53
-  %5 = trunc nuw i8 %i.ae to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   %i.af = sub nsw i64 %2, %i.x                    ; 2 uses
   %i.ag = icmp sgt i64 %i.af, 0
+  %5 = trunc nuw i8 %i.ae to i1
   %i.ah = and i1 %i.ag, %5
   br i1 %i.ah, label %.lr.ph, label %_ZN5arrow2io21CompressedInputStream4Impl20ReadFromDecompressedElPh.exit._crit_edge, !llvm.loop !218
 

@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZNK10aiMetadata3GetI8aiStringEEbjRT_.exit
 
 _ZNK10aiMetadata3GetI8aiStringEEbjRT_.exit:       ; preds = %bb.j, %bb.k
-  %i.do = phi i32 [ 0, %bb.j ], [ %spec.select.i.i, %bb.k ] ; 2 uses
+  %i.do = phi i32 [ %spec.select.i.i, %bb.k ], [ 0, %bb.j ] ; 2 uses
   %i.dp = call noalias noundef nonnull dereferenceable(1028) ptr @_Znwm(i64 noundef 1028) #22 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 4 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %i.dq, i8 0, i64 1024, i1 false)
