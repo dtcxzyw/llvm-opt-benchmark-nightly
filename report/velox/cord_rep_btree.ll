@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 13
   %i.c = load i8, ptr %i.b, align 1, !tbaa !7     ; 5 uses
-  %i.d = zext i8 %i.c to i32                      ; 8 uses
+  %i.d = zext i8 %i.c to i32                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %.not92 = icmp eq i8 %i.c, 0                    ; 2 uses
   br i1 %.not92, label %.critedge.i, label %.lr.ph.i
@@ -337,7 +337,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond.not.3, label %_ZN4absl12lts_2024011613cord_internal12_GLOBAL__N_115StackOperationsILNS1_12CordRepBtree8EdgeTypeE0EE10BuildStackEPS4_i.exit, label %.lr.ph24.i.new, !llvm.loop !25
 
 _ZN4absl12lts_2024011613cord_internal12_GLOBAL__N_115StackOperationsILNS1_12CordRepBtree8EdgeTypeE0EE10BuildStackEPS4_i.exit: ; preds = %.prol.loopexit, %.lr.ph24.i.new, %.critedge.thread.i, %.critedge.i
-  %i.bs = phi i32 [ %i.z, %.critedge.i ], [ %i.t, %.critedge.thread.i ], [ %i.z, %.lr.ph24.i.new ], [ %i.z, %.prol.loopexit ] ; 2 uses
+  %i.bs = phi i32 [ %i.z, %.critedge.i ], [ %i.t, %.critedge.thread.i ], [ %i.z, %.lr.ph24.i.new ], [ %i.z, %.prol.loopexit ] ; 3 uses
   %.115.lcssa.i = phi ptr [ %.014.lcssa.i, %.critedge.i ], [ %i.o, %.critedge.thread.i ], [ %.lcssa179.unr, %.prol.loopexit ], [ %i.br, %.lr.ph24.i.new ] ; 6 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.115.lcssa.i, i64 15 ; 2 uses
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !7
@@ -408,12 +408,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20240
   br i1 %.not92, label %.loopexit.i.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.g
-  %i.dc = zext i8 %i.c to i64                     ; 6 uses
+  %i.dc = zext i8 %i.c to i64                     ; 5 uses
   %i.dd = add nsw i32 %i.d, -1
   %i.de = zext nneg i32 %i.dd to i64              ; 3 uses
   %i.df = getelementptr [8 x i8], ptr %4, i64 %i.dc ; 3 uses
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !14 ; 4 uses
-  %i.dh = sext i32 %i.bs to i64                   ; 2 uses
+  %i.dh = sext i32 %i.bs to i64
   br i1 %i.cb, label %.loopexit124.i.i, label %bb.j
 
 bb.h:                                             ; preds = %_ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE0EEENS2_8OpResultEbPNS1_7CordRepEm.exit.jt1.i.i
@@ -434,7 +434,7 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20240
   br label %.loopexit124.i.i
 
 bb.j:                                             ; preds = %.preheader.i.i
-  %.not46.i.i = icmp sgt i64 %i.dc, %i.dh
+  %.not46.i.i = icmp slt i32 %i.bs, %i.d
   %indvars.iv.next.i.i = add nsw i64 %i.dc, -1    ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dg, i64 14
   %i.dq = load i8, ptr %i.dp, align 1
@@ -837,7 +837,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 13
   %i.c = load i8, ptr %i.b, align 1, !tbaa !7     ; 5 uses
-  %i.d = zext i8 %i.c to i32                      ; 7 uses
+  %i.d = zext i8 %i.c to i32                      ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %.not108 = icmp eq i8 %i.c, 0                   ; 2 uses
   br i1 %.not108, label %.critedge.i, label %.lr.ph.i
@@ -969,7 +969,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond.not.3, label %_ZN4absl12lts_2024011613cord_internal12_GLOBAL__N_115StackOperationsILNS1_12CordRepBtree8EdgeTypeE1EE10BuildStackEPS4_i.exit, label %.lr.ph24.i.new, !llvm.loop !37
 
 _ZN4absl12lts_2024011613cord_internal12_GLOBAL__N_115StackOperationsILNS1_12CordRepBtree8EdgeTypeE1EE10BuildStackEPS4_i.exit: ; preds = %.prol.loopexit, %.lr.ph24.i.new, %.critedge.thread.i, %.critedge.i
-  %i.br = phi i32 [ %i.y, %.critedge.i ], [ %i.s, %.critedge.thread.i ], [ %i.y, %.lr.ph24.i.new ], [ %i.y, %.prol.loopexit ] ; 2 uses
+  %i.br = phi i32 [ %i.y, %.critedge.i ], [ %i.s, %.critedge.thread.i ], [ %i.y, %.lr.ph24.i.new ], [ %i.y, %.prol.loopexit ] ; 3 uses
   %.115.lcssa.i = phi ptr [ %.014.lcssa.i, %.critedge.i ], [ %i.n, %.critedge.thread.i ], [ %.lcssa226.unr, %.prol.loopexit ], [ %i.bq, %.lr.ph24.i.new ] ; 6 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.115.lcssa.i, i64 15 ; 2 uses
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !7
@@ -1040,12 +1040,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20240
   br i1 %.not108, label %.loopexit.i.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.g
-  %i.db = zext i8 %i.c to i64                     ; 6 uses
+  %i.db = zext i8 %i.c to i64                     ; 5 uses
   %i.dc = add nsw i32 %i.d, -1
   %i.dd = zext nneg i32 %i.dc to i64              ; 3 uses
   %i.de = getelementptr [8 x i8], ptr %4, i64 %i.db ; 3 uses
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !14 ; 4 uses
-  %i.dg = sext i32 %i.br to i64                   ; 2 uses
+  %i.dg = sext i32 %i.br to i64
   br i1 %i.ca, label %.loopexit119.i.i, label %bb.j
 
 bb.h:                                             ; preds = %_ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE1EEENS2_8OpResultEbPNS1_7CordRepEm.exit.jt1.i.i
@@ -1067,7 +1067,7 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20240
   br label %.loopexit119.i.i
 
 bb.j:                                             ; preds = %.preheader.i.i
-  %.not45.i.i = icmp sgt i64 %i.db, %i.dg
+  %.not45.i.i = icmp slt i32 %i.br, %i.d
   %indvars.iv.next.i.i = add nsw i64 %i.db, -1    ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.df, i64 15
   %i.dq = load i8, ptr %i.dp, align 1

@@ -204,9 +204,9 @@ bb.ad:                                            ; preds = %bb.h
   br label %.lr.ph.i4.epil
 
 .lr.ph.i4.epil:                                   ; preds = %.lr.ph.i4.epil, %.lr.ph.i4.epil.preheader
-  %indvars.iv.epil = phi i64 [ %indvars.iv.next.epil, %.lr.ph.i4.epil ], [ %indvars.iv.epil.init, %.lr.ph.i4.epil.preheader ] ; 2 uses
-  %.1106.i.epil = phi i32 [ %i.hp, %.lr.ph.i4.epil ], [ %.1106.i.epil.init, %.lr.ph.i4.epil.preheader ]
-  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i4.epil ], [ 0, %.lr.ph.i4.epil.preheader ]
+  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.lr.ph.i4.epil.preheader ], [ %indvars.iv.next.epil, %.lr.ph.i4.epil ] ; 2 uses
+  %.1106.i.epil = phi i32 [ %.1106.i.epil.init, %.lr.ph.i4.epil.preheader ], [ %i.hp, %.lr.ph.i4.epil ]
+  %epil.iter = phi i64 [ 0, %.lr.ph.i4.epil.preheader ], [ %epil.iter.next, %.lr.ph.i4.epil ]
   %i.hk = shl i32 %.1106.i.epil, 6                ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.cf, i64 %indvars.iv.epil
   %i.hm = load i8, ptr %i.hl, align 1, !tbaa !79

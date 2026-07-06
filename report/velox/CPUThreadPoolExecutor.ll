@@ -204,7 +204,6 @@ bb.a:
   store i8 %1, ptr %i.b, align 1, !tbaa !55
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
   store i32 0, ptr %i.c, align 4, !tbaa !7
-  %6 = zext i8 %1 to i32
   %.not = icmp eq i8 %1, 0                        ; 2 uses
   br i1 %.not, label %bb.b, label %_ZN6google12Check_GTImplIhiEEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_RKT0_PKc.exit.thread, !prof !5439
 
@@ -231,6 +230,7 @@ bb.c:                                             ; preds = %_ZN6google12Check_G
           to label %.preheader unwind label %bb.l
 
 .preheader:                                       ; preds = %bb.c
+  %6 = zext i8 %1 to i16
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
@@ -311,8 +311,8 @@ bb.o:                                             ; preds = %bb.m
 
 _ZNSt6vectorIN5folly9MPMCQueueINS0_21CPUThreadPoolExecutor7CPUTaskESt6atomicLb0ESaIS3_EEESaIS6_EE12emplace_backIJRmEEERS6_DpOT_.exit: ; preds = %bb.o, %.noexc15
   %i.u = add i8 %.019, 1                          ; 2 uses
-  %7 = sext i8 %i.u to i32
-  %i.v = icmp slt i32 %7, %6
+  %7 = sext i8 %i.u to i16
+  %i.v = icmp slt i16 %7, %6
   br i1 %i.v, label %bb.m, label %._crit_edge, !llvm.loop !15361
 
 bb.p:                                             ; preds = %bb.o, %bb.n

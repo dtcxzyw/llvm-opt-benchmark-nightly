@@ -204,10 +204,9 @@ bb.a:
   %i.g = sub nsw i64 %i.e, %i.f
   %i.h = getelementptr inbounds [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8, !tbaa !13
-  %8 = zext i8 %0 to i64                          ; 2 uses
-  %sext = shl i64 %i.i, 48
-  %9 = ashr exact i64 %sext, 48
-  %.not = icmp ugt i64 %9, %8                     ; 2 uses
+  %8 = trunc i64 %i.i to i16
+  %9 = zext i8 %0 to i16
+  %.not = icmp ugt i16 %8, %9                     ; 2 uses
   br i1 %.not, label %bb.g, label %.noexc.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -334,9 +333,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %_ZN
   resume { ptr, i32 } %.pn17
 
 bb.g:                                             ; preds = %bb.a
+  %10 = zext i8 %0 to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.f
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !13
-  %i.al = mul nsw i64 %i.ak, %8
+  %i.al = mul nsw i64 %i.ak, %10
   %i.am = trunc i64 %i.al to i16
   store i16 %i.am, ptr %1, align 2, !tbaa !41
   br label %bb.h
@@ -367,10 +367,9 @@ bb.a:
   %i.g = sub nsw i64 %i.e, %i.f
   %i.h = getelementptr inbounds [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8, !tbaa !13
-  %8 = zext i8 %0 to i64                          ; 2 uses
-  %sext = shl i64 %i.i, 32
-  %9 = ashr exact i64 %sext, 32
-  %.not = icmp ugt i64 %9, %8                     ; 2 uses
+  %8 = trunc i64 %i.i to i32
+  %9 = zext i8 %0 to i32
+  %.not = icmp ugt i32 %8, %9                     ; 2 uses
   br i1 %.not, label %bb.g, label %.noexc.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -497,9 +496,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %_ZN
   resume { ptr, i32 } %.pn17
 
 bb.g:                                             ; preds = %bb.a
+  %10 = zext i8 %0 to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.f
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !13
-  %i.al = mul nsw i64 %i.ak, %8
+  %i.al = mul nsw i64 %i.ak, %10
   %i.am = trunc i64 %i.al to i32
   store i32 %i.am, ptr %1, align 4, !tbaa !3
   br label %bb.h
@@ -902,10 +902,10 @@ bb.a:
   %i.g = sub nsw i64 %i.e, %i.f
   %i.h = getelementptr inbounds [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8, !tbaa !13
-  %8 = zext i16 %0 to i64
-  %sext = shl i64 %i.i, 48
-  %9 = ashr exact i64 %sext, 48
-  %.not = icmp ugt i64 %9, %8                     ; 2 uses
+  %8 = trunc i64 %i.i to i16
+  %9 = sext i16 %8 to i32
+  %10 = zext i16 %0 to i32
+  %.not = icmp ult i32 %10, %9                    ; 2 uses
   br i1 %.not, label %bb.g, label %.noexc.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -1065,10 +1065,9 @@ bb.a:
   %i.g = sub nsw i64 %i.e, %i.f
   %i.h = getelementptr inbounds [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8, !tbaa !13
-  %8 = zext i16 %0 to i64                         ; 2 uses
-  %sext = shl i64 %i.i, 32
-  %9 = ashr exact i64 %sext, 32
-  %.not = icmp ugt i64 %9, %8                     ; 2 uses
+  %8 = trunc i64 %i.i to i32
+  %9 = zext i16 %0 to i32
+  %.not = icmp ugt i32 %8, %9                     ; 2 uses
   br i1 %.not, label %bb.g, label %.noexc.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -1195,9 +1194,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %_ZN
   resume { ptr, i32 } %.pn17
 
 bb.g:                                             ; preds = %bb.a
+  %10 = zext i16 %0 to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.f
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !13
-  %i.al = mul nsw i64 %i.ak, %8
+  %i.al = mul nsw i64 %i.ak, %10
   %i.am = trunc i64 %i.al to i32
   store i32 %i.am, ptr %1, align 4, !tbaa !3
   br label %bb.h

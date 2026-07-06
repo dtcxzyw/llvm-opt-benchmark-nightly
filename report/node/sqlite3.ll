@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !157  ; 13 uses
   %.not = icmp eq ptr %i.k, null
-  %i.l = sext i32 %1 to i64                       ; 4 uses
+  %i.l = sext i32 %1 to i64                       ; 3 uses
   br i1 %.not, label %bb.u, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -237,8 +237,8 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 438
   %i.w = load i16, ptr %i.v, align 2, !tbaa !353
-  %3 = zext i16 %i.w to i64
-  %.not20.i = icmp ugt i64 %i.l, %3
+  %3 = zext i16 %i.w to i32
+  %.not20.i = icmp ugt i32 %1, %3
   br i1 %.not20.i, label %sqlite3DbRealloc.exit.thread63, label %sqlite3DbReallocOrFree.exit
 
 sqlite3DbRealloc.exit:                            ; preds = %bb.d
@@ -641,10 +641,10 @@ bb.e:                                             ; preds = %bb.b, %bb.c
   br i1 %i.ac, label %sqlite3DbReallocOrFree.exit, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %i.ad = phi i64 [ %i.w, %._crit_edge.thread ], [ %i.ab, %._crit_edge ] ; 2 uses
+  %i.ad = phi i64 [ %i.w, %._crit_edge.thread ], [ %i.ab, %._crit_edge ]
   %i.ae = phi ptr [ %i.v, %._crit_edge.thread ], [ %i.aa, %._crit_edge ] ; 2 uses
   %i.af = phi ptr [ %i.u, %._crit_edge.thread ], [ %i.z, %._crit_edge ] ; 11 uses
-  %i.ag = phi i32 [ %i.t, %._crit_edge.thread ], [ %i.y, %._crit_edge ]
+  %i.ag = phi i32 [ %i.t, %._crit_edge.thread ], [ %i.y, %._crit_edge ] ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 512 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !100
   %i.aj = icmp ult ptr %i.g, %i.ai
@@ -669,8 +669,8 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.ap = getelementptr inbounds nuw i8, ptr %i.af, i64 438
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !353
-  %5 = zext i16 %i.aq to i64
-  %.not20.i.i = icmp ugt i64 %i.ad, %5
+  %5 = zext i16 %i.aq to i32
+  %.not20.i.i = icmp ugt i32 %i.ag, %5
   br i1 %.not20.i.i, label %sqlite3DbRealloc.exit.thread10.i, label %sqlite3DbReallocOrFree.exit.thread41
 
 sqlite3DbRealloc.exit.thread10.i:                 ; preds = %bb.j, %bb.i, %bb.h, %bb.f
