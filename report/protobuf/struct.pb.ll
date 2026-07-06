@@ -203,10 +203,11 @@ bb.g:                                             ; preds = %bb.f
   %i.ac = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.u, i1 true)
-  %3 = sub nuw nsw i64 59, %i.ad                  ; 2 uses
-  %i.ae = load i8, ptr %i.ab, align 8, !tbaa !180 ; 3 uses
-  %4 = zext i8 %i.ae to i64                       ; 2 uses
-  %.not.i.i.i.i = icmp samesign ult i64 %3, %4
+  %3 = trunc nuw nsw i64 %i.ad to i32
+  %4 = sub nuw nsw i32 59, %3                     ; 2 uses
+  %i.ae = load i8, ptr %i.ab, align 8, !tbaa !180 ; 4 uses
+  %5 = zext i8 %i.ae to i32
+  %.not.i.i.i.i = icmp samesign ult i32 %4, %5
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 48 ; 2 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !181 ; 3 uses
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.h, !prof !89
@@ -225,7 +226,8 @@ bb.j:                                             ; preds = %bb.i
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.h
-  %.idx.i.i.i.i = shl nuw nsw i64 %4, 3
+  %6 = zext i8 %i.ae to i64
+  %.idx.i.i.i.i = shl nuw nsw i64 %6, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.l, ptr align 8 %i.ag, i64 %.idx.i.i.i.i, i1 false)
   %.pre.i.i.i.i = load i8, ptr %i.ab, align 8, !tbaa !180
   %i.ak = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
@@ -248,7 +250,8 @@ _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.
   br label %_ZN6google8protobuf8internal14UntypedMapBase11DeleteTableEPNS0_5ArenaEPPNS1_8NodeBaseEj.exit
 
 bb.k:                                             ; preds = %bb.g
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %3 ; 2 uses
+  %7 = zext nneg i32 %4 to i64
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %7 ; 2 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !182
   store ptr %i.ap, ptr %i.l, align 8, !tbaa !184
   store ptr %i.l, ptr %i.ao, align 8, !tbaa !182
