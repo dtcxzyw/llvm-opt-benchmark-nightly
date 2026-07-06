@@ -203,9 +203,7 @@ bb.ac:                                            ; preds = %bb.a
 define dso_local noundef i32 @_ZN9Stockfish9UCIEngine5to_cpEiRKNS_8PositionE(i32 noundef %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1048) %1) local_unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 148
-  %2 = load i32, ptr %i.a, align 4, !tbaa !262
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 180
-  %3 = load i32, ptr %i.b, align 4, !tbaa !262
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.d = load i32, ptr %i.c, align 8, !tbaa !262
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 184
@@ -216,20 +214,22 @@ bb.a:
   %i.j = load i32, ptr %i.i, align 4, !tbaa !262
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 192
+  %2 = load i32, ptr %i.a, align 4, !tbaa !262
+  %3 = load i32, ptr %i.b, align 4, !tbaa !262
   %i.m = load <2 x i32>, ptr %i.k, align 8, !tbaa !262
   %i.n = load <2 x i32>, ptr %i.l, align 8, !tbaa !262
   %i.o = add nsw <2 x i32> %i.n, %i.m
-  %4 = mul nsw <2 x i32> %i.o, <i32 5, i32 9>     ; 2 uses
-  %5 = add i32 %i.f, %i.d
-  %6 = add i32 %5, %i.h
-  %reass.add.i = add i32 %6, %i.j
+  %4 = insertelement <4 x i32> poison, i32 %3, i64 2
+  %5 = insertelement <4 x i32> %4, i32 %2, i64 3
+  %6 = shufflevector <2 x i32> %i.o, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x i32> %6, <4 x i32> %5, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %8 = mul nsw <4 x i32> %7, <i32 5, i32 9, i32 1, i32 1>
+  %i.p = add i32 %i.f, %i.d
+  %i.q = add i32 %i.p, %i.h
+  %reass.add.i = add i32 %i.q, %i.j
   %reass.mul.i = mul i32 %reass.add.i, 3
-  %i.p = add i32 %3, %2
-  %i.q = add i32 %i.p, %reass.mul.i
-  %7 = extractelement <2 x i32> %4, i64 0
-  %8 = add i32 %i.q, %7
-  %9 = extractelement <2 x i32> %4, i64 1
-  %i.r = add i32 %8, %9
+  %9 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %8)
+  %i.r = add i32 %9, %reass.mul.i
   %.sroa.speculate.load.false.sroa.speculated.i = tail call i32 @llvm.smax.i32(i32 %i.r, i32 17)
   %i.s = tail call i32 @llvm.umin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i, i32 78)
   %i.t = uitofp nneg i32 %i.s to double
@@ -322,9 +322,7 @@ bb.a:
   %i.ao = getelementptr inbounds i8, ptr %3, i64 %i.an
   call void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.ao, ptr noundef nonnull %i.ae) #26
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 148 ; 2 uses
-  %4 = load i32, ptr %i.ap, align 4, !tbaa !262
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 180 ; 2 uses
-  %5 = load i32, ptr %i.aq, align 4, !tbaa !262
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 2 uses
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !262
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 184 ; 2 uses
@@ -335,20 +333,22 @@ bb.a:
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !262
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 160 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 2 uses
+  %4 = load i32, ptr %i.ap, align 4, !tbaa !262
+  %5 = load i32, ptr %i.aq, align 4, !tbaa !262
   %i.bb = load <2 x i32>, ptr %i.az, align 8, !tbaa !262
   %i.bc = load <2 x i32>, ptr %i.ba, align 8, !tbaa !262
   %i.bd = add nsw <2 x i32> %i.bc, %i.bb
-  %6 = mul nsw <2 x i32> %i.bd, <i32 5, i32 9>    ; 2 uses
-  %7 = add i32 %i.au, %i.as
-  %8 = add i32 %7, %i.aw
-  %reass.add.i.i = add i32 %8, %i.ay
+  %6 = insertelement <4 x i32> poison, i32 %5, i64 2
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 3
+  %8 = shufflevector <2 x i32> %i.bd, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x i32> %8, <4 x i32> %7, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %10 = mul nsw <4 x i32> %9, <i32 5, i32 9, i32 1, i32 1>
+  %i.be = add i32 %i.au, %i.as
+  %i.bf = add i32 %i.be, %i.aw
+  %reass.add.i.i = add i32 %i.bf, %i.ay
   %reass.mul.i.i = mul i32 %reass.add.i.i, 3
-  %i.be = add i32 %5, %4
-  %i.bf = add i32 %i.be, %reass.mul.i.i
-  %9 = extractelement <2 x i32> %6, i64 0
-  %10 = add i32 %i.bf, %9
-  %11 = extractelement <2 x i32> %6, i64 1
-  %i.bg = add i32 %10, %11
+  %11 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %10)
+  %i.bg = add i32 %11, %reass.mul.i.i
   %.sroa.speculate.load.false.sroa.speculated.i.i = call i32 @llvm.smax.i32(i32 %i.bg, i32 17)
   %i.bh = call i32 @llvm.umin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i.i, i32 78)
   %i.bi = uitofp nneg i32 %i.bh to double
@@ -364,26 +364,26 @@ bb.a:
   %i.bs = fdiv double %i.br, %i.bp
   %i.bt = call double @exp(double noundef %i.bs) #26
   %i.bu = sub nsw i32 0, %1
-  %i.bv = load i32, ptr %i.ap, align 4, !tbaa !262
-  %i.bw = load i32, ptr %i.aq, align 4, !tbaa !262
-  %i.bx = load i32, ptr %i.ar, align 8, !tbaa !262
-  %i.by = load i32, ptr %i.at, align 8, !tbaa !262
-  %i.bz = load i32, ptr %i.av, align 4, !tbaa !262
-  %i.ca = load i32, ptr %i.ax, align 4, !tbaa !262
+  %i.bv = load i32, ptr %i.ar, align 8, !tbaa !262
+  %i.bw = load i32, ptr %i.at, align 8, !tbaa !262
+  %i.bx = load i32, ptr %i.av, align 4, !tbaa !262
+  %i.by = load i32, ptr %i.ax, align 4, !tbaa !262
+  %i.bz = load i32, ptr %i.ap, align 4, !tbaa !262
+  %i.ca = load i32, ptr %i.aq, align 4, !tbaa !262
   %i.cb = load <2 x i32>, ptr %i.az, align 8, !tbaa !262
   %i.cc = load <2 x i32>, ptr %i.ba, align 8, !tbaa !262
   %i.cd = add nsw <2 x i32> %i.cc, %i.cb
-  %12 = mul nsw <2 x i32> %i.cd, <i32 5, i32 9>   ; 2 uses
-  %13 = add i32 %i.by, %i.bx
-  %14 = add i32 %13, %i.bz
-  %reass.add.i.i8 = add i32 %14, %i.ca
-  %reass.mul.i.i9 = mul i32 %reass.add.i.i8, 3
+  %12 = insertelement <4 x i32> poison, i32 %i.ca, i64 2
+  %13 = insertelement <4 x i32> %12, i32 %i.bz, i64 3
+  %14 = shufflevector <2 x i32> %i.cd, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x i32> %14, <4 x i32> %13, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %16 = mul nsw <4 x i32> %15, <i32 5, i32 9, i32 1, i32 1>
   %i.ce = add i32 %i.bw, %i.bv
-  %i.cf = add i32 %i.ce, %reass.mul.i.i9
-  %15 = extractelement <2 x i32> %12, i64 0
-  %16 = add i32 %i.cf, %15
-  %17 = extractelement <2 x i32> %12, i64 1
-  %i.cg = add i32 %16, %17
+  %i.cf = add i32 %i.ce, %i.bx
+  %reass.add.i.i8 = add i32 %i.cf, %i.by
+  %reass.mul.i.i9 = mul i32 %reass.add.i.i8, 3
+  %17 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %16)
+  %i.cg = add i32 %17, %reass.mul.i.i9
   %.sroa.speculate.load.false.sroa.speculated.i.i10 = call i32 @llvm.smax.i32(i32 %i.cg, i32 17)
   %i.ch = call i32 @llvm.umin.i32(i32 %.sroa.speculate.load.false.sroa.speculated.i.i10, i32 78)
   %i.ci = uitofp nneg i32 %i.ch to double
@@ -785,6 +785,9 @@ declare i32 @llvm.umin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="znver5" "target-features"="+adx,+aes,+avx,+avx2,+avx512bf16,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vp2intersect,+avx512vpopcntdq,+avxvnni,+bmi,+bmi2,+clflushopt,+clwb,+clzero,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+movdir64b,+movdiri,+mwaitx,+pclmul,+pku,+popcnt,+prefetchi,+prfchw,+rdpid,+rdpru,+rdrnd,+rdseed,+sahf,+sha,+shstk,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+sse4a,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nofree nounwind }
