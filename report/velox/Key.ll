@@ -99,7 +99,7 @@ bb.a:
   %i.ab = fcmp olt <2 x double> %i.z, %i.aa
   %i.ac = shufflevector <2 x i1> %i.ab, <2 x i1> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ad = shufflevector <2 x double> %i.z, <2 x double> %i.aa, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %2 = shufflevector <2 x double> %i.aa, <2 x double> %i.z, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %2 = shufflevector <2 x double> %i.z, <2 x double> %i.aa, <4 x i32> <i32 2, i32 0, i32 3, i32 1>
   %i.ae = select <4 x i1> %i.ac, <4 x double> %i.ad, <4 x double> %2
   store <4 x double> %i.ae, ptr %i.q, align 8, !tbaa !14
   %i.af = tail call noundef zeroext i1 @_ZNK4geos4geom8Envelope6coversERKS1_(ptr noundef nonnull align 8 dereferenceable(32) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %1)
@@ -124,7 +124,7 @@ bb.a:
   %i.as = fcmp olt <2 x double> %i.aq, %i.ar
   %i.at = shufflevector <2 x i1> %i.as, <2 x i1> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.au = shufflevector <2 x double> %i.aq, <2 x double> %i.ar, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %3 = shufflevector <2 x double> %i.ar, <2 x double> %i.aq, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %3 = shufflevector <2 x double> %i.aq, <2 x double> %i.ar, <4 x i32> <i32 2, i32 0, i32 3, i32 1>
   %i.av = select <4 x i1> %i.at, <4 x double> %i.au, <4 x double> %3
   store <4 x double> %i.av, ptr %i.q, align 8, !tbaa !14
   %i.aw = tail call noundef zeroext i1 @_ZNK4geos4geom8Envelope6coversERKS1_(ptr noundef nonnull align 8 dereferenceable(32) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %1)
@@ -187,7 +187,6 @@ bb.a:
   %i.a = load <2 x double>, ptr %2, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.c = load double, ptr %i.b, align 8, !tbaa !15
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = insertelement <2 x double> %i.a, double %i.c, i64 1
   %i.e = insertelement <2 x double> poison, double %ldexp, i64 0
   %i.f = shufflevector <2 x double> %i.e, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
@@ -195,11 +194,12 @@ bb.a:
   %i.h = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %i.g)
   %i.i = fmul <2 x double> %i.f, %i.h             ; 5 uses
   store <2 x double> %i.i, ptr %0, align 8, !tbaa !14
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = fadd <2 x double> %i.f, %i.i             ; 3 uses
   %i.k = fcmp olt <2 x double> %i.i, %i.j
   %i.l = shufflevector <2 x i1> %i.k, <2 x i1> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.m = shufflevector <2 x double> %i.i, <2 x double> %i.j, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %4 = shufflevector <2 x double> %i.j, <2 x double> %i.i, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %4 = shufflevector <2 x double> %i.i, <2 x double> %i.j, <4 x i32> <i32 2, i32 0, i32 3, i32 1>
   %i.n = select <4 x i1> %i.l, <4 x double> %i.m, <4 x double> %4
   store <4 x double> %i.n, ptr %3, align 8, !tbaa !14
   ret void
