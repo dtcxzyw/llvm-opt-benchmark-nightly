@@ -202,22 +202,25 @@ vector.ph:                                        ; preds = %middle.block, %poly
   %indvars.iv.next48.i = add nuw nsw i64 %indvars.iv47.i, 1 ; 3 uses
   %i.cb = trunc nuw nsw i64 %indvars.iv.next48.i to i32
   %i.cc = uitofp nneg i32 %i.cb to double
-  %i.cd = fdiv double %i.cc, 2.000000e+03         ; 5 uses
+  %i.cd = fdiv double %i.cc, 2.000000e+03         ; 4 uses
   %i.ce = fmul nnan double %i.cd, 5.000000e-01
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv47.i
   store double %i.ce, ptr %i.cf, align 8, !tbaa !8
   %i.cg = fmul nnan double %i.cd, 2.500000e-01
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv47.i
   store double %i.cg, ptr %i.ch, align 8, !tbaa !8
-  %2 = fdiv double %i.cd, 6.000000e+00
-  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv47.i
-  store double %2, ptr %i.ci, align 8, !tbaa !8
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv47.i
   %3 = fmul nnan double %i.cd, 1.250000e-01
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %indvars.iv47.i
-  store double %3, ptr %4, align 8, !tbaa !8
-  %5 = fdiv double %i.cd, 9.000000e+00
+  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %indvars.iv47.i
+  %4 = insertelement <2 x double> poison, double %i.cd, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = fdiv <2 x double> %5, <double 6.000000e+00, double 9.000000e+00> ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  store double %7, ptr %2, align 8, !tbaa !8
+  store double %3, ptr %i.ci, align 8, !tbaa !8
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %indvars.iv47.i
-  store double %5, ptr %i.cj, align 8, !tbaa !8
+  %8 = extractelement <2 x double> %6, i64 1
+  store double %8, ptr %i.cj, align 8, !tbaa !8
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv47.i
   store double 0.000000e+00, ptr %i.ck, align 8, !tbaa !8
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv47.i

@@ -201,16 +201,19 @@ _ZNSt13unordered_mapIN2v88internal6TaggedINS1_14AllocationSiteEEEmNS1_6Object6Ha
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, i8 0, i64 16, i1 false)
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.fp = load float, ptr %i.fo, align 8
-  %i.fq = fpext float %i.fp to double             ; 2 uses
-  %3 = fdiv double 2.560000e+02, %i.fq
-  %4 = call double @llvm.ceil.f64(double %3)
-  %5 = fptoui double %4 to i64
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %7 = load i64, ptr %6, align 8
-  %8 = fdiv double 1.000000e+00, %i.fq
-  %i.fr = call double @llvm.ceil.f64(double %8)
+  %i.fq = fpext float %i.fp to double
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %4 = load i64, ptr %3, align 8
+  %5 = insertelement <2 x double> poison, double %i.fq, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> <double 2.560000e+02, double 1.000000e+00>, %6 ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = call double @llvm.ceil.f64(double %8)
+  %10 = fptoui double %9 to i64
+  %11 = extractelement <2 x double> %7, i64 1
+  %i.fr = call double @llvm.ceil.f64(double %11)
   %i.fs = fptoui double %i.fr to i64
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %5, i64 %i.fs)
+  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %10, i64 %i.fs)
   %i.ft = call noundef i64 @_ZNKSt8__detail20_Prime_rehash_policy11_M_next_bktEm(ptr noundef nonnull align 8 dereferenceable(16) %i.fo, i64 noundef %.sroa.speculated.i.i.i) #14 ; 2 uses
   %i.fu = load i64, ptr %i.fl, align 8
   %.not.i.i.i41 = icmp eq i64 %i.ft, %i.fu
@@ -221,7 +224,7 @@ bb.ab:                                            ; preds = %_ZNSt13unordered_ma
   br label %_ZNSt13unordered_mapIN2v88internal6TaggedINS1_14AllocationSiteEEEmNS1_6Object6HasherESt8equal_toIS4_ESaISt4pairIKS4_mEEE7reserveEm.exit
 
 bb.ac:                                            ; preds = %_ZNSt13unordered_mapIN2v88internal6TaggedINS1_14AllocationSiteEEEmNS1_6Object6HasherESt8equal_toIS4_ESaISt4pairIKS4_mEEE5clearEv.exit
-  store i64 %7, ptr %6, align 8
+  store i64 %4, ptr %3, align 8
   br label %_ZNSt13unordered_mapIN2v88internal6TaggedINS1_14AllocationSiteEEEmNS1_6Object6HasherESt8equal_toIS4_ESaISt4pairIKS4_mEEE7reserveEm.exit
 
 _ZNSt13unordered_mapIN2v88internal6TaggedINS1_14AllocationSiteEEEmNS1_6Object6HasherESt8equal_toIS4_ESaISt4pairIKS4_mEEE7reserveEm.exit: ; preds = %bb.ab, %bb.ac

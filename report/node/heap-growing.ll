@@ -89,7 +89,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.n = phi i64 [ %3, %bb.b ], [ 1048576, %bb.a ] ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.q = uitofp i64 %i.n to double                ; 3 uses
+  %i.q = uitofp i64 %i.n to double                ; 2 uses
   %i.r = fmul nnan double %i.q, 1.500000e+00
   %i.s = fptoui double %i.r to i64
   %i.t = add i64 %i.n, 655360
@@ -104,11 +104,16 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.aa = load i64, ptr %i.o, align 8             ; 2 uses
   %i.ab = sub i64 %i.aa, %i.z
   %i.ac = sub i64 %i.aa, %i.n
-  %i.ad = uitofp i64 %i.ac to double              ; 2 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.ad, double 9.000000e-01, double %i.q)
-  %i.ae = fptoui double %6 to i64
-  %7 = tail call double @llvm.fmuladd.f64(double %i.ad, double 5.000000e-01, double %i.q)
-  %i.af = fptoui double %7 to i64
+  %i.ad = uitofp i64 %i.ac to double
+  %6 = insertelement <2 x double> poison, double %i.ad, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = insertelement <2 x double> poison, double %i.q, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> <double 9.000000e-01, double 5.000000e-01>, <2 x double> %9) ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %i.ae = fptoui double %11 to i64
+  %12 = extractelement <2 x double> %10, i64 1
+  %i.af = fptoui double %12 to i64
   %.sroa.speculated11.i = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 %i.ae)
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %.sroa.speculated11.i, i64 %i.af)
   store i64 %.sroa.speculated.i, ptr %i.p, align 8
@@ -122,7 +127,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8
   %.sroa.speculated23 = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.b) ; 3 uses
-  %i.c = uitofp i64 %.sroa.speculated23 to double ; 3 uses
+  %i.c = uitofp i64 %.sroa.speculated23 to double ; 2 uses
   %i.d = fmul nnan double %i.c, 1.500000e+00
   %i.e = fptoui double %i.d to i64
   %i.f = add i64 %.sroa.speculated23, 655360
@@ -139,11 +144,16 @@ bb.a:
   %i.o = load i64, ptr %i.g, align 8              ; 2 uses
   %i.p = sub i64 %i.o, %i.n
   %i.q = sub i64 %i.o, %.sroa.speculated23
-  %i.r = uitofp i64 %i.q to double                ; 2 uses
-  %2 = tail call double @llvm.fmuladd.f64(double %i.r, double 9.000000e-01, double %i.c)
-  %i.s = fptoui double %2 to i64
-  %3 = tail call double @llvm.fmuladd.f64(double %i.r, double 5.000000e-01, double %i.c)
-  %i.t = fptoui double %3 to i64
+  %i.r = uitofp i64 %i.q to double
+  %2 = insertelement <2 x double> poison, double %i.r, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %i.c, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> <double 9.000000e-01, double 5.000000e-01>, <2 x double> %5) ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  %i.s = fptoui double %7 to i64
+  %8 = extractelement <2 x double> %6, i64 1
+  %i.t = fptoui double %8 to i64
   %.sroa.speculated11 = tail call i64 @llvm.umin.i64(i64 %i.p, i64 %i.s)
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %.sroa.speculated11, i64 %i.t)
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -282,7 +292,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8
   %.sroa.speculated23.i = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.b) ; 3 uses
-  %i.c = uitofp i64 %.sroa.speculated23.i to double ; 3 uses
+  %i.c = uitofp i64 %.sroa.speculated23.i to double ; 2 uses
   %i.d = fmul nnan double %i.c, 1.500000e+00
   %i.e = fptoui double %i.d to i64
   %i.f = add i64 %.sroa.speculated23.i, 655360
@@ -299,11 +309,16 @@ bb.a:
   %i.o = load i64, ptr %i.g, align 8              ; 2 uses
   %i.p = sub i64 %i.o, %i.n
   %i.q = sub i64 %i.o, %.sroa.speculated23.i
-  %i.r = uitofp i64 %i.q to double                ; 2 uses
-  %2 = tail call double @llvm.fmuladd.f64(double %i.r, double 9.000000e-01, double %i.c)
-  %i.s = fptoui double %2 to i64
-  %3 = tail call double @llvm.fmuladd.f64(double %i.r, double 5.000000e-01, double %i.c)
-  %i.t = fptoui double %3 to i64
+  %i.r = uitofp i64 %i.q to double
+  %2 = insertelement <2 x double> poison, double %i.r, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %i.c, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> <double 9.000000e-01, double 5.000000e-01>, <2 x double> %5) ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  %i.s = fptoui double %7 to i64
+  %8 = extractelement <2 x double> %6, i64 1
+  %i.t = fptoui double %8 to i64
   %.sroa.speculated11.i = tail call i64 @llvm.umin.i64(i64 %i.p, i64 %i.s)
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %.sroa.speculated11.i, i64 %i.t)
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -317,9 +332,6 @@ declare noundef double @_ZNK5cppgc8internal14StatsCollector36GetRecentAllocation
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.ceil.f64(double) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @_ZN5cppgc8internal11HeapGrowing15HeapGrowingImpl17DisableForTestingEv(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(72) initializes((64, 65)) %0) local_unnamed_addr #3 align 2 {
@@ -550,6 +562,9 @@ declare i64 @llvm.umax.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

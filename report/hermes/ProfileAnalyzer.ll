@@ -204,26 +204,28 @@ _ZNSt13unordered_mapIPKhtSt4hashIS1_ESt8equal_toIS1_ESaISt4pairIKS1_tEEE4findERS
   %i.am = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt8__detail9_Map_baseItSt4pairIKtmESaIS3_ENS_10_Select1stESt8equal_toItESt4hashItENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb0ELb0ELb1EEELb1EEixERS2_(ptr noundef nonnull align 8 dereferenceable(56) %i.al, ptr noundef nonnull align 2 dereferenceable(2) %i.b)
   %i.an = load i64, ptr %i.am, align 8, !tbaa !109 ; 6 uses
   %i.ao = mul i64 %i.an, 100
-  %13 = uitofp i64 %i.ao to double
-  %14 = load ptr, ptr %i.aj, align 8, !tbaa !682, !nonnull !85, !align !128
-  %15 = load i64, ptr %14, align 8, !tbaa !93
-  %16 = uitofp i64 %15 to double
-  %17 = fdiv double %13, %16
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %i.ap = load ptr, ptr %18, align 8, !tbaa !696, !nonnull !85, !align !128
-  %19 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt8__detail9_Map_baseItSt4pairIKtmESaIS3_ENS_10_Select1stESt8equal_toItESt4hashItENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb0ELb0ELb1EEELb1EEixERS2_(ptr noundef nonnull align 8 dereferenceable(56) %i.ap, ptr noundef nonnull align 2 dereferenceable(2) %i.b)
-  %i.aq = load i64, ptr %19, align 8, !tbaa !109
-  %20 = uitofp i64 %i.aq to double
-  %21 = load ptr, ptr %i.aj, align 8, !tbaa !682, !nonnull !85, !align !128
-  %22 = getelementptr inbounds nuw i8, ptr %21, i64 8
-  %23 = load i64, ptr %22, align 8, !tbaa !91
-  %24 = uitofp i64 %23 to double
-  %25 = fdiv double %20, %24
+  %13 = load ptr, ptr %i.aj, align 8, !tbaa !682, !nonnull !85, !align !128
+  %14 = load i64, ptr %13, align 8, !tbaa !93
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
+  %16 = load ptr, ptr %15, align 8, !tbaa !696, !nonnull !85, !align !128
+  %17 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt8__detail9_Map_baseItSt4pairIKtmESaIS3_ENS_10_Select1stESt8equal_toItESt4hashItENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb0ELb0ELb1EEELb1EEixERS2_(ptr noundef nonnull align 8 dereferenceable(56) %16, ptr noundef nonnull align 2 dereferenceable(2) %i.b)
+  %18 = load i64, ptr %17, align 8, !tbaa !109
+  %i.ap = load ptr, ptr %i.aj, align 8, !tbaa !682, !nonnull !85, !align !128
+  %19 = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
+  %i.aq = load i64, ptr %19, align 8, !tbaa !91
+  %20 = insertelement <2 x i64> poison, i64 %i.ao, i64 0
+  %21 = insertelement <2 x i64> %20, i64 %18, i64 1
+  %22 = uitofp <2 x i64> %21 to <2 x double>
+  %23 = insertelement <2 x i64> poison, i64 %14, i64 0
+  %24 = insertelement <2 x i64> %23, i64 %i.aq, i64 1
+  %25 = uitofp <2 x i64> %24 to <2 x double>
+  %26 = fdiv <2 x double> %22, %25                ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !678, !nonnull !85, !align !128
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
-  call void @_ZN6hermes3hbc12formatStringIJdEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcDpT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, ptr noundef nonnull @.str.36, double noundef %17)
+  %27 = extractelement <2 x double> %26, i64 0
+  call void @_ZN6hermes3hbc12formatStringIJdEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcDpT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, ptr noundef nonnull @.str.36, double noundef %27)
   %i.at = load ptr, ptr %5, align 8, !tbaa !50
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.av = load i64, ptr %i.au, align 8, !tbaa !54
@@ -347,7 +349,7 @@ _ZNSt7__cxx119to_stringEm.exit:                   ; preds = %bb.o, %bb.p
   %i.ct = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsERKNS_15FormattedStringE(ptr noundef nonnull align 8 dereferenceable(36) %i.ay, ptr noundef nonnull align 8 dereferenceable(24) %6) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
-  %i.cu = load ptr, ptr %18, align 8, !tbaa !696, !nonnull !85, !align !128
+  %i.cu = load ptr, ptr %15, align 8, !tbaa !696, !nonnull !85, !align !128
   %i.cv = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt8__detail9_Map_baseItSt4pairIKtmESaIS3_ENS_10_Select1stESt8equal_toItESt4hashItENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb0ELb0ELb1EEELb1EEixERS2_(ptr noundef nonnull align 8 dereferenceable(56) %i.cu, ptr noundef nonnull align 2 dereferenceable(2) %i.b)
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !109 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !706)
@@ -460,7 +462,8 @@ _ZNSt7__cxx119to_stringEm.exit19:                 ; preds = %bb.w, %bb.x
   %i.er = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsERKNS_15FormattedStringE(ptr noundef nonnull align 8 dereferenceable(36) %i.ct, ptr noundef nonnull align 8 dereferenceable(24) %8) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
-  call void @_ZN6hermes3hbc12formatStringIJdEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcDpT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %11, ptr noundef nonnull @.str.43, double noundef %25)
+  %28 = extractelement <2 x double> %26, i64 1
+  call void @_ZN6hermes3hbc12formatStringIJdEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcDpT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %11, ptr noundef nonnull @.str.43, double noundef %28)
   %i.es = load ptr, ptr %11, align 8, !tbaa !50
   %i.et = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.eu = load i64, ptr %i.et, align 8, !tbaa !54

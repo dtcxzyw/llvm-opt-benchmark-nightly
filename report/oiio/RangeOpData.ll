@@ -201,18 +201,20 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.b = load i32, ptr %i.a, align 8, !tbaa !40
   %i.c = tail call noundef double @_ZN16OpenColorIO_v2_519GetBitDepthMaxValueENS_8BitDepthE(i32 noundef %i.b)
-  %1 = fdiv double 1.000000e+00, %i.c             ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 220
   %i.e = load i32, ptr %i.d, align 4, !tbaa !41
   %i.f = tail call noundef double @_ZN16OpenColorIO_v2_519GetBitDepthMaxValueENS_8BitDepthE(i32 noundef %i.e)
-  %2 = fdiv double 1.000000e+00, %i.f             ; 2 uses
+  %1 = insertelement <2 x double> poison, double %i.c, i64 0
+  %2 = insertelement <2 x double> %1, double %i.f, i64 1
+  %3 = fdiv <2 x double> splat (double 1.000000e+00), %2 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.h = load double, ptr %i.g, align 8, !tbaa !35 ; 3 uses
   %i.i = fcmp uno double %i.h, 0.000000e+00
   br i1 %i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = fmul double %1, %i.h                     ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %i.j = fmul double %4, %i.h                     ; 2 uses
   store double %i.j, ptr %i.g, align 8, !tbaa !35
   br label %bb.c
 
@@ -224,7 +226,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = fmul double %1, %i.m                     ; 2 uses
+  %5 = extractelement <2 x double> %3, i64 0
+  %i.o = fmul double %5, %i.m                     ; 2 uses
   store double %i.o, ptr %i.l, align 8, !tbaa !36
   br label %bb.e
 
@@ -236,7 +239,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.s = load double, ptr %i.r, align 8, !tbaa !37
-  %i.t = fmul double %2, %i.s
+  %6 = extractelement <2 x double> %3, i64 1
+  %i.t = fmul double %6, %i.s
   store double %i.t, ptr %i.r, align 8, !tbaa !37
   br label %bb.g
 
@@ -247,7 +251,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
   %i.w = load double, ptr %i.v, align 8, !tbaa !38
-  %i.x = fmul double %2, %i.w
+  %7 = extractelement <2 x double> %3, i64 1
+  %i.x = fmul double %7, %i.w
   store double %i.x, ptr %i.v, align 8, !tbaa !38
   br label %bb.i
 

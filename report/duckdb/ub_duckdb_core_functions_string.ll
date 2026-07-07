@@ -204,13 +204,18 @@ bb.a:
 
 _ZN19duckdb_jaro_winkler6detailL18jaro_length_filterElld.exit: ; preds = %bb.a
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %i.f, i64 %i.c)
-  %i.i = sitofp i64 %.sroa.speculated.i to double ; 2 uses
+  %i.i = sitofp i64 %.sroa.speculated.i to double
   %i.j = sitofp i64 %i.c to double                ; 4 uses
-  %8 = fdiv double %i.i, %i.j
-  %9 = sitofp i64 %i.f to double                  ; 4 uses
-  %10 = fdiv double %i.i, %9
-  %11 = fadd double %8, %10
-  %i.k = fadd double %11, 1.000000e+00
+  %8 = sitofp i64 %i.f to double                  ; 4 uses
+  %9 = insertelement <2 x double> poison, double %i.i, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = insertelement <2 x double> poison, double %i.j, i64 0
+  %12 = insertelement <2 x double> %11, double %8, i64 1
+  %13 = fdiv <2 x double> %10, %12                ; 2 uses
+  %shift = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %13, %shift
+  %14 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.k = fadd double %14, 1.000000e+00
   %i.l = fdiv double %i.k, 3.000000e+00
   %i.m = fcmp ult double %i.l, %5
   br i1 %i.m, label %.critedge, label %bb.b
@@ -486,11 +491,16 @@ _ZN19duckdb_jaro_winkler6detailL28flag_similar_characters_wordINS_6common23Block
   br i1 %.not.i, label %.critedge, label %_ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit
 
 _ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit: ; preds = %_ZN19duckdb_jaro_winkler6detailL28flag_similar_characters_wordINS_6common23BlockPatternMatchVectorEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES7_EENS0_16FlaggedCharsWordERKT_T0_SJ_T1_SK_i.exit
-  %i.ep = uitofp nneg i64 %i.eo to double         ; 2 uses
-  %12 = fdiv double %i.ep, %i.j
-  %i.eq = fadd double %12, 0.000000e+00
-  %13 = fdiv double %i.ep, %9
-  %i.er = fadd double %13, %i.eq
+  %i.ep = uitofp nneg i64 %i.eo to double
+  %15 = insertelement <2 x double> poison, double %i.ep, i64 0
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
+  %17 = insertelement <2 x double> poison, double %8, i64 0
+  %18 = insertelement <2 x double> %17, double %i.j, i64 1
+  %19 = fdiv <2 x double> %16, %18                ; 2 uses
+  %20 = extractelement <2 x double> %19, i64 1
+  %i.eq = fadd double %20, 0.000000e+00
+  %21 = extractelement <2 x double> %19, i64 0
+  %i.er = fadd double %21, %i.eq
   %i.es = fadd double %i.er, 1.000000e+00
   %i.et = fdiv double %i.es, 3.000000e+00
   %i.eu = fcmp ult double %i.et, %5
@@ -893,11 +903,16 @@ _ZN19duckdb_jaro_winkler6detailL18count_common_charsERKNS0_21FlaggedCharsMultiwo
   br i1 %.not.i96, label %.critedge67, label %_ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit98
 
 _ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit98: ; preds = %_ZN19duckdb_jaro_winkler6detailL18count_common_charsERKNS0_21FlaggedCharsMultiwordE.exit
-  %i.ko = sitofp i64 %.2.i to double              ; 2 uses
-  %14 = fdiv double %i.ko, %i.j
-  %i.kp = fadd double %14, 0.000000e+00
-  %15 = fdiv double %i.ko, %9
-  %i.kq = fadd double %15, %i.kp
+  %i.ko = sitofp i64 %.2.i to double
+  %22 = insertelement <2 x double> poison, double %i.ko, i64 0
+  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
+  %24 = insertelement <2 x double> poison, double %8, i64 0
+  %25 = insertelement <2 x double> %24, double %i.j, i64 1
+  %26 = fdiv <2 x double> %23, %25                ; 2 uses
+  %27 = extractelement <2 x double> %26, i64 1
+  %i.kp = fadd double %27, 0.000000e+00
+  %28 = extractelement <2 x double> %26, i64 0
+  %i.kq = fadd double %28, %i.kp
   %i.kr = fadd double %i.kq, 1.000000e+00
   %i.ks = fdiv double %i.kr, 3.000000e+00
   %i.kt = fcmp ult double %i.ks, %5
@@ -1056,11 +1071,16 @@ _ZN19duckdb_jaro_winkler6detailL25count_transpositions_wordINS_6common23BlockPat
   %.264 = phi i64 [ 0, %_ZN19duckdb_jaro_winkler6detail11jaro_boundsIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES5_EElT_RSD_T0_RSF_.exit ], [ %i.mx, %_ZN19duckdb_jaro_winkler6detail21FlaggedCharsMultiwordD2Ev.exit ], [ 0, %bb.q ], [ 0, %bb.g ], [ %i.gn, %_ZNK19duckdb_jaro_winkler6common23BlockPatternMatchVector3getIcEEmT_.exit.i84 ]
   %.061 = phi i64 [ 0, %_ZN19duckdb_jaro_winkler6detail11jaro_boundsIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES5_EElT_RSD_T0_RSF_.exit ], [ %.2.i, %_ZN19duckdb_jaro_winkler6detail21FlaggedCharsMultiwordD2Ev.exit ], [ %i.eo, %bb.q ], [ 0, %bb.g ], [ %i.eo, %_ZNK19duckdb_jaro_winkler6common23BlockPatternMatchVector3getIcEEmT_.exit.i84 ]
   %i.nc = sdiv i64 %.264, 2
-  %i.nd = sitofp i64 %.061 to double              ; 4 uses
-  %16 = fdiv double %i.nd, %i.j
-  %i.ne = fadd double %16, 0.000000e+00
-  %17 = fdiv double %i.nd, %9
-  %i.nf = fadd double %17, %i.ne
+  %i.nd = sitofp i64 %.061 to double              ; 3 uses
+  %29 = insertelement <2 x double> poison, double %i.nd, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %31 = insertelement <2 x double> poison, double %8, i64 0
+  %32 = insertelement <2 x double> %31, double %i.j, i64 1
+  %33 = fdiv <2 x double> %30, %32                ; 2 uses
+  %34 = extractelement <2 x double> %33, i64 1
+  %i.ne = fadd double %34, 0.000000e+00
+  %35 = extractelement <2 x double> %33, i64 0
+  %i.nf = fadd double %35, %i.ne
   %i.ng = sitofp i64 %i.nc to double
   %i.nh = fsub double %i.nd, %i.ng
   %i.ni = fdiv double %i.nh, %i.nd
@@ -1463,13 +1483,18 @@ bb.a:
 
 _ZN19duckdb_jaro_winkler6detailL18jaro_length_filterElld.exit: ; preds = %bb.a
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %i.f, i64 %i.c)
-  %i.i = sitofp i64 %.sroa.speculated.i to double ; 2 uses
+  %i.i = sitofp i64 %.sroa.speculated.i to double
   %i.j = sitofp i64 %i.c to double                ; 4 uses
-  %9 = fdiv double %i.i, %i.j
-  %10 = sitofp i64 %i.f to double                 ; 4 uses
-  %11 = fdiv double %i.i, %10
-  %12 = fadd double %9, %11
-  %i.k = fadd double %12, 1.000000e+00
+  %9 = sitofp i64 %i.f to double                  ; 4 uses
+  %10 = insertelement <2 x double> poison, double %i.i, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %12 = insertelement <2 x double> poison, double %i.j, i64 0
+  %13 = insertelement <2 x double> %12, double %9, i64 1
+  %14 = fdiv <2 x double> %11, %13                ; 2 uses
+  %shift = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %14, %shift
+  %15 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.k = fadd double %15, 1.000000e+00
   %i.l = fdiv double %i.k, 3.000000e+00
   %i.m = fcmp ult double %i.l, %4
   br i1 %i.m, label %_ZN19duckdb_jaro_winkler6detailL18jaro_length_filterElld.exit.thread, label %bb.b
@@ -1857,11 +1882,16 @@ _ZN19duckdb_jaro_winkler6detailL28flag_similar_characters_wordINS_6common18Patte
   br i1 %.not.i68, label %.critedge, label %_ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit
 
 _ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit: ; preds = %_ZN19duckdb_jaro_winkler6detailL28flag_similar_characters_wordINS_6common18PatternMatchVectorEPKcS5_EENS0_16FlaggedCharsWordERKT_T0_SA_T1_SB_i.exit
-  %i.gk = uitofp nneg i64 %i.gj to double         ; 2 uses
-  %13 = fdiv double %i.gk, %i.j
-  %i.gl = fadd double %13, 0.000000e+00
-  %14 = fdiv double %i.gk, %10
-  %i.gm = fadd double %14, %i.gl
+  %i.gk = uitofp nneg i64 %i.gj to double
+  %16 = insertelement <2 x double> poison, double %i.gk, i64 0
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %18 = insertelement <2 x double> poison, double %9, i64 0
+  %19 = insertelement <2 x double> %18, double %i.j, i64 1
+  %20 = fdiv <2 x double> %17, %19                ; 2 uses
+  %21 = extractelement <2 x double> %20, i64 1
+  %i.gl = fadd double %21, 0.000000e+00
+  %22 = extractelement <2 x double> %20, i64 0
+  %i.gm = fadd double %22, %i.gl
   %i.gn = fadd double %i.gm, 1.000000e+00
   %i.go = fdiv double %i.gn, 3.000000e+00
   %i.gp = fcmp ult double %i.go, %4
@@ -2264,11 +2294,16 @@ _ZN19duckdb_jaro_winkler6detailL18count_common_charsERKNS0_21FlaggedCharsMultiwo
   br i1 %.not.i92, label %.critedge50, label %_ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit94
 
 _ZN19duckdb_jaro_winkler6detailL23jaro_common_char_filterEllld.exit94: ; preds = %_ZN19duckdb_jaro_winkler6detailL18count_common_charsERKNS0_21FlaggedCharsMultiwordE.exit
-  %i.mi = sitofp i64 %i.mh to double              ; 2 uses
-  %15 = fdiv double %i.mi, %i.j
-  %i.mj = fadd double %15, 0.000000e+00
-  %16 = fdiv double %i.mi, %10
-  %i.mk = fadd double %16, %i.mj
+  %i.mi = sitofp i64 %i.mh to double
+  %23 = insertelement <2 x double> poison, double %i.mi, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %25 = insertelement <2 x double> poison, double %9, i64 0
+  %26 = insertelement <2 x double> %25, double %i.j, i64 1
+  %27 = fdiv <2 x double> %24, %26                ; 2 uses
+  %28 = extractelement <2 x double> %27, i64 1
+  %i.mj = fadd double %28, 0.000000e+00
+  %29 = extractelement <2 x double> %27, i64 0
+  %i.mk = fadd double %29, %i.mj
   %i.ml = fadd double %i.mk, 1.000000e+00
   %i.mm = fdiv double %i.ml, 3.000000e+00
   %i.mn = fcmp ult double %i.mm, %4
@@ -2468,11 +2503,16 @@ bb.at:                                            ; preds = %_ZN19duckdb_jaro_wi
   %.246 = phi i64 [ %.012.lcssa.i, %_ZN19duckdb_jaro_winkler6detailL25count_transpositions_wordINS_6common18PatternMatchVectorEPKcEElRKT_T0_S9_RKNS0_16FlaggedCharsWordE.exit ], [ %.026.lcssa.i, %_ZN19duckdb_jaro_winkler6common23BlockPatternMatchVectorD2Ev.exit ], [ 0, %_ZN19duckdb_jaro_winkler6common20remove_common_prefixIPKcS3_EElRT_S4_RT0_S6_.exit ]
   %.043 = phi i64 [ %i.gj, %_ZN19duckdb_jaro_winkler6detailL25count_transpositions_wordINS_6common18PatternMatchVectorEPKcEElRKT_T0_S9_RKNS0_16FlaggedCharsWordE.exit ], [ %i.mh, %_ZN19duckdb_jaro_winkler6common23BlockPatternMatchVectorD2Ev.exit ], [ %.0.lcssa.i, %_ZN19duckdb_jaro_winkler6common20remove_common_prefixIPKcS3_EElRT_S4_RT0_S6_.exit ]
   %i.pa = sdiv i64 %.246, 2
-  %i.pb = sitofp i64 %.043 to double              ; 4 uses
-  %17 = fdiv double %i.pb, %i.j
-  %i.pc = fadd double %17, 0.000000e+00
-  %18 = fdiv double %i.pb, %10
-  %i.pd = fadd double %18, %i.pc
+  %i.pb = sitofp i64 %.043 to double              ; 3 uses
+  %30 = insertelement <2 x double> poison, double %i.pb, i64 0
+  %31 = shufflevector <2 x double> %30, <2 x double> poison, <2 x i32> zeroinitializer
+  %32 = insertelement <2 x double> poison, double %9, i64 0
+  %33 = insertelement <2 x double> %32, double %i.j, i64 1
+  %34 = fdiv <2 x double> %31, %33                ; 2 uses
+  %35 = extractelement <2 x double> %34, i64 1
+  %i.pc = fadd double %35, 0.000000e+00
+  %36 = extractelement <2 x double> %34, i64 0
+  %i.pd = fadd double %36, %i.pc
   %i.pe = sitofp i64 %i.pa to double
   %i.pf = fsub double %i.pb, %i.pe
   %i.pg = fdiv double %i.pf, %i.pb

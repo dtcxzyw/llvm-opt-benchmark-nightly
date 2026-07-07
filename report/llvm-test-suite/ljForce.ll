@@ -204,12 +204,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   store double %i.dr, ptr %i.dp, align 8, !tbaa !16
   %i.ds = getelementptr inbounds [8 x i8], ptr %i.do, i64 %indvars.iv171 ; 2 uses
   %i.dt = load double, ptr %i.ds, align 8, !tbaa !16
-  %1 = call double @llvm.fmuladd.f64(double %i.dn, double 5.000000e-01, double %i.dt)
-  store double %1, ptr %i.ds, align 8, !tbaa !16
-  %2 = fmul double %i.ap, %i.dl
-  %3 = fmul double %i.di, %2
-  %4 = call double @llvm.fmuladd.f64(double %i.dl, double 1.200000e+01, double -6.000000e+00)
-  %i.du = fmul double %4, %3                      ; 3 uses
+  %1 = fmul double %i.ap, %i.dl
+  %2 = fmul double %i.di, %1
+  %3 = insertelement <2 x double> poison, double %i.dn, i64 0
+  %4 = insertelement <2 x double> %3, double %i.dl, i64 1
+  %5 = insertelement <2 x double> <double poison, double -6.000000e+00>, double %i.dt, i64 0
+  %6 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> <double 5.000000e-01, double 1.200000e+01>, <2 x double> %5) ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  store double %7, ptr %i.ds, align 8, !tbaa !16
+  %8 = extractelement <2 x double> %6, i64 1
+  %i.du = fmul double %8, %2                      ; 3 uses
   %i.dv = load ptr, ptr %i.ci, align 8, !tbaa !35 ; 2 uses
   %i.dw = getelementptr inbounds nuw [24 x i8], ptr %i.dv, i64 %indvars.iv177 ; 3 uses
   %i.dx = getelementptr inbounds [24 x i8], ptr %i.dv, i64 %indvars.iv171 ; 3 uses

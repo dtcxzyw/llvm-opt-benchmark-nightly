@@ -204,16 +204,18 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 136
   %.sroa.0.0.copyload.i2.i = load i64, ptr %i.i, align 8, !tbaa !91
   %i.j = sub nsw i64 %i.h, %.sroa.0.0.copyload.i2.i
-  %i.k = sitofp i64 %i.j to double
-  %3 = fdiv double %i.k, 1.000000e+09
-  %4 = tail call i64 @_ZN6hermes8oscompat15thread_cpu_timeEv() #31
-  %5 = sitofp i64 %4 to double
-  %6 = fdiv double %5, 1.000000e+06
+  %3 = tail call i64 @_ZN6hermes8oscompat15thread_cpu_timeEv() #31
+  %i.k = sitofp i64 %3 to double
+  %4 = sitofp i64 %i.j to double
+  %5 = insertelement <2 x double> poison, double %4, i64 0
+  %6 = insertelement <2 x double> %5, double %i.k, i64 1
+  %7 = fdiv <2 x double> %6, <double 1.000000e+09, double 1.000000e+06> ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.m = load i64, ptr %i.l, align 8, !tbaa !155
   %i.n = sitofp i64 %i.m to double
   %i.o = fdiv double %i.n, 1.000000e+06
-  %i.p = fsub double %6, %i.o
+  %8 = extractelement <2 x double> %7, i64 1
+  %i.p = fsub double %8, %i.o
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 64
@@ -319,7 +321,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !3
   call void @_ZN6hermes11JSONEmitter9emitValueEj(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef %i.bk) #31
   call void @_ZN6hermes11JSONEmitter7emitKeyEN4llvh9StringRefE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nonnull @.str.15, i64 9) #31
-  call void @_ZN6hermes11JSONEmitter9emitValueEd(ptr noundef nonnull align 8 dereferenceable(72) %1, double noundef %3) #31
+  %9 = extractelement <2 x double> %7, i64 0
+  call void @_ZN6hermes11JSONEmitter9emitValueEd(ptr noundef nonnull align 8 dereferenceable(72) %1, double noundef %9) #31
   call void @_ZN6hermes11JSONEmitter7emitKeyEN4llvh9StringRefE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nonnull @.str.16, i64 12) #31
   call void @_ZN6hermes11JSONEmitter9emitValueEd(ptr noundef nonnull align 8 dereferenceable(72) %1, double noundef %i.p) #31
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 176

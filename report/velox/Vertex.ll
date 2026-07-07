@@ -129,15 +129,17 @@ bb.c:                                             ; preds = %.noexc
   br label %common.resume
 
 bb.d:                                             ; preds = %.noexc
-  %3 = load double, ptr %i.a, align 8, !tbaa !17  ; 4 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %i.u = load double, ptr %i.t, align 8, !tbaa !19 ; 4 uses
-  %4 = fmul double %3, %i.u
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %6 = load double, ptr %5, align 8, !tbaa !19    ; 4 uses
-  %7 = load double, ptr %i.k, align 8, !tbaa !17  ; 4 uses
-  %i.v = fmul double %6, %7
-  %i.w = fsub double %4, %i.v                     ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %4 = load <2 x double>, ptr %i.a, align 8, !tbaa !13 ; 4 uses
+  %i.u = load double, ptr %i.t, align 8, !tbaa !19 ; 2 uses
+  %5 = load <2 x double>, ptr %i.k, align 8, !tbaa !13 ; 4 uses
+  %6 = load double, ptr %3, align 8, !tbaa !19    ; 2 uses
+  %7 = extractelement <2 x double> %4, i64 0
+  %8 = fmul double %7, %6
+  %9 = extractelement <2 x double> %5, i64 0
+  %i.v = fmul double %i.u, %9
+  %i.w = fsub double %8, %i.v                     ; 2 uses
   %i.x = fcmp ogt double %i.w, 0.000000e+00
   br i1 %i.x, label %_ZNSt10unique_ptrIN4geos11triangulate8quadedge6VertexESt14default_deleteIS3_EED2Ev.exit25, label %bb.f
 
@@ -151,24 +153,25 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.z, label %_ZNSt10unique_ptrIN4geos11triangulate8quadedge6VertexESt14default_deleteIS3_EED2Ev.exit25, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %8 = fmul double %3, %7
-  %i.aa = fcmp olt double %8, 0.000000e+00
-  %i.ab = fmul double %i.u, %6
+  %foldExtExtBinop = fmul <2 x double> %4, %5
+  %10 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.aa = fcmp olt double %10, 0.000000e+00
+  %i.ab = fmul double %6, %i.u
   %i.ac = fcmp olt double %i.ab, 0.000000e+00
   %or.cond = or i1 %i.ac, %i.aa
   br i1 %or.cond, label %_ZNSt10unique_ptrIN4geos11triangulate8quadedge6VertexESt14default_deleteIS3_EED2Ev.exit25, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %9 = fmul double %3, %3
-  %10 = fmul double %6, %6
-  %11 = fadd double %9, %10
-  %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %11)
-  %12 = fmul double %7, %7
-  %13 = fmul double %i.u, %i.u
-  %14 = fadd double %13, %12
-  %sqrt.i18 = tail call noundef double @llvm.sqrt.f64(double %14)
-  %15 = fcmp olt double %sqrt.i, %sqrt.i18
-  br i1 %15, label %_ZNSt10unique_ptrIN4geos11triangulate8quadedge6VertexESt14default_deleteIS3_EED2Ev.exit25, label %bb.i
+  %11 = shufflevector <2 x double> %4, <2 x double> %5, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %12 = fmul <2 x double> %11, %11
+  %13 = shufflevector <2 x double> %4, <2 x double> %5, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %14 = fmul <2 x double> %13, %13
+  %15 = fadd <2 x double> %12, %14
+  %16 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %15) ; 2 uses
+  %shift = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %17 = fcmp olt <2 x double> %16, %shift
+  %18 = extractelement <2 x i1> %17, i64 0
+  br i1 %18, label %_ZNSt10unique_ptrIN4geos11triangulate8quadedge6VertexESt14default_deleteIS3_EED2Ev.exit25, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ad = load double, ptr %1, align 8, !tbaa !7
@@ -553,122 +556,120 @@ declare void @__cxa_end_catch() local_unnamed_addr
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZNK4geos11triangulate8quadedge6Vertex17interpolateZValueERKS2_S4_S4_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #4 align 2 {
 bb.a:
-  %4 = load double, ptr %1, align 8, !tbaa !17    ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load double, ptr %i.a, align 8, !tbaa !19 ; 3 uses
-  %5 = load double, ptr %2, align 8, !tbaa !17
-  %6 = fsub double %5, %4                         ; 2 uses
-  %7 = load double, ptr %3, align 8, !tbaa !17
-  %8 = fsub double %7, %4                         ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %10 = load double, ptr %9, align 8, !tbaa !19
-  %11 = fsub double %10, %i.b                     ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %13 = load double, ptr %12, align 8, !tbaa !19
-  %14 = fsub double %13, %i.b                     ; 2 uses
-  %15 = fmul double %6, %14
-  %16 = fmul double %8, %11
-  %17 = fsub double %15, %16                      ; 2 uses
-  %18 = load double, ptr %0, align 8, !tbaa !17
-  %19 = fsub double %18, %4                       ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %21 = load double, ptr %20, align 8, !tbaa !19
-  %22 = fsub double %21, %i.b                     ; 2 uses
-  %23 = fmul double %14, %19
-  %24 = fmul double %8, %22
-  %25 = fsub double %23, %24
-  %26 = fdiv double %25, %17
-  %27 = fmul double %6, %22
-  %28 = fmul double %11, %19
-  %29 = fsub double %27, %28
-  %30 = fdiv double %29, %17
-  %31 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %32 = load double, ptr %31, align 8, !tbaa !43  ; 3 uses
-  %33 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %34 = load double, ptr %33, align 8, !tbaa !43
-  %35 = fsub double %34, %32
-  %36 = fmul double %35, %26
-  %37 = fadd double %32, %36
-  %38 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %39 = load double, ptr %38, align 8, !tbaa !43
-  %40 = fsub double %39, %32
-  %41 = fmul double %30, %40
-  %i.c = fadd double %41, %37
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.b = load double, ptr %i.a, align 8, !tbaa !43 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %5 = load double, ptr %4, align 8, !tbaa !43
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %7 = load double, ptr %6, align 8, !tbaa !43
+  %8 = load <2 x double>, ptr %1, align 8, !tbaa !13 ; 4 uses
+  %9 = load <2 x double>, ptr %2, align 8, !tbaa !13 ; 2 uses
+  %10 = load <2 x double>, ptr %3, align 8, !tbaa !13 ; 2 uses
+  %11 = shufflevector <2 x double> %9, <2 x double> %10, <2 x i32> <i32 0, i32 3>
+  %12 = fsub <2 x double> %11, %8                 ; 3 uses
+  %shift = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x double> %12, %shift
+  %13 = load <2 x double>, ptr %0, align 8, !tbaa !13 ; 3 uses
+  %14 = shufflevector <2 x double> %13, <2 x double> %10, <2 x i32> <i32 0, i32 2>
+  %15 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %16 = fsub <2 x double> %14, %15                ; 2 uses
+  %17 = shufflevector <2 x double> %9, <2 x double> %13, <2 x i32> <i32 1, i32 3>
+  %18 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %19 = fsub <2 x double> %17, %18                ; 2 uses
+  %shift36 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop37 = fmul <2 x double> %shift36, %19
+  %foldExtExtBinop39 = fsub <2 x double> %foldExtExtBinop, %foldExtExtBinop37
+  %20 = fsub <2 x double> %13, %8
+  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %22 = fmul <2 x double> %12, %21
+  %23 = fmul <2 x double> %16, %19
+  %24 = fsub <2 x double> %22, %23
+  %25 = shufflevector <2 x double> %foldExtExtBinop39, <2 x double> poison, <2 x i32> zeroinitializer
+  %26 = fdiv <2 x double> %24, %25
+  %27 = insertelement <2 x double> poison, double %7, i64 0
+  %28 = insertelement <2 x double> %27, double %5, i64 1
+  %29 = insertelement <2 x double> poison, double %i.b, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %31 = fsub <2 x double> %28, %30
+  %32 = fmul <2 x double> %26, %31                ; 2 uses
+  %33 = extractelement <2 x double> %32, i64 1
+  %34 = fadd double %i.b, %33
+  %35 = extractelement <2 x double> %32, i64 0
+  %i.c = fadd double %35, %34
   ret double %i.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZN4geos11triangulate8quadedge6Vertex12interpolateZERKNS_4geom10CoordinateES6_S6_S6_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #4 align 2 {
 bb.a:
-  %4 = load double, ptr %1, align 8, !tbaa !7     ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load double, ptr %i.a, align 8, !tbaa !10 ; 3 uses
-  %5 = load double, ptr %2, align 8, !tbaa !7
-  %6 = fsub double %5, %4                         ; 2 uses
-  %7 = load double, ptr %3, align 8, !tbaa !7
-  %8 = fsub double %7, %4                         ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %10 = load double, ptr %9, align 8, !tbaa !10
-  %11 = fsub double %10, %i.b                     ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %13 = load double, ptr %12, align 8, !tbaa !10
-  %14 = fsub double %13, %i.b                     ; 2 uses
-  %15 = fmul double %6, %14
-  %16 = fmul double %8, %11
-  %17 = fsub double %15, %16                      ; 2 uses
-  %18 = load double, ptr %0, align 8, !tbaa !7
-  %19 = fsub double %18, %4                       ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %21 = load double, ptr %20, align 8, !tbaa !10
-  %22 = fsub double %21, %i.b                     ; 2 uses
-  %23 = fmul double %14, %19
-  %24 = fmul double %8, %22
-  %25 = fsub double %23, %24
-  %26 = fdiv double %25, %17
-  %27 = fmul double %6, %22
-  %28 = fmul double %11, %19
-  %29 = fsub double %27, %28
-  %30 = fdiv double %29, %17
-  %31 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %32 = load double, ptr %31, align 8, !tbaa !11  ; 3 uses
-  %33 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %34 = load double, ptr %33, align 8, !tbaa !11
-  %35 = fsub double %34, %32
-  %36 = fmul double %35, %26
-  %37 = fadd double %32, %36
-  %38 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %39 = load double, ptr %38, align 8, !tbaa !11
-  %40 = fsub double %39, %32
-  %41 = fmul double %30, %40
-  %i.c = fadd double %41, %37
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.b = load double, ptr %i.a, align 8, !tbaa !11 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %5 = load double, ptr %4, align 8, !tbaa !11
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %7 = load double, ptr %6, align 8, !tbaa !11
+  %8 = load <2 x double>, ptr %1, align 8, !tbaa !13 ; 4 uses
+  %9 = load <2 x double>, ptr %2, align 8, !tbaa !13 ; 2 uses
+  %10 = load <2 x double>, ptr %3, align 8, !tbaa !13 ; 2 uses
+  %11 = shufflevector <2 x double> %9, <2 x double> %10, <2 x i32> <i32 0, i32 3>
+  %12 = fsub <2 x double> %11, %8                 ; 3 uses
+  %shift = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x double> %12, %shift
+  %13 = load <2 x double>, ptr %0, align 8, !tbaa !13 ; 3 uses
+  %14 = shufflevector <2 x double> %13, <2 x double> %10, <2 x i32> <i32 0, i32 2>
+  %15 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %16 = fsub <2 x double> %14, %15                ; 2 uses
+  %17 = shufflevector <2 x double> %9, <2 x double> %13, <2 x i32> <i32 1, i32 3>
+  %18 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %19 = fsub <2 x double> %17, %18                ; 2 uses
+  %shift37 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop38 = fmul <2 x double> %shift37, %19
+  %foldExtExtBinop40 = fsub <2 x double> %foldExtExtBinop, %foldExtExtBinop38
+  %20 = fsub <2 x double> %13, %8
+  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %22 = fmul <2 x double> %12, %21
+  %23 = fmul <2 x double> %16, %19
+  %24 = fsub <2 x double> %22, %23
+  %25 = shufflevector <2 x double> %foldExtExtBinop40, <2 x double> poison, <2 x i32> zeroinitializer
+  %26 = fdiv <2 x double> %24, %25
+  %27 = insertelement <2 x double> poison, double %7, i64 0
+  %28 = insertelement <2 x double> %27, double %5, i64 1
+  %29 = insertelement <2 x double> poison, double %i.b, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %31 = fsub <2 x double> %28, %30
+  %32 = fmul <2 x double> %26, %31                ; 2 uses
+  %33 = extractelement <2 x double> %32, i64 1
+  %34 = fadd double %i.b, %33
+  %35 = extractelement <2 x double> %32, i64 0
+  %i.c = fadd double %35, %34
   ret double %i.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZN4geos11triangulate8quadedge6Vertex12interpolateZERKNS_4geom10CoordinateES6_S6_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #4 align 2 {
 bb.a:
-  %i.a = load <2 x double>, ptr %1, align 8, !tbaa !13 ; 2 uses
-  %i.b = load <2 x double>, ptr %2, align 8, !tbaa !13
-  %3 = fsub <2 x double> %i.a, %i.b               ; 2 uses
-  %4 = fmul <2 x double> %3, %3                   ; 2 uses
-  %shift = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %4, %shift
-  %5 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %5)
-  %6 = load <2 x double>, ptr %0, align 8, !tbaa !13
-  %i.c = fsub <2 x double> %6, %i.a               ; 2 uses
-  %i.d = fmul <2 x double> %i.c, %i.c             ; 2 uses
-  %shift13 = shufflevector <2 x double> %i.d, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop14 = fadd <2 x double> %i.d, %shift13
-  %7 = extractelement <2 x double> %foldExtExtBinop14, i64 0
-  %sqrt.i11 = tail call noundef double @llvm.sqrt.f64(double %7)
+  %i.a = load <2 x double>, ptr %1, align 8, !tbaa !13 ; 4 uses
+  %i.b = load <2 x double>, ptr %2, align 8, !tbaa !13 ; 2 uses
+  %3 = load <2 x double>, ptr %0, align 8, !tbaa !13 ; 2 uses
+  %4 = shufflevector <2 x double> %3, <2 x double> %i.a, <2 x i32> <i32 0, i32 2>
+  %5 = shufflevector <2 x double> %i.a, <2 x double> %i.b, <2 x i32> <i32 0, i32 2>
+  %6 = fsub <2 x double> %4, %5                   ; 2 uses
+  %7 = shufflevector <2 x double> %3, <2 x double> %i.a, <2 x i32> <i32 1, i32 3>
+  %8 = shufflevector <2 x double> %i.a, <2 x double> %i.b, <2 x i32> <i32 1, i32 3>
+  %i.c = fsub <2 x double> %7, %8                 ; 2 uses
+  %i.d = fmul <2 x double> %6, %6
+  %9 = fmul <2 x double> %i.c, %i.c
+  %foldExtExtBinop14 = fadd <2 x double> %i.d, %9
+  %10 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %foldExtExtBinop14) ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.f = load double, ptr %i.e, align 8, !tbaa !11
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load double, ptr %i.g, align 8, !tbaa !11 ; 2 uses
   %i.i = fsub double %i.f, %i.h
-  %8 = fdiv double %sqrt.i11, %sqrt.i
-  %i.j = fmul double %i.i, %8
+  %shift = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fdiv <2 x double> %10, %shift
+  %11 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.j = fmul double %i.i, %11
   %i.k = fadd double %i.h, %i.j
   ret double %i.k
 }
@@ -684,11 +685,11 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 declare void @_ZN4geos9algorithm11HCoordinateC1ERKS1_S3_(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 8 dereferenceable(24)) unnamed_addr #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #11
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #12
+declare void @llvm.experimental.noalias.scope.decl(metadata) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -701,8 +702,8 @@ attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #8 = { nounwind memory(none) }
 attributes #9 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { builtin allocsize(0) }
 attributes #14 = { builtin nounwind }
 attributes #15 = { nounwind }

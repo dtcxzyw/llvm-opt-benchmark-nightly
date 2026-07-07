@@ -201,19 +201,22 @@ bb.dc:                                            ; preds = %.critedge39.i.i
 bb.dd:                                            ; preds = %.critedge39.i.i
   %i.kd = load i64, ptr %3, align 8, !tbaa !26
   %i.ke = sitofp i64 %i.kd to double
-  %i.kf = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %22 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.kf = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.kg = load i64, ptr %i.kf, align 8, !tbaa !28
   %i.kh = sitofp i64 %i.kg to double
-  %22 = fdiv double %i.kh, 1.000000e+06
-  %23 = fadd double %22, %i.ke                    ; 3 uses
-  %24 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %25 = load i64, ptr %24, align 8, !tbaa !29
+  %23 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %24 = load i64, ptr %23, align 8, !tbaa !29
+  %25 = load i64, ptr %22, align 8, !tbaa !30
+  %26 = sitofp i64 %24 to double
   %i.ki = sitofp i64 %25 to double
-  %26 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %27 = load i64, ptr %26, align 8, !tbaa !30
-  %28 = sitofp i64 %27 to double
-  %29 = fdiv double %28, 1.000000e+06
-  %i.kj = fadd double %29, %i.ki                  ; 3 uses
+  %27 = insertelement <2 x double> poison, double %i.ki, i64 0
+  %28 = insertelement <2 x double> %27, double %26, i64 1
+  %29 = fdiv <2 x double> %28, splat (double 1.000000e+06) ; 2 uses
+  %30 = extractelement <2 x double> %29, i64 0
+  %31 = fadd double %30, %i.ke                    ; 3 uses
+  %32 = extractelement <2 x double> %29, i64 1
+  %i.kj = fadd double %32, %i.kh                  ; 3 uses
   %i.kk = load i32, ptr %i.a, align 4, !tbaa !4   ; 2 uses
   %i.kl = and i32 %i.kk, 127                      ; 3 uses
   %i.km = shl nuw nsw i32 %i.kl, 24
@@ -251,11 +254,11 @@ bb.di:                                            ; preds = %bb.dh
   br i1 %.b.i.i, label %bb.dj, label %bb.dk
 
 bb.dj:                                            ; preds = %bb.di
-  %i.kz = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ky, ptr noundef nonnull @.str.86, double noundef %i.jx, double noundef %23, double noundef %i.kj) #15 ; 0 uses
+  %i.kz = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ky, ptr noundef nonnull @.str.86, double noundef %i.jx, double noundef %31, double noundef %i.kj) #15 ; 0 uses
   br label %bb.dn
 
 bb.dk:                                            ; preds = %bb.di
-  %i.la = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ky, ptr noundef nonnull @.str.87, double noundef %i.jx, double noundef %23, double noundef %i.kj) #15 ; 0 uses
+  %i.la = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ky, ptr noundef nonnull @.str.87, double noundef %i.jx, double noundef %31, double noundef %i.kj) #15 ; 0 uses
   br label %bb.dn
 
 bb.dl:                                            ; preds = %bb.dh
@@ -270,7 +273,7 @@ bb.dl:                                            ; preds = %bb.dh
 bb.dm:                                            ; preds = %bb.dl
   %i.lc = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.lb, ptr noundef nonnull @.str.88, i32 noundef %.030.i.i) #16 ; 0 uses
   %i.ld = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.lb, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.90, double noundef %i.jx) #16 ; 0 uses
-  %i.le = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.lb, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.91, double noundef %23) #16 ; 0 uses
+  %i.le = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.lb, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.91, double noundef %31) #16 ; 0 uses
   %i.lf = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.lb, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.92, double noundef %i.kj) #16 ; 0 uses
   %i.lg = call i32 @fclose(ptr noundef nonnull %i.lb) ; 0 uses
   br label %bb.dn
@@ -532,7 +535,7 @@ attributes #19 = { noreturn nounwind }
 !25 = distinct !{!25, !18}
 !26 = !{!27, !16, i64 0}
 !27 = !{!"rusage", !20, i64 0, !20, i64 16, !6, i64 32, !6, i64 40, !6, i64 48, !6, i64 56, !6, i64 64, !6, i64 72, !6, i64 80, !6, i64 88, !6, i64 96, !6, i64 104, !6, i64 112, !6, i64 120, !6, i64 128, !6, i64 136}
-!28 = !{!27, !16, i64 8}
-!29 = !{!27, !16, i64 16}
-!30 = !{!27, !16, i64 24}
+!28 = !{!27, !16, i64 16}
+!29 = !{!27, !16, i64 24}
+!30 = !{!27, !16, i64 8}
 end_hunk_0

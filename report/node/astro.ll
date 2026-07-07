@@ -201,14 +201,18 @@ _ZN6icu_7818CalendarAstronomer12getJulianDayEv.exit: ; preds = %._crit_edge.i, %
 
 bb.d:                                             ; preds = %bb.d, %_ZN6icu_7818CalendarAstronomer12getJulianDayEv.exit
   %.0.i.i = phi double [ %i.u, %_ZN6icu_7818CalendarAstronomer12getJulianDayEv.exit ], [ %i.x, %bb.d ] ; 4 uses
-  %i.v = tail call double @sin(double noundef %.0.i.i) #12
-  %1 = tail call double @llvm.fmuladd.f64(double %i.v, double -1.671300e-02, double %.0.i.i)
-  %2 = fsub double %1, %i.u                       ; 2 uses
-  %3 = tail call double @cos(double noundef %.0.i.i) #12
-  %4 = tail call double @llvm.fmuladd.f64(double %3, double -1.671300e-02, double 1.000000e+00)
-  %i.w = fdiv double %2, %4
+  %1 = tail call double @sin(double noundef %.0.i.i) #12
+  %i.v = tail call double @cos(double noundef %.0.i.i) #12
+  %2 = insertelement <2 x double> poison, double %1, i64 0
+  %3 = insertelement <2 x double> %2, double %i.v, i64 1
+  %4 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %.0.i.i, i64 0
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> splat (double -1.671300e-02), <2 x double> %4) ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = fsub double %6, %i.u                       ; 2 uses
+  %8 = extractelement <2 x double> %5, i64 1
+  %i.w = fdiv double %7, %8
   %i.x = fsub double %.0.i.i, %i.w                ; 2 uses
-  %i.y = tail call double @uprv_fabs_78(double noundef %2) #12
+  %i.y = tail call double @uprv_fabs_78(double noundef %7) #12
   %i.z = fcmp ogt double %i.y, 1.000000e-05
   br i1 %i.z, label %bb.d, label %_ZN6icu_7818CalendarAstronomer15getSunLongitudeEdRdS1_.exit, !llvm.loop !5
 
@@ -248,14 +252,18 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.0.i = phi double [ %i.j, %bb.a ], [ %i.m, %bb.b ] ; 4 uses
-  %i.k = tail call double @sin(double noundef %.0.i) #12
-  %4 = tail call double @llvm.fmuladd.f64(double %i.k, double -1.671300e-02, double %.0.i)
-  %5 = fsub double %4, %i.j                       ; 2 uses
-  %6 = tail call double @cos(double noundef %.0.i) #12
-  %7 = tail call double @llvm.fmuladd.f64(double %6, double -1.671300e-02, double 1.000000e+00)
-  %i.l = fdiv double %5, %7
+  %4 = tail call double @sin(double noundef %.0.i) #12
+  %i.k = tail call double @cos(double noundef %.0.i) #12
+  %5 = insertelement <2 x double> poison, double %4, i64 0
+  %6 = insertelement <2 x double> %5, double %i.k, i64 1
+  %7 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %.0.i, i64 0
+  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> splat (double -1.671300e-02), <2 x double> %7) ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = fsub double %9, %i.j                      ; 2 uses
+  %11 = extractelement <2 x double> %8, i64 1
+  %i.l = fdiv double %10, %11
   %i.m = fsub double %.0.i, %i.l                  ; 2 uses
-  %i.n = tail call double @uprv_fabs_78(double noundef %5) #12
+  %i.n = tail call double @uprv_fabs_78(double noundef %10) #12
   %i.o = fcmp ogt double %i.n, 1.000000e-05
   br i1 %i.o, label %bb.b, label %_ZN6icu_78L11trueAnomalyEdd.exit, !llvm.loop !5
 
@@ -355,21 +363,26 @@ bb.b:                                             ; preds = %bb.d, %tailrecurse
   %i.v = load ptr, ptr %1, align 8
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = tail call noundef double %i.w(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(57) %0) #12 ; 3 uses
-  %6 = fsub double %i.x, %.035
-  %7 = fadd double %6, f0x400921FB54442D18        ; 2 uses
-  %8 = fdiv double %7, f0x401921FB54442D18
-  %9 = tail call noundef double @uprv_floor_78(double noundef %8) #12
-  %10 = tail call noundef double @llvm.fmuladd.f64(double %9, double f0xC01921FB54442D18, double %7)
-  %11 = fadd double %10, f0xC00921FB54442D18
-  %12 = fdiv double %.038, %11
-  %i.y = tail call double @uprv_fabs_78(double noundef %12) #12
-  %13 = fsub double %2, %i.x
-  %i.z = fadd double %13, f0x400921FB54442D18     ; 2 uses
-  %i.aa = fdiv double %i.z, f0x401921FB54442D18
-  %i.ab = tail call noundef double @uprv_floor_78(double noundef %i.aa) #12
-  %i.ac = tail call noundef double @llvm.fmuladd.f64(double %i.ab, double f0xC01921FB54442D18, double %i.z)
+  %6 = insertelement <2 x double> poison, double %i.x, i64 0
+  %7 = insertelement <2 x double> %6, double %2, i64 1
+  %8 = insertelement <2 x double> poison, double %.035, i64 0
+  %9 = insertelement <2 x double> %8, double %i.x, i64 1
+  %10 = fsub <2 x double> %7, %9
+  %11 = fadd <2 x double> %10, splat (double f0x400921FB54442D18) ; 3 uses
+  %12 = fdiv <2 x double> %11, splat (double f0x401921FB54442D18) ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %i.y = tail call noundef double @uprv_floor_78(double noundef %13) #12
+  %14 = extractelement <2 x double> %11, i64 0
+  %15 = tail call noundef double @llvm.fmuladd.f64(double %i.y, double f0xC01921FB54442D18, double %14)
+  %i.z = fadd double %15, f0xC00921FB54442D18
+  %i.aa = fdiv double %.038, %i.z
+  %16 = tail call double @uprv_fabs_78(double noundef %i.aa) #12
+  %17 = extractelement <2 x double> %12, i64 1
+  %i.ab = tail call noundef double @uprv_floor_78(double noundef %17) #12
+  %18 = extractelement <2 x double> %11, i64 1
+  %i.ac = tail call noundef double @llvm.fmuladd.f64(double %i.ab, double f0xC01921FB54442D18, double %18)
   %i.ad = fadd double %i.ac, f0xC00921FB54442D18
-  %i.ae = fmul double %i.y, %i.ad                 ; 4 uses
+  %i.ae = fmul double %16, %i.ad                  ; 4 uses
   %i.af = tail call double @uprv_fabs_78(double noundef %i.ae) #12
   %i.ag = tail call double @uprv_fabs_78(double noundef %.038) #12
   %i.ah = fcmp ule double %i.af, %i.ag
@@ -436,31 +449,36 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN6icu_7818CalendarAstronomer12getJulianDayEv.exit: ; preds = %._crit_edge.i, %bb.c
   %i.k = phi double [ %.pre.i, %._crit_edge.i ], [ %i.j, %bb.c ]
-  %i.l = fadd double %i.k, f0xC142AD09C0000000    ; 3 uses
+  %i.l = fadd double %i.k, f0xC142AD09C0000000    ; 2 uses
   %i.m = tail call double @llvm.fmuladd.f64(double %i.l, double f0x3FCD6FB4CCD0BC8D, double f0x401639A2A09C75E2) ; 2 uses
   %i.n = fdiv double %i.m, f0x401921FB54442D18
   %i.o = tail call noundef double @uprv_floor_78(double noundef %i.n) #12
   %i.p = tail call noundef double @llvm.fmuladd.f64(double %i.o, double f0xC01921FB54442D18, double %i.m) ; 3 uses
-  %1 = tail call double @llvm.fmuladd.f64(double %i.l, double f0xBF5FDB459D100168, double %i.p)
-  %2 = fadd double %1, f0xBFE44BDB3881627C        ; 2 uses
-  %3 = fdiv double %2, f0x401921FB54442D18
-  %i.q = tail call noundef double @uprv_floor_78(double noundef %3) #12
-  %4 = tail call noundef double @llvm.fmuladd.f64(double %i.q, double f0xC01921FB54442D18, double %2) ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.r = load double, ptr %5, align 8             ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %3 = insertelement <2 x double> poison, double %i.l, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x double> <double poison, double f0x40163C779EFC0D54>, double %i.p, i64 0
+  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> <double f0xBF5FDB459D100168, double f0xBF4E48EB230F0FE5>, <2 x double> %5) ; 2 uses
+  %7 = fadd <2 x double> %6, <double f0xBFE44BDB3881627C, double -0.000000e+00> ; 2 uses
+  %8 = fdiv <2 x double> %7, splat (double f0x401921FB54442D18) ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %i.q = tail call noundef double @uprv_floor_78(double noundef %9) #12
+  %10 = extractelement <2 x double> %7, i64 0
+  %11 = tail call noundef double @llvm.fmuladd.f64(double %i.q, double f0xC01921FB54442D18, double %10) ; 2 uses
+  %i.r = load double, ptr %1, align 8             ; 2 uses
   %i.s = fsub double %i.p, %i.r
-  %i.t = fneg double %4
+  %i.t = fneg double %11
   %i.u = tail call double @llvm.fmuladd.f64(double %i.s, double 2.000000e+00, double %i.t)
   %i.v = tail call double @sin(double noundef %i.u) #12
   %i.w = fmul double %i.v, f0x3F96C471A926A187    ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.x = load double, ptr %6, align 8
+  %i.x = load double, ptr %2, align 8
   %i.y = tail call double @sin(double noundef %i.x) #12 ; 2 uses
   %i.z = fmul double %i.y, f0x3F6A90B0ABA4FC89    ; 2 uses
   %i.aa = fmul double %i.y, f0x3F7A736889D66DD0
   %i.ab = fsub double %i.w, %i.z
   %i.ac = fsub double %i.ab, %i.aa
-  %i.ad = fadd double %4, %i.ac                   ; 2 uses
+  %i.ad = fadd double %11, %i.ac                  ; 2 uses
   %i.ae = tail call double @sin(double noundef %i.ad) #12
   %i.af = fmul double %i.ae, f0x3FBC1905209A88DE
   %i.ag = fmul double %i.ad, 2.000000e+00
@@ -475,11 +493,11 @@ _ZN6icu_7818CalendarAstronomer12getJulianDayEv.exit: ; preds = %._crit_edge.i, %
   %i.ap = tail call double @sin(double noundef %i.ao) #12
   %i.aq = fmul double %i.ap, f0x3F8787CEEAB4C1CA
   %i.ar = fadd double %i.aq, %i.am
-  %7 = tail call double @llvm.fmuladd.f64(double %i.l, double f0xBF4E48EB230F0FE5, double f0x40163C779EFC0D54) ; 2 uses
-  %8 = fdiv double %7, f0x401921FB54442D18
-  %9 = tail call noundef double @uprv_floor_78(double noundef %8) #12
-  %i.as = tail call noundef double @llvm.fmuladd.f64(double %9, double f0xC01921FB54442D18, double %7)
-  %i.at = load double, ptr %6, align 8
+  %12 = extractelement <2 x double> %8, i64 1
+  %13 = tail call noundef double @uprv_floor_78(double noundef %12) #12
+  %14 = extractelement <2 x double> %6, i64 1
+  %i.as = tail call noundef double @llvm.fmuladd.f64(double %13, double f0xC01921FB54442D18, double %14)
+  %i.at = load double, ptr %2, align 8
   %i.au = tail call double @sin(double noundef %i.at) #12
   %i.av = tail call double @llvm.fmuladd.f64(double %i.au, double f0xBF66E05A695F8191, double %i.as) ; 2 uses
   %i.aw = fsub double %i.ar, %i.av                ; 2 uses
@@ -881,6 +899,9 @@ declare double @atan(double noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

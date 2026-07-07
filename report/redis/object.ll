@@ -201,44 +201,54 @@ bb.a:
   store i64 %i.d, ptr %i.e, align 8, !tbaa !129
   %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2720), align 8, !tbaa !130
   store i64 %i.f, ptr %i.b, align 8, !tbaa !131
-  %i.g = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2864), align 8, !tbaa !132 ; 3 uses
-  %0 = uitofp i64 %i.g to float                   ; 2 uses
-  %i.h = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2856), align 8, !tbaa !133 ; 2 uses
-  %i.i = uitofp i64 %i.h to float
-  %1 = fdiv float %0, %i.i
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 136
-  store float %1, ptr %2, align 8, !tbaa !134
-  %i.j = sub i64 %i.g, %i.h
-  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  store i64 %i.j, ptr %i.k, align 8, !tbaa !135
-  %3 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2904), align 8, !tbaa !136
-  %4 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2936), align 8, !tbaa !137
-  %5 = sub i64 %3, %4                             ; 2 uses
-  %i.l = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2872), align 8, !tbaa !138
-  %i.m = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2912), align 8, !tbaa !139
-  %6 = sub i64 %i.l, %i.m
-  %7 = uitofp i64 %5 to float
-  %8 = uitofp i64 %6 to float
-  %9 = fdiv float %7, %8
-  %10 = fadd float %9, 1.000000e+00
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 152
-  store float %10, ptr %11, align 8, !tbaa !140
+  %0 = getelementptr inbounds nuw i8, ptr %i.b, i64 136
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 144
+  %2 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2904), align 8, !tbaa !132
+  %3 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2936), align 8, !tbaa !133
+  %4 = sub i64 %2, %3                             ; 2 uses
+  %5 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2872), align 8, !tbaa !134
+  %i.g = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2912), align 8, !tbaa !135
+  %6 = sub i64 %5, %i.g
+  %7 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2864), align 8, !tbaa !136 ; 3 uses
+  %i.h = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2856), align 8, !tbaa !137 ; 2 uses
+  %8 = uitofp i64 %4 to float
+  %i.i = uitofp i64 %6 to float
+  %9 = uitofp i64 %i.h to float
+  %10 = insertelement <2 x float> poison, float %9, i64 0
+  %11 = insertelement <2 x float> %10, float %i.i, i64 1
+  %i.j = sub i64 %7, %i.h
+  store i64 %i.j, ptr %1, align 8, !tbaa !138
+  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  store i64 %5, ptr %12, align 8, !tbaa !141
-  %13 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2888), align 8, !tbaa !142 ; 3 uses
-  %i.n = uitofp i64 %13 to float                  ; 2 uses
-  %14 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2880), align 8, !tbaa !143 ; 2 uses
-  %15 = uitofp i64 %14 to float
-  %16 = fdiv float %i.n, %15
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 168
-  store float %16, ptr %17, align 8, !tbaa !144
-  %18 = sub i64 %13, %14
-  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 176
-  store i64 %18, ptr %19, align 8, !tbaa !145
-  %20 = fdiv float %0, %i.n
-  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 184
-  store float %20, ptr %21, align 8, !tbaa !146
-  %i.o = sub i64 %i.g, %13
+  store i64 %4, ptr %12, align 8, !tbaa !139
+  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 168
+  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 176
+  %i.l = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2888), align 8, !tbaa !140 ; 3 uses
+  %i.m = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2880), align 8, !tbaa !141 ; 2 uses
+  %15 = uitofp i64 %7 to float                    ; 2 uses
+  %16 = insertelement <2 x float> poison, float %15, i64 0
+  %17 = insertelement <2 x float> %16, float %8, i64 1
+  %18 = fdiv <2 x float> %17, %11                 ; 2 uses
+  %19 = extractelement <2 x float> %18, i64 0
+  store float %19, ptr %0, align 8, !tbaa !142
+  %20 = extractelement <2 x float> %18, i64 1
+  %21 = fadd float %20, 1.000000e+00
+  store float %21, ptr %i.k, align 8, !tbaa !143
+  %22 = uitofp i64 %i.l to float                  ; 2 uses
+  %i.n = uitofp i64 %i.m to float
+  %23 = insertelement <2 x float> poison, float %22, i64 0
+  %24 = insertelement <2 x float> %23, float %15, i64 1
+  %25 = insertelement <2 x float> poison, float %i.n, i64 0
+  %26 = insertelement <2 x float> %25, float %22, i64 1
+  %27 = fdiv <2 x float> %24, %26                 ; 2 uses
+  %28 = extractelement <2 x float> %27, i64 0
+  store float %28, ptr %13, align 8, !tbaa !144
+  %29 = sub i64 %i.l, %i.m
+  store i64 %29, ptr %14, align 8, !tbaa !145
+  %30 = getelementptr inbounds nuw i8, ptr %i.b, i64 184
+  %31 = extractelement <2 x float> %27, i64 1
+  store float %31, ptr %30, align 8, !tbaa !146
+  %i.o = sub i64 %7, %i.l
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 192
   store i64 %i.o, ptr %i.p, align 8, !tbaa !147
   %i.q = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1480), align 8, !tbaa !148
@@ -540,14 +550,14 @@ bb.b:                                             ; preds = %bb.a
   %i.i = fcmp ogt float %i.h, 1.500000e+00        ; 3 uses
   %.046 = zext i1 %i.i to i32                     ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  %i.k = load float, ptr %i.j, align 8, !tbaa !134
+  %i.k = load float, ptr %i.j, align 8, !tbaa !142
   %i.l = fpext float %i.k to double
   %i.m = fcmp ogt double %i.l, 1.400000e+00
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !135
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !138
   %i.p = icmp slt i64 %i.o, 10485761              ; 2 uses
   %i.q = select i1 %i.i, i32 2, i32 1
   %spec.select = select i1 %i.p, i32 %.046, i32 %i.q
@@ -557,14 +567,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.151 = phi i32 [ %.046, %bb.b ], [ %spec.select, %bb.c ] ; 2 uses
   %i.r = phi i1 [ true, %bb.b ], [ %i.p, %bb.c ]
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 152
-  %i.t = load float, ptr %i.s, align 8, !tbaa !140
+  %i.t = load float, ptr %i.s, align 8, !tbaa !143
   %i.u = fpext float %i.t to double
   %i.v = fcmp ogt double %i.u, 1.100000e+00
   br i1 %i.v, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 160
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !141
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !139
   %i.y = icmp slt i64 %i.x, 10485761              ; 2 uses
   %not. = xor i1 %i.y, true
   %i.z = zext i1 %not. to i32
@@ -967,25 +977,25 @@ bb.s:                                             ; preds = %bb.r
   %i.dh = fpext float %i.dg to double
   call void @addReplyDouble(ptr noundef nonnull %0, double noundef %i.dh) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.111) #13
-  %i.di = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2872), align 8, !tbaa !138
+  %i.di = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2872), align 8, !tbaa !134
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.di) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.112) #13
-  %i.dj = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2880), align 8, !tbaa !143
+  %i.dj = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2880), align 8, !tbaa !141
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.dj) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.113) #13
-  %i.dk = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2888), align 8, !tbaa !142
+  %i.dk = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2888), align 8, !tbaa !140
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.dk) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.114) #13
   %i.dl = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2896), align 8, !tbaa !203
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.dl) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.115) #13
   %i.dm = getelementptr inbounds nuw i8, ptr %i.bm, i64 152
-  %i.dn = load float, ptr %i.dm, align 8, !tbaa !140
+  %i.dn = load float, ptr %i.dm, align 8, !tbaa !143
   %i.do = fpext float %i.dn to double
   call void @addReplyDouble(ptr noundef nonnull %0, double noundef %i.do) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.116) #13
   %i.dp = getelementptr inbounds nuw i8, ptr %i.bm, i64 160
-  %i.dq = load i64, ptr %i.dp, align 8, !tbaa !141
+  %i.dq = load i64, ptr %i.dp, align 8, !tbaa !139
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.dq) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.117) #13
   %i.dr = getelementptr inbounds nuw i8, ptr %i.bm, i64 168
@@ -1007,12 +1017,12 @@ bb.s:                                             ; preds = %bb.r
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.ea) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.121) #13
   %i.eb = getelementptr inbounds nuw i8, ptr %i.bm, i64 136
-  %i.ec = load float, ptr %i.eb, align 8, !tbaa !134
+  %i.ec = load float, ptr %i.eb, align 8, !tbaa !142
   %i.ed = fpext float %i.ec to double
   call void @addReplyDouble(ptr noundef nonnull %0, double noundef %i.ed) #13
   call void @addReplyBulkCString(ptr noundef nonnull %0, ptr noundef nonnull @.str.122) #13
   %i.ee = getelementptr inbounds nuw i8, ptr %i.bm, i64 144
-  %i.ef = load i64, ptr %i.ee, align 8, !tbaa !135
+  %i.ef = load i64, ptr %i.ee, align 8, !tbaa !138
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.ef) #13
   %i.eg = getelementptr inbounds nuw i8, ptr %i.bm, i64 248
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !124
@@ -1384,18 +1394,18 @@ attributes #17 = { nounwind allocsize(1) }
 !129 = !{!125, !19, i64 16}
 !130 = !{!24, !19, i64 2720}
 !131 = !{!125, !19, i64 0}
-!132 = !{!24, !19, i64 2864}
-!133 = !{!24, !19, i64 2856}
-!134 = !{!125, !126, i64 136}
-!135 = !{!125, !19, i64 144}
-!136 = !{!24, !19, i64 2904}
-!137 = !{!24, !19, i64 2936}
-!138 = !{!24, !19, i64 2872}
-!139 = !{!24, !19, i64 2912}
-!140 = !{!125, !126, i64 152}
-!141 = !{!125, !19, i64 160}
-!142 = !{!24, !19, i64 2888}
-!143 = !{!24, !19, i64 2880}
+!132 = !{!24, !19, i64 2904}
+!133 = !{!24, !19, i64 2936}
+!134 = !{!24, !19, i64 2872}
+!135 = !{!24, !19, i64 2912}
+!136 = !{!24, !19, i64 2864}
+!137 = !{!24, !19, i64 2856}
+!138 = !{!125, !19, i64 144}
+!139 = !{!125, !19, i64 160}
+!140 = !{!24, !19, i64 2888}
+!141 = !{!24, !19, i64 2880}
+!142 = !{!125, !126, i64 136}
+!143 = !{!125, !126, i64 152}
 !144 = !{!125, !126, i64 168}
 !145 = !{!125, !19, i64 176}
 !146 = !{!125, !126, i64 184}

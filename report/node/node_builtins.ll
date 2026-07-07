@@ -204,25 +204,29 @@ bb.a:
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
-  %2 = ashr exact i64 %i.i, 6
-  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 88 ; 2 uses
-  %3 = uitofp i64 %2 to double
-  %4 = load float, ptr %i.j, align 8
-  %5 = fpext float %4 to double                   ; 2 uses
-  %6 = fdiv double %3, %5
-  %7 = tail call double @llvm.ceil.f64(double %6)
-  %8 = fptoui double %7 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 96 ; 2 uses
-  %10 = load i64, ptr %9, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 80
-  %12 = load i64, ptr %11, align 8
-  %13 = add i64 %12, 1
-  %14 = uitofp i64 %13 to double
-  %15 = fdiv double %14, %5
-  %i.k = tail call double @llvm.ceil.f64(double %15)
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 88 ; 2 uses
+  %3 = load float, ptr %2, align 8
+  %4 = fpext float %3 to double
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 96 ; 2 uses
+  %6 = load i64, ptr %5, align 8
+  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 80
+  %7 = load i64, ptr %i.j, align 8
+  %8 = add i64 %7, 1
+  %9 = ashr exact i64 %i.i, 6
+  %10 = insertelement <2 x i64> poison, i64 %9, i64 0
+  %11 = insertelement <2 x i64> %10, i64 %8, i64 1
+  %12 = uitofp <2 x i64> %11 to <2 x double>
+  %13 = insertelement <2 x double> poison, double %4, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = fdiv <2 x double> %12, %14                ; 2 uses
+  %16 = extractelement <2 x double> %15, i64 0
+  %17 = tail call double @llvm.ceil.f64(double %16)
+  %18 = fptoui double %17 to i64
+  %19 = extractelement <2 x double> %15, i64 1
+  %i.k = tail call double @llvm.ceil.f64(double %19)
   %i.l = fptoui double %i.k to i64
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %8, i64 %i.l)
-  %i.m = tail call noundef i64 @_ZNKSt8__detail20_Prime_rehash_policy11_M_next_bktEm(ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 noundef %.sroa.speculated.i.i.i) #25 ; 2 uses
+  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %18, i64 %i.l)
+  %i.m = tail call noundef i64 @_ZNKSt8__detail20_Prime_rehash_policy11_M_next_bktEm(ptr noundef nonnull align 8 dereferenceable(16) %2, i64 noundef %.sroa.speculated.i.i.i) #25 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.o = load i64, ptr %i.n, align 8
   %.not.i.i.i = icmp eq i64 %i.m, %i.o
@@ -234,7 +238,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4node8builtins20BuiltinCodeCacheDataESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S8_EEE7reserveEm.exit
 
 bb.c:                                             ; preds = %bb.a
-  store i64 %10, ptr %9, align 8
+  store i64 %6, ptr %5, align 8
   br label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4node8builtins20BuiltinCodeCacheDataESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S8_EEE7reserveEm.exit
 
 _ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4node8builtins20BuiltinCodeCacheDataESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S8_EEE7reserveEm.exit: ; preds = %bb.b, %bb.c

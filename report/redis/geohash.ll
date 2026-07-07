@@ -63,31 +63,36 @@ bb.h:                                             ; preds = %bb.g
   store i64 0, ptr %5, align 8, !tbaa !18
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i8 %4, ptr %i.s, align 8, !tbaa !21
-  %i.t = load double, ptr %1, align 8, !tbaa !17  ; 3 uses
+  %i.t = load double, ptr %1, align 8, !tbaa !17  ; 2 uses
   %i.u = fcmp olt double %3, %i.t
   %i.v = fcmp ogt double %3, %i.f
   %or.cond = or i1 %i.v, %i.u
   br i1 %or.cond, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.w = load double, ptr %0, align 8, !tbaa !17  ; 3 uses
+  %i.w = load double, ptr %0, align 8, !tbaa !17  ; 2 uses
   %i.x = fcmp olt double %2, %i.w
   %i.y = fcmp ogt double %2, %i.l
   %or.cond66 = or i1 %i.y, %i.x
   br i1 %or.cond66, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %6 = fsub double %3, %i.t
-  %7 = fsub double %i.f, %i.t
-  %8 = fdiv double %6, %7
-  %9 = fsub double %2, %i.w
-  %10 = fsub double %i.l, %i.w
-  %11 = fdiv double %9, %10
+  %6 = insertelement <2 x double> poison, double %3, i64 0
+  %7 = insertelement <2 x double> %6, double %2, i64 1
+  %8 = insertelement <2 x double> poison, double %i.t, i64 0
+  %9 = insertelement <2 x double> %8, double %i.w, i64 1 ; 2 uses
+  %10 = fsub <2 x double> %7, %9
+  %11 = insertelement <2 x double> poison, double %i.f, i64 0
+  %12 = insertelement <2 x double> %11, double %i.l, i64 1
+  %13 = fsub <2 x double> %12, %9
+  %14 = fdiv <2 x double> %10, %13                ; 2 uses
   %i.z = zext nneg i8 %4 to i64
   %i.aa = shl nuw nsw i64 1, %i.z
   %i.ab = uitofp nneg i64 %i.aa to double         ; 2 uses
-  %i.ac = fmul double %8, %i.ab
-  %i.ad = fmul double %11, %i.ab
+  %15 = extractelement <2 x double> %14, i64 0
+  %i.ac = fmul double %15, %i.ab
+  %16 = extractelement <2 x double> %14, i64 1
+  %i.ad = fmul double %16, %i.ab
   %i.ae = fptoui double %i.ac to i32
   %i.af = fptoui double %i.ad to i32
   %i.ag = tail call fastcc i64 @interleave64(i32 noundef %i.ae, i32 noundef %i.af)
@@ -149,15 +154,17 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %2, ptr %i.g, align 8, !tbaa !21
-  %4 = fadd double %1, f0x40554345B1A57F00
-  %5 = fdiv double %4, f0x40654345B1A57F00
-  %6 = fadd double %0, 1.800000e+02
-  %7 = fdiv double %6, 3.600000e+02
+  %4 = insertelement <2 x double> poison, double %1, i64 0
+  %5 = insertelement <2 x double> %4, double %0, i64 1
+  %6 = fadd <2 x double> %5, <double f0x40554345B1A57F00, double 1.800000e+02>
+  %7 = fdiv <2 x double> %6, <double f0x40654345B1A57F00, double 3.600000e+02> ; 2 uses
   %i.h = zext nneg i8 %2 to i64
   %i.i = shl nuw nsw i64 1, %i.h
   %i.j = uitofp nneg i64 %i.i to double           ; 2 uses
-  %i.k = fmul double %5, %i.j
-  %i.l = fmul double %7, %i.j
+  %8 = extractelement <2 x double> %7, i64 0
+  %i.k = fmul double %8, %i.j
+  %9 = extractelement <2 x double> %7, i64 1
+  %i.l = fmul double %9, %i.j
   %i.m = fptoui double %i.k to i32
   %i.n = fptoui double %i.l to i32
   %i.o = zext i32 %i.m to i64                     ; 2 uses
@@ -222,15 +229,17 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %2, ptr %i.g, align 8, !tbaa !21
-  %4 = fadd double %1, f0x40554345B1A57F00
-  %5 = fdiv double %4, f0x40654345B1A57F00
-  %6 = fadd double %0, 1.800000e+02
-  %7 = fdiv double %6, 3.600000e+02
+  %4 = insertelement <2 x double> poison, double %1, i64 0
+  %5 = insertelement <2 x double> %4, double %0, i64 1
+  %6 = fadd <2 x double> %5, <double f0x40554345B1A57F00, double 1.800000e+02>
+  %7 = fdiv <2 x double> %6, <double f0x40654345B1A57F00, double 3.600000e+02> ; 2 uses
   %i.h = zext nneg i8 %2 to i64
   %i.i = shl nuw nsw i64 1, %i.h
   %i.j = uitofp nneg i64 %i.i to double           ; 2 uses
-  %i.k = fmul double %5, %i.j
-  %i.l = fmul double %7, %i.j
+  %8 = extractelement <2 x double> %7, i64 0
+  %i.k = fmul double %8, %i.j
+  %9 = extractelement <2 x double> %7, i64 1
+  %i.l = fmul double %9, %i.j
   %i.m = fptoui double %i.k to i32
   %i.n = fptoui double %i.l to i32
   %i.o = zext i32 %i.m to i64                     ; 2 uses
@@ -302,56 +311,73 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i8 %5, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !23
   %i.h = lshr i64 %4, 1
-  %7 = insertelement <2 x i64> poison, i64 %i.h, i64 0
-  %8 = insertelement <2 x i64> %7, i64 %4, i64 1
-  %9 = and <2 x i64> %8, splat (i64 6148914691236517205) ; 2 uses
-  %10 = lshr <2 x i64> %9, splat (i64 1)
-  %11 = or disjoint <2 x i64> %10, %9
-  %12 = and <2 x i64> %11, splat (i64 3689348814741910323) ; 2 uses
-  %13 = lshr <2 x i64> %12, splat (i64 2)
-  %14 = or disjoint <2 x i64> %13, %12
-  %15 = insertelement <2 x double> poison, double %1, i64 0
-  %16 = insertelement <2 x double> %15, double %3, i64 1
-  %17 = insertelement <2 x double> poison, double %0, i64 0
-  %18 = insertelement <2 x double> %17, double %2, i64 1 ; 2 uses
-  %19 = fsub <2 x double> %16, %18                ; 3 uses
-  %20 = zext nneg i8 %5 to i64
-  %21 = shl nuw i64 1, %20
-  %22 = uitofp i64 %21 to double                  ; 3 uses
-  %23 = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %24 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %25 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %26 = and <2 x i64> %14, splat (i64 1085102592571150095) ; 2 uses
-  %27 = lshr <2 x i64> %26, splat (i64 4)
-  %28 = or disjoint <2 x i64> %27, %26
-  %29 = and <2 x i64> %28, splat (i64 71777214294589695) ; 2 uses
-  %30 = lshr <2 x i64> %29, splat (i64 8)
-  %31 = or disjoint <2 x i64> %30, %29            ; 2 uses
-  %32 = lshr <2 x i64> %31, splat (i64 16)
-  %33 = and <2 x i64> %32, splat (i64 4294901760)
-  %34 = and <2 x i64> %31, splat (i64 65535)
-  %35 = or disjoint <2 x i64> %33, %34
-  %36 = trunc nuw <2 x i64> %35 to <2 x i32>      ; 3 uses
-  %37 = extractelement <2 x i32> %36, i64 1
-  %i.i = add i32 %37, 1
-  %i.j = uitofp i32 %i.i to double
-  %38 = fdiv double %i.j, %22
-  %39 = extractelement <2 x double> %19, i64 1
-  %40 = tail call double @llvm.fmuladd.f64(double %38, double %39, double %2)
-  store double %40, ptr %23, align 8, !tbaa !24
-  %41 = extractelement <2 x i32> %36, i64 0
-  %42 = uitofp i32 %41 to double
-  %43 = fdiv double %42, %22
-  %44 = extractelement <2 x double> %19, i64 0
-  %45 = tail call double @llvm.fmuladd.f64(double %43, double %44, double %0)
-  store double %45, ptr %24, align 8, !tbaa !26
-  %46 = add <2 x i32> %36, <i32 1, i32 0>
-  %47 = uitofp <2 x i32> %46 to <2 x double>
-  %i.k = insertelement <2 x double> poison, double %22, i64 0
+  %7 = and i64 %4, 6148914691236517205            ; 2 uses
+  %8 = and i64 %i.h, 6148914691236517205          ; 2 uses
+  %9 = lshr i64 %7, 1
+  %10 = or disjoint i64 %9, %7
+  %11 = and i64 %10, 3689348814741910323          ; 2 uses
+  %12 = lshr i64 %8, 1
+  %13 = or disjoint i64 %12, %8
+  %14 = and i64 %13, 3689348814741910323          ; 2 uses
+  %15 = lshr i64 %11, 2
+  %16 = or disjoint i64 %15, %11
+  %17 = and i64 %16, 1085102592571150095          ; 2 uses
+  %18 = lshr i64 %14, 2
+  %19 = or disjoint i64 %18, %14
+  %20 = and i64 %19, 1085102592571150095          ; 2 uses
+  %21 = lshr i64 %17, 4
+  %22 = or disjoint i64 %21, %17
+  %23 = and i64 %22, 71777214294589695            ; 2 uses
+  %24 = lshr i64 %20, 4
+  %25 = or disjoint i64 %24, %20
+  %26 = and i64 %25, 71777214294589695            ; 2 uses
+  %27 = lshr i64 %23, 8
+  %28 = or disjoint i64 %27, %23                  ; 2 uses
+  %29 = lshr i64 %26, 8
+  %30 = or disjoint i64 %29, %26                  ; 2 uses
+  %31 = lshr i64 %28, 16
+  %32 = and i64 %31, 4294901760
+  %.masked.i = and i64 %28, 65535
+  %33 = or disjoint i64 %32, %.masked.i
+  %34 = lshr i64 %30, 16
+  %35 = and i64 %34, 4294901760
+  %.masked28.i = and i64 %30, 65535
+  %36 = or disjoint i64 %35, %.masked28.i
+  %37 = fsub double %3, %2
+  %38 = fsub double %1, %0
+  %39 = zext nneg i8 %5 to i64
+  %40 = shl nuw i64 1, %39
+  %41 = uitofp i64 %40 to double
+  %42 = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %43 = trunc nuw i64 %33 to i32                  ; 2 uses
+  %i.i = add i32 %43, 1
+  %44 = uitofp i32 %i.i to double
+  %i.j = uitofp i32 %43 to double
+  %45 = insertelement <2 x double> poison, double %i.j, i64 0
+  %46 = insertelement <2 x double> %45, double %44, i64 1
+  %47 = insertelement <2 x double> poison, double %41, i64 0
+  %48 = shufflevector <2 x double> %47, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %49 = fdiv <2 x double> %46, %48
+  %50 = insertelement <2 x double> poison, double %37, i64 0
+  %51 = shufflevector <2 x double> %50, <2 x double> poison, <2 x i32> zeroinitializer
+  %52 = insertelement <2 x double> poison, double %2, i64 0
+  %53 = shufflevector <2 x double> %52, <2 x double> poison, <2 x i32> zeroinitializer
+  %54 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %49, <2 x double> %51, <2 x double> %53)
+  store <2 x double> %54, ptr %42, align 8, !tbaa !13
+  %55 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %56 = trunc nuw i64 %36 to i32                  ; 2 uses
+  %57 = add i32 %56, 1
+  %58 = uitofp i32 %57 to double
+  %59 = uitofp i32 %56 to double
+  %60 = insertelement <2 x double> poison, double %59, i64 0
+  %61 = insertelement <2 x double> %60, double %58, i64 1
+  %62 = fdiv <2 x double> %61, %48
+  %i.k = insertelement <2 x double> poison, double %38, i64 0
   %i.l = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
-  %48 = fdiv <2 x double> %47, %i.l
-  %i.m = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %48, <2 x double> %19, <2 x double> %18)
-  store <2 x double> %i.m, ptr %25, align 8, !tbaa !13
+  %63 = insertelement <2 x double> poison, double %0, i64 0
+  %64 = shufflevector <2 x double> %63, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.m = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %62, <2 x double> %i.l, <2 x double> %64)
+  store <2 x double> %i.m, ptr %55, align 8, !tbaa !13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d
@@ -361,9 +387,6 @@ bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c,
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local range(i32 0, 2) i32 @geohashDecodeType(i64 %0, i8 %1, ptr nofree noundef writeonly captures(address_is_null) %2) local_unnamed_addr #0 {
@@ -459,9 +482,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load double, ptr %i.a, align 8, !tbaa !26
+  %i.b = load double, ptr %i.a, align 8, !tbaa !24
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.d = load double, ptr %i.c, align 8, !tbaa !27
+  %i.d = load double, ptr %i.c, align 8, !tbaa !26
   %i.e = fadd double %i.b, %i.d
   %i.f = fmul double %i.e, 5.000000e-01           ; 2 uses
   %i.g = fcmp ogt double %i.f, 1.800000e+02
@@ -470,9 +493,9 @@ bb.b:                                             ; preds = %bb.a
   %storemerge16 = select i1 %i.h, double -1.800000e+02, double %storemerge
   store double %storemerge16, ptr %1, align 8, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.j = load double, ptr %i.i, align 8, !tbaa !28
+  %i.j = load double, ptr %i.i, align 8, !tbaa !27
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.l = load double, ptr %i.k, align 8, !tbaa !24
+  %i.l = load double, ptr %i.k, align 8, !tbaa !28
   %i.m = fadd double %i.j, %i.l
   %i.n = fmul double %i.m, 5.000000e-01           ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -754,10 +777,10 @@ attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !21 = !{!19, !11, i64 8}
 !22 = !{!20, !20, i64 0}
 !23 = !{!11, !11, i64 0}
-!24 = !{!25, !14, i64 40}
+!24 = !{!25, !14, i64 16}
 !25 = !{!"", !19, i64 0, !16, i64 16, !16, i64 32}
-!26 = !{!25, !14, i64 16}
-!27 = !{!25, !14, i64 24}
-!28 = !{!25, !14, i64 32}
+!26 = !{!25, !14, i64 24}
+!27 = !{!25, !14, i64 32}
+!28 = !{!25, !14, i64 40}
 !29 = !{i64 0, i64 8, !22, i64 8, i64 1, !23}
 end_hunk_0

@@ -204,13 +204,14 @@ bb.y:                                             ; preds = %._crit_edge, %bb.w
   %.sink.in = uitofp nneg i32 %.sink.in.in to float
   %.sink190.in.in.in = lshr i32 %i.fk, 5
   %.sink190.in.in = and i32 %.sink190.in.in.in, 31
-  %.sink190.in = uitofp nneg i32 %.sink190.in.in to float
   %.sink191.in.in = and i32 %., 31
+  %.sink190.in = uitofp nneg i32 %.sink190.in.in to float
   %.sink191.in = uitofp nneg i32 %.sink191.in.in to float
-  %i.gg = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %.sink191.in, i64 0
+  %i.gg = insertelement <4 x float> poison, float %.sink191.in, i64 0
   %i.gh = insertelement <4 x float> %i.gg, float %.sink190.in, i64 1
-  %i.gi = insertelement <4 x float> %i.gh, float %.sink.in, i64 2
-  %i.gj = fmul nnan <4 x float> %i.gi, <float f0x3D042108, float f0x3D042108, float f0x3D042108, float 1.000000e+00>
+  %i.gi = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %.sink.in, i64 2
+  %2 = shufflevector <4 x float> %i.gh, <4 x float> %i.gi, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.gj = fmul nnan <4 x float> %2, <float f0x3D042108, float f0x3D042108, float f0x3D042108, float 1.000000e+00>
   store <4 x float> %i.gj, ptr %i.ge, align 4
   %i.gk = getelementptr inbounds nuw i8, ptr %i.ge, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.gk, ptr noundef nonnull align 4 dereferenceable(16) %i.ge, i64 16, i1 false)

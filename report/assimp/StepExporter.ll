@@ -201,7 +201,7 @@ bb.ao:                                            ; preds = %bb.an
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.qx, i8 -1, i64 %i.qw, i1 false)
   %i.qy = mul nuw nsw i64 %i.qv, 12               ; 4 uses
   %i.qz = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.qy) #24
-          to label %.lr.ph1030 unwind label %bb.aq ; 11 uses
+          to label %.lr.ph1030 unwind label %bb.aq ; 9 uses
 
 .lr.ph1030:                                       ; preds = %.noexc488
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.qz, i8 0, i64 %i.qy, i1 false)
@@ -317,44 +317,42 @@ _ZN10aiVector3tIfE9NormalizeEv.exit:              ; preds = %_ZN10aiVector3tIfEd
   %i.te = getelementptr inbounds nuw i8, ptr %i.qz, i64 12
   %.sroa.0786.0.copyload = load float, ptr %i.te, align 4 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qz, i64 16
-  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4 ; 3 uses
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qz, i64 20
-  %.sroa.8.0.copyload = load float, ptr %.sroa.8.0..sroa_idx, align 4 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.qz, i64 8
-  %5 = load float, ptr %4, align 4                ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.qz, i64 4
-  %7 = load float, ptr %6, align 4                ; 2 uses
-  %8 = fneg float %7
-  %9 = fmul float %.sroa.8.0.copyload, %8
-  %10 = call float @llvm.fmuladd.f32(float %.sroa.6.0.copyload, float %5, float %9) ; 4 uses
-  %11 = load float, ptr %i.qz, align 4            ; 2 uses
-  %12 = fneg float %5
-  %13 = fmul float %.sroa.0786.0.copyload, %12
-  %14 = call float @llvm.fmuladd.f32(float %.sroa.8.0.copyload, float %11, float %13) ; 4 uses
-  %15 = fneg float %11
-  %16 = fmul float %.sroa.6.0.copyload, %15
-  %i.tf = call float @llvm.fmuladd.f32(float %.sroa.0786.0.copyload, float %7, float %16) ; 4 uses
-  %.sroa.0.0.vec.insert.i491 = insertelement <2 x float> poison, float %10, i64 0
-  %.sroa.0.4.vec.insert.i492 = insertelement <2 x float> %.sroa.0.0.vec.insert.i491, float %14, i64 1
-  %17 = fmul float %14, %14
-  %i.tg = call float @llvm.fmuladd.f32(float %10, float %10, float %17)
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qz, i64 4
+  %.sroa.8.0.copyload = load float, ptr %i.qz, align 4 ; 2 uses
+  %4 = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4 ; 4 uses
+  %5 = load <2 x float>, ptr %.sroa.8.0..sroa_idx, align 4 ; 3 uses
+  %6 = fneg <2 x float> %5
+  %7 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %8 = insertelement <2 x float> %7, float %.sroa.0786.0.copyload, i64 1
+  %9 = fmul <2 x float> %8, %6
+  %10 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %11 = insertelement <2 x float> %10, float %.sroa.8.0.copyload, i64 1
+  %12 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> %11, <2 x float> %9) ; 5 uses
+  %13 = fneg float %.sroa.8.0.copyload
+  %14 = extractelement <2 x float> %4, i64 0      ; 2 uses
+  %15 = fmul float %14, %13
+  %16 = extractelement <2 x float> %5, i64 0
+  %i.tf = call float @llvm.fmuladd.f32(float %.sroa.0786.0.copyload, float %16, float %15) ; 4 uses
+  %foldExtExtBinop1359 = fmul <2 x float> %12, %12
+  %17 = extractelement <2 x float> %foldExtExtBinop1359, i64 1
+  %18 = extractelement <2 x float> %12, i64 0     ; 2 uses
+  %i.tg = call float @llvm.fmuladd.f32(float %18, float %18, float %17)
   %i.th = call noundef float @llvm.fmuladd.f32(float %i.tf, float %i.tf, float %i.tg) ; 2 uses
   %i.ti = fcmp oeq float %i.th, 0.000000e+00
   br i1 %i.ti, label %_ZN10aiVector3tIfE9NormalizeEv.exit513, label %_ZN10aiVector3tIfEdVEf.exit.i511
 
 _ZN10aiVector3tIfEdVEf.exit.i511:                 ; preds = %._crit_edge1031
   %sqrt.i.i512 = call noundef float @llvm.sqrt.f32(float %i.th)
-  %i.tj = fdiv float 1.000000e+00, %sqrt.i.i512   ; 3 uses
-  %18 = fmul float %10, %i.tj
-  %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %18, i64 0
-  %19 = fmul float %14, %i.tj
-  %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %19, i64 1
+  %i.tj = fdiv float 1.000000e+00, %sqrt.i.i512   ; 2 uses
+  %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %i.tj, i64 0
+  %19 = shufflevector <2 x float> %.sroa.0.0.vec.insert, <2 x float> poison, <2 x i32> zeroinitializer
+  %20 = fmul <2 x float> %12, %19
   %i.tk = fmul float %i.tf, %i.tj
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit513
 
 _ZN10aiVector3tIfE9NormalizeEv.exit513:           ; preds = %_ZN10aiVector3tIfEdVEf.exit.i511, %._crit_edge1031
   %.sroa.10.0 = phi float [ %i.tf, %._crit_edge1031 ], [ %i.tk, %_ZN10aiVector3tIfEdVEf.exit.i511 ]
-  %.sroa.0.0 = phi <2 x float> [ %.sroa.0.4.vec.insert.i492, %._crit_edge1031 ], [ %.sroa.0.4.vec.insert, %_ZN10aiVector3tIfEdVEf.exit.i511 ] ; 2 uses
+  %.sroa.0.0 = phi <2 x float> [ %12, %._crit_edge1031 ], [ %20, %_ZN10aiVector3tIfEdVEf.exit.i511 ] ; 2 uses
   %i.tl = load ptr, ptr %i.qh, align 8            ; 4 uses
   %.not.i = icmp ne ptr %i.tl, null
   %i.tm = load i32, ptr %i.qi, align 4
@@ -757,7 +755,7 @@ _ZNSolsEf.exit643:                                ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit645 unwind label %bb.ca ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit645: ; preds = %_ZNSolsEf.exit643
-  %i.aae = fpext float %.sroa.6.0.copyload to double
+  %i.aae = fpext float %14 to double
   %i.aaf = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.aac, double noundef %i.aae)
           to label %_ZNSolsEf.exit647 unwind label %bb.ca ; 2 uses
 
@@ -766,7 +764,8 @@ _ZNSolsEf.exit647:                                ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit649 unwind label %bb.ca ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit649: ; preds = %_ZNSolsEf.exit647
-  %i.aah = fpext float %.sroa.8.0.copyload to double
+  %21 = extractelement <2 x float> %4, i64 1
+  %i.aah = fpext float %21 to double
   %i.aai = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.aaf, double noundef %i.aah)
           to label %_ZNSolsEf.exit651 unwind label %bb.ca ; 2 uses
 
@@ -1168,6 +1167,9 @@ declare float @llvm.sqrt.f32(float) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #15
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

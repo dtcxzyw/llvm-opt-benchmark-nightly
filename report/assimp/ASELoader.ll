@@ -204,7 +204,7 @@ _ZNSt6vectorIP6aiNodeSaIS1_EED2Ev.exit112:        ; preds = %bb.az, %.thread168
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp11ASEImporter9AddMeshesEPKNS_3ASE8BaseNodeEP6aiNode(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(104) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #9 align 2 {
 bb.a:
-  %3 = alloca %class.aiMatrix4x4t, align 4        ; 16 uses
+  %3 = alloca %class.aiMatrix4x4t, align 4        ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -266,13 +266,6 @@ bb.e:                                             ; preds = %._crit_edge
   br i1 %.not80, label %.loopexit64, label %.lr.ph78
 
 .lr.ph78:                                         ; preds = %bb.e
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 28
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 36
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -318,39 +311,36 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph69:                                         ; preds = %bb.g, %.lr.ph69
   %.04867 = phi ptr [ %i.bs, %.lr.ph69 ], [ %i.bb, %bb.g ] ; 5 uses
-  %i.bg = load float, ptr %3, align 4
-  %11 = load float, ptr %.04867, align 4          ; 3 uses
-  %i.bh = load float, ptr %4, align 4
-  %i.bi = getelementptr inbounds nuw i8, ptr %.04867, i64 4
-  %i.bj = load float, ptr %i.bi, align 4          ; 3 uses
-  %12 = fmul float %i.bh, %i.bj
-  %13 = call float @llvm.fmuladd.f32(float %i.bg, float %11, float %12)
-  %14 = load float, ptr %5, align 4
-  %15 = getelementptr inbounds nuw i8, ptr %.04867, i64 8 ; 2 uses
-  %16 = load float, ptr %15, align 4              ; 3 uses
-  %17 = call float @llvm.fmuladd.f32(float %14, float %16, float %13)
-  %18 = load float, ptr %6, align 4
-  %19 = fadd float %17, %18
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %19, i64 0
-  %20 = load float, ptr %7, align 4
-  %21 = load float, ptr %8, align 4
-  %22 = fmul float %i.bj, %21
-  %23 = call float @llvm.fmuladd.f32(float %20, float %11, float %22)
-  %24 = load float, ptr %9, align 4
-  %25 = call float @llvm.fmuladd.f32(float %24, float %16, float %23)
-  %26 = load float, ptr %10, align 4
-  %27 = fadd float %26, %25
-  %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %27, i64 1
+  %i.bg = load float, ptr %.04867, align 4        ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.04867, i64 4
+  %i.bh = load float, ptr %4, align 4             ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %.04867, i64 8 ; 2 uses
+  %i.bj = load float, ptr %i.bi, align 4          ; 2 uses
+  %5 = load <8 x float>, ptr %3, align 4          ; 4 uses
+  %6 = insertelement <2 x float> poison, float %i.bh, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = shufflevector <8 x float> %5, <8 x float> poison, <2 x i32> <i32 1, i32 5>
+  %9 = fmul <2 x float> %7, %8
+  %10 = shufflevector <8 x float> %5, <8 x float> poison, <2 x i32> <i32 0, i32 4>
+  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.bg, i64 0
+  %11 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %11, <2 x float> %9)
+  %13 = shufflevector <8 x float> %5, <8 x float> poison, <2 x i32> <i32 2, i32 6>
+  %14 = insertelement <2 x float> poison, float %i.bj, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> %15, <2 x float> %12)
+  %17 = shufflevector <8 x float> %5, <8 x float> poison, <2 x i32> <i32 3, i32 7>
+  %18 = fadd <2 x float> %16, %17
   %i.bk = load float, ptr %i.af, align 4
   %i.bl = load float, ptr %i.ag, align 4
-  %i.bm = fmul float %i.bj, %i.bl
-  %i.bn = call float @llvm.fmuladd.f32(float %i.bk, float %11, float %i.bm)
+  %i.bm = fmul float %i.bh, %i.bl
+  %i.bn = call float @llvm.fmuladd.f32(float %i.bk, float %i.bg, float %i.bm)
   %i.bo = load float, ptr %i.ah, align 4
-  %i.bp = call float @llvm.fmuladd.f32(float %i.bo, float %16, float %i.bn)
+  %i.bp = call float @llvm.fmuladd.f32(float %i.bo, float %i.bj, float %i.bn)
   %i.bq = load float, ptr %i.ai, align 4
   %i.br = fadd float %i.bq, %i.bp
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %.04867, align 4
-  store float %i.br, ptr %15, align 4
+  store <2 x float> %18, ptr %.04867, align 4
+  store float %i.br, ptr %i.bi, align 4
   %i.bs = getelementptr inbounds nuw i8, ptr %.04867, i64 12 ; 2 uses
   %.not51 = icmp eq ptr %i.bs, %i.bf
   br i1 %.not51, label %._crit_edge70, label %.lr.ph69, !llvm.loop !124
@@ -753,66 +743,63 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEmRKS1_.exit: ; preds = %bb.b, %bb.c,
   %i.ah = load i32, ptr %i.ag, align 4
   %i.ai = zext i32 %i.ah to i64                   ; 2 uses
   %i.aj = load ptr, ptr %0, align 8               ; 3 uses
-  %i.ak = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.ai ; 3 uses
+  %i.ak = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.ai ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 4 ; 2 uses
   %i.am = load i32, ptr %i.al, align 4
   %i.an = zext i32 %i.am to i64
-  %i.ao = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.an ; 3 uses
+  %i.ao = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.an ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ag, i64 8 ; 2 uses
   %i.aq = load i32, ptr %i.ap, align 4
   %i.ar = zext i32 %i.aq to i64
-  %i.as = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.ar ; 3 uses
+  %i.as = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.ar ; 2 uses
   %i.at = load float, ptr %i.ao, align 4
-  %i.au = load float, ptr %i.ak, align 4          ; 2 uses
-  %5 = fsub float %i.at, %i.au                    ; 2 uses
+  %i.au = load float, ptr %i.ak, align 4
   %i.av = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
-  %6 = load float, ptr %i.av, align 4
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
-  %i.ax = load float, ptr %i.aw, align 4          ; 2 uses
-  %7 = fsub float %6, %i.ax                       ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  %8 = load float, ptr %i.ay, align 4
-  %9 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
-  %10 = load float, ptr %9, align 4               ; 2 uses
-  %11 = fsub float %8, %10                        ; 2 uses
-  %12 = load float, ptr %i.as, align 4
-  %13 = fsub float %12, %i.au                     ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.as, i64 4
-  %15 = load float, ptr %14, align 4
-  %16 = fsub float %15, %i.ax                     ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  %18 = load float, ptr %17, align 4
-  %19 = fsub float %18, %10                       ; 2 uses
-  %20 = fneg float %16
-  %21 = fmul float %11, %20
-  %22 = call float @llvm.fmuladd.f32(float %7, float %19, float %21)
-  %23 = fneg float %19
-  %24 = fmul float %5, %23
-  %25 = call float @llvm.fmuladd.f32(float %11, float %13, float %24)
-  %26 = fneg float %13
-  %i.az = fmul float %7, %26
-  %27 = call float @llvm.fmuladd.f32(float %5, float %16, float %i.az) ; 3 uses
-  %.sroa.0.0.vec.insert.i99 = insertelement <2 x float> poison, float %22, i64 0
-  %.sroa.0.4.vec.insert.i100 = insertelement <2 x float> %.sroa.0.0.vec.insert.i99, float %25, i64 1 ; 3 uses
+  %i.ax = load float, ptr %i.as, align 4
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 4
+  %5 = load <2 x float>, ptr %i.av, align 4       ; 2 uses
+  %6 = load <2 x float>, ptr %i.aw, align 4       ; 3 uses
+  %7 = fsub <2 x float> %5, %6                    ; 2 uses
+  %8 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %9 = insertelement <2 x float> %8, float %i.at, i64 1
+  %10 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %11 = insertelement <2 x float> %10, float %i.au, i64 1 ; 2 uses
+  %12 = fsub <2 x float> %9, %11                  ; 2 uses
+  %13 = load <2 x float>, ptr %i.ay, align 4      ; 2 uses
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %15 = insertelement <2 x float> %14, float %i.ax, i64 1
+  %16 = fsub <2 x float> %15, %11                 ; 2 uses
+  %17 = fsub <2 x float> %13, %6                  ; 2 uses
+  %18 = fneg <2 x float> %17
+  %19 = fmul <2 x float> %12, %18
+  %20 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> %16, <2 x float> %19) ; 3 uses
+  %21 = extractelement <2 x float> %16, i64 1
+  %22 = fneg float %21
+  %23 = extractelement <2 x float> %7, i64 0
+  %i.az = fmul float %23, %22
+  %24 = extractelement <2 x float> %12, i64 1
+  %25 = extractelement <2 x float> %17, i64 0
+  %26 = call float @llvm.fmuladd.f32(float %24, float %25, float %i.az) ; 3 uses
   %i.ba = load ptr, ptr %i.a, align 8
   %i.bb = getelementptr inbounds nuw [12 x i8], ptr %i.ba, i64 %i.ai ; 2 uses
-  store <2 x float> %.sroa.0.4.vec.insert.i100, ptr %i.bb, align 4
+  store <2 x float> %20, ptr %i.bb, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  store float %27, ptr %.sroa.4.0..sroa_idx, align 4
+  store float %26, ptr %.sroa.4.0..sroa_idx, align 4
   %i.bc = load i32, ptr %i.al, align 4
   %i.bd = zext i32 %i.bc to i64
   %i.be = load ptr, ptr %i.a, align 8
   %i.bf = getelementptr inbounds nuw [12 x i8], ptr %i.be, i64 %i.bd ; 2 uses
-  store <2 x float> %.sroa.0.4.vec.insert.i100, ptr %i.bf, align 4
+  store <2 x float> %20, ptr %i.bf, align 4
   %.sroa.4.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
-  store float %27, ptr %.sroa.4.0..sroa_idx.1, align 4
+  store float %26, ptr %.sroa.4.0..sroa_idx.1, align 4
   %i.bg = load i32, ptr %i.ap, align 4
   %i.bh = zext i32 %i.bg to i64
   %i.bi = load ptr, ptr %i.a, align 8
   %i.bj = getelementptr inbounds nuw [12 x i8], ptr %i.bi, i64 %i.bh ; 2 uses
-  store <2 x float> %.sroa.0.4.vec.insert.i100, ptr %i.bj, align 4
+  store <2 x float> %20, ptr %i.bj, align 4
   %.sroa.4.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  store float %27, ptr %.sroa.4.0..sroa_idx.2, align 4
+  store float %26, ptr %.sroa.4.0..sroa_idx.2, align 4
   %i.bk = add i32 %.082216, 1                     ; 2 uses
   %i.bl = zext i32 %i.bk to i64                   ; 2 uses
   %i.bm = load ptr, ptr %i.v, align 8

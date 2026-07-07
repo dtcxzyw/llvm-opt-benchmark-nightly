@@ -59,9 +59,11 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 4, !tbaa !27
   %i.g = sitofp i32 %i.f to double
   %i.h = fmul nnan double %i.g, 9.000000e-01
-  %2 = fdiv nnan double %i.h, 1.000000e+02
-  %3 = fpext float %1 to double
-  %4 = fdiv double %3, 1.000000e+02               ; 4 uses
+  %2 = fpext float %1 to double
+  %3 = insertelement <2 x double> poison, double %i.h, i64 0
+  %4 = insertelement <2 x double> %3, double %2, i64 1
+  %5 = fdiv <2 x double> %4, splat (double 1.000000e+02) ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 1      ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 80
   %i.j = load i32, ptr %i.i, align 4, !tbaa !30
   %.not = icmp eq i32 %i.j, 0
@@ -84,13 +86,13 @@ bb.c:                                             ; preds = %bb.b
 
 QualityToJPEGCompression.exit:                    ; preds = %bb.b, %bb.c
   %i.t = phi double [ %i.s, %bb.c ], [ 4.000000e-01, %bb.b ]
-  %i.u = tail call double @pow(double noundef %4, double noundef %i.t) #11, !tbaa !3
+  %i.u = tail call double @pow(double noundef %6, double noundef %i.t) #11, !tbaa !3
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  %i.v = fcmp olt double %4, 7.500000e-01
-  %i.w = fmul nnan double %4, f0x3FE5555555555555
-  %i.x = tail call double @llvm.fmuladd.f64(double %4, double 2.000000e+00, double -1.000000e+00)
+  %i.v = fcmp olt double %6, 7.500000e-01
+  %i.w = fmul nnan double %6, f0x3FE5555555555555
+  %i.x = tail call double @llvm.fmuladd.f64(double %6, double 2.000000e+00, double -1.000000e+00)
   %i.y = select i1 %i.v, double %i.w, double %i.x
   %i.z = tail call double @pow(double noundef %i.y, double noundef f0x3FD5555555555555) #11, !tbaa !3
   br label %bb.e
@@ -109,7 +111,8 @@ bb.e:                                             ; preds = %bb.d, %QualityToJPE
 
 .lr.ph:                                           ; preds = %bb.e
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 608
-  %i.ag = fmul nnan double %2, -7.812500e-03
+  %7 = extractelement <2 x double> %5, i64 0
+  %i.ag = fmul nnan double %7, -7.812500e-03
   %wide.trip.count = zext nneg i32 %i.c to i64
   br label %bb.f
 

@@ -203,8 +203,8 @@ define hidden void @_ZN16OpenColorIO_v2_520build_vonkries_adaptERKNS_12MatrixOpD
 bb.a:
   %4 = alloca %"class.std::shared_ptr", align 8   ; 10 uses
   %5 = alloca %"class.std::shared_ptr", align 8   ; 7 uses
-  %6 = alloca %"class.OpenColorIO_v2_5::MatrixOpData::Offsets", align 8 ; 7 uses
-  %7 = alloca %"class.OpenColorIO_v2_5::MatrixOpData::Offsets", align 8 ; 7 uses
+  %6 = alloca %"class.OpenColorIO_v2_5::MatrixOpData::Offsets", align 8 ; 6 uses
+  %7 = alloca %"class.OpenColorIO_v2_5::MatrixOpData::Offsets", align 8 ; 6 uses
   %8 = alloca %"class.std::shared_ptr", align 8   ; 6 uses
   %9 = alloca %"class.std::shared_ptr", align 8   ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
@@ -262,18 +262,13 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.f unwind label %bb.an
 
 bb.f:                                             ; preds = %bb.e
-  %10 = load double, ptr %7, align 8, !tbaa !21
-  %i.m = load double, ptr %6, align 8, !tbaa !21
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.n = load double, ptr %11, align 8, !tbaa !21
-  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %12 = load double, ptr %i.o, align 8, !tbaa !21
-  %13 = fdiv double %i.n, %12
-  %i.p = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %14 = load double, ptr %i.p, align 8, !tbaa !21
-  %15 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %16 = load double, ptr %15, align 8, !tbaa !21
-  %17 = fdiv double %14, %16
+  %i.m = load double, ptr %7, align 8, !tbaa !21
+  %i.n = load double, ptr %6, align 8, !tbaa !21
+  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %10 = load <2 x double>, ptr %i.o, align 8, !tbaa !21
+  %11 = load <2 x double>, ptr %i.p, align 8, !tbaa !21
+  %12 = fdiv <2 x double> %10, %11                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   call void @llvm.experimental.noalias.scope.decl(metadata !35)
   %i.q = invoke noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #14
@@ -299,7 +294,7 @@ bb.g:                                             ; preds = %.noexc
   %i.v = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store ptr %i.q, ptr %i.v, align 8, !tbaa !15, !alias.scope !35
   store ptr %i.t, ptr %8, align 8, !tbaa !19, !alias.scope !35
-  %i.w = fdiv double %10, %i.m
+  %i.w = fdiv double %i.m, %i.n
   %i.x = load ptr, ptr %i.t, align 8, !tbaa !13
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.z = load ptr, ptr %i.y, align 8
@@ -310,6 +305,7 @@ bb.h:                                             ; preds = %bb.g
   %i.aa = load ptr, ptr %i.t, align 8, !tbaa !13
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8
+  %13 = extractelement <2 x double> %12, i64 0
   invoke void %i.ac(ptr noundef nonnull align 8 dereferenceable(48) %i.t, i64 noundef 5, double noundef %13)
           to label %bb.i unwind label %bb.ap
 
@@ -317,7 +313,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ad = load ptr, ptr %i.t, align 8, !tbaa !13
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %i.af = load ptr, ptr %i.ae, align 8
-  invoke void %i.af(ptr noundef nonnull align 8 dereferenceable(48) %i.t, i64 noundef 10, double noundef %17)
+  %14 = extractelement <2 x double> %12, i64 1
+  invoke void %i.af(ptr noundef nonnull align 8 dereferenceable(48) %i.t, i64 noundef 10, double noundef %14)
           to label %bb.j unwind label %bb.ap
 
 bb.j:                                             ; preds = %bb.i

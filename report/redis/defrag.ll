@@ -203,8 +203,6 @@ bb.b:                                             ; preds = %bb.a
   %i.k = call i32 @zmalloc_get_allocator_info_by_arena(i32 noundef %i.j, i32 noundef 0, ptr noundef nonnull %i.g, ptr noundef nonnull %i.f, ptr noundef nonnull %i.e, ptr noundef nonnull %i.h) #11 ; 0 uses
   %i.l = load i64, ptr %i.e, align 8, !tbaa !87
   %i.m = load i64, ptr %i.a, align 8, !tbaa !87
-  %1 = sub i64 %i.m, %i.l                         ; 2 uses
-  store i64 %1, ptr %i.a, align 8, !tbaa !87
   %i.n = load i64, ptr %i.f, align 8, !tbaa !87
   %i.o = load i64, ptr %i.b, align 8, !tbaa !87
   %i.p = sub i64 %i.o, %i.n
@@ -215,7 +213,9 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.s, ptr %i.c, align 8, !tbaa !87
   %i.t = load i64, ptr %i.h, align 8, !tbaa !87
   %i.u = load i64, ptr %i.d, align 8, !tbaa !87
+  %1 = sub i64 %i.m, %i.l                         ; 2 uses
   %i.v = sub i64 %i.u, %i.t                       ; 2 uses
+  store i64 %1, ptr %i.a, align 8, !tbaa !87
   store i64 %i.v, ptr %i.d, align 8, !tbaa !87
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #11
@@ -227,13 +227,18 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.w = phi i64 [ %.pre7, %._crit_edge ], [ %1, %bb.b ] ; 3 uses
   %i.x = phi i64 [ %.pre6, %._crit_edge ], [ %i.s, %bb.b ] ; 3 uses
   %i.y = phi i64 [ %.pre, %._crit_edge ], [ %i.v, %bb.b ] ; 3 uses
-  %i.z = uitofp i64 %i.y to float
-  %i.aa = uitofp i64 %i.x to float                ; 2 uses
-  %2 = fdiv float %i.z, %i.aa
-  %3 = fmul float %2, 1.000000e+02                ; 2 uses
-  %4 = uitofp i64 %i.w to float
-  %5 = fdiv float %4, %i.aa
-  %i.ab = call float @llvm.fmuladd.f32(float %5, float 1.000000e+02, float -1.000000e+02)
+  %2 = uitofp i64 %i.y to float
+  %i.z = uitofp i64 %i.x to float
+  %i.aa = uitofp i64 %i.w to float
+  %3 = insertelement <2 x float> poison, float %2, i64 0
+  %4 = insertelement <2 x float> %3, float %i.aa, i64 1
+  %5 = insertelement <2 x float> poison, float %i.z, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x float> %4, %6                    ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  %9 = fmul float %8, 1.000000e+02                ; 2 uses
+  %10 = extractelement <2 x float> %7, i64 1
+  %i.ab = call float @llvm.fmuladd.f32(float %10, float 1.000000e+02, float -1.000000e+02)
   %i.ac = sub i64 %i.w, %i.x
   %.not5 = icmp eq ptr %0, null
   br i1 %.not5, label %bb.e, label %bb.d
@@ -249,7 +254,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.af = load i64, ptr %i.b, align 8, !tbaa !87
-  %i.ag = fpext float %3 to double
+  %i.ag = fpext float %9 to double
   %i.ah = fpext float %i.ab to double
   call void (i32, ptr, ...) @_serverLog(i32 noundef 0, ptr noundef nonnull @.str.25, i64 noundef %i.x, i64 noundef %i.af, i64 noundef %i.w, double noundef %i.ag, double noundef %i.ah, i64 noundef %i.y, i64 noundef %i.ac) #11
   br label %bb.g
@@ -259,7 +264,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  ret float %3
+  ret float %9
 }
 
 declare i32 @zmalloc_get_allocator_info(i32 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2

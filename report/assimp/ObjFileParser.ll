@@ -203,7 +203,7 @@ _ZN6Assimp13ObjFileParser12copyNextWordEPcm.exit80: ; preds = %.lr.ph.i68, %.lr.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   store float 0.000000e+00, ptr %i.a, align 4
   %i.ek = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, i1 noundef zeroext true) ; 0 uses
-  %i.el = load float, ptr %i.a, align 4           ; 4 uses
+  %i.el = load float, ptr %i.a, align 4           ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   %i.em = fcmp oeq float %i.el, 0.000000e+00
   br i1 %i.em, label %bb.n, label %bb.q
@@ -224,20 +224,21 @@ bb.p:                                             ; preds = %bb.n
   resume { ptr, i32 } %i.eo
 
 bb.q:                                             ; preds = %_ZN6Assimp13ObjFileParser12copyNextWordEPcm.exit80
-  %2 = fdiv float %i.an, %i.el                    ; 2 uses
-  %3 = fdiv float %i.bv, %i.el                    ; 2 uses
+  %2 = insertelement <2 x float> poison, float %i.an, i64 0
+  %3 = insertelement <2 x float> %2, float %i.bv, i64 1
+  %4 = insertelement <2 x float> poison, float %i.el, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = fdiv <2 x float> %3, %5                    ; 2 uses
   %i.ep = fdiv float %i.dd, %i.el                 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.er = load ptr, ptr %i.eq, align 8            ; 7 uses
+  %i.er = load ptr, ptr %i.eq, align 8            ; 6 uses
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.et = load ptr, ptr %i.es, align 8
   %.not.i81 = icmp eq ptr %i.er, %i.et
   br i1 %.not.i81, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  store float %2, ptr %i.er, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %i.er, i64 4
-  store float %3, ptr %4, align 4
+  store <2 x float> %6, ptr %i.er, align 4
   %i.eu = getelementptr inbounds nuw i8, ptr %i.er, i64 8
   store float %i.ep, ptr %i.eu, align 4
   %i.ev = load ptr, ptr %i.eq, align 8
@@ -268,11 +269,9 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.fh = mul nuw nsw i64 %i.fg, 12
   %i.fi = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fh) #30 ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.fi, i64 %i.fa ; 3 uses
-  store float %2, ptr %5, align 4
-  %i.fj = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store float %3, ptr %i.fj, align 4
-  %i.fk = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 %i.fa ; 2 uses
+  store <2 x float> %6, ptr %i.fj, align 4
+  %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
   store float %i.ep, ptr %i.fk, align 4
   %.not10.i.i.i.i.i = icmp eq ptr %i.ex, %i.er
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit34.i.i, label %.lr.ph.i.i.i.i.i

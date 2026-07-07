@@ -186,20 +186,21 @@ bb.a:
   call void @_ZNK4geos4util21GeometricShapeFactory10Dimensions11getEnvelopeEv(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.2") align 8 %2, ptr noundef nonnull align 8 dereferenceable(64) %i.d)
   %i.e = load ptr, ptr %2, align 8, !tbaa !23     ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
-  %6 = load double, ptr %i.f, align 8, !tbaa !25  ; 2 uses
-  %7 = fcmp uno double %6, 0.000000e+00           ; 2 uses
-  %8 = load double, ptr %i.e, align 8             ; 4 uses
-  %9 = fsub double %6, %8
-  %.0.i = select i1 %7, double 0.000000e+00, double %9
-  %10 = uitofp nneg i32 %spec.store.select to double ; 2 uses
-  %11 = fdiv double %.0.i, %10                    ; 5 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 3 uses
-  %13 = load double, ptr %12, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
-  %15 = load double, ptr %14, align 8             ; 4 uses
-  %16 = fsub double %13, %15
-  %.0.i61 = select i1 %7, double 0.000000e+00, double %16
-  %17 = fdiv double %.0.i61, %10                  ; 2 uses
+  %6 = uitofp nneg i32 %spec.store.select to double
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
+  %9 = load <4 x double>, ptr %i.e, align 8       ; 8 uses
+  %10 = load double, ptr %i.f, align 8, !tbaa !25
+  %11 = fcmp uno double %10, 0.000000e+00
+  %12 = shufflevector <4 x double> %9, <4 x double> poison, <2 x i32> <i32 1, i32 3>
+  %13 = shufflevector <4 x double> %9, <4 x double> poison, <2 x i32> <i32 0, i32 2>
+  %14 = fsub <2 x double> %12, %13
+  %15 = insertelement <2 x i1> poison, i1 %11, i64 0
+  %16 = shufflevector <2 x i1> %15, <2 x i1> poison, <2 x i32> zeroinitializer
+  %17 = select <2 x i1> %16, <2 x double> zeroinitializer, <2 x double> %14
+  %18 = insertelement <2 x double> poison, double %6, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = fdiv <2 x double> %17, %19                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   %i.g = shl nuw i32 %spec.store.select, 2
   %i.h = or disjoint i32 %i.g, 1
@@ -281,7 +282,11 @@ bb.a:
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !40, !noalias !37
   %i.am = icmp eq i32 %i.al, 1
   %wide.trip.count124 = zext nneg i32 %spec.store.select to i64 ; 10 uses
-  br i1 %i.am, label %iter.check, label %.split
+  br i1 %i.am, label %iter.check, label %.split.preheader
+
+.split.preheader:                                 ; preds = %.unr-lcssa
+  %21 = extractelement <2 x double> %20, i64 0
+  br label %.split
 
 iter.check:                                       ; preds = %.unr-lcssa
   %min.iters.check = icmp ult i32 %i.b, 16
@@ -294,12 +299,9 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %n.mod.vf = and i64 %wide.trip.count124, 12
   %n.vec = and i64 %wide.trip.count124, 1073741808 ; 4 uses
-  %broadcast.splatinsert = insertelement <4 x double> poison, double %11, i64 0
-  %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
-  %broadcast.splatinsert167 = insertelement <4 x double> poison, double %8, i64 0
-  %broadcast.splat168 = shufflevector <4 x double> %broadcast.splatinsert167, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
-  %broadcast.splatinsert169 = insertelement <4 x double> poison, double %15, i64 0
-  %broadcast.splat170 = shufflevector <4 x double> %broadcast.splatinsert169, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splat = shufflevector <2 x double> %20, <2 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splat168 = shufflevector <4 x double> %9, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splat170 = shufflevector <4 x double> %9, <4 x double> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2> ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -355,12 +357,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %n.vec175 = and i64 %wide.trip.count124, 1073741820 ; 3 uses
-  %broadcast.splatinsert176 = insertelement <4 x double> poison, double %11, i64 0
-  %broadcast.splat177 = shufflevector <4 x double> %broadcast.splatinsert176, <4 x double> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert178 = insertelement <4 x double> poison, double %8, i64 0
-  %broadcast.splat179 = shufflevector <4 x double> %broadcast.splatinsert178, <4 x double> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert180 = insertelement <4 x double> poison, double %15, i64 0
-  %broadcast.splat181 = shufflevector <4 x double> %broadcast.splatinsert180, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splat177 = shufflevector <2 x double> %20, <2 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splat179 = shufflevector <4 x double> %9, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splat181 = shufflevector <4 x double> %9, <4 x double> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.bl = trunc nuw nsw i64 %vec.epilog.resume.val to i32
   %broadcast.splatinsert182 = insertelement <4 x i32> poison, i32 %i.bl, i64 0
   %broadcast.splat183 = shufflevector <4 x i32> %broadcast.splatinsert182, <4 x i32> poison, <4 x i32> zeroinitializer
@@ -388,15 +387,18 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us.preheader: ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv119.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec175, %vec.epilog.middle.block ]
-  %i.bs = insertelement <2 x double> <double poison, double +qnan>, double %15, i64 0
+  %22 = extractelement <2 x double> %20, i64 0
+  %23 = extractelement <4 x double> %9, i64 0
+  %24 = shufflevector <4 x double> %9, <4 x double> poison, <2 x i32> <i32 2, i32 poison>
+  %i.bs = insertelement <2 x double> %24, double +qnan, i64 1
   br label %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us
 
 _ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us: ; preds = %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us.preheader, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us
   %indvars.iv119 = phi i64 [ %indvars.iv.next120, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us ], [ %indvars.iv119.ph, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us.preheader ] ; 3 uses
   %indvars121 = trunc i64 %indvars.iv119 to i32
   %i.bt = uitofp nneg i32 %indvars121 to double
-  %i.bu = fmul double %11, %i.bt
-  %i.bv = fadd double %i.bu, %8
+  %i.bu = fmul double %22, %i.bt
+  %i.bv = fadd double %i.bu, %23
   %indvars.iv.next120 = add nuw nsw i64 %indvars.iv119, 1 ; 2 uses
   %i.bw = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %indvars.iv119 ; 2 uses
   store double %i.bv, ptr %i.bw, align 8, !tbaa !20
@@ -407,16 +409,17 @@ _ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us: ; preds = %_ZNK4geos4uti
 
 .preheader97:                                     ; preds = %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit.us, %middle.block, %vec.epilog.middle.block
   %i.bx = add nuw nsw i64 %wide.trip.count124, 2
+  %25 = extractelement <2 x double> %20, i64 1    ; 2 uses
   br label %bb.e
 
-.split:                                           ; preds = %.unr-lcssa, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit ], [ 0, %.unr-lcssa ] ; 3 uses
+.split:                                           ; preds = %.split.preheader, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit ], [ 0, %.split.preheader ] ; 3 uses
   %indvars116 = trunc i64 %indvars.iv to i32
   %i.by = load double, ptr %i.e, align 8, !tbaa !49
   %i.bz = uitofp nneg i32 %indvars116 to double
-  %i.ca = fmul double %11, %i.bz
+  %i.ca = fmul double %21, %i.bz
   %i.cb = fadd double %i.ca, %i.by                ; 2 uses
-  %i.cc = load double, ptr %14, align 8, !tbaa !50 ; 2 uses
+  %i.cc = load double, ptr %8, align 8, !tbaa !50 ; 2 uses
   %i.cd = load ptr, ptr %i.aj, align 8, !tbaa !17, !noalias !37 ; 3 uses
   %i.ce = load i32, ptr %i.cd, align 8, !tbaa !40, !noalias !37
   %i.cf = icmp eq i32 %i.ce, 1
@@ -460,9 +463,9 @@ bb.e:                                             ; preds = %.preheader97, %_ZNK
   %.1105 = phi i32 [ 0, %.preheader97 ], [ %i.cw, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit66 ] ; 2 uses
   %indvars.iv130 = add nuw nsw i64 %indvars.iv130.in, 1 ; 2 uses
   %i.cl = load double, ptr %i.f, align 8, !tbaa !25 ; 2 uses
-  %i.cm = load double, ptr %14, align 8, !tbaa !50
+  %i.cm = load double, ptr %8, align 8, !tbaa !50
   %i.cn = uitofp nneg i32 %.1105 to double
-  %i.co = fmul double %17, %i.cn
+  %i.co = fmul double %25, %i.cn
   %i.cp = fadd double %i.co, %i.cm                ; 2 uses
   %i.cq = load ptr, ptr %i.aj, align 8, !tbaa !17, !noalias !53 ; 3 uses
   %i.cr = load i32, ptr %i.cq, align 8, !tbaa !40, !noalias !53
@@ -490,22 +493,26 @@ _ZNK4geos4util21GeometricShapeFactory5coordEdd.exit66: ; preds = %bb.e, %.noexc6
   %i.cw = add nuw nsw i32 %.1105, 1               ; 2 uses
   %exitcond129.not = icmp eq i32 %i.cw, %spec.store.select
   %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 1
-  br i1 %exitcond129.not, label %.preheader96, label %bb.e, !llvm.loop !56
+  br i1 %exitcond129.not, label %.preheader96.preheader, label %bb.e, !llvm.loop !56
+
+.preheader96.preheader:                           ; preds = %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit66
+  %26 = extractelement <2 x double> %20, i64 0
+  br label %.preheader96
 
 bb.g:                                             ; preds = %.noexc64, %bb.f
   %i.cx = landingpad { ptr, i32 }
           cleanup
   br label %.thread
 
-.preheader96:                                     ; preds = %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit66, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69
-  %indvars.iv140 = phi i64 [ %indvars.iv.next141, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ], [ %indvars.iv137, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit66 ] ; 2 uses
-  %indvars.iv133 = phi i64 [ %indvars.iv.next134, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ], [ %indvars.iv130, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit66 ] ; 2 uses
-  %.2107 = phi i32 [ %i.dj, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ], [ 0, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit66 ] ; 2 uses
+.preheader96:                                     ; preds = %.preheader96.preheader, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69
+  %indvars.iv140 = phi i64 [ %indvars.iv.next141, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ], [ %indvars.iv137, %.preheader96.preheader ] ; 2 uses
+  %indvars.iv133 = phi i64 [ %indvars.iv.next134, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ], [ %indvars.iv130, %.preheader96.preheader ] ; 2 uses
+  %.2107 = phi i32 [ %i.dj, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ], [ 0, %.preheader96.preheader ] ; 2 uses
   %i.cy = load double, ptr %i.f, align 8, !tbaa !25
   %i.cz = uitofp nneg i32 %.2107 to double
-  %i.da = fmul double %11, %i.cz
+  %i.da = fmul double %26, %i.cz
   %i.db = fsub double %i.cy, %i.da                ; 2 uses
-  %i.dc = load double, ptr %12, align 8, !tbaa !57 ; 2 uses
+  %i.dc = load double, ptr %7, align 8, !tbaa !57 ; 2 uses
   %i.dd = load ptr, ptr %i.aj, align 8, !tbaa !17, !noalias !58 ; 3 uses
   %i.de = load i32, ptr %i.dd, align 8, !tbaa !40, !noalias !58
   %i.df = icmp eq i32 %i.de, 1
@@ -543,9 +550,9 @@ bb.i:                                             ; preds = %.noexc67, %bb.h
   %indvars.iv143 = phi i64 [ %indvars.iv.next144, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit72 ], [ %indvars.iv140, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ] ; 2 uses
   %.3109 = phi i32 [ %i.dw, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit72 ], [ 0, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit69 ] ; 2 uses
   %i.dl = load double, ptr %i.e, align 8, !tbaa !49 ; 2 uses
-  %i.dm = load double, ptr %12, align 8, !tbaa !57
+  %i.dm = load double, ptr %7, align 8, !tbaa !57
   %i.dn = uitofp nneg i32 %.3109 to double
-  %i.do = fmul double %17, %i.dn
+  %i.do = fmul double %25, %i.dn
   %i.dp = fsub double %i.dm, %i.do                ; 2 uses
   %i.dq = load ptr, ptr %i.aj, align 8, !tbaa !17, !noalias !62 ; 3 uses
   %i.dr = load i32, ptr %i.dq, align 8, !tbaa !40, !noalias !62

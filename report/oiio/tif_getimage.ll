@@ -204,20 +204,24 @@ bb.cw:                                            ; preds = %bb.cv
 
 bb.cx:                                            ; preds = %._crit_edge.i.i, %bb.cu
   %i.go = phi ptr [ %i.gm, %._crit_edge.i.i ], [ %i.gk, %bb.cu ]
-  %i.gp = phi float [ %.pre18.i.i, %._crit_edge.i.i ], [ %i.gh, %bb.cu ] ; 3 uses
+  %i.gp = phi float [ %.pre18.i.i, %._crit_edge.i.i ], [ %i.gh, %bb.cu ] ; 2 uses
   %i.gq = phi ptr [ %.pre.i.i, %._crit_edge.i.i ], [ %i.gf, %bb.cu ]
   %i.gr = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   store float 1.000000e+02, ptr %i.gr, align 4, !tbaa !59
   %i.gs = load float, ptr %i.gq, align 4, !tbaa !59 ; 2 uses
-  %4 = fdiv float %i.gs, %i.gp
-  %5 = fmul float %4, 1.000000e+02
-  store float %5, ptr %i.d, align 4, !tbaa !59
-  %6 = fsub float 1.000000e+00, %i.gs
-  %7 = fsub float %6, %i.gp
-  %8 = fdiv float %7, %i.gp
-  %9 = fmul float %8, 1.000000e+02
+  %4 = fsub float 1.000000e+00, %i.gs
+  %5 = fsub float %4, %i.gp
+  %6 = insertelement <2 x float> poison, float %i.gs, i64 0
+  %7 = insertelement <2 x float> %6, float %5, i64 1
+  %8 = insertelement <2 x float> poison, float %i.gp, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fdiv <2 x float> %7, %9
+  %11 = fmul <2 x float> %10, splat (float 1.000000e+02) ; 2 uses
+  %12 = extractelement <2 x float> %11, i64 0
+  store float %12, ptr %i.d, align 4, !tbaa !59
   %i.gt = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store float %9, ptr %i.gt, align 4, !tbaa !59
+  %13 = extractelement <2 x float> %11, i64 1
+  store float %13, ptr %i.gt, align 4, !tbaa !59
   %i.gu = call i32 @TIFFCIELabToRGBInit(ptr noundef nonnull %i.go, ptr noundef nonnull @display_sRGB, ptr noundef nonnull %i.d) #11
   %i.gv = icmp slt i32 %i.gu, 0
   br i1 %i.gv, label %bb.cy, label %bb.cz

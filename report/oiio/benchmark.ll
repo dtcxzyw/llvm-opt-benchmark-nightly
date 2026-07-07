@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.preheader.3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #29
   %i.af = fcmp ult double %i.m, f0x3EB0C6F7A0B5ED8D ; 2 uses
   %storemerge = select i1 %i.af, i8 77, i8 107
-  %.051 = select i1 %i.af, double 1.000000e+06, double 1.000000e+03 ; 3 uses
+  %.051 = select i1 %i.af, double 1.000000e+06, double 1.000000e+03 ; 2 uses
   store i8 %storemerge, ptr %i.d, align 1, !tbaa !45
   %i.ag = fmul double %i.m, %i.ae                 ; 2 uses
   store double %i.ag, ptr %i.a, align 8, !tbaa !23
@@ -316,7 +316,7 @@ bb.k:                                             ; preds = %bb.g
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66
-  %i.bk = load double, ptr %i.l, align 8, !tbaa !38 ; 4 uses
+  %i.bk = load double, ptr %i.l, align 8, !tbaa !38 ; 3 uses
   %i.bl = fcmp olt double %i.bk, 2.500000e-10
   br i1 %i.bl, label %bb.m, label %bb.n
 
@@ -342,13 +342,18 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #29
   %i.br = uitofp i64 %i.bn to double
-  %4 = fdiv double %i.br, %.051
-  %5 = fdiv double %4, %i.bk
-  store double %5, ptr %i.f, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #29
-  %6 = fdiv double 1.000000e+00, %.051
-  %7 = fdiv double %6, %i.bk
-  store double %7, ptr %i.g, align 8, !tbaa !23
+  %4 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.br, i64 0
+  %5 = insertelement <2 x double> poison, double %.051, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> %4, %6
+  %8 = insertelement <2 x double> poison, double %i.bk, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = fdiv <2 x double> %7, %9                  ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  store double %11, ptr %i.f, align 8, !tbaa !23
+  %12 = extractelement <2 x double> %10, i64 1
+  store double %12, ptr %i.g, align 8, !tbaa !23
   call void @_ZN3fmt3v125printIJdRcdS2_EEEvRSoNS0_7fstringIJDpT_EE1tEDpOS5_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr nonnull @.str.12, i64 37, ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 1 dereferenceable(1) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 1 dereferenceable(1) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #29

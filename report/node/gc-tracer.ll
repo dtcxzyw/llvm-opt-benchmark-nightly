@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.jq = getelementptr inbounds nuw i8, ptr %1, i64 504
   store i64 %i.jp, ptr %i.jq, align 8
   %i.jr = icmp eq i64 %i.io, 0
-  %i.js = sitofp i64 %i.it to double              ; 3 uses
+  %i.js = sitofp i64 %i.it to double              ; 2 uses
   %i.jt = sitofp i64 %i.io to double
   %i.ju = fdiv double %i.js, %i.jt
   %storemerge43 = select i1 %i.jr, double 0.000000e+00, double %i.ju
@@ -214,18 +214,22 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.jw = load i64, ptr %i.as, align 8
+  %18 = load i64, ptr %i.gw, align 8
+  %19 = sitofp i64 %18 to double
   %i.jx = sitofp i64 %i.jw to double
-  %18 = fdiv double %i.js, %i.jx
-  %19 = load i64, ptr %i.gw, align 8
-  %20 = sitofp i64 %19 to double
-  %21 = fdiv double %i.js, %20
+  %20 = insertelement <2 x double> poison, double %i.js, i64 0
+  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> zeroinitializer
+  %22 = insertelement <2 x double> poison, double %i.jx, i64 0
+  %23 = insertelement <2 x double> %22, double %19, i64 1
+  %24 = fdiv <2 x double> %21, %23
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.s, %bb.t
-  %.sink = phi double [ %18, %bb.t ], [ 0.000000e+00, %bb.s ]
-  %storemerge44 = phi double [ %21, %bb.t ], [ 0.000000e+00, %bb.s ]
-  store double %.sink, ptr %i.av, align 8
-  store double %storemerge44, ptr %i.ax, align 8
+  %25 = phi <2 x double> [ %24, %bb.t ], [ zeroinitializer, %bb.s ] ; 2 uses
+  %26 = extractelement <2 x double> %25, i64 0
+  store double %26, ptr %i.av, align 8
+  %27 = extractelement <2 x double> %25, i64 1
+  store double %27, ptr %i.ax, align 8
   %i.jy = getelementptr inbounds nuw i8, ptr %0, i64 3752 ; 4 uses
   %i.jz = load i64, ptr %i.jy, align 8
   %i.ka = icmp eq i64 %i.jz, 0

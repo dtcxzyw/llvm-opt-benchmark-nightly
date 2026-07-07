@@ -204,14 +204,18 @@ bb.h:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.bd = shufflevector <2 x float> %i.bc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.be = fdiv <2 x float> %i.bb, %i.bd
   store <2 x float> %i.be, ptr %i.ax, align 8, !tbaa !32
-  %i.bf = sitofp i32 %i.at to float
-  %23 = sitofp i32 %i.as to float                 ; 2 uses
-  %24 = fdiv float %i.bf, %23
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store float %24, ptr %25, align 8, !tbaa !354
-  %26 = sub nsw i32 %i.ar, %i.aq
-  %27 = sitofp i32 %26 to float
-  %28 = fdiv float %27, %23
+  %i.bf = sitofp i32 %i.as to float
+  %23 = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %24 = sub nsw i32 %i.ar, %i.aq
+  %25 = insertelement <2 x i32> poison, i32 %i.at, i64 0
+  %26 = insertelement <2 x i32> %25, i32 %24, i64 1
+  %27 = sitofp <2 x i32> %26 to <2 x float>
+  %28 = insertelement <2 x float> poison, float %i.bf, i64 0
+  %29 = shufflevector <2 x float> %28, <2 x float> poison, <2 x i32> zeroinitializer
+  %30 = fdiv <2 x float> %27, %29                 ; 2 uses
+  %31 = extractelement <2 x float> %30, i64 0
+  store float %31, ptr %23, align 8, !tbaa !354
+  %32 = extractelement <2 x float> %30, i64 1
   br label %bb.j
 
 bb.i:                                             ; preds = %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit
@@ -223,7 +227,7 @@ bb.i:                                             ; preds = %_ZN11OpenImageIO4v3
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.sink106 = phi i64 [ 84, %bb.i ], [ 92, %bb.h ]
-  %.sink = phi float [ 0.000000e+00, %bb.i ], [ %28, %bb.h ]
+  %.sink = phi float [ 0.000000e+00, %bb.i ], [ %32, %bb.h ]
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 %.sink106
   store float %.sink, ptr %i.bi, align 4, !tbaa !32
   store ptr @.str.47, ptr %6, align 8, !tbaa !7

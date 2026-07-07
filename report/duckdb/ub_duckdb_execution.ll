@@ -204,8 +204,9 @@ bb.a:
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %5 = uitofp i64 %2 to double
-  %6 = uitofp i64 %3 to double
+  %5 = insertelement <2 x i64> poison, i64 %2, i64 0
+  %6 = insertelement <2 x i64> %5, i64 %3, i64 1
+  %7 = uitofp <2 x i64> %6 to <2 x double>
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1008
   %i.h = uitofp i64 %1 to double
   %i.i = fmul nnan double %i.h, 2.500000e-01
@@ -214,10 +215,12 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.c
   %.01418 = phi i64 [ 1, %.lr.ph ], [ %i.w, %bb.c ] ; 3 uses
   %i.j = shl nuw i64 1, %.01418
-  %i.k = uitofp i64 %i.j to double                ; 2 uses
-  %7 = fdiv double %5, %i.k
-  %8 = fdiv double %6, %i.k
-  %i.l = fptoui double %8 to i64
+  %i.k = uitofp i64 %i.j to double
+  %8 = insertelement <2 x double> poison, double %i.k, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = fdiv <2 x double> %7, %9                  ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 1
+  %i.l = fptoui double %11 to i64
   %i.m = uitofp i64 %i.l to double
   %i.n = load double, ptr %i.g, align 8, !tbaa !851
   %i.o = fmul double %i.n, %i.m
@@ -226,7 +229,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.r = tail call noundef i64 @llvm.umax.i64(i64 %i.q, i64 16384)
   %i.s = shl i64 %i.r, 3
   %i.t = uitofp i64 %i.s to double
-  %i.u = fadd double %7, %i.t
+  %12 = extractelement <2 x double> %10, i64 0
+  %i.u = fadd double %12, %i.t
   %i.v = fcmp ugt double %i.u, %i.i
   br i1 %i.v, label %bb.c, label %._crit_edge.loopexit
 

@@ -203,15 +203,17 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   %i.bf = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.13, i64 noundef %.034.lcssa.i) ; 0 uses
   %i.bg = extractelement <2 x i64> %i.bc, i64 1
   %i.bh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.14, i64 noundef %i.bg) ; 0 uses
-  %i.bi = uitofp <2 x i64> %i.bc to <2 x double>  ; 2 uses
+  %i.bi = uitofp <2 x i64> %i.bc to <2 x double>  ; 3 uses
   %i.bj = uitofp i64 %.034.lcssa.i to double      ; 2 uses
-  %i.bk = extractelement <2 x double> %i.bi, i64 0 ; 2 uses
-  %4 = fdiv double %i.bk, %i.bj
-  %5 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.15, double noundef %4) ; 0 uses
-  %i.bl = extractelement <2 x double> %i.bi, i64 1 ; 2 uses
-  %6 = fdiv double %i.bk, %i.bl
-  %i.bm = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16, double noundef %6) ; 0 uses
-  %i.bn = fdiv double %i.bl, %i.bj
+  %i.bk = extractelement <2 x double> %i.bi, i64 1
+  %4 = shufflevector <2 x double> %i.bi, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x double> %i.bi, double %i.bj, i64 0
+  %6 = fdiv <2 x double> %4, %5                   ; 2 uses
+  %i.bl = extractelement <2 x double> %6, i64 0
+  %7 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.15, double noundef %i.bl) ; 0 uses
+  %8 = extractelement <2 x double> %6, i64 1
+  %i.bm = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16, double noundef %8) ; 0 uses
+  %i.bn = fdiv double %i.bk, %i.bj
   %i.bo = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.17, double noundef %i.bn) ; 0 uses
   call void @raxStop(ptr noundef nonnull %3) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #8

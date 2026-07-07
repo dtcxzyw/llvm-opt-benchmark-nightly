@@ -201,10 +201,13 @@ bb.z:                                             ; preds = %bb.c
 bb.aa:                                            ; preds = %bb.z
   %i.ce = fpext float %i.aa to double
   %i.cf = tail call double @pow(double noundef %i.ce, double noundef f0x3FC4680000000000) #4, !tbaa !3
-  %i.cg = fptrunc double %i.cf to float           ; 2 uses
-  %3 = tail call float @llvm.fmuladd.f32(float %i.cg, float f0x4196D000, float f0x3F560000)
-  %4 = tail call float @llvm.fmuladd.f32(float %i.cg, float 1.868750e+01, float 1.000000e+00)
-  %i.ch = fdiv float %3, %4
+  %i.cg = fptrunc double %i.cf to float
+  %3 = insertelement <2 x float> poison, float %i.cg, i64 0
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
+  %5 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> <float f0x4196D000, float 1.868750e+01>, <2 x float> <float f0x3F560000, float 1.000000e+00>) ; 2 uses
+  %6 = extractelement <2 x float> %5, i64 0
+  %7 = extractelement <2 x float> %5, i64 1
+  %i.ch = fdiv float %6, %7
   %i.ci = fpext float %i.ch to double
   %i.cj = tail call double @pow(double noundef %i.ci, double noundef f0x4053B60000000000) #4, !tbaa !3
   %i.ck = fptrunc double %i.cj to float
@@ -290,6 +293,9 @@ declare float @llvm.ceil.f32(float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.log10.f64(double) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #2
 
 attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, argmem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

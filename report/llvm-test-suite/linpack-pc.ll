@@ -203,15 +203,18 @@ matgen.exit:                                      ; preds = %.preheader.i
   store float %i.by, ptr getelementptr inbounds nuw (i8, ptr @main.b, i64 388), align 4, !tbaa !11
   store float %i.ca, ptr getelementptr inbounds nuw (i8, ptr @main.b, i64 392), align 8, !tbaa !11
   store float %i.cc, ptr getelementptr inbounds nuw (i8, ptr @main.b, i64 396), align 4, !tbaa !11
-  %i.cd = tail call i64 @clock() #12
-  %i.ce = sitofp i64 %i.cd to float
-  %0 = fdiv float %i.ce, 1.000000e+06
+  %0 = tail call i64 @clock() #12
   tail call void @dgefa(ptr noundef nonnull @main.a, i32 noundef 201, i32 noundef 100, ptr noundef nonnull @main.ipvt, ptr noundef nonnull @main.info)
-  %1 = tail call i64 @clock() #12
-  %2 = sitofp i64 %1 to float
-  %3 = fdiv float %2, 1.000000e+06
-  %4 = fsub float %3, %0
-  store float %4, ptr @atime, align 16, !tbaa !11
+  %i.cd = tail call i64 @clock() #12
+  %1 = sitofp i64 %0 to float
+  %i.ce = sitofp i64 %i.cd to float
+  %2 = insertelement <2 x float> poison, float %i.ce, i64 0
+  %3 = insertelement <2 x float> %2, float %1, i64 1
+  %4 = fdiv <2 x float> %3, splat (float 1.000000e+06) ; 2 uses
+  %shift = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %4, %shift
+  %5 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  store float %5, ptr @atime, align 16, !tbaa !11
   %i.cf = tail call i64 @clock() #12
   br label %bb.c
 
@@ -373,13 +376,16 @@ daxpy.exit110.i:                                  ; preds = %.lr.ph.i106.i, %mid
   br i1 %exitcond155.not.i, label %dgesl.exit, label %.lr.ph136.i, !llvm.loop !24
 
 dgesl.exit:                                       ; preds = %daxpy.exit110.i
-  %i.ej = sitofp i64 %i.cf to float
-  %5 = fdiv float %i.ej, 1.000000e+06
   %6 = tail call i64 @clock() #12
   %7 = sitofp i64 %6 to float
-  %8 = fdiv float %7, 1.000000e+06
-  %9 = fsub float %8, %5                          ; 2 uses
-  store float %9, ptr getelementptr inbounds nuw (i8, ptr @atime, i64 60), align 4, !tbaa !11
+  %i.ej = sitofp i64 %i.cf to float
+  %8 = insertelement <2 x float> poison, float %i.ej, i64 0
+  %9 = insertelement <2 x float> %8, float %7, i64 1
+  %10 = fdiv <2 x float> %9, splat (float 1.000000e+06) ; 2 uses
+  %shift813 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop814 = fsub <2 x float> %shift813, %10
+  %11 = extractelement <2 x float> %foldExtExtBinop814, i64 0 ; 2 uses
+  store float %11, ptr getelementptr inbounds nuw (i8, ptr @atime, i64 60), align 4, !tbaa !11
   %i.ek = load float, ptr @atime, align 16, !tbaa !11
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(400) @main.x, ptr noundef nonnull align 16 dereferenceable(400) @main.b, i64 400, i1 false), !tbaa !11
   br label %.preheader52.i88
@@ -718,7 +724,7 @@ bb.h:                                             ; preds = %bb.h, %vector.body5
   br i1 %exitcond465.not.1, label %bb.i, label %bb.h, !llvm.loop !25
 
 bb.i:                                             ; preds = %bb.h
-  %i.jf = fadd float %i.ek, %9                    ; 4 uses
+  %i.jf = fadd float %i.ek, %11                   ; 4 uses
   %i.jg = fmul float %..i95.1, 1.000000e+02
   %i.jh = extractelement <2 x float> %i.je, i64 0
   %i.ji = fmul float %i.jg, %i.jh

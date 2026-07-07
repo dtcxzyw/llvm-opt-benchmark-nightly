@@ -203,17 +203,20 @@ bb.i:                                             ; preds = %_ZN4node17ConvertPa
   %i.w = sitofp i64 %i.v to double
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 104
   %i.y = load i64, ptr %i.x, align 8
-  %5 = sitofp i64 %i.y to double
-  %6 = fdiv double %5, 1.000000e+09
-  %7 = fadd double %6, %i.w
-  %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 112
+  %5 = getelementptr inbounds nuw i8, ptr %i.t, i64 112
+  %6 = load i64, ptr %5, align 8
+  %7 = sitofp i64 %6 to double
+  %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 120
   %i.aa = load i64, ptr %i.z, align 8
-  %i.ab = sitofp i64 %i.aa to double
-  %8 = getelementptr inbounds nuw i8, ptr %i.t, i64 120
-  %9 = load i64, ptr %8, align 8
-  %10 = sitofp i64 %9 to double
-  %11 = fdiv double %10, 1.000000e+09
-  %i.ac = fadd double %11, %i.ab
+  %8 = sitofp i64 %i.aa to double
+  %i.ab = sitofp i64 %i.y to double
+  %9 = insertelement <2 x double> poison, double %i.ab, i64 0
+  %10 = insertelement <2 x double> %9, double %8, i64 1
+  %11 = fdiv <2 x double> %10, splat (double 1.000000e+09) ; 2 uses
+  %12 = extractelement <2 x double> %11, i64 0
+  %13 = fadd double %12, %i.w
+  %14 = extractelement <2 x double> %11, i64 1
+  %i.ac = fadd double %14, %7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   call void @llvm.experimental.noalias.scope.decl(metadata !614)
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
@@ -269,7 +272,7 @@ _ZN4node17ConvertPathToUTF8ERKNSt10filesystem7__cxx114pathE.exit18: ; preds = %.
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ag
   store i8 0, ptr %i.ap, align 1
   %i.aq = load ptr, ptr %4, align 8
-  %i.ar = call i32 @uv_fs_utime(ptr noundef null, ptr noundef nonnull %2, ptr noundef %i.aq, double noundef %7, double noundef %i.ac, ptr noundef null) #36 ; 2 uses
+  %i.ar = call i32 @uv_fs_utime(ptr noundef null, ptr noundef nonnull %2, ptr noundef %i.aq, double noundef %13, double noundef %i.ac, ptr noundef null) #36 ; 2 uses
   %i.as = icmp sgt i32 %i.ar, -1                  ; 2 uses
   br i1 %i.as, label %bb.q, label %bb.p
 

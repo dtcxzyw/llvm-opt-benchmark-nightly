@@ -204,18 +204,23 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = fptosi double %i.i to i32                ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %4 = sitofp i32 %i.g to double
-  %5 = fneg double %4
-  %6 = tail call double @llvm.fmuladd.f64(double %i.b, double %2, double %5)
-  %i.o = fmul double %6, 3.000000e+01
+  %4 = insertelement <2 x i32> poison, i32 %i.g, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %i.m, i64 1
+  %6 = sitofp <2 x i32> %5 to <2 x double>
+  %7 = fneg <2 x double> %6
+  %8 = insertelement <2 x double> poison, double %i.b, i64 0
+  %9 = insertelement <2 x double> %8, double %i.h, i64 1
+  %10 = insertelement <2 x double> poison, double %2, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %12 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %11, <2 x double> %7) ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %i.o = fmul double %13, 3.000000e+01
   %i.p = fmul double %i.o, 1.000000e+06
   %i.q = tail call double @llvm.nearbyint.f64(double %i.p)
   %i.r = fdiv double %i.q, 1.000000e+06           ; 2 uses
   %i.s = fptosi double %i.r to i32                ; 2 uses
-  %7 = sitofp i32 %i.m to double
-  %8 = fneg double %7
-  %9 = tail call double @llvm.fmuladd.f64(double %i.h, double %2, double %8)
-  %i.t = fadd double %9, %i.r
+  %14 = extractelement <2 x double> %12, i64 1
+  %i.t = fadd double %14, %i.r
   %i.u = sitofp i32 %i.s to double
   %i.v = fsub double %i.t, %i.u
   %i.w = fmul double %i.v, 8.640000e+04
@@ -618,8 +623,13 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i.i.i.i: ; preds 
 .lr.ph.i.i.i.i:                                   ; preds = %.preheader90.i.i.i.i
   %i.cg = load double, ptr %i.ar, align 8, !tbaa !439, !alias.scope !450, !noalias !455 ; 2 uses
   %i.ch = fcmp oeq double %i.cg, 0.000000e+00
-  %i.ci = fdiv double 1.000000e+00, %i.cg         ; 5 uses
-  br i1 %i.ch, label %.lr.ph.split.us.i.i.i.i, label %.lr.ph.split.i.i.i.i
+  %i.ci = fdiv double 1.000000e+00, %i.cg         ; 4 uses
+  br i1 %i.ch, label %.lr.ph.split.us.i.i.i.i, label %.lr.ph.split.i.i.i.i.preheader
+
+.lr.ph.split.i.i.i.i.preheader:                   ; preds = %.lr.ph.i.i.i.i
+  %14 = insertelement <2 x double> poison, double %i.ci, i64 0
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.split.i.i.i.i
 
 .lr.ph.split.us.i.i.i.i:                          ; preds = %.lr.ph.i.i.i.i, %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i.us.i.i.i.i
   %i.cj = phi ptr [ %i.cn, %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i.us.i.i.i.i ], [ %i.bx, %.lr.ph.i.i.i.i ] ; 2 uses
@@ -655,8 +665,8 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i.us.i.i.i.i: ; preds = 
   %i.cx = icmp ult i64 %.0101.i.i.i.i, %i.cd
   br i1 %i.cx, label %.lr.ph98.i.i.i.i, label %.loopexit89.i.i.i.i
 
-.lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i, %_ZN6duckdb14DivideOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit.i.i.i.i
-  %.196.i.i.i.i = phi i64 [ %i.ew, %_ZN6duckdb14DivideOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit.i.i.i.i ], [ %.0101.i.i.i.i, %.lr.ph.i.i.i.i ] ; 3 uses
+.lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.split.i.i.i.i.preheader, %_ZN6duckdb14DivideOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit.i.i.i.i
+  %.196.i.i.i.i = phi i64 [ %i.ew, %_ZN6duckdb14DivideOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit.i.i.i.i ], [ %.0101.i.i.i.i, %.lr.ph.split.i.i.i.i.preheader ] ; 3 uses
   %i.cy = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %.196.i.i.i.i ; 2 uses
   %.sroa.021.0.copyload.i.i.i.i = load i64, ptr %i.cy, align 8, !alias.scope !447, !noalias !456 ; 2 uses
   %.sroa.422.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
@@ -690,18 +700,21 @@ bb.n:                                             ; preds = %.lr.ph.split.i.i.i.
 
 bb.o:                                             ; preds = %bb.n
   %i.dk = fptosi double %i.dg to i32              ; 3 uses
-  %14 = sitofp i32 %i.de to double
-  %15 = fneg double %14
-  %16 = call double @llvm.fmuladd.f64(double %i.cz, double %i.ci, double %15)
-  %i.dl = fmul double %16, 3.000000e+01
+  %16 = insertelement <2 x i32> poison, i32 %i.de, i64 0
+  %17 = insertelement <2 x i32> %16, i32 %i.dk, i64 1
+  %18 = sitofp <2 x i32> %17 to <2 x double>
+  %19 = fneg <2 x double> %18
+  %20 = insertelement <2 x double> poison, double %i.cz, i64 0
+  %21 = insertelement <2 x double> %20, double %i.df, i64 1
+  %22 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %21, <2 x double> %15, <2 x double> %19) ; 2 uses
+  %23 = extractelement <2 x double> %22, i64 0
+  %i.dl = fmul double %23, 3.000000e+01
   %i.dm = fmul double %i.dl, 1.000000e+06
   %i.dn = call double @llvm.nearbyint.f64(double %i.dm)
   %i.do = fdiv double %i.dn, 1.000000e+06         ; 2 uses
   %i.dp = fptosi double %i.do to i32              ; 2 uses
-  %17 = sitofp i32 %i.dk to double
-  %18 = fneg double %17
-  %19 = call double @llvm.fmuladd.f64(double %i.df, double %i.ci, double %18)
-  %i.dq = fadd double %19, %i.do
+  %24 = extractelement <2 x double> %22, i64 1
+  %i.dq = fadd double %24, %i.do
   %i.dr = sitofp i32 %i.dp to double
   %i.ds = fsub double %i.dq, %i.dr
   %i.dt = fmul double %i.ds, 8.640000e+04
@@ -993,13 +1006,14 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i.i53.i.i: ; pred
 
 .lr.ph.i.i57.i.i:                                 ; preds = %.preheader90.i.i56.i.i
   %i.hg = load <2 x i64>, ptr %i.gd, align 8, !alias.scope !464, !noalias !472 ; 4 uses
+  %25 = trunc <2 x i64> %i.hg to <2 x i32>
   %i.hh = bitcast <2 x i64> %i.hg to <4 x i32>
-  %.sroa.0.0.extract.trunc.i.i.i60.i.i = extractelement <4 x i32> %i.hh, i64 0
-  %20 = sitofp i32 %.sroa.0.0.extract.trunc.i.i.i60.i.i to double ; 2 uses
-  %21 = bitcast <2 x i64> %i.hg to <4 x i32>
-  %.sroa.3.0.extract.trunc.i.i.i62.i.i = extractelement <4 x i32> %21, i64 1
-  %22 = sitofp i32 %.sroa.3.0.extract.trunc.i.i.i62.i.i to double ; 2 uses
-  %23 = extractelement <2 x i64> %i.hg, i64 1
+  %.sroa.0.0.extract.trunc.i.i.i60.i.i = extractelement <4 x i32> %i.hh, i64 1
+  %26 = insertelement <2 x i32> %25, i32 %.sroa.0.0.extract.trunc.i.i.i60.i.i, i64 1
+  %27 = sitofp <2 x i32> %26 to <2 x double>      ; 3 uses
+  %28 = extractelement <2 x i64> %i.hg, i64 1
+  %29 = extractelement <2 x double> %27, i64 0
+  %30 = extractelement <2 x double> %27, i64 1
   br label %bb.ah
 
 .preheader88.i.i83.i.i:                           ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i.i53.i.i
@@ -1038,9 +1052,9 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i.i.i.i.i: ; preds = %bb
 
 bb.ak:                                            ; preds = %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %8), !noalias !471
-  %i.hw = fdiv double 1.000000e+00, %i.hk         ; 5 uses
+  %i.hw = fdiv double 1.000000e+00, %i.hk         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25, !noalias !471
-  %i.hx = fmul double %i.hw, %20                  ; 4 uses
+  %i.hx = fmul double %i.hw, %29                  ; 4 uses
   %i.hy = fcmp uno double %i.hx, 0.000000e+00
   %i.hz = fcmp olt double %i.hx, f0xC1E0000000000000
   %or.cond.i.i.i64.i.i = or i1 %i.hy, %i.hz
@@ -1051,7 +1065,7 @@ bb.ak:                                            ; preds = %bb.ah
 bb.al:                                            ; preds = %bb.ak
   %i.ib = fptosi double %i.hx to i32              ; 2 uses
   store i32 %i.ib, ptr %8, align 16, !tbaa !437, !noalias !471
-  %i.ic = fmul double %i.hw, %22                  ; 5 uses
+  %i.ic = fmul double %i.hw, %30                  ; 5 uses
   store double %i.ic, ptr %i.b, align 8, !tbaa !439, !noalias !471
   %i.id = fcmp uno double %i.ic, 0.000000e+00
   %i.ie = fcmp olt double %i.ic, f0xC1E0000000000000
@@ -1062,18 +1076,21 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.ig = fptosi double %i.ic to i32              ; 3 uses
-  %24 = sitofp i32 %i.ib to double
-  %25 = fneg double %24
-  %26 = call double @llvm.fmuladd.f64(double %20, double %i.hw, double %25)
-  %i.ih = fmul double %26, 3.000000e+01
+  %31 = insertelement <2 x i32> poison, i32 %i.ib, i64 0
+  %32 = insertelement <2 x i32> %31, i32 %i.ig, i64 1
+  %33 = sitofp <2 x i32> %32 to <2 x double>
+  %34 = fneg <2 x double> %33
+  %35 = insertelement <2 x double> poison, double %i.hw, i64 0
+  %36 = shufflevector <2 x double> %35, <2 x double> poison, <2 x i32> zeroinitializer
+  %37 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %27, <2 x double> %36, <2 x double> %34) ; 2 uses
+  %38 = extractelement <2 x double> %37, i64 0
+  %i.ih = fmul double %38, 3.000000e+01
   %i.ii = fmul double %i.ih, 1.000000e+06
   %i.ij = call double @llvm.nearbyint.f64(double %i.ii)
   %i.ik = fdiv double %i.ij, 1.000000e+06         ; 2 uses
   %i.il = fptosi double %i.ik to i32              ; 2 uses
-  %27 = sitofp i32 %i.ig to double
-  %28 = fneg double %27
-  %29 = call double @llvm.fmuladd.f64(double %22, double %i.hw, double %28)
-  %i.im = fadd double %29, %i.ik
+  %39 = extractelement <2 x double> %37, i64 1
+  %i.im = fadd double %39, %i.ik
   %i.in = sitofp i32 %i.il to double
   %i.io = fsub double %i.im, %i.in
   %i.ip = fmul double %i.io, 8.640000e+04
@@ -1098,7 +1115,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %.020.i.i.i68.i.i = phi double [ %i.is, %bb.am ], [ %i.ja, %bb.an ]
   %i.jc = add nsw i32 %i.jb, %i.il
   store i32 %i.jc, ptr %i.gu, align 4, !tbaa !441, !noalias !471
-  %i.jd = call noundef zeroext i1 @_ZN6duckdb7TryCast9OperationIldEEbT_RT0_b(i64 noundef %23, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i1 noundef zeroext false), !noalias !471
+  %i.jd = call noundef zeroext i1 @_ZN6duckdb7TryCast9OperationIldEEbT_RT0_b(i64 noundef %28, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i1 noundef zeroext false), !noalias !471
   br i1 %i.jd, label %bb.ap, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread.i.i69.i.i
 
 bb.ap:                                            ; preds = %bb.ao
@@ -1424,7 +1441,7 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i.i.i131.i.i: ; preds = 
 
 bb.bn:                                            ; preds = %.lr.ph.i.i109.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5), !noalias !486
-  %i.na = fdiv double 1.000000e+00, %i.mo         ; 5 uses
+  %i.na = fdiv double 1.000000e+00, %i.mo         ; 4 uses
   %.sroa.0.0.extract.trunc.i.i.i110.i.i = trunc i64 %.sroa.022.0.copyload.i.i.i.i to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25, !noalias !486
   %i.nb = sitofp i32 %.sroa.0.0.extract.trunc.i.i.i110.i.i to double ; 2 uses
@@ -1453,18 +1470,23 @@ bb.bo:                                            ; preds = %bb.bn
 
 bb.bp:                                            ; preds = %bb.bo
   %i.nm = fptosi double %i.ni to i32              ; 3 uses
-  %30 = sitofp i32 %i.ng to double
-  %31 = fneg double %30
-  %32 = call double @llvm.fmuladd.f64(double %i.nb, double %i.na, double %31)
-  %i.nn = fmul double %32, 3.000000e+01
+  %40 = insertelement <2 x i32> poison, i32 %i.ng, i64 0
+  %41 = insertelement <2 x i32> %40, i32 %i.nm, i64 1
+  %42 = sitofp <2 x i32> %41 to <2 x double>
+  %43 = fneg <2 x double> %42
+  %44 = insertelement <2 x double> poison, double %i.nb, i64 0
+  %45 = insertelement <2 x double> %44, double %i.nh, i64 1
+  %46 = insertelement <2 x double> poison, double %i.na, i64 0
+  %47 = shufflevector <2 x double> %46, <2 x double> poison, <2 x i32> zeroinitializer
+  %48 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %45, <2 x double> %47, <2 x double> %43) ; 2 uses
+  %49 = extractelement <2 x double> %48, i64 0
+  %i.nn = fmul double %49, 3.000000e+01
   %i.no = fmul double %i.nn, 1.000000e+06
   %i.np = call double @llvm.nearbyint.f64(double %i.no)
   %i.nq = fdiv double %i.np, 1.000000e+06         ; 2 uses
   %i.nr = fptosi double %i.nq to i32              ; 2 uses
-  %33 = sitofp i32 %i.nm to double
-  %34 = fneg double %33
-  %35 = call double @llvm.fmuladd.f64(double %i.nh, double %i.na, double %34)
-  %i.ns = fadd double %35, %i.nq
+  %50 = extractelement <2 x double> %48, i64 1
+  %i.ns = fadd double %50, %i.nq
   %i.nt = sitofp i32 %i.nr to double
   %i.nu = fsub double %i.ns, %i.nt
   %i.nv = fmul double %i.nu, 8.640000e+04
@@ -1867,7 +1889,9 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
   br i1 %i.s, label %.lr.ph, label %.loopexit101
 
 .lr.ph:                                           ; preds = %.preheader103
-  %i.t = load double, ptr %1, align 8, !tbaa !439 ; 5 uses
+  %i.t = load double, ptr %1, align 8, !tbaa !439 ; 4 uses
+  %12 = insertelement <2 x double> poison, double %i.t, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.d
 
 .preheader100:                                    ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit
@@ -1909,18 +1933,21 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = fptosi double %i.ad to i32              ; 3 uses
-  %12 = sitofp i32 %i.ab to double
-  %13 = fneg double %12
-  %14 = call double @llvm.fmuladd.f64(double %i.w, double %i.t, double %13)
-  %i.ai = fmul double %14, 3.000000e+01
+  %14 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
+  %15 = insertelement <2 x i32> %14, i32 %i.ah, i64 1
+  %16 = sitofp <2 x i32> %15 to <2 x double>
+  %17 = fneg <2 x double> %16
+  %18 = insertelement <2 x double> poison, double %i.w, i64 0
+  %19 = insertelement <2 x double> %18, double %i.ac, i64 1
+  %20 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %19, <2 x double> %13, <2 x double> %17) ; 2 uses
+  %21 = extractelement <2 x double> %20, i64 0
+  %i.ai = fmul double %21, 3.000000e+01
   %i.aj = fmul double %i.ai, 1.000000e+06
   %i.ak = call double @llvm.nearbyint.f64(double %i.aj)
   %i.al = fdiv double %i.ak, 1.000000e+06         ; 2 uses
   %i.am = fptosi double %i.al to i32              ; 2 uses
-  %15 = sitofp i32 %i.ah to double
-  %16 = fneg double %15
-  %17 = call double @llvm.fmuladd.f64(double %i.ac, double %i.t, double %16)
-  %i.an = fadd double %17, %i.al
+  %22 = extractelement <2 x double> %20, i64 1
+  %i.an = fadd double %22, %i.al
   %i.ao = sitofp i32 %i.am to double
   %i.ap = fsub double %i.an, %i.ao
   %i.aq = fmul double %i.ap, 8.640000e+04
@@ -2043,7 +2070,7 @@ bb.n:                                             ; preds = %.lr.ph113
   %.sroa.013.0.copyload = load i64, ptr %i.bx, align 8 ; 2 uses
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   %.sroa.414.0.copyload = load i64, ptr %.sroa.414.0..sroa_idx, align 8, !tbaa !18
-  %i.by = load double, ptr %1, align 8, !tbaa !439 ; 5 uses
+  %i.by = load double, ptr %1, align 8, !tbaa !439 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %.sroa.0.0.extract.trunc.i85 = trunc i64 %.sroa.013.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
@@ -2073,18 +2100,23 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ck = fptosi double %i.cg to i32              ; 3 uses
-  %18 = sitofp i32 %i.ce to double
-  %19 = fneg double %18
-  %20 = call double @llvm.fmuladd.f64(double %i.bz, double %i.by, double %19)
-  %i.cl = fmul double %20, 3.000000e+01
+  %23 = insertelement <2 x i32> poison, i32 %i.ce, i64 0
+  %24 = insertelement <2 x i32> %23, i32 %i.ck, i64 1
+  %25 = sitofp <2 x i32> %24 to <2 x double>
+  %26 = fneg <2 x double> %25
+  %27 = insertelement <2 x double> poison, double %i.bz, i64 0
+  %28 = insertelement <2 x double> %27, double %i.cf, i64 1
+  %29 = insertelement <2 x double> poison, double %i.by, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %31 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %28, <2 x double> %30, <2 x double> %26) ; 2 uses
+  %32 = extractelement <2 x double> %31, i64 0
+  %i.cl = fmul double %32, 3.000000e+01
   %i.cm = fmul double %i.cl, 1.000000e+06
   %i.cn = call double @llvm.nearbyint.f64(double %i.cm)
   %i.co = fdiv double %i.cn, 1.000000e+06         ; 2 uses
   %i.cp = fptosi double %i.co to i32              ; 2 uses
-  %21 = sitofp i32 %i.ck to double
-  %22 = fneg double %21
-  %23 = call double @llvm.fmuladd.f64(double %i.cf, double %i.by, double %22)
-  %i.cq = fadd double %23, %i.co
+  %33 = extractelement <2 x double> %31, i64 1
+  %i.cq = fadd double %33, %i.co
   %i.cr = sitofp i32 %i.cp to double
   %i.cs = fsub double %i.cq, %i.cr
   %i.ct = fmul double %i.cs, 8.640000e+04
@@ -2281,13 +2313,11 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
   br i1 %i.r, label %.lr.ph, label %.loopexit101
 
 .lr.ph:                                           ; preds = %.preheader103
-  %.sroa.021.0.copyload = load i64, ptr %0, align 8 ; 2 uses
+  %.sroa.021.0.copyload147 = load <2 x i32>, ptr %0, align 8
   %.sroa.422.0.copyload = load i64, ptr %.sroa.422.0..sroa_idx, align 8, !tbaa !18
-  %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.021.0.copyload to i32
-  %12 = sitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
-  %.sroa.3.0.extract.shift.i = lshr i64 %.sroa.021.0.copyload, 32
-  %.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.3.0.extract.shift.i to i32
-  %13 = sitofp i32 %.sroa.3.0.extract.trunc.i to double ; 2 uses
+  %12 = sitofp <2 x i32> %.sroa.021.0.copyload147 to <2 x double> ; 3 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %14 = extractelement <2 x double> %12, i64 1
   br label %bb.d
 
 .preheader100:                                    ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit
@@ -2297,10 +2327,10 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
 bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit
   %.1111 = phi i64 [ %.0116, %.lr.ph ], [ %i.bq, %_ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit ] ; 3 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.1111
-  %i.u = load double, ptr %i.t, align 8, !tbaa !439 ; 5 uses
+  %i.u = load double, ptr %i.t, align 8, !tbaa !439 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.v = fmul double %i.u, %12                    ; 4 uses
+  %i.v = fmul double %i.u, %13                    ; 4 uses
   %i.w = fcmp uno double %i.v, 0.000000e+00
   %i.x = fcmp olt double %i.v, f0xC1E0000000000000
   %or.cond.i = or i1 %i.w, %i.x
@@ -2311,7 +2341,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb
 bb.e:                                             ; preds = %bb.d
   %i.z = fptosi double %i.v to i32                ; 2 uses
   store i32 %i.z, ptr %9, align 16, !tbaa !437
-  %i.aa = fmul double %i.u, %13                   ; 5 uses
+  %i.aa = fmul double %i.u, %14                   ; 5 uses
   store double %i.aa, ptr %i.b, align 8, !tbaa !439
   %i.ab = fcmp uno double %i.aa, 0.000000e+00
   %i.ac = fcmp olt double %i.aa, f0xC1E0000000000000
@@ -2322,18 +2352,21 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = fptosi double %i.aa to i32              ; 3 uses
-  %14 = sitofp i32 %i.z to double
-  %15 = fneg double %14
-  %16 = call double @llvm.fmuladd.f64(double %12, double %i.u, double %15)
-  %i.af = fmul double %16, 3.000000e+01
+  %15 = insertelement <2 x i32> poison, i32 %i.z, i64 0
+  %16 = insertelement <2 x i32> %15, i32 %i.ae, i64 1
+  %17 = sitofp <2 x i32> %16 to <2 x double>
+  %18 = fneg <2 x double> %17
+  %19 = insertelement <2 x double> poison, double %i.u, i64 0
+  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
+  %21 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %20, <2 x double> %18) ; 2 uses
+  %22 = extractelement <2 x double> %21, i64 0
+  %i.af = fmul double %22, 3.000000e+01
   %i.ag = fmul double %i.af, 1.000000e+06
   %i.ah = call double @llvm.nearbyint.f64(double %i.ag)
   %i.ai = fdiv double %i.ah, 1.000000e+06         ; 2 uses
   %i.aj = fptosi double %i.ai to i32              ; 2 uses
-  %17 = sitofp i32 %i.ae to double
-  %18 = fneg double %17
-  %19 = call double @llvm.fmuladd.f64(double %13, double %i.u, double %18)
-  %i.ak = fadd double %19, %i.ai
+  %23 = extractelement <2 x double> %21, i64 1
+  %i.ak = fadd double %23, %i.ai
   %i.al = sitofp i32 %i.aj to double
   %i.am = fsub double %i.ak, %i.al
   %i.an = fmul double %i.am, 8.640000e+04
@@ -2455,7 +2488,7 @@ bb.n:                                             ; preds = %.lr.ph113
   %.sroa.013.0.copyload = load i64, ptr %0, align 8 ; 2 uses
   %.sroa.414.0.copyload = load i64, ptr %.sroa.422.0..sroa_idx, align 8, !tbaa !18
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.2112
-  %i.bv = load double, ptr %i.bu, align 8, !tbaa !439 ; 5 uses
+  %i.bv = load double, ptr %i.bu, align 8, !tbaa !439 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %.sroa.0.0.extract.trunc.i85 = trunc i64 %.sroa.013.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
@@ -2485,18 +2518,23 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ch = fptosi double %i.cd to i32              ; 3 uses
-  %20 = sitofp i32 %i.cb to double
-  %21 = fneg double %20
-  %22 = call double @llvm.fmuladd.f64(double %i.bw, double %i.bv, double %21)
-  %i.ci = fmul double %22, 3.000000e+01
+  %24 = insertelement <2 x i32> poison, i32 %i.cb, i64 0
+  %25 = insertelement <2 x i32> %24, i32 %i.ch, i64 1
+  %26 = sitofp <2 x i32> %25 to <2 x double>
+  %27 = fneg <2 x double> %26
+  %28 = insertelement <2 x double> poison, double %i.bw, i64 0
+  %29 = insertelement <2 x double> %28, double %i.cc, i64 1
+  %30 = insertelement <2 x double> poison, double %i.bv, i64 0
+  %31 = shufflevector <2 x double> %30, <2 x double> poison, <2 x i32> zeroinitializer
+  %32 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %29, <2 x double> %31, <2 x double> %27) ; 2 uses
+  %33 = extractelement <2 x double> %32, i64 0
+  %i.ci = fmul double %33, 3.000000e+01
   %i.cj = fmul double %i.ci, 1.000000e+06
   %i.ck = call double @llvm.nearbyint.f64(double %i.cj)
   %i.cl = fdiv double %i.ck, 1.000000e+06         ; 2 uses
   %i.cm = fptosi double %i.cl to i32              ; 2 uses
-  %23 = sitofp i32 %i.ch to double
-  %24 = fneg double %23
-  %25 = call double @llvm.fmuladd.f64(double %i.cc, double %i.bv, double %24)
-  %i.cn = fadd double %25, %i.cl
+  %34 = extractelement <2 x double> %32, i64 1
+  %i.cn = fadd double %34, %i.cl
   %i.co = sitofp i32 %i.cm to double
   %i.cp = fsub double %i.cn, %i.co
   %i.cq = fmul double %i.cp, 8.640000e+04
@@ -2694,7 +2732,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.sroa.423.0.copyload = load i64, ptr %.sroa.423.0..sroa_idx, align 8, !tbaa !18
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.1120
-  %i.v = load double, ptr %i.u, align 8, !tbaa !439 ; 5 uses
+  %i.v = load double, ptr %i.u, align 8, !tbaa !439 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.022.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
@@ -2724,18 +2762,23 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
   %i.ah = fptosi double %i.ad to i32              ; 3 uses
-  %12 = sitofp i32 %i.ab to double
-  %13 = fneg double %12
-  %14 = call double @llvm.fmuladd.f64(double %i.w, double %i.v, double %13)
-  %i.ai = fmul double %14, 3.000000e+01
+  %12 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %i.ah, i64 1
+  %14 = sitofp <2 x i32> %13 to <2 x double>
+  %15 = fneg <2 x double> %14
+  %16 = insertelement <2 x double> poison, double %i.w, i64 0
+  %17 = insertelement <2 x double> %16, double %i.ac, i64 1
+  %18 = insertelement <2 x double> poison, double %i.v, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %19, <2 x double> %15) ; 2 uses
+  %21 = extractelement <2 x double> %20, i64 0
+  %i.ai = fmul double %21, 3.000000e+01
   %i.aj = fmul double %i.ai, 1.000000e+06
   %i.ak = call double @llvm.nearbyint.f64(double %i.aj)
   %i.al = fdiv double %i.ak, 1.000000e+06         ; 2 uses
   %i.am = fptosi double %i.al to i32              ; 2 uses
-  %15 = sitofp i32 %i.ah to double
-  %16 = fneg double %15
-  %17 = call double @llvm.fmuladd.f64(double %i.ac, double %i.v, double %16)
-  %i.an = fadd double %17, %i.al
+  %22 = extractelement <2 x double> %20, i64 1
+  %i.an = fadd double %22, %i.al
   %i.ao = sitofp i32 %i.am to double
   %i.ap = fsub double %i.an, %i.ao
   %i.aq = fmul double %i.ap, 8.640000e+04
@@ -2859,7 +2902,7 @@ bb.m:                                             ; preds = %.lr.ph122
   %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   %.sroa.415.0.copyload = load i64, ptr %.sroa.415.0..sroa_idx, align 8, !tbaa !18
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.2121
-  %i.bz = load double, ptr %i.by, align 8, !tbaa !439 ; 5 uses
+  %i.bz = load double, ptr %i.by, align 8, !tbaa !439 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %.sroa.0.0.extract.trunc.i94 = trunc i64 %.sroa.014.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
@@ -2889,18 +2932,23 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.cl = fptosi double %i.ch to i32              ; 3 uses
-  %18 = sitofp i32 %i.cf to double
-  %19 = fneg double %18
-  %20 = call double @llvm.fmuladd.f64(double %i.ca, double %i.bz, double %19)
-  %i.cm = fmul double %20, 3.000000e+01
+  %23 = insertelement <2 x i32> poison, i32 %i.cf, i64 0
+  %24 = insertelement <2 x i32> %23, i32 %i.cl, i64 1
+  %25 = sitofp <2 x i32> %24 to <2 x double>
+  %26 = fneg <2 x double> %25
+  %27 = insertelement <2 x double> poison, double %i.ca, i64 0
+  %28 = insertelement <2 x double> %27, double %i.cg, i64 1
+  %29 = insertelement <2 x double> poison, double %i.bz, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %31 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %28, <2 x double> %30, <2 x double> %26) ; 2 uses
+  %32 = extractelement <2 x double> %31, i64 0
+  %i.cm = fmul double %32, 3.000000e+01
   %i.cn = fmul double %i.cm, 1.000000e+06
   %i.co = call double @llvm.nearbyint.f64(double %i.cn)
   %i.cp = fdiv double %i.co, 1.000000e+06         ; 2 uses
   %i.cq = fptosi double %i.cp to i32              ; 2 uses
-  %21 = sitofp i32 %i.cl to double
-  %22 = fneg double %21
-  %23 = call double @llvm.fmuladd.f64(double %i.cg, double %i.bz, double %22)
-  %i.cr = fadd double %23, %i.cp
+  %33 = extractelement <2 x double> %31, i64 1
+  %i.cr = fadd double %33, %i.cp
   %i.cs = sitofp i32 %i.cq to double
   %i.ct = fsub double %i.cr, %i.cs
   %i.cu = fmul double %i.ct, 8.640000e+04
@@ -3303,13 +3351,11 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
   br i1 %i.r, label %.lr.ph, label %.loopexit101
 
 .lr.ph:                                           ; preds = %.preheader103
-  %.sroa.020.0.copyload = load i64, ptr %1, align 8 ; 2 uses
+  %.sroa.020.0.copyload147 = load <2 x i32>, ptr %1, align 8
   %.sroa.421.0.copyload = load i64, ptr %.sroa.421.0..sroa_idx, align 8, !tbaa !18
-  %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.020.0.copyload to i32
-  %12 = sitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
-  %.sroa.3.0.extract.shift.i = lshr i64 %.sroa.020.0.copyload, 32
-  %.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.3.0.extract.shift.i to i32
-  %13 = sitofp i32 %.sroa.3.0.extract.trunc.i to double ; 2 uses
+  %12 = sitofp <2 x i32> %.sroa.020.0.copyload147 to <2 x double> ; 3 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %14 = extractelement <2 x double> %12, i64 1
   br label %bb.d
 
 .preheader100:                                    ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit
@@ -3319,10 +3365,10 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
 bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit
   %.1111 = phi i64 [ %.0116, %.lr.ph ], [ %i.bq, %_ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit ] ; 3 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.1111
-  %i.u = load double, ptr %i.t, align 8, !tbaa !439 ; 5 uses
+  %i.u = load double, ptr %i.t, align 8, !tbaa !439 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.v = fmul double %i.u, %12                    ; 4 uses
+  %i.v = fmul double %i.u, %13                    ; 4 uses
   %i.w = fcmp uno double %i.v, 0.000000e+00
   %i.x = fcmp olt double %i.v, f0xC1E0000000000000
   %or.cond.i = or i1 %i.w, %i.x
@@ -3333,7 +3379,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb
 bb.e:                                             ; preds = %bb.d
   %i.z = fptosi double %i.v to i32                ; 2 uses
   store i32 %i.z, ptr %9, align 16, !tbaa !437
-  %i.aa = fmul double %i.u, %13                   ; 5 uses
+  %i.aa = fmul double %i.u, %14                   ; 5 uses
   store double %i.aa, ptr %i.b, align 8, !tbaa !439
   %i.ab = fcmp uno double %i.aa, 0.000000e+00
   %i.ac = fcmp olt double %i.aa, f0xC1E0000000000000
@@ -3344,18 +3390,21 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = fptosi double %i.aa to i32              ; 3 uses
-  %14 = sitofp i32 %i.z to double
-  %15 = fneg double %14
-  %16 = call double @llvm.fmuladd.f64(double %12, double %i.u, double %15)
-  %i.af = fmul double %16, 3.000000e+01
+  %15 = insertelement <2 x i32> poison, i32 %i.z, i64 0
+  %16 = insertelement <2 x i32> %15, i32 %i.ae, i64 1
+  %17 = sitofp <2 x i32> %16 to <2 x double>
+  %18 = fneg <2 x double> %17
+  %19 = insertelement <2 x double> poison, double %i.u, i64 0
+  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
+  %21 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %20, <2 x double> %18) ; 2 uses
+  %22 = extractelement <2 x double> %21, i64 0
+  %i.af = fmul double %22, 3.000000e+01
   %i.ag = fmul double %i.af, 1.000000e+06
   %i.ah = call double @llvm.nearbyint.f64(double %i.ag)
   %i.ai = fdiv double %i.ah, 1.000000e+06         ; 2 uses
   %i.aj = fptosi double %i.ai to i32              ; 2 uses
-  %17 = sitofp i32 %i.ae to double
-  %18 = fneg double %17
-  %19 = call double @llvm.fmuladd.f64(double %13, double %i.u, double %18)
-  %i.ak = fadd double %19, %i.ai
+  %23 = extractelement <2 x double> %21, i64 1
+  %i.ak = fadd double %23, %i.ai
   %i.al = sitofp i32 %i.aj to double
   %i.am = fsub double %i.ak, %i.al
   %i.an = fmul double %i.am, 8.640000e+04
@@ -3475,7 +3524,7 @@ _ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit: ; pr
 
 bb.n:                                             ; preds = %.lr.ph113
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.2112
-  %i.bv = load double, ptr %i.bu, align 8, !tbaa !439 ; 5 uses
+  %i.bv = load double, ptr %i.bu, align 8, !tbaa !439 ; 4 uses
   %.sroa.012.0.copyload = load i64, ptr %1, align 8 ; 2 uses
   %.sroa.413.0.copyload = load i64, ptr %.sroa.421.0..sroa_idx, align 8, !tbaa !18
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
@@ -3507,18 +3556,23 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ch = fptosi double %i.cd to i32              ; 3 uses
-  %20 = sitofp i32 %i.cb to double
-  %21 = fneg double %20
-  %22 = call double @llvm.fmuladd.f64(double %i.bw, double %i.bv, double %21)
-  %i.ci = fmul double %22, 3.000000e+01
+  %24 = insertelement <2 x i32> poison, i32 %i.cb, i64 0
+  %25 = insertelement <2 x i32> %24, i32 %i.ch, i64 1
+  %26 = sitofp <2 x i32> %25 to <2 x double>
+  %27 = fneg <2 x double> %26
+  %28 = insertelement <2 x double> poison, double %i.bw, i64 0
+  %29 = insertelement <2 x double> %28, double %i.cc, i64 1
+  %30 = insertelement <2 x double> poison, double %i.bv, i64 0
+  %31 = shufflevector <2 x double> %30, <2 x double> poison, <2 x i32> zeroinitializer
+  %32 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %29, <2 x double> %31, <2 x double> %27) ; 2 uses
+  %33 = extractelement <2 x double> %32, i64 0
+  %i.ci = fmul double %33, 3.000000e+01
   %i.cj = fmul double %i.ci, 1.000000e+06
   %i.ck = call double @llvm.nearbyint.f64(double %i.cj)
   %i.cl = fdiv double %i.ck, 1.000000e+06         ; 2 uses
   %i.cm = fptosi double %i.cl to i32              ; 2 uses
-  %23 = sitofp i32 %i.ch to double
-  %24 = fneg double %23
-  %25 = call double @llvm.fmuladd.f64(double %i.cc, double %i.bv, double %24)
-  %i.cn = fadd double %25, %i.cl
+  %34 = extractelement <2 x double> %32, i64 1
+  %i.cn = fadd double %34, %i.cl
   %i.co = sitofp i32 %i.cm to double
   %i.cp = fsub double %i.cn, %i.co
   %i.cq = fmul double %i.cp, 8.640000e+04
@@ -3710,7 +3764,9 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
   br i1 %i.s, label %.lr.ph, label %.loopexit101
 
 .lr.ph:                                           ; preds = %.preheader103
-  %i.t = load double, ptr %0, align 8, !tbaa !439 ; 5 uses
+  %i.t = load double, ptr %0, align 8, !tbaa !439 ; 4 uses
+  %12 = insertelement <2 x double> poison, double %i.t, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.d
 
 .preheader100:                                    ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit
@@ -3752,18 +3808,21 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = fptosi double %i.ad to i32              ; 3 uses
-  %12 = sitofp i32 %i.ab to double
-  %13 = fneg double %12
-  %14 = call double @llvm.fmuladd.f64(double %i.w, double %i.t, double %13)
-  %i.ai = fmul double %14, 3.000000e+01
+  %14 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
+  %15 = insertelement <2 x i32> %14, i32 %i.ah, i64 1
+  %16 = sitofp <2 x i32> %15 to <2 x double>
+  %17 = fneg <2 x double> %16
+  %18 = insertelement <2 x double> poison, double %i.w, i64 0
+  %19 = insertelement <2 x double> %18, double %i.ac, i64 1
+  %20 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %19, <2 x double> %13, <2 x double> %17) ; 2 uses
+  %21 = extractelement <2 x double> %20, i64 0
+  %i.ai = fmul double %21, 3.000000e+01
   %i.aj = fmul double %i.ai, 1.000000e+06
   %i.ak = call double @llvm.nearbyint.f64(double %i.aj)
   %i.al = fdiv double %i.ak, 1.000000e+06         ; 2 uses
   %i.am = fptosi double %i.al to i32              ; 2 uses
-  %15 = sitofp i32 %i.ah to double
-  %16 = fneg double %15
-  %17 = call double @llvm.fmuladd.f64(double %i.ac, double %i.t, double %16)
-  %i.an = fadd double %17, %i.al
+  %22 = extractelement <2 x double> %20, i64 1
+  %i.an = fadd double %22, %i.al
   %i.ao = sitofp i32 %i.am to double
   %i.ap = fsub double %i.an, %i.ao
   %i.aq = fmul double %i.ap, 8.640000e+04
@@ -3882,7 +3941,7 @@ _ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit: ; pr
   br i1 %.not, label %bb.x, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph113
-  %i.bx = load double, ptr %0, align 8, !tbaa !439 ; 5 uses
+  %i.bx = load double, ptr %0, align 8, !tbaa !439 ; 4 uses
   %i.by = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.2112 ; 2 uses
   %.sroa.012.0.copyload = load i64, ptr %i.by, align 8 ; 2 uses
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 8
@@ -3916,18 +3975,23 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ck = fptosi double %i.cg to i32              ; 3 uses
-  %18 = sitofp i32 %i.ce to double
-  %19 = fneg double %18
-  %20 = call double @llvm.fmuladd.f64(double %i.bz, double %i.bx, double %19)
-  %i.cl = fmul double %20, 3.000000e+01
+  %23 = insertelement <2 x i32> poison, i32 %i.ce, i64 0
+  %24 = insertelement <2 x i32> %23, i32 %i.ck, i64 1
+  %25 = sitofp <2 x i32> %24 to <2 x double>
+  %26 = fneg <2 x double> %25
+  %27 = insertelement <2 x double> poison, double %i.bz, i64 0
+  %28 = insertelement <2 x double> %27, double %i.cf, i64 1
+  %29 = insertelement <2 x double> poison, double %i.bx, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %31 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %28, <2 x double> %30, <2 x double> %26) ; 2 uses
+  %32 = extractelement <2 x double> %31, i64 0
+  %i.cl = fmul double %32, 3.000000e+01
   %i.cm = fmul double %i.cl, 1.000000e+06
   %i.cn = call double @llvm.nearbyint.f64(double %i.cm)
   %i.co = fdiv double %i.cn, 1.000000e+06         ; 2 uses
   %i.cp = fptosi double %i.co to i32              ; 2 uses
-  %21 = sitofp i32 %i.ck to double
-  %22 = fneg double %21
-  %23 = call double @llvm.fmuladd.f64(double %i.cf, double %i.bx, double %22)
-  %i.cq = fadd double %23, %i.co
+  %33 = extractelement <2 x double> %31, i64 1
+  %i.cq = fadd double %33, %i.co
   %i.cr = sitofp i32 %i.cp to double
   %i.cs = fsub double %i.cq, %i.cr
   %i.ct = fmul double %i.cs, 8.640000e+04
@@ -4123,7 +4187,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
 .lr.ph:                                           ; preds = %.preheader112, %_ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit
   %.1120 = phi i64 [ %i.bt, %_ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit ], [ %.0125, %.preheader112 ] ; 4 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.1120
-  %i.u = load double, ptr %i.t, align 8, !tbaa !439 ; 5 uses
+  %i.u = load double, ptr %i.t, align 8, !tbaa !439 ; 4 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.1120 ; 2 uses
   %.sroa.021.0.copyload = load i64, ptr %i.v, align 8 ; 2 uses
   %.sroa.422.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 8
@@ -4157,18 +4221,23 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
   %i.ah = fptosi double %i.ad to i32              ; 3 uses
-  %12 = sitofp i32 %i.ab to double
-  %13 = fneg double %12
-  %14 = call double @llvm.fmuladd.f64(double %i.w, double %i.u, double %13)
-  %i.ai = fmul double %14, 3.000000e+01
+  %12 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %i.ah, i64 1
+  %14 = sitofp <2 x i32> %13 to <2 x double>
+  %15 = fneg <2 x double> %14
+  %16 = insertelement <2 x double> poison, double %i.w, i64 0
+  %17 = insertelement <2 x double> %16, double %i.ac, i64 1
+  %18 = insertelement <2 x double> poison, double %i.u, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %19, <2 x double> %15) ; 2 uses
+  %21 = extractelement <2 x double> %20, i64 0
+  %i.ai = fmul double %21, 3.000000e+01
   %i.aj = fmul double %i.ai, 1.000000e+06
   %i.ak = call double @llvm.nearbyint.f64(double %i.aj)
   %i.al = fdiv double %i.ak, 1.000000e+06         ; 2 uses
   %i.am = fptosi double %i.al to i32              ; 2 uses
-  %15 = sitofp i32 %i.ah to double
-  %16 = fneg double %15
-  %17 = call double @llvm.fmuladd.f64(double %i.ac, double %i.u, double %16)
-  %i.an = fadd double %17, %i.al
+  %22 = extractelement <2 x double> %20, i64 1
+  %i.an = fadd double %22, %i.al
   %i.ao = sitofp i32 %i.am to double
   %i.ap = fsub double %i.an, %i.ao
   %i.aq = fmul double %i.ap, 8.640000e+04
@@ -4288,7 +4357,7 @@ _ZN6duckdb16MultiplyOperator9OperationINS_10interval_tEdS2_EET1_T_T0_.exit: ; pr
 
 bb.m:                                             ; preds = %.lr.ph122
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.2121
-  %i.by = load double, ptr %i.bx, align 8, !tbaa !439 ; 5 uses
+  %i.by = load double, ptr %i.bx, align 8, !tbaa !439 ; 4 uses
   %i.bz = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.2121 ; 2 uses
   %.sroa.013.0.copyload = load i64, ptr %i.bz, align 8 ; 2 uses
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
@@ -4322,18 +4391,23 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.cl = fptosi double %i.ch to i32              ; 3 uses
-  %18 = sitofp i32 %i.cf to double
-  %19 = fneg double %18
-  %20 = call double @llvm.fmuladd.f64(double %i.ca, double %i.by, double %19)
-  %i.cm = fmul double %20, 3.000000e+01
+  %23 = insertelement <2 x i32> poison, i32 %i.cf, i64 0
+  %24 = insertelement <2 x i32> %23, i32 %i.cl, i64 1
+  %25 = sitofp <2 x i32> %24 to <2 x double>
+  %26 = fneg <2 x double> %25
+  %27 = insertelement <2 x double> poison, double %i.ca, i64 0
+  %28 = insertelement <2 x double> %27, double %i.cg, i64 1
+  %29 = insertelement <2 x double> poison, double %i.by, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %31 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %28, <2 x double> %30, <2 x double> %26) ; 2 uses
+  %32 = extractelement <2 x double> %31, i64 0
+  %i.cm = fmul double %32, 3.000000e+01
   %i.cn = fmul double %i.cm, 1.000000e+06
   %i.co = call double @llvm.nearbyint.f64(double %i.cn)
   %i.cp = fdiv double %i.co, 1.000000e+06         ; 2 uses
   %i.cq = fptosi double %i.cp to i32              ; 2 uses
-  %21 = sitofp i32 %i.cl to double
-  %22 = fneg double %21
-  %23 = call double @llvm.fmuladd.f64(double %i.cg, double %i.by, double %22)
-  %i.cr = fadd double %23, %i.cp
+  %33 = extractelement <2 x double> %31, i64 1
+  %i.cr = fadd double %33, %i.cp
   %i.cs = sitofp i32 %i.cq to double
   %i.ct = fsub double %i.cr, %i.cs
   %i.cu = fmul double %i.ct, 8.640000e+04
@@ -4735,6 +4809,9 @@ declare i64 @llvm.smin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

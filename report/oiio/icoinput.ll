@@ -204,22 +204,20 @@ _ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit: ; preds = %bb.c
   br i1 %.not.i, label %bb.d, label %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit
-  %i.s = load ptr, ptr %i.a, align 8, !tbaa !777  ; 3 uses
+  %i.s = load ptr, ptr %i.a, align 8, !tbaa !777  ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 2
   %i.u = load i16, ptr %i.t, align 2, !tbaa !779
   %i.v = uitofp i16 %i.u to float
   %i.w = fdiv float %i.v, 6.553500e+04
   store float %i.w, ptr %4, align 4, !tbaa !132
   %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 4
-  %7 = load i16, ptr %i.x, align 2, !tbaa !781
-  %8 = uitofp i16 %7 to float
-  %9 = fdiv float %8, 6.553500e+04
-  store float %9, ptr %5, align 4, !tbaa !132
-  %10 = getelementptr inbounds nuw i8, ptr %i.s, i64 6
-  %11 = load i16, ptr %10, align 2, !tbaa !782
-  %12 = uitofp i16 %11 to float
-  %13 = fdiv float %12, 6.553500e+04
-  store float %13, ptr %6, align 4, !tbaa !132
+  %7 = load <2 x i16>, ptr %i.x, align 2, !tbaa !121
+  %8 = uitofp <2 x i16> %7 to <2 x float>
+  %9 = fdiv <2 x float> %8, splat (float 6.553500e+04) ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  store float %10, ptr %5, align 4, !tbaa !132
+  %11 = extractelement <2 x float> %9, i64 1
+  store float %11, ptr %6, align 4, !tbaa !132
   br label %bb.k
 
 _ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread: ; preds = %bb.c, %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit
@@ -236,7 +234,7 @@ bb.e:                                             ; preds = %_ZN11OpenImageIO4v3
 bb.f:                                             ; preds = %bb.e
   %i.ad = load ptr, ptr %i.a, align 8, !tbaa !777
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.af = load i16, ptr %i.ae, align 2, !tbaa !783 ; 3 uses
+  %i.af = load i16, ptr %i.ae, align 2, !tbaa !781 ; 3 uses
   switch i32 %i.ab, label %bb.i [
     i32 1, label %bb.g
     i32 2, label %bb.h
@@ -267,22 +265,20 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.e, %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread
-  %i.al = load ptr, ptr %i.a, align 8, !tbaa !777 ; 3 uses
+  %i.al = load ptr, ptr %i.a, align 8, !tbaa !777 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 2
   %i.an = load i16, ptr %i.am, align 2, !tbaa !779
   %i.ao = uitofp i16 %i.an to float
   %i.ap = fdiv float %i.ao, 2.550000e+02
   store float %i.ap, ptr %4, align 4, !tbaa !132
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 4
-  %14 = load i16, ptr %i.aq, align 2, !tbaa !781
-  %15 = uitofp i16 %14 to float
-  %16 = fdiv float %15, 2.550000e+02
-  store float %16, ptr %5, align 4, !tbaa !132
-  %17 = getelementptr inbounds nuw i8, ptr %i.al, i64 6
-  %18 = load i16, ptr %17, align 2, !tbaa !782
-  %19 = uitofp i16 %18 to float
-  %20 = fdiv float %19, 2.550000e+02
-  store float %20, ptr %6, align 4, !tbaa !132
+  %12 = load <2 x i16>, ptr %i.aq, align 2, !tbaa !121
+  %13 = uitofp <2 x i16> %12 to <2 x float>
+  %14 = fdiv <2 x float> %13, splat (float 2.550000e+02) ; 2 uses
+  %15 = extractelement <2 x float> %14, i64 0
+  store float %15, ptr %5, align 4, !tbaa !132
+  %16 = extractelement <2 x float> %14, i64 1
+  store float %16, ptr %6, align 4, !tbaa !132
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.h, %bb.i, %bb.g, %bb.d
@@ -685,7 +681,5 @@ begin_hunk_1_@llvm.round.v2f32
 !778 = !{!"p1 _ZTS19png_color_16_struct", !12, i64 0}
 !779 = !{!780, !49, i64 2}
 !780 = !{!"_ZTS19png_color_16_struct", !5, i64 0, !49, i64 2, !49, i64 4, !49, i64 6, !49, i64 8}
-!781 = !{!780, !49, i64 4}
-!782 = !{!780, !49, i64 6}
-!783 = !{!780, !49, i64 8}
+!781 = !{!780, !49, i64 8}
 end_hunk_1

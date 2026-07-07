@@ -204,91 +204,61 @@ bb.a:
   br i1 %i.a, label %.preheader.preheader, label %.preheader25.preheader
 
 .preheader25.preheader:                           ; preds = %bb.a
-  %i.b = fdiv double 0.000000e+00, %0             ; 2 uses
-  %1 = fadd double %i.b, f0x4215EA5143C1A49E
-  %2 = fdiv double %1, %0
-  %3 = fadd double %2, f0x4223FC7075F54C57
-  %4 = fdiv double %i.b, %0
-  %5 = fadd double %4, 3.991680e+07
-  %6 = fdiv double %3, %0
-  %7 = fadd double %6, f0x4220A132818AB61A
-  %8 = fdiv double %5, %0
-  %9 = fadd double %8, f0x419CBD6980000000
-  %10 = fdiv double %7, %0
-  %11 = fadd double %10, f0x4210B0B522E8261A
-  %12 = fdiv double %9, %0
-  %13 = fadd double %12, f0x41A1FDA6B0000000
-  %14 = fdiv double %11, %0
-  %15 = fadd double %14, f0x41F67FC1B3A5A1E8
-  %16 = fdiv double %13, %0
-  %17 = fadd double %16, f0x4199187170000000
-  %18 = fdiv double %15, %0
-  %19 = fadd double %18, f0x41D57418F5D3F33F
-  %20 = fdiv double %17, %0
-  %21 = fadd double %20, f0x4185EEB690000000
-  %22 = fdiv double %19, %0
-  %23 = fadd double %22, f0x41ADAB0C7BB95F2A
-  %24 = fdiv double %21, %0
-  %25 = fadd double %24, f0x41697171E0000000
-  %26 = fdiv double %23, %0
-  %27 = fadd double %26, f0x417DF876F95DCC98
-  %28 = fdiv double %25, %0
-  %29 = fadd double %28, f0x41441F7B00000000
-  %30 = fdiv double %27, %0
-  %31 = fadd double %30, f0x4145F1E95080F44C
-  %32 = fdiv double %29, %0
-  %33 = fadd double %32, 3.574230e+05
-  %34 = fdiv double %31, %0
-  %35 = fadd double %34, f0x4106B6421F8787EB
-  %36 = fdiv double %33, %0
-  %37 = fadd double %36, 3.267000e+04
-  %38 = fdiv double %35, %0
-  %39 = fadd double %38, f0x40BF87AC0858D804
-  %40 = fdiv double %37, %0
-  %41 = fadd double %40, 1.925000e+03
-  %42 = fdiv double %39, %0
-  %43 = fadd double %42, f0x406A5A607BBC3B52
-  %44 = fdiv double %41, %0
-  %45 = fadd double %44, 6.600000e+01
-  %46 = fdiv double %43, %0
-  %47 = fadd double %46, f0x40040D931FF62705
-  %48 = fdiv double %45, %0
-  %49 = fadd double %48, 1.000000e+00
+  %i.b = fdiv double 0.000000e+00, %0
+  %1 = insertelement <2 x double> poison, double %i.b, i64 0
+  %2 = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = fadd <2 x double> %2, <double f0x4215EA5143C1A49E, double -0.000000e+00>
+  %4 = insertelement <2 x double> poison, double %0, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer ; 12 uses
+  %6 = fdiv <2 x double> %3, %5
+  %7 = fadd <2 x double> %6, <double f0x4223FC7075F54C57, double 3.991680e+07>
+  %8 = fdiv <2 x double> %7, %5
+  %9 = fadd <2 x double> %8, <double f0x4220A132818AB61A, double f0x419CBD6980000000>
+  %10 = fdiv <2 x double> %9, %5
+  %11 = fadd <2 x double> %10, <double f0x4210B0B522E8261A, double f0x41A1FDA6B0000000>
+  %12 = fdiv <2 x double> %11, %5
+  %13 = fadd <2 x double> %12, <double f0x41F67FC1B3A5A1E8, double f0x4199187170000000>
+  %14 = fdiv <2 x double> %13, %5
+  %15 = fadd <2 x double> %14, <double f0x41D57418F5D3F33F, double f0x4185EEB690000000>
+  %16 = fdiv <2 x double> %15, %5
+  %17 = fadd <2 x double> %16, <double f0x41ADAB0C7BB95F2A, double f0x41697171E0000000>
+  %18 = fdiv <2 x double> %17, %5
+  %19 = fadd <2 x double> %18, <double f0x417DF876F95DCC98, double f0x41441F7B00000000>
+  %20 = fdiv <2 x double> %19, %5
+  %21 = fadd <2 x double> %20, <double f0x4145F1E95080F44C, double 3.574230e+05>
+  %22 = fdiv <2 x double> %21, %5
+  %23 = fadd <2 x double> %22, <double f0x4106B6421F8787EB, double 3.267000e+04>
+  %24 = fdiv <2 x double> %23, %5
+  %25 = fadd <2 x double> %24, <double f0x40BF87AC0858D804, double 1.925000e+03>
+  %26 = fdiv <2 x double> %25, %5
+  %27 = fadd <2 x double> %26, <double f0x406A5A607BBC3B52, double 6.600000e+01>
+  %28 = fdiv <2 x double> %27, %5
+  %29 = fadd <2 x double> %28, <double f0x40040D931FF62705, double 1.000000e+00>
   br label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.a
-  %50 = tail call double @llvm.fmuladd.f64(double %0, double 0.000000e+00, double f0x40040D931FF62705)
-  %51 = tail call double @llvm.fmuladd.f64(double %0, double 0.000000e+00, double 1.000000e+00)
-  %52 = tail call double @llvm.fmuladd.f64(double %50, double %0, double f0x406A5A607BBC3B52)
-  %53 = tail call double @llvm.fmuladd.f64(double %51, double %0, double 6.600000e+01)
-  %54 = tail call double @llvm.fmuladd.f64(double %52, double %0, double f0x40BF87AC0858D804)
-  %55 = tail call double @llvm.fmuladd.f64(double %53, double %0, double 1.925000e+03)
-  %56 = tail call double @llvm.fmuladd.f64(double %54, double %0, double f0x4106B6421F8787EB)
-  %57 = tail call double @llvm.fmuladd.f64(double %55, double %0, double 3.267000e+04)
-  %58 = tail call double @llvm.fmuladd.f64(double %56, double %0, double f0x4145F1E95080F44C)
-  %59 = tail call double @llvm.fmuladd.f64(double %57, double %0, double 3.574230e+05)
-  %60 = tail call double @llvm.fmuladd.f64(double %58, double %0, double f0x417DF876F95DCC98)
-  %61 = tail call double @llvm.fmuladd.f64(double %59, double %0, double f0x41441F7B00000000)
-  %62 = tail call double @llvm.fmuladd.f64(double %60, double %0, double f0x41ADAB0C7BB95F2A)
-  %63 = tail call double @llvm.fmuladd.f64(double %61, double %0, double f0x41697171E0000000)
-  %64 = tail call double @llvm.fmuladd.f64(double %62, double %0, double f0x41D57418F5D3F33F)
-  %65 = tail call double @llvm.fmuladd.f64(double %63, double %0, double f0x4185EEB690000000)
-  %66 = tail call double @llvm.fmuladd.f64(double %64, double %0, double f0x41F67FC1B3A5A1E8)
-  %67 = tail call double @llvm.fmuladd.f64(double %65, double %0, double f0x4199187170000000)
-  %68 = tail call double @llvm.fmuladd.f64(double %66, double %0, double f0x4210B0B522E8261A)
-  %69 = tail call double @llvm.fmuladd.f64(double %67, double %0, double f0x41A1FDA6B0000000)
-  %70 = tail call double @llvm.fmuladd.f64(double %68, double %0, double f0x4220A132818AB61A)
-  %71 = tail call double @llvm.fmuladd.f64(double %69, double %0, double f0x419CBD6980000000)
-  %72 = tail call double @llvm.fmuladd.f64(double %70, double %0, double f0x4223FC7075F54C57)
-  %73 = tail call double @llvm.fmuladd.f64(double %71, double %0, double 3.991680e+07)
-  %74 = tail call double @llvm.fmuladd.f64(double %72, double %0, double f0x4215EA5143C1A49E)
-  %75 = tail call double @llvm.fmuladd.f64(double %73, double %0, double 0.000000e+00)
+  %30 = insertelement <2 x double> poison, double %0, i64 0
+  %31 = shufflevector <2 x double> %30, <2 x double> poison, <2 x i32> zeroinitializer ; 13 uses
+  %32 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %31, <2 x double> zeroinitializer, <2 x double> <double f0x40040D931FF62705, double 1.000000e+00>)
+  %33 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %32, <2 x double> %31, <2 x double> <double f0x406A5A607BBC3B52, double 6.600000e+01>)
+  %34 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %33, <2 x double> %31, <2 x double> <double f0x40BF87AC0858D804, double 1.925000e+03>)
+  %35 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %34, <2 x double> %31, <2 x double> <double f0x4106B6421F8787EB, double 3.267000e+04>)
+  %36 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %35, <2 x double> %31, <2 x double> <double f0x4145F1E95080F44C, double 3.574230e+05>)
+  %37 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %36, <2 x double> %31, <2 x double> <double f0x417DF876F95DCC98, double f0x41441F7B00000000>)
+  %38 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %37, <2 x double> %31, <2 x double> <double f0x41ADAB0C7BB95F2A, double f0x41697171E0000000>)
+  %39 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %38, <2 x double> %31, <2 x double> <double f0x41D57418F5D3F33F, double f0x4185EEB690000000>)
+  %40 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %39, <2 x double> %31, <2 x double> <double f0x41F67FC1B3A5A1E8, double f0x4199187170000000>)
+  %41 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %40, <2 x double> %31, <2 x double> <double f0x4210B0B522E8261A, double f0x41A1FDA6B0000000>)
+  %42 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %41, <2 x double> %31, <2 x double> <double f0x4220A132818AB61A, double f0x419CBD6980000000>)
+  %43 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %42, <2 x double> %31, <2 x double> <double f0x4223FC7075F54C57, double 3.991680e+07>)
+  %44 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %43, <2 x double> %31, <2 x double> <double f0x4215EA5143C1A49E, double 0.000000e+00>)
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader25.preheader, %.preheader.preheader
-  %.221 = phi double [ %74, %.preheader.preheader ], [ %47, %.preheader25.preheader ]
-  %.2 = phi double [ %75, %.preheader.preheader ], [ %49, %.preheader25.preheader ]
-  %i.c = fdiv double %.221, %.2
+  %45 = phi <2 x double> [ %44, %.preheader.preheader ], [ %29, %.preheader25.preheader ] ; 2 uses
+  %46 = extractelement <2 x double> %45, i64 0
+  %47 = extractelement <2 x double> %45, i64 1
+  %i.c = fdiv double %46, %47
   ret double %i.c
 }
 
@@ -690,6 +660,9 @@ declare double @llvm.log2.f64(double) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

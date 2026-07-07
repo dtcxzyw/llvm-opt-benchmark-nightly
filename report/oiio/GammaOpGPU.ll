@@ -201,19 +201,21 @@ _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit553: ; preds =
   %i.bnt = getelementptr inbounds nuw i8, ptr %.val46, i64 176
   %i.bnu = load ptr, ptr %i.bnt, align 8, !tbaa !64
   %i.bnv = load double, ptr %i.bnu, align 8, !tbaa !65
-  %255 = fdiv double 1.000000e+00, %i.bnv
   %i.bnw = getelementptr inbounds nuw i8, ptr %.val46, i64 200
   %i.bnx = load ptr, ptr %i.bnw, align 8, !tbaa !64
   %i.bny = load double, ptr %i.bnx, align 8, !tbaa !65
-  %256 = fdiv double 1.000000e+00, %i.bny
+  %255 = insertelement <2 x double> poison, double %i.bnv, i64 0
+  %256 = insertelement <2 x double> %255, double %i.bny, i64 1
+  %257 = fdiv <2 x double> splat (double 1.000000e+00), %256 ; 2 uses
   %i.bnz = getelementptr inbounds nuw i8, ptr %.val46, i64 224
   %i.boa = load ptr, ptr %i.bnz, align 8, !tbaa !64
   %i.bob = load double, ptr %i.boa, align 8, !tbaa !65
-  %257 = fdiv double 1.000000e+00, %i.bob
   %i.boc = getelementptr inbounds nuw i8, ptr %.val46, i64 248
   %i.bod = load ptr, ptr %i.boc, align 8, !tbaa !64
   %i.boe = load double, ptr %i.bod, align 8, !tbaa !65
-  %258 = fdiv double 1.000000e+00, %i.boe
+  %258 = insertelement <2 x double> poison, double %i.bob, i64 0
+  %259 = insertelement <2 x double> %258, double %i.boe, i64 1
+  %260 = fdiv <2 x double> splat (double 1.000000e+00), %259 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %76) #10
   %i.bof = call noundef ptr @_ZNK16OpenColorIO_v2_516GpuShaderCreator12getPixelNameEv(ptr noundef nonnull align 8 dereferenceable(16) %.val45) #10 ; 4 uses
   %i.bog = getelementptr inbounds nuw i8, ptr %76, i64 16 ; 7 uses
@@ -277,7 +279,11 @@ bb.rs:                                            ; preds = %._crit_edge.i.i.i55
   store i64 5, ptr %i.bot, align 8, !tbaa !52
   %i.bou = getelementptr inbounds nuw i8, ptr %77, i64 21
   store i8 0, ptr %i.bou, align 1, !tbaa !44
-  invoke void @_ZN16OpenColorIO_v2_513GpuShaderText13declareFloat4ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEdddd(ptr noundef nonnull align 8 dereferenceable(764) %238, ptr noundef nonnull align 8 dereferenceable(32) %77, double noundef %255, double noundef %256, double noundef %257, double noundef %258)
+  %261 = extractelement <2 x double> %257, i64 0
+  %262 = extractelement <2 x double> %257, i64 1
+  %263 = extractelement <2 x double> %260, i64 0
+  %264 = extractelement <2 x double> %260, i64 1
+  invoke void @_ZN16OpenColorIO_v2_513GpuShaderText13declareFloat4ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEdddd(ptr noundef nonnull align 8 dereferenceable(764) %238, ptr noundef nonnull align 8 dereferenceable(32) %77, double noundef %261, double noundef %262, double noundef %263, double noundef %264)
           to label %bb.rt unwind label %bb.sk
 
 bb.rt:                                            ; preds = %._crit_edge.i.i47.i555
@@ -680,19 +686,21 @@ _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit657: ; preds =
   %i.cbp = getelementptr inbounds nuw i8, ptr %.val50, i64 176
   %i.cbq = load ptr, ptr %i.cbp, align 8, !tbaa !64
   %i.cbr = load double, ptr %i.cbq, align 8, !tbaa !65
-  %259 = fdiv double 1.000000e+00, %i.cbr
   %i.cbs = getelementptr inbounds nuw i8, ptr %.val50, i64 200
   %i.cbt = load ptr, ptr %i.cbs, align 8, !tbaa !64
   %i.cbu = load double, ptr %i.cbt, align 8, !tbaa !65
-  %260 = fdiv double 1.000000e+00, %i.cbu
+  %265 = insertelement <2 x double> poison, double %i.cbr, i64 0
+  %266 = insertelement <2 x double> %265, double %i.cbu, i64 1
+  %267 = fdiv <2 x double> splat (double 1.000000e+00), %266 ; 2 uses
   %i.cbv = getelementptr inbounds nuw i8, ptr %.val50, i64 224
   %i.cbw = load ptr, ptr %i.cbv, align 8, !tbaa !64
   %i.cbx = load double, ptr %i.cbw, align 8, !tbaa !65
-  %261 = fdiv double 1.000000e+00, %i.cbx
   %i.cby = getelementptr inbounds nuw i8, ptr %.val50, i64 248
   %i.cbz = load ptr, ptr %i.cby, align 8, !tbaa !64
   %i.cca = load double, ptr %i.cbz, align 8, !tbaa !65
-  %262 = fdiv double 1.000000e+00, %i.cca
+  %268 = insertelement <2 x double> poison, double %i.cbx, i64 0
+  %269 = insertelement <2 x double> %268, double %i.cca, i64 1
+  %270 = fdiv <2 x double> splat (double 1.000000e+00), %269 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #10
   %i.ccb = call noundef ptr @_ZNK16OpenColorIO_v2_516GpuShaderCreator12getPixelNameEv(ptr noundef nonnull align 8 dereferenceable(16) %.val49) #10 ; 4 uses
   %i.ccc = getelementptr inbounds nuw i8, ptr %46, i64 16 ; 7 uses
@@ -756,7 +764,11 @@ bb.vt:                                            ; preds = %._crit_edge.i.i.i65
   store i64 5, ptr %i.ccp, align 8, !tbaa !52
   %i.ccq = getelementptr inbounds nuw i8, ptr %47, i64 21
   store i8 0, ptr %i.ccq, align 1, !tbaa !44
-  invoke void @_ZN16OpenColorIO_v2_513GpuShaderText13declareFloat4ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEdddd(ptr noundef nonnull align 8 dereferenceable(764) %238, ptr noundef nonnull align 8 dereferenceable(32) %47, double noundef %259, double noundef %260, double noundef %261, double noundef %262)
+  %271 = extractelement <2 x double> %267, i64 0
+  %272 = extractelement <2 x double> %267, i64 1
+  %273 = extractelement <2 x double> %270, i64 0
+  %274 = extractelement <2 x double> %270, i64 1
+  invoke void @_ZN16OpenColorIO_v2_513GpuShaderText13declareFloat4ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEdddd(ptr noundef nonnull align 8 dereferenceable(764) %238, ptr noundef nonnull align 8 dereferenceable(32) %47, double noundef %271, double noundef %272, double noundef %273, double noundef %274)
           to label %bb.vu unwind label %bb.wo
 
 bb.vu:                                            ; preds = %._crit_edge.i.i56.i659
@@ -1159,19 +1171,21 @@ _ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2ERKS3_.exit829: ; preds =
   %i.ctm = getelementptr inbounds nuw i8, ptr %.val54, i64 176
   %i.ctn = load ptr, ptr %i.ctm, align 8, !tbaa !64
   %i.cto = load double, ptr %i.ctn, align 8, !tbaa !65
-  %263 = fdiv double 1.000000e+00, %i.cto
   %i.ctp = getelementptr inbounds nuw i8, ptr %.val54, i64 200
   %i.ctq = load ptr, ptr %i.ctp, align 8, !tbaa !64
   %i.ctr = load double, ptr %i.ctq, align 8, !tbaa !65
-  %264 = fdiv double 1.000000e+00, %i.ctr
+  %275 = insertelement <2 x double> poison, double %i.cto, i64 0
+  %276 = insertelement <2 x double> %275, double %i.ctr, i64 1
+  %277 = fdiv <2 x double> splat (double 1.000000e+00), %276 ; 2 uses
   %i.cts = getelementptr inbounds nuw i8, ptr %.val54, i64 224
   %i.ctt = load ptr, ptr %i.cts, align 8, !tbaa !64
   %i.ctu = load double, ptr %i.ctt, align 8, !tbaa !65
-  %265 = fdiv double 1.000000e+00, %i.ctu
   %i.ctv = getelementptr inbounds nuw i8, ptr %.val54, i64 248
   %i.ctw = load ptr, ptr %i.ctv, align 8, !tbaa !64
   %i.ctx = load double, ptr %i.ctw, align 8, !tbaa !65
-  %266 = fdiv double 1.000000e+00, %i.ctx
+  %278 = insertelement <2 x double> poison, double %i.ctu, i64 0
+  %279 = insertelement <2 x double> %278, double %i.ctx, i64 1
+  %280 = fdiv <2 x double> splat (double 1.000000e+00), %279 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   %i.cty = call noundef ptr @_ZNK16OpenColorIO_v2_516GpuShaderCreator12getPixelNameEv(ptr noundef nonnull align 8 dereferenceable(16) %.val53) #10 ; 4 uses
   %i.ctz = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
@@ -1235,7 +1249,11 @@ bb.aax:                                           ; preds = %._crit_edge.i.i.i83
   store i64 5, ptr %i.cum, align 8, !tbaa !52
   %i.cun = getelementptr inbounds nuw i8, ptr %3, i64 21
   store i8 0, ptr %i.cun, align 1, !tbaa !44
-  invoke void @_ZN16OpenColorIO_v2_513GpuShaderText13declareFloat4ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEdddd(ptr noundef nonnull align 8 dereferenceable(764) %238, ptr noundef nonnull align 8 dereferenceable(32) %3, double noundef %263, double noundef %264, double noundef %265, double noundef %266)
+  %281 = extractelement <2 x double> %277, i64 0
+  %282 = extractelement <2 x double> %277, i64 1
+  %283 = extractelement <2 x double> %280, i64 0
+  %284 = extractelement <2 x double> %280, i64 1
+  invoke void @_ZN16OpenColorIO_v2_513GpuShaderText13declareFloat4ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEdddd(ptr noundef nonnull align 8 dereferenceable(764) %238, ptr noundef nonnull align 8 dereferenceable(32) %3, double noundef %281, double noundef %282, double noundef %283, double noundef %284)
           to label %bb.aay unwind label %bb.acd
 
 bb.aay:                                           ; preds = %._crit_edge.i.i81.i831
