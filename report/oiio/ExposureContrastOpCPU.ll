@@ -203,17 +203,16 @@ bb.a:
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph52, !llvm.loop !110
 
 bb.b:                                             ; preds = %bb.a
-  %4 = fdiv float 1.000000e+00, %i.o
-  %5 = insertelement <4 x float> poison, float %4, i64 0
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> zeroinitializer
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bf = load float, ptr %i.be, align 8, !tbaa !48 ; 2 uses
   %i.bg = fmul float %i.w, %i.bf
-  %7 = fdiv float 1.000000e+00, %i.bf
-  %8 = insertelement <4 x float> poison, float %i.bg, i64 0
-  %i.bh = shufflevector <4 x float> %8, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.bi = insertelement <4 x float> poison, float %7, i64 0
+  %4 = insertelement <2 x float> poison, float %i.o, i64 0
+  %5 = insertelement <2 x float> %4, float %i.bf, i64 1
+  %6 = fdiv <2 x float> splat (float 1.000000e+00), %5 ; 2 uses
+  %i.bh = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> zeroinitializer
+  %i.bi = insertelement <4 x float> poison, float %i.bg, i64 0
   %i.bj = shufflevector <4 x float> %i.bi, <4 x float> poison, <4 x i32> zeroinitializer
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.bk = icmp sgt i64 %3, 0
   br i1 %i.bk, label %.lr.ph, label %.loopexit
 
@@ -224,7 +223,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bl = getelementptr inbounds nuw i8, ptr %.148, i64 12
   %i.bm = load float, ptr %i.bl, align 4, !tbaa !66
   %i.bn = load <4 x float>, ptr %.148, align 4, !tbaa !66
-  %i.bo = fmul <4 x float> %i.bj, %i.bn           ; 2 uses
+  %i.bo = fmul <4 x float> %7, %i.bn              ; 2 uses
   %i.bp = bitcast <4 x float> %i.bo to <4 x i32>  ; 2 uses
   %i.bq = and <4 x i32> %i.bp, splat (i32 -2139095041)
   %i.br = or disjoint <4 x i32> %i.bq, splat (i32 1065353216)
@@ -244,7 +243,7 @@ bb.b:                                             ; preds = %bb.a
   %i.cf = add nsw <4 x i32> %i.ce, splat (i32 -127)
   %i.cg = sitofp <4 x i32> %i.cf to <4 x float>
   %i.ch = fadd nnan <4 x float> %i.cc, %i.cg
-  %i.ci = fmul <4 x float> %6, %i.ch              ; 5 uses
+  %i.ci = fmul <4 x float> %i.bh, %i.ch           ; 5 uses
   %i.cj = tail call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> %i.ci)
   %i.ck = fcmp ult <4 x float> %i.ci, zeroinitializer
   %i.cl = sext <4 x i1> %i.ck to <4 x i32>
@@ -269,7 +268,7 @@ bb.b:                                             ; preds = %bb.a
   %i.de = select <4 x i1> %i.db, <4 x float> %i.da, <4 x float> zeroinitializer
   %i.df = select <4 x i1> %i.dc, <4 x float> splat (float +inf), <4 x float> %i.de
   %i.dg = select <4 x i1> %i.dd, <4 x float> %i.df, <4 x float> zeroinitializer
-  %i.dh = fmul <4 x float> %i.bh, %i.dg
+  %i.dh = fmul <4 x float> %i.bj, %i.dg
   store <4 x float> %i.dh, ptr %.14247, align 1, !tbaa !75
   %i.di = getelementptr inbounds nuw i8, ptr %.14247, i64 12
   store float %i.bm, ptr %i.di, align 4, !tbaa !66
@@ -672,15 +671,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bg = load float, ptr %i.bf, align 8, !tbaa !48 ; 2 uses
-  %4 = fdiv float 1.000000e+00, %i.bg
-  %5 = fmul float %i.x, %i.bg
-  %6 = fdiv float 1.000000e+00, %i.o
-  %7 = insertelement <4 x float> poison, float %6, i64 0
-  %8 = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.bh = insertelement <4 x float> poison, float %5, i64 0
+  %4 = fmul float %i.x, %i.bg
+  %5 = insertelement <2 x float> poison, float %i.bg, i64 0
+  %6 = insertelement <2 x float> %5, float %i.o, i64 1
+  %7 = fdiv <2 x float> splat (float 1.000000e+00), %6 ; 2 uses
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %i.bh = insertelement <4 x float> poison, float %4, i64 0
   %i.bi = shufflevector <4 x float> %i.bh, <4 x float> poison, <4 x i32> zeroinitializer
-  %9 = insertelement <4 x float> poison, float %4, i64 0
-  %i.bj = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.bj = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> zeroinitializer
   %i.bk = icmp sgt i64 %3, 0
   br i1 %i.bk, label %.lr.ph, label %.loopexit
 

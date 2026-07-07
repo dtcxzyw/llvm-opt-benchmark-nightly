@@ -204,52 +204,42 @@ bb.ct:                                            ; preds = %_ZN6Assimp3MDL8Half
   %i.aba = load i8, ptr %i.aaz, align 1
   %i.abb = zext i8 %i.aba to i64
   %i.abc = load ptr, ptr %i.va, align 8
-  %i.abd = getelementptr inbounds nuw [160 x i8], ptr %i.abc, i64 %i.abb ; 12 uses
-  %32 = getelementptr inbounds nuw i8, ptr %i.abd, i64 8
-  %33 = load float, ptr %i.aay, align 4           ; 3 uses
-  %34 = getelementptr inbounds nuw i8, ptr %i.aay, i64 4
-  %35 = load float, ptr %34, align 4              ; 3 uses
-  %36 = getelementptr inbounds nuw i8, ptr %i.aay, i64 8
-  %37 = load float, ptr %36, align 4              ; 3 uses
-  %38 = load float, ptr %32, align 4
-  %i.abe = getelementptr inbounds nuw i8, ptr %i.abd, i64 12
-  %i.abf = load float, ptr %i.abe, align 4
-  %39 = fmul float %35, %i.abf
-  %40 = call float @llvm.fmuladd.f32(float %38, float %33, float %39)
-  %i.abg = getelementptr inbounds nuw i8, ptr %i.abd, i64 16
-  %i.abh = load float, ptr %i.abg, align 4
-  %41 = call float @llvm.fmuladd.f32(float %i.abh, float %37, float %40)
-  %i.abi = getelementptr inbounds nuw i8, ptr %i.abd, i64 20
-  %i.abj = load float, ptr %i.abi, align 4
-  %42 = fadd float %i.abj, %41
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %42, i64 0
-  %43 = getelementptr inbounds nuw i8, ptr %i.abd, i64 24
-  %44 = load float, ptr %43, align 4
-  %45 = getelementptr inbounds nuw i8, ptr %i.abd, i64 28
-  %46 = load float, ptr %45, align 4
-  %47 = fmul float %35, %46
-  %48 = call float @llvm.fmuladd.f32(float %44, float %33, float %47)
-  %49 = getelementptr inbounds nuw i8, ptr %i.abd, i64 32
-  %50 = load float, ptr %49, align 4
-  %51 = call float @llvm.fmuladd.f32(float %50, float %37, float %48)
-  %52 = getelementptr inbounds nuw i8, ptr %i.abd, i64 36
-  %53 = load float, ptr %52, align 4
-  %54 = fadd float %53, %51
-  %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %54, i64 1
+  %i.abd = getelementptr inbounds nuw [160 x i8], ptr %i.abc, i64 %i.abb ; 5 uses
+  %i.abe = getelementptr inbounds nuw i8, ptr %i.abd, i64 8
+  %i.abf = load float, ptr %i.aay, align 4        ; 2 uses
+  %i.abg = getelementptr inbounds nuw i8, ptr %i.aay, i64 4
+  %i.abh = load float, ptr %i.abg, align 4        ; 2 uses
+  %i.abi = getelementptr inbounds nuw i8, ptr %i.aay, i64 8
+  %i.abj = load float, ptr %i.abi, align 4        ; 2 uses
+  %32 = load <8 x float>, ptr %i.abe, align 4     ; 4 uses
+  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.abh, i64 0
+  %33 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i, <2 x float> poison, <2 x i32> zeroinitializer
+  %34 = shufflevector <8 x float> %32, <8 x float> poison, <2 x i32> <i32 1, i32 5>
+  %35 = fmul <2 x float> %33, %34
+  %36 = shufflevector <8 x float> %32, <8 x float> poison, <2 x i32> <i32 0, i32 4>
+  %37 = insertelement <2 x float> poison, float %i.abf, i64 0
+  %38 = shufflevector <2 x float> %37, <2 x float> poison, <2 x i32> zeroinitializer
+  %39 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %36, <2 x float> %38, <2 x float> %35)
+  %40 = shufflevector <8 x float> %32, <8 x float> poison, <2 x i32> <i32 2, i32 6>
+  %41 = insertelement <2 x float> poison, float %i.abj, i64 0
+  %42 = shufflevector <2 x float> %41, <2 x float> poison, <2 x i32> zeroinitializer
+  %43 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %40, <2 x float> %42, <2 x float> %39)
+  %44 = shufflevector <8 x float> %32, <8 x float> poison, <2 x i32> <i32 3, i32 7>
+  %45 = fadd <2 x float> %44, %43
   %i.abk = getelementptr inbounds nuw i8, ptr %i.abd, i64 40
   %i.abl = load float, ptr %i.abk, align 4
   %i.abm = getelementptr inbounds nuw i8, ptr %i.abd, i64 44
   %i.abn = load float, ptr %i.abm, align 4
-  %i.abo = fmul float %35, %i.abn
-  %i.abp = call float @llvm.fmuladd.f32(float %i.abl, float %33, float %i.abo)
+  %i.abo = fmul float %i.abh, %i.abn
+  %i.abp = call float @llvm.fmuladd.f32(float %i.abl, float %i.abf, float %i.abo)
   %i.abq = getelementptr inbounds nuw i8, ptr %i.abd, i64 48
   %i.abr = load float, ptr %i.abq, align 4
-  %i.abs = call float @llvm.fmuladd.f32(float %i.abr, float %37, float %i.abp)
+  %i.abs = call float @llvm.fmuladd.f32(float %i.abr, float %i.abj, float %i.abp)
   %i.abt = getelementptr inbounds nuw i8, ptr %i.abd, i64 52
   %i.abu = load float, ptr %i.abt, align 4
   %i.abv = fadd float %i.abu, %i.abs
   %i.abw = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0765.4, i64 %.03082298 ; 2 uses
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %i.abw, align 4
+  store <2 x float> %45, ptr %i.abw, align 4
   %.sroa.4128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.abw, i64 8
   store float %i.abv, ptr %.sroa.4128.0..sroa_idx, align 4
   %i.abx = add nuw i64 %.03082298, 1              ; 2 uses
@@ -271,73 +261,74 @@ bb.ct:                                            ; preds = %_ZN6Assimp3MDL8Half
   %i.ace = getelementptr inbounds nuw i8, ptr %i.acd, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %28, ptr noundef nonnull align 8 dereferenceable(64) %i.ace, i64 64, i1 false)
   %i.acf = invoke noundef nonnull align 4 dereferenceable(64) ptr @_ZN12aiMatrix4x4tIfE7InverseEv(ptr noundef nonnull align 4 dereferenceable(64) %28)
-          to label %bb.cu unwind label %bb.cv     ; 15 uses
+          to label %bb.cu unwind label %bb.cv     ; 14 uses
 
 bb.cu:                                            ; preds = %.lr.ph2301
   %i.acg = getelementptr inbounds nuw [12 x i8], ptr %i.yf, i64 %.03042300 ; 3 uses
   %i.ach = getelementptr inbounds nuw i8, ptr %i.acf, i64 16 ; 2 uses
   %i.aci = getelementptr inbounds nuw i8, ptr %i.acf, i64 4 ; 2 uses
-  %55 = load float, ptr %i.ach, align 4           ; 2 uses
-  %56 = load float, ptr %i.aci, align 4           ; 2 uses
-  store float %56, ptr %i.ach, align 4
-  store float %55, ptr %i.aci, align 4
   %i.acj = getelementptr inbounds nuw i8, ptr %i.acf, i64 32 ; 2 uses
   %i.ack = getelementptr inbounds nuw i8, ptr %i.acf, i64 8 ; 2 uses
-  %i.acl = load float, ptr %i.acj, align 4        ; 2 uses
-  %57 = load float, ptr %i.ack, align 4           ; 2 uses
-  store float %57, ptr %i.acj, align 4
-  store float %i.acl, ptr %i.ack, align 4
-  %i.acm = getelementptr inbounds nuw i8, ptr %i.acf, i64 36 ; 2 uses
-  %i.acn = getelementptr inbounds nuw i8, ptr %i.acf, i64 24 ; 2 uses
-  %i.aco = load float, ptr %i.acm, align 4        ; 2 uses
-  %58 = load float, ptr %i.acn, align 4           ; 2 uses
-  store float %58, ptr %i.acm, align 4
-  store float %i.aco, ptr %i.acn, align 4
-  %i.acp = getelementptr inbounds nuw i8, ptr %i.acf, i64 48 ; 2 uses
-  %i.acq = getelementptr inbounds nuw i8, ptr %i.acf, i64 12 ; 2 uses
+  %i.acl = load float, ptr %i.ack, align 4        ; 2 uses
+  %46 = getelementptr inbounds nuw i8, ptr %i.acf, i64 36
+  %47 = getelementptr inbounds nuw i8, ptr %i.acf, i64 24 ; 2 uses
+  %48 = load float, ptr %47, align 4              ; 2 uses
+  %i.acm = getelementptr inbounds nuw i8, ptr %i.acf, i64 48 ; 2 uses
+  %i.acn = getelementptr inbounds nuw i8, ptr %i.acf, i64 12 ; 2 uses
+  %i.aco = load float, ptr %i.acn, align 4
+  %49 = getelementptr inbounds nuw i8, ptr %i.acf, i64 52
+  %50 = getelementptr inbounds nuw i8, ptr %i.acf, i64 28 ; 2 uses
+  %51 = load float, ptr %50, align 4
+  %i.acp = getelementptr inbounds nuw i8, ptr %i.acf, i64 56 ; 2 uses
+  %i.acq = getelementptr inbounds nuw i8, ptr %i.acf, i64 44 ; 2 uses
   %i.acr = load float, ptr %i.acp, align 4        ; 2 uses
   %i.acs = load float, ptr %i.acq, align 4
   store float %i.acs, ptr %i.acp, align 4
   store float %i.acr, ptr %i.acq, align 4
-  %i.act = getelementptr inbounds nuw i8, ptr %i.acf, i64 52 ; 2 uses
-  %i.acu = getelementptr inbounds nuw i8, ptr %i.acf, i64 28 ; 2 uses
-  %i.acv = load float, ptr %i.act, align 4        ; 2 uses
-  %59 = load float, ptr %i.acu, align 4
-  store float %59, ptr %i.act, align 4
-  store float %i.acv, ptr %i.acu, align 4
-  %60 = getelementptr inbounds nuw i8, ptr %i.acf, i64 56 ; 2 uses
-  %61 = getelementptr inbounds nuw i8, ptr %i.acf, i64 44 ; 2 uses
-  %62 = load float, ptr %60, align 4              ; 2 uses
-  %63 = load float, ptr %61, align 4
-  store float %63, ptr %60, align 4
-  store float %62, ptr %61, align 4
-  %.sroa.0715.0.copyload = load float, ptr %i.acf, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.acf, i64 20
-  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.acf, i64 40
   %.sroa.14.0.copyload = load float, ptr %.sroa.14.0..sroa_idx, align 4
+  %i.act = getelementptr inbounds nuw i8, ptr %i.acg, i64 4
+  %i.acu = getelementptr inbounds nuw i8, ptr %i.acg, i64 8
+  %i.acv = load float, ptr %i.aci, align 4
+  %52 = load <2 x float>, ptr %i.acf, align 4
+  %53 = load <2 x float>, ptr %i.ach, align 4     ; 2 uses
+  store float %i.acv, ptr %i.ach, align 4
+  %54 = extractelement <2 x float> %53, i64 0
+  store float %54, ptr %i.aci, align 4
+  %55 = load <2 x float>, ptr %i.acj, align 4     ; 3 uses
+  store float %i.acl, ptr %i.acj, align 4
+  %56 = extractelement <2 x float> %55, i64 0
+  store float %56, ptr %i.ack, align 4
+  store float %48, ptr %46, align 4
+  %57 = extractelement <2 x float> %55, i64 1
+  store float %57, ptr %47, align 4
+  %58 = load <2 x float>, ptr %i.acm, align 4     ; 3 uses
+  store float %i.aco, ptr %i.acm, align 4
+  %59 = extractelement <2 x float> %58, i64 0
+  store float %59, ptr %i.acn, align 4
+  store float %51, ptr %49, align 4
+  %60 = extractelement <2 x float> %58, i64 1
+  store float %60, ptr %50, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #23
-  %64 = load float, ptr %i.acg, align 4           ; 3 uses
-  %65 = getelementptr inbounds nuw i8, ptr %i.acg, i64 4
-  %i.acw = load float, ptr %65, align 4           ; 3 uses
-  %66 = getelementptr inbounds nuw i8, ptr %i.acg, i64 8
-  %i.acx = load float, ptr %66, align 4           ; 3 uses
-  %67 = fmul float %55, %i.acw
-  %68 = call float @llvm.fmuladd.f32(float %.sroa.0715.0.copyload, float %64, float %67)
-  %69 = call float @llvm.fmuladd.f32(float %i.acl, float %i.acx, float %68)
-  %70 = fadd float %i.acr, %69
-  %.sroa.0.0.vec.insert.i458 = insertelement <2 x float> poison, float %70, i64 0
-  %71 = fmul float %.sroa.9.0.copyload, %i.acw
-  %72 = call float @llvm.fmuladd.f32(float %56, float %64, float %71)
-  %73 = call float @llvm.fmuladd.f32(float %i.aco, float %i.acx, float %72)
-  %74 = fadd float %i.acv, %73
-  %.sroa.0.4.vec.insert.i459 = insertelement <2 x float> %.sroa.0.0.vec.insert.i458, float %74, i64 1
-  %i.acy = fmul float %58, %i.acw
-  %i.acz = call float @llvm.fmuladd.f32(float %57, float %64, float %i.acy)
+  %i.acw = load float, ptr %i.acg, align 4        ; 2 uses
+  %61 = load float, ptr %i.act, align 4           ; 2 uses
+  %i.acx = load float, ptr %i.acu, align 4        ; 2 uses
+  %62 = insertelement <2 x float> poison, float %61, i64 0
+  %63 = shufflevector <2 x float> %62, <2 x float> poison, <2 x i32> zeroinitializer
+  %64 = fmul <2 x float> %53, %63
+  %65 = insertelement <2 x float> poison, float %i.acw, i64 0
+  %66 = shufflevector <2 x float> %65, <2 x float> poison, <2 x i32> zeroinitializer
+  %67 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %52, <2 x float> %66, <2 x float> %64)
+  %68 = insertelement <2 x float> poison, float %i.acx, i64 0
+  %69 = shufflevector <2 x float> %68, <2 x float> poison, <2 x i32> zeroinitializer
+  %70 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %55, <2 x float> %69, <2 x float> %67)
+  %71 = fadd <2 x float> %58, %70
+  %i.acy = fmul float %48, %61
+  %i.acz = call float @llvm.fmuladd.f32(float %i.acl, float %i.acw, float %i.acy)
   %i.ada = call float @llvm.fmuladd.f32(float %.sroa.14.0.copyload, float %i.acx, float %i.acz)
-  %i.adb = fadd float %62, %i.ada
+  %i.adb = fadd float %i.acr, %i.ada
   %i.adc = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0753.3, i64 %.03042300 ; 2 uses
-  store <2 x float> %.sroa.0.4.vec.insert.i459, ptr %i.adc, align 4
+  store <2 x float> %71, ptr %i.adc, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.adc, i64 8
   store float %i.adb, ptr %.sroa.4.0..sroa_idx, align 4
   %i.add = add nuw i64 %.03042300, 1              ; 2 uses

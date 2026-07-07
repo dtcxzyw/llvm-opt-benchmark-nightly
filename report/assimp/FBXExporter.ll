@@ -204,7 +204,7 @@ bb.a:
   %i.z = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.aa = insertelement <2 x float> %i.z, float %i.k, i64 0 ; 2 uses
   %i.ab = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aa, <2 x float> %i.aa, <2 x float> %i.y)
-  %i.ac = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.ab) ; 4 uses
+  %i.ac = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.ab) ; 3 uses
   store <2 x float> %i.ac, ptr %1, align 4
   %i.ad = fmul float %i.r, %i.r
   %i.ae = tail call float @llvm.fmuladd.f32(float %i.p, float %i.p, float %i.ad)
@@ -301,15 +301,12 @@ bb.a:
   br i1 %i.do, label %bb.b, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a
-  %4 = extractelement <2 x float> %i.ac, i64 1
-  %.pre = load float, ptr %1, align 4             ; 2 uses
+  %.pre = load float, ptr %1, align 4
   %i.dp = insertelement <2 x float> %i.ac, float %.pre, i64 0
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.0.4.vec.insert.i = fneg <2 x float> %i.ac ; 4 uses
-  %5 = extractelement <2 x float> %.sroa.0.4.vec.insert.i, i64 1
-  %6 = extractelement <2 x float> %.sroa.0.4.vec.insert.i, i64 0
+  %.sroa.0.4.vec.insert.i = fneg <2 x float> %i.ac ; 2 uses
   %i.dq = fneg float %sqrt.i49                    ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i, ptr %1, align 4
   store float %i.dq, ptr %i.ag, align 4
@@ -317,15 +314,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.dr = phi float [ %sqrt.i49, %._crit_edge ], [ %i.dq, %bb.b ] ; 2 uses
-  %7 = phi float [ %4, %._crit_edge ], [ %5, %bb.b ]
-  %8 = phi float [ %.pre, %._crit_edge ], [ %6, %bb.b ]
-  %i.ds = phi <2 x float> [ %i.dp, %._crit_edge ], [ %.sroa.0.4.vec.insert.i, %bb.b ]
-  %9 = fcmp une float %8, 0.000000e+00            ; 2 uses
-  %10 = fcmp une float %7, 0.000000e+00           ; 3 uses
+  %i.ds = phi <2 x float> [ %i.dp, %._crit_edge ], [ %.sroa.0.4.vec.insert.i, %bb.b ] ; 2 uses
+  %4 = fcmp une <2 x float> %i.ds, zeroinitializer ; 3 uses
   %i.dt = fdiv <2 x float> splat (float 1.000000e+00), %i.ds ; 3 uses
   %i.du = extractelement <2 x float> %i.dt, i64 0
   %i.dv = fmul float %i.k, %i.du
-  %.sroa.12.0 = select i1 %9, float %i.dv, float %i.k
+  %5 = extractelement <2 x i1> %4, i64 0
+  %.sroa.12.0 = select i1 %5, float %i.dv, float %i.k
   %i.dw = fneg float %.sroa.12.0
   %i.dx = tail call noundef float @asinf(float noundef %i.dw) #31 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %2, i64 4
@@ -345,9 +340,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ei = insertelement <4 x float> %i.eh, float %i.ed, i64 2
   %i.ej = shufflevector <4 x float> %i.ei, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
   %i.ek = fmul <4 x float> %i.eg, %i.ej
-  %11 = insertelement <4 x i1> poison, i1 %10, i64 0
-  %12 = insertelement <4 x i1> %11, i1 %9, i64 1
-  %i.el = insertelement <4 x i1> %12, i1 %i.ec, i64 2
+  %6 = shufflevector <2 x i1> %4, <2 x i1> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
+  %i.el = insertelement <4 x i1> %6, i1 %i.ec, i64 2
   %i.em = shufflevector <4 x i1> %i.el, <4 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
   %i.en = select <4 x i1> %i.em, <4 x float> %i.ek, <4 x float> %i.eg
   %i.eo = insertelement <4 x float> poison, float %i.dz, i64 0
@@ -363,13 +357,14 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.ex = extractelement <2 x float> %i.dt, i64 1 ; 2 uses
-  %i.ey = extractelement <2 x float> %i.v, i64 1  ; 2 uses
-  %i.ez = fmul float %i.ey, %i.ex
-  %.sroa.17.0 = select i1 %10, float %i.ez, float %i.ey
+  %i.ex = extractelement <2 x float> %i.v, i64 1  ; 2 uses
+  %i.ey = extractelement <2 x float> %i.dt, i64 1 ; 2 uses
+  %i.ez = fmul float %i.ex, %i.ey
+  %7 = extractelement <2 x i1> %4, i64 1          ; 2 uses
+  %.sroa.17.0 = select i1 %7, float %i.ez, float %i.ex
   %i.fa = extractelement <2 x float> %i.w, i64 1  ; 2 uses
-  %i.fb = fmul float %i.fa, %i.ex
-  %.sroa.22.0 = select i1 %10, float %i.fb, float %i.fa
+  %i.fb = fmul float %i.fa, %i.ey
+  %.sroa.22.0 = select i1 %7, float %i.fb, float %i.fa
   store float 0.000000e+00, ptr %2, align 4
   %i.fc = fneg float %.sroa.17.0
   %i.fd = tail call noundef float @atan2f(float noundef %i.fc, float noundef %.sroa.22.0) #31

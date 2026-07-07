@@ -203,7 +203,7 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %bb.r, %_ZNSt6vector
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden i64 @_ZN4LIEF5MachO7Builder5buildINS0_7details7MachO64EEENS_10ok_error_tERNS0_10VersionMinE(ptr noundef nonnull align 8 dereferenceable(201) %0, ptr noundef nonnull align 8 dereferenceable(80) %1) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %2 = alloca %"struct.LIEF::MachO::details::version_min_command", align 4 ; 7 uses
+  %2 = alloca %"struct.LIEF::MachO::details::version_min_command", align 4 ; 6 uses
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.7) #22 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -211,7 +211,6 @@ bb.a:
   %i.e = tail call noundef ptr @_ZN4LIEF5MachO9to_stringENS0_11LoadCommand4TYPEE(i64 noundef %i.d) #22 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.g = load i64, ptr %i.c, align 8
   %i.h = trunc i64 %i.g to i32
   store i32 %i.h, ptr %2, align 4
@@ -219,28 +218,19 @@ bb.a:
   %i.j = load i32, ptr %i.i, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.j, ptr %i.k, align 4
-  %4 = load i32, ptr %i.f, align 8
-  %5 = shl i32 %4, 16
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 60
-  %7 = load i32, ptr %6, align 4
-  %8 = shl i32 %7, 8
-  %9 = or i32 %8, %5
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %10 = load i32, ptr %i.l, align 8
-  %11 = or i32 %9, %10
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %11, ptr %i.m, align 4
-  %12 = load i32, ptr %3, align 4
-  %13 = shl i32 %12, 16
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %15 = load i32, ptr %14, align 8
-  %16 = shl i32 %15, 8
-  %17 = or i32 %16, %13
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %19 = load i32, ptr %18, align 4
-  %20 = or i32 %17, %19
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i32 %20, ptr %21, align 4
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %3 = load <4 x i32>, ptr %i.f, align 8          ; 3 uses
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <2 x i32> <i32 0, i32 3>
+  %5 = shl <2 x i32> %4, splat (i32 16)
+  %6 = load <2 x i32>, ptr %i.m, align 8
+  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %8 = shufflevector <4 x i32> %3, <4 x i32> %7, <2 x i32> <i32 1, i32 4>
+  %9 = shl <2 x i32> %8, splat (i32 8)
+  %10 = or <2 x i32> %9, %5
+  %11 = shufflevector <4 x i32> %3, <4 x i32> %7, <2 x i32> <i32 2, i32 5>
+  %12 = or <2 x i32> %10, %11
+  store <2 x i32> %12, ptr %i.l, align 4
   store i32 16, ptr %i.i, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.o = load ptr, ptr %i.n, align 8              ; 3 uses
@@ -643,7 +633,7 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %bb.r, %_ZNSt6vector
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden i64 @_ZN4LIEF5MachO7Builder5buildINS0_7details7MachO32EEENS_10ok_error_tERNS0_10VersionMinE(ptr noundef nonnull align 8 dereferenceable(201) %0, ptr noundef nonnull align 8 dereferenceable(80) %1) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %2 = alloca %"struct.LIEF::MachO::details::version_min_command", align 4 ; 7 uses
+  %2 = alloca %"struct.LIEF::MachO::details::version_min_command", align 4 ; 6 uses
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.7) #22 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -651,7 +641,6 @@ bb.a:
   %i.e = tail call noundef ptr @_ZN4LIEF5MachO9to_stringENS0_11LoadCommand4TYPEE(i64 noundef %i.d) #22 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.g = load i64, ptr %i.c, align 8
   %i.h = trunc i64 %i.g to i32
   store i32 %i.h, ptr %2, align 4
@@ -659,28 +648,19 @@ bb.a:
   %i.j = load i32, ptr %i.i, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.j, ptr %i.k, align 4
-  %4 = load i32, ptr %i.f, align 8
-  %5 = shl i32 %4, 16
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 60
-  %7 = load i32, ptr %6, align 4
-  %8 = shl i32 %7, 8
-  %9 = or i32 %8, %5
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %10 = load i32, ptr %i.l, align 8
-  %11 = or i32 %9, %10
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %11, ptr %i.m, align 4
-  %12 = load i32, ptr %3, align 4
-  %13 = shl i32 %12, 16
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %15 = load i32, ptr %14, align 8
-  %16 = shl i32 %15, 8
-  %17 = or i32 %16, %13
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %19 = load i32, ptr %18, align 4
-  %20 = or i32 %17, %19
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i32 %20, ptr %21, align 4
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %3 = load <4 x i32>, ptr %i.f, align 8          ; 3 uses
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <2 x i32> <i32 0, i32 3>
+  %5 = shl <2 x i32> %4, splat (i32 16)
+  %6 = load <2 x i32>, ptr %i.m, align 8
+  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %8 = shufflevector <4 x i32> %3, <4 x i32> %7, <2 x i32> <i32 1, i32 4>
+  %9 = shl <2 x i32> %8, splat (i32 8)
+  %10 = or <2 x i32> %9, %5
+  %11 = shufflevector <4 x i32> %3, <4 x i32> %7, <2 x i32> <i32 2, i32 5>
+  %12 = or <2 x i32> %10, %11
+  store <2 x i32> %12, ptr %i.l, align 4
   store i32 16, ptr %i.i, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.o = load ptr, ptr %i.n, align 8              ; 3 uses

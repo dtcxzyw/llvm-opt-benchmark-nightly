@@ -204,12 +204,6 @@ bb.a:
   %i.p = load <2 x i64>, ptr %i.n, align 8, !alias.scope !26910, !noalias !26913
   %i.q = add <2 x i64> %i.p, %i.o                 ; 3 uses
   store <2 x i64> %i.q, ptr %i.n, align 8, !alias.scope !26910, !noalias !26913
-  %2 = extractelement <2 x i64> %i.q, i64 1
-  %3 = sitofp i64 %2 to double
-  %4 = extractelement <2 x i64> %i.q, i64 0
-  %5 = uitofp i64 %4 to double
-  %6 = fdiv double %3, %5
-  store double %6, ptr %i.d, align 8, !alias.scope !26910, !noalias !26913
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26915)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26918)
@@ -231,12 +225,15 @@ bb.a:
   %i.ad = load <2 x i64>, ptr %i.ab, align 8, !alias.scope !26915, !noalias !26918
   %i.ae = add <2 x i64> %i.ad, %i.ac              ; 3 uses
   store <2 x i64> %i.ae, ptr %i.ab, align 8, !alias.scope !26915, !noalias !26918
-  %7 = extractelement <2 x i64> %i.ae, i64 1
-  %8 = sitofp i64 %7 to double
-  %9 = extractelement <2 x i64> %i.ae, i64 0
-  %10 = uitofp i64 %9 to double
-  %11 = fdiv double %8, %10
-  store double %11, ptr %i.r, align 8, !alias.scope !26915, !noalias !26918
+  %2 = shufflevector <2 x i64> %i.q, <2 x i64> %i.ae, <2 x i32> <i32 1, i32 3>
+  %3 = sitofp <2 x i64> %2 to <2 x double>
+  %4 = shufflevector <2 x i64> %i.q, <2 x i64> %i.ae, <2 x i32> <i32 0, i32 2>
+  %5 = uitofp <2 x i64> %4 to <2 x double>
+  %6 = fdiv <2 x double> %3, %5                   ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  store double %7, ptr %i.d, align 8, !alias.scope !26910, !noalias !26913
+  %8 = extractelement <2 x double> %6, i64 1
+  store double %8, ptr %i.r, align 8, !alias.scope !26915, !noalias !26918
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.ag = load i64, ptr %i.af, align 8, !noundef !4
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses

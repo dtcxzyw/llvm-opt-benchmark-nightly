@@ -201,49 +201,43 @@ declare noundef ptr @_ZNK4geos4geom10LineString16getCoordinatesROEv(ptr noundef 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9operation7overlay8validate20OffsetPointGenerator14computeOffsetsERKNS_4geom10CoordinateES7_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = load double, ptr %2, align 8, !tbaa !42    ; 2 uses
-  %4 = load double, ptr %1, align 8, !tbaa !42    ; 2 uses
-  %5 = fsub double %3, %4                         ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = load double, ptr %i.a, align 8, !tbaa !44  ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load double, ptr %7, align 8, !tbaa !44    ; 2 uses
-  %9 = fsub double %6, %8                         ; 3 uses
-  %10 = fmul double %5, %5
-  %11 = fmul double %9, %9
-  %12 = fadd double %10, %11
-  %sqrt = tail call double @llvm.sqrt.f64(double %12) ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %14 = load double, ptr %13, align 8, !tbaa !10  ; 2 uses
-  %15 = fmul double %5, %14
-  %16 = fdiv double %15, %sqrt                    ; 2 uses
-  %17 = fmul double %14, %9
-  %18 = fdiv double %17, %sqrt                    ; 2 uses
-  %19 = fadd double %3, %4
-  %20 = fmul double %19, 5.000000e-01             ; 2 uses
-  %21 = fadd double %6, %8
-  %22 = fmul double %21, 5.000000e-01             ; 2 uses
-  %23 = fsub double %20, %18                      ; 2 uses
-  %24 = fadd double %22, %16                      ; 2 uses
-  %25 = fadd double %20, %18                      ; 2 uses
-  %26 = fsub double %22, %16                      ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load <2 x double>, ptr %i.a, align 8
+  %4 = load <2 x double>, ptr %2, align 8, !tbaa !42 ; 2 uses
+  %5 = load <2 x double>, ptr %1, align 8, !tbaa !42 ; 2 uses
+  %6 = fsub <2 x double> %4, %5                   ; 3 uses
+  %7 = fmul <2 x double> %6, %6                   ; 2 uses
+  %shift = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %7, %shift
+  %8 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %sqrt = tail call double @llvm.sqrt.f64(double %8)
+  %9 = insertelement <2 x double> poison, double %sqrt, i64 0
+  %10 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %12 = fmul <2 x double> %10, %11
+  %13 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = fdiv <2 x double> %12, %13                ; 2 uses
+  %15 = fadd <2 x double> %4, %5
+  %16 = fmul <2 x double> %15, splat (double 5.000000e-01) ; 2 uses
+  %17 = fsub <2 x double> %16, %14                ; 2 uses
+  %18 = fadd <2 x double> %16, %14                ; 2 uses
+  %19 = shufflevector <2 x double> %17, <2 x double> %18, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %20 = shufflevector <2 x double> %18, <2 x double> %17, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21   ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !45   ; 8 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !43   ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !46   ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !44   ; 2 uses
   %.not.i = icmp eq ptr %i.e, %i.g
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store double %23, ptr %i.e, align 8, !tbaa !47
-  %.sroa.546.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store double %24, ptr %.sroa.546.0..sroa_idx, align 8, !tbaa !47
+  store <2 x double> %19, ptr %i.e, align 8, !tbaa !42
   %.sroa.649.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store double +qnan, ptr %.sroa.649.0..sroa_idx, align 8, !tbaa !47
+  store double +qnan, ptr %.sroa.649.0..sroa_idx, align 8, !tbaa !42
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
-  store ptr %i.h, ptr %i.d, align 8, !tbaa !45
+  store ptr %i.h, ptr %i.d, align 8, !tbaa !43
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -269,23 +263,21 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; pr
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.s = mul nuw nsw i64 %i.r, 24
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #10 ; 5 uses
-  %27 = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l ; 3 uses
-  store double %23, ptr %27, align 8, !tbaa !47
-  %.sroa.546.0..sroa_idx47 = getelementptr inbounds nuw i8, ptr %27, i64 8
-  store double %24, ptr %.sroa.546.0..sroa_idx47, align 8, !tbaa !47
-  %.sroa.649.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %27, i64 16
-  store double +qnan, ptr %.sroa.649.0..sroa_idx50, align 8, !tbaa !47
+  %.sroa.546.0..sroa_idx47 = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l ; 2 uses
+  store <2 x double> %19, ptr %.sroa.546.0..sroa_idx47, align 8, !tbaa !42
+  %.sroa.649.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %.sroa.546.0..sroa_idx47, i64 16
+  store double +qnan, ptr %.sroa.649.0..sroa_idx50, align 8, !tbaa !42
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.i, %i.e
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i.i
   %.012.i.i.i.i.i.i = phi ptr [ %i.v, %.lr.ph.i.i.i.i.i.i ], [ %i.t, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
   %.0911.i.i.i.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i.i.i.i ], [ %i.i, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !48, !alias.scope !49
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !45, !alias.scope !46
   %i.u = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.u, %i.e
-  br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !53
+  br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !50
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.t, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.v, %.lr.ph.i.i.i.i.i.i ]
@@ -301,18 +293,18 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN4geos
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.e, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
   %.pre = phi ptr [ %.pre.pre, %bb.e ], [ %i.c, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i ] ; 3 uses
   store ptr %i.t, ptr %i.c, align 8, !tbaa !22
-  store ptr %i.w, ptr %i.d, align 8, !tbaa !45
+  store ptr %i.w, ptr %i.d, align 8, !tbaa !43
   %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %i.r
-  store ptr %i.x, ptr %i.f, align 8, !tbaa !46
+  store ptr %i.x, ptr %i.f, align 8, !tbaa !44
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 8
-  %.pre54 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !45
+  %.pre54 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !43
   %.phi.trans.insert55 = getelementptr inbounds nuw i8, ptr %.pre, i64 16
-  %.pre56 = load ptr, ptr %.phi.trans.insert55, align 8, !tbaa !46
+  %.pre56 = load ptr, ptr %.phi.trans.insert55, align 8, !tbaa !44
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit: ; preds = %bb.b, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
   %i.y = phi ptr [ %i.g, %bb.b ], [ %.pre56, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ] ; 4 uses
-  %i.z = phi ptr [ %i.h, %bb.b ], [ %.pre54, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ] ; 5 uses
+  %i.z = phi ptr [ %i.h, %bb.b ], [ %.pre54, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ] ; 4 uses
   %i.aa = phi ptr [ %i.c, %bb.b ], [ %.pre, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ] ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
@@ -320,13 +312,11 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit: ; preds = %b
   br i1 %.not.i25, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
-  store double %25, ptr %i.z, align 8, !tbaa !47
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  store double %26, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !47
+  store <2 x double> %20, ptr %i.z, align 8, !tbaa !42
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  store double +qnan, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !47
+  store double +qnan, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !42
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 24
-  store ptr %i.ad, ptr %i.ab, align 8, !tbaa !45
+  store ptr %i.ad, ptr %i.ab, align 8, !tbaa !43
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit38
 
 bb.g:                                             ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
@@ -352,23 +342,21 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26: ; 
   tail call void @llvm.assume(i1 %.not.i.i.i28)
   %i.ao = mul nuw nsw i64 %i.an, 24
   %i.ap = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ao) #10 ; 5 uses
-  %28 = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.ah ; 3 uses
-  store double %25, ptr %28, align 8, !tbaa !47
-  %.sroa.5.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %28, i64 8
-  store double %26, ptr %.sroa.5.0..sroa_idx40, align 8, !tbaa !47
-  %.sroa.6.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %28, i64 16
-  store double +qnan, ptr %.sroa.6.0..sroa_idx42, align 8, !tbaa !47
+  %.sroa.5.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.ah ; 2 uses
+  store <2 x double> %20, ptr %.sroa.5.0..sroa_idx40, align 8, !tbaa !42
+  %.sroa.6.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa_idx40, i64 16
+  store double +qnan, ptr %.sroa.6.0..sroa_idx42, align 8, !tbaa !42
   %.not10.i.i.i.i.i.i29 = icmp eq ptr %i.ae, %i.y
   br i1 %.not10.i.i.i.i.i.i29, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i34, label %.lr.ph.i.i.i.i.i.i30
 
 .lr.ph.i.i.i.i.i.i30:                             ; preds = %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26, %.lr.ph.i.i.i.i.i.i30
   %.012.i.i.i.i.i.i31 = phi ptr [ %i.ar, %.lr.ph.i.i.i.i.i.i30 ], [ %i.ap, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26 ] ; 2 uses
   %.0911.i.i.i.i.i.i32 = phi ptr [ %i.aq, %.lr.ph.i.i.i.i.i.i30 ], [ %i.ae, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i31, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i32, i64 24, i1 false), !tbaa.struct !48, !alias.scope !54
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i31, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i32, i64 24, i1 false), !tbaa.struct !45, !alias.scope !51
   %i.aq = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i32, i64 24 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i31, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i33 = icmp eq ptr %i.aq, %i.y
-  br i1 %.not.i.i.i.i.i.i33, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i34, label %.lr.ph.i.i.i.i.i.i30, !llvm.loop !53
+  br i1 %.not.i.i.i.i.i.i33, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i34, label %.lr.ph.i.i.i.i.i.i30, !llvm.loop !50
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i34: ; preds = %.lr.ph.i.i.i.i.i.i30, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26
   %.0.lcssa.i.i.i.i.i.i35 = phi ptr [ %i.ap, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26 ], [ %i.ar, %.lr.ph.i.i.i.i.i.i30 ]
@@ -382,9 +370,9 @@ bb.i:                                             ; preds = %_ZNSt6vectorIN4geos
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i37: ; preds = %bb.i, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i34
   store ptr %i.ap, ptr %i.aa, align 8, !tbaa !22
-  store ptr %i.as, ptr %i.ab, align 8, !tbaa !45
+  store ptr %i.as, ptr %i.ab, align 8, !tbaa !43
   %i.at = getelementptr inbounds nuw [24 x i8], ptr %i.ap, i64 %i.an
-  store ptr %i.at, ptr %i.ac, align 8, !tbaa !46
+  store ptr %i.at, ptr %i.ac, align 8, !tbaa !44
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit38
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit38: ; preds = %bb.f, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i37
@@ -473,20 +461,17 @@ attributes #13 = { noreturn }
 !39 = !{!"llvm.loop.mustprogress"}
 !40 = distinct !{null}
 !41 = distinct !{null}
-!42 = !{!43, !12, i64 0}
-!43 = !{!"_ZTSN4geos4geom10CoordinateE", !12, i64 0, !12, i64 8, !12, i64 16}
-!44 = !{!43, !12, i64 8}
-!45 = !{!23, !24, i64 8}
-!46 = !{!23, !24, i64 16}
-!47 = !{!12, !12, i64 0}
-!48 = !{i64 0, i64 8, !47, i64 8, i64 8, !47, i64 16, i64 8, !47}
-!49 = !{!50, !52}
-!50 = distinct !{!50, !51, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!51 = distinct !{!51, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_"}
-!52 = distinct !{!52, !51, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
-!53 = distinct !{!53, !39}
-!54 = !{!55, !57}
-!55 = distinct !{!55, !56, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!56 = distinct !{!56, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_"}
-!57 = distinct !{!57, !56, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
+!42 = !{!12, !12, i64 0}
+!43 = !{!23, !24, i64 8}
+!44 = !{!23, !24, i64 16}
+!45 = !{i64 0, i64 8, !42, i64 8, i64 8, !42, i64 16, i64 8, !42}
+!46 = !{!47, !49}
+!47 = distinct !{!47, !48, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
+!48 = distinct !{!48, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_"}
+!49 = distinct !{!49, !48, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
+!50 = distinct !{!50, !39}
+!51 = !{!52, !54}
+!52 = distinct !{!52, !53, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
+!53 = distinct !{!53, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_"}
+!54 = distinct !{!54, !53, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 end_hunk_0

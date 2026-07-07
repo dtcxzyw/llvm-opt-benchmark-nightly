@@ -201,36 +201,35 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader140, %.lr.ph
-  %.096 = phi ptr [ %i.ha, %.lr.ph ], [ %.096.ph, %.lr.ph.preheader140 ] ; 5 uses
+  %.096 = phi ptr [ %i.ha, %.lr.ph ], [ %.096.ph, %.lr.ph.preheader140 ] ; 4 uses
   %.295 = phi ptr [ %i.hm, %.lr.ph ], [ %.295.ph, %.lr.ph.preheader140 ] ; 4 uses
   %.18194 = phi i32 [ %i.hn, %.lr.ph ], [ %.18194.ph, %.lr.ph.preheader140 ]
-  %3 = getelementptr inbounds nuw i8, ptr %.096, i64 1
-  %4 = load i8, ptr %.096, align 1, !tbaa !37
-  %i.gx = getelementptr inbounds nuw i8, ptr %.096, i64 2
-  %i.gy = load i8, ptr %3, align 1, !tbaa !37
+  %i.gx = getelementptr inbounds nuw i8, ptr %.096, i64 1
+  %i.gy = load i8, ptr %.096, align 1, !tbaa !37
   %i.gz = getelementptr inbounds nuw i8, ptr %.096, i64 3
-  %5 = load i8, ptr %i.gx, align 1, !tbaa !37
   %i.ha = getelementptr inbounds nuw i8, ptr %.096, i64 4
   %i.hb = load i8, ptr %i.gz, align 1, !tbaa !37
   %i.hc = getelementptr inbounds nuw i8, ptr %.295, i64 2
   %i.hd = getelementptr inbounds nuw i8, ptr %.295, i64 1
-  %i.he = uitofp i8 %4 to double
-  %i.hf = uitofp i8 %i.hb to double               ; 3 uses
+  %i.he = uitofp i8 %i.gy to double
+  %i.hf = uitofp i8 %i.hb to double               ; 2 uses
   %i.hg = fmul nnan double %i.he, %i.hf
   %i.hh = fdiv double %i.hg, 2.550000e+02
   %i.hi = fadd double %i.hh, 5.000000e-01
   %i.hj = fptoui double %i.hi to i8
+  %3 = load <2 x i8>, ptr %i.gx, align 1, !tbaa !37
   store i8 %i.hj, ptr %i.hc, align 1, !tbaa !37
-  %6 = uitofp i8 %i.gy to double
-  %7 = fmul nnan double %6, %i.hf
-  %8 = fdiv double %7, 2.550000e+02
-  %9 = fadd double %8, 5.000000e-01
-  %10 = fptoui double %9 to i8
-  store i8 %10, ptr %i.hd, align 1, !tbaa !37
-  %11 = uitofp i8 %5 to double
-  %12 = fmul nnan double %11, %i.hf
-  %13 = fdiv double %12, 2.550000e+02
-  %i.hk = fadd double %13, 5.000000e-01
+  %4 = uitofp <2 x i8> %3 to <2 x double>
+  %5 = insertelement <2 x double> poison, double %i.hf, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fmul nnan <2 x double> %6, %4
+  %8 = fdiv <2 x double> %7, splat (double 2.550000e+02) ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = fadd double %9, 5.000000e-01
+  %11 = fptoui double %10 to i8
+  store i8 %11, ptr %i.hd, align 1, !tbaa !37
+  %12 = extractelement <2 x double> %8, i64 1
+  %i.hk = fadd double %12, 5.000000e-01
   %i.hl = fptoui double %i.hk to i8
   store i8 %i.hl, ptr %.295, align 1, !tbaa !37
   %i.hm = getelementptr inbounds nuw i8, ptr %.295, i64 3 ; 2 uses

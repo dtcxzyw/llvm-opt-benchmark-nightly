@@ -204,7 +204,7 @@ bb.jt:                                            ; preds = %bb.jr, %bb.jo, %bb.
           to label %bb.jz unwind label %bb.kr
 
 bb.ju:                                            ; preds = %.lr.ph901, %bb.jv
-  %.sroa.0638.0900 = phi ptr [ %i.jj, %.lr.ph901 ], [ %i.amb, %bb.jv ] ; 12 uses
+  %.sroa.0638.0900 = phi ptr [ %i.jj, %.lr.ph901 ], [ %i.amb, %bb.jv ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #25
   %i.aip = getelementptr inbounds nuw i8, ptr %.sroa.0638.0900, i64 6
   %i.aiq = load i8, ptr %i.aip, align 2
@@ -319,19 +319,17 @@ bb.jv:                                            ; preds = %_ZSt4findIN9__gnu_c
   %i.als = getelementptr inbounds nuw [12 x i8], ptr %i.alp, i64 %i.alr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.als, ptr noundef nonnull align 4 dereferenceable(12) %i.alo, i64 12, i1 false)
   %i.alt = getelementptr inbounds nuw i8, ptr %.sroa.0638.0900, i64 12
-  %32 = load i8, ptr %i.alt, align 2
-  %33 = uitofp i8 %32 to float
-  %34 = fdiv float %33, 2.550000e+02
-  %35 = getelementptr inbounds nuw i8, ptr %.sroa.0638.0900, i64 13
-  %36 = load i8, ptr %35, align 1
-  %37 = uitofp i8 %36 to float
-  %38 = fdiv float %37, 2.550000e+02
-  %i.alu = fsub float 1.000000e+00, %38
+  %32 = load <2 x i8>, ptr %i.alt, align 2
+  %33 = uitofp <2 x i8> %32 to <2 x float>
+  %34 = fdiv <2 x float> %33, splat (float 2.550000e+02) ; 2 uses
+  %35 = extractelement <2 x float> %34, i64 1
+  %i.alu = fsub float 1.000000e+00, %35
   %i.alv = load ptr, ptr %i.ajo, align 8
   %i.alw = load i32, ptr %i.ajl, align 4
   %i.alx = zext i32 %i.alw to i64
   %i.aly = getelementptr inbounds nuw [12 x i8], ptr %i.alv, i64 %i.alx ; 3 uses
-  store float %34, ptr %i.aly, align 4
+  %36 = extractelement <2 x float> %34, i64 0
+  store float %36, ptr %i.aly, align 4
   %.sroa.4.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.aly, i64 4
   store float %i.alu, ptr %.sroa.4.0..sroa_idx.2, align 4
   %.sroa.5.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.aly, i64 8
