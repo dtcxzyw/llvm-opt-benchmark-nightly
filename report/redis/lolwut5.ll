@@ -47,8 +47,8 @@ bb.a:
   %i.e = sub nsw i32 %i.a, %i.d
   %i.f = sitofp i32 %i.e to float
   %i.g = sitofp i32 %1 to float
-  %i.h = fdiv float %i.f, %i.g                    ; 9 uses
-  %i.i = sitofp i32 %2 to float                   ; 4 uses
+  %i.h = fdiv float %i.f, %i.g                    ; 8 uses
+  %i.i = sitofp i32 %2 to float                   ; 3 uses
   %i.j = uitofp nneg i32 %i.d to float
   %i.k = tail call float @llvm.fmuladd.f32(float %i.h, float %i.i, float %i.j)
   %i.l = fptosi float %i.k to i32
@@ -60,20 +60,32 @@ bb.a:
   %i.o = icmp sgt i32 %1, 0
   %i.p = fmul float %i.h, 5.000000e-01            ; 3 uses
   %i.q = uitofp nneg i32 %i.c to float            ; 3 uses
-  br i1 %i.o, label %.preheader, label %._crit_edge57.split
+  br i1 %i.o, label %.preheader.preheader, label %._crit_edge57.split
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.05256 = phi i32 [ %i.ao, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 3 uses
-  %i.r = uitofp nneg i32 %.05256 to float         ; 4 uses
+.preheader.preheader:                             ; preds = %.preheader.lr.ph
+  %3 = insertelement <2 x float> poison, float %i.i, i64 0
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x float> poison, float %i.h, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.05256 = phi i32 [ %i.ao, %._crit_edge ], [ 0, %.preheader.preheader ] ; 3 uses
+  %i.r = uitofp nneg i32 %.05256 to float         ; 3 uses
   %i.s = tail call float @llvm.fmuladd.f32(float %i.r, float %i.h, float %i.p)
   %i.t = fadd float %i.s, %i.q
   %i.u = fptosi float %i.t to i32                 ; 2 uses
   %i.v = icmp samesign ugt i32 %.05256, 1
   %i.w = sitofp i32 %i.u to float
-  br i1 %i.v, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.v, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
-.lr.ph.split.us:                                  ; preds = %.preheader, %.lr.ph.split.us
-  %.05155.us = phi i32 [ %i.an, %.lr.ph.split.us ], [ 0, %.preheader ] ; 2 uses
+.lr.ph.split.us.preheader:                        ; preds = %.preheader
+  %7 = insertelement <2 x float> poison, float %i.r, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.split.us
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
+  %.05155.us = phi i32 [ %i.an, %.lr.ph.split.us ], [ 0, %.lr.ph.split.us.preheader ] ; 2 uses
   %i.x = uitofp nneg i32 %.05155.us to float
   %i.y = tail call float @llvm.fmuladd.f32(float %i.x, float %i.h, float %i.p)
   %i.z = fadd float %i.y, %i.q
@@ -84,38 +96,34 @@ bb.a:
   %i.ae = fdiv float %i.ad, %i.i
   %i.af = fmul float %i.ae, %i.r                  ; 2 uses
   %i.ag = tail call i32 @rand() #6
-  %3 = sitofp i32 %i.ag to float
-  %4 = fmul nnan float %3, f0x30000000
-  %5 = fdiv float %4, %i.i
-  %6 = fmul float %5, %i.r                        ; 2 uses
+  %9 = tail call i32 @rand() #6
   %i.ah = tail call i32 @rand() #6
-  %7 = sitofp i32 %i.ah to float
-  %8 = fmul nnan float %7, f0x30000000
-  %9 = fdiv float %8, %i.i
-  %10 = fmul float %9, %i.r                       ; 2 uses
+  %10 = and i32 %i.ah, 1
+  %.not.us = icmp eq i32 %10, 0
+  %11 = fneg float %i.af
+  %.047.us = select i1 %.not.us, float %i.af, float %11
   %i.ai = tail call i32 @rand() #6
-  %11 = and i32 %i.ai, 1
-  %.not.us = icmp eq i32 %11, 0
-  %12 = fneg float %i.af
-  %.047.us = select i1 %.not.us, float %i.af, float %12
-  %13 = tail call i32 @rand() #6
-  %14 = and i32 %13, 1
-  %.not53.us = icmp eq i32 %14, 0
-  %15 = fneg float %6
-  %.046.us = select i1 %.not53.us, float %6, float %15
-  %16 = tail call i32 @rand() #6
-  %17 = and i32 %16, 1
-  %.not54.us = icmp eq i32 %17, 0
-  %18 = fneg float %10
-  %.0.us = select i1 %.not54.us, float %10, float %18
-  %19 = fmul float %i.h, %.046.us
-  %20 = fdiv float %19, 3.000000e+00
-  %21 = sitofp i32 %i.aa to float
-  %i.aj = fadd float %20, %21
+  %12 = tail call i32 @rand() #6
+  %13 = sitofp i32 %i.aa to float
+  %14 = insertelement <2 x i32> poison, i32 %i.ag, i64 0
+  %15 = insertelement <2 x i32> %14, i32 %9, i64 1
+  %16 = sitofp <2 x i32> %15 to <2 x float>
+  %17 = fmul nnan <2 x float> %16, splat (float f0x30000000)
+  %18 = fdiv <2 x float> %17, %4
+  %19 = fmul <2 x float> %18, %8                  ; 2 uses
+  %20 = insertelement <2 x i32> poison, i32 %i.ai, i64 0
+  %21 = insertelement <2 x i32> %20, i32 %12, i64 1
+  %22 = and <2 x i32> %21, splat (i32 1)
+  %23 = icmp eq <2 x i32> %22, zeroinitializer
+  %24 = fneg <2 x float> %19
+  %25 = select <2 x i1> %23, <2 x float> %19, <2 x float> %24
+  %26 = fmul <2 x float> %6, %25
+  %27 = fdiv <2 x float> %26, splat (float 3.000000e+00) ; 2 uses
+  %28 = extractelement <2 x float> %27, i64 0
+  %i.aj = fadd float %28, %13
   %i.ak = fptosi float %i.aj to i32
-  %22 = fmul float %i.h, %.0.us
-  %23 = fdiv float %22, 3.000000e+00
-  %i.al = fadd float %23, %i.w
+  %29 = extractelement <2 x float> %27, i64 1
+  %i.al = fadd float %29, %i.w
   %i.am = fptosi float %i.al to i32
   tail call void @lwDrawSquare(ptr noundef %i.m, i32 noundef %i.ak, i32 noundef %i.am, float noundef %i.h, float noundef %.047.us, i32 noundef 1) #6
   %i.an = add nuw nsw i32 %.05155.us, 1           ; 2 uses

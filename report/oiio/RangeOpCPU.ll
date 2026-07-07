@@ -201,19 +201,20 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   ret void
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %.023 = phi ptr [ %i.cz, %scalar.ph ], [ %.023.ph, %scalar.ph.preheader ] ; 5 uses
+  %.023 = phi ptr [ %i.cz, %scalar.ph ], [ %.023.ph, %scalar.ph.preheader ] ; 4 uses
   %.01522 = phi ptr [ %i.da, %scalar.ph ], [ %.01522.ph, %scalar.ph.preheader ] ; 5 uses
   %.01621 = phi i64 [ %i.db, %scalar.ph ], [ %.01621.ph, %scalar.ph.preheader ]
   %i.cd = load float, ptr %.023, align 4, !tbaa !17
-  %i.ce = load float, ptr %i.b, align 8, !tbaa !35 ; 3 uses
-  %i.cf = load float, ptr %i.c, align 4, !tbaa !36 ; 3 uses
+  %i.ce = load float, ptr %i.b, align 8, !tbaa !35 ; 2 uses
+  %i.cf = load float, ptr %i.c, align 4, !tbaa !36 ; 2 uses
   %i.cg = tail call float @llvm.fmuladd.f32(float %i.cd, float %i.ce, float %i.cf) ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.023, i64 4
-  %4 = load float, ptr %i.ch, align 4, !tbaa !17
-  %5 = tail call float @llvm.fmuladd.f32(float %4, float %i.ce, float %i.cf) ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.023, i64 8
-  %7 = load float, ptr %6, align 4, !tbaa !17
-  %8 = tail call float @llvm.fmuladd.f32(float %7, float %i.ce, float %i.cf) ; 2 uses
+  %4 = load <2 x float>, ptr %i.ch, align 4, !tbaa !17
+  %5 = insertelement <2 x float> poison, float %i.ce, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x float> poison, float %i.cf, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> %6, <2 x float> %8) ; 2 uses
   %i.ci = load float, ptr %i.d, align 8, !tbaa !19 ; 2 uses
   %i.cj = load float, ptr %i.e, align 4, !tbaa !25 ; 2 uses
   %i.ck = fcmp olt float %i.ci, %i.cg
@@ -223,16 +224,18 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store float %.sroa.speculated.i, ptr %.01522, align 4, !tbaa !17
   %i.cm = load float, ptr %i.d, align 8, !tbaa !19 ; 2 uses
   %i.cn = load float, ptr %i.e, align 4, !tbaa !25 ; 2 uses
-  %i.co = fcmp olt float %i.cm, %5
-  %.sroa.speculated2.i17 = select i1 %i.co, float %5, float %i.cm ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0      ; 2 uses
+  %i.co = fcmp olt float %i.cm, %10
+  %.sroa.speculated2.i17 = select i1 %i.co, float %10, float %i.cm ; 2 uses
   %i.cp = fcmp olt float %i.cn, %.sroa.speculated2.i17
   %.sroa.speculated.i18 = select i1 %i.cp, float %i.cn, float %.sroa.speculated2.i17
   %i.cq = getelementptr inbounds nuw i8, ptr %.01522, i64 4
   store float %.sroa.speculated.i18, ptr %i.cq, align 4, !tbaa !17
   %i.cr = load float, ptr %i.d, align 8, !tbaa !19 ; 2 uses
   %i.cs = load float, ptr %i.e, align 4, !tbaa !25 ; 2 uses
-  %i.ct = fcmp olt float %i.cr, %8
-  %.sroa.speculated2.i19 = select i1 %i.ct, float %8, float %i.cr ; 2 uses
+  %11 = extractelement <2 x float> %9, i64 1      ; 2 uses
+  %i.ct = fcmp olt float %i.cr, %11
+  %.sroa.speculated2.i19 = select i1 %i.ct, float %11, float %i.cr ; 2 uses
   %i.cu = fcmp olt float %i.cs, %.sroa.speculated2.i19
   %.sroa.speculated.i20 = select i1 %i.cu, float %i.cs, float %.sroa.speculated2.i19
   %i.cv = getelementptr inbounds nuw i8, ptr %.01522, i64 8
@@ -634,6 +637,9 @@ _ZNKSt9type_infoeqERKS_.exit.thread8:             ; preds = %bb.c, %_ZNKSt9type_
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }

@@ -81,19 +81,23 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
+  %2 = mul nuw nsw i32 %1, 9
+  %3 = uitofp nneg i32 %2 to double
   %i.b = uitofp nneg i32 %1 to double
-  %2 = fdiv double %0, %i.b
-  %3 = tail call double @pow(double noundef %2, double noundef f0x3FD5555555555555) #5, !tbaa !3
-  %4 = mul nuw nsw i32 %1, 9
-  %5 = uitofp nneg i32 %4 to double
-  %6 = fdiv double 2.000000e+00, %5               ; 3 uses
-  %i.c = fcmp une double %6, 0.000000e+00
+  %4 = insertelement <2 x double> <double poison, double 2.000000e+00>, double %0, i64 0
+  %5 = insertelement <2 x double> poison, double %i.b, i64 0
+  %6 = insertelement <2 x double> %5, double %3, i64 1
+  %7 = fdiv <2 x double> %4, %6                   ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = tail call double @pow(double noundef %8, double noundef f0x3FD5555555555555) #5, !tbaa !3
+  %10 = extractelement <2 x double> %7, i64 1     ; 3 uses
+  %i.c = fcmp une double %10, 0.000000e+00
   br i1 %i.c, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = fsub double 1.000000e+00, %6
-  %i.e = fsub double %3, %i.d
-  %sqrt = tail call double @llvm.sqrt.f64(double %6)
+  %i.d = fsub double 1.000000e+00, %10
+  %i.e = fsub double %9, %i.d
+  %sqrt = tail call double @llvm.sqrt.f64(double %10)
   %i.f = fdiv double %i.e, %sqrt                  ; 7 uses
   %i.g = fcmp ogt double %i.f, 0.000000e+00
   br i1 %i.g, label %bb.d, label %bb.e

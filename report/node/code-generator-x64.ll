@@ -203,7 +203,7 @@ bb.a:
   %1 = alloca %"class.v8::internal::Label", align 4 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = load ptr, ptr %i.b, align 8              ; 6 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
@@ -341,9 +341,8 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit101: ; preds = %bb.j, %_ZN2v88inte
 bb.l:                                             ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit101, %bb.i
   %.0 = phi i32 [ %i.bn, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit101 ], [ %i.am, %bb.i ] ; 4 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.c, i64 58
-  %.sroa.0.0.copyload.i117 = load i16, ptr %i.bo, align 2 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 60
-  %.sroa.0.0.copyload.i118 = load i16, ptr %2, align 4 ; 6 uses
+  %2 = load <2 x i16>, ptr %i.bo, align 2         ; 3 uses
+  %3 = extractelement <2 x i16> %2, i64 1         ; 5 uses
   %i.bp = icmp sgt i32 %.0, 0
   br i1 %i.bp, label %bb.m, label %bb.w
 
@@ -467,10 +466,11 @@ bb.u:                                             ; preds = %_ZN2v88internal4Zon
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.n, %bb.m
-  %3 = call range(i16 0, 17) i16 @llvm.ctpop.i16(i16 %.sroa.0.0.copyload.i117)
-  %4 = call range(i16 0, 17) i16 @llvm.ctpop.i16(i16 %.sroa.0.0.copyload.i118)
-  %i.dq = shl nuw nsw i16 %4, 1
-  %narrow = add nuw nsw i16 %i.dq, %3
+  %4 = call range(i16 0, 17) <2 x i16> @llvm.ctpop.v2i16(<2 x i16> %2) ; 2 uses
+  %5 = extractelement <2 x i16> %4, i64 1
+  %i.dq = shl nuw nsw i16 %5, 1
+  %6 = extractelement <2 x i16> %4, i64 0
+  %narrow = add nuw nsw i16 %i.dq, %6
   %i.dr = zext nneg i16 %narrow to i32
   %i.ds = load ptr, ptr %i.d, align 8
   %i.dt = load ptr, ptr %i.ds, align 8
@@ -489,16 +489,16 @@ _ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit: ; preds = %bb.v
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit, %bb.l
-  %i.eb = icmp eq i16 %.sroa.0.0.copyload.i118, 0
+  %i.eb = icmp eq i16 %3, 0
   br i1 %i.eb, label %.loopexit240, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit93.peel
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit93.peel: ; preds = %bb.w
-  %i.ec = call range(i16 1, 17) i16 @llvm.ctpop.i16(i16 %.sroa.0.0.copyload.i118)
+  %i.ec = call range(i16 1, 17) i16 @llvm.ctpop.i16(i16 %3)
   %i.ed = shl nuw nsw i16 %i.ec, 4
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 5 uses
   %.sroa.0.0.insert.ext.i123 = zext nneg i16 %i.ed to i64
   call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(436) %i.ee, i8 noundef zeroext 5, i8 4, i64 %.sroa.0.0.insert.ext.i123, i32 noundef 8) #18
-  %i.ef = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.0.copyload.i118, i1 true)
+  %i.ef = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %3, i1 true)
   %i.eg = trunc nuw nsw i16 %i.ef to i8           ; 2 uses
   %i.eh = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
   %i.ei = and i32 %i.eh, 32
@@ -514,8 +514,8 @@ bb.y:                                             ; preds = %_ZN2v88internal7Ope
   br label %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel
 
 _ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel: ; preds = %bb.y, %bb.x
-  %i.ej = add i16 %.sroa.0.0.copyload.i118, -1
-  %i.ek = and i16 %i.ej, %.sroa.0.0.copyload.i118 ; 2 uses
+  %i.ej = add i16 %3, -1
+  %i.ek = and i16 %i.ej, %3                       ; 2 uses
   %.not233.peel = icmp eq i16 %i.ek, 0
   br i1 %.not233.peel, label %.loopexit240, label %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratordeEv.exit.peel.next
 
@@ -557,7 +557,8 @@ _ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit: ; preds = %b
   br i1 %.not233, label %.loopexit240, label %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratordeEv.exit.peel.next, !llvm.loop !325
 
 .loopexit240:                                     ; preds = %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel, %bb.w
-  %i.ev = icmp eq i16 %.sroa.0.0.copyload.i117, 0
+  %7 = extractelement <2 x i16> %2, i64 0         ; 2 uses
+  %i.ev = icmp eq i16 %7, 0
   br i1 %i.ev, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %.loopexit240
@@ -565,7 +566,7 @@ _ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit: ; preds = %b
   br label %_ZN2v88internal11RegListBaseINS0_8RegisterEE15ReverseIteratorppEv.exit
 
 _ZN2v88internal11RegListBaseINS0_8RegisterEE15ReverseIteratorppEv.exit: ; preds = %.preheader, %_ZN2v88internal11RegListBaseINS0_8RegisterEE15ReverseIteratorppEv.exit
-  %.sroa.0138.0257 = phi i16 [ %.sroa.0.0.copyload.i117, %.preheader ], [ %i.fe, %_ZN2v88internal11RegListBaseINS0_8RegisterEE15ReverseIteratorppEv.exit ] ; 3 uses
+  %.sroa.0138.0257 = phi i16 [ %7, %.preheader ], [ %i.fe, %_ZN2v88internal11RegListBaseINS0_8RegisterEE15ReverseIteratorppEv.exit ] ; 3 uses
   %i.ex = zext i16 %.sroa.0138.0257 to i32
   %i.ey = call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.ex, i1 true)
   %i.ez = trunc nuw nsw i32 %i.ey to i8
@@ -967,6 +968,9 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.ctlz.i16(i16, i1 immarg) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i16> @llvm.ctpop.v2i16(<2 x i16>) #17
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

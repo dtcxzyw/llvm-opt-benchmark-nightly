@@ -204,14 +204,19 @@ bb.h:                                             ; preds = %bb.g, %_ZN2v88inter
   %.not = icmp eq i32 %i.m, 0
   %i.ag = uitofp i32 %i.s to double
   %i.ah = uitofp i32 %i.m to double
-  %3 = fdiv double %i.ag, %i.ah
-  %4 = select i1 %.not, double 0.000000e+00, double %3
   %.not28 = icmp eq i32 %i.y, 0
   %i.ai = uitofp i32 %i.ae to double
   %i.aj = uitofp i32 %i.y to double
-  %5 = fdiv double %i.ai, %i.aj
-  %i.ak = select i1 %.not28, double 0.000000e+00, double %5
-  tail call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.98, double noundef %4, i32 noundef %i.s, i32 noundef %i.m) #46
+  %3 = insertelement <2 x double> poison, double %i.ag, i64 0
+  %4 = insertelement <2 x double> %3, double %i.ai, i64 1
+  %5 = insertelement <2 x double> poison, double %i.ah, i64 0
+  %6 = insertelement <2 x double> %5, double %i.aj, i64 1
+  %7 = fdiv <2 x double> %4, %6                   ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = select i1 %.not, double 0.000000e+00, double %8
+  %10 = extractelement <2 x double> %7, i64 1
+  %i.ak = select i1 %.not28, double 0.000000e+00, double %10
+  tail call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.98, double noundef %9, i32 noundef %i.s, i32 noundef %i.m) #46
   tail call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.99, double noundef %i.ak, i32 noundef %i.ae, i32 noundef %i.y) #46
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 9608
   %i.am = load i64, ptr %i.al, align 8
@@ -230,14 +235,19 @@ bb.h:                                             ; preds = %bb.g, %_ZN2v88inter
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   %i.ba = load i32, ptr %i.az, align 4            ; 2 uses
   %i.bb = tail call noundef i32 @_ZN2v88internal17DoubleStringCache19GetUsedEntriesCountEv(ptr noundef nonnull align 4 dereferenceable(16) %i.ay) #46 ; 2 uses
-  %i.bc = uitofp i32 %i.au to double
-  %i.bd = uitofp i32 %i.at to double
-  %6 = fdiv double %i.bc, %i.bd
-  %i.be = uitofp i32 %i.bb to double
-  %7 = uitofp i32 %i.ba to double
-  %8 = fdiv double %i.be, %7
-  tail call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.100, double noundef %6, i32 noundef %i.au, i32 noundef %i.at) #46
-  tail call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.101, double noundef %8, i32 noundef %i.bb, i32 noundef %i.ba) #46
+  %i.bc = uitofp i32 %i.bb to double
+  %i.bd = uitofp i32 %i.au to double
+  %11 = uitofp i32 %i.ba to double
+  %i.be = uitofp i32 %i.at to double
+  %12 = insertelement <2 x double> poison, double %i.bd, i64 0
+  %13 = insertelement <2 x double> %12, double %i.bc, i64 1
+  %14 = insertelement <2 x double> poison, double %i.be, i64 0
+  %15 = insertelement <2 x double> %14, double %11, i64 1
+  %16 = fdiv <2 x double> %13, %15                ; 2 uses
+  %17 = extractelement <2 x double> %16, i64 0
+  tail call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.100, double noundef %17, i32 noundef %i.au, i32 noundef %i.at) #46
+  %18 = extractelement <2 x double> %16, i64 1
+  tail call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.101, double noundef %18, i32 noundef %i.bb, i32 noundef %i.ba) #46
   br i1 %2, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h

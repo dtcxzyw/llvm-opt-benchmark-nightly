@@ -204,21 +204,24 @@ bb.a:
   %i.l = add nuw nsw i32 %i.k, 1
   %i.m = uitofp nneg i32 %i.l to double
   %i.n = tail call double @log(double noundef %i.m) #9, !tbaa !4
-  %0 = fdiv double %i.n, f0x3FE62E42FEFA39EF
-  %1 = fadd double %0, 1.000000e-10
-  %i.o = tail call double @llvm.floor.f64(double %1)
-  %2 = fptosi double %i.o to i32                  ; 2 uses
-  %3 = shl nsw i32 %2, 1
-  %4 = or disjoint i32 %3, 1                      ; 2 uses
-  %5 = add nsw i32 %2, 1
-  %notmask = shl nsw i32 -1, %5
-  %6 = xor i32 %notmask, -1
-  %i.p = shl i32 %i.c, 3
-  %i.q = add i32 %i.p, 13
-  %7 = sitofp i32 %i.q to double
-  %8 = tail call double @log(double noundef %7) #9, !tbaa !4
-  %9 = fdiv double %8, f0x3FE62E42FEFA39EF
-  %i.r = fadd double %9, 1.000000e-10
+  %0 = shl i32 %i.c, 3
+  %1 = add i32 %0, 13
+  %2 = sitofp i32 %1 to double
+  %i.o = tail call double @log(double noundef %2) #9, !tbaa !4
+  %3 = insertelement <2 x double> poison, double %i.n, i64 0
+  %4 = insertelement <2 x double> %3, double %i.o, i64 1
+  %5 = fdiv <2 x double> %4, splat (double f0x3FE62E42FEFA39EF) ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = fadd double %6, 1.000000e-10
+  %8 = tail call double @llvm.floor.f64(double %7)
+  %9 = fptosi double %8 to i32                    ; 2 uses
+  %i.p = shl nsw i32 %9, 1
+  %10 = or disjoint i32 %i.p, 1                   ; 2 uses
+  %i.q = add nsw i32 %9, 1
+  %notmask = shl nsw i32 -1, %i.q
+  %11 = xor i32 %notmask, -1
+  %12 = extractelement <2 x double> %5, i64 1
+  %i.r = fadd double %12, 1.000000e-10
   %i.s = tail call double @llvm.ceil.f64(double %i.r)
   %i.t = fptosi double %i.s to i32                ; 2 uses
   %i.u = shl nsw i32 %i.t, 1
@@ -290,7 +293,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.as = zext nneg i32 %6 to i64
+  %i.as = zext nneg i32 %11 to i64
   %i.at = tail call noalias ptr @calloc(i64 noundef %i.as, i64 noundef 4) #10 ; 2 uses
   store ptr %i.at, ptr @refbits, align 8, !tbaa !53
   %i.au = icmp eq ptr %i.at, null
@@ -364,7 +367,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 ._crit_edge118:                                   ; preds = %._crit_edge, %bb.o
   %i.bw = load ptr, ptr @refbits, align 8, !tbaa !53 ; 3 uses
   store i32 1, ptr %i.bw, align 4, !tbaa !4
-  %.not106123 = icmp slt i32 %4, 3
+  %.not106123 = icmp slt i32 %10, 3
   br i1 %.not106123, label %._crit_edge127, label %.lr.ph126
 
 .lr.ph126:                                        ; preds = %._crit_edge118, %._crit_edge122
@@ -426,7 +429,7 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge122:                                   ; preds = %.lr.ph121, %middle.block, %.lr.ph126
   %i.cs = add nuw nsw i32 %.1124, 2               ; 2 uses
-  %.not106 = icmp sgt i32 %i.cs, %4
+  %.not106 = icmp sgt i32 %i.cs, %10
   br i1 %.not106, label %._crit_edge127, label %.lr.ph126, !llvm.loop !61
 
 ._crit_edge127:                                   ; preds = %._crit_edge122, %._crit_edge118

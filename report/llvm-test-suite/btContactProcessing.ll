@@ -203,19 +203,22 @@ bb.h:                                             ; preds = %.lr.ph, %bb.l
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 3 uses
   %i.cf = load ptr, ptr %i.ca, align 8, !tbaa !8
   %i.cg = getelementptr inbounds nuw [48 x i8], ptr %i.cf, i64 %indvars.iv ; 3 uses
-  %i.ch = load float, ptr %i.cg, align 4, !tbaa !38
-  %5 = tail call float @llvm.fmuladd.f32(float %i.ch, float 1.000000e+03, float 1.000000e+00)
-  %i.ci = fptosi float %5 to i32
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.cg, i64 4
+  %5 = load float, ptr %i.cg, align 4, !tbaa !38
+  %6 = getelementptr inbounds nuw i8, ptr %i.cg, i64 4
+  %i.ch = load float, ptr %6, align 4, !tbaa !38
+  %7 = fmul float %i.ch, 1.333000e+03
+  %i.ci = fptosi float %7 to i32
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   %i.ck = load float, ptr %i.cj, align 4, !tbaa !38
-  %6 = fmul float %i.ck, 1.333000e+03
-  %7 = fptosi float %6 to i32
-  %8 = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
-  %9 = load float, ptr %8, align 4, !tbaa !38
-  %10 = tail call float @llvm.fmuladd.f32(float %9, float 2.133000e+03, float 3.000000e+00)
-  %i.cl = fptosi float %10 to i32
-  %i.cm = shl i32 %7, 4
-  %i.cn = add i32 %i.cm, %i.ci
+  %8 = insertelement <2 x float> poison, float %5, i64 0
+  %9 = insertelement <2 x float> %8, float %i.ck, i64 1
+  %10 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> <float 1.000000e+03, float 2.133000e+03>, <2 x float> <float 1.000000e+00, float 3.000000e+00>) ; 2 uses
+  %11 = extractelement <2 x float> %10, i64 0
+  %12 = fptosi float %11 to i32
+  %13 = extractelement <2 x float> %10, i64 1
+  %i.cl = fptosi float %13 to i32
+  %i.cm = shl i32 %i.ci, 4
+  %i.cn = add i32 %i.cm, %12
   %i.co = shl i32 %i.cl, 8
   %i.cp = add i32 %i.cn, %i.co
   %i.cq = icmp eq i32 %i.ce, %i.cd
@@ -617,6 +620,9 @@ declare float @llvm.sqrt.f32(float) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
 
 attributes #0 = { uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -204,9 +204,12 @@ bb.a:
   br i1 %or.cond, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = fdiv float %3, 1.270000e+02
-  %6 = fdiv float %4, 1.270000e+02
-  %7 = fmul float %5, %6
+  %5 = insertelement <2 x float> poison, float %3, i64 0
+  %6 = insertelement <2 x float> %5, float %4, i64 1
+  %7 = fdiv <2 x float> %6, splat (float 1.270000e+02) ; 2 uses
+  %shift = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x float> %7, %shift
+  %8 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.c = icmp ugt i32 %2, 31
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
@@ -384,7 +387,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge82:                                    ; preds = %.lr.ph81, %middle.block, %vec.epilog.middle.block, %._crit_edge
   %.052.lcssa = phi i32 [ %i.ai, %._crit_edge ], [ %i.bz, %vec.epilog.middle.block ], [ %i.bo, %middle.block ], [ %i.ch, %.lr.ph81 ]
   %i.ci = sitofp i32 %.052.lcssa to float
-  %i.cj = fmul float %7, %i.ci
+  %i.cj = fmul float %8, %i.ci
   %i.ck = fsub float 1.000000e+00, %i.cj          ; 3 uses
   %i.cl = fcmp olt float %i.ck, 0.000000e+00
   br i1 %i.cl, label %bb.e, label %bb.c
@@ -442,9 +445,12 @@ bb.f:                                             ; preds = %.thread, %bb.d
   br i1 %or.cond, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %5 = fdiv float %3, 1.270000e+02
-  %6 = fdiv float %4, 1.270000e+02
-  %7 = fmul float %5, %6
+  %5 = insertelement <2 x float> poison, float %3, i64 0
+  %6 = insertelement <2 x float> %5, float %4, i64 1
+  %7 = fdiv <2 x float> %6, splat (float 1.270000e+02) ; 2 uses
+  %shift = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x float> %7, %shift
+  %8 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.k = icmp ugt i32 %2, 7
   br i1 %i.k, label %.lr.ph.preheader, label %.preheader
 
@@ -612,7 +618,7 @@ middle.block:                                     ; preds = %vector.body
   %.173.lcssa = phi i32 [ %.072.lcssa, %.preheader ], [ %i.ag, %middle.block ], [ %i.dj, %.lr.ph92 ]
   %i.dk = add nsw i32 %.173.lcssa, %.071.lcssa
   %i.dl = sitofp i32 %i.dk to float
-  %i.dm = fmul float %7, %i.dl
+  %i.dm = fmul float %8, %i.dl
   %i.dn = fsub float 1.000000e+00, %i.dm          ; 3 uses
   %i.do = fcmp olt float %i.dn, 0.000000e+00
   br i1 %i.do, label %bb.j, label %bb.h
@@ -1015,9 +1021,12 @@ bb.u:                                             ; preds = %.thread.i, %bb.s
   br i1 %or.cond.i, label %hnsw_distance.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %4 = fdiv float %i.dh, 1.270000e+02
-  %5 = fdiv float %i.dj, 1.270000e+02
-  %6 = fmul float %4, %5
+  %4 = insertelement <2 x float> poison, float %i.dh, i64 0
+  %5 = insertelement <2 x float> %4, float %i.dj, i64 1
+  %6 = fdiv <2 x float> %5, splat (float 1.270000e+02) ; 2 uses
+  %shift = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x float> %6, %shift
+  %7 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.du = icmp ugt i32 %i.df, 7
   br i1 %i.du, label %.lr.ph.preheader.i, label %.preheader.i356
 
@@ -1185,7 +1194,7 @@ middle.block:                                     ; preds = %vector.body
   %.173.lcssa.i = phi i32 [ %.072.lcssa.i, %.preheader.i356 ], [ %i.eq, %middle.block ], [ %i.ht, %.lr.ph92.i ]
   %i.hu = add nsw i32 %.173.lcssa.i, %.071.lcssa.i
   %i.hv = sitofp i32 %i.hu to float
-  %i.hw = fmul float %6, %i.hv
+  %i.hw = fmul float %7, %i.hv
   %i.hx = fsub float 1.000000e+00, %i.hw          ; 3 uses
   %i.hy = fcmp olt float %i.hx, 0.000000e+00
   br i1 %i.hy, label %hnsw_distance.exit, label %bb.w
@@ -1231,13 +1240,20 @@ hnsw_distance.exit:                               ; preds = %bb.x, %bb.w, %._cri
   %i.ij = zext i32 %3 to i64                      ; 3 uses
   %i.ik = icmp sgt i32 %2, 2
   %i.il = add nsw i32 %2, -1
-  %i.im = uitofp nneg i32 %i.il to float          ; 2 uses
+  %i.im = uitofp nneg i32 %i.il to float
   %i.in = add nsw i32 %2, -2
-  %i.io = uitofp nneg i32 %i.in to float          ; 2 uses
-  br i1 %i.ik, label %.preheader378.us, label %.preheader378
+  %i.io = uitofp nneg i32 %i.in to float
+  br i1 %i.ik, label %.preheader378.us.preheader, label %.preheader378
 
-.preheader378.us:                                 ; preds = %.preheader378.lr.ph, %._crit_edge412.split.us.us
-  %indvars.iv501 = phi i64 [ %indvars.iv.next502, %._crit_edge412.split.us.us ], [ 0, %.preheader378.lr.ph ] ; 6 uses
+.preheader378.us.preheader:                       ; preds = %.preheader378.lr.ph
+  %8 = insertelement <2 x float> poison, float %i.im, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = insertelement <2 x float> poison, float %i.io, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  br label %.preheader378.us
+
+.preheader378.us:                                 ; preds = %.preheader378.us.preheader, %._crit_edge412.split.us.us
+  %indvars.iv501 = phi i64 [ %indvars.iv.next502, %._crit_edge412.split.us.us ], [ 0, %.preheader378.us.preheader ] ; 6 uses
   %i.ip = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv501
   %i.iq = mul nuw nsw i64 %indvars.iv501, %i.c    ; 3 uses
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv501
@@ -1261,15 +1277,19 @@ bb.ab:                                            ; preds = %bb.ac
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.iv
   %i.ix = load float, ptr %i.iw, align 4, !tbaa !27 ; 2 uses
   %i.iy = load float, ptr %i.ir, align 4, !tbaa !27
-  %i.iz = fneg float %i.ix                        ; 2 uses
-  %7 = tail call float @llvm.fmuladd.f32(float %i.iy, float %i.im, float %i.iz)
-  %8 = fdiv float %7, %i.io
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv496
-  %10 = load float, ptr %9, align 4, !tbaa !27
-  %11 = tail call float @llvm.fmuladd.f32(float %10, float %i.im, float %i.iz)
-  %12 = fdiv float %11, %i.io
-  %13 = fadd float %8, %12
-  %i.ja = fmul float %13, 5.000000e-01
+  %i.iz = fneg float %i.ix
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv496
+  %13 = load float, ptr %12, align 4, !tbaa !27
+  %14 = insertelement <2 x float> poison, float %i.iy, i64 0
+  %15 = insertelement <2 x float> %14, float %13, i64 1
+  %16 = insertelement <2 x float> poison, float %i.iz, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %15, <2 x float> %9, <2 x float> %17)
+  %19 = fdiv <2 x float> %18, %11                 ; 2 uses
+  %shift617 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop618 = fadd <2 x float> %19, %shift617
+  %20 = extractelement <2 x float> %foldExtExtBinop618, i64 0
+  %i.ja = fmul float %20, 5.000000e-01
   %i.jb = fmul float %i.ja, 3.000000e-01
   %i.jc = fsub float 2.000000e+00, %i.ix
   %i.jd = tail call float @llvm.fmuladd.f32(float %i.jc, float f0x3F333333, float %i.jb)
@@ -1672,9 +1692,12 @@ bb.t:                                             ; preds = %.thread.i, %bb.r
   br i1 %or.cond.i, label %hnsw_distance.exit.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %2 = fdiv float %i.dr, 1.270000e+02
-  %3 = fdiv float %i.dt, 1.270000e+02
-  %4 = fmul float %2, %3
+  %2 = insertelement <2 x float> poison, float %i.dr, i64 0
+  %3 = insertelement <2 x float> %2, float %i.dt, i64 1
+  %4 = fdiv <2 x float> %3, splat (float 1.270000e+02) ; 2 uses
+  %shift = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fmul <2 x float> %4, %shift
+  %5 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.ee = icmp ugt i32 %i.dq, 7
   br i1 %i.ee, label %.lr.ph.preheader.i, label %.preheader.i
 
@@ -1842,7 +1865,7 @@ middle.block:                                     ; preds = %vector.body
   %.173.lcssa.i = phi i32 [ %.072.lcssa.i, %.preheader.i ], [ %i.fa, %middle.block ], [ %i.id, %.lr.ph92.i ]
   %i.ie = add nsw i32 %.173.lcssa.i, %.071.lcssa.i
   %i.if = sitofp i32 %i.ie to float
-  %i.ig = fmul float %4, %i.if
+  %i.ig = fmul float %5, %i.if
   %i.ih = fsub float 1.000000e+00, %i.ig          ; 3 uses
   %i.ii = fcmp olt float %i.ih, 0.000000e+00
   br i1 %i.ii, label %hnsw_distance.exit.i, label %bb.v
@@ -2245,15 +2268,19 @@ hnsw_release_read_slot.exit:                      ; preds = %bb.p, %bb.e
 
 bb.q:                                             ; preds = %hnsw_release_read_slot.exit
   %i.dr = uitofp i32 %.095.lcssa to float
-  %3 = fmul nnan float %i.dr, 1.000000e+02
-  %i.ds = uitofp i32 %.090.lcssa to float         ; 2 uses
-  %4 = fdiv float %3, %i.ds
-  %5 = fpext float %4 to double
-  %6 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.36, i32 noundef %.095.lcssa, double noundef %5) ; 0 uses
-  %7 = uitofp i32 %.092.lcssa to float
-  %8 = fmul nnan float %7, 1.000000e+02
-  %9 = fdiv float %8, %i.ds
-  %i.dt = fpext float %9 to double
+  %3 = uitofp i32 %.090.lcssa to float
+  %i.ds = uitofp i32 %.092.lcssa to float
+  %4 = insertelement <2 x float> poison, float %i.ds, i64 0
+  %5 = insertelement <2 x float> %4, float %i.dr, i64 1
+  %6 = fmul nnan <2 x float> %5, splat (float 1.000000e+02)
+  %7 = insertelement <2 x float> poison, float %3, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fdiv <2 x float> %6, %8                    ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 1
+  %11 = fpext float %10 to double
+  %12 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.36, i32 noundef %.095.lcssa, double noundef %11) ; 0 uses
+  %13 = extractelement <2 x float> %9, i64 0
+  %i.dt = fpext float %13 to double
   br label %bb.r
 
 .critedge110:                                     ; preds = %hnsw_release_read_slot.exit

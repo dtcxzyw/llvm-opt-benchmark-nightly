@@ -203,27 +203,29 @@ bb.a:
 wasm_floor.exit176:                               ; preds = %bb.a
   %i.c = fdiv double %1, f0x421D63C37F000000
   %i.d = tail call double @llvm.floor.f64(double %i.c)
-  %i.e = fadd double %i.d, 1.970000e+03           ; 6 uses
-  %i.f = fadd nnan double %i.e, -1.601000e+03
-  %2 = fdiv nnan double %i.f, 4.000000e+02
-  %i.g = tail call nnan double @llvm.floor.f64(double %2)
-  %i.h = fadd nnan double %i.e, -1.970000e+03
-  %3 = fmul nnan double %i.h, 3.650000e+02
-  %4 = fadd nnan double %i.e, -1.969000e+03
-  %5 = fmul nnan double %4, 2.500000e-01
-  %6 = tail call nnan double @llvm.floor.f64(double %5)
-  %7 = fadd double %3, %6
-  %8 = fadd nnan double %i.e, -1.901000e+03
-  %9 = fdiv nnan double %8, 1.000000e+02
-  %i.i = tail call nnan double @llvm.floor.f64(double %9)
-  %i.j = fsub double %7, %i.i
-  %i.k = fadd double %i.g, %i.j
+  %2 = fadd double %i.d, 1.970000e+03             ; 5 uses
+  %i.e = fadd nnan double %2, -1.970000e+03
+  %3 = fmul nnan double %i.e, 3.650000e+02
+  %i.f = fadd nnan double %2, -1.969000e+03
+  %4 = fmul nnan double %i.f, 2.500000e-01
+  %i.g = tail call nnan double @llvm.floor.f64(double %4)
+  %i.h = fadd double %3, %i.g
+  %5 = insertelement <2 x double> poison, double %2, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fadd nnan <2 x double> %6, <double -1.601000e+03, double -1.901000e+03>
+  %8 = fdiv nnan <2 x double> %7, <double 4.000000e+02, double 1.000000e+02> ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = tail call nnan double @llvm.floor.f64(double %9)
+  %11 = extractelement <2 x double> %8, i64 1
+  %i.i = tail call nnan double @llvm.floor.f64(double %11)
+  %i.j = fsub double %i.h, %i.i
+  %i.k = fadd double %10, %i.j
   %i.l = fmul double %i.k, 8.640000e+07           ; 2 uses
   %i.m = fcmp olt double %1, %i.l
   br i1 %i.m, label %.preheader, label %.loopexit189.preheader
 
 .preheader:                                       ; preds = %wasm_floor.exit176, %wasm_floor.exit182
-  %.0165 = phi double [ %i.n, %wasm_floor.exit182 ], [ %i.e, %wasm_floor.exit176 ]
+  %.0165 = phi double [ %i.n, %wasm_floor.exit182 ], [ %2, %wasm_floor.exit176 ]
   %i.n = fadd double %.0165, -1.000000e+00        ; 6 uses
   %i.o = fadd double %i.n, -1.601000e+03
   %i.p = fdiv double %i.o, 4.000000e+02           ; 3 uses
@@ -287,7 +289,7 @@ wasm_floor.exit182:                               ; preds = %bb.f, %bb.g
 
 .loopexit189.preheader:                           ; preds = %wasm_floor.exit182, %wasm_floor.exit176
   %.1168.ph = phi double [ %i.l, %wasm_floor.exit176 ], [ %i.ao, %wasm_floor.exit182 ]
-  %.2.ph = phi double [ %i.e, %wasm_floor.exit176 ], [ %i.n, %wasm_floor.exit182 ]
+  %.2.ph = phi double [ %2, %wasm_floor.exit176 ], [ %i.n, %wasm_floor.exit182 ]
   br label %.loopexit189
 
 .loopexit189:                                     ; preds = %.loopexit189.preheader, %wasm_floor.exit188

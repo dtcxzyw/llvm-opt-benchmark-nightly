@@ -198,19 +198,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
 scalar.ph:                                        ; preds = %.preheader45.i, %scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph ], [ 0, %.preheader45.i ] ; 5 uses
   %i.ao = add nuw nsw i64 %indvars.iv.i, %indvars.iv52.i
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.i
+  %3 = sub nuw nsw i64 %i.z, %indvars.iv.i
+  %4 = trunc nuw nsw i64 %3 to i32
   %i.ap = trunc nuw nsw i64 %i.ao to i32
-  %i.aq = urem i32 %i.ap, 100
-  %2 = uitofp nneg i32 %i.aq to double
-  %3 = fdiv double %2, 6.000000e+01
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.i
-  store double %3, ptr %4, align 8, !tbaa !8
-  %5 = sub nuw nsw i64 %i.z, %indvars.iv.i
-  %6 = trunc nuw nsw i64 %5 to i32
-  %7 = urem i32 %6, 100
-  %8 = uitofp nneg i32 %7 to double
-  %9 = fdiv double %8, 6.000000e+01
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv.i
-  store double %9, ptr %10, align 8, !tbaa !8
+  %i.aq = urem i32 %4, 100
+  %5 = urem i32 %i.ap, 100
+  %6 = uitofp nneg i32 %i.aq to double
+  %7 = uitofp nneg i32 %5 to double
+  %8 = insertelement <2 x double> poison, double %7, i64 0
+  %9 = insertelement <2 x double> %8, double %6, i64 1
+  %10 = fdiv <2 x double> %9, splat (double 6.000000e+01) ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  store double %11, ptr %2, align 8, !tbaa !8
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv.i
+  %13 = extractelement <2 x double> %10, i64 1
+  store double %13, ptr %12, align 8, !tbaa !8
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 80
   br i1 %exitcond.not.i, label %middle.block, label %scalar.ph, !llvm.loop !18

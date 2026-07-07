@@ -204,14 +204,19 @@ float_round_underflow.exit:                       ; preds = %bb.p, %bb.q
 
 bb.r:                                             ; preds = %float_round_underflow.exit, %bb.n
   %i.aq = uitofp nneg i32 %1 to double
-  %i.ar = tail call double @pow(double noundef 1.000000e+01, double noundef %i.aq) #25, !tbaa !7 ; 3 uses
+  %i.ar = tail call double @pow(double noundef 1.000000e+01, double noundef %i.aq) #25, !tbaa !7 ; 2 uses
   %i.as = fmul double %.0.i, %i.ar
-  %i.at = tail call double @llvm.floor.f64(double %i.as) ; 2 uses
-  %2 = fadd double %i.at, 1.000000e+00
-  %3 = fdiv double %2, %i.ar                      ; 2 uses
-  %i.au = fcmp ogt double %3, %.0.i
-  %4 = fdiv double %i.at, %i.ar
-  %.0 = select i1 %i.au, double %4, double %3     ; 2 uses
+  %i.at = tail call double @llvm.floor.f64(double %i.as)
+  %2 = insertelement <2 x double> poison, double %i.at, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = fadd <2 x double> %3, <double 1.000000e+00, double -0.000000e+00>
+  %5 = insertelement <2 x double> poison, double %i.ar, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> %4, %6                   ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0      ; 2 uses
+  %i.au = fcmp ogt double %8, %.0.i
+  %9 = extractelement <2 x double> %7, i64 1
+  %.0 = select i1 %i.au, double %9, double %8     ; 2 uses
   %i.av = bitcast double %.0 to i64               ; 5 uses
   %cond.i37 = icmp eq i64 %i.av, 3458764513820540928
   br i1 %cond.i37, label %bb.v, label %bb.s

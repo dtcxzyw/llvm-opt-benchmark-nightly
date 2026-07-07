@@ -201,10 +201,13 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b
   %i.j = extractvalue { double, double } %i.f, 1
-  %2 = fdiv double %i.j, f0x40026BB1BBB55516
-  %3 = extractvalue { double, double } %i.f, 0
-  %4 = fdiv double %3, f0x40026BB1BBB55516
-  %i.k = tail call ptr @PyComplex_FromCComplex(double %4, double %2) #7
+  %2 = extractvalue { double, double } %i.f, 0
+  %3 = insertelement <2 x double> poison, double %i.j, i64 0
+  %4 = insertelement <2 x double> %3, double %2, i64 1
+  %5 = fdiv <2 x double> %4, splat (double f0x40026BB1BBB55516) ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  %i.k = tail call ptr @PyComplex_FromCComplex(double %7, double %6) #7
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %bb.e, %bb.d, %bb.c

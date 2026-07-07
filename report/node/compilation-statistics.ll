@@ -201,19 +201,23 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   %i.c = tail call noundef double @_ZNK2v84base9TimeDelta15InMillisecondsFEv(ptr noundef nonnull align 8 dereferenceable(8) %4) #16 ; 4 uses
   %i.d = load i64, ptr %4, align 8
-  %6 = sitofp i64 %i.d to double
-  %i.e = load i64, ptr %5, align 8
-  %7 = sitofp i64 %i.e to double
-  %8 = fdiv double %6, %7
-  %9 = fmul double %8, 1.000000e+02               ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.f = load i64, ptr %10, align 8               ; 4 uses
-  %11 = mul i64 %i.f, 100
-  %i.g = uitofp i64 %11 to double
-  %12 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %13 = load i64, ptr %12, align 8
-  %14 = uitofp i64 %13 to double
-  %15 = fdiv double %i.g, %14                     ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.e = load i64, ptr %6, align 8                ; 4 uses
+  %7 = mul i64 %i.e, 100
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %9 = uitofp i64 %7 to double
+  %10 = sitofp i64 %i.d to double
+  %i.f = load i64, ptr %8, align 8
+  %11 = load i64, ptr %5, align 8
+  %i.g = uitofp i64 %i.f to double
+  %12 = sitofp i64 %11 to double
+  %13 = insertelement <2 x double> poison, double %10, i64 0
+  %14 = insertelement <2 x double> %13, double %9, i64 1
+  %15 = insertelement <2 x double> poison, double %12, i64 0
+  %16 = insertelement <2 x double> %15, double %i.g, i64 1
+  %17 = fdiv <2 x double> %14, %16                ; 3 uses
+  %18 = extractelement <2 x double> %17, i64 0
+  %19 = fmul double %18, 1.000000e+02             ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.i = load i64, ptr %i.h, align 8              ; 2 uses
   %i.j = uitofp i64 %i.i to double                ; 2 uses
@@ -221,13 +225,16 @@ bb.a:
   %i.l = load i64, ptr %i.k, align 8
   %i.m = uitofp i64 %i.l to double
   %i.n = fdiv double %i.j, %i.m
-  %16 = fdiv double %i.j, 1.000000e+06
-  %17 = fdiv double %i.c, 1.000000e+03
-  %i.o = fdiv double %16, %17
+  %20 = insertelement <2 x double> poison, double %i.j, i64 0
+  %21 = insertelement <2 x double> %20, double %i.c, i64 1
+  %22 = fdiv <2 x double> %21, <double 1.000000e+06, double 1.000000e+03> ; 2 uses
+  %23 = extractelement <2 x double> %22, i64 0
+  %24 = extractelement <2 x double> %22, i64 1
+  %i.o = fdiv double %23, %24
   br i1 %1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = call noundef i32 (ptr, i32, ptr, ...) @_ZN2v84base2OS8SNPrintFEPciPKcz(ptr noundef nonnull %i.b, i32 noundef 128, ptr noundef nonnull @.str.18, ptr noundef %3, ptr noundef %2, double noundef %i.c, ptr noundef %3, ptr noundef %2, i64 noundef %i.f) #16 ; 0 uses
+  %i.p = call noundef i32 (ptr, i32, ptr, ...) @_ZN2v84base2OS8SNPrintFEPciPKcz(ptr noundef nonnull %i.b, i32 noundef 128, ptr noundef nonnull @.str.18, ptr noundef %3, ptr noundef %2, double noundef %i.c, ptr noundef %3, ptr noundef %2, i64 noundef %i.e) #16 ; 0 uses
   %i.q = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #16
   %i.r = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b, i64 noundef %i.q) #16 ; 0 uses
   br label %bb.l
@@ -241,11 +248,13 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = call noundef i32 (ptr, i32, ptr, ...) @_ZN2v84base2OS8SNPrintFEPciPKcz(ptr noundef nonnull %i.b, i32 noundef 128, ptr noundef nonnull @.str.19, ptr noundef %2, double noundef %i.c, double noundef %9, i64 noundef %i.f, double noundef %15, i64 noundef %i.t, i64 noundef %i.v, double noundef %i.n, double noundef %i.o) #16 ; 0 uses
+  %25 = extractelement <2 x double> %17, i64 1
+  %i.w = call noundef i32 (ptr, i32, ptr, ...) @_ZN2v84base2OS8SNPrintFEPciPKcz(ptr noundef nonnull %i.b, i32 noundef 128, ptr noundef nonnull @.str.19, ptr noundef %2, double noundef %i.c, double noundef %19, i64 noundef %i.e, double noundef %25, i64 noundef %i.t, i64 noundef %i.v, double noundef %i.n, double noundef %i.o) #16 ; 0 uses
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.x = call noundef i32 (ptr, i32, ptr, ...) @_ZN2v84base2OS8SNPrintFEPciPKcz(ptr noundef nonnull %i.b, i32 noundef 128, ptr noundef nonnull @.str.20, ptr noundef %2, double noundef %i.c, double noundef %9, i64 noundef %i.f, double noundef %15, i64 noundef %i.t, i64 noundef %i.v) #16 ; 0 uses
+  %26 = extractelement <2 x double> %17, i64 1
+  %i.x = call noundef i32 (ptr, i32, ptr, ...) @_ZN2v84base2OS8SNPrintFEPciPKcz(ptr noundef nonnull %i.b, i32 noundef 128, ptr noundef nonnull @.str.20, ptr noundef %2, double noundef %i.c, double noundef %19, i64 noundef %i.e, double noundef %26, i64 noundef %i.t, i64 noundef %i.v) #16 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d

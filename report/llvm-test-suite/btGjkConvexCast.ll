@@ -186,7 +186,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   %i.bs = call float @llvm.fmuladd.f32(float %i.ag, float %.sroa.082.0145165, float %i.br)
   %i.bt = call noundef float @llvm.fmuladd.f32(float %i.ai, float %.sroa.14.0147163, float %i.bs)
   %i.bu = fdiv float %.047150161, %i.bt
-  %i.bv = fsub float %.054148162, %i.bu           ; 11 uses
+  %i.bv = fsub float %.054148162, %i.bu           ; 9 uses
   %i.bw = fcmp ule float %i.bv, 1.000000e+00
   %i.bx = fcmp uge float %i.bv, 0.000000e+00
   %or.cond.not134 = and i1 %i.bw, %i.bx
@@ -198,21 +198,18 @@ bb.e:                                             ; preds = %bb.d
   %i.bz = load ptr, ptr %5, align 8, !tbaa !8
   %i.ca = load ptr, ptr %i.bz, align 8
   call void %i.ca(ptr noundef nonnull align 8 dereferenceable(188) %5, float noundef %i.bv)
-  %i.cb = fsub float 1.000000e+00, %i.bv          ; 3 uses
+  %i.cb = fsub float 1.000000e+00, %i.bv
   %i.cc = load <2 x float>, ptr %i.d, align 4, !tbaa !18
   %i.cd = load <2 x float>, ptr %i.c, align 4, !tbaa !18
   %i.ce = insertelement <2 x float> poison, float %i.bv, i64 0
-  %i.cf = shufflevector <2 x float> %i.ce, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.cf = shufflevector <2 x float> %i.ce, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.cg = fmul <2 x float> %i.cf, %i.cd
   %i.ch = insertelement <2 x float> poison, float %i.cb, i64 0
-  %i.ci = shufflevector <2 x float> %i.ch, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.ci = shufflevector <2 x float> %i.ch, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.cj = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ci, <2 x float> %i.cc, <2 x float> %i.cg)
   store <2 x float> %i.cj, ptr %i.aw, align 8, !tbaa !18
   %i.ck = load float, ptr %i.o, align 4, !tbaa !18
   %i.cl = load float, ptr %i.m, align 4, !tbaa !18
-  %9 = fmul float %i.bv, %i.cl
-  %10 = call float @llvm.fmuladd.f32(float %i.cb, float %i.ck, float %9)
-  store float %10, ptr %i.bl, align 8, !tbaa !18
   %i.cm = load <2 x float>, ptr %i.s, align 4, !tbaa !18
   %i.cn = load <2 x float>, ptr %i.r, align 4, !tbaa !18
   %i.co = fmul <2 x float> %i.cf, %i.cn
@@ -220,9 +217,16 @@ bb.e:                                             ; preds = %bb.d
   store <2 x float> %i.cp, ptr %i.bc, align 8, !tbaa !18
   %i.cq = load float, ptr %i.ad, align 4, !tbaa !18
   %i.cr = load float, ptr %i.ab, align 4, !tbaa !18
-  %11 = fmul float %i.bv, %i.cr
-  %12 = call float @llvm.fmuladd.f32(float %i.cb, float %i.cq, float %11)
-  store float %12, ptr %i.bm, align 8, !tbaa !18
+  %9 = insertelement <2 x float> poison, float %i.cl, i64 0
+  %10 = insertelement <2 x float> %9, float %i.cr, i64 1
+  %11 = fmul <2 x float> %i.cf, %10
+  %12 = insertelement <2 x float> poison, float %i.ck, i64 0
+  %13 = insertelement <2 x float> %12, float %i.cq, i64 1
+  %14 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ci, <2 x float> %13, <2 x float> %11) ; 2 uses
+  %15 = extractelement <2 x float> %14, i64 0
+  store float %15, ptr %i.bl, align 8, !tbaa !18
+  %16 = extractelement <2 x float> %14, i64 1
+  store float %16, ptr %i.bm, align 8, !tbaa !18
   call void @_ZN17btGjkPairDetector16getClosestPointsERKN36btDiscreteCollisionDetectorInterface17ClosestPointInputERNS0_6ResultEP12btIDebugDrawb(ptr noundef nonnull align 8 dereferenceable(96) %7, ptr noundef nonnull align 8 dereferenceable(144) %8, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef null, i1 noundef zeroext false)
   %i.cs = load i8, ptr %i.ak, align 4, !tbaa !25, !range !34, !noundef !35
   %i.ct = trunc nuw i8 %i.cs to i1

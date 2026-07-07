@@ -84,14 +84,18 @@ bb.c:                                             ; preds = %bb.b
   %i.k = fadd double %1, %i.j
   %i.l = tail call double @llvm.floor.f64(double %i.k)
   %i.m = fsub double %i.j, %i.l
-  %i.n = fmul double %0, %i.h                     ; 2 uses
-  %2 = fmul double %i.n, %i.n
-  %3 = fdiv double %1, %2
-  %4 = tail call fastcc noundef double @_ZN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_15denomEdd(double noundef %i.m, double noundef %3)
-  %5 = fmul double %0, %0
-  %6 = fdiv double %1, %5
-  %i.o = tail call fastcc noundef double @_ZN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_15denomEdd(double noundef %i.h, double noundef %6)
-  %i.p = tail call double @llvm.fmuladd.f64(double %i.g, double %i.o, double %4)
+  %i.n = fmul double %0, %i.h
+  %2 = insertelement <2 x double> poison, double %i.n, i64 0
+  %3 = insertelement <2 x double> %2, double %0, i64 1 ; 2 uses
+  %4 = fmul <2 x double> %3, %3
+  %5 = insertelement <2 x double> poison, double %1, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> %6, %4                   ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = tail call fastcc noundef double @_ZN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_15denomEdd(double noundef %i.m, double noundef %8)
+  %10 = extractelement <2 x double> %7, i64 1
+  %i.o = tail call fastcc noundef double @_ZN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_15denomEdd(double noundef %i.h, double noundef %10)
+  %i.p = tail call double @llvm.fmuladd.f64(double %i.g, double %i.o, double %9)
   br label %common.ret24
 }
 

@@ -204,23 +204,23 @@ bb.u:                                             ; preds = %bb.t
 .preheader170.i.i.i:                              ; preds = %bb.u, %_ZN11OpenImageIO4v3_1L14ComputeNormalZEhh.exit.i.i.i.i
   %indvars.iv.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_1L14ComputeNormalZEhh.exit.i.i.i.i ], [ 15, %bb.u ] ; 4 uses
   %i.ami = shl nuw nsw i64 %indvars.iv.i.i.i.i, 1
-  %i.amj = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.ami ; 2 uses
-  %3 = load i8, ptr %i.amj, align 2, !tbaa !9     ; 2 uses
-  %i.amk = getelementptr inbounds nuw i8, ptr %i.amj, i64 1
-  %4 = load i8, ptr %i.amk, align 1, !tbaa !9     ; 2 uses
-  %5 = mul nuw nsw i64 %indvars.iv.i.i.i.i, 3
-  %6 = getelementptr inbounds nuw i8, ptr %i.g, i64 %5 ; 3 uses
-  store i8 %3, ptr %6, align 1, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 1
-  store i8 %4, ptr %7, align 1, !tbaa !9
-  %8 = uitofp i8 %3 to float
-  %9 = fdiv float %8, 2.550000e+02
-  %10 = tail call float @llvm.fmuladd.f32(float %9, float 2.000000e+00, float -1.000000e+00) ; 2 uses
-  %11 = uitofp i8 %4 to float
-  %12 = fdiv float %11, 2.550000e+02
+  %i.amj = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.ami
+  %3 = mul nuw nsw i64 %indvars.iv.i.i.i.i, 3
+  %i.amk = getelementptr inbounds nuw i8, ptr %i.g, i64 %3 ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.amk, i64 1
+  %5 = load <2 x i8>, ptr %i.amj, align 2, !tbaa !9 ; 3 uses
+  %6 = extractelement <2 x i8> %5, i64 0
+  store i8 %6, ptr %i.amk, align 1, !tbaa !9
+  %7 = extractelement <2 x i8> %5, i64 1
+  store i8 %7, ptr %4, align 1, !tbaa !9
+  %8 = uitofp <2 x i8> %5 to <2 x float>
+  %9 = fdiv <2 x float> %8, splat (float 2.550000e+02) ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %11 = tail call float @llvm.fmuladd.f32(float %10, float 2.000000e+00, float -1.000000e+00) ; 2 uses
+  %12 = extractelement <2 x float> %9, i64 1
   %i.aml = tail call float @llvm.fmuladd.f32(float %12, float 2.000000e+00, float -1.000000e+00) ; 2 uses
-  %i.amm = fneg float %10
-  %i.amn = tail call float @llvm.fmuladd.f32(float %i.amm, float %10, float 1.000000e+00)
+  %i.amm = fneg float %11
+  %i.amn = tail call float @llvm.fmuladd.f32(float %i.amm, float %11, float 1.000000e+00)
   %i.amo = fneg float %i.aml
   %i.amp = tail call float @llvm.fmuladd.f32(float %i.amo, float %i.aml, float %i.amn) ; 2 uses
   %i.amq = fcmp ogt float %i.amp, 0.000000e+00
@@ -239,7 +239,7 @@ bb.v:                                             ; preds = %.preheader170.i.i.i
 
 _ZN11OpenImageIO4v3_1L14ComputeNormalZEhh.exit.i.i.i.i: ; preds = %bb.v, %.preheader170.i.i.i
   %.0.i.i.i.i.i = phi i8 [ %i.amy, %bb.v ], [ 127, %.preheader170.i.i.i ]
-  %i.amz = getelementptr inbounds nuw i8, ptr %6, i64 2
+  %i.amz = getelementptr inbounds nuw i8, ptr %i.amk, i64 2
   store i8 %.0.i.i.i.i.i, ptr %i.amz, align 1, !tbaa !9
   %indvars.iv.next.i.i.i.i = add nsw i64 %indvars.iv.i.i.i.i, -1
   %.not.i.i.i.i = icmp eq i64 %indvars.iv.i.i.i.i, 0
@@ -258,14 +258,16 @@ _ZN11OpenImageIO4v3_1L14ComputeNormalZEhh.exit.i.i.i.i: ; preds = %bb.v, %.prehe
   store i8 %i.and, ptr %i.anh, align 1, !tbaa !9
   %i.ani = getelementptr inbounds nuw i8, ptr %i.anh, i64 1
   store i8 %i.anf, ptr %i.ani, align 1, !tbaa !9
-  %13 = uitofp i8 %i.and to float
-  %14 = fdiv float %13, 2.550000e+02
-  %15 = tail call float @llvm.fmuladd.f32(float %14, float 2.000000e+00, float -1.000000e+00) ; 2 uses
-  %16 = uitofp i8 %i.anf to float
-  %17 = fdiv float %16, 2.550000e+02
-  %i.anj = tail call float @llvm.fmuladd.f32(float %17, float 2.000000e+00, float -1.000000e+00) ; 2 uses
-  %i.ank = fneg float %15
-  %i.anl = tail call float @llvm.fmuladd.f32(float %i.ank, float %15, float 1.000000e+00)
+  %13 = insertelement <2 x i8> poison, i8 %i.and, i64 0
+  %14 = insertelement <2 x i8> %13, i8 %i.anf, i64 1
+  %15 = uitofp <2 x i8> %14 to <2 x float>
+  %16 = fdiv <2 x float> %15, splat (float 2.550000e+02) ; 2 uses
+  %17 = extractelement <2 x float> %16, i64 0
+  %18 = tail call float @llvm.fmuladd.f32(float %17, float 2.000000e+00, float -1.000000e+00) ; 2 uses
+  %19 = extractelement <2 x float> %16, i64 1
+  %i.anj = tail call float @llvm.fmuladd.f32(float %19, float 2.000000e+00, float -1.000000e+00) ; 2 uses
+  %i.ank = fneg float %18
+  %i.anl = tail call float @llvm.fmuladd.f32(float %i.ank, float %18, float 1.000000e+00)
   %i.anm = fneg float %i.anj
   %i.ann = tail call float @llvm.fmuladd.f32(float %i.anm, float %i.anj, float %i.anl) ; 2 uses
   %i.ano = fcmp ogt float %i.ann, 0.000000e+00

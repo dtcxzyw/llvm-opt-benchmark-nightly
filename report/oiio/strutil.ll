@@ -204,25 +204,28 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   store i64 0, ptr %i.b, align 8, !tbaa !107
   store i8 0, ptr %i.a, align 8, !tbaa !7
-  %11 = fdiv double %1, 8.640000e+04
-  %12 = tail call double @llvm.floor.f64(double %11)
-  %13 = fptosi double %12 to i32                  ; 2 uses
-  %14 = frem double %1, 8.640000e+04              ; 2 uses
-  %15 = fdiv double %14, 3.600000e+03
-  %i.c = tail call double @llvm.floor.f64(double %15)
+  %11 = frem double %1, 8.640000e+04              ; 2 uses
+  %12 = insertelement <2 x double> poison, double %1, i64 0
+  %13 = insertelement <2 x double> %12, double %11, i64 1
+  %14 = fdiv <2 x double> %13, <double 8.640000e+04, double 3.600000e+03> ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %16 = tail call double @llvm.floor.f64(double %15)
+  %17 = fptosi double %16 to i32                  ; 2 uses
+  %18 = extractelement <2 x double> %14, i64 1
+  %i.c = tail call double @llvm.floor.f64(double %18)
   %i.d = fptosi double %i.c to i32                ; 3 uses
-  %i.e = frem double %14, 3.600000e+03            ; 2 uses
+  %i.e = frem double %11, 3.600000e+03            ; 2 uses
   %i.f = fdiv double %i.e, 6.000000e+01
   %i.g = tail call double @llvm.floor.f64(double %i.f)
   %i.h = fptosi double %i.g to i32                ; 2 uses
   %i.i = frem double %i.e, 6.000000e+01           ; 2 uses
-  %.not = icmp eq i32 %13, 0
+  %.not = icmp eq i32 %17, 0
   br i1 %.not, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13, !noalias !131
-  store i32 %13, ptr %6, align 16, !tbaa !7, !alias.scope !134, !noalias !131
+  store i32 %17, ptr %6, align 16, !tbaa !7, !alias.scope !134, !noalias !131
   %i.j = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i32 %i.d, ptr %i.j, align 16, !tbaa !7, !alias.scope !134, !noalias !131
   invoke void @_ZN3fmt3v127vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %7, ptr nonnull @.str.24, i64 8, i64 17, ptr nonnull %6)

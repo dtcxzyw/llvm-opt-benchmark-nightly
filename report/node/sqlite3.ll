@@ -205,6 +205,12 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
+  %3 = insertelement <2 x double> poison, double %.0.i.i38, i64 0
+  %4 = insertelement <2 x double> %3, double %.0.i.i48, i64 1
+  %5 = insertelement <2 x double> poison, double %.0.i.i, i64 0
+  %6 = insertelement <2 x double> %5, double %.0.i.i43, i64 1
+  %7 = insertelement <2 x double> poison, double %.0.i.i53, i64 0
+  %8 = insertelement <2 x double> %7, double %.0.i.i58, i64 1
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -212,20 +218,19 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.idx = shl nuw nsw i64 %indvars.iv, 3
   %i.cm = getelementptr inbounds nuw i8, ptr %i.by, i64 %.idx ; 3 uses
   %i.cn = load float, ptr %i.cm, align 4, !tbaa !8107
-  %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 4 ; 2 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 4
   %i.cp = load float, ptr %i.co, align 4, !tbaa !8107
-  %i.cq = fpext float %i.cn to double             ; 2 uses
-  %i.cr = fpext float %i.cp to double             ; 2 uses
-  %3 = fmul double %.0.i.i38, %i.cr
-  %4 = tail call double @llvm.fmuladd.f64(double %.0.i.i, double %i.cq, double %3)
-  %5 = fadd double %.0.i.i53, %4
-  %6 = fptrunc double %5 to float
-  %7 = fmul double %.0.i.i48, %i.cr
-  %8 = tail call double @llvm.fmuladd.f64(double %.0.i.i43, double %i.cq, double %7)
-  %9 = fadd double %.0.i.i58, %8
-  %10 = fptrunc double %9 to float
-  store float %6, ptr %i.cm, align 4, !tbaa !8107
-  store float %10, ptr %i.co, align 4, !tbaa !8107
+  %i.cq = fpext float %i.cn to double
+  %i.cr = fpext float %i.cp to double
+  %9 = insertelement <2 x double> poison, double %i.cr, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fmul <2 x double> %4, %10
+  %12 = insertelement <2 x double> poison, double %i.cq, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %13, <2 x double> %11)
+  %15 = fadd <2 x double> %8, %14
+  %16 = fptrunc <2 x double> %15 to <2 x float>
+  store <2 x float> %16, ptr %i.cm, align 4, !tbaa !8107
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !8114
@@ -547,6 +552,10 @@ bb.ae:                                            ; preds = %bb.ad
   %i.cw = fneg double %.0.i.i79
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   %wide.trip.count = zext nneg i32 %i.bb to i64
+  %3 = insertelement <2 x double> poison, double %i.cw, i64 0
+  %4 = insertelement <2 x double> %3, double %.0.i.i79, i64 1
+  %5 = insertelement <2 x double> poison, double %.0.i.i, i64 0
+  %6 = insertelement <2 x double> %5, double %.0.i.i74, i64 1
   br label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph, %bb.af
@@ -557,16 +566,14 @@ bb.af:                                            ; preds = %.lr.ph, %bb.af
   %i.db = fdiv double %i.da, %i.cv                ; 2 uses
   %i.dc = fadd double %i.db, f0xBFF921FB54442D18
   %i.dd = tail call fastcc double @geopolySine(double noundef %i.dc)
-  %3 = tail call double @llvm.fmuladd.f64(double %i.cw, double %i.dd, double %.0.i.i)
-  %4 = fptrunc double %3 to float
   %.idx = shl nuw nsw i64 %indvars.iv, 3
-  %i.de = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.idx ; 2 uses
-  store float %4, ptr %i.de, align 4, !tbaa !8107
-  %5 = tail call fastcc double @geopolySine(double noundef %i.db)
-  %6 = tail call double @llvm.fmuladd.f64(double %.0.i.i79, double %5, double %.0.i.i74)
-  %7 = fptrunc double %6 to float
-  %8 = getelementptr i8, ptr %i.de, i64 4
-  store float %7, ptr %8, align 4, !tbaa !8107
+  %i.de = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.idx
+  %7 = tail call fastcc double @geopolySine(double noundef %i.db)
+  %8 = insertelement <2 x double> poison, double %i.dd, i64 0
+  %9 = insertelement <2 x double> %8, double %7, i64 1
+  %10 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %9, <2 x double> %6)
+  %11 = fptrunc <2 x double> %10 to <2 x float>
+  store <2 x float> %11, ptr %i.de, align 4, !tbaa !8107
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.af, !llvm.loop !8115

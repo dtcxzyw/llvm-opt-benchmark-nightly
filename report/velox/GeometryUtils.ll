@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.c
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.c
   %.0.lcssa = phi double [ 0.000000e+00, %bb.c ], [ %i.af, %bb.e ] ; 4 uses
-  %i.p = phi <2 x double> [ zeroinitializer, %bb.c ], [ %i.ad, %bb.e ] ; 6 uses
+  %i.p = phi <2 x double> [ zeroinitializer, %bb.c ], [ %i.ad, %bb.e ] ; 5 uses
   %i.q = fmul <2 x double> %i.p, %i.p             ; 2 uses
   %shift = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.q, %shift
@@ -308,14 +308,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31: ; preds = %bb.
   resume { ptr, i32 } %.pn
 
 bb.k:                                             ; preds = %._crit_edge
-  %sqrt = call double @llvm.sqrt.f64(double %i.t) ; 3 uses
+  %sqrt = call double @llvm.sqrt.f64(double %i.t) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  %6 = extractelement <2 x double> %i.p, i64 0
-  %7 = fdiv double %6, %sqrt
-  %8 = extractelement <2 x double> %i.p, i64 1
-  %i.bb = fdiv double %8, %sqrt
-  %9 = fdiv double %.0.lcssa, %sqrt
-  call void @_ZN8facebook5velox9functions10geospatial14CartesianPointC1Eddd(ptr noundef nonnull align 8 dereferenceable(24) %5, double noundef %7, double noundef %i.bb, double noundef %9)
+  %6 = insertelement <2 x double> poison, double %sqrt, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = fdiv <2 x double> %i.p, %7                 ; 2 uses
+  %i.bb = fdiv double %.0.lcssa, %sqrt
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = extractelement <2 x double> %8, i64 1
+  call void @_ZN8facebook5velox9functions10geospatial14CartesianPointC1Eddd(ptr noundef nonnull align 8 dereferenceable(24) %5, double noundef %9, double noundef %10, double noundef %i.bb)
   %i.bc = load double, ptr %5, align 8, !tbaa !245 ; 3 uses
   %i.bd = fmul double %i.bc, %i.bc
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -327,17 +328,19 @@ bb.k:                                             ; preds = %._crit_edge
   %i.bj = load double, ptr %i.bi, align 8, !tbaa !239
   %i.bk = call double @atan2(double noundef %sqrt.i, double noundef %i.bj) #26, !tbaa !3
   %i.bl = call double @atan2(double noundef %i.bf, double noundef %i.bc) #26, !tbaa !3
-  %10 = fmul double %i.bk, 1.800000e+02
-  %11 = fdiv double %10, f0x400921FB54442D18
-  %12 = fsub double 9.000000e+01, %11
-  %13 = fmul double %i.bl, 1.800000e+02
-  %14 = fdiv double %13, f0x400921FB54442D18
+  %11 = insertelement <2 x double> poison, double %i.bk, i64 0
+  %12 = insertelement <2 x double> %11, double %i.bl, i64 1
+  %13 = fmul <2 x double> %12, splat (double 1.800000e+02)
+  %14 = fdiv <2 x double> %13, splat (double f0x400921FB54442D18) ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %16 = fsub double 9.000000e+01, %15
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
+  %17 = extractelement <2 x double> %14, i64 1
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.d
-  %.sroa.0.0 = phi double [ %i.n, %bb.d ], [ %14, %bb.k ]
-  %.sroa.3.0 = phi double [ %i.o, %bb.d ], [ %12, %bb.k ]
+  %.sroa.0.0 = phi double [ %i.n, %bb.d ], [ %17, %bb.k ]
+  %.sroa.3.0 = phi double [ %i.o, %bb.d ], [ %16, %bb.k ]
   %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.3.0, 1
   ret { double, double } %.fca.1.insert
@@ -357,13 +360,15 @@ bb.a:
   %i.h = load double, ptr %i.g, align 8, !tbaa !239
   %i.i = tail call double @atan2(double noundef %sqrt, double noundef %i.h) #26, !tbaa !3
   %i.j = tail call double @atan2(double noundef %i.d, double noundef %i.a) #26, !tbaa !3
-  %1 = fmul double %i.i, 1.800000e+02
-  %2 = fdiv double %1, f0x400921FB54442D18
-  %3 = fsub double 9.000000e+01, %2
-  %4 = fmul double %i.j, 1.800000e+02
-  %5 = fdiv double %4, f0x400921FB54442D18
-  %.fca.0.insert = insertvalue { double, double } poison, double %5, 0
-  %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %3, 1
+  %1 = insertelement <2 x double> poison, double %i.i, i64 0
+  %2 = insertelement <2 x double> %1, double %i.j, i64 1
+  %3 = fmul <2 x double> %2, splat (double 1.800000e+02)
+  %4 = fdiv <2 x double> %3, splat (double f0x400921FB54442D18) ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  %6 = fsub double 9.000000e+01, %5
+  %7 = extractelement <2 x double> %4, i64 1
+  %.fca.0.insert = insertvalue { double, double } poison, double %7, 0
+  %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %6, 1
   ret { double, double } %.fca.1.insert
 }
 

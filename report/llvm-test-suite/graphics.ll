@@ -46,16 +46,19 @@ bb.a:
   %0 = alloca %struct.stat, align 8               ; 3 uses
   %i.a = load float, ptr @graphics_xmax, align 4, !tbaa !8
   %i.b = load float, ptr @graphics_xmin, align 4, !tbaa !8
-  %1 = fsub float %i.a, %i.b
-  %2 = fpext float %1 to double
-  %3 = fdiv double 8.000000e+02, %2
-  store double %3, ptr @xconversion, align 8, !tbaa !10
-  %4 = load float, ptr @graphics_ymax, align 4, !tbaa !8
-  %5 = load float, ptr @graphics_ymin, align 4, !tbaa !8
-  %6 = fsub float %4, %5
-  %7 = fpext float %6 to double
-  %8 = fdiv double 8.000000e+02, %7
-  store double %8, ptr @yconversion, align 8, !tbaa !10
+  %1 = load float, ptr @graphics_ymax, align 4, !tbaa !8
+  %2 = load float, ptr @graphics_ymin, align 4, !tbaa !8
+  %3 = insertelement <2 x float> poison, float %i.a, i64 0
+  %4 = insertelement <2 x float> %3, float %1, i64 1
+  %5 = insertelement <2 x float> poison, float %i.b, i64 0
+  %6 = insertelement <2 x float> %5, float %2, i64 1
+  %7 = fsub <2 x float> %4, %6
+  %8 = fpext <2 x float> %7 to <2 x double>
+  %9 = fdiv <2 x double> splat (double 8.000000e+02), %8 ; 2 uses
+  %10 = extractelement <2 x double> %9, i64 0
+  store double %10, ptr @xconversion, align 8, !tbaa !10
+  %11 = extractelement <2 x double> %9, i64 1
+  store double %11, ptr @yconversion, align 8, !tbaa !10
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #6
   %i.c = load ptr, ptr @graphics_directory, align 8, !tbaa !12
   %i.d = call i32 @stat(ptr noundef %i.c, ptr noundef nonnull %0) #6

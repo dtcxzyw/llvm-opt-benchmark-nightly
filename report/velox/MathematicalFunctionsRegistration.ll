@@ -204,6 +204,8 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowI
   %i.il = tail call double @llvm.round.f64(double %.sroa.03.0.i)
   %.2.i.i.i.i.i.i.i.i.i.i.i.i.i.us.i.i = select i1 %i.ig, double %.sroa.03.0.i, double %i.il ; 3 uses
   %brmerge48.i = or i1 %i.ig, %i.ib
+  %16 = insertelement <2 x double> poison, double %i.ii, i64 0
+  %17 = insertelement <2 x double> %16, double %.sroa.03.0.i, i64 1
   %broadcast.splatinsert589 = insertelement <4 x double> poison, double %.sroa.03.0.i, i64 0
   %broadcast.splat590 = shufflevector <4 x double> %broadcast.splatinsert589, <4 x double> poison, <4 x i32> zeroinitializer ; 5 uses
   %broadcast.splatinsert559 = insertelement <4 x double> poison, double %.sroa.03.0.i, i64 0
@@ -450,14 +452,14 @@ vec.epilog.middle.block594:                       ; preds = %vec.epilog.vector.b
   br i1 %i.kd, label %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us36.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_dNS0_15ConstantCheckerIJdiEEEJdiEEEE7iterateIJNS3_20ConstantVectorReaderIdEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !7200
 
 .lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.split.i: ; preds = %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.i
-  %i.ke = tail call noundef double @pow(double noundef 1.000000e+01, double noundef %i.id) #37, !tbaa !3, !noalias !7201 ; 4 uses
-  %16 = fmul double %i.ii, %i.ke
-  %17 = tail call double @llvm.round.f64(double %16)
-  %18 = fdiv double %17, %i.ke
-  %19 = fadd double %i.ih, %18                    ; 2 uses
-  %20 = fmul double %.sroa.03.0.i, %i.ke
-  %21 = tail call double @llvm.round.f64(double %20)
-  %22 = fdiv double %21, %i.ke                    ; 2 uses
+  %i.ke = tail call noundef double @pow(double noundef 1.000000e+01, double noundef %i.id) #37, !tbaa !3, !noalias !7201
+  %18 = insertelement <2 x double> poison, double %i.ke, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %20 = fmul <2 x double> %17, %19
+  %21 = tail call <2 x double> @llvm.round.v2f64(<2 x double> %20)
+  %22 = fdiv <2 x double> %21, %19                ; 3 uses
+  %23 = extractelement <2 x double> %22, i64 0
+  %24 = fadd double %i.ih, %23                    ; 2 uses
   %i.kf = or disjoint i64 %i.iw, 1
   %umax597 = tail call i64 @llvm.umax.i64(i64 %i.kf, i64 %i.iv) ; 3 uses
   %i.kg = sub i64 %umax597, %i.iw                 ; 5 uses
@@ -472,7 +474,7 @@ vector.main.loop.iter.check629:                   ; preds = %iter.check642
   %n.mod.vf647 = and i64 %umax597, 1              ; 3 uses
   %n.vec648 = sub nuw i64 %i.kg, %n.mod.vf647     ; 3 uses
   %i.kh = add i64 %n.vec648, %i.iw                ; 2 uses
-  %broadcast.splatinsert649 = insertelement <4 x double> poison, double %19, i64 0
+  %broadcast.splatinsert649 = insertelement <4 x double> poison, double %24, i64 0
   %broadcast.splat650 = shufflevector <4 x double> %broadcast.splatinsert649, <4 x double> poison, <4 x i32> zeroinitializer ; 5 uses
   br i1 %min.iters.check630, label %vec.epilog.vector.body651.preheader, label %vector.body636.preheader
 
@@ -526,8 +528,7 @@ vector.main.loop.iter.check599:                   ; preds = %iter.check612
   %n.mod.vf617 = and i64 %umax597, 1              ; 3 uses
   %n.vec618 = sub nuw i64 %i.kg, %n.mod.vf617     ; 3 uses
   %i.kn = add i64 %n.vec618, %i.iw                ; 2 uses
-  %broadcast.splatinsert619 = insertelement <4 x double> poison, double %22, i64 0
-  %broadcast.splat620 = shufflevector <4 x double> %broadcast.splatinsert619, <4 x double> poison, <4 x i32> zeroinitializer ; 5 uses
+  %broadcast.splat620 = shufflevector <2 x double> %22, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 5 uses
   br i1 %min.iters.check600, label %vec.epilog.vector.body621.preheader, label %vector.body606.preheader
 
 vector.body606.preheader:                         ; preds = %vector.main.loop.iter.check599
@@ -570,12 +571,13 @@ vec.epilog.middle.block624:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i.preheader: ; preds = %middle.block609, %iter.check612, %vec.epilog.middle.block624
   %.093.i.i.i.i.i.i.i.i.i.i.i.us41.i.ph = phi i64 [ %i.kn, %middle.block609 ], [ %i.iw, %iter.check612 ], [ %i.kn, %vec.epilog.middle.block624 ]
+  %25 = extractelement <2 x double> %22, i64 1
   br label %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i
 
 .lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i: ; preds = %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i.preheader, %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i
   %.093.i.i.i.i.i.i.i.i.i.i.i.us41.i = phi i64 [ %i.ku, %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i ], [ %.093.i.i.i.i.i.i.i.i.i.i.i.us41.i.ph, %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i.preheader ] ; 2 uses
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %.val47, i64 %.093.i.i.i.i.i.i.i.i.i.i.i.us41.i
-  store double %22, ptr %i.kt, align 8, !tbaa !1891
+  store double %25, ptr %i.kt, align 8, !tbaa !1891
   %i.ku = add nuw i64 %.093.i.i.i.i.i.i.i.i.i.i.i.us41.i, 1 ; 2 uses
   %i.kv = icmp ult i64 %i.ku, %i.iv
   br i1 %i.kv, label %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.us40.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_dNS0_15ConstantCheckerIJdiEEEJdiEEEE7iterateIJNS3_20ConstantVectorReaderIdEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !7208
@@ -720,7 +722,7 @@ vec.epilog.middle.block534:                       ; preds = %vec.epilog.vector.b
 .lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.i:     ; preds = %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.i.preheader, %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.i
   %.093.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.lx, %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.i ], [ %.093.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.i.preheader ] ; 2 uses
   %i.lw = getelementptr inbounds nuw [8 x i8], ptr %.val47, i64 %.093.i.i.i.i.i.i.i.i.i.i.i.i
-  store double %19, ptr %i.lw, align 8, !tbaa !1891
+  store double %24, ptr %i.lw, align 8, !tbaa !1891
   %i.lx = add nuw i64 %.093.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.ly = icmp ult i64 %i.lx, %i.iv
   br i1 %i.ly, label %.lr.ph94.i.i.i.i.i.i.i.i.i.i.split.split.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_dNS0_15ConstantCheckerIJdiEEEJdiEEEE7iterateIJNS3_20ConstantVectorReaderIdEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !7215
@@ -1123,10 +1125,12 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowI
   %i.iy = fcmp ueq float %i.ix, +inf              ; 4 uses
   %i.iz = tail call float @llvm.trunc.f32(float %.sroa.03.0.i) ; 3 uses
   %i.ja = fsub float %.sroa.03.0.i, %i.iz         ; 2 uses
-  %16 = fpext nnan float %i.ja to double          ; 2 uses
-  %17 = fcmp oeq float %i.ja, 0.000000e+00        ; 2 uses
-  %18 = fpext float %.sroa.03.0.i to double       ; 5 uses
-  %i.jb = tail call double @llvm.fabs.f64(double %18)
+  %16 = fcmp oeq float %i.ja, 0.000000e+00        ; 2 uses
+  %17 = insertelement <2 x float> poison, float %i.ja, i64 0
+  %18 = insertelement <2 x float> %17, float %.sroa.03.0.i, i64 1
+  %19 = fpext <2 x float> %18 to <2 x double>     ; 3 uses
+  %20 = extractelement <2 x double> %19, i64 1    ; 4 uses
+  %i.jb = tail call double @llvm.fabs.f64(double %20)
   %i.jc = fcmp olt double %i.jb, f0x42B0000000000000 ; 2 uses
   %i.jd = tail call float @llvm.round.f32(float %.sroa.03.0.i)
   %.2.i.i.i.i.i.i.i.i.i.i.i.i.i.us.i.i = select i1 %i.iy, float %.sroa.03.0.i, float %i.jd ; 3 uses
@@ -1139,6 +1143,7 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowI
   %broadcast.splat458 = shufflevector <8 x float> %broadcast.splatinsert457, <8 x float> poison, <8 x i32> zeroinitializer ; 5 uses
   %broadcast.splatinsert427 = insertelement <8 x float> poison, float %.2.i.i.i.i.i.i.i.i.i.i.i.i.i.us.i.i, i64 0
   %broadcast.splat428 = shufflevector <8 x float> %broadcast.splatinsert427, <8 x float> poison, <8 x i32> zeroinitializer ; 5 uses
+  %21 = extractelement <2 x double> %19, i64 0
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i:                ; preds = %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJfiEEEJfiEEEE7iterateIJNS3_20ConstantVectorReaderIfEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJfiEEEJfiEEEE7iterateIJNS3_20ConstantVectorReaderIfEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUlimE_clEim.exit49.i.i.i.i.i.i.i.i.i.i.i
@@ -1310,7 +1315,7 @@ vec.epilog.middle.block522:                       ; preds = %vec.epilog.vector.b
   br i1 %i.kk, label %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.us.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJfiEEEJfiEEEE7iterateIJNS3_20ConstantVectorReaderIfEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !7537
 
 .lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.i: ; preds = %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.i
-  br i1 %17, label %iter.check540, label %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.split.i
+  br i1 %16, label %iter.check540, label %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.split.i
 
 iter.check540:                                    ; preds = %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.i
   %i.kl = or disjoint i64 %i.jo, 1
@@ -1377,16 +1382,17 @@ vec.epilog.middle.block552:                       ; preds = %vec.epilog.vector.b
   br i1 %i.kv, label %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.us36.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJfiEEEJfiEEEE7iterateIJNS3_20ConstantVectorReaderIfEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !7540
 
 .lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.split.i: ; preds = %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.preheader.split.i
-  %i.kw = tail call noundef double @pow(double noundef 1.000000e+01, double noundef %i.iv) #37, !tbaa !3, !noalias !7541 ; 4 uses
-  %19 = fmul double %i.kw, %16
-  %20 = tail call double @llvm.round.f64(double %19)
-  %21 = fdiv double %20, %i.kw
-  %22 = fptrunc double %21 to float
-  %23 = fadd float %i.iz, %22                     ; 2 uses
-  %24 = fmul double %i.kw, %18
-  %25 = tail call double @llvm.round.f64(double %24)
-  %26 = fdiv double %25, %i.kw
-  %i.kx = fptrunc double %26 to float             ; 2 uses
+  %i.kw = tail call noundef double @pow(double noundef 1.000000e+01, double noundef %i.iv) #37, !tbaa !3, !noalias !7541
+  %22 = insertelement <2 x double> poison, double %i.kw, i64 0
+  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %24 = fmul <2 x double> %23, %19
+  %25 = tail call <2 x double> @llvm.round.v2f64(<2 x double> %24)
+  %26 = fdiv <2 x double> %25, %23                ; 2 uses
+  %27 = extractelement <2 x double> %26, i64 0
+  %28 = fptrunc double %27 to float
+  %29 = fadd float %i.iz, %28                     ; 2 uses
+  %30 = extractelement <2 x double> %26, i64 1
+  %i.kx = fptrunc double %30 to float             ; 2 uses
   %i.ky = or disjoint i64 %i.jo, 1
   %umax555 = tail call i64 @llvm.umax.i64(i64 %i.ky, i64 %i.jn) ; 3 uses
   %i.kz = sub i64 %umax555, %i.jo                 ; 5 uses
@@ -1401,7 +1407,7 @@ vector.main.loop.iter.check587:                   ; preds = %iter.check600
   %n.mod.vf605 = and i64 %umax555, 1              ; 3 uses
   %n.vec606 = sub nuw i64 %i.kz, %n.mod.vf605     ; 3 uses
   %i.la = add i64 %n.vec606, %i.jo                ; 2 uses
-  %broadcast.splatinsert607 = insertelement <8 x float> poison, float %23, i64 0
+  %broadcast.splatinsert607 = insertelement <8 x float> poison, float %29, i64 0
   %broadcast.splat608 = shufflevector <8 x float> %broadcast.splatinsert607, <8 x float> poison, <8 x i32> zeroinitializer ; 5 uses
   br i1 %min.iters.check588, label %vec.epilog.vector.body609.preheader, label %vector.body594.preheader
 
@@ -1578,7 +1584,7 @@ vec.epilog.middle.block462:                       ; preds = %vec.epilog.vector.b
 
 iter.check480:                                    ; preds = %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.us.i.preheader.i
   %i.ma = tail call noundef double @pow(double noundef 1.000000e+01, double noundef %i.iw) #37, !tbaa !3, !noalias !7541 ; 2 uses
-  %i.mb = fmul double %i.ma, %18
+  %i.mb = fmul double %i.ma, %20
   %i.mc = tail call double @llvm.round.f64(double %i.mb)
   %i.md = fdiv double %i.mc, %i.ma
   %i.me = fptrunc double %i.md to float           ; 2 uses
@@ -1650,7 +1656,7 @@ vec.epilog.middle.block492:                       ; preds = %vec.epilog.vector.b
 .lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.i:     ; preds = %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.i.preheader, %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.i
   %.097.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.mr, %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.i ], [ %.097.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.i.preheader ] ; 2 uses
   %i.mq = getelementptr inbounds nuw [4 x i8], ptr %.val47, i64 %.097.i.i.i.i.i.i.i.i.i.i.i.i
-  store float %23, ptr %i.mq, align 4, !tbaa !2099
+  store float %29, ptr %i.mq, align 4, !tbaa !2099
   %i.mr = add nuw i64 %.097.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.ms = icmp ult i64 %i.mr, %i.jn
   br i1 %i.ms, label %.lr.ph98.i.i.i.i.i.i.i.i.i.i.split.split.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113RoundFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJfiEEEJfiEEEE7iterateIJNS3_20ConstantVectorReaderIfEENSJ_IiEEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !7555
@@ -1665,28 +1671,28 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   %i.mu = tail call noundef double @pow(double noundef 1.000000e+01, double noundef %i.iw) #37, !tbaa !3, !noalias !7556 ; 2 uses
-  %i.mv = fmul double %i.mu, %18
+  %i.mv = fmul double %i.mu, %20
   %i.mw = tail call double @llvm.round.f64(double %i.mv)
   %i.mx = fdiv double %i.mw, %i.mu
   %i.my = fptrunc double %i.mx to float
   br label %_ZN8facebook5velox6StatusD2Ev.exit58.i.i.i.i.i.i.i.i.i.i.i.i
 
 bb.bb:                                            ; preds = %bb.az
-  br i1 %17, label %_ZN8facebook5velox6StatusD2Ev.exit58.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.bc
+  br i1 %16, label %_ZN8facebook5velox6StatusD2Ev.exit58.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.mz = tail call noundef double @pow(double noundef 1.000000e+01, double noundef %i.iv) #37, !tbaa !3, !noalias !7556 ; 4 uses
   br i1 %i.jc, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.na = fmul double %i.mz, %18
+  %i.na = fmul double %i.mz, %20
   %i.nb = tail call double @llvm.round.f64(double %i.na)
   %i.nc = fdiv double %i.nb, %i.mz
   %i.nd = fptrunc double %i.nc to float
   br label %_ZN8facebook5velox6StatusD2Ev.exit58.i.i.i.i.i.i.i.i.i.i.i.i
 
 bb.be:                                            ; preds = %bb.bc
-  %i.ne = fmul double %i.mz, %16
+  %i.ne = fmul double %i.mz, %21
   %i.nf = tail call double @llvm.round.f64(double %i.ne)
   %i.ng = fdiv double %i.nf, %i.mz
   %i.nh = fptrunc double %i.ng to float

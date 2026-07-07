@@ -65,13 +65,18 @@ bb.a:
   %i.a = add nsw i32 %3, -1
   %i.b = sext i32 %i.a to i64                     ; 2 uses
   %i.c = getelementptr inbounds [8 x i8], ptr %0, i64 %i.b
-  %i.d = load double, ptr %i.c, align 8, !tbaa !8 ; 2 uses
+  %i.d = load double, ptr %i.c, align 8, !tbaa !8
   %i.e = getelementptr inbounds [8 x i8], ptr %1, i64 %i.b
   %i.f = load double, ptr %i.e, align 8, !tbaa !8
-  %i.g = tail call double @llvm.fabs.f64(double %i.f) ; 2 uses
-  %10 = tail call double @llvm.fmuladd.f64(double %i.g, double -1.010000e+00, double %i.d) ; 2 uses
-  %11 = tail call double @llvm.fmuladd.f64(double %i.g, double 1.010000e+00, double %i.d) ; 2 uses
+  %i.g = tail call double @llvm.fabs.f64(double %i.f)
+  %10 = insertelement <2 x double> poison, double %i.g, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %12 = insertelement <2 x double> poison, double %i.d, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> <double -1.010000e+00, double 1.010000e+00>, <2 x double> %13) ; 2 uses
   %i.h = icmp sgt i32 %3, 1
+  %15 = extractelement <2 x double> %14, i64 0    ; 2 uses
+  %16 = extractelement <2 x double> %14, i64 1    ; 2 uses
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
@@ -81,8 +86,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ %i.j, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
-  %.0119135 = phi double [ %11, %.lr.ph.preheader ], [ %.1120, %.lr.ph ] ; 2 uses
-  %.0121134 = phi double [ %10, %.lr.ph.preheader ], [ %.1122, %.lr.ph ] ; 2 uses
+  %.0119135 = phi double [ %16, %.lr.ph.preheader ], [ %.1120, %.lr.ph ] ; 2 uses
+  %.0121134 = phi double [ %15, %.lr.ph.preheader ], [ %.1122, %.lr.ph ] ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.l = load <2 x double>, ptr %i.k, align 8, !tbaa !8
   %i.m = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.l) ; 2 uses
@@ -103,8 +108,8 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.0121.lcssa = phi double [ %10, %bb.a ], [ %.1122, %.lr.ph ] ; 6 uses
-  %.0119.lcssa = phi double [ %11, %bb.a ], [ %.1120, %.lr.ph ] ; 5 uses
+  %.0121.lcssa = phi double [ %15, %bb.a ], [ %.1122, %.lr.ph ] ; 6 uses
+  %.0119.lcssa = phi double [ %16, %bb.a ], [ %.1120, %.lr.ph ] ; 5 uses
   %i.v = fadd double %.0121.lcssa, %.0119.lcssa
   %i.w = fcmp ogt double %i.v, 0.000000e+00
   %i.x = fneg double %.0121.lcssa
@@ -346,6 +351,9 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #1
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

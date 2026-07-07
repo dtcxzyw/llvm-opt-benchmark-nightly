@@ -201,13 +201,17 @@ bb.f:                                             ; preds = %.lr.ph, %ziplistNex
   %.0108 = phi i64 [ 0, %.lr.ph ], [ %.2, %ziplistNext.exit64 ] ; 2 uses
   %.070107 = phi i32 [ 0, %.lr.ph ], [ %.272, %ziplistNext.exit64 ] ; 2 uses
   %i.ak = tail call i32 @rand() #18
+  %13 = sub i32 %i.t, %.037109
+  %14 = uitofp i32 %13 to double
+  %15 = uitofp i32 %.033111 to double
   %i.al = sitofp i32 %i.ak to double
-  %13 = fdiv double %i.al, f0x41DFFFFFFFC00000
-  %14 = uitofp i32 %.033111 to double
-  %15 = sub i32 %i.t, %.037109
-  %16 = uitofp i32 %15 to double
-  %17 = fdiv double %14, %16
-  %i.am = fcmp ugt double %13, %17
+  %16 = insertelement <2 x double> poison, double %i.al, i64 0
+  %17 = insertelement <2 x double> %16, double %15, i64 1
+  %18 = insertelement <2 x double> <double f0x41DFFFFFFFC00000, double poison>, double %14, i64 1
+  %19 = fdiv <2 x double> %17, %18                ; 2 uses
+  %20 = extractelement <2 x double> %19, i64 0
+  %21 = extractelement <2 x double> %19, i64 1
+  %i.am = fcmp ugt double %20, %21
   br i1 %i.am, label %bb.y, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

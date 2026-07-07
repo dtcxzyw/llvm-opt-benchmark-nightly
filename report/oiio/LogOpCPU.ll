@@ -203,10 +203,7 @@ bb.a:
   store <2 x float> %i.ac, ptr %i.u, align 8, !tbaa !114
   %i.ad = load ptr, ptr %i.o, align 8, !tbaa !109 ; 4 uses
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !113
-  %2 = fptrunc double %i.ae to float
-  %3 = fdiv float %i.r, %2
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store float %3, ptr %i.af, align 8, !tbaa !114
   %i.ag = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !113
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 100
@@ -245,10 +242,16 @@ bb.a:
   store <2 x float> %i.bm, ptr %i.bg, align 4, !tbaa !114
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %i.bo = load double, ptr %i.bn, align 8, !tbaa !113
-  %4 = fptrunc double %i.bo to float
-  %5 = fdiv float 1.000000e+00, %4
+  %2 = insertelement <2 x double> poison, double %i.ae, i64 0
+  %3 = insertelement <2 x double> %2, double %i.bo, i64 1
+  %4 = fptrunc <2 x double> %3 to <2 x float>
+  %5 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.r, i64 0
+  %6 = fdiv <2 x float> %5, %4                    ; 2 uses
+  %7 = extractelement <2 x float> %6, i64 0
+  store float %7, ptr %i.af, align 8, !tbaa !114
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 132
-  store float %5, ptr %i.bp, align 4, !tbaa !114
+  %8 = extractelement <2 x float> %6, i64 1
+  store float %8, ptr %i.bp, align 4, !tbaa !114
   ret void
 }
 

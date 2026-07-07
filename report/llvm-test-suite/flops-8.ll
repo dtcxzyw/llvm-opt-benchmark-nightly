@@ -84,6 +84,8 @@ bb.a:
   %i.o = load double, ptr @A3, align 8, !tbaa !8  ; 2 uses
   %i.p = load double, ptr @A2, align 8, !tbaa !8  ; 2 uses
   %i.q = load double, ptr @A1, align 8, !tbaa !8  ; 2 uses
+  %0 = insertelement <2 x double> poison, double %i.k, i64 0
+  %1 = insertelement <2 x double> %0, double %i.m, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.b
@@ -91,17 +93,22 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %.04144 = phi i64 [ 1, %bb.a ], [ %i.ag, %bb.b ] ; 2 uses
   %i.r = uitofp nneg i64 %.04144 to double
   %i.s = fmul double %i.d, %i.r                   ; 3 uses
-  %i.t = fmul double %i.s, %i.s                   ; 12 uses
+  %i.t = fmul double %i.s, %i.s                   ; 11 uses
   %i.u = tail call double @llvm.fmuladd.f64(double %i.e, double %i.t, double %i.f)
   %i.v = tail call double @llvm.fmuladd.f64(double %i.t, double %i.u, double %i.g)
   %i.w = tail call double @llvm.fmuladd.f64(double %i.t, double %i.v, double %i.h)
   %i.x = tail call double @llvm.fmuladd.f64(double %i.t, double %i.w, double %i.i)
   %i.y = tail call double @llvm.fmuladd.f64(double %i.t, double %i.x, double %i.j)
-  %0 = tail call double @llvm.fmuladd.f64(double %i.t, double %i.y, double %i.k) ; 2 uses
-  %1 = fmul double %0, %0
-  %i.z = fmul double %i.s, %1
-  %2 = tail call double @llvm.fmuladd.f64(double %i.l, double %i.t, double %i.m)
-  %i.aa = tail call double @llvm.fmuladd.f64(double %2, double %i.t, double %i.n)
+  %2 = insertelement <2 x double> poison, double %i.t, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %i.y, i64 0
+  %5 = insertelement <2 x double> %4, double %i.l, i64 1
+  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %5, <2 x double> %1) ; 3 uses
+  %foldExtExtBinop = fmul <2 x double> %6, %6
+  %7 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.z = fmul double %i.s, %7
+  %8 = extractelement <2 x double> %6, i64 1
+  %i.aa = tail call double @llvm.fmuladd.f64(double %8, double %i.t, double %i.n)
   %i.ab = tail call double @llvm.fmuladd.f64(double %i.aa, double %i.t, double %i.o)
   %i.ac = tail call double @llvm.fmuladd.f64(double %i.ab, double %i.t, double %i.p)
   %i.ad = tail call double @llvm.fmuladd.f64(double %i.ac, double %i.t, double %i.q)
@@ -153,6 +160,9 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2
 
 attributes #0 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

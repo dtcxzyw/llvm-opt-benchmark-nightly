@@ -203,9 +203,13 @@ bb.y:                                             ; preds = %._crit_edge149, %bb
   %i.eo = tail call float @llvm.fmuladd.f32(float %i.dd, float 0.000000e+00, float %i.en)
   %i.ep = tail call float @llvm.fmuladd.f32(float %i.cz, float 0.000000e+00, float %i.eh) ; 2 uses
   %i.eq = tail call float @llvm.fmuladd.f32(float %i.de, float %i.da, float %i.ep)
-  %5 = tail call float @llvm.fmuladd.f32(float %i.dd, float 0.000000e+00, float %i.eq)
-  %6 = tail call float @llvm.fmuladd.f32(float %i.da, float 0.000000e+00, float %i.ep)
-  %i.er = fadd float %6, %i.dd
+  %5 = insertelement <2 x float> poison, float %i.dd, i64 0
+  %6 = insertelement <2 x float> %5, float %i.da, i64 1
+  %7 = insertelement <2 x float> poison, float %i.eq, i64 0
+  %8 = insertelement <2 x float> %7, float %i.ep, i64 1
+  %9 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> zeroinitializer, <2 x float> %8) ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 1
+  %i.er = fadd float %10, %i.dd
   %i.es = load float, ptr %i.av, align 8
   %i.et = fcmp une float %i.es, 0.000000e+00
   br i1 %i.et, label %bb.z, label %bb.ae
@@ -249,10 +253,14 @@ bb.ae:                                            ; preds = %bb.aa, %bb.y
   %i.ez = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   %i.fa = load ptr, ptr %i.ez, align 8            ; 2 uses
   %.not126134 = icmp eq ptr %i.ey, %i.fa
-  br i1 %.not126134, label %.loopexit, label %.lr.ph
+  br i1 %.not126134, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.ae, %.lr.ph
-  %.sroa.066.0135 = phi ptr [ %i.fu, %.lr.ph ], [ %i.ey, %bb.ae ] ; 5 uses
+.lr.ph.preheader:                                 ; preds = %bb.ae
+  %11 = extractelement <2 x float> %9, i64 0
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.sroa.066.0135 = phi ptr [ %i.fu, %.lr.ph ], [ %i.ey, %.lr.ph.preheader ] ; 5 uses
   %i.fb = load float, ptr %.sroa.066.0135, align 4 ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %.sroa.066.0135, i64 4
   %i.fd = load float, ptr %i.fc, align 4          ; 2 uses
@@ -270,7 +278,7 @@ bb.ae:                                            ; preds = %bb.aa, %bb.y
   %i.fp = fadd <2 x float> %i.eg, %i.fo
   %i.fq = fmul float %i.eo, %i.fd
   %i.fr = tail call float @llvm.fmuladd.f32(float %i.ek, float %i.fb, float %i.fq)
-  %i.fs = tail call float @llvm.fmuladd.f32(float %5, float %i.ff, float %i.fr)
+  %i.fs = tail call float @llvm.fmuladd.f32(float %11, float %i.ff, float %i.fr)
   %i.ft = fadd float %i.er, %i.fs
   store <2 x float> %i.fp, ptr %.sroa.066.0135, align 4
   store float %i.ft, ptr %i.fe, align 4

@@ -202,18 +202,21 @@ scalar.ph:                                        ; preds = %.preheader43.i, %sc
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph ], [ 0, %.preheader43.i ] ; 4 uses
   %i.aw = mul nuw nsw i64 %indvars.iv.i, %indvars.iv49.i
   %i.ax = trunc i64 %i.aw to i32                  ; 2 uses
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv.i
+  %3 = add i32 %i.ax, 2
   %i.ay = add i32 %i.ax, 1
+  %4 = urem i32 %3, 1000
   %i.az = urem i32 %i.ay, 1200
-  %i.ba = uitofp nneg i32 %i.az to double
-  %2 = fdiv double %i.ba, 1.200000e+03
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv.i
-  store double %2, ptr %3, align 8, !tbaa !8
-  %4 = add i32 %i.ax, 2
-  %5 = urem i32 %4, 1000
-  %6 = uitofp nneg i32 %5 to double
-  %7 = fdiv double %6, 1.000000e+03
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv.i
-  store double %7, ptr %8, align 8, !tbaa !8
+  %i.ba = uitofp nneg i32 %4 to double
+  %5 = uitofp nneg i32 %i.az to double
+  %6 = insertelement <2 x double> poison, double %5, i64 0
+  %7 = insertelement <2 x double> %6, double %i.ba, i64 1
+  %8 = fdiv <2 x double> %7, <double 1.200000e+03, double 1.000000e+03> ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  store double %9, ptr %2, align 8, !tbaa !8
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv.i
+  %11 = extractelement <2 x double> %8, i64 1
+  store double %11, ptr %10, align 8, !tbaa !8
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 1000
   br i1 %exitcond.not.i, label %middle.block, label %scalar.ph, !llvm.loop !18

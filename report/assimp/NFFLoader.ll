@@ -205,17 +205,17 @@ define linkonce_odr hidden noundef nonnull align 4 dereferenceable(36) ptr @_ZN1
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load <2 x float>, ptr %0, align 4        ; 6 uses
-  %i.d = extractelement <2 x float> %i.c, i64 1   ; 3 uses
-  %i.e = extractelement <2 x float> %i.c, i64 0   ; 3 uses
+  %i.c = load <2 x float>, ptr %0, align 4        ; 8 uses
+  %i.d = extractelement <2 x float> %i.c, i64 1   ; 2 uses
+  %i.e = extractelement <2 x float> %i.c, i64 0
   %i.f = load float, ptr %i.b, align 4            ; 7 uses
-  %i.g = load <2 x float>, ptr %i.a, align 4      ; 3 uses
+  %i.g = load <2 x float>, ptr %i.a, align 4      ; 4 uses
   %i.h = load float, ptr %1, align 4              ; 4 uses
-  %i.i = extractelement <2 x float> %i.g, i64 0   ; 3 uses
+  %i.i = extractelement <2 x float> %i.g, i64 0   ; 2 uses
   %i.j = fmul float %i.d, %i.i
   %i.k = tail call float @llvm.fmuladd.f32(float %i.e, float %i.h, float %i.j)
   %i.l = extractelement <2 x float> %i.g, i64 1   ; 3 uses
-  %i.m = tail call noundef float @llvm.fmuladd.f32(float %i.f, float %i.l, float %i.k) ; 5 uses
+  %i.m = tail call noundef float @llvm.fmuladd.f32(float %i.f, float %i.l, float %i.k) ; 4 uses
   %i.n = tail call float @llvm.fabs.f32(float %i.m)
   %i.o = fcmp ogt float %i.n, f0x3F7FFF58
   br i1 %i.o, label %bb.b, label %bb.f
@@ -332,46 +332,57 @@ bb.f:                                             ; preds = %bb.a
   %i.cx = fneg float %i.i
   %i.cy = fmul float %i.f, %i.cx
   %i.cz = tail call float @llvm.fmuladd.f32(float %i.d, float %i.l, float %i.cy) ; 4 uses
-  %3 = fneg float %i.l
-  %i.da = fmul float %i.e, %3
-  %i.db = tail call float @llvm.fmuladd.f32(float %i.f, float %i.h, float %i.da) ; 6 uses
+  %3 = fadd float %i.m, 1.000000e+00
+  %4 = fdiv float 1.000000e+00, %3                ; 2 uses
+  %i.da = fmul float %i.cz, %4                    ; 2 uses
+  %i.db = tail call float @llvm.fmuladd.f32(float %i.da, float %i.cz, float %i.m)
+  store float %i.db, ptr %2, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dc = fneg float %i.h
-  %4 = fmul float %i.d, %i.dc
-  %5 = tail call float @llvm.fmuladd.f32(float %i.e, float %i.i, float %4) ; 5 uses
-  %6 = fadd float %i.m, 1.000000e+00
-  %7 = fdiv float 1.000000e+00, %6                ; 3 uses
-  %8 = fmul float %i.cz, %7                       ; 3 uses
-  %9 = fmul float %5, %7                          ; 2 uses
-  %10 = fmul float %i.db, %8                      ; 2 uses
-  %11 = fmul float %5, %8                         ; 2 uses
-  %12 = fmul float %i.db, %9                      ; 2 uses
-  %13 = tail call float @llvm.fmuladd.f32(float %8, float %i.cz, float %i.m)
-  store float %13, ptr %2, align 4
-  %14 = fsub float %10, %5
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store float %14, ptr %15, align 4
-  %16 = fadd float %i.db, %11
-  %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %16, ptr %i.dd, align 4
-  %17 = fadd float %5, %10
-  %i.de = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store float %17, ptr %i.de, align 4
-  %18 = fmul float %i.db, %7
-  %19 = tail call float @llvm.fmuladd.f32(float %18, float %i.db, float %i.m)
-  %20 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store float %19, ptr %20, align 4
-  %21 = fsub float %12, %i.cz
-  %22 = getelementptr inbounds nuw i8, ptr %2, i64 20
-  store float %21, ptr %22, align 4
-  %23 = fsub float %11, %i.db
-  %24 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store float %23, ptr %24, align 4
-  %25 = fadd float %i.cz, %12
-  %26 = getelementptr inbounds nuw i8, ptr %2, i64 28
-  store float %25, ptr %26, align 4
-  %27 = tail call float @llvm.fmuladd.f32(float %9, float %5, float %i.m)
+  %7 = fneg float %i.l
+  %8 = insertelement <2 x float> poison, float %7, i64 0
+  %9 = insertelement <2 x float> %8, float %i.dc, i64 1
+  %10 = fmul <2 x float> %i.c, %9
+  %11 = shufflevector <2 x float> %i.c, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %12 = insertelement <2 x float> %11, float %i.f, i64 0
+  %13 = shufflevector <2 x float> %i.g, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %14 = insertelement <2 x float> %13, float %i.h, i64 0
+  %15 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %14, <2 x float> %10) ; 7 uses
+  %16 = insertelement <2 x float> poison, float %i.da, i64 0
+  %17 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %18 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %19 = fmul <2 x float> %17, %18                 ; 3 uses
+  %foldExtExtBinop179 = fsub <2 x float> %19, %15
+  %20 = extractelement <2 x float> %foldExtExtBinop179, i64 1
+  store float %20, ptr %5, align 4
+  %21 = fadd <2 x float> %15, %19
+  store <2 x float> %21, ptr %6, align 4
+  %22 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 20
+  %foldExtExtBinop181 = fsub <2 x float> %19, %15
+  %23 = extractelement <2 x float> %foldExtExtBinop181, i64 0
+  %i.de = getelementptr inbounds nuw i8, ptr %2, i64 24
+  store float %23, ptr %i.de, align 4
+  %24 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  %25 = insertelement <2 x float> poison, float %4, i64 0
+  %26 = shufflevector <2 x float> %25, <2 x float> poison, <2 x i32> zeroinitializer
+  %27 = fmul <2 x float> %15, %26                 ; 2 uses
+  %shift183 = shufflevector <2 x float> %27, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop184 = fmul <2 x float> %15, %shift183
+  %28 = extractelement <2 x float> %foldExtExtBinop184, i64 0 ; 2 uses
+  %29 = insertelement <2 x float> poison, float %i.m, i64 0
+  %30 = shufflevector <2 x float> %29, <2 x float> poison, <2 x i32> zeroinitializer
+  %31 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %27, <2 x float> %15, <2 x float> %30) ; 2 uses
+  %32 = extractelement <2 x float> %31, i64 0
+  store float %32, ptr %22, align 4
+  %33 = fsub float %28, %i.cz
+  store float %33, ptr %i.dd, align 4
+  %34 = fadd float %i.cz, %28
+  store float %34, ptr %24, align 4
   %i.df = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store float %27, ptr %i.df, align 4
+  %35 = extractelement <2 x float> %31, i64 1
+  store float %35, ptr %i.df, align 4
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZN12aiMatrix3x3tIfEixEj.exit.2, %bb.f

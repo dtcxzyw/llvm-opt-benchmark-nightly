@@ -204,19 +204,25 @@ bb.bl:                                            ; preds = %FastLog2.exit16.i48
 
 EstimateEntropy.exit52.2.i:                       ; preds = %bb.bl, %bb.bk
   %.0.i.i51.2.i = phi double [ %i.lh, %bb.bl ], [ %i.lf, %bb.bk ]
-  %9 = fneg double %i.lc
-  %10 = tail call double @llvm.fmuladd.f64(double %i.ld, double %.0.i.i51.2.i, double %9)
-  %11 = fadd double %i.kc, %10
-  %12 = fneg double %i.hi
-  %13 = tail call double @llvm.fmuladd.f64(double %i.hl, double %.0.i.i43.i, double %12)
-  %i.li = fadd double %i.hk, %13
+  %9 = insertelement <2 x double> poison, double %i.lc, i64 0
+  %10 = insertelement <2 x double> %9, double %i.hi, i64 1
+  %11 = fneg <2 x double> %10
+  %12 = insertelement <2 x double> poison, double %i.ld, i64 0
+  %13 = insertelement <2 x double> %12, double %i.hl, i64 1
+  %14 = insertelement <2 x double> poison, double %.0.i.i51.2.i, i64 0
+  %15 = insertelement <2 x double> %14, double %.0.i.i43.i, i64 1
+  %16 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %15, <2 x double> %11) ; 2 uses
+  %17 = extractelement <2 x double> %16, i64 0
+  %18 = fadd double %i.kc, %17
+  %19 = extractelement <2 x double> %16, i64 1
+  %i.li = fadd double %i.hk, %19
   %i.lj = add i32 %i.dz, %i.dw
   %i.lk = add i32 %i.lj, %i.ec
   %i.ll = uitofp i32 %i.lk to double
   %i.lm = fdiv double 1.000000e+00, %i.ll         ; 3 uses
   %i.ln = fmul double %i.lm, %i.gg                ; 3 uses
   %i.lo = fmul double %i.lm, %i.li                ; 2 uses
-  %i.lp = fmul double %i.lm, %11
+  %i.lp = fmul double %i.lm, %18
   %i.lq = icmp samesign ult i32 %4, 7
   %i.lr = fmul double %i.ln, 1.000000e+01
   %.sroa.17.1.i = select i1 %i.lq, double %i.lr, double %i.lp ; 2 uses
@@ -298,6 +304,9 @@ declare i32 @llvm.umax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #15
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

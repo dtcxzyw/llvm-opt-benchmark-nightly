@@ -204,7 +204,11 @@ bb.a:
   %i.i = tail call double @pow(double noundef %.0.lcssa, double noundef %i.c) #23, !tbaa !3
   %i.j = fmul double %i.i, %i.a
   %i.k = fdiv double %i.h, %i.j
-  br i1 %.not, label %._crit_edge56, label %.lr.ph55
+  br i1 %.not, label %._crit_edge56, label %.lr.ph55.preheader
+
+.lr.ph55.preheader:                               ; preds = %._crit_edge
+  %4 = insertelement <2 x double> poison, double %i.k, i64 0
+  br label %.lr.ph55
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.050 = phi double [ %i.y, %.lr.ph ], [ 1.000000e+00, %bb.a ]
@@ -235,26 +239,29 @@ bb.a:
 ._crit_edge56:                                    ; preds = %.lr.ph55, %._crit_edge
   ret void
 
-.lr.ph55:                                         ; preds = %._crit_edge, %.lr.ph55
-  %.04553 = phi i64 [ %i.ak, %.lr.ph55 ], [ 0, %._crit_edge ] ; 4 uses
+.lr.ph55:                                         ; preds = %.lr.ph55.preheader, %.lr.ph55
+  %.04553 = phi i64 [ %i.ak, %.lr.ph55 ], [ 0, %.lr.ph55.preheader ] ; 4 uses
   %i.ad = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6duckdb6vectorISt17reference_wrapperIKNS_20TemporaryMemoryStateEELb1ESaIS4_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.04553)
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !1154 ; 2 uses
   %i.af = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6duckdb6vectorImLb1ESaImEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %.04553)
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !70
-  %4 = uitofp i64 %i.ag to double
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
+  %6 = load atomic i64, ptr %5 seq_cst, align 8
+  %7 = tail call noundef i64 @llvm.umax.i64(i64 %6, i64 1)
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ai = load atomic i64, ptr %i.ah seq_cst, align 8
-  %5 = tail call noundef i64 @llvm.umax.i64(i64 %i.ai, i64 1)
-  %6 = uitofp i64 %5 to double
-  %7 = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
-  %8 = load atomic i64, ptr %7 seq_cst, align 8
-  %9 = uitofp i64 %8 to double
-  %10 = fdiv double %i.k, %4
-  %11 = fmul double %i.e, %9
-  %12 = fdiv double %11, %6
-  %13 = fsub double %10, %12
+  %8 = uitofp i64 %i.ai to double
+  %9 = fmul double %i.e, %8
+  %10 = insertelement <2 x i64> poison, i64 %i.ag, i64 0
+  %11 = insertelement <2 x i64> %10, i64 %7, i64 1
+  %12 = uitofp <2 x i64> %11 to <2 x double>
+  %13 = insertelement <2 x double> %4, double %9, i64 1
+  %14 = fdiv <2 x double> %13, %12                ; 2 uses
+  %shift = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %14, %shift
+  %15 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.aj = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorIdLb1ESaIdEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %.04553)
-  store double %13, ptr %i.aj, align 8, !tbaa !1170
+  store double %15, ptr %i.aj, align 8, !tbaa !1170
   %i.ak = add nuw i64 %.04553, 1                  ; 2 uses
   %exitcond60.not = icmp eq i64 %i.ak, %3
   br i1 %exitcond60.not, label %._crit_edge56, label %.lr.ph55, !llvm.loop !1178

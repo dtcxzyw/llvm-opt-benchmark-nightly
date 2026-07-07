@@ -203,11 +203,14 @@ bb.a:                                             ; preds = %.noexc111
 
 bb.b:                                             ; preds = %.noexc113
   %i.j = fmul double %i.h, %i.i
-  %11 = fdiv double 1.000000e+00, %i.g
-  %i.k = fsub double %i.d, %11
+  %11 = insertelement <2 x double> poison, double %i.g, i64 0
+  %12 = insertelement <2 x double> %11, double %i.j, i64 1
+  %13 = fdiv <2 x double> splat (double 1.000000e+00), %12 ; 2 uses
+  %14 = extractelement <2 x double> %13, i64 0
+  %i.k = fsub double %i.d, %14
   %i.l = call double @llvm.fabs.f64(double %i.k)
-  %12 = fdiv double 1.000000e+00, %i.j
-  %i.m = fmul double %12, 1.000000e-03
+  %15 = extractelement <2 x double> %13, i64 1
+  %i.m = fmul double %15, 1.000000e-03
   %i.n = fcmp uge double %i.l, %i.m               ; 3 uses
   br i1 %i.n, label %bb.f, label %bb.c
 
@@ -610,11 +613,14 @@ bb.bp:                                            ; preds = %.noexc268
 
 bb.bq:                                            ; preds = %.noexc271
   %i.fc = fmul double %i.fa, %i.fb
-  %13 = fdiv double 2.000000e+00, %i.ez
-  %i.fd = fsub double %i.ew, %13
+  %16 = insertelement <2 x double> poison, double %i.ez, i64 0
+  %17 = insertelement <2 x double> %16, double %i.fc, i64 1
+  %18 = fdiv <2 x double> splat (double 2.000000e+00), %17 ; 2 uses
+  %19 = extractelement <2 x double> %18, i64 0
+  %i.fd = fsub double %i.ew, %19
   %i.fe = call double @llvm.fabs.f64(double %i.fd)
-  %14 = fdiv double 2.000000e+00, %i.fc
-  %i.ff = fmul double %14, 1.000000e-03
+  %20 = extractelement <2 x double> %18, i64 1
+  %i.ff = fmul double %20, 1.000000e-03
   %i.fg = fcmp uge double %i.fe, %i.ff            ; 3 uses
   br i1 %i.fg, label %bb.bu, label %bb.br
 
