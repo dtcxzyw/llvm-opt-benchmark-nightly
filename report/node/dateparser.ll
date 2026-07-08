@@ -1,7 +1,7 @@
 inline.NumInlined: 24
 inline.NumDeleted: 14
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN2v88internal10DateParser12TimeComposer5WriteEPd:bb.a
   %or.cond33 = select i1 %.not22, i1 %.not23, i1 false
   %i.aa = load i32, ptr %i.k, align 4
@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %bb.f
 define hidden noundef i32 @_ZN2v88internal10DateParser16ReadMillisecondsENS1_9DateTokenE(i64 %0, i32 %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %.sroa.1.0.extract.shift = lshr i64 %0, 32      ; 2 uses
-  %.sroa.1.0.extract.trunc = trunc nuw i64 %.sroa.1.0.extract.shift to i32 ; 4 uses
+  %.sroa.1.0.extract.trunc = trunc nuw i64 %.sroa.1.0.extract.shift to i32 ; 2 uses
   %i.a = icmp slt i32 %.sroa.1.0.extract.trunc, 3
   br i1 %i.a, label %bb.b, label %bb.e
 
@@ -223,35 +223,32 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.a
   %.not = icmp eq i64 %.sroa.1.0.extract.shift, 3
-  br i1 %.not, label %bb.f, label %vector.ph
+  br i1 %.not, label %bb.f, label %2
 
-vector.ph:                                        ; preds = %bb.e
-  %2 = tail call i32 @llvm.umin.i32(i32 %.sroa.1.0.extract.trunc, i32 9)
-  %3 = add nuw nsw i32 %2, 1
-  %umin = tail call i32 @llvm.umin.i32(i32 %.sroa.1.0.extract.trunc, i32 4)
-  %4 = sub nsw i32 %3, %umin                      ; 2 uses
-  %n.rnd.up = add nsw i32 %4, 3
-  %n.vec = and i32 %n.rnd.up, -4
-  %trip.count.minus.1 = add nsw i32 %4, -1
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %trip.count.minus.1, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
-  br label %vector.body
+2:                                                ; preds = %bb.e
+  %3 = icmp ugt i64 %0, 21474836479
+  br i1 %3, label %4, label %middle.block
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ splat (i32 1), %vector.ph ], [ %5, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %5 = mul <4 x i32> %vec.phi, splat (i32 10)     ; 2 uses
-  %index.next = add nuw i32 %index, 4             ; 2 uses
-  %vec.ind.next = add nuw <4 x i32> %vec.ind, splat (i32 4)
-  %6 = icmp eq i32 %index.next, %n.vec
-  br i1 %6, label %middle.block, label %vector.body, !llvm.loop !11
+4:                                                ; preds = %2
+  %5 = icmp ugt i64 %0, 25769803775
+  br i1 %5, label %6, label %middle.block
 
-middle.block:                                     ; preds = %vector.body
-  %.not16 = icmp ugt <4 x i32> %vec.ind, %broadcast.splat
-  %7 = select <4 x i1> %.not16, <4 x i32> %vec.phi, <4 x i32> %5
-  %8 = tail call i32 @llvm.vector.reduce.mul.v4i32(<4 x i32> %7)
-  %i.d = sdiv i32 %1, %8
+6:                                                ; preds = %4
+  %7 = icmp ugt i64 %0, 30064771071
+  br i1 %7, label %vector.ph, label %middle.block
+
+vector.ph:                                        ; preds = %6
+  %8 = icmp ugt i64 %0, 34359738367
+  br i1 %8, label %vector.body, label %middle.block
+
+vector.body:                                      ; preds = %vector.ph
+  %9 = icmp ugt i64 %0, 38654705663
+  %spec.select = select i1 %9, i32 1000000, i32 100000
+  br label %middle.block
+
+middle.block:                                     ; preds = %vector.body, %vector.ph, %6, %4, %2
+  %.lcssa = phi i32 [ 10, %2 ], [ 100, %4 ], [ 1000, %6 ], [ 10000, %vector.ph ], [ %spec.select, %vector.body ]
+  %i.d = sdiv i32 %1, %.lcssa
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.b, %bb.e, %middle.block, %bb.c, %bb.d
@@ -259,17 +256,10 @@ bb.f:                                             ; preds = %bb.b, %bb.e, %middl
   ret i32 %.014
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #4
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}
@@ -285,7 +275,4 @@ attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !8 = !{}
 !9 = distinct !{!9, !6}
 !10 = distinct !{!10, !6}
-!11 = distinct !{!11, !6, !12, !13}
-!12 = !{!"llvm.loop.isvectorized", i32 1}
-!13 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0
