@@ -204,17 +204,20 @@ declare noundef ptr @_ZN4LIEF3ELF9to_stringENS0_4ARCHE(i32 noundef) local_unname
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden noundef range(i64 0, -30064771072) i64 @_ZN4LIEF3ELF12DynamicEntry8to_valueENS1_3TAGE(i64 noundef %0) local_unnamed_addr #3 align 2 {
 bb.a:
-  %1 = add i64 %0, -4294967296                    ; 2 uses
-  %i.a = lshr i64 %1, 32
+  %i.a = lshr i64 %0, 32
   %trunc = trunc nuw i64 %i.a to i32
   switch i32 %trunc, label %bb.g [
-    i32 0, label %bb.h
-    i32 1, label %bb.b
-    i32 2, label %bb.c
-    i32 3, label %bb.d
-    i32 4, label %bb.e
-    i32 5, label %bb.f
+    i32 1, label %1
+    i32 2, label %bb.b
+    i32 3, label %bb.c
+    i32 4, label %bb.d
+    i32 5, label %bb.e
+    i32 6, label %bb.f
   ]
+
+1:                                                ; preds = %bb.a
+  %2 = add nsw i64 %0, -4294967296
+  br label %bb.h
 
 bb.b:                                             ; preds = %bb.a
   %i.b = add nsw i64 %0, -8589934592
@@ -242,8 +245,8 @@ bb.g:                                             ; preds = %bb.a
   %spec.select = select i1 %i.g, i64 %i.h, i64 %0
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.a, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.0 = phi i64 [ %spec.select, %bb.g ], [ %i.b, %bb.b ], [ %i.c, %bb.c ], [ %i.d, %bb.d ], [ %i.e, %bb.e ], [ %i.f, %bb.f ], [ %1, %bb.a ]
+bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %1
+  %.0 = phi i64 [ %2, %1 ], [ %i.b, %bb.b ], [ %i.c, %bb.c ], [ %i.d, %bb.d ], [ %i.e, %bb.e ], [ %i.f, %bb.f ], [ %spec.select, %bb.g ]
   ret i64 %.0
 }
 
