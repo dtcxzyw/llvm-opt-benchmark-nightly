@@ -204,21 +204,18 @@ vector.ph207:                                     ; preds = %.lr.ph138.preheader
   %i.bz = getelementptr i8, ptr %i.g, i64 %i.by
   %scevgep267 = getelementptr i8, ptr %i.bz, i64 -4
   %load_initial268 = load <2 x float>, ptr %scevgep267, align 4
-  %3 = shufflevector <2 x float> %load_initial268, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   br label %vector.body210
 
 vector.body210:                                   ; preds = %vector.body210, %vector.ph207
-  %store_forwarded269 = phi <2 x float> [ %3, %vector.ph207 ], [ %i.ce, %vector.body210 ]
+  %store_forwarded269 = phi <2 x float> [ %load_initial268, %vector.ph207 ], [ %i.ce, %vector.body210 ]
   %index211 = phi i64 [ 0, %vector.ph207 ], [ %index.next217, %vector.body210 ] ; 2 uses
   %i.ca = add i64 %index211, 2
   %i.cb = sub nsw i64 %i.an, %i.ca
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.cb
   %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 -4 ; 2 uses
   %wide.load214 = load <2 x float>, ptr %i.cd, align 4
-  %reverse215 = shufflevector <2 x float> %wide.load214, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.ce = fadd <2 x float> %store_forwarded269, %reverse215 ; 2 uses
-  %reverse216 = shufflevector <2 x float> %i.ce, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x float> %reverse216, ptr %i.cd, align 4
+  %i.ce = fadd <2 x float> %store_forwarded269, %wide.load214 ; 2 uses
+  store <2 x float> %i.ce, ptr %i.cd, align 4
   %index.next217 = add nuw i64 %index211, 2       ; 2 uses
   %i.cf = icmp eq i64 %index.next217, %n.vec209
   br i1 %i.cf, label %middle.block218, label %vector.body210, !llvm.loop !666

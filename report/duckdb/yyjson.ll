@@ -203,12 +203,10 @@ vector.memcheck10345:                             ; preds = %vector.scevcheck103
 vector.ph10351:                                   ; preds = %vector.memcheck10345
   %n.vec10353 = and i64 %i.ath, 4294967292        ; 2 uses
   %i.aty = and i64 %i.ath, 3
-  %broadcast.splatinsert10354 = insertelement <2 x i64> poison, i64 %i.atk, i64 0 ; 2 uses
-  %broadcast.splatinsert10356 = insertelement <2 x i64> poison, i64 %.pre6868, i64 0 ; 2 uses
-  %15 = shufflevector <2 x i64> %broadcast.splatinsert10354, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.atz = shufflevector <2 x i64> %broadcast.splatinsert10356, <2 x i64> poison, <2 x i32> zeroinitializer
-  %16 = shufflevector <2 x i64> %broadcast.splatinsert10354, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.aua = shufflevector <2 x i64> %broadcast.splatinsert10356, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert10354 = insertelement <2 x i64> poison, i64 %i.atk, i64 0
+  %i.atz = shufflevector <2 x i64> %broadcast.splatinsert10354, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10339 = insertelement <2 x i64> poison, i64 %.pre6868, i64 0
+  %i.aua = shufflevector <2 x i64> %broadcast.splatinsert10339, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body10358
 
 vector.body10358:                                 ; preds = %vector.body10358, %vector.ph10351
@@ -219,25 +217,25 @@ vector.body10358:                                 ; preds = %vector.body10358, %
   %i.aue = getelementptr inbounds i8, ptr %i.auc, i64 -24
   %wide.load10360 = load <2 x i64>, ptr %i.aud, align 8, !tbaa !91
   %wide.load10361 = load <2 x i64>, ptr %i.aue, align 8, !tbaa !91
+  %15 = shl <2 x i64> %wide.load10360, %i.aua
+  %16 = shl <2 x i64> %wide.load10361, %i.aua
   %i.auf = getelementptr [8 x i8], ptr %8, i64 %i.aub ; 2 uses
   %i.aug = getelementptr i8, ptr %i.auf, i64 -8
   %i.auh = getelementptr i8, ptr %i.auf, i64 -24
   %wide.load10364 = load <2 x i64>, ptr %i.aug, align 8, !tbaa !91
   %wide.load10365 = load <2 x i64>, ptr %i.auh, align 8, !tbaa !91
-  %17 = trunc nuw i64 %i.aub to i32
-  %18 = add i32 %i.aqo, %17
-  %19 = zext i32 %18 to i64
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.ajn, i64 %19 ; 2 uses
-  %21 = getelementptr inbounds i8, ptr %20, i64 -8
-  %22 = getelementptr inbounds i8, ptr %20, i64 -24
-  %23 = lshr <2 x i64> %wide.load10364, %15
-  %24 = shl <2 x i64> %wide.load10360, %i.atz
-  %reverse10368 = or <2 x i64> %23, %24
-  %25 = lshr <2 x i64> %wide.load10365, %16
-  %26 = shl <2 x i64> %wide.load10361, %i.aua
-  %reverse10369 = or <2 x i64> %25, %26
-  store <2 x i64> %reverse10368, ptr %21, align 8, !tbaa !91
-  store <2 x i64> %reverse10369, ptr %22, align 8, !tbaa !91
+  %17 = lshr <2 x i64> %wide.load10364, %i.atz
+  %18 = lshr <2 x i64> %wide.load10365, %i.atz
+  %19 = or <2 x i64> %17, %15
+  %20 = or <2 x i64> %18, %16
+  %21 = trunc nuw i64 %i.aub to i32
+  %22 = add i32 %i.aqo, %21
+  %23 = zext i32 %22 to i64
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %i.ajn, i64 %23 ; 2 uses
+  %25 = getelementptr inbounds i8, ptr %24, i64 -8
+  %26 = getelementptr inbounds i8, ptr %24, i64 -24
+  store <2 x i64> %19, ptr %25, align 8, !tbaa !91
+  store <2 x i64> %20, ptr %26, align 8, !tbaa !91
   %index.next10370 = add nuw i64 %index10359, 4   ; 2 uses
   %i.aui = icmp eq i64 %index.next10370, %n.vec10353
   br i1 %i.aui, label %middle.block10371, label %vector.body10358, !llvm.loop !184
@@ -512,12 +510,10 @@ vector.memcheck10299:                             ; preds = %vector.scevcheck102
 vector.ph10305:                                   ; preds = %vector.memcheck10299
   %n.vec10307 = and i64 %i.azf, 4294967292        ; 2 uses
   %i.azw = and i64 %i.azf, 3
-  %broadcast.splatinsert10308 = insertelement <2 x i64> poison, i64 %i.azi, i64 0 ; 2 uses
-  %broadcast.splatinsert10310 = insertelement <2 x i64> poison, i64 %.pre6870, i64 0 ; 2 uses
-  %27 = shufflevector <2 x i64> %broadcast.splatinsert10308, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.azx = shufflevector <2 x i64> %broadcast.splatinsert10310, <2 x i64> poison, <2 x i32> zeroinitializer
-  %28 = shufflevector <2 x i64> %broadcast.splatinsert10308, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.azy = shufflevector <2 x i64> %broadcast.splatinsert10310, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert10308 = insertelement <2 x i64> poison, i64 %i.azi, i64 0
+  %i.azx = shufflevector <2 x i64> %broadcast.splatinsert10308, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10299 = insertelement <2 x i64> poison, i64 %.pre6870, i64 0
+  %i.azy = shufflevector <2 x i64> %broadcast.splatinsert10299, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body10312
 
 vector.body10312:                                 ; preds = %vector.body10312, %vector.ph10305
@@ -528,25 +524,25 @@ vector.body10312:                                 ; preds = %vector.body10312, %
   %i.bac = getelementptr inbounds i8, ptr %i.baa, i64 -24
   %wide.load10314 = load <2 x i64>, ptr %i.bab, align 8, !tbaa !91
   %wide.load10315 = load <2 x i64>, ptr %i.bac, align 8, !tbaa !91
+  %27 = shl <2 x i64> %wide.load10314, %i.azy
+  %28 = shl <2 x i64> %wide.load10315, %i.azy
   %i.bad = getelementptr [8 x i8], ptr %7, i64 %i.azz ; 2 uses
   %i.bae = getelementptr i8, ptr %i.bad, i64 -8
   %i.baf = getelementptr i8, ptr %i.bad, i64 -24
   %wide.load10318 = load <2 x i64>, ptr %i.bae, align 8, !tbaa !91
   %wide.load10319 = load <2 x i64>, ptr %i.baf, align 8, !tbaa !91
-  %29 = trunc nuw i64 %i.azz to i32
-  %30 = add i32 %i.awk, %29
-  %31 = zext i32 %30 to i64
-  %32 = getelementptr inbounds nuw [8 x i8], ptr %i.aze, i64 %31 ; 2 uses
-  %33 = getelementptr inbounds i8, ptr %32, i64 -8
-  %34 = getelementptr inbounds i8, ptr %32, i64 -24
-  %35 = lshr <2 x i64> %wide.load10318, %27
-  %36 = shl <2 x i64> %wide.load10314, %i.azx
-  %reverse10322 = or <2 x i64> %35, %36
-  %37 = lshr <2 x i64> %wide.load10319, %28
-  %38 = shl <2 x i64> %wide.load10315, %i.azy
-  %reverse10323 = or <2 x i64> %37, %38
-  store <2 x i64> %reverse10322, ptr %33, align 8, !tbaa !91
-  store <2 x i64> %reverse10323, ptr %34, align 8, !tbaa !91
+  %29 = lshr <2 x i64> %wide.load10318, %i.azx
+  %30 = lshr <2 x i64> %wide.load10319, %i.azx
+  %31 = or <2 x i64> %29, %27
+  %32 = or <2 x i64> %30, %28
+  %33 = trunc nuw i64 %i.azz to i32
+  %34 = add i32 %i.awk, %33
+  %35 = zext i32 %34 to i64
+  %36 = getelementptr inbounds nuw [8 x i8], ptr %i.aze, i64 %35 ; 2 uses
+  %37 = getelementptr inbounds i8, ptr %36, i64 -8
+  %38 = getelementptr inbounds i8, ptr %36, i64 -24
+  store <2 x i64> %31, ptr %37, align 8, !tbaa !91
+  store <2 x i64> %32, ptr %38, align 8, !tbaa !91
   %index.next10324 = add nuw i64 %index10313, 4   ; 2 uses
   %i.bag = icmp eq i64 %index.next10324, %n.vec10307
   br i1 %i.bag, label %middle.block10325, label %vector.body10312, !llvm.loop !189
@@ -949,12 +945,10 @@ vector.memcheck10253:                             ; preds = %vector.scevcheck102
 vector.ph10259:                                   ; preds = %vector.memcheck10253
   %n.vec10261 = and i64 %i.ffq, 4294967292        ; 2 uses
   %i.fgh = and i64 %i.ffq, 3
-  %broadcast.splatinsert10262 = insertelement <2 x i64> poison, i64 %i.fft, i64 0 ; 2 uses
-  %broadcast.splatinsert10264 = insertelement <2 x i64> poison, i64 %.pre6890, i64 0 ; 2 uses
-  %39 = shufflevector <2 x i64> %broadcast.splatinsert10262, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.fgi = shufflevector <2 x i64> %broadcast.splatinsert10264, <2 x i64> poison, <2 x i32> zeroinitializer
-  %40 = shufflevector <2 x i64> %broadcast.splatinsert10262, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.fgj = shufflevector <2 x i64> %broadcast.splatinsert10264, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert10262 = insertelement <2 x i64> poison, i64 %i.fft, i64 0
+  %i.fgi = shufflevector <2 x i64> %broadcast.splatinsert10262, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10259 = insertelement <2 x i64> poison, i64 %.pre6890, i64 0
+  %i.fgj = shufflevector <2 x i64> %broadcast.splatinsert10259, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body10266
 
 vector.body10266:                                 ; preds = %vector.body10266, %vector.ph10259
@@ -965,25 +959,25 @@ vector.body10266:                                 ; preds = %vector.body10266, %
   %i.fgn = getelementptr inbounds i8, ptr %i.fgl, i64 -24
   %wide.load10268 = load <2 x i64>, ptr %i.fgm, align 8, !tbaa !91
   %wide.load10269 = load <2 x i64>, ptr %i.fgn, align 8, !tbaa !91
+  %39 = shl <2 x i64> %wide.load10268, %i.fgj
+  %40 = shl <2 x i64> %wide.load10269, %i.fgj
   %i.fgo = getelementptr [8 x i8], ptr %6, i64 %i.fgk ; 2 uses
   %i.fgp = getelementptr i8, ptr %i.fgo, i64 -8
   %i.fgq = getelementptr i8, ptr %i.fgo, i64 -24
   %wide.load10272 = load <2 x i64>, ptr %i.fgp, align 8, !tbaa !91
   %wide.load10273 = load <2 x i64>, ptr %i.fgq, align 8, !tbaa !91
-  %41 = trunc nuw i64 %i.fgk to i32
-  %42 = add i32 %i.fcx, %41
-  %43 = zext i32 %42 to i64
-  %44 = getelementptr inbounds nuw [8 x i8], ptr %i.evw, i64 %43 ; 2 uses
-  %45 = getelementptr inbounds i8, ptr %44, i64 -8
-  %46 = getelementptr inbounds i8, ptr %44, i64 -24
-  %47 = lshr <2 x i64> %wide.load10272, %39
-  %48 = shl <2 x i64> %wide.load10268, %i.fgi
-  %reverse10276 = or <2 x i64> %47, %48
-  %49 = lshr <2 x i64> %wide.load10273, %40
-  %50 = shl <2 x i64> %wide.load10269, %i.fgj
-  %reverse10277 = or <2 x i64> %49, %50
-  store <2 x i64> %reverse10276, ptr %45, align 8, !tbaa !91
-  store <2 x i64> %reverse10277, ptr %46, align 8, !tbaa !91
+  %41 = lshr <2 x i64> %wide.load10272, %i.fgi
+  %42 = lshr <2 x i64> %wide.load10273, %i.fgi
+  %43 = or <2 x i64> %41, %39
+  %44 = or <2 x i64> %42, %40
+  %45 = trunc nuw i64 %i.fgk to i32
+  %46 = add i32 %i.fcx, %45
+  %47 = zext i32 %46 to i64
+  %48 = getelementptr inbounds nuw [8 x i8], ptr %i.evw, i64 %47 ; 2 uses
+  %49 = getelementptr inbounds i8, ptr %48, i64 -8
+  %50 = getelementptr inbounds i8, ptr %48, i64 -24
+  store <2 x i64> %43, ptr %49, align 8, !tbaa !91
+  store <2 x i64> %44, ptr %50, align 8, !tbaa !91
   %index.next10278 = add nuw i64 %index10267, 4   ; 2 uses
   %i.fgr = icmp eq i64 %index.next10278, %n.vec10261
   br i1 %i.fgr, label %middle.block10279, label %vector.body10266, !llvm.loop !210
@@ -1258,12 +1252,10 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.flo, 4294967292             ; 2 uses
   %i.fmf = and i64 %i.flo, 3
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.flr, i64 0 ; 2 uses
-  %broadcast.splatinsert10226 = insertelement <2 x i64> poison, i64 %.pre6892, i64 0 ; 2 uses
-  %51 = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.fmg = shufflevector <2 x i64> %broadcast.splatinsert10226, <2 x i64> poison, <2 x i32> zeroinitializer
-  %52 = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.fmh = shufflevector <2 x i64> %broadcast.splatinsert10226, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.flr, i64 0
+  %i.fmg = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10226 = insertelement <2 x i64> poison, i64 %.pre6892, i64 0
+  %i.fmh = shufflevector <2 x i64> %broadcast.splatinsert10226, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1274,25 +1266,25 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fml = getelementptr inbounds i8, ptr %i.fmj, i64 -24
   %wide.load = load <2 x i64>, ptr %i.fmk, align 8, !tbaa !91
   %wide.load10228 = load <2 x i64>, ptr %i.fml, align 8, !tbaa !91
+  %51 = shl <2 x i64> %wide.load, %i.fmh
+  %52 = shl <2 x i64> %wide.load10228, %i.fmh
   %i.fmm = getelementptr [8 x i8], ptr %5, i64 %i.fmi ; 2 uses
   %i.fmn = getelementptr i8, ptr %i.fmm, i64 -8
   %i.fmo = getelementptr i8, ptr %i.fmm, i64 -24
   %wide.load10230.a = load <2 x i64>, ptr %i.fmn, align 8, !tbaa !91
   %wide.load10231 = load <2 x i64>, ptr %i.fmo, align 8, !tbaa !91
-  %53 = trunc nuw i64 %i.fmi to i32
-  %54 = add i32 %i.fit, %53
-  %55 = zext i32 %54 to i64
-  %56 = getelementptr inbounds nuw [8 x i8], ptr %i.fln, i64 %55 ; 2 uses
-  %57 = getelementptr inbounds i8, ptr %56, i64 -8
-  %58 = getelementptr inbounds i8, ptr %56, i64 -24
-  %59 = lshr <2 x i64> %wide.load10230.a, %51
-  %60 = shl <2 x i64> %wide.load, %i.fmg
-  %reverse10234 = or <2 x i64> %59, %60
-  %61 = lshr <2 x i64> %wide.load10231, %52
-  %62 = shl <2 x i64> %wide.load10228, %i.fmh
-  %reverse10235 = or <2 x i64> %61, %62
-  store <2 x i64> %reverse10234, ptr %57, align 8, !tbaa !91
-  store <2 x i64> %reverse10235, ptr %58, align 8, !tbaa !91
+  %53 = lshr <2 x i64> %wide.load10230.a, %i.fmg
+  %54 = lshr <2 x i64> %wide.load10231, %i.fmg
+  %55 = or <2 x i64> %53, %51
+  %56 = or <2 x i64> %54, %52
+  %57 = trunc nuw i64 %i.fmi to i32
+  %58 = add i32 %i.fit, %57
+  %59 = zext i32 %58 to i64
+  %60 = getelementptr inbounds nuw [8 x i8], ptr %i.fln, i64 %59 ; 2 uses
+  %61 = getelementptr inbounds i8, ptr %60, i64 -8
+  %62 = getelementptr inbounds i8, ptr %60, i64 -24
+  store <2 x i64> %55, ptr %61, align 8, !tbaa !91
+  store <2 x i64> %56, ptr %62, align 8, !tbaa !91
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.fmp = icmp eq i64 %index.next, %n.vec
   br i1 %i.fmp, label %middle.block, label %vector.body, !llvm.loop !215
@@ -1695,12 +1687,10 @@ vector.memcheck10529:                             ; preds = %vector.scevcheck105
 vector.ph10535:                                   ; preds = %vector.memcheck10529
   %n.vec10537 = and i64 %i.hmt, 4294967292        ; 2 uses
   %i.hnk = and i64 %i.hmt, 3
-  %broadcast.splatinsert10538 = insertelement <2 x i64> poison, i64 %i.hmw, i64 0 ; 2 uses
-  %broadcast.splatinsert10540 = insertelement <2 x i64> poison, i64 %.pre6824, i64 0 ; 2 uses
-  %63 = shufflevector <2 x i64> %broadcast.splatinsert10538, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.hnl = shufflevector <2 x i64> %broadcast.splatinsert10540, <2 x i64> poison, <2 x i32> zeroinitializer
-  %64 = shufflevector <2 x i64> %broadcast.splatinsert10538, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.hnm = shufflevector <2 x i64> %broadcast.splatinsert10540, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert10538 = insertelement <2 x i64> poison, i64 %i.hmw, i64 0
+  %i.hnl = shufflevector <2 x i64> %broadcast.splatinsert10538, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10499 = insertelement <2 x i64> poison, i64 %.pre6824, i64 0
+  %i.hnm = shufflevector <2 x i64> %broadcast.splatinsert10499, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body10542
 
 vector.body10542:                                 ; preds = %vector.body10542, %vector.ph10535
@@ -1711,25 +1701,25 @@ vector.body10542:                                 ; preds = %vector.body10542, %
   %i.hnq = getelementptr inbounds i8, ptr %i.hno, i64 -24
   %wide.load10544 = load <2 x i64>, ptr %i.hnp, align 8, !tbaa !91
   %wide.load10545 = load <2 x i64>, ptr %i.hnq, align 8, !tbaa !91
+  %63 = shl <2 x i64> %wide.load10544, %i.hnm
+  %64 = shl <2 x i64> %wide.load10545, %i.hnm
   %i.hnr = getelementptr [8 x i8], ptr %12, i64 %i.hnn ; 2 uses
   %i.hns = getelementptr i8, ptr %i.hnr, i64 -8
   %i.hnt = getelementptr i8, ptr %i.hnr, i64 -24
   %wide.load10548 = load <2 x i64>, ptr %i.hns, align 8, !tbaa !91
   %wide.load10549 = load <2 x i64>, ptr %i.hnt, align 8, !tbaa !91
-  %65 = trunc nuw i64 %i.hnn to i32
-  %66 = add i32 %i.hka, %65
-  %67 = zext i32 %66 to i64
-  %68 = getelementptr inbounds nuw [8 x i8], ptr %i.hcz, i64 %67 ; 2 uses
-  %69 = getelementptr inbounds i8, ptr %68, i64 -8
-  %70 = getelementptr inbounds i8, ptr %68, i64 -24
-  %71 = lshr <2 x i64> %wide.load10548, %63
-  %72 = shl <2 x i64> %wide.load10544, %i.hnl
-  %reverse10552 = or <2 x i64> %71, %72
-  %73 = lshr <2 x i64> %wide.load10549, %64
-  %74 = shl <2 x i64> %wide.load10545, %i.hnm
-  %reverse10553 = or <2 x i64> %73, %74
-  store <2 x i64> %reverse10552, ptr %69, align 8, !tbaa !91
-  store <2 x i64> %reverse10553, ptr %70, align 8, !tbaa !91
+  %65 = lshr <2 x i64> %wide.load10548, %i.hnl
+  %66 = lshr <2 x i64> %wide.load10549, %i.hnl
+  %67 = or <2 x i64> %65, %63
+  %68 = or <2 x i64> %66, %64
+  %69 = trunc nuw i64 %i.hnn to i32
+  %70 = add i32 %i.hka, %69
+  %71 = zext i32 %70 to i64
+  %72 = getelementptr inbounds nuw [8 x i8], ptr %i.hcz, i64 %71 ; 2 uses
+  %73 = getelementptr inbounds i8, ptr %72, i64 -8
+  %74 = getelementptr inbounds i8, ptr %72, i64 -24
+  store <2 x i64> %67, ptr %73, align 8, !tbaa !91
+  store <2 x i64> %68, ptr %74, align 8, !tbaa !91
   %index.next10554 = add nuw i64 %index10543, 4   ; 2 uses
   %i.hnu = icmp eq i64 %index.next10554, %n.vec10537
   br i1 %i.hnu, label %middle.block10555, label %vector.body10542, !llvm.loop !224
@@ -2004,12 +1994,10 @@ vector.memcheck10483:                             ; preds = %vector.scevcheck104
 vector.ph10489:                                   ; preds = %vector.memcheck10483
   %n.vec10491 = and i64 %i.hsr, 4294967292        ; 2 uses
   %i.hti = and i64 %i.hsr, 3
-  %broadcast.splatinsert10492 = insertelement <2 x i64> poison, i64 %i.hsu, i64 0 ; 2 uses
-  %broadcast.splatinsert10494 = insertelement <2 x i64> poison, i64 %.pre6826, i64 0 ; 2 uses
-  %75 = shufflevector <2 x i64> %broadcast.splatinsert10492, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.htj = shufflevector <2 x i64> %broadcast.splatinsert10494, <2 x i64> poison, <2 x i32> zeroinitializer
-  %76 = shufflevector <2 x i64> %broadcast.splatinsert10492, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.htk = shufflevector <2 x i64> %broadcast.splatinsert10494, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert10492 = insertelement <2 x i64> poison, i64 %i.hsu, i64 0
+  %i.htj = shufflevector <2 x i64> %broadcast.splatinsert10492, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10459 = insertelement <2 x i64> poison, i64 %.pre6826, i64 0
+  %i.htk = shufflevector <2 x i64> %broadcast.splatinsert10459, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body10496
 
 vector.body10496:                                 ; preds = %vector.body10496, %vector.ph10489
@@ -2020,25 +2008,25 @@ vector.body10496:                                 ; preds = %vector.body10496, %
   %i.hto = getelementptr inbounds i8, ptr %i.htm, i64 -24
   %wide.load10498 = load <2 x i64>, ptr %i.htn, align 8, !tbaa !91
   %wide.load10499 = load <2 x i64>, ptr %i.hto, align 8, !tbaa !91
+  %75 = shl <2 x i64> %wide.load10498, %i.htk
+  %76 = shl <2 x i64> %wide.load10499, %i.htk
   %i.htp = getelementptr [8 x i8], ptr %11, i64 %i.htl ; 2 uses
   %i.htq = getelementptr i8, ptr %i.htp, i64 -8
   %i.htr = getelementptr i8, ptr %i.htp, i64 -24
   %wide.load10502 = load <2 x i64>, ptr %i.htq, align 8, !tbaa !91
   %wide.load10503 = load <2 x i64>, ptr %i.htr, align 8, !tbaa !91
-  %77 = trunc nuw i64 %i.htl to i32
-  %78 = add i32 %i.hpw, %77
-  %79 = zext i32 %78 to i64
-  %80 = getelementptr inbounds nuw [8 x i8], ptr %i.hsq, i64 %79 ; 2 uses
-  %81 = getelementptr inbounds i8, ptr %80, i64 -8
-  %82 = getelementptr inbounds i8, ptr %80, i64 -24
-  %83 = lshr <2 x i64> %wide.load10502, %75
-  %84 = shl <2 x i64> %wide.load10498, %i.htj
-  %reverse10506 = or <2 x i64> %83, %84
-  %85 = lshr <2 x i64> %wide.load10503, %76
-  %86 = shl <2 x i64> %wide.load10499, %i.htk
-  %reverse10507 = or <2 x i64> %85, %86
-  store <2 x i64> %reverse10506, ptr %81, align 8, !tbaa !91
-  store <2 x i64> %reverse10507, ptr %82, align 8, !tbaa !91
+  %77 = lshr <2 x i64> %wide.load10502, %i.htj
+  %78 = lshr <2 x i64> %wide.load10503, %i.htj
+  %79 = or <2 x i64> %77, %75
+  %80 = or <2 x i64> %78, %76
+  %81 = trunc nuw i64 %i.htl to i32
+  %82 = add i32 %i.hpw, %81
+  %83 = zext i32 %82 to i64
+  %84 = getelementptr inbounds nuw [8 x i8], ptr %i.hsq, i64 %83 ; 2 uses
+  %85 = getelementptr inbounds i8, ptr %84, i64 -8
+  %86 = getelementptr inbounds i8, ptr %84, i64 -24
+  store <2 x i64> %79, ptr %85, align 8, !tbaa !91
+  store <2 x i64> %80, ptr %86, align 8, !tbaa !91
   %index.next10508 = add nuw i64 %index10497, 4   ; 2 uses
   %i.hts = icmp eq i64 %index.next10508, %n.vec10491
   br i1 %i.hts, label %middle.block10509, label %vector.body10496, !llvm.loop !229
@@ -2441,12 +2429,10 @@ vector.memcheck10437:                             ; preds = %vector.scevcheck104
 vector.ph10443:                                   ; preds = %vector.memcheck10437
   %n.vec10445 = and i64 %i.lwt, 4294967292        ; 2 uses
   %i.lxk = and i64 %i.lwt, 3
-  %broadcast.splatinsert10446 = insertelement <2 x i64> poison, i64 %i.lww, i64 0 ; 2 uses
-  %broadcast.splatinsert10448 = insertelement <2 x i64> poison, i64 %.pre6846, i64 0 ; 2 uses
-  %87 = shufflevector <2 x i64> %broadcast.splatinsert10446, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.lxl = shufflevector <2 x i64> %broadcast.splatinsert10448, <2 x i64> poison, <2 x i32> zeroinitializer
-  %88 = shufflevector <2 x i64> %broadcast.splatinsert10446, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.lxm = shufflevector <2 x i64> %broadcast.splatinsert10448, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert10446 = insertelement <2 x i64> poison, i64 %i.lww, i64 0
+  %i.lxl = shufflevector <2 x i64> %broadcast.splatinsert10446, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10419 = insertelement <2 x i64> poison, i64 %.pre6846, i64 0
+  %i.lxm = shufflevector <2 x i64> %broadcast.splatinsert10419, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body10450
 
 vector.body10450:                                 ; preds = %vector.body10450, %vector.ph10443
@@ -2457,25 +2443,25 @@ vector.body10450:                                 ; preds = %vector.body10450, %
   %i.lxq = getelementptr inbounds i8, ptr %i.lxo, i64 -24
   %wide.load10452 = load <2 x i64>, ptr %i.lxp, align 8, !tbaa !91
   %wide.load10453 = load <2 x i64>, ptr %i.lxq, align 8, !tbaa !91
+  %87 = shl <2 x i64> %wide.load10452, %i.lxm
+  %88 = shl <2 x i64> %wide.load10453, %i.lxm
   %i.lxr = getelementptr [8 x i8], ptr %10, i64 %i.lxn ; 2 uses
   %i.lxs = getelementptr i8, ptr %i.lxr, i64 -8
   %i.lxt = getelementptr i8, ptr %i.lxr, i64 -24
   %wide.load10456 = load <2 x i64>, ptr %i.lxs, align 8, !tbaa !91
   %wide.load10457 = load <2 x i64>, ptr %i.lxt, align 8, !tbaa !91
-  %89 = trunc nuw i64 %i.lxn to i32
-  %90 = add i32 %i.lua, %89
-  %91 = zext i32 %90 to i64
-  %92 = getelementptr inbounds nuw [8 x i8], ptr %i.lmz, i64 %91 ; 2 uses
-  %93 = getelementptr inbounds i8, ptr %92, i64 -8
-  %94 = getelementptr inbounds i8, ptr %92, i64 -24
-  %95 = lshr <2 x i64> %wide.load10456, %87
-  %96 = shl <2 x i64> %wide.load10452, %i.lxl
-  %reverse10460 = or <2 x i64> %95, %96
-  %97 = lshr <2 x i64> %wide.load10457, %88
-  %98 = shl <2 x i64> %wide.load10453, %i.lxm
-  %reverse10461 = or <2 x i64> %97, %98
-  store <2 x i64> %reverse10460, ptr %93, align 8, !tbaa !91
-  store <2 x i64> %reverse10461, ptr %94, align 8, !tbaa !91
+  %89 = lshr <2 x i64> %wide.load10456, %i.lxl
+  %90 = lshr <2 x i64> %wide.load10457, %i.lxl
+  %91 = or <2 x i64> %89, %87
+  %92 = or <2 x i64> %90, %88
+  %93 = trunc nuw i64 %i.lxn to i32
+  %94 = add i32 %i.lua, %93
+  %95 = zext i32 %94 to i64
+  %96 = getelementptr inbounds nuw [8 x i8], ptr %i.lmz, i64 %95 ; 2 uses
+  %97 = getelementptr inbounds i8, ptr %96, i64 -8
+  %98 = getelementptr inbounds i8, ptr %96, i64 -24
+  store <2 x i64> %91, ptr %97, align 8, !tbaa !91
+  store <2 x i64> %92, ptr %98, align 8, !tbaa !91
   %index.next10462 = add nuw i64 %index10451, 4   ; 2 uses
   %i.lxu = icmp eq i64 %index.next10462, %n.vec10445
   br i1 %i.lxu, label %middle.block10463, label %vector.body10450, !llvm.loop !240
@@ -2750,12 +2736,10 @@ vector.memcheck10391:                             ; preds = %vector.scevcheck103
 vector.ph10397:                                   ; preds = %vector.memcheck10391
   %n.vec10399 = and i64 %i.mcr, 4294967292        ; 2 uses
   %i.mdi = and i64 %i.mcr, 3
-  %broadcast.splatinsert10400 = insertelement <2 x i64> poison, i64 %i.mcu, i64 0 ; 2 uses
-  %broadcast.splatinsert10402 = insertelement <2 x i64> poison, i64 %.pre6848, i64 0 ; 2 uses
-  %99 = shufflevector <2 x i64> %broadcast.splatinsert10400, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.mdj = shufflevector <2 x i64> %broadcast.splatinsert10402, <2 x i64> poison, <2 x i32> zeroinitializer
-  %100 = shufflevector <2 x i64> %broadcast.splatinsert10400, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.mdk = shufflevector <2 x i64> %broadcast.splatinsert10402, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert10400 = insertelement <2 x i64> poison, i64 %i.mcu, i64 0
+  %i.mdj = shufflevector <2 x i64> %broadcast.splatinsert10400, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert10379 = insertelement <2 x i64> poison, i64 %.pre6848, i64 0
+  %i.mdk = shufflevector <2 x i64> %broadcast.splatinsert10379, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body10404
 
 vector.body10404:                                 ; preds = %vector.body10404, %vector.ph10397
@@ -2766,25 +2750,25 @@ vector.body10404:                                 ; preds = %vector.body10404, %
   %i.mdo = getelementptr inbounds i8, ptr %i.mdm, i64 -24
   %wide.load10406 = load <2 x i64>, ptr %i.mdn, align 8, !tbaa !91
   %wide.load10407 = load <2 x i64>, ptr %i.mdo, align 8, !tbaa !91
+  %99 = shl <2 x i64> %wide.load10406, %i.mdk
+  %100 = shl <2 x i64> %wide.load10407, %i.mdk
   %i.mdp = getelementptr [8 x i8], ptr %9, i64 %i.mdl ; 2 uses
   %i.mdq = getelementptr i8, ptr %i.mdp, i64 -8
   %i.mdr = getelementptr i8, ptr %i.mdp, i64 -24
   %wide.load10410 = load <2 x i64>, ptr %i.mdq, align 8, !tbaa !91
   %wide.load10411 = load <2 x i64>, ptr %i.mdr, align 8, !tbaa !91
-  %101 = trunc nuw i64 %i.mdl to i32
-  %102 = add i32 %i.lzw, %101
-  %103 = zext i32 %102 to i64
-  %104 = getelementptr inbounds nuw [8 x i8], ptr %i.mcq, i64 %103 ; 2 uses
-  %105 = getelementptr inbounds i8, ptr %104, i64 -8
-  %106 = getelementptr inbounds i8, ptr %104, i64 -24
-  %107 = lshr <2 x i64> %wide.load10410, %99
-  %108 = shl <2 x i64> %wide.load10406, %i.mdj
-  %reverse10414 = or <2 x i64> %107, %108
-  %109 = lshr <2 x i64> %wide.load10411, %100
-  %110 = shl <2 x i64> %wide.load10407, %i.mdk
-  %reverse10415 = or <2 x i64> %109, %110
-  store <2 x i64> %reverse10414, ptr %105, align 8, !tbaa !91
-  store <2 x i64> %reverse10415, ptr %106, align 8, !tbaa !91
+  %101 = lshr <2 x i64> %wide.load10410, %i.mdj
+  %102 = lshr <2 x i64> %wide.load10411, %i.mdj
+  %103 = or <2 x i64> %101, %99
+  %104 = or <2 x i64> %102, %100
+  %105 = trunc nuw i64 %i.mdl to i32
+  %106 = add i32 %i.lzw, %105
+  %107 = zext i32 %106 to i64
+  %108 = getelementptr inbounds nuw [8 x i8], ptr %i.mcq, i64 %107 ; 2 uses
+  %109 = getelementptr inbounds i8, ptr %108, i64 -8
+  %110 = getelementptr inbounds i8, ptr %108, i64 -24
+  store <2 x i64> %103, ptr %109, align 8, !tbaa !91
+  store <2 x i64> %104, ptr %110, align 8, !tbaa !91
   %index.next10416 = add nuw i64 %index10405, 4   ; 2 uses
   %i.mds = icmp eq i64 %index.next10416, %n.vec10399
   br i1 %i.mds, label %middle.block10417, label %vector.body10404, !llvm.loop !245
@@ -3187,12 +3171,10 @@ vector.memcheck1662:                              ; preds = %vector.scevcheck166
 vector.ph1668:                                    ; preds = %vector.memcheck1662
   %n.vec1670 = and i64 %i.anh, 4294967292         ; 2 uses
   %i.any = and i64 %i.anh, 3
-  %broadcast.splatinsert1671 = insertelement <2 x i64> poison, i64 %i.ank, i64 0 ; 2 uses
-  %broadcast.splatinsert1673 = insertelement <2 x i64> poison, i64 %.pre1145, i64 0 ; 2 uses
-  %8 = shufflevector <2 x i64> %broadcast.splatinsert1671, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.anz = shufflevector <2 x i64> %broadcast.splatinsert1673, <2 x i64> poison, <2 x i32> zeroinitializer
-  %9 = shufflevector <2 x i64> %broadcast.splatinsert1671, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.aoa = shufflevector <2 x i64> %broadcast.splatinsert1673, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert1671 = insertelement <2 x i64> poison, i64 %i.ank, i64 0
+  %i.anz = shufflevector <2 x i64> %broadcast.splatinsert1671, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert1668 = insertelement <2 x i64> poison, i64 %.pre1145, i64 0
+  %i.aoa = shufflevector <2 x i64> %broadcast.splatinsert1668, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body1675
 
 vector.body1675:                                  ; preds = %vector.body1675, %vector.ph1668
@@ -3203,25 +3185,25 @@ vector.body1675:                                  ; preds = %vector.body1675, %v
   %i.aoe = getelementptr inbounds i8, ptr %i.aoc, i64 -24
   %wide.load1677 = load <2 x i64>, ptr %i.aod, align 8, !tbaa !91
   %wide.load1678 = load <2 x i64>, ptr %i.aoe, align 8, !tbaa !91
+  %8 = shl <2 x i64> %wide.load1677, %i.aoa
+  %9 = shl <2 x i64> %wide.load1678, %i.aoa
   %i.aof = getelementptr [8 x i8], ptr %7, i64 %i.aob ; 2 uses
   %i.aog = getelementptr i8, ptr %i.aof, i64 -8
   %i.aoh = getelementptr i8, ptr %i.aof, i64 -24
   %wide.load1681 = load <2 x i64>, ptr %i.aog, align 8, !tbaa !91
   %wide.load1682 = load <2 x i64>, ptr %i.aoh, align 8, !tbaa !91
-  %10 = trunc nuw i64 %i.aob to i32
-  %11 = add i32 %i.ako, %10
-  %12 = zext i32 %11 to i64
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.adn, i64 %12 ; 2 uses
-  %14 = getelementptr inbounds i8, ptr %13, i64 -8
-  %15 = getelementptr inbounds i8, ptr %13, i64 -24
-  %16 = lshr <2 x i64> %wide.load1681, %8
-  %17 = shl <2 x i64> %wide.load1677, %i.anz
-  %reverse1685 = or <2 x i64> %16, %17
-  %18 = lshr <2 x i64> %wide.load1682, %9
-  %19 = shl <2 x i64> %wide.load1678, %i.aoa
-  %reverse1686 = or <2 x i64> %18, %19
-  store <2 x i64> %reverse1685, ptr %14, align 8, !tbaa !91
-  store <2 x i64> %reverse1686, ptr %15, align 8, !tbaa !91
+  %10 = lshr <2 x i64> %wide.load1681, %i.anz
+  %11 = lshr <2 x i64> %wide.load1682, %i.anz
+  %12 = or <2 x i64> %10, %8
+  %13 = or <2 x i64> %11, %9
+  %14 = trunc nuw i64 %i.aob to i32
+  %15 = add i32 %i.ako, %14
+  %16 = zext i32 %15 to i64
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.adn, i64 %16 ; 2 uses
+  %18 = getelementptr inbounds i8, ptr %17, i64 -8
+  %19 = getelementptr inbounds i8, ptr %17, i64 -24
+  store <2 x i64> %12, ptr %18, align 8, !tbaa !91
+  store <2 x i64> %13, ptr %19, align 8, !tbaa !91
   %index.next1687 = add nuw i64 %index1676, 4     ; 2 uses
   %i.aoi = icmp eq i64 %index.next1687, %n.vec1670
   br i1 %i.aoi, label %middle.block1688, label %vector.body1675, !llvm.loop !259
@@ -3496,12 +3478,10 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.atf, 4294967292             ; 2 uses
   %i.atw = and i64 %i.atf, 3
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ati, i64 0 ; 2 uses
-  %broadcast.splatinsert1635 = insertelement <2 x i64> poison, i64 %.pre1147, i64 0 ; 2 uses
-  %20 = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.atx = shufflevector <2 x i64> %broadcast.splatinsert1635, <2 x i64> poison, <2 x i32> zeroinitializer
-  %21 = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.aty = shufflevector <2 x i64> %broadcast.splatinsert1635, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ati, i64 0
+  %i.atx = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert1635 = insertelement <2 x i64> poison, i64 %.pre1147, i64 0
+  %i.aty = shufflevector <2 x i64> %broadcast.splatinsert1635, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3512,25 +3492,25 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.auc = getelementptr inbounds i8, ptr %i.aua, i64 -24
   %wide.load = load <2 x i64>, ptr %i.aub, align 8, !tbaa !91
   %wide.load1637 = load <2 x i64>, ptr %i.auc, align 8, !tbaa !91
+  %20 = shl <2 x i64> %wide.load, %i.aty
+  %21 = shl <2 x i64> %wide.load1637, %i.aty
   %i.aud = getelementptr [8 x i8], ptr %6, i64 %i.atz ; 2 uses
   %i.aue = getelementptr i8, ptr %i.aud, i64 -8
   %i.auf = getelementptr i8, ptr %i.aud, i64 -24
   %wide.load1639.a = load <2 x i64>, ptr %i.aue, align 8, !tbaa !91
   %wide.load1640 = load <2 x i64>, ptr %i.auf, align 8, !tbaa !91
-  %22 = trunc nuw i64 %i.atz to i32
-  %23 = add i32 %i.aqk, %22
-  %24 = zext i32 %23 to i64
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.ate, i64 %24 ; 2 uses
-  %26 = getelementptr inbounds i8, ptr %25, i64 -8
-  %27 = getelementptr inbounds i8, ptr %25, i64 -24
-  %28 = lshr <2 x i64> %wide.load1639.a, %20
-  %29 = shl <2 x i64> %wide.load, %i.atx
-  %reverse1643 = or <2 x i64> %28, %29
-  %30 = lshr <2 x i64> %wide.load1640, %21
-  %31 = shl <2 x i64> %wide.load1637, %i.aty
-  %reverse1644 = or <2 x i64> %30, %31
-  store <2 x i64> %reverse1643, ptr %26, align 8, !tbaa !91
-  store <2 x i64> %reverse1644, ptr %27, align 8, !tbaa !91
+  %22 = lshr <2 x i64> %wide.load1639.a, %i.atx
+  %23 = lshr <2 x i64> %wide.load1640, %i.atx
+  %24 = or <2 x i64> %22, %20
+  %25 = or <2 x i64> %23, %21
+  %26 = trunc nuw i64 %i.atz to i32
+  %27 = add i32 %i.aqk, %26
+  %28 = zext i32 %27 to i64
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.ate, i64 %28 ; 2 uses
+  %30 = getelementptr inbounds i8, ptr %29, i64 -8
+  %31 = getelementptr inbounds i8, ptr %29, i64 -24
+  store <2 x i64> %24, ptr %30, align 8, !tbaa !91
+  store <2 x i64> %25, ptr %31, align 8, !tbaa !91
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aug = icmp eq i64 %index.next, %n.vec
   br i1 %i.aug, label %middle.block, label %vector.body, !llvm.loop !264
@@ -3933,12 +3913,10 @@ vector.memcheck764:                               ; preds = %vector.scevcheck763
 vector.ph770:                                     ; preds = %vector.memcheck764
   %n.vec772 = and i64 %i.amk, 4294967292          ; 2 uses
   %i.anb = and i64 %i.amk, 3
-  %broadcast.splatinsert773 = insertelement <2 x i64> poison, i64 %i.amn, i64 0 ; 2 uses
-  %broadcast.splatinsert775 = insertelement <2 x i64> poison, i64 %.pre579, i64 0 ; 2 uses
-  %7 = shufflevector <2 x i64> %broadcast.splatinsert773, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.anc = shufflevector <2 x i64> %broadcast.splatinsert775, <2 x i64> poison, <2 x i32> zeroinitializer
-  %8 = shufflevector <2 x i64> %broadcast.splatinsert773, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.and = shufflevector <2 x i64> %broadcast.splatinsert775, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert773 = insertelement <2 x i64> poison, i64 %i.amn, i64 0
+  %i.anc = shufflevector <2 x i64> %broadcast.splatinsert773, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert770 = insertelement <2 x i64> poison, i64 %.pre579, i64 0
+  %i.and = shufflevector <2 x i64> %broadcast.splatinsert770, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body777
 
 vector.body777:                                   ; preds = %vector.body777, %vector.ph770
@@ -3949,25 +3927,25 @@ vector.body777:                                   ; preds = %vector.body777, %ve
   %i.anh = getelementptr inbounds i8, ptr %i.anf, i64 -24
   %wide.load779 = load <2 x i64>, ptr %i.ang, align 8, !tbaa !91
   %wide.load780 = load <2 x i64>, ptr %i.anh, align 8, !tbaa !91
+  %7 = shl <2 x i64> %wide.load779, %i.and
+  %8 = shl <2 x i64> %wide.load780, %i.and
   %i.ani = getelementptr [8 x i8], ptr %6, i64 %i.ane ; 2 uses
   %i.anj = getelementptr i8, ptr %i.ani, i64 -8
   %i.ank = getelementptr i8, ptr %i.ani, i64 -24
   %wide.load783 = load <2 x i64>, ptr %i.anj, align 8, !tbaa !91
   %wide.load784 = load <2 x i64>, ptr %i.ank, align 8, !tbaa !91
-  %9 = trunc nuw i64 %i.ane to i32
-  %10 = add i32 %i.ajr, %9
-  %11 = zext i32 %10 to i64
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.acq, i64 %11 ; 2 uses
-  %13 = getelementptr inbounds i8, ptr %12, i64 -8
-  %14 = getelementptr inbounds i8, ptr %12, i64 -24
-  %15 = lshr <2 x i64> %wide.load783, %7
-  %16 = shl <2 x i64> %wide.load779, %i.anc
-  %reverse787 = or <2 x i64> %15, %16
-  %17 = lshr <2 x i64> %wide.load784, %8
-  %18 = shl <2 x i64> %wide.load780, %i.and
-  %reverse788 = or <2 x i64> %17, %18
-  store <2 x i64> %reverse787, ptr %13, align 8, !tbaa !91
-  store <2 x i64> %reverse788, ptr %14, align 8, !tbaa !91
+  %9 = lshr <2 x i64> %wide.load783, %i.anc
+  %10 = lshr <2 x i64> %wide.load784, %i.anc
+  %11 = or <2 x i64> %9, %7
+  %12 = or <2 x i64> %10, %8
+  %13 = trunc nuw i64 %i.ane to i32
+  %14 = add i32 %i.ajr, %13
+  %15 = zext i32 %14 to i64
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.acq, i64 %15 ; 2 uses
+  %17 = getelementptr inbounds i8, ptr %16, i64 -8
+  %18 = getelementptr inbounds i8, ptr %16, i64 -24
+  store <2 x i64> %11, ptr %17, align 8, !tbaa !91
+  store <2 x i64> %12, ptr %18, align 8, !tbaa !91
   %index.next789 = add nuw i64 %index778, 4       ; 2 uses
   %i.anl = icmp eq i64 %index.next789, %n.vec772
   br i1 %i.anl, label %middle.block790, label %vector.body777, !llvm.loop !273
@@ -4242,12 +4220,10 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.asi, 4294967292             ; 2 uses
   %i.asz = and i64 %i.asi, 3
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.asl, i64 0 ; 2 uses
-  %broadcast.splatinsert737 = insertelement <2 x i64> poison, i64 %.pre581, i64 0 ; 2 uses
-  %19 = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.ata = shufflevector <2 x i64> %broadcast.splatinsert737, <2 x i64> poison, <2 x i32> zeroinitializer
-  %20 = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.atb = shufflevector <2 x i64> %broadcast.splatinsert737, <2 x i64> poison, <2 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.asl, i64 0
+  %i.ata = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert737 = insertelement <2 x i64> poison, i64 %.pre581, i64 0
+  %i.atb = shufflevector <2 x i64> %broadcast.splatinsert737, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -4258,25 +4234,25 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.atf = getelementptr inbounds i8, ptr %i.atd, i64 -24
   %wide.load = load <2 x i64>, ptr %i.ate, align 8, !tbaa !91
   %wide.load739 = load <2 x i64>, ptr %i.atf, align 8, !tbaa !91
+  %19 = shl <2 x i64> %wide.load, %i.atb
+  %20 = shl <2 x i64> %wide.load739, %i.atb
   %i.atg = getelementptr [8 x i8], ptr %5, i64 %i.atc ; 2 uses
   %i.ath = getelementptr i8, ptr %i.atg, i64 -8
   %i.ati = getelementptr i8, ptr %i.atg, i64 -24
   %wide.load741.a = load <2 x i64>, ptr %i.ath, align 8, !tbaa !91
   %wide.load742 = load <2 x i64>, ptr %i.ati, align 8, !tbaa !91
-  %21 = trunc nuw i64 %i.atc to i32
-  %22 = add i32 %i.apn, %21
-  %23 = zext i32 %22 to i64
-  %24 = getelementptr inbounds nuw [8 x i8], ptr %i.ash, i64 %23 ; 2 uses
-  %25 = getelementptr inbounds i8, ptr %24, i64 -8
-  %26 = getelementptr inbounds i8, ptr %24, i64 -24
-  %27 = lshr <2 x i64> %wide.load741.a, %19
-  %28 = shl <2 x i64> %wide.load, %i.ata
-  %reverse745 = or <2 x i64> %27, %28
-  %29 = lshr <2 x i64> %wide.load742, %20
-  %30 = shl <2 x i64> %wide.load739, %i.atb
-  %reverse746 = or <2 x i64> %29, %30
-  store <2 x i64> %reverse745, ptr %25, align 8, !tbaa !91
-  store <2 x i64> %reverse746, ptr %26, align 8, !tbaa !91
+  %21 = lshr <2 x i64> %wide.load741.a, %i.ata
+  %22 = lshr <2 x i64> %wide.load742, %i.ata
+  %23 = or <2 x i64> %21, %19
+  %24 = or <2 x i64> %22, %20
+  %25 = trunc nuw i64 %i.atc to i32
+  %26 = add i32 %i.apn, %25
+  %27 = zext i32 %26 to i64
+  %28 = getelementptr inbounds nuw [8 x i8], ptr %i.ash, i64 %27 ; 2 uses
+  %29 = getelementptr inbounds i8, ptr %28, i64 -8
+  %30 = getelementptr inbounds i8, ptr %28, i64 -24
+  store <2 x i64> %23, ptr %29, align 8, !tbaa !91
+  store <2 x i64> %24, ptr %30, align 8, !tbaa !91
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.atj = icmp eq i64 %index.next, %n.vec
   br i1 %i.atj, label %middle.block, label %vector.body, !llvm.loop !278

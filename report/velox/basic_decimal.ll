@@ -204,12 +204,10 @@ _ZN5arrowL14ShiftArrayLeftEPjll.exit129.i:        ; preds = %._crit_edge.i124.i,
 vector.ph143:                                     ; preds = %.lr.ph.i133.i
   %n.vec145 = and i64 %.120.lcssa.i.i.i, 9223372036854775800 ; 3 uses
   %i.kl = sub i64 %i.bm, %n.vec145
-  %broadcast.splatinsert146 = insertelement <4 x i32> poison, i32 %i.kk, i64 0 ; 2 uses
-  %broadcast.splatinsert148 = insertelement <4 x i32> poison, i32 %i.hv, i64 0 ; 2 uses
-  %9 = shufflevector <4 x i32> %broadcast.splatinsert146, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.km = shufflevector <4 x i32> %broadcast.splatinsert148, <4 x i32> poison, <4 x i32> zeroinitializer
-  %10 = shufflevector <4 x i32> %broadcast.splatinsert146, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.kn = shufflevector <4 x i32> %broadcast.splatinsert148, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert146 = insertelement <4 x i32> poison, i32 %i.kk, i64 0
+  %i.km = shufflevector <4 x i32> %broadcast.splatinsert146, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert148 = insertelement <4 x i32> poison, i32 %i.hv, i64 0
+  %i.kn = shufflevector <4 x i32> %broadcast.splatinsert148, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body150
 
 vector.body150:                                   ; preds = %vector.body150, %vector.ph143
@@ -220,18 +218,18 @@ vector.body150:                                   ; preds = %vector.body150, %ve
   %i.kr = getelementptr i8, ptr %i.kp, i64 -32    ; 2 uses
   %wide.load152 = load <4 x i32>, ptr %i.kq, align 4, !tbaa !3
   %wide.load153 = load <4 x i32>, ptr %i.kr, align 4, !tbaa !3
+  %9 = lshr <4 x i32> %wide.load152, %i.kn
+  %10 = lshr <4 x i32> %wide.load153, %i.kn
   %i.ks = getelementptr [4 x i8], ptr %i.b, i64 %i.ko ; 2 uses
   %i.kt = getelementptr i8, ptr %i.ks, i64 -20
   %i.ku = getelementptr i8, ptr %i.ks, i64 -36
   %wide.load156 = load <4 x i32>, ptr %i.kt, align 4, !tbaa !3
   %wide.load157 = load <4 x i32>, ptr %i.ku, align 4, !tbaa !3
-  %i.kv = shl <4 x i32> %wide.load156, %9
-  %11 = lshr <4 x i32> %wide.load152, %i.km
-  %reverse160 = or disjoint <4 x i32> %i.kv, %11
-  %i.kw = shl <4 x i32> %wide.load157, %10
-  %12 = lshr <4 x i32> %wide.load153, %i.kn
-  %reverse161 = or disjoint <4 x i32> %i.kw, %12
-  store <4 x i32> %reverse160, ptr %i.kq, align 4, !tbaa !3
+  %i.kv = shl <4 x i32> %wide.load156, %i.km
+  %i.kw = shl <4 x i32> %wide.load157, %i.km
+  %11 = or disjoint <4 x i32> %i.kv, %9
+  %reverse161 = or disjoint <4 x i32> %i.kw, %10
+  store <4 x i32> %11, ptr %i.kq, align 4, !tbaa !3
   store <4 x i32> %reverse161, ptr %i.kr, align 4, !tbaa !3
   %index.next162 = add nuw i64 %index151, 8       ; 2 uses
   %i.kx = icmp eq i64 %index.next162, %n.vec145
