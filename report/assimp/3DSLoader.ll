@@ -204,14 +204,13 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit: ; preds = %bb.d, %bb.e
   %i.aq = load ptr, ptr %i.ap, align 8            ; 26 uses
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 -216 ; 4 uses
   %i.as = load i16, ptr %1, align 2
-  %i.at = zext i16 %i.as to i32
-  %2 = add nsw i32 %i.at, -16656                  ; 2 uses
-  %i.au = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 28)
+  %i.at = zext i16 %i.as to i32                   ; 2 uses
+  %i.au = call i32 @llvm.fshl.i32(i32 %i.at, i32 %i.at, i32 28)
   switch i32 %i.au, label %.loopexit [
-    i32 0, label %bb.i
-    i32 5, label %bb.ab
-    i32 3, label %bb.bm
-    i32 1, label %bb.cc
+    i32 1041, label %bb.i
+    i32 1046, label %bb.ab
+    i32 1044, label %bb.bm
+    i32 1042, label %bb.cc
   ]
 
 bb.i:                                             ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit

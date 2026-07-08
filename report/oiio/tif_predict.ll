@@ -202,14 +202,13 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %i.n = load i16, ptr %i.m, align 4, !tbaa !45   ; 2 uses
-  %1 = add i16 %i.n, -16                          ; 2 uses
-  %i.o = tail call i16 @llvm.fshl.i16(i16 %1, i16 %1, i16 13)
+  %i.n = load i16, ptr %i.m, align 4, !tbaa !45   ; 3 uses
+  %i.o = tail call i16 @llvm.fshl.i16(i16 %i.n, i16 %i.n, i16 13)
   switch i16 %i.o, label %bb.g [
-    i16 0, label %bb.i
-    i16 1, label %bb.i
     i16 2, label %bb.i
-    i16 6, label %bb.i
+    i16 3, label %bb.i
+    i16 4, label %bb.i
+    i16 8, label %bb.i
   ]
 
 bb.g:                                             ; preds = %bb.f

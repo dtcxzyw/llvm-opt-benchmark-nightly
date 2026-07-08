@@ -204,13 +204,12 @@ bb.i:                                             ; preds = %bb.h
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 45
   store i8 0, ptr %i.bb, align 1
   %i.bc = load i32, ptr %i.ak, align 8            ; 8 uses
-  %6 = lshr i32 %i.bc, 6
-  %i.bd = and i32 %6, 31
+  %i.bd = and i32 %i.bc, 1984
   switch i32 %i.bd, label %bb.j [
     i32 0, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i.i
-    i32 1, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i.i
-    i32 7, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i.i
-    i32 31, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i.i
+    i32 64, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i.i
+    i32 448, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i.i
+    i32 1984, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i.i
   ]
 
 bb.j:                                             ; preds = %bb.i
@@ -289,13 +288,12 @@ bb.p:                                             ; preds = %.lr.ph.i15
   %i.ce = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i, i64 45
   store i8 0, ptr %i.ce, align 1
   %i.cf = load i32, ptr %i.bz, align 8            ; 8 uses
-  %7 = lshr i32 %i.cf, 6
-  %i.cg = and i32 %7, 31
+  %i.cg = and i32 %i.cf, 1984
   switch i32 %i.cg, label %bb.q [
     i32 0, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
-    i32 1, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
-    i32 7, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
-    i32 31, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
+    i32 64, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
+    i32 448, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
+    i32 1984, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
   ]
 
 bb.q:                                             ; preds = %bb.p

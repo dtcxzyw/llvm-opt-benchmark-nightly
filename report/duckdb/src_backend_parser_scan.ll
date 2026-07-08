@@ -203,14 +203,13 @@ bb.cb:                                            ; preds = %bb.bq
 _ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit: ; preds = %bb.bv, %bb.ca, %bb.cb
   %i.sw = load ptr, ptr %i.aw, align 8, !tbaa !32
   %i.sx = getelementptr inbounds nuw i8, ptr %i.sw, i64 1
-  %i.sy = load i8, ptr %i.sx, align 1, !tbaa !34  ; 5 uses
-  %3 = tail call i8 @llvm.fshl.i8(i8 %i.sy, i8 %i.sy, i8 7)
-  switch i8 %3, label %bb.cg [
-    i8 49, label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
-    i8 51, label %bb.cc
-    i8 55, label %bb.cd
-    i8 57, label %bb.ce
-    i8 58, label %bb.cf
+  %i.sy = load i8, ptr %i.sx, align 1, !tbaa !34  ; 4 uses
+  switch i8 %i.sy, label %bb.cg [
+    i8 98, label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
+    i8 102, label %bb.cc
+    i8 110, label %bb.cd
+    i8 114, label %bb.ce
+    i8 116, label %bb.cf
     i8 0, label %bb.ch
   ]
 
@@ -611,9 +610,6 @@ declare ptr @__ctype_b_loc() local_unnamed_addr #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.fshl.i8(i8, i8, i8) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16

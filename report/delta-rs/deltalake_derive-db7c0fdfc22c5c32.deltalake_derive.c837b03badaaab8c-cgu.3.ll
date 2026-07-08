@@ -114,13 +114,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.as, label %bb.e, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCshbKHpCRGxgC_16deltalake_derive.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.at = lshr i32 %.sroa.4.0.i.ph.i.i.i.i, 8     ; 2 uses
-  %2 = tail call i32 @llvm.fshl.i32(i32 %i.at, i32 %i.at, i32 31)
-  switch i32 %2, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCshbKHpCRGxgC_16deltalake_derive.exit [
+  %i.at = lshr i32 %.sroa.4.0.i.ph.i.i.i.i, 8
+  switch i32 %i.at, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCshbKHpCRGxgC_16deltalake_derive.exit [
     i32 0, label %bb.h
-    i32 11, label %bb.f
-    i32 16, label %bb.i
-    i32 24, label %bb.g
+    i32 22, label %bb.f
+    i32 32, label %bb.i
+    i32 48, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -245,13 +244,12 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.cw, label %bb.o, label %bb.u
 
 bb.o:                                             ; preds = %bb.n
-  %i.cx = lshr i32 %.sroa.4.1.i.ph.i.i.i.i, 8     ; 2 uses
-  %3 = tail call i32 @llvm.fshl.i32(i32 %i.cx, i32 %i.cx, i32 31)
-  switch i32 %3, label %bb.u [
+  %i.cx = lshr i32 %.sroa.4.1.i.ph.i.i.i.i, 8
+  switch i32 %i.cx, label %bb.u [
     i32 0, label %bb.r
-    i32 11, label %bb.p
-    i32 16, label %bb.s
-    i32 24, label %bb.q
+    i32 22, label %bb.p
+    i32 32, label %bb.s
+    i32 48, label %bb.q
   ]
 
 bb.p:                                             ; preds = %bb.o
@@ -314,7 +312,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtNtCs2pqxYH9ZEk8_3std6thread5local18panic_access_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #16
+  tail call void @_RNvNtNtCs2pqxYH9ZEk8_3std6thread5local18panic_access_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -348,7 +346,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc7raw_vec6RawVecNtCsjJ0p09o2jmV_10proc_macro9TokenTreeEECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %bb.b
@@ -374,7 +372,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc7raw_vec6RawVecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %bb.b
@@ -400,7 +398,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc7raw_vec6RawVecReEECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %bb.b
@@ -426,7 +424,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc7raw_vec6RawVecjEECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %bb.b
@@ -453,7 +451,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.e = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtCsjJ0p09o2jmV_10proc_macro9TokenTreeEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(32) %0) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtCsjJ0p09o2jmV_10proc_macro9TokenTreeEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(32) %0) #17
           to label %common.resume.i unwind label %bb.g
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjJ0p09o2jmV_10proc_macro11TokenStreamECshbKHpCRGxgC_16deltalake_derive.exit.i.i: ; preds = %bb.c, %bb.b
@@ -469,7 +467,7 @@ bb.e:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 bb.f:                                             ; preds = %bb.e
   %i.g = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 common.resume.i:                                  ; preds = %bb.j, %bb.i, %bb.e, %bb.d
@@ -479,7 +477,7 @@ common.resume.i:                                  ; preds = %bb.j, %bb.i, %bb.e,
 bb.g:                                             ; preds = %bb.d
   %i.h = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsbjGuDcEILED_11proc_macro23imp19DeferredTokenStreamECshbKHpCRGxgC_16deltalake_derive.exit.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjJ0p09o2jmV_10proc_macro11TokenStreamECshbKHpCRGxgC_16deltalake_derive.exit.i.i
@@ -505,7 +503,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.n, label %bb.j, label %common.resume.i
 
 bb.j:                                             ; preds = %bb.i
-  invoke void @_RNvMs6_NtCs6Po7BT7Nknu_5alloc2rcINtB5_2RcINtNtB7_3vec3VecNtCsbjGuDcEILED_11proc_macro29TokenTreeEE9drop_slowBV_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.i) #19
+  invoke void @_RNvMs6_NtCs6Po7BT7Nknu_5alloc2rcINtB5_2RcINtNtB7_3vec3VecNtCsbjGuDcEILED_11proc_macro29TokenTreeEE9drop_slowBV_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.i) #18
           to label %common.resume.i unwind label %bb.m
 
 bb.k:                                             ; preds = %bb.h
@@ -520,13 +518,13 @@ bb.k:                                             ; preds = %bb.h
   br i1 %i.r, label %bb.l, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsbjGuDcEILED_11proc_macro23imp11TokenStreamECshbKHpCRGxgC_16deltalake_derive.exit
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @_RNvMs6_NtCs6Po7BT7Nknu_5alloc2rcINtB5_2RcINtNtB7_3vec3VecNtCsbjGuDcEILED_11proc_macro29TokenTreeEE9drop_slowBV_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.i) #19
+  tail call void @_RNvMs6_NtCs6Po7BT7Nknu_5alloc2rcINtB5_2RcINtNtB7_3vec3VecNtCsbjGuDcEILED_11proc_macro29TokenTreeEE9drop_slowBV_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.i) #18
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsbjGuDcEILED_11proc_macro23imp11TokenStreamECshbKHpCRGxgC_16deltalake_derive.exit
 
 bb.m:                                             ; preds = %bb.j
   %i.s = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsbjGuDcEILED_11proc_macro23imp11TokenStreamECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsbjGuDcEILED_11proc_macro23imp19DeferredTokenStreamECshbKHpCRGxgC_16deltalake_derive.exit.i, %bb.k, %bb.l
@@ -548,7 +546,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc7raw_vec6RawVechEECshbKHpCRGxgC_16deltalake_derive.exit.i: ; preds = %bb.b
@@ -650,7 +648,7 @@ bb.e:                                             ; preds = %.noexc
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp, %.loopexit69
   %.sroa.06.2 = phi i1 [ true, %.loopexit69 ], [ true, %.loopexit.split-lp.loopexit ], [ %.sroa.06.2.ph.ph, %.loopexit.split-lp.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit69 ], [ %lpad.loopexit70, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp71, %.loopexit.split-lp.loopexit.split-lp ]
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecReEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.j) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecReEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.j) #17
           to label %.body unwind label %bb.aq
 
 bb.f:                                             ; preds = %bb.e
@@ -669,7 +667,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef range(i64 -1, 576460752303423487) %i.ab, i64 noundef range(i64 0, 1152921504606846976) %.val14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #16
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef range(i64 -1, 576460752303423487) %i.ab, i64 noundef range(i64 0, 1152921504606846976) %.val14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #15
           to label %.noexc24 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc24:                                         ; preds = %bb.g
@@ -770,13 +768,13 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.p
   %i.bf = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 .body:                                            ; preds = %bb.s, %bb.p, %.loopexit.split-lp
   %.sroa.06.3 = phi i1 [ %.sroa.06.2, %.loopexit.split-lp ], [ false, %bb.p ], [ false, %bb.s ]
   %.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.be, %bb.p ], [ %i.bg, %bb.s ] ; 2 uses
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.k) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.k) #17
           to label %bb.d unwind label %bb.aq
 
 bb.s:                                             ; preds = %bb.q
@@ -801,7 +799,7 @@ bb.u:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 bb.v:                                             ; preds = %bb.t
   %i.bi = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %bb.u, %bb.c
@@ -826,7 +824,7 @@ bb.x:                                             ; preds = %_RNvXs2J_NtNtCsbvkF
   br i1 %i.bl, label %bb.y, label %bb.z, !prof !122
 
 bb.y:                                             ; preds = %bb.x
-  invoke void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef %.sroa.047.087, i64 noundef range(i64 0, 576460752303423488) %.val18, i64 noundef range(i64 0, 576460752303423488) %.val18, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #16
+  invoke void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef %.sroa.047.087, i64 noundef range(i64 0, 576460752303423488) %.val18, i64 noundef range(i64 0, 576460752303423488) %.val18, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #15
           to label %.noexc33 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc33:                                         ; preds = %bb.y
@@ -928,7 +926,7 @@ bb.an:                                            ; preds = %bb.al
   %i.cj = phi i64 [ %.sroa.0.0.ph.lcssa86, %bb.j ], [ %.sroa.0.0.ph.lcssa86, %bb.k ], [ %.sroa.0.0.ph90, %bb.an ], [ %.sroa.0.0.ph90, %bb.am ], [ %.sroa.0.0.ph90, %bb.ak ], [ %.sroa.0.0.ph90, %bb.aj ], [ %.sroa.0.0.ph90, %.cont ]
   %i.ck = phi i64 [ %.val1.i, %bb.j ], [ %.val1.i, %bb.k ], [ %i.bs, %bb.an ], [ %i.bs, %bb.am ], [ %i.bs, %bb.ak ], [ %i.bs, %bb.aj ], [ %i.bs, %.cont ]
   %i.cl = phi ptr [ @4, %bb.j ], [ @4, %bb.k ], [ @6, %bb.an ], [ @6, %bb.am ], [ @6, %bb.ak ], [ @6, %bb.aj ], [ @6, %.cont ]
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val1.i, i64 noundef %i.cj, i64 noundef %i.ck, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cl) #16
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val1.i, i64 noundef %i.cj, i64 noundef %i.ck, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cl) #15
           to label %.cont137 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .cont137:                                         ; preds = %.invoke
@@ -960,7 +958,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecReE4pushCshbKHpCRGxgC_16deltalake_de
 bb.aq:                                            ; preds = %bb.ar, %.body, %.loopexit.split-lp
   %i.cw = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 .body31.thread:                                   ; preds = %bb.t, %bb.ar, %bb.d
@@ -969,7 +967,7 @@ bb.aq:                                            ; preds = %bb.ar, %.body, %.lo
 
 bb.ar:                                            ; preds = %.body31.thread59, %bb.d
   %.pn.pn56 = phi { ptr, i32 } [ %lpad.thr_comm, %.body31.thread59 ], [ %.pn, %bb.d ]
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecReEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.l) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecReEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.l) #17
           to label %.body31.thread unwind label %bb.aq
 }
 
@@ -1071,14 +1069,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
   %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c) #18
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c) #17
           to label %common.resume.i.i unwind label %bb.g, !noalias !162
 
 bb.e:                                             ; preds = %bb.c
   br i1 %i.aj, label %bb.f, label %_RNvXsC_NtCs6Po7BT7Nknu_5alloc6stringNtCsbjGuDcEILED_11proc_macro25IdentNtB5_12SpecToString14spec_to_stringCshbKHpCRGxgC_16deltalake_derive.exit.i.i.i, !prof !122
 
 bb.f:                                             ; preds = %bb.e
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @11, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #20
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @11, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #19
           to label %.noexc.i.i.i.i unwind label %.loopexit.split-lp.i, !noalias !162
 
 .noexc.i.i.i.i:                                   ; preds = %bb.f
@@ -1087,7 +1085,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.d
   %i.ak = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !162
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !162
   unreachable
 
 common.resume.i.i:                                ; preds = %.body.i2.i.i, %bb.bm, %bb.bh, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i, %bb.d
@@ -1120,7 +1118,7 @@ bb.h:                                             ; preds = %bb.b
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i: ; preds = %bb.r, %bb.q, %.body.i.i.i, %bb.l, %bb.i
   %.pn46.i.i.i = phi { ptr, i32 } [ %i.al, %bb.i ], [ %i.ap, %bb.l ], [ %.pn44.i.i.i, %.body.i.i.i ], [ %.pn44.i.i.i, %bb.q ], [ %.pn44.i.i.i, %bb.r ]
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.r) #18
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.r) #17
           to label %common.resume.i.i unwind label %bb.aq, !noalias !152
 
 bb.i:                                             ; preds = %bb.j, %_RNvXsC_NtCs6Po7BT7Nknu_5alloc6stringNtCsbjGuDcEILED_11proc_macro25IdentNtB5_12SpecToString14spec_to_stringCshbKHpCRGxgC_16deltalake_derive.exit.i.i.i
@@ -1146,7 +1144,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.m, %bb.k
   %i.ap = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.p) #18
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.p) #17
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i unwind label %bb.aq, !noalias !152
 
 bb.m:                                             ; preds = %bb.k
@@ -1166,7 +1164,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.ar = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !152
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !152
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i.i: ; preds = %bb.n
@@ -1188,7 +1186,7 @@ bb.q:                                             ; preds = %.body.i.i.i
 
 bb.r:                                             ; preds = %bb.q
   %.val.i.i.i.i.i = load ptr, ptr %i.q, align 8, !alias.scope !171, !noalias !152, !nonnull !17, !noundef !17
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i.i.i.i, i64 noundef 1) #21, !noalias !172
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i.i.i.i, i64 noundef 1) #20, !noalias !172
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i
 
 bb.s:                                             ; preds = %bb.bd, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i.i
@@ -1231,7 +1229,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %.val.i.i49.i.i.i = load ptr, ptr %i.q, align 8, !alias.scope !179, !noalias !152, !nonnull !17, !noundef !17
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i49.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i48.i.i.i, i64 noundef 1) #21, !noalias !180
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i49.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i48.i.i.i, i64 noundef 1) #20, !noalias !180
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit50.i.i.i
 
 bb.x:                                             ; preds = %bb.t
@@ -1259,7 +1257,7 @@ bb.z:                                             ; preds = %bb.x
 
 bb.aa:                                            ; preds = %bb.ad, %bb.ab
   %.pn.pn.i.i.i = phi { ptr, i32 } [ %.pn.i.i.i, %bb.ad ], [ %i.bg, %bb.ab ]
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k) #18
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k) #17
           to label %.body53.i.i.i unwind label %bb.aq, !noalias !152
 
 bb.ab:                                            ; preds = %bb.y
@@ -1273,7 +1271,7 @@ bb.ac:                                            ; preds = %bb.y
 
 bb.ad:                                            ; preds = %bb.ah, %bb.ae
   %.pn.i.i.i = phi { ptr, i32 } [ %i.bh, %bb.ae ], [ %i.bi, %bb.ah ]
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.j) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.j) #17
           to label %bb.aa unwind label %bb.aq, !noalias !152
 
 bb.ae:                                            ; preds = %bb.ak, %bb.af, %bb.ac
@@ -1294,7 +1292,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.aj, %bb.ai, %bb.ag
   %i.bi = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.h) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.h) #17
           to label %bb.ad unwind label %bb.aq, !noalias !152
 
 bb.ai:                                            ; preds = %bb.ag
@@ -1327,7 +1325,7 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %i.bk = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !152
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !152
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECshbKHpCRGxgC_16deltalake_derive.exit.i52.i.i.i: ; preds = %bb.al
@@ -1337,7 +1335,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechE
 .body53.i.i.i:                                    ; preds = %bb.ar, %bb.ao, %bb.am, %bb.aa
   %.not37.i.i.i470 = phi i1 [ false, %bb.aa ], [ %.not37.i.i.i, %bb.ar ], [ %.not37.i.i.i.lcssa461, %bb.ao ], [ false, %bb.am ]
   %.pn42.i.i.i = phi { ptr, i32 } [ %.pn.pn.i.i.i, %bb.aa ], [ %.pn40.i.i.i, %bb.ar ], [ %i.bl, %bb.ao ], [ %i.bj, %bb.am ] ; 2 uses
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.n) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %i.n) #17
           to label %bb.bj unwind label %bb.aq, !noalias !152
 
 bb.ao:                                            ; preds = %bb.aw, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECshbKHpCRGxgC_16deltalake_derive.exit.i52.i.i.i, %bb.z
@@ -1358,12 +1356,12 @@ bb.ap:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 bb.aq:                                            ; preds = %bb.bl, %bb.bj, %.body56.i.i.i, %bb.au, %bb.ar, %.body53.i.i.i, %bb.ah, %bb.ad, %bb.aa, %bb.l, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i
   %i.bm = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !152
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !152
   unreachable
 
 bb.ar:                                            ; preds = %bb.au, %bb.as
   %.pn40.i.i.i = phi { ptr, i32 } [ %i.bo, %bb.au ], [ %i.bn, %bb.as ]
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.l) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.l) #17
           to label %.body53.i.i.i unwind label %bb.aq, !noalias !152
 
 bb.as:                                            ; preds = %bb.ap
@@ -1378,7 +1376,7 @@ bb.at:                                            ; preds = %bb.ap
 bb.au:                                            ; preds = %bb.av, %bb.at
   %i.bo = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.g) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(32) %i.g) #17
           to label %bb.ar unwind label %bb.aq, !noalias !152
 
 bb.av:                                            ; preds = %bb.at
@@ -1412,7 +1410,7 @@ bb.az:                                            ; preds = %bb.ax
 bb.ba:                                            ; preds = %bb.ay
   %i.bq = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !152
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !152
   unreachable
 
 bb.bb:                                            ; preds = %bb.az
@@ -1422,7 +1420,7 @@ bb.bb:                                            ; preds = %bb.az
 
 .body56.i.i.i:                                    ; preds = %bb.bb, %bb.ay
   %eh.lpad-body57.i.i.i = phi { ptr, i32 } [ %i.br, %bb.bb ], [ %i.bp, %bb.ay ]
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %.sroa.619.i.sroa.8.0..sroa.4.0..sroa_idx.i.sroa_idx.i.i) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %.sroa.619.i.sroa.8.0..sroa.4.0..sroa_idx.i.sroa_idx.i.i) #17
           to label %.body.i.i.i unwind label %bb.aq, !noalias !152
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i: ; preds = %bb.az
@@ -1442,7 +1440,7 @@ bb.bd:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 bb.be:                                            ; preds = %bb.bc
   %i.bt = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !152
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !152
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive.exit61.i.i.i: ; preds = %bb.bd
@@ -1460,7 +1458,7 @@ bb.bf:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 
 bb.bg:                                            ; preds = %bb.bf
   %.val.i.i63.i.i.i = load ptr, ptr %i.q, align 8, !alias.scope !188, !noalias !152, !nonnull !17, !noundef !17
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i63.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i62.i.i.i, i64 noundef 1) #21, !noalias !189
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i63.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i62.i.i.i, i64 noundef 1) #20, !noalias !189
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit64.i.i.i
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit64.i.i.i: ; preds = %bb.bg, %bb.bf, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive.exit61.i.i.i
@@ -1477,11 +1475,11 @@ bb.bh:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 bb.bi:                                            ; preds = %bb.bh
   %i.by = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !152
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !152
   unreachable
 
 bb.bj:                                            ; preds = %.body53.i.i.i
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %.sroa.619.i.sroa.8.0..sroa.4.0..sroa_idx.i.sroa_idx.i.i) #18
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef align 8 dereferenceable(24) %.sroa.619.i.sroa.8.0..sroa.4.0..sroa_idx.i.sroa_idx.i.i) #17
           to label %bb.bk unwind label %bb.aq, !noalias !152
 
 bb.bk:                                            ; preds = %bb.bj
@@ -1491,7 +1489,7 @@ bb.bk:                                            ; preds = %bb.bj
   br i1 %or.cond.i.i.i, label %bb.bl, label %.body.i.i.i
 
 bb.bl:                                            ; preds = %bb.bk
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.z) #18
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.z) #17
           to label %.body.i.i.i unwind label %bb.aq, !noalias !152
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit50.i.i.i: ; preds = %bb.w, %bb.v, %bb.u
@@ -1508,7 +1506,7 @@ bb.bm:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 bb.bn:                                            ; preds = %bb.bm
   %i.cc = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !152
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !152
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive.exit70.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentECshbKHpCRGxgC_16deltalake_derive.exit50.i.i.i
@@ -1551,7 +1549,7 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bp
   %i.cg = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !197
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !197
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCs7nQiqFc7Txl_3syn5error5ErrorEECshbKHpCRGxgC_16deltalake_derive.exit.i.i.i.i: ; preds = %bb.bo
@@ -1633,10 +1631,10 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !206
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !noalias !206, !nonnull !17, !noundef !17
-  call void %i.k(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.d, i64 noundef 1) #21, !noalias !206, !inline_history !209
+  call void %i.k(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.d, i64 noundef 1) #20, !noalias !206, !inline_history !209
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !nonnull !17, !noundef !17
-  call void %.sroa.3.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %1) #21
+  call void %.sroa.3.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %1) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.c, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !206
   %.pre.i = load i64, ptr %i.e, align 8, !alias.scope !206
@@ -1661,10 +1659,10 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !210
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.p = load ptr, ptr %i.o, align 8, !noalias !210, !nonnull !17, !noundef !17
-  call void %i.p(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.b, i64 noundef 1) #21, !noalias !210, !inline_history !209
+  call void %i.p(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.b, i64 noundef 1) #20, !noalias !210, !inline_history !209
   %.sroa.311.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.311.0.copyload = load ptr, ptr %.sroa.311.0..sroa_idx, align 8, !nonnull !17, !noundef !17
-  call void %.sroa.311.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %1) #21
+  call void %.sroa.311.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %1) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !210
   %.pre.i6 = load i64, ptr %i.e, align 8, !alias.scope !210
@@ -1726,10 +1724,10 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !213
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !noalias !213, !nonnull !17, !noundef !17
-  call void %i.k(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.d, i64 noundef 1) #21, !noalias !213, !inline_history !209
+  call void %i.k(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.c, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.d, i64 noundef 1) #20, !noalias !213, !inline_history !209
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !nonnull !17, !noundef !17
-  call void %.sroa.3.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %2) #21
+  call void %.sroa.3.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %2) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %i.c, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !213
   %.pre.i = load i64, ptr %i.e, align 8, !alias.scope !213
@@ -1765,10 +1763,10 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !216
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.t = load ptr, ptr %i.s, align 8, !noalias !216, !nonnull !17, !noundef !17
-  call void %i.t(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.b, i64 noundef 1) #21, !noalias !216, !inline_history !209
+  call void %i.t(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %i.b, i64 noundef 1) #20, !noalias !216, !inline_history !209
   %.sroa.312.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.sroa.312.0.copyload = load ptr, ptr %.sroa.312.0..sroa_idx, align 8, !nonnull !17, !noundef !17
-  call void %.sroa.312.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %2) #21
+  call void %.sroa.312.0.copyload(ptr noalias noundef nonnull byval([40 x i8]) align 8 captures(address) dereferenceable(40) %2) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !216
   %.pre.i7 = load i64, ptr %i.e, align 8, !alias.scope !216
@@ -1952,14 +1950,14 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.f, %bb.c
   %i.l = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c) #18
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c) #17
           to label %common.resume unwind label %bb.g, !noalias !236
 
 bb.e:                                             ; preds = %bb.c
   br i1 %i.k, label %bb.f, label %_RNvXsB_NtCs6Po7BT7Nknu_5alloc6stringNtCsjJ0p09o2jmV_10proc_macro5IdentNtB5_8ToString9to_stringCshbKHpCRGxgC_16deltalake_derive.exit, !prof !122
 
 bb.f:                                             ; preds = %bb.e
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @11, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #20
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @11, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #19
           to label %.noexc.i.i unwind label %bb.d, !noalias !236
 
 .noexc.i.i:                                       ; preds = %bb.f
@@ -1968,7 +1966,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.d
   %i.m = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17, !noalias !236
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16, !noalias !236
   unreachable
 
 common.resume:                                    ; preds = %bb.i, %bb.d
@@ -2005,7 +2003,7 @@ bb.i:                                             ; preds = %_RNvXs1t_NtCs6Po7BT
 bb.j:                                             ; preds = %bb.i
   %i.s = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #17
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %_RNvXs1t_NtCs6Po7BT7Nknu_5alloc6stringNtB6_6StringINtNtCsbvkFyIu7lgC_4core3cmp9PartialEqReE2eq.exit
@@ -2194,17 +2192,14 @@ declare hidden noundef zeroext i1 @_RNvMNtCsbvkFyIu7lgC_4core5sliceSh11starts_wi
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs6_NtCs6Po7BT7Nknu_5alloc2rcINtB5_2RcINtNtB7_3vec3VecNtCsbjGuDcEILED_11proc_macro29TokenTreeEE9drop_slowBV_(ptr noalias noundef align 8 dereferenceable(8)) unnamed_addr #9
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #12
-
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #13
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #14
+declare void @llvm.experimental.noalias.scope.decl(metadata) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #15
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -2218,16 +2213,15 @@ attributes #8 = { cold minsize noinline noreturn nounwind nonlazybind optsize uw
 attributes #9 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #10 = { cold minsize noinline noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #11 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #15 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #16 = { noinline noreturn }
-attributes #17 = { cold noreturn nounwind }
-attributes #18 = { cold }
-attributes #19 = { noinline }
-attributes #20 = { noreturn }
-attributes #21 = { nounwind }
+attributes #12 = { nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #15 = { noinline noreturn }
+attributes #16 = { cold noreturn nounwind }
+attributes #17 = { cold }
+attributes #18 = { noinline }
+attributes #19 = { noreturn }
+attributes #20 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

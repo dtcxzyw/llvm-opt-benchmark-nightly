@@ -203,18 +203,17 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 .loopexit:                                        ; preds = %.lr.ph, %.preheader156, %bb.c, %bb.b
   %.1145 = phi i64 [ %.0146168, %bb.b ], [ %i.l, %bb.c ], [ %.0146168, %.preheader156 ], [ %i.o, %.lr.ph ] ; 5 uses
   %i.s = add nsw i64 %.1145, 1                    ; 8 uses
-  %5 = and i64 %i.h, 4160749568
-  %6 = add nsw i64 %5, -134217728
-  %7 = lshr exact i64 %6, 27
-  switch i64 %7, label %bb.n [
-    i64 13, label %bb.m
-    i64 1, label %bb.d
-    i64 12, label %bb.l
-    i64 14, label %.preheader
-    i64 8, label %.preheader154
-    i64 10, label %.preheader155
-    i64 4, label %bb.e
+  %5 = lshr i64 %i.h, 27
+  %6 = and i64 %5, 31
+  switch i64 %6, label %bb.n [
+    i64 14, label %bb.m
+    i64 2, label %bb.d
+    i64 13, label %bb.l
+    i64 15, label %.preheader
+    i64 9, label %.preheader154
+    i64 11, label %.preheader155
     i64 5, label %bb.e
+    i64 6, label %bb.e
   ]
 
 bb.d:                                             ; preds = %.loopexit
@@ -384,19 +383,18 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit2
   %.0236342 = phi i64 [ %.tr271586, %.lr.ph ], [ %i.dp, %.loopexit275 ] ; 16 uses
   %i.m = getelementptr inbounds [8 x i8], ptr %i.j, i64 %.0236342
   %i.n = load i64, ptr %i.m, align 8, !tbaa !50   ; 3 uses
-  %7 = and i64 %i.n, 4160749568
-  %8 = add nsw i64 %7, -268435456
-  %9 = lshr exact i64 %8, 27
-  switch i64 %9, label %bb.ak [
-    i64 0, label %bb.c
-    i64 3, label %bb.e
-    i64 4, label %bb.g
-    i64 1, label %bb.i
-    i64 2, label %bb.n
-    i64 17, label %bb.s
-    i64 18, label %bb.aa
-    i64 10, label %.loopexit275
-    i64 14, label %bb.ai
+  %7 = lshr i64 %i.n, 27
+  %8 = and i64 %7, 31
+  switch i64 %8, label %bb.ak [
+    i64 2, label %bb.c
+    i64 5, label %bb.e
+    i64 6, label %bb.g
+    i64 3, label %bb.i
+    i64 4, label %bb.n
+    i64 19, label %bb.s
+    i64 20, label %bb.aa
+    i64 12, label %.loopexit275
+    i64 16, label %bb.ai
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -655,17 +653,16 @@ bb.ak:                                            ; preds = %bb.b
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !72 ; 2 uses
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.du, i64 %.0236342
   %i.dw = load i64, ptr %i.dv, align 8, !tbaa !50 ; 7 uses
-  %10 = and i64 %i.dw, 4160749568
-  %11 = add nsw i64 %10, -939524096
-  %12 = lshr exact i64 %11, 27
-  switch i64 %12, label %.loopexit [
-    i64 0, label %bb.al
-    i64 4, label %bb.ar
-    i64 2, label %bb.as
-    i64 3, label %bb.at
-    i64 8, label %bb.ax
-    i64 6, label %bb.az
-    i64 7, label %bb.bb
+  %9 = lshr i64 %i.dw, 27
+  %10 = and i64 %9, 31
+  switch i64 %10, label %.loopexit [
+    i64 7, label %bb.al
+    i64 11, label %bb.ar
+    i64 9, label %bb.as
+    i64 10, label %bb.at
+    i64 15, label %bb.ax
+    i64 13, label %bb.az
+    i64 14, label %bb.bb
   ]
 
 bb.al:                                            ; preds = %bb.ak
@@ -879,29 +876,28 @@ bb.b:                                             ; preds = %.lr.ph136, %bb.ad
   %.0118132 = phi i64 [ %1, %.lr.ph136 ], [ %i.df, %bb.ad ] ; 30 uses
   %i.l = getelementptr inbounds [8 x i8], ptr %i.c, i64 %.0118132 ; 4 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !50   ; 7 uses
-  %6 = and i64 %i.m, 4160749568
-  %7 = add nsw i64 %6, -134217728
-  %8 = lshr exact i64 %7, 27
-  switch i64 %8, label %bb.ad [
-    i64 17, label %bb.ac
-    i64 1, label %bb.c
-    i64 2, label %bb.e
-    i64 3, label %bb.g
-    i64 18, label %bb.i
-    i64 19, label %bb.k
-    i64 4, label %bb.m
-    i64 5, label %bb.o
-    i64 6, label %bb.r
+  %6 = lshr i64 %i.m, 27
+  %7 = and i64 %6, 31
+  switch i64 %7, label %bb.ad [
+    i64 18, label %bb.ac
+    i64 2, label %bb.c
+    i64 3, label %bb.e
+    i64 4, label %bb.g
+    i64 19, label %bb.i
+    i64 20, label %bb.k
+    i64 5, label %bb.m
+    i64 6, label %bb.o
     i64 7, label %bb.r
-    i64 8, label %bb.s
-    i64 9, label %bb.t
-    i64 10, label %bb.v
-    i64 11, label %bb.w
-    i64 12, label %bb.x
+    i64 8, label %bb.r
+    i64 9, label %bb.s
+    i64 10, label %bb.t
+    i64 11, label %bb.v
+    i64 12, label %bb.w
     i64 13, label %bb.x
-    i64 14, label %bb.y
-    i64 15, label %bb.z
-    i64 16, label %bb.aa
+    i64 14, label %bb.x
+    i64 15, label %bb.y
+    i64 16, label %bb.z
+    i64 17, label %bb.aa
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -1304,18 +1300,17 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 .loopexit:                                        ; preds = %.lr.ph, %.preheader156, %bb.c, %bb.b
   %.1145 = phi i64 [ %.0146168, %bb.b ], [ %i.l, %bb.c ], [ %.0146168, %.preheader156 ], [ %i.o, %.lr.ph ] ; 5 uses
   %i.s = add nsw i64 %.1145, 1                    ; 8 uses
-  %5 = and i64 %i.h, 4160749568
-  %6 = add nsw i64 %5, -134217728
-  %7 = lshr exact i64 %6, 27
-  switch i64 %7, label %bb.n [
-    i64 13, label %bb.m
-    i64 1, label %bb.d
-    i64 12, label %bb.l
-    i64 14, label %.preheader
-    i64 8, label %.preheader154
-    i64 10, label %.preheader155
-    i64 4, label %bb.e
+  %5 = lshr i64 %i.h, 27
+  %6 = and i64 %5, 31
+  switch i64 %6, label %bb.n [
+    i64 14, label %bb.m
+    i64 2, label %bb.d
+    i64 13, label %bb.l
+    i64 15, label %.preheader
+    i64 9, label %.preheader154
+    i64 11, label %.preheader155
     i64 5, label %bb.e
+    i64 6, label %bb.e
   ]
 
 bb.d:                                             ; preds = %.loopexit
@@ -1493,19 +1488,18 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit2
   %.0236342 = phi i64 [ %.tr271586, %.lr.ph ], [ %i.dp, %.loopexit275 ] ; 16 uses
   %i.m = getelementptr inbounds [8 x i8], ptr %i.j, i64 %.0236342
   %i.n = load i64, ptr %i.m, align 8, !tbaa !50   ; 3 uses
-  %7 = and i64 %i.n, 4160749568
-  %8 = add nsw i64 %7, -268435456
-  %9 = lshr exact i64 %8, 27
-  switch i64 %9, label %bb.ak [
-    i64 0, label %bb.c
-    i64 3, label %bb.e
-    i64 4, label %bb.g
-    i64 1, label %bb.i
-    i64 2, label %bb.n
-    i64 17, label %bb.s
-    i64 18, label %bb.aa
-    i64 10, label %.loopexit275
-    i64 14, label %bb.ai
+  %7 = lshr i64 %i.n, 27
+  %8 = and i64 %7, 31
+  switch i64 %8, label %bb.ak [
+    i64 2, label %bb.c
+    i64 5, label %bb.e
+    i64 6, label %bb.g
+    i64 3, label %bb.i
+    i64 4, label %bb.n
+    i64 19, label %bb.s
+    i64 20, label %bb.aa
+    i64 12, label %.loopexit275
+    i64 16, label %bb.ai
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -1764,17 +1758,16 @@ bb.ak:                                            ; preds = %bb.b
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !72 ; 2 uses
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.du, i64 %.0236342
   %i.dw = load i64, ptr %i.dv, align 8, !tbaa !50 ; 7 uses
-  %10 = and i64 %i.dw, 4160749568
-  %11 = add nsw i64 %10, -939524096
-  %12 = lshr exact i64 %11, 27
-  switch i64 %12, label %.loopexit [
-    i64 0, label %bb.al
-    i64 4, label %bb.ar
-    i64 2, label %bb.as
-    i64 3, label %bb.at
-    i64 8, label %bb.ax
-    i64 6, label %bb.az
-    i64 7, label %bb.bb
+  %9 = lshr i64 %i.dw, 27
+  %10 = and i64 %9, 31
+  switch i64 %10, label %.loopexit [
+    i64 7, label %bb.al
+    i64 11, label %bb.ar
+    i64 9, label %bb.as
+    i64 10, label %bb.at
+    i64 15, label %bb.ax
+    i64 13, label %bb.az
+    i64 14, label %bb.bb
   ]
 
 bb.al:                                            ; preds = %bb.ak
@@ -1983,29 +1976,28 @@ bb.b:                                             ; preds = %.lr.ph153, %bb.ad
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !72
   %i.k = getelementptr inbounds [8 x i8], ptr %i.j, i64 %.0137150 ; 3 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !50   ; 7 uses
-  %6 = and i64 %i.l, 4160749568
-  %7 = add nsw i64 %6, -134217728
-  %8 = lshr exact i64 %7, 27
-  switch i64 %8, label %bb.ad [
-    i64 17, label %bb.ac
-    i64 1, label %bb.c
-    i64 2, label %bb.e
-    i64 3, label %bb.g
-    i64 18, label %bb.i
-    i64 19, label %bb.k
-    i64 4, label %bb.m
-    i64 5, label %bb.o
-    i64 6, label %bb.r
+  %6 = lshr i64 %i.l, 27
+  %7 = and i64 %6, 31
+  switch i64 %7, label %bb.ad [
+    i64 18, label %bb.ac
+    i64 2, label %bb.c
+    i64 3, label %bb.e
+    i64 4, label %bb.g
+    i64 19, label %bb.i
+    i64 20, label %bb.k
+    i64 5, label %bb.m
+    i64 6, label %bb.o
     i64 7, label %bb.r
-    i64 8, label %bb.s
-    i64 9, label %bb.t
-    i64 10, label %bb.v
-    i64 11, label %bb.w
-    i64 12, label %bb.x
+    i64 8, label %bb.r
+    i64 9, label %bb.s
+    i64 10, label %bb.t
+    i64 11, label %bb.v
+    i64 12, label %bb.w
     i64 13, label %bb.x
-    i64 14, label %bb.y
-    i64 15, label %bb.z
-    i64 16, label %bb.aa
+    i64 14, label %bb.x
+    i64 15, label %bb.y
+    i64 16, label %bb.z
+    i64 17, label %bb.aa
   ]
 
 bb.c:                                             ; preds = %bb.b

@@ -201,13 +201,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %_RNvYNvMNtNtCsbvkFyIu7lgC_4core4char7methodsc13is_whitespaceINtNtNtB9_3ops8function5FnMutTcEE8call_mutCs4ZaLwAtrTbk_16deltalake_derive.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = lshr i32 %1, 8                           ; 2 uses
-  %2 = tail call i32 @llvm.fshl.i32(i32 %i.c, i32 %i.c, i32 31)
-  switch i32 %2, label %_RNvNtNtNtCsbvkFyIu7lgC_4core7unicode12unicode_data11white_space6lookupCs4ZaLwAtrTbk_16deltalake_derive.exit.i.i [
+  %i.c = lshr i32 %1, 8
+  switch i32 %i.c, label %_RNvNtNtNtCsbvkFyIu7lgC_4core7unicode12unicode_data11white_space6lookupCs4ZaLwAtrTbk_16deltalake_derive.exit.i.i [
     i32 0, label %bb.f
-    i32 11, label %bb.d
-    i32 16, label %bb.g
-    i32 24, label %bb.e
+    i32 22, label %bb.d
+    i32 32, label %bb.g
+    i32 48, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -608,9 +607,6 @@ declare void @_RNvXNtNtCs7nQiqFc7Txl_3syn6derive7parsingNtB4_11DeriveInputNtNtB6
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMCsbjGuDcEILED_11proc_macro2NtB2_11TokenStream3new(ptr sret([32 x i8]) align 8) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20

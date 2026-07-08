@@ -203,15 +203,14 @@ bb.o:                                             ; preds = %bb.m
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 28
   %.val = load i16, ptr %i.aa, align 4, !tbaa !90
   %i.ab = zext i16 %.val to i32                   ; 7 uses
-  %5 = add nsw i32 %i.ab, -4096
-  %i.ac = lshr i32 %5, 12
+  %i.ac = lshr i32 %i.ab, 12
   switch i32 %i.ac, label %bb.v [
-    i32 3, label %bb.p
-    i32 7, label %bb.q
-    i32 5, label %bb.r
-    i32 1, label %bb.s
-    i32 0, label %bb.t
-    i32 11, label %bb.u
+    i32 4, label %bb.p
+    i32 8, label %bb.q
+    i32 6, label %bb.r
+    i32 2, label %bb.s
+    i32 1, label %bb.t
+    i32 12, label %bb.u
   ]
 
 bb.p:                                             ; preds = %bb.o
@@ -388,16 +387,15 @@ bb.o:                                             ; preds = %bb.m
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 28
   %.val = load i16, ptr %i.aa, align 4, !tbaa !90
   %i.ab = zext i16 %.val to i32                   ; 8 uses
-  %6 = add nsw i32 %i.ab, -4096
-  %i.ac = lshr i32 %6, 12
+  %i.ac = lshr i32 %i.ab, 12
   switch i32 %i.ac, label %bb.w [
-    i32 7, label %bb.p
-    i32 3, label %bb.q
-    i32 9, label %bb.r
-    i32 5, label %bb.s
-    i32 1, label %bb.t
-    i32 0, label %bb.u
-    i32 11, label %bb.v
+    i32 8, label %bb.p
+    i32 4, label %bb.q
+    i32 10, label %bb.r
+    i32 6, label %bb.s
+    i32 2, label %bb.t
+    i32 1, label %bb.u
+    i32 12, label %bb.v
   ]
 
 bb.p:                                             ; preds = %bb.o

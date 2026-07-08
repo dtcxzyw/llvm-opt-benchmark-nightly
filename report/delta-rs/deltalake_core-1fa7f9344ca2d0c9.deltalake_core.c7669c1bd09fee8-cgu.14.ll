@@ -204,13 +204,12 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bc, label %bb.g, label %bb.l
 
 bb.g:                                             ; preds = %bb.f
-  %i.bd = lshr i32 %.sroa.4.0.i.ph.i.i.i.i.i.i, 8 ; 2 uses
-  %1 = tail call i32 @llvm.fshl.i32(i32 %i.bd, i32 %i.bd, i32 31)
-  switch i32 %1, label %bb.l [
+  %i.bd = lshr i32 %.sroa.4.0.i.ph.i.i.i.i.i.i, 8
+  switch i32 %i.bd, label %bb.l [
     i32 0, label %bb.j
-    i32 11, label %bb.h
-    i32 16, label %bb.k
-    i32 24, label %bb.i
+    i32 22, label %bb.h
+    i32 32, label %bb.k
+    i32 48, label %bb.i
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -613,13 +612,12 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cc, label %bb.y, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs14kWLkQVSKO_14deltalake_core.exit.i.i
 
 bb.y:                                             ; preds = %bb.x
-  %i.cd = lshr i32 %.sroa.4.0.i.ph.i.i.i.i.i.i, 8 ; 2 uses
-  %2 = call i32 @llvm.fshl.i32(i32 %i.cd, i32 %i.cd, i32 31)
-  switch i32 %2, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs14kWLkQVSKO_14deltalake_core.exit.i.i [
+  %i.cd = lshr i32 %.sroa.4.0.i.ph.i.i.i.i.i.i, 8
+  switch i32 %i.cd, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs14kWLkQVSKO_14deltalake_core.exit.i.i [
     i32 0, label %bb.ab
-    i32 11, label %bb.z
-    i32 16, label %bb.ac
-    i32 24, label %bb.aa
+    i32 22, label %bb.z
+    i32 32, label %bb.ac
+    i32 48, label %bb.aa
   ]
 
 bb.z:                                             ; preds = %bb.y
@@ -744,13 +742,12 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.eg, label %bb.ai, label %bb.ao
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.eh = lshr i32 %.sroa.4.1.i.ph.i.i.i.i.i.i, 8 ; 2 uses
-  %3 = call i32 @llvm.fshl.i32(i32 %i.eh, i32 %i.eh, i32 31)
-  switch i32 %3, label %bb.ao [
+  %i.eh = lshr i32 %.sroa.4.1.i.ph.i.i.i.i.i.i, 8
+  switch i32 %i.eh, label %bb.ao [
     i32 0, label %bb.al
-    i32 11, label %bb.aj
-    i32 16, label %bb.am
-    i32 24, label %bb.ak
+    i32 22, label %bb.aj
+    i32 32, label %bb.am
+    i32 48, label %bb.ak
   ]
 
 bb.aj:                                            ; preds = %bb.ai
@@ -1152,9 +1149,6 @@ declare hidden void @_RNvXNtNtCs6Po7BT7Nknu_5alloc5boxed4iterINtB4_3BoxDNtNtNtNt
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXNtNtCs6Po7BT7Nknu_5alloc5boxed4iterINtB4_3BoxDNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iteratorp4ItemINtNtBU_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEL_EBM_9size_hintCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16)) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #44
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #48

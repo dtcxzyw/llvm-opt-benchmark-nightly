@@ -201,21 +201,20 @@ _ZNK6hermes2vm10NativeArgs11dyncastThisINS0_8JSObjectEEENS0_6HandleIT_EEv.exit: 
 bb.b:                                             ; preds = %_ZNK6hermes2vm10NativeArgs11dyncastThisINS0_8JSObjectEEENS0_6HandleIT_EEv.exit
   %i.l = inttoptr i64 %.pre-phi to ptr
   %i.m = load i32, ptr %i.l, align 4
-  %3 = add i32 %i.m, -587202560
-  %i.n = lshr i32 %3, 24
+  %i.n = lshr i32 %i.m, 24
   %trunc = trunc nuw i32 %i.n to i8
   switch i8 %trunc, label %bb.n [
-    i8 0, label %bb.c
-    i8 1, label %bb.d
-    i8 2, label %bb.e
-    i8 3, label %bb.f
-    i8 4, label %bb.g
-    i8 5, label %bb.h
-    i8 6, label %bb.i
-    i8 7, label %bb.j
-    i8 8, label %bb.k
-    i8 9, label %bb.l
-    i8 10, label %bb.m
+    i8 35, label %bb.c
+    i8 36, label %bb.d
+    i8 37, label %bb.e
+    i8 38, label %bb.f
+    i8 39, label %bb.g
+    i8 40, label %bb.h
+    i8 41, label %bb.i
+    i8 42, label %bb.j
+    i8 43, label %bb.k
+    i8 44, label %bb.l
+    i8 45, label %bb.m
   ]
 
 bb.c:                                             ; preds = %bb.b

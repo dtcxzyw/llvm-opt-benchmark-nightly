@@ -204,14 +204,13 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
 define hidden void @_ZNK4llvh5APInt8byteSwapEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.llvh::APInt") align 8 captures(none) initializes((0, 12)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(12) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !7    ; 12 uses
-  %2 = add i32 %i.b, -16                          ; 2 uses
-  %i.c = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 28)
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !7    ; 13 uses
+  %i.c = tail call i32 @llvm.fshl.i32(i32 %i.b, i32 %i.b, i32 28)
   switch i32 %i.c, label %bb.g [
-    i32 0, label %bb.b
-    i32 1, label %bb.c
-    i32 2, label %bb.d
-    i32 3, label %bb.f
+    i32 1, label %bb.b
+    i32 2, label %bb.c
+    i32 3, label %bb.d
+    i32 4, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a

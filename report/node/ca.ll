@@ -204,13 +204,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.o
 
 bb.h:                                             ; preds = %bb.j, %bb.g
   %.072 = phi ptr [ %i.s, %bb.g ], [ %i.w, %bb.j ] ; 3 uses
-  %i.t = load i8, ptr %.072, align 1, !tbaa !26   ; 2 uses
-  %23 = call i8 @llvm.fshl.i8(i8 %i.t, i8 %i.t, i8 7)
-  switch i8 %23, label %bb.j [
+  %i.t = load i8, ptr %.072, align 1, !tbaa !26
+  switch i8 %i.t, label %bb.j [
     i8 0, label %.loopexit
-    i8 29, label %bb.i
-    i8 22, label %bb.i
-    i8 23, label %bb.i
+    i8 58, label %bb.i
+    i8 44, label %bb.i
+    i8 46, label %bb.i
   ]
 
 bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h
@@ -611,9 +610,6 @@ declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.fshl.i8(i8, i8, i8) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #9

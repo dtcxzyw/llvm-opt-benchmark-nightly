@@ -201,15 +201,14 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.h = shl i64 %2, 3
-  %7 = add i64 %i.h, -2048                        ; 2 uses
-  %i.i = tail call i64 @llvm.fshl.i64(i64 %7, i64 %7, i64 54)
+  %i.h = shl i64 %2, 3                            ; 2 uses
+  %i.i = tail call i64 @llvm.fshl.i64(i64 %i.h, i64 %i.h, i64 54)
   switch i64 %i.i, label %psa_is_dh_key_size_valid.exit.thread [
-    i64 0, label %psa_is_dh_key_size_valid.exit
-    i64 1, label %psa_is_dh_key_size_valid.exit
     i64 2, label %psa_is_dh_key_size_valid.exit
+    i64 3, label %psa_is_dh_key_size_valid.exit
     i64 4, label %psa_is_dh_key_size_valid.exit
     i64 6, label %psa_is_dh_key_size_valid.exit
+    i64 8, label %psa_is_dh_key_size_valid.exit
   ]
 
 psa_is_dh_key_size_valid.exit:                    ; preds = %bb.g, %bb.g, %bb.g, %bb.g, %bb.g
@@ -612,14 +611,13 @@ bb.a:
   br i1 %i.d, label %psa_mac_abort.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = add i32 %.0.i, -134217984
-  %i.e = lshr i32 %1, 8
+  %i.e = lshr i32 %.0.i, 8
   switch i32 %i.e, label %bb.m [
-    i32 0, label %bb.c
-    i32 3, label %bb.c
-    i32 4, label %bb.c
-    i32 1, label %bb.e
-    i32 2, label %bb.e
+    i32 524289, label %bb.c
+    i32 524292, label %bb.c
+    i32 524293, label %bb.c
+    i32 524290, label %bb.e
+    i32 524291, label %bb.e
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
@@ -819,14 +817,13 @@ bb.h:                                             ; preds = %bb.f
   %i.s = sub nuw i64 %i.o, %2
   store i64 %i.s, ptr %i.q, align 8, !tbaa !77
   %i.t = and i32 %.0.i, -256
-  %8 = add i32 %.0.i, -134217984
-  %i.u = lshr i32 %8, 8
+  %i.u = lshr i32 %.0.i, 8
   switch i32 %i.u, label %bb.bn [
-    i32 0, label %bb.i
-    i32 3, label %bb.i
-    i32 4, label %bb.i
-    i32 1, label %bb.af
-    i32 2, label %bb.af
+    i32 524289, label %bb.i
+    i32 524292, label %bb.i
+    i32 524293, label %bb.i
+    i32 524290, label %bb.af
+    i32 524291, label %bb.af
   ]
 
 bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h
@@ -1229,8 +1226,9 @@ bb.a:
   %2 = alloca %struct.psa_hash_operation_s, align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(552) %i.a, i8 0, i64 552, i1 false)
-  %i.b = add i32 %1, -134217984                   ; 2 uses
-  %switch.i = icmp ugt i32 %i.b, 1279
+  %3 = lshr i32 %1, 8                             ; 2 uses
+  %i.b = add nsw i32 %3, -524294
+  %switch.i = icmp ult i32 %i.b, -5
   %i.c = icmp ne i32 %1, 134219273                ; 2 uses
   %narrow.i.not = and i1 %i.c, %switch.i
   br i1 %narrow.i.not, label %psa_key_derivation_set_maximum_capacity.exit, label %bb.b
@@ -1289,13 +1287,12 @@ bb.g:                                             ; preds = %bb.e
   store i32 1, ptr %2, align 8, !tbaa !54
   %i.m = call i32 @mbedtls_psa_hash_abort(ptr noundef nonnull %i.j) #20 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
-  %3 = lshr i32 %i.b, 8
   switch i32 %3, label %psa_key_derivation_set_maximum_capacity.exit [
-    i32 0, label %bb.h
-    i32 3, label %bb.i
-    i32 4, label %bb.j
-    i32 1, label %bb.k
-    i32 2, label %bb.m
+    i32 524289, label %bb.h
+    i32 524292, label %bb.i
+    i32 524293, label %bb.j
+    i32 524290, label %bb.k
+    i32 524291, label %bb.m
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -1420,14 +1417,13 @@ bb.f:                                             ; preds = %bb.b
 
 select.unfold:                                    ; preds = %bb.e, %bb.e, %bb.d, %bb.d, %bb.c, %bb.c, %bb.f, %bb.f, %bb.f
   %i.f = and i32 %.0.i, -256                      ; 5 uses
-  %7 = add i32 %.0.i, -134217984
-  %i.g = lshr i32 %7, 8
+  %i.g = lshr i32 %.0.i, 8
   switch i32 %i.g, label %bb.bj [
-    i32 0, label %bb.g
-    i32 3, label %bb.g
-    i32 4, label %bb.g
-    i32 1, label %bb.an
-    i32 2, label %bb.ao
+    i32 524289, label %bb.g
+    i32 524292, label %bb.g
+    i32 524293, label %bb.g
+    i32 524290, label %bb.an
+    i32 524291, label %bb.ao
   ]
 
 bb.g:                                             ; preds = %select.unfold, %select.unfold, %select.unfold
@@ -1830,9 +1826,9 @@ bb.e:                                             ; preds = %bb.c
   ]
 
 bb.f:                                             ; preds = %bb.e
-  %2 = add nsw i64 %1, -2048                      ; 2 uses
-  %3 = tail call i64 @llvm.fshl.i64(i64 %2, i64 %2, i64 54) ; 2 uses
-  %i.f = icmp ult i64 %3, 7
+  %2 = tail call i64 @llvm.fshl.i64(i64 %1, i64 %1, i64 54)
+  %switch.tableidx = add i64 %2, -2               ; 2 uses
+  %i.f = icmp ult i64 %switch.tableidx, 7
   br i1 %i.f, label %switch.lookup, label %psa_is_dh_key_size_valid.exit.thread
 
 psa_is_dh_key_size_valid.exit:                    ; preds = %bb.d, %bb.b
@@ -1842,7 +1838,7 @@ psa_is_dh_key_size_valid.exit.thread.fold.split:  ; preds = %bb.e
   br label %psa_is_dh_key_size_valid.exit.thread
 
 switch.lookup:                                    ; preds = %bb.f
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.psa_validate_key_type_and_size_for_key_generation, i64 %3
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.psa_validate_key_type_and_size_for_key_generation, i64 %switch.tableidx
   %switch.load = load i32, ptr %switch.gep, align 4
   br label %psa_is_dh_key_size_valid.exit.thread
 

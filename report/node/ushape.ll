@@ -203,13 +203,12 @@ bb.bh:                                            ; preds = %bb.bg
   %i.dy = and i32 %4, 256
   %i.dz = icmp eq i32 %i.dy, 0                    ; 2 uses
   %.368 = select i1 %i.dz, i16 1632, i16 1776     ; 3 uses
-  %10 = add nsw i32 %i.q, -32
-  %i.ea = lshr exact i32 %10, 5
+  %i.ea = lshr exact i32 %i.q, 5
   switch i32 %i.ea, label %.loopexit [
-    i32 0, label %bb.bi
-    i32 1, label %.preheader
-    i32 2, label %.loopexit.sink.split
-    i32 3, label %bb.bn
+    i32 1, label %bb.bi
+    i32 2, label %.preheader
+    i32 3, label %.loopexit.sink.split
+    i32 4, label %bb.bn
   ]
 
 .preheader:                                       ; preds = %bb.bh

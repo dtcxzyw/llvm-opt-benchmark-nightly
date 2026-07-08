@@ -204,15 +204,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
-  %8 = add i32 %1, -65536
-  %i.b = lshr i32 %8, 16
+  %i.b = lshr i32 %1, 16
   %trunc = trunc nuw i32 %i.b to i16
   switch i16 %trunc, label %bb.f [
-    i16 0, label %bb.c
-    i16 1, label %bb.e
-    i16 2, label %.noexc14
-    i16 3, label %.noexc12
-    i16 4, label %bb.g
+    i16 1, label %bb.c
+    i16 2, label %bb.e
+    i16 3, label %.noexc14
+    i16 4, label %.noexc12
+    i16 5, label %bb.g
   ]
 
 bb.c:                                             ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit

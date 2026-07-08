@@ -201,21 +201,19 @@ bb.f:                                             ; preds = %.lr.ph, %bb.aa
   ]
 
 .critedge28:                                      ; preds = %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f
-  %2 = zext i16 %.075 to i32
-  %3 = add nsw i32 %2, -16384
-  %4 = lshr exact i32 %3, 12
-  switch i32 %4, label %_ZN6Assimp4Ogre20OgreBinarySerializer14ReadMeshBoundsEPNS0_4MeshE.exit [
-    i32 1, label %bb.g
-    i32 0, label %bb.j
-    i32 2, label %bb.k
-    i32 3, label %bb.l
-    i32 4, label %bb.m
-    i32 5, label %bb.n
-    i32 6, label %bb.r
-    i32 7, label %bb.s
-    i32 8, label %bb.t
-    i32 9, label %bb.u
-    i32 10, label %bb.v
+  %2 = lshr exact i16 %.075, 12
+  switch i16 %2, label %_ZN6Assimp4Ogre20OgreBinarySerializer14ReadMeshBoundsEPNS0_4MeshE.exit [
+    i16 5, label %bb.g
+    i16 4, label %bb.j
+    i16 6, label %bb.k
+    i16 7, label %bb.l
+    i16 8, label %bb.m
+    i16 9, label %bb.n
+    i16 10, label %bb.r
+    i16 11, label %bb.s
+    i16 12, label %bb.t
+    i16 13, label %bb.u
+    i16 14, label %bb.v
   ]
 
 bb.g:                                             ; preds = %.critedge28

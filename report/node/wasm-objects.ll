@@ -204,26 +204,25 @@ bb.y:                                             ; preds = %bb.x
   %i.bd = load atomic volatile i64, ptr %i.bc monotonic, align 8
   %i.be = add i64 %i.bd, 11
   %i.bf = inttoptr i64 %i.be to ptr
-  %i.bg = load atomic volatile i16, ptr %i.bf monotonic, align 2 ; 3 uses
+  %i.bg = load atomic volatile i16, ptr %i.bf monotonic, align 2 ; 2 uses
   %i.bh = add i16 %i.bg, -2102
   %i.bi = icmp ult i16 %i.bh, 4
   br i1 %i.bi, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %9 = call i16 @llvm.fshl.i16(i16 %i.bg, i16 %i.bg, i16 15)
-  switch i16 %9, label %_ZN2v88internal6Object5ShareIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_IS1_E9MaybeTypeEPNS0_7IsolateES6_NS0_11ShouldThrowE.exit.i [
-    i16 48, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
-    i16 52, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
-    i16 49, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
-    i16 53, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
-    i16 57, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
-    i16 61, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
-    i16 13, label %bb.aa
-    i16 9, label %bb.aa
+  switch i16 %i.bg, label %_ZN2v88internal6Object5ShareIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_IS1_E9MaybeTypeEPNS0_7IsolateES6_NS0_11ShouldThrowE.exit.i [
+    i16 96, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
+    i16 104, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
+    i16 98, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
+    i16 106, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
+    i16 114, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
+    i16 122, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread23.i
+    i16 26, label %bb.aa
+    i16 18, label %bb.aa
     i16 0, label %bb.aa
-    i16 4, label %bb.aa
-    i16 1, label %bb.aa
-    i16 5, label %bb.aa
+    i16 8, label %bb.aa
+    i16 2, label %bb.aa
+    i16 10, label %bb.aa
   ]
 
 bb.aa:                                            ; preds = %bb.z, %bb.z, %bb.z, %bb.z, %bb.z, %bb.z
@@ -626,26 +625,25 @@ bb.e:                                             ; preds = %bb.d
   %i.o = load atomic volatile i64, ptr %i.n monotonic, align 8
   %i.p = add i64 %i.o, 11
   %i.q = inttoptr i64 %i.p to ptr
-  %i.r = load atomic volatile i16, ptr %i.q monotonic, align 2 ; 3 uses
+  %i.r = load atomic volatile i16, ptr %i.q monotonic, align 2 ; 2 uses
   %i.s = add i16 %i.r, -2102
   %i.t = icmp ult i16 %i.s, 4
   br i1 %i.t, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %4 = tail call i16 @llvm.fshl.i16(i16 %i.r, i16 %i.r, i16 15)
-  switch i16 %4, label %_ZN2v88internal6Object5ShareIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_IS1_E9MaybeTypeEPNS0_7IsolateES6_NS0_11ShouldThrowE.exit [
-    i16 48, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
-    i16 52, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
-    i16 49, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
-    i16 53, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
-    i16 57, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
-    i16 61, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
-    i16 13, label %bb.g
-    i16 9, label %bb.g
+  switch i16 %i.r, label %_ZN2v88internal6Object5ShareIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_IS1_E9MaybeTypeEPNS0_7IsolateES6_NS0_11ShouldThrowE.exit [
+    i16 96, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
+    i16 104, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
+    i16 98, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
+    i16 106, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
+    i16 114, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
+    i16 122, label %_ZNK2v88internal17MaybeDirectHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
+    i16 26, label %bb.g
+    i16 18, label %bb.g
     i16 0, label %bb.g
-    i16 4, label %bb.g
-    i16 1, label %bb.g
-    i16 5, label %bb.g
+    i16 8, label %bb.g
+    i16 2, label %bb.g
+    i16 10, label %bb.g
   ]
 
 bb.g:                                             ; preds = %bb.f, %bb.f, %bb.f, %bb.f, %bb.f, %bb.f
@@ -1046,9 +1044,6 @@ declare i32 @llvm.smax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.fshl.i16(i16, i16, i16) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20

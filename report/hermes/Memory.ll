@@ -10,7 +10,6 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZGVZN4llvh3sys6Memory20allocateMappedMemoryEmPKNS0_11MemoryBlockEjRSt10error_codeE8PageSize = internal global i64 0, align 8
 @_ZZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEjE8PageSize = internal global i64 0, align 8
 @_ZGVZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEjE8PageSize = internal global i64 0, align 8
-@switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj = private unnamed_addr constant [7 x i8] [i8 1, i8 2, i8 3, i8 4, i8 5, i8 poison, i8 7], align 4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden { ptr, i64 } @_ZN4llvh3sys6Memory20allocateMappedMemoryEmPKNS0_11MemoryBlockEjRSt10error_code(i64 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, i32 noundef %2, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) initializes((0, 16)) %3) local_unnamed_addr #0 align 2 {
@@ -46,12 +45,7 @@ switch.lookup:                                    ; preds = %bb.d, %bb.c, %bb.b
   %i.j = add i64 %0, -1
   %i.k = add i64 %i.j, %i.i
   %i.l = udiv i64 %i.k, %i.i                      ; 3 uses
-  %5 = add i32 %2, -16777216                      ; 2 uses
-  %i.m = tail call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 8)
-  %6 = zext nneg i32 %i.m to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj, i64 %6
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
+  %i.m = tail call noundef range(i32 1, 8) i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 8) ; 2 uses
   %.not33 = icmp eq ptr %1, null
   br i1 %.not33, label %.thread46, label %bb.e
 
@@ -78,13 +72,13 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.0 = phi i64 [ %i.u, %bb.g ], [ %i.r, %bb.f ], [ 0, %bb.e ]
   %i.v = inttoptr i64 %.0 to ptr
   %i.w = mul i64 %i.l, %i.i
-  %i.x = tail call ptr @mmap(ptr noundef %i.v, i64 noundef %i.w, i32 noundef %switch.ext, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
+  %i.x = tail call ptr @mmap(ptr noundef %i.v, i64 noundef %i.w, i32 noundef %i.m, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
   %i.y = icmp eq ptr %i.x, inttoptr (i64 -1 to ptr)
   br i1 %i.y, label %bb.i, label %bb.j
 
 .thread46:                                        ; preds = %switch.lookup
   %i.z = mul i64 %i.l, %i.i
-  %i.aa = tail call ptr @mmap(ptr noundef null, i64 noundef %i.z, i32 noundef %switch.ext, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
+  %i.aa = tail call ptr @mmap(ptr noundef null, i64 noundef %i.z, i32 noundef %i.m, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
   %i.ab = icmp eq ptr %i.aa, inttoptr (i64 -1 to ptr)
   br i1 %i.ab, label %.thread48, label %bb.j
 
@@ -212,12 +206,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.m
 
 switch.lookup:                                    ; preds = %bb.g
-  %2 = add i32 %1, -16777216                      ; 2 uses
-  %i.n = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 8)
-  %3 = zext nneg i32 %i.n to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj, i64 %3
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32
+  %i.n = tail call noundef range(i32 1, 8) i32 @llvm.fshl.i32(i32 %1, i32 %1, i32 8)
   %i.o = load i64, ptr @_ZZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEjE8PageSize, align 8, !tbaa !11 ; 2 uses
   %i.p = sub i64 0, %i.o                          ; 3 uses
   %i.q = getelementptr inbounds i8, ptr %i.g, i64 %i.p
@@ -232,7 +221,7 @@ switch.lookup:                                    ; preds = %bb.g
   %i.z = and i64 %i.y, %i.p
   %i.aa = inttoptr i64 %i.v to ptr
   %i.ab = sub i64 %i.z, %i.v
-  %i.ac = tail call i32 @mprotect(ptr noundef %i.aa, i64 noundef %i.ab, i32 noundef %switch.ext) #9
+  %i.ac = tail call i32 @mprotect(ptr noundef %i.aa, i64 noundef %i.ab, i32 noundef %i.n) #9
   %.not17 = icmp eq i32 %i.ac, 0
   br i1 %.not17, label %bb.j, label %bb.i
 

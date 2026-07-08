@@ -203,13 +203,12 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i, i64 45
   store i8 0, ptr %i.r, align 1
   %i.s = load i32, ptr %i.m, align 8              ; 8 uses
-  %2 = lshr i32 %i.s, 6
-  %i.t = and i32 %2, 31
+  %i.t = and i32 %i.s, 1984
   switch i32 %i.t, label %bb.f [
     i32 0, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
-    i32 1, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
-    i32 7, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
-    i32 31, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
+    i32 64, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
+    i32 448, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
+    i32 1984, label %_ZN2v88internal6maglev14MakeTypeStableENS1_8NodeTypeE.exit.i.i
   ]
 
 bb.f:                                             ; preds = %bb.e
