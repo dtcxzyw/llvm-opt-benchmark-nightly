@@ -204,11 +204,11 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %n.vec = and i64 %i.c, 16                       ; 3 uses
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %.lobit, i64 0
-  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
   %i.e = getelementptr i8, ptr %i.d, i64 -16
   %wide.load = load <16 x i8>, ptr %i.e, align 1, !tbaa !7
   %reverse.a = shufflevector <16 x i8> %wide.load, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  %i.f = xor <16 x i8> %reverse.a, %broadcast.splat
+  %7 = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
+  %i.f = xor <16 x i8> %reverse.a, %7
   store <16 x i8> %i.f, ptr %3, align 16, !tbaa !7
   %cmp.n = icmp eq i64 %i.c, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check

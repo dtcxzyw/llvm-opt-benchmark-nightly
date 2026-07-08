@@ -204,7 +204,7 @@ bb.cb:                                            ; preds = %.lr.ph.i707.i
 LZ4HC_reverseCountPattern.exit.i:                 ; preds = %.lr.ph.i707.i, %bb.cb, %._crit_edge1050
   %.1.lcssa.i.i = phi ptr [ %.013.i.i.lcssa, %._crit_edge1050 ], [ %.116.i.i, %.lr.ph.i707.i ], [ %scevgep.i706.i, %bb.cb ]
   %i.qh = ptrtoint ptr %.1.lcssa.i.i to i64
-  %i.qi = sub i64 %i.pw, %i.qh                    ; 2 uses
+  %i.qi = sub i64 %i.pw, %i.qh                    ; 3 uses
   %i.qj = trunc i64 %i.qi to i32                  ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %i.qk = and i64 %i.qi, 4294967295
@@ -216,11 +216,11 @@ LZ4HC_reverseCountPattern.exit.i:                 ; preds = %.lr.ph.i707.i, %bb.
   br i1 %or.cond455.i.i, label %bb.cc, label %bb.cf
 
 bb.cc:                                            ; preds = %LZ4HC_reverseCountPattern.exit.i
-  %7 = sub nsw i32 0, %i.qj                       ; 2 uses
-  %8 = and i32 %7, 3
-  %i.qo = icmp eq i32 %8, 0
-  %9 = shl i32 %7, 3
-  %i.qp = tail call i32 @llvm.fshl.i32(i32 %.val586.i, i32 %.val586.i, i32 %9)
+  %7 = sub i64 0, %i.qi
+  %8 = and i64 %7, 3
+  %i.qo = icmp eq i64 %8, 0
+  %.neg.i = mul i32 %i.qj, 24
+  %i.qp = tail call i32 @llvm.fshl.i32(i32 %.val586.i, i32 %.val586.i, i32 %.neg.i)
   %.0.i709.i = select i1 %i.qo, i32 %.val586.i, i32 %i.qp ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i32 %.0.i709.i, ptr %i.e, align 4, !tbaa !3
@@ -623,7 +623,7 @@ bb.fx:                                            ; preds = %.lr.ph.i773.i
 LZ4HC_reverseCountPattern.exit777.i:              ; preds = %.lr.ph.i773.i, %bb.fx, %._crit_edge1072
   %.1.lcssa.i770.i = phi ptr [ %.013.i766.i.lcssa, %._crit_edge1072 ], [ %.116.i775.i, %.lr.ph.i773.i ], [ %scevgep.i772.i, %bb.fx ]
   %i.ajm = ptrtoint ptr %.1.lcssa.i770.i to i64
-  %i.ajn = sub i64 %i.ajb, %i.ajm                 ; 2 uses
+  %i.ajn = sub i64 %i.ajb, %i.ajm                 ; 3 uses
   %i.ajo = trunc i64 %i.ajn to i32                ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.ajp = and i64 %i.ajn, 4294967295
@@ -635,11 +635,11 @@ LZ4HC_reverseCountPattern.exit777.i:              ; preds = %.lr.ph.i773.i, %bb.
   br i1 %or.cond455.i436.i, label %bb.fy, label %bb.gb
 
 bb.fy:                                            ; preds = %LZ4HC_reverseCountPattern.exit777.i
-  %10 = sub nsw i32 0, %i.ajo                     ; 2 uses
-  %11 = and i32 %10, 3
-  %i.ajt = icmp eq i32 %11, 0
-  %12 = shl i32 %10, 3
-  %i.aju = tail call i32 @llvm.fshl.i32(i32 %.val570.i, i32 %.val570.i, i32 %12)
+  %9 = sub i64 0, %i.ajn
+  %10 = and i64 %9, 3
+  %i.ajt = icmp eq i64 %10, 0
+  %.neg1338.i = mul i32 %i.ajo, 24
+  %i.aju = tail call i32 @llvm.fshl.i32(i32 %.val570.i, i32 %.val570.i, i32 %.neg1338.i)
   %.0.i779.i = select i1 %i.ajt, i32 %.val570.i, i32 %i.aju ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %.0.i779.i, ptr %i.c, align 4, !tbaa !3
@@ -1042,7 +1042,7 @@ bb.kj:                                            ; preds = %.lr.ph.i864.i
 LZ4HC_reverseCountPattern.exit868.i:              ; preds = %.lr.ph.i864.i, %bb.kj, %._crit_edge1097
   %.1.lcssa.i861.i = phi ptr [ %.013.i857.i.lcssa, %._crit_edge1097 ], [ %.116.i866.i, %.lr.ph.i864.i ], [ %scevgep.i863.i, %bb.kj ]
   %i.bhb = ptrtoint ptr %.1.lcssa.i861.i to i64
-  %i.bhc = sub i64 %i.bgq, %i.bhb                 ; 2 uses
+  %i.bhc = sub i64 %i.bgq, %i.bhb                 ; 3 uses
   %i.bhd = trunc i64 %i.bhc to i32                ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.bhe = and i64 %i.bhc, 4294967295
@@ -1054,11 +1054,11 @@ LZ4HC_reverseCountPattern.exit868.i:              ; preds = %.lr.ph.i864.i, %bb.
   br i1 %or.cond455.i224.i, label %bb.kk, label %bb.kn
 
 bb.kk:                                            ; preds = %LZ4HC_reverseCountPattern.exit868.i
-  %13 = sub nsw i32 0, %i.bhd                     ; 2 uses
-  %14 = and i32 %13, 3
-  %i.bhi = icmp eq i32 %14, 0
-  %15 = shl i32 %13, 3
-  %i.bhj = tail call i32 @llvm.fshl.i32(i32 %.val581.i, i32 %.val581.i, i32 %15)
+  %11 = sub i64 0, %i.bhc
+  %12 = and i64 %11, 3
+  %i.bhi = icmp eq i64 %12, 0
+  %.neg1348.i = mul i32 %i.bhd, 24
+  %i.bhj = tail call i32 @llvm.fshl.i32(i32 %.val581.i, i32 %.val581.i, i32 %.neg1348.i)
   %.0.i870.i = select i1 %i.bhi, i32 %.val581.i, i32 %i.bhj ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 %.0.i870.i, ptr %i.a, align 4, !tbaa !3
@@ -1461,7 +1461,7 @@ bb.br:                                            ; preds = %.lr.ph.i559
 LZ4HC_reverseCountPattern.exit:                   ; preds = %bb.br, %.lr.ph.i559, %._crit_edge2490
   %.1.lcssa.i = phi ptr [ %.013.i.lcssa, %._crit_edge2490 ], [ %scevgep.i558, %bb.br ], [ %.116.i, %.lr.ph.i559 ]
   %i.mu = ptrtoint ptr %.1.lcssa.i to i64
-  %i.mv = sub i64 %i.mj, %i.mu                    ; 2 uses
+  %i.mv = sub i64 %i.mj, %i.mu                    ; 3 uses
   %i.mw = trunc i64 %i.mv to i32                  ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %i.mx = and i64 %i.mv, 4294967295
@@ -1473,11 +1473,11 @@ LZ4HC_reverseCountPattern.exit:                   ; preds = %bb.br, %.lr.ph.i559
   br i1 %or.cond455.i, label %bb.bs, label %bb.bv
 
 bb.bs:                                            ; preds = %LZ4HC_reverseCountPattern.exit
-  %7 = sub nsw i32 0, %i.mw                       ; 2 uses
-  %8 = and i32 %7, 3
-  %i.nb = icmp eq i32 %8, 0
-  %9 = shl i32 %7, 3
-  %i.nc = tail call i32 @llvm.fshl.i32(i32 %.val459, i32 %.val459, i32 %9)
+  %7 = sub i64 0, %i.mv
+  %8 = and i64 %7, 3
+  %i.nb = icmp eq i64 %8, 0
+  %.neg = mul i32 %i.mw, 24
+  %i.nc = tail call i32 @llvm.fshl.i32(i32 %.val459, i32 %.val459, i32 %.neg)
   %.0.i561 = select i1 %i.nb, i32 %.val459, i32 %i.nc ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i32 %.0.i561, ptr %i.e, align 4, !tbaa !3
@@ -1880,7 +1880,7 @@ bb.ew:                                            ; preds = %.lr.ph.i646
 LZ4HC_reverseCountPattern.exit650:                ; preds = %bb.ew, %.lr.ph.i646, %._crit_edge2508
   %.1.lcssa.i643 = phi ptr [ %.013.i639.lcssa, %._crit_edge2508 ], [ %scevgep.i645, %bb.ew ], [ %.116.i648, %.lr.ph.i646 ]
   %i.acz = ptrtoint ptr %.1.lcssa.i643 to i64
-  %i.ada = sub i64 %i.aco, %i.acz                 ; 2 uses
+  %i.ada = sub i64 %i.aco, %i.acz                 ; 3 uses
   %i.adb = trunc i64 %i.ada to i32                ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.adc = and i64 %i.ada, 4294967295
@@ -1892,11 +1892,11 @@ LZ4HC_reverseCountPattern.exit650:                ; preds = %bb.ew, %.lr.ph.i646
   br i1 %or.cond455.i316, label %bb.ex, label %bb.fa
 
 bb.ex:                                            ; preds = %LZ4HC_reverseCountPattern.exit650
-  %10 = sub nsw i32 0, %i.adb                     ; 2 uses
-  %11 = and i32 %10, 3
-  %i.adg = icmp eq i32 %11, 0
-  %12 = shl i32 %10, 3
-  %i.adh = tail call i32 @llvm.fshl.i32(i32 %.val447, i32 %.val447, i32 %12)
+  %9 = sub i64 0, %i.ada
+  %10 = and i64 %9, 3
+  %i.adg = icmp eq i64 %10, 0
+  %.neg1180 = mul i32 %i.adb, 24
+  %i.adh = tail call i32 @llvm.fshl.i32(i32 %.val447, i32 %.val447, i32 %.neg1180)
   %.0.i652 = select i1 %i.adg, i32 %.val447, i32 %i.adh ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %.0.i652, ptr %i.c, align 4, !tbaa !3
@@ -2299,7 +2299,7 @@ bb.ip:                                            ; preds = %.lr.ph.i737
 LZ4HC_reverseCountPattern.exit741:                ; preds = %bb.ip, %.lr.ph.i737, %._crit_edge2526
   %.1.lcssa.i734 = phi ptr [ %.013.i730.lcssa, %._crit_edge2526 ], [ %scevgep.i736, %bb.ip ], [ %.116.i739, %.lr.ph.i737 ]
   %i.awk = ptrtoint ptr %.1.lcssa.i734 to i64
-  %i.awl = sub i64 %i.avz, %i.awk                 ; 2 uses
+  %i.awl = sub i64 %i.avz, %i.awk                 ; 3 uses
   %i.awm = trunc i64 %i.awl to i32                ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.awn = and i64 %i.awl, 4294967295
@@ -2311,11 +2311,11 @@ LZ4HC_reverseCountPattern.exit741:                ; preds = %bb.ip, %.lr.ph.i737
   br i1 %or.cond455.i153, label %bb.iq, label %bb.it
 
 bb.iq:                                            ; preds = %LZ4HC_reverseCountPattern.exit741
-  %13 = sub nsw i32 0, %i.awm                     ; 2 uses
-  %14 = and i32 %13, 3
-  %i.awr = icmp eq i32 %14, 0
-  %15 = shl i32 %13, 3
-  %i.aws = tail call i32 @llvm.fshl.i32(i32 %.val455, i32 %.val455, i32 %15)
+  %11 = sub i64 0, %i.awl
+  %12 = and i64 %11, 3
+  %i.awr = icmp eq i64 %12, 0
+  %.neg1187 = mul i32 %i.awm, 24
+  %i.aws = tail call i32 @llvm.fshl.i32(i32 %.val455, i32 %.val455, i32 %.neg1187)
   %.0.i743 = select i1 %i.awr, i32 %.val455, i32 %i.aws ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 %.0.i743, ptr %i.a, align 4, !tbaa !3
@@ -2718,7 +2718,7 @@ bb.bp:                                            ; preds = %.lr.ph.i1061
 LZ4HC_reverseCountPattern.exit:                   ; preds = %bb.bp, %.lr.ph.i1061, %._crit_edge2666
   %.1.lcssa.i = phi ptr [ %.013.i.lcssa, %._crit_edge2666 ], [ %scevgep.i1060, %bb.bp ], [ %.116.i, %.lr.ph.i1061 ]
   %i.of = ptrtoint ptr %.1.lcssa.i to i64
-  %i.og = sub i64 %i.nu, %i.of                    ; 2 uses
+  %i.og = sub i64 %i.nu, %i.of                    ; 3 uses
   %i.oh = trunc i64 %i.og to i32                  ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %i.oi = and i64 %i.og, 4294967295
@@ -2730,11 +2730,11 @@ LZ4HC_reverseCountPattern.exit:                   ; preds = %bb.bp, %.lr.ph.i106
   br i1 %or.cond455.i.i813, label %bb.bq, label %bb.bt
 
 bb.bq:                                            ; preds = %LZ4HC_reverseCountPattern.exit
-  %11 = sub nsw i32 0, %i.oh                      ; 2 uses
-  %12 = and i32 %11, 3
-  %i.om = icmp eq i32 %12, 0
-  %13 = shl i32 %11, 3
-  %i.on = tail call i32 @llvm.fshl.i32(i32 %.val942, i32 %.val942, i32 %13)
+  %11 = sub i64 0, %i.og
+  %12 = and i64 %11, 3
+  %i.om = icmp eq i64 %12, 0
+  %.neg = mul i32 %i.oh, 24
+  %i.on = tail call i32 @llvm.fshl.i32(i32 %.val942, i32 %.val942, i32 %.neg)
   %.0.i1063 = select i1 %i.om, i32 %.val942, i32 %i.on ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i32 %.0.i1063, ptr %i.e, align 4, !tbaa !3
@@ -3137,7 +3137,7 @@ bb.fv:                                            ; preds = %.lr.ph.i1145
 LZ4HC_reverseCountPattern.exit1149:               ; preds = %bb.fv, %.lr.ph.i1145, %._crit_edge2707
   %.1.lcssa.i1142 = phi ptr [ %.013.i1138.lcssa, %._crit_edge2707 ], [ %scevgep.i1144, %bb.fv ], [ %.116.i1147, %.lr.ph.i1145 ]
   %i.ama = ptrtoint ptr %.1.lcssa.i1142 to i64
-  %i.amb = sub i64 %i.alp, %i.ama                 ; 2 uses
+  %i.amb = sub i64 %i.alp, %i.ama                 ; 3 uses
   %i.amc = trunc i64 %i.amb to i32                ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.amd = and i64 %i.amb, 4294967295
@@ -3149,11 +3149,11 @@ LZ4HC_reverseCountPattern.exit1149:               ; preds = %bb.fv, %.lr.ph.i114
   br i1 %or.cond455.i.i580, label %bb.fw, label %bb.fz
 
 bb.fw:                                            ; preds = %LZ4HC_reverseCountPattern.exit1149
-  %14 = sub nsw i32 0, %i.amc                     ; 2 uses
-  %15 = and i32 %14, 3
-  %i.amh = icmp eq i32 %15, 0
-  %16 = shl i32 %14, 3
-  %i.ami = tail call i32 @llvm.fshl.i32(i32 %.val947, i32 %.val947, i32 %16)
+  %13 = sub i64 0, %i.amb
+  %14 = and i64 %13, 3
+  %i.amh = icmp eq i64 %14, 0
+  %.neg1688 = mul i32 %i.amc, 24
+  %i.ami = tail call i32 @llvm.fshl.i32(i32 %.val947, i32 %.val947, i32 %.neg1688)
   %.0.i1151 = select i1 %i.amh, i32 %.val947, i32 %i.ami ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %.0.i1151, ptr %i.c, align 4, !tbaa !3
@@ -3556,7 +3556,7 @@ bb.jk:                                            ; preds = %.lr.ph.i1233
 LZ4HC_reverseCountPattern.exit1237:               ; preds = %bb.jk, %.lr.ph.i1233, %._crit_edge2748
   %.1.lcssa.i1230 = phi ptr [ %.013.i1226.lcssa, %._crit_edge2748 ], [ %scevgep.i1232, %bb.jk ], [ %.116.i1235, %.lr.ph.i1233 ]
   %i.bdh = ptrtoint ptr %.1.lcssa.i1230 to i64
-  %i.bdi = sub i64 %i.bcw, %i.bdh                 ; 2 uses
+  %i.bdi = sub i64 %i.bcw, %i.bdh                 ; 3 uses
   %i.bdj = trunc i64 %i.bdi to i32                ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.bdk = and i64 %i.bdi, 4294967295
@@ -3568,11 +3568,11 @@ LZ4HC_reverseCountPattern.exit1237:               ; preds = %bb.jk, %.lr.ph.i123
   br i1 %or.cond455.i.i, label %bb.jl, label %bb.jo
 
 bb.jl:                                            ; preds = %LZ4HC_reverseCountPattern.exit1237
-  %17 = sub nsw i32 0, %i.bdj                     ; 2 uses
-  %18 = and i32 %17, 3
-  %i.bdo = icmp eq i32 %18, 0
-  %19 = shl i32 %17, 3
-  %i.bdp = tail call i32 @llvm.fshl.i32(i32 %.val952, i32 %.val952, i32 %19)
+  %15 = sub i64 0, %i.bdi
+  %16 = and i64 %15, 3
+  %i.bdo = icmp eq i64 %16, 0
+  %.neg1690 = mul i32 %i.bdj, 24
+  %i.bdp = tail call i32 @llvm.fshl.i32(i32 %.val952, i32 %.val952, i32 %.neg1690)
   %.0.i1239 = select i1 %i.bdo, i32 %.val952, i32 %i.bdp ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 %.0.i1239, ptr %i.a, align 4, !tbaa !3

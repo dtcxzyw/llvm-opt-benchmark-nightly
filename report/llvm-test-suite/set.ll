@@ -203,15 +203,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load20.a = load <4 x i32>, ptr %i.v, align 4, !tbaa !4
   %wide.load21 = load <4 x i32>, ptr %i.w, align 4, !tbaa !4
   %i.x = and <4 x i32> %wide.load20.a, %wide.load ; 2 uses
-  %3 = shufflevector <4 x i32> %i.x, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %4 = and <4 x i32> %wide.load21, %wide.load18   ; 2 uses
-  %i.y = shufflevector <4 x i32> %4, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %3 = and <4 x i32> %wide.load21, %wide.load18   ; 2 uses
+  %reverse = shufflevector <4 x i32> %i.x, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.y = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.q ; 2 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 -12
   %i.ab = getelementptr inbounds i8, ptr %i.z, i64 -28
   store <4 x i32> %i.x, ptr %i.aa, align 4, !tbaa !4
-  store <4 x i32> %4, ptr %i.ab, align 4, !tbaa !4
-  %i.ac = or <4 x i32> %3, %vec.phi               ; 2 uses
+  store <4 x i32> %3, ptr %i.ab, align 4, !tbaa !4
+  %i.ac = or <4 x i32> %reverse, %vec.phi         ; 2 uses
   %i.ad = or <4 x i32> %i.y, %vec.phi17           ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ae = icmp eq i64 %index.next, %n.vec
@@ -300,15 +300,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load20.a = load <4 x i32>, ptr %i.v, align 4, !tbaa !4
   %wide.load21 = load <4 x i32>, ptr %i.w, align 4, !tbaa !4
   %i.x = or <4 x i32> %wide.load20.a, %wide.load  ; 2 uses
-  %3 = shufflevector <4 x i32> %i.x, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %4 = or <4 x i32> %wide.load21, %wide.load18    ; 2 uses
-  %i.y = shufflevector <4 x i32> %4, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %3 = or <4 x i32> %wide.load21, %wide.load18    ; 2 uses
+  %reverse = shufflevector <4 x i32> %i.x, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.y = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.q ; 2 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 -12
   %i.ab = getelementptr inbounds i8, ptr %i.z, i64 -28
   store <4 x i32> %i.x, ptr %i.aa, align 4, !tbaa !4
-  store <4 x i32> %4, ptr %i.ab, align 4, !tbaa !4
-  %i.ac = or <4 x i32> %3, %vec.phi               ; 2 uses
+  store <4 x i32> %3, ptr %i.ab, align 4, !tbaa !4
+  %i.ac = or <4 x i32> %reverse, %vec.phi         ; 2 uses
   %i.ad = or <4 x i32> %i.y, %vec.phi17           ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ae = icmp eq i64 %index.next, %n.vec

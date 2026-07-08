@@ -200,12 +200,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <16 x i8>, ptr %i.bt, align 1, !tbaa !15, !alias.scope !18
   %wide.load394 = load <16 x i8>, ptr %i.bu, align 1, !tbaa !15, !alias.scope !18
   %i.bv = or <16 x i8> %wide.load, splat (i8 -128)
-  %4 = shufflevector <16 x i8> %i.bv, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  %5 = or <16 x i8> %wide.load394, splat (i8 -128)
-  %i.bw = shufflevector <16 x i8> %5, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %4 = or <16 x i8> %wide.load394, splat (i8 -128)
+  %reverse = shufflevector <16 x i8> %i.bv, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %i.bw = shufflevector <16 x i8> %4, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   %gep445 = getelementptr i8, ptr %invariant.gep444, i64 %index ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %gep445, i64 16
-  store <16 x i8> %4, ptr %gep445, align 1, !tbaa !15, !alias.scope !21, !noalias !18
+  store <16 x i8> %reverse, ptr %gep445, align 1, !tbaa !15, !alias.scope !21, !noalias !18
   store <16 x i8> %i.bw, ptr %i.bx, align 1, !tbaa !15, !alias.scope !21, !noalias !18
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.by = icmp eq i64 %index.next, %n.vec
