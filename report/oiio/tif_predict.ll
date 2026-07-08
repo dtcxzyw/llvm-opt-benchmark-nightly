@@ -202,11 +202,11 @@ bb.i:                                             ; preds = %bb.d
 
 iter.check.preheader:                             ; preds = %bb.i
   %min.iters.check = icmp ult i64 %i.ag, 8
-  %min.iters.check131 = icmp ult i64 %i.ag, 16
-  %n.mod.vf = and i64 %i.ag, 8
-  %n.vec = and i64 %i.ag, -16                     ; 4 uses
+  %min.iters.check131 = icmp ult i64 %i.ag, 32
+  %n.mod.vf = and i64 %i.ag, 24
+  %n.vec = and i64 %i.ag, -32                     ; 4 uses
   %i.ai = sub i64 0, %n.vec
-  %i.aj = and i64 %i.ag, 15
+  %i.aj = and i64 %i.ag, 31
   %cmp.n = icmp eq i64 %i.ag, %n.vec
   %min.epilog.iters.check.not.not = icmp eq i64 %n.mod.vf, 0
   %n.vec137 = and i64 %i.ag, -8                   ; 3 uses
@@ -230,15 +230,21 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.an = sub i64 0, %index
-  %next.gep.a = getelementptr i8, ptr %.2104.us, i64 %i.an ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %next.gep.a, i64 %i.d
-  %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 -15 ; 2 uses
+  %next.gep = getelementptr i8, ptr %.2104.us, i64 %i.an ; 3 uses
+  %next.gep.a = getelementptr inbounds nuw i8, ptr %next.gep, i64 %i.d ; 2 uses
+  %i.ao = getelementptr inbounds i8, ptr %next.gep.a, i64 -15 ; 2 uses
+  %i.ap = getelementptr inbounds i8, ptr %next.gep.a, i64 -31 ; 2 uses
+  %wide.load = load <16 x i8>, ptr %i.ao, align 1, !tbaa !64
   %wide.load.a = load <16 x i8>, ptr %i.ap, align 1, !tbaa !64
-  %i.aq = getelementptr i8, ptr %next.gep.a, i64 -15
+  %3 = getelementptr i8, ptr %next.gep, i64 -15
+  %i.aq = getelementptr i8, ptr %next.gep, i64 -31
+  %wide.load133 = load <16 x i8>, ptr %3, align 1, !tbaa !64
   %wide.load132 = load <16 x i8>, ptr %i.aq, align 1, !tbaa !64
+  %4 = sub <16 x i8> %wide.load, %wide.load133
   %i.ar = sub <16 x i8> %wide.load.a, %wide.load132
+  store <16 x i8> %4, ptr %i.ao, align 1, !tbaa !64
   store <16 x i8> %i.ar, ptr %i.ap, align 1, !tbaa !64
-  %index.next = add nuw i64 %index, 16            ; 2 uses
+  %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.as = icmp eq i64 %index.next, %n.vec
   br i1 %i.as, label %middle.block, label %vector.body, !llvm.loop !86
 
@@ -641,11 +647,11 @@ bb.d:                                             ; preds = %bb.c
 
 iter.check.preheader:                             ; preds = %.lr.ph99
   %min.iters.check = icmp ult i64 %i.aq, 8
-  %min.iters.check111 = icmp ult i64 %i.aq, 16
-  %n.mod.vf = and i64 %i.aq, 8
-  %n.vec = and i64 %i.aq, -16                     ; 4 uses
+  %min.iters.check111 = icmp ult i64 %i.aq, 32
+  %n.mod.vf = and i64 %i.aq, 24
+  %n.vec = and i64 %i.aq, -32                     ; 4 uses
   %i.as = sub i64 0, %n.vec
-  %i.at = and i64 %i.aq, 15
+  %i.at = and i64 %i.aq, 31
   %cmp.n = icmp eq i64 %i.aq, %n.vec
   %min.epilog.iters.check.not.not = icmp eq i64 %n.mod.vf, 0
   %n.vec117 = and i64 %i.aq, -8                   ; 3 uses
@@ -669,15 +675,21 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ax = sub i64 0, %index
-  %next.gep.a = getelementptr i8, ptr %.07797.us, i64 %i.ax ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %next.gep.a, i64 %.fr100
-  %i.az = getelementptr inbounds i8, ptr %i.ay, i64 -15 ; 2 uses
+  %next.gep = getelementptr i8, ptr %.07797.us, i64 %i.ax ; 3 uses
+  %next.gep.a = getelementptr inbounds nuw i8, ptr %next.gep, i64 %.fr100 ; 2 uses
+  %i.ay = getelementptr inbounds i8, ptr %next.gep.a, i64 -15 ; 2 uses
+  %i.az = getelementptr inbounds i8, ptr %next.gep.a, i64 -31 ; 2 uses
+  %wide.load = load <16 x i8>, ptr %i.ay, align 1, !tbaa !64
   %wide.load.a = load <16 x i8>, ptr %i.az, align 1, !tbaa !64
-  %i.ba = getelementptr i8, ptr %next.gep.a, i64 -15
+  %3 = getelementptr i8, ptr %next.gep, i64 -15
+  %i.ba = getelementptr i8, ptr %next.gep, i64 -31
+  %wide.load113 = load <16 x i8>, ptr %3, align 1, !tbaa !64
   %wide.load112 = load <16 x i8>, ptr %i.ba, align 1, !tbaa !64
+  %4 = sub <16 x i8> %wide.load, %wide.load113
   %i.bb = sub <16 x i8> %wide.load.a, %wide.load112
+  store <16 x i8> %4, ptr %i.ay, align 1, !tbaa !64
   store <16 x i8> %i.bb, ptr %i.az, align 1, !tbaa !64
-  %index.next = add nuw i64 %index, 16            ; 2 uses
+  %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.bc = icmp eq i64 %index.next, %n.vec
   br i1 %i.bc, label %middle.block, label %vector.body, !llvm.loop !95
 
@@ -948,7 +960,7 @@ attributes #10 = { nounwind }
 !84 = distinct !{!84, !68, !69}
 !85 = distinct !{!85, !69, !68}
 !86 = distinct !{!86, !68, !69}
-!87 = !{!"branch_weights", i32 8, i32 8}
+!87 = !{!"branch_weights", i32 8, i32 24}
 !88 = distinct !{!88, !68, !69}
 !89 = distinct !{!89, !69, !68}
 !90 = distinct !{!90, !68, !69}
