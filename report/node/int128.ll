@@ -201,47 +201,28 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc.exit:
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZNK4absl6int1288ToStringB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(16) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   store ptr %i.a, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store i64 0, ptr %i.b, align 8
   store i8 0, ptr %i.a, align 8
-  %.sroa.02.0.copyload = load i128, ptr %1, align 16 ; 3 uses
+  %.sroa.02.0.copyload = load i128, ptr %1, align 16 ; 2 uses
   %i.c = icmp slt i128 %.sroa.02.0.copyload, 0
-  br i1 %i.c, label %bb.b, label %.thread
-
-.thread:                                          ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
-  %3 = lshr i128 %.sroa.02.0.copyload, 64
-  %4 = trunc nuw nsw i128 %3 to i64
-  %extract.t = trunc i128 %.sroa.02.0.copyload to i64
-  br label %_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit
+  br i1 %i.c, label %bb.b, label %_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str, i64 noundef 1) ; 0 uses
-  %.sroa.0.0.copyload.pr = load i128, ptr %1, align 16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
-  %5 = lshr i128 %.sroa.0.0.copyload.pr, 64
-  %6 = trunc nuw i128 %5 to i64                   ; 2 uses
-  %7 = icmp slt i128 %.sroa.0.0.copyload.pr, 0
-  %extract.t9 = trunc i128 %.sroa.0.0.copyload.pr to i64
-  br i1 %7, label %8, label %_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit
-
-8:                                                ; preds = %bb.b
-  %.neg4.i.i = sub i64 0, %6
-  %.neg4.z.i.i = zext i64 %.neg4.i.i to i128
-  %.neg.i.i = shl nuw i128 %.neg4.z.i.i, 64
-  %9 = and i128 %.sroa.0.0.copyload.pr, 18446744073709551615
-  %.neg3.i.i = sub nuw i128 %.neg.i.i, %9         ; 2 uses
-  %10 = trunc i128 %.neg3.i.i to i64
-  %11 = lshr i128 %.neg3.i.i, 64
-  %12 = trunc nuw i128 %11 to i64
+  %.sroa.0.0.copyload.pr = load i128, ptr %1, align 16
   br label %_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit
 
-_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit: ; preds = %bb.b, %.thread, %8
-  %.sroa.06.0.i = phi i64 [ %10, %8 ], [ %extract.t, %.thread ], [ %extract.t9, %bb.b ]
-  %.sroa.3.0.i = phi i64 [ %12, %8 ], [ %4, %.thread ], [ %6, %bb.b ]
+_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit: ; preds = %bb.b, %bb.a
+  %.sroa.0.0.copyload = phi i128 [ %.sroa.0.0.copyload.pr, %bb.b ], [ %.sroa.02.0.copyload, %bb.a ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
+  %.sroa.06.0.v.i = tail call i128 @llvm.abs.i128(i128 %.sroa.0.0.copyload, i1 false) ; 2 uses
+  %.sroa.06.0.i = trunc i128 %.sroa.06.0.v.i to i64
+  %.sroa.3.0.v.i = lshr i128 %.sroa.06.0.v.i, 64
+  %.sroa.3.0.i = trunc nuw i128 %.sroa.3.0.v.i to i64
   call fastcc void @_ZN4absl12_GLOBAL__N_124Uint128ToFormattedStringB5cxx11ENS_7uint128ESt13_Ios_Fmtflags(ptr dead_on_unwind noalias nonnull writable align 8 %2, i64 %.sroa.06.0.i, i64 %.sroa.3.0.i, i32 noundef 2)
   %i.e = load ptr, ptr %2, align 8                ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -321,14 +302,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef nonnull align 8 dereferenceable(8) ptr @_ZN4absllsERSoNS_6int128E(ptr noundef nonnull align 8 dereferenceable(8) %0, i128 %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 21 uses
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 20 uses
+  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr i8, ptr %i.a, i64 -24
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.f = load i32, ptr %i.e, align 8              ; 4 uses
+  %i.f = load i32, ptr %i.e, align 8              ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   store ptr %i.g, ptr %2, align 8
@@ -342,36 +323,31 @@ bb.a:
   ]
 
 .thread:                                          ; preds = %bb.a, %bb.a
-  %4 = lshr i128 %1, 64
-  %5 = trunc nuw i128 %4 to i64                   ; 2 uses
   %i.j = icmp slt i128 %1, 0
-  br i1 %i.j, label %bb.d, label %bb.b
+  br i1 %i.j, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.thread
   %i.k = and i32 %i.f, 2048
   %.not = icmp eq i32 %i.k, 0
-  br i1 %.not, label %11, label %bb.c
+  br i1 %.not, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %bb.b
-  %i.l = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.1, i64 noundef 1) ; 0 uses
-  br label %11
+bb.c:                                             ; preds = %bb.b, %.thread
+  %.str.1.sink = phi ptr [ @.str, %.thread ], [ @.str.1, %bb.b ]
+  %i.l = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %.str.1.sink, i64 noundef 1) ; 0 uses
+  br label %bb.d
 
-bb.d:                                             ; preds = %.thread
-  %6 = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str, i64 noundef 1) ; 0 uses
+bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
-  %.neg4.i.i = sub i64 0, %5
-  %.neg4.z.i.i = zext i64 %.neg4.i.i to i128
-  %.neg.i.i = shl nuw i128 %.neg4.z.i.i, 64
-  %7 = and i128 %1, 18446744073709551615
-  %.neg3.i.i = sub nuw i128 %.neg.i.i, %7         ; 2 uses
-  %8 = trunc i128 %.neg3.i.i to i64
-  %9 = lshr i128 %.neg3.i.i, 64
-  %10 = trunc nuw i128 %9 to i64
-  br label %_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit
-
-11:                                               ; preds = %bb.b, %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
-  %12 = trunc i128 %1 to i64
+  %.sroa.06.0.v.i = call i128 @llvm.abs.i128(i128 %1, i1 false) ; 2 uses
+  %.sroa.06.0.i = trunc i128 %.sroa.06.0.v.i to i64
+  %.sroa.3.0.v.i = lshr i128 %.sroa.06.0.v.i, 64
+  %.sroa.3.0.i = trunc nuw i128 %.sroa.3.0.v.i to i64
+  %.pre = load ptr, ptr %0, align 8
+  %.phi.trans.insert = getelementptr i8, ptr %.pre, i64 -24
+  %.pre67 = load i64, ptr %.phi.trans.insert, align 8
+  %.phi.trans.insert68 = getelementptr inbounds i8, ptr %0, i64 %.pre67
+  %.phi.trans.insert69 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert68, i64 24
+  %.pre70 = load i32, ptr %.phi.trans.insert69, align 8
   br label %_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit
 
 bb.e:                                             ; preds = %bb.a
@@ -381,17 +357,12 @@ bb.e:                                             ; preds = %bb.a
   %i.o = trunc nuw i128 %i.n to i64
   br label %_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit
 
-_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit: ; preds = %11, %bb.d, %bb.e
-  %13 = phi i1 [ false, %bb.e ], [ true, %bb.d ], [ true, %11 ]
-  %.sroa.064.0 = phi i64 [ %i.m, %bb.e ], [ %8, %bb.d ], [ %12, %11 ]
-  %.sroa.3.0 = phi i64 [ %i.o, %bb.e ], [ %10, %bb.d ], [ %5, %11 ]
-  %14 = load ptr, ptr %0, align 8
-  %15 = getelementptr i8, ptr %14, i64 -24
-  %16 = load i64, ptr %15, align 8
-  %17 = getelementptr inbounds i8, ptr %0, i64 %16
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 24
-  %19 = load i32, ptr %18, align 8
-  call fastcc void @_ZN4absl12_GLOBAL__N_124Uint128ToFormattedStringB5cxx11ENS_7uint128ESt13_Ios_Fmtflags(ptr dead_on_unwind noalias nonnull writable align 8 %3, i64 %.sroa.064.0, i64 %.sroa.3.0, i32 noundef %19)
+_ZN4absl12_GLOBAL__N_121UnsignedAbsoluteValueENS_6int128E.exit: ; preds = %bb.e, %bb.d
+  %4 = phi i32 [ %.pre70, %bb.d ], [ %i.f, %bb.e ]
+  %5 = phi i1 [ true, %bb.d ], [ false, %bb.e ]
+  %.sroa.064.0 = phi i64 [ %.sroa.06.0.i, %bb.d ], [ %i.m, %bb.e ]
+  %.sroa.3.0 = phi i64 [ %.sroa.3.0.i, %bb.d ], [ %i.o, %bb.e ]
+  call fastcc void @_ZN4absl12_GLOBAL__N_124Uint128ToFormattedStringB5cxx11ENS_7uint128ESt13_Ios_Fmtflags(ptr dead_on_unwind noalias nonnull writable align 8 %3, i64 %.sroa.064.0, i64 %.sroa.3.0, i32 noundef %4)
   %i.p = load ptr, ptr %3, align 8                ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.r = load i64, ptr %i.q, align 8              ; 6 uses
@@ -595,7 +566,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEmc.exit: ; preds = 
   br label %bb.ao
 
 bb.v:                                             ; preds = %bb.l
-  br i1 %13, label %bb.w, label %bb.ac
+  br i1 %5, label %bb.w, label %bb.ac
 
 bb.w:                                             ; preds = %bb.v
   %i.ca = load ptr, ptr %2, align 8
@@ -997,6 +968,9 @@ declare i64 @llvm.umin.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #15
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i128 @llvm.abs.i128(i128, i1 immarg) #7
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

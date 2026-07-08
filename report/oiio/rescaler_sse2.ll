@@ -201,10 +201,10 @@ bb.b:                                             ; preds = %bb.a
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ct = load i32, ptr %i.cs, align 8, !tbaa !40
   %i.cu = sext i32 %i.ct to i64
-  %i.cv = udiv i64 %i.cr, %i.cu                   ; 2 uses
+  %i.cv = udiv i64 %i.cr, %i.cu                   ; 3 uses
   %i.cw = trunc i64 %i.cv to i32                  ; 3 uses
   %i.cx = and i64 %i.cv, 4294967295               ; 2 uses
-  %i.cy = sub i32 0, %i.cw                        ; 3 uses
+  %i.cy = sub i32 0, %i.cw                        ; 2 uses
   %i.cz = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 0>, i32 %i.cy, i64 0
   %i.da = insertelement <4 x i32> %i.cz, i32 %i.cy, i64 2
   %i.db = bitcast <4 x i32> %i.da to <2 x i64>    ; 4 uses
@@ -228,13 +228,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.dh, label %.lr.ph119, label %.loopexit
 
 .lr.ph119:                                        ; preds = %.preheader114
-  %1 = zext i32 %i.cy to i64                      ; 2 uses
+  %1 = sub i64 0, %i.cv
+  %2 = and i64 %1, 4294967295                     ; 2 uses
   %i.di = zext nneg i32 %.2.lcssa to i64          ; 8 uses
   %i.dj = xor i32 %.2.lcssa, -1
   %i.dk = add i32 %i.i, %i.dj                     ; 2 uses
   %i.dl = zext i32 %i.dk to i64
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
-  %min.iters.check = icmp ult i32 %i.dk, 11
+  %min.iters.check = icmp ult i32 %i.dk, 79
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph119
@@ -274,7 +275,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.dx, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.dy = zext <4 x i32> %broadcast.splat to <4 x i64>
-  %broadcast.splatinsert162 = insertelement <4 x i64> poison, i64 %1, i64 0
+  %broadcast.splatinsert162 = insertelement <4 x i64> poison, i64 %2, i64 0
   %broadcast.splat163 = shufflevector <4 x i64> %broadcast.splatinsert162, <4 x i64> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert164 = insertelement <4 x i64> poison, i64 %i.cx, i64 0
   %broadcast.splat165 = shufflevector <4 x i64> %broadcast.splatinsert164, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -386,7 +387,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.gt = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv133
   %i.gu = load i32, ptr %i.gt, align 4, !tbaa !3
   %i.gv = zext i32 %i.gu to i64
-  %i.gw = mul nuw i64 %i.gv, %1
+  %i.gw = mul nuw i64 %2, %i.gv
   %i.gx = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv133
   %i.gy = load i32, ptr %i.gx, align 4, !tbaa !3
   %i.gz = zext i32 %i.gy to i64
