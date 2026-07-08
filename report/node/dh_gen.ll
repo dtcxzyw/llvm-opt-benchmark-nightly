@@ -59,13 +59,13 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local range(i32 0, 1131) i32 @ossl_dh_get_named_group_uid_from_size(i32 noundef %0) local_unnamed_addr #3 {
 bb.a:
-  %1 = add i32 %0, -2048                          ; 2 uses
-  %2 = tail call i32 @llvm.fshl.i32(i32 %1, i32 %1, i32 22) ; 2 uses
-  %i.a = icmp ult i32 %2, 7
+  %1 = tail call i32 @llvm.fshl.i32(i32 %0, i32 %0, i32 22)
+  %switch.tableidx = add i32 %1, -2               ; 2 uses
+  %i.a = icmp ult i32 %switch.tableidx, 7
   br i1 %i.a, label %switch.lookup, label %bb.b
 
 switch.lookup:                                    ; preds = %bb.a
-  %i.b = zext nneg i32 %2 to i64
+  %i.b = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table.ossl_dh_get_named_group_uid_from_size, i64 %i.b
   %switch.load = load i16, ptr %switch.gep, align 2
   %switch.ext = zext i16 %switch.load to i32

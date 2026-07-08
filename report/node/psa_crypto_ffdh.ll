@@ -57,22 +57,22 @@ bb.d:                                             ; preds = %bb.a
   %i.h = load i16, ptr %i.g, align 2, !tbaa !14
   %i.i = zext i16 %i.h to i64
   %i.j = add nuw nsw i64 %i.i, 7
-  %i.k = lshr i64 %i.j, 3                         ; 3 uses
-  %10 = add nsw i64 %i.k, -256                    ; 2 uses
-  %11 = call i64 @llvm.fshl.i64(i64 %10, i64 %10, i64 57) ; 5 uses
-  %i.l = icmp ult i64 %11, 7
-  %switch.maskindex = trunc i64 %11 to i8
+  %i.k = lshr i64 %i.j, 3                         ; 4 uses
+  %10 = call i64 @llvm.fshl.i64(i64 %i.k, i64 %i.k, i64 57)
+  %switch.tableidx = add i64 %10, -2              ; 5 uses
+  %i.l = icmp ult i64 %switch.tableidx, 7
+  %switch.maskindex = trunc i64 %switch.tableidx to i8
   %switch.shifted = lshr i8 87, %switch.maskindex
   %switch.lobit = trunc i8 %switch.shifted to i1
   %or.cond61 = select i1 %i.l, i1 %switch.lobit, i1 false
   br i1 %or.cond61, label %switch.lookup, label %mbedtls_psa_ffdh_set_prime_generator.exit.thread46
 
 switch.lookup:                                    ; preds = %bb.d
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement, i64 %11
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement, i64 %switch.tableidx
   %switch.load = load ptr, ptr %switch.gep, align 8
-  %switch.gep57 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.5, i64 %11
+  %switch.gep57 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.5, i64 %switch.tableidx
   %switch.load58 = load ptr, ptr %switch.gep57, align 8
-  %switch.gep59 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.6, i64 %11
+  %switch.gep59 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.6, i64 %switch.tableidx
   %switch.load60 = load i16, ptr %switch.gep59, align 2
   %switch.ext = zext i16 %switch.load60 to i64
   %i.m = call i32 @mbedtls_mpi_read_binary(ptr noundef nonnull %9, ptr noundef nonnull %switch.load, i64 noundef %switch.ext) #6 ; 2 uses
@@ -167,19 +167,19 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
   call void @mbedtls_mpi_init(ptr noundef nonnull %5) #6
   call void @mbedtls_mpi_init(ptr noundef nonnull %4) #6
-  %6 = add i64 %2, -256                           ; 2 uses
-  %7 = call i64 @llvm.fshl.i64(i64 %6, i64 %6, i64 57) ; 4 uses
-  %i.a = icmp ult i64 %7, 7
-  %switch.maskindex = trunc i64 %7 to i8
+  %6 = call i64 @llvm.fshl.i64(i64 %2, i64 %2, i64 57)
+  %switch.tableidx = add i64 %6, -2               ; 4 uses
+  %i.a = icmp ult i64 %switch.tableidx, 7
+  %switch.maskindex = trunc i64 %switch.tableidx to i8
   %switch.shifted = lshr i8 87, %switch.maskindex
   %switch.lobit = trunc i8 %switch.shifted to i1
   %or.cond34 = select i1 %i.a, i1 %switch.lobit, i1 false
   br i1 %or.cond34, label %switch.lookup, label %mbedtls_psa_ffdh_set_prime_generator.exit.thread24
 
 switch.lookup:                                    ; preds = %bb.a
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement, i64 %7
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement, i64 %switch.tableidx
   %switch.load = load ptr, ptr %switch.gep, align 8
-  %switch.gep32 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.6, i64 %7
+  %switch.gep32 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.6, i64 %switch.tableidx
   %switch.load33 = load i16, ptr %switch.gep32, align 2
   %switch.ext = zext i16 %switch.load33 to i64
   %i.b = call i32 @mbedtls_mpi_read_binary(ptr noundef nonnull %5, ptr noundef nonnull %switch.load, i64 noundef %switch.ext) #6 ; 2 uses
@@ -289,22 +289,22 @@ bb.c:                                             ; preds = %bb.b
   %i.e = load i16, ptr %i.d, align 2, !tbaa !14
   %i.f = zext i16 %i.e to i64
   %i.g = add nuw nsw i64 %i.f, 7
-  %i.h = lshr i64 %i.g, 3
-  %13 = add nsw i64 %i.h, -256                    ; 2 uses
-  %14 = call i64 @llvm.fshl.i64(i64 %13, i64 %13, i64 57) ; 5 uses
-  %i.i = icmp ult i64 %14, 7
-  %switch.maskindex = trunc i64 %14 to i8
+  %i.h = lshr i64 %i.g, 3                         ; 2 uses
+  %13 = call i64 @llvm.fshl.i64(i64 %i.h, i64 %i.h, i64 57)
+  %switch.tableidx = add i64 %13, -2              ; 5 uses
+  %i.i = icmp ult i64 %switch.tableidx, 7
+  %switch.maskindex = trunc i64 %switch.tableidx to i8
   %switch.shifted = lshr i8 87, %switch.maskindex
   %switch.lobit = trunc i8 %switch.shifted to i1
   %or.cond59 = select i1 %i.i, i1 %switch.lobit, i1 false
   br i1 %or.cond59, label %switch.lookup, label %mbedtls_psa_ffdh_set_prime_generator.exit.thread44
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement, i64 %14
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement, i64 %switch.tableidx
   %switch.load = load ptr, ptr %switch.gep, align 8
-  %switch.gep55 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.5, i64 %14
+  %switch.gep55 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.5, i64 %switch.tableidx
   %switch.load56 = load ptr, ptr %switch.gep55, align 8
-  %switch.gep57 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.6, i64 %14
+  %switch.gep57 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.mbedtls_psa_ffdh_key_agreement.6, i64 %switch.tableidx
   %switch.load58 = load i16, ptr %switch.gep57, align 2
   %switch.ext = zext i16 %switch.load58 to i64
   %i.j = call i32 @mbedtls_mpi_read_binary(ptr noundef nonnull %8, ptr noundef nonnull %switch.load, i64 noundef %switch.ext) #6 ; 2 uses

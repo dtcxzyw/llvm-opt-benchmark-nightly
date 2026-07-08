@@ -203,14 +203,14 @@ bb.a:
   br i1 %i.c, label %bb.b, label %.split
 
 .split:                                           ; preds = %bb.a
-  %i.d = and i32 %i.b, 61440
-  %i.e = add nsw i32 %i.d, -4096                  ; 2 uses
-  %i.f = icmp ult i32 %i.e, 49152
+  %2 = lshr i32 %i.b, 12
+  %i.d = and i32 %2, 15
+  %i.e = add nsw i32 %i.d, -1                     ; 2 uses
+  %i.f = icmp ult i32 %i.e, 12
   br i1 %i.f, label %switch.lookup, label %filetype.exit
 
 switch.lookup:                                    ; preds = %.split
-  %2 = lshr exact i32 %i.e, 12
-  %i.g = zext nneg i32 %2 to i64
+  %i.g = zext nneg i32 %i.e to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.stat_filemode, i64 %i.g
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %filetype.exit
