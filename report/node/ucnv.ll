@@ -203,10 +203,8 @@ iter.check:                                       ; preds = %.lr.ph
   %i.j = zext nneg i8 %i.g to i64
   %i.k = sub i64 %i.a, %i.c
   %i.l = add nsw i64 %wide.trip.count, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %i.l) ; 2 uses
-  %5 = add i64 %umin, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 %wide.trip.count)
-  %i.m = sub i64 %umax, %umin                     ; 7 uses
+  %umax = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %i.l)
+  %i.m = sub i64 %wide.trip.count, %umax          ; 7 uses
   %min.iters.check = icmp ult i64 %i.m, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
