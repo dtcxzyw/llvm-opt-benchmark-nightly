@@ -204,17 +204,27 @@ bb.aw:                                            ; preds = %bb.ax, %_ZN8faceboo
 
 bb.ax:                                            ; preds = %bb.aw
   %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i, i64 %.013.i.i.i
-  %i.jd = load <4 x i64>, ptr %i.jc, align 1, !tbaa !37, !noalias !9642 ; 2 uses
+  %i.jd = load <4 x i64>, ptr %i.jc, align 1, !tbaa !37, !noalias !9642 ; 3 uses
+  %4 = bitcast <4 x i64> %i.jd to <32 x i8>
   %i.je = bitcast <4 x i64> %i.jd to <32 x i8>
-  %i.jf = icmp ugt <32 x i8> %i.je, splat (i8 -128)
+  %5 = shufflevector <32 x i8> %i.je, <32 x i8> poison, <16 x i32> <i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %6 = icmp ugt <16 x i8> %5, splat (i8 -128)
+  %7 = sext <16 x i1> %6 to <16 x i8>
+  %i.jf = icmp ugt <32 x i8> %4, splat (i8 -128)
+  %8 = sext <32 x i1> %i.jf to <32 x i8>
+  %9 = bitcast <32 x i8> %8 to <8 x i32>
+  %10 = bitcast <16 x i8> %7 to <4 x i32>
+  %11 = shufflevector <4 x i32> %10, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = shufflevector <8 x i32> %9, <8 x i32> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %13 = bitcast <8 x i32> %12 to <4 x i64>
   %i.jg = bitcast <4 x i64> %i.jd to <32 x i8>    ; 2 uses
   %i.jh = icmp eq <32 x i8> %i.jg, splat (i8 -128)
   %i.ji = icmp eq <32 x i8> %i.jg, splat (i8 92)
   %i.jj = or <32 x i1> %i.ji, %i.jh
-  %4 = or <32 x i1> %i.jf, %i.jj
-  %5 = sext <32 x i1> %4 to <32 x i8>
-  %6 = bitcast <32 x i8> %5 to <4 x i64>          ; 2 uses
-  %i.jk = call noundef i32 @llvm.x86.avx.ptestz.256(<4 x i64> %6, <4 x i64> %6)
+  %14 = sext <32 x i1> %i.jj to <32 x i8>
+  %15 = bitcast <32 x i8> %14 to <4 x i64>
+  %16 = or <4 x i64> %13, %15                     ; 2 uses
+  %i.jk = call noundef i32 @llvm.x86.avx.ptestz.256(<4 x i64> %16, <4 x i64> %16)
   %.not.i.i.i38.i.i = icmp eq i32 %i.jk, 0
   br i1 %.not.i.i.i38.i.i, label %.loopexit.i.i, label %bb.aw, !llvm.loop !9649
 
@@ -617,17 +627,27 @@ bb.ag:                                            ; preds = %bb.ah, %_ZN8faceboo
 
 bb.ah:                                            ; preds = %bb.ag
   %i.fy = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i, i64 %.013.i.i
-  %i.fz = load <4 x i64>, ptr %i.fy, align 1, !tbaa !37, !noalias !10012 ; 2 uses
+  %i.fz = load <4 x i64>, ptr %i.fy, align 1, !tbaa !37, !noalias !10012 ; 3 uses
+  %2 = bitcast <4 x i64> %i.fz to <32 x i8>
   %i.ga = bitcast <4 x i64> %i.fz to <32 x i8>
-  %i.gb = icmp ugt <32 x i8> %i.ga, splat (i8 -128)
+  %3 = shufflevector <32 x i8> %i.ga, <32 x i8> poison, <16 x i32> <i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %4 = icmp ugt <16 x i8> %3, splat (i8 -128)
+  %5 = sext <16 x i1> %4 to <16 x i8>
+  %i.gb = icmp ugt <32 x i8> %2, splat (i8 -128)
+  %6 = sext <32 x i1> %i.gb to <32 x i8>
+  %7 = bitcast <32 x i8> %6 to <8 x i32>
+  %8 = bitcast <16 x i8> %5 to <4 x i32>
+  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %10 = shufflevector <8 x i32> %7, <8 x i32> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %11 = bitcast <8 x i32> %10 to <4 x i64>
   %i.gc = bitcast <4 x i64> %i.fz to <32 x i8>    ; 2 uses
   %i.gd = icmp eq <32 x i8> %i.gc, splat (i8 -128)
   %i.ge = icmp eq <32 x i8> %i.gc, splat (i8 92)
   %i.gf = or <32 x i1> %i.ge, %i.gd
-  %2 = or <32 x i1> %i.gb, %i.gf
-  %3 = sext <32 x i1> %2 to <32 x i8>
-  %4 = bitcast <32 x i8> %3 to <4 x i64>          ; 2 uses
-  %i.gg = tail call noundef i32 @llvm.x86.avx.ptestz.256(<4 x i64> %4, <4 x i64> %4)
+  %12 = sext <32 x i1> %i.gf to <32 x i8>
+  %13 = bitcast <32 x i8> %12 to <4 x i64>
+  %14 = or <4 x i64> %11, %13                     ; 2 uses
+  %i.gg = tail call noundef i32 @llvm.x86.avx.ptestz.256(<4 x i64> %14, <4 x i64> %14)
   %.not.i.i.i36.i = icmp eq i32 %i.gg, 0
   br i1 %.not.i.i.i36.i, label %.loopexit.i, label %bb.ag, !llvm.loop !9649
 

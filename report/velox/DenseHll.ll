@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.at = zext i32 %i.as to i64
   %i.au = add <32 x i8> %i.ap, %i.l               ; 2 uses
   %i.av = call <32 x i8> @llvm.smax.v32i8(<32 x i8> %i.an, <32 x i8> %i.au) ; 2 uses
-  %i.aw = sub <32 x i8> %i.av, %i.n               ; 2 uses
+  %i.aw = sub <32 x i8> %i.av, %i.n               ; 3 uses
   store <32 x i8> %i.aw, ptr %6, align 32, !alias.scope !132
   store i64 %i.at, ptr %i.y, align 32, !tbaa !135, !alias.scope !132
   %i.ax = icmp eq <32 x i8> %i.av, %i.n
@@ -233,12 +233,18 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.br = call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bq)
   %i.bs = add nsw i32 %i.br, %i.bb
   store i32 %i.bs, ptr %i.b, align 4, !tbaa !3
+  %8 = bitcast <32 x i8> %i.aw to <8 x i32>
+  %9 = shufflevector <8 x i32> %8, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
   %i.bt = bitcast <32 x i8> %i.aw to <8 x i32>
+  %10 = shl <4 x i32> %9, splat (i32 4)
   %i.bu = shl <8 x i32> %i.bt, splat (i32 4)
-  %8 = bitcast <8 x i32> %i.bu to <4 x i64>
-  %9 = and <4 x i64> %8, splat (i64 -1085102592571150096)
+  %11 = and <8 x i32> %i.bu, <i32 -252645136, i32 -252645136, i32 -252645136, i32 -252645136, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = and <4 x i32> %10, splat (i32 -252645136)
+  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <8 x i32> %11, <8 x i32> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %15 = bitcast <8 x i32> %14 to <4 x i64>
   %i.bv = bitcast <32 x i8> %i.bo to <4 x i64>
-  %i.bw = or <4 x i64> %9, %i.bv
+  %i.bw = or <4 x i64> %i.bv, %15
   store <4 x i64> %i.bw, ptr %i.ad, align 1, !tbaa !30
   %i.bx = load i64, ptr %i.y, align 32, !tbaa !162 ; 2 uses
   %.not = icmp eq i64 %i.bx, 0
@@ -641,7 +647,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.at = zext i32 %i.as to i64
   %i.au = add <32 x i8> %i.ap, %i.l               ; 2 uses
   %i.av = call <32 x i8> @llvm.smax.v32i8(<32 x i8> %i.an, <32 x i8> %i.au) ; 2 uses
-  %i.aw = sub <32 x i8> %i.av, %i.n               ; 2 uses
+  %i.aw = sub <32 x i8> %i.av, %i.n               ; 3 uses
   store <32 x i8> %i.aw, ptr %6, align 32, !alias.scope !373
   store i64 %i.at, ptr %i.y, align 32, !tbaa !135, !alias.scope !373
   %i.ax = icmp eq <32 x i8> %i.av, %i.n
@@ -670,12 +676,18 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.br = call noundef range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bq)
   %i.bs = add nsw i32 %i.br, %i.bb
   store i32 %i.bs, ptr %i.b, align 4, !tbaa !3
+  %8 = bitcast <32 x i8> %i.aw to <8 x i32>
+  %9 = shufflevector <8 x i32> %8, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
   %i.bt = bitcast <32 x i8> %i.aw to <8 x i32>
+  %10 = shl <4 x i32> %9, splat (i32 4)
   %i.bu = shl <8 x i32> %i.bt, splat (i32 4)
-  %8 = bitcast <8 x i32> %i.bu to <4 x i64>
-  %9 = and <4 x i64> %8, splat (i64 -1085102592571150096)
+  %11 = and <8 x i32> %i.bu, <i32 -252645136, i32 -252645136, i32 -252645136, i32 -252645136, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = and <4 x i32> %10, splat (i32 -252645136)
+  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <8 x i32> %11, <8 x i32> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %15 = bitcast <8 x i32> %14 to <4 x i64>
   %i.bv = bitcast <32 x i8> %i.bo to <4 x i64>
-  %i.bw = or <4 x i64> %9, %i.bv
+  %i.bw = or <4 x i64> %i.bv, %15
   store <4 x i64> %i.bw, ptr %i.ad, align 1, !tbaa !30
   %i.bx = load i64, ptr %i.y, align 32, !tbaa !162 ; 2 uses
   %.not = icmp eq i64 %i.bx, 0
