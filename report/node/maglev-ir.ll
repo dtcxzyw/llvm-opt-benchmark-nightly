@@ -204,11 +204,11 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit135: ; preds = %_ZN2v88
   br label %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us
 
 _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us: ; preds = %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us, %.lr.ph.split.us
-  %.0211.us = phi i32 [ 0, %.lr.ph.split.us ], [ %i.eo, %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us ] ; 2 uses
-  %i.ej = shl nsw i32 %.0211.us, 3                ; 3 uses
+  %.0211.us = phi i32 [ 0, %.lr.ph.split.us ], [ %i.eo, %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit.us ] ; 3 uses
+  %i.ej = shl nuw nsw i32 %.0211.us, 3            ; 2 uses
   %i.ek = add nuw nsw i32 %i.ej, 16
   %i.el = add nuw nsw i32 %i.ej, 15
-  %i.em = icmp samesign ult i32 %i.ej, 120        ; 2 uses
+  %i.em = icmp samesign ult i32 %.0211.us, 15     ; 2 uses
   %.sroa.0.4.insert.ext259 = zext nneg i32 %i.el to i64
   %.sroa.0.4.insert.shift260 = shl nuw nsw i64 %.sroa.0.4.insert.ext259, 32
   %. = select i1 %i.em, i64 %i.ei, i64 %i.eh
@@ -323,11 +323,11 @@ _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0
   br i1 %i.fx, label %.thread.i.i140, label %bb.j
 
 _ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit: ; preds = %.lr.ph.split, %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit
-  %.0211 = phi i32 [ 0, %.lr.ph.split ], [ %i.gd, %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit ] ; 2 uses
-  %i.fy = shl nsw i32 %.0211, 3                   ; 3 uses
+  %.0211 = phi i32 [ 0, %.lr.ph.split ], [ %i.gd, %_ZN2v88internal6maglev15MaglevAssembler35LoadTaggedFieldWithoutDecompressingENS0_8RegisterES3_i.exit ] ; 3 uses
+  %i.fy = shl nuw nsw i32 %.0211, 3               ; 2 uses
   %i.fz = add nuw nsw i32 %i.fy, 16
   %i.ga = add nuw nsw i32 %i.fy, 15               ; 2 uses
-  %i.gb = icmp samesign ult i32 %i.fy, 120        ; 2 uses
+  %i.gb = icmp samesign ult i32 %.0211, 15        ; 2 uses
   %i.gc = shl nuw i32 %i.ga, 24
   %.sroa.0.3.insert.shift255 = zext i32 %i.gc to i64
   %.sroa.0.3.insert.insert257 = or disjoint i64 %.sroa.0.1.insert.insert222, %.sroa.0.3.insert.shift255
@@ -730,7 +730,7 @@ bb.f:                                             ; preds = %bb.e
 _ZN2v88internal11RegListBaseINS0_8RegisterEE3setES2_.exit85: ; preds = %bb.e, %bb.f
   %.sroa.095.2101 = phi i16 [ %i.ch, %bb.f ], [ %.sroa.095.0103, %bb.e ] ; 2 uses
   %.sroa.10.2 = phi i16 [ %i.cj, %bb.f ], [ %.sroa.10.0104, %bb.e ] ; 2 uses
-  %i.ck = shl nsw i32 %.0105, 3
+  %i.ck = shl nuw nsw i32 %.0105, 3
   %i.cl = add nuw nsw i32 %i.ck, 16
   %.sroa.10.0.insert.ext = zext i16 %.sroa.10.2 to i48
   %.sroa.10.0.insert.shift = shl nuw nsw i48 %.sroa.10.0.insert.ext, 16

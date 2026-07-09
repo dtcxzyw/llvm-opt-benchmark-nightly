@@ -203,7 +203,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader223, %bb.b
   %indvars.iv = phi i64 [ 0, %.preheader223 ], [ %indvars.iv.next, %bb.b ] ; 9 uses
-  %i.af = shl nuw i64 %indvars.iv, 1              ; 2 uses
+  %i.af = shl nuw nsw i64 %indvars.iv, 1          ; 2 uses
   %i.ag = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
   %i.ah = tail call i32 @llvm.usub.sat.i32(i32 %i.ag, i32 3)
   %i.ai = tail call i32 @llvm.usub.sat.i32(i32 %i.ag, i32 2)
@@ -266,8 +266,8 @@ bb.b:                                             ; preds = %.preheader223, %bb.
   %i.cm = sext i32 %i.cl to i64
   %i.cn = getelementptr inbounds i8, ptr %i.av, i64 %i.cm
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !13
-  %i.cp = mul nsw i64 %i.af, %i.k
-  %i.cq = getelementptr inbounds i8, ptr %.0201228, i64 %i.cp
+  %i.cp = mul nuw nsw i64 %i.af, %i.k
+  %i.cq = getelementptr inbounds nuw i8, ptr %.0201228, i64 %i.cp
   store i8 %i.co, ptr %i.cq, align 1, !tbaa !13
   %i.cr = load ptr, ptr @Clip, align 8, !tbaa !8
   %i.cs = mul nsw i32 %i.au, %i.b
@@ -302,8 +302,8 @@ bb.b:                                             ; preds = %.preheader223, %bb.
   %i.dv = getelementptr inbounds i8, ptr %i.cr, i64 %i.du
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !13
   %i.dx = or disjoint i64 %i.af, 1
-  %i.dy = mul nsw i64 %i.dx, %i.k
-  %i.dz = getelementptr inbounds i8, ptr %.0201228, i64 %i.dy
+  %i.dy = mul nuw nsw i64 %i.dx, %i.k
+  %i.dz = getelementptr inbounds nuw i8, ptr %.0201228, i64 %i.dy
   store i8 %i.dw, ptr %i.dz, align 1, !tbaa !13
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !23
@@ -323,7 +323,7 @@ bb.b:                                             ; preds = %.preheader223, %bb.
 
 bb.c:                                             ; preds = %.preheader, %bb.c
   %indvars.iv242 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next243, %bb.c ] ; 24 uses
-  %i.ed = shl nuw i64 %indvars.iv242, 1           ; 4 uses
+  %i.ed = shl nuw nsw i64 %indvars.iv242, 1       ; 4 uses
   %i.ee = trunc nuw nsw i64 %indvars.iv242 to i32 ; 2 uses
   %i.ef = tail call i32 @llvm.usub.sat.i32(i32 %i.ee, i32 6)
   %i.eg = tail call i32 @llvm.usub.sat.i32(i32 %i.ee, i32 4)
@@ -388,8 +388,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.gk = sext i32 %i.gj to i64
   %i.gl = getelementptr inbounds i8, ptr %i.ew, i64 %i.gk
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !13
-  %i.gn = mul nsw i64 %i.ed, %i.w
-  %i.go = getelementptr inbounds i8, ptr %.1202233, i64 %i.gn
+  %i.gn = mul nuw nsw i64 %i.ed, %i.w
+  %i.go = getelementptr inbounds nuw i8, ptr %.1202233, i64 %i.gn
   store i8 %i.gm, ptr %i.go, align 1, !tbaa !13
   %i.gp = load ptr, ptr @Clip, align 8, !tbaa !8
   %i.gq = load i8, ptr %i.fe, align 1, !tbaa !13
@@ -424,8 +424,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.hr = getelementptr inbounds i8, ptr %i.gp, i64 %i.hq
   %i.hs = load i8, ptr %i.hr, align 1, !tbaa !13
   %i.ht = or disjoint i64 %i.ed, 2
-  %i.hu = mul nsw i64 %i.ht, %i.w
-  %i.hv = getelementptr inbounds i8, ptr %.1202233, i64 %i.hu
+  %i.hu = mul nuw nsw i64 %i.ht, %i.w
+  %i.hv = getelementptr inbounds nuw i8, ptr %.1202233, i64 %i.hu
   store i8 %i.hs, ptr %i.hv, align 1, !tbaa !13
   %i.hw = icmp samesign ult i64 %indvars.iv242, 5
   %i.hx = trunc i64 %indvars.iv242 to i32
@@ -502,8 +502,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.ko = getelementptr inbounds i8, ptr %i.ix, i64 %i.kn
   %i.kp = load i8, ptr %i.ko, align 1, !tbaa !13
   %i.kq = or disjoint i64 %i.ed, 1
-  %i.kr = mul nsw i64 %i.kq, %i.w
-  %i.ks = getelementptr inbounds i8, ptr %.1202233, i64 %i.kr
+  %i.kr = mul nuw nsw i64 %i.kq, %i.w
+  %i.ks = getelementptr inbounds nuw i8, ptr %.1202233, i64 %i.kr
   store i8 %i.kp, ptr %i.ks, align 1, !tbaa !13
   %i.kt = load ptr, ptr @Clip, align 8, !tbaa !8
   %i.ku = mul nsw i32 %i.iw, %i.b
@@ -537,8 +537,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.lu = getelementptr inbounds i8, ptr %i.kt, i64 %i.lt
   %i.lv = load i8, ptr %i.lu, align 1, !tbaa !13
   %i.lw = or disjoint i64 %i.ed, 3
-  %i.lx = mul nsw i64 %i.lw, %i.w
-  %i.ly = getelementptr inbounds i8, ptr %.1202233, i64 %i.lx
+  %i.lx = mul nuw nsw i64 %i.lw, %i.w
+  %i.ly = getelementptr inbounds nuw i8, ptr %.1202233, i64 %i.lx
   store i8 %i.lv, ptr %i.ly, align 1, !tbaa !13
   %i.lz = icmp samesign ult i64 %indvars.iv.next243, %i.y
   br i1 %i.lz, label %bb.c, label %._crit_edge231, !llvm.loop !25
@@ -611,7 +611,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader110, %bb.b
   %indvars.iv = phi i64 [ 0, %.preheader110 ], [ %indvars.iv.next, %bb.b ] ; 9 uses
-  %i.x = shl nuw i64 %indvars.iv, 1
+  %i.x = shl nuw nsw i64 %indvars.iv, 1
   %i.y = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
   %i.z = tail call i32 @llvm.usub.sat.i32(i32 %i.y, i32 2)
   %i.aa = tail call i32 @llvm.usub.sat.i32(i32 %i.y, i32 1)
@@ -627,7 +627,7 @@ bb.b:                                             ; preds = %.preheader110, %bb.
   %i.aj = select i1 %i.ag, i32 %i.ai, i32 %i.g
   %i.ak = getelementptr inbounds nuw i8, ptr %.0116, i64 %indvars.iv
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !13  ; 2 uses
-  %i.am = getelementptr inbounds i8, ptr %.099114, i64 %i.x ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.099114, i64 %i.x ; 2 uses
   store i8 %i.al, ptr %i.am, align 1, !tbaa !13
   %i.an = load ptr, ptr @Clip, align 8, !tbaa !8
   %i.ao = zext nneg i32 %i.z to i64
@@ -687,7 +687,7 @@ bb.b:                                             ; preds = %.preheader110, %bb.
 
 bb.c:                                             ; preds = %.preheader, %bb.c
   %indvars.iv124 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next125, %bb.c ] ; 9 uses
-  %i.cd = shl nuw i64 %indvars.iv124, 1
+  %i.cd = shl nuw nsw i64 %indvars.iv124, 1
   %i.ce = trunc nuw nsw i64 %indvars.iv124 to i32 ; 3 uses
   %i.cf = tail call i32 @llvm.usub.sat.i32(i32 %i.ce, i32 3)
   %i.cg = tail call i32 @llvm.usub.sat.i32(i32 %i.ce, i32 2)
@@ -742,7 +742,7 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.ea = sext i32 %i.dz to i64
   %i.eb = getelementptr inbounds i8, ptr %i.cr, i64 %i.ea
   %i.ec = load i8, ptr %i.eb, align 1, !tbaa !13
-  %i.ed = getelementptr inbounds i8, ptr %.1100119, i64 %i.cd ; 2 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr %.1100119, i64 %i.cd ; 2 uses
   store i8 %i.ec, ptr %i.ed, align 1, !tbaa !13
   %i.ee = load ptr, ptr @Clip, align 8, !tbaa !8
   %i.ef = sext i32 %i.cq to i64

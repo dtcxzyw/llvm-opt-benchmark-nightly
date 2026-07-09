@@ -203,7 +203,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge.loopexit.i:                           ; preds = %scalar.ph, %middle.block
   %spec.select.i.lcssa = phi i32 [ %i.ds, %middle.block ], [ %spec.select.i, %scalar.ph ]
-  %i.dy = add nsw i32 %.021.i, 1
+  %i.dy = add i32 %.021.i, 1
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.m
@@ -215,7 +215,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i32 %i.eb, ptr %i.dz, align 4, !tbaa !4
   %i.ec = add nuw nsw i32 %.022.lcssa.i, %.02542.i ; 2 uses
   %indvars.iv.next46.i = add nuw nsw i64 %indvars.iv45.i, 1 ; 2 uses
-  %i.ed = shl nsw i32 %.02841.i, 1
+  %i.ed = shl nuw nsw i32 %.02841.i, 1
   %exitcond48.not.i = icmp eq i64 %indvars.iv.next46.i, 27
   br i1 %exitcond48.not.i, label %numusearray.exit, label %bb.k, !llvm.loop !49
 

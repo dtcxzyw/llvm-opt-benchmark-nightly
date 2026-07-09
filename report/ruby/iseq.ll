@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph.split
   br i1 %.not24.i57.i, label %iseq_scan_bits.exit69.i, label %.lr.ph.i58.i
 
 .lr.ph.i58.i:                                     ; preds = %.lr.ph16.split.i
-  %i.ca = shl i64 %indvars.iv.i, 6
+  %i.ca = shl nuw nsw i64 %indvars.iv.i, 6
   br label %.lr.ph.split.i60.i
 
 .lr.ph.split.i60.i:                               ; preds = %bb.r, %.lr.ph.i58.i
@@ -607,7 +607,7 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %.not24.i18.us.i, label %iseq_scan_bits.exit30.us.i, label %.lr.ph.i19.us.i
 
 .lr.ph.i19.us.i:                                  ; preds = %.lr.ph.split.us.i
-  %invariant.gep.i.us.idx.i130 = shl i64 %indvars.iv40.i, 9
+  %invariant.gep.i.us.idx.i130 = shl nuw nsw i64 %indvars.iv40.i, 9
   %invariant.gep.i.us.i131 = getelementptr i8, ptr %i.he, i64 %invariant.gep.i.us.idx.i130
   br label %.lr.ph.split.us.i26.us.i
 
@@ -670,7 +670,7 @@ bb.br:                                            ; preds = %bb.bq, %.lr.ph.spli
   br i1 %.not24.i18.i, label %iseq_scan_bits.exit30.i, label %.lr.ph.i19.i
 
 .lr.ph.i19.i:                                     ; preds = %.lr.ph.split.i
-  %i.ih = shl i64 %indvars.iv.i127, 6
+  %i.ih = shl nuw nsw i64 %indvars.iv.i127, 6
   br label %.lr.ph.split.i21.i
 
 .lr.ph.split.i21.i:                               ; preds = %bb.bt, %.lr.ph.i19.i
@@ -1073,7 +1073,7 @@ bb.v:                                             ; preds = %bb.ah, %.lr.ph.i
   %.372.i = phi i32 [ %.055.lcssa.i, %.lr.ph.i ], [ %.6.i.1, %bb.ah ] ; 2 uses
   %i.dd = getelementptr [80 x i8], ptr %i.z, i64 %indvars.iv83.i ; 3 uses
   store i32 %.372.i, ptr %i.dd, align 8, !tbaa !162
-  %i.de = shl i64 %indvars.iv83.i, 9
+  %i.de = shl nuw nsw i64 %indvars.iv83.i, 9
   %i.df = or disjoint i64 %i.de, 54
   %i.dg = getelementptr i8, ptr %i.dd, i64 16
   %i.dh = getelementptr i8, ptr %i.dd, i64 8      ; 2 uses
@@ -1356,7 +1356,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.357.i = phi ptr [ %.0.lcssa.i, %.preheader43.preheader.i ], [ %.6.7.i.1, %bb.bh ]
   %i.br = getelementptr [80 x i8], ptr %i.f, i64 %indvars.iv68.i ; 8 uses
   %i.bs = getelementptr i8, ptr %i.br, i64 64
-  %i.bt = shl i64 %indvars.iv68.i, 9              ; 8 uses
+  %i.bt = shl nuw nsw i64 %indvars.iv68.i, 9      ; 8 uses
   %i.bu = or disjoint i64 %i.bt, 54               ; 2 uses
   %i.bv = load i64, ptr %i.bs, align 8, !tbaa !11 ; 2 uses
   br label %bb.t

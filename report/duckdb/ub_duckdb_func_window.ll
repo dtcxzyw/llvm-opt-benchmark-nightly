@@ -204,7 +204,7 @@ _ZN6duckdb13MergeSortTreeImmSt4lessImELm32ELm32EE15CompareElementsclERKSt4pairIm
 
 .preheader.i:                                     ; preds = %_ZN6duckdb13MergeSortTreeImmSt4lessImELm32ELm32EE15CompareElementsclERKSt4pairImmES8_.exit.thread.i, %_ZN6duckdb13MergeSortTreeImmSt4lessImELm32ELm32EE15CompareElementsclERKSt4pairImmES8_.exit67.thread.i
   %i.at = phi i64 [ %i.bg, %_ZN6duckdb13MergeSortTreeImmSt4lessImELm32ELm32EE15CompareElementsclERKSt4pairImmES8_.exit67.thread.i ], [ 14, %_ZN6duckdb13MergeSortTreeImmSt4lessImELm32ELm32EE15CompareElementsclERKSt4pairImmES8_.exit.thread.i ] ; 5 uses
-  %.idx97.i = shl i64 %i.at, 5
+  %.idx97.i = shl nuw nsw i64 %i.at, 5
   %i.au = getelementptr i8, ptr %5, i64 %.idx97.i ; 6 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   %i.aw = getelementptr i8, ptr %i.au, i64 32

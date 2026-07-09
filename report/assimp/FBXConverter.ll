@@ -204,7 +204,7 @@ _ZN6Assimp3FBX12FBXConverter13PotentialNodeD2Ev.exit: ; preds = %_ZNSt6vectorIN6
 
 bb.cr:                                            ; preds = %bb.ce, %_ZN6Assimp3FBX12FBXConverter13PotentialNodeD2Ev.exit
   %i.ti = add nuw nsw i64 %.0179769, 1            ; 2 uses
-  %i.tj = shl i32 %.0180768, 1
+  %i.tj = shl nuw nsw i32 %.0180768, 1
   %exitcond.not = icmp eq i64 %i.ti, 17
   br i1 %exitcond.not, label %.loopexit, label %bb.ce, !llvm.loop !104
 
@@ -607,7 +607,7 @@ _ZNSt6vectorIP10aiNodeAnimSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__n
   br label %_ZNSt6vectorIP10aiNodeAnimSaIS1_EE9push_backERKS1_.exit191
 
 _ZNSt6vectorIP10aiNodeAnimSaIS1_EE9push_backERKS1_.exit191: ; preds = %_ZNSt6vectorIP10aiNodeAnimSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i188, %bb.bp, %bb.bl
-  %i.gz = shl i32 %.0115305, 4
+  %i.gz = shl nuw nsw i32 %.0115305, 4
   %i.ha = or i32 %i.fl, %i.gz
   %i.hb = load ptr, ptr %13, align 8              ; 2 uses
   %i.hc = icmp eq ptr %i.hb, %i.fe
@@ -930,7 +930,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit226: ; preds = %bb
 bb.cz:                                            ; preds = %bb.az, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit223
   %.2118 = phi i32 [ %.1117, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit223 ], [ %.0116304, %bb.az ] ; 2 uses
   %i.kn = add nuw nsw i64 %.0114307, 1            ; 2 uses
-  %i.ko = shl i32 %.0115305, 1
+  %i.ko = shl nuw nsw i32 %.0115305, 1
   %exitcond309.not = icmp eq i64 %i.kn, 17
   br i1 %exitcond309.not, label %bb.ay, label %bb.az, !llvm.loop !354
 

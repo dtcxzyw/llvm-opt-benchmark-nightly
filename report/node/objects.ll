@@ -204,7 +204,7 @@ _ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE4S
   %.sroa.062.0104.epil.init = phi i64 [ 0, %.split.us ], [ %i.es, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod111 = trunc i64 %i.x to i1
   call void @llvm.assume(i1 %lcmp.mod111)
-  %i.ec = shl i64 %.sroa.062.0104.epil.init, 32
+  %i.ec = shl nuw i64 %.sroa.062.0104.epil.init, 32
   %sext.i54.epil = add i64 %i.ec, 21474836480
   %i.ed = ashr exact i64 %sext.i54.epil, 29
   %i.ee = getelementptr inbounds i8, ptr %i.y, i64 %i.ed ; 2 uses
@@ -226,7 +226,7 @@ bb.z:                                             ; preds = %.lr.ph.epil.prehead
 .lr.ph:                                           ; preds = %bb.ac, %.split.us.new
   %.sroa.062.0104 = phi i64 [ 0, %.split.us.new ], [ %i.es, %bb.ac ] ; 3 uses
   %niter = phi i64 [ 0, %.split.us.new ], [ %niter.next.1, %bb.ac ]
-  %i.ei = shl i64 %.sroa.062.0104, 32
+  %i.ei = shl nuw i64 %.sroa.062.0104, 32
   %sext.i54 = add i64 %i.ei, 21474836480
   %i.ej = ashr exact i64 %sext.i54, 29
   %i.ek = getelementptr inbounds i8, ptr %i.y, i64 %i.ej ; 2 uses
@@ -629,7 +629,7 @@ _ZN2v88internal9HashTableINS0_9StringSetENS0_14StringSetShapeEE4SwapENS0_13Inter
   %.sroa.061.0103.epil.init = phi i64 [ 0, %.split.us ], [ %i.eu, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod110 = trunc i64 %i.x to i1
   call void @llvm.assume(i1 %lcmp.mod110)
-  %i.ee = shl i64 %.sroa.061.0103.epil.init, 32
+  %i.ee = shl nuw i64 %.sroa.061.0103.epil.init, 32
   %sext.i53.epil = add i64 %i.ee, 12884901888
   %i.ef = ashr exact i64 %sext.i53.epil, 29
   %i.eg = getelementptr inbounds i8, ptr %i.y, i64 %i.ef ; 2 uses
@@ -651,7 +651,7 @@ bb.ad:                                            ; preds = %.lr.ph.epil.prehead
 .lr.ph:                                           ; preds = %bb.ag, %.split.us.new
   %.sroa.061.0103 = phi i64 [ 0, %.split.us.new ], [ %i.eu, %bb.ag ] ; 3 uses
   %niter = phi i64 [ 0, %.split.us.new ], [ %niter.next.1, %bb.ag ]
-  %i.ek = shl i64 %.sroa.061.0103, 32
+  %i.ek = shl nuw i64 %.sroa.061.0103, 32
   %sext.i53 = add i64 %i.ek, 12884901888
   %i.el = ashr exact i64 %sext.i53, 29
   %i.em = getelementptr inbounds i8, ptr %i.y, i64 %i.el ; 2 uses
@@ -1054,7 +1054,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN2v88internal9HashTableINS0_9StringSetENS0_14StringSetShapeEE7set_keyEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
   %.sroa.032.044 = phi i64 [ 0, %.lr.ph ], [ %i.by, %_ZN2v88internal9HashTableINS0_9StringSetENS0_14StringSetShapeEE7set_keyEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ] ; 2 uses
-  %i.z = shl i64 %.sroa.032.044, 32
+  %i.z = shl nuw i64 %.sroa.032.044, 32
   %sext = add i64 %i.z, 12884901888
   %i.aa = ashr exact i64 %sext, 29
   %i.ab = getelementptr inbounds i8, ptr %i.p, i64 %i.aa ; 2 uses
@@ -1457,7 +1457,7 @@ _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.thread.i.i.i38: ; 
   %.sroa.053.091.epil.init = phi i64 [ 0, %.split.us ], [ %i.eg, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod98 = trunc i64 %i.x to i1
   call void @llvm.assume(i1 %lcmp.mod98)
-  %i.dq = shl i64 %.sroa.053.091.epil.init, 32
+  %i.dq = shl nuw i64 %.sroa.053.091.epil.init, 32
   %sext.i50.epil = add i64 %i.dq, 12884901888
   %i.dr = ashr exact i64 %sext.i50.epil, 29
   %i.ds = getelementptr inbounds i8, ptr %i.y, i64 %i.dr ; 2 uses
@@ -1479,7 +1479,7 @@ bb.z:                                             ; preds = %.lr.ph.epil.prehead
 .lr.ph:                                           ; preds = %bb.ac, %.split.us.new
   %.sroa.053.091 = phi i64 [ 0, %.split.us.new ], [ %i.eg, %bb.ac ] ; 3 uses
   %niter = phi i64 [ 0, %.split.us.new ], [ %niter.next.1, %bb.ac ]
-  %i.dw = shl i64 %.sroa.053.091, 32
+  %i.dw = shl nuw i64 %.sroa.053.091, 32
   %sext.i50 = add i64 %i.dw, 12884901888
   %i.dx = ashr exact i64 %sext.i50, 29
   %i.dy = getelementptr inbounds i8, ptr %i.y, i64 %i.dx ; 2 uses
@@ -1882,7 +1882,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE7set_keyEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
   %.sroa.032.044 = phi i64 [ 0, %.lr.ph ], [ %i.cb, %_ZN2v88internal9HashTableINS0_13ObjectHashSetENS0_18ObjectHashSetShapeEE7set_keyEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ] ; 2 uses
-  %i.z = shl i64 %.sroa.032.044, 32
+  %i.z = shl nuw i64 %.sroa.032.044, 32
   %sext = add i64 %i.z, 12884901888
   %i.aa = ashr exact i64 %sext, 29
   %i.ab = getelementptr inbounds i8, ptr %i.p, i64 %i.aa ; 2 uses
@@ -2285,7 +2285,7 @@ _ZN2v88internal9HashTableINS0_14NameDictionaryENS0_19NameDictionaryShapeEE5ToKey
   %i.ak = add i64 %i.aj, -1
   %i.al = inttoptr i64 %i.ak to ptr
   %i.am = add nsw i32 %.056, 1
-  %sext = shl i64 %.sroa.033.055, 32
+  %sext = shl nuw i64 %.sroa.033.055, 32
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %i.ao = sext i32 %.056 to i64
   %i.ap = getelementptr inbounds [8 x i8], ptr %i.an, i64 %i.ao
@@ -2688,7 +2688,7 @@ _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16H
 
 bb.l:                                             ; preds = %.lr.ph, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE7set_keyEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
   %.sroa.032.046 = phi i64 [ 0, %.lr.ph ], [ %i.cv, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE7set_keyEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ] ; 2 uses
-  %i.ax = shl i64 %.sroa.032.046, 32
+  %i.ax = shl nuw i64 %.sroa.032.046, 32
   %sext = add i64 %i.ax, 21474836480
   %i.ay = ashr exact i64 %sext, 29
   %i.az = getelementptr inbounds i8, ptr %i.j, i64 %i.ay ; 2 uses
@@ -3091,7 +3091,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread
   %.023 = phi i32 [ 0, %.lr.ph ], [ %.2, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread ] ; 4 uses
   %.sroa.015.022 = phi i64 [ 0, %.lr.ph ], [ %i.ai, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread ] ; 2 uses
-  %i.j = shl i64 %.sroa.015.022, 32
+  %i.j = shl nuw i64 %.sroa.015.022, 32
   %sext.i.i.i = add i64 %i.j, 21474836480
   %i.k = ashr exact i64 %sext.i.i.i, 29
   %i.l = getelementptr inbounds i8, ptr %i.h, i64 %i.k ; 2 uses
@@ -3164,7 +3164,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread
   %.sroa.016.032 = phi i64 [ 0, %.lr.ph ], [ %i.y, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread ] ; 2 uses
-  %i.j = shl i64 %.sroa.016.032, 32
+  %i.j = shl nuw i64 %.sroa.016.032, 32
   %sext.i.i.i = add i64 %i.j, 21474836480
   %i.k = ashr exact i64 %sext.i.i.i, 29
   %i.l = getelementptr inbounds i8, ptr %i.h, i64 %i.k ; 2 uses
@@ -3567,7 +3567,7 @@ _ZSt4sortIN2v88internal10AtomicSlotENS1_19EnumIndexComparatorINS1_16GlobalDictio
 bb.h:                                             ; preds = %.lr.ph, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread
   %.056 = phi i32 [ 0, %.lr.ph ], [ %.1, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread ] ; 4 uses
   %.sroa.033.055 = phi i64 [ 0, %.lr.ph ], [ %i.bt, %_ZN2v88internal9HashTableINS0_16GlobalDictionaryENS0_21GlobalDictionaryShapeEE5ToKeyENS0_13ReadOnlyRootsENS0_13InternalIndexEPNS0_6TaggedINS0_6ObjectEEE.exit.thread ] ; 2 uses
-  %i.bf = shl i64 %.sroa.033.055, 32              ; 2 uses
+  %i.bf = shl nuw i64 %.sroa.033.055, 32          ; 2 uses
   %sext.i.i.i = add i64 %i.bf, 21474836480
   %i.bg = ashr exact i64 %sext.i.i.i, 29
   %i.bh = getelementptr inbounds i8, ptr %i.p, i64 %i.bg
@@ -3970,7 +3970,7 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph.i:                                         ; preds = %bb.r, %bb.t
   %i.bo = phi i64 [ %i.bz, %bb.t ], [ %i.bk, %bb.r ]
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.t ], [ 1, %bb.r ] ; 3 uses
-  %i.bp = shl nsw i64 %indvars.iv.i, 3
+  %i.bp = shl nuw nsw i64 %indvars.iv.i, 3
   %i.bq = add i64 %i.bp, %i.bb
   %i.br = inttoptr i64 %i.bq to ptr               ; 2 uses
   %i.bs = load atomic volatile i64, ptr %i.br monotonic, align 8
@@ -4183,7 +4183,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.i = phi i64 [ %i.c, %.lr.ph ], [ %i.t, %bb.d ]
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
-  %i.j = shl nsw i64 %indvars.iv, 3
+  %i.j = shl nuw nsw i64 %indvars.iv, 3
   %i.k = add i64 %i.g, %i.j
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
   %i.m = load atomic volatile i64, ptr %i.l monotonic, align 8
@@ -4292,7 +4292,7 @@ _ZN2v88internal6HandleINS0_13WeakArrayListEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.e
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit ], [ 1, %_ZN2v88internal6HandleINS0_13WeakArrayListEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ] ; 3 uses
   %i.at = phi i64 [ %i.bv, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit ], [ %i.ad, %_ZN2v88internal6HandleINS0_13WeakArrayListEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ]
   %.090 = phi i32 [ %.1, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit ], [ 1, %_ZN2v88internal6HandleINS0_13WeakArrayListEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ] ; 4 uses
-  %i.au = shl nsw i64 %indvars.iv, 3
+  %i.au = shl nuw nsw i64 %indvars.iv, 3
   %i.av = add nuw nsw i64 %i.au, 23
   %i.aw = add i64 %i.at, %i.av
   %i.ax = inttoptr i64 %i.aw to ptr
