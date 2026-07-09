@@ -203,12 +203,12 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.3
 
 bb.f:                                             ; preds = %.lr.ph34, %bb.f
   %indvars.iv43 = phi i64 [ 0, %.lr.ph34 ], [ %indvars.iv.next44, %bb.f ] ; 4 uses
-  %i.db = shl nuw i64 %indvars.iv43, 1            ; 2 uses
-  %i.dc = getelementptr inbounds [4 x i8], ptr %i.cu, i64 %i.db
+  %i.db = shl nuw nsw i64 %indvars.iv43, 1        ; 2 uses
+  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %i.db
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !4
   %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %indvars.iv43
   store i32 %i.dd, ptr %i.de, align 4, !tbaa !4
-  %i.df = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %i.db
+  %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %i.db
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !4
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %indvars.iv43
   store i32 %i.dg, ptr %i.dh, align 4, !tbaa !4
@@ -241,12 +241,12 @@ bb.f:                                             ; preds = %.lr.ph34, %bb.f
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph34.1
   %indvars.iv43.1 = phi i64 [ 0, %.lr.ph34.1 ], [ %indvars.iv.next44.1, %bb.g ] ; 4 uses
-  %i.ea = shl nuw i64 %indvars.iv43.1, 1          ; 2 uses
-  %i.eb = getelementptr inbounds [4 x i8], ptr %i.dq, i64 %i.ea
+  %i.ea = shl nuw nsw i64 %indvars.iv43.1, 1      ; 2 uses
+  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %i.ea
   %i.ec = load i32, ptr %i.eb, align 4, !tbaa !4
   %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.dt, i64 %indvars.iv43.1
   store i32 %i.ec, ptr %i.ed, align 4, !tbaa !4
-  %i.ee = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.ea
+  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.dw, i64 %i.ea
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !4
   %i.eg = getelementptr inbounds nuw [4 x i8], ptr %i.dz, i64 %indvars.iv43.1
   store i32 %i.ef, ptr %i.eg, align 4, !tbaa !4
@@ -279,12 +279,12 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph34.1
 
 bb.h:                                             ; preds = %bb.h, %.lr.ph34.2
   %indvars.iv43.2 = phi i64 [ 0, %.lr.ph34.2 ], [ %indvars.iv.next44.2, %bb.h ] ; 4 uses
-  %i.ez = shl nuw i64 %indvars.iv43.2, 1          ; 2 uses
-  %i.fa = getelementptr inbounds [4 x i8], ptr %i.ep, i64 %i.ez
+  %i.ez = shl nuw nsw i64 %indvars.iv43.2, 1      ; 2 uses
+  %i.fa = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %i.ez
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !4
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.es, i64 %indvars.iv43.2
   store i32 %i.fb, ptr %i.fc, align 4, !tbaa !4
-  %i.fd = getelementptr inbounds [4 x i8], ptr %i.ev, i64 %i.ez
+  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %i.ez
   %i.fe = load i32, ptr %i.fd, align 4, !tbaa !4
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.ey, i64 %indvars.iv43.2
   store i32 %i.fe, ptr %i.ff, align 4, !tbaa !4
@@ -317,12 +317,12 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph34.2
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph34.3
   %indvars.iv43.3 = phi i64 [ 0, %.lr.ph34.3 ], [ %indvars.iv.next44.3, %bb.i ] ; 4 uses
-  %i.fy = shl nuw i64 %indvars.iv43.3, 1          ; 2 uses
-  %i.fz = getelementptr inbounds [4 x i8], ptr %i.fo, i64 %i.fy
+  %i.fy = shl nuw nsw i64 %indvars.iv43.3, 1      ; 2 uses
+  %i.fz = getelementptr inbounds nuw [4 x i8], ptr %i.fo, i64 %i.fy
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !4
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %i.fr, i64 %indvars.iv43.3
   store i32 %i.ga, ptr %i.gb, align 4, !tbaa !4
-  %i.gc = getelementptr inbounds [4 x i8], ptr %i.fu, i64 %i.fy
+  %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.fu, i64 %i.fy
   %i.gd = load i32, ptr %i.gc, align 4, !tbaa !4
   %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.fx, i64 %indvars.iv43.3
   store i32 %i.gd, ptr %i.ge, align 4, !tbaa !4

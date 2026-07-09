@@ -1,0 +1,230 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 134be6ac097e0..1fb3079a3ec1c 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -2519,26 +2519,37 @@ ScalarEvolution::getStrengthenedNoWrapFlagsFromBinOp(
+ 
+   bool Deduced = false;
+ 
+-  if (OBO->getOpcode() != Instruction::Add &&
+-      OBO->getOpcode() != Instruction::Sub &&
+-      OBO->getOpcode() != Instruction::Mul)
+-    return std::nullopt;
+-
++  Instruction::BinaryOps Opcode = (Instruction::BinaryOps)OBO->getOpcode();
+   const SCEV *LHS = getSCEV(OBO->getOperand(0));
+   const SCEV *RHS = getSCEV(OBO->getOperand(1));
+ 
++  bool CanUseNSW = true;
++  const APInt *ShiftAmt;
++  // Treat `shl %a, C` as `mul %a, 1 << C`.
++  if (match(OBO, m_Shl(m_Value(), m_APInt(ShiftAmt)))) {
++    unsigned BitWidth = ShiftAmt->getBitWidth();
++    if (ShiftAmt->uge(BitWidth))
++      return std::nullopt;
++    // NSW only transfers if the shift amount is < BitWidth - 1, otherwise the
++    // result is more poisonous.
++    CanUseNSW = ShiftAmt->ult(BitWidth - 1);
++    Opcode = Instruction::Mul;
++    RHS = getConstant(APInt::getOneBitSet(BitWidth, ShiftAmt->getZExtValue()));
++  } else if (Opcode != Instruction::Add && Opcode != Instruction::Sub &&
++             Opcode != Instruction::Mul) {
++    return std::nullopt;
++  }
++
+   const Instruction *CtxI =
+       UseContextForNoWrapFlagInference ? dyn_cast<Instruction>(OBO) : nullptr;
+   if (!OBO->hasNoUnsignedWrap() &&
+-      willNotOverflow((Instruction::BinaryOps)OBO->getOpcode(),
+-                      /* Signed */ false, LHS, RHS, CtxI)) {
++      willNotOverflow(Opcode, /* Signed */ false, LHS, RHS, CtxI)) {
+     Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNUW);
+     Deduced = true;
+   }
+ 
+-  if (!OBO->hasNoSignedWrap() &&
+-      willNotOverflow((Instruction::BinaryOps)OBO->getOpcode(),
+-                      /* Signed */ true, LHS, RHS, CtxI)) {
++  if (CanUseNSW && !OBO->hasNoSignedWrap() &&
++      willNotOverflow(Opcode, /* Signed */ true, LHS, RHS, CtxI)) {
+     Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNSW);
+     Deduced = true;
+   }
+diff --git a/llvm/test/Transforms/IndVarSimplify/drop-exact.ll b/llvm/test/Transforms/IndVarSimplify/drop-exact.ll
+index fb8027df74ee7..90129628496cc 100644
+--- a/llvm/test/Transforms/IndVarSimplify/drop-exact.ll
++++ b/llvm/test/Transforms/IndVarSimplify/drop-exact.ll
+@@ -15,7 +15,7 @@ define void @drop_exact(ptr %p, ptr %p1) {
+ ; CHECK-NEXT:    [[TMP13:%.*]] = phi i32 [ -47436, [[BB:%.*]] ], [ [[TMP15:%.*]], [[BB12]] ]
+ ; CHECK-NEXT:    [[TMP14:%.*]] = phi i32 [ 0, [[BB]] ], [ [[TMP42:%.*]], [[BB12]] ]
+ ; CHECK-NEXT:    [[TMP15]] = add nsw i32 [[TMP13]], -1
+-; CHECK-NEXT:    [[TMP16:%.*]] = shl i32 [[TMP15]], 1
++; CHECK-NEXT:    [[TMP16:%.*]] = shl nsw i32 [[TMP15]], 1
+ ; CHECK-NEXT:    [[TMP17:%.*]] = sub nsw i32 42831, [[TMP16]]
+ ; CHECK-NEXT:    [[TMP19:%.*]] = lshr i32 [[TMP17]], 1
+ ; CHECK-NEXT:    [[TMP20:%.*]] = urem i32 [[TMP19]], 250
+@@ -62,7 +62,7 @@ define void @dont_drop_exact(ptr %p, ptr %p1) {
+ ; CHECK-NEXT:    [[TMP13:%.*]] = phi i32 [ -47436, [[BB:%.*]] ], [ [[TMP15:%.*]], [[BB12]] ]
+ ; CHECK-NEXT:    [[TMP14:%.*]] = phi i32 [ 0, [[BB]] ], [ [[TMP42:%.*]], [[BB12]] ]
+ ; CHECK-NEXT:    [[TMP15]] = add nsw i32 [[TMP13]], -1
+-; CHECK-NEXT:    [[TMP16:%.*]] = shl i32 [[TMP15]], 1
++; CHECK-NEXT:    [[TMP16:%.*]] = shl nsw i32 [[TMP15]], 1
+ ; CHECK-NEXT:    [[TMP17:%.*]] = sub nsw i32 42831, [[TMP16]]
+ ; CHECK-NEXT:    [[TMP19:%.*]] = lshr i32 [[TMP17]], 1
+ ; CHECK-NEXT:    [[TMP20:%.*]] = urem i32 [[TMP19]], 250
+diff --git a/llvm/test/Transforms/IndVarSimplify/pr66066.ll b/llvm/test/Transforms/IndVarSimplify/pr66066.ll
+index cfd29876b302d..5bb0d8371b3e3 100644
+--- a/llvm/test/Transforms/IndVarSimplify/pr66066.ll
++++ b/llvm/test/Transforms/IndVarSimplify/pr66066.ll
+@@ -9,7 +9,7 @@ define void @test() {
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 1, [[ENTRY:%.*]] ], [ [[IV_DEC:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_DEC]] = add nsw i8 [[IV]], -1
+-; CHECK-NEXT:    [[SHL:%.*]] = shl i8 [[IV]], 7
++; CHECK-NEXT:    [[SHL:%.*]] = shl nuw i8 [[IV]], 7
+ ; CHECK-NEXT:    call void @use(i8 [[SHL]])
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i8 [[SHL]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[EXIT:%.*]], label [[LOOP]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll b/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll
+index 2fd4032eec23b..4a230b781d2db 100644
+--- a/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll
++++ b/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll
+@@ -333,5 +333,125 @@ bb3:                                              ; preds = %bb1
+   ret void
+ }
+ 
++define void @test_shl_const_bound(ptr %p) {
++; CHECK-LABEL: @test_shl_const_bound(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[OFF:%.*]] = shl nuw nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P:%.*]], i64 [[OFF]]
++; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %off = shl i64 %iv, 2
++  %gep = getelementptr i8, ptr %p, i64 %off
++  store i8 0, ptr %gep
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 100
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @test_shl_bw_minus_one(ptr %p) {
++; CHECK-LABEL: @test_shl_bw_minus_one(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[OFF:%.*]] = shl nuw i8 [[IV]], 7
++; CHECK-NEXT:    store i8 [[OFF]], ptr [[P:%.*]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i8 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], 2
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %loop ]
++  %off = shl i8 %iv, 7
++  store i8 %off, ptr %p
++  %iv.next = add i8 %iv, 1
++  %ec = icmp eq i8 %iv.next, 2
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @test_shl_unbounded(ptr %p, i64 %n) {
++; CHECK-LABEL: @test_shl_unbounded(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[OFF:%.*]] = shl i64 [[IV]], 2
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P:%.*]], i64 [[OFF]]
++; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %off = shl i64 %iv, 2
++  %gep = getelementptr i8, ptr %p, i64 %off
++  store i8 0, ptr %gep
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @test_shl_nuw_only(ptr %p) {
++; CHECK-LABEL: @test_shl_nuw_only(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[OFF:%.*]] = shl nuw i8 [[IV]], 1
++; CHECK-NEXT:    store i8 [[OFF]], ptr [[P:%.*]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], -128
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %loop ]
++  %off = shl i8 %iv, 1
++  store i8 %off, ptr %p
++  %iv.next = add i8 %iv, 1
++  %ec = icmp eq i8 %iv.next, -128
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
+ !0 = !{i32 0, i32 2}
+ !1 = !{i32 0, i32 42}
+diff --git a/llvm/test/Transforms/LoopVectorize/single-early-exit-deref-assumptions.ll b/llvm/test/Transforms/LoopVectorize/single-early-exit-deref-assumptions.ll
+index 8be66cc4c8ef8..b73720c126d03 100644
+--- a/llvm/test/Transforms/LoopVectorize/single-early-exit-deref-assumptions.ll
++++ b/llvm/test/Transforms/LoopVectorize/single-early-exit-deref-assumptions.ll
+@@ -299,7 +299,7 @@ define i64 @early_exit_alignment_and_deref_known_via_assumption_n_not_zero_i16_p
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A]], i64 2) ]
+ ; CHECK-NEXT:    [[N_EXT:%.*]] = zext i32 [[N]] to i64
+-; CHECK-NEXT:    [[MUL:%.*]] = shl i64 [[N_EXT]], 1
++; CHECK-NEXT:    [[MUL:%.*]] = shl nuw nsw i64 [[N_EXT]], 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "dereferenceable"(ptr [[A]], i64 [[MUL]]) ]
+ ; CHECK-NEXT:    [[A_END:%.*]] = getelementptr i8, ptr [[A]], i64 [[MUL]]
+ ; CHECK-NEXT:    [[PRE:%.*]] = icmp eq i32 [[N]], 0

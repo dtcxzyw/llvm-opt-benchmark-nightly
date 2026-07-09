@@ -204,10 +204,10 @@ bb.a:
   br i1 %i.ab, label %._crit_edge115, label %.lr.ph114
 
 .lr.ph:                                           ; preds = %.preheader, %bb.h
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 0, %.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 0, %.preheader ] ; 3 uses
   %.028111 = phi i32 [ %.1, %bb.h ], [ 0, %.preheader ] ; 3 uses
   %i.ac = load i64, ptr %i.h, align 8             ; 6 uses
-  %i.ad = shl i64 %indvars.iv, 3                  ; 2 uses
+  %i.ad = shl nsw i64 %indvars.iv, 3
   %i.ae = add nuw i64 %i.ad, 23
   %i.af = add i64 %i.ac, %i.ae
   %i.ag = inttoptr i64 %i.af to ptr
@@ -217,7 +217,10 @@ bb.a:
   br i1 %i.aj, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.ak = add nuw nsw i64 %i.ad, 31
+  %1 = trunc nuw nsw i64 %indvars.iv to i32
+  %2 = shl i32 %1, 3
+  %3 = sext i32 %2 to i64
+  %i.ak = add nsw i64 %3, 31
   %i.al = add i64 %i.ak, %i.ac
   %i.am = inttoptr i64 %i.al to ptr
   %i.an = load atomic volatile i64, ptr %i.am monotonic, align 8 ; 2 uses
@@ -330,14 +333,17 @@ bb.i:                                             ; preds = %._crit_edge115
   br label %.lr.ph119
 
 .lr.ph119:                                        ; preds = %.lr.ph119.preheader, %bb.k
-  %indvars.iv125 = phi i64 [ 0, %.lr.ph119.preheader ], [ %indvars.iv.next126, %bb.k ] ; 2 uses
+  %indvars.iv125 = phi i64 [ 0, %.lr.ph119.preheader ], [ %indvars.iv.next126, %bb.k ] ; 3 uses
   %i.cl = load i64, ptr %i.h, align 8             ; 2 uses
-  %i.cm = shl i64 %indvars.iv125, 3               ; 2 uses
+  %i.cm = shl nsw i64 %indvars.iv125, 3
   %i.cn = add nuw i64 %i.cm, 23
   %i.co = add i64 %i.cl, %i.cn
   %i.cp = inttoptr i64 %i.co to ptr
   %i.cq = load atomic volatile i64, ptr %i.cp monotonic, align 8
-  %i.cr = add nuw nsw i64 %i.cm, 31
+  %4 = trunc nuw nsw i64 %indvars.iv125 to i32
+  %5 = shl i32 %4, 3
+  %6 = sext i32 %5 to i64
+  %i.cr = add nsw i64 %6, 31
   %i.cs = add i64 %i.cr, %i.cl
   %i.ct = inttoptr i64 %i.cs to ptr
   %i.cu = load atomic volatile i64, ptr %i.ct monotonic, align 8 ; 2 uses

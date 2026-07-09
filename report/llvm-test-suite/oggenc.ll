@@ -204,7 +204,7 @@ oggpack_read.exit.i.peel.i:                       ; preds = %.lr.ph.i.i, %bb.q
   %niter = phi i32 [ 0, %.peel.next.i.preheader.new ], [ %niter.next.1, %oggpack_read.exit.i.i.1 ]
   %.024.i.i = getelementptr inbounds nuw i8, ptr %.024.i.pn.i, i64 1
   %.not.i.i.i = icmp sge i64 %i.br, %invariant.op
-  %i.bs = shl nsw i64 %i.br, 3
+  %i.bs = shl nuw nsw i64 %i.br, 3
   %i.bt = icmp sgt i64 %i.bs, %invariant.op68
   %or.cond73 = select i1 %.not.i.i.i, i1 %i.bt, i1 false
   br i1 %or.cond73, label %oggpack_read.exit.i.i, label %bb.r
@@ -223,7 +223,7 @@ oggpack_read.exit.i.i:                            ; preds = %.peel.next.i, %bb.r
   store i8 %.1.i.i.i, ptr %.024.i.i, align 1
   %.024.i.i.1 = getelementptr inbounds nuw i8, ptr %.024.i.pn.i, i64 2 ; 3 uses
   %.not.i.i.i.1 = icmp sge i64 %i.bw, %invariant.op
-  %i.bx = shl nsw i64 %i.bw, 3
+  %i.bx = shl nuw nsw i64 %i.bw, 3
   %i.by = icmp sgt i64 %i.bx, %invariant.op68
   %or.cond73.1 = select i1 %.not.i.i.i.1, i1 %i.by, i1 false
   br i1 %or.cond73.1, label %oggpack_read.exit.i.i.1, label %bb.s
@@ -626,7 +626,7 @@ post_Y.exit165:                                   ; preds = %post_Y.exit163, %bb
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph209, %post_Y.exit168
-  %.7208 = phi i64 [ 2, %.lr.ph209 ], [ %i.jr, %post_Y.exit168 ] ; 5 uses
+  %.7208 = phi i64 [ 2, %.lr.ph209 ], [ %i.jr, %post_Y.exit168 ] ; 6 uses
   %i.if = add nsw i64 %.7208, -2                  ; 2 uses
   %i.ig = getelementptr inbounds [4 x i8], ptr %i.ic, i64 %i.if
   %i.ih = load i32, ptr %i.ig, align 4
@@ -656,12 +656,10 @@ bb.ak:                                            ; preds = %.lr.ph209, %post_Y.
   %i.jf = sub i32 0, %i.jd
   %.0.p.i = select i1 %i.je, i32 %i.jf, i32 %i.jd
   %.0.i166 = add i32 %.0.p.i, %i.iw               ; 2 uses
-  %sext = shl i64 %.7208, 32
-  %5 = ashr exact i64 %sext, 32                   ; 2 uses
-  %i.jg = getelementptr inbounds [4 x i8], ptr %i.a, i64 %5
+  %i.jg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.7208
   %i.jh = load i32, ptr %i.jg, align 4            ; 3 uses
   %i.ji = icmp slt i32 %i.jh, 0
-  %i.jj = getelementptr inbounds [4 x i8], ptr %i.b, i64 %5
+  %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.7208
   %i.jk = load i32, ptr %i.jj, align 4            ; 3 uses
   br i1 %i.ji, label %post_Y.exit168, label %bb.al
 

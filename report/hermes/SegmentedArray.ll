@@ -203,7 +203,7 @@ _ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i: ; 
 
 vector.body:                                      ; preds = %vector.body, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i
   %index = phi i64 [ 0, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i ], [ %index.next.3, %vector.body ] ; 5 uses
-  %i.j = shl i64 %index, 2
+  %i.j = shl nuw nsw i64 %index, 2
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.j ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 24
@@ -606,7 +606,7 @@ _ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i.i
 
 vector.body121:                                   ; preds = %vector.body121, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i.i
   %index122 = phi i64 [ 0, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i.i ], [ %index.next123.3, %vector.body121 ] ; 5 uses
-  %i.cq = shl i64 %index122, 2
+  %i.cq = shl nuw nsw i64 %index122, 2
   %i.cr = getelementptr inbounds nuw i8, ptr %i.co, i64 %i.cq ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 24
@@ -718,7 +718,7 @@ _ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i.i
 
 vector.body127:                                   ; preds = %vector.body127, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i.i60
   %index128 = phi i64 [ 0, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i.i60 ], [ %index.next129.3, %vector.body127 ] ; 5 uses
-  %i.ep = shl i64 %index128, 2
+  %i.ep = shl nuw nsw i64 %index128, 2
   %i.eq = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.ep ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 8
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 24
@@ -1121,7 +1121,7 @@ _ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i: 
 
 vector.body:                                      ; preds = %vector.body, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i
   %index = phi i64 [ 0, %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i.i ], [ %index.next.3, %vector.body ] ; 5 uses
-  %i.j = shl i64 %index, 2
+  %i.j = shl nuw nsw i64 %index, 2
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.j ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 24

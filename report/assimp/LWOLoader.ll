@@ -204,7 +204,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit20: ; preds = %_ZSt8_DestroyIP
   %lcmp.mod57 = trunc i32 %i.ce to i1
   call void @llvm.assume(i1 %lcmp.mod57)
   %i.ch = load ptr, ptr %i.cf, align 8
-  %i.ci = shl nuw i64 %indvars.iv.epil.init, 2
+  %i.ci = shl nuw nsw i64 %indvars.iv.epil.init, 2
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.ci ; 2 uses
   %i.ck = load <4 x i8>, ptr %i.cj, align 1
   %i.cl = shufflevector <4 x i8> %i.ck, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
@@ -224,7 +224,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.t ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.t ]
   %i.cr = load ptr, ptr %i.cf, align 8
-  %i.cs = shl nuw i64 %indvars.iv, 2
+  %i.cs = shl nuw nsw i64 %indvars.iv, 2
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cs ; 2 uses
   %i.cu = load <4 x i8>, ptr %i.ct, align 1
   %i.cv = shufflevector <4 x i8> %i.cu, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>

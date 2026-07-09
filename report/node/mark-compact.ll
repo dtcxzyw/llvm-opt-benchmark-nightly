@@ -204,7 +204,7 @@ bb.nr:                                            ; preds = %bb.nq
   br i1 %.not.i.i.i.i.i, label %bb.ot, label %bb.ns
 
 bb.ns:                                            ; preds = %.lr.ph.i.i.i.i.i
-  %i.bth = shl i64 %.03819.i.i.i.i.i, 10
+  %i.bth = shl nuw nsw i64 %.03819.i.i.i.i.i, 10
   br label %bb.nu
 
 bb.nt:                                            ; preds = %_ZN4heap4base12BasicSlotSetILm8EE6Bucket13ClearCellBitsILNS2_10AccessModeE0EEEvij.exit.i.i.i.i.i
@@ -607,7 +607,7 @@ bb.py:                                            ; preds = %bb.px
   br i1 %.not.i.i.i.i.i816, label %bb.ra, label %bb.pz
 
 bb.pz:                                            ; preds = %.lr.ph.i.i.i.i.i813
-  %i.ccp = shl i64 %.03819.i.i.i.i.i815, 10
+  %i.ccp = shl nuw nsw i64 %.03819.i.i.i.i.i815, 10
   br label %bb.qb
 
 bb.qa:                                            ; preds = %_ZN4heap4base12BasicSlotSetILm8EE6Bucket13ClearCellBitsILNS2_10AccessModeE0EEEvij.exit.i.i.i.i.i832
@@ -1010,8 +1010,8 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit.us.us, %.lr.ph.us
   %i.v = phi i64 [ %i.ao, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit.us.us ], [ %i.o, %.lr.ph.us ] ; 2 uses
-  %indvars.iv170 = phi i64 [ %indvars.iv.next171, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit.us.us ], [ 0, %.lr.ph.us ] ; 2 uses
-  %i.w = shl i64 %indvars.iv170, 3                ; 2 uses
+  %indvars.iv170 = phi i64 [ %indvars.iv.next171, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit.us.us ], [ 0, %.lr.ph.us ] ; 3 uses
+  %i.w = shl nsw i64 %indvars.iv170, 3
   %.reass188 = add i64 %i.w, %invariant.op187
   %i.x = inttoptr i64 %.reass188 to ptr
   %i.y = load atomic volatile i64, ptr %i.x monotonic, align 8 ; 2 uses
@@ -1023,7 +1023,10 @@ bb.b:                                             ; preds = %_ZNK2v88internal10T
   br i1 %i.ad, label %_ZN2v88internal13MarkingHelper26IsUnmarkedAndNotAlwaysLiveINS0_12MarkingStateEEEbPNS0_4HeapEPT_NS0_6TaggedINS0_10HeapObjectEEE.exit31.thread.us.us, label %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit.us.us
 
 _ZN2v88internal13MarkingHelper26IsUnmarkedAndNotAlwaysLiveINS0_12MarkingStateEEEbPNS0_4HeapEPT_NS0_6TaggedINS0_10HeapObjectEEE.exit31.thread.us.us: ; preds = %bb.b
-  %i.ae = add i64 %i.u, %i.w
+  %2 = trunc nuw nsw i64 %indvars.iv170 to i32
+  %3 = shl i32 %2, 3
+  %4 = sext i32 %3 to i64
+  %i.ae = add i64 %i.u, %4
   %i.af = inttoptr i64 %i.ae to ptr               ; 2 uses
   %i.ag = load atomic volatile i64, ptr %i.af monotonic, align 8 ; 2 uses
   %i.ah = and i64 %i.ag, 1
@@ -1094,7 +1097,7 @@ _ZNSt6vectorIN2v88internal6TaggedINS1_13WeakArrayListEEESaIS4_EED2Ev.exit: ; pre
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit ] ; 2 uses
-  %i.bh = shl i64 %indvars.iv, 3                  ; 2 uses
+  %i.bh = shl nuw nsw i64 %indvars.iv, 3          ; 2 uses
   %.reass = add i64 %i.bh, %invariant.op
   %i.bi = inttoptr i64 %.reass to ptr
   %i.bj = load atomic volatile i64, ptr %i.bi monotonic, align 8 ; 6 uses
@@ -1497,7 +1500,7 @@ bb.d:                                             ; preds = %.loopexit
   br i1 %.not.i.i.i.i.i, label %bb.u, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i
-  %i.am = shl i64 %.0387.i.i.i.i.i, 10
+  %i.am = shl nuw nsw i64 %.0387.i.i.i.i.i, 10
   br label %bb.g
 
 bb.f:                                             ; preds = %_ZN4heap4base12BasicSlotSetILm8EE6Bucket13ClearCellBitsILNS2_10AccessModeE0EEEvij.exit.i.i.i.i.i
@@ -1698,7 +1701,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not.i.i.i.i.i24, label %bb.ak, label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph.i.i.i.i.i21
-  %i.dg = shl i64 %.0387.i.i.i.i.i23, 10
+  %i.dg = shl nuw nsw i64 %.0387.i.i.i.i.i23, 10
   br label %bb.aa
 
 bb.z:                                             ; preds = %_ZN4heap4base12BasicSlotSetILm8EE6Bucket13ClearCellBitsILNS2_10AccessModeE0EEEvij.exit.i.i.i.i.i40
@@ -2101,7 +2104,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i.i.i.i.i.i.i, label %_ZZN2v88internal7SlotSet7IterateILNS0_10AccessModeE0EZNS0_12_GLOBAL__N_125RememberedSetUpdatingItem29UpdateUntypedOldToNewPointersILNS0_17RememberedSetTypeE0EEEvvEUlNS0_19FullMaybeObjectSlotEE_EEmmmmT0_N4heap4base12BasicSlotSetILm8EE15EmptyBucketModeEENKUlmE0_clEm.exit.i.i.i.i.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
-  %i.as = shl i64 %.0389.i.i.i.i.i.i.i, 10
+  %i.as = shl nuw nsw i64 %.0389.i.i.i.i.i.i.i, 10
   br label %bb.i
 
 bb.i:                                             ; preds = %.loopexit.i.i.i.i.i.i.i, %bb.h
@@ -2334,7 +2337,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not.i.i.i.i.i.i7.i, label %_ZZN2v88internal7SlotSet7IterateILNS0_10AccessModeE0EZNS0_12_GLOBAL__N_125RememberedSetUpdatingItem29UpdateUntypedOldToNewPointersILNS0_17RememberedSetTypeE1EEEvvEUlNS0_19FullMaybeObjectSlotEE_EEmmmmT0_N4heap4base12BasicSlotSetILm8EE15EmptyBucketModeEENKUlmE0_clEm.exit.i.i.i.i.i.i.i, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph.i.i.i.i.i.i5.i
-  %i.et = shl i64 %.0389.i.i.i.i.i.i6.i, 10
+  %i.et = shl nuw nsw i64 %.0389.i.i.i.i.i.i6.i, 10
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.loopexit.i.i.i.i.i.i15.i, %bb.ac
@@ -2598,7 +2601,7 @@ bb.az:                                            ; preds = %_ZN2v88internal15Wr
   br i1 %.not.i.i.i.i.i.i34.i, label %_ZZN2v88internal7SlotSet7IterateILNS0_10AccessModeE0EZNS0_12_GLOBAL__N_125RememberedSetUpdatingItem29UpdateUntypedOldToOldPointersEvEUlNS0_19FullMaybeObjectSlotEE_EEmmmmT0_N4heap4base12BasicSlotSetILm8EE15EmptyBucketModeEENKUlmE0_clEm.exit.i.i.i.i.i.i.i, label %bb.ba
 
 bb.ba:                                            ; preds = %.lr.ph.i.i.i.i.i.i33.i
-  %i.jj = shl i64 %.03812.i.i.i.i.i.i.i, 10
+  %i.jj = shl nuw nsw i64 %.03812.i.i.i.i.i.i.i, 10
   br label %bb.bb
 
 bb.bb:                                            ; preds = %.loopexit.i.i.i.i.i.i39.i, %bb.ba
@@ -2744,7 +2747,7 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %.not.i.i.i.i.i6.i.i, label %_ZZN2v88internal7SlotSet7IterateILNS0_10AccessModeE0EZNS0_12_GLOBAL__N_125RememberedSetUpdatingItem29UpdateUntypedOldToOldPointersEvEUlNS0_19FullMaybeObjectSlotEE0_EEmmmmT0_N4heap4base12BasicSlotSetILm8EE15EmptyBucketModeEENKUlmE0_clEm.exit.i.i.i.i.i.i.i, label %bb.bn
 
 bb.bn:                                            ; preds = %.lr.ph.i.i.i.i.i5.i.i
-  %i.li = shl i64 %.0389.i.i.i.i.i.i43.i, 10
+  %i.li = shl nuw nsw i64 %.0389.i.i.i.i.i.i43.i, 10
   br label %bb.bo
 
 bb.bo:                                            ; preds = %.loopexit.i.i.i.i.i11.i.i, %bb.bn
@@ -2957,7 +2960,7 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %.not.i.i.i.i.i.i55.i, label %_ZZN2v88internal7SlotSet7IterateILNS0_10AccessModeE0EZNS0_12_GLOBAL__N_125RememberedSetUpdatingItem34UpdateUntypedTrustedToCodePointersEvEUlNS0_19FullMaybeObjectSlotEE_EEmmmmT0_N4heap4base12BasicSlotSetILm8EE15EmptyBucketModeEENKUlmE0_clEm.exit.i.i.i.i.i.i.i, label %bb.cg
 
 bb.cg:                                            ; preds = %.lr.ph.i.i.i.i.i.i54.i
-  %i.pa = shl i64 %.0386.i.i.i.i.i.i.i, 10
+  %i.pa = shl nuw nsw i64 %.0386.i.i.i.i.i.i.i, 10
   br label %bb.ci
 
 bb.ch:                                            ; preds = %.loopexit.i.i.i.i.i.i60.i
@@ -3119,7 +3122,7 @@ bb.cs:                                            ; preds = %_ZN2v88internal15Wr
   br i1 %.not.i.i.i.i.i.i71.i, label %_ZZN2v88internal7SlotSet7IterateILNS0_10AccessModeE0EZNS0_12_GLOBAL__N_125RememberedSetUpdatingItem37UpdateUntypedTrustedToTrustedPointersEvEUlNS0_19FullMaybeObjectSlotEE_EEmmmmT0_N4heap4base12BasicSlotSetILm8EE15EmptyBucketModeEENKUlmE0_clEm.exit.i.i.i.i.i.i.i, label %bb.ct
 
 bb.ct:                                            ; preds = %.lr.ph.i.i.i.i.i.i69.i
-  %i.ro = shl i64 %.03812.i.i.i.i.i.i70.i, 10
+  %i.ro = shl nuw nsw i64 %.03812.i.i.i.i.i.i70.i, 10
   br label %bb.cv
 
 bb.cu:                                            ; preds = %.loopexit.i.i.i.i.i.i78.i
@@ -3280,7 +3283,7 @@ bb.di:                                            ; preds = %bb.dh
   br i1 %.not.i.i.i.i.i4.i.i, label %_ZZN2v88internal7SlotSet7IterateILNS0_10AccessModeE0EZNS0_12_GLOBAL__N_125RememberedSetUpdatingItem37UpdateUntypedTrustedToTrustedPointersEvEUlNS0_19FullMaybeObjectSlotEE0_EEmmmmT0_N4heap4base12BasicSlotSetILm8EE15EmptyBucketModeEENKUlmE0_clEm.exit.i.i.i.i.i.i.i, label %bb.dj
 
 bb.dj:                                            ; preds = %.lr.ph.i.i.i.i.i3.i.i
-  %i.tr = shl i64 %.0386.i.i.i.i.i.i91.i, 10
+  %i.tr = shl nuw nsw i64 %.0386.i.i.i.i.i.i91.i, 10
   br label %bb.dl
 
 bb.dk:                                            ; preds = %.loopexit.i.i.i.i.i9.i.i

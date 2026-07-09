@@ -201,7 +201,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph899:                                        ; preds = %.lr.ph899.preheader, %.lr.ph899
   %indvars.iv1277 = phi i64 [ 0, %.lr.ph899.preheader ], [ %indvars.iv.next1278, %.lr.ph899 ] ; 2 uses
   %.1897 = phi ptr [ %0, %.lr.ph899.preheader ], [ %i.bu, %.lr.ph899 ] ; 2 uses
-  %.idx1347 = shl nsw i64 %indvars.iv1277, 8
+  %.idx1347 = shl nuw nsw i64 %indvars.iv1277, 8
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1347 ; 32 uses
   %.0.copyload.i.i = load i32, ptr %.1897, align 1
   %i.bt = zext i32 %.0.copyload.i.i to i64        ; 32 uses
@@ -338,7 +338,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph896:                                        ; preds = %.lr.ph896.preheader, %.lr.ph896
   %indvars.iv1272 = phi i64 [ 0, %.lr.ph896.preheader ], [ %indvars.iv.next1273, %.lr.ph896 ] ; 2 uses
   %.2894 = phi ptr [ %0, %.lr.ph896.preheader ], [ %i.fl, %.lr.ph896 ] ; 2 uses
-  %.idx1346 = shl nsw i64 %indvars.iv1272, 8
+  %.idx1346 = shl nuw nsw i64 %indvars.iv1272, 8
   %i.fk = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1346 ; 32 uses
   %.0.copyload.i.i458 = load i64, ptr %.2894, align 1 ; 32 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %.2894, i64 8
@@ -474,7 +474,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph893:                                        ; preds = %.lr.ph893.preheader, %.lr.ph893
   %indvars.iv1267 = phi i64 [ 0, %.lr.ph893.preheader ], [ %indvars.iv.next1268, %.lr.ph893 ] ; 2 uses
   %.3891 = phi ptr [ %0, %.lr.ph893.preheader ], [ %i.je, %.lr.ph893 ] ; 3 uses
-  %.idx1345 = shl nsw i64 %indvars.iv1267, 8
+  %.idx1345 = shl nuw nsw i64 %indvars.iv1267, 8
   %i.jb = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1345 ; 32 uses
   %.0.copyload.i.i459 = load i64, ptr %.3891, align 1 ; 22 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %.3891, i64 8
@@ -613,7 +613,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph890:                                        ; preds = %.lr.ph890.preheader, %.lr.ph890
   %indvars.iv1262 = phi i64 [ 0, %.lr.ph890.preheader ], [ %indvars.iv.next1263, %.lr.ph890 ] ; 2 uses
   %.4888 = phi ptr [ %0, %.lr.ph890.preheader ], [ %i.mw, %.lr.ph890 ] ; 3 uses
-  %.idx1344 = shl nsw i64 %indvars.iv1262, 8
+  %.idx1344 = shl nuw nsw i64 %indvars.iv1262, 8
   %i.mu = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1344 ; 32 uses
   %.0.copyload.i.i460 = load i64, ptr %.4888, align 1 ; 16 uses
   %i.mv = getelementptr inbounds nuw i8, ptr %.4888, i64 8
@@ -749,7 +749,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph887:                                        ; preds = %.lr.ph887.preheader, %.lr.ph887
   %indvars.iv1257 = phi i64 [ 0, %.lr.ph887.preheader ], [ %indvars.iv.next1258, %.lr.ph887 ] ; 2 uses
   %.5885 = phi ptr [ %0, %.lr.ph887.preheader ], [ %i.qo, %.lr.ph887 ] ; 4 uses
-  %.idx1343 = shl nsw i64 %indvars.iv1257, 8
+  %.idx1343 = shl nuw nsw i64 %indvars.iv1257, 8
   %i.qk = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1343 ; 32 uses
   %.0.copyload.i.i461 = load i64, ptr %.5885, align 1 ; 13 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %.5885, i64 8
@@ -890,7 +890,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph884:                                        ; preds = %.lr.ph884.preheader, %.lr.ph884
   %indvars.iv1252 = phi i64 [ 0, %.lr.ph884.preheader ], [ %indvars.iv.next1253, %.lr.ph884 ] ; 2 uses
   %.6882 = phi ptr [ %0, %.lr.ph884.preheader ], [ %i.uh, %.lr.ph884 ] ; 4 uses
-  %.idx1342 = shl nsw i64 %indvars.iv1252, 8
+  %.idx1342 = shl nuw nsw i64 %indvars.iv1252, 8
   %i.ue = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1342 ; 32 uses
   %.0.copyload.i.i462 = load i64, ptr %.6882, align 1 ; 11 uses
   %i.uf = getelementptr inbounds nuw i8, ptr %.6882, i64 8
@@ -1030,7 +1030,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph881:                                        ; preds = %.lr.ph881.preheader, %.lr.ph881
   %indvars.iv1247 = phi i64 [ 0, %.lr.ph881.preheader ], [ %indvars.iv.next1248, %.lr.ph881 ] ; 2 uses
   %.7879 = phi ptr [ %0, %.lr.ph881.preheader ], [ %i.yc, %.lr.ph881 ] ; 5 uses
-  %.idx1341 = shl nsw i64 %indvars.iv1247, 8
+  %.idx1341 = shl nuw nsw i64 %indvars.iv1247, 8
   %i.xx = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1341 ; 32 uses
   %.0.copyload.i.i465 = load i64, ptr %.7879, align 1 ; 10 uses
   %i.xy = getelementptr inbounds nuw i8, ptr %.7879, i64 8
@@ -1173,7 +1173,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph878:                                        ; preds = %.lr.ph878.preheader, %.lr.ph878
   %indvars.iv1242 = phi i64 [ 0, %.lr.ph878.preheader ], [ %indvars.iv.next1243, %.lr.ph878 ] ; 2 uses
   %.8876 = phi ptr [ %0, %.lr.ph878.preheader ], [ %i.abw, %.lr.ph878 ] ; 5 uses
-  %.idx1340 = shl nsw i64 %indvars.iv1242, 8
+  %.idx1340 = shl nuw nsw i64 %indvars.iv1242, 8
   %i.abs = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1340 ; 32 uses
   %.0.copyload.i.i466 = load i64, ptr %.8876, align 1 ; 8 uses
   %i.abt = getelementptr inbounds nuw i8, ptr %.8876, i64 8
@@ -1309,7 +1309,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph875:                                        ; preds = %.lr.ph875.preheader, %.lr.ph875
   %indvars.iv1237 = phi i64 [ 0, %.lr.ph875.preheader ], [ %indvars.iv.next1238, %.lr.ph875 ] ; 2 uses
   %.9873 = phi ptr [ %0, %.lr.ph875.preheader ], [ %i.afm, %.lr.ph875 ] ; 6 uses
-  %.idx1339 = shl nsw i64 %indvars.iv1237, 8
+  %.idx1339 = shl nuw nsw i64 %indvars.iv1237, 8
   %i.afg = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1339 ; 32 uses
   %.0.copyload.i.i468 = load i64, ptr %.9873, align 1 ; 8 uses
   %i.afh = getelementptr inbounds nuw i8, ptr %.9873, i64 8
@@ -1454,7 +1454,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph872:                                        ; preds = %.lr.ph872.preheader, %.lr.ph872
   %indvars.iv1232 = phi i64 [ 0, %.lr.ph872.preheader ], [ %indvars.iv.next1233, %.lr.ph872 ] ; 2 uses
   %.10870 = phi ptr [ %0, %.lr.ph872.preheader ], [ %i.ajh, %.lr.ph872 ] ; 6 uses
-  %.idx1338 = shl nsw i64 %indvars.iv1232, 8
+  %.idx1338 = shl nuw nsw i64 %indvars.iv1232, 8
   %i.ajc = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1338 ; 32 uses
   %.0.copyload.i.i469 = load i64, ptr %.10870, align 1 ; 7 uses
   %i.ajd = getelementptr inbounds nuw i8, ptr %.10870, i64 8
@@ -1598,7 +1598,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph869:                                        ; preds = %.lr.ph869.preheader, %.lr.ph869
   %indvars.iv1227 = phi i64 [ 0, %.lr.ph869.preheader ], [ %indvars.iv.next1228, %.lr.ph869 ] ; 2 uses
   %.11867 = phi ptr [ %0, %.lr.ph869.preheader ], [ %i.ane, %.lr.ph869 ] ; 7 uses
-  %.idx1337 = shl nsw i64 %indvars.iv1227, 8
+  %.idx1337 = shl nuw nsw i64 %indvars.iv1227, 8
   %i.amx = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1337 ; 32 uses
   %.0.copyload.i.i474 = load i64, ptr %.11867, align 1 ; 6 uses
   %i.amy = getelementptr inbounds nuw i8, ptr %.11867, i64 8
@@ -1745,7 +1745,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph866:                                        ; preds = %.lr.ph866.preheader, %.lr.ph866
   %indvars.iv1222 = phi i64 [ 0, %.lr.ph866.preheader ], [ %indvars.iv.next1223, %.lr.ph866 ] ; 2 uses
   %.12864 = phi ptr [ %0, %.lr.ph866.preheader ], [ %i.ara, %.lr.ph866 ] ; 7 uses
-  %.idx1336 = shl nsw i64 %indvars.iv1222, 8
+  %.idx1336 = shl nuw nsw i64 %indvars.iv1222, 8
   %i.aqu = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1336 ; 32 uses
   %.0.copyload.i.i475 = load i64, ptr %.12864, align 1 ; 6 uses
   %i.aqv = getelementptr inbounds nuw i8, ptr %.12864, i64 8
@@ -1889,7 +1889,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph863:                                        ; preds = %.lr.ph863.preheader, %.lr.ph863
   %indvars.iv1217 = phi i64 [ 0, %.lr.ph863.preheader ], [ %indvars.iv.next1218, %.lr.ph863 ] ; 2 uses
   %.13861 = phi ptr [ %0, %.lr.ph863.preheader ], [ %i.auw, %.lr.ph863 ] ; 8 uses
-  %.idx1335 = shl nsw i64 %indvars.iv1217, 8
+  %.idx1335 = shl nuw nsw i64 %indvars.iv1217, 8
   %i.auo = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1335 ; 32 uses
   %.0.copyload.i.i481 = load i64, ptr %.13861, align 1 ; 5 uses
   %i.aup = getelementptr inbounds nuw i8, ptr %.13861, i64 8
@@ -2038,7 +2038,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph860:                                        ; preds = %.lr.ph860.preheader, %.lr.ph860
   %indvars.iv1212 = phi i64 [ 0, %.lr.ph860.preheader ], [ %indvars.iv.next1213, %.lr.ph860 ] ; 2 uses
   %.14858 = phi ptr [ %0, %.lr.ph860.preheader ], [ %i.ayt, %.lr.ph860 ] ; 8 uses
-  %.idx1334 = shl nsw i64 %indvars.iv1212, 8
+  %.idx1334 = shl nuw nsw i64 %indvars.iv1212, 8
   %i.aym = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1334 ; 32 uses
   %.0.copyload.i.i483 = load i64, ptr %.14858, align 1 ; 5 uses
   %i.ayn = getelementptr inbounds nuw i8, ptr %.14858, i64 8
@@ -2186,7 +2186,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph857:                                        ; preds = %.lr.ph857.preheader, %.lr.ph857
   %indvars.iv1207 = phi i64 [ 0, %.lr.ph857.preheader ], [ %indvars.iv.next1208, %.lr.ph857 ] ; 2 uses
   %.15855 = phi ptr [ %0, %.lr.ph857.preheader ], [ %i.bcs, %.lr.ph857 ] ; 9 uses
-  %.idx1333 = shl nsw i64 %indvars.iv1207, 8
+  %.idx1333 = shl nuw nsw i64 %indvars.iv1207, 8
   %i.bcj = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1333 ; 32 uses
   %.0.copyload.i.i490 = load i64, ptr %.15855, align 1 ; 5 uses
   %i.bck = getelementptr inbounds nuw i8, ptr %.15855, i64 8
@@ -2337,7 +2337,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph854:                                        ; preds = %.lr.ph854.preheader, %.lr.ph854
   %indvars.iv1202 = phi i64 [ 0, %.lr.ph854.preheader ], [ %indvars.iv.next1203, %.lr.ph854 ] ; 2 uses
   %.16852 = phi ptr [ %0, %.lr.ph854.preheader ], [ %i.bgq, %.lr.ph854 ] ; 9 uses
-  %.idx1332 = shl nsw i64 %indvars.iv1202, 8
+  %.idx1332 = shl nuw nsw i64 %indvars.iv1202, 8
   %i.bgi = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1332 ; 32 uses
   %.0.copyload.i.i493 = load i64, ptr %.16852, align 1 ; 4 uses
   %i.bgj = getelementptr inbounds nuw i8, ptr %.16852, i64 8
@@ -2473,7 +2473,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph851:                                        ; preds = %.lr.ph851.preheader, %.lr.ph851
   %indvars.iv1197 = phi i64 [ 0, %.lr.ph851.preheader ], [ %indvars.iv.next1198, %.lr.ph851 ] ; 2 uses
   %.17849 = phi ptr [ %0, %.lr.ph851.preheader ], [ %i.bkc, %.lr.ph851 ] ; 10 uses
-  %.idx1331 = shl nsw i64 %indvars.iv1197, 8
+  %.idx1331 = shl nuw nsw i64 %indvars.iv1197, 8
   %i.bjs = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1331 ; 32 uses
   %.0.copyload.i.i501 = load i64, ptr %.17849, align 1 ; 4 uses
   %i.bjt = getelementptr inbounds nuw i8, ptr %.17849, i64 8
@@ -2626,7 +2626,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph848:                                        ; preds = %.lr.ph848.preheader, %.lr.ph848
   %indvars.iv1192 = phi i64 [ 0, %.lr.ph848.preheader ], [ %indvars.iv.next1193, %.lr.ph848 ] ; 2 uses
   %.18846 = phi ptr [ %0, %.lr.ph848.preheader ], [ %i.bob, %.lr.ph848 ] ; 10 uses
-  %.idx1330 = shl nsw i64 %indvars.iv1192, 8
+  %.idx1330 = shl nuw nsw i64 %indvars.iv1192, 8
   %i.bns = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1330 ; 32 uses
   %.0.copyload.i.i505 = load i64, ptr %.18846, align 1 ; 4 uses
   %i.bnt = getelementptr inbounds nuw i8, ptr %.18846, i64 8
@@ -2778,7 +2778,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph845:                                        ; preds = %.lr.ph845.preheader, %.lr.ph845
   %indvars.iv1187 = phi i64 [ 0, %.lr.ph845.preheader ], [ %indvars.iv.next1188, %.lr.ph845 ] ; 2 uses
   %.19843 = phi ptr [ %0, %.lr.ph845.preheader ], [ %i.bsc, %.lr.ph845 ] ; 11 uses
-  %.idx1329 = shl nsw i64 %indvars.iv1187, 8
+  %.idx1329 = shl nuw nsw i64 %indvars.iv1187, 8
   %i.brr = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1329 ; 32 uses
   %.0.copyload.i.i514 = load i64, ptr %.19843, align 1 ; 4 uses
   %i.brs = getelementptr inbounds nuw i8, ptr %.19843, i64 8
@@ -2933,7 +2933,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph842:                                        ; preds = %.lr.ph842.preheader, %.lr.ph842
   %indvars.iv1182 = phi i64 [ 0, %.lr.ph842.preheader ], [ %indvars.iv.next1183, %.lr.ph842 ] ; 2 uses
   %.20840 = phi ptr [ %0, %.lr.ph842.preheader ], [ %i.bwc, %.lr.ph842 ] ; 11 uses
-  %.idx1328 = shl nsw i64 %indvars.iv1182, 8
+  %.idx1328 = shl nuw nsw i64 %indvars.iv1182, 8
   %i.bvs = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1328 ; 32 uses
   %.0.copyload.i.i519 = load i64, ptr %.20840, align 1 ; 4 uses
   %i.bvt = getelementptr inbounds nuw i8, ptr %.20840, i64 8
@@ -3085,7 +3085,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph839:                                        ; preds = %.lr.ph839.preheader, %.lr.ph839
   %indvars.iv1177 = phi i64 [ 0, %.lr.ph839.preheader ], [ %indvars.iv.next1178, %.lr.ph839 ] ; 2 uses
   %.21837 = phi ptr [ %0, %.lr.ph839.preheader ], [ %i.cac, %.lr.ph839 ] ; 12 uses
-  %.idx1327 = shl nsw i64 %indvars.iv1177, 8
+  %.idx1327 = shl nuw nsw i64 %indvars.iv1177, 8
   %i.bzq = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1327 ; 32 uses
   %.0.copyload.i.i529 = load i64, ptr %.21837, align 1 ; 4 uses
   %i.bzr = getelementptr inbounds nuw i8, ptr %.21837, i64 8
@@ -3242,7 +3242,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph836:                                        ; preds = %.lr.ph836.preheader, %.lr.ph836
   %indvars.iv1172 = phi i64 [ 0, %.lr.ph836.preheader ], [ %indvars.iv.next1173, %.lr.ph836 ] ; 2 uses
   %.22834 = phi ptr [ %0, %.lr.ph836.preheader ], [ %i.ced, %.lr.ph836 ] ; 12 uses
-  %.idx1326 = shl nsw i64 %indvars.iv1172, 8
+  %.idx1326 = shl nuw nsw i64 %indvars.iv1172, 8
   %i.cds = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1326 ; 32 uses
   %.0.copyload.i.i535 = load i64, ptr %.22834, align 1 ; 3 uses
   %i.cdt = getelementptr inbounds nuw i8, ptr %.22834, i64 8
@@ -3398,7 +3398,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph833:                                        ; preds = %.lr.ph833.preheader, %.lr.ph833
   %indvars.iv1167 = phi i64 [ 0, %.lr.ph833.preheader ], [ %indvars.iv.next1168, %.lr.ph833 ] ; 2 uses
   %.23831 = phi ptr [ %0, %.lr.ph833.preheader ], [ %i.chu, %.lr.ph833 ]
-  %.idx1325 = shl nsw i64 %indvars.iv1167, 8
+  %.idx1325 = shl nuw nsw i64 %indvars.iv1167, 8
   %i.cht = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1325
   %i.chu = tail call noundef ptr @_ZN5arrow8internal11unpack23_64EPKhPm(ptr noundef %.23831, ptr noundef %i.cht)
   %indvars.iv.next1168 = add nuw nsw i64 %indvars.iv1167, 1 ; 2 uses
@@ -3408,7 +3408,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph830:                                        ; preds = %.lr.ph830.preheader, %.lr.ph830
   %indvars.iv1162 = phi i64 [ 0, %.lr.ph830.preheader ], [ %indvars.iv.next1163, %.lr.ph830 ] ; 2 uses
   %.24828 = phi ptr [ %0, %.lr.ph830.preheader ], [ %i.cih, %.lr.ph830 ] ; 13 uses
-  %.idx1324 = shl nsw i64 %indvars.iv1162, 8
+  %.idx1324 = shl nuw nsw i64 %indvars.iv1162, 8
   %i.chv = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1324 ; 32 uses
   %.0.copyload.i.i546 = load i64, ptr %.24828, align 1 ; 3 uses
   %i.chw = getelementptr inbounds nuw i8, ptr %.24828, i64 8
@@ -3560,7 +3560,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph827:                                        ; preds = %.lr.ph827.preheader, %.lr.ph827
   %indvars.iv1157 = phi i64 [ 0, %.lr.ph827.preheader ], [ %indvars.iv.next1158, %.lr.ph827 ] ; 2 uses
   %.25825 = phi ptr [ %0, %.lr.ph827.preheader ], [ %i.cls, %.lr.ph827 ]
-  %.idx1323 = shl nsw i64 %indvars.iv1157, 8
+  %.idx1323 = shl nuw nsw i64 %indvars.iv1157, 8
   %i.clr = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1323
   %i.cls = tail call noundef ptr @_ZN5arrow8internal11unpack25_64EPKhPm(ptr noundef %.25825, ptr noundef %i.clr)
   %indvars.iv.next1158 = add nuw nsw i64 %indvars.iv1157, 1 ; 2 uses
@@ -3570,7 +3570,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph824:                                        ; preds = %.lr.ph824.preheader, %.lr.ph824
   %indvars.iv1152 = phi i64 [ 0, %.lr.ph824.preheader ], [ %indvars.iv.next1153, %.lr.ph824 ] ; 2 uses
   %.26822 = phi ptr [ %0, %.lr.ph824.preheader ], [ %i.clu, %.lr.ph824 ]
-  %.idx1322 = shl nsw i64 %indvars.iv1152, 8
+  %.idx1322 = shl nuw nsw i64 %indvars.iv1152, 8
   %i.clt = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1322
   %i.clu = tail call noundef ptr @_ZN5arrow8internal11unpack26_64EPKhPm(ptr noundef %.26822, ptr noundef %i.clt)
   %indvars.iv.next1153 = add nuw nsw i64 %indvars.iv1152, 1 ; 2 uses
@@ -3580,7 +3580,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph821:                                        ; preds = %.lr.ph821.preheader, %.lr.ph821
   %indvars.iv1147 = phi i64 [ 0, %.lr.ph821.preheader ], [ %indvars.iv.next1148, %.lr.ph821 ] ; 2 uses
   %.27819 = phi ptr [ %0, %.lr.ph821.preheader ], [ %i.clw, %.lr.ph821 ]
-  %.idx1321 = shl nsw i64 %indvars.iv1147, 8
+  %.idx1321 = shl nuw nsw i64 %indvars.iv1147, 8
   %i.clv = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1321
   %i.clw = tail call noundef ptr @_ZN5arrow8internal11unpack27_64EPKhPm(ptr noundef %.27819, ptr noundef %i.clv)
   %indvars.iv.next1148 = add nuw nsw i64 %indvars.iv1147, 1 ; 2 uses
@@ -3590,7 +3590,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph818:                                        ; preds = %.lr.ph818.preheader, %.lr.ph818
   %indvars.iv1142 = phi i64 [ 0, %.lr.ph818.preheader ], [ %indvars.iv.next1143, %.lr.ph818 ] ; 2 uses
   %.28816 = phi ptr [ %0, %.lr.ph818.preheader ], [ %i.cly, %.lr.ph818 ]
-  %.idx1320 = shl nsw i64 %indvars.iv1142, 8
+  %.idx1320 = shl nuw nsw i64 %indvars.iv1142, 8
   %i.clx = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1320
   %i.cly = tail call noundef ptr @_ZN5arrow8internal11unpack28_64EPKhPm(ptr noundef %.28816, ptr noundef %i.clx)
   %indvars.iv.next1143 = add nuw nsw i64 %indvars.iv1142, 1 ; 2 uses
@@ -3600,7 +3600,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph815:                                        ; preds = %.lr.ph815.preheader, %.lr.ph815
   %indvars.iv1137 = phi i64 [ 0, %.lr.ph815.preheader ], [ %indvars.iv.next1138, %.lr.ph815 ] ; 2 uses
   %.29813 = phi ptr [ %0, %.lr.ph815.preheader ], [ %i.cma, %.lr.ph815 ]
-  %.idx1319 = shl nsw i64 %indvars.iv1137, 8
+  %.idx1319 = shl nuw nsw i64 %indvars.iv1137, 8
   %i.clz = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1319
   %i.cma = tail call noundef ptr @_ZN5arrow8internal11unpack29_64EPKhPm(ptr noundef %.29813, ptr noundef %i.clz)
   %indvars.iv.next1138 = add nuw nsw i64 %indvars.iv1137, 1 ; 2 uses
@@ -3610,7 +3610,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph812:                                        ; preds = %.lr.ph812.preheader, %.lr.ph812
   %indvars.iv1132 = phi i64 [ 0, %.lr.ph812.preheader ], [ %indvars.iv.next1133, %.lr.ph812 ] ; 2 uses
   %.30810 = phi ptr [ %0, %.lr.ph812.preheader ], [ %i.cmc, %.lr.ph812 ]
-  %.idx1318 = shl nsw i64 %indvars.iv1132, 8
+  %.idx1318 = shl nuw nsw i64 %indvars.iv1132, 8
   %i.cmb = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1318
   %i.cmc = tail call noundef ptr @_ZN5arrow8internal11unpack30_64EPKhPm(ptr noundef %.30810, ptr noundef %i.cmb)
   %indvars.iv.next1133 = add nuw nsw i64 %indvars.iv1132, 1 ; 2 uses
@@ -3620,7 +3620,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph809:                                        ; preds = %.lr.ph809.preheader, %.lr.ph809
   %indvars.iv1127 = phi i64 [ 0, %.lr.ph809.preheader ], [ %indvars.iv.next1128, %.lr.ph809 ] ; 2 uses
   %.31807 = phi ptr [ %0, %.lr.ph809.preheader ], [ %i.cme, %.lr.ph809 ]
-  %.idx1317 = shl nsw i64 %indvars.iv1127, 8
+  %.idx1317 = shl nuw nsw i64 %indvars.iv1127, 8
   %i.cmd = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1317
   %i.cme = tail call noundef ptr @_ZN5arrow8internal11unpack31_64EPKhPm(ptr noundef %.31807, ptr noundef %i.cmd)
   %indvars.iv.next1128 = add nuw nsw i64 %indvars.iv1127, 1 ; 2 uses
@@ -3630,7 +3630,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph806:                                        ; preds = %.lr.ph806.preheader, %.lr.ph806
   %indvars.iv1122 = phi i64 [ 0, %.lr.ph806.preheader ], [ %indvars.iv.next1123, %.lr.ph806 ] ; 2 uses
   %.32804 = phi ptr [ %0, %.lr.ph806.preheader ], [ %i.cmv, %.lr.ph806 ] ; 17 uses
-  %.idx1316 = shl nsw i64 %indvars.iv1122, 8
+  %.idx1316 = shl nuw nsw i64 %indvars.iv1122, 8
   %i.cmf = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1316 ; 32 uses
   %.0.copyload.i.i556 = load i64, ptr %.32804, align 1 ; 2 uses
   %i.cmg = getelementptr inbounds nuw i8, ptr %.32804, i64 8
@@ -3766,7 +3766,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph803:                                        ; preds = %.lr.ph803.preheader, %.lr.ph803
   %indvars.iv1117 = phi i64 [ 0, %.lr.ph803.preheader ], [ %indvars.iv.next1118, %.lr.ph803 ] ; 2 uses
   %.33801 = phi ptr [ %0, %.lr.ph803.preheader ], [ %i.cpi, %.lr.ph803 ]
-  %.idx1315 = shl nsw i64 %indvars.iv1117, 8
+  %.idx1315 = shl nuw nsw i64 %indvars.iv1117, 8
   %i.cph = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1315
   %i.cpi = tail call noundef ptr @_ZN5arrow8internal11unpack33_64EPKhPm(ptr noundef %.33801, ptr noundef %i.cph)
   %indvars.iv.next1118 = add nuw nsw i64 %indvars.iv1117, 1 ; 2 uses
@@ -3776,7 +3776,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph800:                                        ; preds = %.lr.ph800.preheader, %.lr.ph800
   %indvars.iv1112 = phi i64 [ 0, %.lr.ph800.preheader ], [ %indvars.iv.next1113, %.lr.ph800 ] ; 2 uses
   %.34798 = phi ptr [ %0, %.lr.ph800.preheader ], [ %i.cpk, %.lr.ph800 ]
-  %.idx1314 = shl nsw i64 %indvars.iv1112, 8
+  %.idx1314 = shl nuw nsw i64 %indvars.iv1112, 8
   %i.cpj = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1314
   %i.cpk = tail call noundef ptr @_ZN5arrow8internal11unpack34_64EPKhPm(ptr noundef %.34798, ptr noundef %i.cpj)
   %indvars.iv.next1113 = add nuw nsw i64 %indvars.iv1112, 1 ; 2 uses
@@ -3786,7 +3786,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph797:                                        ; preds = %.lr.ph797.preheader, %.lr.ph797
   %indvars.iv1107 = phi i64 [ 0, %.lr.ph797.preheader ], [ %indvars.iv.next1108, %.lr.ph797 ] ; 2 uses
   %.35795 = phi ptr [ %0, %.lr.ph797.preheader ], [ %i.cpm, %.lr.ph797 ]
-  %.idx1313 = shl nsw i64 %indvars.iv1107, 8
+  %.idx1313 = shl nuw nsw i64 %indvars.iv1107, 8
   %i.cpl = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1313
   %i.cpm = tail call noundef ptr @_ZN5arrow8internal11unpack35_64EPKhPm(ptr noundef %.35795, ptr noundef %i.cpl)
   %indvars.iv.next1108 = add nuw nsw i64 %indvars.iv1107, 1 ; 2 uses
@@ -3796,7 +3796,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph794:                                        ; preds = %.lr.ph794.preheader, %.lr.ph794
   %indvars.iv1102 = phi i64 [ 0, %.lr.ph794.preheader ], [ %indvars.iv.next1103, %.lr.ph794 ] ; 2 uses
   %.36792 = phi ptr [ %0, %.lr.ph794.preheader ], [ %i.cpo, %.lr.ph794 ]
-  %.idx1312 = shl nsw i64 %indvars.iv1102, 8
+  %.idx1312 = shl nuw nsw i64 %indvars.iv1102, 8
   %i.cpn = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1312
   %i.cpo = tail call noundef ptr @_ZN5arrow8internal11unpack36_64EPKhPm(ptr noundef %.36792, ptr noundef %i.cpn)
   %indvars.iv.next1103 = add nuw nsw i64 %indvars.iv1102, 1 ; 2 uses
@@ -3806,7 +3806,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph791:                                        ; preds = %.lr.ph791.preheader, %.lr.ph791
   %indvars.iv1097 = phi i64 [ 0, %.lr.ph791.preheader ], [ %indvars.iv.next1098, %.lr.ph791 ] ; 2 uses
   %.37789 = phi ptr [ %0, %.lr.ph791.preheader ], [ %i.cpq, %.lr.ph791 ]
-  %.idx1311 = shl nsw i64 %indvars.iv1097, 8
+  %.idx1311 = shl nuw nsw i64 %indvars.iv1097, 8
   %i.cpp = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1311
   %i.cpq = tail call noundef ptr @_ZN5arrow8internal11unpack37_64EPKhPm(ptr noundef %.37789, ptr noundef %i.cpp)
   %indvars.iv.next1098 = add nuw nsw i64 %indvars.iv1097, 1 ; 2 uses
@@ -3816,7 +3816,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph788:                                        ; preds = %.lr.ph788.preheader, %.lr.ph788
   %indvars.iv1092 = phi i64 [ 0, %.lr.ph788.preheader ], [ %indvars.iv.next1093, %.lr.ph788 ] ; 2 uses
   %.38786 = phi ptr [ %0, %.lr.ph788.preheader ], [ %i.cps, %.lr.ph788 ]
-  %.idx1310 = shl nsw i64 %indvars.iv1092, 8
+  %.idx1310 = shl nuw nsw i64 %indvars.iv1092, 8
   %i.cpr = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1310
   %i.cps = tail call noundef ptr @_ZN5arrow8internal11unpack38_64EPKhPm(ptr noundef %.38786, ptr noundef %i.cpr)
   %indvars.iv.next1093 = add nuw nsw i64 %indvars.iv1092, 1 ; 2 uses
@@ -3826,7 +3826,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph785:                                        ; preds = %.lr.ph785.preheader, %.lr.ph785
   %indvars.iv1087 = phi i64 [ 0, %.lr.ph785.preheader ], [ %indvars.iv.next1088, %.lr.ph785 ] ; 2 uses
   %.39783 = phi ptr [ %0, %.lr.ph785.preheader ], [ %i.cpu, %.lr.ph785 ]
-  %.idx1309 = shl nsw i64 %indvars.iv1087, 8
+  %.idx1309 = shl nuw nsw i64 %indvars.iv1087, 8
   %i.cpt = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1309
   %i.cpu = tail call noundef ptr @_ZN5arrow8internal11unpack39_64EPKhPm(ptr noundef %.39783, ptr noundef %i.cpt)
   %indvars.iv.next1088 = add nuw nsw i64 %indvars.iv1087, 1 ; 2 uses
@@ -3836,7 +3836,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph782:                                        ; preds = %.lr.ph782.preheader, %.lr.ph782
   %indvars.iv1082 = phi i64 [ 0, %.lr.ph782.preheader ], [ %indvars.iv.next1083, %.lr.ph782 ] ; 2 uses
   %.40780 = phi ptr [ %0, %.lr.ph782.preheader ], [ %i.cpw, %.lr.ph782 ]
-  %.idx1308 = shl nsw i64 %indvars.iv1082, 8
+  %.idx1308 = shl nuw nsw i64 %indvars.iv1082, 8
   %i.cpv = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1308
   %i.cpw = tail call noundef ptr @_ZN5arrow8internal11unpack40_64EPKhPm(ptr noundef %.40780, ptr noundef %i.cpv)
   %indvars.iv.next1083 = add nuw nsw i64 %indvars.iv1082, 1 ; 2 uses
@@ -3846,7 +3846,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph779:                                        ; preds = %.lr.ph779.preheader, %.lr.ph779
   %indvars.iv1077 = phi i64 [ 0, %.lr.ph779.preheader ], [ %indvars.iv.next1078, %.lr.ph779 ] ; 2 uses
   %.41777 = phi ptr [ %0, %.lr.ph779.preheader ], [ %i.cpy, %.lr.ph779 ]
-  %.idx1307 = shl nsw i64 %indvars.iv1077, 8
+  %.idx1307 = shl nuw nsw i64 %indvars.iv1077, 8
   %i.cpx = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1307
   %i.cpy = tail call noundef ptr @_ZN5arrow8internal11unpack41_64EPKhPm(ptr noundef %.41777, ptr noundef %i.cpx)
   %indvars.iv.next1078 = add nuw nsw i64 %indvars.iv1077, 1 ; 2 uses
@@ -3856,7 +3856,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph776:                                        ; preds = %.lr.ph776.preheader, %.lr.ph776
   %indvars.iv1072 = phi i64 [ 0, %.lr.ph776.preheader ], [ %indvars.iv.next1073, %.lr.ph776 ] ; 2 uses
   %.42774 = phi ptr [ %0, %.lr.ph776.preheader ], [ %i.cqa, %.lr.ph776 ]
-  %.idx1306 = shl nsw i64 %indvars.iv1072, 8
+  %.idx1306 = shl nuw nsw i64 %indvars.iv1072, 8
   %i.cpz = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1306
   %i.cqa = tail call noundef ptr @_ZN5arrow8internal11unpack42_64EPKhPm(ptr noundef %.42774, ptr noundef %i.cpz)
   %indvars.iv.next1073 = add nuw nsw i64 %indvars.iv1072, 1 ; 2 uses
@@ -3866,7 +3866,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph773:                                        ; preds = %.lr.ph773.preheader, %.lr.ph773
   %indvars.iv1067 = phi i64 [ 0, %.lr.ph773.preheader ], [ %indvars.iv.next1068, %.lr.ph773 ] ; 2 uses
   %.43771 = phi ptr [ %0, %.lr.ph773.preheader ], [ %i.cqc, %.lr.ph773 ]
-  %.idx1305 = shl nsw i64 %indvars.iv1067, 8
+  %.idx1305 = shl nuw nsw i64 %indvars.iv1067, 8
   %i.cqb = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1305
   %i.cqc = tail call noundef ptr @_ZN5arrow8internal11unpack43_64EPKhPm(ptr noundef %.43771, ptr noundef %i.cqb)
   %indvars.iv.next1068 = add nuw nsw i64 %indvars.iv1067, 1 ; 2 uses
@@ -3876,7 +3876,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph770:                                        ; preds = %.lr.ph770.preheader, %.lr.ph770
   %indvars.iv1062 = phi i64 [ 0, %.lr.ph770.preheader ], [ %indvars.iv.next1063, %.lr.ph770 ] ; 2 uses
   %.44768 = phi ptr [ %0, %.lr.ph770.preheader ], [ %i.cqe, %.lr.ph770 ]
-  %.idx1304 = shl nsw i64 %indvars.iv1062, 8
+  %.idx1304 = shl nuw nsw i64 %indvars.iv1062, 8
   %i.cqd = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1304
   %i.cqe = tail call noundef ptr @_ZN5arrow8internal11unpack44_64EPKhPm(ptr noundef %.44768, ptr noundef %i.cqd)
   %indvars.iv.next1063 = add nuw nsw i64 %indvars.iv1062, 1 ; 2 uses
@@ -3886,7 +3886,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph767:                                        ; preds = %.lr.ph767.preheader, %.lr.ph767
   %indvars.iv1057 = phi i64 [ 0, %.lr.ph767.preheader ], [ %indvars.iv.next1058, %.lr.ph767 ] ; 2 uses
   %.45765 = phi ptr [ %0, %.lr.ph767.preheader ], [ %i.cqg, %.lr.ph767 ]
-  %.idx1303 = shl nsw i64 %indvars.iv1057, 8
+  %.idx1303 = shl nuw nsw i64 %indvars.iv1057, 8
   %i.cqf = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1303
   %i.cqg = tail call noundef ptr @_ZN5arrow8internal11unpack45_64EPKhPm(ptr noundef %.45765, ptr noundef %i.cqf)
   %indvars.iv.next1058 = add nuw nsw i64 %indvars.iv1057, 1 ; 2 uses
@@ -3896,7 +3896,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph764:                                        ; preds = %.lr.ph764.preheader, %.lr.ph764
   %indvars.iv1052 = phi i64 [ 0, %.lr.ph764.preheader ], [ %indvars.iv.next1053, %.lr.ph764 ] ; 2 uses
   %.46762 = phi ptr [ %0, %.lr.ph764.preheader ], [ %i.cqi, %.lr.ph764 ]
-  %.idx1302 = shl nsw i64 %indvars.iv1052, 8
+  %.idx1302 = shl nuw nsw i64 %indvars.iv1052, 8
   %i.cqh = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1302
   %i.cqi = tail call noundef ptr @_ZN5arrow8internal11unpack46_64EPKhPm(ptr noundef %.46762, ptr noundef %i.cqh)
   %indvars.iv.next1053 = add nuw nsw i64 %indvars.iv1052, 1 ; 2 uses
@@ -3906,7 +3906,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph761:                                        ; preds = %.lr.ph761.preheader, %.lr.ph761
   %indvars.iv1047 = phi i64 [ 0, %.lr.ph761.preheader ], [ %indvars.iv.next1048, %.lr.ph761 ] ; 2 uses
   %.47759 = phi ptr [ %0, %.lr.ph761.preheader ], [ %i.cqk, %.lr.ph761 ]
-  %.idx1301 = shl nsw i64 %indvars.iv1047, 8
+  %.idx1301 = shl nuw nsw i64 %indvars.iv1047, 8
   %i.cqj = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1301
   %i.cqk = tail call noundef ptr @_ZN5arrow8internal11unpack47_64EPKhPm(ptr noundef %.47759, ptr noundef %i.cqj)
   %indvars.iv.next1048 = add nuw nsw i64 %indvars.iv1047, 1 ; 2 uses
@@ -3916,7 +3916,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph758:                                        ; preds = %.lr.ph758.preheader, %.lr.ph758
   %indvars.iv1042 = phi i64 [ 0, %.lr.ph758.preheader ], [ %indvars.iv.next1043, %.lr.ph758 ] ; 2 uses
   %.48756 = phi ptr [ %0, %.lr.ph758.preheader ], [ %i.crj, %.lr.ph758 ] ; 25 uses
-  %.idx1300 = shl nsw i64 %indvars.iv1042, 8
+  %.idx1300 = shl nuw nsw i64 %indvars.iv1042, 8
   %i.cql = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1300 ; 32 uses
   %.0.copyload.i.i564 = load i64, ptr %.48756, align 1 ; 2 uses
   %i.cqm = getelementptr inbounds nuw i8, ptr %.48756, i64 8
@@ -4084,7 +4084,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph755:                                        ; preds = %.lr.ph755.preheader, %.lr.ph755
   %indvars.iv1037 = phi i64 [ 0, %.lr.ph755.preheader ], [ %indvars.iv.next1038, %.lr.ph755 ] ; 2 uses
   %.49753 = phi ptr [ %0, %.lr.ph755.preheader ], [ %i.cum, %.lr.ph755 ]
-  %.idx1299 = shl nsw i64 %indvars.iv1037, 8
+  %.idx1299 = shl nuw nsw i64 %indvars.iv1037, 8
   %i.cul = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1299
   %i.cum = tail call noundef ptr @_ZN5arrow8internal11unpack49_64EPKhPm(ptr noundef %.49753, ptr noundef %i.cul)
   %indvars.iv.next1038 = add nuw nsw i64 %indvars.iv1037, 1 ; 2 uses
@@ -4094,7 +4094,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph752:                                        ; preds = %.lr.ph752.preheader, %.lr.ph752
   %indvars.iv1032 = phi i64 [ 0, %.lr.ph752.preheader ], [ %indvars.iv.next1033, %.lr.ph752 ] ; 2 uses
   %.50750 = phi ptr [ %0, %.lr.ph752.preheader ], [ %i.cuo, %.lr.ph752 ]
-  %.idx1298 = shl nsw i64 %indvars.iv1032, 8
+  %.idx1298 = shl nuw nsw i64 %indvars.iv1032, 8
   %i.cun = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1298
   %i.cuo = tail call noundef ptr @_ZN5arrow8internal11unpack50_64EPKhPm(ptr noundef %.50750, ptr noundef %i.cun)
   %indvars.iv.next1033 = add nuw nsw i64 %indvars.iv1032, 1 ; 2 uses
@@ -4104,7 +4104,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph749:                                        ; preds = %.lr.ph749.preheader, %.lr.ph749
   %indvars.iv1027 = phi i64 [ 0, %.lr.ph749.preheader ], [ %indvars.iv.next1028, %.lr.ph749 ] ; 2 uses
   %.51747 = phi ptr [ %0, %.lr.ph749.preheader ], [ %i.cuq, %.lr.ph749 ]
-  %.idx1297 = shl nsw i64 %indvars.iv1027, 8
+  %.idx1297 = shl nuw nsw i64 %indvars.iv1027, 8
   %i.cup = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1297
   %i.cuq = tail call noundef ptr @_ZN5arrow8internal11unpack51_64EPKhPm(ptr noundef %.51747, ptr noundef %i.cup)
   %indvars.iv.next1028 = add nuw nsw i64 %indvars.iv1027, 1 ; 2 uses
@@ -4114,7 +4114,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph746:                                        ; preds = %.lr.ph746.preheader, %.lr.ph746
   %indvars.iv1022 = phi i64 [ 0, %.lr.ph746.preheader ], [ %indvars.iv.next1023, %.lr.ph746 ] ; 2 uses
   %.52744 = phi ptr [ %0, %.lr.ph746.preheader ], [ %i.cus, %.lr.ph746 ]
-  %.idx1296 = shl nsw i64 %indvars.iv1022, 8
+  %.idx1296 = shl nuw nsw i64 %indvars.iv1022, 8
   %i.cur = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1296
   %i.cus = tail call noundef ptr @_ZN5arrow8internal11unpack52_64EPKhPm(ptr noundef %.52744, ptr noundef %i.cur)
   %indvars.iv.next1023 = add nuw nsw i64 %indvars.iv1022, 1 ; 2 uses
@@ -4124,7 +4124,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph743:                                        ; preds = %.lr.ph743.preheader, %.lr.ph743
   %indvars.iv1017 = phi i64 [ 0, %.lr.ph743.preheader ], [ %indvars.iv.next1018, %.lr.ph743 ] ; 2 uses
   %.53741 = phi ptr [ %0, %.lr.ph743.preheader ], [ %i.cuu, %.lr.ph743 ]
-  %.idx1295 = shl nsw i64 %indvars.iv1017, 8
+  %.idx1295 = shl nuw nsw i64 %indvars.iv1017, 8
   %i.cut = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1295
   %i.cuu = tail call noundef ptr @_ZN5arrow8internal11unpack53_64EPKhPm(ptr noundef %.53741, ptr noundef %i.cut)
   %indvars.iv.next1018 = add nuw nsw i64 %indvars.iv1017, 1 ; 2 uses
@@ -4134,7 +4134,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph740:                                        ; preds = %.lr.ph740.preheader, %.lr.ph740
   %indvars.iv1012 = phi i64 [ 0, %.lr.ph740.preheader ], [ %indvars.iv.next1013, %.lr.ph740 ] ; 2 uses
   %.54738 = phi ptr [ %0, %.lr.ph740.preheader ], [ %i.cuw, %.lr.ph740 ]
-  %.idx1294 = shl nsw i64 %indvars.iv1012, 8
+  %.idx1294 = shl nuw nsw i64 %indvars.iv1012, 8
   %i.cuv = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1294
   %i.cuw = tail call noundef ptr @_ZN5arrow8internal11unpack54_64EPKhPm(ptr noundef %.54738, ptr noundef %i.cuv)
   %indvars.iv.next1013 = add nuw nsw i64 %indvars.iv1012, 1 ; 2 uses
@@ -4144,7 +4144,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph737:                                        ; preds = %.lr.ph737.preheader, %.lr.ph737
   %indvars.iv1007 = phi i64 [ 0, %.lr.ph737.preheader ], [ %indvars.iv.next1008, %.lr.ph737 ] ; 2 uses
   %.55735 = phi ptr [ %0, %.lr.ph737.preheader ], [ %i.cuy, %.lr.ph737 ]
-  %.idx1293 = shl nsw i64 %indvars.iv1007, 8
+  %.idx1293 = shl nuw nsw i64 %indvars.iv1007, 8
   %i.cux = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1293
   %i.cuy = tail call noundef ptr @_ZN5arrow8internal11unpack55_64EPKhPm(ptr noundef %.55735, ptr noundef %i.cux)
   %indvars.iv.next1008 = add nuw nsw i64 %indvars.iv1007, 1 ; 2 uses
@@ -4154,7 +4154,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph734:                                        ; preds = %.lr.ph734.preheader, %.lr.ph734
   %indvars.iv1002 = phi i64 [ 0, %.lr.ph734.preheader ], [ %indvars.iv.next1003, %.lr.ph734 ] ; 2 uses
   %.56732 = phi ptr [ %0, %.lr.ph734.preheader ], [ %i.cva, %.lr.ph734 ]
-  %.idx1292 = shl nsw i64 %indvars.iv1002, 8
+  %.idx1292 = shl nuw nsw i64 %indvars.iv1002, 8
   %i.cuz = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1292
   %i.cva = tail call noundef ptr @_ZN5arrow8internal11unpack56_64EPKhPm(ptr noundef %.56732, ptr noundef %i.cuz)
   %indvars.iv.next1003 = add nuw nsw i64 %indvars.iv1002, 1 ; 2 uses
@@ -4164,7 +4164,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph731:                                        ; preds = %.lr.ph731.preheader, %.lr.ph731
   %indvars.iv997 = phi i64 [ 0, %.lr.ph731.preheader ], [ %indvars.iv.next998, %.lr.ph731 ] ; 2 uses
   %.57729 = phi ptr [ %0, %.lr.ph731.preheader ], [ %i.cvc, %.lr.ph731 ]
-  %.idx1291 = shl nsw i64 %indvars.iv997, 8
+  %.idx1291 = shl nuw nsw i64 %indvars.iv997, 8
   %i.cvb = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1291
   %i.cvc = tail call noundef ptr @_ZN5arrow8internal11unpack57_64EPKhPm(ptr noundef %.57729, ptr noundef %i.cvb)
   %indvars.iv.next998 = add nuw nsw i64 %indvars.iv997, 1 ; 2 uses
@@ -4174,7 +4174,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph728:                                        ; preds = %.lr.ph728.preheader, %.lr.ph728
   %indvars.iv992 = phi i64 [ 0, %.lr.ph728.preheader ], [ %indvars.iv.next993, %.lr.ph728 ] ; 2 uses
   %.58726 = phi ptr [ %0, %.lr.ph728.preheader ], [ %i.cve, %.lr.ph728 ]
-  %.idx1290 = shl nsw i64 %indvars.iv992, 8
+  %.idx1290 = shl nuw nsw i64 %indvars.iv992, 8
   %i.cvd = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1290
   %i.cve = tail call noundef ptr @_ZN5arrow8internal11unpack58_64EPKhPm(ptr noundef %.58726, ptr noundef %i.cvd)
   %indvars.iv.next993 = add nuw nsw i64 %indvars.iv992, 1 ; 2 uses
@@ -4184,7 +4184,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph725:                                        ; preds = %.lr.ph725.preheader, %.lr.ph725
   %indvars.iv987 = phi i64 [ 0, %.lr.ph725.preheader ], [ %indvars.iv.next988, %.lr.ph725 ] ; 2 uses
   %.59723 = phi ptr [ %0, %.lr.ph725.preheader ], [ %i.cvg, %.lr.ph725 ]
-  %.idx1289 = shl nsw i64 %indvars.iv987, 8
+  %.idx1289 = shl nuw nsw i64 %indvars.iv987, 8
   %i.cvf = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1289
   %i.cvg = tail call noundef ptr @_ZN5arrow8internal11unpack59_64EPKhPm(ptr noundef %.59723, ptr noundef %i.cvf)
   %indvars.iv.next988 = add nuw nsw i64 %indvars.iv987, 1 ; 2 uses
@@ -4194,7 +4194,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph722:                                        ; preds = %.lr.ph722.preheader, %.lr.ph722
   %indvars.iv982 = phi i64 [ 0, %.lr.ph722.preheader ], [ %indvars.iv.next983, %.lr.ph722 ] ; 2 uses
   %.60720 = phi ptr [ %0, %.lr.ph722.preheader ], [ %i.cvi, %.lr.ph722 ]
-  %.idx1288 = shl nsw i64 %indvars.iv982, 8
+  %.idx1288 = shl nuw nsw i64 %indvars.iv982, 8
   %i.cvh = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1288
   %i.cvi = tail call noundef ptr @_ZN5arrow8internal11unpack60_64EPKhPm(ptr noundef %.60720, ptr noundef %i.cvh)
   %indvars.iv.next983 = add nuw nsw i64 %indvars.iv982, 1 ; 2 uses
@@ -4204,7 +4204,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph719:                                        ; preds = %.lr.ph719.preheader, %.lr.ph719
   %indvars.iv977 = phi i64 [ 0, %.lr.ph719.preheader ], [ %indvars.iv.next978, %.lr.ph719 ] ; 2 uses
   %.61717 = phi ptr [ %0, %.lr.ph719.preheader ], [ %i.cvk, %.lr.ph719 ]
-  %.idx1287 = shl nsw i64 %indvars.iv977, 8
+  %.idx1287 = shl nuw nsw i64 %indvars.iv977, 8
   %i.cvj = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1287
   %i.cvk = tail call noundef ptr @_ZN5arrow8internal11unpack61_64EPKhPm(ptr noundef %.61717, ptr noundef %i.cvj)
   %indvars.iv.next978 = add nuw nsw i64 %indvars.iv977, 1 ; 2 uses
@@ -4214,7 +4214,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph716:                                        ; preds = %.lr.ph716.preheader, %.lr.ph716
   %indvars.iv972 = phi i64 [ 0, %.lr.ph716.preheader ], [ %indvars.iv.next973, %.lr.ph716 ] ; 2 uses
   %.62714 = phi ptr [ %0, %.lr.ph716.preheader ], [ %i.cvm, %.lr.ph716 ]
-  %.idx1286 = shl nsw i64 %indvars.iv972, 8
+  %.idx1286 = shl nuw nsw i64 %indvars.iv972, 8
   %i.cvl = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1286
   %i.cvm = tail call noundef ptr @_ZN5arrow8internal11unpack62_64EPKhPm(ptr noundef %.62714, ptr noundef %i.cvl)
   %indvars.iv.next973 = add nuw nsw i64 %indvars.iv972, 1 ; 2 uses
@@ -4224,7 +4224,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph713:                                        ; preds = %.lr.ph713.preheader, %.lr.ph713
   %indvars.iv967 = phi i64 [ 0, %.lr.ph713.preheader ], [ %indvars.iv.next968, %.lr.ph713 ] ; 2 uses
   %.63711 = phi ptr [ %0, %.lr.ph713.preheader ], [ %i.cvo, %.lr.ph713 ]
-  %.idx1285 = shl nsw i64 %indvars.iv967, 8
+  %.idx1285 = shl nuw nsw i64 %indvars.iv967, 8
   %i.cvn = getelementptr inbounds nuw i8, ptr %1, i64 %.idx1285
   %i.cvo = tail call noundef ptr @_ZN5arrow8internal11unpack63_64EPKhPm(ptr noundef %.63711, ptr noundef %i.cvn)
   %indvars.iv.next968 = add nuw nsw i64 %indvars.iv967, 1 ; 2 uses
@@ -4234,7 +4234,7 @@ begin_hunk_0_@_ZN5arrow8internal12_GLOBAL__N_116unpack64_defaultEPKhPmii:bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %.64709 = phi ptr [ %0, %.lr.ph.preheader ], [ %i.cwf, %.lr.ph ] ; 17 uses
-  %.idx = shl nsw i64 %indvars.iv, 8
+  %.idx = shl nuw nsw i64 %indvars.iv, 8
   %i.cvp = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 16 uses
   %i.cvq = getelementptr inbounds nuw i8, ptr %.64709, i64 16
   %i.cvr = getelementptr inbounds nuw i8, ptr %.64709, i64 32
@@ -4637,7 +4637,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph400:                                        ; preds = %.lr.ph400.preheader, %.lr.ph400
   %indvars.iv586 = phi i64 [ 0, %.lr.ph400.preheader ], [ %indvars.iv.next587, %.lr.ph400 ] ; 2 uses
   %.1398 = phi ptr [ %0, %.lr.ph400.preheader ], [ %i.ec, %.lr.ph400 ] ; 2 uses
-  %.idx624 = shl nsw i64 %indvars.iv586, 7
+  %.idx624 = shl nuw nsw i64 %indvars.iv586, 7
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 %.idx624 ; 32 uses
   %.0.copyload.i.i = load i32, ptr %.1398, align 4 ; 32 uses
   %i.an = and i32 %.0.copyload.i.i, 1
@@ -4773,7 +4773,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph397:                                        ; preds = %.lr.ph397.preheader, %.lr.ph397
   %indvars.iv581 = phi i64 [ 0, %.lr.ph397.preheader ], [ %indvars.iv.next582, %.lr.ph397 ] ; 2 uses
   %.2395 = phi ptr [ %0, %.lr.ph397.preheader ], [ %i.hs, %.lr.ph397 ] ; 3 uses
-  %.idx623 = shl nsw i64 %indvars.iv581, 7
+  %.idx623 = shl nuw nsw i64 %indvars.iv581, 7
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 %.idx623 ; 32 uses
   %.0.copyload.i.i234 = load i32, ptr %.2395, align 4 ; 16 uses
   %i.ee = and i32 %.0.copyload.i.i234, 3
@@ -4909,7 +4909,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph394:                                        ; preds = %.lr.ph394.preheader, %.lr.ph394
   %indvars.iv576 = phi i64 [ 0, %.lr.ph394.preheader ], [ %indvars.iv.next577, %.lr.ph394 ] ; 2 uses
   %.3392 = phi ptr [ %0, %.lr.ph394.preheader ], [ %i.lp, %.lr.ph394 ] ; 4 uses
-  %.idx622 = shl nsw i64 %indvars.iv576, 7
+  %.idx622 = shl nuw nsw i64 %indvars.iv576, 7
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 %.idx622 ; 32 uses
   %.0.copyload.i.i235 = load i32, ptr %.3392, align 4 ; 11 uses
   %i.hu = and i32 %.0.copyload.i.i235, 7
@@ -5055,7 +5055,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph391:                                        ; preds = %.lr.ph391.preheader, %.lr.ph391
   %indvars.iv571 = phi i64 [ 0, %.lr.ph391.preheader ], [ %indvars.iv.next572, %.lr.ph391 ] ; 2 uses
   %.4389 = phi ptr [ %0, %.lr.ph391.preheader ], [ %i.pd, %.lr.ph391 ] ; 5 uses
-  %.idx621 = shl nsw i64 %indvars.iv571, 7
+  %.idx621 = shl nuw nsw i64 %indvars.iv571, 7
   %i.lq = getelementptr inbounds nuw i8, ptr %1, i64 %.idx621 ; 32 uses
   %.0.copyload.i.i236 = load i32, ptr %.4389, align 4 ; 8 uses
   %i.lr = and i32 %.0.copyload.i.i236, 15
@@ -5191,7 +5191,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph388:                                        ; preds = %.lr.ph388.preheader, %.lr.ph388
   %indvars.iv566 = phi i64 [ 0, %.lr.ph388.preheader ], [ %indvars.iv.next567, %.lr.ph388 ] ; 2 uses
   %.5386 = phi ptr [ %0, %.lr.ph388.preheader ], [ %i.pf, %.lr.ph388 ]
-  %.idx620 = shl nsw i64 %indvars.iv566, 7
+  %.idx620 = shl nuw nsw i64 %indvars.iv566, 7
   %i.pe = getelementptr inbounds nuw i8, ptr %1, i64 %.idx620
   %i.pf = tail call noundef ptr @_ZN5arrow8internal10unpack5_32EPKjPj(ptr noundef %.5386, ptr noundef %i.pe)
   %indvars.iv.next567 = add nuw nsw i64 %indvars.iv566, 1 ; 2 uses
@@ -5201,7 +5201,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph385:                                        ; preds = %.lr.ph385.preheader, %.lr.ph385
   %indvars.iv561 = phi i64 [ 0, %.lr.ph385.preheader ], [ %indvars.iv.next562, %.lr.ph385 ] ; 2 uses
   %.6383 = phi ptr [ %0, %.lr.ph385.preheader ], [ %i.ph, %.lr.ph385 ]
-  %.idx619 = shl nsw i64 %indvars.iv561, 7
+  %.idx619 = shl nuw nsw i64 %indvars.iv561, 7
   %i.pg = getelementptr inbounds nuw i8, ptr %1, i64 %.idx619
   %i.ph = tail call noundef ptr @_ZN5arrow8internal10unpack6_32EPKjPj(ptr noundef %.6383, ptr noundef %i.pg)
   %indvars.iv.next562 = add nuw nsw i64 %indvars.iv561, 1 ; 2 uses
@@ -5211,7 +5211,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph382:                                        ; preds = %.lr.ph382.preheader, %.lr.ph382
   %indvars.iv556 = phi i64 [ 0, %.lr.ph382.preheader ], [ %indvars.iv.next557, %.lr.ph382 ] ; 2 uses
   %.7380 = phi ptr [ %0, %.lr.ph382.preheader ], [ %i.pj, %.lr.ph382 ]
-  %.idx618 = shl nsw i64 %indvars.iv556, 7
+  %.idx618 = shl nuw nsw i64 %indvars.iv556, 7
   %i.pi = getelementptr inbounds nuw i8, ptr %1, i64 %.idx618
   %i.pj = tail call noundef ptr @_ZN5arrow8internal10unpack7_32EPKjPj(ptr noundef %.7380, ptr noundef %i.pi)
   %indvars.iv.next557 = add nuw nsw i64 %indvars.iv556, 1 ; 2 uses
@@ -5221,7 +5221,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph379:                                        ; preds = %.lr.ph379.preheader, %.lr.ph379
   %indvars.iv551 = phi i64 [ 0, %.lr.ph379.preheader ], [ %indvars.iv.next552, %.lr.ph379 ] ; 2 uses
   %.8377 = phi ptr [ %0, %.lr.ph379.preheader ], [ %i.st, %.lr.ph379 ] ; 9 uses
-  %.idx617 = shl nsw i64 %indvars.iv551, 7
+  %.idx617 = shl nuw nsw i64 %indvars.iv551, 7
   %i.pk = getelementptr inbounds nuw i8, ptr %1, i64 %.idx617 ; 32 uses
   %.0.copyload.i.i239 = load i32, ptr %.8377, align 4 ; 4 uses
   %i.pl = and i32 %.0.copyload.i.i239, 255
@@ -5357,7 +5357,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph376:                                        ; preds = %.lr.ph376.preheader, %.lr.ph376
   %indvars.iv546 = phi i64 [ 0, %.lr.ph376.preheader ], [ %indvars.iv.next547, %.lr.ph376 ] ; 2 uses
   %.9374 = phi ptr [ %0, %.lr.ph376.preheader ], [ %i.sv, %.lr.ph376 ]
-  %.idx616 = shl nsw i64 %indvars.iv546, 7
+  %.idx616 = shl nuw nsw i64 %indvars.iv546, 7
   %i.su = getelementptr inbounds nuw i8, ptr %1, i64 %.idx616
   %i.sv = tail call noundef ptr @_ZN5arrow8internal10unpack9_32EPKjPj(ptr noundef %.9374, ptr noundef %i.su)
   %indvars.iv.next547 = add nuw nsw i64 %indvars.iv546, 1 ; 2 uses
@@ -5367,7 +5367,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph373:                                        ; preds = %.lr.ph373.preheader, %.lr.ph373
   %indvars.iv541 = phi i64 [ 0, %.lr.ph373.preheader ], [ %indvars.iv.next542, %.lr.ph373 ] ; 2 uses
   %.10371 = phi ptr [ %0, %.lr.ph373.preheader ], [ %i.sx, %.lr.ph373 ]
-  %.idx615 = shl nsw i64 %indvars.iv541, 7
+  %.idx615 = shl nuw nsw i64 %indvars.iv541, 7
   %i.sw = getelementptr inbounds nuw i8, ptr %1, i64 %.idx615
   %i.sx = tail call noundef ptr @_ZN5arrow8internal11unpack10_32EPKjPj(ptr noundef %.10371, ptr noundef %i.sw)
   %indvars.iv.next542 = add nuw nsw i64 %indvars.iv541, 1 ; 2 uses
@@ -5377,7 +5377,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph370:                                        ; preds = %.lr.ph370.preheader, %.lr.ph370
   %indvars.iv536 = phi i64 [ 0, %.lr.ph370.preheader ], [ %indvars.iv.next537, %.lr.ph370 ] ; 2 uses
   %.11368 = phi ptr [ %0, %.lr.ph370.preheader ], [ %i.sz, %.lr.ph370 ]
-  %.idx614 = shl nsw i64 %indvars.iv536, 7
+  %.idx614 = shl nuw nsw i64 %indvars.iv536, 7
   %i.sy = getelementptr inbounds nuw i8, ptr %1, i64 %.idx614
   %i.sz = tail call noundef ptr @_ZN5arrow8internal11unpack11_32EPKjPj(ptr noundef %.11368, ptr noundef %i.sy)
   %indvars.iv.next537 = add nuw nsw i64 %indvars.iv536, 1 ; 2 uses
@@ -5387,7 +5387,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph367:                                        ; preds = %.lr.ph367.preheader, %.lr.ph367
   %indvars.iv531 = phi i64 [ 0, %.lr.ph367.preheader ], [ %indvars.iv.next532, %.lr.ph367 ] ; 2 uses
   %.12365 = phi ptr [ %0, %.lr.ph367.preheader ], [ %i.tb, %.lr.ph367 ]
-  %.idx613 = shl nsw i64 %indvars.iv531, 7
+  %.idx613 = shl nuw nsw i64 %indvars.iv531, 7
   %i.ta = getelementptr inbounds nuw i8, ptr %1, i64 %.idx613
   %i.tb = tail call noundef ptr @_ZN5arrow8internal11unpack12_32EPKjPj(ptr noundef %.12365, ptr noundef %i.ta)
   %indvars.iv.next532 = add nuw nsw i64 %indvars.iv531, 1 ; 2 uses
@@ -5397,7 +5397,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph364:                                        ; preds = %.lr.ph364.preheader, %.lr.ph364
   %indvars.iv526 = phi i64 [ 0, %.lr.ph364.preheader ], [ %indvars.iv.next527, %.lr.ph364 ] ; 2 uses
   %.13362 = phi ptr [ %0, %.lr.ph364.preheader ], [ %i.td, %.lr.ph364 ]
-  %.idx612 = shl nsw i64 %indvars.iv526, 7
+  %.idx612 = shl nuw nsw i64 %indvars.iv526, 7
   %i.tc = getelementptr inbounds nuw i8, ptr %1, i64 %.idx612
   %i.td = tail call noundef ptr @_ZN5arrow8internal11unpack13_32EPKjPj(ptr noundef %.13362, ptr noundef %i.tc)
   %indvars.iv.next527 = add nuw nsw i64 %indvars.iv526, 1 ; 2 uses
@@ -5407,7 +5407,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph361:                                        ; preds = %.lr.ph361.preheader, %.lr.ph361
   %indvars.iv521 = phi i64 [ 0, %.lr.ph361.preheader ], [ %indvars.iv.next522, %.lr.ph361 ] ; 2 uses
   %.14359 = phi ptr [ %0, %.lr.ph361.preheader ], [ %i.tf, %.lr.ph361 ]
-  %.idx611 = shl nsw i64 %indvars.iv521, 7
+  %.idx611 = shl nuw nsw i64 %indvars.iv521, 7
   %i.te = getelementptr inbounds nuw i8, ptr %1, i64 %.idx611
   %i.tf = tail call noundef ptr @_ZN5arrow8internal11unpack14_32EPKjPj(ptr noundef %.14359, ptr noundef %i.te)
   %indvars.iv.next522 = add nuw nsw i64 %indvars.iv521, 1 ; 2 uses
@@ -5417,7 +5417,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph358:                                        ; preds = %.lr.ph358.preheader, %.lr.ph358
   %indvars.iv516 = phi i64 [ 0, %.lr.ph358.preheader ], [ %indvars.iv.next517, %.lr.ph358 ] ; 2 uses
   %.15356 = phi ptr [ %0, %.lr.ph358.preheader ], [ %i.th, %.lr.ph358 ]
-  %.idx610 = shl nsw i64 %indvars.iv516, 7
+  %.idx610 = shl nuw nsw i64 %indvars.iv516, 7
   %i.tg = getelementptr inbounds nuw i8, ptr %1, i64 %.idx610
   %i.th = tail call noundef ptr @_ZN5arrow8internal11unpack15_32EPKjPj(ptr noundef %.15356, ptr noundef %i.tg)
   %indvars.iv.next517 = add nuw nsw i64 %indvars.iv516, 1 ; 2 uses
@@ -5427,7 +5427,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph355:                                        ; preds = %.lr.ph355.preheader, %.lr.ph355
   %indvars.iv511 = phi i64 [ 0, %.lr.ph355.preheader ], [ %indvars.iv.next512, %.lr.ph355 ] ; 2 uses
   %.16353 = phi ptr [ %0, %.lr.ph355.preheader ], [ %i.wj, %.lr.ph355 ] ; 17 uses
-  %.idx609 = shl nsw i64 %indvars.iv511, 7
+  %.idx609 = shl nuw nsw i64 %indvars.iv511, 7
   %i.ti = getelementptr inbounds nuw i8, ptr %1, i64 %.idx609 ; 32 uses
   %.0.copyload.i.i240 = load i32, ptr %.16353, align 4 ; 2 uses
   %i.tj = and i32 %.0.copyload.i.i240, 65535
@@ -5563,7 +5563,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph352:                                        ; preds = %.lr.ph352.preheader, %.lr.ph352
   %indvars.iv506 = phi i64 [ 0, %.lr.ph352.preheader ], [ %indvars.iv.next507, %.lr.ph352 ] ; 2 uses
   %.17350 = phi ptr [ %0, %.lr.ph352.preheader ], [ %i.wl, %.lr.ph352 ]
-  %.idx608 = shl nsw i64 %indvars.iv506, 7
+  %.idx608 = shl nuw nsw i64 %indvars.iv506, 7
   %i.wk = getelementptr inbounds nuw i8, ptr %1, i64 %.idx608
   %i.wl = tail call noundef ptr @_ZN5arrow8internal11unpack17_32EPKjPj(ptr noundef %.17350, ptr noundef %i.wk)
   %indvars.iv.next507 = add nuw nsw i64 %indvars.iv506, 1 ; 2 uses
@@ -5573,7 +5573,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph349:                                        ; preds = %.lr.ph349.preheader, %.lr.ph349
   %indvars.iv501 = phi i64 [ 0, %.lr.ph349.preheader ], [ %indvars.iv.next502, %.lr.ph349 ] ; 2 uses
   %.18347 = phi ptr [ %0, %.lr.ph349.preheader ], [ %i.wn, %.lr.ph349 ]
-  %.idx607 = shl nsw i64 %indvars.iv501, 7
+  %.idx607 = shl nuw nsw i64 %indvars.iv501, 7
   %i.wm = getelementptr inbounds nuw i8, ptr %1, i64 %.idx607
   %i.wn = tail call noundef ptr @_ZN5arrow8internal11unpack18_32EPKjPj(ptr noundef %.18347, ptr noundef %i.wm)
   %indvars.iv.next502 = add nuw nsw i64 %indvars.iv501, 1 ; 2 uses
@@ -5583,7 +5583,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph346:                                        ; preds = %.lr.ph346.preheader, %.lr.ph346
   %indvars.iv496 = phi i64 [ 0, %.lr.ph346.preheader ], [ %indvars.iv.next497, %.lr.ph346 ] ; 2 uses
   %.19344 = phi ptr [ %0, %.lr.ph346.preheader ], [ %i.wp, %.lr.ph346 ]
-  %.idx606 = shl nsw i64 %indvars.iv496, 7
+  %.idx606 = shl nuw nsw i64 %indvars.iv496, 7
   %i.wo = getelementptr inbounds nuw i8, ptr %1, i64 %.idx606
   %i.wp = tail call noundef ptr @_ZN5arrow8internal11unpack19_32EPKjPj(ptr noundef %.19344, ptr noundef %i.wo)
   %indvars.iv.next497 = add nuw nsw i64 %indvars.iv496, 1 ; 2 uses
@@ -5593,7 +5593,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph343:                                        ; preds = %.lr.ph343.preheader, %.lr.ph343
   %indvars.iv491 = phi i64 [ 0, %.lr.ph343.preheader ], [ %indvars.iv.next492, %.lr.ph343 ] ; 2 uses
   %.20341 = phi ptr [ %0, %.lr.ph343.preheader ], [ %i.wr, %.lr.ph343 ]
-  %.idx605 = shl nsw i64 %indvars.iv491, 7
+  %.idx605 = shl nuw nsw i64 %indvars.iv491, 7
   %i.wq = getelementptr inbounds nuw i8, ptr %1, i64 %.idx605
   %i.wr = tail call noundef ptr @_ZN5arrow8internal11unpack20_32EPKjPj(ptr noundef %.20341, ptr noundef %i.wq)
   %indvars.iv.next492 = add nuw nsw i64 %indvars.iv491, 1 ; 2 uses
@@ -5603,7 +5603,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph340:                                        ; preds = %.lr.ph340.preheader, %.lr.ph340
   %indvars.iv486 = phi i64 [ 0, %.lr.ph340.preheader ], [ %indvars.iv.next487, %.lr.ph340 ] ; 2 uses
   %.21338 = phi ptr [ %0, %.lr.ph340.preheader ], [ %i.wt, %.lr.ph340 ]
-  %.idx604 = shl nsw i64 %indvars.iv486, 7
+  %.idx604 = shl nuw nsw i64 %indvars.iv486, 7
   %i.ws = getelementptr inbounds nuw i8, ptr %1, i64 %.idx604
   %i.wt = tail call noundef ptr @_ZN5arrow8internal11unpack21_32EPKjPj(ptr noundef %.21338, ptr noundef %i.ws)
   %indvars.iv.next487 = add nuw nsw i64 %indvars.iv486, 1 ; 2 uses
@@ -5613,7 +5613,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph337:                                        ; preds = %.lr.ph337.preheader, %.lr.ph337
   %indvars.iv481 = phi i64 [ 0, %.lr.ph337.preheader ], [ %indvars.iv.next482, %.lr.ph337 ] ; 2 uses
   %.22335 = phi ptr [ %0, %.lr.ph337.preheader ], [ %i.wv, %.lr.ph337 ]
-  %.idx603 = shl nsw i64 %indvars.iv481, 7
+  %.idx603 = shl nuw nsw i64 %indvars.iv481, 7
   %i.wu = getelementptr inbounds nuw i8, ptr %1, i64 %.idx603
   %i.wv = tail call noundef ptr @_ZN5arrow8internal11unpack22_32EPKjPj(ptr noundef %.22335, ptr noundef %i.wu)
   %indvars.iv.next482 = add nuw nsw i64 %indvars.iv481, 1 ; 2 uses
@@ -5623,7 +5623,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph334:                                        ; preds = %.lr.ph334.preheader, %.lr.ph334
   %indvars.iv476 = phi i64 [ 0, %.lr.ph334.preheader ], [ %indvars.iv.next477, %.lr.ph334 ] ; 2 uses
   %.23332 = phi ptr [ %0, %.lr.ph334.preheader ], [ %i.wx, %.lr.ph334 ]
-  %.idx602 = shl nsw i64 %indvars.iv476, 7
+  %.idx602 = shl nuw nsw i64 %indvars.iv476, 7
   %i.ww = getelementptr inbounds nuw i8, ptr %1, i64 %.idx602
   %i.wx = tail call noundef ptr @_ZN5arrow8internal11unpack23_32EPKjPj(ptr noundef %.23332, ptr noundef %i.ww)
   %indvars.iv.next477 = add nuw nsw i64 %indvars.iv476, 1 ; 2 uses
@@ -5633,7 +5633,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph331:                                        ; preds = %.lr.ph331.preheader, %.lr.ph331
   %indvars.iv471 = phi i64 [ 0, %.lr.ph331.preheader ], [ %indvars.iv.next472, %.lr.ph331 ] ; 2 uses
   %.24329 = phi ptr [ %0, %.lr.ph331.preheader ], [ %i.wz, %.lr.ph331 ]
-  %.idx601 = shl nsw i64 %indvars.iv471, 7
+  %.idx601 = shl nuw nsw i64 %indvars.iv471, 7
   %i.wy = getelementptr inbounds nuw i8, ptr %1, i64 %.idx601
   %i.wz = tail call noundef ptr @_ZN5arrow8internal11unpack24_32EPKjPj(ptr noundef %.24329, ptr noundef %i.wy)
   %indvars.iv.next472 = add nuw nsw i64 %indvars.iv471, 1 ; 2 uses
@@ -5643,7 +5643,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph328:                                        ; preds = %.lr.ph328.preheader, %.lr.ph328
   %indvars.iv466 = phi i64 [ 0, %.lr.ph328.preheader ], [ %indvars.iv.next467, %.lr.ph328 ] ; 2 uses
   %.25326 = phi ptr [ %0, %.lr.ph328.preheader ], [ %i.xb, %.lr.ph328 ]
-  %.idx600 = shl nsw i64 %indvars.iv466, 7
+  %.idx600 = shl nuw nsw i64 %indvars.iv466, 7
   %i.xa = getelementptr inbounds nuw i8, ptr %1, i64 %.idx600
   %i.xb = tail call noundef ptr @_ZN5arrow8internal11unpack25_32EPKjPj(ptr noundef %.25326, ptr noundef %i.xa)
   %indvars.iv.next467 = add nuw nsw i64 %indvars.iv466, 1 ; 2 uses
@@ -5653,7 +5653,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph325:                                        ; preds = %.lr.ph325.preheader, %.lr.ph325
   %indvars.iv461 = phi i64 [ 0, %.lr.ph325.preheader ], [ %indvars.iv.next462, %.lr.ph325 ] ; 2 uses
   %.26323 = phi ptr [ %0, %.lr.ph325.preheader ], [ %i.xd, %.lr.ph325 ]
-  %.idx599 = shl nsw i64 %indvars.iv461, 7
+  %.idx599 = shl nuw nsw i64 %indvars.iv461, 7
   %i.xc = getelementptr inbounds nuw i8, ptr %1, i64 %.idx599
   %i.xd = tail call noundef ptr @_ZN5arrow8internal11unpack26_32EPKjPj(ptr noundef %.26323, ptr noundef %i.xc)
   %indvars.iv.next462 = add nuw nsw i64 %indvars.iv461, 1 ; 2 uses
@@ -5663,7 +5663,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph322:                                        ; preds = %.lr.ph322.preheader, %.lr.ph322
   %indvars.iv456 = phi i64 [ 0, %.lr.ph322.preheader ], [ %indvars.iv.next457, %.lr.ph322 ] ; 2 uses
   %.27320 = phi ptr [ %0, %.lr.ph322.preheader ], [ %i.xf, %.lr.ph322 ]
-  %.idx598 = shl nsw i64 %indvars.iv456, 7
+  %.idx598 = shl nuw nsw i64 %indvars.iv456, 7
   %i.xe = getelementptr inbounds nuw i8, ptr %1, i64 %.idx598
   %i.xf = tail call noundef ptr @_ZN5arrow8internal11unpack27_32EPKjPj(ptr noundef %.27320, ptr noundef %i.xe)
   %indvars.iv.next457 = add nuw nsw i64 %indvars.iv456, 1 ; 2 uses
@@ -5673,7 +5673,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph319:                                        ; preds = %.lr.ph319.preheader, %.lr.ph319
   %indvars.iv451 = phi i64 [ 0, %.lr.ph319.preheader ], [ %indvars.iv.next452, %.lr.ph319 ] ; 2 uses
   %.28317 = phi ptr [ %0, %.lr.ph319.preheader ], [ %i.xh, %.lr.ph319 ]
-  %.idx597 = shl nsw i64 %indvars.iv451, 7
+  %.idx597 = shl nuw nsw i64 %indvars.iv451, 7
   %i.xg = getelementptr inbounds nuw i8, ptr %1, i64 %.idx597
   %i.xh = tail call noundef ptr @_ZN5arrow8internal11unpack28_32EPKjPj(ptr noundef %.28317, ptr noundef %i.xg)
   %indvars.iv.next452 = add nuw nsw i64 %indvars.iv451, 1 ; 2 uses
@@ -5683,7 +5683,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph316:                                        ; preds = %.lr.ph316.preheader, %.lr.ph316
   %indvars.iv446 = phi i64 [ 0, %.lr.ph316.preheader ], [ %indvars.iv.next447, %.lr.ph316 ] ; 2 uses
   %.29314 = phi ptr [ %0, %.lr.ph316.preheader ], [ %i.xj, %.lr.ph316 ]
-  %.idx596 = shl nsw i64 %indvars.iv446, 7
+  %.idx596 = shl nuw nsw i64 %indvars.iv446, 7
   %i.xi = getelementptr inbounds nuw i8, ptr %1, i64 %.idx596
   %i.xj = tail call noundef ptr @_ZN5arrow8internal11unpack29_32EPKjPj(ptr noundef %.29314, ptr noundef %i.xi)
   %indvars.iv.next447 = add nuw nsw i64 %indvars.iv446, 1 ; 2 uses
@@ -5693,7 +5693,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph313:                                        ; preds = %.lr.ph313.preheader, %.lr.ph313
   %indvars.iv441 = phi i64 [ 0, %.lr.ph313.preheader ], [ %indvars.iv.next442, %.lr.ph313 ] ; 2 uses
   %.30311 = phi ptr [ %0, %.lr.ph313.preheader ], [ %i.xl, %.lr.ph313 ]
-  %.idx595 = shl nsw i64 %indvars.iv441, 7
+  %.idx595 = shl nuw nsw i64 %indvars.iv441, 7
   %i.xk = getelementptr inbounds nuw i8, ptr %1, i64 %.idx595
   %i.xl = tail call noundef ptr @_ZN5arrow8internal11unpack30_32EPKjPj(ptr noundef %.30311, ptr noundef %i.xk)
   %indvars.iv.next442 = add nuw nsw i64 %indvars.iv441, 1 ; 2 uses
@@ -5703,7 +5703,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph310:                                        ; preds = %.lr.ph310.preheader, %.lr.ph310
   %indvars.iv436 = phi i64 [ 0, %.lr.ph310.preheader ], [ %indvars.iv.next437, %.lr.ph310 ] ; 2 uses
   %.31308 = phi ptr [ %0, %.lr.ph310.preheader ], [ %i.xn, %.lr.ph310 ]
-  %.idx594 = shl nsw i64 %indvars.iv436, 7
+  %.idx594 = shl nuw nsw i64 %indvars.iv436, 7
   %i.xm = getelementptr inbounds nuw i8, ptr %1, i64 %.idx594
   %i.xn = tail call noundef ptr @_ZN5arrow8internal11unpack31_32EPKjPj(ptr noundef %.31308, ptr noundef %i.xm)
   %indvars.iv.next437 = add nuw nsw i64 %indvars.iv436, 1 ; 2 uses
@@ -5713,7 +5713,7 @@ begin_hunk_1_@_ZN5arrow8internal12_GLOBAL__N_116unpack32_defaultEPKjPjii:bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %.32306 = phi ptr [ %0, %.lr.ph.preheader ], [ %i.zz, %.lr.ph ] ; 33 uses
-  %.idx = shl nsw i64 %indvars.iv, 7
+  %.idx = shl nuw nsw i64 %indvars.iv, 7
   %i.xo = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 32 uses
   %.0.copyload.i.i241 = load i32, ptr %.32306, align 4
   store i32 %.0.copyload.i.i241, ptr %i.xo, align 4, !tbaa !3
