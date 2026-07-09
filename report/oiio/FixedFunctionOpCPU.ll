@@ -203,7 +203,7 @@ middle.block:                                     ; preds = %vector.body
   %i.de = load float, ptr %.058, align 4, !tbaa !9 ; 2 uses
   %i.df = tail call noundef float @llvm.floor.f32(float %i.de)
   %i.dg = fsub float %i.de, %i.df
-  %i.dh = fmul float %i.dg, 6.000000e+00          ; 2 uses
+  %i.dh = fmul float %i.dg, 6.000000e+00          ; 3 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.058, i64 4
   %i.dj = load float, ptr %i.di, align 4, !tbaa !9 ; 2 uses
   %i.dk = fcmp ogt float %i.dj, 0.000000e+00
@@ -212,6 +212,10 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.speculated.i = select i1 %i.dl, float 1.999000e+00, float %.sroa.speculated2.i ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.058, i64 8
   %i.dn = load float, ptr %i.dm, align 4, !tbaa !9 ; 6 uses
+  %4 = fadd float %i.dh, -3.000000e+00
+  %5 = tail call noundef float @llvm.fabs.f32(float %4)
+  %6 = fadd float %i.dh, -2.000000e+00
+  %7 = tail call noundef float @llvm.fabs.f32(float %6)
   %i.do = fadd float %i.dh, -4.000000e+00
   %i.dp = tail call noundef float @llvm.fabs.f32(float %i.do)
   %i.dq = fsub float 2.000000e+00, %i.dp          ; 2 uses
@@ -233,15 +237,11 @@ middle.block:                                     ; preds = %vector.body
   %.145 = select i1 %i.dz, float %i.eb, float %.044
   %.1 = select i1 %i.dz, float %i.ea, float %.043 ; 3 uses
   %i.ec = fsub float %.145, %.1                   ; 2 uses
-  %i.ed = insertelement <2 x float> poison, float %i.dh, i64 0
-  %4 = shufflevector <2 x float> %i.ed, <2 x float> poison, <2 x i32> zeroinitializer
-  %5 = fadd <2 x float> %4, <float -3.000000e+00, float -2.000000e+00>
-  %6 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %5) ; 2 uses
-  %7 = fadd <2 x float> %6, <float -1.000000e+00, float poison>
-  %i.ee = fsub <2 x float> <float poison, float 2.000000e+00>, %6
-  %8 = shufflevector <2 x float> %7, <2 x float> %i.ee, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %i.ef = fcmp ogt <2 x float> %8, zeroinitializer
-  %i.eg = select <2 x i1> %i.ef, <2 x float> %8, <2 x float> zeroinitializer ; 2 uses
+  %i.ed = insertelement <2 x float> <float poison, float 2.000000e+00>, float %5, i64 0
+  %8 = insertelement <2 x float> <float 1.000000e+00, float poison>, float %7, i64 1
+  %i.ee = fsub <2 x float> %i.ed, %8              ; 2 uses
+  %i.ef = fcmp ogt <2 x float> %i.ee, zeroinitializer
+  %i.eg = select <2 x i1> %i.ef, <2 x float> %i.ee, <2 x float> zeroinitializer ; 2 uses
   %i.eh = fcmp ogt <2 x float> %i.eg, splat (float 1.000000e+00)
   %i.ei = select <2 x i1> %i.eh, <2 x float> splat (float 1.000000e+00), <2 x float> %i.eg
   %i.ej = insertelement <2 x float> poison, float %i.ec, i64 0
@@ -642,9 +642,6 @@ declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #3
