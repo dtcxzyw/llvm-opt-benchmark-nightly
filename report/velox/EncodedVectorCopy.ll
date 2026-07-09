@@ -204,9 +204,8 @@ _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i.i50.i.i.i.us198.i.i:
   br i1 %i.akf, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.i.i51.i.i.i.i.i, label %bb.gx
 
 bb.gx:                                            ; preds = %.preheader.i.i.i.i
-  %sext.i.i.i.i.i.i.i = shl i64 %.027.i.i.i.i.i.i, 32
-  %139 = ashr exact i64 %sext.i.i.i.i.i.i.i, 30
-  %i.ama = getelementptr inbounds i8, ptr %i.akg, i64 %139
+  %sext.i.i.i.i.i.i.i = shl nuw nsw i64 %.027.i.i.i.i.i.i, 2
+  %i.ama = getelementptr inbounds nuw i8, ptr %i.akg, i64 %sext.i.i.i.i.i.i.i
   %i.amb = load i32, ptr %i.ama, align 4, !tbaa !3, !noalias !201
   %i.amc = zext i32 %i.amb to i64                 ; 2 uses
   %i.amd = lshr i64 %i.amc, 6

@@ -204,9 +204,8 @@ bb.g:                                             ; preds = %"_ZZN8facebook5velo
   ]
 
 vector.body272:                                   ; preds = %bb.g
-  %i.cc = shl i64 %indvars.iv59.i.i, 32
-  %15 = ashr exact i64 %i.cc, 30
-  %i.cd = getelementptr inbounds i8, ptr %i.az, i64 %15 ; 5 uses
+  %i.cc = shl nuw nsw i64 %indvars.iv59.i.i, 2
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.cc ; 5 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 32 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 64 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cd, i64 96 ; 2 uses
@@ -222,13 +221,12 @@ vector.body272:                                   ; preds = %bb.g
   store <8 x i32> %i.ci, ptr %i.ce, align 4, !tbaa !3
   store <8 x i32> %i.cj, ptr %i.cf, align 4, !tbaa !3
   store <8 x i32> %i.ck, ptr %i.cg, align 4, !tbaa !3
-  %i.cl = shl i64 %indvars.iv59.i.i, 32
-  %16 = ashr exact i64 %i.cl, 30
-  %i.cm = getelementptr i8, ptr %i.az, i64 %16    ; 4 uses
-  %i.cn = getelementptr i8, ptr %i.cm, i64 128    ; 2 uses
-  %i.co = getelementptr i8, ptr %i.cm, i64 160    ; 2 uses
-  %i.cp = getelementptr i8, ptr %i.cm, i64 192    ; 2 uses
-  %i.cq = getelementptr i8, ptr %i.cm, i64 224    ; 2 uses
+  %i.cl = shl i64 %indvars.iv59.i.i, 2
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.cl ; 4 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 128 ; 2 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 160 ; 2 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.cm, i64 192 ; 2 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.cm, i64 224 ; 2 uses
   %wide.load.1 = load <8 x i32>, ptr %i.cn, align 4, !tbaa !3
   %wide.load274.1 = load <8 x i32>, ptr %i.co, align 4, !tbaa !3
   %wide.load275.1 = load <8 x i32>, ptr %i.cp, align 4, !tbaa !3

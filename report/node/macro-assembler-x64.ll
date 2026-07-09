@@ -201,18 +201,15 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader: ; preds = %bb.b, %bb
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i: ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i
-  %.sroa.0.0 = phi i64 [ %.sroa.0.4.insert.insert, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i ], [ 604241920, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader ]
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i ], [ 16, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader ] ; 3 uses
   %.sroa.0.073.i = phi i16 [ %i.t, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i ], [ 32766, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader ] ; 3 uses
   %i.n = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.073.i, i1 true)
   %i.o = trunc nuw nsw i16 %i.n to i8             ; 2 uses
-  %.sroa.0.1.insert.mask = and i64 %.sroa.0.0, 255
   %i.p = icmp samesign ult i64 %indvars.iv.i, 128 ; 2 uses
-  %.sroa.0.4.insert.shift16 = shl i64 %indvars.iv.i, 32
-  %.sroa.0.2.insert.insert10 = or disjoint i64 %.sroa.0.4.insert.shift16, %.sroa.0.1.insert.mask
+  %.sroa.0.4.insert.shift16 = shl nuw nsw i64 %indvars.iv.i, 32
   %. = select i1 %i.p, i64 608436224, i64 612630528
   %.26 = select i1 %i.p, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr) ; 2 uses
-  %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.2.insert.insert10, %. ; 3 uses
+  %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.4.insert.shift16, %. ; 2 uses
   %i.q = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
   %i.r = and i32 %i.q, 32
   %.not.i.i31.i = icmp eq i32 %i.r, 0
@@ -398,18 +395,15 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader: ; preds = %bb.b, %bb
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i: ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i
-  %.sroa.0.0 = phi i64 [ %.sroa.0.4.insert.insert, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i ], [ 604241920, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader ]
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i ], [ 16, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader ] ; 3 uses
   %.sroa.032.073.i = phi i16 [ %i.j, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.i ], [ 32766, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit.i.preheader ] ; 3 uses
   %i.d = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.032.073.i, i1 true)
   %i.e = trunc nuw nsw i16 %i.d to i8             ; 2 uses
-  %.sroa.0.1.insert.mask = and i64 %.sroa.0.0, 255
   %i.f = icmp samesign ult i64 %indvars.iv.i, 128 ; 2 uses
-  %.sroa.0.4.insert.shift16 = shl i64 %indvars.iv.i, 32
-  %.sroa.0.2.insert.insert10 = or disjoint i64 %.sroa.0.4.insert.shift16, %.sroa.0.1.insert.mask
+  %.sroa.0.4.insert.shift16 = shl nuw nsw i64 %indvars.iv.i, 32
   %. = select i1 %i.f, i64 608436224, i64 612630528
   %.26 = select i1 %i.f, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr) ; 2 uses
-  %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.2.insert.insert10, %. ; 3 uses
+  %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.4.insert.shift16, %. ; 2 uses
   %i.g = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
   %i.h = and i32 %i.g, 32
   %.not.i.i31.i = icmp eq i32 %i.h, 0
