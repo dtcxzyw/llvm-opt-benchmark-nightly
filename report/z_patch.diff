@@ -1,0 +1,82 @@
+diff --git a/llvm/lib/Analysis/ConstraintSystem.cpp b/llvm/lib/Analysis/ConstraintSystem.cpp
+index 62545586b3554..bc08e76cf4753 100644
+--- a/llvm/lib/Analysis/ConstraintSystem.cpp
++++ b/llvm/lib/Analysis/ConstraintSystem.cpp
+@@ -79,6 +79,9 @@ bool ConstraintSystem::eliminateUsingFM() {
+       unsigned IdxLower = 0;
+       auto &LowerRow = RemainingRows[LowerR];
+       auto &UpperRow = RemainingRows[UpperR];
++      // Combine the two rows to eliminate the variable. If any coefficient
++      // computation overflows, skip them.
++      bool Overflow = false;
+       // Update constant and coefficients of both constraints.
+       // Stops until every coefficient is updated or overflows.
+       while (true) {
+@@ -101,15 +104,19 @@ bool ConstraintSystem::eliminateUsingFM() {
+           IdxUpper++;
+         }
+ 
+-        if (MulOverflow(UpperV, -1 * LowerLast, M1))
+-          return false;
++        if (MulOverflow(UpperV, -1 * LowerLast, M1)) {
++          Overflow = true;
++          break;
++        }
+         if (IdxLower < LowerRow.size() && LowerRow[IdxLower].Id == CurrentId) {
+           LowerV = LowerRow[IdxLower].Coefficient;
+           IdxLower++;
+         }
+ 
+-        if (MulOverflow(LowerV, UpperLast, M2))
+-          return false;
++        if (MulOverflow(LowerV, UpperLast, M2)) {
++          Overflow = true;
++          break;
++        }
+         // This algorithm is a variant of sparse Gaussian elimination.
+         //
+         // The new coefficient for CurrentId is
+@@ -124,14 +131,16 @@ bool ConstraintSystem::eliminateUsingFM() {
+         //
+         // Eliminates y after addition:
+         // N: { 6, 7, 0 } => 6 >= 7 * x
+-        if (AddOverflow(M1, M2, N))
+-          return false;
++        if (AddOverflow(M1, M2, N)) {
++          Overflow = true;
++          break;
++        }
+         // Skip variable that is completely eliminated.
+         if (N == 0)
+           continue;
+         NR.emplace_back(N, CurrentId);
+       }
+-      if (NR.empty())
++      if (Overflow || NR.empty())
+         continue;
+       Constraints.push_back(std::move(NR));
+       // Give up if the new system gets too big.
+diff --git a/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll b/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll
+index 044e24feba4e9..008e2ba222fce 100644
+--- a/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll
+@@ -13,8 +13,7 @@ define i32 @f(i64 %a3, i64 %numElements) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i64 [[A1]], [[A3]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[IF_END_I:%.*]], label [[ABORT:%.*]]
+ ; CHECK:       if.end.i:
+-; CHECK-NEXT:    [[CMP2_NOT_I:%.*]] = icmp ult i64 [[A1]], [[A3]]
+-; CHECK-NEXT:    br i1 [[CMP2_NOT_I]], label [[ABORT]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 false, label [[ABORT]], label [[EXIT:%.*]]
+ ; CHECK:       abort:
+ ; CHECK-NEXT:    ret i32 -1
+ ; CHECK:       exit:
+@@ -90,8 +89,7 @@ define i1 @fm_overflow_recovery(i64 %n, i64 %i, i64 %lim) {
+ ; CHECK-NEXT:    [[F2:%.*]] = icmp ult i64 [[N4M4]], [[LIM]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[F2]])
+ ; CHECK-NEXT:    [[I4:%.*]] = shl nuw i64 [[I]], 2
+-; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[I4]], [[LIM]]
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+   %big = icmp ule i64 %n, 2305843009213693952
