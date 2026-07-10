@@ -201,7 +201,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
   store i8 %i.as, ptr %i.at, align 1, !tbaa !14
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %10 = icmp samesign ult i64 %indvars.iv.next.i, %i.f
+  %10 = icmp samesign ugt i64 %i.f, %indvars.iv.next.i
   br i1 %10, label %.lr.ph.i, label %.loopexit.thread.i, !llvm.loop !25
 
 .loopexit.thread.i:                               ; preds = %.lr.ph.i, %vec.epilog.middle.block, %middle.block
@@ -315,12 +315,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load i8, ptr %5, align 1, !tbaa !14      ; 2 uses
-  %i.b = zext i8 %i.a to i64                      ; 5 uses
+  %i.b = zext i8 %i.a to i64                      ; 7 uses
   %i.c = icmp slt i8 %i.a, 0
   br i1 %i.c, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = add nsw i64 %i.b, -127                   ; 5 uses
+  %i.d = add nsw i64 %i.b, -127                   ; 6 uses
   %i.e = add nsw i64 %i.b, -126
   %i.f = lshr i64 %i.e, 1                         ; 2 uses
   %.not88.i = icmp ult i64 %i.f, %6
@@ -332,24 +332,20 @@ bb.d:                                             ; preds = %bb.c
 
 iter.check:                                       ; preds = %bb.d
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 4 uses
-  %9 = trunc nuw nsw i64 %i.d to i32              ; 3 uses
-  %umax34 = tail call i32 @llvm.umax.i32(i32 %9, i32 2)
-  %10 = add nsw i32 %umax34, -1
-  %11 = lshr i32 %10, 1
-  %narrow = add nuw i32 %11, 1
-  %12 = zext i32 %narrow to i64                   ; 5 uses
+  %umax33 = tail call i64 @llvm.umax.i64(i64 %i.d, i64 2)
+  %9 = add nsw i64 %umax33, -1
+  %10 = lshr i64 %9, 1
+  %11 = add nuw i64 %10, 1                        ; 5 uses
   %min.iters.check = icmp ult i64 %i.d, 7
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %umax = tail call i32 @llvm.umax.i32(i32 %9, i32 2)
-  %13 = add nsw i32 %umax, -1
-  %14 = lshr i32 %13, 1
-  %15 = zext nneg i32 %14 to i64                  ; 2 uses
-  %16 = shl nuw nsw i64 %15, 1
-  %i.h = getelementptr i8, ptr %0, i64 %16
+  %12 = add nsw i64 %i.b, -128
+  %13 = lshr i64 %12, 1
+  %14 = and i64 %i.b, 126
+  %i.h = getelementptr i8, ptr %0, i64 %14
   %scevgep = getelementptr i8, ptr %i.h, i64 2
-  %i.i = getelementptr i8, ptr %5, i64 %15
+  %i.i = getelementptr i8, ptr %5, i64 %13
   %scevgep33 = getelementptr i8, ptr %i.i, i64 2
   %bound0 = icmp ult ptr %0, %scevgep33
   %bound1 = icmp ult ptr %i.g, %scevgep
@@ -361,9 +357,9 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check35, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %12, 12
-  %n.vec = and i64 %12, 4294967280                ; 4 uses
-  %i.j = shl nuw nsw i64 %n.vec, 1
+  %n.mod.vf = and i64 %11, 12
+  %n.vec = and i64 %11, -16                       ; 4 uses
+  %i.j = shl i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -392,7 +388,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.v, label %middle.block, label %vector.body, !llvm.loop !32
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %12
+  %cmp.n = icmp eq i64 %11, %n.vec
   br i1 %cmp.n, label %.loopexit.thread, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -401,8 +397,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec41 = and i64 %12, 4294967292              ; 3 uses
-  %i.w = shl nuw nsw i64 %n.vec41, 1
+  %n.vec41 = and i64 %11, -4                      ; 3 uses
+  %i.w = shl i64 %n.vec41, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -421,7 +417,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ad, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !33
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n47 = icmp eq i64 %n.vec41, %12
+  %cmp.n47 = icmp eq i64 %11, %n.vec41
   br i1 %cmp.n47, label %.loopexit.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -441,9 +437,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 1
   store i8 %i.ak, ptr %i.am, align 1, !tbaa !14
-  %indvars.iv.next = add nuw i64 %indvars.iv, 2   ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %i.an = icmp ugt i32 %9, %indvars
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.an = icmp samesign ugt i64 %i.d, %indvars.iv.next
   br i1 %i.an, label %.lr.ph, label %.loopexit.thread, !llvm.loop !34
 
 .loopexit.thread:                                 ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
@@ -564,9 +559,6 @@ declare noundef i64 @_ZN11duckdb_zstd24FSE_decompress_wksp_bmi2EPvmPKvmjS0_mi(pt
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,17 +204,16 @@ bb.w:                                             ; preds = %.lr.ph.preheader.i.
   br label %_ZNSt6vectorIN6Assimp14AttachmentInfoESaIS1_EED2Ev.exit40
 
 .lr.ph:                                           ; preds = %bb.t, %.lr.ph
-  %i.ao = phi i64 [ %5, %.lr.ph ], [ 0, %bb.t ]   ; 2 uses
-  %.044 = phi i32 [ %4, %.lr.ph ], [ 0, %bb.t ]
+  %i.ao = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.t ] ; 3 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %.pre47, i64 %i.ao
   %i.aq = load ptr, ptr %i.ap, align 8
   %i.ar = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %i.ao ; 2 uses
   store ptr %i.aq, ptr %i.ar, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   store ptr %i.s, ptr %.sroa.4.0..sroa_idx, align 8
-  %4 = add i32 %.044, 1                           ; 2 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %i.as = icmp samesign ugt i64 %i.ah, %5
+  %indvars.iv.next = add i64 %i.ao, 1             ; 2 uses
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %i.as = icmp samesign ugt i64 %i.ah, %4
   br i1 %i.as, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !14
 
 bb.x:                                             ; preds = %._crit_edge
@@ -617,9 +616,9 @@ _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc465
 
 ._crit_edge860:                                   ; preds = %.loopexit824
   %.not388 = trunc i32 %3 to i1                   ; 5 uses
-  %i.ea = icmp ugt i64 %i.cn, 1
-  %or.cond1339 = and i1 %i.ea, %.not388
-  br i1 %or.cond1339, label %.lr.ph864, label %.loopexit823
+  %i.ea = icmp samesign ugt i64 %i.cn, 1
+  %or.cond1353 = select i1 %.not388, i1 %i.ea, i1 false
+  br i1 %or.cond1353, label %.lr.ph864, label %.loopexit823
 
 .lr.ph864:                                        ; preds = %._crit_edge860
   %i.eb = and i32 %3, 16
@@ -637,24 +636,20 @@ _ZNSt6vectorIjSaIjEED2Ev.exit686.thread:          ; preds = %.noexc459
   br label %bb.je
 
 .lr.ph859:                                        ; preds = %.lr.ph859.preheader, %.loopexit824
-  %i.ee = phi i64 [ %.pre-phi1083, %.loopexit824 ], [ 0, %.lr.ph859.preheader ] ; 2 uses
-  %.0326857 = phi i32 [ %.pre-phi, %.loopexit824 ], [ 0, %.lr.ph859.preheader ] ; 5 uses
+  %i.ee = phi i64 [ %indvars.iv.next, %.loopexit824 ], [ 0, %.lr.ph859.preheader ] ; 5 uses
   %11 = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %i.ee ; 2 uses
   %12 = load i32, ptr %11, align 4                ; 2 uses
-  %.not447 = icmp eq i32 %12, %.0326857
+  %13 = zext i32 %12 to i64
+  %.not447 = icmp eq i64 %i.ee, %13
   %.not448 = icmp eq i32 %12, -1
   %or.cond795 = or i1 %.not447, %.not448
-  br i1 %or.cond795, label %bb.ad, label %.lr.ph859..loopexit824_crit_edge
-
-.lr.ph859..loopexit824_crit_edge:                 ; preds = %.lr.ph859
-  %.pre1081 = add i32 %.0326857, 1                ; 2 uses
-  %.pre1082 = zext i32 %.pre1081 to i64
-  br label %.loopexit824
+  br i1 %or.cond795, label %bb.ad, label %.loopexit824
 
 bb.ad:                                            ; preds = %.lr.ph859
-  store i32 %.0326857, ptr %11, align 4
-  %.0329853 = add i32 %.0326857, 1                ; 4 uses
-  %i.ef = zext i32 %.0329853 to i64               ; 4 uses
+  %14 = trunc nuw i64 %i.ee to i32                ; 3 uses
+  store i32 %14, ptr %11, align 4
+  %.0329853 = add i32 %14, 1                      ; 2 uses
+  %i.ef = zext i32 %.0329853 to i64               ; 2 uses
   %i.eg = icmp ugt i64 %i.cn, %i.ef
   br i1 %i.eg, label %.lr.ph856, label %.loopexit824
 
@@ -673,7 +668,7 @@ bb.ae:                                            ; preds = %.lr.ph856, %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
   %i.em = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %i.ei
-  store i32 %.0326857, ptr %i.em, align 4
+  store i32 %14, ptr %i.em, align 4
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.af
@@ -682,10 +677,10 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af
   %i.eo = icmp ugt i64 %i.cn, %i.en
   br i1 %i.eo, label %bb.ae, label %.loopexit824, !llvm.loop !18
 
-.loopexit824:                                     ; preds = %bb.ag, %.lr.ph859..loopexit824_crit_edge, %bb.ad
-  %.pre-phi1083 = phi i64 [ %.pre1082, %.lr.ph859..loopexit824_crit_edge ], [ %i.ef, %bb.ad ], [ %i.ef, %bb.ag ] ; 2 uses
-  %.pre-phi = phi i32 [ %.pre1081, %.lr.ph859..loopexit824_crit_edge ], [ %.0329853, %bb.ad ], [ %.0329853, %bb.ag ]
-  %i.ep = icmp ugt i64 %i.cn, %.pre-phi1083
+.loopexit824:                                     ; preds = %bb.ag, %bb.ad, %.lr.ph859
+  %indvars.iv.next = add i64 %i.ee, 1             ; 2 uses
+  %15 = and i64 %indvars.iv.next, 4294967295
+  %i.ep = icmp ugt i64 %i.cn, %15
   br i1 %i.ep, label %.lr.ph859, label %._crit_edge860, !llvm.loop !19
 
 bb.ah:                                            ; preds = %.lr.ph864, %.loopexit821

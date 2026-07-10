@@ -203,8 +203,7 @@ bb.i:                                             ; preds = %.preheader
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.ag = phi i64 [ %5, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.04874 = phi i32 [ %4, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %i.ag = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
   %i.ah = sub nsw i64 %i.ad, %i.ag
   %i.ai = trunc i64 %i.ah to i8
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 %i.ag
@@ -212,9 +211,9 @@ bb.i:                                             ; preds = %.preheader
   %i.al = zext i8 %i.ak to i64
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.al
   store i8 %i.ai, ptr %i.am, align 1, !tbaa !15
-  %4 = add i32 %.04874, 1                         ; 2 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %.not = icmp eq i64 %i.ad, %5
+  %indvars.iv.next = add i64 %i.ag, 1             ; 2 uses
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %.not = icmp eq i64 %i.ad, %4
   br i1 %.not, label %.preheader69, label %.lr.ph, !llvm.loop !33
 
 bb.j:                                             ; preds = %.preheader69, %bb.m

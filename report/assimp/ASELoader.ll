@@ -204,9 +204,8 @@ bb.az:                                            ; preds = %bb.ay
           to label %.lr.ph500.preheader unwind label %bb.ah ; 2 uses
 
 .lr.ph491:                                        ; preds = %.lr.ph491.preheader, %bb.bb
-  %i.rf = phi i32 [ %i.rn, %bb.bb ], [ 0, %.lr.ph491.preheader ] ; 2 uses
-  %i.rg = phi i64 [ %5, %bb.bb ], [ 0, %.lr.ph491.preheader ]
-  %.0220489 = phi i32 [ %4, %bb.bb ], [ 0, %.lr.ph491.preheader ]
+  %i.rf = phi i32 [ 0, %.lr.ph491.preheader ], [ %i.rn, %bb.bb ] ; 2 uses
+  %i.rg = phi i64 [ 0, %.lr.ph491.preheader ], [ %indvars.iv.next557, %bb.bb ] ; 2 uses
   %i.rh = getelementptr inbounds nuw [24 x i8], ptr %.0228, i64 %i.rg ; 2 uses
   %i.ri = load ptr, ptr %i.rh, align 8
   %i.rj = getelementptr inbounds nuw i8, ptr %i.rh, i64 8
@@ -221,9 +220,9 @@ bb.ba:                                            ; preds = %.lr.ph491
 
 bb.bb:                                            ; preds = %.lr.ph491, %bb.ba
   %i.rn = phi i32 [ %i.rf, %.lr.ph491 ], [ %i.rm, %bb.ba ] ; 2 uses
-  %4 = add i32 %.0220489, 1                       ; 2 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %i.ro = icmp ugt i64 %i.rb, %5
+  %indvars.iv.next557 = add i64 %i.rg, 1          ; 2 uses
+  %4 = and i64 %indvars.iv.next557, 4294967295
+  %i.ro = icmp ugt i64 %i.rb, %4
   br i1 %i.ro, label %.lr.ph491, label %._crit_edge492, !llvm.loop !62
 
 .lr.ph500.preheader:                              ; preds = %._crit_edge492
@@ -626,8 +625,7 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE9push_backERKS0_.exit: ; preds = %_ZNSt6vec
 
 .lr.ph522:                                        ; preds = %._crit_edge519, %bb.cy
   %i.alr = phi i32 [ %i.alz, %bb.cy ], [ 0, %._crit_edge519 ] ; 2 uses
-  %i.als = phi i64 [ %7, %bb.cy ], [ 0, %._crit_edge519 ]
-  %.0203520 = phi i32 [ %6, %bb.cy ], [ 0, %._crit_edge519 ]
+  %i.als = phi i64 [ %indvars.iv.next573, %bb.cy ], [ 0, %._crit_edge519 ] ; 2 uses
   %i.alt = getelementptr inbounds nuw [24 x i8], ptr %i.aji, i64 %i.als ; 2 uses
   %i.alu = load ptr, ptr %i.alt, align 8
   %i.alv = getelementptr inbounds nuw i8, ptr %i.alt, i64 8
@@ -642,9 +640,9 @@ bb.cx:                                            ; preds = %.lr.ph522
 
 bb.cy:                                            ; preds = %.lr.ph522, %bb.cx
   %i.alz = phi i32 [ %i.alr, %.lr.ph522 ], [ %i.aly, %bb.cx ] ; 2 uses
-  %6 = add i32 %.0203520, 1                       ; 2 uses
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.ama = icmp ugt i64 %.pre583.a, %7
+  %indvars.iv.next573 = add i64 %i.als, 1         ; 2 uses
+  %5 = and i64 %indvars.iv.next573, 4294967295
+  %i.ama = icmp ugt i64 %.pre583.a, %5
   br i1 %i.ama, label %.lr.ph522, label %._crit_edge523.loopexit, !llvm.loop !78
 
 bb.cz:                                            ; preds = %._crit_edge523
@@ -1047,8 +1045,7 @@ bb.au:                                            ; preds = %._crit_edge262.thre
   br label %_ZNSt6vectorIP6aiNodeSaIS1_EED2Ev.exit
 
 .lr.ph261:                                        ; preds = %bb.at, %.lr.ph261
-  %i.hu = phi i64 [ %7, %.lr.ph261 ], [ 0, %bb.at ] ; 2 uses
-  %.029259 = phi i32 [ %6, %.lr.ph261 ], [ 0, %bb.at ]
+  %i.hu = phi i64 [ %indvars.iv.next299, %.lr.ph261 ], [ 0, %bb.at ] ; 3 uses
   %i.hv = getelementptr inbounds nuw [8 x i8], ptr %.sroa.097.6, i64 %i.hu
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load ptr, ptr %i.c, align 8
@@ -1058,9 +1055,9 @@ bb.au:                                            ; preds = %._crit_edge262.thre
   %i.ib = load ptr, ptr %i.ia, align 8
   %i.ic = getelementptr inbounds nuw [8 x i8], ptr %i.ib, i64 %i.hu
   store ptr %i.hw, ptr %i.ic, align 8
-  %6 = add i32 %.029259, 1                        ; 2 uses
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.id = icmp ugt i64 %i.fh, %7
+  %indvars.iv.next299 = add i64 %i.hu, 1          ; 2 uses
+  %6 = and i64 %indvars.iv.next299, 4294967295
+  %i.id = icmp ugt i64 %i.fh, %6
   br i1 %i.id, label %.lr.ph261, label %._crit_edge262.thread, !llvm.loop !92
 
 ._crit_edge262.thread:                            ; preds = %.lr.ph261
@@ -1463,16 +1460,15 @@ bb.ay:                                            ; preds = %bb.aw
   br label %bb.az
 
 .lr.ph287:                                        ; preds = %bb.ax, %.lr.ph287
-  %i.ii = phi i64 [ %10, %.lr.ph287 ], [ 0, %bb.ax ] ; 2 uses
-  %.0285 = phi i32 [ %9, %.lr.ph287 ], [ 0, %bb.ax ]
+  %i.ii = phi i64 [ %indvars.iv.next353, %.lr.ph287 ], [ 0, %bb.ax ] ; 3 uses
   %i.ij = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0152.0.lcssa, i64 %i.ii
   %i.ik = load ptr, ptr %i.ij, align 8
   %i.il = load ptr, ptr %i.ig, align 8
   %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.il, i64 %i.ii
   store ptr %i.ik, ptr %i.im, align 8
-  %9 = add i32 %.0285, 1                          ; 2 uses
-  %10 = zext i32 %9 to i64                        ; 2 uses
-  %i.in = icmp ugt i64 %i.q, %10
+  %indvars.iv.next353 = add i64 %i.ii, 1          ; 2 uses
+  %9 = and i64 %indvars.iv.next353, 4294967295
+  %i.in = icmp ugt i64 %i.q, %9
   br i1 %i.in, label %.lr.ph287, label %.loopexit.thread, !llvm.loop !122
 
 .loopexit:                                        ; preds = %bb.ax, %._crit_edge282
@@ -1875,8 +1871,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.e
   br label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit
 
 .lr.ph224:                                        ; preds = %.preheader212, %.lr.ph224
-  %i.dh = phi i64 [ %6, %.lr.ph224 ], [ 0, %.preheader212 ]
-  %.084223 = phi i32 [ %5, %.lr.ph224 ], [ 0, %.preheader212 ]
+  %i.dh = phi i64 [ %indvars.iv.next, %.lr.ph224 ], [ 0, %.preheader212 ] ; 2 uses
   %.sroa.13188.0220 = phi float [ %.sroa.speculated191, %.lr.ph224 ], [ 1.000000e+10, %.preheader212 ] ; 2 uses
   %.sroa.13176.0217 = phi float [ %.sroa.speculated, %.lr.ph224 ], [ -1.000000e+10, %.preheader212 ] ; 2 uses
   %i.di = phi <2 x float> [ %i.ds, %.lr.ph224 ], [ splat (float -1.000000e+10), %.preheader212 ] ; 2 uses
@@ -1893,9 +1888,9 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.e
   %i.ds = select <2 x i1> %i.dr, <2 x float> %i.do, <2 x float> %i.di ; 3 uses
   %i.dt = fcmp olt float %.sroa.13176.0217, %i.dm
   %.sroa.speculated = select i1 %i.dt, float %i.dm, float %.sroa.13176.0217 ; 2 uses
-  %5 = add i32 %.084223, 1                        ; 2 uses
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.du = icmp ugt i64 %i.ad, %6
+  %indvars.iv.next = add i64 %i.dh, 1             ; 2 uses
+  %5 = and i64 %indvars.iv.next, 4294967295
+  %i.du = icmp ugt i64 %i.ad, %5
   br i1 %i.du, label %.lr.ph224, label %._crit_edge.loopexit, !llvm.loop !131
 
 _ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit: ; preds = %._crit_edge, %_ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i

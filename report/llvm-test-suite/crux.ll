@@ -202,16 +202,15 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %i.v = phi i64 [ 0, %.lr.ph ], [ %3, %bb.b ]
-  %.026 = phi i32 [ 0, %.lr.ph ], [ %2, %bb.b ]
+  %i.v = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %.02125 = phi i32 [ 1, %.lr.ph ], [ %i.z, %bb.b ]
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.v
   %i.x = load i64, ptr %i.w, align 8, !tbaa !40
   %i.y = trunc i64 %i.x to i32
   %i.z = mul i32 %.02125, %i.y                    ; 2 uses
-  %2 = add i32 %.026, 1                           ; 2 uses
-  %3 = zext i32 %2 to i64                         ; 2 uses
-  %i.aa = icmp ugt i64 %i.i, %3
+  %indvars.iv.next = add i64 %i.v, 1              ; 2 uses
+  %2 = and i64 %indvars.iv.next, 4294967295
+  %i.aa = icmp ugt i64 %i.i, %2
   br i1 %i.aa, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !41
 
 bb.c:                                             ; preds = %._crit_edge, %.lr.ph30
@@ -597,16 +596,15 @@ _ZN4Crux20restore_field_headerEPci.exit:          ; preds = %._crit_edge, %bb.b
   br i1 %.not25, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
-  %i.u = phi i64 [ 0, %.lr.ph ], [ %3, %bb.c ]
-  %.032 = phi i32 [ 0, %.lr.ph ], [ %2, %bb.c ]
+  %i.u = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 2 uses
   %.02231 = phi i32 [ 1, %.lr.ph ], [ %i.y, %bb.c ]
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.u
   %i.w = load i64, ptr %i.v, align 8, !tbaa !40
   %i.x = trunc i64 %i.w to i32
   %i.y = mul i32 %.02231, %i.x                    ; 2 uses
-  %2 = add i32 %.032, 1                           ; 2 uses
-  %3 = zext i32 %2 to i64                         ; 2 uses
-  %i.z = icmp ugt i64 %i.j, %3
+  %indvars.iv.next = add i64 %i.u, 1              ; 2 uses
+  %2 = and i64 %indvars.iv.next, 4294967295
+  %i.z = icmp ugt i64 %i.j, %2
   br i1 %i.z, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !43
 
 bb.d:                                             ; preds = %_ZN4Crux20restore_field_headerEPci.exit

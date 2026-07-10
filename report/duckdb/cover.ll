@@ -203,7 +203,7 @@ bb.ac:                                            ; preds = %bb.ab, %.epilog-lcs
   br i1 %.not126, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ac
-  %min.iters.check203 = icmp ult i64 %i.eo, 20
+  %min.iters.check203 = icmp ult i64 %i.eo, 16
   br i1 %min.iters.check203, label %.lr.ph.preheader218, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.preheader
@@ -215,8 +215,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.et, label %.lr.ph.preheader218, label %vector.ph204
 
 vector.ph204:                                     ; preds = %vector.scevcheck
-  %n.vec206 = and i64 %i.eo, 8589934584           ; 4 uses
-  %6 = trunc i64 %n.vec206 to i32
+  %n.vec206 = and i64 %i.eo, 8589934584           ; 3 uses
   br label %vector.body207
 
 vector.body207:                                   ; preds = %vector.body207, %vector.ph204
@@ -238,17 +237,16 @@ middle.block210:                                  ; preds = %vector.body207
 
 .lr.ph.preheader218:                              ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block210
   %.ph219 = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec206, %middle.block210 ]
-  %.0125.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %6, %middle.block210 ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader218, %.lr.ph
-  %i.ex = phi i64 [ %9, %.lr.ph ], [ %.ph219, %.lr.ph.preheader218 ]
-  %.0125 = phi i32 [ %8, %.lr.ph ], [ %.0125.ph, %.lr.ph.preheader218 ] ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %.pre130, i64 %i.ex
-  store i32 %.0125, ptr %7, align 4, !tbaa !3
-  %8 = add i32 %.0125, 1                          ; 2 uses
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %i.ey = icmp ugt i64 %i.eo, %9
+  %i.ex = phi i64 [ %indvars.iv.next131, %.lr.ph ], [ %.ph219, %.lr.ph.preheader218 ] ; 3 uses
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %.pre130, i64 %i.ex
+  %7 = trunc nuw i64 %i.ex to i32
+  store i32 %7, ptr %6, align 4, !tbaa !3
+  %indvars.iv.next131 = add i64 %i.ex, 1          ; 2 uses
+  %8 = and i64 %indvars.iv.next131, 4294967295
+  %i.ey = icmp ugt i64 %i.eo, %8
   br i1 %i.ey, label %.lr.ph, label %._crit_edge, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block210, %bb.ac

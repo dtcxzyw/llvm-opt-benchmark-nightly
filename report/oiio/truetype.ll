@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o
 
 .lr.ph270:                                        ; preds = %.preheader
   %i.ca = load ptr, ptr %i.i, align 8, !tbaa !99  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bz, 8
+  %min.iters.check = icmp ult i64 %i.bz, 6
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph270
@@ -216,8 +216,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph270
   br i1 %i.cf, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.bz, 8589934588              ; 4 uses
-  %2 = trunc i64 %n.vec to i32
+  %n.vec = and i64 %i.bz, 8589934588              ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -250,7 +249,6 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph270, %middle.block
   %.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph270 ], [ %n.vec, %middle.block ]
-  %.1169269.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph270 ], [ %2, %middle.block ]
   br label %scalar.ph
 
 bb.q:                                             ; preds = %.lr.ph268, %bb.af
@@ -500,8 +498,7 @@ bb.af:                                            ; preds = %.loopexit252, %.loo
   br i1 %exitcond289.not, label %.preheader, label %bb.q, !llvm.loop !658
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %i.gx = phi i64 [ %4, %scalar.ph ], [ %.ph, %scalar.ph.preheader ] ; 2 uses
-  %.1169269 = phi i32 [ %3, %scalar.ph ], [ %.1169269.ph, %scalar.ph.preheader ]
+  %i.gx = phi i64 [ %indvars.iv.next291, %scalar.ph ], [ %.ph, %scalar.ph.preheader ] ; 3 uses
   %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %i.gx
   %i.gz = load i64, ptr %i.gy, align 8, !tbaa !223
   %i.ha = add nsw i64 %i.gz, 512
@@ -511,9 +508,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.he = trunc i64 %i.hb to i32
   %i.hf = add i32 %i.hd, %i.he
   store i32 %i.hf, ptr %i.hc, align 4, !tbaa !3
-  %3 = add i32 %.1169269, 1                       ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %i.hg = icmp ugt i64 %i.bz, %4
+  %indvars.iv.next291 = add i64 %i.gx, 1          ; 2 uses
+  %2 = and i64 %indvars.iv.next291, 4294967295
+  %i.hg = icmp ugt i64 %i.bz, %2
   br i1 %i.hg, label %scalar.ph, label %.thread, !llvm.loop !659
 
 .thread236.sink.split:                            ; preds = %bb.m, %bb.i

@@ -201,7 +201,7 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit166:       ; preds = %bb.bm, %_ZNSt6vecto
 define hidden void @_ZNK16OpenColorIO_v2_523GradingBSplineCurveImpl31computeKnotsAndCoefsForHueCurveERNS0_10KnotsCoefsEib(ptr noundef nonnull align 8 dereferenceable(60) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(112) %1, i32 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"struct.OpenColorIO_v2_5::GradingControlPoint", align 4 ; 5 uses
-  %5 = alloca %"class.std::vector", align 8       ; 28 uses
+  %5 = alloca %"class.std::vector", align 8       ; 27 uses
   %6 = alloca %"class.std::vector.3", align 8     ; 38 uses
   %i.a = alloca float, align 4                    ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -604,55 +604,49 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_inser
   br label %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.exit.i
 
 _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.exit.i: ; preds = %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i130.i, %bb.q, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i116.i, %bb.m, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i, %bb.h
-  %i.gg = phi ptr [ %i.ge, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i130.i ], [ %i.fa, %bb.q ], [ %i.ew, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i116.i ], [ %i.ds, %bb.m ], [ %i.dk, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i ], [ %i.cg, %bb.h ]
+  %i.gg = phi ptr [ %i.ge, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i130.i ], [ %i.fa, %bb.q ], [ %i.ew, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i116.i ], [ %i.ds, %bb.m ], [ %i.dk, %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i ], [ %i.cg, %bb.h ] ; 2 uses
   %i.gh = add i32 %.0166.i, 1                     ; 2 uses
   %i.gi = zext i32 %i.gh to i64                   ; 2 uses
   %i.gj = icmp ugt i64 %i.bq, %i.gi
   br i1 %i.gj, label %bb.f, label %.lr.ph172.i.preheader, !llvm.loop !146
 
 .lr.ph172.i.preheader:                            ; preds = %_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.exit.i
-  %i.gk = load ptr, ptr %5, align 8, !tbaa !49    ; 4 uses
+  %i.gk = load ptr, ptr %5, align 8, !tbaa !49    ; 3 uses
   %i.gl = icmp samesign ugt i64 %i.bq, 1
   br i1 %i.gl, label %.lr.ph170.preheader.i, label %._crit_edge.thread.i
 
-.lr.ph176.i:                                      ; preds = %._crit_edge.thread.i
-  %7 = fmul float %i.gq, 2.000000e-03
-  br label %bb.t
-
 ._crit_edge.thread.i.loopexit:                    ; preds = %._crit_edge.i
-  %8 = zext i32 %13 to i64
+  %.pre = load ptr, ptr %i.br, align 8, !tbaa !53
   br label %._crit_edge.thread.i
 
 ._crit_edge.thread.i:                             ; preds = %._crit_edge.thread.i.loopexit, %.lr.ph172.i.preheader
-  %.090171.i.lcssa = phi i64 [ 0, %.lr.ph172.i.preheader ], [ %8, %._crit_edge.thread.i.loopexit ]
-  %.lcssa495 = phi ptr [ %i.gk, %.lr.ph172.i.preheader ], [ %i.he, %._crit_edge.thread.i.loopexit ]
-  %.lcssa494 = phi ptr [ %i.gk, %.lr.ph172.i.preheader ], [ %i.hf, %._crit_edge.thread.i.loopexit ] ; 2 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %.lcssa495, i64 %.090171.i.lcssa ; 2 uses
-  %10 = load i64, ptr %.lcssa494, align 4
-  %11 = load i64, ptr %9, align 4
-  store i64 %11, ptr %.lcssa494, align 4
-  store i64 %10, ptr %9, align 4
-  %.pre = load ptr, ptr %5, align 8, !tbaa !49    ; 9 uses
-  %.pre688 = load ptr, ptr %i.br, align 8, !tbaa !53
-  %12 = ptrtoint ptr %.pre688 to i64
-  %i.gm = getelementptr i8, ptr %.pre, i64 %i.bp  ; 2 uses
+  %.lcssa495 = phi ptr [ %.pre, %._crit_edge.thread.i.loopexit ], [ %i.gg, %.lr.ph172.i.preheader ]
+  %.lcssa494 = phi ptr [ %i.he, %._crit_edge.thread.i.loopexit ], [ %i.gk, %.lr.ph172.i.preheader ] ; 9 uses
+  %i.gm = getelementptr i8, ptr %.lcssa494, i64 %i.bp ; 2 uses
   %i.gn = getelementptr i8, ptr %i.gm, i64 -8     ; 2 uses
   %i.go = load float, ptr %i.gn, align 4, !tbaa !97
-  %i.gp = load float, ptr %.pre, align 4, !tbaa !97
+  %i.gp = load float, ptr %.lcssa494, align 4, !tbaa !97
   %i.gq = fsub float %i.go, %i.gp                 ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 6 uses
-  %i.gs = ptrtoint ptr %.pre to i64
-  %i.gt = sub i64 %12, %i.gs
+  %7 = ptrtoint ptr %.lcssa495 to i64
+  %i.gs = ptrtoint ptr %.lcssa494 to i64
+  %i.gt = sub i64 %7, %i.gs
   %i.gu = ashr exact i64 %i.gt, 3                 ; 3 uses
   %i.gv = icmp ugt i64 %i.gu, 1
   br i1 %i.gv, label %.lr.ph176.i, label %.loopexit.i
 
+.lr.ph176.i:                                      ; preds = %._crit_edge.thread.i
+  %8 = fmul float %i.gq, 2.000000e-03
+  br label %bb.t
+
 .lr.ph170.preheader.i:                            ; preds = %.lr.ph172.i.preheader, %._crit_edge.i
-  %i.gw = phi i64 [ %15, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ] ; 2 uses
-  %13 = phi i32 [ %14, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ] ; 4 uses
+  %i.gw = phi i64 [ %10, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ]
+  %indvars.iv.next.i500 = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ] ; 4 uses
   %i.gx = phi ptr [ %i.hf, %._crit_edge.i ], [ %i.gk, %.lr.ph172.i.preheader ] ; 3 uses
   %i.gy = phi ptr [ %i.he, %._crit_edge.i ], [ %i.gk, %.lr.ph172.i.preheader ] ; 2 uses
-  %.090171.i499 = phi i32 [ %13, %._crit_edge.i ], [ 0, %.lr.ph172.i.preheader ]
+  %indvars.iv.i499 = phi i64 [ %indvars.iv.next.i500, %._crit_edge.i ], [ 0, %.lr.ph172.i.preheader ]
+  %9 = trunc nuw i64 %indvars.iv.i499 to i32
+  %indvars.i = trunc i64 %indvars.iv.next.i500 to i32
   %i.gz = load float, ptr %i.gx, align 4, !tbaa !97
   br label %.lr.ph170.i
 
@@ -664,16 +658,16 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.ex
   store i64 %i.hd, ptr %i.gx, align 4
   store i64 %i.hc, ptr %i.hb, align 4
   %i.he = load ptr, ptr %5, align 8, !tbaa !49    ; 3 uses
-  %i.hf = getelementptr inbounds nuw [8 x i8], ptr %i.he, i64 %i.gw ; 2 uses
-  %14 = add i32 %13, 1                            ; 2 uses
-  %15 = zext i32 %14 to i64                       ; 2 uses
-  %i.hg = icmp samesign ugt i64 %i.bq, %15
+  %i.hf = getelementptr inbounds nuw [8 x i8], ptr %i.he, i64 %indvars.iv.next.i500
+  %indvars.iv.next.i = add i64 %indvars.iv.next.i500, 1 ; 2 uses
+  %10 = and i64 %indvars.iv.next.i, 4294967295    ; 2 uses
+  %i.hg = icmp samesign ugt i64 %i.bq, %10
   br i1 %i.hg, label %.lr.ph170.preheader.i, label %._crit_edge.thread.i.loopexit
 
 .lr.ph170.i:                                      ; preds = %.lr.ph170.i, %.lr.ph170.preheader.i
   %i.hh = phi i64 [ %i.hm, %.lr.ph170.i ], [ %i.gw, %.lr.ph170.preheader.i ]
-  %.092169.i = phi i32 [ %.1.i, %.lr.ph170.i ], [ %.090171.i499, %.lr.ph170.preheader.i ]
-  %.093168.i = phi i32 [ %i.hl, %.lr.ph170.i ], [ %13, %.lr.ph170.preheader.i ] ; 2 uses
+  %.092169.i = phi i32 [ %.1.i, %.lr.ph170.i ], [ %9, %.lr.ph170.preheader.i ]
+  %.093168.i = phi i32 [ %i.hl, %.lr.ph170.i ], [ %indvars.i, %.lr.ph170.preheader.i ] ; 2 uses
   %.094167.i = phi float [ %.195.i, %.lr.ph170.i ], [ %i.gz, %.lr.ph170.preheader.i ] ; 2 uses
   %i.hi = getelementptr inbounds nuw [8 x i8], ptr %i.gy, i64 %i.hh
   %i.hj = load float, ptr %i.hi, align 4, !tbaa !97 ; 2 uses
@@ -691,14 +685,14 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.ex
 bb.t:                                             ; preds = %bb.v, %.lr.ph176.i
   %i.ho = phi i64 [ 1, %.lr.ph176.i ], [ %i.hz, %bb.v ]
   %.091174.i = phi i32 [ 1, %.lr.ph176.i ], [ %i.hy, %bb.v ] ; 2 uses
-  %i.hp = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.ho ; 2 uses
+  %i.hp = getelementptr inbounds nuw [8 x i8], ptr %.lcssa494, i64 %i.ho ; 2 uses
   %i.hq = load float, ptr %i.hp, align 4, !tbaa !97
   %i.hr = add i32 %.091174.i, -1
   %i.hs = zext i32 %i.hr to i64
-  %i.ht = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.hs
+  %i.ht = getelementptr inbounds nuw [8 x i8], ptr %.lcssa494, i64 %i.hs
   %i.hu = load float, ptr %i.ht, align 4, !tbaa !97 ; 2 uses
   %i.hv = fsub float %i.hq, %i.hu
-  %i.hw = fcmp olt float %i.hv, %7
+  %i.hw = fcmp olt float %i.hv, %8
   br i1 %i.hw, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
@@ -715,7 +709,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 bb.w:                                             ; preds = %._crit_edge177.i
   %i.ib = getelementptr i8, ptr %i.gm, i64 -4
   %i.ic = load float, ptr %i.ib, align 4, !tbaa !100
-  %i.id = getelementptr inbounds nuw i8, ptr %.pre, i64 4
+  %i.id = getelementptr inbounds nuw i8, ptr %.lcssa494, i64 4
   %i.ie = load float, ptr %i.id, align 4, !tbaa !100
   %i.if = fsub float %i.ic, %i.ie                 ; 2 uses
   %i.ig = fmul float %i.if, 2.000000e-03
@@ -724,12 +718,12 @@ bb.w:                                             ; preds = %._crit_edge177.i
 bb.x:                                             ; preds = %bb.z, %bb.w
   %i.ih = phi i64 [ 1, %bb.w ], [ %i.iu, %bb.z ]
   %.089179.i = phi i32 [ 1, %bb.w ], [ %i.it, %bb.z ] ; 2 uses
-  %i.ii = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.ih
+  %i.ii = getelementptr inbounds nuw [8 x i8], ptr %.lcssa494, i64 %i.ih
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 4 ; 2 uses
   %i.ik = load float, ptr %i.ij, align 4, !tbaa !100
   %i.il = add i32 %.089179.i, -1
   %i.im = zext i32 %i.il to i64
-  %i.in = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.im
+  %i.in = getelementptr inbounds nuw [8 x i8], ptr %.lcssa494, i64 %i.im
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 4
   %i.ip = load float, ptr %i.io, align 4, !tbaa !100 ; 2 uses
   %i.iq = fsub float %i.ik, %i.ip
@@ -764,7 +758,7 @@ bb.aa:                                            ; preds = %.loopexit.i
   %i.je = fadd float %i.jd, -1.000000e+00
   %i.jf = select i1 %switch114, float %i.jd, float %i.je
   store float %i.jf, ptr %i.ja, align 4, !tbaa !100
-  %i.jg = invoke ptr @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE6insertEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EERS6_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr nonnull %.pre, ptr noundef nonnull align 4 dereferenceable(8) %4)
+  %i.jg = invoke ptr @_ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE6insertEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EERS6_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr nonnull %.lcssa494, ptr noundef nonnull align 4 dereferenceable(8) %4)
           to label %.noexc121 unwind label %.loopexit.split-lp323 ; 0 uses
 
 .noexc121:                                        ; preds = %bb.aa
@@ -1167,7 +1161,7 @@ _ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i:      ; preds = %_ZNSt6vectorIfSaIfE
   %i.ul = load float, ptr %i.uk, align 4, !tbaa !58
   %i.um = fneg float %i.ul
   %i.un = call float @llvm.fmuladd.f32(float %i.uj, float 3.000000e+00, float %i.um)
-  %i.uo = fmul float %i.un, 5.000000e-01          ; 2 uses
+  %i.uo = fmul float %i.un, 5.000000e-01
   store float %i.uo, ptr %i.ui, align 4, !tbaa !58
   br label %bb.cn
 
@@ -1466,7 +1460,7 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i:     ; preds = %_ZNSt6vectorIfSaIfE
   %i.za = call float @llvm.fmuladd.f32(float %i.yw, float 3.000000e+00, float %i.yz)
   %i.zb = fmul float %i.za, 5.000000e-01          ; 2 uses
   %i.zc = fcmp ogt float %i.zb, f0x3C23D70A
-  %.sroa.speculated.i = select i1 %i.zc, float %i.zb, float f0x3C23D70A ; 2 uses
+  %.sroa.speculated.i = select i1 %i.zc, float %i.zb, float f0x3C23D70A
   store float %.sroa.speculated.i, ptr %i.yv, align 4, !tbaa !58
   br label %bb.cn
 
@@ -1476,7 +1470,6 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i:     ; preds = %_ZNSt6vectorIfSaIfE
   br label %.thread285.i
 
 bb.cn:                                            ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i
-  %16 = phi float [ %.sroa.speculated.i, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i ], [ %i.uo, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i ]
   %i.ze = phi ptr [ %i.yv, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i ], [ %i.ui, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i ] ; 6 uses
   br i1 %.not389.i, label %._crit_edge388.i, label %.lr.ph387.i
 
@@ -1484,20 +1477,19 @@ bb.cn:                                            ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %switch, label %bb.cq, label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit169.i
 
 .lr.ph387.i:                                      ; preds = %bb.cn, %.thread.i
-  %17 = phi float [ %21, %.thread.i ], [ %16, %bb.cn ] ; 4 uses
-  %i.zf = phi i64 [ %20, %.thread.i ], [ 0, %bb.cn ] ; 2 uses
-  %.0120385.i = phi i32 [ %19, %.thread.i ], [ 0, %bb.cn ]
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.ze, i64 %i.zf
-  %i.zg = call float @llvm.fabs.f32(float %17)
-  %19 = add i32 %.0120385.i, 1                    ; 2 uses
-  %20 = zext i32 %19 to i64                       ; 3 uses
-  %i.zh = getelementptr inbounds nuw [4 x i8], ptr %i.ze, i64 %20 ; 2 uses
-  %i.zi = load float, ptr %i.zh, align 4, !tbaa !58 ; 5 uses
+  %i.zf = phi i64 [ %indvars.iv.next.i134, %.thread.i ], [ 0, %bb.cn ] ; 3 uses
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.ze, i64 %i.zf ; 2 uses
+  %12 = load float, ptr %11, align 4, !tbaa !58   ; 4 uses
+  %i.zg = call float @llvm.fabs.f32(float %12)
+  %indvars.iv.next.i134 = add i64 %i.zf, 1        ; 2 uses
+  %13 = and i64 %indvars.iv.next.i134, 4294967295 ; 2 uses
+  %i.zh = getelementptr inbounds nuw [4 x i8], ptr %i.ze, i64 %13 ; 2 uses
+  %i.zi = load float, ptr %i.zh, align 4, !tbaa !58 ; 3 uses
   %i.zj = call float @llvm.fabs.f32(float %i.zi)
   %i.zk = fcmp ogt float %i.zg, %i.zj
   %.0119.i = select i1 %i.zk, float 8.000000e-01, float 2.000000e-01
-  %i.zl = fsub float %i.zi, %17
-  %i.zm = call float @llvm.fmuladd.f32(float %.0119.i, float %i.zl, float %17) ; 2 uses
+  %i.zl = fsub float %i.zi, %12
+  %i.zm = call float @llvm.fmuladd.f32(float %.0119.i, float %i.zl, float %12) ; 2 uses
   %i.zn = fcmp une float %i.zm, 0.000000e+00
   br i1 %i.zn, label %bb.co, label %.thread.i
 
@@ -1510,15 +1502,14 @@ bb.co:                                            ; preds = %.lr.ph387.i
   br i1 %i.zs, label %bb.cp, label %.thread.i
 
 bb.cp:                                            ; preds = %bb.co
-  %i.zt = fmul float %17, %i.zr
-  store float %i.zt, ptr %18, align 4, !tbaa !58
-  %i.zu = fmul float %i.zi, %i.zr                 ; 2 uses
+  %i.zt = fmul float %12, %i.zr
+  store float %i.zt, ptr %11, align 4, !tbaa !58
+  %i.zu = fmul float %i.zi, %i.zr
   store float %i.zu, ptr %i.zh, align 4, !tbaa !58
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.cp, %bb.co, %.lr.ph387.i
-  %21 = phi float [ %i.zi, %.lr.ph387.i ], [ %i.zu, %bb.cp ], [ %i.zi, %bb.co ]
-  %i.zv = icmp ugt i64 %i.nh, %20
+  %i.zv = icmp ugt i64 %i.nh, %13
   br i1 %i.zv, label %.lr.ph387.i, label %._crit_edge388.i, !llvm.loop !163
 
 bb.cq:                                            ; preds = %._crit_edge388.i

@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %.loopexit312, %.loo
   br i1 %.not421, label %.loopexit310, label %.lr.ph403.preheader
 
 .lr.ph403.preheader:                              ; preds = %.preheader311
-  %min.iters.check = icmp ult i64 %i.my, 11
+  %min.iters.check = icmp ult i64 %i.my, 9
   br i1 %min.iters.check, label %.lr.ph403.preheader628, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph403.preheader
@@ -219,8 +219,7 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %n.mod.vf = and i64 %i.my, 3                    ; 2 uses
   %i.ne = icmp eq i64 %n.mod.vf, 0
   %i.nf = select i1 %i.ne, i64 4, i64 %n.mod.vf
-  %n.vec = sub nsw i64 %i.my, %i.nf               ; 3 uses
-  %1 = trunc i64 %n.vec to i32
+  %n.vec = sub nsw i64 %i.my, %i.nf               ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -271,7 +270,6 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph403.preheader628:                           ; preds = %vector.scevcheck, %.lr.ph403.preheader, %middle.block
   %.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph403.preheader ], [ %n.vec, %middle.block ]
-  %.0131402.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph403.preheader ], [ %1, %middle.block ]
   %.3401.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph403.preheader ], [ %i.oo, %middle.block ]
   br label %.lr.ph403
 
@@ -674,8 +672,7 @@ _ZNSt6vectorISt4pairIjfESaIS1_EE12emplace_backIJRjfEEERS1_DpOT_.exit: ; preds = 
   br i1 %.not, label %.loopexit310, label %bb.bt
 
 .lr.ph403:                                        ; preds = %.lr.ph403.preheader628, %.lr.ph403
-  %i.wb = phi i64 [ %3, %.lr.ph403 ], [ %.ph, %.lr.ph403.preheader628 ]
-  %.0131402 = phi i32 [ %2, %.lr.ph403 ], [ %.0131402.ph, %.lr.ph403.preheader628 ]
+  %i.wb = phi i64 [ %indvars.iv.next448, %.lr.ph403 ], [ %.ph, %.lr.ph403.preheader628 ] ; 2 uses
   %.3401 = phi i32 [ %spec.select, %.lr.ph403 ], [ %.3401.ph, %.lr.ph403.preheader628 ]
   %i.wc = getelementptr inbounds nuw [24 x i8], ptr %.ptr291.ptr, i64 %i.wb ; 2 uses
   %i.wd = load ptr, ptr %i.wc, align 8
@@ -684,9 +681,9 @@ _ZNSt6vectorISt4pairIjfESaIS1_EE12emplace_backIJRjfEEERS1_DpOT_.exit: ; preds = 
   %i.wg = icmp ne ptr %i.wd, %i.wf
   %i.wh = zext i1 %i.wg to i32
   %spec.select = add i32 %.3401, %i.wh            ; 3 uses
-  %2 = add i32 %.0131402, 1                       ; 2 uses
-  %3 = zext i32 %2 to i64                         ; 2 uses
-  %i.wi = icmp ugt i64 %i.my, %3
+  %indvars.iv.next448 = add i64 %i.wb, 1          ; 2 uses
+  %1 = and i64 %indvars.iv.next448, 4294967295
+  %i.wi = icmp ugt i64 %i.my, %1
   br i1 %i.wi, label %.lr.ph403, label %._crit_edge404, !llvm.loop !50
 
 bb.bt:                                            ; preds = %._crit_edge404
