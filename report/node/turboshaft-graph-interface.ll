@@ -204,13 +204,13 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
   br label %bb.aj
 
 bb.aj:                                            ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE6SwitchENS2_1VINS2_12WordWithBitsILm32EEEEENS5_6VectorINS2_8SwitchOp4CaseEEEPNS2_5BlockENS0_10BranchHintE.exit, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface7BrOrRetEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEjj.exit115
-  %.067223 = phi i32 [ 0, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE6SwitchENS2_1VINS2_12WordWithBitsILm32EEEEENS5_6VectorINS2_8SwitchOp4CaseEEEPNS2_5BlockENS0_10BranchHintE.exit ], [ %9, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface7BrOrRetEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEjj.exit115 ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE6SwitchENS2_1VINS2_12WordWithBitsILm32EEEEENS5_6VectorINS2_8SwitchOp4CaseEEEPNS2_5BlockENS0_10BranchHintE.exit ], [ %indvars.iv.next, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface7BrOrRetEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEjj.exit115 ] ; 2 uses
   %.sroa.5.0222 = phi ptr [ %i.hg, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE6SwitchENS2_1VINS2_12WordWithBitsILm32EEEEENS5_6VectorINS2_8SwitchOp4CaseEEEPNS2_5BlockENS0_10BranchHintE.exit ], [ %i.lo, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface7BrOrRetEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEjj.exit115 ] ; 3 uses
-  %8 = zext nneg i32 %.067223 to i64
   %i.hh = load ptr, ptr %i.ff, align 8
-  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %i.hh, i64 %8
+  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %i.hh, i64 %indvars.iv
   %i.hj = load ptr, ptr %i.hi, align 8            ; 19 uses
-  %9 = add nuw i32 %.067223, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars237 = trunc i64 %indvars.iv.next to i32
   %i.hk = load ptr, ptr %i.eh, align 8, !nonnull !11, !align !19 ; 5 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hj, i64 40
   %i.hm = load i8, ptr %i.hl, align 8
@@ -488,8 +488,8 @@ bb.az:                                            ; preds = %bb.ay
   br label %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface7BrOrRetEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEjj.exit115
 
 _ZN2v88internal4wasm32TurboshaftGraphBuildingInterface7BrOrRetEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEjj.exit115: ; preds = %bb.ax, %bb.ay, %bb.az
-  %.not205.not = icmp ult i32 %.067223, %i.he
-  br i1 %.not205.not, label %bb.aj, label %bb.ba, !llvm.loop !497
+  %.not205.not = icmp ult i32 %i.he, %indvars237
+  br i1 %.not205.not, label %bb.ba, label %bb.aj, !llvm.loop !497
 
 bb.ba:                                            ; preds = %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface7BrOrRetEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEjj.exit115
   call preserve_mostcc void @_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm16ENS2_13ZoneAllocatorIS6_EEE11FreeStorageEv(ptr noundef nonnull align 8 dereferenceable(160) %7)

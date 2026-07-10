@@ -204,7 +204,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dd = getelementptr inbounds nuw i8, ptr %i.db, i64 1
   store i8 %i.dc, ptr %i.dd, align 1, !tbaa !7
   %indvars.iv.next.i.i.i.i.a = add nuw nsw i64 %indvars.iv.i.i.i.i.a, 2 ; 2 uses
-  %7 = icmp samesign ult i64 %indvars.iv.next.i.i.i.i.a, %i.bv
+  %7 = icmp samesign ugt i64 %i.bv, %indvars.iv.next.i.i.i.i.a
   br i1 %7, label %.lr.ph.i.i.i.i, label %.loopexit.thread.i.i.i.i, !llvm.loop !14
 
 .loopexit.thread.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i, %vec.epilog.middle.block, %middle.block

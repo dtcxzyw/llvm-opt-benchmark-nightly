@@ -204,8 +204,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.n, label %.lr.ph.preheader207, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.i, 8589934584               ; 4 uses
-  %8 = trunc i64 %n.vec to i32
+  %n.vec = and i64 %i.i, 8589934584               ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -263,7 +262,6 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader207:                              ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block
   %.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   %.098158.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %i.bb, %middle.block ]
-  %.099157.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %8, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block
@@ -272,18 +270,17 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not, label %._crit_edge.thread, label %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader207, %.lr.ph
-  %i.bc = phi i64 [ %10, %.lr.ph ], [ %.ph, %.lr.ph.preheader207 ]
-  %.098158 = phi i32 [ %spec.select, %.lr.ph ], [ %.098158.ph, %.lr.ph.preheader207 ]
-  %.099157 = phi i32 [ %9, %.lr.ph ], [ %.099157.ph, %.lr.ph.preheader207 ]
+  %i.bc = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %.ph, %.lr.ph.preheader207 ] ; 2 uses
+  %.099157 = phi i32 [ %spec.select, %.lr.ph ], [ %.098158.ph, %.lr.ph.preheader207 ]
   %i.bd = getelementptr inbounds nuw [112 x i8], ptr %i.e, i64 %i.bc
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 32
   %i.bf = load i8, ptr %i.be, align 8, !range !5, !noundef !6
   %i.bg = xor i8 %i.bf, 1
   %i.bh = zext nneg i8 %i.bg to i32
-  %spec.select = add i32 %.098158, %i.bh          ; 2 uses
-  %9 = add i32 %.099157, 1                        ; 2 uses
-  %10 = zext i32 %9 to i64                        ; 2 uses
-  %i.bi = icmp ugt i64 %i.i, %10
+  %spec.select = add i32 %.099157, %i.bh          ; 2 uses
+  %indvars.iv.next = add i64 %i.bc, 1             ; 2 uses
+  %8 = and i64 %indvars.iv.next, 4294967295
+  %i.bi = icmp ugt i64 %i.i, %8
   br i1 %i.bi, label %.lr.ph, label %._crit_edge, !llvm.loop !11
 
 bb.b:                                             ; preds = %._crit_edge
@@ -686,16 +683,15 @@ bb.az:                                            ; preds = %bb.ay
   br label %bb.bb
 
 .lr.ph321:                                        ; preds = %.lr.ph321.preheader, %.lr.ph321
-  %i.vq = phi i64 [ %4, %.lr.ph321 ], [ 0, %.lr.ph321.preheader ] ; 2 uses
-  %.0319 = phi i32 [ %3, %.lr.ph321 ], [ 0, %.lr.ph321.preheader ]
+  %i.vq = phi i64 [ 0, %.lr.ph321.preheader ], [ %indvars.iv.next343, %.lr.ph321 ] ; 3 uses
   %i.vr = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0252.2, i64 %i.vq
   %i.vs = load ptr, ptr %i.vr, align 8
   %i.vt = load ptr, ptr %i.vo, align 8
   %i.vu = getelementptr inbounds nuw [8 x i8], ptr %i.vt, i64 %i.vq
   store ptr %i.vs, ptr %i.vu, align 8
-  %3 = add i32 %.0319, 1                          ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %i.vv = icmp ugt i64 %i.i, %4
+  %indvars.iv.next343 = add i64 %i.vq, 1          ; 2 uses
+  %3 = and i64 %indvars.iv.next343, 4294967295
+  %i.vv = icmp ugt i64 %i.i, %3
   br i1 %i.vv, label %.lr.ph321, label %.loopexit, !llvm.loop !29
 
 .loopexit:                                        ; preds = %.lr.ph321, %._crit_edge315
@@ -1098,16 +1094,15 @@ bb.du:                                            ; preds = %_ZN8aiString3SetERK
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EED2Ev.exit241.thread
 
 .lr.ph781:                                        ; preds = %.lr.ph781.preheader, %.lr.ph781
-  %i.abh = phi i64 [ %5, %.lr.ph781 ], [ 0, %.lr.ph781.preheader ] ; 2 uses
-  %.0148779 = phi i32 [ %4, %.lr.ph781 ], [ 0, %.lr.ph781.preheader ]
+  %i.abh = phi i64 [ 0, %.lr.ph781.preheader ], [ %indvars.iv.next1035, %.lr.ph781 ] ; 3 uses
   %i.abi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.1, i64 %i.abh
   %i.abj = load ptr, ptr %i.abg, align 8
   %i.abk = getelementptr inbounds nuw [8 x i8], ptr %i.abj, i64 %i.abh
   %i.abl = load i64, ptr %i.abi, align 4
   store i64 %i.abl, ptr %i.abk, align 4
-  %4 = add i32 %.0148779, 1                       ; 2 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %i.abm = icmp ugt i64 %i.aaz, %5
+  %indvars.iv.next1035 = add i64 %i.abh, 1        ; 2 uses
+  %4 = and i64 %indvars.iv.next1035, 4294967295
+  %i.abm = icmp ugt i64 %i.aaz, %4
   br i1 %i.abm, label %.lr.ph781, label %_ZNSt6vectorIfSaIfEED2Ev.exit, !llvm.loop !44
 
 _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %.lr.ph781, %bb.dg
@@ -1329,9 +1324,8 @@ bb.el:                                            ; preds = %bb.ek
   br label %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit
 
 .lr.ph809:                                        ; preds = %.lr.ph809.preheader, %.lr.ph809
-  %i.ads = phi i32 [ %i.aec, %.lr.ph809 ], [ %.pre1058, %.lr.ph809.preheader ]
-  %i.adt = phi i64 [ %7, %.lr.ph809 ], [ 0, %.lr.ph809.preheader ] ; 2 uses
-  %.0807 = phi i32 [ %6, %.lr.ph809 ], [ 0, %.lr.ph809.preheader ]
+  %i.ads = phi i32 [ %.pre1058, %.lr.ph809.preheader ], [ %i.aec, %.lr.ph809 ]
+  %i.adt = phi i64 [ 0, %.lr.ph809.preheader ], [ %indvars.iv.next1044, %.lr.ph809 ] ; 3 uses
   %i.adu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0379.6, i64 %i.adt
   %i.adv = load ptr, ptr %i.adu, align 8
   %i.adw = load ptr, ptr %i.e, align 8
@@ -1344,9 +1338,9 @@ bb.el:                                            ; preds = %bb.ek
   store i32 %i.adz, ptr %i.aeb, align 4
   %i.aec = add i32 %i.adz, 1                      ; 2 uses
   store i32 %i.aec, ptr %i.g, align 8
-  %6 = add i32 %.0807, 1                          ; 2 uses
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.aed = icmp ugt i64 %i.m, %7
+  %indvars.iv.next1044 = add i64 %i.adt, 1        ; 2 uses
+  %5 = and i64 %indvars.iv.next1044, 4294967295
+  %i.aed = icmp ugt i64 %i.m, %5
   br i1 %i.aed, label %.lr.ph809, label %._crit_edge810.thread, !llvm.loop !49
 
 _ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit:           ; preds = %._crit_edge810.thread, %._crit_edge810, %bb.a

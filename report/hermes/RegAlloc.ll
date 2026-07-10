@@ -204,7 +204,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockENS2_17RegisterAllocato
   br label %bb.ax
 
 bb.au:                                            ; preds = %bb.av, %.lr.ph.i69
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.av ], [ 0, %.lr.ph.i69 ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.i69 ], [ %indvars.iv.next, %bb.av ] ; 3 uses
   %i.ww = getelementptr inbounds nuw [8 x i8], ptr %i.ws, i64 %indvars.iv
   %i.wx = load i64, ptr %i.ww, align 8, !tbaa !26
   %i.wy = getelementptr inbounds nuw [8 x i8], ptr %i.wt, i64 %indvars.iv

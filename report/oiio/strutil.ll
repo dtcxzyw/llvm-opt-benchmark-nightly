@@ -204,28 +204,28 @@ _ZL23stbsp__raise_to_power10PdS_di.exit:          ; preds = %bb.g, %bb.k, %bb.l,
 
 bb.r:                                             ; preds = %_ZL23stbsp__raise_to_power10PdS_di.exit
   %i.fy = icmp ugt i64 %i.fq, 999999999
-  %spec.store.select = select i1 %i.fy, i32 10, i32 1
+  %6 = select i1 %i.fy, i64 10, i64 1
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.t, %bb.r
-  %.084 = phi i32 [ %spec.store.select, %bb.r ], [ %7, %bb.t ] ; 4 uses
-  %6 = zext nneg i32 %.084 to i64
-  %i.fz = getelementptr inbounds nuw [8 x i8], ptr @_ZL13stbsp__powten, i64 %6
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.t ], [ %6, %bb.r ] ; 3 uses
+  %i.fz = getelementptr inbounds nuw [8 x i8], ptr @_ZL13stbsp__powten, i64 %indvars.iv
   %i.ga = load i64, ptr %i.fz, align 8, !tbaa !39 ; 2 uses
   %.not111 = icmp ult i64 %i.fq, %i.ga
   br i1 %.not111, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %7 = add nuw nsw i32 %.084, 1                   ; 2 uses
-  %i.gb = icmp eq i32 %7, 20
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.gb = icmp eq i64 %indvars.iv.next, 20
   br i1 %i.gb, label %thread-pre-split, label %bb.s, !llvm.loop !69
 
 bb.u:                                             ; preds = %bb.s
-  %i.gc = icmp ult i32 %i.fw, %.084
+  %7 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
+  %i.gc = icmp ult i32 %i.fw, %7
   br i1 %i.gc, label %bb.v, label %thread-pre-split
 
 bb.v:                                             ; preds = %bb.u
-  %i.gd = sub nuw nsw i32 %.084, %i.fw
+  %i.gd = sub nuw i32 %7, %i.fw
   %i.ge = zext nneg i32 %i.gd to i64
   %i.gf = getelementptr inbounds nuw [8 x i8], ptr @_ZL13stbsp__powten, i64 %i.ge
   %i.gg = load i64, ptr %i.gf, align 8, !tbaa !39 ; 2 uses

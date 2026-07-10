@@ -204,8 +204,7 @@ compact_exons.exit:                               ; preds = %about_same_gap_p.ex
 
 .lr.ph663:                                        ; preds = %.lr.ph1024
   %i.ayq = load ptr, ptr %i.bf, align 8, !tbaa !20
-  %11 = zext i32 %12 to i64
-  %i.ayr = getelementptr inbounds nuw [8 x i8], ptr %i.ayq, i64 %11
+  %i.ayr = getelementptr inbounds nuw [8 x i8], ptr %i.ayq, i64 %indvars.iv.next751
   %i.ays = load ptr, ptr %i.ayr, align 8, !tbaa !31 ; 3 uses
   %i.ayt = getelementptr inbounds nuw i8, ptr %i.ays, i64 12
   %i.ayu = load i32, ptr %i.ayt, align 4, !tbaa !51
@@ -219,36 +218,35 @@ compact_exons.exit:                               ; preds = %about_same_gap_p.ex
 
 .lr.ph1024:                                       ; preds = %.lr.ph663.preheader, %.lr.ph663
   %i.aza = phi ptr [ %i.ays, %.lr.ph663 ], [ %i.ayi, %.lr.ph663.preheader ]
-  %.02866621023 = phi i32 [ %12, %.lr.ph663 ], [ 0, %.lr.ph663.preheader ]
+  %indvars.iv7501010 = phi i64 [ %indvars.iv.next751, %.lr.ph663 ], [ 0, %.lr.ph663.preheader ]
   call void @free(ptr noundef nonnull %i.aza) #18
-  %12 = add nuw i32 %.02866621023, 1              ; 5 uses
+  %indvars.iv.next751 = add nuw nsw i64 %indvars.iv7501010, 1 ; 5 uses
   %i.azb = load i32, ptr %i.bl, align 8, !tbaa !19 ; 3 uses
-  %i.azc = icmp ult i32 %12, %i.azb
-  br i1 %i.azc, label %.lr.ph663, label %.thread561.thread
+  %11 = zext i32 %i.azb to i64
+  %i.azc = icmp samesign ult i64 %indvars.iv.next751, %11
+  br i1 %i.azc, label %.lr.ph663, label %.thread561
 
-.thread561:                                       ; preds = %.lr.ph663, %.lr.ph663.preheader
-  %.lcssa1000 = phi i32 [ %i.ayg, %.lr.ph663.preheader ], [ %i.azb, %.lr.ph663 ] ; 2 uses
-  %.0286662.lcssa = phi i32 [ 0, %.lr.ph663.preheader ], [ %12, %.lr.ph663 ] ; 2 uses
-  %.not341 = icmp eq i32 %.0286662.lcssa, 0
+.thread561:                                       ; preds = %.lr.ph663, %.lr.ph1024, %.lr.ph663.preheader
+  %12 = phi i32 [ %i.ayg, %.lr.ph663.preheader ], [ %i.azb, %.lr.ph1024 ], [ %i.azb, %.lr.ph663 ] ; 2 uses
+  %.0286.lcssa.ph.in = phi i64 [ 0, %.lr.ph663.preheader ], [ %indvars.iv.next751, %.lr.ph1024 ], [ %indvars.iv.next751, %.lr.ph663 ] ; 3 uses
+  %.not341 = icmp eq i64 %.0286.lcssa.ph.in, 0
   br i1 %.not341, label %thread-pre-split564, label %.thread561.thread
 
-.thread561.thread:                                ; preds = %.lr.ph1024, %.thread561
-  %.0286.lcssa.ph905 = phi i32 [ %.0286662.lcssa, %.thread561 ], [ %12, %.lr.ph1024 ] ; 3 uses
-  %13 = phi i32 [ %.lcssa1000, %.thread561 ], [ %i.azb, %.lr.ph1024 ]
+.thread561.thread:                                ; preds = %.thread561
+  %.0286.lcssa.ph = trunc nuw i64 %.0286.lcssa.ph.in to i32 ; 2 uses
   %i.azd = load ptr, ptr %i.bf, align 8, !tbaa !20 ; 2 uses
-  %14 = zext i32 %.0286.lcssa.ph905 to i64
-  %i.aze = getelementptr inbounds nuw [8 x i8], ptr %i.azd, i64 %14
-  %i.azf = sub i32 %13, %.0286.lcssa.ph905
+  %i.aze = getelementptr inbounds nuw [8 x i8], ptr %i.azd, i64 %.0286.lcssa.ph.in
+  %i.azf = sub i32 %12, %.0286.lcssa.ph
   %i.azg = zext i32 %i.azf to i64
   %i.azh = shl nuw nsw i64 %i.azg, 3
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.azd, ptr nonnull align 8 %i.aze, i64 %i.azh, i1 false)
   %i.azi = load i32, ptr %i.bl, align 8, !tbaa !19
-  %i.azj = sub i32 %i.azi, %.0286.lcssa.ph905     ; 2 uses
+  %i.azj = sub i32 %i.azi, %.0286.lcssa.ph        ; 2 uses
   store i32 %i.azj, ptr %i.bl, align 8, !tbaa !19
   br label %thread-pre-split564
 
 thread-pre-split564:                              ; preds = %.thread561, %.thread561.thread
-  %i.azk = phi i32 [ %i.azj, %.thread561.thread ], [ %.lcssa1000, %.thread561 ] ; 3 uses
+  %i.azk = phi i32 [ %i.azj, %.thread561.thread ], [ %12, %.thread561 ] ; 3 uses
   %.0283667 = add i32 %i.azk, -1                  ; 3 uses
   %i.azl = icmp sgt i32 %.0283667, -1
   br i1 %i.azl, label %.lr.ph669.preheader, label %.thread568

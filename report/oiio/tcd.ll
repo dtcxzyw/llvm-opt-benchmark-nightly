@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s, %bb.q, %bb.p
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph632, %._crit_edge626
-  %.0457630 = phi i32 [ 0, %.lr.ph632 ], [ %6, %._crit_edge626 ] ; 3 uses
+  %indvars.iv693 = phi i64 [ 0, %.lr.ph632 ], [ %indvars.iv.next694, %._crit_edge626 ] ; 4 uses
   %.0464629 = phi ptr [ %i.ed, %.lr.ph632 ], [ %i.ru, %._crit_edge626 ] ; 9 uses
   %.0467628 = phi ptr [ %i.ec, %.lr.ph632 ], [ %i.rr, %._crit_edge626 ]
   %.0472627 = phi i32 [ %i.eb, %.lr.ph632 ], [ %i.el, %._crit_edge626 ] ; 2 uses
@@ -239,10 +239,9 @@ bb.u:                                             ; preds = %.lr.ph632, %._crit_
   %i.fj = trunc i64 %i.fi to i32                  ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %.0464629, i64 12
   store i32 %i.fj, ptr %i.fk, align 4, !tbaa !101
-  %5 = zext i32 %.0457630 to i64                  ; 2 uses
-  %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %5
+  %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv693
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !3  ; 6 uses
-  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %5
+  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %indvars.iv693
   %i.fo = load i32, ptr %i.fn, align 4, !tbaa !3  ; 6 uses
   %i.fp = shl nsw i32 -1, %i.fm
   %i.fq = and i32 %i.fp, %i.es                    ; 3 uses
@@ -317,7 +316,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab
   %i.ha = mul nuw i32 %i.gx, 56                   ; 5 uses
-  %i.hb = icmp eq i32 %.0457630, 0                ; 2 uses
+  %i.hb = icmp eq i64 %indvars.iv693, 0           ; 2 uses
   br i1 %i.hb, label %.lr.ph625, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
@@ -720,8 +719,9 @@ opj_tcd_is_band_empty.exit.thread:                ; preds = %._crit_edge, %bb.as
 ._crit_edge626:                                   ; preds = %opj_tcd_is_band_empty.exit.thread
   %.pre = load i32, ptr %i.cr, align 4, !tbaa !95
   %i.ru = getelementptr inbounds nuw i8, ptr %.0464629, i64 192
-  %6 = add nuw i32 %.0457630, 1                   ; 2 uses
-  %i.rv = icmp ult i32 %6, %.pre
+  %indvars.iv.next694 = add nuw nsw i64 %indvars.iv693, 1 ; 2 uses
+  %5 = zext i32 %.pre to i64
+  %i.rv = icmp samesign ult i64 %indvars.iv.next694, %5
   br i1 %i.rv, label %bb.u, label %._crit_edge633, !llvm.loop !153
 
 ._crit_edge633:                                   ; preds = %._crit_edge626, %bb.t

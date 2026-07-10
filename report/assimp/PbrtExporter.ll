@@ -204,10 +204,9 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit249._crit_edge: ; pr
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit251 unwind label %bb.z ; 0 uses
 
 bb.bb:                                            ; preds = %.lr.ph, %_ZN6aiFaceD2Ev.exit
-  %.090359 = phi i32 [ 0, %.lr.ph ], [ %17, %_ZN6aiFaceD2Ev.exit ] ; 3 uses
+  %indvars.iv375 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next376, %_ZN6aiFaceD2Ev.exit ] ; 3 uses
   %i.nh = load ptr, ptr %i.nf, align 8
-  %16 = zext i32 %.090359 to i64
-  %i.ni = getelementptr inbounds nuw [16 x i8], ptr %i.nh, i64 %16 ; 2 uses
+  %i.ni = getelementptr inbounds nuw [16 x i8], ptr %i.nh, i64 %indvars.iv375 ; 2 uses
   %i.nj = load i32, ptr %i.ni, align 8            ; 3 uses
   %.not.i.i = icmp eq i32 %i.nj, 0
   br i1 %.not.i.i, label %_ZN6aiFaceC2ERKS_.exit.thread, label %bb.bc
@@ -289,7 +288,8 @@ _ZNSolsEj.exit.2:                                 ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit255.2 unwind label %bb.bg ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit255.2: ; preds = %_ZNSolsEj.exit.2
-  %i.og = urem i32 %.090359, 7
+  %16 = trunc nuw i64 %indvars.iv375 to i32
+  %i.og = urem i32 %16, 7
   %i.oh = icmp eq i32 %i.og, 6
   br i1 %i.oh, label %bb.bh, label %_ZN6aiFaceD2Ev.exit
 
@@ -304,9 +304,10 @@ bb.bh:                                            ; preds = %_ZStlsISt11char_tra
 
 _ZN6aiFaceD2Ev.exit:                              ; preds = %bb.bh, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit255.2
   call void @_ZdaPv(ptr noundef nonnull %i.nm) #26
-  %17 = add nuw i32 %.090359, 1                   ; 2 uses
+  %indvars.iv.next376 = add nuw nsw i64 %indvars.iv375, 1 ; 2 uses
   %i.ok = load i32, ptr %i.nd, align 8
-  %i.ol = icmp ult i32 %17, %i.ok
+  %17 = zext i32 %i.ok to i64
+  %i.ol = icmp samesign ult i64 %indvars.iv.next376, %17
   br i1 %i.ol, label %bb.bb, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit249._crit_edge, !llvm.loop !141
 
 bb.bi:                                            ; preds = %.loopexit.split-lp, %bb.bf

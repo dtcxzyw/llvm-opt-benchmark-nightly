@@ -1,0 +1,187 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 134be6ac097e0..af27a7897865b 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -1701,6 +1701,18 @@ const SCEV *ScalarEvolution::getZeroExtendExprImpl(const SCEV *Op, Type *Ty,
+   if (const SCEVZeroExtendExpr *SZ = dyn_cast<SCEVZeroExtendExpr>(Op))
+     return getZeroExtendExpr(SZ->getOperand(), Ty, Depth + 1);
+ 
++  // If the operand is an affine AddRec with the no-unsigned-wrap flag, the
++  // zero-extension distributes over the recurrence.
++  if (Depth <= MaxCastDepth)
++    if (const auto *AR = dyn_cast<SCEVAddRecExpr>(Op))
++      if (AR->isAffine() && AR->hasNoUnsignedWrap()) {
++        const SCEV *Start =
++            getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
++        const SCEV *Step =
++            getZeroExtendExpr(AR->getStepRecurrence(*this), Ty, Depth + 1);
++        return getAddRecExpr(Start, Step, AR->getLoop(), AR->getNoWrapFlags());
++      }
++
+   // Before doing any expensive analysis, check to see if we've already
+   // computed a SCEV for this Op and Ty.
+   FoldingSetNodeID ID;
+@@ -1742,14 +1754,7 @@ const SCEV *ScalarEvolution::getZeroExtendExprImpl(const SCEV *Op, Type *Ty,
+       unsigned BitWidth = getTypeSizeInBits(AR->getType());
+       const Loop *L = AR->getLoop();
+ 
+-      // If we have special knowledge that this addrec won't overflow,
+-      // we don't need to do any further analysis.
+-      if (AR->hasNoUnsignedWrap()) {
+-        Start =
+-            getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
+-        Step = getZeroExtendExpr(Step, Ty, Depth + 1);
+-        return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+-      }
++      // The no-unsigned-wrap case is handled before the uniquing lookup above.
+ 
+       // Check whether the backedge-taken count is SCEVCouldNotCompute.
+       // Note that this serves two purposes: It filters out loops that are
+@@ -2054,6 +2059,18 @@ const SCEV *ScalarEvolution::getSignExtendExprImpl(const SCEV *Op, Type *Ty,
+   if (const SCEVZeroExtendExpr *SZ = dyn_cast<SCEVZeroExtendExpr>(Op))
+     return getZeroExtendExpr(SZ->getOperand(), Ty, Depth + 1);
+ 
++  // If the operand is an affine AddRec with the no-signed-wrap flag, the
++  // sign-extension distributes over the recurrence.
++  if (Depth <= MaxCastDepth)
++    if (const auto *AR = dyn_cast<SCEVAddRecExpr>(Op))
++      if (AR->isAffine() && AR->hasNoSignedWrap()) {
++        const SCEV *Start =
++            getExtendAddRecStart<SCEVSignExtendExpr>(AR, Ty, this, Depth + 1);
++        const SCEV *Step =
++            getSignExtendExpr(AR->getStepRecurrence(*this), Ty, Depth + 1);
++        return getAddRecExpr(Start, Step, AR->getLoop(), SCEV::FlagNSW);
++      }
++
+   // Before doing any expensive analysis, check to see if we've already
+   // computed a SCEV for this Op and Ty.
+   FoldingSetNodeID ID;
+@@ -2128,14 +2145,7 @@ const SCEV *ScalarEvolution::getSignExtendExprImpl(const SCEV *Op, Type *Ty,
+       unsigned BitWidth = getTypeSizeInBits(AR->getType());
+       const Loop *L = AR->getLoop();
+ 
+-      // If we have special knowledge that this addrec won't overflow,
+-      // we don't need to do any further analysis.
+-      if (AR->hasNoSignedWrap()) {
+-        Start =
+-            getExtendAddRecStart<SCEVSignExtendExpr>(AR, Ty, this, Depth + 1);
+-        Step = getSignExtendExpr(Step, Ty, Depth + 1);
+-        return getAddRecExpr(Start, Step, L, SCEV::FlagNSW);
+-      }
++      // The no-signed-wrap case is handled before the uniquing lookup above.
+ 
+       // Check whether the backedge-taken count is SCEVCouldNotCompute.
+       // Note that this serves two purposes: It filters out loops that are
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll b/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll
+index 3fde1dfb963c4..023f51265d08e 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll
+@@ -407,7 +407,6 @@ define void @sle_from_int_min_no_nsw(i32 %M, i32 %N) {
+ ; CHECK-NEXT:    exit count for loop: ***COULDNOTCOMPUTE***
+ ; CHECK-NEXT:    predicated exit count for loop: (2147483649 + (sext i32 %M to i64))<nsw>
+ ; CHECK-NEXT:     Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nssw>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:    exit count for latch: (-2147483648 + %N)
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+@@ -415,18 +414,14 @@ define void @sle_from_int_min_no_nsw(i32 %M, i32 %N) {
+ ; CHECK-NEXT:    symbolic max exit count for loop: ***COULDNOTCOMPUTE***
+ ; CHECK-NEXT:    predicated symbolic max exit count for loop: (2147483649 + (sext i32 %M to i64))<nsw>
+ ; CHECK-NEXT:     Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nssw>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:    symbolic max exit count for latch: (-2147483648 + %N)
+ ; CHECK-NEXT:  Loop %loop: Predicated backedge-taken count is ((zext i32 (-2147483648 + %N) to i64) umin (2147483649 + (sext i32 %M to i64))<nsw>)
+ ; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nssw>
+ ; CHECK-NEXT:  Loop %loop: Predicated constant max backedge-taken count is i64 4294967295
+ ; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nssw>
+ ; CHECK-NEXT:  Loop %loop: Predicated symbolic max backedge-taken count is ((zext i32 (-2147483648 + %N) to i64) umin (2147483649 + (sext i32 %M to i64))<nsw>)
+ ; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nssw>
+ ;
+ entry:
+   br label %loop
+diff --git a/llvm/test/Analysis/ScalarEvolution/incorrect-exit-count.ll b/llvm/test/Analysis/ScalarEvolution/incorrect-exit-count.ll
+index b00c26d472eaf..4daa22b0ba54d 100644
+--- a/llvm/test/Analysis/ScalarEvolution/incorrect-exit-count.ll
++++ b/llvm/test/Analysis/ScalarEvolution/incorrect-exit-count.ll
+@@ -19,9 +19,9 @@ define dso_local i32 @f() {
+ ; CHECK-NEXT:    %storemerge1921 = phi i32 [ 3, %outer.loop ], [ %dec, %for.end ]
+ ; CHECK-NEXT:    --> {3,+,-1}<nuw><nsw><%for.cond6> U: [3,4) S: [3,4) Exits: <<Unknown>> LoopDispositions: { %for.cond6: Computable, %outer.loop: Uniform }
+ ; CHECK-NEXT:    %idxprom20 = zext i32 %storemerge1921 to i64
+-; CHECK-NEXT:    --> (zext i32 {3,+,-1}<nuw><nsw><%for.cond6> to i64) U: [3,4) S: [3,4) Exits: <<Unknown>> LoopDispositions: { %for.cond6: Computable, %outer.loop: Uniform }
++; CHECK-NEXT:    --> {3,+,4294967295}<nuw><nsw><%for.cond6> U: [3,4) S: [3,4) Exits: <<Unknown>> LoopDispositions: { %for.cond6: Computable, %outer.loop: Uniform }
+ ; CHECK-NEXT:    %arrayidx7 = getelementptr inbounds [1 x [4 x i16]], ptr @__const.f.g, i64 0, i64 0, i64 %idxprom20
+-; CHECK-NEXT:    --> ((2 * (zext i32 {3,+,-1}<nuw><nsw><%for.cond6> to i64))<nuw><nsw> + @__const.f.g)<nuw> U: [8,-3) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %for.cond6: Computable, %outer.loop: Uniform }
++; CHECK-NEXT:    --> {(6 + @__const.f.g)<nuw>,+,8589934590}<nuw><%for.cond6> U: [8,-3) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %for.cond6: Computable, %outer.loop: Uniform }
+ ; CHECK-NEXT:    %i = load i16, ptr %arrayidx7, align 2
+ ; CHECK-NEXT:    --> %i U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %for.cond6: Variant, %outer.loop: Variant }
+ ; CHECK-NEXT:    %storemerge1822.lcssa.ph = phi i32 [ 0, %for.cond6 ]
+@@ -43,9 +43,9 @@ define dso_local i32 @f() {
+ ; CHECK-NEXT:    %storemerge1921.3 = phi i32 [ 3, %for.end ], [ %dec.3, %for.end.3 ]
+ ; CHECK-NEXT:    --> {3,+,-1}<nuw><nsw><%inner.loop> U: [3,4) S: [3,4) Exits: <<Unknown>> LoopDispositions: { %inner.loop: Computable, %outer.loop: Uniform }
+ ; CHECK-NEXT:    %idxprom20.3 = zext i32 %storemerge1921.3 to i64
+-; CHECK-NEXT:    --> (zext i32 {3,+,-1}<nuw><nsw><%inner.loop> to i64) U: [3,4) S: [3,4) Exits: <<Unknown>> LoopDispositions: { %inner.loop: Computable, %outer.loop: Uniform }
++; CHECK-NEXT:    --> {3,+,4294967295}<nuw><nsw><%inner.loop> U: [3,4) S: [3,4) Exits: <<Unknown>> LoopDispositions: { %inner.loop: Computable, %outer.loop: Uniform }
+ ; CHECK-NEXT:    %arrayidx7.3 = getelementptr inbounds [1 x [4 x i16]], ptr @__const.f.g, i64 0, i64 0, i64 %idxprom20.3
+-; CHECK-NEXT:    --> ((2 * (zext i32 {3,+,-1}<nuw><nsw><%inner.loop> to i64))<nuw><nsw> + @__const.f.g)<nuw> U: [8,-3) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %inner.loop: Computable, %outer.loop: Uniform }
++; CHECK-NEXT:    --> {(6 + @__const.f.g)<nuw>,+,8589934590}<nuw><%inner.loop> U: [8,-3) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %inner.loop: Computable, %outer.loop: Uniform }
+ ; CHECK-NEXT:    %i7 = load i16, ptr %arrayidx7.3, align 2
+ ; CHECK-NEXT:    --> %i7 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %inner.loop: Variant, %outer.loop: Variant }
+ ; CHECK-NEXT:    %i8 = load volatile i32, ptr @b, align 4
+diff --git a/llvm/test/Transforms/IndVarSimplify/iv-widen-addrec-flag-inferred-late.ll b/llvm/test/Transforms/IndVarSimplify/iv-widen-addrec-flag-inferred-late.ll
+new file mode 100644
+index 0000000000000..3618fada6c8b4
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/iv-widen-addrec-flag-inferred-late.ll
+@@ -0,0 +1,48 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=indvars -S %s | FileCheck %s
++
++target datalayout = "e-m:e-i64:64-n8:16:32:64-S128"
++
++define i32 @f(ptr %a, i32 %k) {
++; CHECK-LABEL: define i32 @f(
++; CHECK-SAME: ptr [[A:%.*]], i32 [[K:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[CHECK:.*]] ]
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = zext i32 [[IV]] to i64
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i32, ptr [[A]], i64 [[INDVARS_IV]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[DONE:%.*]] = icmp ne i32 [[V]], 0
++; CHECK-NEXT:    [[LT:%.*]] = icmp ult i32 [[IV]], [[K]]
++; CHECK-NEXT:    [[OR_COND:%.*]] = select i1 [[DONE]], i1 [[LT]], i1 false
++; CHECK-NEXT:    br i1 [[OR_COND]], label %[[CHECK]], label %[[EXIT:.*]]
++; CHECK:       [[CHECK]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
++; CHECK-NEXT:    br label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[TMP1:%.*]] = phi i32 [ [[IV]], %[[LOOP]] ]
++; CHECK-NEXT:    ret i32 [[TMP1]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ 0, %entry ], [ %iv.next, %check ]
++  %idx = zext i32 %iv to i64
++  %gep = getelementptr i32, ptr %a, i64 %idx
++  %v = load i32, ptr %gep, align 4
++  %done = icmp eq i32 %v, 0
++  br i1 %done, label %exit, label %guard
++
++guard:
++  %lt = icmp ult i32 %iv, %k
++  br i1 %lt, label %check, label %exit
++
++check:
++  %iv.next = add i32 %iv, 1
++  br label %loop
++
++exit:
++  ret i32 %iv
++}

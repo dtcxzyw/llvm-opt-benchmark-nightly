@@ -203,15 +203,16 @@ bb.aq:                                            ; preds = %._crit_edge233
   br i1 %.not253, label %._crit_edge248, label %.lr.ph247
 
 bb.ar:                                            ; preds = %._crit_edge242
-  %11 = add nuw i32 %.3244, 1                     ; 2 uses
+  %indvars.iv.next290 = add nuw nsw i64 %indvars.iv289, 1 ; 2 uses
   %i.iq = load i32, ptr @_ZL9fileCount, align 4
-  %i.ir = icmp ult i32 %11, %i.iq
+  %11 = zext i32 %i.iq to i64
+  %i.ir = icmp samesign ult i64 %indvars.iv.next290, %11
   br i1 %i.ir, label %.lr.ph247, label %._crit_edge248, !llvm.loop !19
 
 .lr.ph247:                                        ; preds = %._crit_edge239, %bb.ar
-  %.0155245 = phi i32 [ %.0154.lcssa, %bb.ar ], [ %i.ip, %._crit_edge239 ]
-  %.3244 = phi i32 [ %11, %bb.ar ], [ 0, %._crit_edge239 ] ; 2 uses
-  %i.is = and i32 %.0155245, 15                   ; 2 uses
+  %indvars.iv289 = phi i64 [ %indvars.iv.next290, %bb.ar ], [ 0, %._crit_edge239 ] ; 5 uses
+  %.3244 = phi i32 [ %.0154.lcssa, %bb.ar ], [ %i.ip, %._crit_edge239 ]
+  %i.is = and i32 %.3244, 15                      ; 2 uses
   %.not195 = icmp eq i32 %i.is, 0
   br i1 %.not195, label %bb.at, label %bb.as
 
@@ -222,11 +223,10 @@ bb.as:                                            ; preds = %.lr.ph247
 
 bb.at:                                            ; preds = %bb.as, %.lr.ph247
   %.pre290 = load ptr, ptr @_ZL5files, align 8    ; 2 uses
-  %.pre292 = zext i32 %.3244 to i64               ; 4 uses
   br i1 %.not, label %._crit_edge291, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.iu = getelementptr inbounds nuw [32 x i8], ptr %.pre290, i64 %.pre292 ; 2 uses
+  %i.iu = getelementptr inbounds nuw [32 x i8], ptr %.pre290, i64 %indvars.iv289 ; 2 uses
   %i.iv = load ptr, ptr %i.iu, align 8
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iu, i64 24
   %i.ix = load i32, ptr %i.iw, align 8            ; 2 uses
@@ -237,9 +237,9 @@ bb.au:                                            ; preds = %bb.at
   %.pre289 = load ptr, ptr @_ZL5files, align 8
   br label %._crit_edge291
 
-._crit_edge291:                                   ; preds = %bb.at, %bb.au
+._crit_edge291:                                   ; preds = %bb.au, %bb.at
   %i.jc = phi ptr [ %.pre289, %bb.au ], [ %.pre290, %bb.at ]
-  %i.jd = getelementptr inbounds nuw [32 x i8], ptr %i.jc, i64 %.pre292
+  %i.jd = getelementptr inbounds nuw [32 x i8], ptr %i.jc, i64 %indvars.iv289
   %i.je = load ptr, ptr %i.jd, align 8
   %i.jf = call ptr @T_FileStream_open(ptr noundef %i.je, ptr noundef nonnull @.str.15) #13 ; 4 uses
   %i.jg = icmp eq ptr %i.jf, null
@@ -253,7 +253,7 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %._crit_edge291
   %i.jj = load ptr, ptr @stderr, align 8
   %i.jk = load ptr, ptr @_ZL5files, align 8
-  %i.jl = getelementptr inbounds nuw [32 x i8], ptr %i.jk, i64 %.pre292
+  %i.jl = getelementptr inbounds nuw [32 x i8], ptr %i.jk, i64 %indvars.iv289
   %i.jm = load ptr, ptr %i.jl, align 8
   %i.jn = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.jj, ptr noundef nonnull @.str.16, ptr noundef %i.jm) #15 ; 0 uses
   call void @exit(i32 noundef 4) #16
@@ -272,7 +272,7 @@ bb.av:                                            ; preds = %._crit_edge291
   %.0154.lcssa = phi i32 [ 0, %.preheader ], [ %i.jp, %.lr.ph241 ] ; 4 uses
   call void @T_FileStream_close(ptr noundef nonnull %i.jf) #13
   %i.js = load ptr, ptr @_ZL5files, align 8
-  %i.jt = getelementptr inbounds nuw [32 x i8], ptr %i.js, i64 %.pre292 ; 2 uses
+  %i.jt = getelementptr inbounds nuw [32 x i8], ptr %i.js, i64 %indvars.iv289 ; 2 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 24
   %i.jv = load i32, ptr %i.ju, align 8            ; 3 uses
   %.not196 = icmp eq i32 %.0154.lcssa, %i.jv

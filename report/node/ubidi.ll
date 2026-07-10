@@ -203,32 +203,31 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.lr.ph435
   %i.be = load i32, ptr %i.az, align 4            ; 2 uses
-  %i.bf = and i32 %i.be, 2147483647               ; 2 uses
+  %i.bf = and i32 %i.be, 2147483647
   %i.bg = add nuw nsw i32 %i.bf, %i.bc
   %i.bh = and i32 %i.be, 2147483647
-  %narrow = add nuw i32 %i.bh, 1
-  %6 = zext i32 %narrow to i64
-  %.phi.trans.insert = zext nneg i32 %i.bf to i64
-  %.phi.trans.insert555 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.phi.trans.insert
-  %.pre556 = load i32, ptr %.phi.trans.insert555, align 4
+  %.phi.trans.insert = zext nneg i32 %i.bh to i64 ; 2 uses
+  %6 = add nuw nsw i64 %.phi.trans.insert, 1
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.v
-  %7 = phi i32 [ %.pre556, %bb.r ], [ %i.bj, %bb.v ] ; 2 uses
+  %indvars.iv539 = phi i64 [ %.phi.trans.insert, %bb.r ], [ %indvars.iv.next540, %bb.v ] ; 2 uses
   %indvars.iv537 = phi i64 [ %6, %bb.r ], [ %indvars.iv.next538, %bb.v ] ; 2 uses
   %.1244.i430 = phi i32 [ %.0243.i434, %bb.r ], [ %.2245.i, %bb.v ] ; 2 uses
-  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv537
-  %i.bj = load i32, ptr %i.bi, align 4            ; 3 uses
-  %i.bk = sub nsw i32 %i.bj, %7
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv537
+  %8 = load i32, ptr %7, align 4                  ; 2 uses
+  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv539
+  %i.bj = load i32, ptr %i.bi, align 4            ; 2 uses
+  %i.bk = sub nsw i32 %8, %i.bj
   %i.bl = tail call i32 @llvm.abs.i32(i32 %i.bk, i1 true)
   %.not284.i = icmp eq i32 %i.bl, 1
   br i1 %.not284.i, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.bm = sext i32 %i.bj to i64
+  %i.bm = sext i32 %8 to i64
   %i.bn = getelementptr inbounds i8, ptr %i.u, i64 %i.bm
   %i.bo = load i8, ptr %i.bn, align 1
-  %i.bp = sext i32 %7 to i64
+  %i.bp = sext i32 %i.bj to i64
   %i.bq = getelementptr inbounds i8, ptr %i.u, i64 %i.bp
   %i.br = load i8, ptr %i.bq, align 1
   %.not285.i = icmp eq i8 %i.bo, %i.br
@@ -243,6 +242,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %indvars.iv.next538 = add nuw nsw i64 %indvars.iv537, 1 ; 2 uses
   %i.bt = trunc nuw i64 %indvars.iv.next538 to i32
   %i.bu = icmp sgt i32 %i.bg, %i.bt
+  %indvars.iv.next540 = add nuw nsw i64 %indvars.iv539, 1
   br i1 %i.bu, label %bb.s, label %.loopexit339, !llvm.loop !8
 
 .loopexit339:                                     ; preds = %bb.v, %.lr.ph435

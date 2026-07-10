@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load i8, ptr %4, align 1, !tbaa !27      ; 3 uses
-  %i.b = zext i8 %i.a to i64                      ; 6 uses
+  %i.b = zext i8 %i.a to i64                      ; 8 uses
   %i.c = icmp slt i8 %i.a, 0
   br i1 %i.c, label %bb.c, label %bb.f
 
@@ -221,7 +221,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
-  %i.i = add nsw i64 %i.b, -127                   ; 4 uses
+  %i.i = add nsw i64 %i.b, -127                   ; 5 uses
   %i.j = add nsw i64 %i.b, -126
   %i.k = lshr i64 %i.j, 1                         ; 2 uses
   %.not90 = icmp ult i64 %i.k, %5
@@ -229,24 +229,20 @@ bb.e:                                             ; preds = %bb.c
 
 iter.check:                                       ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 4 uses
-  %6 = trunc nuw nsw i64 %i.i to i32              ; 3 uses
-  %umax2 = tail call i32 @llvm.umax.i32(i32 %6, i32 2)
-  %7 = add nsw i32 %umax2, -1
-  %8 = lshr i32 %7, 1
-  %narrow = add nuw i32 %8, 1
-  %9 = zext i32 %narrow to i64                    ; 5 uses
+  %umax2 = tail call i64 @llvm.umax.i64(i64 %i.i, i64 2)
+  %6 = add nsw i64 %umax2, -1
+  %7 = lshr i64 %6, 1
+  %8 = add nuw i64 %7, 1                          ; 5 uses
   %min.iters.check = icmp ult i64 %i.i, 7
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %umax = tail call i32 @llvm.umax.i32(i32 %6, i32 2)
-  %10 = add nsw i32 %umax, -1
-  %11 = lshr i32 %10, 1
-  %12 = zext nneg i32 %11 to i64                  ; 2 uses
-  %13 = shl nuw nsw i64 %12, 1
-  %i.m = getelementptr i8, ptr %0, i64 %13
+  %9 = add nsw i64 %i.b, -128
+  %10 = lshr i64 %9, 1
+  %11 = and i64 %i.b, 126
+  %i.m = getelementptr i8, ptr %0, i64 %11
   %scevgep = getelementptr i8, ptr %i.m, i64 2
-  %i.n = getelementptr i8, ptr %4, i64 %12
+  %i.n = getelementptr i8, ptr %4, i64 %10
   %scevgep1 = getelementptr i8, ptr %i.n, i64 2
   %bound0 = icmp ult ptr %0, %scevgep1
   %bound1 = icmp ult ptr %i.l, %scevgep
@@ -258,9 +254,9 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check3, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %9, 12
-  %n.vec = and i64 %9, 4294967280                 ; 4 uses
-  %i.o = shl nuw nsw i64 %n.vec, 1
+  %n.mod.vf = and i64 %8, 12
+  %n.vec = and i64 %8, -16                        ; 4 uses
+  %i.o = shl i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -289,7 +285,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !42
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %9
+  %cmp.n = icmp eq i64 %8, %n.vec
   br i1 %cmp.n, label %.loopexit.thread, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -298,8 +294,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec9 = and i64 %9, 4294967292                ; 3 uses
-  %i.ab = shl nuw nsw i64 %n.vec9, 1
+  %n.vec9 = and i64 %8, -4                        ; 3 uses
+  %i.ab = shl i64 %n.vec9, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -318,7 +314,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ai, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !43
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n15 = icmp eq i64 %n.vec9, %9
+  %cmp.n15 = icmp eq i64 %8, %n.vec9
   br i1 %cmp.n15, label %.loopexit.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -338,9 +334,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
   store i8 %i.ap, ptr %i.ar, align 1, !tbaa !27
-  %indvars.iv.next = add nuw i64 %indvars.iv, 2   ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %i.as = icmp ugt i32 %6, %indvars
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.as = icmp samesign ugt i64 %i.i, %indvars.iv.next
   br i1 %i.as, label %.lr.ph, label %.loopexit.thread, !llvm.loop !44
 
 .loopexit.thread:                                 ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
@@ -743,10 +738,10 @@ declare i32 @llvm.smin.i32(i32, i32) #24
 declare void @llvm.assume(i1 noundef) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #24
+declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #24
+declare i32 @llvm.umax.i32(i32, i32) #24
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

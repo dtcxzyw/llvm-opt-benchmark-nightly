@@ -202,35 +202,35 @@ mat_set.exit165:                                  ; preds = %._crit_edge26.i163,
 .preheader23.i191:                                ; preds = %._crit_edge26.i203, %.preheader23.lr.ph.split.split.i188
   %indvar381 = phi i64 [ %indvar.next382, %._crit_edge26.i203 ], [ 0, %.preheader23.lr.ph.split.split.i188 ] ; 2 uses
   %i.ft = mul nuw nsw i64 %indvar381, %i.ew
-  %i.fu = add nuw i64 %i.ft, %i.fr                ; 5 uses
+  %i.fu = add nuw nsw i64 %i.ft, %i.fr            ; 5 uses
   br i1 %i.fs, label %.preheader.i193.epil.preheader, label %.preheader.i193
 
 .preheader.i193:                                  ; preds = %.preheader23.i191, %.preheader.i193
   %indvars.iv31.i194 = phi i64 [ %indvars.iv.next32.i201.3, %.preheader.i193 ], [ 0, %.preheader23.i191 ] ; 5 uses
   %niter538 = phi i64 [ %niter538.next.3, %.preheader.i193 ], [ 0, %.preheader23.i191 ]
   %i.fv = mul nuw nsw i64 %indvars.iv31.i194, %wide.trip.count.i170
-  %i.fw = add i64 %i.fu, %i.fv
+  %i.fw = add nuw i64 %i.fu, %i.fv
   %sext430 = shl i64 %i.fw, 32
   %i.fx = ashr exact i64 %sext430, 30
   %scevgep383 = getelementptr i8, ptr %i.h, i64 %i.fx
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep383, i8 0, i64 %i.ex, i1 false), !tbaa !15
   %indvars.iv.next32.i201 = or disjoint i64 %indvars.iv31.i194, 1
   %i.fy = mul nuw nsw i64 %indvars.iv.next32.i201, %wide.trip.count.i170
-  %i.fz = add i64 %i.fu, %i.fy
+  %i.fz = add nuw i64 %i.fu, %i.fy
   %sext430.1 = shl i64 %i.fz, 32
   %i.ga = ashr exact i64 %sext430.1, 30
   %scevgep383.1 = getelementptr i8, ptr %i.h, i64 %i.ga
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep383.1, i8 0, i64 %i.ex, i1 false), !tbaa !15
   %indvars.iv.next32.i201.1 = or disjoint i64 %indvars.iv31.i194, 2
   %i.gb = mul nuw nsw i64 %indvars.iv.next32.i201.1, %wide.trip.count.i170
-  %i.gc = add i64 %i.fu, %i.gb
+  %i.gc = add nuw i64 %i.fu, %i.gb
   %sext430.2 = shl i64 %i.gc, 32
   %i.gd = ashr exact i64 %sext430.2, 30
   %scevgep383.2 = getelementptr i8, ptr %i.h, i64 %i.gd
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep383.2, i8 0, i64 %i.ex, i1 false), !tbaa !15
   %indvars.iv.next32.i201.2 = or disjoint i64 %indvars.iv31.i194, 3
   %i.ge = mul nuw nsw i64 %indvars.iv.next32.i201.2, %wide.trip.count.i170
-  %i.gf = add i64 %i.fu, %i.ge
+  %i.gf = add nuw i64 %i.fu, %i.ge
   %sext430.3 = shl i64 %i.gf, 32
   %i.gg = ashr exact i64 %sext430.3, 30
   %scevgep383.3 = getelementptr i8, ptr %i.h, i64 %i.gg
@@ -252,7 +252,7 @@ mat_set.exit165:                                  ; preds = %._crit_edge26.i163,
   %indvars.iv31.i194.epil = phi i64 [ %indvars.iv31.i194.epil.init, %.preheader.i193.epil.preheader ], [ %indvars.iv.next32.i201.epil, %.preheader.i193.epil ] ; 2 uses
   %epil.iter534 = phi i64 [ 0, %.preheader.i193.epil.preheader ], [ %epil.iter534.next, %.preheader.i193.epil ]
   %i.gh = mul nuw nsw i64 %indvars.iv31.i194.epil, %wide.trip.count.i170
-  %i.gi = add i64 %i.fu, %i.gh
+  %i.gi = add nuw i64 %i.fu, %i.gh
   %sext430.epil = shl i64 %i.gi, 32
   %i.gj = ashr exact i64 %sext430.epil, 30
   %scevgep383.epil = getelementptr i8, ptr %i.h, i64 %i.gj
@@ -280,35 +280,35 @@ mat_set.exit165:                                  ; preds = %._crit_edge26.i163,
 .preheader23.i211:                                ; preds = %._crit_edge26.i223, %.preheader23.lr.ph.split.split.i208
   %indvar387 = phi i64 [ %indvar.next388, %._crit_edge26.i223 ], [ 0, %.preheader23.lr.ph.split.split.i208 ] ; 2 uses
   %i.gn = mul nuw nsw i64 %indvar387, %i.ew
-  %i.go = add nuw i64 %i.gn, %i.gl                ; 5 uses
+  %i.go = add nuw nsw i64 %i.gn, %i.gl            ; 5 uses
   br i1 %i.gm, label %.preheader.i213.epil.preheader, label %.preheader.i213
 
 .preheader.i213:                                  ; preds = %.preheader23.i211, %.preheader.i213
   %indvars.iv31.i214 = phi i64 [ %indvars.iv.next32.i221.3, %.preheader.i213 ], [ 0, %.preheader23.i211 ] ; 5 uses
   %niter544 = phi i64 [ %niter544.next.3, %.preheader.i213 ], [ 0, %.preheader23.i211 ]
   %i.gp = mul nuw nsw i64 %indvars.iv31.i214, %wide.trip.count.i170
-  %i.gq = add i64 %i.go, %i.gp
+  %i.gq = add nuw i64 %i.go, %i.gp
   %sext431 = shl i64 %i.gq, 32
   %i.gr = ashr exact i64 %sext431, 30
   %scevgep389 = getelementptr i8, ptr %i.h, i64 %i.gr
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep389, i8 0, i64 %i.ex, i1 false), !tbaa !15
   %indvars.iv.next32.i221 = or disjoint i64 %indvars.iv31.i214, 1
   %i.gs = mul nuw nsw i64 %indvars.iv.next32.i221, %wide.trip.count.i170
-  %i.gt = add i64 %i.go, %i.gs
+  %i.gt = add nuw i64 %i.go, %i.gs
   %sext431.1 = shl i64 %i.gt, 32
   %i.gu = ashr exact i64 %sext431.1, 30
   %scevgep389.1 = getelementptr i8, ptr %i.h, i64 %i.gu
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep389.1, i8 0, i64 %i.ex, i1 false), !tbaa !15
   %indvars.iv.next32.i221.1 = or disjoint i64 %indvars.iv31.i214, 2
   %i.gv = mul nuw nsw i64 %indvars.iv.next32.i221.1, %wide.trip.count.i170
-  %i.gw = add i64 %i.go, %i.gv
+  %i.gw = add nuw i64 %i.go, %i.gv
   %sext431.2 = shl i64 %i.gw, 32
   %i.gx = ashr exact i64 %sext431.2, 30
   %scevgep389.2 = getelementptr i8, ptr %i.h, i64 %i.gx
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep389.2, i8 0, i64 %i.ex, i1 false), !tbaa !15
   %indvars.iv.next32.i221.2 = or disjoint i64 %indvars.iv31.i214, 3
   %i.gy = mul nuw nsw i64 %indvars.iv.next32.i221.2, %wide.trip.count.i170
-  %i.gz = add i64 %i.go, %i.gy
+  %i.gz = add nuw i64 %i.go, %i.gy
   %sext431.3 = shl i64 %i.gz, 32
   %i.ha = ashr exact i64 %sext431.3, 30
   %scevgep389.3 = getelementptr i8, ptr %i.h, i64 %i.ha
@@ -330,7 +330,7 @@ mat_set.exit165:                                  ; preds = %._crit_edge26.i163,
   %indvars.iv31.i214.epil = phi i64 [ %indvars.iv31.i214.epil.init, %.preheader.i213.epil.preheader ], [ %indvars.iv.next32.i221.epil, %.preheader.i213.epil ] ; 2 uses
   %epil.iter540 = phi i64 [ 0, %.preheader.i213.epil.preheader ], [ %epil.iter540.next, %.preheader.i213.epil ]
   %i.hb = mul nuw nsw i64 %indvars.iv31.i214.epil, %wide.trip.count.i170
-  %i.hc = add i64 %i.go, %i.hb
+  %i.hc = add nuw i64 %i.go, %i.hb
   %sext431.epil = shl i64 %i.hc, 32
   %i.hd = ashr exact i64 %sext431.epil, 30
   %scevgep389.epil = getelementptr i8, ptr %i.h, i64 %i.hd

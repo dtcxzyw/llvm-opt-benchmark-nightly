@@ -106,7 +106,7 @@ bb.j:                                             ; preds = %bb.i
 
 .thread.split.us:                                 ; preds = %.thread.split.us.preheader, %bb.k
   %indvars.iv195.a = phi i64 [ 0, %.thread.split.us.preheader ], [ %indvars.iv.next196.a, %bb.k ] ; 2 uses
-  %i.aa = phi i64 [ 0, %.thread.split.us.preheader ], [ %8, %bb.k ] ; 2 uses
+  %i.aa = phi i64 [ 0, %.thread.split.us.preheader ], [ %indvars.iv.next196, %bb.k ] ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.aa
   %.val143.us = load i32, ptr %i.ab, align 1      ; 2 uses
   %i.ac = xor i32 %.val143.us, %5                 ; 4 uses
@@ -118,8 +118,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not136.us, label %.split.us, label %.lr.ph.us
 
 bb.k:                                             ; preds = %.loopexit.us
-  %indvars.iv.next196.a = add nuw nsw i64 %indvars.iv195.a, 1 ; 3 uses
-  %8 = shl nsw i64 %indvars.iv.next196.a, 3
+  %indvars.iv.next196.a = add nuw nsw i64 %indvars.iv195.a, 1 ; 2 uses
+  %indvars.iv.next196 = add nuw nsw i64 %i.aa, 8
   %exitcond198 = icmp eq i64 %indvars.iv.next196.a, 20
   br i1 %exitcond198, label %.split174.us, label %.thread.split.us
 
