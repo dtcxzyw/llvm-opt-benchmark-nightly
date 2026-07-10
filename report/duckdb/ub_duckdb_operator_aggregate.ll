@@ -203,8 +203,7 @@ bb.dj:                                            ; preds = %bb.df, %bb.de
           to label %bb.dn unwind label %bb.do
 
 bb.dk:                                            ; preds = %.lr.ph275, %bb.dm
-  %i.gl = phi i64 [ 0, %.lr.ph275 ], [ %26, %bb.dm ] ; 3 uses
-  %.0113274 = phi i32 [ 0, %.lr.ph275 ], [ %25, %bb.dm ] ; 2 uses
+  %i.gl = phi i64 [ 0, %.lr.ph275 ], [ %indvars.iv.next, %bb.dm ] ; 5 uses
   %.0114273 = phi i32 [ 0, %.lr.ph275 ], [ %spec.select, %bb.dm ]
   br i1 %.not.i190, label %bb.dm, label %bb.dl
 
@@ -223,11 +222,12 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk
   %i.gu = shl nuw i64 1, %i.gr
   %i.gv = and i64 %i.gt, %i.gu
   %.not238 = icmp eq i64 %i.gv, 0
-  %spec.select = select i1 %.not238, i32 %.0114273, i32 %.0113274 ; 2 uses
+  %25 = trunc nuw i64 %i.gl to i32
+  %spec.select = select i1 %.not238, i32 %.0114273, i32 %25 ; 2 uses
   %i.gw = getelementptr inbounds nuw [4 x i8], ptr %i.gk, i64 %i.gl
   store i32 %spec.select, ptr %i.gw, align 4, !tbaa !3
-  %25 = add i32 %.0113274, 1                      ; 2 uses
-  %26 = zext i32 %25 to i64                       ; 2 uses
+  %indvars.iv.next = add i64 %i.gl, 1             ; 2 uses
+  %26 = and i64 %indvars.iv.next, 4294967295
   %i.gx = icmp ugt i64 %i.h, %26
   br i1 %i.gx, label %bb.dk, label %._crit_edge, !llvm.loop !1876
 

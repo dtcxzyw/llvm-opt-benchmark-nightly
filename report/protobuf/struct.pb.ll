@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.d, %bb.c
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %.lr.ph.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.k ], [ 0, %.lr.ph.i.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i, %bb.k ] ; 3 uses
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv.i
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !74, !noalias !69 ; 2 uses
   %i.aj = icmp eq ptr %i.ai, null
@@ -312,7 +312,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ 0, %.lr.ph.i.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i, %bb.d ] ; 3 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !74, !noalias !81 ; 2 uses
   %i.m = icmp eq ptr %i.l, null
@@ -631,7 +631,7 @@ bb.a:                                             ; preds = %_ZN6google8protobuf
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %.lr.ph.i.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i, %bb.c ] ; 3 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %indvars.iv.i
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !74, !noalias !93 ; 2 uses
   %i.z = icmp eq ptr %i.y, null
@@ -1034,7 +1034,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %.lr.ph.i.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i, %bb.c ] ; 3 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !74, !noalias !142 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
@@ -1437,7 +1437,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %.lr.ph.i.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !74, !noalias !199 ; 2 uses
   %i.h = icmp eq ptr %i.g, null

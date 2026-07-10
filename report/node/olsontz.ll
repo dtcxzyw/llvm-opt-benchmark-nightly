@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.b
   %i.y = add i16 %i.x, %i.v
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.aa = load i16, ptr %i.z, align 4
-  %i.ab = add i16 %i.y, %i.aa                     ; 6 uses
-  %i.ac = zext i16 %i.ab to i64                   ; 2 uses
+  %i.ab = add i16 %i.y, %i.aa                     ; 5 uses
+  %i.ac = zext i16 %i.ab to i64                   ; 3 uses
   %i.ad = icmp sgt i16 %i.ab, 0                   ; 2 uses
   br i1 %i.ad, label %bb.e, label %.critedge96
 
@@ -214,23 +214,23 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.g
-  %10 = phi i16 [ 0, %bb.e ], [ %i.aj, %bb.g ]
-  %.073105 = phi i16 [ 0, %bb.e ], [ %12, %bb.g ] ; 3 uses
-  %11 = zext nneg i16 %.073105 to i64
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %11
+  %.073105 = phi i16 [ 0, %bb.e ], [ %i.aj, %bb.g ]
+  %indvars.iv = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %bb.g ] ; 3 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %indvars.iv
   %i.ai = load i8, ptr %i.ah, align 1
   %.not91 = icmp eq i8 %i.ai, 0
   br i1 %.not91, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.aj = add i16 %10, 1                          ; 2 uses
+  %i.aj = add i16 %.073105, 1                     ; 2 uses
   store i16 %i.aj, ptr %i.ae, align 8
-  %12 = add nuw nsw i16 %.073105, 1               ; 2 uses
-  %exitcond.not = icmp eq i16 %12, %i.ab
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ac
   br i1 %exitcond.not, label %.critedge96, label %bb.f, !llvm.loop !14
 
 bb.h:                                             ; preds = %bb.f
-  %i.ak = icmp eq i16 %.073105, %i.ab
+  %10 = trunc nuw nsw i64 %indvars.iv to i16
+  %i.ak = icmp eq i16 %i.ab, %10
   br i1 %i.ak, label %.critedge96, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

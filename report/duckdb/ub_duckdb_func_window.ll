@@ -204,9 +204,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i38, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us: ; preds = %.lr.ph, %bb.h
-  %i.t = phi i64 [ %8, %bb.h ], [ 0, %.lr.ph ]    ; 2 uses
+  %i.t = phi i64 [ %indvars.iv.next47, %bb.h ], [ 0, %.lr.ph ] ; 4 uses
   %.042.us = phi i64 [ %.1.us, %bb.h ], [ 0, %.lr.ph ] ; 3 uses
-  %.03441.us = phi i32 [ %7, %bb.h ], [ 0, %.lr.ph ] ; 2 uses
   %i.u = lshr i64 %i.t, 6
   %i.v = and i64 %i.t, 63
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.u
@@ -220,13 +219,14 @@ bb.g:                                             ; preds = %_ZNK6duckdb15Select
   %i.aa = add i64 %.042.us, 1
   %i.ab = load ptr, ptr %i.s, align 8, !tbaa !389
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %.042.us
-  store i32 %.03441.us, ptr %i.ac, align 4, !tbaa !3
+  %7 = trunc nuw i64 %i.t to i32
+  store i32 %7, ptr %i.ac, align 4, !tbaa !3
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us
   %.1.us = phi i64 [ %i.aa, %bb.g ], [ %.042.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us ] ; 2 uses
-  %7 = add i32 %.03441.us, 1                      ; 2 uses
-  %8 = zext i32 %7 to i64                         ; 2 uses
+  %indvars.iv.next47 = add i64 %i.t, 1            ; 2 uses
+  %8 = and i64 %indvars.iv.next47, 4294967295
   %i.ad = icmp ugt i64 %i.e, %8
   br i1 %i.ad, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, label %._crit_edge, !llvm.loop !1434
 
@@ -246,9 +246,8 @@ bb.j:                                             ; preds = %bb.c
   br label %bb.ac
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %.lr.ph, %bb.l
-  %i.ah = phi i64 [ %10, %bb.l ], [ 0, %.lr.ph ]
+  %i.ah = phi i64 [ %indvars.iv.next, %bb.l ], [ 0, %.lr.ph ] ; 3 uses
   %.042 = phi i64 [ %.1, %bb.l ], [ 0, %.lr.ph ]  ; 3 uses
-  %.03441 = phi i32 [ %9, %bb.l ], [ 0, %.lr.ph ] ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.ah
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3
   %i.ak = zext i32 %i.aj to i64                   ; 2 uses
@@ -265,13 +264,14 @@ bb.k:                                             ; preds = %_ZNK6duckdb15Select
   %i.ar = add i64 %.042, 1
   %i.as = load ptr, ptr %i.s, align 8, !tbaa !389
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %.042
-  store i32 %.03441, ptr %i.at, align 4, !tbaa !3
+  %9 = trunc nuw i64 %i.ah to i32
+  store i32 %9, ptr %i.at, align 4, !tbaa !3
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %_ZNK6duckdb15SelectionVector9get_indexEm.exit
   %.1 = phi i64 [ %i.ar, %bb.k ], [ %.042, %_ZNK6duckdb15SelectionVector9get_indexEm.exit ] ; 2 uses
-  %9 = add i32 %.03441, 1                         ; 2 uses
-  %10 = zext i32 %9 to i64                        ; 2 uses
+  %indvars.iv.next = add i64 %i.ah, 1             ; 2 uses
+  %10 = and i64 %indvars.iv.next, 4294967295
   %i.au = icmp ugt i64 %i.e, %10
   br i1 %i.au, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %._crit_edge, !llvm.loop !1434
 

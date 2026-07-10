@@ -204,7 +204,7 @@ scalar.ph756:                                     ; preds = %scalar.ph756.prehea
   br i1 %i.nu, label %scalar.ph756, label %._crit_edge250, !llvm.loop !956
 
 ._crit_edge250:                                   ; preds = %scalar.ph756, %middle.block790
-  %indvars.iv.next274 = add i64 %indvars.iv273, %i.ck
+  %indvars.iv.next274 = add nuw nsw i64 %indvars.iv273, %i.ck
   %i.nv = add nuw nsw i32 %.1252, 1               ; 2 uses
   %indvars.iv.next278 = add i32 %indvars.iv277, %i.cm
   %indvars.iv.next282 = add i32 %indvars.iv281, %i.cm
@@ -607,7 +607,7 @@ scalar.ph1554:                                    ; preds = %scalar.ph1554.prol.
 
 ._crit_edge809:                                   ; preds = %scalar.ph1554.prol.loopexit, %scalar.ph1554, %middle.block1564
   %indvars.iv.next1051 = add nuw nsw i64 %indvars.iv1050, %i.tg
-  %indvars.iv.next1055 = add i64 %indvars.iv1054, %i.th
+  %indvars.iv.next1055 = add nsw i64 %indvars.iv1054, %i.th
   %i.vi = add nuw nsw i32 %.6564812, 1            ; 2 uses
   %exitcond1065.not = icmp eq i32 %i.vi, %2
   br i1 %exitcond1065.not, label %.loopexit663, label %.preheader664, !llvm.loop !1054
@@ -1010,7 +1010,7 @@ scalar.ph769:                                     ; preds = %scalar.ph769.prehea
   br i1 %i.ri, label %scalar.ph769, label %._crit_edge247, !llvm.loop !1105
 
 ._crit_edge247:                                   ; preds = %scalar.ph769, %middle.block811
-  %indvars.iv.next280 = add i64 %indvars.iv279, %i.ek
+  %indvars.iv.next280 = add nuw nsw i64 %indvars.iv279, %i.ek
   %i.rj = add nuw nsw i32 %.1249, 1               ; 2 uses
   %indvars.iv.next266 = add i32 %indvars.iv265, %i.b
   %indvars.iv.next270 = add i32 %indvars.iv269, %i.b
@@ -1413,7 +1413,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.s
-  %indvars.iv.next893 = add i64 %indvars.iv892, %i.t
+  %indvars.iv.next893 = add nsw i64 %indvars.iv892, %i.t
   %i.ce = add nuw nsw i32 %.0543676, 1            ; 2 uses
   %exitcond902.not = icmp eq i32 %i.ce, %2
   br i1 %exitcond902.not, label %.loopexit667, label %.preheader668, !llvm.loop !1165

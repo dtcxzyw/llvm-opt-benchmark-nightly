@@ -204,6 +204,7 @@ bb.bo:                                            ; preds = %.thread565, %bb.bn
   %i.kb = phi ptr [ %i.jy, %.thread565 ], [ %i.ka, %bb.bn ] ; 3 uses
   %i.kc = phi ptr [ %i.jx, %.thread565 ], [ %i.jz, %bb.bn ] ; 2 uses
   %i.kd = phi i32 [ %.ph, %.thread565 ], [ %.pre506, %bb.bn ] ; 2 uses
+  %9 = zext i32 %i.kd to i64
   %.pre507 = load ptr, ptr %4, align 8, !tbaa !7  ; 2 uses
   %.sroa.2.0..sroa_idx.peel.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre507, i64 8
   %.sroa.2.0.copyload.peel.pre = load i64, ptr %.sroa.2.0..sroa_idx.peel.phi.trans.insert, align 8, !tbaa !22 ; 2 uses
@@ -217,7 +218,7 @@ _ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.e
   br i1 %.not171.peel, label %._crit_edge479, label %.lr.ph478.peel.next
 
 .lr.ph478.peel.next:                              ; preds = %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit.peel, %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit
-  %.0117476 = phi i32 [ %10, %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit ], [ 1, %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit.peel ] ; 2 uses
+  %indvars.iv503 = phi i64 [ %indvars.iv.next504, %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit ], [ 1, %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit.peel ] ; 2 uses
   %i.kg = load i64, ptr %i.kb, align 8, !tbaa !19 ; 4 uses
   %i.kh = add i64 %i.kg, 1                        ; 3 uses
   %i.ki = load ptr, ptr %0, align 8, !tbaa !12    ; 2 uses
@@ -251,9 +252,8 @@ bb.bq:                                            ; preds = %bb.bp, %_ZNKSt7__cx
   %i.kq = load ptr, ptr %0, align 8, !tbaa !12
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 %i.kh
   store i8 0, ptr %i.kr, align 1, !tbaa !46
-  %9 = zext i32 %.0117476 to i64
   %i.ks = load ptr, ptr %4, align 8, !tbaa !7
-  %i.kt = getelementptr inbounds nuw [16 x i8], ptr %i.ks, i64 %9 ; 2 uses
+  %i.kt = getelementptr inbounds nuw [16 x i8], ptr %i.ks, i64 %indvars.iv503 ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kt, i64 8
   %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !22 ; 2 uses
   %i.ku = load i64, ptr %i.kb, align 8, !tbaa !19
@@ -268,8 +268,8 @@ bb.bq:                                            ; preds = %bb.bp, %_ZNKSt7__cx
 _ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit: ; preds = %bb.bq
   %.sroa.0.0.copyload = load ptr, ptr %i.kt, align 8, !tbaa !21
   %i.kx = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %.sroa.0.0.copyload, i64 noundef %.sroa.2.0.copyload) #13 ; 0 uses
-  %10 = add nuw i32 %.0117476, 1                  ; 2 uses
-  %.not171 = icmp eq i32 %10, %i.kd
+  %indvars.iv.next504 = add nuw nsw i64 %indvars.iv503, 1 ; 2 uses
+  %.not171 = icmp eq i64 %indvars.iv.next504, %9
   br i1 %.not171, label %._crit_edge479, label %.lr.ph478.peel.next, !llvm.loop !128
 
 ._crit_edge479:                                   ; preds = %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit, %_ZN4llvhpLERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_9StringRefE.exit.peel, %bb.bn

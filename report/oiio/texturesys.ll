@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.sd = getelementptr inbounds nuw i8, ptr %i.qn, i64 48
   store <4 x float> %i.sc, ptr %i.sd, align 16
   %indvars.iv.next2313 = add nuw nsw i64 %indvars.iv2312, 1 ; 2 uses
-  %indvars.iv.next2305 = add i64 %indvars.iv2304, %i.pb
+  %indvars.iv.next2305 = add nsw i64 %indvars.iv2304, %i.pb
   %exitcond2317.not = icmp eq i64 %indvars.iv.next2313, 4
   br i1 %exitcond2317.not, label %.loopexit2185, label %.preheader2179, !llvm.loop !519
 
