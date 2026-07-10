@@ -203,17 +203,15 @@ bb.a:
   br i1 %.not97, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 16
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit134
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -221,8 +219,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !57
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 4 uses
+.critedge.loopexit.split.loop.exit134:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit134, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit134 ], [ 0, %bb.b ] ; 4 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
@@ -488,17 +490,15 @@ bb.a:
   br i1 %.not93, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 16
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit138
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -506,8 +506,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !60
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 6 uses
+.critedge.loopexit.split.loop.exit138:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit138, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit138 ], [ 0, %bb.b ] ; 6 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
@@ -910,17 +914,15 @@ bb.a:
   br i1 %.not97, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 32
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit134
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -928,8 +930,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !177
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 4 uses
+.critedge.loopexit.split.loop.exit134:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit134, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit134 ], [ 0, %bb.b ] ; 4 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
@@ -1243,17 +1249,15 @@ bb.a:
   br i1 %.not93, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 32
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit130
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -1261,8 +1265,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !180
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 4 uses
+.critedge.loopexit.split.loop.exit130:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit130, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit130 ], [ 0, %bb.b ] ; 4 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
