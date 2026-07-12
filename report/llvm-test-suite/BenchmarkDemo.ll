@@ -204,6 +204,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %foldExtExtBinop = fadd <4 x float> %i.ak, %i.ak
   %i.an = load <2 x float>, ptr %2, align 4       ; 11 uses
+  %17 = shufflevector <4 x float> %i.ak, <4 x float> poison, <2 x i32> <i32 0, i32 poison> ; 9 uses
   %i.ao = shufflevector <4 x float> %i.ak, <4 x float> poison, <2 x i32> zeroinitializer ; 11 uses
   store float 1.000000e+00, ptr %4, align 4, !alias.scope !91
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -606,7 +607,6 @@ begin_hunk_1_@_ZN7RagDollC2EP15btDynamicsWorldRK9btVector3f:bb.a
   store float 8.000000e-01, ptr %i.ja, align 8, !tbaa !126
   %i.jb = getelementptr inbounds nuw i8, ptr %i.iz, i64 504
   store <2 x float> <float 1.600000e+00, float 2.500000e+00>, ptr %i.jb, align 8, !tbaa !36
-  %.sroa.0.0.vec.insert.i.i = shufflevector <4 x float> %i.ak, <4 x float> poison, <2 x i32> <i32 0, i32 poison> ; 9 uses
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.am, i64 0 ; 20 uses
   %.sroa.0.0.vec.insert.i.i73 = insertelement <2 x float> poison, float %i.al, i64 0
   %.sroa.0.0.vec.insert.i.i109 = insertelement <2 x float> poison, float %i.dc, i64 0
@@ -621,7 +621,7 @@ begin_hunk_1_@_ZN7RagDollC2EP15btDynamicsWorldRK9btVector3f:bb.a
   %i.jg = getelementptr inbounds nuw i8, ptr %15, i64 32 ; 9 uses
   %i.jh = getelementptr inbounds nuw i8, ptr %15, i64 36
   store <4 x float> <float -1.000000e+00, float -0.000000e+00, float f0xB33BBD2E, float 0.000000e+00>, ptr %i.jg, align 16, !tbaa !36
-  %.sroa.0.4.vec.insert.i.i218 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.c, i64 1
+  %.sroa.0.4.vec.insert.i.i218 = insertelement <2 x float> %17, float %i.c, i64 1
   %i.ji = getelementptr inbounds nuw i8, ptr %15, i64 48 ; 10 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i218, ptr %i.ji, align 16
   %.sroa.4517.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 56 ; 10 uses
@@ -632,7 +632,7 @@ begin_hunk_1_@_ZN7RagDollC2EP15btDynamicsWorldRK9btVector3f:bb.a
   %i.jk = getelementptr inbounds nuw i8, ptr %16, i64 32 ; 10 uses
   store <4 x float> <float -1.000000e+00, float -0.000000e+00, float f0xB33BBD2E, float 0.000000e+00>, ptr %i.jk, align 16, !tbaa !36
   %i.jl = fmul float %3, -1.500000e-01
-  %.sroa.0.4.vec.insert.i.i223 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.jl, i64 1
+  %.sroa.0.4.vec.insert.i.i223 = insertelement <2 x float> %17, float %i.jl, i64 1
   %i.jm = getelementptr inbounds nuw i8, ptr %16, i64 48 ; 10 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i223, ptr %i.jm, align 16
   %.sroa.4508.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 56 ; 10 uses
@@ -725,14 +725,14 @@ _ZN17btHingeConstraint8setLimitEfffff.exit:       ; preds = %bb.l
   store <4 x float> <float 1.000000e+00, float f0xB33BBD2E, float 0.000000e+00, float 0.000000e+00>, ptr %i.jf, align 16, !tbaa !36
   store <4 x float> <float -0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.jg, align 16, !tbaa !36
   %i.ki = fmul float %3, 3.000000e-01
-  %.sroa.0.4.vec.insert.i.i238 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.ki, i64 1
+  %.sroa.0.4.vec.insert.i.i238 = insertelement <2 x float> %17, float %i.ki, i64 1
   store <2 x float> %.sroa.0.4.vec.insert.i.i238, ptr %i.ji, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4517.0..sroa_idx, align 8, !tbaa !60
   store <4 x float> <float f0xB33BBD2E, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %16, align 16, !tbaa !36
   store <4 x float> <float 1.000000e+00, float f0xB33BBD2E, float 0.000000e+00, float 0.000000e+00>, ptr %i.jj, align 16, !tbaa !36
   store <4 x float> <float -0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.jk, align 16, !tbaa !36
   %i.kj = fmul float %3, -1.400000e-01
-  %.sroa.0.4.vec.insert.i.i243 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.kj, i64 1 ; 3 uses
+  %.sroa.0.4.vec.insert.i.i243 = insertelement <2 x float> %17, float %i.kj, i64 1 ; 3 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i243, ptr %i.jm, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !60
   %i.kk = call noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #20 ; 8 uses
@@ -768,7 +768,7 @@ bb.x:                                             ; preds = %_ZN17btHingeConstra
   store <4 x float> <float f0x3F3504F2, float f0xBF3504F4, float 0.000000e+00, float 0.000000e+00>, ptr %i.jj, align 16, !tbaa !36
   store <4 x float> <float -0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.jk, align 16, !tbaa !36
   %i.kx = fmul float %3, 2.250000e-01
-  %.sroa.0.4.vec.insert.i.i253 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.kx, i64 1 ; 2 uses
+  %.sroa.0.4.vec.insert.i.i253 = insertelement <2 x float> %17, float %i.kx, i64 1 ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i253, ptr %i.jm, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !60
   %i.ky = call noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #20 ; 8 uses
@@ -797,14 +797,14 @@ bb.y:                                             ; preds = %bb.x
   store <4 x float> <float -0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.jf, align 16, !tbaa !36
   store <4 x float> <float -1.000000e+00, float -0.000000e+00, float f0xB33BBD2E, float 0.000000e+00>, ptr %i.jg, align 16, !tbaa !36
   %i.lk = fmul float %3, -2.250000e-01
-  %.sroa.0.4.vec.insert.i.i258 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.lk, i64 1 ; 2 uses
+  %.sroa.0.4.vec.insert.i.i258 = insertelement <2 x float> %17, float %i.lk, i64 1 ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i258, ptr %i.ji, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4517.0..sroa_idx, align 8, !tbaa !60
   store <4 x float> <float f0xB33BBD2E, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %16, align 16, !tbaa !36
   store <4 x float> <float -0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.jj, align 16, !tbaa !36
   store <4 x float> <float -1.000000e+00, float -0.000000e+00, float f0xB33BBD2E, float 0.000000e+00>, ptr %i.jk, align 16, !tbaa !36
   %i.ll = fmul float %3, 1.850000e-01
-  %.sroa.0.4.vec.insert.i.i263 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.ll, i64 1 ; 2 uses
+  %.sroa.0.4.vec.insert.i.i263 = insertelement <2 x float> %17, float %i.ll, i64 1 ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i263, ptr %i.jm, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !60
   %i.lm = call noalias noundef nonnull dereferenceable(792) ptr @_Znwm(i64 noundef 792) #20 ; 6 uses
@@ -897,7 +897,7 @@ _ZN17btHingeConstraint8setLimitEfffff.exit294:    ; preds = %bb.z
   store <4 x float> <float f0xB33BBD2E, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %16, align 16, !tbaa !36
   store <4 x float> <float 1.000000e+00, float f0xB33BBD2E, float 0.000000e+00, float 0.000000e+00>, ptr %i.jj, align 16, !tbaa !36
   store <4 x float> <float -0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.jk, align 16, !tbaa !36
-  %.sroa.0.4.vec.insert.i.i301 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.al, i64 1 ; 2 uses
+  %.sroa.0.4.vec.insert.i.i301 = insertelement <2 x float> %17, float %i.al, i64 1 ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i301, ptr %i.jm, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !60
   %i.mt = call noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #20 ; 8 uses
@@ -926,7 +926,7 @@ bb.aa:                                            ; preds = %_ZN17btHingeConstra
   store <4 x float> <float -0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.jf, align 16, !tbaa !36
   store <4 x float> <float -1.000000e+00, float -0.000000e+00, float f0xB33BBD2E, float 0.000000e+00>, ptr %i.jg, align 16, !tbaa !36
   %i.nf = shufflevector <4 x float> %i.db, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.0.4.vec.insert.i.i306 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i.i, <2 x float> %i.nf, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %.sroa.0.4.vec.insert.i.i306 = shufflevector <2 x float> %17, <2 x float> %i.nf, <2 x i32> <i32 0, i32 2> ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i306, ptr %i.ji, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4517.0..sroa_idx, align 8, !tbaa !60
   store <4 x float> <float f0xB33BBD2E, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %16, align 16, !tbaa !36
