@@ -1,0 +1,3 @@
+velox/EventBase.bc: failed to run opt
+velox/ThreadPoolExecutor.bc: failed to run opt
+velox/ArrayFunctionsRegistration.bc: timeout
