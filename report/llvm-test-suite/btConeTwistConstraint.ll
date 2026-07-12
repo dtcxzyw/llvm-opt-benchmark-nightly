@@ -203,7 +203,7 @@ _ZNK21btConeTwistConstraint33adjustSwingAxisToUseEllipseNormalER9btVector3.exit:
   %i.ym = extractelement <2 x float> %i.pr, i64 0 ; 2 uses
   %i.yn = call float @llvm.fmuladd.f32(float %i.yk, float %i.ym, float %i.yl)
   %i.yo = call float @llvm.fmuladd.f32(float %i.ye, float %i.ps, float %i.yn)
-  %i.yp = call float @llvm.fmuladd.f32(float %i.yh, float %i.pi, float %i.yo) ; 2 uses
+  %i.yp = call float @llvm.fmuladd.f32(float %i.yh, float %i.pi, float %i.yo)
   %i.yq = fmul float %i.ph, %i.ye
   %i.yr = call float @llvm.fmuladd.f32(float %i.yk, float %i.pt, float %i.yq)
   %i.ys = call float @llvm.fmuladd.f32(float %i.yh, float %i.ym, float %i.yr)
@@ -212,7 +212,7 @@ _ZNK21btConeTwistConstraint33adjustSwingAxisToUseEllipseNormalER9btVector3.exit:
   %i.yv = call float @llvm.fmuladd.f32(float %i.yk, float %i.ps, float %i.yu)
   %i.yw = call float @llvm.fmuladd.f32(float %i.yb, float %i.pt, float %i.yv)
   %i.yx = call float @llvm.fmuladd.f32(float %i.ye, float %i.pf, float %i.yw) ; 2 uses
-  %.sroa.020.0.vec.insert.i172 = insertelement <2 x float> poison, float %i.yp, i64 0
+  %.sroa.020.0.vec.insert.i172 = insertelement <2 x float> poison, float %i.yp, i64 0 ; 2 uses
   %.sroa.020.4.vec.insert.i173 = insertelement <2 x float> %.sroa.020.0.vec.insert.i172, float %i.yt, i64 1
   %.sroa.3.12.vec.insert.i174 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.yx, i64 0
   %i.yy = getelementptr inbounds nuw i8, ptr %0, i64 508
@@ -247,8 +247,7 @@ _ZNK21btConeTwistConstraint33adjustSwingAxisToUseEllipseNormalER9btVector3.exit:
   %i.zx = fmul <2 x float> %i.zu, %i.zw
   %i.zy = load <2 x float>, ptr %4, align 4, !tbaa !27 ; 2 uses
   %i.zz = shufflevector <2 x float> %i.zq, <2 x float> %i.zy, <2 x i32> <i32 0, i32 2>
-  %11 = insertelement <2 x float> poison, float %i.yp, i64 0
-  %i.aaa = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer ; 4 uses
+  %i.aaa = shufflevector <2 x float> %.sroa.020.0.vec.insert.i172, <2 x float> poison, <2 x i32> zeroinitializer ; 4 uses
   %i.aab = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.zz, <2 x float> %i.aaa, <2 x float> %i.zx)
   %i.aac = load <2 x float>, ptr %i.zj, align 4, !tbaa !27 ; 2 uses
   %i.aad = shufflevector <2 x float> %i.zs, <2 x float> %i.aac, <2 x i32> <i32 0, i32 2>

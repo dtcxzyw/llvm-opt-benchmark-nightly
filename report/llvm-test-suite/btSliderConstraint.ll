@@ -203,8 +203,8 @@ begin_hunk_0_@_ZN18btSliderConstraint19calculateTransformsERK11btTransformS2_:bb
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.hp, ptr noundef nonnull align 4 dereferenceable(16) %i.ho, i64 16, i1 false), !tbaa.struct !25
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 860
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 876
-  %i.hs = load float, ptr %i.hl, align 4, !tbaa !8 ; 4 uses
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.hs, i64 0
+  %i.hs = load float, ptr %i.hl, align 4, !tbaa !8 ; 3 uses
+  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.hs, i64 0 ; 2 uses
   %i.ht = load float, ptr %i.hq, align 4, !tbaa !8 ; 4 uses
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.ht, i64 1
   %i.hu = load float, ptr %i.hr, align 4, !tbaa !8 ; 4 uses
@@ -241,13 +241,13 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sink461 = phi float [ %i.ih, %bb.c ], [ %i.hy, %bb.b ] ; 4 uses
+  %.sink461 = phi float [ %i.ih, %bb.c ], [ %i.hy, %bb.b ] ; 3 uses
   %i.io = phi float [ %i.in, %bb.c ], [ %i.ie, %bb.b ]
   %i.ip = phi float [ %i.if, %bb.c ], [ %i.hx, %bb.b ]
   %i.iq = phi <2 x float> [ %i.im, %bb.c ], [ %i.id, %bb.b ] ; 6 uses
   %.in = getelementptr inbounds nuw i8, ptr %0, i64 996
   %i.ir = load float, ptr %.in, align 4, !tbaa !8
-  %.sroa.0.0.vec.insert.i62 = insertelement <2 x float> poison, float %.sink461, i64 0
+  %.sroa.0.0.vec.insert.i62 = insertelement <2 x float> poison, float %.sink461, i64 0 ; 2 uses
   %i.is = shufflevector <2 x float> %.sroa.0.0.vec.insert.i62, <2 x float> %i.iq, <2 x i32> <i32 0, i32 2>
   %i.it = shufflevector <2 x float> <float poison, float 0.000000e+00>, <2 x float> %i.iq, <2 x i32> <i32 3, i32 1>
   %i.iu = getelementptr inbounds nuw i8, ptr %0, i64 1036
@@ -283,10 +283,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.jq = insertelement <2 x float> %i.jp, float %i.jn, i64 1
   %i.jr = shufflevector <2 x float> %i.iq, <2 x float> poison, <2 x i32> zeroinitializer
   %i.js = fmul <2 x float> %i.jq, %i.jr
-  %3 = insertelement <2 x float> poison, float %.sink461, i64 0
-  %i.jt = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
-  %4 = insertelement <2 x float> poison, float %i.hs, i64 0
-  %i.ju = insertelement <2 x float> %4, float %i.jm, i64 1
+  %i.jt = shufflevector <2 x float> %.sroa.0.0.vec.insert.i62, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ju = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.jm, i64 1
   %i.jv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jt, <2 x float> %i.ju, <2 x float> %i.js)
   %i.jw = shufflevector <2 x float> %i.iq, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.jx = insertelement <2 x float> poison, float %i.hu, i64 0
