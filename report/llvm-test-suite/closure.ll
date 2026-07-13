@@ -200,9 +200,9 @@ declare void @RTC(ptr noundef, i32 noundef) local_unnamed_addr #1
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @closure(ptr nofree noundef readonly captures(address) %0, i32 noundef %1) local_unnamed_addr #3 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64
+  %2 = ptrtoaddr ptr %0 to i64
   %i.a = load ptr, ptr @ruleset, align 8, !tbaa !11 ; 14 uses
-  %3 = ptrtoint ptr %i.a to i64                   ; 13 uses
+  %3 = ptrtoaddr ptr %i.a to i64                  ; 13 uses
   %i.b = load i32, ptr @rulesetsize, align 4, !tbaa !4
   %.fr86 = freeze i32 %i.b                        ; 4 uses
   %i.c = sext i32 %.fr86 to i64
@@ -413,18 +413,17 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .preheader:                                       ; preds = %.loopexit56.thread, %.preheader.loopexit
   %itemsetend.promoted82 = phi ptr [ %i.ce, %.loopexit56.thread ], [ %itemsetend.promoted82.pre, %.preheader.loopexit ] ; 6 uses
-  %.142.lcssa = phi ptr [ %0, %.loopexit56.thread ], [ %.5, %.preheader.loopexit ] ; 8 uses
+  %.142.lcssa = phi ptr [ %0, %.loopexit56.thread ], [ %.5, %.preheader.loopexit ] ; 7 uses
   %i.cf = icmp ult ptr %.142.lcssa, %i.f
   br i1 %i.cf, label %iter.check, label %bb.h
 
 iter.check:                                       ; preds = %.preheader
-  %.142.lcssa131 = ptrtoaddr ptr %.142.lcssa to i64
+  %.142.lcssa131 = ptrtoaddr ptr %.142.lcssa to i64 ; 3 uses
   %itemsetend.promoted82130 = ptrtoaddr ptr %itemsetend.promoted82 to i64
-  %.142.lcssa133 = ptrtoint ptr %.142.lcssa to i64 ; 2 uses
   %i.cg = add i64 %.idx85, %2
-  %i.ch = add i64 %.142.lcssa133, 2
+  %i.ch = add i64 %.142.lcssa131, 2
   %umax134 = tail call i64 @llvm.umax.i64(i64 %i.cg, i64 %i.ch)
-  %i.ci = xor i64 %.142.lcssa133, -1
+  %i.ci = xor i64 %.142.lcssa131, -1
   %i.cj = add i64 %umax134, %i.ci                 ; 3 uses
   %i.ck = lshr i64 %i.cj, 1
   %i.cl = add nuw i64 %i.ck, 1                    ; 5 uses

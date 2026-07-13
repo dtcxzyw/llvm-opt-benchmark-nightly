@@ -203,7 +203,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 3 uses
   %i.i = ptrtoint ptr %i.f to i64
-  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j
   %i.l = ashr exact i64 %i.k, 3
   %.not = icmp ugt i64 %i.l, %i.c
@@ -222,23 +222,22 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call preserve_mostcc void @_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 noundef %i.n)
-  %.pre.i = load ptr, ptr %i.g, align 8           ; 2 uses
-  %.pre13.i = ptrtoint ptr %.pre.i to i64
+  %.pre.i = load ptr, ptr %i.g, align 8
   %.pre = load ptr, ptr %i.e, align 8
   br label %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE14EnsureCapacityEm.exit.i
 
 _ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE14EnsureCapacityEm.exit.i: ; preds = %bb.c, %bb.b
   %i.t = phi ptr [ %i.f, %bb.b ], [ %.pre, %bb.c ] ; 3 uses
-  %.pre-phi.i = phi i64 [ %i.j, %bb.b ], [ %.pre13.i, %bb.c ]
-  %i.u = phi ptr [ %i.h, %bb.b ], [ %.pre.i, %bb.c ] ; 2 uses
+  %i.u = phi ptr [ %i.h, %bb.b ], [ %.pre.i, %bb.c ] ; 3 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.n ; 2 uses
   %i.w = icmp ult ptr %i.t, %i.v
   br i1 %i.w, label %.lr.ph.preheader.i, label %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE6resizeEm.exit
 
 .lr.ph.preheader.i:                               ; preds = %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE14EnsureCapacityEm.exit.i
-  %2 = ptrtoint ptr %i.t to i64                   ; 2 uses
+  %2 = ptrtoaddr ptr %i.t to i64                  ; 2 uses
+  %3 = ptrtoaddr ptr %i.u to i64
   %i.x = shl nuw nsw i64 %i.n, 3
-  %i.y = add nuw i64 %.pre-phi.i, %i.x
+  %i.y = add nuw i64 %i.x, %3
   %i.z = add i64 %2, 8
   %umax.i = tail call i64 @llvm.umax.i64(i64 %i.y, i64 %i.z)
   %i.aa = xor i64 %2, -1

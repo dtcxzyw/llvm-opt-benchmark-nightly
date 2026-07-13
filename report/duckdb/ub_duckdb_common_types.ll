@@ -204,7 +204,7 @@ _ZN6duckdb8string_t8FinalizeEv.exit:              ; preds = %bb.c, %bb.d
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb15DecimalToString13FormatDecimalINS_9hugeint_tEEEvT_hhPcm(i64 %0, i64 %1, i8 noundef zeroext %2, i8 noundef zeroext %3, ptr noundef %4, i64 noundef %5) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoint ptr %4 to i64                     ; 2 uses
+  %6 = ptrtoaddr ptr %4 to i64                    ; 2 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %8 = alloca %"class.std::allocator.20", align 1 ; 5 uses
   %9 = alloca %"struct.duckdb::hugeint_t", align 8 ; 5 uses
@@ -311,7 +311,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.z, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.k
-  %10 = ptrtoint ptr %i.w to i64                  ; 2 uses
+  %10 = ptrtoaddr ptr %i.w to i64                 ; 2 uses
   %i.aa = add i64 %5, %6
   %i.ab = add i64 %10, %i.r
   %i.ac = sub i64 %i.aa, %i.ab
@@ -714,8 +714,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc214
-  %20 = sub i64 %i.mb, %i.mc
-  %21 = add i64 %20, -8                           ; 2 uses
+  %20 = add i64 %i.mb, -8
+  %21 = sub i64 %20, %i.mc                        ; 2 uses
   %i.mo = lshr i64 %21, 3
   %i.mp = add nuw nsw i64 %i.mo, 1                ; 2 uses
   %min.iters.check569 = icmp ult i64 %21, 56
@@ -1118,8 +1118,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc13
-  %5 = sub i64 %i.z, %i.aa
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.z, -8
+  %6 = sub i64 %5, %i.aa                          ; 2 uses
   %i.al = lshr i64 %6, 3
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 56
@@ -1467,8 +1467,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc17
-  %5 = sub i64 %i.ag, %i.ah
-  %6 = add i64 %5, -8                             ; 2 uses
+  %5 = add i64 %i.ag, -8
+  %6 = sub i64 %5, %i.ah                          ; 2 uses
   %i.as = lshr i64 %6, 3
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 56
@@ -1871,8 +1871,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc55
-  %7 = sub i64 %i.cb, %i.cc
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.cb, -8
+  %8 = sub i64 %7, %i.cc                          ; 2 uses
   %i.cn = lshr i64 %8, 3
   %i.co = add nuw nsw i64 %i.cn, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 56
@@ -2275,17 +2275,17 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !89     ; 5 uses
-  %3 = ptrtoint ptr %i.b to i64                   ; 2 uses
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !152  ; 2 uses
-  %i.e = getelementptr i8, ptr %i.b, i64 %i.d     ; 5 uses
+  %i.e = getelementptr i8, ptr %i.b, i64 %i.d     ; 4 uses
   %.not55 = icmp samesign eq i64 %i.d, 0
   br i1 %.not55, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.03756 = phi ptr [ %i.g, %bb.b ], [ %i.b, %bb.a ] ; 3 uses
   %i.f = load i8, ptr %.03756, align 1, !tbaa !153
-  switch i8 %i.f, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.loopexit [
+  switch i8 %i.f, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit [
     i8 32, label %bb.b
     i8 12, label %bb.b
     i8 11, label %bb.b
@@ -2297,21 +2297,16 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %.03756, i64 1 ; 2 uses
   %.not = icmp eq ptr %i.g, %i.e
-  br i1 %.not, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.loopexit, label %.lr.ph, !llvm.loop !3183
+  br i1 %.not, label %.thread, label %.lr.ph, !llvm.loop !3183
 
-_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.loopexit: ; preds = %.lr.ph, %bb.b
-  %.037.lcssa.ph = phi ptr [ %i.e, %bb.b ], [ %.03756, %.lr.ph ] ; 2 uses
-  %.pre = ptrtoint ptr %.037.lcssa.ph to i64
-  br label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit
-
-_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit:  ; preds = %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.loopexit, %bb.a
-  %.037.lcssa77.pre-phi = phi i64 [ %.pre, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.loopexit ], [ %3, %bb.a ] ; 2 uses
-  %.037.lcssa = phi ptr [ %.037.lcssa.ph, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.loopexit ], [ %i.b, %bb.a ] ; 9 uses
+_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit:  ; preds = %.lr.ph, %bb.a
+  %.037.lcssa = phi ptr [ %i.b, %bb.a ], [ %.03756, %.lr.ph ] ; 10 uses
+  %.037.lcssa77 = ptrtoint ptr %.037.lcssa to i64 ; 2 uses
   %.not4659 = icmp eq ptr %i.e, %.037.lcssa
   br i1 %.not4659, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50.thread, label %.lr.ph61.preheader
 
 .lr.ph61.preheader:                               ; preds = %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit
-  %i.h = sub i64 %.037.lcssa77.pre-phi, %3
+  %i.h = sub i64 %.037.lcssa77, %3
   %scevgep = getelementptr i8, ptr %i.b, i64 %i.h
   br label %.lr.ph61
 
@@ -2333,7 +2328,7 @@ _ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50: ; preds = %.lr.ph61, %.lr.ph6
   br i1 %.not46, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50.thread, label %.lr.ph61, !llvm.loop !3184
 
 _ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50.thread: ; preds = %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50, %.lr.ph61, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit
-  %.045.lcssa = phi ptr [ %i.e, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit ], [ %.04560, %.lr.ph61 ], [ %scevgep, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50 ] ; 5 uses
+  %.045.lcssa = phi ptr [ %i.e, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit ], [ %scevgep, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50 ], [ %.04560, %.lr.ph61 ] ; 5 uses
   %.not4765 = icmp eq ptr %.037.lcssa, %.045.lcssa
   br i1 %.not4765, label %.thread, label %.lr.ph67
 
@@ -2387,7 +2382,7 @@ bb.d:                                             ; preds = %._crit_edge102
   store i8 2, ptr %1, align 8, !tbaa !3143
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #46
   %i.y = ptrtoint ptr %.045.lcssa to i64
-  %i.z = sub i64 %i.y, %.037.lcssa77.pre-phi      ; 4 uses
+  %i.z = sub i64 %i.y, %.037.lcssa77              ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   store ptr %i.aa, ptr %2, align 8, !tbaa !151
   %i.ab = icmp eq ptr %.037.lcssa, null
@@ -2522,8 +2517,8 @@ bb.n:                                             ; preds = %.lr.ph67
   %.not47 = icmp eq ptr %i.bg, %.045.lcssa
   br i1 %.not47, label %.thread, label %.lr.ph67, !llvm.loop !3187
 
-.thread:                                          ; preds = %bb.n, %.lr.ph101, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %._crit_edge102
-  %.2 = phi i1 [ false, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50.thread ], [ false, %._crit_edge102 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ false, %.lr.ph101 ], [ false, %bb.n ]
+.thread:                                          ; preds = %bb.b, %bb.n, %.lr.ph101, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %._crit_edge102
+  %.2 = phi i1 [ false, %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit50.thread ], [ false, %._crit_edge102 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ false, %bb.n ], [ false, %.lr.ph101 ], [ false, %bb.b ]
   ret i1 %.2
 }
 
@@ -2926,7 +2921,7 @@ bb.o:                                             ; preds = %.loopexit, %bb.a
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6duckdb16DateToStringCast6FormatEPciiimb(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i64 noundef %4, i1 noundef zeroext %5) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %6 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %6 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %4 ; 11 uses
   %i.b = icmp sgt i32 %1, 99
   br i1 %i.b, label %.lr.ph.i, label %._crit_edge.i
@@ -2955,7 +2950,7 @@ bb.a:
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.a
   %.018.lcssa.i = phi ptr [ %i.a, %bb.a ], [ %i.o, %.lr.ph.i ] ; 4 uses
   %.017.lcssa.i = phi i32 [ %1, %bb.a ], [ %i.f, %.lr.ph.i ] ; 3 uses
-  %.018.lcssa.i27 = ptrtoint ptr %.018.lcssa.i to i64 ; 2 uses
+  %.018.lcssa.i27 = ptrtoaddr ptr %.018.lcssa.i to i64 ; 2 uses
   %i.q = icmp slt i32 %.017.lcssa.i, 10
   br i1 %i.q, label %bb.b, label %bb.c
 
@@ -3358,7 +3353,7 @@ bb.k:                                             ; preds = %bb.j, %_ZN6duckdb13
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef i32 @_ZN6duckdb16TimeToStringCast12FormatMicrosEiPc(i32 noundef %0, ptr noundef %1) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %2 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 6 ; 2 uses
   %i.b = icmp sgt i32 %0, 99
   br i1 %i.b, label %.lr.ph.i, label %._crit_edge.i
@@ -3387,7 +3382,7 @@ bb.a:
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.a
   %.018.lcssa.i = phi ptr [ %i.a, %bb.a ], [ %i.o, %.lr.ph.i ] ; 4 uses
   %.017.lcssa.i = phi i32 [ %0, %bb.a ], [ %i.f, %.lr.ph.i ] ; 3 uses
-  %.018.lcssa.i20 = ptrtoint ptr %.018.lcssa.i to i64 ; 2 uses
+  %.018.lcssa.i20 = ptrtoaddr ptr %.018.lcssa.i to i64 ; 2 uses
   %i.q = icmp slt i32 %.017.lcssa.i, 10
   br i1 %i.q, label %bb.b, label %bb.c
 
@@ -3790,7 +3785,7 @@ _ZN6duckdb20ExceptionFormatValueD2Ev.exit8:       ; preds = %bb.e, %_ZNKSt7__cxx
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr { ptr, i32 } @_ZN17duckdb_fast_float10from_charsIdEENS_17from_chars_resultEPKcS3_RT_bcNS_12chars_formatE(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, i1 noundef zeroext %3, i8 noundef signext %4, i32 noundef %5) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %6 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.bs, label %bb.b
 
@@ -3957,7 +3952,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   %.1179.i = phi i64 [ %i.bw, %bb.q ], [ %i.bf, %bb.p ], [ %i.bf, %bb.o ], [ %.us-phi, %bb.n ], [ %.us-phi, %bb.m ] ; 3 uses
   %.3.i = phi ptr [ %i.bg, %bb.q ], [ %i.ap, %bb.p ], [ %i.ap, %bb.o ], [ %i.ao, %bb.n ], [ %i.ao, %bb.m ] ; 6 uses
-  %.3.i407 = ptrtoint ptr %.3.i to i64
+  %.3.i407 = ptrtoaddr ptr %.3.i to i64
   br i1 %3, label %.outer.us, label %.outer
 
 .outer.us:                                        ; preds = %bb.r
@@ -4031,7 +4026,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cv, label %.outer, label %_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread, !llvm.loop !3444
 
 .outer._crit_edge.loopexit487.split.loop.exit527: ; preds = %bb.u
-  %.4.i.ph405.le = ptrtoint ptr %.4.i.ph to i64
+  %.4.i.ph405.le = ptrtoaddr ptr %.4.i.ph to i64
   %scevgep404.le = getelementptr i8, ptr %.4.i.ph, i64 %6
   %i.cw = sub i64 0, %.4.i.ph405.le
   %scevgep406.le = getelementptr i8, ptr %scevgep404.le, i64 %i.cw
@@ -4434,7 +4429,7 @@ bb.h:                                             ; preds = %.lr.ph.i48, %bb.g
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr { i64, i32 } @_ZN17duckdb_fast_float19parse_long_mantissaINS_13binary_formatIdEEEENS_17adjusted_mantissaEPKcS5_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #3 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %3 = alloca %"struct.duckdb_fast_float::decimal", align 4 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #46
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3450)
@@ -4452,7 +4447,7 @@ bb.a:
   br i1 %.not.i9, label %.critedge.i, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.g = sub i64 %2, %4
   %scevgep = getelementptr i8, ptr %0, i64 %i.g
   br label %.lr.ph
@@ -4470,7 +4465,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph, %bb.a
   %.1.i.lcssa = phi ptr [ %spec.select.i, %bb.a ], [ %.1.i10, %.lr.ph ], [ %scevgep, %bb.b ] ; 5 uses
-  %.1.i.lcssa60 = ptrtoint ptr %.1.i.lcssa to i64
+  %.1.i.lcssa60 = ptrtoaddr ptr %.1.i.lcssa to i64
   %.not99.i15 = icmp eq ptr %.1.i.lcssa, %1
   br i1 %.not99.i15, label %.critedge106.i.loopexit, label %.lr.ph17
 
@@ -4873,7 +4868,7 @@ declare void @_ZN10duckdb_fmt2v68internal13error_handler8on_errorENSt7__cxx1112b
 define linkonce_odr noundef ptr @_ZN10duckdb_fmt2v68internal12parse_arg_idIcNS1_10id_adapterIRNS0_14format_handlerINS0_13arg_formatterINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEEEcNS0_20basic_format_contextISC_cEEEEcEEEEPKT_SM_SM_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #11 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
-  %3 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %4 = alloca %"class.duckdb_fmt::v6::basic_format_arg", align 16 ; 4 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -5276,8 +5271,8 @@ _ZN10duckdb_fmt2v68internal13specs_checkerINS1_13specs_handlerINS0_26basic_forma
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr noundef ptr @_ZN10duckdb_fmt2v68internal11parse_widthIcRNS1_13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEEEEEEEPKT_SL_SL_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(40) %2) local_unnamed_addr #11 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64
-  %4 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %0 to i64
+  %4 = ptrtoaddr ptr %1 to i64
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -5457,8 +5452,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.m,
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr noundef ptr @_ZN10duckdb_fmt2v68internal15parse_precisionIcRNS1_13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEEEEEEEPKT_SL_SL_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(40) %2) local_unnamed_addr #11 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64
-  %4 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %0 to i64
+  %4 = ptrtoaddr ptr %1 to i64
   %i.a = alloca i64, align 8                      ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.b = alloca i64, align 8                      ; 5 uses
@@ -5861,7 +5856,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.e,
 define linkonce_odr noundef ptr @_ZN10duckdb_fmt2v68internal12parse_arg_idIcNS1_13width_adapterIRNS1_13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEEEEEcEEEEPKT_SN_SN_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #11 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
-  %3 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %4 = alloca %"struct.duckdb_fmt::v6::internal::error_handler", align 1 ; 4 uses
   %5 = alloca %"class.duckdb_fmt::v6::internal::width_checker", align 8 ; 4 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -6264,7 +6259,7 @@ bb.au:                                            ; preds = %bb.p, %_ZN10duckdb_
 define linkonce_odr noundef ptr @_ZN10duckdb_fmt2v68internal12parse_arg_idIcNS1_17precision_adapterIRNS1_13specs_checkerINS1_13specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEENS0_20basic_format_contextISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEEEEEcEEEEPKT_SN_SN_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #11 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
-  %3 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %4 = alloca %"struct.duckdb_fmt::v6::internal::error_handler", align 1 ; 4 uses
   %5 = alloca %"class.duckdb_fmt::v6::internal::precision_checker", align 8 ; 4 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -6667,8 +6662,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_12_GLOBAL__N_18WKTValueESt14default_delet
   br i1 %i.fx, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_12_GLOBAL__N_18WKTValueESt14default_deleteIS3_ELb1EEESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit27.i.i.i160, label %.lr.ph.i.i.i.i.i.i.i155.preheader
 
 .lr.ph.i.i.i.i.i.i.i155.preheader:                ; preds = %.noexc165
-  %16 = sub i64 %i.fs, %i.ft
-  %17 = add i64 %16, -8                           ; 2 uses
+  %16 = add i64 %i.fs, -8
+  %17 = sub i64 %16, %i.ft                        ; 2 uses
   %i.gf = lshr i64 %17, 3
   %i.gg = add nuw nsw i64 %i.gf, 1                ; 2 uses
   %min.iters.check491 = icmp ult i64 %17, 56
@@ -7002,8 +6997,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_12_GLOBAL__N_18WKTValueESt14default_delet
   br i1 %i.jm, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_12_GLOBAL__N_18WKTValueESt14default_deleteIS3_ELb1EEESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit27.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc102
-  %18 = sub i64 %i.jh, %i.ji
-  %19 = add i64 %18, -8                           ; 2 uses
+  %18 = add i64 %i.jh, -8
+  %19 = sub i64 %18, %i.ji                        ; 2 uses
   %i.ju = lshr i64 %19, 3
   %i.jv = add nuw nsw i64 %i.ju, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %19, 56
@@ -7406,7 +7401,7 @@ _ZN6duckdb20ExceptionFormatValueD2Ev.exit9:       ; preds = %bb.e, %_ZNKSt7__cxx
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6duckdb15DecimalToString13FormatDecimalIsEEvT_hhPcm(i16 noundef signext %0, i8 noundef zeroext %1, i8 noundef zeroext %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
+  %5 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 5 uses
   %i.b = icmp slt i16 %0, 0
   br i1 %i.b, label %bb.b, label %bb.c
@@ -7515,7 +7510,7 @@ bb.g:                                             ; preds = %bb.c
 ._crit_edge.i25:                                  ; preds = %.lr.ph.i30, %bb.g
   %.017.lcssa20.i26 = phi i16 [ %i.an, %bb.g ], [ %i.au, %.lr.ph.i30 ] ; 2 uses
   %.018.lcssa.i27 = phi ptr [ %i.a, %bb.g ], [ %i.bd, %.lr.ph.i30 ] ; 5 uses
-  %.018.lcssa.i2755 = ptrtoint ptr %.018.lcssa.i27 to i64 ; 2 uses
+  %.018.lcssa.i2755 = ptrtoaddr ptr %.018.lcssa.i27 to i64 ; 2 uses
   %i.bf = zext nneg i16 %.017.lcssa20.i26 to i32  ; 2 uses
   %i.bg = icmp samesign ult i16 %.017.lcssa20.i26, 10
   br i1 %i.bg, label %bb.h, label %bb.i
@@ -7635,7 +7630,7 @@ bb.m:                                             ; preds = %._crit_edge, %_ZN6d
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6duckdb15DecimalToString13FormatDecimalIiEEvT_hhPcm(i32 noundef %0, i8 noundef zeroext %1, i8 noundef zeroext %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
+  %5 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 5 uses
   %i.b = icmp slt i32 %0, 0
   br i1 %i.b, label %bb.b, label %bb.c
@@ -7732,7 +7727,7 @@ bb.g:                                             ; preds = %bb.c
 ._crit_edge.i25:                                  ; preds = %.lr.ph.i30, %bb.g
   %.018.lcssa.i26 = phi ptr [ %i.a, %bb.g ], [ %i.ar, %.lr.ph.i30 ] ; 5 uses
   %.017.lcssa.i27 = phi i32 [ %i.af, %bb.g ], [ %i.ak, %.lr.ph.i30 ] ; 3 uses
-  %.018.lcssa.i2655 = ptrtoint ptr %.018.lcssa.i26 to i64 ; 2 uses
+  %.018.lcssa.i2655 = ptrtoaddr ptr %.018.lcssa.i26 to i64 ; 2 uses
   %i.at = icmp samesign ult i32 %.017.lcssa.i27, 10
   br i1 %i.at, label %bb.h, label %bb.i
 
@@ -8135,7 +8130,7 @@ bb.p:                                             ; preds = %_ZN6duckdb13Numeric
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6duckdb15DecimalToString13FormatDecimalIlEEvT_hhPcm(i64 noundef %0, i8 noundef zeroext %1, i8 noundef zeroext %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
+  %5 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 5 uses
   %i.b = icmp slt i64 %0, 0
   br i1 %i.b, label %bb.b, label %bb.c
@@ -8240,7 +8235,7 @@ bb.g:                                             ; preds = %bb.c
 ._crit_edge.i25:                                  ; preds = %.lr.ph.i30, %bb.g
   %.018.lcssa.i26 = phi ptr [ %i.a, %bb.g ], [ %i.az, %.lr.ph.i30 ] ; 5 uses
   %.017.lcssa.i27 = phi i64 [ %i.ak, %bb.g ], [ %i.aq, %.lr.ph.i30 ] ; 3 uses
-  %.018.lcssa.i2655 = ptrtoint ptr %.018.lcssa.i26 to i64 ; 2 uses
+  %.018.lcssa.i2655 = ptrtoaddr ptr %.018.lcssa.i26 to i64 ; 2 uses
   %i.bb = icmp samesign ult i64 %.017.lcssa.i27, 10
   br i1 %i.bb, label %bb.h, label %bb.i
 

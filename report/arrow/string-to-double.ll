@@ -23,8 +23,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef double @_ZNK14arrow_vendored17double_conversion23StringToDoubleConverter12StringToIeeeIPKcEEdT_ibPi(ptr noundef nonnull align 8 dereferenceable(42) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, ptr noundef %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 16 uses
-  %i.b = alloca ptr, align 8                      ; 36 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 15 uses
+  %i.b = alloca ptr, align 8                      ; 35 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca [782 x i8], align 16              ; 11 uses
   %i.e = alloca i8, align 1                       ; 3 uses
@@ -74,7 +74,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i._crit_edge.thread:                       ; preds = %.lr.ph.i.preheader
   store ptr %1, ptr %i.b, align 8
-  br label %.lr.ph.i._crit_edge._crit_edge
+  br label %._crit_edge543
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %.lr.ph
   %i.x = phi ptr [ %i.w, %.lr.ph.i.lr.ph ], [ %i.ab, %.lr.ph ] ; 4 uses
@@ -99,43 +99,36 @@ _ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit: ; 
 
 .lr.ph.i._crit_edge:                              ; preds = %.lr.ph.i
   store ptr %i.x, ptr %i.b, align 8
-  br i1 %.not212.not, label %bb.d, label %.lr.ph.i._crit_edge._crit_edge
-
-.lr.ph.i._crit_edge._crit_edge:                   ; preds = %.lr.ph.i._crit_edge.thread, %.lr.ph.i._crit_edge
-  %.lcssa427607 = phi ptr [ %1, %.lr.ph.i._crit_edge.thread ], [ %i.x, %.lr.ph.i._crit_edge ] ; 2 uses
-  %5 = phi i8 [ %.pre, %.lr.ph.i._crit_edge.thread ], [ %i.y, %.lr.ph.i._crit_edge ]
-  %.pre560 = ptrtoint ptr %.lcssa427607 to i64
-  br label %._crit_edge543
+  br i1 %.not212.not, label %bb.d, label %._crit_edge543
 
 bb.d:                                             ; preds = %.lr.ph.i._crit_edge
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.af = load double, ptr %i.ae, align 8, !tbaa !18
   br label %.thread
 
-._crit_edge543:                                   ; preds = %bb.c, %.lr.ph.i._crit_edge._crit_edge
-  %.pre-phi561 = phi i64 [ %.pre560, %.lr.ph.i._crit_edge._crit_edge ], [ %i.a, %bb.c ]
-  %6 = phi i8 [ %5, %.lr.ph.i._crit_edge._crit_edge ], [ %.pre, %bb.c ] ; 2 uses
-  %7 = phi ptr [ %.lcssa427607, %.lr.ph.i._crit_edge._crit_edge ], [ %1, %bb.c ] ; 4 uses
-  switch i8 %6, label %bb.j [
+._crit_edge543:                                   ; preds = %bb.c, %.lr.ph.i._crit_edge.thread, %.lr.ph.i._crit_edge
+  %5 = phi i8 [ %i.y, %.lr.ph.i._crit_edge ], [ %.pre, %.lr.ph.i._crit_edge.thread ], [ %.pre, %bb.c ] ; 2 uses
+  %6 = phi ptr [ %i.x, %.lr.ph.i._crit_edge ], [ %1, %.lr.ph.i._crit_edge.thread ], [ %1, %bb.c ] ; 5 uses
+  %7 = ptrtoaddr ptr %6 to i64
+  switch i8 %5, label %bb.j [
     i8 43, label %bb.e
     i8 45, label %bb.e
   ]
 
 bb.e:                                             ; preds = %._crit_edge543, %._crit_edge543
-  %i.ag = icmp eq i8 %6, 45
-  %.ptr404 = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
-  store ptr %.ptr404, ptr %i.b, align 8, !tbaa !7
+  %i.ag = icmp eq i8 %5, 45
+  %.ptr404 = getelementptr inbounds nuw i8, ptr %6, i64 1
   %.not6.not.i238 = icmp eq ptr %.ptr404, %i.h
   br i1 %.not6.not.i238, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit244, label %.lr.ph.i239.preheader
 
 .lr.ph.i239.preheader:                            ; preds = %bb.e
   %i.ah = add i64 %i.a, %i.g
-  %i.ai = sub i64 %i.ah, %.pre-phi561
+  %i.ai = sub i64 %i.ah, %7
   br label %.lr.ph.i239
 
 .lr.ph.i239:                                      ; preds = %.lr.ph.i239.preheader, %bb.f
   %.0338.idx = phi i64 [ %.0338.add, %bb.f ], [ 1, %.lr.ph.i239.preheader ] ; 4 uses
-  %.0338.ptr = getelementptr inbounds nuw i8, ptr %7, i64 %.0338.idx
+  %.0338.ptr = getelementptr inbounds nuw i8, ptr %6, i64 %.0338.idx
   %i.aj = load i8, ptr %.0338.ptr, align 1, !tbaa !15
   %i.ak = sext i8 %i.aj to i32
   %i.al = tail call fastcc noundef zeroext i1 @_ZN14arrow_vendored17double_conversionL12isWhitespaceEi(i32 noundef %i.ak)
@@ -162,12 +155,12 @@ bb.h:                                             ; preds = %bb.g
   br label %.thread
 
 bb.i:                                             ; preds = %bb.g
-  %.0338.ptr.le = getelementptr inbounds nuw i8, ptr %7, i64 %.0338.idx ; 2 uses
+  %.0338.ptr.le = getelementptr inbounds nuw i8, ptr %6, i64 %.0338.idx ; 2 uses
   store ptr %.0338.ptr.le, ptr %i.b, align 8, !tbaa !7
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge543
-  %i.aq = phi ptr [ %.0338.ptr.le, %bb.i ], [ %7, %._crit_edge543 ] ; 2 uses
+  %i.aq = phi ptr [ %.0338.ptr.le, %bb.i ], [ %6, %._crit_edge543 ] ; 2 uses
   %.0180 = phi i1 [ %i.ag, %bb.i ], [ false, %._crit_edge543 ] ; 8 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !19 ; 2 uses
@@ -242,7 +235,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   %i.bl = and i32 %i.i, 20
   %or.cond3.not = icmp ne i32 %i.bl, 0
-  %i.bm = load ptr, ptr %i.b, align 8             ; 4 uses
+  %i.bm = load ptr, ptr %i.b, align 8             ; 6 uses
   %.not224 = icmp eq ptr %i.bm, %i.h              ; 2 uses
   %or.cond393 = select i1 %or.cond3.not, i1 true, i1 %.not224
   br i1 %or.cond393, label %bb.v, label %bb.u
@@ -253,7 +246,7 @@ bb.u:                                             ; preds = %bb.t
   br label %.thread
 
 bb.v:                                             ; preds = %bb.t
-  %.promoted.i245530 = ptrtoint ptr %i.bm to i64
+  %.promoted.i245530 = ptrtoaddr ptr %i.bm to i64
   %or.cond394 = select i1 %i.k, i1 true, i1 %.not224
   br i1 %or.cond394, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit252, label %.lr.ph.i247.preheader
 
@@ -264,7 +257,9 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.br, label %.lr.ph433.preheader, label %.lr.ph.i247._crit_edge
 
 .lr.ph433.preheader:                              ; preds = %.lr.ph.i247.preheader
-  %i.bs = add i64 %i.a, %i.g                      ; 2 uses
+  %i.bs = add i64 %i.a, %i.g
+  %8 = sub i64 %i.bs, %.promoted.i245530
+  %scevgep = getelementptr i8, ptr %i.bm, i64 %8  ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bm, i64 1 ; 2 uses
   %.not.not.i251683 = icmp eq ptr %i.bt, %i.h
   br i1 %.not.not.i251683, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit252, label %.lr.ph.i247.lr.ph, !llvm.loop !16
@@ -293,8 +288,9 @@ bb.v:                                             ; preds = %bb.t
   br label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit252, !llvm.loop !16
 
 _ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit252: ; preds = %.lr.ph433.preheader, %.lr.ph433._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit252.loopexit_crit_edge, %bb.v
-  %.pre-phi559 = phi i64 [ %.promoted.i245530, %bb.v ], [ %i.bs, %.lr.ph433._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit252.loopexit_crit_edge ], [ %i.bs, %.lr.ph433.preheader ]
-  %i.cb = sub i64 %.pre-phi559, %i.a
+  %9 = phi ptr [ %i.bm, %bb.v ], [ %scevgep, %.lr.ph433._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit252.loopexit_crit_edge ], [ %scevgep, %.lr.ph433.preheader ]
+  %10 = ptrtoint ptr %9 to i64
+  %i.cb = sub i64 %10, %i.a
   %i.cc = trunc i64 %i.cb to i32
   store i32 %i.cc, ptr %4, align 4, !tbaa !3
   %spec.select395 = select i1 %.0180, double -inf, double +inf
@@ -370,7 +366,7 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.ae
   %i.cx = and i32 %i.i, 20
   %or.cond5.not = icmp ne i32 %i.cx, 0
-  %i.cy = load ptr, ptr %i.b, align 8             ; 4 uses
+  %i.cy = load ptr, ptr %i.b, align 8             ; 6 uses
   %.not222 = icmp eq ptr %i.cy, %i.h              ; 2 uses
   %or.cond396 = select i1 %or.cond5.not, i1 true, i1 %.not222
   br i1 %or.cond396, label %bb.ai, label %bb.ah
@@ -381,7 +377,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %.thread
 
 bb.ai:                                            ; preds = %bb.ag
-  %.promoted.i257531 = ptrtoint ptr %i.cy to i64
+  %.promoted.i257531 = ptrtoaddr ptr %i.cy to i64
   %or.cond397 = select i1 %i.k, i1 true, i1 %.not222
   br i1 %or.cond397, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264, label %.lr.ph.i259.preheader
 
@@ -392,7 +388,9 @@ bb.ai:                                            ; preds = %bb.ag
   br i1 %i.dd, label %.lr.ph438.preheader, label %.lr.ph.i259._crit_edge
 
 .lr.ph438.preheader:                              ; preds = %.lr.ph.i259.preheader
-  %i.de = add i64 %i.a, %i.g                      ; 2 uses
+  %i.de = add i64 %i.a, %i.g
+  %11 = sub i64 %i.de, %.promoted.i257531
+  %scevgep532 = getelementptr i8, ptr %i.cy, i64 %11 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.cy, i64 1 ; 2 uses
   %.not.not.i263684 = icmp eq ptr %i.df, %i.h
   br i1 %.not.not.i263684, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264, label %.lr.ph.i259.lr.ph, !llvm.loop !16
@@ -421,8 +419,9 @@ bb.ai:                                            ; preds = %bb.ag
   br label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264, !llvm.loop !16
 
 _ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264: ; preds = %.lr.ph438.preheader, %.lr.ph438._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264.loopexit_crit_edge, %bb.ai
-  %.pre-phi557 = phi i64 [ %.promoted.i257531, %bb.ai ], [ %i.de, %.lr.ph438._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264.loopexit_crit_edge ], [ %i.de, %.lr.ph438.preheader ]
-  %i.dn = sub i64 %.pre-phi557, %i.a
+  %12 = phi ptr [ %i.cy, %bb.ai ], [ %scevgep532, %.lr.ph438._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit264.loopexit_crit_edge ], [ %scevgep532, %.lr.ph438.preheader ]
+  %13 = ptrtoint ptr %12 to i64
+  %i.dn = sub i64 %13, %i.a
   %i.do = trunc i64 %i.dn to i32
   store i32 %i.do, ptr %4, align 4, !tbaa !3
   %spec.select398 = select i1 %.0180, double -qnan, double +qnan
@@ -557,8 +556,8 @@ _ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread: ; preds = %switc
   br i1 %i.fe, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %_ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread
-  %.promoted.i265 = load ptr, ptr %i.b, align 8   ; 6 uses
-  %.promoted.i265533 = ptrtoint ptr %.promoted.i265 to i64 ; 2 uses
+  %.promoted.i265 = load ptr, ptr %i.b, align 8   ; 7 uses
+  %.promoted.i265533 = ptrtoaddr ptr %.promoted.i265 to i64
   %.not6.not.i266 = icmp eq ptr %.promoted.i265, %i.h
   %or.cond400 = select i1 %.not223, i1 true, i1 %.not6.not.i266
   br i1 %or.cond400, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272, label %.lr.ph.i267.preheader
@@ -567,7 +566,7 @@ bb.au:                                            ; preds = %_ZN14arrow_vendored
   %i.ff = load i8, ptr %.promoted.i265, align 1, !tbaa !15
   %i.fg = sext i8 %i.ff to i32
   %i.fh = tail call fastcc noundef zeroext i1 @_ZN14arrow_vendored17double_conversionL12isWhitespaceEi(i32 noundef %i.fg)
-  br i1 %i.fh, label %.lr.ph441.preheader, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit
+  br i1 %i.fh, label %.lr.ph441.preheader, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272
 
 .lr.ph441.preheader:                              ; preds = %.lr.ph.i267.preheader
   %i.fi = add i64 %i.a, %i.g
@@ -575,7 +574,7 @@ bb.au:                                            ; preds = %_ZN14arrow_vendored
   %scevgep534 = getelementptr i8, ptr %.promoted.i265, i64 %i.fj
   %i.fk = getelementptr inbounds nuw i8, ptr %.promoted.i265, i64 1 ; 2 uses
   %.not.not.i271685 = icmp eq ptr %i.fk, %i.h
-  br i1 %.not.not.i271685, label %._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a, label %.lr.ph.i267.lr.ph, !llvm.loop !16
+  br i1 %.not.not.i271685, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit, label %.lr.ph.i267.lr.ph, !llvm.loop !16
 
 .lr.ph.i267.lr.ph:                                ; preds = %.lr.ph441.preheader
   br label %.lr.ph.i267, !llvm.loop !16
@@ -585,27 +584,23 @@ bb.au:                                            ; preds = %_ZN14arrow_vendored
   %i.fm = load i8, ptr %i.fl, align 1, !tbaa !15
   %i.fn = sext i8 %i.fm to i32
   %i.fo = tail call fastcc noundef zeroext i1 @_ZN14arrow_vendored17double_conversionL12isWhitespaceEi(i32 noundef %i.fn)
-  br i1 %i.fo, label %.lr.ph441, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit, !llvm.loop !16
+  br i1 %i.fo, label %.lr.ph441, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272, !llvm.loop !16
 
 .lr.ph441:                                        ; preds = %.lr.ph.i267
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fl, i64 1 ; 2 uses
   %.not.not.i271 = icmp eq ptr %i.fp, %i.h
-  br i1 %.not.not.i271, label %.lr.ph441.._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge_crit_edge, label %.lr.ph.i267, !llvm.loop !16
+  br i1 %.not.not.i271, label %._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a, label %.lr.ph.i267, !llvm.loop !16
 
-.lr.ph441.._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge_crit_edge: ; preds = %.lr.ph441
-  br label %._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a, !llvm.loop !16
-
-._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a: ; preds = %.lr.ph441.._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge_crit_edge, %.lr.ph441.preheader
+._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a: ; preds = %.lr.ph441
   br label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit, !llvm.loop !16
 
-_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit: ; preds = %.lr.ph.i267, %._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a, %.lr.ph.i267.preheader
-  %8 = phi ptr [ %.promoted.i265, %.lr.ph.i267.preheader ], [ %scevgep534, %._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a ], [ %i.fl, %.lr.ph.i267 ]
-  %.pre555 = ptrtoint ptr %8 to i64
-  br label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272
+_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit: ; preds = %._ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit_crit_edge.a, %.lr.ph441.preheader
+  br label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272, !llvm.loop !16
 
-_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272: ; preds = %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit, %bb.au
-  %.pre-phi = phi i64 [ %.pre555, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit ], [ %.promoted.i265533, %bb.au ]
-  %i.fq = sub i64 %.pre-phi, %i.a
+_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272: ; preds = %.lr.ph.i267, %.lr.ph.i267.preheader, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit, %bb.au
+  %14 = phi ptr [ %.promoted.i265, %bb.au ], [ %.promoted.i265, %.lr.ph.i267.preheader ], [ %scevgep534, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit272.loopexit ], [ %i.fl, %.lr.ph.i267 ]
+  %15 = ptrtoint ptr %14 to i64
+  %i.fq = sub i64 %15, %i.a
   %i.fr = trunc i64 %i.fq to i32
   store i32 %i.fr, ptr %4, align 4, !tbaa !3
   br label %bb.av
@@ -1008,7 +1003,7 @@ bb.ct:                                            ; preds = %bb.cs
 
 .preheader:                                       ; preds = %bb.ct
   %i.ln = add i64 %i.a, %i.g
-  %.promoted484537 = ptrtoint ptr %.promoted484 to i64
+  %.promoted484537 = ptrtoaddr ptr %.promoted484 to i64
   %i.lo = sub i64 %i.ln, %.promoted484537
   %scevgep538 = getelementptr i8, ptr %.promoted484, i64 %i.lo
   br label %bb.cx
@@ -1082,7 +1077,7 @@ bb.de:                                            ; preds = %bb.dd
   br label %.thread364
 
 bb.df:                                            ; preds = %bb.dd
-  %.promoted.i300539 = ptrtoint ptr %.promoted486 to i64 ; 2 uses
+  %.promoted.i300539 = ptrtoaddr ptr %.promoted486 to i64 ; 2 uses
   %or.cond402 = or i1 %i.k, %.not220
   br i1 %or.cond402, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit307, label %.lr.ph.i302.preheader
 

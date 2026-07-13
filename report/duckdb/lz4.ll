@@ -203,7 +203,6 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef i32 @_ZN10duckdb_lz4L22LZ4_decompress_genericEPKcPciiNS_18earlyEnd_directiveENS_14dict_directiveEPKhS6_m(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef range(i32 0, 2) %4, i32 noundef range(i32 0, 3) %5, ptr noundef %6, ptr nofree noundef readonly captures(address_is_null) %7, i64 noundef %8) unnamed_addr #1 {
 bb.a:
-  %9 = ptrtoint ptr %1 to i64                     ; 2 uses
   %i.a = icmp eq ptr %0, null
   %i.b = icmp slt i32 %3, 0
   %or.cond = or i1 %i.a, %i.b
@@ -243,19 +242,19 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.f
   %i.s = ptrtoint ptr %i.f to i64                 ; 5 uses
-  %i.t = ptrtoint ptr %1 to i64
+  %i.t = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.u = icmp samesign ult i32 %3, 64
   br i1 %i.u, label %.preheader596, label %.preheader604
 
 .preheader604:                                    ; preds = %bb.g
   %i.v = getelementptr inbounds i8, ptr %i.d, i64 -17
   %i.w = getelementptr inbounds i8, ptr %i.d, i64 -15 ; 2 uses
-  %10 = ptrtoint ptr %i.w to i64
+  %9 = ptrtoaddr ptr %i.w to i64
   %i.x = getelementptr inbounds i8, ptr %i.d, i64 -32
   %i.y = getelementptr inbounds i8, ptr %i.f, i64 -64 ; 2 uses
   %i.z = icmp eq i32 %5, 1
-  %i.aa = getelementptr inbounds i8, ptr %i.d, i64 -4 ; 2 uses
-  %11 = ptrtoint ptr %i.aa to i64
+  %i.aa = getelementptr inbounds i8, ptr %i.d, i64 -4
+  %10 = ptrtoaddr ptr %i.aa to i64                ; 2 uses
   %i.ab = icmp eq i32 %5, 2
   %i.ac = getelementptr inbounds i8, ptr %i.f, i64 -5
   %.not443 = icmp eq i32 %4, 0
@@ -279,8 +278,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not12.i, label %.lr.ph990, label %_ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit.thread, !prof !36
 
 .lr.ph990:                                        ; preds = %bb.i
-  %.promoted13.i = ptrtoint ptr %i.af to i64
-  %i.al = tail call i64 @llvm.usub.sat.i64(i64 %10, i64 %.promoted13.i)
+  %.promoted13.i = ptrtoaddr ptr %i.af to i64
+  %i.al = tail call i64 @llvm.usub.sat.i64(i64 %9, i64 %.promoted13.i)
   %scevgep.i = getelementptr i8, ptr %i.af, i64 %i.al
   %i.am = getelementptr inbounds nuw i8, ptr %.0539, i64 2
   br label %bb.k
@@ -351,7 +350,7 @@ _ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit.thread558: ; preds = %.preheader6
   %.21010 = ptrtoint ptr %.2 to i64
   %.val484 = load i16, ptr %.2541, align 1, !tbaa !7 ; 5 uses
   %i.bo = zext i16 %.val484 to i64                ; 6 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %.2541, i64 2 ; 8 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %.2541, i64 2 ; 7 uses
   %i.bq = sub nsw i64 0, %i.bo
   %i.br = getelementptr inbounds i8, ptr %.2, i64 %i.bq ; 12 uses
   %i.bs = and i32 %i.ah, 15                       ; 2 uses
@@ -359,11 +358,11 @@ _ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit.thread558: ; preds = %.preheader6
   br i1 %i.bt, label %bb.p, label %bb.t
 
 bb.p:                                             ; preds = %_ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit.thread558
-  %.promoted13.i490 = ptrtoint ptr %i.bp to i64
-  %i.bu = tail call i64 @llvm.usub.sat.i64(i64 %11, i64 %.promoted13.i490)
+  %.promoted13.i490 = ptrtoaddr ptr %i.bp to i64  ; 2 uses
+  %i.bu = tail call i64 @llvm.usub.sat.i64(i64 %10, i64 %.promoted13.i490)
   %scevgep.i491 = getelementptr i8, ptr %i.bp, i64 %i.bu
   %i.bv = getelementptr inbounds nuw i8, ptr %.2541, i64 3 ; 2 uses
-  %exitcond.i493993.not = icmp ugt ptr %i.aa, %i.bp
+  %exitcond.i493993.not = icmp ugt i64 %10, %.promoted13.i490
   br i1 %exitcond.i493993.not, label %.lr.ph996, label %_ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit.thread, !prof !28
 
 bb.q:                                             ; preds = %.lr.ph996
@@ -656,9 +655,9 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not12.i499, label %.lr.ph1003, label %_ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit.thread, !prof !36
 
 .lr.ph1003:                                       ; preds = %._crit_edge
-  %12 = ptrtoint ptr %i.ft to i64
-  %.promoted13.i501 = ptrtoint ptr %.lcssa616 to i64
-  %i.fu = tail call i64 @llvm.usub.sat.i64(i64 %12, i64 %.promoted13.i501)
+  %11 = ptrtoaddr ptr %i.ft to i64
+  %.promoted13.i501 = ptrtoaddr ptr %.lcssa616 to i64
+  %i.fu = tail call i64 @llvm.usub.sat.i64(i64 %11, i64 %.promoted13.i501)
   %scevgep.i502 = getelementptr i8, ptr %.lcssa616, i64 %i.fu
   %i.fv = getelementptr inbounds nuw i8, ptr %.lcssa616, i64 1
   br label %bb.al
@@ -706,11 +705,10 @@ _ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit:   ; preds = %bb.m, %bb.n, %.loop
   %.6386 = phi i64 [ %.5385, %.loopexit597 ], [ %i.av, %bb.m ], [ %i.aj, %bb.n ] ; 4 uses
   %.0379 = phi i32 [ %i.gl, %.loopexit597 ], [ %i.ah, %bb.n ], [ %i.ah, %bb.m ]
   %.3367 = phi ptr [ %i.gm, %.loopexit597 ], [ %i.bc, %bb.m ], [ %i.bl, %bb.n ] ; 7 uses
-  %.7 = phi ptr [ %.6621, %.loopexit597 ], [ %.0362, %bb.n ], [ %.0362, %bb.m ] ; 11 uses
-  %.33671029 = ptrtoint ptr %.3367 to i64
-  %.71030 = ptrtoint ptr %.7 to i64               ; 2 uses
-  %.71026 = ptrtoaddr ptr %.7 to i64
-  %.65441027 = ptrtoaddr ptr %.6544 to i64
+  %.7 = phi ptr [ %.6621, %.loopexit597 ], [ %.0362, %bb.n ], [ %.0362, %bb.m ] ; 10 uses
+  %.33671029 = ptrtoaddr ptr %.3367 to i64
+  %.71030 = ptrtoint ptr %.7 to i64               ; 3 uses
+  %.65441027 = ptrtoint ptr %.6544 to i64
   %i.gn = getelementptr inbounds i8, ptr %i.f, i64 -12
   %i.go = icmp ugt ptr %.3367, %i.gn
   br i1 %i.go, label %bb.ao, label %bb.an
@@ -729,7 +727,7 @@ bb.an:                                            ; preds = %_ZN10duckdb_lz4L14L
   %i.gv = lshr i64 %i.gu, 3
   %i.gw = add nuw nsw i64 %i.gv, 1                ; 2 uses
   %min.iters.check1032 = icmp ult i64 %i.gu, 72
-  %i.gx = sub i64 %.65441027, %.71026
+  %i.gx = sub i64 %.65441027, %.71030
   %diff.check1028 = icmp ugt i64 %i.gx, -32
   %or.cond1206.a = select i1 %min.iters.check1032, i1 true, i1 %diff.check1028
   br i1 %or.cond1206.a, label %.preheader595.preheader1216, label %vector.ph1033
@@ -836,7 +834,7 @@ _ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit:    ; preds = %.preheader595, %mid
   br label %.loopexit598
 
 .loopexit598:                                     ; preds = %bb.ai, %bb.bh, %_ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit
-  %.8546 = phi ptr [ %i.ia, %_ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit ], [ %i.md, %bb.bh ], [ %i.fa, %bb.ai ] ; 6 uses
+  %.8546 = phi ptr [ %i.ia, %_ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit ], [ %i.md, %bb.bh ], [ %i.fa, %bb.ai ] ; 5 uses
   %.9389 = phi i64 [ %i.ie, %_ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit ], [ %i.mb, %bb.bh ], [ %i.ey, %bb.ai ] ; 2 uses
   %.0377 = phi i64 [ %i.hz, %_ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit ], [ %i.mc, %bb.bh ], [ %i.ez, %bb.ai ]
   %.0370 = phi ptr [ %i.ic, %_ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit ], [ %i.mf, %bb.bh ], [ %i.fc, %bb.ai ]
@@ -845,13 +843,13 @@ _ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit:    ; preds = %.preheader595, %mid
   br i1 %i.if, label %bb.at, label %bb.av
 
 bb.at:                                            ; preds = %.loopexit598
-  %i.ig = getelementptr inbounds i8, ptr %i.d, i64 -4 ; 2 uses
-  %13 = ptrtoint ptr %i.ig to i64
-  %.promoted13.i510 = ptrtoint ptr %.8546 to i64
-  %i.ih = tail call i64 @llvm.usub.sat.i64(i64 %13, i64 %.promoted13.i510)
+  %i.ig = getelementptr inbounds i8, ptr %i.d, i64 -4
+  %12 = ptrtoaddr ptr %i.ig to i64                ; 2 uses
+  %.promoted13.i510 = ptrtoaddr ptr %.8546 to i64 ; 2 uses
+  %i.ih = tail call i64 @llvm.usub.sat.i64(i64 %12, i64 %.promoted13.i510)
   %scevgep.i511 = getelementptr i8, ptr %.8546, i64 %i.ih
   %i.ii = getelementptr inbounds nuw i8, ptr %.8546, i64 1 ; 2 uses
-  %exitcond.i5131005.not = icmp ugt ptr %i.ig, %.8546
+  %exitcond.i5131005.not = icmp ugt i64 %12, %.promoted13.i510
   br i1 %exitcond.i5131005.not, label %.lr.ph1008, label %_ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit.thread, !prof !28
 
 bb.au:                                            ; preds = %.lr.ph1008
@@ -890,10 +888,9 @@ bb.av:                                            ; preds = %_ZN10duckdb_lz4L20r
   %.12392 = phi i64 [ %i.iv, %bb.av ], [ %i.ce, %bb.s ], [ %i.cl, %bb.t ] ; 7 uses
   %.1378 = phi i64 [ %.0377, %bb.av ], [ %i.bo, %bb.t ], [ %i.bo, %bb.s ] ; 3 uses
   %.1371 = phi ptr [ %.0370, %bb.av ], [ %i.br, %bb.t ], [ %i.br, %bb.s ] ; 18 uses
-  %.10 = phi ptr [ %.9, %bb.av ], [ %.2, %bb.t ], [ %.2, %bb.s ] ; 28 uses
-  %.13711127 = ptrtoaddr ptr %.1371 to i64        ; 2 uses
-  %.101050 = ptrtoint ptr %.10 to i64             ; 17 uses
-  %.101047 = ptrtoaddr ptr %.10 to i64
+  %.10 = phi ptr [ %.9, %bb.av ], [ %.2, %bb.t ], [ %.2, %bb.s ] ; 27 uses
+  %.101050 = ptrtoint ptr %.1371 to i64           ; 3 uses
+  %.101046 = ptrtoint ptr %.10 to i64             ; 17 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %.1371, i64 %8
   %i.ix = icmp ult ptr %i.iw, %6
   %or.cond472 = select i1 %i.j, i1 %i.ix, i1 false, !prof !41
@@ -924,7 +921,7 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %bb.az, %bb.ax
   %.13393 = phi i64 [ %i.jf, %bb.az ], [ %.12392, %bb.ax ] ; 7 uses
   %i.jg = ptrtoint ptr %6 to i64                  ; 4 uses
-  %i.jh = ptrtoint ptr %.1371 to i64              ; 3 uses
+  %i.jh = ptrtoint ptr %.1371 to i64
   %i.ji = sub i64 %i.jg, %i.jh                    ; 6 uses
   %.not452 = icmp ugt i64 %.13393, %i.ji
   br i1 %.not452, label %bb.bc, label %bb.bb
@@ -943,25 +940,25 @@ bb.bc:                                            ; preds = %bb.ba
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.10, ptr align 1 %i.jo, i64 %i.ji, i1 false)
   %i.jp = getelementptr inbounds nuw i8, ptr %.10, i64 %i.ji ; 7 uses
   %i.jq = ptrtoint ptr %i.jp to i64
-  %i.jr = sub i64 %i.jq, %i.jg
+  %i.jr = sub i64 %i.jq, %i.jg                    ; 2 uses
   %i.js = icmp ugt i64 %i.jm, %i.jr
   br i1 %i.js, label %iter.check1188, label %bb.bd
 
 iter.check1188:                                   ; preds = %bb.bc
   %i.jt = getelementptr inbounds nuw i8, ptr %.10, i64 %.13393
-  %i.ju = add i64 %.101050, %i.jg
+  %i.ju = add i64 %.101046, %i.jg
   %i.jv = add i64 %i.ju, 1
-  %i.jw = sub i64 %i.jv, %i.jh
-  %i.jx = add i64 %.13393, %.101050
+  %i.jw = sub i64 %i.jv, %.101050
+  %i.jx = add i64 %.13393, %.101046
   %umax1168 = tail call i64 @llvm.umax.i64(i64 %i.jw, i64 %i.jx)
-  %i.jy = add i64 %umax1168, %i.jh
-  %i.jz = add i64 %.101050, %i.jg
+  %i.jy = add i64 %umax1168, %.101050
+  %i.jz = add i64 %.101046, %i.jg
   %i.ka = sub i64 %i.jy, %i.jz                    ; 7 uses
   %min.iters.check1170.a = icmp ult i64 %i.ka, 4
-  %14 = sub i64 %.13711127, %.101050
-  %diff.check1167 = icmp ugt i64 %14, -32
-  %or.cond1207 = select i1 %min.iters.check1170.a, i1 true, i1 %diff.check1167
-  br i1 %or.cond1207, label %.lr.ph676.preheader, label %vector.main.loop.iter.check1171
+  %13 = add i64 %i.jr, -1
+  %diff.check1165 = icmp ult i64 %13, 31
+  %or.cond1205 = or i1 %min.iters.check1170.a, %diff.check1165
+  br i1 %or.cond1205, label %.lr.ph676.preheader, label %vector.main.loop.iter.check1171
 
 vector.main.loop.iter.check1171:                  ; preds = %iter.check1188
   %min.iters.check1172 = icmp ult i64 %i.ka, 32
@@ -1062,12 +1059,12 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not683, label %.loopexit592, label %iter.check1149
 
 iter.check1149:                                   ; preds = %.preheader
-  %i.kw = add i64 %i.ks, %.101050
-  %i.kx = add i64 %.101050, 1
+  %i.kw = add i64 %i.ks, %.101046
+  %i.kx = add i64 %.101046, 1
   %umax1129 = tail call i64 @llvm.umax.i64(i64 %i.kw, i64 %i.kx)
-  %i.ky = sub i64 %umax1129, %.101050             ; 7 uses
+  %i.ky = sub i64 %umax1129, %.101046             ; 7 uses
   %min.iters.check1131.a = icmp ult i64 %i.ky, 4
-  %i.kz = sub i64 %.13711127, %.101050
+  %i.kz = sub i64 %.101050, %.101046
   %diff.check1128 = icmp ugt i64 %i.kz, -32
   %or.cond1208 = select i1 %min.iters.check1131.a, i1 true, i1 %diff.check1128
   br i1 %or.cond1208, label %.lr.ph672.preheader, label %vector.main.loop.iter.check1132
@@ -1268,19 +1265,19 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %i.ny, label %.preheader593.preheader, label %bb.bp
 
 .preheader593.preheader:                          ; preds = %bb.bo
-  %i.nz = add i64 %9, %i.e
+  %i.nz = add i64 %i.t, %i.e
   %i.oa = add i64 %i.nz, -7
-  %i.ob = add i64 %.101050, 16
+  %i.ob = add i64 %.101046, 16
   %umax1070 = tail call i64 @llvm.umax.i64(i64 %i.oa, i64 %i.ob)
   %i.oc = add i64 %umax1070, -9
-  %i.od = sub i64 %i.oc, %.101050                 ; 2 uses
+  %i.od = sub i64 %i.oc, %.101046                 ; 2 uses
   %i.oe = lshr i64 %i.od, 3
   %i.of = add nuw nsw i64 %i.oe, 1                ; 2 uses
   %min.iters.check1072 = icmp ult i64 %i.od, 104
   br i1 %min.iters.check1072, label %.preheader593.preheader1209, label %vector.memcheck1068
 
 vector.memcheck1068:                              ; preds = %.preheader593.preheader
-  %i.og = sub i64 %.101050, %.33731048
+  %i.og = sub i64 %.101046, %.33731048
   %i.oh = add i64 %i.og, 7
   %diff.check1069 = icmp ult i64 %i.oh, 31
   br i1 %diff.check1069, label %.preheader593.preheader1209, label %vector.ph1073
@@ -1340,17 +1337,17 @@ bb.bp:                                            ; preds = %_ZN10duckdb_lz4L13L
   br i1 %i.ox, label %iter.check1109, label %_ZN10duckdb_lz4L13LZ4_wildCopy8EPvPKvS0_.exit520
 
 iter.check1109:                                   ; preds = %bb.bp
-  %i.oy = add i64 %.12392, %.101050
-  %i.oz = add i64 %9, %i.e
+  %i.oy = add i64 %.12392, %.101046
+  %i.oz = add i64 %i.t, %i.e
   %i.pa = add i64 %i.oz, -7
-  %i.pb = add i64 %.101050, 8
+  %i.pb = add i64 %.101046, 8
   %umax1089 = tail call i64 @llvm.umax.i64(i64 %i.pa, i64 %i.pb)
   %i.pc = sub i64 %i.oy, %umax1089                ; 7 uses
   %min.iters.check1091.a = icmp ult i64 %i.pc, 4
   br i1 %min.iters.check1091.a, label %.lr.ph669.preheader, label %vector.memcheck1087
 
 vector.memcheck1087:                              ; preds = %iter.check1109
-  %i.pd = sub i64 %.101050, %.33731048
+  %i.pd = sub i64 %.101046, %.33731048
   %i.pe = add i64 %i.pd, 7
   %diff.check1088 = icmp ult i64 %i.pe, 31
   br i1 %diff.check1088, label %.lr.ph669.preheader, label %vector.main.loop.iter.check1092
@@ -1432,18 +1429,18 @@ bb.bq:                                            ; preds = %bb.bm
 
 bb.br:                                            ; preds = %bb.bq
   %i.pt = getelementptr inbounds nuw i8, ptr %.10, i64 16 ; 4 uses
-  %i.pu = add i64 %.12392, %.101050
-  %i.pv = add i64 %.101050, 24
+  %i.pu = add i64 %.12392, %.101046
+  %i.pv = add i64 %.101046, 24
   %umax1051 = tail call i64 @llvm.umax.i64(i64 %i.pu, i64 %i.pv)
   %i.pw = add i64 %umax1051, -17
-  %i.px = sub i64 %i.pw, %.101050                 ; 2 uses
+  %i.px = sub i64 %i.pw, %.101046                 ; 2 uses
   %i.py = lshr i64 %i.px, 3
   %i.pz = add nuw nsw i64 %i.py, 1                ; 2 uses
   %min.iters.check1053 = icmp ult i64 %i.px, 104
   br i1 %min.iters.check1053, label %scalar.ph1052.preheader, label %vector.memcheck1046
 
 vector.memcheck1046:                              ; preds = %bb.br
-  %i.qa = sub i64 %.101047, %.33731048
+  %i.qa = sub i64 %.101046, %.33731048
   %i.qb = add i64 %i.qa, 7
   %diff.check1049 = icmp ult i64 %i.qb, 31
   br i1 %diff.check1049, label %scalar.ph1052.preheader, label %vector.ph1054
@@ -1846,10 +1843,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN10duckdb_lz4L23LZ4_memcpy_using_offsetEPhPKhS0_m(ptr nofree noundef writeonly captures(address) initializes((0, 8)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readnone captures(address) %2, i64 noundef range(i64 0, 16) %3) unnamed_addr #10 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %2 to i64
-  %6 = ptrtoint ptr %0 to i64                     ; 3 uses
-  %7 = ptrtoint ptr %2 to i64
+  %4 = ptrtoaddr ptr %0 to i64                    ; 5 uses
+  %5 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   switch i64 %3, label %bb.e [
     i64 1, label %bb.b
     i64 2, label %bb.c
@@ -1927,7 +1922,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 vector.memcheck:                                  ; preds = %bb.h
   %.023.i36 = ptrtoaddr ptr %.023.i to i64
-  %i.af = sub i64 %6, %.023.i36
+  %i.af = sub i64 %4, %.023.i36
   %i.ag = add i64 %i.af, 7
   %diff.check = icmp ult i64 %i.ag, 31
   br i1 %diff.check, label %scalar.ph38.preheader, label %vector.ph40
@@ -1983,10 +1978,10 @@ bb.i:                                             ; preds = %bb.d, %bb.c, %bb.b
   br i1 %i.as, label %.lr.ph.preheader, label %_ZN10duckdb_lz4L28LZ4_memcpy_using_offset_baseEPhPKhS0_m.exit
 
 .lr.ph.preheader:                                 ; preds = %bb.i
-  %i.at = add i64 %6, 16
-  %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.at)
+  %i.at = add i64 %4, 16
+  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.at)
   %i.au = add i64 %umax, -9
-  %i.av = sub i64 %i.au, %6                       ; 2 uses
+  %i.av = sub i64 %i.au, %4                       ; 2 uses
   %i.aw = lshr i64 %i.av, 3
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.av, 24

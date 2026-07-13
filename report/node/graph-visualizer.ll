@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.j, %_ZStlsISt11c
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 176 ; 4 uses
   %i.bu = load ptr, ptr %i.bt, align 8            ; 3 uses
   %i.bv = ptrtoint ptr %i.bs to i64
-  %i.bw = ptrtoint ptr %i.bu to i64               ; 3 uses
+  %i.bw = ptrtoint ptr %i.bu to i64               ; 2 uses
   %i.bx = sub i64 %i.bv, %i.bw
   %i.by = ashr exact i64 %i.bx, 3
   %.not.i.i = icmp ugt i64 %i.by, %i.ai
@@ -221,23 +221,22 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   call preserve_mostcc void @_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %i.bq, i64 noundef %i.cb)
-  %.pre.i33 = load ptr, ptr %i.bt, align 8        ; 2 uses
-  %.pre13.i34 = ptrtoint ptr %.pre.i33 to i64
+  %.pre.i33 = load ptr, ptr %i.bt, align 8
   %.pre = load ptr, ptr %i.br, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i29
 
 _ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i29: ; preds = %bb.m, %bb.l
   %i.ch = phi ptr [ %i.bs, %bb.l ], [ %.pre, %bb.m ] ; 3 uses
-  %.pre-phi.i30 = phi i64 [ %i.bw, %bb.l ], [ %.pre13.i34, %bb.m ]
-  %i.ci = phi ptr [ %i.bu, %bb.l ], [ %.pre.i33, %bb.m ] ; 2 uses
+  %i.ci = phi ptr [ %i.bu, %bb.l ], [ %.pre.i33, %bb.m ] ; 3 uses
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.cb ; 4 uses
   %i.ck = icmp ult ptr %i.ch, %i.cj
   br i1 %i.ck, label %.lr.ph.preheader.i31, label %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i
 
 .lr.ph.preheader.i31:                             ; preds = %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i29
-  %5 = ptrtoint ptr %i.ch to i64                  ; 2 uses
+  %5 = ptrtoaddr ptr %i.ch to i64                 ; 2 uses
+  %6 = ptrtoaddr ptr %i.ci to i64
   %i.cl = shl nuw nsw i64 %i.cb, 3
-  %i.cm = add nuw i64 %.pre-phi.i30, %i.cl
+  %i.cm = add nuw i64 %i.cl, %6
   %i.cn = add i64 %5, 8
   %umax.i32 = call i64 @llvm.umax.i64(i64 %i.cm, i64 %i.cn)
   %i.co = xor i64 %5, -1
@@ -259,10 +258,10 @@ _ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i: ; p
   br i1 %i.cy, label %.lr.ph.preheader.i, label %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE6resizeEm.exit
 
 .lr.ph.preheader.i:                               ; preds = %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i
-  %6 = ptrtoint ptr %i.cj to i64                  ; 2 uses
-  %i.cz = add i64 %6, 8
+  %7 = ptrtoaddr ptr %i.cj to i64                 ; 2 uses
+  %i.cz = add i64 %7, 8
   %umax.i = call i64 @llvm.umax.i64(i64 %i.cu, i64 %i.cz)
-  %i.da = xor i64 %6, -1
+  %i.da = xor i64 %7, -1
   %i.db = add i64 %umax.i, %i.da
   %i.dc = and i64 %i.db, -8
   %i.dd = add i64 %i.dc, 8

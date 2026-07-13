@@ -201,7 +201,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !158  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !160  ; 2 uses
-  %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 4 uses
@@ -214,18 +214,17 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 16
   tail call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.l, i64 noundef %i.g, i64 noundef 1) #18
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !160
-  %.pre51 = load ptr, ptr %i.a, align 8, !tbaa !158 ; 2 uses
-  %.pre52 = ptrtoint ptr %.pre51 to i64
+  %.pre51 = load ptr, ptr %i.a, align 8, !tbaa !158
   br label %_ZN4llvh15SmallVectorImplIcE7reserveEm.exit
 
 _ZN4llvh15SmallVectorImplIcE7reserveEm.exit:      ; preds = %bb.a, %bb.b
-  %.pre-phi = phi i64 [ %i.e, %bb.a ], [ %.pre52, %bb.b ]
-  %i.m = phi ptr [ %i.b, %bb.a ], [ %.pre51, %bb.b ] ; 5 uses
+  %i.m = phi ptr [ %i.b, %bb.a ], [ %.pre51, %bb.b ] ; 6 uses
   %i.n = phi ptr [ %i.d, %bb.a ], [ %.pre, %bb.b ] ; 2 uses
   %.not46 = icmp eq ptr %i.n, %i.m
   br i1 %.not46, label %._crit_edge, label %.lr.ph48
 
 .lr.ph48:                                         ; preds = %_ZN4llvh15SmallVectorImplIcE7reserveEm.exit
+  %3 = ptrtoaddr ptr %i.m to i64
   %i.o = getelementptr inbounds i8, ptr %i.m, i64 -2
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
@@ -263,7 +262,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit: ; preds = %._crit_e
 
 bb.d:                                             ; preds = %.lr.ph48, %.critedge
   %.047 = phi ptr [ %i.n, %.lr.ph48 ], [ %i.bk, %.critedge ] ; 12 uses
-  %.04749 = ptrtoint ptr %.047 to i64
+  %.04749 = ptrtoaddr ptr %.047 to i64
   %.not31 = icmp ugt ptr %.047, %i.o
   br i1 %.not31, label %bb.g, label %bb.e
 
@@ -338,7 +337,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit40: ; preds = %bb.k, 
   br i1 %.not3442, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit40
-  %i.bf = getelementptr i8, ptr %.047, i64 %.pre-phi
+  %i.bf = getelementptr i8, ptr %.047, i64 %3
   %scevgep = getelementptr i8, ptr %i.bf, i64 -1
   %i.bg = sub i64 0, %.04749
   %scevgep50 = getelementptr i8, ptr %scevgep, i64 %i.bg

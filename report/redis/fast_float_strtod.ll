@@ -201,13 +201,13 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.af = getelementptr inbounds nuw i8, ptr %.1.lcssa.ph, i64 1 ; 4 uses
-  %i.ag = ptrtoint ptr %i.af to i64               ; 4 uses
+  %i.ag = ptrtoint ptr %i.af to i64               ; 3 uses
   %i.ah = sub i64 %i.a, %i.ag
   %i.ai = icmp sgt i64 %i.ah, 7
   br i1 %i.ai, label %.lr.ph108, label %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit
 
 .lr.ph108:                                        ; preds = %bb.m, %.noexc
-  %.11107 = phi ptr [ %i.az, %.noexc ], [ %i.af, %bb.m ] ; 4 uses
+  %.11107 = phi ptr [ %i.az, %.noexc ], [ %i.af, %bb.m ] ; 3 uses
   %.785106 = phi i64 [ %i.ay, %.noexc ], [ %.078.lcssa.ph, %bb.m ] ; 2 uses
   %.0.copyload.i29 = load i64, ptr %.11107, align 1, !noalias !14 ; 2 uses
   %i.aj = add i64 %.0.copyload.i29, 5063812098665367110
@@ -215,11 +215,7 @@ bb.m:                                             ; preds = %bb.l
   %i.al = or i64 %i.aj, %i.ak
   %i.am = and i64 %i.al, -9187201950435737472
   %.not.i28 = icmp eq i64 %i.am, 0
-  br i1 %.not.i28, label %.noexc, label %.lr.ph108._ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit.loopexit_crit_edge
-
-.lr.ph108._ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit.loopexit_crit_edge: ; preds = %.lr.ph108
-  %.pre161 = ptrtoint ptr %.11107 to i64
-  br label %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit
+  br i1 %.not.i28, label %.noexc, label %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit
 
 .noexc:                                           ; preds = %.lr.ph108
   %i.an = mul i64 %.785106, 100000000
@@ -235,20 +231,20 @@ bb.m:                                             ; preds = %bb.l
   %i.ax = lshr i64 %i.aw, 32
   %i.ay = add i64 %i.ax, %i.an                    ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.11107, i64 8 ; 3 uses
-  %i.ba = ptrtoint ptr %i.az to i64               ; 2 uses
+  %i.ba = ptrtoint ptr %i.az to i64
   %i.bb = sub i64 %i.a, %i.ba
   %i.bc = icmp sgt i64 %i.bb, 7
   br i1 %i.bc, label %.lr.ph108, label %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit, !llvm.loop !19
 
-_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit: ; preds = %.noexc, %.lr.ph108._ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit.loopexit_crit_edge, %bb.m
-  %.11.lcssa156.pre-phi = phi i64 [ %i.ag, %bb.m ], [ %.pre161, %.lr.ph108._ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit.loopexit_crit_edge ], [ %i.ba, %.noexc ] ; 2 uses
-  %.785.lcssa = phi i64 [ %.078.lcssa.ph, %bb.m ], [ %.785106, %.lr.ph108._ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit.loopexit_crit_edge ], [ %i.ay, %.noexc ] ; 2 uses
-  %.11.lcssa = phi ptr [ %i.af, %bb.m ], [ %.11107, %.lr.ph108._ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit.loopexit_crit_edge ], [ %i.az, %.noexc ] ; 4 uses
+_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit: ; preds = %.lr.ph108, %.noexc, %bb.m
+  %.785.lcssa = phi i64 [ %.078.lcssa.ph, %bb.m ], [ %i.ay, %.noexc ], [ %.785106, %.lr.ph108 ] ; 2 uses
+  %.11.lcssa = phi ptr [ %i.af, %bb.m ], [ %i.az, %.noexc ], [ %.11107, %.lr.ph108 ] ; 5 uses
   %.not115.i113 = icmp eq ptr %.11.lcssa, %1
   br i1 %.not115.i113, label %.critedge3.i, label %.lr.ph116.preheader
 
 .lr.ph116.preheader:                              ; preds = %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit
-  %i.bd = sub i64 %i.a, %.11.lcssa156.pre-phi
+  %.11.lcssa156 = ptrtoaddr ptr %.11.lcssa to i64
+  %i.bd = sub i64 %i.a, %.11.lcssa156
   %scevgep157 = getelementptr i8, ptr %.11.lcssa, i64 %i.bd
   br label %.lr.ph116
 
@@ -258,7 +254,7 @@ _ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit: ; preds = %.noexc, %
   %i.be = load i8, ptr %.10115, align 1, !tbaa !13, !noalias !14
   %i.bf = add i8 %i.be, -48                       ; 2 uses
   %i.bg = icmp ult i8 %i.bf, 10
-  br i1 %i.bg, label %bb.n, label %.critedge3.i.loopexit
+  br i1 %i.bg, label %bb.n, label %.critedge3.i
 
 bb.n:                                             ; preds = %.lr.ph116
   %i.bh = getelementptr inbounds nuw i8, ptr %.10115, i64 1 ; 2 uses
@@ -266,20 +262,14 @@ bb.n:                                             ; preds = %.lr.ph116
   %i.bj = zext nneg i8 %i.bf to i64
   %i.bk = add i64 %i.bi, %i.bj                    ; 2 uses
   %.not115.i = icmp eq ptr %i.bh, %1
-  br i1 %.not115.i, label %.critedge3.i.loopexit, label %.lr.ph116, !llvm.loop !20
+  br i1 %.not115.i, label %.critedge3.i, label %.lr.ph116, !llvm.loop !20
 
-.critedge3.i.loopexit:                            ; preds = %.lr.ph116, %bb.n
-  %.684.lcssa.ph = phi i64 [ %i.bk, %bb.n ], [ %.684114, %.lr.ph116 ]
-  %.10.lcssa.ph = phi ptr [ %scevgep157, %bb.n ], [ %.10115, %.lr.ph116 ] ; 2 uses
-  %.pre160 = ptrtoint ptr %.10.lcssa.ph to i64
-  br label %.critedge3.i
-
-.critedge3.i:                                     ; preds = %.critedge3.i.loopexit, %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit
-  %.pre-phi = phi i64 [ %.pre160, %.critedge3.i.loopexit ], [ %.11.lcssa156.pre-phi, %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit ] ; 2 uses
-  %.684.lcssa = phi i64 [ %.684.lcssa.ph, %.critedge3.i.loopexit ], [ %.785.lcssa, %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit ]
-  %.10.lcssa = phi ptr [ %.10.lcssa.ph, %.critedge3.i.loopexit ], [ %.11.lcssa, %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit ]
-  %i.bl = sub i64 %i.ag, %.pre-phi                ; 2 uses
-  %i.bm = sub i64 %.pre-phi, %i.ag
+.critedge3.i:                                     ; preds = %bb.n, %.lr.ph116, %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit
+  %.684.lcssa = phi i64 [ %.785.lcssa, %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit ], [ %.684114, %.lr.ph116 ], [ %i.bk, %bb.n ]
+  %.10.lcssa = phi ptr [ %.11.lcssa, %_ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit ], [ %.10115, %.lr.ph116 ], [ %scevgep157, %bb.n ] ; 2 uses
+  %5 = ptrtoint ptr %.10.lcssa to i64             ; 2 uses
+  %i.bl = sub i64 %i.ag, %5                       ; 2 uses
+  %i.bm = sub i64 %5, %i.ag
   %i.bn = sub nsw i64 %i.y, %i.bl
   br label %.thread
 
@@ -367,7 +357,7 @@ bb.z:                                             ; preds = %bb.x
 .thread86:                                        ; preds = %bb.z, %bb.w, %bb.y
   %.4 = phi ptr [ %i.bz, %bb.y ], [ %.3, %bb.w ], [ %spec.select, %bb.z ] ; 5 uses
   %.087.i = phi i1 [ true, %bb.y ], [ false, %bb.w ], [ false, %bb.z ]
-  %.4158 = ptrtoint ptr %.4 to i64
+  %.4158 = ptrtoaddr ptr %.4 to i64
   %i.cb = icmp eq ptr %.4, %1
   br i1 %i.cb, label %bb.ab, label %bb.aa
 
@@ -770,7 +760,7 @@ bb.a:
   store i64 0, ptr %3, align 8, !tbaa !25
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !44   ; 4 uses
-  %4 = ptrtoint ptr %i.b to i64                   ; 2 uses
+  %4 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.d = load i64, ptr %i.c, align 8, !tbaa !45   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.d ; 9 uses
@@ -779,25 +769,26 @@ bb.a:
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.9311 = phi ptr [ %i.h, %bb.b ], [ %i.b, %bb.a ] ; 4 uses
+  %.9311 = phi ptr [ %i.h, %bb.b ], [ %i.b, %bb.a ] ; 3 uses
   %.0.copyload.i69 = load i64, ptr %.9311, align 1
   %.not.i70 = icmp eq i64 %.0.copyload.i69, 3472328296227680304
-  br i1 %.not.i70, label %bb.b, label %.lr.ph.._crit_edge.loopexit_crit_edge
-
-.lr.ph.._crit_edge.loopexit_crit_edge:            ; preds = %.lr.ph
-  %.pre455 = ptrtoint ptr %.9311 to i64
-  br label %._crit_edge
+  br i1 %.not.i70, label %bb.b, label %._crit_edge.loopexit
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %.9311, i64 8 ; 3 uses
-  %i.i = ptrtoint ptr %i.h to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.h to i64
   %i.j = sub i64 %i.f, %i.i
   %i.k = icmp sgt i64 %i.j, 7
-  br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !46
+  br i1 %i.k, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !46
 
-._crit_edge:                                      ; preds = %bb.b, %.lr.ph.._crit_edge.loopexit_crit_edge, %bb.a
-  %.9.lcssa440.pre-phi = phi i64 [ %4, %bb.a ], [ %.pre455, %.lr.ph.._crit_edge.loopexit_crit_edge ], [ %i.i, %bb.b ]
-  %.9.lcssa = phi ptr [ %i.b, %bb.a ], [ %.9311, %.lr.ph.._crit_edge.loopexit_crit_edge ], [ %i.h, %bb.b ] ; 3 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph, %bb.b
+  %.9.lcssa.ph = phi ptr [ %i.h, %bb.b ], [ %.9311, %.lr.ph ] ; 2 uses
+  %.pre450 = ptrtoaddr ptr %.9.lcssa.ph to i64
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.9.lcssa440.pre-phi = phi i64 [ %.pre450, %._crit_edge.loopexit ], [ %4, %bb.a ]
+  %.9.lcssa = phi ptr [ %.9.lcssa.ph, %._crit_edge.loopexit ], [ %i.b, %bb.a ] ; 3 uses
   %.not8.i67316 = icmp eq ptr %.9.lcssa, %i.e
   br i1 %.not8.i67316, label %._crit_edge350, label %.lr.ph319.preheader
 
@@ -1200,7 +1191,7 @@ _ZN10fast_float6bigint3addEm.exit129:             ; preds = %.lr.ph572, %_ZN10fa
 ._crit_edge350:                                   ; preds = %_ZN10fast_float6bigint3addEm.exit129, %._crit_edge, %_ZN10fast_float10skip_zerosIcEEvRPKT_S3_.exit71
   %i.ii = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !57 ; 6 uses
-  %5 = ptrtoint ptr %i.ij to i64                  ; 2 uses
+  %5 = ptrtoaddr ptr %i.ij to i64                 ; 2 uses
   %.not59 = icmp eq ptr %i.ij, null
   br i1 %.not59, label %_ZN10fast_float12is_truncatedIcEEbPKT_S3_.exit, label %bb.q
 
@@ -1218,25 +1209,26 @@ bb.q:                                             ; preds = %._crit_edge350
   br i1 %i.iq, label %.lr.ph368, label %._crit_edge369
 
 .lr.ph368:                                        ; preds = %.preheader289, %bb.r
-  %.7367 = phi ptr [ %i.ir, %bb.r ], [ %i.ij, %.preheader289 ] ; 4 uses
+  %.7367 = phi ptr [ %i.ir, %bb.r ], [ %i.ij, %.preheader289 ] ; 3 uses
   %.0.copyload.i = load i64, ptr %.7367, align 1
   %.not.i = icmp eq i64 %.0.copyload.i, 3472328296227680304
-  br i1 %.not.i, label %bb.r, label %.lr.ph368.._crit_edge369.loopexit_crit_edge
-
-.lr.ph368.._crit_edge369.loopexit_crit_edge:      ; preds = %.lr.ph368
-  %.pre456 = ptrtoint ptr %.7367 to i64
-  br label %._crit_edge369
+  br i1 %.not.i, label %bb.r, label %._crit_edge369.loopexit
 
 bb.r:                                             ; preds = %.lr.ph368
   %i.ir = getelementptr inbounds nuw i8, ptr %.7367, i64 8 ; 3 uses
-  %i.is = ptrtoint ptr %i.ir to i64               ; 2 uses
+  %i.is = ptrtoint ptr %i.ir to i64
   %i.it = sub i64 %i.ip, %i.is
   %i.iu = icmp sgt i64 %i.it, 7
-  br i1 %i.iu, label %.lr.ph368, label %._crit_edge369, !llvm.loop !46
+  br i1 %i.iu, label %.lr.ph368, label %._crit_edge369.loopexit, !llvm.loop !46
 
-._crit_edge369:                                   ; preds = %bb.r, %.lr.ph368.._crit_edge369.loopexit_crit_edge, %.preheader289
-  %.7.lcssa441.pre-phi = phi i64 [ %5, %.preheader289 ], [ %.pre456, %.lr.ph368.._crit_edge369.loopexit_crit_edge ], [ %i.is, %bb.r ]
-  %.7.lcssa = phi ptr [ %i.ij, %.preheader289 ], [ %.7367, %.lr.ph368.._crit_edge369.loopexit_crit_edge ], [ %i.ir, %bb.r ] ; 3 uses
+._crit_edge369.loopexit:                          ; preds = %.lr.ph368, %bb.r
+  %.7.lcssa.ph = phi ptr [ %i.ir, %bb.r ], [ %.7367, %.lr.ph368 ] ; 2 uses
+  %.pre451 = ptrtoaddr ptr %.7.lcssa.ph to i64
+  br label %._crit_edge369
+
+._crit_edge369:                                   ; preds = %._crit_edge369.loopexit, %.preheader289
+  %.7.lcssa441.pre-phi = phi i64 [ %.pre451, %._crit_edge369.loopexit ], [ %5, %.preheader289 ]
+  %.7.lcssa = phi ptr [ %.7.lcssa.ph, %._crit_edge369.loopexit ], [ %i.ij, %.preheader289 ] ; 3 uses
   %.not8.i373 = icmp eq ptr %.7.lcssa, %i.im
   br i1 %.not8.i373, label %_ZN10fast_float12is_truncatedIcEEbPKT_S3_.exit, label %.lr.ph376.preheader
 

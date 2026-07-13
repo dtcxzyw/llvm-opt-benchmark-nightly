@@ -204,10 +204,10 @@ _ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE9push_backEOS3_.exit.i: ; p
 
 ._crit_edge60.i:                                  ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE9push_backEOS3_.exit47.i, %_ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE7reserveEm.exit38.i
   %i.fi = load ptr, ptr %i.ci, align 8            ; 9 uses
-  %4 = ptrtoint ptr %i.fi to i64                  ; 6 uses
+  %4 = ptrtoaddr ptr %i.fi to i64                 ; 6 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ce, i64 48
   %i.fk = load ptr, ptr %i.fj, align 8            ; 5 uses
-  %5 = ptrtoint ptr %i.fk to i64                  ; 2 uses
+  %5 = ptrtoaddr ptr %i.fk to i64                 ; 2 uses
   %i.fl = icmp ne ptr %i.fi, %i.fk
   %.012.i.i.i = getelementptr inbounds i8, ptr %i.fk, i64 -4 ; 5 uses
   %i.fm = icmp ult ptr %i.fi, %.012.i.i.i
@@ -610,7 +610,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
   %i.f = ptrtoint ptr %i.c to i64
-  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.h = sub i64 %i.f, %i.g
   %i.i = trunc i64 %i.h to i32
   %.not = icmp slt i32 %2, %i.i
@@ -629,22 +629,21 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call preserve_mostcc void @_ZN2v88internal10ZoneVectorINS0_21MachineRepresentationEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef %i.l)
-  %.pre.i = load ptr, ptr %i.d, align 8           ; 2 uses
-  %.pre15.i = ptrtoint ptr %.pre.i to i64
+  %.pre.i = load ptr, ptr %i.d, align 8
   %.pre = load ptr, ptr %i.b, align 8
   br label %_ZN2v88internal10ZoneVectorINS0_21MachineRepresentationEE14EnsureCapacityEm.exit.i
 
 _ZN2v88internal10ZoneVectorINS0_21MachineRepresentationEE14EnsureCapacityEm.exit.i: ; preds = %bb.c, %bb.b
   %i.q = phi ptr [ %i.c, %bb.b ], [ %.pre, %bb.c ] ; 3 uses
-  %.pre-phi.i = phi i64 [ %i.g, %bb.b ], [ %.pre15.i, %bb.c ]
-  %i.r = phi ptr [ %i.e, %bb.b ], [ %.pre.i, %bb.c ]
+  %i.r = phi ptr [ %i.e, %bb.b ], [ %.pre.i, %bb.c ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.l ; 2 uses
   %i.t = icmp ult ptr %i.q, %i.s
   br i1 %i.t, label %.lr.ph.preheader.i, label %_ZN2v88internal10ZoneVectorINS0_21MachineRepresentationEE6resizeEmRKS2_.exit
 
 .lr.ph.preheader.i:                               ; preds = %_ZN2v88internal10ZoneVectorINS0_21MachineRepresentationEE14EnsureCapacityEm.exit.i
-  %3 = ptrtoint ptr %i.q to i64
-  %i.u = add i64 %.pre-phi.i, %i.l
+  %3 = ptrtoaddr ptr %i.q to i64
+  %4 = ptrtoaddr ptr %i.r to i64
+  %i.u = add i64 %4, %i.l
   %i.v = sub i64 %i.u, %3
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.q, i8 5, i64 %i.v, i1 false)
   br label %_ZN2v88internal10ZoneVectorINS0_21MachineRepresentationEE6resizeEmRKS2_.exit

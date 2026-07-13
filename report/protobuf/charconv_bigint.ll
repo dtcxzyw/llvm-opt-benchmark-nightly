@@ -203,8 +203,8 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress uwtable
 define weak_odr noundef i32 @_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE10ReadDigitsEPKcS5_i(ptr noundef nonnull align 4 dereferenceable(20) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %2 to i64                     ; 3 uses
+  %4 = ptrtoaddr ptr %1 to i64
+  %5 = ptrtoaddr ptr %2 to i64                    ; 3 uses
   %i.a = load i32, ptr %0, align 4, !tbaa !7      ; 2 uses
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE9SetToZeroEv.exit, label %_ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i
@@ -230,29 +230,24 @@ _ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE9SetToZeroEv.exit: ; 
   %.0150 = phi ptr [ %i.i, %bb.b ], [ %1, %.lr.ph.preheader ] ; 3 uses
   %i.g = load i8, ptr %.0150, align 1, !tbaa !9
   %i.h = icmp eq i8 %i.g, 48
-  br i1 %i.h, label %bb.b, label %.critedge.loopexit
+  br i1 %i.h, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %.0150, i64 1 ; 2 uses
   %exitcond.not = icmp eq ptr %i.i, %2
-  br i1 %exitcond.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !12
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !12
 
-.critedge.loopexit:                               ; preds = %bb.b, %.lr.ph
-  %.0.lcssa.ph = phi ptr [ %.0150, %.lr.ph ], [ %scevgep, %bb.b ] ; 2 uses
-  %.pre = ptrtoint ptr %.0.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE9SetToZeroEv.exit
-  %.0.lcssa210.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %4, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE9SetToZeroEv.exit ] ; 4 uses
-  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %1, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE9SetToZeroEv.exit ] ; 10 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.b, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE9SetToZeroEv.exit
+  %.0.lcssa = phi ptr [ %1, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE9SetToZeroEv.exit ], [ %scevgep, %bb.b ], [ %.0150, %.lr.ph ] ; 11 uses
+  %.0.lcssa210 = ptrtoint ptr %.0.lcssa to i64    ; 4 uses
   %i.j = icmp ult ptr %.0.lcssa, %2
   br i1 %i.j, label %.lr.ph155.preheader, label %.critedge4
 
 .lr.ph155.preheader:                              ; preds = %.critedge
   %i.k = trunc i64 %5 to i32                      ; 2 uses
-  %i.l = trunc i64 %.0.lcssa210.pre-phi to i32    ; 2 uses
+  %i.l = trunc i64 %.0.lcssa210 to i32            ; 2 uses
   %i.m = sub i32 %i.k, %i.l
-  %i.n = sub i64 %.0.lcssa210.pre-phi, %5
+  %i.n = sub i64 %.0.lcssa210, %5
   %scevgep211 = getelementptr i8, ptr %2, i64 %i.n ; 2 uses
   %i.o = xor i32 %i.l, -1
   %i.p = add i32 %i.o, %i.k
@@ -302,7 +297,7 @@ bb.d:                                             ; preds = %.lr.ph165
 
 bb.e:                                             ; preds = %.critedge88
   %i.aa = ptrtoint ptr %.073.lcssa to i64         ; 2 uses
-  %i.ab = sub i64 %i.aa, %.0.lcssa210.pre-phi     ; 2 uses
+  %i.ab = sub i64 %i.aa, %.0.lcssa210             ; 2 uses
   %i.ac = ashr i64 %i.ab, 2                       ; 2 uses
   %i.ad = icmp sgt i64 %i.ac, 0
   br i1 %i.ad, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
@@ -348,7 +343,7 @@ bb.j:                                             ; preds = %bb.i
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.e
-  %.pre-phi.i.i.i = phi i64 [ %.pre54.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %.0.lcssa210.pre-phi, %bb.e ]
+  %.pre-phi.i.i.i = phi i64 [ %.pre54.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %.0.lcssa210, %bb.e ]
   %.029.lcssa.i.i.i = phi ptr [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %.0.lcssa, %bb.e ] ; 5 uses
   %i.at = sub i64 %i.aa, %.pre-phi.i.i.i
   switch i64 %i.at, label %bb.n [
@@ -751,8 +746,8 @@ bb.m:                                             ; preds = %bb.k, %bb.l, %_ZSt1
 ; Function Attrs: mustprogress uwtable
 define weak_odr noundef i32 @_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10ReadDigitsEPKcS5_i(ptr noundef nonnull align 4 dereferenceable(340) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %2 to i64                     ; 3 uses
+  %4 = ptrtoaddr ptr %1 to i64
+  %5 = ptrtoaddr ptr %2 to i64                    ; 3 uses
   %i.a = load i32, ptr %0, align 4, !tbaa !44     ; 2 uses
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit, label %_ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i
@@ -778,29 +773,24 @@ _ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit: ;
   %.0150 = phi ptr [ %i.i, %bb.b ], [ %1, %.lr.ph.preheader ] ; 3 uses
   %i.g = load i8, ptr %.0150, align 1, !tbaa !9
   %i.h = icmp eq i8 %i.g, 48
-  br i1 %i.h, label %bb.b, label %.critedge.loopexit
+  br i1 %i.h, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %.0150, i64 1 ; 2 uses
   %exitcond.not = icmp eq ptr %i.i, %2
-  br i1 %exitcond.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !46
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !46
 
-.critedge.loopexit:                               ; preds = %bb.b, %.lr.ph
-  %.0.lcssa.ph = phi ptr [ %.0150, %.lr.ph ], [ %scevgep, %bb.b ] ; 2 uses
-  %.pre = ptrtoint ptr %.0.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit
-  %.0.lcssa210.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %4, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit ] ; 4 uses
-  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %1, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit ] ; 10 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.b, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit
+  %.0.lcssa = phi ptr [ %1, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit ], [ %scevgep, %bb.b ], [ %.0150, %.lr.ph ] ; 11 uses
+  %.0.lcssa210 = ptrtoint ptr %.0.lcssa to i64    ; 4 uses
   %i.j = icmp ult ptr %.0.lcssa, %2
   br i1 %i.j, label %.lr.ph155.preheader, label %.critedge4
 
 .lr.ph155.preheader:                              ; preds = %.critedge
   %i.k = trunc i64 %5 to i32                      ; 2 uses
-  %i.l = trunc i64 %.0.lcssa210.pre-phi to i32    ; 2 uses
+  %i.l = trunc i64 %.0.lcssa210 to i32            ; 2 uses
   %i.m = sub i32 %i.k, %i.l
-  %i.n = sub i64 %.0.lcssa210.pre-phi, %5
+  %i.n = sub i64 %.0.lcssa210, %5
   %scevgep211 = getelementptr i8, ptr %2, i64 %i.n ; 2 uses
   %i.o = xor i32 %i.l, -1
   %i.p = add i32 %i.o, %i.k
@@ -850,7 +840,7 @@ bb.d:                                             ; preds = %.lr.ph165
 
 bb.e:                                             ; preds = %.critedge88
   %i.aa = ptrtoint ptr %.073.lcssa to i64         ; 2 uses
-  %i.ab = sub i64 %i.aa, %.0.lcssa210.pre-phi     ; 2 uses
+  %i.ab = sub i64 %i.aa, %.0.lcssa210             ; 2 uses
   %i.ac = ashr i64 %i.ab, 2                       ; 2 uses
   %i.ad = icmp sgt i64 %i.ac, 0
   br i1 %i.ad, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
@@ -896,7 +886,7 @@ bb.j:                                             ; preds = %bb.i
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.e
-  %.pre-phi.i.i.i = phi i64 [ %.pre54.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %.0.lcssa210.pre-phi, %bb.e ]
+  %.pre-phi.i.i.i = phi i64 [ %.pre54.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %.0.lcssa210, %bb.e ]
   %.029.lcssa.i.i.i = phi ptr [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %.0.lcssa, %bb.e ] ; 5 uses
   %i.at = sub i64 %i.aa, %.pre-phi.i.i.i
   switch i64 %i.at, label %bb.n [
