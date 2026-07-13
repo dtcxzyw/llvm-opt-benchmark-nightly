@@ -204,7 +204,7 @@ PyUnicode_WRITE.exit.thread.thread:               ; preds = %bb.f
 
 bb.g:                                             ; preds = %.lr.ph, %.backedge
   %i.z = phi ptr [ %i.t, %.lr.ph ], [ %i.hh, %.backedge ] ; 10 uses
-  %i.aa = phi ptr [ %0, %.lr.ph ], [ %i.hg, %.backedge ] ; 11 uses
+  %i.aa = phi ptr [ %0, %.lr.ph ], [ %i.hg, %.backedge ] ; 10 uses
   %i.ab = getelementptr i8, ptr %i.aa, i64 1      ; 5 uses
   store ptr %i.ab, ptr %i.a, align 8, !tbaa !355
   %i.ac = load i8, ptr %i.aa, align 1, !tbaa !205 ; 6 uses
@@ -297,7 +297,7 @@ bb.r:                                             ; preds = %bb.h
   br i1 %i.ae, label %bb.s, label %bb.cv
 
 bb.s:                                             ; preds = %bb.r
-  %i.bd = getelementptr i8, ptr %i.aa, i64 2      ; 5 uses
+  %i.bd = getelementptr i8, ptr %i.aa, i64 2      ; 6 uses
   store ptr %i.bd, ptr %i.a, align 8, !tbaa !355
   %i.be = load i8, ptr %i.ab, align 1, !tbaa !205 ; 6 uses
   %i.bf = zext i8 %i.be to i32                    ; 4 uses
@@ -408,8 +408,7 @@ bb.ag:                                            ; preds = %bb.s, %bb.t
   %.not76.3 = phi i1 [ false, %bb.t ], [ true, %bb.s ]
   %.055 = phi i64 [ 8, %bb.t ], [ 4, %bb.s ]
   %.0 = phi ptr [ @.str.87, %bb.t ], [ @.str.86, %bb.s ] ; 2 uses
-  %5 = getelementptr i8, ptr %i.aa, i64 %.055
-  %scevgep127 = getelementptr i8, ptr %5, i64 2   ; 2 uses
+  %scevgep127 = getelementptr i8, ptr %i.bd, i64 %.055 ; 2 uses
   %.not78 = icmp ult ptr %i.bd, %i.z
   br i1 %.not78, label %bb.ah, label %.loopexit
 
