@@ -203,7 +203,7 @@ bb.a:
   store <8 x i8> <i8 120, i8 16, i8 1, i8 27, i8 12, i8 7, i8 8, i8 -112>, ptr %i.g, align 1, !tbaa !225
   %i.i = getelementptr i8, ptr %i.a, i64 22       ; 3 uses
   store i8 1, ptr %i.h, align 1, !tbaa !225
-  %i.j = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.j = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.k = and i64 %i.j, 7
   %.not109 = icmp eq i64 %i.k, 0
   br i1 %.not109, label %._crit_edge, label %.lr.ph.preheader
@@ -214,16 +214,14 @@ bb.a:
   %i.n = add nuw nsw i64 %i.m, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.i, i8 0, i64 %i.n, i1 false), !tbaa !225
   %i.o = getelementptr i8, ptr %i.a, i64 %i.m
-  %scevgep = getelementptr i8, ptr %i.o, i64 23   ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.o, i64 23
   %i.p = add i64 %i.m, %i.b
   %i.q = add i64 %i.p, 23
-  %.pre = ptrtoint ptr %scevgep to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.a
-  %.0.lcssa124.pre-phi = phi i64 [ %.pre, %.lr.ph.preheader ], [ %i.j, %bb.a ] ; 2 uses
-  %.0.lcssa = phi ptr [ %scevgep, %.lr.ph.preheader ], [ %i.i, %bb.a ] ; 14 uses
-  %.lcssa108 = phi i64 [ %i.q, %.lr.ph.preheader ], [ %i.j, %bb.a ] ; 2 uses
+  %.0.lcssa = phi ptr [ %i.i, %bb.a ], [ %scevgep, %.lr.ph.preheader ] ; 15 uses
+  %.lcssa108 = phi i64 [ %i.j, %bb.a ], [ %i.q, %.lr.ph.preheader ] ; 2 uses
   %i.r = sub i64 %.lcssa108, %i.b
   %i.s = trunc i64 %i.r to i32
   %i.t = add i32 %i.s, -4
@@ -265,13 +263,14 @@ bb.a:
   br i1 %.not102112, label %._crit_edge116, label %.lr.ph115.preheader
 
 .lr.ph115.preheader:                              ; preds = %._crit_edge
-  %i.ao = sub i64 2, %.0.lcssa124.pre-phi
+  %.0.lcssa124 = ptrtoaddr ptr %.0.lcssa to i64   ; 2 uses
+  %i.ao = sub i64 2, %.0.lcssa124
   %i.ap = and i64 %i.ao, 7                        ; 3 uses
   %i.aq = add nuw nsw i64 %i.ap, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.al, i8 0, i64 %i.aq, i1 false), !tbaa !225
   %i.ar = getelementptr i8, ptr %.0.lcssa, i64 %i.ap
   %scevgep125 = getelementptr i8, ptr %i.ar, i64 30
-  %i.as = add i64 %.0.lcssa124.pre-phi, %i.ap
+  %i.as = add i64 %i.ap, %.0.lcssa124
   %i.at = add i64 %i.as, 30
   br label %._crit_edge116
 

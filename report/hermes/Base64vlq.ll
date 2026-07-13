@@ -55,13 +55,16 @@ bb.e:                                             ; preds = %_ZN4llvh11raw_ostre
 define hidden range(i64 0, 8589934592) i64 @_ZN6hermes9base64vlq6decodeERPKcS2_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr nofree noundef readnone captures(address) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !16     ; 3 uses
-  %2 = ptrtoint ptr %i.a to i64
   %.not3246 = icmp ult ptr %i.a, %1
-  br i1 %.not3246, label %.lr.ph.a, label %.critedge
+  br i1 %.not3246, label %.lr.ph, label %.critedge
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.f
-  %.048 = phi i64 [ %i.l, %bb.f ], [ 0, %bb.a ]
-  %.02447 = phi ptr [ %i.u, %bb.f ], [ %i.a, %bb.a ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.a
+  %2 = ptrtoint ptr %i.a to i64
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.f
+  %.048 = phi i64 [ 0, %.lr.ph ], [ %i.l, %bb.f ]
+  %.02447 = phi ptr [ %i.a, %.lr.ph ], [ %i.u, %bb.f ] ; 4 uses
   %i.b = load i8, ptr %.02447, align 1, !tbaa !7
   switch i8 %i.b, label %.critedge [
     i8 65, label %_ZN6hermes9base64vlqL12base64DecodeEc.exit

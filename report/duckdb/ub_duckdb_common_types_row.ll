@@ -204,8 +204,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_14TupleDataChunkENS0_13arena_deleterIS2_E
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_14TupleDataChunkENS0_13arena_deleterIS2_EELb0EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_14TupleDataChunkENS0_13arena_deleterIS2_EELb0EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
-  %9 = sub i64 %i.bl, %i.bm
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.bl, -8
+  %10 = sub i64 %9, %i.bm                         ; 2 uses
   %i.by = lshr i64 %10, 3
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 56
@@ -608,8 +608,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb18TupleDataChunkPartEESaIS3_EE12_M_c
 
 .lr.ph.i.i.i.i.i.i92.preheader:                   ; preds = %_ZNKSt6vectorISt17reference_wrapperIN6duckdb18TupleDataChunkPartEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.jl = ptrtoaddr ptr %i.jj to i64
-  %11 = sub i64 %i.iz, %i.ja
-  %12 = add i64 %11, -8                           ; 2 uses
+  %11 = add i64 %i.iz, -8
+  %12 = sub i64 %11, %i.ja                        ; 2 uses
   %i.jm = lshr i64 %12, 3
   %i.jn = add nuw nsw i64 %i.jm, 1                ; 2 uses
   %min.iters.check185 = icmp ult i64 %12, 24
@@ -867,8 +867,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_18TupleDataChunkPartENS0_13arena_deleterI
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_18TupleDataChunkPartENS0_13arena_deleterIS2_EELb0EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_18TupleDataChunkPartENS0_13arena_deleterIS2_EELb0EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i
-  %3 = sub i64 %i.aq, %i.ar
-  %4 = add i64 %3, -8                             ; 2 uses
+  %3 = add i64 %i.aq, -8
+  %4 = sub i64 %3, %i.ar                          ; 2 uses
   %i.bp = lshr i64 %4, 3
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 152
@@ -1271,8 +1271,8 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb18TupleDataChunkPartEESaIS3_EE12_M_c
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorISt17reference_wrapperIN6duckdb18TupleDataChunkPartEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.bg = ptrtoaddr ptr %i.be to i64
-  %7 = sub i64 %i.au, %i.av
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.au, -8
+  %8 = sub i64 %7, %i.av                          ; 2 uses
   %i.bh = lshr i64 %8, 3
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 24
@@ -1675,8 +1675,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1E
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc32
-  %7 = sub i64 %i.bm, %i.bn
-  %8 = add i64 %7, -8                             ; 2 uses
+  %7 = add i64 %i.bm, -8
+  %8 = sub i64 %7, %i.bn                          ; 2 uses
   %i.by = lshr i64 %8, 3
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check178 = icmp ult i64 %8, 56
@@ -1835,8 +1835,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i.i41, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i42.preheader
 
 .lr.ph.i.i.i.i.i.i.i42.preheader:                 ; preds = %.noexc49
-  %9 = sub i64 %i.cz, %i.da
-  %10 = add i64 %9, -8                            ; 2 uses
+  %9 = add i64 %i.cz, -8
+  %10 = sub i64 %9, %i.da                         ; 2 uses
   %i.dl = lshr i64 %10, 3
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 56
@@ -2024,8 +2024,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i
-  %11 = sub i64 %i.ej, %i.ek
-  %12 = add i64 %11, -8                           ; 2 uses
+  %11 = add i64 %i.ej, -8
+  %12 = sub i64 %11, %i.ek                        ; 2 uses
   %i.ev = lshr i64 %12, 3
   %i.ew = add nuw nsw i64 %i.ev, 1                ; 2 uses
   %min.iters.check226 = icmp ult i64 %12, 56
@@ -2151,8 +2151,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1E
   br i1 %.not10.i.i.i.i.i.i57, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i, label %.lr.ph.i.i.i.i.i.i58.preheader
 
 .lr.ph.i.i.i.i.i.i58.preheader:                   ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i
-  %13 = sub i64 %i.fr, %i.fs
-  %14 = add i64 %13, -8                           ; 2 uses
+  %13 = add i64 %i.fr, -8
+  %14 = sub i64 %13, %i.fs                        ; 2 uses
   %i.gd = lshr i64 %14, 3
   %i.ge = add nuw nsw i64 %i.gd, 1                ; 2 uses
   %min.iters.check202 = icmp ult i64 %14, 56
@@ -2555,10 +2555,9 @@ bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !354
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !244  ; 9 uses
-  %2 = ptrtoint ptr %i.e to i64                   ; 2 uses
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !244  ; 8 uses
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 4 uses
   %i.h = sub i64 %i.f, %i.g
   %i.i = ashr exact i64 %i.h, 3
   %i.j = icmp ult i64 %i.i, %1
@@ -2609,7 +2608,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_dele
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEENS0_19arena_stl_allocatorIS5_EEE11_M_allocateEm.exit.i
   %i.af = add i64 %i.m, -8
-  %i.ag = sub i64 %i.af, %2                       ; 2 uses
+  %i.ag = sub i64 %i.af, %i.g                     ; 2 uses
   %i.ah = lshr i64 %i.ag, 3
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ag, 200
@@ -2617,7 +2616,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_dele
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.aj = add i64 %i.m, -8
-  %i.ak = sub i64 %i.aj, %2
+  %i.ak = sub i64 %i.aj, %i.g
   %i.al = and i64 %i.ak, -8                       ; 2 uses
   %i.am = getelementptr i8, ptr %i.ac, i64 %i.z
   %i.an = getelementptr i8, ptr %i.am, i64 %i.al
@@ -3020,8 +3019,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1E
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc36
-  %8 = sub i64 %i.as, %i.at
-  %9 = add i64 %8, -8                             ; 2 uses
+  %8 = add i64 %i.as, -8
+  %9 = sub i64 %8, %i.at                          ; 2 uses
   %i.be = lshr i64 %9, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check177 = icmp ult i64 %9, 56
@@ -3180,8 +3179,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i.i45, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i46.preheader
 
 .lr.ph.i.i.i.i.i.i.i46.preheader:                 ; preds = %.noexc53
-  %10 = sub i64 %i.cf, %i.cg
-  %11 = add i64 %10, -8                           ; 2 uses
+  %10 = add i64 %i.cf, -8
+  %11 = sub i64 %10, %i.cg                        ; 2 uses
   %i.cr = lshr i64 %11, 3
   %i.cs = add nuw nsw i64 %i.cr, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %11, 56
@@ -3369,8 +3368,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i, label %.lr.ph.i.i.i.i.i.i56.preheader
 
 .lr.ph.i.i.i.i.i.i56.preheader:                   ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_6VectorESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i
-  %12 = sub i64 %i.dp, %i.dq
-  %13 = add i64 %12, -8                           ; 2 uses
+  %12 = add i64 %i.dp, -8
+  %13 = sub i64 %12, %i.dq                        ; 2 uses
   %i.eb = lshr i64 %13, 3
   %i.ec = add nuw nsw i64 %i.eb, 1                ; 2 uses
   %min.iters.check225 = icmp ult i64 %13, 56
@@ -3496,8 +3495,8 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1E
   br i1 %.not10.i.i.i.i.i.i61, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i, label %.lr.ph.i.i.i.i.i.i62.preheader
 
 .lr.ph.i.i.i.i.i.i62.preheader:                   ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_11VectorCacheESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i
-  %14 = sub i64 %i.ex, %i.ey
-  %15 = add i64 %14, -8                           ; 2 uses
+  %14 = add i64 %i.ex, -8
+  %15 = sub i64 %14, %i.ey                        ; 2 uses
   %i.fj = lshr i64 %15, 3
   %i.fk = add nuw nsw i64 %i.fj, 1                ; 2 uses
   %min.iters.check201 = icmp ult i64 %15, 56
@@ -3900,7 +3899,6 @@ bb.l:                                             ; preds = %_ZN6duckdb10shared_
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEENS0_19arena_stl_allocatorIS5_EEE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !243  ; 5 uses
@@ -3922,7 +3920,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2
   %i.k = icmp ult i64 %i.j, %i.i
   %i.l = tail call i64 @llvm.umin.i64(i64 %i.j, i64 1152921504606846975)
   %i.m = select i1 %i.k, i64 1152921504606846975, i64 %i.l ; 3 uses
-  %i.n = ptrtoint ptr %1 to i64
+  %i.n = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.o = sub i64 %i.n, %i.f
   %.not.i = icmp ne i64 %i.m, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -3969,7 +3967,7 @@ _ZNSt16allocator_traitsIN6duckdb19arena_stl_allocatorINS0_10unique_ptrINS0_16Tup
   br i1 %.not13.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEES6_NS0_19arena_stl_allocatorIS5_EEET0_T_SA_S9_RT1_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt16allocator_traitsIN6duckdb19arena_stl_allocatorINS0_10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS3_EELb0EEEEEE8allocateERS7_m.exit.i
-  %i.ai = add i64 %3, -8
+  %i.ai = add i64 %i.n, -8
   %i.aj = sub i64 %i.ai, %i.f                     ; 2 uses
   %i.ak = lshr i64 %i.aj, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
@@ -3977,7 +3975,7 @@ _ZNSt16allocator_traitsIN6duckdb19arena_stl_allocatorINS0_10unique_ptrINS0_16Tup
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader87, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %i.am = add i64 %3, -8
+  %i.am = add i64 %i.n, -8
   %i.an = sub i64 %i.am, %i.f
   %i.ao = and i64 %i.an, -8                       ; 2 uses
   %i.ap = getelementptr i8, ptr %i.ad, i64 %i.aa
@@ -4043,7 +4041,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSe
 
 .lr.ph.i.i29.preheader:                           ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEES6_NS0_19arena_stl_allocatorIS5_EEET0_T_SA_S9_RT1_.exit
   %i.be = add i64 %i.e, -8
-  %i.bf = sub i64 %i.be, %3                       ; 2 uses
+  %i.bf = sub i64 %i.be, %i.n                     ; 2 uses
   %i.bg = lshr i64 %i.bf, 3
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check71 = icmp ult i64 %i.bf, 184
@@ -4051,7 +4049,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSe
 
 vector.memcheck64:                                ; preds = %.lr.ph.i.i29.preheader
   %i.bi = add i64 %i.e, -8
-  %i.bj = sub i64 %i.bi, %3
+  %i.bj = sub i64 %i.bi, %i.n
   %i.bk = and i64 %i.bj, -8                       ; 2 uses
   %i.bl = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.bk
   %scevgep65 = getelementptr i8, ptr %i.bl, i64 16

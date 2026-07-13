@@ -204,7 +204,7 @@ parser_lex_callback.exit2272:                     ; preds = %bb.aa, %bb.ab
   %i.dd = load ptr, ptr %i.v, align 8, !tbaa !166 ; 2 uses
   %i.de = getelementptr i8, ptr %i.dd, i64 1      ; 5 uses
   %i.df = load ptr, ptr %i.d, align 8, !tbaa !76  ; 10 uses
-  %i.dg = ptrtoint ptr %i.df to i64               ; 6 uses
+  %i.dg = ptrtoint ptr %i.df to i64               ; 3 uses
   %i.dh = ptrtoint ptr %i.de to i64
   %i.di = sub i64 %i.dg, %i.dh
   %i.dj = icmp slt i64 %i.di, 8
@@ -261,7 +261,7 @@ parser_lex_magic_comment_emacs_marker.exit.i:     ; preds = %bb.af
   %i.ed = load i8, ptr %i.ac, align 1, !tbaa !43, !range !45, !noundef !46
   %i.ee = trunc nuw i8 %i.ed to i1
   %i.ef = load ptr, ptr %i.x, align 8, !tbaa !40
-  %i.eg = call ptr @pm_memchr(ptr noundef %.01420.i264.i, i32 noundef 45, i64 noundef %i.ec, i1 noundef zeroext %i.ee, ptr noundef %i.ef) #27 ; 8 uses
+  %i.eg = call ptr @pm_memchr(ptr noundef %.01420.i264.i, i32 noundef 45, i64 noundef %i.ec, i1 noundef zeroext %i.ee, ptr noundef %i.ef) #27 ; 7 uses
   %.not17.i265.i = icmp eq ptr %i.eg, null
   br i1 %.not17.i265.i, label %parser_lex_magic_comment.exit.thread, label %bb.ah
 
@@ -280,7 +280,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.el = getelementptr i8, ptr %i.eg, i64 2
   %i.em = load i8, ptr %i.el, align 1, !tbaa !67
   %i.en = icmp eq i8 %i.em, 45
-  br i1 %i.en, label %parser_lex_magic_comment_emacs_marker.exit269.loopexit.i, label %bb.ak
+  br i1 %i.en, label %parser_lex_magic_comment_emacs_marker.exit269.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.ah
   %i.eo = getelementptr i8, ptr %i.eg, i64 1
@@ -288,29 +288,25 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
   %.not.i267.i = icmp ugt ptr %i.ep, %i.df
   br i1 %.not.i267.i, label %parser_lex_magic_comment.exit.thread, label %.lr.ph.i263.i, !llvm.loop !176
 
-parser_lex_magic_comment_emacs_marker.exit269.loopexit.i: ; preds = %bb.aj
-  %.pre.i = ptrtoint ptr %i.eg to i64
-  br label %parser_lex_magic_comment_emacs_marker.exit269.i
-
-parser_lex_magic_comment_emacs_marker.exit269.i:  ; preds = %bb.ag, %.lr.ph.i.i, %parser_lex_magic_comment_emacs_marker.exit269.loopexit.i, %bb.ac
-  %.0219386.pre-phi.i = phi i64 [ %i.dg, %bb.ac ], [ %.pre.i, %parser_lex_magic_comment_emacs_marker.exit269.loopexit.i ], [ %i.dg, %.lr.ph.i.i ], [ %i.dg, %bb.ag ] ; 9 uses
-  %.not.not288.i = phi i1 [ true, %bb.ac ], [ false, %parser_lex_magic_comment_emacs_marker.exit269.loopexit.i ], [ true, %.lr.ph.i.i ], [ true, %bb.ag ] ; 2 uses
-  %.0219.i.a = phi ptr [ %i.df, %bb.ac ], [ %i.eg, %parser_lex_magic_comment_emacs_marker.exit269.loopexit.i ], [ %i.df, %.lr.ph.i.i ], [ %i.df, %bb.ag ] ; 16 uses
-  %.0218.i = phi ptr [ %i.de, %bb.ac ], [ %i.dr, %parser_lex_magic_comment_emacs_marker.exit269.loopexit.i ], [ %i.de, %.lr.ph.i.i ], [ %i.de, %bb.ag ]
+parser_lex_magic_comment_emacs_marker.exit269.i:  ; preds = %bb.ag, %.lr.ph.i.i, %bb.aj, %bb.ac
+  %.not.not288.i = phi i1 [ false, %bb.aj ], [ true, %bb.ac ], [ true, %.lr.ph.i.i ], [ true, %bb.ag ] ; 2 uses
+  %.0219.i = phi ptr [ %i.eg, %bb.aj ], [ %i.df, %bb.ac ], [ %i.df, %.lr.ph.i.i ], [ %i.df, %bb.ag ] ; 17 uses
+  %.0219.i.a = phi ptr [ %i.dr, %bb.aj ], [ %i.de, %bb.ac ], [ %i.de, %.lr.ph.i.i ], [ %i.de, %bb.ag ]
+  %.0219386.i = ptrtoaddr ptr %.0219.i to i64     ; 9 uses
   br label %.outer.i
 
 .outer.i:                                         ; preds = %.thread.i, %parser_lex_magic_comment_emacs_marker.exit269.i
-  %.0227.ph.i = phi ptr [ %.11.i, %.thread.i ], [ %.0218.i, %parser_lex_magic_comment_emacs_marker.exit269.i ] ; 5 uses
+  %.0227.ph.i = phi ptr [ %.11.i, %.thread.i ], [ %.0219.i.a, %parser_lex_magic_comment_emacs_marker.exit269.i ] ; 5 uses
   %.0213.ph.i = phi i1 [ %.1214294.i, %.thread.i ], [ true, %parser_lex_magic_comment_emacs_marker.exit269.i ] ; 7 uses
-  %i.eq = icmp ult ptr %.0227.ph.i, %.0219.i.a    ; 2 uses
+  %i.eq = icmp ult ptr %.0227.ph.i, %.0219.i      ; 2 uses
   br i1 %.not.not288.i, label %.outer.i.split.us, label %.outer.i.split
 
 .outer.i.split.us:                                ; preds = %.outer.i
   br i1 %i.eq, label %.preheader319.preheader.i.us, label %parser_lex_magic_comment.exit
 
 .preheader319.preheader.i.us:                     ; preds = %.outer.i.split.us
-  %.0227387.i.us = ptrtoint ptr %.0227.ph.i to i64
-  %scevgep.i.us = getelementptr i8, ptr %.0227.ph.i, i64 %.0219386.pre-phi.i
+  %.0227387.i.us = ptrtoaddr ptr %.0227.ph.i to i64
+  %scevgep.i.us = getelementptr i8, ptr %.0227.ph.i, i64 %.0219386.i
   %i.er = sub i64 0, %.0227387.i.us
   %scevgep388.i.us = getelementptr i8, ptr %scevgep.i.us, i64 %i.er
   br label %.preheader319.i.us
@@ -337,11 +333,11 @@ pm_char_is_magic_comment_key_delimiter.exit.i.us: ; preds = %.preheader319.i.us
 .critedge.i.us:                                   ; preds = %.critedge2.i.us, %pm_char_is_magic_comment_key_delimiter.exit.i.us
   %.1228.lcssa.i.us = phi ptr [ %i.eu, %.critedge2.i.us ], [ %.1228327.i.us, %pm_char_is_magic_comment_key_delimiter.exit.i.us ] ; 6 uses
   %.1228.lcssa390.i.us = ptrtoint ptr %.1228.lcssa.i.us to i64 ; 3 uses
-  %i.ev = icmp ult ptr %.1228.lcssa.i.us, %.0219.i.a
+  %i.ev = icmp ult ptr %.1228.lcssa.i.us, %.0219.i
   br i1 %i.ev, label %.lr.ph.preheader.i.us, label %.critedge4.i.us
 
 .lr.ph.preheader.i.us:                            ; preds = %.critedge.i.us
-  %scevgep389.i.us = getelementptr i8, ptr %.1228.lcssa.i.us, i64 %.0219386.pre-phi.i
+  %scevgep389.i.us = getelementptr i8, ptr %.1228.lcssa.i.us, i64 %.0219386.i
   %i.ew = sub i64 0, %.1228.lcssa390.i.us
   %scevgep391.i.us = getelementptr i8, ptr %scevgep389.i.us, i64 %i.ew
   br label %.lr.ph.i.us
@@ -371,13 +367,13 @@ bb.al:                                            ; preds = %pm_char_is_magic_co
   br label %.critedge4.i.us
 
 .critedge4.i.us:                                  ; preds = %.critedge4.loopexit.i.us, %.critedge.i.us
-  %.2229.lcssa394.pre-phi.i.us = phi i64 [ %.pre409.i.us, %.critedge4.loopexit.i.us ], [ %.1228.lcssa390.i.us, %.critedge.i.us ] ; 3 uses
+  %.2229.lcssa394.pre-phi.i.us = phi i64 [ %.pre409.i.us, %.critedge4.loopexit.i.us ], [ %.1228.lcssa390.i.us, %.critedge.i.us ] ; 2 uses
   %.2229.lcssa.i.us = phi ptr [ %.2229.lcssa.ph.i.us, %.critedge4.loopexit.i.us ], [ %.1228.lcssa.i.us, %.critedge.i.us ] ; 5 uses
-  %i.fa = icmp ult ptr %.2229.lcssa.i.us, %.0219.i.a
+  %i.fa = icmp ult ptr %.2229.lcssa.i.us, %.0219.i
   br i1 %i.fa, label %.lr.ph339.preheader.i.us, label %.critedge6.i.us
 
 .lr.ph339.preheader.i.us:                         ; preds = %.critedge4.i.us
-  %scevgep393.i.us = getelementptr i8, ptr %.2229.lcssa.i.us, i64 %.0219386.pre-phi.i
+  %scevgep393.i.us = getelementptr i8, ptr %.2229.lcssa.i.us, i64 %.0219386.i
   %i.fb = sub i64 0, %.2229.lcssa394.pre-phi.i.us
   %scevgep395.i.us = getelementptr i8, ptr %scevgep393.i.us, i64 %i.fb
   br label %.lr.ph339.i.us
@@ -386,22 +382,16 @@ bb.al:                                            ; preds = %pm_char_is_magic_co
   %.3230338.i.us = phi ptr [ %i.fe, %bb.am ], [ %.2229.lcssa.i.us, %.lr.ph339.preheader.i.us ] ; 3 uses
   %i.fc = load i8, ptr %.3230338.i.us, align 1, !tbaa !67
   %i.fd = call zeroext i1 @pm_char_is_whitespace(i8 noundef zeroext %i.fc) #27
-  br i1 %i.fd, label %bb.am, label %.critedge6.loopexit.i.us
+  br i1 %i.fd, label %bb.am, label %.critedge6.i.us
 
 bb.am:                                            ; preds = %.lr.ph339.i.us
   %i.fe = getelementptr i8, ptr %.3230338.i.us, i64 1 ; 3 uses
   %exitcond396.not.i.us = icmp eq ptr %i.fe, %scevgep395.i.us
-  br i1 %exitcond396.not.i.us, label %.critedge6.loopexit.i.us, label %.lr.ph339.i.us, !llvm.loop !179
+  br i1 %exitcond396.not.i.us, label %.critedge6.i.us, label %.lr.ph339.i.us, !llvm.loop !179
 
-.critedge6.loopexit.i.us:                         ; preds = %bb.am, %.lr.ph339.i.us
-  %.3230.lcssa.ph.i.us = phi ptr [ %.3230338.i.us, %.lr.ph339.i.us ], [ %i.fe, %bb.am ] ; 2 uses
-  %.pre410.i.us = ptrtoint ptr %.3230.lcssa.ph.i.us to i64
-  br label %.critedge6.i.us
-
-.critedge6.i.us:                                  ; preds = %.critedge6.loopexit.i.us, %.critedge4.i.us
-  %.3230.lcssa398.pre-phi.i.us = phi i64 [ %.pre410.i.us, %.critedge6.loopexit.i.us ], [ %.2229.lcssa394.pre-phi.i.us, %.critedge4.i.us ]
-  %.3230.lcssa.i.us = phi ptr [ %.3230.lcssa.ph.i.us, %.critedge6.loopexit.i.us ], [ %.2229.lcssa.i.us, %.critedge4.i.us ] ; 3 uses
-  %i.ff = icmp eq ptr %.3230.lcssa.i.us, %.0219.i.a
+.critedge6.i.us:                                  ; preds = %.lr.ph339.i.us, %bb.am, %.critedge4.i.us
+  %.3230.lcssa.i.us = phi ptr [ %.2229.lcssa.i.us, %.critedge4.i.us ], [ %.3230338.i.us, %.lr.ph339.i.us ], [ %i.fe, %bb.am ] ; 3 uses
+  %i.ff = icmp eq ptr %.3230.lcssa.i.us, %.0219.i
   br i1 %i.ff, label %parser_lex_magic_comment.exit, label %bb.an
 
 bb.an:                                            ; preds = %.critedge6.i.us
@@ -413,13 +403,13 @@ bb.an:                                            ; preds = %.critedge6.i.us
   br i1 %i.eq, label %.preheader319.preheader.i, label %parser_lex_magic_comment.exit
 
 bb.ao:                                            ; preds = %bb.ar
-  %i.fi = icmp ult ptr %.3230.lcssa.i, %.0219.i.a
+  %i.fi = icmp ult ptr %.3230.lcssa.i, %.0219.i
   br i1 %i.fi, label %.preheader319.preheader.i, label %parser_lex_magic_comment.exit
 
 .preheader319.preheader.i:                        ; preds = %.outer.i.split, %bb.ao
   %.0227.i4128 = phi ptr [ %.3230.lcssa.i, %bb.ao ], [ %.0227.ph.i, %.outer.i.split ] ; 3 uses
-  %.0227387.i = ptrtoint ptr %.0227.i4128 to i64
-  %scevgep.i = getelementptr i8, ptr %.0227.i4128, i64 %.0219386.pre-phi.i
+  %.0227387.i = ptrtoaddr ptr %.0227.i4128 to i64
+  %scevgep.i = getelementptr i8, ptr %.0227.i4128, i64 %.0219386.i
   %i.fj = sub i64 0, %.0227387.i
   %scevgep388.i = getelementptr i8, ptr %scevgep.i, i64 %i.fj
   br label %.preheader319.i
@@ -446,11 +436,11 @@ pm_char_is_magic_comment_key_delimiter.exit.i:    ; preds = %.preheader319.i
 .critedge.i:                                      ; preds = %.critedge2.i, %pm_char_is_magic_comment_key_delimiter.exit.i
   %.1228.lcssa.i = phi ptr [ %i.fm, %.critedge2.i ], [ %.1228327.i, %pm_char_is_magic_comment_key_delimiter.exit.i ] ; 6 uses
   %.1228.lcssa390.i = ptrtoint ptr %.1228.lcssa.i to i64 ; 3 uses
-  %i.fn = icmp ult ptr %.1228.lcssa.i, %.0219.i.a
+  %i.fn = icmp ult ptr %.1228.lcssa.i, %.0219.i
   br i1 %i.fn, label %.lr.ph.preheader.i, label %.critedge4.i
 
 .lr.ph.preheader.i:                               ; preds = %.critedge.i
-  %scevgep389.i = getelementptr i8, ptr %.1228.lcssa.i, i64 %.0219386.pre-phi.i
+  %scevgep389.i = getelementptr i8, ptr %.1228.lcssa.i, i64 %.0219386.i
   %i.fo = sub i64 0, %.1228.lcssa390.i
   %scevgep391.i = getelementptr i8, ptr %scevgep389.i, i64 %i.fo
   br label %.lr.ph.i
@@ -480,13 +470,13 @@ bb.ap:                                            ; preds = %pm_char_is_magic_co
   br label %.critedge4.i
 
 .critedge4.i:                                     ; preds = %.critedge4.loopexit.i, %.critedge.i
-  %.2229.lcssa394.pre-phi.i = phi i64 [ %.pre409.i, %.critedge4.loopexit.i ], [ %.1228.lcssa390.i, %.critedge.i ] ; 3 uses
+  %.2229.lcssa394.pre-phi.i = phi i64 [ %.pre409.i, %.critedge4.loopexit.i ], [ %.1228.lcssa390.i, %.critedge.i ] ; 2 uses
   %.2229.lcssa.i = phi ptr [ %.2229.lcssa.ph.i, %.critedge4.loopexit.i ], [ %.1228.lcssa.i, %.critedge.i ] ; 5 uses
-  %i.fs = icmp ult ptr %.2229.lcssa.i, %.0219.i.a
+  %i.fs = icmp ult ptr %.2229.lcssa.i, %.0219.i
   br i1 %i.fs, label %.lr.ph339.preheader.i, label %.critedge6.i
 
 .lr.ph339.preheader.i:                            ; preds = %.critedge4.i
-  %scevgep393.i = getelementptr i8, ptr %.2229.lcssa.i, i64 %.0219386.pre-phi.i
+  %scevgep393.i = getelementptr i8, ptr %.2229.lcssa.i, i64 %.0219386.i
   %i.ft = sub i64 0, %.2229.lcssa394.pre-phi.i
   %scevgep395.i = getelementptr i8, ptr %scevgep393.i, i64 %i.ft
   br label %.lr.ph339.i
@@ -495,22 +485,16 @@ bb.ap:                                            ; preds = %pm_char_is_magic_co
   %.3230338.i = phi ptr [ %i.fw, %bb.aq ], [ %.2229.lcssa.i, %.lr.ph339.preheader.i ] ; 3 uses
   %i.fu = load i8, ptr %.3230338.i, align 1, !tbaa !67
   %i.fv = call zeroext i1 @pm_char_is_whitespace(i8 noundef zeroext %i.fu) #27
-  br i1 %i.fv, label %bb.aq, label %.critedge6.loopexit.i
+  br i1 %i.fv, label %bb.aq, label %.critedge6.i
 
 bb.aq:                                            ; preds = %.lr.ph339.i
   %i.fw = getelementptr i8, ptr %.3230338.i, i64 1 ; 3 uses
   %exitcond396.not.i = icmp eq ptr %i.fw, %scevgep395.i
-  br i1 %exitcond396.not.i, label %.critedge6.loopexit.i, label %.lr.ph339.i, !llvm.loop !179
+  br i1 %exitcond396.not.i, label %.critedge6.i, label %.lr.ph339.i, !llvm.loop !179
 
-.critedge6.loopexit.i:                            ; preds = %bb.aq, %.lr.ph339.i
-  %.3230.lcssa.ph.i = phi ptr [ %.3230338.i, %.lr.ph339.i ], [ %i.fw, %bb.aq ] ; 2 uses
-  %.pre410.i = ptrtoint ptr %.3230.lcssa.ph.i to i64
-  br label %.critedge6.i
-
-.critedge6.i:                                     ; preds = %.critedge6.loopexit.i, %.critedge4.i
-  %.3230.lcssa398.pre-phi.i = phi i64 [ %.pre410.i, %.critedge6.loopexit.i ], [ %.2229.lcssa394.pre-phi.i, %.critedge4.i ]
-  %.3230.lcssa.i = phi ptr [ %.3230.lcssa.ph.i, %.critedge6.loopexit.i ], [ %.2229.lcssa.i, %.critedge4.i ] ; 5 uses
-  %i.fx = icmp eq ptr %.3230.lcssa.i, %.0219.i.a
+.critedge6.i:                                     ; preds = %bb.aq, %.lr.ph339.i, %.critedge4.i
+  %.3230.lcssa.i = phi ptr [ %.2229.lcssa.i, %.critedge4.i ], [ %.3230338.i, %.lr.ph339.i ], [ %i.fw, %bb.aq ] ; 5 uses
+  %i.fx = icmp eq ptr %.3230.lcssa.i, %.0219.i
   br i1 %i.fx, label %parser_lex_magic_comment.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %.critedge6.i
@@ -519,19 +503,19 @@ bb.ar:                                            ; preds = %.critedge6.i
   br i1 %i.fz, label %.preheader318.i.preheader, label %bb.ao
 
 .preheader318.i.preheader:                        ; preds = %bb.ar, %bb.an
-  %.us-phi4122 = phi i64 [ %.3230.lcssa398.pre-phi.i.us, %bb.an ], [ %.3230.lcssa398.pre-phi.i, %bb.ar ]
-  %.us-phi4123.a = phi ptr [ %.3230.lcssa.i.us, %bb.an ], [ %.3230.lcssa.i, %bb.ar ] ; 4 uses
+  %.us-phi4123.a = phi ptr [ %.3230.lcssa.i.us, %bb.an ], [ %.3230.lcssa.i, %bb.ar ] ; 5 uses
   %.us-phi4124.a = phi i64 [ %.2229.lcssa394.pre-phi.i.us, %bb.an ], [ %.2229.lcssa394.pre-phi.i, %bb.ar ] ; 3 uses
   %.us-phi4125.a = phi ptr [ %.2229.lcssa.i.us, %bb.an ], [ %.2229.lcssa.i, %bb.ar ]
   %.us-phi4126.a = phi ptr [ %.1228.lcssa.i.us, %bb.an ], [ %.1228.lcssa.i, %bb.ar ] ; 4 uses
   %.us-phi4127 = phi i64 [ %.1228.lcssa390.i.us, %bb.an ], [ %.1228.lcssa390.i, %bb.ar ] ; 3 uses
+  %.3230.lcssa398.le.i = ptrtoaddr ptr %.us-phi4123.a to i64
   %.4231.i6009 = getelementptr i8, ptr %.us-phi4123.a, i64 1 ; 3 uses
-  %i.ga = icmp ult ptr %.4231.i6009, %.0219.i.a
+  %i.ga = icmp ult ptr %.4231.i6009, %.0219.i
   br i1 %i.ga, label %.lr.ph6012, label %.critedge8.i
 
 .preheader318.i:                                  ; preds = %.lr.ph6012
   %.4231.i = getelementptr i8, ptr %.4231.i6011, i64 1 ; 3 uses
-  %i.gb = icmp ult ptr %.4231.i, %.0219.i.a
+  %i.gb = icmp ult ptr %.4231.i, %.0219.i
   br i1 %i.gb, label %.lr.ph6012, label %.critedge8.i, !llvm.loop !180
 
 .lr.ph6012:                                       ; preds = %.preheader318.i.preheader, %.preheader318.i
@@ -548,7 +532,7 @@ bb.ar:                                            ; preds = %.critedge6.i
   %.3230.pn.i.lcssa = phi ptr [ %.3230.pn.i6010, %..critedge8.i_crit_edge ], [ %.us-phi4123.a, %.preheader318.i.preheader ], [ %.4231.i6011, %.preheader318.i ]
   %.4231.i.lcssa = phi ptr [ %.4231.i6011, %..critedge8.i_crit_edge ], [ %.4231.i6009, %.preheader318.i.preheader ], [ %.4231.i, %.preheader318.i ] ; 10 uses
   %.lcssa5617 = phi i1 [ true, %..critedge8.i_crit_edge ], [ false, %.preheader318.i.preheader ], [ false, %.preheader318.i ]
-  %i.ge = icmp eq ptr %.4231.i.lcssa, %.0219.i.a
+  %i.ge = icmp eq ptr %.4231.i.lcssa, %.0219.i
   br i1 %i.ge, label %parser_lex_magic_comment.exit, label %bb.as
 
 bb.as:                                            ; preds = %.critedge8.i
@@ -560,14 +544,14 @@ bb.as:                                            ; preds = %.critedge8.i
   br i1 %.lcssa5617, label %.lr.ph344.preheader.i, label %.critedge12.i
 
 .lr.ph344.preheader.i:                            ; preds = %.preheader316.i
-  %scevgep397.i = getelementptr i8, ptr %.us-phi4123.a, i64 %.0219386.pre-phi.i
-  %i.gh = sub i64 0, %.us-phi4122
+  %scevgep397.i = getelementptr i8, ptr %.us-phi4123.a, i64 %.0219386.i
+  %i.gh = sub i64 0, %.3230.lcssa398.le.i
   %scevgep399.i = getelementptr i8, ptr %scevgep397.i, i64 %i.gh
   br label %.lr.ph344.i
 
 bb.at:                                            ; preds = %bb.as
   %i.gi = getelementptr i8, ptr %.3230.pn.i.lcssa, i64 2 ; 7 uses
-  %i.gj = icmp ult ptr %i.gi, %.0219.i.a
+  %i.gj = icmp ult ptr %i.gi, %.0219.i
   br i1 %i.gj, label %.lr.ph353.i, label %.critedge12.i
 
 .lr.ph353.i:                                      ; preds = %bb.at, %bb.av
@@ -580,14 +564,14 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %.lr.ph353.i
   %i.gl = getelementptr i8, ptr %.5232352.i, i64 1 ; 2 uses
-  %i.gm = icmp ult ptr %i.gl, %.0219.i.a
+  %i.gm = icmp ult ptr %i.gl, %.0219.i
   %spec.select.i = select i1 %i.gm, ptr %i.gl, ptr %.5232352.i
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %.lr.ph353.i
   %.6.i = phi ptr [ %.5232352.i, %.lr.ph353.i ], [ %spec.select.i, %bb.au ]
   %i.gn = getelementptr i8, ptr %.6.i, i64 1      ; 4 uses
-  %i.go = icmp ult ptr %i.gn, %.0219.i.a
+  %i.go = icmp ult ptr %i.gn, %.0219.i
   br i1 %i.go, label %.lr.ph353.i, label %.critedge12.i, !llvm.loop !181
 
 .critedge10.i:                                    ; preds = %.lr.ph353.i
@@ -615,15 +599,15 @@ bb.ax:                                            ; preds = %bb.aw
   %.8.i = phi ptr [ %i.gn, %bb.av ], [ %i.gp, %.critedge10.i ], [ %i.gi, %bb.at ], [ %.4231.i.lcssa, %.preheader316.i ], [ %i.gs, %bb.ax ], [ %.7343.i, %.lr.ph344.i ], [ %.7343.i, %.lr.ph344.i ], [ %.7343.i, %bb.aw ] ; 8 uses
   %.0226.i = phi ptr [ %i.gi, %bb.av ], [ %i.gi, %.critedge10.i ], [ %i.gi, %bb.at ], [ %.4231.i.lcssa, %.preheader316.i ], [ %.4231.i.lcssa, %.lr.ph344.i ], [ %.4231.i.lcssa, %.lr.ph344.i ], [ %.4231.i.lcssa, %bb.aw ], [ %.4231.i.lcssa, %bb.ax ] ; 14 uses
   %.0225.i = phi ptr [ %i.gn, %bb.av ], [ %.5232352.i, %.critedge10.i ], [ %i.gi, %bb.at ], [ %.4231.i.lcssa, %.preheader316.i ], [ %i.gs, %bb.ax ], [ %.7343.i, %.lr.ph344.i ], [ %.7343.i, %.lr.ph344.i ], [ %.7343.i, %bb.aw ] ; 2 uses
-  %.8402.i = ptrtoint ptr %.8.i to i64            ; 2 uses
-  %i.gt = icmp ult ptr %.8.i, %.0219.i.a          ; 2 uses
+  %.8402.i = ptrtoaddr ptr %.8.i to i64           ; 2 uses
+  %i.gt = icmp ult ptr %.8.i, %.0219.i            ; 2 uses
   br i1 %.not.not288.i, label %.preheader.i, label %.preheader315.i
 
 .preheader315.i:                                  ; preds = %.critedge12.i
   br i1 %i.gt, label %.lr.ph356.preheader.i, label %.critedge14.i
 
 .lr.ph356.preheader.i:                            ; preds = %.preheader315.i
-  %scevgep401.i = getelementptr i8, ptr %.8.i, i64 %.0219386.pre-phi.i
+  %scevgep401.i = getelementptr i8, ptr %.8.i, i64 %.0219386.i
   %i.gu = sub i64 0, %.8402.i
   %scevgep403.i = getelementptr i8, ptr %scevgep401.i, i64 %i.gu
   br label %.lr.ph356.i
@@ -632,7 +616,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.gt, label %.lr.ph361.preheader.i, label %.critedge18.i
 
 .lr.ph361.preheader.i:                            ; preds = %.preheader.i
-  %scevgep405.i = getelementptr i8, ptr %.8.i, i64 %.0219386.pre-phi.i
+  %scevgep405.i = getelementptr i8, ptr %.8.i, i64 %.0219386.i
   %i.gv = sub i64 0, %.8402.i
   %scevgep406.i = getelementptr i8, ptr %scevgep405.i, i64 %i.gv
   br label %.lr.ph361.i
@@ -665,7 +649,7 @@ bb.az:                                            ; preds = %.lr.ph361.i
 
 .critedge18.i:                                    ; preds = %bb.az, %.lr.ph361.i, %.preheader.i
   %.10.lcssa.i = phi ptr [ %.8.i, %.preheader.i ], [ %.10360.i, %.lr.ph361.i ], [ %i.hc, %bb.az ] ; 2 uses
-  %.not249.i = icmp eq ptr %.10.lcssa.i, %.0219.i.a
+  %.not249.i = icmp eq ptr %.10.lcssa.i, %.0219.i
   br i1 %.not249.i, label %.critedge14.i, label %parser_lex_magic_comment.exit.thread
 
 .critedge14.i:                                    ; preds = %.critedge16.i, %bb.ay, %.critedge18.i, %.preheader315.i
@@ -885,8 +869,8 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %i.jv, label %.lr.ph369.preheader.i, label %.critedge20.i
 
 .lr.ph369.preheader.i:                            ; preds = %bb.cc
-  %8 = ptrtoint ptr %i.ju to i64
-  %9 = ptrtoint ptr %i.jt to i64
+  %8 = ptrtoaddr ptr %i.ju to i64
+  %9 = ptrtoaddr ptr %i.jt to i64
   %i.jw = sub i64 %8, %9
   %scevgep408.i = getelementptr i8, ptr %i.jt, i64 %i.jw
   br label %.lr.ph369.i
@@ -1289,22 +1273,18 @@ peek.exit.i2513:                                  ; preds = %peek.exit.i2509
   br label %bb.js
 
 bb.js:                                            ; preds = %.sink.split, %match.exit2502.thread, %peek.exit.i2513
-  %.promoted = phi ptr [ %.val3.i2512, %match.exit2502.thread ], [ %.val3.i2512, %peek.exit.i2513 ], [ %i.ags, %.sink.split ] ; 12 uses
+  %.promoted = phi ptr [ %.val3.i2512, %match.exit2502.thread ], [ %.val3.i2512, %peek.exit.i2513 ], [ %i.ags, %.sink.split ] ; 13 uses
   %i.agt = phi i1 [ true, %match.exit2502.thread ], [ true, %peek.exit.i2513 ], [ false, %.sink.split ] ; 2 uses
   %.01870 = phi i32 [ 0, %match.exit2502.thread ], [ 0, %peek.exit.i2513 ], [ %.01870.ph, %.sink.split ] ; 4 uses
   %.not2014 = icmp ult ptr %.promoted, %i.bu
   br i1 %.not2014, label %bb.jt, label %.critedge2056
 
 bb.jt:                                            ; preds = %bb.js
-  br i1 %i.agt, label %bb.ju, label %.lr.ph4141.preheader
-
-.lr.ph4141.preheader:                             ; preds = %bb.jt
-  %.promoted4520 = ptrtoint ptr %.promoted to i64 ; 4 uses
-  br label %.lr.ph4141
+  br i1 %i.agt, label %bb.ju, label %.lr.ph4141
 
 bb.ju:                                            ; preds = %bb.jt
   %i.agu = ptrtoint ptr %i.bu to i64
-  %i.agv = ptrtoint ptr %.promoted to i64         ; 3 uses
+  %i.agv = ptrtoint ptr %.promoted to i64
   %i.agw = sub i64 %i.agu, %i.agv
   %i.agx = call fastcc i64 @char_is_identifier(ptr noundef nonnull %0, ptr noundef %.promoted, i64 noundef %i.agw) ; 2 uses
   %i.agy = icmp eq i64 %i.agx, 0
@@ -1323,7 +1303,8 @@ bb.jv:                                            ; preds = %bb.ju
 
 .critedge19.thread:                               ; preds = %bb.jv
   %i.ahf = ptrtoint ptr %i.aha to i64
-  %i.ahg = sub i64 %i.ahf, %i.agv
+  %10 = ptrtoint ptr %.promoted to i64
+  %i.ahg = sub i64 %i.ahf, %10
   br label %bb.kg
 
 .lr.ph4145:                                       ; preds = %bb.jv, %char_is_identifier.exit.thread
@@ -1395,8 +1376,8 @@ char_is_identifier.exit.thread:                   ; preds = %bb.kb, %bb.jw, %bb.
   %i.aij = icmp slt i64 %i.aii, 1
   br i1 %i.aij, label %.critedge19.loopexit, label %.lr.ph4145, !llvm.loop !205
 
-.lr.ph4141:                                       ; preds = %.lr.ph4141.preheader, %.critedge2052
-  %i.aik = phi ptr [ %i.ain, %.critedge2052 ], [ %.promoted, %.lr.ph4141.preheader ] ; 5 uses
+.lr.ph4141:                                       ; preds = %bb.jt, %.critedge2052
+  %i.aik = phi ptr [ %i.ain, %.critedge2052 ], [ %.promoted, %bb.jt ] ; 5 uses
   %i.ail = load i8, ptr %i.aik, align 1, !tbaa !67
   %.fr3572 = freeze i8 %i.ail                     ; 2 uses
   %i.aim = zext i8 %.fr3572 to i32
@@ -1420,25 +1401,25 @@ switch.early.test:                                ; preds = %.lr.ph4141
   br label %.critedge19
 
 .critedge19:                                      ; preds = %.critedge2052, %.lr.ph4141, %switch.early.test, %switch.early.test, %.critedge19.loopexit
-  %.pre-phi = phi i64 [ %i.agv, %.critedge19.loopexit ], [ %.promoted4520, %switch.early.test ], [ %.promoted4520, %switch.early.test ], [ %.promoted4520, %.lr.ph4141 ], [ %.promoted4520, %.critedge2052 ]
-  %10 = phi ptr [ %.pre4562, %.critedge19.loopexit ], [ %i.ain, %.critedge2052 ], [ %i.aik, %.lr.ph4141 ], [ %i.aik, %switch.early.test ], [ %i.aik, %switch.early.test ] ; 5 uses
-  %i.aio = ptrtoint ptr %10 to i64
-  %i.aip = sub i64 %i.aio, %.pre-phi              ; 4 uses
+  %11 = phi ptr [ %.pre4562, %.critedge19.loopexit ], [ %i.aik, %.lr.ph4141 ], [ %i.aik, %switch.early.test ], [ %i.aik, %switch.early.test ], [ %i.ain, %.critedge2052 ] ; 5 uses
+  %12 = ptrtoint ptr %11 to i64
+  %i.aio = ptrtoint ptr %.promoted to i64
+  %i.aip = sub i64 %12, %i.aio                    ; 4 uses
   br i1 %i.agt, label %bb.kg, label %bb.ke
 
 bb.ke:                                            ; preds = %.critedge19
   %.val.i2516 = load ptr, ptr %i.f, align 8, !tbaa !78
-  %i.aiq = icmp ult ptr %10, %.val.i2516
+  %i.aiq = icmp ult ptr %11, %.val.i2516
   br i1 %i.aiq, label %peek.exit.i2518, label %bb.kf
 
 peek.exit.i2518:                                  ; preds = %bb.ke
   %i.air = trunc nuw nsw i32 %.01870 to i8
-  %i.ais = load i8, ptr %10, align 1, !tbaa !67
+  %i.ais = load i8, ptr %11, align 1, !tbaa !67
   %i.ait = icmp eq i8 %i.ais, %i.air
   br i1 %i.ait, label %match.exit2519, label %bb.kf
 
 match.exit2519:                                   ; preds = %peek.exit.i2518
-  %i.aiu = getelementptr i8, ptr %10, i64 1       ; 2 uses
+  %i.aiu = getelementptr i8, ptr %11, i64 1       ; 2 uses
   store ptr %i.aiu, ptr %i.d, align 8, !tbaa !76
   br label %bb.kg
 
@@ -1450,7 +1431,7 @@ bb.kf:                                            ; preds = %peek.exit.i2518, %b
 
 bb.kg:                                            ; preds = %.critedge19.thread, %match.exit2519, %bb.kf, %.critedge19
   %i.aix = phi i64 [ %i.aip, %match.exit2519 ], [ %i.aip, %bb.kf ], [ %i.aip, %.critedge19 ], [ %i.ahg, %.critedge19.thread ] ; 4 uses
-  %i.aiy = phi ptr [ %i.aiu, %match.exit2519 ], [ %.pre4563, %bb.kf ], [ %10, %.critedge19 ], [ %i.aha, %.critedge19.thread ] ; 2 uses
+  %i.aiy = phi ptr [ %i.aiu, %match.exit2519 ], [ %.pre4563, %bb.kf ], [ %11, %.critedge19 ], [ %i.aha, %.critedge19.thread ] ; 2 uses
   %.01873 = phi i1 [ false, %match.exit2519 ], [ true, %bb.kf ], [ false, %.critedge19 ], [ false, %.critedge19.thread ]
   %i.aiz = getelementptr i8, ptr %0, i64 672
   store ptr null, ptr %i.aiz, align 8, !tbaa !207
@@ -1853,8 +1834,7 @@ bb.alp:                                           ; preds = %lex_mode_pop.exit30
 bb.alq:                                           ; preds = %bb.alj
   %i.dqg = getelementptr i8, ptr %0, i64 304
   %.val2236 = load ptr, ptr %i.dqg, align 8, !tbaa !74
-  %.val2237 = load ptr, ptr %i.dox, align 8, !tbaa !166 ; 14 uses
-  %.val22374505 = ptrtoint ptr %.val2237 to i64   ; 3 uses
+  %.val2237 = load ptr, ptr %i.dox, align 8, !tbaa !166 ; 15 uses
   %i.dqh = icmp eq ptr %.val2237, %.val2236
   br i1 %i.dqh, label %current_token_starts_line.exit3086.thread, label %current_token_starts_line.exit3086
 
@@ -1872,7 +1852,8 @@ current_token_starts_line.exit3086.thread:        ; preds = %bb.alq, %current_to
 
 bb.alr:                                           ; preds = %current_token_starts_line.exit3086.thread
   %i.dqm = ptrtoint ptr %i.dpd to i64
-  %i.dqn = sub i64 %i.dqm, %.val22374505
+  %13 = ptrtoint ptr %.val2237 to i64             ; 2 uses
+  %i.dqn = sub i64 %i.dqm, %13
   %i.dqo = tail call fastcc ptr @next_newline(ptr noundef %.val2237, i64 noundef %i.dqn) ; 5 uses
   %i.dqp = icmp eq ptr %i.dqo, null               ; 2 uses
   br i1 %i.dqp, label %bb.als, label %bb.alt
@@ -1903,9 +1884,9 @@ bb.alu:                                           ; preds = %bb.alt, %bb.als
   br i1 %or.cond, label %.lr.ph.preheader, label %.critedge42
 
 .lr.ph.preheader:                                 ; preds = %bb.alu
-  %.018664504 = ptrtoint ptr %.01866 to i64
-  %i.drb = add i64 %i.dpg, %.val22374505
-  %i.drc = sub i64 %.018664504, %i.drb
+  %.018664503 = ptrtoaddr ptr %.01866 to i64
+  %i.drb = add i64 %i.dpg, %13
+  %i.drc = sub i64 %.018664503, %i.drb
   %scevgep = getelementptr i8, ptr %.val2237, i64 %i.drc ; 2 uses
   br label %.lr.ph
 
@@ -1985,8 +1966,9 @@ bb.amc:                                           ; preds = %bb.alw, %.critedge4
 
 bb.amd:                                           ; preds = %bb.amc
   %i.drz = load ptr, ptr %i.f, align 8, !tbaa !78
-  %i.dsa = ptrtoint ptr %i.drz to i64
-  %i.dsb = sub i64 %i.dsa, %.val22374505
+  %14 = ptrtoint ptr %i.drz to i64
+  %i.dsa = ptrtoint ptr %.val2237 to i64
+  %i.dsb = sub i64 %14, %i.dsa
   %i.dsc = tail call i64 @pm_strspn_inline_whitespace(ptr noundef %.val2237, i64 noundef %i.dsb) #27
   %i.dsd = getelementptr i8, ptr %.val2237, i64 %i.dsc
   br label %pm_heredoc_strspn_inline_whitespace.exit
@@ -2156,7 +2138,7 @@ pm_token_buffer_escape.exit3099:                  ; preds = %bb.amn
 
 .loopexit3620:                                    ; preds = %.lr.ph6008, %pm_token_buffer_escape.exit3099
   %.11853 = phi ptr [ %i.dtv, %pm_token_buffer_escape.exit3099 ], [ %.01852.ph6005, %.lr.ph6008 ] ; 5 uses
-  %.118534517 = ptrtoint ptr %.11853 to i64
+  %.118534515 = ptrtoaddr ptr %.11853 to i64
   %i.dul = load ptr, ptr %i.dtj, align 8, !tbaa !168
   %i.dum = icmp ugt ptr %i.dul, %.11853
   %i.dun = getelementptr i8, ptr %.11853, i64 1   ; 20 uses
@@ -2183,7 +2165,7 @@ bb.amr:                                           ; preds = %bb.amq
   br i1 %.not1973, label %bb.amy, label %bb.ams
 
 bb.ams:                                           ; preds = %bb.amr
-  %i.dut = ptrtoint ptr %i.dus to i64             ; 2 uses
+  %i.dut = ptrtoint ptr %i.dus to i64
   %i.duu = ptrtoint ptr %i.dun to i64
   %i.duv = sub i64 %i.dut, %i.duu                 ; 2 uses
   %i.duw = icmp sgt i64 %i.duv, -1
@@ -2202,13 +2184,11 @@ bb.amu:                                           ; preds = %next_newline.exit31
   %i.duz = getelementptr i8, ptr %i.dux, i64 -1   ; 2 uses
   %i.dva = load i8, ptr %i.duz, align 1, !tbaa !67
   %i.dvb = icmp eq i8 %i.dva, 13
-  %spec.select2072 = select i1 %i.dvb, ptr %i.duz, ptr %i.dux ; 2 uses
-  %.pre4620 = ptrtoint ptr %spec.select2072 to i64
+  %spec.select2072 = select i1 %i.dvb, ptr %i.duz, ptr %i.dux
   br label %bb.amv
 
 bb.amv:                                           ; preds = %next_newline.exit3102, %bb.amu
-  %.018494516.pre-phi = phi i64 [ %i.dut, %next_newline.exit3102 ], [ %.pre4620, %bb.amu ]
-  %.01849 = phi ptr [ %i.dus, %next_newline.exit3102 ], [ %spec.select2072, %bb.amu ]
+  %.01849 = phi ptr [ %spec.select2072, %bb.amu ], [ %i.dus, %next_newline.exit3102 ] ; 2 uses
   %i.dvc = getelementptr i8, ptr %.01849, i64 %i.dtl ; 3 uses
   %i.dvd = load i32, ptr %i.dtg, align 4, !tbaa !246
   %.off2075 = add i32 %i.dvd, -1
@@ -2218,8 +2198,9 @@ bb.amv:                                           ; preds = %next_newline.exit31
   br i1 %or.cond4149, label %.lr.ph4097.preheader, label %.critedge44
 
 .lr.ph4097.preheader:                             ; preds = %bb.amv
+  %.018494514 = ptrtoaddr ptr %.01849 to i64
   %scevgep4515 = getelementptr i8, ptr %.11853, i64 %i.dtl
-  %i.dvf = sub i64 %.018494516.pre-phi, %.118534517
+  %i.dvf = sub i64 %.018494514, %.118534515
   %scevgep4518 = getelementptr i8, ptr %scevgep4515, i64 %i.dvf ; 2 uses
   br label %.lr.ph4097
 
@@ -2622,7 +2603,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.23684, label %.preheader, label %bb.l
 
 .preheader:                                       ; preds = %bb.k
-  %.2.lcssa5961 = ptrtoint ptr %.285 to i64
+  %.2.lcssa5961 = ptrtoaddr ptr %.285 to i64
   %i.ac = getelementptr i8, ptr %0, i64 520
   %scevgep = getelementptr i8, ptr %.285, i64 %i.f
   %i.ad = sub i64 0, %.2.lcssa5961
@@ -3025,7 +3006,7 @@ pm_node_alloc.exit:                               ; preds = %bb.c
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !127  ; 6 uses
   %i.k = getelementptr i8, ptr %1, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !128  ; 3 uses
-  %2 = ptrtoint ptr %i.l to i64                   ; 2 uses
+  %2 = ptrtoaddr ptr %i.l to i64                  ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr i8, ptr %i.c, i64 24 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr i8, ptr %i.c, i64 48 ; 2 uses
   store i16 123, ptr %i.c, align 8, !tbaa !110
@@ -3046,7 +3027,7 @@ pm_node_alloc.exit..critedge_crit_edge:           ; preds = %pm_node_alloc.exit
   br label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %pm_node_alloc.exit
-  %3 = ptrtoint ptr %i.j to i64
+  %3 = ptrtoaddr ptr %i.j to i64
   %i.o = add i64 %2, -1                           ; 3 uses
   %i.p = sub i64 %i.o, %3
   %scevgep = getelementptr i8, ptr %i.j, i64 %i.p ; 2 uses
@@ -3101,7 +3082,6 @@ bb.g:                                             ; preds = %.critedge2
 
 bb.h:                                             ; preds = %.critedge2
   %i.ad = tail call ptr @memchr(ptr noundef %.062.lcssa, i32 noundef 46, i64 noundef %i.aa) #29 ; 8 uses
-  %4 = ptrtoint ptr %i.ad to i64                  ; 4 uses
   %.not = icmp eq ptr %i.ad, null
   br i1 %.not, label %bb.i, label %bb.j
 
@@ -3121,6 +3101,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 bb.l:                                             ; preds = %bb.j
+  %4 = ptrtoint ptr %i.ad to i64                  ; 4 uses
   %i.ai = sub i64 %4, %i.z                        ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.ae, ptr noundef nonnull align 1 %.062.lcssa, i64 noundef %i.ai, i1 noundef false) #27
   %i.aj = getelementptr i8, ptr %i.ae, i64 %i.ai
@@ -3523,7 +3504,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e
   %.019.i = phi ptr [ %i.u, %bb.e ], [ %spec.select.i, %bb.h ], [ %i.u, %bb.g ], [ %i.u, %bb.f ] ; 5 uses
-  %.019.i68 = ptrtoint ptr %.019.i to i64         ; 2 uses
+  %.019.i68 = ptrtoaddr ptr %.019.i to i64        ; 2 uses
   %i.ae = icmp ult ptr %.019.i, %.val40
   br i1 %i.ae, label %.lr.ph.i, label %token_column.exit.thread
 

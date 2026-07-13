@@ -204,7 +204,7 @@ declare i32 @PyExpat_XmlParseXmlDeclNS(i32 noundef, ptr noundef, ptr noundef, pt
 declare i32 @PyExpat_XmlParseXmlDecl(i32 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc i64 @hash(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) unnamed_addr #6 {
+define internal fastcc i64 @hash(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(address) %1) unnamed_addr #6 {
 bb.a:
   %2 = alloca %struct.siphash, align 8            ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
@@ -246,7 +246,7 @@ copy_salt_to_sipkey.exit:                         ; preds = %bb.b
 
 keylen.exit:                                      ; preds = %copy_salt_to_sipkey.exit, %.lr.ph.preheader.i
   %.0.lcssa.i = phi i64 [ 0, %copy_salt_to_sipkey.exit ], [ %i.n, %.lr.ph.preheader.i ] ; 2 uses
-  %3 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %i.o = getelementptr i8, ptr %1, i64 %.0.lcssa.i
   br label %bb.c
 
@@ -256,7 +256,7 @@ bb.c:                                             ; preds = %sip_round.exit.i, %
   br i1 %i.p, label %.lr.ph.preheader.i4, label %sip24_update.exit
 
 .lr.ph.preheader.i4:                              ; preds = %bb.c
-  %.043.i = ptrtoint ptr %.0.i to i64
+  %.043.i = ptrtoaddr ptr %.0.i to i64
   %i.q = getelementptr i8, ptr %.0.i, i64 %.0.lcssa.i
   %scevgep.i5 = getelementptr i8, ptr %i.q, i64 %3
   %i.r = sub i64 0, %.043.i
@@ -339,7 +339,7 @@ sip24_update.exit:                                ; preds = %bb.c, %.critedge.i,
 ; Function Attrs: nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef nonnull ptr @sip24_update(ptr noundef nonnull returned %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) unnamed_addr #18 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %i.a = getelementptr i8, ptr %1, i64 %2
   %i.b = getelementptr i8, ptr %0, i64 40         ; 6 uses
   %i.c = getelementptr i8, ptr %0, i64 32         ; 2 uses
@@ -355,7 +355,7 @@ bb.b:                                             ; preds = %sip_round.exit, %bb
   br i1 %i.h, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %.043 = ptrtoint ptr %.0 to i64
+  %.043 = ptrtoaddr ptr %.0 to i64
   %i.i = getelementptr i8, ptr %.0, i64 %2
   %scevgep = getelementptr i8, ptr %i.i, i64 %3
   %i.j = sub i64 0, %.043

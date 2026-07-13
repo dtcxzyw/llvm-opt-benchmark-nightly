@@ -203,8 +203,7 @@ _ZNSt12_Vector_baseISt6threadSaIS0_EED2Ev.exit:   ; preds = %_ZSt8_DestroyIPSt6t
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt6threadSaIS0_EE17_M_realloc_insertIJRPFvPN6duckdb10FileHandleEmmPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEERS6_RKmSJ_SD_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = ptrtoint ptr %1 to i64                     ; 4 uses
-  %8 = alloca %"class.std::unique_ptr.470", align 8 ; 6 uses
+  %7 = alloca %"class.std::unique_ptr.470", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !65     ; 10 uses
@@ -225,14 +224,14 @@ _ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 3
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #26 ; 11 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
+  call void @llvm.lifetime.start.p0(ptr nonnull %7)
   store i64 0, ptr %i.q, align 8, !tbaa !330
   %i.r = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #26
           to label %.noexc unwind label %bb.g     ; 7 uses
@@ -254,12 +253,12 @@ _ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %i.r, i64 40
   %i.ab = load ptr, ptr %2, align 8, !tbaa !62
   store ptr %i.ab, ptr %i.aa, align 8, !tbaa !340
-  store ptr %i.r, ptr %8, align 8, !tbaa !342
-  invoke void @_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE(ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull %8, ptr noundef nonnull @_ZNSt6thread24_M_thread_deps_never_runEv)
+  store ptr %i.r, ptr %7, align 8, !tbaa !342
+  invoke void @_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE(ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull %7, ptr noundef nonnull @_ZNSt6thread24_M_thread_deps_never_runEv)
           to label %bb.c unwind label %bb.d
 
 bb.c:                                             ; preds = %.noexc
-  %i.ac = load ptr, ptr %8, align 8, !tbaa !342   ; 3 uses
+  %i.ac = load ptr, ptr %7, align 8, !tbaa !342   ; 3 uses
   %.not.i.i = icmp eq ptr %i.ac, null
   br i1 %.not.i.i, label %bb.e, label %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i
 
@@ -273,7 +272,7 @@ _ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i: ; preds = %bb.c
 bb.d:                                             ; preds = %.noexc
   %i.ag = landingpad { ptr, i32 }
           catch ptr null                          ; 2 uses
-  %i.ah = load ptr, ptr %8, align 8, !tbaa !342   ; 3 uses
+  %i.ah = load ptr, ptr %7, align 8, !tbaa !342   ; 3 uses
   %.not.i9.i = icmp eq ptr %i.ah, null
   br i1 %.not.i9.i, label %bb.i, label %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i10.i
 
@@ -285,12 +284,12 @@ _ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i10.i: ; preds = %bb.d
   br label %bb.i
 
 bb.e:                                             ; preds = %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %.not10.i.i.i.i = icmp eq ptr %i.c, %1
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
-  %i.al = add i64 %7, -8
+  %i.al = add i64 %i.m, -8
   %i.am = sub i64 %i.al, %i.e                     ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
@@ -298,7 +297,7 @@ bb.e:                                             ; preds = %_ZNKSt14default_del
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %i.ap = add i64 %7, -8
+  %i.ap = add i64 %i.m, -8
   %i.aq = sub i64 %i.ap, %i.e
   %i.ar = and i64 %i.aq, -8
   %i.as = add i64 %i.ar, 8                        ; 2 uses
@@ -365,7 +364,7 @@ _ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %.lr.
 
 .lr.ph.i.i.i.i31.preheader:                       ; preds = %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit
   %i.be = add i64 %i.d, -8
-  %i.bf = sub i64 %i.be, %7                       ; 2 uses
+  %i.bf = sub i64 %i.be, %i.m                     ; 2 uses
   %i.bg = lshr i64 %i.bf, 3
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check67 = icmp ult i64 %i.bf, 184
@@ -373,7 +372,7 @@ _ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %.lr.
 
 vector.memcheck60:                                ; preds = %.lr.ph.i.i.i.i31.preheader
   %i.bi = add i64 %i.d, -8
-  %i.bj = sub i64 %i.bi, %7
+  %i.bj = sub i64 %i.bi, %i.m
   %i.bk = and i64 %i.bj, -8                       ; 2 uses
   %i.bl = getelementptr i8, ptr %.0.lcssa.i.i.i.i, i64 %i.bk
   %scevgep61 = getelementptr i8, ptr %i.bl, i64 16
@@ -597,8 +596,7 @@ bb.f:                                             ; preds = %bb.e, %_ZNSt6thread
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt6threadSaIS0_EE17_M_realloc_insertIJRPFvPKcmmPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEERS5_RKmSI_SC_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = ptrtoint ptr %1 to i64                     ; 4 uses
-  %8 = alloca %"class.std::unique_ptr.470", align 8 ; 6 uses
+  %7 = alloca %"class.std::unique_ptr.470", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !65     ; 10 uses
@@ -619,14 +617,14 @@ _ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 3
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #26 ; 11 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
+  call void @llvm.lifetime.start.p0(ptr nonnull %7)
   store i64 0, ptr %i.q, align 8, !tbaa !330
   %i.r = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #26
           to label %.noexc unwind label %bb.g     ; 7 uses
@@ -648,12 +646,12 @@ _ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %i.r, i64 40
   %i.ab = load ptr, ptr %2, align 8, !tbaa !62
   store ptr %i.ab, ptr %i.aa, align 8, !tbaa !374
-  store ptr %i.r, ptr %8, align 8, !tbaa !342
-  invoke void @_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE(ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull %8, ptr noundef nonnull @_ZNSt6thread24_M_thread_deps_never_runEv)
+  store ptr %i.r, ptr %7, align 8, !tbaa !342
+  invoke void @_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE(ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull %7, ptr noundef nonnull @_ZNSt6thread24_M_thread_deps_never_runEv)
           to label %bb.c unwind label %bb.d
 
 bb.c:                                             ; preds = %.noexc
-  %i.ac = load ptr, ptr %8, align 8, !tbaa !342   ; 3 uses
+  %i.ac = load ptr, ptr %7, align 8, !tbaa !342   ; 3 uses
   %.not.i.i = icmp eq ptr %i.ac, null
   br i1 %.not.i.i, label %bb.e, label %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i
 
@@ -667,7 +665,7 @@ _ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i: ; preds = %bb.c
 bb.d:                                             ; preds = %.noexc
   %i.ag = landingpad { ptr, i32 }
           catch ptr null                          ; 2 uses
-  %i.ah = load ptr, ptr %8, align 8, !tbaa !342   ; 3 uses
+  %i.ah = load ptr, ptr %7, align 8, !tbaa !342   ; 3 uses
   %.not.i9.i = icmp eq ptr %i.ah, null
   br i1 %.not.i9.i, label %bb.i, label %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i10.i
 
@@ -679,12 +677,12 @@ _ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i10.i: ; preds = %bb.d
   br label %bb.i
 
 bb.e:                                             ; preds = %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %.not10.i.i.i.i = icmp eq ptr %i.c, %1
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
-  %i.al = add i64 %7, -8
+  %i.al = add i64 %i.m, -8
   %i.am = sub i64 %i.al, %i.e                     ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
@@ -692,7 +690,7 @@ bb.e:                                             ; preds = %_ZNKSt14default_del
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %i.ap = add i64 %7, -8
+  %i.ap = add i64 %i.m, -8
   %i.aq = sub i64 %i.ap, %i.e
   %i.ar = and i64 %i.aq, -8
   %i.as = add i64 %i.ar, 8                        ; 2 uses
@@ -759,7 +757,7 @@ _ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %.lr.
 
 .lr.ph.i.i.i.i31.preheader:                       ; preds = %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit
   %i.be = add i64 %i.d, -8
-  %i.bf = sub i64 %i.be, %7                       ; 2 uses
+  %i.bf = sub i64 %i.be, %i.m                     ; 2 uses
   %i.bg = lshr i64 %i.bf, 3
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check67 = icmp ult i64 %i.bf, 184
@@ -767,7 +765,7 @@ _ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %.lr.
 
 vector.memcheck60:                                ; preds = %.lr.ph.i.i.i.i31.preheader
   %i.bi = add i64 %i.d, -8
-  %i.bj = sub i64 %i.bi, %7
+  %i.bj = sub i64 %i.bi, %i.m
   %i.bk = and i64 %i.bj, -8                       ; 2 uses
   %i.bl = getelementptr i8, ptr %.0.lcssa.i.i.i.i, i64 %i.bk
   %scevgep61 = getelementptr i8, ptr %i.bl, i64 16

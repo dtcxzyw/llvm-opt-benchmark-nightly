@@ -203,7 +203,7 @@ bb.aoo:                                           ; preds = %bb.aon
 
 bb.aop:                                           ; preds = %bb.aoo, %bb.aon
   %.0.i.i.i.i.i.i = phi ptr [ %i.ecv, %bb.aon ], [ %i.ecw, %bb.aoo ] ; 6 uses
-  %.063.i.i.i.i.i.i = ptrtoint ptr %.0.i.i.i.i.i.i to i64 ; 3 uses
+  %.063.i.i.i.i.i.i = ptrtoaddr ptr %.0.i.i.i.i.i.i to i64 ; 3 uses
   %spec.select.i.i.i.i.i.i.i.i.i = call i64 @llvm.abs.i64(i64 %.sroa.036.0.i.i.i.i.i.i, i1 true) ; 3 uses
   %i.ecx = udiv i64 %spec.select.i.i.i.i.i.i.i.i.i, 3600000 ; 3 uses
   %i.ecy = udiv i64 %spec.select.i.i.i.i.i.i.i.i.i, 60000
@@ -441,7 +441,7 @@ bb.apa:                                           ; preds = %bb.aoz
 
 bb.apb:                                           ; preds = %bb.apa, %bb.aoz
   %.0.i24.i.i.i.i.i = phi ptr [ %i.eht, %bb.aoz ], [ %i.ehu, %bb.apa ] ; 6 uses
-  %.063.i25.i.i.i.i.i = ptrtoint ptr %.0.i24.i.i.i.i.i to i64 ; 3 uses
+  %.063.i25.i.i.i.i.i = ptrtoaddr ptr %.0.i24.i.i.i.i.i to i64 ; 3 uses
   %spec.select.i.i.i.i26.i.i.i.i.i = call i64 @llvm.abs.i64(i64 %.sroa.036.0.i21.i.i.i.i.i, i1 true) ; 3 uses
   %i.ehv = udiv i64 %spec.select.i.i.i.i26.i.i.i.i.i, 3600000000 ; 3 uses
   %i.ehw = udiv i64 %spec.select.i.i.i.i26.i.i.i.i.i, 60000000
@@ -674,7 +674,7 @@ bb.apl:                                           ; preds = %bb.apk
 
 bb.apm:                                           ; preds = %bb.apl, %bb.apk
   %.0.i68.i.i.i.i.i = phi ptr [ %i.emq, %bb.apk ], [ %i.emr, %bb.apl ] ; 6 uses
-  %.063.i69.i.i.i.i.i = ptrtoint ptr %.0.i68.i.i.i.i.i to i64 ; 3 uses
+  %.063.i69.i.i.i.i.i = ptrtoaddr ptr %.0.i68.i.i.i.i.i to i64 ; 3 uses
   %spec.select.i.i.i.i70.i.i.i.i.i = call i64 @llvm.abs.i64(i64 %.sroa.036.0.i65.i.i.i.i.i, i1 true) ; 3 uses
   %i.ems = udiv i64 %spec.select.i.i.i.i70.i.i.i.i.i, 3600000000000 ; 3 uses
   %i.emt = udiv i64 %spec.select.i.i.i.i70.i.i.i.i.i, 60000000000
@@ -1077,7 +1077,7 @@ bb.aru:                                           ; preds = %_ZNSt10shared_ptrIN
   ]
 
 bb.arv:                                           ; preds = %bb.aru
-  %199 = ptrtoint ptr %84 to i64                  ; 3 uses
+  %199 = ptrtoaddr ptr %84 to i64                 ; 3 uses
   %spec.select.i.i.i.i.i.i.i1268 = icmp ult i32 %.val4.i.i, 86400000
   br i1 %spec.select.i.i.i.i.i.i.i1268, label %bb.arw, label %.invoke.i, !prof !218
 
@@ -1197,7 +1197,7 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   br label %_ZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time32TypeEvEENS_12Time32ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_.exit.i.i
 
 bb.arz:                                           ; preds = %bb.aru
-  %200 = ptrtoint ptr %83 to i64                  ; 3 uses
+  %200 = ptrtoaddr ptr %83 to i64                 ; 3 uses
   %spec.select.i.i15.i.i.i.i.i = icmp sgt i32 %.val4.i.i, -1
   br i1 %spec.select.i.i15.i.i.i.i.i, label %bb.asa, label %.invoke.i, !prof !218
 
@@ -1308,7 +1308,7 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   br label %_ZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time32TypeEvEENS_12Time32ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_.exit.i.i
 
 bb.asd:                                           ; preds = %bb.aru
-  %201 = ptrtoint ptr %82 to i64                  ; 3 uses
+  %201 = ptrtoaddr ptr %82 to i64                 ; 3 uses
   %spec.select.i.i37.i.i.i.i.i = icmp sgt i32 %.val4.i.i, -1
   br i1 %spec.select.i.i37.i.i.i.i.i, label %bb.ase, label %.invoke.i, !prof !218
 
@@ -1711,7 +1711,7 @@ bb.aud:                                           ; preds = %_ZNSt10shared_ptrIN
   ]
 
 bb.aue:                                           ; preds = %bb.aud
-  %202 = ptrtoint ptr %76 to i64                  ; 3 uses
+  %202 = ptrtoaddr ptr %76 to i64                 ; 3 uses
   %spec.select.i.i.i.i.i.i.i1362 = icmp ult i64 %.val4.i.i1293, 86400000
   br i1 %spec.select.i.i.i.i.i.i.i1362, label %bb.auf, label %.invoke.i1338, !prof !218
 
@@ -1831,7 +1831,7 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   br label %_ZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time64TypeEvEENS_12Time64ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_.exit.i.i
 
 bb.aui:                                           ; preds = %bb.aud
-  %203 = ptrtoint ptr %75 to i64                  ; 3 uses
+  %203 = ptrtoaddr ptr %75 to i64                 ; 3 uses
   %spec.select.i.i15.i.i.i.i.i1337 = icmp ult i64 %.val4.i.i1293, 86400000000
   br i1 %spec.select.i.i15.i.i.i.i.i1337, label %bb.auj, label %.invoke.i1338, !prof !218
 
@@ -1946,7 +1946,7 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   br label %_ZN5arrow12_GLOBAL__N_114FormatToBufferINS_8internal15StringFormatterINS_10Time64TypeEvEENS_12Time64ScalarEEESt10shared_ptrINS_6BufferEEOT_RKT0_.exit.i.i
 
 bb.aum:                                           ; preds = %bb.aud
-  %204 = ptrtoint ptr %74 to i64                  ; 3 uses
+  %204 = ptrtoaddr ptr %74 to i64                 ; 3 uses
   %spec.select.i.i36.i.i.i.i.i = icmp ult i64 %.val4.i.i1293, 86400000000000
   br i1 %spec.select.i.i36.i.i.i.i.i, label %bb.aun, label %.invoke.i1338, !prof !218
 

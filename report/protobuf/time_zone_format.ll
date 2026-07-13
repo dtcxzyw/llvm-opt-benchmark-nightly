@@ -75,7 +75,7 @@ bb.a:
   %5 = alloca %"struct.absl::lts_20250512::time_internal::cctz::time_zone::absolute_lookup", align 8 ; 17 uses
   %6 = alloca %struct.tm, align 16                ; 21 uses
   %i.k = alloca [21 x i8], align 16               ; 15 uses
-  %7 = ptrtoint ptr %i.k to i64
+  %7 = ptrtoaddr ptr %i.k to i64
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %9 = alloca %"class.absl::lts_20250512::time_internal::cctz::detail::civil_time.0", align 8 ; 5 uses
   %10 = alloca %"class.absl::lts_20250512::time_internal::cctz::detail::civil_time.0", align 8 ; 5 uses
@@ -210,7 +210,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %.not1001, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.i
-  %22 = ptrtoint ptr %i.by to i64
+  %22 = ptrtoaddr ptr %i.by to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 7 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.k, i64 20 ; 23 uses
@@ -250,10 +250,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.thread804
-  %.02681003 = phi ptr [ %i.by, %.preheader.lr.ph ], [ %.6274, %.thread804 ] ; 6 uses
+  %.02681003 = phi ptr [ %i.by, %.preheader.lr.ph ], [ %.6274, %.thread804 ] ; 7 uses
   %.02751002 = phi ptr [ %i.by, %.preheader.lr.ph ], [ %.6281, %.thread804 ] ; 3 uses
   %scevgep = getelementptr i8, ptr %.02681003, i64 %i.dg
-  %.026810031018 = ptrtoint ptr %.02681003 to i64 ; 2 uses
+  %.026810031018 = ptrtoaddr ptr %.02681003 to i64
   %i.di = sub i64 0, %.026810031018
   %scevgep1019 = getelementptr i8, ptr %scevgep, i64 %i.di
   br label %bb.j
@@ -288,7 +288,8 @@ bb.m:                                             ; preds = %bb.b
   br i1 %or.cond, label %bb.n, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit
 
 bb.n:                                             ; preds = %.critedge
-  %i.do = sub i64 %.1269.lcssa1021, %.026810031018 ; 2 uses
+  %23 = ptrtoint ptr %.02681003 to i64
+  %i.do = sub i64 %.1269.lcssa1021, %23           ; 2 uses
   %i.dp = load i64, ptr %i.m, align 8, !tbaa !11
   %i.dq = sub i64 4611686018427387903, %i.dp
   %i.dr = icmp ult i64 %i.dq, %i.do
@@ -691,7 +692,7 @@ bb.el:                                            ; preds = %._crit_edge.i679
 
 _ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_18Format64EPcil.exit688: ; preds = %._crit_edge.i679, %bb.el
   %.4.i681 = phi ptr [ %i.ada, %bb.el ], [ %.329.lcssa.i680, %._crit_edge.i679 ] ; 8 uses
-  %.4.i6811024 = ptrtoint ptr %.4.i681 to i64
+  %.4.i6811024 = ptrtoaddr ptr %.4.i681 to i64
   %scevgep1025 = getelementptr i8, ptr %scevgep1023, i64 %.4.i6811024 ; 2 uses
   %.not3471147 = icmp eq ptr %i.bx, %.4.i681
   br i1 %.not3471147, label %.critedge4, label %.lr.ph1150

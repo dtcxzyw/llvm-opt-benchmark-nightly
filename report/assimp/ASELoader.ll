@@ -204,18 +204,17 @@ _ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i:     ; preds = %_ZSt4copyIPSt4pairI
   %.pre-phi39.i = phi i64 [ %.pre38.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nz, %bb.bq ] ; 3 uses
   %i.ph = phi ptr [ %.pre34.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nc, %bb.bq ] ; 3 uses
   %i.pi = phi ptr [ %.pre32.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nx, %bb.bq ] ; 5 uses
-  %i.pj = phi ptr [ %.pre.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nd, %bb.bq ] ; 3 uses
+  %i.pj = phi ptr [ %.pre.i, %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.loopexit.i ], [ %i.nd, %bb.bq ] ; 2 uses
   %i.pk = ptrtoaddr ptr %i.pi to i64
-  %i.pl = ptrtoaddr ptr %i.pj to i64
+  %i.pl = ptrtoaddr ptr %i.pj to i64              ; 2 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pj, i64 %.pre-phi39.i ; 5 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.pm, %i.ph
   br i1 %.not9.i.i.i.i.i, label %_ZSt22__uninitialized_copy_aIPSt4pairIifES2_S1_ET0_T_S4_S3_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i
-  %7 = ptrtoint ptr %i.pj to i64
-  %8 = ptrtoint ptr %i.ph to i64
-  %i.pn = add i64 %8, -8
-  %i.po = add i64 %.pre-phi39.i, %7
+  %7 = ptrtoaddr ptr %i.ph to i64
+  %i.pn = add i64 %7, -8
+  %i.po = add i64 %.pre-phi39.i, %i.pl
   %i.pp = sub i64 %i.pn, %i.po                    ; 2 uses
   %i.pq = lshr i64 %i.pp, 3
   %i.pr = add nuw nsw i64 %i.pq, 1                ; 2 uses
@@ -618,8 +617,8 @@ _ZNKSt6vectorISt4pairIjfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ap
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc294
   %i.li = ptrtoaddr ptr %i.le to i64
-  %4 = sub i64 %i.ku, %i.kv
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.ku, -8
+  %5 = sub i64 %4, %i.kv                          ; 2 uses
   %i.lj = lshr i64 %5, 3
   %i.lk = add nuw nsw i64 %i.lj, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -1022,8 +1021,8 @@ _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %b
 
 .lr.ph.i.i.i.i.i319.preheader:                    ; preds = %.noexc325
   %i.akt = ptrtoaddr ptr %i.akr to i64
-  %6 = sub i64 %i.akh, %i.aki
-  %7 = add i64 %6, -8                             ; 2 uses
+  %6 = add i64 %i.akh, -8
+  %7 = sub i64 %6, %i.aki                         ; 2 uses
   %i.aku = lshr i64 %7, 3
   %i.akv = add nuw nsw i64 %i.aku, 1              ; 2 uses
   %min.iters.check684 = icmp ult i64 %7, 24

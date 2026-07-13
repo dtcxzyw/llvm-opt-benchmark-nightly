@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define noundef i64 @_ZN11duckdb_zstd21HUF_readDTableX2_wkspEPjPKvmPvmi(ptr nofree noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = ptrtoint ptr %3 to i64                     ; 8 uses
+  %6 = ptrtoaddr ptr %3 to i64                    ; 8 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
@@ -607,7 +607,7 @@ scalar.ph300.preheader:                           ; preds = %vector.memcheck294,
   %.1103.i.i.ph = phi ptr [ %i.ld, %vector.memcheck294 ], [ %i.ld, %.lr.ph104.i.i ], [ %i.mu, %middle.block317 ] ; 2 uses
   %.175102.i.i.ph = phi ptr [ %i.lf, %vector.memcheck294 ], [ %i.lf, %.lr.ph104.i.i ], [ %i.mv, %middle.block317 ] ; 3 uses
   %i.ng = add i64 %6, %i.lg
-  %.175102.i.i.ph363 = ptrtoint ptr %.175102.i.i.ph to i64 ; 2 uses
+  %.175102.i.i.ph363 = ptrtoaddr ptr %.175102.i.i.ph to i64 ; 2 uses
   %i.nh = sub i64 %i.ng, %.175102.i.i.ph363
   %i.ni = add i64 %i.ep, %i.lg
   %i.nj = sub i64 %i.ni, %.175102.i.i.ph363
@@ -697,7 +697,7 @@ scalar.ph276.preheader:                           ; preds = %vector.memcheck270,
   %.0109.i.i.ph = phi ptr [ %i.ld, %vector.memcheck270 ], [ %i.ld, %.lr.ph110.i.i ], [ %i.ny, %middle.block290 ] ; 2 uses
   %.074108.i.i.ph = phi ptr [ %i.lf, %vector.memcheck270 ], [ %i.lf, %.lr.ph110.i.i ], [ %i.nz, %middle.block290 ] ; 3 uses
   %i.ok = add i64 %6, %i.lg
-  %.074108.i.i.ph367 = ptrtoint ptr %.074108.i.i.ph to i64 ; 2 uses
+  %.074108.i.i.ph367 = ptrtoaddr ptr %.074108.i.i.ph to i64 ; 2 uses
   %i.ol = sub i64 %i.ok, %.074108.i.i.ph367
   %i.om = add i64 %i.eq, %i.lg
   %i.on = sub i64 %i.om, %.074108.i.i.ph367
@@ -1100,7 +1100,7 @@ middle.block266:                                  ; preds = %vector.body257
   %.1103.us.i.ph = phi ptr [ %i.tn, %vector.memcheck244 ], [ %i.tn, %.lr.ph104.i ], [ %i.xf, %middle.block266 ] ; 2 uses
   %.175102.us.i.ph = phi ptr [ %i.tp, %vector.memcheck244 ], [ %i.tp, %.lr.ph104.i ], [ %i.xg, %middle.block266 ] ; 3 uses
   %i.xp = add i64 %6, %i.tq
-  %.175102.us.i.ph392 = ptrtoint ptr %.175102.us.i.ph to i64 ; 2 uses
+  %.175102.us.i.ph392 = ptrtoaddr ptr %.175102.us.i.ph to i64 ; 2 uses
   %i.xq = sub i64 %i.xp, %.175102.us.i.ph392
   %i.xr = add i64 %i.er, %i.tq
   %i.xs = sub i64 %i.xr, %.175102.us.i.ph392
@@ -1224,7 +1224,7 @@ middle.block240:                                  ; preds = %vector.body234
   %.0109.us.i.ph = phi ptr [ %i.tn, %vector.memcheck225 ], [ %i.tn, %.lr.ph110.i ], [ %i.zf, %middle.block240 ] ; 2 uses
   %.074108.us.i.ph = phi ptr [ %i.tp, %vector.memcheck225 ], [ %i.tp, %.lr.ph110.i ], [ %i.zg, %middle.block240 ] ; 3 uses
   %i.zp = add i64 %6, %i.tq
-  %.074108.us.i.ph396 = ptrtoint ptr %.074108.us.i.ph to i64 ; 2 uses
+  %.074108.us.i.ph396 = ptrtoaddr ptr %.074108.us.i.ph to i64 ; 2 uses
   %i.zq = sub i64 %i.zp, %.074108.us.i.ph396
   %i.zr = add i64 %i.es, %i.tq
   %i.zs = sub i64 %i.zr, %.074108.us.i.ph396
@@ -1627,7 +1627,7 @@ _ZN11duckdb_zstd27HUF_decompress1X2_DCtx_wkspEPjPvmPKvmS1_mi.exit: ; preds = %bb
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef i64 @_ZN11duckdb_zstd27HUF_decompress1X1_DCtx_wkspEPjPvmPKvmS1_mi(ptr nofree noundef captures(none) %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, i32 noundef %7) local_unnamed_addr #0 {
+define noundef i64 @_ZN11duckdb_zstd27HUF_decompress1X1_DCtx_wkspEPjPvmPKvmS1_mi(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(address) %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, i32 noundef %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef i64 @_ZN11duckdb_zstd21HUF_readDTableX1_wkspEPjPKvmPvmi(ptr noundef %0, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, i32 noundef %7) ; 5 uses
   %i.b = icmp ult i64 %i.a, -119
@@ -1670,7 +1670,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc noundef i64 @_ZN11duckdb_zstdL38HUF_decompress1X1_usingDTable_internalEPvmPKvmPKji(ptr noundef %0, i64 noundef %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) unnamed_addr #6 {
+define internal fastcc noundef i64 @_ZN11duckdb_zstdL38HUF_decompress1X1_usingDTable_internalEPvmPKvmPKji(ptr nofree noundef writeonly captures(address) %0, i64 noundef %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) unnamed_addr #6 {
 bb.a:
   %i.a = and i32 %5, 1
   %.not = icmp eq i32 %i.a, 0
@@ -1681,7 +1681,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN11duckdb_zstdL46HUF_decompress1X1_usingDTable_internal_defaultEPvmPKvmPKj.exit
 
 bb.c:                                             ; preds = %bb.a
-  %6 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %6 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %.idx.i.i = tail call i64 @llvm.smax.i64(i64 %1, i64 0) ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 7 uses
@@ -1945,7 +1945,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i: ; preds = %b
   br i1 %i.ee, label %.lr.ph112.i, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit.i
 
 .lr.ph112.i:                                      ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i
-  %.3.i129.i = ptrtoint ptr %.3.i.i to i64        ; 2 uses
+  %.3.i129.i = ptrtoaddr ptr %.3.i.i to i64       ; 2 uses
   %i.ef = sub nsw i32 0, %.sroa.3.0.extract.shift.i.i
   %i.eg = and i32 %i.ef, 63
   %i.eh = zext nneg i32 %i.eg to i64              ; 3 uses
@@ -2348,7 +2348,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not24, label %bb.cl, label %bb.cm
 
 bb.c:                                             ; preds = %bb.a
-  %7 = ptrtoint ptr %0 to i64                     ; 5 uses
+  %7 = ptrtoaddr ptr %0 to i64                    ; 5 uses
   %i.c = icmp ult i64 %3, 10
   %i.d = icmp ult i64 %1, 6
   %or.cond.i.i = or i1 %i.d, %i.c
@@ -2751,7 +2751,7 @@ _ZN11duckdb_zstdL21BIT_reloadDStreamFastEPNS_13BIT_DStream_tE.exit108.i: ; preds
 
 bb.au:                                            ; preds = %.loopexit.i
   %i.oq = ptrtoint ptr %i.w to i64
-  %i.or = ptrtoint ptr %.3148.i.i to i64          ; 6 uses
+  %i.or = ptrtoint ptr %.3148.i.i to i64
   %i.os = sub i64 %i.oq, %i.or
   %i.ot = icmp sgt i64 %i.os, 3
   %i.ou = icmp ugt i32 %.sroa.25248.0.i, 64       ; 2 uses
@@ -2783,7 +2783,7 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.av
   %i.pc = icmp eq ptr %.sroa.69266.3412.i, %i.q
-  br i1 %i.pc, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i, label %bb.ay
+  br i1 %i.pc, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.pd = lshr i32 %.sroa.25248.4413.i, 3         ; 2 uses
@@ -2809,7 +2809,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i: ; pre
   %.sroa.0247.4.i = load i64, ptr %.sroa.69266.4.i, align 1, !tbaa !32 ; 7 uses
   %i.pn = icmp ult ptr %.0.i228.i415.i, %i.ow
   %i.po = and i1 %i.pn, %.022.i38.i231.i.i
-  br i1 %i.po, label %bb.az, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i
+  br i1 %i.po, label %bb.az, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i
 
 bb.az:                                            ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i
   %i.pp = and i32 %.sroa.25248.5.i, 63
@@ -2861,7 +2861,7 @@ bb.az:                                            ; preds = %_ZN11duckdb_zstdL17
   %i.rg = getelementptr inbounds nuw i8, ptr %.0.i228.i415.i, i64 4 ; 2 uses
   store i8 %i.rc, ptr %i.qv, align 1, !tbaa !7
   %i.rh = icmp ugt i32 %i.rf, 64
-  br i1 %i.rh, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i, label %bb.av, !prof !101, !llvm.loop !113
+  br i1 %i.rh, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i, label %bb.av, !prof !101, !llvm.loop !113
 
 bb.ba:                                            ; preds = %bb.au
   br i1 %i.ou, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i, label %bb.bb, !prof !122
@@ -2902,32 +2902,24 @@ bb.be:                                            ; preds = %bb.bd
   %.val5.i = load i64, ptr %i.rz, align 1, !tbaa !32
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i
 
-_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i: ; preds = %bb.az, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i, %bb.ax
-  %.sroa.69266.2.ph.i = phi ptr [ %i.q, %bb.ax ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.az ], [ %.sroa.69266.4.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ]
-  %.sroa.25248.2.ph.i = phi i32 [ %.sroa.25248.4413.i, %bb.ax ], [ %i.rf, %bb.az ], [ %.sroa.25248.5.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ]
-  %.sroa.0247.2.ph.i = phi i64 [ %.sroa.0247.3414.i, %bb.ax ], [ %.sroa.0247.4.i, %bb.az ], [ %.sroa.0247.4.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ]
-  %.3.i222.i.ph.i = phi ptr [ %.0.i228.i415.i, %bb.ax ], [ %i.rg, %bb.az ], [ %.0.i228.i415.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ] ; 2 uses
-  %.pre503.i = ptrtoint ptr %.3.i222.i.ph.i to i64
-  br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i
-
-_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i: ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i, %bb.be, %bb.bd, %bb.bc, %bb.ba, %.preheader377.i
-  %.3.i222.i495.pre-phi.i = phi i64 [ %.pre503.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i ], [ %i.or, %.preheader377.i ], [ %i.or, %bb.bd ], [ %i.or, %bb.bc ], [ %i.or, %bb.be ], [ %i.or, %bb.ba ] ; 2 uses
-  %.sroa.69266.2.i = phi ptr [ %.sroa.69266.2.ph.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %.preheader377.i ], [ %i.q, %bb.bd ], [ %i.rl, %bb.bc ], [ %i.rz, %bb.be ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.ba ]
-  %.sroa.25248.2.i = phi i32 [ %.sroa.25248.2.ph.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i ], [ %.sroa.25248.0.i, %.preheader377.i ], [ %.sroa.25248.0.i, %bb.bd ], [ %i.rm, %bb.bc ], [ %i.sb, %bb.be ], [ %.sroa.25248.0.i, %bb.ba ] ; 4 uses
-  %.sroa.0247.2.i = phi i64 [ %.sroa.0247.2.ph.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i ], [ %.sroa.0247.0.i, %.preheader377.i ], [ %.sroa.0247.0.i, %bb.bd ], [ %.val.i110.i, %bb.bc ], [ %.val5.i, %bb.be ], [ %.sroa.0247.0.i, %bb.ba ] ; 3 uses
-  %.3.i222.i.i = phi ptr [ %.3.i222.i.ph.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit.i ], [ %.3148.i.i, %.preheader377.i ], [ %.3148.i.i, %bb.bd ], [ %.3148.i.i, %bb.bc ], [ %.3148.i.i, %bb.be ], [ %.3148.i.i, %bb.ba ] ; 5 uses
+_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i: ; preds = %bb.az, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i, %bb.ax, %bb.be, %bb.bd, %bb.bc, %bb.ba, %.preheader377.i
+  %.sroa.69266.2.i = phi ptr [ %i.rz, %bb.be ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.ba ], [ %i.rl, %bb.bc ], [ %i.q, %bb.bd ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %.preheader377.i ], [ %i.q, %bb.ax ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.az ], [ %.sroa.69266.4.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ]
+  %.sroa.25248.2.i = phi i32 [ %i.sb, %bb.be ], [ %.sroa.25248.0.i, %bb.ba ], [ %i.rm, %bb.bc ], [ %.sroa.25248.0.i, %bb.bd ], [ %.sroa.25248.0.i, %.preheader377.i ], [ %.sroa.25248.4413.i, %bb.ax ], [ %i.rf, %bb.az ], [ %.sroa.25248.5.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ] ; 4 uses
+  %.sroa.0247.2.i = phi i64 [ %.val5.i, %bb.be ], [ %.sroa.0247.0.i, %bb.ba ], [ %.val.i110.i, %bb.bc ], [ %.sroa.0247.0.i, %bb.bd ], [ %.sroa.0247.0.i, %.preheader377.i ], [ %.sroa.0247.3414.i, %bb.ax ], [ %.sroa.0247.4.i, %bb.az ], [ %.sroa.0247.4.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ] ; 3 uses
+  %.3.i222.i.i = phi ptr [ %.3148.i.i, %bb.be ], [ %.3148.i.i, %bb.ba ], [ %.3148.i.i, %bb.bc ], [ %.3148.i.i, %bb.bd ], [ %.3148.i.i, %.preheader377.i ], [ %.0.i228.i415.i, %bb.ax ], [ %i.rg, %bb.az ], [ %.0.i228.i415.i, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i.i ] ; 6 uses
   %i.sc = icmp ult ptr %.3.i222.i.i, %i.w
   br i1 %i.sc, label %.lr.ph432.i, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit236.i.i
 
 .lr.ph432.i:                                      ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.i
+  %.3.i222.i495.i = ptrtoaddr ptr %.3.i222.i.i to i64 ; 2 uses
   %i.sd = sub nsw i32 0, %.sroa.3.0.extract.shift.i.i
   %i.se = and i32 %i.sd, 63
   %i.sf = zext nneg i32 %i.se to i64              ; 3 uses
   %i.sg = add i64 %i.v, %7
-  %i.sh = sub i64 %i.sg, %.3.i222.i495.pre-phi.i  ; 2 uses
+  %i.sh = sub i64 %i.sg, %.3.i222.i495.i          ; 2 uses
   %scevgep.i = getelementptr i8, ptr %.3.i222.i.i, i64 %i.sh
   %i.si = add i64 %i.v, %7
-  %.neg = add i64 %.3.i222.i495.pre-phi.i, 1
+  %.neg = add i64 %.3.i222.i495.i, 1
   %xtraiter = and i64 %i.sh, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
@@ -3147,7 +3139,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i202.i.i: ; preds
   br i1 %i.xd, label %.lr.ph454.i, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit218.i.i
 
 .lr.ph454.i:                                      ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i202.i.i
-  %.3.i204.i.i127 = ptrtoint ptr %.3.i204.i.i to i64 ; 2 uses
+  %.3.i204.i.i127 = ptrtoaddr ptr %.3.i204.i.i to i64 ; 2 uses
   %i.xe = sub nsw i32 0, %.sroa.3.0.extract.shift.i.i
   %i.xf = and i32 %i.xe, 63
   %i.xg = zext nneg i32 %i.xf to i64              ; 3 uses
@@ -3550,7 +3542,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i.i: ; preds = 
   br i1 %i.ahe, label %.lr.ph482.i, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit.i.i
 
 .lr.ph482.i:                                      ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i.i
-  %.3.i.i496.i = ptrtoint ptr %.3.i.i.i to i64    ; 2 uses
+  %.3.i.i496.i = ptrtoaddr ptr %.3.i.i.i to i64   ; 2 uses
   %i.ahf = sub nsw i32 0, %.sroa.3.0.extract.shift.i.i
   %i.ahg = and i32 %i.ahf, 63
   %i.ahh = zext nneg i32 %i.ahg to i64            ; 3 uses
@@ -3953,9 +3945,9 @@ bb.p:                                             ; preds = %bb.o, %.thread, %bb
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #9
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc noundef i64 @_ZN11duckdb_zstdL43HUF_decompress1X1_usingDTable_internal_bmi2EPvmPKvmPKj(ptr noundef %0, i64 noundef %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4) unnamed_addr #10 {
+define internal fastcc noundef i64 @_ZN11duckdb_zstdL43HUF_decompress1X1_usingDTable_internal_bmi2EPvmPKvmPKj(ptr nofree noundef writeonly captures(address) %0, i64 noundef %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4) unnamed_addr #10 {
 bb.a:
-  %5 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %.idx.i = tail call i64 @llvm.smax.i64(i64 %1, i64 0) ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 7 uses
@@ -4220,7 +4212,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i: ; preds = %bb.
   br i1 %i.ec, label %.lr.ph112, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit
 
 .lr.ph112:                                        ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
-  %.3.i129 = ptrtoint ptr %.3.i to i64            ; 2 uses
+  %.3.i129 = ptrtoaddr ptr %.3.i to i64           ; 2 uses
   %i.ed = sub nsw i32 0, %.sroa.3.0.extract.shift.i
   %i.ee = and i32 %i.ed, 63
   %i.ef = zext nneg i32 %i.ee to i64              ; 3 uses
@@ -4623,7 +4615,7 @@ begin_hunk_8_@_ZN11duckdb_zstdL50HUF_decompress4X1_usingDTable_internal_fast_c_l
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef range(i64 1, 0) i64 @_ZN11duckdb_zstdL43HUF_decompress4X1_usingDTable_internal_bmi2EPvmPKvmPKj(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef readonly %4) unnamed_addr #7 {
 bb.a:
-  %5 = ptrtoint ptr %0 to i64                     ; 5 uses
+  %5 = ptrtoaddr ptr %0 to i64                    ; 5 uses
   %6 = alloca %"struct.duckdb_zstd::BIT_DStream_t", align 8 ; 25 uses
   %i.a = icmp ult i64 %3, 10
   %i.b = icmp ult i64 %1, 6
@@ -5026,7 +5018,7 @@ _ZN11duckdb_zstdL21BIT_reloadDStreamFastEPNS_13BIT_DStream_tE.exit108: ; preds =
 
 bb.as:                                            ; preds = %.loopexit
   %i.oo = ptrtoint ptr %i.u to i64
-  %i.op = ptrtoint ptr %.3148.i to i64            ; 6 uses
+  %i.op = ptrtoint ptr %.3148.i to i64
   %i.oq = sub i64 %i.oo, %i.op
   %i.or = icmp sgt i64 %i.oq, 3
   %i.os = icmp ugt i32 %.sroa.25248.0, 64         ; 2 uses
@@ -5058,7 +5050,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.at
   %i.pa = icmp eq ptr %.sroa.69266.3412, %i.o
-  br i1 %i.pa, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit, label %bb.aw
+  br i1 %i.pa, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.pb = lshr i32 %.sroa.25248.4413, 3           ; 2 uses
@@ -5084,7 +5076,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i: ; preds
   %.sroa.0247.4 = load i64, ptr %.sroa.69266.4, align 1, !tbaa !32 ; 7 uses
   %i.pl = icmp ult ptr %.0.i228.i415, %i.ou
   %i.pm = and i1 %i.pl, %.022.i38.i231.i
-  br i1 %i.pm, label %bb.ax, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit
+  br i1 %i.pm, label %bb.ax, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i
 
 bb.ax:                                            ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i
   %i.pn = and i32 %.sroa.25248.5, 63
@@ -5136,7 +5128,7 @@ bb.ax:                                            ; preds = %_ZN11duckdb_zstdL17
   %i.re = getelementptr inbounds nuw i8, ptr %.0.i228.i415, i64 4 ; 2 uses
   store i8 %i.ra, ptr %i.qt, align 1, !tbaa !7
   %i.rf = icmp ugt i32 %i.rd, 64
-  br i1 %i.rf, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit, label %bb.at, !prof !101, !llvm.loop !113
+  br i1 %i.rf, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i, label %bb.at, !prof !101, !llvm.loop !113
 
 bb.ay:                                            ; preds = %bb.as
   br i1 %i.os, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i, label %bb.az, !prof !122
@@ -5177,32 +5169,24 @@ bb.bc:                                            ; preds = %bb.bb
   %.val5 = load i64, ptr %i.rx, align 1, !tbaa !32
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i
 
-_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit: ; preds = %bb.av, %bb.ax, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i
-  %.sroa.69266.2.ph = phi ptr [ %i.o, %bb.av ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.ax ], [ %.sroa.69266.4, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ]
-  %.sroa.25248.2.ph = phi i32 [ %.sroa.25248.4413, %bb.av ], [ %i.rd, %bb.ax ], [ %.sroa.25248.5, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ]
-  %.sroa.0247.2.ph = phi i64 [ %.sroa.0247.3414, %bb.av ], [ %.sroa.0247.4, %bb.ax ], [ %.sroa.0247.4, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ]
-  %.3.i222.i.ph = phi ptr [ %.0.i228.i415, %bb.av ], [ %i.re, %bb.ax ], [ %.0.i228.i415, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ] ; 2 uses
-  %.pre503 = ptrtoint ptr %.3.i222.i.ph to i64
-  br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i
-
-_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i: ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit, %.preheader377, %bb.bb, %bb.ba, %bb.bc, %bb.ay
-  %.3.i222.i495.pre-phi = phi i64 [ %.pre503, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit ], [ %i.op, %.preheader377 ], [ %i.op, %bb.bb ], [ %i.op, %bb.ba ], [ %i.op, %bb.bc ], [ %i.op, %bb.ay ] ; 2 uses
-  %.sroa.69266.2 = phi ptr [ %.sroa.69266.2.ph, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %.preheader377 ], [ %i.o, %bb.bb ], [ %i.rj, %bb.ba ], [ %i.rx, %bb.bc ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.ay ]
-  %.sroa.25248.2 = phi i32 [ %.sroa.25248.2.ph, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit ], [ %.sroa.25248.0, %.preheader377 ], [ %.sroa.25248.0, %bb.bb ], [ %i.rk, %bb.ba ], [ %i.rz, %bb.bc ], [ %.sroa.25248.0, %bb.ay ] ; 4 uses
-  %.sroa.0247.2 = phi i64 [ %.sroa.0247.2.ph, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit ], [ %.sroa.0247.0, %.preheader377 ], [ %.sroa.0247.0, %bb.bb ], [ %.val.i110, %bb.ba ], [ %.val5, %bb.bc ], [ %.sroa.0247.0, %bb.ay ] ; 3 uses
-  %.3.i222.i = phi ptr [ %.3.i222.i.ph, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i.loopexit ], [ %.3148.i, %.preheader377 ], [ %.3148.i, %bb.bb ], [ %.3148.i, %bb.ba ], [ %.3148.i, %bb.bc ], [ %.3148.i, %bb.ay ] ; 5 uses
+_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i: ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i, %bb.ax, %bb.av, %.preheader377, %bb.bb, %bb.ba, %bb.bc, %bb.ay
+  %.sroa.69266.2 = phi ptr [ %i.rx, %bb.bc ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.ay ], [ %i.rj, %bb.ba ], [ %i.o, %bb.bb ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %.preheader377 ], [ %.sroa.69266.4, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ], [ @_ZZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tEE10zeroFilled, %bb.ax ], [ %i.o, %bb.av ]
+  %.sroa.25248.2 = phi i32 [ %i.rz, %bb.bc ], [ %.sroa.25248.0, %bb.ay ], [ %i.rk, %bb.ba ], [ %.sroa.25248.0, %bb.bb ], [ %.sroa.25248.0, %.preheader377 ], [ %.sroa.25248.5, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ], [ %i.rd, %bb.ax ], [ %.sroa.25248.4413, %bb.av ] ; 4 uses
+  %.sroa.0247.2 = phi i64 [ %.val5, %bb.bc ], [ %.sroa.0247.0, %bb.ay ], [ %.val.i110, %bb.ba ], [ %.sroa.0247.0, %bb.bb ], [ %.sroa.0247.0, %.preheader377 ], [ %.sroa.0247.4, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ], [ %.sroa.0247.4, %bb.ax ], [ %.sroa.0247.3414, %bb.av ] ; 3 uses
+  %.3.i222.i = phi ptr [ %.3148.i, %bb.bc ], [ %.3148.i, %bb.ay ], [ %.3148.i, %bb.ba ], [ %.3148.i, %bb.bb ], [ %.3148.i, %.preheader377 ], [ %.0.i228.i415, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i230.i ], [ %i.re, %bb.ax ], [ %.0.i228.i415, %bb.av ] ; 6 uses
   %i.sa = icmp ult ptr %.3.i222.i, %i.u
   br i1 %i.sa, label %.lr.ph432, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit236.i
 
 .lr.ph432:                                        ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i220.i
+  %.3.i222.i495 = ptrtoaddr ptr %.3.i222.i to i64 ; 2 uses
   %i.sb = sub nsw i32 0, %.sroa.3.0.extract.shift.i
   %i.sc = and i32 %i.sb, 63
   %i.sd = zext nneg i32 %i.sc to i64              ; 3 uses
   %i.se = add i64 %i.t, %5
-  %i.sf = sub i64 %i.se, %.3.i222.i495.pre-phi    ; 2 uses
+  %i.sf = sub i64 %i.se, %.3.i222.i495            ; 2 uses
   %scevgep = getelementptr i8, ptr %.3.i222.i, i64 %i.sf
   %i.sg = add i64 %i.t, %5
-  %.neg = add i64 %.3.i222.i495.pre-phi, 1
+  %.neg = add i64 %.3.i222.i495, 1
   %xtraiter = and i64 %i.sf, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
@@ -5422,14 +5406,14 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i202.i: ; preds =
   br i1 %i.xb, label %.lr.ph454, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit218.i
 
 .lr.ph454:                                        ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i202.i
-  %.3.i204.i585 = ptrtoint ptr %.3.i204.i to i64  ; 2 uses
+  %.3.i204.i584 = ptrtoaddr ptr %.3.i204.i to i64 ; 2 uses
   %i.xc = sub nsw i32 0, %.sroa.3.0.extract.shift.i
   %i.xd = and i32 %i.xc, 63
   %i.xe = zext nneg i32 %i.xd to i64              ; 3 uses
   %i.xf = shl nuw nsw i64 %i.t, 1
   %i.xg = add i64 %i.xf, %5
-  %i.xh = sub i64 %5, %.3.i204.i585
-  %.neg592.a = add i64 %.3.i204.i585, 1
+  %i.xh = sub i64 %5, %.3.i204.i584
+  %.neg592.a = add i64 %.3.i204.i584, 1
   %xtraiter586 = and i64 %i.xh, 1
   %lcmp.mod587.not = icmp eq i64 %xtraiter586, 0
   br i1 %lcmp.mod587.not, label %.prol.loopexit584, label %.prol.loopexit584.unr-lcssa
@@ -5832,7 +5816,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i: ; preds = %b
   br i1 %i.ahc, label %.lr.ph482, label %_ZN11duckdb_zstdL18HUF_decodeStreamX1EPhPNS_13BIT_DStream_tES0_PKNS_10HUF_DEltX1Ej.exit.i
 
 .lr.ph482:                                        ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.i
-  %.3.i.i496 = ptrtoint ptr %.3.i.i to i64        ; 2 uses
+  %.3.i.i496 = ptrtoaddr ptr %.3.i.i to i64       ; 2 uses
   %i.ahd = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 7 uses
   %i.ahe = sub nsw i32 0, %.sroa.3.0.extract.shift.i
   %i.ahf = and i32 %i.ahe, 63
@@ -5977,7 +5961,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.m = sub i64 %i.g, %i.l
   %.not53 = icmp ugt i64 %i.f, %i.m
   %i.n = getelementptr inbounds nuw i8, ptr %.04556, i64 %i.f
-  %.146 = select i1 %.not53, ptr %i.b, ptr %i.n   ; 6 uses
+  %.146 = select i1 %.not53, ptr %i.b, ptr %i.n   ; 7 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv ; 3 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !133  ; 7 uses
   %i.q = icmp ugt ptr %i.p, %.146
@@ -6001,7 +5985,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = load ptr, ptr %i.k, align 8, !tbaa !129 ; 7 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 2 uses
   %i.ad = ptrtoint ptr %.146 to i64               ; 3 uses
-  %i.ae = ptrtoint ptr %i.p to i64                ; 4 uses
+  %i.ae = ptrtoint ptr %i.p to i64
   %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
   %i.ag = icmp sgt i64 %i.af, 3
   br i1 %i.ag, label %.preheader, label %bb.l
@@ -6026,7 +6010,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.al = icmp eq ptr %.sroa.3820.250, %i.ab
-  br i1 %i.al, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit, label %bb.j
+  br i1 %i.al, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.am = lshr i32 %.sroa.12.251, 3               ; 2 uses
@@ -6052,7 +6036,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i: ; preds = %b
   %.sroa.0.3 = load i64, ptr %.sroa.3820.3, align 1, !tbaa !32 ; 7 uses
   %i.aw = icmp ult ptr %.0.i53, %i.ai
   %i.ax = and i1 %i.aw, %.022.i38.i
-  br i1 %i.ax, label %bb.k, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit
+  br i1 %i.ax, label %bb.k, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
 
 bb.k:                                             ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i
   %i.ay = and i32 %.sroa.12.3, 63
@@ -6104,7 +6088,7 @@ bb.k:                                             ; preds = %_ZN11duckdb_zstdL17
   %i.cp = getelementptr inbounds nuw i8, ptr %.0.i53, i64 4 ; 2 uses
   store i8 %i.cl, ptr %i.ce, align 1, !tbaa !7
   %i.cq = icmp ugt i32 %i.co, 64
-  br i1 %i.cq, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit, label %bb.g, !prof !134, !llvm.loop !113
+  br i1 %i.cq, label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i, label %bb.g, !prof !134, !llvm.loop !113
 
 bb.l:                                             ; preds = %bb.f
   %.not.i.i = icmp ult ptr %i.s, %i.ac
@@ -6141,24 +6125,16 @@ bb.o:                                             ; preds = %bb.n
   %.val58 = load i64, ptr %i.dh, align 1, !tbaa !32
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
 
-_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit: ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i, %bb.k, %bb.i
-  %.sroa.12.5.ph = phi i32 [ %.sroa.12.3, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i ], [ %.sroa.12.251, %bb.i ], [ %i.co, %bb.k ]
-  %.sroa.0.5.ph = phi i64 [ %.sroa.0.3, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i ], [ %.sroa.0.252, %bb.i ], [ %.sroa.0.3, %bb.k ]
-  %.3.i.ph = phi ptr [ %.0.i53, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i ], [ %.0.i53, %bb.i ], [ %i.cp, %bb.k ] ; 2 uses
-  %.pre61 = ptrtoint ptr %.3.i.ph to i64
-  br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
-
-_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i: ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit, %bb.n, %bb.m, %bb.o
-  %.3.i58.pre-phi = phi i64 [ %.pre61, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit ], [ %i.ae, %bb.n ], [ %i.ae, %bb.m ], [ %i.ae, %bb.o ] ; 2 uses
-  %.sroa.12.5 = phi i32 [ %.sroa.12.5.ph, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit ], [ %i.aa, %bb.n ], [ %i.cu, %bb.m ], [ %i.dj, %bb.o ] ; 3 uses
-  %.sroa.0.5 = phi i64 [ %.sroa.0.5.ph, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit ], [ %.val.i, %bb.n ], [ %.val.i71, %bb.m ], [ %.val58, %bb.o ] ; 3 uses
-  %.3.i = phi ptr [ %.3.i.ph, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i.loopexit ], [ %i.p, %bb.n ], [ %i.p, %bb.m ], [ %i.p, %bb.o ] ; 5 uses
+_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i: ; preds = %bb.i, %bb.k, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i, %bb.n, %bb.m, %bb.o
+  %.sroa.12.5 = phi i32 [ %i.aa, %bb.n ], [ %i.dj, %bb.o ], [ %i.cu, %bb.m ], [ %i.co, %bb.k ], [ %.sroa.12.251, %bb.i ], [ %.sroa.12.3, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i ] ; 3 uses
+  %.sroa.0.5 = phi i64 [ %.val.i, %bb.n ], [ %.val58, %bb.o ], [ %.val.i71, %bb.m ], [ %.sroa.0.3, %bb.k ], [ %.sroa.0.252, %bb.i ], [ %.sroa.0.3, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i ] ; 3 uses
+  %.3.i = phi ptr [ %i.p, %bb.n ], [ %i.p, %bb.o ], [ %i.p, %bb.m ], [ %i.cp, %bb.k ], [ %.0.i53, %bb.i ], [ %.0.i53, %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit43.i ] ; 5 uses
   %i.dk = icmp ult ptr %.3.i, %.146
   br i1 %i.dk, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i
-  %6 = sub i64 %i.ad, %.3.i58.pre-phi             ; 2 uses
-  %scevgep = getelementptr i8, ptr %.3.i, i64 %6
+  %.3.i65 = ptrtoaddr ptr %.3.i to i64            ; 2 uses
+  %6 = sub i64 %i.ad, %.3.i65
   %xtraiter = and i64 %6, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -6182,7 +6158,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i: ; preds = %_ZN
   %.6.i55.unr = phi ptr [ %.3.i, %.lr.ph.preheader ], [ %i.dv, %.lr.ph.prol ]
   %.sroa.12.654.unr = phi i32 [ %.sroa.12.5, %.lr.ph.preheader ], [ %i.du, %.lr.ph.prol ]
   %i.dw = add i64 %i.ad, -1
-  %i.dx = icmp eq i64 %.3.i58.pre-phi, %i.dw
+  %i.dx = icmp eq i64 %i.dw, %.3.i65
   br i1 %i.dx, label %._crit_edge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
@@ -6212,7 +6188,7 @@ _ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.i: ; preds = %_ZN
   %i.es = add i32 %i.eh, %i.er
   %i.et = getelementptr inbounds nuw i8, ptr %.6.i55, i64 2 ; 2 uses
   store i8 %i.ep, ptr %i.ei, align 1, !tbaa !7
-  %exitcond.not.1 = icmp eq ptr %i.et, %scevgep
+  %exitcond.not.1 = icmp eq ptr %i.et, %.146
   br i1 %exitcond.not.1, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !114
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %.lr.ph.prol.loopexit

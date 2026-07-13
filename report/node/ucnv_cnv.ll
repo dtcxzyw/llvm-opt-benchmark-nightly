@@ -29,12 +29,11 @@ bb.a:
 define dso_local void @ucnv_fromUWriteBytes_78(ptr nofree noundef writeonly captures(address_is_null) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readnone captures(address) %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6, ptr nofree noundef writeonly captures(none) %7) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
-  %8 = ptrtoint ptr %4 to i64
   %i.b = ptrtoaddr ptr %1 to i64
-  %9 = ptrtoint ptr %4 to i64                     ; 2 uses
+  %8 = ptrtoaddr ptr %4 to i64                    ; 3 uses
   %i.c = load ptr, ptr %3, align 8
   %.fr = freeze ptr %i.c                          ; 17 uses
-  %10 = ptrtoint ptr %.fr to i64                  ; 4 uses
+  %9 = ptrtoaddr ptr %.fr to i64                  ; 4 uses
   %i.d = icmp eq ptr %5, null
   br i1 %i.d, label %bb.c, label %bb.b
 
@@ -50,8 +49,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.j = xor i64 %10, -1
-  %i.k = add i64 %i.j, %9
+  %i.j = xor i64 %9, -1
+  %i.k = add i64 %i.j, %8
   %i.l = add nsw i32 %2, -1
   %i.m = zext i32 %i.l to i64
   %umin91 = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %i.m) ; 2 uses
@@ -60,8 +59,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader173, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.o = xor i64 %10, -1
-  %i.p = add i64 %i.o, %9
+  %i.o = xor i64 %9, -1
+  %i.p = add i64 %i.o, %8
   %i.q = add nsw i32 %2, -1
   %i.r = zext i32 %i.q to i64
   %umin = tail call i64 @llvm.umin.i64(i64 %i.p, i64 %i.r) ; 2 uses
@@ -133,14 +132,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.ai, label %iter.check, label %.loopexit41
 
 iter.check:                                       ; preds = %bb.c
-  %i.aj = xor i64 %10, -1
+  %i.aj = xor i64 %9, -1
   %i.ak = add i64 %i.aj, %8
   %i.al = add nsw i32 %2, -1
   %i.am = zext i32 %i.al to i64
   %umin99 = tail call i64 @llvm.umin.i64(i64 %i.ak, i64 %i.am) ; 3 uses
   %i.an = add nuw nsw i64 %umin99, 1              ; 5 uses
   %min.iters.check101 = icmp samesign ult i64 %umin99, 3
-  %i.ao = sub i64 %i.b, %10
+  %i.ao = sub i64 %i.b, %9
   %diff.check = icmp ugt i64 %i.ao, -32
   %or.cond = or i1 %min.iters.check101, %diff.check
   br i1 %or.cond, label %.lr.ph53.preheader, label %vector.main.loop.iter.check
