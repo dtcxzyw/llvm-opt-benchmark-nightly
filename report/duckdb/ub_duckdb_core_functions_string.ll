@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.q, %bb.p
   %i.y = urem i64 %.030.i, %i.x
   %i.z = getelementptr inbounds nuw i8, ptr @_ZN6duckdbL8alphabetE, i64 %i.y
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !66
-  %i.ab = getelementptr inbounds i8, ptr %.029.i, i64 -1 ; 5 uses
+  %i.ab = getelementptr inbounds i8, ptr %.029.i, i64 -1 ; 4 uses
   store i8 %i.aa, ptr %i.ab, align 1, !tbaa !66
   %i.ac = udiv i64 %.030.i, %i.x
   %.not.i = icmp ult i64 %.030.i, %i.x
@@ -212,7 +212,7 @@ bb.q:                                             ; preds = %bb.q, %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.ad = ptrtoint ptr %i.w to i64
-  %i.ae = ptrtoint ptr %i.ab to i64
+  %i.ae = ptrtoint ptr %i.ab to i64               ; 2 uses
   %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
   %i.ag = zext nneg i32 %3 to i64                 ; 4 uses
   %i.ah = icmp slt i64 %i.af, %i.ag
@@ -221,10 +221,9 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph.preheader.i:                               ; preds = %bb.r
   %i.ai = sub nuw nsw i64 64, %i.ag
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ai ; 2 uses
-  %10 = ptrtoaddr ptr %i.ab to i64
   %reass.sub.i = add nsw i64 %i.ag, -64
   %i.aj = sub i64 %reass.sub.i, %i.b
-  %i.ak = add i64 %i.aj, %10
+  %i.ak = add i64 %i.aj, %i.ae
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 48, i64 %i.ak, i1 false), !tbaa !66
   br label %"_ZZN6duckdbL14ToBaseFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEENK3$_0clElii.exit"
 
