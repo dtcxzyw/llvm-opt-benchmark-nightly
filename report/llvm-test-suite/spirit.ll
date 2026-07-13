@@ -201,8 +201,8 @@ bb.e:                                             ; preds = %_ZNK5boost6spirit28
 
 bb.f:                                             ; preds = %bb.e, %_ZNK5boost6spirit28skip_parser_iteration_policyI12skip_grammarNS0_16iteration_policyEE4skipINS0_7scannerIPKcNS0_16scanner_policiesIS4_NS0_12match_policyENS0_13action_policyEEEEEEEvRKT_.exit
   %i.aq = phi i8 [ 0, %_ZNK5boost6spirit28skip_parser_iteration_policyI12skip_grammarNS0_16iteration_policyEE4skipINS0_7scannerIPKcNS0_16scanner_policiesIS4_NS0_12match_policyENS0_13action_policyEEEEEEEvRKT_.exit ], [ %i.ap, %bb.e ]
-  %8 = icmp ne i64 %.lobit.i, -1
-  %9 = zext i1 %8 to i8
+  %8 = trunc nsw i64 %.lobit.i to i8
+  %9 = add nsw i8 %8, 1
   store ptr %.pre17, ptr %0, align 8, !tbaa !131
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %9, ptr %i.ar, align 8, !tbaa !132
