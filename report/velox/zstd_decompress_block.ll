@@ -204,20 +204,20 @@ bb.da:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.aay, label %.preheader598.i.preheader, label %bb.db
 
 .preheader598.i.preheader:                        ; preds = %bb.da
-  %8 = add i64 %.sroa.6.0.copyload, %i.aj
-  %umin = tail call i64 @llvm.umin.i64(i64 %.sroa.11.0.copyload, i64 %i.zf)
-  %i.aaz = add i64 %8, %umin
-  %umax34 = tail call i64 @llvm.umax.i64(i64 %.sroa.11.0.copyload, i64 %i.zf) ; 3 uses
-  %i.aba = add i64 %i.aaz, %umax34
+  %8 = tail call i64 @llvm.umin.i64(i64 %.sroa.11.0.copyload, i64 %i.zf)
+  %umin = tail call i64 @llvm.umax.i64(i64 %.sroa.11.0.copyload, i64 %i.zf) ; 3 uses
+  %i.aaz = add i64 %.sroa.6.0.copyload, %i.aj
+  %9 = add i64 %i.aaz, %8
+  %i.aba = add i64 %9, %umin
   %i.abb = sub i64 %i.aba, %.sroa.11.0.copyload
-  %i.abc = add i64 %i.hz, %umax34
+  %i.abc = add i64 %umin, %i.ib
   %umax35 = tail call i64 @llvm.umax.i64(i64 %i.abb, i64 %i.abc)
-  %i.abd = add i64 %umax35, -9
-  %9 = add i64 %umax34, %i.aj
-  %10 = sub i64 %i.abd, %9                        ; 2 uses
-  %i.abe = lshr i64 %10, 3
+  %i.abd = add i64 %umin, %i.aj
+  %10 = sub i64 %umax35, %i.abd
+  %11 = add i64 %10, -9                           ; 2 uses
+  %i.abe = lshr i64 %11, 3
   %i.abf = add nuw nsw i64 %i.abe, 1              ; 2 uses
-  %min.iters.check = icmp ult i64 %10, 72
+  %min.iters.check = icmp ult i64 %11, 72
   br i1 %min.iters.check, label %.preheader598.i.preheader326, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader598.i.preheader
@@ -485,20 +485,20 @@ bb.dv:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.aew, label %.preheader602.i.preheader, label %bb.dw
 
 .preheader602.i.preheader:                        ; preds = %bb.dv
-  %11 = add i64 %.sroa.544.0.copyload, %i.aj
-  %umin114 = tail call i64 @llvm.umin.i64(i64 %.sroa.1048.0.copyload, i64 %i.add)
-  %i.aex = add i64 %11, %umin114
-  %umax115 = tail call i64 @llvm.umax.i64(i64 %.sroa.1048.0.copyload, i64 %i.add) ; 3 uses
-  %i.aey = add i64 %i.aex, %umax115
+  %12 = tail call i64 @llvm.umin.i64(i64 %.sroa.1048.0.copyload, i64 %i.add)
+  %umin114 = tail call i64 @llvm.umax.i64(i64 %.sroa.1048.0.copyload, i64 %i.add) ; 3 uses
+  %i.aex = add i64 %.sroa.544.0.copyload, %i.aj
+  %13 = add i64 %i.aex, %12
+  %i.aey = add i64 %13, %umin114
   %i.aez = sub i64 %i.aey, %.sroa.1048.0.copyload
-  %i.afa = add i64 %i.ia, %umax115
+  %i.afa = add i64 %umin114, %i.ia
   %umax116 = tail call i64 @llvm.umax.i64(i64 %i.aez, i64 %i.afa)
-  %i.afb = add i64 %umax116, -9
-  %12 = add i64 %umax115, %i.aj
-  %13 = sub i64 %i.afb, %12                       ; 2 uses
-  %i.afc = lshr i64 %13, 3
+  %i.afb = add i64 %umin114, %i.aj
+  %14 = sub i64 %umax116, %i.afb
+  %15 = add i64 %14, -9                           ; 2 uses
+  %i.afc = lshr i64 %15, 3
   %i.afd = add nuw nsw i64 %i.afc, 1              ; 2 uses
-  %min.iters.check118 = icmp ult i64 %13, 72
+  %min.iters.check118 = icmp ult i64 %15, 72
   br i1 %min.iters.check118, label %.preheader602.i.preheader330, label %vector.memcheck109
 
 vector.memcheck109:                               ; preds = %.preheader602.i.preheader
@@ -750,20 +750,20 @@ bb.ep:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.aip, label %.preheader605.i.preheader, label %bb.eq
 
 .preheader605.i.preheader:                        ; preds = %bb.ep
-  %14 = add i64 %.sroa.5.0.copyload, %i.aj
-  %umin137 = tail call i64 @llvm.umin.i64(i64 %.sroa.10.0.copyload, i64 %i.agw)
-  %i.aiq = add i64 %14, %umin137
-  %umax138 = tail call i64 @llvm.umax.i64(i64 %.sroa.10.0.copyload, i64 %i.agw) ; 3 uses
-  %i.air = add i64 %i.aiq, %umax138
+  %16 = tail call i64 @llvm.umin.i64(i64 %.sroa.10.0.copyload, i64 %i.agw)
+  %umin137 = tail call i64 @llvm.umax.i64(i64 %.sroa.10.0.copyload, i64 %i.agw) ; 3 uses
+  %i.aiq = add i64 %.sroa.5.0.copyload, %i.aj
+  %17 = add i64 %i.aiq, %16
+  %i.air = add i64 %17, %umin137
   %i.ais = sub i64 %i.air, %.sroa.10.0.copyload
-  %i.ait = add i64 %i.ib, %umax138
+  %i.ait = add i64 %umin137, %i.hz
   %umax139 = tail call i64 @llvm.umax.i64(i64 %i.ais, i64 %i.ait)
-  %i.aiu = add i64 %umax139, -9
-  %15 = add i64 %umax138, %i.aj
-  %16 = sub i64 %i.aiu, %15                       ; 2 uses
-  %i.aiv = lshr i64 %16, 3
+  %i.aiu = add i64 %umin137, %i.aj
+  %18 = sub i64 %umax139, %i.aiu
+  %19 = add i64 %18, -9                           ; 2 uses
+  %i.aiv = lshr i64 %19, 3
   %i.aiw = add nuw nsw i64 %i.aiv, 1              ; 2 uses
-  %min.iters.check141 = icmp ult i64 %16, 72
+  %min.iters.check141 = icmp ult i64 %19, 72
   br i1 %min.iters.check141, label %.preheader605.i.preheader334, label %vector.memcheck133
 
 vector.memcheck133:                               ; preds = %.preheader605.i.preheader
@@ -1166,20 +1166,20 @@ bb.ft:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.apy, label %.preheader588.i.preheader, label %bb.fu
 
 .preheader588.i.preheader:                        ; preds = %bb.ft
-  %17 = add i64 %.sroa.628.0.copyload, %i.aj
-  %umin161 = tail call i64 @llvm.umin.i64(i64 %.sroa.1132.0.copyload, i64 %i.aof)
-  %i.apz = add i64 %17, %umin161
-  %umax162 = tail call i64 @llvm.umax.i64(i64 %.sroa.1132.0.copyload, i64 %i.aof) ; 3 uses
-  %i.aqa = add i64 %i.apz, %umax162
+  %20 = tail call i64 @llvm.umin.i64(i64 %.sroa.1132.0.copyload, i64 %i.aof)
+  %umin161 = tail call i64 @llvm.umax.i64(i64 %.sroa.1132.0.copyload, i64 %i.aof) ; 3 uses
+  %i.apz = add i64 %.sroa.628.0.copyload, %i.aj
+  %21 = add i64 %i.apz, %20
+  %i.aqa = add i64 %21, %umin161
   %i.aqb = sub i64 %i.aqa, %.sroa.1132.0.copyload
-  %i.aqc = add i64 %i.akt, %umax162
+  %i.aqc = add i64 %umin161, %i.akv
   %umax163 = tail call i64 @llvm.umax.i64(i64 %i.aqb, i64 %i.aqc)
-  %i.aqd = add i64 %umax163, -9
-  %18 = add i64 %umax162, %i.aj
-  %19 = sub i64 %i.aqd, %18                       ; 2 uses
-  %i.aqe = lshr i64 %19, 3
+  %i.aqd = add i64 %umin161, %i.aj
+  %22 = sub i64 %umax163, %i.aqd
+  %23 = add i64 %22, -9                           ; 2 uses
+  %i.aqe = lshr i64 %23, 3
   %i.aqf = add nuw nsw i64 %i.aqe, 1              ; 2 uses
-  %min.iters.check165 = icmp ult i64 %19, 72
+  %min.iters.check165 = icmp ult i64 %23, 72
   br i1 %min.iters.check165, label %.preheader588.i.preheader315, label %vector.memcheck156
 
 vector.memcheck156:                               ; preds = %.preheader588.i.preheader
@@ -1432,20 +1432,20 @@ bb.gn:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.atp, label %.preheader592.i.preheader, label %bb.go
 
 .preheader592.i.preheader:                        ; preds = %bb.gn
-  %20 = add i64 %.sroa.552.0.copyload, %i.aj
-  %umin264 = tail call i64 @llvm.umin.i64(i64 %.sroa.1056.0.copyload, i64 %i.arw)
-  %i.atq = add i64 %20, %umin264
-  %umax265 = tail call i64 @llvm.umax.i64(i64 %.sroa.1056.0.copyload, i64 %i.arw) ; 3 uses
-  %i.atr = add i64 %i.atq, %umax265
+  %24 = tail call i64 @llvm.umin.i64(i64 %.sroa.1056.0.copyload, i64 %i.arw)
+  %umin264 = tail call i64 @llvm.umax.i64(i64 %.sroa.1056.0.copyload, i64 %i.arw) ; 3 uses
+  %i.atq = add i64 %.sroa.552.0.copyload, %i.aj
+  %25 = add i64 %i.atq, %24
+  %i.atr = add i64 %25, %umin264
   %i.ats = sub i64 %i.atr, %.sroa.1056.0.copyload
-  %i.att = add i64 %i.aku, %umax265
+  %i.att = add i64 %umin264, %i.aku
   %umax266 = tail call i64 @llvm.umax.i64(i64 %i.ats, i64 %i.att)
-  %i.atu = add i64 %umax266, -9
-  %21 = add i64 %umax265, %i.aj
-  %22 = sub i64 %i.atu, %21                       ; 2 uses
-  %i.atv = lshr i64 %22, 3
+  %i.atu = add i64 %umin264, %i.aj
+  %26 = sub i64 %umax266, %i.atu
+  %27 = add i64 %26, -9                           ; 2 uses
+  %i.atv = lshr i64 %27, 3
   %i.atw = add nuw nsw i64 %i.atv, 1              ; 2 uses
-  %min.iters.check268 = icmp ult i64 %22, 72
+  %min.iters.check268 = icmp ult i64 %27, 72
   br i1 %min.iters.check268, label %.preheader592.i.preheader319, label %vector.memcheck259
 
 vector.memcheck259:                               ; preds = %.preheader592.i.preheader
@@ -1694,20 +1694,20 @@ bb.hh:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.axf, label %.preheader595.i.preheader, label %bb.hi
 
 .preheader595.i.preheader:                        ; preds = %bb.hh
-  %23 = add i64 %.sroa.536.0.copyload, %i.aj
-  %umin287 = tail call i64 @llvm.umin.i64(i64 %.sroa.1040.0.copyload, i64 %i.avm)
-  %i.axg = add i64 %23, %umin287
-  %umax288 = tail call i64 @llvm.umax.i64(i64 %.sroa.1040.0.copyload, i64 %i.avm) ; 3 uses
-  %i.axh = add i64 %i.axg, %umax288
+  %28 = tail call i64 @llvm.umin.i64(i64 %.sroa.1040.0.copyload, i64 %i.avm)
+  %umin287 = tail call i64 @llvm.umax.i64(i64 %.sroa.1040.0.copyload, i64 %i.avm) ; 3 uses
+  %i.axg = add i64 %.sroa.536.0.copyload, %i.aj
+  %29 = add i64 %i.axg, %28
+  %i.axh = add i64 %29, %umin287
   %i.axi = sub i64 %i.axh, %.sroa.1040.0.copyload
-  %i.axj = add i64 %i.akv, %umax288
+  %i.axj = add i64 %umin287, %i.akt
   %umax289 = tail call i64 @llvm.umax.i64(i64 %i.axi, i64 %i.axj)
-  %i.axk = add i64 %umax289, -9
-  %24 = add i64 %umax288, %i.aj
-  %25 = sub i64 %i.axk, %24                       ; 2 uses
-  %i.axl = lshr i64 %25, 3
+  %i.axk = add i64 %umin287, %i.aj
+  %30 = sub i64 %umax289, %i.axk
+  %31 = add i64 %30, -9                           ; 2 uses
+  %i.axl = lshr i64 %31, 3
   %i.axm = add nuw nsw i64 %i.axl, 1              ; 2 uses
-  %min.iters.check291 = icmp ult i64 %25, 72
+  %min.iters.check291 = icmp ult i64 %31, 72
   br i1 %min.iters.check291, label %.preheader595.i.preheader323, label %vector.memcheck283
 
 vector.memcheck283:                               ; preds = %.preheader595.i.preheader
@@ -2110,20 +2110,20 @@ bb.bs:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.qt, label %.preheader269.i.preheader, label %bb.bt
 
 .preheader269.i.preheader:                        ; preds = %bb.bs
-  %10 = add i64 %.sroa.681.0.i, %i.gu
-  %umin = tail call i64 @llvm.umin.i64(i64 %.sink.i, i64 %i.oz)
-  %i.qu = add i64 %10, %umin
-  %umax108 = tail call i64 @llvm.umax.i64(i64 %.sink.i, i64 %i.oz) ; 3 uses
-  %i.qv = add i64 %i.qu, %umax108
+  %10 = tail call i64 @llvm.umin.i64(i64 %.sink.i, i64 %i.oz)
+  %umin = tail call i64 @llvm.umax.i64(i64 %.sink.i, i64 %i.oz) ; 3 uses
+  %i.qu = add i64 %.sroa.681.0.i, %i.gu
+  %11 = add i64 %i.qu, %10
+  %i.qv = add i64 %11, %umin
   %i.qw = sub i64 %i.qv, %.sink.i
-  %i.qx = add i64 %i.gx, %umax108
+  %i.qx = add i64 %umin, %i.gx
   %umax109 = tail call i64 @llvm.umax.i64(i64 %i.qw, i64 %i.qx)
-  %i.qy = add i64 %umax109, -9
-  %11 = add i64 %umax108, %i.gu
-  %12 = sub i64 %i.qy, %11                        ; 2 uses
-  %i.qz = lshr i64 %12, 3
+  %i.qy = add i64 %umin, %i.gu
+  %12 = sub i64 %umax109, %i.qy
+  %13 = add i64 %12, -9                           ; 2 uses
+  %i.qz = lshr i64 %13, 3
   %i.ra = add nuw nsw i64 %i.qz, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %12, 72
+  %min.iters.check = icmp ult i64 %13, 72
   br i1 %min.iters.check, label %.preheader269.i.preheader255, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader269.i.preheader
@@ -2526,21 +2526,21 @@ bb.cu:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.xc, label %.preheader265.i.preheader, label %bb.cv
 
 .preheader265.i.preheader:                        ; preds = %bb.cu
-  %13 = add i64 %.sroa.681.0.i, %i.gu
-  %umin188 = tail call i64 @llvm.umin.i64(i64 %.sink.i, i64 %i.vi)
-  %i.xd = add i64 %13, %umin188
-  %umax189 = tail call i64 @llvm.umax.i64(i64 %.sink.i, i64 %i.vi) ; 3 uses
-  %i.xe = add i64 %i.xd, %umax189
+  %14 = tail call i64 @llvm.umin.i64(i64 %.sink.i, i64 %i.vi)
+  %umin188 = tail call i64 @llvm.umax.i64(i64 %.sink.i, i64 %i.vi) ; 3 uses
+  %i.xd = add i64 %.sroa.681.0.i, %i.gu
+  %15 = add i64 %i.xd, %14
+  %i.xe = add i64 %15, %umin188
   %i.xf = sub i64 %i.xe, %.sink.i
-  %i.xg = add i64 %umax189, %i.gu
+  %i.xg = add i64 %umin188, %i.gu
   %i.xh = add i64 %i.xg, 16
   %umax190 = tail call i64 @llvm.umax.i64(i64 %i.xf, i64 %i.xh)
-  %i.xi = add i64 %umax190, -9
-  %14 = add i64 %umax189, %i.gu
-  %15 = sub i64 %i.xi, %14                        ; 2 uses
-  %i.xj = lshr i64 %15, 3
+  %i.xi = add i64 %umin188, %i.gu
+  %16 = sub i64 %umax190, %i.xi
+  %17 = add i64 %16, -9                           ; 2 uses
+  %i.xj = lshr i64 %17, 3
   %i.xk = add nuw nsw i64 %i.xj, 1                ; 2 uses
-  %min.iters.check192 = icmp ult i64 %15, 184
+  %min.iters.check192 = icmp ult i64 %17, 184
   br i1 %min.iters.check192, label %.preheader265.i.preheader251, label %vector.memcheck183
 
 vector.memcheck183:                               ; preds = %.preheader265.i.preheader
@@ -2943,20 +2943,20 @@ bb.en:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.ahs, label %.preheader262.i.preheader, label %bb.eo
 
 .preheader262.i.preheader:                        ; preds = %bb.en
-  %16 = add i64 %.sroa.6.0.i, %i.gu
-  %umin212 = tail call i64 @llvm.umin.i64(i64 %.sink471.i, i64 %i.afy)
-  %i.aht = add i64 %16, %umin212
-  %umax213 = tail call i64 @llvm.umax.i64(i64 %.sink471.i, i64 %i.afy) ; 3 uses
-  %i.ahu = add i64 %i.aht, %umax213
+  %18 = tail call i64 @llvm.umin.i64(i64 %.sink471.i, i64 %i.afy)
+  %umin212 = tail call i64 @llvm.umax.i64(i64 %.sink471.i, i64 %i.afy) ; 3 uses
+  %i.aht = add i64 %.sroa.6.0.i, %i.gu
+  %19 = add i64 %i.aht, %18
+  %i.ahu = add i64 %19, %umin212
   %i.ahv = sub i64 %i.ahu, %.sink471.i
-  %i.ahw = add i64 %i.yi, %umax213
+  %i.ahw = add i64 %umin212, %i.yi
   %umax214 = tail call i64 @llvm.umax.i64(i64 %i.ahv, i64 %i.ahw)
-  %i.ahx = add i64 %umax214, -9
-  %17 = add i64 %umax213, %i.gu
-  %18 = sub i64 %i.ahx, %17                       ; 2 uses
-  %i.ahy = lshr i64 %18, 3
+  %i.ahx = add i64 %umin212, %i.gu
+  %20 = sub i64 %umax214, %i.ahx
+  %21 = add i64 %20, -9                           ; 2 uses
+  %i.ahy = lshr i64 %21, 3
   %i.ahz = add nuw nsw i64 %i.ahy, 1              ; 2 uses
-  %min.iters.check216 = icmp ult i64 %18, 72
+  %min.iters.check216 = icmp ult i64 %21, 72
   br i1 %min.iters.check216, label %.preheader262.i.preheader234, label %vector.memcheck207
 
 vector.memcheck207:                               ; preds = %.preheader262.i.preheader
@@ -3359,20 +3359,20 @@ bb.bu:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.qp, label %.preheader97.i.preheader, label %bb.bv
 
 .preheader97.i.preheader:                         ; preds = %bb.bu
-  %8 = add i64 %.sroa.6.0.i, %i.hc
-  %umin = tail call i64 @llvm.umin.i64(i64 %.sink.i, i64 %i.ov)
-  %i.qq = add i64 %8, %umin
-  %umax19 = tail call i64 @llvm.umax.i64(i64 %.sink.i, i64 %i.ov) ; 3 uses
-  %i.qr = add i64 %i.qq, %umax19
+  %8 = tail call i64 @llvm.umin.i64(i64 %.sink.i, i64 %i.ov)
+  %umin = tail call i64 @llvm.umax.i64(i64 %.sink.i, i64 %i.ov) ; 3 uses
+  %i.qq = add i64 %.sroa.6.0.i, %i.hc
+  %9 = add i64 %i.qq, %8
+  %i.qr = add i64 %9, %umin
   %i.qs = sub i64 %i.qr, %.sink.i
-  %i.qt = add i64 %i.hf, %umax19
+  %i.qt = add i64 %umin, %i.hf
   %umax20 = tail call i64 @llvm.umax.i64(i64 %i.qs, i64 %i.qt)
-  %i.qu = add i64 %umax20, -9
-  %9 = add i64 %umax19, %i.hc
-  %10 = sub i64 %i.qu, %9                         ; 2 uses
-  %i.qv = lshr i64 %10, 3
+  %i.qu = add i64 %umin, %i.hc
+  %10 = sub i64 %umax20, %i.qu
+  %11 = add i64 %10, -9                           ; 2 uses
+  %i.qv = lshr i64 %11, 3
   %i.qw = add nuw nsw i64 %i.qv, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %10, 72
+  %min.iters.check = icmp ult i64 %11, 72
   br i1 %min.iters.check, label %.preheader97.i.preheader25, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader97.i.preheader
@@ -3775,9 +3775,9 @@ ZSTD_initFseState.exit55:                         ; preds = %bb.x, %bb.z, %bb.aa
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.gu = ptrtoint ptr %i.h to i64                ; 21 uses
   %i.gv = ptrtoint ptr %i.j to i64                ; 3 uses
-  %10 = add i64 %i.gu, 16
+  %10 = ptrtoint ptr %3 to i64
   %i.gw = ptrtoint ptr %3 to i64
-  %11 = ptrtoint ptr %3 to i64
+  %invariant.op = add i64 %i.gu, 16
   br label %bb.ac
 
 bb.ac:                                            ; preds = %ZSTD_initFseState.exit55, %bb.bu
@@ -3953,7 +3953,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.kq = getelementptr inbounds i8, ptr %i.gx, i64 %i.kp
   %i.kr = icmp ult ptr %i.kq, %3
   %i.ks = ptrtoint ptr %i.gx to i64
-  %i.kt = sub i64 %i.ks, %i.gw
+  %i.kt = sub i64 %i.ks, %10
   %i.ku = trunc i64 %i.kt to i32
   %.021.i.i = select i1 %i.kr, i32 %i.ku, i32 %i.kn ; 2 uses
   %i.kv = zext i32 %.021.i.i to i64
@@ -4064,7 +4064,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.nb = getelementptr inbounds i8, ptr %i.la, i64 %i.na
   %i.nc = icmp ult ptr %i.nb, %3
   %i.nd = ptrtoint ptr %i.la to i64
-  %i.ne = sub i64 %i.nd, %11
+  %i.ne = sub i64 %i.nd, %i.gw
   %i.nf = trunc i64 %i.ne to i32
   %.021.i206.i = select i1 %i.nc, i32 %i.nf, i32 %i.my ; 2 uses
   %i.ng = zext i32 %.021.i206.i to i64
@@ -4278,17 +4278,17 @@ bb.bq:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.qs, label %.preheader269.preheader, label %bb.br
 
 .preheader269.preheader:                          ; preds = %bb.bq
-  %12 = add i64 %.sroa.681.0, %i.gu
-  %umin = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.oy)
-  %i.qt = add i64 %12, %umin
-  %umax78 = tail call i64 @llvm.umax.i64(i64 %.sink, i64 %i.oy) ; 3 uses
-  %i.qu = add i64 %i.qt, %umax78
+  %11 = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.oy)
+  %umin = tail call i64 @llvm.umax.i64(i64 %.sink, i64 %i.oy) ; 3 uses
+  %i.qt = add i64 %.sroa.681.0, %i.gu
+  %12 = add i64 %i.qt, %11
+  %i.qu = add i64 %12, %umin
   %i.qv = sub i64 %i.qu, %.sink
-  %i.qw = add i64 %10, %umax78
+  %i.qw = add i64 %umin, %invariant.op
   %umax79 = tail call i64 @llvm.umax.i64(i64 %i.qv, i64 %i.qw)
-  %i.qx = add i64 %umax79, -9
-  %13 = add i64 %umax78, %i.gu
-  %14 = sub i64 %i.qx, %13                        ; 2 uses
+  %i.qx = add i64 %umin, %i.gu
+  %13 = sub i64 %umax79, %i.qx
+  %14 = add i64 %13, -9                           ; 2 uses
   %i.qy = lshr i64 %14, 3
   %i.qz = add nuw nsw i64 %i.qy, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %14, 72
@@ -4691,21 +4691,21 @@ bb.cs:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.xb, label %.preheader265.preheader, label %bb.ct
 
 .preheader265.preheader:                          ; preds = %bb.cs
-  %15 = add i64 %.sroa.681.0, %i.gu
-  %umin158 = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.vh)
-  %i.xc = add i64 %15, %umin158
-  %umax159 = tail call i64 @llvm.umax.i64(i64 %.sink, i64 %i.vh) ; 3 uses
-  %i.xd = add i64 %i.xc, %umax159
+  %15 = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.vh)
+  %umin158 = tail call i64 @llvm.umax.i64(i64 %.sink, i64 %i.vh) ; 3 uses
+  %i.xc = add i64 %.sroa.681.0, %i.gu
+  %16 = add i64 %i.xc, %15
+  %i.xd = add i64 %16, %umin158
   %i.xe = sub i64 %i.xd, %.sink
-  %i.xf = add i64 %umax159, %i.gu
+  %i.xf = add i64 %umin158, %i.gu
   %i.xg = add i64 %i.xf, 16
   %umax160 = tail call i64 @llvm.umax.i64(i64 %i.xe, i64 %i.xg)
-  %i.xh = add i64 %umax160, -9
-  %16 = add i64 %umax159, %i.gu
-  %17 = sub i64 %i.xh, %16                        ; 2 uses
-  %i.xi = lshr i64 %17, 3
+  %i.xh = add i64 %umin158, %i.gu
+  %17 = sub i64 %umax160, %i.xh
+  %18 = add i64 %17, -9                           ; 2 uses
+  %i.xi = lshr i64 %18, 3
   %i.xj = add nuw nsw i64 %i.xi, 1                ; 2 uses
-  %min.iters.check162 = icmp ult i64 %17, 184
+  %min.iters.check162 = icmp ult i64 %18, 184
   br i1 %min.iters.check162, label %.preheader265.preheader216, label %vector.memcheck153
 
 vector.memcheck153:                               ; preds = %.preheader265.preheader
@@ -4802,9 +4802,9 @@ bb.cx:                                            ; preds = %bb.cw
   tail call void asm sideeffect ".p2align 3", "~{dirflag},~{fpsr},~{flags}"() #17, !srcloc !143
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %18 = add i64 %i.gu, 16
-  %i.yh = ptrtoint ptr %3 to i64
   %19 = ptrtoint ptr %3 to i64
+  %i.yh = ptrtoint ptr %3 to i64
+  %invariant.op369 = add i64 %i.gu, 16
   br label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx, %bb.ep
@@ -4980,7 +4980,7 @@ bb.dn:                                            ; preds = %bb.dm
   %i.acb = getelementptr inbounds i8, ptr %i.yi, i64 %i.aca
   %i.acc = icmp ult ptr %i.acb, %3
   %i.acd = ptrtoint ptr %i.yi to i64
-  %i.ace = sub i64 %i.acd, %i.yh
+  %i.ace = sub i64 %i.acd, %19
   %i.acf = trunc i64 %i.ace to i32
   %.021.i213.i = select i1 %i.acc, i32 %i.acf, i32 %i.aby ; 2 uses
   %i.acg = zext i32 %.021.i213.i to i64
@@ -5091,7 +5091,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.aem = getelementptr inbounds i8, ptr %i.acl, i64 %i.ael
   %i.aen = icmp ult ptr %i.aem, %3
   %i.aeo = ptrtoint ptr %i.acl to i64
-  %i.aep = sub i64 %i.aeo, %19
+  %i.aep = sub i64 %i.aeo, %i.yh
   %i.aeq = trunc i64 %i.aep to i32
   %.021.i220.i = select i1 %i.aen, i32 %i.aeq, i32 %i.aej ; 2 uses
   %i.aer = zext i32 %.021.i220.i to i64
@@ -5287,20 +5287,20 @@ bb.el:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.ahr, label %.preheader262.preheader, label %bb.em
 
 .preheader262.preheader:                          ; preds = %bb.el
-  %20 = add i64 %.sroa.6.0, %i.gu
-  %umin182 = tail call i64 @llvm.umin.i64(i64 %.sink471, i64 %i.afx)
-  %i.ahs = add i64 %20, %umin182
-  %umax183 = tail call i64 @llvm.umax.i64(i64 %.sink471, i64 %i.afx) ; 3 uses
-  %i.aht = add i64 %i.ahs, %umax183
+  %20 = tail call i64 @llvm.umin.i64(i64 %.sink471, i64 %i.afx)
+  %umin182 = tail call i64 @llvm.umax.i64(i64 %.sink471, i64 %i.afx) ; 3 uses
+  %i.ahs = add i64 %.sroa.6.0, %i.gu
+  %21 = add i64 %i.ahs, %20
+  %i.aht = add i64 %21, %umin182
   %i.ahu = sub i64 %i.aht, %.sink471
-  %i.ahv = add i64 %18, %umax183
+  %i.ahv = add i64 %umin182, %invariant.op369
   %umax184 = tail call i64 @llvm.umax.i64(i64 %i.ahu, i64 %i.ahv)
-  %i.ahw = add i64 %umax184, -9
-  %21 = add i64 %umax183, %i.gu
-  %22 = sub i64 %i.ahw, %21                       ; 2 uses
-  %i.ahx = lshr i64 %22, 3
+  %i.ahw = add i64 %umin182, %i.gu
+  %22 = sub i64 %umax184, %i.ahw
+  %23 = add i64 %22, -9                           ; 2 uses
+  %i.ahx = lshr i64 %23, 3
   %i.ahy = add nuw nsw i64 %i.ahx, 1              ; 2 uses
-  %min.iters.check186 = icmp ult i64 %22, 72
+  %min.iters.check186 = icmp ult i64 %23, 72
   br i1 %min.iters.check186, label %.preheader262.preheader205, label %vector.memcheck177
 
 vector.memcheck177:                               ; preds = %.preheader262.preheader
@@ -5703,9 +5703,9 @@ ZSTD_initFseState.exit35:                         ; preds = %bb.aa, %bb.ac, %bb.
   %i.hb = getelementptr inbounds nuw i8, ptr %7, i64 104 ; 2 uses
   %i.hc = ptrtoint ptr %i.o to i64                ; 7 uses
   %i.hd = ptrtoint ptr %i.q to i64
-  %8 = add i64 %i.hc, 16
+  %8 = ptrtoint ptr %3 to i64
   %i.he = ptrtoint ptr %3 to i64
-  %9 = ptrtoint ptr %3 to i64
+  %invariant.op = add i64 %i.hc, 16
   br label %bb.af
 
 bb.af:                                            ; preds = %ZSTD_initFseState.exit35, %bb.bw
@@ -5881,7 +5881,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ky = getelementptr inbounds i8, ptr %i.hf, i64 %i.kx
   %i.kz = icmp ult ptr %i.ky, %3
   %i.la = ptrtoint ptr %i.hf to i64
-  %i.lb = sub i64 %i.la, %i.he
+  %i.lb = sub i64 %i.la, %8
   %i.lc = trunc i64 %i.lb to i32
   %.021.i.i = select i1 %i.kz, i32 %i.lc, i32 %i.kv ; 2 uses
   %i.ld = zext i32 %.021.i.i to i64
@@ -5992,7 +5992,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.nj = getelementptr inbounds i8, ptr %i.li, i64 %i.ni
   %i.nk = icmp ult ptr %i.nj, %3
   %i.nl = ptrtoint ptr %i.li to i64
-  %i.nm = sub i64 %i.nl, %9
+  %i.nm = sub i64 %i.nl, %i.he
   %i.nn = trunc i64 %i.nm to i32
   %.021.i87.i = select i1 %i.nk, i32 %i.nn, i32 %i.ng ; 2 uses
   %i.no = zext i32 %.021.i87.i to i64
@@ -6188,17 +6188,17 @@ bb.bs:                                            ; preds = %ZSTD_overlapCopy8.e
   br i1 %i.qo, label %.preheader97.preheader, label %bb.bt
 
 .preheader97.preheader:                           ; preds = %bb.bs
-  %10 = add i64 %.sroa.6.0, %i.hc
-  %umin = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.ou)
-  %i.qp = add i64 %10, %umin
-  %umax13 = tail call i64 @llvm.umax.i64(i64 %.sink, i64 %i.ou) ; 3 uses
-  %i.qq = add i64 %i.qp, %umax13
+  %9 = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.ou)
+  %umin = tail call i64 @llvm.umax.i64(i64 %.sink, i64 %i.ou) ; 3 uses
+  %i.qp = add i64 %.sroa.6.0, %i.hc
+  %10 = add i64 %i.qp, %9
+  %i.qq = add i64 %10, %umin
   %i.qr = sub i64 %i.qq, %.sink
-  %i.qs = add i64 %8, %umax13
+  %i.qs = add i64 %umin, %invariant.op
   %umax14 = tail call i64 @llvm.umax.i64(i64 %i.qr, i64 %i.qs)
-  %i.qt = add i64 %umax14, -9
-  %11 = add i64 %umax13, %i.hc
-  %12 = sub i64 %i.qt, %11                        ; 2 uses
+  %i.qt = add i64 %umin, %i.hc
+  %11 = sub i64 %umax14, %i.qt
+  %12 = add i64 %11, -9                           ; 2 uses
   %i.qu = lshr i64 %12, 3
   %i.qv = add nuw nsw i64 %i.qu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %12, 72

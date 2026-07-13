@@ -203,11 +203,11 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   br i1 %i.bt, label %.lr.ph101.preheader, label %.sink.split
 
 .lr.ph101.preheader:                              ; preds = %.preheader
-  %i.bu = zext i32 %i.x to i64                    ; 3 uses
-  %6 = zext nneg i32 %0 to i64
+  %i.bu = zext i32 %i.x to i64                    ; 4 uses
   %i.bv = icmp ne i32 %i.x, 0
   %umin.neg = sext i1 %i.bv to i64
-  %i.bw = add nsw i64 %umin.neg, %6               ; 3 uses
+  %6 = add nsw i64 %umin.neg, %i.bu
+  %i.bw = add nsw i64 %6, 1                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.bw, 8
   br i1 %min.iters.check, label %.lr.ph101.preheader118, label %vector.ph
 
@@ -610,12 +610,12 @@ bb.b:                                             ; preds = %._crit_edge132
 .lr.ph137.preheader:                              ; preds = %bb.b
   %i.ci = add nuw i32 %0, 1                       ; 2 uses
   %i.cj = zext i32 %i.ci to i64                   ; 3 uses
-  %5 = add nuw i32 %0, 1
-  %smin161 = tail call i32 @llvm.smin.i32(i32 %i.ci, i32 3)
-  %6 = sub i32 %5, %smin161                       ; 2 uses
-  %i.ck = zext i32 %6 to i64
+  %5 = tail call i32 @llvm.smin.i32(i32 %i.ci, i32 3)
+  %6 = sub i32 %0, %5
+  %7 = add i32 %6, 1                              ; 2 uses
+  %i.ck = zext i32 %7 to i64
   %i.cl = add nuw nsw i64 %i.ck, 1                ; 2 uses
-  %min.iters.check = icmp ult i32 %6, 7
+  %min.iters.check = icmp ult i32 %7, 7
   br i1 %min.iters.check, label %.lr.ph137.preheader163, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph137.preheader

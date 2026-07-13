@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.a
 .lr.ph154:                                        ; preds = %bb.i
   %.not119 = icmp eq ptr %4, null
   %i.gy = add nsw i64 %i.gx, -1
-  %i.gz = sdiv i64 %i.gy, 8                       ; 2 uses
+  %i.gz = sdiv i64 %i.gy, 8                       ; 3 uses
   %i.ha = icmp eq i32 %i.gw, 0
   br i1 %i.ha, label %.critedge.thread, label %.lr.ph154.split.split.preheader
 
@@ -225,24 +225,24 @@ bb.i:                                             ; preds = %bb.a
   %i.hp = mul i64 %i.ho, %i.gx                    ; 2 uses
   %i.hq = getelementptr inbounds i8, ptr %i.hm, i64 %i.hp
   %i.hr = ptrtoaddr ptr %i.hm to i64
-  %i.hs = add nsw i64 %i.gz, 1                    ; 2 uses
-  %smax222 = tail call i64 @llvm.smax.i64(i64 %i.hs, i64 1)
-  %i.ht = add i64 %i.hp, %i.hr
-  %smax225 = tail call i64 @llvm.smax.i64(i64 %i.hs, i64 1) ; 2 uses
+  %7 = tail call i64 @llvm.smax.i64(i64 %i.gz, i64 0)
+  %i.hs = add i64 %i.hp, %i.hr
+  %smax222 = tail call i64 @llvm.smax.i64(i64 %i.gz, i64 0)
+  %i.ht = add nuw nsw i64 %smax222, 1             ; 2 uses
   %min.iters.check227 = icmp ult i32 %i.gw, 121
-  %7 = sub nsw i64 0, %smax222
   %8 = and i64 %7, 4294967295
-  %9 = icmp eq i64 %8, 0
-  %n.vec230 = and i64 %smax225, 9223372036854775804 ; 4 uses
+  %9 = icmp eq i64 %8, 4294967295
+  %or.cond = select i1 %min.iters.check227, i1 true, i1 %9
+  %n.vec230 = and i64 %i.ht, 9223372036854775804  ; 4 uses
   %i.hu = trunc i64 %n.vec230 to i32
-  %cmp.n237 = icmp eq i64 %smax225, %n.vec230
+  %cmp.n237 = icmp eq i64 %i.ht, %n.vec230
   br label %.lr.ph154.split.split
 
 .lr.ph154.split.split:                            ; preds = %.lr.ph154.split.split.preheader, %._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split
   %indvars.iv189 = phi i64 [ %indvars.iv.next190, %._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split ], [ 0, %.lr.ph154.split.split.preheader ] ; 4 uses
   %.0109151 = phi ptr [ %i.im, %._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split ], [ %i.hq, %.lr.ph154.split.split.preheader ] ; 3 uses
   %i.hv = mul i64 %indvars.iv189, %i.gx
-  %i.hw = add i64 %i.ht, %i.hv
+  %i.hw = add i64 %i.hs, %i.hv
   br i1 %.not119, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph154.split.split
@@ -260,8 +260,7 @@ bb.k:                                             ; preds = %.lr.ph154.split.spl
   %i.ic = mul i32 %i.gw, %i.ib
   %i.id = zext i32 %i.ic to i64                   ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %i.gt, i64 %i.id ; 2 uses
-  %brmerge = select i1 %min.iters.check227, i1 true, i1 %9
-  br i1 %brmerge, label %scalar.ph226.preheader, label %vector.memcheck223
+  br i1 %or.cond, label %scalar.ph226.preheader, label %vector.memcheck223
 
 vector.memcheck223:                               ; preds = %.lr.ph148
   %i.if = add nuw i64 %i.gu, %i.id
@@ -286,9 +285,9 @@ vector.body231:                                   ; preds = %vector.memcheck223,
 middle.block236:                                  ; preds = %vector.body231
   br i1 %cmp.n237, label %._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split, label %scalar.ph226.preheader
 
-scalar.ph226.preheader:                           ; preds = %.lr.ph148, %vector.memcheck223, %middle.block236
-  %.ph = phi i64 [ 0, %vector.memcheck223 ], [ %n.vec230, %middle.block236 ], [ 0, %.lr.ph148 ]
-  %.0107146.ph = phi i32 [ 0, %vector.memcheck223 ], [ %i.hu, %middle.block236 ], [ 0, %.lr.ph148 ]
+scalar.ph226.preheader:                           ; preds = %vector.memcheck223, %.lr.ph148, %middle.block236
+  %.ph = phi i64 [ 0, %vector.memcheck223 ], [ 0, %.lr.ph148 ], [ %n.vec230, %middle.block236 ]
+  %.0107146.ph = phi i32 [ 0, %vector.memcheck223 ], [ 0, %.lr.ph148 ], [ %i.hu, %middle.block236 ]
   br label %scalar.ph226
 
 ._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split: ; preds = %scalar.ph226, %middle.block236

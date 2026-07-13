@@ -204,12 +204,12 @@ bb.iu:                                            ; preds = %bb.it
   br i1 %i.brj, label %.lr.ph.i.i.i.preheader, label %ZSTD_wildcopy.exit.i.i
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.iu
-  %i.brk = add nsw i64 %.1.i.i, 16
-  %i.brl = add i64 %i.brk, %i.bph
+  %i.brk = add i64 %.1.i.i, %i.bph
+  %i.brl = add i64 %i.brk, 16
   %umax604 = tail call i64 @llvm.umax.i64(i64 %i.blc, i64 %i.brl)
-  %i.brm = add i64 %umax604, -9
-  %7 = add i64 %.1.i.i, %i.bph
-  %8 = sub i64 %i.brm, %7                         ; 2 uses
+  %i.brm = add i64 %.1.i.i, %i.bph
+  %7 = sub i64 %umax604, %i.brm
+  %8 = add i64 %7, -9                             ; 2 uses
   %i.brn = lshr i64 %8, 3
   %i.bro = add nuw nsw i64 %i.brn, 1              ; 2 uses
   %min.iters.check605 = icmp ult i64 %8, 56
@@ -366,15 +366,15 @@ bb.iw:                                            ; preds = %bb.is
   br i1 %i.bsy, label %.lr.ph.i100.i.i.preheader, label %ZSTD_wildcopy.exit104.i.i
 
 .lr.ph.i100.i.i.preheader:                        ; preds = %bb.iw
-  %i.bsz = add nsw i64 %.1.i.i, 4
-  %i.bta = add nsw i64 %i.bsz, %.154.i.i
-  %i.btb = add i64 %i.bta, %i.bph
-  %i.btc = add nsw i64 %.1.i.i, 16
-  %i.btd = add i64 %i.btc, %i.bph
+  %i.bsz = add nsw i64 %.1.i.i, %.154.i.i
+  %i.bta = add i64 %i.bsz, %i.bph
+  %i.btb = add i64 %i.bta, 4
+  %i.btc = add i64 %.1.i.i, %i.bph
+  %i.btd = add i64 %i.btc, 16
   %umax621 = tail call i64 @llvm.umax.i64(i64 %i.btb, i64 %i.btd)
-  %i.bte = add i64 %umax621, -9
-  %9 = add i64 %.1.i.i, %i.bph
-  %10 = sub i64 %i.bte, %9                        ; 2 uses
+  %i.bte = add i64 %.1.i.i, %i.bph
+  %9 = sub i64 %umax621, %i.bte
+  %10 = add i64 %9, -9                            ; 2 uses
   %i.btf = lshr i64 %10, 3
   %i.btg = add nuw nsw i64 %i.btf, 1              ; 2 uses
   %min.iters.check623 = icmp ult i64 %10, 56

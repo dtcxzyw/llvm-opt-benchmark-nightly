@@ -203,10 +203,10 @@ bb.o:                                             ; preds = %bb.n, %unate_inters
   store i32 %i.gj, ptr %.1121, align 4, !tbaa !4
   %i.gk = and i32 %i.gf, 1023                     ; 3 uses
   %i.gl = zext nneg i32 %i.gk to i64              ; 6 uses
-  %2 = add nuw nsw i64 %i.gl, 1
-  %3 = icmp ne i32 %i.gk, 0
-  %umin145.neg = sext i1 %3 to i64
-  %i.gm = add nsw i64 %2, %umin145.neg            ; 3 uses
+  %2 = icmp ne i32 %i.gk, 0
+  %.neg = sext i1 %2 to i64
+  %3 = add nsw i64 %.neg, %i.gl
+  %i.gm = add nsw i64 %3, 1                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.gm, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 

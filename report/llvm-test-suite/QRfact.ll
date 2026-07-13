@@ -202,7 +202,7 @@ begin_hunk_0_@QRiterate:bb.a
 
 .lr.ph.preheader:                                 ; preds = %.preheader151.25, %.preheader151.31, %.preheader151.24, %.preheader151.38, %.preheader151.23, %.preheader151.33, %.preheader151.22, %.preheader151.39, %.preheader151.21, %.preheader151.30, %.preheader151.20, %.preheader151.40, %.preheader151.19, %.preheader151.35, %.preheader151.18, %.preheader151.41, %.preheader151.17, %.preheader151.29, %.preheader151.16, %.preheader151.42, %.preheader151.15, %.preheader151.32, %.preheader151.14, %.preheader151.43, %.preheader151.13, %.preheader151.28, %.preheader151.12, %.preheader151.44, %.preheader151.11, %.preheader151.36, %.preheader151.10, %.preheader151.45, %.preheader151.9, %.preheader151.27, %.preheader151.8, %.preheader151.46, %.preheader151.7, %.preheader151.34, %.preheader151.6, %.preheader151.47, %.preheader151.5, %.preheader151.26, %.preheader151.4, %.preheader151.48, %.preheader151.3, %.preheader151.37, %.preheader151.2, %.preheader151.49, %.preheader151.1, %.preheader151.preheader
   %.0127.lcssa.ph = phi i32 [ 25, %.preheader151.25 ], [ 19, %.preheader151.31 ], [ 26, %.preheader151.24 ], [ 12, %.preheader151.38 ], [ 27, %.preheader151.23 ], [ 17, %.preheader151.33 ], [ 28, %.preheader151.22 ], [ 11, %.preheader151.39 ], [ 29, %.preheader151.21 ], [ 20, %.preheader151.30 ], [ 30, %.preheader151.20 ], [ 10, %.preheader151.40 ], [ 31, %.preheader151.19 ], [ 15, %.preheader151.35 ], [ 32, %.preheader151.18 ], [ 9, %.preheader151.41 ], [ 33, %.preheader151.17 ], [ 21, %.preheader151.29 ], [ 34, %.preheader151.16 ], [ 8, %.preheader151.42 ], [ 35, %.preheader151.15 ], [ 18, %.preheader151.32 ], [ 36, %.preheader151.14 ], [ 7, %.preheader151.43 ], [ 37, %.preheader151.13 ], [ 22, %.preheader151.28 ], [ 38, %.preheader151.12 ], [ 6, %.preheader151.44 ], [ 39, %.preheader151.11 ], [ 14, %.preheader151.36 ], [ 40, %.preheader151.10 ], [ 5, %.preheader151.45 ], [ 41, %.preheader151.9 ], [ 23, %.preheader151.27 ], [ 42, %.preheader151.8 ], [ 4, %.preheader151.46 ], [ 43, %.preheader151.7 ], [ 16, %.preheader151.34 ], [ 44, %.preheader151.6 ], [ 3, %.preheader151.47 ], [ 45, %.preheader151.5 ], [ 24, %.preheader151.26 ], [ 46, %.preheader151.4 ], [ 2, %.preheader151.48 ], [ 47, %.preheader151.3 ], [ 13, %.preheader151.37 ], [ 48, %.preheader151.2 ], [ 1, %.preheader151.49 ], [ 49, %.preheader151.1 ], [ 50, %.preheader151.preheader ] ; 5 uses
-  %i.je = zext nneg i32 %.0127.lcssa.ph to i64    ; 3 uses
+  %i.je = zext nneg i32 %.0127.lcssa.ph to i64    ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
@@ -226,7 +226,7 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %i.jn, label %.lr.ph166.preheader, label %.backedge
 
 .lr.ph166.preheader:                              ; preds = %bb.e, %.critedge2
-  %i.jo = phi i64 [ %indvars.iv171, %.critedge2 ], [ 0, %bb.e ] ; 12 uses
+  %i.jo = phi i64 [ %indvars.iv171, %.critedge2 ], [ 0, %bb.e ] ; 10 uses
   %.1129.lcssa.ph189 = phi i32 [ %i.jm, %.critedge2 ], [ 0, %bb.e ]
   %.in = add nsw i32 %.0127.lcssa.ph, -1
   %i.jp = zext i32 %.in to i64                    ; 4 uses
@@ -261,35 +261,25 @@ bb.e:                                             ; preds = %.lr.ph
   %i.kr = fsub double %i.kc, %i.kq
   %i.ks = fsub double %i.jy, %i.kr
   %i.kt = add nsw i64 %i.jo, -1
-  %2 = trunc i64 %i.jo to i32
-  %3 = add nsw i32 %2, 2
   %i.ku = trunc i64 %i.jo to i32
   %i.kv = add nsw i32 %i.ku, 2
   br label %.lr.ph166
 
 .lr.ph166:                                        ; preds = %.lr.ph166.preheader, %bb.l
-  %indvar = phi i32 [ 0, %.lr.ph166.preheader ], [ %indvar.next, %bb.l ] ; 3 uses
+  %indvar = phi i32 [ 0, %.lr.ph166.preheader ], [ %indvar.next, %bb.l ] ; 2 uses
   %indvars.iv181 = phi i64 [ %i.jo, %.lr.ph166.preheader ], [ %indvars.iv.next182, %bb.l ] ; 9 uses
-  %indvars.iv174 = phi i64 [ %i.kt, %.lr.ph166.preheader ], [ %indvars.iv.next175, %bb.l ] ; 6 uses
+  %indvars.iv174 = phi i64 [ %i.kt, %.lr.ph166.preheader ], [ %indvars.iv.next175, %bb.l ] ; 5 uses
   %.0165 = phi double [ %i.ks, %.lr.ph166.preheader ], [ %.1, %bb.l ] ; 4 uses
   %.0125164 = phi double [ %i.jv, %.lr.ph166.preheader ], [ %.1126, %bb.l ] ; 5 uses
-  %4 = add i32 %i.kv, %indvar
-  %5 = sext i32 %4 to i64
-  %smin199 = tail call i64 @llvm.smin.i64(i64 %5, i64 %i.je)
-  %smax200 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %smin199)
-  %smax201 = tail call i64 @llvm.smax.i64(i64 %smax200, i64 %indvars.iv174)
-  %6 = add i64 %smax201, 1
-  %smax202 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %indvars.iv174)
-  %7 = sub i64 %6, %smax202                       ; 3 uses
   %smax = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %indvars.iv174)
   %i.kw = shl i64 %smax, 3                        ; 2 uses
-  %i.kx = add i32 %3, %indvar
+  %i.kx = add i32 %i.kv, %indvar
   %i.ky = sext i32 %i.kx to i64
   %smin = tail call i64 @llvm.smin.i64(i64 %i.ky, i64 %i.je)
   %smax193 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %smin)
   %smax194 = tail call i64 @llvm.smax.i64(i64 %smax193, i64 %indvars.iv174)
   %i.kz = shl i64 %smax194, 3                     ; 2 uses
-  %smax178 = tail call i64 @llvm.smax.i64(i64 %indvars.iv174, i64 %i.jo) ; 5 uses
+  %smax178 = tail call i64 @llvm.smax.i64(i64 %indvars.iv174, i64 %i.jo) ; 6 uses
   %i.la = fcmp oeq double %.0125164, 0.000000e+00
   br i1 %i.la, label %Givens.exit, label %bb.f
 
@@ -334,8 +324,12 @@ Givens.exit:                                      ; preds = %.lr.ph166, %bb.g, %
   %i.lv = load ptr, ptr %i.lu, align 8, !tbaa !10 ; 4 uses
   %i.lw = getelementptr i8, ptr %i.lu, i64 8
   %i.lx = load ptr, ptr %i.lw, align 8, !tbaa !10 ; 4 uses
-  %i.ly = sext i32 %i.lt to i64
-  %min.iters.check = icmp ult i64 %7, 2
+  %i.ly = sext i32 %i.lt to i64                   ; 2 uses
+  %2 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %i.ly)
+  %3 = tail call i64 @llvm.smax.i64(i64 %2, i64 %indvars.iv174)
+  %4 = sub i64 %3, %smax178
+  %5 = add i64 %4, 1                              ; 3 uses
+  %min.iters.check = icmp ult i64 %5, 2
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph159
@@ -351,7 +345,7 @@ vector.memcheck:                                  ; preds = %.lr.ph159
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %7, -2                         ; 3 uses
+  %n.vec = and i64 %5, -2                         ; 3 uses
   %i.lz = add i64 %smax178, %n.vec
   %broadcast.splatinsert = insertelement <2 x double> poison, double %.0148, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -378,7 +372,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.mi, label %middle.block, label %vector.body, !llvm.loop !22
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %.lr.ph162, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph159, %middle.block

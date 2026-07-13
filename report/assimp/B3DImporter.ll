@@ -204,11 +204,10 @@ bb.y:                                             ; preds = %.lr.ph61, %bb.ac
   %i.dd = zext i64 %i.dc to i128
   %i.de = add nuw nsw i128 %i.dd, 1
   %i.df = add i64 %.promoted, 4
-  %i.dg = zext i64 %i.df to i128                  ; 2 uses
-  %umax96 = tail call i128 @llvm.umax.i128(i128 %i.de, i128 %i.dg)
+  %i.dg = zext i64 %i.df to i128
+  %umax96 = tail call i128 @llvm.usub.sat.i128(i128 %i.de, i128 %i.dg)
   %i.dh = add nuw nsw i128 %umax96, 3
-  %10 = sub nsw i128 %i.dh, %i.dg
-  %i.di = lshr i128 %10, 2
+  %i.di = lshr i128 %i.dh, 2
   %i.dj = add nsw i64 %wide.trip.count, -1
   %i.dk = zext i64 %i.dj to i128
   %umin97 = tail call i128 @llvm.umin.i128(i128 %i.di, i128 %i.dk)
@@ -609,6 +608,9 @@ declare i128 @llvm.umax.i128(i128, i128) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i128 @llvm.umin.i128(i128, i128) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i128 @llvm.usub.sat.i128(i128, i128) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #14

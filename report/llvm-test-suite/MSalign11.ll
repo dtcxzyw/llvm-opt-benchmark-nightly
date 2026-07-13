@@ -203,7 +203,7 @@ match_calc.exit200:                               ; preds = %.prol.loopexit283, 
   %i.de = sext i32 %i.aw to i64
   %i.df = getelementptr inbounds [8 x i8], ptr %0, i64 %i.de
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !21 ; 6 uses
-  %wide.trip.count244 = zext i32 %i.e to i64      ; 6 uses
+  %wide.trip.count244 = zext i32 %i.e to i64      ; 7 uses
   %min.iters.check = icmp ult i32 %5, 9
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -303,10 +303,10 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 
 .lr.ph215.preheader:                              ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %i.ep = zext nneg i32 %i.e to i64               ; 4 uses
-  %18 = zext nneg i32 %5 to i64
   %i.eq = icmp ne i32 %i.e, 0
   %umin.neg = sext i1 %i.eq to i64
-  %i.er = add nsw i64 %umin.neg, %18              ; 3 uses
+  %18 = add nsw i64 %umin.neg, %wide.trip.count244
+  %i.er = add nsw i64 %18, 1                      ; 3 uses
   %min.iters.check269 = icmp ult i64 %i.er, 8
   br i1 %min.iters.check269, label %.lr.ph215.preheader281, label %vector.memcheck267
 

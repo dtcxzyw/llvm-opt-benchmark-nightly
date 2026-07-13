@@ -204,19 +204,16 @@ bb.a:
   br i1 %.not92, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.l = sext i32 %.pre to i64                    ; 9 uses
+  %i.l = sext i32 %.pre to i64                    ; 10 uses
   %i.m = sext i32 %2 to i64                       ; 4 uses
-  %i.n = add nsw i64 %i.l, -1                     ; 2 uses
+  %6 = add nsw i64 %i.l, -1
+  %i.n = add nsw i64 %i.l, -1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %reorder_short_term.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %reorder_short_term.exit ] ; 15 uses
   %i.o = phi i32 [ %i.k, %.lr.ph ], [ %i.fe, %reorder_short_term.exit ] ; 2 uses
   %.04894 = phi i32 [ %.050, %.lr.ph ], [ %.1, %reorder_short_term.exit ] ; 4 uses
-  %smin125 = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %i.n)
-  %6 = sub i64 %i.l, %smin125                     ; 3 uses
-  %smin = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %i.n)
-  %7 = sub i64 %i.l, %smin                        ; 3 uses
   %i.p = icmp sgt i32 %i.o, 3
   br i1 %i.p, label %bb.c, label %bb.d
 
@@ -353,11 +350,13 @@ get_short_term_pic.exit.i:                        ; preds = %bb.q, %bb.p, %bb.m,
   br i1 %.not43.i, label %reorder_short_term.exit.sink.split, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %get_short_term_pic.exit.i
-  %min.iters.check = icmp ult i64 %7, 4
+  %7 = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %i.n)
+  %8 = sub i64 %i.l, %7                           ; 3 uses
+  %min.iters.check = icmp ult i64 %8, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader139, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %7, -4                         ; 3 uses
+  %n.vec = and i64 %8, -4                         ; 3 uses
   %i.bq = sub i64 %i.l, %n.vec
   br label %vector.body
 
@@ -378,7 +377,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bx, label %middle.block, label %vector.body, !llvm.loop !162
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %8, %n.vec
   br i1 %cmp.n, label %.lr.ph41.preheader.i, label %.lr.ph.i.preheader139
 
 .lr.ph.i.preheader139:                            ; preds = %.lr.ph.i.preheader, %middle.block
@@ -534,11 +533,13 @@ get_long_term_pic.exit.i:                         ; preds = %bb.ae, %bb.ad, %bb.
   br i1 %.not39.i, label %reorder_short_term.exit.sink.split, label %.lr.ph.i73.preheader
 
 .lr.ph.i73.preheader:                             ; preds = %get_long_term_pic.exit.i
-  %min.iters.check127 = icmp ult i64 %6, 4
+  %9 = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %6)
+  %10 = sub i64 %i.l, %9                          ; 3 uses
+  %min.iters.check127 = icmp ult i64 %10, 4
   br i1 %min.iters.check127, label %.lr.ph.i73.preheader143, label %vector.ph128
 
 vector.ph128:                                     ; preds = %.lr.ph.i73.preheader
-  %n.vec130 = and i64 %6, -4                      ; 3 uses
+  %n.vec130 = and i64 %10, -4                     ; 3 uses
   %i.ed = sub i64 %i.l, %n.vec130
   br label %vector.body131
 
@@ -559,7 +560,7 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   br i1 %i.ek, label %middle.block136, label %vector.body131, !llvm.loop !166
 
 middle.block136:                                  ; preds = %vector.body131
-  %cmp.n137 = icmp eq i64 %6, %n.vec130
+  %cmp.n137 = icmp eq i64 %10, %n.vec130
   br i1 %cmp.n137, label %.lr.ph37.preheader.i, label %.lr.ph.i73.preheader143
 
 .lr.ph.i73.preheader143:                          ; preds = %.lr.ph.i73.preheader, %middle.block136

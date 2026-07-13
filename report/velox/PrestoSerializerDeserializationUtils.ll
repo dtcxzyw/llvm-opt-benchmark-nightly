@@ -204,7 +204,6 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_10serializer6presto6detail12_GLOBAL__N
   %i.dl = shl nsw i32 %i.dh, 6                    ; 2 uses
   %.promoted.i.pre.i.i.i.i = load i32, ptr %i.d, align 4, !tbaa !3
   %.pre.pre27.i = load i32, ptr %i.b, align 4, !tbaa !3
-  %18 = add i32 %i.dl, -1
   br label %bb.w
 
 bb.u:                                             ; preds = %.lr.ph.i.i.i.i
@@ -242,8 +241,9 @@ bb.w:                                             ; preds = %_ZZN8facebook5velox
 
 .lr.ph.i49.i.i.i.preheader.i:                     ; preds = %bb.w
   %smax.i = call i32 @llvm.smax.i32(i32 %.promoted.i.i.i.i.i, i32 %.pre.i) ; 3 uses
+  %18 = sub i32 %i.dl, %.promoted.i.i.i.i.i
   %i.dx = add i32 %18, %i.du
-  %19 = sub i32 %i.dx, %.promoted.i.i.i.i.i
+  %19 = add i32 %i.dx, -1
   %i.dy = sub i32 %smax.i, %.promoted.i.i.i.i.i
   %umin = call i32 @llvm.umin.i32(i32 %19, i32 %i.dy)
   %i.dz = add i32 %umin, 1                        ; 3 uses

@@ -202,7 +202,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.z, label %.preheader92.preheader, label %.preheader91..preheader89_crit_edge
 
 .preheader92.preheader:                           ; preds = %.preheader93
-  %wide.trip.count128 = zext nneg i32 %7 to i64   ; 15 uses
+  %wide.trip.count128 = zext nneg i32 %7 to i64   ; 16 uses
   %i.aa = shl nuw nsw i64 %wide.trip.count128, 3  ; 2 uses
   %scevgep163 = getelementptr i8, ptr %3, i64 %i.aa
   %min.iters.check168 = icmp ult i32 %7, 6
@@ -297,13 +297,14 @@ scalar.ph167.prol.loopexit:                       ; preds = %scalar.ph167.prol, 
   %i.ax = zext nneg i32 %i.av to i64              ; 4 uses
   %wide.trip.count136 = zext nneg i32 %7 to i64
   %i.ay = shl nuw nsw i64 %wide.trip.count128, 3  ; 3 uses
-  %i.az = add nuw nsw i64 %wide.trip.count128, 1  ; 2 uses
+  %i.az = add nuw nsw i64 %wide.trip.count128, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %i.ax)
   %i.ba = shl nuw nsw i64 %umax, 3                ; 2 uses
   %scevgep183 = getelementptr i8, ptr %3, i64 %i.ay
   %i.bb = sub nsw i64 %i.ba, %i.ay
   %scevgep184 = getelementptr i8, ptr %4, i64 %i.bb
-  %umax191 = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %i.ax)
+  %9 = add nuw nsw i64 %wide.trip.count128, 1
+  %umax191 = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.ax)
   %i.bc = sub nsw i64 %umax191, %wide.trip.count128 ; 3 uses
   %min.iters.check193 = icmp ult i64 %i.bc, 4
   %n.vec196 = and i64 %i.bc, -4                   ; 3 uses
@@ -507,15 +508,16 @@ scalar.ph219.prol.loopexit:                       ; preds = %scalar.ph219.prol, 
   br i1 %i.c, label %.preheader.preheader, label %._crit_edge113.split
 
 .preheader.preheader:                             ; preds = %.preheader87
-  %i.do = sext i32 %7 to i64                      ; 10 uses
+  %i.do = sext i32 %7 to i64                      ; 11 uses
   %i.dp = sext i32 %.pre-phi157 to i64            ; 4 uses
   %i.dq = shl nsw i64 %i.do, 3                    ; 2 uses
-  %i.dr = add nsw i64 %i.do, 1                    ; 2 uses
+  %i.dr = add nsw i64 %i.do, 1
   %smax = tail call i64 @llvm.smax.i64(i64 %i.dr, i64 %i.dp)
   %i.ds = shl nsw i64 %smax, 3                    ; 2 uses
   %i.dt = sub i64 %i.ds, %i.dq
   %scevgep237 = getelementptr i8, ptr %4, i64 %i.dt
-  %smax244 = tail call i64 @llvm.smax.i64(i64 %i.dr, i64 %i.dp)
+  %10 = add nsw i64 %i.do, 1
+  %smax244 = tail call i64 @llvm.smax.i64(i64 %10, i64 %i.dp)
   %i.du = sub i64 %smax244, %i.do                 ; 3 uses
   %min.iters.check246 = icmp ult i64 %i.du, 4
   %n.vec249 = and i64 %i.du, -4                   ; 3 uses
