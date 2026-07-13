@@ -203,10 +203,10 @@ middle.block729:                                  ; preds = %vector.body710
   br i1 %i.gw, label %.lr.ph413.preheader, label %._crit_edge414
 
 .lr.ph413.preheader:                              ; preds = %._crit_edge401
-  %i.gx = sext i32 %i.gv to i64                   ; 24 uses
+  %i.gx = sext i32 %i.gv to i64                   ; 23 uses
   %i.gy = sext i32 %1 to i64                      ; 23 uses
   %i.gz = mul i32 %1, 12
-  %i.ha = sext i32 %i.a to i64                    ; 3 uses
+  %i.ha = sext i32 %i.a to i64                    ; 2 uses
   %i.hb = zext nneg i32 %0 to i64
   %invariant.gep440 = getelementptr [8 x i8], ptr %2, i64 %i.gy ; 2 uses
   %invariant.op = add nsw i64 %i.ha, %i.gy
@@ -233,14 +233,13 @@ middle.block729:                                  ; preds = %vector.body710
   %scevgep759 = getelementptr i8, ptr %2, i64 %i.hi
   %i.hj = getelementptr i8, ptr %2, i64 %i.hh
   %scevgep761 = getelementptr i8, ptr %i.hj, i64 16
-  %4 = add nsw i64 %i.gy, %i.gx                   ; 3 uses
-  %i.hk = add nsw i64 %4, %i.ha
+  %i.hk = add nsw i64 %i.gy, %i.gx                ; 2 uses
   %i.hl = or disjoint i64 %i.gx, 2
   %i.hm = xor i64 %i.gx, -1
   %i.hn = shl nsw i64 %i.gx, 3                    ; 3 uses
   %i.ho = shl nsw i64 %i.gx, 3
   %i.hp = shl nsw i64 %i.gy, 4
-  %i.hq = shl nsw i64 %4, 3
+  %i.hq = shl nsw i64 %i.hk, 3
   %i.hr = mul nsw i64 %i.gy, 24
   %i.hs = add nsw i64 %i.hr, %i.hn                ; 2 uses
   %i.ht = shl nsw i64 %i.gx, 3                    ; 5 uses
@@ -289,9 +288,9 @@ middle.block729:                                  ; preds = %vector.body710
   br label %.lr.ph413
 
 .lr.ph413:                                        ; preds = %.lr.ph413.preheader, %._crit_edge409
-  %indvar = phi i64 [ 0, %.lr.ph413.preheader ], [ %indvar.next, %._crit_edge409 ] ; 11 uses
+  %indvar = phi i64 [ 0, %.lr.ph413.preheader ], [ %indvar.next, %._crit_edge409 ] ; 10 uses
   %indvars.iv429 = phi i64 [ 0, %.lr.ph413.preheader ], [ %indvars.iv.next430, %._crit_edge409 ] ; 2 uses
-  %indvars.iv424 = phi i32 [ %i.gz, %.lr.ph413.preheader ], [ %indvars.iv.next425, %._crit_edge409 ] ; 4 uses
+  %indvars.iv424 = phi i32 [ %i.gz, %.lr.ph413.preheader ], [ %indvars.iv.next425, %._crit_edge409 ] ; 3 uses
   %indvars.iv419 = phi i64 [ %i.gx, %.lr.ph413.preheader ], [ %indvars.iv.next420, %._crit_edge409 ] ; 8 uses
   %i.jk = mul i64 %indvar, %i.gx                  ; 2 uses
   %i.jl = add i64 %i.id, %i.jk
@@ -333,7 +332,7 @@ middle.block729:                                  ; preds = %vector.body710
   %scevgep952.a = getelementptr i8, ptr %i.iz, i64 %i.js
   %scevgep953 = getelementptr i8, ptr %scevgep952.a, i64 %i.ka ; 7 uses
   %i.kb = mul i64 %indvar, %i.gx                  ; 2 uses
-  %i.kc = add i64 %4, %i.kb
+  %i.kc = add i64 %i.hk, %i.kb
   %i.kd = add i64 %i.hl, %i.kb
   %smax914 = tail call i64 @llvm.smax.i64(i64 %i.kc, i64 %i.kd)
   %i.ke = mul i64 %indvar, %i.gx
@@ -346,15 +345,6 @@ middle.block729:                                  ; preds = %vector.body710
   %scevgep920 = getelementptr i8, ptr %i.jg, i64 %i.ki ; 2 uses
   %scevgep924 = getelementptr i8, ptr %i.jh, i64 %i.ki ; 2 uses
   %scevgep928 = getelementptr i8, ptr %i.jj, i64 %i.ki ; 2 uses
-  %5 = mul i64 %indvar, %i.gx
-  %6 = add i64 %i.hk, %5
-  %7 = sext i32 %indvars.iv424 to i64             ; 2 uses
-  %8 = or disjoint i64 %7, 2
-  %smax874 = tail call i64 @llvm.smax.i64(i64 %6, i64 %8)
-  %9 = xor i64 %7, -1
-  %10 = add i64 %smax874, %9                      ; 2 uses
-  %11 = lshr i64 %10, 1
-  %12 = add nuw i64 %11, 1                        ; 2 uses
   %i.kj = sext i32 %indvars.iv424 to i64          ; 4 uses
   %i.kk = shl nsw i64 %i.kj, 3                    ; 7 uses
   %scevgep733 = getelementptr i8, ptr %2, i64 %i.kk ; 7 uses
@@ -385,7 +375,7 @@ middle.block729:                                  ; preds = %vector.body710
   %scevgep758 = getelementptr i8, ptr %scevgep757, i64 %i.ks ; 7 uses
   %scevgep760 = getelementptr i8, ptr %scevgep759, i64 %i.kk ; 7 uses
   %scevgep762 = getelementptr i8, ptr %scevgep761, i64 %i.ks ; 7 uses
-  %i.kw = sext i32 %indvars.iv424 to i64          ; 4 uses
+  %i.kw = sext i32 %indvars.iv424 to i64          ; 6 uses
   %indvars.iv.next430 = add nuw nsw i64 %indvars.iv429, 2 ; 3 uses
   %i.kx = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next430
   %i.ky = load double, ptr %i.kx, align 8, !tbaa !8 ; 5 uses
@@ -403,7 +393,7 @@ middle.block729:                                  ; preds = %vector.body710
   %i.lj = fneg <2 x double> %i.ld
   %i.lk = shufflevector <2 x double> %i.lj, <2 x double> %i.ld, <2 x i32> <i32 1, i32 2>
   %i.ll = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.lh, <2 x double> %i.ld, <2 x double> %i.lk) ; 4 uses
-  %i.lm = add nsw i64 %indvars.iv419, %i.gy
+  %i.lm = add i64 %indvars.iv419, %i.gy
   br i1 %i.b, label %.lr.ph404.preheader, label %._crit_edge409
 
 .lr.ph404.preheader:                              ; preds = %.lr.ph413
@@ -699,9 +689,15 @@ middle.block1102:                                 ; preds = %vector.body1083
   %i.pq = fneg <2 x double> %i.pk
   %i.pr = shufflevector <2 x double> %i.pq, <2 x double> %i.pk, <2 x i32> <i32 1, i32 2>
   %i.ps = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.po, <2 x double> %i.pk, <2 x double> %i.pr) ; 4 uses
-  %.reass = add i64 %indvars.iv419, %invariant.op
+  %.reass = add i64 %indvars.iv419, %invariant.op ; 2 uses
   %i.pt = fneg double %i.lb                       ; 2 uses
-  %min.iters.check876 = icmp ult i64 %10, 14
+  %4 = or disjoint i64 %i.kw, 2
+  %5 = tail call i64 @llvm.smax.i64(i64 %.reass, i64 %4)
+  %6 = xor i64 %i.kw, -1
+  %7 = add i64 %5, %6                             ; 2 uses
+  %8 = lshr i64 %7, 1
+  %9 = add nuw i64 %8, 1                          ; 2 uses
+  %min.iters.check876 = icmp ult i64 %7, 14
   br i1 %min.iters.check876, label %scalar.ph875.preheader, label %vector.memcheck732
 
 vector.memcheck732:                               ; preds = %._crit_edge405
@@ -819,7 +815,7 @@ vector.memcheck732:                               ; preds = %._crit_edge405
   br i1 %conflict.rdx873, label %scalar.ph875.preheader, label %vector.ph877
 
 vector.ph877:                                     ; preds = %vector.memcheck732
-  %n.vec879 = and i64 %12, -2                     ; 3 uses
+  %n.vec879 = and i64 %9, -2                      ; 3 uses
   %i.pu = shl i64 %n.vec879, 1
   %i.pv = add i64 %i.pu, %i.kw
   %broadcast.splatinsert880 = insertelement <2 x double> poison, double %i.pt, i64 0
@@ -897,7 +893,7 @@ vector.body892:                                   ; preds = %vector.body892, %ve
   br i1 %i.rj, label %middle.block911, label %vector.body892, !llvm.loop !64
 
 middle.block911:                                  ; preds = %vector.body892
-  %cmp.n912 = icmp eq i64 %12, %n.vec879
+  %cmp.n912 = icmp eq i64 %9, %n.vec879
   br i1 %cmp.n912, label %._crit_edge409, label %scalar.ph875.preheader
 
 scalar.ph875.preheader:                           ; preds = %vector.memcheck732, %._crit_edge405, %middle.block911

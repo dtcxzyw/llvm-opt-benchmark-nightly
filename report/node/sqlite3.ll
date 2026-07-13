@@ -205,20 +205,20 @@ cellContains.exit.thread:                         ; preds = %.critedge31.i, %.lr
   %wide.trip.count138 = zext nneg i32 %i.ap to i64
   %umax = tail call i64 @llvm.umax.i64(i64 %i.hh, i64 2)
   %i.hm = add nsw i64 %umax, -1
-  %i.hn = lshr i64 %i.hm, 1
+  %i.hn = lshr i64 %i.hm, 1                       ; 2 uses
   %i.ho = add nuw nsw i64 %i.hn, 1                ; 2 uses
-  %umax160 = tail call i64 @llvm.umax.i64(i64 %i.hh, i64 2)
-  %6 = add nsw i64 %umax160, -1
-  %7 = lshr i64 %6, 1                             ; 2 uses
-  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
-  %min.iters.check162 = icmp eq i64 %7, 0
-  %n.vec165 = and i64 %8, 9223372036854775806     ; 3 uses
-  %9 = shl nuw i64 %n.vec165, 1
-  %cmp.n177 = icmp eq i64 %8, %n.vec165
+  %min.iters.check161 = icmp eq i64 %i.hn, 0
+  %n.vec164 = and i64 %i.ho, 9223372036854775806  ; 3 uses
+  %6 = shl nuw i64 %n.vec164, 1
+  %cmp.n176 = icmp eq i64 %i.ho, %n.vec164
+  %7 = tail call i64 @llvm.umax.i64(i64 %i.hh, i64 2)
+  %8 = add nsw i64 %7, -1
+  %9 = lshr i64 %8, 1
+  %10 = add nuw nsw i64 %9, 1                     ; 2 uses
   %min.iters.check = icmp ult i8 %i.hg, 7
-  %n.vec = and i64 %i.ho, 9223372036854775804     ; 3 uses
+  %n.vec = and i64 %10, 9223372036854775804       ; 3 uses
   %i.hp = shl nuw i64 %n.vec, 1
-  %cmp.n = icmp eq i64 %i.ho, %n.vec
+  %cmp.n = icmp eq i64 %10, %n.vec
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph119, %bb.ar
@@ -422,7 +422,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.aa
   %i.mq = sub nsw i64 %i.mn, %i.mp
   %i.mr = sitofp i64 %i.mq to double
   %i.ms = fmul double %.7.i73, %i.mr
-  br i1 %min.iters.check162, label %.preheader57.i.preheader181, label %vector.body166
+  br i1 %min.iters.check161, label %.preheader57.i.preheader181, label %vector.body166
 
 vector.body166:                                   ; preds = %.preheader57.i.preheader, %vector.body166
   %index167 = phi i64 [ %index.next175, %vector.body166 ], [ 0, %.preheader57.i.preheader ] ; 2 uses
@@ -436,14 +436,14 @@ vector.body166:                                   ; preds = %.preheader57.i.preh
   %interleaved.vec174 = shufflevector <4 x i32> %i.mw, <4 x i32> %i.mx, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
   store <4 x i32> %interleaved.vec174, ptr %i.mu, align 8, !tbaa !227
   %index.next175 = add nuw i64 %index167, 2       ; 2 uses
-  %i.my = icmp eq i64 %index.next175, %n.vec165
+  %i.my = icmp eq i64 %index.next175, %n.vec164
   br i1 %i.my, label %middle.block176, label %vector.body166, !llvm.loop !8043
 
 middle.block176:                                  ; preds = %vector.body166
-  br i1 %cmp.n177, label %cellUnion.exit, label %.preheader57.i.preheader181
+  br i1 %cmp.n176, label %cellUnion.exit, label %.preheader57.i.preheader181
 
 .preheader57.i.preheader181:                      ; preds = %.preheader57.i.preheader, %middle.block176
-  %indvars.iv.i82.ph = phi i64 [ 0, %.preheader57.i.preheader ], [ %9, %middle.block176 ]
+  %indvars.iv.i82.ph = phi i64 [ 0, %.preheader57.i.preheader ], [ %6, %middle.block176 ]
   br label %.preheader57.i
 
 .preheader.i84.preheader:                         ; preds = %bb.v, %bb.z
@@ -846,42 +846,34 @@ bb.s:                                             ; preds = %sqlite3_malloc64.ex
   %i.ll = load i8, ptr %i.lj, align 1, !tbaa !7913 ; 4 uses
   %i.lm = load i8, ptr %i.lk, align 2, !tbaa !7964 ; 4 uses
   %i.ln = icmp eq i8 %i.lm, 0                     ; 3 uses
-  %i.lo = zext i8 %i.ll to i64                    ; 14 uses
+  %i.lo = zext i8 %i.ll to i64                    ; 12 uses
   %.not.i165.i = icmp eq i8 %i.ll, 0              ; 2 uses
   %i.lp = sext i32 %i.km to i64                   ; 2 uses
   %i.lq = add nsw i32 %i.kn, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.lo, i64 2)
   %i.lr = add nsw i64 %umax, -1
-  %i.ls = lshr i64 %i.lr, 1
-  %i.lt = add nuw nsw i64 %i.ls, 1                ; 2 uses
-  %umax249 = tail call i64 @llvm.umax.i64(i64 %i.lo, i64 2)
-  %8 = add nsw i64 %umax249, -1
-  %9 = lshr i64 %8, 1                             ; 2 uses
-  %10 = add nuw nsw i64 %9, 1                     ; 2 uses
-  %umax268 = tail call i64 @llvm.umax.i64(i64 %i.lo, i64 2)
-  %11 = add nsw i64 %umax268, -1
-  %12 = lshr i64 %11, 1
-  %13 = add nuw nsw i64 %12, 1                    ; 2 uses
+  %i.ls = lshr i64 %i.lr, 1                       ; 2 uses
+  %i.lt = add nuw nsw i64 %i.ls, 1                ; 4 uses
+  %min.iters.check286 = icmp eq i64 %i.ls, 0
+  %n.vec289 = and i64 %i.lt, 9223372036854775806  ; 3 uses
+  %8 = shl nuw i64 %n.vec289, 1
+  %cmp.n301 = icmp eq i64 %i.lt, %n.vec289
+  %min.iters.check268 = icmp ult i8 %i.ll, 7
+  %n.vec271 = and i64 %i.lt, 9223372036854775804  ; 3 uses
+  %9 = shl nuw i64 %n.vec271, 1
+  %cmp.n283 = icmp eq i64 %i.lt, %n.vec271
   %umax287 = tail call i64 @llvm.umax.i64(i64 %i.lo, i64 2)
   %i.lu = add nsw i64 %umax287, -1
   %i.lv = lshr i64 %i.lu, 1                       ; 2 uses
-  %i.lw = add nuw nsw i64 %i.lv, 1                ; 2 uses
-  %min.iters.check289 = icmp eq i64 %i.lv, 0
-  %n.vec292 = and i64 %i.lw, 9223372036854775806  ; 3 uses
-  %14 = shl nuw i64 %n.vec292, 1
-  %cmp.n304 = icmp eq i64 %i.lw, %n.vec292
-  %min.iters.check270 = icmp ult i8 %i.ll, 7
-  %n.vec273 = and i64 %13, 9223372036854775804    ; 3 uses
-  %15 = shl nuw i64 %n.vec273, 1
-  %cmp.n285 = icmp eq i64 %13, %n.vec273
-  %min.iters.check251 = icmp eq i64 %9, 0
-  %n.vec254 = and i64 %10, 9223372036854775806    ; 3 uses
+  %i.lw = add nuw nsw i64 %i.lv, 1                ; 4 uses
+  %min.iters.check251 = icmp eq i64 %i.lv, 0
+  %n.vec254 = and i64 %i.lw, 9223372036854775806  ; 3 uses
   %i.lx = shl nuw i64 %n.vec254, 1
-  %cmp.n266 = icmp eq i64 %10, %n.vec254
+  %cmp.n266 = icmp eq i64 %i.lw, %n.vec254
   %min.iters.check235 = icmp ult i8 %i.ll, 7
-  %n.vec238 = and i64 %i.lt, 9223372036854775804  ; 3 uses
+  %n.vec238 = and i64 %i.lw, 9223372036854775804  ; 3 uses
   %i.ly = shl nuw i64 %n.vec238, 1
-  %cmp.n247 = icmp eq i64 %i.lt, %n.vec238
+  %cmp.n247 = icmp eq i64 %i.lw, %n.vec238
   br label %.lr.ph220.i
 
 .lr.ph.i42:                                       ; preds = %.lr.ph.i42.preheader, %.loopexit
@@ -1073,7 +1065,7 @@ bb.v:                                             ; preds = %.lr.ph212.i
   br i1 %i.oo, label %.preheader.i148.i.preheader, label %.preheader57.i144.i.preheader
 
 .preheader57.i144.i.preheader:                    ; preds = %bb.v
-  br i1 %min.iters.check289, label %.preheader57.i144.i.preheader367, label %vector.body293
+  br i1 %min.iters.check286, label %.preheader57.i144.i.preheader367, label %vector.body293
 
 vector.body293:                                   ; preds = %.preheader57.i144.i.preheader, %vector.body293
   %index294 = phi i64 [ %index.next302, %vector.body293 ], [ 0, %.preheader57.i144.i.preheader ] ; 2 uses
@@ -1087,18 +1079,18 @@ vector.body293:                                   ; preds = %.preheader57.i144.i
   %interleaved.vec301 = shufflevector <4 x i32> %i.ot, <4 x i32> %i.ou, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
   store <4 x i32> %interleaved.vec301, ptr %i.or, align 8, !tbaa !227
   %index.next302 = add nuw i64 %index294, 2       ; 2 uses
-  %i.ov = icmp eq i64 %index.next302, %n.vec292
+  %i.ov = icmp eq i64 %index.next302, %n.vec289
   br i1 %i.ov, label %middle.block303, label %vector.body293, !llvm.loop !8062
 
 middle.block303:                                  ; preds = %vector.body293
-  br i1 %cmp.n304, label %cellUnion.exit.i, label %.preheader57.i144.i.preheader367
+  br i1 %cmp.n301, label %cellUnion.exit.i, label %.preheader57.i144.i.preheader367
 
 .preheader57.i144.i.preheader367:                 ; preds = %.preheader57.i144.i.preheader, %middle.block303
-  %indvars.iv.i145.i.ph = phi i64 [ 0, %.preheader57.i144.i.preheader ], [ %14, %middle.block303 ]
+  %indvars.iv.i145.i.ph = phi i64 [ 0, %.preheader57.i144.i.preheader ], [ %8, %middle.block303 ]
   br label %.preheader57.i144.i
 
 .preheader.i148.i.preheader:                      ; preds = %bb.v
-  br i1 %min.iters.check270, label %.preheader.i148.i.preheader365, label %vector.body274
+  br i1 %min.iters.check268, label %.preheader.i148.i.preheader365, label %vector.body274
 
 vector.body274:                                   ; preds = %.preheader.i148.i.preheader, %vector.body274
   %index275 = phi i64 [ %index.next283, %vector.body274 ], [ 0, %.preheader.i148.i.preheader ] ; 2 uses
@@ -1118,14 +1110,14 @@ vector.body274:                                   ; preds = %.preheader.i148.i.p
   %interleaved.vec282 = shufflevector <4 x float> %i.pa, <4 x float> %i.pc, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x float> %interleaved.vec282, ptr %i.ox, align 8, !tbaa !227
   %index.next283 = add nuw i64 %index275, 4       ; 2 uses
-  %i.pd = icmp eq i64 %index.next283, %n.vec273
+  %i.pd = icmp eq i64 %index.next283, %n.vec271
   br i1 %i.pd, label %middle.block284, label %vector.body274, !llvm.loop !8063
 
 middle.block284:                                  ; preds = %vector.body274
-  br i1 %cmp.n285, label %cellUnion.exit.i, label %.preheader.i148.i.preheader365
+  br i1 %cmp.n283, label %cellUnion.exit.i, label %.preheader.i148.i.preheader365
 
 .preheader.i148.i.preheader365:                   ; preds = %.preheader.i148.i.preheader, %middle.block284
-  %indvars.iv61.i149.i.ph = phi i64 [ 0, %.preheader.i148.i.preheader ], [ %15, %middle.block284 ]
+  %indvars.iv61.i149.i.ph = phi i64 [ 0, %.preheader.i148.i.preheader ], [ %9, %middle.block284 ]
   br label %.preheader.i148.i
 
 .preheader.i148.i:                                ; preds = %.preheader.i148.i.preheader365, %.preheader.i148.i
@@ -1528,7 +1520,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 3 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !7913  ; 2 uses
-  %i.k = zext i8 %i.j to i64                      ; 6 uses
+  %i.k = zext i8 %i.j to i64                      ; 5 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
@@ -1593,22 +1585,18 @@ nodeGetCell.exit.preheader:                       ; preds = %bb.c
   %i.bg = icmp eq i8 %i.bf, 0
   %i.bh = zext i8 %.val.i to i64
   %wide.trip.count = zext nneg i32 %i.bb to i64
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.k, i64 2)
-  %4 = add nsw i64 %umax, -1
-  %5 = lshr i64 %4, 1
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
   %umax58 = tail call i64 @llvm.umax.i64(i64 %i.k, i64 2)
   %i.bi = add nsw i64 %umax58, -1
   %i.bj = lshr i64 %i.bi, 1                       ; 2 uses
-  %i.bk = add nuw nsw i64 %i.bj, 1                ; 2 uses
+  %i.bk = add nuw nsw i64 %i.bj, 1                ; 4 uses
   %min.iters.check60 = icmp eq i64 %i.bj, 0
   %n.vec63 = and i64 %i.bk, 9223372036854775806   ; 3 uses
   %i.bl = shl nuw i64 %n.vec63, 1
   %cmp.n75 = icmp eq i64 %i.bk, %n.vec63
   %min.iters.check = icmp ult i8 %i.j, 7
-  %n.vec = and i64 %6, 9223372036854775804        ; 3 uses
+  %n.vec = and i64 %i.bk, 9223372036854775804     ; 3 uses
   %i.bm = shl nuw i64 %n.vec, 1
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %i.bk, %n.vec
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %cellUnion.exit

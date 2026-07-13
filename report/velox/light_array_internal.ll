@@ -204,7 +204,7 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i212: ; preds = %bb.a
 .lr.ph55.i:                                       ; preds = %.preheader.i223
   %i.oh = ashr i64 %.sroa.0.0.copyload.i.i49.i, 32 ; 4 uses
   %i.oi = add nsw i64 %i.oh, -1
-  %i.oj = sdiv i64 %i.oi, 8                       ; 2 uses
+  %i.oj = sdiv i64 %i.oi, 8                       ; 3 uses
   %i.ok = icmp eq i64 %.sroa.520.0.extract.shift50.i, 0
   %.not1.i38.i = icmp slt i32 %.sroa.520.0.extract.trunc51.i, -6
   %or.cond2.i39.i = or i1 %i.ok, %.not1.i38.i
@@ -213,16 +213,16 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i212: ; preds = %bb.a
 .lr.ph.split.i40.preheader.preheader.i:           ; preds = %.lr.ph55.i
   %wide.trip.count61.i = zext nneg i32 %i.nz to i64
   %i.ol = getelementptr i8, ptr %2, i64 72
-  %19 = add nsw i64 %i.oj, 1                      ; 2 uses
-  %smax447 = call i64 @llvm.smax.i64(i64 %19, i64 1)
-  %smax450 = call i64 @llvm.smax.i64(i64 %19, i64 1) ; 2 uses
+  %19 = call i64 @llvm.smax.i64(i64 %i.oj, i64 0)
+  %smax447 = call i64 @llvm.smax.i64(i64 %i.oj, i64 0)
+  %20 = add nuw nsw i64 %smax447, 1               ; 2 uses
   %min.iters.check452 = icmp slt i64 %i.oh, 121
-  %20 = sub nsw i64 0, %smax447
-  %21 = and i64 %20, 4294967295
-  %22 = icmp eq i64 %21, 0
-  %n.vec455 = and i64 %smax450, 9223372036854775804 ; 4 uses
+  %21 = and i64 %19, 4294967295
+  %22 = icmp eq i64 %21, 4294967295
+  %or.cond = select i1 %min.iters.check452, i1 true, i1 %22
+  %n.vec455 = and i64 %20, 9223372036854775804    ; 4 uses
   %i.om = trunc i64 %n.vec455 to i32
-  %cmp.n462 = icmp eq i64 %smax450, %n.vec455
+  %cmp.n462 = icmp eq i64 %20, %n.vec455
   br label %.lr.ph.split.i40.preheader.i
 
 bb.ba:                                            ; preds = %_ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i212
@@ -371,10 +371,6 @@ middle.block442:                                  ; preds = %vector.body437
 
 .lr.ph.split.i40.preheader.i:                     ; preds = %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit44.loopexit.i", %.lr.ph.split.i40.preheader.preheader.i
   %indvars.iv58.i = phi i64 [ 0, %.lr.ph.split.i40.preheader.preheader.i ], [ %indvars.iv.next59.i, %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit44.loopexit.i" ] ; 4 uses
-  %23 = trunc i64 %indvars.iv58.i to i32
-  %24 = add i32 %i.h, %23
-  %25 = sext i32 %24 to i64
-  %26 = mul nsw i64 %i.oh, %25
   %i.qy = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv58.i
   %i.qz = load i16, ptr %i.qy, align 2, !tbaa !251
   %i.ra = load ptr, ptr %1, align 8, !tbaa !63    ; 2 uses
@@ -384,7 +380,6 @@ middle.block442:                                  ; preds = %vector.body437
   %i.re = load ptr, ptr %i.rd, align 8, !tbaa !86
   %i.rf = getelementptr inbounds nuw i8, ptr %i.re, i64 16
   %i.rg = load ptr, ptr %i.rf, align 8            ; 2 uses
-  %27 = ptrtoaddr ptr %i.rg to i64
   %i.rh = getelementptr inbounds nuw i8, ptr %i.ra, i64 32
   %i.ri = load i64, ptr %i.rh, align 8, !tbaa !66
   %i.rj = zext i16 %i.qz to i64
@@ -394,18 +389,22 @@ middle.block442:                                  ; preds = %vector.body437
   %.val.val.val.i226 = load ptr, ptr %i.ol, align 8, !tbaa !161
   %i.rn = getelementptr inbounds nuw i8, ptr %.val.val.val.i226, i64 16
   %i.ro = load ptr, ptr %i.rn, align 8            ; 2 uses
-  %28 = ptrtoaddr ptr %i.ro to i64
   %i.rp = trunc nuw nsw i64 %indvars.iv58.i to i32
   %i.rq = add nsw i32 %i.h, %i.rp
   %i.rr = sext i32 %i.rq to i64
   %i.rs = mul nsw i64 %i.oh, %i.rr
   %i.rt = getelementptr inbounds i8, ptr %i.ro, i64 %i.rs ; 2 uses
-  %brmerge = select i1 %min.iters.check452, i1 true, i1 %22
-  br i1 %brmerge, label %.lr.ph.split.i40.i.preheader, label %vector.memcheck448
+  br i1 %or.cond, label %.lr.ph.split.i40.i.preheader, label %vector.memcheck448
 
 vector.memcheck448:                               ; preds = %.lr.ph.split.i40.preheader.i
-  %i.ru = add i64 %26, %28
-  %i.rv = add i64 %i.rl, %27
+  %23 = ptrtoaddr ptr %i.ro to i64
+  %24 = ptrtoaddr ptr %i.rg to i64
+  %25 = trunc i64 %indvars.iv58.i to i32
+  %26 = add i32 %i.h, %25
+  %27 = sext i32 %26 to i64
+  %28 = mul nsw i64 %i.oh, %27
+  %i.ru = add i64 %28, %23
+  %i.rv = add i64 %i.rl, %24
   %i.rw = sub i64 %i.rv, %i.ru
   %diff.check449 = icmp ugt i64 %i.rw, -32
   br i1 %diff.check449, label %.lr.ph.split.i40.i.preheader, label %vector.body456
@@ -427,9 +426,9 @@ vector.body456:                                   ; preds = %vector.memcheck448,
 middle.block461:                                  ; preds = %vector.body456
   br i1 %cmp.n462, label %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit44.loopexit.i", label %.lr.ph.split.i40.i.preheader
 
-.lr.ph.split.i40.i.preheader:                     ; preds = %.lr.ph.split.i40.preheader.i, %vector.memcheck448, %middle.block461
-  %.ph = phi i64 [ 0, %vector.memcheck448 ], [ %n.vec455, %middle.block461 ], [ 0, %.lr.ph.split.i40.preheader.i ]
-  %.03.i41.i.ph = phi i32 [ 0, %vector.memcheck448 ], [ %i.om, %middle.block461 ], [ 0, %.lr.ph.split.i40.preheader.i ]
+.lr.ph.split.i40.i.preheader:                     ; preds = %vector.memcheck448, %.lr.ph.split.i40.preheader.i, %middle.block461
+  %.ph = phi i64 [ 0, %vector.memcheck448 ], [ 0, %.lr.ph.split.i40.preheader.i ], [ %n.vec455, %middle.block461 ]
+  %.03.i41.i.ph = phi i32 [ 0, %vector.memcheck448 ], [ 0, %.lr.ph.split.i40.preheader.i ], [ %i.om, %middle.block461 ]
   br label %.lr.ph.split.i40.i
 
 .lr.ph.split.i40.i:                               ; preds = %.lr.ph.split.i40.i.preheader, %.lr.ph.split.i40.i
@@ -832,7 +831,7 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i256: ; preds = %bb.b
 .lr.ph52.i:                                       ; preds = %.preheader.i267
   %i.yf = ashr i64 %.sroa.0.0.copyload.i.i46.i, 32 ; 2 uses
   %i.yg = add nsw i64 %i.yf, -1
-  %i.yh = sdiv i64 %i.yg, 8                       ; 2 uses
+  %i.yh = sdiv i64 %i.yg, 8                       ; 3 uses
   %i.yi = icmp eq i64 %.sroa.520.0.extract.shift47.i, 0
   %.not10.i35.i = icmp slt i32 %.sroa.520.0.extract.trunc48.i, -6
   %or.cond11.i36.i = or i1 %i.yi, %.not10.i35.i
@@ -841,16 +840,16 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i256: ; preds = %bb.b
 .lr.ph.split.i37.preheader.preheader.i:           ; preds = %.lr.ph52.i
   %wide.trip.count58.i = zext nneg i32 %i.xx to i64
   %i.yj = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %29 = add nsw i64 %i.yh, 1                      ; 2 uses
-  %smax409 = call i64 @llvm.smax.i64(i64 %29, i64 1)
-  %smax412 = call i64 @llvm.smax.i64(i64 %29, i64 1) ; 2 uses
+  %29 = call i64 @llvm.smax.i64(i64 %i.yh, i64 0)
+  %smax409 = call i64 @llvm.smax.i64(i64 %i.yh, i64 0)
+  %30 = add nuw nsw i64 %smax409, 1               ; 2 uses
   %min.iters.check414 = icmp slt i64 %i.yf, 121
-  %30 = sub nsw i64 0, %smax409
-  %31 = and i64 %30, 4294967295
-  %32 = icmp eq i64 %31, 0
-  %n.vec417 = and i64 %smax412, 9223372036854775804 ; 4 uses
+  %31 = and i64 %29, 4294967295
+  %32 = icmp eq i64 %31, 4294967295
+  %or.cond463 = select i1 %min.iters.check414, i1 true, i1 %32
+  %n.vec417 = and i64 %30, 9223372036854775804    ; 4 uses
   %i.yk = trunc i64 %n.vec417 to i32
-  %cmp.n424 = icmp eq i64 %smax412, %n.vec417
+  %cmp.n424 = icmp eq i64 %30, %n.vec417
   br label %.lr.ph.split.i37.preheader.i
 
 bb.bw:                                            ; preds = %_ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i256
@@ -1010,7 +1009,6 @@ middle.block404:                                  ; preds = %vector.body400
   %i.abf = load ptr, ptr %i.abe, align 8, !tbaa !86
   %i.abg = getelementptr inbounds nuw i8, ptr %i.abf, i64 16
   %i.abh = load ptr, ptr %i.abg, align 8          ; 2 uses
-  %33 = ptrtoaddr ptr %i.abh to i64
   %i.abi = getelementptr inbounds nuw i8, ptr %i.abb, i64 32
   %i.abj = load i64, ptr %i.abi, align 8, !tbaa !66
   %i.abk = zext i16 %i.aba to i64
@@ -1020,7 +1018,6 @@ middle.block404:                                  ; preds = %vector.body400
   %i.abo = load ptr, ptr %i.yj, align 8, !tbaa !161
   %i.abp = getelementptr inbounds nuw i8, ptr %i.abo, i64 16
   %i.abq = load ptr, ptr %i.abp, align 8          ; 2 uses
-  %34 = ptrtoaddr ptr %i.abq to i64
   %i.abr = trunc nuw nsw i64 %indvars.iv55.i to i32
   %i.abs = add nsw i32 %i.h, %i.abr
   %i.abt = sext i32 %i.abs to i64
@@ -1028,12 +1025,13 @@ middle.block404:                                  ; preds = %vector.body400
   %i.abv = load i32, ptr %i.abu, align 4, !tbaa !3
   %i.abw = sext i32 %i.abv to i64                 ; 2 uses
   %i.abx = getelementptr inbounds i8, ptr %i.abq, i64 %i.abw ; 2 uses
-  %brmerge533 = select i1 %min.iters.check414, i1 true, i1 %32
-  br i1 %brmerge533, label %.lr.ph.split.i37.i.preheader, label %vector.memcheck410
+  br i1 %or.cond463, label %.lr.ph.split.i37.i.preheader, label %vector.memcheck410
 
 vector.memcheck410:                               ; preds = %.lr.ph.split.i37.preheader.i
-  %i.aby = add i64 %34, %i.abw
-  %i.abz = add i64 %i.abm, %33
+  %33 = ptrtoaddr ptr %i.abq to i64
+  %34 = ptrtoaddr ptr %i.abh to i64
+  %i.aby = add i64 %33, %i.abw
+  %i.abz = add i64 %i.abm, %34
   %i.aca = sub i64 %i.abz, %i.aby
   %diff.check411 = icmp ugt i64 %i.aca, -32
   br i1 %diff.check411, label %.lr.ph.split.i37.i.preheader, label %vector.body418
@@ -1055,9 +1053,9 @@ vector.body418:                                   ; preds = %vector.memcheck410,
 middle.block423:                                  ; preds = %vector.body418
   br i1 %cmp.n424, label %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit41.loopexit.i", label %.lr.ph.split.i37.i.preheader
 
-.lr.ph.split.i37.i.preheader:                     ; preds = %.lr.ph.split.i37.preheader.i, %vector.memcheck410, %middle.block423
-  %.ph476 = phi i64 [ 0, %vector.memcheck410 ], [ %n.vec417, %middle.block423 ], [ 0, %.lr.ph.split.i37.preheader.i ]
-  %.012.i38.i.ph = phi i32 [ 0, %vector.memcheck410 ], [ %i.yk, %middle.block423 ], [ 0, %.lr.ph.split.i37.preheader.i ]
+.lr.ph.split.i37.i.preheader:                     ; preds = %vector.memcheck410, %.lr.ph.split.i37.preheader.i, %middle.block423
+  %.ph476 = phi i64 [ 0, %vector.memcheck410 ], [ 0, %.lr.ph.split.i37.preheader.i ], [ %n.vec417, %middle.block423 ]
+  %.012.i38.i.ph = phi i32 [ 0, %vector.memcheck410 ], [ 0, %.lr.ph.split.i37.preheader.i ], [ %i.yk, %middle.block423 ]
   br label %.lr.ph.split.i37.i
 
 .lr.ph.split.i37.i:                               ; preds = %.lr.ph.split.i37.i.preheader, %.lr.ph.split.i37.i

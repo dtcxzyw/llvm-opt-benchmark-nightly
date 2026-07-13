@@ -1,7 +1,7 @@
 inline.NumInlined: 12
 inline.NumDeleted: 8
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -138,7 +138,7 @@ vector.body42:                                    ; preds = %vector.body, %vecto
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.a, %.loopexit.i
-  %indvars.iv38.i = phi i64 [ %indvars.iv.next39.i, %bb.a ], [ %i.ax, %.loopexit.i ] ; 8 uses
+  %indvars.iv38.i = phi i64 [ %indvars.iv.next39.i, %bb.a ], [ %i.ax, %.loopexit.i ] ; 6 uses
   %i.ay = getelementptr inbounds [4 x i8], ptr @freq, i64 %indvars.iv38.i ; 3 uses
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !4  ; 2 uses
   %i.ba = getelementptr i8, ptr %i.ay, i64 -4
@@ -174,13 +174,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.bn, label %.lr.ph.preheader.i, label %update_model.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
-  %i.bo = and i64 %indvars.iv38.i, 4294967295     ; 4 uses
-  %min.iters.check = icmp samesign ult i64 %i.bo, 8
+  %i.bo = and i64 %indvars.iv38.i, 4294967295     ; 5 uses
+  %1 = icmp ne i64 %i.bo, 0
+  %.neg = sext i1 %1 to i64
+  %2 = add nsw i64 %i.bo, %.neg
+  %3 = add nsw i64 %2, 1                          ; 3 uses
+  %min.iters.check = icmp ult i64 %3, 8
   br i1 %min.iters.check, label %.lr.ph.i.a, label %vector.ph50
 
 vector.ph50:                                      ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %indvars.iv38.i, 4294967288    ; 2 uses
-  %1 = and i64 %indvars.iv38.i, 7
+  %n.vec = and i64 %3, -8                         ; 3 uses
+  %4 = sub nsw i64 %i.bo, %n.vec
   %i.bp = getelementptr [4 x i8], ptr @cum_freq, i64 %i.bo
   br label %vector.body51
 
@@ -201,73 +205,24 @@ vector.body51:                                    ; preds = %vector.body51, %vec
   br i1 %i.bw, label %middle.block55, label %vector.body51, !llvm.loop !21
 
 middle.block55:                                   ; preds = %vector.body51
-  %cmp.n = icmp eq i64 %i.bo, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %update_model.exit, label %.lr.ph.i.a
 
-.lr.ph.i.a:                                       ; preds = %middle.block55, %.lr.ph.preheader.i
-  %indvars.iv43.i.ph = phi i64 [ %i.bo, %.lr.ph.preheader.i ], [ %1, %middle.block55 ] ; 13 uses
-  %2 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
-  %3 = getelementptr i8, ptr %2, i64 -4           ; 2 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !4
-  %5 = add nsw i32 %4, 1
-  store i32 %5, ptr %3, align 4, !tbaa !4
-  %6 = icmp samesign ugt i64 %indvars.iv43.i.ph, 1
-  br i1 %6, label %.lr.ph.i.1, label %update_model.exit
+.lr.ph.i.a:                                       ; preds = %.lr.ph.preheader.i, %middle.block55
+  %indvars.iv43.i.ph = phi i64 [ %i.bo, %.lr.ph.preheader.i ], [ %4, %middle.block55 ]
+  br label %.lr.ph.i.4
 
-.lr.ph.i.1:                                       ; preds = %.lr.ph.i.a
-  %7 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
-  %8 = getelementptr i8, ptr %7, i64 -8           ; 2 uses
-  %9 = load i32, ptr %8, align 4, !tbaa !4
-  %10 = add nsw i32 %9, 1
-  store i32 %10, ptr %8, align 4, !tbaa !4
-  %.not = icmp eq i64 %indvars.iv43.i.ph, 2
-  br i1 %.not, label %update_model.exit, label %.lr.ph.i.2
-
-.lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
-  %11 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
-  %12 = getelementptr i8, ptr %11, i64 -12        ; 2 uses
-  %13 = load i32, ptr %12, align 4, !tbaa !4
-  %14 = add nsw i32 %13, 1
-  store i32 %14, ptr %12, align 4, !tbaa !4
-  %15 = icmp samesign ugt i64 %indvars.iv43.i.ph, 3
-  br i1 %15, label %.lr.ph.i.3, label %update_model.exit
-
-.lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
-  %16 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
-  %17 = getelementptr i8, ptr %16, i64 -16        ; 2 uses
-  %18 = load i32, ptr %17, align 4, !tbaa !4
-  %19 = add nsw i32 %18, 1
-  store i32 %19, ptr %17, align 4, !tbaa !4
-  %.not62 = icmp eq i64 %indvars.iv43.i.ph, 4
-  br i1 %.not62, label %update_model.exit, label %.lr.ph.i.4
-
-.lr.ph.i.4:                                       ; preds = %.lr.ph.i.3
-  %20 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
-  %21 = getelementptr i8, ptr %20, i64 -20        ; 2 uses
-  %i.bx = load i32, ptr %21, align 4, !tbaa !4
+.lr.ph.i.4:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i.4
+  %indvars.iv43.i = phi i64 [ %indvars.iv.next44.i, %.lr.ph.i.4 ], [ %indvars.iv43.i.ph, %.lr.ph.i.a ] ; 2 uses
+  %indvars.iv.next44.i = add nsw i64 %indvars.iv43.i, -1 ; 2 uses
+  %5 = getelementptr inbounds nuw [4 x i8], ptr @cum_freq, i64 %indvars.iv.next44.i ; 2 uses
+  %i.bx = load i32, ptr %5, align 4, !tbaa !4
   %i.by = add nsw i32 %i.bx, 1
-  store i32 %i.by, ptr %21, align 4, !tbaa !4
-  %i.bz = icmp samesign ugt i64 %indvars.iv43.i.ph, 5
-  br i1 %i.bz, label %.lr.ph.i.5, label %update_model.exit
+  store i32 %i.by, ptr %5, align 4, !tbaa !4
+  %i.bz = icmp samesign ugt i64 %indvars.iv43.i, 1
+  br i1 %i.bz, label %.lr.ph.i.4, label %update_model.exit, !llvm.loop !22
 
-.lr.ph.i.5:                                       ; preds = %.lr.ph.i.4
-  %22 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
-  %23 = getelementptr i8, ptr %22, i64 -24        ; 2 uses
-  %24 = load i32, ptr %23, align 4, !tbaa !4
-  %25 = add nsw i32 %24, 1
-  store i32 %25, ptr %23, align 4, !tbaa !4
-  %26 = icmp eq i64 %indvars.iv43.i.ph, 7
-  br i1 %26, label %.lr.ph.i.6, label %update_model.exit
-
-.lr.ph.i.6:                                       ; preds = %.lr.ph.i.5
-  %27 = getelementptr [4 x i8], ptr @cum_freq, i64 %indvars.iv43.i.ph
-  %28 = getelementptr i8, ptr %27, i64 -28        ; 2 uses
-  %29 = load i32, ptr %28, align 4, !tbaa !4
-  %30 = add nsw i32 %29, 1
-  store i32 %30, ptr %28, align 4, !tbaa !4
-  br label %update_model.exit
-
-update_model.exit:                                ; preds = %.lr.ph.i.a, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %.lr.ph.i.6, %middle.block55, %bb.d
+update_model.exit:                                ; preds = %.lr.ph.i.4, %middle.block55, %bb.d
   %i.ca = load ptr, ptr @rle, align 8, !tbaa !16
   %i.cb = load i32, ptr @rle_pos, align 4, !tbaa !4 ; 2 uses
   %i.cc = add i32 %i.cb, 1                        ; 2 uses
@@ -341,7 +296,7 @@ output_bit.exit4.us.i.i:                          ; preds = %bb.g, %.lr.ph.split
   %i.di = add nsw i64 %i.dg, -1                   ; 2 uses
   store i64 %i.di, ptr @bits_to_follow, align 8, !tbaa !14
   %i.dj = icmp sgt i64 %i.dg, 1
-  br i1 %i.dj, label %.lr.ph.split.us.i.i, label %bit_plus_follow.exit.sink.split.i, !llvm.loop !22
+  br i1 %i.dj, label %.lr.ph.split.us.i.i, label %bit_plus_follow.exit.sink.split.i, !llvm.loop !23
 
 bb.h:                                             ; preds = %._crit_edge
   %i.dk = or i32 %i.cj, 128                       ; 4 uses
@@ -398,7 +353,7 @@ output_bit.exit4.i.i:                             ; preds = %bb.j, %.lr.ph.split
   %i.ei = add nsw i64 %i.eg, -1                   ; 2 uses
   store i64 %i.ei, ptr @bits_to_follow, align 8, !tbaa !14
   %i.ej = icmp sgt i64 %i.eg, 1
-  br i1 %i.ej, label %.lr.ph.split.i.i, label %bit_plus_follow.exit.sink.split.i, !llvm.loop !22
+  br i1 %i.ej, label %.lr.ph.split.i.i, label %bit_plus_follow.exit.sink.split.i, !llvm.loop !23
 
 bit_plus_follow.exit.sink.split.i:                ; preds = %output_bit.exit4.i.i, %output_bit.exit4.us.i.i
   %.lcssa19.sink.i = phi i32 [ %i.cx, %output_bit.exit4.us.i.i ], [ %i.dx, %output_bit.exit4.i.i ] ; 2 uses
@@ -514,7 +469,7 @@ output_bit.exit4.us.i:                            ; preds = %bb.e, %.lr.ph.split
   %i.aw = add nsw i64 %i.au, -1                   ; 2 uses
   store i64 %i.aw, ptr @bits_to_follow, align 8, !tbaa !14
   %i.ax = icmp sgt i64 %i.au, 1
-  br i1 %i.ax, label %.lr.ph.split.us.i, label %._crit_edge.i, !llvm.loop !22
+  br i1 %i.ax, label %.lr.ph.split.us.i, label %._crit_edge.i, !llvm.loop !23
 
 ._crit_edge.i:                                    ; preds = %output_bit.exit4.us.i
   store i32 %i.al, ptr @buffer, align 4, !tbaa !4
@@ -579,7 +534,7 @@ output_bit.exit4.i:                               ; preds = %bb.i, %.lr.ph.split
   %i.bx = add nsw i64 %i.bv, -1                   ; 2 uses
   store i64 %i.bx, ptr @bits_to_follow, align 8, !tbaa !14
   %i.by = icmp sgt i64 %i.bv, 1
-  br i1 %i.by, label %.lr.ph.split.i, label %._crit_edge.i13, !llvm.loop !22
+  br i1 %i.by, label %.lr.ph.split.i, label %._crit_edge.i13, !llvm.loop !23
 
 ._crit_edge.i13:                                  ; preds = %output_bit.exit4.i
   store i32 %i.bm, ptr @buffer, align 4, !tbaa !4
@@ -658,5 +613,6 @@ attributes #1 = { nofree norecurse nosync nounwind memory(readwrite, argmem: wri
 !19 = distinct !{!19, !10}
 !20 = distinct !{!20, !10}
 !21 = distinct !{!21, !10, !11, !12}
-!22 = distinct !{!22, !10}
+!22 = distinct !{!22, !10, !12, !11}
+!23 = distinct !{!23, !10}
 end_hunk_0

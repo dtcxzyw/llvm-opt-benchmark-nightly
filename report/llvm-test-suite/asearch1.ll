@@ -147,17 +147,16 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .lr.ph225:                                        ; preds = %._crit_edge, %.preheader213
   %i.at = load i32, ptr @Init, align 4, !tbaa !4  ; 3 uses
-  %i.au = zext i32 %2 to i64                      ; 5 uses
+  %i.au = zext i32 %2 to i64                      ; 4 uses
   %i.av = zext i32 %i.aq to i64                   ; 2 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.au, i64 %i.av)
-  %i.aw = add nuw nsw i64 %umax, 1
-  %3 = sub nsw i64 %i.aw, %i.au                   ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %umax = tail call i64 @llvm.usub.sat.i64(i64 %i.av, i64 %i.au) ; 2 uses
+  %i.aw = add nuw nsw i64 %umax, 1                ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %umax, 7
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph225
-  %n.vec = and i64 %3, -8                         ; 3 uses
-  %i.ax = add nsw i64 %n.vec, %i.au
+  %n.vec = and i64 %i.aw, 8589934584              ; 3 uses
+  %i.ax = add nuw nsw i64 %n.vec, %i.au
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.at, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   br label %vector.body
@@ -178,7 +177,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bd, label %middle.block, label %vector.body, !llvm.loop !13
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.aw, %n.vec
   br i1 %cmp.n, label %.preheader, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph225, %middle.block
@@ -195,7 +194,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph225, %middle.
 .lr.ph264:                                        ; preds = %.preheader
   %sext = shl i64 %i.n, 32
   %i.bh = ashr exact i64 %sext, 32
-  %i.bi = zext i32 %2 to i64                      ; 12 uses
+  %i.bi = zext i32 %2 to i64                      ; 10 uses
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.bi ; 5 uses
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bi ; 5 uses
   %.not197226 = icmp ugt i32 %i.ap, %i.aq         ; 4 uses
@@ -205,18 +204,11 @@ scalar.ph.preheader:                              ; preds = %.lr.ph225, %middle.
   %i.bo = xor i32 %i.o, -1
   %i.bp = zext i32 %i.ap to i64                   ; 24 uses
   %i.bq = or disjoint i32 %i.aq, 1                ; 4 uses
-  %i.br = add i32 %2, -1                          ; 3 uses
+  %i.br = add i32 %2, -1                          ; 6 uses
   %i.bs = add i32 %2, 1
-  %umax341 = call i64 @llvm.umax.i64(i64 %i.bi, i64 %i.bl)
-  %4 = add nuw nsw i64 %umax341, 1
-  %5 = sub nsw i64 %4, %i.bi                      ; 3 uses
-  %6 = add i32 %2, -1                             ; 6 uses
   %i.bt = add i32 %2, 1
-  %i.bu = add i32 %2, 1
-  %umax407 = call i64 @llvm.umax.i64(i64 %i.bi, i64 %i.bl)
-  %7 = add nuw nsw i64 %umax407, 1
-  %8 = sub nsw i64 %7, %i.bi                      ; 3 uses
-  %i.bv = add i32 %2, -1                          ; 3 uses
+  %i.bu = add i32 %2, -1                          ; 6 uses
+  %i.bv = add i32 %2, 1
   %i.bw = add i32 %2, 1
   %i.bx = add i32 %2, -1                          ; 2 uses
   %i.by = zext i32 %i.bx to i64
@@ -230,10 +222,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph225, %middle.
   %broadcast.splatinsert435 = insertelement <4 x i32> poison, i32 %i.q, i64 0
   %broadcast.splat436 = shufflevector <4 x i32> %broadcast.splatinsert435, <4 x i32> poison, <4 x i32> zeroinitializer
   %cmp.n445 = icmp eq i64 %i.bz, %n.vec430
-  %min.iters.check409 = icmp ult i64 %8, 8
-  %n.vec412 = and i64 %8, -8                      ; 3 uses
-  %i.cb = add nsw i64 %n.vec412, %i.bi
-  %cmp.n419 = icmp eq i64 %8, %n.vec412
+  %3 = call i64 @llvm.usub.sat.i64(i64 %i.bl, i64 %i.bi) ; 2 uses
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
+  %min.iters.check409 = icmp samesign ult i64 %3, 7
+  %n.vec412 = and i64 %4, 8589934584              ; 3 uses
+  %i.cb = add nuw nsw i64 %n.vec412, %i.bi
+  %cmp.n419 = icmp eq i64 %4, %n.vec412
   %i.cc = add i32 %2, -1                          ; 2 uses
   %i.cd = zext i32 %i.cc to i64
   %i.ce = add nuw nsw i64 %i.cd, 1                ; 2 uses
@@ -258,10 +252,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph225, %middle.
   %broadcast.splatinsert369 = insertelement <4 x i32> poison, i32 %i.q, i64 0
   %broadcast.splat370 = shufflevector <4 x i32> %broadcast.splatinsert369, <4 x i32> poison, <4 x i32> zeroinitializer
   %cmp.n379 = icmp eq i64 %i.ci, %n.vec364
-  %min.iters.check343 = icmp ult i64 %5, 8
-  %n.vec346 = and i64 %5, -8                      ; 3 uses
-  %i.ck = add nsw i64 %n.vec346, %i.bi
-  %cmp.n353 = icmp eq i64 %5, %n.vec346
+  %5 = call i64 @llvm.usub.sat.i64(i64 %i.bl, i64 %i.bi) ; 2 uses
+  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
+  %min.iters.check343 = icmp samesign ult i64 %5, 7
+  %n.vec346 = and i64 %6, 8589934584              ; 3 uses
+  %i.ck = add nuw nsw i64 %n.vec346, %i.bi
+  %cmp.n353 = icmp eq i64 %6, %n.vec346
   %i.cl = add i32 %2, -1                          ; 2 uses
   %i.cm = zext i32 %i.cl to i64
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
@@ -338,11 +334,11 @@ bb.k:                                             ; preds = %bb.j
 
 vector.scevcheck421:                              ; preds = %.lr.ph229
   %.reass = add i32 %i.dp, %invariant.op
-  %i.dr = icmp ult i32 %.reass, %i.bv
+  %i.dr = icmp ult i32 %.reass, %i.bu
   %.reass463.a = add i32 %i.do, %invariant.op462.a
-  %i.ds = icmp ult i32 %.reass463.a, %i.bv
+  %i.ds = icmp ult i32 %.reass463.a, %i.bu
   %.reass465.a = add i32 %i.dq, %invariant.op464.a
-  %i.dt = icmp ult i32 %.reass465.a, %i.bv
+  %i.dt = icmp ult i32 %.reass465.a, %i.bu
   %i.du = or i1 %i.dr, %i.ds
   %i.dv = or i1 %i.du, %i.dt
   br i1 %i.dv, label %scalar.ph426.preheader, label %vector.memcheck424
@@ -559,17 +555,17 @@ scalar.ph408:                                     ; preds = %scalar.ph408.prehea
 
 vector.scevcheck381:                              ; preds = %.lr.ph239
   %.reass467.a = add i32 %i.hf, %invariant.op466.a
-  %i.hh = icmp ult i32 %.reass467.a, %6
+  %i.hh = icmp ult i32 %.reass467.a, %i.bu
   %.reass469.a = add i32 %i.he, %invariant.op468.a
-  %i.hi = icmp ult i32 %.reass469.a, %6
+  %i.hi = icmp ult i32 %.reass469.a, %i.bu
   %.reass471.a = add i32 %i.hg, %invariant.op470.a
-  %i.hj = icmp ult i32 %.reass471.a, %6
+  %i.hj = icmp ult i32 %.reass471.a, %i.bu
   %i.hk = or i1 %i.hh, %i.hi
   %i.hl = or i1 %i.hk, %i.hj
   br i1 %i.hl, label %scalar.ph386.preheader, label %vector.memcheck384
 
 vector.memcheck384:                               ; preds = %vector.scevcheck381
-  %i.hm = sub i32 %i.bu, %i.hf
+  %i.hm = sub i32 %i.bv, %i.hf
   %i.hn = zext i32 %i.hm to i64
   %i.ho = sub nsw i64 %i.bp, %i.hn
   %i.hp = shl nsw i64 %i.ho, 2
@@ -688,11 +684,11 @@ scalar.ph386:                                     ; preds = %scalar.ph386.prehea
 
 vector.scevcheck355:                              ; preds = %.lr.ph243
   %.reass473.a = add i32 %i.kb, %invariant.op472.a
-  %i.kd = icmp ult i32 %.reass473.a, %6
+  %i.kd = icmp ult i32 %.reass473.a, %i.br
   %.reass475.a = add i32 %i.ka, %invariant.op474.a
-  %i.ke = icmp ult i32 %.reass475.a, %6
+  %i.ke = icmp ult i32 %.reass475.a, %i.br
   %.reass477.a = add i32 %i.kc, %invariant.op476.a
-  %i.kf = icmp ult i32 %.reass477.a, %6
+  %i.kf = icmp ult i32 %.reass477.a, %i.br
   %i.kg = or i1 %i.kd, %i.ke
   %i.kh = or i1 %i.kg, %i.kf
   br i1 %i.kh, label %scalar.ph360.preheader, label %vector.memcheck358
@@ -1076,7 +1072,7 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #7
+declare i64 @llvm.usub.sat.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

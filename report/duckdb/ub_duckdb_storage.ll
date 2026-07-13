@@ -204,13 +204,13 @@ bb.q:                                             ; preds = %bb.k
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !1198
   %i.ah = lshr i64 %i.ae, %i.ag
   %i.ai = invoke noundef i32 @_ZN6duckdb15NumericCastImplIjmLb0EE7ConvertEm(i64 noundef %i.ah)
-          to label %_ZN6duckdb11NumericCastIjmvEET_T0_.exit unwind label %bb.r ; 3 uses
+          to label %_ZN6duckdb11NumericCastIjmvEET_T0_.exit unwind label %bb.r ; 2 uses
 
 _ZN6duckdb11NumericCastIjmvEET_T0_.exit:          ; preds = %bb.q
   %i.aj = load i64, ptr %i.af, align 8, !tbaa !1198
   %i.ak = lshr i64 %1, %i.aj
   %i.al = invoke noundef i32 @_ZN6duckdb15NumericCastImplIjmLb0EE7ConvertEm(i64 noundef %i.ak)
-          to label %_ZN6duckdb11NumericCastIjmvEET_T0_.exit47.preheader unwind label %bb.s ; 4 uses
+          to label %_ZN6duckdb11NumericCastIjmvEET_T0_.exit47.preheader unwind label %bb.s ; 3 uses
 
 _ZN6duckdb11NumericCastIjmvEET_T0_.exit47.preheader: ; preds = %_ZN6duckdb11NumericCastIjmvEET_T0_.exit
   %i.am = icmp ult i32 %i.ai, %i.al
@@ -236,22 +236,15 @@ bb.s:                                             ; preds = %_ZN6duckdb11Numeric
   br label %bb.w
 
 .lr.ph.preheader:                                 ; preds = %_ZN17duckdb_moodycamel15ConcurrentQueueIjNS_28ConcurrentQueueDefaultTraitsEE12enqueue_bulkIPjEEbT_m.exit, %.lr.ph60
-  %indvar = phi i32 [ %indvar.next, %_ZN17duckdb_moodycamel15ConcurrentQueueIjNS_28ConcurrentQueueDefaultTraitsEE12enqueue_bulkIPjEEbT_m.exit ], [ 0, %.lr.ph60 ] ; 2 uses
-  %.02359 = phi i32 [ %i.bg, %_ZN17duckdb_moodycamel15ConcurrentQueueIjNS_28ConcurrentQueueDefaultTraitsEE12enqueue_bulkIPjEEbT_m.exit ], [ %i.ai, %.lr.ph60 ] ; 4 uses
-  %6 = shl i32 %indvar, 11
-  %7 = add i32 %i.ai, %6
-  %8 = sub i32 %i.al, %7                          ; 2 uses
-  %9 = call i32 @llvm.umax.i32(i32 %8, i32 1)
-  %10 = call i32 @llvm.umin.i32(i32 %9, i32 2048)
-  %umax = zext nneg i32 %10 to i64                ; 2 uses
-  %i.aq = sub nuw i32 %i.al, %.02359
+  %.02359 = phi i32 [ %i.ai, %.lr.ph60 ], [ %i.bg, %_ZN17duckdb_moodycamel15ConcurrentQueueIjNS_28ConcurrentQueueDefaultTraitsEE12enqueue_bulkIPjEEbT_m.exit ] ; 4 uses
+  %i.aq = sub nuw i32 %i.al, %.02359              ; 2 uses
   %i.ar = call i32 @llvm.umin.i32(i32 %i.aq, i32 2048)
-  %i.as = zext nneg i32 %i.ar to i64              ; 2 uses
-  %min.iters.check = icmp ult i32 %8, 8
+  %i.as = zext nneg i32 %i.ar to i64              ; 4 uses
+  %min.iters.check = icmp ult i32 %i.aq, 8
   br i1 %min.iters.check, label %.lr.ph.preheader70, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %umax, 4088                    ; 3 uses
+  %n.vec = and i64 %i.as, 4088                    ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.02359, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = add <4 x i32> splat (i32 4), %broadcast.splat
@@ -272,7 +265,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aw, label %middle.block, label %vector.body, !llvm.loop !1207
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %umax
+  %cmp.n = icmp eq i64 %n.vec, %i.as
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader70
 
 .lr.ph.preheader70:                               ; preds = %.lr.ph.preheader, %middle.block
@@ -310,7 +303,6 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge
 _ZN17duckdb_moodycamel15ConcurrentQueueIjNS_28ConcurrentQueueDefaultTraitsEE12enqueue_bulkIPjEEbT_m.exit: ; preds = %.noexc, %bb.t
   %i.bg = add i32 %.02359, 2048                   ; 2 uses
   %i.bh = icmp ult i32 %i.bg, %i.al
-  %indvar.next = add i32 %indvar, 1
   br i1 %i.bh, label %.lr.ph.preheader, label %_ZN6duckdb11NumericCastIjmvEET_T0_.exit47._crit_edge, !llvm.loop !1209
 
 bb.v:                                             ; preds = %bb.d, %_ZN6duckdb11NumericCastIjmvEET_T0_.exit47._crit_edge
@@ -712,9 +704,6 @@ declare i32 @llvm.umin.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
