@@ -203,7 +203,7 @@ declare ptr @PyErr_Format(ptr noundef, ptr noundef, ...) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @_PyUnicodeWriter_WriteASCIIString(ptr nofree noundef captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 4 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 4 uses
   %i.a = icmp eq i64 %2, -1
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -336,7 +336,7 @@ bb.n:                                             ; preds = %.critedge
   br i1 %i.au, label %.lr.ph103, label %.preheader
 
 .preheader.loopexit:                              ; preds = %.lr.ph103
-  %.pre117 = ptrtoint ptr %i.cd to i64
+  %.pre117 = ptrtoaddr ptr %i.cd to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.n
@@ -474,7 +474,7 @@ bb.o:                                             ; preds = %.critedge
   br i1 %i.co, label %.lr.ph, label %.preheader93
 
 .preheader93.loopexit:                            ; preds = %.lr.ph
-  %.pre118 = ptrtoint ptr %i.dr to i64
+  %.pre118 = ptrtoaddr ptr %i.dr to i64
   br label %.preheader93
 
 .preheader93:                                     ; preds = %.preheader93.loopexit, %bb.o
@@ -662,7 +662,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @_PyUnicodeWriter_WriteLatin1String(ptr nofree noundef captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = getelementptr i8, ptr %1, i64 %2         ; 9 uses
   br label %bb.b
 
@@ -848,7 +848,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.02632.i.ph = phi ptr [ %1, %iter.check ], [ %1, %vector.memcheck43 ], [ %i.ak, %vec.epilog.iter.check ], [ %i.at, %vec.epilog.middle.block ] ; 3 uses
   %.02731.i.ph = phi ptr [ %i.ah, %iter.check ], [ %i.ah, %vector.memcheck43 ], [ %i.am, %vec.epilog.iter.check ], [ %i.av, %vec.epilog.middle.block ] ; 2 uses
   %i.az = add i64 %2, %3                          ; 2 uses
-  %.02632.i.ph79 = ptrtoint ptr %.02632.i.ph to i64 ; 2 uses
+  %.02632.i.ph79 = ptrtoaddr ptr %.02632.i.ph to i64 ; 2 uses
   %i.ba = sub i64 %i.az, %.02632.i.ph79
   %xtraiter80 = and i64 %i.ba, 7                  ; 2 uses
   %lcmp.mod81.not = icmp eq i64 %xtraiter80, 0
@@ -970,7 +970,7 @@ middle.block:                                     ; preds = %vector.body
   %.030.i.ph = phi ptr [ %i.co, %vector.memcheck ], [ %i.co, %.lr.ph.preheader.i ], [ %i.cs, %middle.block ] ; 2 uses
   %.129.i.ph = phi ptr [ %1, %vector.memcheck ], [ %1, %.lr.ph.preheader.i ], [ %i.ct, %middle.block ] ; 3 uses
   %i.da = add i64 %2, %3                          ; 2 uses
-  %.129.i.ph78 = ptrtoint ptr %.129.i.ph to i64   ; 2 uses
+  %.129.i.ph78 = ptrtoaddr ptr %.129.i.ph to i64  ; 2 uses
   %i.db = sub i64 %i.da, %.129.i.ph78
   %xtraiter = and i64 %i.db, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

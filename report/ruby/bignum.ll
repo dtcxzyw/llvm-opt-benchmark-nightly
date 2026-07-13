@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.p
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc range(i32 -2, 2) i32 @bary_unpack_internal(ptr noundef %0, i64 noundef range(i64 -576460752303423487, 9223372036854775807) %1, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef %6, i32 noundef %7) unnamed_addr #0 {
 bb.a:
-  %8 = ptrtoint ptr %0 to i64                     ; 4 uses
+  %8 = ptrtoaddr ptr %0 to i64                    ; 4 uses
   %i.a = getelementptr [4 x i8], ptr %0, i64 %1   ; 9 uses
   %i.b = and i32 %6, 1024
   %.not = icmp eq i32 %i.b, 0
@@ -607,7 +607,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   br i1 %i.hi, label %.lr.ph357.preheader, label %.loopexit326
 
 .lr.ph357.preheader:                              ; preds = %bb.ar
-  %.3294394 = ptrtoint ptr %.3294 to i64          ; 2 uses
+  %.3294394 = ptrtoaddr ptr %.3294 to i64         ; 2 uses
   %i.hj = shl i64 %1, 2
   %i.hk = add i64 %i.hj, %8
   %i.hl = add i64 %.3294394, 4
@@ -1010,13 +1010,13 @@ bb.am:                                            ; preds = %.thread, %bb.ak
   %.3263 = phi ptr [ %.3.ph, %.thread ], [ %.2, %bb.ak ] ; 7 uses
   %.0161262 = phi i32 [ %.0161.ph, %.thread ], [ %.0161, %bb.ak ] ; 7 uses
   %.2254261 = phi i64 [ %.2254.ph, %.thread ], [ %.1253, %bb.ak ] ; 6 uses
-  %.3263340 = ptrtoint ptr %.3263 to i64          ; 2 uses
   %.not202 = icmp eq i64 %.2254261, 0
   br i1 %.not202, label %str2big_scan_digits.exit.thread, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
+  %6 = ptrtoint ptr %.3263 to i64                 ; 2 uses
   %i.bt = ptrtoint ptr %0 to i64
-  %i.bu = sub i64 %.3263340, %i.bt                ; 3 uses
+  %i.bu = sub i64 %6, %i.bt                       ; 3 uses
   store i64 %i.bu, ptr %i.b, align 8, !tbaa !11
   %i.bv = load i8, ptr %.3263, align 1, !tbaa !15
   %i.bw = icmp eq i8 %i.bv, 48
@@ -1034,7 +1034,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.cd = and i32 %5, 2
   %i.ce = icmp eq i32 %i.cd, 0
   %scevgep341.a = getelementptr i8, ptr inttoptr (i64 -1 to ptr), i64 %i.cb
-  %i.cf = sub i64 %i.cb, %.3263340
+  %i.cf = sub i64 %i.cb, %6
   %scevgep342 = getelementptr i8, ptr %.3263, i64 %i.cf
   br label %bb.ap
 

@@ -203,7 +203,7 @@ define dso_local i32 @onigenc_mbn_mbc_case_fold(ptr noundef %0, i32 noundef %1, 
 bb.a:
   %i.a = ptrtoaddr ptr %4 to i64
   %i.b = load ptr, ptr %2, align 8, !tbaa !21     ; 13 uses
-  %5 = ptrtoaddr ptr %i.b to i64
+  %5 = ptrtoint ptr %i.b to i64
   %i.c = load i8, ptr %i.b, align 1, !tbaa !26    ; 2 uses
   %i.d = icmp sgt i8 %i.c, -1
   br i1 %i.d, label %bb.b, label %bb.c
