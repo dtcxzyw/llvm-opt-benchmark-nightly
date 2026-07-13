@@ -203,13 +203,13 @@ fb_set_range.exit:                                ; preds = %._crit_edge.i44, %f
   br i1 %i.ay, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %fb_set_range.exit
-  %2 = add nsw i64 %i.a, -65
-  %3 = add nsw i64 %2, %i.am
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64)
-  %4 = sub nsw i64 %3, %umin                      ; 2 uses
-  %i.by = lshr i64 %4, 6
+  %2 = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64)
+  %3 = sub nsw i64 %i.a, %2
+  %4 = add nsw i64 %3, %i.am
+  %5 = add nsw i64 %4, -65                        ; 2 uses
+  %i.by = lshr i64 %5, 6
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %4, 192
+  %min.iters.check = icmp ult i64 %5, 192
   br i1 %min.iters.check, label %.lr.ph.preheader238, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

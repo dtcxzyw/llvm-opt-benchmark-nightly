@@ -203,10 +203,10 @@ scalar.ph189:                                     ; preds = %scalar.ph189.prol.l
   %i.bc = load i32, ptr %i.d, align 4, !tbaa !4
   %i.bd = and i32 %i.bc, 1023                     ; 3 uses
   %i.be = zext nneg i32 %i.bd to i64              ; 6 uses
-  %1 = add nuw nsw i64 %i.be, 1
-  %2 = icmp ne i32 %i.bd, 0
-  %umin172.neg = sext i1 %2 to i64
-  %i.bf = add nsw i64 %1, %umin172.neg            ; 3 uses
+  %1 = icmp ne i32 %i.bd, 0
+  %.neg = sext i1 %1 to i64
+  %2 = add nsw i64 %.neg, %i.be
+  %i.bf = add nsw i64 %2, 1                       ; 3 uses
   %min.iters.check174 = icmp ult i64 %i.bf, 8
   br i1 %min.iters.check174, label %scalar.ph173.preheader, label %vector.memcheck161
 
@@ -361,10 +361,10 @@ bb.v:                                             ; preds = %bb.u
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !28 ; 4 uses
   %i.cv = and i32 %i.cs, 1023                     ; 3 uses
   %i.cw = zext nneg i32 %i.cv to i64              ; 6 uses
-  %3 = add nuw nsw i64 %i.cw, 1
-  %4 = icmp ne i32 %i.cv, 0
-  %umin157.neg = sext i1 %4 to i64
-  %i.cx = add nsw i64 %3, %umin157.neg            ; 3 uses
+  %3 = icmp ne i32 %i.cv, 0
+  %.neg201 = sext i1 %3 to i64
+  %4 = add nsw i64 %.neg201, %i.cw
+  %i.cx = add nsw i64 %4, 1                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.cx, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -714,10 +714,10 @@ bb.o:                                             ; preds = %bb.n
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !28 ; 4 uses
   %i.bh = and i32 %i.be, 1023                     ; 3 uses
   %i.bi = zext nneg i32 %i.bh to i64              ; 6 uses
-  %2 = add nuw nsw i64 %i.bi, 1
-  %3 = icmp ne i32 %i.bh, 0
-  %umin53.neg = sext i1 %3 to i64
-  %i.bj = add nsw i64 %2, %umin53.neg             ; 3 uses
+  %2 = icmp ne i32 %i.bh, 0
+  %.neg = sext i1 %2 to i64
+  %3 = add nsw i64 %.neg, %i.bi
+  %i.bj = add nsw i64 %3, 1                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.bj, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 

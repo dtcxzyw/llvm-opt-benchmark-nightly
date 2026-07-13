@@ -204,15 +204,15 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv
   br i1 %i.zu, label %bb.cy, label %.preheader186.i.preheader
 
 .preheader186.i.preheader:                        ; preds = %bb.cx
-  %i.zv = add nsw i64 %.1.i.i, 4
-  %i.zw = add nsw i64 %i.zv, %.160.i.i
-  %i.zx = add i64 %i.zw, %i.xq
-  %i.zy = add nsw i64 %.1.i.i, 16
-  %i.zz = add i64 %i.zy, %i.xq
+  %i.zv = add nsw i64 %.1.i.i, %.160.i.i
+  %i.zw = add i64 %i.zv, %i.xq
+  %i.zx = add i64 %i.zw, 4
+  %i.zy = add i64 %.1.i.i, %i.xq
+  %i.zz = add i64 %i.zy, 16
   %umax137 = tail call i64 @llvm.umax.i64(i64 %i.zx, i64 %i.zz)
-  %i.aaa = add i64 %umax137, -9
-  %5 = add i64 %.1.i.i, %i.xq
-  %6 = sub i64 %i.aaa, %5                         ; 2 uses
+  %i.aaa = add i64 %.1.i.i, %i.xq
+  %5 = sub i64 %umax137, %i.aaa
+  %6 = add i64 %5, -9                             ; 2 uses
   %i.aab = lshr i64 %6, 3
   %i.aac = add nuw nsw i64 %i.aab, 1              ; 2 uses
   %min.iters.check139 = icmp ult i64 %6, 56
@@ -260,12 +260,12 @@ bb.cy:                                            ; preds = %bb.cx
   br i1 %i.aam, label %.preheader.i.preheader, label %bb.cz
 
 .preheader.i.preheader:                           ; preds = %bb.cy
-  %i.aan = add nsw i64 %.1.i.i, 16
-  %i.aao = add i64 %i.aan, %i.xq
+  %i.aan = add i64 %.1.i.i, %i.xq
+  %i.aao = add i64 %i.aan, 16
   %umax120 = tail call i64 @llvm.umax.i64(i64 %i.tk, i64 %i.aao)
-  %i.aap = add i64 %umax120, -9
-  %7 = add i64 %.1.i.i, %i.xq
-  %8 = sub i64 %i.aap, %7                         ; 2 uses
+  %i.aap = add i64 %.1.i.i, %i.xq
+  %7 = sub i64 %umax120, %i.aap
+  %8 = add i64 %7, -9                             ; 2 uses
   %i.aaq = lshr i64 %8, 3
   %i.aar = add nuw nsw i64 %i.aaq, 1              ; 2 uses
   %min.iters.check121 = icmp ult i64 %8, 56

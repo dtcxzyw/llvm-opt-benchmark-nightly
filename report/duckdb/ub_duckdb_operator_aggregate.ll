@@ -203,10 +203,10 @@ bb.a:
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.am = getelementptr inbounds nuw i8, ptr %i.f, i64 40
+  %min.iters.check = icmp ult i64 %i.h, 5
   %i.an = add i64 %i.h, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.an, i64 -9223372036854775808)
   %i.ao = add nuw i64 %umin, 1                    ; 2 uses
-  %min.iters.check = icmp ult i64 %i.h, 5
   %n.mod.vf = and i64 %i.ao, 3                    ; 2 uses
   %i.ap = icmp eq i64 %n.mod.vf, 0
   %i.aq = select i1 %i.ap, i64 4, i64 %n.mod.vf

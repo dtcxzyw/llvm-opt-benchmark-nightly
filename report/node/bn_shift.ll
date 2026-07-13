@@ -151,7 +151,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !13   ; 5 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !13   ; 4 uses
   %i.d = load ptr, ptr %1, align 8, !tbaa !14     ; 4 uses
   %i.e = ptrtoaddr ptr %i.d to i64
   %.not35 = icmp eq ptr %1, %0
@@ -188,11 +188,11 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 
 .lr.ph.preheader:                                 ; preds = %bb.f
   %i.v = ptrtoaddr ptr %i.k to i64
-  %i.w = zext i32 %i.m to i64                     ; 3 uses
-  %2 = zext nneg i32 %i.c to i64
+  %i.w = zext i32 %i.m to i64                     ; 4 uses
   %i.x = icmp ne i32 %i.m, 0
   %umin.neg = sext i1 %i.x to i64
-  %i.y = add nsw i64 %umin.neg, %2                ; 3 uses
+  %2 = add nsw i64 %umin.neg, %i.w
+  %i.y = add nsw i64 %2, 1                        ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 4
   %i.z = sub i64 %i.v, %i.e
   %diff.check = icmp ugt i64 %i.z, -32

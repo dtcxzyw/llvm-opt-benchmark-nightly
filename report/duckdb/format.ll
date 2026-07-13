@@ -204,11 +204,11 @@ middle.block519:                                  ; preds = %vector.body512
   %i.kp = getelementptr i8, ptr %i.kn, i64 %i.ko  ; 5 uses
   %i.kq = sext i32 %i.b to i64                    ; 4 uses
   %gepdiff = sub nsw i64 %i.kq, %i.ko             ; 5 uses
-  %2 = add nsw i64 %i.kq, 1
-  %3 = icmp ne i64 %gepdiff, 0
-  %umin471.neg = sext i1 %3 to i64
-  %i.kr = add nsw i64 %2, %umin471.neg
-  %4 = sub nsw i64 %i.kr, %i.ko                   ; 3 uses
+  %2 = icmp ne i64 %gepdiff, 0
+  %.neg = sext i1 %2 to i64
+  %3 = sub nsw i64 %.neg, %i.ko
+  %i.kr = add nsw i64 %3, %i.kq
+  %4 = add nsw i64 %i.kr, 1                       ; 3 uses
   %min.iters.check473 = icmp ult i64 %4, 28
   br i1 %min.iters.check473, label %.lr.ph.i.i.i.i.i.i189.preheader567, label %vector.memcheck464
 

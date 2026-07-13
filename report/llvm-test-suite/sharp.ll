@@ -200,10 +200,10 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.bs, ptr %i.c, align 4, !tbaa !4
   %i.bt = and i32 %i.bo, 1023                     ; 2 uses
   %i.bu = zext nneg i32 %i.bt to i64              ; 4 uses
-  %2 = add nuw nsw i64 %i.bu, 1
-  %3 = icmp ne i32 %i.bt, 0
-  %umin162.neg = sext i1 %3 to i64
-  %i.bv = add nsw i64 %2, %umin162.neg            ; 3 uses
+  %2 = icmp ne i32 %i.bt, 0
+  %.neg = sext i1 %2 to i64
+  %3 = add nsw i64 %.neg, %i.bu
+  %i.bv = add nsw i64 %3, 1                       ; 3 uses
   %min.iters.check164 = icmp ult i64 %i.bv, 8
   %brmerge = select i1 %min.iters.check164, i1 true, i1 %conflict.rdx161
   br i1 %brmerge, label %scalar.ph163.preheader, label %vector.ph165
@@ -262,10 +262,10 @@ scalar.ph163:                                     ; preds = %scalar.ph163.prehea
   %i.cr = load i32, ptr %i.bj, align 4, !tbaa !4
   %i.cs = and i32 %i.cr, 1023                     ; 3 uses
   %i.ct = zext nneg i32 %i.cs to i64              ; 7 uses
-  %4 = add nuw nsw i64 %i.ct, 1
-  %5 = icmp ne i32 %i.cs, 0
-  %umin142.neg = sext i1 %5 to i64
-  %i.cu = add nsw i64 %4, %umin142.neg            ; 3 uses
+  %4 = icmp ne i32 %i.cs, 0
+  %.neg177 = sext i1 %4 to i64
+  %5 = add nsw i64 %.neg177, %i.ct
+  %i.cu = add nsw i64 %5, 1                       ; 3 uses
   %min.iters.check144 = icmp ult i64 %i.cu, 12
   br i1 %min.iters.check144, label %scalar.ph143.preheader, label %vector.memcheck131
 
@@ -347,10 +347,10 @@ scalar.ph143:                                     ; preds = %scalar.ph143.prehea
   store i32 %i.eb, ptr %i.c, align 4, !tbaa !4
   %i.ec = and i32 %i.dx, 1023                     ; 2 uses
   %i.ed = zext nneg i32 %i.ec to i64              ; 4 uses
-  %6 = add nuw nsw i64 %i.ed, 1
-  %7 = icmp ne i32 %i.ec, 0
-  %umin115.neg = sext i1 %7 to i64
-  %i.ee = add nsw i64 %6, %umin115.neg            ; 3 uses
+  %6 = icmp ne i32 %i.ec, 0
+  %.neg178 = sext i1 %6 to i64
+  %7 = add nsw i64 %.neg178, %i.ed
+  %i.ee = add nsw i64 %7, 1                       ; 3 uses
   %min.iters.check117 = icmp ult i64 %i.ee, 8
   %brmerge181 = select i1 %min.iters.check117, i1 true, i1 %conflict.rdx
   br i1 %brmerge181, label %scalar.ph116.preheader, label %vector.ph118
@@ -412,10 +412,10 @@ scalar.ph116:                                     ; preds = %scalar.ph116.prehea
   %i.fd = load i32, ptr %i.bj, align 4, !tbaa !4
   %i.fe = and i32 %i.fd, 1023                     ; 3 uses
   %i.ff = zext nneg i32 %i.fe to i64              ; 7 uses
-  %8 = add nuw nsw i64 %i.ff, 1
-  %9 = icmp ne i32 %i.fe, 0
-  %umin109.neg = sext i1 %9 to i64
-  %i.fg = add nsw i64 %8, %umin109.neg            ; 3 uses
+  %8 = icmp ne i32 %i.fe, 0
+  %.neg179 = sext i1 %8 to i64
+  %9 = add nsw i64 %.neg179, %i.ff
+  %i.fg = add nsw i64 %9, 1                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.fg, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 

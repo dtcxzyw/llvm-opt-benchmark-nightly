@@ -201,10 +201,10 @@ bb.g:                                             ; preds = %._crit_edge64
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !4
   %i.di = and i32 %i.dh, 1023                     ; 3 uses
   %i.dj = zext nneg i32 %i.di to i64              ; 6 uses
-  %0 = add nuw nsw i64 %i.dj, 1
-  %1 = icmp ne i32 %i.di, 0
-  %umin102.neg = sext i1 %1 to i64
-  %i.dk = add nsw i64 %0, %umin102.neg            ; 3 uses
+  %0 = icmp ne i32 %i.di, 0
+  %.neg131 = sext i1 %0 to i64
+  %1 = add nsw i64 %.neg131, %i.dj
+  %i.dk = add nsw i64 %1, 1                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.dk, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -274,10 +274,10 @@ bb.h:                                             ; preds = %._crit_edge64
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !4
   %i.eg = and i32 %i.ef, 1023                     ; 3 uses
   %i.eh = zext nneg i32 %i.eg to i64              ; 6 uses
-  %2 = add nuw nsw i64 %i.eh, 1
-  %3 = icmp ne i32 %i.eg, 0
-  %umin117.neg = sext i1 %3 to i64
-  %i.ei = add nsw i64 %2, %umin117.neg            ; 3 uses
+  %2 = icmp ne i32 %i.eg, 0
+  %.neg = sext i1 %2 to i64
+  %3 = add nsw i64 %.neg, %i.eh
+  %i.ei = add nsw i64 %3, 1                       ; 3 uses
   %min.iters.check119 = icmp ult i64 %i.ei, 8
   br i1 %min.iters.check119, label %scalar.ph118.preheader, label %vector.memcheck106
 
