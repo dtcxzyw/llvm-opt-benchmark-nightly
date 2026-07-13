@@ -204,7 +204,7 @@ opj_t1_dec_refpass_step_raw.exit92.i.i:           ; preds = %opj_mqc_raw_decode.
 bb.cw:                                            ; preds = %bb.cd
   %i.zz = load i32, ptr %i.gp, align 8, !tbaa !107 ; 10 uses
   %i.aaa = icmp eq i32 %i.zz, 64
-  %i.aab = load i32, ptr %i.gq, align 4, !tbaa !108 ; 6 uses
+  %i.aab = load i32, ptr %i.gq, align 4, !tbaa !108 ; 5 uses
   %i.aac = icmp eq i32 %i.aab, 64
   %or.cond.i199.i = select i1 %i.aaa, i1 %i.aac, i1 false
   %i.aad = load ptr, ptr %i.gr, align 8, !tbaa !15 ; 4 uses
@@ -607,17 +607,13 @@ bb.ji:                                            ; preds = %bb.jh, %bb.ge
   br i1 %i.axn, label %.preheader497.us.i.i.i, label %._crit_edge542.i.i.i, !llvm.loop !147
 
 .preheader497.lr.ph.split.i.i.i:                  ; preds = %.preheader497.lr.ph.i.i.i
-  %i.axo = and i32 %i.aab, -4
-  %2 = add i32 %i.aab, -4
-  %3 = lshr i32 %2, 2
-  %i.axp = zext nneg i32 %3 to i64                ; 2 uses
-  %4 = shl nuw nsw i64 %i.axp, 2
-  %5 = add nuw nsw i64 %4, 4
-  %i.axq = mul nuw nsw i64 %5, %i.amg
+  %i.axo = and i32 %i.aab, -4                     ; 2 uses
+  %i.axp = zext i32 %i.axo to i64                 ; 2 uses
+  %i.axq = mul nuw nsw i64 %i.axp, %i.amg
   %scevgep.i.i.i = getelementptr i8, ptr %i.aad, i64 %i.axq
-  %i.axr = shl nuw nsw i64 %i.axp, 3
+  %i.axr = shl nuw nsw i64 %i.axp, 1
   %i.axs = getelementptr i8, ptr %i.aae, i64 %i.axr
-  %scevgep601.i.i.i = getelementptr i8, ptr %i.axs, i64 20
+  %scevgep601.i.i.i = getelementptr i8, ptr %i.axs, i64 12
   br label %._crit_edge542.i.i.i
 
 ._crit_edge542.i.i.i:                             ; preds = %._crit_edge.us.i.i.i, %.preheader497.lr.ph.split.i.i.i, %._crit_edge.i200.i
@@ -1020,7 +1016,7 @@ bb.z:                                             ; preds = %bb.x
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.w, %bb.v
   %i.ng = shl nuw i32 64, %.0133405.i             ; 10 uses
-  %i.nh = load i32, ptr %i.bq, align 4, !tbaa !108 ; 10 uses
+  %i.nh = load i32, ptr %i.bq, align 4, !tbaa !108 ; 9 uses
   %.not1184.i.i = icmp ult i32 %i.nh, 4           ; 3 uses
   switch i32 %.0135403.i, label %default.unreachable.i [
     i32 0, label %bb.ab
@@ -1048,13 +1044,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not1185.i.i, label %.lr.ph1141.split.us.i.i, label %.lr.ph1141.split.i.i
 
 .lr.ph1141.split.us.i.i:                          ; preds = %.lr.ph1141.i.i
-  %i.nt = and i32 %i.nh, -4
-  %2 = add i32 %i.nh, -4
-  %3 = lshr i32 %2, 2
-  %i.nu = zext nneg i32 %3 to i64
-  %i.nv = shl nuw nsw i64 %i.nu, 3
+  %i.nt = and i32 %i.nh, -4                       ; 2 uses
+  %i.nu = zext i32 %i.nt to i64
+  %i.nv = shl nuw nsw i64 %i.nu, 1
   %i.nw = getelementptr i8, ptr %i.ni, i64 %i.nv
-  %scevgep.i.i = getelementptr i8, ptr %i.nw, i64 20
+  %scevgep.i.i = getelementptr i8, ptr %i.nw, i64 12
   br label %._crit_edge1142.i.i
 
 .lr.ph1141.split.i.i:                             ; preds = %.lr.ph1141.i.i, %._crit_edge.i.i
@@ -1457,7 +1451,7 @@ bb.lt:                                            ; preds = %bb.b, %bb.a
   %i.azw = lshr exact i32 %i.azv, 1
   %i.azx = or i32 %i.azw, %i.azv                  ; 12 uses
   %i.azy = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 5 uses
-  %i.azz = load i32, ptr %i.azy, align 4, !tbaa !108 ; 9 uses
+  %i.azz = load i32, ptr %i.azy, align 4, !tbaa !108 ; 7 uses
   %.not.i115 = icmp ult i32 %i.azz, 4             ; 2 uses
   br i1 %.not, label %bb.sc, label %bb.lu
 
@@ -1860,17 +1854,13 @@ bb.sb:                                            ; preds = %bb.sa, %bb.lv
   br i1 %i.bzy, label %.preheader934.us.i, label %._crit_edge1003.i, !llvm.loop !373
 
 .preheader934.lr.ph.split.i:                      ; preds = %.preheader934.lr.ph.i
-  %i.bzz = and i32 %i.azz, -4
-  %3 = add i32 %i.azz, -4
-  %4 = lshr i32 %3, 2
-  %i.caa = zext nneg i32 %4 to i64                ; 2 uses
-  %5 = shl nuw nsw i64 %i.caa, 2
-  %6 = add nuw nsw i64 %5, 4
-  %i.cab = mul nuw nsw i64 %6, %i.baj
+  %i.bzz = and i32 %i.azz, -4                     ; 2 uses
+  %i.caa = zext i32 %i.bzz to i64                 ; 2 uses
+  %i.cab = mul nuw nsw i64 %i.caa, %i.baj
   %scevgep.i = getelementptr i8, ptr %i.azi, i64 %i.cab
-  %i.cac = shl nuw nsw i64 %i.caa, 3
+  %i.cac = shl nuw nsw i64 %i.caa, 1
   %i.cad = getelementptr i8, ptr %i.azk, i64 %i.cac
-  %scevgep1089.i = getelementptr i8, ptr %i.cad, i64 20
+  %scevgep1089.i = getelementptr i8, ptr %i.cad, i64 12
   br label %._crit_edge1003.i
 
 ._crit_edge1003.i:                                ; preds = %._crit_edge.us.i, %.preheader934.lr.ph.split.i, %bb.lu
@@ -2273,17 +2263,13 @@ bb.yj:                                            ; preds = %bb.yi, %bb.sd
   br i1 %i.dbi, label %.preheader940.us.i, label %._crit_edge1009.i, !llvm.loop !393
 
 .preheader940.lr.ph.split.i:                      ; preds = %.preheader940.lr.ph.i
-  %i.dbj = and i32 %i.azz, -4
-  %7 = add i32 %i.azz, -4
-  %8 = lshr i32 %7, 2
-  %i.dbk = zext nneg i32 %8 to i64                ; 2 uses
-  %9 = shl nuw nsw i64 %i.dbk, 2
-  %10 = add nuw nsw i64 %9, 4
-  %i.dbl = mul nuw nsw i64 %10, %i.cbe
+  %i.dbj = and i32 %i.azz, -4                     ; 2 uses
+  %i.dbk = zext i32 %i.dbj to i64                 ; 2 uses
+  %i.dbl = mul nuw nsw i64 %i.dbk, %i.cbe
   %scevgep.i226 = getelementptr i8, ptr %i.azi, i64 %i.dbl
-  %i.dbm = shl nuw nsw i64 %i.dbk, 3
+  %i.dbm = shl nuw nsw i64 %i.dbk, 1
   %i.dbn = getelementptr i8, ptr %i.azk, i64 %i.dbm
-  %scevgep1095.i = getelementptr i8, ptr %i.dbn, i64 20
+  %scevgep1095.i = getelementptr i8, ptr %i.dbn, i64 12
   br label %._crit_edge1009.i
 
 ._crit_edge1009.i:                                ; preds = %._crit_edge.us.i162, %.preheader940.lr.ph.split.i, %bb.sc
@@ -2686,7 +2672,7 @@ bb.zp:                                            ; preds = %bb.b, %bb.a
   %i.ddz = lshr exact i32 %i.ddy, 1
   %i.dea = or i32 %i.ddz, %i.ddy                  ; 20 uses
   %i.deb = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 7 uses
-  %i.dec = load i32, ptr %i.deb, align 4, !tbaa !108 ; 9 uses
+  %i.dec = load i32, ptr %i.deb, align 4, !tbaa !108 ; 7 uses
   %.not.i203 = icmp ult i32 %i.dec, 4             ; 2 uses
   br i1 %.not, label %bb.amw, label %bb.zq
 
@@ -3089,17 +3075,13 @@ bb.amv:                                           ; preds = %.sink.split.i201, %
   br i1 %i.ffy, label %.preheader1965.us.i, label %._crit_edge2094.i, !llvm.loop !509
 
 .preheader1965.lr.ph.split.i:                     ; preds = %.preheader1965.lr.ph.i
-  %i.ffz = and i32 %i.dec, -4
-  %3 = add i32 %i.dec, -4
-  %4 = lshr i32 %3, 2
-  %i.fga = zext nneg i32 %4 to i64                ; 2 uses
-  %5 = shl nuw nsw i64 %i.fga, 2
-  %6 = add nuw nsw i64 %5, 4
-  %i.fgb = mul nuw nsw i64 %6, %i.dem
+  %i.ffz = and i32 %i.dec, -4                     ; 2 uses
+  %i.fga = zext i32 %i.ffz to i64                 ; 2 uses
+  %i.fgb = mul nuw nsw i64 %i.fga, %i.dem
   %scevgep.i = getelementptr i8, ptr %i.ddl, i64 %i.fgb
-  %i.fgc = shl nuw nsw i64 %i.fga, 3
+  %i.fgc = shl nuw nsw i64 %i.fga, 1
   %i.fgd = getelementptr i8, ptr %i.ddn, i64 %i.fgc
-  %scevgep2250.i = getelementptr i8, ptr %i.fgd, i64 20
+  %scevgep2250.i = getelementptr i8, ptr %i.fgd, i64 12
   br label %._crit_edge2094.i
 
 ._crit_edge2094.i:                                ; preds = %._crit_edge.us.i, %.preheader1965.lr.ph.split.i, %bb.zq
@@ -3502,17 +3484,13 @@ bb.bab:                                           ; preds = %.sink.split.i233, %
   br i1 %i.hjt, label %.preheader1977.us.i, label %._crit_edge2106.i, !llvm.loop !549
 
 .preheader1977.lr.ph.split.i:                     ; preds = %.preheader1977.lr.ph.i
-  %i.hju = and i32 %i.dec, -4
-  %7 = add i32 %i.dec, -4
-  %8 = lshr i32 %7, 2
-  %i.hjv = zext nneg i32 %8 to i64                ; 2 uses
-  %9 = shl nuw nsw i64 %i.hjv, 2
-  %10 = add nuw nsw i64 %9, 4
-  %i.hjw = mul nuw nsw i64 %10, %i.fhd
+  %i.hju = and i32 %i.dec, -4                     ; 2 uses
+  %i.hjv = zext i32 %i.hju to i64                 ; 2 uses
+  %i.hjw = mul nuw nsw i64 %i.hjv, %i.fhd
   %scevgep.i390 = getelementptr i8, ptr %i.ddl, i64 %i.hjw
-  %i.hjx = shl nuw nsw i64 %i.hjv, 3
+  %i.hjx = shl nuw nsw i64 %i.hjv, 1
   %i.hjy = getelementptr i8, ptr %i.ddn, i64 %i.hjx
-  %scevgep2262.i = getelementptr i8, ptr %i.hjy, i64 20
+  %scevgep2262.i = getelementptr i8, ptr %i.hjy, i64 12
   br label %._crit_edge2106.i
 
 ._crit_edge2106.i:                                ; preds = %._crit_edge.us.i217, %.preheader1977.lr.ph.split.i, %bb.amw
