@@ -204,7 +204,7 @@ bb.au:                                            ; preds = %_ZL11EmitCopyLenmPK
   br i1 %i.ajj, label %_ZL7IsMatchPKhS0_.exit6, label %.thread74.backedge
 
 .thread101:                                       ; preds = %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit, %.split, %.split.us, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit, %.critedge.backedge.us, %.critedge.backedge.us211, %_ZL10UpdateBitsmjmPh.exit
-  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 10 uses
+  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 11 uses
   %i.ajk = sub i64 %.0318.i, %.0331.i             ; 11 uses
   %i.ajl = tail call noundef i64 @llvm.umin.i64(i64 %i.ajk, i64 65536) ; 4 uses
   %.not393.i = icmp eq i64 %i.ajk, 0
@@ -332,13 +332,14 @@ bb.bc:                                            ; preds = %bb.bc, %bb.bb
   br i1 %.not.i54, label %_ZL10UpdateBitsmjmPh.exit.loopexit, label %bb.bc, !llvm.loop !75
 
 bb.bd:                                            ; preds = %_ZL16ShouldMergeBlockPN13duckdb_brotli18BrotliOnePassArenaEPKhmS3_.exit, %bb.av, %.thread101
-  %.0.i.lcssa633634 = ptrtoint ptr %.0.i to i64   ; 2 uses
+  %.0.i.lcssa633634 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
+  %.7.i.lcssa635636 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.alt = icmp ult ptr %.7.i, %i.ct
   br i1 %i.alt, label %bb.be, label %_ZL12EmitLiteralsPKhmS0_PKtPmPh.exit33
 
 bb.be:                                            ; preds = %bb.bd
   %i.alu = ptrtoint ptr %i.ct to i64
-  %i.alv = ptrtoint ptr %.7.i to i64              ; 4 uses
+  %i.alv = ptrtoint ptr %.7.i to i64              ; 2 uses
   %i.alw = sub i64 %i.alu, %i.alv                 ; 18 uses
   %i.alx = icmp ult i64 %i.alw, 6210
   br i1 %i.alx, label %bb.bf, label %bb.bn, !prof !76
@@ -524,7 +525,7 @@ _ZL13EmitInsertLenmPKhPKtPjPmPh.exit27:           ; preds = %bb.bg, %bb.bi, %bb.
   %i.aql = add nsw i64 %.0331.i, -1
   %i.aqm = add i64 %i.aql, %.0.i.lcssa633634
   %xtraiter644 = and i64 %i.alw, 1
-  %i.aqn = icmp eq i64 %i.aqm, %i.alv
+  %i.aqn = icmp eq i64 %i.aqm, %.7.i.lcssa635636
   br i1 %i.aqn, label %.epil.preheader642, label %.lr.ph273.new
 
 .lr.ph273.new:                                    ; preds = %.lr.ph273
@@ -671,7 +672,7 @@ _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30:       ; preds = %bb.bq, %bb.br
   %i.aua = add nsw i64 %.0331.i, -1
   %i.aub = add i64 %i.aua, %.0.i.lcssa633634
   %xtraiter635 = and i64 %i.alw, 1
-  %i.auc = icmp eq i64 %i.aub, %i.alv
+  %i.auc = icmp eq i64 %i.aub, %.7.i.lcssa635636
   br i1 %i.auc, label %.epil.preheader630, label %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new
 
 _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new:   ; preds = %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30
@@ -1074,7 +1075,7 @@ bb.au:                                            ; preds = %_ZL11EmitCopyLenmPK
   br i1 %i.ajj, label %_ZL7IsMatchPKhS0_.exit6, label %.thread74.backedge
 
 .thread101:                                       ; preds = %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit, %.split, %.split.us, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit, %.critedge.backedge.us, %.critedge.backedge.us211, %_ZL10UpdateBitsmjmPh.exit
-  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 10 uses
+  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 11 uses
   %i.ajk = sub i64 %.0318.i, %.0331.i             ; 11 uses
   %i.ajl = tail call noundef i64 @llvm.umin.i64(i64 %i.ajk, i64 65536) ; 4 uses
   %.not393.i = icmp eq i64 %i.ajk, 0
@@ -1202,13 +1203,14 @@ bb.bc:                                            ; preds = %bb.bc, %bb.bb
   br i1 %.not.i54, label %_ZL10UpdateBitsmjmPh.exit.loopexit, label %bb.bc, !llvm.loop !75
 
 bb.bd:                                            ; preds = %_ZL16ShouldMergeBlockPN13duckdb_brotli18BrotliOnePassArenaEPKhmS3_.exit, %bb.av, %.thread101
-  %.0.i.lcssa633634 = ptrtoint ptr %.0.i to i64   ; 2 uses
+  %.0.i.lcssa633634 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
+  %.7.i.lcssa635636 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.alt = icmp ult ptr %.7.i, %i.ct
   br i1 %i.alt, label %bb.be, label %_ZL12EmitLiteralsPKhmS0_PKtPmPh.exit33
 
 bb.be:                                            ; preds = %bb.bd
   %i.alu = ptrtoint ptr %i.ct to i64
-  %i.alv = ptrtoint ptr %.7.i to i64              ; 4 uses
+  %i.alv = ptrtoint ptr %.7.i to i64              ; 2 uses
   %i.alw = sub i64 %i.alu, %i.alv                 ; 18 uses
   %i.alx = icmp ult i64 %i.alw, 6210
   br i1 %i.alx, label %bb.bf, label %bb.bn, !prof !76
@@ -1394,7 +1396,7 @@ _ZL13EmitInsertLenmPKhPKtPjPmPh.exit27:           ; preds = %bb.bg, %bb.bi, %bb.
   %i.aql = add nsw i64 %.0331.i, -1
   %i.aqm = add i64 %i.aql, %.0.i.lcssa633634
   %xtraiter644 = and i64 %i.alw, 1
-  %i.aqn = icmp eq i64 %i.aqm, %i.alv
+  %i.aqn = icmp eq i64 %i.aqm, %.7.i.lcssa635636
   br i1 %i.aqn, label %.epil.preheader642, label %.lr.ph273.new
 
 .lr.ph273.new:                                    ; preds = %.lr.ph273
@@ -1541,7 +1543,7 @@ _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30:       ; preds = %bb.bq, %bb.br
   %i.aua = add nsw i64 %.0331.i, -1
   %i.aub = add i64 %i.aua, %.0.i.lcssa633634
   %xtraiter635 = and i64 %i.alw, 1
-  %i.auc = icmp eq i64 %i.aub, %i.alv
+  %i.auc = icmp eq i64 %i.aub, %.7.i.lcssa635636
   br i1 %i.auc, label %.epil.preheader630, label %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new
 
 _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new:   ; preds = %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30
@@ -1944,7 +1946,7 @@ bb.au:                                            ; preds = %_ZL11EmitCopyLenmPK
   br i1 %i.ajj, label %_ZL7IsMatchPKhS0_.exit6, label %.thread74.backedge
 
 .thread101:                                       ; preds = %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit, %.split, %.split.us, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit, %.critedge.backedge.us, %.critedge.backedge.us211, %_ZL10UpdateBitsmjmPh.exit
-  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 10 uses
+  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 11 uses
   %i.ajk = sub i64 %.0318.i, %.0331.i             ; 11 uses
   %i.ajl = tail call noundef i64 @llvm.umin.i64(i64 %i.ajk, i64 65536) ; 4 uses
   %.not393.i = icmp eq i64 %i.ajk, 0
@@ -2072,13 +2074,14 @@ bb.bc:                                            ; preds = %bb.bc, %bb.bb
   br i1 %.not.i54, label %_ZL10UpdateBitsmjmPh.exit.loopexit, label %bb.bc, !llvm.loop !75
 
 bb.bd:                                            ; preds = %_ZL16ShouldMergeBlockPN13duckdb_brotli18BrotliOnePassArenaEPKhmS3_.exit, %bb.av, %.thread101
-  %.0.i.lcssa633634 = ptrtoint ptr %.0.i to i64   ; 2 uses
+  %.0.i.lcssa633634 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
+  %.7.i.lcssa635636 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.alt = icmp ult ptr %.7.i, %i.ct
   br i1 %i.alt, label %bb.be, label %_ZL12EmitLiteralsPKhmS0_PKtPmPh.exit33
 
 bb.be:                                            ; preds = %bb.bd
   %i.alu = ptrtoint ptr %i.ct to i64
-  %i.alv = ptrtoint ptr %.7.i to i64              ; 4 uses
+  %i.alv = ptrtoint ptr %.7.i to i64              ; 2 uses
   %i.alw = sub i64 %i.alu, %i.alv                 ; 18 uses
   %i.alx = icmp ult i64 %i.alw, 6210
   br i1 %i.alx, label %bb.bf, label %bb.bn, !prof !76
@@ -2264,7 +2267,7 @@ _ZL13EmitInsertLenmPKhPKtPjPmPh.exit27:           ; preds = %bb.bg, %bb.bi, %bb.
   %i.aql = add nsw i64 %.0331.i, -1
   %i.aqm = add i64 %i.aql, %.0.i.lcssa633634
   %xtraiter644 = and i64 %i.alw, 1
-  %i.aqn = icmp eq i64 %i.aqm, %i.alv
+  %i.aqn = icmp eq i64 %i.aqm, %.7.i.lcssa635636
   br i1 %i.aqn, label %.epil.preheader642, label %.lr.ph273.new
 
 .lr.ph273.new:                                    ; preds = %.lr.ph273
@@ -2411,7 +2414,7 @@ _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30:       ; preds = %bb.bq, %bb.br
   %i.aua = add nsw i64 %.0331.i, -1
   %i.aub = add i64 %i.aua, %.0.i.lcssa633634
   %xtraiter635 = and i64 %i.alw, 1
-  %i.auc = icmp eq i64 %i.aub, %i.alv
+  %i.auc = icmp eq i64 %i.aub, %.7.i.lcssa635636
   br i1 %i.auc, label %.epil.preheader630, label %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new
 
 _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new:   ; preds = %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30
@@ -2814,7 +2817,7 @@ bb.au:                                            ; preds = %_ZL11EmitCopyLenmPK
   br i1 %i.ajj, label %_ZL7IsMatchPKhS0_.exit6, label %.thread74.backedge
 
 .thread101:                                       ; preds = %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit, %.split, %.split.us, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit, %.critedge.backedge.us, %.critedge.backedge.us211, %_ZL10UpdateBitsmjmPh.exit
-  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 10 uses
+  %.7.i = phi ptr [ %.1325.i, %.split ], [ %.0324.i, %_ZL10UpdateBitsmjmPh.exit ], [ %.1325.i, %.split.us ], [ %.1325.i, %.critedge.backedge.us ], [ %.1325.i, %.critedge.backedge.us211 ], [ %i.ach, %_ZL11EmitCopyLenmPKhPKtPjPmPh.exit ], [ %i.hu, %_ZL23EmitCopyLenLastDistancemPKhPKtPjPmPh.exit ] ; 11 uses
   %i.ajk = sub i64 %.0318.i, %.0331.i             ; 11 uses
   %i.ajl = tail call noundef i64 @llvm.umin.i64(i64 %i.ajk, i64 65536) ; 4 uses
   %.not393.i = icmp eq i64 %i.ajk, 0
@@ -2942,13 +2945,14 @@ bb.bc:                                            ; preds = %bb.bc, %bb.bb
   br i1 %.not.i54, label %_ZL10UpdateBitsmjmPh.exit.loopexit, label %bb.bc, !llvm.loop !75
 
 bb.bd:                                            ; preds = %_ZL16ShouldMergeBlockPN13duckdb_brotli18BrotliOnePassArenaEPKhmS3_.exit, %bb.av, %.thread101
-  %.0.i.lcssa633634 = ptrtoint ptr %.0.i to i64   ; 2 uses
+  %.0.i.lcssa633634 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
+  %.7.i.lcssa635636 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.alt = icmp ult ptr %.7.i, %i.ct
   br i1 %i.alt, label %bb.be, label %_ZL12EmitLiteralsPKhmS0_PKtPmPh.exit33
 
 bb.be:                                            ; preds = %bb.bd
   %i.alu = ptrtoint ptr %i.ct to i64
-  %i.alv = ptrtoint ptr %.7.i to i64              ; 4 uses
+  %i.alv = ptrtoint ptr %.7.i to i64              ; 2 uses
   %i.alw = sub i64 %i.alu, %i.alv                 ; 18 uses
   %i.alx = icmp ult i64 %i.alw, 6210
   br i1 %i.alx, label %bb.bf, label %bb.bn, !prof !76
@@ -3134,7 +3138,7 @@ _ZL13EmitInsertLenmPKhPKtPjPmPh.exit27:           ; preds = %bb.bg, %bb.bi, %bb.
   %i.aql = add nsw i64 %.0331.i, -1
   %i.aqm = add i64 %i.aql, %.0.i.lcssa633634
   %xtraiter644 = and i64 %i.alw, 1
-  %i.aqn = icmp eq i64 %i.aqm, %i.alv
+  %i.aqn = icmp eq i64 %i.aqm, %.7.i.lcssa635636
   br i1 %i.aqn, label %.epil.preheader642, label %.lr.ph273.new
 
 .lr.ph273.new:                                    ; preds = %.lr.ph273
@@ -3281,7 +3285,7 @@ _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30:       ; preds = %bb.bq, %bb.br
   %i.aua = add nsw i64 %.0331.i, -1
   %i.aub = add i64 %i.aua, %.0.i.lcssa633634
   %xtraiter635 = and i64 %i.alw, 1
-  %i.auc = icmp eq i64 %i.aub, %i.alv
+  %i.auc = icmp eq i64 %i.aub, %.7.i.lcssa635636
   br i1 %i.auc, label %.epil.preheader630, label %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new
 
 _ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30.new:   ; preds = %_ZL17EmitLongInsertLenmPKhPKtPjPmPh.exit30
