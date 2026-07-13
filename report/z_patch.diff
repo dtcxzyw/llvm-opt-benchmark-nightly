@@ -1,0 +1,219 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 134be6ac097e0..25bea2180b31d 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -2809,17 +2809,27 @@ const SCEV *ScalarEvolution::getAddExpr(SmallVectorImpl<SCEVUse> &Ops,
+       }
+     }
+ 
+-    // Try to push the constant operand into a ZExt: A + zext (-A + B) -> zext
+-    // (B), if trunc (A) + -A + B  does not unsigned-wrap.
+-    const SCEVAddExpr *InnerAdd;
+-    if (match(B, m_scev_ZExt(m_scev_Add(InnerAdd)))) {
+-      const SCEV *NarrowA = getTruncateExpr(A, InnerAdd->getType());
+-      if (NarrowA == getNegativeSCEV(InnerAdd->getOperand(0)) &&
+-          getZeroExtendExpr(NarrowA, B->getType()) == A &&
+-          hasFlags(StrengthenNoWrapFlags(this, scAddExpr, {NarrowA, InnerAdd},
++    // Push a negative constant addend out of a ZExt when the inner add is
++    // provably non-negative in the narrow type:
++    //
++    //   A + zext(C + X)  ->  WideAC + zext(X)   [WideAC = A + sext(C)]
++    //
++    // Require A to be a constant so that `A + sext(C)` folds into a single wide
++    // constant, actually simplifying the expression.
++    const SCEVAddExpr *Add;
++    if (isa<SCEVConstant>(A) && match(B, m_scev_ZExt(m_scev_Add(Add)))) {
++      const APInt *C;
++      const SCEV *X;
++      if (match(Add, m_scev_Add(m_scev_APInt(C), m_SCEV(X))) &&
++          C->isNegative() &&
++          // NUW on `(-C) + (C + X) = X` proves that `C + X` did not wrap
++          // below zero, so `zext(C + X) == sext(C) + zext(X)`.
++          hasFlags(StrengthenNoWrapFlags(this, scAddExpr,
++                                         {getConstant(-*C), Add},
+                                          SCEV::FlagAnyWrap),
+                    SCEV::FlagNUW)) {
+-        return getZeroExtendExpr(getAddExpr(NarrowA, InnerAdd), B->getType());
++        return getAddExpr(A, getSignExtendExpr(getConstant(*C), B->getType()),
++                          getZeroExtendExpr(X, B->getType()));
+       }
+     }
+   }
+diff --git a/llvm/test/Analysis/ScalarEvolution/zext-add-nsw-fold.ll b/llvm/test/Analysis/ScalarEvolution/zext-add-nsw-fold.ll
+index 06e1f48a5f2c4..b353eb210bfa3 100644
+--- a/llvm/test/Analysis/ScalarEvolution/zext-add-nsw-fold.ll
++++ b/llvm/test/Analysis/ScalarEvolution/zext-add-nsw-fold.ll
+@@ -107,7 +107,7 @@ define i64 @mul_umax_fold_round_up(i8 %x) {
+ ; CHECK-NEXT:    %add = add nsw i32 -10, %mul
+ ; CHECK-NEXT:    --> (-10 + (4 * (3 umax (zext i8 %x to i32)))<nuw><nsw>)<nsw> U: [2,1011) S: [2,1011)
+ ; CHECK-NEXT:    %ext = zext i32 %add to i64
+-; CHECK-NEXT:    --> (2 + (zext i32 (-12 + (4 * (3 umax (zext i8 %x to i32)))<nuw><nsw>)<nsw> to i64))<nuw><nsw> U: [2,1011) S: [2,1011)
++; CHECK-NEXT:    --> (-10 + (4 * (3 umax (zext i8 %x to i64)))<nuw><nsw>)<nsw> U: [2,1011) S: [2,1011)
+ ; CHECK-NEXT:  Determining loop execution counts for: @mul_umax_fold_round_up
+ ;
+   %zx = zext i8 %x to i32
+@@ -283,3 +283,82 @@ define i64 @mul_zext_fold_positive_c(i8 %x) {
+   %ext = zext i32 %add to i64
+   ret i64 %ext
+ }
++
++; A = -5 with min(mul) = 12. The generalized fold pushes the constant out of
++; the ZExt even though A != -C_min, leaving a non-zero wide constant survivor.
++; The old A + zext(-A + B) shape could not fold this.
++define i64 @mul_umax_fold_negative_a_non_cancelling(i8 %x) {
++; CHECK-LABEL: 'mul_umax_fold_negative_a_non_cancelling'
++; CHECK-NEXT:  Classifying expressions for: @mul_umax_fold_negative_a_non_cancelling
++; CHECK-NEXT:    %zx = zext i8 %x to i32
++; CHECK-NEXT:    --> (zext i8 %x to i32) U: [0,256) S: [0,256)
++; CHECK-NEXT:    %umax = call i32 @llvm.umax.i32(i32 %zx, i32 3)
++; CHECK-NEXT:    --> (3 umax (zext i8 %x to i32)) U: [3,256) S: [3,256)
++; CHECK-NEXT:    %mul = mul nuw nsw i32 4, %umax
++; CHECK-NEXT:    --> (4 * (3 umax (zext i8 %x to i32)))<nuw><nsw> U: [12,1021) S: [12,1021)
++; CHECK-NEXT:    %add = add nsw i32 -5, %mul
++; CHECK-NEXT:    --> (-5 + (4 * (3 umax (zext i8 %x to i32)))<nuw><nsw>)<nsw> U: [7,1016) S: [7,1016)
++; CHECK-NEXT:    %ext = zext i32 %add to i64
++; CHECK-NEXT:    --> (-5 + (4 * (3 umax (zext i8 %x to i64)))<nuw><nsw>)<nsw> U: [7,1016) S: [7,1016)
++; CHECK-NEXT:  Determining loop execution counts for: @mul_umax_fold_negative_a_non_cancelling
++;
++  %zx = zext i8 %x to i32
++  %umax = call i32 @llvm.umax.i32(i32 %zx, i32 3)
++  %mul = mul nuw nsw i32 4, %umax
++  %add = add nsw i32 -5, %mul
++  %ext = zext i32 %add to i64
++  ret i64 %ext
++}
++
++; A = -900 with min(mul) = 800: the narrow sum can be as low as -100, so NUW
++; on `-C + (C + X) = X` cannot be proved and the fold must not fire.
++define i64 @mul_umax_no_fold_underflow_possible(i8 %x) {
++; CHECK-LABEL: 'mul_umax_no_fold_underflow_possible'
++; CHECK-NEXT:  Classifying expressions for: @mul_umax_no_fold_underflow_possible
++; CHECK-NEXT:    %zx = zext i8 %x to i32
++; CHECK-NEXT:    --> (zext i8 %x to i32) U: [0,256) S: [0,256)
++; CHECK-NEXT:    %umax = call i32 @llvm.umax.i32(i32 %zx, i32 200)
++; CHECK-NEXT:    --> (200 umax (zext i8 %x to i32)) U: [200,256) S: [200,256)
++; CHECK-NEXT:    %mul = mul nuw nsw i32 4, %umax
++; CHECK-NEXT:    --> (4 * (200 umax (zext i8 %x to i32)))<nuw><nsw> U: [800,1021) S: [800,1021)
++; CHECK-NEXT:    %add = add nsw i32 -900, %mul
++; CHECK-NEXT:    --> (-900 + (4 * (200 umax (zext i8 %x to i32)))<nuw><nsw>)<nsw> U: [0,-3) S: [-100,121)
++; CHECK-NEXT:    %ext = zext i32 %add to i64
++; CHECK-NEXT:    --> (zext i32 (-900 + (4 * (200 umax (zext i8 %x to i32)))<nuw><nsw>)<nsw> to i64) U: [0,4294967293) S: [0,4294967296)
++; CHECK-NEXT:  Determining loop execution counts for: @mul_umax_no_fold_underflow_possible
++;
++  %zx = zext i8 %x to i32
++  %umax = call i32 @llvm.umax.i32(i32 %zx, i32 200)
++  %mul = mul nuw nsw i32 4, %umax
++  %add = add nsw i32 -900, %mul
++  %ext = zext i32 %add to i64
++  ret i64 %ext
++}
++
++; Two chained zexts (i32 -> i64 -> i128). The fold composes: the constant is
++; pushed all the way out to the widest type.
++define i128 @cascading_zext_fold(i8 %x) {
++; CHECK-LABEL: 'cascading_zext_fold'
++; CHECK-NEXT:  Classifying expressions for: @cascading_zext_fold
++; CHECK-NEXT:    %zx = zext i8 %x to i32
++; CHECK-NEXT:    --> (zext i8 %x to i32) U: [0,256) S: [0,256)
++; CHECK-NEXT:    %umax = call i32 @llvm.umax.i32(i32 %zx, i32 3)
++; CHECK-NEXT:    --> (3 umax (zext i8 %x to i32)) U: [3,256) S: [3,256)
++; CHECK-NEXT:    %mul = mul nuw nsw i32 4, %umax
++; CHECK-NEXT:    --> (4 * (3 umax (zext i8 %x to i32)))<nuw><nsw> U: [12,1021) S: [12,1021)
++; CHECK-NEXT:    %add32 = add nsw i32 -10, %mul
++; CHECK-NEXT:    --> (-10 + (4 * (3 umax (zext i8 %x to i32)))<nuw><nsw>)<nsw> U: [2,1011) S: [2,1011)
++; CHECK-NEXT:    %ext64 = zext i32 %add32 to i64
++; CHECK-NEXT:    --> (-10 + (4 * (3 umax (zext i8 %x to i64)))<nuw><nsw>)<nsw> U: [2,1011) S: [2,1011)
++; CHECK-NEXT:    %ext128 = zext i64 %ext64 to i128
++; CHECK-NEXT:    --> (-10 + (4 * (3 umax (zext i8 %x to i128)))<nuw><nsw>)<nsw> U: [2,1011) S: [2,1011)
++; CHECK-NEXT:  Determining loop execution counts for: @cascading_zext_fold
++;
++  %zx = zext i8 %x to i32
++  %umax = call i32 @llvm.umax.i32(i32 %zx, i32 3)
++  %mul = mul nuw nsw i32 4, %umax
++  %add32 = add nsw i32 -10, %mul
++  %ext64 = zext i32 %add32 to i64
++  %ext128 = zext i64 %ext64 to i128
++  ret i128 %ext128
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/scev-update-loop-opt.ll b/llvm/test/Transforms/IndVarSimplify/scev-update-loop-opt.ll
+index f716796745fb7..01060490bb0f3 100644
+--- a/llvm/test/Transforms/IndVarSimplify/scev-update-loop-opt.ll
++++ b/llvm/test/Transforms/IndVarSimplify/scev-update-loop-opt.ll
+@@ -1,4 +1,4 @@
+-; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals none --version 6
+ ; RUN: opt %s -passes="loop(loop-idiom,indvars,loop-deletion,loop-unroll-full)" -S | FileCheck %s
+ ; REQUIRES: asserts
+ 
+@@ -10,15 +10,15 @@ define void @loop_limit_test(i32 %conv5, i1 %cmp13, i1 %cmp20, i1 %cmp27, i1 %cm
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[CONV5]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[TMP0]] to i64
+-; CHECK-NEXT:    [[TMP2:%.*]] = zext i32 [[CONV5]] to i64
+ ; CHECK-NEXT:    br label %[[FOR_COND:.*]]
+ ; CHECK:       [[FOR_COND_LOOPEXIT:.*]]:
+ ; CHECK-NEXT:    br label %[[FOR_COND]]
+ ; CHECK:       [[FOR_COND]]:
++; CHECK-NEXT:    [[TMP2:%.*]] = zext i32 [[CONV5]] to i64
+ ; CHECK-NEXT:    br label %[[FOR_COND2:.*]]
+ ; CHECK:       [[FOR_COND2]]:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], %[[FOR_COND_CLEANUP14:.*]] ], [ 0, %[[FOR_COND]] ]
+-; CHECK-NEXT:    [[CMP6:%.*]] = icmp samesign ult i64 [[INDVARS_IV]], [[TMP2]]
++; CHECK-NEXT:    [[CMP6:%.*]] = icmp ne i64 [[INDVARS_IV]], [[TMP2]]
+ ; CHECK-NEXT:    br i1 [[CMP6]], label %[[FOR_COND9_PREHEADER:.*]], label %[[FOR_COND_LOOPEXIT]]
+ ; CHECK:       [[FOR_COND9_PREHEADER]]:
+ ; CHECK-NEXT:    br label %[[FOR_COND9:.*]]
+diff --git a/llvm/test/Transforms/LoopVectorize/single_early_exit_zext_trip_count.ll b/llvm/test/Transforms/LoopVectorize/single_early_exit_zext_trip_count.ll
+index 59fe0321c0112..fb591fc3787b8 100644
+--- a/llvm/test/Transforms/LoopVectorize/single_early_exit_zext_trip_count.ll
++++ b/llvm/test/Transforms/LoopVectorize/single_early_exit_zext_trip_count.ll
+@@ -28,17 +28,43 @@ define void @test1(ptr %p) {
+ ; CHECK:       [[PREHEADER]]:
+ ; CHECK-NEXT:    [[EXIT_32:%.*]] = add nsw i32 [[LEN]], -1
+ ; CHECK-NEXT:    [[EXIT:%.*]] = zext i32 [[EXIT_32]] to i64
++; CHECK-NEXT:    [[TMP0:%.*]] = add nuw nsw i64 [[EXIT]], 1
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP0]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
++; CHECK:       [[VECTOR_PH]]:
++; CHECK-NEXT:    [[N_MOD_VF:%.*]] = urem i64 [[TMP0]], 4
++; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[TMP0]], [[N_MOD_VF]]
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ], [ 0, %[[PREHEADER]] ]
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY_INTERIM:.*]] ]
+ ; CHECK-NEXT:    [[ELEM_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[BASE]], i64 [[IV]]
+-; CHECK-NEXT:    [[ELEM:%.*]] = load i8, ptr [[ELEM_PTR]], align 1
++; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i8>, ptr [[ELEM_PTR]], align 1
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp eq <4 x i8> [[WIDE_LOAD]], zeroinitializer
++; CHECK-NEXT:    [[TMP3:%.*]] = freeze <4 x i1> [[TMP2]]
++; CHECK-NEXT:    [[TMP4:%.*]] = call i1 @llvm.vector.reduce.or.v4i1(<4 x i1> [[TMP3]])
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[IV]], 4
++; CHECK-NEXT:    [[TMP5:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP4]], label %[[VECTOR_EARLY_EXIT:.*]], label %[[VECTOR_BODY_INTERIM]]
++; CHECK:       [[VECTOR_BODY_INTERIM]]:
++; CHECK-NEXT:    br i1 [[TMP5]], label %[[MIDDLE_BLOCK:.*]], label %[[LOOP]], !llvm.loop [[LOOP1:![0-9]+]]
++; CHECK:       [[MIDDLE_BLOCK]]:
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[TMP0]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[CMP_N]], label %[[RET_LOOPEXIT:.*]], label %[[SCALAR_PH]]
++; CHECK:       [[VECTOR_EARLY_EXIT]]:
++; CHECK-NEXT:    br label %[[RET_LOOPEXIT]]
++; CHECK:       [[SCALAR_PH]]:
++; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i64 [ [[N_VEC]], %[[MIDDLE_BLOCK]] ], [ 0, %[[PREHEADER]] ]
++; CHECK-NEXT:    br label %[[LOOP2:.*]]
++; CHECK:       [[LOOP2]]:
++; CHECK-NEXT:    [[IV1:%.*]] = phi i64 [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ], [ [[BC_RESUME_VAL]], %[[SCALAR_PH]] ]
++; CHECK-NEXT:    [[ELEM_PTR1:%.*]] = getelementptr inbounds nuw i8, ptr [[BASE]], i64 [[IV1]]
++; CHECK-NEXT:    [[ELEM:%.*]] = load i8, ptr [[ELEM_PTR1]], align 1
+ ; CHECK-NEXT:    [[IS_TARGET:%.*]] = icmp eq i8 [[ELEM]], 0
+-; CHECK-NEXT:    br i1 [[IS_TARGET]], label %[[RET_LOOPEXIT:.*]], label %[[LATCH]]
++; CHECK-NEXT:    br i1 [[IS_TARGET]], label %[[RET_LOOPEXIT]], label %[[LATCH]]
+ ; CHECK:       [[LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[LOOP_COND:%.*]] = icmp ult i64 [[IV]], [[EXIT]]
+-; CHECK-NEXT:    br i1 [[LOOP_COND]], label %[[LOOP]], label %[[RET_LOOPEXIT]]
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV1]], 1
++; CHECK-NEXT:    [[LOOP_COND:%.*]] = icmp ult i64 [[IV1]], [[EXIT]]
++; CHECK-NEXT:    br i1 [[LOOP_COND]], label %[[LOOP2]], label %[[RET_LOOPEXIT]], !llvm.loop [[LOOP4:![0-9]+]]
+ ; CHECK:       [[RET_LOOPEXIT]]:
+ ; CHECK-NEXT:    br label %[[RET]]
+ ; CHECK:       [[RET]]:
