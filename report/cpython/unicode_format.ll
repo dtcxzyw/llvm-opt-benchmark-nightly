@@ -203,7 +203,7 @@ bb.iw:                                            ; preds = %bb.iv
   %i.xe = load i32, ptr %i.ay, align 8, !tbaa !66
   %i.xf = load ptr, ptr %i.az, align 8, !tbaa !67 ; 4 uses
   %i.xg = ptrtoint ptr %i.xf to i64               ; 6 uses
-  %i.xh = load i64, ptr %i.ax, align 8, !tbaa !65 ; 12 uses
+  %i.xh = load i64, ptr %i.ax, align 8, !tbaa !65 ; 13 uses
   switch i32 %i.xe, label %bb.ja [
     i32 1, label %bb.ix
     i32 2, label %bb.iy
@@ -315,20 +315,21 @@ bb.iz:                                            ; preds = %bb.iw
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.iz
   %i.yp = shl i64 %i.xb, 2
-  %4 = add i64 %i.yp, %i.xg
-  %i.yq = shl i64 %i.xh, 2                        ; 3 uses
-  %5 = add i64 %4, %i.yq
-  %6 = shl i64 %.3.i.i, 2
-  %7 = sub i64 %5, %6
-  %i.yr = add i64 %i.xg, 4
-  %i.ys = add i64 %i.yr, %i.yq
+  %4 = shl i64 %i.xh, 2                           ; 2 uses
+  %i.yq = shl i64 %.3.i.i, 2
+  %5 = sub i64 %i.xg, %i.yq
+  %6 = add i64 %5, %i.yp
+  %7 = add i64 %6, %4
+  %i.yr = add i64 %4, %i.xg
+  %i.ys = add i64 %i.yr, 4
   %umax762 = call i64 @llvm.umax.i64(i64 %7, i64 %i.ys)
-  %8 = xor i64 %i.xg, -1
-  %i.yt = add i64 %umax762, %8
-  %9 = sub i64 %i.yt, %i.yq                       ; 2 uses
-  %i.yu = lshr i64 %9, 2
+  %8 = shl i64 %i.xh, 2
+  %i.yt = add i64 %8, %i.xg
+  %9 = xor i64 %i.yt, -1
+  %10 = add i64 %umax762, %9                      ; 2 uses
+  %i.yu = lshr i64 %10, 2
   %i.yv = add nuw nsw i64 %i.yu, 1                ; 2 uses
-  %min.iters.check764 = icmp ult i64 %9, 28
+  %min.iters.check764 = icmp ult i64 %10, 28
   br i1 %min.iters.check764, label %.lr.ph.i.i.i.preheader785, label %vector.ph765
 
 vector.ph765:                                     ; preds = %.lr.ph.i.i.i.preheader
@@ -510,7 +511,7 @@ bb.jt:                                            ; preds = %bb.js
   %i.aao = load i32, ptr %i.ay, align 8, !tbaa !66
   %i.aap = load ptr, ptr %i.az, align 8, !tbaa !67 ; 4 uses
   %i.aaq = ptrtoint ptr %i.aap to i64             ; 6 uses
-  %i.aar = load i64, ptr %i.ax, align 8, !tbaa !65 ; 12 uses
+  %i.aar = load i64, ptr %i.ax, align 8, !tbaa !65 ; 13 uses
   switch i32 %i.aao, label %bb.jx [
     i32 1, label %bb.ju
     i32 2, label %bb.jv
@@ -616,20 +617,21 @@ bb.jw:                                            ; preds = %bb.jt
 
 .lr.ph.i217.i.i.preheader:                        ; preds = %bb.jw
   %i.abx = shl i64 %i.zf, 2
-  %10 = add i64 %i.abx, %i.aaq
-  %i.aby = shl i64 %i.aar, 2                      ; 3 uses
-  %11 = add i64 %10, %i.aby
-  %12 = shl i64 %.3.i.i, 2
-  %13 = sub i64 %11, %12
-  %i.abz = add i64 %i.aaq, 4
-  %i.aca = add i64 %i.abz, %i.aby
-  %umax719 = call i64 @llvm.umax.i64(i64 %13, i64 %i.aca)
-  %14 = xor i64 %i.aaq, -1
-  %i.acb = add i64 %umax719, %14
-  %15 = sub i64 %i.acb, %i.aby                    ; 2 uses
-  %i.acc = lshr i64 %15, 2
+  %11 = shl i64 %i.aar, 2                         ; 2 uses
+  %i.aby = shl i64 %.3.i.i, 2
+  %12 = sub i64 %i.aaq, %i.aby
+  %13 = add i64 %12, %i.abx
+  %14 = add i64 %13, %11
+  %i.abz = add i64 %11, %i.aaq
+  %i.aca = add i64 %i.abz, 4
+  %umax719 = call i64 @llvm.umax.i64(i64 %14, i64 %i.aca)
+  %15 = shl i64 %i.aar, 2
+  %i.acb = add i64 %15, %i.aaq
+  %16 = xor i64 %i.acb, -1
+  %17 = add i64 %umax719, %16                     ; 2 uses
+  %i.acc = lshr i64 %17, 2
   %i.acd = add nuw nsw i64 %i.acc, 1              ; 2 uses
-  %min.iters.check720 = icmp ult i64 %15, 28
+  %min.iters.check720 = icmp ult i64 %17, 28
   br i1 %min.iters.check720, label %.lr.ph.i217.i.i.preheader783, label %vector.ph721
 
 vector.ph721:                                     ; preds = %.lr.ph.i217.i.i.preheader

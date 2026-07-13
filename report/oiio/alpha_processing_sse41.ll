@@ -28,14 +28,16 @@ bb.a:
 .preheader59.us.preheader:                        ; preds = %.preheader59.lr.ph
   %i.g = sext i32 %i.b to i64                     ; 3 uses
   %i.h = zext nneg i32 %2 to i64                  ; 2 uses
+  %6 = add nsw i64 %i.g, -16
   %i.i = or disjoint i64 %i.g, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %i.h) ; 2 uses
-  %i.j = sub i64 %umax, %i.g                      ; 2 uses
-  %min.iters.check118 = icmp ult i64 %i.j, 9
+  %i.j = sub i64 %umax, %6
+  %7 = add i64 %i.j, -16                          ; 2 uses
+  %min.iters.check118 = icmp ult i64 %7, 9
   %n.mod.vf120 = and i64 %umax, 7                 ; 2 uses
   %i.k = icmp eq i64 %n.mod.vf120, 0
   %i.l = select i1 %i.k, i64 8, i64 %n.mod.vf120
-  %n.vec121 = sub i64 %i.j, %i.l                  ; 2 uses
+  %n.vec121 = sub i64 %7, %i.l                    ; 2 uses
   br label %.preheader59.us
 
 .preheader59.us:                                  ; preds = %.preheader59.us.preheader, %._crit_edge.us

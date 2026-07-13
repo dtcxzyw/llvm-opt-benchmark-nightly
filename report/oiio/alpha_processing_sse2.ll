@@ -202,12 +202,14 @@ bb.a:
 .preheader46.us.preheader:                        ; preds = %.preheader46.lr.ph
   %i.f = zext nneg i32 %i.a to i64                ; 3 uses
   %i.g = zext nneg i32 %2 to i64                  ; 2 uses
+  %6 = add nsw i64 %i.f, -16
   %i.h = or disjoint i64 %i.f, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.g) ; 2 uses
-  %i.i = sub nsw i64 %umax, %i.f                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.i, 8
+  %i.i = sub nsw i64 %umax, %6
+  %7 = add nsw i64 %i.i, -16                      ; 2 uses
+  %min.iters.check = icmp ult i64 %7, 8
   %n.mod.vf = and i64 %umax, 7                    ; 2 uses
-  %n.vec = sub nuw nsw i64 %i.i, %n.mod.vf        ; 2 uses
+  %n.vec = sub nuw nsw i64 %7, %n.mod.vf          ; 2 uses
   %cmp.n = icmp eq i64 %n.mod.vf, 0
   br label %.preheader46.us
 
@@ -404,9 +406,6 @@ bb.a:
 .preheader50.us.preheader:                        ; preds = %.preheader50.lr.ph
   %i.g = sext i32 %i.b to i64                     ; 3 uses
   %i.h = zext nneg i32 %2 to i64                  ; 2 uses
-  %6 = or disjoint i64 %i.g, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.h) ; 2 uses
-  %7 = sub i64 %umax, %i.g                        ; 2 uses
   %i.i = add nsw i64 %i.g, -8                     ; 3 uses
   %i.j = lshr exact i64 %i.i, 3
   %i.k = add nuw nsw i64 %i.j, 1                  ; 2 uses
@@ -415,11 +414,16 @@ bb.a:
   %i.m = and i64 %i.i, 8
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   %lcmp.mod118 = trunc i64 %i.k to i1
-  %min.iters.check = icmp ult i64 %7, 9
-  %n.mod.vf = and i64 %umax, 7                    ; 2 uses
+  %6 = add nsw i64 %i.g, -8
+  %7 = or disjoint i64 %i.g, 1
+  %8 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.h) ; 2 uses
+  %9 = sub i64 %8, %6
+  %10 = add i64 %9, -8                            ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 9
+  %n.mod.vf = and i64 %8, 7                       ; 2 uses
   %i.n = icmp eq i64 %n.mod.vf, 0
   %i.o = select i1 %i.n, i64 8, i64 %n.mod.vf
-  %n.vec = sub i64 %7, %i.o                       ; 2 uses
+  %n.vec = sub i64 %10, %i.o                      ; 2 uses
   br label %.preheader50.us
 
 .preheader50.us:                                  ; preds = %.preheader50.us.preheader, %._crit_edge.us

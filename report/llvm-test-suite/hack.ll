@@ -72,7 +72,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 6 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !18   ; 4 uses
   %i.p = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(10) @.str, i64 noundef 9) #12
@@ -321,18 +321,19 @@ bb.x:                                             ; preds = %bb.v, %bb.w
 
 .lr.ph104:                                        ; preds = %._crit_edge
   %i.es = load ptr, ptr %i.f, align 8, !tbaa !8   ; 2 uses
-  %i.et = and i64 %indvars.iv, 9223372036854775806 ; 3 uses
+  %i.et = and i64 %indvars.iv, 9223372036854775806 ; 2 uses
   %i.eu = add nuw nsw i64 %i.et, 2                ; 3 uses
   %i.ev = zext nneg i32 %i.eq to i64              ; 2 uses
   %i.ew = add nuw nsw i64 %i.et, 3
   %umax = call i64 @llvm.umax.i64(i64 %i.ew, i64 %i.ev)
-  %1 = add nsw i64 %umax, -2
-  %i.ex = sub i64 %1, %i.et                       ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ex, 4
+  %1 = and i64 %indvars.iv, 9223372036854775806
+  %i.ex = sub nsw i64 %umax, %1
+  %2 = add i64 %i.ex, -2                          ; 3 uses
+  %min.iters.check = icmp ult i64 %2, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph104
-  %n.vec = and i64 %i.ex, -4                      ; 3 uses
+  %n.vec = and i64 %2, -4                         ; 3 uses
   %i.ey = add i64 %i.eu, %n.vec
   %i.ez = getelementptr [8 x i8], ptr %i.es, i64 %i.eu
   br label %vector.body
@@ -351,7 +352,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.fd, label %middle.block, label %vector.body, !llvm.loop !31
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.ex, %n.vec
+  %cmp.n = icmp eq i64 %2, %n.vec
   br i1 %cmp.n, label %.preheader, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph104, %middle.block

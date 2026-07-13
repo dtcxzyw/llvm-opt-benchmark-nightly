@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.g = shl i64 %3, 1                            ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !389  ; 6 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !389  ; 7 uses
   %.not.i = icmp ugt i64 %i.g, %i.i
   %.not11.i = icmp eq i64 %3, 0                   ; 2 uses
   br i1 %.not.i, label %bb.e, label %bb.d
@@ -225,7 +225,11 @@ bb.e:                                             ; preds = %bb.c
 
 .lr.ph.i8.i:                                      ; preds = %bb.e
   %.promoted.i9.i = load ptr, ptr %1, align 8     ; 3 uses
-  %i.k = lshr i64 %i.i, 1
+  %4 = icmp ne i64 %i.i, 0
+  %.neg = sext i1 %4 to i64
+  %5 = add i64 %i.i, %.neg
+  %6 = add i64 %5, 1
+  %i.k = lshr i64 %6, 1
   %i.l = add i64 %3, -1
   %umin13 = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %i.l) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %umin13, 4

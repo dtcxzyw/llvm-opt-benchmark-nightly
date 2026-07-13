@@ -198,7 +198,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 4 ; 4 uses
   %i.o = load i32, ptr %i.n, align 4, !tbaa !4    ; 2 uses
   %i.p = sub nsw i32 %i.o, %i.i
-  %.fr = freeze i32 %i.p                          ; 4 uses
+  %.fr = freeze i32 %i.p                          ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.h, i64 12 ; 4 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !4    ; 2 uses
   %i.s = sub nsw i32 %i.r, %i.k
@@ -207,7 +207,7 @@ bb.a:
   %i.u = load i32, ptr %i.t, align 4, !tbaa !4    ; 2 uses
   %i.v = sub nsw i32 %i.u, %i.m
   %.fr.i = freeze i32 %i.v                        ; 3 uses
-  %i.w = shl nsw i32 %3, 1                        ; 13 uses
+  %i.w = shl nsw i32 %3, 1                        ; 14 uses
   %i.x = add nsw i32 %.fr, %i.w
   %i.y = add nsw i32 %.fr742.i, %i.w
   %i.z = add nsw i32 %.fr.i, %i.w
@@ -263,12 +263,14 @@ bb.a:
 
 .lr.ph648.split.us.split.us.i.us.preheader:       ; preds = %.lr.ph648.split.us.split.us.i.preheader
   %i.bc = add i32 %.fr, %i.w
-  %i.bd = add i32 %i.bc, -1                       ; 2 uses
+  %i.bd = add i32 %i.bc, -1
   %broadcast.splatinsert112.a = insertelement <16 x i32> poison, i32 %3, i64 0
   %broadcast.splat113.a = shufflevector <16 x i32> %broadcast.splatinsert112.a, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert118 = insertelement <16 x i32> poison, i32 %i.au, i64 0
   %broadcast.splat119 = shufflevector <16 x i32> %broadcast.splatinsert118, <16 x i32> poison, <16 x i32> zeroinitializer
   %induction120 = add <16 x i32> %broadcast.splat119, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %9 = add i32 %.fr, %i.w
+  %10 = add i32 %9, -1
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %3, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert103 = insertelement <16 x i32> poison, i32 %i.au, i64 0
@@ -550,7 +552,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.split.us.us.us.us.i.us.preheader: ; preds = %.lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.us.us.us.i.us
   %smax = tail call i32 @llvm.smax.i32(i32 %i.er, i32 0)
-  %umin = tail call i32 @llvm.umin.i32(i32 %smax, i32 %i.bd) ; 2 uses
+  %umin = tail call i32 @llvm.umin.i32(i32 %smax, i32 %10) ; 2 uses
   %i.ff = add nuw i32 %umin, 1                    ; 2 uses
   %min.iters.check = icmp samesign ult i32 %umin, 15
   br i1 %min.iters.check, label %.lr.ph299.split.split.split.us.us.us.us.split.us550.split.us.split.us.us.us.us.i.us.preheader134, label %vector.ph
