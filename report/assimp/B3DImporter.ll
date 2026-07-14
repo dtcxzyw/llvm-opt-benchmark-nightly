@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
 ._crit_edge62:                                    ; preds = %bb.ac, %bb.x
   %i.cs = add i32 %.03263, 1                      ; 2 uses
   %i.ct = zext i32 %i.cs to i64
-  %i.cu = icmp ugt i64 %i.bk, %i.ct
+  %i.cu = icmp samesign ugt i64 %i.bk, %i.ct
   br i1 %i.cu, label %bb.t, label %._crit_edge65, !llvm.loop !70
 
 bb.y:                                             ; preds = %.lr.ph61, %bb.ac

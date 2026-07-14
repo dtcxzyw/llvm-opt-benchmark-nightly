@@ -204,7 +204,7 @@ vector.ph:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.h = mul nsw i64 %2, 1000000
   %i.i = udiv i64 -1, %i.h
-  %i.j = add i64 %i.i, 1
+  %i.j = add nuw nsw i64 %i.i, 1
   store i64 %i.j, ptr %i.g, align 8, !tbaa !13
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 232
   store i64 %2, ptr %i.k, align 8, !tbaa !11
@@ -607,7 +607,7 @@ vector.ph:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.h = mul nsw i64 %2, 1000
   %i.i = udiv i64 -1, %i.h
-  %i.j = add i64 %i.i, 1
+  %i.j = add nuw nsw i64 %i.i, 1
   store i64 %i.j, ptr %i.g, align 8, !tbaa !1628
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 232
   store i64 %2, ptr %i.k, align 8, !tbaa !11

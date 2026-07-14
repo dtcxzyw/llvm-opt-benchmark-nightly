@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.h
   %.rhs.trunc = trunc i64 %i.ba to i16
   %i.bg = udiv i16 %.lhs.trunc, %.rhs.trunc
   %.zext = zext i16 %i.bg to i64
-  %i.bh = add i64 %i.bd, %.zext
+  %i.bh = add nuw nsw i64 %i.bd, %.zext
   %sext = shl i64 %i.bd, 32
   %i.bi = ashr exact i64 %sext, 32
   %sext123 = shl i64 %i.bh, 32
@@ -607,7 +607,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
 bb.e:                                             ; preds = %bb.a
   %i.r = lshr i64 %1, 48
   %i.s = udiv i64 %i.r, %i.g                      ; 5 uses
-  %i.t = add i64 %i.s, %i.j                       ; 3 uses
+  %i.t = add nuw nsw i64 %i.s, %i.j               ; 3 uses
   %sext = shl i64 %i.j, 32
   %i.u = ashr exact i64 %sext, 32                 ; 9 uses
   %i.v = icmp ugt i64 %i.t, %i.u
@@ -618,7 +618,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %2, label %_ZN8facebook5velox4bits6setBitImEEvPT_mb.exit.us.preheader, label %_ZN8facebook5velox4bits6setBitImEEvPT_mb.exit.preheader
 
 _ZN8facebook5velox4bits6setBitImEEvPT_mb.exit.preheader: ; preds = %.lr.ph
-  %i.x = add i64 %i.s, %i.j
+  %i.x = add nuw nsw i64 %i.s, %i.j
   %.neg = add nsw i64 %i.u, 1
   %xtraiter = and i64 %i.s, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -643,7 +643,7 @@ _ZN8facebook5velox4bits6setBitImEEvPT_mb.exit.prol.loopexit: ; preds = %_ZN8face
   br i1 %i.ag, label %._crit_edge, label %_ZN8facebook5velox4bits6setBitImEEvPT_mb.exit
 
 _ZN8facebook5velox4bits6setBitImEEvPT_mb.exit.us.preheader: ; preds = %.lr.ph
-  %i.ah = add i64 %i.s, %i.j
+  %i.ah = add nuw nsw i64 %i.s, %i.j
   %.neg32 = add nsw i64 %i.u, 1
   %xtraiter30 = and i64 %i.s, 1
   %lcmp.mod31.not = icmp eq i64 %xtraiter30, 0

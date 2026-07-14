@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIN6duckdb19PartitionStatisticsESaIS1_EED2Ev.exit: ; preds = %
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef i64 @_ZNK6duckdb9DataTable10MaxThreadsERNS_13ClientContextE(ptr noundef nonnull align 8 dereferenceable(124) %0, ptr noundef nonnull align 8 dereferenceable(512) %1) local_unnamed_addr #0 align 2 {
+define noundef range(i64 1, 0) i64 @_ZNK6duckdb9DataTable10MaxThreadsERNS_13ClientContextE(ptr noundef nonnull align 8 dereferenceable(124) %0, ptr noundef nonnull align 8 dereferenceable(512) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.b = tail call noundef ptr @_ZNK6duckdb10shared_ptrINS_18RowGroupCollectionELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %i.a)
@@ -219,7 +219,7 @@ bb.a:
   %i.j = tail call noundef ptr @_ZNK6duckdb10shared_ptrINS_18RowGroupCollectionELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %i.a)
   %i.k = tail call noundef i64 @_ZNK6duckdb18RowGroupCollection12GetTotalRowsEv(ptr noundef nonnull align 8 dereferenceable(217) %i.j)
   %i.l = udiv i64 %i.k, %spec.select
-  %i.m = add i64 %i.l, 1
+  %i.m = add nuw nsw i64 %i.l, 1
   ret i64 %i.m
 }
 

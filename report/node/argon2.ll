@@ -203,7 +203,7 @@ bb.w:                                             ; preds = %bb.u
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !36
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i32 %i.bl, ptr %i.bm, align 8, !tbaa !37
-  %i.bn = shl i32 %i.bf, 2
+  %i.bn = shl nuw i32 %i.bf, 2
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 124
   store i32 %i.bn, ptr %i.bo, align 4, !tbaa !38
   %i.bp = tail call fastcc i32 @initialize(ptr noundef nonnull %0)

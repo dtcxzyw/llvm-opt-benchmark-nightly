@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.l = zext nneg i8 %1 to i32                   ; 4 uses
   %i.m = zext nneg i8 %1 to i64
   %i.n = shl i64 2, %i.m
-  %i.o = udiv i64 %i.n, 3                         ; 3 uses
+  %i.o = udiv i64 %i.n, 3                         ; 2 uses
   %i.p = icmp samesign ult i8 %1, 8
   br i1 %i.p, label %bb.i, label %bb.d
 
@@ -248,7 +248,6 @@ _PyFreeList_PopMem.exit.i:                        ; preds = %bb.j
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !62
   %i.ad = add i64 %i.ac, -1
   store i64 %i.ad, ptr %i.ab, align 8, !tbaa !62
-  %.pre.i = shl nuw nsw i64 %i.o, 4
   br label %bb.k
 
 .thread.i:                                        ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.e
@@ -267,7 +266,7 @@ new_keys_object.exit.thread:                      ; preds = %.thread.i
   br label %bb.aw
 
 bb.k:                                             ; preds = %.thread.i, %_PyFreeList_PopMem.exit.i
-  %.pre-phi.i = phi i64 [ %.pre.i, %_PyFreeList_PopMem.exit.i ], [ %i.ag, %.thread.i ]
+  %.pre-phi.i = phi i64 [ 80, %_PyFreeList_PopMem.exit.i ], [ %i.ag, %.thread.i ]
   %.0364246.i = phi i32 [ 3, %_PyFreeList_PopMem.exit.i ], [ %.03642.ph.i, %.thread.i ] ; 2 uses
   %.1.i = phi ptr [ %i.z, %_PyFreeList_PopMem.exit.i ], [ %i.aj, %.thread.i ] ; 15 uses
   store i64 1, ptr %.1.i, align 8, !tbaa !37
