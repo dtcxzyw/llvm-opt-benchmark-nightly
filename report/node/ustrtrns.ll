@@ -201,10 +201,9 @@ bb.j:                                             ; preds = %bb.i, %bb.e
   %.not177 = icmp eq ptr %.1144, null
   %i.ab = sext i32 %.0145 to i64
   %i.ac = getelementptr inbounds [2 x i8], ptr %.1144, i64 %i.ab
-  %i.ad = select i1 %.not177, ptr null, ptr %i.ac ; 8 uses
-  %6 = ptrtoint ptr %i.ad to i64
+  %i.ad = select i1 %.not177, ptr null, ptr %i.ac ; 7 uses
   %i.ae = ptrtoint ptr %i.j to i64                ; 2 uses
-  %i.af = ptrtoint ptr %i.ad to i64
+  %i.af = ptrtoint ptr %i.ad to i64               ; 2 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.t, %bb.j
@@ -415,9 +414,9 @@ bb.ab:                                            ; preds = %bb.y, %bb.aa, %bb.v
   br i1 %i.do, label %.lr.ph221.preheader, label %._crit_edge222
 
 .lr.ph221.preheader:                              ; preds = %._crit_edge
-  %.7253 = ptrtoint ptr %.7 to i64                ; 2 uses
+  %.7253 = ptrtoaddr ptr %.7 to i64               ; 2 uses
   %i.dp = add i64 %.7253, 2
-  %umax = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.dp)
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.af, i64 %i.dp)
   %i.dq = xor i64 %.7253, -1
   %i.dr = add i64 %umax, %i.dq                    ; 2 uses
   %i.ds = lshr i64 %i.dr, 1

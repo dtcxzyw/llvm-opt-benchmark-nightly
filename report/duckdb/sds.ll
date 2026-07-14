@@ -201,7 +201,7 @@ _ZN10duckdb_hllL9sdsinclenEPcm.exit90:            ; preds = %bb.co, %bb.cn, %bb.
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @_ZN10duckdb_hll7sdstrimEPcPKc(ptr noundef returned %0, ptr nofree noundef readonly %1) local_unnamed_addr #12 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
+  %2 = ptrtoaddr ptr %0 to i64
   %i.a = getelementptr inbounds i8, ptr %0, i64 -1 ; 2 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !21    ; 2 uses
   %i.c = zext i8 %i.b to i32                      ; 2 uses
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %bb.a
 _ZN10duckdb_hllL6sdslenEPc.exit:                  ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
   %.0.i = phi i64 [ %i.r, %bb.f ], [ %i.g, %bb.b ], [ %i.j, %bb.c ], [ %i.m, %bb.d ], [ %i.p, %bb.e ] ; 2 uses
   %i.s = getelementptr i8, ptr %0, i64 %.0.i
-  %i.t = getelementptr i8, ptr %i.s, i64 -1       ; 3 uses
+  %i.t = getelementptr i8, ptr %i.s, i64 -1       ; 4 uses
   %.not33 = icmp slt i64 %.0.i, 1
   br i1 %.not33, label %.critedge, label %.lr.ph
 
@@ -259,27 +259,22 @@ _ZN10duckdb_hllL6sdslenEPc.exit:                  ; preds = %bb.b, %bb.c, %bb.d,
   %i.v = sext i8 %i.u to i32
   %i.w = tail call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %1, i32 noundef %i.v) #28
   %.not30 = icmp eq ptr %i.w, null
-  br i1 %.not30, label %.critedge.loopexit, label %bb.g
+  br i1 %.not30, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
   %i.x = getelementptr inbounds nuw i8, ptr %.034, i64 1 ; 3 uses
   %.not = icmp ugt ptr %i.x, %i.t
-  br i1 %.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !34
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !34
 
-.critedge.loopexit:                               ; preds = %bb.g, %.lr.ph
-  %.0.lcssa.ph = phi ptr [ %.034, %.lr.ph ], [ %i.x, %bb.g ] ; 2 uses
-  %.pre = ptrtoint ptr %.0.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %_ZN10duckdb_hllL6sdslenEPc.exit.thread, %.critedge.loopexit, %_ZN10duckdb_hllL6sdslenEPc.exit
-  %3 = phi ptr [ %i.t, %.critedge.loopexit ], [ %i.t, %_ZN10duckdb_hllL6sdslenEPc.exit ], [ %i.e, %_ZN10duckdb_hllL6sdslenEPc.exit.thread ] ; 3 uses
-  %.0.lcssa42.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %2, %_ZN10duckdb_hllL6sdslenEPc.exit ], [ %2, %_ZN10duckdb_hllL6sdslenEPc.exit.thread ] ; 2 uses
-  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %0, %_ZN10duckdb_hllL6sdslenEPc.exit ], [ %0, %_ZN10duckdb_hllL6sdslenEPc.exit.thread ] ; 5 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.g, %_ZN10duckdb_hllL6sdslenEPc.exit.thread, %_ZN10duckdb_hllL6sdslenEPc.exit
+  %3 = phi ptr [ %i.t, %_ZN10duckdb_hllL6sdslenEPc.exit ], [ %i.e, %_ZN10duckdb_hllL6sdslenEPc.exit.thread ], [ %i.t, %bb.g ], [ %i.t, %.lr.ph ] ; 3 uses
+  %.0.lcssa = phi ptr [ %0, %_ZN10duckdb_hllL6sdslenEPc.exit ], [ %0, %_ZN10duckdb_hllL6sdslenEPc.exit.thread ], [ %.034, %.lr.ph ], [ %i.x, %bb.g ] ; 6 uses
+  %.0.lcssa42 = ptrtoint ptr %.0.lcssa to i64     ; 2 uses
   %i.y = icmp ugt ptr %3, %.0.lcssa
   br i1 %i.y, label %.lr.ph38.preheader, label %.critedge2
 
 .lr.ph38.preheader:                               ; preds = %.critedge
-  %i.z = sub i64 %.0.lcssa42.pre-phi, %2
+  %i.z = sub i64 %.0.lcssa42, %2
   %scevgep = getelementptr i8, ptr %0, i64 %i.z
   br label %.lr.ph38
 
@@ -300,7 +295,7 @@ bb.h:                                             ; preds = %.lr.ph38
   %.028.lcssa = phi ptr [ %3, %.critedge ], [ %scevgep, %bb.h ], [ %.02837, %.lr.ph38 ] ; 2 uses
   %i.af = icmp ugt ptr %.0.lcssa, %.028.lcssa
   %i.ag = ptrtoint ptr %.028.lcssa to i64
-  %reass.sub = sub i64 %i.ag, %.0.lcssa42.pre-phi
+  %reass.sub = sub i64 %i.ag, %.0.lcssa42
   %i.ah = add i64 %reass.sub, 1
   %i.ai = select i1 %i.af, i64 0, i64 %i.ah       ; 7 uses
   %.not32 = icmp eq ptr %0, %.0.lcssa

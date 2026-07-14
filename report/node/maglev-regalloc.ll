@@ -175,7 +175,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.m = load ptr, ptr %i.l, align 8              ; 2 uses
   %i.n = ptrtoint ptr %i.k to i64
-  %i.o = ptrtoint ptr %i.m to i64                 ; 3 uses
+  %i.o = ptrtoint ptr %i.m to i64                 ; 2 uses
   %i.p = sub i64 %i.n, %i.o
   %i.q = ashr exact i64 %i.p, 3
   %i.r = add nsw i64 %i.q, %i.h                   ; 4 uses
@@ -190,23 +190,22 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call preserve_mostcc void @_ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %i.x, i64 noundef %i.r)
-  %.pre.i = load ptr, ptr %i.l, align 8           ; 2 uses
-  %.pre13.i = ptrtoint ptr %.pre.i to i64
+  %.pre.i = load ptr, ptr %i.l, align 8
   %.pre = load ptr, ptr %i.j, align 8
   br label %_ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE14EnsureCapacityEm.exit.i
 
 _ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE14EnsureCapacityEm.exit.i: ; preds = %bb.c, %bb.b
   %i.y = phi ptr [ %i.k, %bb.b ], [ %.pre, %bb.c ] ; 3 uses
-  %.pre-phi.i = phi i64 [ %i.o, %bb.b ], [ %.pre13.i, %bb.c ]
-  %i.z = phi ptr [ %i.m, %bb.b ], [ %.pre.i, %bb.c ] ; 2 uses
+  %i.z = phi ptr [ %i.m, %bb.b ], [ %.pre.i, %bb.c ] ; 3 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.r ; 3 uses
   %i.ab = icmp ult ptr %i.y, %i.aa
   br i1 %i.ab, label %.lr.ph.preheader.i, label %_ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE6resizeEm.exit
 
 .lr.ph.preheader.i:                               ; preds = %_ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE14EnsureCapacityEm.exit.i
-  %2 = ptrtoint ptr %i.y to i64                   ; 2 uses
+  %2 = ptrtoaddr ptr %i.y to i64                  ; 2 uses
+  %3 = ptrtoaddr ptr %i.z to i64
   %i.ac = shl nuw nsw i64 %i.r, 3
-  %i.ad = add nuw i64 %.pre-phi.i, %i.ac
+  %i.ad = add nuw i64 %i.ac, %3
   %i.ae = add i64 %2, 8
   %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ad, i64 %i.ae)
   %i.af = xor i64 %2, -1
@@ -272,10 +271,10 @@ _ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE6resizeEm.exit: ; preds = %_ZN2v8
   br i1 %i.bk, label %.lr.ph.preheader.i30, label %_ZN2v88internal10ZoneVectorINS0_6maglev32StraightForwardRegisterAllocator10BlockPatchEE6resizeEm.exit
 
 .lr.ph.preheader.i30:                             ; preds = %.lr.ph.preheader._crit_edge
-  %3 = ptrtoint ptr %i.bi to i64
-  %4 = ptrtoint ptr %i.bj to i64                  ; 2 uses
+  %4 = ptrtoaddr ptr %i.bj to i64                 ; 2 uses
+  %5 = ptrtoaddr ptr %i.bi to i64
   %i.bl = add i64 %4, 16
-  %umax.i31 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.bl)
+  %umax.i31 = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.bl)
   %i.bm = xor i64 %4, -1
   %i.bn = add i64 %umax.i31, %i.bm
   %i.bo = and i64 %i.bn, -16

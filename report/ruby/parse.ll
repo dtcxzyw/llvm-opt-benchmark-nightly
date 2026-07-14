@@ -204,8 +204,8 @@ bb.sg:                                            ; preds = %bb.sf
   br i1 %i.cfb, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.sg
-  %24 = ptrtoint ptr %i.cev to i64
-  %25 = ptrtoint ptr %i.cet to i64
+  %24 = ptrtoaddr ptr %i.cev to i64
+  %25 = ptrtoaddr ptr %i.cet to i64
   %scevgep = getelementptr i8, ptr %i.cev, i64 -2
   %i.cfc = sub i64 %25, %24
   %scevgep3786 = getelementptr i8, ptr %scevgep, i64 %i.cfc
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %.lr.ph208
   br i1 %i.al, label %.lr.ph.preheader, label %.critedge2
 
 .lr.ph.preheader:                                 ; preds = %.critedge
-  %5 = ptrtoint ptr %i.ak to i64
+  %5 = ptrtoaddr ptr %i.ak to i64
   %i.am = sub i64 %5, %i.x
   %scevgep = getelementptr i8, ptr %.0138, i64 %i.am
   br label %.lr.ph
@@ -669,8 +669,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.crit
   %.1135 = phi ptr [ @.str.22, %.critedge2 ], [ %.0134, %bb.n ], [ %.0134, %bb.m ] ; 3 uses
   %.0133 = phi ptr [ @.str.22, %.critedge2 ], [ %spec.select162, %bb.n ], [ @.str.22, %bb.m ] ; 2 uses
   %.1131 = phi ptr [ %.0130.lcssa, %.critedge2 ], [ %i.ay, %bb.n ], [ %.0130.lcssa, %bb.m ] ; 2 uses
-  %.2129 = phi ptr [ %.0127.lcssa, %.critedge2 ], [ %.1128, %bb.n ], [ %.1128, %bb.m ] ; 14 uses
-  %.2129211 = ptrtoint ptr %.2129 to i64
+  %.2129 = phi ptr [ %.0127.lcssa, %.critedge2 ], [ %.1128, %bb.n ], [ %.1128, %bb.m ] ; 13 uses
   %i.ba = load i32, ptr %2, align 4, !tbaa !51    ; 2 uses
   %i.bb = icmp eq i32 %3, %i.ba
   br i1 %i.bb, label %bb.p, label %bb.q
@@ -686,7 +685,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.0136 = phi ptr [ %i.b, %bb.o ], [ %spec.select163, %bb.p ] ; 3 uses
-  %.0136212 = ptrtoint ptr %.0136 to i64
+  %.0136211 = ptrtoaddr ptr %.0136 to i64
   %i.bh = icmp ult ptr %.0136, %.2129
   %spec.select164 = select i1 %i.bh, ptr %.2129, ptr %.0136 ; 4 uses
   %i.bi = icmp slt i64 %i.aq, 5
@@ -762,7 +761,7 @@ bb.y:                                             ; preds = %bb.x
   %.not157175 = phi i1 [ false, %bb.x ], [ true, %bb.y ], [ false, %char_at_end.exit ], [ false, %bb.w ], [ false, %bb.t ]
   %.0126172 = phi i64 [ %i.cb, %bb.x ], [ %i.cb, %bb.y ], [ %i.bm, %char_at_end.exit ], [ %i.bm, %bb.w ], [ %i.bm, %bb.t ] ; 2 uses
   %i.cn = ptrtoint ptr %.1131 to i64
-  %i.co = ptrtoint ptr %.2129 to i64              ; 3 uses
+  %i.co = ptrtoint ptr %.2129 to i64              ; 4 uses
   %i.cp = sub i64 %i.cn, %i.co
   %i.cq = icmp ult ptr %.0138, %.0132
   %i.cr = select i1 %i.cq, ptr %.0138, ptr %.0132 ; 2 uses
@@ -777,11 +776,11 @@ bb.y:                                             ; preds = %bb.x
 
 iter.check:                                       ; preds = %.thread
   %i.cy = ptrtoaddr ptr %i.cw to i64
-  %i.cz = call i64 @llvm.usub.sat.i64(i64 %.0136212, i64 %.2129211) ; 7 uses
+  %i.cz = call i64 @llvm.usub.sat.i64(i64 %.0136211, i64 %i.co) ; 7 uses
   %min.iters.check = icmp ult i64 %i.cz, 8
   %i.da = sub i64 %i.co, %i.cy
   %diff.check = icmp ugt i64 %i.da, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
+  %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph188.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -1184,7 +1183,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l
   %.val172.i = load ptr, ptr %i.ac, align 8, !tbaa !426 ; 6 uses
-  %i.cn = ptrtoint ptr %.val172.i to i64          ; 3 uses
+  %i.cn = ptrtoint ptr %.val172.i to i64
   %i.co = ptrtoint ptr %i.ch to i64               ; 3 uses
   %i.cp = sub i64 %i.cn, %i.co
   %i.cq = icmp slt i64 %i.cp, %i.w
@@ -1213,14 +1212,14 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.0.i.i = phi ptr [ %i.cs, %bb.q ], [ %spec.select.i.i, %bb.r ] ; 2 uses
-  %i.cz = ptrtoint ptr %.0.i.i to i64             ; 2 uses
+  %i.cz = ptrtoint ptr %.0.i.i to i64
   %i.da = sub i64 %i.cz, %i.co
   %i.db = icmp slt i64 %i.da, %i.w
   br i1 %i.db, label %whole_match_p.exit.thread.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.p, %bb.o
-  %.16.pre-phi.i.i = phi i64 [ %i.cz, %bb.s ], [ %i.cn, %bb.p ], [ %i.cn, %bb.o ]
-  %.1.i.i = phi ptr [ %.0.i.i, %bb.s ], [ %.val172.i, %bb.p ], [ %.val172.i, %bb.o ]
+  %.1.i.i = phi ptr [ %.0.i.i, %bb.s ], [ %.val172.i, %bb.p ], [ %.val172.i, %bb.o ] ; 2 uses
+  %.16.i.i = ptrtoaddr ptr %.1.i.i to i64
   %i.dc = getelementptr i8, ptr %.1.i.i, i64 %i.x ; 3 uses
   %i.dd = tail call i32 @strncmp(ptr noundef readonly %i.t, ptr noundef %i.dc, i64 noundef range(i64 0, 4294967296) %i.w) #35
   %.not.i175.i = icmp eq i32 %i.dd, 0
@@ -1234,7 +1233,7 @@ bb.u:                                             ; preds = %bb.t
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.u
   %i.df = add i64 %i.co, %i.w
-  %i.dg = sub i64 %.16.pre-phi.i.i, %i.df
+  %i.dg = sub i64 %.16.i.i, %i.df
   %scevgep.i.i = getelementptr i8, ptr %i.ch, i64 %i.dg ; 2 uses
   br label %.lr.ph.i.i
 
@@ -1606,7 +1605,7 @@ rb_parser_string_free.exit.i:                     ; preds = %.critedge.i197.i
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.ax, %bb.aw
   %.val169.i = load ptr, ptr %i.cg, align 8, !tbaa !50 ; 7 uses
-  %i.if = ptrtoint ptr %.val170.pre.i to i64      ; 3 uses
+  %i.if = ptrtoint ptr %.val170.pre.i to i64
   %i.ig = ptrtoint ptr %.val169.i to i64          ; 3 uses
   %i.ih = sub i64 %i.if, %i.ig
   %i.ii = icmp slt i64 %i.ih, %i.w
@@ -1635,15 +1634,15 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.be, %bb.bd
   %.0.i220.i = phi ptr [ %i.ik, %bb.bd ], [ %spec.select.i221.i, %bb.be ] ; 2 uses
-  %i.ir = ptrtoint ptr %.0.i220.i to i64          ; 2 uses
+  %i.ir = ptrtoint ptr %.0.i220.i to i64
   %i.is = sub i64 %i.ir, %i.ig
   %i.it = icmp slt i64 %i.is, %i.w
   br i1 %i.it, label %.backedge.i.backedge, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.bc, %bb.bb
-  %.16.pre-phi.i206.i = phi i64 [ %i.ir, %bb.bf ], [ %i.if, %bb.bc ], [ %i.if, %bb.bb ]
-  %.1.i207.i = phi ptr [ %.0.i220.i, %bb.bf ], [ %.val170.pre.i, %bb.bc ], [ %.val170.pre.i, %bb.bb ]
-  %i.iu = getelementptr i8, ptr %.1.i207.i, i64 %i.x ; 3 uses
+  %.1.i206.i = phi ptr [ %.0.i220.i, %bb.bf ], [ %.val170.pre.i, %bb.bc ], [ %.val170.pre.i, %bb.bb ] ; 2 uses
+  %.16.i207.i = ptrtoaddr ptr %.1.i206.i to i64
+  %i.iu = getelementptr i8, ptr %.1.i206.i, i64 %i.x ; 3 uses
   %i.iv = tail call i32 @strncmp(ptr noundef readonly %i.t, ptr noundef %i.iu, i64 noundef range(i64 0, 4294967296) %i.w) #35
   %.not.i208.i = icmp eq i32 %i.iv, 0
   br i1 %.not.i208.i, label %bb.bh, label %.backedge.i.backedge
@@ -1655,7 +1654,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 .lr.ph.preheader.i214.i:                          ; preds = %bb.bh
   %i.ix = add i64 %i.ig, %i.w
-  %i.iy = sub i64 %.16.pre-phi.i206.i, %i.ix
+  %i.iy = sub i64 %.16.i207.i, %i.ix
   %scevgep.i215.i = getelementptr i8, ptr %.val169.i, i64 %i.iy ; 2 uses
   br label %.lr.ph.i216.i
 
@@ -2058,7 +2057,7 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.dh, %bb.dg, %bb.df, %bb.de
   %.val.i = load ptr, ptr %i.cg, align 8, !tbaa !50 ; 7 uses
-  %i.qa = ptrtoint ptr %.val168.pre.i to i64      ; 3 uses
+  %i.qa = ptrtoint ptr %.val168.pre.i to i64
   %i.qb = ptrtoint ptr %.val.i to i64             ; 3 uses
   %i.qc = sub i64 %i.qa, %i.qb
   %i.qd = icmp slt i64 %i.qc, %i.w
@@ -2087,15 +2086,15 @@ bb.dm:                                            ; preds = %bb.dl
 
 bb.dn:                                            ; preds = %bb.dm, %bb.dl
   %.0.i273.i = phi ptr [ %i.qf, %bb.dl ], [ %spec.select.i274.i, %bb.dm ] ; 2 uses
-  %i.qm = ptrtoint ptr %.0.i273.i to i64          ; 2 uses
+  %i.qm = ptrtoint ptr %.0.i273.i to i64
   %i.qn = sub i64 %i.qm, %i.qb
   %i.qo = icmp slt i64 %i.qn, %i.w
   br i1 %i.qo, label %.backedge306.i, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn, %bb.dk, %bb.dj
-  %.16.pre-phi.i259.i = phi i64 [ %i.qm, %bb.dn ], [ %i.qa, %bb.dk ], [ %i.qa, %bb.dj ]
-  %.1.i260.i = phi ptr [ %.0.i273.i, %bb.dn ], [ %.val168.pre.i, %bb.dk ], [ %.val168.pre.i, %bb.dj ]
-  %i.qp = getelementptr i8, ptr %.1.i260.i, i64 %i.x ; 3 uses
+  %.1.i259.i = phi ptr [ %.0.i273.i, %bb.dn ], [ %.val168.pre.i, %bb.dk ], [ %.val168.pre.i, %bb.dj ] ; 2 uses
+  %.16.i260.i = ptrtoaddr ptr %.1.i259.i to i64
+  %i.qp = getelementptr i8, ptr %.1.i259.i, i64 %i.x ; 3 uses
   %i.qq = tail call i32 @strncmp(ptr noundef readonly %i.t, ptr noundef %i.qp, i64 noundef range(i64 0, 4294967296) %i.w) #35
   %.not.i261.i = icmp eq i32 %i.qq, 0
   br i1 %.not.i261.i, label %bb.dp, label %.backedge306.i
@@ -2107,7 +2106,7 @@ bb.dp:                                            ; preds = %bb.do
 
 .lr.ph.preheader.i267.i:                          ; preds = %bb.dp
   %i.qs = add i64 %i.qb, %i.w
-  %i.qt = sub i64 %.16.pre-phi.i259.i, %i.qs
+  %i.qt = sub i64 %.16.i260.i, %i.qs
   %scevgep.i268.i = getelementptr i8, ptr %.val.i, i64 %i.qt ; 2 uses
   br label %.lr.ph.i269.i
 
@@ -2510,7 +2509,7 @@ bb.kq:                                            ; preds = %bb.kp
 
 .preheader.i951:                                  ; preds = %bb.kq
   %scevgep.i = getelementptr i8, ptr %.2.i9492868, i64 %i.ayp
-  %.2.lcssa7375.i = ptrtoint ptr %.2.i9492868 to i64
+  %.2.lcssa7375.i = ptrtoaddr ptr %.2.i9492868 to i64
   %i.azt = sub i64 0, %.2.lcssa7375.i
   %scevgep76.i = getelementptr i8, ptr %scevgep.i, i64 %i.azt ; 2 uses
   br label %bb.ks
@@ -2913,7 +2912,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj, %par
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: read) uwtable
 define internal fastcc range(i32 0, 2) i32 @whole_match_p(ptr %.72.val, ptr %.88.val, ptr nofree noundef readonly captures(none) %0, i64 noundef range(i64 0, 4294967296) %1, i32 noundef range(i32 0, 33) %2) unnamed_addr #24 {
 bb.a:
-  %i.a = ptrtoint ptr %.88.val to i64             ; 3 uses
+  %i.a = ptrtoint ptr %.88.val to i64
   %i.b = ptrtoint ptr %.72.val to i64             ; 3 uses
   %i.c = sub i64 %i.a, %i.b
   %i.d = icmp slt i64 %i.c, %1
@@ -2942,14 +2941,14 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.0 = phi ptr [ %i.f, %bb.d ], [ %spec.select, %bb.e ] ; 2 uses
-  %i.m = ptrtoint ptr %.0 to i64                  ; 2 uses
+  %i.m = ptrtoint ptr %.0 to i64
   %i.n = sub i64 %i.m, %i.b
   %i.o = icmp slt i64 %i.n, %1
   br i1 %i.o, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c, %bb.b
-  %.16.pre-phi = phi i64 [ %i.m, %bb.f ], [ %i.a, %bb.c ], [ %i.a, %bb.b ]
-  %.1 = phi ptr [ %.0, %bb.f ], [ %.88.val, %bb.c ], [ %.88.val, %bb.b ]
+  %.1 = phi ptr [ %.0, %bb.f ], [ %.88.val, %bb.c ], [ %.88.val, %bb.b ] ; 2 uses
+  %.16 = ptrtoaddr ptr %.1 to i64
   %i.p = sub nsw i64 0, %1
   %i.q = getelementptr i8, ptr %.1, i64 %i.p      ; 3 uses
   %i.r = tail call i32 @strncmp(ptr noundef %0, ptr noundef %i.q, i64 noundef %1) #35
@@ -2964,7 +2963,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.preheader:                                 ; preds = %bb.h
   %i.t = add i64 %1, %i.b
-  %i.u = sub i64 %.16.pre-phi, %i.t
+  %i.u = sub i64 %.16, %i.t
   %scevgep = getelementptr i8, ptr %.72.val, i64 %i.u ; 2 uses
   br label %.lr.ph
 

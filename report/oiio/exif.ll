@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPN3tsl17detail_robin_hash12bucket_entryISt4pairIiPKN11OpenImageIO4v3_17TagInfoEELb0EEESA_EvT_SC_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.a
-  %1 = ptrtoint ptr %i.d to i64
+  %1 = ptrtoaddr ptr %i.d to i64
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = add i64 %1, -24
   %i.g = sub i64 %i.f, %i.e                       ; 2 uses
@@ -607,7 +607,7 @@ bb.a:
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %._crit_edge
   %i.an = ptrtoint ptr %i.l to i64
-  %4 = ptrtoint ptr %i.k to i64
+  %4 = ptrtoaddr ptr %i.k to i64
   %i.ao = add i64 %4, -24
   %i.ap = sub i64 %i.ao, %i.an                    ; 2 uses
   %i.aq = udiv i64 %i.ap, 24
@@ -1010,9 +1010,8 @@ _ZN11OpenImageIO4v3_13pvt8dataspanIcEENS0_4spanIKhLm18446744073709551615EEERK12T
   br i1 %i.hu, label %_ZNSt6vectorItSaItEED2Ev.exit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.ai, %_ZN11OpenImageIO4v3_13pvt8dataspanIcEENS0_4spanIKhLm18446744073709551615EEERK12TIFFDirEntryS5_im.exit
-  %.sroa.011.0.i213480 = phi ptr [ %i.hm, %_ZN11OpenImageIO4v3_13pvt8dataspanIcEENS0_4spanIKhLm18446744073709551615EEERK12TIFFDirEntryS5_im.exit ], [ %i.ht, %bb.ai ] ; 9 uses
-  %.sroa.011.0.i213480611 = ptrtoint ptr %.sroa.011.0.i213480 to i64
-  %.sroa.011.0.i213480493 = ptrtoaddr ptr %.sroa.011.0.i213480 to i64
+  %.sroa.011.0.i213480 = phi ptr [ %i.hm, %_ZN11OpenImageIO4v3_13pvt8dataspanIcEENS0_4spanIKhLm18446744073709551615EEERK12TIFFDirEntryS5_im.exit ], [ %i.ht, %bb.ai ] ; 8 uses
+  %.sroa.011.0.i213480493 = ptrtoaddr ptr %.sroa.011.0.i213480 to i64 ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.aj
@@ -1127,8 +1126,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.09.i.i.i.ph = phi ptr [ %.ph483, %iter.check ], [ %i.ij, %vec.epilog.iter.check ], [ %i.io, %vec.epilog.middle.block ] ; 2 uses
   %.068.i.i.i.ph = phi ptr [ %.sroa.011.0.i213480, %iter.check ], [ %i.ik, %vec.epilog.iter.check ], [ %i.ip, %vec.epilog.middle.block ] ; 3 uses
-  %.068.i.i.i.ph610 = ptrtoint ptr %.068.i.i.i.ph to i64 ; 2 uses
-  %i.ir = add i64 %i.hk, %.sroa.011.0.i213480611  ; 2 uses
+  %.068.i.i.i.ph610 = ptrtoaddr ptr %.068.i.i.i.ph to i64 ; 2 uses
+  %i.ir = add i64 %i.hk, %.sroa.011.0.i213480493  ; 2 uses
   %i.is = add i64 %indvar, %.068.i.i.i.ph610
   %i.it = sub i64 %i.ir, %i.is
   %xtraiter = and i64 %i.it, 7                    ; 2 uses
@@ -1531,7 +1530,7 @@ _ZN3tsl9robin_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenI
   br i1 %.not4.i.i.i.i.i1.i, label %_ZSt8_DestroyIPN3tsl17detail_robin_hash12bucket_entryISt4pairIiPKN11OpenImageIO4v3_17TagInfoEELb0EEESA_EvT_SC_RSaIT0_E.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i2.i.preheader
 
 .lr.ph.i.i.i.i.i2.i.preheader:                    ; preds = %_ZN3tsl9robin_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_17TagInfoESt4hashIS6_ESt8equal_toIS6_ESaISt4pairIS6_SB_EELb0ENS_2rh26power_of_two_growth_policyILm2EEEED2Ev.exit.i
-  %2 = ptrtoint ptr %i.ae to i64
+  %2 = ptrtoaddr ptr %i.ae to i64
   %i.af = ptrtoint ptr %i.ac to i64
   %i.ag = add i64 %2, -24
   %i.ah = sub i64 %i.ag, %i.af                    ; 2 uses

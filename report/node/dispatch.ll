@@ -203,9 +203,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 48
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.f, align 8 ; 8 uses
-  %.sroa.0.0.copyload.i.i.i.i44 = ptrtoint ptr %.sroa.0.0.copyload.i.i.i.i to i64
-  %.sroa.0.0.copyload.i.i.i.i28 = ptrtoaddr ptr %.sroa.0.0.copyload.i.i.i.i to i64
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.f, align 8 ; 7 uses
+  %.sroa.0.0.copyload.i.i.i.i28 = ptrtoaddr ptr %.sroa.0.0.copyload.i.i.i.i to i64 ; 2 uses
   %.sroa.2.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val, i64 56
   %.sroa.2.0.copyload.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i, align 8 ; 16 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %.sroa.2.0.copyload.i.i.i.i
@@ -309,9 +308,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.06.i.i.i.i.i.i.ph = phi ptr [ %i.p, %iter.check ], [ %i.s, %vec.epilog.iter.check ], [ %i.x, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.02.05.i.i.i.i.i.i.ph = phi ptr [ %.sroa.0.0.copyload.i.i.i.i, %iter.check ], [ %i.t, %vec.epilog.iter.check ], [ %i.y, %vec.epilog.middle.block ] ; 3 uses
-  %i.aa = add i64 %.sroa.2.0.copyload.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i44 ; 2 uses
-  %.sroa.02.05.i.i.i.i.i.i.ph45 = ptrtoint ptr %.sroa.02.05.i.i.i.i.i.i.ph to i64 ; 2 uses
-  %i.ab = sub i64 %i.aa, %.sroa.02.05.i.i.i.i.i.i.ph45
+  %i.aa = add i64 %.sroa.2.0.copyload.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i28 ; 2 uses
+  %.sroa.02.05.i.i.i.i.i.i.ph44 = ptrtoaddr ptr %.sroa.02.05.i.i.i.i.i.i.ph to i64 ; 2 uses
+  %i.ab = sub i64 %i.aa, %.sroa.02.05.i.i.i.i.i.i.ph44
   %xtraiter = and i64 %i.ab, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
@@ -331,7 +330,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.preheader
   %.06.i.i.i.i.i.i.unr = phi ptr [ %.06.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ], [ %i.ae, %.lr.ph.i.i.i.i.i.i.prol ]
   %.sroa.02.05.i.i.i.i.i.i.unr = phi ptr [ %.sroa.02.05.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ], [ %i.ad, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.af = sub i64 %.sroa.02.05.i.i.i.i.i.i.ph45, %i.aa
+  %i.af = sub i64 %.sroa.02.05.i.i.i.i.i.i.ph44, %i.aa
   %i.ag = icmp ugt i64 %i.af, -8
   br i1 %i.ag, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPKhSt4spanIS8_Lm18446744073709551615EEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 

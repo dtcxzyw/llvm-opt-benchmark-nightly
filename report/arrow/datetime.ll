@@ -203,8 +203,8 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc112.i
   %i.rv = ptrtoaddr ptr %i.rs to i64
-  %43 = sub i64 %i.ri, %i.rj
-  %44 = add i64 %43, -8                           ; 2 uses
+  %43 = add i64 %i.ri, -8
+  %44 = sub i64 %43, %i.rj                        ; 2 uses
   %i.rw = lshr i64 %44, 3
   %i.rx = add nuw nsw i64 %i.rw, 1                ; 2 uses
   %min.iters.check520 = icmp ult i64 %44, 24
@@ -607,8 +607,8 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
 
 .lr.ph.i.i.i.i.i.i208.i.preheader:                ; preds = %.noexc217.i
   %i.abi = ptrtoaddr ptr %i.abf to i64
-  %45 = sub i64 %i.aav, %i.aaw
-  %46 = add i64 %45, -8                           ; 2 uses
+  %45 = add i64 %i.aav, -8
+  %46 = sub i64 %45, %i.aaw                       ; 2 uses
   %i.abj = lshr i64 %46, 3
   %i.abk = add nuw nsw i64 %i.abj, 1              ; 2 uses
   %min.iters.check = icmp ult i64 %46, 24
@@ -1011,7 +1011,6 @@ declare noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noun
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE17_M_realloc_insertIJNSt6chrono10time_pointINS6_3_V212system_clockENS6_8durationIlSt5ratioILl1ELl1EEEEEENS1_6detail12undocumentedEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 1 dereferenceable(1) %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !260  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !25     ; 7 uses
@@ -1032,7 +1031,7 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -1048,7 +1047,7 @@ _ZNSt16allocator_traitsISaIN14arrow_vendored4date11leap_secondEEE9constructIS2_J
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt16allocator_traitsISaIN14arrow_vendored4date11leap_secondEEE9constructIS2_JNSt6chrono10time_pointINS6_3_V212system_clockENS6_8durationIlSt5ratioILl1ELl1EEEEEENS1_6detail12undocumentedEEEEvRS3_PT_DpOT0_.exit
-  %i.s = add i64 %4, -8
+  %i.s = add i64 %i.m, -8
   %i.t = sub i64 %i.s, %i.e                       ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
@@ -1112,14 +1111,14 @@ _ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5
 
 .lr.ph.i.i.i28.preheader:                         ; preds = %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit
   %i.ai = add i64 %i.d, -8
-  %i.aj = sub i64 %i.ai, %4                       ; 2 uses
+  %i.aj = sub i64 %i.ai, %i.m                     ; 2 uses
   %i.ak = lshr i64 %i.aj, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check55 = icmp ult i64 %i.aj, 104
   br i1 %min.iters.check55, label %.lr.ph.i.i.i28.preheader70, label %vector.memcheck51
 
 vector.memcheck51:                                ; preds = %.lr.ph.i.i.i28.preheader
-  %i.am = sub i64 %.0.lcssa.i.i.i52, %4
+  %i.am = sub i64 %.0.lcssa.i.i.i52, %i.m
   %i.an = add i64 %i.am, 7
   %diff.check53 = icmp ult i64 %i.an, 31
   br i1 %diff.check53, label %.lr.ph.i.i.i28.preheader70, label %vector.ph56

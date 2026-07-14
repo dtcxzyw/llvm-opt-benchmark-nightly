@@ -204,8 +204,8 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs1N9T06jgEdt_11arrow_array12rec
   br i1 %i.n, label %_RNvXs_NtNtCs6Po7BT7Nknu_5alloc3vec21spec_from_iter_nestedINtB6_3VecRNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchEINtB4_18SpecFromIterNestedB13_INtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterB14_EE9from_iterCs14kWLkQVSKO_14deltalake_core.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i.i
-  %3 = sub i64 %i.b, %i.c
-  %4 = add i64 %3, -40                            ; 2 uses
+  %3 = add i64 %i.b, -40
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.o = udiv i64 %4, 40
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 120
@@ -608,8 +608,8 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs8VI8w5SIoU4_15datafusion_expr4
   br i1 %i.n, label %.loopexit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i
-  %3 = sub i64 %i.b, %i.c
-  %4 = add i64 %3, -112                           ; 2 uses
+  %3 = add i64 %i.b, -112
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.o = udiv i64 %4, 112
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 336
@@ -696,8 +696,8 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs90oH6M0AZ2B_22datafusion_expr_
   br i1 %i.n, label %.loopexit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs90oH6M0AZ2B_22datafusion_expr_common19interval_arithmetic8IntervalE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i
-  %3 = sub i64 %i.b, %i.c
-  %4 = add i64 %3, -128                           ; 2 uses
+  %3 = add i64 %i.b, -128
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.o = lshr i64 %4, 7
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 384
@@ -853,16 +853,15 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecbE7reserveCs14kWLkQVSKO_14deltalake_c
   call void @llvm.experimental.noalias.scope.decl(metadata !39262)
   call void @llvm.experimental.noalias.scope.decl(metadata !39265)
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.af = load ptr, ptr %i.a, align 8, !alias.scope !39268, !noalias !39271, !nonnull !8, !noundef !8 ; 9 uses
-  %i.ag = ptrtoaddr ptr %i.af to i64
+  %i.af = load ptr, ptr %i.a, align 8, !alias.scope !39268, !noalias !39271, !nonnull !8, !noundef !8 ; 8 uses
+  %i.ag = ptrtoaddr ptr %i.af to i64              ; 2 uses
   %i.ah = load ptr, ptr %i.ae, align 8, !alias.scope !39268, !noalias !39271, !nonnull !8, !noundef !8 ; 3 uses
   %i.ai = icmp eq ptr %i.af, %i.ah
   br i1 %i.ai, label %_RINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB6_3VecbE14extend_trustedINtNtB6_5drain5DrainbEECs14kWLkQVSKO_14deltalake_core.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecbE7reserveCs14kWLkQVSKO_14deltalake_core.exit.i.i
-  %2 = ptrtoint ptr %i.ah to i64                  ; 3 uses
-  %3 = ptrtoint ptr %i.af to i64
-  %i.aj = sub i64 %2, %3                          ; 7 uses
+  %2 = ptrtoaddr ptr %i.ah to i64                 ; 3 uses
+  %i.aj = sub i64 %2, %i.ag                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.aj, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
@@ -933,7 +932,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.preheader:                         ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ %i.ac, %iter.check ], [ %i.ac, %vector.memcheck ], [ %i.am, %vec.epilog.iter.check ], [ %i.at, %vec.epilog.middle.block ] ; 2 uses
   %.ph30 = phi ptr [ %i.af, %iter.check ], [ %i.af, %vector.memcheck ], [ %i.an, %vec.epilog.iter.check ], [ %i.au, %vec.epilog.middle.block ] ; 3 uses
-  %.ph3033 = ptrtoint ptr %.ph30 to i64           ; 2 uses
+  %.ph3033 = ptrtoaddr ptr %.ph30 to i64          ; 2 uses
   %i.ay = sub i64 %2, %.ph3033
   %xtraiter = and i64 %i.ay, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
