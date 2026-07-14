@@ -204,39 +204,19 @@ bb.aq:                                            ; preds = %.lr.ph676, %.crited
   %indvars.iv720 = phi i64 [ 0, %.lr.ph676 ], [ %indvars.iv.next721, %.critedge678 ] ; 4 uses
   %i.jl = load ptr, ptr %i.bb, align 8
   %i.jm = getelementptr inbounds nuw [8 x i8], ptr %i.jl, i64 %indvars.iv720
-  %i.jn = load ptr, ptr %i.jm, align 8            ; 6 uses
+  %i.jn = load ptr, ptr %i.jm, align 8            ; 2 uses
   %i.jo = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0545.0, i64 %indvars.iv720 ; 24 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.jn, i64 112 ; 5 uses
-  %4 = load <4 x ptr>, ptr %3, align 8
-  %5 = load ptr, ptr %3, align 8
-  %6 = icmp ne <4 x ptr> %4, splat (ptr null)
-  %7 = getelementptr inbounds nuw i8, ptr %i.jn, i64 144
-  %8 = load ptr, ptr %7, align 8
-  %.not.4.i = icmp ne ptr %8, null
-  %9 = zext i1 %.not.4.i to i32
-  %i.jp = getelementptr inbounds nuw i8, ptr %i.jn, i64 152
-  %10 = load ptr, ptr %i.jp, align 8
-  %.not.5.i = icmp ne ptr %10, null
-  %11 = zext i1 %.not.5.i to i32
-  %12 = getelementptr inbounds nuw i8, ptr %i.jn, i64 160
-  %i.jq = load ptr, ptr %12, align 8
-  %.not.6.i = icmp ne ptr %i.jq, null
-  %13 = zext i1 %.not.6.i to i32
-  %14 = bitcast <4 x i1> %6 to i4
-  %15 = call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %14)
-  %16 = zext nneg i4 %15 to i32
-  %op.rdx842 = add nuw nsw i32 %16, %9
-  %op.rdx843 = add nuw nsw i32 %11, %13
-  %op.rdx844 = add nuw nsw i32 %op.rdx842, %op.rdx843
-  %17 = getelementptr inbounds nuw i8, ptr %i.jn, i64 168
-  %18 = load ptr, ptr %17, align 8
-  %.not.7.i = icmp ne ptr %18, null
-  %i.jr = zext i1 %.not.7.i to i32
-  %spec.select.7.i = add nuw nsw i32 %op.rdx844, %i.jr ; 2 uses
+  %i.jp = getelementptr inbounds nuw i8, ptr %i.jn, i64 112 ; 5 uses
+  %3 = load <8 x ptr>, ptr %i.jp, align 8
+  %i.jq = load ptr, ptr %i.jp, align 8
+  %4 = icmp ne <8 x ptr> %3, splat (ptr null)
+  %5 = bitcast <8 x i1> %4 to i8
+  %6 = call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %5)
+  %i.jr = zext nneg i8 %6 to i32                  ; 2 uses
   %i.js = load i32, ptr %i.e, align 4
-  %i.jt = add i32 %spec.select.7.i, %i.js
+  %i.jt = add i32 %i.js, %i.jr
   store i32 %i.jt, ptr %i.e, align 4
-  %.not238 = icmp eq ptr %5, null
+  %.not238 = icmp eq ptr %i.jq, null
   br i1 %.not238, label %.critedge, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
@@ -270,7 +250,7 @@ _ZNK6Assimp17STransformVecInfo15IsUntransformedEv.exit: ; preds = %bb.at
 
 .critedge:                                        ; preds = %bb.ar, %bb.aq, %_ZNK6Assimp17STransformVecInfo15IsUntransformedEv.exit
   %i.kg = load i32, ptr %i.d, align 4
-  %i.kh = add i32 %i.kg, %spec.select.7.i
+  %i.kh = add i32 %i.kg, %i.jr
   store i32 %i.kh, ptr %i.d, align 4
   br label %.critedge678
 
@@ -426,7 +406,7 @@ bb.ba:                                            ; preds = %.lr.ph652, %bb.az
 ._crit_edge653:                                   ; preds = %._crit_edge653.loopexit, %.preheader576
   %.sroa.0481.2656 = phi ptr [ %.sroa.0481.1647, %.preheader576 ], [ %.sroa.0481.2656.pre, %._crit_edge653.loopexit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #17
-  %i.lr = load <8 x ptr>, ptr %3, align 8
+  %i.lr = load <8 x ptr>, ptr %i.jp, align 8
   %i.ls = icmp eq <8 x ptr> %i.lr, splat (ptr null) ; 2 uses
   %i.lt = zext <8 x i1> %i.ls to <8 x i8>
   store <8 x i8> %i.lt, ptr %i.g, align 8
@@ -773,7 +753,7 @@ bb.cg:                                            ; preds = %bb.cd
   %i.qu = phi i64 [ %.pr780, %.preheader573thread-pre-split ], [ %i.qk, %bb.by ]
   %.0218 = phi i32 [ 8, %.preheader573thread-pre-split ], [ %i.ql, %bb.by ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.j, ptr noundef nonnull align 8 dereferenceable(64) %3, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.j, ptr noundef nonnull align 8 dereferenceable(64) %i.jp, i64 64, i1 false)
   %.not685 = icmp eq i64 %i.qu, 0
   br i1 %.not685, label %._crit_edge672, label %.lr.ph671
 
@@ -900,7 +880,7 @@ bb.cp:                                            ; preds = %bb.co
           to label %bb.cq unwind label %.loopexit.split-lp
 
 bb.cq:                                            ; preds = %bb.cp, %bb.cn
-  %i.si = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.qx ; 2 uses
+  %i.si = getelementptr inbounds nuw [8 x i8], ptr %i.jp, i64 %i.qx ; 2 uses
   %i.sj = load ptr, ptr %i.si, align 8            ; 3 uses
   %.not240 = icmp eq ptr %i.sj, null
   br i1 %.not240, label %bb.cs, label %.preheader.preheader
@@ -1303,7 +1283,7 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i4 @llvm.ctpop.i4(i4) #5
+declare i8 @llvm.ctpop.i8(i8) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

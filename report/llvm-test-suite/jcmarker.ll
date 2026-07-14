@@ -204,7 +204,7 @@ bb.a:
   %.035.in.v.v = select i1 %.not, i64 120, i64 152
   %.035.in.v = getelementptr inbounds nuw i8, ptr %0, i64 %.035.in.v.v
   %.035.in = getelementptr inbounds [8 x i8], ptr %.035.in.v, i64 %i.a
-  %.035 = load ptr, ptr %.035.in, align 8, !tbaa !81 ; 9 uses
+  %.035 = load ptr, ptr %.035.in, align 8, !tbaa !81 ; 5 uses
   %i.c = icmp eq ptr %.035, null
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -284,26 +284,10 @@ bb.h:                                             ; preds = %bb.g
 
 emit_marker.exit:                                 ; preds = %emit_byte.exit.i, %bb.g, %bb.h
   %i.al = getelementptr inbounds nuw i8, ptr %.035, i64 1
-  %3 = load <12 x i8>, ptr %i.al, align 1, !tbaa !41
-  %4 = getelementptr inbounds nuw i8, ptr %.035, i64 13
-  %5 = load i8, ptr %4, align 1, !tbaa !41
-  %6 = zext i8 %5 to i32
-  %7 = getelementptr inbounds nuw i8, ptr %.035, i64 14
-  %8 = load i8, ptr %7, align 2, !tbaa !41
-  %9 = zext i8 %8 to i32
-  %10 = getelementptr inbounds nuw i8, ptr %.035, i64 15
-  %11 = load i8, ptr %10, align 1, !tbaa !41
-  %12 = zext i8 %11 to i32
-  %13 = zext <12 x i8> %3 to <12 x i32>
-  %i.am = tail call i32 @llvm.vector.reduce.add.v12i32(<12 x i32> %13)
-  %op.rdx = add nuw nsw i32 %i.am, %6
-  %op.rdx54 = add nuw nsw i32 %9, %12
-  %op.rdx55 = add nuw nsw i32 %op.rdx, %op.rdx54
-  %14 = getelementptr inbounds nuw i8, ptr %.035, i64 16
-  %15 = load i8, ptr %14, align 4, !tbaa !41
-  %16 = zext i8 %15 to i32
-  %17 = add nuw nsw i32 %op.rdx55, %16            ; 3 uses
-  %i.an = add nuw nsw i32 %17, 19                 ; 2 uses
+  %3 = load <16 x i8>, ptr %i.al, align 1, !tbaa !41
+  %4 = zext <16 x i8> %3 to <16 x i32>
+  %i.am = tail call i32 @llvm.vector.reduce.add.v16i32(<16 x i32> %4) ; 3 uses
+  %i.an = add nuw nsw i32 %i.am, 19               ; 2 uses
   %i.ao = lshr i32 %i.an, 8
   %i.ap = load ptr, ptr %i.k, align 8, !tbaa !37  ; 4 uses
   %i.aq = trunc nuw nsw i32 %i.ao to i8
@@ -395,12 +379,12 @@ emit_byte.exit.preheader:                         ; preds = %emit_2bytes.exit, %
   br label %emit_byte.exit
 
 .preheader:                                       ; preds = %emit_byte.exit41
-  %.not48 = icmp eq i32 %17, 0
+  %.not48 = icmp eq i32 %i.am, 0
   br i1 %.not48, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cf = getelementptr inbounds nuw i8, ptr %.035, i64 17
-  %i.cg = zext nneg i32 %17 to i64
+  %i.cg = zext nneg i32 %i.am to i64
   br label %bb.q
 
 emit_byte.exit:                                   ; preds = %emit_byte.exit.preheader, %emit_byte.exit41
@@ -487,7 +471,7 @@ bb.t:                                             ; preds = %._crit_edge, %bb.c
 declare void @llvm.assume(i1 noundef) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v12i32(<12 x i32>) #2
+declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #2
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }

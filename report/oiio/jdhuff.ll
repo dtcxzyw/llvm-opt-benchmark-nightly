@@ -203,26 +203,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.f = phi ptr [ %i.a, %bb.c ], [ %i.c, %bb.b ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(17) %i.f, ptr noundef nonnull align 1 dereferenceable(17) %2, i64 17, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %4 = load <12 x i8>, ptr %i.g, align 1, !tbaa !35
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 13
-  %6 = load i8, ptr %5, align 1, !tbaa !35
-  %7 = zext i8 %6 to i32
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 14
-  %9 = load i8, ptr %8, align 1, !tbaa !35
-  %10 = zext i8 %9 to i32
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 15
-  %12 = load i8, ptr %11, align 1, !tbaa !35
-  %13 = zext i8 %12 to i32
-  %14 = zext <12 x i8> %4 to <12 x i32>
-  %i.h = tail call i32 @llvm.vector.reduce.add.v12i32(<12 x i32> %14)
-  %op.rdx = add nuw nsw i32 %i.h, %7
-  %op.rdx27 = add nuw nsw i32 %10, %13
-  %op.rdx28 = add nuw nsw i32 %op.rdx, %op.rdx27
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %16 = load i8, ptr %15, align 1, !tbaa !35
-  %17 = zext i8 %16 to i32
-  %18 = add nuw nsw i32 %op.rdx28, %17            ; 3 uses
-  %i.i = add nsw i32 %18, -257
+  %4 = load <16 x i8>, ptr %i.g, align 1, !tbaa !35
+  %5 = zext <16 x i8> %4 to <16 x i32>
+  %i.h = tail call i32 @llvm.vector.reduce.add.v16i32(<16 x i32> %5) ; 3 uses
+  %i.i = add nsw i32 %i.h, -257
   %or.cond = icmp ult i32 %i.i, -256
   br i1 %or.cond, label %bb.e, label %bb.f
 
@@ -237,12 +221,12 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.m = load ptr, ptr %1, align 8, !tbaa !37
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 17
-  %i.o = zext nneg i32 %18 to i64                 ; 2 uses
+  %i.o = zext nneg i32 %i.h to i64                ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.n, ptr align 1 %3, i64 %i.o, i1 false)
   %i.p = load ptr, ptr %1, align 8, !tbaa !37
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 17
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.o
-  %i.s = sub nsw i32 256, %18
+  %i.s = sub nsw i32 256, %i.h
   %i.t = sext i32 %i.s to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.r, i8 0, i64 %i.t, i1 false)
   %i.u = load ptr, ptr %1, align 8, !tbaa !37
@@ -263,7 +247,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v12i32(<12 x i32>) #4
+declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
