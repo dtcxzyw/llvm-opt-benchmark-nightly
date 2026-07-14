@@ -204,7 +204,7 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__g
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE12emplace_backIJRKS2_EEEvDpOT_.exit: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.e
   %.sroa.28.3 = phi ptr [ %i.ak, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.28.1, %bb.e ] ; 4 uses
   %.0.lcssa.i.i.i.i.i.i43.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i43, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.14.1, %bb.e ] ; 4 uses
-  %.sroa.069.6 = phi ptr [ %i.ag, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.069.1, %bb.e ] ; 12 uses
+  %.sroa.069.6 = phi ptr [ %i.ag, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.069.1, %bb.e ] ; 13 uses
   %.sroa.14.4 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i43.pn, i64 24 ; 4 uses
   %i.al = add i64 %.025, 1
   %i.am = urem i64 %i.al, %i.r                    ; 2 uses
@@ -212,7 +212,8 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE12emplace_backIJRKS2_EEEvDpOT_.exit
   br i1 %.not, label %bb.i, label %bb.c, !llvm.loop !192
 
 bb.i:                                             ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE12emplace_backIJRKS2_EEEvDpOT_.exit
-  %.0.lcssa.i.i.i.i.i.i43.pn.lcssa118119 = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i43.pn to i64
+  %.0.lcssa.i.i.i.i.i.i43.pn.lcssa118119 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i.i43.pn to i64
+  %.sroa.069.6.lcssa120121 = ptrtoaddr ptr %.sroa.069.6 to i64
   br i1 %.0.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE12emplace_backIJRKS2_EEEvDpOT_.exit62, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -233,7 +234,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.as = ptrtoint ptr %.sroa.28.3 to i64
-  %i.at = ptrtoint ptr %.sroa.069.6 to i64        ; 2 uses
+  %i.at = ptrtoint ptr %.sroa.069.6 to i64
   %i.au = sub i64 %i.as, %i.at                    ; 3 uses
   %i.av = icmp eq i64 %i.au, 9223372036854775800
   br i1 %i.av, label %bb.n, label %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i48
@@ -265,7 +266,7 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i48: ; 
   br i1 %.not10.i.i.i.i.i.i51, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i56, label %.lr.ph.i.i.i.i.i.i52.preheader
 
 .lr.ph.i.i.i.i.i.i52.preheader:                   ; preds = %.noexc61
-  %i.be = sub i64 %.0.lcssa.i.i.i.i.i.i43.pn.lcssa118119, %i.at ; 2 uses
+  %i.be = sub i64 %.0.lcssa.i.i.i.i.i.i43.pn.lcssa118119, %.sroa.069.6.lcssa120121 ; 2 uses
   %i.bf = udiv i64 %i.be, 24
   %i.bg = add nuw nsw i64 %i.bf, 1
   %xtraiter = and i64 %i.bg, 3                    ; 2 uses
