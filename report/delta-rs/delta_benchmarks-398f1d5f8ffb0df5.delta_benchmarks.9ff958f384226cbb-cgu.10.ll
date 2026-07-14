@@ -201,7 +201,7 @@ _RINvMs6_NtCs2HSpDNxY7OE_9hashbrown3rawINtB6_8RawTablejE7reserveNCINvNtCsbpG6u9K
   %i.m = load i64, ptr %i.d, align 8, !noundef !3 ; 6 uses
   %i.n = icmp ult i64 %i.m, 82351536043346213
   tail call void @llvm.assume(i1 %i.n)
-  %i.o = sub nsw i64 %i.l, %i.m
+  %i.o = sub nsw i64 %i.l, %i.m                   ; 2 uses
   %i.p = icmp ugt i64 %1, %i.o
   br i1 %i.p, label %bb.c, label %_RNvMs_NtCsbpG6u9KFjWn_8indexmap5innerINtB4_4CoreNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuE15reserve_entriesCsdJxlLsGgtXr_16delta_benchmarks.exit
 
@@ -212,11 +212,11 @@ bb.c:                                             ; preds = %_RINvMs6_NtCs2HSpDN
   %i.s = load i64, ptr %i.e, align 8, !alias.scope !11563, !noundef !3
   %i.t = add i64 %i.s, %i.r                       ; 2 uses
   %.sroa.0.0.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.t, i64 82351536043346212) ; 3 uses
-  %i.u = sub nsw i64 %.sroa.0.0.i.i, %i.m
+  %i.u = sub nsw i64 %.sroa.0.0.i.i, %i.m         ; 2 uses
   %i.v = icmp ugt i64 %i.u, %1
-  br i1 %i.v, label %bb.g, label %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner17try_reserve_exactCsdJxlLsGgtXr_16delta_benchmarks.exit.i
+  br i1 %i.v, label %2, label %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner17try_reserve_exactCsdJxlLsGgtXr_16delta_benchmarks.exit.i
 
-_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner17try_reserve_exactCsdJxlLsGgtXr_16delta_benchmarks.exit.i: ; preds = %bb.c, %bb.i, %bb.g
+_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner17try_reserve_exactCsdJxlLsGgtXr_16delta_benchmarks.exit.i: ; preds = %bb.g, %bb.i, %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11566)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11569)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11572)
@@ -254,8 +254,12 @@ bb.f:                                             ; preds = %bb.e, %_RNvMs2_NtCs
   tail call void @_RNvNtCs6Po7BT7Nknu_5alloc7raw_vec12handle_error(i64 noundef %.sroa.0.0.i.i.i, i64 %.sroa.3.0.i.i.i) #41, !noalias !11576
   unreachable
 
-bb.g:                                             ; preds = %bb.c
+2:                                                ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11577)
+  %3 = icmp ugt i64 %i.u, %i.o
+  br i1 %3, label %bb.g, label %_RNvMs_NtCsbpG6u9KFjWn_8indexmap5innerINtB4_4CoreNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuE15reserve_entriesCsdJxlLsGgtXr_16delta_benchmarks.exit
+
+bb.g:                                             ; preds = %2
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11580)
   %i.ag = icmp ult i64 %i.t, %i.m
   br i1 %i.ag, label %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner17try_reserve_exactCsdJxlLsGgtXr_16delta_benchmarks.exit.i, label %bb.h
@@ -284,7 +288,7 @@ _RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner13reserve_exactCsdJxlLsG
   store i64 %.sroa.0.0.i.sink.i, ptr %0, align 8, !alias.scope !11563
   br label %_RNvMs_NtCsbpG6u9KFjWn_8indexmap5innerINtB4_4CoreNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuE15reserve_entriesCsdJxlLsGgtXr_16delta_benchmarks.exit
 
-_RNvMs_NtCsbpG6u9KFjWn_8indexmap5innerINtB4_4CoreNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuE15reserve_entriesCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner13reserve_exactCsdJxlLsGgtXr_16delta_benchmarks.exit.sink.split.i, %_RINvMs6_NtCs2HSpDNxY7OE_9hashbrown3rawINtB6_8RawTablejE7reserveNCINvNtCsbpG6u9KFjWn_8indexmap5inner8get_hashNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuE0ECsdJxlLsGgtXr_16delta_benchmarks.exit
+_RNvMs_NtCsbpG6u9KFjWn_8indexmap5innerINtB4_4CoreNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuE15reserve_entriesCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %_RNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner13reserve_exactCsdJxlLsGgtXr_16delta_benchmarks.exit.sink.split.i, %2, %_RINvMs6_NtCs2HSpDNxY7OE_9hashbrown3rawINtB6_8RawTablejE7reserveNCINvNtCsbpG6u9KFjWn_8indexmap5inner8get_hashNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuE0ECsdJxlLsGgtXr_16delta_benchmarks.exit
   ret void
 }
 
