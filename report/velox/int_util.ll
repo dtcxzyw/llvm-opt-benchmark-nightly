@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 ._crit_edge.i.i.thread.i:                         ; preds = %bb.c
   %i.o = urem i8 %1, 100
   %i.p = shl nuw i8 %i.o, 1
-  %2 = udiv i8 %1, 100
+  %2 = icmp ugt i8 %1, -57
   %i.q = zext i8 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.q ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 1
@@ -214,6 +214,7 @@ bb.c:                                             ; preds = %bb.b
   %i.v = load i8, ptr %i.r, align 2, !tbaa !7
   %i.w = getelementptr i8, ptr %i.b, i64 1
   store i8 %i.v, ptr %i.w, align 1, !tbaa !7
+  %3 = select i1 %2, i8 2, i8 1
   br label %bb.e
 
 ._crit_edge.i.i.i:                                ; preds = %bb.c
@@ -232,7 +233,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %_ZSt12__to_chars_iIhENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yEEES2_IS4_nES2_IS4_oES2_IcS6_EEE5valueESt15to_chars_resultE4typeEPcSP_S4_i.exit._crit_edge
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i, %._crit_edge.i.i.thread.i
-  %.0.lcssa.i.i79.i = phi i8 [ %2, %._crit_edge.i.i.thread.i ], [ %1, %._crit_edge.i.i.i ]
+  %.0.lcssa.i.i79.i = phi i8 [ %3, %._crit_edge.i.i.thread.i ], [ %1, %._crit_edge.i.i.i ]
   %i.af = or disjoint i8 %.0.lcssa.i.i79.i, 48
   br label %_ZSt12__to_chars_iIhENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yEEES2_IS4_nES2_IS4_oES2_IcS6_EEE5valueESt15to_chars_resultE4typeEPcSP_S4_i.exit._crit_edge
 
@@ -256,7 +257,7 @@ _ZSt12__to_chars_iIhENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvI
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 1
   %i.aq = urem i8 %1, 100
   %i.ar = shl nuw i8 %i.aq, 1
-  %3 = udiv i8 %1, 100
+  %4 = icmp ugt i8 %1, -57
   %i.as = zext i8 %i.ar to i64
   %i.at = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.as ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 1
@@ -292,7 +293,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.us: ; preds 
   br i1 %i.bd, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
-  %4 = or disjoint i8 %3, 48
+  %5 = select i1 %4, i8 50, i8 49
   br label %_ZSt12__to_chars_iIhENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yEEES2_IS4_nES2_IS4_oES2_IcS6_EEE5valueESt15to_chars_resultE4typeEPcSP_S4_i.exit25.us39
 
 _ZSt12__to_chars_iIhENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yEEES2_IS4_nES2_IS4_oES2_IcS6_EEE5valueESt15to_chars_resultE4typeEPcSP_S4_i.exit25.us39: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.us36, %.lr.ph.split.split.us
@@ -374,7 +375,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit: ; preds = %
   %i.cj = load i8, ptr %i.at, align 2, !tbaa !7
   %i.ck = getelementptr i8, ptr %i.ch, i64 -2
   store i8 %i.cj, ptr %i.ck, align 1, !tbaa !7
-  store i8 %4, ptr %i.bj, align 1, !tbaa !7
+  store i8 %5, ptr %i.bj, align 1, !tbaa !7
   br label %._crit_edge
 
 ._crit_edge.loopexit69:                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.us51

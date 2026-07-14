@@ -203,7 +203,8 @@ _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vector
   store i8 %i.is, ptr %i.it, align 1, !tbaa !10
   %i.iu = load i8, ptr %i.iq, align 1, !tbaa !10
   store i8 %i.iu, ptr %i.io, align 1, !tbaa !10
-  %6 = udiv i8 %i.ib, 100
+  %6 = icmp ugt i8 %i.ib, -57
+  %7 = select i1 %6, i8 2, i8 1
   br label %bb.w
 
 ._crit_edge.i:                                    ; preds = %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i
@@ -223,7 +224,7 @@ bb.v:                                             ; preds = %._crit_edge.i
 
 bb.w:                                             ; preds = %._crit_edge.i, %._crit_edge.thread.i
   %.0.lcssa29.i = phi ptr [ %i.io, %._crit_edge.thread.i ], [ %i.im, %._crit_edge.i ]
-  %.021.lcssa28.i = phi i8 [ %6, %._crit_edge.thread.i ], [ %i.ib, %._crit_edge.i ]
+  %.021.lcssa28.i = phi i8 [ %7, %._crit_edge.thread.i ], [ %i.ib, %._crit_edge.i ]
   %i.jc = or disjoint i8 %.021.lcssa28.i, 48
   %i.jd = getelementptr inbounds i8, ptr %.0.lcssa29.i, i64 -1
   store i8 %i.jc, ptr %i.jd, align 1, !tbaa !10
@@ -271,7 +272,8 @@ _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vector
   store i8 %i.jy, ptr %i.jz, align 1, !tbaa !10
   %i.ka = load i8, ptr %i.jw, align 1, !tbaa !10
   store i8 %i.ka, ptr %i.ju, align 1, !tbaa !10
-  %7 = udiv i8 %i.ji, 100
+  %8 = icmp ugt i8 %i.ji, -57
+  %9 = select i1 %8, i8 2, i8 1
   br label %bb.ab
 
 ._crit_edge.i86:                                  ; preds = %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i85
@@ -291,7 +293,7 @@ bb.aa:                                            ; preds = %._crit_edge.i86
 
 bb.ab:                                            ; preds = %._crit_edge.i86, %._crit_edge.thread.i89
   %.0.lcssa29.i87 = phi ptr [ %i.ju, %._crit_edge.thread.i89 ], [ %i.js, %._crit_edge.i86 ]
-  %.021.lcssa28.i88 = phi i8 [ %7, %._crit_edge.thread.i89 ], [ %i.ji, %._crit_edge.i86 ]
+  %.021.lcssa28.i88 = phi i8 [ %9, %._crit_edge.thread.i89 ], [ %i.ji, %._crit_edge.i86 ]
   %i.ki = or disjoint i8 %.021.lcssa28.i88, 48
   %i.kj = getelementptr inbounds i8, ptr %.0.lcssa29.i87, i64 -1
   store i8 %i.ki, ptr %i.kj, align 1, !tbaa !10
@@ -377,7 +379,8 @@ _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vector
   store i8 %i.mg, ptr %i.mh, align 1, !tbaa !10
   %i.mi = load i8, ptr %i.me, align 1, !tbaa !10
   store i8 %i.mi, ptr %i.mc, align 1, !tbaa !10
-  %8 = udiv i8 %i.lp, 100
+  %10 = icmp ugt i8 %i.lp, -57
+  %11 = select i1 %10, i8 2, i8 1
   br label %bb.ag
 
 ._crit_edge.i93:                                  ; preds = %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i92
@@ -397,7 +400,7 @@ bb.af:                                            ; preds = %._crit_edge.i93
 
 bb.ag:                                            ; preds = %._crit_edge.i93, %._crit_edge.thread.i96
   %.0.lcssa29.i94 = phi ptr [ %i.mc, %._crit_edge.thread.i96 ], [ %i.ma, %._crit_edge.i93 ]
-  %.021.lcssa28.i95 = phi i8 [ %8, %._crit_edge.thread.i96 ], [ %i.lp, %._crit_edge.i93 ]
+  %.021.lcssa28.i95 = phi i8 [ %11, %._crit_edge.thread.i96 ], [ %i.lp, %._crit_edge.i93 ]
   %i.mq = or disjoint i8 %.021.lcssa28.i95, 48
   %i.mr = getelementptr inbounds i8, ptr %.0.lcssa29.i94, i64 -1
   store i8 %i.mq, ptr %i.mr, align 1, !tbaa !10
@@ -491,7 +494,8 @@ _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vector
   store i8 %i.ol, ptr %i.om, align 1, !tbaa !10
   %i.on = load i8, ptr %i.oj, align 1, !tbaa !10
   store i8 %i.on, ptr %i.oh, align 1, !tbaa !10
-  %9 = udiv i8 %i.nu, 100
+  %12 = icmp ugt i8 %i.nu, -57
+  %13 = select i1 %12, i8 2, i8 1
   br label %bb.am
 
 ._crit_edge.i100:                                 ; preds = %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i99
@@ -511,7 +515,7 @@ bb.al:                                            ; preds = %._crit_edge.i100
 
 bb.am:                                            ; preds = %._crit_edge.i100, %._crit_edge.thread.i103
   %.0.lcssa29.i101 = phi ptr [ %i.oh, %._crit_edge.thread.i103 ], [ %i.of, %._crit_edge.i100 ]
-  %.021.lcssa28.i102 = phi i8 [ %9, %._crit_edge.thread.i103 ], [ %i.nu, %._crit_edge.i100 ]
+  %.021.lcssa28.i102 = phi i8 [ %13, %._crit_edge.thread.i103 ], [ %i.nu, %._crit_edge.i100 ]
   %i.ov = or disjoint i8 %.021.lcssa28.i102, 48
   %i.ow = getelementptr inbounds i8, ptr %.0.lcssa29.i101, i64 -1
   store i8 %i.ov, ptr %i.ow, align 1, !tbaa !10
@@ -559,7 +563,8 @@ _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vector
   store i8 %i.pr, ptr %i.ps, align 1, !tbaa !10
   %i.pt = load i8, ptr %i.pp, align 1, !tbaa !10
   store i8 %i.pt, ptr %i.pn, align 1, !tbaa !10
-  %10 = udiv i8 %i.pb, 100
+  %14 = icmp ugt i8 %i.pb, -57
+  %15 = select i1 %14, i8 2, i8 1
   br label %bb.ar
 
 ._crit_edge.i107:                                 ; preds = %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i106
@@ -579,7 +584,7 @@ bb.aq:                                            ; preds = %._crit_edge.i107
 
 bb.ar:                                            ; preds = %._crit_edge.i107, %._crit_edge.thread.i110
   %.0.lcssa29.i108 = phi ptr [ %i.pn, %._crit_edge.thread.i110 ], [ %i.pl, %._crit_edge.i107 ]
-  %.021.lcssa28.i109 = phi i8 [ %10, %._crit_edge.thread.i110 ], [ %i.pb, %._crit_edge.i107 ]
+  %.021.lcssa28.i109 = phi i8 [ %15, %._crit_edge.thread.i110 ], [ %i.pb, %._crit_edge.i107 ]
   %i.qb = or disjoint i8 %.021.lcssa28.i109, 48
   %i.qc = getelementptr inbounds i8, ptr %.0.lcssa29.i108, i64 -1
   store i8 %i.qb, ptr %i.qc, align 1, !tbaa !10
@@ -653,7 +658,8 @@ _ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vector
   store i8 %i.rp, ptr %i.rq, align 1, !tbaa !10
   %i.rr = load i8, ptr %i.rn, align 1, !tbaa !10
   store i8 %i.rr, ptr %i.rl, align 1, !tbaa !10
-  %11 = udiv i8 %i.qy, 100
+  %16 = icmp ugt i8 %i.qy, -57
+  %17 = select i1 %16, i8 2, i8 1
   br label %bb.aw
 
 ._crit_edge.i114:                                 ; preds = %_ZN13geos_nlohmann6detail10serializerINS_10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEE12count_digitsEm.exit.i113
@@ -673,7 +679,7 @@ bb.av:                                            ; preds = %._crit_edge.i114
 
 bb.aw:                                            ; preds = %._crit_edge.i114, %._crit_edge.thread.i117
   %.0.lcssa29.i115 = phi ptr [ %i.rl, %._crit_edge.thread.i117 ], [ %i.rj, %._crit_edge.i114 ]
-  %.021.lcssa28.i116 = phi i8 [ %11, %._crit_edge.thread.i117 ], [ %i.qy, %._crit_edge.i114 ]
+  %.021.lcssa28.i116 = phi i8 [ %17, %._crit_edge.thread.i117 ], [ %i.qy, %._crit_edge.i114 ]
   %i.rz = or disjoint i8 %.021.lcssa28.i116, 48
   %i.sa = getelementptr inbounds i8, ptr %.0.lcssa29.i115, i64 -1
   store i8 %i.rz, ptr %i.sa, align 1, !tbaa !10

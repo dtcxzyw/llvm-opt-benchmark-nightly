@@ -203,7 +203,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   %.070105.i = phi i64 [ %i.eg, %select.unfold.i ], [ 0, %bb.ax ] ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dl, i64 %.070105.i
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !20
-  %.fr104.i = freeze i8 %i.dq                     ; 9 uses
+  %.fr104.i = freeze i8 %i.dq                     ; 10 uses
   %i.dr = and i8 %.fr104.i, -33
   %i.ds = add i8 %i.dr, -65
   %i.dt = icmp ult i8 %i.ds, 26
@@ -230,8 +230,12 @@ bb.ay:                                            ; preds = %.lr.ph.split.i
 bb.az:                                            ; preds = %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   store i8 92, ptr %i.b, align 1, !tbaa !20
-  %3 = udiv i8 %.fr104.i, 100
-  %i.dx = or disjoint i8 %3, 48
+  %3 = icmp ugt i8 %.fr104.i, 99
+  %4 = zext i1 %3 to i8
+  %5 = icmp ugt i8 %.fr104.i, -57
+  %6 = zext i1 %5 to i8
+  %7 = add nuw nsw i8 %4, %6
+  %i.dx = or disjoint i8 %7, 48
   store i8 %i.dx, ptr %i.j, align 1, !tbaa !20
   %i.dy = urem i8 %.fr104.i, 100
   %i.dz = udiv i8 %i.dy, 10
