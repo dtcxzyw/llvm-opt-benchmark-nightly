@@ -203,10 +203,9 @@ bb.s:                                             ; preds = %RSTRING_PTR.exit, %
   %i.by = load i64, ptr %i.z, align 8
   %i.bz = and i64 %i.by, 7168
   %.cmp.a = icmp samesign ugt i64 %i.bz, 4608
-  %3 = zext i1 %.cmp.a to i8
-  %4 = or disjoint i8 %3, 48
+  %3 = select i1 %.cmp.a, i8 49, i8 48
   %i.ca = getelementptr i8, ptr %.1, i64 2
-  store i8 %4, ptr %i.bx, align 1, !tbaa !53
+  store i8 %3, ptr %i.bx, align 1, !tbaa !53
   %i.cb = load i64, ptr %i.z, align 8
   %.fr = freeze i64 %i.cb
   %i.cc = trunc i64 %.fr to i32

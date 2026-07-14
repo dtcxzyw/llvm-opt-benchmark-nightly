@@ -201,8 +201,8 @@ bb.ad:                                            ; preds = %.preheader680.split
   br i1 %i.bk, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %5 = udiv i8 %i.bj, 100
-  %6 = or disjoint i8 %5, 48
+  %5 = icmp ugt i8 %i.bj, -57
+  %6 = select i1 %5, i8 50, i8 49
   store i8 %6, ptr %i.a, align 1, !tbaa !16
   %i.cq = urem i8 %i.bj, 100
   %i.cr = udiv i8 %i.cq, 10
@@ -297,8 +297,8 @@ bb.aq:                                            ; preds = %bb.ao
   br label %bb.as
 
 bb.ar:                                            ; preds = %bb.an
-  %7 = udiv i8 %i.dj, 100
-  %8 = or disjoint i8 %7, 48
+  %7 = icmp ugt i8 %i.dj, -57
+  %8 = select i1 %7, i8 50, i8 49
   store i8 %8, ptr %i.a, align 1, !tbaa !16
   %i.du = urem i8 %i.dj, 100
   %i.dv = udiv i8 %i.du, 10
@@ -358,8 +358,8 @@ bb.aw:                                            ; preds = %bb.au
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.at
-  %9 = udiv i8 %i.ei, 100
-  %10 = or disjoint i8 %9, 48
+  %9 = icmp ugt i8 %i.ei, -57
+  %10 = select i1 %9, i8 50, i8 49
   store i8 %10, ptr %i.a, align 1, !tbaa !16
   %i.et = urem i8 %i.ei, 100
   %i.eu = udiv i8 %i.et, 10
@@ -419,8 +419,8 @@ bb.bc:                                            ; preds = %bb.ba
   br label %.thread599.loopexit698
 
 bb.bd:                                            ; preds = %bb.az
-  %11 = udiv i8 %i.fh, 100
-  %12 = or disjoint i8 %11, 48
+  %11 = icmp ugt i8 %i.fh, -57
+  %12 = select i1 %11, i8 50, i8 49
   store i8 %12, ptr %i.a, align 1, !tbaa !16
   %i.fs = urem i8 %i.fh, 100
   %i.ft = udiv i8 %i.fs, 10
@@ -823,7 +823,7 @@ bb.ac:                                            ; preds = %.thread589, %bb.ab,
   br i1 %.not512, label %bb.be, label %.preheader690
 
 .preheader690:                                    ; preds = %bb.ac
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 4 uses
   br i1 %i.c, label %.preheader690.split.us, label %.preheader690.split.preheader
 
 .preheader690.split.preheader:                    ; preds = %.preheader690
@@ -876,18 +876,17 @@ bb.ad:                                            ; preds = %.preheader690.split
   br i1 %i.bq, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
+  %5 = icmp ugt i8 %i.bp, -57
+  %6 = select i1 %5, i32 50, i32 49
+  store i32 %6, ptr %i.a, align 16, !tbaa !3
   %i.cw = urem i8 %i.bp, 100
   %i.cx = udiv i8 %i.cw, 10
-  %5 = udiv i8 %i.bp, 100
-  %i.cy = insertelement <2 x i8> poison, i8 %5, i64 0
-  %i.cz = insertelement <2 x i8> %i.cy, i8 %i.cx, i64 1
+  %7 = urem i8 %i.bp, 10
+  %i.cy = insertelement <2 x i8> poison, i8 %i.cx, i64 0
+  %i.cz = insertelement <2 x i8> %i.cy, i8 %7, i64 1
   %i.da = or disjoint <2 x i8> %i.cz, splat (i8 48)
   %i.db = zext nneg <2 x i8> %i.da to <2 x i32>
-  store <2 x i32> %i.db, ptr %i.a, align 16, !tbaa !3
-  %6 = urem i8 %i.bp, 10
-  %7 = or disjoint i8 %6, 48
-  %8 = zext nneg i8 %7 to i32
-  store i32 %8, ptr %i.bo, align 8, !tbaa !3
+  store <2 x i32> %i.db, ptr %i.bo, align 4, !tbaa !3
   br label %bb.ak
 
 bb.af:                                            ; preds = %bb.ad
@@ -979,18 +978,17 @@ bb.aq:                                            ; preds = %bb.ao
   br label %bb.as
 
 bb.ar:                                            ; preds = %bb.an
+  %8 = icmp ugt i8 %i.du, -57
+  %9 = select i1 %8, i32 50, i32 49
+  store i32 %9, ptr %i.a, align 16, !tbaa !3
   %i.ei = urem i8 %i.du, 100
   %i.ej = udiv i8 %i.ei, 10
-  %9 = udiv i8 %i.du, 100
-  %i.ek = insertelement <2 x i8> poison, i8 %9, i64 0
-  %i.el = insertelement <2 x i8> %i.ek, i8 %i.ej, i64 1
+  %10 = urem i8 %i.du, 10
+  %i.ek = insertelement <2 x i8> poison, i8 %i.ej, i64 0
+  %i.el = insertelement <2 x i8> %i.ek, i8 %10, i64 1
   %i.em = or disjoint <2 x i8> %i.el, splat (i8 48)
   %i.en = zext nneg <2 x i8> %i.em to <2 x i32>
-  store <2 x i32> %i.en, ptr %i.a, align 16, !tbaa !3
-  %10 = urem i8 %i.du, 10
-  %11 = or disjoint i8 %10, 48
-  %12 = zext nneg i8 %11 to i32
-  store i32 %12, ptr %i.bo, align 8, !tbaa !3
+  store <2 x i32> %i.en, ptr %i.bo, align 4, !tbaa !3
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ap, %bb.aq, %bb.ar
@@ -1045,18 +1043,17 @@ bb.aw:                                            ; preds = %bb.au
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.at
+  %11 = icmp ugt i8 %i.ey, -57
+  %12 = select i1 %11, i32 50, i32 49
+  store i32 %12, ptr %i.a, align 16, !tbaa !3
   %i.fm = urem i8 %i.ey, 100
   %i.fn = udiv i8 %i.fm, 10
-  %13 = udiv i8 %i.ey, 100
-  %i.fo = insertelement <2 x i8> poison, i8 %13, i64 0
-  %i.fp = insertelement <2 x i8> %i.fo, i8 %i.fn, i64 1
+  %13 = urem i8 %i.ey, 10
+  %i.fo = insertelement <2 x i8> poison, i8 %i.fn, i64 0
+  %i.fp = insertelement <2 x i8> %i.fo, i8 %13, i64 1
   %i.fq = or disjoint <2 x i8> %i.fp, splat (i8 48)
   %i.fr = zext nneg <2 x i8> %i.fq to <2 x i32>
-  store <2 x i32> %i.fr, ptr %i.a, align 16, !tbaa !3
-  %14 = urem i8 %i.ey, 10
-  %15 = or disjoint i8 %14, 48
-  %16 = zext nneg i8 %15 to i32
-  store i32 %16, ptr %i.bo, align 8, !tbaa !3
+  store <2 x i32> %i.fr, ptr %i.bo, align 4, !tbaa !3
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.av, %bb.aw, %bb.ax
@@ -1111,18 +1108,17 @@ bb.bc:                                            ; preds = %bb.ba
   br label %.thread599.loopexit708
 
 bb.bd:                                            ; preds = %bb.az
+  %14 = icmp ugt i8 %i.gc, -57
+  %15 = select i1 %14, i32 50, i32 49
+  store i32 %15, ptr %i.a, align 16, !tbaa !3
   %i.gq = urem i8 %i.gc, 100
   %i.gr = udiv i8 %i.gq, 10
-  %17 = udiv i8 %i.gc, 100
-  %i.gs = insertelement <2 x i8> poison, i8 %17, i64 0
-  %i.gt = insertelement <2 x i8> %i.gs, i8 %i.gr, i64 1
+  %16 = urem i8 %i.gc, 10
+  %i.gs = insertelement <2 x i8> poison, i8 %i.gr, i64 0
+  %i.gt = insertelement <2 x i8> %i.gs, i8 %16, i64 1
   %i.gu = or disjoint <2 x i8> %i.gt, splat (i8 48)
   %i.gv = zext nneg <2 x i8> %i.gu to <2 x i32>
-  store <2 x i32> %i.gv, ptr %i.a, align 16, !tbaa !3
-  %18 = urem i8 %i.gc, 10
-  %19 = or disjoint i8 %18, 48
-  %20 = zext nneg i8 %19 to i32
-  store i32 %20, ptr %i.bo, align 8, !tbaa !3
+  store <2 x i32> %i.gv, ptr %i.bo, align 4, !tbaa !3
   br label %.thread599.loopexit708
 
 .thread599.loopexit708:                           ; preds = %bb.bb, %bb.bc, %bb.bd
