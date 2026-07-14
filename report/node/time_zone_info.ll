@@ -1,8 +1,8 @@
 inline.NumInlined: 1273
 inline.NumDeleted: 541
-loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumUnrolled: 8
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -155,7 +155,6 @@ $_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_ = comdat 
 @.str.23 = private unnamed_addr constant [39 x i8] c"/apex/com.android.tzdata/etc/tz/tzdata\00", align 1
 @.str.24 = private unnamed_addr constant [35 x i8] c"/data/misc/zoneinfo/current/tzdata\00", align 1
 @.str.25 = private unnamed_addr constant [34 x i8] c"/system/usr/share/zoneinfo/tzdata\00", align 1
-@constinit.26 = private unnamed_addr constant [3 x ptr] [ptr @.str.23, ptr @.str.24, ptr @.str.25], align 8
 @.str.28 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.29 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 @_ZTVN4absl13time_internal4cctz12_GLOBAL__N_121AndroidZoneInfoSourceE = internal unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN4absl13time_internal4cctz12_GLOBAL__N_121AndroidZoneInfoSourceD2Ev, ptr @_ZN4absl13time_internal4cctz12_GLOBAL__N_121AndroidZoneInfoSourceD0Ev, ptr @_ZN4absl13time_internal4cctz12_GLOBAL__N_118FileZoneInfoSource4ReadEPvm, ptr @_ZN4absl13time_internal4cctz12_GLOBAL__N_118FileZoneInfoSource4SkipEm, ptr @_ZNK4absl13time_internal4cctz12_GLOBAL__N_121AndroidZoneInfoSource7VersionB5cxx11Ev] }, align 8
@@ -558,31 +557,18 @@ bb.r:                                             ; preds = %bb.q
   br label %.lr.ph221
 
 .lr.ph:                                           ; preds = %bb.r, %bb.w
-  %.0114216 = phi ptr [ %i.fd, %bb.w ], [ %i.et, %bb.r ] ; 6 uses
+  %.0114216 = phi ptr [ %i.fd, %bb.w ], [ %i.et, %bb.r ] ; 4 uses
   %.0120215 = phi i64 [ %i.fk, %bb.w ], [ 0, %bb.r ] ; 4 uses
   br i1 %.not135, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph
-  %12 = getelementptr inbounds nuw i8, ptr %.0114216, i64 1
-  %.07.val.i = load i8, ptr %.0114216, align 1    ; 2 uses
-  %13 = zext i8 %.07.val.i to i64
-  %14 = getelementptr inbounds nuw i8, ptr %.0114216, i64 2
-  %.07.val.1.i = load i8, ptr %12, align 1
-  %15 = zext i8 %.07.val.1.i to i64
-  %16 = getelementptr inbounds nuw i8, ptr %.0114216, i64 3
-  %.07.val.2.i = load i8, ptr %14, align 1
-  %17 = zext i8 %.07.val.2.i to i64
-  %18 = shl nuw nsw i64 %13, 24
-  %19 = shl nuw nsw i64 %15, 16
-  %20 = shl nuw nsw i64 %17, 8
-  %.07.val.3.i = load i8, ptr %16, align 1
-  %i.ew = zext i8 %.07.val.3.i to i64
-  %21 = or disjoint i64 %19, %18
-  %22 = or disjoint i64 %21, %20
-  %23 = or disjoint i64 %22, %i.ew                ; 2 uses
-  %i.ex = or disjoint i64 %23, -4294967296
+  %.07.val.i = load i8, ptr %.0114216, align 1
+  %12 = load i32, ptr %.0114216, align 1
+  %13 = call i32 @llvm.bswap.i32(i32 %12)
+  %i.ew = zext i32 %13 to i64                     ; 2 uses
+  %i.ex = or disjoint i64 %i.ew, -4294967296
   %i.ey = icmp slt i8 %.07.val.i, 0
-  %.0.i173 = select i1 %i.ey, i64 %i.ex, i64 %23
+  %.0.i173 = select i1 %i.ey, i64 %i.ex, i64 %i.ew
   br label %bb.u
 
 bb.t:                                             ; preds = %.lr.ph
@@ -985,8 +971,8 @@ bb.a:
   %7 = alloca %"class.std::basic_ifstream", align 8 ; 15 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %i.c = alloca [24 x i8], align 16               ; 16 uses
-  %i.d = alloca [52 x i8], align 16               ; 13 uses
+  %i.c = alloca [24 x i8], align 16               ; 20 uses
+  %i.d = alloca [52 x i8], align 16               ; 15 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !138)
@@ -1314,37 +1300,19 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i23.i.i.i: ; preds = %_ZNSt1
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i17.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i17.i.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i23.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i14.i.i.i
-  %.0.i.i18.i.i.i = phi i64 [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i14.i.i.i ], [ %i.cf, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i23.i.i.i ]
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.c, i64 11
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.c, i64 12
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 13
-  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 14
-  %14 = getelementptr inbounds nuw i8, ptr %i.c, i64 15
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %15 = getelementptr inbounds nuw i8, ptr %i.c, i64 17
-  %16 = getelementptr inbounds nuw i8, ptr %i.c, i64 18
-  %17 = getelementptr inbounds nuw i8, ptr %i.c, i64 19
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 41
-  %19 = getelementptr inbounds nuw i8, ptr %i.d, i64 42
-  %20 = getelementptr inbounds nuw i8, ptr %i.d, i64 43
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.d, i64 44
-  %21 = getelementptr inbounds nuw i8, ptr %i.d, i64 45
-  %22 = getelementptr inbounds nuw i8, ptr %i.d, i64 46
-  %23 = getelementptr inbounds nuw i8, ptr %i.d, i64 47
-  br label %24
+  %.0.i.i18.i.i.i = phi i64 [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i14.i.i.i ], [ %i.cf, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i23.i.i.i ] ; 3 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.c, i64 11 ; 3 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 6 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 6 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 9 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.d, i64 44 ; 6 uses
+  %12 = call noalias ptr @fopen64(ptr noundef nonnull readonly @.str.23, ptr noundef nonnull @.str.20), !noalias !160 ; 7 uses
+  %.not.i50.i.i.i.i = icmp eq ptr %12, null
+  br i1 %.not.i50.i.i.i.i, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i, label %bb.ac
 
-24:                                               ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i17.i.i.i
-  %.0.idx132.i.i.i.i = phi i64 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i17.i.i.i ], [ %.0.add.i.i.i.i, %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a ] ; 2 uses
-  %.0.ptr.i.i.i.i = getelementptr inbounds nuw i8, ptr @constinit.26, i64 %.0.idx132.i.i.i.i
-  %25 = load ptr, ptr %.0.ptr.i.i.i.i, align 8, !noalias !159
-  %26 = call noalias ptr @fopen64(ptr noundef readonly %25, ptr noundef nonnull @.str.20), !noalias !160 ; 7 uses
-  %.not.i50.i.i.i.i = icmp eq ptr %26, null
-  br i1 %.not.i50.i.i.i.i, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a, label %bb.ac
-
-bb.ac:                                            ; preds = %24
+bb.ac:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i17.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24, !noalias !159
-  %i.cl = call i64 @fread(ptr noundef nonnull %i.c, i64 noundef 1, i64 noundef 24, ptr noundef nonnull %26), !noalias !159
+  %i.cl = call i64 @fread(ptr noundef nonnull %i.c, i64 noundef 1, i64 noundef 24, ptr noundef nonnull %12), !noalias !159
   %.not43.i.i.i.i = icmp eq i64 %i.cl, 24
   br i1 %.not43.i.i.i.i, label %bb.ad, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i
 
@@ -1363,52 +1331,32 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   %i.cv = load i8, ptr %i.cg, align 1, !noalias !159
-  %.07.val.i.i.i.i.i = load i8, ptr %i.ch, align 4, !noalias !159 ; 2 uses
-  %27 = zext i8 %.07.val.i.i.i.i.i to i64
-  %.07.val.1.i.i.i.i.i = load i8, ptr %12, align 1, !noalias !159
-  %28 = zext i8 %.07.val.1.i.i.i.i.i to i64
-  %.07.val.2.i.i.i.i.i = load i8, ptr %13, align 2, !noalias !159
-  %29 = zext i8 %.07.val.2.i.i.i.i.i to i64
-  %30 = shl nuw nsw i64 %27, 24
-  %31 = shl nuw nsw i64 %28, 16
-  %32 = shl nuw nsw i64 %29, 8
-  %.07.val.3.i.i.i.i.i = load i8, ptr %14, align 1, !noalias !159
-  %i.cw = zext i8 %.07.val.3.i.i.i.i.i to i64
-  %33 = or disjoint i64 %31, %30
-  %34 = or disjoint i64 %33, %32
-  %35 = or disjoint i64 %34, %i.cw                ; 4 uses
-  %i.cx = or disjoint i64 %35, -4294967296
+  %.07.val.i.i.i.i.i = load i8, ptr %i.ch, align 4, !noalias !159
+  %13 = load i32, ptr %i.ch, align 4, !noalias !159
+  %14 = call i32 @llvm.bswap.i32(i32 %13)
+  %i.cw = zext i32 %14 to i64                     ; 4 uses
+  %i.cx = or disjoint i64 %i.cw, -4294967296
   %i.cy = icmp slt i8 %.07.val.i.i.i.i.i, 0       ; 2 uses
-  %.0.i51.i.i.i.i = select i1 %i.cy, i64 %i.cx, i64 %35
-  %.07.val.i52.i.i.i.i = load i8, ptr %i.ci, align 16, !noalias !159 ; 2 uses
-  %36 = zext i8 %.07.val.i52.i.i.i.i to i64
-  %.07.val.1.i53.i.i.i.i = load i8, ptr %15, align 1, !noalias !159
-  %37 = zext i8 %.07.val.1.i53.i.i.i.i to i64
-  %.07.val.2.i54.i.i.i.i = load i8, ptr %16, align 2, !noalias !159
-  %38 = zext i8 %.07.val.2.i54.i.i.i.i to i64
-  %39 = shl nuw nsw i64 %36, 24
-  %40 = shl nuw nsw i64 %37, 16
-  %41 = shl nuw nsw i64 %38, 8
-  %.07.val.3.i55.i.i.i.i = load i8, ptr %17, align 1, !noalias !159
-  %i.cz = zext i8 %.07.val.3.i55.i.i.i.i to i64
-  %42 = or disjoint i64 %40, %39
-  %43 = or disjoint i64 %42, %41
-  %44 = or disjoint i64 %43, %i.cz                ; 2 uses
-  %i.da = or disjoint i64 %44, -4294967296
+  %.0.i51.i.i.i.i = select i1 %i.cy, i64 %i.cx, i64 %i.cw
+  %.07.val.i52.i.i.i.i = load i8, ptr %i.ci, align 16, !noalias !159
+  %15 = load i32, ptr %i.ci, align 16, !noalias !159
+  %16 = call i32 @llvm.bswap.i32(i32 %15)
+  %i.cz = zext i32 %16 to i64                     ; 2 uses
+  %i.da = or disjoint i64 %i.cz, -4294967296
   %i.db = icmp slt i8 %.07.val.i52.i.i.i.i, 0
-  %.0.i56.i.i.i.i = select i1 %i.db, i64 %i.da, i64 %44 ; 3 uses
+  %.0.i56.i.i.i.i = select i1 %i.db, i64 %i.da, i64 %i.cz ; 3 uses
   %i.dc = icmp slt i64 %.0.i56.i.i.i.i, %.0.i51.i.i.i.i
   %or.cond.i.i.i.i = or i1 %i.cy, %i.dc
   br i1 %or.cond.i.i.i.i, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.dd = call i32 @fseek(ptr noundef nonnull %26, i64 noundef %35, i32 noundef 0), !noalias !159
+  %i.dd = call i32 @fseek(ptr noundef nonnull %12, i64 noundef %i.cw, i32 noundef 0), !noalias !159
   %.not45.i.i.i.i = icmp eq i32 %i.dd, 0
   br i1 %.not45.i.i.i.i, label %bb.ag, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i
 
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24, !noalias !159
-  %i.de = sub nsw i64 %.0.i56.i.i.i.i, %35        ; 3 uses
+  %i.de = sub nsw i64 %.0.i56.i.i.i.i, %i.cw      ; 3 uses
   %i.df = udiv i64 %i.de, 52                      ; 2 uses
   %i.dg = mul nuw i64 %i.df, 52
   %.not46.i.i.i.i = icmp ne i64 %i.dg, %i.de
@@ -1423,46 +1371,26 @@ bb.ah:                                            ; preds = %bb.aj
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.ag, %bb.ah
   %.038126.i.i.i.i = phi i64 [ %i.dh, %bb.ah ], [ 0, %bb.ag ]
-  %i.di = call i64 @fread(ptr noundef nonnull %i.d, i64 noundef 1, i64 noundef 52, ptr noundef nonnull %26), !noalias !159
+  %i.di = call i64 @fread(ptr noundef nonnull %i.d, i64 noundef 1, i64 noundef 52, ptr noundef nonnull %12), !noalias !159
   %.not48.i.i.i.i = icmp eq i64 %i.di, 52
   br i1 %.not48.i.i.i.i, label %bb.ai, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i
 
 bb.ai:                                            ; preds = %.lr.ph.i.i.i.i
-  %.07.val.i57.i.i.i.i = load i8, ptr %i.cj, align 8, !noalias !159 ; 2 uses
-  %45 = zext i8 %.07.val.i57.i.i.i.i to i64
-  %.07.val.1.i58.i.i.i.i = load i8, ptr %18, align 1, !noalias !159
-  %46 = zext i8 %.07.val.1.i58.i.i.i.i to i64
-  %.07.val.2.i59.i.i.i.i = load i8, ptr %19, align 2, !noalias !159
-  %47 = zext i8 %.07.val.2.i59.i.i.i.i to i64
-  %48 = shl nuw nsw i64 %45, 24
-  %49 = shl nuw nsw i64 %46, 16
-  %50 = shl nuw nsw i64 %47, 8
-  %.07.val.3.i60.i.i.i.i = load i8, ptr %20, align 1, !noalias !159
-  %i.dj = zext i8 %.07.val.3.i60.i.i.i.i to i64
-  %51 = or disjoint i64 %49, %48
-  %52 = or disjoint i64 %51, %50
-  %53 = or disjoint i64 %52, %i.dj                ; 2 uses
-  %i.dk = or disjoint i64 %53, -4294967296
+  %.07.val.i57.i.i.i.i = load i8, ptr %i.cj, align 8, !noalias !159
+  %17 = load i32, ptr %i.cj, align 8, !noalias !159
+  %18 = call i32 @llvm.bswap.i32(i32 %17)
+  %i.dj = zext i32 %18 to i64                     ; 2 uses
+  %i.dk = or disjoint i64 %i.dj, -4294967296
   %i.dl = icmp slt i8 %.07.val.i57.i.i.i.i, 0
-  %.0.i61.i.i.i.i = select i1 %i.dl, i64 %i.dk, i64 %53
+  %.0.i61.i.i.i.i = select i1 %i.dl, i64 %i.dk, i64 %i.dj
   %i.dm = add nsw i64 %.0.i61.i.i.i.i, %.0.i56.i.i.i.i ; 2 uses
-  %.07.val.i62.i.i.i.i = load i8, ptr %i.ck, align 4, !noalias !159 ; 2 uses
-  %54 = zext i8 %.07.val.i62.i.i.i.i to i64
-  %.07.val.1.i63.i.i.i.i = load i8, ptr %21, align 1, !noalias !159
-  %55 = zext i8 %.07.val.1.i63.i.i.i.i to i64
-  %.07.val.2.i64.i.i.i.i = load i8, ptr %22, align 2, !noalias !159
-  %56 = zext i8 %.07.val.2.i64.i.i.i.i to i64
-  %57 = shl nuw nsw i64 %54, 24
-  %58 = shl nuw nsw i64 %55, 16
-  %59 = shl nuw nsw i64 %56, 8
-  %.07.val.3.i65.i.i.i.i = load i8, ptr %23, align 1, !noalias !159
-  %i.dn = zext i8 %.07.val.3.i65.i.i.i.i to i64
-  %60 = or disjoint i64 %58, %57
-  %61 = or disjoint i64 %60, %59
-  %62 = or disjoint i64 %61, %i.dn                ; 2 uses
-  %i.do = or disjoint i64 %62, -4294967296
+  %.07.val.i62.i.i.i.i = load i8, ptr %i.ck, align 4, !noalias !159
+  %19 = load i32, ptr %i.ck, align 4, !noalias !159
+  %20 = call i32 @llvm.bswap.i32(i32 %19)
+  %i.dn = zext i32 %20 to i64                     ; 2 uses
+  %i.do = or disjoint i64 %i.dn, -4294967296
   %i.dp = icmp slt i8 %.07.val.i62.i.i.i.i, 0
-  %.0.i66.i.i.i.i = select i1 %i.dp, i64 %i.do, i64 %62 ; 2 uses
+  %.0.i66.i.i.i.i = select i1 %i.dp, i64 %i.do, i64 %i.dn ; 2 uses
   %i.dq = or i64 %.0.i66.i.i.i.i, %i.dm
   %or.cond.not.i.i.i.i = icmp sgt i64 %i.dq, -1
   br i1 %or.cond.not.i.i.i.i, label %bb.aj, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i
@@ -1476,16 +1404,19 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.du, label %bb.ak, label %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.dv = call i32 @fseek(ptr noundef nonnull %26, i64 noundef %i.dm, i32 noundef 0), !noalias !159
+  %i.dv = call i32 @fseek(ptr noundef nonnull %12, i64 noundef %i.dm, i32 noundef 0), !noalias !159
   %.not49.i.i.i.i = icmp eq i32 %i.dv, 0
   br i1 %.not49.i.i.i.i, label %bb.al, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i
 
-bb.al:                                            ; preds = %bb.ak
-  %i.dw = icmp eq i8 %i.cv, 0
+bb.al:                                            ; preds = %126, %72, %bb.ak
+  %.lcssa100 = phi ptr [ %12, %bb.ak ], [ %21, %72 ], [ %75, %126 ]
+  %.lcssa99 = phi i8 [ %i.cv, %bb.ak ], [ %35, %72 ], [ %87, %126 ]
+  %.0.i66.i.i.i.i.lcssa.lcssa = phi i64 [ %.0.i66.i.i.i.i, %bb.ak ], [ %.0.i66.i.i.i.i.1, %72 ], [ %.0.i66.i.i.i.i.2, %126 ]
+  %i.dw = icmp eq i8 %.lcssa99, 0
   %i.dx = getelementptr inbounds nuw i8, ptr %i.c, i64 6
   %i.dy = select i1 %i.dw, ptr %i.dx, ptr @.str.28 ; 3 uses
   %i.dz = call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #26, !noalias !159 ; 8 uses
-  %i.ea = ptrtoint ptr %26 to i64
+  %i.ea = ptrtoint ptr %.lcssa100 to i64
   %i.eb = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 6 uses
   store ptr %i.eb, ptr %10, align 8, !noalias !159
   %i.ec = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.dy) #24, !noalias !159 ; 8 uses
@@ -1541,7 +1472,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit.i.i.i
   %i.en = getelementptr inbounds nuw i8, ptr %i.dz, i64 16
   store i64 %i.ea, ptr %i.en, align 8, !noalias !159
   %i.eo = getelementptr inbounds nuw i8, ptr %i.dz, i64 24
-  store i64 %.0.i66.i.i.i.i, ptr %i.eo, align 8, !noalias !159
+  store i64 %.0.i66.i.i.i.i.lcssa.lcssa, ptr %i.eo, align 8, !noalias !159
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN4absl13time_internal4cctz12_GLOBAL__N_121AndroidZoneInfoSourceE, i64 16), ptr %i.dz, align 8, !noalias !159
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dz, i64 32 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.dz, i64 48 ; 3 uses
@@ -1556,14 +1487,14 @@ bb.as:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.assume(i1 %i.eu)
   %i.ev = add nuw nsw i64 %i.et, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.eq, ptr noundef nonnull align 8 dereferenceable(1) %i.eb, i64 %i.ev, i1 false), !noalias !159
-  br label %bb.at
+  br label %129
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i21.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit.i.i.i.i
   store ptr %i.er, ptr %i.ep, align 8, !noalias !159
   %i.ew = load i64, ptr %i.eb, align 8, !noalias !159
   store i64 %i.ew, ptr %i.eq, align 8, !noalias !159
   %.pre.i22.i.i.i = load i64, ptr %i.ek, align 8, !noalias !159
-  br label %bb.at
+  br label %129
 
 _ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i: ; preds = %bb.ai, %.lr.ph.i.i.i.i, %bb.ah, %bb.ak, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #24, !noalias !159
@@ -1571,25 +1502,234 @@ _ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i: ; preds = %b
 
 _ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i: ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i, %bb.af, %bb.ae, %bb.ad, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24, !noalias !159
-  %i.ex = call noundef i32 @fclose(ptr noundef nonnull %26) #24, !noalias !159, !inline_history !164 ; 0 uses
-  br label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a
+  %i.ex = call noundef i32 @fclose(ptr noundef nonnull %12) #24, !noalias !159, !inline_history !164 ; 0 uses
+  br label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i
 
-_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a: ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i, %24
-  %.0.add.i.i.i.i = add nuw nsw i64 %.0.idx132.i.i.i.i, 8 ; 2 uses
-  %.not.i19.i.i.i = icmp eq i64 %.0.add.i.i.i.i, 24
-  br i1 %.not.i19.i.i.i, label %bb.au, label %24
+_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i: ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i17.i.i.i
+  %21 = call noalias ptr @fopen64(ptr noundef nonnull readonly @.str.24, ptr noundef nonnull @.str.20), !noalias !160 ; 7 uses
+  %.not.i50.i.i.i.i.1 = icmp eq ptr %21, null
+  br i1 %.not.i50.i.i.i.i.1, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.1, label %22
 
-bb.at:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i21.i.i.i, %bb.as
-  %63 = phi i64 [ %.pre.i22.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i21.i.i.i ], [ %i.et, %bb.as ]
-  %i.ey = getelementptr inbounds nuw i8, ptr %i.dz, i64 40
-  store i64 %63, ptr %i.ey, align 8, !noalias !159
-  store ptr %i.dz, ptr %0, align 8, !alias.scope !159
+22:                                               ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24, !noalias !159
+  %23 = call i64 @fread(ptr noundef nonnull %i.c, i64 noundef 1, i64 noundef 24, ptr noundef nonnull %21), !noalias !159
+  %.not43.i.i.i.i.1 = icmp eq i64 %23, 24
+  br i1 %.not43.i.i.i.i.1, label %24, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.1
+
+24:                                               ; preds = %22
+  %25 = load i32, ptr %i.c, align 16
+  %26 = xor i32 %25, 1633974900
+  %27 = getelementptr i8, ptr %i.c, i64 4
+  %28 = load i16, ptr %27, align 4
+  %29 = zext i16 %28 to i32
+  %30 = xor i32 %29, 24948
+  %31 = or i32 %26, %30
+  %32 = icmp ne i32 %31, 0
+  %33 = zext i1 %32 to i32
+  %.not44.i.i.i.i.1 = icmp eq i32 %33, 0
+  br i1 %.not44.i.i.i.i.1, label %34, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.1
+
+34:                                               ; preds = %24
+  %35 = load i8, ptr %i.cg, align 1, !noalias !159
+  %.07.val.i.i.i.i.i.1 = load i8, ptr %i.ch, align 4, !noalias !159
+  %36 = load i32, ptr %i.ch, align 4, !noalias !159
+  %37 = call i32 @llvm.bswap.i32(i32 %36)
+  %38 = zext i32 %37 to i64                       ; 4 uses
+  %39 = or disjoint i64 %38, -4294967296
+  %40 = icmp slt i8 %.07.val.i.i.i.i.i.1, 0       ; 2 uses
+  %.0.i51.i.i.i.i.1 = select i1 %40, i64 %39, i64 %38
+  %.07.val.i52.i.i.i.i.1 = load i8, ptr %i.ci, align 16, !noalias !159
+  %41 = load i32, ptr %i.ci, align 16, !noalias !159
+  %42 = call i32 @llvm.bswap.i32(i32 %41)
+  %43 = zext i32 %42 to i64                       ; 2 uses
+  %44 = or disjoint i64 %43, -4294967296
+  %45 = icmp slt i8 %.07.val.i52.i.i.i.i.1, 0
+  %.0.i56.i.i.i.i.1 = select i1 %45, i64 %44, i64 %43 ; 3 uses
+  %46 = icmp slt i64 %.0.i56.i.i.i.i.1, %.0.i51.i.i.i.i.1
+  %or.cond.i.i.i.i.1 = or i1 %40, %46
+  br i1 %or.cond.i.i.i.i.1, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.1, label %47
+
+47:                                               ; preds = %34
+  %48 = call i32 @fseek(ptr noundef nonnull %21, i64 noundef %38, i32 noundef 0), !noalias !159
+  %.not45.i.i.i.i.1 = icmp eq i32 %48, 0
+  br i1 %.not45.i.i.i.i.1, label %49, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.1
+
+49:                                               ; preds = %47
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24, !noalias !159
+  %50 = sub nsw i64 %.0.i56.i.i.i.i.1, %38        ; 3 uses
+  %51 = udiv i64 %50, 52                          ; 2 uses
+  %52 = mul nuw i64 %51, 52
+  %.not46.i.i.i.i.1 = icmp ne i64 %52, %50
+  %.not47125.i.i.i.i.1 = icmp ult i64 %50, 52
+  %or.cond146.i.i.i.i.1 = or i1 %.not47125.i.i.i.i.1, %.not46.i.i.i.i.1
+  br i1 %or.cond146.i.i.i.i.1, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.1, label %.lr.ph.i.i.i.i.1
+
+.lr.ph.i.i.i.i.1:                                 ; preds = %49, %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a
+  %.038126.i.i.i.i.1 = phi i64 [ %.0.add.i.i.i.i, %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a ], [ 0, %49 ]
+  %53 = call i64 @fread(ptr noundef nonnull %i.d, i64 noundef 1, i64 noundef 52, ptr noundef nonnull %21), !noalias !159
+  %.not48.i.i.i.i.1 = icmp eq i64 %53, 52
+  br i1 %.not48.i.i.i.i.1, label %54, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.1
+
+54:                                               ; preds = %.lr.ph.i.i.i.i.1
+  %.07.val.i57.i.i.i.i.1 = load i8, ptr %i.cj, align 8, !noalias !159
+  %55 = load i32, ptr %i.cj, align 8, !noalias !159
+  %56 = call i32 @llvm.bswap.i32(i32 %55)
+  %57 = zext i32 %56 to i64                       ; 2 uses
+  %58 = or disjoint i64 %57, -4294967296
+  %59 = icmp slt i8 %.07.val.i57.i.i.i.i.1, 0
+  %.0.i61.i.i.i.i.1 = select i1 %59, i64 %58, i64 %57
+  %60 = add nsw i64 %.0.i61.i.i.i.i.1, %.0.i56.i.i.i.i.1 ; 2 uses
+  %.07.val.i62.i.i.i.i.1 = load i8, ptr %i.ck, align 4, !noalias !159
+  %61 = load i32, ptr %i.ck, align 4, !noalias !159
+  %62 = call i32 @llvm.bswap.i32(i32 %61)
+  %63 = zext i32 %62 to i64                       ; 2 uses
+  %64 = or disjoint i64 %63, -4294967296
+  %65 = icmp slt i8 %.07.val.i62.i.i.i.i.1, 0
+  %.0.i66.i.i.i.i.1 = select i1 %65, i64 %64, i64 %63 ; 2 uses
+  %66 = or i64 %.0.i66.i.i.i.i.1, %60
+  %or.cond.not.i.i.i.i.1 = icmp sgt i64 %66, -1
+  br i1 %or.cond.not.i.i.i.i.1, label %67, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.1
+
+67:                                               ; preds = %54
+  store i8 0, ptr %i.cj, align 8, !noalias !159
+  %68 = load ptr, ptr %2, align 8, !noalias !159
+  %69 = getelementptr inbounds nuw i8, ptr %68, i64 %.0.i.i18.i.i.i
+  %70 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %69, ptr noundef nonnull dereferenceable(1) %i.d) #29, !noalias !159
+  %71 = icmp eq i32 %70, 0
+  br i1 %71, label %72, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a
+
+_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a: ; preds = %67
+  %.0.add.i.i.i.i = add i64 %.038126.i.i.i.i.1, 1 ; 2 uses
+  %.not.i19.i.i.i = icmp eq i64 %.0.add.i.i.i.i, %51
+  br i1 %.not.i19.i.i.i, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.1, label %.lr.ph.i.i.i.i.1, !llvm.loop !163
+
+72:                                               ; preds = %67
+  %73 = call i32 @fseek(ptr noundef nonnull %21, i64 noundef %60, i32 noundef 0), !noalias !159
+  %.not49.i.i.i.i.1 = icmp eq i32 %73, 0
+  br i1 %.not49.i.i.i.i.1, label %bb.al, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.1
+
+_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.1: ; preds = %.lr.ph.i.i.i.i.1, %54, %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a, %72, %49
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #24, !noalias !159
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24, !noalias !159
-  call void @llvm.lifetime.end.p0(ptr nonnull %10), !noalias !158
-  br label %"_ZSt10__invoke_rISt10unique_ptrIN4absl13time_internal4cctz14ZoneInfoSourceESt14default_deleteIS4_EERZNS3_12TimeZoneInfo4LoadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0JSG_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit"
+  br label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.1
 
-bb.au:                                            ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.a
+_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.1: ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.1, %47, %34, %24, %22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24, !noalias !159
+  %74 = call noundef i32 @fclose(ptr noundef nonnull %21) #24, !noalias !159, !inline_history !164 ; 0 uses
+  br label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.1
+
+_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.1: ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.1, %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i
+  %75 = call noalias ptr @fopen64(ptr noundef nonnull readonly @.str.25, ptr noundef nonnull @.str.20), !noalias !160 ; 7 uses
+  %.not.i50.i.i.i.i.2 = icmp eq ptr %75, null
+  br i1 %.not.i50.i.i.i.i.2, label %bb.au, label %76
+
+76:                                               ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.1
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24, !noalias !159
+  %77 = call i64 @fread(ptr noundef nonnull %i.c, i64 noundef 1, i64 noundef 24, ptr noundef nonnull %75), !noalias !159
+  %.not43.i.i.i.i.2 = icmp eq i64 %77, 24
+  br i1 %.not43.i.i.i.i.2, label %bb.at, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.2
+
+bb.at:                                            ; preds = %76
+  %78 = load i32, ptr %i.c, align 16
+  %79 = xor i32 %78, 1633974900
+  %i.ey = getelementptr i8, ptr %i.c, i64 4
+  %80 = load i16, ptr %i.ey, align 4
+  %81 = zext i16 %80 to i32
+  %82 = xor i32 %81, 24948
+  %83 = or i32 %79, %82
+  %84 = icmp ne i32 %83, 0
+  %85 = zext i1 %84 to i32
+  %.not44.i.i.i.i.2 = icmp eq i32 %85, 0
+  br i1 %.not44.i.i.i.i.2, label %86, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.2
+
+86:                                               ; preds = %bb.at
+  %87 = load i8, ptr %i.cg, align 1, !noalias !159
+  %.07.val.i.i.i.i.i.2 = load i8, ptr %i.ch, align 4, !noalias !159
+  %88 = load i32, ptr %i.ch, align 4, !noalias !159
+  %89 = call i32 @llvm.bswap.i32(i32 %88)
+  %90 = zext i32 %89 to i64                       ; 4 uses
+  %91 = or disjoint i64 %90, -4294967296
+  %92 = icmp slt i8 %.07.val.i.i.i.i.i.2, 0       ; 2 uses
+  %.0.i51.i.i.i.i.2 = select i1 %92, i64 %91, i64 %90
+  %.07.val.i52.i.i.i.i.2 = load i8, ptr %i.ci, align 16, !noalias !159
+  %93 = load i32, ptr %i.ci, align 16, !noalias !159
+  %94 = call i32 @llvm.bswap.i32(i32 %93)
+  %95 = zext i32 %94 to i64                       ; 2 uses
+  %96 = or disjoint i64 %95, -4294967296
+  %97 = icmp slt i8 %.07.val.i52.i.i.i.i.2, 0
+  %.0.i56.i.i.i.i.2 = select i1 %97, i64 %96, i64 %95 ; 3 uses
+  %98 = icmp slt i64 %.0.i56.i.i.i.i.2, %.0.i51.i.i.i.i.2
+  %or.cond.i.i.i.i.2 = or i1 %92, %98
+  br i1 %or.cond.i.i.i.i.2, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.2, label %99
+
+99:                                               ; preds = %86
+  %100 = call i32 @fseek(ptr noundef nonnull %75, i64 noundef %90, i32 noundef 0), !noalias !159
+  %.not45.i.i.i.i.2 = icmp eq i32 %100, 0
+  br i1 %.not45.i.i.i.i.2, label %101, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.2
+
+101:                                              ; preds = %99
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24, !noalias !159
+  %102 = sub nsw i64 %.0.i56.i.i.i.i.2, %90       ; 3 uses
+  %103 = udiv i64 %102, 52                        ; 2 uses
+  %104 = mul nuw i64 %103, 52
+  %.not46.i.i.i.i.2 = icmp ne i64 %104, %102
+  %.not47125.i.i.i.i.2 = icmp ult i64 %102, 52
+  %or.cond146.i.i.i.i.2 = or i1 %.not47125.i.i.i.i.2, %.not46.i.i.i.i.2
+  br i1 %or.cond146.i.i.i.i.2, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.2, label %.lr.ph.i.i.i.i.2
+
+.lr.ph.i.i.i.i.2:                                 ; preds = %101, %124
+  %.038126.i.i.i.i.2 = phi i64 [ %125, %124 ], [ 0, %101 ]
+  %105 = call i64 @fread(ptr noundef nonnull %i.d, i64 noundef 1, i64 noundef 52, ptr noundef nonnull %75), !noalias !159
+  %.not48.i.i.i.i.2 = icmp eq i64 %105, 52
+  br i1 %.not48.i.i.i.i.2, label %106, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.2
+
+106:                                              ; preds = %.lr.ph.i.i.i.i.2
+  %.07.val.i57.i.i.i.i.2 = load i8, ptr %i.cj, align 8, !noalias !159
+  %107 = load i32, ptr %i.cj, align 8, !noalias !159
+  %108 = call i32 @llvm.bswap.i32(i32 %107)
+  %109 = zext i32 %108 to i64                     ; 2 uses
+  %110 = or disjoint i64 %109, -4294967296
+  %111 = icmp slt i8 %.07.val.i57.i.i.i.i.2, 0
+  %.0.i61.i.i.i.i.2 = select i1 %111, i64 %110, i64 %109
+  %112 = add nsw i64 %.0.i61.i.i.i.i.2, %.0.i56.i.i.i.i.2 ; 2 uses
+  %.07.val.i62.i.i.i.i.2 = load i8, ptr %i.ck, align 4, !noalias !159
+  %113 = load i32, ptr %i.ck, align 4, !noalias !159
+  %114 = call i32 @llvm.bswap.i32(i32 %113)
+  %115 = zext i32 %114 to i64                     ; 2 uses
+  %116 = or disjoint i64 %115, -4294967296
+  %117 = icmp slt i8 %.07.val.i62.i.i.i.i.2, 0
+  %.0.i66.i.i.i.i.2 = select i1 %117, i64 %116, i64 %115 ; 2 uses
+  %118 = or i64 %.0.i66.i.i.i.i.2, %112
+  %or.cond.not.i.i.i.i.2 = icmp sgt i64 %118, -1
+  br i1 %or.cond.not.i.i.i.i.2, label %119, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.2
+
+119:                                              ; preds = %106
+  store i8 0, ptr %i.cj, align 8, !noalias !159
+  %120 = load ptr, ptr %2, align 8, !noalias !159
+  %121 = getelementptr inbounds nuw i8, ptr %120, i64 %.0.i.i18.i.i.i
+  %122 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %121, ptr noundef nonnull dereferenceable(1) %i.d) #29, !noalias !159
+  %123 = icmp eq i32 %122, 0
+  br i1 %123, label %126, label %124
+
+124:                                              ; preds = %119
+  %125 = add i64 %.038126.i.i.i.i.2, 1            ; 2 uses
+  %.not47.i.i.i.i.2 = icmp eq i64 %125, %103
+  br i1 %.not47.i.i.i.i.2, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.2, label %.lr.ph.i.i.i.i.2, !llvm.loop !163
+
+126:                                              ; preds = %119
+  %127 = call i32 @fseek(ptr noundef nonnull %75, i64 noundef %112, i32 noundef 0), !noalias !159
+  %.not49.i.i.i.i.2 = icmp eq i32 %127, 0
+  br i1 %.not49.i.i.i.i.2, label %bb.al, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.2
+
+_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.2: ; preds = %.lr.ph.i.i.i.i.2, %106, %124, %126, %101
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #24, !noalias !159
+  br label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.2
+
+_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.2: ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.sink.split.i.i.i.i.2, %99, %86, %bb.at, %76
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24, !noalias !159
+  %128 = call noundef i32 @fclose(ptr noundef nonnull %75) #24, !noalias !159, !inline_history !164 ; 0 uses
+  br label %bb.au
+
+bb.au:                                            ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.i.i.i.i.2, %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit70.thread.i.i.i.i.1
   store ptr null, ptr %0, align 8, !alias.scope !159
   call void @llvm.lifetime.end.p0(ptr nonnull %10), !noalias !158
   call void @llvm.experimental.noalias.scope.decl(metadata !165)
@@ -1597,6 +1737,16 @@ bb.au:                                            ; preds = %_ZNSt10unique_ptrI8
   %i.ez = load i64, ptr %i.e, align 8, !noalias !168 ; 4 uses
   %i.fa = icmp eq i64 %i.ez, 0
   br i1 %i.fa, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i47.i.i.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i28.i.i.i
+
+129:                                              ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i21.i.i.i, %bb.as
+  %130 = phi i64 [ %.pre.i22.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i21.i.i.i ], [ %i.et, %bb.as ]
+  %131 = getelementptr inbounds nuw i8, ptr %i.dz, i64 40
+  store i64 %130, ptr %131, align 8, !noalias !159
+  store ptr %i.dz, ptr %0, align 8, !alias.scope !159
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #24, !noalias !159
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24, !noalias !159
+  call void @llvm.lifetime.end.p0(ptr nonnull %10), !noalias !158
+  br label %"_ZSt10__invoke_rISt10unique_ptrIN4absl13time_internal4cctz14ZoneInfoSourceESt14default_deleteIS4_EERZNS3_12TimeZoneInfo4LoadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0JSG_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit"
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i28.i.i.i: ; preds = %bb.au
   %spec.select.i.i.i29.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.ez, i64 5)
@@ -2000,7 +2150,7 @@ bb.cg:                                            ; preds = %_ZNKSt7__cxx1112bas
   store ptr null, ptr %0, align 8, !alias.scope !158
   br label %"_ZSt10__invoke_rISt10unique_ptrIN4absl13time_internal4cctz14ZoneInfoSourceESt14default_deleteIS4_EERZNS3_12TimeZoneInfo4LoadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0JSG_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit"
 
-"_ZSt10__invoke_rISt10unique_ptrIN4absl13time_internal4cctz14ZoneInfoSourceESt14default_deleteIS4_EERZNS3_12TimeZoneInfo4LoadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0JSG_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit": ; preds = %_ZN4absl13time_internal4cctz12_GLOBAL__N_118FileZoneInfoSource4OpenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i.i, %bb.at, %_ZN4absl13time_internal4cctz12_GLOBAL__N_121FuchsiaZoneInfoSource4OpenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i.i, %bb.cg
+"_ZSt10__invoke_rISt10unique_ptrIN4absl13time_internal4cctz14ZoneInfoSourceESt14default_deleteIS4_EERZNS3_12TimeZoneInfo4LoadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0JSG_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit": ; preds = %_ZN4absl13time_internal4cctz12_GLOBAL__N_118FileZoneInfoSource4OpenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i.i, %129, %_ZN4absl13time_internal4cctz12_GLOBAL__N_121FuchsiaZoneInfoSource4OpenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i.i, %bb.cg
   ret void
 }
 
