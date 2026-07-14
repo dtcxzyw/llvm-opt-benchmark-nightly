@@ -204,12 +204,13 @@ bb.dv:                                            ; preds = %._crit_edge.i.i.i.u
   %i.adv = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.adu
   %i.adw = load i16, ptr %i.adv, align 2
   store i16 %i.adw, ptr %i.adr, align 1
-  %31 = udiv i8 %i.acq, 100
+  %31 = icmp ugt i8 %i.acq, -57
+  %32 = select i1 %31, i8 2, i8 1
   br label %bb.dw
 
 bb.dw:                                            ; preds = %._crit_edge.i.i.i.us.thread.i.peel, %._crit_edge.i.i.i.us.i573.peel
   %.0.lcssa.i.i.i.us65.i.peel = phi i32 [ %i.adp, %._crit_edge.i.i.i.us.thread.i.peel ], [ %i.adb, %._crit_edge.i.i.i.us.i573.peel ]
-  %.018.lcssa.i.i.i.us64.i.peel = phi i8 [ %31, %._crit_edge.i.i.i.us.thread.i.peel ], [ %i.acq, %._crit_edge.i.i.i.us.i573.peel ]
+  %.018.lcssa.i.i.i.us64.i.peel = phi i8 [ %32, %._crit_edge.i.i.i.us.thread.i.peel ], [ %i.acq, %._crit_edge.i.i.i.us.i573.peel ]
   %i.adx = or disjoint i8 %.018.lcssa.i.i.i.us64.i.peel, 48
   %i.ady = add i32 %.0.lcssa.i.i.i.us65.i.peel, -1
   %i.adz = zext i32 %i.ady to i64
@@ -377,7 +378,8 @@ _ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.i.i.us.thr
   %i.aga = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.afz
   %i.agb = load i16, ptr %i.aga, align 2
   store i16 %i.agb, ptr %i.afw, align 1
-  %32 = udiv i8 %i.afc, 100
+  %33 = icmp ugt i8 %i.afc, -57
+  %34 = select i1 %33, i8 2, i8 1
   br label %bb.ec
 
 ._crit_edge.i.i.i.us.i573:                        ; preds = %_ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.i.i.us.thread.i572
@@ -386,7 +388,7 @@ _ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.i.i.us.thr
 
 bb.ec:                                            ; preds = %._crit_edge.i.i.i.us.i573, %._crit_edge.i.i.i.us.thread.i
   %.0.lcssa.i.i.i.us65.i = phi i32 [ %i.afu, %._crit_edge.i.i.i.us.thread.i ], [ %i.afn, %._crit_edge.i.i.i.us.i573 ]
-  %.018.lcssa.i.i.i.us64.i = phi i8 [ %32, %._crit_edge.i.i.i.us.thread.i ], [ %i.afc, %._crit_edge.i.i.i.us.i573 ]
+  %.018.lcssa.i.i.i.us64.i = phi i8 [ %34, %._crit_edge.i.i.i.us.thread.i ], [ %i.afc, %._crit_edge.i.i.i.us.i573 ]
   %i.agd = or disjoint i8 %.018.lcssa.i.i.i.us64.i, 48
   %i.age = add i32 %.0.lcssa.i.i.i.us65.i, -1
   %i.agf = zext i32 %i.age to i64

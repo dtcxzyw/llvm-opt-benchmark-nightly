@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge.i.i.thread.i:                         ; preds = %bb.b
   %i.j = urem i8 %i.c, 100
   %i.k = shl nuw i8 %i.j, 1
-  %2 = udiv i8 %i.c, 100
+  %2 = icmp ugt i8 %i.c, -57
   %i.l = zext i8 %i.k to i64
   %i.m = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.l ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 1
@@ -215,6 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = load i8, ptr %i.m, align 2
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.q, ptr %i.r, align 1
+  %3 = select i1 %2, i8 2, i8 1
   br label %bb.d
 
 ._crit_edge.i.i.i:                                ; preds = %bb.b
@@ -233,7 +234,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.k
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i, %._crit_edge.i.i.thread.i
-  %.0.lcssa.i.i79.i = phi i8 [ %2, %._crit_edge.i.i.thread.i ], [ %i.c, %._crit_edge.i.i.i ]
+  %.0.lcssa.i.i79.i = phi i8 [ %3, %._crit_edge.i.i.thread.i ], [ %i.c, %._crit_edge.i.i.i ]
   %i.aa = or disjoint i8 %.0.lcssa.i.i79.i, 48
   br label %bb.k
 
@@ -323,7 +324,7 @@ bb.l:                                             ; preds = %bb.k
 ._crit_edge.i.i.thread.i25:                       ; preds = %bb.l
   %i.aw = urem i8 %i.ap, 100
   %i.ax = shl nuw i8 %i.aw, 1
-  %3 = udiv i8 %i.ap, 100
+  %4 = icmp ugt i8 %i.ap, -57
   %i.ay = zext i8 %i.ax to i64
   %i.az = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.ay ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 1
@@ -333,6 +334,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bd = load i8, ptr %i.az, align 2
   %i.be = getelementptr i8, ptr %.ptr, i64 1
   store i8 %i.bd, ptr %i.be, align 1
+  %5 = select i1 %4, i8 2, i8 1
   br label %bb.n
 
 ._crit_edge.i.i.i16:                              ; preds = %bb.l
@@ -351,7 +353,7 @@ bb.m:                                             ; preds = %._crit_edge.i.i.i16
   br label %bb.o
 
 bb.n:                                             ; preds = %._crit_edge.i.i.i16, %._crit_edge.i.i.thread.i25
-  %.0.lcssa.i.i79.i17 = phi i8 [ %3, %._crit_edge.i.i.thread.i25 ], [ %i.ap, %._crit_edge.i.i.i16 ]
+  %.0.lcssa.i.i79.i17 = phi i8 [ %5, %._crit_edge.i.i.thread.i25 ], [ %i.ap, %._crit_edge.i.i.i16 ]
   %i.bn = or disjoint i8 %.0.lcssa.i.i79.i17, 48
   br label %bb.o
 
@@ -395,7 +397,7 @@ bb.q:                                             ; preds = %._crit_edge.i.i.i16
 ._crit_edge.i.i.thread.i25.1:                     ; preds = %bb.p
   %i.ce = urem i8 %i.bp, 100
   %i.cf = shl nuw i8 %i.ce, 1
-  %4 = udiv i8 %i.bp, 100
+  %6 = icmp ugt i8 %i.bp, -57
   %i.cg = zext i8 %i.cf to i64
   %i.ch = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.cg ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 1
@@ -405,10 +407,11 @@ bb.q:                                             ; preds = %._crit_edge.i.i.i16
   %i.cl = load i8, ptr %i.ch, align 2
   %i.cm = getelementptr i8, ptr %.ptr.1, i64 1
   store i8 %i.cl, ptr %i.cm, align 1
+  %7 = select i1 %6, i8 2, i8 1
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge.i.i.thread.i25.1, %._crit_edge.i.i.i16.1
-  %.0.lcssa.i.i79.i17.1 = phi i8 [ %4, %._crit_edge.i.i.thread.i25.1 ], [ %i.bp, %._crit_edge.i.i.i16.1 ]
+  %.0.lcssa.i.i79.i17.1 = phi i8 [ %7, %._crit_edge.i.i.thread.i25.1 ], [ %i.bp, %._crit_edge.i.i.i16.1 ]
   %i.cn = or disjoint i8 %.0.lcssa.i.i79.i17.1, 48
   br label %bb.s
 
@@ -451,7 +454,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i16
 ._crit_edge.i.i.thread.i25.2:                     ; preds = %bb.t
   %i.dd = urem i8 %i.co, 100
   %i.de = shl nuw i8 %i.dd, 1
-  %5 = udiv i8 %i.co, 100
+  %8 = icmp ugt i8 %i.co, -57
   %i.df = zext i8 %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.df ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 1
@@ -461,10 +464,11 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i16
   %i.dk = load i8, ptr %i.dg, align 2
   %i.dl = getelementptr i8, ptr %.ptr.2, i64 1
   store i8 %i.dk, ptr %i.dl, align 1
+  %9 = select i1 %8, i8 2, i8 1
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge.i.i.thread.i25.2, %._crit_edge.i.i.i16.2
-  %.0.lcssa.i.i79.i17.2 = phi i8 [ %5, %._crit_edge.i.i.thread.i25.2 ], [ %i.co, %._crit_edge.i.i.i16.2 ]
+  %.0.lcssa.i.i79.i17.2 = phi i8 [ %9, %._crit_edge.i.i.thread.i25.2 ], [ %i.co, %._crit_edge.i.i.i16.2 ]
   %i.dm = or disjoint i8 %.0.lcssa.i.i79.i17.2, 48
   br label %_ZSt12__to_chars_iIhENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt15to_chars_resultE4typeEPcSP_S4_i.exit26.2
 
@@ -867,9 +871,9 @@ bb.ts:                                            ; preds = %bb.ah
   unreachable
 
 .critedge326:                                     ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread, %bb.mz, %.sink.split.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865
-  %.sroa.01503.2 = phi i16 [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.024032907, %bb.mz ], [ %.sroa.01503.024032907, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.sroa.01503.024032907, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.024032907, %.sink.split.i.i ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
-  %.15283 = phi i64 [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279296629742984, %bb.mz ], [ %.11279296629742984, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.92772950, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.11279296629742984, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279296629742984, %.sink.split.i.i ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.92772951, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ] ; 2 uses
-  %.18 = phi i32 [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12296729732989, %bb.mz ], [ %.12296729732989, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.82952, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.12296729732989, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12296729732989, %.sink.split.i.i ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.82953, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
+  %.sroa.01503.2 = phi i16 [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.sroa.01503.024032907, %bb.mz ], [ %.sroa.01503.024032907, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.sroa.01503.024032907, %.sink.split.i.i ], [ %.sroa.01503.024032907, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.sroa.01503.024032907, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.sroa.01503.02403, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
+  %.15283 = phi i64 [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.92772950, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.11279296629742984, %bb.mz ], [ %.11279296629742984, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.11279296629742984, %.sink.split.i.i ], [ %.11279296629742984, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.11279296629742984, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.92772951, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ] ; 2 uses
+  %.18 = phi i32 [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.82952, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit860 ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEc.exit ], [ %.12296729732989, %bb.mz ], [ %.12296729732989, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm.exit919.thread ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit ], [ %.12296729732989, %.sink.split.i.i ], [ %.12296729732989, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1092 ], [ %.12296729732989, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i931 ], [ %.82953, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit865 ]
   %.not = icmp ugt i64 %.15283, %.sroa.01347.1
   br i1 %.not, label %.loopexit3090, label %bb.ah, !llvm.loop !94
 
@@ -1272,8 +1276,8 @@ bb.pr:                                            ; preds = %bb.ah
   br label %bb.bv, !llvm.loop !164
 
 .critedge334:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831
-  %.15292 = phi i64 [ %.92862463, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ], [ %.92862464, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ] ; 2 uses
-  %.18 = phi i32 [ %.82465, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ], [ %.82466, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ]
+  %.15292 = phi i64 [ %.92862464, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ], [ %.92862463, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ] ; 2 uses
+  %.18 = phi i32 [ %.82466, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ], [ %.82465, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ]
   %.not = icmp ugt i64 %.15292, %.sroa.01167.1
   br i1 %.not, label %.critedge354.critedge, label %bb.ah, !llvm.loop !164
 

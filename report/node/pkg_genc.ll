@@ -203,8 +203,8 @@ bb.u:                                             ; preds = %.preheader, %_ZL6wr
   br i1 %i.fp, label %.thread.i, label %bb.v
 
 .thread.i:                                        ; preds = %bb.u
-  %7 = udiv i8 %i.fo, 100
-  %8 = or disjoint i8 %7, 48
+  %7 = icmp ugt i8 %i.fo, -57
+  %8 = select i1 %7, i8 50, i8 49
   store i8 %8, ptr %i.a, align 1
   %i.fq = urem i8 %i.fo, 100
   br label %bb.w

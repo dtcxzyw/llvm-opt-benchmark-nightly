@@ -203,7 +203,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit.i:       ; preds = %bb.u
   br i1 %or.cond.i223, label %bb.v, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.thread.i
 
 bb.v:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit.i
-  %i.dk = trunc i16 %i.di to i8                   ; 3 uses
+  %i.dk = trunc i16 %i.di to i8                   ; 4 uses
   %i.dl = urem i8 %i.dk, 10
   %i.dm = udiv i8 %i.dk, 10
   %i.dn = or disjoint i8 %i.dl, 48
@@ -234,11 +234,14 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.eb, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %7 = udiv i8 %i.dk, 100
-  %8 = or disjoint i8 %7, 48
-  %i.ec = zext nneg i8 %8 to i16
+  %7 = icmp ugt i8 %i.dk, 99
+  %8 = zext i1 %7 to i16
+  %9 = icmp ugt i8 %i.dk, -57
+  %i.ec = zext i1 %9 to i16
+  %10 = add nuw nsw i16 %8, %i.ec
+  %11 = or disjoint i16 %10, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store i16 %i.ec, ptr %i.c, align 2
+  store i16 %11, ptr %i.c, align 2
   %i.ed = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString9doReplaceEiiPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %5, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.c, i32 noundef 0, i32 noundef 1) #13 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.y

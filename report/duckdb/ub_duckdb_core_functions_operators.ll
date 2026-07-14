@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EmcRKS3_.exit.i: ; preds 
 ._crit_edge.i.i.thread:                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EmcRKS3_.exit.i
   %i.h = urem i8 %1, 100
   %i.i = shl nuw i8 %i.h, 1
-  %2 = udiv i8 %1, 100
+  %2 = icmp ugt i8 %1, -57
   %i.j = zext i8 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.j ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
@@ -218,6 +218,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EmcRKS3_.exit.i: ; preds 
   %i.s = getelementptr i8, ptr %i.f, i64 %i.r
   %i.t = getelementptr i8, ptr %i.s, i64 -2
   store i8 %i.q, ptr %i.t, align 1, !tbaa !34
+  %3 = select i1 %2, i8 2, i8 1
   br label %bb.b
 
 ._crit_edge.i.i:                                  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EmcRKS3_.exit.i
@@ -236,7 +237,7 @@ bb.a:                                             ; preds = %._crit_edge.i.i
   br label %_ZNSt7__cxx119to_stringEi.exit
 
 bb.b:                                             ; preds = %._crit_edge.i.i.thread, %._crit_edge.i.i
-  %.0.lcssa.i.i2 = phi i8 [ %2, %._crit_edge.i.i.thread ], [ %1, %._crit_edge.i.i ]
+  %.0.lcssa.i.i2 = phi i8 [ %3, %._crit_edge.i.i.thread ], [ %1, %._crit_edge.i.i ]
   %i.ac = or disjoint i8 %.0.lcssa.i.i2, 48
   br label %_ZNSt7__cxx119to_stringEi.exit
 

@@ -203,15 +203,19 @@ bb.ah:                                            ; preds = %bb.af
   %i.ef = trunc i32 %i.ee to i16
   %i.eg = getelementptr inbounds nuw i8, ptr %i.i, i64 304
   tail call void @biari_encode_symbol(ptr noundef nonnull %i.a, i16 noundef signext %i.ef, ptr noundef nonnull %i.eg) #12
-  %i.eh = urem i32 %spec.select256265, 12         ; 2 uses
-  %2 = lshr i32 %i.eh, 2                          ; 2 uses
-  %i.ei = icmp eq i32 %2, 0
+  %i.eh = urem i32 %spec.select256265, 12         ; 3 uses
+  %2 = icmp samesign ugt i32 %i.eh, 3
+  %3 = zext i1 %2 to i32
+  %4 = icmp samesign ugt i32 %i.eh, 7
+  %5 = zext i1 %4 to i32
+  %6 = add nuw nsw i32 %3, %5                     ; 2 uses
+  %i.ei = icmp eq i32 %6, 0
   %i.ej = getelementptr inbounds nuw i8, ptr %i.i, i64 320 ; 2 uses
   br i1 %i.ei, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   tail call void @biari_encode_symbol(ptr noundef nonnull %i.a, i16 noundef signext 1, ptr noundef nonnull %i.ej) #12
-  %i.ek = icmp ne i32 %2, 1
+  %i.ek = icmp ne i32 %6, 1
   %i.el = zext i1 %i.ek to i16
   br label %bb.aj
 

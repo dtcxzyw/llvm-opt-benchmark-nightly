@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge.i.i.thread.i:                         ; preds = %bb.b
   %i.i = urem i8 %1, 100
   %i.j = shl nuw i8 %i.i, 1
-  %2 = udiv i8 %1, 100
+  %2 = icmp ugt i8 %1, -57
   %i.k = zext i8 %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.k ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 1
@@ -214,6 +214,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load i8, ptr %i.l, align 2, !tbaa !7
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.p, ptr %i.q, align 1, !tbaa !7
+  %3 = select i1 %2, i8 2, i8 1
   br label %bb.d
 
 ._crit_edge.i.i.i:                                ; preds = %bb.b
@@ -232,7 +233,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit25
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i, %._crit_edge.i.i.thread.i
-  %.0.lcssa.i.i79.i = phi i8 [ %2, %._crit_edge.i.i.thread.i ], [ %1, %._crit_edge.i.i.i ]
+  %.0.lcssa.i.i79.i = phi i8 [ %3, %._crit_edge.i.i.thread.i ], [ %1, %._crit_edge.i.i.i ]
   %i.z = or disjoint i8 %.0.lcssa.i.i79.i, 48
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit25
 
@@ -635,7 +636,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge.i.i.thread.i.i:                       ; preds = %bb.b
   %i.h = urem i8 %1, 100
   %i.i = shl nuw i8 %i.h, 1
-  %6 = udiv i8 %1, 100
+  %6 = icmp ugt i8 %1, -57
   %i.j = zext i8 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.j ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
@@ -645,6 +646,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = load i8, ptr %i.k, align 2, !tbaa !7, !noalias !1486
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 17
   store i8 %i.o, ptr %i.p, align 1, !tbaa !7, !alias.scope !1486
+  %7 = select i1 %6, i8 2, i8 1
   br label %bb.d
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.b
@@ -663,7 +665,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZN5arrow8internal7ToCharsIhJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_DpOT0_.exit
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i.i, %._crit_edge.i.i.thread.i.i
-  %.0.lcssa.i.i79.i.i = phi i8 [ %6, %._crit_edge.i.i.thread.i.i ], [ %1, %._crit_edge.i.i.i.i ]
+  %.0.lcssa.i.i79.i.i = phi i8 [ %7, %._crit_edge.i.i.thread.i.i ], [ %1, %._crit_edge.i.i.i.i ]
   %i.y = or disjoint i8 %.0.lcssa.i.i79.i.i, 48
   br label %_ZN5arrow8internal7ToCharsIhJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_DpOT0_.exit
 
@@ -695,7 +697,7 @@ bb.e:                                             ; preds = %_ZN5arrow8internal7
 ._crit_edge.i.i.thread.i.i11:                     ; preds = %bb.e
   %i.aj = urem i8 %i.ab, 100
   %i.ak = shl nuw i8 %i.aj, 1
-  %7 = udiv i8 %i.ab, 100
+  %8 = icmp ugt i8 %i.ab, -57
   %i.al = zext i8 %i.ak to i64
   %i.am = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 1
@@ -705,6 +707,7 @@ bb.e:                                             ; preds = %_ZN5arrow8internal7
   %i.aq = load i8, ptr %i.am, align 2, !tbaa !7, !noalias !1489
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 17
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !7, !alias.scope !1489
+  %9 = select i1 %8, i8 2, i8 1
   br label %bb.g
 
 ._crit_edge.i.i.i.i7:                             ; preds = %bb.e
@@ -723,7 +726,7 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.h
 
 bb.g:                                             ; preds = %._crit_edge.i.i.i.i7, %._crit_edge.i.i.thread.i.i11
-  %.0.lcssa.i.i79.i.i8 = phi i8 [ %7, %._crit_edge.i.i.thread.i.i11 ], [ %i.ab, %._crit_edge.i.i.i.i7 ]
+  %.0.lcssa.i.i79.i.i8 = phi i8 [ %9, %._crit_edge.i.i.thread.i.i11 ], [ %i.ab, %._crit_edge.i.i.i.i7 ]
   %i.ba = or disjoint i8 %.0.lcssa.i.i79.i.i8, 48
   br label %bb.h
 
@@ -755,7 +758,7 @@ bb.i:                                             ; preds = %bb.h
 ._crit_edge.i.i.thread.i.i17:                     ; preds = %bb.i
   %i.bl = urem i8 %i.bd, 100
   %i.bm = shl nuw i8 %i.bl, 1
-  %8 = udiv i8 %i.bd, 100
+  %10 = icmp ugt i8 %i.bd, -57
   %i.bn = zext i8 %i.bm to i64
   %i.bo = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.bn ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 1
@@ -765,6 +768,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bs = load i8, ptr %i.bo, align 2, !tbaa !7, !noalias !1492
   %i.bt = getelementptr inbounds nuw i8, ptr %5, i64 17
   store i8 %i.bs, ptr %i.bt, align 1, !tbaa !7, !alias.scope !1492
+  %11 = select i1 %10, i8 2, i8 1
   br label %bb.k
 
 ._crit_edge.i.i.i.i13:                            ; preds = %bb.i
@@ -783,7 +787,7 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.l
 
 bb.k:                                             ; preds = %._crit_edge.i.i.i.i13, %._crit_edge.i.i.thread.i.i17
-  %.0.lcssa.i.i79.i.i14 = phi i8 [ %8, %._crit_edge.i.i.thread.i.i17 ], [ %i.bd, %._crit_edge.i.i.i.i13 ]
+  %.0.lcssa.i.i79.i.i14 = phi i8 [ %11, %._crit_edge.i.i.thread.i.i17 ], [ %i.bd, %._crit_edge.i.i.i.i13 ]
   %i.cc = or disjoint i8 %.0.lcssa.i.i79.i.i14, 48
   br label %bb.l
 

@@ -204,7 +204,8 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail1
   %i.ce = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.cd
   %i.cf = load i16, ptr %i.ce, align 2
   store i16 %i.cf, ptr %i.ca, align 1
-  %9 = udiv i8 %i.bb, 100
+  %9 = icmp ugt i8 %i.bb, -57
+  %10 = select i1 %9, i8 2, i8 1
   br label %bb.l
 
 ._crit_edge.i.i.i.us:                             ; preds = %bb.k
@@ -213,7 +214,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail1
 
 bb.l:                                             ; preds = %._crit_edge.i.i.i.us.thread, %._crit_edge.i.i.i.us
   %.0.lcssa.i.i.i.us191 = phi i32 [ %i.by, %._crit_edge.i.i.i.us.thread ], [ %i.br, %._crit_edge.i.i.i.us ]
-  %.018.lcssa.i.i.i.us190 = phi i8 [ %9, %._crit_edge.i.i.i.us.thread ], [ %i.bb, %._crit_edge.i.i.i.us ]
+  %.018.lcssa.i.i.i.us190 = phi i8 [ %10, %._crit_edge.i.i.i.us.thread ], [ %i.bb, %._crit_edge.i.i.i.us ]
   %i.ch = or disjoint i8 %.018.lcssa.i.i.i.us190, 48
   %i.ci = add i32 %.0.lcssa.i.i.i.us191, -1
   %i.cj = zext i32 %i.ci to i64
@@ -273,7 +274,8 @@ bb.n:                                             ; preds = %_ZN3fmt3v126detail1
   %i.dh = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.dg
   %i.di = load i16, ptr %i.dh, align 2
   store i16 %i.di, ptr %i.dd, align 1
-  %10 = udiv i8 %i.bb, 100
+  %11 = icmp ugt i8 %i.bb, -57
+  %12 = select i1 %11, i8 2, i8 1
   br label %bb.o
 
 ._crit_edge.i.i.us:                               ; preds = %bb.n
@@ -282,7 +284,7 @@ bb.n:                                             ; preds = %_ZN3fmt3v126detail1
 
 bb.o:                                             ; preds = %._crit_edge.i.i.us.thread, %._crit_edge.i.i.us
   %.0.lcssa.i.i.us195 = phi i32 [ %i.db, %._crit_edge.i.i.us.thread ], [ %i.br, %._crit_edge.i.i.us ]
-  %.018.lcssa.i.i.us194 = phi i8 [ %10, %._crit_edge.i.i.us.thread ], [ %i.bb, %._crit_edge.i.i.us ]
+  %.018.lcssa.i.i.us194 = phi i8 [ %12, %._crit_edge.i.i.us.thread ], [ %i.bb, %._crit_edge.i.i.us ]
   %i.dk = or disjoint i8 %.018.lcssa.i.i.us194, 48
   %i.dl = add i32 %.0.lcssa.i.i.us195, -1
   %i.dm = zext i32 %i.dl to i64
@@ -316,7 +318,8 @@ _ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.thread.i.u
   %i.ec = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.eb
   %i.ed = load i16, ptr %i.ec, align 2
   store i16 %i.ed, ptr %i.dy, align 1
-  %11 = udiv i8 %i.bb, 100
+  %13 = icmp ugt i8 %i.bb, -57
+  %14 = select i1 %13, i8 2, i8 1
   br label %bb.q
 
 ._crit_edge.i12.i.us:                             ; preds = %_ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.thread.i.us
@@ -325,7 +328,7 @@ _ZN3fmt3v126detail10to_pointerIcEEPT_NS0_14basic_appenderIS3_EEm.exit.thread.i.u
 
 bb.q:                                             ; preds = %._crit_edge.i12.i.us.thread, %._crit_edge.i12.i.us
   %.0.lcssa.i14.i.us199 = phi i32 [ %i.dw, %._crit_edge.i12.i.us.thread ], [ %i.br, %._crit_edge.i12.i.us ]
-  %.018.lcssa.i13.i.us198 = phi i8 [ %11, %._crit_edge.i12.i.us.thread ], [ %i.bb, %._crit_edge.i12.i.us ]
+  %.018.lcssa.i13.i.us198 = phi i8 [ %14, %._crit_edge.i12.i.us.thread ], [ %i.bb, %._crit_edge.i12.i.us ]
   %i.ef = or disjoint i8 %.018.lcssa.i13.i.us198, 48
   %i.eg = add i32 %.0.lcssa.i14.i.us199, -1
   %i.eh = zext i32 %i.eg to i64
