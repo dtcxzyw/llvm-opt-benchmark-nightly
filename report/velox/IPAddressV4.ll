@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit.loopexit.i
 
 .lr.ph.2.i:                                       ; preds = %.lr.ph.preheader.i
-  %2 = udiv i8 %i.a, 100
-  %3 = or disjoint i8 %2, 48
+  %2 = icmp ugt i8 %i.a, -57
+  %3 = select i1 %2, i8 50, i8 49
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %3, ptr %1, align 1, !tbaa !11
   %i.h = urem i8 %i.a, 100                        ; 2 uses
@@ -254,8 +254,8 @@ bb.c:                                             ; preds = %_ZN5folly6detail18w
   br label %.loopexit.loopexit.i11
 
 .lr.ph.2.i17:                                     ; preds = %.lr.ph.preheader.i7
-  %4 = udiv i8 %i.p, 100
-  %5 = or disjoint i8 %4, 48
+  %4 = icmp ugt i8 %i.p, -57
+  %5 = select i1 %4, i8 50, i8 49
   %i.v = getelementptr inbounds nuw i8, ptr %.pn.i, i64 3
   store i8 %5, ptr %i.n, align 1, !tbaa !11
   %i.w = urem i8 %i.p, 100                        ; 2 uses
@@ -304,8 +304,8 @@ bb.d:                                             ; preds = %_ZN5folly6detail18w
   br label %.loopexit.loopexit.i23
 
 .lr.ph.2.i29:                                     ; preds = %.lr.ph.preheader.i19
-  %6 = udiv i8 %i.ae, 100
-  %7 = or disjoint i8 %6, 48
+  %6 = icmp ugt i8 %i.ae, -57
+  %7 = select i1 %6, i8 50, i8 49
   %i.ak = getelementptr inbounds nuw i8, ptr %.pn.i14, i64 3
   store i8 %7, ptr %i.ac, align 1, !tbaa !11
   %i.al = urem i8 %i.ae, 100                      ; 2 uses
@@ -354,8 +354,8 @@ bb.e:                                             ; preds = %_ZN5folly6detail18w
   br label %.loopexit.loopexit.i35
 
 .lr.ph.2.i41:                                     ; preds = %.lr.ph.preheader.i31
-  %8 = udiv i8 %i.at, 100
-  %9 = or disjoint i8 %8, 48
+  %8 = icmp ugt i8 %i.at, -57
+  %9 = select i1 %8, i8 50, i8 49
   %i.az = getelementptr inbounds nuw i8, ptr %.pn.i26, i64 3
   store i8 %9, ptr %i.ar, align 1, !tbaa !11
   %i.ba = urem i8 %i.at, 100                      ; 2 uses

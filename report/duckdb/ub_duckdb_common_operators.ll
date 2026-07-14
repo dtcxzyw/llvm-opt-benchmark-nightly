@@ -204,6 +204,8 @@ bb.a:
   br i1 %i.q, label %._crit_edge.thread.i, label %._crit_edge.i
 
 ._crit_edge.thread.i:                             ; preds = %bb.a
+  %3 = icmp ugt i8 %i.c, -57
+  %4 = select i1 %3, i32 2, i32 1
   %i.r = getelementptr inbounds i8, ptr %i.p, i64 -2 ; 2 uses
   %i.s = urem i8 %i.c, 100
   %i.t = shl nuw i8 %i.s, 1
@@ -219,8 +221,6 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr @_ZN10duckdb_fmt2v68internal10basic_dataIvE6digitsE, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !23
   store i8 %i.ad, ptr %i.r, align 1, !tbaa !23
-  %3 = udiv i8 %i.c, 100
-  %4 = zext nneg i8 %3 to i32
   br label %bb.b
 
 ._crit_edge.i:                                    ; preds = %bb.a
@@ -623,6 +623,8 @@ bb.a:
   br i1 %i.l, label %._crit_edge.thread.i, label %._crit_edge.i
 
 ._crit_edge.thread.i:                             ; preds = %bb.a
+  %3 = icmp ugt i8 %0, -57
+  %4 = select i1 %3, i32 2, i32 1
   %i.m = getelementptr inbounds i8, ptr %i.k, i64 -2 ; 2 uses
   %i.n = urem i8 %0, 100
   %i.o = shl nuw i8 %i.n, 1
@@ -638,8 +640,6 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr @_ZN10duckdb_fmt2v68internal10basic_dataIvE6digitsE, i64 %i.w
   %i.y = load i8, ptr %i.x, align 1, !tbaa !23
   store i8 %i.y, ptr %i.m, align 1, !tbaa !23
-  %3 = udiv i8 %0, 100
-  %4 = zext nneg i8 %3 to i32
   br label %bb.b
 
 ._crit_edge.i:                                    ; preds = %bb.a
