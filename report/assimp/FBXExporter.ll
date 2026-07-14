@@ -204,12 +204,12 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.bl, %bb.bk, %_ZN
   br i1 %.not5.i, label %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_T0_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit
-  %.sroa.01381.114372 = ptrtoint ptr %.sroa.01381.11 to i64
-  %.sroa.18.64371 = ptrtoint ptr %.sroa.18.6 to i64
-  %i.mr = add i64 %.sroa.18.64371, -4
-  %i.ms = add i64 %i.mr, %i.gq
-  %78 = add i64 %.sroa.01381.114372, %i.gp
-  %79 = sub i64 %i.ms, %78                        ; 2 uses
+  %.sroa.01381.114372 = ptrtoint ptr %.sroa.18.6 to i64
+  %.sroa.18.64371 = ptrtoint ptr %.sroa.01381.11 to i64
+  %i.mr = add i64 %.sroa.01381.114372, %i.gq
+  %i.ms = add i64 %.sroa.18.64371, %i.gp
+  %78 = sub i64 %i.mr, %i.ms
+  %79 = add i64 %78, -4                           ; 2 uses
   %i.mt = lshr i64 %79, 2
   %i.mu = add nuw nsw i64 %i.mt, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %79, 28

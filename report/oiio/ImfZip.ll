@@ -152,13 +152,13 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not44, label %._crit_edge40, label %.lr.ph39.preheader
 
 .lr.ph39.preheader:                               ; preds = %._crit_edge
-  %.pre45 = ptrtoint ptr %.pre to i64             ; 3 uses
   %.02835 = getelementptr inbounds nuw i8, ptr %.pre, i64 1 ; 3 uses
   %i.t = load i8, ptr %.pre, align 1, !tbaa !14   ; 2 uses
-  %i.u = add i64 %.pre45, %i.d
-  %i.v = add i64 %.pre45, 2
+  %4 = ptrtoint ptr %.pre to i64                  ; 3 uses
+  %i.u = add i64 %4, %i.d
+  %i.v = add i64 %4, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.v)
-  %i.w = xor i64 %.pre45, -1
+  %i.w = xor i64 %4, -1
   %i.x = add i64 %umax, %i.w                      ; 3 uses
   %min.iters.check = icmp ult i64 %i.x, 32
   br i1 %min.iters.check, label %.lr.ph39.preheader47, label %vector.ph

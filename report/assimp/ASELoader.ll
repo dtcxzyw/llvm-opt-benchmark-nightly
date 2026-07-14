@@ -204,11 +204,11 @@ _ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i:     ; preds = %_ZSt4copyIPSt4pairI
   br i1 %.not9.i.i.i.i.i, label %_ZSt22__uninitialized_copy_aIPSt4pairIifES2_S1_ET0_T_S4_S3_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i
-  %i.pn = ptrtoint ptr %i.pj to i64
-  %i.po = ptrtoint ptr %i.ph to i64
-  %i.pp = add i64 %i.po, -8
-  %7 = add i64 %.pre-phi39.i, %i.pn
-  %8 = sub i64 %i.pp, %7                          ; 2 uses
+  %i.pn = ptrtoint ptr %i.ph to i64
+  %i.po = ptrtoint ptr %i.pj to i64
+  %i.pp = add i64 %.pre-phi39.i, %i.po
+  %7 = sub i64 %i.pn, %i.pp
+  %8 = add i64 %7, -8                             ; 2 uses
   %i.pq = lshr i64 %8, 3
   %i.pr = add nuw nsw i64 %i.pq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 56

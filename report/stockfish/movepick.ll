@@ -132,9 +132,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 define dso_local i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %1 = alloca %"struct.Stockfish::MoveList", align 8 ; 8 uses
-  %2 = ptrtoint ptr %1 to i64
-  %3 = alloca %"struct.Stockfish::MoveList.2", align 8 ; 5 uses
-  %4 = alloca %"struct.Stockfish::MoveList.6", align 8 ; 5 uses
+  %2 = alloca %"struct.Stockfish::MoveList.2", align 8 ; 5 uses
+  %3 = alloca %"struct.Stockfish::MoveList.6", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 12 uses
   %.ptr88.ptr = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
@@ -144,7 +143,8 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 14 uses
   %.01724.i = getelementptr inbounds nuw i8, ptr %0, i64 124 ; 2 uses
   %.pre = load i32, ptr %i.a, align 8, !tbaa !49
-  %invariant.op = sub i64 -2, %2
+  %4 = ptrtoint ptr %1 to i64
+  %invariant.op = sub i64 -2, %4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit, %bb.a
@@ -191,9 +191,9 @@ _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_E
   br label %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %5 = ptrtoint ptr %i.k to i64
-  %6 = load ptr, ptr %i.d, align 8, !tbaa !27     ; 17 uses
-  %.reass = add i64 %5, %invariant.op             ; 2 uses
+  %5 = load ptr, ptr %i.d, align 8, !tbaa !27     ; 17 uses
+  %6 = ptrtoint ptr %i.k to i64
+  %.reass = add i64 %6, %invariant.op             ; 2 uses
   %i.m = lshr i64 %.reass, 1
   %i.n = add nuw i64 %i.m, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %.reass, 30
@@ -397,37 +397,37 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.gb = insertelement <16 x i8> %i.ga, i8 %i.fl, i64 15 ; 2 uses
   %i.gc = zext <16 x i8> %i.dp to <16 x i64>      ; 16 uses
   %i.gd = extractelement <16 x i64> %i.gc, i64 0
-  %i.ge = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gd
+  %i.ge = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gd
   %i.gf = extractelement <16 x i64> %i.gc, i64 1
-  %i.gg = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gf
+  %i.gg = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gf
   %i.gh = extractelement <16 x i64> %i.gc, i64 2
-  %i.gi = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gh
+  %i.gi = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gh
   %i.gj = extractelement <16 x i64> %i.gc, i64 3
-  %i.gk = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gj
+  %i.gk = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gj
   %i.gl = extractelement <16 x i64> %i.gc, i64 4
-  %i.gm = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gl
+  %i.gm = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gl
   %i.gn = extractelement <16 x i64> %i.gc, i64 5
-  %i.go = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gn
+  %i.go = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gn
   %i.gp = extractelement <16 x i64> %i.gc, i64 6
-  %i.gq = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gp
+  %i.gq = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gp
   %i.gr = extractelement <16 x i64> %i.gc, i64 7
-  %i.gs = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gr
+  %i.gs = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gr
   %i.gt = extractelement <16 x i64> %i.gc, i64 8
-  %i.gu = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gt
+  %i.gu = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gt
   %i.gv = extractelement <16 x i64> %i.gc, i64 9
-  %i.gw = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gv
+  %i.gw = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gv
   %i.gx = extractelement <16 x i64> %i.gc, i64 10
-  %i.gy = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gx
+  %i.gy = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gx
   %i.gz = extractelement <16 x i64> %i.gc, i64 11
-  %i.ha = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.gz
+  %i.ha = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.gz
   %i.hb = extractelement <16 x i64> %i.gc, i64 12
-  %i.hc = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.hb
+  %i.hc = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.hb
   %i.hd = extractelement <16 x i64> %i.gc, i64 13
-  %i.he = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.hd
+  %i.he = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.hd
   %i.hf = extractelement <16 x i64> %i.gc, i64 14
-  %i.hg = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.hf
+  %i.hg = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.hf
   %i.hh = extractelement <16 x i64> %i.gc, i64 15
-  %i.hi = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.hh
+  %i.hi = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.hh
   %i.hj = getelementptr inbounds nuw [16 x i8], ptr %i.ge, i64 %i.dq
   %i.hk = getelementptr inbounds nuw [16 x i8], ptr %i.gg, i64 %i.ds
   %i.hl = getelementptr inbounds nuw [16 x i8], ptr %i.gi, i64 %i.du
@@ -550,7 +550,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.kz = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ku
   %i.la = load i8, ptr %i.kz, align 1, !tbaa !51  ; 2 uses
   %i.lb = zext i8 %i.ky to i64
-  %i.lc = getelementptr inbounds nuw [1024 x i8], ptr %6, i64 %i.lb
+  %i.lc = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.lb
   %i.ld = getelementptr inbounds nuw [16 x i8], ptr %i.lc, i64 %i.ku
   %i.le = and i8 %i.la, 7
   %i.lf = zext nneg i8 %i.le to i64
@@ -688,12 +688,12 @@ bb.i:                                             ; preds = %"_ZZN9Stockfish10Mo
   br i1 %i.nd, label %bb.n, label %bb.j
 
 bb.j:                                             ; preds = %.loopexit
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   %i.ne = load ptr, ptr %0, align 8, !tbaa !52, !nonnull !53, !align !54
-  %i.nf = getelementptr inbounds nuw i8, ptr %3, i64 512
-  %i.ng = call noundef ptr @_ZN9Stockfish8generateILNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES3_(ptr noundef nonnull align 8 dereferenceable(1048) %i.ne, ptr noundef nonnull align 8 dereferenceable(520) %3) #8
+  %i.nf = getelementptr inbounds nuw i8, ptr %2, i64 512
+  %i.ng = call noundef ptr @_ZN9Stockfish8generateILNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES3_(ptr noundef nonnull align 8 dereferenceable(1048) %i.ne, ptr noundef nonnull align 8 dereferenceable(520) %2) #8
   store ptr %i.ng, ptr %i.nf, align 8, !tbaa !74
-  %i.nh = call noundef ptr @_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE1EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE(ptr noundef nonnull align 8 dereferenceable(2164) %0, ptr noundef nonnull align 8 dereferenceable(520) %3) ; 4 uses
+  %i.nh = call noundef ptr @_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE1EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE(ptr noundef nonnull align 8 dereferenceable(2164) %0, ptr noundef nonnull align 8 dereferenceable(520) %2) ; 4 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %0, i64 88
   store ptr %i.nh, ptr %i.ni, align 8, !tbaa !77
   store ptr %i.nh, ptr %i.f, align 8, !tbaa !58
@@ -750,7 +750,7 @@ bb.m:                                             ; preds = %.critedge.i24, %.lr
   br i1 %i.ny, label %.lr.ph28.i14, label %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit28, !llvm.loop !71
 
 _ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit28: ; preds = %bb.m, %bb.j
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   %.pre161 = load i32, ptr %i.a, align 8, !tbaa !49
   br label %bb.n
 
@@ -895,12 +895,12 @@ bb.y:                                             ; preds = %bb.w, %bb.v
   br i1 %i.po, label %bb.v, label %"_ZN9Stockfish10MovePicker6selectIZNS0_9next_moveEvE3$_3EENS_4MoveET_.exit", !llvm.loop !81
 
 bb.z:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   %i.pp = load ptr, ptr %0, align 8, !tbaa !52, !nonnull !53, !align !54
-  %i.pq = call noundef ptr @_ZN9Stockfish8generateILNS_7GenTypeE2EEEPNS_4MoveERKNS_8PositionES3_(ptr noundef nonnull align 8 dereferenceable(1048) %i.pp, ptr noundef nonnull align 8 dereferenceable(520) %4) #8 ; 2 uses
+  %i.pq = call noundef ptr @_ZN9Stockfish8generateILNS_7GenTypeE2EEEPNS_4MoveERKNS_8PositionES3_(ptr noundef nonnull align 8 dereferenceable(1048) %i.pp, ptr noundef nonnull align 8 dereferenceable(520) %3) #8 ; 2 uses
   store ptr %.ptr88.ptr, ptr %i.c, align 8, !tbaa !56
   %i.pr = load ptr, ptr %0, align 8, !tbaa !52, !nonnull !53, !align !54 ; 3 uses
-  %.not27.i = icmp eq ptr %4, %i.pq
+  %.not27.i = icmp eq ptr %3, %i.pq
   br i1 %.not27.i, label %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit.thread, label %.lr.ph.i42
 
 _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit.thread: ; preds = %bb.z
@@ -922,7 +922,7 @@ _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_E
 
 bb.aa:                                            ; preds = %bb.ad, %.lr.ph.i42
   %.029.i.idx = phi i64 [ 116, %.lr.ph.i42 ], [ %.029.i.add, %bb.ad ] ; 3 uses
-  %.02628.i = phi ptr [ %4, %.lr.ph.i42 ], [ %i.rf, %bb.ad ] ; 2 uses
+  %.02628.i = phi ptr [ %3, %.lr.ph.i42 ], [ %i.rf, %bb.ad ] ; 2 uses
   %.029.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.029.i.idx ; 2 uses
   %.sroa.014.0.copyload.i = load i16, ptr %.02628.i, align 2, !tbaa !30 ; 7 uses
   %.029.i.add = add nuw nsw i64 %.029.i.idx, 8    ; 2 uses
@@ -1022,7 +1022,7 @@ _ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit61: ; 
   %i.rp = load i32, ptr %i.a, align 8, !tbaa !49
   %i.rq = add nsw i32 %i.rp, 1
   store i32 %i.rq, ptr %i.a, align 8, !tbaa !49
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   br label %.loopexit97
 
 .loopexit97:                                      ; preds = %bb.b, %bb.b, %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit61

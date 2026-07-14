@@ -90,7 +90,6 @@ interleave.exit:                                  ; preds = %.lr.ph48.i, %._crit
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @internal_zip_deconstruct_bytes(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64                     ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 2 uses
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %._crit_edge42, label %.lr.ph.preheader
@@ -133,6 +132,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
 .lr.ph41.preheader:                               ; preds = %._crit_edge
   %.137 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
   %i.n = load i8, ptr %0, align 1, !tbaa !7       ; 2 uses
+  %3 = ptrtoint ptr %0 to i64                     ; 3 uses
   %i.o = add i64 %2, %3
   %i.p = add i64 %3, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.o, i64 %i.p)
@@ -373,7 +373,6 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.s = load ptr, ptr %i.c, align 8, !tbaa !45   ; 6 uses
-  %1 = ptrtoint ptr %i.s to i64                   ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !46   ; 2 uses
   %i.v = load i64, ptr %i.e, align 8, !tbaa !29   ; 6 uses
@@ -419,6 +418,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i.i
 .lr.ph41.preheader.i.i:                           ; preds = %._crit_edge.i.i
   %.137.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 1 ; 3 uses
   %i.aj = load i8, ptr %i.s, align 1, !tbaa !7    ; 2 uses
+  %1 = ptrtoint ptr %i.s to i64                   ; 3 uses
   %i.ak = add i64 %i.v, %1
   %i.al = add i64 %1, 2
   %umax = call i64 @llvm.umax.i64(i64 %i.ak, i64 %i.al)

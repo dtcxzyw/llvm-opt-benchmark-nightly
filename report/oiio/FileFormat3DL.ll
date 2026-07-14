@@ -203,8 +203,6 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.a, %.outer._crit
   %.sroa.17.0.ph.lcssa647944 = phi ptr [ %.sroa.17.0.ph.lcssa647, %bb.bw ], [ %.sroa.17.0.ph.lcssa647, %.outer._crit_edge ], [ null, %bb.a ] ; 2 uses
   %.0490.ph.lcssa661943 = phi i32 [ %.0490.ph.lcssa661, %bb.bw ], [ %.0490.ph.lcssa661, %.outer._crit_edge ], [ 0, %bb.a ] ; 6 uses
   %.sroa.30.0.ph.lcssa675941 = phi ptr [ %.sroa.30.0.ph.lcssa675, %bb.bw ], [ %.sroa.30.0.ph.lcssa675, %.outer._crit_edge ], [ null, %bb.a ] ; 5 uses
-  %.sroa.17479.0.ph.lcssa5959491227 = ptrtoint ptr %.sroa.17479.0.ph.lcssa595949 to i64
-  %.sroa.0467.0.ph.lcssa5759501228 = ptrtoint ptr %.sroa.0467.0.ph.lcssa575950 to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %i.jj = load ptr, ptr %5, align 16, !tbaa !52   ; 3 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -411,11 +409,13 @@ bb.cp:                                            ; preds = %bb.ck
   br i1 %i.jz, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110IsIdentityERKSt6vectorIiSaIiEENS_8BitDepthE.exit.thread, label %.preheader519.preheader
 
 .preheader519.preheader:                          ; preds = %bb.cp
-  %22 = add i64 %.sroa.17479.0.ph.lcssa5959491227, -4
-  %i.li = sub i64 %22, %.sroa.0467.0.ph.lcssa5759501228 ; 2 uses
-  %i.lj = lshr i64 %i.li, 2
+  %22 = ptrtoint ptr %.sroa.17479.0.ph.lcssa595949 to i64
+  %23 = ptrtoint ptr %.sroa.0467.0.ph.lcssa575950 to i64
+  %i.li = sub i64 %22, %23
+  %24 = add i64 %i.li, -4                         ; 2 uses
+  %i.lj = lshr i64 %24, 2
   %i.lk = add nuw nsw i64 %i.lj, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.li, 28
+  %min.iters.check = icmp ult i64 %24, 28
   br i1 %min.iters.check, label %.preheader519.preheader1260, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader519.preheader

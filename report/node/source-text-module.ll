@@ -203,7 +203,6 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.n
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal18DirectHandleVectorINS0_15JSMessageObjectEE9push_backERKNS0_12DirectHandleIS2_EE.exit
-  %.0.lcssa.i.i.i.i.i.i.i52.pn191.le = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i.i52.pn to i64 ; 2 uses
   %.sroa.078.3189.le = ptrtoaddr ptr %.sroa.078.3 to i64
   %.pre = load ptr, ptr %i.z, align 8             ; 3 uses
   %.pre143 = load ptr, ptr %5, align 8            ; 5 uses
@@ -323,7 +322,8 @@ _ZNSt12_Vector_baseIN2v88internal21DirectHandleUncheckedINS1_15JSMessageObjectEE
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.br
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.by, ptr %i.bz, align 8
-  %i.ca = sub i64 %.0.lcssa.i.i.i.i.i.i.i52.pn191.le, %i.bq ; 2 uses
+  %8 = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i.i52.pn to i64 ; 2 uses
+  %i.ca = sub i64 %8, %i.bq                       ; 2 uses
   %i.cb = lshr i64 %i.ca, 3
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
   %min.iters.check193 = icmp ult i64 %i.ca, 72
@@ -363,7 +363,7 @@ middle.block204:                                  ; preds = %vector.body197
   %.08.i.i.i.i.i.i5.i43.ph = phi ptr [ %i.bw, %_ZNSt12_Vector_baseIN2v88internal21DirectHandleUncheckedINS1_15JSMessageObjectEEESaIS4_EEC2EmRKS5_.exit.i.i.i41 ], [ %i.cg, %middle.block204 ] ; 2 uses
   %.sroa.04.07.i.i.i.i.i.i6.i44.ph = phi ptr [ %.sroa.078.3, %_ZNSt12_Vector_baseIN2v88internal21DirectHandleUncheckedINS1_15JSMessageObjectEEESaIS4_EEC2EmRKS5_.exit.i.i.i41 ], [ %i.ch, %middle.block204 ] ; 3 uses
   %.sroa.04.07.i.i.i.i.i.i6.i44.ph215 = ptrtoint ptr %.sroa.04.07.i.i.i.i.i.i6.i44.ph to i64
-  %i.cm = sub i64 %.0.lcssa.i.i.i.i.i.i.i52.pn191.le, %.sroa.04.07.i.i.i.i.i.i6.i44.ph215 ; 2 uses
+  %i.cm = sub i64 %8, %.sroa.04.07.i.i.i.i.i.i6.i44.ph215 ; 2 uses
   %i.cn = lshr i64 %i.cm, 3
   %i.co = add nuw nsw i64 %i.cn, 1
   %xtraiter = and i64 %i.co, 7                    ; 2 uses

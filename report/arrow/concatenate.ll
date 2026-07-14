@@ -203,12 +203,12 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.da, label %.thread76.loopexit, label %bb.o, !prof !46
 
 bb.o:                                             ; preds = %bb.n
+  %8 = sub i32 %.03782, %i.cs                     ; 2 uses
   %i.db = ptrtoint ptr %i.cq to i64
   %i.dc = ptrtoint ptr %i.co to i64
-  %8 = sub i32 %.03782, %i.cs                     ; 2 uses
-  %i.dd = add i64 %i.ci, -4
-  %9 = add i64 %i.dd, %i.db
-  %10 = sub i64 %9, %i.dc                         ; 2 uses
+  %i.dd = add i64 %i.ci, %i.db
+  %9 = sub i64 %i.dd, %i.dc
+  %10 = add i64 %9, -4                            ; 2 uses
   %i.de = lshr i64 %10, 2
   %i.df = add nuw nsw i64 %i.de, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 28
@@ -611,16 +611,16 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.cw, label %.thread76.loopexit, label %bb.o, !prof !46
 
 bb.o:                                             ; preds = %bb.n
+  %8 = load i64, ptr %i.cn, align 8, !tbaa !175, !noalias !968
+  %9 = sub i64 %.03782, %8                        ; 2 uses
   %i.cx = ptrtoint ptr %i.cp to i64
   %i.cy = ptrtoint ptr %i.cn to i64
-  %8 = load i64, ptr %i.cn, align 8, !tbaa !175, !noalias !968
-  %i.cz = sub i64 %.03782, %8                     ; 2 uses
-  %9 = add i64 %i.ch, -8
-  %i.da = add i64 %9, %i.cx
-  %10 = sub i64 %i.da, %i.cy                      ; 2 uses
-  %i.db = lshr i64 %10, 3
+  %10 = add i64 %i.ch, %i.cx
+  %i.cz = sub i64 %10, %i.cy
+  %i.da = add i64 %i.cz, -8                       ; 2 uses
+  %i.db = lshr i64 %i.da, 3
   %i.dc = add nuw nsw i64 %i.db, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %10, 40
+  %min.iters.check = icmp ult i64 %i.da, 40
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.o
@@ -635,7 +635,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.dg = shl i64 %n.vec, 3                       ; 2 uses
   %i.dh = getelementptr i8, ptr %i.ce, i64 %i.dg
   %i.di = getelementptr i8, ptr %i.cn, i64 %i.dg
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.cz, i64 0
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %9, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
@@ -669,7 +669,7 @@ middle.block:                                     ; preds = %vector.body
   %.010.i.i = phi ptr [ %i.ds, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader ] ; 2 uses
   %.079.i.i = phi ptr [ %i.dr, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader ] ; 2 uses
   %i.dp = load i64, ptr %.079.i.i, align 8, !tbaa !175, !noalias !968
-  %i.dq = add i64 %i.cz, %i.dp
+  %i.dq = add i64 %9, %i.dp
   store i64 %i.dq, ptr %.010.i.i, align 8, !tbaa !175, !noalias !968
   %i.dr = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8

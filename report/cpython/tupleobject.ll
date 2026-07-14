@@ -203,7 +203,6 @@ tuple_alloc.exit.thread53.sink.split:             ; preds = %.critedge.thread.i,
 
 tuple_alloc.exit.thread53:                        ; preds = %tuple_alloc.exit.thread53.sink.split, %tuple_alloc.exit
   %.2.i55 = phi ptr [ %i.z, %tuple_alloc.exit ], [ %.sink77, %tuple_alloc.exit.thread53.sink.split ] ; 6 uses
-  %.2.i5579 = ptrtoint ptr %.2.i55 to i64         ; 3 uses
   %i.ac = getelementptr i8, ptr %.2.i55, i64 32   ; 8 uses
   %i.ad = icmp eq i64 %.val, 1
   %i.ae = getelementptr i8, ptr %0, i64 32        ; 4 uses
@@ -230,16 +229,17 @@ _Py_RefcntAdd.exit:                               ; preds = %bb.m, %bb.n
   br i1 %i.an, label %.lr.ph60.preheader, label %_Py_memory_repeat.exit
 
 .lr.ph60.preheader:                               ; preds = %_Py_RefcntAdd.exit
+  %2 = ptrtoint ptr %.2.i55 to i64                ; 3 uses
   %i.ao = shl i64 %1, 3
-  %i.ap = add i64 %i.ao, %.2.i5579
+  %i.ap = add i64 %i.ao, %2
   %i.aq = add i64 %i.ap, 32
-  %i.ar = add i64 %.2.i5579, 40
+  %i.ar = add i64 %2, 40
   %umax = tail call i64 @llvm.umax.i64(i64 %i.aq, i64 %i.ar)
-  %2 = add i64 %umax, -33
-  %3 = sub i64 %2, %.2.i5579                      ; 2 uses
-  %i.as = lshr i64 %3, 3
+  %3 = sub i64 %umax, %2
+  %4 = add i64 %3, -33                            ; 2 uses
+  %i.as = lshr i64 %4, 3
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %3, 24
+  %min.iters.check = icmp ult i64 %4, 24
   br i1 %min.iters.check, label %.lr.ph60.preheader80, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph60.preheader

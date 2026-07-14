@@ -201,8 +201,8 @@ _ZNSt15__new_allocatorIN16OpenColorIO_v2_519GradingControlPointEE8allocateEmPKv.
   %i.q = ptrtoaddr ptr %i.j to i64
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.n to i64
-  %2 = add i64 %i.r, -8
-  %3 = sub i64 %2, %i.s                           ; 2 uses
+  %2 = sub i64 %i.r, %i.s
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.t = lshr i64 %3, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -363,8 +363,8 @@ _ZNSt15__new_allocatorIN16OpenColorIO_v2_519GradingControlPointEE8allocateEmPKv.
   %i.q = ptrtoaddr ptr %i.j to i64
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.n to i64
-  %3 = add i64 %i.r, -8
-  %4 = sub i64 %3, %i.s                           ; 2 uses
+  %3 = sub i64 %i.r, %i.s
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.t = lshr i64 %4, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 72
@@ -716,9 +716,9 @@ _ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit: ; pred
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.ae to i64
   %i.ap = add i64 %i.ai, %i.an
-  %i.aq = add i64 %i.ap, -8
-  %2 = add i64 %i.ao, %i.ah
-  %3 = sub i64 %i.aq, %2                          ; 2 uses
+  %i.aq = add i64 %i.ao, %i.ah
+  %2 = sub i64 %i.ap, %i.aq
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ar = lshr i64 %3, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72

@@ -204,15 +204,15 @@ bb.a:
   br i1 %.not151, label %._crit_edge.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.p = ptrtoint ptr %i.l to i64                 ; 4 uses
+  %i.p = ptrtoint ptr %i.l to i64                 ; 3 uses
   %i.q = add i64 %.idx, %i.p
   %i.r = add i64 %i.p, 72
   %umax = tail call i64 @llvm.umax.i64(i64 %i.q, i64 %i.r)
-  %2 = add i64 %umax, -72                         ; 2 uses
-  %i.s = icmp ne i64 %2, %i.p
+  %2 = sub i64 %umax, %i.p                        ; 2 uses
+  %i.s = icmp ne i64 %2, 72
   %umin = zext i1 %i.s to i64                     ; 2 uses
-  %3 = add i64 %i.p, %umin
-  %4 = sub i64 %2, %3
+  %3 = sub i64 %2, %umin
+  %4 = add i64 %3, -72
   %i.t = udiv i64 %4, 72
   %i.u = add nuw nsw i64 %i.t, %umin              ; 2 uses
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses

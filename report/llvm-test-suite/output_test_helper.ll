@@ -204,8 +204,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cx = ptrtoaddr ptr %i.cq to i64
   %i.cy = ptrtoint ptr %i.cv to i64
   %i.cz = ptrtoint ptr %i.cu to i64
-  %2 = add i64 %i.cy, -4
-  %3 = sub i64 %2, %i.cz                          ; 2 uses
+  %2 = sub i64 %i.cy, %i.cz
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.da = lshr i64 %3, 2
   %i.db = add nuw nsw i64 %i.da, 1                ; 2 uses
   %min.iters.check62 = icmp ult i64 %3, 44
@@ -608,8 +608,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bl = ptrtoaddr ptr %i.be to i64
   %i.bm = ptrtoint ptr %i.bj to i64
   %i.bn = ptrtoint ptr %i.bi to i64
-  %2 = add i64 %i.bm, -4
-  %3 = sub i64 %2, %i.bn                          ; 2 uses
+  %2 = sub i64 %i.bm, %i.bn
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.bo = lshr i64 %3, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -1012,8 +1012,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cx = ptrtoaddr ptr %i.cq to i64
   %i.cy = ptrtoint ptr %i.cv to i64
   %i.cz = ptrtoint ptr %i.cu to i64
-  %2 = add i64 %i.cy, -4
-  %3 = sub i64 %2, %i.cz                          ; 2 uses
+  %2 = sub i64 %i.cy, %i.cz
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.da = lshr i64 %3, 2
   %i.db = add nuw nsw i64 %i.da, 1                ; 2 uses
   %min.iters.check62 = icmp ult i64 %3, 44
@@ -1416,8 +1416,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bl = ptrtoaddr ptr %i.be to i64
   %i.bm = ptrtoint ptr %i.bj to i64
   %i.bn = ptrtoint ptr %i.bi to i64
-  %2 = add i64 %i.bm, -4
-  %3 = sub i64 %2, %i.bn                          ; 2 uses
+  %2 = sub i64 %i.bm, %i.bn
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.bo = lshr i64 %3, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44

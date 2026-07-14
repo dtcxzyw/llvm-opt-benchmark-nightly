@@ -204,11 +204,11 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = ptrtoint ptr %1 to i64
-  %2 = ptrtoint ptr %0 to i64                     ; 2 uses
-  %3 = add i64 %i.c, -8
-  %i.d = add i64 %2, 8
-  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.d)
-  %i.e = xor i64 %2, -1
+  %2 = add i64 %i.c, -8
+  %3 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %i.d = add i64 %3, 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.d)
+  %i.e = xor i64 %3, -1
   %i.f = add i64 %umax, %i.e                      ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
