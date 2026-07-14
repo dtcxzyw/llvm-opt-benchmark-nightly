@@ -203,7 +203,7 @@ bb.a:
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i) #7, !srcloc !13
   %.val242 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.e = getelementptr inbounds nuw i8, ptr %.val242, i64 %i.b
-  %.0.copyload.i251 = load i32, ptr %i.e, align 1 ; 8 uses
+  %.0.copyload.i251 = load i32, ptr %i.e, align 1 ; 7 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i251) #7, !srcloc !13
   %i.f = lshr i32 %.0.copyload.i251, 1
   %i.g = icmp ult i32 %.0.copyload.i, %i.f
@@ -218,27 +218,23 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 12
-  %.0.copyload.i252 = load i32, ptr %i.k, align 1 ; 3 uses
+  %.0.copyload.i252 = load i32, ptr %i.k, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i252) #7, !srcloc !13
-  %.not224 = icmp eq i32 %.0.copyload.i251, 0     ; 2 uses
-  %2 = mul i32 %.0.copyload.i252, 12
-  %3 = select i1 %.not224, i32 %2, i32 96
   %.val240 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.l = getelementptr inbounds nuw i8, ptr %.val240, i64 %i.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.0.copyload.i253 = load i32, ptr %i.m, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i253) #7, !srcloc !13
-  %4 = select i1 %.not224, i32 %.0.copyload.i253, i32 %i.h ; 2 uses
-  %i.n = add i32 %4, %3                           ; 2 uses
+  %i.n = add i32 %1, 104                          ; 2 uses
   br label %.loopexit267
 
 bb.d:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %.0.copyload.i254 = load i32, ptr %i.o, align 1 ; 2 uses
+  %.0.copyload.i254 = load i32, ptr %i.o, align 1 ; 6 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i254) #7, !srcloc !13
   %i.p = and i32 %.0.copyload.i251, 1             ; 5 uses
   %.not = icmp eq i32 %i.p, 0                     ; 2 uses
-  %i.q = select i1 %.not, i32 %.0.copyload.i254, i32 %i.h ; 7 uses
+  %i.q = select i1 %.not, i32 %.0.copyload.i254, i32 %i.h ; 3 uses
   %.val238 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.r = getelementptr inbounds nuw i8, ptr %.val238, i64 %i.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 12
@@ -276,15 +272,16 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not223, label %.loopexit267, label %.preheader266
 
 .loopexit267:                                     ; preds = %bb.f, %bb.e, %.preheader266, %bb.d, %bb.c
-  %.pre-phi = phi i32 [ %4, %bb.c ], [ %i.q, %bb.d ], [ %i.q, %.preheader266 ], [ %i.q, %bb.e ], [ %i.q, %bb.f ]
   %.1212 = phi i32 [ %i.n, %bb.c ], [ %i.q, %bb.d ], [ %i.v, %bb.f ], [ %.0211, %bb.e ], [ %.0211, %.preheader266 ] ; 2 uses
   %.0209 = phi i32 [ %.0.copyload.i251, %bb.c ], [ %i.p, %bb.d ], [ %i.p, %.preheader266 ], [ %i.p, %bb.e ], [ %i.p, %bb.f ]
   %.0207 = phi i32 [ %i.n, %bb.c ], [ %i.v, %bb.d ], [ %i.v, %.preheader266 ], [ %i.v, %bb.e ], [ %i.v, %bb.f ] ; 4 uses
   %.0206 = phi i32 [ %.0.copyload.i252, %bb.c ], [ %.0.copyload.i255, %bb.d ], [ %.0.copyload.i255, %.preheader266 ], [ %.0.copyload.i255, %bb.e ], [ %.0.copyload.i255, %bb.f ]
-  %.not225 = icmp eq i32 %.0209, 0
+  %.0 = phi i32 [ %.0.copyload.i253, %bb.c ], [ %.0.copyload.i254, %bb.d ], [ %.0.copyload.i254, %.preheader266 ], [ %.0.copyload.i254, %bb.e ], [ %.0.copyload.i254, %bb.f ]
+  %.not225 = icmp eq i32 %.0209, 0                ; 2 uses
   %i.ac = mul i32 %.0206, 12
-  %i.ad = select i1 %.not225, i32 %i.ac, i32 96
-  %i.ae = add i32 %i.ad, %.pre-phi                ; 2 uses
+  %2 = select i1 %.not225, i32 %i.ac, i32 96
+  %i.ad = select i1 %.not225, i32 %.0, i32 %i.h
+  %i.ae = add i32 %2, %i.ad                       ; 2 uses
   %.not226 = icmp eq i32 %i.ae, %.1212
   br i1 %.not226, label %.loopexit265, label %.preheader264
 
