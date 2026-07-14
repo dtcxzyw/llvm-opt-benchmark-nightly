@@ -1,0 +1,8 @@
+velox/EventBase.bc: failed to run opt
+velox/ThreadPoolExecutor.bc: failed to run opt
+velox/DateTimeFunctionsRegistration.bc: timeout
+velox/ArrayFunctionsRegistration.bc: timeout
+velox/MathematicalFunctionsRegistration.bc: timeout
+velox/ProbabilityTrigonometricFunctionsRegistration.bc: timeout
+velox/GeometryFunctionsRegistration.bc: timeout
+velox/StringFunctionsRegistration.bc: timeout
