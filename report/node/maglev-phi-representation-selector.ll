@@ -204,7 +204,6 @@ bb.y:                                             ; preds = %bb.x
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 408
   %i.gh = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
-  %7 = sub i64 %i.fv, %i.fw
   br label %bb.aa
 
 bb.z:                                             ; preds = %._crit_edge.i.i
@@ -325,7 +324,7 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft18SnapshotTableEntryIPNS0_
   store ptr %i.hh, ptr %i.ii, align 8
   %i.ik = load ptr, ptr %i.ac, align 8            ; 3 uses
   %i.il = load ptr, ptr %i.aa, align 8            ; 5 uses
-  %i.im = ptrtoint ptr %i.ik to i64               ; 4 uses
+  %i.im = ptrtoint ptr %i.ik to i64               ; 3 uses
   %i.in = ptrtoint ptr %i.il to i64               ; 5 uses
   %i.io = sub i64 %i.im, %i.in                    ; 4 uses
   %i.ip = ashr exact i64 %i.io, 3                 ; 2 uses
@@ -405,24 +404,24 @@ _ZN2v88internal10ZoneVectorIPNS0_6maglev9ValueNodeEE19PrepareForInsertionEPKS4_m
 
 ._crit_edge.i.i.i.i:                              ; preds = %_ZN2v88internal10ZoneVectorIPNS0_6maglev9ValueNodeEE19PrepareForInsertionEPKS4_mPm.exit.i.i, %_ZN2v88internal10ZoneVectorIPNS0_6maglev9ValueNodeEE19PrepareForInsertionEPKS4_mPm.exit.thread.i.i
   %.pn.i.i = phi ptr [ %i.il, %_ZN2v88internal10ZoneVectorIPNS0_6maglev9ValueNodeEE19PrepareForInsertionEPKS4_mPm.exit.i.i ], [ %i.jp, %_ZN2v88internal10ZoneVectorIPNS0_6maglev9ValueNodeEE19PrepareForInsertionEPKS4_mPm.exit.thread.i.i ] ; 2 uses
-  %.pn.i.i74 = ptrtoint ptr %.pn.i.i to i64       ; 3 uses
   %.0.lcssa.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 %i.io ; 4 uses
   %i.js = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 %i.fx
   %.pre20.i.i.i.i = load ptr, ptr %i.hh, align 8  ; 2 uses
-  %i.jt = add i64 %i.in, -1
-  %i.ju = add i64 %7, %.pn.i.i74
-  %i.jv = add i64 %i.ju, %i.im
-  %i.jw = sub i64 %i.jv, %i.in
-  %8 = add i64 %.pn.i.i74, 8
-  %i.jx = add i64 %8, %i.im
-  %9 = sub i64 %i.jx, %i.in
-  %umax = call i64 @llvm.umax.i64(i64 %i.jw, i64 %9)
-  %i.jy = add i64 %i.jt, %umax
-  %10 = add i64 %.pn.i.i74, %i.im
-  %11 = sub i64 %i.jy, %10                        ; 2 uses
-  %i.jz = lshr i64 %11, 3
+  %7 = ptrtoint ptr %.pn.i.i to i64               ; 2 uses
+  %i.jt = add i64 %7, %i.im                       ; 2 uses
+  %i.ju = add i64 %i.jt, %i.fv
+  %i.jv = add i64 %i.in, %i.fw
+  %i.jw = sub i64 %i.ju, %i.jv
+  %8 = sub i64 %i.jt, %i.in
+  %i.jx = add i64 %8, 8
+  %9 = call i64 @llvm.umax.i64(i64 %i.jw, i64 %i.jx)
+  %10 = add i64 %9, %i.in
+  %i.jy = add i64 %7, %i.im
+  %11 = xor i64 %i.jy, -1
+  %12 = add i64 %10, %11                          ; 2 uses
+  %i.jz = lshr i64 %12, 3
   %i.ka = add nuw nsw i64 %i.jz, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %11, 24
+  %min.iters.check = icmp ult i64 %12, 24
   br i1 %min.iters.check, label %.lr.ph18.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %._crit_edge.i.i.i.i

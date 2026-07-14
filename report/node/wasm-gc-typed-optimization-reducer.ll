@@ -201,8 +201,8 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4
   store ptr %i.ah, ptr %i.bi, align 8
   %i.bk = load ptr, ptr %i.j, align 8             ; 3 uses
   %i.bl = load ptr, ptr %i.k, align 8             ; 5 uses
-  %i.bm = ptrtoint ptr %i.bk to i64               ; 4 uses
-  %i.bn = ptrtoint ptr %i.bl to i64               ; 5 uses
+  %i.bm = ptrtoint ptr %i.bk to i64               ; 3 uses
+  %i.bn = ptrtoint ptr %i.bl to i64               ; 4 uses
   %i.bo = sub i64 %i.bm, %i.bn                    ; 4 uses
   %i.bp = ashr exact i64 %i.bo, 2                 ; 2 uses
   %i.bq = xor i64 %i.bp, -1
@@ -283,21 +283,19 @@ _ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.
 
 ._crit_edge.i.i.i.i:                              ; preds = %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.i.i, %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.thread.i.i
   %.pn.i.i = phi ptr [ %i.bl, %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.i.i ], [ %i.cr, %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.thread.i.i ] ; 2 uses
-  %.pn.i.i39 = ptrtoint ptr %.pn.i.i to i64       ; 3 uses
   %.0.lcssa.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 %i.bo ; 4 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 %.idx.i.i
   %.pre20.i.i.i.i = load i32, ptr %i.ah, align 4  ; 2 uses
-  %6 = add i64 %i.bn, -1
-  %7 = add i64 %.idx.i.i, %.pn.i.i39
-  %i.cv = add i64 %7, %i.bm
-  %i.cw = sub i64 %i.cv, %i.bn
-  %i.cx = add i64 %.pn.i.i39, 4
-  %i.cy = add i64 %i.cx, %i.bm
-  %8 = sub i64 %i.cy, %i.bn
-  %umax = call i64 @llvm.umax.i64(i64 %i.cw, i64 %8)
-  %i.cz = add i64 %6, %umax
-  %9 = add i64 %.pn.i.i39, %i.bm
-  %10 = sub i64 %i.cz, %9                         ; 2 uses
+  %6 = ptrtoint ptr %.pn.i.i to i64               ; 2 uses
+  %i.cv = add i64 %6, %i.bm
+  %i.cw = sub i64 %i.cv, %i.bn                    ; 2 uses
+  %i.cx = add i64 %i.cw, %.idx.i.i
+  %i.cy = add i64 %i.cw, 4
+  %7 = call i64 @llvm.umax.i64(i64 %i.cx, i64 %i.cy)
+  %8 = add i64 %7, %i.bn
+  %i.cz = add i64 %6, %i.bm
+  %9 = xor i64 %i.cz, -1
+  %10 = add i64 %8, %9                            ; 2 uses
   %i.da = lshr i64 %10, 2
   %i.db = add nuw nsw i64 %i.da, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 28
@@ -700,7 +698,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -735,11 +732,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -8
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 3
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -8                           ; 2 uses
+  %i.s = lshr i64 %3, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 72
+  %min.iters.check = icmp ult i64 %3, 72
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
