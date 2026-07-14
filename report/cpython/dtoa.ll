@@ -204,7 +204,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @lshift(ptr noundef %0, i32 noundef range(i32 1, -2147483648) %1) unnamed_addr #0 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = getelementptr i8, ptr %0, i64 24         ; 7 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !7
@@ -355,13 +354,14 @@ bb.l:                                             ; preds = %bb.h, %bb.c
   br i1 %.not57, label %.preheader.preheader, label %bb.m
 
 .preheader.preheader:                             ; preds = %._crit_edge70
+  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
   %i.by = shl nsw i64 %i.bv, 2
   %i.bz = add i64 %i.by, %2
   %i.ca = add i64 %i.bz, 24
   %i.cb = add i64 %2, 28
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ca, i64 %i.cb)
-  %3 = add i64 %umax, -25
-  %4 = sub i64 %3, %2                             ; 2 uses
+  %3 = sub i64 %umax, %2
+  %4 = add i64 %3, -25                            ; 2 uses
   %i.cc = lshr i64 %4, 2
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 60

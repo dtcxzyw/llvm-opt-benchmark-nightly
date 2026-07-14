@@ -201,8 +201,6 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %_ZNSt6vectorIhSaIhE
   %.sroa.10.0 = phi ptr [ %i.m, %bb.d ], [ %i.m, %bb.c ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ]
   %.sroa.041.0 = phi ptr [ %i.l, %bb.d ], [ %i.l, %bb.c ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 11 uses
   %.0.i.i.i.i.i = phi ptr [ %i.m, %bb.d ], [ %i.n, %bb.c ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 5 uses
-  %.0.i.i.i.i.i61 = ptrtoint ptr %.0.i.i.i.i.i to i64
-  %.sroa.041.062 = ptrtoint ptr %.sroa.041.0 to i64
   %i.q = tail call i32 @mincore(ptr noundef %i.f, i64 noundef %i.g, ptr noundef %.sroa.041.0) #22
   %.not = icmp eq i32 %i.q, 0
   br i1 %.not, label %bb.e, label %.loopexit
@@ -230,7 +228,9 @@ bb.h:                                             ; preds = %bb.e
   br i1 %.not4445, label %.loopexit, label %.lr.ph.split.us.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %bb.h
-  %i.w = sub i64 %.0.i.i.i.i.i61, %.sroa.041.062  ; 3 uses
+  %3 = ptrtoint ptr %.0.i.i.i.i.i to i64
+  %4 = ptrtoint ptr %.sroa.041.0 to i64
+  %i.w = sub i64 %3, %4                           ; 3 uses
   %min.iters.check = icmp ult i64 %i.w, 8
   br i1 %min.iters.check, label %.lr.ph.split.us.preheader65, label %vector.ph
 

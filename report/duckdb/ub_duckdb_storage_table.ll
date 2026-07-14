@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %_ZNK6duckdb14TableI
 
 _ZNSt12_Vector_baseIN6duckdb12optional_idxESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !3397 ; 3 uses
-  %i.ao = ptrtoint ptr %i.an to i64               ; 2 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !3397 ; 4 uses
+  %i.ao = ptrtoint ptr %i.an to i64
   %i.ap = sub i64 %i.ao, %i.aj
   %i.aq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #38
           to label %.noexc81 unwind label %bb.i   ; 7 uses
@@ -216,11 +216,12 @@ _ZNSt12_Vector_baseIN6duckdb12optional_idxESaIS1_EE11_M_allocateEm.exit.i: ; pre
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc81
   %i.ar = ptrtoaddr ptr %i.aq to i64
-  %12 = add i64 %i.ao, -8
-  %i.as = sub i64 %12, %i.aj                      ; 2 uses
-  %i.at = lshr i64 %i.as, 3
+  %12 = ptrtoint ptr %i.an to i64
+  %i.as = sub i64 %12, %i.aj
+  %13 = add i64 %i.as, -8                         ; 2 uses
+  %i.at = lshr i64 %13, 3
   %i.au = add nuw nsw i64 %i.at, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.as, 72
+  %min.iters.check = icmp ult i64 %13, 72
   %i.av = sub i64 %i.aj, %i.ar
   %diff.check = icmp ugt i64 %i.av, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -623,7 +624,6 @@ _ZN6duckdb20ExceptionFormatValueD2Ev.exit7:       ; preds = %bb.e, %_ZNKSt7__cxx
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE17_M_realloc_insertIJRmEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !3397 ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !3396   ; 7 uses
@@ -644,7 +644,7 @@ _ZNKSt6vectorIN6duckdb12optional_idxESaIS1_EE12_M_check_lenEmPKc.exit: ; preds =
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -661,11 +661,12 @@ _ZNSt16allocator_traitsISaIN6duckdb12optional_idxEEE9constructIS1_JRmEEEvRS2_PT_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt16allocator_traitsISaIN6duckdb12optional_idxEEE9constructIS1_JRmEEEvRS2_PT_DpOT0_.exit
-  %4 = add i64 %3, -8
-  %i.t = sub i64 %4, %i.e                         ; 2 uses
-  %i.u = lshr i64 %i.t, 3
+  %3 = ptrtoint ptr %1 to i64
+  %i.t = sub i64 %3, %i.e
+  %4 = add i64 %i.t, -8                           ; 2 uses
+  %i.u = lshr i64 %4, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 72
+  %min.iters.check = icmp ult i64 %4, 72
   %i.w = sub i64 %i.e, %i.q
   %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -724,15 +725,16 @@ _ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ;
   br i1 %.not10.i.i.i.i26, label %_ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit32, label %.lr.ph.i.i.i.i27.preheader
 
 .lr.ph.i.i.i.i27.preheader:                       ; preds = %_ZNSt6vectorIN6duckdb12optional_idxESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
-  %5 = add i64 %i.d, -8
-  %i.ai = sub i64 %5, %3                          ; 2 uses
-  %i.aj = lshr i64 %i.ai, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.ai = sub i64 %i.d, %5
+  %6 = add i64 %i.ai, -8                          ; 2 uses
+  %i.aj = lshr i64 %6, 3
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
-  %min.iters.check54 = icmp ult i64 %i.ai, 104
+  %min.iters.check54 = icmp ult i64 %6, 104
   br i1 %min.iters.check54, label %.lr.ph.i.i.i.i27.preheader69, label %vector.memcheck50
 
 vector.memcheck50:                                ; preds = %.lr.ph.i.i.i.i27.preheader
-  %i.al = sub i64 %.0.lcssa.i.i.i.i51, %3
+  %i.al = sub i64 %.0.lcssa.i.i.i.i51, %i.m
   %i.am = add i64 %i.al, 7
   %diff.check52 = icmp ult i64 %i.am, 31
   br i1 %diff.check52, label %.lr.ph.i.i.i.i27.preheader69, label %vector.ph55

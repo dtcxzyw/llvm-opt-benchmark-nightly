@@ -204,15 +204,15 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 .lr.ph.i.preheader.i:                             ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i, %.noexc170
   %i.dj = phi ptr [ %i.dg, %.noexc170 ], [ %i.di, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.dk = phi ptr [ %i.df, %.noexc170 ], [ %i.dh, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 7 uses
-  %9 = ptrtoint ptr %i.dj to i64
-  %i.dl = ptrtoint ptr %i.dk to i64
-  %10 = load ptr, ptr %7, align 8, !tbaa !675     ; 4 uses
-  %11 = add i64 %9, -4
-  %12 = sub i64 %11, %i.dl                        ; 2 uses
+  %9 = load ptr, ptr %7, align 8, !tbaa !675      ; 4 uses
+  %i.dl = ptrtoint ptr %i.dj to i64
+  %10 = ptrtoint ptr %i.dk to i64
+  %11 = sub i64 %i.dl, %10
+  %12 = add i64 %11, -4                           ; 2 uses
   %i.dm = lshr i64 %12, 2
   %i.dn = add nuw nsw i64 %i.dm, 1                ; 2 uses
   %min.iters.check1515 = icmp ult i64 %12, 44
-  %i.do = ptrtoaddr ptr %10 to i64
+  %i.do = ptrtoaddr ptr %9 to i64
   %i.dp = ptrtoaddr ptr %i.dk to i64
   %i.dq = sub i64 %i.dp, %i.do
   %diff.check = icmp ugt i64 %i.dq, -32
@@ -222,14 +222,14 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 vector.ph1516:                                    ; preds = %.lr.ph.i.preheader.i
   %n.vec1518 = and i64 %i.dn, 9223372036854775800 ; 3 uses
   %i.dr = shl i64 %n.vec1518, 2                   ; 2 uses
-  %i.ds = getelementptr i8, ptr %10, i64 %i.dr
+  %i.ds = getelementptr i8, ptr %9, i64 %i.dr
   %i.dt = getelementptr i8, ptr %i.dk, i64 %i.dr
   br label %vector.body1519
 
 vector.body1519:                                  ; preds = %vector.body1519, %vector.ph1516
   %index1520 = phi i64 [ 0, %vector.ph1516 ], [ %index.next1524, %vector.body1519 ] ; 2 uses
   %i.du = shl i64 %index1520, 2                   ; 2 uses
-  %next.gep = getelementptr i8, ptr %10, i64 %i.du ; 2 uses
+  %next.gep = getelementptr i8, ptr %9, i64 %i.du ; 2 uses
   %next.gep1521 = getelementptr i8, ptr %i.dk, i64 %i.du ; 2 uses
   %i.dv = getelementptr i8, ptr %next.gep1521, i64 16
   %wide.load1522 = load <4 x i32>, ptr %next.gep1521, align 4, !tbaa !3
@@ -246,7 +246,7 @@ middle.block1525:                                 ; preds = %vector.body1519
   br i1 %cmp.n1526, label %.loopexit570, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i.preheader.i, %middle.block1525
-  %.08.i.i.ph = phi ptr [ %10, %.lr.ph.i.preheader.i ], [ %i.ds, %middle.block1525 ]
+  %.08.i.i.ph = phi ptr [ %9, %.lr.ph.i.preheader.i ], [ %i.ds, %middle.block1525 ]
   %.057.i.i.ph = phi ptr [ %i.dk, %.lr.ph.i.preheader.i ], [ %i.dt, %middle.block1525 ]
   br label %.lr.ph.i.i
 
@@ -302,15 +302,15 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %.pr = phi i64 [ %i.eh, %.noexc182 ], [ %i.ed, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 7 uses
   %i.em = phi ptr [ %i.ej, %.noexc182 ], [ %i.ek, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 2 uses
   %i.en = phi ptr [ %i.ei, %.noexc182 ], [ %i.eb, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 5 uses
-  %13 = ptrtoint ptr %i.em to i64
-  %i.eo = ptrtoint ptr %i.en to i64
-  %14 = load ptr, ptr %8, align 8, !tbaa !675     ; 7 uses
-  %15 = add i64 %13, -4
-  %16 = sub i64 %15, %i.eo                        ; 2 uses
+  %13 = load ptr, ptr %8, align 8, !tbaa !675     ; 7 uses
+  %i.eo = ptrtoint ptr %i.em to i64
+  %14 = ptrtoint ptr %i.en to i64
+  %15 = sub i64 %i.eo, %14
+  %16 = add i64 %15, -4                           ; 2 uses
   %i.ep = lshr i64 %16, 2
   %i.eq = add nuw nsw i64 %i.ep, 1                ; 2 uses
   %min.iters.check1532 = icmp ult i64 %16, 44
-  %i.er = ptrtoaddr ptr %14 to i64
+  %i.er = ptrtoaddr ptr %13 to i64
   %i.es = ptrtoaddr ptr %i.en to i64
   %i.et = sub i64 %i.es, %i.er
   %diff.check1530 = icmp ugt i64 %i.et, -32
@@ -320,14 +320,14 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 vector.ph1533:                                    ; preds = %.lr.ph.i.preheader.i174
   %n.vec1535 = and i64 %i.eq, 9223372036854775800 ; 3 uses
   %i.eu = shl i64 %n.vec1535, 2                   ; 2 uses
-  %i.ev = getelementptr i8, ptr %14, i64 %i.eu
+  %i.ev = getelementptr i8, ptr %13, i64 %i.eu
   %i.ew = getelementptr i8, ptr %i.en, i64 %i.eu
   br label %vector.body1536
 
 vector.body1536:                                  ; preds = %vector.body1536, %vector.ph1533
   %index1537 = phi i64 [ 0, %vector.ph1533 ], [ %index.next1542, %vector.body1536 ] ; 2 uses
   %i.ex = shl i64 %index1537, 2                   ; 2 uses
-  %next.gep1538 = getelementptr i8, ptr %14, i64 %i.ex ; 2 uses
+  %next.gep1538 = getelementptr i8, ptr %13, i64 %i.ex ; 2 uses
   %next.gep1539 = getelementptr i8, ptr %i.en, i64 %i.ex ; 2 uses
   %i.ey = getelementptr i8, ptr %next.gep1539, i64 16
   %wide.load1540 = load <4 x i32>, ptr %next.gep1539, align 4, !tbaa !3
@@ -344,7 +344,7 @@ middle.block1543:                                 ; preds = %vector.body1536
   br i1 %cmp.n1544, label %.loopexit1623, label %.lr.ph.i.i175.preheader
 
 .lr.ph.i.i175.preheader:                          ; preds = %.lr.ph.i.preheader.i174, %middle.block1543
-  %.08.i.i176.ph = phi ptr [ %14, %.lr.ph.i.preheader.i174 ], [ %i.ev, %middle.block1543 ]
+  %.08.i.i176.ph = phi ptr [ %13, %.lr.ph.i.preheader.i174 ], [ %i.ev, %middle.block1543 ]
   %.057.i.i177.ph = phi ptr [ %i.en, %.lr.ph.i.preheader.i174 ], [ %i.ew, %middle.block1543 ]
   br label %.lr.ph.i.i175
 
@@ -375,7 +375,7 @@ vector.ph1549:                                    ; preds = %.lr.ph.i185.prehead
 vector.body1552:                                  ; preds = %vector.body1552, %vector.ph1549
   %index1553 = phi i64 [ 0, %vector.ph1549 ], [ %index.next1557, %vector.body1552 ] ; 2 uses
   %vector.recur1554 = phi <4 x i32> [ <i32 poison, i32 poison, i32 poison, i32 0>, %vector.ph1549 ], [ %i.fi, %vector.body1552 ]
-  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %index1553 ; 3 uses
+  %i.ff = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %index1553 ; 3 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 16 ; 2 uses
   %wide.load1555 = load <4 x i32>, ptr %i.ff, align 4, !tbaa !3 ; 2 uses
   %wide.load1556 = load <4 x i32>, ptr %i.fg, align 4, !tbaa !3 ; 3 uses
@@ -413,7 +413,7 @@ middle.block1558:                                 ; preds = %vector.body1552
 .lr.ph.i185:                                      ; preds = %.lr.ph.i185.preheader1673, %.lr.ph.i185
   %.01418.i186 = phi i64 [ %i.fw, %.lr.ph.i185 ], [ %.01418.i186.ph, %.lr.ph.i185.preheader1673 ] ; 2 uses
   %.017.i187 = phi i32 [ %i.ft, %.lr.ph.i185 ], [ %.017.i187.ph, %.lr.ph.i185.preheader1673 ]
-  %i.fr = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %.01418.i186 ; 2 uses
+  %i.fr = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %.01418.i186 ; 2 uses
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !3  ; 3 uses
   %i.ft = lshr i32 %i.fs, 31                      ; 2 uses
   %i.fu = shl i32 %i.fs, 1
@@ -440,7 +440,7 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZN3fmt3v126detail6bufferIjE9push_backERKj.exit.i191
 
 _ZN3fmt3v126detail6bufferIjE9push_backERKj.exit.i191: ; preds = %.noexc195, %bb.r
-  %i.ga = phi ptr [ %14, %bb.r ], [ %.pre678, %.noexc195 ]
+  %i.ga = phi ptr [ %13, %bb.r ], [ %.pre678, %.noexc195 ]
   %.pre-phi.i.i192 = phi i64 [ %i.fx, %bb.r ], [ %.pre2.i.i194, %.noexc195 ]
   %i.gb = phi i64 [ %.pr, %bb.r ], [ %.pre.i.i193, %.noexc195 ]
   store i64 %.pre-phi.i.i192, ptr %i.r, align 8, !tbaa !685
@@ -843,12 +843,12 @@ _ZN11OpenImageIO4v3_14pugi4impl19xml_buffered_writer12write_directEPKcm.exit: ; 
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN11OpenImageIO4v3_14pugi4impl20node_output_pi_valueERNS2_19xml_buffered_writerEPKc(ptr noundef nonnull align 8 dereferenceable(10260) %0, ptr noundef %1) local_unnamed_addr #1 {
 bb.a:
+  %2 = ptrtoint ptr %0 to i64                     ; 2 uses
   %i.a = load i8, ptr %1, align 1, !tbaa !62      ; 2 uses
   %.not21 = icmp eq i8 %i.a, 0
   br i1 %.not21, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.a
-  %2 = ptrtoint ptr %0 to i64                     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 10248 ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10256 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2048 ; 15 uses
@@ -1251,12 +1251,12 @@ _ZN11OpenImageIO4v3_14pugi4impl19xml_buffered_writer5writeEc.exit31: ; preds = %
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN11OpenImageIO4v3_14pugi4impl19text_output_escapedERNS2_19xml_buffered_writerEPKcNS2_11chartypex_tEj(ptr noundef nonnull align 8 dereferenceable(10260) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
+  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
   %i.a = load i8, ptr %1, align 1, !tbaa !62
   %.not76 = icmp eq i8 %i.a, 0
   br i1 %.not76, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.a
-  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 10248 ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10256 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2048 ; 15 uses
@@ -1659,7 +1659,7 @@ bb.ak:                                            ; preds = %.sink.split, %bb.ah
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN11OpenImageIO4v3_14pugi4impl19xml_buffered_writer5flushEPKcm(ptr noundef nonnull align 8 dereferenceable(10260) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #12 align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.a = ptrtoint ptr %0 to i64
   %i.b = icmp eq i64 %2, 0
   br i1 %i.b, label %bb.j, label %bb.b
 
@@ -1789,11 +1789,12 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.g
   %i.an = ptrtoint ptr %i.am to i64
-  %3 = add i64 %i.an, -2052
-  %i.ao = sub i64 %3, %i.a                        ; 2 uses
-  %i.ap = lshr i64 %i.ao, 2
+  %3 = ptrtoint ptr %0 to i64
+  %i.ao = sub i64 %i.an, %3
+  %4 = add i64 %i.ao, -2052                       ; 2 uses
+  %i.ap = lshr i64 %4, 2
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ao, 28
+  %min.iters.check = icmp ult i64 %4, 28
   br i1 %min.iters.check, label %.lr.ph.i24.i.preheader34, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i24.i.preheader
@@ -2196,8 +2197,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cx = ptrtoaddr ptr %i.cq to i64
   %i.cy = ptrtoint ptr %i.cv to i64
   %i.cz = ptrtoint ptr %i.cu to i64
-  %2 = add i64 %i.cy, -4
-  %3 = sub i64 %2, %i.cz                          ; 2 uses
+  %2 = sub i64 %i.cy, %i.cz
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.da = lshr i64 %3, 2
   %i.db = add nuw nsw i64 %i.da, 1                ; 2 uses
   %min.iters.check62 = icmp ult i64 %3, 44
@@ -2600,8 +2601,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bl = ptrtoaddr ptr %i.be to i64
   %i.bm = ptrtoint ptr %i.bj to i64
   %i.bn = ptrtoint ptr %i.bi to i64
-  %2 = add i64 %i.bm, -4
-  %3 = sub i64 %2, %i.bn                          ; 2 uses
+  %2 = sub i64 %i.bm, %i.bn
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.bo = lshr i64 %3, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -3004,8 +3005,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.cx = ptrtoaddr ptr %i.cq to i64
   %i.cy = ptrtoint ptr %i.cv to i64
   %i.cz = ptrtoint ptr %i.cu to i64
-  %2 = add i64 %i.cy, -4
-  %3 = sub i64 %2, %i.cz                          ; 2 uses
+  %2 = sub i64 %i.cy, %i.cz
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.da = lshr i64 %3, 2
   %i.db = add nuw nsw i64 %i.da, 1                ; 2 uses
   %min.iters.check62 = icmp ult i64 %3, 44
@@ -3408,8 +3409,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   %i.bl = ptrtoaddr ptr %i.be to i64
   %i.bm = ptrtoint ptr %i.bj to i64
   %i.bn = ptrtoint ptr %i.bi to i64
-  %2 = add i64 %i.bm, -4
-  %3 = sub i64 %2, %i.bn                          ; 2 uses
+  %2 = sub i64 %i.bm, %i.bn
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.bo = lshr i64 %3, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44

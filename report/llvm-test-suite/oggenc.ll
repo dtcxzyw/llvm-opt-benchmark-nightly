@@ -204,7 +204,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i32 @push(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef nonnull captures(none) %2, ptr nofree noundef nonnull captures(none) %3, ptr noundef %4, i32 noundef %5, ptr noundef %6, i32 noundef %7, i64 noundef %8) unnamed_addr #32 {
 bb.a:
-  %9 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.a = load i32, ptr %2, align 4
   %i.b = sext i32 %i.a to i64                     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
@@ -368,7 +367,7 @@ sum.exit:                                         ; preds = %.lr.ph.i.prol.loope
   %i.by = sub i64 %i.bw, %i.bx
   %i.bz = ashr exact i64 %i.by, 2
   %i.ca = sdiv i64 %i.bz, %i.v
-  %i.cb = add i64 %i.ca, %.080.lcssa              ; 6 uses
+  %i.cb = add i64 %i.ca, %.080.lcssa              ; 7 uses
   %i.cc = load i32, ptr %i.c, align 4             ; 2 uses
   %i.cd = zext i32 %i.cc to i64
   %i.ce = icmp ult i64 %i.cb, %i.cd
@@ -380,18 +379,20 @@ bb.e:                                             ; preds = %._crit_edge99
 
 .lr.ph105.preheader:                              ; preds = %bb.e
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.cb ; 3 uses
-  %i.ch = shl i64 %i.cb, 2                        ; 2 uses
+  %9 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %i.ch = shl i64 %i.cb, 2
   %i.ci = add i64 %i.ch, %9
   %i.cj = add i64 %i.ci, 4
   %i.ck = shl nuw nsw i64 %i.e, 2
   %i.cl = add i64 %i.ck, %9
   %umax = tail call i64 @llvm.umax.i64(i64 %i.cj, i64 %i.cl)
-  %10 = xor i64 %9, -1
-  %i.cm = add i64 %umax, %10
-  %11 = sub i64 %i.cm, %i.ch                      ; 2 uses
-  %i.cn = lshr i64 %11, 2
+  %10 = shl i64 %i.cb, 2
+  %i.cm = add i64 %10, %9
+  %11 = xor i64 %i.cm, -1
+  %12 = add i64 %umax, %11                        ; 2 uses
+  %i.cn = lshr i64 %12, 2
   %i.co = add nuw nsw i64 %i.cn, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %11, 60
+  %min.iters.check = icmp ult i64 %12, 60
   %i.cp = shl i64 %i.cb, 2
   %diff.check = icmp ugt i64 %i.cp, -32
   %or.cond = or i1 %min.iters.check, %diff.check

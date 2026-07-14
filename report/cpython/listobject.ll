@@ -203,7 +203,6 @@ list_new_prealloc.exit._crit_edge.i:              ; preds = %list_new_prealloc.e
 bb.k:                                             ; preds = %list_new_prealloc.exit._crit_edge.i, %list_new_prealloc.exit.thread45.i
   %i.w = phi ptr [ %i.n, %list_new_prealloc.exit.thread45.i ], [ %.pre.i, %list_new_prealloc.exit._crit_edge.i ] ; 8 uses
   %.0.i47.i = phi ptr [ %i.i, %list_new_prealloc.exit.thread45.i ], [ %i.u, %list_new_prealloc.exit._crit_edge.i ] ; 3 uses
-  %2 = ptrtoint ptr %i.w to i64                   ; 3 uses
   %i.x = getelementptr i8, ptr %.0.i47.i, i64 24
   %i.y = icmp eq i64 %.val.i, 1
   %i.z = getelementptr i8, ptr %0, i64 24
@@ -231,6 +230,7 @@ _Py_RefcntAdd.exit.i:                             ; preds = %bb.m, %bb.l
   br i1 %i.aj, label %.lr.ph52.i.preheader, label %_Py_memory_repeat.exit.i
 
 .lr.ph52.i.preheader:                             ; preds = %_Py_RefcntAdd.exit.i
+  %2 = ptrtoint ptr %i.w to i64                   ; 3 uses
   %i.ak = shl i64 %1, 3
   %i.al = add i64 %i.ak, %2
   %i.am = add i64 %2, 8

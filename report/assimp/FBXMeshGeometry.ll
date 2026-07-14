@@ -204,8 +204,8 @@ bb.af:                                            ; preds = %bb.ae
 .lr.ph.i.i.preheader:                             ; preds = %bb.af
   %i.fg = ptrtoint ptr %i.ff to i64
   %i.fh = ptrtoint ptr %i.fd to i64
-  %12 = add i64 %i.fg, -4
-  %13 = sub i64 %12, %i.fh                        ; 2 uses
+  %12 = sub i64 %i.fg, %i.fh
+  %13 = add i64 %12, -4                           ; 2 uses
   %i.fi = lshr i64 %13, 2
   %i.fj = add nuw nsw i64 %i.fi, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %13, 12
@@ -608,11 +608,11 @@ bb.o:                                             ; preds = %_ZNSt6vectorIiSaIiE
   unreachable
 
 _ZNSt6vectorIiSaIiEE2atEm.exit:                   ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit
-  %7 = ptrtoint ptr %i.cx to i64
+  %7 = load i32, ptr %i.cx, align 4               ; 2 uses
   %i.cy = ptrtoint ptr %i.cw to i64
-  %8 = load i32, ptr %i.cx, align 4               ; 2 uses
-  %9 = add i64 %i.cy, -4
-  %10 = sub i64 %9, %7                            ; 2 uses
+  %8 = ptrtoint ptr %i.cx to i64
+  %9 = sub i64 %i.cy, %8
+  %10 = add i64 %9, -4                            ; 2 uses
   %i.cz = lshr i64 %10, 2
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 28
@@ -622,7 +622,7 @@ vector.ph:                                        ; preds = %_ZNSt6vectorIiSaIiE
   %n.vec = and i64 %i.da, 9223372036854775800     ; 3 uses
   %i.db = shl i64 %n.vec, 2
   %i.dc = getelementptr i8, ptr %i.cx, i64 %i.db
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %8, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %7, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
@@ -647,7 +647,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i45:                                 ; preds = %.lr.ph.i.i.i.i45.preheader, %.lr.ph.i.i.i.i45
   %.06.i.i.i.i = phi ptr [ %i.dg, %.lr.ph.i.i.i.i45 ], [ %.06.i.i.i.i.ph, %.lr.ph.i.i.i.i45.preheader ] ; 2 uses
-  store i32 %8, ptr %.06.i.i.i.i, align 4
+  store i32 %7, ptr %.06.i.i.i.i, align 4
   %i.dg = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i, i64 4 ; 2 uses
   %.not.i.i.i.i46 = icmp eq ptr %i.dg, %i.cw
   br i1 %.not.i.i.i.i46, label %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE8LogErrorIJRA34_KcEEEvDpOT_.exit, label %.lr.ph.i.i.i.i45, !llvm.loop !68

@@ -204,8 +204,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.i.i, label %.thread69, label %.lr.ph.i.i, !llvm.loop !149
 
 bb.k:                                             ; preds = %._crit_edge.i, %.split92.us
-  %.157.i = phi ptr [ %i.bn, %._crit_edge.i ], [ %i.ay, %.split92.us ] ; 16 uses
-  %.157.i224 = ptrtoint ptr %.157.i to i64        ; 4 uses
+  %.157.i = phi ptr [ %i.bn, %._crit_edge.i ], [ %i.ay, %.split92.us ] ; 17 uses
+  %.157.i224 = ptrtoint ptr %.157.i to i64        ; 2 uses
   %i.bt = add nsw i64 %i.aq, -15
   %.not68.i = icmp sgt i64 %spec.select57, %i.bt
   br i1 %.not68.i, label %bb.r, label %bb.l, !prof !22
@@ -267,12 +267,13 @@ bb.r:                                             ; preds = %bb.k
   br i1 %i.cm, label %.lr.ph90.i.preheader, label %._crit_edge91.i
 
 .lr.ph90.i.preheader:                             ; preds = %bb.r
-  %4 = xor i64 %.157.i224, -1
-  %i.cn = add i64 %i.bb, -16
-  %5 = add i64 %i.cn, %i.aq
-  %i.co = add i64 %.157.i224, 16
-  %umax229 = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.co)
-  %i.cp = add i64 %umax229, %4                    ; 3 uses
+  %4 = add i64 %i.aq, %i.bb
+  %i.cn = add i64 %4, -16
+  %5 = ptrtoint ptr %.157.i to i64                ; 2 uses
+  %i.co = add i64 %5, 16
+  %umax229 = tail call i64 @llvm.umax.i64(i64 %i.cn, i64 %i.co)
+  %6 = xor i64 %5, -1
+  %i.cp = add i64 %umax229, %6                    ; 3 uses
   %i.cq = lshr i64 %i.cp, 4
   %min.iters.check230 = icmp ult i64 %i.cp, 144
   br i1 %min.iters.check230, label %.lr.ph90.i.preheader247, label %vector.memcheck223
@@ -482,7 +483,7 @@ declare void @__cxa_guard_release(ptr) local_unnamed_addr #21
 define internal fastcc noundef ptr @_ZN13duckdb_snappy12_GLOBAL__N_115IncrementalCopyEPKcPcS3_S3_(ptr noundef %0, ptr noundef %1, ptr nofree noundef readnone returned captures(address, ret: address, provenance) %2, ptr nofree noundef readnone captures(address) %3) unnamed_addr #22 {
 bb.a:
   %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %3 to i64                   ; 2 uses
+  %i.b = ptrtoint ptr %3 to i64
   %i.c = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.d = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.e = sub i64 %i.c, %i.d                       ; 2 uses
@@ -586,8 +587,8 @@ vec.epilog.middle.block178:                       ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.i, label %_ZN13duckdb_snappy12_GLOBAL__N_119IncrementalCopySlowEPKcPcS3_.exit, label %.lr.ph.i, !llvm.loop !163
 
 bb.d:                                             ; preds = %._crit_edge, %bb.a
-  %.157 = phi ptr [ %i.h, %._crit_edge ], [ %1, %bb.a ] ; 16 uses
-  %.157110 = ptrtoint ptr %.157 to i64            ; 4 uses
+  %.157 = phi ptr [ %i.h, %._crit_edge ], [ %1, %bb.a ] ; 17 uses
+  %.157110 = ptrtoint ptr %.157 to i64            ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %3, i64 -15
   %.not68 = icmp ugt ptr %2, %i.w
   br i1 %.not68, label %bb.k, label %bb.e, !prof !22
@@ -649,10 +650,12 @@ bb.k:                                             ; preds = %bb.d
   br i1 %i.ap, label %.lr.ph90.preheader, label %._crit_edge91
 
 .lr.ph90.preheader:                               ; preds = %bb.k
-  %i.aq = add i64 %i.b, -16
-  %i.ar = add i64 %.157110, 16
+  %4 = ptrtoint ptr %3 to i64
+  %i.aq = add i64 %4, -16
+  %5 = ptrtoint ptr %.157 to i64                  ; 2 uses
+  %i.ar = add i64 %5, 16
   %umax112 = tail call i64 @llvm.umax.i64(i64 %i.aq, i64 %i.ar)
-  %i.as = xor i64 %.157110, -1
+  %i.as = xor i64 %5, -1
   %i.at = add i64 %umax112, %i.as                 ; 3 uses
   %i.au = lshr i64 %i.at, 4
   %min.iters.check = icmp ult i64 %i.at, 336

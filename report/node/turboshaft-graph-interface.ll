@@ -204,7 +204,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorIZNS_8i
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -239,11 +238,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -8
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 3
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -8                           ; 2 uses
+  %i.s = lshr i64 %3, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 72
+  %min.iters.check = icmp ult i64 %3, 72
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -646,8 +646,8 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft18SnapshotTableEntryINS3_7
   %i.bh = load ptr, ptr %i.h, align 8             ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.bj = load ptr, ptr %i.i, align 8             ; 5 uses
-  %i.bk = ptrtoint ptr %i.bh to i64               ; 4 uses
-  %i.bl = ptrtoint ptr %i.bj to i64               ; 5 uses
+  %i.bk = ptrtoint ptr %i.bh to i64               ; 3 uses
+  %i.bl = ptrtoint ptr %i.bj to i64               ; 4 uses
   %i.bm = sub i64 %i.bk, %i.bl                    ; 4 uses
   %i.bn = ashr exact i64 %i.bm, 2                 ; 2 uses
   %i.bo = xor i64 %i.bn, -1
@@ -728,21 +728,19 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInser
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread
   %.pn = phi ptr [ %i.bj, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit ], [ %i.cp, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread ] ; 2 uses
-  %.pn94 = ptrtoint ptr %.pn to i64               ; 3 uses
   %.0.lcssa.i.i = getelementptr inbounds nuw i8, ptr %.pn, i64 %i.bm ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 %.idx
   %.pre20.i.i = load i32, ptr %i.bi, align 8      ; 2 uses
-  %5 = add i64 %i.bl, -1
-  %6 = add i64 %.idx, %.pn94
-  %i.ct = add i64 %6, %i.bk
-  %i.cu = sub i64 %i.ct, %i.bl
-  %i.cv = add i64 %.pn94, 4
-  %i.cw = add i64 %i.cv, %i.bk
-  %7 = sub i64 %i.cw, %i.bl
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.cu, i64 %7)
-  %i.cx = add i64 %5, %umax
-  %8 = add i64 %.pn94, %i.bk
-  %9 = sub i64 %i.cx, %8                          ; 2 uses
+  %5 = ptrtoint ptr %.pn to i64                   ; 2 uses
+  %i.ct = add i64 %5, %i.bk
+  %i.cu = sub i64 %i.ct, %i.bl                    ; 2 uses
+  %i.cv = add i64 %i.cu, %.idx
+  %i.cw = add i64 %i.cu, 4
+  %6 = tail call i64 @llvm.umax.i64(i64 %i.cv, i64 %i.cw)
+  %7 = add i64 %6, %i.bl
+  %i.cx = add i64 %5, %i.bk
+  %8 = xor i64 %i.cx, -1
+  %9 = add i64 %7, %8                             ; 2 uses
   %i.cy = lshr i64 %9, 2
   %i.cz = add nuw nsw i64 %i.cy, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %9, 28
@@ -1145,7 +1143,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -1180,11 +1177,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1587,7 +1585,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -1622,11 +1619,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -2029,7 +2027,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -2064,11 +2061,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -2471,7 +2469,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -2506,11 +2503,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -2913,8 +2911,8 @@ bb.f:                                             ; preds = %_ZN2v84base11SmallV
   %i.ae = ptrtoaddr ptr %i.ab to i64
   %i.af = ptrtoint ptr %i.ac to i64
   %i.ag = ptrtoint ptr %i.ab to i64
-  %2 = add i64 %i.af, -4
-  %3 = sub i64 %2, %i.ag                          ; 2 uses
+  %2 = sub i64 %i.af, %i.ag
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.ah = lshr i64 %3, 2
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -3317,7 +3315,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -3352,11 +3349,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -3759,7 +3757,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -3794,11 +3791,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -8
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 3
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -8                           ; 2 uses
+  %i.s = lshr i64 %3, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 72
+  %min.iters.check = icmp ult i64 %3, 72
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -4201,8 +4199,8 @@ bb.f:                                             ; preds = %_ZN2v84base11SmallV
   %i.ae = ptrtoaddr ptr %i.ab to i64
   %i.af = ptrtoint ptr %i.ac to i64
   %i.ag = ptrtoint ptr %i.ab to i64
-  %2 = add i64 %i.af, -4
-  %3 = sub i64 %2, %i.ag                          ; 2 uses
+  %2 = sub i64 %i.af, %i.ag
+  %3 = add i64 %2, -4                             ; 2 uses
   %i.ah = lshr i64 %3, 2
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -4276,7 +4274,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -4311,11 +4308,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -4718,7 +4716,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -4753,11 +4750,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -5160,7 +5158,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -5195,11 +5192,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -5602,7 +5600,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -5637,11 +5634,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -6044,7 +6042,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -6079,11 +6076,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -4
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 2
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -4                           ; 2 uses
+  %i.s = lshr i64 %3, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
+  %min.iters.check = icmp ult i64 %3, 44
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -6486,8 +6484,8 @@ bb.f:                                             ; preds = %_ZN2v84base11SmallV
   %i.ac = ptrtoaddr ptr %i.z to i64
   %i.ad = ptrtoint ptr %i.aa to i64
   %i.ae = ptrtoint ptr %i.z to i64
-  %2 = add i64 %i.ad, -8
-  %3 = sub i64 %2, %i.ae                          ; 2 uses
+  %2 = sub i64 %i.ad, %i.ae
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.af = lshr i64 %3, 3
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -6890,8 +6888,8 @@ bb.f:                                             ; preds = %_ZN2v84base11SmallV
   %i.ac = ptrtoaddr ptr %i.z to i64
   %i.ad = ptrtoint ptr %i.aa to i64
   %i.ae = ptrtoint ptr %i.z to i64
-  %2 = add i64 %i.ad, -8
-  %3 = sub i64 %2, %i.ae                          ; 2 uses
+  %2 = sub i64 %i.ad, %i.ae
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.af = lshr i64 %3, 3
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72

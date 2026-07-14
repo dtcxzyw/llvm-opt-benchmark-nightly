@@ -16,10 +16,8 @@ target triple = "x86_64-pc-linux-gnu"
 define void @_ZN4absl12lts_2025051215random_internal24InitDiscreteDistributionEPSt6vectorIdSaIdEE(ptr dead_on_unwind noalias nofree writable sret(%"class.std::vector") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !7      ; 9 uses
-  %2 = ptrtoint ptr %i.a to i64
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !7    ; 7 uses
-  %3 = ptrtoint ptr %i.c to i64
   %.not5.i = icmp eq ptr %i.a, %i.c               ; 2 uses
   br i1 %.not5.i, label %.loopexit165, label %.lr.ph.i
 
@@ -39,9 +37,11 @@ _ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET0_T_S8_S
   br i1 %i.i, label %.loopexit165, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET0_T_S8_S7_.exit
-  %4 = add i64 %3, -8
-  %i.j = sub i64 %4, %2
-  %i.k = lshr i64 %i.j, 3                         ; 2 uses
+  %2 = ptrtoint ptr %i.c to i64
+  %3 = ptrtoint ptr %i.a to i64
+  %i.j = sub i64 %2, %3
+  %4 = add i64 %i.j, -8
+  %i.k = lshr i64 %4, 3                           ; 2 uses
   %i.l = add nuw nsw i64 %i.k, 1                  ; 2 uses
   %min.iters.check = icmp eq i64 %i.k, 0
   br i1 %min.iters.check, label %.lr.ph.preheader529, label %vector.ph

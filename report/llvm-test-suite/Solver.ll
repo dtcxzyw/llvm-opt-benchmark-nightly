@@ -203,30 +203,29 @@ bb.b:                                             ; preds = %.lr.ph95, %_ZN3vecI
   br i1 %.not82, label %._crit_edge88, label %.lr.ph87
 
 .lr.ph87:                                         ; preds = %bb.b
-  %1 = ptrtoint ptr %i.v to i64
-  %2 = xor i32 %.sroa.052.0.copyload, 1           ; 3 uses
-  %i.aa = add i64 %.idx, %1
+  %1 = xor i32 %.sroa.052.0.copyload, 1           ; 3 uses
+  %2 = ptrtoint ptr %i.v to i64
+  %i.aa = add i64 %.idx, %2
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph87, %.loopexit
   %.185 = phi ptr [ %.093, %.lr.ph87 ], [ %.2, %.loopexit ] ; 3 uses
   %.06084 = phi ptr [ %i.v, %.lr.ph87 ], [ %.262, %.loopexit ] ; 4 uses
   %.06383 = phi ptr [ %i.v, %.lr.ph87 ], [ %.265, %.loopexit ] ; 6 uses
-  %.06084129 = ptrtoint ptr %.06084 to i64        ; 2 uses
   %.06383127 = ptrtoaddr ptr %.06383 to i64
   %.06084128 = ptrtoaddr ptr %.06084 to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %.06084, i64 8 ; 8 uses
   %i.ac = load ptr, ptr %.06084, align 8, !tbaa !46 ; 11 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 4 uses
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !81 ; 2 uses
-  %i.af = icmp eq i32 %i.ae, %2
+  %i.af = icmp eq i32 %i.ae, %1
   br i1 %i.af, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 12 ; 2 uses
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !4  ; 2 uses
   store i32 %i.ah, ptr %i.ad, align 4, !tbaa !4
-  store i32 %2, ptr %i.ag, align 4, !tbaa !4
+  store i32 %1, ptr %i.ag, align 4, !tbaa !4
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -280,7 +279,7 @@ bb.h:                                             ; preds = %.lr.ph
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %indvars.iv
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ac, i64 12 ; 2 uses
   store i32 %.sroa.06.0.copyload, ptr %i.bc, align 4, !tbaa !4
-  store i32 %2, ptr %i.bb, align 4, !tbaa !4
+  store i32 %1, ptr %i.bb, align 4, !tbaa !4
   %.sroa.03.0.copyload = load i32, ptr %i.bc, align 4, !tbaa !4
   %i.bd = xor i32 %.sroa.03.0.copyload, 1
   %i.be = load ptr, ptr %i.g, align 8, !tbaa !56
@@ -333,13 +332,14 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %i.cd, label %.lr.ph80.preheader, label %.loopexit
 
 .lr.ph80.preheader:                               ; preds = %bb.k
-  %i.ce = add i64 %.06084129, 16
+  %3 = ptrtoint ptr %.06084 to i64                ; 2 uses
+  %i.ce = add i64 %3, 16
   %umax = tail call i64 @llvm.umax.i64(i64 %i.aa, i64 %i.ce)
-  %3 = add i64 %umax, -9
-  %4 = sub i64 %3, %.06084129                     ; 2 uses
-  %i.cf = lshr i64 %4, 3
+  %4 = sub i64 %umax, %3
+  %5 = add i64 %4, -9                             ; 2 uses
+  %i.cf = lshr i64 %5, 3
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %4, 24
+  %min.iters.check = icmp ult i64 %5, 24
   %i.ch = sub i64 %.06084128, %.06383127
   %diff.check = icmp ugt i64 %i.ch, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check

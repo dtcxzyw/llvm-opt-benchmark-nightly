@@ -203,14 +203,11 @@ bb.f:                                             ; preds = %single_keccak.exit,
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @scalar_ntt(ptr nofree noundef captures(address) %0) unnamed_addr #9 {
 bb.a:
-  %i.a = ptrtoint ptr %0 to i64                   ; 12 uses
-  %1 = xor i64 %i.a, -1
-  %2 = add i64 %i.a, 256
-  %3 = add i64 %i.a, 2
+  %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit144, %bb.a
-  %.020.idx = phi i64 [ 0, %bb.a ], [ %.022.add.lcssa, %.loopexit144 ] ; 5 uses
+  %.020.idx = phi i64 [ 0, %bb.a ], [ %.022.add.lcssa, %.loopexit144 ] ; 4 uses
   %.1 = phi ptr [ @kNTTRoots, %bb.a ], [ %i.b, %.loopexit144 ]
   %.020.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.020.idx ; 3 uses
   %.020.add = add nuw nsw i64 %.020.idx, 256      ; 4 uses
@@ -218,14 +215,16 @@ bb.b:                                             ; preds = %.loopexit144, %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %.1, i64 2 ; 3 uses
   %i.c = load i16, ptr %i.b, align 2, !tbaa !38
   %i.d = zext i16 %i.c to i32                     ; 2 uses
-  %i.e = add i64 %2, %.020.idx
-  %i.f = add i64 %3, %.020.idx
+  %1 = add i64 %.020.idx, %i.a                    ; 2 uses
+  %i.e = add i64 %1, 256
+  %i.f = add i64 %1, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.f)
-  %i.g = add i64 %umax, %1
-  %4 = sub i64 %i.g, %.020.idx                    ; 2 uses
-  %i.h = lshr i64 %4, 1
+  %i.g = add i64 %.020.idx, %i.a
+  %2 = xor i64 %i.g, -1
+  %3 = add i64 %umax, %2                          ; 2 uses
+  %i.h = lshr i64 %3, 1
   %i.i = add nuw i64 %i.h, 1                      ; 2 uses
-  %min.iters.check = icmp ult i64 %4, 14
+  %min.iters.check = icmp ult i64 %3, 14
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.b
@@ -333,13 +332,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %i.bq, label %bb.b, label %.preheader38.a, !llvm.loop !101
 
 .preheader38.a:                                   ; preds = %.loopexit144
-  %5 = xor i64 %i.a, -1
-  %6 = add i64 %i.a, 128
-  %7 = add i64 %i.a, 2
+  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader38.a, %.loopexit143
-  %.020.idx.1 = phi i64 [ %.022.add.1.lcssa, %.loopexit143 ], [ 0, %.preheader38.a ] ; 5 uses
+  %.020.idx.1 = phi i64 [ %.022.add.1.lcssa, %.loopexit143 ], [ 0, %.preheader38.a ] ; 4 uses
   %.1.1 = phi ptr [ %i.br, %.loopexit143 ], [ %i.b, %.preheader38.a ]
   %.020.ptr.1 = getelementptr inbounds nuw i8, ptr %0, i64 %.020.idx.1 ; 3 uses
   %.020.add.1 = add nuw nsw i64 %.020.idx.1, 128  ; 4 uses
@@ -347,14 +344,16 @@ bb.c:                                             ; preds = %.preheader38.a, %.l
   %i.br = getelementptr inbounds nuw i8, ptr %.1.1, i64 2 ; 3 uses
   %i.bs = load i16, ptr %i.br, align 2, !tbaa !38
   %i.bt = zext i16 %i.bs to i32                   ; 2 uses
-  %i.bu = add i64 %6, %.020.idx.1
-  %i.bv = add i64 %7, %.020.idx.1
+  %5 = add i64 %.020.idx.1, %4                    ; 2 uses
+  %i.bu = add i64 %5, 128
+  %i.bv = add i64 %5, 2
   %umax46 = tail call i64 @llvm.umax.i64(i64 %i.bu, i64 %i.bv)
-  %i.bw = add i64 %umax46, %5
-  %8 = sub i64 %i.bw, %.020.idx.1                 ; 2 uses
-  %i.bx = lshr i64 %8, 1
+  %i.bw = add i64 %.020.idx.1, %4
+  %6 = xor i64 %i.bw, -1
+  %7 = add i64 %umax46, %6                        ; 2 uses
+  %i.bx = lshr i64 %7, 1
   %i.by = add nuw i64 %i.bx, 1                    ; 2 uses
-  %min.iters.check48 = icmp ult i64 %8, 14
+  %min.iters.check48 = icmp ult i64 %7, 14
   br i1 %min.iters.check48, label %scalar.ph47.preheader, label %vector.ph49
 
 vector.ph49:                                      ; preds = %bb.c
@@ -462,13 +461,11 @@ scalar.ph47:                                      ; preds = %scalar.ph47.prehead
   br i1 %i.eg, label %bb.c, label %.preheader37.a, !llvm.loop !101
 
 .preheader37.a:                                   ; preds = %.loopexit143
-  %9 = xor i64 %i.a, -1
-  %10 = add i64 %i.a, 64
-  %11 = add i64 %i.a, 2
+  %8 = ptrtoint ptr %0 to i64                     ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader37.a, %.loopexit142
-  %.020.idx.2 = phi i64 [ %.022.add.2.lcssa, %.loopexit142 ], [ 0, %.preheader37.a ] ; 5 uses
+  %.020.idx.2 = phi i64 [ %.022.add.2.lcssa, %.loopexit142 ], [ 0, %.preheader37.a ] ; 4 uses
   %.1.2 = phi ptr [ %i.eh, %.loopexit142 ], [ %i.br, %.preheader37.a ]
   %.020.ptr.2 = getelementptr inbounds nuw i8, ptr %0, i64 %.020.idx.2 ; 3 uses
   %.020.add.2 = add nuw nsw i64 %.020.idx.2, 64   ; 4 uses
@@ -476,14 +473,16 @@ bb.d:                                             ; preds = %.preheader37.a, %.l
   %i.eh = getelementptr inbounds nuw i8, ptr %.1.2, i64 2 ; 3 uses
   %i.ei = load i16, ptr %i.eh, align 2, !tbaa !38
   %i.ej = zext i16 %i.ei to i32                   ; 2 uses
-  %i.ek = add i64 %10, %.020.idx.2
-  %i.el = add i64 %11, %.020.idx.2
+  %9 = add i64 %.020.idx.2, %8                    ; 2 uses
+  %i.ek = add i64 %9, 64
+  %i.el = add i64 %9, 2
   %umax65 = tail call i64 @llvm.umax.i64(i64 %i.ek, i64 %i.el)
-  %i.em = add i64 %umax65, %9
-  %12 = sub i64 %i.em, %.020.idx.2                ; 2 uses
-  %i.en = lshr i64 %12, 1
+  %i.em = add i64 %.020.idx.2, %8
+  %10 = xor i64 %i.em, -1
+  %11 = add i64 %umax65, %10                      ; 2 uses
+  %i.en = lshr i64 %11, 1
   %i.eo = add nuw i64 %i.en, 1                    ; 2 uses
-  %min.iters.check67 = icmp ult i64 %12, 14
+  %min.iters.check67 = icmp ult i64 %11, 14
   br i1 %min.iters.check67, label %scalar.ph66.preheader, label %vector.ph68
 
 vector.ph68:                                      ; preds = %bb.d
@@ -591,13 +590,11 @@ scalar.ph66:                                      ; preds = %scalar.ph66.prehead
   br i1 %i.gw, label %bb.d, label %.preheader36.a, !llvm.loop !101
 
 .preheader36.a:                                   ; preds = %.loopexit142
-  %13 = xor i64 %i.a, -1
-  %14 = add i64 %i.a, 32
-  %15 = add i64 %i.a, 2
+  %12 = ptrtoint ptr %0 to i64                    ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader36.a, %.loopexit141
-  %.020.idx.3 = phi i64 [ %.022.add.3.lcssa, %.loopexit141 ], [ 0, %.preheader36.a ] ; 5 uses
+  %.020.idx.3 = phi i64 [ %.022.add.3.lcssa, %.loopexit141 ], [ 0, %.preheader36.a ] ; 4 uses
   %.1.3 = phi ptr [ %i.gx, %.loopexit141 ], [ %i.eh, %.preheader36.a ] ; 4 uses
   %.020.ptr.3 = getelementptr inbounds nuw i8, ptr %0, i64 %.020.idx.3 ; 3 uses
   %.020.add.3 = add nuw nsw i64 %.020.idx.3, 32   ; 4 uses
@@ -605,14 +602,16 @@ bb.e:                                             ; preds = %.preheader36.a, %.l
   %i.gx = getelementptr inbounds nuw i8, ptr %.1.3, i64 2 ; 4 uses
   %i.gy = load i16, ptr %i.gx, align 2, !tbaa !38
   %i.gz = zext i16 %i.gy to i32                   ; 2 uses
-  %i.ha = add i64 %14, %.020.idx.3
-  %i.hb = add i64 %15, %.020.idx.3
+  %13 = add i64 %.020.idx.3, %12                  ; 2 uses
+  %i.ha = add i64 %13, 32
+  %i.hb = add i64 %13, 2
   %umax84 = tail call i64 @llvm.umax.i64(i64 %i.ha, i64 %i.hb)
-  %i.hc = add i64 %umax84, %13
-  %16 = sub i64 %i.hc, %.020.idx.3                ; 2 uses
-  %i.hd = lshr i64 %16, 1
+  %i.hc = add i64 %.020.idx.3, %12
+  %14 = xor i64 %i.hc, -1
+  %15 = add i64 %umax84, %14                      ; 2 uses
+  %i.hd = lshr i64 %15, 1
   %i.he = add nuw i64 %i.hd, 1                    ; 2 uses
-  %min.iters.check86 = icmp ult i64 %16, 14
+  %min.iters.check86 = icmp ult i64 %15, 14
   br i1 %min.iters.check86, label %scalar.ph85.preheader, label %vector.ph87
 
 vector.ph87:                                      ; preds = %bb.e
@@ -1015,7 +1014,6 @@ scalar_mult.exit._crit_edge:                      ; preds = %scalar_mult_add.exi
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @scalar_inverse_ntt(ptr nofree noundef nonnull captures(address) %0) unnamed_addr #9 {
 vector.memcheck:
-  %1 = ptrtoint ptr %0 to i64                     ; 12 uses
   %scevgep = getelementptr i8, ptr %0, i64 512    ; 2 uses
   %bound0 = icmp ult ptr %0, getelementptr inbounds nuw (i8, ptr @kInverseNTTRoots, i64 130)
   %bound1 = icmp ugt ptr %scevgep, getelementptr inbounds nuw (i8, ptr @kInverseNTTRoots, i64 2)
@@ -1418,13 +1416,11 @@ scalar.ph72:                                      ; preds = %vector.memcheck66, 
 
 .preheader42.a:                                   ; preds = %vector.body74, %scalar.ph72
   %.lcssa47 = phi ptr [ %i.aur, %scalar.ph72 ], [ %i.st, %vector.body74 ]
-  %2 = xor i64 %1, -1
-  %3 = add i64 %1, 32
-  %4 = add i64 %1, 2
+  %1 = ptrtoint ptr %0 to i64                     ; 2 uses
   br label %bb.a
 
 bb.a:                                             ; preds = %.preheader42.a, %.loopexit156
-  %.021.idx.3 = phi i64 [ %.023.add.3.lcssa, %.loopexit156 ], [ 0, %.preheader42.a ] ; 5 uses
+  %.021.idx.3 = phi i64 [ %.023.add.3.lcssa, %.loopexit156 ], [ 0, %.preheader42.a ] ; 4 uses
   %.1.3 = phi ptr [ %i.avw, %.loopexit156 ], [ %.lcssa47, %.preheader42.a ]
   %.021.ptr.3 = getelementptr inbounds i8, ptr %0, i64 %.021.idx.3 ; 3 uses
   %.021.add.3 = add nsw i64 %.021.idx.3, 32       ; 4 uses
@@ -1432,14 +1428,16 @@ bb.a:                                             ; preds = %.preheader42.a, %.l
   %i.avw = getelementptr inbounds nuw i8, ptr %.1.3, i64 2 ; 3 uses
   %i.avx = load i16, ptr %i.avw, align 2, !tbaa !38
   %i.avy = zext i16 %i.avx to i32                 ; 2 uses
-  %i.avz = add i64 %3, %.021.idx.3
-  %i.awa = add i64 %4, %.021.idx.3
+  %2 = add i64 %.021.idx.3, %1                    ; 2 uses
+  %i.avz = add i64 %2, 32
+  %i.awa = add i64 %2, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.avz, i64 %i.awa)
-  %i.awb = add i64 %umax, %2
-  %5 = sub i64 %i.awb, %.021.idx.3                ; 2 uses
-  %i.awc = lshr i64 %5, 1
+  %i.awb = add i64 %.021.idx.3, %1
+  %3 = xor i64 %i.awb, -1
+  %4 = add i64 %umax, %3                          ; 2 uses
+  %i.awc = lshr i64 %4, 1
   %i.awd = add nuw i64 %i.awc, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %5, 14
+  %min.iters.check = icmp ult i64 %4, 14
   br i1 %min.iters.check, label %scalar.ph80.preheader, label %vector.ph81
 
 vector.ph81:                                      ; preds = %bb.a
@@ -1541,13 +1539,11 @@ scalar.ph80:                                      ; preds = %scalar.ph80.prehead
   br i1 %i.ayg, label %bb.a, label %.preheader41.a, !llvm.loop !209
 
 .preheader41.a:                                   ; preds = %.loopexit156
-  %6 = xor i64 %1, -1
-  %7 = add i64 %1, 64
-  %8 = add i64 %1, 2
+  %5 = ptrtoint ptr %0 to i64                     ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader41.a, %.loopexit155
-  %.021.idx.4 = phi i64 [ %.023.add.4.lcssa, %.loopexit155 ], [ 0, %.preheader41.a ] ; 5 uses
+  %.021.idx.4 = phi i64 [ %.023.add.4.lcssa, %.loopexit155 ], [ 0, %.preheader41.a ] ; 4 uses
   %.1.4 = phi ptr [ %i.ayh, %.loopexit155 ], [ %i.avw, %.preheader41.a ]
   %.021.ptr.4 = getelementptr inbounds i8, ptr %0, i64 %.021.idx.4 ; 3 uses
   %.021.add.4 = add nsw i64 %.021.idx.4, 64       ; 4 uses
@@ -1555,14 +1551,16 @@ bb.b:                                             ; preds = %.preheader41.a, %.l
   %i.ayh = getelementptr inbounds nuw i8, ptr %.1.4, i64 2 ; 3 uses
   %i.ayi = load i16, ptr %i.ayh, align 2, !tbaa !38
   %i.ayj = zext i16 %i.ayi to i32                 ; 2 uses
-  %i.ayk = add i64 %7, %.021.idx.4
-  %i.ayl = add i64 %8, %.021.idx.4
+  %6 = add i64 %.021.idx.4, %5                    ; 2 uses
+  %i.ayk = add i64 %6, 64
+  %i.ayl = add i64 %6, 2
   %umax90 = tail call i64 @llvm.umax.i64(i64 %i.ayk, i64 %i.ayl)
-  %i.aym = add i64 %umax90, %6
-  %9 = sub i64 %i.aym, %.021.idx.4                ; 2 uses
-  %i.ayn = lshr i64 %9, 1
+  %i.aym = add i64 %.021.idx.4, %5
+  %7 = xor i64 %i.aym, -1
+  %8 = add i64 %umax90, %7                        ; 2 uses
+  %i.ayn = lshr i64 %8, 1
   %i.ayo = add nuw i64 %i.ayn, 1                  ; 2 uses
-  %min.iters.check92 = icmp ult i64 %9, 14
+  %min.iters.check92 = icmp ult i64 %8, 14
   br i1 %min.iters.check92, label %scalar.ph91.preheader, label %vector.ph93
 
 vector.ph93:                                      ; preds = %bb.b
@@ -1664,13 +1662,11 @@ scalar.ph91:                                      ; preds = %scalar.ph91.prehead
   br i1 %i.bar, label %bb.b, label %.preheader40.a, !llvm.loop !209
 
 .preheader40.a:                                   ; preds = %.loopexit155
-  %10 = xor i64 %1, -1
-  %11 = add i64 %1, 128
-  %12 = add i64 %1, 2
+  %9 = ptrtoint ptr %0 to i64                     ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader40.a, %.loopexit154
-  %.021.idx.5 = phi i64 [ %.023.add.5.lcssa, %.loopexit154 ], [ 0, %.preheader40.a ] ; 5 uses
+  %.021.idx.5 = phi i64 [ %.023.add.5.lcssa, %.loopexit154 ], [ 0, %.preheader40.a ] ; 4 uses
   %.1.5 = phi ptr [ %i.bas, %.loopexit154 ], [ %i.ayh, %.preheader40.a ]
   %.021.ptr.5 = getelementptr inbounds i8, ptr %0, i64 %.021.idx.5 ; 3 uses
   %.021.add.5 = add nsw i64 %.021.idx.5, 128      ; 4 uses
@@ -1678,14 +1674,16 @@ bb.c:                                             ; preds = %.preheader40.a, %.l
   %i.bas = getelementptr inbounds nuw i8, ptr %.1.5, i64 2 ; 3 uses
   %i.bat = load i16, ptr %i.bas, align 2, !tbaa !38
   %i.bau = zext i16 %i.bat to i32                 ; 2 uses
-  %i.bav = add i64 %11, %.021.idx.5
-  %i.baw = add i64 %12, %.021.idx.5
+  %10 = add i64 %.021.idx.5, %9                   ; 2 uses
+  %i.bav = add i64 %10, 128
+  %i.baw = add i64 %10, 2
   %umax109 = tail call i64 @llvm.umax.i64(i64 %i.bav, i64 %i.baw)
-  %i.bax = add i64 %umax109, %10
-  %13 = sub i64 %i.bax, %.021.idx.5               ; 2 uses
-  %i.bay = lshr i64 %13, 1
+  %i.bax = add i64 %.021.idx.5, %9
+  %11 = xor i64 %i.bax, -1
+  %12 = add i64 %umax109, %11                     ; 2 uses
+  %i.bay = lshr i64 %12, 1
   %i.baz = add nuw i64 %i.bay, 1                  ; 2 uses
-  %min.iters.check111 = icmp ult i64 %13, 14
+  %min.iters.check111 = icmp ult i64 %12, 14
   br i1 %min.iters.check111, label %scalar.ph110.preheader, label %vector.ph112
 
 vector.ph112:                                     ; preds = %bb.c
@@ -1787,13 +1785,11 @@ scalar.ph110:                                     ; preds = %scalar.ph110.prehea
   br i1 %i.bdc, label %bb.c, label %.preheader39.a, !llvm.loop !209
 
 .preheader39.a:                                   ; preds = %.loopexit154
-  %14 = xor i64 %1, -1
-  %15 = add i64 %1, 256
-  %16 = add i64 %1, 2
+  %13 = ptrtoint ptr %0 to i64                    ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader39.a, %.loopexit
-  %.021.idx.6 = phi i64 [ %.023.add.6.lcssa, %.loopexit ], [ 0, %.preheader39.a ] ; 5 uses
+  %.021.idx.6 = phi i64 [ %.023.add.6.lcssa, %.loopexit ], [ 0, %.preheader39.a ] ; 4 uses
   %.1.6 = phi ptr [ %i.bdd, %.loopexit ], [ %i.bas, %.preheader39.a ]
   %.021.ptr.6 = getelementptr inbounds i8, ptr %0, i64 %.021.idx.6 ; 3 uses
   %.021.add.6 = add nsw i64 %.021.idx.6, 256      ; 4 uses
@@ -1801,14 +1797,16 @@ bb.d:                                             ; preds = %.preheader39.a, %.l
   %i.bdd = getelementptr inbounds nuw i8, ptr %.1.6, i64 2 ; 2 uses
   %i.bde = load i16, ptr %i.bdd, align 2, !tbaa !38
   %i.bdf = zext i16 %i.bde to i32                 ; 2 uses
-  %i.bdg = add i64 %15, %.021.idx.6
-  %i.bdh = add i64 %16, %.021.idx.6
+  %14 = add i64 %.021.idx.6, %13                  ; 2 uses
+  %i.bdg = add i64 %14, 256
+  %i.bdh = add i64 %14, 2
   %umax128 = tail call i64 @llvm.umax.i64(i64 %i.bdg, i64 %i.bdh)
-  %i.bdi = add i64 %umax128, %14
-  %17 = sub i64 %i.bdi, %.021.idx.6               ; 2 uses
-  %i.bdj = lshr i64 %17, 1
+  %i.bdi = add i64 %.021.idx.6, %13
+  %15 = xor i64 %i.bdi, -1
+  %16 = add i64 %umax128, %15                     ; 2 uses
+  %i.bdj = lshr i64 %16, 1
   %i.bdk = add nuw i64 %i.bdj, 1                  ; 2 uses
-  %min.iters.check130 = icmp ult i64 %17, 14
+  %min.iters.check130 = icmp ult i64 %16, 14
   br i1 %min.iters.check130, label %scalar.ph129.preheader, label %vector.ph131
 
 vector.ph131:                                     ; preds = %bb.d

@@ -204,10 +204,10 @@ bb.fa:                                            ; preds = %bb.ez
   br label %bb.fd
 
 ._crit_edge860:                                   ; preds = %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit, %bb.fa
-  %i.px = phi ptr [ null, %bb.fa ], [ %i.rx, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 4 uses
+  %i.px = phi ptr [ null, %bb.fa ], [ %i.rx, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 5 uses
   %i.py = phi ptr [ null, %bb.fa ], [ %i.rw, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 10 uses
   %i.pz = phi ptr [ null, %bb.fa ], [ %i.ry, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 4 uses
-  %i.qa = ptrtoint ptr %i.px to i64               ; 2 uses
+  %i.qa = ptrtoint ptr %i.px to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #25
   invoke void @_ZN6duckdb5Value7INTEGEREi(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %44, i32 noundef 42)
@@ -527,11 +527,12 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EE
   br i1 %.not10.i.i.i.i.i.i.i351, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i356, label %.lr.ph.i.i.i.i.i.i.i352.preheader
 
 .lr.ph.i.i.i.i.i.i.i352.preheader:                ; preds = %.noexc361
-  %61 = add i64 %i.qa, -8
-  %i.tk = sub i64 %61, %i.su                      ; 2 uses
-  %i.tl = lshr i64 %i.tk, 3
+  %61 = ptrtoint ptr %i.px to i64
+  %i.tk = sub i64 %61, %i.su
+  %62 = add i64 %i.tk, -8                         ; 2 uses
+  %i.tl = lshr i64 %62, 3
   %i.tm = add nuw nsw i64 %i.tl, 1                ; 2 uses
-  %min.iters.check1162 = icmp ult i64 %i.tk, 152
+  %min.iters.check1162 = icmp ult i64 %62, 152
   br i1 %min.iters.check1162, label %.lr.ph.i.i.i.i.i.i.i352.preheader1224, label %vector.memcheck1155
 
 vector.memcheck1155:                              ; preds = %.lr.ph.i.i.i.i.i.i.i352.preheader
@@ -934,11 +935,11 @@ _ZSt4copyIPN6duckdb13PhysicalIndexES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m,
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6duckdb13PhysicalIndexESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN6duckdb13PhysicalIndexES2_ET0_T_S4_S3_.exit
-  %i.al = ptrtoint ptr %i.ah to i64
-  %i.am = ptrtoint ptr %i.ae to i64
-  %i.an = add i64 %i.am, -8
-  %2 = add i64 %.pre-phi33, %i.al
-  %3 = sub i64 %i.an, %2                          ; 2 uses
+  %i.al = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoint ptr %i.ah to i64
+  %i.an = add i64 %.pre-phi33, %i.am
+  %2 = sub i64 %i.al, %i.an
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ao = lshr i64 %3, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 104
@@ -1341,9 +1342,9 @@ _ZSt4copyIPSt17reference_wrapperIN6duckdb12CatalogEntryEES4_ET0_T_S6_S5_.exit: ;
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.ae to i64
   %i.ap = add i64 %i.ai, %i.an
-  %i.aq = add i64 %i.ap, -8
-  %2 = add i64 %i.ao, %i.ah
-  %3 = sub i64 %i.aq, %2                          ; 2 uses
+  %i.aq = add i64 %i.ao, %i.ah
+  %2 = sub i64 %i.ap, %i.aq
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ar = lshr i64 %3, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -1746,8 +1747,8 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i: ;
   %i.ay = ptrtoaddr ptr %i.ar to i64
   %i.az = ptrtoint ptr %i.aw to i64
   %i.ba = ptrtoint ptr %i.av to i64
-  %2 = add i64 %i.az, -8
-  %3 = sub i64 %2, %i.ba                          ; 2 uses
+  %2 = sub i64 %i.az, %i.ba
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.bb = lshr i64 %3, 3
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -1845,8 +1846,8 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i17:
   %i.cf = ptrtoaddr ptr %i.by to i64
   %i.cg = ptrtoint ptr %i.cd to i64
   %i.ch = ptrtoint ptr %i.cc to i64
-  %4 = add i64 %i.cg, -8
-  %5 = sub i64 %4, %i.ch                          ; 2 uses
+  %4 = sub i64 %i.cg, %i.ch
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ci = lshr i64 %5, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
   %min.iters.check50 = icmp ult i64 %5, 72

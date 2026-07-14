@@ -203,8 +203,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 ._crit_edge.i.i.i.i:                              ; preds = %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE9push_backEOS3_.exit.i.i.i.i
-  %.sroa.9.1.i.i.i.i34.le = ptrtoint ptr %.sroa.9.1.i.i.i.i to i64
-  %.sroa.032.1.i.i.i.i35.le = ptrtoint ptr %.sroa.032.1.i.i.i.i to i64
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !641, !nonnull !48, !align !232
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !50   ; 4 uses
@@ -226,13 +224,15 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %.not4244.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %bb.c
-  %3 = add i64 %.sroa.9.1.i.i.i.i34.le, -32
-  %i.y = sub i64 %3, %.sroa.032.1.i.i.i.i35.le    ; 2 uses
-  %min.iters.check = icmp ult i64 %i.y, 64
+  %3 = ptrtoint ptr %.sroa.9.1.i.i.i.i to i64
+  %4 = ptrtoint ptr %.sroa.032.1.i.i.i.i to i64
+  %i.y = sub i64 %3, %4
+  %5 = add i64 %i.y, -32                          ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 64
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader42, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
-  %i.z = lshr i64 %i.y, 4
+  %i.z = lshr i64 %5, 4
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
   %n.mod.vf = and i64 %i.aa, 3                    ; 2 uses
   %i.ab = icmp eq i64 %n.mod.vf, 0

@@ -203,7 +203,6 @@ bb.a:
   %4 = alloca %struct.TOrigin_, align 8           ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 9 uses
-  %5 = ptrtoint ptr %i.b to i64                   ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -216,7 +215,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.g = phi ptr [ %i.f, %bb.b ], [ null, %bb.a ] ; 4 uses
-  %6 = ptrtoint ptr %i.g to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 4
@@ -262,9 +260,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ae, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %i.af = add i64 %5, 16
-  %umax = call i64 @llvm.umax.i64(i64 %6, i64 %i.af)
-  %i.ag = xor i64 %5, -1
+  %5 = ptrtoint ptr %i.g to i64
+  %6 = ptrtoint ptr %i.b to i64                   ; 2 uses
+  %i.af = add i64 %6, 16
+  %umax = call i64 @llvm.umax.i64(i64 %5, i64 %i.af)
+  %i.ag = xor i64 %6, -1
   %i.ah = add i64 %umax, %i.ag                    ; 2 uses
   %i.ai = lshr i64 %i.ah, 4
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses

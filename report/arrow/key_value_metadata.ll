@@ -203,7 +203,6 @@ thread-pre-split.thread:                          ; preds = %_ZNSt6vectorIlSaIlE
 .noexc11:                                         ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
   %i.j = ashr exact i64 %i.f, 2
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #25 ; 14 uses
-  %3 = ptrtoint ptr %i.k to i64
   store ptr %i.k, ptr %0, align 8, !tbaa !83
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.g
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -225,11 +224,12 @@ thread-pre-split:                                 ; preds = %.noexc11
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sink, ptr %i.r, align 8, !tbaa !79
   %.0.i.i.i.i.i2324 = ptrtoint ptr %.sink to i64
-  %4 = add i64 %.0.i.i.i.i.i2324, -8
-  %i.s = sub i64 %4, %3                           ; 2 uses
-  %i.t = lshr i64 %i.s, 3
+  %3 = ptrtoint ptr %i.k to i64
+  %i.s = sub i64 %.0.i.i.i.i.i2324, %3
+  %4 = add i64 %i.s, -8                           ; 2 uses
+  %i.t = lshr i64 %4, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.s, 24
+  %min.iters.check = icmp ult i64 %4, 24
   br i1 %min.iters.check, label %.lr.ph.i.preheader27, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader

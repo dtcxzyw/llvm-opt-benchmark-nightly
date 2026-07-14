@@ -204,11 +204,11 @@ bb.a:
   br i1 %.not, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %i.b, align 8              ; 9 uses
-  %i.d = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 10 uses
+  %i.d = ptrtoint ptr %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.f = load ptr, ptr %i.e, align 8              ; 3 uses
-  %i.g = ptrtoint ptr %i.f to i64                 ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8              ; 4 uses
+  %i.g = ptrtoint ptr %i.f to i64
   %.not8.i = icmp eq ptr %i.c, %i.f
   br i1 %.not8.i, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit, label %.lr.ph.i
 
@@ -224,11 +224,13 @@ bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %2 = add i64 %i.g, -24
-  %i.s = sub i64 %2, %i.d                         ; 2 uses
-  %i.t = udiv i64 %i.s, 24
+  %2 = ptrtoint ptr %i.f to i64
+  %3 = ptrtoint ptr %i.c to i64
+  %i.s = sub i64 %2, %3
+  %4 = add i64 %i.s, -24                          ; 2 uses
+  %i.t = udiv i64 %4, 24
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.s, 24
+  %min.iters.check = icmp ult i64 %4, 24
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
@@ -366,11 +368,11 @@ _ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit: ; preds = %scalar.ph
   br i1 %.not9, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit8, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit
-  %i.da = load ptr, ptr %i.cz, align 8            ; 9 uses
-  %i.db = ptrtoint ptr %i.da to i64               ; 2 uses
+  %i.da = load ptr, ptr %i.cz, align 8            ; 10 uses
+  %i.db = ptrtoint ptr %i.da to i64
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
-  %i.dd = load ptr, ptr %i.dc, align 8            ; 3 uses
-  %i.de = ptrtoint ptr %i.dd to i64               ; 2 uses
+  %i.dd = load ptr, ptr %i.dc, align 8            ; 4 uses
+  %i.de = ptrtoint ptr %i.dd to i64
   %.not8.i4 = icmp eq ptr %i.da, %i.dd
   br i1 %.not8.i4, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit8, label %.lr.ph.i5
 
@@ -386,11 +388,13 @@ bb.c:                                             ; preds = %_ZN6Assimp3IFC8Temp
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %3 = add i64 %i.de, -24
-  %i.dq = sub i64 %3, %i.db                       ; 2 uses
-  %i.dr = udiv i64 %i.dq, 24
+  %5 = ptrtoint ptr %i.dd to i64
+  %6 = ptrtoint ptr %i.da to i64
+  %i.dq = sub i64 %5, %6
+  %7 = add i64 %i.dq, -24                         ; 2 uses
+  %i.dr = udiv i64 %7, 24
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.dq, 24
+  %min.iters.check46 = icmp ult i64 %7, 24
   br i1 %min.iters.check46, label %scalar.ph45.preheader, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i5
@@ -564,11 +568,11 @@ _ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit8: ; preds = %scalar.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8                ; 9 uses
-  %i.b = ptrtoint ptr %i.a to i64                 ; 2 uses
+  %i.a = load ptr, ptr %0, align 8                ; 10 uses
+  %i.b = ptrtoint ptr %i.a to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
-  %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
+  %i.e = ptrtoint ptr %i.d to i64
   %.not8 = icmp eq ptr %i.a, %i.d
   br i1 %.not8, label %._crit_edge, label %.lr.ph
 
@@ -584,11 +588,13 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %2 = add i64 %i.e, -24
-  %i.q = sub i64 %2, %i.b                         ; 2 uses
-  %i.r = udiv i64 %i.q, 24
+  %2 = ptrtoint ptr %i.d to i64
+  %3 = ptrtoint ptr %i.a to i64
+  %i.q = sub i64 %2, %3
+  %4 = add i64 %i.q, -24                          ; 2 uses
+  %i.r = udiv i64 %4, 24
   %i.s = add nuw nsw i64 %i.r, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.q, 24
+  %min.iters.check = icmp ult i64 %4, 24
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
@@ -991,9 +997,9 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_b
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit
   %i.ao = ptrtoint ptr %i.an to i64
   %i.ap = shl nsw i64 %3, 2
-  %4 = add i64 %i.ap, %i.v
-  %i.aq = add i64 %4, -4
-  %5 = sub i64 %i.aq, %i.ao                       ; 2 uses
+  %4 = sub i64 %i.v, %i.ao
+  %i.aq = add i64 %4, %i.ap
+  %5 = add i64 %i.aq, -4                          ; 2 uses
   %i.ar = lshr i64 %5, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 28

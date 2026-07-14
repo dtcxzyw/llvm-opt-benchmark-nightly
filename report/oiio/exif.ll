@@ -204,8 +204,8 @@ bb.a:
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.a
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.b to i64
-  %1 = add i64 %i.e, -24
-  %2 = sub i64 %1, %i.f                           ; 2 uses
+  %1 = sub i64 %i.e, %i.f
+  %2 = add i64 %1, -24                            ; 2 uses
   %i.g = udiv i64 %2, 24
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %2, 168
@@ -608,10 +608,10 @@ bb.a:
   br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPN3tsl17detail_robin_hash12bucket_entryISt4pairIiPKN11OpenImageIO4v3_17TagInfoEELb0EEESA_EvT_SC_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %._crit_edge
-  %i.an = ptrtoint ptr %i.l to i64
-  %i.ao = ptrtoint ptr %i.k to i64
-  %4 = add i64 %i.ao, -24
-  %5 = sub i64 %4, %i.an                          ; 2 uses
+  %i.an = ptrtoint ptr %i.k to i64
+  %i.ao = ptrtoint ptr %i.l to i64
+  %4 = sub i64 %i.an, %i.ao
+  %5 = add i64 %4, -24                            ; 2 uses
   %i.ap = udiv i64 %5, 24
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 168
@@ -1014,8 +1014,8 @@ _ZN3tsl9robin_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenI
 .lr.ph.i.i.i.i.i2.i.preheader:                    ; preds = %_ZN3tsl9robin_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_17TagInfoESt4hashIS6_ESt8equal_toIS6_ESaISt4pairIS6_SB_EELb0ENS_2rh26power_of_two_growth_policyILm2EEEED2Ev.exit.i
   %i.af = ptrtoint ptr %i.ae to i64
   %i.ag = ptrtoint ptr %i.ac to i64
-  %2 = add i64 %i.af, -24
-  %3 = sub i64 %2, %i.ag                          ; 2 uses
+  %2 = sub i64 %i.af, %i.ag
+  %3 = add i64 %2, -24                            ; 2 uses
   %i.ah = udiv i64 %3, 24
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 168

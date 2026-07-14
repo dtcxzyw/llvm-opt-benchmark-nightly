@@ -204,8 +204,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 .lr.ph.i.preheader:                               ; preds = %.noexc101
   %i.je = ptrtoint ptr %i.jd to i64
   %i.jf = ptrtoint ptr %i.jb to i64
-  %21 = add i64 %i.je, -32
-  %22 = sub i64 %21, %i.jf                        ; 2 uses
+  %21 = sub i64 %i.je, %i.jf
+  %22 = add i64 %21, -32                          ; 2 uses
   %min.iters.check = icmp ult i64 %22, 128
   br i1 %min.iters.check, label %.lr.ph.i.preheader275, label %vector.ph
 
@@ -608,8 +608,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 .lr.ph.i.preheader:                               ; preds = %.noexc144
   %i.jt = ptrtoint ptr %i.js to i64
   %i.ju = ptrtoint ptr %i.jq to i64
-  %28 = add i64 %i.jt, -32
-  %29 = sub i64 %28, %i.ju                        ; 2 uses
+  %28 = sub i64 %i.jt, %i.ju
+  %29 = add i64 %28, -32                          ; 2 uses
   %min.iters.check = icmp ult i64 %29, 128
   br i1 %min.iters.check, label %.lr.ph.i.preheader521, label %vector.ph
 

@@ -204,11 +204,11 @@ middle.block:                                     ; preds = %vector.body
 _ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit: ; preds = %.lr.ph.i, %middle.block, %.thread.i
   %i.cp = phi ptr [ %i.bk, %.thread.i ], [ %i.bv, %middle.block ], [ %i.bv, %.lr.ph.i ]
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.cr = load ptr, ptr %i.cq, align 8            ; 11 uses
-  %i.cs = ptrtoint ptr %i.cr to i64               ; 9 uses
+  %i.cr = load ptr, ptr %i.cq, align 8            ; 13 uses
+  %i.cs = ptrtoint ptr %i.cr to i64               ; 4 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.cu = load ptr, ptr %i.ct, align 8            ; 3 uses
-  %i.cv = ptrtoint ptr %i.cu to i64               ; 2 uses
+  %i.cu = load ptr, ptr %i.ct, align 8            ; 4 uses
+  %i.cv = ptrtoint ptr %i.cu to i64
   %i.cw = ptrtoint ptr %i.cr to i64
   %i.cx = sub i64 %i.cv, %i.cw
   %i.cy = ashr exact i64 %i.cx, 3
@@ -222,10 +222,11 @@ _ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS
   br i1 %.not.i35, label %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.i, label %.lr.ph.i36.preheader
 
 .lr.ph.i36.preheader:                             ; preds = %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit
-  %i.dd = add i64 %.idx.i, %i.cs
-  %i.de = add i64 %i.cs, 8
+  %4 = ptrtoint ptr %i.cr to i64                  ; 3 uses
+  %i.dd = add i64 %.idx.i, %4
+  %i.de = add i64 %4, 8
   %umax78 = call i64 @llvm.umax.i64(i64 %i.dd, i64 %i.de)
-  %i.df = xor i64 %i.cs, -1
+  %i.df = xor i64 %4, -1
   %i.dg = add i64 %umax78, %i.df                  ; 2 uses
   %i.dh = lshr i64 %i.dg, 3
   %i.di = add nuw nsw i64 %i.dh, 1                ; 2 uses
@@ -298,23 +299,26 @@ _ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16Cop
   br label %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.i
 
 _ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.i: ; preds = %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.loopexit.i, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit
-  %i.ec = phi i64 [ %.pre.i, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.loopexit.i ], [ 0, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit ] ; 3 uses
+  %i.ec = phi i64 [ %.pre.i, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.loopexit.i ], [ 0, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit ] ; 4 uses
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %i.ec ; 4 uses
   %i.ee = icmp ult ptr %i.ed, %i.cu
   br i1 %i.ee, label %.lr.ph17.preheader.i, label %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE6insertIPS6_St26random_access_iterator_tagEES9_PKS6_T_SD_.exit
 
 .lr.ph17.preheader.i:                             ; preds = %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.i
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %i.ec ; 3 uses
-  %i.eg = shl nuw nsw i64 %i.ec, 3                ; 2 uses
-  %i.eh = add i64 %i.eg, %i.cs
+  %5 = ptrtoint ptr %i.cu to i64
+  %6 = ptrtoint ptr %i.cr to i64                  ; 2 uses
+  %i.eg = shl nuw nsw i64 %i.ec, 3
+  %i.eh = add i64 %i.eg, %6
   %i.ei = add i64 %i.eh, 8
-  %umax102 = call i64 @llvm.umax.i64(i64 %i.cv, i64 %i.ei)
-  %4 = xor i64 %i.cs, -1
-  %i.ej = add i64 %umax102, %4
-  %5 = sub i64 %i.ej, %i.eg                       ; 2 uses
-  %i.ek = lshr i64 %5, 3
+  %umax102 = call i64 @llvm.umax.i64(i64 %5, i64 %i.ei)
+  %7 = shl i64 %i.ec, 3
+  %i.ej = add i64 %7, %6
+  %8 = xor i64 %i.ej, -1
+  %9 = add i64 %umax102, %8                       ; 2 uses
+  %i.ek = lshr i64 %9, 3
   %i.el = add nuw nsw i64 %i.ek, 1                ; 2 uses
-  %min.iters.check104 = icmp ult i64 %5, 72
+  %min.iters.check104 = icmp ult i64 %9, 72
   %i.em = sub i64 %i.cs, %i.da
   %diff.check101 = icmp ugt i64 %i.em, -32
   %or.cond119 = or i1 %min.iters.check104, %diff.check101
@@ -717,10 +721,9 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v88internal10ZoneVectorISt4
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 8 uses
-  %2 = ptrtoint ptr %i.b to i64                   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
-  %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
+  %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.b to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -768,9 +771,11 @@ _ZN2v88internal4Zone13AllocateArrayISt4pairINS0_8compiler10turboshaft7OpIndexES6
   br i1 %or.cond, label %.lr.ph.preheader, label %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16MoveToNewStorageEPS6_S8_PKS6_.exit
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal4Zone13AllocateArrayISt4pairINS0_8compiler10turboshaft7OpIndexES6_EA_S7_EEPT_m.exit
-  %i.ad = add i64 %2, 8
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.ad)
-  %i.ae = xor i64 %2, -1
+  %2 = ptrtoint ptr %i.d to i64
+  %3 = ptrtoint ptr %i.b to i64                   ; 2 uses
+  %i.ad = add i64 %3, 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.ad)
+  %i.ae = xor i64 %3, -1
   %i.af = add i64 %umax, %i.ae                    ; 2 uses
   %i.ag = lshr i64 %i.af, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses

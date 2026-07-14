@@ -204,9 +204,7 @@ bb.j:                                             ; preds = %bb.i, %bb.b
   %i.bh = load ptr, ptr %i.ae, align 8, !tbaa !1049
   %.not47.i.i = icmp eq ptr %i.bh, null
   %i.bi = load ptr, ptr %i.g, align 8, !tbaa !1093 ; 7 uses
-  %7 = ptrtoint ptr %i.bi to i64
   %i.bj = load ptr, ptr %i.af, align 8, !tbaa !1093 ; 4 uses
-  %8 = ptrtoint ptr %i.bj to i64
   %.not4856.i.i = icmp eq ptr %i.bi, %i.bj        ; 2 uses
   br i1 %.not47.i.i, label %bb.p, label %bb.k
 
@@ -214,11 +212,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not4856.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.k
-  %9 = add i64 %8, -16
-  %i.bk = sub i64 %9, %7                          ; 2 uses
-  %i.bl = lshr i64 %i.bk, 4
+  %7 = ptrtoint ptr %i.bj to i64
+  %8 = ptrtoint ptr %i.bi to i64
+  %i.bk = sub i64 %7, %8
+  %9 = add i64 %i.bk, -16                         ; 2 uses
+  %i.bl = lshr i64 %9, 4
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
-  %min.iters.check58 = icmp ult i64 %i.bk, 48
+  %min.iters.check58 = icmp ult i64 %9, 48
   br i1 %min.iters.check58, label %.lr.ph.i.i.preheader76, label %vector.ph59
 
 vector.ph59:                                      ; preds = %.lr.ph.i.i.preheader
@@ -621,9 +621,7 @@ bb.r:                                             ; preds = %_ZNK6duckdb21Window
   %i.cp = load ptr, ptr %i.at, align 8, !tbaa !1049
   %.not58.i.i = icmp eq ptr %i.cp, null
   %i.cq = load ptr, ptr %i.g, align 8, !tbaa !1093 ; 7 uses
-  %7 = ptrtoint ptr %i.cq to i64
   %i.cr = load ptr, ptr %i.au, align 8, !tbaa !1093 ; 4 uses
-  %8 = ptrtoint ptr %i.cr to i64
   %.not5967.i.i = icmp eq ptr %i.cq, %i.cr        ; 2 uses
   br i1 %.not58.i.i, label %bb.y, label %bb.s
 
@@ -631,11 +629,13 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not5967.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.s
-  %9 = add i64 %8, -16
-  %i.cs = sub i64 %9, %7                          ; 2 uses
-  %i.ct = lshr i64 %i.cs, 4
+  %7 = ptrtoint ptr %i.cr to i64
+  %8 = ptrtoint ptr %i.cq to i64
+  %i.cs = sub i64 %7, %8
+  %9 = add i64 %i.cs, -16                         ; 2 uses
+  %i.ct = lshr i64 %9, 4
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cs, 48
+  %min.iters.check = icmp ult i64 %9, 48
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader66, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader

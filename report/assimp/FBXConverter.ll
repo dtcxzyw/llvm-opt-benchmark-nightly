@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.u = load ptr, ptr %i.k, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   store i32 %i.t, ptr %i.v, align 8
-  %i.w = load ptr, ptr %i.a, align 8              ; 8 uses
-  %i.x = ptrtoint ptr %i.w to i64                 ; 2 uses
-  %i.y = load ptr, ptr %i.c, align 8              ; 3 uses
-  %i.z = ptrtoint ptr %i.y to i64                 ; 2 uses
+  %i.w = load ptr, ptr %i.a, align 8              ; 9 uses
+  %i.x = ptrtoint ptr %i.w to i64
+  %i.y = load ptr, ptr %i.c, align 8              ; 4 uses
+  %i.z = ptrtoint ptr %i.y to i64
   %.not5.i = icmp eq ptr %i.w, %i.y
   br i1 %.not5.i, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i.preheader
 
@@ -215,11 +215,13 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = load ptr, ptr %i.k, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %i.ac = load ptr, ptr %i.ab, align 8            ; 6 uses
-  %1 = add i64 %i.z, -8
-  %i.ad = sub i64 %1, %i.x                        ; 2 uses
-  %i.ae = lshr i64 %i.ad, 3
+  %1 = ptrtoint ptr %i.y to i64
+  %2 = ptrtoint ptr %i.w to i64
+  %i.ad = sub i64 %1, %2
+  %3 = add i64 %i.ad, -8                          ; 2 uses
+  %i.ae = lshr i64 %3, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ad, 120
+  %min.iters.check = icmp ult i64 %3, 120
   br i1 %min.iters.check, label %.lr.ph.i.preheader233, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
@@ -310,10 +312,10 @@ bb.c:                                             ; preds = %_ZSt11swap_rangesIN
   %i.bp = load ptr, ptr %i.bf, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 32
   store i32 %i.bo, ptr %i.bq, align 8
-  %i.br = load ptr, ptr %i.av, align 8            ; 8 uses
-  %i.bs = ptrtoint ptr %i.br to i64               ; 2 uses
-  %i.bt = load ptr, ptr %i.ax, align 8            ; 3 uses
-  %i.bu = ptrtoint ptr %i.bt to i64               ; 2 uses
+  %i.br = load ptr, ptr %i.av, align 8            ; 9 uses
+  %i.bs = ptrtoint ptr %i.br to i64
+  %i.bt = load ptr, ptr %i.ax, align 8            ; 4 uses
+  %i.bu = ptrtoint ptr %i.bt to i64
   %.not5.i14 = icmp eq ptr %i.br, %i.bt
   br i1 %.not5.i14, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiMaterialSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i15.preheader
 
@@ -321,11 +323,13 @@ bb.c:                                             ; preds = %_ZSt11swap_rangesIN
   %i.bv = load ptr, ptr %i.bf, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 40
   %i.bx = load ptr, ptr %i.bw, align 8            ; 6 uses
-  %2 = add i64 %i.bu, -8
-  %i.by = sub i64 %2, %i.bs                       ; 2 uses
-  %i.bz = lshr i64 %i.by, 3
+  %4 = ptrtoint ptr %i.bt to i64
+  %5 = ptrtoint ptr %i.br to i64
+  %i.by = sub i64 %4, %5
+  %6 = add i64 %i.by, -8                          ; 2 uses
+  %i.bz = lshr i64 %6, 3
   %i.ca = add nuw nsw i64 %i.bz, 1                ; 2 uses
-  %min.iters.check90 = icmp ult i64 %i.by, 120
+  %min.iters.check90 = icmp ult i64 %6, 120
   br i1 %min.iters.check90, label %.lr.ph.i15.preheader232, label %vector.memcheck83
 
 vector.memcheck83:                                ; preds = %.lr.ph.i15.preheader
@@ -416,10 +420,10 @@ bb.d:                                             ; preds = %_ZSt11swap_rangesIN
   %i.dk = load ptr, ptr %i.da, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 48
   store i32 %i.dj, ptr %i.dl, align 8
-  %i.dm = load ptr, ptr %i.cq, align 8            ; 8 uses
-  %i.dn = ptrtoint ptr %i.dm to i64               ; 2 uses
-  %i.do = load ptr, ptr %i.cs, align 8            ; 3 uses
-  %i.dp = ptrtoint ptr %i.do to i64               ; 2 uses
+  %i.dm = load ptr, ptr %i.cq, align 8            ; 9 uses
+  %i.dn = ptrtoint ptr %i.dm to i64
+  %i.do = load ptr, ptr %i.cs, align 8            ; 4 uses
+  %i.dp = ptrtoint ptr %i.do to i64
   %.not5.i20 = icmp eq ptr %i.dm, %i.do
   br i1 %.not5.i20, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP11aiAnimationSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i21.preheader
 
@@ -427,11 +431,13 @@ bb.d:                                             ; preds = %_ZSt11swap_rangesIN
   %i.dq = load ptr, ptr %i.da, align 8
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 56
   %i.ds = load ptr, ptr %i.dr, align 8            ; 6 uses
-  %3 = add i64 %i.dp, -8
-  %i.dt = sub i64 %3, %i.dn                       ; 2 uses
-  %i.du = lshr i64 %i.dt, 3
+  %7 = ptrtoint ptr %i.do to i64
+  %8 = ptrtoint ptr %i.dm to i64
+  %i.dt = sub i64 %7, %8
+  %9 = add i64 %i.dt, -8                          ; 2 uses
+  %i.du = lshr i64 %9, 3
   %i.dv = add nuw nsw i64 %i.du, 1                ; 2 uses
-  %min.iters.check114 = icmp ult i64 %i.dt, 120
+  %min.iters.check114 = icmp ult i64 %9, 120
   br i1 %min.iters.check114, label %.lr.ph.i21.preheader231, label %vector.memcheck107
 
 vector.memcheck107:                               ; preds = %.lr.ph.i21.preheader
@@ -522,10 +528,10 @@ bb.e:                                             ; preds = %_ZSt11swap_rangesIN
   %i.ff = load ptr, ptr %i.ev, align 8
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 80
   store i32 %i.fe, ptr %i.fg, align 8
-  %i.fh = load ptr, ptr %i.el, align 8            ; 8 uses
-  %i.fi = ptrtoint ptr %i.fh to i64               ; 2 uses
-  %i.fj = load ptr, ptr %i.en, align 8            ; 3 uses
-  %i.fk = ptrtoint ptr %i.fj to i64               ; 2 uses
+  %i.fh = load ptr, ptr %i.el, align 8            ; 9 uses
+  %i.fi = ptrtoint ptr %i.fh to i64
+  %i.fj = load ptr, ptr %i.en, align 8            ; 4 uses
+  %i.fk = ptrtoint ptr %i.fj to i64
   %.not5.i26 = icmp eq ptr %i.fh, %i.fj
   br i1 %.not5.i26, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP7aiLightSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i27.preheader
 
@@ -533,11 +539,13 @@ bb.e:                                             ; preds = %_ZSt11swap_rangesIN
   %i.fl = load ptr, ptr %i.ev, align 8
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 88
   %i.fn = load ptr, ptr %i.fm, align 8            ; 6 uses
-  %4 = add i64 %i.fk, -8
-  %i.fo = sub i64 %4, %i.fi                       ; 2 uses
-  %i.fp = lshr i64 %i.fo, 3
+  %10 = ptrtoint ptr %i.fj to i64
+  %11 = ptrtoint ptr %i.fh to i64
+  %i.fo = sub i64 %10, %11
+  %12 = add i64 %i.fo, -8                         ; 2 uses
+  %i.fp = lshr i64 %12, 3
   %i.fq = add nuw nsw i64 %i.fp, 1                ; 2 uses
-  %min.iters.check138 = icmp ult i64 %i.fo, 120
+  %min.iters.check138 = icmp ult i64 %12, 120
   br i1 %min.iters.check138, label %.lr.ph.i27.preheader230, label %vector.memcheck131
 
 vector.memcheck131:                               ; preds = %.lr.ph.i27.preheader
@@ -628,10 +636,10 @@ bb.f:                                             ; preds = %_ZSt11swap_rangesIN
   %i.ha = load ptr, ptr %i.gq, align 8
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 96
   store i32 %i.gz, ptr %i.hb, align 8
-  %i.hc = load ptr, ptr %i.gg, align 8            ; 8 uses
-  %i.hd = ptrtoint ptr %i.hc to i64               ; 2 uses
-  %i.he = load ptr, ptr %i.gi, align 8            ; 3 uses
-  %i.hf = ptrtoint ptr %i.he to i64               ; 2 uses
+  %i.hc = load ptr, ptr %i.gg, align 8            ; 9 uses
+  %i.hd = ptrtoint ptr %i.hc to i64
+  %i.he = load ptr, ptr %i.gi, align 8            ; 4 uses
+  %i.hf = ptrtoint ptr %i.he to i64
   %.not5.i32 = icmp eq ptr %i.hc, %i.he
   br i1 %.not5.i32, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP8aiCameraSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i33.preheader
 
@@ -639,11 +647,13 @@ bb.f:                                             ; preds = %_ZSt11swap_rangesIN
   %i.hg = load ptr, ptr %i.gq, align 8
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 104
   %i.hi = load ptr, ptr %i.hh, align 8            ; 6 uses
-  %5 = add i64 %i.hf, -8
-  %i.hj = sub i64 %5, %i.hd                       ; 2 uses
-  %i.hk = lshr i64 %i.hj, 3
+  %13 = ptrtoint ptr %i.he to i64
+  %14 = ptrtoint ptr %i.hc to i64
+  %i.hj = sub i64 %13, %14
+  %15 = add i64 %i.hj, -8                         ; 2 uses
+  %i.hk = lshr i64 %15, 3
   %i.hl = add nuw nsw i64 %i.hk, 1                ; 2 uses
-  %min.iters.check162 = icmp ult i64 %i.hj, 120
+  %min.iters.check162 = icmp ult i64 %15, 120
   br i1 %min.iters.check162, label %.lr.ph.i33.preheader229, label %vector.memcheck155
 
 vector.memcheck155:                               ; preds = %.lr.ph.i33.preheader
@@ -734,10 +744,10 @@ bb.g:                                             ; preds = %_ZSt11swap_rangesIN
   %i.iv = load ptr, ptr %i.il, align 8
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iv, i64 64
   store i32 %i.iu, ptr %i.iw, align 8
-  %i.ix = load ptr, ptr %i.ib, align 8            ; 8 uses
-  %i.iy = ptrtoint ptr %i.ix to i64               ; 2 uses
-  %i.iz = load ptr, ptr %i.id, align 8            ; 3 uses
-  %i.ja = ptrtoint ptr %i.iz to i64               ; 2 uses
+  %i.ix = load ptr, ptr %i.ib, align 8            ; 9 uses
+  %i.iy = ptrtoint ptr %i.ix to i64
+  %i.iz = load ptr, ptr %i.id, align 8            ; 4 uses
+  %i.ja = ptrtoint ptr %i.iz to i64
   %.not5.i38 = icmp eq ptr %i.ix, %i.iz
   br i1 %.not5.i38, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP9aiTextureSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i39.preheader
 
@@ -745,11 +755,13 @@ bb.g:                                             ; preds = %_ZSt11swap_rangesIN
   %i.jb = load ptr, ptr %i.il, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 72
   %i.jd = load ptr, ptr %i.jc, align 8            ; 6 uses
-  %6 = add i64 %i.ja, -8
-  %i.je = sub i64 %6, %i.iy                       ; 2 uses
-  %i.jf = lshr i64 %i.je, 3
+  %16 = ptrtoint ptr %i.iz to i64
+  %17 = ptrtoint ptr %i.ix to i64
+  %i.je = sub i64 %16, %17
+  %18 = add i64 %i.je, -8                         ; 2 uses
+  %i.jf = lshr i64 %18, 3
   %i.jg = add nuw nsw i64 %i.jf, 1                ; 2 uses
-  %min.iters.check186 = icmp ult i64 %i.je, 120
+  %min.iters.check186 = icmp ult i64 %18, 120
   br i1 %min.iters.check186, label %.lr.ph.i39.preheader228, label %vector.memcheck179
 
 vector.memcheck179:                               ; preds = %.lr.ph.i39.preheader
@@ -839,10 +851,10 @@ bb.h:                                             ; preds = %_ZSt11swap_rangesIN
   %i.kq = load ptr, ptr %i.kg, align 8
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 1148
   store i32 %i.kp, ptr %i.kr, align 4
-  %i.ks = load ptr, ptr %i.jw, align 8            ; 8 uses
-  %i.kt = ptrtoint ptr %i.ks to i64               ; 2 uses
-  %i.ku = load ptr, ptr %i.jy, align 8            ; 3 uses
-  %i.kv = ptrtoint ptr %i.ku to i64               ; 2 uses
+  %i.ks = load ptr, ptr %i.jw, align 8            ; 9 uses
+  %i.kt = ptrtoint ptr %i.ks to i64
+  %i.ku = load ptr, ptr %i.jy, align 8            ; 4 uses
+  %i.kv = ptrtoint ptr %i.ku to i64
   %.not5.i44 = icmp eq ptr %i.ks, %i.ku
   br i1 %.not5.i44, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiSkeletonSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i45.preheader
 
@@ -850,11 +862,13 @@ bb.h:                                             ; preds = %_ZSt11swap_rangesIN
   %i.kw = load ptr, ptr %i.kg, align 8
   %i.kx = getelementptr inbounds nuw i8, ptr %i.kw, i64 1152
   %i.ky = load ptr, ptr %i.kx, align 8            ; 6 uses
-  %7 = add i64 %i.kv, -8
-  %i.kz = sub i64 %7, %i.kt                       ; 2 uses
-  %i.la = lshr i64 %i.kz, 3
+  %19 = ptrtoint ptr %i.ku to i64
+  %20 = ptrtoint ptr %i.ks to i64
+  %i.kz = sub i64 %19, %20
+  %21 = add i64 %i.kz, -8                         ; 2 uses
+  %i.la = lshr i64 %21, 3
   %i.lb = add nuw nsw i64 %i.la, 1                ; 2 uses
-  %min.iters.check210 = icmp ult i64 %i.kz, 120
+  %min.iters.check210 = icmp ult i64 %21, 120
   br i1 %min.iters.check210, label %.lr.ph.i45.preheader227, label %vector.memcheck203
 
 vector.memcheck203:                               ; preds = %.lr.ph.i45.preheader
@@ -1257,8 +1271,8 @@ bb.bc:                                            ; preds = %bb.bb
   %i.pr = ptrtoaddr ptr %i.pn to i64
   %i.ps = ptrtoint ptr %i.pp to i64
   %i.pt = ptrtoint ptr %i.po to i64
-  %13 = add i64 %i.ps, -8
-  %14 = sub i64 %13, %i.pt                        ; 2 uses
+  %13 = sub i64 %i.ps, %i.pt
+  %14 = add i64 %13, -8                           ; 2 uses
   %i.pu = lshr i64 %14, 3
   %i.pv = add nuw nsw i64 %i.pu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %14, 24

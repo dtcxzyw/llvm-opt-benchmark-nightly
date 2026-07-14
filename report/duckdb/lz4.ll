@@ -203,7 +203,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef i32 @_ZN10duckdb_lz4L22LZ4_decompress_genericEPKcPciiNS_18earlyEnd_directiveENS_14dict_directiveEPKhS6_m(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef range(i32 0, 2) %4, i32 noundef range(i32 0, 3) %5, ptr noundef %6, ptr nofree noundef readonly captures(address_is_null) %7, i64 noundef %8) unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.a = ptrtoint ptr %1 to i64
   %i.b = icmp eq ptr %0, null
   %i.c = icmp slt i32 %3, 0
   %or.cond = or i1 %i.b, %i.c
@@ -606,8 +606,6 @@ _ZN10duckdb_lz4L14LZ4_wildCopy32EPvPKvS0_.exit:   ; preds = %bb.m, %bb.n, %.loop
   %.0379 = phi i32 [ %i.gp, %.loopexit597 ], [ %i.ak, %bb.n ], [ %i.ak, %bb.m ]
   %.3367 = phi ptr [ %i.gq, %.loopexit597 ], [ %i.bf, %bb.m ], [ %i.bo, %bb.n ] ; 7 uses
   %.7 = phi ptr [ %.6621, %.loopexit597 ], [ %.0362, %bb.n ], [ %.0362, %bb.m ] ; 11 uses
-  %.33671029 = ptrtoint ptr %.3367 to i64
-  %.71030 = ptrtoint ptr %.7 to i64               ; 2 uses
   %.71026 = ptrtoaddr ptr %.7 to i64
   %.65441027 = ptrtoaddr ptr %.6544 to i64
   %i.gr = getelementptr inbounds i8, ptr %i.g, i64 -12
@@ -621,9 +619,11 @@ bb.an:                                            ; preds = %_ZN10duckdb_lz4L14L
   br i1 %i.gv, label %bb.ao, label %.preheader595.preheader
 
 .preheader595.preheader:                          ; preds = %bb.an
-  %i.gw = add i64 %.71030, 8
-  %umax1031 = tail call i64 @llvm.umax.i64(i64 %.33671029, i64 %i.gw)
-  %i.gx = xor i64 %.71030, -1
+  %9 = ptrtoint ptr %.3367 to i64
+  %10 = ptrtoint ptr %.7 to i64                   ; 2 uses
+  %i.gw = add i64 %10, 8
+  %umax1031 = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.gw)
+  %i.gx = xor i64 %10, -1
   %i.gy = add i64 %umax1031, %i.gx                ; 2 uses
   %i.gz = lshr i64 %i.gy, 3
   %i.ha = add nuw nsw i64 %i.gz, 1                ; 2 uses
@@ -789,10 +789,10 @@ bb.av:                                            ; preds = %_ZN10duckdb_lz4L20r
   %.12392 = phi i64 [ %i.ja, %bb.av ], [ %i.ch, %bb.s ], [ %i.co, %bb.t ] ; 7 uses
   %.1378 = phi i64 [ %.0377, %bb.av ], [ %i.br, %bb.t ], [ %i.br, %bb.s ] ; 3 uses
   %.1371 = phi ptr [ %.0370, %bb.av ], [ %i.bu, %bb.t ], [ %i.bu, %bb.s ] ; 18 uses
-  %.10 = phi ptr [ %.9, %bb.av ], [ %.2, %bb.t ], [ %.2, %bb.s ] ; 28 uses
+  %.10 = phi ptr [ %.9, %bb.av ], [ %.2, %bb.t ], [ %.2, %bb.s ] ; 30 uses
   %.13711127 = ptrtoaddr ptr %.1371 to i64        ; 2 uses
-  %.101050 = ptrtoint ptr %.10 to i64             ; 17 uses
-  %.101047 = ptrtoaddr ptr %.10 to i64
+  %.101050 = ptrtoint ptr %.10 to i64             ; 10 uses
+  %.101047 = ptrtoaddr ptr %.10 to i64            ; 3 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.1371, i64 %8
   %i.jc = icmp ult ptr %i.jb, %6
   %or.cond472 = select i1 %i.k, i1 %i.jc, i1 false, !prof !41
@@ -1167,19 +1167,21 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %i.oe, label %.preheader593.preheader, label %bb.bp
 
 .preheader593.preheader:                          ; preds = %bb.bo
-  %i.of = add i64 %i.a, %i.f
+  %11 = ptrtoint ptr %1 to i64
+  %i.of = add i64 %11, %i.f
   %i.og = add i64 %i.of, -7
-  %i.oh = add i64 %.101050, 16
+  %12 = ptrtoint ptr %.10 to i64                  ; 2 uses
+  %i.oh = add i64 %12, 16
   %umax1070 = tail call i64 @llvm.umax.i64(i64 %i.og, i64 %i.oh)
-  %9 = add i64 %umax1070, -9
-  %10 = sub i64 %9, %.101050                      ; 2 uses
-  %i.oi = lshr i64 %10, 3
+  %13 = sub i64 %umax1070, %12
+  %14 = add i64 %13, -9                           ; 2 uses
+  %i.oi = lshr i64 %14, 3
   %i.oj = add nuw nsw i64 %i.oi, 1                ; 2 uses
-  %min.iters.check1072 = icmp ult i64 %10, 104
+  %min.iters.check1072 = icmp ult i64 %14, 104
   br i1 %min.iters.check1072, label %.preheader593.preheader1209, label %vector.memcheck1068
 
 vector.memcheck1068:                              ; preds = %.preheader593.preheader
-  %i.ok = sub i64 %.101050, %.33731048
+  %i.ok = sub i64 %.101047, %.33731048
   %i.ol = add i64 %i.ok, 7
   %diff.check1069 = icmp ult i64 %i.ol, 31
   br i1 %diff.check1069, label %.preheader593.preheader1209, label %vector.ph1073
@@ -1249,7 +1251,7 @@ iter.check1109:                                   ; preds = %bb.bp
   br i1 %min.iters.check1091, label %.lr.ph669.preheader, label %vector.memcheck1087
 
 vector.memcheck1087:                              ; preds = %iter.check1109
-  %i.ph = sub i64 %.101050, %.33731048
+  %i.ph = sub i64 %.101047, %.33731048
   %i.pi = add i64 %i.ph, 7
   %diff.check1088 = icmp ult i64 %i.pi, 31
   br i1 %diff.check1088, label %.lr.ph669.preheader, label %vector.main.loop.iter.check1092
@@ -1331,14 +1333,15 @@ bb.bq:                                            ; preds = %bb.bm
 
 bb.br:                                            ; preds = %bb.bq
   %i.px = getelementptr inbounds nuw i8, ptr %.10, i64 16 ; 4 uses
-  %i.py = add i64 %.12392, %.101050
-  %i.pz = add i64 %.101050, 24
+  %15 = ptrtoint ptr %.10 to i64                  ; 3 uses
+  %i.py = add i64 %.12392, %15
+  %i.pz = add i64 %15, 24
   %umax1051 = tail call i64 @llvm.umax.i64(i64 %i.py, i64 %i.pz)
-  %11 = add i64 %umax1051, -17
-  %12 = sub i64 %11, %.101050                     ; 2 uses
-  %i.qa = lshr i64 %12, 3
+  %16 = sub i64 %umax1051, %15
+  %17 = add i64 %16, -17                          ; 2 uses
+  %i.qa = lshr i64 %17, 3
   %i.qb = add nuw nsw i64 %i.qa, 1                ; 2 uses
-  %min.iters.check1053 = icmp ult i64 %12, 104
+  %min.iters.check1053 = icmp ult i64 %17, 104
   br i1 %min.iters.check1053, label %scalar.ph1052.preheader, label %vector.memcheck1046
 
 vector.memcheck1046:                              ; preds = %bb.br
@@ -1741,10 +1744,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN10duckdb_lz4L23LZ4_memcpy_using_offsetEPhPKhS0_m(ptr nofree noundef writeonly captures(address) initializes((0, 8)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readnone captures(address) %2, i64 noundef range(i64 0, 16) %3) unnamed_addr #10 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %2 to i64
-  %6 = ptrtoint ptr %0 to i64                     ; 3 uses
-  %7 = ptrtoint ptr %2 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   switch i64 %3, label %bb.e [
     i64 1, label %bb.b
     i64 2, label %bb.c
@@ -1811,18 +1811,20 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.023.i = phi ptr [ %i.x, %bb.f ], [ %i.z, %bb.g ] ; 5 uses
   %.0.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.aa = add i64 %4, 16
+  %5 = ptrtoint ptr %2 to i64
+  %6 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %i.aa = add i64 %6, 16
   %umax37 = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.aa)
-  %8 = add i64 %umax37, -9
-  %9 = sub i64 %8, %4                             ; 2 uses
-  %i.ab = lshr i64 %9, 3
+  %7 = sub i64 %umax37, %6
+  %8 = add i64 %7, -9                             ; 2 uses
+  %i.ab = lshr i64 %8, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check39 = icmp ult i64 %9, 104
+  %min.iters.check39 = icmp ult i64 %8, 104
   br i1 %min.iters.check39, label %scalar.ph38.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.h
   %.023.i36 = ptrtoaddr ptr %.023.i to i64
-  %i.ad = sub i64 %6, %.023.i36
+  %i.ad = sub i64 %4, %.023.i36
   %i.ae = add i64 %i.ad, 7
   %diff.check = icmp ult i64 %i.ae, 31
   br i1 %diff.check, label %scalar.ph38.preheader, label %vector.ph40
@@ -1878,13 +1880,15 @@ bb.i:                                             ; preds = %bb.d, %bb.c, %bb.b
   br i1 %i.aq, label %.lr.ph.preheader, label %_ZN10duckdb_lz4L28LZ4_memcpy_using_offset_baseEPhPKhS0_m.exit
 
 .lr.ph.preheader:                                 ; preds = %bb.i
-  %i.ar = add i64 %6, 16
-  %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.ar)
-  %10 = add i64 %umax, -9
-  %11 = sub i64 %10, %6                           ; 2 uses
-  %i.as = lshr i64 %11, 3
+  %9 = ptrtoint ptr %2 to i64
+  %10 = ptrtoint ptr %0 to i64                    ; 2 uses
+  %i.ar = add i64 %10, 16
+  %umax = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.ar)
+  %11 = sub i64 %umax, %10
+  %12 = add i64 %11, -9                           ; 2 uses
+  %i.as = lshr i64 %12, 3
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %11, 24
+  %min.iters.check = icmp ult i64 %12, 24
   br i1 %min.iters.check, label %.lr.ph.preheader53, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

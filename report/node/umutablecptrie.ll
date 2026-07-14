@@ -204,8 +204,7 @@ bb.k:                                             ; preds = %bb.j
   %.not58.not = icmp samesign ugt i32 %i.ah, %i.ab
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8            ; 2 uses
-  %5 = ptrtoint ptr %i.aj to i64                  ; 2 uses
-  %i.ak = zext nneg i32 %i.ae to i64              ; 2 uses
+  %i.ak = zext nneg i32 %i.ae to i64              ; 3 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.ak ; 4 uses
   br i1 %.not58.not, label %bb.m, label %bb.l
 
@@ -251,23 +250,25 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.ax, label %.lr.ph.preheader.i, label %_ZN6icu_7812_GLOBAL__N_19fillBlockEPjiij.exit71
 
 .lr.ph.preheader.i:                               ; preds = %bb.m
-  %i.ay = zext nneg i32 %i.ac to i64              ; 2 uses
+  %i.ay = zext nneg i32 %i.ac to i64              ; 3 uses
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %i.ay ; 3 uses
-  %i.ba = shl nuw nsw i64 %i.ak, 2                ; 2 uses
-  %6 = add i64 %i.ba, %5                          ; 2 uses
-  %7 = shl nuw nsw i64 %i.ay, 2                   ; 2 uses
-  %i.bb = add i64 %6, %7
+  %5 = ptrtoint ptr %i.aj to i64                  ; 2 uses
+  %i.ba = shl nuw nsw i64 %i.ak, 2
+  %6 = shl nuw nsw i64 %i.ay, 2
+  %7 = add i64 %i.ba, %5                          ; 2 uses
+  %i.bb = add i64 %7, %6
   %i.bc = add i64 %i.bb, 4
   %i.bd = shl nuw nsw i64 %i.av, 2
-  %i.be = add i64 %6, %i.bd
+  %i.be = add i64 %7, %i.bd
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %i.be)
-  %8 = xor i64 %5, -1
-  %i.bf = add i64 %umax, %8
-  %9 = add nuw nsw i64 %i.ba, %7
-  %10 = sub i64 %i.bf, %9                         ; 2 uses
-  %i.bg = lshr i64 %10, 2
+  %8 = add nuw nsw i64 %i.ak, %i.ay
+  %9 = shl nuw nsw i64 %8, 2
+  %i.bf = add i64 %9, %5
+  %10 = xor i64 %i.bf, -1
+  %11 = add i64 %umax, %10                        ; 2 uses
+  %i.bg = lshr i64 %11, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
-  %min.iters.check93 = icmp ult i64 %10, 28
+  %min.iters.check93 = icmp ult i64 %11, 28
   br i1 %min.iters.check93, label %.lr.ph.i61.preheader, label %vector.ph94
 
 vector.ph94:                                      ; preds = %.lr.ph.preheader.i
@@ -369,22 +370,23 @@ bb.p:                                             ; preds = %._crit_edge
 .lr.ph.preheader.i68:                             ; preds = %bb.p
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cp = load ptr, ptr %i.co, align 8            ; 2 uses
-  %11 = ptrtoint ptr %i.cp to i64                 ; 2 uses
-  %i.cq = zext nneg i32 %i.cm to i64              ; 2 uses
+  %i.cq = zext nneg i32 %i.cm to i64              ; 3 uses
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr %i.cp, i64 %i.cq ; 4 uses
   %i.cs = zext nneg i32 %i.bp to i64              ; 2 uses
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %i.cs
-  %i.cu = shl nuw nsw i64 %i.cq, 2                ; 2 uses
-  %12 = add nuw i64 %i.cu, %11
+  %12 = ptrtoint ptr %i.cp to i64                 ; 2 uses
+  %i.cu = shl nuw nsw i64 %i.cq, 2
   %13 = shl nuw nsw i64 %i.cs, 2
+  %14 = add nuw i64 %i.cu, %12
   %i.cv = tail call i64 @llvm.umax.i64(i64 %13, i64 4)
-  %umax105 = add nuw i64 %12, %i.cv
-  %14 = xor i64 %11, -1
-  %i.cw = add i64 %umax105, %14
-  %15 = sub i64 %i.cw, %i.cu                      ; 2 uses
-  %i.cx = lshr i64 %15, 2
+  %umax105 = add nuw i64 %14, %i.cv
+  %15 = shl nuw nsw i64 %i.cq, 2
+  %i.cw = add i64 %15, %12
+  %16 = xor i64 %i.cw, -1
+  %17 = add i64 %umax105, %16                     ; 2 uses
+  %i.cx = lshr i64 %17, 2
   %i.cy = add nuw nsw i64 %i.cx, 1                ; 2 uses
-  %min.iters.check107 = icmp ult i64 %15, 28
+  %min.iters.check107 = icmp ult i64 %17, 28
   br i1 %min.iters.check107, label %.lr.ph.i69.preheader, label %vector.ph108
 
 vector.ph108:                                     ; preds = %.lr.ph.preheader.i68

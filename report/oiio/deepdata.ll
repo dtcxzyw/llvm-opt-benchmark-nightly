@@ -203,9 +203,9 @@ _ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit: ; preds = %bb.l, %
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.ae to i64
   %i.ap = add i64 %i.ai, %i.an
-  %i.aq = add i64 %i.ap, -8
-  %2 = add i64 %i.ao, %i.ah
-  %3 = sub i64 %i.aq, %2                          ; 2 uses
+  %i.aq = add i64 %i.ao, %i.ah
+  %2 = sub i64 %i.ap, %i.aq
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ar = lshr i64 %3, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -608,8 +608,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN11OpenImageIO4v3_18TypeDescESaIS2_EE13_M_assign_auxIPKS2_EEvT_S8_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64
-  %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
+  %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = sub i64 %i.a, %i.b                       ; 10 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -715,13 +714,15 @@ _ZSt4copyIPKN11OpenImageIO4v3_18TypeDescEPS2_ET0_T_S7_S6_.exit17: ; preds = %bb.
   br i1 %.not9.i.i.i.i, label %_ZSt22__uninitialized_copy_aIPKN11OpenImageIO4v3_18TypeDescEPS2_S2_ET0_T_S7_S6_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPKN11OpenImageIO4v3_18TypeDescEPS2_ET0_T_S7_S6_.exit17
-  %4 = add i64 %i.h, %i.a
-  %i.ad = add i64 %4, -8
-  %i.ae = add i64 %i.r, %3
-  %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
-  %i.ag = lshr i64 %i.af, 3
+  %3 = ptrtoint ptr %2 to i64
+  %4 = ptrtoint ptr %1 to i64
+  %i.ad = add i64 %i.h, %3
+  %i.ae = add i64 %i.r, %4
+  %i.af = sub i64 %i.ad, %i.ae
+  %5 = add i64 %i.af, -8                          ; 2 uses
+  %i.ag = lshr i64 %5, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.af, 136
+  %min.iters.check = icmp ult i64 %5, 136
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader30, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader

@@ -203,9 +203,9 @@ _ZSt4copyIPSt17reference_wrapperIN6duckdb12CatalogEntryEES4_ET0_T_S6_S5_.exit: ;
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.ae to i64
   %i.ap = add i64 %i.ai, %i.an
-  %i.aq = add i64 %i.ap, -8
-  %2 = add i64 %i.ao, %i.ah
-  %3 = sub i64 %i.aq, %2                          ; 2 uses
+  %i.aq = add i64 %i.ao, %i.ah
+  %2 = sub i64 %i.ap, %i.aq
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ar = lshr i64 %3, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -608,7 +608,7 @@ _ZNSt10_HashtableISt17reference_wrapperIN6duckdb7CatalogEES3_SaIS3_ENSt8__detail
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESaIS3_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPS3_S5_EEEEvSA_T_SB_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %4 = ptrtoaddr ptr %1 to i64
   %.not94 = icmp eq ptr %2, %3
   br i1 %.not94, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, label %bb.b
 
@@ -916,11 +916,12 @@ _ZNSt12_Vector_baseISt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESaIS3_EE
 
 .lr.ph.i.i.i.i.i60.preheader:                     ; preds = %_ZNSt12_Vector_baseISt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESaIS3_EE11_M_allocateEm.exit
   %i.cx = ptrtoaddr ptr %i.cw to i64
-  %5 = add i64 %4, -8
-  %i.cy = sub i64 %5, %i.cl                       ; 2 uses
-  %i.cz = lshr i64 %i.cy, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.cy = sub i64 %5, %i.cl
+  %6 = add i64 %i.cy, -8                          ; 2 uses
+  %i.cz = lshr i64 %6, 3
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
-  %min.iters.check161 = icmp ult i64 %i.cy, 72
+  %min.iters.check161 = icmp ult i64 %6, 72
   %i.db = sub i64 %i.cl, %i.cx
   %diff.check159 = icmp ugt i64 %i.db, -32
   %or.cond215 = or i1 %min.iters.check161, %diff.check159
@@ -1028,11 +1029,12 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapp
 
 .lr.ph.i.i.i.i.i73.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEES6_S5_ET0_T_SC_SB_RSaIT1_E.exit71
   %.lcssa117196 = ptrtoaddr ptr %.lcssa117 to i64
-  %6 = add i64 %i.j, -8
-  %i.eb = sub i64 %6, %4                          ; 2 uses
-  %i.ec = lshr i64 %i.eb, 3
+  %7 = ptrtoint ptr %1 to i64
+  %i.eb = sub i64 %i.j, %7
+  %8 = add i64 %i.eb, -8                          ; 2 uses
+  %i.ec = lshr i64 %8, 3
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
-  %min.iters.check199 = icmp ult i64 %i.eb, 72
+  %min.iters.check199 = icmp ult i64 %8, 72
   %i.ee = sub i64 %4, %.lcssa117196
   %diff.check197 = icmp ugt i64 %i.ee, -32
   %or.cond217 = select i1 %min.iters.check199, i1 true, i1 %diff.check197

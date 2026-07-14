@@ -204,7 +204,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i8 @_ZN5arrow8internal15DetectUIntWidthEPKmPKhlh(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, i8 noundef zeroext %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoint ptr %0 to i64
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -271,11 +270,12 @@ _ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread: ; preds = %_ZN5arrow8inte
   br i1 %i.v, label %.lr.ph91.preheader, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit76
 
 .lr.ph91.preheader:                               ; preds = %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread
-  %.155106 = ptrtoint ptr %.155 to i64            ; 2 uses
-  %i.w = add i64 %.idx, %4
-  %i.x = add i64 %.155106, 8
+  %.155106 = ptrtoint ptr %0 to i64
+  %i.w = add i64 %.idx, %.155106
+  %4 = ptrtoint ptr %.155 to i64                  ; 2 uses
+  %i.x = add i64 %4, 8
   %umax = tail call i64 @llvm.umax.i64(i64 %i.w, i64 %i.x)
-  %i.y = xor i64 %.155106, -1
+  %i.y = xor i64 %4, -1
   %i.z = add i64 %umax, %i.y                      ; 2 uses
   %i.aa = lshr i64 %i.z, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses

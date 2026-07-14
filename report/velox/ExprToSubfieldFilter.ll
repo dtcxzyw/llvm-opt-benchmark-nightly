@@ -204,10 +204,10 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.eg, label %.thread123, label %bb.b, !llvm.loop !76
 
 .loopexit:                                        ; preds = %bb.y, %bb.x
-  %i.eh = phi ptr [ %i.c, %bb.x ], [ %i.dw, %bb.y ] ; 5 uses
-  %i.ei = ptrtoint ptr %i.eh to i64               ; 2 uses
-  %i.ej = load ptr, ptr %2, align 8, !tbaa !77    ; 9 uses
-  %i.ek = ptrtoint ptr %i.ej to i64               ; 6 uses
+  %i.eh = phi ptr [ %i.c, %bb.x ], [ %i.dw, %bb.y ] ; 6 uses
+  %i.ei = ptrtoint ptr %i.eh to i64
+  %i.ej = load ptr, ptr %2, align 8, !tbaa !77    ; 10 uses
+  %i.ek = ptrtoint ptr %i.ej to i64               ; 3 uses
   %i.el = icmp ne ptr %i.ej, %i.eh
   %.sroa.0.010.i.i = getelementptr inbounds i8, ptr %i.eh, i64 -8 ; 5 uses
   %.not11.i.i = icmp ult ptr %i.ej, %.sroa.0.010.i.i
@@ -215,15 +215,17 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %or.cond.i.i, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN8facebook5velox6common8Subfield11PathElementESt14default_deleteIS7_EESt6vectorISA_SaISA_EEEEEvT_SG_.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %.loopexit
-  %i.em = add i64 %i.ei, -16
-  %i.en = add i64 %i.ek, 8
+  %6 = ptrtoint ptr %i.eh to i64
+  %i.em = add i64 %6, -16
+  %7 = ptrtoint ptr %i.ej to i64                  ; 2 uses
+  %i.en = add i64 %7, 8
   %umax331 = tail call i64 @llvm.umax.i64(i64 %i.em, i64 %i.en)
-  %6 = add i64 %umax331, -8                       ; 2 uses
-  %i.eo = icmp ne i64 %6, %i.ek
+  %8 = sub i64 %umax331, %7                       ; 2 uses
+  %i.eo = icmp ne i64 %8, 8
   %umin332 = zext i1 %i.eo to i64                 ; 2 uses
-  %7 = add i64 %i.ek, %umin332
-  %8 = sub i64 %6, %7
-  %i.ep = lshr i64 %8, 4
+  %9 = sub i64 %8, %umin332
+  %10 = add i64 %9, -8
+  %i.ep = lshr i64 %10, 4
   %i.eq = add nuw nsw i64 %i.ep, %umin332         ; 2 uses
   %i.er = add nuw nsw i64 %i.eq, 1                ; 2 uses
   %min.iters.check333 = icmp samesign ult i64 %i.eq, 31

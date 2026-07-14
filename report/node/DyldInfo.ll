@@ -204,15 +204,15 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 .lr.ph.i.preheader.i:                             ; preds = %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i
   %i.fc = phi ptr [ %i.ez, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i ], [ %i.fb, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.fd = phi ptr [ %i.ey, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i ], [ %i.fa, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 5 uses
-  %10 = ptrtoint ptr %i.fc to i64
-  %i.fe = ptrtoint ptr %i.fd to i64
-  %11 = load ptr, ptr %8, align 8                 ; 4 uses
-  %12 = add i64 %10, -4
-  %13 = sub i64 %12, %i.fe                        ; 2 uses
+  %10 = load ptr, ptr %8, align 8                 ; 4 uses
+  %i.fe = ptrtoint ptr %i.fc to i64
+  %11 = ptrtoint ptr %i.fd to i64
+  %12 = sub i64 %i.fe, %11
+  %13 = add i64 %12, -4                           ; 2 uses
   %i.ff = lshr i64 %13, 2
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %13, 44
-  %i.fh = ptrtoaddr ptr %11 to i64
+  %i.fh = ptrtoaddr ptr %10 to i64
   %i.fi = ptrtoaddr ptr %i.fd to i64
   %i.fj = sub i64 %i.fi, %i.fh
   %diff.check = icmp ugt i64 %i.fj, -32
@@ -222,14 +222,14 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 vector.ph:                                        ; preds = %.lr.ph.i.preheader.i
   %n.vec = and i64 %i.fg, 9223372036854775800     ; 3 uses
   %i.fk = shl i64 %n.vec, 2                       ; 2 uses
-  %i.fl = getelementptr i8, ptr %11, i64 %i.fk
+  %i.fl = getelementptr i8, ptr %10, i64 %i.fk
   %i.fm = getelementptr i8, ptr %i.fd, i64 %i.fk
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.fn = shl i64 %index, 2                       ; 2 uses
-  %next.gep = getelementptr i8, ptr %11, i64 %i.fn ; 2 uses
+  %next.gep = getelementptr i8, ptr %10, i64 %i.fn ; 2 uses
   %next.gep861 = getelementptr i8, ptr %i.fd, i64 %i.fn ; 2 uses
   %i.fo = getelementptr i8, ptr %next.gep861, i64 16
   %wide.load = load <4 x i32>, ptr %next.gep861, align 4
@@ -246,7 +246,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %_ZN3fmt3v116detail6bigint6assignERKS2_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i.preheader.i, %middle.block
-  %.08.i.i.ph = phi ptr [ %11, %.lr.ph.i.preheader.i ], [ %i.fl, %middle.block ]
+  %.08.i.i.ph = phi ptr [ %10, %.lr.ph.i.preheader.i ], [ %i.fl, %middle.block ]
   %.057.i.i.ph = phi ptr [ %i.fd, %.lr.ph.i.preheader.i ], [ %i.fm, %middle.block ]
   br label %.lr.ph.i.i
 
@@ -297,15 +297,15 @@ _ZN3fmt3v116detail6bigint6assignERKS2_.exit151.thread: ; preds = %_ZN3fmt3v1119b
 .lr.ph.i.preheader.i143:                          ; preds = %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148
   %i.ge = phi ptr [ %i.gb, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148 ], [ %i.gd, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140 ] ; 2 uses
   %i.gf = phi ptr [ %i.ga, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148 ], [ %i.gc, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140 ] ; 5 uses
-  %14 = ptrtoint ptr %i.ge to i64
-  %i.gg = ptrtoint ptr %i.gf to i64
-  %15 = load ptr, ptr %9, align 8                 ; 4 uses
-  %16 = add i64 %14, -4
-  %17 = sub i64 %16, %i.gg                        ; 2 uses
+  %14 = load ptr, ptr %9, align 8                 ; 4 uses
+  %i.gg = ptrtoint ptr %i.ge to i64
+  %15 = ptrtoint ptr %i.gf to i64
+  %16 = sub i64 %i.gg, %15
+  %17 = add i64 %16, -4                           ; 2 uses
   %i.gh = lshr i64 %17, 2
   %i.gi = add nuw nsw i64 %i.gh, 1                ; 2 uses
   %min.iters.check867 = icmp ult i64 %17, 44
-  %i.gj = ptrtoaddr ptr %15 to i64
+  %i.gj = ptrtoaddr ptr %14 to i64
   %i.gk = ptrtoaddr ptr %i.gf to i64
   %i.gl = sub i64 %i.gk, %i.gj
   %diff.check865 = icmp ugt i64 %i.gl, -32
@@ -315,14 +315,14 @@ _ZN3fmt3v116detail6bigint6assignERKS2_.exit151.thread: ; preds = %_ZN3fmt3v1119b
 vector.ph868:                                     ; preds = %.lr.ph.i.preheader.i143
   %n.vec870 = and i64 %i.gi, 9223372036854775800  ; 3 uses
   %i.gm = shl i64 %n.vec870, 2                    ; 2 uses
-  %i.gn = getelementptr i8, ptr %15, i64 %i.gm
+  %i.gn = getelementptr i8, ptr %14, i64 %i.gm
   %i.go = getelementptr i8, ptr %i.gf, i64 %i.gm
   br label %vector.body871
 
 vector.body871:                                   ; preds = %vector.body871, %vector.ph868
   %index872 = phi i64 [ 0, %vector.ph868 ], [ %index.next877, %vector.body871 ] ; 2 uses
   %i.gp = shl i64 %index872, 2                    ; 2 uses
-  %next.gep873 = getelementptr i8, ptr %15, i64 %i.gp ; 2 uses
+  %next.gep873 = getelementptr i8, ptr %14, i64 %i.gp ; 2 uses
   %next.gep874 = getelementptr i8, ptr %i.gf, i64 %i.gp ; 2 uses
   %i.gq = getelementptr i8, ptr %next.gep874, i64 16
   %wide.load875 = load <4 x i32>, ptr %next.gep874, align 4
@@ -339,7 +339,7 @@ middle.block878:                                  ; preds = %vector.body871
   br i1 %cmp.n879, label %_ZN3fmt3v116detail6bigint6assignERKS2_.exit151, label %.lr.ph.i.i144.preheader
 
 .lr.ph.i.i144.preheader:                          ; preds = %.lr.ph.i.preheader.i143, %middle.block878
-  %.08.i.i145.ph = phi ptr [ %15, %.lr.ph.i.preheader.i143 ], [ %i.gn, %middle.block878 ]
+  %.08.i.i145.ph = phi ptr [ %14, %.lr.ph.i.preheader.i143 ], [ %i.gn, %middle.block878 ]
   %.057.i.i146.ph = phi ptr [ %i.gf, %.lr.ph.i.preheader.i143 ], [ %i.go, %middle.block878 ]
   br label %.lr.ph.i.i144
 
@@ -742,7 +742,7 @@ _ZNSt12_Vector_baseIN4LIEF5MachO7details19binding_instructionESaIS3_EE13_M_deall
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
   %i.d = load ptr, ptr %0, align 8                ; 10 uses
@@ -777,11 +777,12 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESa
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = add i64 %i.a, -8
-  %i.t = sub i64 %3, %i.f                         ; 2 uses
-  %i.u = lshr i64 %i.t, 3
+  %3 = ptrtoint ptr %1 to i64
+  %i.t = sub i64 %3, %i.f
+  %4 = add i64 %i.t, -8                           ; 2 uses
+  %i.u = lshr i64 %4, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %4, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -852,11 +853,12 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaI
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %4 = add i64 %i.e, -8
-  %i.am = sub i64 %4, %i.a                        ; 2 uses
-  %i.an = lshr i64 %i.am, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.am = sub i64 %i.e, %5
+  %6 = add i64 %i.am, -8                          ; 2 uses
+  %i.an = lshr i64 %6, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.am, 184
+  %min.iters.check46 = icmp ult i64 %6, 184
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader

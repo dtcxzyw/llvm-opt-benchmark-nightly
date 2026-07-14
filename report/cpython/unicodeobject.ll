@@ -204,8 +204,8 @@ bb.x:                                             ; preds = %_PyUnicode_DATA.exi
   br label %_PyUnicode_DATA.exit320
 
 _PyUnicode_DATA.exit320:                          ; preds = %bb.w, %bb.x
-  %.0.i.i309.pn = phi ptr [ %.0.i.i309, %bb.w ], [ %.val4.i311, %bb.x ] ; 2 uses
-  %.0.i.i309.pn676 = ptrtoint ptr %.0.i.i309.pn to i64 ; 2 uses
+  %.0.i.i309.pn = phi ptr [ %.0.i.i309, %bb.w ], [ %.val4.i311, %bb.x ] ; 3 uses
+  %.0.i.i309.pn676 = ptrtoint ptr %.0.i.i309.pn to i64
   %i.cu = getelementptr i8, ptr %.0.i.i309.pn, i64 %3 ; 5 uses
   %i.cv = getelementptr i8, ptr %i.cu, i64 %4     ; 2 uses
   %i.cw = and i64 %4, -4
@@ -214,16 +214,18 @@ _PyUnicode_DATA.exit320:                          ; preds = %bb.w, %bb.x
   br i1 %i.cy, label %.lr.ph480, label %.preheader431
 
 .preheader431:                                    ; preds = %.lr.ph480, %_PyUnicode_DATA.exit320
-  %.0239.lcssa = phi ptr [ %i.cu, %_PyUnicode_DATA.exit320 ], [ %i.ef, %.lr.ph480 ] ; 8 uses
+  %.0239.lcssa = phi ptr [ %i.cu, %_PyUnicode_DATA.exit320 ], [ %i.ef, %.lr.ph480 ] ; 9 uses
   %.0233.lcssa = phi ptr [ %i.cr, %_PyUnicode_DATA.exit320 ], [ %i.eg, %.lr.ph480 ] ; 6 uses
-  %.0239.lcssa677 = ptrtoint ptr %.0239.lcssa to i64 ; 3 uses
+  %.0239.lcssa677 = ptrtoint ptr %.0239.lcssa to i64 ; 2 uses
   %i.cz = icmp ult ptr %.0239.lcssa, %i.cv
   br i1 %i.cz, label %.lr.ph485.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph485.preheader:                              ; preds = %.preheader431
+  %6 = ptrtoint ptr %.0.i.i309.pn to i64
+  %7 = ptrtoint ptr %.0239.lcssa to i64
   %i.da = add i64 %4, %3
-  %i.db = add i64 %i.da, %.0.i.i309.pn676
-  %i.dc = sub i64 %i.db, %.0239.lcssa677          ; 3 uses
+  %i.db = add i64 %i.da, %6
+  %i.dc = sub i64 %i.db, %7                       ; 3 uses
   %min.iters.check684 = icmp ult i64 %i.dc, 32
   br i1 %min.iters.check684, label %.lr.ph485.preheader747, label %vector.memcheck675
 
@@ -349,7 +351,6 @@ bb.ad:                                            ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit344:                          ; preds = %bb.ac, %bb.ad
   %.0.i.i333.pn = phi ptr [ %.0.i.i333, %bb.ac ], [ %.val4.i335, %bb.ad ] ; 2 uses
-  %.0.i.i333.pn656 = ptrtoint ptr %.0.i.i333.pn to i64
   %i.et = getelementptr [2 x i8], ptr %.0.i.i333.pn, i64 %3 ; 5 uses
   %i.eu = getelementptr [2 x i8], ptr %i.et, i64 %4 ; 2 uses
   %.idx552 = shl i64 %4, 1                        ; 2 uses
@@ -366,13 +367,14 @@ _PyUnicode_DATA.exit344:                          ; preds = %bb.ac, %bb.ad
   br i1 %i.ez, label %.lr.ph477.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph477.preheader:                              ; preds = %.preheader433
-  %.0243.lcssa657 = ptrtoint ptr %.0243.lcssa to i64 ; 2 uses
-  %i.fa = add i64 %.idx552, %.0.i.i333.pn656
-  %6 = shl i64 %3, 1
-  %7 = add i64 %i.fa, %6
-  %i.fb = add i64 %.0243.lcssa657, 2
-  %umax658 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.fb)
-  %i.fc = xor i64 %.0243.lcssa657, -1
+  %.0243.lcssa657 = ptrtoint ptr %.0.i.i333.pn to i64
+  %8 = shl i64 %3, 1
+  %i.fa = add i64 %.idx552, %.0243.lcssa657
+  %9 = add i64 %i.fa, %8
+  %10 = ptrtoint ptr %.0243.lcssa to i64          ; 2 uses
+  %i.fb = add i64 %10, 2
+  %umax658 = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.fb)
+  %i.fc = xor i64 %10, -1
   %i.fd = add i64 %umax658, %i.fc                 ; 2 uses
   %i.fe = lshr i64 %i.fd, 1
   %i.ff = add nuw i64 %i.fe, 1                    ; 2 uses
@@ -669,8 +671,8 @@ bb.aq:                                            ; preds = %_PyUnicode_DATA.exi
   br label %_PyUnicode_DATA.exit392
 
 _PyUnicode_DATA.exit392:                          ; preds = %bb.ap, %bb.aq
-  %.0.i.i381.pn = phi ptr [ %.0.i.i381, %bb.ap ], [ %.val4.i383, %bb.aq ] ; 2 uses
-  %.0.i.i381.pn598 = ptrtoint ptr %.0.i.i381.pn to i64 ; 2 uses
+  %.0.i.i381.pn = phi ptr [ %.0.i.i381, %bb.ap ], [ %.val4.i383, %bb.aq ] ; 3 uses
+  %.0.i.i381.pn598 = ptrtoint ptr %.0.i.i381.pn to i64
   %i.ix = getelementptr [4 x i8], ptr %.0.i.i381.pn, i64 %3 ; 5 uses
   %i.iy = getelementptr [4 x i8], ptr %i.ix, i64 %4 ; 2 uses
   %.idx550 = shl i64 %4, 2                        ; 3 uses
@@ -682,18 +684,20 @@ _PyUnicode_DATA.exit392:                          ; preds = %bb.ap, %bb.aq
 
 .preheader437:                                    ; preds = %.lr.ph456, %_PyUnicode_DATA.exit392
   %.0247.lcssa = phi ptr [ %i.iu, %_PyUnicode_DATA.exit392 ], [ %i.kt, %.lr.ph456 ] ; 6 uses
-  %.0245.lcssa = phi ptr [ %i.ix, %_PyUnicode_DATA.exit392 ], [ %i.ks, %.lr.ph456 ] ; 8 uses
-  %.0245.lcssa599 = ptrtoint ptr %.0245.lcssa to i64 ; 4 uses
+  %.0245.lcssa = phi ptr [ %i.ix, %_PyUnicode_DATA.exit392 ], [ %i.ks, %.lr.ph456 ] ; 9 uses
+  %.0245.lcssa599 = ptrtoint ptr %.0245.lcssa to i64 ; 2 uses
   %i.jd = icmp ult ptr %.0245.lcssa, %i.iy
   br i1 %i.jd, label %.lr.ph461.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph461.preheader:                              ; preds = %.preheader437
-  %8 = add i64 %.idx550, %.0.i.i381.pn598
+  %11 = ptrtoint ptr %.0.i.i381.pn to i64
   %i.je = shl i64 %3, 2
-  %i.jf = add i64 %8, %i.je
-  %i.jg = add i64 %.0245.lcssa599, 4
+  %12 = add i64 %.idx550, %11
+  %i.jf = add i64 %12, %i.je
+  %13 = ptrtoint ptr %.0245.lcssa to i64          ; 2 uses
+  %i.jg = add i64 %13, 4
   %umax602 = tail call i64 @llvm.umax.i64(i64 %i.jf, i64 %i.jg)
-  %i.jh = xor i64 %.0245.lcssa599, -1
+  %i.jh = xor i64 %13, -1
   %i.ji = add i64 %umax602, %i.jh                 ; 2 uses
   %i.jj = lshr i64 %i.ji, 2
   %i.jk = add nuw nsw i64 %i.jj, 1                ; 2 uses
@@ -825,7 +829,6 @@ bb.av:                                            ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit416:                          ; preds = %bb.au, %bb.av
   %.0.i.i405.pn = phi ptr [ %.0.i.i405, %bb.au ], [ %.val4.i407, %bb.av ] ; 2 uses
-  %.0.i.i405.pn593 = ptrtoint ptr %.0.i.i405.pn to i64
   %i.lf = getelementptr [4 x i8], ptr %.0.i.i405.pn, i64 %3 ; 5 uses
   %i.lg = getelementptr [4 x i8], ptr %i.lf, i64 %4 ; 2 uses
   %.idx = shl i64 %4, 2                           ; 2 uses
@@ -842,13 +845,14 @@ _PyUnicode_DATA.exit416:                          ; preds = %bb.au, %bb.av
   br i1 %i.ll, label %.lr.ph453.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph453.preheader:                              ; preds = %.preheader439
-  %.0235.lcssa594 = ptrtoint ptr %.0235.lcssa to i64 ; 2 uses
-  %i.lm = add i64 %.idx, %.0.i.i405.pn593
-  %9 = shl i64 %3, 2
-  %10 = add i64 %i.lm, %9
-  %i.ln = add i64 %.0235.lcssa594, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %10, i64 %i.ln)
-  %i.lo = xor i64 %.0235.lcssa594, -1
+  %.0235.lcssa594 = ptrtoint ptr %.0.i.i405.pn to i64
+  %14 = shl i64 %3, 2
+  %i.lm = add i64 %.idx, %.0235.lcssa594
+  %15 = add i64 %i.lm, %14
+  %16 = ptrtoint ptr %.0235.lcssa to i64          ; 2 uses
+  %i.ln = add i64 %16, 4
+  %umax = tail call i64 @llvm.umax.i64(i64 %15, i64 %i.ln)
+  %i.lo = xor i64 %16, -1
   %i.lp = add i64 %umax, %i.lo                    ; 2 uses
   %i.lq = lshr i64 %i.lp, 2
   %i.lr = add nuw nsw i64 %i.lq, 1                ; 2 uses
@@ -1251,7 +1255,7 @@ Py_DECREF.exit32:                                 ; preds = %PyUnicode_MAX_CHAR_
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @PyUnicode_FromWideChar(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
+  %i.a = ptrtoint ptr %0 to i64
   %i.b = icmp eq ptr %0, null
   %i.c = icmp ne i64 %1, 0
   %or.cond = and i1 %i.b, %i.c
@@ -1370,17 +1374,19 @@ bb.p:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.ak, label %.lr.ph68.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.lr.ph68.i, %bb.p
-  %.051.lcssa.i = phi ptr [ %0, %bb.p ], [ %i.bx, %.lr.ph68.i ] ; 8 uses
+  %.051.lcssa.i = phi ptr [ %0, %bb.p ], [ %i.bx, %.lr.ph68.i ] ; 9 uses
   %.0.lcssa.i = phi ptr [ %.0.i23, %bb.p ], [ %i.by, %.lr.ph68.i ] ; 6 uses
-  %.051.lcssa.i83 = ptrtoint ptr %.051.lcssa.i to i64 ; 4 uses
+  %.051.lcssa.i83 = ptrtoint ptr %.051.lcssa.i to i64 ; 2 uses
   %i.al = icmp ult ptr %.051.lcssa.i, %i.o
   br i1 %i.al, label %.lr.ph73.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph73.i.preheader:                             ; preds = %.preheader.i
-  %i.am = add i64 %.idx57.i, %i.a
-  %i.an = add i64 %.051.lcssa.i83, 4
+  %2 = ptrtoint ptr %0 to i64
+  %i.am = add i64 %.idx57.i, %2
+  %3 = ptrtoint ptr %.051.lcssa.i to i64          ; 2 uses
+  %i.an = add i64 %3, 4
   %umax86 = tail call i64 @llvm.umax.i64(i64 %i.am, i64 %i.an)
-  %i.ao = xor i64 %.051.lcssa.i83, -1
+  %i.ao = xor i64 %3, -1
   %i.ap = add i64 %umax86, %i.ao                  ; 2 uses
   %i.aq = lshr i64 %i.ap, 2
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
@@ -1488,11 +1494,12 @@ bb.q:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.cj, label %.lr.ph65.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph65.i.preheader:                             ; preds = %.preheader58.i
-  %.055.lcssa.i79 = ptrtoint ptr %.055.lcssa.i to i64 ; 2 uses
-  %i.ck = add i64 %.idx57.i, %i.a
-  %i.cl = add i64 %.055.lcssa.i79, 4
+  %.055.lcssa.i79 = ptrtoint ptr %0 to i64
+  %i.ck = add i64 %.idx57.i, %.055.lcssa.i79
+  %4 = ptrtoint ptr %.055.lcssa.i to i64          ; 2 uses
+  %i.cl = add i64 %4, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ck, i64 %i.cl)
-  %i.cm = xor i64 %.055.lcssa.i79, -1
+  %i.cm = xor i64 %4, -1
   %i.cn = add i64 %umax, %i.cm                    ; 2 uses
   %i.co = lshr i64 %i.cn, 2
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses
@@ -1649,7 +1656,7 @@ declare i64 @wcslen(ptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @PyUnicodeWriter_WriteWideChar(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.a = ptrtoint ptr %1 to i64
   %i.b = icmp slt i64 %2, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -1743,17 +1750,19 @@ bb.i:                                             ; preds = %.critedge
   br i1 %i.ak, label %.lr.ph68.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.lr.ph68.i, %bb.i
-  %.051.lcssa.i = phi ptr [ %1, %bb.i ], [ %i.bx, %.lr.ph68.i ] ; 8 uses
+  %.051.lcssa.i = phi ptr [ %1, %bb.i ], [ %i.bx, %.lr.ph68.i ] ; 9 uses
   %.0.lcssa.i = phi ptr [ %i.ag, %bb.i ], [ %i.by, %.lr.ph68.i ] ; 6 uses
-  %.051.lcssa.i83 = ptrtoint ptr %.051.lcssa.i to i64 ; 4 uses
+  %.051.lcssa.i83 = ptrtoint ptr %.051.lcssa.i to i64 ; 2 uses
   %i.al = icmp ult ptr %.051.lcssa.i, %i.e
   br i1 %i.al, label %.lr.ph73.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph73.i.preheader:                             ; preds = %.preheader.i
-  %i.am = add i64 %.idx57.i, %i.a
-  %i.an = add i64 %.051.lcssa.i83, 4
+  %3 = ptrtoint ptr %1 to i64
+  %i.am = add i64 %.idx57.i, %3
+  %4 = ptrtoint ptr %.051.lcssa.i to i64          ; 2 uses
+  %i.an = add i64 %4, 4
   %umax86 = tail call i64 @llvm.umax.i64(i64 %i.am, i64 %i.an)
-  %i.ao = xor i64 %.051.lcssa.i83, -1
+  %i.ao = xor i64 %4, -1
   %i.ap = add i64 %umax86, %i.ao                  ; 2 uses
   %i.aq = lshr i64 %i.ap, 2
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
@@ -1861,11 +1870,12 @@ bb.j:                                             ; preds = %.critedge
   br i1 %i.cj, label %.lr.ph65.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph65.i.preheader:                             ; preds = %.preheader58.i
-  %.055.lcssa.i79 = ptrtoint ptr %.055.lcssa.i to i64 ; 2 uses
-  %i.ck = add i64 %.idx57.i, %i.a
-  %i.cl = add i64 %.055.lcssa.i79, 4
+  %.055.lcssa.i79 = ptrtoint ptr %1 to i64
+  %i.ck = add i64 %.idx57.i, %.055.lcssa.i79
+  %5 = ptrtoint ptr %.055.lcssa.i to i64          ; 2 uses
+  %i.cl = add i64 %5, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ck, i64 %i.cl)
-  %i.cm = xor i64 %.055.lcssa.i79, -1
+  %i.cm = xor i64 %5, -1
   %i.cn = add i64 %umax, %i.cm                    ; 2 uses
   %i.co = lshr i64 %i.cn, 2
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses
@@ -2223,7 +2233,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @PyUnicodeWriter_WriteUCS4(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.a = ptrtoint ptr %1 to i64
   %i.b = icmp slt i64 %2, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -2386,17 +2396,19 @@ bb.m:                                             ; preds = %.critedge
   br i1 %i.i, label %.lr.ph101, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph101, %bb.m
-  %.082.lcssa = phi ptr [ %1, %bb.m ], [ %i.ch, %.lr.ph101 ] ; 8 uses
+  %.082.lcssa = phi ptr [ %1, %bb.m ], [ %i.ch, %.lr.ph101 ] ; 9 uses
   %.076.lcssa = phi ptr [ %i.au, %bb.m ], [ %i.ci, %.lr.ph101 ] ; 6 uses
-  %.082.lcssa146 = ptrtoint ptr %.082.lcssa to i64 ; 4 uses
+  %.082.lcssa146 = ptrtoint ptr %.082.lcssa to i64 ; 2 uses
   %i.av = icmp ult ptr %.082.lcssa, %i.e
   br i1 %i.av, label %.lr.ph106.preheader, label %.loopexit
 
 .lr.ph106.preheader:                              ; preds = %.preheader
-  %i.aw = add i64 %.idx88, %i.a
-  %i.ax = add i64 %.082.lcssa146, 4
+  %3 = ptrtoint ptr %1 to i64
+  %i.aw = add i64 %.idx88, %3
+  %4 = ptrtoint ptr %.082.lcssa to i64            ; 2 uses
+  %i.ax = add i64 %4, 4
   %umax149 = tail call i64 @llvm.umax.i64(i64 %i.aw, i64 %i.ax)
-  %i.ay = xor i64 %.082.lcssa146, -1
+  %i.ay = xor i64 %4, -1
   %i.az = add i64 %umax149, %i.ay                 ; 2 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
@@ -2500,11 +2512,12 @@ bb.n:                                             ; preds = %.critedge
   br i1 %i.cp, label %.lr.ph98.preheader, label %.loopexit
 
 .lr.ph98.preheader:                               ; preds = %.preheader89
-  %.078.lcssa142 = ptrtoint ptr %.078.lcssa to i64 ; 2 uses
-  %i.cq = add i64 %.idx88, %i.a
-  %i.cr = add i64 %.078.lcssa142, 4
+  %.078.lcssa142 = ptrtoint ptr %1 to i64
+  %i.cq = add i64 %.idx88, %.078.lcssa142
+  %5 = ptrtoint ptr %.078.lcssa to i64            ; 2 uses
+  %i.cr = add i64 %5, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.cq, i64 %i.cr)
-  %i.cs = xor i64 %.078.lcssa142, -1
+  %i.cs = xor i64 %5, -1
   %i.ct = add i64 %umax, %i.cs                    ; 2 uses
   %i.cu = lshr i64 %i.ct, 2
   %i.cv = add nuw nsw i64 %i.cu, 1                ; 2 uses
@@ -2907,7 +2920,7 @@ unicode_char.exit:                                ; preds = %.lr.ph62, %middle.b
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @_PyUnicode_FromUCS4(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
+  %i.a = ptrtoint ptr %0 to i64
   switch i64 %1, label %bb.n [
     i64 0, label %unicode_char.exit
     i64 1, label %bb.b
@@ -3130,17 +3143,19 @@ _PyUnicode_DATA.exit:                             ; preds = %bb.w, %bb.x
   br i1 %i.ab, label %.lr.ph106, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph106, %_PyUnicode_DATA.exit
-  %.068.lcssa = phi ptr [ %0, %_PyUnicode_DATA.exit ], [ %i.co, %.lr.ph106 ] ; 8 uses
+  %.068.lcssa = phi ptr [ %0, %_PyUnicode_DATA.exit ], [ %i.co, %.lr.ph106 ] ; 9 uses
   %.063.lcssa = phi ptr [ %.0.i76, %_PyUnicode_DATA.exit ], [ %i.cp, %.lr.ph106 ] ; 6 uses
-  %.068.lcssa155 = ptrtoint ptr %.068.lcssa to i64 ; 4 uses
+  %.068.lcssa155 = ptrtoint ptr %.068.lcssa to i64 ; 2 uses
   %i.bc = icmp ult ptr %.068.lcssa, %i.x
   br i1 %i.bc, label %.lr.ph111.preheader, label %unicode_char.exit
 
 .lr.ph111.preheader:                              ; preds = %.preheader
-  %i.bd = add i64 %.idx93, %i.a
-  %i.be = add i64 %.068.lcssa155, 4
+  %2 = ptrtoint ptr %0 to i64
+  %i.bd = add i64 %.idx93, %2
+  %3 = ptrtoint ptr %.068.lcssa to i64            ; 2 uses
+  %i.be = add i64 %3, 4
   %umax158 = tail call i64 @llvm.umax.i64(i64 %i.bd, i64 %i.be)
-  %i.bf = xor i64 %.068.lcssa155, -1
+  %i.bf = xor i64 %3, -1
   %i.bg = add i64 %umax158, %i.bf                 ; 2 uses
   %i.bh = lshr i64 %i.bg, 2
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
@@ -3268,11 +3283,12 @@ _PyUnicode_DATA.exit84:                           ; preds = %bb.aa, %bb.ab
   br i1 %i.db, label %.lr.ph103.preheader, label %unicode_char.exit
 
 .lr.ph103.preheader:                              ; preds = %.preheader94
-  %.064.lcssa151 = ptrtoint ptr %.064.lcssa to i64 ; 2 uses
-  %i.dc = add i64 %.idx93, %i.a
-  %i.dd = add i64 %.064.lcssa151, 4
+  %.064.lcssa151 = ptrtoint ptr %0 to i64
+  %i.dc = add i64 %.idx93, %.064.lcssa151
+  %4 = ptrtoint ptr %.064.lcssa to i64            ; 2 uses
+  %i.dd = add i64 %4, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.dc, i64 %i.dd)
-  %i.de = xor i64 %.064.lcssa151, -1
+  %i.de = xor i64 %4, -1
   %i.df = add i64 %umax, %i.de                    ; 2 uses
   %i.dg = lshr i64 %i.df, 2
   %i.dh = add nuw nsw i64 %i.dg, 1                ; 2 uses
@@ -3675,11 +3691,11 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.bk, label %.lr.ph98.preheader, label %.loopexit
 
 .lr.ph98.preheader:                               ; preds = %.preheader91
-  %.078.lcssa129 = ptrtoint ptr %.078.lcssa to i64 ; 2 uses
   %4 = add i64 %.idx, %.0.i111
-  %i.bl = add i64 %.078.lcssa129, 2
+  %5 = ptrtoint ptr %.078.lcssa to i64            ; 2 uses
+  %i.bl = add i64 %5, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.bl)
-  %i.bm = xor i64 %.078.lcssa129, -1
+  %i.bm = xor i64 %5, -1
   %i.bn = add i64 %umax, %i.bm                    ; 2 uses
   %i.bo = lshr i64 %i.bn, 1
   %i.bp = add nuw i64 %i.bo, 1                    ; 2 uses
@@ -4082,7 +4098,6 @@ bb.e:                                             ; preds = %bb.c
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.d, %bb.e
   %.0.i = phi ptr [ %.0.i.i, %bb.d ], [ %.val4.i, %bb.e ] ; 18 uses
-  %.0.i464 = ptrtoint ptr %.0.i to i64            ; 3 uses
   %i.o = getelementptr i8, ptr %0, i64 16
   %.val135 = load i64, ptr %i.o, align 8, !tbaa !207 ; 16 uses
   %i.p = icmp eq i32 %i.k, 4
@@ -4094,11 +4109,12 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.r, label %.lr.ph.preheader, label %.loopexit243
 
 .lr.ph.preheader:                                 ; preds = %bb.f
+  %3 = ptrtoint ptr %.0.i to i64                  ; 3 uses
   %i.s = shl i64 %.val135, 2
-  %i.t = add i64 %i.s, %.0.i464
-  %i.u = add i64 %.0.i464, 4
+  %i.t = add i64 %i.s, %3
+  %i.u = add i64 %3, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.t, i64 %i.u)
-  %i.v = xor i64 %.0.i464, -1
+  %i.v = xor i64 %3, -1
   %i.w = add i64 %umax, %i.v                      ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
@@ -4501,8 +4517,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @unicode_decode_utf8(ptr noundef %0, i64 noundef %1, i32 noundef %2, ptr noundef %3, ptr nofree noundef writeonly captures(address_is_null) %4) unnamed_addr #1 {
 bb.a:
-  %5 = ptrtoint ptr %0 to i64
-  %6 = alloca %struct._PyUnicodeWriter, align 8   ; 7 uses
+  %5 = alloca %struct._PyUnicodeWriter, align 8   ; 7 uses
   switch i64 %1, label %bb.h [
     i64 0, label %bb.b
     i64 1, label %bb.d
@@ -4794,8 +4809,9 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.em, label %.lr.ph60.i.preheader, label %utf8_count_codepoints.exit
 
 .lr.ph60.i.preheader:                             ; preds = %.loopexit.i
+  %6 = ptrtoint ptr %0 to i64
   %.3.i113 = ptrtoint ptr %.3.i to i64
-  %i.en = add i64 %1, %5
+  %i.en = add i64 %1, %6
   %i.eo = sub i64 %i.en, %.3.i113                 ; 3 uses
   %min.iters.check = icmp ult i64 %i.eo, 4
   br i1 %min.iters.check, label %.lr.ph60.i.preheader116, label %vector.ph
@@ -4880,8 +4896,8 @@ bb.r:                                             ; preds = %bb.q, %utf8_count_c
   br i1 %.not, label %get_latin1_char.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #33
-  call void @_PyUnicodeWriter_InitWithBuffer(ptr noundef nonnull %6, ptr noundef nonnull %i.fx) #33
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #33
+  call void @_PyUnicodeWriter_InitWithBuffer(ptr noundef nonnull %5, ptr noundef nonnull %i.fx) #33
   br i1 %i.fw, label %bb.t, label %bb.w
 
 bb.t:                                             ; preds = %bb.s
@@ -4906,27 +4922,27 @@ bb.v:                                             ; preds = %bb.t
 _PyUnicode_DATA.exit80:                           ; preds = %bb.u, %bb.v
   %.0.i78 = phi ptr [ %.0.i.i77, %bb.u ], [ %.val4.i79, %bb.v ]
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0.i78, ptr align 1 %0, i64 %i.m, i1 false)
-  %i.gc = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.gc = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i64 %i.m, ptr %i.gc, align 8, !tbaa !279
   br label %bb.w
 
 bb.w:                                             ; preds = %_PyUnicode_DATA.exit80, %bb.s
   %.056 = phi ptr [ %i.u, %_PyUnicode_DATA.exit80 ], [ %0, %bb.s ]
-  %i.gd = call fastcc i32 @unicode_decode_utf8_impl(ptr noundef nonnull %6, ptr noundef %0, ptr noundef %.056, ptr noundef %i.l, i32 noundef %2, ptr noundef %3, ptr noundef %4)
+  %i.gd = call fastcc i32 @unicode_decode_utf8_impl(ptr noundef nonnull %5, ptr noundef %0, ptr noundef %.056, ptr noundef %i.l, i32 noundef %2, ptr noundef %3, ptr noundef %4)
   %i.ge = icmp slt i32 %i.gd, 0
   br i1 %i.ge, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  call void @_PyUnicodeWriter_Dealloc(ptr noundef nonnull %6) #33
+  call void @_PyUnicodeWriter_Dealloc(ptr noundef nonnull %5) #33
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
-  %i.gf = call ptr @_PyUnicodeWriter_Finish(ptr noundef nonnull %6) #33
+  %i.gf = call ptr @_PyUnicodeWriter_Finish(ptr noundef nonnull %5) #33
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
   %.1 = phi ptr [ null, %bb.x ], [ %i.gf, %bb.y ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #33
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #33
   br label %get_latin1_char.exit
 
 get_latin1_char.exit:                             ; preds = %bb.g, %.thread, %bb.c, %bb.b, %_PyUnicode_DATA.exit, %bb.n, %bb.j, %bb.r, %bb.z, %bb.i
@@ -5329,8 +5345,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_PyUnicode_DATA.exit
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.b, %bb.c
-  %.0.i = phi ptr [ %.0.i.i, %bb.b ], [ %.val4.i, %bb.c ] ; 4 uses
-  %.0.i13 = ptrtoint ptr %.0.i to i64             ; 6 uses
+  %.0.i = phi ptr [ %.0.i.i, %bb.b ], [ %.val4.i, %bb.c ] ; 5 uses
+  %.0.i13 = ptrtoint ptr %.0.i to i64             ; 3 uses
   switch i32 %i.d, label %bb.g [
     i32 1, label %bb.d
     i32 2, label %bb.e
@@ -5438,19 +5454,21 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.al, label %.lr.ph.i.preheader, label %_PyUnicode_Fill.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.f
+  %4 = ptrtoint ptr %.0.i to i64                  ; 3 uses
   %i.am = shl i64 %2, 2
-  %4 = add i64 %i.am, %.0.i13
-  %5 = shl i64 %1, 2                              ; 3 uses
-  %i.an = add i64 %4, %5
-  %i.ao = add i64 %5, %.0.i13
+  %5 = shl i64 %1, 2                              ; 2 uses
+  %6 = add i64 %i.am, %4
+  %i.an = add i64 %6, %5
+  %i.ao = add i64 %5, %4
   %i.ap = add i64 %i.ao, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.an, i64 %i.ap)
-  %6 = xor i64 %.0.i13, -1
-  %i.aq = add i64 %umax, %6
-  %7 = sub i64 %i.aq, %5                          ; 2 uses
-  %i.ar = lshr i64 %7, 2
+  %7 = shl i64 %1, 2
+  %i.aq = add i64 %7, %4
+  %8 = xor i64 %i.aq, -1
+  %9 = add i64 %umax, %8                          ; 2 uses
+  %i.ar = lshr i64 %9, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp ult i64 %9, 28
   br i1 %min.iters.check, label %.lr.ph.i.preheader39, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -5593,8 +5611,8 @@ bb.n:                                             ; preds = %bb.l
   br label %_PyUnicode_DATA.exit.i
 
 _PyUnicode_DATA.exit.i:                           ; preds = %bb.n, %bb.m
-  %.0.i.i = phi ptr [ %.0.i.i.i, %bb.m ], [ %.val4.i.i, %bb.n ] ; 4 uses
-  %.0.i.i39 = ptrtoint ptr %.0.i.i to i64         ; 4 uses
+  %.0.i.i = phi ptr [ %.0.i.i.i, %bb.m ], [ %.val4.i.i, %bb.n ] ; 5 uses
+  %.0.i.i39 = ptrtoint ptr %.0.i.i to i64         ; 2 uses
   switch i32 %i.t, label %bb.r [
     i32 1, label %bb.o
     i32 2, label %bb.p
@@ -5701,18 +5719,20 @@ bb.q:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.az, label %.lr.ph.i.i.preheader, label %_PyUnicode_FastFill.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.q
-  %i.ba = shl i64 %1, 2                           ; 2 uses
-  %4 = add i64 %i.ba, %.0.i.i39                   ; 2 uses
+  %4 = ptrtoint ptr %.0.i.i to i64                ; 2 uses
+  %i.ba = shl i64 %1, 2
   %5 = shl i64 %i.q, 2
-  %i.bb = add i64 %4, %5
-  %i.bc = add i64 %4, 4
+  %6 = add i64 %i.ba, %4                          ; 2 uses
+  %i.bb = add i64 %6, %5
+  %i.bc = add i64 %6, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bb, i64 %i.bc)
-  %6 = xor i64 %.0.i.i39, -1
-  %i.bd = add i64 %umax, %6
-  %7 = sub i64 %i.bd, %i.ba                       ; 2 uses
-  %i.be = lshr i64 %7, 2
+  %7 = shl i64 %1, 2
+  %i.bd = add i64 %7, %4
+  %8 = xor i64 %i.bd, -1
+  %9 = add i64 %umax, %8                          ; 2 uses
+  %i.be = lshr i64 %9, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp ult i64 %9, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader65, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
@@ -6115,12 +6135,12 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.bg, label %.lr.ph118.preheader, label %.loopexit
 
 .lr.ph118.preheader:                              ; preds = %.preheader101
-  %.091.lcssa169 = ptrtoint ptr %.091.lcssa to i64 ; 2 uses
   %i.bh = shl nuw nsw i64 %2, 1
   %i.bi = add i64 %i.bh, %i.a
-  %i.bj = add i64 %.091.lcssa169, 2
+  %4 = ptrtoint ptr %.091.lcssa to i64            ; 2 uses
+  %i.bj = add i64 %4, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bi, i64 %i.bj)
-  %i.bk = xor i64 %.091.lcssa169, -1
+  %i.bk = xor i64 %4, -1
   %i.bl = add i64 %umax, %i.bk                    ; 2 uses
   %i.bm = lshr i64 %i.bl, 1
   %i.bn = add nuw i64 %i.bm, 1                    ; 2 uses
@@ -6523,8 +6543,8 @@ bb.d:                                             ; preds = %_PyUnicode_DATA.exi
 
 bb.e:                                             ; preds = %_PyUnicode_DATA.exit
   %i.l = mul nuw nsw i64 %.val, 12
-  %i.m = tail call ptr @PyMem_Malloc(i64 noundef %i.l) #33 ; 14 uses
-  %i.n = ptrtoint ptr %i.m to i64                 ; 3 uses
+  %i.m = tail call ptr @PyMem_Malloc(i64 noundef %i.l) #33 ; 16 uses
+  %i.n = ptrtoint ptr %i.m to i64
   %i.o = icmp eq ptr %i.m, null
   br i1 %i.o, label %bb.f, label %bb.g
 
@@ -6578,17 +6598,19 @@ bb.k:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.ae, label %.lr.ph98, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph98, %bb.k
-  %.074.lcssa = phi ptr [ %i.m, %bb.k ], [ %i.br, %.lr.ph98 ] ; 8 uses
+  %.074.lcssa = phi ptr [ %i.m, %bb.k ], [ %i.br, %.lr.ph98 ] ; 9 uses
   %.072.lcssa = phi ptr [ %.0.i85, %bb.k ], [ %i.bs, %.lr.ph98 ] ; 6 uses
-  %.074.lcssa127 = ptrtoint ptr %.074.lcssa to i64 ; 4 uses
+  %.074.lcssa127 = ptrtoint ptr %.074.lcssa to i64 ; 2 uses
   %i.af = icmp ult ptr %.074.lcssa, %i.u
   br i1 %i.af, label %.lr.ph103.preheader, label %.loopexit
 
 .lr.ph103.preheader:                              ; preds = %.preheader
-  %i.ag = add i64 %.idx79, %i.n
-  %i.ah = add i64 %.074.lcssa127, 4
+  %2 = ptrtoint ptr %i.m to i64
+  %i.ag = add i64 %.idx79, %2
+  %3 = ptrtoint ptr %.074.lcssa to i64            ; 2 uses
+  %i.ah = add i64 %3, 4
   %umax130 = call i64 @llvm.umax.i64(i64 %i.ag, i64 %i.ah)
-  %i.ai = xor i64 %.074.lcssa127, -1
+  %i.ai = xor i64 %3, -1
   %i.aj = add i64 %umax130, %i.ai                 ; 2 uses
   %i.ak = lshr i64 %i.aj, 2
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
@@ -6696,11 +6718,12 @@ bb.l:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.cd, label %.lr.ph95.preheader, label %.loopexit
 
 .lr.ph95.preheader:                               ; preds = %.preheader88
-  %.069.lcssa123 = ptrtoint ptr %.069.lcssa to i64 ; 2 uses
-  %i.ce = add i64 %.idx79, %i.n
-  %i.cf = add i64 %.069.lcssa123, 4
+  %.069.lcssa123 = ptrtoint ptr %i.m to i64
+  %i.ce = add i64 %.idx79, %.069.lcssa123
+  %4 = ptrtoint ptr %.069.lcssa to i64            ; 2 uses
+  %i.cf = add i64 %4, 4
   %umax = call i64 @llvm.umax.i64(i64 %i.ce, i64 %i.cf)
-  %i.cg = xor i64 %.069.lcssa123, -1
+  %i.cg = xor i64 %4, -1
   %i.ch = add i64 %umax, %i.cg                    ; 2 uses
   %i.ci = lshr i64 %i.ch, 2
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
@@ -7103,8 +7126,8 @@ bb.j:                                             ; preds = %bb.h
   br label %_PyUnicode_DATA.exit
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.i, %bb.j
-  %.0.i45 = phi ptr [ %.0.i.i, %bb.i ], [ %.val4.i, %bb.j ] ; 17 uses
-  %.0.i4567 = ptrtoint ptr %.0.i45 to i64         ; 12 uses
+  %.0.i45 = phi ptr [ %.0.i.i, %bb.i ], [ %.val4.i, %bb.j ] ; 18 uses
+  %.0.i4567 = ptrtoint ptr %.0.i45 to i64         ; 9 uses
   br i1 %i.a, label %_PyUnicode_Fill.exit, label %bb.k
 
 bb.k:                                             ; preds = %_PyUnicode_DATA.exit
@@ -7208,11 +7231,12 @@ bb.n:                                             ; preds = %bb.k
   br i1 %i.aw, label %.lr.ph.i.preheader, label %_PyUnicode_Fill.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.n
+  %4 = ptrtoint ptr %.0.i45 to i64                ; 3 uses
   %i.ax = shl i64 %spec.store.select, 2
-  %i.ay = add i64 %i.ax, %.0.i4567
-  %i.az = add i64 %.0.i4567, 4
+  %i.ay = add i64 %i.ax, %4
+  %i.az = add i64 %4, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ay, i64 %i.az)
-  %i.ba = xor i64 %.0.i4567, -1
+  %i.ba = xor i64 %4, -1
   %i.bb = add i64 %umax, %i.ba                    ; 2 uses
   %i.bc = lshr i64 %i.bb, 2
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses

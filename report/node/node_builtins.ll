@@ -204,7 +204,7 @@ declare void @_ZN2v812api_internal19MoveGlobalReferenceEPPmS2_(ptr noundef, ptr 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE15_M_range_insertIPKNS0_5LocalIS3_EEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EET_SG_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %4 = ptrtoaddr ptr %1 to i64
   %.not = icmp eq ptr %2, %3
   br i1 %.not, label %_ZSt4copyIPKN2v85LocalINS0_4NameEEEN9__gnu_cxx17__normal_iteratorIPNS0_8internal14LocalUncheckedIS2_EESt6vectorISA_SaISA_EEEEET0_T_SH_SG_.exit, label %bb.b
 
@@ -591,11 +591,12 @@ _ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE11_M_alloc
 
 .lr.ph.i.i.i.i.i59.preheader:                     ; preds = %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE11_M_allocateEm.exit
   %i.ea = ptrtoaddr ptr %i.dy to i64
-  %5 = add i64 %4, -8
-  %i.eb = sub i64 %5, %i.dn                       ; 2 uses
-  %i.ec = lshr i64 %i.eb, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.eb = sub i64 %5, %i.dn
+  %6 = add i64 %i.eb, -8                          ; 2 uses
+  %i.ec = lshr i64 %6, 3
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
-  %min.iters.check191 = icmp ult i64 %i.eb, 72
+  %min.iters.check191 = icmp ult i64 %6, 72
   %i.ee = sub i64 %i.dn, %i.ea
   %diff.check189 = icmp ugt i64 %i.ee, -32
   %or.cond247 = or i1 %min.iters.check191, %diff.check189
@@ -703,11 +704,12 @@ _ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_4NameEEEPNS0_8internal14LocalUnche
 
 .lr.ph.i.i.i.i.i70.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_4NameEEEPNS0_8internal14LocalUncheckedIS2_EES8_ET0_T_SB_SA_RSaIT1_E.exit69
   %.lcssa109226 = ptrtoaddr ptr %.lcssa109 to i64
-  %6 = add i64 %i.j, -8
-  %i.fg = sub i64 %6, %4                          ; 2 uses
-  %i.fh = lshr i64 %i.fg, 3
+  %7 = ptrtoint ptr %1 to i64
+  %i.fg = sub i64 %i.j, %7
+  %8 = add i64 %i.fg, -8                          ; 2 uses
+  %i.fh = lshr i64 %8, 3
   %i.fi = add nuw nsw i64 %i.fh, 1                ; 2 uses
-  %min.iters.check229 = icmp ult i64 %i.fg, 72
+  %min.iters.check229 = icmp ult i64 %8, 72
   %i.fj = sub i64 %4, %.lcssa109226
   %diff.check227 = icmp ugt i64 %i.fj, -32
   %or.cond249 = select i1 %min.iters.check229, i1 true, i1 %diff.check227
@@ -780,7 +782,7 @@ _ZSt4copyIPKN2v85LocalINS0_4NameEEEN9__gnu_cxx17__normal_iteratorIPNS0_8internal
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE15_M_range_insertIPKNS0_5LocalIS3_EEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EET_SG_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %4 = ptrtoaddr ptr %1 to i64
   %.not = icmp eq ptr %2, %3
   br i1 %.not, label %_ZSt4copyIPKN2v85LocalINS0_5ValueEEEN9__gnu_cxx17__normal_iteratorIPNS0_8internal14LocalUncheckedIS2_EESt6vectorISA_SaISA_EEEEET0_T_SH_SG_.exit, label %bb.b
 
@@ -1167,11 +1169,12 @@ _ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE11_M_allo
 
 .lr.ph.i.i.i.i.i59.preheader:                     ; preds = %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE11_M_allocateEm.exit
   %i.ea = ptrtoaddr ptr %i.dy to i64
-  %5 = add i64 %4, -8
-  %i.eb = sub i64 %5, %i.dn                       ; 2 uses
-  %i.ec = lshr i64 %i.eb, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.eb = sub i64 %5, %i.dn
+  %6 = add i64 %i.eb, -8                          ; 2 uses
+  %i.ec = lshr i64 %6, 3
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
-  %min.iters.check191 = icmp ult i64 %i.eb, 72
+  %min.iters.check191 = icmp ult i64 %6, 72
   %i.ee = sub i64 %i.dn, %i.ea
   %diff.check189 = icmp ugt i64 %i.ee, -32
   %or.cond247 = or i1 %min.iters.check191, %diff.check189
@@ -1279,11 +1282,12 @@ _ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_5ValueEEEPNS0_8internal14LocalUnch
 
 .lr.ph.i.i.i.i.i70.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_5ValueEEEPNS0_8internal14LocalUncheckedIS2_EES8_ET0_T_SB_SA_RSaIT1_E.exit69
   %.lcssa109226 = ptrtoaddr ptr %.lcssa109 to i64
-  %6 = add i64 %i.j, -8
-  %i.fg = sub i64 %6, %4                          ; 2 uses
-  %i.fh = lshr i64 %i.fg, 3
+  %7 = ptrtoint ptr %1 to i64
+  %i.fg = sub i64 %i.j, %7
+  %8 = add i64 %i.fg, -8                          ; 2 uses
+  %i.fh = lshr i64 %8, 3
   %i.fi = add nuw nsw i64 %i.fh, 1                ; 2 uses
-  %min.iters.check229 = icmp ult i64 %i.fg, 72
+  %min.iters.check229 = icmp ult i64 %8, 72
   %i.fj = sub i64 %4, %.lcssa109226
   %diff.check227 = icmp ugt i64 %i.fj, -32
   %or.cond249 = select i1 %min.iters.check229, i1 true, i1 %diff.check227

@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !354
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !244  ; 9 uses
-  %i.f = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !244  ; 10 uses
+  %i.f = ptrtoint ptr %i.e to i64
   %i.g = ptrtoint ptr %i.d to i64
   %i.h = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.i = sub i64 %i.g, %i.h
@@ -215,8 +215,8 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !243  ; 3 uses
-  %i.n = ptrtoint ptr %i.m to i64                 ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !243  ; 4 uses
+  %i.n = ptrtoint ptr %i.m to i64                 ; 2 uses
   %i.o = sub i64 %i.n, %i.h
   %i.p = load ptr, ptr %0, align 8, !tbaa !777
   tail call void @_ZN6duckdb14ArenaAllocator9AlignNextEv(ptr noundef nonnull align 8 dereferenceable(72) %i.p)
@@ -257,11 +257,13 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_dele
   br i1 %.not13.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEENS0_19arena_stl_allocatorIS5_EEE20_M_allocate_and_copyISt13move_iteratorIPS5_EEESB_mT_SD_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEENS0_19arena_stl_allocatorIS5_EEE11_M_allocateEm.exit.i
-  %2 = add i64 %i.n, -8
-  %i.ag = sub i64 %2, %i.f                        ; 2 uses
-  %i.ah = lshr i64 %i.ag, 3
+  %2 = ptrtoint ptr %i.m to i64
+  %3 = ptrtoint ptr %i.e to i64
+  %i.ag = sub i64 %2, %3
+  %4 = add i64 %i.ag, -8                          ; 2 uses
+  %i.ah = lshr i64 %4, 3
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ag, 200
+  %min.iters.check = icmp ult i64 %4, 200
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader21, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
@@ -664,7 +666,7 @@ bb.l:                                             ; preds = %_ZN6duckdb10shared_
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEENS0_19arena_stl_allocatorIS5_EEE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !243  ; 5 uses
@@ -733,11 +735,12 @@ _ZNSt16allocator_traitsIN6duckdb19arena_stl_allocatorINS0_10unique_ptrINS0_16Tup
   br i1 %.not13.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEES6_NS0_19arena_stl_allocatorIS5_EEET0_T_SA_S9_RT1_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt16allocator_traitsIN6duckdb19arena_stl_allocatorINS0_10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS3_EELb0EEEEEE8allocateERS7_m.exit.i
-  %3 = add i64 %i.a, -8
-  %i.aj = sub i64 %3, %i.g                        ; 2 uses
-  %i.ak = lshr i64 %i.aj, 3
+  %3 = ptrtoint ptr %1 to i64
+  %i.aj = sub i64 %3, %i.g
+  %4 = add i64 %i.aj, -8                          ; 2 uses
+  %i.ak = lshr i64 %4, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aj, 200
+  %min.iters.check = icmp ult i64 %4, 200
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader87, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
@@ -806,11 +809,12 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSe
   br i1 %.not13.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEES6_NS0_19arena_stl_allocatorIS5_EEET0_T_SA_S9_RT1_.exit34, label %.lr.ph.i.i29.preheader
 
 .lr.ph.i.i29.preheader:                           ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_16TupleDataSegmentENS0_13arena_deleterIS2_EELb0EEES6_NS0_19arena_stl_allocatorIS5_EEET0_T_SA_S9_RT1_.exit
-  %4 = add i64 %i.f, -8
-  %i.be = sub i64 %4, %i.a                        ; 2 uses
-  %i.bf = lshr i64 %i.be, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.be = sub i64 %i.f, %5
+  %6 = add i64 %i.be, -8                          ; 2 uses
+  %i.bf = lshr i64 %6, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check71 = icmp ult i64 %i.be, 184
+  %min.iters.check71 = icmp ult i64 %6, 184
   br i1 %min.iters.check71, label %.lr.ph.i.i29.preheader86, label %vector.memcheck64
 
 vector.memcheck64:                                ; preds = %.lr.ph.i.i29.preheader

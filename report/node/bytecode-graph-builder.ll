@@ -201,8 +201,7 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE9push_backERKS4_.exit26.peel: ;
   %i.aj = load ptr, ptr %i.ae, align 8
   %i.ak = sext i32 %2 to i64                      ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  %i.al = call noundef ptr @_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE19PrepareForInsertionEPKS4_mPm(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef %i.aj, i64 noundef %i.ak, ptr noundef nonnull %i.a) ; 7 uses
-  %7 = ptrtoint ptr %i.al to i64                  ; 4 uses
+  %i.al = call noundef ptr @_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE19PrepareForInsertionEPKS4_mPm(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef %i.aj, i64 noundef %i.ak, ptr noundef nonnull %i.a) ; 8 uses
   %i.am = load i64, ptr %i.a, align 8             ; 2 uses
   %.idx.i = shl i64 %i.am, 3                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx.i
@@ -210,6 +209,7 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE9push_backERKS4_.exit26.peel: ;
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %._crit_edge
+  %7 = ptrtoint ptr %i.al to i64                  ; 3 uses
   %i.ao = add i64 %.idx.i, %7
   %i.ap = add i64 %7, 8
   %umax = call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.ap)
@@ -261,12 +261,13 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.bc, label %.lr.ph18.i.preheader, label %_ZN2v88internal10ZoneVectorIPNS0_8compiler4NodeEE6insertEPKS4_mRS6_.exit
 
 .lr.ph18.i.preheader:                             ; preds = %._crit_edge.i
-  %.0.lcssa.i42 = ptrtoint ptr %.0.lcssa.i to i64 ; 2 uses
+  %.0.lcssa.i42 = ptrtoint ptr %i.al to i64
   %i.bd = shl nsw i64 %i.ak, 3
-  %i.be = add i64 %i.bd, %7
-  %i.bf = add i64 %.0.lcssa.i42, 8
+  %i.be = add i64 %i.bd, %.0.lcssa.i42
+  %8 = ptrtoint ptr %.0.lcssa.i to i64            ; 2 uses
+  %i.bf = add i64 %8, 8
   %umax43 = call i64 @llvm.umax.i64(i64 %i.be, i64 %i.bf)
-  %i.bg = xor i64 %.0.lcssa.i42, -1
+  %i.bg = xor i64 %8, -1
   %i.bh = add i64 %umax43, %i.bg                  ; 2 uses
   %i.bi = lshr i64 %i.bh, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses

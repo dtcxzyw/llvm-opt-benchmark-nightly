@@ -203,25 +203,26 @@ bb.g:                                             ; preds = %bb.f, %bb.x, %bb.w,
   %i.bk = load ptr, ptr %i.ag, align 8, !tbaa !108 ; 6 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.099.0141, i64 8
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !124 ; 4 uses
-  %i.bn = sext i32 %.063143 to i64                ; 6 uses
+  %i.bn = sext i32 %.063143 to i64                ; 7 uses
   %i.bo = getelementptr inbounds [8 x i8], ptr %i.bk, i64 %i.bn ; 5 uses
   %i.bp = icmp ult ptr %i.bo, %i.bm
   br i1 %i.bp, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader112
+  %6 = sext i32 %.065142 to i64                   ; 5 uses
   %i.bq = ptrtoint ptr %i.bm to i64
   %i.br = ptrtoint ptr %i.bk to i64               ; 2 uses
-  %6 = sext i32 %.065142 to i64                   ; 5 uses
-  %i.bs = add i64 %i.br, 8
-  %7 = shl nsw i64 %i.bn, 3                       ; 2 uses
-  %i.bt = add i64 %i.bs, %7
+  %7 = shl nsw i64 %i.bn, 3
+  %i.bs = add i64 %7, %i.br
+  %i.bt = add i64 %i.bs, 8
   %umax = call i64 @llvm.umax.i64(i64 %i.bq, i64 %i.bt)
-  %8 = xor i64 %i.br, -1
-  %i.bu = add i64 %umax, %8
-  %9 = sub i64 %i.bu, %7                          ; 2 uses
-  %i.bv = lshr i64 %9, 3
+  %8 = shl nsw i64 %i.bn, 3
+  %i.bu = add i64 %8, %i.br
+  %9 = xor i64 %i.bu, -1
+  %10 = add i64 %umax, %9                         ; 2 uses
+  %i.bv = lshr i64 %10, 3
   %i.bw = add nuw nsw i64 %i.bv, 1                ; 2 uses
-  %min.iters.check221 = icmp ult i64 %9, 24
+  %min.iters.check221 = icmp ult i64 %10, 24
   br i1 %min.iters.check221, label %.lr.ph.preheader235, label %vector.memcheck218
 
 vector.memcheck218:                               ; preds = %.lr.ph.preheader

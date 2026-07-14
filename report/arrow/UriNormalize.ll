@@ -203,7 +203,6 @@ bb.o:                                             ; preds = %bb.e
 
 bb.p:                                             ; preds = %bb.o
   %i.av = load ptr, ptr %0, align 8, !tbaa !68    ; 14 uses
-  %4 = ptrtoint ptr %i.av to i64                  ; 2 uses
   %.not172 = icmp eq ptr %i.av, null
   br i1 %.not172, label %uriLowercaseInplaceW.exit, label %bb.q
 
@@ -213,7 +212,6 @@ bb.q:                                             ; preds = %bb.p
   %.not173 = icmp eq i32 %i.ax, 0
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !80 ; 5 uses
-  %5 = ptrtoint ptr %i.az to i64
   br i1 %.not173, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -221,9 +219,11 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ba, label %.preheader.i219.preheader, label %uriLowercaseInplaceW.exit
 
 .preheader.i219.preheader:                        ; preds = %bb.r
-  %i.bb = add i64 %4, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.bb)
-  %i.bc = xor i64 %4, -1
+  %4 = ptrtoint ptr %i.az to i64
+  %5 = ptrtoint ptr %i.av to i64                  ; 2 uses
+  %i.bb = add i64 %5, 4
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.bb)
+  %i.bc = xor i64 %5, -1
   %i.bd = add i64 %umax, %i.bc                    ; 2 uses
   %i.be = lshr i64 %i.bd, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
@@ -506,7 +506,6 @@ bb.z:                                             ; preds = %uriLowercaseInplace
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !86 ; 18 uses
-  %6 = ptrtoint ptr %i.ez to i64                  ; 2 uses
   %.not176 = icmp eq ptr %i.ez, null
   br i1 %.not176, label %bb.aj, label %bb.aa
 
@@ -516,7 +515,6 @@ bb.aa:                                            ; preds = %bb.z
   %.not180 = icmp eq i32 %i.fb, 0
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !80 ; 9 uses
-  %7 = ptrtoint ptr %i.fd to i64
   br i1 %.not180, label %bb.ae, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -524,9 +522,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.fe, label %.preheader.i224.preheader, label %uriLowercaseInplaceW.exit227
 
 .preheader.i224.preheader:                        ; preds = %bb.ab
-  %i.ff = add i64 %6, 4
-  %umax442 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.ff)
-  %i.fg = xor i64 %6, -1
+  %6 = ptrtoint ptr %i.fd to i64
+  %7 = ptrtoint ptr %i.ez to i64                  ; 2 uses
+  %i.ff = add i64 %7, 4
+  %umax442 = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.ff)
+  %i.fg = xor i64 %7, -1
   %i.fh = add i64 %umax442, %i.fg                 ; 2 uses
   %i.fi = lshr i64 %i.fh, 2
   %i.fj = add nuw nsw i64 %i.fi, 1                ; 2 uses
