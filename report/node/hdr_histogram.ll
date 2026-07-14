@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l
   %i.by = add nsw i32 %.0.i.i.i25, %i.bv
   br label %counts_inc_normalised_atomic.exit.i26
 
-counts_inc_normalised_atomic.exit.i26:            ; preds = %bb.m, %bb.l
+counts_inc_normalised_atomic.exit.i26:            ; preds = %bb.l, %bb.m
   %.011.i.i.i27 = phi i32 [ %i.by, %bb.m ], [ %i.bq, %bb.l ]
   %i.bz = load ptr, ptr %i.ai, align 8, !tbaa !21
   %i.ca = sext i32 %.011.i.i.i27 to i64
@@ -223,7 +223,7 @@ bb.n:                                             ; preds = %.split.i.i29
   %i.cg = extractvalue { i64, i1 } %i.cf, 1
   br i1 %i.cg, label %.split22.i.i31.loopexit.preheader, label %.split.i.i29, !llvm.loop !45
 
-.split22.i.i31.loopexit.preheader:                ; preds = %.split.i.i29, %bb.n
+.split22.i.i31.loopexit.preheader:                ; preds = %bb.n, %.split.i.i29
   br label %.split22.i.i31.loopexit
 
 .split22.i.i31.loopexit:                          ; preds = %.split22.i.i31.loopexit.preheader, %bb.o
