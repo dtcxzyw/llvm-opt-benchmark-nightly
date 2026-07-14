@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 define dso_local void @strins(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(address) %1) local_unnamed_addr #24 {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
-  %2 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %2 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #29 ; 2 uses
   %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #29
   %i.d = add i64 %i.c, %i.b
@@ -298,17 +298,16 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph
 
 .preheader:                                       ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.a
-  %.018.lcssa = phi ptr [ %i.f, %bb.a ], [ %i.ab, %vec.epilog.middle.block ], [ %i.s, %middle.block ], [ %i.be, %vec.epilog.scalar.ph ] ; 9 uses
-  %.018.lcssa44 = ptrtoaddr ptr %.018.lcssa to i64
+  %.018.lcssa = phi ptr [ %i.f, %bb.a ], [ %i.ab, %vec.epilog.middle.block ], [ %i.s, %middle.block ], [ %i.be, %vec.epilog.scalar.ph ] ; 8 uses
+  %.018.lcssa44 = ptrtoaddr ptr %.018.lcssa to i64 ; 3 uses
   %.not2124 = icmp ult ptr %.018.lcssa, %1
   br i1 %.not2124, label %._crit_edge, label %iter.check65
 
 iter.check65:                                     ; preds = %.preheader
-  %.018.lcssa46 = ptrtoint ptr %.018.lcssa to i64 ; 2 uses
-  %i.ah = add i64 %.018.lcssa46, -1
+  %i.ah = add i64 %.018.lcssa44, -1
   %i.ai = add i64 %2, -1
   %umin47 = tail call i64 @llvm.umin.i64(i64 %i.ah, i64 %i.ai)
-  %i.aj = sub i64 %.018.lcssa46, %umin47          ; 7 uses
+  %i.aj = sub i64 %.018.lcssa44, %umin47          ; 7 uses
   %min.iters.check48 = icmp ult i64 %i.aj, 8
   br i1 %min.iters.check48, label %.lr.ph27.preheader, label %vector.memcheck43
 

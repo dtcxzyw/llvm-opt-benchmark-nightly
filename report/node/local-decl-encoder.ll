@@ -203,12 +203,11 @@ declare preserve_mostcc void @_ZN2v88internal4Zone6ExpandEm(ptr noundef nonnull 
 define linkonce_odr hidden preserve_mostcc void @_ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1) local_unnamed_addr #4 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 8 uses
-  %2 = ptrtoint ptr %i.b to i64                   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
   %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.f = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.f = ptrtoint ptr %i.b to i64                 ; 5 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
@@ -255,9 +254,9 @@ _ZN2v88internal4Zone13AllocateArrayISt4pairIjNS0_4wasm9ValueTypeEEA_S6_EEPT_m.ex
   br i1 %or.cond, label %.lr.ph.preheader, label %_ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE16MoveToNewStorageEPS5_S7_PKS5_.exit
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal4Zone13AllocateArrayISt4pairIjNS0_4wasm9ValueTypeEEA_S6_EEPT_m.exit
-  %i.ad = add i64 %2, 8
+  %i.ad = add i64 %i.f, 8
   %umax = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.ad)
-  %i.ae = xor i64 %2, -1
+  %i.ae = xor i64 %i.f, -1
   %i.af = add i64 %umax, %i.ae                    ; 2 uses
   %i.ag = lshr i64 %i.af, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses

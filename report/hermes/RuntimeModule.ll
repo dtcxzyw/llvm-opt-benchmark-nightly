@@ -203,8 +203,8 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.es = ptrtoaddr ptr %i.eq to i64
-  %3 = sub i64 %i.eg, %i.eh
-  %4 = add i64 %3, -4                             ; 2 uses
+  %3 = add i64 %i.eg, -4
+  %4 = sub i64 %3, %i.eh                          ; 2 uses
   %i.et = lshr i64 %4, 2
   %i.eu = add nuw nsw i64 %i.et, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 44
@@ -607,8 +607,8 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.u = ptrtoaddr ptr %i.s to i64
-  %2 = sub i64 %i.i, %i.j
-  %3 = add i64 %2, -4                             ; 2 uses
+  %2 = add i64 %i.i, -4
+  %3 = sub i64 %2, %i.j                           ; 2 uses
   %i.v = lshr i64 %3, 2
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 44
@@ -852,7 +852,7 @@ _ZN6hermes14checkedMalloc2Emm.exit.i:             ; preds = %bb.a
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.e, i64 1) ; 2 uses
   %mul.val.i.i = shl nuw i64 %.sroa.speculated, 3
   %i.k = tail call noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef %mul.val.i.i) #17 ; 5 uses
-  %i.l = load ptr, ptr %0, align 8, !tbaa !64     ; 7 uses
+  %i.l = load ptr, ptr %0, align 8, !tbaa !64     ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = load i64, ptr %i.m, align 8, !tbaa !59   ; 2 uses
   %.idx.i = shl i64 %i.n, 3                       ; 2 uses
@@ -861,20 +861,19 @@ _ZN6hermes14checkedMalloc2Emm.exit.i:             ; preds = %bb.a
   br i1 %.not.i, label %_ZN6hermes2vm14CopyableVectorIPNS0_13RuntimeModuleEE11setCapacityEm.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZN6hermes14checkedMalloc2Emm.exit.i
-  %i.p = ptrtoaddr ptr %i.l to i64
+  %i.p = ptrtoaddr ptr %i.l to i64                ; 4 uses
   %i.q = ptrtoaddr ptr %i.k to i64
-  %2 = ptrtoint ptr %i.l to i64                   ; 3 uses
-  %i.r = add i64 %.idx.i, %2
-  %i.s = add i64 %2, 8
+  %i.r = add i64 %.idx.i, %i.p
+  %i.s = add i64 %i.p, 8
   %umax = tail call i64 @llvm.umax.i64(i64 %i.r, i64 %i.s)
-  %i.t = xor i64 %2, -1
+  %i.t = xor i64 %i.p, -1
   %i.u = add i64 %umax, %i.t                      ; 2 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.u, 72
   %i.x = sub i64 %i.p, %i.q
   %diff.check = icmp ugt i64 %i.x, -32
-  %or.cond9 = select i1 %min.iters.check, i1 true, i1 %diff.check
+  %or.cond9 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond9, label %.lr.ph.i.preheader10, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
@@ -1219,8 +1218,8 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
 
 .lr.ph.i.i.i.i.i51.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit
   %i.bg = ptrtoaddr ptr %i.bf to i64
-  %4 = sub i64 %i.f, %i.j
-  %5 = add i64 %4, -4                             ; 2 uses
+  %4 = add i64 %i.f, -4
+  %5 = sub i64 %4, %i.j                           ; 2 uses
   %i.bh = lshr i64 %5, 2
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
   %min.iters.check120 = icmp ult i64 %5, 44
@@ -1279,8 +1278,8 @@ _ZSt22__uninitialized_move_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT
   %i.bv = load ptr, ptr %i.c, align 8, !tbaa !148
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.k
   store ptr %i.bw, ptr %i.c, align 8, !tbaa !148
-  %6 = sub i64 %i.f, %i.j
-  %7 = add i64 %6, -4                             ; 2 uses
+  %6 = add i64 %i.f, -4
+  %7 = sub i64 %6, %i.j                           ; 2 uses
   %i.bx = lshr i64 %7, 2
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check135 = icmp ult i64 %7, 28
@@ -1400,8 +1399,8 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
   br i1 %.not7.i.i.i.i.i73, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i74.preheader
 
 .lr.ph.i.i.i.i.i74.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit72
-  %8 = sub i64 %i.cp, %i.cg
-  %9 = add i64 %8, -4                             ; 2 uses
+  %8 = add i64 %i.cp, -4
+  %9 = sub i64 %8, %i.cg                          ; 2 uses
   %i.de = lshr i64 %9, 2
   %i.df = add nuw nsw i64 %i.de, 1                ; 2 uses
   %min.iters.check196 = icmp ult i64 %9, 44
@@ -1459,8 +1458,8 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET
   br i1 %.not7.i.i.i.i.i79, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit85, label %.lr.ph.i.i.i.i.i80.preheader
 
 .lr.ph.i.i.i.i.i80.preheader:                     ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit
-  %10 = sub i64 %i.f, %i.cp
-  %11 = add i64 %10, -4                           ; 2 uses
+  %10 = add i64 %i.f, -4
+  %11 = sub i64 %10, %i.cp                        ; 2 uses
   %i.ds = lshr i64 %11, 2
   %i.dt = add nuw nsw i64 %i.ds, 1                ; 2 uses
   %min.iters.check215 = icmp ult i64 %11, 76

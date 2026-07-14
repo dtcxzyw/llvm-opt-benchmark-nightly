@@ -132,7 +132,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 define dso_local i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %1 = alloca %"struct.Stockfish::MoveList", align 8 ; 8 uses
-  %2 = ptrtoint ptr %1 to i64
+  %2 = ptrtoaddr ptr %1 to i64
   %3 = alloca %"struct.Stockfish::MoveList.2", align 8 ; 5 uses
   %4 = alloca %"struct.Stockfish::MoveList.6", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 12 uses
@@ -191,7 +191,7 @@ _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_E
   br label %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %5 = ptrtoint ptr %i.k to i64
+  %5 = ptrtoaddr ptr %i.k to i64
   %i.m = load ptr, ptr %i.d, align 8, !tbaa !27   ; 17 uses
   %.reass = add i64 %5, %invariant.op             ; 2 uses
   %i.n = lshr i64 %.reass, 1

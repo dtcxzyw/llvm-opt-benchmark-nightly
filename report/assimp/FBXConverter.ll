@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   store i32 %i.t, ptr %i.v, align 8
   %i.w = load ptr, ptr %i.a, align 8              ; 8 uses
-  %1 = ptrtoint ptr %i.w to i64                   ; 2 uses
+  %1 = ptrtoaddr ptr %i.w to i64                  ; 2 uses
   %i.x = load ptr, ptr %i.c, align 8              ; 3 uses
-  %2 = ptrtoint ptr %i.x to i64                   ; 2 uses
+  %2 = ptrtoaddr ptr %i.x to i64                  ; 2 uses
   %.not5.i = icmp eq ptr %i.w, %i.x
   br i1 %.not5.i, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i.preheader
 
@@ -310,9 +310,9 @@ bb.c:                                             ; preds = %_ZSt11swap_rangesIN
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 32
   store i32 %i.bn, ptr %i.bp, align 8
   %i.bq = load ptr, ptr %i.au, align 8            ; 8 uses
-  %3 = ptrtoint ptr %i.bq to i64                  ; 2 uses
+  %3 = ptrtoaddr ptr %i.bq to i64                 ; 2 uses
   %i.br = load ptr, ptr %i.aw, align 8            ; 3 uses
-  %4 = ptrtoint ptr %i.br to i64                  ; 2 uses
+  %4 = ptrtoaddr ptr %i.br to i64                 ; 2 uses
   %.not5.i14 = icmp eq ptr %i.bq, %i.br
   br i1 %.not5.i14, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiMaterialSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i15.preheader
 
@@ -416,9 +416,9 @@ bb.d:                                             ; preds = %_ZSt11swap_rangesIN
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 48
   store i32 %i.dh, ptr %i.dj, align 8
   %i.dk = load ptr, ptr %i.co, align 8            ; 8 uses
-  %5 = ptrtoint ptr %i.dk to i64                  ; 2 uses
+  %5 = ptrtoaddr ptr %i.dk to i64                 ; 2 uses
   %i.dl = load ptr, ptr %i.cq, align 8            ; 3 uses
-  %6 = ptrtoint ptr %i.dl to i64                  ; 2 uses
+  %6 = ptrtoaddr ptr %i.dl to i64                 ; 2 uses
   %.not5.i20 = icmp eq ptr %i.dk, %i.dl
   br i1 %.not5.i20, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP11aiAnimationSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i21.preheader
 
@@ -522,9 +522,9 @@ bb.e:                                             ; preds = %_ZSt11swap_rangesIN
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 80
   store i32 %i.fb, ptr %i.fd, align 8
   %i.fe = load ptr, ptr %i.ei, align 8            ; 8 uses
-  %7 = ptrtoint ptr %i.fe to i64                  ; 2 uses
+  %7 = ptrtoaddr ptr %i.fe to i64                 ; 2 uses
   %i.ff = load ptr, ptr %i.ek, align 8            ; 3 uses
-  %8 = ptrtoint ptr %i.ff to i64                  ; 2 uses
+  %8 = ptrtoaddr ptr %i.ff to i64                 ; 2 uses
   %.not5.i26 = icmp eq ptr %i.fe, %i.ff
   br i1 %.not5.i26, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP7aiLightSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i27.preheader
 
@@ -628,9 +628,9 @@ bb.f:                                             ; preds = %_ZSt11swap_rangesIN
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 96
   store i32 %i.gv, ptr %i.gx, align 8
   %i.gy = load ptr, ptr %i.gc, align 8            ; 8 uses
-  %9 = ptrtoint ptr %i.gy to i64                  ; 2 uses
+  %9 = ptrtoaddr ptr %i.gy to i64                 ; 2 uses
   %i.gz = load ptr, ptr %i.ge, align 8            ; 3 uses
-  %10 = ptrtoint ptr %i.gz to i64                 ; 2 uses
+  %10 = ptrtoaddr ptr %i.gz to i64                ; 2 uses
   %.not5.i32 = icmp eq ptr %i.gy, %i.gz
   br i1 %.not5.i32, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP8aiCameraSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i33.preheader
 
@@ -734,9 +734,9 @@ bb.g:                                             ; preds = %_ZSt11swap_rangesIN
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 64
   store i32 %i.ip, ptr %i.ir, align 8
   %i.is = load ptr, ptr %i.hw, align 8            ; 8 uses
-  %11 = ptrtoint ptr %i.is to i64                 ; 2 uses
+  %11 = ptrtoaddr ptr %i.is to i64                ; 2 uses
   %i.it = load ptr, ptr %i.hy, align 8            ; 3 uses
-  %12 = ptrtoint ptr %i.it to i64                 ; 2 uses
+  %12 = ptrtoaddr ptr %i.it to i64                ; 2 uses
   %.not5.i38 = icmp eq ptr %i.is, %i.it
   br i1 %.not5.i38, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP9aiTextureSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i39.preheader
 
@@ -839,9 +839,9 @@ bb.h:                                             ; preds = %_ZSt11swap_rangesIN
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kk, i64 1148
   store i32 %i.kj, ptr %i.kl, align 4
   %i.km = load ptr, ptr %i.jq, align 8            ; 8 uses
-  %13 = ptrtoint ptr %i.km to i64                 ; 2 uses
+  %13 = ptrtoaddr ptr %i.km to i64                ; 2 uses
   %i.kn = load ptr, ptr %i.js, align 8            ; 3 uses
-  %14 = ptrtoint ptr %i.kn to i64                 ; 2 uses
+  %14 = ptrtoaddr ptr %i.kn to i64                ; 2 uses
   %.not5.i44 = icmp eq ptr %i.km, %i.kn
   br i1 %.not5.i44, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiSkeletonSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i45.preheader
 
@@ -1244,8 +1244,10 @@ _ZNSt12_Vector_baseIjSaIjEE11_M_allocateEm.exit.i: ; preds = %bb.c
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA33_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit
-  %i.s = ptrtoint ptr %.sroa.16.1 to i64          ; 3 uses
-  %i.t = ptrtoint ptr %.sroa.092.2 to i64         ; 4 uses
+  %.sroa.16.1270.le = ptrtoaddr ptr %.sroa.16.1 to i64 ; 2 uses
+  %.sroa.092.2271.le = ptrtoaddr ptr %.sroa.092.2 to i64 ; 2 uses
+  %i.s = ptrtoint ptr %.sroa.16.1 to i64
+  %i.t = ptrtoint ptr %.sroa.092.2 to i64         ; 2 uses
   %i.u = sub i64 %i.s, %i.t                       ; 2 uses
   %i.v = ashr exact i64 %i.u, 2                   ; 2 uses
   %.not = icmp eq ptr %.sroa.16.1, %.sroa.092.2
@@ -1626,9 +1628,9 @@ bb.ah:                                            ; preds = %.noexc81
   br label %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA33_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit
 
 _ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA33_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit: ; preds = %.noexc84, %.noexc81, %.noexc80, %.noexc77, %_ZNSt6vectorIjSaIjEED2Ev.exit74, %_ZNSt6vectorIjSaIjEED2Ev.exit
-  %.sroa.16.1 = phi ptr [ %.sroa.16.0158, %.noexc80 ], [ %.sroa.16.5, %_ZNSt6vectorIjSaIjEED2Ev.exit ], [ %.sroa.16.8, %_ZNSt6vectorIjSaIjEED2Ev.exit74 ], [ %.sroa.16.0158, %.noexc77 ], [ %.sroa.16.0158, %.noexc81 ], [ %.sroa.16.0158, %.noexc84 ] ; 4 uses
+  %.sroa.16.1 = phi ptr [ %.sroa.16.0158, %.noexc80 ], [ %.sroa.16.5, %_ZNSt6vectorIjSaIjEED2Ev.exit ], [ %.sroa.16.8, %_ZNSt6vectorIjSaIjEED2Ev.exit74 ], [ %.sroa.16.0158, %.noexc77 ], [ %.sroa.16.0158, %.noexc81 ], [ %.sroa.16.0158, %.noexc84 ] ; 5 uses
   %.sroa.30.2 = phi ptr [ %.sroa.30.0159, %.noexc80 ], [ %.sroa.30.8, %_ZNSt6vectorIjSaIjEED2Ev.exit ], [ %.sroa.30.11, %_ZNSt6vectorIjSaIjEED2Ev.exit74 ], [ %.sroa.30.0159, %.noexc77 ], [ %.sroa.30.0159, %.noexc81 ], [ %.sroa.30.0159, %.noexc84 ] ; 3 uses
-  %.sroa.092.2 = phi ptr [ %.sroa.092.0161, %.noexc80 ], [ %.sroa.092.8, %_ZNSt6vectorIjSaIjEED2Ev.exit ], [ %.sroa.092.11, %_ZNSt6vectorIjSaIjEED2Ev.exit74 ], [ %.sroa.092.0161, %.noexc77 ], [ %.sroa.092.0161, %.noexc81 ], [ %.sroa.092.0161, %.noexc84 ] ; 12 uses
+  %.sroa.092.2 = phi ptr [ %.sroa.092.0161, %.noexc80 ], [ %.sroa.092.8, %_ZNSt6vectorIjSaIjEED2Ev.exit ], [ %.sroa.092.11, %_ZNSt6vectorIjSaIjEED2Ev.exit74 ], [ %.sroa.092.0161, %.noexc77 ], [ %.sroa.092.0161, %.noexc81 ], [ %.sroa.092.0161, %.noexc84 ] ; 13 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.089.0160, i64 8 ; 2 uses
   %.not117 = icmp eq ptr %i.dh, %i.e
   br i1 %.not117, label %._crit_edge, label %bb.e
@@ -1646,8 +1648,8 @@ bb.aj:                                            ; preds = %bb.ai
   %i.dm = trunc i64 %i.v to i32
   %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 1120
   store i32 %i.dm, ptr %i.dn, align 8
-  %7 = sub i64 %i.s, %i.t
-  %8 = add i64 %7, -4                             ; 2 uses
+  %7 = add i64 %.sroa.16.1270.le, -4
+  %8 = sub i64 %7, %.sroa.092.2271.le             ; 2 uses
   %i.do = lshr i64 %8, 2
   %i.dp = add nuw nsw i64 %i.do, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %8, 60
@@ -1655,8 +1657,8 @@ bb.aj:                                            ; preds = %bb.ai
 
 vector.memcheck:                                  ; preds = %bb.aj
   %scevgep = getelementptr i8, ptr %.sroa.092.2, i64 4
-  %i.dq = add i64 %i.s, -4
-  %i.dr = sub i64 %i.dq, %i.t
+  %i.dq = add i64 %.sroa.16.1270.le, -4
+  %i.dr = sub i64 %i.dq, %.sroa.092.2271.le
   %i.ds = and i64 %i.dr, -4                       ; 2 uses
   %scevgep270 = getelementptr i8, ptr %scevgep, i64 %i.ds
   %scevgep271 = getelementptr i8, ptr %i.dk, i64 4
@@ -2059,18 +2061,17 @@ bb.bc:                                            ; preds = %bb.bb
 
 .noexc268:                                        ; preds = %bb.bc
   store ptr %i.pn, ptr %i.ou, align 8
-  %i.po = load ptr, ptr %i.pc, align 8            ; 6 uses
+  %i.po = load ptr, ptr %i.pc, align 8            ; 5 uses
   %i.pp = load ptr, ptr %i.pe, align 8            ; 3 uses
   %.not3538.i = icmp eq ptr %i.po, %i.pp
   br i1 %.not3538.i, label %_ZNSt3mapIP6aiMeshPSt6vectorIP14aiSkeletonBoneSaIS4_EESt4lessIS1_ESaISt4pairIKS1_S7_EEE4findERSB_.exit.thread.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.noexc268
-  %i.pq = ptrtoaddr ptr %i.po to i64
+  %i.pq = ptrtoaddr ptr %i.po to i64              ; 2 uses
   %i.pr = ptrtoaddr ptr %i.pn to i64
-  %13 = ptrtoint ptr %i.pp to i64
-  %14 = ptrtoint ptr %i.po to i64
+  %13 = ptrtoaddr ptr %i.pp to i64
   %i.ps = add i64 %13, -8
-  %i.pt = sub i64 %i.ps, %14                      ; 2 uses
+  %i.pt = sub i64 %i.ps, %i.pq                    ; 2 uses
   %i.pu = lshr i64 %i.pt, 3
   %i.pv = add nuw nsw i64 %i.pu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.pt, 24
@@ -2473,8 +2474,8 @@ bb.as:                                            ; preds = %bb.ar
   %i.gs = trunc i64 %i.gn to i32
   %i.gt = getelementptr inbounds nuw i8, ptr %1, i64 216
   store i32 %i.gs, ptr %i.gt, align 8
-  %11 = sub i64 %i.gk, %i.gl
-  %12 = add i64 %11, -8                           ; 2 uses
+  %11 = add i64 %i.gk, -8
+  %12 = sub i64 %11, %i.gl                        ; 2 uses
   %i.gu = lshr i64 %12, 3
   %i.gv = add nuw nsw i64 %i.gu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %12, 120
@@ -2877,8 +2878,8 @@ bb.cl:                                            ; preds = %bb.ck
   store ptr %i.nh, ptr %i.t, align 8
   %i.ni = trunc i64 %i.mo to i32
   store i32 %i.ni, ptr %i.s, align 8
-  %17 = sub i64 %i.ml, %i.mm
-  %18 = add i64 %17, -8                           ; 2 uses
+  %17 = add i64 %i.ml, -8
+  %18 = sub i64 %17, %i.mm                        ; 2 uses
   %i.nj = lshr i64 %18, 3
   %i.nk = add nuw nsw i64 %i.nj, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %18, 120
@@ -3281,8 +3282,8 @@ _ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPjjEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69
-  %4 = sub i64 %i.f, %i.j
-  %5 = add i64 %4, -4                             ; 2 uses
+  %4 = add i64 %i.f, -4
+  %5 = sub i64 %4, %i.j                           ; 2 uses
   %i.bg = lshr i64 %5, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check112 = icmp ult i64 %5, 28

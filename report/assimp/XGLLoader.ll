@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %2, align 8                ; 2 uses
   %i.h = load i64, ptr %i.e, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.h ; 8 uses
-  %3 = ptrtoint ptr %i.i to i64                   ; 4 uses
+  %3 = ptrtoaddr ptr %i.i to i64                  ; 4 uses
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -284,7 +284,7 @@ _ZN10aiVector3tIfEixEj.exit:                      ; preds = %bb.h
   %i.q = load float, ptr %i.b, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   %.sroa.0.0.vec.insert = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.q, i64 0 ; 6 uses
-  %4 = ptrtoint ptr %i.p to i64
+  %4 = ptrtoaddr ptr %i.p to i64
   %i.r = sub i64 %3, %4
   %scevgep.i.i17 = getelementptr i8, ptr %i.p, i64 %i.r ; 2 uses
   br label %bb.i
@@ -339,7 +339,7 @@ bb.m:                                             ; preds = %.noexc23
 
 bb.n:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit22
   %i.x = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i21, i64 1 ; 3 uses
-  %5 = ptrtoint ptr %i.x to i64
+  %5 = ptrtoaddr ptr %i.x to i64
   %i.y = sub i64 %3, %5
   %scevgep.i.i.1 = getelementptr i8, ptr %i.x, i64 %i.y ; 2 uses
   br label %bb.o
@@ -384,7 +384,7 @@ _ZN10aiVector3tIfEixEj.exit.1:                    ; preds = %bb.r
   %i.ad = load float, ptr %i.b, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.ad, i64 1 ; 6 uses
-  %6 = ptrtoint ptr %i.ac to i64
+  %6 = ptrtoaddr ptr %i.ac to i64
   %i.ae = sub i64 %3, %6
   %scevgep.i.i17.1 = getelementptr i8, ptr %i.ac, i64 %i.ae ; 2 uses
   br label %bb.s
@@ -417,7 +417,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit22.1:     ; preds = %bb.s, %.critedge.i.
 
 bb.v:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit22.1
   %i.ai = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i21.1, i64 1 ; 3 uses
-  %7 = ptrtoint ptr %i.ai to i64
+  %7 = ptrtoaddr ptr %i.ai to i64
   %i.aj = sub i64 %3, %7
   %scevgep.i.i.2 = getelementptr i8, ptr %i.ai, i64 %i.aj ; 2 uses
   br label %bb.w
@@ -820,8 +820,8 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
 
 .lr.ph.i.i.i.i.i219.preheader:                    ; preds = %.noexc226
   %i.le = ptrtoaddr ptr %i.lb to i64
-  %21 = sub i64 %i.kr, %i.ks
-  %22 = add i64 %21, -8                           ; 2 uses
+  %21 = add i64 %i.kr, -8
+  %22 = sub i64 %21, %i.ks                        ; 2 uses
   %i.lf = lshr i64 %22, 3
   %i.lg = add nuw nsw i64 %i.lf, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %22, 24
@@ -1224,7 +1224,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %2, align 8                ; 2 uses
   %i.h = load i64, ptr %i.e, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.h ; 6 uses
-  %3 = ptrtoint ptr %i.i to i64                   ; 2 uses
+  %3 = ptrtoaddr ptr %i.i to i64                  ; 2 uses
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -1302,7 +1302,7 @@ bb.h:                                             ; preds = %.critedge.i.i
 bb.i:                                             ; preds = %bb.h
   %i.q = load float, ptr %i.b, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
-  %4 = ptrtoint ptr %i.p to i64
+  %4 = ptrtoaddr ptr %i.p to i64
   %i.r = sub i64 %3, %4
   %scevgep.i.i17 = getelementptr i8, ptr %i.p, i64 %i.r ; 2 uses
   br label %bb.j
@@ -1356,7 +1356,7 @@ bb.n:                                             ; preds = %.noexc23
 
 bb.o:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit22
   %i.x = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i21, i64 1 ; 3 uses
-  %5 = ptrtoint ptr %i.x to i64
+  %5 = ptrtoaddr ptr %i.x to i64
   %i.y = sub i64 %3, %5
   %scevgep.i.i.1 = getelementptr i8, ptr %i.x, i64 %i.y ; 2 uses
   br label %bb.p
@@ -1759,18 +1759,17 @@ _ZNSt15__new_allocatorI10aiVector2tIfEE8allocateEmPKv.exit.i.i.i.i: ; preds = %b
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.ar
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   store ptr %i.aw, ptr %i.ax, align 8
-  %i.ay = load ptr, ptr %i.al, align 8            ; 6 uses
+  %i.ay = load ptr, ptr %i.al, align 8            ; 5 uses
   %i.az = load ptr, ptr %i.am, align 8            ; 3 uses
   %.not7.i.i.i.i.i23 = icmp eq ptr %i.ay, %i.az
   br i1 %.not7.i.i.i.i.i23, label %.loopexit, label %.lr.ph.i.i.i.i.i24.preheader
 
 .lr.ph.i.i.i.i.i24.preheader:                     ; preds = %.noexc31
-  %i.ba = ptrtoaddr ptr %i.ay to i64
+  %i.ba = ptrtoaddr ptr %i.ay to i64              ; 2 uses
   %i.bb = ptrtoaddr ptr %i.au to i64
-  %2 = ptrtoint ptr %i.az to i64
-  %3 = ptrtoint ptr %i.ay to i64
+  %2 = ptrtoaddr ptr %i.az to i64
   %i.bc = add i64 %2, -8
-  %i.bd = sub i64 %i.bc, %3                       ; 2 uses
+  %i.bd = sub i64 %i.bc, %i.ba                    ; 2 uses
   %i.be = lshr i64 %i.bd, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bd, 72

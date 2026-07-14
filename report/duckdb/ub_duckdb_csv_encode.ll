@@ -203,8 +203,8 @@ _ZN6duckdb12optional_ptrINS_16EncodingFunctionELb1EEptEv.exit41: ; preds = %bb.g
   %i.bc = phi ptr [ %i.bx, %_ZNSt6vectorIcSaIcEE9push_backERKc.exit ], [ %i.ap, %bb.g ]
   %.03090 = phi i64 [ %i.bw, %_ZNSt6vectorIcSaIcEE9push_backERKc.exit ], [ %i.au, %bb.g ] ; 3 uses
   %.sroa.26.089 = phi ptr [ %.sroa.26.1, %_ZNSt6vectorIcSaIcEE9push_backERKc.exit ], [ null, %bb.g ] ; 3 uses
-  %.sroa.15.088 = phi ptr [ %.sroa.15.2, %_ZNSt6vectorIcSaIcEE9push_backERKc.exit ], [ null, %bb.g ] ; 5 uses
-  %.sroa.0.087 = phi ptr [ %.sroa.0.3, %_ZNSt6vectorIcSaIcEE9push_backERKc.exit ], [ null, %bb.g ] ; 17 uses
+  %.sroa.15.088 = phi ptr [ %.sroa.15.2, %_ZNSt6vectorIcSaIcEE9push_backERKc.exit ], [ null, %bb.g ] ; 6 uses
+  %.sroa.0.087 = phi ptr [ %.sroa.0.3, %_ZNSt6vectorIcSaIcEE9push_backERKc.exit ], [ null, %bb.g ] ; 18 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 64
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !58
   %i.bf = icmp ult i64 %.03090, %i.be
@@ -295,15 +295,17 @@ _ZNSt6vectorIcSaIcEE9push_backERKc.exit:          ; preds = %_ZNSt6vectorIcSaIcE
 
 .loopexit:                                        ; preds = %_ZN6duckdb12optional_ptrINS_16EncodingFunctionELb1EEptEv.exit41
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.s, i8 0, i64 16, i1 false)
-  %i.by = ptrtoint ptr %.sroa.15.088 to i64       ; 2 uses
-  %i.bz = ptrtoint ptr %.sroa.0.087 to i64        ; 2 uses
+  %i.by = ptrtoint ptr %.sroa.15.088 to i64
+  %i.bz = ptrtoint ptr %.sroa.0.087 to i64
   %i.ca = sub i64 %i.by, %i.bz                    ; 4 uses
   %.not98 = icmp eq ptr %.sroa.15.088, %.sroa.0.087
   br i1 %.not98, label %._crit_edge96, label %.lr.ph95.preheader
 
 .lr.ph95.preheader:                               ; preds = %.loopexit
+  %.sroa.0.087.lcssa169173 = ptrtoaddr ptr %.sroa.0.087 to i64
+  %.sroa.15.088.lcssa164168 = ptrtoaddr ptr %.sroa.15.088 to i64
   %xtraiter = and i64 %i.ca, 3                    ; 3 uses
-  %i.cb = sub i64 %i.bz, %i.by
+  %i.cb = sub i64 %.sroa.0.087.lcssa169173, %.sroa.15.088.lcssa164168
   %i.cc = icmp ugt i64 %i.cb, -4
   br i1 %i.cc, label %.lr.ph95.epil.preheader, label %.lr.ph95.preheader.new
 

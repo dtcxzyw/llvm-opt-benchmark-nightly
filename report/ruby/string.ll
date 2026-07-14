@@ -204,7 +204,7 @@ middle.block279:                                  ; preds = %vector.body271
   br i1 %i.cp, label %.lr.ph172.preheader, label %.loopexit
 
 .lr.ph172.preheader:                              ; preds = %.loopexit130
-  %.1284 = ptrtoint ptr %.1 to i64
+  %.1284 = ptrtoaddr ptr %.1 to i64
   %i.cq = sub i64 %i.p, %.1284                    ; 3 uses
   %min.iters.check286 = icmp ult i64 %i.cq, 4
   br i1 %min.iters.check286, label %.lr.ph172.preheader303, label %vector.ph287
@@ -607,7 +607,7 @@ define internal fastcc ptr @str_utf8_nth(ptr noundef %0, ptr noundef %1, ptr nof
 bb.a:
   %i.a = load i64, ptr %2, align 8, !tbaa !27     ; 5 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.c = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.d = sub i64 %i.b, %i.c
   %i.e = icmp sgt i64 %i.d, 16
   %i.f = icmp sgt i64 %i.a, 16
@@ -696,26 +696,22 @@ middle.block:                                     ; preds = %vector.body
   %i.al = add nuw nsw i64 %i.ak, %i.aj
   %i.am = and i64 %i.al, 15
   %i.an = sub i64 %.229, %i.am                    ; 3 uses
-  %i.ao = getelementptr i8, ptr %.030, i64 8      ; 4 uses
+  %i.ao = getelementptr i8, ptr %.030, i64 8      ; 3 uses
   %i.ap = icmp ult ptr %i.ao, %i.k
   %i.aq = icmp sgt i64 %i.an, 7
   %i.ar = select i1 %i.ap, i1 %i.aq, i1 false
-  br i1 %i.ar, label %.preheader, label %.loopexit.loopexit, !llvm.loop !85
+  br i1 %i.ar, label %.preheader, label %.loopexit, !llvm.loop !85
 
-.loopexit.loopexit:                               ; preds = %.preheader
-  %.pre = ptrtoint ptr %i.ao to i64
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.a
-  %.146.pre-phi = phi i64 [ %.pre, %.loopexit.loopexit ], [ %i.c, %bb.a ]
-  %.3 = phi i64 [ %i.an, %.loopexit.loopexit ], [ %i.a, %bb.a ] ; 2 uses
-  %.1 = phi ptr [ %i.ao, %.loopexit.loopexit ], [ %0, %bb.a ] ; 4 uses
+.loopexit:                                        ; preds = %.preheader, %bb.a
+  %.3 = phi i64 [ %i.a, %bb.a ], [ %i.an, %.preheader ] ; 2 uses
+  %.1 = phi ptr [ %0, %bb.a ], [ %i.ao, %.preheader ] ; 5 uses
   %i.as = icmp ult ptr %.1, %1
   br i1 %i.as, label %.lr.ph39.preheader, label %._crit_edge
 
 .lr.ph39.preheader:                               ; preds = %.loopexit
-  %i.at = sub i64 %i.b, %.146.pre-phi
-  %scevgep47 = getelementptr i8, ptr %.1, i64 %i.at ; 2 uses
+  %.146 = ptrtoaddr ptr %.1 to i64
+  %i.at = sub i64 %i.b, %.146
+  %scevgep47 = getelementptr i8, ptr %.1, i64 %i.at
   br label %.lr.ph39
 
 .lr.ph39:                                         ; preds = %.lr.ph39.preheader, %bb.e
@@ -736,7 +732,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %.lr.ph39
   %.5 = phi i64 [ %i.aw, %bb.d ], [ %.437, %.lr.ph39 ] ; 2 uses
   %i.ax = getelementptr i8, ptr %.238, i64 1      ; 2 uses
-  %exitcond48.not = icmp eq ptr %i.ax, %scevgep47
+  %exitcond48.not = icmp eq ptr %i.ax, %1
   br i1 %exitcond48.not, label %._crit_edge, label %.lr.ph39, !llvm.loop !86
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.c, %.loopexit
@@ -750,7 +746,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph39
 define internal fastcc i64 @str_utf8_offset(ptr noundef %0, ptr noundef %1, i64 noundef range(i64 1, -9223372036854775807) %2) unnamed_addr #15 {
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 5 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 4 uses
   %i.c = sub i64 %i.a, %i.b
   %i.d = icmp sgt i64 %i.c, 16
   %i.e = icmp sgt i64 %2, 16
@@ -839,26 +835,22 @@ middle.block:                                     ; preds = %vector.body
   %i.ak = add nuw nsw i64 %i.aj, %i.ai
   %i.al = and i64 %i.ak, 15
   %i.am = sub i64 %.229.i, %i.al                  ; 3 uses
-  %i.an = getelementptr i8, ptr %.030.i, i64 8    ; 4 uses
+  %i.an = getelementptr i8, ptr %.030.i, i64 8    ; 3 uses
   %i.ao = icmp ult ptr %i.an, %i.j
   %i.ap = icmp sgt i64 %i.am, 7
   %i.aq = select i1 %i.ao, i1 %i.ap, i1 false
-  br i1 %i.aq, label %.preheader.i, label %.loopexit.loopexit.i, !llvm.loop !85
+  br i1 %i.aq, label %.preheader.i, label %.loopexit.i, !llvm.loop !85
 
-.loopexit.loopexit.i:                             ; preds = %.preheader.i
-  %.pre.i = ptrtoint ptr %i.an to i64
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %bb.a
-  %.146.pre-phi.i = phi i64 [ %.pre.i, %.loopexit.loopexit.i ], [ %i.b, %bb.a ]
-  %.3.i = phi i64 [ %i.am, %.loopexit.loopexit.i ], [ %2, %bb.a ]
-  %.1.i = phi ptr [ %i.an, %.loopexit.loopexit.i ], [ %0, %bb.a ] ; 4 uses
+.loopexit.i:                                      ; preds = %.preheader.i, %bb.a
+  %.3.i = phi i64 [ %2, %bb.a ], [ %i.am, %.preheader.i ]
+  %.1.i = phi ptr [ %0, %bb.a ], [ %i.an, %.preheader.i ] ; 5 uses
   %i.ar = icmp ult ptr %.1.i, %1
   br i1 %i.ar, label %.lr.ph39.preheader.i, label %str_utf8_nth.exit
 
 .lr.ph39.preheader.i:                             ; preds = %.loopexit.i
-  %i.as = sub i64 %i.a, %.146.pre-phi.i
-  %scevgep47.i = getelementptr i8, ptr %.1.i, i64 %i.as ; 2 uses
+  %.146.i = ptrtoaddr ptr %.1.i to i64
+  %i.as = sub i64 %i.a, %.146.i
+  %scevgep47.i = getelementptr i8, ptr %.1.i, i64 %i.as
   br label %.lr.ph39.i
 
 .lr.ph39.i:                                       ; preds = %bb.e, %.lr.ph39.preheader.i
@@ -879,7 +871,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %.lr.ph39.i
   %.5.i = phi i64 [ %i.av, %bb.d ], [ %.437.i, %.lr.ph39.i ]
   %i.aw = getelementptr i8, ptr %.238.i, i64 1    ; 2 uses
-  %exitcond48.not.i = icmp eq ptr %i.aw, %scevgep47.i
+  %exitcond48.not.i = icmp eq ptr %i.aw, %1
   br i1 %exitcond48.not.i, label %str_utf8_nth.exit, label %.lr.ph39.i, !llvm.loop !86
 
 str_utf8_nth.exit:                                ; preds = %bb.c, %bb.e, %.loopexit.i
@@ -1282,7 +1274,7 @@ bb.e:                                             ; preds = %get_encoding.exit
 
 RSTRING_END.exit:                                 ; preds = %get_encoding.exit, %bb.e
   %i.v = phi ptr [ %i.u, %bb.e ], [ %i.t, %get_encoding.exit ] ; 14 uses
-  %1 = ptrtoint ptr %i.v to i64
+  %1 = ptrtoaddr ptr %i.v to i64
   %i.w = load i64, ptr %i.b, align 8, !tbaa !14   ; 11 uses
   %i.x = getelementptr i8, ptr %i.v, i64 %i.w     ; 9 uses
   %i.y = inttoptr i64 %i.q to ptr                 ; 6 uses
@@ -1393,7 +1385,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.04979.ph = phi ptr [ %i.v, %iter.check ], [ %i.v, %vector.memcheck ], [ %i.an, %vec.epilog.iter.check ], [ %i.av, %vec.epilog.middle.block ] ; 3 uses
   %.05378.ph = phi ptr [ %i.ag, %iter.check ], [ %i.ag, %vector.memcheck ], [ %i.ap, %vec.epilog.iter.check ], [ %i.ax, %vec.epilog.middle.block ] ; 2 uses
   %i.bb = add i64 %i.w, %1                        ; 2 uses
-  %.04979.ph113 = ptrtoint ptr %.04979.ph to i64  ; 2 uses
+  %.04979.ph113 = ptrtoaddr ptr %.04979.ph to i64 ; 2 uses
   %i.bc = sub i64 %i.bb, %.04979.ph113
   %xtraiter = and i64 %i.bc, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1796,7 +1788,7 @@ bb.l:                                             ; preds = %bb.k
 
 RSTRING_PTR.exit73:                               ; preds = %bb.k, %bb.l
   %i.bk = phi ptr [ %i.bj, %bb.l ], [ %i.bi, %bb.k ] ; 7 uses
-  %3 = ptrtoint ptr %i.bk to i64
+  %3 = ptrtoaddr ptr %i.bk to i64
   %.not64 = icmp eq ptr %i.bk, null
   br i1 %.not64, label %bb.q, label %bb.m
 
@@ -1820,7 +1812,7 @@ RSTRING_END.exit:                                 ; preds = %bb.n, %bb.o
   br i1 %i.br, label %.lr.ph, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %RSTRING_END.exit
-  %4 = ptrtoint ptr %i.bp to i64
+  %4 = ptrtoaddr ptr %i.bp to i64
   %i.bs = trunc i32 %i.bf to i8                   ; 2 uses
   %i.bt = add i64 %i.bm, %4
   %i.bu = sub i64 %i.bt, %3                       ; 4 uses
@@ -2223,7 +2215,7 @@ bb.f:                                             ; preds = %.loopexit131
 
 RSTRING_PTR.exit:                                 ; preds = %.loopexit131, %bb.f
   %i.al = phi ptr [ %i.ak, %bb.f ], [ %i.aj, %.loopexit131 ] ; 15 uses
-  %3 = ptrtoint ptr %i.al to i64                  ; 3 uses
+  %3 = ptrtoaddr ptr %i.al to i64                 ; 3 uses
   %.not93 = icmp eq ptr %i.al, null
   br i1 %.not93, label %bb.av, label %bb.g
 
@@ -2242,7 +2234,7 @@ bb.i:                                             ; preds = %bb.h
 
 RSTRING_END.exit:                                 ; preds = %bb.h, %bb.i
   %i.aq = phi ptr [ %i.ap, %bb.i ], [ %i.aj, %bb.h ] ; 2 uses
-  %4 = ptrtoint ptr %i.aq to i64                  ; 3 uses
+  %4 = ptrtoaddr ptr %i.aq to i64                 ; 3 uses
   %i.ar = getelementptr i8, ptr %i.aq, i64 %i.an  ; 3 uses
   %i.as = getelementptr i8, ptr %.1, i64 20
   %.val.i = load i32, ptr %i.as, align 4, !tbaa !16
@@ -2645,7 +2637,7 @@ bb.l:                                             ; preds = %bb.g, %tr_find.exit
 define internal fastcc i64 @rstrip_offset(i64 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
-  %4 = ptrtoint ptr %1 to i64
+  %4 = ptrtoaddr ptr %1 to i64
   %i.b = tail call i32 @rb_enc_dummy_p(ptr noundef readonly %3) #32
   %.not.i = icmp eq i32 %i.b, 0
   br i1 %.not.i, label %rb_str_check_dummy_enc.exit, label %bb.b

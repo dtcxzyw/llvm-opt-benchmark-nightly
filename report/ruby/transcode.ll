@@ -204,10 +204,10 @@ bb.g:                                             ; preds = %bb.d
 bb.h:                                             ; preds = %bb.ar, %bb.g
   %i.q = phi i32 [ %.pre1291, %bb.g ], [ %i.fr, %bb.ar ]
   %i.r = phi i8 [ %i.o, %bb.g ], [ %i.fn, %bb.ar ] ; 3 uses
-  %.01091.pn = phi ptr [ %.01091, %bb.g ], [ %.51134, %bb.ar ] ; 3 uses
+  %.01091.pn = phi ptr [ %.01091, %bb.g ], [ %.51134, %bb.ar ] ; 2 uses
   %.21095 = phi ptr [ %.11094, %bb.g ], [ %.51098, %bb.ar ] ; 21 uses
-  %.1 = phi ptr [ %.01091, %bb.g ], [ %.4, %bb.ar ] ; 28 uses
-  %.01091.pn1288 = ptrtoint ptr %.01091.pn to i64
+  %.1 = phi ptr [ %.01091, %bb.g ], [ %.4, %bb.ar ] ; 27 uses
+  %.01091.pn1288 = ptrtoaddr ptr %.01091.pn to i64 ; 2 uses
   %.21131 = getelementptr i8, ptr %.01091.pn, i64 1 ; 20 uses
   %i.s = zext i8 %i.r to i64
   %i.t = getelementptr i8, ptr %i.a, i64 24
@@ -252,7 +252,7 @@ bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
   %i.aw = getelementptr i8, ptr %4, i64 24
   store i64 %.sink, ptr %i.aw, align 8, !tbaa !199
   %i.ax = getelementptr i8, ptr %4, i64 24
-  %i.ay = ptrtoint ptr %.1 to i64                 ; 3 uses
+  %i.ay = ptrtoint ptr %.1 to i64                 ; 4 uses
   %i.az = getelementptr i8, ptr %4, i64 40        ; 11 uses
   %i.ba = getelementptr i8, ptr %4, i64 56        ; 10 uses
   %.not.i.i = icmp eq ptr %.21131, %.1
@@ -331,7 +331,7 @@ bb.n:                                             ; preds = %.prol.preheader
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
   %.010921287.unr = phi ptr [ %.1, %.lr.ph ], [ %i.bn, %.prol.loopexit.unr-lcssa ]
-  %i.by = icmp eq ptr %.01091.pn, %.1
+  %i.by = icmp eq i64 %.01091.pn1288, %i.ay
   br i1 %i.by, label %._crit_edge.loopexit, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %bb.r

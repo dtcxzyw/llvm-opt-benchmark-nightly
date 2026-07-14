@@ -203,8 +203,8 @@ _ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69
-  %4 = sub i64 %i.f, %i.j
-  %5 = add i64 %4, -4                             ; 2 uses
+  %4 = add i64 %i.f, -4
+  %5 = sub i64 %4, %i.j                           ; 2 uses
   %i.bg = lshr i64 %5, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %5, 28
@@ -570,8 +570,8 @@ _ZSt22__uninitialized_move_aIPPN5arrow12ArrayBuilderES3_SaIS2_EET0_T_S6_S5_RT1_.
   br i1 %.not6.i.i.i70, label %_ZSt4fillIPPN5arrow12ArrayBuilderES2_EvT_S4_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPPN5arrow12ArrayBuilderES3_SaIS2_EET0_T_S6_S5_RT1_.exit69
-  %4 = sub i64 %i.f, %i.j
-  %5 = add i64 %4, -8                             ; 2 uses
+  %4 = add i64 %i.f, -8
+  %5 = sub i64 %4, %i.j                           ; 2 uses
   %i.bg = lshr i64 %5, 3
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %5, 24
