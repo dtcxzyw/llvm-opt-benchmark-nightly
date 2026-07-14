@@ -204,7 +204,9 @@ hufBuildEncTable.exit:                            ; preds = %bb.ad
   br i1 %.not195.i, label %hufPackEncTable.exit, label %.lr.ph201.i.preheader
 
 .lr.ph201.i.preheader:                            ; preds = %hufBuildEncTable.exit
-  %i.ki = add i64 %2, %i.a                        ; 4 uses
+  %i.ki = add i64 %2, %i.a                        ; 3 uses
+  %7 = ptrtoint ptr %1 to i64
+  %8 = add i64 %2, %7
   br label %.lr.ph201.i
 
 .lr.ph201.i:                                      ; preds = %.lr.ph201.i.preheader, %.thread132.i
@@ -335,14 +337,14 @@ bb.aj:                                            ; preds = %.lr.ph182.i
   br i1 %i.md, label %.thread132.i, label %.lr.ph187.preheader.i
 
 .lr.ph187.preheader.i:                            ; preds = %.critedge.i
-  %.182.lcssa.i249 = ptrtoint ptr %.182.lcssa.i to i64
   %i.me = zext i32 %i.mc to i64                   ; 3 uses
-  %7 = add nuw i32 %.1104.lcssa.i, 15
   %smin248 = tail call i32 @llvm.smin.i32(i32 %i.mc, i32 15)
-  %i.mf = sub i32 %7, %smin248
-  %i.mg = lshr i32 %i.mf, 3
+  %i.mf = sub i32 %.1104.lcssa.i, %smin248
+  %9 = add i32 %i.mf, 15
+  %i.mg = lshr i32 %9, 3
   %i.mh = zext nneg i32 %i.mg to i64
-  %i.mi = tail call i64 @llvm.usub.sat.i64(i64 %i.ki, i64 %.182.lcssa.i249)
+  %10 = ptrtoint ptr %.182.lcssa.i to i64
+  %i.mi = tail call i64 @llvm.usub.sat.i64(i64 %8, i64 %10)
   %umin251 = tail call i64 @llvm.umin.i64(i64 %i.mh, i64 %i.mi) ; 2 uses
   %min.iters.check253 = icmp samesign ult i64 %umin251, 16
   br i1 %min.iters.check253, label %.lr.ph187.i.preheader, label %vector.ph254
@@ -593,7 +595,9 @@ hufPackEncTable.exit:                             ; preds = %bb.ap, %._crit_edge
   %i.po = add nuw nsw i32 %i.pn, 8                ; 2 uses
   %i.pp = and i64 %i.pk, 63                       ; 2 uses
   %i.pq = lshr i64 %i.pk, 6                       ; 2 uses
-  %i.pr = add i64 %2, %i.a                        ; 4 uses
+  %i.pr = add i64 %2, %i.a                        ; 3 uses
+  %11 = ptrtoint ptr %1 to i64
+  %12 = add i64 %2, %11
   br label %bb.aq
 
 bb.aq:                                            ; preds = %.loopexit268.i, %.lr.ph347.i
@@ -882,13 +886,13 @@ bb.aw:                                            ; preds = %.critedge239.loopex
   br i1 %i.ts, label %.critedge239.loopexit.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.aw
-  %.4165320.i385 = ptrtoint ptr %.4165320.i to i64
   %i.tt = zext nneg i32 %i.tr to i64              ; 5 uses
-  %8 = add nuw nsw i64 %i.tt, 7
-  %smin384 = tail call i64 @llvm.smin.i64(i64 %i.tt, i64 15)
-  %9 = sub nsw i64 %8, %smin384
-  %i.tu = lshr i64 %9, 3
-  %i.tv = tail call i64 @llvm.usub.sat.i64(i64 %i.pr, i64 %.4165320.i385)
+  %13 = tail call i64 @llvm.smin.i64(i64 %i.tt, i64 15)
+  %14 = sub nsw i64 %i.tt, %13
+  %15 = add nuw nsw i64 %14, 7
+  %i.tu = lshr i64 %15, 3
+  %16 = ptrtoint ptr %.4165320.i to i64
+  %i.tv = tail call i64 @llvm.usub.sat.i64(i64 %12, i64 %16)
   %umin387 = tail call i64 @llvm.umin.i64(i64 %i.tu, i64 %i.tv) ; 2 uses
   %min.iters.check389 = icmp samesign ult i64 %umin387, 16
   br i1 %min.iters.check389, label %.lr.ph.i57.preheader, label %vector.ph390
@@ -1250,13 +1254,13 @@ bb.bd:                                            ; preds = %.critedge247.loopex
   br i1 %i.yu, label %.critedge247.loopexit.i, label %.lr.ph355.preheader.i
 
 .lr.ph355.preheader.i:                            ; preds = %bb.bd
-  %.13174360.i477 = ptrtoint ptr %.13174360.i to i64
   %i.yv = zext nneg i32 %i.yt to i64              ; 5 uses
-  %10 = add nuw nsw i64 %i.yv, 7
-  %smin476 = tail call i64 @llvm.smin.i64(i64 %i.yv, i64 15)
-  %11 = sub nsw i64 %10, %smin476
-  %i.yw = lshr i64 %11, 3
-  %i.yx = tail call i64 @llvm.usub.sat.i64(i64 %i.vf, i64 %.13174360.i477)
+  %17 = tail call i64 @llvm.smin.i64(i64 %i.yv, i64 15)
+  %18 = sub nsw i64 %i.yv, %17
+  %19 = add nuw nsw i64 %18, 7
+  %i.yw = lshr i64 %19, 3
+  %20 = ptrtoint ptr %.13174360.i to i64
+  %i.yx = tail call i64 @llvm.usub.sat.i64(i64 %i.vf, i64 %20)
   %umin479 = tail call i64 @llvm.umin.i64(i64 %i.yw, i64 %i.yx) ; 2 uses
   %min.iters.check481 = icmp samesign ult i64 %umin479, 16
   br i1 %min.iters.check481, label %.lr.ph355.i.preheader, label %vector.ph482

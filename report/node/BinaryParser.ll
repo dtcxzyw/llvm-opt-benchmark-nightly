@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %bb.r, %_ZNSt8_Rb_tr
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
   %i.d = load ptr, ptr %0, align 8                ; 10 uses
@@ -236,11 +236,12 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_E
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = add i64 %i.a, -8
-  %i.t = sub i64 %3, %i.f                         ; 2 uses
-  %i.u = lshr i64 %i.t, 3
+  %3 = ptrtoint ptr %1 to i64
+  %i.t = sub i64 %3, %i.f
+  %4 = add i64 %i.t, -8                           ; 2 uses
+  %i.u = lshr i64 %4, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %4, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -311,11 +312,12 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_EE
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6BinaryESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %4 = add i64 %i.e, -8
-  %i.am = sub i64 %4, %i.a                        ; 2 uses
-  %i.an = lshr i64 %i.am, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.am = sub i64 %i.e, %5
+  %6 = add i64 %i.am, -8                          ; 2 uses
+  %i.an = lshr i64 %6, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.am, 184
+  %min.iters.check46 = icmp ult i64 %6, 184
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
@@ -718,7 +720,7 @@ _ZNKSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIK
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
   %i.d = load ptr, ptr %0, align 8                ; 10 uses
@@ -753,11 +755,12 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = add i64 %i.a, -8
-  %i.t = sub i64 %3, %i.f                         ; 2 uses
-  %i.u = lshr i64 %i.t, 3
+  %3 = ptrtoint ptr %1 to i64
+  %i.t = sub i64 %3, %i.f
+  %4 = add i64 %i.t, -8                           ; 2 uses
+  %i.u = lshr i64 %4, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %4, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -828,11 +831,12 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %4 = add i64 %i.e, -8
-  %i.am = sub i64 %4, %i.a                        ; 2 uses
-  %i.an = lshr i64 %i.am, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.am = sub i64 %i.e, %5
+  %6 = add i64 %i.am, -8                          ; 2 uses
+  %i.an = lshr i64 %6, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.am, 184
+  %min.iters.check46 = icmp ult i64 %6, 184
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
@@ -921,7 +925,7 @@ _ZNSt12_Vector_baseISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EES
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
   %i.d = load ptr, ptr %0, align 8                ; 10 uses
@@ -956,11 +960,12 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESa
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %3 = add i64 %i.a, -8
-  %i.t = sub i64 %3, %i.f                         ; 2 uses
-  %i.u = lshr i64 %i.t, 3
+  %3 = ptrtoint ptr %1 to i64
+  %i.t = sub i64 %3, %i.f
+  %4 = add i64 %i.t, -8                           ; 2 uses
+  %i.u = lshr i64 %4, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 152
+  %min.iters.check = icmp ult i64 %4, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -1031,11 +1036,12 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaI
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %4 = add i64 %i.e, -8
-  %i.am = sub i64 %4, %i.a                        ; 2 uses
-  %i.an = lshr i64 %i.am, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.am = sub i64 %i.e, %5
+  %6 = add i64 %i.am, -8                          ; 2 uses
+  %i.an = lshr i64 %6, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
-  %min.iters.check46 = icmp ult i64 %i.am, 184
+  %min.iters.check46 = icmp ult i64 %6, 184
   br i1 %min.iters.check46, label %.lr.ph.i.i.i17.preheader61, label %vector.memcheck39
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader

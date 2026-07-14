@@ -204,8 +204,8 @@ bb.al:                                            ; preds = %bb.aj
 .lr.ph.i.preheader:                               ; preds = %bb.al
   %i.gb = ptrtoint ptr %i.ga to i64
   %i.gc = ptrtoint ptr %i.fy to i64
-  %7 = add i64 %i.gb, -32
-  %8 = sub i64 %7, %i.gc                          ; 2 uses
+  %7 = sub i64 %i.gb, %i.gc
+  %8 = add i64 %7, -32                            ; 2 uses
   %min.iters.check = icmp ult i64 %8, 128
   br i1 %min.iters.check, label %.lr.ph.i.preheader325, label %vector.ph
 
@@ -608,10 +608,10 @@ _ZNK6google8protobuf10Reflection26PopulateTcParseFastEntriesERKNS0_8internal17Ta
   %i.os = getelementptr inbounds nuw i8, ptr %.014.i, i64 4
   %i.ot = getelementptr inbounds nuw i8, ptr %.sroa.05.013.i, i64 8
   %i.ou = getelementptr inbounds nuw i8, ptr %.sroa.05.013.i, i64 16
-  %i.ov = load ptr, ptr %i.ou, align 8, !tbaa !635 ; 4 uses
-  %i.ow = ptrtoint ptr %i.ov to i64               ; 2 uses
-  %i.ox = load ptr, ptr %i.ot, align 8, !tbaa !638 ; 9 uses
-  %i.oy = ptrtoint ptr %i.ox to i64               ; 2 uses
+  %i.ov = load ptr, ptr %i.ou, align 8, !tbaa !635 ; 5 uses
+  %i.ow = ptrtoint ptr %i.ov to i64
+  %i.ox = load ptr, ptr %i.ot, align 8, !tbaa !638 ; 10 uses
+  %i.oy = ptrtoint ptr %i.ox to i64
   %i.oz = ptrtoint ptr %i.ov to i64
   %i.pa = ptrtoint ptr %i.ox to i64
   %i.pb = sub i64 %i.oz, %i.pa
@@ -623,11 +623,13 @@ _ZNK6google8protobuf10Reflection26PopulateTcParseFastEntriesERKNS0_8internal17Ta
   br i1 %.not89.i, label %._crit_edge.i, label %.lr.ph.i104.preheader
 
 .lr.ph.i104.preheader:                            ; preds = %.lr.ph16.i
-  %9 = add i64 %i.ow, -4
-  %i.pf = sub i64 %9, %i.oy                       ; 2 uses
-  %i.pg = lshr i64 %i.pf, 2
+  %9 = ptrtoint ptr %i.ov to i64
+  %10 = ptrtoint ptr %i.ox to i64
+  %i.pf = sub i64 %9, %10
+  %11 = add i64 %i.pf, -4                         ; 2 uses
+  %i.pg = lshr i64 %11, 2
   %i.ph = add nuw nsw i64 %i.pg, 1                ; 2 uses
-  %min.iters.check306 = icmp ult i64 %i.pf, 28
+  %min.iters.check306 = icmp ult i64 %11, 28
   br i1 %min.iters.check306, label %.lr.ph.i104.preheader324, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i104.preheader

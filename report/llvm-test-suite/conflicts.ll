@@ -174,8 +174,8 @@ bb.e:                                             ; preds = %bb.d
 
 .loopexit60:                                      ; preds = %._crit_edge..loopexit60_crit_edge, %.loopexit60.loopexit, %bb.c
   %i.ai = phi i32 [ %i.l, %._crit_edge..loopexit60_crit_edge ], [ %.pre93, %.loopexit60.loopexit ], [ %i.l, %bb.c ]
-  %i.aj = phi ptr [ %.pre, %._crit_edge..loopexit60_crit_edge ], [ %.pre92, %.loopexit60.loopexit ], [ %.pre92, %bb.c ] ; 2 uses
-  %i.ak = ptrtoint ptr %i.aj to i64               ; 2 uses
+  %i.aj = phi ptr [ %.pre, %._crit_edge..loopexit60_crit_edge ], [ %.pre92, %.loopexit60.loopexit ], [ %.pre92, %bb.c ] ; 3 uses
+  %i.ak = ptrtoint ptr %i.aj to i64
   %i.al = load ptr, ptr @lookaheads, align 8, !tbaa !27
   %i.am = getelementptr [2 x i8], ptr %i.al, i64 %i.b ; 2 uses
   %i.an = getelementptr i8, ptr %i.am, i64 2
@@ -256,12 +256,12 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bs, label %.lr.ph81, label %.loopexit
 
 .lr.ph81:                                         ; preds = %._crit_edge70
-  %i.bt = load ptr, ptr @lookaheadset, align 8, !tbaa !11 ; 9 uses
+  %i.bt = load ptr, ptr @lookaheadset, align 8, !tbaa !11 ; 10 uses
   %i.bu = icmp ult ptr %i.bt, %i.ar
   br i1 %i.bu, label %.lr.ph74.us.us.preheader, label %.loopexit
 
 .lr.ph74.us.us.preheader:                         ; preds = %.lr.ph81
-  %i.bv = ptrtoint ptr %i.bt to i64               ; 4 uses
+  %i.bv = ptrtoint ptr %i.bt to i64               ; 2 uses
   %i.bw = sext i16 %i.br to i32
   %i.bx = shl nsw i64 %i.aq, 2
   %i.by = add i64 %i.bx, %i.ak
@@ -272,11 +272,13 @@ bb.i:                                             ; preds = %bb.h
   %i.cc = and i64 %i.cb, -4
   %i.cd = add i64 %i.cc, 4                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.bt, i64 %i.cd
+  %1 = ptrtoint ptr %i.aj to i64
   %i.ce = shl nsw i64 %i.aq, 2
-  %i.cf = add i64 %i.ce, %i.ak
-  %i.cg = add i64 %i.bv, 4
+  %i.cf = add i64 %i.ce, %1
+  %2 = ptrtoint ptr %i.bt to i64                  ; 2 uses
+  %i.cg = add i64 %2, 4
   %umax110 = tail call i64 @llvm.umax.i64(i64 %i.cf, i64 %i.cg)
-  %i.ch = xor i64 %i.bv, -1
+  %i.ch = xor i64 %2, -1
   %i.ci = add i64 %umax110, %i.ch                 ; 2 uses
   %i.cj = lshr i64 %i.ci, 2
   %i.ck = add nuw nsw i64 %i.cj, 1                ; 2 uses
@@ -679,8 +681,8 @@ bb.f:                                             ; preds = %bb.c, %bb.e
   %i.al = getelementptr i8, ptr %i.ak, i64 2
   %i.am = load i16, ptr %i.al, align 2, !tbaa !29 ; 2 uses
   %i.an = sext i16 %i.am to i32
-  %i.ao = load ptr, ptr @lookaheadset, align 8, !tbaa !11 ; 16 uses
-  %i.ap = ptrtoint ptr %i.ao to i64               ; 12 uses
+  %i.ao = load ptr, ptr @lookaheadset, align 8, !tbaa !11 ; 18 uses
+  %i.ap = ptrtoint ptr %i.ao to i64               ; 6 uses
   %i.aq = sext i32 %i.ai to i64
   %.idx = shl nsw i64 %i.aq, 2                    ; 5 uses
   %i.ar = getelementptr inbounds i8, ptr %i.ao, i64 %.idx ; 2 uses
@@ -704,10 +706,11 @@ bb.f:                                             ; preds = %bb.c, %bb.e
   %i.bc = add i64 %i.bb, 4                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.ao, i64 %i.bc
   %scevgep90 = getelementptr i8, ptr %i.au, i64 %i.bc
-  %i.bd = add i64 %.idx, %i.ap
-  %i.be = add i64 %i.ap, 4
+  %1 = ptrtoint ptr %i.ao to i64                  ; 3 uses
+  %i.bd = add i64 %.idx, %1
+  %i.be = add i64 %1, 4
   %umax92 = tail call i64 @llvm.umax.i64(i64 %i.bd, i64 %i.be)
-  %i.bf = xor i64 %i.ap, -1
+  %i.bf = xor i64 %1, -1
   %i.bg = add i64 %umax92, %i.bf                  ; 2 uses
   %i.bh = lshr i64 %i.bg, 2
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
@@ -788,10 +791,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .lr.ph72.preheader:                               ; preds = %._crit_edge68.split
   %i.cf = load ptr, ptr @shiftset, align 8, !tbaa !11 ; 6 uses
-  %i.cg = add i64 %.idx, %i.ap
-  %i.ch = add i64 %i.ap, 4
+  %2 = ptrtoint ptr %i.ao to i64                  ; 3 uses
+  %i.cg = add i64 %.idx, %2
+  %i.ch = add i64 %2, 4
   %umax105 = tail call i64 @llvm.umax.i64(i64 %i.cg, i64 %i.ch)
-  %i.ci = xor i64 %i.ap, -1
+  %i.ci = xor i64 %2, -1
   %i.cj = add i64 %umax105, %i.ci                 ; 2 uses
   %i.ck = lshr i64 %i.cj, 2
   %i.cl = add nuw nsw i64 %i.ck, 1                ; 2 uses
@@ -1194,12 +1198,12 @@ bb.o:                                             ; preds = %.loopexit210
   br i1 %i.co, label %.lr.ph226.preheader, label %.preheader209
 
 .lr.ph226.preheader:                              ; preds = %bb.o
-  %1 = ptrtoint ptr %i.ck to i64                  ; 3 uses
   %i.cp = load ptr, ptr @shiftset, align 8, !tbaa !11 ; 5 uses
   %i.cq = load ptr, ptr @LA, align 8, !tbaa !11   ; 2 uses
   %i.cr = mul i32 %i.cj, %i.by
   %i.cs = sext i32 %i.cr to i64                   ; 2 uses
   %i.ct = getelementptr inbounds [4 x i8], ptr %i.cq, i64 %i.cs ; 4 uses
+  %1 = ptrtoint ptr %i.ck to i64                  ; 3 uses
   %i.cu = add i64 %.idx, %1
   %i.cv = add i64 %1, 4
   %umax.a = tail call i64 @llvm.umax.i64(i64 %i.cu, i64 %i.cv)
@@ -1335,8 +1339,8 @@ bb.r:                                             ; preds = %.loopexit210
   br i1 %i.fd, label %bb.s, label %bb.al
 
 bb.s:                                             ; preds = %bb.r
-  %i.fe = load ptr, ptr @lookaheadset, align 8, !tbaa !11 ; 13 uses
-  %i.ff = ptrtoint ptr %i.fe to i64               ; 11 uses
+  %i.fe = load ptr, ptr @lookaheadset, align 8, !tbaa !11 ; 15 uses
+  %i.ff = ptrtoint ptr %i.fe to i64               ; 5 uses
   %i.fg = load i32, ptr @tokensetsize, align 4, !tbaa !4 ; 3 uses
   %i.fh = sext i32 %i.fg to i64
   %.idx280 = shl nsw i64 %i.fh, 2                 ; 4 uses
@@ -1363,38 +1367,40 @@ bb.s:                                             ; preds = %bb.r
   %i.fw = add i64 %i.fv, 4                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.fm, i64 %i.fw
   %scevgep355 = getelementptr i8, ptr %i.fe, i64 %i.fw
-  %i.fx = add i64 %.idx280, %i.ff
-  %i.fy = add i64 %i.ff, 4
+  %2 = ptrtoint ptr %i.fe to i64                  ; 3 uses
+  %i.fx = add i64 %.idx280, %2
+  %i.fy = add i64 %2, 4
   %umax356 = tail call i64 @llvm.umax.i64(i64 %i.fx, i64 %i.fy)
-  %i.fz = xor i64 %i.ff, -1
+  %i.fz = xor i64 %2, -1
   %i.ga = add i64 %umax356, %i.fz                 ; 2 uses
   %i.gb = lshr i64 %i.ga, 2
   %i.gc = add nuw nsw i64 %i.gb, 1                ; 2 uses
-  %2 = add i64 %.idx280, %i.ff
-  %3 = add i64 %i.ff, 4
-  %umax379 = tail call i64 @llvm.umax.i64(i64 %2, i64 %3)
-  %4 = xor i64 %i.ff, -1
-  %5 = add i64 %umax379, %4                       ; 2 uses
-  %6 = lshr i64 %5, 2
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
-  %min.iters.check381 = icmp ult i64 %5, 28
+  %min.iters.check378 = icmp ult i64 %i.ga, 28
   %invariant.op = sub i64 %i.fl, %i.ff
-  %8 = sub i64 %i.fn, %i.ff
-  %diff.check377 = icmp ugt i64 %8, -32
-  %n.vec384 = and i64 %7, 9223372036854775800     ; 3 uses
-  %9 = shl i64 %n.vec384, 2                       ; 3 uses
-  %10 = getelementptr i8, ptr %i.fe, i64 %9
-  %11 = getelementptr i8, ptr %i.fm, i64 %9
-  %cmp.n396 = icmp eq i64 %7, %n.vec384
-  %min.iters.check358 = icmp ult i64 %i.ga, 28
+  %3 = sub i64 %i.fn, %i.ff
+  %diff.check375 = icmp ugt i64 %3, -32
+  %n.vec381 = and i64 %i.gc, 9223372036854775800  ; 3 uses
+  %4 = shl i64 %n.vec381, 2                       ; 3 uses
+  %5 = getelementptr i8, ptr %i.fe, i64 %4
+  %6 = getelementptr i8, ptr %i.fm, i64 %4
+  %cmp.n393 = icmp eq i64 %i.gc, %n.vec381
+  %7 = ptrtoint ptr %i.fe to i64                  ; 3 uses
+  %8 = add i64 %.idx280, %7
+  %9 = add i64 %7, 4
+  %10 = tail call i64 @llvm.umax.i64(i64 %8, i64 %9)
+  %11 = xor i64 %7, -1
+  %12 = add i64 %10, %11                          ; 2 uses
+  %13 = lshr i64 %12, 2
+  %14 = add nuw nsw i64 %13, 1                    ; 2 uses
+  %min.iters.check358 = icmp ult i64 %12, 28
   %bound0 = icmp ult ptr %i.fm, %scevgep355
   %bound1 = icmp ult ptr %i.fe, %scevgep
   %found.conflict = and i1 %bound0, %bound1
-  %n.vec361 = and i64 %i.gc, 9223372036854775800  ; 3 uses
+  %n.vec361 = and i64 %14, 9223372036854775800    ; 3 uses
   %i.gd = shl i64 %n.vec361, 2                    ; 2 uses
   %i.ge = getelementptr i8, ptr %i.fe, i64 %i.gd
   %i.gf = getelementptr i8, ptr %i.fm, i64 %i.gd
-  %cmp.n372 = icmp eq i64 %i.gc, %n.vec361
+  %cmp.n372 = icmp eq i64 %14, %n.vec361
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph253, %._crit_edge248
@@ -1412,17 +1418,17 @@ bb.t:                                             ; preds = %.lr.ph253, %._crit_
   %i.gj = sext i32 %i.gi to i64                   ; 2 uses
   %i.gk = mul nsw i64 %indvars.iv294, %i.gj
   %i.gl = getelementptr inbounds [4 x i8], ptr %i.fk, i64 %i.gk ; 4 uses
-  br i1 %min.iters.check381, label %.lr.ph236.preheader401, label %vector.memcheck375
+  br i1 %min.iters.check378, label %.lr.ph236.preheader401, label %vector.memcheck375
 
 vector.memcheck375:                               ; preds = %.lr.ph236.preheader
   %i.gm = mul i64 %i.gh, %i.gj
   %.reass = add i64 %i.gm, %invariant.op
   %diff.check376 = icmp ugt i64 %.reass, -32
-  %conflict.rdx378 = or i1 %diff.check376, %diff.check377
+  %conflict.rdx378 = or i1 %diff.check376, %diff.check375
   br i1 %conflict.rdx378, label %.lr.ph236.preheader401, label %vector.ph382
 
 vector.ph382:                                     ; preds = %vector.memcheck375
-  %i.gn = getelementptr i8, ptr %i.gl, i64 %9
+  %i.gn = getelementptr i8, ptr %i.gl, i64 %4
   br label %vector.body385
 
 vector.body385:                                   ; preds = %vector.body385, %vector.ph382
@@ -1445,16 +1451,16 @@ vector.body385:                                   ; preds = %vector.body385, %ve
   store <4 x i32> %i.gt, ptr %next.gep388, align 4, !tbaa !4
   store <4 x i32> %i.gu, ptr %i.gv, align 4, !tbaa !4
   %index.next394 = add nuw i64 %index386, 8       ; 2 uses
-  %i.gw = icmp eq i64 %index.next394, %n.vec384
+  %i.gw = icmp eq i64 %index.next394, %n.vec381
   br i1 %i.gw, label %middle.block395, label %vector.body385, !llvm.loop !86
 
 middle.block395:                                  ; preds = %vector.body385
-  br i1 %cmp.n396, label %.preheader, label %.lr.ph236.preheader401
+  br i1 %cmp.n393, label %.preheader, label %.lr.ph236.preheader401
 
 .lr.ph236.preheader401:                           ; preds = %vector.memcheck375, %.lr.ph236.preheader, %middle.block395
   %.1158234.ph = phi ptr [ %i.gl, %vector.memcheck375 ], [ %i.gl, %.lr.ph236.preheader ], [ %i.gn, %middle.block395 ]
-  %.3170233.ph = phi ptr [ %i.fe, %vector.memcheck375 ], [ %i.fe, %.lr.ph236.preheader ], [ %10, %middle.block395 ]
-  %.1176232.ph = phi ptr [ %i.fm, %vector.memcheck375 ], [ %i.fm, %.lr.ph236.preheader ], [ %11, %middle.block395 ]
+  %.3170233.ph = phi ptr [ %i.fe, %vector.memcheck375 ], [ %i.fe, %.lr.ph236.preheader ], [ %5, %middle.block395 ]
+  %.1176232.ph = phi ptr [ %i.fm, %vector.memcheck375 ], [ %i.fm, %.lr.ph236.preheader ], [ %6, %middle.block395 ]
   br label %.lr.ph236
 
 .preheader:                                       ; preds = %.lr.ph236, %middle.block395, %bb.t

@@ -201,10 +201,9 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v88internal10ZoneVectorISt4
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 8 uses
-  %2 = ptrtoint ptr %i.b to i64                   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
-  %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
+  %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.b to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -252,9 +251,11 @@ _ZN2v88internal4Zone13AllocateArrayISt4pairINS0_8compiler10turboshaft7OpIndexES6
   br i1 %or.cond, label %.lr.ph.preheader, label %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16MoveToNewStorageEPS6_S8_PKS6_.exit
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal4Zone13AllocateArrayISt4pairINS0_8compiler10turboshaft7OpIndexES6_EA_S7_EEPT_m.exit
-  %i.ad = add i64 %2, 8
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.ad)
-  %i.ae = xor i64 %2, -1
+  %2 = ptrtoint ptr %i.d to i64
+  %3 = ptrtoint ptr %i.b to i64                   ; 2 uses
+  %i.ad = add i64 %3, 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.ad)
+  %i.ae = xor i64 %3, -1
   %i.af = add i64 %umax, %i.ae                    ; 2 uses
   %i.ag = lshr i64 %i.af, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses

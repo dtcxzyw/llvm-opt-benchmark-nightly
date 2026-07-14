@@ -203,7 +203,6 @@ declare void @_ZN2v88internal13ThreadManager22IterateArchivedThreadsEPNS0_13Thre
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE17_M_realloc_insertIJRNS1_6TaggedIS3_EERPNS1_7IsolateEEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.c = load ptr, ptr %0, align 8                ; 7 uses
@@ -224,7 +223,7 @@ _ZNKSt6vectorIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE12_M_check_lenEmPK
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp eq i64 %i.l, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE11_M_allocateEm.exit, label %bb.c
@@ -263,11 +262,12 @@ _ZSt12construct_atIN2v88internal6HandleINS1_10JSFunctionEEEJRNS1_6TaggedIS3_EERP
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZSt12construct_atIN2v88internal6HandleINS1_10JSFunctionEEEJRNS1_6TaggedIS3_EERPNS1_7IsolateEEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSC_DpOSD_.exit
-  %5 = add i64 %4, -8
-  %i.ad = sub i64 %5, %i.e                        ; 2 uses
-  %i.ae = lshr i64 %i.ad, 3
+  %4 = ptrtoint ptr %1 to i64
+  %i.ad = sub i64 %4, %i.e
+  %5 = add i64 %i.ad, -8                          ; 2 uses
+  %i.ae = lshr i64 %5, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ad, 72
+  %min.iters.check = icmp ult i64 %5, 72
   %i.ag = sub i64 %i.e, %i.r
   %diff.check = icmp ugt i64 %i.ag, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -326,15 +326,16 @@ _ZNSt6vectorIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE11_S_relocateEPS4_S
   br i1 %.not10.i.i.i17, label %_ZNSt6vectorIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit23, label %.lr.ph.i.i.i18.preheader
 
 .lr.ph.i.i.i18.preheader:                         ; preds = %_ZNSt6vectorIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit
-  %6 = add i64 %i.d, -8
-  %i.as = sub i64 %6, %4                          ; 2 uses
-  %i.at = lshr i64 %i.as, 3
+  %6 = ptrtoint ptr %1 to i64
+  %i.as = sub i64 %i.d, %6
+  %7 = add i64 %i.as, -8                          ; 2 uses
+  %i.at = lshr i64 %7, 3
   %i.au = add nuw nsw i64 %i.at, 1                ; 2 uses
-  %min.iters.check45 = icmp ult i64 %i.as, 104
+  %min.iters.check45 = icmp ult i64 %7, 104
   br i1 %min.iters.check45, label %.lr.ph.i.i.i18.preheader60, label %vector.memcheck41
 
 vector.memcheck41:                                ; preds = %.lr.ph.i.i.i18.preheader
-  %i.av = sub i64 %.0.lcssa.i.i.i42, %4
+  %i.av = sub i64 %.0.lcssa.i.i.i42, %i.m
   %i.aw = add i64 %i.av, 7
   %diff.check43 = icmp ult i64 %i.aw, 31
   br i1 %diff.check43, label %.lr.ph.i.i.i18.preheader60, label %vector.ph46
@@ -408,7 +409,6 @@ _ZNSt12_Vector_baseIN2v88internal6HandleINS1_10JSFunctionEEESaIS4_EE13_M_dealloc
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN2v88internal6HandleINS1_17JSGeneratorObjectEEESaIS4_EE17_M_realloc_insertIJRNS1_6TaggedIS3_EERPNS1_7IsolateEEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.c = load ptr, ptr %0, align 8                ; 7 uses
@@ -429,7 +429,7 @@ _ZNKSt6vectorIN2v88internal6HandleINS1_17JSGeneratorObjectEEESaIS4_EE12_M_check_
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp eq i64 %i.l, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN2v88internal6HandleINS1_17JSGeneratorObjectEEESaIS4_EE11_M_allocateEm.exit, label %bb.c
@@ -468,11 +468,12 @@ _ZSt12construct_atIN2v88internal6HandleINS1_17JSGeneratorObjectEEEJRNS1_6TaggedI
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN2v88internal6HandleINS1_17JSGeneratorObjectEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZSt12construct_atIN2v88internal6HandleINS1_17JSGeneratorObjectEEEJRNS1_6TaggedIS3_EERPNS1_7IsolateEEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSC_DpOSD_.exit
-  %5 = add i64 %4, -8
-  %i.ad = sub i64 %5, %i.e                        ; 2 uses
-  %i.ae = lshr i64 %i.ad, 3
+  %4 = ptrtoint ptr %1 to i64
+  %i.ad = sub i64 %4, %i.e
+  %5 = add i64 %i.ad, -8                          ; 2 uses
+  %i.ae = lshr i64 %5, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ad, 72
+  %min.iters.check = icmp ult i64 %5, 72
   %i.ag = sub i64 %i.e, %i.r
   %diff.check = icmp ugt i64 %i.ag, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -531,15 +532,16 @@ _ZNSt6vectorIN2v88internal6HandleINS1_17JSGeneratorObjectEEESaIS4_EE11_S_relocat
   br i1 %.not10.i.i.i17, label %_ZNSt6vectorIN2v88internal6HandleINS1_17JSGeneratorObjectEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit23, label %.lr.ph.i.i.i18.preheader
 
 .lr.ph.i.i.i18.preheader:                         ; preds = %_ZNSt6vectorIN2v88internal6HandleINS1_17JSGeneratorObjectEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit
-  %6 = add i64 %i.d, -8
-  %i.as = sub i64 %6, %4                          ; 2 uses
-  %i.at = lshr i64 %i.as, 3
+  %6 = ptrtoint ptr %1 to i64
+  %i.as = sub i64 %i.d, %6
+  %7 = add i64 %i.as, -8                          ; 2 uses
+  %i.at = lshr i64 %7, 3
   %i.au = add nuw nsw i64 %i.at, 1                ; 2 uses
-  %min.iters.check45 = icmp ult i64 %i.as, 104
+  %min.iters.check45 = icmp ult i64 %7, 104
   br i1 %min.iters.check45, label %.lr.ph.i.i.i18.preheader60, label %vector.memcheck41
 
 vector.memcheck41:                                ; preds = %.lr.ph.i.i.i18.preheader
-  %i.av = sub i64 %.0.lcssa.i.i.i42, %4
+  %i.av = sub i64 %.0.lcssa.i.i.i42, %i.m
   %i.aw = add i64 %i.av, 7
   %diff.check43 = icmp ult i64 %i.aw, 31
   br i1 %diff.check43, label %.lr.ph.i.i.i18.preheader60, label %vector.ph46

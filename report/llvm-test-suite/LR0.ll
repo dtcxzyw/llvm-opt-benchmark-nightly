@@ -202,8 +202,8 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !8    ; 7 uses
   %i.e = load ptr, ptr @kernel_end, align 8, !tbaa !15
   %i.f = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.b
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !8    ; 6 uses
-  %i.h = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !8    ; 7 uses
+  %i.h = ptrtoint ptr %i.g to i64
   %i.i = ptrtoint ptr %i.d to i64
   %i.j = sub i64 %i.h, %i.i                       ; 2 uses
   %i.k = lshr exact i64 %i.j, 1                   ; 2 uses
@@ -212,9 +212,10 @@ bb.a:
   br i1 %i.m, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = ptrtoint ptr %i.g to i64
   %i.n = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.o = add i64 %i.n, 2
-  %umax.a = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.o)
+  %umax.a = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.o)
   %i.p = xor i64 %i.n, -1
   %i.q = add i64 %umax.a, %i.p                    ; 2 uses
   %i.r = lshr i64 %i.q, 1

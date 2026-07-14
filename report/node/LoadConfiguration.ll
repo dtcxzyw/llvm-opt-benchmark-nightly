@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
-  %i.s = load ptr, ptr %i.r, align 8              ; 3 uses
-  %i.t = ptrtoint ptr %i.s to i64                 ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8              ; 4 uses
+  %i.t = ptrtoint ptr %i.s to i64
   %i.u = sub i64 %i.t, %i.n
   %i.v = shl nuw nsw i64 %.sroa.speculated, 3
   %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #25 ; 7 uses
@@ -214,11 +214,12 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EE11_M_allocateEm.exit.i
   %i.x = ptrtoaddr ptr %i.w to i64
-  %5 = add i64 %i.t, -8
-  %i.y = sub i64 %5, %i.n                         ; 2 uses
-  %i.z = lshr i64 %i.y, 3
+  %5 = ptrtoint ptr %i.s to i64
+  %i.y = sub i64 %5, %i.n
+  %6 = add i64 %i.y, -8                           ; 2 uses
+  %i.z = lshr i64 %6, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
-  %min.iters.check = icmp ult i64 %i.y, 72
+  %min.iters.check = icmp ult i64 %6, 72
   %i.ab = sub i64 %i.n, %i.x
   %diff.check = icmp ugt i64 %i.ab, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -621,8 +622,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
   %i.fq = ptrtoaddr ptr %i.fj to i64
   %i.fr = ptrtoint ptr %i.fo to i64
   %i.fs = ptrtoint ptr %i.fn to i64
-  %3 = add i64 %i.fr, -8
-  %4 = sub i64 %3, %i.fs                          ; 2 uses
+  %3 = sub i64 %i.fr, %i.fs
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.ft = lshr i64 %4, 3
   %i.fu = add nuw nsw i64 %i.ft, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 72
@@ -717,8 +718,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
   %i.gx = ptrtoaddr ptr %i.gq to i64
   %i.gy = ptrtoint ptr %i.gv to i64
   %i.gz = ptrtoint ptr %i.gu to i64
-  %5 = add i64 %i.gy, -8
-  %6 = sub i64 %5, %i.gz                          ; 2 uses
+  %5 = sub i64 %i.gy, %i.gz
+  %6 = add i64 %5, -8                             ; 2 uses
   %i.ha = lshr i64 %6, 3
   %i.hb = add nuw nsw i64 %i.ha, 1                ; 2 uses
   %min.iters.check178 = icmp ult i64 %6, 72
@@ -813,8 +814,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
   %i.ie = ptrtoaddr ptr %i.hx to i64
   %i.if = ptrtoint ptr %i.ic to i64
   %i.ig = ptrtoint ptr %i.ib to i64
-  %7 = add i64 %i.if, -8
-  %8 = sub i64 %7, %i.ig                          ; 2 uses
+  %7 = sub i64 %i.if, %i.ig
+  %8 = add i64 %7, -8                             ; 2 uses
   %i.ih = lshr i64 %8, 3
   %i.ii = add nuw nsw i64 %i.ih, 1                ; 2 uses
   %min.iters.check196 = icmp ult i64 %8, 72
@@ -909,8 +910,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE17LoadConfiguration16guard_function_tESaIS3_EEC2EmR
   %i.jl = ptrtoaddr ptr %i.je to i64
   %i.jm = ptrtoint ptr %i.jj to i64
   %i.jn = ptrtoint ptr %i.ji to i64
-  %9 = add i64 %i.jm, -8
-  %10 = sub i64 %9, %i.jn                         ; 2 uses
+  %9 = sub i64 %i.jm, %i.jn
+  %10 = add i64 %9, -8                            ; 2 uses
   %i.jo = lshr i64 %10, 3
   %i.jp = add nuw nsw i64 %i.jo, 1                ; 2 uses
   %min.iters.check214 = icmp ult i64 %10, 72
@@ -1313,9 +1314,9 @@ _ZSt4copyIPN4LIEF2PE17LoadConfiguration16guard_function_tES4_ET0_T_S6_S5_.exit: 
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.ae to i64
   %i.ap = add i64 %i.ai, %i.an
-  %i.aq = add i64 %i.ap, -8
-  %2 = add i64 %i.ao, %i.ah
-  %3 = sub i64 %i.aq, %2                          ; 2 uses
+  %i.aq = add i64 %i.ao, %i.ah
+  %2 = sub i64 %i.ap, %i.aq
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ar = lshr i64 %3, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -1718,8 +1719,8 @@ _ZNSt12_Vector_baseIN4LIEF2PE16VolatileMetadata7range_tESaIS3_EEC2EmRKS4_.exit.i
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = ptrtoint ptr %i.am to i64
   %i.aq = ptrtoint ptr %i.al to i64
-  %2 = add i64 %i.ap, -8
-  %3 = sub i64 %2, %i.aq                          ; 2 uses
+  %2 = sub i64 %i.ap, %i.aq
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ar = lshr i64 %3, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 72
@@ -2122,15 +2123,15 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 .lr.ph.i.preheader.i:                             ; preds = %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i
   %i.fc = phi ptr [ %i.ez, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i ], [ %i.fb, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.fd = phi ptr [ %i.ey, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i ], [ %i.fa, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 5 uses
-  %10 = ptrtoint ptr %i.fc to i64
-  %i.fe = ptrtoint ptr %i.fd to i64
-  %11 = load ptr, ptr %8, align 8                 ; 4 uses
-  %12 = add i64 %10, -4
-  %13 = sub i64 %12, %i.fe                        ; 2 uses
+  %10 = load ptr, ptr %8, align 8                 ; 4 uses
+  %i.fe = ptrtoint ptr %i.fc to i64
+  %11 = ptrtoint ptr %i.fd to i64
+  %12 = sub i64 %i.fe, %11
+  %13 = add i64 %12, -4                           ; 2 uses
   %i.ff = lshr i64 %13, 2
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %13, 44
-  %i.fh = ptrtoaddr ptr %11 to i64
+  %i.fh = ptrtoaddr ptr %10 to i64
   %i.fi = ptrtoaddr ptr %i.fd to i64
   %i.fj = sub i64 %i.fi, %i.fh
   %diff.check = icmp ugt i64 %i.fj, -32
@@ -2140,14 +2141,14 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 vector.ph:                                        ; preds = %.lr.ph.i.preheader.i
   %n.vec = and i64 %i.fg, 9223372036854775800     ; 3 uses
   %i.fk = shl i64 %n.vec, 2                       ; 2 uses
-  %i.fl = getelementptr i8, ptr %11, i64 %i.fk
+  %i.fl = getelementptr i8, ptr %10, i64 %i.fk
   %i.fm = getelementptr i8, ptr %i.fd, i64 %i.fk
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.fn = shl i64 %index, 2                       ; 2 uses
-  %next.gep = getelementptr i8, ptr %11, i64 %i.fn ; 2 uses
+  %next.gep = getelementptr i8, ptr %10, i64 %i.fn ; 2 uses
   %next.gep861 = getelementptr i8, ptr %i.fd, i64 %i.fn ; 2 uses
   %i.fo = getelementptr i8, ptr %next.gep861, i64 16
   %wide.load = load <4 x i32>, ptr %next.gep861, align 4
@@ -2164,7 +2165,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %_ZN3fmt3v116detail6bigint6assignERKS2_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i.preheader.i, %middle.block
-  %.08.i.i.ph = phi ptr [ %11, %.lr.ph.i.preheader.i ], [ %i.fl, %middle.block ]
+  %.08.i.i.ph = phi ptr [ %10, %.lr.ph.i.preheader.i ], [ %i.fl, %middle.block ]
   %.057.i.i.ph = phi ptr [ %i.fd, %.lr.ph.i.preheader.i ], [ %i.fm, %middle.block ]
   br label %.lr.ph.i.i
 
@@ -2215,15 +2216,15 @@ _ZN3fmt3v116detail6bigint6assignERKS2_.exit151.thread: ; preds = %_ZN3fmt3v1119b
 .lr.ph.i.preheader.i143:                          ; preds = %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148
   %i.ge = phi ptr [ %i.gb, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148 ], [ %i.gd, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140 ] ; 2 uses
   %i.gf = phi ptr [ %i.ga, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148 ], [ %i.gc, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140 ] ; 5 uses
-  %14 = ptrtoint ptr %i.ge to i64
-  %i.gg = ptrtoint ptr %i.gf to i64
-  %15 = load ptr, ptr %9, align 8                 ; 4 uses
-  %16 = add i64 %14, -4
-  %17 = sub i64 %16, %i.gg                        ; 2 uses
+  %14 = load ptr, ptr %9, align 8                 ; 4 uses
+  %i.gg = ptrtoint ptr %i.ge to i64
+  %15 = ptrtoint ptr %i.gf to i64
+  %16 = sub i64 %i.gg, %15
+  %17 = add i64 %16, -4                           ; 2 uses
   %i.gh = lshr i64 %17, 2
   %i.gi = add nuw nsw i64 %i.gh, 1                ; 2 uses
   %min.iters.check867 = icmp ult i64 %17, 44
-  %i.gj = ptrtoaddr ptr %15 to i64
+  %i.gj = ptrtoaddr ptr %14 to i64
   %i.gk = ptrtoaddr ptr %i.gf to i64
   %i.gl = sub i64 %i.gk, %i.gj
   %diff.check865 = icmp ugt i64 %i.gl, -32
@@ -2233,14 +2234,14 @@ _ZN3fmt3v116detail6bigint6assignERKS2_.exit151.thread: ; preds = %_ZN3fmt3v1119b
 vector.ph868:                                     ; preds = %.lr.ph.i.preheader.i143
   %n.vec870 = and i64 %i.gi, 9223372036854775800  ; 3 uses
   %i.gm = shl i64 %n.vec870, 2                    ; 2 uses
-  %i.gn = getelementptr i8, ptr %15, i64 %i.gm
+  %i.gn = getelementptr i8, ptr %14, i64 %i.gm
   %i.go = getelementptr i8, ptr %i.gf, i64 %i.gm
   br label %vector.body871
 
 vector.body871:                                   ; preds = %vector.body871, %vector.ph868
   %index872 = phi i64 [ 0, %vector.ph868 ], [ %index.next877, %vector.body871 ] ; 2 uses
   %i.gp = shl i64 %index872, 2                    ; 2 uses
-  %next.gep873 = getelementptr i8, ptr %15, i64 %i.gp ; 2 uses
+  %next.gep873 = getelementptr i8, ptr %14, i64 %i.gp ; 2 uses
   %next.gep874 = getelementptr i8, ptr %i.gf, i64 %i.gp ; 2 uses
   %i.gq = getelementptr i8, ptr %next.gep874, i64 16
   %wide.load875 = load <4 x i32>, ptr %next.gep874, align 4
@@ -2257,7 +2258,7 @@ middle.block878:                                  ; preds = %vector.body871
   br i1 %cmp.n879, label %_ZN3fmt3v116detail6bigint6assignERKS2_.exit151, label %.lr.ph.i.i144.preheader
 
 .lr.ph.i.i144.preheader:                          ; preds = %.lr.ph.i.preheader.i143, %middle.block878
-  %.08.i.i145.ph = phi ptr [ %15, %.lr.ph.i.preheader.i143 ], [ %i.gn, %middle.block878 ]
+  %.08.i.i145.ph = phi ptr [ %14, %.lr.ph.i.preheader.i143 ], [ %i.gn, %middle.block878 ]
   %.057.i.i146.ph = phi ptr [ %i.gf, %.lr.ph.i.preheader.i143 ], [ %i.go, %middle.block878 ]
   br label %.lr.ph.i.i144
 

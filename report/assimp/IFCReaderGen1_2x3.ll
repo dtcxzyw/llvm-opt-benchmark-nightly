@@ -201,8 +201,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x321IfcRepresentationItemEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -211,11 +211,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x321IfcRepresentationIt
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x321IfcRepresentationItemEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -618,8 +619,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcRepresentationEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -628,11 +629,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcRepresentationEE
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcRepresentationEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1035,8 +1037,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcCompositeCurveSegmentEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -1045,11 +1047,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcCompositeCurveSe
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcCompositeCurveSegmentEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1452,8 +1455,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x310IfcProductEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -1462,11 +1465,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x310IfcProductEEESaIS6_
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x310IfcProductEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1869,8 +1873,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcRepresentationContextEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -1879,11 +1883,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcRepresentationCo
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcRepresentationContextEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -2286,8 +2291,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x39IfcObjectEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -2296,11 +2301,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x39IfcObjectEEESaIS6_EE
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x39IfcObjectEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -2703,8 +2709,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x319IfcObjectDefinitionEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -2713,11 +2719,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x319IfcObjectDefinition
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x319IfcObjectDefinitionEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -3120,8 +3127,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %.pre-phi77, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -3130,11 +3137,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEE
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -3537,8 +3545,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x37IfcFaceEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -3547,11 +3555,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x37IfcFaceEEESaIS6_EE11
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x37IfcFaceEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -3954,8 +3963,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x330IfcPresentationStyleAssignmentEEESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 3 uses
-  %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 4 uses
+  %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %i.ac
   %i.ak = ashr exact i64 %i.v, 1
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #24 ; 7 uses
@@ -3964,11 +3973,12 @@ _ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x330IfcPresentationStyl
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x330IfcPresentationStyleAssignmentEEESaIS6_EE11_M_allocateEm.exit.i
   %i.am = ptrtoaddr ptr %i.al to i64
-  %11 = add i64 %i.ai, -8
-  %i.an = sub i64 %11, %i.ac                      ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %11 = ptrtoint ptr %i.ah to i64
+  %i.an = sub i64 %11, %i.ac
+  %12 = add i64 %i.an, -8                         ; 2 uses
+  %i.ao = lshr i64 %12, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 72
+  %min.iters.check = icmp ult i64 %12, 72
   %i.aq = sub i64 %i.ac, %i.am
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = or i1 %min.iters.check, %diff.check

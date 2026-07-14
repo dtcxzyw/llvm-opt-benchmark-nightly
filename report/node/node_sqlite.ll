@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8              ; 3 uses
-  %i.l = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8              ; 4 uses
+  %i.l = ptrtoint ptr %i.k to i64
   %i.m = sub i64 %i.l, %i.f
   %i.n = shl nuw nsw i64 %1, 3
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #32 ; 7 uses
@@ -214,11 +214,12 @@ _ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE11_M_alloc
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_4NameEEESaIS4_EE11_M_allocateEm.exit.i
   %i.p = ptrtoaddr ptr %i.o to i64
-  %2 = add i64 %i.l, -8
-  %i.q = sub i64 %2, %i.f                         ; 2 uses
-  %i.r = lshr i64 %i.q, 3
+  %2 = ptrtoint ptr %i.k to i64
+  %i.q = sub i64 %2, %i.f
+  %3 = add i64 %i.q, -8                           ; 2 uses
+  %i.r = lshr i64 %3, 3
   %i.s = add nuw nsw i64 %i.r, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.q, 72
+  %min.iters.check = icmp ult i64 %3, 72
   %i.t = sub i64 %i.f, %i.p
   %diff.check = icmp ugt i64 %i.t, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -621,7 +622,6 @@ bb.i:                                             ; preds = %.lr.ph, %_ZN2v811Lo
   %.sroa.097.0147 = phi ptr [ %.sroa.097.6, %.lr.ph ], [ %.sroa.097.7, %_ZN2v811LocalVectorINS_5ValueEE12emplace_backIJRNS_5LocalIS1_EEEEEvDpOT_.exit ] ; 9 uses
   %.sroa.097.6.pn146 = phi ptr [ %.sroa.097.6, %.lr.ph ], [ %.0.lcssa.i.i.i.i.i.i.i79.pn, %_ZN2v811LocalVectorINS_5ValueEE12emplace_backIJRNS_5LocalIS1_EEEEEvDpOT_.exit ] ; 3 uses
   %.sroa.21.0145 = phi ptr [ %.sroa.21.6, %.lr.ph ], [ %.sroa.21.7, %_ZN2v811LocalVectorINS_5ValueEE12emplace_backIJRNS_5LocalIS1_EEEEEvDpOT_.exit ] ; 5 uses
-  %.sroa.097.6.pn146179 = ptrtoint ptr %.sroa.097.6.pn146 to i64 ; 2 uses
   %.sroa.11.0149 = getelementptr inbounds nuw i8, ptr %.sroa.097.6.pn146, i64 8 ; 3 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %i.aj = load ptr, ptr %i.ai, align 8            ; 6 uses
@@ -798,7 +798,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i74.preheader:                 ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i70
   %i.cl = ptrtoaddr ptr %i.cj to i64
-  %i.cm = sub i64 %.sroa.097.6.pn146179, %i.ca    ; 2 uses
+  %6 = ptrtoint ptr %.sroa.097.6.pn146 to i64     ; 2 uses
+  %i.cm = sub i64 %6, %i.ca                       ; 2 uses
   %i.cn = lshr i64 %i.cm, 3
   %i.co = add nuw nsw i64 %i.cn, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.cm, 24
@@ -839,7 +840,7 @@ middle.block:                                     ; preds = %vector.body
   %.012.i.i.i.i.i.i.i75.ph = phi ptr [ %i.cj, %.lr.ph.i.i.i.i.i.i.i74.preheader ], [ %i.cr, %middle.block ] ; 2 uses
   %.0911.i.i.i.i.i.i.i76.ph = phi ptr [ %.sroa.097.0147, %.lr.ph.i.i.i.i.i.i.i74.preheader ], [ %i.cs, %middle.block ] ; 3 uses
   %.0911.i.i.i.i.i.i.i76.ph190 = ptrtoint ptr %.0911.i.i.i.i.i.i.i76.ph to i64
-  %i.cx = sub i64 %.sroa.097.6.pn146179, %.0911.i.i.i.i.i.i.i76.ph190 ; 2 uses
+  %i.cx = sub i64 %6, %.0911.i.i.i.i.i.i.i76.ph190 ; 2 uses
   %i.cy = lshr i64 %i.cx, 3
   %i.cz = add nuw nsw i64 %i.cy, 1
   %xtraiter = and i64 %i.cz, 7                    ; 2 uses
@@ -1242,7 +1243,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNK2
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE15_M_range_insertIPKNS0_5LocalIS3_EEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EET_SG_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %4 = ptrtoaddr ptr %1 to i64
   %.not = icmp eq ptr %2, %3
   br i1 %.not, label %_ZSt4copyIPKN2v85LocalINS0_5ValueEEEN9__gnu_cxx17__normal_iteratorIPNS0_8internal14LocalUncheckedIS2_EESt6vectorISA_SaISA_EEEEET0_T_SH_SG_.exit, label %bb.b
 
@@ -1629,11 +1630,12 @@ _ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE11_M_allo
 
 .lr.ph.i.i.i.i.i59.preheader:                     ; preds = %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE11_M_allocateEm.exit
   %i.ea = ptrtoaddr ptr %i.dy to i64
-  %5 = add i64 %4, -8
-  %i.eb = sub i64 %5, %i.dn                       ; 2 uses
-  %i.ec = lshr i64 %i.eb, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.eb = sub i64 %5, %i.dn
+  %6 = add i64 %i.eb, -8                          ; 2 uses
+  %i.ec = lshr i64 %6, 3
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
-  %min.iters.check191 = icmp ult i64 %i.eb, 72
+  %min.iters.check191 = icmp ult i64 %6, 72
   %i.ee = sub i64 %i.dn, %i.ea
   %diff.check189 = icmp ugt i64 %i.ee, -32
   %or.cond247 = or i1 %min.iters.check191, %diff.check189
@@ -1741,11 +1743,12 @@ _ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_5ValueEEEPNS0_8internal14LocalUnch
 
 .lr.ph.i.i.i.i.i70.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_5ValueEEEPNS0_8internal14LocalUncheckedIS2_EES8_ET0_T_SB_SA_RSaIT1_E.exit69
   %.lcssa109226 = ptrtoaddr ptr %.lcssa109 to i64
-  %6 = add i64 %i.j, -8
-  %i.fg = sub i64 %6, %4                          ; 2 uses
-  %i.fh = lshr i64 %i.fg, 3
+  %7 = ptrtoint ptr %1 to i64
+  %i.fg = sub i64 %i.j, %7
+  %8 = add i64 %i.fg, -8                          ; 2 uses
+  %i.fh = lshr i64 %8, 3
   %i.fi = add nuw nsw i64 %i.fh, 1                ; 2 uses
-  %min.iters.check229 = icmp ult i64 %i.fg, 72
+  %min.iters.check229 = icmp ult i64 %8, 72
   %i.fj = sub i64 %4, %.lcssa109226
   %diff.check227 = icmp ugt i64 %i.fj, -32
   %or.cond249 = select i1 %min.iters.check229, i1 true, i1 %diff.check227

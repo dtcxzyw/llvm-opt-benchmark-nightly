@@ -204,20 +204,22 @@ bb.h:                                             ; preds = %.noexc
   store ptr %i.ab, ptr %i.aa, align 8, !tbaa !309, !alias.scope !1239
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ad, i8 0, i64 24, i1 false)
-  %i.ae = load ptr, ptr %i.j, align 8, !tbaa !59  ; 8 uses
-  %i.af = ptrtoint ptr %i.ae to i64               ; 2 uses
-  %i.ag = load ptr, ptr %i.k, align 8, !tbaa !59  ; 3 uses
-  %i.ah = ptrtoint ptr %i.ag to i64               ; 2 uses
+  %i.ae = load ptr, ptr %i.j, align 8, !tbaa !59  ; 9 uses
+  %i.af = ptrtoint ptr %i.ae to i64
+  %i.ag = load ptr, ptr %i.k, align 8, !tbaa !59  ; 4 uses
+  %i.ah = ptrtoint ptr %i.ag to i64
   %.not60 = icmp eq ptr %i.ae, %i.ag
   %.pre = load i64, ptr %i.p, align 8, !tbaa !1216 ; 4 uses
   br i1 %.not60, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.h
-  %11 = add i64 %i.ah, -8
-  %i.ai = sub i64 %11, %i.af                      ; 2 uses
-  %i.aj = lshr i64 %i.ai, 3
+  %11 = ptrtoint ptr %i.ag to i64
+  %12 = ptrtoint ptr %i.ae to i64
+  %i.ai = sub i64 %11, %12
+  %13 = add i64 %i.ai, -8                         ; 2 uses
+  %i.aj = lshr i64 %13, 3
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ai, 152
+  %min.iters.check = icmp ult i64 %13, 152
   br i1 %min.iters.check, label %.lr.ph.preheader86, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -620,8 +622,8 @@ bb.k:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_18AggregatePartitionESt14default_deleteIS2_ELb1EEESaIS5_EE11_M_allocateEm.exit.i: ; preds = %bb.k
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 256 ; 2 uses
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !1697 ; 3 uses
-  %i.ak = ptrtoint ptr %i.aj to i64               ; 3 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !1697 ; 4 uses
+  %i.ak = ptrtoint ptr %i.aj to i64               ; 2 uses
   %i.al = sub i64 %i.ak, %i.af
   %i.am = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #38
           to label %.noexc52 unwind label %bb.o   ; 9 uses
@@ -631,11 +633,12 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_18AggregatePartitionESt14default_de
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_18AggregatePartitionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc52
-  %4 = add i64 %i.ak, -8
-  %i.an = sub i64 %4, %i.af                       ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %4 = ptrtoint ptr %i.aj to i64
+  %i.an = sub i64 %4, %i.af
+  %5 = add i64 %i.an, -8                          ; 2 uses
+  %i.ao = lshr i64 %5, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 152
+  %min.iters.check = icmp ult i64 %5, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader119, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader

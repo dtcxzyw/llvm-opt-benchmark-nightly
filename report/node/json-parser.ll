@@ -204,10 +204,10 @@ bb.ae:                                            ; preds = %.thread424
   %i.kw = add i64 %i.kv, 15
   %i.kx = inttoptr i64 %i.kw to ptr
   %i.ky = load i64, ptr %i.kx, align 8            ; 2 uses
-  %i.kz = load ptr, ptr %i.ed, align 8            ; 8 uses
-  %i.la = ptrtoint ptr %i.kz to i64               ; 2 uses
-  %i.lb = load ptr, ptr %i.eb, align 8            ; 3 uses
-  %i.lc = ptrtoint ptr %i.lb to i64               ; 2 uses
+  %i.kz = load ptr, ptr %i.ed, align 8            ; 9 uses
+  %i.la = ptrtoint ptr %i.kz to i64
+  %i.lb = load ptr, ptr %i.eb, align 8            ; 4 uses
+  %i.lc = ptrtoint ptr %i.lb to i64
   %.not80614 = icmp eq ptr %i.kz, %i.lb
   br i1 %.not80614, label %._crit_edge619, label %.lr.ph618
 
@@ -215,11 +215,13 @@ bb.ae:                                            ; preds = %.thread424
   %i.ld = add i64 %i.ky, -1
   %i.le = inttoptr i64 %i.ld to ptr               ; 2 uses
   %i.lf = getelementptr inbounds nuw i8, ptr %i.le, i64 16 ; 3 uses
-  %3 = add i64 %i.lc, -4
-  %i.lg = sub i64 %3, %i.la                       ; 2 uses
-  %i.lh = lshr i64 %i.lg, 2
+  %3 = ptrtoint ptr %i.lb to i64
+  %4 = ptrtoint ptr %i.kz to i64
+  %i.lg = sub i64 %3, %4
+  %5 = add i64 %i.lg, -4                          ; 2 uses
+  %i.lh = lshr i64 %5, 2
   %i.li = add nuw nsw i64 %i.lh, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.lg, 60
+  %min.iters.check = icmp ult i64 %5, 60
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph618
@@ -278,16 +280,16 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   br i1 %.not81620, label %.loopexit, label %.lr.ph624
 
 .lr.ph624:                                        ; preds = %._crit_edge619
-  %4 = ptrtoint ptr %i.mb to i64
-  %5 = ptrtoint ptr %i.lz to i64
   %i.mc = add i64 %i.ky, -1                       ; 2 uses
   %i.md = inttoptr i64 %i.mc to ptr
   %i.me = getelementptr inbounds nuw i8, ptr %i.md, i64 16 ; 2 uses
-  %6 = add i64 %4, -8
-  %i.mf = sub i64 %6, %5                          ; 2 uses
-  %i.mg = lshr i64 %i.mf, 3
+  %6 = ptrtoint ptr %i.mb to i64
+  %7 = ptrtoint ptr %i.lz to i64
+  %i.mf = sub i64 %6, %7
+  %8 = add i64 %i.mf, -8                          ; 2 uses
+  %i.mg = lshr i64 %8, 3
   %i.mh = add nuw nsw i64 %i.mg, 1                ; 2 uses
-  %min.iters.check1207 = icmp ult i64 %i.mf, 72
+  %min.iters.check1207 = icmp ult i64 %8, 72
   br i1 %min.iters.check1207, label %scalar.ph1206.preheader, label %vector.memcheck1205
 
 vector.memcheck1205:                              ; preds = %.lr.ph624
@@ -690,10 +692,10 @@ bb.q:                                             ; preds = %.thread257
   %i.ej = add i64 %i.ei, 15
   %i.ek = inttoptr i64 %i.ej to ptr
   %i.el = load i64, ptr %i.ek, align 8            ; 2 uses
-  %i.em = load ptr, ptr %i.az, align 8            ; 8 uses
-  %i.en = ptrtoint ptr %i.em to i64               ; 2 uses
-  %i.eo = load ptr, ptr %i.ax, align 8            ; 3 uses
-  %i.ep = ptrtoint ptr %i.eo to i64               ; 2 uses
+  %i.em = load ptr, ptr %i.az, align 8            ; 9 uses
+  %i.en = ptrtoint ptr %i.em to i64
+  %i.eo = load ptr, ptr %i.ax, align 8            ; 4 uses
+  %i.ep = ptrtoint ptr %i.eo to i64
   %.not80333 = icmp eq ptr %i.em, %i.eo
   br i1 %.not80333, label %._crit_edge338, label %.lr.ph337
 
@@ -701,11 +703,13 @@ bb.q:                                             ; preds = %.thread257
   %i.eq = add i64 %i.el, -1
   %i.er = inttoptr i64 %i.eq to ptr               ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 16 ; 3 uses
-  %3 = add i64 %i.ep, -4
-  %i.et = sub i64 %3, %i.en                       ; 2 uses
-  %i.eu = lshr i64 %i.et, 2
+  %3 = ptrtoint ptr %i.eo to i64
+  %4 = ptrtoint ptr %i.em to i64
+  %i.et = sub i64 %3, %4
+  %5 = add i64 %i.et, -4                          ; 2 uses
+  %i.eu = lshr i64 %5, 2
   %i.ev = add nuw nsw i64 %i.eu, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.et, 60
+  %min.iters.check = icmp ult i64 %5, 60
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph337
@@ -764,16 +768,16 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   br i1 %.not81339, label %.loopexit, label %.lr.ph343
 
 .lr.ph343:                                        ; preds = %._crit_edge338
-  %4 = ptrtoint ptr %i.fo to i64
-  %5 = ptrtoint ptr %i.fm to i64
   %i.fp = add i64 %i.el, -1                       ; 2 uses
   %i.fq = inttoptr i64 %i.fp to ptr
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 16 ; 2 uses
-  %6 = add i64 %4, -8
-  %i.fs = sub i64 %6, %5                          ; 2 uses
-  %i.ft = lshr i64 %i.fs, 3
+  %6 = ptrtoint ptr %i.fo to i64
+  %7 = ptrtoint ptr %i.fm to i64
+  %i.fs = sub i64 %6, %7
+  %8 = add i64 %i.fs, -8                          ; 2 uses
+  %i.ft = lshr i64 %8, 3
   %i.fu = add nuw nsw i64 %i.ft, 1                ; 2 uses
-  %min.iters.check491 = icmp ult i64 %i.fs, 72
+  %min.iters.check491 = icmp ult i64 %8, 72
   br i1 %min.iters.check491, label %scalar.ph490.preheader, label %vector.memcheck489
 
 vector.memcheck489:                               ; preds = %.lr.ph343
@@ -1176,7 +1180,6 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %2 = ptrtoint ptr %i.b to i64
   %i.c = load ptr, ptr %0, align 8                ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -1211,11 +1214,12 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %3 = add i64 %2, -8
-  %i.r = sub i64 %3, %i.g                         ; 2 uses
-  %i.s = lshr i64 %i.r, 3
+  %2 = ptrtoint ptr %i.b to i64
+  %i.r = sub i64 %2, %i.g
+  %3 = add i64 %i.r, -8                           ; 2 uses
+  %i.s = lshr i64 %3, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 72
+  %min.iters.check = icmp ult i64 %3, 72
   %i.u = sub i64 %i.g, %i.q
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = or i1 %min.iters.check, %diff.check

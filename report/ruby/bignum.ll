@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.p
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc range(i32 -2, 2) i32 @bary_unpack_internal(ptr noundef %0, i64 noundef range(i64 -576460752303423487, 9223372036854775807) %1, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef %6, i32 noundef %7) unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %0 to i64
   %i.b = getelementptr [4 x i8], ptr %0, i64 %1   ; 9 uses
   %i.c = and i32 %6, 1024
   %.not = icmp eq i32 %i.c, 0
@@ -607,11 +607,12 @@ bb.ad:                                            ; preds = %bary_swap.exit
   br i1 %.old369, label %.lr.ph366.preheader, label %.loopexit
 
 .lr.ph366.preheader:                              ; preds = %bb.ad, %._crit_edge363
+  %8 = ptrtoint ptr %0 to i64                     ; 3 uses
   %i.da = shl i64 %1, 2
-  %i.db = add i64 %i.da, %i.a
-  %i.dc = add i64 %i.a, 4
+  %i.db = add i64 %i.da, %8
+  %i.dc = add i64 %8, 4
   %umax471 = tail call i64 @llvm.umax.i64(i64 %i.db, i64 %i.dc)
-  %i.dd = xor i64 %i.a, -1
+  %i.dd = xor i64 %8, -1
   %i.de = add i64 %umax471, %i.dd                 ; 2 uses
   %i.df = lshr i64 %i.de, 2
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses

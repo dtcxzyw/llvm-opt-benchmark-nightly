@@ -204,11 +204,11 @@ _ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE9push_backEOS3_.exit.i: ; p
   br i1 %.not.i19, label %._crit_edge.i, label %bb.o
 
 ._crit_edge60.i:                                  ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE9push_backEOS3_.exit47.i, %_ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE7reserveEm.exit38.i
-  %i.fi = load ptr, ptr %i.ci, align 8            ; 9 uses
-  %i.fj = ptrtoint ptr %i.fi to i64               ; 6 uses
+  %i.fi = load ptr, ptr %i.ci, align 8            ; 10 uses
+  %i.fj = ptrtoint ptr %i.fi to i64               ; 3 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ce, i64 48
-  %i.fl = load ptr, ptr %i.fk, align 8            ; 5 uses
-  %i.fm = ptrtoint ptr %i.fl to i64               ; 2 uses
+  %i.fl = load ptr, ptr %i.fk, align 8            ; 6 uses
+  %i.fm = ptrtoint ptr %i.fl to i64
   %i.fn = icmp ne ptr %i.fi, %i.fl
   %.012.i.i.i = getelementptr inbounds i8, ptr %i.fl, i64 -4 ; 5 uses
   %i.fo = icmp ult ptr %i.fi, %.012.i.i.i
@@ -216,18 +216,20 @@ _ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE9push_backEOS3_.exit.i: ; p
   br i1 %or.cond.i.i.i, label %.lr.ph.i.i.i.preheader, label %_ZN2v88internal8compilerL19InstructionBlockForEPNS0_4ZoneERKNS1_10turboshaft5GraphEPKNS4_5BlockESA_.exit
 
 .lr.ph.i.i.i.preheader:                           ; preds = %._crit_edge60.i
-  %4 = add i64 %i.fm, -8
-  %i.fp = add i64 %i.fj, 4
-  %umax49 = call i64 @llvm.umax.i64(i64 %4, i64 %i.fp)
-  %i.fq = add i64 %umax49, -4                     ; 2 uses
-  %i.fr = sub i64 %i.fq, %i.fj
-  %i.fs = icmp ne i64 %i.fq, %i.fj                ; 2 uses
-  %umin50.neg = sext i1 %i.fs to i64
-  %5 = select i1 %i.fs, i64 2, i64 1
-  %i.ft = add i64 %i.fr, %umin50.neg
+  %4 = ptrtoint ptr %i.fl to i64
+  %i.fp = add i64 %4, -8
+  %5 = ptrtoint ptr %i.fi to i64                  ; 2 uses
+  %i.fq = add i64 %5, 4
+  %6 = call i64 @llvm.umax.i64(i64 %i.fp, i64 %i.fq)
+  %i.fr = sub i64 %6, %5                          ; 2 uses
+  %i.fs = icmp ne i64 %i.fr, 4
+  %7 = zext i1 %i.fs to i64                       ; 2 uses
+  %8 = sub i64 %i.fr, %7
+  %i.ft = add i64 %8, -4
   %i.fu = lshr i64 %i.ft, 3
-  %i.fv = add nuw nsw i64 %5, %i.fu               ; 3 uses
-  %min.iters.check = icmp samesign ult i64 %i.fv, 16
+  %9 = add nuw nsw i64 %i.fu, %7                  ; 2 uses
+  %i.fv = add nuw nsw i64 %9, 1                   ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %9, 15
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader59, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
@@ -253,10 +255,10 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.prehea
   br i1 %found.conflict, label %.lr.ph.i.i.i.preheader59, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.fv, 4611686018427387896     ; 4 uses
+  %n.vec = and i64 %i.fv, 9223372036854775800     ; 4 uses
   %i.gg = mul i64 %n.vec, -4
   %i.gh = getelementptr i8, ptr %.012.i.i.i, i64 %i.gg
-  %i.gi = shl nuw i64 %n.vec, 2
+  %i.gi = shl i64 %n.vec, 2
   %i.gj = getelementptr i8, ptr %i.fi, i64 %i.gi
   br label %vector.body
 

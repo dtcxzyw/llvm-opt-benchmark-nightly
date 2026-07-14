@@ -203,7 +203,6 @@ declare noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noun
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE17_M_realloc_insertIJNSt6chrono10time_pointINS6_3_V212system_clockENS6_8durationIlSt5ratioILl1ELl1EEEEEENS1_6detail12undocumentedEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 1 dereferenceable(1) %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !260  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !25     ; 7 uses
@@ -224,7 +223,7 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -240,11 +239,12 @@ _ZNSt16allocator_traitsISaIN14arrow_vendored4date11leap_secondEEE9constructIS2_J
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt16allocator_traitsISaIN14arrow_vendored4date11leap_secondEEE9constructIS2_JNSt6chrono10time_pointINS6_3_V212system_clockENS6_8durationIlSt5ratioILl1ELl1EEEEEENS1_6detail12undocumentedEEEEvRS3_PT_DpOT0_.exit
-  %5 = add i64 %4, -8
-  %i.s = sub i64 %5, %i.e                         ; 2 uses
-  %i.t = lshr i64 %i.s, 3
+  %4 = ptrtoint ptr %1 to i64
+  %i.s = sub i64 %4, %i.e
+  %5 = add i64 %i.s, -8                           ; 2 uses
+  %i.t = lshr i64 %5, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.s, 72
+  %min.iters.check = icmp ult i64 %5, 72
   %i.v = sub i64 %i.e, %i.q
   %diff.check = icmp ugt i64 %i.v, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -303,15 +303,16 @@ _ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5
   br i1 %.not10.i.i.i27, label %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit33, label %.lr.ph.i.i.i28.preheader
 
 .lr.ph.i.i.i28.preheader:                         ; preds = %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit
-  %6 = add i64 %i.d, -8
-  %i.ah = sub i64 %6, %4                          ; 2 uses
-  %i.ai = lshr i64 %i.ah, 3
+  %6 = ptrtoint ptr %1 to i64
+  %i.ah = sub i64 %i.d, %6
+  %7 = add i64 %i.ah, -8                          ; 2 uses
+  %i.ai = lshr i64 %7, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
-  %min.iters.check55 = icmp ult i64 %i.ah, 104
+  %min.iters.check55 = icmp ult i64 %7, 104
   br i1 %min.iters.check55, label %.lr.ph.i.i.i28.preheader70, label %vector.memcheck51
 
 vector.memcheck51:                                ; preds = %.lr.ph.i.i.i28.preheader
-  %i.ak = sub i64 %.0.lcssa.i.i.i52, %4
+  %i.ak = sub i64 %.0.lcssa.i.i.i52, %i.m
   %i.al = add i64 %i.ak, 7
   %diff.check53 = icmp ult i64 %i.al, 31
   br i1 %diff.check53, label %.lr.ph.i.i.i28.preheader70, label %vector.ph56

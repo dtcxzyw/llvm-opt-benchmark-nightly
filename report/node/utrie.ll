@@ -204,9 +204,8 @@ _ZL18utrie_getDataBlockP8UNewTriei.exit:          ; preds = %bb.g, %bb.e
   %i.ae = add nuw nsw i32 %1, 32
   %i.af = and i32 %i.ae, 4194272                  ; 5 uses
   %.not98 = icmp samesign ugt i32 %i.af, %2
-  %i.ag = load ptr, ptr %i.i, align 8             ; 2 uses
-  %5 = ptrtoint ptr %i.ag to i64                  ; 4 uses
-  %i.ah = zext nneg i32 %.0.i to i64              ; 3 uses
+  %i.ag = load ptr, ptr %i.i, align 8             ; 3 uses
+  %i.ah = zext nneg i32 %.0.i to i64              ; 5 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.ah ; 40 uses
   br i1 %.not98, label %bb.k, label %bb.h
 
@@ -609,7 +608,7 @@ bb.k:                                             ; preds = %_ZL18utrie_getDataB
   %i.fo = and i32 %2, 31                          ; 2 uses
   %i.fp = zext nneg i32 %i.fo to i64              ; 3 uses
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.fp ; 2 uses
-  %i.fr = zext nneg i32 %i.l to i64               ; 3 uses
+  %i.fr = zext nneg i32 %i.l to i64               ; 5 uses
   %i.fs = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.fr ; 13 uses
   %.not.i102 = icmp eq i8 %4, 0
   %i.ft = icmp samesign ult i32 %i.l, %i.fo       ; 2 uses
@@ -619,21 +618,23 @@ bb.k:                                             ; preds = %_ZL18utrie_getDataB
   br i1 %i.ft, label %.lr.ph.i104.preheader, label %_ZL15utrie_fillBlockPjiijja.exit135
 
 .lr.ph.i104.preheader:                            ; preds = %.preheader15.i103
-  %i.fu = shl nuw nsw i64 %i.ah, 2                ; 2 uses
-  %6 = add i64 %i.fu, %5                          ; 2 uses
-  %7 = shl nuw nsw i64 %i.fr, 2                   ; 2 uses
-  %i.fv = add i64 %6, %7
+  %5 = ptrtoint ptr %i.ag to i64                  ; 2 uses
+  %i.fu = shl nuw nsw i64 %i.ah, 2
+  %6 = shl nuw nsw i64 %i.fr, 2
+  %7 = add i64 %i.fu, %5                          ; 2 uses
+  %i.fv = add i64 %7, %6
   %i.fw = add i64 %i.fv, 4
   %i.fx = shl nuw nsw i64 %i.fp, 2
-  %i.fy = add i64 %6, %i.fx
+  %i.fy = add i64 %7, %i.fx
   %umax = tail call i64 @llvm.umax.i64(i64 %i.fw, i64 %i.fy)
-  %8 = xor i64 %5, -1
-  %i.fz = add i64 %umax, %8
-  %9 = add nuw nsw i64 %i.fu, %7
-  %10 = sub i64 %i.fz, %9                         ; 2 uses
-  %i.ga = lshr i64 %10, 2
+  %8 = add nuw nsw i64 %i.ah, %i.fr
+  %9 = shl nuw nsw i64 %8, 2
+  %i.fz = add i64 %9, %5
+  %10 = xor i64 %i.fz, -1
+  %11 = add i64 %umax, %10                        ; 2 uses
+  %i.ga = lshr i64 %11, 2
   %i.gb = add nuw nsw i64 %i.ga, 1                ; 2 uses
-  %min.iters.check223 = icmp ult i64 %10, 28
+  %min.iters.check223 = icmp ult i64 %11, 28
   br i1 %min.iters.check223, label %.lr.ph.i104.preheader337, label %vector.ph224
 
 vector.ph224:                                     ; preds = %.lr.ph.i104.preheader
@@ -667,21 +668,23 @@ middle.block232:                                  ; preds = %vector.body229
   br i1 %i.ft, label %.lr.ph19.i107.preheader, label %_ZL15utrie_fillBlockPjiijja.exit135
 
 .lr.ph19.i107.preheader:                          ; preds = %.preheader.i106
-  %i.gh = shl nuw nsw i64 %i.ah, 2                ; 2 uses
-  %11 = add i64 %i.gh, %5                         ; 2 uses
-  %12 = shl nuw nsw i64 %i.fr, 2                  ; 2 uses
-  %i.gi = add i64 %11, %12
+  %12 = ptrtoint ptr %i.ag to i64                 ; 2 uses
+  %i.gh = shl nuw nsw i64 %i.ah, 2
+  %13 = shl nuw nsw i64 %i.fr, 2
+  %14 = add i64 %i.gh, %12                        ; 2 uses
+  %i.gi = add i64 %14, %13
   %i.gj = add i64 %i.gi, 4
   %i.gk = shl nuw nsw i64 %i.fp, 2
-  %i.gl = add i64 %11, %i.gk
+  %i.gl = add i64 %14, %i.gk
   %umax235 = tail call i64 @llvm.umax.i64(i64 %i.gj, i64 %i.gl)
-  %13 = xor i64 %5, -1
-  %i.gm = add i64 %umax235, %13
-  %14 = add nuw nsw i64 %i.gh, %12
-  %15 = sub i64 %i.gm, %14                        ; 2 uses
-  %i.gn = lshr i64 %15, 2
+  %15 = add nuw nsw i64 %i.ah, %i.fr
+  %16 = shl nuw nsw i64 %15, 2
+  %i.gm = add i64 %16, %12
+  %17 = xor i64 %i.gm, -1
+  %18 = add i64 %umax235, %17                     ; 2 uses
+  %i.gn = lshr i64 %18, 2
   %i.go = add nuw nsw i64 %i.gn, 1                ; 2 uses
-  %min.iters.check237 = icmp ult i64 %15, 28
+  %min.iters.check237 = icmp ult i64 %18, 28
   br i1 %min.iters.check237, label %.lr.ph19.i107.preheader335, label %vector.ph238
 
 vector.ph238:                                     ; preds = %.lr.ph19.i107.preheader
@@ -1084,25 +1087,26 @@ bb.bb:                                            ; preds = %_ZL20utrie_allocDat
   br label %_ZL18utrie_getDataBlockP8UNewTriei.exit127
 
 _ZL18utrie_getDataBlockP8UNewTriei.exit127:       ; preds = %._ZL18utrie_getDataBlockP8UNewTriei.exit127_crit_edge, %bb.bb
-  %.pre-phi = phi i64 [ %.pre, %._ZL18utrie_getDataBlockP8UNewTriei.exit127_crit_edge ], [ %i.me, %bb.bb ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre, %._ZL18utrie_getDataBlockP8UNewTriei.exit127_crit_edge ], [ %i.me, %bb.bb ] ; 3 uses
   %i.mj = load ptr, ptr %i.i, align 8             ; 2 uses
-  %16 = ptrtoint ptr %i.mj to i64                 ; 2 uses
   %i.mk = getelementptr inbounds nuw [4 x i8], ptr %i.mj, i64 %.pre-phi ; 14 uses
   %i.ml = zext nneg i32 %i.hr to i64              ; 2 uses
   %i.mm = getelementptr inbounds nuw [4 x i8], ptr %i.mk, i64 %i.ml ; 2 uses
   %.not.i128 = icmp eq i8 %4, 0
-  %i.mn = shl nuw nsw i64 %.pre-phi, 2            ; 2 uses
-  %17 = add i64 %i.mn, %16                        ; 2 uses
-  %18 = shl nuw nsw i64 %i.ml, 2
-  %i.mo = add i64 %17, %18
-  %i.mp = add i64 %17, 4
+  %19 = ptrtoint ptr %i.mj to i64                 ; 2 uses
+  %i.mn = shl nuw nsw i64 %.pre-phi, 2
+  %20 = shl nuw nsw i64 %i.ml, 2
+  %21 = add i64 %i.mn, %19                        ; 2 uses
+  %i.mo = add i64 %21, %20
+  %i.mp = add i64 %21, 4
   %umax290 = tail call i64 @llvm.umax.i64(i64 %i.mo, i64 %i.mp)
-  %19 = xor i64 %16, -1
-  %i.mq = add i64 %umax290, %19
-  %20 = sub i64 %i.mq, %i.mn                      ; 2 uses
-  %i.mr = lshr i64 %20, 2
+  %22 = shl nuw nsw i64 %.pre-phi, 2
+  %i.mq = add i64 %22, %19
+  %23 = xor i64 %i.mq, -1
+  %24 = add i64 %umax290, %23                     ; 2 uses
+  %i.mr = lshr i64 %24, 2
   %i.ms = add nuw nsw i64 %i.mr, 1                ; 4 uses
-  %min.iters.check292 = icmp ult i64 %20, 28      ; 2 uses
+  %min.iters.check292 = icmp ult i64 %24, 28      ; 2 uses
   br i1 %.not.i128, label %.lr.ph19.i133.preheader, label %.lr.ph.i130.preheader
 
 .lr.ph.i130.preheader:                            ; preds = %_ZL18utrie_getDataBlockP8UNewTriei.exit127

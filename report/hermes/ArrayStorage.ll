@@ -203,15 +203,13 @@ _ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4fillIPS3_EEvT_S6_S2_RNS0_
   %i.bq = phi ptr [ %i.ba, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4copyIPS3_S5_EET0_T_S7_S6_RNS0_7HadesGCE.exit ], [ %i.bd, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE9setNonPtrES2_RNS0_7HadesGCE.exit.i ] ; 2 uses
   %.idx87105 = phi i64 [ %.idx87, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4copyIPS3_S5_EET0_T_S7_S6_RNS0_7HadesGCE.exit ], [ %.idx87104, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE9setNonPtrES2_RNS0_7HadesGCE.exit.i ]
   %i.br = phi ptr [ %i.ay, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4copyIPS3_S5_EET0_T_S7_S6_RNS0_7HadesGCE.exit ], [ %i.be, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE9setNonPtrES2_RNS0_7HadesGCE.exit.i ] ; 3 uses
-  %5 = ptrtoint ptr %i.br to i64
-  %6 = ptrtoint ptr %i.bq to i64
   %i.bs = add i32 %.sroa.speculated72, %3
   %i.bt = icmp ult i32 %i.bs, %4
   br i1 %i.bt, label %bb.l, label %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE18uninitialized_fillIPS3_EEvT_S6_S2_RNS0_7HadesGCE.exit
 
 bb.l:                                             ; preds = %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4fillIPS3_EEvT_S6_S2_RNS0_7HadesGCE.exit
-  %i.bu = zext i32 %.sroa.speculated72 to i64
-  %.idx88 = shl nuw nsw i64 %i.bu, 2              ; 3 uses
+  %i.bu = zext i32 %.sroa.speculated72 to i64     ; 2 uses
+  %.idx88 = shl nuw nsw i64 %i.bu, 2              ; 2 uses
   %i.bv = zext nneg i32 %4 to i64
   %.idx89 = shl nuw nsw i64 %i.bv, 2              ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.br, i64 %.idx89
@@ -221,13 +219,16 @@ bb.l:                                             ; preds = %_ZN6hermes2vm17GCHe
 
 .lr.ph.i65.preheader:                             ; preds = %bb.l
   %i.by = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.idx88 ; 3 uses
-  %i.bz = add i64 %.idx89, %5
-  %7 = add i64 %i.bz, -4
-  %i.ca = add i64 %.idx88, %6
-  %8 = sub i64 %7, %i.ca                          ; 2 uses
-  %i.cb = lshr i64 %8, 2
+  %5 = ptrtoint ptr %i.br to i64
+  %6 = ptrtoint ptr %i.bq to i64
+  %7 = shl nuw nsw i64 %i.bu, 2
+  %i.bz = add i64 %7, %6
+  %8 = sub i64 %5, %i.bz
+  %i.ca = add i64 %8, %.idx89
+  %9 = add i64 %i.ca, -4                          ; 2 uses
+  %i.cb = lshr i64 %9, 2
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %8, 28
+  %min.iters.check = icmp ult i64 %9, 28
   br i1 %min.iters.check, label %.lr.ph.i65.preheader108, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i65.preheader

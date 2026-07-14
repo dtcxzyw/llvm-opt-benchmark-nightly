@@ -201,8 +201,8 @@ bb.p:                                             ; preds = %bb.n
 
 _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_10ConstraintESt14default_deleteIS2_ELb1EEESaIS5_EE11_M_allocateEm.exit.i: ; preds = %bb.p
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bk, i64 472 ; 2 uses
-  %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !300 ; 3 uses
-  %i.cd = ptrtoint ptr %i.cc to i64               ; 3 uses
+  %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !300 ; 4 uses
+  %i.cd = ptrtoint ptr %i.cc to i64               ; 2 uses
   %i.ce = sub i64 %i.cd, %i.by
   %i.cf = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bs) #33
           to label %.noexc14 unwind label %.loopexit.split-lp ; 9 uses
@@ -212,11 +212,12 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_10ConstraintESt14default_deleteIS2_
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ConstraintESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i.i12.preheader
 
 .lr.ph.i.i.i.i.i12.preheader:                     ; preds = %.noexc14
-  %5 = add i64 %i.cd, -8
-  %i.cg = sub i64 %5, %i.by                       ; 2 uses
-  %i.ch = lshr i64 %i.cg, 3
+  %5 = ptrtoint ptr %i.cc to i64
+  %i.cg = sub i64 %5, %i.by
+  %6 = add i64 %i.cg, -8                          ; 2 uses
+  %i.ch = lshr i64 %6, 3
   %i.ci = add nuw nsw i64 %i.ch, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cg, 152
+  %min.iters.check = icmp ult i64 %6, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i12.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i12.preheader
@@ -619,11 +620,11 @@ _ZSt4copyIPN6duckdb13PhysicalIndexES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m,
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6duckdb13PhysicalIndexESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN6duckdb13PhysicalIndexES2_ET0_T_S4_S3_.exit
-  %i.al = ptrtoint ptr %i.ah to i64
-  %i.am = ptrtoint ptr %i.ae to i64
-  %i.an = add i64 %i.am, -8
-  %2 = add i64 %.pre-phi33, %i.al
-  %3 = sub i64 %i.an, %2                          ; 2 uses
+  %i.al = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoint ptr %i.ah to i64
+  %i.an = add i64 %.pre-phi33, %i.am
+  %2 = sub i64 %i.al, %i.an
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ao = lshr i64 %3, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 104

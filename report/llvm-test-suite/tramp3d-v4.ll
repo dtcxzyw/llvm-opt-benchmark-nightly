@@ -204,19 +204,21 @@ _ZNSt12_Vector_baseI3LocILi2EESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt15__new_
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.h
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.m, ptr %i.n, align 8, !tbaa !268
-  %i.o = load ptr, ptr %3, align 8, !tbaa !449    ; 9 uses
-  %i.p = ptrtoint ptr %i.o to i64                 ; 2 uses
-  %i.q = load ptr, ptr %i.c, align 8, !tbaa !449  ; 3 uses
-  %i.r = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %i.o = load ptr, ptr %3, align 8, !tbaa !449    ; 10 uses
+  %i.p = ptrtoint ptr %i.o to i64
+  %i.q = load ptr, ptr %i.c, align 8, !tbaa !449  ; 4 uses
+  %i.r = ptrtoint ptr %i.q to i64
   %.not7.i.i.i.i.i = icmp eq ptr %i.o, %i.q
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorI3LocILi2EESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt12_Vector_baseI3LocILi2EESaIS1_EEC2EmRKS2_.exit.i
-  %5 = add i64 %i.r, -8
-  %i.s = sub i64 %5, %i.p                         ; 2 uses
-  %i.t = lshr i64 %i.s, 3
+  %5 = ptrtoint ptr %i.q to i64
+  %6 = ptrtoint ptr %i.o to i64
+  %i.s = sub i64 %5, %6
+  %7 = add i64 %i.s, -8                           ; 2 uses
+  %i.t = lshr i64 %7, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.s, 120
+  %min.iters.check = icmp ult i64 %7, 120
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader54, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -311,19 +313,21 @@ _ZNSt12_Vector_baseI6VectorILi2Ed4FullESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNS
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.ar
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.aw, ptr %i.ax, align 8, !tbaa !280
-  %i.ay = load ptr, ptr %4, align 8, !tbaa !461   ; 9 uses
-  %i.az = ptrtoint ptr %i.ay to i64               ; 2 uses
-  %i.ba = load ptr, ptr %i.am, align 8, !tbaa !461 ; 3 uses
-  %i.bb = ptrtoint ptr %i.ba to i64               ; 2 uses
+  %i.ay = load ptr, ptr %4, align 8, !tbaa !461   ; 10 uses
+  %i.az = ptrtoint ptr %i.ay to i64
+  %i.ba = load ptr, ptr %i.am, align 8, !tbaa !461 ; 4 uses
+  %i.bb = ptrtoint ptr %i.ba to i64
   %.not7.i.i.i.i.i5 = icmp eq ptr %i.ay, %i.ba
   br i1 %.not7.i.i.i.i.i5, label %_ZNSt6vectorI6VectorILi2Ed4FullESaIS2_EEC2ERKS4_.exit, label %.lr.ph.i.i.i.i.i6.preheader
 
 .lr.ph.i.i.i.i.i6.preheader:                      ; preds = %_ZNSt12_Vector_baseI6VectorILi2Ed4FullESaIS2_EEC2EmRKS3_.exit.i
-  %6 = add i64 %i.bb, -16
-  %i.bc = sub i64 %6, %i.az                       ; 2 uses
-  %i.bd = lshr i64 %i.bc, 4
+  %8 = ptrtoint ptr %i.ba to i64
+  %9 = ptrtoint ptr %i.ay to i64
+  %i.bc = sub i64 %8, %9
+  %10 = add i64 %i.bc, -16                        ; 2 uses
+  %i.bd = lshr i64 %10, 4
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check37 = icmp ult i64 %i.bc, 240
+  %min.iters.check37 = icmp ult i64 %10, 240
   br i1 %min.iters.check37, label %.lr.ph.i.i.i.i.i6.preheader53, label %vector.memcheck30
 
 vector.memcheck30:                                ; preds = %.lr.ph.i.i.i.i.i6.preheader
@@ -726,7 +730,7 @@ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE10_Auto_nodeD2E
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorI3LocILi2EESaIS1_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEvNS6_IPS1_S3_EET_SC_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %.not88 = icmp eq ptr %2, %3
   br i1 %.not88, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %bb.b
 
@@ -1129,11 +1133,12 @@ _ZNSt12_Vector_baseI3LocILi2EESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6ve
   br i1 %.not9.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i.i.i.i58.preheader
 
 .lr.ph.i.i.i.i.i58.preheader:                     ; preds = %_ZNSt12_Vector_baseI3LocILi2EESaIS1_EE11_M_allocateEm.exit
-  %4 = add i64 %i.a, -8
-  %i.gd = sub i64 %4, %i.fr                       ; 2 uses
-  %i.ge = lshr i64 %i.gd, 3
+  %4 = ptrtoint ptr %1 to i64
+  %i.gd = sub i64 %4, %i.fr
+  %5 = add i64 %i.gd, -8                          ; 2 uses
+  %i.ge = lshr i64 %5, 3
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
-  %min.iters.check273 = icmp ult i64 %i.gd, 120
+  %min.iters.check273 = icmp ult i64 %5, 120
   br i1 %min.iters.check273, label %.lr.ph.i.i.i.i.i58.preheader358, label %vector.memcheck266
 
 vector.memcheck266:                               ; preds = %.lr.ph.i.i.i.i.i58.preheader
@@ -1267,11 +1272,12 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vecto
   br i1 %.not9.i.i.i.i.i68, label %_ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.exit74, label %.lr.ph.i.i.i.i.i69.preheader
 
 .lr.ph.i.i.i.i.i69.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vectorIS3_SaIS3_EEEEPS3_S3_ET0_T_SC_SB_RSaIT1_E.exit67
-  %5 = add i64 %i.k, -8
-  %i.hq = sub i64 %5, %i.a                        ; 2 uses
-  %i.hr = lshr i64 %i.hq, 3
+  %6 = ptrtoint ptr %1 to i64
+  %i.hq = sub i64 %i.k, %6
+  %7 = add i64 %i.hq, -8                          ; 2 uses
+  %i.hr = lshr i64 %7, 3
   %i.hs = add nuw nsw i64 %i.hr, 1                ; 2 uses
-  %min.iters.check333 = icmp ult i64 %i.hq, 120
+  %min.iters.check333 = icmp ult i64 %7, 120
   br i1 %min.iters.check333, label %.lr.ph.i.i.i.i.i69.preheader356, label %vector.memcheck326
 
 vector.memcheck326:                               ; preds = %.lr.ph.i.i.i.i.i69.preheader
@@ -1356,7 +1362,7 @@ _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vectorIS3_SaIS3_EEEENS1_
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorI6VectorILi2Ed4FullESaIS2_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEvNS7_IPS2_S4_EET_SD_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %.not94 = icmp eq ptr %2, %3
   br i1 %.not94, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK6VectorILi2Ed4FullESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit, label %bb.b
 
@@ -1759,11 +1765,12 @@ _ZNSt12_Vector_baseI6VectorILi2Ed4FullESaIS2_EE11_M_allocateEm.exit: ; preds = %
   br i1 %.not9.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i64.preheader
 
 .lr.ph.i.i.i.i.i64.preheader:                     ; preds = %_ZNSt12_Vector_baseI6VectorILi2Ed4FullESaIS2_EE11_M_allocateEm.exit
-  %4 = add i64 %i.a, -16
-  %i.gi = sub i64 %4, %i.fw                       ; 2 uses
-  %i.gj = lshr i64 %i.gi, 4
+  %4 = ptrtoint ptr %1 to i64
+  %i.gi = sub i64 %4, %i.fw
+  %5 = add i64 %i.gi, -16                         ; 2 uses
+  %i.gj = lshr i64 %5, 4
   %i.gk = add nuw nsw i64 %i.gj, 1                ; 2 uses
-  %min.iters.check201 = icmp ult i64 %i.gi, 240
+  %min.iters.check201 = icmp ult i64 %5, 240
   br i1 %min.iters.check201, label %.lr.ph.i.i.i.i.i64.preheader268, label %vector.memcheck194
 
 vector.memcheck194:                               ; preds = %.lr.ph.i.i.i.i.i64.preheader
@@ -1897,11 +1904,12 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK6VectorILi2Ed4Full
   br i1 %.not9.i.i.i.i.i74, label %_ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_S5_RT1_.exit80, label %.lr.ph.i.i.i.i.i75.preheader
 
 .lr.ph.i.i.i.i.i75.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK6VectorILi2Ed4FullESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit73
-  %5 = add i64 %i.k, -16
-  %i.hv = sub i64 %5, %i.a                        ; 2 uses
-  %i.hw = lshr i64 %i.hv, 4
+  %6 = ptrtoint ptr %1 to i64
+  %i.hv = sub i64 %i.k, %6
+  %7 = add i64 %i.hv, -16                         ; 2 uses
+  %i.hw = lshr i64 %7, 4
   %i.hx = add nuw nsw i64 %i.hw, 1                ; 2 uses
-  %min.iters.check249 = icmp ult i64 %i.hv, 240
+  %min.iters.check249 = icmp ult i64 %7, 240
   br i1 %min.iters.check249, label %.lr.ph.i.i.i.i.i75.preheader266, label %vector.memcheck242
 
 vector.memcheck242:                               ; preds = %.lr.ph.i.i.i.i.i75.preheader
@@ -1986,7 +1994,7 @@ _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK6VectorILi2Ed4FullESt6vectorIS4_SaIS4
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorI3LocILi2EESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 4 dereferenceable(8) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !264  ; 3 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !267    ; 11 uses
@@ -2020,11 +2028,12 @@ _ZNKSt6vectorI3LocILi2EESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   br i1 %.not9.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorI3LocILi2EESaIS1_EE12_M_check_lenEmPKc.exit
-  %3 = add i64 %i.a, -8
-  %i.t = sub i64 %3, %i.f                         ; 2 uses
-  %i.u = lshr i64 %i.t, 3
+  %3 = ptrtoint ptr %1 to i64
+  %i.t = sub i64 %3, %i.f
+  %4 = add i64 %i.t, -8                           ; 2 uses
+  %i.u = lshr i64 %4, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 120
+  %min.iters.check = icmp ult i64 %4, 120
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader78, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -2092,11 +2101,12 @@ _ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.e
   br i1 %.not9.i.i.i.i.i18, label %_ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.exit24, label %.lr.ph.i.i.i.i.i19.preheader
 
 .lr.ph.i.i.i.i.i19.preheader:                     ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.exit
-  %4 = add i64 %i.e, -8
-  %i.an = sub i64 %4, %i.a                        ; 2 uses
-  %i.ao = lshr i64 %i.an, 3
+  %5 = ptrtoint ptr %1 to i64
+  %i.an = sub i64 %i.e, %5
+  %6 = add i64 %i.an, -8                          ; 2 uses
+  %i.ao = lshr i64 %6, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check54 = icmp ult i64 %i.an, 136
+  %min.iters.check54 = icmp ult i64 %6, 136
   br i1 %min.iters.check54, label %.lr.ph.i.i.i.i.i19.preheader77, label %vector.memcheck47
 
 vector.memcheck47:                                ; preds = %.lr.ph.i.i.i.i.i19.preheader
@@ -2178,7 +2188,7 @@ _ZNSt12_Vector_baseI3LocILi2EESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZS
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorI6VectorILi2Ed4FullESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !276  ; 3 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !279    ; 11 uses
@@ -2212,11 +2222,12 @@ _ZNKSt6vectorI6VectorILi2Ed4FullESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb
   br i1 %.not9.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorI6VectorILi2Ed4FullESaIS2_EE12_M_check_lenEmPKc.exit
-  %3 = add i64 %i.a, -16
-  %i.t = sub i64 %3, %i.f                         ; 2 uses
-  %i.u = lshr i64 %i.t, 4
+  %3 = ptrtoint ptr %1 to i64
+  %i.t = sub i64 %3, %i.f
+  %4 = add i64 %i.t, -16                          ; 2 uses
+  %i.u = lshr i64 %4, 4
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 240
+  %min.iters.check = icmp ult i64 %4, 240
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader68, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -2284,11 +2295,12 @@ _ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_
   br i1 %.not9.i.i.i.i.i18, label %_ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_S5_RT1_.exit24, label %.lr.ph.i.i.i.i.i19.preheader
 
 .lr.ph.i.i.i.i.i19.preheader:                     ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_S5_RT1_.exit
-  %4 = add i64 %i.e, -16
-  %i.an = sub i64 %4, %i.a                        ; 2 uses
-  %i.ao = lshr i64 %i.an, 4
+  %5 = ptrtoint ptr %1 to i64
+  %i.an = sub i64 %i.e, %5
+  %6 = add i64 %i.an, -16                         ; 2 uses
+  %i.ao = lshr i64 %6, 4
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check50 = icmp ult i64 %i.an, 272
+  %min.iters.check50 = icmp ult i64 %6, 272
   br i1 %min.iters.check50, label %.lr.ph.i.i.i.i.i19.preheader67, label %vector.memcheck43
 
 vector.memcheck43:                                ; preds = %.lr.ph.i.i.i.i.i19.preheader

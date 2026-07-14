@@ -203,7 +203,7 @@ _ZNSt12_Vector_baseISt6threadSaIS0_EED2Ev.exit:   ; preds = %_ZSt8_DestroyIPSt6t
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt6threadSaIS0_EE17_M_realloc_insertIJRPFvPN6duckdb10FileHandleEmmPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEERS6_RKmSJ_SD_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %7 = alloca %"class.std::unique_ptr.470", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !68   ; 3 uses
@@ -290,11 +290,12 @@ bb.e:                                             ; preds = %_ZNKSt14default_del
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
-  %8 = add i64 %i.a, -8
-  %i.am = sub i64 %8, %i.f                        ; 2 uses
-  %i.an = lshr i64 %i.am, 3
+  %8 = ptrtoint ptr %1 to i64
+  %i.am = sub i64 %8, %i.f
+  %9 = add i64 %i.am, -8                          ; 2 uses
+  %i.an = lshr i64 %9, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.am, 152
+  %min.iters.check = icmp ult i64 %9, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -364,11 +365,12 @@ _ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %.lr.
   br i1 %.not10.i.i.i.i30, label %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit36, label %.lr.ph.i.i.i.i31.preheader
 
 .lr.ph.i.i.i.i31.preheader:                       ; preds = %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit
-  %9 = add i64 %i.e, -8
-  %i.be = sub i64 %9, %i.a                        ; 2 uses
-  %i.bf = lshr i64 %i.be, 3
+  %10 = ptrtoint ptr %1 to i64
+  %i.be = sub i64 %i.e, %10
+  %11 = add i64 %i.be, -8                         ; 2 uses
+  %i.bf = lshr i64 %11, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check67 = icmp ult i64 %i.be, 184
+  %min.iters.check67 = icmp ult i64 %11, 184
   br i1 %min.iters.check67, label %.lr.ph.i.i.i.i31.preheader82, label %vector.memcheck60
 
 vector.memcheck60:                                ; preds = %.lr.ph.i.i.i.i31.preheader
@@ -597,7 +599,7 @@ bb.f:                                             ; preds = %bb.e, %_ZNSt6thread
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt6threadSaIS0_EE17_M_realloc_insertIJRPFvPKcmmPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEERS5_RKmSI_SC_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %7 = alloca %"class.std::unique_ptr.470", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !68   ; 3 uses
@@ -684,11 +686,12 @@ bb.e:                                             ; preds = %_ZNKSt14default_del
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
-  %8 = add i64 %i.a, -8
-  %i.am = sub i64 %8, %i.f                        ; 2 uses
-  %i.an = lshr i64 %i.am, 3
+  %8 = ptrtoint ptr %1 to i64
+  %i.am = sub i64 %8, %i.f
+  %9 = add i64 %i.am, -8                          ; 2 uses
+  %i.an = lshr i64 %9, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.am, 152
+  %min.iters.check = icmp ult i64 %9, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
@@ -758,11 +761,12 @@ _ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %.lr.
   br i1 %.not10.i.i.i.i30, label %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit36, label %.lr.ph.i.i.i.i31.preheader
 
 .lr.ph.i.i.i.i31.preheader:                       ; preds = %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit
-  %9 = add i64 %i.e, -8
-  %i.be = sub i64 %9, %i.a                        ; 2 uses
-  %i.bf = lshr i64 %i.be, 3
+  %10 = ptrtoint ptr %1 to i64
+  %i.be = sub i64 %i.e, %10
+  %11 = add i64 %i.be, -8                         ; 2 uses
+  %i.bf = lshr i64 %11, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check67 = icmp ult i64 %i.be, 184
+  %min.iters.check67 = icmp ult i64 %11, 184
   br i1 %min.iters.check67, label %.lr.ph.i.i.i.i31.preheader82, label %vector.memcheck60
 
 vector.memcheck60:                                ; preds = %.lr.ph.i.i.i.i31.preheader
