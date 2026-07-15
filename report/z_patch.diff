@@ -1,0 +1,325 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index b82f4669262a4..50edd98c32022 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1160,8 +1160,8 @@ void State::addInfoFor(BasicBlock &BB) {
+   bool GuaranteedToExecute = true;
+   // Queue conditions and assumes.
+   for (Instruction &I : BB) {
+-    if (auto *Cmp = dyn_cast<ICmpInst>(&I)) {
+-      for (Use &U : Cmp->uses()) {
++    if (match(&I, m_ICmpLike(Pred, m_Value(), m_Value()))) {
++      for (Use &U : I.uses()) {
+         auto *UserI = getContextInstForUse(U);
+         auto *DTN = DT.getNode(UserI->getParent());
+         if (!DTN)
+@@ -1364,7 +1364,7 @@ struct ReproducerEntry {
+ /// will then be added as function arguments. \p DT is used to order cloned
+ /// instructions. The reproducer function will get added to \p M, if it is
+ /// non-null. Otherwise no reproducer function is generated.
+-static void generateReproducer(CmpInst *Cond, Module *M,
++static void generateReproducer(Instruction *Cond, bool IsSigned, Module *M,
+                                ArrayRef<ReproducerEntry> Stack,
+                                ConstraintInfo &Info, DominatorTree &DT) {
+   if (!M)
+@@ -1409,7 +1409,7 @@ static void generateReproducer(CmpInst *Cond, Module *M,
+   for (auto &Entry : Stack)
+     if (Entry.Pred != ICmpInst::BAD_ICMP_PREDICATE)
+       CollectArguments({Entry.LHS, Entry.RHS}, ICmpInst::isSigned(Entry.Pred));
+-  CollectArguments(Cond, ICmpInst::isSigned(Cond->getPredicate()));
++  CollectArguments(Cond, IsSigned);
+ 
+   SmallVector<Type *> ParamTys;
+   for (auto *P : Args)
+@@ -1485,7 +1485,7 @@ static void generateReproducer(CmpInst *Cond, Module *M,
+ 
+   // Finally, clone the condition to reproduce and remap instruction operands in
+   // the reproducer using Old2New.
+-  CloneInstructions(Cond, CmpInst::isSigned(Cond->getPredicate()));
++  CloneInstructions(Cond, IsSigned);
+   Entry->getTerminator()->setOperand(0, Cond);
+   remapInstructionsInBlocks({Entry}, Old2New);
+ 
+@@ -1523,15 +1523,17 @@ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+ }
+ 
+ static bool checkAndReplaceCondition(
+-    ICmpInst *Cmp, ConstraintInfo &Info, unsigned NumIn, unsigned NumOut,
++    CmpPredicate Pred, Value *A, Value *B, Instruction *CheckInst,
++    ConstraintInfo &Info, unsigned NumIn, unsigned NumOut,
+     Instruction *ContextInst, Module *ReproducerModule,
+     ArrayRef<ReproducerEntry> ReproducerCondStack, DominatorTree &DT,
+     SmallVectorImpl<Instruction *> &ToRemove) {
+-  auto ReplaceCmpWithConstant = [&](CmpInst *Cmp, bool IsTrue) {
+-    generateReproducer(Cmp, ReproducerModule, ReproducerCondStack, Info, DT);
++  auto ReplaceCmpWithConstant = [&](Instruction *CheckInst, bool IsTrue) {
++    generateReproducer(CheckInst, ICmpInst::isSigned(Pred), ReproducerModule,
++                       ReproducerCondStack, Info, DT);
+     Constant *ConstantC = ConstantInt::getBool(
+-        CmpInst::makeCmpResultType(Cmp->getType()), IsTrue);
+-    bool Changed = Cmp->replaceUsesWithIf(ConstantC, [&](Use &U) {
++        CmpInst::makeCmpResultType(CheckInst->getType()), IsTrue);
++    bool Changed = CheckInst->replaceUsesWithIf(ConstantC, [&](Use &U) {
+       auto *UserI = getContextInstForUse(U);
+       auto *DTN = DT.getNode(UserI->getParent());
+       if (!DTN || DTN->getDFSNumIn() < NumIn || DTN->getDFSNumOut() > NumOut)
+@@ -1550,7 +1552,7 @@ static bool checkAndReplaceCondition(
+     // Update the debug value records that satisfy the same condition used
+     // in replaceUsesWithIf.
+     SmallVector<DbgVariableRecord *> DVRUsers;
+-    findDbgUsers(Cmp, DVRUsers);
++    findDbgUsers(CheckInst, DVRUsers);
+ 
+     for (auto *DVR : DVRUsers) {
+       auto *DTN = DT.getNode(DVR->getParent());
+@@ -1562,27 +1564,24 @@ static bool checkAndReplaceCondition(
+           MarkedI->comesBefore(ContextInst))
+         continue;
+ 
+-      DVR->replaceVariableLocationOp(Cmp, ConstantC);
++      DVR->replaceVariableLocationOp(CheckInst, ConstantC);
+     }
+ 
+-    if (Cmp->use_empty())
+-      ToRemove.push_back(Cmp);
++    if (CheckInst->use_empty())
++      ToRemove.push_back(CheckInst);
+ 
+     return Changed;
+   };
+ 
+-  if (auto ImpliedCondition =
+-          checkCondition(Cmp->getPredicate(), Cmp->getOperand(0),
+-                         Cmp->getOperand(1), Cmp, Info))
+-    return ReplaceCmpWithConstant(Cmp, *ImpliedCondition);
++  if (auto ImpliedCondition = checkCondition(Pred, A, B, CheckInst, Info))
++    return ReplaceCmpWithConstant(CheckInst, *ImpliedCondition);
+ 
+   // When the predicate is samesign and unsigned, we can also make use of the
+   // signed predicate information.
+-  if (Cmp->hasSameSign() && Cmp->isUnsigned())
+-    if (auto ImpliedCondition =
+-            checkCondition(Cmp->getSignedPredicate(), Cmp->getOperand(0),
+-                           Cmp->getOperand(1), Cmp, Info))
+-      return ReplaceCmpWithConstant(Cmp, *ImpliedCondition);
++  if (Pred.hasSameSign() && ICmpInst::isUnsigned(Pred))
++    if (auto ImpliedCondition = checkCondition(
++            ICmpInst::getSignedPredicate(Pred), A, B, CheckInst, Info))
++      return ReplaceCmpWithConstant(CheckInst, *ImpliedCondition);
+ 
+   return false;
+ }
+@@ -1656,7 +1655,7 @@ static bool checkOrAndOpImpliedByOther(
+   if (JoinOp->use_empty())
+     return false;
+ 
+-  CmpInst *CmpToCheck = cast<CmpInst>(CB.getInstructionToSimplify());
++  Instruction *CmpToCheck = cast<Instruction>(CB.getInstructionToSimplify());
+   unsigned OtherOpIdx = JoinOp->getOperand(0) == CmpToCheck ? 1 : 0;
+ 
+   // Don't try to simplify the first condition of a select by the second, as
+@@ -1681,7 +1680,7 @@ static bool checkOrAndOpImpliedByOther(
+     Value *Val = Worklist.pop_back_val();
+     Value *LHS, *RHS;
+     CmpPredicate Pred;
+-    if (match(Val, m_ICmp(Pred, m_Value(LHS), m_Value(RHS)))) {
++    if (match(Val, m_ICmpLike(Pred, m_Value(LHS), m_Value(RHS)))) {
+       // For OR, check if the negated condition implies CmpToCheck.
+       if (IsOr)
+         Pred = CmpInst::getInversePredicate(Pred);
+@@ -1698,10 +1697,11 @@ static bool checkOrAndOpImpliedByOther(
+   if (OldSize == DFSInStack.size())
+     return false;
+ 
++  Value *A, *B;
++  CmpPredicate Pred;
++  assert(match(CmpToCheck, m_ICmpLike(Pred, m_Value(A), m_Value(B))));
+   // Check if the second condition can be simplified now.
+-  if (auto ImpliedCondition =
+-          checkCondition(CmpToCheck->getPredicate(), CmpToCheck->getOperand(0),
+-                         CmpToCheck->getOperand(1), CmpToCheck, Info)) {
++  if (auto ImpliedCondition = checkCondition(Pred, A, B, CmpToCheck, Info)) {
+     if (IsOr == *ImpliedCondition)
+       JoinOp->replaceAllUsesWith(
+           ConstantInt::getBool(JoinOp->getType(), *ImpliedCondition));
+@@ -1925,6 +1925,8 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+                            DFSInStack);
+     }
+ 
++    CmpPredicate Pred;
++    Value *A, *B;
+     // For a block, check if any CmpInsts become known based on the current set
+     // of constraints.
+     if (CB.isCheck()) {
+@@ -1935,9 +1937,9 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+                         << "\n");
+       if (auto *II = dyn_cast<WithOverflowInst>(Inst)) {
+         Changed |= tryToSimplifyOverflowMath(II, Info, ToRemove);
+-      } else if (auto *Cmp = dyn_cast<ICmpInst>(Inst)) {
++      } else if (match(Inst, m_ICmpLike(Pred, m_Value(A), m_Value(B)))) {
+         bool Simplified = checkAndReplaceCondition(
+-            Cmp, Info, CB.NumIn, CB.NumOut, CB.getContextInst(),
++            Pred, A, B, Inst, Info, CB.NumIn, CB.NumOut, CB.getContextInst(),
+             ReproducerModule.get(), ReproducerCondStack, S.DT, ToRemove);
+         if (!Simplified &&
+             match(CB.getContextInst(), m_LogicalOp(m_Value(), m_Value()))) {
+@@ -1992,7 +1994,6 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+       }
+     };
+ 
+-    CmpPredicate Pred;
+     if (!CB.isConditionFact()) {
+       Value *X;
+       if (match(CB.Inst, m_Intrinsic<Intrinsic::abs>(m_Value(X)))) {
+@@ -2061,7 +2062,6 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+       }
+     }
+ 
+-    Value *A = nullptr, *B = nullptr;
+     if (CB.isConditionFact()) {
+       Pred = CB.Cond.Pred;
+       A = CB.Cond.Op0;
+diff --git a/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll b/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
+index 63e1826ece5d7..700585160e95e 100644
+--- a/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
++++ b/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
+@@ -322,3 +322,47 @@ then:
+ else:
+   ret i1 false
+ }
++
++define i1 @test_icmp_trunc_nuw_reproducer(i8 %x) {
++; CHECK-LABEL: define i1 @"{{.+}}test_icmp_trunc_nuw_reproducerrepro"(i8 %x) {
++; CHECK-NEXT: entry:
++; CHECK-NEXT:   %0 = icmp eq i8 %x, 0
++; CHECK-NEXT:   call void @llvm.assume(i1 %0)
++; CHECK-NEXT:   %check = trunc nuw i8 %x to i1
++; CHECK-NEXT:   ret i1 %check
++; CHECK-NEXT: }
++;
++entry:
++  %iszero = icmp eq i8 %x, 0
++  br i1 %iszero, label %then, label %else
++
++then:
++  %check = trunc nuw i8 %x to i1
++  call void @use(i1 %check)
++  ret i1 %check
++
++else:
++  ret i1 false
++}
++
++define i1 @test_trunc_nuw_icmp_reproducer(i8 %x) {
++; CHECK-LABEL: define i1 @"{{.+}}test_trunc_nuw_icmp_reproducerrepro"(i8 %x) {
++; CHECK-NEXT: entry:
++; CHECK-NEXT:   %0 = icmp eq i8 %x, 0
++; CHECK-NEXT:   call void @llvm.assume(i1 %0)
++; CHECK-NEXT:   %check = icmp ne i8 %x, 0
++; CHECK-NEXT:   ret i1 %check
++; CHECK-NEXT: }
++;
++entry:
++  %iszero = trunc nuw i8 %x to i1
++  br i1 %iszero, label %else, label %then
++
++then:
++  %check = icmp ne i8 %x, 0
++  call void @use(i1 %check)
++  ret i1 %check
++
++else:
++  ret i1 false
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/trunc.ll b/llvm/test/Transforms/ConstraintElimination/trunc.ll
+index b7cb2d1711cd3..8c49daad7b880 100644
+--- a/llvm/test/Transforms/ConstraintElimination/trunc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/trunc.ll
+@@ -218,14 +218,12 @@ define void @test_trunc_nuw(i1 %c, i8 %x) {
+ ; CHECK:       [[BB1]]:
+ ; CHECK-NEXT:    call void @use(i1 false)
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[T_3:%.*]] = trunc nuw i8 [[X]] to i1
+-; CHECK-NEXT:    call void @use(i1 [[T_3]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 false)
+-; CHECK-NEXT:    [[T_6:%.*]] = trunc nuw i8 [[X]] to i1
+-; CHECK-NEXT:    call void @use(i1 [[T_6]])
++; CHECK-NEXT:    call void @use(i1 false)
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -258,8 +256,7 @@ define void @assume_trunc_nuw(i8 %x) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    call void @use(i1 false)
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[T_3:%.*]] = trunc nuw i8 [[X]] to i1
+-; CHECK-NEXT:    call void @use(i1 [[T_3]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    ret void
+ ;
+   %c.1 = trunc nuw i8 %x to i1
+@@ -291,8 +288,7 @@ define void @test_or_trunc_nuw(i1 %c, i8 %x) {
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 false)
+-; CHECK-NEXT:    [[T_6:%.*]] = trunc nuw i8 [[X]] to i1
+-; CHECK-NEXT:    call void @use(i1 [[T_6]])
++; CHECK-NEXT:    call void @use(i1 false)
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -329,8 +325,7 @@ define void @test_and_trunc_nuw(i1 %c, i8 %x) {
+ ; CHECK:       [[BB1]]:
+ ; CHECK-NEXT:    call void @use(i1 false)
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[T_3:%.*]] = trunc nuw i8 [[X]] to i1
+-; CHECK-NEXT:    call void @use(i1 [[T_3]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    [[T_4:%.*]] = icmp eq i8 [[X]], 0
+@@ -365,6 +360,40 @@ if.else:
+   ret void
+ }
+ 
++define void @test_and_icmp_eq_with_trunc_nuw_is_false(i8 %x) {
++; CHECK-LABEL: define void @test_and_icmp_eq_with_trunc_nuw_is_false(
++; CHECK-SAME: i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C1:%.*]] = icmp eq i8 [[X]], 0
++; CHECK-NEXT:    [[C2:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %c1 = icmp eq i8 %x, 0
++  %c2 = trunc nuw i8 %x to i1
++  %and = and i1 %c1, %c2
++  call void @use(i1 %and)
++  ret void
++}
++
++define void @test_and_trunc_nuw_with_icmp_eq_is_false(i8 %x) {
++; CHECK-LABEL: define void @test_and_trunc_nuw_with_icmp_eq_is_false(
++; CHECK-SAME: i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C1:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    [[C2:%.*]] = icmp eq i8 [[X]], 0
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %c1 = trunc nuw i8 %x to i1
++  %c2 = icmp eq i8 %x, 0
++  %and = and i1 %c1, %c2
++  call void @use(i1 %and)
++  ret void
++}
++
+ declare void @use(i1)
+ 
+ declare void @cond()
