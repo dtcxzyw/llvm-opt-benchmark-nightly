@@ -204,7 +204,7 @@ bb.a:
 
 .preheader131:                                    ; preds = %bb.b, %.preheader131
   %indvars.iv.1 = phi i64 [ %indvars.iv.next.1.7, %.preheader131 ], [ 0, %bb.b ] ; 9 uses
-  %.sroa.060.172.1 = phi i64 [ %i.bp, %.preheader131 ], [ %i.amt, %bb.b ] ; 2 uses
+  %.sroa.060.172.1 = phi i64 [ %i.bp, %.preheader131 ], [ 6220767562156456789, %bb.b ] ; 2 uses
   %i.a = lshr i64 %.sroa.060.172.1, 12
   %i.b = xor i64 %i.a, %.sroa.060.172.1           ; 2 uses
   %i.c = shl i64 %i.b, 25
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.amq = shl i64 %i.amp, 25
   %i.amr = xor i64 %i.amq, %i.amp                 ; 2 uses
   %i.ams = lshr i64 %i.amr, 27
-  %i.amt = xor i64 %i.ams, %i.amr                 ; 3 uses
+  %i.amt = xor i64 %i.ams, %i.amr                 ; 2 uses
   %i.amu = mul i64 %i.amt, 2685821657736338717
   %i.amv = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish7Zobrist3psqE, i64 512), i64 %indvars.iv
   %i.amw = getelementptr inbounds nuw i8, ptr %i.amv, i64 56
