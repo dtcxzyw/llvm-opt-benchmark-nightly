@@ -204,12 +204,13 @@ bb.f:                                             ; preds = %bb.e, %_ZN11OpenIma
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden noundef i32 @_ZN11OpenImageIO4v3_124compute_ellipse_samplingEffffRfS1_S1_PfS2_bf(float noundef %0, float noundef %1, float noundef %2, float noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %4, ptr noundef nonnull align 4 dereferenceable(4) %5, ptr noundef nonnull align 4 dereferenceable(4) %6, ptr noundef %7, ptr noundef %8, i1 noundef zeroext %9, float noundef %10) local_unnamed_addr #23 {
 bb.a:
-  %11 = tail call noundef float @llvm.sin.f32(float %1)
-  store float %11, ptr %5, align 4, !tbaa !26
-  %12 = tail call noundef float @llvm.cos.f32(float %1)
+  %sincos.i = tail call { float, float } @llvm.sincos.f32(float %1) ; 2 uses
+  %sin.i = extractvalue { float, float } %sincos.i, 0
+  %cos.i = extractvalue { float, float } %sincos.i, 1
+  store float %sin.i, ptr %5, align 4, !tbaa !26
   %i.a = fsub float %2, %3
   %i.b = fmul float %i.a, 2.000000e+00            ; 3 uses
-  %i.c = fmul float %12, %i.b
+  %i.c = fmul float %cos.i, %i.b
   store float %i.c, ptr %4, align 4, !tbaa !26
   %i.d = load float, ptr %5, align 4, !tbaa !26
   %i.e = fmul float %i.b, %i.d
@@ -612,13 +613,14 @@ bb.y:                                             ; preds = %bb.q
 bb.z:                                             ; preds = %bb.y
   %i.hy = load float, ptr %i.d, align 4, !tbaa !26
   %i.hz = fmul float %i.hy, 1.000000e+02          ; 2 uses
-  %i.ia = load float, ptr %i.f, align 4, !tbaa !26 ; 2 uses
-  %25 = call float @llvm.cos.f32(float %i.ia)
-  %i.ib = fmul float %i.hz, %25
+  %i.ia = load float, ptr %i.f, align 4, !tbaa !26
+  %sincos = call { float, float } @llvm.sincos.f32(float %i.ia) ; 2 uses
+  %sin = extractvalue { float, float } %sincos, 0
+  %cos = extractvalue { float, float } %sincos, 1
+  %i.ib = fmul float %i.hz, %cos
   %i.ic = fptosi float %i.ib to i32
   %i.id = add nsw i32 %i.ic, 128
-  %26 = call float @llvm.sin.f32(float %i.ia)
-  %i.ie = fmul float %i.hz, %26
+  %i.ie = fmul float %i.hz, %sin
   %i.if = fptosi float %i.ie to i32
   %i.ig = sub nsw i32 128, %i.if
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #3
@@ -638,14 +640,15 @@ bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #3
   %i.il = load float, ptr %i.e, align 4, !tbaa !26
   %i.im = fmul float %i.il, 1.000000e+02          ; 2 uses
-  %i.in = load float, ptr %i.f, align 4, !tbaa !26 ; 2 uses
-  %27 = call float @llvm.sin.f32(float %i.in)
-  %i.io = fneg float %27
+  %i.in = load float, ptr %i.f, align 4, !tbaa !26
+  %sincos117 = call { float, float } @llvm.sincos.f32(float %i.in) ; 2 uses
+  %sin118 = extractvalue { float, float } %sincos117, 0
+  %cos119 = extractvalue { float, float } %sincos117, 1
+  %i.io = fneg float %sin118
   %i.ip = fmul float %i.im, %i.io
   %i.iq = fptosi float %i.ip to i32
   %i.ir = add nsw i32 %i.iq, 128
-  %28 = call float @llvm.cos.f32(float %i.in)
-  %i.is = fmul float %i.im, %28
+  %i.is = fmul float %i.im, %cos119
   %i.it = fptosi float %i.is to i32
   %i.iu = sub nsw i32 128, %i.it
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #3
@@ -974,12 +977,6 @@ declare void @_ZN11OpenImageIO4v3_18ImageBufC1ERKNS0_9ImageSpecENS0_16Initialize
 declare noundef zeroext i1 @_ZN11OpenImageIO4v3_112ImageBufAlgo4fillERNS0_8ImageBufENS0_4spanIKfLm18446744073709551615EEENS0_3ROIEi(ptr noundef nonnull align 8 dereferenceable(16), ptr, i64, ptr noundef byval(%"struct.OpenImageIO::v3_1::ROI") align 8, i32 noundef) local_unnamed_addr #9
 
 declare noundef zeroext i1 @_ZN11OpenImageIO4v3_112ImageBufAlgo11render_lineERNS0_8ImageBufEiiiiNS0_4spanIKfLm18446744073709551615EEEbNS0_3ROIEi(ptr noundef nonnull align 8 dereferenceable(16), i32 noundef, i32 noundef, i32 noundef, i32 noundef, ptr noundef byval(%"class.OpenImageIO::v3_1::span.195") align 8, i1 noundef zeroext, ptr noundef byval(%"struct.OpenImageIO::v3_1::ROI") align 8, i32 noundef) local_unnamed_addr #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.cos.f32(float) #25
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sin.f32(float) #25
 
 declare noundef zeroext i1 @_ZN11OpenImageIO4v3_112ImageBufAlgo10render_boxERNS0_8ImageBufEiiiiNS0_4spanIKfLm18446744073709551615EEEbNS0_3ROIEi(ptr noundef nonnull align 8 dereferenceable(16), i32 noundef, i32 noundef, i32 noundef, i32 noundef, ptr noundef byval(%"class.OpenImageIO::v3_1::span.195") align 8, i1 noundef zeroext, ptr noundef byval(%"struct.OpenImageIO::v3_1::ROI") align 8, i32 noundef) local_unnamed_addr #9
 
@@ -1382,6 +1379,9 @@ declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctpop.i32(i32) #25
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare { float, float } @llvm.sincos.f32(float) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #25
