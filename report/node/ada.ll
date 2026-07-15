@@ -205,8 +205,8 @@ bb.pr:                                            ; preds = %bb.ah
   br label %bb.bv, !llvm.loop !164
 
 .critedge334:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831
-  %.15292 = phi i64 [ %.92862464, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ], [ %.92862463, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ] ; 2 uses
-  %.18 = phi i32 [ %.82466, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ], [ %.82465, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ]
+  %.15292 = phi i64 [ %.92862463, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ], [ %.92862464, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ] ; 2 uses
+  %.18 = phi i32 [ %.82465, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit826 ], [ %.82466, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit831 ]
   %.not = icmp ugt i64 %.15292, %.sroa.01167.1
   br i1 %.not, label %.critedge354.critedge, label %bb.ah, !llvm.loop !164
 
