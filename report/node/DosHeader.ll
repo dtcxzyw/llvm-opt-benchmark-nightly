@@ -204,7 +204,50 @@ $_ZN3fmt3v116detail14string_literalIcJLc93EEE5valueE = comdat any
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4LIEF2PE9DosHeaderC2ERKNS0_7details13pe_dos_headerE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(64) %1) unnamed_addr #0 align 2 {
-bb.a:
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %5 = add nuw i64 %4, 72
+  %6 = add nuw i64 %3, 64
+  %rt.bound0 = icmp ugt i64 %6, %4
+  %rt.bound1 = icmp ugt i64 %5, %3
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  tail call void @_ZN4LIEF6ObjectC2Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) #21
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN4LIEF2PE9DosHeaderE, i64 16), ptr %0, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %8 = load <8 x i16>, ptr %1, align 1
+  store <8 x i16> %8, ptr %7, align 8
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %11 = load <4 x i16>, ptr %10, align 1
+  store <4 x i16> %11, ptr %9, align 8
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %14 = load <2 x i16>, ptr %13, align 1
+  store <2 x i16> %14, ptr %12, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 36
+  store i64 0, ptr %15, align 4
+  %18 = load <2 x i16>, ptr %17, align 1
+  store <2 x i16> %18, ptr %16, align 4
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %19, i8 0, i64 20, i1 false)
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 68
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 60
+  %22 = load i32, ptr %21, align 1
+  store i32 %22, ptr %20, align 4
+  %23 = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %24 = load i64, ptr %23, align 2
+  store i64 %24, ptr %15, align 4
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %19, ptr noundef nonnull align 2 dereferenceable(20) %25, i64 20, i1 false)
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   tail call void @_ZN4LIEF6ObjectC2Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) #21
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN4LIEF2PE9DosHeaderE, i64 16), ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -283,6 +326,9 @@ bb.a:
   store i64 %i.bb, ptr %i.ap, align 4
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 40
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.aw, ptr noundef nonnull align 2 dereferenceable(20) %i.bc, i64 20, i1 false)
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 

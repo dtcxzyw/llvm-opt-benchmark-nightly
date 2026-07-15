@@ -56,7 +56,67 @@ $_ZN6icu_7810MemoryPoolINS_5units18ConversionRateInfoELi8EED2Ev = comdat any
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local void @_ZN6icu_785units6Factor10multiplyByERKS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(88) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %1) local_unnamed_addr #0 align 2 {
-bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add nuw i64 %4, 88
+  %6 = add nuw i64 %3, 88
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = load double, ptr %1, align 8
+  %8 = load double, ptr %0, align 8
+  %9 = fmul double %7, %8
+  store double %9, ptr %0, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %11 = load double, ptr %10, align 8
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %13 = load double, ptr %12, align 8
+  %14 = fmul double %11, %13
+  store double %14, ptr %12, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %17 = load <4 x i32>, ptr %15, align 4
+  %18 = load <4 x i32>, ptr %16, align 4
+  %19 = add nsw <4 x i32> %18, %17
+  store <4 x i32> %19, ptr %16, align 4
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %22 = load <4 x i32>, ptr %20, align 4
+  %23 = load <4 x i32>, ptr %21, align 4
+  %24 = add nsw <4 x i32> %23, %22
+  store <4 x i32> %24, ptr %21, align 4
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 60
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
+  %27 = load <4 x i32>, ptr %25, align 4
+  %28 = load <4 x i32>, ptr %26, align 4
+  %29 = add nsw <4 x i32> %28, %27
+  store <4 x i32> %29, ptr %26, align 4
+  %30 = getelementptr inbounds nuw i8, ptr %1, i64 76
+  %31 = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
+  %32 = load <2 x i32>, ptr %30, align 4
+  %33 = load <2 x i32>, ptr %31, align 4
+  %34 = add nsw <2 x i32> %33, %32
+  store <2 x i32> %34, ptr %31, align 4
+  %35 = getelementptr inbounds nuw i8, ptr %1, i64 84
+  %36 = load i32, ptr %35, align 4
+  %37 = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
+  %38 = load i32, ptr %37, align 4
+  %39 = add nsw i32 %38, %36
+  store i32 %39, ptr %37, align 4
+  %40 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %41 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %42 = load double, ptr %40, align 8             ; 2 uses
+  %43 = load double, ptr %41, align 8             ; 2 uses
+  %44 = fcmp olt double %42, %43
+  %45 = select i1 %44, double %43, double %42
+  store double %45, ptr %41, align 8
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = load double, ptr %1, align 8
   %i.b = load double, ptr %0, align 8
   %i.c = fmul double %i.a, %i.b
@@ -164,6 +224,9 @@ bb.a:
   %i.cj = fcmp olt double %i.ch, %i.ci
   %i.ck = select i1 %i.cj, double %i.ci, double %i.ch
   store double %i.ck, ptr %i.cg, align 8
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 
@@ -175,7 +238,67 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local void @_ZN6icu_785units6Factor8divideByERKS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(88) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %1) local_unnamed_addr #0 align 2 {
-bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add nuw i64 %4, 88
+  %6 = add nuw i64 %3, 88
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %8 = load double, ptr %7, align 8
+  %9 = load double, ptr %0, align 8
+  %10 = fmul double %8, %9
+  store double %10, ptr %0, align 8
+  %11 = load double, ptr %1, align 8
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %13 = load double, ptr %12, align 8
+  %14 = fmul double %11, %13
+  store double %14, ptr %12, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %17 = load <4 x i32>, ptr %15, align 4
+  %18 = load <4 x i32>, ptr %16, align 4
+  %19 = sub nsw <4 x i32> %18, %17
+  store <4 x i32> %19, ptr %16, align 4
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %22 = load <4 x i32>, ptr %20, align 4
+  %23 = load <4 x i32>, ptr %21, align 4
+  %24 = sub nsw <4 x i32> %23, %22
+  store <4 x i32> %24, ptr %21, align 4
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 60
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
+  %27 = load <4 x i32>, ptr %25, align 4
+  %28 = load <4 x i32>, ptr %26, align 4
+  %29 = sub nsw <4 x i32> %28, %27
+  store <4 x i32> %29, ptr %26, align 4
+  %30 = getelementptr inbounds nuw i8, ptr %1, i64 76
+  %31 = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
+  %32 = load <2 x i32>, ptr %30, align 4
+  %33 = load <2 x i32>, ptr %31, align 4
+  %34 = sub nsw <2 x i32> %33, %32
+  store <2 x i32> %34, ptr %31, align 4
+  %35 = getelementptr inbounds nuw i8, ptr %1, i64 84
+  %36 = load i32, ptr %35, align 4
+  %37 = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
+  %38 = load i32, ptr %37, align 4
+  %39 = sub nsw i32 %38, %36
+  store i32 %39, ptr %37, align 4
+  %40 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %41 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %42 = load double, ptr %40, align 8             ; 2 uses
+  %43 = load double, ptr %41, align 8             ; 2 uses
+  %44 = fcmp olt double %42, %43
+  %45 = select i1 %44, double %43, double %42
+  store double %45, ptr %41, align 8
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load double, ptr %i.a, align 8
   %i.c = load double, ptr %0, align 8
@@ -283,6 +406,9 @@ bb.a:
   %i.cj = fcmp olt double %i.ch, %i.ci
   %i.ck = select i1 %i.cj, double %i.ci, double %i.ch
   store double %i.ck, ptr %i.cg, align 8
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 

@@ -203,6 +203,8 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal9CopyCharsIthEEvPT0_PKT_m(ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef %2) local_unnamed_addr #0 comdat {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 6 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 6 uses
   switch i64 %2, label %bb.b [
     i64 1, label %.lr.ph.i.i.i.i.i.i.i.preheader
     i64 2, label %.lr.ph.i.i.i.i.i.i.i37.preheader
@@ -223,232 +225,28 @@ bb.a:
   ]
 
 .lr.ph.i.i.i.i.i.i.i107.preheader:                ; preds = %bb.a
-  %3 = load i16, ptr %1, align 2
-  %4 = trunc i16 %3 to i8
-  store i8 %4, ptr %0, align 1
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %7 = load i16, ptr %5, align 2
-  %8 = trunc i16 %7 to i8
-  store i8 %8, ptr %6, align 1
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %11 = load i16, ptr %9, align 2
-  %12 = trunc i16 %11 to i8
-  store i8 %12, ptr %10, align 1
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %15 = load i16, ptr %13, align 2
-  %16 = trunc i16 %15 to i8
-  store i8 %16, ptr %14, align 1
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %19 = load i16, ptr %17, align 2
-  %20 = trunc i16 %19 to i8
-  store i8 %20, ptr %18, align 1
-  %21 = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %23 = load i16, ptr %21, align 2
-  %24 = trunc i16 %23 to i8
-  store i8 %24, ptr %22, align 1
-  %25 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %26 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %27 = load i16, ptr %25, align 2
-  %28 = trunc i16 %27 to i8
-  store i8 %28, ptr %26, align 1
-  %29 = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %31 = load i16, ptr %29, align 2
-  %32 = trunc i16 %31 to i8
-  store i8 %32, ptr %30, align 1
-  %33 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %34 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %35 = load i16, ptr %33, align 2
-  %36 = trunc i16 %35 to i8
-  store i8 %36, ptr %34, align 1
-  %37 = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %38 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %39 = load i16, ptr %37, align 2
-  %40 = trunc i16 %39 to i8
-  store i8 %40, ptr %38, align 1
-  %41 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %42 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %43 = load i16, ptr %41, align 2
-  %44 = trunc i16 %43 to i8
-  store i8 %44, ptr %42, align 1
-  %45 = getelementptr inbounds nuw i8, ptr %1, i64 22
-  %46 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %47 = load i16, ptr %45, align 2
-  %48 = trunc i16 %47 to i8
-  store i8 %48, ptr %46, align 1
-  %49 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %50 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %51 = load i16, ptr %49, align 2
-  %52 = trunc i16 %51 to i8
-  store i8 %52, ptr %50, align 1
-  %53 = getelementptr inbounds nuw i8, ptr %1, i64 26
-  %54 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  %55 = load i16, ptr %53, align 2
-  %56 = trunc i16 %55 to i8
-  store i8 %56, ptr %54, align 1
-  %57 = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %58 = getelementptr inbounds nuw i8, ptr %0, i64 14
-  %59 = load i16, ptr %57, align 2
-  %60 = trunc i16 %59 to i8
-  store i8 %60, ptr %58, align 1
-  %61 = getelementptr inbounds nuw i8, ptr %1, i64 30
-  %62 = getelementptr inbounds nuw i8, ptr %0, i64 15
-  %63 = load i16, ptr %61, align 2
-  %64 = trunc i16 %63 to i8
-  store i8 %64, ptr %62, align 1
-  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+  %5 = add i64 %4, 32
+  %6 = add i64 %3, 16
+  %rt.bound0169 = icmp ugt i64 %5, %3
+  %rt.bound1170 = icmp ugt i64 %6, %4
+  %rt.conflict171 = and i1 %rt.bound0169, %rt.bound1170
+  br i1 %rt.conflict171, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtvec
 
 .lr.ph.i.i.i.i.i.i.i102.preheader:                ; preds = %bb.a
-  %65 = load i16, ptr %1, align 2
-  %66 = trunc i16 %65 to i8
-  store i8 %66, ptr %0, align 1
-  %67 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %68 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %69 = load i16, ptr %67, align 2
-  %70 = trunc i16 %69 to i8
-  store i8 %70, ptr %68, align 1
-  %71 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %72 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %73 = load i16, ptr %71, align 2
-  %74 = trunc i16 %73 to i8
-  store i8 %74, ptr %72, align 1
-  %75 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %76 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %77 = load i16, ptr %75, align 2
-  %78 = trunc i16 %77 to i8
-  store i8 %78, ptr %76, align 1
-  %79 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %80 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %81 = load i16, ptr %79, align 2
-  %82 = trunc i16 %81 to i8
-  store i8 %82, ptr %80, align 1
-  %83 = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %84 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %85 = load i16, ptr %83, align 2
-  %86 = trunc i16 %85 to i8
-  store i8 %86, ptr %84, align 1
-  %87 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %88 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %89 = load i16, ptr %87, align 2
-  %90 = trunc i16 %89 to i8
-  store i8 %90, ptr %88, align 1
-  %91 = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %92 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %93 = load i16, ptr %91, align 2
-  %94 = trunc i16 %93 to i8
-  store i8 %94, ptr %92, align 1
-  %95 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %96 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %97 = load i16, ptr %95, align 2
-  %98 = trunc i16 %97 to i8
-  store i8 %98, ptr %96, align 1
-  %99 = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %100 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %101 = load i16, ptr %99, align 2
-  %102 = trunc i16 %101 to i8
-  store i8 %102, ptr %100, align 1
-  %103 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %104 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %105 = load i16, ptr %103, align 2
-  %106 = trunc i16 %105 to i8
-  store i8 %106, ptr %104, align 1
-  %107 = getelementptr inbounds nuw i8, ptr %1, i64 22
-  %108 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %109 = load i16, ptr %107, align 2
-  %110 = trunc i16 %109 to i8
-  store i8 %110, ptr %108, align 1
-  %111 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %112 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %113 = load i16, ptr %111, align 2
-  %114 = trunc i16 %113 to i8
-  store i8 %114, ptr %112, align 1
-  %115 = getelementptr inbounds nuw i8, ptr %1, i64 26
-  %116 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  %117 = load i16, ptr %115, align 2
-  %118 = trunc i16 %117 to i8
-  store i8 %118, ptr %116, align 1
-  %119 = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %120 = getelementptr inbounds nuw i8, ptr %0, i64 14
-  %121 = load i16, ptr %119, align 2
-  %122 = trunc i16 %121 to i8
-  store i8 %122, ptr %120, align 1
-  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+  %7 = add i64 %4, 30
+  %8 = add i64 %3, 15
+  %rt.bound0165 = icmp ugt i64 %7, %3
+  %rt.bound1166 = icmp ugt i64 %8, %4
+  %rt.conflict167 = and i1 %rt.bound0165, %rt.bound1166
+  br i1 %rt.conflict167, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtvec
 
 .lr.ph.i.i.i.i.i.i.i97.preheader:                 ; preds = %bb.a
-  %123 = load i16, ptr %1, align 2
-  %124 = trunc i16 %123 to i8
-  store i8 %124, ptr %0, align 1
-  %125 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %126 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %127 = load i16, ptr %125, align 2
-  %128 = trunc i16 %127 to i8
-  store i8 %128, ptr %126, align 1
-  %129 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %130 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %131 = load i16, ptr %129, align 2
-  %132 = trunc i16 %131 to i8
-  store i8 %132, ptr %130, align 1
-  %133 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %134 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %135 = load i16, ptr %133, align 2
-  %136 = trunc i16 %135 to i8
-  store i8 %136, ptr %134, align 1
-  %137 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %138 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %139 = load i16, ptr %137, align 2
-  %140 = trunc i16 %139 to i8
-  store i8 %140, ptr %138, align 1
-  %141 = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %142 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %143 = load i16, ptr %141, align 2
-  %144 = trunc i16 %143 to i8
-  store i8 %144, ptr %142, align 1
-  %145 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %146 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %147 = load i16, ptr %145, align 2
-  %148 = trunc i16 %147 to i8
-  store i8 %148, ptr %146, align 1
-  %149 = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %150 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %151 = load i16, ptr %149, align 2
-  %152 = trunc i16 %151 to i8
-  store i8 %152, ptr %150, align 1
-  %153 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %154 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %155 = load i16, ptr %153, align 2
-  %156 = trunc i16 %155 to i8
-  store i8 %156, ptr %154, align 1
-  %157 = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %158 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %159 = load i16, ptr %157, align 2
-  %160 = trunc i16 %159 to i8
-  store i8 %160, ptr %158, align 1
-  %161 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %162 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %163 = load i16, ptr %161, align 2
-  %164 = trunc i16 %163 to i8
-  store i8 %164, ptr %162, align 1
-  %165 = getelementptr inbounds nuw i8, ptr %1, i64 22
-  %166 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %167 = load i16, ptr %165, align 2
-  %168 = trunc i16 %167 to i8
-  store i8 %168, ptr %166, align 1
-  %169 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %170 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %171 = load i16, ptr %169, align 2
-  %172 = trunc i16 %171 to i8
-  store i8 %172, ptr %170, align 1
-  %173 = getelementptr inbounds nuw i8, ptr %1, i64 26
-  %174 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  %175 = load i16, ptr %173, align 2
-  %176 = trunc i16 %175 to i8
-  store i8 %176, ptr %174, align 1
-  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+  %9 = add i64 %4, 28
+  %10 = add i64 %3, 14
+  %rt.bound0 = icmp ugt i64 %9, %3
+  %rt.bound1 = icmp ugt i64 %10, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtvec
 
 .lr.ph.i.i.i.i.i.i.i92.preheader:                 ; preds = %bb.a
   %i.a = load i16, ptr %1, align 2
@@ -851,8 +649,289 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.my = icmp samesign ugt i64 %.012.i.i.i.i.i.i.i113, 1
   br i1 %i.my, label %.lr.ph.i.i.i.i.i.i.i112, label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit, !llvm.loop !77
 
-_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit:              ; preds = %.lr.ph.i.i.i.i.i.i.i112, %middle.block, %vec.epilog.middle.block, %.lr.ph.i.i.i.i.i.i.i107.preheader, %.lr.ph.i.i.i.i.i.i.i102.preheader, %.lr.ph.i.i.i.i.i.i.i97.preheader, %.lr.ph.i.i.i.i.i.i.i92.preheader, %.lr.ph.i.i.i.i.i.i.i87.preheader, %.lr.ph.i.i.i.i.i.i.i82.preheader, %.lr.ph.i.i.i.i.i.i.i77.preheader, %.lr.ph.i.i.i.i.i.i.i72.preheader, %.lr.ph.i.i.i.i.i.i.i67.preheader, %.lr.ph.i.i.i.i.i.i.i62.preheader, %.lr.ph.i.i.i.i.i.i.i57.preheader, %.lr.ph.i.i.i.i.i.i.i52.preheader, %.lr.ph.i.i.i.i.i.i.i47.preheader, %.lr.ph.i.i.i.i.i.i.i42.preheader, %.lr.ph.i.i.i.i.i.i.i37.preheader, %.lr.ph.i.i.i.i.i.i.i.preheader, %bb.b
+_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit:              ; preds = %.lr.ph.i.i.i.i.i.i.i107.preheader.rtvec, %.lr.ph.i.i.i.i.i.i.i107.preheader.rtscalar, %.lr.ph.i.i.i.i.i.i.i102.preheader.rtvec, %.lr.ph.i.i.i.i.i.i.i102.preheader.rtscalar, %.lr.ph.i.i.i.i.i.i.i97.preheader.rtvec, %.lr.ph.i.i.i.i.i.i.i97.preheader.rtscalar, %.lr.ph.i.i.i.i.i.i.i112, %middle.block, %vec.epilog.middle.block, %.lr.ph.i.i.i.i.i.i.i92.preheader, %.lr.ph.i.i.i.i.i.i.i87.preheader, %.lr.ph.i.i.i.i.i.i.i82.preheader, %.lr.ph.i.i.i.i.i.i.i77.preheader, %.lr.ph.i.i.i.i.i.i.i72.preheader, %.lr.ph.i.i.i.i.i.i.i67.preheader, %.lr.ph.i.i.i.i.i.i.i62.preheader, %.lr.ph.i.i.i.i.i.i.i57.preheader, %.lr.ph.i.i.i.i.i.i.i52.preheader, %.lr.ph.i.i.i.i.i.i.i47.preheader, %.lr.ph.i.i.i.i.i.i.i42.preheader, %.lr.ph.i.i.i.i.i.i.i37.preheader, %.lr.ph.i.i.i.i.i.i.i.preheader, %bb.b
   ret void
+
+.lr.ph.i.i.i.i.i.i.i97.preheader.rtvec:           ; preds = %.lr.ph.i.i.i.i.i.i.i97.preheader
+  %11 = load <8 x i16>, ptr %1, align 2
+  %12 = trunc <8 x i16> %11 to <8 x i8>
+  store <8 x i8> %12, ptr %0, align 1
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %15 = load <4 x i16>, ptr %13, align 2
+  %16 = trunc <4 x i16> %15 to <4 x i8>
+  store <4 x i8> %16, ptr %14, align 1
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %19 = load i16, ptr %17, align 2
+  %20 = trunc i16 %19 to i8
+  store i8 %20, ptr %18, align 1
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 13
+  %23 = load i16, ptr %21, align 2
+  %24 = trunc i16 %23 to i8
+  store i8 %24, ptr %22, align 1
+  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+
+.lr.ph.i.i.i.i.i.i.i97.preheader.rtscalar:        ; preds = %.lr.ph.i.i.i.i.i.i.i97.preheader
+  %25 = load i16, ptr %1, align 2
+  %26 = trunc i16 %25 to i8
+  store i8 %26, ptr %0, align 1
+  %27 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %29 = load i16, ptr %27, align 2
+  %30 = trunc i16 %29 to i8
+  store i8 %30, ptr %28, align 1
+  %31 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %32 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %33 = load i16, ptr %31, align 2
+  %34 = trunc i16 %33 to i8
+  store i8 %34, ptr %32, align 1
+  %35 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %36 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %37 = load i16, ptr %35, align 2
+  %38 = trunc i16 %37 to i8
+  store i8 %38, ptr %36, align 1
+  %39 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %40 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %41 = load i16, ptr %39, align 2
+  %42 = trunc i16 %41 to i8
+  store i8 %42, ptr %40, align 1
+  %43 = getelementptr inbounds nuw i8, ptr %1, i64 10
+  %44 = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %45 = load i16, ptr %43, align 2
+  %46 = trunc i16 %45 to i8
+  store i8 %46, ptr %44, align 1
+  %47 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %48 = getelementptr inbounds nuw i8, ptr %0, i64 6
+  %49 = load i16, ptr %47, align 2
+  %50 = trunc i16 %49 to i8
+  store i8 %50, ptr %48, align 1
+  %51 = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %52 = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %53 = load i16, ptr %51, align 2
+  %54 = trunc i16 %53 to i8
+  store i8 %54, ptr %52, align 1
+  %55 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %56 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %57 = load i16, ptr %55, align 2
+  %58 = trunc i16 %57 to i8
+  store i8 %58, ptr %56, align 1
+  %59 = getelementptr inbounds nuw i8, ptr %1, i64 18
+  %60 = getelementptr inbounds nuw i8, ptr %0, i64 9
+  %61 = load i16, ptr %59, align 2
+  %62 = trunc i16 %61 to i8
+  store i8 %62, ptr %60, align 1
+  %63 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %64 = getelementptr inbounds nuw i8, ptr %0, i64 10
+  %65 = load i16, ptr %63, align 2
+  %66 = trunc i16 %65 to i8
+  store i8 %66, ptr %64, align 1
+  %67 = getelementptr inbounds nuw i8, ptr %1, i64 22
+  %68 = getelementptr inbounds nuw i8, ptr %0, i64 11
+  %69 = load i16, ptr %67, align 2
+  %70 = trunc i16 %69 to i8
+  store i8 %70, ptr %68, align 1
+  %71 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %72 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %73 = load i16, ptr %71, align 2
+  %74 = trunc i16 %73 to i8
+  store i8 %74, ptr %72, align 1
+  %75 = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %76 = getelementptr inbounds nuw i8, ptr %0, i64 13
+  %77 = load i16, ptr %75, align 2
+  %78 = trunc i16 %77 to i8
+  store i8 %78, ptr %76, align 1
+  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+
+.lr.ph.i.i.i.i.i.i.i102.preheader.rtvec:          ; preds = %.lr.ph.i.i.i.i.i.i.i102.preheader
+  %79 = load <8 x i16>, ptr %1, align 2
+  %80 = trunc <8 x i16> %79 to <8 x i8>
+  store <8 x i8> %80, ptr %0, align 1
+  %81 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %82 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %83 = load <4 x i16>, ptr %81, align 2
+  %84 = trunc <4 x i16> %83 to <4 x i8>
+  store <4 x i8> %84, ptr %82, align 1
+  %85 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %86 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %87 = load i16, ptr %85, align 2
+  %88 = trunc i16 %87 to i8
+  store i8 %88, ptr %86, align 1
+  %89 = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %90 = getelementptr inbounds nuw i8, ptr %0, i64 13
+  %91 = load i16, ptr %89, align 2
+  %92 = trunc i16 %91 to i8
+  store i8 %92, ptr %90, align 1
+  %93 = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %94 = getelementptr inbounds nuw i8, ptr %0, i64 14
+  %95 = load i16, ptr %93, align 2
+  %96 = trunc i16 %95 to i8
+  store i8 %96, ptr %94, align 1
+  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+
+.lr.ph.i.i.i.i.i.i.i102.preheader.rtscalar:       ; preds = %.lr.ph.i.i.i.i.i.i.i102.preheader
+  %97 = load i16, ptr %1, align 2
+  %98 = trunc i16 %97 to i8
+  store i8 %98, ptr %0, align 1
+  %99 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %100 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %101 = load i16, ptr %99, align 2
+  %102 = trunc i16 %101 to i8
+  store i8 %102, ptr %100, align 1
+  %103 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %104 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %105 = load i16, ptr %103, align 2
+  %106 = trunc i16 %105 to i8
+  store i8 %106, ptr %104, align 1
+  %107 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %108 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %109 = load i16, ptr %107, align 2
+  %110 = trunc i16 %109 to i8
+  store i8 %110, ptr %108, align 1
+  %111 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %112 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %113 = load i16, ptr %111, align 2
+  %114 = trunc i16 %113 to i8
+  store i8 %114, ptr %112, align 1
+  %115 = getelementptr inbounds nuw i8, ptr %1, i64 10
+  %116 = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %117 = load i16, ptr %115, align 2
+  %118 = trunc i16 %117 to i8
+  store i8 %118, ptr %116, align 1
+  %119 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %120 = getelementptr inbounds nuw i8, ptr %0, i64 6
+  %121 = load i16, ptr %119, align 2
+  %122 = trunc i16 %121 to i8
+  store i8 %122, ptr %120, align 1
+  %123 = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %124 = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %125 = load i16, ptr %123, align 2
+  %126 = trunc i16 %125 to i8
+  store i8 %126, ptr %124, align 1
+  %127 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %128 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %129 = load i16, ptr %127, align 2
+  %130 = trunc i16 %129 to i8
+  store i8 %130, ptr %128, align 1
+  %131 = getelementptr inbounds nuw i8, ptr %1, i64 18
+  %132 = getelementptr inbounds nuw i8, ptr %0, i64 9
+  %133 = load i16, ptr %131, align 2
+  %134 = trunc i16 %133 to i8
+  store i8 %134, ptr %132, align 1
+  %135 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %136 = getelementptr inbounds nuw i8, ptr %0, i64 10
+  %137 = load i16, ptr %135, align 2
+  %138 = trunc i16 %137 to i8
+  store i8 %138, ptr %136, align 1
+  %139 = getelementptr inbounds nuw i8, ptr %1, i64 22
+  %140 = getelementptr inbounds nuw i8, ptr %0, i64 11
+  %141 = load i16, ptr %139, align 2
+  %142 = trunc i16 %141 to i8
+  store i8 %142, ptr %140, align 1
+  %143 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %144 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %145 = load i16, ptr %143, align 2
+  %146 = trunc i16 %145 to i8
+  store i8 %146, ptr %144, align 1
+  %147 = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %148 = getelementptr inbounds nuw i8, ptr %0, i64 13
+  %149 = load i16, ptr %147, align 2
+  %150 = trunc i16 %149 to i8
+  store i8 %150, ptr %148, align 1
+  %151 = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %152 = getelementptr inbounds nuw i8, ptr %0, i64 14
+  %153 = load i16, ptr %151, align 2
+  %154 = trunc i16 %153 to i8
+  store i8 %154, ptr %152, align 1
+  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+
+.lr.ph.i.i.i.i.i.i.i107.preheader.rtvec:          ; preds = %.lr.ph.i.i.i.i.i.i.i107.preheader
+  %155 = load <16 x i16>, ptr %1, align 2
+  %156 = trunc <16 x i16> %155 to <16 x i8>
+  store <16 x i8> %156, ptr %0, align 1
+  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
+
+.lr.ph.i.i.i.i.i.i.i107.preheader.rtscalar:       ; preds = %.lr.ph.i.i.i.i.i.i.i107.preheader
+  %157 = load i16, ptr %1, align 2
+  %158 = trunc i16 %157 to i8
+  store i8 %158, ptr %0, align 1
+  %159 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %160 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %161 = load i16, ptr %159, align 2
+  %162 = trunc i16 %161 to i8
+  store i8 %162, ptr %160, align 1
+  %163 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %164 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %165 = load i16, ptr %163, align 2
+  %166 = trunc i16 %165 to i8
+  store i8 %166, ptr %164, align 1
+  %167 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %168 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %169 = load i16, ptr %167, align 2
+  %170 = trunc i16 %169 to i8
+  store i8 %170, ptr %168, align 1
+  %171 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %172 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %173 = load i16, ptr %171, align 2
+  %174 = trunc i16 %173 to i8
+  store i8 %174, ptr %172, align 1
+  %175 = getelementptr inbounds nuw i8, ptr %1, i64 10
+  %176 = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %177 = load i16, ptr %175, align 2
+  %178 = trunc i16 %177 to i8
+  store i8 %178, ptr %176, align 1
+  %179 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %180 = getelementptr inbounds nuw i8, ptr %0, i64 6
+  %181 = load i16, ptr %179, align 2
+  %182 = trunc i16 %181 to i8
+  store i8 %182, ptr %180, align 1
+  %183 = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %184 = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %185 = load i16, ptr %183, align 2
+  %186 = trunc i16 %185 to i8
+  store i8 %186, ptr %184, align 1
+  %187 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %188 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %189 = load i16, ptr %187, align 2
+  %190 = trunc i16 %189 to i8
+  store i8 %190, ptr %188, align 1
+  %191 = getelementptr inbounds nuw i8, ptr %1, i64 18
+  %192 = getelementptr inbounds nuw i8, ptr %0, i64 9
+  %193 = load i16, ptr %191, align 2
+  %194 = trunc i16 %193 to i8
+  store i8 %194, ptr %192, align 1
+  %195 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %196 = getelementptr inbounds nuw i8, ptr %0, i64 10
+  %197 = load i16, ptr %195, align 2
+  %198 = trunc i16 %197 to i8
+  store i8 %198, ptr %196, align 1
+  %199 = getelementptr inbounds nuw i8, ptr %1, i64 22
+  %200 = getelementptr inbounds nuw i8, ptr %0, i64 11
+  %201 = load i16, ptr %199, align 2
+  %202 = trunc i16 %201 to i8
+  store i8 %202, ptr %200, align 1
+  %203 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %204 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %205 = load i16, ptr %203, align 2
+  %206 = trunc i16 %205 to i8
+  store i8 %206, ptr %204, align 1
+  %207 = getelementptr inbounds nuw i8, ptr %1, i64 26
+  %208 = getelementptr inbounds nuw i8, ptr %0, i64 13
+  %209 = load i16, ptr %207, align 2
+  %210 = trunc i16 %209 to i8
+  store i8 %210, ptr %208, align 1
+  %211 = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %212 = getelementptr inbounds nuw i8, ptr %0, i64 14
+  %213 = load i16, ptr %211, align 2
+  %214 = trunc i16 %213 to i8
+  store i8 %214, ptr %212, align 1
+  %215 = getelementptr inbounds nuw i8, ptr %1, i64 30
+  %216 = getelementptr inbounds nuw i8, ptr %0, i64 15
+  %217 = load i16, ptr %215, align 2
+  %218 = trunc i16 %217 to i8
+  store i8 %218, ptr %216, align 1
+  br label %_ZSt6copy_nIPKtiPhET1_T_T0_S3_.exit
 }
 
 declare ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE36AllocateRawTwoByteInternalizedStringEij(ptr noundef nonnull align 1 dereferenceable(1), i32 noundef, i32 noundef) local_unnamed_addr #3

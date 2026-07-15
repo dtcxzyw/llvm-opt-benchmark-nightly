@@ -185,7 +185,36 @@ bb.e:                                             ; preds = %bb.a, %bb.d, %bb.c
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local noundef nonnull align 4 dereferenceable(28) ptr @_ZN6icu_789ScriptSet5UnionERKS0_(ptr nofree noundef nonnull returned align 4 captures(ret: address, provenance) dereferenceable(28) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(28) %1) local_unnamed_addr #3 align 2 {
-bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add nuw i64 %4, 28
+  %6 = add nuw i64 %3, 28
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = load <4 x i32>, ptr %1, align 4
+  %8 = load <4 x i32>, ptr %0, align 4
+  %9 = or <4 x i32> %8, %7
+  store <4 x i32> %9, ptr %0, align 4
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %12 = load <2 x i32>, ptr %10, align 4
+  %13 = load <2 x i32>, ptr %11, align 4
+  %14 = or <2 x i32> %13, %12
+  store <2 x i32> %14, ptr %11, align 4
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %16 = load i32, ptr %15, align 4
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %18 = load i32, ptr %17, align 4
+  %19 = or i32 %18, %16
+  store i32 %19, ptr %17, align 4
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = load i32, ptr %1, align 4
   %i.b = load i32, ptr %0, align 4
   %i.c = or i32 %i.b, %i.a
@@ -226,12 +255,44 @@ bb.a:
   %i.af = load i32, ptr %i.ae, align 4
   %i.ag = or i32 %i.af, %i.ad
   store i32 %i.ag, ptr %i.ae, align 4
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local noundef nonnull align 4 dereferenceable(28) ptr @_ZN6icu_789ScriptSet9intersectERKS0_(ptr nofree noundef nonnull returned align 4 captures(ret: address, provenance) dereferenceable(28) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(28) %1) local_unnamed_addr #3 align 2 {
-bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add nuw i64 %4, 28
+  %6 = add nuw i64 %3, 28
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = load <4 x i32>, ptr %1, align 4
+  %8 = load <4 x i32>, ptr %0, align 4
+  %9 = and <4 x i32> %8, %7
+  store <4 x i32> %9, ptr %0, align 4
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %12 = load <2 x i32>, ptr %10, align 4
+  %13 = load <2 x i32>, ptr %11, align 4
+  %14 = and <2 x i32> %13, %12
+  store <2 x i32> %14, ptr %11, align 4
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %16 = load i32, ptr %15, align 4
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %18 = load i32, ptr %17, align 4
+  %19 = and i32 %18, %16
+  store i32 %19, ptr %17, align 4
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = load i32, ptr %1, align 4
   %i.b = load i32, ptr %0, align 4
   %i.c = and i32 %i.b, %i.a
@@ -272,6 +333,9 @@ bb.a:
   %i.af = load i32, ptr %i.ae, align 4
   %i.ag = and i32 %i.af, %i.ad
   store i32 %i.ag, ptr %i.ae, align 4
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret ptr %0
 }
 

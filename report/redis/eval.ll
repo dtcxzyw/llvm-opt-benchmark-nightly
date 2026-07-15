@@ -203,9 +203,97 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 1
   store i8 95, ptr %i.a, align 1, !tbaa !19
   %.not = icmp eq i32 %0, 0
-  br i1 %.not, label %3, label %.preheader.preheader.a
+  br i1 %.not, label %8, label %.preheader.preheader
 
-.preheader.preheader.a:                           ; preds = %bb.a
+.preheader.preheader:                             ; preds = %bb.a
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %5 = add i64 %3, 40
+  %6 = add i64 %4, 2
+  %7 = add i64 %4, 43
+  %rt.bound0 = icmp ugt i64 %7, %3
+  %rt.bound1 = icmp ult i64 %6, %5
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %.preheader.preheader.a, label %.preheader.preheader.rtvec
+
+8:                                                ; preds = %bb.a
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %10 = getelementptr i8, ptr %1, i64 -1
+  %.val.i = load i8, ptr %10, align 1, !tbaa !19  ; 2 uses
+  %11 = and i8 %.val.i, 7
+  switch i8 %11, label %sdslen.exit [
+    i8 0, label %12
+    i8 1, label %15
+    i8 2, label %19
+    i8 3, label %23
+    i8 4, label %27
+  ]
+
+12:                                               ; preds = %8
+  %13 = lshr i8 %.val.i, 3
+  %14 = zext nneg i8 %13 to i64
+  br label %sdslen.exit
+
+15:                                               ; preds = %8
+  %16 = getelementptr inbounds i8, ptr %1, i64 -3
+  %17 = load i8, ptr %16, align 1, !tbaa !19
+  %18 = zext i8 %17 to i64
+  br label %sdslen.exit
+
+19:                                               ; preds = %8
+  %20 = getelementptr inbounds i8, ptr %1, i64 -5
+  %21 = load i16, ptr %20, align 1, !tbaa !105
+  %22 = zext i16 %21 to i64
+  br label %sdslen.exit
+
+23:                                               ; preds = %8
+  %24 = getelementptr inbounds i8, ptr %1, i64 -9
+  %25 = load i32, ptr %24, align 1, !tbaa !9
+  %26 = zext i32 %25 to i64
+  br label %sdslen.exit
+
+27:                                               ; preds = %8
+  %28 = getelementptr inbounds i8, ptr %1, i64 -17
+  %29 = load i64, ptr %28, align 1, !tbaa !106
+  br label %sdslen.exit
+
+sdslen.exit:                                      ; preds = %8, %12, %15, %19, %23, %27
+  %.0.i = phi i64 [ %29, %27 ], [ %14, %12 ], [ %18, %15 ], [ %22, %19 ], [ %26, %23 ], [ 0, %8 ]
+  tail call void @sha1hex(ptr noundef nonnull %9, ptr noundef nonnull %1, i64 noundef %.0.i)
+  br label %.preheader.preheader.rtcont
+
+.preheader.preheader.rtcont:                      ; preds = %.preheader.preheader.rtvec, %.preheader.preheader.a, %sdslen.exit
+  ret void
+
+.preheader.preheader.rtvec:                       ; preds = %.preheader.preheader
+  %30 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %31 = load <16 x i8>, ptr %1, align 1, !tbaa !19 ; 3 uses
+  %32 = add <16 x i8> %31, splat (i8 -65)
+  %33 = icmp ult <16 x i8> %32, splat (i8 26)
+  %34 = add nuw nsw <16 x i8> %31, splat (i8 32)
+  %35 = select <16 x i1> %33, <16 x i8> %34, <16 x i8> %31
+  store <16 x i8> %35, ptr %30, align 1, !tbaa !19
+  %36 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %37 = getelementptr inbounds nuw i8, ptr %2, i64 18
+  %38 = load <16 x i8>, ptr %36, align 1, !tbaa !19 ; 3 uses
+  %39 = add <16 x i8> %38, splat (i8 -65)
+  %40 = icmp ult <16 x i8> %39, splat (i8 26)
+  %41 = add nuw nsw <16 x i8> %38, splat (i8 32)
+  %42 = select <16 x i1> %40, <16 x i8> %41, <16 x i8> %38
+  store <16 x i8> %42, ptr %37, align 1, !tbaa !19
+  %43 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %44 = getelementptr inbounds nuw i8, ptr %2, i64 34
+  %45 = load <8 x i8>, ptr %43, align 1, !tbaa !19 ; 3 uses
+  %46 = add <8 x i8> %45, splat (i8 -65)
+  %47 = icmp ult <8 x i8> %46, splat (i8 26)
+  %48 = add nuw nsw <8 x i8> %45, splat (i8 32)
+  %49 = select <8 x i1> %47, <8 x i8> %48, <8 x i8> %45
+  store <8 x i8> %49, ptr %44, align 1, !tbaa !19
+  %50 = getelementptr inbounds nuw i8, ptr %2, i64 42
+  store i8 0, ptr %50, align 1, !tbaa !19
+  br label %.preheader.preheader.rtcont
+
+.preheader.preheader.a:                           ; preds = %.preheader.preheader
   %i.b = load i8, ptr %1, align 1, !tbaa !19      ; 3 uses
   %i.c = add i8 %i.b, -65
   %or.cond = icmp ult i8 %i.c, 26
@@ -527,56 +615,7 @@ bb.a:
   store i8 %spec.select.39, ptr %i.gr, align 1, !tbaa !19
   %i.gs = getelementptr inbounds nuw i8, ptr %2, i64 42
   store i8 0, ptr %i.gs, align 1, !tbaa !19
-  br label %25
-
-3:                                                ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %5 = getelementptr i8, ptr %1, i64 -1
-  %.val.i = load i8, ptr %5, align 1, !tbaa !19   ; 2 uses
-  %6 = and i8 %.val.i, 7
-  switch i8 %6, label %sdslen.exit [
-    i8 0, label %7
-    i8 1, label %10
-    i8 2, label %14
-    i8 3, label %18
-    i8 4, label %22
-  ]
-
-7:                                                ; preds = %3
-  %8 = lshr i8 %.val.i, 3
-  %9 = zext nneg i8 %8 to i64
-  br label %sdslen.exit
-
-10:                                               ; preds = %3
-  %11 = getelementptr inbounds i8, ptr %1, i64 -3
-  %12 = load i8, ptr %11, align 1, !tbaa !19
-  %13 = zext i8 %12 to i64
-  br label %sdslen.exit
-
-14:                                               ; preds = %3
-  %15 = getelementptr inbounds i8, ptr %1, i64 -5
-  %16 = load i16, ptr %15, align 1, !tbaa !105
-  %17 = zext i16 %16 to i64
-  br label %sdslen.exit
-
-18:                                               ; preds = %3
-  %19 = getelementptr inbounds i8, ptr %1, i64 -9
-  %20 = load i32, ptr %19, align 1, !tbaa !9
-  %21 = zext i32 %20 to i64
-  br label %sdslen.exit
-
-22:                                               ; preds = %3
-  %23 = getelementptr inbounds i8, ptr %1, i64 -17
-  %24 = load i64, ptr %23, align 1, !tbaa !106
-  br label %sdslen.exit
-
-sdslen.exit:                                      ; preds = %3, %7, %10, %14, %18, %22
-  %.0.i = phi i64 [ %24, %22 ], [ %9, %7 ], [ %13, %10 ], [ %17, %14 ], [ %21, %18 ], [ 0, %3 ]
-  tail call void @sha1hex(ptr noundef nonnull %4, ptr noundef nonnull %1, i64 noundef %.0.i)
-  br label %25
-
-25:                                               ; preds = %.preheader.preheader.a, %sdslen.exit
-  ret void
+  br label %.preheader.preheader.rtcont
 }
 
 declare ptr @dictFind(ptr noundef, ptr noundef) local_unnamed_addr #1

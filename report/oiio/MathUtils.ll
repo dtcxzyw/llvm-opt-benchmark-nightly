@@ -203,17 +203,56 @@ bb.a:
   %i.a = alloca [16 x float], align 16            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, ptr noundef nonnull align 4 dereferenceable(64) %2, i64 64, i1 false)
-  %.sroa.0.0.copyload = load float, ptr %3, align 4
+  %.sroa.0.0.copyload = load float, ptr %3, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4
+  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4 ; 2 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4
+  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4 ; 2 uses
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %.sroa.12.0.copyload = load float, ptr %.sroa.12.0..sroa_idx, align 4
+  %.sroa.12.0.copyload = load float, ptr %.sroa.12.0..sroa_idx, align 4 ; 2 uses
   %i.b = call noundef zeroext i1 @_ZN16OpenColorIO_v2_513GetM44InverseEPfPKf(ptr noundef %0, ptr noundef nonnull %i.a) ; 2 uses
-  br i1 %i.b, label %.preheader.preheader.a, label %4
+  br i1 %i.b, label %.preheader.preheader, label %.preheader.preheader.rtcont
 
-.preheader.preheader.a:                           ; preds = %bb.a
+.preheader.preheader:                             ; preds = %bb.a
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %6 = add i64 %4, 64
+  %7 = add i64 %5, 16
+  %rt.bound0 = icmp ugt i64 %7, %4
+  %rt.bound1 = icmp ugt i64 %6, %5
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %.preheader.preheader.a, label %.preheader.preheader.rtvec
+
+.preheader.preheader.rtcont:                      ; preds = %.preheader.preheader.rtvec, %.preheader.preheader.a, %bb.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  ret i1 %i.b
+
+.preheader.preheader.rtvec:                       ; preds = %.preheader.preheader
+  %8 = fneg float %.sroa.0.0.copyload
+  %9 = fneg float %.sroa.6.0.copyload
+  %10 = fneg float %.sroa.9.0.copyload
+  %11 = fneg float %.sroa.12.0.copyload
+  %12 = load <16 x float>, ptr %0, align 4, !tbaa !9 ; 4 uses
+  %13 = shufflevector <16 x float> %12, <16 x float> poison, <4 x i32> <i32 1, i32 5, i32 9, i32 13>
+  %14 = insertelement <4 x float> poison, float %9, i64 0
+  %15 = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> zeroinitializer
+  %16 = fmul <4 x float> %13, %15
+  %17 = shufflevector <16 x float> %12, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
+  %18 = insertelement <4 x float> poison, float %8, i64 0
+  %19 = shufflevector <4 x float> %18, <4 x float> poison, <4 x i32> zeroinitializer
+  %20 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %17, <4 x float> %19, <4 x float> %16)
+  %21 = shufflevector <16 x float> %12, <16 x float> poison, <4 x i32> <i32 2, i32 6, i32 10, i32 14>
+  %22 = insertelement <4 x float> poison, float %10, i64 0
+  %23 = shufflevector <4 x float> %22, <4 x float> poison, <4 x i32> zeroinitializer
+  %24 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %21, <4 x float> %23, <4 x float> %20)
+  %25 = shufflevector <16 x float> %12, <16 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 15>
+  %26 = insertelement <4 x float> poison, float %11, i64 0
+  %27 = shufflevector <4 x float> %26, <4 x float> poison, <4 x i32> zeroinitializer
+  %28 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %25, <4 x float> %27, <4 x float> %24)
+  store <4 x float> %28, ptr %1, align 4, !tbaa !9
+  br label %.preheader.preheader.rtcont
+
+.preheader.preheader.a:                           ; preds = %.preheader.preheader
   %i.c = fneg float %.sroa.0.0.copyload           ; 4 uses
   %i.d = fneg float %.sroa.6.0.copyload           ; 4 uses
   %i.e = fneg float %.sroa.9.0.copyload           ; 4 uses
@@ -272,11 +311,7 @@ bb.a:
   %i.bc = tail call float @llvm.fmuladd.f32(float %i.bb, float %i.f, float %i.az)
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 12
   store float %i.bc, ptr %i.bd, align 4, !tbaa !9
-  br label %4
-
-4:                                                ; preds = %bb.a, %.preheader.preheader.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  ret i1 %i.b
+  br label %.preheader.preheader.rtcont
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable

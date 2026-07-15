@@ -204,16 +204,16 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN9NCompress8NDeflate8NEncoder6CCoder9SetPricesERKNS0_7CLevelsE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(39764) %0, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(320) %1) local_unnamed_addr #14 align 2 {
 bb.a:
+  %2 = ptrtoaddr ptr %1 to i64                    ; 3 uses
+  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1268
   %i.b = load i8, ptr %i.a, align 4, !tbaa !33, !range !51, !noundef !52
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %.loopexit, label %.preheader27
 
 .preheader27:                                     ; preds = %bb.a
-  %2 = ptrtoaddr ptr %0 to i64
-  %3 = ptrtoaddr ptr %1 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1392 ; 5 uses
-  %i.e = sub i64 %2, %3
+  %i.e = sub i64 %3, %2
   %i.f = add i64 %i.e, 1391
   %diff.check = icmp ult i64 %i.f, 31
   br i1 %diff.check, label %scalar.ph, label %vector.body
@@ -319,7 +319,7 @@ vector.body:                                      ; preds = %.preheader27
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 1308
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !42 ; 4 uses
   %.not31 = icmp eq i32 %i.br, 0
-  br i1 %.not31, label %.preheader.a, label %.lr.ph
+  br i1 %.not31, label %.preheader, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader26
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 1328
@@ -332,7 +332,7 @@ vector.body:                                      ; preds = %.preheader27
 
 .lr.ph.new:                                       ; preds = %.lr.ph
   %unroll_iter = and i64 %wide.trip.count, 4294967294
-  br label %4
+  br label %8
 
 scalar.ph:                                        ; preds = %.preheader27, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph ], [ 0, %.preheader27 ] ; 6 uses
@@ -367,9 +367,9 @@ scalar.ph:                                        ; preds = %.preheader27, %scal
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, 256
   br i1 %exitcond.not.3, label %.preheader26, label %scalar.ph, !llvm.loop !113
 
-.preheader.loopexit.unr-lcssa:                    ; preds = %4
+.preheader.loopexit.unr-lcssa:                    ; preds = %8
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader.a, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv33.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next34.1, %.preheader.loopexit.unr-lcssa ] ; 2 uses
@@ -388,9 +388,75 @@ scalar.ph:                                        ; preds = %.preheader27, %scal
   %i.cv = add i8 %i.cs, %i.cu
   %i.cw = getelementptr inbounds nuw i8, ptr %i.bu, i64 %indvars.iv33.epil.init
   store i8 %i.cv, ptr %i.cw, align 1, !tbaa !62
-  br label %.preheader.a
+  br label %.preheader
 
-.preheader.a:                                     ; preds = %.epil.preheader, %.preheader.loopexit.unr-lcssa, %.preheader26
+.preheader:                                       ; preds = %.epil.preheader, %.preheader.loopexit.unr-lcssa, %.preheader26
+  %4 = add nuw i64 %2, 288
+  %5 = add nuw i64 %2, 320
+  %6 = add nuw i64 %3, 1904
+  %7 = add nuw i64 %3, 1936
+  %rt.bound0 = icmp ult i64 %6, %5
+  %rt.bound1 = icmp ult i64 %4, %7
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %.preheader.a, label %.preheader.rtvec
+
+8:                                                ; preds = %8, %.lr.ph.new
+  %indvars.iv33 = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next34.1, %8 ] ; 4 uses
+  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %8 ]
+  %9 = getelementptr inbounds nuw i8, ptr @_ZN9NCompress8NDeflate8NEncoderL10g_LenSlotsE, i64 %indvars.iv33
+  %10 = load i8, ptr %9, align 2, !tbaa !62
+  %11 = zext i8 %10 to i64                        ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 %11
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 257
+  %14 = load i8, ptr %13, align 1, !tbaa !62      ; 2 uses
+  %.not24 = icmp eq i8 %14, 0
+  %15 = select i1 %.not24, i8 11, i8 %14
+  %16 = getelementptr inbounds nuw i8, ptr %i.bt, i64 %11
+  %17 = load i8, ptr %16, align 1, !tbaa !62
+  %18 = add i8 %15, %17
+  %19 = getelementptr inbounds nuw i8, ptr %i.bu, i64 %indvars.iv33
+  store i8 %18, ptr %19, align 2, !tbaa !62
+  %indvars.iv.next34 = or disjoint i64 %indvars.iv33, 1 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr @_ZN9NCompress8NDeflate8NEncoderL10g_LenSlotsE, i64 %indvars.iv.next34
+  %21 = load i8, ptr %20, align 1, !tbaa !62
+  %22 = zext i8 %21 to i64                        ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %1, i64 %22
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 257
+  %25 = load i8, ptr %24, align 1, !tbaa !62      ; 2 uses
+  %.not24.1 = icmp eq i8 %25, 0
+  %26 = select i1 %.not24.1, i8 11, i8 %25
+  %27 = getelementptr inbounds nuw i8, ptr %i.bt, i64 %22
+  %28 = load i8, ptr %27, align 1, !tbaa !62
+  %29 = add i8 %26, %28
+  %30 = getelementptr inbounds nuw i8, ptr %i.bu, i64 %indvars.iv.next34
+  store i8 %29, ptr %30, align 1, !tbaa !62
+  %indvars.iv.next34.1 = add nuw nsw i64 %indvars.iv33, 2 ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %8, !llvm.loop !114
+
+.loopexit:                                        ; preds = %.preheader.rtvec, %.preheader.a, %bb.a
+  ret void
+
+.preheader.rtvec:                                 ; preds = %.preheader
+  %31 = getelementptr inbounds nuw i8, ptr %1, i64 288
+  %32 = getelementptr inbounds nuw i8, ptr %0, i64 1904
+  %33 = load <16 x i8>, ptr %31, align 1, !tbaa !62 ; 2 uses
+  %34 = icmp eq <16 x i8> %33, zeroinitializer
+  %35 = add <16 x i8> %33, <i8 0, i8 0, i8 0, i8 0, i8 1, i8 1, i8 2, i8 2, i8 3, i8 3, i8 4, i8 4, i8 5, i8 5, i8 6, i8 6>
+  %36 = select <16 x i1> %34, <16 x i8> <i8 6, i8 6, i8 6, i8 6, i8 7, i8 7, i8 8, i8 8, i8 9, i8 9, i8 10, i8 10, i8 11, i8 11, i8 12, i8 12>, <16 x i8> %35
+  store <16 x i8> %36, ptr %32, align 8, !tbaa !62
+  %37 = getelementptr inbounds nuw i8, ptr %1, i64 304
+  %38 = getelementptr inbounds nuw i8, ptr %0, i64 1920
+  %39 = load <16 x i8>, ptr %37, align 1, !tbaa !62 ; 2 uses
+  %40 = icmp eq <16 x i8> %39, zeroinitializer
+  %41 = add <16 x i8> %39, <i8 7, i8 7, i8 8, i8 8, i8 9, i8 9, i8 10, i8 10, i8 11, i8 11, i8 12, i8 12, i8 13, i8 13, i8 14, i8 14>
+  %42 = select <16 x i1> %40, <16 x i8> <i8 13, i8 13, i8 14, i8 14, i8 15, i8 15, i8 16, i8 16, i8 17, i8 17, i8 18, i8 18, i8 19, i8 19, i8 20, i8 20>, <16 x i8> %41
+  store <16 x i8> %42, ptr %38, align 8, !tbaa !62
+  br label %.loopexit
+
+.preheader.a:                                     ; preds = %.preheader
   %i.cx = getelementptr inbounds nuw i8, ptr %1, i64 288
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 1904
   %i.cz = load i8, ptr %i.cx, align 1, !tbaa !62  ; 2 uses
@@ -612,44 +678,6 @@ scalar.ph:                                        ; preds = %.preheader27, %scal
   %i.iw = getelementptr inbounds nuw i8, ptr %0, i64 1935
   store i8 %i.iv, ptr %i.iw, align 1, !tbaa !62
   br label %.loopexit
-
-4:                                                ; preds = %4, %.lr.ph.new
-  %indvars.iv33 = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next34.1, %4 ] ; 4 uses
-  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %4 ]
-  %5 = getelementptr inbounds nuw i8, ptr @_ZN9NCompress8NDeflate8NEncoderL10g_LenSlotsE, i64 %indvars.iv33
-  %6 = load i8, ptr %5, align 2, !tbaa !62
-  %7 = zext i8 %6 to i64                          ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 257
-  %10 = load i8, ptr %9, align 1, !tbaa !62       ; 2 uses
-  %.not24 = icmp eq i8 %10, 0
-  %11 = select i1 %.not24, i8 11, i8 %10
-  %12 = getelementptr inbounds nuw i8, ptr %i.bt, i64 %7
-  %13 = load i8, ptr %12, align 1, !tbaa !62
-  %14 = add i8 %11, %13
-  %15 = getelementptr inbounds nuw i8, ptr %i.bu, i64 %indvars.iv33
-  store i8 %14, ptr %15, align 2, !tbaa !62
-  %indvars.iv.next34 = or disjoint i64 %indvars.iv33, 1 ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr @_ZN9NCompress8NDeflate8NEncoderL10g_LenSlotsE, i64 %indvars.iv.next34
-  %17 = load i8, ptr %16, align 1, !tbaa !62
-  %18 = zext i8 %17 to i64                        ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 %18
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 257
-  %21 = load i8, ptr %20, align 1, !tbaa !62      ; 2 uses
-  %.not24.1 = icmp eq i8 %21, 0
-  %22 = select i1 %.not24.1, i8 11, i8 %21
-  %23 = getelementptr inbounds nuw i8, ptr %i.bt, i64 %18
-  %24 = load i8, ptr %23, align 1, !tbaa !62
-  %25 = add i8 %22, %24
-  %26 = getelementptr inbounds nuw i8, ptr %i.bu, i64 %indvars.iv.next34
-  store i8 %25, ptr %26, align 1, !tbaa !62
-  %indvars.iv.next34.1 = add nuw nsw i64 %indvars.iv33, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %4, !llvm.loop !114
-
-.loopexit:                                        ; preds = %.preheader.a, %bb.a
-  ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
