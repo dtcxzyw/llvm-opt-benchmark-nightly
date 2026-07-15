@@ -204,14 +204,14 @@ _ZNKSt14default_deleteISt6vectorISt10unique_ptrIN12v8_inspector8protocol8Debugge
 
 _ZNSt10unique_ptrISt6vectorIS_IN12v8_inspector8protocol8Debugger8LocationESt14default_deleteIS4_EESaIS7_EES5_IS9_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteISt6vectorISt10unique_ptrIN12v8_inspector8protocol8Debugger8LocationES_IS5_EESaIS7_EEEclEPS9_.exit.i.i.i.i, %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 40
-  %i.ae = load i8, ptr %i.ad, align 8, !range !17, !noundef !27 ; 3 uses
+  %i.ae = load i8, ptr %i.ad, align 8, !range !17, !noundef !27 ; 2 uses
   %i.af = trunc nuw i8 %i.ae to i1                ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.ah = load i8, ptr %i.ag, align 8, !range !17, !noundef !27 ; 2 uses
   %i.ai = trunc nuw i8 %i.ah to i1                ; 2 uses
   %narrow = add nuw nsw i8 %i.ah, %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 40
-  %i.ak = load i8, ptr %i.aj, align 8, !range !17, !noundef !27 ; 2 uses
+  %i.ak = load i8, ptr %i.aj, align 8, !range !17, !noundef !27
   %narrow141 = add nuw nsw i8 %narrow, %i.ak
   %.not = icmp eq i8 %narrow141, 1
   br i1 %.not, label %bb.e, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i31
@@ -277,28 +277,19 @@ bb.f:                                             ; preds = %_ZNRSt8optionalIiE5
   store i16 0, ptr %i.bd, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %26, i64 32 ; 3 uses
   store i64 0, ptr %i.bf, align 8
-  br i1 %i.ai, label %bb.g, label %38
+  br i1 %i.ai, label %bb.g, label %.thread
 
-38:                                               ; preds = %bb.f
-  %39 = or i8 %i.ae, %i.ak
-  %brmerge.not = icmp eq i8 %39, 0
-  br i1 %brmerge.not, label %.thread, label %.thread.sink.split
-
-.thread.sink.split:                               ; preds = %38
-  %.mux239 = select i1 %i.af, i32 1, i32 3
-  %.mux = select i1 %i.af, ptr %3, ptr %5         ; 2 uses
-  call void @_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(40) %26, ptr noundef nonnull align 8 dereferenceable(40) %.mux)
-  %40 = getelementptr inbounds nuw i8, ptr %.mux, i64 32
-  %41 = load i64, ptr %40, align 8
-  store i64 %41, ptr %i.bf, align 8
-  br label %.thread
-
-.thread:                                          ; preds = %38, %.thread.sink.split
-  %.025.ph = phi i32 [ 1, %38 ], [ %.mux239, %.thread.sink.split ] ; 2 uses
+.thread:                                          ; preds = %bb.f
+  %. = select i1 %i.af, ptr %3, ptr %5            ; 2 uses
+  %.237 = select i1 %i.af, i32 1, i32 3           ; 2 uses
+  call void @_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(40) %26, ptr noundef nonnull align 8 dereferenceable(40) %.)
+  %storemerge.in = getelementptr inbounds nuw i8, ptr %., i64 32
+  %storemerge = load i64, ptr %storemerge.in, align 8
+  store i64 %storemerge, ptr %i.bf, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #19
   store ptr null, ptr %27, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %27, i64 8
-  store i32 %.025.ph, ptr %i.bg, align 8
+  store i32 %.237, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %27, i64 16
   store ptr %26, ptr %i.bh, align 8
   br label %_ZN12v8_inspector12_GLOBAL__N_17MatcherC2EPNS_15V8InspectorImplENS0_14BreakpointTypeERKNS_8String16E.exit
@@ -321,7 +312,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN12v8_inspector12_GLOBAL__N_17MatcherC2EPNS_15V8InspectorImplENS0_14BreakpointTypeERKNS_8String16E.exit
 
 _ZN12v8_inspector12_GLOBAL__N_17MatcherC2EPNS_15V8InspectorImplENS0_14BreakpointTypeERKNS_8String16E.exit: ; preds = %bb.g, %.thread
-  %.025138 = phi i32 [ %.025.ph, %.thread ], [ 2, %bb.g ] ; 2 uses
+  %.025138 = phi i32 [ %.237, %.thread ], [ 2, %bb.g ] ; 2 uses
   %.val129 = phi ptr [ null, %.thread ], [ %i.bo, %bb.g ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #19
