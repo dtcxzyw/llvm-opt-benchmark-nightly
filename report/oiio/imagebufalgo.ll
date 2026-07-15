@@ -204,10 +204,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.bn = load ptr, ptr %i.k, align 8, !tbaa !289 ; 2 uses
   %i.bo = load float, ptr %i.bn, align 4, !tbaa !254 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
-  %i.bq = load float, ptr %i.bp, align 4, !tbaa !254 ; 2 uses
-  %5 = call noundef float @llvm.sin.f32(float %i.bq)
-  %6 = call noundef float @llvm.cos.f32(float %i.bq)
-  %i.br = fmul float %i.bo, %6
+  %i.bq = load float, ptr %i.bp, align 4, !tbaa !254
+  %sincos.i.i.i.i = call { float, float } @llvm.sincos.f32(float %i.bq) ; 2 uses
+  %sin.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 0
+  %cos.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 1
+  %i.br = fmul float %i.bo, %cos.i.i.i.i
   %i.bs = load ptr, ptr %3, align 8, !tbaa !287
   %i.bt = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bs)
           to label %.noexc.i.i.i unwind label %bb.aj
@@ -223,7 +224,7 @@ bb.j:                                             ; preds = %.noexc.i.i.i
 bb.k:                                             ; preds = %bb.j, %.noexc.i.i.i
   %i.bv = load ptr, ptr %i.l, align 8, !tbaa !289
   store float %i.br, ptr %i.bv, align 4, !tbaa !254
-  %i.bw = fmul float %i.bo, %5
+  %i.bw = fmul float %i.bo, %sin.i.i.i.i
   %i.bx = load ptr, ptr %3, align 8, !tbaa !287
   %i.by = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bx)
           to label %.noexc25.i.i.i unwind label %bb.ak
@@ -502,12 +503,6 @@ _ZNSt14_Function_base13_Base_managerIZN11OpenImageIO4v3_1L21polar_to_complex_imp
   ret i1 false
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sin.f32(float) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.cos.f32(float) #8
-
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZNSt17_Function_handlerIFvN11OpenImageIO4v3_13ROIEEZNS1_L21polar_to_complex_implIfhEEbRNS1_8ImageBufERKS5_S2_iEUlS2_E_E9_M_invokeERKSt9_Any_dataOS2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(32) %1) #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
@@ -641,10 +636,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 1
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !96
   %i.bt = uitofp i8 %i.bs to float
-  %i.bu = fmul nnan float %i.bt, f0x3B808081      ; 2 uses
-  %5 = call noundef float @llvm.sin.f32(float %i.bu)
-  %6 = call noundef float @llvm.cos.f32(float %i.bu)
-  %i.bv = fmul nnan float %i.bq, %6
+  %i.bu = fmul nnan float %i.bt, f0x3B808081
+  %sincos.i.i.i.i = call { float, float } @llvm.sincos.f32(float %i.bu) ; 2 uses
+  %sin.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 0
+  %cos.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 1
+  %i.bv = fmul float %i.bq, %cos.i.i.i.i
   %i.bw = load ptr, ptr %3, align 8, !tbaa !287
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
           to label %.noexc.i.i.i unwind label %bb.aj
@@ -660,7 +656,7 @@ bb.j:                                             ; preds = %.noexc.i.i.i
 bb.k:                                             ; preds = %bb.j, %.noexc.i.i.i
   %i.bz = load ptr, ptr %i.l, align 8, !tbaa !289
   store float %i.bv, ptr %i.bz, align 4, !tbaa !254
-  %i.ca = fmul nnan float %i.bq, %5
+  %i.ca = fmul float %i.bq, %sin.i.i.i.i
   %i.cb = load ptr, ptr %3, align 8, !tbaa !287
   %i.cc = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cb)
           to label %.noexc25.i.i.i unwind label %bb.ak
@@ -1063,10 +1059,11 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r, %bb.q
   %.sroa.0.0.i.i.i.i.i24.i.i.i = phi i32 [ %i.cp, %bb.q ], [ %i.cq, %bb.r ], [ %i.cx, %bb.t ], [ %i.cl, %bb.s ]
-  %i.cy = bitcast i32 %.sroa.0.0.i.i.i.i.i24.i.i.i to float ; 2 uses
-  %5 = call noundef float @llvm.sin.f32(float %i.cy)
-  %6 = call noundef float @llvm.cos.f32(float %i.cy)
-  %i.cz = fmul float %6, %i.cf
+  %i.cy = bitcast i32 %.sroa.0.0.i.i.i.i.i24.i.i.i to float
+  %sincos.i.i.i.i = call { float, float } @llvm.sincos.f32(float %i.cy) ; 2 uses
+  %sin.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 0
+  %cos.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 1
+  %i.cz = fmul float %cos.i.i.i.i, %i.cf
   %i.da = load ptr, ptr %3, align 8, !tbaa !287
   %i.db = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.da)
           to label %.noexc.i.i.i unwind label %bb.av
@@ -1082,7 +1079,7 @@ bb.v:                                             ; preds = %.noexc.i.i.i
 bb.w:                                             ; preds = %bb.v, %.noexc.i.i.i
   %i.dd = load ptr, ptr %i.l, align 8, !tbaa !289
   store float %i.cz, ptr %i.dd, align 4, !tbaa !254
-  %i.de = fmul float %5, %i.cf
+  %i.de = fmul float %sin.i.i.i.i, %i.cf
   %i.df = load ptr, ptr %3, align 8, !tbaa !287
   %i.dg = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.df)
           to label %.noexc29.i.i.i unwind label %bb.aw
@@ -1485,10 +1482,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 2
   %i.bs = load i16, ptr %i.br, align 2, !tbaa !1177
   %i.bt = uitofp i16 %i.bs to float
-  %i.bu = fmul nnan float %i.bt, f0x37800080      ; 2 uses
-  %5 = call noundef float @llvm.sin.f32(float %i.bu)
-  %6 = call noundef float @llvm.cos.f32(float %i.bu)
-  %i.bv = fmul nnan float %i.bq, %6
+  %i.bu = fmul nnan float %i.bt, f0x37800080
+  %sincos.i.i.i.i = call { float, float } @llvm.sincos.f32(float %i.bu) ; 2 uses
+  %sin.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 0
+  %cos.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 1
+  %i.bv = fmul float %i.bq, %cos.i.i.i.i
   %i.bw = load ptr, ptr %3, align 8, !tbaa !287
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
           to label %.noexc.i.i.i unwind label %bb.aj
@@ -1504,7 +1502,7 @@ bb.j:                                             ; preds = %.noexc.i.i.i
 bb.k:                                             ; preds = %bb.j, %.noexc.i.i.i
   %i.bz = load ptr, ptr %i.l, align 8, !tbaa !289
   store float %i.bv, ptr %i.bz, align 4, !tbaa !254
-  %i.ca = fmul nnan float %i.bq, %5
+  %i.ca = fmul float %i.bq, %sin.i.i.i.i
   %i.cb = load ptr, ptr %3, align 8, !tbaa !287
   %i.cc = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cb)
           to label %.noexc25.i.i.i unwind label %bb.ak
@@ -1907,10 +1905,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 1
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !96
   %i.bt = uitofp i8 %i.bs to float
-  %i.bu = fmul nnan float %i.bt, f0x3B808081      ; 2 uses
-  %5 = call noundef float @llvm.sin.f32(float %i.bu)
-  %6 = call noundef float @llvm.cos.f32(float %i.bu)
-  %i.bv = fmul nnan float %i.bq, %6
+  %i.bu = fmul nnan float %i.bt, f0x3B808081
+  %sincos.i.i.i.i = call { float, float } @llvm.sincos.f32(float %i.bu) ; 2 uses
+  %sin.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 0
+  %cos.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 1
+  %i.bv = fmul float %i.bq, %cos.i.i.i.i
   %i.bw = load ptr, ptr %3, align 8, !tbaa !287
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
           to label %.noexc.i.i.i unwind label %bb.aj
@@ -1925,7 +1924,7 @@ bb.j:                                             ; preds = %.noexc.i.i.i
 
 bb.k:                                             ; preds = %bb.j, %.noexc.i.i.i
   %i.bz = load ptr, ptr %i.l, align 8, !tbaa !289
-  %i.ca = fmul nnan float %i.bv, 2.550000e+02     ; 2 uses
+  %i.ca = fmul float %i.bv, 2.550000e+02          ; 2 uses
   %i.cb = fcmp olt float %i.ca, 0.000000e+00
   %i.cc = select i1 %i.cb, float -5.000000e-01, float 5.000000e-01
   %i.cd = fadd float %i.ca, %i.cc                 ; 2 uses
@@ -1935,7 +1934,7 @@ bb.k:                                             ; preds = %bb.j, %.noexc.i.i.i
   %.1.i.i.i.i.i.i.i.i.i = select i1 %i.ce, float 2.550000e+02, float %.0.i.i.i.i.i.i.i.i.i
   %i.cf = fptoui float %.1.i.i.i.i.i.i.i.i.i to i8
   store i8 %i.cf, ptr %i.bz, align 1, !tbaa !96
-  %i.cg = fmul nnan float %i.bq, %5
+  %i.cg = fmul float %i.bq, %sin.i.i.i.i
   %i.ch = load ptr, ptr %3, align 8, !tbaa !287
   %i.ci = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ch)
           to label %.noexc28.i.i.i unwind label %bb.ak
@@ -1951,7 +1950,7 @@ bb.l:                                             ; preds = %.noexc28.i.i.i
 bb.m:                                             ; preds = %bb.l, %.noexc28.i.i.i
   %i.ck = load ptr, ptr %i.l, align 8, !tbaa !289
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 1
-  %i.cm = fmul nnan float %i.cg, 2.550000e+02     ; 2 uses
+  %i.cm = fmul float %i.cg, 2.550000e+02          ; 2 uses
   %i.cn = fcmp olt float %i.cm, 0.000000e+00
   %i.co = select i1 %i.cn, float -5.000000e-01, float 5.000000e-01
   %i.cp = fadd float %i.cm, %i.co                 ; 2 uses
@@ -2354,9 +2353,10 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r, %bb.q
   %.sroa.0.0.i.i.i.i.i24.i.i.i = phi i32 [ %i.cp, %bb.q ], [ %i.cq, %bb.r ], [ %i.cx, %bb.t ], [ %i.cl, %bb.s ]
-  %i.cy = bitcast i32 %.sroa.0.0.i.i.i.i.i24.i.i.i to float ; 2 uses
-  %5 = call noundef float @llvm.cos.f32(float %i.cy)
-  %i.cz = fmul float %5, %i.cf                    ; 2 uses
+  %i.cy = bitcast i32 %.sroa.0.0.i.i.i.i.i24.i.i.i to float
+  %sincos.i.i.i.i = call { float, float } @llvm.sincos.f32(float %i.cy) ; 2 uses
+  %cos.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 1
+  %i.cz = fmul float %cos.i.i.i.i, %i.cf          ; 2 uses
   %i.da = load ptr, ptr %3, align 8, !tbaa !287
   %i.db = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.da)
           to label %.noexc23.i.i unwind label %bb.bo
@@ -2450,8 +2450,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ac, %bb.ab, %bb.aa, %bb.y, %bb.x
   %.0.i.i.i.i.i22.i.i = phi i16 [ %i.dj, %bb.ac ], [ %i.du, %bb.y ], [ %i.dw, %bb.aa ], [ %i.ee, %bb.ab ], [ %i.dm, %bb.x ], [ %i.et, %bb.af ], [ %i.ep, %bb.ae ]
   store i16 %.0.i.i.i.i.i22.i.i, ptr %i.dd, align 2, !tbaa !1177
-  %6 = call noundef float @llvm.sin.f32(float %i.cy)
-  %i.eu = fmul float %6, %i.cf                    ; 2 uses
+  %sin.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 0
+  %i.eu = fmul float %sin.i.i.i.i, %i.cf          ; 2 uses
   %i.ev = load ptr, ptr %3, align 8, !tbaa !287
   %i.ew = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ev)
           to label %.noexc17.i.i unwind label %bb.bp
@@ -2854,10 +2854,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 2
   %i.bs = load i16, ptr %i.br, align 2, !tbaa !1177
   %i.bt = uitofp i16 %i.bs to float
-  %i.bu = fmul nnan float %i.bt, f0x37800080      ; 2 uses
-  %5 = call noundef float @llvm.sin.f32(float %i.bu)
-  %6 = call noundef float @llvm.cos.f32(float %i.bu)
-  %i.bv = fmul nnan float %i.bq, %6
+  %i.bu = fmul nnan float %i.bt, f0x37800080
+  %sincos.i.i.i.i = call { float, float } @llvm.sincos.f32(float %i.bu) ; 2 uses
+  %sin.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 0
+  %cos.i.i.i.i = extractvalue { float, float } %sincos.i.i.i.i, 1
+  %i.bv = fmul float %i.bq, %cos.i.i.i.i
   %i.bw = load ptr, ptr %3, align 8, !tbaa !287
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
           to label %.noexc.i.i.i unwind label %bb.aj
@@ -2872,7 +2873,7 @@ bb.j:                                             ; preds = %.noexc.i.i.i
 
 bb.k:                                             ; preds = %bb.j, %.noexc.i.i.i
   %i.bz = load ptr, ptr %i.l, align 8, !tbaa !289
-  %i.ca = fmul nnan float %i.bv, 6.553500e+04     ; 2 uses
+  %i.ca = fmul float %i.bv, 6.553500e+04          ; 2 uses
   %i.cb = fcmp olt float %i.ca, 0.000000e+00
   %i.cc = select i1 %i.cb, float -5.000000e-01, float 5.000000e-01
   %i.cd = fadd float %i.ca, %i.cc                 ; 2 uses
@@ -2882,7 +2883,7 @@ bb.k:                                             ; preds = %bb.j, %.noexc.i.i.i
   %.1.i.i.i.i.i.i.i.i.i = select i1 %i.ce, float 6.553500e+04, float %.0.i.i.i.i.i.i.i.i.i
   %i.cf = fptoui float %.1.i.i.i.i.i.i.i.i.i to i16
   store i16 %i.cf, ptr %i.bz, align 2, !tbaa !1177
-  %i.cg = fmul nnan float %i.bq, %5
+  %i.cg = fmul float %i.bq, %sin.i.i.i.i
   %i.ch = load ptr, ptr %3, align 8, !tbaa !287
   %i.ci = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ch)
           to label %.noexc28.i.i.i unwind label %bb.ak
@@ -2898,7 +2899,7 @@ bb.l:                                             ; preds = %.noexc28.i.i.i
 bb.m:                                             ; preds = %bb.l, %.noexc28.i.i.i
   %i.ck = load ptr, ptr %i.l, align 8, !tbaa !289 ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 2
-  %i.cm = fmul nnan float %i.cg, 6.553500e+04     ; 2 uses
+  %i.cm = fmul float %i.cg, 6.553500e+04          ; 2 uses
   %i.cn = fcmp olt float %i.cm, 0.000000e+00
   %i.co = select i1 %i.cn, float -5.000000e-01, float 5.000000e-01
   %i.cp = fadd float %i.cm, %i.co                 ; 2 uses
@@ -3300,6 +3301,9 @@ declare i128 @llvm.ctlz.i128(i128, i1 immarg) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare { float, float } @llvm.sincos.f32(float) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #8
