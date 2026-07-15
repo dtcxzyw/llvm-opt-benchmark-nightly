@@ -205,7 +205,7 @@ bb.el:                                            ; preds = %sqlite3_column_int.
 
 bb.em:                                            ; preds = %bb.el
   %i.sb = getelementptr inbounds nuw i8, ptr %i.sa, i64 8 ; 3 uses
-  %i.sc = load i32, ptr %i.sb, align 8, !tbaa !6922 ; 5 uses
+  %i.sc = load i32, ptr %i.sb, align 8, !tbaa !6922 ; 4 uses
   %i.sd = icmp slt i32 %i.sc, 4
   br i1 %i.sd, label %bb.eo, label %bb.en
 
@@ -271,11 +271,9 @@ bb.et:                                            ; preds = %fts5LeafRead.exit.i
 
 bb.eu:                                            ; preds = %bb.et
   %i.sz = load i32, ptr %i.kd, align 4, !tbaa !6636
-  %4 = icmp eq i32 %i.sz, 5
-  %i.ta = icmp eq i32 %i.sc, 4
+  %i.ta = icmp eq i32 %i.sz, 5
   %i.tb = icmp eq i32 %i.sf, 4
-  %5 = and i1 %i.ta, %i.tb
-  %or.cond143.i.i = and i1 %5, %4
+  %or.cond143.i.i = and i1 %i.tb, %i.ta
   br i1 %or.cond143.i.i, label %fts5IntegrityCheckPgidx.exit.i.i, label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu, %bb.et
