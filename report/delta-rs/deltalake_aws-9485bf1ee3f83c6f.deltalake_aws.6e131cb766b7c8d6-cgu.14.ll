@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.e
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.am = load ptr, ptr %i.al, align 8, !alias.scope !1186, !noalias !1187, !noundef !3 ; 2 uses
   %.not.i.i1 = icmp eq ptr %i.am, null
-  %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   br i1 %.not.i.i1, label %bb.g, label %._RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i_crit_edge
 
 ._RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i_crit_edge: ; preds = %bb.f
@@ -270,13 +270,11 @@ bb.g:                                             ; preds = %bb.f
   %i.bd = icmp eq i64 %i.bc, 0
   br i1 %i.bd, label %._crit_edge.i.i, label %.lr.ph.i.i2
 
-_RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %._RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i_crit_edge, %._crit_edge.i.i
+_RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %._crit_edge.i.i, %._RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i_crit_edge
   %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.i.pre, %._RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i_crit_edge ], [ 0, %._crit_edge.i.i ] ; 2 uses
   %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.i.pre, %._RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i_crit_edge ], [ 0, %._crit_edge.i.i ] ; 2 uses
   %.sroa.05.0.copyload.i.i = phi ptr [ %i.am, %._RNvMsc_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE10init_frontCs9rVkZwOUgsI_13deltalake_aws.exit.i_crit_edge ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1196)
-  %.sroa.26.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.37.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.05.0.copyload.i.i, i64 626
   %i.bf = load i16, ptr %i.be, align 2, !noalias !1197, !noundef !3
   %i.bg = zext i16 %i.bf to i64
@@ -391,8 +389,9 @@ bb.l:                                             ; preds = %bb.k
 _RINvMsb_NtNtNtCs6Po7BT7Nknu_5alloc11collections5btree8navigateINtB6_13LazyLeafRangeNtNtNtB8_4node6marker5DyingNtNtBc_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueE27deallocating_next_uncheckedNtNtBc_5alloc6GlobalECs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %.prol.loopexit, %.new, %bb.h
   %.sroa.7.0.ph.i.i.i = phi i64 [ %i.bm, %bb.h ], [ 0, %.new ], [ 0, %.prol.loopexit ]
   %.sroa.0.0.ph.i.i.i = phi ptr [ %.sroa.0.0.lcssa.i.i.i.i, %bb.h ], [ %.sroa.017.0.i.i.i.i.i.lcssa.unr, %.prol.loopexit ], [ %.sroa.017.0.i.i.i.i.i.7, %.new ]
+  %.sroa.37.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   store ptr %.sroa.0.0.ph.i.i.i, ptr %i.al, align 8, !alias.scope !1189, !noalias !1192
-  store i64 0, ptr %.sroa.26.0..sroa_idx.i.i, align 8, !alias.scope !1189, !noalias !1192
+  store i64 0, ptr %i.an, align 8, !alias.scope !1189, !noalias !1192
   store i64 %.sroa.7.0.ph.i.i.i, ptr %.sroa.37.0..sroa_idx.i.i, align 8, !alias.scope !1189, !noalias !1192
   store ptr %.sroa.0.0.lcssa.i.i.i.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
