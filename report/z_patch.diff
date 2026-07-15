@@ -1,0 +1,69 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index b82f4669262a4..c3cb608754c21 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1980,6 +1980,30 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+                                      DFSInStack);
+       }
+ 
++      // (X | Y) >=s 0 implies X >=s 0 and Y >=s 0, because the sign bit of an
++      // OR is the OR of the operand sign bits. Look through this
++      // canonicalization by InstCombine. disjunct so it is available to the
++      // solver.
++      if ((Pred == CmpInst::ICMP_SGE && match(B, m_Zero())) ||
++          (Pred == CmpInst::ICMP_SGT && match(B, m_AllOnes()))) {
++        SmallVector<Value *> OrWorklist = {A};
++        SmallPtrSet<Value *, 4> SeenOr;
++        Value *X, *Y;
++        while (!OrWorklist.empty()) {
++          Value *Cur = OrWorklist.pop_back_val();
++          if (!match(Cur, m_Or(m_Value(X), m_Value(Y))))
++            continue;
++          for (Value *Op : {X, Y}) {
++            if (!SeenOr.insert(Op).second)
++              continue;
++            OrWorklist.push_back(Op);
++            Info.addFact(CmpInst::ICMP_SGE, Op,
++                         ConstantInt::getNullValue(Op->getType()), CB.NumIn,
++                         CB.NumOut, DFSInStack);
++          }
++        }
++      }
++
+       if (ReproducerModule && DFSInStack.size() > ReproducerCondStack.size()) {
+         // Add dummy entries to ReproducerCondStack to keep it in sync with
+         // DFSInStack.
+diff --git a/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll b/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll
+index b8413acbbf2cf..92b80e5459499 100644
+--- a/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll
++++ b/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll
+@@ -17,8 +17,7 @@ define i1 @or_non_negative_bounds(i64 %a, i64 %b, i64 %c, i64 %d) {
+ ; CHECK-NEXT:    br i1 [[AND_3]], label %[[THEN:.*]], label %[[ELSE:.*]]
+ ; CHECK:       [[THEN]]:
+ ; CHECK-NEXT:    [[IDX:%.*]] = add nsw i64 [[D]], [[B]]
+-; CHECK-NEXT:    [[RES:%.*]] = icmp ult i64 [[IDX]], [[A]]
+-; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[ELSE]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -50,8 +49,7 @@ define i1 @or_non_negative_sge(i64 %a, i64 %b) {
+ ; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[O]], 0
+ ; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[ELSE:.*]]
+ ; CHECK:       [[THEN]]:
+-; CHECK-NEXT:    [[RES:%.*]] = icmp sge i64 [[B]], 0
+-; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[ELSE]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -76,8 +74,7 @@ define i1 @or_non_negative_nested(i64 %a, i64 %b, i64 %c) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i64 [[O2]], -1
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[THEN:.*]], label %[[ELSE:.*]]
+ ; CHECK:       [[THEN]]:
+-; CHECK-NEXT:    [[RES:%.*]] = icmp sge i64 [[C]], 0
+-; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[ELSE]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
