@@ -204,35 +204,37 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread: ; preds = %_ZN
   %i.bf = extractelement <2 x float> %i.bb, i64 0
   %i.bg = fpext float %i.bf to double
   %i.bh = fmul double %i.bg, f0x401921FB54442D18
-  %i.bi = fptrunc double %i.bh to float           ; 4 uses
+  %i.bi = fptrunc double %i.bh to float
+  %sincos7.i = call { float, float } @llvm.sincos.f32(float %i.bi) ; 4 uses
   %i.bj = extractelement <2 x float> %i.bb, i64 1
   %i.bk = fpext float %i.bj to double
   %i.bl = fmul double %i.bk, f0x400921FB54442D18
-  %i.bm = fptrunc double %i.bl to float           ; 2 uses
-  %4 = call noundef float @llvm.sin.f32(float %i.bm) ; 3 uses
-  %5 = call noundef float @llvm.cos.f32(float %i.bm) ; 2 uses
+  %i.bm = fptrunc double %i.bl to float
+  %sincos.i.i = call { float, float } @llvm.sincos.f32(float %i.bm) ; 2 uses
+  %sin.i.i = extractvalue { float, float } %sincos.i.i, 0 ; 3 uses
+  %cos.i.i = extractvalue { float, float } %sincos.i.i, 1 ; 2 uses
   br i1 %i.be, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %6 = call float @llvm.sin.f32(float %i.bi)
-  %7 = fmul float %6, %4
-  %8 = fneg float %4
-  %9 = call float @llvm.cos.f32(float %i.bi)
-  %i.bn = fmul float %9, %8
+  %cos9.i = extractvalue { float, float } %sincos7.i, 1
+  %sin.i = extractvalue { float, float } %sincos7.i, 0
+  %4 = fmul float %sin.i, %sin.i.i
+  %5 = fneg float %sin.i.i
+  %i.bn = fmul float %cos9.i, %5
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 bb.l:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %10 = fneg float %4                             ; 2 uses
-  %11 = call float @llvm.cos.f32(float %i.bi)
-  %12 = fmul float %11, %10
-  %13 = call float @llvm.sin.f32(float %i.bi)
-  %i.bo = fmul float %13, %10
+  %sin8.i = extractvalue { float, float } %sincos7.i, 0
+  %cos.i = extractvalue { float, float } %sincos7.i, 1
+  %6 = fneg float %sin.i.i                        ; 2 uses
+  %7 = fmul float %cos.i, %6
+  %i.bo = fmul float %sin8.i, %6
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 _ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit:   ; preds = %bb.l, %bb.k
-  %.sink11.i = phi float [ %7, %bb.k ], [ %12, %bb.l ] ; 2 uses
-  %.sink10.i = phi float [ %5, %bb.k ], [ %i.bo, %bb.l ] ; 2 uses
-  %.sink.i = phi float [ %i.bn, %bb.k ], [ %5, %bb.l ]
+  %.sink11.i = phi float [ %4, %bb.k ], [ %7, %bb.l ] ; 2 uses
+  %.sink10.i = phi float [ %cos.i.i, %bb.k ], [ %i.bo, %bb.l ] ; 2 uses
+  %.sink.i = phi float [ %i.bn, %bb.k ], [ %cos.i.i, %bb.l ]
   %i.bp = call float @llvm.acos.f32(float %.sink.i)
   %i.bq = fpext ninf float %i.bp to double
   %i.br = fmul double %i.bq, f0x3FD45F306DC9C883
@@ -635,12 +637,6 @@ declare void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_NS1_8WrapModeE
 
 declare void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126), ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(32), i32 noundef, i1 noundef zeroext) unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sin.f32(float) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.cos.f32(float) #23
-
 declare void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBase7rerangeEiiiiiiNS1_8WrapModeE(ptr noundef nonnull align 8 dereferenceable(126), i32 noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -841,35 +837,37 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread: ; preds = %_ZN
   %i.be = extractelement <2 x float> %i.ba, i64 0
   %i.bf = fpext float %i.be to double
   %i.bg = fmul double %i.bf, f0x401921FB54442D18
-  %i.bh = fptrunc double %i.bg to float           ; 4 uses
+  %i.bh = fptrunc double %i.bg to float
+  %sincos7.i = call { float, float } @llvm.sincos.f32(float %i.bh) ; 4 uses
   %i.bi = extractelement <2 x float> %i.ba, i64 1
   %i.bj = fpext float %i.bi to double
   %i.bk = fmul double %i.bj, f0x400921FB54442D18
-  %i.bl = fptrunc double %i.bk to float           ; 2 uses
-  %4 = call noundef float @llvm.sin.f32(float %i.bl) ; 3 uses
-  %5 = call noundef float @llvm.cos.f32(float %i.bl) ; 2 uses
+  %i.bl = fptrunc double %i.bk to float
+  %sincos.i.i = call { float, float } @llvm.sincos.f32(float %i.bl) ; 2 uses
+  %sin.i.i = extractvalue { float, float } %sincos.i.i, 0 ; 3 uses
+  %cos.i.i = extractvalue { float, float } %sincos.i.i, 1 ; 2 uses
   br i1 %i.bd, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %6 = call float @llvm.sin.f32(float %i.bh)
-  %7 = fmul float %6, %4
-  %8 = fneg float %4
-  %9 = call float @llvm.cos.f32(float %i.bh)
-  %i.bm = fmul float %9, %8
+  %cos9.i = extractvalue { float, float } %sincos7.i, 1
+  %sin.i = extractvalue { float, float } %sincos7.i, 0
+  %4 = fmul float %sin.i, %sin.i.i
+  %5 = fneg float %sin.i.i
+  %i.bm = fmul float %cos9.i, %5
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 bb.k:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %10 = fneg float %4                             ; 2 uses
-  %11 = call float @llvm.cos.f32(float %i.bh)
-  %12 = fmul float %11, %10
-  %13 = call float @llvm.sin.f32(float %i.bh)
-  %i.bn = fmul float %13, %10
+  %sin8.i = extractvalue { float, float } %sincos7.i, 0
+  %cos.i = extractvalue { float, float } %sincos7.i, 1
+  %6 = fneg float %sin.i.i                        ; 2 uses
+  %7 = fmul float %cos.i, %6
+  %i.bn = fmul float %sin8.i, %6
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 _ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit:   ; preds = %bb.k, %bb.j
-  %.sink11.i = phi float [ %7, %bb.j ], [ %12, %bb.k ] ; 2 uses
-  %.sink10.i = phi float [ %5, %bb.j ], [ %i.bn, %bb.k ] ; 2 uses
-  %.sink.i = phi float [ %i.bm, %bb.j ], [ %5, %bb.k ]
+  %.sink11.i = phi float [ %4, %bb.j ], [ %7, %bb.k ] ; 2 uses
+  %.sink10.i = phi float [ %cos.i.i, %bb.j ], [ %i.bn, %bb.k ] ; 2 uses
+  %.sink.i = phi float [ %i.bm, %bb.j ], [ %cos.i.i, %bb.k ]
   %i.bo = call float @llvm.acos.f32(float %.sink.i)
   %i.bp = fpext ninf float %i.bo to double
   %i.bq = fmul double %i.bp, f0x3FD45F306DC9C883
@@ -1272,35 +1270,37 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread: ; preds = %_ZN
   %i.be = extractelement <2 x float> %i.ba, i64 0
   %i.bf = fpext float %i.be to double
   %i.bg = fmul double %i.bf, f0x401921FB54442D18
-  %i.bh = fptrunc double %i.bg to float           ; 4 uses
+  %i.bh = fptrunc double %i.bg to float
+  %sincos7.i = call { float, float } @llvm.sincos.f32(float %i.bh) ; 4 uses
   %i.bi = extractelement <2 x float> %i.ba, i64 1
   %i.bj = fpext float %i.bi to double
   %i.bk = fmul double %i.bj, f0x400921FB54442D18
-  %i.bl = fptrunc double %i.bk to float           ; 2 uses
-  %4 = call noundef float @llvm.sin.f32(float %i.bl) ; 3 uses
-  %5 = call noundef float @llvm.cos.f32(float %i.bl) ; 2 uses
+  %i.bl = fptrunc double %i.bk to float
+  %sincos.i.i = call { float, float } @llvm.sincos.f32(float %i.bl) ; 2 uses
+  %sin.i.i = extractvalue { float, float } %sincos.i.i, 0 ; 3 uses
+  %cos.i.i = extractvalue { float, float } %sincos.i.i, 1 ; 2 uses
   br i1 %i.bd, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %6 = call float @llvm.sin.f32(float %i.bh)
-  %7 = fmul float %6, %4
-  %8 = fneg float %4
-  %9 = call float @llvm.cos.f32(float %i.bh)
-  %i.bm = fmul float %9, %8
+  %cos9.i = extractvalue { float, float } %sincos7.i, 1
+  %sin.i = extractvalue { float, float } %sincos7.i, 0
+  %4 = fmul float %sin.i, %sin.i.i
+  %5 = fneg float %sin.i.i
+  %i.bm = fmul float %cos9.i, %5
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 bb.k:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %10 = fneg float %4                             ; 2 uses
-  %11 = call float @llvm.cos.f32(float %i.bh)
-  %12 = fmul float %11, %10
-  %13 = call float @llvm.sin.f32(float %i.bh)
-  %i.bn = fmul float %13, %10
+  %sin8.i = extractvalue { float, float } %sincos7.i, 0
+  %cos.i = extractvalue { float, float } %sincos7.i, 1
+  %6 = fneg float %sin.i.i                        ; 2 uses
+  %7 = fmul float %cos.i, %6
+  %i.bn = fmul float %sin8.i, %6
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 _ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit:   ; preds = %bb.k, %bb.j
-  %.sink11.i = phi float [ %7, %bb.j ], [ %12, %bb.k ] ; 2 uses
-  %.sink10.i = phi float [ %5, %bb.j ], [ %i.bn, %bb.k ] ; 2 uses
-  %.sink.i = phi float [ %i.bm, %bb.j ], [ %5, %bb.k ]
+  %.sink11.i = phi float [ %4, %bb.j ], [ %7, %bb.k ] ; 2 uses
+  %.sink10.i = phi float [ %cos.i.i, %bb.j ], [ %i.bn, %bb.k ] ; 2 uses
+  %.sink.i = phi float [ %i.bm, %bb.j ], [ %cos.i.i, %bb.k ]
   %i.bo = call float @llvm.acos.f32(float %.sink.i)
   %i.bp = fpext ninf float %i.bo to double
   %i.bq = fmul double %i.bp, f0x3FD45F306DC9C883
@@ -1703,35 +1703,37 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread: ; preds = %_ZN
   %i.be = extractelement <2 x float> %i.ba, i64 0
   %i.bf = fpext float %i.be to double
   %i.bg = fmul double %i.bf, f0x401921FB54442D18
-  %i.bh = fptrunc double %i.bg to float           ; 4 uses
+  %i.bh = fptrunc double %i.bg to float
+  %sincos7.i = call { float, float } @llvm.sincos.f32(float %i.bh) ; 4 uses
   %i.bi = extractelement <2 x float> %i.ba, i64 1
   %i.bj = fpext float %i.bi to double
   %i.bk = fmul double %i.bj, f0x400921FB54442D18
-  %i.bl = fptrunc double %i.bk to float           ; 2 uses
-  %4 = call noundef float @llvm.sin.f32(float %i.bl) ; 3 uses
-  %5 = call noundef float @llvm.cos.f32(float %i.bl) ; 2 uses
+  %i.bl = fptrunc double %i.bk to float
+  %sincos.i.i = call { float, float } @llvm.sincos.f32(float %i.bl) ; 2 uses
+  %sin.i.i = extractvalue { float, float } %sincos.i.i, 0 ; 3 uses
+  %cos.i.i = extractvalue { float, float } %sincos.i.i, 1 ; 2 uses
   br i1 %i.bd, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %6 = call float @llvm.sin.f32(float %i.bh)
-  %7 = fmul float %6, %4
-  %8 = fneg float %4
-  %9 = call float @llvm.cos.f32(float %i.bh)
-  %i.bm = fmul float %9, %8
+  %cos9.i = extractvalue { float, float } %sincos7.i, 1
+  %sin.i = extractvalue { float, float } %sincos7.i, 0
+  %4 = fmul float %sin.i, %sin.i.i
+  %5 = fneg float %sin.i.i
+  %i.bm = fmul float %cos9.i, %5
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 bb.k:                                             ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
-  %10 = fneg float %4                             ; 2 uses
-  %11 = call float @llvm.cos.f32(float %i.bh)
-  %12 = fmul float %11, %10
-  %13 = call float @llvm.sin.f32(float %i.bh)
-  %i.bn = fmul float %13, %10
+  %sin8.i = extractvalue { float, float } %sincos7.i, 0
+  %cos.i = extractvalue { float, float } %sincos7.i, 1
+  %6 = fneg float %sin.i.i                        ; 2 uses
+  %7 = fmul float %cos.i, %6
+  %i.bn = fmul float %sin8.i, %6
   br label %_ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit
 
 _ZN11OpenImageIO4v3_114latlong_to_dirEffb.exit:   ; preds = %bb.k, %bb.j
-  %.sink11.i = phi float [ %7, %bb.j ], [ %12, %bb.k ] ; 2 uses
-  %.sink10.i = phi float [ %5, %bb.j ], [ %i.bn, %bb.k ] ; 2 uses
-  %.sink.i = phi float [ %i.bm, %bb.j ], [ %5, %bb.k ]
+  %.sink11.i = phi float [ %4, %bb.j ], [ %7, %bb.k ] ; 2 uses
+  %.sink10.i = phi float [ %cos.i.i, %bb.j ], [ %i.bn, %bb.k ] ; 2 uses
+  %.sink.i = phi float [ %i.bm, %bb.j ], [ %cos.i.i, %bb.k ]
   %i.bo = call float @llvm.acos.f32(float %.sink.i)
   %i.bp = fpext ninf float %i.bo to double
   %i.bq = fmul double %i.bp, f0x3FD45F306DC9C883
@@ -2133,6 +2135,9 @@ declare double @llvm.fabs.f64(double) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #23
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare { float, float } @llvm.sincos.f32(float) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #29

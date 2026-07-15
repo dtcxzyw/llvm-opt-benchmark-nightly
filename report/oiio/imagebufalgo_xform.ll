@@ -204,18 +204,19 @@ bb.a:
   %i.i = fadd float %i.h, 0.000000e+00            ; 3 uses
   %i.j = tail call float @llvm.fmuladd.f32(float %i.c, float 0.000000e+00, float %i.e)
   %i.k = fadd float %i.j, 1.000000e+00            ; 3 uses
-  %10 = tail call noundef float @llvm.cos.f32(float %2) ; 6 uses
-  %11 = tail call noundef float @llvm.sin.f32(float %2) ; 5 uses
-  %i.l = fneg float %11                           ; 2 uses
-  %i.m = fmul ninf float %11, 0.000000e+00
-  %i.n = fsub float %10, %i.m
+  %sincos.i.i = tail call { float, float } @llvm.sincos.f32(float %2) ; 2 uses
+  %sin.i.i = extractvalue { float, float } %sincos.i.i, 0 ; 5 uses
+  %cos.i.i = extractvalue { float, float } %sincos.i.i, 1 ; 6 uses
+  %i.l = fneg float %sin.i.i                      ; 2 uses
+  %i.m = fmul float %sin.i.i, 0.000000e+00
+  %i.n = fsub float %cos.i.i, %i.m
   %i.o = fadd float %i.n, 0.000000e+00            ; 2 uses
-  %i.p = fmul ninf float %10, 0.000000e+00
-  %i.q = fadd float %11, %i.p
+  %i.p = fmul float %cos.i.i, 0.000000e+00
+  %i.q = fadd float %sin.i.i, %i.p
   %i.r = fmul float %i.i, %i.l
-  %i.s = tail call float @llvm.fmuladd.f32(float %i.g, float %10, float %i.r)
-  %i.t = fmul float %10, %i.i
-  %i.u = tail call float @llvm.fmuladd.f32(float %i.g, float %11, float %i.t)
+  %i.s = tail call float @llvm.fmuladd.f32(float %i.g, float %cos.i.i, float %i.r)
+  %i.t = fmul float %cos.i.i, %i.i
+  %i.u = tail call float @llvm.fmuladd.f32(float %i.g, float %sin.i.i, float %i.t)
   %i.v = tail call float @llvm.fmuladd.f32(float %i.k, float 0.000000e+00, float %i.u) ; 2 uses
   %i.w = fmul float %i.i, 0.000000e+00
   %i.x = tail call float @llvm.fmuladd.f32(float %i.g, float 0.000000e+00, float %i.w)
@@ -236,10 +237,10 @@ bb.a:
   %i.am = insertelement <2 x float> poison, float %i.ah, i64 0
   %i.an = insertelement <2 x float> %i.am, float %i.ai, i64 1
   %i.ao = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %i.an)
-  %i.ap = insertelement <2 x float> poison, float %10, i64 0
-  %i.aq = insertelement <2 x float> %i.ap, float %11, i64 1
+  %i.ap = insertelement <2 x float> poison, float %cos.i.i, i64 0
+  %i.aq = insertelement <2 x float> %i.ap, float %sin.i.i, i64 1
   %i.ar = insertelement <2 x float> poison, float %i.l, i64 0
-  %i.as = insertelement <2 x float> %i.ar, float %10, i64 1
+  %i.as = insertelement <2 x float> %i.ar, float %cos.i.i, i64 1
   %i.at = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aq, <2 x float> zeroinitializer, <2 x float> %i.as)
   %i.au = fadd <2 x float> %i.at, zeroinitializer ; 4 uses
   %i.av = fmul <2 x float> %i.au, <float 1.000000e+00, float 0.000000e+00> ; 2 uses
@@ -642,18 +643,19 @@ bb.a:
   %i.k = fadd float %i.j, 0.000000e+00            ; 3 uses
   %i.l = tail call float @llvm.fmuladd.f32(float %i.e, float 0.000000e+00, float %i.g)
   %i.m = fadd float %i.l, 1.000000e+00            ; 3 uses
-  %20 = tail call noundef float @llvm.cos.f32(float %2) ; 6 uses
-  %21 = tail call noundef float @llvm.sin.f32(float %2) ; 5 uses
-  %i.n = fneg float %21                           ; 2 uses
-  %i.o = fmul ninf float %21, 0.000000e+00
-  %i.p = fsub float %20, %i.o
+  %sincos.i.i = tail call { float, float } @llvm.sincos.f32(float %2) ; 2 uses
+  %sin.i.i = extractvalue { float, float } %sincos.i.i, 0 ; 5 uses
+  %cos.i.i = extractvalue { float, float } %sincos.i.i, 1 ; 6 uses
+  %i.n = fneg float %sin.i.i                      ; 2 uses
+  %i.o = fmul float %sin.i.i, 0.000000e+00
+  %i.p = fsub float %cos.i.i, %i.o
   %i.q = fadd float %i.p, 0.000000e+00            ; 2 uses
-  %i.r = fmul ninf float %20, 0.000000e+00
-  %i.s = fadd float %21, %i.r
+  %i.r = fmul float %cos.i.i, 0.000000e+00
+  %i.s = fadd float %sin.i.i, %i.r
   %i.t = fmul float %i.k, %i.n
-  %i.u = tail call float @llvm.fmuladd.f32(float %i.i, float %20, float %i.t)
-  %i.v = fmul float %20, %i.k
-  %i.w = tail call float @llvm.fmuladd.f32(float %i.i, float %21, float %i.v)
+  %i.u = tail call float @llvm.fmuladd.f32(float %i.i, float %cos.i.i, float %i.t)
+  %i.v = fmul float %cos.i.i, %i.k
+  %i.w = tail call float @llvm.fmuladd.f32(float %i.i, float %sin.i.i, float %i.v)
   %i.x = tail call float @llvm.fmuladd.f32(float %i.m, float 0.000000e+00, float %i.w) ; 2 uses
   %i.y = fmul float %i.k, 0.000000e+00
   %i.z = tail call float @llvm.fmuladd.f32(float %i.i, float 0.000000e+00, float %i.y)
@@ -674,10 +676,10 @@ bb.a:
   %i.ao = insertelement <2 x float> poison, float %i.aj, i64 0
   %i.ap = insertelement <2 x float> %i.ao, float %i.ak, i64 1
   %i.aq = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.an, <2 x float> zeroinitializer, <2 x float> %i.ap)
-  %i.ar = insertelement <2 x float> poison, float %20, i64 0
-  %i.as = insertelement <2 x float> %i.ar, float %21, i64 1
+  %i.ar = insertelement <2 x float> poison, float %cos.i.i, i64 0
+  %i.as = insertelement <2 x float> %i.ar, float %sin.i.i, i64 1
   %i.at = insertelement <2 x float> poison, float %i.n, i64 0
-  %i.au = insertelement <2 x float> %i.at, float %20, i64 1
+  %i.au = insertelement <2 x float> %i.at, float %cos.i.i, i64 1
   %i.av = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.as, <2 x float> zeroinitializer, <2 x float> %i.au)
   %i.aw = fadd <2 x float> %i.av, zeroinitializer ; 4 uses
   %i.ax = fmul <2 x float> %i.aw, <float 1.000000e+00, float 0.000000e+00> ; 2 uses
@@ -861,18 +863,19 @@ bb.a:
   %i.v = fadd float %i.u, 0.000000e+00            ; 3 uses
   %i.w = call float @llvm.fmuladd.f32(float %i.p, float 0.000000e+00, float %i.r)
   %i.x = fadd float %i.w, 1.000000e+00            ; 3 uses
-  %9 = call noundef float @llvm.cos.f32(float %2) ; 6 uses
-  %10 = call noundef float @llvm.sin.f32(float %2) ; 5 uses
-  %i.y = fneg float %10                           ; 2 uses
-  %i.z = fmul ninf float %10, 0.000000e+00
-  %i.aa = fsub float %9, %i.z
+  %sincos.i.i.i = call { float, float } @llvm.sincos.f32(float %2) ; 2 uses
+  %sin.i.i.i = extractvalue { float, float } %sincos.i.i.i, 0 ; 5 uses
+  %cos.i.i.i = extractvalue { float, float } %sincos.i.i.i, 1 ; 6 uses
+  %i.y = fneg float %sin.i.i.i                    ; 2 uses
+  %i.z = fmul float %sin.i.i.i, 0.000000e+00
+  %i.aa = fsub float %cos.i.i.i, %i.z
   %i.ab = fadd float %i.aa, 0.000000e+00          ; 2 uses
-  %i.ac = fmul ninf float %9, 0.000000e+00
-  %i.ad = fadd float %10, %i.ac
+  %i.ac = fmul float %cos.i.i.i, 0.000000e+00
+  %i.ad = fadd float %sin.i.i.i, %i.ac
   %i.ae = fmul float %i.v, %i.y
-  %i.af = call float @llvm.fmuladd.f32(float %i.t, float %9, float %i.ae)
-  %i.ag = fmul float %9, %i.v
-  %i.ah = call float @llvm.fmuladd.f32(float %i.t, float %10, float %i.ag)
+  %i.af = call float @llvm.fmuladd.f32(float %i.t, float %cos.i.i.i, float %i.ae)
+  %i.ag = fmul float %cos.i.i.i, %i.v
+  %i.ah = call float @llvm.fmuladd.f32(float %i.t, float %sin.i.i.i, float %i.ag)
   %i.ai = call float @llvm.fmuladd.f32(float %i.x, float 0.000000e+00, float %i.ah) ; 2 uses
   %i.aj = fmul float %i.v, 0.000000e+00
   %i.ak = call float @llvm.fmuladd.f32(float %i.t, float 0.000000e+00, float %i.aj)
@@ -892,10 +895,10 @@ bb.a:
   %i.ay = insertelement <2 x float> poison, float %i.at, i64 0
   %i.az = insertelement <2 x float> %i.ay, float %i.au, i64 1
   %i.ba = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ax, <2 x float> zeroinitializer, <2 x float> %i.az)
-  %i.bb = insertelement <2 x float> poison, float %9, i64 0
-  %i.bc = insertelement <2 x float> %i.bb, float %10, i64 1
+  %i.bb = insertelement <2 x float> poison, float %cos.i.i.i, i64 0
+  %i.bc = insertelement <2 x float> %i.bb, float %sin.i.i.i, i64 1
   %i.bd = insertelement <2 x float> poison, float %i.y, i64 0
-  %i.be = insertelement <2 x float> %i.bd, float %9, i64 1
+  %i.be = insertelement <2 x float> %i.bd, float %cos.i.i.i, i64 1
   %i.bf = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> zeroinitializer, <2 x float> %i.be)
   %i.bg = fadd <2 x float> %i.bf, zeroinitializer ; 4 uses
   %i.bh = fmul <2 x float> %i.bg, <float 1.000000e+00, float 0.000000e+00> ; 2 uses
@@ -987,18 +990,19 @@ bb.a:
   %i.i = fadd float %i.h, 0.000000e+00            ; 3 uses
   %i.j = tail call float @llvm.fmuladd.f32(float %i.c, float 0.000000e+00, float %i.e)
   %i.k = fadd float %i.j, 1.000000e+00            ; 3 uses
-  %10 = tail call noundef float @llvm.cos.f32(float %2) ; 6 uses
-  %11 = tail call noundef float @llvm.sin.f32(float %2) ; 5 uses
-  %i.l = fneg float %11                           ; 2 uses
-  %i.m = fmul ninf float %11, 0.000000e+00
-  %i.n = fsub float %10, %i.m
+  %sincos.i.i.i = tail call { float, float } @llvm.sincos.f32(float %2) ; 2 uses
+  %sin.i.i.i = extractvalue { float, float } %sincos.i.i.i, 0 ; 5 uses
+  %cos.i.i.i = extractvalue { float, float } %sincos.i.i.i, 1 ; 6 uses
+  %i.l = fneg float %sin.i.i.i                    ; 2 uses
+  %i.m = fmul float %sin.i.i.i, 0.000000e+00
+  %i.n = fsub float %cos.i.i.i, %i.m
   %i.o = fadd float %i.n, 0.000000e+00            ; 2 uses
-  %i.p = fmul ninf float %10, 0.000000e+00
-  %i.q = fadd float %11, %i.p
+  %i.p = fmul float %cos.i.i.i, 0.000000e+00
+  %i.q = fadd float %sin.i.i.i, %i.p
   %i.r = fmul float %i.i, %i.l
-  %i.s = tail call float @llvm.fmuladd.f32(float %i.g, float %10, float %i.r)
-  %i.t = fmul float %10, %i.i
-  %i.u = tail call float @llvm.fmuladd.f32(float %i.g, float %11, float %i.t)
+  %i.s = tail call float @llvm.fmuladd.f32(float %i.g, float %cos.i.i.i, float %i.r)
+  %i.t = fmul float %cos.i.i.i, %i.i
+  %i.u = tail call float @llvm.fmuladd.f32(float %i.g, float %sin.i.i.i, float %i.t)
   %i.v = tail call float @llvm.fmuladd.f32(float %i.k, float 0.000000e+00, float %i.u) ; 2 uses
   %i.w = fmul float %i.i, 0.000000e+00
   %i.x = tail call float @llvm.fmuladd.f32(float %i.g, float 0.000000e+00, float %i.w)
@@ -1019,10 +1023,10 @@ bb.a:
   %i.am = insertelement <2 x float> poison, float %i.ah, i64 0
   %i.an = insertelement <2 x float> %i.am, float %i.ai, i64 1
   %i.ao = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %i.an)
-  %i.ap = insertelement <2 x float> poison, float %10, i64 0
-  %i.aq = insertelement <2 x float> %i.ap, float %11, i64 1
+  %i.ap = insertelement <2 x float> poison, float %cos.i.i.i, i64 0
+  %i.aq = insertelement <2 x float> %i.ap, float %sin.i.i.i, i64 1
   %i.ar = insertelement <2 x float> poison, float %i.l, i64 0
-  %i.as = insertelement <2 x float> %i.ar, float %10, i64 1
+  %i.as = insertelement <2 x float> %i.ar, float %cos.i.i.i, i64 1
   %i.at = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aq, <2 x float> zeroinitializer, <2 x float> %i.as)
   %i.au = fadd <2 x float> %i.at, zeroinitializer ; 4 uses
   %i.av = fmul <2 x float> %i.au, <float 1.000000e+00, float 0.000000e+00> ; 2 uses
@@ -1425,12 +1429,6 @@ declare void @_ZN11OpenImageIO4v3_110ParamValue11clear_valueEv(ptr noundef nonnu
 ; Function Attrs: nounwind
 declare void @_ZN11OpenImageIO4v3_110ParamValue12init_noclearENS0_7ustringENS0_8TypeDescEiNS0_4spanIKSt4byteLm18446744073709551615EEENS1_4CopyENS1_11FromUstringE(ptr noundef nonnull align 8 dereferenceable(39), ptr, i64, i32 noundef, ptr, i64, i8, i8) local_unnamed_addr #7
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.cos.f32(float) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sin.f32(float) #9
-
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN11OpenImageIO4v3_15TimerD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
@@ -1832,6 +1830,9 @@ declare i128 @llvm.ctlz.i128(i128, i1 immarg) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #9
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare { float, float } @llvm.sincos.f32(float) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.copysign.f32(float, float) #9

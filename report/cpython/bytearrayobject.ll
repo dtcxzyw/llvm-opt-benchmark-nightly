@@ -204,7 +204,7 @@ _PyIndex_Check.exit.thread.i:                     ; preds = %_PyIndex_Check.exit
   br label %bytearray_take_bytes_impl.exit
 
 bb.i:                                             ; preds = %.thread, %bb.h, %bb.d
-  %.val.i11 = phi i64 [ %.val.i, %bb.h ], [ %.val.i, %bb.d ], [ %.val.i10, %.thread ] ; 4 uses
+  %.val.i11 = phi i64 [ %.val.i, %bb.h ], [ %.val.i, %bb.d ], [ %.val.i10, %.thread ] ; 3 uses
   %i.r = phi ptr [ %i.e, %bb.h ], [ %i.e, %bb.d ], [ %i.c, %.thread ] ; 2 uses
   %.051.i = phi i64 [ %spec.select.i, %bb.h ], [ %.val.i, %bb.d ], [ %.val.i10, %.thread ] ; 11 uses
   %i.s = icmp slt i64 %.051.i, 0
@@ -230,9 +230,7 @@ _canresize.exit.thread.i:                         ; preds = %bb.k
 
 _canresize.exit.i:                                ; preds = %bb.k
   %i.z = icmp eq i64 %.051.i, 0
-  %3 = icmp eq i64 %.val.i11, 0
-  %or.cond.i = select i1 %i.z, i1 true, i1 %3
-  br i1 %or.cond.i, label %bb.l, label %bb.m
+  br i1 %i.z, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %_canresize.exit.i
   %i.aa = tail call ptr @Py_GetConstant(i32 noundef 8) #17
