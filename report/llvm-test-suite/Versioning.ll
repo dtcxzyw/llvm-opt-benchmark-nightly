@@ -203,7 +203,41 @@ declare void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align
 
 ; Function Attrs: mustprogress noinline nounwind uwtable
 define linkonce_odr dso_local void @_Z6do_xorILj16EiEvPT0_S1_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #6 comdat {
-bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add i64 %4, 64
+  %6 = add i64 %3, 64
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = load <4 x i32>, ptr %1, align 4, !tbaa !4
+  %8 = load <4 x i32>, ptr %0, align 4, !tbaa !4
+  %9 = xor <4 x i32> %8, %7
+  store <4 x i32> %9, ptr %0, align 4, !tbaa !4
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %12 = load <4 x i32>, ptr %10, align 4, !tbaa !4
+  %13 = load <4 x i32>, ptr %11, align 4, !tbaa !4
+  %14 = xor <4 x i32> %13, %12
+  store <4 x i32> %14, ptr %11, align 4, !tbaa !4
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %17 = load <4 x i32>, ptr %15, align 4, !tbaa !4
+  %18 = load <4 x i32>, ptr %16, align 4, !tbaa !4
+  %19 = xor <4 x i32> %18, %17
+  store <4 x i32> %19, ptr %16, align 4, !tbaa !4
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %22 = load <4 x i32>, ptr %20, align 4, !tbaa !4
+  %23 = load <4 x i32>, ptr %21, align 4, !tbaa !4
+  %24 = xor <4 x i32> %23, %22
+  store <4 x i32> %24, ptr %21, align 4, !tbaa !4
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = load i32, ptr %1, align 4, !tbaa !4
   %i.b = load i32, ptr %0, align 4, !tbaa !4
   %i.c = xor i32 %i.b, %i.a
@@ -298,6 +332,9 @@ bb.a:
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !4
   %i.bz = xor i32 %i.by, %i.bw
   store i32 %i.bz, ptr %i.bx, align 4, !tbaa !4
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 
@@ -342,7 +379,58 @@ bb.a:
 
 ; Function Attrs: mustprogress noinline nounwind uwtable
 define linkonce_odr dso_local void @_Z10do_add_xorILj16EiEvPT0_S1_S1_(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #6 comdat {
-bb.a:
+  %4 = ptrtoaddr ptr %0 to i64                    ; 3 uses
+  %5 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %7 = add i64 %6, 64
+  %8 = add i64 %5, 64
+  %9 = add i64 %4, 64                             ; 2 uses
+  %rt.bound0 = icmp ugt i64 %7, %4
+  %rt.bound1 = icmp ugt i64 %9, %6
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.bound09 = icmp ugt i64 %8, %4
+  %rt.bound110 = icmp ugt i64 %9, %5
+  %rt.conflict11 = and i1 %rt.bound09, %rt.bound110
+  %rt.conflict.all = or i1 %rt.conflict, %rt.conflict11
+  br i1 %rt.conflict.all, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %3
+  %10 = load <4 x i32>, ptr %1, align 4, !tbaa !4
+  %11 = load <4 x i32>, ptr %2, align 4, !tbaa !4
+  %12 = add nsw <4 x i32> %11, %10
+  %13 = load <4 x i32>, ptr %0, align 4, !tbaa !4
+  %14 = xor <4 x i32> %13, %12
+  store <4 x i32> %14, ptr %0, align 4, !tbaa !4
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %16 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %18 = load <4 x i32>, ptr %15, align 4, !tbaa !4
+  %19 = load <4 x i32>, ptr %16, align 4, !tbaa !4
+  %20 = add nsw <4 x i32> %19, %18
+  %21 = load <4 x i32>, ptr %17, align 4, !tbaa !4
+  %22 = xor <4 x i32> %21, %20
+  store <4 x i32> %22, ptr %17, align 4, !tbaa !4
+  %23 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %24 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %25 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %26 = load <4 x i32>, ptr %23, align 4, !tbaa !4
+  %27 = load <4 x i32>, ptr %24, align 4, !tbaa !4
+  %28 = add nsw <4 x i32> %27, %26
+  %29 = load <4 x i32>, ptr %25, align 4, !tbaa !4
+  %30 = xor <4 x i32> %29, %28
+  store <4 x i32> %30, ptr %25, align 4, !tbaa !4
+  %31 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %32 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %34 = load <4 x i32>, ptr %31, align 4, !tbaa !4
+  %35 = load <4 x i32>, ptr %32, align 4, !tbaa !4
+  %36 = add nsw <4 x i32> %35, %34
+  %37 = load <4 x i32>, ptr %33, align 4, !tbaa !4
+  %38 = xor <4 x i32> %37, %36
+  store <4 x i32> %38, ptr %33, align 4, !tbaa !4
+  br label %.rtcont
+
+bb.a:                                             ; preds = %3
   %i.a = load i32, ptr %1, align 4, !tbaa !4
   %i.b = load i32, ptr %2, align 4, !tbaa !4
   %i.c = add nsw i32 %i.b, %i.a
@@ -484,6 +572,9 @@ bb.a:
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !4
   %i.du = xor i32 %i.dt, %i.dr
   store i32 %i.du, ptr %i.ds, align 4, !tbaa !4
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 

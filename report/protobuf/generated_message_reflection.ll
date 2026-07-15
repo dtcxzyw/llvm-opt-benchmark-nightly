@@ -204,7 +204,7 @@ _ZNK6google8protobuf10Reflection13IsMicroStringEPKNS0_15FieldDescriptorE.exit: ;
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !3
   %i.dk = and i32 %i.dj, 2
   %.not = icmp eq i32 %i.dk, 0
-  br i1 %.not, label %27, label %bb.u
+  br i1 %.not, label %29, label %bb.u
 
 bb.u:                                             ; preds = %_ZNK6google8protobuf10Reflection13IsMicroStringEPKNS0_15FieldDescriptorE.exit
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
@@ -301,7 +301,8 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal11MicroStringEEEPT_PNS
   %.pre18.i110 = phi i8 [ %.pre18.i110.pre, %bb.y ], [ %i.cb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i108 = phi ptr [ %.pre.i108.pre, %bb.y ], [ %i.bz, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.eu = phi i32 [ %.pre, %bb.y ], [ %i.dm, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i105 = phi ptr [ %i.ec, %bb.y ], [ %i.et, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 14 uses
+  %.0.i105 = phi ptr [ %i.ec, %bb.y ], [ %i.et, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 17 uses
+  %.0.i105159 = ptrtoaddr ptr %.0.i105 to i64     ; 2 uses
   %.not.i.i106 = icmp eq i32 %i.eu, -1
   %.pre148 = and i8 %.pre18.i110, 8               ; 2 uses
   br i1 %.not.i.i106, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i120, label %bb.ab
@@ -391,7 +392,8 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStrin
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal11MicroStringEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit131
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal11MicroStringEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit131: ; preds = %bb.ae, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i125
-  %.0.i130 = phi ptr [ %i.fk, %bb.ae ], [ %i.gb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i125 ] ; 14 uses
+  %.0.i130 = phi ptr [ %i.fk, %bb.ae ], [ %i.gb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_11MicroStringEEEjPKNS0_15FieldDescriptorE.exit.i125 ] ; 17 uses
+  %.0.i130160 = ptrtoaddr ptr %.0.i130 to i64     ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.gd = load i64, ptr %i.gc, align 8, !tbaa !36 ; 3 uses
   %i.ge = trunc i64 %i.gd to i1
@@ -427,9 +429,89 @@ bb.ak:                                            ; preds = %_ZNK6google8protobu
 _ZNK6google8protobuf11MessageLite8GetArenaEv.exit133: ; preds = %bb.aj, %bb.ak
   %.0.i.i132 = phi ptr [ %i.go, %bb.aj ], [ %i.gp, %bb.ak ] ; 3 uses
   %i.gq = icmp eq ptr %.0.i.i, %.0.i.i132
-  br i1 %i.gq, label %.lr.ph.i.i.preheader.a, label %5
+  br i1 %i.gq, label %.lr.ph.i.i.preheader, label %7
 
-.lr.ph.i.i.preheader.a:                           ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit133
+.lr.ph.i.i.preheader:                             ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit133
+  %5 = add i64 %.0.i105159, 8
+  %6 = add i64 %.0.i130160, 8
+  %rt.bound0 = icmp ugt i64 %6, %.0.i105159
+  %rt.bound1 = icmp ugt i64 %5, %.0.i130160
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %.lr.ph.i.i.preheader.a, label %.lr.ph.i.i.preheader.rtvec
+
+7:                                                ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit133
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
+  store ptr null, ptr %4, align 8, !tbaa !265
+  %8 = load ptr, ptr %.0.i105, align 8
+  %9 = ptrtoint ptr %8 to i64                     ; 3 uses
+  %10 = and i64 %9, 3
+  %11 = icmp eq i64 %10, 0
+  br i1 %11, label %12, label %13
+
+12:                                               ; preds = %7
+  store i64 %9, ptr %4, align 8, !tbaa !94
+  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
+
+13:                                               ; preds = %7
+  call void @_ZN6google8protobuf8internal11MicroString16SetFromOtherSlowERKS2_PNS0_5ArenaEm(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %.0.i105, ptr noundef %.0.i.i132, i64 noundef 7)
+  %.pre139 = load ptr, ptr %.0.i105, align 8, !tbaa !265
+  %.pre143 = ptrtoint ptr %.pre139 to i64
+  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
+
+_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit: ; preds = %12, %13
+  %.pre-phi = phi i64 [ %9, %12 ], [ %.pre143, %13 ]
+  %14 = load ptr, ptr %.0.i130, align 8
+  %15 = ptrtoint ptr %14 to i64                   ; 2 uses
+  %16 = or i64 %.pre-phi, %15
+  %17 = and i64 %16, 3
+  %18 = icmp eq i64 %17, 0
+  br i1 %18, label %19, label %20
+
+19:                                               ; preds = %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
+  store i64 %15, ptr %.0.i105, align 8, !tbaa !94
+  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
+
+20:                                               ; preds = %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
+  call void @_ZN6google8protobuf8internal11MicroString16SetFromOtherSlowERKS2_PNS0_5ArenaEm(ptr noundef nonnull align 8 dereferenceable(8) %.0.i105, ptr noundef nonnull align 8 dereferenceable(8) %.0.i130, ptr noundef %.0.i.i, i64 noundef 7)
+  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
+
+_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135: ; preds = %19, %20
+  %21 = icmp eq ptr %.0.i.i132, null
+  br i1 %21, label %22, label %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit
+
+22:                                               ; preds = %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
+  %23 = load ptr, ptr %.0.i130, align 8, !tbaa !265
+  %24 = ptrtoint ptr %23 to i64
+  %25 = and i64 %24, 3
+  %26 = icmp eq i64 %25, 0
+  br i1 %26, label %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit, label %27
+
+27:                                               ; preds = %22
+  call void @_ZN6google8protobuf8internal11MicroString11DestroySlowEv(ptr noundef nonnull align 8 dereferenceable(8) %.0.i130)
+  br label %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit
+
+_ZN6google8protobuf8internal11MicroString7DestroyEv.exit: ; preds = %27, %22, %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
+  %28 = load i64, ptr %4, align 8, !tbaa !94
+  store i64 %28, ptr %.0.i130, align 8, !tbaa !94
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
+  br label %_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit
+
+29:                                               ; preds = %_ZNK6google8protobuf10Reflection13IsMicroStringEPKNS0_15FieldDescriptorE.exit
+  tail call void @_ZN6google8protobuf8internal15SwapFieldHelper21SwapNonInlinedStringsILb0EEEvPKNS0_10ReflectionEPNS0_7MessageES8_PKNS0_15FieldDescriptorE(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %3)
+  br label %_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit
+
+_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit: ; preds = %.lr.ph.i.i.preheader.rtvec, %.lr.ph.i.i.preheader.a, %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit, %bb.r, %29, %_ZNK6google8protobuf10Reflection10MutableRawIN4absl12lts_202505124CordEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit65, %bb.a
+  ret void
+
+.lr.ph.i.i.preheader.rtvec:                       ; preds = %.lr.ph.i.i.preheader
+  %30 = load <8 x i8>, ptr %.0.i130, align 1, !tbaa !31
+  %31 = load <8 x i8>, ptr %.0.i105, align 1, !tbaa !31
+  store <8 x i8> %30, ptr %.0.i105, align 1, !tbaa !31
+  store <8 x i8> %31, ptr %.0.i130, align 1, !tbaa !31
+  br label %_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit
+
+.lr.ph.i.i.preheader.a:                           ; preds = %.lr.ph.i.i.preheader
   %i.gr = load i8, ptr %.0.i105, align 1, !tbaa !31
   %i.gs = load i8, ptr %.0.i130, align 1, !tbaa !31
   store i8 %i.gs, ptr %.0.i105, align 1, !tbaa !31
@@ -477,70 +559,6 @@ _ZNK6google8protobuf11MessageLite8GetArenaEv.exit133: ; preds = %bb.aj, %bb.ak
   store i8 %i.hn, ptr %.079.i.i.ptr.7, align 1, !tbaa !31
   store i8 %i.hm, ptr %i.hl, align 1, !tbaa !31
   br label %_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit
-
-5:                                                ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit133
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
-  store ptr null, ptr %4, align 8, !tbaa !265
-  %6 = load ptr, ptr %.0.i105, align 8
-  %7 = ptrtoint ptr %6 to i64                     ; 3 uses
-  %8 = and i64 %7, 3
-  %9 = icmp eq i64 %8, 0
-  br i1 %9, label %10, label %11
-
-10:                                               ; preds = %5
-  store i64 %7, ptr %4, align 8, !tbaa !94
-  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
-
-11:                                               ; preds = %5
-  call void @_ZN6google8protobuf8internal11MicroString16SetFromOtherSlowERKS2_PNS0_5ArenaEm(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %.0.i105, ptr noundef %.0.i.i132, i64 noundef 7)
-  %.pre139 = load ptr, ptr %.0.i105, align 8, !tbaa !265
-  %.pre143 = ptrtoint ptr %.pre139 to i64
-  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
-
-_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit: ; preds = %10, %11
-  %.pre-phi = phi i64 [ %7, %10 ], [ %.pre143, %11 ]
-  %12 = load ptr, ptr %.0.i130, align 8
-  %13 = ptrtoint ptr %12 to i64                   ; 2 uses
-  %14 = or i64 %.pre-phi, %13
-  %15 = and i64 %14, 3
-  %16 = icmp eq i64 %15, 0
-  br i1 %16, label %17, label %18
-
-17:                                               ; preds = %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
-  store i64 %13, ptr %.0.i105, align 8, !tbaa !94
-  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
-
-18:                                               ; preds = %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit
-  call void @_ZN6google8protobuf8internal11MicroString16SetFromOtherSlowERKS2_PNS0_5ArenaEm(ptr noundef nonnull align 8 dereferenceable(8) %.0.i105, ptr noundef nonnull align 8 dereferenceable(8) %.0.i130, ptr noundef %.0.i.i, i64 noundef 7)
-  br label %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
-
-_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135: ; preds = %17, %18
-  %19 = icmp eq ptr %.0.i.i132, null
-  br i1 %19, label %20, label %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit
-
-20:                                               ; preds = %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
-  %21 = load ptr, ptr %.0.i130, align 8, !tbaa !265
-  %22 = ptrtoint ptr %21 to i64
-  %23 = and i64 %22, 3
-  %24 = icmp eq i64 %23, 0
-  br i1 %24, label %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit, label %25
-
-25:                                               ; preds = %20
-  call void @_ZN6google8protobuf8internal11MicroString11DestroySlowEv(ptr noundef nonnull align 8 dereferenceable(8) %.0.i130)
-  br label %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit
-
-_ZN6google8protobuf8internal11MicroString7DestroyEv.exit: ; preds = %25, %20, %_ZN6google8protobuf8internal11MicroString3SetERKS2_PNS0_5ArenaE.exit135
-  %26 = load i64, ptr %4, align 8, !tbaa !94
-  store i64 %26, ptr %.0.i130, align 8, !tbaa !94
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
-  br label %_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit
-
-27:                                               ; preds = %_ZNK6google8protobuf10Reflection13IsMicroStringEPKNS0_15FieldDescriptorE.exit
-  tail call void @_ZN6google8protobuf8internal15SwapFieldHelper21SwapNonInlinedStringsILb0EEEvPKNS0_10ReflectionEPNS0_7MessageES8_PKNS0_15FieldDescriptorE(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %3)
-  br label %_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit
-
-_ZN6google8protobuf8internal11MicroString12InternalSwapEPS2_m.exit: ; preds = %.lr.ph.i.i.preheader.a, %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit, %bb.r, %27, %_ZNK6google8protobuf10Reflection10MutableRawIN4absl12lts_202505124CordEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit65, %bb.a
-  ret void
 }
 
 ; Function Attrs: mustprogress uwtable

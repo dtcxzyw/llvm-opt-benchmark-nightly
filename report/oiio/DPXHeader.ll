@@ -204,7 +204,23 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_ZNK3dpx14IndustryHeader12FilmEdgeCodeEPc(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(384) %0, ptr nofree noundef writeonly captures(none) initializes((0, 17)) %1) local_unnamed_addr #6 align 2 {
-bb.a:
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %5 = add i64 %4, 16
+  %6 = add i64 %3, 17
+  %rt.bound0 = icmp ugt i64 %6, %4
+  %rt.bound1 = icmp ugt i64 %5, %3
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = load <16 x i8>, ptr %0, align 4, !tbaa !15
+  store <16 x i8> %7, ptr %1, align 1, !tbaa !15
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  store i8 0, ptr %8, align 1, !tbaa !15
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = load i8, ptr %0, align 4, !tbaa !15
   store i8 %i.a, ptr %1, align 1, !tbaa !15
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -269,12 +285,29 @@ bb.a:
   store i8 %i.as, ptr %i.at, align 1, !tbaa !15
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i8 0, ptr %i.au, align 1, !tbaa !15
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_ZN3dpx14IndustryHeader15SetFileEdgeCodeEPKc(ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(384) initializes((0, 16)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 align 2 {
-bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add i64 %4, 16
+  %6 = add i64 %3, 16
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = load <16 x i8>, ptr %1, align 1, !tbaa !15
+  store <16 x i8> %7, ptr %0, align 4, !tbaa !15
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = load i8, ptr %1, align 1, !tbaa !15
   store i8 %i.a, ptr %0, align 4, !tbaa !15
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -337,6 +370,9 @@ bb.a:
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !15
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 15
   store i8 %i.as, ptr %i.at, align 1, !tbaa !15
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 

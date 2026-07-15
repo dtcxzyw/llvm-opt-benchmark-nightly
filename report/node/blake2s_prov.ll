@@ -63,7 +63,34 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local noundef i32 @ossl_blake2s_init(ptr nofree noundef writeonly captures(none) initializes((0, 128)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #2 {
-bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add i64 %4, 32
+  %6 = add i64 %3, 128
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %2
+  %7 = getelementptr i8, ptr %0, i64 32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %7, i8 0, i64 96, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !5
+  %8 = load i8, ptr %1, align 1, !tbaa !10
+  %9 = zext i8 %8 to i64
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 120
+  store i64 %9, ptr %10, align 8, !tbaa !13
+  %11 = load <4 x i32>, ptr %1, align 1
+  %12 = xor <4 x i32> %11, <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>
+  store <4 x i32> %12, ptr %0, align 8, !tbaa !5
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %15 = load <4 x i32>, ptr %13, align 1
+  %16 = xor <4 x i32> %15, <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>
+  store <4 x i32> %16, ptr %14, align 8, !tbaa !5
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.a, i8 0, i64 96, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !5
@@ -109,12 +136,57 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.z = xor i32 %.val.7.i, 1541459225
   store i32 %i.z, ptr %i.y, align 4, !tbaa !5
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret i32 1
 }
 
 ; Function Attrs: nounwind uwtable
 define dso_local noundef i32 @ossl_blake2s_init_key(ptr nofree noundef writeonly captures(none) initializes((0, 128)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 {
-ossl_blake2s_update.exit.a:
+ossl_blake2s_update.exit:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add i64 %4, 32
+  %6 = add i64 %3, 128
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %ossl_blake2s_update.exit.a, label %ossl_blake2s_update.exit.rtvec
+
+ossl_blake2s_update.exit.rtvec:                   ; preds = %ossl_blake2s_update.exit
+  %7 = alloca [64 x i8], align 16                 ; 6 uses
+  %8 = getelementptr i8, ptr %0, i64 32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %8, i8 0, i64 96, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !5
+  %9 = load i8, ptr %1, align 1, !tbaa !10
+  %10 = zext i8 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 120
+  store i64 %10, ptr %11, align 8, !tbaa !13
+  %12 = load <4 x i32>, ptr %1, align 1
+  %.val.i = load i32, ptr %1, align 1
+  %13 = xor <4 x i32> %12, <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>
+  store <4 x i32> %13, ptr %0, align 8, !tbaa !5
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %16 = load <4 x i32>, ptr %14, align 1
+  %17 = xor <4 x i32> %16, <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>
+  store <4 x i32> %17, ptr %15, align 8, !tbaa !5
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %7, i8 0, i64 64, i1 false)
+  %18 = lshr i32 %.val.i, 8
+  %19 = and i32 %18, 255
+  %20 = zext nneg i32 %19 to i64
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %7, ptr align 1 %2, i64 %20, i1 false)
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %22, ptr noundef nonnull align 16 dereferenceable(64) %7, i64 64, i1 false)
+  store i64 64, ptr %21, align 8, !tbaa !16
+  call void @OPENSSL_cleanse(ptr noundef nonnull %7, i64 noundef 64) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
+  br label %ossl_blake2s_update.exit.rtcont
+
+ossl_blake2s_update.exit.a:                       ; preds = %ossl_blake2s_update.exit
   %i.a = alloca [64 x i8], align 16               ; 6 uses
   %i.b = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.b, i8 0, i64 96, i1 false)
@@ -173,6 +245,9 @@ ossl_blake2s_update.exit.a:
   store i64 64, ptr %i.ae, align 8, !tbaa !16
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.a, i64 noundef 64) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  br label %ossl_blake2s_update.exit.rtcont
+
+ossl_blake2s_update.exit.rtcont:                  ; preds = %ossl_blake2s_update.exit.a, %ossl_blake2s_update.exit.rtvec
   ret i32 1
 }
 

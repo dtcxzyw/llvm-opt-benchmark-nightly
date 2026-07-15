@@ -17,35 +17,73 @@ module asm
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos5shape7fractal14HilbertEncoderC2EjRNS_4geom8EnvelopeE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((0, 4), (8, 40)) %0, i32 noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) unnamed_addr #0 align 2 {
-bb.a:
+  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %6 = add nuw i64 %5, 40
+  %7 = add nuw i64 %4, 32
+  %rt.bound0 = icmp ugt i64 %7, %5
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %rt.guard = freeze i1 %rt.conflict
+  br i1 %rt.guard, label %bb.a, label %.rtvec
+
+.rtvec:                                           ; preds = %3
+  store i32 %1, ptr %0, align 8, !tbaa !7
+  %8 = uitofp i32 %1 to double
+  %exp2 = tail call double @exp2(double %8)
+  %9 = fptosi double %exp2 to i32
+  %10 = add nsw i32 %9, -1
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %12 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %13 = sitofp i32 %10 to double
+  %14 = load <4 x double>, ptr %2, align 8        ; 2 uses
+  %15 = load double, ptr %12, align 8, !tbaa !10
+  %16 = fcmp uno double %15, 0.000000e+00
+  %17 = shufflevector <4 x double> %14, <4 x double> poison, <2 x i32> <i32 1, i32 3>
+  %18 = shufflevector <4 x double> %14, <4 x double> poison, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %19 = fsub <2 x double> %17, %18
+  %20 = insertelement <2 x i1> poison, i1 %16, i64 0
+  %21 = shufflevector <2 x i1> %20, <2 x i1> poison, <2 x i32> zeroinitializer
+  %22 = select <2 x i1> %21, <2 x double> zeroinitializer, <2 x double> %19
+  %23 = insertelement <2 x double> poison, double %13, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %25 = fdiv <2 x double> %22, %24
+  %26 = shufflevector <2 x double> %18, <2 x double> %25, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %26, ptr %11, align 8, !tbaa !12
+  br label %.rtcont
+
+bb.a:                                             ; preds = %3
   store i32 %1, ptr %0, align 8, !tbaa !7
   %i.a = uitofp i32 %1 to double
   %exp2.a = tail call double @exp2(double %i.a)
   %i.b = fptosi double %exp2.a to i32
   %i.c = add nsw i32 %i.b, -1
-  %i.d = load double, ptr %2, align 8, !tbaa !10  ; 2 uses
+  %i.d = load double, ptr %2, align 8, !tbaa !13  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store double %i.d, ptr %i.e, align 8, !tbaa !12
+  store double %i.d, ptr %i.e, align 8, !tbaa !14
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.g = load double, ptr %i.f, align 8, !tbaa !13 ; 2 uses
+  %i.g = load double, ptr %i.f, align 8, !tbaa !10 ; 2 uses
   %i.h = fcmp uno double %i.g, 0.000000e+00       ; 2 uses
   %i.i = fsub double %i.g, %i.d
   %.0.i = select i1 %i.h, double 0.000000e+00, double %i.i
   %i.j = sitofp i32 %i.c to double                ; 2 uses
   %i.k = fdiv double %.0.i, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store double %i.k, ptr %i.l, align 8, !tbaa !14
+  store double %i.k, ptr %i.l, align 8, !tbaa !15
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.n = load double, ptr %i.m, align 8, !tbaa !15 ; 2 uses
+  %i.n = load double, ptr %i.m, align 8, !tbaa !16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %i.n, ptr %i.o, align 8, !tbaa !16
+  store double %i.n, ptr %i.o, align 8, !tbaa !17
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.q = load double, ptr %i.p, align 8
   %i.r = fsub double %i.q, %i.n
   %.0.i7 = select i1 %i.h, double 0.000000e+00, double %i.r
   %i.s = fdiv double %.0.i7, %i.j
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store double %i.s, ptr %i.t, align 8, !tbaa !17
+  store double %i.s, ptr %i.t, align 8, !tbaa !18
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
   ret void
 }
 
@@ -59,7 +97,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define noundef i32 @_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load double, ptr %i.a, align 8, !tbaa !13 ; 2 uses
+  %i.b = load double, ptr %i.a, align 8, !tbaa !10 ; 2 uses
   %i.c = fcmp uno double %i.b, 0.000000e+00       ; 2 uses
   %i.d = load double, ptr %1, align 8             ; 2 uses
   %i.e = fsub double %i.b, %i.d
@@ -67,13 +105,13 @@ bb.a:
   %i.g = select i1 %i.c, double 0.000000e+00, double %i.f
   %i.h = fadd double %i.d, %i.g                   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.j = load double, ptr %i.i, align 8, !tbaa !12 ; 2 uses
+  %i.j = load double, ptr %i.i, align 8, !tbaa !14 ; 2 uses
   %i.k = fcmp ogt double %i.h, %i.j
   br i1 %i.k, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.m = load double, ptr %i.l, align 8, !tbaa !14 ; 2 uses
+  %i.m = load double, ptr %i.l, align 8, !tbaa !15 ; 2 uses
   %i.n = fcmp une double %i.m, 0.000000e+00
   br i1 %i.n, label %bb.c, label %bb.d
 
@@ -94,13 +132,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.x = select i1 %i.c, double 0.000000e+00, double %i.w
   %i.y = fadd double %i.u, %i.x                   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.aa = load double, ptr %i.z, align 8, !tbaa !16 ; 2 uses
+  %i.aa = load double, ptr %i.z, align 8, !tbaa !17 ; 2 uses
   %i.ab = fcmp ogt double %i.y, %i.aa
   br i1 %i.ab, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.ad = load double, ptr %i.ac, align 8, !tbaa !17 ; 2 uses
+  %i.ad = load double, ptr %i.ac, align 8, !tbaa !18 ; 2 uses
   %i.ae = fcmp une double %i.ad, 0.000000e+00
   br i1 %i.ae, label %bb.f, label %bb.g
 
@@ -129,7 +167,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  store <4 x double> splat (double +qnan), ptr %2, align 8, !tbaa !18
+  store <4 x double> splat (double +qnan), ptr %2, align 8, !tbaa !12
   %i.d = load ptr, ptr %0, align 8, !tbaa !19     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19   ; 2 uses
@@ -137,14 +175,14 @@ bb.a:
   br i1 %.not13, label %._crit_edge.thread, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit
-  %.pre = load double, ptr %i.a, align 8, !tbaa !13
+  %.pre = load double, ptr %i.a, align 8, !tbaa !10
   %i.g = fcmp uno double %.pre, 0.000000e+00
   br i1 %i.g, label %._crit_edge.thread, label %bb.k
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit
   %.sroa.010.014 = phi ptr [ %i.ac, %_ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit ], [ %i.d, %bb.a ] ; 2 uses
   %i.h = load ptr, ptr %.sroa.010.014, align 8, !tbaa !23 ; 2 uses
-  %i.i = load double, ptr %i.a, align 8, !tbaa !13 ; 2 uses
+  %i.i = load double, ptr %i.a, align 8, !tbaa !10 ; 2 uses
   %i.j = fcmp uno double %i.i, 0.000000e+00
   %i.k = load ptr, ptr %i.h, align 8, !tbaa !25
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 176
@@ -157,34 +195,34 @@ bb.b:                                             ; preds = %.lr.ph
   br label %_ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.o = load double, ptr %i.n, align 8, !tbaa !10 ; 2 uses
-  %i.p = load double, ptr %2, align 8, !tbaa !10
+  %i.o = load double, ptr %i.n, align 8, !tbaa !13 ; 2 uses
+  %i.p = load double, ptr %2, align 8, !tbaa !13
   %i.q = fcmp olt double %i.o, %i.p
   br i1 %i.q, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store double %i.o, ptr %2, align 8, !tbaa !10
+  store double %i.o, ptr %2, align 8, !tbaa !13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %i.s = load double, ptr %i.r, align 8, !tbaa !13 ; 2 uses
+  %i.s = load double, ptr %i.r, align 8, !tbaa !10 ; 2 uses
   %i.t = fcmp ogt double %i.s, %i.i
   br i1 %i.t, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store double %i.s, ptr %i.a, align 8, !tbaa !13
+  store double %i.s, ptr %i.a, align 8, !tbaa !10
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %i.v = load double, ptr %i.u, align 8, !tbaa !15 ; 2 uses
-  %i.w = load double, ptr %i.b, align 8, !tbaa !15
+  %i.v = load double, ptr %i.u, align 8, !tbaa !16 ; 2 uses
+  %i.w = load double, ptr %i.b, align 8, !tbaa !16
   %i.x = fcmp olt double %i.v, %i.w
   br i1 %i.x, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  store double %i.v, ptr %i.b, align 8, !tbaa !15
+  store double %i.v, ptr %i.b, align 8, !tbaa !16
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -258,19 +296,19 @@ bb.n:                                             ; preds = %_ZSt25__unguarded_l
   %i.az = load ptr, ptr %i.ay, align 8
   %i.ba = call noundef ptr %i.az(ptr noundef nonnull align 8 dereferenceable(40) %i.as), !inline_history !29 ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  %i.bc = load double, ptr %i.bb, align 8, !tbaa !13 ; 2 uses
+  %i.bc = load double, ptr %i.bb, align 8, !tbaa !10 ; 2 uses
   %i.bd = fcmp uno double %i.bc, 0.000000e+00     ; 2 uses
   %i.be = load double, ptr %i.ba, align 8         ; 2 uses
   %i.bf = fsub double %i.bc, %i.be
   %i.bg = fmul double %i.bf, 5.000000e-01
   %i.bh = select i1 %i.bd, double 0.000000e+00, double %i.bg
   %i.bi = fadd double %i.be, %i.bh                ; 2 uses
-  %i.bj = load double, ptr %i.ao, align 8, !tbaa !12 ; 2 uses
+  %i.bj = load double, ptr %i.ao, align 8, !tbaa !14 ; 2 uses
   %i.bk = fcmp ogt double %i.bi, %i.bj
   br i1 %i.bk, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %.lr.ph.i.i.i.i.i
-  %i.bl = load double, ptr %i.ap, align 8, !tbaa !14 ; 2 uses
+  %i.bl = load double, ptr %i.ap, align 8, !tbaa !15 ; 2 uses
   %i.bm = fcmp une double %i.bl, 0.000000e+00
   br i1 %i.bm, label %bb.p, label %bb.q
 
@@ -290,12 +328,12 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %.lr.p
   %i.bv = fmul double %i.bu, 5.000000e-01
   %i.bw = select i1 %i.bd, double 0.000000e+00, double %i.bv
   %i.bx = fadd double %i.bt, %i.bw                ; 2 uses
-  %i.by = load double, ptr %i.aq, align 8, !tbaa !16 ; 2 uses
+  %i.by = load double, ptr %i.aq, align 8, !tbaa !17 ; 2 uses
   %i.bz = fcmp ogt double %i.bx, %i.by
   br i1 %i.bz, label %bb.r, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i.i
 
 bb.r:                                             ; preds = %bb.q
-  %i.ca = load double, ptr %i.ar, align 8, !tbaa !17 ; 2 uses
+  %i.ca = load double, ptr %i.ar, align 8, !tbaa !18 ; 2 uses
   %i.cb = fcmp une double %i.ca, 0.000000e+00
   br i1 %i.cb, label %bb.s, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i.i
 
@@ -314,19 +352,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i.
   %i.cj = load ptr, ptr %i.ci, align 8
   %i.ck = call noundef ptr %i.cj(ptr noundef nonnull align 8 dereferenceable(40) %i.aw), !inline_history !29 ; 4 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
-  %i.cm = load double, ptr %i.cl, align 8, !tbaa !13 ; 2 uses
+  %i.cm = load double, ptr %i.cl, align 8, !tbaa !10 ; 2 uses
   %i.cn = fcmp uno double %i.cm, 0.000000e+00     ; 2 uses
   %i.co = load double, ptr %i.ck, align 8         ; 2 uses
   %i.cp = fsub double %i.cm, %i.co
   %i.cq = fmul double %i.cp, 5.000000e-01
   %i.cr = select i1 %i.cn, double 0.000000e+00, double %i.cq
   %i.cs = fadd double %i.co, %i.cr                ; 2 uses
-  %i.ct = load double, ptr %i.ao, align 8, !tbaa !12 ; 2 uses
+  %i.ct = load double, ptr %i.ao, align 8, !tbaa !14 ; 2 uses
   %i.cu = fcmp ogt double %i.cs, %i.ct
   br i1 %i.cu, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i.i
-  %i.cv = load double, ptr %i.ap, align 8, !tbaa !14 ; 2 uses
+  %i.cv = load double, ptr %i.ap, align 8, !tbaa !15 ; 2 uses
   %i.cw = fcmp une double %i.cv, 0.000000e+00
   br i1 %i.cw, label %bb.u, label %bb.v
 
@@ -346,12 +384,12 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %_ZN4g
   %i.df = fmul double %i.de, 5.000000e-01
   %i.dg = select i1 %i.cn, double 0.000000e+00, double %i.df
   %i.dh = fadd double %i.dd, %i.dg                ; 2 uses
-  %i.di = load double, ptr %i.aq, align 8, !tbaa !16 ; 2 uses
+  %i.di = load double, ptr %i.aq, align 8, !tbaa !17 ; 2 uses
   %i.dj = fcmp ogt double %i.dh, %i.di
   br i1 %i.dj, label %bb.w, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i.i.i
 
 bb.w:                                             ; preds = %bb.v
-  %i.dk = load double, ptr %i.ar, align 8, !tbaa !17 ; 2 uses
+  %i.dk = load double, ptr %i.ar, align 8, !tbaa !18 ; 2 uses
   %i.dl = fcmp une double %i.dk, 0.000000e+00
   br i1 %i.dl, label %bb.x, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i.i.i
 
@@ -452,19 +490,19 @@ bb.c:                                             ; preds = %_ZSt13__adjust_heap
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = tail call noundef ptr %i.ah(ptr noundef nonnull align 8 dereferenceable(40) %i.ad), !inline_history !34 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  %i.ak = load double, ptr %i.aj, align 8, !tbaa !13 ; 2 uses
+  %i.ak = load double, ptr %i.aj, align 8, !tbaa !10 ; 2 uses
   %i.al = fcmp uno double %i.ak, 0.000000e+00     ; 2 uses
   %i.am = load double, ptr %i.ai, align 8         ; 2 uses
   %i.an = fsub double %i.ak, %i.am
   %i.ao = fmul double %i.an, 5.000000e-01
   %i.ap = select i1 %i.al, double 0.000000e+00, double %i.ao
   %i.aq = fadd double %i.am, %i.ap                ; 2 uses
-  %i.ar = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.ar = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.as = fcmp ogt double %i.aq, %i.ar
   br i1 %i.as, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i
-  %i.at = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.at = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.au = fcmp une double %i.at, 0.000000e+00
   br i1 %i.au, label %bb.e, label %bb.f
 
@@ -484,12 +522,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %.lr.p
   %i.bd = fmul double %i.bc, 5.000000e-01
   %i.be = select i1 %i.al, double 0.000000e+00, double %i.bd
   %i.bf = fadd double %i.bb, %i.be                ; 2 uses
-  %i.bg = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.bg = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.bh = fcmp ogt double %i.bf, %i.bg
   br i1 %i.bh, label %bb.g, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i11.i.i.i
 
 bb.g:                                             ; preds = %bb.f
-  %i.bi = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.bi = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.bj = fcmp une double %i.bi, 0.000000e+00
   br i1 %i.bj, label %bb.h, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i11.i.i.i
 
@@ -508,19 +546,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i11.i.i.
   %i.br = load ptr, ptr %i.bq, align 8
   %i.bs = tail call noundef ptr %i.br(ptr noundef nonnull align 8 dereferenceable(40) %i.ae), !inline_history !34 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
-  %i.bu = load double, ptr %i.bt, align 8, !tbaa !13 ; 2 uses
+  %i.bu = load double, ptr %i.bt, align 8, !tbaa !10 ; 2 uses
   %i.bv = fcmp uno double %i.bu, 0.000000e+00     ; 2 uses
   %i.bw = load double, ptr %i.bs, align 8         ; 2 uses
   %i.bx = fsub double %i.bu, %i.bw
   %i.by = fmul double %i.bx, 5.000000e-01
   %i.bz = select i1 %i.bv, double 0.000000e+00, double %i.by
   %i.ca = fadd double %i.bw, %i.bz                ; 2 uses
-  %i.cb = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.cb = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.cc = fcmp ogt double %i.ca, %i.cb
   br i1 %i.cc, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i11.i.i.i
-  %i.cd = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.cd = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.ce = fcmp une double %i.cd, 0.000000e+00
   br i1 %i.ce, label %bb.j, label %bb.k
 
@@ -540,12 +578,12 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %_ZN4g
   %i.cn = fmul double %i.cm, 5.000000e-01
   %i.co = select i1 %i.bv, double 0.000000e+00, double %i.cn
   %i.cp = fadd double %i.cl, %i.co                ; 2 uses
-  %i.cq = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.cq = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.cr = fcmp ogt double %i.cp, %i.cq
   br i1 %i.cr, label %bb.l, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit15.i.i.i
 
 bb.l:                                             ; preds = %bb.k
-  %i.cs = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.cs = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.ct = fcmp une double %i.cs, 0.000000e+00
   br i1 %i.ct, label %bb.m, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit15.i.i.i
 
@@ -595,19 +633,19 @@ bb.o:                                             ; preds = %bb.n, %._crit_edge.
   %i.dl = load ptr, ptr %i.dk, align 8
   %i.dm = tail call noundef ptr %i.dl(ptr noundef nonnull align 8 dereferenceable(40) %i.di), !inline_history !34 ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
-  %i.do = load double, ptr %i.dn, align 8, !tbaa !13 ; 2 uses
+  %i.do = load double, ptr %i.dn, align 8, !tbaa !10 ; 2 uses
   %i.dp = fcmp uno double %i.do, 0.000000e+00     ; 2 uses
   %i.dq = load double, ptr %i.dm, align 8         ; 2 uses
   %i.dr = fsub double %i.do, %i.dq
   %i.ds = fmul double %i.dr, 5.000000e-01
   %i.dt = select i1 %i.dp, double 0.000000e+00, double %i.ds
   %i.du = fadd double %i.dq, %i.dt                ; 2 uses
-  %i.dv = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.dv = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.dw = fcmp ogt double %i.du, %i.dv
   br i1 %i.dw, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %.lr.ph.i.i.i.i.i
-  %i.dx = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.dx = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.dy = fcmp une double %i.dx, 0.000000e+00
   br i1 %i.dy, label %bb.q, label %bb.r
 
@@ -627,12 +665,12 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %.lr.p
   %i.eh = fmul double %i.eg, 5.000000e-01
   %i.ei = select i1 %i.dp, double 0.000000e+00, double %i.eh
   %i.ej = fadd double %i.ef, %i.ei                ; 2 uses
-  %i.ek = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.ek = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.el = fcmp ogt double %i.ej, %i.ek
   br i1 %i.el, label %bb.s, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i
 
 bb.s:                                             ; preds = %bb.r
-  %i.em = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.em = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.en = fcmp une double %i.em, 0.000000e+00
   br i1 %i.en, label %bb.t, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i
 
@@ -651,19 +689,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i:
   %i.ev = load ptr, ptr %i.eu, align 8
   %i.ew = tail call noundef ptr %i.ev(ptr noundef nonnull align 8 dereferenceable(40) %i.w), !inline_history !34 ; 4 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
-  %i.ey = load double, ptr %i.ex, align 8, !tbaa !13 ; 2 uses
+  %i.ey = load double, ptr %i.ex, align 8, !tbaa !10 ; 2 uses
   %i.ez = fcmp uno double %i.ey, 0.000000e+00     ; 2 uses
   %i.fa = load double, ptr %i.ew, align 8         ; 2 uses
   %i.fb = fsub double %i.ey, %i.fa
   %i.fc = fmul double %i.fb, 5.000000e-01
   %i.fd = select i1 %i.ez, double 0.000000e+00, double %i.fc
   %i.fe = fadd double %i.fa, %i.fd                ; 2 uses
-  %i.ff = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.ff = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.fg = fcmp ogt double %i.fe, %i.ff
   br i1 %i.fg, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i
-  %i.fh = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.fh = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.fi = fcmp une double %i.fh, 0.000000e+00
   br i1 %i.fi, label %bb.v, label %bb.w
 
@@ -683,12 +721,12 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %_ZN4g
   %i.fr = fmul double %i.fq, 5.000000e-01
   %i.fs = select i1 %i.ez, double 0.000000e+00, double %i.fr
   %i.ft = fadd double %i.fp, %i.fs                ; 2 uses
-  %i.fu = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.fu = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.fv = fcmp ogt double %i.ft, %i.fu
   br i1 %i.fv, label %bb.x, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i.i
 
 bb.x:                                             ; preds = %bb.w
-  %i.fw = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.fw = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.fx = fcmp une double %i.fw, 0.000000e+00
   br i1 %i.fx, label %bb.y, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i.i
 
@@ -752,19 +790,19 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vecto
   %i.hc = load ptr, ptr %i.hb, align 8
   %i.hd = tail call noundef ptr %i.hc(ptr noundef nonnull align 8 dereferenceable(40) %i.gy), !inline_history !38 ; 4 uses
   %i.he = getelementptr inbounds nuw i8, ptr %i.hd, i64 8
-  %i.hf = load double, ptr %i.he, align 8, !tbaa !13 ; 2 uses
+  %i.hf = load double, ptr %i.he, align 8, !tbaa !10 ; 2 uses
   %i.hg = fcmp uno double %i.hf, 0.000000e+00     ; 2 uses
   %i.hh = load double, ptr %i.hd, align 8         ; 2 uses
   %i.hi = fsub double %i.hf, %i.hh
   %i.hj = fmul double %i.hi, 5.000000e-01
   %i.hk = select i1 %i.hg, double 0.000000e+00, double %i.hj
   %i.hl = fadd double %i.hh, %i.hk                ; 2 uses
-  %i.hm = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.hm = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.hn = fcmp ogt double %i.hl, %i.hm
   br i1 %i.hn, label %bb.aa, label %bb.ac
 
 bb.aa:                                            ; preds = %.lr.ph.i.i.i28.i
-  %i.ho = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.ho = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.hp = fcmp une double %i.ho, 0.000000e+00
   br i1 %i.hp, label %bb.ab, label %bb.ac
 
@@ -784,12 +822,12 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %.lr
   %i.hy = fmul double %i.hx, 5.000000e-01
   %i.hz = select i1 %i.hg, double 0.000000e+00, double %i.hy
   %i.ia = fadd double %i.hw, %i.hz                ; 2 uses
-  %i.ib = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.ib = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.ic = fcmp ogt double %i.ia, %i.ib
   br i1 %i.ic, label %bb.ad, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i4.i.i
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.id = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.id = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.ie = fcmp une double %i.id, 0.000000e+00
   br i1 %i.ie, label %bb.ae, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i4.i.i
 
@@ -808,19 +846,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i4.i.i: 
   %i.im = load ptr, ptr %i.il, align 8
   %i.in = tail call noundef ptr %i.im(ptr noundef nonnull align 8 dereferenceable(40) %i.gz), !inline_history !38 ; 4 uses
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 8
-  %i.ip = load double, ptr %i.io, align 8, !tbaa !13 ; 2 uses
+  %i.ip = load double, ptr %i.io, align 8, !tbaa !10 ; 2 uses
   %i.iq = fcmp uno double %i.ip, 0.000000e+00     ; 2 uses
   %i.ir = load double, ptr %i.in, align 8         ; 2 uses
   %i.is = fsub double %i.ip, %i.ir
   %i.it = fmul double %i.is, 5.000000e-01
   %i.iu = select i1 %i.iq, double 0.000000e+00, double %i.it
   %i.iv = fadd double %i.ir, %i.iu                ; 2 uses
-  %i.iw = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.iw = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.ix = fcmp ogt double %i.iv, %i.iw
   br i1 %i.ix, label %bb.af, label %bb.ah
 
 bb.af:                                            ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i4.i.i
-  %i.iy = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.iy = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.iz = fcmp une double %i.iy, 0.000000e+00
   br i1 %i.iz, label %bb.ag, label %bb.ah
 
@@ -840,12 +878,12 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %_ZN
   %i.ji = fmul double %i.jh, 5.000000e-01
   %i.jj = select i1 %i.iq, double 0.000000e+00, double %i.ji
   %i.jk = fadd double %i.jg, %i.jj                ; 2 uses
-  %i.jl = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.jl = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.jm = fcmp ogt double %i.jk, %i.jl
   br i1 %i.jm, label %bb.ai, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit8.i.i
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.jn = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.jn = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.jo = fcmp une double %i.jn, 0.000000e+00
   br i1 %i.jo, label %bb.aj, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit8.i.i
 
@@ -908,19 +946,19 @@ bb.al:                                            ; preds = %bb.ak, %._crit_edge
   %i.kn = load ptr, ptr %i.km, align 8
   %i.ko = tail call noundef ptr %i.kn(ptr noundef nonnull align 8 dereferenceable(40) %i.kk), !inline_history !38 ; 4 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 8
-  %i.kq = load double, ptr %i.kp, align 8, !tbaa !13 ; 2 uses
+  %i.kq = load double, ptr %i.kp, align 8, !tbaa !10 ; 2 uses
   %i.kr = fcmp uno double %i.kq, 0.000000e+00     ; 2 uses
   %i.ks = load double, ptr %i.ko, align 8         ; 2 uses
   %i.kt = fsub double %i.kq, %i.ks
   %i.ku = fmul double %i.kt, 5.000000e-01
   %i.kv = select i1 %i.kr, double 0.000000e+00, double %i.ku
   %i.kw = fadd double %i.ks, %i.kv                ; 2 uses
-  %i.kx = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.kx = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.ky = fcmp ogt double %i.kw, %i.kx
   br i1 %i.ky, label %bb.am, label %bb.ao
 
 bb.am:                                            ; preds = %.lr.ph.i.i.i.i14.i
-  %i.kz = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.kz = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.la = fcmp une double %i.kz, 0.000000e+00
   br i1 %i.la, label %bb.an, label %bb.ao
 
@@ -940,12 +978,12 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %.lr
   %i.lj = fmul double %i.li, 5.000000e-01
   %i.lk = select i1 %i.kr, double 0.000000e+00, double %i.lj
   %i.ll = fadd double %i.lh, %i.lk                ; 2 uses
-  %i.lm = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.lm = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.ln = fcmp ogt double %i.ll, %i.lm
   br i1 %i.ln, label %bb.ap, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i19.i
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.lo = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.lo = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.lp = fcmp une double %i.lo, 0.000000e+00
   br i1 %i.lp, label %bb.aq, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i19.i
 
@@ -964,19 +1002,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i19.i:
   %i.lx = load ptr, ptr %i.lw, align 8
   %i.ly = tail call noundef ptr %i.lx(ptr noundef nonnull align 8 dereferenceable(40) %i.gl), !inline_history !38 ; 4 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 8
-  %i.ma = load double, ptr %i.lz, align 8, !tbaa !13 ; 2 uses
+  %i.ma = load double, ptr %i.lz, align 8, !tbaa !10 ; 2 uses
   %i.mb = fcmp uno double %i.ma, 0.000000e+00     ; 2 uses
   %i.mc = load double, ptr %i.ly, align 8         ; 2 uses
   %i.md = fsub double %i.ma, %i.mc
   %i.me = fmul double %i.md, 5.000000e-01
   %i.mf = select i1 %i.mb, double 0.000000e+00, double %i.me
   %i.mg = fadd double %i.mc, %i.mf                ; 2 uses
-  %i.mh = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.mh = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.mi = fcmp ogt double %i.mg, %i.mh
   br i1 %i.mi, label %bb.ar, label %bb.at
 
 bb.ar:                                            ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i19.i
-  %i.mj = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.mj = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.mk = fcmp une double %i.mj, 0.000000e+00
   br i1 %i.mk, label %bb.as, label %bb.at
 
@@ -996,12 +1034,12 @@ bb.at:                                            ; preds = %bb.as, %bb.ar, %_ZN
   %i.mt = fmul double %i.ms, 5.000000e-01
   %i.mu = select i1 %i.mb, double 0.000000e+00, double %i.mt
   %i.mv = fadd double %i.mr, %i.mu                ; 2 uses
-  %i.mw = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.mw = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.mx = fcmp ogt double %i.mv, %i.mw
   br i1 %i.mx, label %bb.au, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i22.i
 
 bb.au:                                            ; preds = %bb.at
-  %i.my = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.my = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.mz = fcmp une double %i.my, 0.000000e+00
   br i1 %i.mz, label %bb.av, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i22.i
 
@@ -1127,19 +1165,19 @@ bb.bi:                                            ; preds = %_ZZN4geos5shape7fra
   %i.or = load ptr, ptr %i.oq, align 8
   %i.os = tail call noundef ptr %i.or(ptr noundef nonnull align 8 dereferenceable(40) %i.on), !inline_history !40 ; 4 uses
   %i.ot = getelementptr inbounds nuw i8, ptr %i.os, i64 8
-  %i.ou = load double, ptr %i.ot, align 8, !tbaa !13 ; 2 uses
+  %i.ou = load double, ptr %i.ot, align 8, !tbaa !10 ; 2 uses
   %i.ov = fcmp uno double %i.ou, 0.000000e+00     ; 2 uses
   %i.ow = load double, ptr %i.os, align 8         ; 2 uses
   %i.ox = fsub double %i.ou, %i.ow
   %i.oy = fmul double %i.ox, 5.000000e-01
   %i.oz = select i1 %i.ov, double 0.000000e+00, double %i.oy
   %i.pa = fadd double %i.ow, %i.oz                ; 2 uses
-  %i.pb = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.pb = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.pc = fcmp ogt double %i.pa, %i.pb
   br i1 %i.pc, label %bb.bj, label %bb.bl
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.pd = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.pd = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.pe = fcmp une double %i.pd, 0.000000e+00
   br i1 %i.pe, label %bb.bk, label %bb.bl
 
@@ -1159,12 +1197,12 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.
   %i.pn = fmul double %i.pm, 5.000000e-01
   %i.po = select i1 %i.ov, double 0.000000e+00, double %i.pn
   %i.pp = fadd double %i.pl, %i.po                ; 2 uses
-  %i.pq = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.pq = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.pr = fcmp ogt double %i.pp, %i.pq
   br i1 %i.pr, label %bb.bm, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.ps = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.ps = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.pt = fcmp une double %i.ps, 0.000000e+00
   br i1 %i.pt, label %bb.bn, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i
 
@@ -1183,19 +1221,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i: ;
   %i.qb = load ptr, ptr %i.qa, align 8
   %i.qc = tail call noundef ptr %i.qb(ptr noundef nonnull align 8 dereferenceable(40) %i.oo), !inline_history !40 ; 4 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %i.qc, i64 8
-  %i.qe = load double, ptr %i.qd, align 8, !tbaa !13 ; 2 uses
+  %i.qe = load double, ptr %i.qd, align 8, !tbaa !10 ; 2 uses
   %i.qf = fcmp uno double %i.qe, 0.000000e+00     ; 2 uses
   %i.qg = load double, ptr %i.qc, align 8         ; 2 uses
   %i.qh = fsub double %i.qe, %i.qg
   %i.qi = fmul double %i.qh, 5.000000e-01
   %i.qj = select i1 %i.qf, double 0.000000e+00, double %i.qi
   %i.qk = fadd double %i.qg, %i.qj                ; 2 uses
-  %i.ql = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.ql = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.qm = fcmp ogt double %i.qk, %i.ql
   br i1 %i.qm, label %bb.bo, label %bb.bq
 
 bb.bo:                                            ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i
-  %i.qn = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.qn = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.qo = fcmp une double %i.qn, 0.000000e+00
   br i1 %i.qo, label %bb.bp, label %bb.bq
 
@@ -1215,12 +1253,12 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo, %_ZN
   %i.qx = fmul double %i.qw, 5.000000e-01
   %i.qy = select i1 %i.qf, double 0.000000e+00, double %i.qx
   %i.qz = fadd double %i.qv, %i.qy                ; 2 uses
-  %i.ra = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.ra = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.rb = fcmp ogt double %i.qz, %i.ra
   br i1 %i.rb, label %bb.br, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i
 
 bb.br:                                            ; preds = %bb.bq
-  %i.rc = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.rc = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.rd = fcmp une double %i.rc, 0.000000e+00
   br i1 %i.rd, label %bb.bs, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i
 
@@ -1248,19 +1286,19 @@ _ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6
   %i.rp = load ptr, ptr %i.ro, align 8
   %i.rq = tail call noundef ptr %i.rp(ptr noundef nonnull align 8 dereferenceable(40) %i.rl), !inline_history !40 ; 4 uses
   %i.rr = getelementptr inbounds nuw i8, ptr %i.rq, i64 8
-  %i.rs = load double, ptr %i.rr, align 8, !tbaa !13 ; 2 uses
+  %i.rs = load double, ptr %i.rr, align 8, !tbaa !10 ; 2 uses
   %i.rt = fcmp uno double %i.rs, 0.000000e+00     ; 2 uses
   %i.ru = load double, ptr %i.rq, align 8         ; 2 uses
   %i.rv = fsub double %i.rs, %i.ru
   %i.rw = fmul double %i.rv, 5.000000e-01
   %i.rx = select i1 %i.rt, double 0.000000e+00, double %i.rw
   %i.ry = fadd double %i.ru, %i.rx                ; 2 uses
-  %i.rz = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.rz = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.sa = fcmp ogt double %i.ry, %i.rz
   br i1 %i.sa, label %bb.bt, label %bb.bv
 
 bb.bt:                                            ; preds = %.preheader.i.i
-  %i.sb = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.sb = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.sc = fcmp une double %i.sb, 0.000000e+00
   br i1 %i.sc, label %bb.bu, label %bb.bv
 
@@ -1280,12 +1318,12 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %.pr
   %i.sl = fmul double %i.sk, 5.000000e-01
   %i.sm = select i1 %i.rt, double 0.000000e+00, double %i.sl
   %i.sn = fadd double %i.sj, %i.sm                ; 2 uses
-  %i.so = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.so = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.sp = fcmp ogt double %i.sn, %i.so
   br i1 %i.sp, label %bb.bw, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i9.i.i
 
 bb.bw:                                            ; preds = %bb.bv
-  %i.sq = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.sq = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.sr = fcmp une double %i.sq, 0.000000e+00
   br i1 %i.sr, label %bb.bx, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i9.i.i
 
@@ -1304,19 +1342,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i9.i.i: 
   %i.sz = load ptr, ptr %i.sy, align 8
   %i.ta = tail call noundef ptr %i.sz(ptr noundef nonnull align 8 dereferenceable(40) %i.rm), !inline_history !40 ; 4 uses
   %i.tb = getelementptr inbounds nuw i8, ptr %i.ta, i64 8
-  %i.tc = load double, ptr %i.tb, align 8, !tbaa !13 ; 2 uses
+  %i.tc = load double, ptr %i.tb, align 8, !tbaa !10 ; 2 uses
   %i.td = fcmp uno double %i.tc, 0.000000e+00     ; 2 uses
   %i.te = load double, ptr %i.ta, align 8         ; 2 uses
   %i.tf = fsub double %i.tc, %i.te
   %i.tg = fmul double %i.tf, 5.000000e-01
   %i.th = select i1 %i.td, double 0.000000e+00, double %i.tg
   %i.ti = fadd double %i.te, %i.th                ; 2 uses
-  %i.tj = load double, ptr %i.g, align 8, !tbaa !12 ; 2 uses
+  %i.tj = load double, ptr %i.g, align 8, !tbaa !14 ; 2 uses
   %i.tk = fcmp ogt double %i.ti, %i.tj
   br i1 %i.tk, label %bb.by, label %bb.ca
 
 bb.by:                                            ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i9.i.i
-  %i.tl = load double, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %i.tl = load double, ptr %i.h, align 8, !tbaa !15 ; 2 uses
   %i.tm = fcmp une double %i.tl, 0.000000e+00
   br i1 %i.tm, label %bb.bz, label %bb.ca
 
@@ -1336,12 +1374,12 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by, %_ZN
   %i.tv = fmul double %i.tu, 5.000000e-01
   %i.tw = select i1 %i.td, double 0.000000e+00, double %i.tv
   %i.tx = fadd double %i.tt, %i.tw                ; 2 uses
-  %i.ty = load double, ptr %i.i, align 8, !tbaa !16 ; 2 uses
+  %i.ty = load double, ptr %i.i, align 8, !tbaa !17 ; 2 uses
   %i.tz = fcmp ogt double %i.tx, %i.ty
   br i1 %i.tz, label %bb.cb, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit13.i.i
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.ua = load double, ptr %i.j, align 8, !tbaa !17 ; 2 uses
+  %i.ua = load double, ptr %i.j, align 8, !tbaa !18 ; 2 uses
   %i.ub = fcmp une double %i.ua, 0.000000e+00
   br i1 %i.ub, label %bb.cc, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit13.i.i
 
@@ -1390,7 +1428,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = tail call noundef ptr %i.d(ptr noundef nonnull align 8 dereferenceable(40) %1) ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.g = load double, ptr %i.f, align 8, !tbaa !13 ; 2 uses
+  %i.g = load double, ptr %i.f, align 8, !tbaa !10 ; 2 uses
   %i.h = fcmp uno double %i.g, 0.000000e+00       ; 2 uses
   %i.i = load double, ptr %i.e, align 8           ; 2 uses
   %i.j = fsub double %i.g, %i.i
@@ -1398,13 +1436,13 @@ bb.a:
   %i.l = select i1 %i.h, double 0.000000e+00, double %i.k
   %i.m = fadd double %i.i, %i.l                   ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.o = load double, ptr %i.n, align 8, !tbaa !12 ; 2 uses
+  %i.o = load double, ptr %i.n, align 8, !tbaa !14 ; 2 uses
   %i.p = fcmp ogt double %i.m, %i.o
   br i1 %i.p, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.r = load double, ptr %i.q, align 8, !tbaa !14 ; 2 uses
+  %i.r = load double, ptr %i.q, align 8, !tbaa !15 ; 2 uses
   %i.s = fcmp une double %i.r, 0.000000e+00
   br i1 %i.s, label %bb.c, label %bb.d
 
@@ -1425,13 +1463,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.ac = select i1 %i.h, double 0.000000e+00, double %i.ab
   %i.ad = fadd double %i.z, %i.ac                 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.af = load double, ptr %i.ae, align 8, !tbaa !16 ; 2 uses
+  %i.af = load double, ptr %i.ae, align 8, !tbaa !17 ; 2 uses
   %i.ag = fcmp ogt double %i.ad, %i.af
   br i1 %i.ag, label %bb.e, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.ai = load double, ptr %i.ah, align 8, !tbaa !17 ; 2 uses
+  %i.ai = load double, ptr %i.ah, align 8, !tbaa !18 ; 2 uses
   %i.aj = fcmp une double %i.ai, 0.000000e+00
   br i1 %i.aj, label %bb.f, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit
 
@@ -1451,7 +1489,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit: ; preds
   %i.as = load ptr, ptr %i.ar, align 8
   %i.at = tail call noundef ptr %i.as(ptr noundef nonnull align 8 dereferenceable(40) %2) ; 4 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  %i.av = load double, ptr %i.au, align 8, !tbaa !13 ; 2 uses
+  %i.av = load double, ptr %i.au, align 8, !tbaa !10 ; 2 uses
   %i.aw = fcmp uno double %i.av, 0.000000e+00     ; 2 uses
   %i.ax = load double, ptr %i.at, align 8         ; 2 uses
   %i.ay = fsub double %i.av, %i.ax
@@ -1459,13 +1497,13 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit: ; preds
   %i.ba = select i1 %i.aw, double 0.000000e+00, double %i.az
   %i.bb = fadd double %i.ax, %i.ba                ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  %i.bd = load double, ptr %i.bc, align 8, !tbaa !12 ; 2 uses
+  %i.bd = load double, ptr %i.bc, align 8, !tbaa !14 ; 2 uses
   %i.be = fcmp ogt double %i.bb, %i.bd
   br i1 %i.be, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
-  %i.bg = load double, ptr %i.bf, align 8, !tbaa !14 ; 2 uses
+  %i.bg = load double, ptr %i.bf, align 8, !tbaa !15 ; 2 uses
   %i.bh = fcmp une double %i.bg, 0.000000e+00
   br i1 %i.bh, label %bb.h, label %bb.i
 
@@ -1486,13 +1524,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %_ZN4g
   %i.br = select i1 %i.aw, double 0.000000e+00, double %i.bq
   %i.bs = fadd double %i.bo, %i.br                ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
-  %i.bu = load double, ptr %i.bt, align 8, !tbaa !16 ; 2 uses
+  %i.bu = load double, ptr %i.bt, align 8, !tbaa !17 ; 2 uses
   %i.bv = fcmp ogt double %i.bs, %i.bu
   br i1 %i.bv, label %bb.j, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit5
 
 bb.j:                                             ; preds = %bb.i
   %i.bw = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
-  %i.bx = load double, ptr %i.bw, align 8, !tbaa !17 ; 2 uses
+  %i.bx = load double, ptr %i.bw, align 8, !tbaa !18 ; 2 uses
   %i.by = fcmp une double %i.bx, 0.000000e+00
   br i1 %i.by, label %bb.k, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit5
 
@@ -1592,19 +1630,19 @@ bb.g:                                             ; preds = %bb.b
   %i.ab = load ptr, ptr %i.aa, align 8
   %i.ac = tail call noundef ptr %i.ab(ptr noundef nonnull align 8 dereferenceable(40) %i.u), !inline_history !50 ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
-  %i.ae = load double, ptr %i.ad, align 8, !tbaa !13 ; 2 uses
+  %i.ae = load double, ptr %i.ad, align 8, !tbaa !10 ; 2 uses
   %i.af = fcmp uno double %i.ae, 0.000000e+00     ; 2 uses
   %i.ag = load double, ptr %i.ac, align 8         ; 2 uses
   %i.ah = fsub double %i.ae, %i.ag
   %i.ai = fmul double %i.ah, 5.000000e-01
   %i.aj = select i1 %i.af, double 0.000000e+00, double %i.ai
   %i.ak = fadd double %i.ag, %i.aj                ; 2 uses
-  %i.al = load double, ptr %i.b, align 8, !tbaa !12 ; 2 uses
+  %i.al = load double, ptr %i.b, align 8, !tbaa !14 ; 2 uses
   %i.am = fcmp ogt double %i.ak, %i.al
   br i1 %i.am, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %.lr.ph.i
-  %i.an = load double, ptr %i.c, align 8, !tbaa !14 ; 2 uses
+  %i.an = load double, ptr %i.c, align 8, !tbaa !15 ; 2 uses
   %i.ao = fcmp une double %i.an, 0.000000e+00
   br i1 %i.ao, label %bb.i, label %bb.j
 
@@ -1624,12 +1662,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %i.ax = fmul double %i.aw, 5.000000e-01
   %i.ay = select i1 %i.af, double 0.000000e+00, double %i.ax
   %i.az = fadd double %i.av, %i.ay                ; 2 uses
-  %i.ba = load double, ptr %i.d, align 8, !tbaa !16 ; 2 uses
+  %i.ba = load double, ptr %i.d, align 8, !tbaa !17 ; 2 uses
   %i.bb = fcmp ogt double %i.az, %i.ba
   br i1 %i.bb, label %bb.k, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i
 
 bb.k:                                             ; preds = %bb.j
-  %i.bc = load double, ptr %i.e, align 8, !tbaa !17 ; 2 uses
+  %i.bc = load double, ptr %i.e, align 8, !tbaa !18 ; 2 uses
   %i.bd = fcmp une double %i.bc, 0.000000e+00
   br i1 %i.bd, label %bb.l, label %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i
 
@@ -1648,19 +1686,19 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i: ; pre
   %i.bl = load ptr, ptr %i.bk, align 8
   %i.bm = tail call noundef ptr %i.bl(ptr noundef nonnull align 8 dereferenceable(40) %i.y), !inline_history !50 ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
-  %i.bo = load double, ptr %i.bn, align 8, !tbaa !13 ; 2 uses
+  %i.bo = load double, ptr %i.bn, align 8, !tbaa !10 ; 2 uses
   %i.bp = fcmp uno double %i.bo, 0.000000e+00     ; 2 uses
   %i.bq = load double, ptr %i.bm, align 8         ; 2 uses
   %i.br = fsub double %i.bo, %i.bq
   %i.bs = fmul double %i.br, 5.000000e-01
   %i.bt = select i1 %i.bp, double 0.000000e+00, double %i.bs
   %i.bu = fadd double %i.bq, %i.bt                ; 2 uses
-  %i.bv = load double, ptr %i.b, align 8, !tbaa !12 ; 2 uses
+  %i.bv = load double, ptr %i.b, align 8, !tbaa !14 ; 2 uses
   %i.bw = fcmp ogt double %i.bu, %i.bv
   br i1 %i.bw, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %_ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i
-  %i.bx = load double, ptr %i.c, align 8, !tbaa !14 ; 2 uses
+  %i.bx = load double, ptr %i.c, align 8, !tbaa !15 ; 2 uses
   %i.by = fcmp une double %i.bx, 0.000000e+00
   br i1 %i.by, label %bb.n, label %bb.o
 
@@ -1680,12 +1718,12 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %_ZN4g
   %i.ch = fmul double %i.cg, 5.000000e-01
   %i.ci = select i1 %i.bp, double 0.000000e+00, double %i.ch
   %i.cj = fadd double %i.cf, %i.ci                ; 2 uses
-  %i.ck = load double, ptr %i.d, align 8, !tbaa !16 ; 2 uses
+  %i.ck = load double, ptr %i.d, align 8, !tbaa !17 ; 2 uses
   %i.cl = fcmp ogt double %i.cj, %i.ck
   br i1 %i.cl, label %bb.p, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit
 
 bb.p:                                             ; preds = %bb.o
-  %i.cm = load double, ptr %i.e, align 8, !tbaa !17 ; 2 uses
+  %i.cm = load double, ptr %i.e, align 8, !tbaa !18 ; 2 uses
   %i.cn = fcmp une double %i.cm, 0.000000e+00
   br i1 %i.cn, label %bb.q, label %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit
 
@@ -1742,15 +1780,15 @@ attributes #4 = { nounwind }
 !7 = !{!8, !4, i64 0}
 !8 = !{!"_ZTSN4geos5shape7fractal14HilbertEncoderE", !4, i64 0, !9, i64 8, !9, i64 16, !9, i64 24, !9, i64 32}
 !9 = !{!"double", !5, i64 0}
-!10 = !{!11, !9, i64 0}
+!10 = !{!11, !9, i64 8}
 !11 = !{!"_ZTSN4geos4geom8EnvelopeE", !9, i64 0, !9, i64 8, !9, i64 16, !9, i64 24}
-!12 = !{!8, !9, i64 8}
-!13 = !{!11, !9, i64 8}
-!14 = !{!8, !9, i64 24}
-!15 = !{!11, !9, i64 16}
-!16 = !{!8, !9, i64 16}
-!17 = !{!8, !9, i64 32}
-!18 = !{!9, !9, i64 0}
+!12 = !{!9, !9, i64 0}
+!13 = !{!11, !9, i64 0}
+!14 = !{!8, !9, i64 8}
+!15 = !{!8, !9, i64 24}
+!16 = !{!11, !9, i64 16}
+!17 = !{!8, !9, i64 16}
+!18 = !{!8, !9, i64 32}
 !19 = !{!20, !20, i64 0}
 !20 = !{!"p2 _ZTSN4geos4geom8GeometryE", !21, i64 0}
 !21 = !{!"any p2 pointer", !22, i64 0}
@@ -1759,7 +1797,7 @@ attributes #4 = { nounwind }
 !24 = !{!"p1 _ZTSN4geos4geom8GeometryE", !22, i64 0}
 !25 = !{!26, !26, i64 0}
 !26 = !{!"vtable pointer", !6, i64 0}
-!27 = !{i64 0, i64 8, !18, i64 8, i64 8, !18, i64 16, i64 8, !18, i64 24, i64 8, !18}
+!27 = !{i64 0, i64 8, !12, i64 8, i64 8, !12, i64 16, i64 8, !12, i64 24, i64 8, !12}
 !28 = !{!11, !9, i64 24}
 !29 = distinct !{null, null, null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
 !30 = distinct !{!30, !31}
