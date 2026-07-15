@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.e = load i32, ptr %i.d, align 4, !tbaa !119  ; 3 uses
   %i.f = and i32 %i.e, 8
-  %.not52 = icmp eq i32 %i.f, 0                   ; 3 uses
+  %.not52 = icmp eq i32 %i.f, 0                   ; 4 uses
   %i.g = and i32 %i.e, 3
   %i.h = add nuw nsw i32 %i.g, 1
   %i.i = select i1 %.not52, i32 %i.h, i32 1       ; 2 uses
@@ -218,34 +218,28 @@ bb.d:                                             ; preds = %bb.c
   %i.m = mul i32 %i.i, %i.k                       ; 2 uses
   %i.n = icmp eq i32 %3, 0
   %spec.select = select i1 %i.n, i32 %i.m, i32 %3 ; 2 uses
-  %.045 = tail call i32 @llvm.abs.i32(i32 %spec.select, i1 true) ; 3 uses
+  %.045 = tail call i32 @llvm.abs.i32(i32 %spec.select, i1 true) ; 2 uses
   %i.o = load ptr, ptr %0, align 8, !tbaa !108
   %i.p = icmp eq ptr %i.o, null
   %i.q = icmp eq ptr %2, null
   %or.cond.not64 = or i1 %i.q, %i.p
   %.not54 = icmp ult i32 %.045, %i.m
   %or.cond59 = select i1 %or.cond.not64, i1 true, i1 %.not54
-  br i1 %or.cond59, label %bb.m, label %6
+  br i1 %or.cond59, label %bb.m, label %bb.e
 
-6:                                                ; preds = %bb.d
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %8 = load i32, ptr %7, align 8, !tbaa !138      ; 2 uses
-  br i1 %.not52, label %bb.e, label %.thread
-
-bb.e:                                             ; preds = %6
+bb.e:                                             ; preds = %bb.d
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %7 = load i32, ptr %6, align 8, !tbaa !138
   %i.r = lshr i32 %i.e, 2
   %i.s = and i32 %i.r, 1
-  %9 = add nuw nsw i32 %i.s, 1
-  %10 = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %9, i1 true)
-  %11 = lshr i32 -1, %10
-  %i.t = udiv i32 %11, %.045
-  %.not56 = icmp ugt i32 %8, %i.t
-  br i1 %.not56, label %bb.l, label %bb.f
+  %8 = lshr i32 -1, %i.s
+  %9 = select i1 %.not52, i32 %8, i32 -1
+  %i.t = udiv i32 %9, %.045
+  %.not56 = icmp ugt i32 %7, %i.t
+  br i1 %.not56, label %bb.l, label %.thread
 
-.thread:                                          ; preds = %6
-  %mul = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.045, i32 %8)
-  %mul.ov = extractvalue { i32, i1 } %mul, 1
-  br i1 %mul.ov, label %bb.l, label %.thread61
+.thread:                                          ; preds = %bb.e
+  br i1 %.not52, label %bb.f, label %.thread61
 
 .thread61:                                        ; preds = %.thread
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 28
@@ -255,7 +249,7 @@ bb.e:                                             ; preds = %6
   %or.cond3 = and i1 %i.x, %i.w
   br i1 %or.cond3, label %bb.f, label %bb.k
 
-bb.f:                                             ; preds = %bb.e, %.thread61
+bb.f:                                             ; preds = %.thread61, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.y, i8 0, i64 64, i1 false)
@@ -295,7 +289,7 @@ bb.k:                                             ; preds = %.thread61
   %i.ai = tail call i32 @png_image_error(ptr noundef nonnull %0, ptr noundef nonnull @.str.21) #13
   br label %.critedge
 
-bb.l:                                             ; preds = %.thread, %bb.e
+bb.l:                                             ; preds = %bb.e
   %i.aj = tail call i32 @png_image_error(ptr noundef nonnull %0, ptr noundef nonnull @.str.22) #13
   br label %.critedge
 
@@ -698,7 +692,7 @@ bb.g:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.q = load i32, ptr %i.p, align 4, !tbaa !119
   %.fr236 = freeze i32 %i.q                       ; 4 uses
-  %i.r = and i32 %.fr236, 1
+  %i.r = and i32 %.fr236, 1                       ; 3 uses
   %i.s = and i32 %.fr236, 5
   %or.cond.not = icmp eq i32 %i.s, 1
   br i1 %or.cond.not, label %bb.h, label %bb.i
@@ -965,10 +959,10 @@ bb.aa:                                            ; preds = %bb.l
   %i.ez = load i64, ptr %i.ey, align 8, !tbaa !174
   %i.fa = sdiv i64 %i.ez, 2                       ; 2 uses
   %i.fb = trunc i32 %.fr236 to i1
-  %i.fc = add nuw nsw i32 %i.r, 1                 ; 7 uses
+  %i.fc = add nuw nsw i32 %i.r, 1                 ; 4 uses
   %i.fd = and i32 %.fr236, 33
   %or.cond208.not = icmp eq i32 %i.fd, 33         ; 2 uses
-  %1 = mul i32 %i.fc, %i.i
+  %1 = shl i32 %i.i, %i.r
   %i.fe = zext i32 %1 to i64                      ; 4 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.fg = zext i1 %or.cond208.not to i64          ; 2 uses
@@ -1002,7 +996,7 @@ bb.ab:                                            ; preds = %.split.us
   br i1 %i.fz, label %.loopexit212.us, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %2 = mul nuw nsw i32 %i.fv, %i.fc
+  %2 = shl nuw nsw i32 %i.fv, %i.r
   %i.ga = shl nuw nsw i32 %i.fc, %i.fn
   %i.gb = xor i32 %i.fq, 1
   %i.gc = lshr i32 %.1219.us, 1
@@ -1116,7 +1110,6 @@ bb.ai:                                            ; preds = %.split
   br i1 %i.id, label %.loopexit212, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %3 = mul nuw nsw i32 %i.hz, %i.fc
   %i.ie = shl nuw nsw i32 %i.fc, %i.hr
   %i.if = xor i32 %i.hu, 1
   %i.ig = lshr i32 %.1219, 1
@@ -1128,7 +1121,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.im = ashr i32 %i.il, 1
   %i.in = lshr i32 8, %i.im
   %i.io = select i1 %i.ik, i32 %i.in, i32 8
-  %i.ip = zext nneg i32 %3 to i64
+  %i.ip = zext nneg i32 %i.hz to i64
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.split, %bb.aj
@@ -1215,20 +1208,14 @@ declare zeroext i8 @png_get_channels(ptr noundef, ptr noundef) local_unnamed_add
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #9
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.cttz.i32(i32, i1 immarg) #10
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #11
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.abs.i32(i32, i1 immarg) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #9
+declare i32 @llvm.abs.i32(i32, i1 immarg) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12
@@ -1243,8 +1230,8 @@ attributes #6 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-siz
 attributes #7 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #11 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #13 = { nounwind }
 attributes #14 = { noreturn nounwind }
