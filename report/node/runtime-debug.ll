@@ -204,7 +204,7 @@ _ZN2v88internal13NumberToInt32ENS0_6TaggedINS0_6ObjectEEE.exit.i: ; preds = %bb.
   br label %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit.thread.i
 
 _ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit.thread.i: ; preds = %_ZN2v88internal13NumberToInt32ENS0_6TaggedINS0_6ObjectEEE.exit.i, %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit.i, %_ZN2v88internalL41__RT_impl_Runtime_ScriptLocationFromLine2ENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit
-  %.0.i17 = phi i32 [ 0, %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit.i ], [ %i.et, %_ZN2v88internal13NumberToInt32ENS0_6TaggedINS0_6ObjectEEE.exit.i ], [ 0, %_ZN2v88internalL41__RT_impl_Runtime_ScriptLocationFromLine2ENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit ] ; 7 uses
+  %.0.i17 = phi i32 [ 0, %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit.i ], [ %i.et, %_ZN2v88internal13NumberToInt32ENS0_6TaggedINS0_6ObjectEEE.exit.i ], [ 0, %_ZN2v88internalL41__RT_impl_Runtime_ScriptLocationFromLine2ENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit ] ; 6 uses
   %i.eu = load i64, ptr %i.at, align 8            ; 5 uses
   %i.ev = icmp eq i64 %i.eu, %i.cx
   br i1 %i.ev, label %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit26.thread.i, label %_ZN2v88internal17IsNullOrUndefinedENS0_6TaggedINS0_6ObjectEEENS0_13ReadOnlyRootsE.exit26.i
@@ -320,13 +320,9 @@ bb.aw:                                            ; preds = %_ZN2v88internal17Is
   %i.gt = icmp eq i32 %.0.i17, 0                  ; 2 uses
   %i.gu = icmp eq i32 %.0.i11, 0
   %or.cond3.i.i18 = or i1 %i.gu, %i.gt
-  br i1 %or.cond3.i.i18, label %6, label %bb.bc
+  br i1 %or.cond3.i.i18, label %bb.ax, label %bb.bc
 
-6:                                                ; preds = %bb.aw
-  %7 = icmp slt i32 %.0.i17, 0
-  br i1 %7, label %_ZN2v88internal12_GLOBAL__N_118ScriptLinePositionEPNS0_7IsolateENS0_12DirectHandleINS0_6ScriptEEEi.exit.i.i, label %bb.ax
-
-bb.ax:                                            ; preds = %6
+bb.ax:                                            ; preds = %bb.aw
   %i.gv = load i64, ptr %.0.i.i.i.i, align 8      ; 2 uses
   %i.gw = add i64 %i.gv, 47
   %i.gx = inttoptr i64 %i.gw to ptr
@@ -374,8 +370,8 @@ bb.bb:                                            ; preds = %bb.ba
   %i.hr = add nsw i32 %i.hq, 1
   br label %_ZN2v88internal12_GLOBAL__N_118ScriptLinePositionEPNS0_7IsolateENS0_12DirectHandleINS0_6ScriptEEEi.exit.i.i
 
-_ZN2v88internal12_GLOBAL__N_118ScriptLinePositionEPNS0_7IsolateENS0_12DirectHandleINS0_6ScriptEEEi.exit.i.i: ; preds = %bb.bb, %bb.ba, %_ZN2v88internal6Script12InitLineEndsEPNS0_7IsolateENS0_12DirectHandleIS1_EE.exit.i.i.i, %bb.ax, %6
-  %.1.i.i.i = phi i32 [ 0, %bb.ax ], [ -1, %6 ], [ %i.hr, %bb.bb ], [ 0, %_ZN2v88internal6Script12InitLineEndsEPNS0_7IsolateENS0_12DirectHandleIS1_EE.exit.i.i.i ], [ -1, %bb.ba ]
+_ZN2v88internal12_GLOBAL__N_118ScriptLinePositionEPNS0_7IsolateENS0_12DirectHandleINS0_6ScriptEEEi.exit.i.i: ; preds = %bb.bb, %bb.ba, %_ZN2v88internal6Script12InitLineEndsEPNS0_7IsolateENS0_12DirectHandleIS1_EE.exit.i.i.i, %bb.ax
+  %.1.i.i.i = phi i32 [ 0, %bb.ax ], [ -1, %bb.ba ], [ %i.hr, %bb.bb ], [ 0, %_ZN2v88internal6Script12InitLineEndsEPNS0_7IsolateENS0_12DirectHandleIS1_EE.exit.i.i.i ]
   %i.hs = add nsw i32 %.1.i.i.i, %.0.i11
   br label %_ZN2v88internal12_GLOBAL__N_128ScriptLinePositionWithOffsetEPNS0_7IsolateENS0_12DirectHandleINS0_6ScriptEEEii.exit.i
 
