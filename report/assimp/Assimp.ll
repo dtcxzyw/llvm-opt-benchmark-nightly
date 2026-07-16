@@ -204,24 +204,20 @@ _ZL21stbi__mad3sizes_validiiii.exit._crit_edge:   ; preds = %bb.g, %_ZL21stbi__m
   %.pre-phi = phi i32 [ %i.ad, %_ZL21stbi__mul2sizes_validii.exit12.i ], [ 0, %bb.g ]
   %i.ag = add i32 %.pre-phi, 7
   %i.ah = lshr i32 %i.ag, 3                       ; 13 uses
-  %or.cond.not.i.i298 = icmp sgt i32 %5, -1
-  br i1 %or.cond.not.i.i298, label %8, label %_ZL21stbi__mad2sizes_validiii.exit.thread
-
-8:                                                ; preds = %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge
   br i1 %i.k, label %_ZL21stbi__mad2sizes_validiii.exit, label %_ZL21stbi__mul2sizes_validii.exit.i299
 
-_ZL21stbi__mul2sizes_validii.exit.i299:           ; preds = %8
+_ZL21stbi__mul2sizes_validii.exit.i299:           ; preds = %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge
   %i.ai = udiv i32 2147483647, %5
   %.not10.i = icmp samesign ugt i32 %i.ah, %i.ai
   br i1 %.not10.i, label %_ZL21stbi__mad2sizes_validiii.exit.thread, label %_ZL21stbi__mad2sizes_validiii.exit
 
-_ZL21stbi__mad2sizes_validiii.exit:               ; preds = %8, %_ZL21stbi__mul2sizes_validii.exit.i299
+_ZL21stbi__mad2sizes_validiii.exit:               ; preds = %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge, %_ZL21stbi__mul2sizes_validii.exit.i299
   %i.aj = mul nuw nsw i32 %i.ah, %5
   %i.ak = xor i32 %i.ah, 2147483647
-  %.not330 = icmp samesign ugt i32 %i.aj, %i.ak
+  %.not330 = icmp sgt i32 %i.aj, %i.ak
   br i1 %.not330, label %_ZL21stbi__mad2sizes_validiii.exit.thread, label %bb.h
 
-_ZL21stbi__mad2sizes_validiii.exit.thread:        ; preds = %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge, %_ZL21stbi__mul2sizes_validii.exit.i299, %_ZL21stbi__mad2sizes_validiii.exit
+_ZL21stbi__mad2sizes_validiii.exit.thread:        ; preds = %_ZL21stbi__mul2sizes_validii.exit.i299, %_ZL21stbi__mad2sizes_validiii.exit
   %i.al = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZL22stbi__g_failure_reason)
   store ptr @.str.11, ptr %i.al, align 8
   br label %bb.ak
@@ -274,7 +270,7 @@ bb.l:                                             ; preds = %bb.j
   %i.bi = icmp eq i32 %7, 0
   %i.bj = sext i32 %6 to i64
   %i.bk = getelementptr inbounds i8, ptr @_ZL23stbi__depth_scale_table, i64 %i.bj
-  %wide.trip.count460 = zext nneg i32 %5 to i64
+  %wide.trip.count460 = zext i32 %5 to i64
   %wide.trip.count424 = zext i32 %spec.select to i64 ; 15 uses
   %wide.trip.count434 = zext nneg i32 %spec.select to i64
   %wide.trip.count444 = zext i32 %i.aw to i64     ; 8 uses
