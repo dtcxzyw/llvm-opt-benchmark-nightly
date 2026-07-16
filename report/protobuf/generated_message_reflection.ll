@@ -204,8 +204,8 @@ _ZNK6google8protobuf11MessageLite8GetArenaEv.exit133: ; preds = %bb.aj, %bb.ak
 .lr.ph.i.i.preheader:                             ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit133
   %i.gr = add i64 %.0.i105159, 8
   %i.gs = add i64 %.0.i130160, 8
-  %rt.bound0 = icmp ugt i64 %i.gr, %.0.i130160
-  %rt.bound1 = icmp ugt i64 %i.gs, %.0.i105159
+  %rt.bound0 = icmp ugt i64 %i.gs, %.0.i105159
+  %rt.bound1 = icmp ugt i64 %i.gr, %.0.i130160
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
   br i1 %rt.guard, label %.lr.ph.i.i.preheader.rtscalar, label %.lr.ph.i.i.preheader.rtvec
