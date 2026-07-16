@@ -203,8 +203,8 @@ bb.ad:                                            ; preds = %.noexc.i.i717
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ac, %bb.ad
-  %i.gr = phi ptr [ %.pre1367, %bb.ad ], [ %i.gn, %bb.ac ]
-  %i.gs = phi i64 [ %i.gq, %bb.ad ], [ 0, %bb.ac ] ; 2 uses
+  %i.gr = phi ptr [ %i.gn, %bb.ac ], [ %.pre1367, %bb.ad ]
+  %i.gs = phi i64 [ 0, %bb.ac ], [ %i.gq, %bb.ad ] ; 2 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   store i64 %i.gs, ptr %i.gt, align 8, !tbaa !102
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gr, i64 %i.gs
@@ -607,8 +607,8 @@ bb.ap:                                            ; preds = %.noexc.i.i.i.i.i380
   br label %.critedge505.i.i.i.i
 
 .critedge505.i.i.i.i:                             ; preds = %bb.ap, %bb.ao
-  %i.se = phi ptr [ %.pre805.i.i.i.i, %bb.ap ], [ %i.ci, %bb.ao ]
-  %i.sf = phi i64 [ %i.sd, %bb.ap ], [ 0, %bb.ao ] ; 2 uses
+  %i.se = phi ptr [ %i.ci, %bb.ao ], [ %.pre805.i.i.i.i, %bb.ap ]
+  %i.sf = phi i64 [ 0, %bb.ao ], [ %i.sd, %bb.ap ] ; 2 uses
   store i64 %i.sf, ptr %i.cj, align 8, !tbaa !102, !noalias !553
   %i.sg = getelementptr inbounds nuw i8, ptr %i.se, i64 %i.sf
   store i8 0, ptr %i.sg, align 1, !tbaa !30, !noalias !553
@@ -1011,8 +1011,8 @@ bb.ch:                                            ; preds = %.noexc.i.i.i.i.i416
   br label %.critedge506.i.i.i.i
 
 .critedge506.i.i.i.i:                             ; preds = %bb.ch, %bb.cg
-  %i.abv = phi ptr [ %.pre807.i.i.i.i, %bb.ch ], [ %i.ez, %bb.cg ]
-  %i.abw = phi i64 [ %i.abu, %bb.ch ], [ 0, %bb.cg ] ; 2 uses
+  %i.abv = phi ptr [ %i.ez, %bb.cg ], [ %.pre807.i.i.i.i, %bb.ch ]
+  %i.abw = phi i64 [ 0, %bb.cg ], [ %i.abu, %bb.ch ] ; 2 uses
   store i64 %i.abw, ptr %i.fa, align 8, !tbaa !102, !noalias !565
   %i.abx = getelementptr inbounds nuw i8, ptr %i.abv, i64 %i.abw
   store i8 0, ptr %i.abx, align 1, !tbaa !30, !noalias !565
@@ -1415,8 +1415,8 @@ bb.ds:                                            ; preds = %.noexc.i.i.i.i.i447
   br label %.critedge507.i.i.i.i
 
 .critedge507.i.i.i.i:                             ; preds = %bb.ds, %bb.dr
-  %i.akf = phi ptr [ %.pre809.i.i.i.i, %bb.ds ], [ %i.gx, %bb.dr ]
-  %i.akg = phi i64 [ %i.ake, %bb.ds ], [ 0, %bb.dr ] ; 2 uses
+  %i.akf = phi ptr [ %i.gx, %bb.dr ], [ %.pre809.i.i.i.i, %bb.ds ]
+  %i.akg = phi i64 [ 0, %bb.dr ], [ %i.ake, %bb.ds ] ; 2 uses
   store i64 %i.akg, ptr %i.gy, align 8, !tbaa !102, !noalias !574
   %i.akh = getelementptr inbounds nuw i8, ptr %i.akf, i64 %i.akg
   store i8 0, ptr %i.akh, align 1, !tbaa !30, !noalias !574
