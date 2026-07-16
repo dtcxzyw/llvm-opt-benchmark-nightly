@@ -1,0 +1,168 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index f1f800cd69d60..676006a9e6201 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1072,38 +1072,42 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   }
+ 
+   Value *LowerBound = StartValue;
++  bool UnsignedInBounds = true, SignedInBounds = true;
+   if (IncStep) {
+-    // Adjust lower bound when dealing with a post-increment value.
+     auto *StartC = dyn_cast<ConstantInt>(StartValue);
+     if (!StartC)
+       return;
+-    bool Overflow = false;
+-    APInt Sum = StartC->getValue().uadd_ov(*StepOffset, Overflow);
+-    if (Overflow)
+-      return;
++    bool UOverflow = false, SOverflow = false;
++    APInt Sum = StartC->getValue().uadd_ov(*StepOffset, UOverflow);
++    (void)StartC->getValue().sadd_ov(*StepOffset, SOverflow);
+     LowerBound = ConstantInt::get(StartValue->getType(), Sum);
++    UnsignedInBounds = !UOverflow;
++    SignedInBounds = !SOverflow;
+   }
+ 
+-  // AR may wrap. Add PN >= StartValue conditional on LowerBound <= B which
++  // AR may wrap. Add PN >= StartValue conditional on LowerBound <= B, which
+   // guarantees that the loop exits before wrapping in combination with the
+   // restrictions on B and the step above.
+-  if (!MonotonicallyIncreasingUnsigned)
++  if (!MonotonicallyIncreasingUnsigned && UnsignedInBounds)
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, CmpInst::ICMP_UGE, PN, StartValue,
+         ConditionTy(CmpInst::ICMP_ULE, LowerBound, B)));
+-  // Only unsigned facts are derived for the post-increment path.
+-  if (!MonotonicallyIncreasingSigned && !IncStep)
++  if (!MonotonicallyIncreasingSigned && SignedInBounds)
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, CmpInst::ICMP_SGE, PN, StartValue,
+-        ConditionTy(CmpInst::ICMP_SLE, StartValue, B)));
++        ConditionTy(CmpInst::ICMP_SLE, LowerBound, B)));
++
++  if (SignedInBounds)
++    WorkList.push_back(FactOrCheck::getConditionFact(
++        DTN, CmpInst::ICMP_SLT, PN, B,
++        ConditionTy(CmpInst::ICMP_SLE, LowerBound, B)));
++
++  if (!UnsignedInBounds)
++    return;
+ 
+   WorkList.push_back(FactOrCheck::getConditionFact(
+       DTN, CmpInst::ICMP_ULT, PN, B,
+       ConditionTy(CmpInst::ICMP_ULE, LowerBound, B)));
+-  if (!IncStep)
+-    WorkList.push_back(FactOrCheck::getConditionFact(
+-        DTN, CmpInst::ICMP_SLT, PN, B,
+-        ConditionTy(CmpInst::ICMP_SLE, StartValue, B)));
+ 
+   // Try to add condition from header to the dedicated exit blocks. When exiting
+   // either with EQ or NE in the header, we know that the induction value must
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index 103fb73e4d37a..b1ac763592750 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -283,8 +283,8 @@ exit:
+ }
+ 
+ ; Post-increment condition with signed predicates in body.
+-define i1 @postinc_negative_start_signed_body_not_folded(i1 %c) {
+-; CHECK-LABEL: define i1 @postinc_negative_start_signed_body_not_folded(
++define i1 @postinc_negative_start_signed_body_folded(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_negative_start_signed_body_folded(
+ ; CHECK-SAME: i1 [[C:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
+@@ -294,10 +294,9 @@ define i1 @postinc_negative_start_signed_body_not_folded(i1 %c) {
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV_NEXT]], 10
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[RES:%.*]] = icmp slt i64 [[IV]], 10
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT_0]]:
+-; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -540,10 +539,9 @@ define void @postinc_signed_facts_when_unsigned_overflows(ptr %p, i1 %c) {
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i8 [[IV_NEXT]], 100
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[UB:%.*]] = icmp slt i8 [[IV]], 100
+ ; CHECK-NEXT:    [[UNS:%.*]] = icmp ult i8 [[IV]], 100
+ ; CHECK-NEXT:    [[Z0:%.*]] = zext i1 false to i8
+-; CHECK-NEXT:    [[Z1:%.*]] = zext i1 [[UB]] to i8
++; CHECK-NEXT:    [[Z1:%.*]] = zext i1 true to i8
+ ; CHECK-NEXT:    [[Z2:%.*]] = zext i1 [[UNS]] to i8
+ ; CHECK-NEXT:    store i8 [[Z0]], ptr [[P]], align 1
+ ; CHECK-NEXT:    store i8 [[Z1]], ptr [[P]], align 1
+@@ -576,3 +574,53 @@ loop.latch:
+ exit:
+   ret void
+ }
++
++; Similar to @postinc_signed_facts_when_unsigned_overflows: here the signed sum
++; StartValue + Step (127 + 1) overflows signed but not unsigned.
++define void @postinc_unsigned_facts_when_signed_overflows(ptr %p) {
++; CHECK-LABEL: define void @postinc_unsigned_facts_when_signed_overflows(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 127, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i8 [[IV_NEXT]], -100
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[SLB:%.*]] = icmp slt i8 [[IV]], 127
++; CHECK-NEXT:    [[SUB:%.*]] = icmp slt i8 [[IV]], -100
++; CHECK-NEXT:    [[Z0:%.*]] = zext i1 [[SLB]] to i8
++; CHECK-NEXT:    [[Z1:%.*]] = zext i1 [[SUB]] to i8
++; CHECK-NEXT:    [[Z2:%.*]] = zext i1 true to i8
++; CHECK-NEXT:    store i8 [[Z0]], ptr [[P]], align 1
++; CHECK-NEXT:    store i8 [[Z1]], ptr [[P]], align 1
++; CHECK-NEXT:    store i8 [[Z2]], ptr [[P]], align 1
++; CHECK-NEXT:    br label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i8 [ 127, %entry ], [ %iv.next, %loop.latch ]
++  %iv.next = add i8 %iv, 1
++  %done = icmp eq i8 %iv.next, -100
++  br i1 %done, label %exit, label %loop.latch
++
++loop.latch:
++  %slb = icmp slt i8 %iv, 127
++  %sub = icmp slt i8 %iv, -100
++  %uns = icmp ult i8 %iv, -100
++  %z0 = zext i1 %slb to i8
++  %z1 = zext i1 %sub to i8
++  %z2 = zext i1 %uns to i8
++  store i8 %z0, ptr %p, align 1
++  store i8 %z1, ptr %p, align 1
++  store i8 %z2, ptr %p, align 1
++  br label %loop.header
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+index 5aa179a25ccac..a5c0702896efd 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+@@ -302,8 +302,7 @@ define void @signed_postinc_iv_step_1(i64 %end) {
+ ; CHECK-NEXT:    [[CMP_I_NOT:%.*]] = icmp eq i64 [[IV_NEXT]], [[END]]
+ ; CHECK-NEXT:    br i1 [[CMP_I_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp slt i64 [[IV]], [[END]]
+-; CHECK-NEXT:    call void @use(i1 [[CMP2]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ; CHECK:       exit:
