@@ -204,8 +204,8 @@ bb.a:
   %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.c = add i64 %i.b, 16
   %i.d = add i64 %i.a, 17
-  %rt.bound0 = icmp ugt i64 %i.d, %i.b
-  %rt.bound1 = icmp ugt i64 %i.c, %i.a
+  %rt.bound0 = icmp ugt i64 %i.c, %i.a
+  %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   br i1 %rt.conflict, label %.rtscalar, label %.rtvec
 
