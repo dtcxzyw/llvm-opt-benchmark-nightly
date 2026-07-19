@@ -203,23 +203,11 @@ Transformation_to_Log_Area_Ratios.exit:           ; preds = %bb.ao, %bb.ap, %bb.
   %i.amg = shufflevector <2 x i32> %i.ali, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.amh = shufflevector <8 x i32> %i.amf, <8 x i32> %i.amg, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
   %i.ami = add <8 x i32> %i.amh, splat (i32 16777216)
-  %i.amj = ashr <8 x i32> %i.ami, splat (i32 25)  ; 5 uses
+  %i.amj = ashr <8 x i32> %i.ami, splat (i32 25)  ; 2 uses
   %i.amk = icmp sgt <8 x i32> %i.amj, <i32 31, i32 31, i32 15, i32 15, i32 7, i32 7, i32 3, i32 3>
-  %3 = extractelement <8 x i32> %i.amj, i64 3
-  %4 = tail call i32 @llvm.smax.i32(i32 %3, i32 -16)
-  %5 = extractelement <8 x i32> %i.amj, i64 2
-  %6 = tail call i32 @llvm.smax.i32(i32 %5, i32 -16)
-  %i.aml = trunc nsw <8 x i32> %i.amj to <8 x i16>
-  %7 = trunc i32 %6 to i16
-  %8 = insertelement <8 x i16> %i.aml, i16 %7, i64 2
-  %9 = trunc i32 %4 to i16
-  %10 = insertelement <8 x i16> %8, i16 %9, i64 3
-  %11 = shufflevector <8 x i32> %i.amj, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %12 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %11, <4 x i32> <i32 -8, i32 -8, i32 -4, i32 -4>)
-  %13 = trunc <4 x i32> %12 to <4 x i16>
-  %14 = shufflevector <4 x i16> %13, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %15 = shufflevector <8 x i16> %10, <8 x i16> %14, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %i.amm = add nsw <8 x i16> %15, <i16 32, i16 32, i16 16, i16 16, i16 8, i16 8, i16 4, i16 4>
+  %3 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.amj, <8 x i32> <i32 -2147483648, i32 -2147483648, i32 -16, i32 -16, i32 -8, i32 -8, i32 -4, i32 -4>)
+  %i.aml = trunc <8 x i32> %3 to <8 x i16>
+  %i.amm = add nsw <8 x i16> %i.aml, <i16 32, i16 32, i16 16, i16 16, i16 8, i16 8, i16 4, i16 4>
   %i.amn = select <8 x i1> %i.amk, <8 x i16> <i16 63, i16 63, i16 31, i16 31, i16 15, i16 15, i16 7, i16 7>, <8 x i16> %i.amm
   store <8 x i16> %i.amn, ptr %2, align 2, !tbaa !8
   ret void
@@ -260,7 +248,7 @@ declare i16 @llvm.vector.reduce.umax.v8i16(<8 x i16>) #3
 declare <8 x i16> @llvm.sadd.sat.v8i16(<8 x i16>, <8 x i16>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #3
+declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

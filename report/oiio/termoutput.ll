@@ -204,23 +204,14 @@ bb.eh:                                            ; preds = %.lr.ph, %bb.ei
   %i.ut = zext <2 x i32> %i.un to <2 x i64>
   %i.uu = or disjoint <2 x i64> %i.us, %i.ut
   %i.uv = bitcast <2 x i64> %i.uu to <4 x float>
-  %i.uw = call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> %i.uv) ; 4 uses
-  %.sroa.0808.0.vec.extract811 = extractelement <4 x i32> %i.uw, i64 0
-  %.sroa.speculated694 = call i32 @llvm.smax.i32(i32 %.sroa.0808.0.vec.extract811, i32 0)
-  %.sroa.0808.4.vec.extract813 = extractelement <4 x i32> %i.uw, i64 1
-  %.sroa.speculated694.1 = call i32 @llvm.smax.i32(i32 %.sroa.0808.4.vec.extract813, i32 0)
-  %.sroa.0808.8.vec.extract816 = extractelement <4 x i32> %i.uw, i64 2
-  %.sroa.speculated694.2 = call i32 @llvm.smax.i32(i32 %.sroa.0808.8.vec.extract816, i32 0)
-  %64 = call i32 @llvm.umin.i32(i32 %.sroa.speculated694, i32 5)
-  %65 = call i32 @llvm.umin.i32(i32 %.sroa.speculated694.1, i32 5)
-  %66 = call i32 @llvm.umin.i32(i32 %.sroa.speculated694.2, i32 5)
-  %67 = mul nuw nsw i32 %64, 36
-  %68 = add nuw nsw i32 %67, 16
-  %69 = mul nuw nsw i32 %65, 6
-  %70 = add nuw nsw i32 %68, %69
-  %71 = add nuw nsw i32 %70, %66
+  %i.uw = call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> %i.uv) ; 2 uses
+  %64 = insertelement <4 x i32> %i.uw, i32 -2147483648, i64 3
+  %65 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %64, <4 x i32> <i32 0, i32 0, i32 0, i32 -1>)
+  %66 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %65, <4 x i32> <i32 5, i32 5, i32 5, i32 1>)
+  %67 = mul nuw nsw <4 x i32> %66, <i32 36, i32 6, i32 1, i32 16>
+  %68 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %67)
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #32
-  store i32 %71, ptr %18, align 16, !tbaa !33
+  store i32 %68, ptr %18, align 16, !tbaa !33
   invoke void @_ZN3fmt3v126vprintEP8_IO_FILENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr noundef %spec.select, ptr nonnull @.str.31, i64 11, i64 1, ptr nonnull %18)
           to label %bb.ei unwind label %bb.ek
 
@@ -420,23 +411,14 @@ bb.ez:                                            ; preds = %.lr.ph765, %bb.fa
   %i.xh = zext <2 x i32> %i.xb to <2 x i64>
   %i.xi = or disjoint <2 x i64> %i.xg, %i.xh
   %i.xj = bitcast <2 x i64> %i.xi to <4 x float>
-  %i.xk = call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> %i.xj) ; 3 uses
-  %.sroa.0795.0.vec.extract798 = extractelement <4 x i32> %i.xk, i64 0
-  %.sroa.speculated699 = call i32 @llvm.smax.i32(i32 %.sroa.0795.0.vec.extract798, i32 0)
-  %.sroa.0795.4.vec.extract800 = extractelement <4 x i32> %i.xk, i64 1
-  %.sroa.speculated699.1 = call i32 @llvm.smax.i32(i32 %.sroa.0795.4.vec.extract800, i32 0)
-  %.sroa.0795.8.vec.extract803 = extractelement <4 x i32> %i.xk, i64 2
-  %.sroa.speculated699.2 = call i32 @llvm.smax.i32(i32 %.sroa.0795.8.vec.extract803, i32 0)
-  %72 = call i32 @llvm.umin.i32(i32 %.sroa.speculated699, i32 5)
-  %73 = call i32 @llvm.umin.i32(i32 %.sroa.speculated699.1, i32 5)
-  %74 = call i32 @llvm.umin.i32(i32 %.sroa.speculated699.2, i32 5)
-  %75 = mul nuw nsw i32 %72, 36
-  %76 = add nuw nsw i32 %75, 16
-  %77 = mul nuw nsw i32 %73, 6
-  %78 = add nuw nsw i32 %76, %77
-  %79 = add nuw nsw i32 %78, %74
+  %i.xk = call <4 x i32> @llvm.x86.sse2.cvttps2dq(<4 x float> %i.xj)
+  %69 = insertelement <4 x i32> %i.xk, i32 -2147483648, i64 3
+  %70 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %69, <4 x i32> <i32 0, i32 0, i32 0, i32 -1>)
+  %71 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %70, <4 x i32> <i32 5, i32 5, i32 5, i32 1>)
+  %72 = mul nuw nsw <4 x i32> %71, <i32 36, i32 6, i32 1, i32 16>
+  %73 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %72)
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #32
-  store i32 %79, ptr %19, align 16, !tbaa !33
+  store i32 %73, ptr %19, align 16, !tbaa !33
   invoke void @_ZN3fmt3v126vprintEP8_IO_FILENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr noundef %spec.select, ptr nonnull @.str.31, i64 11, i64 1, ptr nonnull %19)
           to label %bb.fa unwind label %bb.fc
 
@@ -838,6 +820,15 @@ declare i128 @llvm.ctlz.i128(i128, i1 immarg) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #19
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
