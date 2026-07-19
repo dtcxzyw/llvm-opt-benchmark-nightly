@@ -204,12 +204,18 @@ begin_hunk_0_@setup_tone_curves:bb.a
   br label %bb.b
 
 .preheader288:                                    ; preds = %pred.store.continue514.6
-  %i.cdk = fpext float %1 to double               ; 6 uses
+  %i.cdk = fpext float %1 to double               ; 4 uses
   %i.cdl = icmp sgt i32 %2, 0
   %wide.trip.count = zext i32 %2 to i64           ; 3 uses
   %min.iters.check1363 = icmp ult i32 %2, 8
   %n.vec1366 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   %cmp.n1371 = icmp eq i64 %n.vec1366, %wide.trip.count
+  %5 = insertelement <2 x double> poison, double %i.cdk, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x i32> <i32 poison, i32 2147483647>, i32 %2, i64 0
+  %8 = insertelement <2 x double> poison, double %i.cdk, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = insertelement <2 x i32> <i32 poison, i32 2147483647>, i32 %2, i64 0
   br label %bb.i
 
 bb.b:                                             ; preds = %bb.a, %pred.store.continue514.6
@@ -612,21 +618,23 @@ bb.k:                                             ; preds = %.preheader283, %._c
   %i.hxc = fadd double %i.hxb, f0x4017DCF680000000
   %i.hxd = fmul double %i.hxc, f0x3FE62E42A0000000
   %i.hxe = tail call double @exp(double noundef %i.hxd) #62
-  %5 = fdiv double %i.hxe, %i.cdk
-  %6 = fptosi double %5 to i32
-  %7 = fadd double %i.hxa, -1.937500e+00
-  %8 = fadd double %7, f0x4017DCF680000000
-  %9 = fmul double %8, f0x3FE62E42A0000000
-  %10 = tail call double @exp(double noundef %9) #62
-  %11 = fdiv double %10, %i.cdk
-  %12 = fadd double %11, 1.000000e+00
-  %13 = fptosi double %12 to i32
-  %spec.store.select4 = tail call i32 @llvm.smax.i32(i32 %6, i32 0) ; 2 uses
-  %spec.select274 = tail call i32 @llvm.smin.i32(i32 %spec.store.select4, i32 %2)
-  %.1247 = tail call i32 @llvm.smin.i32(i32 %spec.select274, i32 %.0246317) ; 4 uses
-  %spec.store.select5 = tail call i32 @llvm.smax.i32(i32 %13, i32 0)
-  %.0244 = tail call i32 @llvm.smin.i32(i32 %spec.store.select5, i32 %2) ; 3 uses
-  %i.hxf = icmp slt i32 %.1247, %.0244
+  %11 = fadd double %i.hxa, -1.937500e+00
+  %12 = fadd double %11, f0x4017DCF680000000
+  %13 = fmul double %12, f0x3FE62E42A0000000
+  %14 = tail call double @exp(double noundef %13) #62
+  %15 = insertelement <2 x double> poison, double %i.hxe, i64 0
+  %16 = insertelement <2 x double> %15, double %14, i64 1
+  %17 = fdiv <2 x double> %16, %6
+  %18 = fadd <2 x double> %17, <double -0.000000e+00, double 1.000000e+00>
+  %19 = fptosi <2 x double> %18 to <2 x i32>
+  %20 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %19, <2 x i32> zeroinitializer) ; 2 uses
+  %21 = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %20, <2 x i32> %7)
+  %22 = insertelement <2 x i32> poison, i32 %.0246317, i64 0
+  %23 = insertelement <2 x i32> %22, i32 %2, i64 1
+  %24 = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %21, <2 x i32> %23) ; 2 uses
+  %25 = extractelement <2 x i32> %24, i64 0       ; 4 uses
+  %26 = extractelement <2 x i32> %24, i64 1       ; 3 uses
+  %i.hxf = icmp slt i32 %25, %26
   br i1 %i.hxf, label %.lr.ph315, label %._crit_edge
 
 .lr.ph315:                                        ; preds = %bb.k
@@ -634,13 +642,14 @@ bb.k:                                             ; preds = %.preheader283, %._c
   %i.hxh = load float, ptr %i.hxg, align 4        ; 11 uses
   %i.hxi = tail call i32 @llvm.smin.i32(i32 %.0246317, i32 %2)
   %smin = sext i32 %i.hxi to i64
-  %i.hxj = zext nneg i32 %spec.store.select4 to i64
+  %27 = extractelement <2 x i32> %20, i64 0
+  %i.hxj = zext nneg i32 %27 to i64
   %smin386 = tail call i64 @llvm.smin.i64(i64 %smin, i64 %i.hxj) ; 4 uses
   %i.hxk = trunc nsw i64 %smin386 to i32
-  %i.hxl = add i32 %.0244, %i.hxk
-  %i.hxm = sub i32 %i.hxl, %.1247                 ; 3 uses
-  %i.hxn = xor i32 %.1247, -1
-  %i.hxo = add i32 %.0244, %i.hxn                 ; 2 uses
+  %i.hxl = add i32 %26, %i.hxk
+  %i.hxm = sub i32 %i.hxl, %25                    ; 3 uses
+  %i.hxn = xor i32 %25, -1
+  %i.hxo = add i32 %26, %i.hxn                    ; 2 uses
   %i.hxp = zext i32 %i.hxo to i64
   %i.hxq = add nuw nsw i64 %i.hxp, 1              ; 2 uses
   %min.iters.check1332 = icmp ult i32 %i.hxo, 7
@@ -770,7 +779,7 @@ bb.m:                                             ; preds = %scalar.ph1331, %bb.
   br i1 %exitcond389.not, label %._crit_edge, label %scalar.ph1331, !llvm.loop !552
 
 ._crit_edge:                                      ; preds = %bb.m, %middle.block1359, %bb.k
-  %.2248.lcssa = phi i32 [ %.1247, %bb.k ], [ %i.hxm, %middle.block1359 ], [ %i.hxm, %bb.m ] ; 3 uses
+  %.2248.lcssa = phi i32 [ %25, %bb.k ], [ %i.hxm, %middle.block1359 ], [ %i.hxm, %bb.m ] ; 3 uses
   %indvars.iv.next391 = add nuw nsw i64 %indvars.iv390, 1 ; 2 uses
   %exitcond393.not = icmp eq i64 %indvars.iv.next391, 56
   br i1 %exitcond393.not, label %.preheader, label %bb.k, !llvm.loop !553
@@ -935,21 +944,23 @@ bb.p:                                             ; preds = %.preheader286, %._c
   %i.ian = fadd double %i.iam, f0x4017DCF680000000
   %i.iao = fmul double %i.ian, f0x3FE62E42A0000000
   %i.iap = tail call double @exp(double noundef %i.iao) #62
-  %14 = fdiv double %i.iap, %i.cdk
-  %15 = fptosi double %14 to i32
-  %16 = fadd double %i.ial, -1.937500e+00
-  %17 = fadd double %16, f0x4017DCF680000000
-  %18 = fmul double %17, f0x3FE62E42A0000000
-  %19 = tail call double @exp(double noundef %18) #62
-  %20 = fdiv double %19, %i.cdk
-  %21 = fadd double %20, 1.000000e+00
-  %22 = fptosi double %21 to i32
-  %spec.store.select6 = tail call i32 @llvm.smax.i32(i32 %15, i32 0) ; 2 uses
-  %spec.select275 = tail call i32 @llvm.smin.i32(i32 %spec.store.select6, i32 %2)
-  %.1243 = tail call i32 @llvm.smin.i32(i32 %spec.select275, i32 %.0242334) ; 4 uses
-  %spec.store.select7 = tail call i32 @llvm.smax.i32(i32 %22, i32 0)
-  %.0240 = tail call i32 @llvm.smin.i32(i32 %spec.store.select7, i32 %2) ; 3 uses
-  %i.iaq = icmp slt i32 %.1243, %.0240
+  %28 = fadd double %i.ial, -1.937500e+00
+  %29 = fadd double %28, f0x4017DCF680000000
+  %30 = fmul double %29, f0x3FE62E42A0000000
+  %31 = tail call double @exp(double noundef %30) #62
+  %32 = insertelement <2 x double> poison, double %i.iap, i64 0
+  %33 = insertelement <2 x double> %32, double %31, i64 1
+  %34 = fdiv <2 x double> %33, %9
+  %35 = fadd <2 x double> %34, <double -0.000000e+00, double 1.000000e+00>
+  %36 = fptosi <2 x double> %35 to <2 x i32>
+  %37 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %36, <2 x i32> zeroinitializer) ; 2 uses
+  %38 = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %37, <2 x i32> %10)
+  %39 = insertelement <2 x i32> poison, i32 %.0242334, i64 0
+  %40 = insertelement <2 x i32> %39, i32 %2, i64 1
+  %41 = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %38, <2 x i32> %40) ; 2 uses
+  %42 = extractelement <2 x i32> %41, i64 0       ; 4 uses
+  %43 = extractelement <2 x i32> %41, i64 1       ; 3 uses
+  %i.iaq = icmp slt i32 %42, %43
   br i1 %i.iaq, label %.lr.ph330, label %._crit_edge331
 
 .lr.ph330:                                        ; preds = %bb.p
@@ -957,13 +968,14 @@ bb.p:                                             ; preds = %.preheader286, %._c
   %i.ias = load float, ptr %i.iar, align 4        ; 11 uses
   %i.iat = tail call i32 @llvm.smin.i32(i32 %.0242334, i32 %2)
   %smin404 = sext i32 %i.iat to i64
-  %i.iau = zext nneg i32 %spec.store.select6 to i64
+  %44 = extractelement <2 x i32> %37, i64 0
+  %i.iau = zext nneg i32 %44 to i64
   %smin405 = tail call i64 @llvm.smin.i64(i64 %smin404, i64 %i.iau) ; 4 uses
   %i.iav = trunc nsw i64 %smin405 to i32
-  %i.iaw = add i32 %.0240, %i.iav
-  %i.iax = sub i32 %i.iaw, %.1243                 ; 3 uses
-  %i.iay = xor i32 %.1243, -1
-  %i.iaz = add i32 %.0240, %i.iay                 ; 2 uses
+  %i.iaw = add i32 %43, %i.iav
+  %i.iax = sub i32 %i.iaw, %42                    ; 3 uses
+  %i.iay = xor i32 %42, -1
+  %i.iaz = add i32 %43, %i.iay                    ; 2 uses
   %i.iba = zext i32 %i.iaz to i64
   %i.ibb = add nuw nsw i64 %i.iba, 1              ; 2 uses
   %min.iters.check1270 = icmp ult i32 %i.iaz, 7
@@ -1093,7 +1105,7 @@ bb.r:                                             ; preds = %scalar.ph1269, %bb.
   br i1 %exitcond409.not, label %._crit_edge331, label %scalar.ph1269, !llvm.loop !558
 
 ._crit_edge331:                                   ; preds = %bb.r, %middle.block1297, %bb.p
-  %.2.lcssa = phi i32 [ %.1243, %bb.p ], [ %i.iax, %middle.block1297 ], [ %i.iax, %bb.r ] ; 3 uses
+  %.2.lcssa = phi i32 [ %42, %bb.p ], [ %i.iax, %middle.block1297 ], [ %i.iax, %bb.r ] ; 3 uses
   %indvars.iv.next411 = add nuw nsw i64 %indvars.iv410, 1 ; 2 uses
   %exitcond413.not = icmp eq i64 %indvars.iv.next411, 56
   br i1 %exitcond413.not, label %.preheader285, label %bb.p, !llvm.loop !559
@@ -1494,6 +1506,12 @@ declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.bitreverse.v2i32(<2 x i32>) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.rint.v4f32(<4 x float>) #30
