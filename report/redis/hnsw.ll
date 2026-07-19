@@ -204,16 +204,16 @@ bb.k:                                             ; preds = %.lr.ph266
   %i.az = mul i64 %i.ax, 1465756011083071488
   %i.ba = lshr i64 %i.ay, 33
   %i.bb = or disjoint i64 %i.ba, %i.az
+  %wide.trip.count224 = zext i32 %i.am to i64
   %invariant.op281.reass = xor i64 %i.ay, %invariant.op284
   %invariant.op283.reass = xor i64 %i.bb, %invariant.op
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph189, %bb.q
-  %.0104188 = phi i32 [ 0, %.lr.ph189 ], [ %4, %bb.q ] ; 2 uses
-  %.sroa.6.2187.a = phi i64 [ %.sroa.6.1192, %.lr.ph189 ], [ %i.dk, %bb.q ]
-  %.sroa.0.2186.a = phi i64 [ %.sroa.0.1191, %.lr.ph189 ], [ %i.di, %bb.q ]
-  %3 = zext i32 %.0104188 to i64
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %3 ; 2 uses
+  %.sroa.6.2187.a = phi i64 [ 0, %.lr.ph189 ], [ %indvars.iv.next222, %bb.q ] ; 2 uses
+  %.sroa.0.2186.a = phi i64 [ %.sroa.6.1192, %.lr.ph189 ], [ %i.dk, %bb.q ]
+  %.sroa.0.2186 = phi i64 [ %.sroa.0.1191, %.lr.ph189 ], [ %i.di, %bb.q ]
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %.sroa.6.2187.a ; 2 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !26
   %i.be = ptrtoint ptr %i.bd to i64               ; 6 uses
   %i.bf = icmp eq i64 %i.ae, %i.be
@@ -275,9 +275,9 @@ bb.m:                                             ; preds = %bb.l
   %i.de = xor i64 %i.dd, %i.dc
   %i.df = mul i64 %i.de, 3133965575612453543      ; 2 uses
   %i.dg = lshr i64 %i.df, 32
-  %i.dh = xor i64 %.sroa.0.2186.a, %i.cz
+  %i.dh = xor i64 %.sroa.0.2186, %i.cz
   %i.di = xor i64 %i.dh, %i.cy                    ; 2 uses
-  %i.dj = xor i64 %.sroa.6.2187.a, %i.dg
+  %i.dj = xor i64 %.sroa.0.2186.a, %i.dg
   %i.dk = xor i64 %i.dj, %i.df                    ; 2 uses
   br i1 %.not204, label %.thread150, label %.lr.ph.preheader
 
@@ -320,8 +320,8 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p
   store ptr %i.du, ptr %i.bc, align 8, !tbaa !26
-  %4 = add nuw i32 %.0104188, 1                   ; 2 uses
-  %exitcond221.not = icmp eq i32 %4, %i.am
+  %indvars.iv.next222 = add nuw nsw i64 %.sroa.6.2187.a, 1 ; 2 uses
+  %exitcond221.not = icmp eq i64 %indvars.iv.next222, %wide.trip.count224
   br i1 %exitcond221.not, label %._crit_edge, label %bb.l, !llvm.loop !226
 
 ._crit_edge:                                      ; preds = %bb.q, %bb.i, %.loopexit

@@ -68,8 +68,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.f = shl i32 %.03436, 1
-  %.idx = shl i64 %indvars.iv, 4
-  %i.g = getelementptr inbounds i8, ptr %1, i64 %.idx ; 2 uses
+  %.idx = shl nsw i64 %indvars.iv, 4
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 2 uses
   %i.h = sext i32 %i.f to i64
   %i.i = getelementptr inbounds [8 x i8], ptr %1, i64 %i.h ; 2 uses
   %i.j = load <2 x double>, ptr %i.g, align 8, !tbaa !10
@@ -159,8 +159,8 @@ bb.d:                                             ; preds = %int_log2.exit
 
 bb.e:                                             ; preds = %.lr.ph.i102
   %i.n = shl i32 %.03436.i, 1
-  %.idx.i = shl i64 %indvars.iv.i, 4
-  %i.o = getelementptr inbounds i8, ptr %1, i64 %.idx.i ; 2 uses
+  %.idx.i = shl nuw nsw i64 %indvars.iv.i, 4
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i ; 2 uses
   %i.p = sext i32 %i.n to i64
   %i.q = getelementptr inbounds [8 x i8], ptr %1, i64 %i.p ; 2 uses
   %i.r = load <2 x double>, ptr %i.o, align 8, !tbaa !10

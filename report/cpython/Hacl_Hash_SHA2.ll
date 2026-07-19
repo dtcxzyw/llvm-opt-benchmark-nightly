@@ -35,7 +35,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %i.b = shl nuw i64 %indvars.iv, 6
+  %i.b = shl nuw nsw i64 %indvars.iv, 6
   %i.c = getelementptr i8, ptr %1, i64 %i.b
   tail call fastcc void @sha256_update(ptr noundef %i.c, ptr noundef %2)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -438,7 +438,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
-  %i.b = shl nuw i64 %indvars.iv.i, 6
+  %i.b = shl nuw nsw i64 %indvars.iv.i, 6
   %i.c = getelementptr i8, ptr %1, i64 %i.b
   tail call fastcc void @sha256_update(ptr noundef readonly %i.c, ptr noundef %2)
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -540,7 +540,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %i.b = shl nuw i64 %indvars.iv, 7
+  %i.b = shl nuw nsw i64 %indvars.iv, 7
   %i.c = getelementptr i8, ptr %1, i64 %i.b
   tail call fastcc void @sha512_update(ptr noundef %i.c, ptr noundef %2)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -943,7 +943,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
-  %i.b = shl nuw i64 %indvars.iv.i, 7
+  %i.b = shl nuw nsw i64 %indvars.iv.i, 7
   %i.c = getelementptr i8, ptr %1, i64 %i.b
   tail call fastcc void @sha512_update(ptr noundef readonly %i.c, ptr noundef %2)
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -1206,7 +1206,7 @@ _Py_LibHacl_Hacl_Hash_SHA2_sha256_update_nblocks.exit: ; preds = %.lr.ph.i.prehe
 
 .lr.ph.i160:                                      ; preds = %.lr.ph.i160, %.lr.ph.preheader.i
   %indvars.iv.i161 = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i162, %.lr.ph.i160 ] ; 2 uses
-  %i.v = shl nuw i64 %indvars.iv.i161, 6
+  %i.v = shl nuw nsw i64 %indvars.iv.i161, 6
   %i.w = getelementptr i8, ptr %1, i64 %i.v
   tail call fastcc void @sha256_update(ptr noundef readonly %i.w, ptr noundef %.sroa.083.0.copyload)
   %indvars.iv.next.i162 = add nuw nsw i64 %indvars.iv.i161, 1 ; 2 uses
@@ -1263,7 +1263,7 @@ _Py_LibHacl_Hacl_Hash_SHA2_sha256_update_nblocks.exit170: ; preds = %.lr.ph.i166
 
 .lr.ph.i174:                                      ; preds = %.lr.ph.i174, %.lr.ph.preheader.i172
   %indvars.iv.i175 = phi i64 [ 0, %.lr.ph.preheader.i172 ], [ %indvars.iv.next.i176, %.lr.ph.i174 ] ; 2 uses
-  %i.ao = shl nuw i64 %indvars.iv.i175, 6
+  %i.ao = shl nuw nsw i64 %indvars.iv.i175, 6
   %i.ap = getelementptr i8, ptr %i.aa, i64 %i.ao
   tail call fastcc void @sha256_update(ptr noundef readonly %i.ap, ptr noundef %.sroa.045.0.copyload)
   %indvars.iv.next.i176 = add nuw nsw i64 %indvars.iv.i175, 1 ; 2 uses
@@ -1382,7 +1382,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
-  %i.g = shl nuw i64 %indvars.iv.i, 6
+  %i.g = shl nuw nsw i64 %indvars.iv.i, 6
   %i.h = getelementptr i8, ptr %1, i64 %i.g
   call fastcc void @sha256_update(ptr noundef readonly %i.h, ptr noundef nonnull %i.b)
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -1591,7 +1591,7 @@ bb.a:
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ] ; 2 uses
-  %i.g = shl nuw i64 %indvars.iv.i.i, 6
+  %i.g = shl nuw nsw i64 %indvars.iv.i.i, 6
   %i.h = getelementptr i8, ptr %1, i64 %i.g
   call fastcc void @sha256_update(ptr noundef readonly %i.h, ptr noundef nonnull %i.b)
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
@@ -1843,7 +1843,7 @@ _Py_LibHacl_Hacl_Hash_SHA2_sha512_update_nblocks.exit: ; preds = %.lr.ph.i.prehe
 
 .lr.ph.i160:                                      ; preds = %.lr.ph.i160, %.lr.ph.preheader.i
   %indvars.iv.i161 = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i162, %.lr.ph.i160 ] ; 2 uses
-  %i.v = shl nuw i64 %indvars.iv.i161, 7
+  %i.v = shl nuw nsw i64 %indvars.iv.i161, 7
   %i.w = getelementptr i8, ptr %1, i64 %i.v
   tail call fastcc void @sha512_update(ptr noundef readonly %i.w, ptr noundef %.sroa.083.0.copyload)
   %indvars.iv.next.i162 = add nuw nsw i64 %indvars.iv.i161, 1 ; 2 uses
@@ -1900,7 +1900,7 @@ _Py_LibHacl_Hacl_Hash_SHA2_sha512_update_nblocks.exit170: ; preds = %.lr.ph.i166
 
 .lr.ph.i174:                                      ; preds = %.lr.ph.i174, %.lr.ph.preheader.i172
   %indvars.iv.i175 = phi i64 [ 0, %.lr.ph.preheader.i172 ], [ %indvars.iv.next.i176, %.lr.ph.i174 ] ; 2 uses
-  %i.ao = shl nuw i64 %indvars.iv.i175, 7
+  %i.ao = shl nuw nsw i64 %indvars.iv.i175, 7
   %i.ap = getelementptr i8, ptr %i.aa, i64 %i.ao
   tail call fastcc void @sha512_update(ptr noundef readonly %i.ap, ptr noundef %.sroa.045.0.copyload)
   %indvars.iv.next.i176 = add nuw nsw i64 %indvars.iv.i175, 1 ; 2 uses
@@ -2070,7 +2070,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
-  %i.m = shl nuw i64 %indvars.iv.i, 7
+  %i.m = shl nuw nsw i64 %indvars.iv.i, 7
   %i.n = getelementptr i8, ptr %1, i64 %i.m
   call fastcc void @sha512_update(ptr noundef readonly %i.n, ptr noundef nonnull %i.b)
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -2361,7 +2361,7 @@ bb.a:
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ] ; 2 uses
-  %i.m = shl nuw i64 %indvars.iv.i.i, 7
+  %i.m = shl nuw nsw i64 %indvars.iv.i.i, 7
   %i.n = getelementptr i8, ptr %1, i64 %i.m
   call fastcc void @sha512_update(ptr noundef readonly %i.n, ptr noundef nonnull %i.b)
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses

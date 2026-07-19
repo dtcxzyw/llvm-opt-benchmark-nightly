@@ -204,13 +204,12 @@ bb.jy:                                            ; preds = %.loopexit1092
   br i1 %i.aok, label %_ZNSt6vectorIjSaIjEED2Ev.exit, label %bb.lh
 
 .lr.ph1257:                                       ; preds = %.loopexit1091, %bb.kf
-  %.03701255 = phi i32 [ %i.apz, %bb.kf ], [ 0, %.loopexit1091 ]
-  %.03721254 = phi i32 [ %23, %bb.kf ], [ 0, %.loopexit1091 ] ; 2 uses
+  %indvars.iv1405 = phi i64 [ %indvars.iv.next1406, %bb.kf ], [ 0, %.loopexit1091 ] ; 3 uses
+  %.03721254 = phi i32 [ %i.apz, %bb.kf ], [ 0, %.loopexit1091 ]
   %i.aol = load ptr, ptr %i.anm, align 8
-  %22 = zext i32 %.03721254 to i64                ; 2 uses
-  %i.aom = getelementptr inbounds nuw [16 x i8], ptr %i.aol, i64 %22 ; 2 uses
+  %i.aom = getelementptr inbounds nuw [16 x i8], ptr %i.aol, i64 %indvars.iv1405 ; 2 uses
   %i.aon = load ptr, ptr %i.aly, align 8
-  %i.aoo = getelementptr inbounds nuw [4 x i8], ptr %i.aon, i64 %22
+  %i.aoo = getelementptr inbounds nuw [4 x i8], ptr %i.aon, i64 %indvars.iv1405
   %i.aop = load i32, ptr %i.aoo, align 4
   %i.aoq = zext i32 %i.aop to i64                 ; 2 uses
   %.not415 = icmp ugt i64 %i.aky, %i.aoq
@@ -250,9 +249,10 @@ bb.ke:                                            ; preds = %bb.kd
   br label %bb.kh
 
 bb.kf:                                            ; preds = %bb.kn
-  %23 = add nuw i32 %.03721254, 1                 ; 2 uses
+  %indvars.iv.next1406 = add nuw nsw i64 %indvars.iv1405, 1 ; 2 uses
   %i.aoz = load i32, ptr %i.alh, align 8          ; 2 uses
-  %i.apa = icmp ult i32 %23, %i.aoz
+  %22 = zext i32 %i.aoz to i64
+  %i.apa = icmp samesign ult i64 %indvars.iv.next1406, %22
   br i1 %i.apa, label %.lr.ph1257, label %._crit_edge1258, !llvm.loop !28
 
 bb.kg:                                            ; preds = %bb.kd
@@ -262,7 +262,7 @@ bb.kg:                                            ; preds = %bb.kd
 
 bb.kh:                                            ; preds = %bb.ke, %bb.kn
   %indvars.iv1401 = phi i64 [ 0, %bb.ke ], [ %indvars.iv.next1402, %bb.kn ] ; 5 uses
-  %.13711252 = phi i32 [ %.03701255, %bb.ke ], [ %i.apz, %bb.kn ] ; 3 uses
+  %.13711252 = phi i32 [ %.03721254, %bb.ke ], [ %i.apz, %bb.kn ] ; 3 uses
   %i.apc = getelementptr inbounds nuw [4 x i8], ptr %i.aou, i64 %indvars.iv1401
   %i.apd = load i32, ptr %i.apc, align 4
   %i.ape = zext i32 %i.apd to i64                 ; 2 uses

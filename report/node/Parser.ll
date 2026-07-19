@@ -201,10 +201,10 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 96
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = call i64 %i.k(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull %2, i64 noundef %i.h, i64 noundef 8, i64 noundef 0) #14, !inline_history !60
+  %5 = and i64 %i.l, 4294967296
   %i.m = load i64, ptr %2, align 8
   store i64 %i.h, ptr %i.g, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
-  %5 = and i64 %i.l, 4294967296
   %.not.a = icmp eq i64 %5, 0
   br i1 %.not.a, label %.loopexit.sink.split, label %bb.b
 

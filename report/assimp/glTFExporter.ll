@@ -204,8 +204,7 @@ bb.dp:                                            ; preds = %bb.do
   br label %bb.eh
 
 .lr.ph751:                                        ; preds = %.preheader, %.lr.ph751
-  %i.acn = phi i64 [ %22, %.lr.ph751 ], [ 0, %.preheader ] ; 2 uses
-  %.0217750 = phi i32 [ %21, %.lr.ph751 ], [ 0, %.preheader ]
+  %i.acn = phi i64 [ %indvars.iv.next903, %.lr.ph751 ], [ 0, %.preheader ] ; 3 uses
   %i.aco = getelementptr inbounds nuw [64 x i8], ptr %.pre908.a, i64 %i.acn ; 16 uses
   %i.acp = getelementptr inbounds nuw [64 x i8], ptr %i.aci, i64 %i.acn ; 16 uses
   %i.acq = load float, ptr %i.aco, align 4
@@ -270,9 +269,9 @@ bb.dp:                                            ; preds = %bb.do
   %i.aei = load float, ptr %i.aeh, align 4
   %i.aej = getelementptr inbounds nuw i8, ptr %i.acp, i64 60
   store float %i.aei, ptr %i.aej, align 4
-  %21 = add i32 %.0217750, 1                      ; 2 uses
-  %22 = zext i32 %21 to i64                       ; 2 uses
-  %i.aek = icmp ugt i64 %i.acf, %22
+  %indvars.iv.next903 = add i64 %i.acn, 1         ; 2 uses
+  %21 = and i64 %indvars.iv.next903, 4294967295
+  %i.aek = icmp ugt i64 %i.acf, %21
   br i1 %i.aek, label %.lr.ph751, label %._crit_edge752, !llvm.loop !55
 
 bb.dq:                                            ; preds = %._crit_edge752
@@ -675,10 +674,9 @@ bb.c:                                             ; preds = %.lr.ph206, %._crit_
   br i1 %spec.select249, label %bb.e, label %bb.n
 
 bb.d:                                             ; preds = %.lr.ph192, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread
-  %i.bw = phi i64 [ 0, %.lr.ph192 ], [ %7, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread ]
+  %i.bw = phi i64 [ 0, %.lr.ph192 ], [ %indvars.iv.next, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread ] ; 4 uses
   %.082191 = phi i32 [ 0, %.lr.ph192 ], [ %i.cm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread ] ; 2 uses
   %.083190 = phi i1 [ true, %.lr.ph192 ], [ %spec.select249, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread ] ; 2 uses
-  %.085189 = phi i32 [ 0, %.lr.ph192 ], [ %6, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread ] ; 2 uses
   %i.bx = getelementptr inbounds nuw [16 x i8], ptr %i.bl, i64 %i.bw ; 2 uses
   %i.by = load ptr, ptr %i.bx, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
@@ -706,15 +704,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit: ; pre
   %cond.fr = freeze i1 %i.cl                      ; 2 uses
   %not..0.i = xor i1 %cond.fr, true
   %spec.select = select i1 %not..0.i, i1 %.083190, i1 false
-  %spec.select256 = select i1 %cond.fr, i32 %.085189, i32 %.082191
+  %6 = trunc nuw i64 %i.bw to i32
+  %spec.select256 = select i1 %cond.fr, i32 %6, i32 %.082191
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit.thread: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i
   %spec.select249 = phi i1 [ %.083190, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i ], [ %spec.select, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit ] ; 2 uses
   %i.cm = phi i32 [ %.082191, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i ], [ %spec.select256, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_.exit ] ; 2 uses
-  %6 = add i32 %.085189, 1                        ; 2 uses
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.cn = icmp ugt i64 %i.bp, %7
+  %7 = add i64 %i.bw, 1
+  %8 = and i64 %7, 4294967295
+  %i.cn = icmp ugt i64 %i.bp, %8
+  %indvars.iv.next = add i64 %i.bw, 1
   br i1 %i.cn, label %bb.d, label %._crit_edge, !llvm.loop !125
 
 bb.e:                                             ; preds = %._crit_edge

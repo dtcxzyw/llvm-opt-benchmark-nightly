@@ -203,7 +203,7 @@ _ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i
   %i.fi = zext i32 %i.fd to i64
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fh, i64 %i.fi
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 4
-  %i.fl = shl i64 %indvars.iv.i.i, 2
+  %i.fl = shl nuw nsw i64 %indvars.iv.i.i, 2
   %i.fm = and i64 %i.fl, 4294967292
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fk, i64 %i.fm ; 2 uses
   %i.fo = load i32, ptr %i.fn, align 4, !tbaa !3, !noalias !116

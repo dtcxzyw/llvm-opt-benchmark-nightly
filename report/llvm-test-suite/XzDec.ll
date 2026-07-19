@@ -203,8 +203,8 @@ bb.m:                                             ; preds = %bb.l, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   %i.bb = load ptr, ptr %i.f, align 8, !tbaa !37
   %i.bc = add nsw i64 %indvars.iv, -1             ; 4 uses
-  %i.bd = shl nsw i64 %i.bc, 17
-  %i.be = getelementptr inbounds i8, ptr %i.bb, i64 %i.bd
+  %i.bd = shl nuw nsw i64 %i.bc, 17
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bd
   %i.bf = getelementptr inbounds [8 x i8], ptr %i.p, i64 %i.bc
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !30 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bg
@@ -234,7 +234,7 @@ bb.o:                                             ; preds = %.lr.ph.peel.next
 
 bb.p:                                             ; preds = %bb.o
   %i.bw = load ptr, ptr %i.f, align 8, !tbaa !37
-  %i.bx = shl nsw i64 %indvars.iv, 17
+  %i.bx = shl nuw nsw i64 %indvars.iv, 17
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bx
   br label %bb.q
 
