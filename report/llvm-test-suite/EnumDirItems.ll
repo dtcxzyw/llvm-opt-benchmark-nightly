@@ -201,16 +201,16 @@ bb.d:                                             ; preds = %.loopexit, %._crit_
 
 .lr.ph39:                                         ; preds = %bb.d
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.pre41 = load ptr, ptr %i.ah, align 8, !tbaa !23
-  %.pre42 = load ptr, ptr %5, align 8, !tbaa !23
+  %5 = load ptr, ptr %i.ah, align 8, !tbaa !23
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.pre42 = load ptr, ptr %6, align 8, !tbaa !23
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph39, %bb.e
   %.137 = phi i32 [ %i.ab, %.lr.ph39 ], [ %i.an, %bb.e ]
   %.13336 = phi i32 [ %3, %.lr.ph39 ], [ %i.au, %bb.e ]
   %i.ai = zext nneg i32 %.13336 to i64            ; 2 uses
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %.pre41, i64 %i.ai
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ai
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !27 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.am = load i32, ptr %i.al, align 8, !tbaa !15 ; 2 uses

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 bb.i:                                             ; preds = %.lr.ph, %.loopexit
   %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.loopexit ] ; 9 uses
-  %i.hh = shl nsw i64 %indvar, 2                  ; 5 uses
+  %i.hh = shl nuw nsw i64 %indvar, 2              ; 5 uses
   %i.hi = trunc nuw nsw i64 %indvar to i32        ; 3 uses
   %i.hj = shl i64 %indvar, 3
   %i.hk = and i64 %i.hj, 8589934584               ; 4 uses
@@ -607,12 +607,12 @@ bb.a:
 .preheader:                                       ; preds = %bb.a, %.preheader
   %indvars.iv = phi i64 [ %i.r, %bb.a ], [ %indvars.iv.next11, %.preheader ] ; 3 uses
   %i.ai = sub nsw i64 %indvars.iv, %i.r
-  %i.aj = shl nsw i64 %i.ai, 4                    ; 2 uses
+  %i.aj = shl nuw nsw i64 %i.ai, 4                ; 2 uses
   %i.ak = trunc nuw nsw i64 %i.aj to i32
   %i.al = sub i32 %i.ak, %i.k                     ; 15 uses
   %i.am = getelementptr inbounds [8 x i8], ptr %i.p, i64 %indvars.iv
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !60 ; 16 uses
-  %i.ao = getelementptr inbounds [2 x i8], ptr %1, i64 %i.aj
+  %i.ao = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.aj
   %i.ap = load i16, ptr %i.ao, align 2, !tbaa !61
   %i.aq = getelementptr inbounds [2 x i8], ptr %i.an, i64 %i.q
   store i16 %i.ap, ptr %i.aq, align 2, !tbaa !61

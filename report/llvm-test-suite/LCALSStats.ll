@@ -203,8 +203,7 @@ bb.q:                                             ; preds = %bb.m
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph261, %bb.t
-  %i.hx = phi i64 [ 0, %.lr.ph261 ], [ %4, %bb.t ] ; 9 uses
-  %.0121260 = phi i32 [ 0, %.lr.ph261 ], [ %3, %bb.t ]
+  %i.hx = phi i64 [ 0, %.lr.ph261 ], [ %indvars.iv.next284, %bb.t ] ; 10 uses
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.ht, i64 %i.hx
   %i.hz = load i64, ptr %i.hy, align 8, !tbaa !63
   %.not = icmp eq i64 %i.hz, 0
@@ -250,9 +249,9 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s
-  %3 = add i32 %.0121260, 1                       ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %i.jf = icmp ugt i64 %i.hr, %4
+  %indvars.iv.next284 = add i64 %i.hx, 1          ; 2 uses
+  %3 = and i64 %indvars.iv.next284, 4294967295
+  %i.jf = icmp ugt i64 %i.hr, %3
   br i1 %i.jf, label %bb.r, label %.loopexit, !llvm.loop !168
 
 .loopexit:                                        ; preds = %bb.t, %.preheader232, %.lr.ph263
@@ -398,8 +397,8 @@ bb.b:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
-  %i.j = lshr exact i64 %i.i, 5                   ; 2 uses
-  %i.k = trunc i64 %i.j to i32                    ; 4 uses
+  %i.j = lshr exact i64 %i.i, 5                   ; 4 uses
+  %i.k = trunc i64 %i.j to i32                    ; 2 uses
   %.not441 = icmp eq i32 %i.k, 0                  ; 2 uses
   br i1 %.not441, label %._crit_edge, label %.lr.ph
 
@@ -794,6 +793,7 @@ _ZNSolsEPFRSoS_E.exit59:                          ; preds = %.noexc247
   %i.eh = getelementptr i8, ptr %.pre446.pre, i64 -24
   %i.ei = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.ej = getelementptr inbounds nuw i8, ptr %8, i64 248
+  %wide.trip.count447 = and i64 %i.j, 4294967295
   br label %bb.x
 
 .preheader:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i
@@ -812,13 +812,13 @@ _ZNSolsEPFRSoS_E.exit59:                          ; preds = %.noexc247
   %i.es = getelementptr i8, ptr %.pre446.pre, i64 -24
   %i.et = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.eu = getelementptr inbounds nuw i8, ptr %4, i64 248
+  %wide.trip.count452 = and i64 %i.j, 4294967295
   br label %bb.bh
 
 bb.x:                                             ; preds = %.lr.ph437, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i
-  %.027436 = phi i32 [ 0, %.lr.ph437 ], [ %15, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i ] ; 2 uses
-  %14 = zext i32 %.027436 to i64
+  %indvars.iv444 = phi i64 [ 0, %.lr.ph437 ], [ %indvars.iv.next445, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i ] ; 2 uses
   %i.ev = load ptr, ptr %0, align 8, !tbaa !145
-  %i.ew = getelementptr inbounds nuw [32 x i8], ptr %i.ev, i64 %14 ; 4 uses
+  %i.ew = getelementptr inbounds nuw [32 x i8], ptr %i.ev, i64 %indvars.iv444 ; 4 uses
   %.val = load ptr, ptr %1, align 8, !tbaa !147, !noalias !185
   %.val43 = load i64, ptr %i.o, align 8, !tbaa !78, !noalias !185 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
@@ -1221,8 +1221,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit108.i: ; preds = %
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i100.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
-  %15 = add nuw i32 %.027436, 1                   ; 2 uses
-  %exitcond444.not = icmp eq i32 %15, %i.k
+  %indvars.iv.next445 = add nuw nsw i64 %indvars.iv444, 1 ; 2 uses
+  %exitcond444.not = icmp eq i64 %indvars.iv.next445, %wide.trip.count447
   br i1 %exitcond444.not, label %.preheader, label %bb.x, !llvm.loop !198
 
 ._crit_edge440.loopexit:                          ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i179
@@ -1256,10 +1256,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75: ; preds = %._c
   br label %bb.cu
 
 bb.bh:                                            ; preds = %.lr.ph439, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i179
-  %.0438 = phi i32 [ 1, %.lr.ph439 ], [ %17, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i179 ] ; 2 uses
-  %16 = zext i32 %.0438 to i64
+  %indvars.iv449 = phi i64 [ 1, %.lr.ph439 ], [ %indvars.iv.next450, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i179 ] ; 2 uses
   %i.pb = load ptr, ptr %0, align 8, !tbaa !145
-  %i.pc = getelementptr inbounds nuw [32 x i8], ptr %i.pb, i64 %16 ; 4 uses
+  %i.pc = getelementptr inbounds nuw [32 x i8], ptr %i.pb, i64 %indvars.iv449 ; 4 uses
   %.val44 = load ptr, ptr %1, align 8, !tbaa !147, !noalias !199
   %.val45 = load i64, ptr %i.o, align 8, !tbaa !78, !noalias !199 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
@@ -1662,8 +1661,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit108.i87: ; preds =
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i101.i179: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99.i177, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i100.i178
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
-  %17 = add nuw i32 %.0438, 1                     ; 2 uses
-  %exitcond445.not = icmp eq i32 %17, %i.k
+  %indvars.iv.next450 = add nuw nsw i64 %indvars.iv449, 1 ; 2 uses
+  %exitcond445.not = icmp eq i64 %indvars.iv.next450, %wide.trip.count452
   br i1 %exitcond445.not, label %._crit_edge440.loopexit, label %bb.bh, !llvm.loop !211
 
 .body71:                                          ; preds = %bb.bj, %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit108.i87, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i76, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit108.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %bb.u

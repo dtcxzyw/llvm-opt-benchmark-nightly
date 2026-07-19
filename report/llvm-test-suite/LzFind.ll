@@ -203,26 +203,30 @@ bb.d:                                             ; preds = %bb.c
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !14
   %i.ba = load i8, ptr %i.o, align 1, !tbaa !14
   %i.bb = icmp eq i8 %i.az, %i.ba
-  br i1 %i.bb, label %.lr.ph, label %bb.j
+  br i1 %i.bb, label %.lr.ph.preheader, label %bb.j
 
-.lr.ph:                                           ; preds = %bb.d, %bb.e
-  %.072101 = phi i32 [ %3, %bb.e ], [ 2, %bb.d ]  ; 4 uses
-  %2 = zext i32 %.072101 to i64                   ; 2 uses
-  %i.bc = sub nsw i64 %2, %i.aw
+.lr.ph.preheader:                                 ; preds = %bb.d
+  %2 = zext i32 %i.b to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
+  %indvars.iv = phi i64 [ 2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 4 uses
+  %i.bc = sub nsw i64 %indvars.iv, %i.aw
   %i.bd = getelementptr inbounds i8, ptr %i.o, i64 %i.bc
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !14
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.o, i64 %2
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.o, i64 %indvars.iv
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !14
   %.not76 = icmp eq i8 %i.be, %i.bg
   br i1 %.not76, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph
-  %3 = add nuw i32 %.072101, 1                    ; 2 uses
-  %.not = icmp eq i32 %3, %i.b
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not = icmp eq i64 %indvars.iv.next, %2
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !81
 
 bb.f:                                             ; preds = %.lr.ph
-  store i32 %.072101, ptr %1, align 4, !tbaa !4
+  %3 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
+  store i32 %3, ptr %1, align 4, !tbaa !4
   %i.bh = add i32 %i.ao, -1
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.bh, ptr %i.bi, align 4, !tbaa !4
@@ -361,7 +365,7 @@ SkipMatchesSpec.exit:                             ; preds = %._crit_edge.i, %.pr
 bb.j:                                             ; preds = %bb.f, %bb.d, %bb.c
   %i.dq = phi i32 [ %.pre, %bb.f ], [ %i.au, %bb.d ], [ %i.au, %bb.c ] ; 3 uses
   %.073 = phi i64 [ 2, %bb.f ], [ 0, %bb.d ], [ 0, %bb.c ]
-  %.1 = phi i32 [ %.072101, %bb.f ], [ 2, %bb.d ], [ 2, %bb.c ]
+  %.1 = phi i32 [ %3, %bb.f ], [ 2, %bb.d ], [ 2, %bb.c ]
   %i.dr = load i32, ptr %i.ah, align 8, !tbaa !16 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !56 ; 2 uses

@@ -204,6 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN14arrow
 
 .lr.ph26.i:                                       ; preds = %.preheader.i
   %i.x = tail call i16 @llvm.umax.i16(i16 %i.h, i16 128)
+  %wide.trip.count31.i = zext nneg i16 %i.x to i64
   %exitcond31.i96 = icmp ugt i16 %i.h, 127
   br i1 %exitcond31.i96, label %.lr.ph26.i._crit_edge, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i
 
@@ -246,8 +247,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.preheader.i.unr-lcssa, label %bb.c, !llvm.loop !23
 
 bb.d:                                             ; preds = %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next29.i to i16
-  %exitcond31.i = icmp eq i16 %i.x, %lftr.wideiv.i
+  %exitcond31.i = icmp eq i64 %indvars.iv.next29.i, %wide.trip.count31.i
   br i1 %exitcond31.i, label %.lr.ph26.i._crit_edge.loopexit, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i, !llvm.loop !24
 
 .lr.ph26.i._crit_edge.loopexit:                   ; preds = %bb.d
@@ -324,6 +324,7 @@ bb.e:                                             ; preds = %.lr.ph50, %_ZN14arr
 
 .lr.ph20.i:                                       ; preds = %.preheader.i16
   %i.bs = tail call i16 @llvm.umax.i16(i16 %i.bh, i16 128)
+  %wide.trip.count25.i = zext nneg i16 %i.bs to i64
   %exitcond25.i100 = icmp ugt i16 %i.bh, 127
   br i1 %exitcond25.i100, label %.lr.ph20.i._crit_edge, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i18
 
@@ -356,8 +357,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i11.n
   br i1 %niter136.ncmp.1, label %.preheader.i16.unr-lcssa, label %bb.f, !llvm.loop !26
 
 bb.g:                                             ; preds = %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i18
-  %lftr.wideiv.i17 = trunc i64 %indvars.iv.next23.i to i16
-  %exitcond25.i = icmp eq i16 %i.bs, %lftr.wideiv.i17
+  %exitcond25.i = icmp eq i64 %indvars.iv.next23.i, %wide.trip.count25.i
   br i1 %exitcond25.i, label %.lr.ph20.i._crit_edge.loopexit, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i18, !llvm.loop !27
 
 .lr.ph20.i._crit_edge.loopexit:                   ; preds = %bb.g
@@ -456,6 +456,7 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph20.i28:                                     ; preds = %.preheader.i26
   %i.dk = tail call i16 @llvm.umax.i16(i16 %.pr, i16 128)
+  %wide.trip.count25.i28 = zext nneg i16 %i.dk to i64
   %exitcond25.i32104 = icmp ugt i16 %.pr, 127
   br i1 %exitcond25.i32104, label %._crit_edge107, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i33
 
@@ -488,8 +489,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.i20.n
   br i1 %niter143.ncmp.1, label %.preheader.i26.unr-lcssa, label %bb.j, !llvm.loop !26
 
 bb.k:                                             ; preds = %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i33
-  %lftr.wideiv.i31 = trunc i64 %indvars.iv.next23.i34 to i16
-  %exitcond25.i32 = icmp eq i16 %i.dk, %lftr.wideiv.i31
+  %exitcond25.i32 = icmp eq i64 %indvars.iv.next23.i34, %wide.trip.count25.i28
   br i1 %exitcond25.i32, label %._crit_edge107.loopexit, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i33, !llvm.loop !27
 
 ._crit_edge107.loopexit:                          ; preds = %bb.k
@@ -892,6 +892,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph20:                                         ; preds = %.preheader
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.p = tail call i16 @llvm.umax.i16(i16 %i.b, i16 128)
+  %wide.trip.count25 = zext nneg i16 %i.p to i64
   %exitcond2529 = icmp ugt i16 %i.b, 127
   br i1 %exitcond2529, label %._crit_edge, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.lr.ph
 
@@ -928,8 +929,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.preheader.unr-lcssa, label %bb.d, !llvm.loop !26
 
 bb.e:                                             ; preds = %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit
-  %lftr.wideiv = trunc i64 %indvars.iv.next23 to i16
-  %exitcond25 = icmp eq i16 %i.p, %lftr.wideiv
+  %exitcond25 = icmp eq i64 %indvars.iv.next23, %wide.trip.count25
   br i1 %exitcond25, label %._crit_edge.loopexit, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit, !llvm.loop !27
 
 ._crit_edge.loopexit:                             ; preds = %bb.e
@@ -1031,6 +1031,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph26:                                         ; preds = %.preheader
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.x = tail call i16 @llvm.umax.i16(i16 %i.b, i16 128)
+  %wide.trip.count31 = zext nneg i16 %i.x to i64
   %exitcond3135 = icmp ugt i16 %i.b, 127
   br i1 %exitcond3135, label %._crit_edge, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.lr.ph
 
@@ -1077,8 +1078,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.preheader.unr-lcssa, label %bb.e, !llvm.loop !23
 
 bb.f:                                             ; preds = %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit
-  %lftr.wideiv = trunc i64 %indvars.iv.next29 to i16
-  %exitcond31 = icmp eq i16 %i.x, %lftr.wideiv
+  %exitcond31 = icmp eq i64 %indvars.iv.next29, %wide.trip.count31
   br i1 %exitcond31, label %._crit_edge.loopexit, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit, !llvm.loop !24
 
 ._crit_edge.loopexit:                             ; preds = %bb.f

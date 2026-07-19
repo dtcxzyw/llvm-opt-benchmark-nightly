@@ -203,6 +203,8 @@ _ZNK6duckdb18ColumnDataConsumer14ChunkReference17GetMinimumBlockIDEv.exit37: ; p
 .lr.ph115:                                        ; preds = %.preheader
   %i.bo = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.bp = getelementptr inbounds nuw i8, ptr %i.r, i64 24
+  %13 = zext i32 %i.ak to i64
+  %wide.trip.count = zext i32 %i.bc to i64
   br label %bb.ao
 
 .lr.ph:                                           ; preds = %.preheader109, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit
@@ -605,9 +607,8 @@ _ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit: ; preds = %_Z
   br i1 %i.fn, label %.lr.ph, label %.loopexit, !llvm.loop !1195
 
 bb.ao:                                            ; preds = %.lr.ph115, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit42
-  %.0114 = phi i32 [ %i.ak, %.lr.ph115 ], [ %14, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit42 ] ; 2 uses
+  %indvars.iv = phi i64 [ %13, %.lr.ph115 ], [ %indvars.iv.next, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit42 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
-  %13 = zext i32 %.0114 to i64                    ; 3 uses
   %i.fo = load ptr, ptr %i.bp, align 8, !tbaa !49
   %i.fp = load ptr, ptr %i.bo, align 8, !tbaa !48 ; 2 uses
   %i.fq = ptrtoint ptr %i.fo to i64
@@ -616,9 +617,9 @@ bb.ao:                                            ; preds = %.lr.ph115, %_ZN6duc
   %i.ft = sdiv exact i64 %i.fs, 40                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  store i64 %13, ptr %i.e, align 8, !tbaa !103
+  store i64 %indvars.iv, ptr %i.e, align 8, !tbaa !103
   store i64 %i.ft, ptr %i.f, align 8, !tbaa !103
-  %.not.i.i.i67 = icmp ugt i64 %i.ft, %13
+  %.not.i.i.i67 = icmp ugt i64 %i.ft, %indvars.iv
   br i1 %.not.i.i.i67, label %_ZN6duckdb6vectorINS_13BlockMetaDataELb1ESaIS1_EEixEm.exit74, label %.noexc.i100, !prof !104
 
 .noexc.i100:                                      ; preds = %bb.ao
@@ -682,7 +683,7 @@ bb.as:                                            ; preds = %bb.ap
 _ZN6duckdb6vectorINS_13BlockMetaDataELb1ESaIS1_EEixEm.exit74: ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %i.ge = getelementptr inbounds nuw [40 x i8], ptr %i.fp, i64 %13 ; 4 uses
+  %i.ge = getelementptr inbounds nuw [40 x i8], ptr %i.fp, i64 %indvars.iv ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1196)
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 8
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !97, !noalias !1196 ; 4 uses
@@ -996,8 +997,8 @@ bb.bz:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit42: ; preds = %_ZNK6duckdb10shared_ptrINS_11BlockHandleELb1EEptEv.exit55, %bb.bv, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i40, %bb.bz
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
-  %14 = add nuw i32 %.0114, 1                     ; 2 uses
-  %exitcond.not = icmp eq i32 %14, %i.bc
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.ao, !llvm.loop !1205
 
 .loopexit:                                        ; preds = %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit, %_ZN6duckdb19ColumnDataAllocator25SetDestroyBufferUponUnpinEj.exit42, %.preheader109, %.preheader, %bb.b

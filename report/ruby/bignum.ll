@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %.lr.ph172
   br i1 %i.ai, label %.lr.ph172, label %.critedge2, !llvm.loop !309
 
 .critedge2:                                       ; preds = %.lr.ph172, %bb.i, %BIGNUM_DIGITS.exit127
-  %.0101.lcssa = phi i64 [ %.0.i, %BIGNUM_DIGITS.exit127 ], [ 0, %bb.i ], [ %.0101171, %.lr.ph172 ] ; 20 uses
+  %.0101.lcssa = phi i64 [ %.0.i, %BIGNUM_DIGITS.exit127 ], [ 0, %bb.i ], [ %.0101171, %.lr.ph172 ] ; 18 uses
   %i.aj = icmp slt i64 %.0101.lcssa, %.0102169
   br i1 %i.aj, label %bb.l, label %bb.j
 
@@ -292,19 +292,13 @@ bb.u:                                             ; preds = %bb.s
 
 BIGNUM_DIGITS.exit130:                            ; preds = %bb.t, %bb.u
   %.0.i129 = phi ptr [ %i.bn, %bb.t ], [ %i.bp, %bb.u ] ; 6 uses
-  %.0.i12912 = ptrtoaddr ptr %.0.i129 to i64
   %i.bq = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.be)
   %i.br = icmp samesign ult i32 %i.bq, 2
-  br i1 %i.br, label %4, label %8
+  br i1 %i.br, label %.lr.ph.i.i.i, label %.lr.ph.i.i
 
-4:                                                ; preds = %BIGNUM_DIGITS.exit130
-  %5 = add i32 %i.be, -1
-  %6 = load i32, ptr %.0.i126, align 4, !tbaa !7
-  %7 = and i32 %6, %5                             ; 4 uses
-  %.not.i.i.i131 = icmp eq i64 %.0101.lcssa, 0
-  br i1 %.not.i.i.i131, label %bigdivrem_single.exit, label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %4
+.lr.ph.i.i.i:                                     ; preds = %BIGNUM_DIGITS.exit130
+  %.0.i12912 = ptrtoaddr ptr %.0.i129 to i64
+  %4 = load i32, ptr %.0.i126, align 4, !tbaa !7
   %i.bs = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.be, i1 false)
   %i.bt = sub nsw i32 31, %i.bs
   %i.bu = zext nneg i32 %i.bt to i64              ; 4 uses
@@ -346,7 +340,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %vector.recur.extract = extractelement <4 x i64> %i.ca, i64 3
   %cmp.n = icmp eq i64 %.0101.lcssa, %n.vec
-  br i1 %cmp.n, label %bigdivrem_single.exit, label %scalar.ph.preheader
+  br i1 %cmp.n, label %bigdivrem_single.exit.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i.i.i, %middle.block
   %.017.i.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.i ], [ %n.vec, %middle.block ] ; 4 uses
@@ -375,7 +369,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %.017.i.i.i.unr = phi i64 [ %.017.i.i.i.ph, %scalar.ph.preheader ], [ %i.cs, %scalar.ph.prol ]
   %.014.in16.i.i.i.unr = phi i64 [ %.014.in16.i.i.i.ph, %scalar.ph.preheader ], [ %i.cn, %scalar.ph.prol ]
   %i.ct = icmp eq i64 %.0101.lcssa, %.neg
-  br i1 %i.ct, label %bigdivrem_single.exit, label %scalar.ph
+  br i1 %i.ct, label %bigdivrem_single.exit.loopexit, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %.017.i.i.i = phi i64 [ %i.dl, %scalar.ph ], [ %.017.i.i.i.unr, %scalar.ph.prol.loopexit ] ; 3 uses
@@ -404,13 +398,9 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.dj, ptr %i.dk, align 4, !tbaa !7
   %i.dl = add nuw i64 %.017.i.i.i, 2              ; 2 uses
   %exitcond.not.i.i.i.1 = icmp eq i64 %i.dl, %.0101.lcssa
-  br i1 %exitcond.not.i.i.i.1, label %bigdivrem_single.exit, label %scalar.ph, !llvm.loop !311
+  br i1 %exitcond.not.i.i.i.1, label %bigdivrem_single.exit.loopexit, label %scalar.ph, !llvm.loop !311
 
-8:                                                ; preds = %BIGNUM_DIGITS.exit130
-  %.not.i.i = icmp eq i64 %.0101.lcssa, 0
-  br i1 %.not.i.i, label %bigdivrem_single.exit, label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %8
+.lr.ph.i.i:                                       ; preds = %BIGNUM_DIGITS.exit130
   %i.dm = zext i32 %i.be to i64                   ; 2 uses
   br label %bb.v
 
@@ -437,8 +427,13 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i.i
   %i.dz = trunc nuw i64 %i.dx to i32
   br label %bigdivrem_single.exit
 
-bigdivrem_single.exit:                            ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %4, %8, %._crit_edge.loopexit.i.i
-  %.027.i.i = phi i32 [ %i.dz, %._crit_edge.loopexit.i.i ], [ %7, %4 ], [ 0, %8 ], [ %7, %middle.block ], [ %7, %scalar.ph ], [ %7, %scalar.ph.prol.loopexit ] ; 2 uses
+bigdivrem_single.exit.loopexit:                   ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+  %5 = add i32 %i.be, -1
+  %6 = and i32 %4, %5
+  br label %bigdivrem_single.exit
+
+bigdivrem_single.exit:                            ; preds = %bigdivrem_single.exit.loopexit, %._crit_edge.loopexit.i.i
+  %.027.i.i = phi i32 [ %i.dz, %._crit_edge.loopexit.i.i ], [ %6, %bigdivrem_single.exit.loopexit ] ; 2 uses
   %.not116 = icmp eq ptr %3, null
   br i1 %.not116, label %bb.z, label %bb.w
 

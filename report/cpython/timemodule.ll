@@ -201,7 +201,7 @@ bb.a:
   %spec.select.i = select i1 %.not.i, ptr @.str.61, ptr %.val41
   %i.h = call ptr @strncpy(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) %spec.select.i, i64 noundef 9) #11 ; 0 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %.val43 = load i64, ptr %i.i, align 8, !tbaa !57 ; 5 uses
+  %.val43 = load i64, ptr %i.i, align 8, !tbaa !57 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   store i8 0, ptr %i.j, align 1, !tbaa !23
   %i.k = add i64 %i.e, 15778800
@@ -210,7 +210,7 @@ bb.a:
   %.not.i44 = icmp eq ptr %.val, null
   %spec.select.i45 = select i1 %.not.i44, ptr @.str.61, ptr %.val
   %i.m = call ptr @strncpy(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(1) %spec.select.i45, i64 noundef 9) #11 ; 0 uses
-  %.val42 = load i64, ptr %i.i, align 8, !tbaa !57 ; 5 uses
+  %.val42 = load i64, ptr %i.i, align 8, !tbaa !57 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 9
   store i8 0, ptr %i.n, align 1, !tbaa !23
   %i.o = add i64 %.val43, -172801
@@ -246,9 +246,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ac, label %bb.n, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %2 = icmp ne i64 %.val42, %.val43
-  %3 = zext i1 %2 to i64
-  %i.ad = call i32 @PyModule_AddIntConstant(ptr noundef %0, ptr noundef nonnull @.str.58, i64 noundef %3) #11
+  %i.ad = call i32 @PyModule_AddIntConstant(ptr noundef %0, ptr noundef nonnull @.str.58, i64 noundef 1) #11
   %i.ae = icmp slt i32 %i.ad, 0
   br i1 %i.ae, label %bb.n, label %bb.g
 

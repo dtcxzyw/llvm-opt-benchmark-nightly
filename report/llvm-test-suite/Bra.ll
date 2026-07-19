@@ -199,7 +199,7 @@ bb.h:                                             ; preds = %.split, %bb.f, %bb.
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local range(i64 0, 4294967296) i64 @SPARC_Convert(ptr nofree noundef captures(none) %0, i64 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
+define dso_local range(i64 0, 4294967293) i64 @SPARC_Convert(ptr nofree noundef captures(none) %0, i64 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp ult i64 %1, 4
   br i1 %i.a, label %.loopexit, label %bb.b
@@ -210,8 +210,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not49, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.b, %.thread.us
-  %i.c = phi i64 [ %13, %.thread.us ], [ 0, %bb.b ]
-  %.04550.us = phi i32 [ %12, %.thread.us ], [ 0, %bb.b ] ; 6 uses
+  %i.c = phi i64 [ %indvars.iv.next55, %.thread.us ], [ 0, %bb.b ] ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %i.c ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !8     ; 2 uses
   switch i8 %i.e, label %.thread.us [
@@ -220,45 +219,42 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %.split.us
-  %4 = or disjoint i32 %.04550.us, 1
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %4 = or disjoint i64 %i.c, 1                    ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %4
   %i.g = load i8, ptr %i.f, align 1, !tbaa !8     ; 2 uses
   %i.h = icmp ugt i8 %i.g, -65
   br i1 %i.h, label %bb.e, label %.thread.us
 
 bb.d:                                             ; preds = %.split.us
-  %6 = or disjoint i32 %.04550.us, 1
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %7
+  %5 = or disjoint i64 %i.c, 1                    ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %5
   %i.j = load i8, ptr %i.i, align 1, !tbaa !8     ; 2 uses
   %i.k = icmp ult i8 %i.j, 64
   br i1 %i.k, label %bb.e, label %.thread.us
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.l = phi i8 [ %i.j, %bb.d ], [ %i.g, %bb.c ]
-  %.pre-phi53 = phi i64 [ %7, %bb.d ], [ %5, %bb.c ]
+  %.pre-phi53 = phi i64 [ %5, %bb.d ], [ %4, %bb.c ]
   %i.m = zext nneg i8 %i.e to i32
   %i.n = shl nuw nsw i32 %i.m, 24
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %.pre-phi53
   %i.p = zext i8 %i.l to i32
   %i.q = shl nuw nsw i32 %i.p, 16
-  %8 = or disjoint i32 %i.q, %i.n
-  %i.r = or disjoint i32 %.04550.us, 2
-  %9 = zext i32 %i.r to i64
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %9 ; 2 uses
+  %i.r = or disjoint i32 %i.q, %i.n
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %i.c
+  %i.s = getelementptr inbounds nuw i8, ptr %6, i64 2 ; 2 uses
   %i.t = load i8, ptr %i.s, align 1, !tbaa !8
   %i.u = zext i8 %i.t to i32
   %i.v = shl nuw nsw i32 %i.u, 8
-  %10 = or disjoint i32 %8, %i.v
-  %i.w = or disjoint i32 %.04550.us, 3
-  %11 = zext i32 %i.w to i64
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 %11 ; 2 uses
+  %i.w = or disjoint i32 %i.r, %i.v
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %i.c
+  %i.x = getelementptr inbounds nuw i8, ptr %7, i64 3 ; 2 uses
   %i.y = load i8, ptr %i.x, align 1, !tbaa !8
   %i.z = zext i8 %i.y to i32
-  %i.aa = or disjoint i32 %10, %i.z
+  %i.aa = or disjoint i32 %i.w, %i.z
   %i.ab = shl i32 %i.aa, 2
-  %i.ac = add i32 %.04550.us, %2
+  %8 = trunc nuw i64 %i.c to i32
+  %i.ac = add i32 %2, %8
   %.0.us = sub i32 %i.ab, %i.ac                   ; 3 uses
   %i.ad = lshr i32 %.0.us, 2                      ; 2 uses
   %i.ae = shl i32 %.0.us, 7
@@ -281,14 +277,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %.thread.us
 
 .thread.us:                                       ; preds = %bb.e, %bb.d, %bb.c, %.split.us
-  %12 = add i32 %.04550.us, 4                     ; 2 uses
-  %13 = zext i32 %12 to i64                       ; 3 uses
-  %.not.us = icmp ult i64 %i.b, %13
+  %indvars.iv.next55 = add i64 %i.c, 4            ; 2 uses
+  %9 = and i64 %indvars.iv.next55, 4294967292     ; 2 uses
+  %.not.us = icmp ult i64 %i.b, %9
   br i1 %.not.us, label %.loopexit, label %.split.us, !llvm.loop !13
 
 .split:                                           ; preds = %bb.b, %.thread
-  %i.ar = phi i64 [ %23, %.thread ], [ 0, %bb.b ]
-  %.04550 = phi i32 [ %22, %.thread ], [ 0, %bb.b ] ; 6 uses
+  %i.ar = phi i64 [ %indvars.iv.next, %.thread ], [ 0, %bb.b ] ; 7 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 %i.ar ; 2 uses
   %i.at = load i8, ptr %i.as, align 1, !tbaa !8   ; 2 uses
   switch i8 %i.at, label %.thread [
@@ -297,45 +292,42 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   ]
 
 bb.f:                                             ; preds = %.split
-  %14 = or disjoint i32 %.04550, 1
-  %15 = zext i32 %14 to i64                       ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 %15
+  %10 = or disjoint i64 %i.ar, 1                  ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 %10
   %i.av = load i8, ptr %i.au, align 1, !tbaa !8   ; 2 uses
   %i.aw = icmp ult i8 %i.av, 64
   br i1 %i.aw, label %bb.h, label %.thread
 
 bb.g:                                             ; preds = %.split
-  %16 = or disjoint i32 %.04550, 1
-  %17 = zext i32 %16 to i64                       ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 %17
+  %11 = or disjoint i64 %i.ar, 1                  ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 %11
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !8   ; 2 uses
   %i.az = icmp ugt i8 %i.ay, -65
   br i1 %i.az, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ba = phi i8 [ %i.ay, %bb.g ], [ %i.av, %bb.f ]
-  %.pre-phi = phi i64 [ %17, %bb.g ], [ %15, %bb.f ]
+  %.pre-phi = phi i64 [ %11, %bb.g ], [ %10, %bb.f ]
   %i.bb = zext nneg i8 %i.at to i32
   %i.bc = shl nuw nsw i32 %i.bb, 24
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 %.pre-phi
   %i.be = zext i8 %i.ba to i32
   %i.bf = shl nuw nsw i32 %i.be, 16
-  %18 = or disjoint i32 %i.bf, %i.bc
-  %i.bg = or disjoint i32 %.04550, 2
-  %19 = zext i32 %i.bg to i64
-  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 %19 ; 2 uses
+  %i.bg = or disjoint i32 %i.bf, %i.bc
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 %i.ar
+  %i.bh = getelementptr inbounds nuw i8, ptr %12, i64 2 ; 2 uses
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !8
   %i.bj = zext i8 %i.bi to i32
   %i.bk = shl nuw nsw i32 %i.bj, 8
-  %20 = or disjoint i32 %18, %i.bk
-  %i.bl = or disjoint i32 %.04550, 3
-  %21 = zext i32 %i.bl to i64
-  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 %21 ; 2 uses
+  %i.bl = or disjoint i32 %i.bg, %i.bk
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 %i.ar
+  %i.bm = getelementptr inbounds nuw i8, ptr %13, i64 3 ; 2 uses
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !8
   %i.bo = zext i8 %i.bn to i32
-  %i.bp = or disjoint i32 %20, %i.bo
+  %i.bp = or disjoint i32 %i.bl, %i.bo
   %i.bq = shl i32 %i.bp, 2
-  %i.br = add i32 %.04550, %2
+  %14 = trunc nuw i64 %i.ar to i32
+  %i.br = add i32 %2, %14
   %.0 = add i32 %i.bq, %i.br                      ; 3 uses
   %i.bs = lshr i32 %.0, 2                         ; 2 uses
   %i.bt = shl i32 %.0, 7
@@ -358,13 +350,13 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %.thread
 
 .thread:                                          ; preds = %.split, %bb.f, %bb.g, %bb.h
-  %22 = add i32 %.04550, 4                        ; 2 uses
-  %23 = zext i32 %22 to i64                       ; 3 uses
-  %.not = icmp ult i64 %i.b, %23
+  %indvars.iv.next = add i64 %i.ar, 4             ; 2 uses
+  %15 = and i64 %indvars.iv.next, 4294967292      ; 2 uses
+  %.not = icmp ult i64 %i.b, %15
   br i1 %.not, label %.loopexit, label %.split, !llvm.loop !13
 
 .loopexit:                                        ; preds = %.thread, %.thread.us, %bb.a
-  %.046 = phi i64 [ 0, %bb.a ], [ %13, %.thread.us ], [ %23, %.thread ]
+  %.046 = phi i64 [ 0, %bb.a ], [ %9, %.thread.us ], [ %15, %.thread ]
   ret i64 %.046
 }
 

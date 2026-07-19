@@ -204,9 +204,10 @@ bb.z:                                             ; preds = %bb.ay, %bb.av, %bb.
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !7
   %i.ap = and i32 %i.ao, %.lcssa124               ; 5 uses
   store i32 %i.ap, ptr %i.a, align 4, !tbaa !7
-  %7 = getelementptr [4 x i8], ptr @_ZZN5folly15utf8ToCodePointERPKhS1_bE7bitMask, i64 %.lcssa127
-  %8 = getelementptr i8, ptr %7, i64 -4
-  %i.aq = load i32, ptr %8, align 4, !tbaa !7
+  %7 = add nuw nsw i64 %.lcssa127, 4294967295
+  %8 = and i64 %7, 4294967295
+  %9 = getelementptr inbounds nuw [4 x i8], ptr @_ZZN5folly15utf8ToCodePointERPKhS1_bE7bitMask, i64 %8
+  %i.aq = load i32, ptr %9, align 4, !tbaa !7
   %i.ar = xor i32 %i.aq, -1
   %i.as = and i32 %i.ap, %i.ar
   %i.at = icmp eq i32 %i.as, 0

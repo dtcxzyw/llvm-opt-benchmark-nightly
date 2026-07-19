@@ -204,8 +204,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us.us: ; preds =
   br i1 %i.dk, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us.us, label %._crit_edge, !llvm.loop !2368
 
 _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us: ; preds = %.lr.ph.split.us, %bb.af
-  %i.dl = phi i64 [ %17, %bb.af ], [ 0, %.lr.ph.split.us ] ; 2 uses
-  %.0152.us = phi i32 [ %16, %bb.af ], [ 0, %.lr.ph.split.us ] ; 2 uses
+  %i.dl = phi i64 [ %indvars.iv.next159, %bb.af ], [ 0, %.lr.ph.split.us ] ; 4 uses
   %.039151.us = phi i64 [ %.1.us, %bb.af ], [ 0, %.lr.ph.split.us ] ; 3 uses
   %i.dm = lshr i64 %i.dl, 6
   %i.dn = and i64 %i.dl, 63
@@ -219,13 +218,14 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us: ; preds = %.
 _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113.thread.us: ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us
   %i.ds = add i64 %.039151.us, 1
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.cx, i64 %.039151.us
-  store i32 %.0152.us, ptr %i.dt, align 4, !tbaa !3
+  %16 = trunc nuw i64 %i.dl to i32
+  store i32 %16, ptr %i.dt, align 4, !tbaa !3
   br label %bb.af
 
 bb.af:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113.thread.us, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us
   %.1.us = phi i64 [ %i.ds, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113.thread.us ], [ %.039151.us, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us ] ; 2 uses
-  %16 = add i32 %.0152.us, 1                      ; 2 uses
-  %17 = zext i32 %16 to i64                       ; 2 uses
+  %indvars.iv.next159 = add i64 %i.dl, 1          ; 2 uses
+  %17 = and i64 %indvars.iv.next159, 4294967295
   %i.du = icmp ugt i64 %i.cv, %17
   br i1 %i.du, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us, label %._crit_edge, !llvm.loop !2369
 
@@ -379,8 +379,7 @@ bb.bb:                                            ; preds = %bb.ae
   br label %bb.bx
 
 _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit: ; preds = %.lr.ph, %bb.bc
-  %i.es = phi i64 [ %19, %bb.bc ], [ 0, %.lr.ph ] ; 3 uses
-  %.0152 = phi i32 [ %18, %bb.bc ], [ 0, %.lr.ph ] ; 2 uses
+  %i.es = phi i64 [ %indvars.iv.next, %bb.bc ], [ 0, %.lr.ph ] ; 5 uses
   %.039151 = phi i64 [ %.1, %bb.bc ], [ 0, %.lr.ph ] ; 4 uses
   %i.et = add i64 %i.es, %i.cp                    ; 2 uses
   %i.eu = lshr i64 %i.et, 6
@@ -410,13 +409,14 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113: ; preds = %_ZNK6duc
 _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113.thread: ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113
   %i.fh = add i64 %.039151, 1
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.cx, i64 %.039151
-  store i32 %.0152, ptr %i.fi, align 4, !tbaa !3
+  %18 = trunc nuw i64 %i.es to i32
+  store i32 %18, ptr %i.fi, align 4, !tbaa !3
   br label %bb.bc
 
 bb.bc:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113.thread
   %.1 = phi i64 [ %i.fh, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113.thread ], [ %.039151, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit113 ], [ %.039151, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
-  %18 = add i32 %.0152, 1                         ; 2 uses
-  %19 = zext i32 %18 to i64                       ; 2 uses
+  %indvars.iv.next = add i64 %i.es, 1             ; 2 uses
+  %19 = and i64 %indvars.iv.next, 4294967295
   %i.fj = icmp ugt i64 %i.cv, %19
   br i1 %i.fj, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit, label %._crit_edge, !llvm.loop !2369
 

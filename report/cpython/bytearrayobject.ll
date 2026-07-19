@@ -204,7 +204,7 @@ Py_DECREF.exit.thread:                            ; preds = %bb.f, %Py_DECREF.ex
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.val31 = load i64, ptr %i.s, align 8, !tbaa !27 ; 25 uses
   %i.t = getelementptr i8, ptr %0, i64 16         ; 4 uses
-  %.val.i.i = load i64, ptr %i.t, align 8, !tbaa !25 ; 67 uses
+  %.val.i.i = load i64, ptr %i.t, align 8, !tbaa !25 ; 64 uses
   %i.u = icmp slt i64 %.val.i.i, %.val29
   br i1 %i.u, label %bb.j, label %bb.s
 
@@ -607,10 +607,8 @@ bb.bf:                                            ; preds = %bb.bb
   store i64 %.val.i.i, ptr %i.fn, align 8, !tbaa !25
   %i.fo = getelementptr i8, ptr %i.fb, i64 24
   store i64 %.val.i.i, ptr %i.fo, align 8, !tbaa !26
-  %5 = icmp ne ptr %.val58.i.i, null
-  %6 = icmp ne i64 %.val.i.i, 0
-  %or.cond.i.i.i.i.i = and i1 %6, %5
-  br i1 %or.cond.i.i.i.i.i, label %bb.bg, label %bytearray_replace_impl.exit
+  %.not143.i.i = icmp eq ptr %.val58.i.i, null
+  br i1 %.not143.i.i, label %bytearray_replace_impl.exit, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fk, ptr nonnull readonly align 1 %.val58.i.i, i64 %.val.i.i, i1 false)
@@ -916,10 +914,8 @@ bb.cp:                                            ; preds = %bb.cl
   store i64 %.val.i.i, ptr %i.jj, align 8, !tbaa !25
   %i.jk = getelementptr i8, ptr %i.ix, i64 24
   store i64 %.val.i.i, ptr %i.jk, align 8, !tbaa !26
-  %7 = icmp ne ptr %.val60.i.i, null
-  %8 = icmp ne i64 %.val.i.i, 0
-  %or.cond.i.i.i85.i.i = and i1 %8, %7
-  br i1 %or.cond.i.i.i85.i.i, label %bb.cq, label %bytearray_replace_impl.exit
+  %.not142.i.i = icmp eq ptr %.val60.i.i, null
+  br i1 %.not142.i.i, label %bytearray_replace_impl.exit, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jg, ptr nonnull readonly align 1 %.val60.i.i, i64 %.val.i.i, i1 false)
@@ -1204,10 +1200,8 @@ bb.dy:                                            ; preds = %bb.du
   store i64 %.val.i.i, ptr %i.nf, align 8, !tbaa !25
   %i.ng = getelementptr i8, ptr %i.mt, i64 24
   store i64 %.val.i.i, ptr %i.ng, align 8, !tbaa !26
-  %9 = icmp ne ptr %.val62.i.i, null
-  %10 = icmp ne i64 %.val.i.i, 0
-  %or.cond.i.i.i110.i.i = and i1 %10, %9
-  br i1 %or.cond.i.i.i110.i.i, label %bb.dz, label %bytearray_replace_impl.exit
+  %.not.i.i = icmp eq ptr %.val62.i.i, null
+  br i1 %.not.i.i, label %bytearray_replace_impl.exit, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.nc, ptr nonnull readonly align 1 %.val62.i.i, i64 %.val.i.i, i1 false)

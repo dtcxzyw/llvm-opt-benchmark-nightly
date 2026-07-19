@@ -204,7 +204,7 @@ _ZN6Assimp3FBX12FBXConverter13PotentialNodeD2Ev.exit: ; preds = %_ZNSt6vectorIN6
 
 bb.cr:                                            ; preds = %bb.ce, %_ZN6Assimp3FBX12FBXConverter13PotentialNodeD2Ev.exit
   %i.ti = add nuw nsw i64 %.0179769, 1            ; 2 uses
-  %i.tj = shl i32 %.0180768, 1
+  %i.tj = shl nuw nsw i32 %.0180768, 1
   %exitcond.not = icmp eq i64 %i.ti, 17
   br i1 %exitcond.not, label %.loopexit, label %bb.ce, !llvm.loop !104
 
@@ -607,8 +607,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.ba, label %.lr.ph.preheader105, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.av, 8589934584              ; 4 uses
-  %4 = trunc i64 %n.vec to i32
+  %n.vec = and i64 %i.av, 8589934584              ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -635,7 +634,6 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader105:                              ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block
   %.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.05879.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %4, %middle.block ]
   %.05978.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %i.bi, %middle.block ]
   br label %.lr.ph
 
@@ -655,16 +653,15 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.br, label %.loopexit, label %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader105, %.lr.ph
-  %i.bs = phi i64 [ %6, %.lr.ph ], [ %.ph, %.lr.ph.preheader105 ]
-  %.05879 = phi i32 [ %5, %.lr.ph ], [ %.05879.ph, %.lr.ph.preheader105 ]
+  %i.bs = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %.ph, %.lr.ph.preheader105 ] ; 2 uses
   %.05978 = phi i32 [ %spec.select, %.lr.ph ], [ %.05978.ph, %.lr.ph.preheader105 ]
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %i.bs
   %i.bu = load i32, ptr %i.bt, align 4
   %i.bv = lshr i32 %i.bu, 31
   %spec.select = add i32 %i.bv, %.05978           ; 2 uses
-  %5 = add i32 %.05879, 1                         ; 2 uses
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.bw = icmp ugt i64 %i.av, %6
+  %indvars.iv.next = add i64 %i.bs, 1             ; 2 uses
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %i.bw = icmp ugt i64 %i.av, %4
   br i1 %i.bw, label %.lr.ph, label %._crit_edge, !llvm.loop !129
 
 bb.g:                                             ; preds = %._crit_edge
@@ -1067,7 +1064,7 @@ _ZNSt6vectorIP10aiNodeAnimSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__n
   br label %_ZNSt6vectorIP10aiNodeAnimSaIS1_EE9push_backERKS1_.exit191
 
 _ZNSt6vectorIP10aiNodeAnimSaIS1_EE9push_backERKS1_.exit191: ; preds = %_ZNSt6vectorIP10aiNodeAnimSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i188, %bb.bp, %bb.bl
-  %i.gz = shl i32 %.0115305, 4
+  %i.gz = shl nuw nsw i32 %.0115305, 4
   %i.ha = or i32 %i.fl, %i.gz
   %i.hb = load ptr, ptr %13, align 8              ; 2 uses
   %i.hc = icmp eq ptr %i.hb, %i.fe
@@ -1390,7 +1387,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit226: ; preds = %bb
 bb.cz:                                            ; preds = %bb.az, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit223
   %.2118 = phi i32 [ %.1117, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit223 ], [ %.0116304, %bb.az ] ; 2 uses
   %i.kn = add nuw nsw i64 %.0114307, 1            ; 2 uses
-  %i.ko = shl i32 %.0115305, 1
+  %i.ko = shl nuw nsw i32 %.0115305, 1
   %exitcond309.not = icmp eq i64 %i.kn, 17
   br i1 %exitcond309.not, label %bb.ay, label %bb.az, !llvm.loop !354
 

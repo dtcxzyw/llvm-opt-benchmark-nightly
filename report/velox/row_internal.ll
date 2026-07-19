@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 .lr.ph139.split.preheader:                        ; preds = %bb.h
   %i.fv = call i64 @llvm.smax.i64(i64 %i.ft, i64 0)
   %i.fw = add nuw nsw i64 %i.fv, 1                ; 2 uses
-  %min.iters.check = icmp slt i64 %i.fq, 185
+  %min.iters.check = icmp slt i64 %i.fq, 137
   br i1 %min.iters.check, label %.lr.ph139.split.preheader261, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph139.split.preheader
@@ -221,8 +221,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %diff.check, label %.lr.ph139.split.preheader261, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.fw, 9223372036854775804     ; 4 uses
-  %7 = trunc i64 %n.vec to i32
+  %n.vec = and i64 %i.fw, 9223372036854775804     ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -245,7 +244,6 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph139.split.preheader261:                     ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph139.split.preheader, %middle.block
   %.ph262 = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph139.split.preheader ], [ %n.vec, %middle.block ]
-  %.0108137.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph139.split.preheader ], [ %7, %middle.block ]
   br label %.lr.ph139.split
 
 _ZN5arrow8bit_util7CeilDivEll.exit.thread:        ; preds = %.lr.ph139.split, %middle.block, %bb.h
@@ -255,15 +253,14 @@ _ZN5arrow8bit_util7CeilDivEll.exit.thread:        ; preds = %.lr.ph139.split, %m
   br i1 %exitcond188.not, label %.critedge.thread, label %bb.e, !llvm.loop !162
 
 .lr.ph139.split:                                  ; preds = %.lr.ph139.split.preheader261, %.lr.ph139.split
-  %i.gk = phi i64 [ %9, %.lr.ph139.split ], [ %.ph262, %.lr.ph139.split.preheader261 ] ; 2 uses
-  %.0108137 = phi i32 [ %8, %.lr.ph139.split ], [ %.0108137.ph, %.lr.ph139.split.preheader261 ]
+  %i.gk = phi i64 [ %indvars.iv.next185, %.lr.ph139.split ], [ %.ph262, %.lr.ph139.split.preheader261 ] ; 3 uses
   %i.gl = getelementptr inbounds nuw [8 x i8], ptr %i.fr, i64 %i.gk
   %i.gm = load i64, ptr %i.gl, align 8, !tbaa !96
   %i.gn = getelementptr inbounds nuw [8 x i8], ptr %.0104141, i64 %i.gk
   store i64 %i.gm, ptr %i.gn, align 8, !tbaa !96
-  %8 = add i32 %.0108137, 1                       ; 2 uses
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %.not129 = icmp slt i64 %i.ft, %9
+  %indvars.iv.next185 = add i64 %i.gk, 1          ; 2 uses
+  %7 = and i64 %indvars.iv.next185, 4294967295
+  %.not129 = icmp slt i64 %i.ft, %7
   br i1 %.not129, label %_ZN5arrow8bit_util7CeilDivEll.exit.thread, label %.lr.ph139.split, !llvm.loop !163
 
 bb.i:                                             ; preds = %bb.a
@@ -307,12 +304,11 @@ bb.i:                                             ; preds = %bb.a
   %i.hr = add i64 %i.hn, %i.hp
   %i.hs = tail call i64 @llvm.smax.i64(i64 %i.gx, i64 0)
   %i.ht = add nuw nsw i64 %i.hs, 1                ; 2 uses
-  %min.iters.check225 = icmp ult i32 %i.gu, 121
+  %min.iters.check225 = icmp ult i32 %i.gu, 89
   %i.hu = and i64 %i.hq, 4294967295
   %i.hv = icmp eq i64 %i.hu, 4294967295
   %or.cond = select i1 %min.iters.check225, i1 true, i1 %i.hv
-  %n.vec228 = and i64 %i.ht, 9223372036854775804  ; 4 uses
-  %10 = trunc i64 %n.vec228 to i32
+  %n.vec228 = and i64 %i.ht, 9223372036854775804  ; 3 uses
   %cmp.n235 = icmp eq i64 %i.ht, %n.vec228
   br label %.lr.ph154.split.split
 
@@ -365,7 +361,6 @@ middle.block234:                                  ; preds = %vector.body229
 
 scalar.ph224.preheader:                           ; preds = %vector.memcheck222, %.lr.ph148, %middle.block234
   %.ph = phi i64 [ 0, %vector.memcheck222 ], [ 0, %.lr.ph148 ], [ %n.vec228, %middle.block234 ]
-  %.0107146.ph = phi i32 [ 0, %vector.memcheck222 ], [ 0, %.lr.ph148 ], [ %10, %middle.block234 ]
   br label %scalar.ph224
 
 ._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split: ; preds = %scalar.ph224, %middle.block234
@@ -375,15 +370,14 @@ scalar.ph224.preheader:                           ; preds = %vector.memcheck222,
   br i1 %exitcond193.not, label %.critedge.thread, label %.lr.ph154.split.split, !llvm.loop !165
 
 scalar.ph224:                                     ; preds = %scalar.ph224.preheader, %scalar.ph224
-  %i.io = phi i64 [ %12, %scalar.ph224 ], [ %.ph, %scalar.ph224.preheader ] ; 2 uses
-  %.0107146 = phi i32 [ %11, %scalar.ph224 ], [ %.0107146.ph, %scalar.ph224.preheader ]
+  %i.io = phi i64 [ %indvars.iv.next194, %scalar.ph224 ], [ %.ph, %scalar.ph224.preheader ] ; 3 uses
   %i.ip = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %i.io
   %i.iq = load i64, ptr %i.ip, align 8, !tbaa !96
   %i.ir = getelementptr inbounds nuw [8 x i8], ptr %.0109151, i64 %i.io
   store i64 %i.iq, ptr %i.ir, align 8, !tbaa !96
-  %11 = add i32 %.0107146, 1                      ; 2 uses
-  %12 = zext i32 %11 to i64                       ; 2 uses
-  %.not130 = icmp slt i64 %i.gx, %12
+  %indvars.iv.next194 = add i64 %i.io, 1          ; 2 uses
+  %8 = and i64 %indvars.iv.next194, 4294967295
+  %.not130 = icmp slt i64 %i.gx, %8
   br i1 %.not130, label %._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split, label %scalar.ph224, !llvm.loop !166
 
 .critedge.thread:                                 ; preds = %_ZN5arrow8bit_util7CeilDivEll.exit.thread, %._ZN5arrow8bit_util7CeilDivEll.exit127.thread_crit_edge.split, %.lr.ph154, %_ZN5arrow6StatusD2Ev.exit126, %bb.i

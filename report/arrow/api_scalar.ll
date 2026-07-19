@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph60.new
   store i64 %i.ee, ptr %i.dw, align 8, !tbaa !1295
   %i.ef = select i1 %.not47, i8 0, i8 %.13758
   %i.eg = or i8 %i.ef, %.13957
-  %i.eh = shl i8 %.13758, 1
+  %i.eh = shl nuw i8 %.13758, 1
   %i.ei = load i64, ptr %i.dv, align 8, !tbaa !352 ; 2 uses
   %i.ej = add nsw i64 %i.ei, 1
   store i64 %i.ej, ptr %i.dv, align 8, !tbaa !352
@@ -217,7 +217,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph60.new
   store i64 %i.eo, ptr %i.dw, align 8, !tbaa !1295
   %i.ep = select i1 %.not47.1, i8 0, i8 %i.eh
   %i.eq = or i8 %i.ep, %i.eg                      ; 3 uses
-  %i.er = shl i8 %.13758, 2                       ; 2 uses
+  %i.er = shl nuw i8 %.13758, 2                   ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge61.loopexit.unr-lcssa, label %bb.f, !llvm.loop !1332

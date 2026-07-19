@@ -204,25 +204,25 @@ bb.b:                                             ; preds = %bb.a
   %niter162 = phi i64 [ %niter162.next.3, %.lr.ph108.us.us.new ], [ 0, %.lr.ph108.us.us ]
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv136
   %i.co = load float, ptr %i.cn, align 16, !tbaa !26
-  %.idx = shl nsw i64 %indvars.iv136, 6
+  %.idx = shl nuw nsw i64 %indvars.iv136, 6
   %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx
   store float %i.co, ptr %gep, align 4, !tbaa !26
   %indvars.iv.next137 = or disjoint i64 %indvars.iv136, 1 ; 2 uses
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv.next137
   %i.cq = load float, ptr %i.cp, align 4, !tbaa !26
-  %.idx.1 = shl nsw i64 %indvars.iv.next137, 6
+  %.idx.1 = shl nuw nsw i64 %indvars.iv.next137, 6
   %gep.1 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx.1
   store float %i.cq, ptr %gep.1, align 4, !tbaa !26
   %indvars.iv.next137.1 = or disjoint i64 %indvars.iv136, 2 ; 2 uses
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv.next137.1
   %i.cs = load float, ptr %i.cr, align 8, !tbaa !26
-  %.idx.2 = shl nsw i64 %indvars.iv.next137.1, 6
+  %.idx.2 = shl nuw nsw i64 %indvars.iv.next137.1, 6
   %gep.2 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx.2
   store float %i.cs, ptr %gep.2, align 4, !tbaa !26
   %indvars.iv.next137.2 = or disjoint i64 %indvars.iv136, 3 ; 2 uses
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv.next137.2
   %i.cu = load float, ptr %i.ct, align 4, !tbaa !26
-  %.idx.3 = shl nsw i64 %indvars.iv.next137.2, 6
+  %.idx.3 = shl nuw nsw i64 %indvars.iv.next137.2, 6
   %gep.3 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx.3
   store float %i.cu, ptr %gep.3, align 4, !tbaa !26
   %indvars.iv.next137.3 = add nuw nsw i64 %indvars.iv136, 4 ; 2 uses
@@ -243,7 +243,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %epil.iter = phi i64 [ 0, %.epil.preheader157 ], [ %epil.iter.next, %bb.c ]
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv136.epil
   %i.cw = load float, ptr %i.cv, align 4, !tbaa !26
-  %.idx.epil = shl nsw i64 %indvars.iv136.epil, 6
+  %.idx.epil = shl nuw nsw i64 %indvars.iv136.epil, 6
   %gep.epil = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx.epil
   store float %i.cw, ptr %gep.epil, align 4, !tbaa !26
   %indvars.iv.next137.epil = add nuw nsw i64 %indvars.iv136.epil, 1
@@ -258,7 +258,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
 ..loopexit_crit_edge.us.us:                       ; preds = %..loopexit_crit_edge.us.us.loopexit, %.split.us.split.us
   %.1.us.us = phi i1 [ %.099110.us.us, %.split.us.split.us ], [ %i.cx, %..loopexit_crit_edge.us.us.loopexit ] ; 2 uses
   %indvars.iv.next142 = add nuw nsw i64 %indvars.iv141, 1 ; 2 uses
-  %i.cy = shl i64 %.0100109.us.us, 1
+  %i.cy = shl nuw nsw i64 %.0100109.us.us, 1
   %exitcond143.not = icmp eq i64 %indvars.iv.next142, 16
   br i1 %exitcond143.not, label %.split114.us, label %.split.us.split.us, !llvm.loop !287
 
@@ -305,7 +305,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
 bb.d:                                             ; preds = %.loopexit.us, %.split.us.split
   %.1.us = phi i1 [ %.099110.us, %.split.us.split ], [ %i.dx, %.loopexit.us ] ; 2 uses
   %indvars.iv.next134 = add nuw nsw i64 %indvars.iv133, 1 ; 2 uses
-  %i.dy = shl i64 %.0100109.us, 1
+  %i.dy = shl nuw nsw i64 %.0100109.us, 1
   %exitcond135.not = icmp eq i64 %indvars.iv.next134, 16
   br i1 %exitcond135.not, label %.split114.us, label %.split.us.split, !llvm.loop !287
 
@@ -375,7 +375,7 @@ bb.d:                                             ; preds = %.loopexit.us, %.spl
   %niter = phi i64 [ %niter.next.1, %.lr.ph.us.new ], [ 0, %.lr.ph.us ]
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv126
   %i.fg = load float, ptr %i.ff, align 8, !tbaa !26
-  %i.fh = shl nsw i64 %indvars.iv126, 4
+  %i.fh = shl nuw nsw i64 %indvars.iv126, 4
   %i.fi = add nuw nsw i64 %i.fh, %indvars.iv130   ; 3 uses
   %i.fj = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %i.fi
   store float %i.fg, ptr %i.fj, align 4, !tbaa !26
@@ -390,7 +390,7 @@ bb.d:                                             ; preds = %.loopexit.us, %.spl
   %indvars.iv.next127 = or disjoint i64 %indvars.iv126, 1 ; 4 uses
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv.next127
   %i.fr = load float, ptr %i.fq, align 4, !tbaa !26
-  %i.fs = shl nsw i64 %indvars.iv.next127, 4
+  %i.fs = shl nuw nsw i64 %indvars.iv.next127, 4
   %i.ft = add nuw nsw i64 %i.fs, %indvars.iv130   ; 3 uses
   %i.fu = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %i.ft
   store float %i.fr, ptr %i.fu, align 4, !tbaa !26
@@ -415,7 +415,7 @@ bb.d:                                             ; preds = %.loopexit.us, %.spl
   call void @llvm.assume(i1 %lcmp.mod156)
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv126.epil.init
   %i.gc = load float, ptr %i.gb, align 4, !tbaa !26
-  %i.gd = shl nsw i64 %indvars.iv126.epil.init, 4
+  %i.gd = shl nuw nsw i64 %indvars.iv126.epil.init, 4
   %i.ge = add nuw nsw i64 %i.gd, %indvars.iv130   ; 3 uses
   %i.gf = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %i.ge
   store float %i.gc, ptr %i.gf, align 4, !tbaa !26
@@ -436,7 +436,7 @@ bb.d:                                             ; preds = %.loopexit.us, %.spl
 ..loopexit105_crit_edge.us:                       ; preds = %..loopexit105_crit_edge.us.loopexit, %.split.split.us
   %.1.us119 = phi i1 [ %.099110.us116, %.split.split.us ], [ %i.gm, %..loopexit105_crit_edge.us.loopexit ] ; 2 uses
   %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
-  %i.gn = shl i64 %.0100109.us117, 1
+  %i.gn = shl nuw nsw i64 %.0100109.us117, 1
   %exitcond132.not = icmp eq i64 %indvars.iv.next131, 16
   br i1 %exitcond132.not, label %.split114.us, label %.split.split.us, !llvm.loop !287
 
@@ -488,7 +488,7 @@ bb.d:                                             ; preds = %.loopexit.us, %.spl
 bb.e:                                             ; preds = %.loopexit105, %.split.split
   %.1 = phi i1 [ %.099110, %.split.split ], [ %i.hm, %.loopexit105 ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.hn = shl i64 %.0100109, 1
+  %i.hn = shl nuw nsw i64 %.0100109, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %.split114.us, label %.split.split, !llvm.loop !287
 }
@@ -891,7 +891,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.sd = getelementptr inbounds nuw i8, ptr %i.qn, i64 48
   store <4 x float> %i.sc, ptr %i.sd, align 16
   %indvars.iv.next2313 = add nuw nsw i64 %indvars.iv2312, 1 ; 2 uses
-  %indvars.iv.next2305 = add i64 %indvars.iv2304, %i.pb
+  %indvars.iv.next2305 = add nsw i64 %indvars.iv2304, %i.pb
   %exitcond2317.not = icmp eq i64 %indvars.iv.next2313, 4
   br i1 %exitcond2317.not, label %.loopexit2185, label %.preheader2179, !llvm.loop !519
 

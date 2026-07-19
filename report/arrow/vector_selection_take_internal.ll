@@ -204,7 +204,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EhLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i.i539:                                    ; preds = %.lr.ph.i.i539, %.lr.ph.i.i539.preheader.new
   %.0.i1833.i.i540 = phi i64 [ 0, %.lr.ph.i.i539.preheader.new ], [ %i.fhz, %.lr.ph.i.i539 ] ; 4 uses
   %niter3468 = phi i64 [ 0, %.lr.ph.i.i539.preheader.new ], [ %niter3468.next.1, %.lr.ph.i.i539 ]
-  %i.fhi = shl nsw i64 %.0.i1833.i.i540, 2
+  %i.fhi = shl nuw nsw i64 %.0.i1833.i.i540, 2
   %i.fhj = getelementptr inbounds nuw i8, ptr %i.eyl, i64 %i.fhi
   %i.fhk = getelementptr inbounds nuw i8, ptr %i.eyt, i64 %.0.i1833.i.i540
   %i.fhl = load i8, ptr %i.fhk, align 1, !tbaa !98, !noalias !605
@@ -214,7 +214,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EhLb0EEEE16ExecuteWithNullsIL
   %i.fhp = load i32, ptr %i.fho, align 1, !noalias !605
   store i32 %i.fhp, ptr %i.fhj, align 1, !noalias !605
   %i.fhq = or disjoint i64 %.0.i1833.i.i540, 1    ; 2 uses
-  %i.fhr = shl nsw i64 %i.fhq, 2
+  %i.fhr = shl nuw nsw i64 %i.fhq, 2
   %i.fhs = getelementptr inbounds nuw i8, ptr %i.eyl, i64 %i.fhr
   %i.fht = getelementptr inbounds nuw i8, ptr %i.eyt, i64 %i.fhq
   %i.fhu = load i8, ptr %i.fht, align 1, !tbaa !98, !noalias !605
@@ -617,7 +617,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EtLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i24.i478:                                  ; preds = %.lr.ph.i24.i478, %.lr.ph.i24.i478.preheader.new
   %.0.i1833.i25.i479 = phi i64 [ 0, %.lr.ph.i24.i478.preheader.new ], [ %i.frx, %.lr.ph.i24.i478 ] ; 4 uses
   %niter3457 = phi i64 [ 0, %.lr.ph.i24.i478.preheader.new ], [ %niter3457.next.1, %.lr.ph.i24.i478 ]
-  %i.frg = shl nsw i64 %.0.i1833.i25.i479, 2
+  %i.frg = shl nuw nsw i64 %.0.i1833.i25.i479, 2
   %i.frh = getelementptr inbounds nuw i8, ptr %i.fij, i64 %i.frg
   %i.fri = getelementptr inbounds nuw [2 x i8], ptr %i.fir, i64 %.0.i1833.i25.i479
   %i.frj = load i16, ptr %i.fri, align 2, !tbaa !269, !noalias !614
@@ -627,7 +627,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EtLb0EEEE16ExecuteWithNullsIL
   %i.frn = load i32, ptr %i.frm, align 1, !noalias !614
   store i32 %i.frn, ptr %i.frh, align 1, !noalias !614
   %i.fro = or disjoint i64 %.0.i1833.i25.i479, 1  ; 2 uses
-  %i.frp = shl nsw i64 %i.fro, 2
+  %i.frp = shl nuw nsw i64 %i.fro, 2
   %i.frq = getelementptr inbounds nuw i8, ptr %i.fij, i64 %i.frp
   %i.frr = getelementptr inbounds nuw [2 x i8], ptr %i.fir, i64 %i.fro
   %i.frs = load i16, ptr %i.frr, align 2, !tbaa !269, !noalias !614
@@ -1030,7 +1030,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EjLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i86.i417:                                  ; preds = %.lr.ph.i86.i417, %.lr.ph.i86.i417.preheader.new
   %.0.i1833.i87.i418 = phi i64 [ 0, %.lr.ph.i86.i417.preheader.new ], [ %i.gbv, %.lr.ph.i86.i417 ] ; 4 uses
   %niter3446 = phi i64 [ 0, %.lr.ph.i86.i417.preheader.new ], [ %niter3446.next.1, %.lr.ph.i86.i417 ]
-  %i.gbe = shl nsw i64 %.0.i1833.i87.i418, 2
+  %i.gbe = shl nuw nsw i64 %.0.i1833.i87.i418, 2
   %i.gbf = getelementptr inbounds nuw i8, ptr %i.fsh, i64 %i.gbe
   %i.gbg = getelementptr inbounds nuw [4 x i8], ptr %i.fsp, i64 %.0.i1833.i87.i418
   %i.gbh = load i32, ptr %i.gbg, align 4, !tbaa !3, !noalias !623
@@ -1040,7 +1040,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EjLb0EEEE16ExecuteWithNullsIL
   %i.gbl = load i32, ptr %i.gbk, align 1, !noalias !623
   store i32 %i.gbl, ptr %i.gbf, align 1, !noalias !623
   %i.gbm = or disjoint i64 %.0.i1833.i87.i418, 1  ; 2 uses
-  %i.gbn = shl nsw i64 %i.gbm, 2
+  %i.gbn = shl nuw nsw i64 %i.gbm, 2
   %i.gbo = getelementptr inbounds nuw i8, ptr %i.fsh, i64 %i.gbn
   %i.gbp = getelementptr inbounds nuw [4 x i8], ptr %i.fsp, i64 %i.gbm
   %i.gbq = load i32, ptr %i.gbp, align 4, !tbaa !3, !noalias !623
@@ -1443,7 +1443,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EmLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i148.i600:                                 ; preds = %.lr.ph.i148.i600, %.lr.ph.i148.i600.preheader.new
   %.0.i1833.i149.i601 = phi i64 [ 0, %.lr.ph.i148.i600.preheader.new ], [ %i.glj, %.lr.ph.i148.i600 ] ; 4 uses
   %niter3479 = phi i64 [ 0, %.lr.ph.i148.i600.preheader.new ], [ %niter3479.next.1, %.lr.ph.i148.i600 ]
-  %i.gku = shl nsw i64 %.0.i1833.i149.i601, 2
+  %i.gku = shl nuw nsw i64 %.0.i1833.i149.i601, 2
   %i.gkv = getelementptr inbounds nuw i8, ptr %i.gcf, i64 %i.gku
   %i.gkw = getelementptr inbounds nuw [8 x i8], ptr %i.gcn, i64 %.0.i1833.i149.i601
   %i.gkx = load i64, ptr %i.gkw, align 8, !tbaa !130, !noalias !632
@@ -1452,7 +1452,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EmLb0EEEE16ExecuteWithNullsIL
   %i.gla = load i32, ptr %i.gkz, align 1, !noalias !632
   store i32 %i.gla, ptr %i.gkv, align 1, !noalias !632
   %i.glb = or disjoint i64 %.0.i1833.i149.i601, 1 ; 2 uses
-  %i.glc = shl nsw i64 %i.glb, 2
+  %i.glc = shl nuw nsw i64 %i.glb, 2
   %i.gld = getelementptr inbounds nuw i8, ptr %i.gcf, i64 %i.glc
   %i.gle = getelementptr inbounds nuw [8 x i8], ptr %i.gcn, i64 %i.glb
   %i.glf = load i64, ptr %i.gle, align 8, !tbaa !130, !noalias !632
@@ -1473,7 +1473,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i149.i601.epil.init = phi i64 [ 0, %.lr.ph.i148.i600.preheader ], [ %i.glj, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod3477 = trunc i64 %i.gch to i1
   call void @llvm.assume(i1 %lcmp.mod3477)
-  %i.glk = shl nsw i64 %.0.i1833.i149.i601.epil.init, 2
+  %i.glk = shl nuw nsw i64 %.0.i1833.i149.i601.epil.init, 2
   %i.gll = getelementptr inbounds nuw i8, ptr %i.gcf, i64 %i.glk
   %i.glm = getelementptr inbounds nuw [8 x i8], ptr %i.gcn, i64 %.0.i1833.i149.i601.epil.init
   %i.gln = load i64, ptr %i.glm, align 8, !tbaa !130, !noalias !632
@@ -1491,7 +1491,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i.i540.epil.init = phi i64 [ 0, %.lr.ph.i.i539.preheader ], [ %i.fhz, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3204.unr-lcssa ] ; 2 uses
   %lcmp.mod3466 = trunc i64 %i.eyn to i1
   call void @llvm.assume(i1 %lcmp.mod3466)
-  %i.glr = shl nsw i64 %.0.i1833.i.i540.epil.init, 2
+  %i.glr = shl nuw nsw i64 %.0.i1833.i.i540.epil.init, 2
   %i.gls = getelementptr inbounds nuw i8, ptr %i.eyl, i64 %i.glr
   %i.glt = getelementptr inbounds nuw i8, ptr %i.eyt, i64 %.0.i1833.i.i540.epil.init
   %i.glu = load i8, ptr %i.glt, align 1, !tbaa !98, !noalias !605
@@ -1510,7 +1510,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i25.i479.epil.init = phi i64 [ 0, %.lr.ph.i24.i478.preheader ], [ %i.frx, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3212.unr-lcssa ] ; 2 uses
   %lcmp.mod3455 = trunc i64 %i.fil to i1
   call void @llvm.assume(i1 %lcmp.mod3455)
-  %i.glz = shl nsw i64 %.0.i1833.i25.i479.epil.init, 2
+  %i.glz = shl nuw nsw i64 %.0.i1833.i25.i479.epil.init, 2
   %i.gma = getelementptr inbounds nuw i8, ptr %i.fij, i64 %i.glz
   %i.gmb = getelementptr inbounds nuw [2 x i8], ptr %i.fir, i64 %.0.i1833.i25.i479.epil.init
   %i.gmc = load i16, ptr %i.gmb, align 2, !tbaa !269, !noalias !614
@@ -1529,7 +1529,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i87.i418.epil.init = phi i64 [ 0, %.lr.ph.i86.i417.preheader ], [ %i.gbv, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3220.unr-lcssa ] ; 2 uses
   %lcmp.mod3444 = trunc i64 %i.fsj to i1
   call void @llvm.assume(i1 %lcmp.mod3444)
-  %i.gmh = shl nsw i64 %.0.i1833.i87.i418.epil.init, 2
+  %i.gmh = shl nuw nsw i64 %.0.i1833.i87.i418.epil.init, 2
   %i.gmi = getelementptr inbounds nuw i8, ptr %i.fsh, i64 %i.gmh
   %i.gmj = getelementptr inbounds nuw [4 x i8], ptr %i.fsp, i64 %.0.i1833.i87.i418.epil.init
   %i.gmk = load i32, ptr %i.gmj, align 4, !tbaa !3, !noalias !623
@@ -1932,7 +1932,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EhLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i.i784:                                    ; preds = %.lr.ph.i.i784, %.lr.ph.i.i784.preheader.new
   %.0.i1833.i.i785 = phi i64 [ 0, %.lr.ph.i.i784.preheader.new ], [ %i.gwz, %.lr.ph.i.i784 ] ; 4 uses
   %niter3424 = phi i64 [ 0, %.lr.ph.i.i784.preheader.new ], [ %niter3424.next.1, %.lr.ph.i.i784 ]
-  %i.gwi = shl nsw i64 %.0.i1833.i.i785, 3
+  %i.gwi = shl nuw nsw i64 %.0.i1833.i.i785, 3
   %i.gwj = getelementptr inbounds nuw i8, ptr %i.gnl, i64 %i.gwi
   %i.gwk = getelementptr inbounds nuw i8, ptr %i.gnt, i64 %.0.i1833.i.i785
   %i.gwl = load i8, ptr %i.gwk, align 1, !tbaa !98, !noalias !645
@@ -1942,7 +1942,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EhLb0EEEE16ExecuteWithNullsIL
   %i.gwp = load i64, ptr %i.gwo, align 1, !noalias !645
   store i64 %i.gwp, ptr %i.gwj, align 1, !noalias !645
   %i.gwq = or disjoint i64 %.0.i1833.i.i785, 1    ; 2 uses
-  %i.gwr = shl nsw i64 %i.gwq, 3
+  %i.gwr = shl nuw nsw i64 %i.gwq, 3
   %i.gws = getelementptr inbounds nuw i8, ptr %i.gnl, i64 %i.gwr
   %i.gwt = getelementptr inbounds nuw i8, ptr %i.gnt, i64 %i.gwq
   %i.gwu = load i8, ptr %i.gwt, align 1, !tbaa !98, !noalias !645
@@ -2345,7 +2345,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EtLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i24.i723:                                  ; preds = %.lr.ph.i24.i723, %.lr.ph.i24.i723.preheader.new
   %.0.i1833.i25.i724 = phi i64 [ 0, %.lr.ph.i24.i723.preheader.new ], [ %i.hgx, %.lr.ph.i24.i723 ] ; 4 uses
   %niter3413 = phi i64 [ 0, %.lr.ph.i24.i723.preheader.new ], [ %niter3413.next.1, %.lr.ph.i24.i723 ]
-  %i.hgg = shl nsw i64 %.0.i1833.i25.i724, 3
+  %i.hgg = shl nuw nsw i64 %.0.i1833.i25.i724, 3
   %i.hgh = getelementptr inbounds nuw i8, ptr %i.gxj, i64 %i.hgg
   %i.hgi = getelementptr inbounds nuw [2 x i8], ptr %i.gxr, i64 %.0.i1833.i25.i724
   %i.hgj = load i16, ptr %i.hgi, align 2, !tbaa !269, !noalias !654
@@ -2355,7 +2355,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EtLb0EEEE16ExecuteWithNullsIL
   %i.hgn = load i64, ptr %i.hgm, align 1, !noalias !654
   store i64 %i.hgn, ptr %i.hgh, align 1, !noalias !654
   %i.hgo = or disjoint i64 %.0.i1833.i25.i724, 1  ; 2 uses
-  %i.hgp = shl nsw i64 %i.hgo, 3
+  %i.hgp = shl nuw nsw i64 %i.hgo, 3
   %i.hgq = getelementptr inbounds nuw i8, ptr %i.gxj, i64 %i.hgp
   %i.hgr = getelementptr inbounds nuw [2 x i8], ptr %i.gxr, i64 %i.hgo
   %i.hgs = load i16, ptr %i.hgr, align 2, !tbaa !269, !noalias !654
@@ -2758,7 +2758,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EjLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i86.i662:                                  ; preds = %.lr.ph.i86.i662, %.lr.ph.i86.i662.preheader.new
   %.0.i1833.i87.i663 = phi i64 [ 0, %.lr.ph.i86.i662.preheader.new ], [ %i.hqv, %.lr.ph.i86.i662 ] ; 4 uses
   %niter3402 = phi i64 [ 0, %.lr.ph.i86.i662.preheader.new ], [ %niter3402.next.1, %.lr.ph.i86.i662 ]
-  %i.hqe = shl nsw i64 %.0.i1833.i87.i663, 3
+  %i.hqe = shl nuw nsw i64 %.0.i1833.i87.i663, 3
   %i.hqf = getelementptr inbounds nuw i8, ptr %i.hhh, i64 %i.hqe
   %i.hqg = getelementptr inbounds nuw [4 x i8], ptr %i.hhp, i64 %.0.i1833.i87.i663
   %i.hqh = load i32, ptr %i.hqg, align 4, !tbaa !3, !noalias !663
@@ -2768,7 +2768,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EjLb0EEEE16ExecuteWithNullsIL
   %i.hql = load i64, ptr %i.hqk, align 1, !noalias !663
   store i64 %i.hql, ptr %i.hqf, align 1, !noalias !663
   %i.hqm = or disjoint i64 %.0.i1833.i87.i663, 1  ; 2 uses
-  %i.hqn = shl nsw i64 %i.hqm, 3
+  %i.hqn = shl nuw nsw i64 %i.hqm, 3
   %i.hqo = getelementptr inbounds nuw i8, ptr %i.hhh, i64 %i.hqn
   %i.hqp = getelementptr inbounds nuw [4 x i8], ptr %i.hhp, i64 %i.hqm
   %i.hqq = load i32, ptr %i.hqp, align 4, !tbaa !3, !noalias !663
@@ -3171,7 +3171,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EmLb0EEEE16ExecuteWithNullsIL
 .lr.ph.i148.i845:                                 ; preds = %.lr.ph.i148.i845, %.lr.ph.i148.i845.preheader.new
   %.0.i1833.i149.i846 = phi i64 [ 0, %.lr.ph.i148.i845.preheader.new ], [ %i.iaj, %.lr.ph.i148.i845 ] ; 4 uses
   %niter3435 = phi i64 [ 0, %.lr.ph.i148.i845.preheader.new ], [ %niter3435.next.1, %.lr.ph.i148.i845 ]
-  %i.hzu = shl nsw i64 %.0.i1833.i149.i846, 3
+  %i.hzu = shl nuw nsw i64 %.0.i1833.i149.i846, 3
   %i.hzv = getelementptr inbounds nuw i8, ptr %i.hrf, i64 %i.hzu
   %i.hzw = getelementptr inbounds nuw [8 x i8], ptr %i.hrn, i64 %.0.i1833.i149.i846
   %i.hzx = load i64, ptr %i.hzw, align 8, !tbaa !130, !noalias !672
@@ -3180,7 +3180,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EmLb0EEEE16ExecuteWithNullsIL
   %i.iaa = load i64, ptr %i.hzz, align 1, !noalias !672
   store i64 %i.iaa, ptr %i.hzv, align 1, !noalias !672
   %i.iab = or disjoint i64 %.0.i1833.i149.i846, 1 ; 2 uses
-  %i.iac = shl nsw i64 %i.iab, 3
+  %i.iac = shl nuw nsw i64 %i.iab, 3
   %i.iad = getelementptr inbounds nuw i8, ptr %i.hrf, i64 %i.iac
   %i.iae = getelementptr inbounds nuw [8 x i8], ptr %i.hrn, i64 %i.iab
   %i.iaf = load i64, ptr %i.iae, align 8, !tbaa !130, !noalias !672
@@ -3201,7 +3201,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i149.i846.epil.init = phi i64 [ 0, %.lr.ph.i148.i845.preheader ], [ %i.iaj, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod3433 = trunc i64 %i.hrh to i1
   call void @llvm.assume(i1 %lcmp.mod3433)
-  %i.iak = shl nsw i64 %.0.i1833.i149.i846.epil.init, 3
+  %i.iak = shl nuw nsw i64 %.0.i1833.i149.i846.epil.init, 3
   %i.ial = getelementptr inbounds nuw i8, ptr %i.hrf, i64 %i.iak
   %i.iam = getelementptr inbounds nuw [8 x i8], ptr %i.hrn, i64 %.0.i1833.i149.i846.epil.init
   %i.ian = load i64, ptr %i.iam, align 8, !tbaa !130, !noalias !672
@@ -3219,7 +3219,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i.i785.epil.init = phi i64 [ 0, %.lr.ph.i.i784.preheader ], [ %i.gwz, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3235.unr-lcssa ] ; 2 uses
   %lcmp.mod3422 = trunc i64 %i.gnn to i1
   call void @llvm.assume(i1 %lcmp.mod3422)
-  %i.iar = shl nsw i64 %.0.i1833.i.i785.epil.init, 3
+  %i.iar = shl nuw nsw i64 %.0.i1833.i.i785.epil.init, 3
   %i.ias = getelementptr inbounds nuw i8, ptr %i.gnl, i64 %i.iar
   %i.iat = getelementptr inbounds nuw i8, ptr %i.gnt, i64 %.0.i1833.i.i785.epil.init
   %i.iau = load i8, ptr %i.iat, align 1, !tbaa !98, !noalias !645
@@ -3238,7 +3238,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i25.i724.epil.init = phi i64 [ 0, %.lr.ph.i24.i723.preheader ], [ %i.hgx, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3243.unr-lcssa ] ; 2 uses
   %lcmp.mod3411 = trunc i64 %i.gxl to i1
   call void @llvm.assume(i1 %lcmp.mod3411)
-  %i.iaz = shl nsw i64 %.0.i1833.i25.i724.epil.init, 3
+  %i.iaz = shl nuw nsw i64 %.0.i1833.i25.i724.epil.init, 3
   %i.iba = getelementptr inbounds nuw i8, ptr %i.gxj, i64 %i.iaz
   %i.ibb = getelementptr inbounds nuw [2 x i8], ptr %i.gxr, i64 %.0.i1833.i25.i724.epil.init
   %i.ibc = load i16, ptr %i.ibb, align 2, !tbaa !269, !noalias !654
@@ -3257,7 +3257,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i87.i663.epil.init = phi i64 [ 0, %.lr.ph.i86.i662.preheader ], [ %i.hqv, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3251.unr-lcssa ] ; 2 uses
   %lcmp.mod3400 = trunc i64 %i.hhj to i1
   call void @llvm.assume(i1 %lcmp.mod3400)
-  %i.ibh = shl nsw i64 %.0.i1833.i87.i663.epil.init, 3
+  %i.ibh = shl nuw nsw i64 %.0.i1833.i87.i663.epil.init, 3
   %i.ibi = getelementptr inbounds nuw i8, ptr %i.hhh, i64 %i.ibh
   %i.ibj = getelementptr inbounds nuw [4 x i8], ptr %i.hhp, i64 %.0.i1833.i87.i663.epil.init
   %i.ibk = load i32, ptr %i.ibj, align 4, !tbaa !3, !noalias !663
@@ -3660,7 +3660,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EhLb0EEEE16ExecuteWithNullsI
 .lr.ph.i.i1029:                                   ; preds = %.lr.ph.i.i1029, %.lr.ph.i.i1029.preheader.new
   %.0.i1833.i.i1030 = phi i64 [ 0, %.lr.ph.i.i1029.preheader.new ], [ %i.ilr, %.lr.ph.i.i1029 ] ; 4 uses
   %niter3380 = phi i64 [ 0, %.lr.ph.i.i1029.preheader.new ], [ %niter3380.next.1, %.lr.ph.i.i1029 ]
-  %i.ilc = shl nsw i64 %.0.i1833.i.i1030, 4
+  %i.ilc = shl nuw nsw i64 %.0.i1833.i.i1030, 4
   %i.ild = getelementptr inbounds nuw i8, ptr %i.icl, i64 %i.ilc
   %i.ile = getelementptr inbounds nuw i8, ptr %i.ict, i64 %.0.i1833.i.i1030
   %i.ilf = load i8, ptr %i.ile, align 1, !tbaa !98, !noalias !685
@@ -3669,7 +3669,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EhLb0EEEE16ExecuteWithNullsI
   %i.ili = getelementptr inbounds nuw i8, ptr %i.ick, i64 %i.ilh
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ild, ptr noundef nonnull align 1 dereferenceable(16) %i.ili, i64 16, i1 false), !noalias !685
   %i.ilj = or disjoint i64 %.0.i1833.i.i1030, 1   ; 2 uses
-  %i.ilk = shl nsw i64 %i.ilj, 4
+  %i.ilk = shl nuw nsw i64 %i.ilj, 4
   %i.ill = getelementptr inbounds nuw i8, ptr %i.icl, i64 %i.ilk
   %i.ilm = getelementptr inbounds nuw i8, ptr %i.ict, i64 %i.ilj
   %i.iln = load i8, ptr %i.ilm, align 1, !tbaa !98, !noalias !685
@@ -4072,7 +4072,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EtLb0EEEE16ExecuteWithNullsI
 .lr.ph.i24.i968:                                  ; preds = %.lr.ph.i24.i968, %.lr.ph.i24.i968.preheader.new
   %.0.i1833.i25.i969 = phi i64 [ 0, %.lr.ph.i24.i968.preheader.new ], [ %i.ivh, %.lr.ph.i24.i968 ] ; 4 uses
   %niter3369 = phi i64 [ 0, %.lr.ph.i24.i968.preheader.new ], [ %niter3369.next.1, %.lr.ph.i24.i968 ]
-  %i.ius = shl nsw i64 %.0.i1833.i25.i969, 4
+  %i.ius = shl nuw nsw i64 %.0.i1833.i25.i969, 4
   %i.iut = getelementptr inbounds nuw i8, ptr %i.imb, i64 %i.ius
   %i.iuu = getelementptr inbounds nuw [2 x i8], ptr %i.imj, i64 %.0.i1833.i25.i969
   %i.iuv = load i16, ptr %i.iuu, align 2, !tbaa !269, !noalias !694
@@ -4081,7 +4081,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EtLb0EEEE16ExecuteWithNullsI
   %i.iuy = getelementptr inbounds nuw i8, ptr %i.ima, i64 %i.iux
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.iut, ptr noundef nonnull align 1 dereferenceable(16) %i.iuy, i64 16, i1 false), !noalias !694
   %i.iuz = or disjoint i64 %.0.i1833.i25.i969, 1  ; 2 uses
-  %i.iva = shl nsw i64 %i.iuz, 4
+  %i.iva = shl nuw nsw i64 %i.iuz, 4
   %i.ivb = getelementptr inbounds nuw i8, ptr %i.imb, i64 %i.iva
   %i.ivc = getelementptr inbounds nuw [2 x i8], ptr %i.imj, i64 %i.iuz
   %i.ivd = load i16, ptr %i.ivc, align 2, !tbaa !269, !noalias !694
@@ -4484,7 +4484,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EjLb0EEEE16ExecuteWithNullsI
 .lr.ph.i86.i907:                                  ; preds = %.lr.ph.i86.i907, %.lr.ph.i86.i907.preheader.new
   %.0.i1833.i87.i908 = phi i64 [ 0, %.lr.ph.i86.i907.preheader.new ], [ %i.jex, %.lr.ph.i86.i907 ] ; 4 uses
   %niter3358 = phi i64 [ 0, %.lr.ph.i86.i907.preheader.new ], [ %niter3358.next.1, %.lr.ph.i86.i907 ]
-  %i.jei = shl nsw i64 %.0.i1833.i87.i908, 4
+  %i.jei = shl nuw nsw i64 %.0.i1833.i87.i908, 4
   %i.jej = getelementptr inbounds nuw i8, ptr %i.ivr, i64 %i.jei
   %i.jek = getelementptr inbounds nuw [4 x i8], ptr %i.ivz, i64 %.0.i1833.i87.i908
   %i.jel = load i32, ptr %i.jek, align 4, !tbaa !3, !noalias !703
@@ -4493,7 +4493,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EjLb0EEEE16ExecuteWithNullsI
   %i.jeo = getelementptr inbounds nuw i8, ptr %i.ivq, i64 %i.jen
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jej, ptr noundef nonnull align 1 dereferenceable(16) %i.jeo, i64 16, i1 false), !noalias !703
   %i.jep = or disjoint i64 %.0.i1833.i87.i908, 1  ; 2 uses
-  %i.jeq = shl nsw i64 %i.jep, 4
+  %i.jeq = shl nuw nsw i64 %i.jep, 4
   %i.jer = getelementptr inbounds nuw i8, ptr %i.ivr, i64 %i.jeq
   %i.jes = getelementptr inbounds nuw [4 x i8], ptr %i.ivz, i64 %i.jep
   %i.jet = load i32, ptr %i.jes, align 4, !tbaa !3, !noalias !703
@@ -4896,7 +4896,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EmLb0EEEE16ExecuteWithNullsI
 .lr.ph.i148.i1090:                                ; preds = %.lr.ph.i148.i1090, %.lr.ph.i148.i1090.preheader.new
   %.0.i1833.i149.i1091 = phi i64 [ 0, %.lr.ph.i148.i1090.preheader.new ], [ %i.jod, %.lr.ph.i148.i1090 ] ; 4 uses
   %niter3391 = phi i64 [ 0, %.lr.ph.i148.i1090.preheader.new ], [ %niter3391.next.1, %.lr.ph.i148.i1090 ]
-  %i.jnq = shl nsw i64 %.0.i1833.i149.i1091, 4
+  %i.jnq = shl nuw nsw i64 %.0.i1833.i149.i1091, 4
   %i.jnr = getelementptr inbounds nuw i8, ptr %i.jfh, i64 %i.jnq
   %i.jns = getelementptr inbounds nuw [8 x i8], ptr %i.jfp, i64 %.0.i1833.i149.i1091
   %i.jnt = load i64, ptr %i.jns, align 8, !tbaa !130, !noalias !712
@@ -4904,7 +4904,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EmLb0EEEE16ExecuteWithNullsI
   %i.jnv = getelementptr inbounds nuw i8, ptr %i.jfg, i64 %i.jnu
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jnr, ptr noundef nonnull align 1 dereferenceable(16) %i.jnv, i64 16, i1 false), !noalias !712
   %i.jnw = or disjoint i64 %.0.i1833.i149.i1091, 1 ; 2 uses
-  %i.jnx = shl nsw i64 %i.jnw, 4
+  %i.jnx = shl nuw nsw i64 %i.jnw, 4
   %i.jny = getelementptr inbounds nuw i8, ptr %i.jfh, i64 %i.jnx
   %i.jnz = getelementptr inbounds nuw [8 x i8], ptr %i.jfp, i64 %i.jnw
   %i.joa = load i64, ptr %i.jnz, align 8, !tbaa !130, !noalias !712
@@ -4924,7 +4924,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i149.i1091.epil.init = phi i64 [ 0, %.lr.ph.i148.i1090.preheader ], [ %i.jod, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod3389 = trunc i64 %i.jfj to i1
   call void @llvm.assume(i1 %lcmp.mod3389)
-  %i.joe = shl nsw i64 %.0.i1833.i149.i1091.epil.init, 4
+  %i.joe = shl nuw nsw i64 %.0.i1833.i149.i1091.epil.init, 4
   %i.jof = getelementptr inbounds nuw i8, ptr %i.jfh, i64 %i.joe
   %i.jog = getelementptr inbounds nuw [8 x i8], ptr %i.jfp, i64 %.0.i1833.i149.i1091.epil.init
   %i.joh = load i64, ptr %i.jog, align 8, !tbaa !130, !noalias !712
@@ -4941,7 +4941,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i.i1030.epil.init = phi i64 [ 0, %.lr.ph.i.i1029.preheader ], [ %i.ilr, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3266.unr-lcssa ] ; 2 uses
   %lcmp.mod3378 = trunc i64 %i.icn to i1
   call void @llvm.assume(i1 %lcmp.mod3378)
-  %i.jok = shl nsw i64 %.0.i1833.i.i1030.epil.init, 4
+  %i.jok = shl nuw nsw i64 %.0.i1833.i.i1030.epil.init, 4
   %i.jol = getelementptr inbounds nuw i8, ptr %i.icl, i64 %i.jok
   %i.jom = getelementptr inbounds nuw i8, ptr %i.ict, i64 %.0.i1833.i.i1030.epil.init
   %i.jon = load i8, ptr %i.jom, align 1, !tbaa !98, !noalias !685
@@ -4959,7 +4959,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i25.i969.epil.init = phi i64 [ 0, %.lr.ph.i24.i968.preheader ], [ %i.ivh, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3274.unr-lcssa ] ; 2 uses
   %lcmp.mod3367 = trunc i64 %i.imd to i1
   call void @llvm.assume(i1 %lcmp.mod3367)
-  %i.jor = shl nsw i64 %.0.i1833.i25.i969.epil.init, 4
+  %i.jor = shl nuw nsw i64 %.0.i1833.i25.i969.epil.init, 4
   %i.jos = getelementptr inbounds nuw i8, ptr %i.imb, i64 %i.jor
   %i.jot = getelementptr inbounds nuw [2 x i8], ptr %i.imj, i64 %.0.i1833.i25.i969.epil.init
   %i.jou = load i16, ptr %i.jot, align 2, !tbaa !269, !noalias !694
@@ -4977,7 +4977,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i87.i908.epil.init = phi i64 [ 0, %.lr.ph.i86.i907.preheader ], [ %i.jex, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3282.unr-lcssa ] ; 2 uses
   %lcmp.mod3356 = trunc i64 %i.ivt to i1
   call void @llvm.assume(i1 %lcmp.mod3356)
-  %i.joy = shl nsw i64 %.0.i1833.i87.i908.epil.init, 4
+  %i.joy = shl nuw nsw i64 %.0.i1833.i87.i908.epil.init, 4
   %i.joz = getelementptr inbounds nuw i8, ptr %i.ivr, i64 %i.joy
   %i.jpa = getelementptr inbounds nuw [4 x i8], ptr %i.ivz, i64 %.0.i1833.i87.i908.epil.init
   %i.jpb = load i32, ptr %i.jpa, align 4, !tbaa !3, !noalias !703
@@ -5380,7 +5380,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EhLb0EEEE16ExecuteWithNullsI
 .lr.ph.i.i1274:                                   ; preds = %.lr.ph.i.i1274, %.lr.ph.i.i1274.preheader.new
   %.0.i1833.i.i1275 = phi i64 [ 0, %.lr.ph.i.i1274.preheader.new ], [ %i.jzh, %.lr.ph.i.i1274 ] ; 4 uses
   %niter3336 = phi i64 [ 0, %.lr.ph.i.i1274.preheader.new ], [ %niter3336.next.1, %.lr.ph.i.i1274 ]
-  %i.jys = shl nsw i64 %.0.i1833.i.i1275, 5
+  %i.jys = shl nuw nsw i64 %.0.i1833.i.i1275, 5
   %i.jyt = getelementptr inbounds nuw i8, ptr %i.jqb, i64 %i.jys
   %i.jyu = getelementptr inbounds nuw i8, ptr %i.jqj, i64 %.0.i1833.i.i1275
   %i.jyv = load i8, ptr %i.jyu, align 1, !tbaa !98, !noalias !725
@@ -5389,7 +5389,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EhLb0EEEE16ExecuteWithNullsI
   %i.jyy = getelementptr inbounds nuw i8, ptr %i.jqa, i64 %i.jyx
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.jyt, ptr noundef nonnull align 1 dereferenceable(32) %i.jyy, i64 32, i1 false), !noalias !725
   %i.jyz = or disjoint i64 %.0.i1833.i.i1275, 1   ; 2 uses
-  %i.jza = shl nsw i64 %i.jyz, 5
+  %i.jza = shl nuw nsw i64 %i.jyz, 5
   %i.jzb = getelementptr inbounds nuw i8, ptr %i.jqb, i64 %i.jza
   %i.jzc = getelementptr inbounds nuw i8, ptr %i.jqj, i64 %i.jyz
   %i.jzd = load i8, ptr %i.jzc, align 1, !tbaa !98, !noalias !725
@@ -5792,7 +5792,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EtLb0EEEE16ExecuteWithNullsI
 .lr.ph.i24.i1213:                                 ; preds = %.lr.ph.i24.i1213, %.lr.ph.i24.i1213.preheader.new
   %.0.i1833.i25.i1214 = phi i64 [ 0, %.lr.ph.i24.i1213.preheader.new ], [ %i.kix, %.lr.ph.i24.i1213 ] ; 4 uses
   %niter3325 = phi i64 [ 0, %.lr.ph.i24.i1213.preheader.new ], [ %niter3325.next.1, %.lr.ph.i24.i1213 ]
-  %i.kii = shl nsw i64 %.0.i1833.i25.i1214, 5
+  %i.kii = shl nuw nsw i64 %.0.i1833.i25.i1214, 5
   %i.kij = getelementptr inbounds nuw i8, ptr %i.jzr, i64 %i.kii
   %i.kik = getelementptr inbounds nuw [2 x i8], ptr %i.jzz, i64 %.0.i1833.i25.i1214
   %i.kil = load i16, ptr %i.kik, align 2, !tbaa !269, !noalias !734
@@ -5801,7 +5801,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EtLb0EEEE16ExecuteWithNullsI
   %i.kio = getelementptr inbounds nuw i8, ptr %i.jzq, i64 %i.kin
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.kij, ptr noundef nonnull align 1 dereferenceable(32) %i.kio, i64 32, i1 false), !noalias !734
   %i.kip = or disjoint i64 %.0.i1833.i25.i1214, 1 ; 2 uses
-  %i.kiq = shl nsw i64 %i.kip, 5
+  %i.kiq = shl nuw nsw i64 %i.kip, 5
   %i.kir = getelementptr inbounds nuw i8, ptr %i.jzr, i64 %i.kiq
   %i.kis = getelementptr inbounds nuw [2 x i8], ptr %i.jzz, i64 %i.kip
   %i.kit = load i16, ptr %i.kis, align 2, !tbaa !269, !noalias !734
@@ -6204,7 +6204,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EjLb0EEEE16ExecuteWithNullsI
 .lr.ph.i86.i1152:                                 ; preds = %.lr.ph.i86.i1152, %.lr.ph.i86.i1152.preheader.new
   %.0.i1833.i87.i1153 = phi i64 [ 0, %.lr.ph.i86.i1152.preheader.new ], [ %i.ksn, %.lr.ph.i86.i1152 ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.i86.i1152.preheader.new ], [ %niter.next.1, %.lr.ph.i86.i1152 ]
-  %i.kry = shl nsw i64 %.0.i1833.i87.i1153, 5
+  %i.kry = shl nuw nsw i64 %.0.i1833.i87.i1153, 5
   %i.krz = getelementptr inbounds nuw i8, ptr %i.kjh, i64 %i.kry
   %i.ksa = getelementptr inbounds nuw [4 x i8], ptr %i.kjp, i64 %.0.i1833.i87.i1153
   %i.ksb = load i32, ptr %i.ksa, align 4, !tbaa !3, !noalias !743
@@ -6213,7 +6213,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EjLb0EEEE16ExecuteWithNullsI
   %i.kse = getelementptr inbounds nuw i8, ptr %i.kjg, i64 %i.ksd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.krz, ptr noundef nonnull align 1 dereferenceable(32) %i.kse, i64 32, i1 false), !noalias !743
   %i.ksf = or disjoint i64 %.0.i1833.i87.i1153, 1 ; 2 uses
-  %i.ksg = shl nsw i64 %i.ksf, 5
+  %i.ksg = shl nuw nsw i64 %i.ksf, 5
   %i.ksh = getelementptr inbounds nuw i8, ptr %i.kjh, i64 %i.ksg
   %i.ksi = getelementptr inbounds nuw [4 x i8], ptr %i.kjp, i64 %i.ksf
   %i.ksj = load i32, ptr %i.ksi, align 4, !tbaa !3, !noalias !743
@@ -6616,7 +6616,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EmLb0EEEE16ExecuteWithNullsI
 .lr.ph.i148.i1335:                                ; preds = %.lr.ph.i148.i1335, %.lr.ph.i148.i1335.preheader.new
   %.0.i1833.i149.i1336 = phi i64 [ 0, %.lr.ph.i148.i1335.preheader.new ], [ %i.lbt, %.lr.ph.i148.i1335 ] ; 4 uses
   %niter3347 = phi i64 [ 0, %.lr.ph.i148.i1335.preheader.new ], [ %niter3347.next.1, %.lr.ph.i148.i1335 ]
-  %i.lbg = shl nsw i64 %.0.i1833.i149.i1336, 5
+  %i.lbg = shl nuw nsw i64 %.0.i1833.i149.i1336, 5
   %i.lbh = getelementptr inbounds nuw i8, ptr %i.ksx, i64 %i.lbg
   %i.lbi = getelementptr inbounds nuw [8 x i8], ptr %i.ktf, i64 %.0.i1833.i149.i1336
   %i.lbj = load i64, ptr %i.lbi, align 8, !tbaa !130, !noalias !752
@@ -6624,7 +6624,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EmLb0EEEE16ExecuteWithNullsI
   %i.lbl = getelementptr inbounds nuw i8, ptr %i.ksw, i64 %i.lbk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.lbh, ptr noundef nonnull align 1 dereferenceable(32) %i.lbl, i64 32, i1 false), !noalias !752
   %i.lbm = or disjoint i64 %.0.i1833.i149.i1336, 1 ; 2 uses
-  %i.lbn = shl nsw i64 %i.lbm, 5
+  %i.lbn = shl nuw nsw i64 %i.lbm, 5
   %i.lbo = getelementptr inbounds nuw i8, ptr %i.ksx, i64 %i.lbn
   %i.lbp = getelementptr inbounds nuw [8 x i8], ptr %i.ktf, i64 %i.lbm
   %i.lbq = load i64, ptr %i.lbp, align 8, !tbaa !130, !noalias !752
@@ -6644,7 +6644,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i149.i1336.epil.init = phi i64 [ 0, %.lr.ph.i148.i1335.preheader ], [ %i.lbt, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod3345 = trunc i64 %i.ksz to i1
   call void @llvm.assume(i1 %lcmp.mod3345)
-  %i.lbu = shl nsw i64 %.0.i1833.i149.i1336.epil.init, 5
+  %i.lbu = shl nuw nsw i64 %.0.i1833.i149.i1336.epil.init, 5
   %i.lbv = getelementptr inbounds nuw i8, ptr %i.ksx, i64 %i.lbu
   %i.lbw = getelementptr inbounds nuw [8 x i8], ptr %i.ktf, i64 %.0.i1833.i149.i1336.epil.init
   %i.lbx = load i64, ptr %i.lbw, align 8, !tbaa !130, !noalias !752
@@ -6661,7 +6661,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i.i1275.epil.init = phi i64 [ 0, %.lr.ph.i.i1274.preheader ], [ %i.jzh, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3297.unr-lcssa ] ; 2 uses
   %lcmp.mod3334 = trunc i64 %i.jqd to i1
   call void @llvm.assume(i1 %lcmp.mod3334)
-  %i.lca = shl nsw i64 %.0.i1833.i.i1275.epil.init, 5
+  %i.lca = shl nuw nsw i64 %.0.i1833.i.i1275.epil.init, 5
   %i.lcb = getelementptr inbounds nuw i8, ptr %i.jqb, i64 %i.lca
   %i.lcc = getelementptr inbounds nuw i8, ptr %i.jqj, i64 %.0.i1833.i.i1275.epil.init
   %i.lcd = load i8, ptr %i.lcc, align 1, !tbaa !98, !noalias !725
@@ -6679,7 +6679,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i25.i1214.epil.init = phi i64 [ 0, %.lr.ph.i24.i1213.preheader ], [ %i.kix, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3305.unr-lcssa ] ; 2 uses
   %lcmp.mod3323 = trunc i64 %i.jzt to i1
   call void @llvm.assume(i1 %lcmp.mod3323)
-  %i.lch = shl nsw i64 %.0.i1833.i25.i1214.epil.init, 5
+  %i.lch = shl nuw nsw i64 %.0.i1833.i25.i1214.epil.init, 5
   %i.lci = getelementptr inbounds nuw i8, ptr %i.jzr, i64 %i.lch
   %i.lcj = getelementptr inbounds nuw [2 x i8], ptr %i.jzz, i64 %.0.i1833.i25.i1214.epil.init
   %i.lck = load i16, ptr %i.lcj, align 2, !tbaa !269, !noalias !734
@@ -6697,7 +6697,7 @@ _ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWi
   %.0.i1833.i87.i1153.epil.init = phi i64 [ 0, %.lr.ph.i86.i1152.preheader ], [ %i.ksn, %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3313.unr-lcssa ] ; 2 uses
   %lcmp.mod3314 = trunc i64 %i.kjj to i1
   call void @llvm.assume(i1 %lcmp.mod3314)
-  %i.lco = shl nsw i64 %.0.i1833.i87.i1153.epil.init, 5
+  %i.lco = shl nuw nsw i64 %.0.i1833.i87.i1153.epil.init, 5
   %i.lcp = getelementptr inbounds nuw i8, ptr %i.kjh, i64 %i.lco
   %i.lcq = getelementptr inbounds nuw [4 x i8], ptr %i.kjp, i64 %.0.i1833.i87.i1153.epil.init
   %i.lcr = load i32, ptr %i.lcq, align 4, !tbaa !3, !noalias !743

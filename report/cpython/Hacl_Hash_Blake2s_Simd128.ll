@@ -201,10 +201,10 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
-  %i.b = shl i64 %indvars.iv.next.i, 6
+  %i.b = shl nuw nsw i64 %indvars.iv.next.i, 6
   %i.c = and i64 %i.b, 4294967232
   %i.d = add i64 %i.c, %1
-  %i.e = shl i64 %indvars.iv.i, 6
+  %i.e = shl nuw nsw i64 %indvars.iv.i, 6
   %i.f = and i64 %i.e, 4294967232
   %i.g = getelementptr i8, ptr %2, i64 %i.f
   call fastcc void @update_block(ptr noundef nonnull %i.a, ptr noundef %0, i1 noundef zeroext false, i1 noundef zeroext false, i64 noundef %i.d, ptr noundef readonly %i.g)
@@ -607,9 +607,9 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i191:                                      ; preds = %.lr.ph.i191, %.lr.ph.preheader.i
   %indvars.iv.i192 = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i193, %.lr.ph.i191 ] ; 2 uses
   %indvars.iv.next.i193 = add nuw nsw i64 %indvars.iv.i192, 1 ; 3 uses
-  %i.u = shl i64 %indvars.iv.next.i193, 6
+  %i.u = shl nuw nsw i64 %indvars.iv.next.i193, 6
   %i.v = add i64 %i.u, %.sroa.3145.0.copyload
-  %i.w = shl i64 %indvars.iv.i192, 6
+  %i.w = shl nuw nsw i64 %indvars.iv.i192, 6
   %i.x = getelementptr i8, ptr %1, i64 %i.w
   tail call fastcc void @update_block(ptr noundef %.sroa.4118.0.copyload, ptr noundef %.sroa.5119.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 noundef %i.v, ptr noundef readonly %i.x)
   %exitcond.not.i194 = icmp eq i64 %indvars.iv.next.i193, %wide.trip.count.i
@@ -680,9 +680,9 @@ _Py_LibHacl_Hacl_Hash_Blake2s_Simd128_update_multi.exit201: ; preds = %.lr.ph.i1
 .lr.ph.i205:                                      ; preds = %.lr.ph.i205, %.lr.ph.preheader.i203
   %indvars.iv.i206 = phi i64 [ 0, %.lr.ph.preheader.i203 ], [ %indvars.iv.next.i207, %.lr.ph.i205 ] ; 2 uses
   %indvars.iv.next.i207 = add nuw nsw i64 %indvars.iv.i206, 1 ; 3 uses
-  %i.aw = shl i64 %indvars.iv.next.i207, 6
+  %i.aw = shl nuw nsw i64 %indvars.iv.next.i207, 6
   %i.ax = add i64 %i.aw, %i.ad
-  %i.ay = shl i64 %indvars.iv.i206, 6
+  %i.ay = shl nuw nsw i64 %indvars.iv.i206, 6
   %i.az = getelementptr i8, ptr %i.ab, i64 %i.ay
   tail call fastcc void @update_block(ptr noundef %.sroa.447.0.copyload, ptr noundef %.sroa.5.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 noundef %i.ax, ptr noundef readonly %i.az)
   %exitcond.not.i208 = icmp eq i64 %indvars.iv.next.i207, %wide.trip.count.i204
@@ -969,10 +969,10 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ] ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses
-  %i.o = shl i64 %indvars.iv.next.i.i, 6
+  %i.o = shl nuw nsw i64 %indvars.iv.next.i.i, 6
   %i.p = and i64 %i.o, 4294967232
   %i.q = add nuw nsw i64 %i.p, 64
-  %i.r = shl i64 %indvars.iv.i.i, 6
+  %i.r = shl nuw nsw i64 %indvars.iv.i.i, 6
   %i.s = and i64 %i.r, 4294967232
   %i.t = getelementptr i8, ptr %5, i64 %i.s
   call fastcc void @update_block(ptr noundef nonnull %0, ptr noundef nonnull %1, i1 noundef zeroext false, i1 noundef zeroext false, i64 noundef %i.q, ptr noundef readonly %i.t)
@@ -1013,9 +1013,9 @@ bb.d:                                             ; preds = %bb.a
 .lr.ph.i.i21:                                     ; preds = %.lr.ph.i.i21, %.lr.ph.preheader.i.i19
   %indvars.iv.i.i22 = phi i64 [ 0, %.lr.ph.preheader.i.i19 ], [ %indvars.iv.next.i.i23, %.lr.ph.i.i21 ] ; 2 uses
   %indvars.iv.next.i.i23 = add nuw nsw i64 %indvars.iv.i.i22, 1 ; 3 uses
-  %i.ag = shl i64 %indvars.iv.next.i.i23, 6
+  %i.ag = shl nuw nsw i64 %indvars.iv.next.i.i23, 6
   %i.ah = and i64 %i.ag, 4294967232
-  %i.ai = shl i64 %indvars.iv.i.i22, 6
+  %i.ai = shl nuw nsw i64 %indvars.iv.i.i22, 6
   %i.aj = and i64 %i.ai, 4294967232
   %i.ak = getelementptr i8, ptr %5, i64 %i.aj
   tail call fastcc void @update_block(ptr noundef nonnull %0, ptr noundef nonnull %1, i1 noundef zeroext false, i1 noundef zeroext false, i64 noundef %i.ah, ptr noundef readonly %i.ak)

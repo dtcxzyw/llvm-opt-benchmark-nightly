@@ -203,7 +203,7 @@ vector.scevcheck:                                 ; preds = %.preheader.lr.ph
 
 vector.ph1231:                                    ; preds = %vector.scevcheck
   %n.vec1233 = and i64 %i.nl, 8589934588          ; 4 uses
-  %i.oy = trunc i64 %n.vec1233 to i32             ; 2 uses
+  %i.oy = trunc i64 %n.vec1233 to i32
   %i.oz = mul i32 %i.oy, 3
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.op, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
@@ -231,32 +231,30 @@ middle.block1238:                                 ; preds = %vector.body1234
 .preheader.preheader:                             ; preds = %vector.scevcheck, %.preheader.lr.ph, %middle.block1238
   %.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.preheader.lr.ph ], [ %n.vec1233, %middle.block1238 ]
   %.098722.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.preheader.lr.ph ], [ %i.oz, %middle.block1238 ]
-  %.0100721.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.preheader.lr.ph ], [ %i.oy, %middle.block1238 ]
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %i.ph = phi i64 [ %23, %.preheader ], [ %.ph, %.preheader.preheader ]
-  %.098722 = phi i32 [ %i.pu, %.preheader ], [ %.098722.ph, %.preheader.preheader ] ; 4 uses
-  %.0100721 = phi i32 [ %22, %.preheader ], [ %.0100721.ph, %.preheader.preheader ]
+  %i.ph = phi i64 [ %indvars.iv.next, %.preheader ], [ %.ph, %.preheader.preheader ] ; 2 uses
+  %.0100721 = phi i32 [ %i.pu, %.preheader ], [ %.098722.ph, %.preheader.preheader ] ; 4 uses
   %i.pi = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0467.0.ph.lcssa575950, i64 %i.ph
   %i.pj = load i32, ptr %i.pi, align 4, !tbaa !3
   %i.pk = sitofp i32 %i.pj to float
   %i.pl = fdiv float %i.pk, %i.op                 ; 3 uses
-  %i.pm = zext i32 %.098722 to i64
+  %i.pm = zext i32 %.0100721 to i64
   %i.pn = getelementptr inbounds nuw [4 x i8], ptr %i.os, i64 %i.pm
   store float %i.pl, ptr %i.pn, align 4, !tbaa !121
-  %i.po = add i32 %.098722, 1
+  %i.po = add i32 %.0100721, 1
   %i.pp = zext i32 %i.po to i64
   %i.pq = getelementptr inbounds nuw [4 x i8], ptr %i.os, i64 %i.pp
   store float %i.pl, ptr %i.pq, align 4, !tbaa !121
-  %i.pr = add i32 %.098722, 2
+  %i.pr = add i32 %.0100721, 2
   %i.ps = zext i32 %i.pr to i64
   %i.pt = getelementptr inbounds nuw [4 x i8], ptr %i.os, i64 %i.ps
   store float %i.pl, ptr %i.pt, align 4, !tbaa !121
-  %i.pu = add i32 %.098722, 3
-  %22 = add i32 %.0100721, 1                      ; 2 uses
-  %23 = zext i32 %22 to i64                       ; 2 uses
-  %i.pv = icmp ugt i64 %i.nl, %23
+  %i.pu = add i32 %.0100721, 3
+  %indvars.iv.next = add i64 %i.ph, 1             ; 2 uses
+  %22 = and i64 %indvars.iv.next, 4294967295
+  %i.pv = icmp ugt i64 %i.nl, %22
   br i1 %i.pv, label %.preheader, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110IsIdentityERKSt6vectorIiSaIiEENS_8BitDepthE.exit.thread, !llvm.loop !124
 
 bb.dv:                                            ; preds = %bb.du

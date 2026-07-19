@@ -113,14 +113,14 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 224
   %i.g = load ptr, ptr %i.f, align 8
+  %wide.trip.count81 = zext i32 %i.b to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph41, %._crit_edge
-  %.02739 = phi i32 [ 0, %.lr.ph41 ], [ %3, %._crit_edge ] ; 2 uses
-  %2 = zext i32 %.02739 to i64                    ; 2 uses
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %2
+  %indvars.iv78 = phi i64 [ 0, %.lr.ph41 ], [ %indvars.iv.next79, %._crit_edge ] ; 3 uses
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv78
   %i.i = load ptr, ptr %i.h, align 8              ; 18 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %2
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv78
   %i.k = load ptr, ptr %i.j, align 8              ; 18 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 1028
   %i.m = load i32, ptr %i.l, align 4              ; 3 uses
@@ -293,8 +293,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.de, label %.thread, label %bb.r
 
 ._crit_edge:                                      ; preds = %bb.r, %.preheader
-  %3 = add nuw i32 %.02739, 1                     ; 2 uses
-  %exitcond78.not = icmp eq i32 %3, %i.b
+  %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 1 ; 2 uses
+  %exitcond78.not = icmp eq i64 %indvars.iv.next79, %wide.trip.count81
   br i1 %exitcond78.not, label %.thread, label %bb.b, !llvm.loop !5
 
 .thread:                                          ; preds = %._crit_edge, %bb.b, %_ZNK12aiMatrix4x4tIfEneERKS0_.exit, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.s, %bb.t, %bb.a

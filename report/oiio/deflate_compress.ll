@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e
   %.08.i.i.i = phi i32 [ %i.bp, %.lr.ph.preheader.i.i.i ], [ %i.cn, %heapify_subtree.exit.i.i.i ]
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv.i.i.i
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !3  ; 2 uses
-  %i.bu = shl nuw i64 %indvars.iv.i.i.i, 1        ; 2 uses
-  %.not27.i.i.i.i = icmp ugt i64 %i.bu, %i.bq
+  %i.bu = shl nuw nsw i64 %indvars.iv.i.i.i, 1    ; 2 uses
+  %.not27.i.i.i.i = icmp samesign ugt i64 %i.bu, %i.bq
   br i1 %.not27.i.i.i.i, label %heapify_subtree.exit.i.i.i, label %.lr.ph.i.preheader.i.i.i
 
 .lr.ph.i.preheader.i.i.i:                         ; preds = %.lr.ph.i.i.i

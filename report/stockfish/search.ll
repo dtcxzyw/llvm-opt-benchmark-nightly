@@ -204,7 +204,7 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.7, %vector.body ] ; 9 uses
-  %i.c = shl nuw i64 %index, 1
+  %i.c = shl nuw nsw i64 %index, 1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %i.c ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 64
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 128
@@ -293,7 +293,7 @@ _ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT
 
 vector.body163:                                   ; preds = %vector.body163, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.i
   %index164 = phi i64 [ 0, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.i ], [ %index.next165.7, %vector.body163 ] ; 9 uses
-  %i.ar = shl nuw i64 %index164, 1
+  %i.ar = shl nuw nsw i64 %index164, 1
   %i.as = getelementptr inbounds nuw i8, ptr %.0.ptr10.1.i, i64 %i.ar ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 64
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 128
@@ -696,7 +696,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit217: ; preds = %_Z
 
 vector.body480:                                   ; preds = %vector.body480, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit217
   %index481 = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit217 ], [ %index.next482.7, %vector.body480 ] ; 9 uses
-  %i.dg = shl nuw i64 %index481, 1
+  %i.dg = shl nuw nsw i64 %index481, 1
   %i.dh = getelementptr inbounds nuw i8, ptr %i.df, i64 %i.dg ; 4 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 64
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 128
@@ -785,7 +785,7 @@ _ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT
 
 vector.body485:                                   ; preds = %vector.body485, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.i
   %index486 = phi i64 [ 0, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.i ], [ %index.next487.7, %vector.body485 ] ; 9 uses
-  %i.ev = shl nuw i64 %index486, 1
+  %i.ev = shl nuw nsw i64 %index486, 1
   %i.ew = getelementptr inbounds nuw i8, ptr %.0.ptr10.1.i, i64 %i.ev ; 4 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 64
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ew, i64 128
@@ -874,7 +874,7 @@ _ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT
 
 vector.body490:                                   ; preds = %vector.body490, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.1.i
   %index491 = phi i64 [ 0, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.1.i ], [ %index.next492.7, %vector.body490 ] ; 9 uses
-  %i.gk = shl nuw i64 %index491, 1
+  %i.gk = shl nuw nsw i64 %index491, 1
   %i.gl = getelementptr inbounds nuw i8, ptr %.0.ptr10.2.i, i64 %i.gk ; 4 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 64
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gl, i64 128
@@ -963,7 +963,7 @@ _ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT
 
 vector.body495:                                   ; preds = %vector.body495, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.2.i
   %index496 = phi i64 [ 0, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.2.i ], [ %index.next497.7, %vector.body495 ] ; 9 uses
-  %i.hz = shl nuw i64 %index496, 1
+  %i.hz = shl nuw nsw i64 %index496, 1
   %i.ia = getelementptr inbounds nuw i8, ptr %.0.ptr10.3.i, i64 %i.hz ; 4 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 64
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ia, i64 128
@@ -1052,7 +1052,7 @@ _ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT
 
 vector.body500:                                   ; preds = %vector.body500, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.3.i
   %index501 = phi i64 [ 0, %_ZN9Stockfish10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm65536EJEE4fillIiEEvRKT_.exit.3.i ], [ %index.next502.7, %vector.body500 ] ; 9 uses
-  %i.jo = shl nuw i64 %index501, 1
+  %i.jo = shl nuw nsw i64 %index501, 1
   %i.jp = getelementptr inbounds nuw i8, ptr %.0.ptr10.4.i, i64 %i.jo ; 4 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 64
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jp, i64 128

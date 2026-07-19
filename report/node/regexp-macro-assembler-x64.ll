@@ -201,7 +201,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205.peel1061: ; preds = %bb.z, %bb
   br i1 %i.ct, label %.peel.next.peel.newph, label %.loopexit
 
 .peel.next.peel.newph:                            ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205.peel1061, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205
-  %indvars.iv825 = phi i64 [ %indvars.iv.next826, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205 ], [ 4, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205.peel1061 ] ; 5 uses
+  %indvars.iv825 = phi i64 [ %indvars.iv.next826, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205 ], [ 4, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205.peel1061 ] ; 6 uses
   %i.cu = load i32, ptr %i.u, align 4
   %i.cv = sext i32 %i.cu to i64
   %.not.i338 = icmp slt i64 %indvars.iv825, %i.cv
@@ -229,8 +229,8 @@ bb.ac:                                            ; preds = %bb.ab
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit205: ; preds = %bb.ab, %bb.ac
-  %i.db = shl nsw i64 %indvars.iv825, 2           ; 3 uses
-  %i.dc = icmp samesign ult i64 %i.db, 128        ; 3 uses
+  %i.db = shl nuw nsw i64 %indvars.iv825, 2       ; 2 uses
+  %i.dc = icmp samesign ult i64 %indvars.iv825, 32 ; 3 uses
   %.sroa.19.sroa.18.0.extract.shift = and i64 %i.db, 4294967040
   %.sroa.19.sroa.18.sroa.0.0 = select i1 %i.dc, i64 0, i64 %.sroa.19.sroa.18.0.extract.shift
   %.sroa.10.0 = select i1 %i.dc, i64 4390912, i64 8585216
