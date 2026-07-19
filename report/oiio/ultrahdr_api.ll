@@ -201,11 +201,11 @@ bb.m:                                             ; preds = %.critedge188
   %i.aq = load ptr, ptr %i.j, align 8, !tbaa !81  ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !3
-  %.sroa.speculated359 = call i32 @llvm.smax.i32(i32 %i.as, i32 0) ; 5 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.au = load i32, ptr %i.at, align 8, !tbaa !35 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.an, i64 12
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !3
+  %.sroa.speculated359 = call i32 @llvm.smax.i32(i32 %i.as, i32 0) ; 5 uses
   %.sroa.speculated355 = call i32 @llvm.smin.i32(i32 %i.aw, i32 %i.au) ; 4 uses
   %.not179 = icmp sgt i32 %.sroa.speculated355, %.sroa.speculated359
   br i1 %.not179, label %bb.o, label %bb.n
@@ -222,11 +222,11 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.bb = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !3
-  %.sroa.speculated351 = call i32 @llvm.smax.i32(i32 %i.bc, i32 0) ; 5 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ap, i64 20
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !36 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.an, i64 20
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !3
+  %.sroa.speculated351 = call i32 @llvm.smax.i32(i32 %i.bc, i32 0) ; 5 uses
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.bg, i32 %i.be) ; 4 uses
   %.not180 = icmp sgt i32 %.sroa.speculated, %.sroa.speculated351
   br i1 %.not180, label %bb.q, label %bb.p

@@ -204,11 +204,11 @@ define dso_local void @report() local_unnamed_addr #1 {
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
-  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @frame_ctr, i64 8), align 8, !tbaa !4
-  %i.f = load i32, ptr @frame_ctr, align 16, !tbaa !4
-  %0 = load i32, ptr getelementptr inbounds nuw (i8, ptr @frame_ctr, i64 12), align 4, !tbaa !4
-  %1 = add nsw i32 %0, %i.f
-  %i.g = tail call noundef i32 @llvm.smax.i32(i32 %1, i32 1) ; 2 uses
+  %i.e = load i32, ptr @frame_ctr, align 16, !tbaa !4
+  %i.f = load i32, ptr getelementptr inbounds nuw (i8, ptr @frame_ctr, i64 12), align 4, !tbaa !4
+  %0 = add nsw i32 %i.f, %i.e
+  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @frame_ctr, i64 8), align 8, !tbaa !4
+  %i.g = tail call noundef i32 @llvm.smax.i32(i32 %0, i32 1) ; 2 uses
   %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @frame_ctr, i64 4), align 4, !tbaa !4 ; 3 uses
   %i.i = load ptr, ptr @stats, align 8, !tbaa !8  ; 66 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1360
@@ -611,7 +611,7 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
   %i.arj = getelementptr inbounds nuw i8, ptr %i.ari, i64 2056
   %i.ark = load i64, ptr %i.arj, align 8, !tbaa !205
   %i.arl = sitofp i64 %i.ark to float
-  %i.arm = sitofp i32 %i.e to float               ; 5 uses
+  %i.arm = sitofp i32 %1 to float                 ; 5 uses
   %i.arn = fdiv float %i.arl, %i.arm
   %i.aro = fpext float %i.arn to double
   %i.arp = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.arh, ptr noundef nonnull @.str.158, double noundef %i.aro) #23 ; 0 uses
