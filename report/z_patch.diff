@@ -1,0 +1,2249 @@
+diff --git a/llvm/include/llvm/Analysis/BranchProbabilityInfo.h b/llvm/include/llvm/Analysis/BranchProbabilityInfo.h
+index dfc0079724d52..970fd532a1485 100644
+--- a/llvm/include/llvm/Analysis/BranchProbabilityInfo.h
++++ b/llvm/include/llvm/Analysis/BranchProbabilityInfo.h
+@@ -27,8 +27,7 @@
+ namespace llvm {
+ 
+ class Function;
+-class Loop;
+-class LoopInfo;
++class CycleInfo;
+ class raw_ostream;
+ class DominatorTree;
+ class PostDominatorTree;
+@@ -110,11 +109,11 @@ class BranchProbabilityInfo {
+ public:
+   BranchProbabilityInfo() = default;
+ 
+-  BranchProbabilityInfo(const Function &F, const LoopInfo &LI,
++  BranchProbabilityInfo(const Function &F, const CycleInfo &CI,
+                         const TargetLibraryInfo *TLI = nullptr,
+                         DominatorTree *DT = nullptr,
+                         PostDominatorTree *PDT = nullptr) {
+-    calculate(F, LI, TLI, DT, PDT);
++    calculate(F, CI, TLI, DT, PDT);
+   }
+ 
+   LLVM_ABI bool invalidate(Function &, const PreservedAnalyses &PA,
+@@ -174,7 +173,7 @@ class BranchProbabilityInfo {
+     return IsLikely ? LikelyProb : LikelyProb.getCompl();
+   }
+ 
+-  LLVM_ABI void calculate(const Function &F, const LoopInfo &LI,
++  LLVM_ABI void calculate(const Function &F, const CycleInfo &CI,
+                           const TargetLibraryInfo *TLI, DominatorTree *DT,
+                           PostDominatorTree *PDT);
+ 
+diff --git a/llvm/include/llvm/Analysis/LazyBranchProbabilityInfo.h b/llvm/include/llvm/Analysis/LazyBranchProbabilityInfo.h
+index 0f8932f784881..6cd4528d05a64 100644
+--- a/llvm/include/llvm/Analysis/LazyBranchProbabilityInfo.h
++++ b/llvm/include/llvm/Analysis/LazyBranchProbabilityInfo.h
+@@ -20,8 +20,8 @@
+ #include "llvm/Pass.h"
+ 
+ namespace llvm {
++class CycleInfo;
+ class Function;
+-class LoopInfo;
+ class TargetLibraryInfo;
+ 
+ /// This is an alternative analysis pass to
+@@ -41,7 +41,7 @@ class TargetLibraryInfo;
+ ///   LazyBranchProbabilityInfoPass::getLazyBPIAnalysisUsage(AU)
+ ///
+ /// 3. The computed BPI should be requested with
+-///    getAnalysis<LazyBranchProbabilityInfoPass>().getBPI() before LoopInfo
++///    getAnalysis<LazyBranchProbabilityInfoPass>().getBPI() before CycleInfo
+ ///    could be invalidated for example by changing the CFG.
+ ///
+ /// Note that it is expected that we wouldn't need this functionality for the
+@@ -54,15 +54,15 @@ class LLVM_ABI LazyBranchProbabilityInfoPass : public FunctionPass {
+   /// analysis without paying for the overhead if BPI doesn't end up being used.
+   class LazyBranchProbabilityInfo {
+   public:
+-    LazyBranchProbabilityInfo(const Function *F, const LoopInfo *LI,
++    LazyBranchProbabilityInfo(const Function *F, const CycleInfo *CI,
+                               const TargetLibraryInfo *TLI)
+-        : F(F), LI(LI), TLI(TLI) {}
++        : F(F), CI(CI), TLI(TLI) {}
+ 
+     /// Retrieve the BPI with the branch probabilities computed.
+     BranchProbabilityInfo &getCalculated() {
+       if (!Calculated) {
+-        assert(F && LI && "call setAnalysis");
+-        BPI.calculate(*F, *LI, TLI, nullptr, nullptr);
++        assert(F && CI && "call setAnalysis");
++        BPI.calculate(*F, *CI, TLI, nullptr, nullptr);
+         Calculated = true;
+       }
+       return BPI;
+@@ -76,7 +76,7 @@ class LLVM_ABI LazyBranchProbabilityInfoPass : public FunctionPass {
+     BranchProbabilityInfo BPI;
+     bool Calculated = false;
+     const Function *F;
+-    const LoopInfo *LI;
++    const CycleInfo *CI;
+     const TargetLibraryInfo *TLI;
+   };
+ 
+diff --git a/llvm/lib/Analysis/BranchProbabilityInfo.cpp b/llvm/lib/Analysis/BranchProbabilityInfo.cpp
+index 1b0a8b8e74f4a..cbf87da8f8a75 100644
+--- a/llvm/lib/Analysis/BranchProbabilityInfo.cpp
++++ b/llvm/lib/Analysis/BranchProbabilityInfo.cpp
+@@ -16,7 +16,7 @@
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/Analysis/ConstantFolding.h"
+-#include "llvm/Analysis/LoopInfo.h"
++#include "llvm/Analysis/CycleAnalysis.h"
+ #include "llvm/Analysis/PostDominators.h"
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+ #include "llvm/IR/Attributes.h"
+@@ -61,7 +61,7 @@ static cl::opt<std::string> PrintBranchProbFuncName(
+ 
+ INITIALIZE_PASS_BEGIN(BranchProbabilityInfoWrapperPass, "branch-prob",
+                       "Branch Probability Analysis", false, true)
+-INITIALIZE_PASS_DEPENDENCY(LoopInfoWrapperPass)
++INITIALIZE_PASS_DEPENDENCY(CycleInfoWrapperPass)
+ INITIALIZE_PASS_DEPENDENCY(TargetLibraryInfoWrapperPass)
+ INITIALIZE_PASS_DEPENDENCY(DominatorTreeWrapperPass)
+ INITIALIZE_PASS_DEPENDENCY(PostDominatorTreeWrapperPass)
+@@ -165,98 +165,24 @@ namespace {
+ class BPIConstruction {
+ public:
+   BPIConstruction(BranchProbabilityInfo &BPI) : BPI(BPI) {}
+-  void calculate(const Function &F, const LoopInfo &LI,
++  void calculate(const Function &F, const CycleInfo &CI,
+                  const TargetLibraryInfo *TLI, DominatorTree *DT,
+                  PostDominatorTree *PDT);
+ 
+ private:
+-  // Data structure to track SCCs for handling irreducible loops.
+-  class SccInfo {
+-    // Enum of types to classify basic blocks in SCC. Basic block belonging to
+-    // SCC is 'Inner' until it is either 'Header' or 'Exiting'. Note that a
+-    // basic block can be 'Header' and 'Exiting' at the same time.
+-    enum SccBlockType {
+-      Inner = 0x0,
+-      Header = 0x1,
+-      Exiting = 0x2,
+-    };
+-    // Map of basic blocks to SCC IDs they belong to. If basic block doesn't
+-    // belong to any SCC it is not in the map.
+-    using SccMap = DenseMap<const BasicBlock *, int>;
+-    // Each basic block in SCC is attributed with one or several types from
+-    // SccBlockType. Map value has uint32_t type (instead of SccBlockType)
+-    // since basic block may be for example "Header" and "Exiting" at the same
+-    // time and we need to be able to keep more than one value from
+-    // SccBlockType.
+-    using SccBlockTypeMap = DenseMap<const BasicBlock *, uint32_t>;
+-    // Vector containing classification of basic blocks for all  SCCs where i'th
+-    // vector element corresponds to SCC with ID equal to i.
+-    using SccBlockTypeMaps = std::vector<SccBlockTypeMap>;
+-
+-    SccMap SccNums;
+-    SccBlockTypeMaps SccBlocks;
+-
+-  public:
+-    explicit SccInfo(const Function &F);
+-
+-    /// If \p BB belongs to some SCC then ID of that SCC is returned, otherwise
+-    /// -1 is returned. If \p BB belongs to more than one SCC at the same time
+-    /// result is undefined.
+-    int getSCCNum(const BasicBlock *BB) const;
+-    /// Returns true if \p BB is a 'header' block in SCC with \p SccNum ID,
+-    /// false otherwise.
+-    bool isSCCHeader(const BasicBlock *BB, int SccNum) const {
+-      return getSccBlockType(BB, SccNum) & Header;
+-    }
+-    /// Returns true if \p BB is an 'exiting' block in SCC with \p SccNum ID,
+-    /// false otherwise.
+-    bool isSCCExitingBlock(const BasicBlock *BB, int SccNum) const {
+-      return getSccBlockType(BB, SccNum) & Exiting;
+-    }
+-    /// Fills in \p Enters vector with all such blocks that don't belong to
+-    /// SCC with \p SccNum ID but there is an edge to a block belonging to the
+-    /// SCC.
+-    void getSccEnterBlocks(int SccNum,
+-                           SmallVectorImpl<BasicBlock *> &Enters) const;
+-    /// Fills in \p Exits vector with all such blocks that don't belong to
+-    /// SCC with \p SccNum ID but there is an edge from a block belonging to the
+-    /// SCC.
+-    void getSccExitBlocks(int SccNum,
+-                          SmallVectorImpl<BasicBlock *> &Exits) const;
+-
+-  private:
+-    /// Returns \p BB's type according to classification given by SccBlockType
+-    /// enum. Please note that \p BB must belong to SSC with \p SccNum ID.
+-    uint32_t getSccBlockType(const BasicBlock *BB, int SccNum) const;
+-    /// Calculates \p BB's type and stores it in internal data structures for
+-    /// future use. Please note that \p BB must belong to SSC with \p SccNum ID.
+-    void calculateSccBlockType(const BasicBlock *BB, int SccNum);
+-  };
+-
+-  /// Pair of Loop and SCC ID number. Used to unify handling of normal and
+-  /// SCC based loop representations.
+-  using LoopData = std::pair<Loop *, int>;
+   /// Helper class to keep basic block along with its loop data information.
+   class LoopBlock {
+   public:
+-    explicit LoopBlock(const BasicBlock *BB, const LoopInfo &LI,
+-                       const SccInfo &SccI);
++    explicit LoopBlock(const BasicBlock *BB, const CycleInfo &CI)
++        : BB(BB), C(CI.getCycle(BB)) {}
+ 
+     const BasicBlock *getBlock() const { return BB; }
+     BasicBlock *getBlock() { return const_cast<BasicBlock *>(BB); }
+-    LoopData getLoopData() const { return LD; }
+-    Loop *getLoop() const { return LD.first; }
+-    int getSccNum() const { return LD.second; }
+-
+-    bool belongsToLoop() const { return getLoop() || getSccNum() != -1; }
+-    bool belongsToSameLoop(const LoopBlock &LB) const {
+-      return (LB.getLoop() && getLoop() == LB.getLoop()) ||
+-             (LB.getSccNum() != -1 && getSccNum() == LB.getSccNum());
+-    }
++    CycleRef getCycle() const { return C; }
+ 
+   private:
+     const BasicBlock *const BB = nullptr;
+-    LoopData LD = {nullptr, -1};
++    CycleRef C = CycleRef();
+   };
+ 
+   // Pair of LoopBlocks representing an edge from first to second block.
+@@ -264,7 +190,7 @@ class BPIConstruction {
+ 
+   /// Helper to construct LoopBlock for \p BB.
+   LoopBlock getLoopBlock(const BasicBlock *BB) const {
+-    return LoopBlock(BB, *LI, *SccI);
++    return LoopBlock(BB, *CI);
+   }
+ 
+   /// Returns true if destination block belongs to some loop and source block is
+@@ -278,24 +204,18 @@ class BPIConstruction {
+   /// Returns true if \p Edge is either enters to or exits from some loop, false
+   /// in all other cases.
+   bool isLoopEnteringExitingEdge(const LoopEdge &Edge) const;
+-  /// Returns true if source and destination blocks belongs to the same loop and
+-  /// destination block is loop header.
+-  bool isLoopBackEdge(const LoopEdge &Edge) const;
+   // Fills in \p Enters vector with all "enter" blocks to a loop \LB belongs to.
+   void getLoopEnterBlocks(const LoopBlock &LB,
+                           SmallVectorImpl<BasicBlock *> &Enters) const;
+-  // Fills in \p Exits vector with all "exit" blocks from a loop \LB belongs to.
+-  void getLoopExitBlocks(const LoopBlock &LB,
+-                         SmallVectorImpl<BasicBlock *> &Exits) const;
+ 
+   /// Returns estimated weight for \p BB. std::nullopt if \p BB has no estimated
+   /// weight.
+   std::optional<uint32_t> getEstimatedBlockWeight(const BasicBlock *BB) const;
+ 
+   /// Returns estimated weight to enter \p L. In other words it is weight of
+-  /// loop's header block not scaled by trip count. Returns std::nullopt if \p L
++  /// loop's header block not scaled by trip count. Returns std::nullopt if \p C
+   /// has no no estimated weight.
+-  std::optional<uint32_t> getEstimatedLoopWeight(const LoopData &L) const;
++  std::optional<uint32_t> getEstimatedLoopWeight(CycleRef C) const;
+ 
+   /// Return estimated weight for \p Edge. Returns std::nullopt if estimated
+   /// weight is unknown.
+@@ -341,133 +261,23 @@ class BPIConstruction {
+ 
+   BranchProbabilityInfo &BPI;
+ 
+-  const LoopInfo *LI = nullptr;
+-
+-  /// Keeps information about all SCCs in a function.
+-  std::unique_ptr<const SccInfo> SccI;
++  const CycleInfo *CI = nullptr;
+ 
+   /// Keeps mapping of a basic block to its estimated weight.
+   SmallDenseMap<const BasicBlock *, uint32_t> EstimatedBlockWeight;
+ 
+   /// Keeps mapping of a loop to estimated weight to enter the loop.
+-  SmallDenseMap<LoopData, uint32_t> EstimatedLoopWeight;
++  SmallDenseMap<CycleRef, uint32_t> EstimatedLoopWeight;
+ };
+ 
+-BPIConstruction::SccInfo::SccInfo(const Function &F) {
+-  // Record SCC numbers of blocks in the CFG to identify irreducible loops.
+-  // FIXME: We could only calculate this if the CFG is known to be irreducible
+-  // (perhaps cache this info in LoopInfo if we can easily calculate it there?).
+-  int SccNum = 0;
+-  for (scc_iterator<const Function *> It = scc_begin(&F); !It.isAtEnd();
+-       ++It, ++SccNum) {
+-    // Ignore single-block SCCs since they either aren't loops or LoopInfo will
+-    // catch them.
+-    const std::vector<const BasicBlock *> &Scc = *It;
+-    if (Scc.size() == 1)
+-      continue;
+-
+-    LLVM_DEBUG(dbgs() << "BPI: SCC " << SccNum << ":");
+-    for (const auto *BB : Scc) {
+-      LLVM_DEBUG(dbgs() << " " << BB->getName());
+-      SccNums[BB] = SccNum;
+-      calculateSccBlockType(BB, SccNum);
+-    }
+-    LLVM_DEBUG(dbgs() << "\n");
+-  }
+-}
+-
+-int BPIConstruction::SccInfo::getSCCNum(const BasicBlock *BB) const {
+-  auto SccIt = SccNums.find(BB);
+-  if (SccIt == SccNums.end())
+-    return -1;
+-  return SccIt->second;
+-}
+-
+-void BPIConstruction::SccInfo::getSccEnterBlocks(
+-    int SccNum, SmallVectorImpl<BasicBlock *> &Enters) const {
+-
+-  for (auto MapIt : SccBlocks[SccNum]) {
+-    const auto *BB = MapIt.first;
+-    if (isSCCHeader(BB, SccNum))
+-      for (const auto *Pred : predecessors(BB))
+-        if (getSCCNum(Pred) != SccNum)
+-          Enters.push_back(const_cast<BasicBlock *>(BB));
+-  }
+-}
+-
+-void BPIConstruction::SccInfo::getSccExitBlocks(
+-    int SccNum, SmallVectorImpl<BasicBlock *> &Exits) const {
+-  for (auto MapIt : SccBlocks[SccNum]) {
+-    const auto *BB = MapIt.first;
+-    if (isSCCExitingBlock(BB, SccNum))
+-      for (const auto *Succ : successors(BB))
+-        if (getSCCNum(Succ) != SccNum)
+-          Exits.push_back(const_cast<BasicBlock *>(Succ));
+-  }
+-}
+-
+-uint32_t BPIConstruction::SccInfo::getSccBlockType(const BasicBlock *BB,
+-                                                   int SccNum) const {
+-  assert(getSCCNum(BB) == SccNum);
+-
+-  assert(SccBlocks.size() > static_cast<unsigned>(SccNum) && "Unknown SCC");
+-  const auto &SccBlockTypes = SccBlocks[SccNum];
+-
+-  auto It = SccBlockTypes.find(BB);
+-  if (It != SccBlockTypes.end()) {
+-    return It->second;
+-  }
+-  return Inner;
+-}
+-
+-void BPIConstruction::SccInfo::calculateSccBlockType(const BasicBlock *BB,
+-                                                     int SccNum) {
+-  assert(getSCCNum(BB) == SccNum);
+-  uint32_t BlockType = Inner;
+-
+-  if (llvm::any_of(predecessors(BB), [&](const BasicBlock *Pred) {
+-        // Consider any block that is an entry point to the SCC as
+-        // a header.
+-        return getSCCNum(Pred) != SccNum;
+-      }))
+-    BlockType |= Header;
+-
+-  if (llvm::any_of(successors(BB), [&](const BasicBlock *Succ) {
+-        return getSCCNum(Succ) != SccNum;
+-      }))
+-    BlockType |= Exiting;
+-
+-  // Lazily compute the set of headers for a given SCC and cache the results
+-  // in the SccHeaderMap.
+-  if (SccBlocks.size() <= static_cast<unsigned>(SccNum))
+-    SccBlocks.resize(SccNum + 1);
+-  auto &SccBlockTypes = SccBlocks[SccNum];
+-
+-  if (BlockType != Inner) {
+-    bool IsInserted;
+-    std::tie(std::ignore, IsInserted) =
+-        SccBlockTypes.insert(std::make_pair(BB, BlockType));
+-    assert(IsInserted && "Duplicated block in SCC");
+-  }
+-}
+-
+-BPIConstruction::LoopBlock::LoopBlock(const BasicBlock *BB, const LoopInfo &LI,
+-                                      const SccInfo &SccI)
+-    : BB(BB) {
+-  LD.first = LI.getLoopFor(BB);
+-  if (!LD.first) {
+-    LD.second = SccI.getSCCNum(BB);
+-  }
+-}
+-
+ bool BPIConstruction::isLoopEnteringEdge(const LoopEdge &Edge) const {
+   const auto &SrcBlock = Edge.first;
+   const auto &DstBlock = Edge.second;
+-  return (DstBlock.getLoop() &&
+-          !DstBlock.getLoop()->contains(SrcBlock.getLoop())) ||
+-         // Assume that SCCs can't be nested.
+-         (DstBlock.getSccNum() != -1 &&
+-          SrcBlock.getSccNum() != DstBlock.getSccNum());
++  if (!DstBlock.getCycle()) // Edge into no-cycle is not entering.
++    return false;
++  if (!SrcBlock.getCycle()) // Edge from no-cycle into cycle is entering.
++    return true;
++  return !CI->contains(DstBlock.getCycle(), SrcBlock.getCycle());
+ }
+ 
+ bool BPIConstruction::isLoopExitingEdge(const LoopEdge &Edge) const {
+@@ -478,35 +288,13 @@ bool BPIConstruction::isLoopEnteringExitingEdge(const LoopEdge &Edge) const {
+   return isLoopEnteringEdge(Edge) || isLoopExitingEdge(Edge);
+ }
+ 
+-bool BPIConstruction::isLoopBackEdge(const LoopEdge &Edge) const {
+-  const auto &SrcBlock = Edge.first;
+-  const auto &DstBlock = Edge.second;
+-  return SrcBlock.belongsToSameLoop(DstBlock) &&
+-         ((DstBlock.getLoop() &&
+-           DstBlock.getLoop()->getHeader() == DstBlock.getBlock()) ||
+-          (DstBlock.getSccNum() != -1 &&
+-           SccI->isSCCHeader(DstBlock.getBlock(), DstBlock.getSccNum())));
+-}
+-
+ void BPIConstruction::getLoopEnterBlocks(
+     const LoopBlock &LB, SmallVectorImpl<BasicBlock *> &Enters) const {
+-  if (LB.getLoop()) {
+-    auto *Header = LB.getLoop()->getHeader();
+-    Enters.append(pred_begin(Header), pred_end(Header));
+-  } else {
+-    assert(LB.getSccNum() != -1 && "LB doesn't belong to any loop?");
+-    SccI->getSccEnterBlocks(LB.getSccNum(), Enters);
+-  }
+-}
+-
+-void BPIConstruction::getLoopExitBlocks(
+-    const LoopBlock &LB, SmallVectorImpl<BasicBlock *> &Exits) const {
+-  if (LB.getLoop()) {
+-    LB.getLoop()->getExitBlocks(Exits);
+-  } else {
+-    assert(LB.getSccNum() != -1 && "LB doesn't belong to any loop?");
+-    SccI->getSccExitBlocks(LB.getSccNum(), Exits);
+-  }
++  CycleRef C = LB.getCycle();
++  for (BasicBlock *Entry : CI->getEntries(C))
++    for (const auto *Pred : predecessors(Entry))
++      if (!CI->contains(C, Pred))
++        Enters.push_back(const_cast<BasicBlock *>(Pred));
+ }
+ 
+ // Propagate existing explicit probabilities from either profile data or
+@@ -679,12 +467,12 @@ bool BPIConstruction::calcPointerHeuristics(const BasicBlock *BB) {
+   }
+ }
+ 
+-// Compute the unlikely successors to the block BB in the loop L, specifically
++// Compute the unlikely successors to the block BB in the cycle C, specifically
+ // those that are unlikely because this is a loop, and add them to the
+ // UnlikelyBlocks set.
+ static void
+-computeUnlikelySuccessors(const BasicBlock *BB, Loop *L,
+-                          SmallPtrSetImpl<const BasicBlock*> &UnlikelyBlocks) {
++computeUnlikelySuccessors(const BasicBlock *BB, const CycleInfo &CI, CycleRef C,
++                          SmallPtrSetImpl<const BasicBlock *> &UnlikelyBlocks) {
+   // Sometimes in a loop we have a branch whose condition is made false by
+   // taking it. This is typically something like
+   //  int n = 0;
+@@ -711,30 +499,30 @@ computeUnlikelySuccessors(const BasicBlock *BB, Loop *L,
+     return;
+ 
+   // Check if the branch is based on an instruction compared with a constant
+-  CmpInst *CI = dyn_cast<CmpInst>(BI->getCondition());
+-  if (!CI || !isa<Instruction>(CI->getOperand(0)) ||
+-      !isa<Constant>(CI->getOperand(1)))
++  CmpInst *Cmp = dyn_cast<CmpInst>(BI->getCondition());
++  if (!Cmp || !isa<Instruction>(Cmp->getOperand(0)) ||
++      !isa<Constant>(Cmp->getOperand(1)))
+     return;
+ 
+   // Either the instruction must be a PHI, or a chain of operations involving
+   // constants that ends in a PHI which we can then collapse into a single value
+   // if the PHI value is known.
+-  Instruction *CmpLHS = dyn_cast<Instruction>(CI->getOperand(0));
++  Instruction *CmpLHS = dyn_cast<Instruction>(Cmp->getOperand(0));
+   PHINode *CmpPHI = dyn_cast<PHINode>(CmpLHS);
+-  Constant *CmpConst = dyn_cast<Constant>(CI->getOperand(1));
++  Constant *CmpConst = dyn_cast<Constant>(Cmp->getOperand(1));
+   // Collect the instructions until we hit a PHI
+   SmallVector<BinaryOperator *, 1> InstChain;
+   while (!CmpPHI && CmpLHS && isa<BinaryOperator>(CmpLHS) &&
+          isa<Constant>(CmpLHS->getOperand(1))) {
+     // Stop if the chain extends outside of the loop
+-    if (!L->contains(CmpLHS))
++    if (!CI.contains(C, CmpLHS->getParent()))
+       return;
+     InstChain.push_back(cast<BinaryOperator>(CmpLHS));
+     CmpLHS = dyn_cast<Instruction>(CmpLHS->getOperand(0));
+     if (CmpLHS)
+       CmpPHI = dyn_cast<PHINode>(CmpLHS);
+   }
+-  if (!CmpPHI || !L->contains(CmpPHI))
++  if (!CmpPHI || !CI.contains(C, CmpPHI->getParent()))
+     return;
+ 
+   // Trace the phi node to find all values that come from successors of BB
+@@ -746,7 +534,7 @@ computeUnlikelySuccessors(const BasicBlock *BB, Loop *L,
+     PHINode *P = WorkList.pop_back_val();
+     for (BasicBlock *B : P->blocks()) {
+       // Skip blocks that aren't part of the loop
+-      if (!L->contains(B))
++      if (!CI.contains(C, B))
+         continue;
+       Value *V = P->getIncomingValueForBlock(B);
+       // If the source is a PHI add it to the work list if we haven't
+@@ -774,7 +562,7 @@ computeUnlikelySuccessors(const BasicBlock *BB, Loop *L,
+         continue;
+       // Now constant-evaluate the compare
+       Constant *Result = ConstantFoldCompareInstOperands(
+-          CI->getPredicate(), CmpLHSConst, CmpConst, DL);
++          Cmp->getPredicate(), CmpLHSConst, CmpConst, DL);
+       // If the result means we don't branch to the block then that block is
+       // unlikely.
+       if (Result && ((Result->isNullValue() && B == BI->getSuccessor(0)) ||
+@@ -793,8 +581,8 @@ BPIConstruction::getEstimatedBlockWeight(const BasicBlock *BB) const {
+ }
+ 
+ std::optional<uint32_t>
+-BPIConstruction::getEstimatedLoopWeight(const LoopData &L) const {
+-  auto WeightIt = EstimatedLoopWeight.find(L);
++BPIConstruction::getEstimatedLoopWeight(CycleRef C) const {
++  auto WeightIt = EstimatedLoopWeight.find(C);
+   if (WeightIt == EstimatedLoopWeight.end())
+     return std::nullopt;
+   return WeightIt->second;
+@@ -805,7 +593,7 @@ BPIConstruction::getEstimatedEdgeWeight(const LoopEdge &Edge) const {
+   // For edges entering a loop take weight of a loop rather than an individual
+   // block in the loop.
+   return isLoopEnteringEdge(Edge)
+-             ? getEstimatedLoopWeight(Edge.second.getLoopData())
++             ? getEstimatedLoopWeight(Edge.second.getCycle())
+              : getEstimatedBlockWeight(Edge.second.getBlock());
+ }
+ 
+@@ -850,7 +638,7 @@ bool BPIConstruction::updateEstimatedBlockWeight(
+     LoopBlock PredLoop = getLoopBlock(PredBlock);
+     // Add affected block/loop to a working list.
+     if (isLoopExitingEdge({PredLoop, LoopBB})) {
+-      if (!EstimatedLoopWeight.count(PredLoop.getLoopData()))
++      if (!EstimatedLoopWeight.count(PredLoop.getCycle()))
+         LoopWorkList.push_back(PredLoop);
+     } else if (!EstimatedBlockWeight.count(PredBlock))
+       BlockWorkList.push_back(PredBlock);
+@@ -948,7 +736,7 @@ void BPIConstruction::estimateBlockWeights(const Function &F, DominatorTree *DT,
+                                            PostDominatorTree *PDT) {
+   SmallVector<BasicBlock *, 8> BlockWorkList;
+   SmallVector<LoopBlock, 8> LoopWorkList;
+-  SmallDenseMap<LoopData, SmallVector<BasicBlock *, 4>> LoopExitBlocks;
++  SmallDenseMap<CycleRef, SmallVector<BasicBlock *, 4>> LoopExitBlocks;
+ 
+   // By doing RPO we make sure that all predecessors already have weights
+   // calculated before visiting theirs successors.
+@@ -967,14 +755,14 @@ void BPIConstruction::estimateBlockWeights(const Function &F, DominatorTree *DT,
+   do {
+     while (!LoopWorkList.empty()) {
+       const LoopBlock LoopBB = LoopWorkList.pop_back_val();
+-      const LoopData LD = LoopBB.getLoopData();
+-      if (EstimatedLoopWeight.count(LD))
++      CycleRef C = LoopBB.getCycle();
++      if (EstimatedLoopWeight.count(C))
+         continue;
+ 
+-      auto Res = LoopExitBlocks.try_emplace(LD);
++      auto Res = LoopExitBlocks.try_emplace(C);
+       SmallVectorImpl<BasicBlock *> &Exits = Res.first->second;
+       if (Res.second)
+-        getLoopExitBlocks(LoopBB, Exits);
++        CI->getExitBlocks(C, Exits);
+       auto LoopWeight = getMaxEstimatedEdgeWeight(
+           LoopBB, make_range(Exits.begin(), Exits.end()));
+ 
+@@ -983,7 +771,7 @@ void BPIConstruction::estimateBlockWeights(const Function &F, DominatorTree *DT,
+         if (LoopWeight <= static_cast<uint32_t>(BlockExecWeight::UNREACHABLE))
+           LoopWeight = static_cast<uint32_t>(BlockExecWeight::LOWEST_NON_ZERO);
+ 
+-        EstimatedLoopWeight.insert({LD, *LoopWeight});
++        EstimatedLoopWeight.insert({C, *LoopWeight});
+         // Add all blocks entering the loop into working list.
+         getLoopEnterBlocks(LoopBB, BlockWorkList);
+       }
+@@ -1022,8 +810,8 @@ bool BPIConstruction::calcEstimatedHeuristics(const BasicBlock *BB) {
+ 
+   SmallPtrSet<const BasicBlock *, 8> UnlikelyBlocks;
+   uint32_t TC = LBH_TAKEN_WEIGHT / LBH_NONTAKEN_WEIGHT;
+-  if (LoopBB.getLoop())
+-    computeUnlikelySuccessors(BB, LoopBB.getLoop(), UnlikelyBlocks);
++  if (LoopBB.getCycle())
++    computeUnlikelySuccessors(BB, *CI, LoopBB.getCycle(), UnlikelyBlocks);
+ 
+   // Changed to 'true' if at least one successor has estimated weight.
+   bool FoundEstimatedWeight = false;
+@@ -1046,7 +834,7 @@ bool BPIConstruction::calcEstimatedHeuristics(const BasicBlock *BB) {
+           Weight.value_or(static_cast<uint32_t>(BlockExecWeight::DEFAULT)) /
+               TC);
+     }
+-    bool IsUnlikelyEdge = LoopBB.getLoop() && UnlikelyBlocks.contains(SuccBB);
++    bool IsUnlikelyEdge = LoopBB.getCycle() && UnlikelyBlocks.contains(SuccBB);
+     if (IsUnlikelyEdge &&
+         // Avoid adjustment of ZERO weight since it should remain unchanged.
+         Weight != static_cast<uint32_t>(BlockExecWeight::ZERO)) {
+@@ -1223,12 +1011,10 @@ bool BPIConstruction::calcFloatingPointHeuristics(const BasicBlock *BB) {
+   }
+   return true;
+ }
+-void BPIConstruction::calculate(const Function &F, const LoopInfo &LoopI,
++void BPIConstruction::calculate(const Function &F, const CycleInfo &CycleI,
+                                 const TargetLibraryInfo *TLI, DominatorTree *DT,
+                                 PostDominatorTree *PDT) {
+-  LI = &LoopI;
+-
+-  SccI = std::make_unique<SccInfo>(F);
++  CI = &CycleI;
+ 
+   std::unique_ptr<DominatorTree> DTPtr;
+   std::unique_ptr<PostDominatorTree> PDTPtr;
+@@ -1435,7 +1221,8 @@ void BranchProbabilityInfo::eraseBlock(const BasicBlock *BB) {
+     EdgeStarts[BB->getNumber()] = 0;
+ }
+ 
+-void BranchProbabilityInfo::calculate(const Function &F, const LoopInfo &LoopI,
++void BranchProbabilityInfo::calculate(const Function &F,
++                                      const CycleInfo &CycleI,
+                                       const TargetLibraryInfo *TLI,
+                                       DominatorTree *DT,
+                                       PostDominatorTree *PDT) {
+@@ -1445,7 +1232,7 @@ void BranchProbabilityInfo::calculate(const Function &F, const LoopInfo &LoopI,
+   BlockNumberEpoch = F.getBlockNumberEpoch();
+   Probs.clear();
+   EdgeStarts.clear();
+-  BPIConstruction(*this).calculate(F, LoopI, TLI, DT, PDT);
++  BPIConstruction(*this).calculate(F, CycleI, TLI, DT, PDT);
+ 
+   if (PrintBranchProb && (PrintBranchProbFuncName.empty() ||
+                           F.getName() == PrintBranchProbFuncName)) {
+@@ -1459,7 +1246,7 @@ void BranchProbabilityInfoWrapperPass::getAnalysisUsage(
+   // asserts that DT is also present so if we don't make sure that we have DT
+   // here, that assert will trigger.
+   AU.addRequired<DominatorTreeWrapperPass>();
+-  AU.addRequired<LoopInfoWrapperPass>();
++  AU.addRequired<CycleInfoWrapperPass>();
+   AU.addRequired<TargetLibraryInfoWrapperPass>();
+   AU.addRequired<DominatorTreeWrapperPass>();
+   AU.addRequired<PostDominatorTreeWrapperPass>();
+@@ -1467,13 +1254,13 @@ void BranchProbabilityInfoWrapperPass::getAnalysisUsage(
+ }
+ 
+ bool BranchProbabilityInfoWrapperPass::runOnFunction(Function &F) {
+-  const LoopInfo &LI = getAnalysis<LoopInfoWrapperPass>().getLoopInfo();
++  const CycleInfo &CI = getAnalysis<CycleInfoWrapperPass>().getResult();
+   const TargetLibraryInfo &TLI =
+       getAnalysis<TargetLibraryInfoWrapperPass>().getTLI(F);
+   DominatorTree &DT = getAnalysis<DominatorTreeWrapperPass>().getDomTree();
+   PostDominatorTree &PDT =
+       getAnalysis<PostDominatorTreeWrapperPass>().getPostDomTree();
+-  BPI.calculate(F, LI, &TLI, &DT, &PDT);
++  BPI.calculate(F, CI, &TLI, &DT, &PDT);
+   return false;
+ }
+ 
+@@ -1485,12 +1272,12 @@ void BranchProbabilityInfoWrapperPass::print(raw_ostream &OS,
+ AnalysisKey BranchProbabilityAnalysis::Key;
+ BranchProbabilityInfo
+ BranchProbabilityAnalysis::run(Function &F, FunctionAnalysisManager &AM) {
+-  auto &LI = AM.getResult<LoopAnalysis>(F);
++  auto &CI = AM.getResult<CycleAnalysis>(F);
+   auto &TLI = AM.getResult<TargetLibraryAnalysis>(F);
+   auto &DT = AM.getResult<DominatorTreeAnalysis>(F);
+   auto &PDT = AM.getResult<PostDominatorTreeAnalysis>(F);
+   BranchProbabilityInfo BPI;
+-  BPI.calculate(F, LI, &TLI, &DT, &PDT);
++  BPI.calculate(F, CI, &TLI, &DT, &PDT);
+   return BPI;
+ }
+ 
+diff --git a/llvm/lib/Analysis/LazyBranchProbabilityInfo.cpp b/llvm/lib/Analysis/LazyBranchProbabilityInfo.cpp
+index 7297905a85f60..740747e7c086b 100644
+--- a/llvm/lib/Analysis/LazyBranchProbabilityInfo.cpp
++++ b/llvm/lib/Analysis/LazyBranchProbabilityInfo.cpp
+@@ -14,7 +14,7 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Analysis/LazyBranchProbabilityInfo.h"
+-#include "llvm/Analysis/LoopInfo.h"
++#include "llvm/Analysis/CycleAnalysis.h"
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/InitializePasses.h"
+@@ -25,7 +25,7 @@ using namespace llvm;
+ 
+ INITIALIZE_PASS_BEGIN(LazyBranchProbabilityInfoPass, DEBUG_TYPE,
+                       "Lazy Branch Probability Analysis", true, true)
+-INITIALIZE_PASS_DEPENDENCY(LoopInfoWrapperPass)
++INITIALIZE_PASS_DEPENDENCY(CycleInfoWrapperPass)
+ INITIALIZE_PASS_DEPENDENCY(TargetLibraryInfoWrapperPass)
+ INITIALIZE_PASS_END(LazyBranchProbabilityInfoPass, DEBUG_TYPE,
+                     "Lazy Branch Probability Analysis", true, true)
+@@ -45,7 +45,7 @@ void LazyBranchProbabilityInfoPass::getAnalysisUsage(AnalysisUsage &AU) const {
+   // asserts that DT is also present so if we don't make sure that we have DT
+   // here, that assert will trigger.
+   AU.addRequiredTransitive<DominatorTreeWrapperPass>();
+-  AU.addRequiredTransitive<LoopInfoWrapperPass>();
++  AU.addRequiredTransitive<CycleInfoWrapperPass>();
+   AU.addRequiredTransitive<TargetLibraryInfoWrapperPass>();
+   AU.setPreservesAll();
+ }
+@@ -53,21 +53,21 @@ void LazyBranchProbabilityInfoPass::getAnalysisUsage(AnalysisUsage &AU) const {
+ void LazyBranchProbabilityInfoPass::releaseMemory() { LBPI.reset(); }
+ 
+ bool LazyBranchProbabilityInfoPass::runOnFunction(Function &F) {
+-  LoopInfo &LI = getAnalysis<LoopInfoWrapperPass>().getLoopInfo();
++  CycleInfo &CI = getAnalysis<CycleInfoWrapperPass>().getResult();
+   TargetLibraryInfo &TLI =
+       getAnalysis<TargetLibraryInfoWrapperPass>().getTLI(F);
+-  LBPI = std::make_unique<LazyBranchProbabilityInfo>(&F, &LI, &TLI);
++  LBPI = std::make_unique<LazyBranchProbabilityInfo>(&F, &CI, &TLI);
+   return false;
+ }
+ 
+ void LazyBranchProbabilityInfoPass::getLazyBPIAnalysisUsage(AnalysisUsage &AU) {
+   AU.addRequiredTransitive<LazyBranchProbabilityInfoPass>();
+-  AU.addRequiredTransitive<LoopInfoWrapperPass>();
++  AU.addRequiredTransitive<CycleInfoWrapperPass>();
+   AU.addRequiredTransitive<TargetLibraryInfoWrapperPass>();
+ }
+ 
+ void llvm::initializeLazyBPIPassPass(PassRegistry &Registry) {
+   INITIALIZE_PASS_DEPENDENCY(LazyBranchProbabilityInfoPass);
+-  INITIALIZE_PASS_DEPENDENCY(LoopInfoWrapperPass);
++  INITIALIZE_PASS_DEPENDENCY(CycleInfoWrapperPass);
+   INITIALIZE_PASS_DEPENDENCY(TargetLibraryInfoWrapperPass);
+ }
+diff --git a/llvm/lib/Analysis/ModuleSummaryAnalysis.cpp b/llvm/lib/Analysis/ModuleSummaryAnalysis.cpp
+index 33caa268b1c6e..ef16310d1f249 100644
+--- a/llvm/lib/Analysis/ModuleSummaryAnalysis.cpp
++++ b/llvm/lib/Analysis/ModuleSummaryAnalysis.cpp
+@@ -33,6 +33,7 @@
+ #include "llvm/IR/BasicBlock.h"
+ #include "llvm/IR/Constant.h"
+ #include "llvm/IR/Constants.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/Function.h"
+ #include "llvm/IR/GlobalAlias.h"
+@@ -1084,7 +1085,9 @@ ModuleSummaryIndex llvm::buildModuleSummaryIndex(
+       BFI = GetBFICallback(F);
+     else if (F.hasProfileData()) {
+       LoopInfo LI{DT};
+-      BranchProbabilityInfo BPI{F, LI};
++      CycleInfo CI;
++      CI.compute(const_cast<Function &>(F));
++      BranchProbabilityInfo BPI{F, CI};
+       BFIPtr = std::make_unique<BlockFrequencyInfo>(F, BPI, LI);
+       BFI = BFIPtr.get();
+     }
+diff --git a/llvm/lib/Analysis/OptimizationRemarkEmitter.cpp b/llvm/lib/Analysis/OptimizationRemarkEmitter.cpp
+index fbb5971e10750..520029349f487 100644
+--- a/llvm/lib/Analysis/OptimizationRemarkEmitter.cpp
++++ b/llvm/lib/Analysis/OptimizationRemarkEmitter.cpp
+@@ -16,6 +16,7 @@
+ #include "llvm/Analysis/LazyBlockFrequencyInfo.h"
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/Analysis/ProfileSummaryInfo.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/DiagnosticInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/LLVMContext.h"
+@@ -34,11 +35,13 @@ OptimizationRemarkEmitter::OptimizationRemarkEmitter(const Function *F)
+   DT.recalculate(*const_cast<Function *>(F));
+ 
+   // Generate LoopInfo from it.
++  CycleInfo CI;
++  CI.compute(*const_cast<Function *>(F));
+   LoopInfo LI;
+   LI.analyze(DT);
+ 
+   // Then compute BranchProbabilityInfo.
+-  BranchProbabilityInfo BPI(*F, LI, nullptr, &DT, nullptr);
++  BranchProbabilityInfo BPI(*F, CI, nullptr, &DT, nullptr);
+ 
+   // Finally compute BFI.
+   OwnedBFI = std::make_unique<BlockFrequencyInfo>(*F, BPI, LI);
+diff --git a/llvm/lib/CodeGen/CodeGenPrepare.cpp b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+index 9d3f18c8fce63..4cc93d21da5c0 100644
+--- a/llvm/lib/CodeGen/CodeGenPrepare.cpp
++++ b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+@@ -50,6 +50,7 @@
+ #include "llvm/IR/CFG.h"
+ #include "llvm/IR/Constant.h"
+ #include "llvm/IR/Constants.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/DataLayout.h"
+ #include "llvm/IR/DebugInfo.h"
+ #include "llvm/IR/DerivedTypes.h"
+@@ -853,8 +854,10 @@ void CodeGenPrepare::removeAllAssertingVHReferences(Value *V) {
+ // Verify BFI has been updated correctly by recomputing BFI and comparing them.
+ [[maybe_unused]] void CodeGenPrepare::verifyBFIUpdates(Function &F) {
+   DominatorTree NewDT(F);
++  CycleInfo NewCI;
++  NewCI.compute(F);
+   LoopInfo NewLI(NewDT);
+-  BranchProbabilityInfo NewBPI(F, NewLI, TLInfo);
++  BranchProbabilityInfo NewBPI(F, NewCI, TLInfo);
+   BlockFrequencyInfo NewBFI(F, NewBPI, NewLI);
+   NewBFI.verifyMatch(*BFI);
+ }
+diff --git a/llvm/lib/CodeGen/MachineFunctionPass.cpp b/llvm/lib/CodeGen/MachineFunctionPass.cpp
+index f69d1c0997ecc..67ae3613263dc 100644
+--- a/llvm/lib/CodeGen/MachineFunctionPass.cpp
++++ b/llvm/lib/CodeGen/MachineFunctionPass.cpp
+@@ -13,6 +13,7 @@
+ #include "llvm/CodeGen/MachineFunctionPass.h"
+ #include "llvm/Analysis/BasicAliasAnalysis.h"
+ #include "llvm/Analysis/BranchProbabilityInfo.h"
++#include "llvm/Analysis/CycleAnalysis.h"
+ #include "llvm/Analysis/DominanceFrontier.h"
+ #include "llvm/Analysis/GlobalsModRef.h"
+ #include "llvm/Analysis/IVUsers.h"
+@@ -152,6 +153,7 @@ void MachineFunctionPass::getAnalysisUsage(AnalysisUsage &AU) const {
+   AU.addPreserved<GlobalsAAWrapperPass>();
+   AU.addPreserved<IVUsersWrapperPass>();
+   AU.addPreserved<LoopInfoWrapperPass>();
++  AU.addPreserved<CycleInfoWrapperPass>();
+   AU.addPreserved<MemoryDependenceWrapperPass>();
+   AU.addPreserved<ScalarEvolutionWrapperPass>();
+   AU.addPreserved<SCEVAAWrapperPass>();
+diff --git a/llvm/lib/Transforms/IPO/PartialInlining.cpp b/llvm/lib/Transforms/IPO/PartialInlining.cpp
+index b95ab41993d19..e01bb9f78fca3 100644
+--- a/llvm/lib/Transforms/IPO/PartialInlining.cpp
++++ b/llvm/lib/Transforms/IPO/PartialInlining.cpp
+@@ -29,6 +29,7 @@
+ #include "llvm/IR/Attributes.h"
+ #include "llvm/IR/BasicBlock.h"
+ #include "llvm/IR/CFG.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/DebugLoc.h"
+ #include "llvm/IR/DiagnosticInfo.h"
+ #include "llvm/IR/Dominators.h"
+@@ -348,8 +349,10 @@ PartialInlinerImpl::computeOutliningColdRegionsInfo(
+   BasicBlock *EntryBlock = &F.front();
+ 
+   DominatorTree DT(F);
++  CycleInfo CI;
++  CI.compute(F);
+   LoopInfo LI(DT);
+-  BranchProbabilityInfo BPI(F, LI);
++  BranchProbabilityInfo BPI(F, CI);
+   std::unique_ptr<BlockFrequencyInfo> ScopedBFI;
+   BlockFrequencyInfo *BFI;
+   if (!GetBFI) {
+@@ -903,8 +906,10 @@ void PartialInlinerImpl::computeCallsiteToProfCountMap(
+       // For the old pass manager:
+       if (!GetBFI) {
+         DominatorTree DT(*Caller);
++        CycleInfo CI;
++        CI.compute(*Caller);
+         LoopInfo LI(DT);
+-        BranchProbabilityInfo BPI(*Caller, LI);
++        BranchProbabilityInfo BPI(*Caller, CI);
+         TempBFI.reset(new BlockFrequencyInfo(*Caller, BPI, LI));
+         CurrentCallerBFI = TempBFI.get();
+       } else {
+@@ -1088,8 +1093,10 @@ bool PartialInlinerImpl::FunctionCloner::doMultiRegionFunctionOutlining() {
+   DT.recalculate(*ClonedFunc);
+ 
+   // Manually calculate a BlockFrequencyInfo and BranchProbabilityInfo.
++  CycleInfo CI;
++  CI.compute(*ClonedFunc);
+   LoopInfo LI(DT);
+-  BranchProbabilityInfo BPI(*ClonedFunc, LI);
++  BranchProbabilityInfo BPI(*ClonedFunc, CI);
+   ClonedFuncBFI.reset(new BlockFrequencyInfo(*ClonedFunc, BPI, LI));
+ 
+   // Cache and recycle the CodeExtractor analysis to avoid O(n^2) compile-time.
+@@ -1163,8 +1170,10 @@ PartialInlinerImpl::FunctionCloner::doSingleRegionFunctionOutlining() {
+   DT.recalculate(*ClonedFunc);
+ 
+   // Manually calculate a BlockFrequencyInfo and BranchProbabilityInfo.
++  CycleInfo CI;
++  CI.compute(*ClonedFunc);
+   LoopInfo LI(DT);
+-  BranchProbabilityInfo BPI(*ClonedFunc, LI);
++  BranchProbabilityInfo BPI(*ClonedFunc, CI);
+   ClonedFuncBFI.reset(new BlockFrequencyInfo(*ClonedFunc, BPI, LI));
+ 
+   // Gather up the blocks that we're going to extract.
+diff --git a/llvm/lib/Transforms/Instrumentation/InstrProfiling.cpp b/llvm/lib/Transforms/Instrumentation/InstrProfiling.cpp
+index 5e58b5c95f776..ef97dac7a5f0a 100644
+--- a/llvm/lib/Transforms/Instrumentation/InstrProfiling.cpp
++++ b/llvm/lib/Transforms/Instrumentation/InstrProfiling.cpp
+@@ -29,6 +29,7 @@
+ #include "llvm/IR/CFG.h"
+ #include "llvm/IR/Constant.h"
+ #include "llvm/IR/Constants.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/DIBuilder.h"
+ #include "llvm/IR/DerivedTypes.h"
+ #include "llvm/IR/DiagnosticInfo.h"
+@@ -973,13 +974,15 @@ void InstrLowerer::promoteCounterLoadStores(Function *F) {
+     return;
+ 
+   DominatorTree DT(*F);
++  CycleInfo CI;
++  CI.compute(*F);
+   LoopInfo LI(DT);
+   DenseMap<Loop *, SmallVector<LoadStorePair, 8>> LoopPromotionCandidates;
+ 
+   std::unique_ptr<BlockFrequencyInfo> BFI;
+   if (Options.UseBFIInPromotion) {
+     std::unique_ptr<BranchProbabilityInfo> BPI;
+-    BPI.reset(new BranchProbabilityInfo(*F, LI, &GetTLI(*F)));
++    BPI.reset(new BranchProbabilityInfo(*F, CI, &GetTLI(*F)));
+     BFI.reset(new BlockFrequencyInfo(*F, *BPI, LI));
+   }
+ 
+diff --git a/llvm/lib/Transforms/Instrumentation/PGOInstrumentation.cpp b/llvm/lib/Transforms/Instrumentation/PGOInstrumentation.cpp
+index f6fcb41636000..47f98d98a50e9 100644
+--- a/llvm/lib/Transforms/Instrumentation/PGOInstrumentation.cpp
++++ b/llvm/lib/Transforms/Instrumentation/PGOInstrumentation.cpp
+@@ -72,6 +72,7 @@
+ #include "llvm/IR/Comdat.h"
+ #include "llvm/IR/Constant.h"
+ #include "llvm/IR/Constants.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/DiagnosticInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/EHPersonalities.h"
+@@ -1582,8 +1583,10 @@ void PGOUseFunc::populateCoverage() {
+ 
+   unsigned NumCorruptCoverage = 0;
+   DominatorTree DT(F);
++  CycleInfo CI;
++  CI.compute(F);
+   LoopInfo LI(DT);
+-  BranchProbabilityInfo BPI(F, LI);
++  BranchProbabilityInfo BPI(F, CI);
+   BlockFrequencyInfo BFI(F, BPI, LI);
+   auto IsBlockDead = [&](const BasicBlock &BB) -> std::optional<bool> {
+     if (auto C = BFI.getBlockProfileCount(&BB))
+@@ -2340,8 +2343,10 @@ static bool annotateAllFunctions(
+         (ViewBlockFreqFuncName.empty() ||
+          F.getName() == ViewBlockFreqFuncName)) {
+       LoopInfo LI{DominatorTree(F)};
++      CycleInfo CI;
++      CI.compute(F);
+       std::unique_ptr<BranchProbabilityInfo> NewBPI =
+-          std::make_unique<BranchProbabilityInfo>(F, LI);
++          std::make_unique<BranchProbabilityInfo>(F, CI);
+       std::unique_ptr<BlockFrequencyInfo> NewBFI =
+           std::make_unique<BlockFrequencyInfo>(F, *NewBPI, LI);
+       if (PGOViewCounts == PGOVCT_Graph)
+@@ -2366,8 +2371,10 @@ static bool annotateAllFunctions(
+     }
+ 
+     if (PGOVerifyBFI || PGOVerifyHotBFI || PGOFixEntryCount) {
++      CycleInfo CI;
++      CI.compute(F);
+       LoopInfo LI{DominatorTree(F)};
+-      BranchProbabilityInfo NBPI(F, LI);
++      BranchProbabilityInfo NBPI(F, CI);
+ 
+       // Fix func entry count.
+       if (PGOFixEntryCount)
+diff --git a/llvm/test/CodeGen/AArch64/GlobalISel/gisel-commandline-option.ll b/llvm/test/CodeGen/AArch64/GlobalISel/gisel-commandline-option.ll
+index 19cd2b5a453f2..33e8b854d86b1 100644
+--- a/llvm/test/CodeGen/AArch64/GlobalISel/gisel-commandline-option.ll
++++ b/llvm/test/CodeGen/AArch64/GlobalISel/gisel-commandline-option.ll
+@@ -73,6 +73,7 @@
+ ; VERIFY-NEXT:   Verify generated machine code
+ ; ENABLED-NEXT: Analysis for ComputingKnownBits
+ ; ENABLED-O1-NEXT: Lazy Branch Probability Analysis
++; ENABLED-O1-NEXT: Natural Loop Information
+ ; ENABLED-O1-NEXT: Lazy Block Frequency Analysis
+ ; ENABLED-NEXT:  InstructionSelect
+ ; ENABLED-O1-NEXT:  AArch64 Post Select Optimizer
+diff --git a/llvm/test/CodeGen/AArch64/O3-pipeline.ll b/llvm/test/CodeGen/AArch64/O3-pipeline.ll
+index 08d3b94530d14..c94b80ff21bf0 100644
+--- a/llvm/test/CodeGen/AArch64/O3-pipeline.ll
++++ b/llvm/test/CodeGen/AArch64/O3-pipeline.ll
+@@ -36,6 +36,7 @@
+ ; CHECK-NEXT:       Dominator Tree Construction
+ ; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Canonicalize natural loops
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       Optimization Remark Emitter
+@@ -52,9 +53,10 @@
+ ; CHECK-NEXT:       Lower Garbage Collection Instructions
+ ; CHECK-NEXT:       Shadow Stack GC Lowering
+ ; CHECK-NEXT:       Remove unreachable blocks from the CFG
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Block Frequency Analysis
+ ; CHECK-NEXT:       Constant Hoisting
+ ; CHECK-NEXT:       Replace intrinsics with calls to vector library
+@@ -66,6 +68,7 @@
+ ; CHECK-NEXT:       Scalarize Masked Memory Intrinsics
+ ; CHECK-NEXT:       Expand reduction intrinsics
+ ; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Block Frequency Analysis
+@@ -95,6 +98,7 @@
+ ; CHECK-NEXT:       Interleaved Access Pass
+ ; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Type Promotion
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Block Frequency Analysis
+@@ -112,7 +116,7 @@
+ ; CHECK-NEXT:       Module Verifier
+ ; CHECK-NEXT:       Analysis containing CSE Info
+ ; CHECK-NEXT:       Dominator Tree Construction
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Basic Alias Analysis (stateless AA impl)
+@@ -127,6 +131,7 @@
+ ; CHECK-NEXT:       RegBankSelect
+ ; CHECK-NEXT:       Analysis for ComputingKnownBits
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       InstructionSelect
+ ; CHECK-NEXT:       ResetMachineFunction
+diff --git a/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll b/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll
+index d10df2ed1d11f..f8101eba8106b 100644
+--- a/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll
++++ b/llvm/test/CodeGen/AMDGPU/llc-pipeline.ll
+@@ -231,9 +231,10 @@
+ ; GCN-O1-NEXT:        Induction Variable Users
+ ; GCN-O1-NEXT:        Loop Strength Reduction
+ ; GCN-O1-NEXT:      Remove unreachable blocks from the CFG
+-; GCN-O1-NEXT:      Natural Loop Information
++; GCN-O1-NEXT:      Cycle Info Analysis
+ ; GCN-O1-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O1-NEXT:      Branch Probability Analysis
++; GCN-O1-NEXT:      Natural Loop Information
+ ; GCN-O1-NEXT:      Block Frequency Analysis
+ ; GCN-O1-NEXT:      Constant Hoisting
+ ; GCN-O1-NEXT:      Replace intrinsics with calls to vector library
+@@ -249,6 +250,7 @@
+ ; GCN-O1-NEXT:      Dominator Tree Construction
+ ; GCN-O1-NEXT:      AMDGPU Lower Kernel Arguments
+ ; GCN-O1-NEXT:      Natural Loop Information
++; GCN-O1-NEXT:      Cycle Info Analysis
+ ; GCN-O1-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O1-NEXT:      Branch Probability Analysis
+ ; GCN-O1-NEXT:      Block Frequency Analysis
+@@ -314,11 +316,11 @@
+ ; GCN-O1-NEXT:        Uniformity Analysis
+ ; GCN-O1-NEXT:        Basic Alias Analysis (stateless AA impl)
+ ; GCN-O1-NEXT:        Function Alias Analysis Results
+-; GCN-O1-NEXT:        Natural Loop Information
+ ; GCN-O1-NEXT:        Post-Dominator Tree Construction
+ ; GCN-O1-NEXT:        Branch Probability Analysis
+ ; GCN-O1-NEXT:        Assignment Tracking Analysis
+ ; GCN-O1-NEXT:        Lazy Branch Probability Analysis
++; GCN-O1-NEXT:        Natural Loop Information
+ ; GCN-O1-NEXT:        Lazy Block Frequency Analysis
+ ; GCN-O1-NEXT:        AMDGPU DAG->DAG Pattern Instruction Selection
+ ; GCN-O1-NEXT:        MachineDominator Tree Construction
+@@ -516,6 +518,7 @@
+ ; GCN-O1-OPTS-NEXT:      Natural Loop Information
+ ; GCN-O1-OPTS-NEXT:      AMDGPU Promote Alloca
+ ; GCN-O1-OPTS-NEXT:      Canonicalize natural loops
++; GCN-O1-OPTS-NEXT:      Cycle Info Analysis
+ ; GCN-O1-OPTS-NEXT:      Lazy Branch Probability Analysis
+ ; GCN-O1-OPTS-NEXT:      Lazy Block Frequency Analysis
+ ; GCN-O1-OPTS-NEXT:      Optimization Remark Emitter
+@@ -539,9 +542,10 @@
+ ; GCN-O1-OPTS-NEXT:        Induction Variable Users
+ ; GCN-O1-OPTS-NEXT:        Loop Strength Reduction
+ ; GCN-O1-OPTS-NEXT:      Remove unreachable blocks from the CFG
+-; GCN-O1-OPTS-NEXT:      Natural Loop Information
++; GCN-O1-OPTS-NEXT:      Cycle Info Analysis
+ ; GCN-O1-OPTS-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O1-OPTS-NEXT:      Branch Probability Analysis
++; GCN-O1-OPTS-NEXT:      Natural Loop Information
+ ; GCN-O1-OPTS-NEXT:      Block Frequency Analysis
+ ; GCN-O1-OPTS-NEXT:      Constant Hoisting
+ ; GCN-O1-OPTS-NEXT:      Replace intrinsics with calls to vector library
+@@ -558,6 +562,7 @@
+ ; GCN-O1-OPTS-NEXT:      Dominator Tree Construction
+ ; GCN-O1-OPTS-NEXT:      AMDGPU Lower Kernel Arguments
+ ; GCN-O1-OPTS-NEXT:      Natural Loop Information
++; GCN-O1-OPTS-NEXT:      Cycle Info Analysis
+ ; GCN-O1-OPTS-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O1-OPTS-NEXT:      Branch Probability Analysis
+ ; GCN-O1-OPTS-NEXT:      Block Frequency Analysis
+@@ -629,11 +634,11 @@
+ ; GCN-O1-OPTS-NEXT:        Uniformity Analysis
+ ; GCN-O1-OPTS-NEXT:        Basic Alias Analysis (stateless AA impl)
+ ; GCN-O1-OPTS-NEXT:        Function Alias Analysis Results
+-; GCN-O1-OPTS-NEXT:        Natural Loop Information
+ ; GCN-O1-OPTS-NEXT:        Post-Dominator Tree Construction
+ ; GCN-O1-OPTS-NEXT:        Branch Probability Analysis
+ ; GCN-O1-OPTS-NEXT:        Assignment Tracking Analysis
+ ; GCN-O1-OPTS-NEXT:        Lazy Branch Probability Analysis
++; GCN-O1-OPTS-NEXT:        Natural Loop Information
+ ; GCN-O1-OPTS-NEXT:        Lazy Block Frequency Analysis
+ ; GCN-O1-OPTS-NEXT:        AMDGPU DAG->DAG Pattern Instruction Selection
+ ; GCN-O1-OPTS-NEXT:        MachineDominator Tree Construction
+@@ -855,6 +860,7 @@
+ ; GCN-O2-NEXT:      LCSSA Verifier
+ ; GCN-O2-NEXT:      Loop-Closed SSA Form Pass
+ ; GCN-O2-NEXT:      Scalar Evolution Analysis
++; GCN-O2-NEXT:      Cycle Info Analysis
+ ; GCN-O2-NEXT:      Lazy Branch Probability Analysis
+ ; GCN-O2-NEXT:      Lazy Block Frequency Analysis
+ ; GCN-O2-NEXT:      Loop Pass Manager
+@@ -864,9 +870,10 @@
+ ; GCN-O2-NEXT:        Induction Variable Users
+ ; GCN-O2-NEXT:        Loop Strength Reduction
+ ; GCN-O2-NEXT:      Remove unreachable blocks from the CFG
+-; GCN-O2-NEXT:      Natural Loop Information
++; GCN-O2-NEXT:      Cycle Info Analysis
+ ; GCN-O2-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O2-NEXT:      Branch Probability Analysis
++; GCN-O2-NEXT:      Natural Loop Information
+ ; GCN-O2-NEXT:      Block Frequency Analysis
+ ; GCN-O2-NEXT:      Constant Hoisting
+ ; GCN-O2-NEXT:      Replace intrinsics with calls to vector library
+@@ -883,6 +890,7 @@
+ ; GCN-O2-NEXT:      Dominator Tree Construction
+ ; GCN-O2-NEXT:      AMDGPU Lower Kernel Arguments
+ ; GCN-O2-NEXT:      Natural Loop Information
++; GCN-O2-NEXT:      Cycle Info Analysis
+ ; GCN-O2-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O2-NEXT:      Branch Probability Analysis
+ ; GCN-O2-NEXT:      Block Frequency Analysis
+@@ -955,11 +963,11 @@
+ ; GCN-O2-NEXT:        Uniformity Analysis
+ ; GCN-O2-NEXT:        Basic Alias Analysis (stateless AA impl)
+ ; GCN-O2-NEXT:        Function Alias Analysis Results
+-; GCN-O2-NEXT:        Natural Loop Information
+ ; GCN-O2-NEXT:        Post-Dominator Tree Construction
+ ; GCN-O2-NEXT:        Branch Probability Analysis
+ ; GCN-O2-NEXT:        Assignment Tracking Analysis
+ ; GCN-O2-NEXT:        Lazy Branch Probability Analysis
++; GCN-O2-NEXT:        Natural Loop Information
+ ; GCN-O2-NEXT:        Lazy Block Frequency Analysis
+ ; GCN-O2-NEXT:        AMDGPU DAG->DAG Pattern Instruction Selection
+ ; GCN-O2-NEXT:        MachineDominator Tree Construction
+@@ -1171,6 +1179,7 @@
+ ; GCN-O3-NEXT:      Basic Alias Analysis (stateless AA impl)
+ ; GCN-O3-NEXT:      Function Alias Analysis Results
+ ; GCN-O3-NEXT:      Memory Dependence Analysis
++; GCN-O3-NEXT:      Cycle Info Analysis
+ ; GCN-O3-NEXT:      Lazy Branch Probability Analysis
+ ; GCN-O3-NEXT:      Lazy Block Frequency Analysis
+ ; GCN-O3-NEXT:      Optimization Remark Emitter
+@@ -1188,6 +1197,7 @@
+ ; GCN-O3-NEXT:      LCSSA Verifier
+ ; GCN-O3-NEXT:      Loop-Closed SSA Form Pass
+ ; GCN-O3-NEXT:      Scalar Evolution Analysis
++; GCN-O3-NEXT:      Cycle Info Analysis
+ ; GCN-O3-NEXT:      Lazy Branch Probability Analysis
+ ; GCN-O3-NEXT:      Lazy Block Frequency Analysis
+ ; GCN-O3-NEXT:      Loop Pass Manager
+@@ -1197,9 +1207,10 @@
+ ; GCN-O3-NEXT:        Induction Variable Users
+ ; GCN-O3-NEXT:        Loop Strength Reduction
+ ; GCN-O3-NEXT:      Remove unreachable blocks from the CFG
+-; GCN-O3-NEXT:      Natural Loop Information
++; GCN-O3-NEXT:      Cycle Info Analysis
+ ; GCN-O3-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O3-NEXT:      Branch Probability Analysis
++; GCN-O3-NEXT:      Natural Loop Information
+ ; GCN-O3-NEXT:      Block Frequency Analysis
+ ; GCN-O3-NEXT:      Constant Hoisting
+ ; GCN-O3-NEXT:      Replace intrinsics with calls to vector library
+@@ -1214,6 +1225,7 @@
+ ; GCN-O3-NEXT:      Basic Alias Analysis (stateless AA impl)
+ ; GCN-O3-NEXT:      Function Alias Analysis Results
+ ; GCN-O3-NEXT:      Memory Dependence Analysis
++; GCN-O3-NEXT:      Cycle Info Analysis
+ ; GCN-O3-NEXT:      Lazy Branch Probability Analysis
+ ; GCN-O3-NEXT:      Lazy Block Frequency Analysis
+ ; GCN-O3-NEXT:      Optimization Remark Emitter
+@@ -1223,6 +1235,7 @@
+ ; GCN-O3-NEXT:      Dominator Tree Construction
+ ; GCN-O3-NEXT:      AMDGPU Lower Kernel Arguments
+ ; GCN-O3-NEXT:      Natural Loop Information
++; GCN-O3-NEXT:      Cycle Info Analysis
+ ; GCN-O3-NEXT:      Post-Dominator Tree Construction
+ ; GCN-O3-NEXT:      Branch Probability Analysis
+ ; GCN-O3-NEXT:      Block Frequency Analysis
+@@ -1295,11 +1308,11 @@
+ ; GCN-O3-NEXT:        Uniformity Analysis
+ ; GCN-O3-NEXT:        Basic Alias Analysis (stateless AA impl)
+ ; GCN-O3-NEXT:        Function Alias Analysis Results
+-; GCN-O3-NEXT:        Natural Loop Information
+ ; GCN-O3-NEXT:        Post-Dominator Tree Construction
+ ; GCN-O3-NEXT:        Branch Probability Analysis
+ ; GCN-O3-NEXT:        Assignment Tracking Analysis
+ ; GCN-O3-NEXT:        Lazy Branch Probability Analysis
++; GCN-O3-NEXT:        Natural Loop Information
+ ; GCN-O3-NEXT:        Lazy Block Frequency Analysis
+ ; GCN-O3-NEXT:        AMDGPU DAG->DAG Pattern Instruction Selection
+ ; GCN-O3-NEXT:        MachineDominator Tree Construction
+diff --git a/llvm/test/CodeGen/ARM/O3-pipeline.ll b/llvm/test/CodeGen/ARM/O3-pipeline.ll
+index 9f4d70531a3f7..d57e8785a94c8 100644
+--- a/llvm/test/CodeGen/ARM/O3-pipeline.ll
++++ b/llvm/test/CodeGen/ARM/O3-pipeline.ll
+@@ -28,9 +28,10 @@
+ ; CHECK-NEXT:      Lower Garbage Collection Instructions
+ ; CHECK-NEXT:      Shadow Stack GC Lowering
+ ; CHECK-NEXT:      Remove unreachable blocks from the CFG
+-; CHECK-NEXT:      Natural Loop Information
++; CHECK-NEXT:      Cycle Info Analysis
+ ; CHECK-NEXT:      Post-Dominator Tree Construction
+ ; CHECK-NEXT:      Branch Probability Analysis
++; CHECK-NEXT:      Natural Loop Information
+ ; CHECK-NEXT:      Block Frequency Analysis
+ ; CHECK-NEXT:      Constant Hoisting
+ ; CHECK-NEXT:      Replace intrinsics with calls to vector library
+@@ -49,6 +50,7 @@
+ ; CHECK-NEXT:      Complex Deinterleaving Pass
+ ; CHECK-NEXT:      Interleaved Access Pass
+ ; CHECK-NEXT:      Type Promotion
++; CHECK-NEXT:      Cycle Info Analysis
+ ; CHECK-NEXT:      Post-Dominator Tree Construction
+ ; CHECK-NEXT:      Branch Probability Analysis
+ ; CHECK-NEXT:      Block Frequency Analysis
+@@ -58,14 +60,15 @@
+ ; CHECK-NEXT:      Merge internal globals
+ ; CHECK-NEXT:      Natural Loop Information
+ ; CHECK-NEXT:      Scalar Evolution Analysis
++; CHECK-NEXT:      Cycle Info Analysis
+ ; CHECK-NEXT:      Lazy Branch Probability Analysis
+ ; CHECK-NEXT:      Lazy Block Frequency Analysis
+ ; CHECK-NEXT:      Optimization Remark Emitter
+ ; CHECK-NEXT:      Hardware Loop Insertion
+ ; CHECK-NEXT:      Loop Pass Manager
+ ; CHECK-NEXT:        Transform predicated vector loops to use MVE tail predication
+-; CHECK-NEXT:      A No-Op Barrier Pass
+-; CHECK-NEXT:      FunctionPass Manager
++; CHECK-NEXT:    A No-Op Barrier Pass
++; CHECK-NEXT:    FunctionPass Manager
+ ; CHECK-NEXT:      Prepare inline asm insts
+ ; CHECK-NEXT:      Safe Stack instrumentation pass
+ ; CHECK-NEXT:      Insert stack protectors
+@@ -73,11 +76,12 @@
+ ; CHECK-NEXT:      Dominator Tree Construction
+ ; CHECK-NEXT:      Basic Alias Analysis (stateless AA impl)
+ ; CHECK-NEXT:      Function Alias Analysis Results
+-; CHECK-NEXT:      Natural Loop Information
++; CHECK-NEXT:      Cycle Info Analysis
+ ; CHECK-NEXT:      Post-Dominator Tree Construction
+ ; CHECK-NEXT:      Branch Probability Analysis
+ ; CHECK-NEXT:      Assignment Tracking Analysis
+ ; CHECK-NEXT:      Lazy Branch Probability Analysis
++; CHECK-NEXT:      Natural Loop Information
+ ; CHECK-NEXT:      Lazy Block Frequency Analysis
+ ; CHECK-NEXT:      ARM Instruction Selection
+ ; CHECK-NEXT:      Finalize ISel and expand pseudo-instructions
+@@ -108,7 +112,7 @@
+ ; CHECK-NEXT:      Modulo Software Pipelining
+ ; CHECK-NEXT:      MachineDominator Tree Construction
+ ; CHECK-NEXT:      Machine Natural Loop Construction
+-; CHECK-NEXT:      MVE TailPred and VPT Optimisation Pass
++; CHECK-NEXT:      ARM MVE TailPred and VPT Optimisation Pass
+ ; CHECK-NEXT:      ARM MLA / MLS expansion pass
+ ; CHECK-NEXT:      MachineDominator Tree Construction
+ ; CHECK-NEXT:      ARM pre- register allocation load / store optimization pass
+diff --git a/llvm/test/CodeGen/LoongArch/annotate-tablejump.ll b/llvm/test/CodeGen/LoongArch/annotate-tablejump.ll
+index 2af80789086e6..f47b8fde2efdf 100644
+--- a/llvm/test/CodeGen/LoongArch/annotate-tablejump.ll
++++ b/llvm/test/CodeGen/LoongArch/annotate-tablejump.ll
+@@ -13,7 +13,7 @@ define void @switch_4_arms(i32 %in, ptr %out) nounwind {
+ ; LA32-JT:       # %bb.0: # %entry
+ ; LA32-JT-NEXT:    addi.w $a3, $a0, -1
+ ; LA32-JT-NEXT:    ori $a2, $zero, 3
+-; LA32-JT-NEXT:    bltu $a2, $a3, .LBB0_7
++; LA32-JT-NEXT:    bltu $a2, $a3, .LBB0_6
+ ; LA32-JT-NEXT:  # %bb.1: # %entry
+ ; LA32-JT-NEXT:    pcalau12i $a4, %pc_hi20(.LJTI0_0)
+ ; LA32-JT-NEXT:    addi.w $a4, $a4, %pc_lo12(.LJTI0_0)
+@@ -23,27 +23,27 @@ define void @switch_4_arms(i32 %in, ptr %out) nounwind {
+ ; LA32-JT-NEXT:    jr $a3
+ ; LA32-JT-NEXT:  .LBB0_2: # %bb1
+ ; LA32-JT-NEXT:    ori $a3, $zero, 4
+-; LA32-JT-NEXT:    b .LBB0_6
++; LA32-JT-NEXT:    b .LBB0_5
+ ; LA32-JT-NEXT:  .LBB0_3: # %bb2
+ ; LA32-JT-NEXT:    ori $a3, $zero, 3
+-; LA32-JT-NEXT:    b .LBB0_6
++; LA32-JT-NEXT:    b .LBB0_5
+ ; LA32-JT-NEXT:  .LBB0_4: # %bb3
+ ; LA32-JT-NEXT:    ori $a3, $zero, 2
+-; LA32-JT-NEXT:    b .LBB0_6
+-; LA32-JT-NEXT:  .LBB0_5: # %bb4
+-; LA32-JT-NEXT:    ori $a3, $zero, 1
+-; LA32-JT-NEXT:  .LBB0_6: # %exit
++; LA32-JT-NEXT:  .LBB0_5: # %exit
+ ; LA32-JT-NEXT:    st.w $a3, $a1, 0
+-; LA32-JT-NEXT:  .LBB0_7: # %exit
++; LA32-JT-NEXT:  .LBB0_6: # %exit
+ ; LA32-JT-NEXT:    addi.w $a3, $a0, -5
+ ; LA32-JT-NEXT:    bltu $a2, $a3, .LBB0_9
+-; LA32-JT-NEXT:  # %bb.8: # %exit
++; LA32-JT-NEXT:  # %bb.7: # %exit
+ ; LA32-JT-NEXT:    pcalau12i $a4, %pc_hi20(.LJTI0_1)
+ ; LA32-JT-NEXT:    addi.w $a4, $a4, %pc_lo12(.LJTI0_1)
+ ; LA32-JT-NEXT:    alsl.w $a3, $a3, $a4, 2
+ ; LA32-JT-NEXT:    ld.w $a3, $a3, 0
+ ; LA32-JT-NEXT:  .Ljrtb_1:
+ ; LA32-JT-NEXT:    jr $a3
++; LA32-JT-NEXT:  .LBB0_8: # %bb4
++; LA32-JT-NEXT:    ori $a3, $zero, 1
++; LA32-JT-NEXT:    b .LBB0_5
+ ; LA32-JT-NEXT:  .LBB0_9: # %exit2
+ ; LA32-JT-NEXT:    ret
+ ;
+@@ -52,7 +52,7 @@ define void @switch_4_arms(i32 %in, ptr %out) nounwind {
+ ; LA64-JT-NEXT:    addi.w $a0, $a0, 0
+ ; LA64-JT-NEXT:    addi.d $a3, $a0, -1
+ ; LA64-JT-NEXT:    ori $a2, $zero, 3
+-; LA64-JT-NEXT:    bltu $a2, $a3, .LBB0_7
++; LA64-JT-NEXT:    bltu $a2, $a3, .LBB0_6
+ ; LA64-JT-NEXT:  # %bb.1: # %entry
+ ; LA64-JT-NEXT:    slli.d $a3, $a3, 3
+ ; LA64-JT-NEXT:    pcalau12i $a4, %pc_hi20(.LJTI0_0)
+@@ -62,27 +62,27 @@ define void @switch_4_arms(i32 %in, ptr %out) nounwind {
+ ; LA64-JT-NEXT:    jr $a3
+ ; LA64-JT-NEXT:  .LBB0_2: # %bb1
+ ; LA64-JT-NEXT:    ori $a3, $zero, 4
+-; LA64-JT-NEXT:    b .LBB0_6
++; LA64-JT-NEXT:    b .LBB0_5
+ ; LA64-JT-NEXT:  .LBB0_3: # %bb2
+ ; LA64-JT-NEXT:    ori $a3, $zero, 3
+-; LA64-JT-NEXT:    b .LBB0_6
++; LA64-JT-NEXT:    b .LBB0_5
+ ; LA64-JT-NEXT:  .LBB0_4: # %bb3
+ ; LA64-JT-NEXT:    ori $a3, $zero, 2
+-; LA64-JT-NEXT:    b .LBB0_6
+-; LA64-JT-NEXT:  .LBB0_5: # %bb4
+-; LA64-JT-NEXT:    ori $a3, $zero, 1
+-; LA64-JT-NEXT:  .LBB0_6: # %exit
++; LA64-JT-NEXT:  .LBB0_5: # %exit
+ ; LA64-JT-NEXT:    st.w $a3, $a1, 0
+-; LA64-JT-NEXT:  .LBB0_7: # %exit
++; LA64-JT-NEXT:  .LBB0_6: # %exit
+ ; LA64-JT-NEXT:    addi.d $a3, $a0, -5
+ ; LA64-JT-NEXT:    bltu $a2, $a3, .LBB0_9
+-; LA64-JT-NEXT:  # %bb.8: # %exit
++; LA64-JT-NEXT:  # %bb.7: # %exit
+ ; LA64-JT-NEXT:    slli.d $a3, $a3, 3
+ ; LA64-JT-NEXT:    pcalau12i $a4, %pc_hi20(.LJTI0_1)
+ ; LA64-JT-NEXT:    addi.d $a4, $a4, %pc_lo12(.LJTI0_1)
+ ; LA64-JT-NEXT:    ldx.d $a3, $a4, $a3
+ ; LA64-JT-NEXT:  .Ljrtb_1:
+ ; LA64-JT-NEXT:    jr $a3
++; LA64-JT-NEXT:  .LBB0_8: # %bb4
++; LA64-JT-NEXT:    ori $a3, $zero, 1
++; LA64-JT-NEXT:    b .LBB0_5
+ ; LA64-JT-NEXT:  .LBB0_9: # %exit2
+ ; LA64-JT-NEXT:    ret
+ entry:
+diff --git a/llvm/test/CodeGen/LoongArch/opt-pipeline.ll b/llvm/test/CodeGen/LoongArch/opt-pipeline.ll
+index 2657a575aa8af..bda71c7faebf4 100644
+--- a/llvm/test/CodeGen/LoongArch/opt-pipeline.ll
++++ b/llvm/test/CodeGen/LoongArch/opt-pipeline.ll
+@@ -53,9 +53,10 @@
+ ; LAXX-NEXT:       Lower Garbage Collection Instructions
+ ; LAXX-NEXT:       Shadow Stack GC Lowering
+ ; LAXX-NEXT:       Remove unreachable blocks from the CFG
+-; LAXX-NEXT:       Natural Loop Information
++; LAXX-NEXT:       Cycle Info Analysis
+ ; LAXX-NEXT:       Post-Dominator Tree Construction
+ ; LAXX-NEXT:       Branch Probability Analysis
++; LAXX-NEXT:       Natural Loop Information
+ ; LAXX-NEXT:       Block Frequency Analysis
+ ; LAXX-NEXT:       Constant Hoisting
+ ; LAXX-NEXT:       Replace intrinsics with calls to vector library
+@@ -68,6 +69,7 @@
+ ; LAXX-NEXT:       Expand reduction intrinsics
+ ; LAXX-NEXT:       Natural Loop Information
+ ; LAXX-NEXT:       Type Promotion
++; LAXX-NEXT:       Cycle Info Analysis
+ ; LAXX-NEXT:       Post-Dominator Tree Construction
+ ; LAXX-NEXT:       Branch Probability Analysis
+ ; LAXX-NEXT:       Block Frequency Analysis
+@@ -80,11 +82,12 @@
+ ; LAXX-NEXT:       Module Verifier
+ ; LAXX-NEXT:       Basic Alias Analysis (stateless AA impl)
+ ; LAXX-NEXT:       Function Alias Analysis Results
+-; LAXX-NEXT:       Natural Loop Information
++; LAXX-NEXT:       Cycle Info Analysis
+ ; LAXX-NEXT:       Post-Dominator Tree Construction
+ ; LAXX-NEXT:       Branch Probability Analysis
+ ; LAXX-NEXT:       Assignment Tracking Analysis
+ ; LAXX-NEXT:       Lazy Branch Probability Analysis
++; LAXX-NEXT:       Natural Loop Information
+ ; LAXX-NEXT:       Lazy Block Frequency Analysis
+ ; LAXX-NEXT:       LoongArch DAG->DAG Pattern Instruction Selection
+ ; LAXX-NEXT:       Finalize ISel and expand pseudo-instructions
+diff --git a/llvm/test/CodeGen/M68k/pipeline.ll b/llvm/test/CodeGen/M68k/pipeline.ll
+index 24329b2749fca..66eb993ade52d 100644
+--- a/llvm/test/CodeGen/M68k/pipeline.ll
++++ b/llvm/test/CodeGen/M68k/pipeline.ll
+@@ -22,9 +22,10 @@
+ ; CHECK-NEXT:      Lower Garbage Collection Instructions
+ ; CHECK-NEXT:      Shadow Stack GC Lowering
+ ; CHECK-NEXT:      Remove unreachable blocks from the CFG
+-; CHECK-NEXT:      Natural Loop Information
++; CHECK-NEXT:      Cycle Info Analysis
+ ; CHECK-NEXT:      Post-Dominator Tree Construction
+ ; CHECK-NEXT:      Branch Probability Analysis
++; CHECK-NEXT:      Natural Loop Information
+ ; CHECK-NEXT:      Block Frequency Analysis
+ ; CHECK-NEXT:      Constant Hoisting
+ ; CHECK-NEXT:      Replace intrinsics with calls to vector library
+@@ -36,6 +37,7 @@
+ ; CHECK-NEXT:      Scalarize Masked Memory Intrinsics
+ ; CHECK-NEXT:      Expand reduction intrinsics
+ ; CHECK-NEXT:      Natural Loop Information
++; CHECK-NEXT:      Cycle Info Analysis
+ ; CHECK-NEXT:      Post-Dominator Tree Construction
+ ; CHECK-NEXT:      Branch Probability Analysis
+ ; CHECK-NEXT:      Block Frequency Analysis
+@@ -48,11 +50,12 @@
+ ; CHECK-NEXT:      Module Verifier
+ ; CHECK-NEXT:      Basic Alias Analysis (stateless AA impl)
+ ; CHECK-NEXT:      Function Alias Analysis Results
+-; CHECK-NEXT:      Natural Loop Information
++; CHECK-NEXT:      Cycle Info Analysis
+ ; CHECK-NEXT:      Post-Dominator Tree Construction
+ ; CHECK-NEXT:      Branch Probability Analysis
+ ; CHECK-NEXT:      Assignment Tracking Analysis
+ ; CHECK-NEXT:      Lazy Branch Probability Analysis
++; CHECK-NEXT:      Natural Loop Information
+ ; CHECK-NEXT:      Lazy Block Frequency Analysis
+ ; CHECK-NEXT:      M68k DAG->DAG Pattern Instruction Selection
+ ; CHECK-NEXT:      M68k PIC Global Base Reg Initialization
+diff --git a/llvm/test/CodeGen/PowerPC/O3-pipeline.ll b/llvm/test/CodeGen/PowerPC/O3-pipeline.ll
+index 3901d122f4494..127c7872fd01d 100644
+--- a/llvm/test/CodeGen/PowerPC/O3-pipeline.ll
++++ b/llvm/test/CodeGen/PowerPC/O3-pipeline.ll
+@@ -42,6 +42,7 @@
+ ; CHECK-NEXT:       LCSSA Verifier
+ ; CHECK-NEXT:       Loop-Closed SSA Form Pass
+ ; CHECK-NEXT:       Scalar Evolution Analysis
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       Loop Pass Manager
+@@ -54,9 +55,10 @@
+ ; CHECK-NEXT:       Lower Garbage Collection Instructions
+ ; CHECK-NEXT:       Shadow Stack GC Lowering
+ ; CHECK-NEXT:       Remove unreachable blocks from the CFG
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Block Frequency Analysis
+ ; CHECK-NEXT:       Constant Hoisting
+ ; CHECK-NEXT:       Replace intrinsics with calls to vector library
+@@ -68,6 +70,7 @@
+ ; CHECK-NEXT:       Scalarize Masked Memory Intrinsics
+ ; CHECK-NEXT:       Expand reduction intrinsics
+ ; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Block Frequency Analysis
+@@ -79,6 +82,7 @@
+ ; CHECK-NEXT:       Scalar Evolution Analysis
+ ; CHECK-NEXT:       Prepare loop for ppc preferred instruction forms
+ ; CHECK-NEXT:       Scalar Evolution Analysis
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       Optimization Remark Emitter
+@@ -89,11 +93,12 @@
+ ; CHECK-NEXT:       Module Verifier
+ ; CHECK-NEXT:       Basic Alias Analysis (stateless AA impl)
+ ; CHECK-NEXT:       Function Alias Analysis Results
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Assignment Tracking Analysis
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       PowerPC DAG->DAG Pattern Instruction Selection
+ ; CHECK-NEXT:       MachineDominator Tree Construction
+diff --git a/llvm/test/CodeGen/RISCV/GlobalISel/gisel-commandline-option.ll b/llvm/test/CodeGen/RISCV/GlobalISel/gisel-commandline-option.ll
+index 82c66c23b26ba..e5f993b7552d2 100644
+--- a/llvm/test/CodeGen/RISCV/GlobalISel/gisel-commandline-option.ll
++++ b/llvm/test/CodeGen/RISCV/GlobalISel/gisel-commandline-option.ll
+@@ -26,6 +26,7 @@
+ ; ENABLED-NEXT:  RegBankSelect
+ ; ENABLED-NEXT:  Analysis for ComputingKnownBits
+ ; ENABLED-O1-NEXT:  Lazy Branch Probability Analysis
++; ENABLED-O1-NEXT:  Natural Loop Information
+ ; ENABLED-O1-NEXT:  Lazy Block Frequency Analysis
+ ; ENABLED-NEXT:  InstructionSelect
+ ; ENABLED-NEXT:  ResetMachineFunction
+diff --git a/llvm/test/CodeGen/RISCV/O3-pipeline.ll b/llvm/test/CodeGen/RISCV/O3-pipeline.ll
+index 12b0895e0f158..d5bb2797c974a 100644
+--- a/llvm/test/CodeGen/RISCV/O3-pipeline.ll
++++ b/llvm/test/CodeGen/RISCV/O3-pipeline.ll
+@@ -32,10 +32,11 @@
+ ; CHECK-NEXT:     FunctionPass Manager
+ ; CHECK-NEXT:       Expand IR instructions
+ ; CHECK-NEXT:       Expand Atomic instructions
+-; CHECK-NEXT:       RISC-V Zacas ABI fix 
++; CHECK-NEXT:       RISC-V Zacas ABI fix
+ ; CHECK-NEXT:       Dominator Tree Construction
+ ; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Canonicalize natural loops
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       Optimization Remark Emitter
+@@ -56,9 +57,10 @@
+ ; CHECK-NEXT:       Lower Garbage Collection Instructions
+ ; CHECK-NEXT:       Shadow Stack GC Lowering
+ ; CHECK-NEXT:       Remove unreachable blocks from the CFG
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Block Frequency Analysis
+ ; CHECK-NEXT:       Constant Hoisting
+ ; CHECK-NEXT:       Replace intrinsics with calls to vector library
+@@ -70,6 +72,7 @@
+ ; CHECK-NEXT:       Scalarize Masked Memory Intrinsics
+ ; CHECK-NEXT:       Expand reduction intrinsics
+ ; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Block Frequency Analysis
+@@ -80,6 +83,7 @@
+ ; CHECK-NEXT:       Dominator Tree Construction
+ ; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Type Promotion
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Block Frequency Analysis
+@@ -97,11 +101,12 @@
+ ; CHECK-NEXT:       Dominator Tree Construction
+ ; CHECK-NEXT:       Basic Alias Analysis (stateless AA impl)
+ ; CHECK-NEXT:       Function Alias Analysis Results
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Assignment Tracking Analysis
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       RISC-V DAG->DAG Pattern Instruction Selection
+ ; CHECK-NEXT:       Finalize ISel and expand pseudo-instructions
+@@ -118,9 +123,9 @@
+ ; CHECK-NEXT:       Remove dead machine instructions
+ ; CHECK-NEXT:       MachineDominator Tree Construction
+ ; CHECK-NEXT:       Machine Natural Loop Construction
+-; CHECK-NEXT:       Machine Trace Metrics 
+-; CHECK-NEXT:       Lazy Machine Block Frequency Analysis 
+-; CHECK-NEXT:       Machine InstCombiner 
++; CHECK-NEXT:       Machine Trace Metrics
++; CHECK-NEXT:       Lazy Machine Block Frequency Analysis
++; CHECK-NEXT:       Machine InstCombiner
+ ; CHECK-NEXT:       Machine Block Frequency Analysis
+ ; CHECK-NEXT:       Early Machine Loop Invariant Code Motion
+ ; CHECK-NEXT:       MachineDominator Tree Construction
+diff --git a/llvm/test/CodeGen/SPIRV/llc-pipeline.ll b/llvm/test/CodeGen/SPIRV/llc-pipeline.ll
+index c9234576df30d..3318fe41d0760 100644
+--- a/llvm/test/CodeGen/SPIRV/llc-pipeline.ll
++++ b/llvm/test/CodeGen/SPIRV/llc-pipeline.ll
+@@ -64,8 +64,9 @@
+ ; SPIRV-O0-NEXT:      SPIRV post legalizer
+ ; SPIRV-O0-NEXT:      Analysis for ComputingKnownBits
+ ; SPIRV-O0-NEXT:      Dominator Tree Construction
+-; SPIRV-O0-NEXT:      Natural Loop Information
++; SPIRV-O0-NEXT:      Cycle Info Analysis
+ ; SPIRV-O0-NEXT:      Lazy Branch Probability Analysis
++; SPIRV-O0-NEXT:      Natural Loop Information
+ ; SPIRV-O0-NEXT:      Lazy Block Frequency Analysis
+ ; SPIRV-O0-NEXT:      InstructionSelect
+ ; SPIRV-O0-NEXT:      ResetMachineFunction
+@@ -125,9 +126,10 @@
+ ; SPIRV-Opt-NEXT:      Lower Garbage Collection Instructions
+ ; SPIRV-Opt-NEXT:      Shadow Stack GC Lowering
+ ; SPIRV-Opt-NEXT:      Remove unreachable blocks from the CFG
+-; SPIRV-Opt-NEXT:      Natural Loop Information
++; SPIRV-Opt-NEXT:      Cycle Info Analysis
+ ; SPIRV-Opt-NEXT:      Post-Dominator Tree Construction
+ ; SPIRV-Opt-NEXT:      Branch Probability Analysis
++; SPIRV-Opt-NEXT:      Natural Loop Information
+ ; SPIRV-Opt-NEXT:      Block Frequency Analysis
+ ; SPIRV-Opt-NEXT:      Constant Hoisting
+ ; SPIRV-Opt-NEXT:      Replace intrinsics with calls to vector library
+@@ -147,6 +149,7 @@
+ ; SPIRV-Opt-NEXT:    FunctionPass Manager
+ ; SPIRV-Opt-NEXT:      Dominator Tree Construction
+ ; SPIRV-Opt-NEXT:      Natural Loop Information
++; SPIRV-Opt-NEXT:      Cycle Info Analysis
+ ; SPIRV-Opt-NEXT:      Post-Dominator Tree Construction
+ ; SPIRV-Opt-NEXT:      Branch Probability Analysis
+ ; SPIRV-Opt-NEXT:      Block Frequency Analysis
+@@ -169,7 +172,7 @@
+ ; SPIRV-Opt-NEXT:      Insert stack protectors
+ ; SPIRV-Opt-NEXT:      Analysis containing CSE Info
+ ; SPIRV-Opt-NEXT:      Dominator Tree Construction
+-; SPIRV-Opt-NEXT:      Natural Loop Information
++; SPIRV-Opt-NEXT:      Cycle Info Analysis
+ ; SPIRV-Opt-NEXT:      Post-Dominator Tree Construction
+ ; SPIRV-Opt-NEXT:      Branch Probability Analysis
+ ; SPIRV-Opt-NEXT:      Basic Alias Analysis (stateless AA impl)
+@@ -184,6 +187,7 @@
+ ; SPIRV-Opt-NEXT:      SPIRV post legalizer
+ ; SPIRV-Opt-NEXT:      Analysis for ComputingKnownBits
+ ; SPIRV-Opt-NEXT:      Lazy Branch Probability Analysis
++; SPIRV-Opt-NEXT:      Natural Loop Information
+ ; SPIRV-Opt-NEXT:      Lazy Block Frequency Analysis
+ ; SPIRV-Opt-NEXT:      InstructionSelect
+ ; SPIRV-Opt-NEXT:      ResetMachineFunction
+diff --git a/llvm/test/CodeGen/WebAssembly/GlobalISel/gisel-commandline-option.ll b/llvm/test/CodeGen/WebAssembly/GlobalISel/gisel-commandline-option.ll
+index bff1f6912d48b..b1ed82a7fea8e 100644
+--- a/llvm/test/CodeGen/WebAssembly/GlobalISel/gisel-commandline-option.ll
++++ b/llvm/test/CodeGen/WebAssembly/GlobalISel/gisel-commandline-option.ll
+@@ -26,8 +26,9 @@
+ ; ENABLED-NEXT:  RegBankSelect
+ ; ENABLED-NEXT:  Analysis for ComputingKnownBits
+ ; ENABLED-O1-NEXT:  Dominator Tree Construction
+-; ENABLED-O1-NEXT:  Natural Loop Information
++; ENABLED-O1-NEXT:  Cycle Info Analysis
+ ; ENABLED-O1-NEXT:  Lazy Branch Probability Analysis
++; ENABLED-O1-NEXT:  Natural Loop Information
+ ; ENABLED-O1-NEXT:  Lazy Block Frequency Analysis
+ ; ENABLED-NEXT:  InstructionSelect
+ ; NOFALLBACK-NEXT:  WebAssembly Argument Move
+diff --git a/llvm/test/CodeGen/X86/opt-pipeline.ll b/llvm/test/CodeGen/X86/opt-pipeline.ll
+index 24390f2d852d3..ad4d0bf7fe0e4 100644
+--- a/llvm/test/CodeGen/X86/opt-pipeline.ll
++++ b/llvm/test/CodeGen/X86/opt-pipeline.ll
+@@ -51,9 +51,10 @@
+ ; CHECK-NEXT:       Lower Garbage Collection Instructions
+ ; CHECK-NEXT:       Shadow Stack GC Lowering
+ ; CHECK-NEXT:       Remove unreachable blocks from the CFG
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Block Frequency Analysis
+ ; CHECK-NEXT:       Constant Hoisting
+ ; CHECK-NEXT:       Replace intrinsics with calls to vector library
+@@ -68,6 +69,7 @@
+ ; CHECK-NEXT:       X86 Partial Reduction
+ ; CHECK-NEXT:       Expand indirectbr instructions
+ ; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Block Frequency Analysis
+@@ -80,11 +82,12 @@
+ ; CHECK-NEXT:       Module Verifier
+ ; CHECK-NEXT:       Basic Alias Analysis (stateless AA impl)
+ ; CHECK-NEXT:       Function Alias Analysis Results
+-; CHECK-NEXT:       Natural Loop Information
++; CHECK-NEXT:       Cycle Info Analysis
+ ; CHECK-NEXT:       Post-Dominator Tree Construction
+ ; CHECK-NEXT:       Branch Probability Analysis
+ ; CHECK-NEXT:       Assignment Tracking Analysis
+ ; CHECK-NEXT:       Lazy Branch Probability Analysis
++; CHECK-NEXT:       Natural Loop Information
+ ; CHECK-NEXT:       Lazy Block Frequency Analysis
+ ; CHECK-NEXT:       X86 DAG->DAG Instruction Selection
+ ; CHECK-NEXT:       MachineDominator Tree Construction
+diff --git a/llvm/test/CodeGen/X86/pr38795.ll b/llvm/test/CodeGen/X86/pr38795.ll
+index 6a0c13526ac18..3c23fdafa97e3 100644
+--- a/llvm/test/CodeGen/X86/pr38795.ll
++++ b/llvm/test/CodeGen/X86/pr38795.ll
+@@ -25,7 +25,7 @@ define dso_local void @fn() {
+ ; CHECK-NEXT:    xorl %ebx, %ebx
+ ; CHECK-NEXT:    # implicit-def: $ecx
+ ; CHECK-NEXT:    # implicit-def: $edi
+-; CHECK-NEXT:    # implicit-def: $dh
++; CHECK-NEXT:    # implicit-def: $dl
+ ; CHECK-NEXT:    # implicit-def: $al
+ ; CHECK-NEXT:    # kill: killed $al
+ ; CHECK-NEXT:    # implicit-def: $ebp
+@@ -33,7 +33,8 @@ define dso_local void @fn() {
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_15: # %for.inc
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    movb %dl, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
++; CHECK-NEXT:    movzbl {{[-0-9]+}}(%e{{[sb]}}p), %eax # 1-byte Folded Reload
++; CHECK-NEXT:    movb %al, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
+ ; CHECK-NEXT:  .LBB0_1: # %for.cond
+ ; CHECK-NEXT:    # =>This Loop Header: Depth=1
+ ; CHECK-NEXT:    # Child Loop BB0_19 Depth 2
+@@ -41,46 +42,73 @@ define dso_local void @fn() {
+ ; CHECK-NEXT:    jne .LBB0_3
+ ; CHECK-NEXT:  # %bb.2: # %if.then
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    movb %dh, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
++; CHECK-NEXT:    movb %dl, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
+ ; CHECK-NEXT:    movl $.str, (%esp)
+ ; CHECK-NEXT:    calll printf
+ ; CHECK-NEXT:    # implicit-def: $eax
+-; CHECK-NEXT:    movzbl {{[-0-9]+}}(%e{{[sb]}}p), %edx # 1-byte Folded Reload
+-; CHECK-NEXT:    testl %edi, %edi
+-; CHECK-NEXT:    jne .LBB0_10
+-; CHECK-NEXT:    jmp .LBB0_6
++; CHECK-NEXT:    movzbl {{[-0-9]+}}(%e{{[sb]}}p), %ecx # 1-byte Folded Reload
++; CHECK-NEXT:    movb %cl, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
++; CHECK-NEXT:    jmp .LBB0_5
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_3: # %if.end
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+ ; CHECK-NEXT:    movl %ecx, %eax
+ ; CHECK-NEXT:    cltd
+ ; CHECK-NEXT:    idivl a
+-; CHECK-NEXT:    movl %ecx, %edx
++; CHECK-NEXT:    movl %eax, %esi
++; CHECK-NEXT:    movl %ecx, %eax
+ ; CHECK-NEXT:    movl $0, h
+-; CHECK-NEXT:    movb {{[-0-9]+}}(%e{{[sb]}}p), %dh # 1-byte Reload
+-; CHECK-NEXT:    cmpb $8, %dh
++; CHECK-NEXT:    movzbl {{[-0-9]+}}(%e{{[sb]}}p), %edx # 1-byte Folded Reload
++; CHECK-NEXT:    cmpb $8, %dl
+ ; CHECK-NEXT:    jg .LBB0_7
+ ; CHECK-NEXT:  # %bb.4: # %if.then13
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    movl %eax, %esi
++; CHECK-NEXT:    movb %al, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
+ ; CHECK-NEXT:    movl $.str, (%esp)
+-; CHECK-NEXT:    movb %dl, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
+ ; CHECK-NEXT:    calll printf
+-; CHECK-NEXT:    movb {{[-0-9]+}}(%e{{[sb]}}p), %dh # 1-byte Reload
+-; CHECK-NEXT:    movb {{[-0-9]+}}(%e{{[sb]}}p), %dl # 1-byte Reload
++; CHECK-NEXT:    movzbl {{[-0-9]+}}(%e{{[sb]}}p), %edx # 1-byte Folded Reload
+ ; CHECK-NEXT:    testb %bl, %bl
+ ; CHECK-NEXT:    movl %esi, %ecx
+ ; CHECK-NEXT:    # implicit-def: $eax
+-; CHECK-NEXT:    movb %dh, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
++; CHECK-NEXT:    movb %dl, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
+ ; CHECK-NEXT:    jne .LBB0_15
++; CHECK-NEXT:    jmp .LBB0_5
++; CHECK-NEXT:    .p2align 4
++; CHECK-NEXT:  .LBB0_7: # %if.end21
++; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
++; CHECK-NEXT:    # implicit-def: $ebp
++; CHECK-NEXT:    jmp .LBB0_8
+ ; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  # %bb.5: # %for.cond35
++; CHECK-NEXT:  .LBB0_5: # %for.cond35
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+ ; CHECK-NEXT:    testl %edi, %edi
+ ; CHECK-NEXT:    je .LBB0_6
+-; CHECK-NEXT:  .LBB0_10: # %af
++; CHECK-NEXT:  # %bb.10: # %af
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+ ; CHECK-NEXT:    testb %bl, %bl
++; CHECK-NEXT:    je .LBB0_16
++; CHECK-NEXT:  .LBB0_11: # in Loop: Header=BB0_1 Depth=1
++; CHECK-NEXT:    # implicit-def: $edi
++; CHECK-NEXT:    # implicit-def: $cl
++; CHECK-NEXT:    # kill: killed $cl
++; CHECK-NEXT:    # implicit-def: $cl
++; CHECK-NEXT:    # kill: killed $cl
++; CHECK-NEXT:    # implicit-def: $ebp
++; CHECK-NEXT:    jmp .LBB0_5
++; CHECK-NEXT:    .p2align 4
++; CHECK-NEXT:  .LBB0_6: # in Loop: Header=BB0_1 Depth=1
++; CHECK-NEXT:    xorl %edi, %edi
++; CHECK-NEXT:    movzbl {{[-0-9]+}}(%e{{[sb]}}p), %eax # 1-byte Folded Reload
++; CHECK-NEXT:    movzbl {{[-0-9]+}}(%e{{[sb]}}p), %edx # 1-byte Folded Reload
++; CHECK-NEXT:    jmp .LBB0_19
++; CHECK-NEXT:    .p2align 4
++; CHECK-NEXT:  .LBB0_8: # %ae
++; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
++; CHECK-NEXT:    testb %bl, %bl
++; CHECK-NEXT:    je .LBB0_12
++; CHECK-NEXT:  # %bb.9: # in Loop: Header=BB0_1 Depth=1
++; CHECK-NEXT:    # implicit-def: $eax
++; CHECK-NEXT:    testb %bl, %bl
+ ; CHECK-NEXT:    jne .LBB0_11
+ ; CHECK-NEXT:  .LBB0_16: # %if.end39
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+@@ -94,33 +122,22 @@ define dso_local void @fn() {
+ ; CHECK-NEXT:    calll printf
+ ; CHECK-NEXT:  .LBB0_18: # %for.end46
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    # implicit-def: $dh
+ ; CHECK-NEXT:    # implicit-def: $dl
++; CHECK-NEXT:    # implicit-def: $al
+ ; CHECK-NEXT:    # implicit-def: $ebp
+-; CHECK-NEXT:    jmp .LBB0_19
+-; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  .LBB0_7: # %if.end21
+-; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    # implicit-def: $ebp
+-; CHECK-NEXT:    jmp .LBB0_8
+-; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  .LBB0_6: # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    xorl %edi, %edi
+-; CHECK-NEXT:    movb {{[-0-9]+}}(%e{{[sb]}}p), %dh # 1-byte Reload
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_19: # %for.cond47
+ ; CHECK-NEXT:    # Parent Loop BB0_1 Depth=1
+ ; CHECK-NEXT:    # => This Inner Loop Header: Depth=2
+ ; CHECK-NEXT:    testb %bl, %bl
+ ; CHECK-NEXT:    jne .LBB0_19
+-; CHECK-NEXT:  .LBB0_8: # %ae
+-; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    testb %bl, %bl
+-; CHECK-NEXT:    jne .LBB0_9
+-; CHECK-NEXT:  # %bb.12: # %if.end26
++; CHECK-NEXT:    jmp .LBB0_8
++; CHECK-NEXT:    .p2align 4
++; CHECK-NEXT:  .LBB0_12: # %if.end26
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
++; CHECK-NEXT:    movb %al, {{[-0-9]+}}(%e{{[sb]}}p) # 1-byte Spill
+ ; CHECK-NEXT:    xorl %ecx, %ecx
+-; CHECK-NEXT:    testb %dh, %dh
++; CHECK-NEXT:    testb %dl, %dl
+ ; CHECK-NEXT:    je .LBB0_15
+ ; CHECK-NEXT:  # %bb.13: # %if.end26
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+@@ -131,20 +148,6 @@ define dso_local void @fn() {
+ ; CHECK-NEXT:    xorl %ecx, %ecx
+ ; CHECK-NEXT:    xorl %ebp, %ebp
+ ; CHECK-NEXT:    jmp .LBB0_15
+-; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  .LBB0_9: # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    # implicit-def: $eax
+-; CHECK-NEXT:    testb %bl, %bl
+-; CHECK-NEXT:    je .LBB0_16
+-; CHECK-NEXT:  .LBB0_11: # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    # implicit-def: $edi
+-; CHECK-NEXT:    # implicit-def: $cl
+-; CHECK-NEXT:    # kill: killed $cl
+-; CHECK-NEXT:    # implicit-def: $dl
+-; CHECK-NEXT:    # implicit-def: $ebp
+-; CHECK-NEXT:    testl %edi, %edi
+-; CHECK-NEXT:    jne .LBB0_10
+-; CHECK-NEXT:    jmp .LBB0_6
+ entry:
+   br label %for.cond
+ 
+diff --git a/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll
+index f098951e1403d..aa0b2864eaab8 100644
+--- a/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-postlink-pgo-defaults.ll
+@@ -42,8 +42,9 @@
+ ; CHECK-O-NEXT: Running analysis: OuterAnalysisManagerProxy
+ ; CHECK-O-NEXT: Running analysis: BlockFrequencyAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: BranchProbabilityAnalysis on foo
+-; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
++; CHECK-O-NEXT: Running analysis: CycleAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: PostDominatorTreeAnalysis on foo
++; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
+ ; CHECK-O-NEXT: Running pass: SimplifyCFGPass
+ ; CHECK-O-NEXT: Running pass: AlwaysInlinerPass
+ ; CHECK-O-NEXT: Running pass: ModuleInlinerWrapperPass
+@@ -120,7 +121,6 @@
+ ; CHECK-O-NEXT: Running pass: ADCEPass
+ ; CHECK-O23-NEXT: Running pass: MemCpyOptPass
+ ; CHECK-O23-NEXT: Running pass: DSEPass
+-; CHECK-O23-NEXT: Running analysis: CycleAnalysis
+ ; CHECK-O23-NEXT: Running pass: MoveAutoInitPass on foo
+ ; CHECK-O23-NEXT: Running pass: LoopSimplifyPass
+ ; CHECK-O23-NEXT: Running pass: LCSSAPass
+diff --git a/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll
+index 702920e5a6dbf..e9d64c4a43163 100644
+--- a/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-postlink-samplepgo-defaults.ll
+@@ -48,8 +48,9 @@
+ ; CHECK-O-NEXT: Running analysis: OuterAnalysisManagerProxy
+ ; CHECK-O-NEXT: Running analysis: BlockFrequencyAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: BranchProbabilityAnalysis on foo
+-; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
++; CHECK-O-NEXT: Running analysis: CycleAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: PostDominatorTreeAnalysis on foo
++; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
+ ; CHECK-O-NEXT: Running pass: SimplifyCFGPass on foo
+ 
+ ; CHECK-O-NEXT: Running pass: PGOForceFunctionAttrsPass
+@@ -127,7 +128,6 @@
+ ; CHECK-O-NEXT: Running pass: ADCEPass
+ ; CHECK-O23-NEXT: Running pass: MemCpyOptPass
+ ; CHECK-O23-NEXT: Running pass: DSEPass
+-; CHECK-O23-NEXT: Running analysis: CycleAnalysis
+ ; CHECK-O23-NEXT: Running pass: MoveAutoInitPass
+ ; CHECK-O23-NEXT: Running pass: LoopSimplifyPass
+ ; CHECK-O23-NEXT: Running pass: LCSSAPass
+diff --git a/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll
+index 2c2046b0d0934..b60a8af7be33e 100644
+--- a/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-prelink-pgo-defaults.ll
+@@ -67,9 +67,10 @@
+ ; CHECK-O-NEXT: Running pass: PGOInstrumentationUse
+ ; CHECK-O-NEXT: Running analysis: ProfileSummaryAnalysis
+ ; CHECK-O-NEXT: Running analysis: BranchProbabilityAnalysis on foo
+-; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
++; CHECK-O-NEXT: Running analysis: CycleAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: PostDominatorTreeAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: BlockFrequencyAnalysis on foo
++; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
+ ; CHECK-O-NEXT: Invalidating analysis: InnerAnalysisManagerProxy
+ ; CHECK-O-NEXT: Invalidating analysis: LazyCallGraphAnalysis on
+ ; CHECK-O-NEXT: Invalidating analysis: InnerAnalysisManagerProxy
+@@ -119,8 +120,9 @@
+ ; CHECK-O-NEXT: Running analysis: LastRunTrackingAnalysis
+ ; CHECK-O-NEXT: Running analysis: BlockFrequencyAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: BranchProbabilityAnalysis on foo
+-; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
++; CHECK-O-NEXT: Running analysis: CycleAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: PostDominatorTreeAnalysis on foo
++; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
+ ; CHECK-O23-NEXT: Running pass: AggressiveInstCombinePass
+ ; CHECK-O-NEXT: Running pass: LibCallsShrinkWrapPass
+ ; CHECK-O23-NEXT: Running pass: PGOMemOPSizeOpt
+@@ -166,7 +168,6 @@
+ ; CHECK-O-NEXT: Running pass: ADCEPass
+ ; CHECK-O23-NEXT: Running pass: MemCpyOptPass
+ ; CHECK-O23-NEXT: Running pass: DSEPass
+-; CHECK-O23-NEXT: Running analysis: CycleAnalysis
+ ; CHECK-O23-NEXT: Running pass: MoveAutoInitPass on foo
+ ; CHECK-O23-NEXT: Running pass: LoopSimplifyPass
+ ; CHECK-O23-NEXT: Running pass: LCSSAPass
+diff --git a/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll b/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll
+index ef01b14df972a..34ff5ae50f30b 100644
+--- a/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll
++++ b/llvm/test/Other/new-pm-thinlto-prelink-samplepgo-defaults.ll
+@@ -54,8 +54,9 @@
+ ; CHECK-O-NEXT: Running analysis: OuterAnalysisManagerProxy
+ ; CHECK-O-NEXT: Running analysis: BlockFrequencyAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: BranchProbabilityAnalysis on foo
+-; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
++; CHECK-O-NEXT: Running analysis: CycleAnalysis on foo
+ ; CHECK-O-NEXT: Running analysis: PostDominatorTreeAnalysis on foo
++; CHECK-O-NEXT: Running analysis: LoopAnalysis on foo
+ ; CHECK-O-NEXT: Running pass: SimplifyCFGPass on foo
+ ; CHECK-O-NEXT: Running pass: PGOForceFunctionAttrsPass
+ ; CHECK-O-NEXT: Running pass: AlwaysInlinerPass
+@@ -131,7 +132,6 @@
+ ; CHECK-O-NEXT: Running pass: ADCEPass
+ ; CHECK-O23-NEXT: Running pass: MemCpyOptPass
+ ; CHECK-O23-NEXT: Running pass: DSEPass
+-; CHECK-O23-NEXT: Running analysis: CycleAnalysis
+ ; CHECK-O23-NEXT: Running pass: MoveAutoInitPass on foo
+ ; CHECK-O23-NEXT: Running pass: LoopSimplifyPass
+ ; CHECK-O23-NEXT: Running pass: LCSSAPass
+diff --git a/llvm/test/Transforms/Inline/cgscc-incremental-invalidate.ll b/llvm/test/Transforms/Inline/cgscc-incremental-invalidate.ll
+index bc31bca614a40..373bc01c9f473 100644
+--- a/llvm/test/Transforms/Inline/cgscc-incremental-invalidate.ll
++++ b/llvm/test/Transforms/Inline/cgscc-incremental-invalidate.ll
+@@ -8,20 +8,23 @@
+ ;
+ ; CHECK: Running pass: InlinerPass on (test1_f, test1_g, test1_h)
+ ; CHECK: Running analysis: DominatorTreeAnalysis on test1_f
++; CHECK: Invalidating analysis: CycleAnalysis on test1_f
+ ; CHECK: Invalidating analysis: DominatorTreeAnalysis on test1_f
+-; CHECK: Invalidating analysis: LoopAnalysis on test1_f
+ ; CHECK: Invalidating analysis: BranchProbabilityAnalysis on test1_f
++; CHECK: Invalidating analysis: LoopAnalysis on test1_f
+ ; CHECK: Invalidating analysis: BlockFrequencyAnalysis on test1_f
+ ; CHECK: Invalidating analysis: EphemeralValuesAnalysis on test1_f
+ ; CHECK: Running analysis: DominatorTreeAnalysis on test1_g
++; CHECK: Invalidating analysis: CycleAnalysis on test1_g
+ ; CHECK: Invalidating analysis: DominatorTreeAnalysis on test1_g
+-; CHECK: Invalidating analysis: LoopAnalysis on test1_g
+ ; CHECK: Invalidating analysis: BranchProbabilityAnalysis on test1_g
++; CHECK: Invalidating analysis: LoopAnalysis on test1_g
+ ; CHECK: Invalidating analysis: BlockFrequencyAnalysis on test1_g
+ ; CHECK: Invalidating analysis: EphemeralValuesAnalysis on test1_g
++; CHECK: Invalidating analysis: CycleAnalysis on test1_h
+ ; CHECK: Invalidating analysis: DominatorTreeAnalysis on test1_h
+-; CHECK: Invalidating analysis: LoopAnalysis on test1_h
+ ; CHECK: Invalidating analysis: BranchProbabilityAnalysis on test1_h
++; CHECK: Invalidating analysis: LoopAnalysis on test1_h
+ ; CHECK: Invalidating analysis: BlockFrequencyAnalysis on test1_h
+ ; CHECK: Invalidating analysis: EphemeralValuesAnalysis on test1_h
+ ; CHECK-NOT: Invalidating analysis:
+diff --git a/llvm/test/Transforms/PGOProfile/Inputs/irreducible.proftext b/llvm/test/Transforms/PGOProfile/Inputs/irreducible.proftext
+index b8828cc1238d7..d0fdac4193553 100644
+--- a/llvm/test/Transforms/PGOProfile/Inputs/irreducible.proftext
++++ b/llvm/test/Transforms/PGOProfile/Inputs/irreducible.proftext
+@@ -7,8 +7,8 @@ _Z11irreducibleii
+ # Counter Values:
+ 1000
+ 950
+-100
+ 373
++100
+ 1
+ 0
+ 
+@@ -19,11 +19,11 @@ _Z11irreduciblePh
+ 9
+ # Counter Values:
+ 300
+-99
+-300
+-201
+ 1
++201
+ 1
++99
+ 0
+ 0
++99
+ 0
+diff --git a/llvm/test/Transforms/PGOProfile/Inputs/irreducible_entry.proftext b/llvm/test/Transforms/PGOProfile/Inputs/irreducible_entry.proftext
+index da84cd0ff34a0..361a63c8e3e7f 100644
+--- a/llvm/test/Transforms/PGOProfile/Inputs/irreducible_entry.proftext
++++ b/llvm/test/Transforms/PGOProfile/Inputs/irreducible_entry.proftext
+@@ -9,8 +9,8 @@ _Z11irreducibleii
+ 1
+ 1000
+ 950
+-100
+ 373
++100
+ 0
+ 
+ _Z11irreduciblePh
+@@ -21,10 +21,10 @@ _Z11irreduciblePh
+ # Counter Values:
+ 1
+ 300
+-99
+-300
+ 201
+ 1
++99
+ 0
+ 0
++99
+ 0
+diff --git a/llvm/unittests/Analysis/BlockFrequencyInfoTest.cpp b/llvm/unittests/Analysis/BlockFrequencyInfoTest.cpp
+index c1e94cd5898fb..fd6daf4ae1230 100644
+--- a/llvm/unittests/Analysis/BlockFrequencyInfoTest.cpp
++++ b/llvm/unittests/Analysis/BlockFrequencyInfoTest.cpp
+@@ -12,6 +12,7 @@
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/AsmParser/Parser.h"
+ #include "llvm/IR/BasicBlock.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/Function.h"
+ #include "llvm/IR/LLVMContext.h"
+@@ -28,13 +29,16 @@ class BlockFrequencyInfoTest : public testing::Test {
+ protected:
+   std::unique_ptr<BranchProbabilityInfo> BPI;
+   std::unique_ptr<DominatorTree> DT;
++  std::unique_ptr<CycleInfo> CI;
+   std::unique_ptr<LoopInfo> LI;
+   LLVMContext C;
+ 
+   BlockFrequencyInfo buildBFI(Function &F) {
+     DT.reset(new DominatorTree(F));
+     LI.reset(new LoopInfo(*DT));
+-    BPI.reset(new BranchProbabilityInfo(F, *LI));
++    CI.reset(new CycleInfo());
++    CI->compute(F);
++    BPI.reset(new BranchProbabilityInfo(F, *CI));
+     return BlockFrequencyInfo(F, *BPI, *LI);
+   }
+   std::unique_ptr<Module> makeLLVMModule() {
+diff --git a/llvm/unittests/Analysis/BranchProbabilityInfoTest.cpp b/llvm/unittests/Analysis/BranchProbabilityInfoTest.cpp
+index 38d9c0dd46e6f..ce4e763b553f7 100644
+--- a/llvm/unittests/Analysis/BranchProbabilityInfoTest.cpp
++++ b/llvm/unittests/Analysis/BranchProbabilityInfoTest.cpp
+@@ -7,10 +7,10 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Analysis/BranchProbabilityInfo.h"
+-#include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/AsmParser/Parser.h"
+ #include "llvm/IR/BasicBlock.h"
+ #include "llvm/IR/Constants.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/Function.h"
+ #include "llvm/IR/Instructions.h"
+@@ -27,13 +27,14 @@ namespace {
+ struct BranchProbabilityInfoTest : public testing::Test {
+   std::unique_ptr<BranchProbabilityInfo> BPI;
+   std::unique_ptr<DominatorTree> DT;
+-  std::unique_ptr<LoopInfo> LI;
++  std::unique_ptr<CycleInfo> CI;
+   LLVMContext C;
+ 
+   BranchProbabilityInfo &buildBPI(Function &F) {
+     DT.reset(new DominatorTree(F));
+-    LI.reset(new LoopInfo(*DT));
+-    BPI.reset(new BranchProbabilityInfo(F, *LI));
++    CI.reset(new CycleInfo());
++    CI->compute(F);
++    BPI.reset(new BranchProbabilityInfo(F, *CI));
+     return *BPI;
+   }
+ 
+diff --git a/llvm/unittests/Analysis/ProfileSummaryInfoTest.cpp b/llvm/unittests/Analysis/ProfileSummaryInfoTest.cpp
+index c8752c78d1c35..629d7b0ffedcb 100644
+--- a/llvm/unittests/Analysis/ProfileSummaryInfoTest.cpp
++++ b/llvm/unittests/Analysis/ProfileSummaryInfoTest.cpp
+@@ -12,6 +12,7 @@
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/AsmParser/Parser.h"
+ #include "llvm/IR/BasicBlock.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/Function.h"
+ #include "llvm/IR/LLVMContext.h"
+@@ -37,6 +38,7 @@ class ProfileSummaryInfoTest : public testing::Test {
+   std::unique_ptr<BranchProbabilityInfo> BPI;
+   std::unique_ptr<DominatorTree> DT;
+   std::unique_ptr<LoopInfo> LI;
++  std::unique_ptr<CycleInfo> CI;
+ 
+   ProfileSummaryInfo buildPSI(Module *M) {
+     return ProfileSummaryInfo(*M);
+@@ -44,7 +46,9 @@ class ProfileSummaryInfoTest : public testing::Test {
+   BlockFrequencyInfo buildBFI(Function &F) {
+     DT.reset(new DominatorTree(F));
+     LI.reset(new LoopInfo(*DT));
+-    BPI.reset(new BranchProbabilityInfo(F, *LI));
++    CI.reset(new CycleInfo());
++    CI->compute(F);
++    BPI.reset(new BranchProbabilityInfo(F, *CI));
+     return BlockFrequencyInfo(F, *BPI, *LI);
+   }
+   std::unique_ptr<Module> makeLLVMModule(const char *ProfKind = nullptr,
+diff --git a/llvm/unittests/Transforms/IPO/FunctionSpecializationTest.cpp b/llvm/unittests/Transforms/IPO/FunctionSpecializationTest.cpp
+index 400f23a932540..4941b153cc6f2 100644
+--- a/llvm/unittests/Transforms/IPO/FunctionSpecializationTest.cpp
++++ b/llvm/unittests/Transforms/IPO/FunctionSpecializationTest.cpp
+@@ -6,9 +6,11 @@
+ //
+ //===----------------------------------------------------------------------===//
+ 
++#include "llvm/Transforms/IPO/FunctionSpecialization.h"
+ #include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/BlockFrequencyInfo.h"
+ #include "llvm/Analysis/BranchProbabilityInfo.h"
++#include "llvm/Analysis/CycleAnalysis.h"
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/Analysis/PostDominators.h"
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+@@ -17,7 +19,6 @@
+ #include "llvm/IR/Constants.h"
+ #include "llvm/IR/PassInstrumentation.h"
+ #include "llvm/Support/SourceMgr.h"
+-#include "llvm/Transforms/IPO/FunctionSpecialization.h"
+ #include "llvm/Transforms/Utils/SCCPSolver.h"
+ #include "gtest/gtest.h"
+ #include <memory>
+@@ -49,6 +50,7 @@ class FunctionSpecializationTest : public testing::Test {
+     FAM.registerPass([&] { return TargetIRAnalysis(); });
+     FAM.registerPass([&] { return BlockFrequencyAnalysis(); });
+     FAM.registerPass([&] { return BranchProbabilityAnalysis(); });
++    FAM.registerPass([&] { return CycleAnalysis(); });
+     FAM.registerPass([&] { return LoopAnalysis(); });
+     FAM.registerPass([&] { return AssumptionAnalysis(); });
+     FAM.registerPass([&] { return DominatorTreeAnalysis(); });
+diff --git a/llvm/unittests/Transforms/Utils/BasicBlockUtilsTest.cpp b/llvm/unittests/Transforms/Utils/BasicBlockUtilsTest.cpp
+index a91d67ff6c550..5785037687d28 100644
+--- a/llvm/unittests/Transforms/Utils/BasicBlockUtilsTest.cpp
++++ b/llvm/unittests/Transforms/Utils/BasicBlockUtilsTest.cpp
+@@ -20,6 +20,7 @@
+ #include "llvm/Analysis/TargetLibraryInfo.h"
+ #include "llvm/AsmParser/Parser.h"
+ #include "llvm/IR/BasicBlock.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/LLVMContext.h"
+ #include "llvm/IR/Module.h"
+@@ -651,7 +652,9 @@ define void @crit_edge(ptr %tgt, i1 %cond0, i1 %cond1) {
+   Function *F = M->getFunction("crit_edge");
+   DominatorTree DT(*F);
+   LoopInfo LI(DT);
+-  BranchProbabilityInfo BPI(*F, LI);
++  CycleInfo CI;
++  CI.compute(*F);
++  BranchProbabilityInfo BPI(*F, CI);
+   BlockFrequencyInfo BFI(*F, BPI, LI);
+ 
+   ASSERT_TRUE(SplitIndirectBrCriticalEdges(*F, /*IgnoreBlocksWithoutPHI=*/true,
+@@ -693,7 +696,9 @@ define void @crit_edge(ptr %tgt, i1 %cond0, i1 %cond1) {
+   Function *F = M->getFunction("crit_edge");
+   DominatorTree DT(*F);
+   LoopInfo LI(DT);
+-  BranchProbabilityInfo BPI(*F, LI);
++  CycleInfo CI;
++  CI.compute(*F);
++  BranchProbabilityInfo BPI(*F, CI);
+   BlockFrequencyInfo BFI(*F, BPI, LI);
+ 
+   ASSERT_TRUE(SplitIndirectBrCriticalEdges(*F, /*IgnoreBlocksWithoutPHI=*/false,
+@@ -794,8 +799,9 @@ switch i32 %0, label %LD [
+ )IR");
+   Function *F = M->getFunction("edge_probability");
+   DominatorTree DT(*F);
+-  LoopInfo LI(DT);
+-  BranchProbabilityInfo BPI(*F, LI);
++  CycleInfo CI;
++  CI.compute(*F);
++  BranchProbabilityInfo BPI(*F, CI);
+ 
+   // Check that the unreachable block has the minimal probability.
+   const BasicBlock *EntryBB = getBasicBlockByName(*F, "entry");
+diff --git a/llvm/unittests/Transforms/Utils/SizeOptsTest.cpp b/llvm/unittests/Transforms/Utils/SizeOptsTest.cpp
+index 9c3d1657aa03a..f1057fb964b80 100644
+--- a/llvm/unittests/Transforms/Utils/SizeOptsTest.cpp
++++ b/llvm/unittests/Transforms/Utils/SizeOptsTest.cpp
+@@ -7,12 +7,13 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Transforms/Utils/SizeOpts.h"
+-#include "llvm/Analysis/ProfileSummaryInfo.h"
+ #include "llvm/Analysis/BlockFrequencyInfo.h"
+ #include "llvm/Analysis/BranchProbabilityInfo.h"
+ #include "llvm/Analysis/LoopInfo.h"
++#include "llvm/Analysis/ProfileSummaryInfo.h"
+ #include "llvm/AsmParser/Parser.h"
+ #include "llvm/IR/BasicBlock.h"
++#include "llvm/IR/CycleInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/Function.h"
+ #include "llvm/IR/LLVMContext.h"
+@@ -33,12 +34,15 @@ class SizeOptsTest : public testing::Test {
+   struct BFIData {
+     std::unique_ptr<DominatorTree> DT;
+     std::unique_ptr<LoopInfo> LI;
++    std::unique_ptr<CycleInfo> CI;
+     std::unique_ptr<BranchProbabilityInfo> BPI;
+     std::unique_ptr<BlockFrequencyInfo> BFI;
+     BFIData(Function &F) {
+       DT.reset(new DominatorTree(F));
+       LI.reset(new LoopInfo(*DT));
+-      BPI.reset(new BranchProbabilityInfo(F, *LI));
++      CI.reset(new CycleInfo());
++      CI->compute(F);
++      BPI.reset(new BranchProbabilityInfo(F, *CI));
+       BFI.reset(new BlockFrequencyInfo(F, *BPI, *LI));
+     }
+     BlockFrequencyInfo *get() { return BFI.get(); }
