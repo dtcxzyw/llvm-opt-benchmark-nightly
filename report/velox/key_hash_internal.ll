@@ -163,7 +163,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %_ZN5arrow8bit_util7
   %.02533.i = phi i32 [ %i.az, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i32 [ %i.bd, %.lr.ph.i ], [ 1640531535, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.be, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.aj = shl i64 %.02731.i, 4
+  %i.aj = shl nuw nsw i64 %.02731.i, 4
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 4 uses
   %.0.copyload.i.i73 = load i32, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
@@ -314,7 +314,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit75:             ; preds = %_ZN5arrow8bit_util7
   %.02533.i88 = phi i32 [ %i.er, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ]
   %.02632.i89 = phi i32 [ %i.ev, %.lr.ph.i85 ], [ 1640531535, %.lr.ph.preheader.i84 ]
   %.02731.i90 = phi i64 [ %i.ew, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ] ; 3 uses
-  %i.eb = shl i64 %.02731.i90, 4
+  %i.eb = shl nuw nsw i64 %.02731.i90, 4
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.eb ; 4 uses
   %.0.copyload.i.i91 = load i32, ptr %i.ec, align 1
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 4
@@ -514,7 +514,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %_ZN5arrow8bit_util7
   %.02533.i = phi i32 [ %i.az, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i32 [ %i.bd, %.lr.ph.i ], [ 1640531535, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.be, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.aj = shl i64 %.02731.i, 4
+  %i.aj = shl nuw nsw i64 %.02731.i, 4
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 4 uses
   %.0.copyload.i.i69 = load i32, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
@@ -658,7 +658,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit71:             ; preds = %_ZN5arrow8bit_util7
   %.02533.i84 = phi i32 [ %i.ek, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ]
   %.02632.i85 = phi i32 [ %i.eo, %.lr.ph.i81 ], [ 1640531535, %.lr.ph.preheader.i80 ]
   %.02731.i86 = phi i64 [ %i.ep, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ] ; 3 uses
-  %i.du = shl i64 %.02731.i86, 4
+  %i.du = shl nuw nsw i64 %.02731.i86, 4
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.du ; 4 uses
   %.0.copyload.i.i87 = load i32, ptr %i.dv, align 1
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
@@ -876,7 +876,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %.lr.ph158, %bb.d
   %.02533.i = phi i32 [ %i.ay, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i32 [ %i.bc, %.lr.ph.i ], [ 1640531535, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.bd, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.ai = shl i64 %.02731.i, 4
+  %i.ai = shl nuw nsw i64 %.02731.i, 4
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ai ; 4 uses
   %.0.copyload.i.i73 = load i32, ptr %i.aj, align 1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
@@ -1028,7 +1028,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit75:             ; preds = %bb.f, %bb.g
   %.02533.i88 = phi i32 [ %i.eo, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ]
   %.02632.i89 = phi i32 [ %i.es, %.lr.ph.i85 ], [ 1640531535, %.lr.ph.preheader.i84 ]
   %.02731.i90 = phi i64 [ %i.et, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ] ; 3 uses
-  %i.dy = shl i64 %.02731.i90, 4
+  %i.dy = shl nuw nsw i64 %.02731.i90, 4
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dv, i64 %i.dy ; 4 uses
   %.0.copyload.i.i91 = load i32, ptr %i.dz, align 1
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
@@ -1233,7 +1233,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %.lr.ph154, %bb.d
   %.02533.i = phi i32 [ %i.ay, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i32 [ %i.bc, %.lr.ph.i ], [ 1640531535, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.bd, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.ai = shl i64 %.02731.i, 4
+  %i.ai = shl nuw nsw i64 %.02731.i, 4
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ai ; 4 uses
   %.0.copyload.i.i69 = load i32, ptr %i.aj, align 1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
@@ -1378,7 +1378,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit71:             ; preds = %bb.f, %bb.g
   %.02533.i84 = phi i32 [ %i.eh, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ]
   %.02632.i85 = phi i32 [ %i.el, %.lr.ph.i81 ], [ 1640531535, %.lr.ph.preheader.i80 ]
   %.02731.i86 = phi i64 [ %i.em, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ] ; 3 uses
-  %i.dr = shl i64 %.02731.i86, 4
+  %i.dr = shl nuw nsw i64 %.02731.i86, 4
   %i.ds = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.dr ; 4 uses
   %.0.copyload.i.i87 = load i32, ptr %i.ds, align 1
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 4
@@ -1781,17 +1781,15 @@ bb.a:
   br i1 %.not97, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 16
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit134
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -1799,8 +1797,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !57
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 4 uses
+.critedge.loopexit.split.loop.exit134:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit134, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit134 ], [ 0, %bb.b ] ; 4 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
@@ -1862,7 +1864,7 @@ bb.d:                                             ; preds = %.lr.ph102, %_ZN5arr
   %.02533.i = phi i32 [ %i.as, %.lr.ph.i ], [ 0, %bb.d ]
   %.02632.i = phi i32 [ %i.aw, %.lr.ph.i ], [ 1640531535, %bb.d ]
   %.02731.i = phi i64 [ %i.ax, %.lr.ph.i ], [ 0, %bb.d ] ; 3 uses
-  %i.ac = shl i64 %.02731.i, 4
+  %i.ac = shl nuw nsw i64 %.02731.i, 4
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ac ; 4 uses
   %.0.copyload.i.i44 = load i32, ptr %i.ad, align 1
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
@@ -1969,7 +1971,7 @@ bb.e:                                             ; preds = %.lr.ph105, %_ZN5arr
   %.02533.i54 = phi i32 [ %i.dm, %.lr.ph.i51 ], [ 0, %bb.e ]
   %.02632.i55 = phi i32 [ %i.dq, %.lr.ph.i51 ], [ 1640531535, %bb.e ]
   %.02731.i56 = phi i64 [ %i.dr, %.lr.ph.i51 ], [ 0, %bb.e ] ; 3 uses
-  %i.cw = shl i64 %.02731.i56, 4
+  %i.cw = shl nuw nsw i64 %.02731.i56, 4
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.cw ; 4 uses
   %.0.copyload.i.i57 = load i32, ptr %i.cx, align 1
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
@@ -2066,17 +2068,15 @@ bb.a:
   br i1 %.not93, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 16
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit138
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -2084,8 +2084,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !60
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 6 uses
+.critedge.loopexit.split.loop.exit138:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit138, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit138 ], [ 0, %bb.b ] ; 6 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
@@ -2132,7 +2136,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %.critedge, %bb.c
   %.02533.i.us = phi i32 [ %i.al, %.lr.ph.i.us ], [ 0, %.lr.ph.preheader.i.us ]
   %.02632.i.us = phi i32 [ %i.ap, %.lr.ph.i.us ], [ 1640531535, %.lr.ph.preheader.i.us ]
   %.02731.i.us = phi i64 [ %i.aq, %.lr.ph.i.us ], [ 0, %.lr.ph.preheader.i.us ] ; 3 uses
-  %i.v = shl i64 %.02731.i.us, 4
+  %i.v = shl nuw nsw i64 %.02731.i.us, 4
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.v ; 4 uses
   %.0.copyload.i.i40.us = load i32, ptr %i.w, align 1
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 4
@@ -2456,7 +2460,7 @@ bb.d:                                             ; preds = %.lr.ph101, %_ZN5arr
   %.02533.i50 = phi i32 [ %i.iy, %.lr.ph.i47 ], [ 0, %bb.d ]
   %.02632.i51 = phi i32 [ %i.jc, %.lr.ph.i47 ], [ 1640531535, %bb.d ]
   %.02731.i52 = phi i64 [ %i.jd, %.lr.ph.i47 ], [ 0, %bb.d ] ; 3 uses
-  %i.ii = shl i64 %.02731.i52, 4
+  %i.ii = shl nuw nsw i64 %.02731.i52, 4
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ih, i64 %i.ii ; 4 uses
   %.0.copyload.i.i53 = load i32, ptr %i.ij, align 1
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 4
@@ -2859,7 +2863,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %_ZN5arrow8bit_util7
   %.02533.i = phi i64 [ %i.ay, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i64 [ %i.bc, %.lr.ph.i ], [ 7046029288634856825, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.bd, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.ai = shl nsw i64 %.02731.i, 5
+  %i.ai = shl nuw nsw i64 %.02731.i, 5
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ai ; 4 uses
   %.0.copyload.i.i73 = load i64, ptr %i.aj, align 1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
@@ -3036,7 +3040,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit75:             ; preds = %_ZN5arrow8bit_util7
   %.02533.i88 = phi i64 [ %i.fm, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ]
   %.02632.i89 = phi i64 [ %i.fq, %.lr.ph.i85 ], [ 7046029288634856825, %.lr.ph.preheader.i84 ]
   %.02731.i90 = phi i64 [ %i.fr, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ] ; 3 uses
-  %i.ew = shl nsw i64 %.02731.i90, 5
+  %i.ew = shl nuw nsw i64 %.02731.i90, 5
   %i.ex = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.ew ; 4 uses
   %.0.copyload.i.i91 = load i64, ptr %i.ex, align 1
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 8
@@ -3262,7 +3266,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %_ZN5arrow8bit_util7
   %.02533.i = phi i64 [ %i.ay, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i64 [ %i.bc, %.lr.ph.i ], [ 7046029288634856825, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.bd, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.ai = shl nsw i64 %.02731.i, 5
+  %i.ai = shl nuw nsw i64 %.02731.i, 5
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ai ; 4 uses
   %.0.copyload.i.i69 = load i64, ptr %i.aj, align 1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
@@ -3432,7 +3436,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit71:             ; preds = %_ZN5arrow8bit_util7
   %.02533.i84 = phi i64 [ %i.ff, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ]
   %.02632.i85 = phi i64 [ %i.fj, %.lr.ph.i81 ], [ 7046029288634856825, %.lr.ph.preheader.i80 ]
   %.02731.i86 = phi i64 [ %i.fk, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ] ; 3 uses
-  %i.ep = shl nsw i64 %.02731.i86, 5
+  %i.ep = shl nuw nsw i64 %.02731.i86, 5
   %i.eq = getelementptr inbounds nuw i8, ptr %i.em, i64 %i.ep ; 4 uses
   %.0.copyload.i.i87 = load i64, ptr %i.eq, align 1
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 8
@@ -3669,7 +3673,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %.lr.ph158, %bb.d
   %.02533.i = phi i64 [ %i.az, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i64 [ %i.bd, %.lr.ph.i ], [ 7046029288634856825, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.be, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.aj = shl nsw i64 %.02731.i, 5
+  %i.aj = shl nuw nsw i64 %.02731.i, 5
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 4 uses
   %.0.copyload.i.i73 = load i64, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -3849,7 +3853,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit75:             ; preds = %bb.f, %bb.g
   %.02533.i88 = phi i64 [ %i.fn, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ]
   %.02632.i89 = phi i64 [ %i.fr, %.lr.ph.i85 ], [ 7046029288634856825, %.lr.ph.preheader.i84 ]
   %.02731.i90 = phi i64 [ %i.fs, %.lr.ph.i85 ], [ 0, %.lr.ph.preheader.i84 ] ; 3 uses
-  %i.ex = shl nsw i64 %.02731.i90, 5
+  %i.ex = shl nuw nsw i64 %.02731.i90, 5
   %i.ey = getelementptr inbounds nuw i8, ptr %i.eu, i64 %i.ex ; 4 uses
   %.0.copyload.i.i91 = load i64, ptr %i.ey, align 1
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
@@ -4076,7 +4080,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit:               ; preds = %.lr.ph154, %bb.d
   %.02533.i = phi i64 [ %i.az, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %.02632.i = phi i64 [ %i.bd, %.lr.ph.i ], [ 7046029288634856825, %.lr.ph.preheader.i ]
   %.02731.i = phi i64 [ %i.be, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.aj = shl nsw i64 %.02731.i, 5
+  %i.aj = shl nuw nsw i64 %.02731.i, 5
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 4 uses
   %.0.copyload.i.i69 = load i64, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -4249,7 +4253,7 @@ _ZN5arrow8bit_util7CeilDivEll.exit71:             ; preds = %bb.f, %bb.g
   %.02533.i84 = phi i64 [ %i.fg, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ]
   %.02632.i85 = phi i64 [ %i.fk, %.lr.ph.i81 ], [ 7046029288634856825, %.lr.ph.preheader.i80 ]
   %.02731.i86 = phi i64 [ %i.fl, %.lr.ph.i81 ], [ 0, %.lr.ph.preheader.i80 ] ; 3 uses
-  %i.eq = shl nsw i64 %.02731.i86, 5
+  %i.eq = shl nuw nsw i64 %.02731.i86, 5
   %i.er = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.eq ; 4 uses
   %.0.copyload.i.i87 = load i64, ptr %i.er, align 1
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 8
@@ -4652,17 +4656,15 @@ bb.a:
   br i1 %.not97, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 32
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit134
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -4670,8 +4672,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !177
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 4 uses
+.critedge.loopexit.split.loop.exit134:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit134, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit134 ], [ 0, %bb.b ] ; 4 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
@@ -4733,7 +4739,7 @@ bb.d:                                             ; preds = %.lr.ph102, %_ZN5arr
   %.02533.i = phi i64 [ %i.as, %.lr.ph.i ], [ 0, %bb.d ]
   %.02632.i = phi i64 [ %i.aw, %.lr.ph.i ], [ 7046029288634856825, %bb.d ]
   %.02731.i = phi i64 [ %i.ax, %.lr.ph.i ], [ 0, %bb.d ] ; 3 uses
-  %i.ac = shl nsw i64 %.02731.i, 5
+  %i.ac = shl nuw nsw i64 %.02731.i, 5
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ac ; 4 uses
   %.0.copyload.i.i44 = load i64, ptr %i.ad, align 1
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
@@ -4864,7 +4870,7 @@ bb.e:                                             ; preds = %.lr.ph105, %_ZN5arr
   %.02533.i54 = phi i64 [ %i.ek, %.lr.ph.i51 ], [ 0, %bb.e ]
   %.02632.i55 = phi i64 [ %i.eo, %.lr.ph.i51 ], [ 7046029288634856825, %bb.e ]
   %.02731.i56 = phi i64 [ %i.ep, %.lr.ph.i51 ], [ 0, %bb.e ] ; 3 uses
-  %i.du = shl nsw i64 %.02731.i56, 5
+  %i.du = shl nuw nsw i64 %.02731.i56, 5
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.du ; 4 uses
   %.0.copyload.i.i57 = load i64, ptr %i.dv, align 1
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
@@ -4985,17 +4991,15 @@ bb.a:
   br i1 %.not93, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %0 to i64
+  %i.b = zext i32 %0 to i64                       ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %5 = sub i32 %0, %4
-  %6 = zext i32 %5 to i64
-  %i.c = mul i64 %1, %6
+  %indvars.iv = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %4 = sub nsw i64 %i.b, %indvars.iv
+  %i.c = mul i64 %1, %4
   %i.d = icmp ult i64 %i.c, 32
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.critedge.loopexit.split.loop.exit130
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
@@ -5003,8 +5007,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !180
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %4, %.lr.ph ] ; 4 uses
+.critedge.loopexit.split.loop.exit130:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit130, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %5, %.critedge.loopexit.split.loop.exit130 ], [ 0, %bb.b ] ; 4 uses
   %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_ZN5arrow8bit_util7CeilDivEll.exit, label %bb.c
 
@@ -5066,7 +5074,7 @@ bb.d:                                             ; preds = %.lr.ph98, %_ZN5arro
   %.02533.i = phi i64 [ %i.as, %.lr.ph.i ], [ 0, %bb.d ]
   %.02632.i = phi i64 [ %i.aw, %.lr.ph.i ], [ 7046029288634856825, %bb.d ]
   %.02731.i = phi i64 [ %i.ax, %.lr.ph.i ], [ 0, %bb.d ] ; 3 uses
-  %i.ac = shl nsw i64 %.02731.i, 5
+  %i.ac = shl nuw nsw i64 %.02731.i, 5
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ac ; 4 uses
   %.0.copyload.i.i40 = load i64, ptr %i.ad, align 1
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
@@ -5190,7 +5198,7 @@ bb.e:                                             ; preds = %.lr.ph101, %_ZN5arr
   %.02533.i50 = phi i64 [ %i.ed, %.lr.ph.i47 ], [ 0, %bb.e ]
   %.02632.i51 = phi i64 [ %i.eh, %.lr.ph.i47 ], [ 7046029288634856825, %bb.e ]
   %.02731.i52 = phi i64 [ %i.ei, %.lr.ph.i47 ], [ 0, %bb.e ] ; 3 uses
-  %i.dn = shl nsw i64 %.02731.i52, 5
+  %i.dn = shl nuw nsw i64 %.02731.i52, 5
   %i.do = getelementptr inbounds nuw i8, ptr %i.dm, i64 %i.dn ; 4 uses
   %.0.copyload.i.i53 = load i64, ptr %i.do, align 1
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 8

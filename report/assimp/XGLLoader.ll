@@ -204,27 +204,34 @@ bb.m:                                             ; preds = %_ZNSt3mapIjP10aiMat
   %i.bi = load ptr, ptr %i.bf, align 8            ; 2 uses
   %i.bj = ptrtoint ptr %i.bh to i64
   %i.bk = ptrtoint ptr %i.bi to i64
-  %i.bl = sub i64 %i.bj, %i.bk
-  %4 = lshr exact i64 %i.bl, 3
-  %5 = trunc i64 %4 to i32                        ; 2 uses
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %.loopexit, label %.lr.ph
+  %i.bl = sub i64 %i.bj, %i.bk                    ; 2 uses
+  %4 = and i64 %i.bl, 34359738360
+  %.not = icmp eq i64 %4, 0
+  br i1 %.not, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.m, %bb.n
-  %.02043 = phi i32 [ %7, %bb.n ], [ 0, %bb.m ]   ; 3 uses
-  %6 = zext i32 %.02043 to i64
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %6
+.lr.ph.preheader:                                 ; preds = %bb.m
+  %5 = lshr exact i64 %i.bl, 3
+  %wide.trip.count = and i64 %5, 4294967295
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.n ] ; 3 uses
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %indvars.iv
   %i.bn = load ptr, ptr %i.bm, align 8
   %i.bo = icmp eq ptr %i.bn, %i.be
-  br i1 %i.bo, label %.loopexit, label %bb.n
+  br i1 %i.bo, label %.loopexit.loopexit.split.loop.exit, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph
-  %7 = add nuw i32 %.02043, 1                     ; 2 uses
-  %exitcond.not = icmp eq i32 %7, %5
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !116
 
-.loopexit:                                        ; preds = %bb.n, %.lr.ph, %bb.m, %bb.f
-  %.1 = phi i32 [ %i.am, %bb.f ], [ 0, %bb.m ], [ 0, %bb.n ], [ %.02043, %.lr.ph ]
+.loopexit.loopexit.split.loop.exit:               ; preds = %.lr.ph
+  %6 = trunc nuw i64 %indvars.iv to i32
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.n, %.loopexit.loopexit.split.loop.exit, %bb.m, %bb.f
+  %.1 = phi i32 [ %i.am, %bb.f ], [ 0, %bb.m ], [ %6, %.loopexit.loopexit.split.loop.exit ], [ 0, %bb.n ]
   %i.bp = load ptr, ptr %3, align 8               ; 2 uses
   %i.bq = icmp eq ptr %i.bp, %i.d
   br i1 %i.bq, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i

@@ -203,10 +203,9 @@ bb.af:                                            ; preds = %bb.ae
 
 .lr.ph255:                                        ; preds = %_ZNSt6vectorIbSaIbEE6resizeEmb.exit.preheader, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit
   %i.cr = phi i32 [ %i.cy, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit ], [ %i.bq, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit.preheader ]
-  %.0128254 = phi i32 [ %4, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit ], [ 0, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit.preheader ] ; 4 uses
+  %indvars.iv325 = phi i64 [ %indvars.iv.next326, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit ], [ 0, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit.preheader ] ; 4 uses
   %i.cs = load ptr, ptr %i.bi, align 8
-  %3 = zext i32 %.0128254 to i64
-  %i.ct = getelementptr inbounds nuw [16 x i8], ptr %i.cs, i64 %3 ; 3 uses
+  %i.ct = getelementptr inbounds nuw [16 x i8], ptr %i.cs, i64 %indvars.iv325 ; 3 uses
   %i.cu = load i32, ptr %i.ct, align 8            ; 3 uses
   %i.cv = icmp ugt i32 %i.cu, 32767
   br i1 %i.cv, label %bb.ag, label %.preheader216
@@ -220,7 +219,8 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.aj
 
 bb.ag:                                            ; preds = %.lr.ph255
-  invoke void (ptr, ptr, ...) @_ZN6Assimp17ValidateDSProcess11ReportErrorEPKcz(ptr nonnull align 8 poison, ptr noundef nonnull @.str.41, i32 noundef %.0128254, i32 noundef %i.cu, i32 noundef 32767) #21
+  %3 = trunc nuw i64 %indvars.iv325 to i32
+  invoke void (ptr, ptr, ...) @_ZN6Assimp17ValidateDSProcess11ReportErrorEPKcz(ptr nonnull align 8 poison, ptr noundef nonnull @.str.41, i32 noundef %3, i32 noundef %i.cu, i32 noundef 32767) #21
           to label %bb.ah unwind label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
@@ -237,8 +237,9 @@ _ZNSt6vectorIbSaIbEE6resizeEmb.exit.loopexit:     ; preds = %bb.an
 
 _ZNSt6vectorIbSaIbEE6resizeEmb.exit:              ; preds = %_ZNSt6vectorIbSaIbEE6resizeEmb.exit.loopexit, %.preheader216
   %i.cy = phi i32 [ %.pre, %_ZNSt6vectorIbSaIbEE6resizeEmb.exit.loopexit ], [ %i.cr, %.preheader216 ] ; 2 uses
-  %4 = add nuw i32 %.0128254, 1                   ; 2 uses
-  %i.cz = icmp ult i32 %4, %i.cy
+  %indvars.iv.next326 = add nuw nsw i64 %indvars.iv325, 1 ; 2 uses
+  %4 = zext i32 %i.cy to i64
+  %i.cz = icmp samesign ult i64 %indvars.iv.next326, %4
   br i1 %i.cz, label %.lr.ph255, label %.preheader215, !llvm.loop !17
 
 bb.aj:                                            ; preds = %.lr.ph253, %bb.an
@@ -251,8 +252,9 @@ bb.aj:                                            ; preds = %.lr.ph253, %bb.an
   br i1 %.not165, label %bb.an, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
+  %5 = trunc nuw i64 %indvars.iv325 to i32
   %i.de = trunc nuw i64 %indvars.iv322 to i32
-  invoke void (ptr, ptr, ...) @_ZN6Assimp17ValidateDSProcess11ReportErrorEPKcz(ptr nonnull align 8 poison, ptr noundef nonnull @.str.42, i32 noundef %.0128254, i32 noundef %i.de) #21
+  invoke void (ptr, ptr, ...) @_ZN6Assimp17ValidateDSProcess11ReportErrorEPKcz(ptr nonnull align 8 poison, ptr noundef nonnull @.str.42, i32 noundef %5, i32 noundef %i.de) #21
           to label %bb.al unwind label %bb.am
 
 bb.al:                                            ; preds = %bb.ak

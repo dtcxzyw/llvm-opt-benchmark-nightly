@@ -119,7 +119,7 @@ $_ZSt25__unguarded_linear_insertIPN4llvh7SMFixItEN9__gnu_cxx5__ops14_Val_less_it
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i32 @_ZN4llvh9SourceMgr14AddIncludeFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_5SMLocERS6_(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr %2, ptr noundef nonnull align 8 dereferenceable(32) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.llvh::ErrorOr", align 8     ; 12 uses
+  %4 = alloca %"class.llvh::ErrorOr", align 8     ; 13 uses
   %5 = alloca %"class.llvh::Twine", align 8       ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -142,18 +142,19 @@ bb.a:
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !16
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h
-  %11 = lshr exact i64 %i.i, 5
-  %12 = trunc i64 %11 to i32                      ; 2 uses
-  %.not22 = icmp eq i32 %12, 0
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 2 uses
+  %11 = and i64 %i.i, 137438953440
+  %.not22 = icmp eq i64 %11, 0
   br i1 %.not22, label %..critedge_crit_edge, label %.lr.ph
 
 ..critedge_crit_edge:                             ; preds = %bb.a
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.pre25 = load i8, ptr %.phi.trans.insert, align 8
   br label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a
+  %12 = lshr exact i64 %i.i, 5
+  %13 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -166,12 +167,13 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %8, i64 16
   %.sroa.31.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %.pre = load i8, ptr %.phi.trans.insert, align 8
+  %14 = and i64 %12, 4294967295
+  %.pre = load i8, ptr %13, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit
   %i.u = phi i8 [ %.pre, %.lr.ph ], [ %.sink, %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit ] ; 2 uses
-  %.01223 = phi i32 [ 0, %.lr.ph ], [ %14, %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit ] ; 2 uses
   %i.v = trunc i8 %i.u to i1
   br i1 %i.v, label %bb.c, label %.critedge
 
@@ -184,9 +186,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4llvh7E
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
-  %13 = zext i32 %.01223 to i64
   %i.z = load ptr, ptr %i.c, align 8, !tbaa !16
-  %i.aa = getelementptr inbounds nuw [32 x i8], ptr %i.z, i64 %13 ; 2 uses
+  %i.aa = getelementptr inbounds nuw [32 x i8], ptr %i.z, i64 %indvars.iv ; 2 uses
   %i.ab = call { ptr, i64 } @_ZN4llvh3sys4path13get_separatorENS1_5StyleE(i32 noundef 2) #19
   %i.ac = extractvalue { ptr, i64 } %i.ab, 0      ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !17)
@@ -361,7 +362,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17: ; preds = %_ZN
   store i8 1, ptr %i.r, align 1, !tbaa !10
   store ptr %3, ptr %9, align 8, !tbaa !11
   call void @_ZN4llvh12MemoryBuffer7getFileERKNS_5TwineElbb(ptr dead_on_unwind nonnull writable sret(%"class.llvh::ErrorOr") align 8 %8, ptr noundef nonnull align 8 dereferenceable(18) %9, i64 noundef -1, i1 noundef zeroext true, i1 noundef zeroext false) #19
-  %i.cc = load i8, ptr %.phi.trans.insert, align 8 ; 3 uses
+  %i.cc = load i8, ptr %13, align 8               ; 3 uses
   %i.cd = trunc i8 %i.cc to i1
   br i1 %i.cd, label %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit.i.i, label %bb.m
 
@@ -375,7 +376,7 @@ _ZNKSt14default_deleteIN4llvh12MemoryBufferEEclEPS1_.exit.i.i.i.i: ; preds = %bb
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
   %i.ch = load ptr, ptr %i.cg, align 8
   call void %i.ch(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.ce) #19, !inline_history !37
-  %.pre.i.i = load i8, ptr %.phi.trans.insert, align 8
+  %.pre.i.i = load i8, ptr %13, align 8
   br label %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit.i.i
 
 _ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit.i.i: ; preds = %_ZNKSt14default_deleteIN4llvh12MemoryBufferEEclEPS1_.exit.i.i.i.i, %bb.m, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17
@@ -400,11 +401,11 @@ bb.n:                                             ; preds = %_ZN4llvh7ErrorOrISt
 
 _ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit: ; preds = %bb.n, %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEEaSEOS6_.exit.thread
   %.sink = phi i8 [ %i.cl, %_ZN4llvh7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEEaSEOS6_.exit.thread ], [ %i.cm, %bb.n ] ; 3 uses
-  store i8 %.sink, ptr %.phi.trans.insert, align 8
+  store i8 %.sink, ptr %13, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
-  %14 = add nuw i32 %.01223, 1                    ; 2 uses
-  %.not = icmp eq i32 %14, %12
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not = icmp eq i64 %indvars.iv.next, %14
   br i1 %.not, label %.critedge, label %bb.b, !llvm.loop !40
 
 bb.o:                                             ; preds = %.critedge

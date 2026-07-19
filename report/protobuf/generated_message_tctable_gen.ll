@@ -204,15 +204,18 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store i32 -1, ptr %0, align 8, !tbaa !140
-  %i.b = trunc i64 %2 to i16                      ; 4 uses
+  %i.b = trunc i64 %2 to i16                      ; 3 uses
   %.not99 = icmp eq i16 %i.b, 0
-  br i1 %.not99, label %.thread81, label %.lr.ph
+  br i1 %.not99, label %.thread81, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.a, %bb.b
-  %i.c = phi i32 [ %i.n, %bb.b ], [ -1, %bb.a ]
-  %.039100 = phi i16 [ %6, %bb.b ], [ 0, %bb.a ]  ; 4 uses
-  %5 = zext i16 %.039100 to i64
-  %i.d = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %5
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %5 = and i64 %2, 65535
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %i.c = phi i32 [ -1, %.lr.ph.preheader ], [ %i.n, %bb.b ]
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %i.d = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %indvars.iv
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !50
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.g = load i32, ptr %i.f, align 4, !tbaa !7    ; 2 uses
@@ -220,7 +223,8 @@ bb.a:
   br i1 %i.h, label %.preheader, label %bb.b
 
 .preheader:                                       ; preds = %.lr.ph
-  %.not52104 = icmp eq i16 %.039100, %i.b
+  %6 = trunc nuw i64 %indvars.iv to i16           ; 2 uses
+  %.not52104 = icmp eq i16 %6, %i.b
   br i1 %.not52104, label %.thread81, label %.lr.ph109
 
 .lr.ph109:                                        ; preds = %.preheader
@@ -235,12 +239,12 @@ bb.b:                                             ; preds = %.lr.ph
   %.neg = shl nsw i32 -1, %i.m
   %i.n = add i32 %i.c, %.neg                      ; 2 uses
   store i32 %i.n, ptr %0, align 8, !tbaa !140
-  %6 = add nuw i16 %.039100, 1                    ; 2 uses
-  %.not = icmp eq i16 %6, %i.b
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not = icmp eq i64 %indvars.iv.next, %5
   br i1 %.not, label %.thread81, label %.lr.ph, !llvm.loop !172
 
 bb.c:                                             ; preds = %.lr.ph109, %._crit_edge
-  %.1108 = phi i16 [ %.039100, %.lr.ph109 ], [ %i.ci, %._crit_edge ] ; 3 uses
+  %.1108 = phi i16 [ %6, %.lr.ph109 ], [ %i.ci, %._crit_edge ] ; 3 uses
   %.045107 = phi ptr [ null, %.lr.ph109 ], [ %.146, %._crit_edge ]
   %.047106 = phi i1 [ true, %.lr.ph109 ], [ false, %._crit_edge ]
   %i.o = phi i1 [ false, %.lr.ph109 ], [ true, %._crit_edge ]

@@ -204,13 +204,18 @@ _ZN6icu_78L11findAlgNameEPNS_16AlgorithmicRangeE15UCharNameChoicePKc.exit.thread
   %i.oc = getelementptr inbounds nuw i8, ptr %.078141, i64 %i.ob
   %i.od = add i32 %.486140, -1                    ; 2 uses
   %.not99 = icmp eq i32 %i.od, 0
-  br i1 %.not99, label %._crit_edge.split, label %.lr.ph.split, !llvm.loop !25
+  br i1 %.not99, label %._crit_edge.split.loopexit, label %.lr.ph.split, !llvm.loop !25
 
-._crit_edge.split:                                ; preds = %_ZN6icu_78L11findAlgNameEPNS_16AlgorithmicRangeE15UCharNameChoicePKc.exit.thread, %bb.av
+._crit_edge.split.loopexit:                       ; preds = %_ZN6icu_78L11findAlgNameEPNS_16AlgorithmicRangeE15UCharNameChoicePKc.exit.thread
+  %.pre = load ptr, ptr @_ZN6icu_78L10uCharNamesE, align 8
+  br label %._crit_edge.split
+
+._crit_edge.split:                                ; preds = %._crit_edge.split.loopexit, %bb.av
+  %4 = phi ptr [ %.pre, %._crit_edge.split.loopexit ], [ %i.km, %bb.av ]
   store ptr %i.e, ptr %3, align 8
   %i.oe = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i32 65535, ptr %i.oe, align 8
-  %i.of = call fastcc noundef signext i8 @_ZN6icu_78L9enumNamesEPNS_10UCharNamesEiiPFaPvi15UCharNameChoicePKciES2_S3_(ptr noundef %i.km, i32 noundef 0, i32 noundef 1114112, ptr noundef null, ptr noundef nonnull %3, i32 noundef %0) ; 0 uses
+  %i.of = call fastcc noundef signext i8 @_ZN6icu_78L9enumNamesEPNS_10UCharNamesEiiPFaPvi15UCharNameChoicePKciES2_S3_(ptr noundef %4, i32 noundef 0, i32 noundef 1114112, ptr noundef null, ptr noundef nonnull %3, i32 noundef %0) ; 0 uses
   %i.og = load i32, ptr %i.oe, align 8            ; 2 uses
   %i.oh = icmp eq i32 %i.og, 65535
   br i1 %i.oh, label %.loopexit.sink.split, label %.loopexit

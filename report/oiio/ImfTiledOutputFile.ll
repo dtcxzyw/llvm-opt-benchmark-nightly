@@ -203,7 +203,7 @@ bb.ac:                                            ; preds = %bb.w
 .lr.ph268:                                        ; preds = %.lr.ph268.preheader, %bb.ev
   %indvars.iv305 = phi i64 [ %.092.lcssa, %.lr.ph268.preheader ], [ %indvars.iv.next306, %bb.ev ] ; 3 uses
   %indvars.iv303 = phi i64 [ 0, %.lr.ph268.preheader ], [ %indvars.iv.next304, %bb.ev ] ; 2 uses
-  %.079266 = phi i32 [ %.078.sroa.speculated, %.lr.ph268.preheader ], [ %.180, %bb.ev ] ; 30 uses
+  %.079266 = phi i32 [ %.078.sroa.speculated, %.lr.ph268.preheader ], [ %.180, %bb.ev ] ; 32 uses
   %.081260 = phi i32 [ %spec.select212, %.lr.ph268.preheader ], [ %.182, %bb.ev ] ; 21 uses
   %.286258 = phi i32 [ %.084.lcssa, %.lr.ph268.preheader ], [ %.387, %bb.ev ] ; 2 uses
   %.290257 = phi i32 [ %.088.lcssa, %.lr.ph268.preheader ], [ %.391, %bb.ev ] ; 3 uses
@@ -606,7 +606,7 @@ _ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.
 
 .critedge.i.i:                                    ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit.i.i, %bb.cu, %bb.cs, %bb.cq, %_ZNSt3mapIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i.i, %bb.ck
   %i.lo = phi i1 [ true, %bb.ck ], [ false, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit.i.i ], [ true, %_ZNSt3mapIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i.i ], [ false, %bb.cs ], [ false, %bb.cq ], [ false, %bb.cu ]
-  %.08.lcssa.i.i.i17.i.i = phi ptr [ %i.ec, %bb.ck ], [ %.19.i.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit.i.i ], [ %.19.i.i.i.i.i, %_ZNSt3mapIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i.i ], [ %.19.i.i.i.i.i, %bb.cs ], [ %.19.i.i.i.i.i, %bb.cq ], [ %.19.i.i.i.i.i, %bb.cu ] ; 15 uses
+  %.08.lcssa.i.i.i17.i.i = phi ptr [ %i.ec, %bb.ck ], [ %.19.i.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit.i.i ], [ %.19.i.i.i.i.i, %_ZNSt3mapIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEE11lower_boundERS8_.exit.i.i ], [ %.19.i.i.i.i.i, %bb.cs ], [ %.19.i.i.i.i.i, %bb.cq ], [ %.19.i.i.i.i.i, %bb.cu ] ; 17 uses
   %i.lp = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #25
           to label %.noexc153 unwind label %.loopexit.split-lp.loopexit ; 8 uses
 
@@ -668,7 +668,7 @@ _ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.
   br i1 %i.mj, label %.thread.i.i.i, label %.sink.split.i.i.i
 
 bb.dd:                                            ; preds = %.noexc153
-  %i.mk = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i17.i.i, i64 32
+  %i.mk = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i17.i.i, i64 32 ; 2 uses
   %i.ml = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i17.i.i, i64 44
   %i.mm = load i32, ptr %i.ml, align 4, !tbaa !203 ; 3 uses
   %i.mn = icmp slt i32 %6, %i.mm
@@ -676,17 +676,17 @@ bb.dd:                                            ; preds = %.noexc153
 
 bb.de:                                            ; preds = %bb.dd
   %i.mo = icmp eq i32 %6, %i.mm
-  br i1 %i.mo, label %bb.df, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i
+  br i1 %i.mo, label %bb.df, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.i.i.i
 
 bb.df:                                            ; preds = %bb.de
   %i.mp = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i17.i.i, i64 40
-  %i.mq = load i32, ptr %i.mp, align 4, !tbaa !204 ; 3 uses
+  %i.mq = load i32, ptr %i.mp, align 4, !tbaa !204 ; 2 uses
   %i.mr = icmp slt i32 %5, %i.mq
   br i1 %i.mr, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
   %i.ms = icmp eq i32 %5, %i.mq
-  br i1 %i.ms, label %bb.dh, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i
+  br i1 %i.ms, label %bb.dh, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.i.i.i
 
 bb.dh:                                            ; preds = %bb.dg
   %i.mt = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i17.i.i, i64 36
@@ -696,12 +696,12 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.dh
   %i.mw = icmp eq i32 %.079266, %i.mu
-  br i1 %i.mw, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.i.i.i.i, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i
+  br i1 %i.mw, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.i.i.i.i, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.i.i.i
 
 _ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.i.i.i.i: ; preds = %bb.di
-  %i.mx = load i32, ptr %i.mk, align 4, !tbaa !206 ; 2 uses
+  %i.mx = load i32, ptr %i.mk, align 4, !tbaa !206
   %i.my = icmp slt i32 %.081260, %i.mx
-  br i1 %i.my, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i
+  br i1 %i.my, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.i.i.i
 
 _ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i: ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.i.i.i.i, %bb.dh, %bb.df, %bb.dd
   %i.mz = getelementptr inbounds nuw i8, ptr %i.dd, i64 328
@@ -754,19 +754,36 @@ _ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.
   %spec.select48.i.i.i.i = select i1 %i.nt, ptr %i.nc, ptr %.08.lcssa.i.i.i17.i.i
   br label %.thread.i.i.i
 
-_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i: ; preds = %bb.dg
-  %i.nu = icmp slt i32 %i.mq, %5
-  br i1 %i.nu, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i, label %.thread10.i.i.i
+_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.i.i.i: ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.i.i.i.i, %bb.di, %bb.dg, %bb.de
+  %12 = icmp slt i32 %i.mm, %6
+  br i1 %12, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i
 
-_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i: ; preds = %bb.de
-  %i.nv = icmp slt i32 %i.mm, %6
-  br i1 %i.nv, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i, label %.thread10.i.i.i
+_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i: ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.i.i.i
+  %13 = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i17.i.i, i64 40
+  %14 = load i32, ptr %13, align 4, !tbaa !204    ; 2 uses
+  %i.nu = icmp slt i32 %14, %5
+  br i1 %i.nu, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i, label %15
 
-_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i: ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.i.i.i.i
-  %i.nw = icmp slt i32 %i.mx, %.081260
+15:                                               ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i
+  %16 = icmp eq i32 %14, %5
+  br i1 %16, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i, label %.thread10.i.i.i
+
+_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i: ; preds = %15
+  %17 = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i17.i.i, i64 36
+  %18 = load i32, ptr %17, align 4, !tbaa !205    ; 2 uses
+  %i.nv = icmp slt i32 %18, %.079266
+  br i1 %i.nv, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i, label %19
+
+19:                                               ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i
+  %20 = icmp eq i32 %18, %.079266
+  br i1 %20, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i, label %.thread10.i.i.i
+
+_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i: ; preds = %19
+  %21 = load i32, ptr %i.mk, align 4, !tbaa !206
+  %i.nw = icmp slt i32 %21, %.081260
   br i1 %i.nw, label %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i, label %.thread10.i.i.i
 
-_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i: ; preds = %bb.di, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i
+_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i: ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.i.i.i
   %i.nx = getelementptr inbounds nuw i8, ptr %i.dd, i64 336
   %i.ny = load ptr, ptr %i.nx, align 8, !tbaa !207 ; 2 uses
   %i.nz = icmp eq ptr %i.ny, %.08.lcssa.i.i.i17.i.i
@@ -924,8 +941,8 @@ _ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.
   br i1 %i.pz, label %.thread.i.i.i, label %.thread10.i.i.i
 
 _ZNSt8_Rb_treeIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordESt4pairIKS2_PNS1_12BufferedTileEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit.i.i: ; preds = %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i
-  %.sroa.037.2.i.i.i.i = phi ptr [ null, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i ], [ %i.na, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i ] ; 2 uses
-  %.sroa.12.2.i.i.i.i = phi ptr [ %i.ny, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i ], [ %i.na, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i ] ; 2 uses
+  %.sroa.037.2.i.i.i.i = phi ptr [ %i.na, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i ], [ null, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i ] ; 2 uses
+  %.sroa.12.2.i.i.i.i = phi ptr [ %i.na, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread.i.i.i.i ], [ %i.ny, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.thread.i.i.i.i ] ; 2 uses
   %.not.i.i.i = icmp eq ptr %.sroa.12.2.i.i.i.i, null
   br i1 %.not.i.i.i, label %.thread10.i.i.i, label %.thread.i.i.i
 
@@ -982,8 +999,8 @@ bb.en:                                            ; preds = %bb.em, %bb.el, %bb.
   store i64 %i.qt, ptr %i.qr, align 8, !tbaa !62
   br label %_ZNSt3mapIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEEixERS8_.exit.i
 
-.thread10.i.i.i:                                  ; preds = %_ZNSt8_Rb_treeIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordESt4pairIKS2_PNS1_12BufferedTileEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit14.i.i.i, %bb.ef, %bb.ed, %bb.eb, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i
-  %.sroa.01.0.ph.i.i.i = phi ptr [ %.sroa.037.2.i.i.i.i, %_ZNSt8_Rb_treeIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordESt4pairIKS2_PNS1_12BufferedTileEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit.i.i ], [ %.sroa.015.0.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit14.i.i.i ], [ %.08.lcssa.i.i.i17.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.thread.i.i.i.i ], [ %.08.lcssa.i.i.i17.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i ], [ %.08.lcssa.i.i.i17.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit13.thread41.i.thread.i.i.i ], [ %.sroa.015.0.i.i.i, %bb.eb ], [ %.sroa.015.0.i.i.i, %bb.ed ], [ %.sroa.015.0.i.i.i, %bb.ef ]
+.thread10.i.i.i:                                  ; preds = %_ZNSt8_Rb_treeIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordESt4pairIKS2_PNS1_12BufferedTileEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit14.i.i.i, %bb.ef, %bb.ed, %bb.eb, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i, %19, %15
+  %.sroa.01.0.ph.i.i.i = phi ptr [ %.sroa.037.2.i.i.i.i, %_ZNSt8_Rb_treeIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordESt4pairIKS2_PNS1_12BufferedTileEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit.i.i ], [ %.08.lcssa.i.i.i17.i.i, %19 ], [ %.08.lcssa.i.i.i17.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit15.i.i.i.i ], [ %.08.lcssa.i.i.i17.i.i, %15 ], [ %.sroa.015.0.i.i.i, %bb.eb ], [ %.sroa.015.0.i.i.i, %bb.ed ], [ %.sroa.015.0.i.i.i, %bb.ef ], [ %.sroa.015.0.i.i.i, %_ZNKSt4lessIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit14.i.i.i ]
   call void @_ZdlPvm(ptr noundef nonnull %i.lp, i64 noundef 56) #26
   br label %_ZNSt3mapIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEEixERS8_.exit.i
 
