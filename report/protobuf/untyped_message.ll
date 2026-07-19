@@ -203,9 +203,8 @@ bb.c:                                             ; preds = %bb.b
   %niter = phi i64 [ 0, %.lr.ph.split.i.preheader.new ], [ %niter.next.1, %.lr.ph.split.i ]
   %i.ao = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %.011.i ; 3 uses
   store ptr %i.n, ptr %i.ao, align 8, !tbaa !18
-  %sext.i = shl i64 %.011.i, 32
-  %6 = ashr exact i64 %sext.i, 29
-  %i.ap = getelementptr inbounds i8, ptr %i.v, i64 %6
+  %sext.i = shl nuw nsw i64 %.011.i, 3
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.v, i64 %sext.i
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !121
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !7
@@ -214,9 +213,8 @@ bb.c:                                             ; preds = %bb.b
   %i.at = or disjoint i64 %.011.i, 1              ; 2 uses
   %i.au = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %i.at ; 3 uses
   store ptr %i.n, ptr %i.au, align 8, !tbaa !18
-  %sext.i.1 = shl i64 %i.at, 32
-  %7 = ashr exact i64 %sext.i.1, 29
-  %i.av = getelementptr inbounds i8, ptr %i.v, i64 %7
+  %sext.i.1 = shl nuw nsw i64 %i.at, 3
+  %i.av = getelementptr inbounds nuw i8, ptr %i.v, i64 %sext.i.1
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !121
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store ptr %i.aw, ptr %i.ax, align 8, !tbaa !7
@@ -261,9 +259,8 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.assume(i1 %lcmp.mod49)
   %i.be = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %.011.i.epil.init ; 3 uses
   store ptr %i.n, ptr %i.be, align 8, !tbaa !18
-  %sext.i.epil = shl i64 %.011.i.epil.init, 32
-  %8 = ashr exact i64 %sext.i.epil, 29
-  %i.bf = getelementptr inbounds i8, ptr %i.v, i64 %8
+  %sext.i.epil = shl nuw nsw i64 %.011.i.epil.init, 3
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.v, i64 %sext.i.epil
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !121
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   store ptr %i.bg, ptr %i.bh, align 8, !tbaa !7
@@ -666,9 +663,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %niter = phi i64 [ 0, %.lr.ph.split.i.preheader.new ], [ %niter.next.1, %.lr.ph.split.i ]
   %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.011.i ; 3 uses
   store ptr %i.m, ptr %i.an, align 8, !tbaa !18
-  %sext.i = shl i64 %.011.i, 32
-  %2 = ashr exact i64 %sext.i, 29
-  %i.ao = getelementptr inbounds i8, ptr %i.u, i64 %2
+  %sext.i = shl nuw nsw i64 %.011.i, 3
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.u, i64 %sext.i
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !121
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !7
@@ -677,9 +673,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.as = or disjoint i64 %.011.i, 1              ; 2 uses
   %i.at = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %i.as ; 3 uses
   store ptr %i.m, ptr %i.at, align 8, !tbaa !18
-  %sext.i.1 = shl i64 %i.as, 32
-  %3 = ashr exact i64 %sext.i.1, 29
-  %i.au = getelementptr inbounds i8, ptr %i.u, i64 %3
+  %sext.i.1 = shl nuw nsw i64 %i.as, 3
+  %i.au = getelementptr inbounds nuw i8, ptr %i.u, i64 %sext.i.1
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !121
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store ptr %i.av, ptr %i.aw, align 8, !tbaa !7
@@ -724,9 +719,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   tail call void @llvm.assume(i1 %lcmp.mod89)
   %i.bd = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.011.i.epil.init ; 3 uses
   store ptr %i.m, ptr %i.bd, align 8, !tbaa !18
-  %sext.i.epil = shl i64 %.011.i.epil.init, 32
-  %4 = ashr exact i64 %sext.i.epil, 29
-  %i.be = getelementptr inbounds i8, ptr %i.u, i64 %4
+  %sext.i.epil = shl nuw nsw i64 %.011.i.epil.init, 3
+  %i.be = getelementptr inbounds nuw i8, ptr %i.u, i64 %sext.i.epil
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !121
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   store ptr %i.bf, ptr %i.bg, align 8, !tbaa !7

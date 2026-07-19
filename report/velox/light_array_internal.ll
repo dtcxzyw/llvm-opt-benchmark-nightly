@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %.idx = shl nsw i64 %indvars.iv, 4
+  %.idx = shl nuw nsw i64 %indvars.iv, 4
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 %.idx ; 8 uses
   %i.r = load i16, ptr %i.q, align 2, !tbaa !251
   %i.s = zext i16 %i.r to i64
@@ -381,7 +381,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %.idx = shl nsw i64 %indvars.iv, 4
+  %.idx = shl nuw nsw i64 %indvars.iv, 4
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 %.idx ; 8 uses
   %i.k = load i16, ptr %i.j, align 2, !tbaa !251
   %i.l = zext i16 %i.k to i64
@@ -784,12 +784,11 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i212: ; preds = %bb.a
   %i.om = call i64 @llvm.smax.i64(i64 %i.oj, i64 0)
   %i.on = call i64 @llvm.smax.i64(i64 %i.oj, i64 0)
   %i.oo = add nuw nsw i64 %i.on, 1                ; 2 uses
-  %min.iters.check448 = icmp slt i64 %i.oh, 121
+  %min.iters.check448 = icmp slt i64 %i.oh, 89
   %i.op = and i64 %i.om, 4294967295
   %i.oq = icmp eq i64 %i.op, 4294967295
   %or.cond = select i1 %min.iters.check448, i1 true, i1 %i.oq
-  %n.vec451 = and i64 %i.oo, 9223372036854775804  ; 4 uses
-  %19 = trunc i64 %n.vec451 to i32
+  %n.vec451 = and i64 %i.oo, 9223372036854775804  ; 3 uses
   %cmp.n458 = icmp eq i64 %i.oo, %n.vec451
   br label %.lr.ph.split.i40.preheader.i
 
@@ -876,7 +875,7 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit37.i: ; preds = %bb.bd
 .lr.ph.split.i.i.preheader:                       ; preds = %.lr.ph.i217
   %i.qk = call i64 @llvm.smax.i64(i64 %i.qi, i64 0)
   %i.ql = add nuw nsw i64 %i.qk, 1                ; 2 uses
-  %min.iters.check430 = icmp slt i32 %i.px, 185
+  %min.iters.check430 = icmp slt i32 %i.px, 137
   br i1 %min.iters.check430, label %.lr.ph.split.i.i.preheader464, label %vector.scevcheck425
 
 vector.scevcheck425:                              ; preds = %.lr.ph.split.i.i.preheader
@@ -893,8 +892,7 @@ vector.memcheck427:                               ; preds = %vector.scevcheck425
   br i1 %diff.check428, label %.lr.ph.split.i.i.preheader464, label %vector.ph431
 
 vector.ph431:                                     ; preds = %vector.memcheck427
-  %n.vec433 = and i64 %i.ql, 9223372036854775804  ; 4 uses
-  %20 = trunc i64 %n.vec433 to i32
+  %n.vec433 = and i64 %i.ql, 9223372036854775804  ; 3 uses
   br label %vector.body434
 
 vector.body434:                                   ; preds = %vector.body434, %vector.ph431
@@ -917,19 +915,17 @@ middle.block439:                                  ; preds = %vector.body434
 
 .lr.ph.split.i.i.preheader464:                    ; preds = %vector.memcheck427, %vector.scevcheck425, %.lr.ph.split.i.i.preheader, %middle.block439
   %.ph465 = phi i64 [ 0, %vector.memcheck427 ], [ 0, %vector.scevcheck425 ], [ 0, %.lr.ph.split.i.i.preheader ], [ %n.vec433, %middle.block439 ]
-  %.03.i.i.ph = phi i32 [ 0, %vector.memcheck427 ], [ 0, %vector.scevcheck425 ], [ 0, %.lr.ph.split.i.i.preheader ], [ %20, %middle.block439 ]
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.split.i.i.preheader464, %.lr.ph.split.i.i
-  %i.qx = phi i64 [ %22, %.lr.ph.split.i.i ], [ %.ph465, %.lr.ph.split.i.i.preheader464 ] ; 2 uses
-  %.03.i.i = phi i32 [ %21, %.lr.ph.split.i.i ], [ %.03.i.i.ph, %.lr.ph.split.i.i.preheader464 ]
+  %i.qx = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.split.i.i ], [ %.ph465, %.lr.ph.split.i.i.preheader464 ] ; 3 uses
   %i.qy = getelementptr inbounds nuw [8 x i8], ptr %i.qg, i64 %i.qx
   %i.qz = getelementptr inbounds nuw [8 x i8], ptr %i.pu, i64 %i.qx
   %.0.copyload.i.i.i = load i64, ptr %i.qz, align 8
   store i64 %.0.copyload.i.i.i, ptr %i.qy, align 1
-  %21 = add i32 %.03.i.i, 1                       ; 2 uses
-  %22 = zext i32 %21 to i64                       ; 2 uses
-  %.not.i.i220 = icmp slt i64 %i.qi, %22
+  %indvars.iv.next.i.i = add i64 %i.qx, 1         ; 2 uses
+  %19 = and i64 %indvars.iv.next.i.i, 4294967295
+  %.not.i.i220 = icmp slt i64 %i.qi, %19
   br i1 %.not.i.i220, label %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit.i", label %.lr.ph.split.i.i, !llvm.loop !278
 
 "_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit.i": ; preds = %.lr.ph.split.i.i, %middle.block439, %.lr.ph.i217
@@ -996,19 +992,17 @@ middle.block457:                                  ; preds = %vector.body452
 
 .lr.ph.split.i40.i.preheader:                     ; preds = %vector.memcheck445, %.lr.ph.split.i40.preheader.i, %middle.block457
   %.ph = phi i64 [ 0, %vector.memcheck445 ], [ 0, %.lr.ph.split.i40.preheader.i ], [ %n.vec451, %middle.block457 ]
-  %.03.i41.i.ph = phi i32 [ 0, %vector.memcheck445 ], [ 0, %.lr.ph.split.i40.preheader.i ], [ %19, %middle.block457 ]
   br label %.lr.ph.split.i40.i
 
 .lr.ph.split.i40.i:                               ; preds = %.lr.ph.split.i40.i.preheader, %.lr.ph.split.i40.i
-  %i.sk = phi i64 [ %24, %.lr.ph.split.i40.i ], [ %.ph, %.lr.ph.split.i40.i.preheader ] ; 2 uses
-  %.03.i41.i = phi i32 [ %23, %.lr.ph.split.i40.i ], [ %.03.i41.i.ph, %.lr.ph.split.i40.i.preheader ]
+  %i.sk = phi i64 [ %indvars.iv.next.i43.i, %.lr.ph.split.i40.i ], [ %.ph, %.lr.ph.split.i40.i.preheader ] ; 3 uses
   %i.sl = getelementptr inbounds nuw [8 x i8], ptr %i.rv, i64 %i.sk
   %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.ro, i64 %i.sk
   %.0.copyload.i.i42.i = load i64, ptr %i.sm, align 8
   store i64 %.0.copyload.i.i42.i, ptr %i.sl, align 1
-  %23 = add i32 %.03.i41.i, 1                     ; 2 uses
-  %24 = zext i32 %23 to i64                       ; 2 uses
-  %.not.i43.i = icmp slt i64 %i.oj, %24
+  %indvars.iv.next.i43.i = add i64 %i.sk, 1       ; 2 uses
+  %20 = and i64 %indvars.iv.next.i43.i, 4294967295
+  %.not.i43.i = icmp slt i64 %i.oj, %20
   br i1 %.not.i43.i, label %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit44.loopexit.i", label %.lr.ph.split.i40.i, !llvm.loop !281
 
 "_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit44.loopexit.i": ; preds = %.lr.ph.split.i40.i, %middle.block457
@@ -1411,12 +1405,11 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i256: ; preds = %bb.b
   %i.yq = call i64 @llvm.smax.i64(i64 %i.yn, i64 0)
   %i.yr = call i64 @llvm.smax.i64(i64 %i.yn, i64 0)
   %i.ys = add nuw nsw i64 %i.yr, 1                ; 2 uses
-  %min.iters.check412 = icmp slt i64 %i.yl, 121
+  %min.iters.check412 = icmp slt i64 %i.yl, 89
   %i.yt = and i64 %i.yq, 4294967295
   %i.yu = icmp eq i64 %i.yt, 4294967295
   %or.cond463 = select i1 %min.iters.check412, i1 true, i1 %i.yu
-  %n.vec415 = and i64 %i.ys, 9223372036854775804  ; 4 uses
-  %25 = trunc i64 %n.vec415 to i32
+  %n.vec415 = and i64 %i.ys, 9223372036854775804  ; 3 uses
   %cmp.n422 = icmp eq i64 %i.ys, %n.vec415
   br label %.lr.ph.split.i37.preheader.i
 
@@ -1505,7 +1498,7 @@ bb.ca:                                            ; preds = %"_ZZN5arrow7compute
 .lr.ph.split.i.i262.preheader:                    ; preds = %bb.ca
   %i.aar = call i64 @llvm.smax.i64(i64 %i.aap, i64 0)
   %i.aas = add nuw nsw i64 %i.aar, 1              ; 2 uses
-  %min.iters.check395 = icmp slt i32 %i.aab, 185
+  %min.iters.check395 = icmp slt i32 %i.aab, 137
   br i1 %min.iters.check395, label %.lr.ph.split.i.i262.preheader476, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.split.i.i262.preheader
@@ -1522,8 +1515,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %diff.check, label %.lr.ph.split.i.i262.preheader476, label %vector.ph396
 
 vector.ph396:                                     ; preds = %vector.memcheck
-  %n.vec398 = and i64 %i.aas, 9223372036854775804 ; 4 uses
-  %26 = trunc i64 %n.vec398 to i32
+  %n.vec398 = and i64 %i.aas, 9223372036854775804 ; 3 uses
   br label %vector.body399
 
 vector.body399:                                   ; preds = %vector.body399, %vector.ph396
@@ -1546,19 +1538,17 @@ middle.block403:                                  ; preds = %vector.body399
 
 .lr.ph.split.i.i262.preheader476:                 ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.split.i.i262.preheader, %middle.block403
   %.ph477 = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.split.i.i262.preheader ], [ %n.vec398, %middle.block403 ]
-  %.012.i.i.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.split.i.i262.preheader ], [ %26, %middle.block403 ]
   br label %.lr.ph.split.i.i262
 
 .lr.ph.split.i.i262:                              ; preds = %.lr.ph.split.i.i262.preheader476, %.lr.ph.split.i.i262
-  %i.abe = phi i64 [ %28, %.lr.ph.split.i.i262 ], [ %.ph477, %.lr.ph.split.i.i262.preheader476 ] ; 2 uses
-  %.012.i.i = phi i32 [ %27, %.lr.ph.split.i.i262 ], [ %.012.i.i.ph, %.lr.ph.split.i.i262.preheader476 ]
+  %i.abe = phi i64 [ %indvars.iv.next.i.i265, %.lr.ph.split.i.i262 ], [ %.ph477, %.lr.ph.split.i.i262.preheader476 ] ; 3 uses
   %i.abf = getelementptr inbounds nuw [8 x i8], ptr %i.aam, i64 %i.abe
   %i.abg = getelementptr inbounds nuw [8 x i8], ptr %i.zy, i64 %i.abe
   %.0.copyload.i.i.i263 = load i64, ptr %i.abg, align 8
   store i64 %.0.copyload.i.i.i263, ptr %i.abf, align 1
-  %27 = add i32 %.012.i.i, 1                      ; 2 uses
-  %28 = zext i32 %27 to i64                       ; 2 uses
-  %.not.i.i264 = icmp slt i64 %i.aap, %28
+  %indvars.iv.next.i.i265 = add i64 %i.abe, 1     ; 2 uses
+  %21 = and i64 %indvars.iv.next.i.i265, 4294967295
+  %.not.i.i264 = icmp slt i64 %i.aap, %21
   br i1 %.not.i.i264, label %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit.i", label %.lr.ph.split.i.i262, !llvm.loop !308
 
 "_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit.i": ; preds = %.lr.ph.split.i.i262, %middle.block403, %bb.ca
@@ -1623,19 +1613,17 @@ middle.block421:                                  ; preds = %vector.body416
 
 .lr.ph.split.i37.i.preheader:                     ; preds = %vector.memcheck409, %.lr.ph.split.i37.preheader.i, %middle.block421
   %.ph475 = phi i64 [ 0, %vector.memcheck409 ], [ 0, %.lr.ph.split.i37.preheader.i ], [ %n.vec415, %middle.block421 ]
-  %.012.i38.i.ph = phi i32 [ 0, %vector.memcheck409 ], [ 0, %.lr.ph.split.i37.preheader.i ], [ %25, %middle.block421 ]
   br label %.lr.ph.split.i37.i
 
 .lr.ph.split.i37.i:                               ; preds = %.lr.ph.split.i37.i.preheader, %.lr.ph.split.i37.i
-  %i.acq = phi i64 [ %30, %.lr.ph.split.i37.i ], [ %.ph475, %.lr.ph.split.i37.i.preheader ] ; 2 uses
-  %.012.i38.i = phi i32 [ %29, %.lr.ph.split.i37.i ], [ %.012.i38.i.ph, %.lr.ph.split.i37.i.preheader ]
+  %i.acq = phi i64 [ %indvars.iv.next.i40.i, %.lr.ph.split.i37.i ], [ %.ph475, %.lr.ph.split.i37.i.preheader ] ; 3 uses
   %i.acr = getelementptr inbounds nuw [8 x i8], ptr %i.acf, i64 %i.acq
   %i.acs = getelementptr inbounds nuw [8 x i8], ptr %i.abv, i64 %i.acq
   %.0.copyload.i.i39.i = load i64, ptr %i.acs, align 8
   store i64 %.0.copyload.i.i39.i, ptr %i.acr, align 1
-  %29 = add i32 %.012.i38.i, 1                    ; 2 uses
-  %30 = zext i32 %29 to i64                       ; 2 uses
-  %.not.i40.i = icmp slt i64 %i.yn, %30
+  %indvars.iv.next.i40.i = add i64 %i.acq, 1      ; 2 uses
+  %22 = and i64 %indvars.iv.next.i40.i, 4294967295
+  %.not.i40.i = icmp slt i64 %i.yn, %22
   br i1 %.not.i40.i, label %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit41.loopexit.i", label %.lr.ph.split.i37.i, !llvm.loop !311
 
 "_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit41.loopexit.i": ; preds = %.lr.ph.split.i37.i, %middle.block421

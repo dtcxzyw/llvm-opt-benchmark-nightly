@@ -204,7 +204,7 @@ oggpack_read.exit.i.peel.i:                       ; preds = %.lr.ph.i.i, %bb.q
   %niter = phi i32 [ 0, %.peel.next.i.preheader.new ], [ %niter.next.1, %oggpack_read.exit.i.i.1 ]
   %.024.i.i = getelementptr inbounds nuw i8, ptr %.024.i.pn.i, i64 1
   %.not.i.i.i = icmp sge i64 %i.br, %invariant.op
-  %i.bs = shl nsw i64 %i.br, 3
+  %i.bs = shl nuw nsw i64 %i.br, 3
   %i.bt = icmp sgt i64 %i.bs, %invariant.op68
   %or.cond73 = select i1 %.not.i.i.i, i1 %i.bt, i1 false
   br i1 %or.cond73, label %oggpack_read.exit.i.i, label %bb.r
@@ -223,7 +223,7 @@ oggpack_read.exit.i.i:                            ; preds = %.peel.next.i, %bb.r
   store i8 %.1.i.i.i, ptr %.024.i.i, align 1
   %.024.i.i.1 = getelementptr inbounds nuw i8, ptr %.024.i.pn.i, i64 2 ; 3 uses
   %.not.i.i.i.1 = icmp sge i64 %i.bw, %invariant.op
-  %i.bx = shl nsw i64 %i.bw, 3
+  %i.bx = shl nuw nsw i64 %i.bw, 3
   %i.by = icmp sgt i64 %i.bx, %invariant.op68
   %or.cond73.1 = select i1 %.not.i.i.i.1, i1 %i.by, i1 false
   br i1 %or.cond73.1, label %oggpack_read.exit.i.i.1, label %bb.s
@@ -626,7 +626,7 @@ post_Y.exit165:                                   ; preds = %post_Y.exit163, %bb
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph209, %post_Y.exit168
-  %.7208 = phi i64 [ 2, %.lr.ph209 ], [ %i.jr, %post_Y.exit168 ] ; 5 uses
+  %.7208 = phi i64 [ 2, %.lr.ph209 ], [ %i.jr, %post_Y.exit168 ] ; 6 uses
   %i.if = add nsw i64 %.7208, -2                  ; 2 uses
   %i.ig = getelementptr inbounds [4 x i8], ptr %i.ic, i64 %i.if
   %i.ih = load i32, ptr %i.ig, align 4
@@ -656,12 +656,10 @@ bb.ak:                                            ; preds = %.lr.ph209, %post_Y.
   %i.jf = sub i32 0, %i.jd
   %.0.p.i = select i1 %i.je, i32 %i.jf, i32 %i.jd
   %.0.i166 = add i32 %.0.p.i, %i.iw               ; 2 uses
-  %sext = shl i64 %.7208, 32
-  %5 = ashr exact i64 %sext, 32                   ; 2 uses
-  %i.jg = getelementptr inbounds [4 x i8], ptr %i.a, i64 %5
+  %i.jg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.7208
   %i.jh = load i32, ptr %i.jg, align 4            ; 3 uses
   %i.ji = icmp slt i32 %i.jh, 0
-  %i.jj = getelementptr inbounds [4 x i8], ptr %i.b, i64 %5
+  %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.7208
   %i.jk = load i32, ptr %i.jj, align 4            ; 3 uses
   br i1 %i.ji, label %post_Y.exit168, label %bb.al
 
@@ -1064,7 +1062,7 @@ scalar.ph755:                                     ; preds = %scalar.ph755.prehea
   br i1 %i.nv, label %scalar.ph755, label %._crit_edge250, !llvm.loop !956
 
 ._crit_edge250:                                   ; preds = %scalar.ph755, %middle.block789
-  %indvars.iv.next274 = add i64 %indvars.iv273, %i.ck
+  %indvars.iv.next274 = add nuw nsw i64 %indvars.iv273, %i.ck
   %i.nw = add nuw nsw i32 %.1252, 1               ; 2 uses
   %indvars.iv.next278 = add i32 %indvars.iv277, %i.cm
   %indvars.iv.next282 = add i32 %indvars.iv281, %i.cm
@@ -1467,7 +1465,7 @@ scalar.ph1554:                                    ; preds = %scalar.ph1554.prol.
 
 ._crit_edge809:                                   ; preds = %scalar.ph1554.prol.loopexit, %scalar.ph1554, %middle.block1564
   %indvars.iv.next1051 = add nuw nsw i64 %indvars.iv1050, %i.tg
-  %indvars.iv.next1055 = add i64 %indvars.iv1054, %i.th
+  %indvars.iv.next1055 = add nsw i64 %indvars.iv1054, %i.th
   %i.vi = add nuw nsw i32 %.6564812, 1            ; 2 uses
   %exitcond1065.not = icmp eq i32 %i.vi, %2
   br i1 %exitcond1065.not, label %.loopexit663, label %.preheader664, !llvm.loop !1054
@@ -1870,7 +1868,7 @@ scalar.ph768:                                     ; preds = %scalar.ph768.prehea
   br i1 %i.rj, label %scalar.ph768, label %._crit_edge247, !llvm.loop !1105
 
 ._crit_edge247:                                   ; preds = %scalar.ph768, %middle.block810
-  %indvars.iv.next280 = add i64 %indvars.iv279, %i.ek
+  %indvars.iv.next280 = add nuw nsw i64 %indvars.iv279, %i.ek
   %i.rk = add nuw nsw i32 %.1249, 1               ; 2 uses
   %indvars.iv.next266 = add i32 %indvars.iv265, %i.b
   %indvars.iv.next270 = add i32 %indvars.iv269, %i.b
@@ -2273,7 +2271,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.s
-  %indvars.iv.next893 = add i64 %indvars.iv892, %i.t
+  %indvars.iv.next893 = add nsw i64 %indvars.iv892, %i.t
   %i.ce = add nuw nsw i32 %.0543676, 1            ; 2 uses
   %exitcond902.not = icmp eq i32 %i.ce, %2
   br i1 %exitcond902.not, label %.loopexit667, label %.preheader668, !llvm.loop !1165

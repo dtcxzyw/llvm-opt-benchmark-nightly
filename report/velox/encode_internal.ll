@@ -203,13 +203,12 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = add nsw i64 %i.z, 1
   %i.ac = call i64 @llvm.usub.sat.i64(i64 %i.ab, i64 1) ; 2 uses
   %i.ad = add nsw i64 %i.z, 1                     ; 3 uses
-  %min.iters.check76 = icmp ult i64 %i.ad, 18
+  %min.iters.check76 = icmp ult i64 %i.ad, 14
   %i.ae = and i64 %i.ac, 4294967295
   %i.af = icmp eq i64 %i.ae, 4294967295
   %i.ag = icmp ugt i64 %i.ac, 4294967295
   %i.ah = or i1 %i.af, %i.ag
-  %n.vec79 = and i64 %i.ad, -4                    ; 4 uses
-  %10 = trunc nsw i64 %n.vec79 to i32
+  %n.vec79 = and i64 %i.ad, -4                    ; 3 uses
   %cmp.n86 = icmp eq i64 %i.ad, %n.vec79
   br label %.lr.ph.split.i.i
 
@@ -279,19 +278,17 @@ middle.block85:                                   ; preds = %vector.body80
 
 .lr.ph.split.i.i.i.preheader:                     ; preds = %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i, %vector.memcheck72, %middle.block85
   %.ph = phi i64 [ 0, %vector.memcheck72 ], [ %n.vec79, %middle.block85 ], [ 0, %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i ]
-  %.011.i.i.i.ph = phi i32 [ 0, %vector.memcheck72 ], [ %10, %middle.block85 ], [ 0, %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i ]
   br label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %.lr.ph.split.i.i.i.preheader, %.lr.ph.split.i.i.i
-  %i.bq = phi i64 [ %12, %.lr.ph.split.i.i.i ], [ %.ph, %.lr.ph.split.i.i.i.preheader ] ; 2 uses
-  %.011.i.i.i = phi i32 [ %11, %.lr.ph.split.i.i.i ], [ %.011.i.i.i.ph, %.lr.ph.split.i.i.i.preheader ]
+  %i.bq = phi i64 [ %indvars.iv.next.i.i.i, %.lr.ph.split.i.i.i ], [ %.ph, %.lr.ph.split.i.i.i.preheader ] ; 3 uses
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %i.bq
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.bq
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !24
   store i64 %i.bt, ptr %i.br, align 1
-  %11 = add i32 %.011.i.i.i, 1                    ; 2 uses
-  %12 = zext i32 %11 to i64                       ; 2 uses
-  %.not.i15.i.i = icmp samesign ult i64 %i.z, %12
+  %indvars.iv.next.i.i.i = add i64 %i.bq, 1       ; 2 uses
+  %10 = and i64 %indvars.iv.next.i.i.i, 4294967295
+  %.not.i15.i.i = icmp samesign ult i64 %i.z, %10
   br i1 %.not.i15.i.i, label %_ZZN5arrow7compute13EncoderBinary9DecodeImpILb1EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.loopexit.i.i, label %.lr.ph.split.i.i.i, !llvm.loop !92
 
 _ZZN5arrow7compute13EncoderBinary9DecodeImpILb1EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.loopexit.i.i: ; preds = %.lr.ph.split.i.i.i, %middle.block85
@@ -330,13 +327,12 @@ _ZNK5arrow7compute12RowTableImpl7offsetsEv.exit.i.i: ; preds = %bb.h, %bb.g
   %i.cf = add nsw i64 %i.cd, 1
   %i.cg = call i64 @llvm.usub.sat.i64(i64 %i.cf, i64 1) ; 2 uses
   %i.ch = add nsw i64 %i.cd, 1                    ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ch, 18
+  %min.iters.check = icmp ult i64 %i.ch, 14
   %i.ci = and i64 %i.cg, 4294967295
   %i.cj = icmp eq i64 %i.ci, 4294967295
   %i.ck = icmp ugt i64 %i.cg, 4294967295
   %i.cl = or i1 %i.cj, %i.ck
-  %n.vec = and i64 %i.ch, -4                      ; 4 uses
-  %13 = trunc nsw i64 %n.vec to i32
+  %n.vec = and i64 %i.ch, -4                      ; 3 uses
   %cmp.n = icmp eq i64 %i.ch, %n.vec
   br label %.lr.ph.split.i.i31
 
@@ -403,19 +399,17 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.i.i.i36.preheader:                   ; preds = %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i34, %vector.memcheck, %middle.block
   %.ph89 = phi i64 [ 0, %vector.memcheck ], [ %n.vec, %middle.block ], [ 0, %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i34 ]
-  %.011.i.i.i37.ph = phi i32 [ 0, %vector.memcheck ], [ %13, %middle.block ], [ 0, %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i34 ]
   br label %.lr.ph.split.i.i.i36
 
 .lr.ph.split.i.i.i36:                             ; preds = %.lr.ph.split.i.i.i36.preheader, %.lr.ph.split.i.i.i36
-  %i.dr = phi i64 [ %15, %.lr.ph.split.i.i.i36 ], [ %.ph89, %.lr.ph.split.i.i.i36.preheader ] ; 2 uses
-  %.011.i.i.i37 = phi i32 [ %14, %.lr.ph.split.i.i.i36 ], [ %.011.i.i.i37.ph, %.lr.ph.split.i.i.i36.preheader ]
+  %i.dr = phi i64 [ %indvars.iv.next.i.i.i38, %.lr.ph.split.i.i.i36 ], [ %.ph89, %.lr.ph.split.i.i.i36.preheader ] ; 3 uses
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.dh, i64 %i.dr
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %i.dr
   %i.du = load i64, ptr %i.dt, align 8, !tbaa !24
   store i64 %i.du, ptr %i.ds, align 1
-  %14 = add i32 %.011.i.i.i37, 1                  ; 2 uses
-  %15 = zext i32 %14 to i64                       ; 2 uses
-  %.not.i15.i.i38 = icmp samesign ult i64 %i.cd, %15
+  %indvars.iv.next.i.i.i38 = add i64 %i.dr, 1     ; 2 uses
+  %11 = and i64 %indvars.iv.next.i.i.i38, 4294967295
+  %.not.i15.i.i38 = icmp samesign ult i64 %i.cd, %11
   br i1 %.not.i15.i.i38, label %_ZZN5arrow7compute13EncoderBinary9DecodeImpILb0EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.loopexit.i.i, label %.lr.ph.split.i.i.i36, !llvm.loop !95
 
 _ZZN5arrow7compute13EncoderBinary9DecodeImpILb0EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.loopexit.i.i: ; preds = %.lr.ph.split.i.i.i36, %middle.block
@@ -818,7 +812,7 @@ _ZNK5arrow7compute12RowTableImpl4dataEi.exit25.i.i: ; preds = %bb.e, %_ZNK5arrow
 
 .lr.ph.split.i.i.i.preheader:                     ; preds = %_ZNK5arrow7compute12RowTableImpl4dataEi.exit25.i.i
   %i.az = add nsw i64 %i.ax, 1                    ; 3 uses
-  %min.iters.check37 = icmp ult i64 %i.az, 26
+  %min.iters.check37 = icmp ult i64 %i.az, 20
   br i1 %min.iters.check37, label %.lr.ph.split.i.i.i.preheader50, label %vector.scevcheck31
 
 vector.scevcheck31:                               ; preds = %.lr.ph.split.i.i.i.preheader
@@ -839,8 +833,7 @@ vector.memcheck33:                                ; preds = %vector.scevcheck31
   br i1 %diff.check35, label %.lr.ph.split.i.i.i.preheader50, label %vector.ph38
 
 vector.ph38:                                      ; preds = %vector.memcheck33
-  %n.vec40 = and i64 %i.az, -4                    ; 4 uses
-  %6 = trunc nsw i64 %n.vec40 to i32
+  %n.vec40 = and i64 %i.az, -4                    ; 3 uses
   br label %vector.body41
 
 vector.body41:                                    ; preds = %vector.body41, %vector.ph38
@@ -863,19 +856,17 @@ middle.block46:                                   ; preds = %vector.body41
 
 .lr.ph.split.i.i.i.preheader50:                   ; preds = %vector.memcheck33, %vector.scevcheck31, %.lr.ph.split.i.i.i.preheader, %middle.block46
   %.ph = phi i64 [ 0, %vector.memcheck33 ], [ 0, %vector.scevcheck31 ], [ 0, %.lr.ph.split.i.i.i.preheader ], [ %n.vec40, %middle.block46 ]
-  %.011.i.i.i.ph = phi i32 [ 0, %vector.memcheck33 ], [ 0, %vector.scevcheck31 ], [ 0, %.lr.ph.split.i.i.i.preheader ], [ %6, %middle.block46 ]
   br label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %.lr.ph.split.i.i.i.preheader50, %.lr.ph.split.i.i.i
-  %i.bp = phi i64 [ %8, %.lr.ph.split.i.i.i ], [ %.ph, %.lr.ph.split.i.i.i.preheader50 ] ; 2 uses
-  %.011.i.i.i = phi i32 [ %7, %.lr.ph.split.i.i.i ], [ %.011.i.i.i.ph, %.lr.ph.split.i.i.i.preheader50 ]
+  %i.bp = phi i64 [ %indvars.iv.next.i.i.i, %.lr.ph.split.i.i.i ], [ %.ph, %.lr.ph.split.i.i.i.preheader50 ] ; 3 uses
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.bp
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.bp
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !24
   store i64 %i.bs, ptr %i.bq, align 1
-  %7 = add i32 %.011.i.i.i, 1                     ; 2 uses
-  %8 = zext i32 %7 to i64                         ; 2 uses
-  %.not.i26.i.i = icmp samesign ult i64 %i.ax, %8
+  %indvars.iv.next.i.i.i = add i64 %i.bp, 1       ; 2 uses
+  %6 = and i64 %indvars.iv.next.i.i.i, 4294967295
+  %.not.i26.i.i = icmp samesign ult i64 %i.ax, %6
   br i1 %.not.i26.i.i, label %_ZZN5arrow7compute16EncoderVarBinary9DecodeImpILb1EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.i.i, label %.lr.ph.split.i.i.i, !llvm.loop !115
 
 _ZZN5arrow7compute16EncoderVarBinary9DecodeImpILb1EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.i.i: ; preds = %.lr.ph.split.i.i.i, %middle.block46, %_ZNK5arrow7compute12RowTableImpl4dataEi.exit25.i.i
@@ -954,7 +945,7 @@ _ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i: ; preds = %_ZZN5arrow7compute1
 
 .lr.ph.split.i.i.i18.preheader:                   ; preds = %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i
   %i.dq = add nsw i64 %i.do, 1                    ; 3 uses
-  %min.iters.check = icmp ult i64 %i.dq, 26
+  %min.iters.check = icmp ult i64 %i.dq, 20
   br i1 %min.iters.check, label %.lr.ph.split.i.i.i18.preheader51, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.split.i.i.i18.preheader
@@ -975,8 +966,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %diff.check, label %.lr.ph.split.i.i.i18.preheader51, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.dq, -4                      ; 4 uses
-  %9 = trunc nsw i64 %n.vec to i32
+  %n.vec = and i64 %i.dq, -4                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -999,19 +989,17 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.i.i.i18.preheader51:                 ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.split.i.i.i18.preheader, %middle.block
   %.ph52 = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.split.i.i.i18.preheader ], [ %n.vec, %middle.block ]
-  %.011.i.i.i19.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.split.i.i.i18.preheader ], [ %9, %middle.block ]
   br label %.lr.ph.split.i.i.i18
 
 .lr.ph.split.i.i.i18:                             ; preds = %.lr.ph.split.i.i.i18.preheader51, %.lr.ph.split.i.i.i18
-  %i.eg = phi i64 [ %11, %.lr.ph.split.i.i.i18 ], [ %.ph52, %.lr.ph.split.i.i.i18.preheader51 ] ; 2 uses
-  %.011.i.i.i19 = phi i32 [ %10, %.lr.ph.split.i.i.i18 ], [ %.011.i.i.i19.ph, %.lr.ph.split.i.i.i18.preheader51 ]
+  %i.eg = phi i64 [ %indvars.iv.next.i.i.i20, %.lr.ph.split.i.i.i18 ], [ %.ph52, %.lr.ph.split.i.i.i18.preheader51 ] ; 3 uses
   %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %i.eg
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.dh, i64 %i.eg
   %i.ej = load i64, ptr %i.ei, align 8, !tbaa !24
   store i64 %i.ej, ptr %i.eh, align 1
-  %10 = add i32 %.011.i.i.i19, 1                  ; 2 uses
-  %11 = zext i32 %10 to i64                       ; 2 uses
-  %.not.i27.i.i = icmp samesign ult i64 %i.do, %11
+  %indvars.iv.next.i.i.i20 = add i64 %i.eg, 1     ; 2 uses
+  %7 = and i64 %indvars.iv.next.i.i.i20, 4294967295
+  %.not.i27.i.i = icmp samesign ult i64 %i.do, %7
   br i1 %.not.i27.i.i, label %_ZZN5arrow7compute16EncoderVarBinary9DecodeImpILb0EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.i.i, label %.lr.ph.split.i.i.i18, !llvm.loop !118
 
 _ZZN5arrow7compute16EncoderVarBinary9DecodeImpILb0EEEvjjjRKNS0_12RowTableImplEPNS0_14KeyColumnArrayEENKUlPhPKhlE_clES8_SA_l.exit.i.i: ; preds = %.lr.ph.split.i.i.i18, %middle.block, %_ZNK5arrow7compute12RowTableImpl4dataEi.exit.i.i

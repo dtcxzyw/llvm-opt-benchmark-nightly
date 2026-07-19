@@ -204,15 +204,15 @@ bb.da:                                            ; preds = %bb.cy
   br label %bb.db
 
 bb.db:                                            ; preds = %bb.df, %bb.da
-  %indvars.iv218.i.i = phi i64 [ %indvars.iv.next219.i.i, %bb.df ], [ 0, %bb.da ] ; 3 uses
-  %indvars.iv.i82.i.i = phi i64 [ %indvars.iv.next416.i.i.i, %bb.df ], [ 0, %bb.da ] ; 3 uses
-  %.0237363.i.i.i = phi i32 [ %.1238.i.i.i, %bb.df ], [ -1, %bb.da ] ; 5 uses
-  %indvars417.i.i.i = trunc i64 %indvars.iv.i82.i.i to i32 ; 2 uses
-  %i.yq = load ptr, ptr %0, align 8               ; 2 uses
-  %i.yr = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv218.i.i
+  %indvars.iv218.i.i = phi i64 [ 0, %bb.da ], [ %indvars.iv.next416.i.i.i, %bb.df ] ; 3 uses
+  %indvars.iv.i82.i.i = phi i64 [ 0, %bb.da ], [ %indvars.iv.next219.i.i, %bb.df ] ; 4 uses
+  %.0237363.i.i.i = phi i32 [ -1, %bb.da ], [ %.1238.i.i.i, %bb.df ] ; 5 uses
+  %indvars417.i.i.i = trunc i64 %indvars.iv218.i.i to i32 ; 2 uses
+  %i.yq = load ptr, ptr %0, align 8
+  %i.yr = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv.i82.i.i ; 2 uses
   %i.ys = load i32, ptr %i.yr, align 4            ; 5 uses
   %i.yt = trunc i32 %i.ys to i16
-  %i.yu = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv.i82.i.i
+  %i.yu = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv218.i.i
   store i16 %i.yt, ptr %i.yu, align 2
   %i.yv = load i32, ptr %i.yh, align 8
   %i.yw = icmp eq i32 %i.ys, %i.yv
@@ -236,22 +236,21 @@ bb.de:                                            ; preds = %bb.dd
 
 bb.df:                                            ; preds = %bb.de, %bb.dd, %bb.dc, %bb.db
   %.1238.i.i.i = phi i32 [ %.0237363.i.i.i, %bb.dd ], [ %.0237363.i.i.i, %bb.de ], [ %indvars417.i.i.i, %bb.dc ], [ -1, %bb.db ]
-  %7 = or disjoint i64 %indvars.iv218.i.i, 1      ; 3 uses
   %i.zc = add i32 %i.ys, 16
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %7
-  store i32 %i.zc, ptr %8, align 4
+  %7 = getelementptr inbounds nuw i8, ptr %i.yr, i64 4
+  store i32 %i.zc, ptr %7, align 4
   %i.zd = add i32 %i.ys, 32
   %i.ze = load ptr, ptr %0, align 8
-  %i.zf = getelementptr [4 x i8], ptr %i.ze, i64 %7
-  %i.zg = getelementptr i8, ptr %i.zf, i64 4
+  %i.zf = getelementptr inbounds nuw [4 x i8], ptr %i.ze, i64 %indvars.iv.i82.i.i
+  %i.zg = getelementptr inbounds nuw i8, ptr %i.zf, i64 8
   store i32 %i.zd, ptr %i.zg, align 4
   %i.zh = add i32 %i.ys, 48
   %i.zi = load ptr, ptr %0, align 8
-  %i.zj = getelementptr [4 x i8], ptr %i.zi, i64 %7
-  %i.zk = getelementptr i8, ptr %i.zj, i64 8
+  %i.zj = getelementptr inbounds nuw [4 x i8], ptr %i.zi, i64 %indvars.iv.i82.i.i
+  %i.zk = getelementptr inbounds nuw i8, ptr %i.zj, i64 12
   store i32 %i.zh, ptr %i.zk, align 4
-  %indvars.iv.next219.i.i = add nuw nsw i64 %indvars.iv218.i.i, 4
-  %indvars.iv.next416.i.i.i = add nuw nsw i64 %indvars.iv.i82.i.i, 1 ; 2 uses
+  %indvars.iv.next219.i.i = add nuw nsw i64 %indvars.iv.i82.i.i, 4
+  %indvars.iv.next416.i.i.i = add nuw nsw i64 %indvars.iv218.i.i, 1 ; 2 uses
   %exitcond.not.i83.i.i = icmp eq i64 %indvars.iv.next416.i.i.i, %wide.trip.count.i81.i.i
   br i1 %exitcond.not.i83.i.i, label %._crit_edge.i.i85.i.i, label %bb.db, !llvm.loop !55
 
@@ -273,10 +272,10 @@ bb.df:                                            ; preds = %bb.de, %bb.dd, %bb.
   br label %.preheader351.i.i.i
 
 .preheader351.i.i.i:                              ; preds = %bb.dn, %.preheader351.lr.ph.i.i.i
-  %indvars.iv221.i.i = phi i64 [ %indvars.iv.next222.i.i, %bb.dn ], [ %i.zr, %.preheader351.lr.ph.i.i.i ] ; 6 uses
-  %.2239367.i.i.i = phi i32 [ %.3240.i.i.i, %bb.dn ], [ %i.zq, %.preheader351.lr.ph.i.i.i ] ; 5 uses
-  %.0250366.i.i.i = phi i32 [ %.3253.i.i.i, %bb.dn ], [ 0, %.preheader351.lr.ph.i.i.i ] ; 5 uses
-  %.0267365.i.i.i = phi i1 [ %.2269.i.i.i, %bb.dn ], [ false, %.preheader351.lr.ph.i.i.i ] ; 4 uses
+  %indvars.iv221.i.i = phi i64 [ %i.zr, %.preheader351.lr.ph.i.i.i ], [ %indvars.iv.next222.i.i, %bb.dn ] ; 6 uses
+  %.2239367.i.i.i = phi i32 [ %i.zq, %.preheader351.lr.ph.i.i.i ], [ %.3240.i.i.i, %bb.dn ] ; 5 uses
+  %.0250366.i.i.i = phi i32 [ 0, %.preheader351.lr.ph.i.i.i ], [ %.3253.i.i.i, %bb.dn ] ; 5 uses
+  %.0267365.i.i.i = phi i1 [ false, %.preheader351.lr.ph.i.i.i ], [ %.2269.i.i.i, %bb.dn ] ; 4 uses
   %i.zt = load ptr, ptr %0, align 8               ; 2 uses
   %i.zu = load i32, ptr %i.yh, align 8
   %i.zv = getelementptr inbounds nuw [4 x i8], ptr %i.zt, i64 %indvars.iv221.i.i ; 2 uses

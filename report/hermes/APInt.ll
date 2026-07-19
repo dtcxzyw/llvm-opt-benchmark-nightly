@@ -204,7 +204,6 @@ bb.a:
   %i.c = zext i32 %i.b to i64
   %i.d = add nuw nsw i64 %i.c, 63
   %i.e = lshr i64 %i.d, 6                         ; 2 uses
-  %2 = trunc nuw nsw i64 %i.e to i32
   %.not12.not = icmp eq i64 %i.e, 0
   br i1 %.not12.not, label %._crit_edge, label %.lr.ph
 
@@ -214,16 +213,15 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph
-  %.0913 = phi i32 [ 0, %.lr.ph ], [ %4, %bb.b ]  ; 2 uses
-  %3 = zext nneg i32 %.0913 to i64                ; 2 uses
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %3
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
   %i.i = load i64, ptr %i.h, align 8, !tbaa !10
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %3
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
   %i.k = load i64, ptr %i.j, align 8, !tbaa !10
   %i.l = and i64 %i.k, %i.i
   %.not10.not = icmp ne i64 %i.l, 0               ; 2 uses
-  %4 = add nuw nsw i32 %.0913, 1                  ; 2 uses
-  %.not.not = icmp eq i32 %4, %2
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not.not = icmp eq i64 %indvars.iv.next, %i.e
   %or.cond = select i1 %.not10.not, i1 true, i1 %.not.not
   br i1 %or.cond, label %._crit_edge, label %bb.b, !llvm.loop !149
 
@@ -240,7 +238,6 @@ bb.a:
   %i.c = zext i32 %i.b to i64
   %i.d = add nuw nsw i64 %i.c, 63
   %i.e = lshr i64 %i.d, 6                         ; 2 uses
-  %2 = trunc nuw nsw i64 %i.e to i32
   %.not11 = icmp eq i64 %i.e, 0
   br i1 %.not11, label %._crit_edge, label %.lr.ph
 
@@ -250,17 +247,16 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph
-  %.0912 = phi i32 [ 0, %.lr.ph ], [ %4, %bb.b ]  ; 2 uses
-  %3 = zext nneg i32 %.0912 to i64                ; 2 uses
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %3
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
   %i.i = load i64, ptr %i.h, align 8, !tbaa !10
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %3
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
   %i.k = load i64, ptr %i.j, align 8, !tbaa !10
   %i.l = xor i64 %i.k, -1
   %i.m = and i64 %i.i, %i.l
   %.not10 = icmp eq i64 %i.m, 0                   ; 2 uses
-  %4 = add nuw nsw i32 %.0912, 1                  ; 2 uses
-  %.not = icmp ne i32 %4, %2
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not = icmp ne i64 %indvars.iv.next, %i.e
   %or.cond.not = select i1 %.not10, i1 %.not, i1 false
   br i1 %or.cond.not, label %bb.b, label %._crit_edge, !llvm.loop !150
 

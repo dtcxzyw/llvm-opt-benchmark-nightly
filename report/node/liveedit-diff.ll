@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.v, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.v ] ; 12 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.v ] ; 11 uses
   %i.u = sub nsw i64 0, %indvars.iv.i             ; 5 uses
   %i.v = sub nsw i64 1, %indvars.iv.i             ; 5 uses
   br label %bb.d
@@ -338,10 +338,8 @@ bb.j:                                             ; preds = %.critedge.i.i
   br i1 %.not39.i.i, label %bb.k, label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer19ShortestEditForwardERKNS2_13EditGraphAreaEi.exit.thread.i
 
 _ZN2v88internal12_GLOBAL__N_111MyersDiffer19ShortestEditForwardERKNS2_13EditGraphAreaEi.exit.thread.i: ; preds = %bb.j
-  %7 = icmp ne i64 %indvars.iv.i, 0
   %.not35.le.i.i = icmp eq i32 %.sroa.0.0.i.i, %storemerge.i.i
-  %or.cond.le.i.i = select i1 %7, i1 %.not35.le.i.i, i1 false
-  %i.ce = sext i1 %or.cond.le.i.i to i32
+  %i.ce = sext i1 %.not35.le.i.i to i32
   %i.cf = add nsw i32 %i.av, %i.ce
   %.sroa.11.0.insert.ext.i.i = zext i32 %.sroa.11.0.lcssa.i.i to i64
   %.sroa.11.0.insert.shift.i.i = shl nuw i64 %.sroa.11.0.insert.ext.i.i, 32

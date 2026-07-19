@@ -204,7 +204,7 @@ bb.cu:                                            ; preds = %extend_fw.exit
   %i.abh = getelementptr inbounds nuw i8, ptr %i.abb, i64 12 ; 2 uses
   %i.abi = load i32, ptr %i.abh, align 4, !tbaa !51 ; 9 uses
   %i.abj = xor i32 %i.abi, -1
-  %i.abk = add i32 %i.abg, %i.abj                 ; 16 uses
+  %i.abk = add i32 %i.abg, %i.abj                 ; 15 uses
   %i.abl = icmp sgt i32 %i.abk, 0
   br i1 %i.abl, label %bb.cv, label %bb.fi
 
@@ -230,7 +230,7 @@ bb.cx:                                            ; preds = %bb.cw
   %i.abv = zext i32 %i.abp to i64
   %i.abw = getelementptr inbounds nuw i8, ptr %.pre758.a, i64 %i.abv ; 4 uses
   %i.abx = xor i32 %i.abp, -1
-  %i.aby = add i32 %i.abm, %i.abx                 ; 10 uses
+  %i.aby = add i32 %i.abm, %i.abx                 ; 9 uses
   %i.abz = icmp ugt i32 %i.aby, 999999
   br i1 %i.abz, label %greedy.exitthread-pre-split, label %bb.cy
 
@@ -298,8 +298,7 @@ bb.dc:                                            ; preds = %bb.cz
 
 bb.dd:                                            ; preds = %bb.cy
   %.neg606.i = sub i32 %i.aca, %..i               ; 2 uses
-  %.not607.i = icmp eq i32 %i.aby, 0              ; 2 uses
-  br i1 %.not607.i, label %.critedge.thread.i409, label %.lr.ph.i408
+  br label %.lr.ph.i408
 
 .lr.ph.i408:                                      ; preds = %bb.dd, %bb.de
   %.0430532.i = phi i32 [ %i.adq, %bb.de ], [ %i.aby, %bb.dd ] ; 3 uses
@@ -364,8 +363,8 @@ add_col_elt.exit508.i:                            ; preds = %bb.dg, %bb.df
   store ptr %i.ady, ptr %i.ael, align 8, !tbaa !44
   br label %greedy.exit
 
-.critedge.thread.i409:                            ; preds = %.lr.ph.i408, %.critedge.i426, %bb.dd
-  %.0438530.i = phi i32 [ %i.adp, %.critedge.i426 ], [ %i.abk, %bb.dd ], [ %.0438531.i, %.lr.ph.i408 ]
+.critedge.thread.i409:                            ; preds = %.lr.ph.i408, %.critedge.i426
+  %.0438530.i = phi i32 [ %i.adp, %.critedge.i426 ], [ %.0438531.i, %.lr.ph.i408 ]
   %i.aem = add i32 %..i, %i.aby                   ; 3 uses
   %i.aen = add i32 %i.aem, 1
   %i.aeo = zext i32 %i.aen to i64                 ; 2 uses
@@ -464,14 +463,11 @@ scalar.ph1055:                                    ; preds = %scalar.ph1055.prol.
   %i.afs = add i32 %..i, -1
   %i.aft = add i32 %..i, 1                        ; 4 uses
   %invariant.umin.i = call i32 @llvm.umin.i32(i32 %i.aby, i32 range(i32 1, 501) %i.abk) ; 2 uses
-  br i1 %.not607.i, label %.critedge3.thread.i, label %.lr.ph536.preheader.i
-
-.lr.ph536.preheader.i:                            ; preds = %.loopexit
   %wide.trip.count.i412 = zext nneg i32 %invariant.umin.i to i64
   br label %.lr.ph536.i
 
-.lr.ph536.i:                                      ; preds = %bb.dh, %.lr.ph536.preheader.i
-  %indvars.iv612.i = phi i64 [ 0, %.lr.ph536.preheader.i ], [ %indvars.iv.next613.i, %bb.dh ] ; 4 uses
+.lr.ph536.i:                                      ; preds = %bb.dh, %.loopexit
+  %indvars.iv612.i = phi i64 [ 0, %.loopexit ], [ %indvars.iv.next613.i, %bb.dh ] ; 4 uses
   %i.afu = getelementptr inbounds nuw i8, ptr %i.abu, i64 %indvars.iv612.i
   %i.afv = load i8, ptr %i.afu, align 1, !tbaa !20
   %i.afw = getelementptr inbounds nuw i8, ptr %i.abw, i64 %indvars.iv612.i
@@ -532,8 +528,7 @@ add_col_elt.exit512.i:                            ; preds = %bb.dj, %bb.di
   call void @free(ptr noundef %i.aer) #18
   br label %greedy.exitthread-pre-split
 
-.critedge3.thread.i:                              ; preds = %.critedge3.i, %.loopexit
-  %.1439.lcssa704.i = phi i32 [ %.1439.lcssa.i, %.critedge3.i ], [ 0, %.loopexit ]
+.critedge3.thread.i:                              ; preds = %.critedge3.i
   %i.agt = call ptr @xmalloc(i64 noundef %i.aep) #18 ; 8 uses
   %i.agu = call ptr @xmalloc(i64 noundef %i.aep) #18 ; 6 uses
   %umax.i413 = call i64 @llvm.umax.i64(i64 %i.aeo, i64 1)
@@ -541,7 +536,7 @@ add_col_elt.exit512.i:                            ; preds = %bb.dj, %bb.di
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.agt, i8 -1, i64 %i.agv, i1 false), !tbaa !4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.agu, i8 -1, i64 %i.agv, i1 false), !tbaa !4
   %i.agw = getelementptr inbounds [4 x i8], ptr %i.agt, i64 %i.afq ; 3 uses
-  store i32 %.1439.lcssa704.i, ptr %i.agw, align 4, !tbaa !4
+  store i32 %.1439.lcssa.i, ptr %i.agw, align 4, !tbaa !4
   %i.agx = zext i32 %i.aft to i64
   %i.agy = shl nuw nsw i64 %i.agx, 2              ; 4 uses
   %i.agz = call ptr @xmalloc(i64 noundef %i.agy) #18 ; 15 uses
@@ -944,8 +939,7 @@ compact_exons.exit:                               ; preds = %about_same_gap_p.ex
 
 .lr.ph663:                                        ; preds = %.lr.ph1024
   %i.ayq = load ptr, ptr %i.bf, align 8, !tbaa !20
-  %11 = zext i32 %12 to i64
-  %i.ayr = getelementptr inbounds nuw [8 x i8], ptr %i.ayq, i64 %11
+  %i.ayr = getelementptr inbounds nuw [8 x i8], ptr %i.ayq, i64 %indvars.iv.next751
   %i.ays = load ptr, ptr %i.ayr, align 8, !tbaa !31 ; 3 uses
   %i.ayt = getelementptr inbounds nuw i8, ptr %i.ays, i64 12
   %i.ayu = load i32, ptr %i.ayt, align 4, !tbaa !51
@@ -959,36 +953,35 @@ compact_exons.exit:                               ; preds = %about_same_gap_p.ex
 
 .lr.ph1024:                                       ; preds = %.lr.ph663.preheader, %.lr.ph663
   %i.aza = phi ptr [ %i.ays, %.lr.ph663 ], [ %i.ayi, %.lr.ph663.preheader ]
-  %.02866621023 = phi i32 [ %12, %.lr.ph663 ], [ 0, %.lr.ph663.preheader ]
+  %indvars.iv7501010 = phi i64 [ %indvars.iv.next751, %.lr.ph663 ], [ 0, %.lr.ph663.preheader ]
   call void @free(ptr noundef nonnull %i.aza) #18
-  %12 = add nuw i32 %.02866621023, 1              ; 5 uses
+  %indvars.iv.next751 = add nuw nsw i64 %indvars.iv7501010, 1 ; 5 uses
   %i.azb = load i32, ptr %i.bl, align 8, !tbaa !19 ; 3 uses
-  %i.azc = icmp ult i32 %12, %i.azb
-  br i1 %i.azc, label %.lr.ph663, label %.thread561.thread
+  %11 = zext i32 %i.azb to i64
+  %i.azc = icmp samesign ult i64 %indvars.iv.next751, %11
+  br i1 %i.azc, label %.lr.ph663, label %.thread561
 
-.thread561:                                       ; preds = %.lr.ph663, %.lr.ph663.preheader
-  %.lcssa1000 = phi i32 [ %i.ayg, %.lr.ph663.preheader ], [ %i.azb, %.lr.ph663 ] ; 2 uses
-  %.0286662.lcssa = phi i32 [ 0, %.lr.ph663.preheader ], [ %12, %.lr.ph663 ] ; 2 uses
-  %.not341 = icmp eq i32 %.0286662.lcssa, 0
+.thread561:                                       ; preds = %.lr.ph663, %.lr.ph1024, %.lr.ph663.preheader
+  %12 = phi i32 [ %i.ayg, %.lr.ph663.preheader ], [ %i.azb, %.lr.ph1024 ], [ %i.azb, %.lr.ph663 ] ; 2 uses
+  %.0286.lcssa.ph.in = phi i64 [ 0, %.lr.ph663.preheader ], [ %indvars.iv.next751, %.lr.ph1024 ], [ %indvars.iv.next751, %.lr.ph663 ] ; 3 uses
+  %.not341 = icmp eq i64 %.0286.lcssa.ph.in, 0
   br i1 %.not341, label %thread-pre-split564, label %.thread561.thread
 
-.thread561.thread:                                ; preds = %.lr.ph1024, %.thread561
-  %.0286.lcssa.ph905 = phi i32 [ %.0286662.lcssa, %.thread561 ], [ %12, %.lr.ph1024 ] ; 3 uses
-  %13 = phi i32 [ %.lcssa1000, %.thread561 ], [ %i.azb, %.lr.ph1024 ]
+.thread561.thread:                                ; preds = %.thread561
+  %.0286.lcssa.ph = trunc nuw i64 %.0286.lcssa.ph.in to i32 ; 2 uses
   %i.azd = load ptr, ptr %i.bf, align 8, !tbaa !20 ; 2 uses
-  %14 = zext i32 %.0286.lcssa.ph905 to i64
-  %i.aze = getelementptr inbounds nuw [8 x i8], ptr %i.azd, i64 %14
-  %i.azf = sub i32 %13, %.0286.lcssa.ph905
+  %i.aze = getelementptr inbounds nuw [8 x i8], ptr %i.azd, i64 %.0286.lcssa.ph.in
+  %i.azf = sub i32 %12, %.0286.lcssa.ph
   %i.azg = zext i32 %i.azf to i64
   %i.azh = shl nuw nsw i64 %i.azg, 3
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.azd, ptr nonnull align 8 %i.aze, i64 %i.azh, i1 false)
   %i.azi = load i32, ptr %i.bl, align 8, !tbaa !19
-  %i.azj = sub i32 %i.azi, %.0286.lcssa.ph905     ; 2 uses
+  %i.azj = sub i32 %i.azi, %.0286.lcssa.ph        ; 2 uses
   store i32 %i.azj, ptr %i.bl, align 8, !tbaa !19
   br label %thread-pre-split564
 
 thread-pre-split564:                              ; preds = %.thread561, %.thread561.thread
-  %i.azk = phi i32 [ %i.azj, %.thread561.thread ], [ %.lcssa1000, %.thread561 ] ; 3 uses
+  %i.azk = phi i32 [ %i.azj, %.thread561.thread ], [ %12, %.thread561 ] ; 3 uses
   %.0283667 = add i32 %i.azk, -1                  ; 3 uses
   %i.azl = icmp sgt i32 %.0283667, -1
   br i1 %i.azl, label %.lr.ph669.preheader, label %.thread568

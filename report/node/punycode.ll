@@ -28,65 +28,52 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.f, label %.lr.ph.preheader187, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %1, 8589934584                 ; 4 uses
-  %4 = trunc i64 %n.vec to i32
+  %n.vec = and i64 %1, 8589934588                 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %9, %vector.body ]
   %vec.phi175 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.i, %vector.body ]
-  %vec.phi176 = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi177 = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %8, %vector.body ]
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %index ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %wide.load = load <4 x i8>, ptr %5, align 1, !tbaa !9
+  %vec.phi177 = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %index
   %wide.load178 = load <4 x i8>, ptr %i.g, align 1, !tbaa !9
-  %6 = icmp eq <4 x i8> %wide.load, splat (i8 45) ; 2 uses
-  %i.h = icmp eq <4 x i8> %wide.load178, splat (i8 45) ; 2 uses
-  %7 = or <4 x i1> %vec.phi176, %6                ; 2 uses
-  %8 = or <4 x i1> %vec.phi177, %i.h              ; 2 uses
-  %9 = select <4 x i1> %6, <4 x i32> %vec.ind, <4 x i32> %vec.phi ; 2 uses
-  %i.i = select <4 x i1> %i.h, <4 x i32> %step.add, <4 x i32> %vec.phi175 ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
+  %wide.load.fr = freeze <4 x i8> %wide.load178
+  %i.h = icmp eq <4 x i8> %wide.load.fr, splat (i8 45) ; 2 uses
+  %4 = bitcast <4 x i1> %i.h to i4
+  %.not177 = icmp eq i4 %4, 0                     ; 2 uses
+  %5 = select i1 %.not177, <4 x i1> %vec.phi177, <4 x i1> %i.h ; 2 uses
+  %i.i = select i1 %.not177, <4 x i32> %vec.phi175, <4 x i32> %vec.ind ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %i.j = icmp eq i64 %index.next, %n.vec
   br i1 %i.j, label %middle.block, label %vector.body, !llvm.loop !10
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %9, <4 x i32> %i.i)
-  %10 = tail call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax)
-  %bin.rdx = or <4 x i1> %8, %7
-  %bin.rdx.fr = freeze <4 x i1> %bin.rdx
-  %11 = bitcast <4 x i1> %bin.rdx.fr to i4
-  %.not180 = icmp eq i4 %11, 0
-  %rdx.select = select i1 %.not180, i32 0, i32 %10 ; 2 uses
+  %6 = tail call i32 @llvm.experimental.vector.extract.last.active.v4i32(<4 x i32> %i.i, <4 x i1> %5, i32 0) ; 2 uses
   %cmp.n = icmp eq i64 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader187
 
 .lr.ph.preheader187:                              ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block
   %.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.086125.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %4, %middle.block ]
-  %.089124.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %rdx.select, %middle.block ]
+  %.089124.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %6, %middle.block ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader187, %.lr.ph
-  %i.k = phi i64 [ %13, %.lr.ph ], [ %.ph, %.lr.ph.preheader187 ]
-  %.086125 = phi i32 [ %12, %.lr.ph ], [ %.086125.ph, %.lr.ph.preheader187 ] ; 2 uses
+  %i.k = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %.ph, %.lr.ph.preheader187 ] ; 3 uses
   %.089124 = phi i32 [ %spec.select, %.lr.ph ], [ %.089124.ph, %.lr.ph.preheader187 ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !9
   %i.n = icmp eq i8 %i.m, 45
-  %spec.select = select i1 %i.n, i32 %.086125, i32 %.089124 ; 2 uses
-  %12 = add i32 %.086125, 1                       ; 2 uses
-  %13 = zext i32 %12 to i64                       ; 2 uses
-  %i.o = icmp ugt i64 %1, %13
+  %7 = trunc nuw i64 %i.k to i32
+  %spec.select = select i1 %i.n, i32 %7, i32 %.089124 ; 2 uses
+  %indvars.iv.next = add i64 %i.k, 1              ; 2 uses
+  %8 = and i64 %indvars.iv.next, 4294967295
+  %i.o = icmp ugt i64 %1, %8
   br i1 %i.o, label %.lr.ph, label %._crit_edge, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block
-  %spec.select.lcssa = phi i32 [ %rdx.select, %middle.block ], [ %spec.select, %.lr.ph ] ; 4 uses
+  %spec.select.lcssa = phi i32 [ %6, %middle.block ], [ %spec.select, %.lr.ph ] ; 4 uses
   %.not = icmp eq i32 %spec.select.lcssa, 0
   br i1 %.not, label %._crit_edge.thread, label %bb.b
 
@@ -300,8 +287,8 @@ bb.a:
   %3 = alloca %struct.wpacket_st, align 8         ; 8 uses
   %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca [6 x i8], align 4                 ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   %.not = icmp eq ptr %1, null
   %.sink34.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.c, i64 3
   %.sink34.i.sroa.gep47 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
@@ -310,14 +297,14 @@ bb.a:
   br i1 %.not, label %bb.t, label %bb.b, !prof !18
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = call i32 @WPACKET_init_static_len(ptr noundef nonnull %3, ptr noundef nonnull %1, i64 noundef %2, i64 noundef 0) #6
+  %i.d = call i32 @WPACKET_init_static_len(ptr noundef nonnull %3, ptr noundef nonnull %1, i64 noundef %2, i64 noundef 0) #7
   %.not37 = icmp eq i32 %i.d, 0
   br i1 %.not37, label %bb.t, label %.preheader74
 
 .preheader74:                                     ; preds = %bb.b, %bb.q
   %.027 = phi i32 [ %spec.select45, %bb.q ], [ 1, %bb.b ] ; 3 uses
   %.026 = phi ptr [ %i.bd, %bb.q ], [ %0, %bb.b ] ; 6 uses
-  %i.e = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.026, i32 noundef 46) #7 ; 3 uses
+  %i.e = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.026, i32 noundef 46) #8 ; 3 uses
   %.not38 = icmp eq ptr %i.e, null                ; 2 uses
   br i1 %.not38, label %bb.d, label %bb.c
 
@@ -328,23 +315,23 @@ bb.c:                                             ; preds = %.preheader74
   br label %bb.e
 
 bb.d:                                             ; preds = %.preheader74
-  %i.i = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.026) #7
+  %i.i = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.026) #8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.j = phi i64 [ %i.h, %bb.c ], [ %i.i, %bb.d ] ; 2 uses
-  %i.k = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.026, ptr noundef nonnull dereferenceable(5) @.str, i64 noundef 4) #7
+  %i.k = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.026, ptr noundef nonnull dereferenceable(5) @.str, i64 noundef 4) #8
   %i.l = icmp eq i32 %i.k, 0
   br i1 %i.l, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = call i32 @WPACKET_memcpy(ptr noundef nonnull %3, ptr noundef nonnull %.026, i64 noundef %i.j) #6
+  %i.m = call i32 @WPACKET_memcpy(ptr noundef nonnull %3, ptr noundef nonnull %.026, i64 noundef %i.j) #7
   %.not39 = icmp eq i32 %i.m, 0
   %spec.select = select i1 %.not39, i32 0, i32 %.027
   br label %bb.p
 
 bb.g:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   store i32 512, ptr %i.b, align 4, !tbaa !5
   %i.n = getelementptr inbounds nuw i8, ptr %.026, i64 4
   %i.o = add i64 %i.j, -4
@@ -364,7 +351,7 @@ bb.g:                                             ; preds = %bb.e
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.o ] ; 2 uses
   %.12877 = phi i32 [ %.027, %.lr.ph.preheader ], [ %spec.select44, %bb.o ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.s = load i32, ptr %i.r, align 4, !tbaa !5    ; 14 uses
   %i.t = icmp ult i32 %i.s, 128
@@ -432,28 +419,28 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 .thread:                                          ; preds = %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   br label %.thread69
 
 bb.o:                                             ; preds = %bb.n, %bb.l, %bb.j, %bb.h
   %.sink34.i.sroa.phi.ph = phi ptr [ %.sink34.i.sroa.gep50, %bb.h ], [ %.sink34.i.sroa.gep49, %bb.j ], [ %.sink34.i.sroa.gep, %bb.l ], [ %.sink34.i.sroa.gep47, %bb.n ]
   %.0.i.ph = phi i64 [ 1, %bb.h ], [ 2, %bb.j ], [ 3, %bb.l ], [ 4, %bb.n ]
   store i8 0, ptr %.sink34.i.sroa.phi.ph, align 1, !tbaa !9
-  %i.bb = call i32 @WPACKET_memcpy(ptr noundef nonnull %3, ptr noundef nonnull %i.c, i64 noundef %.0.i.ph) #6
+  %i.bb = call i32 @WPACKET_memcpy(ptr noundef nonnull %3, ptr noundef nonnull %i.c, i64 noundef %.0.i.ph) #7
   %.not40 = icmp eq i32 %i.bb, 0
   %spec.select44 = select i1 %.not40, i32 0, i32 %.12877 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 .thread69:                                        ; preds = %bb.g, %.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   br label %bb.s
 
 ._crit_edge:                                      ; preds = %bb.o, %.preheader
   %.128.lcssa = phi i32 [ %.027, %.preheader ], [ %spec.select44, %bb.o ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge, %bb.f
@@ -461,27 +448,27 @@ bb.p:                                             ; preds = %._crit_edge, %bb.f
   br i1 %.not38, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.bc = call i32 @WPACKET_put_bytes__(ptr noundef nonnull %3, i64 noundef 46, i64 noundef 1) #6
+  %i.bc = call i32 @WPACKET_put_bytes__(ptr noundef nonnull %3, i64 noundef 46, i64 noundef 1) #7
   %.not42 = icmp eq i32 %i.bc, 0
   %spec.select45 = select i1 %.not42, i32 0, i32 %.5
   %i.bd = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   br label %.preheader74
 
 bb.r:                                             ; preds = %bb.p
-  %i.be = call i32 @WPACKET_put_bytes__(ptr noundef nonnull %3, i64 noundef 0, i64 noundef 1) #6
+  %i.be = call i32 @WPACKET_put_bytes__(ptr noundef nonnull %3, i64 noundef 0, i64 noundef 1) #7
   %.not43 = icmp eq i32 %i.be, 0
   %spec.select46 = select i1 %.not43, i32 0, i32 %.5
   br label %bb.s
 
 bb.s:                                             ; preds = %.thread69, %bb.r
   %.8 = phi i32 [ %spec.select46, %bb.r ], [ -1, %.thread69 ]
-  call void @WPACKET_cleanup(ptr noundef nonnull %3) #6
+  call void @WPACKET_cleanup(ptr noundef nonnull %3) #7
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.b, %bb.a, %bb.s
   %.0 = phi i32 [ -1, %bb.b ], [ %.8, %bb.s ], [ -1, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.0
 }
 
@@ -505,11 +492,8 @@ declare void @WPACKET_cleanup(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.umax.v4i32(<4 x i32>) #5
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.experimental.vector.extract.last.active.v4i32(<4 x i32>, <4 x i1>, i32) #6
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -517,8 +501,9 @@ attributes #2 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width
 attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nounwind }
-attributes #7 = { nounwind willreturn memory(read) }
+attributes #6 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nounwind }
+attributes #8 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

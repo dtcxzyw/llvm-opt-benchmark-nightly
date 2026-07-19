@@ -203,8 +203,7 @@ _ZN10aiVector3tIfE13NormalizeSafeEv.exit152:      ; preds = %._crit_edge245, %_Z
   br label %_ZNSt13_Bvector_baseISaIbEED2Ev.exit158
 
 bb.w:                                             ; preds = %.lr.ph244, %bb.y
-  %i.fu = phi i64 [ 0, %.lr.ph244 ], [ %6, %bb.y ]
-  %.098243 = phi i32 [ 0, %.lr.ph244 ], [ %5, %bb.y ]
+  %i.fu = phi i64 [ 0, %.lr.ph244 ], [ %indvars.iv.next283, %bb.y ] ; 2 uses
   %.sroa.14182.0240 = phi float [ 0.000000e+00, %.lr.ph244 ], [ %.sroa.14182.1, %bb.y ] ; 2 uses
   %i.fv = phi <2 x float> [ zeroinitializer, %.lr.ph244 ], [ %i.gk, %bb.y ] ; 2 uses
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.fc, i64 %i.fu
@@ -229,14 +228,13 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x, %bb.w
   %.sroa.14182.1 = phi float [ %i.gj, %bb.x ], [ %.sroa.14182.0240, %bb.w ] ; 2 uses
   %i.gk = phi <2 x float> [ %i.gg, %bb.x ], [ %i.fv, %bb.w ] ; 2 uses
-  %5 = add i32 %.098243, 1                        ; 2 uses
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.gl = icmp ugt i64 %i.fg, %6
+  %indvars.iv.next283 = add i64 %i.fu, 1          ; 2 uses
+  %5 = and i64 %indvars.iv.next283, 4294967295
+  %i.gl = icmp ugt i64 %i.fg, %5
   br i1 %i.gl, label %bb.w, label %._crit_edge245, !llvm.loop !10
 
 .lr.ph249:                                        ; preds = %_ZN10aiVector3tIfE13NormalizeSafeEv.exit152, %.lr.ph249
-  %i.gm = phi i64 [ %8, %.lr.ph249 ], [ 0, %_ZN10aiVector3tIfE13NormalizeSafeEv.exit152 ]
-  %.097248 = phi i32 [ %7, %.lr.ph249 ], [ 0, %_ZN10aiVector3tIfE13NormalizeSafeEv.exit152 ]
+  %i.gm = phi i64 [ %indvars.iv.next286, %.lr.ph249 ], [ 0, %_ZN10aiVector3tIfE13NormalizeSafeEv.exit152 ] ; 2 uses
   %i.gn = getelementptr inbounds nuw [4 x i8], ptr %i.fc, i64 %i.gm
   %i.go = load i32, ptr %i.gn, align 4            ; 2 uses
   %i.gp = zext i32 %i.go to i64                   ; 2 uses
@@ -254,9 +252,9 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.gv = load i64, ptr %i.gs, align 8
   %i.gw = or i64 %i.gv, %i.gu
   store i64 %i.gw, ptr %i.gs, align 8
-  %7 = add i32 %.097248, 1                        ; 2 uses
-  %8 = zext i32 %7 to i64                         ; 2 uses
-  %i.gx = icmp samesign ugt i64 %i.fg, %8
+  %indvars.iv.next286 = add i64 %i.gm, 1          ; 2 uses
+  %6 = and i64 %indvars.iv.next286, 4294967295
+  %i.gx = icmp samesign ugt i64 %i.fg, %6
   br i1 %i.gx, label %.lr.ph249, label %.loopexit, !llvm.loop !11
 
 .loopexit:                                        ; preds = %.lr.ph249, %_ZN10aiVector3tIfE13NormalizeSafeEv.exit152, %bb.u
@@ -328,8 +326,7 @@ bb.ac:                                            ; preds = %bb.aa
   br label %_ZNSt13_Bvector_baseISaIbEED2Ev.exit158
 
 .lr.ph258:                                        ; preds = %bb.ab, %bb.ag
-  %i.ic = phi i64 [ %10, %bb.ag ], [ 0, %bb.ab ]
-  %.0256 = phi i32 [ %9, %bb.ag ], [ 0, %bb.ab ]
+  %i.ic = phi i64 [ %indvars.iv.next294, %bb.ag ], [ 0, %bb.ab ] ; 2 uses
   %.sroa.14.0253 = phi float [ %.sroa.14.1, %bb.ag ], [ 0.000000e+00, %bb.ab ] ; 3 uses
   %i.id = phi <2 x float> [ %i.it, %bb.ag ], [ zeroinitializer, %bb.ab ] ; 3 uses
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.hl, i64 %i.ic
@@ -363,9 +360,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %.lr.ph258
   %.sroa.14.1 = phi float [ %i.is, %bb.af ], [ %.sroa.14.0253, %bb.ae ], [ %.sroa.14.0253, %.lr.ph258 ] ; 2 uses
   %i.it = phi <2 x float> [ %i.ir, %bb.af ], [ %i.id, %bb.ae ], [ %i.id, %.lr.ph258 ] ; 2 uses
-  %9 = add i32 %.0256, 1                          ; 2 uses
-  %10 = zext i32 %9 to i64                        ; 2 uses
-  %i.iu = icmp ugt i64 %i.hp, %10
+  %indvars.iv.next294 = add i64 %i.ic, 1          ; 2 uses
+  %7 = and i64 %indvars.iv.next294, 4294967295
+  %i.iu = icmp ugt i64 %i.hp, %7
   br i1 %i.iu, label %.lr.ph258, label %._crit_edge259, !llvm.loop !13
 
 _ZN10aiVector3tIfE13NormalizeSafeEv.exit161:      ; preds = %_ZN10aiVector3tIfEdVEf.exit.i159, %._crit_edge259
