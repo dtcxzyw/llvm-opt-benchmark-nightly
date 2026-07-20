@@ -201,8 +201,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %.us-phi = phi ptr [ %.04489.us, %.lr.ph.split.us ], [ %.04489, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit ] ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.04093, i64 32 ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.us-phi, i64 32 ; 3 uses
-  %i.be = load i128, ptr %i.bc, align 1
-  %i.bf = load i128, ptr %i.bd, align 1
+  %i.be = load i128, ptr %i.bc, align 8
+  %i.bf = load i128, ptr %i.bd, align 8
   %i.bg = icmp ne i128 %i.be, %i.bf
   %i.bh = zext i1 %i.bg to i32
   %i.bi = icmp eq i32 %i.bh, 0
