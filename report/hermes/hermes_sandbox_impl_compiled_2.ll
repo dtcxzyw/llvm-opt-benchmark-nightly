@@ -203,7 +203,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.s, %bb.r
   %indvars.iv1302 = phi i64 [ %indvars.iv.next1303, %bb.s ], [ 0, %bb.r ] ; 2 uses
   %.21024 = phi i32 [ %i.da, %bb.s ], [ %.01022, %bb.r ] ; 3 uses
-  %i.cf = trunc nuw i64 %indvars.iv1302 to i32    ; 4 uses
+  %i.cf = trunc nuw nsw i64 %indvars.iv1302 to i32 ; 4 uses
   %i.cg = add i32 %i.ag, %i.cf
   %i.ch = zext i32 %i.cg to i64
   %.val1156 = load ptr, ptr %i.f, align 8, !tbaa !18
@@ -606,7 +606,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.
   %.12807 = phi i32 [ %i.iq, %bb.bi ], [ %i.ip, %bb.bk ], [ %i.lp, %bb.bj ] ; 3 uses
   %i.lr = phi i1 [ false, %bb.bi ], [ false, %bb.bk ], [ true, %bb.bj ]
   %.not2879 = phi i1 [ false, %bb.bi ], [ true, %bb.bk ], [ false, %bb.bj ] ; 4 uses
-  %.12797 = phi i32 [ 2, %bb.bi ], [ 0, %bb.bk ], [ 1, %bb.bj ] ; 11 uses
+  %.12797 = phi i32 [ 2, %bb.bi ], [ 0, %bb.bk ], [ 1, %bb.bj ] ; 10 uses
   %i.ls = add nsw i32 %.12797, %.12807            ; 2 uses
   %.not2870 = icmp eq i32 %i.ls, 0
   br i1 %.not2870, label %.loopexit3233, label %bb.bm
@@ -1009,70 +1009,51 @@ bb.da:                                            ; preds = %bb.cz
   br i1 %.not2879, label %.loopexit3228, label %bb.db
 
 bb.db:                                            ; preds = %bb.da
-  %5 = and i32 %.12797, 1
   %.not2890 = icmp eq i32 %i.ni, 0
-  br i1 %.not2890, label %..thread_crit_edge, label %bb.dc
-
-..thread_crit_edge:                               ; preds = %bb.db
-  %.pre3341 = and i32 %i.nn, 31
-  br label %.thread
+  br i1 %.not2890, label %bb.dc, label %bb.dd
 
 bb.dc:                                            ; preds = %bb.db
-  %6 = sub nuw nsw i32 32, %i.nn                  ; 2 uses
-  %7 = and i32 %.12797, 2
-  %i.ua = and i32 %i.nn, 31                       ; 3 uses
-  br label %bb.dd
+  %i.ua = and i32 %i.nn, 31
+  br label %.thread
 
-bb.dd:                                            ; preds = %bb.dd, %bb.dc
-  %.02804 = phi i32 [ 1, %bb.dc ], [ %13, %bb.dd ] ; 2 uses
-  %.52801 = phi i32 [ 0, %bb.dc ], [ %14, %bb.dd ]
-  %.92782 = phi i32 [ 0, %bb.dc ], [ %i.up, %bb.dd ]
-  %8 = shl i32 %.02804, 2                         ; 3 uses
-  %i.ub = add i32 %8, %.12760
-  %i.uc = add i32 %8, %i.jk
+bb.dd:                                            ; preds = %bb.db
+  %5 = and i32 %.12797, 1
+  %6 = sub nuw nsw i32 32, %i.nn                  ; 2 uses
+  %7 = and i32 %i.nn, 31                          ; 3 uses
+  %i.ub = add i32 %.12760, 4
+  %i.uc = add i32 %i.jk, 4
   %i.ud = zext i32 %i.uc to i64
   %.val2940 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ue = getelementptr inbounds nuw i8, ptr %.val2940, i64 %i.ud
   %.0.copyload.i3167 = load i32, ptr %i.ue, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3167) #7, !srcloc !19
-  %i.uf = lshr i32 %.0.copyload.i3167, %i.ua
-  %9 = or i32 %i.uf, %.92782
+  %i.uf = lshr i32 %.0.copyload.i3167, %7
   %i.ug = zext i32 %i.ub to i64
   %.val2986 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.uh = getelementptr inbounds nuw i8, ptr %.val2986, i64 %i.ug
-  store i32 %9, ptr %i.uh, align 1
-  %10 = add nsw i32 %8, -4                        ; 2 uses
-  %11 = add i32 %10, %.12760
+  store i32 %i.uf, ptr %i.uh, align 1
   %i.ui = shl i32 %.0.copyload.i3167, %6
-  %12 = add i32 %10, %i.jk
-  %i.uj = zext i32 %12 to i64
+  %i.uj = zext i32 %i.jk to i64
   %.val2939 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.uk = getelementptr inbounds nuw i8, ptr %.val2939, i64 %i.uj
   %.0.copyload.i3168 = load i32, ptr %i.uk, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3168) #7, !srcloc !19
-  %i.ul = lshr i32 %.0.copyload.i3168, %i.ua
+  %i.ul = lshr i32 %.0.copyload.i3168, %7
   %i.um = or i32 %i.ul, %i.ui
-  %i.un = zext i32 %11 to i64
+  %i.un = zext i32 %.12760 to i64
   %.val2985 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.uo = getelementptr inbounds nuw i8, ptr %.val2985, i64 %i.un
   store i32 %i.um, ptr %i.uo, align 1
-  %13 = add i32 %.02804, -2                       ; 2 uses
-  %i.up = shl i32 %.0.copyload.i3168, %6          ; 2 uses
-  %14 = add i32 %.52801, 2                        ; 2 uses
-  %.not2891 = icmp eq i32 %14, %7
-  br i1 %.not2891, label %15, label %bb.dd
+  %i.up = shl i32 %.0.copyload.i3168, %6
+  %.not2891 = icmp eq i32 %5, 0
+  br i1 %.not2891, label %.loopexit3228, label %.thread
 
-15:                                               ; preds = %bb.dd
-  %.not2892 = icmp eq i32 %5, 0
-  br i1 %.not2892, label %.loopexit3228, label %.thread
-
-.thread:                                          ; preds = %..thread_crit_edge, %15
-  %.pre-phi3342 = phi i32 [ %.pre3341, %..thread_crit_edge ], [ %i.ua, %15 ]
-  %.1027833215 = phi i32 [ 0, %..thread_crit_edge ], [ %i.up, %15 ]
-  %.128053214 = phi i32 [ 0, %..thread_crit_edge ], [ %13, %15 ]
-  %16 = shl i32 %.128053214, 2                    ; 2 uses
-  %i.uq = add i32 %16, %.12760
-  %i.ur = add i32 %16, %i.jk
+.thread:                                          ; preds = %bb.dc, %bb.dd
+  %.pre-phi3342 = phi i32 [ %i.ua, %bb.dc ], [ %7, %bb.dd ]
+  %.1027833215 = phi i32 [ 0, %bb.dc ], [ %i.up, %bb.dd ]
+  %.128053214 = phi i32 [ 0, %bb.dc ], [ -4, %bb.dd ] ; 2 uses
+  %i.uq = add i32 %.128053214, %.12760
+  %i.ur = add i32 %.128053214, %i.jk
   %i.us = zext i32 %i.ur to i64
   %.val2938 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ut = getelementptr inbounds nuw i8, ptr %.val2938, i64 %i.us
@@ -1114,7 +1095,7 @@ bb.de:                                            ; preds = %bb.cz
   store i32 %.sink3377, ptr %i.vg, align 1
   br label %.loopexit3228
 
-.loopexit3228:                                    ; preds = %.preheader3227, %.loopexit3228.sink.split, %bb.de, %15, %bb.da, %bb.cy, %.loopexit3226
+.loopexit3228:                                    ; preds = %.preheader3227, %.loopexit3228.sink.split, %bb.de, %bb.dd, %bb.da, %bb.cy, %.loopexit3226
   %.not2895 = icmp eq i32 %.0.copyload.i3136, 0
   br i1 %.not2895, label %bb.dh, label %.preheader3225
 
