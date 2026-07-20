@@ -203,7 +203,7 @@ declare i32 @ull2string(ptr noundef, i64 noundef, i64 noundef) local_unnamed_add
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef ptr @sdstrim(ptr noundef returned %0, ptr nofree noundef readonly %1) local_unnamed_addr #13 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
+  %2 = ptrtoaddr ptr %0 to i64
   %i.a = getelementptr i8, ptr %0, i64 -1         ; 3 uses
   %.val.i = load i8, ptr %i.a, align 1, !tbaa !17 ; 2 uses
   %i.b = and i8 %.val.i, 7
@@ -250,7 +250,7 @@ bb.f:                                             ; preds = %bb.a
 sdslen.exit:                                      ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
   %.0.i = phi i64 [ %i.p, %bb.f ], [ %i.e, %bb.b ], [ %i.h, %bb.c ], [ %i.k, %bb.d ], [ %i.n, %bb.e ] ; 2 uses
   %i.q = getelementptr i8, ptr %0, i64 %.0.i
-  %i.r = getelementptr i8, ptr %i.q, i64 -1       ; 3 uses
+  %i.r = getelementptr i8, ptr %i.q, i64 -1       ; 4 uses
   %.not32 = icmp slt i64 %.0.i, 1
   br i1 %.not32, label %.critedge, label %.lr.ph
 
@@ -260,27 +260,22 @@ sdslen.exit:                                      ; preds = %bb.b, %bb.c, %bb.d,
   %i.t = sext i8 %i.s to i32
   %i.u = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %1, i32 noundef %i.t) #23
   %.not28 = icmp eq ptr %i.u, null
-  br i1 %.not28, label %.critedge.loopexit, label %bb.g
+  br i1 %.not28, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
   %i.v = getelementptr inbounds nuw i8, ptr %.033, i64 1 ; 3 uses
   %.not = icmp ugt ptr %i.v, %i.r
-  br i1 %.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !29
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !29
 
-.critedge.loopexit:                               ; preds = %bb.g, %.lr.ph
-  %.0.lcssa.ph = phi ptr [ %.033, %.lr.ph ], [ %i.v, %bb.g ] ; 2 uses
-  %.pre = ptrtoint ptr %.0.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %sdslen.exit.thread, %.critedge.loopexit, %sdslen.exit
-  %3 = phi ptr [ %i.r, %.critedge.loopexit ], [ %i.r, %sdslen.exit ], [ %i.c, %sdslen.exit.thread ] ; 3 uses
-  %.0.lcssa41.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %2, %sdslen.exit ], [ %2, %sdslen.exit.thread ] ; 2 uses
-  %.0.lcssa = phi ptr [ %.0.lcssa.ph, %.critedge.loopexit ], [ %0, %sdslen.exit ], [ %0, %sdslen.exit.thread ] ; 4 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.g, %sdslen.exit.thread, %sdslen.exit
+  %3 = phi ptr [ %i.r, %sdslen.exit ], [ %i.c, %sdslen.exit.thread ], [ %i.r, %bb.g ], [ %i.r, %.lr.ph ] ; 3 uses
+  %.0.lcssa = phi ptr [ %0, %sdslen.exit ], [ %0, %sdslen.exit.thread ], [ %.033, %.lr.ph ], [ %i.v, %bb.g ] ; 5 uses
+  %.0.lcssa41 = ptrtoint ptr %.0.lcssa to i64     ; 2 uses
   %i.w = icmp ugt ptr %3, %.0.lcssa
   br i1 %i.w, label %.lr.ph37.preheader, label %.critedge2
 
 .lr.ph37.preheader:                               ; preds = %.critedge
-  %i.x = sub i64 %.0.lcssa41.pre-phi, %2
+  %i.x = sub i64 %.0.lcssa41, %2
   %scevgep = getelementptr i8, ptr %0, i64 %i.x
   br label %.lr.ph37
 
@@ -300,7 +295,7 @@ bb.h:                                             ; preds = %.lr.ph37
 .critedge2:                                       ; preds = %.lr.ph37, %bb.h, %.critedge
   %.026.lcssa = phi ptr [ %3, %.critedge ], [ %scevgep, %bb.h ], [ %.02636, %.lr.ph37 ]
   %i.ad = ptrtoint ptr %.026.lcssa to i64
-  %i.ae = sub i64 %i.ad, %.0.lcssa41.pre-phi
+  %i.ae = sub i64 %i.ad, %.0.lcssa41
   %i.af = add nsw i64 %i.ae, 1                    ; 7 uses
   %.not30 = icmp eq ptr %0, %.0.lcssa
   br i1 %.not30, label %bb.j, label %bb.i

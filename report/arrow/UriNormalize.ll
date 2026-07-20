@@ -203,8 +203,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.an
   br i1 %or.cond16.i243, label %iter.check627, label %uriContainsUglyPercentEncodingA.exit
 
 iter.check627:                                    ; preds = %bb.ar
-  %4 = ptrtoint ptr %i.lu to i64
-  %5 = ptrtoint ptr %i.ls to i64
+  %4 = ptrtoaddr ptr %i.lu to i64
+  %5 = ptrtoaddr ptr %i.ls to i64
   %i.lx = sub i64 %4, %5                          ; 7 uses
   %min.iters.check566 = icmp ult i64 %i.lx, 4
   br i1 %min.iters.check566, label %.preheader.i244.preheader, label %vector.main.loop.iter.check567
@@ -607,8 +607,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ba, label %.preheader.i219.preheader, label %uriLowercaseInplaceW.exit
 
 .preheader.i219.preheader:                        ; preds = %bb.r
-  %4 = ptrtoint ptr %i.az to i64
-  %5 = ptrtoint ptr %i.av to i64                  ; 2 uses
+  %4 = ptrtoaddr ptr %i.az to i64
+  %5 = ptrtoaddr ptr %i.av to i64                 ; 2 uses
   %i.bb = add i64 %5, 4
   %i.bc = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.bb)
   %i.bd = xor i64 %5, -1
@@ -910,8 +910,8 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.ff, label %.preheader.i224.preheader, label %uriLowercaseInplaceW.exit227
 
 .preheader.i224.preheader:                        ; preds = %bb.ab
-  %6 = ptrtoint ptr %i.fe to i64
-  %7 = ptrtoint ptr %i.fa to i64                  ; 2 uses
+  %6 = ptrtoaddr ptr %i.fe to i64
+  %7 = ptrtoaddr ptr %i.fa to i64                 ; 2 uses
   %i.fg = add i64 %7, 4
   %i.fh = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.fg)
   %i.fi = xor i64 %7, -1
@@ -1253,8 +1253,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.an
   br i1 %or.cond16.i238, label %.preheader.i239.preheader, label %uriContainsUglyPercentEncodingW.exit
 
 .preheader.i239.preheader:                        ; preds = %bb.ar
-  %8 = ptrtoint ptr %i.jy to i64
-  %9 = ptrtoint ptr %i.jw to i64                  ; 2 uses
+  %8 = ptrtoaddr ptr %i.jy to i64
+  %9 = ptrtoaddr ptr %i.jw to i64                 ; 2 uses
   %i.kb = add i64 %9, 4
   %i.kc = tail call i64 @llvm.umax.i64(i64 %8, i64 %i.kb)
   %i.kd = xor i64 %9, -1

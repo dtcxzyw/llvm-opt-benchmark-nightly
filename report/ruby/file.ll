@@ -201,8 +201,8 @@ bb.ak:                                            ; preds = %RSTRING_PTR.exit334
   br i1 %i.dg, label %.lr.ph.preheader.i, label %skiproot.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.ak
-  %5 = ptrtoint ptr %.1257 to i64
-  %6 = ptrtoint ptr %.0250 to i64
+  %5 = ptrtoaddr ptr %.1257 to i64
+  %6 = ptrtoaddr ptr %.0250 to i64
   %i.dh = sub i64 %5, %6
   %scevgep.i = getelementptr i8, ptr %.0250, i64 %i.dh
   br label %.lr.ph.i336
@@ -605,15 +605,11 @@ bb.bu:                                            ; preds = %ruby_nonempty_memcp
   %i.ie = zext i1 %i.id to i64
   %i.if = getelementptr i8, ptr %.13, i64 %i.ie   ; 3 uses
   %i.ig = icmp ult ptr %.11, %i.if
-  br i1 %i.ig, label %.lr.ph.preheader.i362, label %.skiproot.exit367_crit_edge
-
-.skiproot.exit367_crit_edge:                      ; preds = %bb.bu
-  %.pre415 = ptrtoint ptr %.11 to i64
-  br label %skiproot.exit367
+  br i1 %i.ig, label %.lr.ph.preheader.i362, label %skiproot.exit367
 
 .lr.ph.preheader.i362:                            ; preds = %bb.bu
-  %7 = ptrtoint ptr %i.if to i64
-  %8 = ptrtoint ptr %.11 to i64                   ; 3 uses
+  %7 = ptrtoaddr ptr %i.if to i64
+  %8 = ptrtoaddr ptr %.11 to i64
   %i.ih = sub i64 %7, %8
   %scevgep.i363 = getelementptr i8, ptr %.11, i64 %i.ih
   br label %.lr.ph.i364
@@ -629,15 +625,15 @@ bb.bv:                                            ; preds = %.lr.ph.i364
   %exitcond.not.i366 = icmp eq ptr %i.ik, %i.if
   br i1 %exitcond.not.i366, label %skiproot.exit367, label %.lr.ph.i364, !llvm.loop !94
 
-skiproot.exit367:                                 ; preds = %.lr.ph.i364, %bb.bv, %.skiproot.exit367_crit_edge
-  %.pre-phi416 = phi i64 [ %.pre415, %.skiproot.exit367_crit_edge ], [ %8, %bb.bv ], [ %8, %.lr.ph.i364 ]
-  %.0.lcssa.i361 = phi ptr [ %.11, %.skiproot.exit367_crit_edge ], [ %.01.i365, %.lr.ph.i364 ], [ %scevgep.i363, %bb.bv ]
+skiproot.exit367:                                 ; preds = %.lr.ph.i364, %bb.bv, %bb.bu
+  %.0.lcssa.i361 = phi ptr [ %.11, %bb.bu ], [ %.01.i365, %.lr.ph.i364 ], [ %scevgep.i363, %bb.bv ]
   %i.il = getelementptr i8, ptr %.0.lcssa.i361, i64 -1
   %i.im = icmp eq ptr %.13, %i.il
   %spec.select318.idx = zext i1 %i.im to i64
   %spec.select318 = getelementptr i8, ptr %.13, i64 %spec.select318.idx
-  %i.in = ptrtoint ptr %spec.select318 to i64
-  %i.io = sub i64 %i.in, %.pre-phi416
+  %9 = ptrtoint ptr %spec.select318 to i64
+  %i.in = ptrtoint ptr %.11 to i64
+  %i.io = sub i64 %9, %i.in
   call void @rb_str_set_len(i64 noundef %4, i64 noundef %i.io) #22
   %i.ip = load i64, ptr %i.a, align 8, !tbaa !14
   %i.iq = call ptr @rb_enc_check(i64 noundef %i.ip, i64 noundef %4) #22 ; 0 uses
@@ -1040,7 +1036,7 @@ declare i64 @rb_hash_new() local_unnamed_addr #2
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc i32 @realpath_rec(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef nonnull captures(none) %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, i32 noundef range(i32 0, 3) %5, i32 noundef range(i32 0, 2) %6) unnamed_addr #0 {
 bb.a:
-  %7 = ptrtoint ptr %2 to i64
+  %7 = ptrtoaddr ptr %2 to i64
   %8 = alloca %struct.no_gvl_stat_data, align 8   ; 5 uses
   %9 = alloca %struct.no_gvl_stat_data, align 8   ; 5 uses
   %10 = alloca %struct.stat, align 8              ; 5 uses

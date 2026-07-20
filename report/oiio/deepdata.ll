@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit
 
 _ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !11    ; 3 uses
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !11    ; 2 uses
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !7   ; 4 uses
   %i.ag = load ptr, ptr %0, align 8, !tbaa !11
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
@@ -215,11 +215,10 @@ _ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit: ; preds = %bb.l, %
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN11OpenImageIO4v3_18TypeDescESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN11OpenImageIO4v3_18TypeDescES3_ET0_T_S5_S4_.exit
-  %i.am = ptrtoaddr ptr %i.ae to i64
-  %2 = ptrtoint ptr %i.al to i64
-  %3 = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoaddr ptr %i.ae to i64              ; 2 uses
+  %2 = ptrtoaddr ptr %i.al to i64
   %i.an = add i64 %i.ai, %2
-  %i.ao = add i64 %3, %i.ah
+  %i.ao = add i64 %i.am, %i.ah
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = add i64 %i.ap, -8                       ; 2 uses
   %i.ar = lshr i64 %i.aq, 3
@@ -622,8 +621,8 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN11OpenImageIO4v3_18TypeDescESaIS2_EE13_M_assign_auxIPKS2_EEvT_S8_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoint ptr %2 to i64
-  %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b                       ; 10 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !61
@@ -728,10 +727,8 @@ _ZSt4copyIPKN11OpenImageIO4v3_18TypeDescEPS2_ET0_T_S7_S6_.exit17: ; preds = %bb.
   br i1 %.not9.i.i.i.i, label %_ZSt22__uninitialized_copy_aIPKN11OpenImageIO4v3_18TypeDescEPS2_S2_ET0_T_S7_S6_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPKN11OpenImageIO4v3_18TypeDescEPS2_ET0_T_S7_S6_.exit17
-  %3 = ptrtoint ptr %2 to i64
-  %4 = ptrtoint ptr %1 to i64
-  %i.ad = add i64 %i.h, %3
-  %i.ae = add i64 %i.r, %4
+  %i.ad = add i64 %i.h, %i.a
+  %i.ae = add i64 %i.r, %i.b
   %i.af = sub i64 %i.ad, %i.ae
   %i.ag = add i64 %i.af, -8                       ; 2 uses
   %i.ah = lshr i64 %i.ag, 3

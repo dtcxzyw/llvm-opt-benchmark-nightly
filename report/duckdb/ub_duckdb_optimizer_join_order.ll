@@ -204,7 +204,7 @@ bb.a:
   %i.g = shl nuw i64 %i.e, 3
   %i.h = select i1 %i.f, i64 -1, i64 %i.g         ; 2 uses
   %i.i = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #30, !noalias !240 ; 13 uses
-  %4 = ptrtoaddr ptr %i.i to i64                  ; 2 uses
+  %4 = ptrtoint ptr %i.i to i64                   ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %i.h, i1 false), !noalias !240
   %i.j = icmp eq i64 %i.b, 0
   br i1 %i.j, label %.preheader, label %.lr.ph
@@ -607,10 +607,10 @@ _ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_back
   %i.br = phi i64 [ %i.k, %.preheader325.lr.ph ], [ %i.md, %_ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_backEOS3_.exit165 ] ; 8 uses
   %i.bs = phi i64 [ %i.i, %.preheader325.lr.ph ], [ %i.mb, %_ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_backEOS3_.exit165 ]
   %i.bt = phi i64 [ %i.h, %.preheader325.lr.ph ], [ %i.ma, %_ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_backEOS3_.exit165 ]
-  %.sroa.0259.1512 = phi ptr [ %.sroa.0259.0.lcssa, %.preheader325.lr.ph ], [ %.sroa.0259.4, %_ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_backEOS3_.exit165 ] ; 21 uses
+  %.sroa.0259.1512 = phi ptr [ %.sroa.0259.0.lcssa, %.preheader325.lr.ph ], [ %.sroa.0259.4, %_ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_backEOS3_.exit165 ] ; 20 uses
   %.sroa.24.1511 = phi ptr [ %.sroa.24.0.lcssa, %.preheader325.lr.ph ], [ %.sroa.24.3, %_ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_backEOS3_.exit165 ] ; 3 uses
   %.sroa.48.1510 = phi ptr [ %.sroa.48.0.lcssa, %.preheader325.lr.ph ], [ %.sroa.48.3, %_ZNSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE9push_backEOS3_.exit165 ] ; 5 uses
-  %.sroa.0259.1512793 = ptrtoaddr ptr %.sroa.0259.1512 to i64
+  %.sroa.0259.1512793 = ptrtoaddr ptr %.sroa.0259.1512 to i64 ; 2 uses
   br label %bb.j
 
 .loopexit324:                                     ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb12NeighborInfoEESaIS3_EED2Ev.exit104, %bb.j
@@ -1013,8 +1013,7 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb15JoinRelationSetEESaIS3_EE12_M_chec
 
 .lr.ph.i.i.i.i.i.i.i155.preheader:                ; preds = %.noexc164
   %i.li = ptrtoaddr ptr %i.lf to i64
-  %13 = ptrtoint ptr %.sroa.0259.1512 to i64
-  %i.lj = sub i64 %i.kw, %13
+  %i.lj = sub i64 %i.kw, %.sroa.0259.1512793
   %i.lk = add i64 %i.lj, -8                       ; 2 uses
   %i.ll = lshr i64 %i.lk, 3
   %i.lm = add nuw nsw i64 %i.ll, 1                ; 2 uses
@@ -1417,8 +1416,8 @@ bb.a:
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorImSaImEE9push_backERKm.exit, %bb.a
-  %i.n = phi ptr [ null, %bb.a ], [ %i.as, %_ZNSt6vectorImSaImEE9push_backERKm.exit ] ; 4 uses
-  %5 = ptrtoint ptr %i.n to i64
+  %i.n = phi ptr [ null, %bb.a ], [ %i.as, %_ZNSt6vectorImSaImEE9push_backERKm.exit ] ; 3 uses
+  %5 = ptrtoaddr ptr %i.n to i64                  ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.p = load i8, ptr %i.o, align 8, !tbaa !442
   switch i8 %i.p, label %.loopexit81 [
@@ -1563,15 +1562,13 @@ bb.n:                                             ; preds = %._crit_edge
 
 bb.o:                                             ; preds = %bb.n
   store i64 0, ptr %i.b, align 8, !tbaa !402
-  %i.bf = load ptr, ptr %3, align 8, !tbaa !68    ; 9 uses
-  %6 = ptrtoint ptr %i.bf to i64
+  %i.bf = load ptr, ptr %3, align 8, !tbaa !68    ; 8 uses
+  %6 = ptrtoaddr ptr %i.bf to i64                 ; 2 uses
   %.not7192 = icmp eq ptr %i.bf, %i.n
   br i1 %.not7192, label %.loopexit81, label %.lr.ph95.preheader
 
 .lr.ph95.preheader:                               ; preds = %bb.o
-  %7 = ptrtoint ptr %i.n to i64
-  %8 = ptrtoint ptr %i.bf to i64
-  %i.bg = sub i64 %7, %8
+  %i.bg = sub i64 %5, %6
   %i.bh = add i64 %i.bg, -8                       ; 2 uses
   %i.bi = lshr i64 %i.bh, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
@@ -1974,7 +1971,7 @@ _ZN6duckdb12optional_ptrINS_15JoinRelationSetELb1EEdeEv.exit187: ; preds = %bb.c
           to label %.noexc191 unwind label %bb.ct ; 13 uses
 
 .noexc191:                                        ; preds = %_ZN6duckdb12optional_ptrINS_15JoinRelationSetELb1EEdeEv.exit187
-  %43 = ptrtoaddr ptr %i.nb to i64                ; 2 uses
+  %43 = ptrtoint ptr %i.nb to i64                 ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.nb, i8 0, i64 %i.na, i1 false), !noalias !1140
   %i.nc = icmp eq i64 %i.mu, 0
   br i1 %i.nc, label %.preheader.i, label %.lr.ph.i188
@@ -2377,7 +2374,7 @@ _ZN6duckdb12optional_ptrINS_15JoinRelationSetELb1EEdeEv.exit249: ; preds = %bb.e
           to label %.noexc278 unwind label %bb.ex ; 13 uses
 
 .noexc278:                                        ; preds = %_ZN6duckdb12optional_ptrINS_15JoinRelationSetELb1EEdeEv.exit249
-  %44 = ptrtoaddr ptr %i.xf to i64                ; 2 uses
+  %44 = ptrtoint ptr %i.xf to i64                 ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.xf, i8 0, i64 %i.xe, i1 false), !noalias !1154
   %i.xg = icmp eq i64 %i.wy, 0
   br i1 %i.xg, label %.preheader.i259, label %.lr.ph.i250
@@ -2780,11 +2777,11 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEE
   br label %_ZN6duckdb6vectorINS_13JoinConditionELb1ESaIS1_EE5clearEv.exit
 
 .lr.ph1085:                                       ; preds = %bb.hg, %_ZNSt13unordered_setISt17reference_wrapperIN6duckdb10ExpressionEENS1_22ExpressionHashFunctionIS2_EENS1_18ExpressionEqualityIS2_EESaIS3_EE4findERKS3_.exit461.thread909
-  %i.apa = phi ptr [ %i.axq, %_ZNSt13unordered_setISt17reference_wrapperIN6duckdb10ExpressionEENS1_22ExpressionHashFunctionIS2_EENS1_18ExpressionEqualityIS2_EESaIS3_EE4findERKS3_.exit461.thread909 ], [ %i.ay, %bb.hg ] ; 10 uses
+  %i.apa = phi ptr [ %i.axq, %_ZNSt13unordered_setISt17reference_wrapperIN6duckdb10ExpressionEENS1_22ExpressionHashFunctionIS2_EENS1_18ExpressionEqualityIS2_EESaIS3_EE4findERKS3_.exit461.thread909 ], [ %i.ay, %bb.hg ] ; 9 uses
   %i.apb = phi ptr [ %i.axr, %_ZNSt13unordered_setISt17reference_wrapperIN6duckdb10ExpressionEENS1_22ExpressionHashFunctionIS2_EENS1_18ExpressionEqualityIS2_EESaIS3_EE4findERKS3_.exit461.thread909 ], [ %i.az, %bb.hg ] ; 15 uses
   %i.apc = phi ptr [ %i.axs, %_ZNSt13unordered_setISt17reference_wrapperIN6duckdb10ExpressionEENS1_22ExpressionHashFunctionIS2_EENS1_18ExpressionEqualityIS2_EESaIS3_EE4findERKS3_.exit461.thread909 ], [ %i.ba, %bb.hg ] ; 8 uses
   %.sroa.0819.01083 = phi ptr [ %i.axt, %_ZNSt13unordered_setISt17reference_wrapperIN6duckdb10ExpressionEENS1_22ExpressionHashFunctionIS2_EENS1_18ExpressionEqualityIS2_EESaIS3_EE4findERKS3_.exit461.thread909 ], [ %i.aom, %bb.hg ] ; 10 uses
-  %45 = ptrtoint ptr %i.apa to i64
+  %45 = ptrtoaddr ptr %i.apa to i64               ; 2 uses
   %i.apd = load ptr, ptr %.sroa.0819.01083, align 8, !tbaa !350 ; 7 uses
   %.not.i433 = icmp eq ptr %i.apd, null
   br i1 %.not.i433, label %.noexc.i770, label %_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEdeEv.exit442, !prof !51
@@ -3187,8 +3184,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_10FilterInfoESt14default_deleteIS2_ELb1EE
   br i1 %.not10.i.i.i.i.i.i.i533, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10FilterInfoESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i538, label %.lr.ph.i.i.i.i.i.i.i534.preheader
 
 .lr.ph.i.i.i.i.i.i.i534.preheader:                ; preds = %.noexc543
-  %46 = ptrtoint ptr %i.apa to i64
-  %i.awd = sub i64 %46, %i.avj
+  %i.awd = sub i64 %45, %i.avj
   %i.awe = add i64 %i.awd, -8                     ; 2 uses
   %i.awf = lshr i64 %i.awe, 3
   %i.awg = add nuw nsw i64 %i.awf, 1              ; 2 uses
@@ -3591,17 +3587,16 @@ _ZNSt15__new_allocatorIN6duckdb12optional_ptrINS0_10FilterInfoELb1EEEE8allocateE
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.t
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr %i.y, ptr %i.z, align 8, !tbaa !116
-  %i.aa = load ptr, ptr %i.n, align 8, !tbaa !597 ; 6 uses
+  %i.aa = load ptr, ptr %i.n, align 8, !tbaa !597 ; 5 uses
   %i.ab = load ptr, ptr %i.o, align 8, !tbaa !597 ; 3 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.aa, %i.ab
   br i1 %.not7.i.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc8
-  %i.ac = ptrtoaddr ptr %i.aa to i64
+  %i.ac = ptrtoaddr ptr %i.aa to i64              ; 2 uses
   %i.ad = ptrtoaddr ptr %i.w to i64
-  %3 = ptrtoint ptr %i.ab to i64
-  %4 = ptrtoint ptr %i.aa to i64
-  %i.ae = sub i64 %3, %4
+  %3 = ptrtoaddr ptr %i.ab to i64
+  %i.ae = sub i64 %3, %i.ac
   %i.af = add i64 %i.ae, -8                       ; 2 uses
   %i.ag = lshr i64 %i.af, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses

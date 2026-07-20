@@ -11,39 +11,34 @@ bb.a:
   br i1 %i.a, label %utf8_range_Validate.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 5 uses
-  %2 = ptrtoint ptr %i.b to i64                   ; 5 uses
-  %i.c = ptrtoint ptr %0 to i64
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 6 uses
+  %i.c = ptrtoint ptr %i.b to i64                 ; 5 uses
   %i.d = icmp sgt i64 %1, 7
   br i1 %i.d, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
-  %.011.i = phi ptr [ %i.g, %bb.c ], [ %0, %bb.b ] ; 4 uses
+  %.011.i = phi ptr [ %i.g, %bb.c ], [ %0, %bb.b ] ; 3 uses
   %.0.copyload.i.i = load i64, ptr %.011.i, align 1
   %i.e = and i64 %.0.copyload.i.i, -9187201950435737472
   %i.f = icmp eq i64 %i.e, 0
-  br i1 %i.f, label %bb.c, label %.lr.ph..critedge.loopexit_crit_edge.i
-
-.lr.ph..critedge.loopexit_crit_edge.i:            ; preds = %.lr.ph.i
-  %.pre20.i = ptrtoint ptr %.011.i to i64
-  br label %.critedge.i
+  br i1 %i.f, label %bb.c, label %.critedge.i
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.g = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 3 uses
-  %i.h = ptrtoint ptr %i.g to i64                 ; 2 uses
-  %i.i = sub i64 %2, %i.h
+  %i.h = ptrtoint ptr %i.g to i64
+  %i.i = sub i64 %i.c, %i.h
   %i.j = icmp sgt i64 %i.i, 7
   br i1 %i.j, label %.lr.ph.i, label %.critedge.i, !llvm.loop !7
 
-.critedge.i:                                      ; preds = %bb.c, %.lr.ph..critedge.loopexit_crit_edge.i, %bb.b
-  %.0.lcssa19.pre-phi.i = phi i64 [ %i.c, %bb.b ], [ %.pre20.i, %.lr.ph..critedge.loopexit_crit_edge.i ], [ %i.h, %bb.c ]
-  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.011.i, %.lr.ph..critedge.loopexit_crit_edge.i ], [ %i.g, %bb.c ] ; 4 uses
+.critedge.i:                                      ; preds = %bb.c, %.lr.ph.i, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.011.i, %.lr.ph.i ], [ %i.g, %bb.c ] ; 5 uses
   %i.k = icmp ult ptr %.0.lcssa.i, %i.b
   br i1 %i.k, label %.lr.ph15.preheader.i, label %utf8_range_SkipAscii.exit
 
 .lr.ph15.preheader.i:                             ; preds = %.critedge.i
-  %i.l = sub i64 %2, %.0.lcssa19.pre-phi.i
-  %scevgep.i = getelementptr i8, ptr %.0.lcssa.i, i64 %i.l ; 2 uses
+  %.0.lcssa19.i = ptrtoaddr ptr %.0.lcssa.i to i64
+  %i.l = sub i64 %i.c, %.0.lcssa19.i
+  %scevgep.i = getelementptr i8, ptr %.0.lcssa.i, i64 %i.l
   br label %.lr.ph15.i
 
 .lr.ph15.i:                                       ; preds = %bb.d, %.lr.ph15.preheader.i
@@ -54,13 +49,13 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 bb.d:                                             ; preds = %.lr.ph15.i
   %i.o = getelementptr inbounds nuw i8, ptr %.114.i, i64 1 ; 2 uses
-  %exitcond.not.i = icmp eq ptr %i.o, %scevgep.i
+  %exitcond.not.i = icmp eq ptr %i.o, %i.b
   br i1 %exitcond.not.i, label %utf8_range_SkipAscii.exit, label %.lr.ph15.i, !llvm.loop !10
 
 utf8_range_SkipAscii.exit:                        ; preds = %.lr.ph15.i, %bb.d, %.critedge.i
   %.1.lcssa.i = phi ptr [ %.0.lcssa.i, %.critedge.i ], [ %.114.i, %.lr.ph15.i ], [ %scevgep.i, %bb.d ] ; 4 uses
   %i.p = ptrtoint ptr %.1.lcssa.i to i64
-  %i.q = sub i64 %2, %i.p
+  %i.q = sub i64 %i.c, %i.p
   %i.r = icmp slt i64 %i.q, 16
   %i.s = icmp ult ptr %.1.lcssa.i, %i.b           ; 2 uses
   br i1 %i.r, label %bb.e, label %bb.q
@@ -71,7 +66,7 @@ bb.e:                                             ; preds = %utf8_range_SkipAsci
 .lr.ph.i1:                                        ; preds = %bb.e, %.thread119.i
   %i.t = phi ptr [ %i.az, %.thread119.i ], [ %.1.lcssa.i, %bb.e ] ; 7 uses
   %i.u = ptrtoint ptr %i.t to i64
-  %i.v = sub i64 %2, %i.u                         ; 3 uses
+  %i.v = sub i64 %i.c, %i.u                       ; 3 uses
   %i.w = load i8, ptr %i.t, align 1, !tbaa !9     ; 9 uses
   %i.x = icmp slt i8 %i.w, 0
   br i1 %i.x, label %bb.f, label %.thread119.i, !llvm.loop !11
@@ -160,7 +155,7 @@ bb.q:                                             ; preds = %utf8_range_SkipAsci
 .lr.ph.i6:                                        ; preds = %bb.q, %.thread119.i9
   %i.bb = phi ptr [ %i.ch, %.thread119.i9 ], [ %.1.lcssa.i, %bb.q ] ; 7 uses
   %i.bc = ptrtoint ptr %i.bb to i64
-  %i.bd = sub i64 %2, %i.bc                       ; 3 uses
+  %i.bd = sub i64 %i.c, %i.bc                     ; 3 uses
   %i.be = load i8, ptr %i.bb, align 1, !tbaa !9   ; 9 uses
   %i.bf = icmp slt i8 %i.be, 0
   br i1 %i.bf, label %bb.r, label %.thread119.i9, !llvm.loop !11
@@ -255,39 +250,35 @@ bb.a:
   br i1 %i.a, label %utf8_range_Validate.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 5 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 6 uses
   %i.c = ptrtoint ptr %i.b to i64                 ; 5 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.d = ptrtoint ptr %0 to i64
   %i.e = icmp sgt i64 %1, 7
   br i1 %i.e, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
-  %.011.i = phi ptr [ %i.h, %bb.c ], [ %0, %bb.b ] ; 4 uses
+  %.011.i = phi ptr [ %i.h, %bb.c ], [ %0, %bb.b ] ; 3 uses
   %.0.copyload.i.i = load i64, ptr %.011.i, align 1
   %i.f = and i64 %.0.copyload.i.i, -9187201950435737472
   %i.g = icmp eq i64 %i.f, 0
-  br i1 %i.g, label %bb.c, label %.lr.ph..critedge.loopexit_crit_edge.i
-
-.lr.ph..critedge.loopexit_crit_edge.i:            ; preds = %.lr.ph.i
-  %.pre20.i = ptrtoint ptr %.011.i to i64
-  br label %.critedge.i
+  br i1 %i.g, label %bb.c, label %.critedge.i
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.h = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 3 uses
-  %i.i = ptrtoint ptr %i.h to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.h to i64
   %i.j = sub i64 %i.c, %i.i
   %i.k = icmp sgt i64 %i.j, 7
   br i1 %i.k, label %.lr.ph.i, label %.critedge.i, !llvm.loop !7
 
-.critedge.i:                                      ; preds = %bb.c, %.lr.ph..critedge.loopexit_crit_edge.i, %bb.b
-  %.0.lcssa19.pre-phi.i = phi i64 [ %i.d, %bb.b ], [ %.pre20.i, %.lr.ph..critedge.loopexit_crit_edge.i ], [ %i.i, %bb.c ]
-  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.011.i, %.lr.ph..critedge.loopexit_crit_edge.i ], [ %i.h, %bb.c ] ; 4 uses
+.critedge.i:                                      ; preds = %bb.c, %.lr.ph.i, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.011.i, %.lr.ph.i ], [ %i.h, %bb.c ] ; 5 uses
   %i.l = icmp ult ptr %.0.lcssa.i, %i.b
   br i1 %i.l, label %.lr.ph15.preheader.i, label %utf8_range_SkipAscii.exit
 
 .lr.ph15.preheader.i:                             ; preds = %.critedge.i
-  %i.m = sub i64 %i.c, %.0.lcssa19.pre-phi.i
-  %scevgep.i = getelementptr i8, ptr %.0.lcssa.i, i64 %i.m ; 2 uses
+  %.0.lcssa19.i = ptrtoaddr ptr %.0.lcssa.i to i64
+  %i.m = sub i64 %i.c, %.0.lcssa19.i
+  %scevgep.i = getelementptr i8, ptr %.0.lcssa.i, i64 %i.m
   br label %.lr.ph15.i
 
 .lr.ph15.i:                                       ; preds = %bb.d, %.lr.ph15.preheader.i
@@ -298,7 +289,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 bb.d:                                             ; preds = %.lr.ph15.i
   %i.p = getelementptr inbounds nuw i8, ptr %.114.i, i64 1 ; 2 uses
-  %exitcond.not.i = icmp eq ptr %i.p, %scevgep.i
+  %exitcond.not.i = icmp eq ptr %i.p, %i.b
   br i1 %exitcond.not.i, label %utf8_range_SkipAscii.exit, label %.lr.ph15.i, !llvm.loop !10
 
 utf8_range_SkipAscii.exit:                        ; preds = %.lr.ph15.i, %bb.d, %.critedge.i

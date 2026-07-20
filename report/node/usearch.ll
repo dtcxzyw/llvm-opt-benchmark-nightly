@@ -201,8 +201,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.k = load ptr, ptr %i.j, align 8              ; 10 uses
-  %3 = ptrtoint ptr %i.k to i64                   ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8              ; 9 uses
+  %3 = ptrtoaddr ptr %i.k to i64                  ; 6 uses
   %.not30 = icmp eq ptr %i.k, null
   br i1 %.not30, label %.loopexit, label %bb.c
 
@@ -216,11 +216,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %4 = ptrtoint ptr %i.k to i64                   ; 3 uses
-  %i.q = add i64 %.idx, %4
-  %i.r = add i64 %4, 2
+  %i.q = add i64 %.idx, %3
+  %i.r = add i64 %3, 2
   %i.s = tail call i64 @llvm.umax.i64(i64 %i.q, i64 %i.r)
-  %i.t = xor i64 %4, -1
+  %i.t = xor i64 %3, -1
   %i.u = add i64 %i.s, %i.t                       ; 2 uses
   %i.v = lshr i64 %i.u, 1
   %i.w = add nuw i64 %i.v, 1                      ; 2 uses

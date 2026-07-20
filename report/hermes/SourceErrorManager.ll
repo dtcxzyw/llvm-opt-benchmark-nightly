@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
-  %.sroa.010.0.copyload = load ptr, ptr %i.c, align 8, !tbaa !134 ; 5 uses
+  %.sroa.010.0.copyload = load ptr, ptr %i.c, align 8, !tbaa !134 ; 6 uses
   %.sroa.211.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 168
   %.sroa.211.0.copyload = load i64, ptr %.sroa.211.0..sroa_idx, align 8, !tbaa !89
   %.not.i = icmp uge ptr %1, %.sroa.010.0.copyload
@@ -218,11 +218,11 @@ bb.e:                                             ; preds = %bb.d
   %i.h = icmp eq i8 %i.g, 13
   %i.i = icmp slt i8 %i.g, -64
   %or.cond.i.i = or i1 %i.h, %i.i
-  %4 = ptrtoint ptr %.sroa.010.0.copyload to i64  ; 2 uses
   br i1 %or.cond.i.i, label %.critedge.preheader.i.i, label %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit, !prof !198
 
 .critedge.preheader.i.i:                          ; preds = %bb.e
-  %5 = ptrtoint ptr %1 to i64
+  %4 = ptrtoaddr ptr %.sroa.010.0.copyload to i64
+  %5 = ptrtoaddr ptr %1 to i64
   %i.j = sub i64 %4, %5
   %scevgep.i.i = getelementptr i8, ptr %1, i64 %i.j ; 2 uses
   %i.k = icmp eq ptr %1, %.sroa.010.0.copyload
@@ -251,8 +251,9 @@ _ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12So
   %i.r = load i32, ptr %i.q, align 4, !tbaa !202
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.r, ptr %i.s, align 4, !tbaa !185
-  %i.t = ptrtoint ptr %.1.i.i to i64
-  %i.u = sub i64 %i.t, %4
+  %6 = ptrtoint ptr %.1.i.i to i64
+  %i.t = ptrtoint ptr %.sroa.010.0.copyload to i64
+  %i.u = sub i64 %6, %i.t
   %i.v = trunc i64 %i.u to i32
   %i.w = add i32 %i.v, 1
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -282,17 +283,17 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = extractvalue { ptr, i64 } %i.ag, 1
   store ptr %i.ah, ptr %i.y, align 8, !tbaa !134
   store i64 %i.ai, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !89
-  %i.aj = load ptr, ptr %i.c, align 8, !tbaa !165 ; 3 uses
+  %i.aj = load ptr, ptr %i.c, align 8, !tbaa !165 ; 4 uses
   %i.ak = load i8, ptr %1, align 1, !tbaa !118    ; 2 uses
   %i.al = icmp eq i8 %i.ak, 13
   %i.am = icmp slt i8 %i.ak, -64
   %or.cond.i.i19 = or i1 %i.al, %i.am
-  %6 = ptrtoint ptr %i.aj to i64                  ; 2 uses
   br i1 %or.cond.i.i19, label %.critedge.preheader.i.i21, label %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit26, !prof !198
 
 .critedge.preheader.i.i21:                        ; preds = %bb.g
-  %7 = ptrtoint ptr %1 to i64
-  %i.an = sub i64 %6, %7
+  %7 = ptrtoaddr ptr %i.aj to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.an = sub i64 %7, %8
   %scevgep.i.i22 = getelementptr i8, ptr %1, i64 %i.an ; 2 uses
   %i.ao = icmp eq ptr %1, %i.aj
   br i1 %i.ao, label %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit26, label %.lr.ph, !prof !199
@@ -317,8 +318,9 @@ _ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12So
   %.1.i.i20 = phi ptr [ %1, %bb.g ], [ %scevgep.i.i22, %.critedge.preheader.i.i21 ], [ %i.aq, %._ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit26.loopexit_crit_edge ], [ %scevgep.i.i22, %.critedge.i.i23 ]
   %i.au = load <2 x i32>, ptr %i.a, align 8, !tbaa !3
   store <2 x i32> %i.au, ptr %2, align 4, !tbaa !3
-  %i.av = ptrtoint ptr %.1.i.i20 to i64
-  %i.aw = sub i64 %i.av, %6
+  %9 = ptrtoint ptr %.1.i.i20 to i64
+  %i.av = ptrtoint ptr %i.aj to i64
+  %i.aw = sub i64 %9, %i.av
   %i.ax = trunc i64 %i.aw to i32
   %i.ay = add i32 %i.ax, 1
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -359,17 +361,17 @@ bb.j:                                             ; preds = %bb.i
   store ptr %i.bh, ptr %i.bj, align 8, !tbaa !134
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 184
   store i64 %i.bi, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !89
-  %i.bk = load ptr, ptr %i.be, align 8, !tbaa !165 ; 3 uses
+  %i.bk = load ptr, ptr %i.be, align 8, !tbaa !165 ; 4 uses
   %i.bl = load i8, ptr %1, align 1, !tbaa !118    ; 2 uses
   %i.bm = icmp eq i8 %i.bl, 13
   %i.bn = icmp slt i8 %i.bl, -64
   %or.cond.i.i28 = or i1 %i.bm, %i.bn
-  %8 = ptrtoint ptr %i.bk to i64                  ; 2 uses
   br i1 %or.cond.i.i28, label %.critedge.preheader.i.i30, label %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit35, !prof !198
 
 .critedge.preheader.i.i30:                        ; preds = %bb.j
-  %9 = ptrtoint ptr %1 to i64
-  %i.bo = sub i64 %8, %9
+  %10 = ptrtoaddr ptr %i.bk to i64
+  %11 = ptrtoaddr ptr %1 to i64
+  %i.bo = sub i64 %10, %11
   %scevgep.i.i31 = getelementptr i8, ptr %1, i64 %i.bo ; 2 uses
   %i.bp = icmp eq ptr %1, %i.bk
   br i1 %i.bp, label %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit35, label %.lr.ph53, !prof !199
@@ -394,8 +396,9 @@ _ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12So
   %.1.i.i29 = phi ptr [ %1, %bb.j ], [ %scevgep.i.i31, %.critedge.preheader.i.i30 ], [ %i.br, %._ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit35.loopexit_crit_edge ], [ %scevgep.i.i31, %.critedge.i.i32 ]
   %i.bv = load <2 x i32>, ptr %i.a, align 8, !tbaa !3
   store <2 x i32> %i.bv, ptr %2, align 4, !tbaa !3
-  %i.bw = ptrtoint ptr %.1.i.i29 to i64
-  %i.bx = sub i64 %i.bw, %8
+  %12 = ptrtoint ptr %.1.i.i29 to i64
+  %i.bw = ptrtoint ptr %i.bk to i64
+  %i.bx = sub i64 %12, %i.bw
   %i.by = trunc i64 %i.bx to i32
   %i.bz = add i32 %i.by, 1
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 8

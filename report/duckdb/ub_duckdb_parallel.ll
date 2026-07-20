@@ -204,8 +204,8 @@ bb.z:                                             ; preds = %_ZNSt10unique_ptrIN
 
 _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEESaIS5_EE11_M_allocateEm.exit.i: ; preds = %bb.z
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
-  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !997 ; 4 uses
-  %i.cw = ptrtoint ptr %i.cv to i64               ; 2 uses
+  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !997 ; 3 uses
+  %i.cw = ptrtoint ptr %i.cv to i64               ; 3 uses
   %i.cx = sub i64 %i.cw, %i.cr
   %i.cy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cl) #37
           to label %.noexc45 unwind label %bb.q   ; 9 uses
@@ -215,8 +215,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_EL
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc45
-  %9 = ptrtoint ptr %i.cv to i64
-  %i.cz = sub i64 %9, %i.cr
+  %i.cz = sub i64 %i.cw, %i.cr
   %i.da = add i64 %i.cz, -8                       ; 2 uses
   %i.db = lshr i64 %i.da, 3
   %i.dc = add nuw nsw i64 %i.db, 1                ; 2 uses
@@ -333,8 +332,8 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEESa
 
 _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_13OperatorStateESt14default_deleteIS2_ELb1EEESaIS5_EE11_M_allocateEm.exit.i: ; preds = %_ZNSt6vectorIN6duckdb10unique_ptrINS0_9DataChunkESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit.thread
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
-  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !1014 ; 4 uses
-  %i.eh = ptrtoint ptr %i.eg to i64               ; 2 uses
+  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !1014 ; 3 uses
+  %i.eh = ptrtoint ptr %i.eg to i64               ; 3 uses
   %i.ei = sub i64 %i.eh, %i.ec
   %i.ej = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %.pre-phi164193) #37
           to label %.noexc53 unwind label %bb.q   ; 9 uses
@@ -344,8 +343,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_13OperatorStateESt14default_deleteI
   br i1 %.not10.i.i.i.i.i46, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_13OperatorStateESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i.i47.preheader
 
 .lr.ph.i.i.i.i.i47.preheader:                     ; preds = %.noexc53
-  %10 = ptrtoint ptr %i.eg to i64
-  %i.ek = sub i64 %10, %i.ec
+  %i.ek = sub i64 %i.eh, %i.ec
   %i.el = add i64 %i.ek, -8                       ; 2 uses
   %i.em = lshr i64 %i.el, 3
   %i.en = add nuw nsw i64 %i.em, 1                ; 2 uses
@@ -748,7 +746,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPSt17reference_wrapperIN6duckdb8PipelineEES4_ET0_T_S6_S5_.exit
 
 _ZSt4copyIPSt17reference_wrapperIN6duckdb8PipelineEES4_ET0_T_S6_S5_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !247   ; 3 uses
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !247   ; 2 uses
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !286 ; 4 uses
   %i.ag = load ptr, ptr %0, align 8, !tbaa !247
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
@@ -760,11 +758,10 @@ _ZSt4copyIPSt17reference_wrapperIN6duckdb8PipelineEES4_ET0_T_S6_S5_.exit: ; pred
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKSt17reference_wrapperIN6duckdb8PipelineEESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPSt17reference_wrapperIN6duckdb8PipelineEES4_ET0_T_S6_S5_.exit
-  %i.am = ptrtoaddr ptr %i.ae to i64
-  %2 = ptrtoint ptr %i.al to i64
-  %3 = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoaddr ptr %i.ae to i64              ; 2 uses
+  %2 = ptrtoaddr ptr %i.al to i64
   %i.an = add i64 %i.ai, %2
-  %i.ao = add i64 %3, %i.ah
+  %i.ao = add i64 %i.am, %i.ah
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = add i64 %i.ap, -8                       ; 2 uses
   %i.ar = lshr i64 %i.aq, 3

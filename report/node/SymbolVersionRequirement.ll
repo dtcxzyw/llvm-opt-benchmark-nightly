@@ -142,16 +142,15 @@ bb.f:                                             ; preds = %_ZNSt7__cxx1112basi
 
 _ZNSt12_Vector_baseISt10unique_ptrIN4LIEF3ELF27SymbolVersionAuxRequirementESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
-  %i.am = ptrtoint ptr %i.al to i64               ; 2 uses
+  %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
+  %i.am = ptrtoint ptr %i.al to i64               ; 3 uses
   %i.an = sub i64 %i.am, %i.ah
   %i.ao = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #15 ; 9 uses
   %.not10.i.i.i.i = icmp eq ptr %i.af, %i.al
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF3ELF27SymbolVersionAuxRequirementESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN4LIEF3ELF27SymbolVersionAuxRequirementESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i
-  %2 = ptrtoint ptr %i.al to i64
-  %i.ap = sub i64 %2, %i.ah
+  %i.ap = sub i64 %i.am, %i.ah
   %i.aq = add i64 %i.ap, -8                       ; 2 uses
   %i.ar = lshr i64 %i.aq, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses

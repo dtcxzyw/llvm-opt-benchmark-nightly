@@ -204,8 +204,8 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %.not8.i, label %_ZNK6google8protobuf8internal17TailCallTableInfo15NumToEntryTable6size16Ev.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.al
-  %7 = ptrtoint ptr %i.ga to i64
-  %8 = ptrtoint ptr %i.fy to i64
+  %7 = ptrtoaddr ptr %i.ga to i64
+  %8 = ptrtoaddr ptr %i.fy to i64
   %i.gb = sub i64 %7, %8
   %i.gc = add i64 %i.gb, -32                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.gc, 128
@@ -608,12 +608,10 @@ _ZNK6google8protobuf10Reflection26PopulateTcParseFastEntriesERKNS0_8internal17Ta
   %i.os = getelementptr inbounds nuw i8, ptr %.014.i, i64 4
   %i.ot = getelementptr inbounds nuw i8, ptr %.sroa.05.013.i, i64 8
   %i.ou = getelementptr inbounds nuw i8, ptr %.sroa.05.013.i, i64 16
-  %i.ov = load ptr, ptr %i.ou, align 8, !tbaa !635 ; 5 uses
-  %9 = ptrtoint ptr %i.ov to i64
-  %i.ow = load ptr, ptr %i.ot, align 8, !tbaa !638 ; 10 uses
-  %10 = ptrtoint ptr %i.ow to i64
-  %i.ox = ptrtoint ptr %i.ov to i64
-  %i.oy = ptrtoint ptr %i.ow to i64
+  %i.ov = load ptr, ptr %i.ou, align 8, !tbaa !635 ; 3 uses
+  %i.ow = load ptr, ptr %i.ot, align 8, !tbaa !638 ; 8 uses
+  %i.ox = ptrtoint ptr %i.ov to i64               ; 3 uses
+  %i.oy = ptrtoint ptr %i.ow to i64               ; 3 uses
   %i.oz = sub i64 %i.ox, %i.oy
   %i.pa = lshr exact i64 %i.oz, 2
   %i.pb = trunc i64 %i.pa to i16
@@ -623,9 +621,7 @@ _ZNK6google8protobuf10Reflection26PopulateTcParseFastEntriesERKNS0_8internal17Ta
   br i1 %.not89.i, label %._crit_edge.i, label %.lr.ph.i104.preheader
 
 .lr.ph.i104.preheader:                            ; preds = %.lr.ph16.i
-  %11 = ptrtoint ptr %i.ov to i64
-  %12 = ptrtoint ptr %i.ow to i64
-  %i.pd = sub i64 %11, %12
+  %i.pd = sub i64 %i.ox, %i.oy
   %i.pe = add i64 %i.pd, -4                       ; 2 uses
   %i.pf = lshr i64 %i.pe, 2
   %i.pg = add nuw nsw i64 %i.pf, 1                ; 2 uses
@@ -634,8 +630,8 @@ _ZNK6google8protobuf10Reflection26PopulateTcParseFastEntriesERKNS0_8internal17Ta
 
 vector.memcheck:                                  ; preds = %.lr.ph.i104.preheader
   %scevgep = getelementptr i8, ptr %.014.i, i64 10
-  %i.ph = add i64 %9, -4
-  %i.pi = sub i64 %i.ph, %10
+  %i.ph = add i64 %i.ox, -4
+  %i.pi = sub i64 %i.ph, %i.oy
   %i.pj = and i64 %i.pi, -4                       ; 2 uses
   %scevgep302 = getelementptr i8, ptr %scevgep, i64 %i.pj
   %scevgep303 = getelementptr i8, ptr %i.ow, i64 4

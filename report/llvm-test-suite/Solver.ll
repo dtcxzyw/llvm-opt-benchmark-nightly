@@ -203,16 +203,16 @@ bb.b:                                             ; preds = %.lr.ph95, %_ZN3vecI
 
 .lr.ph87:                                         ; preds = %bb.b
   %i.aa = xor i32 %.sroa.052.0.copyload, 1        ; 3 uses
-  %1 = ptrtoint ptr %i.v to i64
+  %1 = ptrtoaddr ptr %i.v to i64
   %i.ab = add i64 %.idx, %1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph87, %.loopexit
   %.185 = phi ptr [ %.093, %.lr.ph87 ], [ %.2, %.loopexit ] ; 3 uses
-  %.06084 = phi ptr [ %i.v, %.lr.ph87 ], [ %.262, %.loopexit ] ; 4 uses
+  %.06084 = phi ptr [ %i.v, %.lr.ph87 ], [ %.262, %.loopexit ] ; 3 uses
   %.06383 = phi ptr [ %i.v, %.lr.ph87 ], [ %.265, %.loopexit ] ; 6 uses
   %.06383127 = ptrtoaddr ptr %.06383 to i64
-  %.06084128 = ptrtoaddr ptr %.06084 to i64
+  %.06084128 = ptrtoaddr ptr %.06084 to i64       ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.06084, i64 8 ; 8 uses
   %i.ad = load ptr, ptr %.06084, align 8, !tbaa !46 ; 11 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8 ; 4 uses
@@ -331,10 +331,9 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %i.ce, label %.lr.ph80.preheader, label %.loopexit
 
 .lr.ph80.preheader:                               ; preds = %bb.k
-  %2 = ptrtoint ptr %.06084 to i64                ; 2 uses
-  %i.cf = add i64 %2, 16
+  %i.cf = add i64 %.06084128, 16
   %i.cg = tail call i64 @llvm.umax.i64(i64 %i.ab, i64 %i.cf)
-  %i.ch = sub i64 %i.cg, %2
+  %i.ch = sub i64 %i.cg, %.06084128
   %i.ci = add i64 %i.ch, -9                       ; 2 uses
   %i.cj = lshr i64 %i.ci, 3
   %i.ck = add nuw nsw i64 %i.cj, 1                ; 2 uses
