@@ -1,0 +1,280 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 71997a6c9e5f1..9c833b1cb3e11 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -944,7 +944,12 @@ static void dumpConstraint(ArrayRef<int64_t> C,
+ 
+ void State::addInfoForInductions(BasicBlock &BB) {
+   auto *L = LI.getLoopFor(&BB);
+-  if (!L || L->getHeader() != &BB)
++  if (!L)
++    return;
++
++  BasicBlock *Header = L->getHeader();
++  BasicBlock *Latch = L->getLoopLatch();
++  if (Header != &BB && Latch != &BB)
+     return;
+ 
+   // A is either a phi or a post-increment PN + C with constant step. For the
+@@ -960,10 +965,15 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   if (!match(BB.getTerminator(),
+              m_Br(m_c_ICmp(Pred, IndValue, m_Value(B)), m_Value(), m_Value())))
+     return;
+-  if (PN->getParent() != &BB || PN->getNumIncomingValues() != 2 ||
++  if (PN->getParent() != Header || PN->getNumIncomingValues() != 2 ||
+       !SE.isSCEVable(PN->getType()))
+     return;
+ 
++  // Only use the condition in the latch to inject facts in the header when
++  // comparing a post-inc IV.
++  if (&BB == Latch && !IncStep)
++    return;
++
+   BasicBlock *InLoopSucc = nullptr;
+   if (Pred == CmpInst::ICMP_NE)
+     InLoopSucc = cast<CondBrInst>(BB.getTerminator())->getSuccessor(0);
+@@ -1074,42 +1084,46 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   }
+ 
+   Value *LowerBound = StartValue;
++  bool UnsignedInBounds = true, SignedInBounds = true;
+   if (IncStep) {
+-    // Adjust lower bound when dealing with a post-increment value.
+     auto *StartC = dyn_cast<ConstantInt>(StartValue);
+     if (!StartC)
+       return;
+-    bool Overflow = false;
+-    APInt Sum = StartC->getValue().uadd_ov(*StepOffset, Overflow);
+-    if (Overflow)
+-      return;
++    bool UOverflow = false, SOverflow = false;
++    APInt Sum = StartC->getValue().uadd_ov(*StepOffset, UOverflow);
++    (void)StartC->getValue().sadd_ov(*StepOffset, SOverflow);
+     LowerBound = ConstantInt::get(StartValue->getType(), Sum);
++    UnsignedInBounds = !UOverflow;
++    SignedInBounds = !SOverflow;
+   }
+ 
+-  // AR may wrap. Add PN >= StartValue conditional on LowerBound <= B which
++  // AR may wrap. Add PN >= StartValue conditional on LowerBound <= B, which
+   // guarantees that the loop exits before wrapping in combination with the
+   // restrictions on B and the step above.
+-  if (!MonotonicallyIncreasingUnsigned)
++  if (!MonotonicallyIncreasingUnsigned && UnsignedInBounds)
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, CmpInst::ICMP_UGE, PN, StartValue,
+         ConditionTy(CmpInst::ICMP_ULE, LowerBound, B)));
+-  // Only unsigned facts are derived for the post-increment path.
+-  if (!MonotonicallyIncreasingSigned && !IncStep)
++  if (!MonotonicallyIncreasingSigned && SignedInBounds)
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, CmpInst::ICMP_SGE, PN, StartValue,
+-        ConditionTy(CmpInst::ICMP_SLE, StartValue, B)));
++        ConditionTy(CmpInst::ICMP_SLE, LowerBound, B)));
++
++  if (SignedInBounds)
++    WorkList.push_back(FactOrCheck::getConditionFact(
++        DTN, CmpInst::ICMP_SLT, PN, B,
++        ConditionTy(CmpInst::ICMP_SLE, LowerBound, B)));
++
++  if (!UnsignedInBounds)
++    return;
+ 
+   WorkList.push_back(FactOrCheck::getConditionFact(
+       DTN, CmpInst::ICMP_ULT, PN, B,
+       ConditionTy(CmpInst::ICMP_ULE, LowerBound, B)));
+-  if (!IncStep)
+-    WorkList.push_back(FactOrCheck::getConditionFact(
+-        DTN, CmpInst::ICMP_SLT, PN, B,
+-        ConditionTy(CmpInst::ICMP_SLE, StartValue, B)));
+ 
+-  // Try to add condition from header to the dedicated exit blocks. When exiting
+-  // either with EQ or NE in the header, we know that the induction value must
+-  // be u<= B, as other exits may only exit earlier.
++  // Try to add condition from the header or latch to the dedicated exit
++  // blocks. When exiting either with EQ or NE, we know that the induction value
++  // must be u<= B, as other exits may only exit earlier.
+   assert(!StepOffset->isNegative() && "induction must be increasing");
+   assert((Pred == CmpInst::ICMP_EQ || Pred == CmpInst::ICMP_NE) &&
+          "unsupported predicate");
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 51fc9be6743a5..1f075bad904af 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -15,8 +15,7 @@ define i1 @latch_counted_header_check_removable(ptr %p, i64 %n, i64 %lim) {
+ ; CHECK:       [[LOOP_HEADER]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+ ; CHECK-NEXT:    [[OFF:%.*]] = shl nuw nsw i64 [[IV]], 2
+-; CHECK-NEXT:    [[RC:%.*]] = icmp ult i64 [[OFF]], [[LIM]]
+-; CHECK-NEXT:    br i1 [[RC]], label %[[LOOP_LATCH]], label %[[EXIT_1]]
++; CHECK-NEXT:    br i1 true, label %[[LOOP_LATCH]], label %[[EXIT_1]]
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[OFF]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+@@ -129,8 +128,7 @@ define i1 @latch_counted_bound_consumer_not_folded(ptr %s, i64 %n) {
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label %[[EXIT:.*]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[N]], -1
+-; CHECK-NEXT:    [[CMP_NOT:%.*]] = icmp eq i64 [[SUB]], 0
+-; CHECK-NEXT:    ret i1 [[CMP_NOT]]
++; CHECK-NEXT:    ret i1 false
+ ;
+ entry:
+   br label %loop.header
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index 103fb73e4d37a..b1ac763592750 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -283,8 +283,8 @@ exit:
+ }
+ 
+ ; Post-increment condition with signed predicates in body.
+-define i1 @postinc_negative_start_signed_body_not_folded(i1 %c) {
+-; CHECK-LABEL: define i1 @postinc_negative_start_signed_body_not_folded(
++define i1 @postinc_negative_start_signed_body_folded(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_negative_start_signed_body_folded(
+ ; CHECK-SAME: i1 [[C:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
+@@ -294,10 +294,9 @@ define i1 @postinc_negative_start_signed_body_not_folded(i1 %c) {
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV_NEXT]], 10
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[RES:%.*]] = icmp slt i64 [[IV]], 10
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT_0]]:
+-; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -540,10 +539,9 @@ define void @postinc_signed_facts_when_unsigned_overflows(ptr %p, i1 %c) {
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i8 [[IV_NEXT]], 100
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[UB:%.*]] = icmp slt i8 [[IV]], 100
+ ; CHECK-NEXT:    [[UNS:%.*]] = icmp ult i8 [[IV]], 100
+ ; CHECK-NEXT:    [[Z0:%.*]] = zext i1 false to i8
+-; CHECK-NEXT:    [[Z1:%.*]] = zext i1 [[UB]] to i8
++; CHECK-NEXT:    [[Z1:%.*]] = zext i1 true to i8
+ ; CHECK-NEXT:    [[Z2:%.*]] = zext i1 [[UNS]] to i8
+ ; CHECK-NEXT:    store i8 [[Z0]], ptr [[P]], align 1
+ ; CHECK-NEXT:    store i8 [[Z1]], ptr [[P]], align 1
+@@ -576,3 +574,53 @@ loop.latch:
+ exit:
+   ret void
+ }
++
++; Similar to @postinc_signed_facts_when_unsigned_overflows: here the signed sum
++; StartValue + Step (127 + 1) overflows signed but not unsigned.
++define void @postinc_unsigned_facts_when_signed_overflows(ptr %p) {
++; CHECK-LABEL: define void @postinc_unsigned_facts_when_signed_overflows(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 127, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i8 [[IV_NEXT]], -100
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[SLB:%.*]] = icmp slt i8 [[IV]], 127
++; CHECK-NEXT:    [[SUB:%.*]] = icmp slt i8 [[IV]], -100
++; CHECK-NEXT:    [[Z0:%.*]] = zext i1 [[SLB]] to i8
++; CHECK-NEXT:    [[Z1:%.*]] = zext i1 [[SUB]] to i8
++; CHECK-NEXT:    [[Z2:%.*]] = zext i1 true to i8
++; CHECK-NEXT:    store i8 [[Z0]], ptr [[P]], align 1
++; CHECK-NEXT:    store i8 [[Z1]], ptr [[P]], align 1
++; CHECK-NEXT:    store i8 [[Z2]], ptr [[P]], align 1
++; CHECK-NEXT:    br label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i8 [ 127, %entry ], [ %iv.next, %loop.latch ]
++  %iv.next = add i8 %iv, 1
++  %done = icmp eq i8 %iv.next, -100
++  br i1 %done, label %exit, label %loop.latch
++
++loop.latch:
++  %slb = icmp slt i8 %iv, 127
++  %sub = icmp slt i8 %iv, -100
++  %uns = icmp ult i8 %iv, -100
++  %z0 = zext i1 %slb to i8
++  %z1 = zext i1 %sub to i8
++  %z2 = zext i1 %uns to i8
++  store i8 %z0, ptr %p, align 1
++  store i8 %z1, ptr %p, align 1
++  store i8 %z2, ptr %p, align 1
++  br label %loop.header
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll b/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll
+index 91546d4abf438..6491f46e4f124 100644
+--- a/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll
++++ b/llvm/test/Transforms/ConstraintElimination/loops-bottom-tested-pointer-cmps.ll
+@@ -21,8 +21,7 @@ define void @checks_in_loops_removable(ptr %ptr, ptr %lower, ptr %upper, i8 %n)
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ 0, [[PRE_2]] ], [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[PTR_IV:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_LOWER:%.*]] = icmp ugt ptr [[LOWER]], [[PTR_IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV]]
++; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = or i1 false, false
+ ; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    store i8 0, ptr [[PTR_IV]], align 4
+@@ -85,14 +84,12 @@ define void @some_checks_in_loops_removable(ptr %ptr, ptr %lower, ptr %upper, i8
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ 0, [[PRE_2]] ], [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[PTR_IV:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_LOWER:%.*]] = icmp ugt ptr [[LOWER]], [[PTR_IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV]]
++; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = or i1 false, false
+ ; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_BODY:%.*]]
+ ; CHECK:       loop.body:
+ ; CHECK-NEXT:    [[IV_1:%.*]] = add nuw nsw i16 [[IV]], 1
+ ; CHECK-NEXT:    [[PTR_IV_1:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV_1]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_1_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV_1]]
+-; CHECK-NEXT:    [[OR_1:%.*]] = or i1 false, [[CMP_PTR_IV_1_UPPER]]
++; CHECK-NEXT:    [[OR_1:%.*]] = or i1 false, false
+ ; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    store i8 0, ptr [[PTR_IV]], align 4
+@@ -161,15 +158,15 @@ define void @no_checks_in_loops_removable(ptr %ptr, ptr %lower, ptr %upper, i8 %
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ 0, [[PRE_1]] ], [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[PTR_IV:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV]]
+-; CHECK-NEXT:    [[CMP_PTR_IV_LOWER:%.*]] = icmp ugt ptr [[LOWER]], [[PTR_IV]]
+ ; CHECK-NEXT:    [[CMP_PTR_IV_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV]]
+-; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_BODY:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = or i1 false, [[CMP_PTR_IV_UPPER]]
++; CHECK-NEXT:    br i1 [[OR]], label [[TRAP]], label [[LOOP_BODY:%.*]]
+ ; CHECK:       loop.body:
+ ; CHECK-NEXT:    [[IV_1:%.*]] = add nuw nsw i16 [[IV]], 1
+ ; CHECK-NEXT:    [[PTR_IV_1:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[IV_1]]
+ ; CHECK-NEXT:    [[CMP_PTR_IV_1_UPPER:%.*]] = icmp ule ptr [[UPPER]], [[PTR_IV_1]]
+ ; CHECK-NEXT:    [[OR_1:%.*]] = or i1 false, [[CMP_PTR_IV_1_UPPER]]
+-; CHECK-NEXT:    br i1 [[CMP_PTR_IV_UPPER]], label [[TRAP]], label [[LOOP_LATCH]]
++; CHECK-NEXT:    br i1 [[OR]], label [[TRAP]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    store i8 0, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i16 [[IV]], 1
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+index 5aa179a25ccac..a5c0702896efd 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+@@ -302,8 +302,7 @@ define void @signed_postinc_iv_step_1(i64 %end) {
+ ; CHECK-NEXT:    [[CMP_I_NOT:%.*]] = icmp eq i64 [[IV_NEXT]], [[END]]
+ ; CHECK-NEXT:    br i1 [[CMP_I_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp slt i64 [[IV]], [[END]]
+-; CHECK-NEXT:    call void @use(i1 [[CMP2]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ; CHECK:       exit:
