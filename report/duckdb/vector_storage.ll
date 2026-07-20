@@ -203,7 +203,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i: ; preds = %_ZNK6duckdb15Sele
   %i.cn = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.ch
   store i16 %i.cm, ptr %i.cn, align 2, !tbaa !43
   %i.co = add nuw i64 %.016.us.i, 4               ; 2 uses
-  %niter786.next.3 = add i64 %niter786, 4         ; 2 uses
+  %niter786.next.3 = add nuw i64 %niter786, 4     ; 2 uses
   %niter786.ncmp.3 = icmp eq i64 %niter786.next.3, %unroll_iter785
   br i1 %niter786.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit589.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i, !llvm.loop !53
 
@@ -266,7 +266,7 @@ bb.j:                                             ; preds = %_ZNK6duckdb21Templa
   %i.dg = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.da
   store i16 %.sink.i46.1, ptr %i.dg, align 2, !tbaa !43
   %i.dh = add nuw i64 %.016.us19.i, 2             ; 2 uses
-  %niter780.next.1 = add i64 %niter780, 2         ; 2 uses
+  %niter780.next.1 = add nuw i64 %niter780, 2     ; 2 uses
   %niter780.ncmp.1 = icmp eq i64 %niter780.next.1, %unroll_iter779
   br i1 %niter780.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit590.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i, !llvm.loop !53
 
@@ -317,7 +317,7 @@ bb.k:                                             ; preds = %_ZNK6duckdb21Templa
   %i.eg = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.du
   store i16 %.sink28.i.1, ptr %i.eg, align 2, !tbaa !43
   %i.eh = add nuw i64 %.016.i42, 2                ; 2 uses
-  %niter774.next.1 = add i64 %niter774, 2         ; 2 uses
+  %niter774.next.1 = add nuw i64 %niter774, 2     ; 2 uses
   %niter774.ncmp.1 = icmp eq i64 %niter774.next.1, %unroll_iter773
   br i1 %niter774.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit591.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i41, !llvm.loop !53
 
@@ -463,7 +463,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i64: ; preds = %_ZNK6duckdb15Se
   %i.gt = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.gn
   store i32 %i.gs, ptr %i.gt, align 4, !tbaa !3
   %i.gu = add nuw i64 %.016.us.i65, 4             ; 2 uses
-  %niter765.next.3 = add i64 %niter765, 4         ; 2 uses
+  %niter765.next.3 = add nuw i64 %niter765, 4     ; 2 uses
   %niter765.ncmp.3 = icmp eq i64 %niter765.next.3, %unroll_iter764
   br i1 %niter765.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit594.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i64, !llvm.loop !57
 
@@ -526,7 +526,7 @@ bb.m:                                             ; preds = %_ZNK6duckdb21Templa
   %i.hm = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.hg
   store i32 %.sink.i61.1, ptr %i.hm, align 4, !tbaa !3
   %i.hn = add nuw i64 %.016.us19.i58, 2           ; 2 uses
-  %niter759.next.1 = add i64 %niter759, 2         ; 2 uses
+  %niter759.next.1 = add nuw i64 %niter759, 2     ; 2 uses
   %niter759.ncmp.1 = icmp eq i64 %niter759.next.1, %unroll_iter758
   br i1 %niter759.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit595.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i57, !llvm.loop !57
 
@@ -577,7 +577,7 @@ bb.n:                                             ; preds = %_ZNK6duckdb21Templa
   %i.im = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ia
   store i32 %.sink28.i55.1, ptr %i.im, align 4, !tbaa !3
   %i.in = add nuw i64 %.016.i52, 2                ; 2 uses
-  %niter753.next.1 = add i64 %niter753, 2         ; 2 uses
+  %niter753.next.1 = add nuw i64 %niter753, 2     ; 2 uses
   %niter753.ncmp.1 = icmp eq i64 %niter753.next.1, %unroll_iter752
   br i1 %niter753.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit596.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i51, !llvm.loop !57
 
@@ -723,7 +723,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i87: ; preds = %_ZNK6duckdb15Se
   %i.kz = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.kt
   store i64 %i.ky, ptr %i.kz, align 8, !tbaa !39
   %i.la = add nuw i64 %.016.us.i88, 4             ; 2 uses
-  %niter744.next.3 = add i64 %niter744, 4         ; 2 uses
+  %niter744.next.3 = add nuw i64 %niter744, 4     ; 2 uses
   %niter744.ncmp.3 = icmp eq i64 %niter744.next.3, %unroll_iter743
   br i1 %niter744.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit599.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i87, !llvm.loop !61
 
@@ -789,7 +789,7 @@ bb.p:                                             ; preds = %_ZNK6duckdb21Templa
   %i.lv = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.lm
   store i64 %.sink.i84.1, ptr %i.lv, align 8, !tbaa !39
   %i.lw = add nuw i64 %.016.us19.i81, 2           ; 2 uses
-  %niter738.next.1 = add i64 %niter738, 2         ; 2 uses
+  %niter738.next.1 = add nuw i64 %niter738, 2     ; 2 uses
   %niter738.ncmp.1 = icmp eq i64 %niter738.next.1, %unroll_iter737
   br i1 %niter738.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit600.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i80, !llvm.loop !61
 
@@ -840,7 +840,7 @@ bb.q:                                             ; preds = %_ZNK6duckdb21Templa
   %i.mv = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.mj
   store i64 %.sink28.i78.1, ptr %i.mv, align 8, !tbaa !39
   %i.mw = add nuw i64 %.016.i75, 2                ; 2 uses
-  %niter732.next.1 = add i64 %niter732, 2         ; 2 uses
+  %niter732.next.1 = add nuw i64 %niter732, 2     ; 2 uses
   %niter732.ncmp.1 = icmp eq i64 %niter732.next.1, %unroll_iter731
   br i1 %niter732.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit601.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i74, !llvm.loop !61
 
@@ -1066,7 +1066,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i120: ; preds = %_ZNK6duckdb15S
   %i.qf = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.pz
   store i16 %i.qe, ptr %i.qf, align 2, !tbaa !43
   %i.qg = add nuw i64 %.016.us.i121, 4            ; 2 uses
-  %niter723.next.3 = add i64 %niter723, 4         ; 2 uses
+  %niter723.next.3 = add nuw i64 %niter723, 4     ; 2 uses
   %niter723.ncmp.3 = icmp eq i64 %niter723.next.3, %unroll_iter722
   br i1 %niter723.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit604.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i120, !llvm.loop !67
 
@@ -1129,7 +1129,7 @@ bb.w:                                             ; preds = %_ZNK6duckdb21Templa
   %i.qy = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.qs
   store i16 %.sink.i117.1, ptr %i.qy, align 2, !tbaa !43
   %i.qz = add nuw i64 %.016.us19.i114, 2          ; 2 uses
-  %niter717.next.1 = add i64 %niter717, 2         ; 2 uses
+  %niter717.next.1 = add nuw i64 %niter717, 2     ; 2 uses
   %niter717.ncmp.1 = icmp eq i64 %niter717.next.1, %unroll_iter716
   br i1 %niter717.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit605.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i113, !llvm.loop !67
 
@@ -1180,7 +1180,7 @@ bb.x:                                             ; preds = %_ZNK6duckdb21Templa
   %i.ry = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.rm
   store i16 %.sink28.i111.1, ptr %i.ry, align 2, !tbaa !43
   %i.rz = add nuw i64 %.016.i108, 2               ; 2 uses
-  %niter711.next.1 = add i64 %niter711, 2         ; 2 uses
+  %niter711.next.1 = add nuw i64 %niter711, 2     ; 2 uses
   %niter711.ncmp.1 = icmp eq i64 %niter711.next.1, %unroll_iter710
   br i1 %niter711.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit606.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i107, !llvm.loop !67
 
@@ -1326,7 +1326,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i143: ; preds = %_ZNK6duckdb15S
   %i.ul = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.uf
   store i32 %i.uk, ptr %i.ul, align 4, !tbaa !3
   %i.um = add nuw i64 %.016.us.i144, 4            ; 2 uses
-  %niter702.next.3 = add i64 %niter702, 4         ; 2 uses
+  %niter702.next.3 = add nuw i64 %niter702, 4     ; 2 uses
   %niter702.ncmp.3 = icmp eq i64 %niter702.next.3, %unroll_iter701
   br i1 %niter702.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit609.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i143, !llvm.loop !71
 
@@ -1389,7 +1389,7 @@ bb.z:                                             ; preds = %_ZNK6duckdb21Templa
   %i.ve = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.uy
   store i32 %.sink.i140.1, ptr %i.ve, align 4, !tbaa !3
   %i.vf = add nuw i64 %.016.us19.i137, 2          ; 2 uses
-  %niter696.next.1 = add i64 %niter696, 2         ; 2 uses
+  %niter696.next.1 = add nuw i64 %niter696, 2     ; 2 uses
   %niter696.ncmp.1 = icmp eq i64 %niter696.next.1, %unroll_iter695
   br i1 %niter696.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit610.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i136, !llvm.loop !71
 
@@ -1440,7 +1440,7 @@ bb.aa:                                            ; preds = %_ZNK6duckdb21Templa
   %i.we = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.vs
   store i32 %.sink28.i134.1, ptr %i.we, align 4, !tbaa !3
   %i.wf = add nuw i64 %.016.i131, 2               ; 2 uses
-  %niter690.next.1 = add i64 %niter690, 2         ; 2 uses
+  %niter690.next.1 = add nuw i64 %niter690, 2     ; 2 uses
   %niter690.ncmp.1 = icmp eq i64 %niter690.next.1, %unroll_iter689
   br i1 %niter690.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit611.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i130, !llvm.loop !71
 
@@ -1586,7 +1586,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i166: ; preds = %_ZNK6duckdb15S
   %i.yr = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.yl
   store i64 %i.yq, ptr %i.yr, align 8, !tbaa !39
   %i.ys = add nuw i64 %.016.us.i167, 4            ; 2 uses
-  %niter681.next.3 = add i64 %niter681, 4         ; 2 uses
+  %niter681.next.3 = add nuw i64 %niter681, 4     ; 2 uses
   %niter681.ncmp.3 = icmp eq i64 %niter681.next.3, %unroll_iter680
   br i1 %niter681.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit614.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i166, !llvm.loop !75
 
@@ -1652,7 +1652,7 @@ bb.ac:                                            ; preds = %_ZNK6duckdb21Templa
   %i.zn = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ze
   store i64 %.sink.i163.1, ptr %i.zn, align 8, !tbaa !39
   %i.zo = add nuw i64 %.016.us19.i160, 2          ; 2 uses
-  %niter675.next.1 = add i64 %niter675, 2         ; 2 uses
+  %niter675.next.1 = add nuw i64 %niter675, 2     ; 2 uses
   %niter675.ncmp.1 = icmp eq i64 %niter675.next.1, %unroll_iter674
   br i1 %niter675.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit615.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i159, !llvm.loop !75
 
@@ -1703,7 +1703,7 @@ bb.ad:                                            ; preds = %_ZNK6duckdb21Templa
   %i.aan = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.aab
   store i64 %.sink28.i157.1, ptr %i.aan, align 8, !tbaa !39
   %i.aao = add nuw i64 %.016.i154, 2              ; 2 uses
-  %niter669.next.1 = add i64 %niter669, 2         ; 2 uses
+  %niter669.next.1 = add nuw i64 %niter669, 2     ; 2 uses
   %niter669.ncmp.1 = icmp eq i64 %niter669.next.1, %unroll_iter668
   br i1 %niter669.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit616.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i153, !llvm.loop !75
 
@@ -1961,7 +1961,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i207: ; preds = %_ZNK6duckdb15S
   %i.aeo = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.aei
   store float %i.aen, ptr %i.aeo, align 4, !tbaa !79
   %i.aep = add nuw i64 %.016.us.i208, 4           ; 2 uses
-  %niter660.next.3 = add i64 %niter660, 4         ; 2 uses
+  %niter660.next.3 = add nuw i64 %niter660, 4     ; 2 uses
   %niter660.ncmp.3 = icmp eq i64 %niter660.next.3, %unroll_iter659
   br i1 %niter660.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit621.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i207, !llvm.loop !84
 
@@ -2024,7 +2024,7 @@ bb.ap:                                            ; preds = %_ZNK6duckdb21Templa
   %i.afh = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.afb
   store float %.sink.i204.1, ptr %i.afh, align 4, !tbaa !79
   %i.afi = add nuw i64 %.016.us19.i201, 2         ; 2 uses
-  %niter654.next.1 = add i64 %niter654, 2         ; 2 uses
+  %niter654.next.1 = add nuw i64 %niter654, 2     ; 2 uses
   %niter654.ncmp.1 = icmp eq i64 %niter654.next.1, %unroll_iter653
   br i1 %niter654.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit622.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i200, !llvm.loop !84
 
@@ -2075,7 +2075,7 @@ bb.aq:                                            ; preds = %_ZNK6duckdb21Templa
   %i.agh = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.afv
   store float %.sink28.i198.1, ptr %i.agh, align 4, !tbaa !79
   %i.agi = add nuw i64 %.016.i195, 2              ; 2 uses
-  %niter648.next.1 = add i64 %niter648, 2         ; 2 uses
+  %niter648.next.1 = add nuw i64 %niter648, 2     ; 2 uses
   %niter648.ncmp.1 = icmp eq i64 %niter648.next.1, %unroll_iter647
   br i1 %niter648.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit623.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i194, !llvm.loop !84
 
@@ -2221,7 +2221,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i230: ; preds = %_ZNK6duckdb15S
   %i.aiu = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.aio
   store double %i.ait, ptr %i.aiu, align 8, !tbaa !85
   %i.aiv = add nuw i64 %.016.us.i231, 4           ; 2 uses
-  %niter640.next.3 = add i64 %niter640, 4         ; 2 uses
+  %niter640.next.3 = add nuw i64 %niter640, 4     ; 2 uses
   %niter640.ncmp.3 = icmp eq i64 %niter640.next.3, %unroll_iter639
   br i1 %niter640.ncmp.3, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit626.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.i230, !llvm.loop !90
 
@@ -2284,7 +2284,7 @@ bb.as:                                            ; preds = %_ZNK6duckdb21Templa
   %i.ajn = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ajh
   store double %.sink.i227.1, ptr %i.ajn, align 8, !tbaa !85
   %i.ajo = add nuw i64 %.016.us19.i224, 2         ; 2 uses
-  %niter635.next.1 = add i64 %niter635, 2         ; 2 uses
+  %niter635.next.1 = add nuw i64 %niter635, 2     ; 2 uses
   %niter635.ncmp.1 = icmp eq i64 %niter635.next.1, %unroll_iter634
   br i1 %niter635.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit627.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us20.i223, !llvm.loop !90
 
@@ -2335,7 +2335,7 @@ bb.at:                                            ; preds = %_ZNK6duckdb21Templa
   %i.akn = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.akb
   store double %.sink28.i221.1, ptr %i.akn, align 8, !tbaa !85
   %i.ako = add nuw i64 %.016.i218, 2              ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_117CopyToStorageLoopIaEEvRNS_19UnifiedVectorFormatEmPh.exit.loopexit628.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i217, !llvm.loop !90
 
@@ -2738,7 +2738,7 @@ bb.j:                                             ; preds = %bb.a
   %i.jk = getelementptr inbounds nuw [16 x i8], ptr %i.je, i64 %i.ji
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jk, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.jj, i64 16, i1 false), !tbaa.struct !76
   %i.jl = add nuw i64 %.08.i76, 2                 ; 2 uses
-  %niter381.next.1 = add i64 %niter381, 2         ; 2 uses
+  %niter381.next.1 = add nuw i64 %niter381, 2     ; 2 uses
   %niter381.ncmp.1 = icmp eq i64 %niter381.next.1, %unroll_iter380
   br i1 %niter381.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_119ReadFromStorageLoopIaEEvPhmRNS_6VectorE.exit.loopexit359.unr-lcssa, label %.lr.ph.i75, !llvm.loop !151
 
@@ -2769,7 +2769,7 @@ bb.k:                                             ; preds = %bb.a
   %i.jt = getelementptr inbounds nuw [16 x i8], ptr %i.jn, i64 %i.jr
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jt, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.js, i64 16, i1 false), !tbaa.struct !76
   %i.ju = add nuw i64 %.08.i80, 2                 ; 2 uses
-  %niter376.next.1 = add i64 %niter376, 2         ; 2 uses
+  %niter376.next.1 = add nuw i64 %niter376, 2     ; 2 uses
   %niter376.ncmp.1 = icmp eq i64 %niter376.next.1, %unroll_iter375
   br i1 %niter376.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_119ReadFromStorageLoopIaEEvPhmRNS_6VectorE.exit.loopexit360.unr-lcssa, label %.lr.ph.i79, !llvm.loop !152
 
@@ -2972,7 +2972,7 @@ bb.n:                                             ; preds = %bb.a
   %i.mm = getelementptr inbounds nuw [16 x i8], ptr %i.mg, i64 %i.mk
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.mm, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ml, i64 16, i1 false), !tbaa.struct !91
   %i.mn = add nuw i64 %.08.i92, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_119ReadFromStorageLoopIaEEvPhmRNS_6VectorE.exit.loopexit365.unr-lcssa, label %.lr.ph.i91, !llvm.loop !159
 

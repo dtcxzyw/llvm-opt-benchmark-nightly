@@ -204,7 +204,7 @@ bb.a:
   %i.t = or i64 %i.s, %i.r
   store i64 %i.t, ptr %i.o, align 8, !tbaa !9
   %i.u = add nuw i64 %.013, 2                     ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !14
 
@@ -330,7 +330,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ac = or i64 %i.y, %i.ab
   store i64 %i.ac, ptr %i.aa, align 8, !tbaa !9
   %i.ad = add nuw i64 %.01619, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !17
 
@@ -505,7 +505,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 %i.ab
   store i8 %i.ai, ptr %i.aj, align 1, !tbaa !16
   %i.ak = add nuw i64 %.038, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph39, !llvm.loop !19
 
@@ -597,7 +597,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph43.new
   %i.ai = getelementptr i8, ptr %i.o, i64 %i.ah
   store i8 %i.ag, ptr %i.ai, align 1, !tbaa !16
   %i.aj = add nuw i64 %.042, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d, !llvm.loop !21
 
@@ -991,7 +991,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.z
   store i64 %i.ah, ptr %i.al, align 8, !tbaa !9
   %i.am = add nuw i64 %.01920, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !32
 }
@@ -1062,7 +1062,7 @@ bb.a:
   %i.af = add nuw nsw i64 %i.ae, %i.ab            ; 3 uses
   store i64 %i.ac, ptr %i.x, align 8, !tbaa !9
   %i.ag = add nuw i64 %.02122.us, 2               ; 2 uses
-  %niter40.next.1 = add i64 %niter40, 2           ; 2 uses
+  %niter40.next.1 = add nuw i64 %niter40, 2       ; 2 uses
   %niter40.ncmp.1 = icmp eq i64 %niter40.next.1, %unroll_iter39
   br i1 %niter40.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph.split.us, !llvm.loop !33
 
@@ -1128,7 +1128,7 @@ bb.a:
   %i.bh = zext i1 %i.bg to i64                    ; 3 uses
   store i64 %i.bf, ptr %i.bd, align 8, !tbaa !9
   %i.bi = add nuw i64 %.02122, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit31.unr-lcssa, label %.lr.ph.split, !llvm.loop !33
 }
@@ -1208,7 +1208,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.z
   store i64 %i.ak, ptr %i.al, align 8, !tbaa !9
   %i.am = add nuw i64 %.01819, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !34
 }
@@ -1611,7 +1611,7 @@ bb.a:
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.u
   store i64 %i.af, ptr %i.ag, align 8, !tbaa !9
   %i.ah = add nuw i64 %.01819.i, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_Z20mbedtls_mpi_core_subPmPKmS1_m.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !34
 
@@ -2014,7 +2014,7 @@ _Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i: ; preds = %_Z28mbedtls_mpi_
   %i.df = or i64 %i.de, %i.da
   store i64 %i.df, ptr %i.db, align 8, !tbaa !9
   %i.dg = add nuw i64 %.013.i.us.i.i, 2           ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i.loopexit91.unr-lcssa, label %.lr.ph.i.us.i.i, !llvm.loop !14
 
@@ -2035,7 +2035,7 @@ _Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i: ; preds = %_Z28mbedtls_mpi_
   %i.dp = and i64 %i.dn, %.reass.i.i.i.1
   store i64 %i.dp, ptr %i.dm, align 8, !tbaa !9
   %i.dq = add nuw i64 %.013.i.i.i, 2              ; 2 uses
-  %niter102.next.1 = add i64 %niter102, 2         ; 2 uses
+  %niter102.next.1 = add nuw i64 %niter102, 2     ; 2 uses
   %niter102.ncmp.1 = icmp eq i64 %niter102.next.1, %unroll_iter101
   br i1 %niter102.ncmp.1, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !14
 
@@ -2168,7 +2168,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.n
   store i64 %i.q, ptr %i.t, align 8, !tbaa !9
   %i.u = add nuw i64 %.01213, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !56
 }
@@ -2258,7 +2258,7 @@ bb.a:
   %i.ao = load volatile i64, ptr %i.an, align 8, !tbaa !9
   %i.ap = or i64 %i.ao, %i.al                     ; 3 uses
   %i.aq = add nuw i64 %.09, 8                     ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !58
 }

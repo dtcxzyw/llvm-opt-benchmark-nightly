@@ -204,7 +204,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2133
 
@@ -607,7 +607,7 @@ bb.bb:                                            ; preds = %bb.bb, %.lr.ph.i.i2
   store i32 %i.sp, ptr %i.sk, align 4, !tbaa !3
   %i.sq = lshr i64 %i.so, 32                      ; 3 uses
   %i.sr = add nuw i64 %.013.i.i, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.bb, !llvm.loop !15499
 
@@ -702,7 +702,7 @@ bb.bf:                                            ; preds = %bb.bf, %.lr.ph.i.i2
   store i32 %i.tx, ptr %i.ts, align 4, !tbaa !3
   %i.ty = lshr i64 %i.tw, 32                      ; 3 uses
   %i.tz = add nuw i64 %.013.i.i293, 2             ; 2 uses
-  %niter1905.next.1 = add i64 %niter1905, 2       ; 2 uses
+  %niter1905.next.1 = add nuw i64 %niter1905, 2   ; 2 uses
   %niter1905.ncmp.1 = icmp eq i64 %niter1905.next.1, %unroll_iter1904
   br i1 %niter1905.ncmp.1, label %._crit_edge.i.i296.unr-lcssa, label %bb.bf, !llvm.loop !15499
 
@@ -797,7 +797,7 @@ bb.bj:                                            ; preds = %bb.bj, %.lr.ph.i.i3
   store i32 %i.vf, ptr %i.va, align 4, !tbaa !3
   %i.vg = lshr i64 %i.ve, 32                      ; 3 uses
   %i.vh = add nuw i64 %.013.i.i307, 2             ; 2 uses
-  %niter1912.next.1 = add i64 %niter1912, 2       ; 2 uses
+  %niter1912.next.1 = add nuw i64 %niter1912, 2   ; 2 uses
   %niter1912.ncmp.1 = icmp eq i64 %niter1912.next.1, %unroll_iter1911
   br i1 %niter1912.ncmp.1, label %._crit_edge.i.i310.unr-lcssa, label %bb.bj, !llvm.loop !15499
 
@@ -1200,7 +1200,7 @@ bb.cu:                                            ; preds = %bb.cu, %.lr.ph.i.i3
   store i32 %i.aci, ptr %i.acd, align 4, !tbaa !3
   %i.acj = lshr i64 %i.ach, 32                    ; 3 uses
   %i.ack = add nuw i64 %.013.i.i368, 2            ; 2 uses
-  %niter1933.next.1 = add i64 %niter1933, 2       ; 2 uses
+  %niter1933.next.1 = add nuw i64 %niter1933, 2   ; 2 uses
   %niter1933.ncmp.1 = icmp eq i64 %niter1933.next.1, %unroll_iter1932
   br i1 %niter1933.ncmp.1, label %._crit_edge.i.i371.unr-lcssa, label %bb.cu, !llvm.loop !15499
 
@@ -1292,7 +1292,7 @@ bb.cx:                                            ; preds = %bb.cx, %.lr.ph.i.i3
   store i32 %i.adq, ptr %i.adl, align 4, !tbaa !3
   %i.adr = lshr i64 %i.adp, 32                    ; 3 uses
   %i.ads = add nuw i64 %.013.i.i382, 2            ; 2 uses
-  %niter1940.next.1 = add i64 %niter1940, 2       ; 2 uses
+  %niter1940.next.1 = add nuw i64 %niter1940, 2   ; 2 uses
   %niter1940.ncmp.1 = icmp eq i64 %niter1940.next.1, %unroll_iter1939
   br i1 %niter1940.ncmp.1, label %._crit_edge.i.i385.unr-lcssa, label %bb.cx, !llvm.loop !15499
 
@@ -1390,7 +1390,7 @@ bb.db:                                            ; preds = %bb.db, %.lr.ph.i.i3
   store i32 %i.aey, ptr %i.aet, align 4, !tbaa !3
   %i.aez = lshr i64 %i.aex, 32                    ; 3 uses
   %i.afa = add nuw i64 %.013.i.i396, 2            ; 2 uses
-  %niter1947.next.1 = add i64 %niter1947, 2       ; 2 uses
+  %niter1947.next.1 = add nuw i64 %niter1947, 2   ; 2 uses
   %niter1947.ncmp.1 = icmp eq i64 %niter1947.next.1, %unroll_iter1946
   br i1 %niter1947.ncmp.1, label %._crit_edge.i.i399.unr-lcssa, label %bb.db, !llvm.loop !15499
 
@@ -1494,7 +1494,7 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph.i.i4
   store i32 %i.agl, ptr %i.agg, align 4, !tbaa !3
   %i.agm = lshr i64 %i.agk, 32                    ; 3 uses
   %i.agn = add nuw i64 %.013.i.i410, 2            ; 2 uses
-  %niter1926.next.1 = add i64 %niter1926, 2       ; 2 uses
+  %niter1926.next.1 = add nuw i64 %niter1926, 2   ; 2 uses
   %niter1926.ncmp.1 = icmp eq i64 %niter1926.next.1, %unroll_iter1925
   br i1 %niter1926.ncmp.1, label %._crit_edge.i.i413.unr-lcssa, label %bb.dh, !llvm.loop !15499
 
@@ -1744,7 +1744,7 @@ bb.dw:                                            ; preds = %bb.dw, %.lr.ph.i.i4
   store i32 %i.akh, ptr %i.akc, align 4, !tbaa !3
   %i.aki = lshr i64 %i.akg, 32                    ; 3 uses
   %i.akj = add nuw i64 %.013.i.i448, 2            ; 2 uses
-  %niter1919.next.1 = add i64 %niter1919, 2       ; 2 uses
+  %niter1919.next.1 = add nuw i64 %niter1919, 2   ; 2 uses
   %niter1919.ncmp.1 = icmp eq i64 %niter1919.next.1, %unroll_iter1918
   br i1 %niter1919.ncmp.1, label %._crit_edge.i.i451.unr-lcssa, label %bb.dw, !llvm.loop !15499
 
@@ -2147,7 +2147,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i.i.n
   store i32 %i.ax, ptr %i.as, align 4, !tbaa !3
   %i.ay = lshr i64 %i.aw, 32                      ; 3 uses
   %i.az = add nuw i64 %.013.i.i, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.h, !llvm.loop !15499
 
@@ -2550,7 +2550,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i14.n
   %i.ei = lshr i64 %i.eg, 63                      ; 2 uses
   %indvars.iv.next.i16.1 = add nsw i64 %indvars.iv.i15, 2 ; 3 uses
   %i.ej = add nuw i64 %.01223.i, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i18.unr-lcssa, label %bb.g, !llvm.loop !15518
 
@@ -2953,7 +2953,7 @@ bb.a:
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 224
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.aj, i8 0, i64 16, i1 false)
   %i.ak = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIavvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !33002
 
@@ -3356,7 +3356,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 336
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsvvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !33229
 
@@ -3759,7 +3759,7 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.ar, i8 0, i64 16, i1 false)
   %i.as = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIivvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !33456
 
@@ -4162,7 +4162,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlvvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !33682
 
@@ -4565,7 +4565,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyInvvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !33909
 
@@ -4968,7 +4968,7 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.ar, i8 0, i64 16, i1 false)
   %i.as = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !34140
 
@@ -5371,7 +5371,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !34371
 
@@ -5774,7 +5774,7 @@ bb.a:
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 224
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.aj, i8 0, i64 16, i1 false)
   %i.ak = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbvvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !34596
 
@@ -6177,7 +6177,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !34824
 
@@ -6580,7 +6580,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !35241
 
@@ -6983,7 +6983,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIN8facebook5velox4exec11GenericViewEv
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.ba, i8 0, i64 16, i1 false)
   %i.bb = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox4exec11GenericViewEvvvvSt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !35490
 
@@ -7386,7 +7386,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbivvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !45514
 
@@ -7789,7 +7789,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaivvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !45784
 
@@ -8192,7 +8192,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsivvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !46054
 
@@ -8595,7 +8595,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiivvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !46324
 
@@ -8998,7 +8998,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.al, i8 0, i64 16, i1 false)
   %i.am = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlivvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !46594
 
@@ -9401,7 +9401,7 @@ _ZN5folly3f146detail21VectorContainerPolicyInivvvSt17integral_constantIbLb1EEE12
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.ba, i8 0, i64 16, i1 false)
   %i.bb = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyInivvvSt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !46863
 
@@ -9804,7 +9804,7 @@ bb.a:
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.am, i8 0, i64 16, i1 false)
   %i.an = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfivvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !47149
 
@@ -10207,7 +10207,7 @@ bb.a:
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.am, i8 0, i64 16, i1 false)
   %i.an = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdivvvEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !47439
 
@@ -10610,7 +10610,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIN8facebook5velox9TimestampEivvvSt17i
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.ba, i8 0, i64 16, i1 false)
   %i.bb = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox9TimestampEivvvSt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !47722
 
@@ -11013,7 +11013,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewEivvvSt1
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.ba, i8 0, i64 16, i1 false)
   %i.bb = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox10StringViewEivvvSt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !48236
 

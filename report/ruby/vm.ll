@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.backedge, %bb.afi
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !11
   %i.cf = and i64 %i.ce, -4
   %i.cg = inttoptr i64 %i.cf to ptr               ; 3 uses
-  %niter3866.next.7 = add i64 %niter3866, 8       ; 2 uses
+  %niter3866.next.7 = add nuw i64 %niter3866, 8   ; 2 uses
   %niter3866.ncmp.7 = icmp eq i64 %niter3866.next.7, %unroll_iter3865
   br i1 %niter3866.ncmp.7, label %vm_get_ep.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !306
 
@@ -301,7 +301,7 @@ bb.e:                                             ; preds = %.backedge, %bb.afj
   %i.eg = load i64, ptr %i.ef, align 8, !tbaa !11
   %i.eh = and i64 %i.eg, -4
   %i.ei = inttoptr i64 %i.eh to ptr               ; 3 uses
-  %niter3859.next.7 = add i64 %niter3859, 8       ; 2 uses
+  %niter3859.next.7 = add nuw i64 %niter3859, 8   ; 2 uses
   %niter3859.ncmp.7 = icmp eq i64 %niter3859.next.7, %unroll_iter3858
   br i1 %niter3859.ncmp.7, label %vm_get_ep.exit2370.loopexit.unr-lcssa, label %.lr.ph.i2365, !llvm.loop !306
 
@@ -408,7 +408,7 @@ bb.h:                                             ; preds = %.backedge, %bb.afk
   %i.gh = load i64, ptr %i.gg, align 8, !tbaa !11
   %i.gi = and i64 %i.gh, -4
   %i.gj = inttoptr i64 %i.gi to ptr               ; 3 uses
-  %niter3852.next.7 = add i64 %niter3852, 8       ; 2 uses
+  %niter3852.next.7 = add nuw i64 %niter3852, 8   ; 2 uses
   %niter3852.ncmp.7 = icmp eq i64 %niter3852.next.7, %unroll_iter3851
   br i1 %niter3852.ncmp.7, label %vm_get_ep.exit2377.loopexit.unr-lcssa, label %.lr.ph.i2372, !llvm.loop !306
 
@@ -589,7 +589,7 @@ bb.q:                                             ; preds = %.backedge, %bb.afl
   %i.jk = load i64, ptr %i.jj, align 8, !tbaa !11
   %i.jl = and i64 %i.jk, -4
   %i.jm = inttoptr i64 %i.jl to ptr               ; 3 uses
-  %niter3845.next.7 = add i64 %niter3845, 8       ; 2 uses
+  %niter3845.next.7 = add nuw i64 %niter3845, 8   ; 2 uses
   %niter3845.ncmp.7 = icmp eq i64 %niter3845.next.7, %unroll_iter3844
   br i1 %niter3845.ncmp.7, label %vm_get_ep.exit2388.loopexit.unr-lcssa, label %.lr.ph.i2383, !llvm.loop !306
 
@@ -699,7 +699,7 @@ bb.t:                                             ; preds = %.backedge, %bb.afm
   %i.ln = load i64, ptr %i.lm, align 8, !tbaa !11
   %i.lo = and i64 %i.ln, -4
   %i.lp = inttoptr i64 %i.lo to ptr               ; 3 uses
-  %niter3838.next.7 = add i64 %niter3838, 8       ; 2 uses
+  %niter3838.next.7 = add nuw i64 %niter3838, 8   ; 2 uses
   %niter3838.ncmp.7 = icmp eq i64 %niter3838.next.7, %unroll_iter3837
   br i1 %niter3838.ncmp.7, label %vm_get_ep.exit2396.loopexit.unr-lcssa, label %.lr.ph.i2391, !llvm.loop !306
 

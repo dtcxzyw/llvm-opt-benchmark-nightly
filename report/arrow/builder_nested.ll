@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.w = load i64, ptr %i.j, align 8, !tbaa !178
   %i.x = add nsw i64 %i.w, 4                      ; 3 uses
   store i64 %i.x, ptr %i.j, align 8, !tbaa !178
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !179
 }
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.v = load i64, ptr %i.i, align 8, !tbaa !178
   %i.w = add nsw i64 %i.v, 8                      ; 3 uses
   store i64 %i.w, ptr %i.i, align 8, !tbaa !178
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !236
 }
@@ -1010,7 +1010,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.w = load i64, ptr %i.j, align 8, !tbaa !178
   %i.x = add nsw i64 %i.w, 4                      ; 3 uses
   store i64 %i.x, ptr %i.j, align 8, !tbaa !178
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !295
 }
@@ -1413,7 +1413,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.v = load i64, ptr %i.i, align 8, !tbaa !178
   %i.w = add nsw i64 %i.v, 8                      ; 3 uses
   store i64 %i.w, ptr %i.i, align 8, !tbaa !178
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !354
 }
@@ -1816,7 +1816,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.t = load i64, ptr %i.c, align 8, !tbaa !178
   %i.u = add nsw i64 %i.t, 4                      ; 3 uses
   store i64 %i.u, ptr %i.c, align 8, !tbaa !178
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph10.unr-lcssa, label %bb.b, !llvm.loop !503
 
@@ -2219,7 +2219,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.t = load i64, ptr %i.c, align 8, !tbaa !178
   %i.u = add nsw i64 %i.t, 8                      ; 3 uses
   store i64 %i.u, ptr %i.c, align 8, !tbaa !178
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph10.unr-lcssa, label %bb.b, !llvm.loop !529
 
@@ -2622,7 +2622,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph60.new
   %i.ep = select i1 %.not47.1, i8 0, i8 %i.eh
   %i.eq = or i8 %i.ep, %i.eg                      ; 3 uses
   %i.er = shl nuw i8 %.13758, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge61.loopexit.unr-lcssa, label %bb.f, !llvm.loop !867
 

@@ -204,7 +204,7 @@ _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_124FractionalDigitGenera
   %i.an = trunc i64 %i.am to i32
   store i32 %i.an, ptr %i.ai, align 4, !tbaa !3
   %i.ao = lshr i64 %i.am, 32                      ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_124FractionalDigitGenerator11GetOneDigitEv.exit.i.i.i.i.i.unr-lcssa, label %.preheader.i.i.i.i.i.i, !llvm.loop !128
 
@@ -278,7 +278,7 @@ _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_124FractionalDigitGenera
   %i.bu = trunc i64 %i.bt to i32
   store i32 %i.bu, ptr %i.bp, align 4, !tbaa !3
   %i.bv = lshr i64 %i.bt, 32                      ; 3 uses
-  %niter83.next.1 = add i64 %niter83, 2           ; 2 uses
+  %niter83.next.1 = add nuw i64 %niter83, 2       ; 2 uses
   %niter83.ncmp.1 = icmp eq i64 %niter83.next.1, %unroll_iter82
   br i1 %niter83.ncmp.1, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_124FractionalDigitGenerator11GetOneDigitEv.exit8.i.i.i.i.i.unr-lcssa, label %.preheader.i3.i.i.i.i.i, !llvm.loop !128
 

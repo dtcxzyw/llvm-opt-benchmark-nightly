@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph15.new
   %i.ab = or i64 %i.aa, %i.u
   store i64 %i.ab, ptr %i.z, align 8
   %i.ac = add nuw i32 %.0814, 2                   ; 2 uses
-  %niter30.next.1 = add i32 %niter30, 2           ; 2 uses
+  %niter30.next.1 = add nuw i32 %niter30, 2       ; 2 uses
   %niter30.ncmp.1 = icmp eq i32 %niter30.next.1, %unroll_iter29
   br i1 %niter30.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !6
 
@@ -247,7 +247,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.bh = or i64 %i.az, %i.bg
   store i64 %i.bh, ptr %i.bf, align 8
   %i.bi = add nuw i32 %.013, 2                    ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit23.unr-lcssa, label %bb.c, !llvm.loop !8
 
@@ -650,7 +650,7 @@ bb.w:                                             ; preds = %bb.s
   %i.xk = or i64 %i.xd, %i.xj
   store i64 %i.xk, ptr %i.xi, align 8
   %i.xl = add nuw i32 %.0814.i.i, 2               ; 2 uses
-  %niter7419.next.1 = add i32 %niter7419, 2       ; 2 uses
+  %niter7419.next.1 = add nuw i32 %niter7419, 2   ; 2 uses
   %niter7419.ncmp.1 = icmp eq i32 %niter7419.next.1, %unroll_iter7418
   br i1 %niter7419.ncmp.1, label %_ZN2v88internal8compiler23BytecodeLoopAssignments3AddENS0_11interpreter8RegisterE.exit.i.loopexit.unr-lcssa, label %.lr.ph15.i.i, !llvm.loop !6
 
@@ -693,7 +693,7 @@ bb.w:                                             ; preds = %bb.s
   %i.yq = or i64 %i.yi, %i.yp
   store i64 %i.yq, ptr %i.yo, align 8
   %i.yr = add nuw i32 %.013.i.i, 2                ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN2v88internal8compiler23BytecodeLoopAssignments3AddENS0_11interpreter8RegisterE.exit.i.loopexit7412.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !8
 
@@ -1096,7 +1096,7 @@ bb.aia:                                           ; preds = %bb.aia, %.lr.ph.i.i
   %i.pda = or i64 %i.pcu, %i.pcz
   store i64 %i.pda, ptr %i.pcy, align 8
   %i.pdb = add nuw i32 %.07.i.i.i.i2018, 2        ; 2 uses
-  %niter7460.next.1 = add i32 %niter7460, 2       ; 2 uses
+  %niter7460.next.1 = add nuw i32 %niter7460, 2   ; 2 uses
   %niter7460.ncmp.1 = icmp eq i32 %niter7460.next.1, %unroll_iter7459
   br i1 %niter7460.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb1ELNS0_11interpreter8BytecodeE100ELNS4_19ImplicitRegisterUseE2EJLNS4_11OperandTypeE10ELS7_11ELS7_8ELS7_6EEEEvRNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %bb.aia, !llvm.loop !18
 
@@ -1376,7 +1376,7 @@ bb.ail:                                           ; preds = %bb.ail, %.lr.ph.i.i
   %i.pjb = or i64 %i.piv, %i.pja
   store i64 %i.pjb, ptr %i.piz, align 8
   %i.pjc = add nuw i32 %.07.i.i.i.i2000, 2        ; 2 uses
-  %niter7454.next.1 = add i32 %niter7454, 2       ; 2 uses
+  %niter7454.next.1 = add nuw i32 %niter7454, 2   ; 2 uses
   %niter7454.ncmp.1 = icmp eq i32 %niter7454.next.1, %unroll_iter7453
   br i1 %niter7454.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb1ELNS0_11interpreter8BytecodeE101ELNS4_19ImplicitRegisterUseE2EJLNS4_11OperandTypeE10ELS7_11ELS7_8ELS7_6EEEEvRNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %bb.ail, !llvm.loop !19
 
@@ -1779,7 +1779,7 @@ bb.ajz:                                           ; preds = %bb.ajz, %.lr.ph.i.i
   %i.qcb = or i64 %i.qbv, %i.qca
   store i64 %i.qcb, ptr %i.qbz, align 8
   %i.qcc = add nuw i32 %.07.i.i.i.i1940, 2        ; 2 uses
-  %niter7448.next.1 = add i32 %niter7448, 2       ; 2 uses
+  %niter7448.next.1 = add nuw i32 %niter7448, 2   ; 2 uses
   %niter7448.ncmp.1 = icmp eq i32 %niter7448.next.1, %unroll_iter7447
   br i1 %niter7448.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb1ELNS0_11interpreter8BytecodeE105ELNS4_19ImplicitRegisterUseE2EJLNS4_11OperandTypeE10ELS7_11ELS7_8ELS7_6EEEEvRNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %bb.ajz, !llvm.loop !20
 
@@ -2182,7 +2182,7 @@ bb.alo:                                           ; preds = %bb.alo, %.lr.ph.i.i
   %i.qvr = or i64 %i.qvl, %i.qvq
   store i64 %i.qvr, ptr %i.qvp, align 8
   %i.qvs = add nuw i32 %.07.i.i.i.i1880, 2        ; 2 uses
-  %niter7442.next.1 = add i32 %niter7442, 2       ; 2 uses
+  %niter7442.next.1 = add nuw i32 %niter7442, 2   ; 2 uses
   %niter7442.ncmp.1 = icmp eq i32 %niter7442.next.1, %unroll_iter7441
   br i1 %niter7442.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb1ELNS0_11interpreter8BytecodeE109ELNS4_19ImplicitRegisterUseE2EJLNS4_11OperandTypeE10ELS7_11ELS7_8ELS7_6EEEEvRNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %bb.alo, !llvm.loop !21
 
@@ -2443,7 +2443,7 @@ bb.aly:                                           ; preds = %bb.aly, %.lr.ph.i.i
   %i.rbg = or i64 %i.rba, %i.rbf
   store i64 %i.rbg, ptr %i.rbe, align 8
   %i.rbh = add nuw i32 %.07.i.i.i.i1862, 2        ; 2 uses
-  %niter7436.next.1 = add i32 %niter7436, 2       ; 2 uses
+  %niter7436.next.1 = add nuw i32 %niter7436, 2   ; 2 uses
   %niter7436.ncmp.1 = icmp eq i32 %niter7436.next.1, %unroll_iter7435
   br i1 %niter7436.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb1ELNS0_11interpreter8BytecodeE110ELNS4_19ImplicitRegisterUseE2EJLNS4_11OperandTypeE4ELS7_11ELS7_8EEEEvRNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %bb.aly, !llvm.loop !22
 
@@ -2846,7 +2846,7 @@ bb.amr:                                           ; preds = %bb.amr, %.lr.ph.i.i
   %i.rku = or i64 %i.rko, %i.rkt
   store i64 %i.rku, ptr %i.rks, align 8
   %i.rkv = add nuw i32 %.07.i.i.i.i1830, 2        ; 2 uses
-  %niter7430.next.1 = add i32 %niter7430, 2       ; 2 uses
+  %niter7430.next.1 = add nuw i32 %niter7430, 2   ; 2 uses
   %niter7430.ncmp.1 = icmp eq i32 %niter7430.next.1, %unroll_iter7429
   br i1 %niter7430.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb1ELNS0_11interpreter8BytecodeE112ELNS4_19ImplicitRegisterUseE2EJLNS4_11OperandTypeE5ELS7_11ELS7_8EEEEvRNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %bb.amr, !llvm.loop !23
 
@@ -3107,7 +3107,7 @@ bb.anb:                                           ; preds = %bb.anb, %.lr.ph.i.i
   %i.rqj = or i64 %i.rqd, %i.rqi
   store i64 %i.rqj, ptr %i.rqh, align 8
   %i.rqk = add nuw i32 %.07.i.i.i.i, 2            ; 2 uses
-  %niter7424.next.1 = add i32 %niter7424, 2       ; 2 uses
+  %niter7424.next.1 = add nuw i32 %niter7424, 2   ; 2 uses
   %niter7424.ncmp.1 = icmp eq i32 %niter7424.next.1, %unroll_iter7423
   br i1 %niter7424.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb1ELNS0_11interpreter8BytecodeE113ELNS4_19ImplicitRegisterUseE2EJLNS4_11OperandTypeE3ELS7_11ELS7_8EEEEvRNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.loopexit.unr-lcssa, label %bb.anb, !llvm.loop !24
 
@@ -3510,7 +3510,7 @@ bb.clk:                                           ; preds = %bb.clk, %.lr.ph.i.i
   %i.akhl = or i64 %i.akhf, %i.akhk
   store i64 %i.akhl, ptr %i.akhj, align 8
   %i.akhm = add nuw i32 %.07.i.i.i.i3999, 2       ; 2 uses
-  %niter7502.next.1 = add i32 %niter7502, 2       ; 2 uses
+  %niter7502.next.1 = add nuw i32 %niter7502, 2   ; 2 uses
   %niter7502.ncmp.1 = icmp eq i32 %niter7502.next.1, %unroll_iter7501
   br i1 %niter7502.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb0EEEvNS0_11interpreter8BytecodeERNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.sink.split.loopexit.unr-lcssa, label %bb.clk, !llvm.loop !18
 
@@ -3617,7 +3617,7 @@ bb.clq:                                           ; preds = %bb.clq, %.lr.ph.i.i
   %i.akju = or i64 %i.akjo, %i.akjt
   store i64 %i.akju, ptr %i.akjs, align 8
   %i.akjv = add nuw i32 %.07.i.i.i.i3991, 2       ; 2 uses
-  %niter7496.next.1 = add i32 %niter7496, 2       ; 2 uses
+  %niter7496.next.1 = add nuw i32 %niter7496, 2   ; 2 uses
   %niter7496.ncmp.1 = icmp eq i32 %niter7496.next.1, %unroll_iter7495
   br i1 %niter7496.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb0EEEvNS0_11interpreter8BytecodeERNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.sink.split.loopexit7343.unr-lcssa, label %bb.clq, !llvm.loop !19
 
@@ -3877,7 +3877,7 @@ bb.cmk:                                           ; preds = %bb.cmk, %.lr.ph.i.i
   %i.akpe = or i64 %i.akoy, %i.akpd
   store i64 %i.akpe, ptr %i.akpc, align 8
   %i.akpf = add nuw i32 %.07.i.i.i.i3973, 2       ; 2 uses
-  %niter7490.next.1 = add i32 %niter7490, 2       ; 2 uses
+  %niter7490.next.1 = add nuw i32 %niter7490, 2   ; 2 uses
   %niter7490.ncmp.1 = icmp eq i32 %niter7490.next.1, %unroll_iter7489
   br i1 %niter7490.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb0EEEvNS0_11interpreter8BytecodeERNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.sink.split.loopexit7344.unr-lcssa, label %bb.cmk, !llvm.loop !20
 
@@ -4157,7 +4157,7 @@ bb.cnf:                                           ; preds = %bb.cnf, %.lr.ph.i.i
   %i.akve = or i64 %i.akuy, %i.akvd
   store i64 %i.akve, ptr %i.akvc, align 8
   %i.akvf = add nuw i32 %.07.i.i.i.i3955, 2       ; 2 uses
-  %niter7484.next.1 = add i32 %niter7484, 2       ; 2 uses
+  %niter7484.next.1 = add nuw i32 %niter7484, 2   ; 2 uses
   %niter7484.ncmp.1 = icmp eq i32 %niter7484.next.1, %unroll_iter7483
   br i1 %niter7484.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb0EEEvNS0_11interpreter8BytecodeERNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.sink.split.loopexit7345.unr-lcssa, label %bb.cnf, !llvm.loop !21
 
@@ -4245,7 +4245,7 @@ bb.cnk:                                           ; preds = %bb.cnk, %.lr.ph.i.i
   %i.akxb = or i64 %i.akwv, %i.akxa
   store i64 %i.akxb, ptr %i.akwz, align 8
   %i.akxc = add nuw i32 %.07.i.i.i.i3947, 2       ; 2 uses
-  %niter7478.next.1 = add i32 %niter7478, 2       ; 2 uses
+  %niter7478.next.1 = add nuw i32 %niter7478, 2   ; 2 uses
   %niter7478.ncmp.1 = icmp eq i32 %niter7478.next.1, %unroll_iter7477
   br i1 %niter7478.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb0EEEvNS0_11interpreter8BytecodeERNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.sink.split.loopexit7346.unr-lcssa, label %bb.cnk, !llvm.loop !22
 
@@ -4371,7 +4371,7 @@ bb.cnt:                                           ; preds = %bb.cnt, %.lr.ph.i.i
   %i.akzp = or i64 %i.akzj, %i.akzo
   store i64 %i.akzp, ptr %i.akzn, align 8
   %i.akzq = add nuw i32 %.07.i.i.i.i3937, 2       ; 2 uses
-  %niter7472.next.1 = add i32 %niter7472, 2       ; 2 uses
+  %niter7472.next.1 = add nuw i32 %niter7472, 2   ; 2 uses
   %niter7472.ncmp.1 = icmp eq i32 %niter7472.next.1, %unroll_iter7471
   br i1 %niter7472.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb0EEEvNS0_11interpreter8BytecodeERNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.sink.split.loopexit7347.unr-lcssa, label %bb.cnt, !llvm.loop !23
 
@@ -4459,7 +4459,7 @@ bb.cny:                                           ; preds = %bb.cny, %.lr.ph.i.i
   %i.albm = or i64 %i.albg, %i.albl
   store i64 %i.albm, ptr %i.albk, align 8
   %i.albn = add nuw i32 %.07.i.i.i.i3930, 2       ; 2 uses
-  %niter7466.next.1 = add i32 %niter7466, 2       ; 2 uses
+  %niter7466.next.1 = add nuw i32 %niter7466, 2   ; 2 uses
   %niter7466.ncmp.1 = icmp eq i32 %niter7466.next.1, %unroll_iter7465
   br i1 %niter7466.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_114UpdateLivenessILb0EEEvNS0_11interpreter8BytecodeERNS1_16BytecodeLivenessEPPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorENS0_12DirectHandleINS0_13BytecodeArrayEEERKNS1_19BytecodeLivenessMapEPNS0_4ZoneE.exit.sink.split.loopexit7348.unr-lcssa, label %bb.cny, !llvm.loop !24
 
@@ -4862,7 +4862,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.n
   %i.ba = or i64 %i.au, %i.az
   store i64 %i.ba, ptr %i.ay, align 8
   %i.bb = add nuw i32 %.07.i.i, 2                 ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_116UpdateInLivenessILNS0_11interpreter8BytecodeE111ELNS4_19ImplicitRegisterUseE4EJLNS4_11OperandTypeE4ELS7_11ELS7_8ELS7_15EEJLm0ELm1ELm2ELm3EEEEvPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorESt16integer_sequenceImJXspT2_EEE.exit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !65
 
@@ -4966,7 +4966,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.n
   %i.at = or i64 %i.an, %i.as
   store i64 %i.at, ptr %i.ar, align 8
   %i.au = add nuw i32 %.07.i.i, 2                 ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_116UpdateInLivenessILNS0_11interpreter8BytecodeE114ELNS4_19ImplicitRegisterUseE3EJLNS4_11OperandTypeE10ELS7_11ELS7_8ELS7_6EEJLm0ELm1ELm2ELm3EEEEvPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorESt16integer_sequenceImJXspT2_EEE.exit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !66
 
@@ -5070,7 +5070,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.n
   %i.at = or i64 %i.an, %i.as
   store i64 %i.at, ptr %i.ar, align 8
   %i.au = add nuw i32 %.07.i.i, 2                 ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN2v88internal8compiler12_GLOBAL__N_116UpdateInLivenessILNS0_11interpreter8BytecodeE115ELNS4_19ImplicitRegisterUseE3EJLNS4_11OperandTypeE10ELS7_11ELS7_8ELS7_6EEJLm0ELm1ELm2ELm3EEEEvPNS1_21BytecodeLivenessStateERKNS4_21BytecodeArrayIteratorESt16integer_sequenceImJXspT2_EEE.exit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !67
 
