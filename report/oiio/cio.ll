@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.b
   store i32 %i.v, ptr %i.q, align 8, !tbaa !32
   br label %bb.h
 
-bb.e:                                             ; preds = %._crit_edge.loopexit.i, %bb.a
+bb.e:                                             ; preds = %bb.a, %._crit_edge.loopexit.i
   %i.w = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ %i.b, %bb.a ]
   store ptr %i.w, ptr %i.c, align 8, !tbaa !31
   store i64 0, ptr %i.d, align 8, !tbaa !39
@@ -380,9 +380,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.b = load i32, ptr %i.a, align 8, !tbaa !32
-  %2 = and i32 %i.b, 1
-  %.not5 = icmp eq i32 %2, 0
-  br i1 %.not5, label %bb.d, label %bb.c
+  %.not5 = trunc nuw i32 %i.b to i1
+  br i1 %.not5, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32

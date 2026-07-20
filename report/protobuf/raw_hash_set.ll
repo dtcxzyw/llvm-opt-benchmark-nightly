@@ -201,8 +201,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !10
   %i.c = zext i32 %i.b to i64                     ; 3 uses
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %4 = trunc nuw i32 %3 to i1
+  br i1 %4, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 15
@@ -605,9 +605,8 @@ bb.d:                                             ; preds = %bb.c
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !22
   %i.bh = xor i64 %i.bg, %2
-  %3 = and i64 %i.bh, 1
-  %.not102 = icmp eq i64 %3, 0
-  %i.bi = select i1 %.not102, i64 %i.b, i64 0     ; 2 uses
+  %.not102 = trunc i64 %i.bh to i1
+  %i.bi = select i1 %.not102, i64 0, i64 %i.b     ; 2 uses
   %i.bj = load ptr, ptr %i.d, align 8, !tbaa !8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bi ; 2 uses
   store i8 %i.ab, ptr %i.bk, align 1, !tbaa !44

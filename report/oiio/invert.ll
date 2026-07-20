@@ -102,9 +102,8 @@ bb.c:                                             ; preds = %._crit_edge126.spli
   %i.ad = trunc i64 %indvars.iv.i to i32
   %i.ae = sub i32 %2, %i.ad
   %i.af = trunc nuw i64 %indvars.iv.i to i32      ; 4 uses
-  %xtraiter = and i32 %i.ae, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph110.i.prol.loopexit, label %.lr.ph110.i.prol
+  %lcmp.mod.not = trunc nuw i32 %i.ae to i1
+  br i1 %lcmp.mod.not, label %.lr.ph110.i.prol, label %.lr.ph110.i.prol.loopexit
 
 .lr.ph110.i.prol:                                 ; preds = %.lr.ph110.preheader.i
   %i.ag = load float, ptr %i.ac, align 4, !tbaa !12 ; 3 uses
@@ -507,8 +506,8 @@ opj_lupSolve.exit.i.epil:                         ; preds = %opj_lupSolve.exit.i
   %exitcond38.not.i = icmp eq i64 %indvars.iv.next35.i, %.pre-phi
   br i1 %exitcond38.not.i, label %.sink.split, label %bb.g, !llvm.loop !34
 
-.sink.split:                                      ; preds = %._crit_edge.i, %bb.c, %.epilog-lcssa
-  %.0.ph = phi i32 [ 1, %.epilog-lcssa ], [ 0, %bb.c ], [ 0, %._crit_edge.i ]
+.sink.split:                                      ; preds = %bb.c, %._crit_edge.i, %.epilog-lcssa
+  %.0.ph = phi i32 [ 1, %.epilog-lcssa ], [ 0, %._crit_edge.i ], [ 0, %bb.c ]
   tail call void @opj_free(ptr noundef nonnull %i.c) #6
   br label %bb.h
 

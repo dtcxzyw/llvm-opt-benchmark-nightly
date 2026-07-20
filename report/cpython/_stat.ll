@@ -203,7 +203,7 @@ define internal ptr @stat_filemode(ptr nofree readnone captures(none) %0, ptr no
 bb.a:
   %i.a = alloca [10 x i8], align 8                ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  %i.b = tail call fastcc i32 @_PyLong_AsMode_t(ptr noundef %1) ; 3 uses
+  %i.b = tail call fastcc i32 @_PyLong_AsMode_t(ptr noundef %1) ; 7 uses
   %i.c = icmp eq i32 %i.b, -1
   br i1 %i.c, label %bb.b, label %.split
 
@@ -224,51 +224,54 @@ filetype.exit:                                    ; preds = %.split, %switch.loo
   %.0.i = phi i8 [ %switch.load, %switch.lookup ], [ 63, %.split ]
   store i8 %.0.i, ptr %i.a, align 8, !tbaa !11
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %2 = insertelement <12 x i32> poison, i32 %i.b, i64 0
-  %3 = shufflevector <12 x i32> %2, <12 x i32> poison, <12 x i32> zeroinitializer
-  %4 = and <12 x i32> %3, <i32 1, i32 512, i32 2, i32 4, i32 8, i32 1024, i32 16, i32 32, i32 64, i32 2048, i32 128, i32 256>
+  %2 = and i32 %i.b, 256
+  %.not.i = icmp eq i32 %2, 0
+  %3 = select i1 %.not.i, i8 45, i8 114
+  store i8 %3, ptr %i.h, align 1, !tbaa !11
+  %4 = and i32 %i.b, 128
+  %.not26.i = icmp eq i32 %4, 0
+  %5 = select i1 %.not26.i, i8 45, i8 119
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %11 = icmp eq <12 x i32> %4, zeroinitializer    ; 12 uses
-  %12 = extractelement <12 x i1> %11, i64 11
-  %13 = select i1 %12, i8 45, i8 114
-  store i8 %13, ptr %i.h, align 1, !tbaa !11
-  %14 = extractelement <12 x i1> %11, i64 10
-  %15 = select i1 %14, i8 45, i8 119
-  store i8 %15, ptr %i.i, align 2, !tbaa !11
-  %i.j = extractelement <12 x i1> %11, i64 8      ; 2 uses
+  store i8 %5, ptr %i.i, align 2, !tbaa !11
+  %6 = and i32 %i.b, 2048
+  %.not27.i = icmp eq i32 %6, 0
+  %7 = insertelement <8 x i32> poison, i32 %i.b, i64 0
+  %8 = shufflevector <8 x i32> %7, <8 x i32> poison, <8 x i32> zeroinitializer
+  %9 = and <8 x i32> %8, <i32 512, i32 2, i32 4, i32 8, i32 1024, i32 16, i32 32, i32 64>
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %16 = icmp eq <8 x i32> %9, zeroinitializer     ; 8 uses
+  %i.j = extractelement <8 x i1> %16, i64 7       ; 2 uses
   %i.k = select i1 %i.j, i8 45, i8 120
   %i.l = select i1 %i.j, i8 83, i8 115
-  %16 = extractelement <12 x i1> %11, i64 9
-  %.sink.i = select i1 %16, i8 %i.k, i8 %i.l
-  store i8 %.sink.i, ptr %5, align 1, !tbaa !11
-  %i.m = extractelement <12 x i1> %11, i64 7
+  %.sink.i = select i1 %.not27.i, i8 %i.k, i8 %i.l
+  store i8 %.sink.i, ptr %10, align 1, !tbaa !11
+  %i.m = extractelement <8 x i1> %16, i64 6
   %i.n = select i1 %i.m, i8 45, i8 114
-  store i8 %i.n, ptr %6, align 4, !tbaa !11
-  %i.o = extractelement <12 x i1> %11, i64 6
+  store i8 %i.n, ptr %11, align 4, !tbaa !11
+  %i.o = extractelement <8 x i1> %16, i64 5
   %i.p = select i1 %i.o, i8 45, i8 119
-  store i8 %i.p, ptr %7, align 1, !tbaa !11
-  %i.q = extractelement <12 x i1> %11, i64 4      ; 2 uses
+  store i8 %i.p, ptr %12, align 1, !tbaa !11
+  %i.q = extractelement <8 x i1> %16, i64 3       ; 2 uses
   %i.r = select i1 %i.q, i8 45, i8 120
   %i.s = select i1 %i.q, i8 83, i8 115
-  %i.t = extractelement <12 x i1> %11, i64 5
+  %i.t = extractelement <8 x i1> %16, i64 4
   %.sink40.i = select i1 %i.t, i8 %i.r, i8 %i.s
-  store i8 %.sink40.i, ptr %8, align 2, !tbaa !11
-  %i.u = extractelement <12 x i1> %11, i64 3
+  store i8 %.sink40.i, ptr %13, align 2, !tbaa !11
+  %i.u = extractelement <8 x i1> %16, i64 2
   %i.v = select i1 %i.u, i8 45, i8 114
-  store i8 %i.v, ptr %9, align 1, !tbaa !11
-  %i.w = extractelement <12 x i1> %11, i64 2
+  store i8 %i.v, ptr %14, align 1, !tbaa !11
+  %i.w = extractelement <8 x i1> %16, i64 1
   %i.x = select i1 %i.w, i8 45, i8 119
-  store i8 %i.x, ptr %10, align 8, !tbaa !11
-  %17 = extractelement <12 x i1> %11, i64 0       ; 2 uses
-  %i.y = select i1 %17, i8 45, i8 120
-  %i.z = select i1 %17, i8 84, i8 116
-  %i.aa = extractelement <12 x i1> %11, i64 1
+  store i8 %i.x, ptr %15, align 8, !tbaa !11
+  %.not38.i = trunc nuw i32 %i.b to i1            ; 2 uses
+  %i.y = select i1 %.not38.i, i8 120, i8 45
+  %i.z = select i1 %.not38.i, i8 116, i8 84
+  %i.aa = extractelement <8 x i1> %16, i64 0
   %.sink41.i = select i1 %i.aa, i8 %i.y, i8 %i.z
   br label %bb.c
 

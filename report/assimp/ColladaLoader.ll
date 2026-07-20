@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i, label %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmET0_T_S9_S8_.exit, label %.lr.ph.i, !llvm.loop !81
 
 _ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmET0_T_S9_S8_.exit: ; preds = %.lr.ph.i, %middle.block, %bb.f
-  %.0.lcssa.i = phi i64 [ 0, %bb.f ], [ %i.ba, %middle.block ], [ %i.bc, %.lr.ph.i ] ; 16 uses
+  %.0.lcssa.i = phi i64 [ 0, %bb.f ], [ %i.ba, %middle.block ], [ %i.bc, %.lr.ph.i ] ; 14 uses
   %i.be = trunc i64 %.0.lcssa.i to i32
   store i32 %i.be, ptr %i.d, align 4
   %i.bf = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.0.lcssa.i, i64 12) ; 2 uses
@@ -406,11 +406,8 @@ _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK10aiVector3tIfESt6vectorIS3_SaIS3_EEE
   %i.ed = urem i64 %i.ec, 12
   %i.ee = sub i64 %i.ec, %i.ed
   %i.ef = add i64 %i.ee, 12
-  %xtraiter = and i64 %.0.lcssa.i, 1
   %i.eg = icmp eq i64 %.0.lcssa.i, 1
   %unroll_iter = and i64 %.0.lcssa.i, -2
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod1559 = trunc i64 %.0.lcssa.i to i1
   br label %bb.aa
 
 .preheader699:                                    ; preds = %bb.ae
@@ -462,17 +459,13 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ff = getelementptr inbounds nuw i8, ptr %i.et, i64 112
   %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.ff, i64 %.0358880
   store ptr %i.fc, ptr %i.fg, align 8
-  %.pre = load ptr, ptr %7, align 8               ; 3 uses
+  %.pre = load ptr, ptr %7, align 8               ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %.pre, i64 112
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.fh, i64 %.0358880 ; 3 uses
   br i1 %i.eg, label %.epil.preheader, label %.lr.ph.new
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph.new
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
-  %.0362879.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ge, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod1559)
+.epil.preheader:                                  ; preds = %.lr.ph, %.lr.ph.new
+  %.0362879.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ge, %.lr.ph.new ] ; 2 uses
   %i.fj = load ptr, ptr %i.eu, align 8
   %i.fk = getelementptr [12 x i8], ptr %i.fj, i64 %5
   %i.fl = getelementptr [12 x i8], ptr %i.fk, i64 %.0362879.epil.init
@@ -481,8 +474,8 @@ bb.ac:                                            ; preds = %bb.ab
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.fn, ptr noundef nonnull align 4 dereferenceable(12) %i.fl, i64 12, i1 false)
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %.loopexit700.thread
-  %.pre1176 = phi ptr [ %.pre1175, %.loopexit700.thread ], [ %.pre, %._crit_edge.loopexit.unr-lcssa ], [ %.pre, %.epil.preheader ] ; 2 uses
+._crit_edge:                                      ; preds = %.epil.preheader, %.loopexit700.thread
+  %.pre1176 = phi ptr [ %.pre1175, %.loopexit700.thread ], [ %.pre, %.epil.preheader ] ; 2 uses
   %i.fo = getelementptr inbounds nuw [4 x i8], ptr %i.eb, i64 %.0358880
   %i.fp = load i32, ptr %i.fo, align 4
   %i.fq = getelementptr inbounds nuw i8, ptr %.pre1176, i64 176
@@ -514,7 +507,7 @@ bb.ad:                                            ; preds = %bb.ab
   %i.ge = add nuw i64 %.0362879, 2                ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph.new, !llvm.loop !83
+  br i1 %niter.ncmp.1, label %.epil.preheader, label %.lr.ph.new, !llvm.loop !83
 
 bb.ae:                                            ; preds = %bb.aa, %._crit_edge
   %i.gf = phi ptr [ %i.et, %bb.aa ], [ %.pre1176, %._crit_edge ] ; 4 uses
@@ -917,7 +910,7 @@ declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr nounde
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN10aiMetadata3AddI8aiStringEEvRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 4 dereferenceable(1028) %2) local_unnamed_addr #21 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8                ; 5 uses
+  %i.a = load i32, ptr %0, align 8                ; 6 uses
   %i.b = add i32 %i.a, 1                          ; 2 uses
   %i.c = zext i32 %i.b to i64                     ; 3 uses
   %i.d = mul nuw nsw i64 %i.c, 1028               ; 2 uses
@@ -1014,11 +1007,10 @@ bb.b:                                             ; preds = %bb.a
   %i.aq = icmp eq ptr %i.e, %i.ap
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.as = load ptr, ptr %i.ar, align 8            ; 4 uses
-  %wide.trip.count22 = zext i32 %i.a to i64       ; 3 uses
+  %wide.trip.count22 = zext i32 %i.a to i64       ; 2 uses
   br i1 %i.aq, label %_ZN8aiStringaSERKS_.exit.us.preheader, label %_ZN8aiStringaSERKS_.exit
 
 _ZN8aiStringaSERKS_.exit.us.preheader:            ; preds = %.lr.ph
-  %xtraiter33 = and i64 %wide.trip.count22, 1
   %i.at = icmp eq i32 %i.a, 1
   br i1 %i.at, label %_ZN8aiStringaSERKS_.exit.us.epil.preheader, label %_ZN8aiStringaSERKS_.exit.us.preheader.new
 
@@ -1042,8 +1034,8 @@ _ZN8aiStringaSERKS_.exit.us:                      ; preds = %_ZN8aiStringaSERKS_
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZN8aiStringaSERKS_.exit.us, !llvm.loop !188
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %_ZN8aiStringaSERKS_.exit.us
-  %lcmp.mod34.not = icmp eq i64 %xtraiter33, 0
-  br i1 %lcmp.mod34.not, label %._crit_edge, label %_ZN8aiStringaSERKS_.exit.us.epil.preheader
+  %lcmp.mod34.not = trunc i32 %i.a to i1
+  br i1 %lcmp.mod34.not, label %_ZN8aiStringaSERKS_.exit.us.epil.preheader, label %._crit_edge
 
 _ZN8aiStringaSERKS_.exit.us.epil.preheader:       ; preds = %._crit_edge.loopexit.unr-lcssa, %_ZN8aiStringaSERKS_.exit.us.preheader
   %indvars.iv19.epil.init = phi i64 [ 0, %_ZN8aiStringaSERKS_.exit.us.preheader ], [ %indvars.iv.next20.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses

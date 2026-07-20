@@ -204,14 +204,9 @@ bb.a:
 define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiSC_EEE19transfer_n_slots_fnEPvSO_SO_m(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not11 = icmp eq i64 %3, 0
-  br i1 %.not11, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not11, label %._crit_edge, label %.lr.ph.prol
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i64 %3, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+.lr.ph.prol:                                      ; preds = %bb.a
   %i.a = load i32, ptr %2, align 8, !tbaa !213
   store i32 %i.a, ptr %1, align 8, !tbaa !213
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -223,22 +218,16 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !36
   store ptr %i.g, ptr %i.e, align 8, !tbaa !36
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
-  %i.h = add nsw i64 %3, -1
+  %i.h = add i64 %3, -1
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.014.unr = phi i64 [ %3, %.lr.ph.preheader ], [ %i.h, %.lr.ph.prol ]
-  %.0913.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %i.j, %.lr.ph.prol ]
-  %.01012.unr = phi ptr [ %2, %.lr.ph.preheader ], [ %i.i, %.lr.ph.prol ]
   %4 = icmp eq i64 %3, 1
   br i1 %4, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.014 = phi i64 [ %i.aa, %.lr.ph ], [ %.014.unr, %.lr.ph.prol.loopexit ]
-  %.0913 = phi ptr [ %i.ac, %.lr.ph ], [ %.0913.unr, %.lr.ph.prol.loopexit ] ; 7 uses
-  %.01012 = phi ptr [ %i.ab, %.lr.ph ], [ %.01012.unr, %.lr.ph.prol.loopexit ] ; 7 uses
+.lr.ph:                                           ; preds = %.lr.ph.prol, %.lr.ph
+  %.014 = phi i64 [ %i.aa, %.lr.ph ], [ %i.h, %.lr.ph.prol ]
+  %.0913 = phi ptr [ %i.ac, %.lr.ph ], [ %i.j, %.lr.ph.prol ] ; 7 uses
+  %.01012 = phi ptr [ %i.ab, %.lr.ph ], [ %i.i, %.lr.ph.prol ] ; 7 uses
   %i.k = load i32, ptr %.01012, align 8, !tbaa !213
   store i32 %i.k, ptr %.0913, align 8, !tbaa !213
   %i.l = getelementptr inbounds nuw i8, ptr %.0913, i64 8
@@ -269,7 +258,7 @@ bb.a:
   %.not.1 = icmp eq i64 %i.aa, 0
   br i1 %.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !662
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph.prol, %.lr.ph, %bb.a
   ret void
 }
 

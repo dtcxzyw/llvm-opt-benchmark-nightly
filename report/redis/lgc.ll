@@ -204,18 +204,17 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
 
 .loopexit.thread.i:                               ; preds = %bb.i
   %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.bg = load i8, ptr %i.bf, align 8, !tbaa !71  ; 2 uses
+  %i.bg = load i8, ptr %i.bf, align 8, !tbaa !71  ; 3 uses
   %i.bh = zext nneg i8 %i.bg to i32
   %i.bi = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 4 uses
-  %notmask120.i = shl nsw i32 -1, %i.bh           ; 2 uses
+  %notmask120.i = shl nsw i32 -1, %i.bh
   %i.bj = xor i32 %notmask120.i, -1
-  %i.bk = zext nneg i32 %i.bj to i64              ; 4 uses
+  %i.bk = zext nneg i32 %i.bj to i64              ; 3 uses
   br i1 %i.ab, label %.split.us.split.us.i.preheader, label %.split.split.us.i
 
 .split.us.split.us.i.preheader:                   ; preds = %.loopexit.thread.i
-  %1 = and i32 %notmask120.i, 1
-  %lcmp.mod.not = icmp eq i32 %1, 0
-  br i1 %lcmp.mod.not, label %.split.us.split.us.i.prol.loopexit, label %.split.us.split.us.i.prol
+  %lcmp.mod.not = icmp eq i8 %i.bg, 0
+  br i1 %lcmp.mod.not, label %.split.us.split.us.i.prol, label %.split.us.split.us.i.prol.loopexit
 
 .split.us.split.us.i.prol:                        ; preds = %.split.us.split.us.i.preheader
   %i.bl = load ptr, ptr %i.bi, align 8, !tbaa !72
@@ -223,24 +222,20 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !73
   %i.bp = icmp eq i32 %i.bo, 0
-  br i1 %i.bp, label %bb.n, label %removeentry.exit.us.us.i.prol
+  br i1 %i.bp, label %bb.n, label %.split.us.split.us.i.prol.loopexit
 
 bb.n:                                             ; preds = %.split.us.split.us.i.prol
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bm, i64 24 ; 2 uses
   %i.br = load i32, ptr %i.bq, align 8, !tbaa !30
   %i.bs = icmp sgt i32 %i.br, 3
-  br i1 %i.bs, label %bb.o, label %removeentry.exit.us.us.i.prol
+  br i1 %i.bs, label %bb.o, label %.split.us.split.us.i.prol.loopexit
 
 bb.o:                                             ; preds = %bb.n
   store i32 11, ptr %i.bq, align 8, !tbaa !30
-  br label %removeentry.exit.us.us.i.prol
-
-removeentry.exit.us.us.i.prol:                    ; preds = %bb.o, %bb.n, %.split.us.split.us.i.prol
-  %indvars.iv.next104.i.prol = add nsw i64 %i.bk, -1
   br label %.split.us.split.us.i.prol.loopexit
 
-.split.us.split.us.i.prol.loopexit:               ; preds = %removeentry.exit.us.us.i.prol, %.split.us.split.us.i.preheader
-  %indvars.iv103.i.unr = phi i64 [ %i.bk, %.split.us.split.us.i.preheader ], [ %indvars.iv.next104.i.prol, %removeentry.exit.us.us.i.prol ]
+.split.us.split.us.i.prol.loopexit:               ; preds = %.split.us.split.us.i.prol, %bb.n, %bb.o, %.split.us.split.us.i.preheader
+  %indvars.iv103.i.unr = phi i64 [ %i.bk, %.split.us.split.us.i.preheader ], [ -1, %bb.o ], [ -1, %bb.n ], [ -1, %.split.us.split.us.i.prol ]
   %i.bt = icmp eq i8 %i.bg, 0
   br i1 %i.bt, label %.loopexit, label %.split.us.split.us.i
 

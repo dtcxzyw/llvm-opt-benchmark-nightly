@@ -203,8 +203,8 @@ bb.g:                                             ; preds = %bb.f
   %i.o = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %.val7.i = load i64, ptr %0, align 8, !range !811, !alias.scope !812, !noundef !4
-  %1 = icmp eq i64 %.val7.i, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit5, label %bb.h
+  %1 = trunc nuw i64 %.val7.i to i1
+  br i1 %1, label %bb.h, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit5
 
 bb.h:                                             ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -214,8 +214,8 @@ bb.h:                                             ; preds = %bb.g
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn8generics14BoundLifetimesEECshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %._RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn8generics14BoundLifetimesEECshbKHpCRGxgC_16deltalake_derive.exit_crit_edge, %bb.e
   %.val.i = phi i64 [ %.val.i.pre, %._RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn8generics14BoundLifetimesEECshbKHpCRGxgC_16deltalake_derive.exit_crit_edge ], [ %i.a, %bb.e ]
-  %2 = icmp eq i64 %.val.i, 0
-  br i1 %2, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit, label %bb.i
+  %2 = trunc nuw i64 %.val.i to i1
+  br i1 %2, label %bb.i, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit
 
 bb.i:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn8generics14BoundLifetimesEECshbKHpCRGxgC_16deltalake_derive.exit
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -618,8 +618,8 @@ bb.i:                                             ; preds = %bb.f
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs7nQiqFc7Txl_3syn4item9SignatureECshbKHpCRGxgC_16deltalake_derive(ptr noalias noundef nonnull align 8 dereferenceable(288) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.val = load i64, ptr %0, align 8, !range !811, !noundef !4
-  %1 = icmp eq i64 %.val, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit, label %bb.b
+  %1 = trunc nuw i64 %.val to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1022,9 +1022,8 @@ _RNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3revINtB4_3RevNtNtNtBa_3str4iter5C
   %.sroa.0.024.lcssa30.sink32 = phi i64 [ %..i, %bb.a ], [ %.sroa.0.024, %bb.c ], [ %i.ap, %bb.d ], [ %.sroa.0.024, %_RNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3revINtB4_3RevNtNtNtBa_3str4iter5CharsENtNtNtB8_6traits8iterator8Iterator4nextCshbKHpCRGxgC_16deltalake_derive.exit ] ; 2 uses
   store i64 1, ptr %i.a, align 8
   store i64 %.sroa.0.024.lcssa30.sink32, ptr %i.c, align 8
-  %3 = and i64 %.sroa.0.024.lcssa30.sink32, 1
-  %4 = icmp eq i64 %3, 0
-  %..i9 = select i1 %4, i8 2, i8 1
+  %3 = trunc nuw i64 %.sroa.0.024.lcssa30.sink32 to i1
+  %..i9 = select i1 %3, i8 1, i8 2
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 78
   store i8 %..i9, ptr %i.ao, align 2
   ret void
@@ -1427,13 +1426,13 @@ bb.bo:                                            ; preds = %bb.bl
   unreachable
 
 bb.bp:                                            ; preds = %_RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme10check_pair.exit.thread42.i.i.i.i.i.i
-  %i.lq = load i64, ptr %i.s, align 8, !alias.scope !3973, !noalias !3976, !noundef !4
-  %2 = and i64 %i.lq, 1                           ; 2 uses
-  %3 = icmp eq i64 %2, 0
-  %..i.i25.i.i.i.i.i.i = select i1 %3, i8 2, i8 1
+  %i.lq = load i64, ptr %i.s, align 8, !alias.scope !3973, !noalias !3976, !noundef !4 ; 2 uses
+  %2 = trunc nuw i64 %i.lq to i1
+  %..i.i25.i.i.i.i.i.i = select i1 %2, i8 1, i8 2
   store i8 %..i.i25.i.i.i.i.i.i, ptr %i.m, align 2, !alias.scope !4060, !noalias !4065
+  %3 = and i64 %i.lq, 1
   %.sroa.19.8.insert.mask51.i.i.i.i.i = and i64 %.sroa.19.0.i.i.i.i.i, -256
-  %i.lr = or disjoint i64 %2, %.sroa.19.8.insert.mask51.i.i.i.i.i
+  %i.lr = or disjoint i64 %3, %.sroa.19.8.insert.mask51.i.i.i.i.i
   %.sroa.19.8.insert.insert52.i.i.i.i.i = xor i64 %i.lr, 1
   br label %bb.bx
 

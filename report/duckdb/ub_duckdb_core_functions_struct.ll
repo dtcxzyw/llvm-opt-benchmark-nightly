@@ -203,7 +203,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 10 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 0) ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !53   ; 14 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !53   ; 12 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !188, !nonnull !135, !align !136
   %i.f = tail call noundef nonnull align 8 dereferenceable(481) ptr @_ZNK6duckdb14BaseExpression4CastINS_23BoundFunctionExpressionEEERKT_v(ptr noundef nonnull align 8 dereferenceable(56) %i.e)
@@ -221,7 +221,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit: ; preds = %bb.b
   %i.m = load i64, ptr %i.l, align 8, !tbaa !102
-  %i.n = trunc i64 %i.m to i1
+  %i.n = trunc nuw i64 %i.m to i1
   br i1 %i.n, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit
@@ -281,7 +281,6 @@ bb.f:                                             ; preds = %_ZN6duckdb15Selecti
   br i1 %.not.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us37.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader: ; preds = %.lr.ph.split
-  %xtraiter = and i64 %i.c, 1
   %i.w = icmp eq i64 %i.c, 1
   br i1 %i.w, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader.new
 
@@ -354,14 +353,8 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us37: ; preds = %_ZNK6duckdb15Sele
   %exitcond41.not = icmp eq i64 %i.az, %i.c
   br i1 %exitcond41.not, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us37, !llvm.loop !241
 
-._crit_edge.loopexit54.unr-lcssa:                 ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader
-
-_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader: ; preds = %._crit_edge.loopexit54.unr-lcssa, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader
-  %.02435.epil.init = phi i64 [ 0, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader ], [ %i.cn, %._crit_edge.loopexit54.unr-lcssa ] ; 2 uses
-  %lcmp.mod55 = trunc i64 %i.c to i1
-  call void @llvm.assume(i1 %lcmp.mod55)
+_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader: ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader, %_ZNK6duckdb15SelectionVector9get_indexEm.exit
+  %.02435.epil.init = phi i64 [ 0, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader ], [ %i.cn, %_ZNK6duckdb15SelectionVector9get_indexEm.exit ] ; 2 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.02435.epil.init
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !3
   %i.bc = zext i32 %i.bb to i64                   ; 2 uses
@@ -377,7 +370,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader: ; preds = %._crit_
   store i32 %i.bk, ptr %i.bl, align 4, !tbaa !3
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader, %._crit_edge.loopexit54.unr-lcssa, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us37, %middle.block, %.lr.ph.split.us, %.preheader
+._crit_edge:                                      ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us37, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader, %middle.block, %.lr.ph.split.us, %.preheader
   invoke void @_ZN6duckdb6Vector5SliceERKS0_RKNS_15SelectionVectorEm(ptr noundef nonnull align 8 dereferenceable(104) %2, ptr noundef nonnull align 8 dereferenceable(104) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %i.c)
           to label %bb.i unwind label %bb.h
 
@@ -425,7 +418,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %_ZNK6duckdb15Select
   %i.cn = add nuw i64 %.02435, 2                  ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit54.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !242
+  br i1 %niter.ncmp.1, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !242
 
 bb.i:                                             ; preds = %._crit_edge
   %i.co = getelementptr inbounds nuw i8, ptr %4, i64 64
@@ -828,7 +821,7 @@ bb.c:                                             ; preds = %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !102
-  %i.ab = trunc i64 %i.aa to i1
+  %i.ab = trunc nuw i64 %i.aa to i1
   %i.ac = xor i1 %i.ab, true
   br label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit
 

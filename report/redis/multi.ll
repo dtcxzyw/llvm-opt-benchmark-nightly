@@ -201,9 +201,8 @@ bb.d:                                             ; preds = %bb.c
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !58   ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   %i.o = load i8, ptr %i.n, align 8
-  %2 = and i8 %i.o, 1
-  %.not7.i = icmp eq i8 %2, 0
-  br i1 %.not7.i, label %bb.e, label %.backedge.i
+  %.not7.i = trunc i8 %i.o to i1
+  br i1 %.not7.i, label %.backedge.i, label %bb.e
 
 .backedge.i:                                      ; preds = %bb.e, %.lr.ph.i
   %i.p = call ptr @listNext(ptr noundef nonnull %1) #10 ; 2 uses
@@ -498,9 +497,8 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !58   ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 48
   %i.k = load i8, ptr %i.j, align 8
-  %2 = and i8 %i.k, 1
-  %.not7 = icmp eq i8 %2, 0
-  br i1 %.not7, label %bb.c, label %.backedge
+  %.not7 = trunc i8 %i.k to i1
+  br i1 %.not7, label %.backedge, label %bb.c
 
 .backedge:                                        ; preds = %.lr.ph, %bb.c
   %i.l = call ptr @listNext(ptr noundef nonnull %1) #10 ; 2 uses
@@ -699,9 +697,8 @@ bb.c:                                             ; preds = %bb.b
   %i.l = phi ptr [ %i.ae, %bb.i ], [ %i.k, %bb.c ] ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 48 ; 3 uses
   %i.n = load i8, ptr %i.m, align 8
-  %3 = and i8 %i.n, 1
-  %.not22 = icmp eq i8 %3, 0
-  br i1 %.not22, label %bb.h, label %bb.d
+  %.not22 = trunc i8 %i.n to i1
+  br i1 %.not22, label %bb.d, label %bb.h
 
 bb.d:                                             ; preds = %.lr.ph
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 32
@@ -942,9 +939,8 @@ bb.r:                                             ; preds = %bb.q
   %i.bl = phi ptr [ %i.cd, %bb.aa ], [ %i.bk, %bb.r ] ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 48 ; 5 uses
   %i.bn = load i8, ptr %i.bm, align 8             ; 2 uses
-  %5 = and i8 %i.bn, 1
-  %.not43 = icmp eq i8 %5, 0
-  br i1 %.not43, label %bb.w, label %bb.s
+  %.not43 = trunc i8 %i.bn to i1
+  br i1 %.not43, label %bb.s, label %bb.w
 
 bb.s:                                             ; preds = %.lr.ph
   br i1 %.not39, label %bb.u, label %bb.t

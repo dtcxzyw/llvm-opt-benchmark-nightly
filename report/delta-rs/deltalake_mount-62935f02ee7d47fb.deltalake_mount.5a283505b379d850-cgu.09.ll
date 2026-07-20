@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
   %i.d = load i64, ptr %i.c, align 8, !range !59, !alias.scope !60, !noundef !4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %1 = icmp eq i64 %i.d, 0
-  br i1 %1, label %bb.c, label %bb.e
+  %1 = trunc nuw i64 %i.d to i1
+  br i1 %1, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61)
@@ -550,7 +550,7 @@ bb.a:
 define hidden void @_RINvNvNtCsbvkFyIu7lgC_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs7JU2D1aBbVY_15deltalake_mount(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, i64 noundef range(i64 1, 0) %2) unnamed_addr #1 {
 bb.a:
   %min.iters.check = icmp ult i64 %2, 8
-  br i1 %min.iters.check, label %scalar.ph.preheader.a, label %vector.memcheck
+  br i1 %min.iters.check, label %scalar.ph.prol, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
   %i.a = shl i64 %2, 3                            ; 2 uses
@@ -559,7 +559,7 @@ vector.memcheck:                                  ; preds = %bb.a
   %bound0 = icmp ult ptr %0, %scevgep5
   %bound1 = icmp ult ptr %1, %scevgep
   %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %scalar.ph.preheader.a, label %vector.ph
+  br i1 %found.conflict, label %scalar.ph.prol, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %2, -4                         ; 3 uses
@@ -583,20 +583,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load6, ptr %i.e, align 1, !alias.scope !108, !noalias !100
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.f = icmp eq i64 %index.next, %n.vec
-  br i1 %i.f, label %middle.block, label %vector.body, !llvm.loop !110
+  br i1 %i.f, label %scalar.ph.preheader.a, label %vector.body, !llvm.loop !110
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %2, %n.vec
-  br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader.a
+scalar.ph.preheader.a:                            ; preds = %vector.body
+  %lcmp.mod.not = icmp eq i64 %2, %n.vec
+  br i1 %lcmp.mod.not, label %.loopexit, label %scalar.ph.prol
 
-scalar.ph.preheader.a:                            ; preds = %vector.memcheck, %bb.a, %middle.block
-  %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
+scalar.ph.prol:                                   ; preds = %vector.memcheck, %bb.a, %scalar.ph.preheader.a
+  %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %scalar.ph.preheader.a ] ; 4 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
-
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader.a
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.04.ph ; 2 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.sroa.0.04.ph ; 2 uses
@@ -606,18 +601,14 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %.sroa.02.0.copyload.i.prol = load i64, ptr %i.i, align 1, !alias.scope !103, !noalias !100
   store i64 %.sroa.02.0.copyload.i.prol, ptr %i.h, align 1, !alias.scope !100, !noalias !103
   store i64 %.sroa.0.0.copyload.i.prol, ptr %i.i, align 1, !alias.scope !103, !noalias !100
-  br label %scalar.ph.prol.loopexit
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader.a
-  %.sroa.0.04.unr = phi i64 [ %.sroa.0.04.ph, %scalar.ph.preheader.a ], [ %i.g, %scalar.ph.prol ]
   %3 = icmp eq i64 %2, %.neg
   br i1 %3, label %.loopexit, label %scalar.ph
 
-.loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+.loopexit:                                        ; preds = %scalar.ph.prol, %scalar.ph, %scalar.ph.preheader.a
   ret void
 
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %.sroa.0.04 = phi i64 [ %i.m, %scalar.ph ], [ %.sroa.0.04.unr, %scalar.ph.prol.loopexit ] ; 4 uses
+scalar.ph:                                        ; preds = %scalar.ph.prol, %scalar.ph
+  %.sroa.0.04 = phi i64 [ %i.m, %scalar.ph ], [ %i.g, %scalar.ph.prol ] ; 4 uses
   %i.j = add nuw i64 %.sroa.0.04, 1               ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.04 ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.sroa.0.04 ; 2 uses

@@ -203,25 +203,24 @@ bb.b:                                             ; preds = %bb.a
   %.idx.i = and i64 %i.m, 1073741816              ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.l, i8 0, i64 %.idx.i, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %i.o = load i32, ptr %i.n, align 8              ; 4 uses
+  %i.o = load i32, ptr %i.n, align 8              ; 5 uses
   %.not240 = icmp eq i32 %i.o, 0
   br i1 %.not240, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.q = load ptr, ptr %i.p, align 8              ; 3 uses
-  %wide.trip.count = zext i32 %i.o to i64         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.r = icmp eq i32 %i.o, 1
   br i1 %i.r, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %5 = and i32 %i.o, -2
+  %unroll_iter = zext i32 %5 to i64
   br label %bb.c
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.c
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.o to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]

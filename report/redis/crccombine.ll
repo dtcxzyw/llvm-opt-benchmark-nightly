@@ -203,39 +203,30 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load i64, ptr @combine_cache, align 16, !tbaa !13
   %i.c = icmp eq i64 %i.b, 0
-  br i1 %i.c, label %bb.c, label %.preheader
+  br i1 %i.c, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @init_combine_cache(i64 noundef %3, i8 noundef zeroext %4)
-  br label %.preheader
+  br label %bb.d
 
-.preheader:                                       ; preds = %bb.c, %bb.b
-  br label %5
-
-5:                                                ; preds = %.preheader, %bb.e
-  %.016 = phi i64 [ %i.d, %bb.e ], [ %2, %.preheader ] ; 2 uses
-  %.015 = phi i64 [ %.1, %bb.e ], [ %0, %.preheader ] ; 2 uses
-  %.0 = phi i32 [ %i.f, %bb.e ], [ 0, %.preheader ] ; 2 uses
-  %6 = and i64 %.016, 1
-  %.not = icmp eq i64 %6, 0
-  br i1 %.not, label %bb.e, label %bb.d
-
-bb.d:                                             ; preds = %5
-  %7 = zext nneg i32 %.0 to i64
-  %8 = getelementptr inbounds nuw [512 x i8], ptr @combine_cache, i64 %7
-  %9 = tail call i64 @gf2_matrix_times_switch(ptr noundef nonnull %8, i64 noundef %.015)
+bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %5
-  %.1 = phi i64 [ %9, %bb.d ], [ %.015, %5 ]      ; 2 uses
+bb.e:                                             ; preds = %bb.d, %bb.e
+  %.016 = phi i64 [ %i.d, %bb.e ], [ %2, %bb.d ]
+  %.1 = phi i64 [ %7, %bb.e ], [ %0, %bb.d ]
+  %.0 = phi i32 [ %i.f, %bb.e ], [ 0, %bb.d ]     ; 2 uses
+  %5 = zext nneg i32 %.0 to i64
+  %6 = getelementptr inbounds nuw [512 x i8], ptr @combine_cache, i64 %5
+  %7 = tail call i64 @gf2_matrix_times_switch(ptr noundef nonnull %6, i64 noundef %.1) ; 2 uses
   %i.d = lshr i64 %.016, 1                        ; 2 uses
   %i.e = add nuw nsw i32 %.0, 1
   %i.f = and i32 %i.e, 63
   %.not19 = icmp eq i64 %i.d, 0
-  br i1 %.not19, label %bb.f, label %5, !llvm.loop !22
+  br i1 %.not19, label %bb.f, label %bb.e, !llvm.loop !22
 
 bb.f:                                             ; preds = %bb.e
-  %i.g = xor i64 %.1, %1
+  %i.g = xor i64 %7, %1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %bb.f

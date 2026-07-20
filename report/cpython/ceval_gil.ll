@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
 gil_created.exit:                                 ; preds = %bb.b
   %i.f = getelementptr i8, ptr %i.b, i64 16       ; 2 uses
   %i.g = load atomic i32, ptr %i.f acquire, align 4
-  %1 = icmp slt i32 %i.g, 0
-  br i1 %1, label %bb.k, label %bb.c
+  %1 = icmp sgt i32 %i.g, -1
+  br i1 %1, label %bb.c, label %bb.k
 
 bb.c:                                             ; preds = %gil_created.exit
   %i.h = getelementptr i8, ptr %i.b, i64 32
@@ -595,9 +595,8 @@ bb.k:                                             ; preds = %bb.j
 drop_gil_impl.exit:                               ; preds = %bb.j
   %i.m = getelementptr i8, ptr %1, i64 24         ; 2 uses
   %i.n = load atomic i64, ptr %i.m monotonic, align 8
-  %3 = and i64 %i.n, 1
-  %.not17 = icmp eq i64 %3, 0
-  br i1 %.not17, label %drop_gil_impl.exit25, label %bb.l
+  %3 = trunc i64 %i.n to i1
+  br i1 %3, label %bb.l, label %drop_gil_impl.exit25
 
 bb.l:                                             ; preds = %drop_gil_impl.exit
   %i.o = getelementptr i8, ptr %i.b, i64 168      ; 3 uses
@@ -738,8 +737,8 @@ bb.a:
 gil_created.exit:                                 ; preds = %bb.a
   %i.f = getelementptr i8, ptr %i.d, i64 16
   %i.g = load atomic i32, ptr %i.f acquire, align 4
-  %2 = icmp slt i32 %i.g, 0
-  br i1 %2, label %gil_created.exit.thread, label %bb.b
+  %2 = icmp sgt i32 %i.g, -1
+  br i1 %2, label %bb.b, label %gil_created.exit.thread
 
 bb.b:                                             ; preds = %gil_created.exit
   tail call fastcc void @create_gil(ptr noundef nonnull %i.d)
@@ -795,9 +794,8 @@ bb.a:
 define dso_local range(i32 -1, 1) i32 @_PyEval_AddPendingCall(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32
-  %4 = and i32 %3, 1
-  %.not = icmp eq i32 %4, 0                       ; 2 uses
-  %spec.select = select i1 %.not, ptr %i.a, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 2912) ; 5 uses
+  %.not = trunc nuw i32 %3 to i1                  ; 2 uses
+  %spec.select = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 2912), ptr %i.a ; 5 uses
   %i.b = getelementptr i8, ptr %spec.select, i64 8 ; 4 uses
   %i.c = cmpxchg ptr %i.b, i8 0, i8 1 seq_cst seq_cst, align 1
   %i.d = extractvalue { i8, i1 } %i.c, 1
@@ -843,7 +841,7 @@ bb.d:                                             ; preds = %_push_pending_call.
   br label %_PyMutex_Unlock.exit
 
 _PyMutex_Unlock.exit:                             ; preds = %_push_pending_call.exit, %bb.d
-  br i1 %.not, label %bb.f, label %bb.e
+  br i1 %.not, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_PyMutex_Unlock.exit
   %i.v = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 904), align 8, !tbaa !115
@@ -1246,8 +1244,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.v = load i32, ptr %i.u, align 8, !tbaa !216  ; 2 uses
-  %.not.i25.i = icmp sgt i32 %i.v, -1
-  br i1 %.not.i25.i, label %bb.p, label %Py_DECREF.exit26.i
+  %.not.i25.i = icmp slt i32 %i.v, 0
+  br i1 %.not.i25.i, label %Py_DECREF.exit26.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.w = add nsw i32 %i.v, -1                     ; 2 uses
@@ -1261,8 +1259,8 @@ bb.q:                                             ; preds = %bb.p
 
 Py_DECREF.exit26.i:                               ; preds = %bb.q, %bb.p, %bb.o, %bb.n
   %i.y = load i32, ptr %i.s, align 8, !tbaa !216  ; 2 uses
-  %.not.i23.i = icmp sgt i32 %i.y, -1
-  br i1 %.not.i23.i, label %bb.r, label %Py_DECREF.exit24.i
+  %.not.i23.i = icmp slt i32 %i.y, 0
+  br i1 %.not.i23.i, label %Py_DECREF.exit24.i, label %bb.r
 
 bb.r:                                             ; preds = %Py_DECREF.exit26.i
   %i.z = add nsw i32 %i.y, -1                     ; 2 uses
@@ -1290,8 +1288,8 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u
   %i.ad = call ptr @PyRun_StringFlags(ptr noundef nonnull %i.ab, i32 noundef 257, ptr noundef nonnull %i.ac, ptr noundef nonnull %i.ac, ptr noundef null) #13 ; 4 uses
   %i.ae = load i32, ptr %i.ac, align 8, !tbaa !216 ; 2 uses
-  %.not.i14.i.i = icmp sgt i32 %i.ae, -1
-  br i1 %.not.i14.i.i, label %bb.w, label %Py_DECREF.exit15.i.i
+  %.not.i14.i.i = icmp slt i32 %i.ae, 0
+  br i1 %.not.i14.i.i, label %Py_DECREF.exit15.i.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.af = add nsw i32 %i.ae, -1                   ; 2 uses
@@ -1309,8 +1307,8 @@ Py_DECREF.exit15.i.i:                             ; preds = %bb.x, %bb.w, %bb.v
 
 bb.y:                                             ; preds = %Py_DECREF.exit15.i.i
   %i.ah = load i32, ptr %i.ad, align 8, !tbaa !216 ; 2 uses
-  %.not.i.i.i = icmp sgt i32 %i.ah, -1
-  br i1 %.not.i.i.i, label %bb.z, label %run_remote_debugger_source.exit.thread.i
+  %.not.i.i.i = icmp slt i32 %i.ah, 0
+  br i1 %.not.i.i.i, label %run_remote_debugger_source.exit.thread.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
@@ -1328,8 +1326,8 @@ run_remote_debugger_source.exit.i:                ; preds = %Py_DECREF.exit15.i.
 
 run_remote_debugger_source.exit.thread.i:         ; preds = %run_remote_debugger_source.exit.i, %bb.aa, %bb.z, %bb.y
   %i.ak = load i32, ptr %i.t, align 8, !tbaa !216 ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.ak, -1
-  br i1 %.not.i.i, label %bb.ab, label %run_remote_debugger_script.exit
+  %.not.i.i = icmp slt i32 %i.ak, 0
+  br i1 %.not.i.i, label %run_remote_debugger_script.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %run_remote_debugger_source.exit.thread.i
   %i.al = add nsw i32 %i.ak, -1                   ; 2 uses
@@ -1343,8 +1341,8 @@ bb.ac:                                            ; preds = %bb.ab
 
 run_remote_debugger_script.exit:                  ; preds = %bb.h, %bb.j, %Py_DECREF.exit24.i, %run_remote_debugger_source.exit.thread.i, %bb.ab, %bb.ac
   %i.an = load i32, ptr %i.p, align 8, !tbaa !216 ; 2 uses
-  %.not.i = icmp sgt i32 %i.an, -1
-  br i1 %.not.i, label %bb.ad, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.an, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %run_remote_debugger_script.exit
   %i.ao = add nsw i32 %i.an, -1                   ; 2 uses
@@ -1380,8 +1378,8 @@ declare void @PyMem_Free(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @_Py_HandlePending(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 24         ; 6 uses
-  %i.b = load atomic i64, ptr %i.a monotonic, align 8 ; 6 uses
+  %i.a = getelementptr i8, ptr %0, i64 24         ; 5 uses
+  %i.b = load atomic i64, ptr %i.a monotonic, align 8 ; 5 uses
   %i.c = and i64 %i.b, 32
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -1440,49 +1438,20 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %1 = and i64 %i.b, 1
-  %.not23 = icmp eq i64 %1, 0
-  br i1 %.not23, label %2, label %bb.j
+  %.not23 = trunc nuw i64 %i.b to i1
+  br i1 %.not23, label %bb.j, label %_PyEval_RaiseAsyncExc.exit
 
 bb.j:                                             ; preds = %bb.i
   tail call void @_PyThreadState_Detach(ptr noundef nonnull %0) #13
   tail call void @_PyThreadState_Attach(ptr noundef nonnull %0) #13
-  br label %2
+  br label %_PyEval_RaiseAsyncExc.exit
 
-2:                                                ; preds = %bb.j, %bb.i
-  %3 = and i64 %i.b, 8
-  %.not24 = icmp eq i64 %3, 0
-  br i1 %.not24, label %_PyEval_RaiseAsyncExc.exit, label %4
-
-4:                                                ; preds = %2
-  %5 = atomicrmw and ptr %i.a, i64 -9 seq_cst, align 8 ; 0 uses
-  %6 = getelementptr i8, ptr %0, i64 160
-  %7 = atomicrmw xchg ptr %6, ptr null seq_cst, align 8 ; 5 uses
-  %.not.i25 = icmp eq ptr %7, null
-  br i1 %.not.i25, label %_PyEval_RaiseAsyncExc.exit, label %8
-
-8:                                                ; preds = %4
-  tail call void @_PyErr_SetNone(ptr noundef nonnull %0, ptr noundef nonnull %7) #13
-  %9 = load i32, ptr %7, align 8, !tbaa !216      ; 2 uses
-  %.not.i.i26 = icmp sgt i32 %9, -1
-  br i1 %.not.i.i26, label %10, label %_PyEval_RaiseAsyncExc.exit.thread
-
-10:                                               ; preds = %8
-  %11 = add nsw i32 %9, -1                        ; 2 uses
-  store i32 %11, ptr %7, align 8, !tbaa !216
-  %12 = icmp eq i32 %11, 0
-  br i1 %12, label %13, label %_PyEval_RaiseAsyncExc.exit.thread
-
-13:                                               ; preds = %10
-  tail call void @_Py_Dealloc(ptr noundef nonnull %7) #13
-  br label %_PyEval_RaiseAsyncExc.exit.thread
-
-_PyEval_RaiseAsyncExc.exit:                       ; preds = %4, %2
+_PyEval_RaiseAsyncExc.exit:                       ; preds = %bb.i, %bb.j
   %i.r = tail call i32 @_PyRunRemoteDebugger(ptr noundef nonnull %0) ; 0 uses
   br label %_PyEval_RaiseAsyncExc.exit.thread
 
-_PyEval_RaiseAsyncExc.exit.thread:                ; preds = %13, %10, %8, %handle_signals.exit, %bb.f, %_PyEval_RaiseAsyncExc.exit
-  %.0 = phi i32 [ 0, %_PyEval_RaiseAsyncExc.exit ], [ -1, %handle_signals.exit ], [ -1, %bb.f ], [ -1, %8 ], [ -1, %10 ], [ -1, %13 ]
+_PyEval_RaiseAsyncExc.exit.thread:                ; preds = %handle_signals.exit, %bb.f, %_PyEval_RaiseAsyncExc.exit
+  %.0 = phi i32 [ 0, %_PyEval_RaiseAsyncExc.exit ], [ -1, %handle_signals.exit ], [ -1, %bb.f ]
   ret i32 %.0
 }
 
@@ -1503,8 +1472,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @_PyErr_SetNone(ptr noundef %0, ptr noundef nonnull %i.d) #13
   %i.e = load i32, ptr %i.d, align 8, !tbaa !216  ; 2 uses
-  %.not.i = icmp sgt i32 %i.e, -1
-  br i1 %.not.i, label %bb.c, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.e, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = add nsw i32 %i.e, -1                     ; 2 uses

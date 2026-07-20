@@ -201,30 +201,13 @@ bb.a:
 define linkonce_odr hidden void @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJMN6hermes2vm18StatSamplingThreadEFvvEPS5_EEEEE6_M_runEv(ptr noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !42
-  %.unpack.i.i.i.i = load i64, ptr %1, align 8, !tbaa !43 ; 3 uses
   %.elt2.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.unpack3.i.i.i.i = load i64, ptr %.elt2.i.i.i.i, align 8, !tbaa !43
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 %.unpack3.i.i.i.i ; 2 uses
-  %2 = and i64 %.unpack.i.i.i.i, 1
-  %.not.i.i.i.i = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i.i, label %8, label %3
-
-3:                                                ; preds = %bb.a
-  %4 = load ptr, ptr %i.c, align 8, !tbaa !24
-  %5 = getelementptr i8, ptr %4, i64 %.unpack.i.i.i.i
-  %6 = getelementptr i8, ptr %5, i64 -1
-  %7 = load ptr, ptr %6, align 8, !nosanitize !36
-  br label %_ZNSt6thread8_InvokerISt5tupleIJMN6hermes2vm18StatSamplingThreadEFvvEPS4_EEEclEv.exit
-
-8:                                                ; preds = %bb.a
-  %9 = inttoptr i64 %.unpack.i.i.i.i to ptr
-  br label %_ZNSt6thread8_InvokerISt5tupleIJMN6hermes2vm18StatSamplingThreadEFvvEPS4_EEEclEv.exit
-
-_ZNSt6thread8_InvokerISt5tupleIJMN6hermes2vm18StatSamplingThreadEFvvEPS4_EEEclEv.exit: ; preds = %3, %8
-  %10 = phi ptr [ %7, %3 ], [ %9, %8 ]
-  tail call void %10(ptr noundef nonnull align 8 dereferenceable(184) %i.c) #11, !inline_history !44
+  %1 = load ptr, ptr %i.c, align 8, !tbaa !24
+  %2 = load ptr, ptr %1, align 8, !nosanitize !36
+  tail call void %2(ptr noundef nonnull align 8 dereferenceable(184) %i.c) #11, !inline_history !44
   ret void
 }
 

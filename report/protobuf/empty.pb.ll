@@ -72,15 +72,12 @@ define void @_ZN6google8protobuf5EmptyC2EPNS0_5ArenaERKS1_(ptr noundef nonnull a
   store i32 0, ptr %i.c, align 8, !tbaa !10
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6google8protobuf5EmptyE, i64 16), ptr %0, align 8, !tbaa !12
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !7    ; 2 uses
-  %i.f = trunc i64 %i.e to i1
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !7
+  %i.f = trunc nuw i64 %i.e to i1
   br i1 %i.f, label %.noexc4, label %_ZN6google8protobuf8internal16InternalMetadata9MergeFromINS0_15UnknownFieldSetEEEvRKS2_.exit
 
 .noexc4:                                          ; preds = %.noexc
-  %3 = add nsw i64 %i.e, -1
-  %4 = inttoptr i64 %3 to ptr
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  invoke void @_ZN6google8protobuf8internal16InternalMetadata11DoMergeFromINS0_15UnknownFieldSetEEEvRKT_(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %5)
+  invoke void @_ZN6google8protobuf8internal16InternalMetadata11DoMergeFromINS0_15UnknownFieldSetEEEvRKT_(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(32) inttoptr (i64 8 to ptr))
           to label %_ZN6google8protobuf8internal16InternalMetadata9MergeFromINS0_15UnknownFieldSetEEEvRKS2_.exit unwind label %bb.a
 
 _ZN6google8protobuf8internal16InternalMetadata9MergeFromINS0_15UnknownFieldSetEEEvRKS2_.exit: ; preds = %.noexc, %.noexc4

@@ -28,19 +28,15 @@ declare extern_weak void @rb_define_singleton_method(i64 noundef, ptr noundef, p
 ; Function Attrs: nounwind uwtable
 define internal noundef i64 @ary_resize(i64 %0, i64 noundef returned %1, i64 noundef %2) #0 {
 bb.a:
-  %i.a = trunc i64 %2 to i1
-  br i1 %i.a, label %3, label %bb.b
-
-3:                                                ; preds = %bb.a
-  %4 = ashr i64 %2, 1
-  br label %rb_num2long_inline.exit
+  %i.a = trunc nuw i64 %2 to i1
+  br i1 %i.a, label %rb_num2long_inline.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @rb_num2long(i64 noundef %2) #2
+  %i.b = tail call i64 @rb_num2long(i64 noundef 0) #2
   br label %rb_num2long_inline.exit
 
-rb_num2long_inline.exit:                          ; preds = %3, %bb.b
-  %.0.i = phi i64 [ %4, %3 ], [ %i.b, %bb.b ]
+rb_num2long_inline.exit:                          ; preds = %bb.a, %bb.b
+  %.0.i = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]
   %i.c = tail call i64 @rb_ary_resize(i64 noundef %1, i64 noundef %.0.i) #2 ; 0 uses
   ret i64 %1
 }

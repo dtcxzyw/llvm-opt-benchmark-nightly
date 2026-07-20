@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !21   ; 2 uses
   %i.i = trunc i64 %i.h to i32
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %3, i32 %i.i) ; 6 uses
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %3, i32 %i.i) ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.j = sext i32 %spec.select to i64             ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !198)
@@ -466,13 +466,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49: ; preds = %_ZN
   br i1 %or.cond71, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49
-  %wide.trip.count = zext nneg i32 %spec.select to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.bz = icmp eq i32 %spec.select, 1
   br i1 %i.bz, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %8 = and i32 %spec.select, 2147483646
+  %unroll_iter = zext nneg i32 %8 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.u, %.lr.ph.preheader.new
@@ -511,8 +510,8 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph.1
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !204
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.u
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i32 %spec.select to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ]

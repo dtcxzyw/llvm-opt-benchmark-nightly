@@ -58,7 +58,7 @@ bb.b:                                             ; preds = %._crit_edge
   %.not.i = icmp ne i64 %i.v, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.w = tail call noundef ptr @_ZN13duckdb_brotli14BrotliAllocateEPNS_13MemoryManagerEm(ptr noundef %0, i64 noundef %i.v) ; 6 uses
-  %i.x = zext i32 %i.f to i64                     ; 7 uses
+  %i.x = zext i32 %i.f to i64                     ; 6 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.x ; 3 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.x ; 5 uses
   %i.aa = zext nneg i32 %i.p to i64               ; 7 uses
@@ -178,7 +178,6 @@ bb.h:                                             ; preds = %bb.f
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bq, i64 20
   store i32 %.014.lcssa, ptr %i.ca, align 4, !tbaa !19
   store ptr %1, ptr %i.bu, align 1
-  %xtraiter = and i64 %i.x, 1
   %unroll_iter = and i64 %i.x, 4294967294
   br label %bb.i
 
@@ -205,8 +204,6 @@ bb.i:                                             ; preds = %bb.i, %.new
   br i1 %niter.ncmp.1, label %.preheader.preheader.i.unr-lcssa, label %bb.i, !llvm.loop !20
 
 .preheader.preheader.i.unr-lcssa:                 ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  call void @llvm.assume(i1 %lcmp.mod.not)
   %i.cj = zext nneg i32 %i.h to i64
   br label %.preheader.i
 

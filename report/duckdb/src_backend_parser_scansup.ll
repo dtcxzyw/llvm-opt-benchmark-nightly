@@ -31,7 +31,7 @@ bb.a:
   %i.h = tail call align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN17duckdb_libpgqueryL27pg_preserve_identifier_caseE)
   %i.i = load i8, ptr %i.h, align 1, !tbaa !7, !range !9, !noundef !10
   %i.j = trunc nuw i8 %i.i to i1
-  %wide.trip.count43 = zext nneg i32 %1 to i64    ; 17 uses
+  %wide.trip.count43 = zext nneg i32 %1 to i64    ; 16 uses
   br i1 %i.j, label %iter.check75, label %.lr.ph.split
 
 iter.check75:                                     ; preds = %.lr.ph
@@ -214,9 +214,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.split.us.preheader:                  ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec54, %vec.epilog.middle.block ] ; 5 uses
-  %xtraiter = and i64 %wide.trip.count43, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.split.split.us.prol.loopexit, label %.lr.ph.split.split.us.prol
+  %lcmp.mod.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.split.split.us.prol, label %.lr.ph.split.split.us.prol.loopexit
 
 .lr.ph.split.split.us.prol:                       ; preds = %.lr.ph.split.split.us.preheader
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.ph

@@ -109,7 +109,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   store ptr %1, ptr %0, align 8, !tbaa !15
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.u = load i16, ptr %i.t, align 8, !tbaa !16   ; 4 uses
+  %i.u = load i16, ptr %i.t, align 8, !tbaa !16   ; 5 uses
   %.not98 = icmp eq i16 %i.u, 0
   br i1 %.not98, label %._crit_edge.thread, label %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph
 
@@ -119,19 +119,18 @@ _ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph: ;
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 54
   %i.y = load i16, ptr %i.x, align 2, !tbaa !20
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 3 uses
-  %2 = zext i16 %i.y to i64                       ; 3 uses
-  %wide.trip.count = zext i16 %i.u to i64         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %wide.trip.count = zext i16 %i.y to i64         ; 3 uses
   %i.aa = icmp eq i16 %i.u, 1
   br i1 %i.aa, label %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.epil.preheader, label %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph.new
 
 _ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph.new: ; preds = %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 65534
+  %2 = and i16 %i.u, -2
+  %unroll_iter = zext i16 %2 to i64
   br label %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.r
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.epil.preheader
+  %lcmp.mod.not = trunc i16 %i.u to i1
+  br i1 %lcmp.mod.not, label %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.epil.preheader, label %._crit_edge
 
 _ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.epil.preheader: ; preds = %._crit_edge.unr-lcssa, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph
   %.epil.init = phi i64 [ -1, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph ], [ %i.au, %._crit_edge.unr-lcssa ] ; 4 uses
@@ -139,7 +138,7 @@ _ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.epil.pre
   %.05689.epil.init = phi ptr [ null, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph ], [ %.157.1, %._crit_edge.unr-lcssa ] ; 3 uses
   %lcmp.mod180 = trunc i16 %i.u to i1
   tail call void @llvm.assume(i1 %lcmp.mod180)
-  %i.ab = mul nuw nsw i64 %indvars.iv.epil.init, %2
+  %i.ab = mul nuw nsw i64 %indvars.iv.epil.init, %wide.trip.count
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ab ; 3 uses
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !21
   switch i32 %i.ad, label %._crit_edge [
@@ -173,7 +172,7 @@ _ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit: ; preds
   %indvars.iv = phi i64 [ 0, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph.new ], [ %indvars.iv.next.1, %bb.r ] ; 3 uses
   %.05689 = phi ptr [ null, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph.new ], [ %.157.1, %bb.r ] ; 3 uses
   %niter = phi i64 [ 0, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.lr.ph.new ], [ %niter.next.1, %bb.r ]
-  %i.aj = mul nuw nsw i64 %indvars.iv, %2
+  %i.aj = mul nuw nsw i64 %indvars.iv, %wide.trip.count
   %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.aj ; 3 uses
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !21
   switch i32 %i.al, label %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.1 [
@@ -198,7 +197,7 @@ _ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit.1: ; pre
   %i.ao = phi i64 [ %i.ai, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit ], [ %i.ai, %bb.l ], [ %i.an, %bb.m ], [ %i.ai, %bb.n ] ; 4 uses
   %.157 = phi ptr [ %.05689, %_ZNK4absl12lts_2025051218debugging_internal11ElfMemImage7GetPhdrEi.exit ], [ %.05689, %bb.l ], [ %.05689, %bb.m ], [ %i.ak, %bb.n ] ; 3 uses
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1
-  %i.ap = mul nuw nsw i64 %indvars.iv.next, %2
+  %i.ap = mul nuw nsw i64 %indvars.iv.next, %wide.trip.count
   %i.aq = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ap ; 3 uses
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !21
   switch i32 %i.ar, label %bb.r [
@@ -390,9 +389,8 @@ bb.ah:                                            ; preds = %bb.ah, %bb.ag
   %i.db = zext i32 %.2 to i64
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %i.db
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !3
-  %3 = and i32 %i.dd, 1
-  %4 = icmp eq i32 %3, 0
-  br i1 %4, label %bb.ah, label %.thread, !llvm.loop !36
+  %3 = trunc nuw i32 %i.dd to i1
+  br i1 %3, label %.thread, label %bb.ah, !llvm.loop !36
 
 .thread:                                          ; preds = %bb.af, %bb.ah, %bb.ae, %bb.ad
   %storemerge = phi i32 [ %i.cj, %bb.ad ], [ 0, %bb.ae ], [ %i.da, %bb.ah ], [ 0, %bb.af ]

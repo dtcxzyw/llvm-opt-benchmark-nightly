@@ -106,8 +106,8 @@ case_insensitive_match.exit:                      ; preds = %.lr.ph.i.2
   %spec.select = select i1 %i.aw, ptr %i.ax, ptr %i.t
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i25.4, %case_insensitive_match.exit, %.lr.ph.i25.1, %.lr.ph.i25.2, %.lr.ph.i25.3
-  %i.ay = phi ptr [ %i.t, %case_insensitive_match.exit ], [ %spec.select, %.lr.ph.i25.4 ], [ %i.t, %.lr.ph.i25.3 ], [ %i.t, %.lr.ph.i25.2 ], [ %i.t, %.lr.ph.i25.1 ]
+.loopexit:                                        ; preds = %.lr.ph.i25.4, %.lr.ph.i25.3, %.lr.ph.i25.2, %.lr.ph.i25.1, %case_insensitive_match.exit
+  %i.ay = phi ptr [ %i.t, %.lr.ph.i25.3 ], [ %i.t, %case_insensitive_match.exit ], [ %i.t, %.lr.ph.i25.1 ], [ %spec.select, %.lr.ph.i25.4 ], [ %i.t, %.lr.ph.i25.2 ]
   %i.az = select i1 %.not21.not, double -inf, double +inf
   br label %case_insensitive_match.exit36.thread
 
@@ -401,7 +401,6 @@ bb.j:                                             ; preds = %bb.a, %bb.d, %bb.g,
   %.319 = phi i8 [ 101, %bb.c ], [ 114, %bb.g ], [ 103, %bb.f ], [ 102, %bb.d ], [ %1, %bb.a ]
   %.3 = phi ptr [ %.014, %bb.c ], [ @lc_float_strings, %bb.g ], [ %.2, %bb.f ], [ @uc_float_strings, %bb.d ], [ @lc_float_strings, %bb.a ] ; 3 uses
   %.0 = phi i32 [ 2, %bb.c ], [ 0, %bb.g ], [ 2, %bb.f ], [ 3, %bb.d ], [ 3, %bb.a ] ; 2 uses
-  %5 = and i32 %3, 1                              ; 2 uses
   %i.e = and i32 %3, 2                            ; 2 uses
   %i.f = and i32 %3, 4                            ; 3 uses
   %i.g = and i32 %3, 8
@@ -500,8 +499,8 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.ai, label %.sink.split.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %.not184.i = icmp eq i32 %5, 0
-  br i1 %.not184.i, label %bb.x, label %.sink.split.i
+  %.not184.i = trunc i32 %3 to i1
+  br i1 %.not184.i, label %.sink.split.i, label %bb.x
 
 .sink.split.i:                                    ; preds = %bb.w, %bb.v
   %.sink.i = phi i8 [ 45, %bb.v ], [ 43, %bb.w ]
@@ -655,8 +654,8 @@ bb.ao:                                            ; preds = %bb.am
   br i1 %i.by, label %.sink.split256.i, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %.not191.i = icmp eq i32 %5, 0
-  br i1 %.not191.i, label %bb.aq, label %.sink.split256.i
+  %.not191.i = trunc i32 %3 to i1
+  br i1 %.not191.i, label %.sink.split256.i, label %bb.aq
 
 .sink.split256.i:                                 ; preds = %bb.ap, %bb.ao
   %.sink257.i = phi i8 [ 45, %bb.ao ], [ 43, %bb.ap ]

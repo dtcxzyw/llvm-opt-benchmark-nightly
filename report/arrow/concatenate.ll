@@ -203,7 +203,7 @@ bb.jk:                                            ; preds = %bb.jj, %bb.ji, %.th
   %i.afb = phi i64 [ %i.aff, %.loopexit.i.i.us.i ], [ %.promoted253.i, %.lr.ph71.i.i.preheader.split.us.i ] ; 2 uses
   %.03170.i.i.us.i = phi i64 [ %.3.i.i.us.i, %.loopexit.i.i.us.i ], [ 0, %.lr.ph71.i.i.preheader.split.us.i ] ; 3 uses
   %i.afc = sub nsw i64 %i.afa, %i.afb
-  %.sroa.speculated.i.i.us.i = call i64 @llvm.smin.i64(i64 %i.afc, i64 32767) ; 4 uses
+  %.sroa.speculated.i.i.us.i = call i64 @llvm.smin.i64(i64 %i.afc, i64 32767) ; 5 uses
   %i.afd = trunc i64 %.sroa.speculated.i.i.us.i to i16
   %sext.i.i.us.i = shl i64 %.sroa.speculated.i.i.us.i, 48 ; 2 uses
   %i.afe = ashr exact i64 %sext.i.i.us.i, 48      ; 2 uses
@@ -212,11 +212,11 @@ bb.jk:                                            ; preds = %bb.jj, %bb.ji, %.th
   br i1 %i.afg, label %.lr.ph68.i.i.us.i.preheader, label %.loopexit.i.i.us.i
 
 .lr.ph68.i.i.us.i.preheader:                      ; preds = %.lr.ph71.i.i.us.i
-  %xtraiter1185 = and i64 %.sroa.speculated.i.i.us.i, 1 ; 2 uses
   %i.afh = icmp eq i64 %sext.i.i.us.i, 281474976710656
   br i1 %i.afh, label %.lr.ph68.i.i.us.i.epil.preheader, label %.lr.ph68.i.i.us.i.preheader.new
 
 .lr.ph68.i.i.us.i.preheader.new:                  ; preds = %.lr.ph68.i.i.us.i.preheader
+  %xtraiter1185 = and i64 %.sroa.speculated.i.i.us.i, 1
   %unroll_iter1189 = sub nsw i64 %i.afe, %xtraiter1185
   br label %.lr.ph68.i.i.us.i
 
@@ -258,12 +258,12 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpO
   br i1 %niter1190.ncmp.1, label %.loopexit.i.i.us.i.loopexit.unr-lcssa, label %.lr.ph68.i.i.us.i, !llvm.loop !332
 
 .loopexit.i.i.us.i.loopexit.unr-lcssa:            ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.1
-  %lcmp.mod1186.not = icmp eq i64 %xtraiter1185, 0
-  br i1 %lcmp.mod1186.not, label %.loopexit.i.i.us.i, label %.lr.ph68.i.i.us.i.epil.preheader
+  %lcmp.mod1186.not = trunc nuw i64 %.sroa.speculated.i.i.us.i to i1
+  br i1 %lcmp.mod1186.not, label %.lr.ph68.i.i.us.i.epil.preheader, label %.loopexit.i.i.us.i
 
 .lr.ph68.i.i.us.i.epil.preheader:                 ; preds = %.loopexit.i.i.us.i.loopexit.unr-lcssa, %.lr.ph68.i.i.us.i.preheader
   %.166.i.i.us.i.epil.init = phi i64 [ %.03170.i.i.us.i, %.lr.ph68.i.i.us.i.preheader ], [ %i.afx, %.loopexit.i.i.us.i.loopexit.unr-lcssa ] ; 4 uses
-  %lcmp.mod1188 = trunc i64 %.sroa.speculated.i.i.us.i to i1
+  %lcmp.mod1188 = trunc nuw i64 %.sroa.speculated.i.i.us.i to i1
   call void @llvm.assume(i1 %lcmp.mod1188)
   %i.afy = getelementptr inbounds [4 x i8], ptr %i.acv, i64 %.166.i.i.us.i.epil.init
   %i.afz = load i32, ptr %i.afy, align 4, !tbaa !3, !noalias !319
@@ -490,9 +490,8 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpO
   br i1 %exitcond.not.i.i.i, label %.loopexit.i.i.i, label %bb.kc, !llvm.loop !337
 
 .loopexit.i.i.i.loopexit.unr-lcssa:               ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1
-  %118 = and i16 %.sroa.0.0.extract.trunc.i36.i.i, 1
-  %lcmp.mod1192.not = icmp eq i16 %118, 0
-  br i1 %lcmp.mod1192.not, label %.loopexit.i.i.i, label %.lr.ph68.i.i.i.epil.preheader
+  %lcmp.mod1192.not = trunc i16 %.sroa.0.0.extract.trunc.i36.i.i to i1
+  br i1 %lcmp.mod1192.not, label %.lr.ph68.i.i.i.epil.preheader, label %.loopexit.i.i.i
 
 .lr.ph68.i.i.i.epil.preheader:                    ; preds = %.loopexit.i.i.i.loopexit.unr-lcssa, %.lr.ph68.i.i.i.preheader
   %.166.i.i.i.epil.init = phi i64 [ %.03170.i.i.i, %.lr.ph68.i.i.i.preheader ], [ %i.aih, %.loopexit.i.i.i.loopexit.unr-lcssa ] ; 4 uses
@@ -895,7 +894,7 @@ bb.sy:                                            ; preds = %bb.sx, %bb.sw, %.th
   %i.bko = load i64, ptr %i.bhn, align 8, !tbaa !330, !noalias !413
   %i.bkp = load i64, ptr %i.bho, align 8, !tbaa !331, !noalias !413 ; 2 uses
   %i.bkq = sub nsw i64 %i.bko, %i.bkp
-  %.sroa.speculated.i.i.us.i210 = call i64 @llvm.smin.i64(i64 %i.bkq, i64 32767) ; 4 uses
+  %.sroa.speculated.i.i.us.i210 = call i64 @llvm.smin.i64(i64 %i.bkq, i64 32767) ; 5 uses
   %i.bkr = trunc i64 %.sroa.speculated.i.i.us.i210 to i16
   %sext.i.i.us.i211 = shl i64 %.sroa.speculated.i.i.us.i210, 48 ; 2 uses
   %i.bks = ashr exact i64 %sext.i.i.us.i211, 48   ; 2 uses
@@ -905,11 +904,11 @@ bb.sy:                                            ; preds = %bb.sx, %bb.sw, %.th
   br i1 %i.bku, label %.lr.ph68.i.i.us.i214.preheader, label %.loopexit.i.i.us.i212
 
 .lr.ph68.i.i.us.i214.preheader:                   ; preds = %.lr.ph71.i.i.us.i208
-  %xtraiter1175 = and i64 %.sroa.speculated.i.i.us.i210, 1 ; 2 uses
   %i.bkv = icmp eq i64 %sext.i.i.us.i211, 281474976710656
   br i1 %i.bkv, label %.lr.ph68.i.i.us.i214.epil.preheader, label %.lr.ph68.i.i.us.i214.preheader.new
 
 .lr.ph68.i.i.us.i214.preheader.new:               ; preds = %.lr.ph68.i.i.us.i214.preheader
+  %xtraiter1175 = and i64 %.sroa.speculated.i.i.us.i210, 1
   %unroll_iter = sub nsw i64 %i.bks, %xtraiter1175
   br label %.lr.ph68.i.i.us.i214
 
@@ -951,12 +950,12 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpO
   br i1 %niter.ncmp.1, label %.loopexit.i.i.us.loopexit.i.unr-lcssa, label %.lr.ph68.i.i.us.i214, !llvm.loop !431
 
 .loopexit.i.i.us.loopexit.i.unr-lcssa:            ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.1
-  %lcmp.mod1176.not = icmp eq i64 %xtraiter1175, 0
-  br i1 %lcmp.mod1176.not, label %.loopexit.i.i.us.loopexit.i, label %.lr.ph68.i.i.us.i214.epil.preheader
+  %lcmp.mod1176.not = trunc nuw i64 %.sroa.speculated.i.i.us.i210 to i1
+  br i1 %lcmp.mod1176.not, label %.lr.ph68.i.i.us.i214.epil.preheader, label %.loopexit.i.i.us.loopexit.i
 
 .lr.ph68.i.i.us.i214.epil.preheader:              ; preds = %.loopexit.i.i.us.loopexit.i.unr-lcssa, %.lr.ph68.i.i.us.i214.preheader
   %.166.i.i.us.i216.epil.init = phi i64 [ %.03170.i.i.us.i209, %.lr.ph68.i.i.us.i214.preheader ], [ %i.bll, %.loopexit.i.i.us.loopexit.i.unr-lcssa ] ; 4 uses
-  %lcmp.mod1178 = trunc i64 %.sroa.speculated.i.i.us.i210 to i1
+  %lcmp.mod1178 = trunc nuw i64 %.sroa.speculated.i.i.us.i210 to i1
   call void @llvm.assume(i1 %lcmp.mod1178)
   %i.blm = getelementptr inbounds [8 x i8], ptr %i.bii, i64 %.166.i.i.us.i216.epil.init
   %i.bln = load i64, ptr %i.blm, align 8, !tbaa !175, !noalias !424
@@ -1186,9 +1185,8 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpO
   br i1 %exitcond.not.i.i.i244, label %.loopexit.i.i.i224, label %.lr.ph.i77.i.i241, !llvm.loop !433
 
 .loopexit.i.i.i224.loopexit.unr-lcssa:            ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.1
-  %119 = and i16 %.sroa.0.0.extract.trunc.i33.i.i, 1
-  %lcmp.mod1180.not = icmp eq i16 %119, 0
-  br i1 %lcmp.mod1180.not, label %.loopexit.i.i.i224, label %.lr.ph68.i.i.i226.epil.preheader
+  %lcmp.mod1180.not = trunc i16 %.sroa.0.0.extract.trunc.i33.i.i to i1
+  br i1 %lcmp.mod1180.not, label %.lr.ph68.i.i.i226.epil.preheader, label %.loopexit.i.i.i224
 
 .lr.ph68.i.i.i226.epil.preheader:                 ; preds = %.loopexit.i.i.i224.loopexit.unr-lcssa, %.lr.ph68.i.i.i226.preheader
   %.166.i.i.i228.epil.init = phi i64 [ %.03170.i.i.i219, %.lr.ph68.i.i.i226.preheader ], [ %i.bnw, %.loopexit.i.i.i224.loopexit.unr-lcssa ] ; 4 uses
@@ -1591,10 +1589,10 @@ bb.af:                                            ; preds = %._crit_edge44
   %.02318.i = phi i64 [ %i.if, %.loopexit.i ], [ %i.ga, %.noexc ] ; 4 uses
   %.02417.i = phi i64 [ %i.ie, %.loopexit.i ], [ 0, %.noexc ]
   %i.go = invoke i32 @_ZN5arrow8internal23OptionalBitBlockCounter9NextBlockEv(ptr noundef nonnull align 8 dereferenceable(48) %2)
-          to label %.noexc47 unwind label %.loopexit ; 3 uses
+          to label %.noexc47 unwind label %.loopexit ; 4 uses
 
 .noexc47:                                         ; preds = %.lr.ph20.i
-  %.sroa.0.0.extract.trunc.i = trunc i32 %i.go to i16 ; 7 uses
+  %.sroa.0.0.extract.trunc.i = trunc i32 %i.go to i16 ; 6 uses
   %.sroa.8.0.extract.shift.i = lshr i32 %i.go, 16 ; 2 uses
   %.sroa.8.0.extract.trunc.i = trunc nuw i32 %.sroa.8.0.extract.shift.i to i16
   %i.gp = icmp eq i16 %.sroa.0.0.extract.trunc.i, %.sroa.8.0.extract.trunc.i
@@ -1680,9 +1678,8 @@ bb.aj:                                            ; preds = %bb.ai, %.lr.ph.i.1
   br i1 %niter.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !801
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %bb.aj
-  %7 = and i16 %.sroa.0.0.extract.trunc.i, 1
-  %lcmp.mod.not = icmp eq i16 %7, 0
-  br i1 %lcmp.mod.not, label %.loopexit.i, label %.lr.ph.i.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.go to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %.loopexit.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %.loopexit.i.loopexit.unr-lcssa, %.lr.ph.i.preheader
   %.4.epil.init = phi i64 [ %.2, %.lr.ph.i.preheader ], [ %.5.1, %.loopexit.i.loopexit.unr-lcssa ] ; 2 uses

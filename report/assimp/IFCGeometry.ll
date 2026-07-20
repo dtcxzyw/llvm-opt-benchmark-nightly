@@ -203,27 +203,18 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %i.ar, label %bb.b, label %._crit_edge, !llvm.loop !362
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
-  %.0.lcssa = phi i64 [ %1, %bb.a ], [ %spec.select, %bb.b ] ; 5 uses
-  %9 = and i64 %2, 1
-  %10 = icmp eq i64 %9, 0
-  br i1 %10, label %11, label %bb.d
+  %.0.lcssa = phi i64 [ %1, %bb.a ], [ %spec.select, %bb.b ] ; 2 uses
+  %9 = trunc nuw i64 %2 to i1
+  %10 = icmp ne i64 %.0.lcssa, -1
+  %or.cond.not = or i1 %10, %9
+  br i1 %or.cond.not, label %bb.d, label %bb.c
 
-11:                                               ; preds = %._crit_edge
-  %12 = add nsw i64 %2, -2
-  %13 = ashr exact i64 %12, 1
-  %14 = icmp eq i64 %.0.lcssa, %13
-  br i1 %14, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %11
-  %15 = shl nsw i64 %.0.lcssa, 1
-  %16 = or disjoint i64 %15, 1                    ; 2 uses
-  %17 = getelementptr inbounds [88 x i8], ptr %0, i64 %16
-  %18 = getelementptr inbounds [88 x i8], ptr %0, i64 %.0.lcssa
-  %i.as = call noundef nonnull align 8 dereferenceable(88) ptr @_ZN6Assimp3IFC11TempOpeningaSEOS1_(ptr noundef nonnull align 8 dereferenceable(88) %18, ptr noundef nonnull align 8 dereferenceable(88) %17) #30 ; 0 uses
+bb.c:                                             ; preds = %._crit_edge
+  %11 = getelementptr inbounds i8, ptr %0, i64 -88 ; 2 uses
+  %i.as = call noundef nonnull align 8 dereferenceable(88) ptr @_ZN6Assimp3IFC11TempOpeningaSEOS1_(ptr noundef nonnull align 8 dereferenceable(88) %11, ptr noundef nonnull align 8 dereferenceable(88) %11) #30 ; 0 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %11, %._crit_edge
-  %.1 = phi i64 [ %16, %bb.c ], [ %.0.lcssa, %11 ], [ %.0.lcssa, %._crit_edge ]
+bb.d:                                             ; preds = %bb.c, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #30
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %8, ptr noundef nonnull align 8 dereferenceable(88) %3, i64 32, i1 false)
@@ -247,7 +238,7 @@ bb.d:                                             ; preds = %bb.c, %11, %._crit_
   %i.bg = load ptr, ptr %i.bf, align 8
   store ptr %i.bg, ptr %i.be, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bc, i8 0, i64 24, i1 false)
-  invoke void @_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPN6Assimp3IFC11TempOpeningESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops14_Iter_comp_valINS4_14DistanceSorterEEEEvT_T0_SF_T1_RT2_(ptr %0, i64 noundef %.1, i64 noundef %1, ptr noundef nonnull %8, ptr noundef nonnull align 8 dereferenceable(24) %7)
+  invoke void @_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPN6Assimp3IFC11TempOpeningESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops14_Iter_comp_valINS4_14DistanceSorterEEEEvT_T0_SF_T1_RT2_(ptr %0, i64 noundef %.0.lcssa, i64 noundef %1, ptr noundef nonnull %8, ptr noundef nonnull align 8 dereferenceable(24) %7)
           to label %bb.e unwind label %bb.s
 
 bb.e:                                             ; preds = %bb.d

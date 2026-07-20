@@ -83,8 +83,8 @@ bb.f:                                             ; preds = %.body
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtB4_6option6OptionhENtNtCseqDwI8vvjGQ_10serde_json5error5ErrorEECsfY7SmN0bPrO_14deltalake_test(i8 %.0.val, ptr captures(address) %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %0 = icmp eq i8 %.0.val, 0
-  br i1 %0, label %bb.b, label %bb.c
+  %0 = trunc nuw i8 %.0.val to i1
+  br i1 %0, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsfY7SmN0bPrO_14deltalake_test.exit, %bb.a
   ret void
@@ -487,8 +487,7 @@ bb.bd:                                            ; preds = %bb.k
 
 _RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessINtNtB8_4read6IoReadNtNtCs2pqxYH9ZEk8_3std2fs4FileEENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess10next_valueNtNtB1D_11ignored_any10IgnoredAnyECsfY7SmN0bPrO_14deltalake_test.exit.i.outer: ; preds = %bb.ej, %bb.bd
   %.sroa.439.0.i.ph = phi i32 [ %i.px, %bb.ej ], [ undef, %bb.bd ]
-  %.not1590 = phi i1 [ false, %bb.ej ], [ true, %bb.bd ]
-  %.sroa.037.0.i.ph = phi i1 [ true, %bb.ej ], [ false, %bb.bd ]
+  %.sroa.037.0.i.ph = phi i1 [ true, %bb.ej ], [ false, %bb.bd ] ; 2 uses
   %.sroa.431.0.i.ph = phi i32 [ %.sroa.431.0.i.ph1607, %bb.ej ], [ undef, %bb.bd ]
   %.sroa.029.0.i.ph = phi i32 [ %.sroa.029.0.i.ph1608, %bb.ej ], [ 0, %bb.bd ]
   %.sroa.4.0.i.ph = phi i64 [ %.sroa.4.0.i.ph1615, %bb.ej ], [ undef, %bb.bd ]
@@ -752,8 +751,8 @@ bb.bt:                                            ; preds = %bb.bf
 
 bb.bu:                                            ; preds = %bb.bo, %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !401
-  %.not1592 = icmp eq i64 %.sroa.07.0.i.ph1616, 0
-  br i1 %.not1592, label %bb.dv, label %.invoke, !prof !62
+  %6 = trunc nuw i64 %.sroa.07.0.i.ph1616 to i1
+  br i1 %6, label %.invoke, label %bb.dv, !prof !163
 
 bb.bv:                                            ; preds = %bb.bp, %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !401
@@ -763,12 +762,12 @@ bb.bv:                                            ; preds = %bb.bp, %bb.bk
 
 bb.bw:                                            ; preds = %bb.bq, %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !401
-  %.not1591 = icmp eq i32 %.sroa.029.0.i.ph1608, 0
-  br i1 %.not1591, label %bb.ee, label %.invoke, !prof !62
+  %7 = trunc nuw i32 %.sroa.029.0.i.ph1608 to i1
+  br i1 %7, label %.invoke, label %bb.ee, !prof !163
 
 bb.bx:                                            ; preds = %bb.br, %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !401
-  br i1 %.not1590, label %bb.eh, label %.invoke, !prof !62
+  br i1 %.sroa.037.0.i.ph, label %.invoke, label %bb.eh, !prof !163
 
 bb.by:                                            ; preds = %bb.br, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bk, %bb.bj, %bb.bi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !401

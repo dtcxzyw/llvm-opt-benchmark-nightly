@@ -201,12 +201,11 @@ bb.av:                                            ; preds = %bb.au
   br label %flush_pending.exit252
 
 flush_pending.exit252:                            ; preds = %bb.at, %bb.au, %bb.av
-  %2 = icmp eq i32 %i.js, 0
-  %3 = select i1 %2, i32 0, i32 2
+  %2 = shl nuw nsw i32 %i.js, 1
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.ap, %flush_pending.exit252, %bb.ao, %bb.ab, %bb.y
-  %.0208 = phi i32 [ 1, %bb.ab ], [ 3, %bb.y ], [ %3, %flush_pending.exit252 ], [ 0, %bb.ao ], [ 0, %bb.ap ]
+  %.0208 = phi i32 [ 1, %bb.ab ], [ 3, %bb.y ], [ %2, %flush_pending.exit252 ], [ 0, %bb.ao ], [ 0, %bb.ap ]
   ret i32 %.0208
 }
 

@@ -40,28 +40,19 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr i8, ptr %i.g, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !19   ; 3 uses
   %i.k = getelementptr i8, ptr %i.g, i64 32
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !23   ; 5 uses
-  %.not23.i = icmp eq i64 %i.l, 0
-  br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i.preheader
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !23   ; 2 uses
+  switch i64 %i.l, label %.lr.ph.i.preheader.new [
+    i64 0, label %._crit_edge.i
+    i64 1, label %.lr.ph.i.epil.preheader
+  ]
 
-.lr.ph.i.preheader:                               ; preds = %bb.b
-  %xtraiter = and i64 %i.l, 1
-  %2 = icmp eq i64 %i.l, 1
-  br i1 %2, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
-
-.lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
+.lr.ph.i.preheader.new:                           ; preds = %bb.b
   %unroll_iter = and i64 %i.l, -2
   br label %.lr.ph.i
 
-._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
-
-.lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i.preheader
-  %.025.i.epil.init = phi i64 [ %i.h, %.lr.ph.i.preheader ], [ %.1.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
-  %.01724.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.ad, %._crit_edge.i.loopexit.unr-lcssa ]
-  %lcmp.mod7 = trunc i64 %i.l to i1
-  tail call void @llvm.assume(i1 %lcmp.mod7)
+.lr.ph.i.epil.preheader:                          ; preds = %bb.b, %.lr.ph.i
+  %.025.i.epil.init = phi i64 [ %i.h, %bb.b ], [ %.1.i.1, %.lr.ph.i ] ; 2 uses
+  %.01724.i.epil.init = phi i64 [ 0, %bb.b ], [ %i.ad, %.lr.ph.i ]
   %i.m = getelementptr [64 x i8], ptr %i.j, i64 %.01724.i.epil.init
   %i.n = load atomic i64, ptr %i.m seq_cst, align 8 ; 3 uses
   %.not19.i.epil = icmp ne i64 %i.n, 0
@@ -71,8 +62,8 @@ bb.b:                                             ; preds = %bb.a
   %.1.i.epil = select i1 %or.cond.i.epil, i64 %i.n, i64 %.025.i.epil.init
   br label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.epil.preheader, %._crit_edge.i.loopexit.unr-lcssa, %bb.b
-  %.0.lcssa.i = phi i64 [ %i.h, %bb.b ], [ %.1.i.1, %._crit_edge.i.loopexit.unr-lcssa ], [ %.1.i.epil, %.lr.ph.i.epil.preheader ] ; 3 uses
+._crit_edge.i:                                    ; preds = %bb.b, %.lr.ph.i.epil.preheader
+  %.0.lcssa.i = phi i64 [ %i.h, %bb.b ], [ %.1.i.epil, %.lr.ph.i.epil.preheader ] ; 3 uses
   %i.q = getelementptr i8, ptr %i.g, i64 8        ; 2 uses
   %i.r = load atomic i64, ptr %i.q seq_cst, align 8 ; 3 uses
   %i.s = sub i64 %i.r, %.0.lcssa.i
@@ -97,11 +88,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = sub i64 %i.aa, %.1.i
   %i.ac = icmp slt i64 %i.ab, 0
   %or.cond.i.1 = select i1 %.not19.i.1, i1 %i.ac, i1 false
-  %.1.i.1 = select i1 %or.cond.i.1, i64 %i.aa, i64 %.1.i ; 3 uses
+  %.1.i.1 = select i1 %or.cond.i.1, i64 %i.aa, i64 %.1.i ; 2 uses
   %i.ad = add nuw i64 %.01724.i, 2                ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !24
+  br i1 %niter.ncmp.1, label %.lr.ph.i.epil.preheader, label %.lr.ph.i, !llvm.loop !24
 
 bb.c:                                             ; preds = %._crit_edge.i
   %i.ae = cmpxchg ptr %i.q, i64 %i.r, i64 %.0.lcssa.i seq_cst seq_cst, align 8 ; 0 uses
@@ -145,7 +136,7 @@ bb.a:
   br i1 %i.d, label %_PyMutex_Lock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @PyMutex_Lock(ptr noundef %i.b) #9
+  tail call void @PyMutex_Lock(ptr noundef %i.b) #8
   br label %_PyMutex_Lock.exit
 
 _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
@@ -166,14 +157,14 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
   br label %bb.q
 
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
-  tail call void @_PyEval_StopTheWorld(ptr noundef nonnull %0) #9
+  tail call void @_PyEval_StopTheWorld(ptr noundef nonnull %0) #8
   %i.l = getelementptr i8, ptr %0, i64 10904      ; 3 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !23
   %i.n = shl i64 %i.m, 1
   %spec.store.select.i = tail call i64 @llvm.smax.i64(i64 %i.n, i64 8) ; 3 uses
   %i.o = shl i64 %spec.store.select.i, 6
   %i.p = or disjoint i64 %i.o, 63
-  %i.q = tail call ptr @PyMem_RawCalloc(i64 noundef 1, i64 noundef %i.p) #9 ; 3 uses
+  %i.q = tail call ptr @PyMem_RawCalloc(i64 noundef 1, i64 noundef %i.p) #8 ; 3 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %.thread20, label %bb.d
 
@@ -261,13 +252,13 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not.i.i.1, label %bb.o, label %bb.f, !llvm.loop !53
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @PyMem_RawFree(ptr noundef %i.x) #9
+  tail call void @PyMem_RawFree(ptr noundef %i.x) #8
   %i.ax = load ptr, ptr %i.e, align 8, !tbaa !26  ; 5 uses
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %.thread20, label %bb.p
 
 .thread20:                                        ; preds = %bb.c, %bb.o
-  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #9
+  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #8
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.o
@@ -279,7 +270,7 @@ bb.p:                                             ; preds = %bb.o
   store ptr %i.a, ptr %i.bb, align 8, !tbaa !11
   %i.bc = getelementptr i8, ptr %i.ax, i64 49
   store i8 1, ptr %i.bc, align 1, !tbaa !28
-  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #9
+  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #8
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.thread
@@ -299,7 +290,7 @@ bb.r:                                             ; preds = %.thread20, %bb.q
   br i1 %i.bk, label %_PyMutex_Unlock.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @PyMutex_Unlock(ptr noundef %i.b) #9
+  tail call void @PyMutex_Unlock(ptr noundef %i.b) #8
   br label %_PyMutex_Unlock.exit
 
 _PyMutex_Unlock.exit:                             ; preds = %bb.r, %bb.s
@@ -319,7 +310,7 @@ bb.a:
   br i1 %i.c, label %_PyMutex_Lock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @PyMutex_Lock(ptr noundef %i.a) #9
+  tail call void @PyMutex_Lock(ptr noundef %i.a) #8
   br label %_PyMutex_Lock.exit
 
 _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
@@ -335,7 +326,7 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
   br i1 %i.j, label %_PyMutex_Unlock.exit, label %bb.c
 
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
-  tail call void @PyMutex_Unlock(ptr noundef %i.a) #9
+  tail call void @PyMutex_Unlock(ptr noundef %i.a) #8
   br label %_PyMutex_Unlock.exit
 
 _PyMutex_Unlock.exit:                             ; preds = %_PyMutex_Lock.exit, %bb.c
@@ -353,7 +344,7 @@ bb.a:
   br i1 %i.e, label %_PyMutex_Lock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @PyMutex_Lock(ptr noundef %i.c) #9
+  tail call void @PyMutex_Lock(ptr noundef %i.c) #8
   br label %_PyMutex_Lock.exit
 
 _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
@@ -374,7 +365,7 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
   br i1 %i.n, label %_PyMutex_Unlock.exit, label %bb.c
 
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
-  tail call void @PyMutex_Unlock(ptr noundef %i.c) #9
+  tail call void @PyMutex_Unlock(ptr noundef %i.c) #8
   br label %_PyMutex_Unlock.exit
 
 _PyMutex_Unlock.exit:                             ; preds = %_PyMutex_Lock.exit, %bb.c
@@ -386,7 +377,7 @@ define hidden void @_Py_qsbr_fini(ptr nofree noundef captures(none) initializes(
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 10896
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !29
-  tail call void @PyMem_RawFree(ptr noundef %i.b) #9
+  tail call void @PyMem_RawFree(ptr noundef %i.b) #8
   %i.c = getelementptr i8, ptr %0, i64 10888
   %i.d = getelementptr i8, ptr %0, i64 10920
   store ptr null, ptr %i.d, align 8, !tbaa !26
@@ -406,7 +397,7 @@ bb.a:
   %i.e = getelementptr i8, ptr %i.d, i64 40
   store i8 0, ptr %i.e, align 1
   %i.f = getelementptr i8, ptr %i.d, i64 32
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !23   ; 5 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !23   ; 3 uses
   %.not18 = icmp eq i64 %i.g, 0
   br i1 %.not18, label %._crit_edge, label %.lr.ph
 
@@ -414,7 +405,6 @@ bb.a:
   %i.h = getelementptr i8, ptr %i.d, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !19   ; 3 uses
   %i.j = getelementptr i8, ptr %i.d, i64 48       ; 6 uses
-  %xtraiter = and i64 %i.g, 1
   %i.k = icmp eq i64 %i.g, 1
   br i1 %i.k, label %.epil.preheader, label %.lr.ph.new
 
@@ -422,14 +412,8 @@ bb.a:
   %unroll_iter = and i64 %i.g, -2
   br label %bb.d
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.j
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
-  %.019.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ah, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod22 = trunc i64 %i.g to i1
-  tail call void @llvm.assume(i1 %lcmp.mod22)
+.epil.preheader:                                  ; preds = %.lr.ph, %bb.j
+  %.019.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ah, %bb.j ]
   %i.l = getelementptr [64 x i8], ptr %i.i, i64 %.019.epil.init ; 5 uses
   %.not17.epil = icmp eq ptr %i.l, %i.b
   br i1 %.not17.epil, label %._crit_edge, label %bb.b
@@ -450,7 +434,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.l, ptr %i.j, align 8, !tbaa !26
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.c, %bb.b, %.epil.preheader, %bb.a
+._crit_edge:                                      ; preds = %bb.c, %bb.b, %.epil.preheader, %bb.a
   ret void
 
 bb.d:                                             ; preds = %bb.j, %.lr.ph.new
@@ -502,7 +486,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %i.ah = add nuw i64 %.019, 2                    ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.d, !llvm.loop !120
+  br i1 %niter.ncmp.1, label %.epil.preheader, label %bb.d, !llvm.loop !120
 }
 
 declare void @PyMutex_Lock(ptr noundef) local_unnamed_addr #3
@@ -520,9 +504,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
-
 attributes #0 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { norecurse nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -531,8 +512,7 @@ attributes #4 = { nofree norecurse nosync nounwind memory(readwrite, inaccessibl
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { nounwind }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

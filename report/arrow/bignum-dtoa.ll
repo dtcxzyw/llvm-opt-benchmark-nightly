@@ -58,8 +58,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.040 = phi i32 [ %.0.i44, %bb.b ], [ %.0.i46, %bb.c ] ; 9 uses
   %.0 = phi i64 [ %i.h, %bb.b ], [ %.0.i45, %bb.c ] ; 7 uses
   %i.ac = icmp ult i32 %1, 2                      ; 4 uses
-  %11 = and i64 %.0, 1
-  %12 = icmp eq i64 %11, 0                        ; 2 uses
+  %11 = trunc nuw i64 %.0 to i1                   ; 2 uses
   %i.ad = and i64 %.0, 4503599627370496
   %i.ae = icmp eq i64 %i.ad, 0
   br i1 %i.ae, label %.lr.ph.i, label %_ZN14arrow_vendored17double_conversionL18NormalizedExponentEmi.exit
@@ -184,7 +183,7 @@ bb.n:                                             ; preds = %_ZN14arrow_vendored
 
 _ZN14arrow_vendored17double_conversionL24InitialScaledStartValuesEmibibPNS0_6BignumES2_S2_S2_.exit: ; preds = %bb.g, %bb.j, %_ZN14arrow_vendored17double_conversionL40InitialScaledStartValuesPositiveExponentEmiibPNS0_6BignumES2_S2_S2_.exit.i, %bb.n
   %i.bc = call noundef i32 @_ZN14arrow_vendored17double_conversion6Bignum11PlusCompareERKS1_S3_S3_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %10, ptr noundef nonnull align 4 dereferenceable(516) %8) ; 2 uses
-  br i1 %12, label %bb.o, label %bb.p
+  br i1 %11, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %_ZN14arrow_vendored17double_conversionL24InitialScaledStartValuesEmibibPNS0_6BignumES2_S2_S2_.exit
   %i.bd = icmp sgt i32 %i.bc, -1
@@ -228,7 +227,7 @@ bb.u:                                             ; preds = %_ZN14arrow_vendored
   %i.bj = icmp eq i32 %i.bi, 0                    ; 3 uses
   %spec.select.i = select i1 %i.bj, ptr %9, ptr %10 ; 6 uses
   store i32 0, ptr %5, align 4, !tbaa !3
-  br i1 %12, label %.split.us.i, label %.split.i
+  br i1 %11, label %.split.i, label %.split.us.i
 
 .split.us.i:                                      ; preds = %bb.u
   br i1 %i.bj, label %.split.us.split.us.i, label %.split.us.split.i
@@ -326,9 +325,9 @@ bb.y:                                             ; preds = %.split.split.i
   call void @_ZN14arrow_vendored17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %spec.select.i, i32 noundef 10)
   br label %.split.split.i
 
-.split6.us.i:                                     ; preds = %.split.split.i, %.split.split.us.i, %.split.us.split.i, %.split.us.split.us.i
-  %.us-phi.i = phi i1 [ %i.co, %.split.split.us.i ], [ %i.cd, %.split.us.split.i ], [ %i.bs, %.split.us.split.us.i ], [ %i.cz, %.split.split.i ] ; 2 uses
-  %.us-phi7.i = phi i1 [ %i.cq, %.split.split.us.i ], [ %i.cf, %.split.us.split.i ], [ %i.bu, %.split.us.split.us.i ], [ %i.db, %.split.split.i ]
+.split6.us.i:                                     ; preds = %.split.us.split.i, %.split.us.split.us.i, %.split.split.i, %.split.split.us.i
+  %.us-phi.i = phi i1 [ %i.cz, %.split.split.i ], [ %i.co, %.split.split.us.i ], [ %i.bs, %.split.us.split.us.i ], [ %i.cd, %.split.us.split.i ] ; 2 uses
+  %.us-phi7.i = phi i1 [ %i.db, %.split.split.i ], [ %i.cq, %.split.split.us.i ], [ %i.bu, %.split.us.split.us.i ], [ %i.cf, %.split.us.split.i ]
   %or.cond3.i = and i1 %.us-phi.i, %.us-phi7.i
   br i1 %or.cond3.i, label %bb.z, label %bb.ae
 
@@ -352,9 +351,8 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZN14arrow_vendored17double_conversionL22GenerateShortestDigitsEPNS0_6BignumES2_S2_S2_bNS0_6VectorIcEEPi.exit
 
 bb.ac:                                            ; preds = %bb.aa
-  %13 = and i8 %i.di, 1
-  %14 = icmp eq i8 %13, 0
-  br i1 %14, label %_ZN14arrow_vendored17double_conversionL22GenerateShortestDigitsEPNS0_6BignumES2_S2_S2_bNS0_6VectorIcEEPi.exit, label %bb.ad
+  %12 = trunc i8 %i.di to i1
+  br i1 %12, label %bb.ad, label %_ZN14arrow_vendored17double_conversionL22GenerateShortestDigitsEPNS0_6BignumES2_S2_S2_bNS0_6VectorIcEEPi.exit
 
 bb.ad:                                            ; preds = %bb.ac
   %i.dk = add i8 %i.di, 1

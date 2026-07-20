@@ -201,7 +201,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %bb.a
 
 bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
   %i.i = getelementptr i8, ptr %i.e, i64 24
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !15   ; 8 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !15   ; 6 uses
   %i.k = and i64 %i.j, 3
   %i.l = icmp eq i64 %i.k, 2
   br i1 %i.l, label %RB_FLOAT_TYPE_P.exit.thread.i.i, label %bb.c
@@ -230,20 +230,15 @@ RB_FLOAT_TYPE_P.exit.thread.i.i:                  ; preds = %RB_FLOAT_TYPE_P.exi
   br label %f_signbit.exit.i
 
 RB_FLOAT_TYPE_P.exit.thread7.i.i:                 ; preds = %RB_FLOAT_TYPE_P.exit.i.i, %bb.c
-  %i.aa = trunc i64 %i.j to i1
-  br i1 %i.aa, label %2, label %bb.d
-
-2:                                                ; preds = %RB_FLOAT_TYPE_P.exit.thread7.i.i
-  %3 = icmp slt i64 %i.j, 0
-  %4 = select i1 %3, i64 20, i64 0
-  br label %f_signbit.exit.i
+  %i.aa = trunc nuw i64 %i.j to i1
+  br i1 %i.aa, label %f_signbit.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %RB_FLOAT_TYPE_P.exit.thread7.i.i
-  %i.ab = tail call i64 (i64, i64, i32, ...) @rb_funcall(i64 noundef %i.j, i64 noundef 60, i32 noundef 1, i64 noundef 1) #10
+  %i.ab = tail call i64 (i64, i64, i32, ...) @rb_funcall(i64 noundef 0, i64 noundef 60, i32 noundef 1, i64 noundef 1) #10
   br label %f_signbit.exit.i
 
-f_signbit.exit.i:                                 ; preds = %bb.d, %2, %RB_FLOAT_TYPE_P.exit.thread.i.i
-  %.0.i18.i = phi i64 [ %i.z, %RB_FLOAT_TYPE_P.exit.thread.i.i ], [ %4, %2 ], [ %i.ab, %bb.d ]
+f_signbit.exit.i:                                 ; preds = %bb.d, %RB_FLOAT_TYPE_P.exit.thread7.i.i, %RB_FLOAT_TYPE_P.exit.thread.i.i
+  %.0.i18.i = phi i64 [ %i.z, %RB_FLOAT_TYPE_P.exit.thread.i.i ], [ %i.ab, %bb.d ], [ 0, %RB_FLOAT_TYPE_P.exit.thread7.i.i ]
   %i.ac = getelementptr i8, ptr %i.e, i64 16
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !17
   %i.ae = tail call double @rb_num_to_dbl(i64 noundef %i.ad) #10 ; 2 uses
@@ -255,7 +250,8 @@ f_signbit.exit.i:                                 ; preds = %bb.d, %2, %RB_FLOAT
   %i.ak = fadd double %i.ae, %i.ag
   %i.al = fmul double %i.ak, 5.000000e-01
   %i.am = tail call double @sqrt(double noundef %i.al) #10, !tbaa !7
-  %.not.i = icmp eq i64 %.0.i18.i, 0
+  %.0.i18.fr.i = freeze i64 %.0.i18.i
+  %.not.i = icmp eq i64 %.0.i18.fr.i, 0
   %i.an = fneg double %i.aj
   %.0.i = select i1 %.not.i, double %i.aj, double %i.an
   %i.ao = tail call i64 @rb_float_new(double noundef %i.am) #10
@@ -340,15 +336,15 @@ bb.a:
 define internal i64 @math_ldexp(i64 %0, i64 noundef %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = tail call double @rb_num_to_dbl(i64 noundef %1) #10
-  %i.b = trunc i64 %2 to i1
+  %i.b = trunc nuw i64 %2 to i1
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @rb_fix2int(i64 noundef %2) #10
+  %i.c = tail call i64 @rb_fix2int(i64 noundef 1) #10
   br label %rb_num2int_inline.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call i64 @rb_num2int(i64 noundef %2) #10
+  %i.d = tail call i64 @rb_num2int(i64 noundef 0) #10
   br label %rb_num2int_inline.exit
 
 rb_num2int_inline.exit:                           ; preds = %bb.b, %bb.c

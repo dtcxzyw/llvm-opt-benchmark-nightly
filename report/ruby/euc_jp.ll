@@ -201,18 +201,12 @@ bb.b:                                             ; preds = %bb.a
   %i.p = zext i8 %i.o to i32
   %i.q = add nuw nsw i32 %i.l, %i.p               ; 2 uses
   %i.r = icmp samesign ult i32 %i.q, 13
-  br i1 %i.r, label %3, label %.critedge29.thread.i
+  br i1 %i.r, label %bb.c, label %.critedge29.thread.i
 
-3:                                                ; preds = %bb.b
-  %4 = zext nneg i32 %i.q to i64                  ; 2 uses
-  %5 = getelementptr inbounds nuw [2 x i8], ptr @onig_jis_property.wordlist, i64 %4 ; 2 uses
-  %6 = shl nuw nsw i64 1, %4
-  %7 = and i64 %6, 7584
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %.critedge29.thread.i, label %bb.c
-
-bb.c:                                             ; preds = %3
-  %i.s = load i8, ptr %5, align 2, !tbaa !19
+bb.c:                                             ; preds = %bb.b
+  %3 = zext nneg i32 %i.q to i64
+  %4 = getelementptr inbounds nuw [2 x i8], ptr @onig_jis_property.wordlist, i64 %3 ; 2 uses
+  %i.s = load i8, ptr %4, align 2, !tbaa !19
   %i.t = sext i8 %i.s to i64
   %i.u = and i64 %i.t, 4294967295
   %i.v = getelementptr inbounds nuw i8, ptr @onig_jis_property_pool_contents, i64 %i.u ; 3 uses
@@ -234,12 +228,12 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = icmp eq i8 %i.ad, 0
   br i1 %i.ae, label %onig_jis_property.exit, label %.critedge29.thread.i
 
-.critedge29.thread.i:                             ; preds = %bb.b, %3, %bb.c, %bb.d, %bb.e, %bb.a
+.critedge29.thread.i:                             ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.a
   %i.af = tail call i32 @onigenc_minimum_property_name_to_ctype(ptr noundef %0, ptr noundef %1, ptr noundef %2) #8
   br label %bb.f
 
 onig_jis_property.exit:                           ; preds = %bb.e
-  %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 1
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !21
   %i.ai = zext i8 %i.ah to i32
   br label %bb.f

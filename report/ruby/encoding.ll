@@ -203,9 +203,8 @@ pm_utf_8_codepoint.exit.thread:                   ; preds = %bb.k, %pm_utf_8_cod
   %i.ah = zext nneg i32 %.3.i17 to i64
   %i.ai = getelementptr i8, ptr @pm_encoding_unicode_table, i64 %i.ah
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !11
-  %2 = and i8 %i.aj, 1
-  %.not = icmp eq i8 %2, 0
-  %i.ak = select i1 %.not, i64 0, i64 %storemerge.i16
+  %.not = trunc i8 %i.aj to i1
+  %i.ak = select i1 %.not, i64 %storemerge.i16, i64 0
   br label %pm_unicode_codepoint_match.exit
 
 .preheader:                                       ; preds = %pm_utf_8_codepoint.exit, %bb.m
@@ -608,10 +607,9 @@ bb.e:                                             ; preds = %bb.d
   %i.l = zext nneg i32 %i.j to i64
   %i.m = getelementptr i8, ptr @pm_encoding_unicode_table, i64 %i.l
   %i.n = load i8, ptr %i.m, align 1, !tbaa !11
-  %2 = and i8 %i.n, 1
-  %.not = icmp eq i8 %2, 0
+  %.not = trunc i8 %i.n to i1
   %i.o = load i64, ptr %i.a, align 8
-  %i.p = select i1 %.not, i64 0, i64 %i.o
+  %i.p = select i1 %.not, i64 %i.o, i64 0
   br label %pm_unicode_codepoint_match.exit
 
 .preheader:                                       ; preds = %bb.d, %bb.g

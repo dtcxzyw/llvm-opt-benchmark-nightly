@@ -204,10 +204,9 @@ bb.e:                                             ; preds = %_ZNSt3setImSt4lessI
   %i.j = lshr i64 %storemerge16, 6
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.j
   %i.l = load i64, ptr %i.k, align 8, !tbaa !25
-  %1 = shl nuw i64 1, %i.i
-  %2 = and i64 %i.l, %1
-  %.not13 = icmp eq i64 %2, 0
-  br i1 %.not13, label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit, label %bb.f
+  %1 = lshr i64 %i.l, %i.i
+  %.not13 = trunc i64 %1 to i1
+  br i1 %.not13, label %bb.f, label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit
 
 bb.f:                                             ; preds = %.preheader
   %.02022.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !37 ; 2 uses
@@ -610,7 +609,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %_ZZN9Stockfish6Search5Skill9pick_bestERKSt6vectorINS0_8RootMoveESaIS3_EEmE3rng.promoted = load i64, ptr @_ZZN9Stockfish6Search5Skill9pick_bestERKSt6vectorINS0_8RootMoveESaIS3_EEmE3rng.0, align 8 ; 2 uses
   %i.o = fptosi double %i.n to i32                ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %xtraiter = and i64 %2, 1
   %i.q = icmp eq i64 %2, 1
   br i1 %i.q, label %.epil.preheader, label %.lr.ph.new
 
@@ -618,16 +616,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %unroll_iter = and i64 %2, -2
   br label %bb.g
 
-._crit_edge.unr-lcssa:                            ; preds = %bb.k
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
-  %.028.epil.init = phi i32 [ -32001, %.lr.ph ], [ %.1.1, %._crit_edge.unr-lcssa ]
-  %.02227.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ck, %._crit_edge.unr-lcssa ]
-  %.epil.init = phi i64 [ %_ZZN9Stockfish6Search5Skill9pick_bestERKSt6vectorINS0_8RootMoveESaIS3_EEmE3rng.promoted, %.lr.ph ], [ %i.bx, %._crit_edge.unr-lcssa ] ; 2 uses
-  %lcmp.mod33 = trunc i64 %2 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod33)
+.epil.preheader:                                  ; preds = %.lr.ph, %bb.k
+  %.028.epil.init = phi i32 [ -32001, %.lr.ph ], [ %.1.1, %bb.k ]
+  %.02227.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ck, %bb.k ]
+  %.epil.init = phi i64 [ %_ZZN9Stockfish6Search5Skill9pick_bestERKSt6vectorINS0_8RootMoveESaIS3_EEmE3rng.promoted, %.lr.ph ], [ %i.bx, %bb.k ] ; 2 uses
   %i.r = getelementptr inbounds nuw [72 x i8], ptr %i.f, i64 %.02227.epil.init ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.t = load i32, ptr %i.s, align 8, !tbaa !238  ; 2 uses
@@ -638,7 +630,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.y = shl i64 %i.x, 25
   %i.z = xor i64 %i.y, %i.x                       ; 2 uses
   %i.aa = lshr i64 %i.z, 27
-  %i.ab = xor i64 %i.aa, %i.z                     ; 3 uses
+  %i.ab = xor i64 %i.aa, %i.z                     ; 2 uses
   %i.ac = trunc i64 %i.ab to i32
   %i.ad = mul i32 %i.ac, 1332534557
   %i.ae = urem i32 %i.ad, %i.o
@@ -658,9 +650,8 @@ bb.e:                                             ; preds = %.epil.preheader
   store i16 %i.an, ptr %i.p, align 8, !tbaa !191
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.epil.preheader, %bb.e, %._crit_edge.unr-lcssa
-  %.lcssa = phi i64 [ %i.bx, %._crit_edge.unr-lcssa ], [ %i.ab, %bb.e ], [ %i.ab, %.epil.preheader ]
-  store i64 %.lcssa, ptr @_ZZN9Stockfish6Search5Skill9pick_bestERKSt6vectorINS0_8RootMoveESaIS3_EEmE3rng.0, align 8, !tbaa !360
+._crit_edge:                                      ; preds = %.epil.preheader, %bb.e
+  store i64 %i.ab, ptr @_ZZN9Stockfish6Search5Skill9pick_bestERKSt6vectorINS0_8RootMoveESaIS3_EEmE3rng.0, align 8, !tbaa !360
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %bb.d
@@ -715,7 +706,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bu = shl i64 %i.bt, 25
   %i.bv = xor i64 %i.bu, %i.bt                    ; 2 uses
   %i.bw = lshr i64 %i.bv, 27
-  %i.bx = xor i64 %i.bw, %i.bv                    ; 4 uses
+  %i.bx = xor i64 %i.bw, %i.bv                    ; 3 uses
   %i.by = trunc i64 %i.bx to i32
   %i.bz = mul i32 %i.by, 1332534557
   %i.ca = urem i32 %i.bz, %i.o
@@ -740,7 +731,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ck = add nuw i64 %.02227, 2                  ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.g, !llvm.loop !362
+  br i1 %niter.ncmp.1, label %.epil.preheader, label %bb.g, !llvm.loop !362
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)

@@ -201,8 +201,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   br i1 %i.d, label %mi_page_thread_free_collect.exit, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %2 = and i64 %.0.i, 1
-  %i.e = cmpxchg weak ptr %i.a, i64 %.0.i, i64 %2 acq_rel acquire, align 8 ; 2 uses
+  %i.e = cmpxchg weak ptr %i.a, i64 %.0.i, i64 %.0.i acq_rel acquire, align 8 ; 2 uses
   %i.f = extractvalue { i64, i1 } %i.e, 1
   %i.g = extractvalue { i64, i1 } %i.e, 0
   br i1 %i.f, label %bb.d, label %bb.b, !llvm.loop !54
@@ -343,8 +342,7 @@ bb.h:                                             ; preds = %bb.i, %bb.g
   br i1 %i.ah, label %mi_page_thread_free_collect.exit.i, label %bb.i, !prof !7
 
 bb.i:                                             ; preds = %bb.h
-  %2 = and i64 %.0.i.i, 1
-  %i.ai = cmpxchg weak ptr %i.ae, i64 %.0.i.i, i64 %2 acq_rel acquire, align 8 ; 2 uses
+  %i.ai = cmpxchg weak ptr %i.ae, i64 %.0.i.i, i64 %.0.i.i acq_rel acquire, align 8 ; 2 uses
   %i.aj = extractvalue { i64, i1 } %i.ai, 1
   %i.ak = extractvalue { i64, i1 } %i.ai, 0
   br i1 %i.aj, label %bb.j, label %bb.h, !llvm.loop !54
@@ -466,8 +464,7 @@ bb.d:                                             ; preds = %bb.e, %mi_page_set_
   br i1 %i.p, label %mi_page_thread_free_collect.exit.i, label %bb.e, !prof !7
 
 bb.e:                                             ; preds = %bb.d
-  %2 = and i64 %.0.i.i, 1
-  %i.q = cmpxchg weak ptr %i.m, i64 %.0.i.i, i64 %2 acq_rel acquire, align 8 ; 2 uses
+  %i.q = cmpxchg weak ptr %i.m, i64 %.0.i.i, i64 %.0.i.i acq_rel acquire, align 8 ; 2 uses
   %i.r = extractvalue { i64, i1 } %i.q, 1
   %i.s = extractvalue { i64, i1 } %i.q, 0
   br i1 %i.r, label %bb.f, label %bb.d, !llvm.loop !54
@@ -686,8 +683,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   br i1 %i.d, label %mi_page_thread_free_collect.exit.i, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %2 = and i64 %.0.i.i, 1
-  %i.e = cmpxchg weak ptr %i.a, i64 %.0.i.i, i64 %2 acq_rel acquire, align 8 ; 2 uses
+  %i.e = cmpxchg weak ptr %i.a, i64 %.0.i.i, i64 %.0.i.i acq_rel acquire, align 8 ; 2 uses
   %i.f = extractvalue { i64, i1 } %i.e, 1
   %i.g = extractvalue { i64, i1 } %i.e, 0
   br i1 %i.f, label %bb.d, label %bb.b, !llvm.loop !54
@@ -1090,8 +1086,7 @@ bb.x:                                             ; preds = %bb.y, %bb.w
   br i1 %i.bz, label %mi_page_thread_free_collect.exit.i.i, label %bb.y, !prof !7
 
 bb.y:                                             ; preds = %bb.x
-  %4 = and i64 %.0.i.i.i, 1
-  %i.ca = cmpxchg weak ptr %i.bw, i64 %.0.i.i.i, i64 %4 acq_rel acquire, align 8 ; 2 uses
+  %i.ca = cmpxchg weak ptr %i.bw, i64 %.0.i.i.i, i64 %.0.i.i.i acq_rel acquire, align 8 ; 2 uses
   %i.cb = extractvalue { i64, i1 } %i.ca, 1
   %i.cc = extractvalue { i64, i1 } %i.ca, 0
   br i1 %i.cb, label %bb.z, label %bb.x, !llvm.loop !54
@@ -1494,8 +1489,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   br i1 %i.p, label %mi_page_thread_free_collect.exit.i, label %bb.f, !prof !7
 
 bb.f:                                             ; preds = %bb.e
-  %3 = and i64 %.0.i.i, 1
-  %i.q = cmpxchg weak ptr %i.m, i64 %.0.i.i, i64 %3 acq_rel acquire, align 8 ; 2 uses
+  %i.q = cmpxchg weak ptr %i.m, i64 %.0.i.i, i64 %.0.i.i acq_rel acquire, align 8 ; 2 uses
   %i.r = extractvalue { i64, i1 } %i.q, 1
   %i.s = extractvalue { i64, i1 } %i.q, 0
   br i1 %i.r, label %bb.g, label %bb.e, !llvm.loop !54
@@ -1569,8 +1563,7 @@ bb.p:                                             ; preds = %bb.q, %bb.o
   br i1 %i.al, label %mi_page_thread_free_collect.exit.i.i, label %bb.q, !prof !7
 
 bb.q:                                             ; preds = %bb.p
-  %4 = and i64 %.0.i.i.i, 1
-  %i.am = cmpxchg weak ptr %i.m, i64 %.0.i.i.i, i64 %4 acq_rel acquire, align 8 ; 2 uses
+  %i.am = cmpxchg weak ptr %i.m, i64 %.0.i.i.i, i64 %.0.i.i.i acq_rel acquire, align 8 ; 2 uses
   %i.an = extractvalue { i64, i1 } %i.am, 1
   %i.ao = extractvalue { i64, i1 } %i.am, 0
   br i1 %i.an, label %bb.r, label %bb.p, !llvm.loop !54

@@ -204,8 +204,8 @@ bb.dx:                                            ; preds = %bb.dw, %bb.dt, %bb.
 
 bb.dy:                                            ; preds = %.loopexit359
   %i.aby = icmp ne ptr %.0208.lcssa, null
-  %20 = icmp ne i32 %2, 0                         ; 2 uses
-  %or.cond7 = and i1 %20, %i.aby
+  %20 = trunc nuw i32 %2 to i1                    ; 2 uses
+  %or.cond7 = and i1 %i.aby, %20
   br i1 %or.cond7, label %bb.dz, label %bb.ea
 
 bb.dz:                                            ; preds = %bb.dy
@@ -217,7 +217,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 bb.ea:                                            ; preds = %bb.dz, %bb.dy
   %i.acc = icmp ne ptr %.0211.lcssa, null
-  %or.cond9 = and i1 %20, %i.acc
+  %or.cond9 = and i1 %i.acc, %20
   br i1 %or.cond9, label %bb.eb, label %bb.ed
 
 bb.eb:                                            ; preds = %bb.ea
@@ -376,7 +376,6 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.peel.next.preheader:                       ; preds = %bb.c
   %i.m = add nsw i64 %1, -1                       ; 3 uses
-  %xtraiter = and i64 %i.m, 1
   %i.n = icmp eq i64 %1, 2
   br i1 %i.n, label %.lr.ph.peel.next.epil.preheader, label %.lr.ph.peel.next.preheader.new
 
@@ -425,13 +424,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph.peel.next, !llvm.loop !129
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph.peel.next
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.peel.next.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %i.m to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.peel.next.epil.preheader, label %._crit_edge
 
 .lr.ph.peel.next.epil.preheader:                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.peel.next.preheader
   %.027.epil.init = phi ptr [ getelementptr inbounds nuw (i8, ptr @binary_filename, i64 28), %.lr.ph.peel.next.preheader ], [ %i.ao, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
   %.02526.epil.init = phi i64 [ 1, %.lr.ph.peel.next.preheader ], [ %i.ap, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod32 = trunc i64 %i.m to i1
+  %lcmp.mod32 = trunc nuw i64 %i.m to i1
   tail call void @llvm.assume(i1 %lcmp.mod32)
   %i.aq = getelementptr i8, ptr %0, i64 %.02526.epil.init
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !14

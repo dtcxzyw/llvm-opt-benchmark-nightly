@@ -203,7 +203,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = and i16 %.0.val, 36
   %or.cond70.not.a = icmp eq i16 %i.b, 36
-  br i1 %or.cond70.not.a, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit, label %16
+  br i1 %or.cond70.not.a, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit, label %bb.c
 
 _ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
@@ -220,17 +220,13 @@ _ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   br label %.thread17
 
-16:                                               ; preds = %bb.b
-  %17 = and i16 %.0.val, 8
-  %.not56 = icmp eq i16 %17, 0
-  br i1 %.not56, label %bb.g, label %bb.c
-
-bb.c:                                             ; preds = %16
-  %18 = lshr i16 %.0.val1, 1
-  %19 = xor i16 %18, %.0.val
-  %20 = and i16 %19, 1
-  %.not57 = icmp eq i16 %20, 0
-  br i1 %.not57, label %bb.g, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit75
+bb.c:                                             ; preds = %bb.b
+  %16 = and i16 %.0.val, 8
+  %.not.not56 = icmp eq i16 %16, 0
+  %17 = lshr i16 %.0.val1, 1
+  %.not57 = icmp eq i16 %.0.val, %17
+  %or.cond22 = or i1 %.not.not56, %.not57
+  br i1 %or.cond22, label %bb.g, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit75
 
 _ZN6hermes2vm11TwineChar16C2EPKc.exit75:          ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
@@ -356,7 +352,7 @@ _ZN6hermes2vmplERKNS0_11TwineChar16ES3_.exit104:  ; preds = %bb.d, %bb.e, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   br label %.thread17
 
-bb.g:                                             ; preds = %16, %bb.c, %bb.a
+bb.g:                                             ; preds = %bb.c, %bb.a
   %i.an = and i16 %.0.val, 192
   %i.ao = icmp eq i16 %i.an, 0
   %i.ap = and i16 %.0.val, 256

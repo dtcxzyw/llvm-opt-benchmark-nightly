@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !69)
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span5InnerECsj34PGqTgg0L_16deltalake_lakefs.exit, label %bb.c
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.c, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span5InnerECsj34PGqTgg0L_16deltalake_lakefs.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -607,8 +607,8 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !295)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !298)
   %i.d = load i64, ptr %.val, align 8, !range !56, !alias.scope !301, !noundef !7
-  %1 = icmp eq i64 %i.d, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher8DispatchECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i.i, label %bb.d
+  %1 = trunc nuw i64 %i.d to i1
+  br i1 %1, label %bb.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher8DispatchECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i.i
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
@@ -764,8 +764,8 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !319)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !322)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !325)
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher8DispatchECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i, label %bb.d
+  %1 = trunc nuw i64 %i.c to i1
+  br i1 %1, label %bb.d, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher8DispatchECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -939,8 +939,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !367)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !370)
   %i.a = load i64, ptr %0, align 8, !range !56, !alias.scope !373, !noundef !7
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher8DispatchECsj34PGqTgg0L_16deltalake_lakefs.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher8DispatchECsj34PGqTgg0L_16deltalake_lakefs.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1343,8 +1343,8 @@ bb.q:                                             ; preds = %_RNvXs7_NtCscTw95cG
   call void @llvm.experimental.noalias.scope.decl(metadata !491)
   call void @llvm.experimental.noalias.scope.decl(metadata !494)
   call void @llvm.experimental.noalias.scope.decl(metadata !497)
-  %1 = icmp eq i64 %i.bh, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCscTw95cGIolY_7tracing4span5InnerEECsj34PGqTgg0L_16deltalake_lakefs.exit, label %bb.r
+  %1 = trunc nuw i64 %i.bh to i1
+  br i1 %1, label %bb.r, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCscTw95cGIolY_7tracing4span5InnerEECsj34PGqTgg0L_16deltalake_lakefs.exit
 
 bb.r:                                             ; preds = %bb.q
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1741,8 +1741,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !509)
   %i.a = load i64, ptr %0, align 8, !range !56, !alias.scope !509, !noundef !7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.d
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !512)
@@ -1992,8 +1992,8 @@ bb.p:                                             ; preds = %_RINvMs4_NtNtNtCskQ
   call void @llvm.experimental.noalias.scope.decl(metadata !564)
   call void @llvm.experimental.noalias.scope.decl(metadata !567)
   %i.af = load i64, ptr %i.g, align 8, !range !56, !alias.scope !570, !noundef !7
-  %2 = icmp eq i64 %i.af, 0
-  br i1 %2, label %bb.q, label %bb.s
+  %2 = trunc nuw i64 %i.af to i1
+  br i1 %2, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.experimental.noalias.scope.decl(metadata !571)
@@ -2396,9 +2396,11 @@ bb.ab:                                            ; preds = %bb.z
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef ptr @_RNvYINtNtNtCsdLO2CoGLRSt_6base645write7encoder13EncoderWriterNtNtNtB9_6engine15general_purpose14GeneralPurposeQINtNtCs6Po7BT7Nknu_5alloc3vec3VechEENtNtCs2pqxYH9ZEk8_3std2io5Write9write_fmtCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(1064) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 {
+define hidden noundef ptr @_RNvYINtNtNtCsdLO2CoGLRSt_6base645write7encoder13EncoderWriterNtNtNtB9_6engine15general_purpose14GeneralPurposeQINtNtCs6Po7BT7Nknu_5alloc3vec3VechEENtNtCs2pqxYH9ZEk8_3std2io5Write9write_fmtCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(1064) %0, ptr nofree noundef nonnull readonly captures(address, read_provenance) %1, ptr noundef nonnull %2) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noundef ptr @_RINvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtNtNtCsdLO2CoGLRSt_6base645write7encoder13EncoderWriterNtNtNtBP_6engine15general_purpose14GeneralPurposeQINtNtCs6Po7BT7Nknu_5alloc3vec3VechEEECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 dereferenceable(1064) %0, ptr noundef nonnull %1, ptr noundef nonnull %2)
+  %3 = ptrtoint ptr %2 to i64
+  %4 = lshr i64 %3, 1
+  %i.a = tail call noundef ptr @_RNvYINtNtNtCsdLO2CoGLRSt_6base645write7encoder13EncoderWriterNtNtNtB9_6engine15general_purpose14GeneralPurposeQINtNtCs6Po7BT7Nknu_5alloc3vec3VechEENtNtCs2pqxYH9ZEk8_3std2io5Write9write_allCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 dereferenceable(1064) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %4)
   ret ptr %i.a
 }
 
@@ -2662,9 +2664,6 @@ declare hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNvXs2_NtCsjyY8HP
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvMsa_NtCs2HSpDNxY7OE_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tablejNtNtNtNtCsc8g9ilNZkOD_14allocator_api26stable5alloc6global6GlobalECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(32), ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef, i64 noundef) unnamed_addr #0
-
-; Function Attrs: nonlazybind uwtable
-declare hidden noundef ptr @_RINvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtNtNtCsdLO2CoGLRSt_6base645write7encoder13EncoderWriterNtNtNtBP_6engine15general_purpose14GeneralPurposeQINtNtCs6Po7BT7Nknu_5alloc3vec3VechEEECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(1064), ptr noundef nonnull, ptr noundef nonnull) unnamed_addr #0
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16

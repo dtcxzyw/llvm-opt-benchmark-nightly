@@ -203,11 +203,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.j = trunc i64 %1 to i1
+  %i.j = trunc nuw i64 %1 to i1
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call i64 @rb_fix2int(i64 noundef %1) #6
+  %i.k = tail call i64 @rb_fix2int(i64 noundef 1) #6
   %i.l = trunc i64 %i.k to i32
   br label %bb.f
 
@@ -347,7 +347,7 @@ rb_scan_args_set.exit:                            ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.backedge, %rb_scan_args_set.exit
-  %.021 = phi i32 [ 0, %rb_scan_args_set.exit ], [ %8, %.backedge ] ; 4 uses
+  %.021 = phi i32 [ 0, %rb_scan_args_set.exit ], [ %.sink, %.backedge ] ; 5 uses
   %i.ac = call i64 @rb_io_taint_check(i64 noundef %2) #6
   %i.ad = inttoptr i64 %i.ac to ptr
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
@@ -369,8 +369,7 @@ bb.f:                                             ; preds = %.backedge, %rb_scan
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !42
   store i32 %i.ah, ptr %3, align 8, !tbaa !56
-  %6 = and i32 %.021, 1
-  %.not31 = icmp eq i32 %6, 0
+  %.not31 = trunc nuw i32 %.021 to i1
   %i.ai = and i32 %.021, 4
   %.not32 = icmp eq i32 %i.ai, 0
   br label %bb.g
@@ -384,14 +383,18 @@ bb.g:                                             ; preds = %bb.j, %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.am = call ptr @rb_errno_ptr() #6
   %i.an = load i32, ptr %i.am, align 4, !tbaa !6  ; 3 uses
-  %7 = icmp eq i32 %i.an, 90
-  %or.cond = select i1 %7, i1 %.not31, i1 false
-  br i1 %or.cond, label %.backedge, label %bb.i
+  %6 = icmp ne i32 %i.an, 90
+  %or.cond = select i1 %6, i1 true, i1 %.not31
+  br i1 %or.cond, label %bb.i, label %.backedge
 
 bb.i:                                             ; preds = %bb.h
   %i.ao = icmp eq i32 %i.an, 12
   %or.cond34 = select i1 %i.ao, i1 %.not32, i1 false
-  br i1 %or.cond34, label %.backedge, label %bb.j
+  br i1 %or.cond34, label %7, label %bb.j
+
+7:                                                ; preds = %bb.i
+  %8 = or disjoint i32 %.021, 4
+  br label %.backedge
 
 bb.j:                                             ; preds = %bb.i
   %i.ap = load i32, ptr %3, align 8, !tbaa !56
@@ -413,13 +416,16 @@ bb.l:                                             ; preds = %bb.g
 bb.m:                                             ; preds = %bb.l
   %i.av = and i32 %.021, 2
   %.not30 = icmp eq i32 %i.av, 0
-  br i1 %.not30, label %.backedge, label %bb.n
+  br i1 %.not30, label %9, label %bb.n
 
-.backedge:                                        ; preds = %bb.i, %bb.h, %bb.m
-  %.sink98 = phi i32 [ 2, %bb.m ], [ 1, %bb.h ], [ 4, %bb.i ]
-  %.sink = phi i32 [ 24, %bb.m ], [ 24, %bb.h ], [ 12, %bb.i ]
-  %8 = or disjoint i32 %.021, %.sink98
-  %i.aw = call i32 @rb_gc_for_fd(i32 noundef %.sink) #6 ; 0 uses
+9:                                                ; preds = %bb.m
+  %10 = or disjoint i32 %.021, 2
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.h, %7, %9
+  %.sink98 = phi i32 [ 12, %7 ], [ 24, %9 ], [ 24, %bb.h ]
+  %.sink = phi i32 [ %8, %7 ], [ %10, %9 ], [ 1, %bb.h ]
+  %i.aw = call i32 @rb_gc_for_fd(i32 noundef %.sink98) #6 ; 0 uses
   br label %bb.f
 
 bb.n:                                             ; preds = %bb.m

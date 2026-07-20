@@ -203,8 +203,8 @@ middle.block53:                                   ; preds = %vector.body48
   %i.bf = mul nsw i32 %i.aa, %i.u
   %i.bg = sext i32 %i.be to i64                   ; 5 uses
   %i.bh = sext i32 %i.bf to i64                   ; 5 uses
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1)
-  %wide.trip.count69.i = zext nneg i32 %smax.i to i64 ; 5 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.bd, i32 1) ; 2 uses
+  %wide.trip.count69.i = zext nneg i32 %smax.i to i64 ; 4 uses
   %min.iters.check24 = icmp slt i32 %i.bd, 16
   br i1 %min.iters.check24, label %scalar.ph23.preheader, label %vector.memcheck
 
@@ -265,9 +265,8 @@ middle.block34:                                   ; preds = %vector.body28
 
 scalar.ph23.preheader:                            ; preds = %vector.memcheck, %.lr.ph57.i, %middle.block34
   %indvars.iv66.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph57.i ], [ %n.vec27, %middle.block34 ] ; 5 uses
-  %xtraiter56 = and i64 %wide.trip.count69.i, 1
-  %lcmp.mod57.not = icmp eq i64 %xtraiter56, 0
-  br i1 %lcmp.mod57.not, label %scalar.ph23.prol.loopexit, label %scalar.ph23.prol
+  %lcmp.mod57.not = trunc i32 %smax.i to i1
+  br i1 %lcmp.mod57.not, label %scalar.ph23.prol, label %scalar.ph23.prol.loopexit
 
 scalar.ph23.prol:                                 ; preds = %scalar.ph23.preheader
   %i.ce = add nsw i64 %indvars.iv66.i.ph, %i.bg   ; 2 uses

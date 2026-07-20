@@ -31,28 +31,24 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
-  %i.d = trunc i64 %2 to i1
-  br i1 %i.d, label %4, label %bb.b
-
-4:                                                ; preds = %bb.a
-  %5 = ashr i64 %2, 1
-  br label %rb_num2long_inline.exit
+  %i.d = trunc nuw i64 %2 to i1
+  br i1 %i.d, label %rb_num2long_inline.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call i64 @rb_num2long(i64 noundef %2) #3
+  %i.e = tail call i64 @rb_num2long(i64 noundef 0) #3
   br label %rb_num2long_inline.exit
 
-rb_num2long_inline.exit:                          ; preds = %4, %bb.b
-  %.0.i = phi i64 [ %5, %4 ], [ %i.e, %bb.b ]
-  %i.f = trunc i64 %3 to i1
+rb_num2long_inline.exit:                          ; preds = %bb.a, %bb.b
+  %.0.i = phi i64 [ %i.e, %bb.b ], [ 0, %bb.a ]
+  %i.f = trunc nuw i64 %3 to i1
   br i1 %i.f, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %rb_num2long_inline.exit
-  %i.g = tail call i64 @rb_fix2int(i64 noundef %3) #3
+  %i.g = tail call i64 @rb_fix2int(i64 noundef 1) #3
   br label %rb_num2int_inline.exit
 
 bb.d:                                             ; preds = %rb_num2long_inline.exit
-  %i.h = tail call i64 @rb_num2int(i64 noundef %3) #3
+  %i.h = tail call i64 @rb_num2int(i64 noundef 0) #3
   br label %rb_num2int_inline.exit
 
 rb_num2int_inline.exit:                           ; preds = %bb.c, %bb.d

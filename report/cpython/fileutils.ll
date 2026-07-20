@@ -203,12 +203,12 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.i.preheader:                               ; preds = %.preheader
   %i.dq = load i32, ptr %i.c, align 4, !tbaa !7   ; 2 uses
   %i.dr = and i32 %i.dq, -2048
-  %.not.i.i = icmp eq i32 %i.dr, 55296
-  %0 = icmp sgt i32 %i.dq, 1114111
-  %narrow.i.not.i = or i1 %0, %.not.i.i
+  %0 = icmp ne i32 %i.dr, 55296
+  %1 = icmp slt i32 %i.dq, 1114112
+  %narrow.i.i = and i1 %1, %0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
-  br i1 %narrow.i.not.i, label %_Py_mbstowcs.exit.thread, label %.critedge
+  br i1 %narrow.i.i, label %.critedge, label %_Py_mbstowcs.exit.thread
 
 _Py_mbstowcs.exit:                                ; preds = %.preheader
   %.not31 = icmp eq i64 %i.dn, -1
@@ -422,10 +422,10 @@ bb.f:                                             ; preds = %.lr.ph.i
   %i.j = getelementptr [4 x i8], ptr %i.e, i64 %.01823.i
   %i.k = load i32, ptr %i.j, align 4, !tbaa !7    ; 2 uses
   %i.l = and i32 %i.k, -2048
-  %.not.i.i = icmp eq i32 %i.l, 55296
-  %6 = icmp sgt i32 %i.k, 1114111
-  %narrow.i.not.i = or i1 %6, %.not.i.i
-  br i1 %narrow.i.not.i, label %_Py_mbstowcs.exit.thread, label %bb.f
+  %6 = icmp ne i32 %i.l, 55296
+  %7 = icmp slt i32 %i.k, 1114112
+  %narrow.i.i = and i1 %7, %6
+  br i1 %narrow.i.i, label %bb.f, label %_Py_mbstowcs.exit.thread
 
 _Py_mbstowcs.exit:                                ; preds = %bb.f, %bb.e
   %.not69 = icmp eq i64 %i.f, -1
@@ -480,10 +480,10 @@ _Py_mbrtowc.exit.us:                              ; preds = %.lr.ph.split.us
 bb.l:                                             ; preds = %.lr.ph.split.us
   %i.u = load i32, ptr %.053107.us, align 4, !tbaa !7 ; 2 uses
   %i.v = and i32 %i.u, -2048
-  %.not.i.i78.us = icmp eq i32 %i.v, 55296
-  %7 = icmp sgt i32 %i.u, 1114111
-  %narrow.i.not.i79.us = or i1 %7, %.not.i.i78.us
-  br i1 %narrow.i.not.i79.us, label %.split.us, label %bb.m
+  %8 = icmp ne i32 %i.v, 55296
+  %9 = icmp slt i32 %i.u, 1114112
+  %narrow.i.i78.us = and i1 %9, %8
+  br i1 %narrow.i.i78.us, label %bb.m, label %.split.us
 
 bb.m:                                             ; preds = %bb.l
   %i.w = getelementptr i8, ptr %.054106.us, i64 %i.r
@@ -504,10 +504,10 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %.lr.ph.split
   %i.aa = load i32, ptr %.053107, align 4, !tbaa !7 ; 2 uses
   %i.ab = and i32 %i.aa, -2048
-  %.not.i.i78 = icmp eq i32 %i.ab, 55296
-  %8 = icmp sgt i32 %i.aa, 1114111
-  %narrow.i.not.i79 = or i1 %8, %.not.i.i78
-  br i1 %narrow.i.not.i79, label %_Py_mbrtowc.exit.thread, label %bb.o
+  %10 = icmp ne i32 %i.ab, 55296
+  %11 = icmp slt i32 %i.aa, 1114112
+  %narrow.i.i78 = and i1 %11, %10
+  br i1 %narrow.i.i78, label %bb.o, label %_Py_mbrtowc.exit.thread
 
 _Py_mbrtowc.exit:                                 ; preds = %.lr.ph.split
   %i.ac = icmp eq i64 %i.y, 0
@@ -710,9 +710,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.sink.split.i.i, %bb.h
   %i.i = phi i1 [ false, %.sink.split.i.i ], [ true, %bb.h ]
   %i.j = tail call i64 @wcslen(ptr noundef readonly %0) #18 ; 4 uses
-  %.not.i = icmp eq i32 %4, 0                     ; 2 uses
+  %.not.i = trunc nuw i32 %4 to i1                ; 2 uses
   %i.k = add i64 %i.j, 1                          ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %.not.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.l = tail call ptr @PyMem_RawMalloc(i64 noundef %i.k) #17
@@ -763,7 +763,7 @@ bb.m:                                             ; preds = %.lr.ph.split.us.i
 
 .split.us.i:                                      ; preds = %.lr.ph.split.us.i, %.lr.ph.split.i
   %.us-phi.i = phi i64 [ %.03349.i, %.lr.ph.split.i ], [ %.03349.us.i, %.lr.ph.split.us.i ]
-  br i1 %.not.i, label %bb.o, label %bb.n
+  br i1 %.not.i, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.split.us.i
   tail call void @PyMem_RawFree(ptr noundef nonnull %.034.i) #17
@@ -935,8 +935,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load i32, ptr %i.b, align 8, !tbaa !187  ; 2 uses
-  %.not.i8 = icmp sgt i32 %i.f, -1
-  br i1 %.not.i8, label %bb.d, label %Py_DECREF.exit9
+  %.not.i8 = icmp slt i32 %i.f, 0
+  br i1 %.not.i8, label %Py_DECREF.exit9, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = add nsw i32 %i.f, -1                     ; 2 uses
@@ -948,8 +948,8 @@ bb.e:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %i.a, align 8, !tbaa !193
   %i.j = call i32 @stat64(ptr noundef %i.i, ptr noundef %1) #17 ; 3 uses
   %i.k = load i32, ptr %i.b, align 8, !tbaa !187  ; 2 uses
-  %.not.i = icmp sgt i32 %i.k, -1
-  br i1 %.not.i, label %bb.f, label %Py_DECREF.exit9
+  %.not.i = icmp slt i32 %i.k, 0
+  br i1 %.not.i, label %Py_DECREF.exit9, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.l = add nsw i32 %i.k, -1                     ; 2 uses
@@ -1020,8 +1020,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %bb.d, label %get_inheritable.exit
 
 bb.d:                                             ; preds = %bb.c
-  %.not.i = icmp eq i32 %2, 0
-  br i1 %.not.i, label %.critedge, label %bb.e
+  %.not.i = trunc nuw i32 %2 to i1
+  br i1 %.not.i, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
   %i.g = load ptr, ptr @PyExc_OSError, align 8, !tbaa !198
@@ -1029,8 +1029,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.critedge
 
 get_inheritable.exit:                             ; preds = %bb.c
-  %4 = and i32 %i.e, 1
-  store atomic i32 %4, ptr %3 monotonic, align 4
+  store atomic i32 %i.e, ptr %3 monotonic, align 4
   br label %bb.f
 
 bb.f:                                             ; preds = %get_inheritable.exit, %bb.b
@@ -1039,8 +1038,8 @@ bb.f:                                             ; preds = %get_inheritable.exi
   br i1 %.not37, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f, %bb.a
-  %.not38 = icmp eq i32 %2, 0                     ; 2 uses
-  br i1 %.not38, label %.thread, label %bb.h
+  %.not38 = trunc nuw i32 %2 to i1                ; 2 uses
+  br i1 %.not38, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.j = load atomic i32, ptr @set_inheritable.ioctl_works monotonic, align 4
@@ -1104,12 +1103,11 @@ bb.q:                                             ; preds = %.thread, %bb.o
   br i1 %i.aa, label %.critedge, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.ab = tail call i32 (i32, i32, ...) @fcntl64(i32 noundef %0, i32 noundef 2, i32 noundef %.031) #17
-  %5 = icmp sgt i32 %i.ab, -1                     ; 2 uses
-  %brmerge = or i1 %.not38, %5
-  %not. = xor i1 %5, true
-  %.mux = sext i1 %not. to i32
-  br i1 %brmerge, label %.critedge, label %bb.s
+  %i.ab = tail call i32 (i32, i32, ...) @fcntl64(i32 noundef %0, i32 noundef 2, i32 noundef %.031) #17 ; 2 uses
+  %4 = icmp slt i32 %i.ab, 0
+  %brmerge.not = and i1 %4, %.not38
+  %.lobit = ashr i32 %i.ab, 31
+  br i1 %brmerge.not, label %bb.s, label %.critedge
 
 bb.s:                                             ; preds = %bb.r
   %i.ac = load ptr, ptr @PyExc_OSError, align 8, !tbaa !198
@@ -1117,7 +1115,7 @@ bb.s:                                             ; preds = %bb.r
   br label %.critedge
 
 .critedge:                                        ; preds = %.thread, %bb.d, %bb.e, %bb.r, %bb.s, %bb.q, %bb.p, %bb.j, %bb.k, %bb.f, %bb.m
-  %.1 = phi i32 [ 0, %bb.j ], [ -1, %bb.e ], [ 0, %bb.q ], [ -1, %bb.s ], [ -1, %bb.m ], [ 0, %bb.f ], [ %.mux, %bb.r ], [ -1, %.thread ], [ 0, %bb.k ], [ -1, %bb.p ], [ -1, %bb.d ]
+  %.1 = phi i32 [ 0, %bb.j ], [ -1, %bb.e ], [ 0, %bb.q ], [ -1, %bb.s ], [ -1, %bb.m ], [ 0, %bb.f ], [ %.lobit, %bb.r ], [ -1, %.thread ], [ 0, %bb.k ], [ -1, %bb.p ], [ -1, %bb.d ]
   ret i32 %.1
 }
 
@@ -1140,8 +1138,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %set_inheritable.exit, label %get_inheritable.exit.i
 
 get_inheritable.exit.i:                           ; preds = %bb.c
-  %3 = and i32 %i.e, 1
-  store atomic i32 %3, ptr %2 monotonic, align 4
+  store atomic i32 %i.e, ptr %2 monotonic, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %get_inheritable.exit.i, %bb.b
@@ -1182,8 +1179,8 @@ bb.a:
 define internal fastcc range(i32 -1, -2147483648) i32 @_Py_open_impl(ptr noundef %0, i32 noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
   %i.a = or i32 %1, 524288                        ; 3 uses
-  %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %bb.p, label %bb.b
+  %.not = trunc nuw i32 %2 to i1
+  br i1 %.not, label %bb.b, label %bb.p
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call ptr @PyUnicode_DecodeFSDefault(ptr noundef %0) #17 ; 15 uses
@@ -1197,8 +1194,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = load i32, ptr %i.b, align 8, !tbaa !187  ; 2 uses
-  %.not.i44 = icmp sgt i32 %i.f, -1
-  br i1 %.not.i44, label %bb.e, label %.critedge39
+  %.not.i44 = icmp slt i32 %i.f, 0
+  br i1 %.not.i44, label %.critedge39, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.g = add nsw i32 %i.f, -1                     ; 2 uses
@@ -1230,8 +1227,8 @@ bb.h:                                             ; preds = %bb.g
 
 .critedge:                                        ; preds = %bb.h
   %i.p = load i32, ptr %i.b, align 8, !tbaa !187  ; 2 uses
-  %.not.i42 = icmp sgt i32 %i.p, -1
-  br i1 %.not.i42, label %bb.i, label %.critedge39
+  %.not.i42 = icmp slt i32 %i.p, 0
+  br i1 %.not.i42, label %.critedge39, label %bb.i
 
 bb.i:                                             ; preds = %.critedge
   %i.q = add nsw i32 %i.p, -1                     ; 2 uses
@@ -1247,8 +1244,8 @@ bb.k:                                             ; preds = %bb.g
   %i.s = load ptr, ptr @PyExc_OSError, align 8, !tbaa !198
   %i.t = tail call ptr @PyErr_SetFromErrnoWithFilenameObjects(ptr noundef %i.s, ptr noundef nonnull %i.b, ptr noundef null) #17 ; 0 uses
   %i.u = load i32, ptr %i.b, align 8, !tbaa !187  ; 2 uses
-  %.not.i40 = icmp sgt i32 %i.u, -1
-  br i1 %.not.i40, label %bb.l, label %.critedge39
+  %.not.i40 = icmp slt i32 %i.u, 0
+  br i1 %.not.i40, label %.critedge39, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.v = add nsw i32 %i.u, -1                     ; 2 uses
@@ -1262,8 +1259,8 @@ bb.m:                                             ; preds = %bb.l
 
 .split:                                           ; preds = %.preheader
   %i.x = load i32, ptr %i.b, align 8, !tbaa !187  ; 2 uses
-  %.not.i = icmp sgt i32 %i.x, -1
-  br i1 %.not.i, label %bb.n, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.x, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.n
 
 bb.n:                                             ; preds = %.split
   %i.y = add nsw i32 %i.x, -1                     ; 2 uses
@@ -1295,8 +1292,7 @@ bb.q:                                             ; preds = %.split31
   br i1 %i.ag, label %set_inheritable.exit.thread, label %get_inheritable.exit.i
 
 get_inheritable.exit.i:                           ; preds = %bb.q
-  %3 = and i32 %i.af, 1
-  store atomic i32 %3, ptr @_Py_open_cloexec_works monotonic, align 4
+  store atomic i32 %i.af, ptr @_Py_open_cloexec_works monotonic, align 4
   br label %bb.r
 
 bb.r:                                             ; preds = %get_inheritable.exit.i, %.split31
@@ -1464,8 +1460,8 @@ bb.f:                                             ; preds = %bb.e
   %i.m = load i32, ptr %i.j, align 4, !tbaa !7
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !198  ; 3 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !187  ; 2 uses
-  %.not.i = icmp sgt i32 %i.o, -1
-  br i1 %.not.i, label %bb.g, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.o, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.g
 
 bb.g:                                             ; preds = %.critedge
   %i.p = add nsw i32 %i.o, -1                     ; 2 uses
@@ -1868,14 +1864,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 0, ptr %i.c, align 4, !tbaa !7
   %.not134 = icmp eq i64 %i.b, 0
-  %.not56 = icmp eq i32 %4, 0                     ; 5 uses
+  %.not56 = trunc nuw i32 %4 to i1                ; 5 uses
   br i1 %.not134, label %.split92, label %.lr.ph.us.us
 
 .thread:                                          ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 0, ptr %i.d, align 4, !tbaa !7
   %.not134165 = icmp eq i64 %i.b, 0
-  %.not56166 = icmp eq i32 %4, 0                  ; 4 uses
+  %.not56166 = trunc nuw i32 %4 to i1             ; 4 uses
   br i1 %.not134165, label %.split92, label %.lr.ph.us
 
 .lr.ph.us.us:                                     ; preds = %.sink.split.i, %bb.e
@@ -1888,15 +1884,15 @@ bb.b:                                             ; preds = %._crit_edge.split.u
   br i1 %.not56, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = call ptr @PyMem_RawMalloc(i64 noundef %i.e) #17
+  %i.f = call ptr @PyMem_Malloc(i64 noundef %i.e) #17
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.g = call ptr @PyMem_Malloc(i64 noundef %i.e) #17
+  %i.g = call ptr @PyMem_RawMalloc(i64 noundef %i.e) #17
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.152.us.us = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 2 uses
+  %.152.us.us = phi ptr [ %i.g, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
   %i.h = icmp eq ptr %.152.us.us, null
   br i1 %i.h, label %get_surrogateescape.exit, label %.lr.ph.us.us
 
@@ -1955,15 +1951,15 @@ bb.k:                                             ; preds = %._crit_edge.split.u
   br i1 %.not56166, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.u = call ptr @PyMem_RawMalloc(i64 noundef %i.t) #17
+  %i.u = call ptr @PyMem_Malloc(i64 noundef %i.t) #17
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  %i.v = call ptr @PyMem_Malloc(i64 noundef %i.t) #17
+  %i.v = call ptr @PyMem_RawMalloc(i64 noundef %i.t) #17
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.152.us = phi ptr [ %i.u, %bb.l ], [ %i.v, %bb.m ] ; 2 uses
+  %.152.us = phi ptr [ %i.v, %bb.m ], [ %i.u, %bb.l ] ; 2 uses
   %i.w = icmp eq ptr %.152.us, null
   br i1 %i.w, label %get_surrogateescape.exit, label %.lr.ph.us
 
@@ -2039,7 +2035,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.r,
 
 bb.w:                                             ; preds = %.split92.split.us
   %i.am = add i64 %.046.us121, 1                  ; 2 uses
-  %i.an = tail call ptr @PyMem_Malloc(i64 noundef %i.am) #17 ; 2 uses
+  %i.an = tail call ptr @PyMem_RawMalloc(i64 noundef %i.am) #17 ; 2 uses
   %i.ao = icmp eq ptr %i.an, null
   br i1 %i.ao, label %get_surrogateescape.exit, label %.split92.split.us
 
@@ -2058,7 +2054,7 @@ bb.w:                                             ; preds = %.split92.split.us
 
 bb.x:                                             ; preds = %.split92.split
   %i.ap = add i64 %.046, 1                        ; 2 uses
-  %i.aq = tail call ptr @PyMem_RawMalloc(i64 noundef %i.ap) #17 ; 2 uses
+  %i.aq = tail call ptr @PyMem_Malloc(i64 noundef %i.ap) #17 ; 2 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %get_surrogateescape.exit, label %.split92.split
 
@@ -2066,7 +2062,7 @@ bb.x:                                             ; preds = %.split92.split
   %.not56170 = phi i1 [ %.not56, %bb.f ], [ %.not56, %.thread.us.us.us ], [ %.not56, %bb.h ], [ %.not56166, %.thread.us98 ], [ %.not56166, %bb.q ]
   %.us-phi = phi ptr [ %.048.us.us, %bb.f ], [ %.048.us.us, %.thread.us.us.us ], [ %.048.us.us, %bb.h ], [ %.048.us, %.thread.us98 ], [ %.048.us, %bb.q ] ; 2 uses
   %.us-phi82 = phi i64 [ %.04779.us.us.us, %bb.f ], [ %.04779.us.us.us, %.thread.us.us.us ], [ %.04779.us.us.us, %bb.h ], [ %.04779.us94, %.thread.us98 ], [ %.04779.us94, %bb.q ]
-  br i1 %.not56170, label %bb.z, label %bb.y
+  br i1 %.not56170, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %.split.us
   call void @PyMem_RawFree(ptr noundef %.us-phi) #17

@@ -201,15 +201,14 @@ _ZL20detectX86FamilyModeljPjS_.exit:              ; preds = %bb.b, %bb.d
   %.029 = phi i32 [ %i.m, %bb.b ], [ %i.s, %bb.d ] ; 5 uses
   %i.t = lshr i32 %i.i, 22
   %i.u = shl i32 %i.h, 5
-  %i.v = and i32 %i.u, 32
+  %i.v = and i32 %i.t, 26
+  %.4.i = or disjoint i32 %i.v, %i.u
   %i.w = lshr i32 %i.h, 3
   %i.x = and i32 %i.w, 64
   %i.y = lshr i32 %i.h, 12
-  %.2.i = or disjoint i32 %i.v, %i.x
   %i.z = and i32 %i.y, 384
-  %.5.i = or disjoint i32 %.2.i, %i.z
-  %0 = and i32 %i.t, 26
-  %.11.i = or disjoint i32 %.5.i, %0              ; 3 uses
+  %.5.i = or disjoint i32 %i.x, %i.z
+  %.11.i = or i32 %.5.i, %.4.i                    ; 3 uses
   %i.aa = lshr i32 %i.h, 22
   %.lobit442.i = and i32 %i.aa, 1                 ; 2 uses
   %i.ab = and i32 %i.h, 402653184
@@ -224,7 +223,7 @@ bb.e:                                             ; preds = %_ZL20detectX86Famil
   %i.ag = icmp eq i32 %i.af, 6                    ; 2 uses
   %i.ah = and i32 %i.ae, 230
   %i.ai = icmp eq i32 %i.ah, 230
-  %i.aj = or disjoint i32 %.11.i, 512
+  %i.aj = or i32 %.11.i, 512
   %spec.select441.i = select i1 %i.ag, i32 %i.aj, i32 %.11.i
   br label %.thread.i
 
@@ -420,9 +419,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not101.i, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %1 = and i32 %.4106.i, 1
-  %.not110.i = icmp eq i32 %1, 0
-  br i1 %.not110.i, label %bb.bm, label %bb.ay
+  %.not110.i = trunc nuw i32 %.4106.i to i1
+  br i1 %.not110.i, label %bb.ay, label %bb.bm
 
 bb.v:                                             ; preds = %bb.t
   %i.cc = and i32 %.27.i, 128
@@ -435,9 +433,8 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not103.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %2 = and i32 %.4106.i, 1
-  %.not109.i = icmp eq i32 %2, 0
-  br i1 %.not109.i, label %bb.av, label %bb.ax
+  %.not109.i = trunc nuw i32 %.4106.i to i1
+  br i1 %.not109.i, label %bb.ax, label %bb.av
 
 bb.y:                                             ; preds = %bb.w
   %i.ce = and i32 %.4106.i, 4
@@ -840,7 +837,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.1 = phi i32 [ %i.dx, %bb.e ], [ %.0, %bb.d ]
   %.0519 = extractvalue { i32, i32, i32, i32 } %.pn, 2 ; 3 uses
   %.0522 = extractvalue { i32, i32, i32, i32 } %.pn, 3 ; 2 uses
-  %i.dy = trunc i32 %.0519 to i8
+  %i.dy = trunc nuw i32 %.0519 to i8
   %i.dz = tail call { ptr, i8 } @_ZN4llvh9StringMapIbNS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIbEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nonnull @.str.173, i64 4)
   %.fca.0.extract.i231.a = extractvalue { ptr, i8 } %i.dz, 0
   %i.ea = load ptr, ptr %.fca.0.extract.i231.a, align 8, !tbaa !94
@@ -941,7 +938,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.pn527 = phi { i32, i32, i32, i32 } [ %i.gm, %bb.g ], [ %.pn, %bb.f ]
   %.2 = phi i32 [ %i.gn, %bb.g ], [ %.1, %bb.f ]
   %.1515 = extractvalue { i32, i32, i32, i32 } %.pn527, 1 ; 3 uses
-  %i.gq = trunc i32 %.1515 to i8
+  %i.gq = trunc nuw i32 %.1515 to i8
   %i.gr = tail call { ptr, i8 } @_ZN4llvh9StringMapIbNS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIbEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nonnull @.str.183, i64 6)
   %.fca.0.extract.i241.a = extractvalue { ptr, i8 } %i.gr, 0
   %i.gs = load ptr, ptr %.fca.0.extract.i241.a, align 8, !tbaa !94
@@ -967,7 +964,7 @@ bb.i:                                             ; preds = %bb.h
   %i.hg = extractvalue { i32, i32, i32, i32 } %i.he, 1 ; 2 uses
   %i.hh = extractvalue { i32, i32, i32, i32 } %i.he, 2
   %i.hi = extractvalue { i32, i32, i32, i32 } %i.he, 3
-  %.pre = trunc i32 %i.hg to i8
+  %.pre = trunc nuw i32 %i.hg to i8
   %.pre533 = and i8 %.pre, 1
   br label %bb.j
 
@@ -1177,8 +1174,8 @@ bb.o:                                             ; preds = %bb.n
   %i.ma = load ptr, ptr %.fca.0.extract.i263.a, align 8, !tbaa !94
   %i.mb = getelementptr inbounds nuw i8, ptr %i.ma, i64 8
   store i8 %spec.select185, ptr %i.mb, align 1, !tbaa !96
-  %.not162 = icmp sgt i32 %.2516, -1
-  %spec.select213 = select i1 %.not162, i8 0, i8 %i.ly
+  %.not = icmp slt i32 %.2516, 0
+  %spec.select213 = select i1 %.not, i8 %i.ly, i8 0
   br label %bb.p
 
 .critedge187:                                     ; preds = %bb.n
@@ -1196,7 +1193,7 @@ bb.p:                                             ; preds = %bb.o, %.critedge187
   %i.mh = load ptr, ptr %.fca.0.extract.i265.a, align 8, !tbaa !94
   %i.mi = getelementptr inbounds nuw i8, ptr %i.mh, i64 8
   store i8 %i.mf, ptr %i.mi, align 1, !tbaa !96
-  %i.mj = trunc i32 %.2521 to i8
+  %i.mj = trunc nuw i32 %.2521 to i8
   %i.mk = tail call { ptr, i8 } @_ZN4llvh9StringMapIbNS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIbEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nonnull @.str.205, i64 11)
   %.fca.0.extract.i266.a = extractvalue { ptr, i8 } %i.mk, 0
   %i.ml = load ptr, ptr %.fca.0.extract.i266.a, align 8, !tbaa !94
@@ -1380,9 +1377,8 @@ bb.r:                                             ; preds = %bb.q, %.critedge200
   %i.qu = tail call { i32, i32, i32, i32 } asm "movq\09%rbx, %rsi\0A\09cpuid\0A\09xchgq\09%rbx, %rsi\0A\09", "={ax},={si},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 13, i32 1) #23, !srcloc !54 ; 2 uses
   %i.qv = extractvalue { i32, i32, i32, i32 } %i.qu, 0 ; 3 uses
   %i.qw = extractvalue { i32, i32, i32, i32 } %i.qu, 1
-  %1 = and i32 %i.qv, 1
-  %.not170 = icmp eq i32 %1, 0
-  %spec.select207.a = select i1 %.not170, i8 0, i8 %i.cr
+  %.not169 = trunc nuw i32 %i.qv to i1
+  %spec.select207.a = select i1 %.not169, i8 %i.cr, i8 0
   %i.qx = tail call { ptr, i8 } @_ZN4llvh9StringMapIbNS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIbEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nonnull @.str.222, i64 8)
   %.fca.0.extract.i285.a = extractvalue { ptr, i8 } %i.qx, 0
   %i.qy = load ptr, ptr %.fca.0.extract.i285.a, align 8, !tbaa !94

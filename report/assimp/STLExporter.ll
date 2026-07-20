@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %.lr.ph37, %bb.g
   %indvars.iv47 = phi i64 [ 0, %.lr.ph37 ], [ %indvars.iv.next48, %bb.g ] ; 2 uses
   %i.n = load ptr, ptr %i.j, align 8
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %indvars.iv47 ; 5 uses
-  %i.p = load i32, ptr %i.o, align 8              ; 3 uses
+  %i.p = load i32, ptr %i.o, align 8              ; 4 uses
   %i.q = icmp ult i32 %i.p, 3
   br i1 %i.q, label %bb.g, label %bb.c
 
@@ -215,14 +215,13 @@ bb.c:                                             ; preds = %bb.b
 .preheader:                                       ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.t = load ptr, ptr %i.s, align 8              ; 3 uses
-  %wide.trip.count = zext i32 %i.p to i64         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %2 = and i32 %i.p, -2
+  %unroll_iter = zext i32 %2 to i64
   br label %bb.e
 
 .unr-lcssa:                                       ; preds = %bb.e
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %bb.d, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.p to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %bb.d
 
 .epil.preheader:                                  ; preds = %.unr-lcssa
   %lcmp.mod61 = trunc i32 %i.p to i1
@@ -514,7 +513,7 @@ bb.b:                                             ; preds = %.lr.ph37, %bb.g
   %indvars.iv47 = phi i64 [ 0, %.lr.ph37 ], [ %indvars.iv.next48, %bb.g ] ; 2 uses
   %i.i = load ptr, ptr %i.c, align 8
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %indvars.iv47 ; 5 uses
-  %i.k = load i32, ptr %i.j, align 8              ; 3 uses
+  %i.k = load i32, ptr %i.j, align 8              ; 4 uses
   %i.l = icmp ult i32 %i.k, 3
   br i1 %i.l, label %bb.g, label %bb.c
 
@@ -526,14 +525,13 @@ bb.c:                                             ; preds = %bb.b
 .preheader:                                       ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.o = load ptr, ptr %i.n, align 8              ; 3 uses
-  %wide.trip.count = zext i32 %i.k to i64         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %2 = and i32 %i.k, -2
+  %unroll_iter = zext i32 %2 to i64
   br label %bb.e
 
 .unr-lcssa:                                       ; preds = %bb.e
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %bb.d, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.k to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %bb.d
 
 .epil.preheader:                                  ; preds = %.unr-lcssa
   %lcmp.mod61 = trunc i32 %i.k to i1

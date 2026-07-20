@@ -203,15 +203,14 @@ _ZN5o3dgc6VectorIlE8AllocateEm.exit:              ; preds = %bb.a, %bb.e
   store i64 %i.bf, ptr %2, align 8
   %i.bg = load ptr, ptr %1, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.be
-  %i.bi = load i8, ptr %i.bh, align 1
-  %3 = zext i8 %i.bi to i64                       ; 2 uses
-  %4 = lshr i64 %3, 1
+  %i.bi = load i8, ptr %i.bh, align 1             ; 2 uses
+  %3 = lshr i8 %i.bi, 1
+  %4 = zext nneg i8 %3 to i64
   %i.bj = shl i64 %4, %.0.i
   %i.bk = add i64 %i.bj, %.09.i                   ; 2 uses
   %i.bl = add i64 %.0.i, 6
-  %5 = and i64 %3, 1
-  %.not.i12 = icmp eq i64 %5, 0
-  br i1 %.not.i12, label %_ZNK5o3dgc12BinaryStream13ReadUIntASCIIERm.exit, label %.preheader.i, !llvm.loop !22
+  %.not.i12 = trunc i8 %i.bi to i1
+  br i1 %.not.i12, label %.preheader.i, label %_ZNK5o3dgc12BinaryStream13ReadUIntASCIIERm.exit, !llvm.loop !22
 
 _ZNK5o3dgc12BinaryStream13ReadUIntASCIIERm.exit:  ; preds = %.preheader.i, %.lr.ph
   %.1.i = phi i64 [ %i.bc, %.lr.ph ], [ %i.bk, %.preheader.i ]
@@ -368,25 +367,19 @@ _ZN5o3dgc6VectorIlE8AllocateEm.exit:              ; preds = %bb.a, %bb.e
   store i64 %i.bf, ptr %2, align 8
   %i.bg = load ptr, ptr %1, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.be
-  %i.bi = load i8, ptr %i.bh, align 1
-  %3 = zext i8 %i.bi to i64                       ; 2 uses
-  %4 = lshr i64 %3, 1
+  %i.bi = load i8, ptr %i.bh, align 1             ; 2 uses
+  %3 = lshr i8 %i.bi, 1
+  %4 = zext nneg i8 %3 to i64
   %i.bj = shl i64 %4, %.0.i.i
   %i.bk = add i64 %i.bj, %.09.i.i                 ; 2 uses
   %i.bl = add i64 %.0.i.i, 6
-  %5 = and i64 %3, 1
-  %.not.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i, label %_ZNK5o3dgc12BinaryStream12ReadIntASCIIERm.exit, label %.preheader.i.i, !llvm.loop !22
+  %.not.i.i = trunc i8 %i.bi to i1
+  br i1 %.not.i.i, label %.preheader.i.i, label %_ZNK5o3dgc12BinaryStream12ReadIntASCIIERm.exit, !llvm.loop !22
 
 _ZNK5o3dgc12BinaryStream12ReadIntASCIIERm.exit:   ; preds = %.preheader.i.i, %.lr.ph
-  %.1.i.i = phi i64 [ %i.bc, %.lr.ph ], [ %i.bk, %.preheader.i.i ] ; 3 uses
+  %.1.i.i = phi i64 [ %i.bc, %.lr.ph ], [ %i.bk, %.preheader.i.i ]
   %i.bm = and i64 %.1.i.i, 1
-  %.not.i2.i = icmp eq i64 %i.bm, 0
-  %6 = add i64 %.1.i.i, 1
-  %7 = lshr exact i64 %6, 1
-  %i.bn = sub nsw i64 0, %7
-  %8 = lshr exact i64 %.1.i.i, 1
-  %9 = select i1 %.not.i2.i, i64 %8, i64 %i.bn
+  %i.bn = sub nsw i64 0, %i.bm
   %i.bo = load i64, ptr %i.aw, align 8            ; 6 uses
   %i.bp = load i64, ptr %i.ak, align 8
   %i.bq = icmp eq i64 %i.bo, %i.bp
@@ -430,7 +423,7 @@ _ZN5o3dgc6VectorIlE8PushBackERKl.exit:            ; preds = %._crit_edge.i, %bb.
   %i.cb = add i64 %i.bz, 1
   store i64 %i.cb, ptr %i.aw, align 8
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %i.bz
-  store i64 %9, ptr %i.cc, align 8
+  store i64 %i.bn, ptr %i.cc, align 8
   %i.cd = add nuw i64 %.013, 1                    ; 2 uses
   %i.ce = icmp ult i64 %i.cd, %i.aj
   br i1 %i.ce, label %.lr.ph, label %._crit_edge, !llvm.loop !24

@@ -132,9 +132,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 10
   %i.n = load i8, ptr %i.m, align 2, !tbaa !22
-  %4 = and i8 %i.n, 1
-  %.not = icmp eq i8 %4, 0
-  br i1 %.not, label %bb.g, label %.critedge.critedge
+  %.not = trunc i8 %i.n to i1
+  br i1 %.not, label %.critedge.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.o = load ptr, ptr %i.a, align 8, !tbaa !23
@@ -537,8 +536,8 @@ luaV_tostring.exit.a:                             ; preds = %bb.c
 
 luaV_tostring.exit.thread:                        ; preds = %bb.c, %bb.b
   %i.s = call fastcc i32 @call_binTM(ptr noundef nonnull %0, ptr noundef nonnull %i.j, ptr noundef nonnull %i.h, ptr noundef nonnull %i.j, i32 noundef 15)
-  %.not70 = icmp eq i32 %i.s, 0
-  br i1 %.not70, label %bb.d, label %luaV_tostring.exit74
+  %.not70 = trunc nuw i32 %i.s to i1
+  br i1 %.not70, label %luaV_tostring.exit74, label %bb.d
 
 bb.d:                                             ; preds = %luaV_tostring.exit.thread
   call void @luaG_concaterror(ptr noundef nonnull %0, ptr noundef nonnull %i.j, ptr noundef nonnull %i.h) #8
@@ -941,8 +940,8 @@ bb.bk:                                            ; preds = %bb.bi
 bb.bl:                                            ; preds = %bb.bi
   store ptr %i.ac, ptr %i.d, align 8, !tbaa !43
   %i.nc = call fastcc i32 @call_binTM(ptr noundef nonnull %0, ptr noundef nonnull %i.mq, ptr noundef nonnull @luaO_nilobject_, ptr noundef nonnull %i.cb, i32 noundef 12)
-  %.not784 = icmp eq i32 %i.nc, 0
-  br i1 %.not784, label %bb.bm, label %bb.bn
+  %.not784 = trunc nuw i32 %i.nc to i1
+  br i1 %.not784, label %bb.bn, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
   call void @luaG_typeerror(ptr noundef nonnull %0, ptr noundef nonnull %i.mq, ptr noundef nonnull @.str.6) #8
@@ -1345,8 +1344,8 @@ default.unreachable63:                            ; preds = %._crit_edge
 
 bb.m:                                             ; preds = %luaV_tonumber.exit53, %luaV_tonumber.exit
   %i.ag = call fastcc i32 @call_binTM(ptr noundef %0, ptr noundef nonnull %2, ptr noundef %3, ptr noundef %1, i32 noundef %4)
-  %.not50 = icmp eq i32 %i.ag, 0
-  br i1 %.not50, label %bb.n, label %bb.o
+  %.not50 = trunc nuw i32 %i.ag to i1
+  br i1 %.not50, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   call void @luaG_aritherror(ptr noundef %0, ptr noundef nonnull %2, ptr noundef %3) #8

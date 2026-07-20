@@ -203,11 +203,10 @@ _ZNSt10unique_ptrIN6duckdb14StorageLockKeyESt14default_deleteIS1_EED2Ev.exit: ; 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrIN6duckdb14StorageLockKeyESt14default_deleteIS1_EED2Ev.exit, %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !284
-  %.not43 = icmp ne ptr %i.j, null
-  %4 = and i64 %1, 3
-  %or.cond42.not = icmp eq i64 %4, 0
-  %or.cond44 = select i1 %.not43, i1 true, i1 %or.cond42.not
-  br i1 %or.cond44, label %bb.c, label %.critedge15
+  %.not41 = icmp eq ptr %i.j, null
+  %4 = trunc nuw i64 %1 to i1
+  %or.cond44 = select i1 %.not41, i1 %4, i1 false
+  br i1 %or.cond44, label %.critedge15, label %bb.c
 
 .critedge15:                                      ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31

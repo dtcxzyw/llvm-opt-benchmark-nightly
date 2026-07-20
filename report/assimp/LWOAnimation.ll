@@ -203,15 +203,15 @@ bb.a:
   %.not = icmp eq ptr %2, null                    ; 2 uses
   %.sroa.gep243 = getelementptr inbounds nuw i8, ptr %6, i64 24
   %.sroa.gep244 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.gep247 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %.sroa.gep248 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.gep251 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %.sroa.gep252 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.sroa.gep247 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %.sroa.gep248 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.sroa.gep251 = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %.sroa.gep252 = getelementptr inbounds nuw i8, ptr %2, i64 24
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.gep253 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.sroa.gep249 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %.sroa.gep253 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %.sroa.gep249 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.gep245 = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.i = load i32, ptr %i.h, align 4
@@ -330,9 +330,8 @@ _ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx1
 
 _ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE9push_backERKS2_.exit82: ; preds = %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i79, %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE9push_backERKS2_.exit66
   %i.af = phi ptr [ %8, %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i79 ], [ %4, %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE9push_backERKS2_.exit66 ] ; 4 uses
-  %10 = and i32 %5, 1
-  %.not42 = icmp eq i32 %10, 0
-  br i1 %.not42, label %bb.k, label %bb.j
+  %.not42 = trunc nuw i32 %5 to i1
+  br i1 %.not42, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE9push_backERKS2_.exit82
   %.sroa.phi.a = getelementptr inbounds nuw i8, ptr %i.af, i64 24
@@ -343,7 +342,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN6Assi
   %i.aj = fdiv double 1.000000e+00, %.
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 168
   store double %i.aj, ptr %i.ak, align 8
-  %i.al = load ptr, ptr %.sroa.phi242, align 8, !noalias !16
+  %i.al = load ptr, ptr %.sroa.phi250, align 8, !noalias !16
   %i.am = getelementptr inbounds i8, ptr %i.al, i64 -40
   %i.an = load ptr, ptr %.sroa.phi239, align 8, !noalias !19
   %i.ao = getelementptr inbounds i8, ptr %i.an, i64 -40
@@ -363,8 +362,8 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN6Assi
 bb.k:                                             ; preds = %_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE9push_backERKS2_.exit82
   %.sroa.phi236 = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %.sroa.phi233 = getelementptr inbounds nuw i8, ptr %i.af, i64 24
-  %i.ba = load ptr, ptr %.sroa.phi246, align 8
-  %i.bb = load ptr, ptr %.sroa.phi250, align 8
+  %i.ba = load ptr, ptr %.sroa.phi242, align 8
+  %i.bb = load ptr, ptr %.sroa.phi246, align 8
   %i.bc = ptrtoint ptr %i.ba to i64
   %i.bd = ptrtoint ptr %i.bb to i64
   %i.be = sub i64 %i.bc, %i.bd

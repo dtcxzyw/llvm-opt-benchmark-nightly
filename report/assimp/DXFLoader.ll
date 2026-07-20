@@ -203,8 +203,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.iz = ptrtoint ptr %i.ix to i64
   %i.ja = sub i64 %i.iy, %i.iz
   %i.jb = sdiv exact i64 %i.ja, 12
-  %4 = and i32 %i.gg, 1
-  %i.jc = zext nneg i32 %4 to i64
+  %i.jc = zext nneg i32 %i.gg to i64
   %i.jd = add nsw i64 %i.jb, %i.jc                ; 5 uses
   %i.je = icmp ugt i64 %i.jd, 2305843009213693951
   br i1 %i.je, label %bb.bf, label %bb.bg
@@ -295,9 +294,8 @@ _ZNSt6vectorIjSaIjEE7reserveEm.exit100:           ; preds = %_ZNSt6vectorIjSaIjE
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIjSaIjEE9push_backEOj.exit118, %_ZNSt6vectorIjSaIjEE7reserveEm.exit100
   %.lcssa = phi i64 [ %i.kl, %_ZNSt6vectorIjSaIjEE7reserveEm.exit100 ], [ %i.ne, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit118 ]
   %i.km = load i32, ptr %i.gf, align 8
-  %5 = and i32 %i.km, 1
-  %.not56 = icmp eq i32 %5, 0
-  br i1 %.not56, label %_ZNSt6vectorISt10shared_ptrIN6Assimp3DXF8PolyLineEESaIS4_EE8pop_backEv.exit, label %bb.bz
+  %.not56 = trunc nuw i32 %i.km to i1
+  br i1 %.not56, label %bb.bz, label %_ZNSt6vectorISt10shared_ptrIN6Assimp3DXF8PolyLineEESaIS4_EE8pop_backEv.exit
 
 .lr.ph162:                                        ; preds = %_ZNSt6vectorIjSaIjEE7reserveEm.exit100, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit118
   %.0161 = phi i32 [ %i.mx, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit118 ], [ 0, %_ZNSt6vectorIjSaIjEE7reserveEm.exit100 ] ; 2 uses

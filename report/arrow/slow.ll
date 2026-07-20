@@ -203,11 +203,9 @@ bb.a:
   %i.g = fptoui x86_fp80 %i.f to i64              ; 2 uses
   %i.h = add i64 %i.g, 52
   %i.i = udiv i64 %i.h, %i.g                      ; 2 uses
-  %spec.select.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 5 uses
+  %spec.select.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 3 uses
   %.promoted = load i64, ptr %1, align 8, !tbaa !24
-  %xtraiter = and i64 %spec.select.i.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %i.j = add nsw i64 %spec.select.i.i, -1
+  %i.j = add i64 %spec.select.i.i, -1
   %i.k = icmp ult i64 %i.i, 2
   br label %select.unfold.i.i
 
@@ -220,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %select.unfold.i.i
   %i.n = fdiv double %i.u, %i.x                   ; 2 uses
   %i.o = fcmp ult double %i.n, 1.000000e+00
-  br i1 %i.o, label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit, label %3, !prof !126
+  br i1 %i.o, label %select.unfold.i.i21.prol.loopexit, label %select.unfold.i.i21.prol.a, !prof !126
 
 select.unfold.i.i:                                ; preds = %select.unfold.i.i.backedge, %.preheader
   %.023.i.i = phi i64 [ %spec.select.i.i, %.preheader ], [ %.023.i.i.be, %select.unfold.i.i.backedge ]
@@ -228,7 +226,7 @@ select.unfold.i.i:                                ; preds = %select.unfold.i.i.b
   %.01521.i.i = phi double [ 0.000000e+00, %.preheader ], [ %.01521.i.i.be, %select.unfold.i.i.backedge ]
   %i.p = phi i64 [ %.promoted, %.preheader ], [ %.be, %select.unfold.i.i.backedge ]
   %i.q = mul i64 %i.p, 16807
-  %i.r = urem i64 %i.q, 2147483647                ; 4 uses
+  %i.r = urem i64 %i.q, 2147483647                ; 3 uses
   %i.s = add nsw i64 %i.r, -1
   %i.t = uitofp i64 %i.s to double
   %i.u = tail call double @llvm.fmuladd.f64(double %i.t, double %.01422.i.i, double %.01521.i.i) ; 2 uses
@@ -246,43 +244,31 @@ select.unfold.i.i.backedge:                       ; preds = %select.unfold.i.i, 
   %.be = phi i64 [ %i.r, %select.unfold.i.i ], [ %.lcssa66, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27 ]
   br label %select.unfold.i.i, !llvm.loop !127
 
-3:                                                ; preds = %bb.c
-  br label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit
-
-_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit: ; preds = %bb.c, %3
-  %.016.i.i = phi double [ f0x3FEFFFFFFFFFFFFF, %3 ], [ %i.n, %bb.c ]
-  br i1 %lcmp.mod.not, label %select.unfold.i.i21.prol.loopexit, label %select.unfold.i.i21.prol.a
-
-select.unfold.i.i21.prol.a:                       ; preds = %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit
-  %4 = mul nuw nsw i64 %i.r, 16807
-  %5 = urem i64 %4, 2147483647                    ; 3 uses
-  %6 = add nsw i64 %5, -1
-  %7 = uitofp i64 %6 to double                    ; 2 uses
+select.unfold.i.i21.prol.a:                       ; preds = %bb.c
   br label %select.unfold.i.i21.prol.loopexit
 
-select.unfold.i.i21.prol.loopexit:                ; preds = %select.unfold.i.i21.prol.a, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit
-  %.lcssa66.unr = phi i64 [ poison, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit ], [ %5, %select.unfold.i.i21.prol.a ]
-  %.lcssa65.unr = phi double [ poison, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit ], [ %7, %select.unfold.i.i21.prol.a ]
-  %.023.i.i22.unr = phi i64 [ %spec.select.i.i, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit ], [ %i.j, %select.unfold.i.i21.prol.a ]
-  %.01422.i.i23.unr = phi double [ 1.000000e+00, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit ], [ f0x41DFFFFFFF800000, %select.unfold.i.i21.prol.a ]
-  %.01521.i.i24.unr = phi double [ 0.000000e+00, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit ], [ %7, %select.unfold.i.i21.prol.a ]
-  %.unr = phi i64 [ %i.r, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit ], [ %5, %select.unfold.i.i21.prol.a ]
+select.unfold.i.i21.prol.loopexit:                ; preds = %bb.c, %select.unfold.i.i21.prol.a
+  %.lcssa65.unr = phi double [ f0x3FEFFFFFFFFFFFFF, %select.unfold.i.i21.prol.a ], [ %i.n, %bb.c ]
+  %3 = mul nuw nsw i64 %i.r, 16807
+  %4 = urem i64 %3, 2147483647                    ; 3 uses
+  %5 = add nsw i64 %4, -1
+  %6 = uitofp i64 %5 to double                    ; 2 uses
   br i1 %i.k, label %.unr-lcssa, label %select.unfold.i.i21
 
 .unr-lcssa:                                       ; preds = %select.unfold.i.i21, %select.unfold.i.i21.prol.loopexit
-  %.lcssa66 = phi i64 [ %.lcssa66.unr, %select.unfold.i.i21.prol.loopexit ], [ %i.am, %select.unfold.i.i21 ] ; 2 uses
-  %.lcssa65 = phi double [ %.lcssa65.unr, %select.unfold.i.i21.prol.loopexit ], [ %i.ap, %select.unfold.i.i21 ]
+  %.lcssa66 = phi i64 [ %4, %select.unfold.i.i21.prol.loopexit ], [ %i.am, %select.unfold.i.i21 ] ; 2 uses
+  %.lcssa65 = phi double [ %6, %select.unfold.i.i21.prol.loopexit ], [ %i.ap, %select.unfold.i.i21 ]
   %.lcssa = phi double [ f0x41DFFFFFFF800000, %select.unfold.i.i21.prol.loopexit ], [ %i.as, %select.unfold.i.i21 ]
-  %i.z = tail call double @llvm.fmuladd.f64(double %.016.i.i, double 2.000000e+00, double -1.000000e+00) ; 3 uses
+  %i.z = tail call double @llvm.fmuladd.f64(double %.lcssa65.unr, double 2.000000e+00, double -1.000000e+00) ; 3 uses
   %i.aa = fdiv double %.lcssa65, %.lcssa          ; 2 uses
   %i.ab = fcmp ult double %i.aa, 1.000000e+00
   br i1 %i.ab, label %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27, label %bb.d, !prof !126
 
 select.unfold.i.i21:                              ; preds = %select.unfold.i.i21.prol.loopexit, %select.unfold.i.i21
-  %.023.i.i22 = phi i64 [ %i.at, %select.unfold.i.i21 ], [ %.023.i.i22.unr, %select.unfold.i.i21.prol.loopexit ]
-  %.01422.i.i23 = phi double [ %i.as, %select.unfold.i.i21 ], [ %.01422.i.i23.unr, %select.unfold.i.i21.prol.loopexit ] ; 2 uses
-  %.01521.i.i24 = phi double [ %i.ap, %select.unfold.i.i21 ], [ %.01521.i.i24.unr, %select.unfold.i.i21.prol.loopexit ]
-  %i.ac = phi i64 [ %i.am, %select.unfold.i.i21 ], [ %.unr, %select.unfold.i.i21.prol.loopexit ]
+  %.023.i.i22 = phi i64 [ %i.at, %select.unfold.i.i21 ], [ %i.j, %select.unfold.i.i21.prol.loopexit ]
+  %.01422.i.i23 = phi double [ %i.as, %select.unfold.i.i21 ], [ f0x41DFFFFFFF800000, %select.unfold.i.i21.prol.loopexit ] ; 2 uses
+  %.01521.i.i24 = phi double [ %i.ap, %select.unfold.i.i21 ], [ %6, %select.unfold.i.i21.prol.loopexit ]
+  %i.ac = phi i64 [ %i.am, %select.unfold.i.i21 ], [ %4, %select.unfold.i.i21.prol.loopexit ]
   %i.ad = mul nuw nsw i64 %i.ac, 16807
   %i.ae = urem i64 %i.ad, 2147483647              ; 2 uses
   %i.af = add nsw i64 %i.ae, -1

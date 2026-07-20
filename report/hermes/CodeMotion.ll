@@ -203,9 +203,8 @@ _ZL8hoistCBIPN6hermes14CondBranchInstE.exit:      ; preds = %.thread.i, %bb.m, %
   %.2.lcssa = phi i1 [ %.0.lcssa, %._crit_edge ], [ %i.hi, %_ZL25hoistInstructionsFromLoopPN6hermes10BasicBlockERKNS_13DominanceInfoERKNS_12LoopAnalysisE.exit ]
   %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 264
   %i.ct = load i32, ptr %i.cs, align 8
-  %5 = and i32 %i.ct, 1
-  %.not.i.i.i17 = icmp eq i32 %5, 0
-  br i1 %.not.i.i.i17, label %bb.n, label %_ZN4llvh13SmallDenseMapIPKN6hermes10BasicBlockEPS2_Lj16ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S5_EEED2Ev.exit.i
+  %.not.i.i.i17 = trunc nuw i32 %i.ct to i1
+  br i1 %.not.i.i.i17, label %_ZN4llvh13SmallDenseMapIPKN6hermes10BasicBlockEPS2_Lj16ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S5_EEED2Ev.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %._crit_edge53
   %i.cu = getelementptr inbounds nuw i8, ptr %4, i64 272
@@ -215,9 +214,8 @@ bb.n:                                             ; preds = %._crit_edge53
 
 _ZN4llvh13SmallDenseMapIPKN6hermes10BasicBlockEPS2_Lj16ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S5_EEED2Ev.exit.i: ; preds = %bb.n, %._crit_edge53
   %i.cw = load i32, ptr %4, align 8
-  %6 = and i32 %i.cw, 1
-  %.not.i.i1.i = icmp eq i32 %6, 0
-  br i1 %.not.i.i1.i, label %bb.o, label %_ZN6hermes12LoopAnalysisD2Ev.exit
+  %.not.i.i1.i = trunc nuw i32 %i.cw to i1
+  br i1 %.not.i.i1.i, label %_ZN6hermes12LoopAnalysisD2Ev.exit, label %bb.o
 
 bb.o:                                             ; preds = %_ZN4llvh13SmallDenseMapIPKN6hermes10BasicBlockEPS2_Lj16ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S5_EEED2Ev.exit.i
   %i.cx = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -319,12 +317,11 @@ bb.u:                                             ; preds = %.lr.ph52, %_ZL25hoi
   %.sroa.027.049 = phi ptr [ %i.e, %.lr.ph52 ], [ %i.hj, %_ZL25hoistInstructionsFromLoopPN6hermes10BasicBlockERKNS_13DominanceInfoERKNS_12LoopAnalysisE.exit ] ; 2 uses
   %i.ea = load ptr, ptr %.sroa.027.049, align 8, !tbaa !11 ; 13 uses
   %i.eb = load i32, ptr %4, align 8
-  %7 = and i32 %i.eb, 1
-  %.not.i.i.i.i.i.i = icmp eq i32 %7, 0           ; 2 uses
+  %.not.i.i.i.i.i.i = trunc nuw i32 %i.eb to i1   ; 2 uses
   %i.ec = load ptr, ptr %i.g, align 8
-  %i.ed = select i1 %.not.i.i.i.i.i.i, ptr %i.ec, ptr %i.g ; 2 uses
+  %i.ed = select i1 %.not.i.i.i.i.i.i, ptr %i.g, ptr %i.ec ; 2 uses
   %i.ee = load i32, ptr %i.h, align 8
-  %i.ef = select i1 %.not.i.i.i.i.i.i, i32 %i.ee, i32 16 ; 2 uses
+  %i.ef = select i1 %.not.i.i.i.i.i.i, i32 16, i32 %i.ee ; 2 uses
   %i.eg = icmp eq i32 %i.ef, 0
   br i1 %i.eg, label %_ZNK6hermes12LoopAnalysis13isBlockInLoopEPKNS_10BasicBlockE.exit.i, label %bb.v
 

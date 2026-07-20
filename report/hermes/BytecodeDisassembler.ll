@@ -203,7 +203,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = tail call noundef ptr %i.k(ptr noundef nonnull align 8 dereferenceable(280) %i.h, i32 noundef %1) #18 ; 3 uses
   %i.m = ptrtoint ptr %i.g to i64
-  %i.n = trunc i64 %i.m to i1
+  %i.n = trunc nuw i64 %i.m to i1
   br i1 %i.n, label %bb.b, label %bb.c, !prof !171
 
 bb.b:                                             ; preds = %bb.a
@@ -587,7 +587,7 @@ _ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED
   %i.bo = load ptr, ptr %i.bn, align 8
   %i.bp = tail call noundef ptr %i.bo(ptr noundef nonnull align 8 dereferenceable(280) %i.bh, i32 noundef %1) #18, !inline_history !219 ; 3 uses
   %i.bq = ptrtoint ptr %i.bl to i64
-  %i.br = trunc i64 %i.bq to i1
+  %i.br = trunc nuw i64 %i.bq to i1
   br i1 %i.br, label %bb.s, label %bb.t, !prof !171
 
 bb.s:                                             ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
@@ -990,7 +990,7 @@ define internal fastcc void @_ZN6hermes3hbcL16dumpFunctionNameERN4llvh11raw_ostr
 bb.a:
   %i.a = load ptr, ptr %3, align 8, !tbaa !245    ; 2 uses
   %i.b = ptrtoint ptr %i.a to i64
-  %i.c = trunc i64 %i.b to i1
+  %i.c = trunc nuw i64 %i.b to i1
   %..i = select i1 %i.c, i64 29, i64 15, !prof !171
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %..i
   %.sroa.0.0.i = load i8, ptr %i.d, align 1, !tbaa !7
@@ -1055,7 +1055,7 @@ bb.j:                                             ; preds = %bb.h
 _ZN4llvh11raw_ostreamlsEPKc.exit:                 ; preds = %bb.j, %bb.i, %bb.g, %bb.f, %bb.d, %bb.c
   %i.y = load ptr, ptr %3, align 8, !tbaa !245    ; 3 uses
   %i.z = ptrtoint ptr %i.y to i64
-  %i.aa = trunc i64 %i.z to i1
+  %i.aa = trunc nuw i64 %i.z to i1
   br i1 %i.aa, label %bb.k, label %bb.l, !prof !171
 
 bb.k:                                             ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit
@@ -1458,7 +1458,7 @@ bb.e:                                             ; preds = %_ZNSt10shared_ptrIN
 _ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit.i: ; preds = %bb.e, %_ZNSt10shared_ptrIN6hermes3hbc20BCProviderFromBufferEEC2ERKS3_.exit
   %.sroa.0.0.i.i = phi ptr [ %i.by, %bb.e ], [ %i.bl, %_ZNSt10shared_ptrIN6hermes3hbc20BCProviderFromBufferEEC2ERKS3_.exit ] ; 3 uses
   %i.bz = ptrtoint ptr %.sroa.0.0.i.i to i64
-  %i.ca = trunc i64 %i.bz to i1
+  %i.ca = trunc nuw i64 %i.bz to i1
   br i1 %i.ca, label %bb.f, label %bb.g, !prof !171
 
 bb.f:                                             ; preds = %_ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit.i
@@ -1492,7 +1492,7 @@ bb.h:                                             ; preds = %_ZNK6hermes3hbc20BC
 _ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit: ; preds = %_ZNK6hermes3hbc20BCProviderFromBuffer11getBytecodeEj.exit, %bb.h
   %.sroa.0.0.i = phi ptr [ %i.cp, %bb.h ], [ %i.bl, %_ZNK6hermes3hbc20BCProviderFromBuffer11getBytecodeEj.exit ] ; 3 uses
   %i.cq = ptrtoint ptr %.sroa.0.0.i to i64
-  %i.cr = trunc i64 %i.cq to i1
+  %i.cr = trunc nuw i64 %i.cq to i1
   br i1 %i.cr, label %bb.i, label %bb.j, !prof !171
 
 bb.i:                                             ; preds = %_ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit
@@ -1895,7 +1895,7 @@ _ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED
   %i.br = load ptr, ptr %i.bq, align 8
   %i.bs = call noundef ptr %i.br(ptr noundef nonnull align 8 dereferenceable(280) %i.bo, i32 noundef %1) #18, !inline_history !219 ; 3 uses
   %i.bt = ptrtoint ptr %i.bn to i64
-  %i.bu = trunc i64 %i.bt to i1
+  %i.bu = trunc nuw i64 %i.bt to i1
   br i1 %i.bu, label %bb.s, label %bb.t, !prof !171
 
 bb.s:                                             ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
@@ -2119,7 +2119,7 @@ _ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED
   %i.fg = load ptr, ptr %i.ff, align 8
   %i.fh = call noundef ptr %i.fg(ptr noundef nonnull align 8 dereferenceable(280) %i.fd, i32 noundef %1) #18, !inline_history !219 ; 3 uses
   %i.fi = ptrtoint ptr %i.fc to i64
-  %i.fj = trunc i64 %i.fi to i1
+  %i.fj = trunc nuw i64 %i.fi to i1
   br i1 %i.fj, label %bb.al, label %bb.am, !prof !171
 
 bb.al:                                            ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit34
@@ -2522,7 +2522,7 @@ _ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED
   %i.bl = load ptr, ptr %i.bk, align 8
   %i.bm = tail call noundef ptr %i.bl(ptr noundef nonnull align 8 dereferenceable(280) %i.be, i32 noundef %1) #18, !inline_history !219 ; 3 uses
   %i.bn = ptrtoint ptr %i.bi to i64
-  %i.bo = trunc i64 %i.bn to i1
+  %i.bo = trunc nuw i64 %i.bn to i1
   br i1 %i.bo, label %bb.s, label %bb.t, !prof !171
 
 bb.s:                                             ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
@@ -2925,7 +2925,7 @@ bb.t:                                             ; preds = %.lr.ph, %_ZN6hermes
   %i.cl = load ptr, ptr %i.ck, align 8
   %i.cm = call noundef ptr %i.cl(ptr noundef nonnull align 8 dereferenceable(280) %i.ci, i32 noundef %.07) #18, !inline_history !219 ; 3 uses
   %i.cn = ptrtoint ptr %i.ch to i64
-  %i.co = trunc i64 %i.cn to i1
+  %i.co = trunc nuw i64 %i.cn to i1
   br i1 %i.co, label %bb.u, label %bb.v, !prof !171
 
 bb.u:                                             ; preds = %bb.t
@@ -3328,7 +3328,7 @@ _ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED
   %i.dz = load ptr, ptr %i.dy, align 8
   %i.ea = call noundef ptr %i.dz(ptr noundef nonnull align 8 dereferenceable(280) %i.dw, i32 noundef %.0137) #18, !inline_history !219 ; 3 uses
   %i.eb = ptrtoint ptr %i.dv to i64
-  %i.ec = trunc i64 %i.eb to i1
+  %i.ec = trunc nuw i64 %i.eb to i1
   br i1 %i.ec, label %bb.ae, label %bb.af, !prof !171
 
 bb.ae:                                            ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
@@ -3731,7 +3731,7 @@ bb.bo:                                            ; preds = %bb.bm
 _ZN4llvh11raw_ostreamlsEPKc.exit96:               ; preds = %bb.bn, %bb.bo
   %.0.i.i95 = phi ptr [ %i.jr, %bb.bn ], [ %1, %bb.bo ]
   %i.ju = ptrtoint ptr %i.jl to i64
-  %i.jv = trunc i64 %i.ju to i1                   ; 4 uses
+  %i.jv = trunc nuw i64 %i.ju to i1               ; 4 uses
   br i1 %i.jv, label %bb.bp, label %bb.bq, !prof !171
 
 bb.bp:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit96
@@ -4080,9 +4080,8 @@ bb.cx:                                            ; preds = %_ZN4llvh11raw_ostre
 
 _ZN4llvh11raw_ostreamlsEc.exit:                   ; preds = %bb.cx, %bb.cw, %_ZN4llvh11raw_ostreamlsEPKc.exit110
   %i.pm = load i32, ptr %i.a, align 8, !tbaa !361
-  %10 = and i32 %i.pm, 1
-  %.not.i131 = icmp eq i32 %10, 0
-  br i1 %.not.i131, label %bb.cz, label %bb.cy
+  %10 = trunc nuw i32 %i.pm to i1
+  br i1 %10, label %bb.cy, label %bb.cz
 
 bb.cy:                                            ; preds = %_ZN4llvh11raw_ostreamlsEc.exit
   call void @_ZN6hermes3hbc20BytecodeDisassembler25disassembleFunctionPrettyEjRN4llvh11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(20) %0, i32 noundef %.047138, ptr noundef nonnull align 8 dereferenceable(36) %1)
@@ -4485,7 +4484,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = tail call ptr %i.f(ptr noundef nonnull align 8 dereferenceable(280) %i.c, i32 noundef %1) #18 ; 3 uses
   %i.h = ptrtoint ptr %i.g to i64
-  %i.i = trunc i64 %i.h to i1
+  %i.i = trunc nuw i64 %i.h to i1
   br i1 %i.i, label %bb.b, label %bb.c, !prof !171
 
 bb.b:                                             ; preds = %bb.a

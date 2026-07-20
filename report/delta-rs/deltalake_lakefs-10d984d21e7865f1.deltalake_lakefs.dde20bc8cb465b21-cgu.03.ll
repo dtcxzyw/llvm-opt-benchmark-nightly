@@ -203,33 +203,23 @@ _RNvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %i.dr = and i64 %i.k, 15
   %.not10.i.i.i.i = icmp ne i64 %i.dr, 0
   %i.ds = zext i1 %.not10.i.i.i.i to i64
-  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dq, %i.ds ; 4 uses
+  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dq, %i.ds ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14.i) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.dt = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
-  br i1 %i.dt, label %.epil.preheader, label %.lr.ph.i.i.new
+  br i1 %i.dt, label %._crit_edge.i.i, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
   %unroll_iter = and i64 %.sroa.05.0.i.i.i.i, 2305843009213693950
   br label %bb.p
 
-._crit_edge.i.i.unr-lcssa:                        ; preds = %bb.p
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i
-  %.sroa.0.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ea, %._crit_edge.i.i.unr-lcssa ]
-  %lcmp.mod109 = trunc i64 %.sroa.05.0.i.i.i.i to i1
-  tail call void @llvm.assume(i1 %lcmp.mod109)
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.p
+  %.sroa.0.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ea, %bb.p ]
   %4 = getelementptr inbounds nuw i8, ptr %.val14.i, i64 %.sroa.0.08.i.i.epil.init ; 2 uses
   %.val5.i.i.epil = load <16 x i8>, ptr %4, align 16, !noalias !61
   %.lobit.i.i.i.epil = ashr <16 x i8> %.val5.i.i.epil, splat (i8 7)
   %5 = bitcast <16 x i8> %.lobit.i.i.i.epil to <2 x i64>
   %6 = or <2 x i64> %5, splat (i64 -9187201950435737472)
   store <2 x i64> %6, ptr %4, align 16, !noalias !61
-  br label %._crit_edge.i.i
-
-._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.epil.preheader
   %i.du = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.dv = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %..i = tail call i64 @llvm.umax.i64(i64 %i.k, i64 16)
@@ -261,7 +251,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i.n
   store <2 x i64> %i.ee, ptr %i.ec, align 16, !noalias !61
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.p
+  br i1 %niter.ncmp.1, label %._crit_edge.i.i, label %bb.p
 
 .lr.ph.i14:                                       ; preds = %bb.w, %._crit_edge.i.i
   %.sroa.0.06.i = phi i64 [ %i.ef, %bb.w ], [ 0, %._crit_edge.i.i ] ; 10 uses

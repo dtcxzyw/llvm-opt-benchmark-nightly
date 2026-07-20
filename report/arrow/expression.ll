@@ -204,7 +204,7 @@ bb.bn:                                            ; preds = %.lr.ph.preheader.i.
 
 bb.bo:                                            ; preds = %.lr.ph, %bb.bm
   %.093237 = phi i64 [ 0, %.lr.ph ], [ %i.hj, %bb.bm ] ; 4 uses
-  %.094236 = phi i8 [ 1, %.lr.ph ], [ %.195, %bb.bm ] ; 2 uses
+  %.094236 = phi i1 [ true, %.lr.ph ], [ %.195, %bb.bm ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #31
   %i.hr = load ptr, ptr %i.gp, align 8, !tbaa !130
   %i.hs = getelementptr inbounds nuw [16 x i8], ptr %i.hr, i64 %.093237
@@ -277,13 +277,11 @@ bb.bw:                                            ; preds = %_ZN5arrow5DatumaSEO
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ig, i64 16
   %i.ii = load i8, ptr %i.ih, align 8, !tbaa !69
   %i.ij = icmp eq i8 %i.ii, 1
-  %51 = icmp ne i8 %.094236, 0
-  %i.ik = select i1 %i.ij, i1 %51, i1 false
-  %52 = zext i1 %i.ik to i8
+  %i.ik = select i1 %i.ij, i1 %.094236, i1 false
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %bb.bq
-  %.195 = phi i8 [ %.094236, %bb.bq ], [ %52, %bb.bw ] ; 2 uses
+  %.195 = phi i1 [ %.094236, %bb.bq ], [ %i.ik, %bb.bw ] ; 2 uses
   %i.il = load ptr, ptr %36, align 8, !tbaa !274  ; 2 uses
   %i.im = icmp eq ptr %i.il, null
   br i1 %i.im, label %bb.by, label %_ZN5arrow6ResultINS_5DatumEE7DestroyEv.exit.thread.i, !prof !290
@@ -323,8 +321,7 @@ _ZN5arrow6ResultINS_5DatumEED2Ev.exit:            ; preds = %_ZN5arrow6ResultINS
 
 ._crit_edge:                                      ; preds = %bb.bm
   %i.it = icmp ne ptr %i.hl, %i.hk
-  %53 = trunc nuw i8 %.195 to i1
-  %i.iu = select i1 %i.it, i1 %53, i1 false
+  %i.iu = select i1 %i.it, i1 %.195, i1 false
   br i1 %i.iu, label %bb.cc, label %bb.cb
 
 bb.cb:                                            ; preds = %._crit_edge.thread, %._crit_edge

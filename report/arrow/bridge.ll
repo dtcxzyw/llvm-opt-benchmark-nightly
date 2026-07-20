@@ -204,7 +204,7 @@ _ZN5arrow8internal16StaticVectorImplI11ArrowSchemaLm1ENS0_18SmallVectorStorageIS
   br i1 %i.ar, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %_ZN5arrow8internal16StaticVectorImplI11ArrowSchemaLm1ENS0_18SmallVectorStorageIS2_Lm1EEEE6resizeEm.exit
-  %i.as = sub nuw nsw i64 %.pre-phi29, %i.aq      ; 9 uses
+  %i.as = sub nuw nsw i64 %.pre-phi29, %i.aq      ; 7 uses
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 376 ; 3 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !138
   %i.av = ptrtoint ptr %i.au to i64
@@ -220,9 +220,8 @@ bb.h:                                             ; preds = %_ZN5arrow8internal1
 
 .preheader.i.i.preheader:                         ; preds = %bb.h
   %.neg = add nuw nsw i64 %i.aq, 1
-  %xtraiter = and i64 %i.as, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader.i.i.prol.loopexit, label %.preheader.i.i.prol
+  %lcmp.mod.not = trunc nuw i64 %i.as to i1
+  br i1 %lcmp.mod.not, label %.preheader.i.i.prol, label %.preheader.i.i.prol.loopexit
 
 .preheader.i.i.prol:                              ; preds = %.preheader.i.i.preheader
   %i.bb = getelementptr inbounds nuw i8, ptr %.val8.i, i64 16 ; 2 uses
@@ -315,25 +314,20 @@ _ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaExporterEmS2_ET_
 
 bb.i:                                             ; preds = %bb.h
   %i.cr = icmp ugt i64 %.pre-phi29, 24019198012642645
-  br i1 %i.cr, label %bb.j, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i
+  br i1 %i.cr, label %bb.j, label %.prol.loopexit.unr-lcssa
 
 bb.j:                                             ; preds = %bb.i
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.66) #41
   unreachable
 
-_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.i
+.prol.loopexit.unr-lcssa:                         ; preds = %bb.i
   %.sroa.speculated.i.i.i15 = tail call i64 @llvm.umax.i64(i64 %i.aq, i64 range(i64 1, 0) %i.as)
   %4 = add nuw nsw i64 %.sroa.speculated.i.i.i15, %i.aq
   %5 = tail call i64 @llvm.umin.i64(i64 %4, i64 24019198012642645) ; 2 uses
   %6 = mul nuw nsw i64 %5, 384
   %7 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %6) #34 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %i.ap ; 16 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %i.ap ; 15 uses
   %.neg41 = add nuw nsw i64 %i.aq, 1
-  %xtraiter39 = and i64 %i.as, 1
-  %lcmp.mod40.not = icmp eq i64 %xtraiter39, 0
-  br i1 %lcmp.mod40.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
-
-.prol.loopexit.unr-lcssa:                         ; preds = %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %i.cs = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(280) %i.cs, i8 0, i64 280, i1 false)
   store ptr %i.cs, ptr %8, align 8, !tbaa !33
@@ -357,17 +351,12 @@ _ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.dd, i8 0, i64 72, i1 false)
   %i.de = add nsw i64 %i.as, -1
   %i.df = getelementptr inbounds nuw i8, ptr %8, i64 384
-  br label %.prol.loopexit
-
-.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i
-  %.07.i.i.i32.i.i.unr = phi ptr [ %8, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.df, %.prol.loopexit.unr-lcssa ]
-  %.056.i.i.i33.i.i.unr = phi i64 [ %i.as, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.de, %.prol.loopexit.unr-lcssa ]
   %9 = icmp eq i64 %.pre-phi29, %.neg41
   br i1 %9, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaExporterEmS2_ET_S4_T0_RSaIT1_E.exit35.i.i, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new
 
-_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new: ; preds = %.prol.loopexit, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new
-  %.07.i.i.i32.i.i = phi ptr [ %i.eg, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new ], [ %.07.i.i.i32.i.i.unr, %.prol.loopexit ] ; 27 uses
-  %.056.i.i.i33.i.i = phi i64 [ %i.ef, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new ], [ %.056.i.i.i33.i.i.unr, %.prol.loopexit ]
+_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new: ; preds = %.prol.loopexit.unr-lcssa, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new
+  %.07.i.i.i32.i.i = phi ptr [ %i.eg, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new ], [ %i.df, %.prol.loopexit.unr-lcssa ] ; 27 uses
+  %.056.i.i.i33.i.i = phi i64 [ %i.ef, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new ], [ %i.de, %.prol.loopexit.unr-lcssa ]
   %i.dg = getelementptr inbounds nuw i8, ptr %.07.i.i.i32.i.i, i64 16 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(280) %i.dg, i8 0, i64 280, i1 false)
   store ptr %i.dg, ptr %.07.i.i.i32.i.i, align 8, !tbaa !33
@@ -416,7 +405,7 @@ _ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.
   %.not.i.i.i34.i.i.1 = icmp eq i64 %i.ef, 0
   br i1 %.not.i.i.i34.i.i.1, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaExporterEmS2_ET_S4_T0_RSaIT1_E.exit35.i.i, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new, !llvm.loop !1066
 
-_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaExporterEmS2_ET_S4_T0_RSaIT1_E.exit35.i.i: ; preds = %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new, %.prol.loopexit
+_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaExporterEmS2_ET_S4_T0_RSaIT1_E.exit35.i.i: ; preds = %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new, %.prol.loopexit.unr-lcssa
   %.not1.i.i.i.i.i = icmp eq ptr %.val7.i, %.val8.i
   br i1 %.not1.i.i.i.i.i, label %_ZNSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -819,7 +808,7 @@ _ZN5arrow6StatusD2Ev.exit102:                     ; preds = %_ZN5arrow6StatusD2E
   %i.alq = load ptr, ptr %1, align 8, !tbaa !484
   %i.alr = getelementptr inbounds nuw i8, ptr %i.alq, i64 24
   %i.als = load i64, ptr %i.alr, align 8, !tbaa !131
-  %i.alt = trunc i64 %i.als to i1
+  %i.alt = trunc nuw i64 %i.als to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #31
   %i.alu = getelementptr inbounds nuw i8, ptr %63, i64 72
   invoke void @_ZN5arrow10dictionaryERKSt10shared_ptrINS_8DataTypeEES4_b(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %65, ptr noundef nonnull align 8 dereferenceable(16) %i.ajt, ptr noundef nonnull align 8 dereferenceable(16) %i.alu, i1 noundef zeroext %i.alt)

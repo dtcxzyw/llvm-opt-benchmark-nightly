@@ -201,8 +201,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   store i32 1, ptr %i.al, align 4, !tbaa !34
   %i.df = add i8 %i.as, -65
   %i.dg = icmp ult i8 %i.df, 26
-  %14 = icmp ne i8 %i.cv, 0
-  %15 = and i1 %i.dg, %14
+  %14 = select i1 %i.dg, i8 %i.cv, i8 0
   br label %bb.au
 
 bb.ah:                                            ; preds = %bb.aa
@@ -219,8 +218,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.dk = add nsw i32 %i.aq, 1                    ; 2 uses
   store i32 %i.dk, ptr %i.al, align 4, !tbaa !34
-  %16 = icmp ne i8 %i.ao, 0
-  %17 = and i1 %i.dj, %16
+  %15 = select i1 %i.dj, i8 %i.ao, i8 0
   br label %bb.au
 
 bb.ak:                                            ; preds = %bb.ai
@@ -284,6 +282,7 @@ bb.an:                                            ; preds = %bb.am
   store i32 %i.ef, ptr %i.al, align 4, !tbaa !34
   %i.eg = add i8 %i.as, -65
   %i.eh = icmp ult i8 %i.eg, 26
+  %16 = zext i1 %i.eh to i8
   br label %bb.au
 
 bb.ao:                                            ; preds = %bb.am
@@ -352,14 +351,14 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   store i32 1, ptr %i.al, align 4, !tbaa !34
   %i.fa = add i8 %i.as, -65
   %i.fb = icmp ult i8 %i.fa, 26
+  %17 = zext i1 %i.fb to i8
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.aj, %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_117DecodeDataBuilder8AddFirstEcc.exit25.i, %bb.an, %bb.ag, %bb.at
-  %.sink.shrunk = phi i1 [ %17, %bb.aj ], [ false, %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_117DecodeDataBuilder8AddFirstEcc.exit25.i ], [ %i.eh, %bb.an ], [ %15, %bb.ag ], [ %i.fb, %bb.at ]
+  %.sink = phi i8 [ %15, %bb.aj ], [ 0, %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_117DecodeDataBuilder8AddFirstEcc.exit25.i ], [ %16, %bb.an ], [ %14, %bb.ag ], [ %17, %bb.at ] ; 2 uses
   %i.fc = phi i8 [ %i.an, %bb.aj ], [ 0, %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_117DecodeDataBuilder8AddFirstEcc.exit25.i ], [ 96, %bb.an ], [ %.sink.i.i, %bb.ag ], [ %.sink.i35.i, %bb.at ]
   %i.fd = phi i8 [ %i.ap, %bb.aj ], [ 0, %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_117DecodeDataBuilder8AddFirstEcc.exit25.i ], [ %i.ap, %bb.an ], [ %i.cw, %bb.ag ], [ 0, %bb.at ]
   %i.fe = phi i32 [ %i.dk, %bb.aj ], [ 1, %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_117DecodeDataBuilder8AddFirstEcc.exit25.i ], [ %i.ef, %bb.an ], [ 1, %bb.ag ], [ 1, %bb.at ]
-  %.sink = zext i1 %.sink.shrunk to i8            ; 2 uses
   store i8 %.sink, ptr %i.am, align 1, !tbaa !35
   %i.ff = add nuw i64 %.059185, 1
   br label %bb.ba

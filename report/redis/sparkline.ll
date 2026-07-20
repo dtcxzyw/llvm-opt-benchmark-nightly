@@ -145,7 +145,6 @@ bb.a:
   %i.f = mul nsw i32 %2, 3                        ; 2 uses
   %i.g = sext i32 %4 to i64                       ; 4 uses
   %i.h = tail call noalias ptr @zmalloc(i64 noundef %i.g) #8 ; 7 uses
-  %6 = and i32 %5, 1
   %i.i = and i32 %5, 2
   %.not = icmp eq i32 %i.i, 0                     ; 4 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -170,9 +169,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %i.p = xor i32 %2, -1
   %i.q = sitofp i32 %i.f to double
   %i.r = add nsw i32 %i.f, -1
-  %.not87 = trunc i32 %5 to i1
-  %.not88 = icmp eq i32 %6, 0
-  %.in.in.v = select i1 %.not88, ptr @charset, ptr @charset_fill
+  %.not87 = trunc nuw i32 %5 to i1                ; 2 uses
+  %.in.in.v = select i1 %.not87, ptr @charset_fill, ptr @charset
   br i1 %i.m, label %.lr.ph.us.preheader, label %.split
 
 .lr.ph.us.preheader:                              ; preds = %bb.e

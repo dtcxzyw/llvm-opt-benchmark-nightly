@@ -19,19 +19,15 @@ declare void @rb_str_modify(i64 noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define noundef i64 @bug_str_modify_expand(i64 noundef returned %0, i64 noundef %1) #0 {
 bb.a:
-  %i.a = trunc i64 %1 to i1
-  br i1 %i.a, label %2, label %bb.b
-
-2:                                                ; preds = %bb.a
-  %3 = ashr i64 %1, 1
-  br label %rb_num2long_inline.exit
+  %i.a = trunc nuw i64 %1 to i1
+  br i1 %i.a, label %rb_num2long_inline.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @rb_num2long(i64 noundef %1) #2
+  %i.b = tail call i64 @rb_num2long(i64 noundef 0) #2
   br label %rb_num2long_inline.exit
 
-rb_num2long_inline.exit:                          ; preds = %2, %bb.b
-  %.0.i = phi i64 [ %3, %2 ], [ %i.b, %bb.b ]
+rb_num2long_inline.exit:                          ; preds = %bb.a, %bb.b
+  %.0.i = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]
   tail call void @rb_str_modify_expand(i64 noundef %0, i64 noundef %.0.i) #2
   ret i64 %0
 }

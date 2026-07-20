@@ -201,12 +201,11 @@ bb.g:                                             ; preds = %bb.e
   %i.q = tail call i32 @SSL_get_error(ptr noundef %i.p, i32 noundef %i.n) #7 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.s = load i32, ptr %i.r, align 8, !tbaa !45
-  %2 = and i32 %i.s, 1
-  %3 = icmp eq i32 %2, 0
+  %2 = trunc nuw i32 %i.s to i1
   %i.t = and i32 %i.q, -2
-  %or.cond = icmp eq i32 %i.t, 2
-  %or.cond30 = select i1 %3, i1 %or.cond, i1 false
-  br i1 %or.cond30, label %bb.h, label %bb.i
+  %or.cond = icmp ne i32 %i.t, 2
+  %or.cond30 = select i1 %2, i1 true, i1 %or.cond
+  br i1 %or.cond30, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   store ptr %i.e, ptr %i.b, align 8, !tbaa !31
@@ -609,9 +608,8 @@ bb.e:                                             ; preds = %bb.c
   %i.j = tail call i32 @SSL_get_error(ptr noundef %i.i, i32 noundef %i.e) #7
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.l = load i32, ptr %i.k, align 8, !tbaa !45
-  %3 = and i32 %i.l, 1
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.h, label %bb.f
+  %.not = trunc nuw i32 %i.l to i1
+  br i1 %.not, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.m = tail call ptr @__errno_location() #8
@@ -725,9 +723,8 @@ bb.j:                                             ; preds = %bb.i
   %i.ae = tail call i32 @SSL_get_error(ptr noundef %i.ad, i32 noundef %i.aa) #7
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !45
-  %1 = and i32 %i.ag, 1
-  %2 = icmp eq i32 %1, 0
-  br i1 %2, label %bb.k, label %maybeCheckWant.exit
+  %1 = trunc nuw i32 %i.ag to i1
+  br i1 %1, label %maybeCheckWant.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   switch i32 %i.ae, label %maybeCheckWant.exit [

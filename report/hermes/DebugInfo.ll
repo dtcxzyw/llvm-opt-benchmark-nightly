@@ -204,9 +204,8 @@ bb.c:                                             ; preds = %bb.a
   store i32 %i.ac, ptr %i.g, align 8, !tbaa !75
   %i.ad = load i64, ptr %i.b, align 8, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
-  %2 = and i64 %i.r, 1
-  %.not = icmp eq i64 %2, 0
-  br i1 %.not, label %bb.e, label %bb.d
+  %.not = trunc nuw i64 %i.r to i1
+  br i1 %.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
@@ -231,8 +230,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i32 %i.an, ptr %i.ak, align 8, !tbaa !79
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !74
-  %i.aq = trunc i64 %i.aj to i32
-  %i.ar = add i32 %i.ap, %i.aq
+  %i.aq = trunc nuw nsw i64 %i.aj to i32
+  %i.ar = add nuw nsw i32 %i.ap, %i.aq
   store i32 %i.ar, ptr %i.ao, align 4, !tbaa !74
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.at = load i32, ptr %i.as, align 8, !tbaa !76
@@ -412,9 +411,8 @@ bb.g:                                             ; preds = %.lr.ph219, %.loopex
   %i.bd = call noundef i32 @_ZN6hermes16readSignedLEB128EN4llvh8ArrayRefIhEEjPl(ptr %.sroa.0.0.copyload, i64 %.sroa.2.0.copyload, i32 noundef %i.bc, ptr noundef nonnull %i.b) #14, !noalias !89
   %i.be = add i32 %i.bd, %i.bc                    ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14, !noalias !89
-  %5 = and i64 %i.ax, 1
-  %.not.i = icmp eq i64 %5, 0
-  br i1 %.not.i, label %bb.i, label %bb.h
+  %.not.i = trunc nuw i64 %i.ax to i1
+  br i1 %.not.i, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph207
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14, !noalias !89
@@ -424,12 +422,12 @@ bb.h:                                             ; preds = %.lr.ph207
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph207, %bb.h
-  %.sroa.20.1 = phi i32 [ %i.be, %.lr.ph207 ], [ %i.bg, %bb.h ] ; 2 uses
+  %.sroa.20.1 = phi i32 [ %i.bg, %bb.h ], [ %i.be, %.lr.ph207 ] ; 2 uses
   %i.bh = lshr i64 %i.ax, 1
   %i.bi = trunc i64 %i.at to i32
   %i.bj = add i32 %.sroa.44.0201, %i.bi           ; 3 uses
-  %i.bk = trunc i64 %i.bh to i32
-  %i.bl = add i32 %.sroa.49.0200, %i.bk           ; 2 uses
+  %i.bk = trunc nuw nsw i64 %i.bh to i32
+  %i.bl = add nuw nsw i32 %.sroa.49.0200, %i.bk   ; 2 uses
   %i.bm = trunc i64 %i.ba to i32
   %i.bn = add i32 %.sroa.53.0199, %i.bm           ; 6 uses
   %i.bo = icmp eq i32 %i.bl, %3
@@ -832,9 +830,8 @@ _ZN4llvh11raw_ostreamlsEPKc.exit64:               ; preds = %bb.aa, %bb.ab
   %i.gg = add i32 %i.gf, %i.gd                    ; 3 uses
   %i.gh = load i64, ptr %i.b, align 8, !tbaa !20, !noalias !140
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14, !noalias !140
-  %6 = and i64 %i.fy, 1
-  %.not.i65 = icmp eq i64 %6, 0
-  br i1 %.not.i65, label %bb.ad, label %bb.ac
+  %.not.i65 = trunc nuw i64 %i.fy to i1
+  br i1 %.not.i65, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph173
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14, !noalias !140
@@ -844,12 +841,12 @@ bb.ac:                                            ; preds = %.lr.ph173
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph173, %bb.ac
-  %.sroa.20.1 = phi i32 [ %i.gg, %.lr.ph173 ], [ %i.gj, %bb.ac ] ; 2 uses
+  %.sroa.20.1 = phi i32 [ %i.gj, %bb.ac ], [ %i.gg, %.lr.ph173 ] ; 2 uses
   %i.gk = lshr i64 %i.fy, 1
   %i.gl = trunc i64 %i.fu to i32
   %i.gm = add i32 %.sroa.43.0171, %i.gl           ; 2 uses
-  %i.gn = trunc i64 %i.gk to i32
-  %i.go = add i32 %.sroa.48.0170, %i.gn           ; 2 uses
+  %i.gn = trunc nuw nsw i64 %i.gk to i32
+  %i.go = add nuw nsw i32 %.sroa.48.0170, %i.gn   ; 2 uses
   %i.gp = trunc i64 %i.gb to i32
   %i.gq = add i32 %.sroa.53.0169, %i.gp           ; 2 uses
   %i.gr = load ptr, ptr %i.j, align 8, !tbaa !106

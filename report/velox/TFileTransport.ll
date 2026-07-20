@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.outer
 
 .outer:                                           ; preds = %.outer.backedge, %bb.c
-  %.012.ph = phi i32 [ 0, %bb.c ], [ %.012.ph.be, %.outer.backedge ]
+  %.012.ph = phi i1 [ false, %bb.c ], [ %.012.ph.be, %.outer.backedge ]
   %i.t = load i32, ptr %i.g, align 8, !tbaa !177  ; 3 uses
   %i.u = load i32, ptr %i.h, align 4, !tbaa !178  ; 2 uses
   %i.v = icmp eq i32 %i.t, %i.u
@@ -300,8 +300,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.aw, label %bb.l, label %.outer.backedge
 
 bb.l:                                             ; preds = %bb.k
-  %.not27 = icmp eq i32 %.012.ph, 0
-  br i1 %.not27, label %bb.m, label %.loopexit
+  br i1 %.012.ph, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ax = mul nuw nsw i32 %i.aq, 1000
@@ -309,7 +308,7 @@ bb.m:                                             ; preds = %bb.l
   br label %.outer.backedge
 
 .outer.backedge:                                  ; preds = %.backedge, %bb.k, %bb.x, %.loopexit37, %bb.m
-  %.012.ph.be = phi i32 [ 1, %bb.m ], [ 0, %.loopexit37 ], [ 0, %bb.x ], [ 0, %bb.k ], [ 0, %.backedge ]
+  %.012.ph.be = phi i1 [ true, %bb.m ], [ false, %.loopexit37 ], [ false, %bb.x ], [ false, %bb.k ], [ false, %.backedge ]
   br label %.outer, !llvm.loop !180
 
 .loopexit37:                                      ; preds = %bb.j, %.lr.ph, %.outer

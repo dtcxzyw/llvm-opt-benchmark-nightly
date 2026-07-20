@@ -201,13 +201,12 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.ac
 
 _ZN4absl12lts_202505128StatusOrIN6google8protobuf13json_internal14BufferingGuardEEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0ES5_T_EE5valueEiE4typeELi0EEEOSA_.exit: ; preds = %bb.x
-  %.pre = load i64, ptr %4, align 8, !tbaa !27    ; 2 uses
-  %i.cf = trunc i64 %.pre to i1
+  %.pre = load i64, ptr %4, align 8, !tbaa !27
+  %i.cf = trunc nuw i64 %.pre to i1
   br i1 %i.cf, label %_ZN4absl12lts_202505126StatusD2Ev.exit, label %bb.y
 
 bb.y:                                             ; preds = %_ZN4absl12lts_202505128StatusOrIN6google8protobuf13json_internal14BufferingGuardEEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0ES5_T_EE5valueEiE4typeELi0EEEOSA_.exit
-  %5 = inttoptr i64 %.pre to ptr
-  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) %5)
+  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) null)
           to label %_ZN4absl12lts_202505126StatusD2Ev.exit unwind label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -547,13 +546,12 @@ _ZN6google8protobuf13json_internal22ZeroCopyBufferedStream13DownRefBufferEv.exit
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !27     ; 2 uses
-  %i.b = trunc i64 %i.a to i1
+  %i.a = load i64, ptr %0, align 8, !tbaa !27
+  %i.b = trunc nuw i64 %i.a to i1
   br i1 %i.b, label %_ZN4absl12lts_202505126Status5UnrefEm.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = inttoptr i64 %i.a to ptr
-  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
+  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) null)
           to label %_ZN4absl12lts_202505126Status5UnrefEm.exit unwind label %bb.c
 
 _ZN4absl12lts_202505126Status5UnrefEm.exit:       ; preds = %bb.a, %bb.b

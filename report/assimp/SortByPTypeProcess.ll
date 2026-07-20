@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorIP6aiMe
 
 bb.e:                                             ; preds = %.lr.ph995, %bb.ir
   %indvars.iv1290 = phi i64 [ 0, %.lr.ph995 ], [ %indvars.iv.next1291, %bb.ir ] ; 4 uses
-  %.sroa.0.0993 = phi i32 [ 0, %.lr.ph995 ], [ %spec.select434, %bb.ir ]
+  %.sroa.0.0993 = phi i32 [ 0, %.lr.ph995 ], [ %3, %bb.ir ]
   %.sroa.7.0992 = phi i32 [ 0, %.lr.ph995 ], [ %.sroa.7.1, %bb.ir ]
   %.sroa.10.0991 = phi i32 [ 0, %.lr.ph995 ], [ %.sroa.10.1, %bb.ir ]
   %.sroa.13.0990 = phi i32 [ 0, %.lr.ph995 ], [ %.sroa.13.1, %bb.ir ]
@@ -216,7 +216,7 @@ bb.e:                                             ; preds = %.lr.ph995, %bb.ir
   %i.aa = load ptr, ptr %i.v, align 8
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv1290
   %i.ac = load ptr, ptr %i.ab, align 8            ; 48 uses
-  %i.ad = load i32, ptr %i.ac, align 8            ; 6 uses
+  %i.ad = load i32, ptr %i.ac, align 8            ; 5 uses
   %i.ae = icmp eq i32 %i.ad, 0
   br i1 %i.ae, label %.preheader, label %bb.k
 
@@ -274,19 +274,19 @@ bb.j:                                             ; preds = %._crit_edge1007
   br label %bb.jn
 
 bb.k:                                             ; preds = %bb.e
-  %spec.select = and i32 %i.ad, 1                 ; 2 uses
-  %spec.select434 = add i32 %spec.select, %.sroa.0.0993 ; 2 uses
-  %3 = lshr i32 %i.ad, 1
-  %4 = and i32 %3, 1                              ; 2 uses
-  %.1333 = add nuw nsw i32 %4, %spec.select
-  %.sroa.7.1 = add i32 %4, %.sroa.7.0992          ; 2 uses
+  %3 = add nuw i32 %.sroa.0.0993, 1               ; 2 uses
+  %4 = and i32 %i.ad, 2                           ; 2 uses
+  %.not378 = icmp eq i32 %4, 0
+  %.1333 = select i1 %.not378, i32 1, i32 2
+  %5 = lshr exact i32 %4, 1
+  %.sroa.7.1 = add i32 %5, %.sroa.7.0992          ; 2 uses
   %i.ar = lshr i32 %i.ad, 2
   %i.as = and i32 %i.ar, 1                        ; 2 uses
-  %.2334 = add nuw nsw i32 %.1333, %i.as
   %.sroa.10.1 = add i32 %i.as, %.sroa.10.0991     ; 2 uses
   %i.at = lshr i32 %i.ad, 3
   %i.au = and i32 %i.at, 1                        ; 2 uses
-  %.3335 = add nuw nsw i32 %.2334, %i.au          ; 2 uses
+  %.2334 = add nuw nsw i32 %i.au, %i.as
+  %.3335 = add nuw nsw i32 %.2334, %.1333         ; 2 uses
   %.sroa.13.1 = add i32 %i.au, %.sroa.13.0990     ; 2 uses
   %i.av = icmp eq i32 %.3335, 1
   br i1 %i.av, label %bb.l, label %bb.u
@@ -689,9 +689,8 @@ bb.je:                                            ; preds = %bb.jd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   %i.apb = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.apc = load i32, ptr %i.apb, align 8          ; 4 uses
-  %5 = and i32 %i.apc, 1
-  %.not373 = icmp eq i32 %5, 0
-  %i.apd = select i1 %.not373, ptr @.str.8, ptr @.str.7
+  %.not373 = trunc nuw i32 %i.apc to i1
+  %i.apd = select i1 %.not373, ptr @.str.7, ptr @.str.8
   %i.ape = and i32 %i.apc, 2
   %.not374 = icmp eq i32 %i.ape, 0
   %i.apf = select i1 %.not374, ptr @.str.8, ptr @.str.7
@@ -701,7 +700,7 @@ bb.je:                                            ; preds = %bb.jd
   %i.api = and i32 %i.apc, 8
   %.not376 = icmp eq i32 %i.api, 0
   %i.apj = select i1 %.not376, ptr @.str.8, ptr @.str.7
-  %i.apk = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 1024, ptr noundef nonnull @.str.6, i32 noundef %spec.select434, ptr noundef nonnull %i.apd, i32 noundef %.sroa.7.1, ptr noundef nonnull %i.apf, i32 noundef %.sroa.10.1, ptr noundef nonnull %i.aph, i32 noundef %.sroa.13.1, ptr noundef nonnull %i.apj) #19 ; 0 uses
+  %i.apk = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 1024, ptr noundef nonnull @.str.6, i32 noundef %3, ptr noundef nonnull %i.apd, i32 noundef %.sroa.7.1, ptr noundef nonnull %i.apf, i32 noundef %.sroa.10.1, ptr noundef nonnull %i.aph, i32 noundef %.sroa.13.1, ptr noundef nonnull %i.apj) #19 ; 0 uses
   %i.apl = invoke noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
           to label %bb.jf unwind label %bb.jj
 

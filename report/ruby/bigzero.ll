@@ -20,19 +20,15 @@ declare extern_weak void @rb_define_singleton_method(i64 noundef, ptr noundef, p
 ; Function Attrs: nounwind uwtable
 define internal i64 @bug_big_zero(i64 %0, i64 noundef %1) #0 {
 bb.a:
-  %i.a = trunc i64 %1 to i1
-  br i1 %i.a, label %2, label %bb.b
-
-2:                                                ; preds = %bb.a
-  %3 = ashr i64 %1, 1
-  br label %rb_num2ulong_inline.exit
+  %i.a = trunc nuw i64 %1 to i1
+  br i1 %i.a, label %rb_num2ulong_inline.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @rb_num2ulong(i64 noundef %1) #4
+  %i.b = tail call i64 @rb_num2ulong(i64 noundef 0) #4
   br label %rb_num2ulong_inline.exit
 
-rb_num2ulong_inline.exit:                         ; preds = %2, %bb.b
-  %.0.i = phi i64 [ %3, %2 ], [ %i.b, %bb.b ]     ; 4 uses
+rb_num2ulong_inline.exit:                         ; preds = %bb.a, %bb.b
+  %.0.i = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]   ; 4 uses
   %i.c = tail call i64 @rb_big_new(i64 noundef %.0.i, i32 noundef 1) #4 ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !10
@@ -67,19 +63,15 @@ rbimpl_size_mul_or_raise.exit:                    ; preds = %BIGNUM_DIGITS.exit
 ; Function Attrs: nounwind uwtable
 define internal i64 @bug_big_negzero(i64 %0, i64 noundef %1) #0 {
 bb.a:
-  %i.a = trunc i64 %1 to i1
-  br i1 %i.a, label %2, label %bb.b
-
-2:                                                ; preds = %bb.a
-  %3 = ashr i64 %1, 1
-  br label %rb_num2ulong_inline.exit
+  %i.a = trunc nuw i64 %1 to i1
+  br i1 %i.a, label %rb_num2ulong_inline.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @rb_num2ulong(i64 noundef %1) #4
+  %i.b = tail call i64 @rb_num2ulong(i64 noundef 0) #4
   br label %rb_num2ulong_inline.exit
 
-rb_num2ulong_inline.exit:                         ; preds = %2, %bb.b
-  %.0.i = phi i64 [ %3, %2 ], [ %i.b, %bb.b ]     ; 4 uses
+rb_num2ulong_inline.exit:                         ; preds = %bb.a, %bb.b
+  %.0.i = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]   ; 4 uses
   %i.c = tail call i64 @rb_big_new(i64 noundef %.0.i, i32 noundef 0) #4 ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !10

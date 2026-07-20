@@ -203,12 +203,11 @@ percpu_arena_ind_limit.exit.i.i:                  ; preds = %bb.x
   %i.bq = getelementptr i8, ptr %.037.i.i, i64 78928 ; 2 uses
   %.037.val47.i.i = load i32, ptr %i.bq, align 8, !tbaa !21
   %i.br = icmp eq i32 %i.bo, 4
-  %i.bs = load i32, ptr @je_ncpus, align 4        ; 4 uses
+  %i.bs = load i32, ptr @je_ncpus, align 4        ; 3 uses
   %i.bt = icmp ugt i32 %i.bs, 1
   %or.cond.i.i.i = and i1 %i.br, %i.bt
-  %5 = and i32 %i.bs, 1
   %i.bu = lshr i32 %i.bs, 1
-  %spec.select.i.i = add nuw i32 %i.bu, %5
+  %spec.select.i.i = add nuw i32 %i.bu, 1
   %.0.i.i.i = select i1 %or.cond.i.i.i, i32 %spec.select.i.i, i32 %i.bs
   %i.bv = icmp ult i32 %.037.val47.i.i, %.0.i.i.i
   br i1 %i.bv, label %bb.y, label %arena_choose_maybe_huge.exit.thread

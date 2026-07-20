@@ -201,12 +201,10 @@ bb.a:
   store ptr %1, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %2, ptr %i.b, align 8
-  %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %3 = and i64 %i.c, 1
-  %.not = icmp eq i64 %3, 0
-  %4 = lshr i64 %i.c, 1
-  %.sroa.0.0 = select i1 %.not, ptr null, ptr %1
-  call void @_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs6Po7BT7Nknu_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbjGuDcEILED_11proc_macro2(ptr sret([24 x i8]) align 8 %0, ptr %.sroa.0.0, i64 %4, ptr nonnull align 8 %i.a) #18
+  %i.c = ptrtoint ptr %2 to i64
+  %3 = trunc nuw i64 %i.c to i1
+  %.sroa.0.0 = select i1 %3, ptr %1, ptr null
+  call void @_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs6Po7BT7Nknu_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsbjGuDcEILED_11proc_macro2(ptr sret([24 x i8]) align 8 %0, ptr %.sroa.0.0, i64 0, ptr nonnull align 8 %i.a) #18
   ret void
 }
 

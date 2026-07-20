@@ -18,31 +18,24 @@ declare extern_weak void @rb_define_method(i64 noundef, ptr noundef, ptr noundef
 ; Function Attrs: nounwind uwtable
 define internal i64 @bug_struct_len(i64 noundef %0) #0 {
 bb.a:
-  %i.a = tail call i64 @rb_struct_size(i64 noundef %0) #2 ; 3 uses
-  %i.b = trunc i64 %i.a to i1
-  br i1 %i.b, label %1, label %3
+  %i.a = tail call i64 @rb_struct_size(i64 noundef %0) #2
+  %i.b = trunc nuw i64 %i.a to i1
+  br i1 %i.b, label %bb.b, label %RSTRUCT_LEN.exit
 
-1:                                                ; preds = %bb.a
-  %2 = ashr i64 %i.a, 1
-  br label %RSTRUCT_LEN.exit
-
-3:                                                ; preds = %bb.a
-  %4 = tail call i64 @rb_num2long(i64 noundef %i.a) #2
-  br label %RSTRUCT_LEN.exit
-
-RSTRUCT_LEN.exit:                                 ; preds = %1, %3
-  %.0.i.i = phi i64 [ %2, %1 ], [ %4, %3 ]        ; 3 uses
-  %i.c = add i64 %.0.i.i, 4611686018427387904
+RSTRUCT_LEN.exit:                                 ; preds = %bb.a
+  %1 = tail call i64 @rb_num2long(i64 noundef 0) #2 ; 3 uses
+  %i.c = add i64 %1, 4611686018427387904
   %or.cond.i = icmp sgt i64 %i.c, -1
   br i1 %or.cond.i, label %bb.b, label %bb.c
 
-bb.b:                                             ; preds = %RSTRUCT_LEN.exit
-  %i.d = shl nsw i64 %.0.i.i, 1
+bb.b:                                             ; preds = %bb.a, %RSTRUCT_LEN.exit
+  %.0.i.i3 = phi i64 [ %1, %RSTRUCT_LEN.exit ], [ 0, %bb.a ]
+  %i.d = shl nsw i64 %.0.i.i3, 1
   %i.e = or disjoint i64 %i.d, 1
   br label %rb_long2num_inline.exit
 
 bb.c:                                             ; preds = %RSTRUCT_LEN.exit
-  %i.f = tail call i64 @rb_int2big(i64 noundef %.0.i.i) #2
+  %i.f = tail call i64 @rb_int2big(i64 noundef %1) #2
   br label %rb_long2num_inline.exit
 
 rb_long2num_inline.exit:                          ; preds = %bb.b, %bb.c

@@ -203,26 +203,28 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load i8, ptr %i.f, align 1, !tbaa !12
   %i.h = zext i8 %i.g to i32
   %i.i = trunc i64 %i.c to i32
-  %i.j = lshr i32 %i.h, %i.i
-  %4 = trunc nuw i32 %i.j to i8                   ; 2 uses
-  %5 = and i8 %4, 1
-  %.not2627 = icmp eq i8 %5, 0
-  br i1 %.not2627, label %.lr.ph.preheader, label %.loopexit
+  %i.j = lshr i32 %i.h, %i.i                      ; 2 uses
+  %.not2627 = trunc i32 %i.j to i1
+  br i1 %.not2627, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.k = add i64 %3, -1                           ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
-  br i1 %i.l, label %.loopexit, label %.lr.ph35.a
+  br i1 %i.l, label %.loopexit, label %.lr.ph35
+
+.lr.ph35:                                         ; preds = %.lr.ph.preheader
+  %4 = trunc nuw i32 %i.j to i8
+  br label %.lr.ph35.a
 
 .lr.ph:                                           ; preds = %bb.d
   %i.m = add i64 %i.o, -1                         ; 2 uses
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %.loopexit, label %.lr.ph35.a, !llvm.loop !19
 
-.lr.ph35.a:                                       ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.o = phi i64 [ %i.m, %.lr.ph ], [ %i.k, %.lr.ph.preheader ] ; 3 uses
-  %.0202834 = phi ptr [ %.121, %.lr.ph ], [ %i.f, %.lr.ph.preheader ] ; 2 uses
-  %.in33 = phi i8 [ %.119, %.lr.ph ], [ %4, %.lr.ph.preheader ]
+.lr.ph35.a:                                       ; preds = %.lr.ph35, %.lr.ph
+  %i.o = phi i64 [ %i.k, %.lr.ph35 ], [ %i.m, %.lr.ph ] ; 3 uses
+  %.0202834 = phi ptr [ %i.f, %.lr.ph35 ], [ %.121, %.lr.ph ] ; 2 uses
+  %.in33 = phi i8 [ %4, %.lr.ph35 ], [ %.119, %.lr.ph ]
   %i.p = lshr i8 %.in33, 1
   %i.q = and i64 %i.o, 7
   %i.r = icmp eq i64 %i.q, 0
@@ -236,9 +238,8 @@ bb.c:                                             ; preds = %.lr.ph35.a
 bb.d:                                             ; preds = %bb.c, %.lr.ph35.a
   %.121 = phi ptr [ %i.s, %bb.c ], [ %.0202834, %.lr.ph35.a ]
   %.119 = phi i8 [ %i.t, %bb.c ], [ %i.p, %.lr.ph35.a ] ; 2 uses
-  %6 = and i8 %.119, 1
-  %.not26 = icmp eq i8 %6, 0
-  br i1 %.not26, label %.lr.ph, label %..loopexit.loopexit_crit_edge, !llvm.loop !19
+  %.not26 = trunc i8 %.119 to i1
+  br i1 %.not26, label %..loopexit.loopexit_crit_edge, label %.lr.ph, !llvm.loop !19
 
 ..loopexit.loopexit_crit_edge:                    ; preds = %bb.d
   br label %.loopexit, !llvm.loop !19

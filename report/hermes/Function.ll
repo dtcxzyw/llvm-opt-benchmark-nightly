@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZN6hermes2vm15Hand
   call void @_ZNK6hermes2vm15StringPrimitive17appendUTF16StringERN4llvh15SmallVectorImplIDsEE(ptr noundef nonnull align 4 dereferenceable(8) %i.bp, ptr noundef nonnull align 8 dereferenceable(144) %7) #13
   br label %"_ZZN6hermes2vm25functionPrototypeToStringEPvRNS0_7RuntimeENS0_10NativeArgsEENK3$_0clERNS0_12SmallXStringIDsLj64EEE.exit.a"
 
-"_ZZN6hermes2vm25functionPrototypeToStringEPvRNS0_7RuntimeENS0_10NativeArgsEENK3$_0clERNS0_12SmallXStringIDsLj64EEE.exit.a": ; preds = %bb.i, %bb.e
+"_ZZN6hermes2vm25functionPrototypeToStringEPvRNS0_7RuntimeENS0_10NativeArgsEENK3$_0clERNS0_12SmallXStringIDsLj64EEE.exit.a": ; preds = %bb.e, %bb.i
   %i.bq = load i32, ptr %i.ba, align 4, !tbaa !25
   %i.br = zext i32 %i.bq to i64
   %i.bs = load i32, ptr %i.az, align 8, !tbaa !26 ; 2 uses
@@ -266,9 +266,9 @@ _ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit: ;
   %i.cn = extractvalue { i32, i64 } %.pn.i, 1
   br label %bb.m
 
-bb.m:                                             ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit
-  %.sroa.0148.0 = phi i32 [ %i.cm, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i ]
-  %.sroa.8.0 = phi i64 [ %i.cn, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit ], [ undef, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i ], [ undef, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i ]
+bb.m:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit
+  %.sroa.0148.0 = phi i32 [ %i.cm, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i ]
+  %.sroa.8.0 = phi i64 [ %i.cn, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit ], [ undef, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i ], [ undef, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i ]
   %i.co = load ptr, ptr %7, align 8, !tbaa !24    ; 2 uses
   %i.cp = icmp eq ptr %i.co, %i.ay
   br i1 %i.cp, label %_ZN4llvh11SmallVectorIDsLj64EED2Ev.exit, label %bb.n
@@ -369,7 +369,7 @@ bb.u:                                             ; preds = %_ZN6hermes2vm15Hand
   call void @_ZNK6hermes2vm15StringPrimitive17appendUTF16StringERN4llvh15SmallVectorImplIDsEE(ptr noundef nonnull align 4 dereferenceable(8) %i.do, ptr noundef nonnull align 8 dereferenceable(144) %8) #13
   br label %"_ZZN6hermes2vm25functionPrototypeToStringEPvRNS0_7RuntimeENS0_10NativeArgsEENK3$_0clERNS0_12SmallXStringIDsLj64EEE.exit76.a"
 
-"_ZZN6hermes2vm25functionPrototypeToStringEPvRNS0_7RuntimeENS0_10NativeArgsEENK3$_0clERNS0_12SmallXStringIDsLj64EEE.exit76.a": ; preds = %bb.u, %bb.q
+"_ZZN6hermes2vm25functionPrototypeToStringEPvRNS0_7RuntimeENS0_10NativeArgsEENK3$_0clERNS0_12SmallXStringIDsLj64EEE.exit76.a": ; preds = %bb.q, %bb.u
   %.sroa.0.0.copyload.i.i.i77 = load i64, ptr %.sroa.01.0.i, align 8, !tbaa !33
   %i.dp = and i64 %.sroa.0.0.copyload.i.i.i77, 281474976710655
   %i.dq = inttoptr i64 %i.dp to ptr
@@ -666,9 +666,9 @@ _ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit121
   %i.ho = extractvalue { i32, i64 } %.pn.i119, 1
   br label %.thread
 
-.thread:                                          ; preds = %_ZN6hermes2vm12SmallXStringIDsLj64EE6appendEc.exit, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i72, %bb.p, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit121
-  %.sroa.0148.4 = phi i32 [ 0, %_ZN6hermes2vm12SmallXStringIDsLj64EE6appendEc.exit ], [ %i.hn, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit121 ], [ 0, %bb.p ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i72 ]
-  %.sroa.8.3 = phi i64 [ undef, %_ZN6hermes2vm12SmallXStringIDsLj64EE6appendEc.exit ], [ %i.ho, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit121 ], [ undef, %bb.p ], [ undef, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i72 ]
+.thread:                                          ; preds = %_ZN6hermes2vm12SmallXStringIDsLj64EE6appendEc.exit, %bb.p, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i72, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit121
+  %.sroa.0148.4 = phi i32 [ %i.hn, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit121 ], [ 0, %_ZN6hermes2vm12SmallXStringIDsLj64EE6appendEc.exit ], [ 0, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i72 ], [ 0, %bb.p ]
+  %.sroa.8.3 = phi i64 [ %i.ho, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEN4llvh8ArrayRefIDsEE.exit121 ], [ undef, %_ZN6hermes2vm12SmallXStringIDsLj64EE6appendEc.exit ], [ undef, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_11HermesValueEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i72 ], [ undef, %bb.p ]
   %i.hp = load ptr, ptr %8, align 8, !tbaa !24    ; 2 uses
   %i.hq = icmp eq ptr %i.hp, %i.cs
   br i1 %i.hq, label %_ZN4llvh11SmallVectorIDsLj64EED2Ev.exit122, label %bb.aj
@@ -1014,7 +1014,6 @@ _ZN6hermes2vm21ScopedNativeCallFrameC2ERNS0_7RuntimeEjPNS0_8CallableEbNS0_11Herm
 .lr.ph:                                           ; preds = %_ZN6hermes2vm21ScopedNativeCallFrameC2ERNS0_7RuntimeEjPNS0_8CallableEbNS0_11HermesValueE.exit
   %i.ba = load i32, ptr %i.q, align 8, !tbaa !74  ; 3 uses
   %i.bb = add i32 %i.r, -1                        ; 3 uses
-  %xtraiter = and i32 %i.bb, 1
   %i.bc = icmp eq i32 %i.r, 2
   br i1 %i.bc, label %.epil.preheader, label %.lr.ph.new
 
@@ -1027,12 +1026,12 @@ bb.d:                                             ; preds = %_ZNK6hermes2vm10Nat
   br label %bb.i
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc nuw i32 %i.bb to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %.030.epil.init = phi i32 [ 1, %.lr.ph ], [ %i.cy, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod34 = trunc i32 %i.bb to i1
+  %lcmp.mod34 = trunc nuw i32 %i.bb to i1
   tail call void @llvm.assume(i1 %lcmp.mod34)
   %i.be = icmp ult i32 %.030.epil.init, %i.ba
   br i1 %i.be, label %bb.e, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.epil

@@ -204,12 +204,11 @@ bb.k:                                             ; preds = %bb.j
 
 percpu_arena_ind_limit.exit:                      ; preds = %bb.k
   %i.l = icmp eq i32 %i.j, 4
-  %i.m = load i32, ptr @je_ncpus, align 4         ; 4 uses
+  %i.m = load i32, ptr @je_ncpus, align 4         ; 3 uses
   %i.n = icmp ugt i32 %i.m, 1
   %or.cond.i = and i1 %i.l, %i.n
-  %7 = and i32 %i.m, 1
   %i.o = lshr i32 %i.m, 1
-  %spec.select65 = add nuw i32 %i.o, %7
+  %spec.select65 = add nuw i32 %i.o, 1
   %.0.i = select i1 %or.cond.i, i32 %spec.select65, i32 %i.m
   %i.p = icmp ult i32 %.038, %.0.i
   br i1 %i.p, label %.thread, label %bb.l
@@ -504,12 +503,11 @@ percpu_arena_ind_limit.exit.i:                    ; preds = %bb.j
   %i.s = getelementptr i8, ptr %.037.i, i64 78928 ; 2 uses
   %.037.val47.i = load i32, ptr %i.s, align 8, !tbaa !116
   %i.t = icmp eq i32 %i.q, 4
-  %i.u = load i32, ptr @je_ncpus, align 4         ; 4 uses
+  %i.u = load i32, ptr @je_ncpus, align 4         ; 3 uses
   %i.v = icmp ugt i32 %i.u, 1
   %or.cond.i.i = and i1 %i.t, %i.v
-  %1 = and i32 %i.u, 1
   %i.w = lshr i32 %i.u, 1
-  %spec.select.i = add nuw i32 %i.w, %1
+  %spec.select.i = add nuw i32 %i.w, 1
   %.0.i.i = select i1 %or.cond.i.i, i32 %spec.select.i, i32 %i.u
   %i.x = icmp ult i32 %.037.val47.i, %.0.i.i
   br i1 %i.x, label %bb.k, label %arena_choose_impl.exit

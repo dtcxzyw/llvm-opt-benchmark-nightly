@@ -203,12 +203,12 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load i64, ptr %i.e, align 8, !noundef !12
-  %7 = load i64, ptr %1, align 8                  ; 5 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  %8 = load i64, ptr %1, align 8                  ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load i64, ptr %i.g, align 8              ; 2 uses
   %i.i = sub i64 %5, %i.h
-  %.promoted35 = load i64, ptr %8, align 8
+  %.promoted35 = load i64, ptr %7, align 8
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
@@ -223,10 +223,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.n = load i8, ptr %i.m, align 1, !noundef !12
   %i.o = and i8 %i.n, 63
   %i.p = zext nneg i8 %i.o to i64
-  %9 = shl nuw i64 1, %i.p
-  %10 = and i64 %9, %i.f
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %bb.d, label %bb.e
+  %9 = lshr i64 %i.f, %i.p
+  %10 = trunc nuw i64 %9 to i1
+  br i1 %10, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.j, %._crit_edge
   %storemerge = phi i64 [ 0, %._crit_edge ], [ 1, %bb.j ]
@@ -239,8 +238,8 @@ bb.d:                                             ; preds = %bb.b
   br i1 %6, label %bb.f, label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
-  %.sroa.0.0.i = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %7)
-  %.sroa.01.0 = select i1 %6, i64 %7, i64 %.sroa.0.0.i ; 4 uses
+  %.sroa.0.0.i = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %8)
+  %.sroa.01.0 = select i1 %6, i64 %8, i64 %.sroa.0.0.i ; 4 uses
   %umax49 = tail call i64 @llvm.umax.i64(i64 %.sroa.01.0, i64 %5)
   %exitcond.not86.not = icmp ult i64 %.sroa.01.0, %5
   br i1 %exitcond.not86.not, label %.lr.ph89, label %._crit_edge90
@@ -248,7 +247,7 @@ bb.e:                                             ; preds = %bb.b
 .sink.split:                                      ; preds = %bb.d, %bb.r, %bb.o
   %.sink = phi i64 [ %i.i, %bb.o ], [ 0, %bb.r ], [ 0, %bb.d ] ; 2 uses
   %.ph71 = phi i64 [ %i.al, %bb.o ], [ %i.at, %bb.r ], [ %i.q, %bb.d ]
-  store i64 %.sink, ptr %8, align 8
+  store i64 %.sink, ptr %7, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %bb.r, %bb.o, %bb.d
@@ -265,7 +264,7 @@ bb.g:                                             ; preds = %bb.p
 
 ._crit_edge90:                                    ; preds = %bb.g, %bb.e
   %.sroa.05.0 = select i1 %6, i64 0, i64 %i.j     ; 2 uses
-  %i.w = icmp ult i64 %.sroa.05.0, %7
+  %i.w = icmp ult i64 %.sroa.05.0, %8
   br i1 %i.w, label %.lr.ph93, label %._crit_edge94
 
 .lr.ph89:                                         ; preds = %bb.e, %bb.g
@@ -284,13 +283,13 @@ bb.h:                                             ; preds = %bb.m
   br i1 %6, label %bb.j, label %bb.i
 
 .lr.ph93:                                         ; preds = %._crit_edge90, %bb.h
-  %.sroa.2.091 = phi i64 [ %i.ab, %bb.h ], [ %7, %._crit_edge90 ]
+  %.sroa.2.091 = phi i64 [ %i.ab, %bb.h ], [ %8, %._crit_edge90 ]
   %i.ab = add i64 %.sroa.2.091, -1                ; 6 uses
   %i.ac = icmp ult i64 %i.ab, %5
   br i1 %i.ac, label %bb.k, label %bb.l
 
 bb.i:                                             ; preds = %._crit_edge94
-  store i64 0, ptr %8, align 8
+  store i64 0, ptr %7, align 8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge94
@@ -343,7 +342,7 @@ bb.q:                                             ; preds = %.lr.ph89
 bb.r:                                             ; preds = %bb.p
   %i.ar = add i64 %i.l, 1
   %i.as = add i64 %i.ar, %.sroa.02.087
-  %i.at = sub i64 %i.as, %7                       ; 3 uses
+  %i.at = sub i64 %i.as, %8                       ; 3 uses
   store i64 %i.at, ptr %i.a, align 8
   br i1 %6, label %bb.f, label %.sink.split
 }
@@ -746,9 +745,9 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCsVcNsP0WZIc_22aws_smithy_run
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs2pqxYH9ZEk8_3std3env8VarErrorEECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !11, !noundef !12
-  %1 = icmp eq i64 %i.a, 0
+  %1 = trunc nuw i64 %i.a to i1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  br i1 %1, label %bb.b, label %bb.e
+  br i1 %1, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
@@ -1151,8 +1150,8 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !490)
   %i.f = load i64, ptr %i.e, align 8, !range !11, !alias.scope !493, !noundef !12
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %1 = icmp eq i64 %i.f, 0
-  br i1 %1, label %bb.d, label %bb.f
+  %1 = trunc nuw i64 %i.f to i1
+  br i1 %1, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !494)
@@ -1555,9 +1554,8 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i
 bb.f:                                             ; preds = %bb.e
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ax, i64 60
   %i.be = load i32, ptr %i.bd, align 4, !noalias !1685, !noundef !12
-  %2 = and i32 %i.be, 1
-  %.not8.i.i.i.i = icmp eq i32 %2, 0
-  br i1 %.not8.i.i.i.i, label %_RNvMs4_NtNtCslw7hBPHc6qc_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i.i.i, label %bb.g
+  %.not8.i.i.i.i = trunc nuw i32 %i.be to i1
+  br i1 %.not8.i.i.i.i, label %bb.g, label %_RNvMs4_NtNtCslw7hBPHc6qc_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 64

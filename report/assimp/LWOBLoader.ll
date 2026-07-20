@@ -203,11 +203,10 @@ bb.bu:                                            ; preds = %bb.bt
   %i.ft = load i16, ptr %i.ci, align 1
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ci, i64 2
   store ptr %i.fu, ptr %i.a, align 8
-  %.sroa.0.0.insert.insert.i83 = call noundef i16 @llvm.bswap.i16(i16 %i.ft)
-  %i.fv = zext i16 %.sroa.0.0.insert.insert.i83 to i32 ; 4 uses
-  %3 = and i32 %i.fv, 1
-  %.not65 = icmp eq i32 %3, 0
-  br i1 %.not65, label %bb.bv, label %.sink.split
+  %.sroa.0.0.insert.insert.i83 = call noundef i16 @llvm.bswap.i16(i16 %i.ft) ; 2 uses
+  %i.fv = zext i16 %.sroa.0.0.insert.insert.i83 to i32 ; 3 uses
+  %.not65 = trunc i16 %.sroa.0.0.insert.insert.i83 to i1
+  br i1 %.not65, label %.sink.split, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
   %i.fw = and i32 %i.fv, 2
@@ -610,10 +609,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  %4 = and i64 %i.n, 1
   %i.au = load ptr, ptr %i.b, align 8
-  %i.av = sub nuw nsw i64 2, %4
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.av
+  %i.av = sub i64 2, %i.n
+  %i.aw = getelementptr inbounds i8, ptr %i.au, i64 %i.av
   store ptr %i.aw, ptr %i.b, align 8
   ret void
 }

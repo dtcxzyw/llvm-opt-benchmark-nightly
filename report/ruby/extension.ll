@@ -201,22 +201,20 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.f
   %i.x = load i64, ptr @rb_id_option_line, align 8, !tbaa !11
   %i.y = icmp eq i64 %i.b, %i.x
-  br i1 %i.y, label %3, label %bb.n
+  br i1 %i.y, label %bb.k, label %bb.n
 
-3:                                                ; preds = %bb.j
-  %4 = icmp eq i64 %1, 4
-  br i1 %4, label %bb.aq, label %bb.k
-
-bb.k:                                             ; preds = %3
-  %5 = trunc i64 %1 to i1
-  br i1 %5, label %bb.l, label %bb.m
+bb.k:                                             ; preds = %bb.j
+  switch i64 %1, label %bb.l [
+    i64 4, label %bb.aq
+    i64 0, label %bb.m
+  ]
 
 bb.l:                                             ; preds = %bb.k
-  %i.z = tail call i64 @rb_fix2int(i64 noundef %1) #9
+  %i.z = tail call i64 @rb_fix2int(i64 noundef 1) #9
   br label %rb_num2int_inline.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.aa = tail call i64 @rb_num2int(i64 noundef %1) #9
+  %i.aa = tail call i64 @rb_num2int(i64 noundef 0) #9
   br label %rb_num2int_inline.exit
 
 rb_num2int_inline.exit:                           ; preds = %bb.l, %bb.m
@@ -410,7 +408,7 @@ bb.ap:                                            ; preds = %bb.am
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.ck, ptr noundef nonnull @.str.67, i64 noundef %0) #11
   unreachable
 
-bb.aq:                                            ; preds = %bb.g, %bb.x, %RSTRING_PTR.exit, %bb.h, %bb.i, %bb.p, %bb.o, %bb.ab, %bb.aa, %bb.ai, %bb.ah, %bb.ao, %bb.an, %bb.ak, %bb.al, %bb.ad, %._crit_edge, %bb.r, %3, %rb_num2int_inline.exit, %bb.b, %check_string.exit
+bb.aq:                                            ; preds = %bb.k, %bb.g, %bb.x, %RSTRING_PTR.exit, %bb.h, %bb.i, %bb.p, %bb.o, %bb.ab, %bb.aa, %bb.ai, %bb.ah, %bb.ao, %bb.an, %bb.ak, %bb.al, %bb.ad, %._crit_edge, %bb.r, %rb_num2int_inline.exit, %bb.b, %check_string.exit
   ret i32 0
 }
 

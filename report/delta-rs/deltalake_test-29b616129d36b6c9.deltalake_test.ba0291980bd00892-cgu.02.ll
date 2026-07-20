@@ -165,9 +165,9 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std9backtrace11B
   ret void
 
 bb.b:                                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.a, 0
+  %1 = trunc nuw i64 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %1, label %bb.c, label %bb.d
+  br i1 %1, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
@@ -570,9 +570,9 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT
   br i1 %i.l, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std9backtrace15BacktraceSymbolECsfY7SmN0bPrO_14deltalake_test.exit.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VechEEECsfY7SmN0bPrO_14deltalake_test.exit.i.i.i.i
-  %1 = icmp eq i64 %i.k, 0
+  %1 = trunc nuw i64 %i.k to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
-  br i1 %1, label %bb.e, label %bb.f
+  br i1 %1, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.m)
@@ -661,9 +661,9 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT
   br i1 %i.f, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs2pqxYH9ZEk8_3std9backtrace11BytesOrWideEECsfY7SmN0bPrO_14deltalake_test.exit, label %bb.d
 
 bb.d:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VechEEECsfY7SmN0bPrO_14deltalake_test.exit
-  %1 = icmp eq i64 %i.e, 0
+  %1 = trunc nuw i64 %i.e to i1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %1, label %bb.e, label %bb.f
+  br i1 %1, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g)
@@ -1066,9 +1066,10 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfY7S
   br i1 %min.iters.check, label %.lr.ph.i.preheader6, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %i.r, 1152921504606846974      ; 4 uses
+  %2 = add nuw nsw i64 %i.r, 1
+  %n.vec = and i64 %2, 2305843009213693950        ; 4 uses
   %i.s = sub i64 %i.i, %n.vec
-  %i.t = shl nuw i64 %n.vec, 4
+  %i.t = shl i64 %n.vec, 4
   %i.u = getelementptr i8, ptr %i.d, i64 %i.t
   br label %vector.body
 

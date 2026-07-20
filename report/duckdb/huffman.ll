@@ -202,16 +202,15 @@ _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.1: ; preds = %_ZL14
 ._crit_edge.1:                                    ; preds = %._crit_edge.loopexit.1, %._crit_edge
   %.279.lcssa.1 = phi i64 [ %.279.lcssa, %._crit_edge ], [ %i.hq, %._crit_edge.loopexit.1 ] ; 4 uses
   %.2.lcssa.1 = phi i32 [ %.2.lcssa, %._crit_edge ], [ %i.hs, %._crit_edge.loopexit.1 ] ; 2 uses
-  %i.ht = load i16, ptr %i.m, align 2, !tbaa !7   ; 3 uses
+  %i.ht = load i16, ptr %i.m, align 2, !tbaa !7   ; 4 uses
   %.not8590.2 = icmp eq i16 %i.ht, 0
   br i1 %.not8590.2, label %._crit_edge.2, label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %._crit_edge.1
-  %i.hu = zext i16 %i.ht to i32                   ; 3 uses
+  %i.hu = zext i16 %i.ht to i32                   ; 2 uses
   %i.hv = sext i32 %.2.lcssa.1 to i64             ; 3 uses
-  %xtraiter = and i32 %i.hu, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.2.prol.loopexit, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.2.prol
+  %lcmp.mod.not = trunc i16 %i.ht to i1
+  br i1 %lcmp.mod.not, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.2.prol, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.2.prol.loopexit
 
 _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.2.prol: ; preds = %.lr.ph.2
   %i.hw = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.hv
@@ -294,16 +293,15 @@ _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.2: ; preds = %_ZL14
 ._crit_edge.2:                                    ; preds = %._crit_edge.loopexit.2, %._crit_edge.1
   %.279.lcssa.2 = phi i64 [ %.279.lcssa.1, %._crit_edge.1 ], [ %.lcssa120, %._crit_edge.loopexit.2 ] ; 4 uses
   %.2.lcssa.2 = phi i32 [ %.2.lcssa.1, %._crit_edge.1 ], [ %i.je, %._crit_edge.loopexit.2 ] ; 2 uses
-  %i.jf = load i16, ptr %i.r, align 2, !tbaa !7   ; 3 uses
+  %i.jf = load i16, ptr %i.r, align 2, !tbaa !7   ; 4 uses
   %.not8590.3 = icmp eq i16 %i.jf, 0
   br i1 %.not8590.3, label %._crit_edge.3, label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %._crit_edge.2
-  %i.jg = zext i16 %i.jf to i32                   ; 3 uses
+  %i.jg = zext i16 %i.jf to i32                   ; 2 uses
   %i.jh = sext i32 %.2.lcssa.2 to i64             ; 3 uses
-  %xtraiter123 = and i32 %i.jg, 1
-  %lcmp.mod124.not = icmp eq i32 %xtraiter123, 0
-  br i1 %lcmp.mod124.not, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.3.prol.loopexit, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.3.prol
+  %lcmp.mod124.not = trunc i16 %i.jf to i1
+  br i1 %lcmp.mod124.not, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.3.prol, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.3.prol.loopexit
 
 _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.3.prol: ; preds = %.lr.ph.3
   %i.ji = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.jh
@@ -374,16 +372,15 @@ _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.3: ; preds = %_ZL14
 ._crit_edge.3:                                    ; preds = %._crit_edge.loopexit.3, %._crit_edge.2
   %.279.lcssa.3 = phi i64 [ %.279.lcssa.2, %._crit_edge.2 ], [ %.lcssa, %._crit_edge.loopexit.3 ] ; 3 uses
   %.2.lcssa.3 = phi i32 [ %.2.lcssa.2, %._crit_edge.2 ], [ %i.kk, %._crit_edge.loopexit.3 ]
-  %i.kl = load i16, ptr %i.w, align 2, !tbaa !7   ; 3 uses
+  %i.kl = load i16, ptr %i.w, align 2, !tbaa !7   ; 4 uses
   %.not8590.4 = icmp eq i16 %i.kl, 0
   br i1 %.not8590.4, label %.loopexit, label %.lr.ph.4
 
 .lr.ph.4:                                         ; preds = %._crit_edge.3
-  %i.km = zext i16 %i.kl to i32                   ; 3 uses
+  %i.km = zext i16 %i.kl to i32                   ; 2 uses
   %i.kn = sext i32 %.2.lcssa.3 to i64             ; 3 uses
-  %xtraiter125 = and i32 %i.km, 1
-  %lcmp.mod126.not = icmp eq i32 %xtraiter125, 0
-  br i1 %lcmp.mod126.not, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.4.prol.loopexit, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.4.prol
+  %lcmp.mod126.not = trunc i16 %i.kl to i1
+  br i1 %lcmp.mod126.not, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.4.prol, label %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.4.prol.loopexit
 
 _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.4.prol: ; preds = %.lr.ph.4
   %i.ko = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.kn

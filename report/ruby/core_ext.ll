@@ -45,9 +45,9 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %rbimpl_RB_TYPE_P_fa
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef range(i64 0, 21) i64 @int_fixnum_p(i64 %0, i64 noundef %1) #3 {
+define internal range(i64 0, 21) i64 @int_fixnum_p(i64 %0, i64 noundef %1) #3 {
 bb.a:
-  %i.a = trunc i64 %1 to i1
+  %i.a = trunc nuw i64 %1 to i1
   %i.b = select i1 %i.a, i64 20, i64 0
   ret i64 %i.b
 }
@@ -55,48 +55,39 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal i64 @rb_int_to_bignum(i64 %0, i64 noundef %1) #0 {
 bb.a:
-  %i.a = trunc i64 %1 to i1
+  %i.a = trunc nuw i64 %1 to i1
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = ashr i64 %1, 1
-  %i.b = tail call i64 @rb_int2big(i64 noundef %2) #4
+  %i.b = tail call i64 @rb_int2big(i64 noundef 0) #4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i64 [ %i.b, %bb.b ], [ %1, %bb.a ]
+  %.0 = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]
   ret i64 %.0
 }
 
 ; Function Attrs: nounwind uwtable
 define internal i64 @positive_pow(i64 %0, i64 noundef %1, i64 noundef %2) #0 {
 bb.a:
-  %i.a = trunc i64 %1 to i1
-  br i1 %i.a, label %3, label %bb.b
-
-3:                                                ; preds = %bb.a
-  %4 = ashr i64 %1, 1
-  br label %rb_num2long_inline.exit
+  %i.a = trunc nuw i64 %1 to i1
+  br i1 %i.a, label %rb_num2long_inline.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @rb_num2long(i64 noundef %1) #4
+  %i.b = tail call i64 @rb_num2long(i64 noundef 0) #4
   br label %rb_num2long_inline.exit
 
-rb_num2long_inline.exit:                          ; preds = %3, %bb.b
-  %.0.i = phi i64 [ %4, %3 ], [ %i.b, %bb.b ]
-  %i.c = trunc i64 %2 to i1
-  br i1 %i.c, label %5, label %bb.c
-
-5:                                                ; preds = %rb_num2long_inline.exit
-  %6 = ashr i64 %2, 1
-  br label %rb_num2ulong_inline.exit
+rb_num2long_inline.exit:                          ; preds = %bb.a, %bb.b
+  %.0.i = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]
+  %i.c = trunc nuw i64 %2 to i1
+  br i1 %i.c, label %rb_num2ulong_inline.exit, label %bb.c
 
 bb.c:                                             ; preds = %rb_num2long_inline.exit
-  %i.d = tail call i64 @rb_num2ulong(i64 noundef %2) #4
+  %i.d = tail call i64 @rb_num2ulong(i64 noundef 0) #4
   br label %rb_num2ulong_inline.exit
 
-rb_num2ulong_inline.exit:                         ; preds = %5, %bb.c
-  %.0.i2 = phi i64 [ %6, %5 ], [ %i.d, %bb.c ]
+rb_num2ulong_inline.exit:                         ; preds = %rb_num2long_inline.exit, %bb.c
+  %.0.i2 = phi i64 [ %i.d, %bb.c ], [ 0, %rb_num2long_inline.exit ]
   %i.e = tail call i64 @rb_int_positive_pow(i64 noundef %.0.i, i64 noundef %.0.i2) #4
   ret i64 %i.e
 }

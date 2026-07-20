@@ -201,17 +201,21 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i8, ptr %i.g, align 1, !tbaa !65
   %i.i = zext i8 %i.h to i32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 114
-  %i.k = load i8, ptr %i.j, align 2, !tbaa !66    ; 2 uses
+  %i.k = load i8, ptr %i.j, align 2, !tbaa !66    ; 3 uses
   %i.l = zext i8 %i.k to i32                      ; 2 uses
   %i.m = and i32 %i.l, 1
   %i.n = add nuw nsw i32 %i.m, %i.i
   %.not.i = icmp samesign ugt i32 %i.n, %i.f
-  %3 = and i32 %i.l, 5
-  %or.cond.i = icmp eq i32 %3, 4
-  %or.cond22.i = or i1 %or.cond.i, %.not.i
-  br i1 %or.cond22.i, label %.critedge232, label %bb.c
+  br i1 %.not.i, label %.critedge232, label %3
 
-bb.c:                                             ; preds = %bb.b
+3:                                                ; preds = %bb.b
+  %4 = and i32 %i.l, 4
+  %.not17.i = icmp eq i32 %4, 0
+  %.not18.i = trunc i8 %i.k to i1
+  %or.cond.i = or i1 %.not17.i, %.not18.i
+  br i1 %or.cond.i, label %bb.c, label %.critedge232
+
+bb.c:                                             ; preds = %3
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.p = load i32, ptr %i.o, align 8, !tbaa !67
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -403,9 +407,8 @@ bb.x:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.x, %.lr.ph
   %.0178.lcssa.ph = phi i32 [ %i.cc, %bb.x ], [ %i.cg, %.lr.ph ]
-  %4 = and i32 %.0178.lcssa.ph, 1
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %.critedge, label %.critedge232
+  %5 = trunc nuw i32 %.0178.lcssa.ph to i1
+  br i1 %5, label %.critedge232, label %.critedge
 
 default.unreachable306:                           ; preds = %checkArgMode.exit, %bb.h, %bb.g
   unreachable
@@ -559,8 +562,8 @@ bb.ar:                                            ; preds = %bb.aq
   ]
 
 luaG_checkopenop.exit:                            ; preds = %bb.ar, %bb.ar, %bb.ar, %bb.ar
-  %6 = icmp ugt i32 %i.dy, 8388607
-  br i1 %6, label %.critedge232, label %bb.at
+  %6 = icmp ult i32 %i.dy, 8388608
+  br i1 %6, label %bb.at, label %.critedge232
 
 bb.as:                                            ; preds = %bb.aq
   %i.ea = add nsw i32 %.0180, -1                  ; 2 uses
@@ -687,8 +690,8 @@ bb.bg:                                            ; preds = %luaG_checkopenop.ex
   %i.fj = load i32, ptr %i.fi, align 4, !tbaa !4
   br label %.critedge232
 
-.critedge232:                                     ; preds = %bb.aw, %bb.as, %bb.ap, %bb.be, %bb.ba, %bb.az, %bb.ar, %bb.q, %bb.r, %bb.o, %bb.n, %bb.l, %bb.m, %bb.j, %bb.i, %bb.ac, %bb.z, %bb.ad, %bb.af, %bb.ag, %bb.ah, %bb.ak, %bb.aj, %bb.al, %luaG_checkopenop.exit, %bb.an, %bb.av, %bb.ay, %luaG_checkopenop.exit243, %bb.bc, %bb.y, %._crit_edge, %bb.t, %bb.f, %bb.v, %bb.bf, %.lr.ph276, %bb.b, %bb.a, %bb.c, %bb.d, %precheck.exit, %._crit_edge282
-  %.10 = phi i32 [ 0, %precheck.exit ], [ %i.fj, %._crit_edge282 ], [ 0, %.lr.ph276 ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.a ], [ 0, %bb.bf ], [ 0, %bb.v ], [ 0, %bb.f ], [ 0, %bb.t ], [ 0, %._crit_edge ], [ 0, %bb.y ], [ 0, %bb.bc ], [ 0, %luaG_checkopenop.exit243 ], [ 0, %bb.ay ], [ 0, %bb.av ], [ 0, %bb.an ], [ 0, %luaG_checkopenop.exit ], [ 0, %bb.al ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.ah ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.ad ], [ 0, %bb.z ], [ 0, %bb.ac ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.n ], [ 0, %bb.o ], [ 0, %bb.r ], [ 0, %bb.q ], [ 0, %bb.ar ], [ 0, %bb.az ], [ 0, %bb.ba ], [ 0, %bb.be ], [ 0, %bb.ap ], [ 0, %bb.as ], [ 0, %bb.aw ]
+.critedge232:                                     ; preds = %bb.aw, %bb.as, %bb.ap, %bb.be, %bb.ba, %bb.az, %bb.ar, %bb.q, %bb.r, %bb.o, %bb.n, %bb.l, %bb.m, %bb.j, %bb.i, %bb.ac, %bb.z, %bb.ad, %bb.af, %bb.ag, %bb.ah, %bb.ak, %bb.aj, %bb.al, %luaG_checkopenop.exit, %bb.an, %bb.av, %bb.ay, %luaG_checkopenop.exit243, %bb.bc, %bb.y, %._crit_edge, %bb.t, %bb.f, %bb.v, %bb.bf, %.lr.ph276, %bb.a, %bb.b, %3, %bb.c, %bb.d, %precheck.exit, %._crit_edge282
+  %.10 = phi i32 [ 0, %precheck.exit ], [ %i.fj, %._crit_edge282 ], [ 0, %bb.c ], [ 0, %bb.a ], [ 0, %3 ], [ 0, %bb.b ], [ 0, %.lr.ph276 ], [ 0, %bb.d ], [ 0, %bb.bf ], [ 0, %bb.v ], [ 0, %bb.f ], [ 0, %bb.t ], [ 0, %._crit_edge ], [ 0, %bb.y ], [ 0, %bb.bc ], [ 0, %luaG_checkopenop.exit243 ], [ 0, %bb.ay ], [ 0, %bb.av ], [ 0, %bb.an ], [ 0, %luaG_checkopenop.exit ], [ 0, %bb.al ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.ah ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.ad ], [ 0, %bb.z ], [ 0, %bb.ac ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.n ], [ 0, %bb.o ], [ 0, %bb.r ], [ 0, %bb.q ], [ 0, %bb.ar ], [ 0, %bb.az ], [ 0, %bb.ba ], [ 0, %bb.be ], [ 0, %bb.ap ], [ 0, %bb.as ], [ 0, %bb.aw ]
   ret i32 %.10
 }
 

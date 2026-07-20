@@ -204,8 +204,8 @@ bb.ms:                                            ; preds = %bb.mp
   %i.ayv = getelementptr inbounds nuw i8, ptr %i.ayu, i64 16
   %i.ayw = load ptr, ptr %i.ayv, align 8, !tbaa !126, !noalias !437
   %i.ayx = getelementptr inbounds nuw i8, ptr %i.ayw, i64 24
-  %i.ayy = load i64, ptr %i.ayx, align 8, !tbaa !130, !noalias !437 ; 2 uses
-  %i.ayz = lshr i64 %i.ayy, 4                     ; 3 uses
+  %i.ayy = load i64, ptr %i.ayx, align 8, !tbaa !130, !noalias !437
+  %i.ayz = lshr i64 %i.ayy, 4                     ; 2 uses
   switch i64 %i.ayz, label %.lr.ph.i147.preheader.new [
     i64 0, label %._crit_edge.i148
     i64 1, label %.lr.ph.i147.epil.preheader
@@ -215,15 +215,8 @@ bb.ms:                                            ; preds = %bb.mp
   %unroll_iter = and i64 %i.ayz, 1152921504606846974
   br label %.lr.ph.i147
 
-._crit_edge.i148.loopexit.unr-lcssa:              ; preds = %.lr.ph.i147
-  %65 = and i64 %i.ayy, 16
-  %lcmp.mod747.not = icmp eq i64 %65, 0
-  br i1 %lcmp.mod747.not, label %._crit_edge.i148, label %.lr.ph.i147.epil.preheader
-
-.lr.ph.i147.epil.preheader:                       ; preds = %bb.ms, %._crit_edge.i148.loopexit.unr-lcssa
-  %.0191.i.epil.init = phi i64 [ 0, %bb.ms ], [ %i.bao, %._crit_edge.i148.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod748 = trunc i64 %i.ayz to i1
-  call void @llvm.assume(i1 %lcmp.mod748)
+.lr.ph.i147.epil.preheader:                       ; preds = %bb.ms, %.lr.ph.i147
+  %.0191.i.epil.init = phi i64 [ 0, %bb.ms ], [ %i.bao, %.lr.ph.i147 ] ; 2 uses
   %i.aza = getelementptr inbounds nuw [16 x i8], ptr %i.axx, i64 %.0191.i.epil.init ; 2 uses
   %.sroa.8.0..sroa_idx.i.epil = getelementptr inbounds nuw i8, ptr %i.aza, i64 8
   %.sroa.8.0.copyload.i.epil = load i64, ptr %.sroa.8.0..sroa_idx.i.epil, align 8, !tbaa !236, !noalias !437
@@ -236,7 +229,7 @@ bb.ms:                                            ; preds = %bb.mp
   store i64 %i.azb, ptr %.sroa.8.0..sroa_idx4.i.epil, align 8, !tbaa !236, !noalias !437
   br label %._crit_edge.i148
 
-._crit_edge.i148:                                 ; preds = %.lr.ph.i147.epil.preheader, %._crit_edge.i148.loopexit.unr-lcssa, %bb.ms
+._crit_edge.i148:                                 ; preds = %bb.ms, %.lr.ph.i147.epil.preheader
   %i.azf = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.azg = load ptr, ptr %i.azf, align 8, !tbaa !33, !noalias !437
   %i.azh = getelementptr inbounds nuw i8, ptr %i.azg, i64 40
@@ -327,7 +320,7 @@ bb.my:                                            ; preds = %_ZN9__gnu_cxx27__ex
   %i.bao = add nuw nsw i64 %.0191.i, 2            ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i148.loopexit.unr-lcssa, label %.lr.ph.i147, !llvm.loop !450
+  br i1 %niter.ncmp.1, label %.lr.ph.i147.epil.preheader, label %.lr.ph.i147, !llvm.loop !450
 
 bb.mz:                                            ; preds = %bb.my, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i152, %bb.mu, %.noexc.i149
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #19, !noalias !437
@@ -730,7 +723,7 @@ bb.f:                                             ; preds = %bb.d
   br label %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EE16_Temporary_valueC2IJRKS3_EEEPS5_DpOT_.exit
 
 _ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EE16_Temporary_valueC2IJRKS3_EEEPS5_DpOT_.exit: ; preds = %bb.c, %bb.e, %bb.f
-  %i.p = load ptr, ptr %i.c, align 8, !tbaa !1375 ; 16 uses
+  %i.p = load ptr, ptr %i.c, align 8, !tbaa !1375 ; 15 uses
   %i.q = ptrtoint ptr %i.p to i64
   %i.r = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.s = sub i64 %i.q, %i.r
@@ -982,20 +975,15 @@ _ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit.i.i.i: ; preds = %_ZNSt16_Sp_cou
   br i1 %.not.i.i.i, label %_ZSt4fillIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RKT0_.exit, label %bb.n, !llvm.loop !2234
 
 bb.y:                                             ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EE16_Temporary_valueC2IJRKS3_EEEPS5_DpOT_.exit
-  %i.db = sub nuw i64 %2, %i.t                    ; 8 uses
+  %i.db = sub nuw i64 %2, %i.t                    ; 6 uses
   %.not7.i.i.i.i = icmp eq i64 %i.db, 0
   br i1 %.not7.i.i.i.i, label %_ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.y
   %i.dc = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 9 uses
-  br i1 %.not.i.i.i.i.i, label %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader, label %.lr.ph.i.i.i.i.split.preheader
+  br i1 %.not.i.i.i.i.i, label %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader, label %.lr.ph.i.i.i.i.split.prol
 
-.lr.ph.i.i.i.i.split.preheader:                   ; preds = %.lr.ph.i.i.i.i
-  %xtraiter = and i64 %i.db, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.split.prol.loopexit, label %.lr.ph.i.i.i.i.split.prol
-
-.lr.ph.i.i.i.i.split.prol:                        ; preds = %.lr.ph.i.i.i.i.split.preheader
+.lr.ph.i.i.i.i.split.prol:                        ; preds = %.lr.ph.i.i.i.i
   store <2 x ptr> %i.i, ptr %i.p, align 8, !tbaa !93
   %i.dd = load i8, ptr @__libc_single_threaded, align 1, !tbaa !95
   %.not.i.i.i.i.i.i.i.i.i71.prol = icmp eq i8 %i.dd, 0
@@ -1005,21 +993,15 @@ bb.z:                                             ; preds = %.lr.ph.i.i.i.i.spli
   %i.de = load i32, ptr %i.dc, align 4, !tbaa !3
   %i.df = add nsw i32 %i.de, 1
   store i32 %i.df, ptr %i.dc, align 4, !tbaa !3
-  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.prol
+  br label %.lr.ph.i.i.i.i.split.prol.loopexit
 
 bb.aa:                                            ; preds = %.lr.ph.i.i.i.i.split.prol
   %i.dg = atomicrmw volatile add ptr %i.dc, i32 1 acq_rel, align 4 ; 0 uses
-  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.prol
-
-_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.prol: ; preds = %bb.aa, %bb.z
-  %4 = add nsw i64 %i.db, -1
-  %5 = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 2 uses
   br label %.lr.ph.i.i.i.i.split.prol.loopexit
 
-.lr.ph.i.i.i.i.split.prol.loopexit:               ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.prol, %.lr.ph.i.i.i.i.split.preheader
-  %.lcssa184.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.split.preheader ], [ %5, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.prol ]
-  %.09.i.i.i.i.unr = phi ptr [ %i.p, %.lr.ph.i.i.i.i.split.preheader ], [ %5, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.prol ]
-  %.068.i.i.i.i.unr = phi i64 [ %i.db, %.lr.ph.i.i.i.i.split.preheader ], [ %4, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.prol ]
+.lr.ph.i.i.i.i.split.prol.loopexit:               ; preds = %bb.aa, %bb.z
+  %4 = add i64 %i.db, -1
+  %5 = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 2 uses
   %i.dh = icmp eq i64 %i.db, 1
   br i1 %i.dh, label %_ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i.split
 
@@ -1086,8 +1068,8 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.
   br i1 %.not.i.i.i.i.us.7, label %_ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us, !llvm.loop !2236
 
 .lr.ph.i.i.i.i.split:                             ; preds = %.lr.ph.i.i.i.i.split.prol.loopexit, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1
-  %.09.i.i.i.i = phi ptr [ %i.eo, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1 ], [ %.09.i.i.i.i.unr, %.lr.ph.i.i.i.i.split.prol.loopexit ] ; 3 uses
-  %.068.i.i.i.i = phi i64 [ %i.en, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1 ], [ %.068.i.i.i.i.unr, %.lr.ph.i.i.i.i.split.prol.loopexit ]
+  %.09.i.i.i.i = phi ptr [ %i.eo, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1 ], [ %5, %.lr.ph.i.i.i.i.split.prol.loopexit ] ; 3 uses
+  %.068.i.i.i.i = phi i64 [ %i.en, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1 ], [ %4, %.lr.ph.i.i.i.i.split.prol.loopexit ]
   store <2 x ptr> %i.i, ptr %.09.i.i.i.i, align 8, !tbaa !93
   %i.ee = load i8, ptr @__libc_single_threaded, align 1, !tbaa !95
   %.not.i.i.i.i.i.i.i.i.i71 = icmp eq i8 %i.ee, 0
@@ -1127,7 +1109,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.
   br i1 %.not.i.i.i.i.1, label %_ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i.split, !llvm.loop !2236
 
 _ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i.split.prol.loopexit, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.prol.loopexit, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us, %bb.y
-  %.0.lcssa.i.i.i.i = phi ptr [ %i.p, %bb.y ], [ %i.ed, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us ], [ %.lcssa182.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.prol.loopexit ], [ %.lcssa184.unr, %.lr.ph.i.i.i.i.split.prol.loopexit ], [ %i.eo, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1 ] ; 4 uses
+  %.0.lcssa.i.i.i.i = phi ptr [ %i.p, %bb.y ], [ %i.ed, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us ], [ %.lcssa182.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.prol.loopexit ], [ %5, %.lr.ph.i.i.i.i.split.prol.loopexit ], [ %i.eo, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.1 ] ; 4 uses
   store ptr %.0.lcssa.i.i.i.i, ptr %i.c, align 8, !tbaa !1292
   %i.ep = icmp eq ptr %1, %i.p
   br i1 %i.ep, label %_ZSt22__uninitialized_move_aIPSt10shared_ptrIN5arrow6BufferEES4_SaIS3_EET0_T_S7_S6_RT1_.exit76.thread, label %.lr.ph.i.i.i.i.i72

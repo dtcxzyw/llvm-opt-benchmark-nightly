@@ -203,9 +203,7 @@ bb.j:                                             ; preds = %bb.i
   %i.at = load i16, ptr %i.as, align 2, !tbaa !88
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.av = load i16, ptr %i.au, align 2, !tbaa !88
-  %2 = xor i16 %i.av, %i.at
-  %3 = and i16 %2, 1
-  %i.aw = icmp eq i16 %3, 0
+  %i.aw = icmp eq i16 %i.at, %i.av
   br i1 %i.aw, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.a, %bb.b, %bb.g, %bb.h, %bb.i, %bb.j

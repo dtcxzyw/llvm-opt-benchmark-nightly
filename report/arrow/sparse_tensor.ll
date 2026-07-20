@@ -204,7 +204,7 @@ _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; 
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 40
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !101
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !10 ; 24 uses
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !10 ; 16 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !99 ; 2 uses
   %i.al = load ptr, ptr %2, align 8, !tbaa !101   ; 2 uses
@@ -260,7 +260,6 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !327
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16 ; 3 uses
   %i.bf = load ptr, ptr %2, align 8, !tbaa !101   ; 3 uses
-  %xtraiter = and i64 %i.ai, 1
   %i.bg = icmp eq i64 %i.ai, 1
   br i1 %i.bg, label %.lr.ph.i.i.i90.epil.preheader, label %.lr.ph.i.i.i90.preheader.new
 
@@ -281,7 +280,6 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !327
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 3 uses
   %i.bp = load ptr, ptr %2, align 8, !tbaa !101   ; 3 uses
-  %xtraiter167 = and i64 %i.ai, 1
   %i.bq = icmp eq i64 %i.ai, 1
   br i1 %i.bq, label %.lr.ph.i.i.i80.epil.preheader, label %.lr.ph.i.i.i80.preheader.new
 
@@ -302,7 +300,6 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !327
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 16 ; 3 uses
   %i.bz = load ptr, ptr %2, align 8, !tbaa !101   ; 3 uses
-  %xtraiter172 = and i64 %i.ai, 1
   %i.ca = icmp eq i64 %i.ai, 1
   br i1 %i.ca, label %.lr.ph.i.i.i70.epil.preheader, label %.lr.ph.i.i.i70.preheader.new
 
@@ -323,7 +320,6 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !327
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 16 ; 3 uses
   %i.cj = load ptr, ptr %2, align 8, !tbaa !101   ; 3 uses
-  %xtraiter177 = and i64 %i.ai, 1
   %i.ck = icmp eq i64 %i.ai, 1
   br i1 %i.ck, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.i.i.i.preheader.new
 
@@ -360,7 +356,7 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.dg = add nuw nsw i64 %.053143, 2             ; 2 uses
   %niter181.next.1 = add nuw nsw i64 %niter181, 2 ; 2 uses
   %niter181.ncmp.1 = icmp eq i64 %niter181.next.1, %unroll_iter180
-  br i1 %niter181.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !330
+  br i1 %niter181.ncmp.1, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.i.i.i, !llvm.loop !330
 
 .lr.ph.i.i.i70:                                   ; preds = %.lr.ph.i.i.i70, %.lr.ph.i.i.i70.preheader.new
   %.054142 = phi i64 [ 0, %.lr.ph.i.i.i70.preheader.new ], [ %i.ec, %.lr.ph.i.i.i70 ] ; 4 uses
@@ -391,7 +387,7 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.ec = add nuw nsw i64 %.054142, 2             ; 2 uses
   %niter176.next.1 = add nuw nsw i64 %niter176, 2 ; 2 uses
   %niter176.ncmp.1 = icmp eq i64 %niter176.next.1, %unroll_iter175
-  br i1 %niter176.ncmp.1, label %.loopexit.loopexit163.unr-lcssa, label %.lr.ph.i.i.i70, !llvm.loop !333
+  br i1 %niter176.ncmp.1, label %.lr.ph.i.i.i70.epil.preheader, label %.lr.ph.i.i.i70, !llvm.loop !333
 
 .lr.ph.i.i.i80:                                   ; preds = %.lr.ph.i.i.i80, %.lr.ph.i.i.i80.preheader.new
   %.055141 = phi i64 [ 0, %.lr.ph.i.i.i80.preheader.new ], [ %i.ey, %.lr.ph.i.i.i80 ] ; 4 uses
@@ -422,7 +418,7 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.ey = add nuw nsw i64 %.055141, 2             ; 2 uses
   %niter171.next.1 = add nuw nsw i64 %niter171, 2 ; 2 uses
   %niter171.ncmp.1 = icmp eq i64 %niter171.next.1, %unroll_iter170
-  br i1 %niter171.ncmp.1, label %.loopexit.loopexit164.unr-lcssa, label %.lr.ph.i.i.i80, !llvm.loop !334
+  br i1 %niter171.ncmp.1, label %.lr.ph.i.i.i80.epil.preheader, label %.lr.ph.i.i.i80, !llvm.loop !334
 
 .lr.ph.i.i.i90:                                   ; preds = %.lr.ph.i.i.i90, %.lr.ph.i.i.i90.preheader.new
   %.052140 = phi i64 [ 0, %.lr.ph.i.i.i90.preheader.new ], [ %i.fs, %.lr.ph.i.i.i90 ] ; 4 uses
@@ -451,16 +447,10 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   %i.fs = add nuw nsw i64 %.052140, 2             ; 2 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit165.unr-lcssa, label %.lr.ph.i.i.i90, !llvm.loop !335
+  br i1 %niter.ncmp.1, label %.lr.ph.i.i.i90.epil.preheader, label %.lr.ph.i.i.i90, !llvm.loop !335
 
-.loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph.i.i.i
-  %lcmp.mod178.not = icmp eq i64 %xtraiter177, 0
-  br i1 %lcmp.mod178.not, label %.loopexit, label %.lr.ph.i.i.i.epil.preheader
-
-.lr.ph.i.i.i.epil.preheader:                      ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i.i.i.preheader
-  %.053143.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.preheader ], [ %i.dg, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod179 = trunc i64 %i.ai to i1
-  tail call void @llvm.assume(i1 %lcmp.mod179)
+.lr.ph.i.i.i.epil.preheader:                      ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
+  %.053143.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.preheader ], [ %i.dg, %.lr.ph.i.i.i ] ; 2 uses
   %i.ft = load i64, ptr %i.ce, align 8, !tbaa !10
   %i.fu = mul nsw i64 %i.ft, %1
   %i.fv = load i64, ptr %i.cf, align 8, !tbaa !10
@@ -474,14 +464,8 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   store i64 %i.gb, ptr %i.gc, align 8, !tbaa !10
   br label %.loopexit
 
-.loopexit.loopexit163.unr-lcssa:                  ; preds = %.lr.ph.i.i.i70
-  %lcmp.mod173.not = icmp eq i64 %xtraiter172, 0
-  br i1 %lcmp.mod173.not, label %.loopexit, label %.lr.ph.i.i.i70.epil.preheader
-
-.lr.ph.i.i.i70.epil.preheader:                    ; preds = %.loopexit.loopexit163.unr-lcssa, %.lr.ph.i.i.i70.preheader
-  %.054142.epil.init = phi i64 [ 0, %.lr.ph.i.i.i70.preheader ], [ %i.ec, %.loopexit.loopexit163.unr-lcssa ] ; 2 uses
-  %lcmp.mod174 = trunc i64 %i.ai to i1
-  tail call void @llvm.assume(i1 %lcmp.mod174)
+.lr.ph.i.i.i70.epil.preheader:                    ; preds = %.lr.ph.i.i.i70.preheader, %.lr.ph.i.i.i70
+  %.054142.epil.init = phi i64 [ 0, %.lr.ph.i.i.i70.preheader ], [ %i.ec, %.lr.ph.i.i.i70 ] ; 2 uses
   %i.gd = load i64, ptr %i.bu, align 8, !tbaa !10
   %i.ge = mul nsw i64 %i.gd, %1
   %i.gf = load i64, ptr %i.bv, align 8, !tbaa !10
@@ -495,14 +479,8 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   store i64 %i.gl, ptr %i.gm, align 8, !tbaa !10
   br label %.loopexit
 
-.loopexit.loopexit164.unr-lcssa:                  ; preds = %.lr.ph.i.i.i80
-  %lcmp.mod168.not = icmp eq i64 %xtraiter167, 0
-  br i1 %lcmp.mod168.not, label %.loopexit, label %.lr.ph.i.i.i80.epil.preheader
-
-.lr.ph.i.i.i80.epil.preheader:                    ; preds = %.loopexit.loopexit164.unr-lcssa, %.lr.ph.i.i.i80.preheader
-  %.055141.epil.init = phi i64 [ 0, %.lr.ph.i.i.i80.preheader ], [ %i.ey, %.loopexit.loopexit164.unr-lcssa ] ; 2 uses
-  %lcmp.mod169 = trunc i64 %i.ai to i1
-  tail call void @llvm.assume(i1 %lcmp.mod169)
+.lr.ph.i.i.i80.epil.preheader:                    ; preds = %.lr.ph.i.i.i80.preheader, %.lr.ph.i.i.i80
+  %.055141.epil.init = phi i64 [ 0, %.lr.ph.i.i.i80.preheader ], [ %i.ey, %.lr.ph.i.i.i80 ] ; 2 uses
   %i.gn = load i64, ptr %i.bk, align 8, !tbaa !10
   %i.go = mul nsw i64 %i.gn, %1
   %i.gp = load i64, ptr %i.bl, align 8, !tbaa !10
@@ -516,14 +494,8 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   store i64 %i.gv, ptr %i.gw, align 8, !tbaa !10
   br label %.loopexit
 
-.loopexit.loopexit165.unr-lcssa:                  ; preds = %.lr.ph.i.i.i90
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.i.i.i90.epil.preheader
-
-.lr.ph.i.i.i90.epil.preheader:                    ; preds = %.loopexit.loopexit165.unr-lcssa, %.lr.ph.i.i.i90.preheader
-  %.052140.epil.init = phi i64 [ 0, %.lr.ph.i.i.i90.preheader ], [ %i.fs, %.loopexit.loopexit165.unr-lcssa ] ; 2 uses
-  %lcmp.mod166 = trunc i64 %i.ai to i1
-  tail call void @llvm.assume(i1 %lcmp.mod166)
+.lr.ph.i.i.i90.epil.preheader:                    ; preds = %.lr.ph.i.i.i90.preheader, %.lr.ph.i.i.i90
+  %.052140.epil.init = phi i64 [ 0, %.lr.ph.i.i.i90.preheader ], [ %i.fs, %.lr.ph.i.i.i90 ] ; 2 uses
   %i.gx = load i64, ptr %i.ba, align 8, !tbaa !10
   %i.gy = mul nsw i64 %i.gx, %1
   %i.gz = load i64, ptr %i.bb, align 8, !tbaa !10
@@ -536,7 +508,7 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.k, %bb.l, %bb.m,
   store i64 %i.he, ptr %i.hf, align 8, !tbaa !10
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i90.epil.preheader, %.loopexit.loopexit165.unr-lcssa, %.lr.ph.i.i.i80.epil.preheader, %.loopexit.loopexit164.unr-lcssa, %.lr.ph.i.i.i70.epil.preheader, %.loopexit.loopexit163.unr-lcssa, %.lr.ph.i.i.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader135, %.preheader133, %.preheader131, %.preheader, %_ZNSt6vectorIlSaIlEE6resizeEm.exit, %.split
+.loopexit:                                        ; preds = %.lr.ph.i.i.i90.epil.preheader, %.lr.ph.i.i.i80.epil.preheader, %.lr.ph.i.i.i70.epil.preheader, %.lr.ph.i.i.i.epil.preheader, %.preheader135, %.preheader133, %.preheader131, %.preheader, %_ZNSt6vectorIlSaIlEE6resizeEm.exit, %.split
   ret void
 }
 

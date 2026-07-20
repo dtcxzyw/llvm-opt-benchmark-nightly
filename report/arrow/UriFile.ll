@@ -171,9 +171,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.pre = load i8, ptr %i.s, align 1, !tbaa !7
   br label %.thread87.split.us.split.us.i
 
-.thread87.split.split.us.i:                       ; preds = %bb.n, %.thread83.i
+.thread87.split.split.us.i:                       ; preds = %.thread83.i, %bb.n
   %.164.us96.i = phi ptr [ %.4.us106.i, %bb.n ], [ %i.l, %.thread83.i ] ; 5 uses
-  %.061.us97.i = phi i32 [ %.162.us103.i, %bb.n ], [ 1, %.thread83.i ] ; 2 uses
+  %.061.us98.i = phi i1 [ %.162.us107.i, %bb.n ], [ true, %.thread83.i ] ; 2 uses
   %.060.us98.i = phi ptr [ %.1.us107.i, %bb.n ], [ %i.a, %.thread83.i ] ; 2 uses
   %.059.us99.i = phi ptr [ %i.ae, %bb.n ], [ %0, %.thread83.i ] ; 7 uses
   %i.t = load i8, ptr %.059.us99.i, align 1, !tbaa !7 ; 2 uses
@@ -188,8 +188,7 @@ bb.h:                                             ; preds = %.thread87.split.spl
   br i1 %i.v, label %bb.i, label %thread-pre-split.i
 
 bb.i:                                             ; preds = %bb.h
-  %.not166.i = icmp eq i32 %.061.us97.i, 0
-  br i1 %.not166.i, label %bb.j, label %bb.k
+  br i1 %.061.us98.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.w = tail call ptr @uriEscapeExA(ptr noundef nonnull %i.u, ptr noundef nonnull %.059.us99.i, ptr noundef %.164.us96.i, i32 noundef 0, i32 noundef 0) #5
@@ -213,7 +212,7 @@ thread-pre-split.i:                               ; preds = %bb.k, %bb.j, %bb.h
 bb.l:                                             ; preds = %thread-pre-split.i, %.thread87.split.split.us.i
   %i.ac = phi i8 [ %.pr.i, %thread-pre-split.i ], [ %i.t, %.thread87.split.split.us.i ]
   %.3.us102.i = phi ptr [ %.3.us102.ph.i, %thread-pre-split.i ], [ %.164.us96.i, %.thread87.split.split.us.i ] ; 4 uses
-  %.162.us103.i = phi i32 [ 0, %thread-pre-split.i ], [ %.061.us97.i, %.thread87.split.split.us.i ]
+  %.162.us107.i = phi i1 [ false, %thread-pre-split.i ], [ %.061.us98.i, %.thread87.split.split.us.i ]
   switch i8 %i.ac, label %bb.n [
     i8 0, label %.split.us.i
     i8 92, label %bb.m
@@ -309,14 +308,13 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 .thread58.thread.i:                               ; preds = %bb.d
-  %i.l = tail call i32 @strncmp(ptr noundef nonnull readonly dereferenceable(1) %0, ptr noundef nonnull dereferenceable(9) @.str.2, i64 noundef 8) #6 ; 2 uses
-  %.not = icmp eq i32 %i.l, 0
-  %i.m = icmp eq i32 %i.l, 0
+  %i.l = tail call i32 @strncmp(ptr noundef nonnull readonly dereferenceable(1) %0, ptr noundef nonnull dereferenceable(9) @.str.2, i64 noundef 8) #6
+  %i.m = icmp eq i32 %i.l, 0                      ; 2 uses
   %i.n = select i1 %i.m, i64 8, i64 7
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.n ; 3 uses
   %i.p = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.o) #6
   %i.q = add i64 %i.p, 1                          ; 2 uses
-  br i1 %.not, label %bb.e, label %.thread.i
+  br i1 %i.m, label %bb.e, label %.thread.i
 
 .thread.i:                                        ; preds = %.thread58.thread.i
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 2
@@ -518,7 +516,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .thread87.split.split.us.i:                       ; preds = %.thread83.i, %bb.n
   %.164.us96.i = phi ptr [ %.4.us106.i, %bb.n ], [ %i.m, %.thread83.i ] ; 5 uses
-  %.061.us97.i = phi i32 [ %.162.us103.i, %bb.n ], [ 1, %.thread83.i ] ; 2 uses
+  %.061.us98.i = phi i1 [ %.162.us107.i, %bb.n ], [ true, %.thread83.i ] ; 2 uses
   %.060.us98.i = phi ptr [ %.1.us107.i, %bb.n ], [ %i.a, %.thread83.i ] ; 2 uses
   %.059.us99.i = phi ptr [ %i.ag, %bb.n ], [ %0, %.thread83.i ] ; 7 uses
   %i.u = load i32, ptr %.059.us99.i, align 4, !tbaa !3 ; 2 uses
@@ -533,8 +531,7 @@ bb.h:                                             ; preds = %.thread87.split.spl
   br i1 %i.w, label %bb.i, label %thread-pre-split.i
 
 bb.i:                                             ; preds = %bb.h
-  %.not162.i = icmp eq i32 %.061.us97.i, 0
-  br i1 %.not162.i, label %bb.j, label %bb.k
+  br i1 %.061.us98.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.x = tail call ptr @uriEscapeExW(ptr noundef nonnull %i.v, ptr noundef nonnull %.059.us99.i, ptr noundef %.164.us96.i, i32 noundef 0, i32 noundef 0) #5
@@ -559,7 +556,7 @@ thread-pre-split.i:                               ; preds = %bb.k, %bb.j, %bb.h
 bb.l:                                             ; preds = %thread-pre-split.i, %.thread87.split.split.us.i
   %i.ae = phi i32 [ %.pr.i, %thread-pre-split.i ], [ %i.u, %.thread87.split.split.us.i ]
   %.3.us102.i = phi ptr [ %.3.us102.ph.i, %thread-pre-split.i ], [ %.164.us96.i, %.thread87.split.split.us.i ] ; 4 uses
-  %.162.us103.i = phi i32 [ 0, %thread-pre-split.i ], [ %.061.us97.i, %.thread87.split.split.us.i ]
+  %.162.us107.i = phi i1 [ false, %thread-pre-split.i ], [ %.061.us98.i, %.thread87.split.split.us.i ]
   switch i32 %i.ae, label %bb.n [
     i32 0, label %.split.us.i
     i32 92, label %bb.m

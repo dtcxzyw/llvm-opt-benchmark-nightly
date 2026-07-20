@@ -23,13 +23,13 @@ bb.a:
   br i1 %.not104, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.d = add nsw i64 %.idx, -16                   ; 3 uses
-  %5 = lshr exact i64 %i.d, 4
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
+  %i.d = add nsw i64 %.idx, -16                   ; 2 uses
   %i.e = icmp eq i64 %i.d, 0
   br i1 %i.e, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %5 = lshr exact i64 %i.d, 4
+  %6 = add nuw nsw i64 %5, 1
   %unroll_iter = and i64 %6, 2305843009213693950
   br label %.lr.ph
 
@@ -56,22 +56,15 @@ bb.a:
   %.sroa.speculated81.1 = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated84.1, i32 %i.q)
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.s = load i32, ptr %i.r, align 4
-  %.sroa.speculated.1 = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated81.1, i32 %i.s) ; 3 uses
+  %.sroa.speculated.1 = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated81.1, i32 %i.s) ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.0106, i64 32 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !3
+  br i1 %niter.ncmp.1, label %.lr.ph.epil.preheader, label %.lr.ph, !llvm.loop !3
 
-.loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph
-  %7 = and i64 %i.d, 16
-  %lcmp.mod.not.not = icmp eq i64 %7, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.epil.preheader, label %.loopexit
-
-.lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.0106.epil.init = phi ptr [ %1, %.lr.ph.preheader ], [ %i.t, %.loopexit.loopexit.unr-lcssa ]
-  %.096105.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %.sroa.speculated.1, %.loopexit.loopexit.unr-lcssa ]
-  %lcmp.mod130 = trunc i64 %6 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod130)
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.preheader, %.lr.ph
+  %.0106.epil.init = phi ptr [ %1, %.lr.ph.preheader ], [ %i.t, %.lr.ph ]
+  %.096105.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %.sroa.speculated.1, %.lr.ph ]
   %i.u = getelementptr inbounds nuw i8, ptr %.0106.epil.init, i64 8
   %i.v = load ptr, ptr %i.u, align 8              ; 3 uses
   %i.w = load i32, ptr %i.v, align 4
@@ -84,8 +77,8 @@ bb.a:
   %.sroa.speculated.epil = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated81.epil, i32 %i.aa)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader, %bb.a
-  %.197 = phi i32 [ %3, %bb.a ], [ 0, %.preheader ], [ %.sroa.speculated.1, %.loopexit.loopexit.unr-lcssa ], [ %.sroa.speculated.epil, %.lr.ph.epil.preheader ] ; 5 uses
+.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.preheader, %bb.a
+  %.197 = phi i32 [ %3, %bb.a ], [ 0, %.preheader ], [ %.sroa.speculated.epil, %.lr.ph.epil.preheader ] ; 5 uses
   %i.ab = add i32 %.197, 1                        ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.ab, ptr %i.ac, align 8

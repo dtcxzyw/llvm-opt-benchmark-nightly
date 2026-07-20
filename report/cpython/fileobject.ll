@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = select i1 %.not, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   %i.d = tail call ptr (ptr, ptr, ...) @PyObject_CallFunction(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.2, i32 noundef %0, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef nonnull %i.c) #8 ; 3 uses
   %i.e = load i32, ptr %i.a, align 8, !tbaa !11   ; 2 uses
-  %.not.i = icmp sgt i32 %i.e, -1
-  br i1 %.not.i, label %bb.c, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.e, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = add nsw i32 %i.e, -1                     ; 2 uses
@@ -277,8 +277,8 @@ bb.h:                                             ; preds = %bb.g
   %i.l = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.k, ptr noundef nonnull @.str.5, ptr noundef nonnull %0, ptr noundef nonnull %i.g) #8 ; 0 uses
   store ptr null, ptr %i.b, align 8, !tbaa !12
   %i.m = load i32, ptr %i.g, align 8, !tbaa !11   ; 2 uses
-  %.not.i46 = icmp sgt i32 %i.m, -1
-  br i1 %.not.i46, label %bb.i, label %Py_DECREF.exit47.thread
+  %.not.i46 = icmp slt i32 %i.m, 0
+  br i1 %.not.i46, label %Py_DECREF.exit47.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.n = add nsw i32 %i.m, -1                     ; 2 uses
@@ -316,8 +316,8 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   store ptr null, ptr %i.b, align 8, !tbaa !12
   %i.w = load i32, ptr %i.g, align 8, !tbaa !11   ; 2 uses
-  %.not.i44 = icmp sgt i32 %i.w, -1
-  br i1 %.not.i44, label %bb.n, label %Py_DECREF.exit45
+  %.not.i44 = icmp slt i32 %i.w, 0
+  br i1 %.not.i44, label %Py_DECREF.exit45, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.x = add nsw i32 %i.w, -1                     ; 2 uses
@@ -371,8 +371,8 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   store ptr null, ptr %i.b, align 8, !tbaa !12
   %i.ao = load i32, ptr %i.ah, align 8, !tbaa !11 ; 2 uses
-  %.not.i42 = icmp sgt i32 %i.ao, -1
-  br i1 %.not.i42, label %bb.v, label %Py_DECREF.exit43
+  %.not.i42 = icmp slt i32 %i.ao, 0
+  br i1 %.not.i42, label %Py_DECREF.exit43, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.ap = add nsw i32 %i.ao, -1                   ; 2 uses
@@ -477,8 +477,8 @@ bb.ah:                                            ; preds = %PyUnicode_READ_CHAR
   %i.bo = load ptr, ptr %i.b, align 8, !tbaa !12  ; 3 uses
   store ptr %i.bn, ptr %i.b, align 8, !tbaa !12
   %i.bp = load i32, ptr %i.bo, align 8, !tbaa !11 ; 2 uses
-  %.not.i = icmp sgt i32 %i.bp, -1
-  br i1 %.not.i, label %bb.ai, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.bp, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.bq = add nsw i32 %i.bp, -1                   ; 2 uses
@@ -529,9 +529,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.d, label %Py_DECREF.exit23, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = and i32 %2, 1
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.f, label %bb.e
+  %.not = trunc nuw i32 %2 to i1
+  br i1 %.not, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.e = tail call ptr @PyObject_Str(ptr noundef %0) #8
@@ -548,8 +547,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.h = load i32, ptr %i.c, align 8, !tbaa !11   ; 2 uses
-  %.not.i22 = icmp sgt i32 %i.h, -1
-  br i1 %.not.i22, label %bb.i, label %Py_DECREF.exit23
+  %.not.i22 = icmp slt i32 %i.h, 0
+  br i1 %.not.i22, label %Py_DECREF.exit23, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.i = add nsw i32 %i.h, -1                     ; 2 uses
@@ -564,8 +563,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.g
   %i.k = tail call ptr @PyObject_CallOneArg(ptr noundef nonnull %i.c, ptr noundef nonnull %.014) #8 ; 4 uses
   %i.l = load i32, ptr %.014, align 8, !tbaa !11  ; 2 uses
-  %.not.i20 = icmp sgt i32 %i.l, -1
-  br i1 %.not.i20, label %bb.l, label %Py_DECREF.exit21
+  %.not.i20 = icmp slt i32 %i.l, 0
+  br i1 %.not.i20, label %Py_DECREF.exit21, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.m = add nsw i32 %i.l, -1                     ; 2 uses
@@ -579,8 +578,8 @@ bb.m:                                             ; preds = %bb.l
 
 Py_DECREF.exit21:                                 ; preds = %bb.k, %bb.l, %bb.m
   %i.o = load i32, ptr %i.c, align 8, !tbaa !11   ; 2 uses
-  %.not.i18 = icmp sgt i32 %i.o, -1
-  br i1 %.not.i18, label %bb.n, label %Py_DECREF.exit19
+  %.not.i18 = icmp slt i32 %i.o, 0
+  br i1 %.not.i18, label %Py_DECREF.exit19, label %bb.n
 
 bb.n:                                             ; preds = %Py_DECREF.exit21
   %i.p = add nsw i32 %i.o, -1                     ; 2 uses
@@ -598,8 +597,8 @@ Py_DECREF.exit19:                                 ; preds = %Py_DECREF.exit21, %
 
 bb.p:                                             ; preds = %Py_DECREF.exit19
   %i.s = load i32, ptr %i.k, align 8, !tbaa !11   ; 2 uses
-  %.not.i = icmp sgt i32 %i.s, -1
-  br i1 %.not.i, label %bb.q, label %Py_DECREF.exit23
+  %.not.i = icmp slt i32 %i.s, 0
+  br i1 %.not.i, label %Py_DECREF.exit23, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.t = add nsw i32 %i.s, -1                     ; 2 uses
@@ -651,8 +650,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.f = tail call i32 @PyFile_WriteObject(ptr noundef nonnull %i.d, ptr noundef nonnull %1, i32 noundef 1) ; 3 uses
   %i.g = load i32, ptr %i.d, align 8, !tbaa !11   ; 2 uses
-  %.not.i = icmp sgt i32 %i.g, -1
-  br i1 %.not.i, label %bb.g, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.g, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.h = add nsw i32 %i.g, -1                     ; 2 uses
@@ -742,8 +741,8 @@ _PyObject_CallNoArgs.exit:                        ; preds = %_PyVectorcall_Funct
   %.0.i.i = phi ptr [ %i.t, %_PyVectorcall_FunctionInline.exit.thread.i.i ], [ %i.v, %bb.h ] ; 10 uses
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !12   ; 3 uses
   %i.x = load i32, ptr %i.w, align 8, !tbaa !11   ; 2 uses
-  %.not.i27 = icmp sgt i32 %i.x, -1
-  br i1 %.not.i27, label %bb.i, label %Py_DECREF.exit28
+  %.not.i27 = icmp slt i32 %i.x, 0
+  br i1 %.not.i27, label %Py_DECREF.exit28, label %bb.i
 
 bb.i:                                             ; preds = %_PyObject_CallNoArgs.exit
   %i.y = add nsw i32 %i.x, -1                     ; 2 uses
@@ -771,8 +770,8 @@ bb.k:                                             ; preds = %Py_DECREF.exit28
 bb.l:                                             ; preds = %bb.k
   %i.ae = call i32 @PyLong_AsInt(ptr noundef nonnull %.0.i.i) #8 ; 3 uses
   %i.af = load i32, ptr %.0.i.i, align 8, !tbaa !11 ; 2 uses
-  %.not.i25 = icmp sgt i32 %i.af, -1
-  br i1 %.not.i25, label %bb.m, label %Py_DECREF.exit26
+  %.not.i25 = icmp slt i32 %i.af, 0
+  br i1 %.not.i25, label %Py_DECREF.exit26, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = add nsw i32 %i.af, -1                   ; 2 uses
@@ -788,8 +787,8 @@ bb.o:                                             ; preds = %bb.k
   %i.ai = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !12
   %i.aj = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.ai, ptr noundef nonnull @.str.10, ptr noundef nonnull %0, ptr noundef nonnull %.0.i.i) #8 ; 0 uses
   %i.ak = load i32, ptr %.0.i.i, align 8, !tbaa !11 ; 2 uses
-  %.not.i = icmp sgt i32 %i.ak, -1
-  br i1 %.not.i, label %bb.p, label %.critedge
+  %.not.i = icmp slt i32 %i.ak, 0
+  br i1 %.not.i, label %.critedge, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.al = add nsw i32 %i.ak, -1                   ; 2 uses
@@ -1111,8 +1110,8 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.l = tail call ptr (ptr, ptr, ...) @PyObject_CallFunction(ptr noundef nonnull %i.k, ptr noundef nonnull @.str.18, ptr noundef nonnull %0, ptr noundef nonnull @.str.19) #8 ; 3 uses
   %i.m = load i32, ptr %i.k, align 8, !tbaa !11   ; 2 uses
-  %.not.i = icmp sgt i32 %i.m, -1
-  br i1 %.not.i, label %bb.g, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.m, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.n = add nsw i32 %i.m, -1                     ; 2 uses
@@ -1139,8 +1138,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call ptr @PyFile_OpenCodeObject(ptr noundef nonnull %i.a) ; 3 uses
   %i.c = load i32, ptr %i.a, align 8, !tbaa !11   ; 2 uses
-  %.not.i = icmp sgt i32 %i.c, -1
-  br i1 %.not.i, label %bb.c, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.c, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = add nsw i32 %i.c, -1                     ; 2 uses
@@ -1170,8 +1169,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load i32, ptr %i.b, align 8, !tbaa !11   ; 2 uses
-  %.not.i = icmp sgt i32 %i.d, -1
-  br i1 %.not.i, label %bb.c, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.d, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.e = add nsw i32 %i.d, -1                     ; 2 uses
@@ -1296,8 +1295,8 @@ bb.f:                                             ; preds = %._crit_edge, %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.t = load i32, ptr %.012, align 8, !tbaa !11  ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.t, -1
-  br i1 %.not.i.i, label %bb.h, label %Py_XDECREF.exitthread-pre-split
+  %.not.i.i = icmp slt i32 %i.t, 0
+  br i1 %.not.i.i, label %Py_XDECREF.exitthread-pre-split, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.u = add nsw i32 %i.t, -1                     ; 2 uses

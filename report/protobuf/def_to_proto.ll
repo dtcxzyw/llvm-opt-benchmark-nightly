@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %qual_dup.exit107, %
 bb.w:                                             ; preds = %bb.v
   %i.dx = tail call { ptr, i64 } @upb_FieldDef_Default(ptr noundef %1) #11 ; 2 uses
   %i.dy = extractvalue { ptr, i64 } %i.dx, 0      ; 7 uses
-  %i.dz = extractvalue { ptr, i64 } %i.dx, 1      ; 9 uses
+  %i.dz = extractvalue { ptr, i64 } %i.dx, 1      ; 7 uses
   %i.ea = tail call i32 @upb_FieldDef_CType(ptr noundef %1) #11 ; 2 uses
   %i.eb = ptrtoint ptr %i.dy to i64               ; 5 uses
   %i.ec = trunc i64 %i.eb to i32                  ; 4 uses
@@ -459,7 +459,6 @@ bb.as:                                            ; preds = %bb.af
   br i1 %.not62.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.as
-  %xtraiter = and i64 %i.dz, 1
   %i.hi = icmp eq i64 %i.dz, 1
   br i1 %i.hi, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
@@ -467,15 +466,9 @@ bb.as:                                            ; preds = %bb.af
   %unroll_iter = and i64 %i.dz, -2
   br label %.lr.ph.i.i
 
-._crit_edge.i.i.loopexit.unr-lcssa:               ; preds = %bb.at
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.lr.ph.i.i.epil.preheader
-
-.lr.ph.i.i.epil.preheader:                        ; preds = %._crit_edge.i.i.loopexit.unr-lcssa, %.lr.ph.i.i.preheader
-  %.056.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.if, %._crit_edge.i.i.loopexit.unr-lcssa ]
-  %.03555.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.ig, %._crit_edge.i.i.loopexit.unr-lcssa ]
-  %lcmp.mod176 = trunc i64 %i.dz to i1
-  tail call void @llvm.assume(i1 %lcmp.mod176)
+.lr.ph.i.i.epil.preheader:                        ; preds = %.lr.ph.i.i.preheader, %bb.at
+  %.056.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.if, %bb.at ]
+  %.03555.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.ig, %bb.at ]
   %i.hj = getelementptr inbounds nuw i8, ptr %i.dy, i64 %.03555.i.i.epil.init
   %i.hk = load i8, ptr %i.hj, align 1, !tbaa !19  ; 2 uses
   switch i8 %i.hk, label %special_escape.exit.i.i.epil [
@@ -497,8 +490,8 @@ special_escape.exit.i.i.epil:                     ; preds = %.lr.ph.i.i.epil.pre
   %i.hm = add i64 %.sink.i.i.epil, %.056.i.i.epil.init
   br label %._crit_edge.i.i
 
-._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.loopexit.epilog-lcssa, %._crit_edge.i.i.loopexit.unr-lcssa, %bb.as
-  %.0.lcssa.i.i = phi i64 [ 0, %bb.as ], [ %i.if, %._crit_edge.i.i.loopexit.unr-lcssa ], [ %i.hm, %._crit_edge.i.i.loopexit.epilog-lcssa ] ; 2 uses
+._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.loopexit.epilog-lcssa, %bb.as
+  %.0.lcssa.i.i = phi i64 [ 0, %bb.as ], [ %i.hm, %._crit_edge.i.i.loopexit.epilog-lcssa ] ; 2 uses
   %i.hn = load ptr, ptr %0, align 8, !tbaa !7     ; 4 uses
   %i.ho = add i64 %.0.lcssa.i.i, 7
   %i.hp = and i64 %i.ho, -8                       ; 3 uses
@@ -564,11 +557,11 @@ special_escape.exit.i.i.1:                        ; preds = %.lr.ph.i.i.1
 
 bb.at:                                            ; preds = %special_escape.exit.i.i.1, %.lr.ph.i.i.1, %.lr.ph.i.i.1, %.lr.ph.i.i.1, %.lr.ph.i.i.1, %.lr.ph.i.i.1, %.lr.ph.i.i.1
   %.sink.i.i.1 = phi i64 [ %..i.i.1, %special_escape.exit.i.i.1 ], [ 2, %.lr.ph.i.i.1 ], [ 2, %.lr.ph.i.i.1 ], [ 2, %.lr.ph.i.i.1 ], [ 2, %.lr.ph.i.i.1 ], [ 2, %.lr.ph.i.i.1 ], [ 2, %.lr.ph.i.i.1 ]
-  %i.if = add i64 %.sink.i.i.1, %i.ia             ; 3 uses
+  %i.if = add i64 %.sink.i.i.1, %i.ia             ; 2 uses
   %i.ig = add nuw i64 %.03555.i.i, 2              ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !32
+  br i1 %niter.ncmp.1, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i, !llvm.loop !32
 
 bb.au:                                            ; preds = %upb_Arena_Malloc.exit.i73.i
   %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -110,36 +110,25 @@ declare hidden ptr @luaM_toobig(ptr noundef) local_unnamed_addr #1
 define hidden ptr @luaS_newlstr(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %.not41 = icmp eq i64 %2, 0
-  br i1 %.not41, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not41, label %._crit_edge, label %.lr.ph.prol
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = trunc i64 %2 to i32                        ; 4 uses
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+.lr.ph.prol:                                      ; preds = %bb.a
+  %3 = trunc i64 %2 to i32                        ; 3 uses
   %i.a = shl i32 %3, 5
   %i.b = lshr i32 %3, 2
   %i.c = add i32 %i.a, %i.b
-  %i.d = add nsw i64 %2, -1                       ; 2 uses
+  %i.d = add i64 %2, -1                           ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %i.d
   %i.f = load i8, ptr %i.e, align 1, !tbaa !32
   %i.g = zext i8 %i.f to i32
   %i.h = add i32 %i.c, %i.g
   %i.i = xor i32 %i.h, %3                         ; 2 uses
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %i.i, %.lr.ph.prol ]
-  %.03243.unr = phi i64 [ %2, %.lr.ph.preheader ], [ %i.d, %.lr.ph.prol ]
-  %.03442.unr = phi i32 [ %3, %.lr.ph.preheader ], [ %i.i, %.lr.ph.prol ]
   %4 = icmp eq i64 %2, 1
   br i1 %4, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.03243 = phi i64 [ %i.v, %.lr.ph ], [ %.03243.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.03442 = phi i32 [ %i.aa, %.lr.ph ], [ %.03442.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.prol, %.lr.ph
+  %.03243 = phi i64 [ %i.v, %.lr.ph ], [ %i.d, %.lr.ph.prol ] ; 2 uses
+  %.03442 = phi i32 [ %i.aa, %.lr.ph ], [ %i.i, %.lr.ph.prol ] ; 3 uses
   %i.j = shl i32 %.03442, 5
   %i.k = lshr i32 %.03442, 2
   %i.l = add i32 %i.j, %i.k
@@ -161,8 +150,8 @@ bb.a:
   %.not.1 = icmp eq i64 %i.v, 0
   br i1 %.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !36
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.a
-  %.034.lcssa = phi i32 [ 0, %bb.a ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.aa, %.lr.ph ] ; 3 uses
+._crit_edge:                                      ; preds = %.lr.ph.prol, %.lr.ph, %bb.a
+  %.034.lcssa = phi i32 [ 0, %bb.a ], [ %i.i, %.lr.ph.prol ], [ %i.aa, %.lr.ph ] ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !8  ; 3 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !37
