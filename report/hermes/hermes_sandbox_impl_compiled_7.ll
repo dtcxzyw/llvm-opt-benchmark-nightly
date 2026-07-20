@@ -203,6 +203,10 @@ bb.cp:                                            ; preds = %bb.co
   %.not1345 = icmp eq i32 %.0.copyload.i1539, 0
   br i1 %.not1345, label %.preheader.preheader, label %.preheader1574.1
 
+.preheader.preheader:                             ; preds = %.preheader1574.8, %.preheader1574.7, %.preheader1574.6, %.preheader1574.5, %.preheader1574.4, %.preheader1574.3, %.preheader1574.2, %.preheader1574.1, %.preheader1574.preheader
+  %indvars.iv.ph = phi i64 [ 9, %.preheader1574.8 ], [ 8, %.preheader1574.7 ], [ 7, %.preheader1574.6 ], [ 6, %.preheader1574.5 ], [ 5, %.preheader1574.4 ], [ 4, %.preheader1574.3 ], [ 3, %.preheader1574.2 ], [ 2, %.preheader1574.1 ], [ 1, %.preheader1574.preheader ]
+  br label %.preheader
+
 .preheader1574.1:                                 ; preds = %.preheader1574.preheader
   %i.mv = add i32 %4, 8
   tail call void @w2c_hermes_pop_arg(ptr noundef nonnull %0, i32 noundef %i.mv, i32 noundef %.0.copyload.i1539, i32 noundef %3, i32 noundef %7)
@@ -298,10 +302,6 @@ bb.cp:                                            ; preds = %bb.co
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1539.8) #13, !srcloc !14
   %.not1345.8 = icmp eq i32 %.0.copyload.i1539.8, 0
   br i1 %.not1345.8, label %.preheader.preheader, label %.loopexit1573.loopexit1622
-
-.preheader.preheader:                             ; preds = %.preheader1574.preheader, %.preheader1574.1, %.preheader1574.2, %.preheader1574.3, %.preheader1574.4, %.preheader1574.5, %.preheader1574.6, %.preheader1574.7, %.preheader1574.8
-  %indvars.iv.ph = phi i64 [ 9, %.preheader1574.8 ], [ 8, %.preheader1574.7 ], [ 7, %.preheader1574.6 ], [ 6, %.preheader1574.5 ], [ 5, %.preheader1574.4 ], [ 4, %.preheader1574.3 ], [ 3, %.preheader1574.2 ], [ 2, %.preheader1574.1 ], [ 1, %.preheader1574.preheader ]
-  br label %.preheader
 
 .loopexit1573.loopexit1622:                       ; preds = %.preheader1574.8
   %i.ob = add i32 %4, 72

@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 define dso_local void @_ZN11btRigidBody16addConstraintRefEP17btTypedConstraint(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(564) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 524 ; 4 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 10 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 9 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.i, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.thread
 
@@ -214,23 +214,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.c ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.c ] ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !61
   %i.h = icmp eq ptr %i.g, %1
-  br i1 %i.h, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit, label %bb.c
+  br i1 %i.h, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.thread, label %bb.b
 
-_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit: ; preds = %bb.b
-  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %3 = icmp eq i32 %i.b, %2
-  br i1 %3, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.thread, label %bb.h
-
-_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.thread: ; preds = %bb.c, %bb.a, %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit
+_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.thread: ; preds = %bb.c, %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !19
   %i.k = icmp eq i32 %i.b, %i.j
@@ -377,7 +372,7 @@ _ZN20btAlignedObjectArrayIP17btTypedConstraintE9push_backERKS1_.exit: ; preds = 
   store i32 %i.bc, ptr %i.a, align 4, !tbaa !18
   br label %bb.h
 
-bb.h:                                             ; preds = %_ZN20btAlignedObjectArrayIP17btTypedConstraintE9push_backERKS1_.exit, %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit
+bb.h:                                             ; preds = %bb.b, %_ZN20btAlignedObjectArrayIP17btTypedConstraintE9push_backERKS1_.exit
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 272
   store i8 1, ptr %i.bd, align 8, !tbaa !75
   ret void
@@ -387,7 +382,7 @@ bb.h:                                             ; preds = %_ZN20btAlignedObjec
 define dso_local void @_ZN11btRigidBody19removeConstraintRefEP17btTypedConstraint(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(564) %0, ptr nofree noundef readnone captures(address) %1) local_unnamed_addr #12 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 524 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !18   ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit
 
@@ -398,23 +393,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !61   ; 2 uses
   %i.h = icmp eq ptr %i.g, %1
-  br i1 %i.h, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i, label %bb.c
+  br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit, label %bb.b
 
-_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i: ; preds = %bb.b
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %3 = icmp sgt i32 %i.b, %2
-  br i1 %3, label %bb.d, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit
-
-bb.d:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i
+bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.j = add nsw i32 %i.b, -1                     ; 2 uses
   %i.k = zext nneg i32 %i.j to i64
@@ -427,10 +417,10 @@ bb.d:                                             ; preds = %_ZNK20btAlignedObje
   %i.o = zext i1 %i.n to i8
   br label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit
 
-_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i, %bb.d
-  %4 = phi i8 [ %i.o, %bb.d ], [ 0, %bb.a ], [ 1, %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i ], [ 1, %bb.c ]
+_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %bb.d
+  %2 = phi i8 [ %i.o, %bb.d ], [ 0, %bb.a ], [ 1, %bb.c ]
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 272
-  store i8 %4, ptr %i.p, align 8, !tbaa !75
+  store i8 %2, ptr %i.p, align 8, !tbaa !75
   ret void
 }
 

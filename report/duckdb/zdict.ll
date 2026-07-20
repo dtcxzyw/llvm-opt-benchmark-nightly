@@ -204,31 +204,27 @@ bb.l:                                             ; preds = %bb.g
   br i1 %i.bn, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %i.bo = zext i32 %i.am to i64                   ; 2 uses
+  %i.bo = zext i32 %i.am to i64
   %.not13.i = icmp eq i32 %i.am, 0
   br i1 %.not13.i, label %_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.m, %bb.n
-  %.010.i = phi i64 [ %i.bt, %bb.n ], [ 0, %bb.m ] ; 4 uses
+  %.010.i = phi i64 [ %i.bt, %bb.n ], [ 0, %bb.m ] ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bm, i64 %.010.i
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !33
   %i.br = getelementptr inbounds nuw i8, ptr %i.g, i64 %.010.i
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !33
   %.not.i = icmp eq i8 %i.bq, %i.bs
-  br i1 %.not.i, label %bb.n, label %_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit
+  br i1 %.not.i, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.lr.ph.i
   %i.bt = add nuw nsw i64 %.010.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bt, %i.bo
   br i1 %exitcond.not.i, label %_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit.thread, label %.lr.ph.i, !llvm.loop !101
 
-_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit:       ; preds = %.lr.ph.i
-  %.not172 = icmp eq i64 %.010.i, %i.bo
-  br i1 %.not172, label %_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit.thread, label %bb.o
-
-_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit.thread: ; preds = %bb.m, %_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit, %bb.n
+_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit.thread: ; preds = %bb.m, %bb.n
   %i.bu = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
-  %i.bv = trunc nuw i64 %indvars.iv229 to i32
+  %i.bv = trunc i64 %indvars.iv229 to i32
   %i.bw = sub nsw i32 %.sroa.0102.sroa.14.0.extract.trunc, %i.am
   %narrow = tail call i32 @llvm.smax.i32(i32 %i.bw, i32 1)
   %spec.select = zext nneg i32 %narrow to i64
@@ -246,7 +242,7 @@ _ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit.thread: ; preds = %bb.m, %_ZN11duckdb
   store i32 %i.cf, ptr %i.bu, align 4, !tbaa !61
   br label %.loopexit
 
-bb.o:                                             ; preds = %bb.l, %_ZN11duckdb_zstdL10isIncludedEPKvS1_m.exit, %bb.f
+bb.o:                                             ; preds = %.lr.ph.i, %bb.l, %bb.f
   %indvars.iv.next230 = add nuw nsw i64 %indvars.iv229, 1 ; 2 uses
   %exitcond234.not = icmp eq i64 %indvars.iv.next230, %wide.trip.count233
   br i1 %exitcond234.not, label %.loopexit, label %bb.f, !llvm.loop !102

@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %or.cond5, label %bb.w, label %bb.ai
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %i.bk = add nsw i64 %3, -1                      ; 13 uses
+  %i.bk = add nsw i64 %3, -1                      ; 12 uses
   %i.bl = getelementptr i8, ptr %2, i64 %i.bk
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !14  ; 5 uses
   %xtraiter = and i64 %i.bk, 1
@@ -275,19 +275,15 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.ag
 
 bb.z:                                             ; preds = %.preheader.us.i, %bb.ah
-  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.dd, %bb.ah ] ; 4 uses
+  %.0102.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.dd, %bb.ah ] ; 3 uses
   %i.co = getelementptr i8, ptr %i.de, i64 %.0102.us.i
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !14
   %i.cq = getelementptr i8, ptr %2, i64 %.0102.us.i
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !14
   %.not90.us.i = icmp eq i8 %i.cp, %i.cr
-  br i1 %.not90.us.i, label %bb.ah, label %._crit_edge104.us.i
+  br i1 %.not90.us.i, label %bb.ah, label %bb.aa
 
-._crit_edge104.us.i:                              ; preds = %bb.z
-  %6 = icmp eq i64 %.0102.us.i, %i.bk
-  br i1 %6, label %._crit_edge104.us.thread.i, label %bb.aa
-
-bb.aa:                                            ; preds = %._crit_edge104.us.i
+bb.aa:                                            ; preds = %bb.z
   %i.cs = add i64 %.066110.us.i, 1                ; 2 uses
   %.not91.us.i = icmp sgt i64 %i.cs, %i.bx
   br i1 %.not91.us.i, label %bb.ac, label %bb.ab
@@ -310,7 +306,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %.167.us.i = add i64 %.078.pn.us.i, %.066110.us.i
   br label %bb.ag
 
-._crit_edge104.us.thread.i:                       ; preds = %bb.ah, %._crit_edge104.us.i
+._crit_edge104.us.thread.i:                       ; preds = %bb.ah
   br i1 %i.b, label %bb.ae, label %stringlib_find_char.exit
 
 bb.ae:                                            ; preds = %._crit_edge104.us.thread.i

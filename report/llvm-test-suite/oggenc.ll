@@ -204,7 +204,7 @@ _vp_remove_floor.exit:                            ; preds = %.preheader.i427, %.
   %i.aeq = load i32, ptr %i.cr, align 8           ; 6 uses
   %i.aer = load ptr, ptr %i.zv, align 8           ; 4 uses
   %i.aes = getelementptr inbounds nuw i8, ptr %i.aer, i64 512
-  %i.aet = load i32, ptr %i.aes, align 8          ; 5 uses
+  %i.aet = load i32, ptr %i.aes, align 8          ; 4 uses
   %i.aeu = getelementptr inbounds nuw i8, ptr %i.aer, i64 508
   %i.aev = load i32, ptr %i.aeu, align 4
   %spec.select.i435 = call i32 @llvm.smin.i32(i32 %i.aev, i32 %i.aeq) ; 7 uses
@@ -325,7 +325,7 @@ middle.block753:                                  ; preds = %vector.body749
 bb.bg:                                            ; preds = %.preheader.us.i, %5
   %indvars.iv129.i = phi i64 [ 0, %.preheader.us.i ], [ %indvars.iv.next130.i, %5 ] ; 6 uses
   %.194.us.i = phi float [ %.0.lcssa.us.i, %.preheader.us.i ], [ %.2.us.i, %5 ] ; 3 uses
-  %i.agb = trunc nuw nsw i64 %indvars.iv129.i to i32 ; 2 uses
+  %i.agb = trunc nuw nsw i64 %indvars.iv129.i to i32
   %i.agc = add i32 %i.aiw, %i.agb
   %i.agd = sext i32 %i.agc to i64
   %i.age = getelementptr inbounds [4 x i8], ptr %i.aep, i64 %i.agd
@@ -350,26 +350,9 @@ bb.bi:                                            ; preds = %bb.bg
   %i.agq = fpext float %.194.us.i to double
   %i.agr = load double, ptr %i.afl, align 8
   %i.ags = fcmp ogt double %i.agr, %i.agq
-  br i1 %i.ags, label %._crit_edge.us.i, label %1
+  br i1 %i.ags, label %.lr.ph101.us.i.preheader, label %1
 
-1:                                                ; preds = %bb.bi
-  %2 = call noundef float @llvm.copysign.f32(float 1.000000e+00, float %i.agi)
-  %3 = getelementptr inbounds [4 x i8], ptr %i.aen, i64 %i.agg
-  store float %2, ptr %3, align 4
-  %4 = fadd float %.194.us.i, -1.000000e+00
-  br label %5
-
-5:                                                ; preds = %1, %bb.bh
-  %.2.us.i = phi float [ %i.agp, %bb.bh ], [ %4, %1 ]
-  %indvars.iv.next130.i = add nuw nsw i64 %indvars.iv129.i, 1 ; 2 uses
-  %exitcond133.not.i = icmp eq i64 %indvars.iv.next130.i, %i.afm
-  br i1 %exitcond133.not.i, label %.loopexit.us.i, label %bb.bg, !llvm.loop !601
-
-._crit_edge.us.i:                                 ; preds = %bb.bi
-  %6 = icmp sgt i32 %i.aet, %i.agb
-  br i1 %6, label %.lr.ph101.us.i.preheader, label %.loopexit.us.i
-
-.lr.ph101.us.i.preheader:                         ; preds = %._crit_edge.us.i
+.lr.ph101.us.i.preheader:                         ; preds = %bb.bi
   %i.agt = sub nsw i64 %i.afm, %indvars.iv129.i
   %xtraiter783 = and i64 %i.agt, 3                ; 2 uses
   %lcmp.mod784.not = icmp eq i64 %xtraiter783, 0
@@ -402,6 +385,19 @@ bb.bi:                                            ; preds = %bb.bg
   %invariant.op797 = add i32 2, %i.aiw
   %invariant.op799 = add i32 3, %i.aiw
   br label %.lr.ph101.us.i
+
+1:                                                ; preds = %bb.bi
+  %2 = call noundef float @llvm.copysign.f32(float 1.000000e+00, float %i.agi)
+  %3 = getelementptr inbounds [4 x i8], ptr %i.aen, i64 %i.agg
+  store float %2, ptr %3, align 4
+  %4 = fadd float %.194.us.i, -1.000000e+00
+  br label %5
+
+5:                                                ; preds = %1, %bb.bh
+  %.2.us.i = phi float [ %i.agp, %bb.bh ], [ %4, %1 ]
+  %indvars.iv.next130.i = add nuw nsw i64 %indvars.iv129.i, 1 ; 2 uses
+  %exitcond133.not.i = icmp eq i64 %indvars.iv.next130.i, %i.afm
+  br i1 %exitcond133.not.i, label %.loopexit.us.i, label %bb.bg, !llvm.loop !601
 
 .lr.ph101.us.i:                                   ; preds = %.lr.ph101.us.i, %.lr.ph101.us.i.preheader.new
   %indvars.iv134.i = phi i64 [ %indvars.iv134.i.unr, %.lr.ph101.us.i.preheader.new ], [ %indvars.iv.next135.i.3, %.lr.ph101.us.i ] ; 5 uses
@@ -467,7 +463,7 @@ bb.bi:                                            ; preds = %bb.bg
   %exitcond520.not.3 = icmp eq i64 %indvars.iv.next127.i.3, %indvars.iv139.i
   br i1 %exitcond520.not.3, label %.preheader.us.i, label %.lr.ph91.us.i, !llvm.loop !604
 
-.loopexit.us.i:                                   ; preds = %5, %.lr.ph101.us.i.prol.loopexit, %.lr.ph101.us.i, %._crit_edge.us.i
+.loopexit.us.i:                                   ; preds = %5, %.lr.ph101.us.i.prol.loopexit, %.lr.ph101.us.i
   %indvars.iv.next140.i = add nuw nsw i64 %indvars.iv139.i, %i.afm ; 2 uses
   %.not83.us.i = icmp sgt i64 %indvars.iv.next140.i, %i.afo
   %i.aiv = trunc nuw nsw i64 %indvars.iv139.i to i32 ; 2 uses

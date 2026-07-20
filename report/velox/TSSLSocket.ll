@@ -201,13 +201,13 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.backedge.i, %bb.b
-  %indvars.iv35.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next36.i, %.backedge.i ] ; 3 uses
+  %indvars.iv35.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next36.i, %.backedge.i ] ; 2 uses
   %.033.i = phi i32 [ 0, %bb.b ], [ %.0.be.i, %.backedge.i ] ; 2 uses
   %i.g = sext i32 %.033.i to i64                  ; 2 uses
   %i.h = getelementptr inbounds i8, ptr %i.f, i64 %i.g
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !29    ; 6 uses
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !29    ; 5 uses
   %.not.i = icmp eq i8 %i.i, 0
-  br i1 %.not.i, label %.critedge.i, label %bb.d
+  br i1 %.not.i, label %_ZN6apache6thrift9transportL9matchNameEPKcS3_i.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv35.i
@@ -235,7 +235,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.p = icmp eq i8 %i.k, 42
-  br i1 %i.p, label %.preheader.i, label %.critedge.i
+  br i1 %i.p, label %.preheader.i, label %_ZN6apache6thrift9transportL9matchNameEPKcS3_i.exit
 
 .preheader.i:                                     ; preds = %bb.f, %bb.g
   %i.q = phi i8 [ %.pre.i, %bb.g ], [ %i.i, %bb.f ]
@@ -255,25 +255,16 @@ bb.g:                                             ; preds = %.preheader.i
   %i.r = trunc nsw i64 %indvars.iv.i to i32
   br label %.backedge.i
 
-.critedge.i:                                      ; preds = %bb.f, %bb.c
-  %4 = trunc nuw nsw i64 %indvars.iv35.i to i32
-  %5 = icmp eq i32 %3, %4
-  br i1 %5, label %.critedge.thread.i, label %_ZN6apache6thrift9transportL9matchNameEPKcS3_i.exit
-
 .critedge.thread.i.loopexit:                      ; preds = %.backedge.i
   %.pre = sext i32 %.0.be.i to i64
   %.phi.trans.insert = getelementptr inbounds i8, ptr %i.f, i64 %.pre
   %.pre15 = load i8, ptr %.phi.trans.insert, align 1, !tbaa !29
-  br label %.critedge.thread.i
-
-.critedge.thread.i:                               ; preds = %.critedge.thread.i.loopexit, %.critedge.i
-  %6 = phi i8 [ %.pre15, %.critedge.thread.i.loopexit ], [ %i.i, %.critedge.i ]
-  %7 = icmp eq i8 %6, 0
-  %8 = zext i1 %7 to i32
+  %4 = icmp eq i8 %.pre15, 0
+  %5 = zext i1 %4 to i32
   br label %_ZN6apache6thrift9transportL9matchNameEPKcS3_i.exit
 
-_ZN6apache6thrift9transportL9matchNameEPKcS3_i.exit: ; preds = %.critedge.i, %.critedge.thread.i, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %.critedge.i ], [ %8, %.critedge.thread.i ]
+_ZN6apache6thrift9transportL9matchNameEPKcS3_i.exit: ; preds = %bb.c, %bb.f, %.critedge.thread.i.loopexit, %bb.a
+  %.0 = phi i32 [ 0, %bb.a ], [ %5, %.critedge.thread.i.loopexit ], [ 0, %bb.f ], [ 0, %bb.c ]
   ret i32 %.0
 }
 

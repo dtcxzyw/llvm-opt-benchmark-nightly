@@ -201,7 +201,6 @@ $_ZTSNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEE = comdat any
 @.str.48 = private unnamed_addr constant [22 x i8] c"basic_string::replace\00", align 1
 @.str.49 = private unnamed_addr constant [25 x i8] c"basic_string::_M_replace\00", align 1
 @.str.50 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
-@.str.52 = private unnamed_addr constant [21 x i8] c"basic_string::substr\00", align 1
 @.str.54 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
 @.str.55 = private unnamed_addr constant [29 x i8] c"basic_string::_M_replace_aux\00", align 1
 @.str.56 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
@@ -604,7 +603,7 @@ bb.am:                                            ; preds = %_ZNSt7__cxx1112basi
 define linkonce_odr void @_ZN5boost15program_options14strip_prefixesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string.3") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #10 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !21   ; 13 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !21   ; 11 uses
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %._crit_edge.i.i.thread, label %.lr.ph.i.i
 
@@ -618,7 +617,7 @@ bb.a:
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %.lr.ph.i.i, %bb.b
-  %.0710.i.i = phi i64 [ %i.h, %bb.b ], [ 0, %.lr.ph.i.i ] ; 7 uses
+  %.0710.i.i = phi i64 [ %i.h, %bb.b ], [ 0, %.lr.ph.i.i ] ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0710.i.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !22
   %i.g = and i8 %i.f, -3
@@ -633,7 +632,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0710.i.i ; 2 uses
   %i.j = icmp eq i64 %.0710.i.i, -1
-  br i1 %i.j, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit.thread, label %2
+  br i1 %i.j, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit.thread, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit.thread: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -686,16 +685,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   store i8 0, ptr %i.u, align 1, !tbaa !22
   br label %bb.k
 
-2:                                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !121)
-  %3 = icmp ugt i64 %.0710.i.i, %i.b
-  br i1 %3, label %4, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-
-4:                                                ; preds = %2
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.50, ptr noundef nonnull @.str.52, i64 noundef %.0710.i.i, i64 noundef %i.b) #32, !noalias !121
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %2
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.v, ptr %0, align 8, !tbaa !15, !alias.scope !121
   %i.w = sub nuw i64 %i.b, %.0710.i.i             ; 8 uses
