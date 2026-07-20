@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !18   ; 4 uses
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !18   ; 3 uses
   %i.u = icmp sgt i32 %i.t, 0
   br i1 %i.u, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIP17btCollisionObjectE6removeERKS1_.exit
 
@@ -214,23 +214,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.e ] ; 3 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv.i.i
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !47   ; 2 uses
   %i.z = icmp eq ptr %i.y, %1
-  br i1 %i.z, label %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.i, label %bb.e
+  br i1 %i.z, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIP17btCollisionObjectE6removeERKS1_.exit, label %bb.d
 
-_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.i: ; preds = %bb.d
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %3 = icmp sgt i32 %i.t, %2
-  br i1 %3, label %bb.f, label %_ZN20btAlignedObjectArrayIP17btCollisionObjectE6removeERKS1_.exit
-
-bb.f:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.i
+bb.f:                                             ; preds = %bb.d
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv.i.i
   %i.ab = add nsw i32 %i.t, -1                    ; 2 uses
   %i.ac = zext nneg i32 %i.ab to i64
@@ -241,7 +236,7 @@ bb.f:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.ab, ptr %i.s, align 4, !tbaa !18
   br label %_ZN20btAlignedObjectArrayIP17btCollisionObjectE6removeERKS1_.exit
 
-_ZN20btAlignedObjectArrayIP17btCollisionObjectE6removeERKS1_.exit: ; preds = %bb.e, %bb.c, %_ZNK20btAlignedObjectArrayIP17btCollisionObjectE16findLinearSearchERKS1_.exit.i, %bb.f
+_ZN20btAlignedObjectArrayIP17btCollisionObjectE6removeERKS1_.exit: ; preds = %bb.e, %bb.c, %bb.f
   ret void
 }
 

@@ -204,7 +204,7 @@ declare void @_ZN16btCollisionWorld21removeCollisionObjectEP17btCollisionObject(
 define dso_local void @_ZN23btDiscreteDynamicsWorld15removeRigidBodyEP11btRigidBody(ptr noundef nonnull align 8 dereferenceable(372) %0, ptr noundef %1) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 284 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !55   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !55   ; 3 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIP11btRigidBodyE6removeERKS1_.exit
 
@@ -215,23 +215,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !218  ; 2 uses
   %i.h = icmp eq ptr %i.g, %1
-  br i1 %i.h, label %_ZNK20btAlignedObjectArrayIP11btRigidBodyE16findLinearSearchERKS1_.exit.i, label %bb.c
+  br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIP11btRigidBodyE6removeERKS1_.exit, label %bb.b
 
-_ZNK20btAlignedObjectArrayIP11btRigidBodyE16findLinearSearchERKS1_.exit.i: ; preds = %bb.b
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %3 = icmp sgt i32 %i.b, %2
-  br i1 %3, label %bb.d, label %_ZN20btAlignedObjectArrayIP11btRigidBodyE6removeERKS1_.exit
-
-bb.d:                                             ; preds = %_ZNK20btAlignedObjectArrayIP11btRigidBodyE16findLinearSearchERKS1_.exit.i
+bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.j = add nsw i32 %i.b, -1                     ; 2 uses
   %i.k = zext nneg i32 %i.j to i64
@@ -242,7 +237,7 @@ bb.d:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.j, ptr %i.a, align 4, !tbaa !55
   br label %_ZN20btAlignedObjectArrayIP11btRigidBodyE6removeERKS1_.exit
 
-_ZN20btAlignedObjectArrayIP11btRigidBodyE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %_ZNK20btAlignedObjectArrayIP11btRigidBodyE16findLinearSearchERKS1_.exit.i, %bb.d
+_ZN20btAlignedObjectArrayIP11btRigidBodyE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %bb.d
   tail call void @_ZN16btCollisionWorld21removeCollisionObjectEP17btCollisionObject(ptr noundef nonnull align 8 dereferenceable(129) %0, ptr noundef %1)
   ret void
 }
@@ -645,7 +640,7 @@ declare void @_ZN11btRigidBody16addConstraintRefEP17btTypedConstraint(ptr nounde
 define dso_local void @_ZN23btDiscreteDynamicsWorld16removeConstraintEP17btTypedConstraint(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(372) %0, ptr noundef %1) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 252 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !51   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !51   ; 3 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit
 
@@ -656,23 +651,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !241  ; 2 uses
   %i.h = icmp eq ptr %i.g, %1
-  br i1 %i.h, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i, label %bb.c
+  br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit, label %bb.b
 
-_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i: ; preds = %bb.b
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %3 = icmp sgt i32 %i.b, %2
-  br i1 %3, label %bb.d, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit
-
-bb.d:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i
+bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.j = add nsw i32 %i.b, -1                     ; 2 uses
   %i.k = zext nneg i32 %i.j to i64
@@ -683,7 +673,7 @@ bb.d:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.j, ptr %i.a, align 4, !tbaa !51
   br label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit
 
-_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE16findLinearSearchERKS1_.exit.i, %bb.d
+_ZN20btAlignedObjectArrayIP17btTypedConstraintE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !97, !nonnull !68, !align !98
   tail call void @_ZN11btRigidBody19removeConstraintRefEP17btTypedConstraint(ptr noundef nonnull align 8 dereferenceable(564) %i.o, ptr noundef %1)
@@ -851,7 +841,7 @@ _ZN20btAlignedObjectArrayIP17btActionInterfaceE9push_backERKS1_.exit: ; preds = 
 define dso_local void @_ZN23btDiscreteDynamicsWorld12removeActionEP17btActionInterface(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(372) %0, ptr nofree noundef readnone captures(address) %1) unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 340 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !61   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !61   ; 3 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.i.i, label %_ZN20btAlignedObjectArrayIP17btActionInterfaceE6removeERKS1_.exit
 
@@ -862,23 +852,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !91   ; 2 uses
   %i.h = icmp eq ptr %i.g, %1
-  br i1 %i.h, label %_ZNK20btAlignedObjectArrayIP17btActionInterfaceE16findLinearSearchERKS1_.exit.i, label %bb.c
+  br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZN20btAlignedObjectArrayIP17btActionInterfaceE6removeERKS1_.exit, label %bb.b
 
-_ZNK20btAlignedObjectArrayIP17btActionInterfaceE16findLinearSearchERKS1_.exit.i: ; preds = %bb.b
-  %2 = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %3 = icmp sgt i32 %i.b, %2
-  br i1 %3, label %bb.d, label %_ZN20btAlignedObjectArrayIP17btActionInterfaceE6removeERKS1_.exit
-
-bb.d:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btActionInterfaceE16findLinearSearchERKS1_.exit.i
+bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i.i
   %i.j = add nsw i32 %i.b, -1                     ; 2 uses
   %i.k = zext nneg i32 %i.j to i64
@@ -889,7 +874,7 @@ bb.d:                                             ; preds = %_ZNK20btAlignedObje
   store i32 %i.j, ptr %i.a, align 4, !tbaa !61
   br label %_ZN20btAlignedObjectArrayIP17btActionInterfaceE6removeERKS1_.exit
 
-_ZN20btAlignedObjectArrayIP17btActionInterfaceE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %_ZNK20btAlignedObjectArrayIP17btActionInterfaceE16findLinearSearchERKS1_.exit.i, %bb.d
+_ZN20btAlignedObjectArrayIP17btActionInterfaceE6removeERKS1_.exit: ; preds = %bb.c, %bb.a, %bb.d
   ret void
 }
 

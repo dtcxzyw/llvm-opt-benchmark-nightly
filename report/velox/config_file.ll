@@ -201,7 +201,7 @@ bb.a:
   br i1 %.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a, %bb.b
-  %.0710.i.i = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 8 uses
+  %.0710.i.i = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.0710.i.i
   %i.b = load i8, ptr %i.a, align 1, !tbaa !23    ; 3 uses
   %i.c = zext nneg i8 %i.b to i64
@@ -241,23 +241,14 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i7:    ; preds = %_ZNKSt7__cxx1112bas
   %i.o = and i64 %i.n, 4294977024
   %memchr.bits15 = icmp eq i64 %i.o, 0
   %memchr.not16 = select i1 %memchr.bounds14, i1 true, i1 %memchr.bits15
-  br i1 %memchr.not16, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit, label %bb.c
+  br i1 %memchr.not16, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i7
   %.not15.i.i = icmp eq i64 %.1.i.i, 0
-  br i1 %.not15.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i7, !llvm.loop !86
+  br i1 %.not15.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i7, !llvm.loop !86
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i7, %bb.c
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i7, %bb.c
   %.010.i.i = phi i64 [ %.1.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i7 ], [ -1, %bb.c ]
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !87)
-  %1 = icmp ugt i64 %.0710.i.i, %.8.val
-  br i1 %1, label %2, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-
-2:                                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i64 noundef %.0710.i.i, i64 noundef %.8.val) #28, !noalias !87
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit
   %reass.sub = sub i64 %.010.i.i, %.0710.i.i
   %i.p = add i64 %reass.sub, 1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses

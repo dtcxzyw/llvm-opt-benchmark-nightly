@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not13, label %bb.d, label %bb.s
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.e = add nsw i32 %0, -1                       ; 4 uses
+  %i.e = add nsw i32 %0, -1                       ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.g = icmp eq i32 %i.e, 0
   br i1 %i.g, label %bb.e, label %bb.f
@@ -272,21 +272,16 @@ bb.k:                                             ; preds = %.lr.ph37.split.us.s
   br i1 %.not28.us.us.i, label %cliOutputCommandHelp.exit31.us.us.i, label %.preheader.us.us.i
 
 bb.l:                                             ; preds = %.preheader.us.us.i, %bb.n
-  %indvars.iv42.i = phi i64 [ 0, %.preheader.us.us.i ], [ %indvars.iv.next43.i, %bb.n ] ; 4 uses
+  %indvars.iv42.i = phi i64 [ 0, %.preheader.us.us.i ], [ %indvars.iv.next43.i, %bb.n ] ; 3 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv42.i
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !29
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv42.i
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !29
   %i.af = tail call i32 @strcasecmp(ptr noundef %i.ac, ptr noundef %i.ae) #34
   %.not29.us.us.i = icmp eq i32 %i.af, 0
-  br i1 %.not29.us.us.i, label %bb.n, label %._crit_edge.us.us.i
+  br i1 %.not29.us.us.i, label %bb.n, label %cliOutputCommandHelp.exit31.us.us.i
 
-._crit_edge.us.us.i:                              ; preds = %bb.l
-  %3 = trunc nuw nsw i64 %indvars.iv42.i to i32
-  %4 = icmp eq i32 %i.e, %3
-  br i1 %4, label %._crit_edge.us.us.thread.i, label %cliOutputCommandHelp.exit31.us.us.i
-
-._crit_edge.us.us.thread.i:                       ; preds = %bb.n, %._crit_edge.us.us.i
+._crit_edge.us.us.thread.i:                       ; preds = %bb.n
   %i.ag = load ptr, ptr %i.y, align 8, !tbaa !52
   %i.ah = getelementptr inbounds nuw i8, ptr %i.w, i64 80
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !573
@@ -316,9 +311,9 @@ bb.n:                                             ; preds = %bb.l
   %exitcond.not.i = icmp eq i64 %indvars.iv.next43.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.us.us.thread.i, label %bb.l, !llvm.loop !574
 
-cliOutputCommandHelp.exit31.us.us.i:              ; preds = %cliOutputCommandHelp.exit.us.us.i, %._crit_edge.us.us.i, %bb.k, %.lr.ph37.split.us.split.us.i
-  %i.at = phi i32 [ %.pre49.i, %cliOutputCommandHelp.exit.us.us.i ], [ %i.u, %._crit_edge.us.us.i ], [ %i.u, %bb.k ], [ %i.u, %.lr.ph37.split.us.split.us.i ] ; 2 uses
-  %i.au = phi ptr [ %.pre.i, %cliOutputCommandHelp.exit.us.us.i ], [ %i.v, %._crit_edge.us.us.i ], [ %i.v, %bb.k ], [ %i.v, %.lr.ph37.split.us.split.us.i ]
+cliOutputCommandHelp.exit31.us.us.i:              ; preds = %bb.l, %cliOutputCommandHelp.exit.us.us.i, %bb.k, %.lr.ph37.split.us.split.us.i
+  %i.at = phi i32 [ %.pre49.i, %cliOutputCommandHelp.exit.us.us.i ], [ %i.u, %.lr.ph37.split.us.split.us.i ], [ %i.u, %bb.k ], [ %i.u, %bb.l ] ; 2 uses
+  %i.au = phi ptr [ %.pre.i, %cliOutputCommandHelp.exit.us.us.i ], [ %i.v, %.lr.ph37.split.us.split.us.i ], [ %i.v, %bb.k ], [ %i.v, %bb.l ]
   %indvars.iv.next46.i = add nuw nsw i64 %indvars.iv45.i, 1 ; 2 uses
   %i.av = sext i32 %i.at to i64
   %i.aw = icmp slt i64 %indvars.iv.next46.i, %i.av
