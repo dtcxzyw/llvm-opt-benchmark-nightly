@@ -203,18 +203,18 @@ bb.e:                                             ; preds = %_ZSteqIcSt11char_tr
 
 bb.f:                                             ; preds = %bb.e
   %i.bq = load ptr, ptr %1, align 8, !tbaa !145   ; 13 uses
+  %21 = ptrtoint ptr %i.bq to i64                 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !145 ; 5 uses
+  %22 = ptrtoint ptr %i.bs to i64                 ; 2 uses
   %.not2931.i.i = icmp eq ptr %i.bq, %i.bs
   br i1 %.not2931.i.i, label %._crit_edge.thread.i.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.f
-  %21 = ptrtoint ptr %i.bs to i64
-  %22 = ptrtoint ptr %i.bq to i64
-  %i.bt = add i64 %21, -48
-  %i.bu = sub i64 %i.bt, %22                      ; 5 uses
+  %i.bt = add i64 %22, -48
+  %i.bu = sub i64 %i.bt, %21                      ; 3 uses
   %i.bv = udiv i64 %i.bu, 48
-  %i.bw = add nuw nsw i64 %i.bv, 1                ; 8 uses
+  %i.bw = add nuw nsw i64 %i.bv, 1                ; 4 uses
   %min.iters.check = icmp ult i64 %i.bu, 384
   br i1 %min.iters.check, label %.lr.ph.i.i19.preheader, label %vector.main.loop.iter.check
 
@@ -302,18 +302,22 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 iter.check167:                                    ; preds = %.lr.ph.i.i19
   %i.co = uitofp i64 %spec.select28.i.i to double ; 3 uses
-  %min.iters.check132 = icmp ult i64 %i.bu, 384
+  %23 = add i64 %22, -48
+  %24 = sub i64 %23, %21                          ; 3 uses
+  %25 = udiv i64 %24, 48
+  %26 = add nuw nsw i64 %25, 1                    ; 4 uses
+  %min.iters.check132 = icmp ult i64 %24, 384
   br i1 %min.iters.check132, label %vec.epilog.scalar.ph168.preheader, label %vector.main.loop.iter.check133
 
 vector.main.loop.iter.check133:                   ; preds = %iter.check167
-  %min.iters.check134 = icmp ult i64 %i.bu, 1536
+  %min.iters.check134 = icmp ult i64 %24, 1536
   br i1 %min.iters.check134, label %vec.epilog.ph171, label %vector.ph135
 
 vector.ph135:                                     ; preds = %vector.main.loop.iter.check133
-  %n.mod.vf136 = and i64 %i.bw, 31                ; 2 uses
+  %n.mod.vf136 = and i64 %26, 31                  ; 2 uses
   %i.cp = icmp eq i64 %n.mod.vf136, 0
   %i.cq = select i1 %i.cp, i64 32, i64 %n.mod.vf136 ; 2 uses
-  %n.vec137 = sub nsw i64 %i.bw, %i.cq            ; 3 uses
+  %n.vec137 = sub nsw i64 %26, %i.cq              ; 3 uses
   %i.cr = mul i64 %n.vec137, 48
   %i.cs = getelementptr i8, ptr %i.bq, i64 %i.cr  ; 2 uses
   %broadcast.splatinsert138 = insertelement <8 x double> poison, double %i.co, i64 0
@@ -373,10 +377,10 @@ vec.epilog.ph171:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val164 = phi i64 [ %n.vec137, %vec.epilog.iter.check169 ], [ 0, %vector.main.loop.iter.check133 ]
   %bc.merge.rdx165 = phi i64 [ %i.do, %vec.epilog.iter.check169 ], [ 0, %vector.main.loop.iter.check133 ]
   %bc.resume.val166 = phi ptr [ %i.cs, %vec.epilog.iter.check169 ], [ %i.bq, %vector.main.loop.iter.check133 ]
-  %n.mod.vf172 = and i64 %i.bw, 7                 ; 2 uses
+  %n.mod.vf172 = and i64 %26, 7                   ; 2 uses
   %i.dp = icmp eq i64 %n.mod.vf172, 0
   %i.dq = select i1 %i.dp, i64 8, i64 %n.mod.vf172
-  %n.vec173 = sub nsw i64 %i.bw, %i.dq            ; 2 uses
+  %n.vec173 = sub nsw i64 %26, %i.dq              ; 2 uses
   %i.dr = mul i64 %n.vec173, 48
   %i.ds = getelementptr i8, ptr %i.bq, i64 %i.dr
   %i.dt = insertelement <8 x i64> <i64 poison, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx165, i64 0
@@ -779,8 +783,8 @@ _ZNSt13unordered_mapIN9Stockfish4MoveElNS1_8MoveHashESt8equal_toIS1_ESaISt4pairI
   br i1 %.not9396, label %._crit_edge107, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt13unordered_mapIN9Stockfish4MoveElNS1_8MoveHashESt8equal_toIS1_ESaISt4pairIKS1_lEEEC2EmRKS2_RKS4_RKS8_.exit
-  %2 = ptrtoint ptr %i.ai to i64
-  %3 = ptrtoint ptr %i.ah to i64
+  %2 = ptrtoaddr ptr %i.ai to i64
+  %3 = ptrtoaddr ptr %i.ah to i64
   %i.aj = add i64 %2, -8
   %i.ak = sub i64 %i.aj, %3                       ; 3 uses
   %i.al = lshr i64 %i.ak, 3
@@ -1183,8 +1187,8 @@ bb.a:
   br i1 %i.f, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %2 = ptrtoint ptr %i.e to i64
-  %3 = ptrtoint ptr %i.c to i64
+  %2 = ptrtoaddr ptr %i.e to i64
+  %3 = ptrtoaddr ptr %i.c to i64
   %i.g = add i64 %2, -8
   %i.h = sub i64 %i.g, %3                         ; 3 uses
   %i.i = lshr i64 %i.h, 3

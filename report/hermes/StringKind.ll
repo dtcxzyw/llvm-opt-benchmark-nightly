@@ -32,9 +32,9 @@ define hidden void @_ZN6hermes10StringKind11Accumulator9push_backENS0_4KindE(ptr
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   store i32 %1, ptr %i.a, align 4, !tbaa !9
-  %i.b = load ptr, ptr %0, align 8, !tbaa !11     ; 7 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !11     ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !11   ; 7 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !11   ; 8 uses
   %i.e = icmp eq ptr %i.b, %i.d
   br i1 %i.e, label %bb.b, label %bb.c, !prof !14
 
@@ -66,8 +66,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12emplace_backIJRNS1_4KindEEEERS2_DpOT_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.p = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.q = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.p = ptrtoint ptr %i.d to i64
+  %i.q = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.r = sub i64 %i.p, %i.q                       ; 5 uses
   %i.s = icmp eq i64 %i.r, 9223372036854775804
   br i1 %i.s, label %bb.g, label %_ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i
@@ -87,7 +87,9 @@ _ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ;
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.r
   %i.ab = or i32 %1, 1
   store i32 %i.ab, ptr %i.aa, align 4, !tbaa !7
-  %i.ac = sub i64 %i.p, %i.q
+  %2 = ptrtoaddr ptr %i.d to i64
+  %3 = ptrtoaddr ptr %i.b to i64
+  %i.ac = sub i64 %2, %3
   %i.ad = add i64 %i.ac, -4                       ; 2 uses
   %i.ae = lshr i64 %i.ad, 2
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
@@ -174,7 +176,7 @@ _ZNSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12emplace_backIJRNS1_4KindEEEERS
 define linkonce_odr hidden noundef nonnull align 4 dereferenceable(4) ptr @_ZNSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12emplace_backIJRNS1_4KindEEEERS2_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #2 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !16
   %.not = icmp eq ptr %i.b, %i.d
@@ -189,9 +191,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %0, align 8, !tbaa !29     ; 7 uses
-  %i.i = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !29     ; 8 uses
+  %i.i = ptrtoint ptr %i.b to i64
+  %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775804
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i
@@ -220,7 +222,9 @@ _ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i: ; p
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i
   %i.w = ptrtoaddr ptr %i.s to i64
-  %i.x = sub i64 %i.i, %i.j
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.h to i64
+  %i.x = sub i64 %2, %3
   %i.y = add i64 %i.x, -4                         ; 2 uses
   %i.z = lshr i64 %i.y, 2
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses

@@ -204,7 +204,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN6hermes5regex4NodeE, i64 16), ptr %i.a, align 8, !tbaa !57, !noalias !517
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !475  ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !475  ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !480
   %.not.i.i = icmp eq ptr %i.d, %i.f
@@ -218,9 +218,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE9push_backEOS6_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = load ptr, ptr %i.b, align 8, !tbaa !474  ; 10 uses
-  %i.j = ptrtoint ptr %i.d to i64                 ; 3 uses
-  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.i = load ptr, ptr %i.b, align 8, !tbaa !474  ; 11 uses
+  %i.j = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = icmp eq i64 %i.l, 9223372036854775800
   br i1 %i.m, label %bb.d, label %_ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
@@ -247,7 +247,9 @@ _ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_E
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %i.w = sub i64 %i.j, %i.k
+  %1 = ptrtoaddr ptr %i.d to i64
+  %2 = ptrtoaddr ptr %i.i to i64
+  %i.w = sub i64 %1, %2
   %i.x = add i64 %i.w, -8                         ; 2 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
@@ -408,7 +410,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN6hermes5regex8GoalNodeE, i64 16), ptr %i.a, align 8, !tbaa !57, !noalias !532
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !475  ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !475  ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !480
   %.not.i.i = icmp eq ptr %i.d, %i.f
@@ -422,9 +424,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS2_EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = load ptr, ptr %i.b, align 8, !tbaa !474  ; 10 uses
-  %i.j = ptrtoint ptr %i.d to i64                 ; 3 uses
-  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.i = load ptr, ptr %i.b, align 8, !tbaa !474  ; 11 uses
+  %i.j = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = icmp eq i64 %i.l, 9223372036854775800
   br i1 %i.m, label %bb.d, label %_ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
@@ -451,7 +453,9 @@ _ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_E
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %i.w = sub i64 %i.j, %i.k
+  %1 = ptrtoaddr ptr %i.d to i64
+  %2 = ptrtoaddr ptr %i.i to i64
+  %i.w = sub i64 %1, %2
   %i.x = add i64 %i.w, -8                         ; 2 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
@@ -854,7 +858,7 @@ _ZN6hermes5regex13MatchCharNodeC2EN4llvh11SmallVectorIjLj5EEENS0_11SyntaxFlagsE.
   store i8 %i.m, ptr %i.dp, align 8, !tbaa !559
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cp, i64 49
   store i8 %.lobit.i, ptr %i.dq, align 1, !tbaa !566
-  %i.dr = load ptr, ptr %i.o, align 8, !tbaa !475 ; 6 uses
+  %i.dr = load ptr, ptr %i.o, align 8, !tbaa !475 ; 7 uses
   %i.ds = load ptr, ptr %i.p, align 8, !tbaa !480
   %.not.i = icmp eq ptr %i.dr, %i.ds
   br i1 %.not.i, label %bb.w, label %bb.v
@@ -866,9 +870,9 @@ bb.v:                                             ; preds = %_ZN6hermes5regex13M
   br label %_ZNSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_13MatchCharNodeEEEERS6_DpOT_.exit
 
 bb.w:                                             ; preds = %_ZN6hermes5regex13MatchCharNodeC2EN4llvh11SmallVectorIjLj5EEENS0_11SyntaxFlagsE.exit
-  %i.du = load ptr, ptr %2, align 8, !tbaa !474   ; 10 uses
-  %i.dv = ptrtoint ptr %i.dr to i64               ; 3 uses
-  %i.dw = ptrtoint ptr %i.du to i64               ; 3 uses
+  %i.du = load ptr, ptr %2, align 8, !tbaa !474   ; 11 uses
+  %i.dv = ptrtoint ptr %i.dr to i64               ; 2 uses
+  %i.dw = ptrtoint ptr %i.du to i64               ; 2 uses
   %i.dx = sub i64 %i.dv, %i.dw                    ; 4 uses
   %i.dy = icmp eq i64 %i.dx, 9223372036854775800
   br i1 %i.dy, label %bb.x, label %_ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i
@@ -894,7 +898,9 @@ _ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_E
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN6hermes5regex4NodeESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i
-  %i.eh = sub i64 %i.dv, %i.dw
+  %7 = ptrtoaddr ptr %i.dr to i64
+  %8 = ptrtoaddr ptr %i.du to i64
+  %i.eh = sub i64 %7, %8
   %i.ei = add i64 %i.eh, -8                       ; 2 uses
   %i.ej = lshr i64 %i.ei, 3
   %i.ek = add nuw nsw i64 %i.ej, 1                ; 2 uses

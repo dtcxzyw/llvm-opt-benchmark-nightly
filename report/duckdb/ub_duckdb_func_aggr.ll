@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %_ZN6duckdb9make_uni
   br label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_123SortedAggregateBindDataESt14default_deleteIS2_EED2Ev.exit54
 
 bb.l:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit
-  %i.an = phi ptr [ %.pre76, %.lr.ph ], [ %i.ca, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 5 uses
+  %i.an = phi ptr [ %.pre76, %.lr.ph ], [ %i.ca, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 6 uses
   %i.ao = phi ptr [ %.pre78, %.lr.ph ], [ %i.cb, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 3 uses
   %.sroa.061.072 = phi ptr [ %i.ai, %.lr.ph ], [ %i.cc, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.061.072, i64 8 ; 4 uses
@@ -219,9 +219,9 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit
 
 bb.n:                                             ; preds = %bb.l
-  %i.as = load ptr, ptr %i.i, align 8, !tbaa !179 ; 10 uses
-  %i.at = ptrtoint ptr %i.an to i64               ; 3 uses
-  %i.au = ptrtoint ptr %i.as to i64               ; 3 uses
+  %i.as = load ptr, ptr %i.i, align 8, !tbaa !179 ; 11 uses
+  %i.at = ptrtoint ptr %i.an to i64               ; 2 uses
+  %i.au = ptrtoint ptr %i.as to i64               ; 2 uses
   %i.av = sub i64 %i.at, %i.au                    ; 3 uses
   %i.aw = icmp eq i64 %i.av, 9223372036854775800
   br i1 %i.aw, label %bb.o, label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i
@@ -255,7 +255,9 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EE
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc38
-  %i.bg = sub i64 %i.at, %i.au
+  %6 = ptrtoaddr ptr %i.an to i64
+  %7 = ptrtoaddr ptr %i.as to i64
+  %i.bg = sub i64 %6, %7
   %i.bh = add i64 %i.bg, -8                       ; 2 uses
   %i.bi = lshr i64 %i.bh, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
@@ -658,7 +660,7 @@ bb.q:                                             ; preds = %_ZN6duckdb9make_uni
   br label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_123SortedAggregateBindDataESt14default_deleteIS2_EED2Ev.exit81
 
 bb.r:                                             ; preds = %.lr.ph108, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit
-  %i.ck = phi ptr [ %.pre112, %.lr.ph108 ], [ %i.dx, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 5 uses
+  %i.ck = phi ptr [ %.pre112, %.lr.ph108 ], [ %i.dx, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 6 uses
   %i.cl = phi ptr [ %.pre114, %.lr.ph108 ], [ %i.dy, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 3 uses
   %.sroa.088.0107 = phi ptr [ %i.cg, %.lr.ph108 ], [ %i.dz, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit ] ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.sroa.088.0107, i64 8 ; 4 uses
@@ -674,9 +676,9 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12emplace_backIJS5_EEEvDpOT_.exit
 
 bb.t:                                             ; preds = %bb.r
-  %i.cp = load ptr, ptr %i.be, align 8, !tbaa !179 ; 10 uses
-  %i.cq = ptrtoint ptr %i.ck to i64               ; 3 uses
-  %i.cr = ptrtoint ptr %i.cp to i64               ; 3 uses
+  %i.cp = load ptr, ptr %i.be, align 8, !tbaa !179 ; 11 uses
+  %i.cq = ptrtoint ptr %i.ck to i64               ; 2 uses
+  %i.cr = ptrtoint ptr %i.cp to i64               ; 2 uses
   %i.cs = sub i64 %i.cq, %i.cr                    ; 3 uses
   %i.ct = icmp eq i64 %i.cs, 9223372036854775800
   br i1 %i.ct, label %bb.u, label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i
@@ -710,7 +712,9 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EE
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc54
-  %i.dd = sub i64 %i.cq, %i.cr
+  %6 = ptrtoaddr ptr %i.ck to i64
+  %7 = ptrtoaddr ptr %i.cp to i64
+  %i.dd = sub i64 %6, %7
   %i.de = add i64 %i.dd, -8                       ; 2 uses
   %i.df = lshr i64 %i.de, 3
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses

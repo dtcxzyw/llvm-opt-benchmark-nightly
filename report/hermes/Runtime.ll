@@ -204,9 +204,9 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 9568 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 9584 ; 4 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !463
-  %i.o = load ptr, ptr %i.l, align 8, !tbaa !464  ; 7 uses
+  %i.o = load ptr, ptr %i.l, align 8, !tbaa !464  ; 8 uses
   %i.p = ptrtoint ptr %i.n to i64
-  %i.q = ptrtoint ptr %i.o to i64                 ; 4 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
   %i.r = sub i64 %i.p, %i.q                       ; 2 uses
   %i.s = icmp ult i64 %i.r, 2048
   br i1 %i.s, label %_ZNSt12_Vector_baseIN6hermes2vm17PinnedHermesValueESaIS2_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorIN6hermes2vm17PinnedHermesValueESaIS2_EE7reserveEm.exit
@@ -222,8 +222,9 @@ _ZNSt12_Vector_baseIN6hermes2vm17PinnedHermesValueESaIS2_EE11_M_allocateEm.exit.
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6hermes2vm17PinnedHermesValueESaIS2_EE11_M_allocateEm.exit.i
   %i.y = ptrtoaddr ptr %i.x to i64
-  %2 = ptrtoint ptr %i.u to i64
-  %i.z = sub i64 %2, %i.q
+  %2 = ptrtoaddr ptr %i.u to i64
+  %3 = ptrtoaddr ptr %i.o to i64
+  %i.z = sub i64 %2, %3
   %i.aa = add i64 %i.z, -8                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
@@ -313,7 +314,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorIN6herm
   store ptr %i.e, ptr %i.i, align 8, !tbaa !100
   %i.au = call ptr @_ZN6hermes2vm7Runtime23allocateCharacterStringEDs(ptr noundef nonnull align 8 dereferenceable(9816) %0, i16 noundef zeroext %.010)
   %.sroa.0.0.copyload.i = load i64, ptr %i.au, align 8, !tbaa !18 ; 2 uses
-  %i.av = load ptr, ptr %i.aq, align 8, !tbaa !465 ; 5 uses
+  %i.av = load ptr, ptr %i.aq, align 8, !tbaa !465 ; 6 uses
   %i.aw = load ptr, ptr %i.m, align 8, !tbaa !463
   %.not.i.i = icmp eq ptr %i.av, %i.aw
   br i1 %.not.i.i, label %bb.f, label %bb.e
@@ -326,9 +327,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIN6hermes2vm17PinnedHermesValueESaIS2_EE9push_backEOS2_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.az = load ptr, ptr %i.l, align 8, !tbaa !464 ; 7 uses
-  %i.ba = ptrtoint ptr %i.av to i64               ; 2 uses
-  %i.bb = ptrtoint ptr %i.az to i64               ; 3 uses
+  %i.az = load ptr, ptr %i.l, align 8, !tbaa !464 ; 8 uses
+  %i.ba = ptrtoint ptr %i.av to i64
+  %i.bb = ptrtoint ptr %i.az to i64               ; 2 uses
   %i.bc = sub i64 %i.ba, %i.bb                    ; 4 uses
   %i.bd = icmp eq i64 %i.bc, 9223372036854775800
   br i1 %i.bd, label %bb.g, label %_ZNKSt6vectorIN6hermes2vm17PinnedHermesValueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -355,7 +356,9 @@ _ZNKSt6vectorIN6hermes2vm17PinnedHermesValueESaIS2_EE12_M_check_lenEmPKc.exit.i.
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6hermes2vm17PinnedHermesValueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bm = ptrtoaddr ptr %i.bk to i64
-  %i.bn = sub i64 %i.ba, %i.bb
+  %4 = ptrtoaddr ptr %i.av to i64
+  %5 = ptrtoaddr ptr %i.az to i64
+  %i.bn = sub i64 %4, %5
   %i.bo = add i64 %i.bn, -8                       ; 2 uses
   %i.bp = lshr i64 %i.bo, 3
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
@@ -758,7 +761,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.val, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !1226, !nonnull !124, !align !1227 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !682  ; 6 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !682  ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !688
   %.not.i.i.i.i = icmp eq ptr %i.e, %i.g
@@ -771,9 +774,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE9push_backERKS2_.exit.i.i.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = load ptr, ptr %i.c, align 8, !tbaa !679  ; 7 uses
-  %i.j = ptrtoint ptr %i.e to i64                 ; 2 uses
-  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.i = load ptr, ptr %i.c, align 8, !tbaa !679  ; 8 uses
+  %i.j = ptrtoint ptr %i.e to i64
+  %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = icmp eq i64 %i.l, 9223372036854775804
   br i1 %i.m, label %bb.d, label %_ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
@@ -800,7 +803,9 @@ _ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i.i: ;
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %_ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
   %i.v = ptrtoaddr ptr %i.t to i64
-  %i.w = sub i64 %i.j, %i.k
+  %6 = ptrtoaddr ptr %i.e to i64
+  %7 = ptrtoaddr ptr %i.i to i64
+  %i.w = sub i64 %6, %7
   %i.x = add i64 %i.w, -4                         ; 2 uses
   %i.y = lshr i64 %i.x, 2
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
@@ -889,7 +894,7 @@ bb.g:                                             ; preds = %bb.f, %_ZNSt6vector
   %i.at = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1235, !nonnull !124, !align !1227 ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 3 uses
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !682 ; 6 uses
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !682 ; 7 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 16 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !688
   %.not.i7.i.i.i = icmp eq ptr %i.aw, %i.ay
@@ -902,9 +907,9 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE9push_backERKS2_.exit20.i.i.i
 
 bb.i:                                             ; preds = %bb.g
-  %i.ba = load ptr, ptr %i.au, align 8, !tbaa !679 ; 7 uses
-  %i.bb = ptrtoint ptr %i.aw to i64               ; 2 uses
-  %i.bc = ptrtoint ptr %i.ba to i64               ; 3 uses
+  %i.ba = load ptr, ptr %i.au, align 8, !tbaa !679 ; 8 uses
+  %i.bb = ptrtoint ptr %i.aw to i64
+  %i.bc = ptrtoint ptr %i.ba to i64               ; 2 uses
   %i.bd = sub i64 %i.bb, %i.bc                    ; 4 uses
   %i.be = icmp eq i64 %i.bd, 9223372036854775804
   br i1 %i.be, label %bb.j, label %_ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i8.i.i.i
@@ -931,7 +936,9 @@ _ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i8.i.i.i: 
 
 .lr.ph.i.i.i.i.i12.i.i.i.preheader:               ; preds = %_ZNKSt6vectorIN6hermes2vm8SymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i8.i.i.i
   %i.bn = ptrtoaddr ptr %i.bl to i64
-  %i.bo = sub i64 %i.bb, %i.bc
+  %8 = ptrtoaddr ptr %i.aw to i64
+  %9 = ptrtoaddr ptr %i.ba to i64
+  %i.bo = sub i64 %8, %9
   %i.bp = add i64 %i.bo, -4                       ; 2 uses
   %i.bq = lshr i64 %i.bp, 2
   %i.br = add nuw nsw i64 %i.bq, 1                ; 2 uses
@@ -1334,7 +1341,7 @@ vec.epilog.middle.block236:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.preheader:                               ; preds = %iter.check222, %vec.epilog.iter.check224, %vec.epilog.middle.block236
   %.010.i.ph = phi ptr [ %1, %iter.check222 ], [ %i.j, %vec.epilog.iter.check224 ], [ %i.o, %vec.epilog.middle.block236 ] ; 2 uses
   %.079.i.ph = phi ptr [ %0, %iter.check222 ], [ %i.k, %vec.epilog.iter.check224 ], [ %i.p, %vec.epilog.middle.block236 ] ; 3 uses
-  %.079.i.ph249 = ptrtoint ptr %.079.i.ph to i64  ; 2 uses
+  %.079.i.ph249 = ptrtoaddr ptr %.079.i.ph to i64 ; 2 uses
   %i.r = sub i64 %i.f, %.079.i.ph249
   %xtraiter250 = and i64 %i.r, 3                  ; 2 uses
   %lcmp.mod251.not = icmp eq i64 %xtraiter250, 0

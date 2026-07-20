@@ -201,8 +201,8 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1006)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
-  %i.b = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.b = ptrtoint ptr %2 to i64
+  %i.c = ptrtoint ptr %1 to i64
   %i.d = sub nuw i64 %i.b, %i.c
   %i.e = udiv exact i64 %i.d, 40                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1006
@@ -228,7 +228,9 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs1N9T06jgEdt_11arrow_array12rec
   br i1 %i.n, label %_RNvXs_NtNtCs6Po7BT7Nknu_5alloc3vec21spec_from_iter_nestedINtB6_3VecRNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchEINtB4_18SpecFromIterNestedB13_INtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterB14_EE9from_iterCsfY7SmN0bPrO_14deltalake_test.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecRNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE7reserveCsfY7SmN0bPrO_14deltalake_test.exit.i.i.i
-  %i.o = sub i64 %i.b, %i.c
+  %3 = ptrtoaddr ptr %2 to i64
+  %4 = ptrtoaddr ptr %1 to i64
+  %i.o = sub i64 %3, %4
   %i.p = add i64 %i.o, -40                        ; 2 uses
   %i.q = udiv i64 %i.p, 40
   %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses

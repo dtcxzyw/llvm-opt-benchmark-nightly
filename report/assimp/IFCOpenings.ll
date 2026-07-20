@@ -204,8 +204,8 @@ _ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit: ; preds = %bb.g, %_ZNSt12_V
   br i1 %.not136155, label %._crit_edge159, label %.lr.ph158.preheader
 
 .lr.ph158.preheader:                              ; preds = %._crit_edge
-  %6 = ptrtoint ptr %i.bl to i64
-  %7 = ptrtoint ptr %i.bm to i64
+  %6 = ptrtoaddr ptr %i.bl to i64
+  %7 = ptrtoaddr ptr %i.bm to i64
   %i.bx = sub i64 %6, %7
   %i.by = add i64 %i.bx, -16
   %i.bz = lshr i64 %i.by, 4                       ; 2 uses
@@ -608,8 +608,8 @@ bb.cu:                                            ; preds = %bb.ct
   %i.ug = load double, ptr %i.uf, align 8, !noalias !257 ; 2 uses
   %i.uh = getelementptr inbounds nuw i8, ptr %9, i64 88
   %i.ui = load double, ptr %i.uh, align 8, !noalias !257 ; 2 uses
-  %18 = ptrtoint ptr %i.tz to i64
-  %19 = ptrtoint ptr %i.tx to i64
+  %18 = ptrtoaddr ptr %i.tz to i64
+  %19 = ptrtoaddr ptr %i.tx to i64
   %i.uj = sub i64 %18, %19
   %i.uk = add i64 %i.uj, -24                      ; 2 uses
   %i.ul = udiv i64 %i.uk, 24
@@ -1012,9 +1012,9 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 13 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 14 uses
   %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 5 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 2
   %.not65 = icmp ult i64 %i.h, %2
@@ -1022,7 +1022,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %3, align 4                ; 6 uses
-  %i.j = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.j = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.k = sub i64 %i.f, %i.j                       ; 6 uses
   %i.l = ashr exact i64 %i.k, 2                   ; 3 uses
   %i.m = icmp ugt i64 %i.l, %2
@@ -1194,7 +1194,9 @@ _ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPjjEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69
-  %i.bg = sub i64 %i.f, %i.j
+  %4 = ptrtoaddr ptr %i.d to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.bg = sub i64 %4, %5
   %i.bh = add i64 %i.bg, -4                       ; 2 uses
   %i.bi = lshr i64 %i.bh, 2
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses

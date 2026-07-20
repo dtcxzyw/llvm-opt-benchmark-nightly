@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %._crit_edge
   br label %.preheader141
 
 .lr.ph199:                                        ; preds = %.lr.ph.preheader.i.i.i.i.i, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit
-  %.sroa.0115.0198 = phi ptr [ %.sroa.0115.3, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit ], [ null, %.lr.ph.preheader.i.i.i.i.i ] ; 10 uses
-  %.sroa.10120.0197 = phi ptr [ %.sroa.10120.1, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit ], [ null, %.lr.ph.preheader.i.i.i.i.i ] ; 8 uses
+  %.sroa.0115.0198 = phi ptr [ %.sroa.0115.3, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit ], [ null, %.lr.ph.preheader.i.i.i.i.i ] ; 11 uses
+  %.sroa.10120.0197 = phi ptr [ %.sroa.10120.1, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit ], [ null, %.lr.ph.preheader.i.i.i.i.i ] ; 9 uses
   %.sroa.13121.0196 = phi ptr [ %.sroa.13121.3, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit ], [ null, %.lr.ph.preheader.i.i.i.i.i ] ; 2 uses
   %.sroa.0105.0195 = phi ptr [ %i.cm, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit ], [ %i.c, %.lr.ph.preheader.i.i.i.i.i ] ; 2 uses
   %.sroa.13.0194 = phi ptr [ %.sroa.13.1, %_ZNSt6vectorIlSaIlEE12emplace_backIJiEEERlDpOT_.exit ], [ null, %.lr.ph.preheader.i.i.i.i.i ] ; 4 uses
@@ -221,8 +221,8 @@ bb.l:                                             ; preds = %.lr.ph199
   br label %_ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIN5arrow5ArrayEES_IS5_SaIS5_EEEESaISA_EE12emplace_backIJSA_EEERSA_DpOT_.exit
 
 bb.m:                                             ; preds = %.lr.ph199
-  %i.au = ptrtoint ptr %.sroa.10120.0197 to i64   ; 2 uses
-  %i.av = ptrtoint ptr %.sroa.0115.0198 to i64    ; 3 uses
+  %i.au = ptrtoint ptr %.sroa.10120.0197 to i64
+  %i.av = ptrtoint ptr %.sroa.0115.0198 to i64    ; 2 uses
   %i.aw = sub i64 %i.au, %i.av                    ; 4 uses
   %i.ax = icmp eq i64 %i.aw, 9223372036854775800
   br i1 %i.ax, label %bb.n, label %_ZNKSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIN5arrow5ArrayEES_IS5_SaIS5_EEEESaISA_EE12_M_check_lenEmPKc.exit.i.i
@@ -256,7 +256,9 @@ _ZNKSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIN5arrow5ArrayEES_I
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc71
   %i.bh = ptrtoaddr ptr %i.be to i64
-  %i.bi = sub i64 %i.au, %i.av
+  %3 = ptrtoaddr ptr %.sroa.10120.0197 to i64
+  %4 = ptrtoaddr ptr %.sroa.0115.0198 to i64
+  %i.bi = sub i64 %3, %4
   %i.bj = add i64 %i.bi, -8                       ; 2 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses

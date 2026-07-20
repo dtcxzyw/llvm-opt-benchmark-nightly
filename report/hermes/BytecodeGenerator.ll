@@ -204,7 +204,7 @@ define hidden void @_ZN6hermes3hbc23BytecodeModuleGenerator12addCJSModuleEjj(ptr
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 768 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 776 ; 4 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !488  ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !488  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 784 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !489
   %.not.i.i = icmp eq ptr %i.c, %i.e
@@ -222,9 +222,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE9push_backEOS1_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !490  ; 7 uses
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !490  ; 8 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775800
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -255,7 +255,9 @@ _ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.u = ptrtoaddr ptr %i.s to i64
-  %i.v = sub i64 %i.i, %i.j
+  %3 = ptrtoaddr ptr %i.c to i64
+  %4 = ptrtoaddr ptr %i.h to i64
+  %i.v = sub i64 %3, %4
   %i.w = add i64 %i.v, -8                         ; 2 uses
   %i.x = lshr i64 %i.w, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
@@ -336,7 +338,7 @@ define hidden void @_ZN6hermes3hbc23BytecodeModuleGenerator18addCJSModuleStaticE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 792 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 800 ; 4 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !488  ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !488  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 808 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !489
   %.not.i.i = icmp eq ptr %i.c, %i.e
@@ -354,9 +356,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE9push_backEOS1_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !490  ; 7 uses
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !490  ; 8 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775800
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -387,7 +389,9 @@ _ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.u = ptrtoaddr ptr %i.s to i64
-  %i.v = sub i64 %i.i, %i.j
+  %3 = ptrtoaddr ptr %i.c to i64
+  %4 = ptrtoaddr ptr %i.h to i64
+  %i.v = sub i64 %3, %4
   %i.w = add i64 %i.v, -8                         ; 2 uses
   %i.x = lshr i64 %i.w, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
@@ -468,7 +472,7 @@ define hidden void @_ZN6hermes3hbc23BytecodeModuleGenerator17addFunctionSourceEj
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 816 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 824 ; 4 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !488  ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !488  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 832 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !489
   %.not.i.i = icmp eq ptr %i.c, %i.e
@@ -486,9 +490,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE9push_backEOS1_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !490  ; 7 uses
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !490  ; 8 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775800
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -519,7 +523,9 @@ _ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.u = ptrtoaddr ptr %i.s to i64
-  %i.v = sub i64 %i.i, %i.j
+  %3 = ptrtoaddr ptr %i.c to i64
+  %4 = ptrtoaddr ptr %i.h to i64
+  %i.v = sub i64 %3, %4
   %i.w = add i64 %i.v, -8                         ; 2 uses
   %i.x = lshr i64 %i.w, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
@@ -922,10 +928,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !761  ; 5 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !762    ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 4 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !761  ; 6 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !762    ; 11 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -969,7 +975,9 @@ _ZNKSt6vectorISt10unique_ptrIN6hermes3hbc16BytecodeFunctionESt14default_deleteIS
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6hermes3hbc16BytecodeFunctionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN6hermes3hbc16BytecodeFunctionESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %i.x = sub i64 %i.d, %i.e
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.x = sub i64 %2, %3
   %i.y = add i64 %i.x, -8                         ; 2 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses

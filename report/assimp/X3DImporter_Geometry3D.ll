@@ -203,10 +203,10 @@ bb.bi:                                            ; preds = %bb.bg
 
 bb.bj:                                            ; preds = %.loopexit983
   %i.ia = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 5 uses
-  %i.ib = load ptr, ptr %i.ia, align 8            ; 4 uses
-  %i.ic = load ptr, ptr %14, align 8              ; 9 uses
-  %i.id = ptrtoint ptr %i.ib to i64               ; 2 uses
-  %i.ie = ptrtoint ptr %i.ic to i64               ; 4 uses
+  %i.ib = load ptr, ptr %i.ia, align 8            ; 5 uses
+  %i.ic = load ptr, ptr %14, align 8              ; 10 uses
+  %i.id = ptrtoint ptr %i.ib to i64
+  %i.ie = ptrtoint ptr %i.ic to i64               ; 3 uses
   %i.if = sub i64 %i.id, %i.ie                    ; 4 uses
   %i.ig = ashr exact i64 %i.if, 3                 ; 2 uses
   %i.ih = load ptr, ptr %i.av, align 8
@@ -266,7 +266,9 @@ _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc336
   %i.jb = ptrtoaddr ptr %i.ja to i64
-  %i.jc = sub i64 %i.id, %i.ie
+  %20 = ptrtoaddr ptr %i.ib to i64
+  %21 = ptrtoaddr ptr %i.ic to i64
+  %i.jc = sub i64 %20, %21
   %i.jd = add i64 %i.jc, -8                       ; 2 uses
   %i.je = lshr i64 %i.jd, 3
   %i.jf = add nuw nsw i64 %i.je, 1                ; 2 uses
@@ -354,7 +356,7 @@ _ZNSt6vectorI10aiVector2tIfESaIS1_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_b
   br i1 %.not1034, label %.loopexit977, label %.lr.ph1000
 
 .lr.ph1000:                                       ; preds = %_ZNSt6vectorI10aiVector2tIfESaIS1_EE7reserveEm.exit, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit
-  %i.jv = phi ptr [ %i.le, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit ], [ %i.jt, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE7reserveEm.exit ] ; 6 uses
+  %i.jv = phi ptr [ %i.le, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit ], [ %i.jt, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE7reserveEm.exit ] ; 7 uses
   %.0223999 = phi i64 [ %i.lf, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit ], [ 0, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE7reserveEm.exit ]
   %i.jw = load ptr, ptr %i.it, align 8
   %.not.i337 = icmp eq ptr %i.jv, %i.jw
@@ -370,9 +372,9 @@ bb.br:                                            ; preds = %.lr.ph1000
   br label %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit
 
 bb.bs:                                            ; preds = %.lr.ph1000
-  %i.jz = load ptr, ptr %14, align 8              ; 7 uses
-  %i.ka = ptrtoint ptr %i.jv to i64               ; 2 uses
-  %i.kb = ptrtoint ptr %i.jz to i64               ; 3 uses
+  %i.jz = load ptr, ptr %14, align 8              ; 8 uses
+  %i.ka = ptrtoint ptr %i.jv to i64
+  %i.kb = ptrtoint ptr %i.jz to i64               ; 2 uses
   %i.kc = sub i64 %i.ka, %i.kb                    ; 4 uses
   %i.kd = icmp eq i64 %i.kc, 9223372036854775800
   br i1 %i.kd, label %bb.bt, label %_ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i338
@@ -407,7 +409,9 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i338: ; preds = 
 
 .lr.ph.i.i.i.i.i342.preheader:                    ; preds = %.noexc347
   %i.km = ptrtoaddr ptr %i.kk to i64
-  %i.kn = sub i64 %i.ka, %i.kb
+  %22 = ptrtoaddr ptr %i.jv to i64
+  %23 = ptrtoaddr ptr %i.jz to i64
+  %i.kn = sub i64 %22, %23
   %i.ko = add i64 %i.kn, -8                       ; 2 uses
   %i.kp = lshr i64 %i.ko, 3
   %i.kq = add nuw nsw i64 %i.kp, 1                ; 2 uses

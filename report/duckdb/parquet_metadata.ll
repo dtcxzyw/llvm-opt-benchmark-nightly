@@ -203,7 +203,7 @@ _ZN6duckdb21TemplatedValidityMaskImE8SetValidEm.exit: ; preds = %bb.a, %bb.b
   br i1 %.not50, label %._crit_edge, label %.lr.ph49
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
-  %i.x = phi ptr [ null, %.lr.ph ], [ %i.bj, %bb.l ] ; 5 uses
+  %i.x = phi ptr [ null, %.lr.ph ], [ %i.bj, %bb.l ] ; 6 uses
   %.sroa.043.047 = phi ptr [ %i.s, %.lr.ph ], [ %i.bn, %bb.l ] ; 4 uses
   %i.y = load ptr, ptr %.sroa.043.047, align 8, !tbaa !572 ; 2 uses
   %i.z = load ptr, ptr %i.w, align 8, !tbaa !573
@@ -219,9 +219,9 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb6VectorEESaIS3_EE9push_backEOS3_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.ad = load ptr, ptr %5, align 8, !tbaa !274   ; 7 uses
-  %i.ae = ptrtoint ptr %i.x to i64                ; 2 uses
-  %i.af = ptrtoint ptr %i.ad to i64               ; 3 uses
+  %i.ad = load ptr, ptr %5, align 8, !tbaa !274   ; 8 uses
+  %i.ae = ptrtoint ptr %i.x to i64
+  %i.af = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ag = sub i64 %i.ae, %i.af                    ; 3 uses
   %i.ah = icmp eq i64 %i.ag, 9223372036854775800
   br i1 %i.ah, label %bb.f, label %_ZNKSt6vectorISt17reference_wrapperIN6duckdb6VectorEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -255,7 +255,9 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb6VectorEESaIS3_EE12_M_check_lenEmPKc
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc37
   %i.ar = ptrtoaddr ptr %i.ao to i64
-  %i.as = sub i64 %i.ae, %i.af
+  %6 = ptrtoaddr ptr %i.x to i64
+  %7 = ptrtoaddr ptr %i.ad to i64
+  %i.as = sub i64 %6, %7
   %i.at = add i64 %i.as, -8                       ; 2 uses
   %i.au = lshr i64 %i.at, 3
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -658,7 +660,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
           to label %bb.c unwind label %.loopexit104 ; 2 uses
 
 bb.c:                                             ; preds = %bb.b
-  %i.z = load ptr, ptr %i.j, align 8, !tbaa !271  ; 5 uses
+  %i.z = load ptr, ptr %i.j, align 8, !tbaa !271  ; 6 uses
   %i.aa = load ptr, ptr %i.k, align 8, !tbaa !573
   %.not.i.i = icmp eq ptr %i.z, %i.aa
   br i1 %.not.i.i, label %bb.e, label %bb.d
@@ -672,9 +674,9 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb6VectorEESaIS3_EE9push_backEOS3_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.ae = load ptr, ptr %5, align 8, !tbaa !274   ; 7 uses
-  %i.af = ptrtoint ptr %i.z to i64                ; 2 uses
-  %i.ag = ptrtoint ptr %i.ae to i64               ; 3 uses
+  %i.ae = load ptr, ptr %5, align 8, !tbaa !274   ; 8 uses
+  %i.af = ptrtoint ptr %i.z to i64
+  %i.ag = ptrtoint ptr %i.ae to i64               ; 2 uses
   %i.ah = sub i64 %i.af, %i.ag                    ; 3 uses
   %i.ai = icmp eq i64 %i.ah, 9223372036854775800
   br i1 %i.ai, label %bb.f, label %_ZNKSt6vectorISt17reference_wrapperIN6duckdb6VectorEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -708,7 +710,9 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb6VectorEESaIS3_EE12_M_check_lenEmPKc
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc71
   %i.as = ptrtoaddr ptr %i.ap to i64
-  %i.at = sub i64 %i.af, %i.ag
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.ae to i64
+  %i.at = sub i64 %7, %8
   %i.au = add i64 %i.at, -8                       ; 2 uses
   %i.av = lshr i64 %i.au, 3
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses

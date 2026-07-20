@@ -203,9 +203,9 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   ret void
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit
-  %i.g = phi ptr [ null, %.lr.ph ], [ %i.as, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit ] ; 6 uses
+  %i.g = phi ptr [ null, %.lr.ph ], [ %i.as, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit ] ; 7 uses
   %.sroa.010.020 = phi ptr [ %.sroa.010.018, %.lr.ph ], [ %.sroa.010.0, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit ] ; 2 uses
-  %i.h = phi ptr [ null, %.lr.ph ], [ %i.at, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit ] ; 12 uses
+  %i.h = phi ptr [ null, %.lr.ph ], [ %i.at, %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit ] ; 13 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.020, i64 40
   %i.j = invoke noundef nonnull align 8 dereferenceable(49) ptr @_ZNK6duckdb10unique_ptrINS_13SecretStorageESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.i)
           to label %bb.d unwind label %.loopexit  ; 2 uses
@@ -223,8 +223,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.n = ptrtoint ptr %i.g to i64                 ; 2 uses
-  %i.o = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.n = ptrtoint ptr %i.g to i64
+  %i.o = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.p = sub i64 %i.n, %i.o                       ; 3 uses
   %i.q = icmp eq i64 %i.p, 9223372036854775800
   br i1 %i.q, label %bb.g, label %_ZNKSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -259,7 +259,9 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE12_M_check_
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc7
   %i.aa = ptrtoaddr ptr %i.x to i64
-  %i.ab = sub i64 %i.n, %i.o
+  %2 = ptrtoaddr ptr %i.g to i64
+  %3 = ptrtoaddr ptr %i.h to i64
+  %i.ab = sub i64 %2, %3
   %i.ac = add i64 %i.ab, -8                       ; 2 uses
   %i.ad = lshr i64 %i.ac, 3
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
@@ -662,7 +664,7 @@ bb.n:                                             ; preds = %bb.k
   br label %bb.bo
 
 bb.o:                                             ; preds = %.lr.ph, %bb.ae
-  %i.y = phi ptr [ null, %.lr.ph ], [ %i.cm, %bb.ae ] ; 8 uses
+  %i.y = phi ptr [ null, %.lr.ph ], [ %i.cm, %bb.ae ] ; 9 uses
   %.sroa.0124.0164 = phi ptr [ %i.r, %.lr.ph ], [ %i.cn, %bb.ae ] ; 5 uses
   switch i8 %4, label %bb.u [
     i8 2, label %bb.p
@@ -725,9 +727,9 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE9push_backEOS3_.exit79
 
 bb.y:                                             ; preds = %bb.w
-  %i.au = load ptr, ptr %6, align 8, !tbaa !618   ; 7 uses
-  %i.av = ptrtoint ptr %i.y to i64                ; 2 uses
-  %i.aw = ptrtoint ptr %i.au to i64               ; 3 uses
+  %i.au = load ptr, ptr %6, align 8, !tbaa !618   ; 8 uses
+  %i.av = ptrtoint ptr %i.y to i64
+  %i.aw = ptrtoint ptr %i.au to i64               ; 2 uses
   %i.ax = sub i64 %i.av, %i.aw                    ; 3 uses
   %i.ay = icmp eq i64 %i.ax, 9223372036854775800
   br i1 %i.ay, label %bb.z, label %_ZNKSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i65
@@ -761,7 +763,9 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb13SecretStorageEESaIS3_EE12_M_check_
 
 .lr.ph.i.i.i.i.i.i.i69.preheader:                 ; preds = %.noexc78
   %i.bi = ptrtoaddr ptr %i.bf to i64
-  %i.bj = sub i64 %i.av, %i.aw
+  %20 = ptrtoaddr ptr %i.y to i64
+  %21 = ptrtoaddr ptr %i.au to i64
+  %i.bj = sub i64 %20, %21
   %i.bk = add i64 %i.bj, -8                       ; 2 uses
   %i.bl = lshr i64 %i.bk, 3
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses

@@ -54,7 +54,7 @@ $_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_ = comdat 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef i64 @_ZN5arrow8internal12CountSetBitsEPKhll(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.a = ptrtoint ptr %0 to i64
   %i.b = shl i64 %i.a, 3
   %i.c = add i64 %i.b, %1                         ; 2 uses
   %i.d = add i64 %i.c, 63
@@ -237,13 +237,14 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.dk, label %.lr.ph57.preheader, label %._crit_edge58
 
 .lr.ph57.preheader:                               ; preds = %.preheader45
+  %3 = ptrtoaddr ptr %0 to i64
   %i.dl = shl nuw nsw i64 %i.h, 3
-  %i.dm = add i64 %i.l, %i.a
+  %i.dm = add i64 %i.l, %3
   %i.dn = add i64 %i.dm, %i.dl
-  %3 = ptrtoint ptr %.041.lcssa to i64            ; 2 uses
-  %i.do = add i64 %3, 8
+  %4 = ptrtoaddr ptr %.041.lcssa to i64           ; 2 uses
+  %i.do = add i64 %4, 8
   %i.dp = tail call i64 @llvm.umax.i64(i64 %i.dn, i64 %i.do)
-  %i.dq = xor i64 %3, -1
+  %i.dq = xor i64 %4, -1
   %i.dr = add i64 %i.dp, %i.dq                    ; 2 uses
   %i.ds = lshr i64 %i.dr, 3
   %i.dt = add nuw nsw i64 %i.ds, 1                ; 2 uses

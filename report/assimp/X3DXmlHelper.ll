@@ -201,9 +201,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = load ptr, ptr %2, align 8                ; 7 uses
+  %i.j = load ptr, ptr %2, align 8                ; 8 uses
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = ptrtoint ptr %i.j to i64                 ; 4 uses
+  %i.l = ptrtoint ptr %i.j to i64                 ; 3 uses
   %i.m = sub i64 %i.k, %i.l                       ; 2 uses
   %i.n = ashr exact i64 %i.m, 3
   %i.o = icmp ult i64 %i.n, %i.f
@@ -224,8 +224,9 @@ _ZNSt12_Vector_baseI10aiVector2tIfESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc9
   %i.v = ptrtoaddr ptr %i.u to i64
-  %4 = ptrtoint ptr %i.q to i64
-  %i.w = sub i64 %4, %i.l
+  %4 = ptrtoaddr ptr %i.q to i64
+  %5 = ptrtoaddr ptr %i.j to i64
+  %i.w = sub i64 %4, %5
   %i.x = add i64 %i.w, -8                         ; 2 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
@@ -314,7 +315,7 @@ bb.g:                                             ; preds = %_ZNSt12_Vector_base
   br label %bb.m
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit
-  %i.ap = phi ptr [ %.pre, %.lr.ph ], [ %i.cb, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit ] ; 5 uses
+  %i.ap = phi ptr [ %.pre, %.lr.ph ], [ %i.cb, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit ] ; 6 uses
   %.sroa.017.025 = phi ptr [ %.sroa.017.023, %.lr.ph ], [ %.sroa.017.0, %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit ] ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.017.025, i64 16 ; 2 uses
   %i.ar = load ptr, ptr %i.h, align 8
@@ -330,9 +331,9 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZNSt6vectorI10aiVector2tIfESaIS1_EE9push_backERKS1_.exit
 
 bb.j:                                             ; preds = %bb.h
-  %i.av = load ptr, ptr %2, align 8               ; 7 uses
-  %i.aw = ptrtoint ptr %i.ap to i64               ; 2 uses
-  %i.ax = ptrtoint ptr %i.av to i64               ; 3 uses
+  %i.av = load ptr, ptr %2, align 8               ; 8 uses
+  %i.aw = ptrtoint ptr %i.ap to i64
+  %i.ax = ptrtoint ptr %i.av to i64               ; 2 uses
   %i.ay = sub i64 %i.aw, %i.ax                    ; 4 uses
   %i.az = icmp eq i64 %i.ay, 9223372036854775800
   br i1 %i.az, label %bb.k, label %_ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -366,7 +367,9 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc11
   %i.bj = ptrtoaddr ptr %i.bg to i64
-  %i.bk = sub i64 %i.aw, %i.ax
+  %6 = ptrtoaddr ptr %i.ap to i64
+  %7 = ptrtoaddr ptr %i.av to i64
+  %i.bk = sub i64 %6, %7
   %i.bl = add i64 %i.bk, -8                       ; 2 uses
   %i.bm = lshr i64 %i.bl, 3
   %i.bn = add nuw nsw i64 %i.bm, 1                ; 2 uses

@@ -204,11 +204,11 @@ define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorINS_8in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %i.c = load ptr, ptr %0, align 8                ; 5 uses
+  %i.c = load ptr, ptr %0, align 8                ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = ptrtoint ptr %i.e to i64
-  %i.g = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.g = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.h = sub i64 %i.f, %i.g
   %i.i = ashr exact i64 %i.h, 2
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.i)
@@ -238,8 +238,9 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
   %i.q = ptrtoaddr ptr %i.o to i64
-  %2 = ptrtoint ptr %i.b to i64
-  %i.r = sub i64 %2, %i.g
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.r = sub i64 %2, %3
   %i.s = add i64 %i.r, -8                         ; 2 uses
   %i.t = lshr i64 %i.s, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses

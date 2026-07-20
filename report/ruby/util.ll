@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = shl nuw nsw i64 %i.ad, 2
   %i.af = add nuw nsw i64 %i.ae, 32
   %i.ag = tail call noalias ptr @malloc(i64 noundef %i.af) #26 ; 8 uses
-  %2 = ptrtoint ptr %i.ag to i64                  ; 3 uses
+  %2 = ptrtoaddr ptr %i.ag to i64                 ; 3 uses
   %.not.i83 = icmp eq ptr %i.ag, null
   br i1 %.not.i83, label %Balloc.exit.thread, label %bb.f
 
@@ -314,9 +314,9 @@ Balloc.exit.thread:                               ; preds = %._crit_edge98, %bb.
 }
 
 ; Function Attrs: nounwind sspstrong memory(readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @lshift(ptr noundef %0, i32 noundef range(i32 1, -2147483648) %1) unnamed_addr #16 {
+define internal fastcc noundef ptr @lshift(ptr noundef captures(address, ret: address, provenance) %0, i32 noundef range(i32 1, -2147483648) %1) unnamed_addr #16 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
+  %2 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr i8, ptr %0, i64 24         ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !7
   %.not = icmp eq i32 %i.b, 0
@@ -719,7 +719,7 @@ bb.ab:                                            ; preds = %bb.v, %bb.v, %bb.aa
   %i.bn = add nuw i32 %.1441, 1
   %i.bo = sext i32 %i.bn to i64
   %i.bp = tail call noalias ptr @malloc(i64 noundef %i.bo) #26 ; 17 uses
-  %6 = ptrtoint ptr %i.bp to i64                  ; 4 uses
+  %6 = ptrtoaddr ptr %i.bp to i64                 ; 4 uses
   %.not493 = icmp eq ptr %i.bp, null
   br i1 %.not493, label %Bclear.exit594, label %bb.ac
 
@@ -1047,7 +1047,7 @@ bb.az:                                            ; preds = %.lr.ph958._crit_edg
   %.5414 = phi i32 [ %.2411, %.lr.ph958._crit_edge ], [ %.2411, %bb.az ], [ %.3412, %bb.aw ], [ %.3412, %._crit_edge953 ], [ %.3412, %.lr.ph946 ] ; 2 uses
   %.5 = phi ptr [ %.lcssa1282, %.lr.ph958._crit_edge ], [ %.lcssa1282, %bb.az ], [ %.lcssa922, %bb.aw ], [ %.lcssa922, %._crit_edge953 ], [ %i.dz, %.lr.ph946 ] ; 4 uses
   %i.gu = add i64 %6, 1
-  %.51070 = ptrtoint ptr %.5 to i64               ; 2 uses
+  %.51070 = ptrtoaddr ptr %.5 to i64              ; 2 uses
   %i.gv = sub i64 %i.gu, %.51070
   %scevgep1071 = getelementptr i8, ptr %.5, i64 %i.gv
   %i.gw = sub i64 %6, %.51070
@@ -1450,7 +1450,7 @@ cmp.exit639.thread771:                            ; preds = %bb.ek, %cmp.exit639
   %.11725 = phi ptr [ %.10724, %cmp.exit639 ], [ %.10724, %cmp.exit639.thread ], [ %.8, %bb.dv ], [ %.10724, %bb.ek ] ; 3 uses
   %.12 = phi ptr [ %.11, %cmp.exit639 ], [ %.11, %cmp.exit639.thread ], [ %i.ox, %bb.dv ], [ %.11, %bb.ek ] ; 4 uses
   %i.qn = add i64 %6, 1
-  %.121068 = ptrtoint ptr %.12 to i64             ; 2 uses
+  %.121068 = ptrtoaddr ptr %.12 to i64            ; 2 uses
   %i.qo = sub i64 %i.qn, %.121068
   %scevgep = getelementptr i8, ptr %.12, i64 %i.qo
   %i.qp = sub i64 %6, %.121068

@@ -200,9 +200,9 @@ declare void @RTC(ptr noundef, i32 noundef) local_unnamed_addr #1
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @closure(ptr nofree noundef readonly captures(address) %0, i32 noundef %1) local_unnamed_addr #3 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64
+  %2 = ptrtoaddr ptr %0 to i64
   %i.a = load ptr, ptr @ruleset, align 8, !tbaa !11 ; 16 uses
-  %3 = ptrtoint ptr %i.a to i64                   ; 7 uses
+  %3 = ptrtoaddr ptr %i.a to i64                  ; 7 uses
   %i.b = load i32, ptr @rulesetsize, align 4, !tbaa !4
   %.fr86 = freeze i32 %i.b                        ; 4 uses
   %i.c = sext i32 %.fr86 to i64
@@ -227,7 +227,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = mul i32 %i.j, %.fr86
   %i.l = sext i32 %i.k to i64                     ; 2 uses
   %i.m = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.l ; 4 uses
-  %4 = ptrtoint ptr %i.a to i64                   ; 3 uses
+  %4 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
   %i.n = add i64 %.idx, %4
   %i.o = add i64 %4, 4
   %i.p = tail call i64 @llvm.umax.i64(i64 %i.n, i64 %i.o)
@@ -311,7 +311,7 @@ middle.block123:                                  ; preds = %vector.body116
   %i.ax = add i64 %i.aw, 4                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.ax
   %scevgep103 = getelementptr i8, ptr %i.ar, i64 %i.ax
-  %5 = ptrtoint ptr %i.a to i64                   ; 3 uses
+  %5 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
   %i.ay = add i64 %.idx, %5
   %i.az = add i64 %5, 4
   %i.ba = tail call i64 @llvm.umax.i64(i64 %i.ay, i64 %i.az)
@@ -415,18 +415,17 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .preheader:                                       ; preds = %.loopexit56.thread, %.preheader.loopexit
   %itemsetend.promoted82 = phi ptr [ %i.cg, %.loopexit56.thread ], [ %itemsetend.promoted82.pre, %.preheader.loopexit ] ; 6 uses
-  %.142.lcssa = phi ptr [ %0, %.loopexit56.thread ], [ %.5, %.preheader.loopexit ] ; 8 uses
+  %.142.lcssa = phi ptr [ %0, %.loopexit56.thread ], [ %.5, %.preheader.loopexit ] ; 7 uses
   %i.ch = icmp ult ptr %.142.lcssa, %i.f
   br i1 %i.ch, label %iter.check, label %bb.h
 
 iter.check:                                       ; preds = %.preheader
-  %.142.lcssa129 = ptrtoaddr ptr %.142.lcssa to i64
+  %.142.lcssa129 = ptrtoaddr ptr %.142.lcssa to i64 ; 3 uses
   %itemsetend.promoted82128 = ptrtoaddr ptr %itemsetend.promoted82 to i64
-  %.142.lcssa131 = ptrtoint ptr %.142.lcssa to i64 ; 2 uses
   %i.ci = add i64 %.idx85, %2
-  %i.cj = add i64 %.142.lcssa131, 2
+  %i.cj = add i64 %.142.lcssa129, 2
   %umax132 = tail call i64 @llvm.umax.i64(i64 %i.ci, i64 %i.cj)
-  %i.ck = xor i64 %.142.lcssa131, -1
+  %i.ck = xor i64 %.142.lcssa129, -1
   %i.cl = add i64 %umax132, %i.ck                 ; 3 uses
   %i.cm = lshr i64 %i.cl, 1
   %i.cn = add nuw i64 %i.cm, 1                    ; 5 uses

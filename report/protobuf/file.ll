@@ -203,7 +203,7 @@ bb.o:                                             ; preds = %.noexc59
 
 bb.p:                                             ; preds = %.noexc59
   store ptr %i.bj, ptr %6, align 8, !tbaa !223, !alias.scope !220
-  %i.bm = load ptr, ptr %i.an, align 8, !tbaa !225 ; 6 uses
+  %i.bm = load ptr, ptr %i.an, align 8, !tbaa !225 ; 7 uses
   %i.bn = load ptr, ptr %i.ao, align 8, !tbaa !226
   %.not.i = icmp eq ptr %i.bm, %i.bn
   %i.bo = ptrtoint ptr %i.bj to i64               ; 2 uses
@@ -216,9 +216,9 @@ _ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGenerato
   br label %_ZNSt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS4_EED2Ev.exit
 
 bb.q:                                             ; preds = %bb.p
-  %i.bq = load ptr, ptr %i.ag, align 8, !tbaa !227 ; 10 uses
-  %i.br = ptrtoint ptr %i.bm to i64               ; 3 uses
-  %i.bs = ptrtoint ptr %i.bq to i64               ; 3 uses
+  %i.bq = load ptr, ptr %i.ag, align 8, !tbaa !227 ; 11 uses
+  %i.br = ptrtoint ptr %i.bm to i64               ; 2 uses
+  %i.bs = ptrtoint ptr %i.bq to i64               ; 2 uses
   %i.bt = sub i64 %i.br, %i.bs                    ; 4 uses
   %i.bu = icmp eq i64 %i.bt, 9223372036854775800
   br i1 %i.bu, label %bb.r, label %_ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS5_EESaIS8_EE12_M_check_lenEmPKc.exit.i
@@ -250,7 +250,9 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGenerat
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc89
-  %i.cd = sub i64 %i.br, %i.bs
+  %9 = ptrtoaddr ptr %i.bm to i64
+  %10 = ptrtoaddr ptr %i.bq to i64
+  %i.cd = sub i64 %9, %10
   %i.ce = add i64 %i.cd, -8                       ; 2 uses
   %i.cf = lshr i64 %i.ce, 3
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 2 uses
@@ -427,7 +429,7 @@ bb.z:                                             ; preds = %.noexc63
 
 bb.aa:                                            ; preds = %.noexc63
   store ptr %i.dy, ptr %7, align 8, !tbaa !252, !alias.scope !249
-  %i.ea = load ptr, ptr %i.au, align 8, !tbaa !243 ; 6 uses
+  %i.ea = load ptr, ptr %i.au, align 8, !tbaa !243 ; 7 uses
   %i.eb = load ptr, ptr %i.av, align 8, !tbaa !254
   %.not.i.i = icmp eq ptr %i.ea, %i.eb
   %i.ec = ptrtoint ptr %i.dy to i64               ; 2 uses
@@ -440,9 +442,9 @@ _ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec18ExtensionGen
   br label %_ZNSt10unique_ptrIN6google8protobuf8compiler10objectivec18ExtensionGeneratorESt14default_deleteIS4_EED2Ev.exit
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ee = load ptr, ptr %i.ai, align 8, !tbaa !244 ; 10 uses
-  %i.ef = ptrtoint ptr %i.ea to i64               ; 3 uses
-  %i.eg = ptrtoint ptr %i.ee to i64               ; 3 uses
+  %i.ee = load ptr, ptr %i.ai, align 8, !tbaa !244 ; 11 uses
+  %i.ef = ptrtoint ptr %i.ea to i64               ; 2 uses
+  %i.eg = ptrtoint ptr %i.ee to i64               ; 2 uses
   %i.eh = sub i64 %i.ef, %i.eg                    ; 4 uses
   %i.ei = icmp eq i64 %i.eh, 9223372036854775800
   br i1 %i.ei, label %bb.ac, label %_ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec18ExtensionGeneratorESt14default_deleteIS5_EESaIS8_EE12_M_check_lenEmPKc.exit.i
@@ -474,7 +476,9 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec18ExtensionGe
   br i1 %.not10.i.i.i.i92, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec18ExtensionGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i93.preheader
 
 .lr.ph.i.i.i.i93.preheader:                       ; preds = %.noexc106
-  %i.er = sub i64 %i.ef, %i.eg
+  %11 = ptrtoaddr ptr %i.ea to i64
+  %12 = ptrtoaddr ptr %i.ee to i64
+  %i.er = sub i64 %11, %12
   %i.es = add i64 %i.er, -8                       ; 2 uses
   %i.et = lshr i64 %i.es, 3
   %i.eu = add nuw nsw i64 %i.et, 1                ; 2 uses
@@ -642,7 +646,7 @@ bb.al:                                            ; preds = %.noexc68
 
 bb.am:                                            ; preds = %.noexc68
   store ptr %i.ga, ptr %8, align 8, !tbaa !280, !alias.scope !277
-  %i.gc = load ptr, ptr %i.dp, align 8, !tbaa !282 ; 7 uses
+  %i.gc = load ptr, ptr %i.dp, align 8, !tbaa !282 ; 8 uses
   %i.gd = load ptr, ptr %i.dq, align 8, !tbaa !283
   %.not.i71 = icmp eq ptr %i.gc, %i.gd
   %i.ge = ptrtoint ptr %i.ga to i64               ; 2 uses
@@ -655,9 +659,9 @@ _ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGener
   br label %_ZNSt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS4_EED2Ev.exit
 
 bb.an:                                            ; preds = %bb.am
-  %i.gg = load ptr, ptr %i.ah, align 8, !tbaa !284 ; 10 uses
-  %i.gh = ptrtoint ptr %i.gc to i64               ; 3 uses
-  %i.gi = ptrtoint ptr %i.gg to i64               ; 3 uses
+  %i.gg = load ptr, ptr %i.ah, align 8, !tbaa !284 ; 11 uses
+  %i.gh = ptrtoint ptr %i.gc to i64               ; 2 uses
+  %i.gi = ptrtoint ptr %i.gg to i64               ; 2 uses
   %i.gj = sub i64 %i.gh, %i.gi                    ; 4 uses
   %i.gk = icmp eq i64 %i.gj, 9223372036854775800
   br i1 %i.gk, label %bb.ao, label %_ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS5_EESaIS8_EE12_M_check_lenEmPKc.exit.i
@@ -689,7 +693,9 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGene
   br i1 %.not10.i.i.i.i109, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i110.preheader
 
 .lr.ph.i.i.i.i110.preheader:                      ; preds = %.noexc123
-  %i.gt = sub i64 %i.gh, %i.gi
+  %13 = ptrtoaddr ptr %i.gc to i64
+  %14 = ptrtoaddr ptr %i.gg to i64
+  %i.gt = sub i64 %13, %14
   %i.gu = add i64 %i.gt, -8                       ; 2 uses
   %i.gv = lshr i64 %i.gu, 3
   %i.gw = add nuw nsw i64 %i.gv, 1                ; 2 uses
@@ -1033,7 +1039,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZSt11make_uniqueIN6google8protobuf8compiler10objectivec13EnumGeneratorEJPKNS1_14EnumDescriptorERKNS3_17GenerationOptionsEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.b
   store ptr %i.o, ptr %6, align 8, !tbaa !223, !alias.scope !301
-  %i.q = load ptr, ptr %i.e, align 8, !tbaa !225  ; 6 uses
+  %i.q = load ptr, ptr %i.e, align 8, !tbaa !225  ; 7 uses
   %i.r = load ptr, ptr %i.f, align 8, !tbaa !226
   %.not.i = icmp eq ptr %i.q, %i.r
   %i.s = ptrtoint ptr %i.o to i64                 ; 2 uses
@@ -1046,9 +1052,9 @@ _ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGenerato
   br label %_ZNSt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS4_EED2Ev.exit
 
 bb.d:                                             ; preds = %_ZSt11make_uniqueIN6google8protobuf8compiler10objectivec13EnumGeneratorEJPKNS1_14EnumDescriptorERKNS3_17GenerationOptionsEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
-  %i.u = load ptr, ptr %2, align 8, !tbaa !227    ; 10 uses
-  %i.v = ptrtoint ptr %i.q to i64                 ; 3 uses
-  %i.w = ptrtoint ptr %i.u to i64                 ; 3 uses
+  %i.u = load ptr, ptr %2, align 8, !tbaa !227    ; 11 uses
+  %i.v = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %i.w = ptrtoint ptr %i.u to i64                 ; 2 uses
   %i.x = sub i64 %i.v, %i.w                       ; 4 uses
   %i.y = icmp eq i64 %i.x, 9223372036854775800
   br i1 %i.y, label %bb.e, label %_ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS5_EESaIS8_EE12_M_check_lenEmPKc.exit.i
@@ -1080,7 +1086,9 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGenerat
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc33
-  %i.ah = sub i64 %i.v, %i.w
+  %8 = ptrtoaddr ptr %i.q to i64
+  %9 = ptrtoaddr ptr %i.u to i64
+  %i.ah = sub i64 %8, %9
   %i.ai = add i64 %i.ah, -8                       ; 2 uses
   %i.aj = lshr i64 %i.ai, 3
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
@@ -1220,7 +1228,7 @@ bb.j:                                             ; preds = %bb.i
 
 _ZSt11make_uniqueIN6google8protobuf8compiler10objectivec16MessageGeneratorEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERPKNS1_10DescriptorERKNS3_17GenerationOptionsEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.i
   store ptr %i.bk, ptr %7, align 8, !tbaa !280, !alias.scope !318
-  %i.bm = load ptr, ptr %i.k, align 8, !tbaa !282 ; 7 uses
+  %i.bm = load ptr, ptr %i.k, align 8, !tbaa !282 ; 8 uses
   %i.bn = load ptr, ptr %i.l, align 8, !tbaa !283
   %.not.i28 = icmp eq ptr %i.bm, %i.bn
   %i.bo = ptrtoint ptr %i.bk to i64               ; 2 uses
@@ -1233,9 +1241,9 @@ _ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGener
   br label %_ZNSt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS4_EED2Ev.exit
 
 bb.k:                                             ; preds = %_ZSt11make_uniqueIN6google8protobuf8compiler10objectivec16MessageGeneratorEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERPKNS1_10DescriptorERKNS3_17GenerationOptionsEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
-  %i.bq = load ptr, ptr %4, align 8, !tbaa !284   ; 10 uses
-  %i.br = ptrtoint ptr %i.bm to i64               ; 3 uses
-  %i.bs = ptrtoint ptr %i.bq to i64               ; 3 uses
+  %i.bq = load ptr, ptr %4, align 8, !tbaa !284   ; 11 uses
+  %i.br = ptrtoint ptr %i.bm to i64               ; 2 uses
+  %i.bs = ptrtoint ptr %i.bq to i64               ; 2 uses
   %i.bt = sub i64 %i.br, %i.bs                    ; 4 uses
   %i.bu = icmp eq i64 %i.bt, 9223372036854775800
   br i1 %i.bu, label %bb.l, label %_ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS5_EESaIS8_EE12_M_check_lenEmPKc.exit.i
@@ -1267,7 +1275,9 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGene
   br i1 %.not10.i.i.i.i36, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i37.preheader
 
 .lr.ph.i.i.i.i37.preheader:                       ; preds = %.noexc50
-  %i.cd = sub i64 %i.br, %i.bs
+  %10 = ptrtoaddr ptr %i.bm to i64
+  %11 = ptrtoaddr ptr %i.bq to i64
+  %i.cd = sub i64 %10, %11
   %i.ce = add i64 %i.cd, -8                       ; 2 uses
   %i.cf = lshr i64 %i.ce, 3
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 2 uses

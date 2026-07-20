@@ -204,8 +204,8 @@ sub_0:                                            ; preds = %sub_0.lr.ph, %bb.aa
   %indvars.iv = phi i64 [ 1, %sub_0.lr.ph ], [ %indvars.iv.next, %bb.aa ] ; 2 uses
   %.01989 = phi i1 [ false, %sub_0.lr.ph ], [ %.120, %bb.aa ]
   %.02188 = phi i32 [ 0, %sub_0.lr.ph ], [ %.2, %bb.aa ] ; 3 uses
-  %.sroa.054.087 = phi ptr [ null, %sub_0.lr.ph ], [ %.sroa.054.2, %bb.aa ] ; 14 uses
-  %.sroa.17.086 = phi ptr [ null, %sub_0.lr.ph ], [ %.sroa.17.2, %bb.aa ] ; 8 uses
+  %.sroa.054.087 = phi ptr [ null, %sub_0.lr.ph ], [ %.sroa.054.2, %bb.aa ] ; 15 uses
+  %.sroa.17.086 = phi ptr [ null, %sub_0.lr.ph ], [ %.sroa.17.2, %bb.aa ] ; 9 uses
   %.sroa.10.085 = phi ptr [ null, %sub_0.lr.ph ], [ %.sroa.10.2, %bb.aa ] ; 6 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !14 ; 5 uses
@@ -419,8 +419,8 @@ bb.v:                                             ; preds = %bb.u
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit37
 
 bb.w:                                             ; preds = %bb.u
-  %i.cu = ptrtoint ptr %.sroa.17.086 to i64       ; 3 uses
-  %i.cv = ptrtoint ptr %.sroa.054.087 to i64      ; 3 uses
+  %i.cu = ptrtoint ptr %.sroa.17.086 to i64       ; 2 uses
+  %i.cv = ptrtoint ptr %.sroa.054.087 to i64      ; 2 uses
   %i.cw = sub i64 %i.cu, %i.cv                    ; 4 uses
   %i.cx = icmp eq i64 %i.cw, 9223372036854775800
   br i1 %i.cx, label %bb.x, label %_ZNKSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
@@ -448,7 +448,9 @@ _ZNKSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i52.preheader
 
 .lr.ph.i.i.i.i52.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
-  %i.dh = sub i64 %i.cu, %i.cv
+  %11 = ptrtoaddr ptr %.sroa.17.086 to i64
+  %12 = ptrtoaddr ptr %.sroa.054.087 to i64
+  %i.dh = sub i64 %11, %12
   %i.di = add i64 %i.dh, -8                       ; 2 uses
   %i.dj = lshr i64 %i.di, 3
   %i.dk = add nuw nsw i64 %i.dj, 1                ; 2 uses
@@ -851,9 +853,9 @@ _ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPSt4pairIjjESt6vectorIS3_SaIS3_EEEEE
 
 bb.ft:                                            ; preds = %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i, %.lr.ph505.i
   %.sroa.0357.0503.i = phi ptr [ %.sroa.0357.0498.i, %.lr.ph505.i ], [ %.sroa.0357.0.i, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i ] ; 2 uses
-  %.sroa.18.0502.i = phi ptr [ null, %.lr.ph505.i ], [ %.sroa.18.1.i, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i ] ; 8 uses
+  %.sroa.18.0502.i = phi ptr [ null, %.lr.ph505.i ], [ %.sroa.18.1.i, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i ] ; 9 uses
   %.sroa.11.0501.i = phi ptr [ null, %.lr.ph505.i ], [ %.sroa.11.1.i, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i ] ; 7 uses
-  %.sroa.0360.0500.i = phi ptr [ null, %.lr.ph505.i ], [ %.sroa.0360.1.i, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i ] ; 11 uses
+  %.sroa.0360.0500.i = phi ptr [ null, %.lr.ph505.i ], [ %.sroa.0360.1.i, %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i ] ; 12 uses
   %i.aiu = getelementptr inbounds nuw i8, ptr %.sroa.0357.0503.i, i64 8
   %i.aiv = load i64, ptr %i.aiu, align 4          ; 3 uses
   %.sroa.0.0.extract.trunc.i = trunc i64 %i.aiv to i32 ; 5 uses
@@ -925,8 +927,8 @@ bb.fz:                                            ; preds = %.loopexit.i
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJRjRKjEEERS1_DpOT_.exit.i
 
 bb.ga:                                            ; preds = %.loopexit.i
-  %i.ajs = ptrtoint ptr %.sroa.18.0502.i to i64   ; 2 uses
-  %i.ajt = ptrtoint ptr %.sroa.0360.0500.i to i64 ; 3 uses
+  %i.ajs = ptrtoint ptr %.sroa.18.0502.i to i64
+  %i.ajt = ptrtoint ptr %.sroa.0360.0500.i to i64 ; 2 uses
   %i.aju = sub i64 %i.ajs, %i.ajt                 ; 4 uses
   %i.ajv = icmp eq i64 %i.aju, 9223372036854775800
   br i1 %i.ajv, label %bb.gb, label %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -955,7 +957,9 @@ _ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
 
 .lr.ph.i.i.i.i.i333.i.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIjjESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.akf = ptrtoaddr ptr %i.akc to i64
-  %i.akg = sub i64 %i.ajs, %i.ajt
+  %13 = ptrtoaddr ptr %.sroa.18.0502.i to i64
+  %14 = ptrtoaddr ptr %.sroa.0360.0500.i to i64
+  %i.akg = sub i64 %13, %14
   %i.akh = add i64 %i.akg, -8                     ; 2 uses
   %i.aki = lshr i64 %i.akh, 3
   %i.akj = add nuw nsw i64 %i.aki, 1              ; 2 uses

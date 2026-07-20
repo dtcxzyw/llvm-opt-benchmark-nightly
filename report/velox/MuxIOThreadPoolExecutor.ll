@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %bb.c
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN5folly17ExecutorKeepAliveINS0_9EventBaseEEESaIS3_EE17_M_realloc_insertIJPS2_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !12832 ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !12632  ; 12 uses
@@ -225,7 +224,7 @@ _ZNKSt6vectorIN5folly17ExecutorKeepAliveINS0_9EventBaseEEESaIS3_EE12_M_check_len
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -258,7 +257,7 @@ bb.c:                                             ; preds = %_ZN5folly8Executor1
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN5folly17ExecutorKeepAliveINS0_9EventBaseEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.c
-  %i.ac = add i64 %3, -8
+  %i.ac = add i64 %i.m, -8
   %i.ad = sub i64 %i.ac, %i.e                     ; 3 uses
   %i.ae = lshr i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 5 uses
@@ -266,7 +265,7 @@ iter.check:                                       ; preds = %bb.c
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ag = add i64 %3, -8
+  %i.ag = add i64 %i.m, -8
   %i.ah = sub i64 %i.ag, %i.e
   %i.ai = and i64 %i.ah, -8
   %i.aj = add i64 %i.ai, 8                        ; 2 uses
@@ -378,7 +377,7 @@ _ZNSt6vectorIN5folly17ExecutorKeepAliveINS0_9EventBaseEEESaIS3_EE11_S_relocateEP
 
 iter.check91:                                     ; preds = %_ZNSt6vectorIN5folly17ExecutorKeepAliveINS0_9EventBaseEEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit
   %i.be = add i64 %i.d, -8
-  %i.bf = sub i64 %i.be, %3                       ; 3 uses
+  %i.bf = sub i64 %i.be, %i.m                     ; 3 uses
   %i.bg = lshr i64 %i.bf, 3
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 5 uses
   %min.iters.check72 = icmp ult i64 %i.bf, 24
@@ -386,7 +385,7 @@ iter.check91:                                     ; preds = %_ZNSt6vectorIN5foll
 
 vector.memcheck66:                                ; preds = %iter.check91
   %i.bi = add i64 %i.d, -8
-  %i.bj = sub i64 %i.bi, %3
+  %i.bj = sub i64 %i.bi, %i.m
   %i.bk = and i64 %i.bj, -8                       ; 2 uses
   %i.bl = getelementptr i8, ptr %1, i64 %i.bk
   %scevgep67 = getelementptr i8, ptr %i.bl, i64 8

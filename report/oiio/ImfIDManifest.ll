@@ -157,7 +157,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN27OpenImageIO_v3_1_Imf__3_3_510IDManifest4initEPKcS2_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %2 to i64                     ; 2 uses
+  %3 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %4 = alloca %"struct.std::_Rb_tree<unsigned long, std::pair<const unsigned long, std::vector<std::__cxx11::basic_string<char>>>, std::_Select1st<std::pair<const unsigned long, std::vector<std::__cxx11::basic_string<char>>>>, std::less<unsigned long>>::_Auto_node", align 8 ; 6 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
@@ -560,7 +560,7 @@ bb.dl:                                            ; preds = %bb.db
   br i1 %.not.i252527, label %.lr.ph531.preheader, label %._crit_edge532
 
 .lr.ph531.preheader:                              ; preds = %bb.dl
-  %.promoted.i250617 = ptrtoint ptr %.promoted.i250 to i64
+  %.promoted.i250617 = ptrtoaddr ptr %.promoted.i250 to i64
   %scevgep = getelementptr i8, ptr %.promoted.i250, i64 %3
   %i.pn = sub i64 0, %.promoted.i250617
   %scevgep618 = getelementptr i8, ptr %scevgep, i64 %i.pn ; 2 uses
@@ -963,7 +963,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resize
   br i1 %.not.i288539, label %.lr.ph543.preheader, label %._crit_edge544
 
 .lr.ph543.preheader:                              ; preds = %.lr.ph555
-  %.lcssa538549553621 = ptrtoint ptr %.lcssa538549553 to i64
+  %.lcssa538549553621 = ptrtoaddr ptr %.lcssa538549553 to i64
   %scevgep620 = getelementptr i8, ptr %.lcssa538549553, i64 %3
   %i.vi = sub i64 0, %.lcssa538549553621
   %scevgep622 = getelementptr i8, ptr %scevgep620, i64 %i.vi ; 2 uses
@@ -1366,9 +1366,9 @@ _ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit665.thread: ; preds = %_ZNKSt6vectorISt
 bb.bt:                                            ; preds = %.lr.ph1351, %.critedge2
   %.01861350 = phi i32 [ 1, %.lr.ph1351 ], [ %.1187.lcssa, %.critedge2 ] ; 2 uses
   %.01931349 = phi i64 [ 1, %.lr.ph1351 ], [ %i.wn, %.critedge2 ] ; 3 uses
-  %.sroa.29.01348 = phi ptr [ %i.ub, %.lr.ph1351 ], [ %.sroa.29.1, %.critedge2 ] ; 8 uses
+  %.sroa.29.01348 = phi ptr [ %i.ub, %.lr.ph1351 ], [ %.sroa.29.1, %.critedge2 ] ; 9 uses
   %.sroa.17.01347 = phi ptr [ %i.ub, %.lr.ph1351 ], [ %.sroa.17.1, %.critedge2 ] ; 5 uses
-  %.sroa.0859.01346 = phi ptr [ %i.ua, %.lr.ph1351 ], [ %.sroa.0859.1, %.critedge2 ] ; 10 uses
+  %.sroa.0859.01346 = phi ptr [ %i.ua, %.lr.ph1351 ], [ %.sroa.0859.1, %.critedge2 ] ; 11 uses
   %i.us = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0907.0, i64 %.01931349
   %i.ut = getelementptr inbounds nuw i8, ptr %i.us, i64 4 ; 2 uses
   %i.uu = load i32, ptr %i.ut, align 4, !tbaa !134 ; 3 uses
@@ -1393,8 +1393,8 @@ bb.bw:                                            ; preds = %bb.bv
   br label %_ZNSt6vectorISt4pairIiiESaIS1_EE9push_backERKS1_.exit
 
 bb.bx:                                            ; preds = %bb.bv
-  %i.uy = ptrtoint ptr %.sroa.29.01348 to i64     ; 2 uses
-  %i.uz = ptrtoint ptr %.sroa.0859.01346 to i64   ; 3 uses
+  %i.uy = ptrtoint ptr %.sroa.29.01348 to i64
+  %i.uz = ptrtoint ptr %.sroa.0859.01346 to i64   ; 2 uses
   %i.va = sub i64 %i.uy, %i.uz                    ; 4 uses
   %i.vb = icmp eq i64 %i.va, 9223372036854775800
   br i1 %i.vb, label %bb.by, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i362
@@ -1430,7 +1430,9 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i362: ; preds = %bb.
 
 .lr.ph.i.i.i.i.i365.preheader:                    ; preds = %.noexc371
   %i.vk = ptrtoaddr ptr %i.vi to i64
-  %i.vl = sub i64 %i.uy, %i.uz
+  %19 = ptrtoaddr ptr %.sroa.29.01348 to i64
+  %20 = ptrtoaddr ptr %.sroa.0859.01346 to i64
+  %i.vl = sub i64 %19, %20
   %i.vm = add i64 %i.vl, -8                       ; 2 uses
   %i.vn = lshr i64 %i.vm, 3
   %i.vo = add nuw nsw i64 %i.vn, 1                ; 2 uses

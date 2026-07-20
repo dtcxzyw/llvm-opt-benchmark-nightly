@@ -201,10 +201,10 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit
-  %i.n = phi ptr [ null, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 5 uses
+  %i.n = phi ptr [ null, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 6 uses
   %i.o = phi ptr [ null, %.lr.ph ], [ %i.ay, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 3 uses
   %.sroa.016.028 = phi ptr [ %i.i, %.lr.ph ], [ %i.ba, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 2 uses
-  %i.p = phi ptr [ null, %.lr.ph ], [ %i.az, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 13 uses
+  %i.p = phi ptr [ null, %.lr.ph ], [ %i.az, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 14 uses
   %i.q = invoke noundef nonnull align 8 dereferenceable(216) ptr @_ZNK6duckdb10ColumnList9GetColumnERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(105) %2, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.016.028)
           to label %bb.e unwind label %bb.k
 
@@ -223,8 +223,8 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.t = ptrtoint ptr %i.n to i64                 ; 2 uses
-  %i.u = ptrtoint ptr %i.p to i64                 ; 3 uses
+  %i.t = ptrtoint ptr %i.n to i64
+  %i.u = ptrtoint ptr %i.p to i64                 ; 2 uses
   %i.v = sub i64 %i.t, %i.u                       ; 3 uses
   %i.w = icmp eq i64 %i.v, 9223372036854775800
   br i1 %i.w, label %bb.i, label %_ZNKSt6vectorIN6duckdb12LogicalIndexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -258,7 +258,9 @@ _ZNKSt6vectorIN6duckdb12LogicalIndexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; p
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc13
   %i.af = ptrtoaddr ptr %i.ad to i64
-  %i.ag = sub i64 %i.t, %i.u
+  %3 = ptrtoaddr ptr %i.n to i64
+  %4 = ptrtoaddr ptr %i.p to i64
+  %i.ag = sub i64 %3, %4
   %i.ah = add i64 %i.ag, -8                       ; 2 uses
   %i.ai = lshr i64 %i.ah, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
@@ -661,8 +663,8 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i: ;
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc15
   %i.ax = ptrtoaddr ptr %i.av to i64
   %i.ay = ptrtoaddr ptr %i.ar to i64
-  %2 = ptrtoint ptr %i.aw to i64
-  %3 = ptrtoint ptr %i.av to i64
+  %2 = ptrtoaddr ptr %i.aw to i64
+  %3 = ptrtoaddr ptr %i.av to i64
   %i.az = sub i64 %2, %3
   %i.ba = add i64 %i.az, -8                       ; 2 uses
   %i.bb = lshr i64 %i.ba, 3
@@ -760,8 +762,8 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i17:
 .lr.ph.i.i.i.i.i.i19.preheader:                   ; preds = %.noexc26
   %i.ce = ptrtoaddr ptr %i.cc to i64
   %i.cf = ptrtoaddr ptr %i.by to i64
-  %4 = ptrtoint ptr %i.cd to i64
-  %5 = ptrtoint ptr %i.cc to i64
+  %4 = ptrtoaddr ptr %i.cd to i64
+  %5 = ptrtoaddr ptr %i.cc to i64
   %i.cg = sub i64 %4, %5
   %i.ch = add i64 %i.cg, -8                       ; 2 uses
   %i.ci = lshr i64 %i.ch, 3

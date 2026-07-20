@@ -203,7 +203,7 @@ bb.a:
   br i1 %.not81, label %._crit_edge85, label %.lr.ph84
 
 .lr.ph84:                                         ; preds = %bb.a
-  %6 = ptrtoint ptr %0 to i64
+  %6 = ptrtoaddr ptr %0 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 3 uses
@@ -215,7 +215,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph84, %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit
   %.082 = phi ptr [ %0, %.lr.ph84 ], [ %.6109, %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit ] ; 13 uses
-  %.08289 = ptrtoint ptr %.082 to i64             ; 4 uses
+  %.08289 = ptrtoaddr ptr %.082 to i64            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   store ptr %i.b, ptr %5, align 8, !tbaa !177
   store i32 0, ptr %i.c, align 8, !tbaa !155
@@ -365,24 +365,22 @@ bb.o:                                             ; preds = %.lr.ph75, %bb.h, %b
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph75, %bb.o
   %i.ao = phi i32 [ %i.am, %bb.o ], [ %i.n, %.lr.ph75 ]
-  %.034.lcssa.ph = phi ptr [ %.135, %bb.o ], [ %.03473, %.lr.ph75 ] ; 2 uses
-  %.3.lcssa.ph = phi ptr [ %i.an, %bb.o ], [ %.374, %.lr.ph75 ] ; 2 uses
+  %.034.lcssa.ph = phi ptr [ %.135, %bb.o ], [ %.03473, %.lr.ph75 ]
+  %.3.lcssa.ph = phi ptr [ %i.an, %bb.o ], [ %.374, %.lr.ph75 ]
   %.pre = load i32, ptr %i.d, align 4, !tbaa !178
-  %.pre96 = ptrtoint ptr %.3.lcssa.ph to i64
-  %.pre97 = ptrtoint ptr %.034.lcssa.ph to i64
   %i.ap = zext i32 %.pre to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.pre-phi98 = phi i64 [ %.pre97, %._crit_edge.loopexit ], [ %.08289, %.preheader ]
-  %.pre-phi = phi i64 [ %.pre96, %._crit_edge.loopexit ], [ %.08289, %.preheader ]
-  %7 = phi i32 [ %i.ao, %._crit_edge.loopexit ], [ 0, %.preheader ] ; 2 uses
-  %8 = phi i64 [ %i.ap, %._crit_edge.loopexit ], [ 128, %.preheader ]
-  %.034.lcssa = phi ptr [ %.034.lcssa.ph, %._crit_edge.loopexit ], [ %.082, %.preheader ] ; 2 uses
-  %.3.lcssa = phi ptr [ %.3.lcssa.ph, %._crit_edge.loopexit ], [ %.082, %.preheader ] ; 3 uses
-  %i.aq = sub i64 %.pre-phi, %.pre-phi98          ; 4 uses
+  %7 = phi i32 [ 0, %.preheader ], [ %i.ao, %._crit_edge.loopexit ] ; 2 uses
+  %.pre-phi = phi i64 [ 128, %.preheader ], [ %i.ap, %._crit_edge.loopexit ]
+  %.034.lcssa = phi ptr [ %.082, %.preheader ], [ %.034.lcssa.ph, %._crit_edge.loopexit ] ; 3 uses
+  %.3.lcssa = phi ptr [ %.082, %.preheader ], [ %.3.lcssa.ph, %._crit_edge.loopexit ] ; 4 uses
+  %8 = ptrtoint ptr %.3.lcssa to i64
+  %9 = ptrtoint ptr %.034.lcssa to i64
+  %i.aq = sub i64 %8, %9                          ; 4 uses
   %i.ar = zext i32 %7 to i64                      ; 2 uses
-  %i.as = sub nsw i64 %8, %i.ar
+  %i.as = sub nsw i64 %.pre-phi, %i.ar
   %i.at = icmp ugt i64 %i.aq, %i.as
   br i1 %i.at, label %bb.p, label %bb.q
 

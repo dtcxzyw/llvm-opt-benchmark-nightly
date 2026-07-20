@@ -201,7 +201,6 @@ declare void @_ZNK8facebook5velox10LazyVector18loadVectorInternalEv(ptr noundef 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt10unique_ptrIN8facebook5velox13DecodedVectorESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !279  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !361    ; 12 uses
@@ -222,7 +221,7 @@ _ZNKSt6vectorISt10unique_ptrIN8facebook5velox13DecodedVectorESt14default_deleteI
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -236,7 +235,7 @@ _ZNKSt6vectorISt10unique_ptrIN8facebook5velox13DecodedVectorESt14default_deleteI
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN8facebook5velox13DecodedVectorESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN8facebook5velox13DecodedVectorESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %i.s = add i64 %3, -8
+  %i.s = add i64 %i.m, -8
   %i.t = sub i64 %i.s, %i.e                       ; 3 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 5 uses
@@ -244,7 +243,7 @@ iter.check:                                       ; preds = %_ZNKSt6vectorISt10u
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.w = add i64 %3, -8
+  %i.w = add i64 %i.m, -8
   %i.x = sub i64 %i.w, %i.e
   %i.y = and i64 %i.x, -8
   %i.z = add i64 %i.y, 8                          ; 2 uses
@@ -359,7 +358,7 @@ _ZNSt6vectorISt10unique_ptrIN8facebook5velox13DecodedVectorESt14default_deleteIS
 
 iter.check77:                                     ; preds = %_ZNSt6vectorISt10unique_ptrIN8facebook5velox13DecodedVectorESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
   %i.ax = add i64 %i.d, -8
-  %i.ay = sub i64 %i.ax, %3                       ; 3 uses
+  %i.ay = sub i64 %i.ax, %i.m                     ; 3 uses
   %i.az = lshr i64 %i.ay, 3
   %i.ba = add nuw nsw i64 %i.az, 1                ; 5 uses
   %min.iters.check58 = icmp ult i64 %i.ay, 24
@@ -367,7 +366,7 @@ iter.check77:                                     ; preds = %_ZNSt6vectorISt10un
 
 vector.memcheck52:                                ; preds = %iter.check77
   %i.bb = add i64 %i.d, -8
-  %i.bc = sub i64 %i.bb, %3
+  %i.bc = sub i64 %i.bb, %i.m
   %i.bd = and i64 %i.bc, -8                       ; 2 uses
   %i.be = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.bd
   %scevgep53 = getelementptr i8, ptr %i.be, i64 16
@@ -500,7 +499,6 @@ declare void @_ZNK8facebook5velox10BaseVector8toStringB5cxx11Eb(ptr dead_on_unwi
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorISt10unique_ptrIN8facebook5velox17SelectivityVectorESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !216  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !218    ; 12 uses
@@ -521,7 +519,7 @@ _ZNKSt6vectorISt10unique_ptrIN8facebook5velox17SelectivityVectorESt14default_del
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -535,7 +533,7 @@ _ZNKSt6vectorISt10unique_ptrIN8facebook5velox17SelectivityVectorESt14default_del
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN8facebook5velox17SelectivityVectorESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN8facebook5velox17SelectivityVectorESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %i.s = add i64 %3, -8
+  %i.s = add i64 %i.m, -8
   %i.t = sub i64 %i.s, %i.e                       ; 3 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 5 uses
@@ -543,7 +541,7 @@ iter.check:                                       ; preds = %_ZNKSt6vectorISt10u
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.w = add i64 %3, -8
+  %i.w = add i64 %i.m, -8
   %i.x = sub i64 %i.w, %i.e
   %i.y = and i64 %i.x, -8
   %i.z = add i64 %i.y, 8                          ; 2 uses
@@ -658,7 +656,7 @@ _ZNSt6vectorISt10unique_ptrIN8facebook5velox17SelectivityVectorESt14default_dele
 
 iter.check77:                                     ; preds = %_ZNSt6vectorISt10unique_ptrIN8facebook5velox17SelectivityVectorESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
   %i.ax = add i64 %i.d, -8
-  %i.ay = sub i64 %i.ax, %3                       ; 3 uses
+  %i.ay = sub i64 %i.ax, %i.m                     ; 3 uses
   %i.az = lshr i64 %i.ay, 3
   %i.ba = add nuw nsw i64 %i.az, 1                ; 5 uses
   %min.iters.check58 = icmp ult i64 %i.ay, 24
@@ -666,7 +664,7 @@ iter.check77:                                     ; preds = %_ZNSt6vectorISt10un
 
 vector.memcheck52:                                ; preds = %iter.check77
   %i.bb = add i64 %i.d, -8
-  %i.bc = sub i64 %i.bb, %3
+  %i.bc = sub i64 %i.bb, %i.m
   %i.bd = and i64 %i.bc, -8                       ; 2 uses
   %i.be = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.bd
   %scevgep53 = getelementptr i8, ptr %i.be, i64 16

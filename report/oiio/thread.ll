@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 bb.ae:                                            ; preds = %bb.ab, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit
-  %i.ct = phi ptr [ null, %bb.ab ], [ %i.ek, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 11 uses
-  %i.cu = phi ptr [ null, %bb.ab ], [ %i.el, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 5 uses
+  %i.ct = phi ptr [ null, %bb.ab ], [ %i.ek, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 12 uses
+  %i.cu = phi ptr [ null, %bb.ab ], [ %i.el, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 6 uses
   %i.cv = phi ptr [ null, %bb.ab ], [ %i.em, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 3 uses
   %indvars.iv108 = phi i64 [ %i.cp, %bb.ab ], [ %indvars.iv.next109, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ]
   %indvars.iv.next109 = add nsw i64 %indvars.iv108, -1 ; 5 uses
@@ -227,8 +227,8 @@ bb.af:                                            ; preds = %bb.ae
   br label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE9push_backEOS4_.exit
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.dd = ptrtoint ptr %i.cu to i64               ; 3 uses
-  %i.de = ptrtoint ptr %i.ct to i64               ; 3 uses
+  %i.dd = ptrtoint ptr %i.cu to i64               ; 2 uses
+  %i.de = ptrtoint ptr %i.ct to i64               ; 2 uses
   %i.df = sub i64 %i.dd, %i.de                    ; 4 uses
   %i.dg = icmp eq i64 %i.df, 9223372036854775800
   br i1 %i.dg, label %bb.ah, label %_ZNKSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE12_M_check_lenEmPKc.exit.i
@@ -262,7 +262,9 @@ _ZNKSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE12_M_check
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, label %.lr.ph.i.i.i.i80.preheader
 
 .lr.ph.i.i.i.i80.preheader:                       ; preds = %.noexc83
-  %i.dq = sub i64 %i.dd, %i.de
+  %9 = ptrtoaddr ptr %i.cu to i64
+  %10 = ptrtoaddr ptr %i.ct to i64
+  %i.dq = sub i64 %9, %10
   %i.dr = add i64 %i.dq, -8                       ; 2 uses
   %i.ds = lshr i64 %i.dr, 3
   %i.dt = add nuw nsw i64 %i.ds, 1                ; 2 uses
@@ -665,8 +667,8 @@ bb.a:
   br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPN3tsl17detail_robin_hash12bucket_entryISt4pairINSt6thread2idEiELb1EEES7_EvT_S9_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.a
-  %1 = ptrtoint ptr %i.d to i64
-  %2 = ptrtoint ptr %i.b to i64
+  %1 = ptrtoaddr ptr %i.d to i64
+  %2 = ptrtoaddr ptr %i.b to i64
   %i.e = sub i64 %1, %2
   %i.f = add i64 %i.e, -24                        ; 2 uses
   %i.g = udiv i64 %i.f, 24
@@ -1069,10 +1071,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !73   ; 5 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !74     ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 4 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !73   ; 6 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !74     ; 11 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1116,7 +1118,9 @@ _ZNKSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE12_M_check
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE12_M_check_lenEmPKc.exit
-  %i.x = sub i64 %i.d, %i.e
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.x = sub i64 %2, %3
   %i.y = add i64 %i.x, -8                         ; 2 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
@@ -1519,8 +1523,8 @@ bb.f:                                             ; preds = %_ZN3tsl17detail_rob
   br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPN3tsl17detail_robin_hash12bucket_entryISt4pairINSt6thread2idEiELb1EEES7_EvT_S9_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %._crit_edge
-  %4 = ptrtoint ptr %i.as to i64
-  %5 = ptrtoint ptr %i.ar to i64
+  %4 = ptrtoaddr ptr %i.as to i64
+  %5 = ptrtoaddr ptr %i.ar to i64
   %i.bq = sub i64 %4, %5
   %i.br = add i64 %i.bq, -24                      ; 2 uses
   %i.bs = udiv i64 %i.br, 24
@@ -1923,8 +1927,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not4.i.i.i.i.i, label %_ZSt8_DestroyIPN3tsl17detail_robin_hash12bucket_entryISt4pairINSt6thread2idEiELb1EEES7_EvT_S9_RSaIT0_E.exit.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.b
-  %1 = ptrtoint ptr %i.d to i64
-  %2 = ptrtoint ptr %i.b to i64
+  %1 = ptrtoaddr ptr %i.d to i64
+  %2 = ptrtoaddr ptr %i.b to i64
   %i.e = sub i64 %1, %2
   %i.f = add i64 %i.e, -24                        ; 2 uses
   %i.g = udiv i64 %i.f, 24

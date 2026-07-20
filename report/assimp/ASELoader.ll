@@ -204,8 +204,8 @@ _ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i:     ; preds = %_ZSt4copyIPSt4pairI
   br i1 %.not9.i.i.i.i.i, label %_ZSt22__uninitialized_copy_aIPSt4pairIifES2_S1_ET0_T_S4_S3_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZSt4copyIPSt4pairIifES2_ET0_T_S4_S3_.exit.i
-  %7 = ptrtoint ptr %i.ph to i64
-  %8 = ptrtoint ptr %i.pj to i64
+  %7 = ptrtoaddr ptr %i.ph to i64
+  %8 = ptrtoaddr ptr %i.pj to i64
   %i.pn = add i64 %.pre-phi39.i, %8
   %i.po = sub i64 %7, %i.pn
   %i.pp = add i64 %i.po, -8                       ; 2 uses
@@ -608,7 +608,7 @@ bb.an:                                            ; preds = %bb.am
   %i.kj = getelementptr inbounds [24 x i8], ptr %.0228, i64 %i.ki ; 4 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %.sroa.0367.0469, i64 4 ; 2 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kj, i64 8 ; 4 uses
-  %i.km = load ptr, ptr %i.kl, align 8            ; 6 uses
+  %i.km = load ptr, ptr %i.kl, align 8            ; 7 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %i.kj, i64 16 ; 2 uses
   %i.ko = load ptr, ptr %i.kn, align 8
   %.not.i290 = icmp eq ptr %i.km, %i.ko
@@ -625,9 +625,9 @@ bb.ao:                                            ; preds = %.lr.ph470
   br label %_ZNSt6vectorISt4pairIjfESaIS1_EE12emplace_backIJRjRKfEEERS1_DpOT_.exit
 
 bb.ap:                                            ; preds = %.lr.ph470
-  %i.kt = load ptr, ptr %i.kj, align 8            ; 7 uses
-  %i.ku = ptrtoint ptr %i.km to i64               ; 2 uses
-  %i.kv = ptrtoint ptr %i.kt to i64               ; 3 uses
+  %i.kt = load ptr, ptr %i.kj, align 8            ; 8 uses
+  %i.ku = ptrtoint ptr %i.km to i64
+  %i.kv = ptrtoint ptr %i.kt to i64               ; 2 uses
   %i.kw = sub i64 %i.ku, %i.kv                    ; 4 uses
   %i.kx = icmp eq i64 %i.kw, 9223372036854775800
   br i1 %i.kx, label %bb.aq, label %_ZNKSt6vectorISt4pairIjfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -663,7 +663,9 @@ _ZNKSt6vectorISt4pairIjfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ap
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc294
   %i.li = ptrtoaddr ptr %i.le to i64
-  %i.lj = sub i64 %i.ku, %i.kv
+  %4 = ptrtoaddr ptr %i.km to i64
+  %5 = ptrtoaddr ptr %i.kt to i64
+  %i.lj = sub i64 %4, %5
   %i.lk = add i64 %i.lj, -8                       ; 2 uses
   %i.ll = lshr i64 %i.lk, 3
   %i.lm = add nuw nsw i64 %i.ll, 1                ; 2 uses
@@ -1066,7 +1068,7 @@ bb.cs:                                            ; preds = %_ZNSt6vectorIS_I14a
   %i.ajy = sext i32 %i.ajx to i64
   %i.ajz = getelementptr inbounds nuw [24 x i8], ptr %i.aji, i64 %i.ajy ; 4 uses
   %i.aka = getelementptr inbounds nuw i8, ptr %i.ajz, i64 8 ; 4 uses
-  %i.akb = load ptr, ptr %i.aka, align 8          ; 6 uses
+  %i.akb = load ptr, ptr %i.aka, align 8          ; 7 uses
   %i.akc = getelementptr inbounds nuw i8, ptr %i.ajz, i64 16 ; 2 uses
   %i.akd = load ptr, ptr %i.akc, align 8
   %.not.i315 = icmp eq ptr %i.akb, %i.akd
@@ -1082,9 +1084,9 @@ bb.ct:                                            ; preds = %.lr.ph513
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE9push_backERKS0_.exit
 
 bb.cu:                                            ; preds = %.lr.ph513
-  %i.akg = load ptr, ptr %i.ajz, align 8          ; 7 uses
-  %i.akh = ptrtoint ptr %i.akb to i64             ; 2 uses
-  %i.aki = ptrtoint ptr %i.akg to i64             ; 3 uses
+  %i.akg = load ptr, ptr %i.ajz, align 8          ; 8 uses
+  %i.akh = ptrtoint ptr %i.akb to i64
+  %i.aki = ptrtoint ptr %i.akg to i64             ; 2 uses
   %i.akj = sub i64 %i.akh, %i.aki                 ; 4 uses
   %i.akk = icmp eq i64 %i.akj, 9223372036854775800
   br i1 %i.akk, label %bb.cv, label %_ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i
@@ -1119,7 +1121,9 @@ _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %b
 
 .lr.ph.i.i.i.i.i319.preheader:                    ; preds = %.noexc325
   %i.akt = ptrtoaddr ptr %i.akr to i64
-  %i.aku = sub i64 %i.akh, %i.aki
+  %6 = ptrtoaddr ptr %i.akb to i64
+  %7 = ptrtoaddr ptr %i.akg to i64
+  %i.aku = sub i64 %6, %7
   %i.akv = add i64 %i.aku, -8                     ; 2 uses
   %i.akw = lshr i64 %i.akv, 3
   %i.akx = add nuw nsw i64 %i.akw, 1              ; 2 uses

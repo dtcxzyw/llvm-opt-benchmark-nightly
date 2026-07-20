@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 
 .loopexit750.i:                                   ; preds = %.preheader749.i, %.loopexit752.i
   %i.q = phi i8 [ %i.m, %.loopexit752.i ], [ %i.p, %.preheader749.i ] ; 3 uses
-  %.3454.i = phi ptr [ %.1452.i, %.loopexit752.i ], [ %i.o, %.preheader749.i ] ; 10 uses
-  %.34541055.i = ptrtoint ptr %.3454.i to i64     ; 4 uses
+  %.3454.i = phi ptr [ %.1452.i, %.loopexit752.i ], [ %i.o, %.preheader749.i ] ; 11 uses
   %i.r = sext i8 %i.q to i32                      ; 2 uses
   %i.s = add i8 %i.q, -48
   %i.t = icmp ult i8 %i.s, 10
@@ -249,14 +248,15 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
 
 ._crit_edge.i:                                    ; preds = %bb.g
   %.pre1075.i = ptrtoint ptr %i.ae to i64         ; 2 uses
-  %i.aj = sub i64 %.pre1075.i, %.34541055.i
+  %4 = ptrtoint ptr %.3454.i to i64               ; 3 uses
+  %i.aj = sub i64 %.pre1075.i, %4
   %i.ak = trunc i64 %i.aj to i32                  ; 4 uses
   %i.al = icmp ugt ptr %i.ae, %.3454.i
   br i1 %i.al, label %.lr.ph887.preheader.i, label %.critedge.i
 
 .lr.ph887.preheader.i:                            ; preds = %._crit_edge.i
   %i.am = trunc i64 %.pre1075.i to i32
-  %i.an = trunc i64 %.34541055.i to i32
+  %i.an = trunc i64 %4 to i32
   %i.ao = sub i32 %i.am, %i.an
   br label %.lr.ph887.i
 
@@ -279,13 +279,14 @@ bb.h:                                             ; preds = %.lr.ph887.i
   br i1 %i.au, label %bb.i, label %bb.q
 
 .critedge.thread.i:                               ; preds = %.loopexit750.i
+  %5 = ptrtoint ptr %.3454.i to i64
   %i.av = icmp eq i8 %i.q, 46
   br i1 %i.av, label %.preheader748.i, label %bb.q
 
 bb.i:                                             ; preds = %.critedge.i
   %i.aw = getelementptr inbounds nuw i8, ptr %.4455876.i, i64 2 ; 2 uses
   %i.ax = ptrtoint ptr %i.aw to i64
-  %i.ay = sub i64 %i.ax, %.34541055.i
+  %i.ay = sub i64 %i.ax, %4
   %i.az = trunc i64 %i.ay to i32                  ; 2 uses
   %i.ba = sub nsw i32 %i.az, %i.ak
   br label %bb.j
@@ -340,7 +341,7 @@ bb.k:                                             ; preds = %bb.j
 
 ._crit_edge905.i.thread:                          ; preds = %._crit_edge894.i
   %i.bn = ptrtoint ptr %.5456.lcssa.i to i64
-  %i.bo = sub i64 %.34541055.i, %i.bn
+  %i.bo = sub i64 %5, %i.bn
   %i.bp = trunc i64 %i.bo to i32                  ; 2 uses
   %i.bq = add nsw i32 %i.bp, 1
   %i.br = add nsw i32 %.0512.lcssa.i, -48
@@ -743,7 +744,7 @@ Balloc.exit:                                      ; preds = %bb.c, %bb.h
   br i1 %i.bf, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %Balloc.exit
-  %.1.i81 = ptrtoint ptr %.1.i to i64             ; 3 uses
+  %.1.i81 = ptrtoaddr ptr %.1.i to i64            ; 3 uses
   %i.bg = add i64 %.idx, %.1.i81
   %i.bh = add i64 %i.bg, 24
   %i.bi = add i64 %.1.i81, 28
@@ -954,7 +955,7 @@ Balloc.exit:                                      ; preds = %bb.c, %bb.h
   br i1 %.not49, label %.preheader.preheader, label %bb.i
 
 .preheader.preheader:                             ; preds = %._crit_edge59
-  %3 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.bk = shl nsw i64 %i.bh, 2
   %i.bl = add i64 %i.bk, %3
   %i.bm = add i64 %i.bl, 24

@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.q, %bb.l
   br i1 %i.ci, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.r
-  %.1.i82101 = ptrtoint ptr %.1.i82 to i64        ; 3 uses
+  %.1.i82101 = ptrtoaddr ptr %.1.i82 to i64       ; 3 uses
   %i.cj = shl nsw i64 %i.cg, 2
   %i.ck = add i64 %i.cj, %.1.i82101
   %i.cl = add i64 %i.ck, 24
@@ -451,7 +451,7 @@ bb.l:                                             ; preds = %bb.h, %bb.c
   br i1 %.not57, label %.preheader.preheader, label %bb.m
 
 .preheader.preheader:                             ; preds = %._crit_edge70
-  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
+  %2 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.by = shl nsw i64 %i.bv, 2
   %i.bz = add i64 %i.by, %2
   %i.ca = add i64 %i.bz, 24
@@ -854,7 +854,7 @@ rv_alloc.exit:                                    ; preds = %bb.bl, %bb.bq
   %.0490816 = phi i32 [ %.0490820, %bb.bl ], [ %.0490817, %bb.bq ] ; 11 uses
   %.09.lcssa22.i = phi i32 [ %.09.lcssa21.i, %bb.bl ], [ %.09.lcssa19.i, %bb.bq ]
   %.1.i.i668 = phi ptr [ %i.ha, %bb.bl ], [ %.024.i.i667, %bb.bq ] ; 8 uses
-  %.1.i.i6681218 = ptrtoint ptr %.1.i.i668 to i64 ; 4 uses
+  %.1.i.i6681218 = ptrtoaddr ptr %.1.i.i668 to i64 ; 4 uses
   %i.if = getelementptr i8, ptr %.1.i.i668, i64 20
   store i32 0, ptr %i.if, align 4, !tbaa !137
   %i.ig = getelementptr i8, ptr %.1.i.i668, i64 16
@@ -1180,7 +1180,7 @@ bb.cn:                                            ; preds = %.lr.ph1108._crit_ed
   %.5477 = phi i32 [ %.2474, %.lr.ph1108._crit_edge ], [ %.2474, %bb.cn ], [ %.3475, %._crit_edge1104 ], [ %.3475, %.lr.ph1097 ] ; 2 uses
   %.5 = phi ptr [ %.lcssa1464, %.lr.ph1108._crit_edge ], [ %.lcssa1464, %bb.cn ], [ %.lcssa1073, %._crit_edge1104 ], [ %i.ks, %.lr.ph1097 ] ; 4 uses
   %i.nl = add i64 %.1.i.i6681218, 5
-  %.51221 = ptrtoint ptr %.5 to i64               ; 2 uses
+  %.51221 = ptrtoaddr ptr %.5 to i64              ; 2 uses
   %i.nm = sub i64 %i.nl, %.51221
   %scevgep1222 = getelementptr i8, ptr %.5, i64 %i.nm
   %i.nn = add i64 %.1.i.i6681218, 4
@@ -1583,7 +1583,7 @@ cmp.exit720.thread876:                            ; preds = %bb.gk, %cmp.exit720
   %.14425 = phi ptr [ %.11422, %bb.fv ], [ %.13424, %cmp.exit720 ], [ %.13424, %cmp.exit720.thread ], [ %.13424, %bb.gk ] ; 2 uses
   %.13 = phi ptr [ %i.xk, %bb.fv ], [ %.12, %cmp.exit720 ], [ %.12, %cmp.exit720.thread ], [ %.12, %bb.gk ] ; 4 uses
   %i.zg = add i64 %.1.i.i6681218, 5
-  %.131219 = ptrtoint ptr %.13 to i64             ; 2 uses
+  %.131219 = ptrtoaddr ptr %.13 to i64            ; 2 uses
   %i.zh = sub i64 %i.zg, %.131219
   %scevgep = getelementptr i8, ptr %.13, i64 %i.zh
   %i.zi = add i64 %.1.i.i6681218, 4

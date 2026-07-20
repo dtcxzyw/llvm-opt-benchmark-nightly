@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %_ZNSt10lock_guardIS
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12emplace_backIJS2_EEERS2_DpOT_.exit
-  %i.d = phi ptr [ %.pre16, %.lr.ph ], [ %i.ao, %_ZNSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12emplace_backIJS2_EEERS2_DpOT_.exit ] ; 5 uses
+  %i.d = phi ptr [ %.pre16, %.lr.ph ], [ %i.ao, %_ZNSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12emplace_backIJS2_EEERS2_DpOT_.exit ] ; 6 uses
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ap, %_ZNSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12emplace_backIJS2_EEERS2_DpOT_.exit ] ; 3 uses
   %.sroa.07.015 = phi ptr [ %.pre20, %.lr.ph ], [ %i.aq, %_ZNSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12emplace_backIJS2_EEERS2_DpOT_.exit ] ; 2 uses
   %i.f = load ptr, ptr %.sroa.07.015, align 8, !tbaa !59 ; 2 uses
@@ -217,9 +217,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12emplace_backIJS2_EEERS2_DpOT_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = load ptr, ptr %0, align 8, !tbaa !102    ; 7 uses
-  %i.j = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.i = load ptr, ptr %0, align 8, !tbaa !102    ; 8 uses
+  %i.j = ptrtoint ptr %i.d to i64
+  %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = icmp eq i64 %i.l, 9223372036854775800
   br i1 %i.m, label %bb.g, label %_ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i.i
@@ -253,7 +253,9 @@ _ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i.i: 
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc4
   %i.w = ptrtoaddr ptr %i.t to i64
-  %i.x = sub i64 %i.j, %i.k
+  %1 = ptrtoaddr ptr %i.d to i64
+  %2 = ptrtoaddr ptr %i.i to i64
+  %i.x = sub i64 %1, %2
   %i.y = add i64 %i.x, -8                         ; 2 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses

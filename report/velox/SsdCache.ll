@@ -204,7 +204,6 @@ declare void @_ZN8facebook5velox5cache19AsyncDataCacheEntry7releaseEv(ptr nounde
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN8facebook5velox5cache8CachePinESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !280  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !283    ; 12 uses
@@ -225,7 +224,7 @@ _ZNKSt6vectorIN8facebook5velox5cache8CachePinESaIS3_EE12_M_check_lenEmPKc.exit: 
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -264,7 +263,7 @@ bb.e:                                             ; preds = %bb.d, %.noexc26
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN8facebook5velox5cache8CachePinESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.e
-  %i.u = add i64 %3, -8
+  %i.u = add i64 %i.m, -8
   %i.v = sub i64 %i.u, %i.e                       ; 3 uses
   %i.w = lshr i64 %i.v, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 5 uses
@@ -272,7 +271,7 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.y = add i64 %3, -8
+  %i.y = add i64 %i.m, -8
   %i.z = sub i64 %i.y, %i.e
   %i.aa = and i64 %i.z, -8
   %i.ab = add i64 %i.aa, 8                        ; 2 uses
@@ -384,7 +383,7 @@ _ZNSt6vectorIN8facebook5velox5cache8CachePinESaIS3_EE11_S_relocateEPS3_S6_S6_RS4
 
 iter.check93:                                     ; preds = %_ZNSt6vectorIN8facebook5velox5cache8CachePinESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit
   %i.aw = add i64 %i.d, -8
-  %i.ax = sub i64 %i.aw, %3                       ; 3 uses
+  %i.ax = sub i64 %i.aw, %i.m                     ; 3 uses
   %i.ay = lshr i64 %i.ax, 3
   %i.az = add nuw nsw i64 %i.ay, 1                ; 5 uses
   %min.iters.check74 = icmp ult i64 %i.ax, 24
@@ -392,7 +391,7 @@ iter.check93:                                     ; preds = %_ZNSt6vectorIN8face
 
 vector.memcheck68:                                ; preds = %iter.check93
   %i.ba = add i64 %i.d, -8
-  %i.bb = sub i64 %i.ba, %3
+  %i.bb = sub i64 %i.ba, %i.m
   %i.bc = and i64 %i.bb, -8                       ; 2 uses
   %i.bd = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.bc
   %scevgep69 = getelementptr i8, ptr %i.bd, i64 16
@@ -795,7 +794,7 @@ bb.a:
   br i1 %or.cond23, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %6 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.d = ptrtoint ptr %0 to i64                   ; 2 uses
   %scevgep.i = getelementptr i8, ptr inttoptr (i64 -1 to ptr), i64 %6 ; 2 uses
   %i.e = sub i64 %6, %i.d
@@ -943,7 +942,7 @@ bb.q:                                             ; preds = %bb.f, %bb.o
 define linkonce_odr noundef ptr @_ZN3fmt3v116detail12parse_arg_idIcNS1_20dynamic_spec_handlerIcEEEEPKT_S7_S7_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 comdat {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 4 uses
-  %3 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.b = load i8, ptr %0, align 1, !tbaa !16      ; 5 uses
   %i.c = add i8 %i.b, -48
   %or.cond = icmp ult i8 %i.c, 10

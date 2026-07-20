@@ -63,9 +63,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !13
-  %i.n = load ptr, ptr %1, align 8, !tbaa !12     ; 7 uses
+  %i.n = load ptr, ptr %1, align 8, !tbaa !12     ; 8 uses
   %i.o = ptrtoint ptr %i.m to i64
-  %i.p = ptrtoint ptr %i.n to i64                 ; 4 uses
+  %i.p = ptrtoint ptr %i.n to i64                 ; 3 uses
   %i.q = sub i64 %i.o, %i.p                       ; 2 uses
   %i.r = ashr exact i64 %i.q, 3
   %i.s = icmp ult i64 %i.r, %i.j
@@ -82,8 +82,9 @@ _ZNSt12_Vector_baseIN3upb10EnumDefPtrESaIS1_EE11_M_allocateEm.exit.i: ; preds = 
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN3upb10EnumDefPtrESaIS1_EE11_M_allocateEm.exit.i
   %i.y = ptrtoaddr ptr %i.x to i64
-  %3 = ptrtoint ptr %i.t to i64
-  %i.z = sub i64 %3, %i.p
+  %3 = ptrtoaddr ptr %i.t to i64
+  %4 = ptrtoaddr ptr %i.n to i64
+  %i.z = sub i64 %3, %4
   %i.aa = add i64 %i.z, -8                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
@@ -179,7 +180,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ax = tail call ptr @upb_MessageDef_NestedEnum(ptr noundef %0, i32 noundef %.022) ; 2 uses
-  %i.ay = load ptr, ptr %i.a, align 8, !tbaa !8   ; 6 uses
+  %i.ay = load ptr, ptr %i.a, align 8, !tbaa !8   ; 7 uses
   %i.az = load ptr, ptr %i.l, align 8, !tbaa !13
   %.not.i.i = icmp eq ptr %i.ay, %i.az
   br i1 %.not.i.i, label %bb.i, label %bb.h
@@ -192,9 +193,9 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit
 
 bb.i:                                             ; preds = %bb.g
-  %i.bc = load ptr, ptr %1, align 8, !tbaa !12    ; 7 uses
-  %i.bd = ptrtoint ptr %i.ay to i64               ; 2 uses
-  %i.be = ptrtoint ptr %i.bc to i64               ; 3 uses
+  %i.bc = load ptr, ptr %1, align 8, !tbaa !12    ; 8 uses
+  %i.bd = ptrtoint ptr %i.ay to i64
+  %i.be = ptrtoint ptr %i.bc to i64               ; 2 uses
   %i.bf = sub i64 %i.bd, %i.be                    ; 4 uses
   %i.bg = icmp eq i64 %i.bf, 9223372036854775800
   br i1 %i.bg, label %bb.j, label %_ZNKSt6vectorIN3upb10EnumDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -222,7 +223,9 @@ _ZNKSt6vectorIN3upb10EnumDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN3upb10EnumDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bq = ptrtoaddr ptr %i.bn to i64
-  %i.br = sub i64 %i.bd, %i.be
+  %5 = ptrtoaddr ptr %i.ay to i64
+  %6 = ptrtoaddr ptr %i.bc to i64
+  %i.br = sub i64 %5, %6
   %i.bs = add i64 %i.br, -8                       ; 2 uses
   %i.bt = lshr i64 %i.bs, 3
   %i.bu = add nuw nsw i64 %i.bt, 1                ; 2 uses
@@ -364,8 +367,8 @@ _ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit: ; preds = %bb.c, %_ZNSt1
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit
-  %i.k = phi ptr [ %i.bb, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted64, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit ] ; 7 uses
-  %i.l = phi ptr [ %i.bc, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted64, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit ] ; 18 uses
+  %i.k = phi ptr [ %i.bb, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted64, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit ] ; 8 uses
+  %i.l = phi ptr [ %i.bc, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted64, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit ] ; 19 uses
   %i.m = phi ptr [ %i.bd, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit ] ; 8 uses
   %.017 = phi i32 [ %i.be, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit ], [ 0, %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE7reserveEm.exit ] ; 4 uses
   %i.n = invoke noundef i32 @upb_FileDef_TopLevelEnumCount(ptr noundef %1)
@@ -432,8 +435,8 @@ bb.i:                                             ; preds = %_ZNK3upb10FileDefPt
   br label %_ZNSt6vectorIN3upb10EnumDefPtrESaIS1_EE9push_backEOS1_.exit
 
 bb.j:                                             ; preds = %_ZNK3upb10FileDefPtr13toplevel_enumEi.exit27
-  %i.v = ptrtoint ptr %i.k to i64                 ; 2 uses
-  %i.w = ptrtoint ptr %i.l to i64                 ; 3 uses
+  %i.v = ptrtoint ptr %i.k to i64
+  %i.w = ptrtoint ptr %i.l to i64                 ; 2 uses
   %i.x = sub i64 %i.v, %i.w                       ; 4 uses
   %i.y = icmp eq i64 %i.x, 9223372036854775800
   br i1 %i.y, label %bb.k, label %_ZNKSt6vectorIN3upb10EnumDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -469,7 +472,9 @@ _ZNKSt6vectorIN3upb10EnumDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc30
   %i.ai = ptrtoaddr ptr %i.af to i64
-  %i.aj = sub i64 %i.v, %i.w
+  %3 = ptrtoaddr ptr %i.k to i64
+  %4 = ptrtoaddr ptr %i.l to i64
+  %i.aj = sub i64 %3, %4
   %i.ak = add i64 %i.aj, -8                       ; 2 uses
   %i.al = lshr i64 %i.ak, 3
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
@@ -872,7 +877,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.r, %bb.s
 define dso_local void @_ZN3upb9generator11AddMessagesENS_13MessageDefPtrEPSt6vectorIS1_SaIS1_EE(ptr %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !55   ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !55   ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !58
   %.not.i = icmp eq ptr %i.b, %i.d
@@ -886,9 +891,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIN3upb13MessageDefPtrESaIS1_EE9push_backERKS1_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = load ptr, ptr %1, align 8, !tbaa !61     ; 7 uses
-  %i.h = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.i = ptrtoint ptr %i.g to i64                 ; 3 uses
+  %i.g = load ptr, ptr %1, align 8, !tbaa !61     ; 8 uses
+  %i.h = ptrtoint ptr %i.b to i64
+  %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
   %i.j = sub i64 %i.h, %i.i                       ; 4 uses
   %i.k = icmp eq i64 %i.j, 9223372036854775800
   br i1 %i.k, label %bb.d, label %_ZNKSt6vectorIN3upb13MessageDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -916,7 +921,9 @@ _ZNKSt6vectorIN3upb13MessageDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN3upb13MessageDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.u = ptrtoaddr ptr %i.r to i64
-  %i.v = sub i64 %i.h, %i.i
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.g to i64
+  %i.v = sub i64 %2, %3
   %i.w = add i64 %i.v, -8                         ; 2 uses
   %i.x = lshr i64 %i.w, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
@@ -1076,7 +1083,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit
   %.013 = phi i32 [ 0, %.lr.ph ], [ %i.ar, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ] ; 2 uses
   %i.g = tail call ptr @upb_MessageDef_NestedExtension(ptr noundef %0, i32 noundef %.013) ; 2 uses
-  %i.h = load ptr, ptr %i.c, align 8, !tbaa !71   ; 6 uses
+  %i.h = load ptr, ptr %i.c, align 8, !tbaa !71   ; 7 uses
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !74
   %.not.i.i = icmp eq ptr %i.h, %i.i
   br i1 %.not.i.i, label %bb.d, label %bb.c
@@ -1089,9 +1096,9 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.l = load ptr, ptr %1, align 8, !tbaa !77     ; 7 uses
-  %i.m = ptrtoint ptr %i.h to i64                 ; 2 uses
-  %i.n = ptrtoint ptr %i.l to i64                 ; 3 uses
+  %i.l = load ptr, ptr %1, align 8, !tbaa !77     ; 8 uses
+  %i.m = ptrtoint ptr %i.h to i64
+  %i.n = ptrtoint ptr %i.l to i64                 ; 2 uses
   %i.o = sub i64 %i.m, %i.n                       ; 4 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775800
   br i1 %i.p, label %bb.e, label %_ZNKSt6vectorIN3upb11FieldDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -1119,7 +1126,9 @@ _ZNKSt6vectorIN3upb11FieldDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN3upb11FieldDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.z = ptrtoaddr ptr %i.w to i64
-  %i.aa = sub i64 %i.m, %i.n
+  %2 = ptrtoaddr ptr %i.h to i64
+  %3 = ptrtoaddr ptr %i.l to i64
+  %i.aa = sub i64 %2, %3
   %i.ab = add i64 %i.aa, -8                       ; 2 uses
   %i.ac = lshr i64 %i.ab, 3
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses
@@ -1245,8 +1254,8 @@ _ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit: ; preds = %bb.a, %_ZNSt
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit
-  %i.j = phi ptr [ %i.ax, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted33, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 6 uses
-  %i.k = phi ptr [ %i.ay, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted33, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 15 uses
+  %i.j = phi ptr [ %i.ax, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted33, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 7 uses
+  %i.k = phi ptr [ %i.ay, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted33, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 16 uses
   %i.l = phi ptr [ %i.az, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 6 uses
   %.08 = phi i32 [ %i.ba, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ 0, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 3 uses
   %i.m = invoke noundef i32 @upb_FileDef_TopLevelExtensionCount(ptr noundef %1)
@@ -1284,8 +1293,8 @@ bb.e:                                             ; preds = %_ZNK3upb10FileDefPt
   br label %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit
 
 bb.f:                                             ; preds = %_ZNK3upb10FileDefPtr18toplevel_extensionEi.exit
-  %i.s = ptrtoint ptr %i.j to i64                 ; 2 uses
-  %i.t = ptrtoint ptr %i.k to i64                 ; 3 uses
+  %i.s = ptrtoint ptr %i.j to i64
+  %i.t = ptrtoint ptr %i.k to i64                 ; 2 uses
   %i.u = sub i64 %i.s, %i.t                       ; 4 uses
   %i.v = icmp eq i64 %i.u, 9223372036854775800
   br i1 %i.v, label %bb.g, label %_ZNKSt6vectorIN3upb11FieldDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -1321,7 +1330,9 @@ _ZNKSt6vectorIN3upb11FieldDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc20
   %i.af = ptrtoaddr ptr %i.ac to i64
-  %i.ag = sub i64 %i.s, %i.t
+  %2 = ptrtoaddr ptr %i.j to i64
+  %3 = ptrtoaddr ptr %i.k to i64
+  %i.ag = sub i64 %2, %3
   %i.ah = add i64 %i.ag, -8                       ; 2 uses
   %i.ai = lshr i64 %i.ah, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
@@ -1503,8 +1514,8 @@ _ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit: ; preds = %bb.c, %_ZNSt
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit
-  %i.j = phi ptr [ %i.bq, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted44, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 12 uses
-  %i.k = phi ptr [ %i.br, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted44, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 21 uses
+  %i.j = phi ptr [ %i.bq, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted44, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 13 uses
+  %i.k = phi ptr [ %i.br, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted44, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 22 uses
   %i.l = phi ptr [ %i.bs, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ %.promoted, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 6 uses
   %.06 = phi i32 [ %i.bt, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit ], [ 0, %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE7reserveEm.exit ] ; 3 uses
   %i.m = invoke noundef i32 @upb_MessageDef_FieldCount(ptr noundef %1)
@@ -1628,8 +1639,8 @@ bb.k:                                             ; preds = %_ZNK3upb13MessageDe
   br label %_ZNSt6vectorIN3upb11FieldDefPtrESaIS1_EE9push_backEOS1_.exit
 
 bb.l:                                             ; preds = %_ZNK3upb13MessageDefPtr5fieldEi.exit
-  %i.al = ptrtoint ptr %i.j to i64                ; 2 uses
-  %i.am = ptrtoint ptr %i.k to i64                ; 3 uses
+  %i.al = ptrtoint ptr %i.j to i64
+  %i.am = ptrtoint ptr %i.k to i64                ; 2 uses
   %i.an = sub i64 %i.al, %i.am                    ; 4 uses
   %i.ao = icmp eq i64 %i.an, 9223372036854775800
   br i1 %i.ao, label %bb.m, label %_ZNKSt6vectorIN3upb11FieldDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -1665,7 +1676,9 @@ _ZNKSt6vectorIN3upb11FieldDefPtrESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc27
   %i.ay = ptrtoaddr ptr %i.av to i64
-  %i.az = sub i64 %i.al, %i.am
+  %2 = ptrtoaddr ptr %i.j to i64
+  %3 = ptrtoaddr ptr %i.k to i64
+  %i.az = sub i64 %2, %3
   %i.ba = add i64 %i.az, -8                       ; 2 uses
   %i.bb = lshr i64 %i.ba, 3
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses

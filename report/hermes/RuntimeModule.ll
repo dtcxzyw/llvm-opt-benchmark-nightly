@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %bb.u, %._crit_edge
   br i1 %i.dz, label %bb.w, label %bb.ae
 
 bb.w:                                             ; preds = %bb.v
-  %i.ea = load ptr, ptr %i.t, align 8, !tbaa !148 ; 5 uses
+  %i.ea = load ptr, ptr %i.t, align 8, !tbaa !148 ; 6 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !116
   %.not.i.i37 = icmp eq ptr %i.ea, %i.ec
@@ -217,9 +217,9 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZN6hermes10hashStringIcEEjN4llvh8ArrayRefIT_EE.exit
 
 bb.y:                                             ; preds = %bb.w
-  %i.ef = load ptr, ptr %i.r, align 8, !tbaa !96  ; 7 uses
-  %i.eg = ptrtoint ptr %i.ea to i64               ; 2 uses
-  %i.eh = ptrtoint ptr %i.ef to i64               ; 3 uses
+  %i.ef = load ptr, ptr %i.r, align 8, !tbaa !96  ; 8 uses
+  %i.eg = ptrtoint ptr %i.ea to i64
+  %i.eh = ptrtoint ptr %i.ef to i64               ; 2 uses
   %i.ei = sub i64 %i.eg, %i.eh                    ; 4 uses
   %i.ej = icmp eq i64 %i.ei, 9223372036854775804
   br i1 %i.ej, label %bb.z, label %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -246,7 +246,9 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.es = ptrtoaddr ptr %i.eq to i64
-  %i.et = sub i64 %i.eg, %i.eh
+  %3 = ptrtoaddr ptr %i.ea to i64
+  %4 = ptrtoaddr ptr %i.ef to i64
+  %i.et = sub i64 %3, %4
   %i.eu = add i64 %i.et, -4                       ; 2 uses
   %i.ev = lshr i64 %i.eu, 2
   %i.ew = add nuw nsw i64 %i.ev, 1                ; 2 uses
@@ -649,7 +651,7 @@ define hidden noundef i32 @_ZN6hermes2vm6detail20mapStringMayAllocateERNS0_13Run
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !148  ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !148  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !116
   %.not.i.i = icmp eq ptr %i.c, %i.e
@@ -663,9 +665,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE9push_backEOS2_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !96   ; 7 uses
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !96   ; 8 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775804
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -692,7 +694,9 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.u = ptrtoaddr ptr %i.s to i64
-  %i.v = sub i64 %i.i, %i.j
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.h to i64
+  %i.v = sub i64 %2, %3
   %i.w = add i64 %i.v, -4                         ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
@@ -948,7 +952,7 @@ _ZN6hermes14checkedMalloc2Emm.exit.i:             ; preds = %bb.a
 .lr.ph.i.preheader:                               ; preds = %_ZN6hermes14checkedMalloc2Emm.exit.i
   %i.p = ptrtoaddr ptr %i.l to i64
   %i.q = ptrtoaddr ptr %i.k to i64
-  %2 = ptrtoint ptr %i.l to i64                   ; 3 uses
+  %2 = ptrtoaddr ptr %i.l to i64                  ; 3 uses
   %i.r = add i64 %.idx.i, %2
   %i.s = add i64 %2, 8
   %i.t = tail call i64 @llvm.umax.i64(i64 %i.r, i64 %i.s)
@@ -1106,9 +1110,9 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !116
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !148  ; 18 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !148  ; 21 uses
   %i.e = ptrtoint ptr %i.b to i64
-  %i.f = ptrtoint ptr %i.d to i64                 ; 6 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 2
   %.not49 = icmp ult i64 %i.h, %2
@@ -1116,7 +1120,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %3, align 4                ; 6 uses
-  %i.j = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.j = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.k = sub i64 %i.f, %i.j                       ; 3 uses
   %i.l = ashr exact i64 %i.k, 2                   ; 2 uses
   %i.m = icmp ugt i64 %i.l, %2
@@ -1304,7 +1308,9 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
 
 .lr.ph.i.i.i.i.i51.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit
   %i.bg = ptrtoaddr ptr %i.bf to i64
-  %i.bh = sub i64 %i.f, %i.j
+  %4 = ptrtoaddr ptr %i.d to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.bh = sub i64 %4, %5
   %i.bi = add i64 %i.bh, -4                       ; 2 uses
   %i.bj = lshr i64 %i.bi, 2
   %i.bk = add nuw nsw i64 %i.bj, 1                ; 2 uses
@@ -1364,7 +1370,9 @@ _ZSt22__uninitialized_move_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT
   %i.bx = load ptr, ptr %i.c, align 8, !tbaa !148
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 %i.k
   store ptr %i.by, ptr %i.c, align 8, !tbaa !148
-  %i.bz = sub i64 %i.f, %i.j
+  %6 = ptrtoaddr ptr %i.d to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.bz = sub i64 %6, %7
   %i.ca = add i64 %i.bz, -4                       ; 2 uses
   %i.cb = lshr i64 %i.ca, 2
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
@@ -1406,8 +1414,8 @@ middle.block145:                                  ; preds = %vector.body141
   br i1 %.not.i.i.i62, label %_ZSt4fillIPN6hermes2vm12RootSymbolIDES2_EvT_S4_RKT0_.exit, label %.lr.ph.i.i.i60, !llvm.loop !470
 
 bb.i:                                             ; preds = %bb.b
-  %i.cj = load ptr, ptr %0, align 8, !tbaa !96    ; 7 uses
-  %i.ck = ptrtoint ptr %i.cj to i64               ; 5 uses
+  %i.cj = load ptr, ptr %0, align 8, !tbaa !96    ; 8 uses
+  %i.ck = ptrtoint ptr %i.cj to i64               ; 4 uses
   %i.cl = sub i64 %i.f, %i.ck
   %i.cm = ashr exact i64 %i.cl, 2                 ; 4 uses
   %i.cn = sub nsw i64 2305843009213693951, %i.cm
@@ -1424,7 +1432,7 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit: ; pred
   %i.cq = icmp ult i64 %i.cp, %i.cm
   %i.cr = tail call i64 @llvm.umin.i64(i64 %i.cp, i64 2305843009213693951)
   %i.cs = select i1 %i.cq, i64 2305843009213693951, i64 %i.cr ; 3 uses
-  %i.ct = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.ct = ptrtoint ptr %1 to i64                  ; 2 uses
   %i.cu = sub i64 %i.ct, %i.ck
   %.not.i = icmp eq i64 %i.cs, 0
   br i1 %.not.i, label %.lr.ph.preheader.i.i.i.i65, label %bb.k
@@ -1485,7 +1493,9 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
   br i1 %.not7.i.i.i.i.i73, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i74.preheader
 
 .lr.ph.i.i.i.i.i74.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit72
-  %i.di = sub i64 %i.ct, %i.ck
+  %8 = ptrtoaddr ptr %1 to i64
+  %9 = ptrtoaddr ptr %i.cj to i64
+  %i.di = sub i64 %8, %9
   %i.dj = add i64 %i.di, -4                       ; 2 uses
   %i.dk = lshr i64 %i.dj, 2
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
@@ -1544,7 +1554,9 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET
   br i1 %.not7.i.i.i.i.i79, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit85, label %.lr.ph.i.i.i.i.i80.preheader
 
 .lr.ph.i.i.i.i.i80.preheader:                     ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit
-  %i.dy = sub i64 %i.f, %i.ct
+  %10 = ptrtoaddr ptr %i.d to i64
+  %11 = ptrtoaddr ptr %1 to i64
+  %i.dy = sub i64 %10, %11
   %i.dz = add i64 %i.dy, -4                       ; 2 uses
   %i.ea = lshr i64 %i.dz, 2
   %i.eb = add nuw nsw i64 %i.ea, 1                ; 2 uses

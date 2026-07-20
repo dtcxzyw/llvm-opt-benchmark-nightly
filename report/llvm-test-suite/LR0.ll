@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %._crit_edge.i
   %i.af = trunc i32 %.1.i to i16
   %i.ag = getelementptr inbounds nuw i8, ptr %i.z, i64 10
   store i16 %i.af, ptr %i.ag, align 2, !tbaa !33
-  %i.ah = load ptr, ptr @redset, align 8, !tbaa !8 ; 9 uses
-  %i.ai = ptrtoaddr ptr %i.ah to i64
+  %i.ah = load ptr, ptr @redset, align 8, !tbaa !8 ; 8 uses
+  %i.ai = ptrtoaddr ptr %i.ah to i64              ; 4 uses
   %i.aj = sext i32 %.1.i to i64
   %.idx.i = shl nsw i64 %i.aj, 1                  ; 2 uses
   %i.ak = getelementptr inbounds i8, ptr %i.ah, i64 %.idx.i
@@ -211,11 +211,10 @@ bb.e:                                             ; preds = %._crit_edge.i
   br i1 %i.al, label %iter.check205, label %._crit_edge33.i
 
 iter.check205:                                    ; preds = %bb.e
-  %0 = ptrtoint ptr %i.ah to i64                  ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.z, i64 12 ; 6 uses
-  %i.an = xor i64 %0, -1
-  %i.ao = add i64 %.idx.i, %0
-  %i.ap = add i64 %0, 2
+  %i.an = xor i64 %i.ai, -1
+  %i.ao = add i64 %.idx.i, %i.ai
+  %i.ap = add i64 %i.ai, 2
   %umax185 = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.ap)
   %i.aq = add i64 %umax185, %i.an                 ; 3 uses
   %i.ar = lshr i64 %i.aq, 1
@@ -438,12 +437,12 @@ bb.m:                                             ; preds = %bb.l
   %i.dj = load ptr, ptr @kernel_base, align 8, !tbaa !15
   %i.dk = sext i16 %i.di to i64                   ; 6 uses
   %i.dl = getelementptr inbounds [8 x i8], ptr %i.dj, i64 %i.dk
-  %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !8  ; 8 uses
+  %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !8  ; 9 uses
   %i.dn = load ptr, ptr @kernel_end, align 8, !tbaa !15
   %i.do = getelementptr inbounds [8 x i8], ptr %i.dn, i64 %i.dk
-  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !8  ; 6 uses
-  %i.dq = ptrtoint ptr %i.dp to i64               ; 2 uses
-  %i.dr = ptrtoint ptr %i.dm to i64               ; 3 uses
+  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !8  ; 7 uses
+  %i.dq = ptrtoint ptr %i.dp to i64
+  %i.dr = ptrtoint ptr %i.dm to i64
   %i.ds = sub i64 %i.dq, %i.dr                    ; 3 uses
   %i.dt = lshr exact i64 %i.ds, 1                 ; 3 uses
   %i.du = trunc i64 %i.dt to i32                  ; 2 uses
@@ -451,9 +450,11 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.dv, label %.lr.ph.i16.preheader, label %._crit_edge.i11.thread
 
 .lr.ph.i16.preheader:                             ; preds = %.lr.ph21.i
-  %i.dw = add i64 %i.dr, 2
-  %i.dx = tail call i64 @llvm.umax.i64(i64 %i.dq, i64 %i.dw)
-  %i.dy = xor i64 %i.dr, -1
+  %0 = ptrtoaddr ptr %i.dp to i64
+  %1 = ptrtoaddr ptr %i.dm to i64                 ; 2 uses
+  %i.dw = add i64 %1, 2
+  %i.dx = tail call i64 @llvm.umax.i64(i64 %0, i64 %i.dw)
+  %i.dy = xor i64 %1, -1
   %i.dz = add i64 %i.dx, %i.dy                    ; 2 uses
   %i.ea = lshr i64 %i.dz, 1
   %i.eb = add nuw i64 %i.ea, 1                    ; 2 uses
@@ -592,8 +593,8 @@ bb.o:                                             ; preds = %bb.n, %.split.us
   %.pre-phi43 = phi i64 [ %.pre42, %bb.n ], [ %i.dt, %.split.us ]
   %.pre-phi41 = phi i64 [ %.pre40, %bb.n ], [ %i.ds, %.split.us ]
   %i.fu = phi ptr [ %.pre36, %bb.n ], [ %i.dp, %.split.us ] ; 3 uses
-  %i.fv = phi ptr [ %.pre33, %bb.n ], [ %i.dm, %.split.us ] ; 9 uses
-  %i.fw = ptrtoaddr ptr %i.fv to i64
+  %i.fv = phi ptr [ %.pre33, %bb.n ], [ %i.dm, %.split.us ] ; 8 uses
+  %i.fw = ptrtoaddr ptr %i.fv to i64              ; 3 uses
   %i.fx = trunc i64 %.pre-phi41 to i32
   %i.fy = and i32 %i.fx, -2
   %i.fz = add i32 %i.fy, 22
@@ -612,12 +613,11 @@ bb.o:                                             ; preds = %bb.n, %.split.us
   br i1 %i.gi, label %iter.check153, label %new_state.exit.i
 
 iter.check153:                                    ; preds = %bb.o
-  %1 = ptrtoint ptr %i.fv to i64                  ; 2 uses
-  %2 = ptrtoint ptr %i.fu to i64
+  %2 = ptrtoaddr ptr %i.fu to i64
   %i.gj = getelementptr inbounds nuw i8, ptr %i.ga, i64 22 ; 6 uses
-  %i.gk = add i64 %1, 2
+  %i.gk = add i64 %i.fw, 2
   %umax135 = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.gk)
-  %i.gl = xor i64 %1, -1
+  %i.gl = xor i64 %i.fw, -1
   %i.gm = add i64 %umax135, %i.gl                 ; 3 uses
   %i.gn = lshr i64 %i.gm, 1
   %i.go = add nuw i64 %i.gn, 1                    ; 5 uses
@@ -736,8 +736,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.pre-phi69.i = phi i64 [ %.pre68.i, %bb.q ], [ %i.dt, %bb.p ]
   %.pre-phi67.i = phi i64 [ %.pre66.i, %bb.q ], [ %i.ds, %bb.p ]
   %i.hl = phi ptr [ %.pre62.i, %bb.q ], [ %i.dp, %bb.p ] ; 3 uses
-  %i.hm = phi ptr [ %.pre59.i, %bb.q ], [ %i.dm, %bb.p ] ; 9 uses
-  %i.hn = ptrtoaddr ptr %i.hm to i64
+  %i.hm = phi ptr [ %.pre59.i, %bb.q ], [ %i.dm, %bb.p ] ; 8 uses
+  %i.hn = ptrtoaddr ptr %i.hm to i64              ; 3 uses
   %i.ho = trunc i64 %.pre-phi67.i to i32
   %i.hp = and i32 %i.ho, -2
   %i.hq = add i32 %i.hp, 22
@@ -756,12 +756,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.hz, label %iter.check116, label %new_state.exit46.i
 
 iter.check116:                                    ; preds = %bb.r
-  %3 = ptrtoint ptr %i.hm to i64                  ; 2 uses
-  %4 = ptrtoint ptr %i.hl to i64
+  %3 = ptrtoaddr ptr %i.hl to i64
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hr, i64 22 ; 6 uses
-  %i.ib = add i64 %3, 2
-  %umax98 = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.ib)
-  %i.ic = xor i64 %3, -1
+  %i.ib = add i64 %i.hn, 2
+  %umax98 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.ib)
+  %i.ic = xor i64 %i.hn, -1
   %i.id = add i64 %umax98, %i.ic                  ; 3 uses
   %i.ie = lshr i64 %i.id, 1
   %i.if = add nuw i64 %i.ie, 1                    ; 5 uses
@@ -889,8 +888,8 @@ bb.s:                                             ; preds = %append_states.exit
   %i.jt = trunc i32 %i.js to i16
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jm, i64 10
   store i16 %i.jt, ptr %i.ju, align 2, !tbaa !61
-  %i.jv = load ptr, ptr @shiftset, align 8, !tbaa !8 ; 9 uses
-  %i.jw = ptrtoaddr ptr %i.jv to i64
+  %i.jv = load ptr, ptr @shiftset, align 8, !tbaa !8 ; 8 uses
+  %i.jw = ptrtoaddr ptr %i.jv to i64              ; 4 uses
   %i.jx = sext i32 %i.js to i64
   %.idx.i7 = shl nsw i64 %i.jx, 1                 ; 2 uses
   %i.jy = getelementptr inbounds i8, ptr %i.jv, i64 %.idx.i7
@@ -898,12 +897,11 @@ bb.s:                                             ; preds = %append_states.exit
   br i1 %i.jz, label %iter.check, label %save_shifts.exit
 
 iter.check:                                       ; preds = %bb.s
-  %5 = ptrtoint ptr %i.jv to i64                  ; 3 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jm, i64 12 ; 6 uses
-  %i.kb = add i64 %.idx.i7, %5
-  %i.kc = add i64 %5, 2
+  %i.kb = add i64 %.idx.i7, %i.jw
+  %i.kc = add i64 %i.jw, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.kb, i64 %i.kc)
-  %i.kd = xor i64 %5, -1
+  %i.kd = xor i64 %i.jw, -1
   %i.ke = add i64 %umax, %i.kd                    ; 3 uses
   %i.kf = lshr i64 %i.ke, 1
   %i.kg = add nuw i64 %i.kf, 1                    ; 5 uses
@@ -1080,8 +1078,8 @@ bb.e:                                             ; preds = %._crit_edge
   %i.y = trunc i32 %.1 to i16
   %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 10
   store i16 %i.y, ptr %i.z, align 2, !tbaa !33
-  %i.aa = load ptr, ptr @redset, align 8, !tbaa !8 ; 9 uses
-  %i.ab = ptrtoaddr ptr %i.aa to i64
+  %i.aa = load ptr, ptr @redset, align 8, !tbaa !8 ; 8 uses
+  %i.ab = ptrtoaddr ptr %i.aa to i64              ; 4 uses
   %i.ac = sext i32 %.1 to i64
   %.idx = shl nsw i64 %i.ac, 1                    ; 2 uses
   %i.ad = getelementptr inbounds i8, ptr %i.aa, i64 %.idx
@@ -1089,11 +1087,10 @@ bb.e:                                             ; preds = %._crit_edge
   br i1 %i.ae, label %iter.check, label %._crit_edge33
 
 iter.check:                                       ; preds = %bb.e
-  %0 = ptrtoint ptr %i.aa to i64                  ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.s, i64 12 ; 6 uses
-  %i.ag = xor i64 %0, -1
-  %i.ah = add i64 %.idx, %0
-  %i.ai = add i64 %0, 2
+  %i.ag = xor i64 %i.ab, -1
+  %i.ah = add i64 %.idx, %i.ab
+  %i.ai = add i64 %i.ab, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ah, i64 %i.ai)
   %i.aj = add i64 %umax, %i.ag                    ; 3 uses
   %i.ak = lshr i64 %i.aj, 1
@@ -1357,8 +1354,8 @@ bb.a:
   %i.k = trunc i32 %i.j to i16
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 10
   store i16 %i.k, ptr %i.l, align 2, !tbaa !61
-  %i.m = load ptr, ptr @shiftset, align 8, !tbaa !8 ; 9 uses
-  %i.n = ptrtoaddr ptr %i.m to i64
+  %i.m = load ptr, ptr @shiftset, align 8, !tbaa !8 ; 8 uses
+  %i.n = ptrtoaddr ptr %i.m to i64                ; 4 uses
   %i.o = sext i32 %i.j to i64
   %.idx = shl nsw i64 %i.o, 1                     ; 2 uses
   %i.p = getelementptr inbounds i8, ptr %i.m, i64 %.idx
@@ -1366,12 +1363,11 @@ bb.a:
   br i1 %i.q, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.a
-  %0 = ptrtoint ptr %i.m to i64                   ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 6 uses
-  %i.s = add i64 %.idx, %0
-  %i.t = add i64 %0, 2
+  %i.s = add i64 %.idx, %i.n
+  %i.t = add i64 %i.n, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.s, i64 %i.t)
-  %i.u = xor i64 %0, -1
+  %i.u = xor i64 %i.n, -1
   %i.v = add i64 %umax, %i.u                      ; 3 uses
   %i.w = lshr i64 %i.v, 1
   %i.x = add nuw i64 %i.w, 1                      ; 5 uses
@@ -1774,8 +1770,8 @@ bb.a:
   br i1 %i.m, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %1 = ptrtoint ptr %i.g to i64
-  %2 = ptrtoint ptr %i.d to i64                   ; 2 uses
+  %1 = ptrtoaddr ptr %i.g to i64
+  %2 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
   %i.n = add i64 %2, 2
   %i.o = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.n)
   %i.p = xor i64 %2, -1
@@ -1900,12 +1896,12 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.bi = load ptr, ptr @kernel_base, align 8, !tbaa !15
   %i.bj = getelementptr inbounds [8 x i8], ptr %i.bi, i64 %i.b
-  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !8  ; 9 uses
+  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !8  ; 8 uses
   %i.bl = load ptr, ptr @kernel_end, align 8, !tbaa !15
   %i.bm = getelementptr inbounds [8 x i8], ptr %i.bl, i64 %i.b
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !8  ; 3 uses
   %i.bo = ptrtoint ptr %i.bn to i64               ; 2 uses
-  %i.bp = ptrtoint ptr %i.bk to i64               ; 2 uses
+  %i.bp = ptrtoint ptr %i.bk to i64               ; 4 uses
   %i.bq = sub i64 %i.bo, %i.bp                    ; 2 uses
   %i.br = lshr exact i64 %i.bq, 1
   %i.bs = trunc i64 %i.bq to i32
@@ -1926,11 +1922,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.cd, label %iter.check, label %new_state.exit
 
 iter.check:                                       ; preds = %bb.f
-  %3 = ptrtoint ptr %i.bk to i64                  ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bv, i64 22 ; 6 uses
-  %i.cf = add i64 %3, 2
+  %i.cf = add i64 %i.bp, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bo, i64 %i.cf)
-  %i.cg = xor i64 %3, -1
+  %i.cg = xor i64 %i.bp, -1
   %i.ch = add i64 %umax, %i.cg                    ; 3 uses
   %i.ci = lshr i64 %i.ch, 1
   %i.cj = add nuw i64 %i.ci, 1                    ; 5 uses
@@ -2048,8 +2043,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.pre-phi69 = phi i64 [ %.pre68, %bb.h ], [ %i.k, %bb.g ]
   %.pre-phi67 = phi i64 [ %.pre66, %bb.h ], [ %i.j, %bb.g ]
   %i.dg = phi ptr [ %.pre62, %bb.h ], [ %i.g, %bb.g ] ; 3 uses
-  %i.dh = phi ptr [ %.pre59, %bb.h ], [ %i.d, %bb.g ] ; 9 uses
-  %i.di = ptrtoaddr ptr %i.dh to i64
+  %i.dh = phi ptr [ %.pre59, %bb.h ], [ %i.d, %bb.g ] ; 8 uses
+  %i.di = ptrtoaddr ptr %i.dh to i64              ; 3 uses
   %i.dj = trunc i64 %.pre-phi67 to i32
   %i.dk = and i32 %i.dj, -2
   %i.dl = add i32 %i.dk, 22
@@ -2069,12 +2064,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.dv, label %iter.check138, label %new_state.exit46
 
 iter.check138:                                    ; preds = %bb.i
-  %4 = ptrtoint ptr %i.dh to i64                  ; 2 uses
-  %5 = ptrtoint ptr %i.dg to i64
+  %3 = ptrtoaddr ptr %i.dg to i64
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dm, i64 22 ; 6 uses
-  %i.dx = add i64 %4, 2
-  %umax118 = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.dx)
-  %i.dy = xor i64 %4, -1
+  %i.dx = add i64 %i.di, 2
+  %umax118 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.dx)
+  %i.dy = xor i64 %i.di, -1
   %i.dz = add i64 %umax118, %i.dy                 ; 3 uses
   %i.ea = lshr i64 %i.dz, 1
   %i.eb = add nuw i64 %i.ea, 1                    ; 5 uses
@@ -2194,12 +2188,12 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.c = load ptr, ptr @kernel_base, align 8, !tbaa !15
   %i.d = sext i32 %0 to i64                       ; 2 uses
   %i.e = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.d
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !8    ; 9 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !8    ; 8 uses
   %i.g = load ptr, ptr @kernel_end, align 8, !tbaa !15
   %i.h = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.d
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !8    ; 3 uses
   %i.j = ptrtoint ptr %i.i to i64                 ; 2 uses
-  %i.k = ptrtoint ptr %i.f to i64                 ; 2 uses
+  %i.k = ptrtoint ptr %i.f to i64                 ; 4 uses
   %i.l = sub i64 %i.j, %i.k                       ; 2 uses
   %i.m = lshr exact i64 %i.l, 1
   %i.n = trunc i64 %i.l to i32
@@ -2221,11 +2215,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.z, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.c
-  %1 = ptrtoint ptr %i.f to i64                   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.q, i64 22 ; 6 uses
-  %i.ab = add i64 %1, 2
+  %i.ab = add i64 %i.k, 2
   %umax = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %i.ab)
-  %i.ac = xor i64 %1, -1
+  %i.ac = xor i64 %i.k, -1
   %i.ad = add i64 %umax, %i.ac                    ; 3 uses
   %i.ae = lshr i64 %i.ad, 1
   %i.af = add nuw i64 %i.ae, 1                    ; 5 uses
