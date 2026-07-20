@@ -203,7 +203,7 @@ bb.cf:                                            ; preds = %.noexc304, %.lr.ph.
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
   %i.qt = load ptr, ptr %i.hc, align 8, !tbaa !71, !noalias !889 ; 5 uses
   %i.qu = load ptr, ptr %i.hh, align 8, !tbaa !75, !noalias !889 ; 2 uses
-  %i.qv = load ptr, ptr %i.he, align 8, !tbaa !76, !noalias !889 ; 20 uses
+  %i.qv = load ptr, ptr %i.he, align 8, !tbaa !76, !noalias !889 ; 17 uses
   %i.qw = ptrtoint ptr %i.qt to i64               ; 3 uses
   %i.qx = ptrtoint ptr %i.qu to i64
   %i.qy = sub i64 %i.qw, %i.qx
@@ -266,7 +266,7 @@ bb.cm:                                            ; preds = %bb.cl
 bb.cn:                                            ; preds = %bb.cl
   %i.rs = load ptr, ptr %i.hd, align 8, !tbaa !76 ; 4 uses
   %i.rt = ptrtoint ptr %i.rs to i64
-  %i.ru = ptrtoint ptr %i.qv to i64               ; 4 uses
+  %i.ru = ptrtoint ptr %i.qv to i64               ; 3 uses
   %i.rv = sub i64 %i.rt, %i.ru
   %i.rw = ashr exact i64 %i.rv, 3                 ; 3 uses
   %i.rx = icmp ne ptr %i.rs, null
@@ -312,50 +312,27 @@ bb.cq:                                            ; preds = %bb.cp
   %i.su = sub i64 %i.sr, %i.sq
   %i.sv = lshr i64 %i.su, 1
   %i.sw = getelementptr inbounds nuw [8 x i8], ptr %i.sn, i64 %i.sv
-  %i.sx = getelementptr inbounds nuw i8, ptr %i.sw, i64 8 ; 10 uses
-  %29 = icmp ult ptr %i.sx, %i.qv
-  %30 = getelementptr inbounds nuw i8, ptr %i.rs, i64 8 ; 2 uses
-  br i1 %29, label %31, label %40
+  %29 = getelementptr inbounds nuw i8, ptr %i.sw, i64 8 ; 4 uses
+  %i.sx = getelementptr inbounds nuw i8, ptr %i.rs, i64 8
+  %30 = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.sp ; 2 uses
+  %31 = ptrtoint ptr %i.sx to i64
+  %32 = sub i64 %31, %i.ru                        ; 3 uses
+  %33 = ashr exact i64 %32, 3                     ; 2 uses
+  %34 = icmp sgt i64 %33, 1
+  br i1 %34, label %bb.cr, label %bb.cs, !prof !899
 
-31:                                               ; preds = %bb.cq
-  %32 = ptrtoint ptr %30 to i64
-  %33 = sub i64 %32, %i.ru                        ; 3 uses
-  %34 = icmp sgt i64 %33, 8
-  br i1 %34, label %35, label %36, !prof !899
-
-35:                                               ; preds = %31
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.sx, ptr nonnull align 8 %i.qv, i64 %33, i1 false)
+bb.cr:                                            ; preds = %bb.cq
+  %i.sy = sub nsw i64 0, %33
+  %i.sz = getelementptr inbounds [8 x i8], ptr %30, i64 %i.sy
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.sz, ptr align 8 %i.qv, i64 %32, i1 false)
   br label %.noexc415
 
-36:                                               ; preds = %31
-  %37 = icmp eq i64 %33, 8
-  br i1 %37, label %38, label %.noexc415
-
-38:                                               ; preds = %36
-  %39 = load ptr, ptr %i.qv, align 8, !tbaa !51
-  store ptr %39, ptr %i.sx, align 8, !tbaa !51
-  br label %.noexc415
-
-40:                                               ; preds = %bb.cq
-  %41 = getelementptr inbounds nuw [8 x i8], ptr %i.sx, i64 %i.sp ; 2 uses
-  %42 = ptrtoint ptr %30 to i64
-  %43 = sub i64 %42, %i.ru                        ; 3 uses
-  %44 = ashr exact i64 %43, 3                     ; 2 uses
-  %45 = icmp sgt i64 %44, 1
-  br i1 %45, label %bb.cr, label %bb.cs, !prof !899
-
-bb.cr:                                            ; preds = %40
-  %i.sy = sub nsw i64 0, %44
-  %i.sz = getelementptr inbounds [8 x i8], ptr %41, i64 %i.sy
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.sz, ptr align 8 %i.qv, i64 %43, i1 false)
-  br label %.noexc415
-
-bb.cs:                                            ; preds = %40
-  %i.ta = icmp eq i64 %43, 8
+bb.cs:                                            ; preds = %bb.cq
+  %i.ta = icmp eq i64 %32, 8
   br i1 %i.ta, label %bb.ct, label %.noexc415
 
 bb.ct:                                            ; preds = %bb.cs
-  %i.tb = getelementptr inbounds i8, ptr %41, i64 -8
+  %i.tb = getelementptr inbounds i8, ptr %30, i64 -8
   %i.tc = load ptr, ptr %i.qv, align 8, !tbaa !51
   store ptr %i.tc, ptr %i.tb, align 8, !tbaa !51
   br label %.noexc415
@@ -421,8 +398,8 @@ _ZSt4copyIPPN2PP4WordES3_ET0_T_S5_S4_.exit24.i425: ; preds = %bb.cy, %bb.cx, %bb
   store i64 %i.te, ptr %i.ie, align 8, !tbaa !63
   br label %.noexc415
 
-.noexc415:                                        ; preds = %_ZSt4copyIPPN2PP4WordES3_ET0_T_S5_S4_.exit24.i425, %bb.ct, %bb.cs, %bb.cr, %38, %36, %35
-  %.0.i426 = phi ptr [ %i.tm, %_ZSt4copyIPPN2PP4WordES3_ET0_T_S5_S4_.exit24.i425 ], [ %i.sx, %38 ], [ %i.sx, %35 ], [ %i.sx, %36 ], [ %i.sx, %bb.cr ], [ %i.sx, %bb.cs ], [ %i.sx, %bb.ct ] ; 4 uses
+.noexc415:                                        ; preds = %_ZSt4copyIPPN2PP4WordES3_ET0_T_S5_S4_.exit24.i425, %bb.ct, %bb.cs, %bb.cr
+  %.0.i426 = phi ptr [ %i.tm, %_ZSt4copyIPPN2PP4WordES3_ET0_T_S5_S4_.exit24.i425 ], [ %29, %bb.cs ], [ %29, %bb.cr ], [ %29, %bb.ct ] ; 4 uses
   store ptr %.0.i426, ptr %i.he, align 8, !tbaa !76
   %i.tu = load ptr, ptr %.0.i426, align 8, !tbaa !51 ; 2 uses
   store ptr %i.tu, ptr %i.hh, align 8, !tbaa !75

@@ -203,51 +203,37 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.e = icmp samesign ult i32 %1, 257
   %i.f = icmp samesign ult i32 %1, 65537
-  %.neg.i.i2930 = lshr i32 %1, 3                  ; 2 uses
-  %i.g = add nuw nsw i32 %1, 2                    ; 2 uses
+  %.neg.i.i2930 = lshr i32 %1, 3
+  %i.g = add nuw nsw i32 %1, 2
   %i.h = sub nsw i32 %i.g, %.neg.i.i2930
   %i.i = select i1 %i.f, i32 1, i32 2
   %i.j = select i1 %i.e, i32 0, i32 %i.i
   %i.k = shl nsw i32 %i.h, %i.j                   ; 6 uses
   %i.l = icmp ugt i32 %i.k, 134217728
-  br i1 %i.l, label %bb.f, label %5, !prof !5
+  br i1 %i.l, label %bb.f, label %_ZN2v88internal11FactoryBaseINS0_12LocalFactoryEE12NewByteArrayEiNS0_14AllocationTypeENS0_19AllocationAlignmentE.exit, !prof !5
 
 bb.f:                                             ; preds = %bb.e
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.3, i32 noundef %i.k) #17
   unreachable
 
-5:                                                ; preds = %bb.e
-  %6 = icmp eq i32 %i.g, %.neg.i.i2930
-  br i1 %6, label %7, label %11, !prof !5
-
-7:                                                ; preds = %5
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1952
-  %9 = load ptr, ptr %8, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 1824
-  br label %_ZN2v88internal11FactoryBaseINS0_12LocalFactoryEE12NewByteArrayEiNS0_14AllocationTypeENS0_19AllocationAlignmentE.exit
-
-11:                                               ; preds = %5
+_ZN2v88internal11FactoryBaseINS0_12LocalFactoryEE12NewByteArrayEiNS0_14AllocationTypeENS0_19AllocationAlignmentE.exit: ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  store i8 0, ptr %12, align 1
-  %13 = call ptr @_ZN2v88internal18PrimitiveArrayBaseINS0_9ByteArrayENS0_14ByteArrayShapeENS0_16HeapObjectLayoutEE8AllocateINS0_12LocalIsolateEEENS0_6HandleIS2_EEPT_iPSt8optionalINS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSE_2EEEEENS0_14AllocationTypeENS0_19AllocationAlignmentE(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %i.k, ptr noundef nonnull %3, i8 noundef zeroext %2, i8 noundef zeroext 0) ; 2 uses
-  %14 = add nuw nsw i32 %i.k, 23
-  %15 = and i32 %14, 536870904
-  %reass.sub = sub nsw i32 %15, %i.k
-  %16 = add nsw i32 %reass.sub, -16
-  %17 = load i64, ptr %13, align 8
-  %18 = add i64 %17, -1
-  %19 = inttoptr i64 %18 to ptr
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 16
-  %21 = zext nneg i32 %i.k to i64
-  %22 = getelementptr inbounds nuw i8, ptr %20, i64 %21
-  %23 = sext i32 %16 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %22, i8 0, i64 %23, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 1
+  store i8 0, ptr %5, align 1
+  %6 = call ptr @_ZN2v88internal18PrimitiveArrayBaseINS0_9ByteArrayENS0_14ByteArrayShapeENS0_16HeapObjectLayoutEE8AllocateINS0_12LocalIsolateEEENS0_6HandleIS2_EEPT_iPSt8optionalINS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSE_2EEEEENS0_14AllocationTypeENS0_19AllocationAlignmentE(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %i.k, ptr noundef nonnull %3, i8 noundef zeroext %2, i8 noundef zeroext 0) ; 2 uses
+  %7 = add nuw nsw i32 %i.k, 23
+  %8 = and i32 %7, 536870904
+  %reass.sub = sub nsw i32 %8, %i.k
+  %9 = add nsw i32 %reass.sub, -16
+  %10 = load i64, ptr %6, align 8
+  %11 = add i64 %10, -1
+  %12 = inttoptr i64 %11 to ptr
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %14 = zext nneg i32 %i.k to i64
+  %15 = getelementptr inbounds nuw i8, ptr %13, i64 %14
+  %16 = sext i32 %9 to i64
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %15, i8 0, i64 %16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
-  br label %_ZN2v88internal11FactoryBaseINS0_12LocalFactoryEE12NewByteArrayEiNS0_14AllocationTypeENS0_19AllocationAlignmentE.exit
-
-_ZN2v88internal11FactoryBaseINS0_12LocalFactoryEE12NewByteArrayEiNS0_14AllocationTypeENS0_19AllocationAlignmentE.exit: ; preds = %7, %11
-  %.sroa.012.0.i.i = phi ptr [ %10, %7 ], [ %13, %11 ]
   %.sroa.0.0.copyload.i.i = load ptr, ptr %0, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i, i64 696
   %i.n = load i64, ptr %i.m, align 8
@@ -260,7 +246,7 @@ _ZN2v88internal11FactoryBaseINS0_12LocalFactoryEE12NewByteArrayEiNS0_14Allocatio
   store atomic volatile i64 %i.n, ptr %i.t monotonic, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
   store i64 %i.r, ptr %4, align 8
-  %i.u = load i64, ptr %.sroa.012.0.i.i, align 8
+  %i.u = load i64, ptr %6, align 8
   call void @_ZN2v88internal19SwissNameDictionary10InitializeINS0_12LocalIsolateEEEvPT_NS0_6TaggedINS0_9ByteArrayEEEi(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull %0, i64 %i.u, i32 noundef %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16

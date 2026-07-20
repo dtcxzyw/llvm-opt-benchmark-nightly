@@ -204,9 +204,9 @@ _ZN4llvh12DenseMapBaseINS_13SmallDenseMapIN6hermes2vm6detail10TransitionENS3_7We
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN6hermes2vm12WeakValueMapINS0_6detail10TransitionENS0_11HiddenClassEE12pruneInvalidERNS0_7HadesGCE(ptr noundef nonnull align 8 dereferenceable(140) %0, ptr noundef nonnull align 8 dereferenceable(8112) %1) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8                ; 7 uses
+  %i.a = load i32, ptr %0, align 8                ; 6 uses
   %i.b = lshr i32 %i.a, 1
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !14
   %.not = icmp ugt i32 %i.b, %i.d
   br i1 %.not, label %bb.b, label %bb.g
@@ -216,15 +216,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %.not.i.i.i.i.i.i = icmp eq i32 %i.a, 0         ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
-  %2 = select i1 %.not.i.i.i.i.i.i, ptr %i.g, ptr %i.f
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = load i32, ptr %i.h, align 8              ; 2 uses
-  %3 = select i1 %.not.i.i.i.i.i.i, i32 %i.i, i32 8
-  %4 = zext i32 %3 to i64
-  %5 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %4 ; 2 uses
+  %i.i = load i32, ptr %i.h, align 8
   br label %_ZN4llvh12DenseMapBaseINS_13SmallDenseMapIN6hermes2vm6detail10TransitionENS3_7WeakRefINS3_11HiddenClassEEELj8ENS_12DenseMapInfoIS5_EENS_6detail12DenseMapPairIS5_S8_EEEES5_S8_SA_SD_E5beginEv.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -262,8 +257,8 @@ _ZN4llvh12DenseMapBaseINS_13SmallDenseMapIN6hermes2vm6detail10TransitionENS3_7We
   %.pre-phi = phi i32 [ %i.j, %bb.d ], [ %i.a, %bb.c ], [ %i.j, %.critedge2.i8.i14.i11.i ], [ %i.j, %.lr.ph.i6.i12.i5.i ]
   %i.z = phi i32 [ %i.o, %bb.d ], [ %i.i, %bb.c ], [ %i.o, %.critedge2.i8.i14.i11.i ], [ %i.o, %.lr.ph.i6.i12.i5.i ]
   %i.aa = phi ptr [ %i.l, %bb.d ], [ %i.g, %bb.c ], [ %i.l, %.critedge2.i8.i14.i11.i ], [ %i.l, %.lr.ph.i6.i12.i5.i ]
-  %.pn16.i = phi ptr [ %i.m, %bb.d ], [ %5, %bb.c ], [ %.sroa.0.3.i6.i, %.lr.ph.i6.i12.i5.i ], [ %i.r, %.critedge2.i8.i14.i11.i ] ; 2 uses
-  %.pn14.i = phi ptr [ %i.r, %bb.d ], [ %5, %bb.c ], [ %i.r, %.critedge2.i8.i14.i11.i ], [ %i.r, %.lr.ph.i6.i12.i5.i ] ; 2 uses
+  %.pn16.i = phi ptr [ %i.m, %bb.d ], [ %i.c, %bb.c ], [ %.sroa.0.3.i6.i, %.lr.ph.i6.i12.i5.i ], [ %i.r, %.critedge2.i8.i14.i11.i ] ; 2 uses
+  %.pn14.i = phi ptr [ %i.r, %bb.d ], [ %i.c, %bb.c ], [ %i.r, %.critedge2.i8.i14.i11.i ], [ %i.r, %.lr.ph.i6.i12.i5.i ] ; 2 uses
   %.not.i.i.i.i.i = icmp eq i32 %.pre-phi, 0      ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = select i1 %.not.i.i.i.i.i, ptr %i.aa, ptr %i.ab
