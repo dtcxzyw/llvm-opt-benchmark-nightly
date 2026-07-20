@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %bb.u
   %.pre.i.i.i.i = load i64, ptr %i.du, align 8
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.u, %bb.v
+bb.w:                                             ; preds = %bb.v, %bb.u
   %i.ed = phi i64 [ %.pre.i.i.i.i, %bb.v ], [ %i.ea, %bb.u ] ; 2 uses
   %i.ee = inttoptr i64 %i.ed to ptr               ; 4 uses
   %i.ef = add i64 %i.ed, 536
@@ -564,7 +564,7 @@ bb.z:                                             ; preds = %bb.y
   %.pre.i.i.i.i = load i64, ptr %i.df, align 8
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.y, %bb.z
+bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.do = phi i64 [ %.pre.i.i.i.i, %bb.z ], [ %i.dl, %bb.y ] ; 2 uses
   %i.dp = inttoptr i64 %i.do to ptr               ; 4 uses
   %i.dq = add i64 %i.do, 536
@@ -750,7 +750,7 @@ bb.l:                                             ; preds = %bb.k
   %.pre.i.i.i = load i64, ptr %i.bh, align 8
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.k, %bb.l
+bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bq = phi i64 [ %.pre.i.i.i, %bb.l ], [ %i.bn, %bb.k ] ; 2 uses
   %i.br = inttoptr i64 %i.bq to ptr               ; 4 uses
   %i.bs = add i64 %i.bq, 536
@@ -1153,7 +1153,7 @@ bb.t:                                             ; preds = %bb.s
   %.pre.i.i.i = load i64, ptr %i.dj, align 8
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.s, %bb.t
+bb.u:                                             ; preds = %bb.t, %bb.s
   %i.ds = phi i64 [ %.pre.i.i.i, %bb.t ], [ %i.dp, %bb.s ] ; 2 uses
   %i.dt = inttoptr i64 %i.ds to ptr               ; 4 uses
   %i.du = add i64 %i.ds, 536
@@ -1556,7 +1556,7 @@ bb.v:                                             ; preds = %bb.u
   %.pre.i.i.i.i30 = load i64, ptr %i.ed, align 8
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.u, %bb.v
+bb.w:                                             ; preds = %bb.v, %bb.u
   %i.em = phi i64 [ %.pre.i.i.i.i30, %bb.v ], [ %i.ej, %bb.u ] ; 2 uses
   %i.en = inttoptr i64 %i.em to ptr               ; 4 uses
   %i.eo = add i64 %i.em, 536
@@ -1959,7 +1959,7 @@ bb.y:                                             ; preds = %bb.x
   %.pre.i.i.i.i = load i64, ptr %i.es, align 8
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.x, %bb.y
+bb.z:                                             ; preds = %bb.y, %bb.x
   %i.fb = phi i64 [ %.pre.i.i.i.i, %bb.y ], [ %i.ey, %bb.x ] ; 2 uses
   %i.fc = inttoptr i64 %i.fb to ptr               ; 4 uses
   %i.fd = add i64 %i.fb, 536
@@ -2048,7 +2048,7 @@ bb.ag:                                            ; preds = %bb.af
   %.pre.i.i.i.i101 = load i64, ptr %i.gg, align 8
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.af, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.gp = phi i64 [ %.pre.i.i.i.i101, %bb.ag ], [ %i.gm, %bb.af ] ; 2 uses
   %i.gq = inttoptr i64 %i.gp to ptr               ; 4 uses
   %i.gr = add i64 %i.gp, 536
@@ -2451,7 +2451,7 @@ bb.bq:                                            ; preds = %bb.bp
   %.pre.i.i.i.i164 = load i64, ptr %i.og, align 8
   br label %bb.br
 
-bb.br:                                            ; preds = %bb.bp, %bb.bq
+bb.br:                                            ; preds = %bb.bq, %bb.bp
   %i.op = phi i64 [ %.pre.i.i.i.i164, %bb.bq ], [ %i.om, %bb.bp ] ; 2 uses
   %i.oq = inttoptr i64 %i.op to ptr               ; 4 uses
   %i.or = add i64 %i.op, 536
@@ -2854,7 +2854,7 @@ bb.cv:                                            ; preds = %bb.cu
   %.pre.i.i.i186 = load i64, ptr %i.vg, align 8
   br label %bb.cw
 
-bb.cw:                                            ; preds = %bb.cu, %bb.cv
+bb.cw:                                            ; preds = %bb.cv, %bb.cu
   %i.vp = phi i64 [ %.pre.i.i.i186, %bb.cv ], [ %i.vm, %bb.cu ] ; 2 uses
   %i.vq = inttoptr i64 %i.vp to ptr               ; 4 uses
   %i.vr = add i64 %i.vp, 536
