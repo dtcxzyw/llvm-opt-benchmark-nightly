@@ -67,7 +67,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @upb_MtDecoder_BuildMiniTableEnum(ptr noundef nonnull %0, ptr noundef %1, i64 noundef %2) unnamed_addr #0 {
+define internal fastcc ptr @upb_MtDecoder_BuildMiniTableEnum(ptr noundef nonnull %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = call i32 @__sigsetjmp(ptr noundef nonnull %i.a, i32 noundef 0) #12
@@ -454,8 +454,8 @@ bb.ae:                                            ; preds = %bb.h
   br i1 %or.cond.i, label %bb.af, label %bb.ai
 
 bb.af:                                            ; preds = %bb.ae
-  %3 = ptrtoint ptr %i.s to i64
-  %4 = ptrtoint ptr %i.q to i64
+  %3 = ptrtoaddr ptr %i.s to i64
+  %4 = ptrtoaddr ptr %i.q to i64
   %i.ej = load i8, ptr getelementptr inbounds nuw (i8, ptr @_kUpb_FromBase92, i64 94), align 1, !tbaa !22
   %i.ek = sext i8 %i.ej to i32
   %i.el = load i8, ptr getelementptr inbounds nuw (i8, ptr @_kUpb_FromBase92, i64 63), align 1, !tbaa !22

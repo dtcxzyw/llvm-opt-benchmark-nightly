@@ -203,7 +203,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cj = sext i32 %i.cc to i64
   %i.ck = getelementptr inbounds i8, ptr %i.ci, i64 %i.cj
   store i8 %i.ch, ptr %i.ck, align 1, !tbaa !7
-  %i.cl = add nuw nsw i64 %.018.i.i, 1            ; 2 uses
+  %i.cl = add nuw i64 %.018.i.i, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.cl, %i.by
   br i1 %exitcond.not.i.i, label %.loopexit.i.i, label %bb.p, !llvm.loop !46
 
@@ -606,7 +606,7 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = sext i32 %i.t to i64
   %i.ab = getelementptr inbounds i8, ptr %i.z, i64 %i.aa
   store i8 %i.y, ptr %i.ab, align 1, !tbaa !7
-  %i.ac = add nuw nsw i64 %.018.i, 1              ; 2 uses
+  %i.ac = add nuw i64 %.018.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ac, %i.p
   br i1 %exitcond.not.i, label %.loopexit.i, label %bb.e, !llvm.loop !46
 
@@ -1009,7 +1009,7 @@ bb.n:                                             ; preds = %bb.m
   %i.cd = sext i32 %i.bw to i64
   %i.ce = getelementptr inbounds i8, ptr %i.cc, i64 %i.cd
   store i8 %i.cb, ptr %i.ce, align 1, !tbaa !7
-  %i.cf = add nuw nsw i64 %.018.i.i, 1            ; 2 uses
+  %i.cf = add nuw i64 %.018.i.i, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.cf, %i.bs
   br i1 %exitcond.not.i.i, label %.loopexit.i.i, label %bb.m, !llvm.loop !46
 

@@ -143,7 +143,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 14 uses
   %.01724.i = getelementptr inbounds nuw i8, ptr %0, i64 124 ; 2 uses
   %.pre = load i32, ptr %i.a, align 8, !tbaa !49
-  %4 = ptrtoint ptr %1 to i64
+  %4 = ptrtoaddr ptr %1 to i64
   %invariant.op = sub i64 -2, %4
   br label %bb.b
 
@@ -192,7 +192,7 @@ _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_E
 
 .lr.ph.i:                                         ; preds = %bb.d
   %i.m = load ptr, ptr %i.d, align 8, !tbaa !27   ; 17 uses
-  %5 = ptrtoint ptr %i.k to i64
+  %5 = ptrtoaddr ptr %i.k to i64
   %.reass = add i64 %5, %invariant.op             ; 2 uses
   %i.n = lshr i64 %.reass, 1
   %i.o = add nuw i64 %i.n, 1                      ; 2 uses
