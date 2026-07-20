@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit296:                          ; preds = %bb.q, %bb.r
   %.0.i.i285.pn = phi ptr [ %.0.i.i285, %bb.q ], [ %.val4.i287, %bb.r ] ; 2 uses
-  %.0.i.i285.pn693 = ptrtoint ptr %.0.i.i285.pn to i64 ; 2 uses
+  %.0.i.i285.pn693 = ptrtoaddr ptr %.0.i.i285.pn to i64 ; 2 uses
   %i.ap = getelementptr i8, ptr %.0.i.i285.pn, i64 %3 ; 5 uses
   %i.aq = getelementptr i8, ptr %i.ap, i64 %4     ; 2 uses
   %i.ar = and i64 %4, -4
@@ -215,7 +215,7 @@ _PyUnicode_DATA.exit296:                          ; preds = %bb.q, %bb.r
 .preheader:                                       ; preds = %.lr.ph488, %_PyUnicode_DATA.exit296
   %.0231.lcssa = phi ptr [ %i.ap, %_PyUnicode_DATA.exit296 ], [ %i.cg, %.lr.ph488 ] ; 10 uses
   %.0229.lcssa = phi ptr [ %i.am, %_PyUnicode_DATA.exit296 ], [ %i.ch, %.lr.ph488 ] ; 8 uses
-  %.0231.lcssa694 = ptrtoint ptr %.0231.lcssa to i64 ; 3 uses
+  %.0231.lcssa694 = ptrtoaddr ptr %.0231.lcssa to i64 ; 3 uses
   %i.au = icmp ult ptr %.0231.lcssa, %i.aq
   br i1 %i.au, label %iter.check719, label %ucs1lib_find_max_char.exit
 
@@ -381,7 +381,7 @@ bb.x:                                             ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit320:                          ; preds = %bb.w, %bb.x
   %.0.i.i309.pn = phi ptr [ %.0.i.i309, %bb.w ], [ %.val4.i311, %bb.x ] ; 3 uses
-  %.0.i.i309.pn669 = ptrtoint ptr %.0.i.i309.pn to i64
+  %.0.i.i309.pn669 = ptrtoaddr ptr %.0.i.i309.pn to i64
   %i.cu = getelementptr i8, ptr %.0.i.i309.pn, i64 %3 ; 5 uses
   %i.cv = getelementptr i8, ptr %i.cu, i64 %4     ; 2 uses
   %i.cw = and i64 %4, -4
@@ -392,13 +392,13 @@ _PyUnicode_DATA.exit320:                          ; preds = %bb.w, %bb.x
 .preheader431:                                    ; preds = %.lr.ph480, %_PyUnicode_DATA.exit320
   %.0239.lcssa = phi ptr [ %i.cu, %_PyUnicode_DATA.exit320 ], [ %i.ef, %.lr.ph480 ] ; 9 uses
   %.0233.lcssa = phi ptr [ %i.cr, %_PyUnicode_DATA.exit320 ], [ %i.eg, %.lr.ph480 ] ; 6 uses
-  %.0239.lcssa670 = ptrtoint ptr %.0239.lcssa to i64 ; 2 uses
+  %.0239.lcssa670 = ptrtoaddr ptr %.0239.lcssa to i64 ; 2 uses
   %i.cz = icmp ult ptr %.0239.lcssa, %i.cv
   br i1 %i.cz, label %.lr.ph485.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph485.preheader:                              ; preds = %.preheader431
-  %6 = ptrtoint ptr %.0.i.i309.pn to i64
-  %7 = ptrtoint ptr %.0239.lcssa to i64
+  %6 = ptrtoaddr ptr %.0.i.i309.pn to i64
+  %7 = ptrtoaddr ptr %.0239.lcssa to i64
   %i.da = add i64 %4, %3
   %i.db = add i64 %i.da, %6
   %i.dc = sub i64 %i.db, %7                       ; 3 uses
@@ -543,11 +543,11 @@ _PyUnicode_DATA.exit344:                          ; preds = %bb.ac, %bb.ad
   br i1 %i.ez, label %.lr.ph477.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph477.preheader:                              ; preds = %.preheader433
-  %8 = ptrtoint ptr %.0.i.i333.pn to i64
+  %8 = ptrtoaddr ptr %.0.i.i333.pn to i64
   %i.fa = shl i64 %3, 1
   %i.fb = add i64 %.idx552, %8
   %i.fc = add i64 %i.fb, %i.fa
-  %9 = ptrtoint ptr %.0243.lcssa to i64           ; 2 uses
+  %9 = ptrtoaddr ptr %.0243.lcssa to i64          ; 2 uses
   %i.fd = add i64 %9, 2
   %i.fe = tail call i64 @llvm.umax.i64(i64 %i.fc, i64 %i.fd)
   %i.ff = xor i64 %9, -1
@@ -657,7 +657,7 @@ bb.ak:                                            ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit368:                          ; preds = %bb.aj, %bb.ak
   %.0.i.i357.pn = phi ptr [ %.0.i.i357, %bb.aj ], [ %.val4.i359, %bb.ak ] ; 2 uses
-  %.0.i.i357.pn616 = ptrtoint ptr %.0.i.i357.pn to i64 ; 2 uses
+  %.0.i.i357.pn616 = ptrtoaddr ptr %.0.i.i357.pn to i64 ; 2 uses
   %i.gk = getelementptr [2 x i8], ptr %.0.i.i357.pn, i64 %3 ; 5 uses
   %i.gl = getelementptr [2 x i8], ptr %i.gk, i64 %4 ; 2 uses
   %.idx551 = shl i64 %4, 1                        ; 3 uses
@@ -670,7 +670,7 @@ _PyUnicode_DATA.exit368:                          ; preds = %bb.aj, %bb.ak
 .preheader435:                                    ; preds = %.lr.ph464, %_PyUnicode_DATA.exit368
   %.0251.lcssa = phi ptr [ %i.gk, %_PyUnicode_DATA.exit368 ], [ %i.im, %.lr.ph464 ] ; 10 uses
   %.0249.lcssa = phi ptr [ %i.gh, %_PyUnicode_DATA.exit368 ], [ %i.in, %.lr.ph464 ] ; 8 uses
-  %.0251.lcssa617 = ptrtoint ptr %.0251.lcssa to i64 ; 4 uses
+  %.0251.lcssa617 = ptrtoaddr ptr %.0251.lcssa to i64 ; 4 uses
   %i.gq = icmp ult ptr %.0251.lcssa, %i.gl
   br i1 %i.gq, label %iter.check, label %ucs1lib_find_max_char.exit
 
@@ -848,7 +848,7 @@ bb.aq:                                            ; preds = %_PyUnicode_DATA.exi
 
 _PyUnicode_DATA.exit392:                          ; preds = %bb.ap, %bb.aq
   %.0.i.i381.pn = phi ptr [ %.0.i.i381, %bb.ap ], [ %.val4.i383, %bb.aq ] ; 3 uses
-  %.0.i.i381.pn596 = ptrtoint ptr %.0.i.i381.pn to i64
+  %.0.i.i381.pn596 = ptrtoaddr ptr %.0.i.i381.pn to i64
   %i.ja = getelementptr [4 x i8], ptr %.0.i.i381.pn, i64 %3 ; 5 uses
   %i.jb = getelementptr [4 x i8], ptr %i.ja, i64 %4 ; 2 uses
   %.idx550 = shl i64 %4, 2                        ; 3 uses
@@ -861,16 +861,16 @@ _PyUnicode_DATA.exit392:                          ; preds = %bb.ap, %bb.aq
 .preheader437:                                    ; preds = %.lr.ph456, %_PyUnicode_DATA.exit392
   %.0247.lcssa = phi ptr [ %i.ix, %_PyUnicode_DATA.exit392 ], [ %i.ky, %.lr.ph456 ] ; 6 uses
   %.0245.lcssa = phi ptr [ %i.ja, %_PyUnicode_DATA.exit392 ], [ %i.kx, %.lr.ph456 ] ; 9 uses
-  %.0245.lcssa597 = ptrtoint ptr %.0245.lcssa to i64 ; 2 uses
+  %.0245.lcssa597 = ptrtoaddr ptr %.0245.lcssa to i64 ; 2 uses
   %i.jg = icmp ult ptr %.0245.lcssa, %i.jb
   br i1 %i.jg, label %.lr.ph461.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph461.preheader:                              ; preds = %.preheader437
-  %10 = ptrtoint ptr %.0.i.i381.pn to i64
+  %10 = ptrtoaddr ptr %.0.i.i381.pn to i64
   %i.jh = shl i64 %3, 2
   %i.ji = add i64 %.idx550, %10
   %i.jj = add i64 %i.ji, %i.jh
-  %11 = ptrtoint ptr %.0245.lcssa to i64          ; 2 uses
+  %11 = ptrtoaddr ptr %.0245.lcssa to i64         ; 2 uses
   %i.jk = add i64 %11, 4
   %i.jl = tail call i64 @llvm.umax.i64(i64 %i.jj, i64 %i.jk)
   %i.jm = xor i64 %11, -1
@@ -1021,11 +1021,11 @@ _PyUnicode_DATA.exit416:                          ; preds = %bb.au, %bb.av
   br i1 %i.lq, label %.lr.ph453.preheader, label %ucs1lib_find_max_char.exit
 
 .lr.ph453.preheader:                              ; preds = %.preheader439
-  %12 = ptrtoint ptr %.0.i.i405.pn to i64
+  %12 = ptrtoaddr ptr %.0.i.i405.pn to i64
   %i.lr = shl i64 %3, 2
   %i.ls = add i64 %.idx, %12
   %i.lt = add i64 %i.ls, %i.lr
-  %13 = ptrtoint ptr %.0235.lcssa to i64          ; 2 uses
+  %13 = ptrtoaddr ptr %.0235.lcssa to i64         ; 2 uses
   %i.lu = add i64 %13, 4
   %i.lv = tail call i64 @llvm.umax.i64(i64 %i.lt, i64 %i.lu)
   %i.lw = xor i64 %13, -1
@@ -1428,7 +1428,7 @@ Py_DECREF.exit32:                                 ; preds = %PyUnicode_MAX_CHAR_
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @PyUnicode_FromWideChar(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) local_unnamed_addr #1 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64
+  %2 = ptrtoaddr ptr %0 to i64
   %i.a = icmp eq ptr %0, null
   %i.b = icmp ne i64 %1, 0
   %or.cond = and i1 %i.a, %i.b
@@ -1549,14 +1549,14 @@ bb.p:                                             ; preds = %_PyUnicode_DATA.exi
 .preheader.i:                                     ; preds = %.lr.ph68.i, %bb.p
   %.051.lcssa.i = phi ptr [ %0, %bb.p ], [ %i.bx, %.lr.ph68.i ] ; 9 uses
   %.0.lcssa.i = phi ptr [ %.0.i23, %bb.p ], [ %i.by, %.lr.ph68.i ] ; 6 uses
-  %.051.lcssa.i82 = ptrtoint ptr %.051.lcssa.i to i64 ; 2 uses
+  %.051.lcssa.i82 = ptrtoaddr ptr %.051.lcssa.i to i64 ; 2 uses
   %i.ak = icmp ult ptr %.051.lcssa.i, %i.n
   br i1 %i.ak, label %.lr.ph73.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph73.i.preheader:                             ; preds = %.preheader.i
-  %3 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %0 to i64
   %i.al = add i64 %.idx57.i, %3
-  %4 = ptrtoint ptr %.051.lcssa.i to i64          ; 2 uses
+  %4 = ptrtoaddr ptr %.051.lcssa.i to i64         ; 2 uses
   %i.am = add i64 %4, 4
   %i.an = tail call i64 @llvm.umax.i64(i64 %i.al, i64 %i.am)
   %i.ao = xor i64 %4, -1
@@ -1667,9 +1667,9 @@ bb.q:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.cj, label %.lr.ph65.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph65.i.preheader:                             ; preds = %.preheader58.i
-  %5 = ptrtoint ptr %0 to i64
+  %5 = ptrtoaddr ptr %0 to i64
   %i.ck = add i64 %.idx57.i, %5
-  %6 = ptrtoint ptr %.055.lcssa.i to i64          ; 2 uses
+  %6 = ptrtoaddr ptr %.055.lcssa.i to i64         ; 2 uses
   %i.cl = add i64 %6, 4
   %i.cm = tail call i64 @llvm.umax.i64(i64 %i.ck, i64 %i.cl)
   %i.cn = xor i64 %6, -1
@@ -1829,7 +1829,7 @@ declare i64 @wcslen(ptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @PyUnicodeWriter_WriteWideChar(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %i.a = icmp slt i64 %2, 0
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -1925,14 +1925,14 @@ bb.i:                                             ; preds = %.critedge
 .preheader.i:                                     ; preds = %.lr.ph68.i, %bb.i
   %.051.lcssa.i = phi ptr [ %1, %bb.i ], [ %i.bx, %.lr.ph68.i ] ; 9 uses
   %.0.lcssa.i = phi ptr [ %i.af, %bb.i ], [ %i.by, %.lr.ph68.i ] ; 6 uses
-  %.051.lcssa.i82 = ptrtoint ptr %.051.lcssa.i to i64 ; 2 uses
+  %.051.lcssa.i82 = ptrtoaddr ptr %.051.lcssa.i to i64 ; 2 uses
   %i.ak = icmp ult ptr %.051.lcssa.i, %i.d
   br i1 %i.ak, label %.lr.ph73.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph73.i.preheader:                             ; preds = %.preheader.i
-  %4 = ptrtoint ptr %1 to i64
+  %4 = ptrtoaddr ptr %1 to i64
   %i.al = add i64 %.idx57.i, %4
-  %5 = ptrtoint ptr %.051.lcssa.i to i64          ; 2 uses
+  %5 = ptrtoaddr ptr %.051.lcssa.i to i64         ; 2 uses
   %i.am = add i64 %5, 4
   %i.an = tail call i64 @llvm.umax.i64(i64 %i.al, i64 %i.am)
   %i.ao = xor i64 %5, -1
@@ -2043,9 +2043,9 @@ bb.j:                                             ; preds = %.critedge
   br i1 %i.cj, label %.lr.ph65.i.preheader, label %unicode_write_widechar.exit
 
 .lr.ph65.i.preheader:                             ; preds = %.preheader58.i
-  %6 = ptrtoint ptr %1 to i64
+  %6 = ptrtoaddr ptr %1 to i64
   %i.ck = add i64 %.idx57.i, %6
-  %7 = ptrtoint ptr %.055.lcssa.i to i64          ; 2 uses
+  %7 = ptrtoaddr ptr %.055.lcssa.i to i64         ; 2 uses
   %i.cl = add i64 %7, 4
   %i.cm = tail call i64 @llvm.umax.i64(i64 %i.ck, i64 %i.cl)
   %i.cn = xor i64 %7, -1
@@ -2406,7 +2406,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @PyUnicodeWriter_WriteUCS4(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %i.a = icmp slt i64 %2, 0
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -2571,14 +2571,14 @@ bb.m:                                             ; preds = %.critedge
 .preheader:                                       ; preds = %.lr.ph101, %bb.m
   %.082.lcssa = phi ptr [ %1, %bb.m ], [ %i.ch, %.lr.ph101 ] ; 9 uses
   %.076.lcssa = phi ptr [ %i.at, %bb.m ], [ %i.ci, %.lr.ph101 ] ; 6 uses
-  %.082.lcssa145 = ptrtoint ptr %.082.lcssa to i64 ; 2 uses
+  %.082.lcssa145 = ptrtoaddr ptr %.082.lcssa to i64 ; 2 uses
   %i.au = icmp ult ptr %.082.lcssa, %i.d
   br i1 %i.au, label %.lr.ph106.preheader, label %.loopexit
 
 .lr.ph106.preheader:                              ; preds = %.preheader
-  %4 = ptrtoint ptr %1 to i64
+  %4 = ptrtoaddr ptr %1 to i64
   %i.av = add i64 %.idx88, %4
-  %5 = ptrtoint ptr %.082.lcssa to i64            ; 2 uses
+  %5 = ptrtoaddr ptr %.082.lcssa to i64           ; 2 uses
   %i.aw = add i64 %5, 4
   %i.ax = tail call i64 @llvm.umax.i64(i64 %i.av, i64 %i.aw)
   %i.ay = xor i64 %5, -1
@@ -2685,9 +2685,9 @@ bb.n:                                             ; preds = %.critedge
   br i1 %i.cp, label %.lr.ph98.preheader, label %.loopexit
 
 .lr.ph98.preheader:                               ; preds = %.preheader89
-  %6 = ptrtoint ptr %1 to i64
+  %6 = ptrtoaddr ptr %1 to i64
   %i.cq = add i64 %.idx88, %6
-  %7 = ptrtoint ptr %.078.lcssa to i64            ; 2 uses
+  %7 = ptrtoaddr ptr %.078.lcssa to i64           ; 2 uses
   %i.cr = add i64 %7, 4
   %i.cs = tail call i64 @llvm.umax.i64(i64 %i.cq, i64 %i.cr)
   %i.ct = xor i64 %7, -1
@@ -2898,7 +2898,7 @@ _PyUnicode_FromUCS1.exit:                         ; preds = %_PyUnicode_DATA.exi
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @_PyUnicode_FromUCS2(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) unnamed_addr #1 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %2 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   switch i64 %1, label %bb.n [
     i64 0, label %unicode_char.exit
     i64 1, label %bb.b
@@ -3132,7 +3132,7 @@ _PyUnicode_DATA.exit53:                           ; preds = %bb.w, %bb.x
 .preheader:                                       ; preds = %.lr.ph, %_PyUnicode_DATA.exit53
   %.039.lcssa = phi ptr [ %0, %_PyUnicode_DATA.exit53 ], [ %i.cu, %.lr.ph ] ; 10 uses
   %.038.lcssa = phi ptr [ %.0.i51, %_PyUnicode_DATA.exit53 ], [ %i.cv, %.lr.ph ] ; 8 uses
-  %.039.lcssa93 = ptrtoint ptr %.039.lcssa to i64 ; 4 uses
+  %.039.lcssa93 = ptrtoaddr ptr %.039.lcssa to i64 ; 4 uses
   %i.bc = icmp ult ptr %.039.lcssa, %i.v
   br i1 %i.bc, label %iter.check, label %unicode_char.exit
 
@@ -3275,7 +3275,7 @@ unicode_char.exit:                                ; preds = %.lr.ph62, %middle.b
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @_PyUnicode_FromUCS4(ptr nofree noundef readonly captures(address) %0, i64 noundef %1) unnamed_addr #1 {
 bb.a:
-  %2 = ptrtoint ptr %0 to i64
+  %2 = ptrtoaddr ptr %0 to i64
   switch i64 %1, label %bb.n [
     i64 0, label %unicode_char.exit
     i64 1, label %bb.b
@@ -3500,14 +3500,14 @@ _PyUnicode_DATA.exit:                             ; preds = %bb.w, %bb.x
 .preheader:                                       ; preds = %.lr.ph106, %_PyUnicode_DATA.exit
   %.068.lcssa = phi ptr [ %0, %_PyUnicode_DATA.exit ], [ %i.co, %.lr.ph106 ] ; 9 uses
   %.063.lcssa = phi ptr [ %.0.i76, %_PyUnicode_DATA.exit ], [ %i.cp, %.lr.ph106 ] ; 6 uses
-  %.068.lcssa154 = ptrtoint ptr %.068.lcssa to i64 ; 2 uses
+  %.068.lcssa154 = ptrtoaddr ptr %.068.lcssa to i64 ; 2 uses
   %i.bb = icmp ult ptr %.068.lcssa, %i.w
   br i1 %i.bb, label %.lr.ph111.preheader, label %unicode_char.exit
 
 .lr.ph111.preheader:                              ; preds = %.preheader
-  %3 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %0 to i64
   %i.bc = add i64 %.idx93, %3
-  %4 = ptrtoint ptr %.068.lcssa to i64            ; 2 uses
+  %4 = ptrtoaddr ptr %.068.lcssa to i64           ; 2 uses
   %i.bd = add i64 %4, 4
   %i.be = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %i.bd)
   %i.bf = xor i64 %4, -1
@@ -3638,9 +3638,9 @@ _PyUnicode_DATA.exit84:                           ; preds = %bb.aa, %bb.ab
   br i1 %i.db, label %.lr.ph103.preheader, label %unicode_char.exit
 
 .lr.ph103.preheader:                              ; preds = %.preheader94
-  %5 = ptrtoint ptr %0 to i64
+  %5 = ptrtoaddr ptr %0 to i64
   %i.dc = add i64 %.idx93, %5
-  %6 = ptrtoint ptr %.064.lcssa to i64            ; 2 uses
+  %6 = ptrtoaddr ptr %.064.lcssa to i64           ; 2 uses
   %i.dd = add i64 %6, 4
   %i.de = tail call i64 @llvm.umax.i64(i64 %i.dc, i64 %i.dd)
   %i.df = xor i64 %6, -1
@@ -4043,7 +4043,7 @@ bb.c:                                             ; preds = %bb.a
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %.0.i.i, %bb.b ], [ %.val4.i, %bb.c ] ; 12 uses
-  %.0.i111 = ptrtoint ptr %.0.i to i64            ; 3 uses
+  %.0.i111 = ptrtoaddr ptr %.0.i to i64           ; 3 uses
   %i.h = getelementptr i8, ptr %0, i64 16
   %.val = load i64, ptr %i.h, align 8, !tbaa !207 ; 8 uses
   %i.i = icmp ne i32 %3, 0                        ; 3 uses
@@ -4096,7 +4096,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.v, label %.lr.ph101, label %.preheader
 
 .preheader.loopexit:                              ; preds = %.lr.ph101
-  %.pre = ptrtoint ptr %i.ay to i64
+  %.pre = ptrtoaddr ptr %i.ay to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.j
@@ -4209,7 +4209,7 @@ bb.k:                                             ; preds = %bb.i
 
 .lr.ph98.preheader:                               ; preds = %.preheader91
   %i.bl = add i64 %.idx, %.0.i111
-  %4 = ptrtoint ptr %.078.lcssa to i64            ; 2 uses
+  %4 = ptrtoaddr ptr %.078.lcssa to i64           ; 2 uses
   %i.bm = add i64 %4, 2
   %i.bn = tail call i64 @llvm.umax.i64(i64 %i.bl, i64 %i.bm)
   %i.bo = xor i64 %4, -1
@@ -4612,7 +4612,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
   store ptr %0, ptr %i.b, align 8, !tbaa !355
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #33
-  %i.h = getelementptr i8, ptr %0, i64 %1         ; 6 uses
+  %i.h = getelementptr i8, ptr %0, i64 %1         ; 7 uses
   store ptr %i.h, ptr %i.c, align 8, !tbaa !355
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #33
   store ptr null, ptr %i.d, align 8, !tbaa !194
@@ -4704,8 +4704,8 @@ bb.h:                                             ; preds = %bb.f
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.g, %bb.h
   %.0.i = phi ptr [ %.0.i.i, %bb.g ], [ %.val4.i, %bb.h ] ; 4 uses
-  %4 = ptrtoint ptr %i.h to i64
-  %i.af = ptrtoint ptr %0 to i64                  ; 3 uses
+  %4 = ptrtoaddr ptr %i.h to i64
+  %i.af = ptrtoint ptr %0 to i64                  ; 2 uses
   %i.ag = ptrtoint ptr %.0.i to i64
   %i.ah = or i64 %i.ag, %i.af
   %i.ai = and i64 %i.ah, 7
@@ -4724,31 +4724,25 @@ _PyUnicode_DATA.exit:                             ; preds = %bb.g, %bb.h
   %i.al = load i64, ptr %.02743.i, align 8, !tbaa !193 ; 2 uses
   %i.am = and i64 %i.al, -9187201950435737472
   %.not35.i = icmp eq i64 %i.am, 0
-  br i1 %.not35.i, label %bb.i, label %.thread.loopexit.i
+  br i1 %.not35.i, label %bb.i, label %.thread.i
 
 bb.i:                                             ; preds = %.lr.ph.i
   store i64 %i.al, ptr %.02842.i, align 8, !tbaa !193
   %i.an = getelementptr i8, ptr %.02842.i, i64 8  ; 2 uses
   %i.ao = getelementptr i8, ptr %i.ak, i64 8      ; 2 uses
   %.not34.i = icmp ugt ptr %i.ao, %i.h
-  br i1 %.not34.i, label %.thread.loopexit.i, label %.lr.ph.i
+  br i1 %.not34.i, label %.thread.i, label %.lr.ph.i
 
-.thread.loopexit.i:                               ; preds = %bb.i, %.lr.ph.i
-  %.028.lcssa.ph.i = phi ptr [ %i.an, %bb.i ], [ %.02842.i, %.lr.ph.i ]
-  %.027.lcssa.ph.i = phi ptr [ %i.ak, %bb.i ], [ %.02743.i, %.lr.ph.i ] ; 2 uses
-  %.pre.i = ptrtoint ptr %.027.lcssa.ph.i to i64
-  br label %.thread.i
-
-.thread.i:                                        ; preds = %.thread.loopexit.i, %.preheader.i
-  %.027.lcssa54.pre-phi.i = phi i64 [ %.pre.i, %.thread.loopexit.i ], [ %i.af, %.preheader.i ] ; 2 uses
-  %.028.lcssa.i = phi ptr [ %.028.lcssa.ph.i, %.thread.loopexit.i ], [ %.0.i, %.preheader.i ]
-  %.027.lcssa.i = phi ptr [ %.027.lcssa.ph.i, %.thread.loopexit.i ], [ %0, %.preheader.i ] ; 3 uses
+.thread.i:                                        ; preds = %bb.i, %.lr.ph.i, %.preheader.i
+  %.028.lcssa.i = phi ptr [ %.0.i, %.preheader.i ], [ %i.an, %bb.i ], [ %.02842.i, %.lr.ph.i ]
+  %.027.lcssa.i = phi ptr [ %0, %.preheader.i ], [ %i.ak, %bb.i ], [ %.02743.i, %.lr.ph.i ] ; 5 uses
   %i.ap = icmp ult ptr %.027.lcssa.i, %i.h
   br i1 %i.ap, label %.lr.ph50.preheader.i, label %._crit_edge.i
 
 .lr.ph50.preheader.i:                             ; preds = %.thread.i
-  %i.aq = sub i64 %4, %.027.lcssa54.pre-phi.i
-  %scevgep.i = getelementptr i8, ptr %.027.lcssa.i, i64 %i.aq ; 2 uses
+  %.027.lcssa54.i = ptrtoaddr ptr %.027.lcssa.i to i64
+  %i.aq = sub i64 %4, %.027.lcssa54.i
+  %scevgep.i = getelementptr i8, ptr %.027.lcssa.i, i64 %i.aq
   br label %.lr.ph50.i
 
 .lr.ph50.i:                                       ; preds = %bb.j, %.lr.ph50.preheader.i
@@ -4756,23 +4750,19 @@ bb.i:                                             ; preds = %.lr.ph.i
   %.33148.i = phi ptr [ %i.at, %bb.j ], [ %.028.lcssa.i, %.lr.ph50.preheader.i ] ; 2 uses
   %i.ar = load i8, ptr %.349.i, align 1, !tbaa !205 ; 2 uses
   %.not36.i = icmp sgt i8 %i.ar, -1
-  br i1 %.not36.i, label %bb.j, label %._crit_edge.loopexit.i
+  br i1 %.not36.i, label %bb.j, label %._crit_edge.i
 
 bb.j:                                             ; preds = %.lr.ph50.i
   %i.as = getelementptr i8, ptr %.349.i, i64 1    ; 2 uses
   %i.at = getelementptr i8, ptr %.33148.i, i64 1
   store i8 %i.ar, ptr %.33148.i, align 1, !tbaa !205
-  %exitcond.not.i = icmp eq ptr %i.as, %scevgep.i
-  br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %.lr.ph50.i, !llvm.loop !389
+  %exitcond.not.i = icmp eq ptr %i.as, %i.h
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph50.i, !llvm.loop !389
 
-._crit_edge.loopexit.i:                           ; preds = %bb.j, %.lr.ph50.i
-  %.3.lcssa.ph.i = phi ptr [ %scevgep.i, %bb.j ], [ %.349.i, %.lr.ph50.i ]
-  %.pre55.i = ptrtoint ptr %.3.lcssa.ph.i to i64
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.thread.i
-  %.pre-phi.i = phi i64 [ %.pre55.i, %._crit_edge.loopexit.i ], [ %.027.lcssa54.pre-phi.i, %.thread.i ]
-  %i.au = sub i64 %.pre-phi.i, %i.af
+._crit_edge.i:                                    ; preds = %bb.j, %.lr.ph50.i, %.thread.i
+  %.3.lcssa.i = phi ptr [ %.027.lcssa.i, %.thread.i ], [ %scevgep.i, %bb.j ], [ %.349.i, %.lr.ph50.i ]
+  %5 = ptrtoint ptr %.3.lcssa.i to i64
+  %i.au = sub i64 %5, %i.af
   br label %ascii_decode.exit
 
 bb.k:                                             ; preds = %_PyUnicode_DATA.exit
@@ -5175,7 +5165,7 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.r, label %.lr.ph.preheader, label %.loopexit243
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %3 = ptrtoint ptr %.0.i to i64                  ; 3 uses
+  %3 = ptrtoaddr ptr %.0.i to i64                 ; 3 uses
   %i.s = shl i64 %.val135, 2
   %i.t = add i64 %i.s, %3
   %i.u = add i64 %3, 4
@@ -5275,7 +5265,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.bf, label %bb.m, label %ucs1lib_utf16_encode.exit
 
 bb.m:                                             ; preds = %bb.l
-  %4 = ptrtoint ptr %.0.i to i64                  ; 4 uses
+  %4 = ptrtoaddr ptr %.0.i to i64                 ; 4 uses
   %i.bg = getelementptr i8, ptr %.0.i, i64 %.val135 ; 2 uses
   %i.bh = and i64 %.val135, 9223372036854775804
   %i.bi = getelementptr i8, ptr %.0.i, i64 %i.bh  ; 3 uses
@@ -5286,7 +5276,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bj, label %.lr.ph.i, label %.preheader47.i
 
 .preheader47.loopexit.i:                          ; preds = %.lr.ph.i
-  %.pre75.i = ptrtoint ptr %i.cs to i64
+  %.pre75.i = ptrtoaddr ptr %i.cs to i64
   br label %.preheader47.i
 
 .preheader47.i:                                   ; preds = %.preheader47.loopexit.i, %bb.n
@@ -5419,7 +5409,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.bj, label %.lr.ph58.i, label %.preheader.i
 
 .preheader.loopexit.i:                            ; preds = %.lr.ph58.i
-  %.pre.i = ptrtoint ptr %i.eo to i64
+  %.pre.i = ptrtoaddr ptr %i.eo to i64
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %bb.o
@@ -5822,7 +5812,7 @@ bb.bd:                                            ; preds = %bb.bb
 
 _PyUnicode_DATA.exit160:                          ; preds = %bb.bc, %bb.bd
   %.0.i158 = phi ptr [ %.0.i.i157, %bb.bc ], [ %.val4.i159, %bb.bd ] ; 8 uses
-  %5 = ptrtoint ptr %.0.i158 to i64               ; 4 uses
+  %5 = ptrtoaddr ptr %.0.i158 to i64              ; 4 uses
   %i.kq = getelementptr i8, ptr %.0.i158, i64 %.val134 ; 2 uses
   %i.kr = and i64 %.val134, -4
   %i.ks = getelementptr i8, ptr %.0.i158, i64 %i.kr ; 3 uses
@@ -5833,7 +5823,7 @@ bb.be:                                            ; preds = %_PyUnicode_DATA.exi
   br i1 %i.kt, label %.lr.ph.i174, label %.preheader47.i162
 
 .preheader47.loopexit.i177:                       ; preds = %.lr.ph.i174
-  %.pre75.i178 = ptrtoint ptr %i.mc to i64
+  %.pre75.i178 = ptrtoaddr ptr %i.mc to i64
   br label %.preheader47.i162
 
 .preheader47.i162:                                ; preds = %.preheader47.loopexit.i177, %bb.be
@@ -5966,7 +5956,7 @@ bb.bf:                                            ; preds = %_PyUnicode_DATA.exi
   br i1 %i.kt, label %.lr.ph58.i189, label %.preheader.i179
 
 .preheader.loopexit.i192:                         ; preds = %.lr.ph58.i189
-  %.pre.i193 = ptrtoint ptr %i.ny to i64
+  %.pre.i193 = ptrtoaddr ptr %i.ny to i64
   br label %.preheader.i179
 
 .preheader.i179:                                  ; preds = %.preheader.loopexit.i192, %bb.bf
@@ -6330,7 +6320,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.ac, label %bb.l, label %ucs1lib_utf32_encode.exit
 
 bb.l:                                             ; preds = %bb.k
-  %3 = ptrtoint ptr %.0.i to i64                  ; 4 uses
+  %3 = ptrtoaddr ptr %.0.i to i64                 ; 4 uses
   %i.ad = getelementptr i8, ptr %.0.i, i64 %.val122 ; 2 uses
   %i.ae = and i64 %.val122, 9223372036854775804
   %i.af = getelementptr i8, ptr %.0.i, i64 %i.ae  ; 3 uses
@@ -6341,7 +6331,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ag, label %.lr.ph.i, label %.preheader48.i
 
 .preheader48.loopexit.i:                          ; preds = %.lr.ph.i
-  %.pre76.i = ptrtoint ptr %i.bj to i64
+  %.pre76.i = ptrtoaddr ptr %i.bj to i64
   br label %.preheader48.i
 
 .preheader48.i:                                   ; preds = %.preheader48.loopexit.i, %bb.m
@@ -6441,7 +6431,7 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.ag, label %.lr.ph59.i, label %.preheader.i
 
 .preheader.loopexit.i:                            ; preds = %.lr.ph59.i
-  %.pre.i = ptrtoint ptr %i.cy to i64
+  %.pre.i = ptrtoaddr ptr %i.cy to i64
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %bb.n
@@ -6844,7 +6834,7 @@ bb.aw:                                            ; preds = %bb.au
 
 _PyUnicode_DATA.exit152:                          ; preds = %bb.av, %bb.aw
   %.0.i150 = phi ptr [ %.0.i.i149, %bb.av ], [ %.val4.i151, %bb.aw ] ; 8 uses
-  %4 = ptrtoint ptr %.0.i150 to i64               ; 4 uses
+  %4 = ptrtoaddr ptr %.0.i150 to i64              ; 4 uses
   %i.jm = getelementptr i8, ptr %.0.i150, i64 %.val121 ; 2 uses
   %i.jn = and i64 %.val121, -4
   %i.jo = getelementptr i8, ptr %.0.i150, i64 %i.jn ; 3 uses
@@ -6855,7 +6845,7 @@ bb.ax:                                            ; preds = %_PyUnicode_DATA.exi
   br i1 %i.jp, label %.lr.ph.i166, label %.preheader48.i154
 
 .preheader48.loopexit.i169:                       ; preds = %.lr.ph.i166
-  %.pre76.i170 = ptrtoint ptr %i.ks to i64
+  %.pre76.i170 = ptrtoaddr ptr %i.ks to i64
   br label %.preheader48.i154
 
 .preheader48.i154:                                ; preds = %.preheader48.loopexit.i169, %bb.ax
@@ -6955,7 +6945,7 @@ bb.ay:                                            ; preds = %_PyUnicode_DATA.exi
   br i1 %i.jp, label %.lr.ph59.i181, label %.preheader.i171
 
 .preheader.loopexit.i184:                         ; preds = %.lr.ph59.i181
-  %.pre.i185 = ptrtoint ptr %i.mh to i64
+  %.pre.i185 = ptrtoaddr ptr %i.mh to i64
   br label %.preheader.i171
 
 .preheader.i171:                                  ; preds = %.preheader.loopexit.i184, %bb.ay
@@ -7358,8 +7348,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.em, label %.lr.ph60.i.preheader, label %utf8_count_codepoints.exit
 
 .lr.ph60.i.preheader:                             ; preds = %.loopexit.i
-  %6 = ptrtoint ptr %0 to i64
-  %7 = ptrtoint ptr %.3.i to i64
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %.3.i to i64
   %i.en = add i64 %1, %6
   %i.eo = sub i64 %i.en, %7                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.eo, 4
@@ -7762,8 +7752,8 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.s, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.outer
-  %.promoted459 = ptrtoint ptr %.promoted to i64
-  %5 = ptrtoint ptr %i.r to i64
+  %.promoted459 = ptrtoaddr ptr %.promoted to i64
+  %5 = ptrtoaddr ptr %i.r to i64
   %i.t = zext i32 %.0115.ph to i64
   %i.u = sub i64 %5, %.promoted459
   %scevgep = getelementptr i8, ptr %.promoted, i64 %i.u
@@ -8166,7 +8156,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %i.k, label %bb.o, label %.critedge
 
 .critedge:                                        ; preds = %bb.e, %bb.f
-  %i.l = getelementptr i8, ptr %1, i64 %2         ; 6 uses
+  %i.l = getelementptr i8, ptr %1, i64 %2         ; 7 uses
   %i.m = getelementptr i8, ptr %0, i64 16
   %i.n = load i32, ptr %i.m, align 8, !tbaa !280
   %i.o = icmp eq i32 %i.n, 1
@@ -8178,8 +8168,8 @@ bb.g:                                             ; preds = %.critedge
   %i.r = getelementptr i8, ptr %0, i64 32         ; 3 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !279
   %i.t = getelementptr i8, ptr %i.q, i64 %i.s     ; 4 uses
-  %6 = ptrtoint ptr %i.l to i64
-  %i.u = ptrtoint ptr %1 to i64                   ; 3 uses
+  %6 = ptrtoaddr ptr %i.l to i64
+  %i.u = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = or i64 %i.v, %i.u
   %i.x = and i64 %i.w, 7
@@ -8198,31 +8188,25 @@ bb.g:                                             ; preds = %.critedge
   %i.aa = load i64, ptr %.02743.i, align 8, !tbaa !193 ; 2 uses
   %i.ab = and i64 %i.aa, -9187201950435737472
   %.not35.i = icmp eq i64 %i.ab, 0
-  br i1 %.not35.i, label %bb.h, label %.thread.loopexit.i
+  br i1 %.not35.i, label %bb.h, label %.thread.i
 
 bb.h:                                             ; preds = %.lr.ph.i
   store i64 %i.aa, ptr %.02842.i, align 8, !tbaa !193
   %i.ac = getelementptr i8, ptr %.02842.i, i64 8  ; 2 uses
   %i.ad = getelementptr i8, ptr %i.z, i64 8       ; 2 uses
   %.not34.i = icmp ugt ptr %i.ad, %i.l
-  br i1 %.not34.i, label %.thread.loopexit.i, label %.lr.ph.i
+  br i1 %.not34.i, label %.thread.i, label %.lr.ph.i
 
-.thread.loopexit.i:                               ; preds = %bb.h, %.lr.ph.i
-  %.028.lcssa.ph.i = phi ptr [ %i.ac, %bb.h ], [ %.02842.i, %.lr.ph.i ]
-  %.027.lcssa.ph.i = phi ptr [ %i.z, %bb.h ], [ %.02743.i, %.lr.ph.i ] ; 2 uses
-  %.pre.i = ptrtoint ptr %.027.lcssa.ph.i to i64
-  br label %.thread.i
-
-.thread.i:                                        ; preds = %.thread.loopexit.i, %.preheader.i
-  %.027.lcssa54.pre-phi.i = phi i64 [ %.pre.i, %.thread.loopexit.i ], [ %i.u, %.preheader.i ] ; 2 uses
-  %.028.lcssa.i = phi ptr [ %.028.lcssa.ph.i, %.thread.loopexit.i ], [ %i.t, %.preheader.i ]
-  %.027.lcssa.i = phi ptr [ %.027.lcssa.ph.i, %.thread.loopexit.i ], [ %1, %.preheader.i ] ; 3 uses
+.thread.i:                                        ; preds = %bb.h, %.lr.ph.i, %.preheader.i
+  %.028.lcssa.i = phi ptr [ %i.t, %.preheader.i ], [ %i.ac, %bb.h ], [ %.02842.i, %.lr.ph.i ]
+  %.027.lcssa.i = phi ptr [ %1, %.preheader.i ], [ %i.z, %bb.h ], [ %.02743.i, %.lr.ph.i ] ; 5 uses
   %i.ae = icmp ult ptr %.027.lcssa.i, %i.l
   br i1 %i.ae, label %.lr.ph50.preheader.i, label %._crit_edge.i
 
 .lr.ph50.preheader.i:                             ; preds = %.thread.i
-  %i.af = sub i64 %6, %.027.lcssa54.pre-phi.i
-  %scevgep.i = getelementptr i8, ptr %.027.lcssa.i, i64 %i.af ; 2 uses
+  %.027.lcssa54.i = ptrtoaddr ptr %.027.lcssa.i to i64
+  %i.af = sub i64 %6, %.027.lcssa54.i
+  %scevgep.i = getelementptr i8, ptr %.027.lcssa.i, i64 %i.af
   br label %.lr.ph50.i
 
 .lr.ph50.i:                                       ; preds = %bb.i, %.lr.ph50.preheader.i
@@ -8230,23 +8214,19 @@ bb.h:                                             ; preds = %.lr.ph.i
   %.33148.i = phi ptr [ %i.ai, %bb.i ], [ %.028.lcssa.i, %.lr.ph50.preheader.i ] ; 2 uses
   %i.ag = load i8, ptr %.349.i, align 1, !tbaa !205 ; 2 uses
   %.not36.i = icmp sgt i8 %i.ag, -1
-  br i1 %.not36.i, label %bb.i, label %._crit_edge.loopexit.i
+  br i1 %.not36.i, label %bb.i, label %._crit_edge.i
 
 bb.i:                                             ; preds = %.lr.ph50.i
   %i.ah = getelementptr i8, ptr %.349.i, i64 1    ; 2 uses
   %i.ai = getelementptr i8, ptr %.33148.i, i64 1
   store i8 %i.ag, ptr %.33148.i, align 1, !tbaa !205
-  %exitcond.not.i = icmp eq ptr %i.ah, %scevgep.i
-  br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %.lr.ph50.i, !llvm.loop !389
+  %exitcond.not.i = icmp eq ptr %i.ah, %i.l
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph50.i, !llvm.loop !389
 
-._crit_edge.loopexit.i:                           ; preds = %bb.i, %.lr.ph50.i
-  %.3.lcssa.ph.i = phi ptr [ %scevgep.i, %bb.i ], [ %.349.i, %.lr.ph50.i ]
-  %.pre55.i = ptrtoint ptr %.3.lcssa.ph.i to i64
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.thread.i
-  %.pre-phi.i = phi i64 [ %.pre55.i, %._crit_edge.loopexit.i ], [ %.027.lcssa54.pre-phi.i, %.thread.i ]
-  %i.aj = sub i64 %.pre-phi.i, %i.u
+._crit_edge.i:                                    ; preds = %bb.i, %.lr.ph50.i, %.thread.i
+  %.3.lcssa.i = phi ptr [ %.027.lcssa.i, %.thread.i ], [ %scevgep.i, %bb.i ], [ %.349.i, %.lr.ph50.i ]
+  %7 = ptrtoint ptr %.3.lcssa.i to i64
+  %i.aj = sub i64 %7, %i.u
   br label %ascii_decode.exit
 
 bb.j:                                             ; preds = %bb.g
@@ -8649,9 +8629,9 @@ bb.ep:                                            ; preds = %_PyUnicode_GetNameC
 _PyUnicode_GetNameCAPI.exit.thread:               ; preds = %bb.eo, %_PyUnicode_GetNameCAPI.exit
   %.0.i145172 = phi ptr [ %i.km, %_PyUnicode_GetNameCAPI.exit ], [ %i.kk, %bb.eo ]
   %i.kp = load ptr, ptr %i.a, align 8, !tbaa !355 ; 7 uses
-  %7 = ptrtoint ptr %i.kp to i64
+  %7 = ptrtoaddr ptr %i.kp to i64
   %i.kq = load ptr, ptr %i.c, align 8, !tbaa !355 ; 11 uses
-  %8 = ptrtoint ptr %i.kq to i64
+  %8 = ptrtoaddr ptr %i.kq to i64
   %.not96 = icmp ult ptr %i.kp, %i.kq
   br i1 %.not96, label %bb.eq, label %.critedge
 
@@ -9054,7 +9034,7 @@ bb.c:                                             ; preds = %bb.a
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %.0.i.i, %bb.b ], [ %.val4.i, %bb.c ] ; 5 uses
-  %.0.i13 = ptrtoint ptr %.0.i to i64             ; 3 uses
+  %.0.i13 = ptrtoaddr ptr %.0.i to i64            ; 3 uses
   switch i32 %i.d, label %bb.g [
     i32 1, label %bb.d
     i32 2, label %bb.e
@@ -9162,7 +9142,7 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.al, label %.lr.ph.i.preheader, label %_PyUnicode_Fill.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.f
-  %4 = ptrtoint ptr %.0.i to i64                  ; 3 uses
+  %4 = ptrtoaddr ptr %.0.i to i64                 ; 3 uses
   %i.am = shl i64 %2, 2
   %i.an = shl i64 %1, 2                           ; 2 uses
   %i.ao = add i64 %i.am, %4
@@ -9320,7 +9300,7 @@ bb.n:                                             ; preds = %bb.l
 
 _PyUnicode_DATA.exit.i:                           ; preds = %bb.n, %bb.m
   %.0.i.i = phi ptr [ %.0.i.i.i, %bb.m ], [ %.val4.i.i, %bb.n ] ; 5 uses
-  %.0.i.i39 = ptrtoint ptr %.0.i.i to i64         ; 2 uses
+  %.0.i.i39 = ptrtoaddr ptr %.0.i.i to i64        ; 2 uses
   switch i32 %i.t, label %bb.r [
     i32 1, label %bb.o
     i32 2, label %bb.p
@@ -9427,7 +9407,7 @@ bb.q:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.az, label %.lr.ph.i.i.preheader, label %_PyUnicode_FastFill.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.q
-  %4 = ptrtoint ptr %.0.i.i to i64                ; 2 uses
+  %4 = ptrtoaddr ptr %.0.i.i to i64               ; 2 uses
   %i.ba = shl i64 %1, 2
   %i.bb = shl i64 %i.q, 2
   %i.bc = add i64 %i.ba, %4                       ; 2 uses
@@ -9830,7 +9810,7 @@ bb.am:                                            ; preds = %_PyUnicode_EnsureUn
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @unicode_askind(i32 noundef range(i32 0, 8) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2, i32 noundef range(i32 0, 8) %3) unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 5 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 5 uses
   %i.a = icmp eq i32 %3, 2
   br i1 %i.a, label %bb.b, label %bb.e
 
@@ -9852,7 +9832,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.h, label %.lr.ph121, label %.preheader
 
 .preheader.loopexit:                              ; preds = %.lr.ph121
-  %.pre = ptrtoint ptr %i.aq to i64
+  %.pre = ptrtoaddr ptr %i.aq to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.d
@@ -10011,7 +9991,7 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph118.preheader:                              ; preds = %.preheader101
   %i.bg = shl nuw nsw i64 %2, 1
   %i.bh = add i64 %i.bg, %4
-  %5 = ptrtoint ptr %.091.lcssa to i64            ; 2 uses
+  %5 = ptrtoaddr ptr %.091.lcssa to i64           ; 2 uses
   %i.bi = add i64 %5, 2
   %i.bj = tail call i64 @llvm.umax.i64(i64 %i.bh, i64 %i.bi)
   %i.bk = xor i64 %5, -1
@@ -10085,7 +10065,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.cl, label %.lr.ph, label %.preheader103
 
 .preheader103.loopexit:                           ; preds = %.lr.ph
-  %.pre138 = ptrtoint ptr %i.do to i64
+  %.pre138 = ptrtoaddr ptr %i.do to i64
   br label %.preheader103
 
 .preheader103:                                    ; preds = %.preheader103.loopexit, %bb.i
@@ -10488,7 +10468,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 _PyUnicode_DATA.exit89.i:                         ; preds = %bb.ac, %bb.ab
   %.0.i87.i = phi ptr [ %.0.i.i86.i, %bb.ab ], [ %.val4.i88.i, %bb.ac ] ; 7 uses
-  %.0.i87.i79 = ptrtoint ptr %.0.i87.i to i64     ; 6 uses
+  %.0.i87.i79 = ptrtoaddr ptr %.0.i87.i to i64    ; 6 uses
   %i.bq = xor i64 %.0.i87.i79, -1
   %i.br = shl nuw nsw i64 %i.x, 1
   %i.bs = add i64 %i.br, %.0.i87.i79
@@ -10891,7 +10871,7 @@ bb.d:                                             ; preds = %_PyUnicode_DATA.exi
 bb.e:                                             ; preds = %_PyUnicode_DATA.exit
   %i.l = mul nuw nsw i64 %.val, 12
   %i.m = tail call ptr @PyMem_Malloc(i64 noundef %i.l) #33 ; 16 uses
-  %2 = ptrtoint ptr %i.m to i64
+  %2 = ptrtoaddr ptr %i.m to i64
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.f, label %bb.g
 
@@ -10947,14 +10927,14 @@ bb.k:                                             ; preds = %_PyUnicode_DATA.exi
 .preheader:                                       ; preds = %.lr.ph98, %bb.k
   %.074.lcssa = phi ptr [ %i.m, %bb.k ], [ %i.br, %.lr.ph98 ] ; 9 uses
   %.072.lcssa = phi ptr [ %.0.i85, %bb.k ], [ %i.bs, %.lr.ph98 ] ; 6 uses
-  %.074.lcssa126 = ptrtoint ptr %.074.lcssa to i64 ; 2 uses
+  %.074.lcssa126 = ptrtoaddr ptr %.074.lcssa to i64 ; 2 uses
   %i.ae = icmp ult ptr %.074.lcssa, %i.t
   br i1 %i.ae, label %.lr.ph103.preheader, label %.loopexit
 
 .lr.ph103.preheader:                              ; preds = %.preheader
-  %3 = ptrtoint ptr %i.m to i64
+  %3 = ptrtoaddr ptr %i.m to i64
   %i.af = add i64 %.idx79, %3
-  %4 = ptrtoint ptr %.074.lcssa to i64            ; 2 uses
+  %4 = ptrtoaddr ptr %.074.lcssa to i64           ; 2 uses
   %i.ag = add i64 %4, 4
   %i.ah = call i64 @llvm.umax.i64(i64 %i.af, i64 %i.ag)
   %i.ai = xor i64 %4, -1
@@ -11065,9 +11045,9 @@ bb.l:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.cd, label %.lr.ph95.preheader, label %.loopexit
 
 .lr.ph95.preheader:                               ; preds = %.preheader88
-  %5 = ptrtoint ptr %i.m to i64
+  %5 = ptrtoaddr ptr %i.m to i64
   %i.ce = add i64 %.idx79, %5
-  %6 = ptrtoint ptr %.069.lcssa to i64            ; 2 uses
+  %6 = ptrtoaddr ptr %.069.lcssa to i64           ; 2 uses
   %i.cf = add i64 %6, 4
   %i.cg = call i64 @llvm.umax.i64(i64 %i.ce, i64 %i.cf)
   %i.ch = xor i64 %6, -1
@@ -11470,7 +11450,7 @@ bb.j:                                             ; preds = %bb.h
 
 _PyUnicode_DATA.exit:                             ; preds = %bb.i, %bb.j
   %.0.i45 = phi ptr [ %.0.i.i, %bb.i ], [ %.val4.i, %bb.j ] ; 18 uses
-  %.0.i4567 = ptrtoint ptr %.0.i45 to i64         ; 9 uses
+  %.0.i4567 = ptrtoaddr ptr %.0.i45 to i64        ; 9 uses
   br i1 %i.a, label %_PyUnicode_Fill.exit, label %bb.k
 
 bb.k:                                             ; preds = %_PyUnicode_DATA.exit
@@ -11574,7 +11554,7 @@ bb.n:                                             ; preds = %bb.k
   br i1 %i.aw, label %.lr.ph.i.preheader, label %_PyUnicode_Fill.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.n
-  %4 = ptrtoint ptr %.0.i45 to i64                ; 3 uses
+  %4 = ptrtoaddr ptr %.0.i45 to i64               ; 3 uses
   %i.ax = shl i64 %spec.store.select, 2
   %i.ay = add i64 %i.ax, %4
   %i.az = add i64 %4, 4

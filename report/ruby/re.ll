@@ -204,20 +204,21 @@ declare void @rb_gc_writebarrier(i64 noundef, i64 noundef) local_unnamed_addr #4
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc range(i32 -1, 1) i32 @unescape_nonascii0(ptr nofree noundef nonnull captures(none) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef nonnull captures(none) %4, ptr nofree noundef nonnull writeonly captures(none) %5, ptr nofree noundef nonnull writeonly captures(none) %6, i32 noundef %7, i32 noundef range(i32 0, 2) %8) unnamed_addr #2 {
 bb.a:
-  %9 = ptrtoint ptr %1 to i64                     ; 3 uses
-  %i.a = alloca ptr, align 8                      ; 28 uses
+  %i.a = alloca ptr, align 8                      ; 29 uses
   %i.b = alloca i8, align 1                       ; 16 uses
   %i.c = alloca [2 x i8], align 1                 ; 5 uses
   %i.d = alloca i64, align 8                      ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
-  %i.e = load ptr, ptr %0, align 8, !tbaa !63     ; 4 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !63
   store ptr %i.e, ptr %i.a, align 8, !tbaa !63
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
   %i.f = icmp ne i32 %8, 0                        ; 2 uses
   %i.g = and i32 %7, -3
+  %9 = ptrtoint ptr %1 to i64                     ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %i.i = icmp ult ptr %i.e, %1
+  %.promoted391 = load ptr, ptr %i.a, align 8, !tbaa !63 ; 3 uses
+  %i.i = icmp ult ptr %.promoted391, %1
   br i1 %i.i, label %.lr.ph388.lr.ph, label %.loopexit229._crit_edge
 
 .lr.ph388.lr.ph:                                  ; preds = %bb.a
@@ -436,7 +437,7 @@ bb.af:                                            ; preds = %bb.i
   br i1 %i.bf, label %.lr.ph259.preheader, label %.critedge.loopexit
 
 .lr.ph259.preheader:                              ; preds = %.preheader
-  %.promoted258287 = ptrtoint ptr %i.u to i64
+  %.promoted258287 = ptrtoaddr ptr %i.u to i64
   %scevgep286 = getelementptr i8, ptr %i.u, i64 %9
   %i.bg = sub i64 0, %.promoted258287
   %scevgep288 = getelementptr i8, ptr %scevgep286, i64 %i.bg ; 2 uses
@@ -687,14 +688,14 @@ bb.bl:                                            ; preds = %bb.at, %bb.as, %bb.
   br i1 %i.dh, label %.lr.ph388, label %.loopexit229._crit_edge
 
 .lr.ph388:                                        ; preds = %.lr.ph388.lr.ph, %.loopexit229.loopexit
-  %.promoted395 = phi ptr [ %i.e, %.lr.ph388.lr.ph ], [ %.promoted, %.loopexit229.loopexit ]
+  %.promoted395 = phi ptr [ %.promoted391, %.lr.ph388.lr.ph ], [ %.promoted, %.loopexit229.loopexit ]
   %.4149394 = phi i32 [ 0, %.lr.ph388.lr.ph ], [ %.3148.ph, %.loopexit229.loopexit ] ; 13 uses
   %.5155393 = phi i32 [ 1, %.lr.ph388.lr.ph ], [ %.4154.ph, %.loopexit229.loopexit ] ; 16 uses
   %.5161392 = phi i32 [ %i.j, %.lr.ph388.lr.ph ], [ %.4160.ph, %.loopexit229.loopexit ] ; 22 uses
   br label %bb.b
 
 .loopexit229._crit_edge:                          ; preds = %.loopexit229.loopexit, %.critedge, %bb.a
-  %.lcssa370 = phi ptr [ %i.r, %.critedge ], [ %i.e, %bb.a ], [ %.promoted, %.loopexit229.loopexit ] ; 2 uses
+  %.lcssa370 = phi ptr [ %i.r, %.critedge ], [ %.promoted391, %bb.a ], [ %.promoted, %.loopexit229.loopexit ] ; 2 uses
   store ptr %.lcssa370, ptr %i.a, align 8
   %.not = icmp eq i32 %8, 0
   br i1 %.not, label %.thread220, label %bb.bm
@@ -1097,12 +1098,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !63     ; 5 uses
-  %5 = ptrtoint ptr %i.c to i64                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   %i.d = icmp ult ptr %i.c, %1
   br i1 %i.d, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %5 = ptrtoaddr ptr %i.c to i64
   %i.e = sub i64 %i.a, %5
   %scevgep = getelementptr i8, ptr %i.c, i64 %i.e
   br label %.lr.ph
@@ -1115,22 +1116,17 @@ bb.a:
   %i.i = add nsw i32 %i.g, -14
   %i.j = icmp ult i32 %i.i, -5
   %narrow.i.not = select i1 %i.h, i1 %i.j, i1 false
-  br i1 %narrow.i.not, label %.critedge.loopexit, label %bb.b
+  br i1 %narrow.i.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.k = getelementptr i8, ptr %.02537, i64 1     ; 2 uses
   %exitcond.not = icmp eq ptr %i.k, %1
-  br i1 %exitcond.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !134
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !134
 
-.critedge.loopexit:                               ; preds = %bb.b, %.lr.ph
-  %.025.lcssa.ph = phi ptr [ %.02537, %.lr.ph ], [ %scevgep, %bb.b ] ; 2 uses
-  %.pre = ptrtoint ptr %.025.lcssa.ph to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %5, %bb.a ]
-  %.025.lcssa = phi ptr [ %.025.lcssa.ph, %.critedge.loopexit ], [ %i.c, %bb.a ] ; 2 uses
-  %i.l = sub i64 %i.a, %.pre-phi
+.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
+  %.025.lcssa = phi ptr [ %i.c, %bb.a ], [ %scevgep, %bb.b ], [ %.02537, %.lr.ph ] ; 3 uses
+  %6 = ptrtoint ptr %.025.lcssa to i64
+  %i.l = sub i64 %i.a, %6
   %i.m = call i64 @ruby_scan_hex(ptr noundef %.025.lcssa, i64 noundef %i.l, ptr noundef nonnull %i.b) #28
   %i.n = load i64, ptr %i.b, align 8, !tbaa !19   ; 2 uses
   %i.o = icmp eq i64 %i.n, 0
@@ -1140,7 +1136,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.p = phi i64 [ %i.af, %.critedge2 ], [ %i.n, %.critedge ] ; 2 uses
   %i.q = phi i64 [ %i.ae, %.critedge2 ], [ %i.m, %.critedge ]
   %.145 = phi ptr [ %.2.lcssa, %.critedge2 ], [ %.025.lcssa, %.critedge ] ; 3 uses
-  %.14551 = ptrtoint ptr %.145 to i64
+  %.14551 = ptrtoaddr ptr %.145 to i64
   %i.r = icmp ugt i64 %i.p, 6
   br i1 %i.r, label %bb.c, label %bb.d
 
