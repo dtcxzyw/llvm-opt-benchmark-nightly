@@ -204,7 +204,7 @@ bb.a:
   %.val.i.3 = load i64, ptr %i.az, align 8, !noundef !3
   %i.ba = add i64 %.val.i.3, %i.ax                ; 3 uses
   %i.bb = add nuw i64 %.sroa.04.0.i, 4            ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtNtCs4tdlwR1I4n2_7parquet4file8metadata16RowGroupMetaDataENtNtNtNtBb_4iter6traits8iterator8Iterator4foldxNCINvNtNtB1V_8adapters3map8map_foldRBQ_xxNCNvMNtBS_6writerINtB3k_20ThriftMetadataWriterINtNtCs6Po7BT7Nknu_5alloc3vec3VechEE6finish0NCINvXse_NtB1T_5accumxNtB4Q_3Sum3sumINtB2F_3MapBF_B3f_EE0E0ECs14kWLkQVSKO_14deltalake_core.exit.loopexit.unr-lcssa, label %.preheader
 
@@ -607,7 +607,7 @@ bb.a:
   %.val.i.3 = load i64, ptr %i.az, align 8, !noundef !3
   %i.ba = add i64 %.val.i.3, %i.ax                ; 3 uses
   %i.bb = add nuw i64 %.sroa.04.0.i, 4            ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtNtCs4tdlwR1I4n2_7parquet4file8metadata16RowGroupMetaDataENtNtNtNtBb_4iter6traits8iterator8Iterator4foldxNCINvNtNtB1V_8adapters3map8map_foldRBQ_xxNCNvMNtBS_6writerINtB3k_20ThriftMetadataWriterNtNtNtCs14kWLkQVSKO_14deltalake_core6writer5utils15ShareableBufferE6finish0NCINvXse_NtB1T_5accumxNtB5l_3Sum3sumINtB2F_3MapBF_B3f_EE0E0EB45_.exit.loopexit.unr-lcssa, label %.preheader
 
@@ -1010,7 +1010,7 @@ bb.a:
   %.val.i.3 = load i64, ptr %i.az, align 8, !noundef !3
   %i.ba = add i64 %.val.i.3, %i.ax                ; 3 uses
   %i.bb = add nuw i64 %.sroa.04.0.i, 4            ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtNtCs4tdlwR1I4n2_7parquet4file8metadata16RowGroupMetaDataENtNtNtNtBb_4iter6traits8iterator8Iterator4foldxNCINvNtNtB1V_8adapters3map8map_foldRBQ_xxNCNvMNtBS_6writerINtB3k_20ThriftMetadataWriterQINtNtCs6Po7BT7Nknu_5alloc3vec3VechEE6finish0NCINvXse_NtB1T_5accumxNtB4R_3Sum3sumINtB2F_3MapBF_B3f_EE0E0ECs14kWLkQVSKO_14deltalake_core.exit.loopexit.unr-lcssa, label %.preheader
 

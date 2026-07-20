@@ -204,7 +204,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIbiNS_23HeterogeneousAccessHashIbvEENS_26HeterogeneousAccessEqualToIbvEEN8facebook5velox6memory12StlAllocatorISt4pairIKbiEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1314
 
@@ -607,7 +607,7 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.as, i8 0, i64 16, i1 false)
   %i.at = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbivvN8facebook5velox6memory12StlAllocatorISt4pairIKbiEEEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1362
 
@@ -1010,7 +1010,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIiiNS_23HeterogeneousAccessHashIivEENS_26HeterogeneousAccessEqualToIivEEN8facebook5velox6memory12StlAllocatorISt4pairIKiiEEEEEvvNSC_ISD_ISE_SH_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1469
 
@@ -1413,7 +1413,7 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.as, i8 0, i64 16, i1 false)
   %i.at = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiivvN8facebook5velox6memory12StlAllocatorISt4pairIKiiEEEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1506
 
@@ -1816,7 +1816,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIaiNS_23HeterogeneousAccessHashIavEENS_26HeterogeneousAccessEqualToIavEEN8facebook5velox6memory12StlAllocatorISt4pairIKaiEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1587
 
@@ -2219,7 +2219,7 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.as, i8 0, i64 16, i1 false)
   %i.at = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaivvN8facebook5velox6memory12StlAllocatorISt4pairIKaiEEEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1624
 
@@ -2622,7 +2622,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIsiNS_23HeterogeneousAccessHashIsvEENS_26HeterogeneousAccessEqualToIsvEEN8facebook5velox6memory12StlAllocatorISt4pairIKsiEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1705
 
@@ -3025,7 +3025,7 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.as, i8 0, i64 16, i1 false)
   %i.at = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsivvN8facebook5velox6memory12StlAllocatorISt4pairIKsiEEEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1742
 
@@ -3428,7 +3428,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIliNS_23HeterogeneousAccessHashIlvEENS_26HeterogeneousAccessEqualToIlvEEN8facebook5velox6memory12StlAllocatorISt4pairIKliEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1823
 
@@ -3831,7 +3831,7 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.aq, i8 0, i64 16, i1 false)
   %i.ar = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlivvN8facebook5velox6memory12StlAllocatorISt4pairIKliEEEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1860
 
@@ -4234,7 +4234,7 @@ _ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly1
   store i64 0, ptr %i.z, align 8, !tbaa !129
   %i.ab = getelementptr inbounds nuw i8, ptr %.01418.i, i64 80 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.01517.i, i64 80 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIniNS_23HeterogeneousAccessHashInvEENS_26HeterogeneousAccessEqualToInvEEN8facebook5velox6memory12StlAllocatorISt4pairIKniEEEEEvvNSB_ISC_IKiSG_EEESt17integral_constantIbLb1EEE8transferERSJ_PSI_SO_m.exit.loopexit.unr-lcssa, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly10F14FastMapIniNS6_23HeterogeneousAccessHashInvEENS6_26HeterogeneousAccessEqualToInvEENS3_IS4_IKniEEEEEEEEE7destroyISG_EEvRSH_PT_.exit.i, !llvm.loop !1898
 
@@ -4637,7 +4637,7 @@ _ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly1
   store i64 0, ptr %i.bo, align 8, !tbaa !129
   %i.bq = getelementptr inbounds nuw i8, ptr %.01418.i.i, i64 80 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.01517.i.i, i64 80 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIniNS_23HeterogeneousAccessHashInvEENS_26HeterogeneousAccessEqualToInvEEN8facebook5velox6memory12StlAllocatorISt4pairIKniEEEEEvvNSB_ISC_IKiSG_EEESt17integral_constantIbLb1EEE12beforeRehashEmmmmRPh.exit.loopexit.unr-lcssa, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly10F14FastMapIniNS6_23HeterogeneousAccessHashInvEENS6_26HeterogeneousAccessEqualToInvEENS3_IS4_IKniEEEEEEEEE7destroyISG_EEvRSH_PT_.exit.i.i, !llvm.loop !1898
 
@@ -4714,7 +4714,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIniNS_23Heterogeneou
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.cs, i8 0, i64 16, i1 false)
   %i.ct = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter146.next.7 = add i64 %niter146, 8         ; 2 uses
+  %niter146.next.7 = add nuw i64 %niter146, 8     ; 2 uses
   %niter146.ncmp.7 = icmp eq i64 %niter146.next.7, %unroll_iter145
   br i1 %niter146.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIniNS_23HeterogeneousAccessHashInvEENS_26HeterogeneousAccessEqualToInvEEN8facebook5velox6memory12StlAllocatorISt4pairIKniEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1941
 
@@ -5117,7 +5117,7 @@ _ZN5folly3f146detail21VectorContainerPolicyInivvN8facebook5velox6memory12StlAllo
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.bf, i8 0, i64 16, i1 false)
   %i.bg = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyInivvN8facebook5velox6memory12StlAllocatorISt4pairIKniEEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1971
 
@@ -5520,7 +5520,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIfiN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS8_14NaNAwareEqualsIfLb1EEENS6_6memory12StlAllocatorISt4pairIKfiEEEEEvvNSE_ISF_IKiSJ_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2066
 
@@ -5923,7 +5923,7 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.as, i8 0, i64 16, i1 false)
   %i.at = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfiN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEENS5_6memory12StlAllocatorISt4pairIKfiEEEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2103
 
@@ -6326,7 +6326,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIdiN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS8_14NaNAwareEqualsIdLb1EEENS6_6memory12StlAllocatorISt4pairIKdiEEEEEvvNSE_ISF_IKiSJ_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2195
 
@@ -6729,7 +6729,7 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.aq, i8 0, i64 16, i1 false)
   %i.ar = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdiN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEENS5_6memory12StlAllocatorISt4pairIKdiEEEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2232
 
@@ -7132,7 +7132,7 @@ _ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly1
   store i64 0, ptr %i.z, align 8, !tbaa !129
   %i.ab = getelementptr inbounds nuw i8, ptr %.01418.i, i64 80 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.01517.i, i64 80 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox10StringViewEiNS_23HeterogeneousAccessHashIS6_vEENS_26HeterogeneousAccessEqualToIS6_vEENS5_6memory12StlAllocatorISt4pairIKS6_iEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEE8transferERSK_PSJ_SP_m.exit.loopexit.unr-lcssa, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly10F14FastMapINS1_10StringViewEiNS6_23HeterogeneousAccessHashIS8_vEENS6_26HeterogeneousAccessEqualToIS8_vEENS3_IS4_IKS8_iEEEEEEEEE7destroyISH_EEvRSI_PT_.exit.i, !llvm.loop !2270
 
@@ -7535,7 +7535,7 @@ _ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly1
   store i64 0, ptr %i.bo, align 8, !tbaa !129
   %i.bq = getelementptr inbounds nuw i8, ptr %.01418.i.i, i64 80 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.01517.i.i, i64 80 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox10StringViewEiNS_23HeterogeneousAccessHashIS6_vEENS_26HeterogeneousAccessEqualToIS6_vEENS5_6memory12StlAllocatorISt4pairIKS6_iEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEE12beforeRehashEmmmmRPh.exit.loopexit.unr-lcssa, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly10F14FastMapINS1_10StringViewEiNS6_23HeterogeneousAccessHashIS8_vEENS6_26HeterogeneousAccessEqualToIS8_vEENS3_IS4_IKS8_iEEEEEEEEE7destroyISH_EEvRSI_PT_.exit.i.i, !llvm.loop !2270
 
@@ -7612,7 +7612,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox10S
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.cs, i8 0, i64 16, i1 false)
   %i.ct = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter146.next.7 = add i64 %niter146, 8         ; 2 uses
+  %niter146.next.7 = add nuw i64 %niter146, 8     ; 2 uses
   %niter146.ncmp.7 = icmp eq i64 %niter146.next.7, %unroll_iter145
   br i1 %niter146.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox10StringViewEiNS_23HeterogeneousAccessHashIS7_vEENS_26HeterogeneousAccessEqualToIS7_vEENS6_6memory12StlAllocatorISt4pairIKS7_iEEEEEvvNSD_ISE_IKiSI_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2325
 
@@ -8015,7 +8015,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewEivvNS4_
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.bj, i8 0, i64 16, i1 false)
   %i.bk = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox10StringViewEivvNS5_6memory12StlAllocatorISt4pairIKS6_iEEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2355
 
@@ -8418,7 +8418,7 @@ _ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly1
   store i64 0, ptr %i.z, align 8, !tbaa !129
   %i.ab = getelementptr inbounds nuw i8, ptr %.01418.i, i64 80 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.01517.i, i64 80 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox9TimestampEiNS_23HeterogeneousAccessHashIS6_vEENS_26HeterogeneousAccessEqualToIS6_vEENS5_6memory12StlAllocatorISt4pairIKS6_iEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEE8transferERSK_PSJ_SP_m.exit.loopexit.unr-lcssa, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly10F14FastMapINS1_9TimestampEiNS6_23HeterogeneousAccessHashIS8_vEENS6_26HeterogeneousAccessEqualToIS8_vEENS3_IS4_IKS8_iEEEEEEEEE7destroyISH_EEvRSI_PT_.exit.i, !llvm.loop !2432
 
@@ -8821,7 +8821,7 @@ _ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly1
   store i64 0, ptr %i.bo, align 8, !tbaa !129
   %i.bq = getelementptr inbounds nuw i8, ptr %.01418.i.i, i64 80 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.01517.i.i, i64 80 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox9TimestampEiNS_23HeterogeneousAccessHashIS6_vEENS_26HeterogeneousAccessEqualToIS6_vEENS5_6memory12StlAllocatorISt4pairIKS6_iEEEEEvvNSC_ISD_IKiSH_EEESt17integral_constantIbLb1EEE12beforeRehashEmmmmRPh.exit.loopexit.unr-lcssa, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorISt4pairIKiN5folly10F14FastMapINS1_9TimestampEiNS6_23HeterogeneousAccessHashIS8_vEENS6_26HeterogeneousAccessEqualToIS8_vEENS3_IS4_IKS8_iEEEEEEEEE7destroyISH_EEvRSI_PT_.exit.i.i, !llvm.loop !2432
 
@@ -8898,7 +8898,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox9Ti
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.cs, i8 0, i64 16, i1 false)
   %i.ct = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter146.next.7 = add i64 %niter146, 8         ; 2 uses
+  %niter146.next.7 = add nuw i64 %niter146, 8     ; 2 uses
   %niter146.ncmp.7 = icmp eq i64 %niter146.next.7, %unroll_iter145
   br i1 %niter146.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastMapIN8facebook5velox9TimestampEiNS_23HeterogeneousAccessHashIS7_vEENS_26HeterogeneousAccessEqualToIS7_vEENS6_6memory12StlAllocatorISt4pairIKS7_iEEEEEvvNSD_ISE_IKiSI_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2475
 
@@ -9301,7 +9301,7 @@ _ZN5folly3f146detail21VectorContainerPolicyIN8facebook5velox9TimestampEivvNS4_6m
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.bh, i8 0, i64 16, i1 false)
   %i.bi = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebook5velox9TimestampEivvNS5_6memory12StlAllocatorISt4pairIKS6_iEEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2504
 
@@ -9704,7 +9704,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 448
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.at, i8 0, i64 16, i1 false)
   %i.au = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastSetIN8facebook5velox9functions6detail6MapKeyENS8_12MapKeyHasherENS_26HeterogeneousAccessEqualToIS9_vEENS6_6memory12StlAllocatorIS9_EEEEvvNSE_ISt4pairIKiSG_EEESt17integral_constantIbLb1EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2544
 
@@ -10107,7 +10107,7 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 1792
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.as, i8 0, i64 16, i1 false)
   %i.at = add nuw i64 %.08.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9functions6detail6MapKeyEvNS7_12MapKeyHasherEvNS5_6memory12StlAllocatorIS8_EEEEE16initializeChunksEPhmm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !286
 

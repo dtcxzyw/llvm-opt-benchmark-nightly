@@ -204,7 +204,7 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.us: ; preds = %_ZN6duckd
   %i.z = and i64 %i.y, %i.w
   store i64 %i.z, ptr %i.x, align 8, !tbaa !281
   %i.aa = add nuw i64 %.052.us, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit64.unr-lcssa, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.us, !llvm.loop !470
 
@@ -607,7 +607,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_31TemplatedParquetValueConversionIjEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !770
 
@@ -1010,7 +1010,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_31TemplatedParquetValueConversionImEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !816
 
@@ -1413,7 +1413,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_31TemplatedParquetValueConversionIiEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !832
 
@@ -1816,7 +1816,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_31TemplatedParquetValueConversionIlEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !875
 
@@ -2219,7 +2219,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionItfXadL_ZNS_16Float16ToFloat32ERKtEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !893
 
@@ -2622,7 +2622,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_31TemplatedParquetValueConversionIfEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !908
 
@@ -3025,7 +3025,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_31TemplatedParquetValueConversionIdEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !924
 
@@ -3428,7 +3428,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionINS_5Int96ENS_11timestamp_tEXadL_ZNS_26ImpalaTimestampToTimestampERKS3_EEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !943
 
@@ -3831,7 +3831,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_11timestamp_tEXadL_ZNS_29ParquetTimestampMsToTimestampERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !959
 
@@ -4234,7 +4234,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_11timestamp_tEXadL_ZNS_33ParquetTimestampMicrosToTimestampERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !975
 
@@ -4637,7 +4637,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_11timestamp_tEXadL_ZNS_29ParquetTimestampNsToTimestampERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !991
 
@@ -5040,7 +5040,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionINS_5Int96ENS_14timestamp_ns_tEXadL_ZNS_28ImpalaTimestampToTimestampNSERKS3_EEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1007
 
@@ -5443,7 +5443,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_14timestamp_ns_tEXadL_ZNS_31ParquetTimestampMsToTimestampNsERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1023
 
@@ -5846,7 +5846,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_14timestamp_ns_tEXadL_ZNS_31ParquetTimestampUsToTimestampNsERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1039
 
@@ -6249,7 +6249,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_14timestamp_ns_tEXadL_ZNS_31ParquetTimestampNsToTimestampNsERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1055
 
@@ -6652,7 +6652,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIiNS_6date_tEXadL_ZNS_16ParquetIntToDateERKiEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1071
 
@@ -7055,7 +7055,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIiNS_7dtime_tEXadL_ZNS_18ParquetMsIntToTimeERKiEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1087
 
@@ -7458,7 +7458,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_7dtime_tEXadL_ZNS_16ParquetIntToTimeERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1103
 
@@ -7861,7 +7861,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_7dtime_tEXadL_ZNS_18ParquetNsIntToTimeERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1119
 
@@ -8264,7 +8264,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIiNS_10dtime_ns_tEXadL_ZNS_20ParquetMsIntToTimeNsERKiEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1135
 
@@ -8667,7 +8667,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_10dtime_ns_tEXadL_ZNS_20ParquetUsIntToTimeNsERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1151
 
@@ -9070,7 +9070,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_10dtime_ns_tEXadL_ZNS_18ParquetIntToTimeNsERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1167
 
@@ -9473,7 +9473,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIiNS_10dtime_tz_tEXadL_ZNS_20ParquetIntToTimeMsTZERKiEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1183
 
@@ -9876,7 +9876,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_10dtime_tz_tEXadL_ZNS_18ParquetIntToTimeTZERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1199
 
@@ -10279,7 +10279,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_30CallbackParquetValueConversionIlNS_10dtime_tz_tEXadL_ZNS_20ParquetIntToTimeNsTZERKlEEEELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1215
 
@@ -10682,7 +10682,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_19UUIDValueConversionELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1289
 
@@ -11085,7 +11085,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.x = phi i64 [ %i.p, %bb.e ], [ %i.v, %bb.f ] ; 2 uses
   %i.y = phi ptr [ %i.q, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
   %i.z = add nuw i64 %.08.i, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb12ColumnReader26PlainSkipTemplatedInternalINS_23IntervalValueConversionELb1ELb0EEEvRNS_10ByteBufferEPKhmm.exit.loopexit25.unr-lcssa, label %bb.c, !llvm.loop !1305
 
@@ -11488,7 +11488,7 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.us: ; preds = %_ZN6duckd
   %i.v = and i64 %i.u, %i.s
   store i64 %i.v, ptr %i.t, align 8, !tbaa !281
   %i.w = add nuw i64 %.06.us, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit14.unr-lcssa, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.us, !llvm.loop !1319
 

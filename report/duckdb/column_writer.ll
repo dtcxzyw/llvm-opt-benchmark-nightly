@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 60
   store i32 -1, ptr %i.ar, align 4, !tbaa !741
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIaiNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !775
 
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 60
   store i32 -1, ptr %i.ar, align 4, !tbaa !916
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIsiNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !927
 
@@ -1010,7 +1010,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 60
   store i32 -1, ptr %i.ar, align 4, !tbaa !1014
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIiiNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1025
 
@@ -1413,7 +1413,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 120
   store i32 -1, ptr %i.ar, align 8, !tbaa !1112
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIllNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1123
 
@@ -1816,7 +1816,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 120
   store i32 -1, ptr %i.ar, align 8, !tbaa !1204
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_10dtime_tz_tElNS_21ParquetTimeTZOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1216
 
@@ -2219,7 +2219,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 184
   store i32 -1, ptr %i.ar, align 8, !tbaa !1300
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_9hugeint_tEdNS_22ParquetHugeintOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1312
 
@@ -2622,7 +2622,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 184
   store i32 -1, ptr %i.ar, align 8, !tbaa !1397
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_10uhugeint_tEdNS_23ParquetUhugeintOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1409
 
@@ -3025,7 +3025,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 120
   store i32 -1, ptr %i.ar, align 8, !tbaa !1489
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIllNS_26ParquetTimestampNSOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1500
 
@@ -3428,7 +3428,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 120
   store i32 -1, ptr %i.ar, align 8, !tbaa !1582
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIllNS_25ParquetTimestampSOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1593
 
@@ -3831,7 +3831,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 60
   store i32 -1, ptr %i.ar, align 4, !tbaa !1680
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIhiNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1691
 
@@ -4234,7 +4234,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 60
   store i32 -1, ptr %i.ar, align 4, !tbaa !1778
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryItiNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1789
 
@@ -4637,7 +4637,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 60
   store i32 -1, ptr %i.ar, align 4, !tbaa !1876
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryIjjNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1887
 
@@ -5040,7 +5040,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 120
   store i32 -1, ptr %i.ar, align 8, !tbaa !1974
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryImmNS_19ParquetCastOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1985
 
@@ -5443,7 +5443,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 60
   store i32 -1, ptr %i.ar, align 4, !tbaa !2070
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_14float_na_equalEfNS_21FloatingPointOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2082
 
@@ -5846,7 +5846,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 120
   store i32 -1, ptr %i.ar, align 8, !tbaa !2169
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_15double_na_equalEdNS_21FloatingPointOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2181
 
@@ -6249,7 +6249,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 184
   store i32 -1, ptr %i.ar, align 8, !tbaa !2271
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_8string_tES1_NS_19ParquetBlobOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2283
 
@@ -6652,7 +6652,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 184
   store i32 -1, ptr %i.ar, align 8, !tbaa !2394
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_8string_tES1_NS_23ParquetGeometryOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2405
 
@@ -7055,7 +7055,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 184
   store i32 -1, ptr %i.ar, align 8, !tbaa !2520
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_8string_tES1_NS_21ParquetStringOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2531
 
@@ -7458,7 +7458,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 184
   store i32 -1, ptr %i.ar, align 8, !tbaa !2620
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_9hugeint_tENS_21ParquetUUIDTargetTypeENS_19ParquetUUIDOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2631
 
@@ -7861,7 +7861,7 @@ bb.b:                                             ; preds = %_ZN6duckdb9Allocato
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 184
   store i32 -1, ptr %i.ar, align 8, !tbaa !2713
   %i.as = add nuw i64 %.03.i, 8                   ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN6duckdb19PrimitiveDictionaryINS_10interval_tENS_25ParquetIntervalTargetTypeENS_23ParquetIntervalOperatorEE5ClearEv.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2725
 

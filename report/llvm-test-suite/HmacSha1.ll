@@ -172,7 +172,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = load i8, ptr %i.x, align 1, !tbaa !8
   %i.z = zext i8 %i.y to i32
   %.0.tr = trunc i64 %.031 to i32
-  %i.aa = shl i32 %.0.tr, 3
+  %i.aa = shl nuw nsw i32 %.0.tr, 3
   %i.ab = and i32 %i.aa, 16
   %i.ac = xor i32 %i.ab, 24
   %i.ad = shl nuw i32 %i.z, %i.ac
@@ -186,7 +186,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !8
   %i.al = zext i8 %i.ak to i32
   %.0.tr.1 = trunc i64 %.031 to i32
-  %i.am = shl i32 %.0.tr.1, 3
+  %i.am = shl nuw nsw i32 %.0.tr.1, 3
   %i.an = and i32 %i.am, 16
   %i.ao = xor i32 %i.an, 16
   %i.ap = shl nuw nsw i32 %i.al, %i.ao
@@ -196,7 +196,7 @@ bb.b:                                             ; preds = %bb.a
   %i.at = or i32 %i.ap, %i.as
   store i32 %i.at, ptr %i.ar, align 4, !tbaa !4
   %i.au = add nuw nsw i64 %.031, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !13
 

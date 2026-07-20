@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1157
 
@@ -319,7 +319,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1157
 
@@ -722,7 +722,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter140.next.1 = add i64 %niter140, 2         ; 2 uses
+  %niter140.next.1 = add nuw i64 %niter140, 2     ; 2 uses
   %niter140.ncmp.1 = icmp eq i64 %niter140.next.1, %unroll_iter139
   br i1 %niter140.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1174
 
@@ -837,7 +837,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit132.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1174
 
@@ -1240,7 +1240,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1190
 
@@ -1355,7 +1355,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1190
 
@@ -1758,7 +1758,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1206
 
@@ -1873,7 +1873,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1206
 
@@ -2276,7 +2276,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1222
 
@@ -2391,7 +2391,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1222
 
@@ -2794,7 +2794,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter140.next.1 = add i64 %niter140, 2         ; 2 uses
+  %niter140.next.1 = add nuw i64 %niter140, 2     ; 2 uses
   %niter140.ncmp.1 = icmp eq i64 %niter140.next.1, %unroll_iter139
   br i1 %niter140.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1238
 
@@ -2909,7 +2909,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit132.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1238
 
@@ -3312,7 +3312,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1254
 
@@ -3427,7 +3427,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1254
 
@@ -3830,7 +3830,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1270
 
@@ -3945,7 +3945,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1270
 
@@ -4348,7 +4348,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1286
 
@@ -4463,7 +4463,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1286
 
@@ -4866,7 +4866,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1302
 
@@ -4981,7 +4981,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1302
 
@@ -5384,7 +5384,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1318
 
@@ -5499,7 +5499,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1318
 
@@ -5902,7 +5902,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.u, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.v = add nuw i64 %.06597.us, 2                ; 2 uses
-  %niter140.next.1 = add i64 %niter140, 2         ; 2 uses
+  %niter140.next.1 = add nuw i64 %niter140, 2     ; 2 uses
   %niter140.ncmp.1 = icmp eq i64 %niter140.next.1, %unroll_iter139
   br i1 %niter140.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1346
 
@@ -6017,7 +6017,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bi, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bj = add nuw i64 %.06597, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit132.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1346
 
@@ -6420,7 +6420,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.u, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.v = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1358
 
@@ -6535,7 +6535,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bi, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bj = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit131.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1358
 
@@ -6938,7 +6938,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1393
 
@@ -7053,7 +7053,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1393
 
@@ -7456,7 +7456,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1412
 
@@ -7571,7 +7571,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1412
 
@@ -7974,7 +7974,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1431
 
@@ -8089,7 +8089,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1431
 
@@ -8492,7 +8492,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1450
 
@@ -8607,7 +8607,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1450
 
@@ -9010,7 +9010,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1469
 
@@ -9125,7 +9125,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1469
 
@@ -9528,7 +9528,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1488
 
@@ -9643,7 +9643,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1488
 
@@ -10046,7 +10046,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1507
 
@@ -10161,7 +10161,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1507
 
@@ -10564,7 +10564,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1526
 
@@ -10679,7 +10679,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1526
 
@@ -11082,7 +11082,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1545
 
@@ -11197,7 +11197,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1545
 
@@ -11600,7 +11600,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1564
 
@@ -11715,7 +11715,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1564
 
@@ -12118,7 +12118,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.w, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.x = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1583
 
@@ -12233,7 +12233,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bk, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bl = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1583
 
@@ -12636,7 +12636,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.u, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.v = add nuw i64 %.06597.us, 2                ; 2 uses
-  %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
+  %niter138.next.1 = add nuw i64 %niter138, 2     ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1609
 
@@ -12751,7 +12751,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bi, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bj = add nuw i64 %.06597, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit130.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1609
 
@@ -13154,7 +13154,7 @@ bb.f:                                             ; preds = %_ZNK6duckdb15Select
 bb.g:                                             ; preds = %bb.f, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1
   %.164.us.1 = phi i64 [ %i.u, %bb.f ], [ %.164.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.1 ] ; 3 uses
   %i.v = add nuw i64 %.06596.us, 2                ; 2 uses
-  %niter137.next.1 = add i64 %niter137, 2         ; 2 uses
+  %niter137.next.1 = add nuw i64 %niter137, 2     ; 2 uses
   %niter137.ncmp.1 = icmp eq i64 %niter137.next.1, %unroll_iter136
   br i1 %niter137.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us, !llvm.loop !1623
 
@@ -13269,7 +13269,7 @@ bb.o:                                             ; preds = %_ZNK6duckdb15Select
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1
   %.164.1 = phi i64 [ %i.bi, %bb.o ], [ %.164, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.1 ] ; 3 uses
   %i.bj = add nuw i64 %.06596, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit129.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !1623
 

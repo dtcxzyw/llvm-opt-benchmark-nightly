@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %.val.i.3 = load i64, ptr %i.af, align 8, !noundef !27
   %i.ag = add i64 %.val.i.3, %i.ad                ; 3 uses
   %i.ah = add nuw i64 %.sroa.04.0.i, 4            ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1T_8adapters3map8map_foldRBQ_jjNvMs_BS_BQ_8num_rowsNCINvXsK_NtB1R_5accumjNtB3G_3Sum3sumINtB2D_3MapBF_B3d_EE0E0ECs14kWLkQVSKO_14deltalake_core.exit.loopexit.unr-lcssa, label %.preheader
 
@@ -606,7 +606,7 @@ bb.a:
   %.val.i.3 = load i64, ptr %i.p, align 8, !noundef !27
   %i.q = add i64 %.val.i.3, %i.n                  ; 3 uses
   %i.r = add nuw i64 %.sroa.04.0.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1T_8adapters3map8map_foldRBQ_jjNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB3l_14LogDataHandler9num_files0NCINvXsK_NtB1R_5accumjNtB50_3Sum3sumINtB2D_3MapBF_B3d_EE0E0EB3r_.exit.loopexit.unr-lcssa, label %.preheader
 
@@ -1009,7 +1009,7 @@ bb.a:
   %.val.i.3 = load i64, ptr %i.ae, align 8, !noundef !27
   %i.af = add i64 %.val.i.3, %i.ac                ; 3 uses
   %i.ag = add nuw i64 %.sroa.04.0.i, 4            ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterINtNtNtCs6Po7BT7Nknu_5alloc11collections9vec_deque8VecDequeTNtNtBX_6string6StringjEEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB2j_8adapters3map8map_foldRBQ_jjNCNvXs0_NtNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan9exec_metaNtB3L_17DeltaScanMetaExecNtNtCs5wg436RVUAP_24datafusion_physical_plan14execution_plan13ExecutionPlan13repartitioned0NCINvXsK_NtB2h_5accumjNtB7i_3Sum3sumINtB33_3MapBF_B3D_EE0E0EB3V_.exit.loopexit.unr-lcssa, label %.preheader
 
@@ -1412,7 +1412,7 @@ bb.a:
   %.sroa.0.0.i.i.i.i.3 = load i64, ptr %.sroa.0.0.in.i.i.i.i.3, align 8, !noalias !18208, !noundef !27
   %i.q = add i64 %.sroa.0.0.i.i.i.i.3, %i.n       ; 3 uses
   %i.r = add nuw i64 %.sroa.04.0.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtNtCs7xHNgVo2C7m_12arrow_buffer6buffer9immutable6BufferENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1T_8adapters3map8map_foldRBQ_jjNCNvXs1_NtNtCs1N9T06jgEdt_11arrow_array5array15byte_view_arrayINtB3l_20GenericByteViewArrayNtNtB3p_5types14BinaryViewTypeENtB3n_5Array22get_buffer_memory_size0NCINvXsK_NtB1R_5accumjNtB5V_3Sum3sumINtB2D_3MapBF_B3d_EE0E0ECs14kWLkQVSKO_14deltalake_core.exit.i.loopexit.unr-lcssa, label %.preheader.i
 
@@ -1512,7 +1512,7 @@ bb.a:
   %.sroa.0.0.i.i.i.3 = load i64, ptr %.sroa.0.0.in.i.i.i.3, align 8, !noundef !27
   %i.q = add i64 %.sroa.0.0.i.i.i.3, %i.n         ; 3 uses
   %i.r = add nuw i64 %.sroa.04.0.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtNtCs7xHNgVo2C7m_12arrow_buffer6buffer9immutable6BufferENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1T_8adapters3map8map_foldRBQ_jjNCNvXs1_NtNtCs1N9T06jgEdt_11arrow_array5array15byte_view_arrayINtB3l_20GenericByteViewArrayNtNtB3p_5types14BinaryViewTypeENtB3n_5Array22get_buffer_memory_size0NCINvXsK_NtB1R_5accumjNtB5V_3Sum3sumINtB2D_3MapBF_B3d_EE0E0ECs14kWLkQVSKO_14deltalake_core.exit.loopexit.unr-lcssa, label %.preheader
 
@@ -1915,7 +1915,7 @@ bb.a:
   %.sroa.0.0.i.i.i.i.3 = load i64, ptr %.sroa.0.0.in.i.i.i.i.3, align 8, !noalias !18251, !noundef !27
   %i.q = add i64 %.sroa.0.0.i.i.i.i.3, %i.n       ; 3 uses
   %i.r = add nuw i64 %.sroa.04.0.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtNtCs7xHNgVo2C7m_12arrow_buffer6buffer9immutable6BufferENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1T_8adapters3map8map_foldRBQ_jjNCNvXs1_NtNtCs1N9T06jgEdt_11arrow_array5array15byte_view_arrayINtB3l_20GenericByteViewArrayNtNtB3p_5types14StringViewTypeENtB3n_5Array22get_buffer_memory_size0NCINvXsK_NtB1R_5accumjNtB5V_3Sum3sumINtB2D_3MapBF_B3d_EE0E0ECs14kWLkQVSKO_14deltalake_core.exit.i.loopexit.unr-lcssa, label %.preheader.i
 
@@ -2015,7 +2015,7 @@ bb.a:
   %.sroa.0.0.i.i.i.3 = load i64, ptr %.sroa.0.0.in.i.i.i.3, align 8, !noundef !27
   %i.q = add i64 %.sroa.0.0.i.i.i.3, %i.n         ; 3 uses
   %i.r = add nuw i64 %.sroa.04.0.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtNtCs7xHNgVo2C7m_12arrow_buffer6buffer9immutable6BufferENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1T_8adapters3map8map_foldRBQ_jjNCNvXs1_NtNtCs1N9T06jgEdt_11arrow_array5array15byte_view_arrayINtB3l_20GenericByteViewArrayNtNtB3p_5types14StringViewTypeENtB3n_5Array22get_buffer_memory_size0NCINvXsK_NtB1R_5accumjNtB5V_3Sum3sumINtB2D_3MapBF_B3d_EE0E0ECs14kWLkQVSKO_14deltalake_core.exit.loopexit.unr-lcssa, label %.preheader
 
@@ -2418,7 +2418,7 @@ bb.a:
   %.val.i.3 = load i64, ptr %i.p, align 8, !noundef !27
   %i.q = add i64 %.val.i.3, %i.n                  ; 3 uses
   %i.r = add nuw i64 %.sroa.04.0.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1T_8adapters3map8map_foldRBQ_jjNCNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB3m_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics14num_containers0NCINvXsK_NtB1R_5accumjNtB6l_3Sum3sumINtB2D_3MapBF_B3d_EE0E0EB3s_.exit.loopexit.unr-lcssa, label %.preheader
 

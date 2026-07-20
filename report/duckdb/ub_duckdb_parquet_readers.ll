@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   store i64 %i.t, ptr %i.w, align 8, !tbaa !300
   %i.x = add nuw i64 %.08, 4                      ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.c, !llvm.loop !378
 }

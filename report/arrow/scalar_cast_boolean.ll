@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph61.new
   %i.br = select i1 %.not47.1, i8 0, i8 %i.bo
   %i.bs = or i8 %i.br, %i.bn                      ; 3 uses
   %i.bt = shl nuw i8 %.13759, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge62.loopexit.unr-lcssa, label %bb.f, !llvm.loop !265
 
@@ -412,7 +412,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph61.new
   %i.br = select i1 %.not47.1, i8 0, i8 %i.bo
   %i.bs = or i8 %i.br, %i.bn                      ; 3 uses
   %i.bt = shl nuw i8 %.13759, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge62.loopexit.unr-lcssa, label %bb.f, !llvm.loop !270
 
@@ -577,7 +577,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph62.new
   %i.bf = select i1 %.not47.3, i8 0, i8 %i.bc
   %i.bg = or i8 %i.bf, %i.bb                      ; 3 uses
   %i.bh = shl nuw i8 %.13760, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge63.unr-lcssa, label %bb.g, !llvm.loop !276
 
@@ -758,7 +758,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph62.new
   %i.bf = select i1 %.not47.3, i8 0, i8 %i.bc
   %i.bg = or i8 %i.bf, %i.bb                      ; 3 uses
   %i.bh = shl nuw i8 %.13760, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge63.unr-lcssa, label %bb.g, !llvm.loop !283
 
@@ -939,7 +939,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph62.new
   %i.bf = select i1 %.not47.3, i8 0, i8 %i.bc
   %i.bg = or i8 %i.bf, %i.bb                      ; 3 uses
   %i.bh = shl nuw i8 %.13760, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge63.unr-lcssa, label %bb.g, !llvm.loop !289
 
@@ -1120,7 +1120,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph62.new
   %i.bf = select i1 %.not47.3, i8 0, i8 %i.bc
   %i.bg = or i8 %i.bf, %i.bb                      ; 3 uses
   %i.bh = shl nuw i8 %.13760, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge63.unr-lcssa, label %bb.g, !llvm.loop !295
 
@@ -1301,7 +1301,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph62.new
   %i.bf = select i1 %.not47.3, i8 0, i8 %i.bc
   %i.bg = or i8 %i.bf, %i.bb                      ; 3 uses
   %i.bh = shl nuw i8 %.13760, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge63.unr-lcssa, label %bb.g, !llvm.loop !302
 
@@ -1482,7 +1482,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph62.new
   %i.bf = select i1 %.not47.3, i8 0, i8 %i.bc
   %i.bg = or i8 %i.bf, %i.bb                      ; 3 uses
   %i.bh = shl nuw i8 %.13760, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge63.unr-lcssa, label %bb.g, !llvm.loop !308
 
@@ -1663,7 +1663,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph60.new
   %i.bk = select i1 %i.bj, i8 %i.bg, i8 0
   %i.bl = or i8 %i.bk, %i.bf                      ; 3 uses
   %i.bm = shl nuw i8 %.13758, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge61.unr-lcssa, label %bb.g, !llvm.loop !316
 
@@ -1844,7 +1844,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph60.new
   %i.bk = select i1 %i.bj, i8 %i.bg, i8 0
   %i.bl = or i8 %i.bk, %i.bf                      ; 3 uses
   %i.bm = shl nuw i8 %.13758, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge61.unr-lcssa, label %bb.g, !llvm.loop !324
 

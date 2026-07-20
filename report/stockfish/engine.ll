@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %_ZN
   %i.gg = xor i64 %i.gb, %i.gf
   %i.gh = mul i64 %i.gg, 1099511628211            ; 3 uses
   %i.gi = add nuw i64 %.09.i.i, 8                 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN9Stockfish11hash_stringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.loopexit.unr-lcssa, label %.lr.ph.i.i25, !llvm.loop !609
 
@@ -446,7 +446,7 @@ _ZN9Stockfish21getExecutablePathHashB5cxx11Ev.exit: ; preds = %._crit_edge.i.i.t
   %i.cc = xor i64 %i.bx, %i.cb
   %i.cd = mul i64 %i.cc, 1099511628211            ; 3 uses
   %i.ce = add nuw i64 %.09.i.i, 8                 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN9Stockfish11hash_stringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !609
 
@@ -606,7 +606,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit: ; pr
   %i.ey = xor i64 %i.et, %i.ex
   %i.ez = mul i64 %i.ey, 1099511628211            ; 3 uses
   %i.fa = add nuw i64 %.09.i.i.i, 8               ; 2 uses
-  %niter85.next.7 = add i64 %niter85, 8           ; 2 uses
+  %niter85.next.7 = add nuw i64 %niter85, 8       ; 2 uses
   %niter85.ncmp.7 = icmp eq i64 %niter85.next.7, %unroll_iter84
   br i1 %niter85.ncmp.7, label %_ZN9Stockfish11hash_stringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !609
 
@@ -1009,7 +1009,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %i.br = xor i64 %i.bm, %i.bq
   %i.bs = mul i64 %i.br, 1099511628211            ; 3 uses
   %i.bt = add nuw i64 %.09.i.i.i, 8               ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN9Stockfish11hash_stringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !609
 

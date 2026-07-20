@@ -204,7 +204,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qa
   store i8 %i.qi, ptr %i.qj, align 1, !tbaa !34, !alias.scope !638, !noalias !649
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !653
 
@@ -254,7 +254,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qw
   store i8 %i.re, ptr %i.rf, align 1, !tbaa !34, !alias.scope !638, !noalias !649
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !653
 
@@ -381,7 +381,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tg
   store i8 %i.tr, ptr %i.ts, align 1, !tbaa !34, !alias.scope !638, !noalias !649
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !653
 
@@ -784,7 +784,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qa
   store i16 %i.qi, ptr %i.qj, align 2, !tbaa !657, !alias.scope !725, !noalias !736
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !740
 
@@ -834,7 +834,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qw
   store i16 %i.re, ptr %i.rf, align 2, !tbaa !657, !alias.scope !725, !noalias !736
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !740
 
@@ -961,7 +961,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.tg
   store i16 %i.tr, ptr %i.ts, align 2, !tbaa !657, !alias.scope !725, !noalias !736
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !740
 
@@ -1364,7 +1364,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.op
   store i32 %i.ox, ptr %i.oy, align 4, !tbaa !3, !alias.scope !803, !noalias !814
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !817
 
@@ -1414,7 +1414,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.pl
   store i32 %i.pt, ptr %i.pu, align 4, !tbaa !3, !alias.scope !803, !noalias !814
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !817
 
@@ -1541,7 +1541,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.rv
   store i32 %i.sg, ptr %i.sh, align 4, !tbaa !3, !alias.scope !803, !noalias !814
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !817
 
@@ -1944,7 +1944,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.op
   store i64 %i.ox, ptr %i.oy, align 8, !tbaa !101, !alias.scope !880, !noalias !891
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !894
 
@@ -1994,7 +1994,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.pl
   store i64 %i.pt, ptr %i.pu, align 8, !tbaa !101, !alias.scope !880, !noalias !891
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !894
 
@@ -2121,7 +2121,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.rv
   store i64 %i.sg, ptr %i.sh, align 8, !tbaa !101, !alias.scope !880, !noalias !891
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !894
 
@@ -2524,7 +2524,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qa
   store i8 %i.qi, ptr %i.qj, align 1, !tbaa !34, !alias.scope !963, !noalias !974
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !978
 
@@ -2574,7 +2574,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qw
   store i8 %i.re, ptr %i.rf, align 1, !tbaa !34, !alias.scope !963, !noalias !974
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !978
 
@@ -2701,7 +2701,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tg
   store i8 %i.tr, ptr %i.ts, align 1, !tbaa !34, !alias.scope !963, !noalias !974
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !978
 
@@ -3104,7 +3104,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qa
   store i16 %i.qi, ptr %i.qj, align 2, !tbaa !657, !alias.scope !1047, !noalias !1058
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1062
 
@@ -3154,7 +3154,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qw
   store i16 %i.re, ptr %i.rf, align 2, !tbaa !657, !alias.scope !1047, !noalias !1058
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1062
 
@@ -3281,7 +3281,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.tg
   store i16 %i.tr, ptr %i.ts, align 2, !tbaa !657, !alias.scope !1047, !noalias !1058
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1062
 
@@ -3684,7 +3684,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.op
   store i32 %i.ox, ptr %i.oy, align 4, !tbaa !3, !alias.scope !1125, !noalias !1136
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1139
 
@@ -3734,7 +3734,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.pl
   store i32 %i.pt, ptr %i.pu, align 4, !tbaa !3, !alias.scope !1125, !noalias !1136
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1139
 
@@ -3861,7 +3861,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.rv
   store i32 %i.sg, ptr %i.sh, align 4, !tbaa !3, !alias.scope !1125, !noalias !1136
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1139
 
@@ -4264,7 +4264,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.op
   store i64 %i.ox, ptr %i.oy, align 8, !tbaa !101, !alias.scope !1202, !noalias !1213
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1216
 
@@ -4314,7 +4314,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.pl
   store i64 %i.pt, ptr %i.pu, align 8, !tbaa !101, !alias.scope !1202, !noalias !1213
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1216
 
@@ -4441,7 +4441,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.rv
   store i64 %i.sg, ptr %i.sh, align 8, !tbaa !101, !alias.scope !1202, !noalias !1213
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseANDOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1216
 
@@ -4844,7 +4844,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qa
   store i8 %i.qi, ptr %i.qj, align 1, !tbaa !34, !alias.scope !1424, !noalias !1435
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1439
 
@@ -4894,7 +4894,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qw
   store i8 %i.re, ptr %i.rf, align 1, !tbaa !34, !alias.scope !1424, !noalias !1435
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1439
 
@@ -5021,7 +5021,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tg
   store i8 %i.tr, ptr %i.ts, align 1, !tbaa !34, !alias.scope !1424, !noalias !1435
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1439
 
@@ -5424,7 +5424,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qa
   store i16 %i.qi, ptr %i.qj, align 2, !tbaa !657, !alias.scope !1508, !noalias !1519
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1523
 
@@ -5474,7 +5474,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qw
   store i16 %i.re, ptr %i.rf, align 2, !tbaa !657, !alias.scope !1508, !noalias !1519
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1523
 
@@ -5601,7 +5601,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.tg
   store i16 %i.tr, ptr %i.ts, align 2, !tbaa !657, !alias.scope !1508, !noalias !1519
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1523
 
@@ -6004,7 +6004,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.op
   store i32 %i.ox, ptr %i.oy, align 4, !tbaa !3, !alias.scope !1586, !noalias !1597
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1600
 
@@ -6054,7 +6054,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.pl
   store i32 %i.pt, ptr %i.pu, align 4, !tbaa !3, !alias.scope !1586, !noalias !1597
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1600
 
@@ -6181,7 +6181,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.rv
   store i32 %i.sg, ptr %i.sh, align 4, !tbaa !3, !alias.scope !1586, !noalias !1597
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1600
 
@@ -6584,7 +6584,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.op
   store i64 %i.ox, ptr %i.oy, align 8, !tbaa !101, !alias.scope !1663, !noalias !1674
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1677
 
@@ -6634,7 +6634,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.pl
   store i64 %i.pt, ptr %i.pu, align 8, !tbaa !101, !alias.scope !1663, !noalias !1674
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1677
 
@@ -6761,7 +6761,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.rv
   store i64 %i.sg, ptr %i.sh, align 8, !tbaa !101, !alias.scope !1663, !noalias !1674
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1677
 
@@ -7164,7 +7164,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qa
   store i8 %i.qi, ptr %i.qj, align 1, !tbaa !34, !alias.scope !1746, !noalias !1757
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1761
 
@@ -7214,7 +7214,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qw
   store i8 %i.re, ptr %i.rf, align 1, !tbaa !34, !alias.scope !1746, !noalias !1757
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1761
 
@@ -7341,7 +7341,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tg
   store i8 %i.tr, ptr %i.ts, align 1, !tbaa !34, !alias.scope !1746, !noalias !1757
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1761
 
@@ -7744,7 +7744,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qa
   store i16 %i.qi, ptr %i.qj, align 2, !tbaa !657, !alias.scope !1830, !noalias !1841
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1845
 
@@ -7794,7 +7794,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qw
   store i16 %i.re, ptr %i.rf, align 2, !tbaa !657, !alias.scope !1830, !noalias !1841
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1845
 
@@ -7921,7 +7921,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.tg
   store i16 %i.tr, ptr %i.ts, align 2, !tbaa !657, !alias.scope !1830, !noalias !1841
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1845
 
@@ -8324,7 +8324,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.op
   store i32 %i.ox, ptr %i.oy, align 4, !tbaa !3, !alias.scope !1908, !noalias !1919
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1922
 
@@ -8374,7 +8374,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.pl
   store i32 %i.pt, ptr %i.pu, align 4, !tbaa !3, !alias.scope !1908, !noalias !1919
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1922
 
@@ -8501,7 +8501,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.rv
   store i32 %i.sg, ptr %i.sh, align 4, !tbaa !3, !alias.scope !1908, !noalias !1919
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1922
 
@@ -8904,7 +8904,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.op
   store i64 %i.ox, ptr %i.oy, align 8, !tbaa !101, !alias.scope !1985, !noalias !1996
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !1999
 
@@ -8954,7 +8954,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.pl
   store i64 %i.pt, ptr %i.pu, align 8, !tbaa !101, !alias.scope !1985, !noalias !1996
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !1999
 
@@ -9081,7 +9081,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.rv
   store i64 %i.sg, ptr %i.sh, align 8, !tbaa !101, !alias.scope !1985, !noalias !1996
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_117BitwiseOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !1999
 
@@ -9484,7 +9484,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qa
   store i8 %i.qi, ptr %i.qj, align 1, !tbaa !34, !alias.scope !2206, !noalias !2217
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2221
 
@@ -9534,7 +9534,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qw
   store i8 %i.re, ptr %i.rf, align 1, !tbaa !34, !alias.scope !2206, !noalias !2217
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2221
 
@@ -9661,7 +9661,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tg
   store i8 %i.tr, ptr %i.ts, align 1, !tbaa !34, !alias.scope !2206, !noalias !2217
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2221
 
@@ -10064,7 +10064,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qa
   store i16 %i.qi, ptr %i.qj, align 2, !tbaa !657, !alias.scope !2290, !noalias !2301
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2305
 
@@ -10114,7 +10114,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qw
   store i16 %i.re, ptr %i.rf, align 2, !tbaa !657, !alias.scope !2290, !noalias !2301
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2305
 
@@ -10241,7 +10241,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.tg
   store i16 %i.tr, ptr %i.ts, align 2, !tbaa !657, !alias.scope !2290, !noalias !2301
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2305
 
@@ -10644,7 +10644,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.op
   store i32 %i.ox, ptr %i.oy, align 4, !tbaa !3, !alias.scope !2368, !noalias !2379
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2382
 
@@ -10694,7 +10694,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.pl
   store i32 %i.pt, ptr %i.pu, align 4, !tbaa !3, !alias.scope !2368, !noalias !2379
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2382
 
@@ -10821,7 +10821,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.rv
   store i32 %i.sg, ptr %i.sh, align 4, !tbaa !3, !alias.scope !2368, !noalias !2379
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2382
 
@@ -11224,7 +11224,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.op
   store i64 %i.ox, ptr %i.oy, align 8, !tbaa !101, !alias.scope !2445, !noalias !2456
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2459
 
@@ -11274,7 +11274,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.pl
   store i64 %i.pt, ptr %i.pu, align 8, !tbaa !101, !alias.scope !2445, !noalias !2456
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2459
 
@@ -11401,7 +11401,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.rv
   store i64 %i.sg, ptr %i.sh, align 8, !tbaa !101, !alias.scope !2445, !noalias !2456
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2459
 
@@ -11804,7 +11804,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qa
   store i8 %i.qi, ptr %i.qj, align 1, !tbaa !34, !alias.scope !2528, !noalias !2539
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2543
 
@@ -11854,7 +11854,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.qw
   store i8 %i.re, ptr %i.rf, align 1, !tbaa !34, !alias.scope !2528, !noalias !2539
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2543
 
@@ -11981,7 +11981,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tg
   store i8 %i.tr, ptr %i.ts, align 1, !tbaa !34, !alias.scope !2528, !noalias !2539
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2543
 
@@ -12384,7 +12384,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qj = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qa
   store i16 %i.qi, ptr %i.qj, align 2, !tbaa !657, !alias.scope !2612, !noalias !2623
   %i.qk = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter320.next.1 = add i64 %niter320, 2         ; 2 uses
+  %niter320.next.1 = add nuw i64 %niter320, 2     ; 2 uses
   %niter320.ncmp.1 = icmp eq i64 %niter320.next.1, %unroll_iter319
   br i1 %niter320.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit306.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2627
 
@@ -12434,7 +12434,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rf = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.qw
   store i16 %i.re, ptr %i.rf, align 2, !tbaa !657, !alias.scope !2612, !noalias !2623
   %i.rg = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter315.next.1 = add i64 %niter315, 2         ; 2 uses
+  %niter315.next.1 = add nuw i64 %niter315, 2     ; 2 uses
   %niter315.ncmp.1 = icmp eq i64 %niter315.next.1, %unroll_iter314
   br i1 %niter315.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit307.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2627
 
@@ -12561,7 +12561,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ts = getelementptr inbounds nuw [2 x i8], ptr %i.oe, i64 %i.tg
   store i16 %i.tr, ptr %i.ts, align 2, !tbaa !657, !alias.scope !2612, !noalias !2623
   %i.tt = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit308.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2627
 
@@ -12964,7 +12964,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.op
   store i32 %i.ox, ptr %i.oy, align 4, !tbaa !3, !alias.scope !2690, !noalias !2701
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2704
 
@@ -13014,7 +13014,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.pl
   store i32 %i.pt, ptr %i.pu, align 4, !tbaa !3, !alias.scope !2690, !noalias !2701
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2704
 
@@ -13141,7 +13141,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.rv
   store i32 %i.sg, ptr %i.sh, align 4, !tbaa !3, !alias.scope !2690, !noalias !2701
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2704
 
@@ -13544,7 +13544,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.oy = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.op
   store i64 %i.ox, ptr %i.oy, align 8, !tbaa !101, !alias.scope !2767, !noalias !2778
   %i.oz = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter212.next.1 = add i64 %niter212, 2         ; 2 uses
+  %niter212.next.1 = add nuw i64 %niter212, 2     ; 2 uses
   %niter212.ncmp.1 = icmp eq i64 %niter212.next.1, %unroll_iter211
   br i1 %niter212.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit198.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !2781
 
@@ -13594,7 +13594,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.pl
   store i64 %i.pt, ptr %i.pu, align 8, !tbaa !101, !alias.scope !2767, !noalias !2778
   %i.pv = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter207.next.1 = add i64 %niter207, 2         ; 2 uses
+  %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1 = icmp eq i64 %niter207.next.1, %unroll_iter206
   br i1 %niter207.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit199.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !2781
 
@@ -13721,7 +13721,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.rv
   store i64 %i.sg, ptr %i.sh, align 8, !tbaa !101, !alias.scope !2767, !noalias !2778
   %i.si = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_118BitwiseXOROperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit200.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !2781
 
@@ -14124,7 +14124,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.ir = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.ik
   store i8 %i.iq, ptr %i.ir, align 1, !tbaa !34, !alias.scope !2944, !noalias !2951
   %i.is = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopIaaNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit141.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !2956
 
@@ -14527,7 +14527,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.ir = getelementptr inbounds nuw [2 x i8], ptr %i.et, i64 %i.ik
   store i16 %i.iq, ptr %i.ir, align 2, !tbaa !657, !alias.scope !2982, !noalias !2989
   %i.is = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopIssNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit141.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !2994
 
@@ -14930,7 +14930,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.hw = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %i.hp
   store i32 %i.hv, ptr %i.hw, align 4, !tbaa !3, !alias.scope !3016, !noalias !3023
   %i.hx = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopIiiNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit90.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !3027
 
@@ -15333,7 +15333,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %i.hp
   store i64 %i.hv, ptr %i.hw, align 8, !tbaa !101, !alias.scope !3049, !noalias !3056
   %i.hx = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopIllNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit90.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !3060
 
@@ -15736,7 +15736,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.ir = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.ik
   store i8 %i.iq, ptr %i.ir, align 1, !tbaa !34, !alias.scope !3085, !noalias !3092
   %i.is = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopIhhNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit141.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !3097
 
@@ -16139,7 +16139,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.ir = getelementptr inbounds nuw [2 x i8], ptr %i.et, i64 %i.ik
   store i16 %i.iq, ptr %i.ir, align 2, !tbaa !657, !alias.scope !3122, !noalias !3129
   %i.is = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopIttNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit141.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !3134
 
@@ -16542,7 +16542,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.hw = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %i.hp
   store i32 %i.hv, ptr %i.hw, align 4, !tbaa !3, !alias.scope !3156, !noalias !3163
   %i.hx = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopIjjNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit90.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !3167
 
@@ -16945,7 +16945,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i: ; preds = %_ZNK6duckdb15S
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %i.hp
   store i64 %i.hv, ptr %i.hw, align 8, !tbaa !101, !alias.scope !3189, !noalias !3196
   %i.hx = add nuw i64 %.0284.i.i.i, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb13UnaryExecutor11ExecuteLoopImmNS_20UnaryOperatorWrapperENS_12_GLOBAL__N_118BitwiseNotOperatorEEEvPKT_PT0_mPKNS_15SelectionVectorERNS_12ValidityMaskESE_Pvb.exit.i.i.loopexit90.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit32.i.i.i, !llvm.loop !3200
 
@@ -17348,7 +17348,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.rv = getelementptr inbounds nuw i8, ptr %i.ov, i64 %i.rh
   store i8 %i.ru, ptr %i.rv, align 1, !tbaa !34, !alias.scope !4039, !noalias !4050
   %i.rw = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter310.next.1 = add i64 %niter310, 2         ; 2 uses
+  %niter310.next.1 = add nuw i64 %niter310, 2     ; 2 uses
   %niter310.ncmp.1 = icmp eq i64 %niter310.next.1, %unroll_iter309
   br i1 %niter310.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit296.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4054
 
@@ -17408,7 +17408,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.tb = getelementptr inbounds nuw i8, ptr %i.ov, i64 %i.sn
   store i8 %i.ta, ptr %i.tb, align 1, !tbaa !34, !alias.scope !4039, !noalias !4050
   %i.tc = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter305.next.1 = add i64 %niter305, 2         ; 2 uses
+  %niter305.next.1 = add nuw i64 %niter305, 2     ; 2 uses
   %niter305.ncmp.1 = icmp eq i64 %niter305.next.1, %unroll_iter304
   br i1 %niter305.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit297.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4054
 
@@ -17550,7 +17550,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.wd = getelementptr inbounds nuw i8, ptr %i.ov, i64 %i.vm
   store i8 %i.wc, ptr %i.wd, align 1, !tbaa !34, !alias.scope !4039, !noalias !4050
   %i.we = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIaaaNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit298.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4054
 
@@ -17953,7 +17953,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.qk = getelementptr inbounds nuw [2 x i8], ptr %i.nu, i64 %i.pw
   store i16 %i.qj, ptr %i.qk, align 2, !tbaa !657, !alias.scope !4119, !noalias !4130
   %i.ql = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter232.next.1 = add i64 %niter232, 2         ; 2 uses
+  %niter232.next.1 = add nuw i64 %niter232, 2     ; 2 uses
   %niter232.ncmp.1 = icmp eq i64 %niter232.next.1, %unroll_iter231
   br i1 %niter232.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit218.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4133
 
@@ -18013,7 +18013,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.rq = getelementptr inbounds nuw [2 x i8], ptr %i.nu, i64 %i.rc
   store i16 %i.rp, ptr %i.rq, align 2, !tbaa !657, !alias.scope !4119, !noalias !4130
   %i.rr = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter227.next.1 = add i64 %niter227, 2         ; 2 uses
+  %niter227.next.1 = add nuw i64 %niter227, 2     ; 2 uses
   %niter227.ncmp.1 = icmp eq i64 %niter227.next.1, %unroll_iter226
   br i1 %niter227.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit219.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4133
 
@@ -18155,7 +18155,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.us = getelementptr inbounds nuw [2 x i8], ptr %i.nu, i64 %i.ub
   store i16 %i.ur, ptr %i.us, align 2, !tbaa !657, !alias.scope !4119, !noalias !4130
   %i.ut = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIsssNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit220.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4133
 
@@ -18558,7 +18558,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.no = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %i.nd
   store i32 %i.nn, ptr %i.no, align 4, !tbaa !3, !alias.scope !4196, !noalias !4207
   %i.np = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter206.next.1 = add i64 %niter206, 2         ; 2 uses
+  %niter206.next.1 = add nuw i64 %niter206, 2     ; 2 uses
   %niter206.ncmp.1 = icmp eq i64 %niter206.next.1, %unroll_iter205
   br i1 %niter206.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit192.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4210
 
@@ -18612,7 +18612,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.oo = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %i.od
   store i32 %i.on, ptr %i.oo, align 4, !tbaa !3, !alias.scope !4196, !noalias !4207
   %i.op = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter201.next.1 = add i64 %niter201, 2         ; 2 uses
+  %niter201.next.1 = add nuw i64 %niter201, 2     ; 2 uses
   %niter201.ncmp.1 = icmp eq i64 %niter201.next.1, %unroll_iter200
   br i1 %niter201.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit193.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4210
 
@@ -18745,7 +18745,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.rh = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %i.qt
   store i32 %i.rg, ptr %i.rh, align 4, !tbaa !3, !alias.scope !4196, !noalias !4207
   %i.ri = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIiiiNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit194.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4210
 
@@ -19148,7 +19148,7 @@ bb.al:                                            ; preds = %bb.al, %.lr.ph16.i.
   %i.ij = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %i.id
   store i64 %i.ii, ptr %i.ij, align 8, !tbaa !101, !alias.scope !4238, !noalias !4243
   %i.ik = add nuw i64 %.05815.i.i.i.i, 2          ; 2 uses
-  %niter139.next.1 = add i64 %niter139, 2         ; 2 uses
+  %niter139.next.1 = add nuw i64 %niter139, 2     ; 2 uses
   %niter139.ncmp.1 = icmp eq i64 %niter139.next.1, %unroll_iter138
   br i1 %niter139.ncmp.1, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardIlllNS_12_GLOBAL__N_125BitwiseShiftRightOperatorEEEvRNS_6VectorES5_S5_m.exit.loopexit100.unr-lcssa, label %bb.al, !llvm.loop !4247
 
@@ -19412,7 +19412,7 @@ bb.bb:                                            ; preds = %bb.ba, %.lr.ph11.i.
   %i.mq = getelementptr inbounds nuw [8 x i8], ptr %i.ir, i64 %i.mi
   store i64 %i.mp, ptr %i.mq, align 8, !tbaa !101, !alias.scope !4254, !noalias !4259
   %i.mr = add nuw i64 %.06715.i.i.i.i, 2          ; 2 uses
-  %niter132.next.1 = add i64 %niter132, 2         ; 2 uses
+  %niter132.next.1 = add nuw i64 %niter132, 2     ; 2 uses
   %niter132.ncmp.1 = icmp eq i64 %niter132.next.1, %unroll_iter131
   br i1 %niter132.ncmp.1, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardIlllNS_12_GLOBAL__N_125BitwiseShiftRightOperatorEEEvRNS_6VectorES5_S5_m.exit.loopexit103.unr-lcssa, label %.lr.ph16.i.i97.i.i, !llvm.loop !4263
 
@@ -19541,7 +19541,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.us.i.i.i.i: ; preds = %_ZNK6d
   %i.oc = getelementptr inbounds nuw [8 x i8], ptr %i.mt, i64 %i.nu
   store i64 %i.ob, ptr %i.oc, align 8, !tbaa !101, !alias.scope !4269, !noalias !4280
   %i.od = add nuw i64 %.04161.us.us.i.i.i.i, 2    ; 2 uses
-  %niter125.next.1 = add i64 %niter125, 2         ; 2 uses
+  %niter125.next.1 = add nuw i64 %niter125, 2     ; 2 uses
   %niter125.ncmp.1 = icmp eq i64 %niter125.next.1, %unroll_iter124
   br i1 %niter125.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.us.i.i.i.i, !llvm.loop !4281
 
@@ -19574,7 +19574,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.pa = getelementptr inbounds nuw [8 x i8], ptr %i.mt, i64 %i.op
   store i64 %i.oz, ptr %i.pa, align 8, !tbaa !101, !alias.scope !4269, !noalias !4280
   %i.pb = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter120.next.1 = add i64 %niter120, 2         ; 2 uses
+  %niter120.next.1 = add nuw i64 %niter120, 2     ; 2 uses
   %niter120.ncmp.1 = icmp eq i64 %niter120.next.1, %unroll_iter119
   br i1 %niter120.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit106.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4281
 
@@ -19628,7 +19628,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.qa = getelementptr inbounds nuw [8 x i8], ptr %i.mt, i64 %i.pp
   store i64 %i.pz, ptr %i.qa, align 8, !tbaa !101, !alias.scope !4269, !noalias !4280
   %i.qb = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter115.next.1 = add i64 %niter115, 2         ; 2 uses
+  %niter115.next.1 = add nuw i64 %niter115, 2     ; 2 uses
   %niter115.ncmp.1 = icmp eq i64 %niter115.next.1, %unroll_iter114
   br i1 %niter115.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit107.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4281
 
@@ -19761,7 +19761,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.st = getelementptr inbounds nuw [8 x i8], ptr %i.mt, i64 %i.sf
   store i64 %i.ss, ptr %i.st, align 8, !tbaa !101, !alias.scope !4269, !noalias !4280
   %i.su = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIlllNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit108.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4281
 
@@ -20164,7 +20164,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.rn = getelementptr inbounds nuw i8, ptr %i.on, i64 %i.qz
   store i8 %i.rm, ptr %i.rn, align 1, !tbaa !34, !alias.scope !4350, !noalias !4361
   %i.ro = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter312.next.1 = add i64 %niter312, 2         ; 2 uses
+  %niter312.next.1 = add nuw i64 %niter312, 2     ; 2 uses
   %niter312.ncmp.1 = icmp eq i64 %niter312.next.1, %unroll_iter311
   br i1 %niter312.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit298.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4365
 
@@ -20224,7 +20224,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.st = getelementptr inbounds nuw i8, ptr %i.on, i64 %i.sf
   store i8 %i.ss, ptr %i.st, align 1, !tbaa !34, !alias.scope !4350, !noalias !4361
   %i.su = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter307.next.1 = add i64 %niter307, 2         ; 2 uses
+  %niter307.next.1 = add nuw i64 %niter307, 2     ; 2 uses
   %niter307.ncmp.1 = icmp eq i64 %niter307.next.1, %unroll_iter306
   br i1 %niter307.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit299.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4365
 
@@ -20366,7 +20366,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.vv = getelementptr inbounds nuw i8, ptr %i.on, i64 %i.ve
   store i8 %i.vu, ptr %i.vv, align 1, !tbaa !34, !alias.scope !4350, !noalias !4361
   %i.vw = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIhhhNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit300.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4365
 
@@ -20769,7 +20769,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.ps = getelementptr inbounds nuw [2 x i8], ptr %i.nc, i64 %i.pe
   store i16 %i.pr, ptr %i.ps, align 2, !tbaa !657, !alias.scope !4430, !noalias !4441
   %i.pt = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter232.next.1 = add i64 %niter232, 2         ; 2 uses
+  %niter232.next.1 = add nuw i64 %niter232, 2     ; 2 uses
   %niter232.ncmp.1 = icmp eq i64 %niter232.next.1, %unroll_iter231
   br i1 %niter232.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit218.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4444
 
@@ -20829,7 +20829,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.qy = getelementptr inbounds nuw [2 x i8], ptr %i.nc, i64 %i.qk
   store i16 %i.qx, ptr %i.qy, align 2, !tbaa !657, !alias.scope !4430, !noalias !4441
   %i.qz = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter227.next.1 = add i64 %niter227, 2         ; 2 uses
+  %niter227.next.1 = add nuw i64 %niter227, 2     ; 2 uses
   %niter227.ncmp.1 = icmp eq i64 %niter227.next.1, %unroll_iter226
   br i1 %niter227.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit219.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4444
 
@@ -20971,7 +20971,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.ua = getelementptr inbounds nuw [2 x i8], ptr %i.nc, i64 %i.tj
   store i16 %i.tz, ptr %i.ua, align 2, !tbaa !657, !alias.scope !4430, !noalias !4441
   %i.ub = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopItttNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit220.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4444
 
@@ -21374,7 +21374,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.no = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %i.nd
   store i32 %i.nn, ptr %i.no, align 4, !tbaa !3, !alias.scope !4507, !noalias !4518
   %i.np = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter206.next.1 = add i64 %niter206, 2         ; 2 uses
+  %niter206.next.1 = add nuw i64 %niter206, 2     ; 2 uses
   %niter206.ncmp.1 = icmp eq i64 %niter206.next.1, %unroll_iter205
   br i1 %niter206.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit192.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4521
 
@@ -21428,7 +21428,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.oo = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %i.od
   store i32 %i.on, ptr %i.oo, align 4, !tbaa !3, !alias.scope !4507, !noalias !4518
   %i.op = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter201.next.1 = add i64 %niter201, 2         ; 2 uses
+  %niter201.next.1 = add nuw i64 %niter201, 2     ; 2 uses
   %niter201.ncmp.1 = icmp eq i64 %niter201.next.1, %unroll_iter200
   br i1 %niter201.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit193.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4521
 
@@ -21561,7 +21561,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.rh = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %i.qt
   store i32 %i.rg, ptr %i.rh, align 4, !tbaa !3, !alias.scope !4507, !noalias !4518
   %i.ri = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopIjjjNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit194.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4521
 
@@ -21964,7 +21964,7 @@ bb.al:                                            ; preds = %bb.al, %.lr.ph16.i.
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %i.eh, i64 %i.hq
   store i64 %i.hv, ptr %i.hw, align 8, !tbaa !101, !alias.scope !4549, !noalias !4554
   %i.hx = add nuw i64 %.05815.i.i.i.i, 2          ; 2 uses
-  %niter155.next.1 = add i64 %niter155, 2         ; 2 uses
+  %niter155.next.1 = add nuw i64 %niter155, 2     ; 2 uses
   %niter155.ncmp.1 = icmp eq i64 %niter155.next.1, %unroll_iter154
   br i1 %niter155.ncmp.1, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardImmmNS_12_GLOBAL__N_125BitwiseShiftRightOperatorEEEvRNS_6VectorES5_S5_m.exit.loopexit116.unr-lcssa, label %bb.al, !llvm.loop !4558
 
@@ -22228,7 +22228,7 @@ bb.bb:                                            ; preds = %bb.ba, %.lr.ph11.i.
   %i.md = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %i.lv
   store i64 %i.mc, ptr %i.md, align 8, !tbaa !101, !alias.scope !4565, !noalias !4570
   %i.me = add nuw i64 %.06715.i.i.i.i, 2          ; 2 uses
-  %niter148.next.1 = add i64 %niter148, 2         ; 2 uses
+  %niter148.next.1 = add nuw i64 %niter148, 2     ; 2 uses
   %niter148.ncmp.1 = icmp eq i64 %niter148.next.1, %unroll_iter147
   br i1 %niter148.ncmp.1, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardImmmNS_12_GLOBAL__N_125BitwiseShiftRightOperatorEEEvRNS_6VectorES5_S5_m.exit.loopexit119.unr-lcssa, label %.lr.ph16.i.i97.i.i, !llvm.loop !4574
 
@@ -22357,7 +22357,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.us.i.i.i.i: ; preds = %_ZNK6d
   %i.np = getelementptr inbounds nuw [8 x i8], ptr %i.mg, i64 %i.nh
   store i64 %i.no, ptr %i.np, align 8, !tbaa !101, !alias.scope !4580, !noalias !4591
   %i.nq = add nuw i64 %.04161.us.us.i.i.i.i, 2    ; 2 uses
-  %niter141.next.1 = add i64 %niter141, 2         ; 2 uses
+  %niter141.next.1 = add nuw i64 %niter141, 2     ; 2 uses
   %niter141.ncmp.1 = icmp eq i64 %niter141.next.1, %unroll_iter140
   br i1 %niter141.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.us.i.i.i.i, !llvm.loop !4592
 
@@ -22390,7 +22390,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i: ; preds = %_ZNK6duck
   %i.on = getelementptr inbounds nuw [8 x i8], ptr %i.mg, i64 %i.oc
   store i64 %i.om, ptr %i.on, align 8, !tbaa !101, !alias.scope !4580, !noalias !4591
   %i.oo = add nuw i64 %.04161.us.i.i.i.i, 2       ; 2 uses
-  %niter136.next.1 = add i64 %niter136, 2         ; 2 uses
+  %niter136.next.1 = add nuw i64 %niter136, 2     ; 2 uses
   %niter136.ncmp.1 = icmp eq i64 %niter136.next.1, %unroll_iter135
   br i1 %niter136.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit122.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us.i.i.i.i, !llvm.loop !4592
 
@@ -22444,7 +22444,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i: ; preds = %_ZNK6du
   %i.pn = getelementptr inbounds nuw [8 x i8], ptr %i.mg, i64 %i.pc
   store i64 %i.pm, ptr %i.pn, align 8, !tbaa !101, !alias.scope !4580, !noalias !4591
   %i.po = add nuw i64 %.04161.us64.i.i.i.i, 2     ; 2 uses
-  %niter131.next.1 = add i64 %niter131, 2         ; 2 uses
+  %niter131.next.1 = add nuw i64 %niter131, 2     ; 2 uses
   %niter131.ncmp.1 = icmp eq i64 %niter131.next.1, %unroll_iter130
   br i1 %niter131.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit123.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.us63.i.i.i.i, !llvm.loop !4592
 
@@ -22577,7 +22577,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i: ; preds = %_ZNK6duckdb1
   %i.sg = getelementptr inbounds nuw [8 x i8], ptr %i.mg, i64 %i.rs
   store i64 %i.sf, ptr %i.sg, align 8, !tbaa !101, !alias.scope !4580, !noalias !4591
   %i.sh = add nuw i64 %.04161.i.i.i.i, 2          ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6duckdb14BinaryExecutor18ExecuteGenericLoopImmmNS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_125BitwiseShiftRightOperatorEbEEvPKT_PKT0_PT1_PKNS_15SelectionVectorESF_mRNS_12ValidityMaskESH_SH_T4_.exit.i.i.i.loopexit124.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit52.i.i.i.i, !llvm.loop !4592
 

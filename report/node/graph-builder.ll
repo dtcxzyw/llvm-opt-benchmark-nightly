@@ -204,13 +204,13 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft27MaybeRegisterRepresentati
   store i8 %.sroa.0.0.copyload.2, ptr %i.bh, align 1
   %i.bi = getelementptr inbounds nuw i8, ptr %.02333, i64 3
   %.sroa.0.0.copyload.3 = load i8, ptr %i.bi, align 1
-  %i.bj = add i64 %.134, 4                        ; 3 uses
+  %i.bj = add nuw i64 %.134, 4                    ; 3 uses
   %i.bk = load ptr, ptr %i.f, align 8
-  %i.bl = getelementptr i8, ptr %i.bk, i64 %.134
-  %i.bm = getelementptr i8, ptr %i.bl, i64 3
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.134
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 3
   store i8 %.sroa.0.0.copyload.3, ptr %i.bm, align 1
   %i.bn = getelementptr inbounds nuw i8, ptr %.02333, i64 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 }

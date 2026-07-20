@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 rb_parser_enc_associate.exit.1:                   ; preds = %bb.k, %rb_parser_enc_associate.exit
   %i.bn = add nuw nsw i64 %.039, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.e, !llvm.loop !629
 
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = zext i8 %i.ad to i64
   %i.af = add i64 %i.aa, %i.ae                    ; 3 uses
   %i.ag = add nuw i64 %.09.i.i.i, 4               ; 2 uses
-  %niter193.next.3 = add i64 %niter193, 4         ; 2 uses
+  %niter193.next.3 = add nuw i64 %niter193, 4     ; 2 uses
   %niter193.ncmp.3 = icmp eq i64 %niter193.next.3, %unroll_iter192
   br i1 %niter193.ncmp.3, label %rb_char_p_hash.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !654
 
@@ -655,7 +655,7 @@ bb.c:                                             ; preds = %bb.a
   %i.bg = zext i8 %i.bf to i64
   %i.bh = add i64 %i.bc, %i.bg                    ; 3 uses
   %i.bi = add nuw i64 %.09.i.i.i23, 4             ; 2 uses
-  %niter186.next.3 = add i64 %niter186, 4         ; 2 uses
+  %niter186.next.3 = add nuw i64 %niter186, 4     ; 2 uses
   %niter186.ncmp.3 = icmp eq i64 %niter186.next.3, %unroll_iter185
   br i1 %niter186.ncmp.3, label %rb_char_p_hash.exit.loopexit129.unr-lcssa, label %.lr.ph.i.i.i22, !llvm.loop !654
 
@@ -703,7 +703,7 @@ bb.d:                                             ; preds = %bb.a
   %i.ci = zext i8 %i.ch to i64
   %i.cj = add i64 %i.ce, %i.ci                    ; 3 uses
   %i.ck = add nuw i64 %.09.i.i.i30, 4             ; 2 uses
-  %niter179.next.3 = add i64 %niter179, 4         ; 2 uses
+  %niter179.next.3 = add nuw i64 %niter179, 4     ; 2 uses
   %niter179.ncmp.3 = icmp eq i64 %niter179.next.3, %unroll_iter178
   br i1 %niter179.ncmp.3, label %rb_char_p_hash.exit.loopexit131.unr-lcssa, label %.lr.ph.i.i.i29, !llvm.loop !654
 
@@ -751,7 +751,7 @@ bb.e:                                             ; preds = %bb.a
   %i.dk = zext i8 %i.dj to i64
   %i.dl = add i64 %i.dg, %i.dk                    ; 3 uses
   %i.dm = add nuw i64 %.09.i.i.i37, 4             ; 2 uses
-  %niter172.next.3 = add i64 %niter172, 4         ; 2 uses
+  %niter172.next.3 = add nuw i64 %niter172, 4     ; 2 uses
   %niter172.ncmp.3 = icmp eq i64 %niter172.next.3, %unroll_iter171
   br i1 %niter172.ncmp.3, label %rb_char_p_hash.exit.loopexit133.unr-lcssa, label %.lr.ph.i.i.i36, !llvm.loop !654
 
@@ -802,7 +802,7 @@ bb.f:                                             ; preds = %bb.a
   %i.en = zext i8 %i.em to i64
   %i.eo = add i64 %i.ej, %i.en                    ; 3 uses
   %i.ep = add nuw i64 %.09.i.i.i44, 4             ; 2 uses
-  %niter165.next.3 = add i64 %niter165, 4         ; 2 uses
+  %niter165.next.3 = add nuw i64 %niter165, 4     ; 2 uses
   %niter165.ncmp.3 = icmp eq i64 %niter165.next.3, %unroll_iter164
   br i1 %niter165.ncmp.3, label %rb_char_p_hash.exit.loopexit135.unr-lcssa, label %.lr.ph.i.i.i43, !llvm.loop !654
 
@@ -853,7 +853,7 @@ bb.g:                                             ; preds = %bb.a
   %i.fq = zext i8 %i.fp to i64
   %i.fr = add i64 %i.fm, %i.fq                    ; 3 uses
   %i.fs = add nuw i64 %.09.i.i.i50, 4             ; 2 uses
-  %niter158.next.3 = add i64 %niter158, 4         ; 2 uses
+  %niter158.next.3 = add nuw i64 %niter158, 4     ; 2 uses
   %niter158.ncmp.3 = icmp eq i64 %niter158.next.3, %unroll_iter157
   br i1 %niter158.ncmp.3, label %rb_char_p_hash.exit.loopexit137.unr-lcssa, label %.lr.ph.i.i.i49, !llvm.loop !654
 
@@ -904,7 +904,7 @@ bb.h:                                             ; preds = %bb.a
   %i.gt = zext i8 %i.gs to i64
   %i.gu = add i64 %i.gp, %i.gt                    ; 3 uses
   %i.gv = add nuw i64 %.09.i.i.i57, 4             ; 2 uses
-  %niter151.next.3 = add i64 %niter151, 4         ; 2 uses
+  %niter151.next.3 = add nuw i64 %niter151, 4     ; 2 uses
   %niter151.ncmp.3 = icmp eq i64 %niter151.next.3, %unroll_iter150
   br i1 %niter151.ncmp.3, label %rb_char_p_hash.exit.loopexit139.unr-lcssa, label %.lr.ph.i.i.i56, !llvm.loop !654
 
@@ -961,7 +961,7 @@ bb.j:                                             ; preds = %bb.a
   %i.hz = zext i8 %i.hy to i64
   %i.ia = add i64 %i.hv, %i.hz                    ; 3 uses
   %i.ib = add nuw i64 %.09.i.i.i64, 4             ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %rb_char_p_hash.exit.loopexit141.unr-lcssa, label %.lr.ph.i.i.i63, !llvm.loop !654
 

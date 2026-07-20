@@ -204,7 +204,7 @@ bb.au:                                            ; preds = %bb.at
   %i.gq = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gp
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.go, ptr nonnull align 1 %i.gq, i64 %i.cx, i1 false)
   %i.gr = add nuw i64 %.0111, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph112, !llvm.loop !105
 
@@ -607,7 +607,7 @@ bb.av:                                            ; preds = %bb.au
   %i.hk = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.hj
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.hi, ptr nonnull align 1 %i.hk, i64 %i.cx, i1 false)
   %i.hl = add nuw i64 %.0111, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph112, !llvm.loop !108
 
@@ -1010,7 +1010,7 @@ bb.au:                                            ; preds = %bb.at
   %i.gl = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gk
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gj, ptr nonnull align 1 %i.gl, i64 %i.cx, i1 false)
   %i.gm = add nuw i64 %.0111, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph112, !llvm.loop !110
 
@@ -1413,7 +1413,7 @@ bb.ci:                                            ; preds = %bb.ch
   %i.sq = getelementptr inbounds nuw i8, ptr %.3.i.i.i, i64 %i.sp
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.so, ptr nonnull align 1 %i.sq, i64 %i.pf, i1 false)
   %i.sr = add nuw i64 %.0109.i.i, 2               ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5glTF28Accessor11ExtractDataIZL24BuildVertexWeightMappingRNS_4Mesh9PrimitiveERSt6vectorIS5_I14aiVertexWeightSaIS6_EESaIS8_EEPS5_IjSaIjEEE7WeightsEEmRPT_PKSD_.exit.i.loopexit.unr-lcssa, label %.lr.ph110.i.i, !llvm.loop !131
 
@@ -1816,7 +1816,7 @@ bb.eh:                                            ; preds = %bb.eg
   %i.aax = getelementptr inbounds nuw i8, ptr %.3.i.i95.i, i64 %i.aaw
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aav, ptr nonnull align 1 %i.aax, i64 %i.xe, i1 false)
   %i.aay = add nuw i64 %.0109.i123.i, 4           ; 2 uses
-  %niter966.next.3 = add i64 %niter966, 4         ; 2 uses
+  %niter966.next.3 = add nuw i64 %niter966, 4     ; 2 uses
   %niter966.ncmp.3 = icmp eq i64 %niter966.next.3, %unroll_iter965
   br i1 %niter966.ncmp.3, label %_ZN5glTF28Accessor11ExtractDataIZL24BuildVertexWeightMappingRNS_4Mesh9PrimitiveERSt6vectorIS5_I14aiVertexWeightSaIS6_EESaIS8_EEPS5_IjSaIjEEE8Indices8EEmRPT_PKSD_.exit.i.loopexit.unr-lcssa, label %.lr.ph110.i122.i, !llvm.loop !134
 
@@ -2219,7 +2219,7 @@ bb.gg:                                            ; preds = %bb.gf
   %i.ajf = getelementptr inbounds nuw i8, ptr %.3.i.i159.i, i64 %i.aje
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.ajd, ptr nonnull align 1 %i.ajf, i64 %i.afm, i1 false)
   %i.ajg = add nuw i64 %.0109.i187.i, 4           ; 2 uses
-  %niter960.next.3 = add i64 %niter960, 4         ; 2 uses
+  %niter960.next.3 = add nuw i64 %niter960, 4     ; 2 uses
   %niter960.ncmp.3 = icmp eq i64 %niter960.next.3, %unroll_iter959
   br i1 %niter960.ncmp.3, label %_ZN5glTF28Accessor11ExtractDataIZL24BuildVertexWeightMappingRNS_4Mesh9PrimitiveERSt6vectorIS5_I14aiVertexWeightSaIS6_EESaIS8_EEPS5_IjSaIjEEE9Indices16EEmRPT_PKSD_.exit.i.loopexit.unr-lcssa, label %.lr.ph110.i186.i, !llvm.loop !138
 
@@ -2622,7 +2622,7 @@ bb.av:                                            ; preds = %bb.au
   %i.gk = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gj
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gi, ptr nonnull align 1 %i.gk, i64 %i.cx, i1 false)
   %i.gl = add nuw i64 %.0109, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph110, !llvm.loop !171
 
@@ -3025,7 +3025,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.new
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   store float %i.di, ptr %i.dj, align 4
   %i.dk = add nuw i64 %.0133171, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.thread.loopexit.unr-lcssa, label %bb.q, !llvm.loop !179
 
@@ -3428,7 +3428,7 @@ bb.av:                                            ; preds = %bb.au
   %i.gk = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gj
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gi, ptr nonnull align 1 %i.gk, i64 %i.cx, i1 false)
   %i.gl = add nuw i64 %.0109, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph110, !llvm.loop !185
 
@@ -3831,7 +3831,7 @@ bb.av:                                            ; preds = %bb.au
   %i.gk = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gj
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gi, ptr nonnull align 1 %i.gk, i64 %i.cx, i1 false)
   %i.gl = add nuw i64 %.0109, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph110, !llvm.loop !187
 
@@ -4234,7 +4234,7 @@ bb.av:                                            ; preds = %bb.au
   %i.gx = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gw
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gv, ptr nonnull align 1 %i.gx, i64 %i.cx, i1 false)
   %i.gy = add nuw i64 %.0111, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph112, !llvm.loop !191
 
@@ -4637,7 +4637,7 @@ bb.j:                                             ; preds = %.lr.ph.3
 bb.k:                                             ; preds = %bb.j, %.lr.ph.3
   %i.ao = phi i64 [ %i.aj, %.lr.ph.3 ], [ %i.an, %bb.j ] ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.0180, i64 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !732
 
@@ -5040,7 +5040,7 @@ bb.au:                                            ; preds = %bb.at
   %i.gl = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gk
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gj, ptr nonnull align 1 %i.gl, i64 %i.cx, i1 false)
   %i.gm = add nuw i64 %.0111, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph112, !llvm.loop !1101
 
@@ -5443,7 +5443,7 @@ bb.au:                                            ; preds = %bb.at
   %i.gl = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.gk
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.gj, ptr nonnull align 1 %i.gl, i64 %i.cx, i1 false)
   %i.gm = add nuw i64 %.0111, 2                   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph112, !llvm.loop !1103
 

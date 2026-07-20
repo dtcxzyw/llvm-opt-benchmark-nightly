@@ -204,7 +204,7 @@ _ZN5arrow6StatusD2Ev.exit13.i.i.i.i:              ; preds = %.noexc198.i.i, %_ZN
   %i.qq = add nsw i64 %i.qp, 2                    ; 3 uses
   store i64 %i.qq, ptr %i.qb, align 8, !tbaa !131, !noalias !151
   %i.qr = add nuw nsw i64 %.015.i.i.i.i, 2        ; 2 uses
-  %niter297.next.1 = add i64 %niter297, 2         ; 2 uses
+  %niter297.next.1 = add nuw nsw i64 %niter297, 2 ; 2 uses
   %niter297.ncmp.1 = icmp eq i64 %niter297.next.1, %unroll_iter296
   br i1 %niter297.ncmp.1, label %_ZN5arrow6StatusD2Ev.exit210.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i, !llvm.loop !157
 
@@ -292,7 +292,7 @@ _ZN5arrow6StatusD2Ev.exit13.i17.i.i.i:            ; preds = %.noexc201.i.i, %_ZN
   %i.rw = add nsw i64 %i.rv, 2                    ; 3 uses
   store i64 %i.rw, ptr %i.qx, align 8, !tbaa !131, !noalias !159
   %i.rx = add nuw nsw i64 %.015.i20.i.i.i, 2      ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i19.i.i.i, !llvm.loop !157
 
@@ -695,7 +695,7 @@ _ZN5arrow6StatusD2Ev.exit13.i17.i.i21.i:          ; preds = %.noexc201.i81.i, %_
   %i.aqz = add nsw i64 %i.aqy, 4                  ; 3 uses
   store i64 %i.aqz, ptr %i.aqa, align 8, !tbaa !131, !noalias !235
   %i.ara = add nuw nsw i64 %.015.i20.i.i77.i, 2   ; 2 uses
-  %niter324.next.1 = add i64 %niter324, 2         ; 2 uses
+  %niter324.next.1 = add nuw nsw i64 %niter324, 2 ; 2 uses
   %niter324.ncmp.1 = icmp eq i64 %niter324.next.1, %unroll_iter323
   br i1 %niter324.ncmp.1, label %.loopexit.i.i22.i.loopexit.unr-lcssa, label %.lr.ph.i19.i.i76.i, !llvm.loop !233
 
@@ -1098,7 +1098,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EhLb0EEEE16ExecuteWithNullsILb
   %i.cdi = load i8, ptr %i.cdh, align 1, !noalias !516
   store i8 %i.cdi, ptr %i.cdd, align 1, !noalias !516
   %i.cdj = add nuw nsw i64 %.0.i1833.i.i125, 4    ; 2 uses
-  %niter3560.next.3 = add i64 %niter3560, 4       ; 2 uses
+  %niter3560.next.3 = add nuw nsw i64 %niter3560, 4 ; 2 uses
   %niter3560.ncmp.3 = icmp eq i64 %niter3560.next.3, %unroll_iter3559
   br i1 %niter3560.ncmp.3, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3142.unr-lcssa, label %.lr.ph.i.i124, !llvm.loop !526
 
@@ -1501,7 +1501,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EtLb0EEEE16ExecuteWithNullsILb
   %i.cno = load i8, ptr %i.cnn, align 1, !noalias !527
   store i8 %i.cno, ptr %i.cnj, align 1, !noalias !527
   %i.cnp = add nuw nsw i64 %.0.i1833.i25.i114, 4  ; 2 uses
-  %niter3547.next.3 = add i64 %niter3547, 4       ; 2 uses
+  %niter3547.next.3 = add nuw nsw i64 %niter3547, 4 ; 2 uses
   %niter3547.ncmp.3 = icmp eq i64 %niter3547.next.3, %unroll_iter3546
   br i1 %niter3547.ncmp.3, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3150.unr-lcssa, label %.lr.ph.i24.i113, !llvm.loop !536
 
@@ -1904,7 +1904,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EjLb0EEEE16ExecuteWithNullsILb
   %i.cxu = load i8, ptr %i.cxt, align 1, !noalias !537
   store i8 %i.cxu, ptr %i.cxp, align 1, !noalias !537
   %i.cxv = add nuw nsw i64 %.0.i1833.i87.i, 4     ; 2 uses
-  %niter3534.next.3 = add i64 %niter3534, 4       ; 2 uses
+  %niter3534.next.3 = add nuw nsw i64 %niter3534, 4 ; 2 uses
   %niter3534.ncmp.3 = icmp eq i64 %niter3534.next.3, %unroll_iter3533
   br i1 %niter3534.ncmp.3, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3158.unr-lcssa, label %.lr.ph.i86.i, !llvm.loop !546
 
@@ -2307,7 +2307,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EmLb0EEEE16ExecuteWithNullsILb
   %i.dhm = load i8, ptr %i.dhl, align 1, !noalias !547
   store i8 %i.dhm, ptr %i.dhi, align 1, !noalias !547
   %i.dhn = add nuw nsw i64 %.0.i1833.i149.i, 4    ; 2 uses
-  %niter3573.next.3 = add i64 %niter3573, 4       ; 2 uses
+  %niter3573.next.3 = add nuw nsw i64 %niter3573, 4 ; 2 uses
   %niter3573.ncmp.3 = icmp eq i64 %niter3573.next.3, %unroll_iter3572
   br i1 %niter3573.ncmp.3, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa, label %.lr.ph.i148.i, !llvm.loop !556
 
@@ -2710,7 +2710,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi16EhLb0EEEE16ExecuteWithNullsIL
   %i.dsy = load i16, ptr %i.dsx, align 1, !noalias !565
   store i16 %i.dsy, ptr %i.dss, align 1, !noalias !565
   %i.dsz = add nuw nsw i64 %.0.i1833.i.i297, 2    ; 2 uses
-  %niter3512.next.1 = add i64 %niter3512, 2       ; 2 uses
+  %niter3512.next.1 = add nuw nsw i64 %niter3512, 2 ; 2 uses
   %niter3512.ncmp.1 = icmp eq i64 %niter3512.next.1, %unroll_iter3511
   br i1 %niter3512.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi16EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3173.unr-lcssa, label %.lr.ph.i.i296, !llvm.loop !573
 
@@ -3113,7 +3113,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi16EtLb0EEEE16ExecuteWithNullsIL
   %i.ecw = load i16, ptr %i.ecv, align 1, !noalias !574
   store i16 %i.ecw, ptr %i.ecq, align 1, !noalias !574
   %i.ecx = add nuw nsw i64 %.0.i1833.i25.i237, 2  ; 2 uses
-  %niter3501.next.1 = add i64 %niter3501, 2       ; 2 uses
+  %niter3501.next.1 = add nuw nsw i64 %niter3501, 2 ; 2 uses
   %niter3501.ncmp.1 = icmp eq i64 %niter3501.next.1, %unroll_iter3500
   br i1 %niter3501.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi16EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3181.unr-lcssa, label %.lr.ph.i24.i236, !llvm.loop !582
 
@@ -3516,7 +3516,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi16EjLb0EEEE16ExecuteWithNullsIL
   %i.emu = load i16, ptr %i.emt, align 1, !noalias !583
   store i16 %i.emu, ptr %i.emo, align 1, !noalias !583
   %i.emv = add nuw nsw i64 %.0.i1833.i87.i177, 2  ; 2 uses
-  %niter3490.next.1 = add i64 %niter3490, 2       ; 2 uses
+  %niter3490.next.1 = add nuw nsw i64 %niter3490, 2 ; 2 uses
   %niter3490.ncmp.1 = icmp eq i64 %niter3490.next.1, %unroll_iter3489
   br i1 %niter3490.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi16EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3189.unr-lcssa, label %.lr.ph.i86.i176, !llvm.loop !591
 
@@ -3919,7 +3919,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi16EmLb0EEEE16ExecuteWithNullsIL
   %i.ewi = load i16, ptr %i.ewh, align 1, !noalias !592
   store i16 %i.ewi, ptr %i.ewd, align 1, !noalias !592
   %i.ewj = add nuw nsw i64 %.0.i1833.i149.i357, 2 ; 2 uses
-  %niter3523.next.1 = add i64 %niter3523, 2       ; 2 uses
+  %niter3523.next.1 = add nuw nsw i64 %niter3523, 2 ; 2 uses
   %niter3523.ncmp.1 = icmp eq i64 %niter3523.next.1, %unroll_iter3522
   br i1 %niter3523.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi16EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa, label %.lr.ph.i148.i356, !llvm.loop !600
 
@@ -4322,7 +4322,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EhLb0EEEE16ExecuteWithNullsIL
   %i.fhy = load i32, ptr %i.fhx, align 1, !noalias !605
   store i32 %i.fhy, ptr %i.fhs, align 1, !noalias !605
   %i.fhz = add nuw nsw i64 %.0.i1833.i.i540, 2    ; 2 uses
-  %niter3468.next.1 = add i64 %niter3468, 2       ; 2 uses
+  %niter3468.next.1 = add nuw nsw i64 %niter3468, 2 ; 2 uses
   %niter3468.ncmp.1 = icmp eq i64 %niter3468.next.1, %unroll_iter3467
   br i1 %niter3468.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3204.unr-lcssa, label %.lr.ph.i.i539, !llvm.loop !613
 
@@ -4725,7 +4725,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EtLb0EEEE16ExecuteWithNullsIL
   %i.frw = load i32, ptr %i.frv, align 1, !noalias !614
   store i32 %i.frw, ptr %i.frq, align 1, !noalias !614
   %i.frx = add nuw nsw i64 %.0.i1833.i25.i479, 2  ; 2 uses
-  %niter3457.next.1 = add i64 %niter3457, 2       ; 2 uses
+  %niter3457.next.1 = add nuw nsw i64 %niter3457, 2 ; 2 uses
   %niter3457.ncmp.1 = icmp eq i64 %niter3457.next.1, %unroll_iter3456
   br i1 %niter3457.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3212.unr-lcssa, label %.lr.ph.i24.i478, !llvm.loop !622
 
@@ -5128,7 +5128,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EjLb0EEEE16ExecuteWithNullsIL
   %i.gbu = load i32, ptr %i.gbt, align 1, !noalias !623
   store i32 %i.gbu, ptr %i.gbo, align 1, !noalias !623
   %i.gbv = add nuw nsw i64 %.0.i1833.i87.i418, 2  ; 2 uses
-  %niter3446.next.1 = add i64 %niter3446, 2       ; 2 uses
+  %niter3446.next.1 = add nuw nsw i64 %niter3446, 2 ; 2 uses
   %niter3446.ncmp.1 = icmp eq i64 %niter3446.next.1, %unroll_iter3445
   br i1 %niter3446.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3220.unr-lcssa, label %.lr.ph.i86.i417, !llvm.loop !631
 
@@ -5531,7 +5531,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi32EmLb0EEEE16ExecuteWithNullsIL
   %i.gli = load i32, ptr %i.glh, align 1, !noalias !632
   store i32 %i.gli, ptr %i.gld, align 1, !noalias !632
   %i.glj = add nuw nsw i64 %.0.i1833.i149.i601, 2 ; 2 uses
-  %niter3479.next.1 = add i64 %niter3479, 2       ; 2 uses
+  %niter3479.next.1 = add nuw nsw i64 %niter3479, 2 ; 2 uses
   %niter3479.ncmp.1 = icmp eq i64 %niter3479.next.1, %unroll_iter3478
   br i1 %niter3479.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi32EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa, label %.lr.ph.i148.i600, !llvm.loop !640
 
@@ -5934,7 +5934,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EhLb0EEEE16ExecuteWithNullsIL
   %i.gwy = load i64, ptr %i.gwx, align 1, !noalias !645
   store i64 %i.gwy, ptr %i.gws, align 1, !noalias !645
   %i.gwz = add nuw nsw i64 %.0.i1833.i.i785, 2    ; 2 uses
-  %niter3424.next.1 = add i64 %niter3424, 2       ; 2 uses
+  %niter3424.next.1 = add nuw nsw i64 %niter3424, 2 ; 2 uses
   %niter3424.ncmp.1 = icmp eq i64 %niter3424.next.1, %unroll_iter3423
   br i1 %niter3424.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3235.unr-lcssa, label %.lr.ph.i.i784, !llvm.loop !653
 
@@ -6337,7 +6337,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EtLb0EEEE16ExecuteWithNullsIL
   %i.hgw = load i64, ptr %i.hgv, align 1, !noalias !654
   store i64 %i.hgw, ptr %i.hgq, align 1, !noalias !654
   %i.hgx = add nuw nsw i64 %.0.i1833.i25.i724, 2  ; 2 uses
-  %niter3413.next.1 = add i64 %niter3413, 2       ; 2 uses
+  %niter3413.next.1 = add nuw nsw i64 %niter3413, 2 ; 2 uses
   %niter3413.ncmp.1 = icmp eq i64 %niter3413.next.1, %unroll_iter3412
   br i1 %niter3413.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3243.unr-lcssa, label %.lr.ph.i24.i723, !llvm.loop !662
 
@@ -6740,7 +6740,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EjLb0EEEE16ExecuteWithNullsIL
   %i.hqu = load i64, ptr %i.hqt, align 1, !noalias !663
   store i64 %i.hqu, ptr %i.hqo, align 1, !noalias !663
   %i.hqv = add nuw nsw i64 %.0.i1833.i87.i663, 2  ; 2 uses
-  %niter3402.next.1 = add i64 %niter3402, 2       ; 2 uses
+  %niter3402.next.1 = add nuw nsw i64 %niter3402, 2 ; 2 uses
   %niter3402.ncmp.1 = icmp eq i64 %niter3402.next.1, %unroll_iter3401
   br i1 %niter3402.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3251.unr-lcssa, label %.lr.ph.i86.i662, !llvm.loop !671
 
@@ -7143,7 +7143,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi64EmLb0EEEE16ExecuteWithNullsIL
   %i.iai = load i64, ptr %i.iah, align 1, !noalias !672
   store i64 %i.iai, ptr %i.iad, align 1, !noalias !672
   %i.iaj = add nuw nsw i64 %.0.i1833.i149.i846, 2 ; 2 uses
-  %niter3435.next.1 = add i64 %niter3435, 2       ; 2 uses
+  %niter3435.next.1 = add nuw nsw i64 %niter3435, 2 ; 2 uses
   %niter3435.ncmp.1 = icmp eq i64 %niter3435.next.1, %unroll_iter3434
   br i1 %niter3435.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi64EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa, label %.lr.ph.i148.i845, !llvm.loop !680
 
@@ -7546,7 +7546,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EhLb0EEEE16ExecuteWithNullsI
   %i.ilq = getelementptr inbounds nuw i8, ptr %i.ick, i64 %i.ilp
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ill, ptr noundef nonnull align 1 dereferenceable(16) %i.ilq, i64 16, i1 false), !noalias !685
   %i.ilr = add nuw nsw i64 %.0.i1833.i.i1030, 2   ; 2 uses
-  %niter3380.next.1 = add i64 %niter3380, 2       ; 2 uses
+  %niter3380.next.1 = add nuw nsw i64 %niter3380, 2 ; 2 uses
   %niter3380.ncmp.1 = icmp eq i64 %niter3380.next.1, %unroll_iter3379
   br i1 %niter3380.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3266.unr-lcssa, label %.lr.ph.i.i1029, !llvm.loop !693
 
@@ -7949,7 +7949,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EtLb0EEEE16ExecuteWithNullsI
   %i.ivg = getelementptr inbounds nuw i8, ptr %i.ima, i64 %i.ivf
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ivb, ptr noundef nonnull align 1 dereferenceable(16) %i.ivg, i64 16, i1 false), !noalias !694
   %i.ivh = add nuw nsw i64 %.0.i1833.i25.i969, 2  ; 2 uses
-  %niter3369.next.1 = add i64 %niter3369, 2       ; 2 uses
+  %niter3369.next.1 = add nuw nsw i64 %niter3369, 2 ; 2 uses
   %niter3369.ncmp.1 = icmp eq i64 %niter3369.next.1, %unroll_iter3368
   br i1 %niter3369.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3274.unr-lcssa, label %.lr.ph.i24.i968, !llvm.loop !702
 
@@ -8352,7 +8352,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EjLb0EEEE16ExecuteWithNullsI
   %i.jew = getelementptr inbounds nuw i8, ptr %i.ivq, i64 %i.jev
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jer, ptr noundef nonnull align 1 dereferenceable(16) %i.jew, i64 16, i1 false), !noalias !703
   %i.jex = add nuw nsw i64 %.0.i1833.i87.i908, 2  ; 2 uses
-  %niter3358.next.1 = add i64 %niter3358, 2       ; 2 uses
+  %niter3358.next.1 = add nuw nsw i64 %niter3358, 2 ; 2 uses
   %niter3358.ncmp.1 = icmp eq i64 %niter3358.next.1, %unroll_iter3357
   br i1 %niter3358.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3282.unr-lcssa, label %.lr.ph.i86.i907, !llvm.loop !711
 
@@ -8755,7 +8755,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi128EmLb0EEEE16ExecuteWithNullsI
   %i.joc = getelementptr inbounds nuw i8, ptr %i.jfg, i64 %i.job
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jny, ptr noundef nonnull align 1 dereferenceable(16) %i.joc, i64 16, i1 false), !noalias !712
   %i.jod = add nuw nsw i64 %.0.i1833.i149.i1091, 2 ; 2 uses
-  %niter3391.next.1 = add i64 %niter3391, 2       ; 2 uses
+  %niter3391.next.1 = add nuw nsw i64 %niter3391, 2 ; 2 uses
   %niter3391.ncmp.1 = icmp eq i64 %niter3391.next.1, %unroll_iter3390
   br i1 %niter3391.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi128EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa, label %.lr.ph.i148.i1090, !llvm.loop !720
 
@@ -9158,7 +9158,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EhLb0EEEE16ExecuteWithNullsI
   %i.jzg = getelementptr inbounds nuw i8, ptr %i.jqa, i64 %i.jzf
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.jzb, ptr noundef nonnull align 1 dereferenceable(32) %i.jzg, i64 32, i1 false), !noalias !725
   %i.jzh = add nuw nsw i64 %.0.i1833.i.i1275, 2   ; 2 uses
-  %niter3336.next.1 = add i64 %niter3336, 2       ; 2 uses
+  %niter3336.next.1 = add nuw nsw i64 %niter3336, 2 ; 2 uses
   %niter3336.ncmp.1 = icmp eq i64 %niter3336.next.1, %unroll_iter3335
   br i1 %niter3336.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3297.unr-lcssa, label %.lr.ph.i.i1274, !llvm.loop !733
 
@@ -9561,7 +9561,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EtLb0EEEE16ExecuteWithNullsI
   %i.kiw = getelementptr inbounds nuw i8, ptr %i.jzq, i64 %i.kiv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.kir, ptr noundef nonnull align 1 dereferenceable(32) %i.kiw, i64 32, i1 false), !noalias !734
   %i.kix = add nuw nsw i64 %.0.i1833.i25.i1214, 2 ; 2 uses
-  %niter3325.next.1 = add i64 %niter3325, 2       ; 2 uses
+  %niter3325.next.1 = add nuw nsw i64 %niter3325, 2 ; 2 uses
   %niter3325.ncmp.1 = icmp eq i64 %niter3325.next.1, %unroll_iter3324
   br i1 %niter3325.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3305.unr-lcssa, label %.lr.ph.i24.i1213, !llvm.loop !742
 
@@ -9964,7 +9964,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EjLb0EEEE16ExecuteWithNullsI
   %i.ksm = getelementptr inbounds nuw i8, ptr %i.kjg, i64 %i.ksl
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.ksh, ptr noundef nonnull align 1 dereferenceable(32) %i.ksm, i64 32, i1 false), !noalias !743
   %i.ksn = add nuw nsw i64 %.0.i1833.i87.i1153, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit3313.unr-lcssa, label %.lr.ph.i86.i1152, !llvm.loop !751
 
@@ -10367,7 +10367,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi256EmLb0EEEE16ExecuteWithNullsI
   %i.lbs = getelementptr inbounds nuw i8, ptr %i.ksw, i64 %i.lbr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.lbo, ptr noundef nonnull align 1 dereferenceable(32) %i.lbs, i64 32, i1 false), !noalias !752
   %i.lbt = add nuw nsw i64 %.0.i1833.i149.i1336, 2 ; 2 uses
-  %niter3347.next.1 = add i64 %niter3347, 2       ; 2 uses
+  %niter3347.next.1 = add nuw nsw i64 %niter3347, 2 ; 2 uses
   %niter3347.ncmp.1 = icmp eq i64 %niter3347.next.1, %unroll_iter3346
   br i1 %niter3347.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi256EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESC_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa, label %.lr.ph.i148.i1335, !llvm.loop !760
 
@@ -10770,7 +10770,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EhLb1EEEE16ExecuteWithNullsILb
   %i.lna = getelementptr inbounds i8, ptr %i.ldu, i64 %i.lmz
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lmv, ptr align 1 %i.lna, i64 %i.ldc, i1 false), !noalias !766
   %i.lnb = add nuw nsw i64 %.0.i1842.i.i, 2       ; 2 uses
-  %niter3612.next.1 = add i64 %niter3612, 2       ; 2 uses
+  %niter3612.next.1 = add nuw nsw i64 %niter3612, 2 ; 2 uses
   %niter3612.ncmp.1 = icmp eq i64 %niter3612.next.1, %unroll_iter3611
   br i1 %niter3612.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EES5_IbLb0EES5_IbLb1EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESE_PNS_9ArrayDataEl.exit.loopexit3060.unr-lcssa, label %.lr.ph.i.i1460, !llvm.loop !774
 
@@ -11173,7 +11173,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EtLb1EEEE16ExecuteWithNullsILb
   %i.lwq = getelementptr inbounds i8, ptr %i.lnk, i64 %i.lwp
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lwl, ptr align 1 %i.lwq, i64 %i.ldc, i1 false), !noalias !775
   %i.lwr = add nuw nsw i64 %.0.i1842.i25.i, 2     ; 2 uses
-  %niter3599.next.1 = add i64 %niter3599, 2       ; 2 uses
+  %niter3599.next.1 = add nuw nsw i64 %niter3599, 2 ; 2 uses
   %niter3599.ncmp.1 = icmp eq i64 %niter3599.next.1, %unroll_iter3598
   br i1 %niter3599.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EES5_IbLb0EES5_IbLb1EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESE_PNS_9ArrayDataEl.exit.loopexit3068.unr-lcssa, label %.lr.ph.i24.i1428, !llvm.loop !783
 
@@ -11576,7 +11576,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EjLb1EEEE16ExecuteWithNullsILb
   %i.mgg = getelementptr inbounds i8, ptr %i.lxa, i64 %i.mgf
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mgb, ptr align 1 %i.mgg, i64 %i.ldc, i1 false), !noalias !784
   %i.mgh = add nuw nsw i64 %.0.i1842.i87.i, 2     ; 2 uses
-  %niter3586.next.1 = add i64 %niter3586, 2       ; 2 uses
+  %niter3586.next.1 = add nuw nsw i64 %niter3586, 2 ; 2 uses
   %niter3586.ncmp.1 = icmp eq i64 %niter3586.next.1, %unroll_iter3585
   br i1 %niter3586.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EES5_IbLb0EES5_IbLb1EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESE_PNS_9ArrayDataEl.exit.loopexit3076.unr-lcssa, label %.lr.ph.i86.i1396, !llvm.loop !792
 
@@ -11979,7 +11979,7 @@ _ZN5arrow8internal14GatherBaseCRTPINS0_6GatherILi8EmLb1EEEE16ExecuteWithNullsILb
   %i.mpm = getelementptr inbounds nuw i8, ptr %i.mgq, i64 %i.mpl
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mpi, ptr align 1 %i.mpm, i64 %i.ldc, i1 false), !noalias !793
   %i.mpn = add nuw nsw i64 %.0.i1842.i149.i, 2    ; 2 uses
-  %niter3625.next.1 = add i64 %niter3625, 2       ; 2 uses
+  %niter3625.next.1 = add nuw nsw i64 %niter3625, 2 ; 2 uses
   %niter3625.ncmp.1 = icmp eq i64 %niter3625.next.1, %unroll_iter3624
   br i1 %niter3625.ncmp.1, label %_ZN5arrow7compute8internal12_GLOBAL__N_117TakeIndexDispatchITtTpTyENS2_18FixedWidthTakeImplEJSt17integral_constantIiLi8EES5_IbLb0EES5_IbLb1EEEEENS_6StatusEPNS0_13KernelContextERKNS_9ArraySpanESE_PNS_9ArrayDataEl.exit.loopexit.unr-lcssa, label %.lr.ph.i148.i1492, !llvm.loop !801
 
