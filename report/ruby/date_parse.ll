@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %.loopexit345, %.loo
   br i1 %i.av, label %.lr.ph.i230, label %digit_span.exit
 
 .lr.ph.i230:                                      ; preds = %bb.l
-  %5 = ptrtoint ptr %i.aj to i64
-  %6 = ptrtoint ptr %.1192 to i64
+  %5 = ptrtoaddr ptr %i.aj to i64
+  %6 = ptrtoaddr ptr %.1192 to i64
   %i.aw = tail call ptr @__ctype_b_loc() #12
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !17
   %i.ay = sub i64 %5, %6                          ; 2 uses
@@ -376,8 +376,8 @@ bb.ab:                                            ; preds = %.loopexit, %.loopex
   br i1 %i.dd, label %.lr.ph.i241, label %digit_span.exit245.thread
 
 .lr.ph.i241:                                      ; preds = %bb.ab
-  %7 = ptrtoint ptr %i.cq to i64
-  %8 = ptrtoint ptr %.1195338 to i64
+  %7 = ptrtoaddr ptr %i.cq to i64
+  %8 = ptrtoaddr ptr %.1195338 to i64
   %i.de = tail call ptr @__ctype_b_loc() #12
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !17
   %i.dg = sub i64 %7, %8                          ; 2 uses
@@ -519,8 +519,8 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.fd, label %bb.al, label %.critedge4, !llvm.loop !58
 
 .lr.ph.i263:                                      ; preds = %bb.al
-  %9 = ptrtoint ptr %i.et to i64
-  %10 = ptrtoint ptr %.0197366 to i64
+  %9 = ptrtoaddr ptr %i.et to i64
+  %10 = ptrtoaddr ptr %.0197366 to i64
   %i.fe = sub i64 %9, %10                         ; 2 uses
   br label %bb.an
 
@@ -625,8 +625,8 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.gr, label %bb.au, label %.critedge6, !llvm.loop !59
 
 .lr.ph.i279:                                      ; preds = %bb.au
-  %11 = ptrtoint ptr %i.gh to i64
-  %12 = ptrtoint ptr %.0193368 to i64
+  %11 = ptrtoaddr ptr %i.gh to i64
+  %12 = ptrtoaddr ptr %.0193368 to i64
   %i.gs = sub i64 %11, %12                        ; 2 uses
   br label %bb.aw
 

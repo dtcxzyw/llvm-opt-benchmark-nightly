@@ -201,8 +201,8 @@ singlematch.exit:                                 ; preds = %bb.ce, %bb.cd, %bb.
   br i1 %i.hd, label %.lr.ph276, label %.critedge.i
 
 .lr.ph276:                                        ; preds = %.preheader
-  %.075.ph.lcssa351354 = ptrtoint ptr %.075.ph.ph to i64
-  %.lcssa341344 = ptrtoint ptr %i.hc to i64
+  %.075.ph.lcssa351354 = ptrtoaddr ptr %.075.ph.ph to i64
+  %.lcssa341344 = ptrtoaddr ptr %i.hc to i64
   %i.ik = load i8, ptr %.077, align 1, !tbaa !10  ; 2 uses
   %i.il = getelementptr inbounds i8, ptr %.015.i120, i64 -1 ; 3 uses
   %i.im = sub i64 %.lcssa341344, %.075.ph.lcssa351354 ; 2 uses
@@ -326,8 +326,8 @@ bb.cu:                                            ; preds = %.lr.ph532
   br i1 %.not23.i, label %bb.cu, label %.start_capture.exit.loopexit_crit_edge, !llvm.loop !52
 
 bb.cv:                                            ; preds = %singlematch.exit
-  %.lcssa328330 = ptrtoint ptr %i.hc to i64
-  %.075.ph.lcssa338340 = ptrtoint ptr %.075.ph.ph to i64
+  %.lcssa328330 = ptrtoaddr ptr %i.hc to i64
+  %.075.ph.lcssa338340 = ptrtoaddr ptr %.075.ph.ph to i64
   br i1 %i.if, label %bb.cw, label %start_capture.exit
 
 bb.cw:                                            ; preds = %bb.cv

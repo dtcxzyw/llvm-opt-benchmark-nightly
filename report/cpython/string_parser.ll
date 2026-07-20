@@ -56,7 +56,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.k, label %.lr.ph105.i, label %.loopexit.i
 
 .lr.ph105.i:                                      ; preds = %bb.f
-  %5 = ptrtoint ptr %i.j to i64
+  %5 = ptrtoaddr ptr %i.j to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %Py_DECREF.exit69.i, %.lr.ph105.i
@@ -459,8 +459,8 @@ declare ptr @_PyUnicode_DecodeUnicodeEscapeInternal2(ptr noundef, i64 noundef, p
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @warn_invalid_escape_sequence(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, ptr noundef nonnull %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %5 = ptrtoint ptr %2 to i64                     ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %i.a = getelementptr i8, ptr %0, i64 148
   %i.b = load i32, ptr %i.a, align 4, !tbaa !38
   %.not = icmp eq i32 %i.b, 0

@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 34 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  %4 = ptrtoint ptr %i.b to i64                   ; 7 uses
+  %4 = ptrtoaddr ptr %i.b to i64                  ; 7 uses
   %.not11 = icmp eq i64 %1, 0
   br i1 %.not11, label %jsonSkipWhiteSpaces.exit.i, label %.lr.ph.i.i
 
@@ -246,7 +246,7 @@ bb.d:                                             ; preds = %jsonSkipWhiteSpaces
   br i1 %i.l, label %.lr.ph.i42.i, label %jsonSkipWhiteSpaces.exit45.i
 
 .lr.ph.i42.i:                                     ; preds = %.preheader.i
-  %.376.pn168.i = ptrtoint ptr %.376.pn.i to i64
+  %.376.pn168.i = ptrtoaddr ptr %.376.pn.i to i64
   %i.m = tail call ptr @__ctype_b_loc() #24
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !34
   %scevgep167.i = getelementptr i8, ptr %.376.pn.i, i64 %4
@@ -344,7 +344,7 @@ bb.n:                                             ; preds = %bb.m
 
 jsonSkipWhiteSpaces.exit52.i:                     ; preds = %bb.n, %bb.m, %bb.l
   %.7.i = phi ptr [ %i.ac, %bb.l ], [ %.6.i, %bb.m ], [ %scevgep174.i, %bb.n ] ; 5 uses
-  %.7176.i = ptrtoint ptr %.7.i to i64
+  %.7176.i = ptrtoaddr ptr %.7.i to i64
   %.not36.i = icmp ult ptr %.7.i, %i.b
   br i1 %.not36.i, label %bb.o, label %jsonSeekField.exit.thread
 
@@ -388,7 +388,7 @@ jsonSkipWhiteSpaces.exit57.i:                     ; preds = %bb.r, %bb.q, %bb.p
   br i1 %brmerge.i, label %.thread.loopexit100.split.loop.exit114.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %jsonSkipWhiteSpaces.exit57.i
-  %.9179.i = ptrtoint ptr %.9.i to i64
+  %.9179.i = ptrtoaddr ptr %.9.i to i64
   %i.bd = tail call ptr @__ctype_b_loc() #24
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !34 ; 3 uses
   %scevgep178.i = getelementptr i8, ptr %.9.i, i64 %4
@@ -413,7 +413,6 @@ bb.t:                                             ; preds = %bb.s
 
 jsonSkipWhiteSpaces.exit.i.i:                     ; preds = %bb.t, %bb.s
   %.10.i = phi ptr [ %.13.i, %bb.s ], [ %scevgep180.i, %bb.t ] ; 16 uses
-  %.10182.i = ptrtoint ptr %.10.i to i64          ; 2 uses
   %.not.i58.i = icmp ult ptr %.10.i, %i.b
   br i1 %.not.i58.i, label %bb.u, label %jsonSeekField.exit.thread
 
@@ -591,10 +590,11 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.dk, label %jsonSkipValue.exit.thread86.i, label %jsonSeekField.exit.thread
 
 .lr.ph.i45.i.i:                                   ; preds = %bb.u
-  %i.dl = sub i64 %4, %.10182.i
+  %5 = ptrtoaddr ptr %.10.i to i64                ; 2 uses
+  %i.dl = sub i64 %4, %5
   %scevgep.i.i.i = getelementptr i8, ptr %.10.i, i64 %i.dl
   %scevgep181.i = getelementptr i8, ptr %.10.i, i64 %4
-  %i.dm = sub i64 0, %.10182.i
+  %i.dm = sub i64 0, %5
   %scevgep183.i.a = getelementptr i8, ptr %scevgep181.i, i64 %i.dm
   br label %bb.am
 
@@ -639,9 +639,9 @@ jsonSkipValue.exit.thread86.i:                    ; preds = %jsonSkipValue.exit.
   br i1 %i.dw, label %.lr.ph.i61.i, label %jsonSkipWhiteSpaces.exit64.i
 
 .lr.ph.i61.i:                                     ; preds = %jsonSkipValue.exit.thread86.i
-  %.1491185.i = ptrtoint ptr %.1491.i to i64
+  %.1491184.i = ptrtoaddr ptr %.1491.i to i64
   %scevgep184.i = getelementptr i8, ptr %.1491.i, i64 %4
-  %i.dx = sub i64 0, %.1491185.i
+  %i.dx = sub i64 0, %.1491184.i
   %scevgep186.i = getelementptr i8, ptr %scevgep184.i, i64 %i.dx
   br label %bb.an
 
