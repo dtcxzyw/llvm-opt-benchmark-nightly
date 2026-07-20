@@ -204,10 +204,10 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !9367   ; 13 uses
-  %5 = ptrtoint ptr %i.a to i64
+  %5 = ptrtoaddr ptr %i.a to i64
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !9367 ; 5 uses
-  %6 = ptrtoint ptr %i.c to i64
+  %6 = ptrtoaddr ptr %i.c to i64
   %i.d = icmp eq ptr %i.a, %i.c
   br i1 %i.d, label %bb.p, label %bb.b
 
@@ -610,10 +610,10 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !9367   ; 13 uses
-  %5 = ptrtoint ptr %i.a to i64
+  %5 = ptrtoaddr ptr %i.a to i64
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !9367 ; 5 uses
-  %6 = ptrtoint ptr %i.c to i64
+  %6 = ptrtoaddr ptr %i.c to i64
   %i.d = icmp eq ptr %i.a, %i.c
   br i1 %i.d, label %bb.p, label %bb.b
 
@@ -1016,10 +1016,10 @@ _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %bb.e, %bb.f
 define linkonce_odr void @_ZNSt21discrete_distributionIiE10param_type13_M_initializeEv(ptr noundef nonnull align 8 dereferenceable(48) %0) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9448 ; 6 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !9338   ; 9 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9448 ; 7 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !9338   ; 10 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 2 uses
   %i.h = icmp ult i64 %i.g, 2
@@ -1046,7 +1046,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.l, label %.lr.ph.i10.preheader, label %.lr.ph.i, !llvm.loop !9449
 
 .lr.ph.i10.preheader:                             ; preds = %.lr.ph.i
-  %i.m = sub i64 %i.d, %i.e
+  %1 = ptrtoaddr ptr %i.b to i64
+  %2 = ptrtoaddr ptr %i.c to i64
+  %i.m = sub i64 %1, %2
   %i.n = add i64 %i.m, -8                         ; 2 uses
   %i.o = lshr i64 %i.n, 3
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses

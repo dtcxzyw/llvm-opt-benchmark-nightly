@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %i.n, i64 128 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !614
-  %i.z = load ptr, ptr %i.o, align 8, !tbaa !615  ; 10 uses
+  %i.z = load ptr, ptr %i.o, align 8, !tbaa !615  ; 11 uses
   %i.aa = ptrtoint ptr %i.y to i64
-  %i.ab = ptrtoint ptr %i.z to i64                ; 4 uses
+  %i.ab = ptrtoint ptr %i.z to i64                ; 3 uses
   %i.ac = sub i64 %i.aa, %i.ab
   %i.ad = icmp ult i64 %i.ac, %i.v
   br i1 %i.ad, label %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_deleteIS2_ELb1EEESaIS5_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit
@@ -224,8 +224,9 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_del
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc14
-  %5 = ptrtoint ptr %i.af to i64
-  %i.aj = sub i64 %5, %i.ab
+  %5 = ptrtoaddr ptr %i.af to i64
+  %6 = ptrtoaddr ptr %i.z to i64
+  %i.aj = sub i64 %5, %6
   %i.ak = add i64 %i.aj, -8                       ; 2 uses
   %i.al = lshr i64 %i.ak, 3
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
@@ -348,7 +349,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bi, i64 120 ; 3 uses
-  %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !616 ; 6 uses
+  %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !616 ; 7 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bi, i64 128 ; 2 uses
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !614
   %.not.i.i = icmp eq ptr %i.bp, %i.br
@@ -362,9 +363,9 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_deleteIS2_
   br label %_ZNSt10unique_ptrIN6duckdb17ColumnWriterStateESt14default_deleteIS1_EED2Ev.exit
 
 bb.j:                                             ; preds = %bb.i
-  %i.bu = load ptr, ptr %i.bj, align 8, !tbaa !615 ; 10 uses
-  %i.bv = ptrtoint ptr %i.bp to i64               ; 3 uses
-  %i.bw = ptrtoint ptr %i.bu to i64               ; 3 uses
+  %i.bu = load ptr, ptr %i.bj, align 8, !tbaa !615 ; 11 uses
+  %i.bv = ptrtoint ptr %i.bp to i64               ; 2 uses
+  %i.bw = ptrtoint ptr %i.bu to i64               ; 2 uses
   %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
   %i.by = icmp eq i64 %i.bx, 9223372036854775800
   br i1 %i.by, label %bb.k, label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -398,7 +399,9 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_deleteIS2
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_17ColumnWriterStateESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc16
-  %i.ci = sub i64 %i.bv, %i.bw
+  %7 = ptrtoaddr ptr %i.bp to i64
+  %8 = ptrtoaddr ptr %i.bu to i64
+  %i.ci = sub i64 %7, %8
   %i.cj = add i64 %i.ci, -8                       ; 2 uses
   %i.ck = lshr i64 %i.cj, 3
   %i.cl = add nuw nsw i64 %i.ck, 1                ; 2 uses

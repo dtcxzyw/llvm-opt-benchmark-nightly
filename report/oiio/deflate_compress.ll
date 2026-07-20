@@ -204,7 +204,7 @@ deflate_near_optimal_merge_stats.exit.outer:      ; preds = %scalar.ph465, %bb.k
   %.sroa.9.1.ph = phi i32 [ %.sroa.9.5, %scalar.ph465 ], [ %.sroa.9.0, %bb.k ]
   %.sroa.0.1.ph = phi i32 [ %.sroa.0.5, %scalar.ph465 ], [ %.sroa.0.0, %bb.k ]
   %.0174.ph = phi ptr [ %.1175, %scalar.ph465 ], [ %.0, %bb.k ]
-  %.0170.ph = phi ptr [ %.3, %scalar.ph465 ], [ null, %bb.k ] ; 3 uses
+  %.0170.ph = phi ptr [ %.3, %scalar.ph465 ], [ null, %bb.k ] ; 4 uses
   %.1165.idx.ph = phi i64 [ %.4168.idx, %scalar.ph465 ], [ %.0164.idx, %bb.k ]
   %.1158.ph = phi ptr [ %.5162, %scalar.ph465 ], [ %.0157, %bb.k ]
   %.1154.ph = phi ptr [ %.5, %scalar.ph465 ], [ %.0153, %bb.k ]
@@ -607,7 +607,7 @@ bt_matchfinder_advance_one_byte.exit:             ; preds = %bb.bk, %lz_extend.e
   %.4168.idx = phi i64 [ %.2166.add, %bb.ap ], [ %.3167.add, %bt_matchfinder_advance_one_byte.exit ] ; 5 uses
   %.5162 = phi ptr [ %.2159, %bb.ap ], [ %.4161, %bt_matchfinder_advance_one_byte.exit ] ; 3 uses
   %.5 = phi ptr [ %.2155, %bb.ap ], [ %.4, %bt_matchfinder_advance_one_byte.exit ] ; 3 uses
-  %.3 = phi ptr [ %i.rq, %bb.ap ], [ %i.wx, %bt_matchfinder_advance_one_byte.exit ] ; 11 uses
+  %.3 = phi ptr [ %i.rq, %bb.ap ], [ %i.wx, %bt_matchfinder_advance_one_byte.exit ] ; 12 uses
   %.not189 = icmp ult ptr %.3, %.0.i
   %.not190 = icmp slt i64 %.4168.idx, 6530368
   %or.cond194 = select i1 %.not189, i1 %.not190, i1 false
@@ -722,12 +722,14 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not419, label %vector.ph, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.yq = ptrtoint ptr %.0170.ph to i64           ; 3 uses
-  %i.yr = ptrtoint ptr %.3 to i64                 ; 2 uses
+  %.3.lcssa535.lcssa536 = ptrtoaddr ptr %.3 to i64
+  %.0170.ph.lcssa532533 = ptrtoaddr ptr %.0170.ph to i64
+  %i.yq = ptrtoint ptr %.0170.ph to i64           ; 2 uses
+  %i.yr = ptrtoint ptr %.3 to i64
   %i.ys = sub i64 %i.yr, %i.yq
   %i.yt = trunc i64 %i.ys to i32                  ; 3 uses
-  %i.yu = trunc i64 %i.yq to i32
-  %i.yv = trunc i64 %i.yr to i32
+  %i.yu = trunc i64 %.0170.ph.lcssa532533 to i32
+  %i.yv = trunc i64 %.3.lcssa535.lcssa536 to i32
   %xtraiter532 = and i32 %i.yt, 7                 ; 2 uses
   %lcmp.mod533.not = icmp eq i32 %xtraiter532, 0
   br i1 %lcmp.mod533.not, label %.prol.loopexit, label %.prol.preheader

@@ -204,8 +204,8 @@ bb.au:                                            ; preds = %bb.an
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef i32 @_ZN6google8protobuf8internal30CountVarintsAssumingLargeArrayEPKcS3_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.a = ptrtoint ptr %1 to i64
+  %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.c = sub i64 %i.a, %i.b
   %i.d = trunc i64 %i.c to i32                    ; 3 uses
   %i.e = getelementptr inbounds i8, ptr %1, i64 -8 ; 4 uses
@@ -213,10 +213,12 @@ bb.a:
   br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.g = add i64 %i.a, -8
-  %i.h = add i64 %i.b, 8
+  %2 = ptrtoaddr ptr %1 to i64
+  %i.g = add i64 %2, -8
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %i.h = add i64 %3, 8
   %i.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %i.h)
-  %i.j = xor i64 %i.b, -1
+  %i.j = xor i64 %3, -1
   %i.k = add i64 %i.i, %i.j                       ; 2 uses
   %i.l = lshr i64 %i.k, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
@@ -303,9 +305,9 @@ bb.a:
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = ptrtoint ptr %1 to i64
+  %2 = ptrtoaddr ptr %1 to i64
   %i.c = add i64 %2, -8
-  %3 = ptrtoint ptr %0 to i64                     ; 2 uses
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.d = add i64 %3, 8
   %i.e = tail call i64 @llvm.umax.i64(i64 %i.c, i64 %i.d)
   %i.f = xor i64 %3, -1

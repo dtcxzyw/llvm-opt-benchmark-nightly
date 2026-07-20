@@ -204,7 +204,7 @@ _ZNK4llvh5Error3isAINS_9ErrorListEEEbv.exit9.thread: ; preds = %_ZNK4llvh5Error3
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ad, i64 8 ; 2 uses
   store ptr null, ptr %2, align 8, !tbaa !203, !noalias !295
   %i.be = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 3 uses
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !292 ; 6 uses
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !292 ; 7 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ad, i64 24 ; 2 uses
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !294
   %.not.i.i11 = icmp eq ptr %i.bf, %i.bh
@@ -217,9 +217,9 @@ bb.k:                                             ; preds = %_ZNK4llvh5Error3isA
   br label %_ZNSt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit
 
 bb.l:                                             ; preds = %_ZNK4llvh5Error3isAINS_9ErrorListEEEbv.exit9.thread
-  %i.bj = load ptr, ptr %i.bd, align 8, !tbaa !298 ; 10 uses
-  %i.bk = ptrtoint ptr %i.bf to i64               ; 3 uses
-  %i.bl = ptrtoint ptr %i.bj to i64               ; 3 uses
+  %i.bj = load ptr, ptr %i.bd, align 8, !tbaa !298 ; 11 uses
+  %i.bk = ptrtoint ptr %i.bf to i64               ; 2 uses
+  %i.bl = ptrtoint ptr %i.bj to i64               ; 2 uses
   %i.bm = sub i64 %i.bk, %i.bl                    ; 4 uses
   %i.bn = icmp eq i64 %i.bm, 9223372036854775800
   br i1 %i.bn, label %bb.m, label %_ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
@@ -245,7 +245,9 @@ _ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
-  %i.bw = sub i64 %i.bk, %i.bl
+  %3 = ptrtoaddr ptr %i.bf to i64
+  %4 = ptrtoaddr ptr %i.bj to i64
+  %i.bw = sub i64 %3, %4
   %i.bx = add i64 %i.bw, -8                       ; 2 uses
   %i.by = lshr i64 %i.bx, 3
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
@@ -360,15 +362,15 @@ bb.o:                                             ; preds = %_ZNK4llvh5Error3isA
   %i.df = and i64 %i.de, -2
   %i.dg = inttoptr i64 %i.df to ptr               ; 3 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 8 ; 2 uses
-  %i.di = load ptr, ptr %i.dh, align 8, !tbaa !265 ; 13 uses
+  %i.di = load ptr, ptr %i.dh, align 8, !tbaa !265 ; 14 uses
   %i.dj = load ptr, ptr %1, align 8, !tbaa !203, !noalias !311
   %i.dk = ptrtoint ptr %i.dj to i64
   %i.dl = and i64 %i.dk, -2                       ; 3 uses
   %i.dm = inttoptr i64 %i.dl to ptr
   store ptr null, ptr %1, align 8, !tbaa !203, !noalias !311
-  %i.dn = ptrtoint ptr %i.di to i64               ; 4 uses
+  %i.dn = ptrtoint ptr %i.di to i64               ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dg, i64 16 ; 4 uses
-  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !292 ; 11 uses
+  %i.dp = load ptr, ptr %i.do, align 8, !tbaa !292 ; 12 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dg, i64 24 ; 2 uses
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !294
   %.not.i.i18 = icmp eq ptr %i.dp, %i.dr
@@ -436,7 +438,7 @@ _ZNKSt14default_deleteIN4llvh13ErrorInfoBaseEEclEPS1_.exit.i.i.i.i.i.i.i: ; pred
   br label %_ZNSt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit21
 
 bb.s:                                             ; preds = %bb.o
-  %i.eo = ptrtoint ptr %i.dp to i64               ; 3 uses
+  %i.eo = ptrtoint ptr %i.dp to i64               ; 2 uses
   %i.ep = sub i64 %i.eo, %i.dn                    ; 3 uses
   %i.eq = icmp eq i64 %i.ep, 9223372036854775800
   br i1 %i.eq, label %bb.t, label %_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i41
@@ -462,7 +464,9 @@ _ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_
   br i1 %.not10.i.i.i16.i43, label %_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i48, label %.lr.ph.i.i.i17.i44.preheader
 
 .lr.ph.i.i.i17.i44.preheader:                     ; preds = %_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i41
-  %i.ez = sub i64 %i.eo, %i.dn
+  %5 = ptrtoaddr ptr %i.dp to i64
+  %6 = ptrtoaddr ptr %i.di to i64
+  %i.ez = sub i64 %5, %6
   %i.fa = add i64 %i.ez, -8                       ; 2 uses
   %i.fb = lshr i64 %i.fa, 3
   %i.fc = add nuw nsw i64 %i.fb, 1                ; 2 uses
@@ -592,12 +596,11 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #19
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !292  ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !298    ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !292  ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !298    ; 11 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
@@ -613,7 +616,7 @@ _ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -627,8 +630,9 @@ _ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
-  %4 = ptrtoint ptr %1 to i64
-  %i.s = sub i64 %4, %i.e
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %i.c to i64
+  %i.s = sub i64 %3, %4
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
@@ -636,7 +640,7 @@ _ZNKSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %i.w = add i64 %3, -8
+  %i.w = add i64 %i.m, -8
   %i.x = sub i64 %i.w, %i.e
   %i.y = and i64 %i.x, -8
   %i.z = add i64 %i.y, 8                          ; 2 uses
@@ -703,8 +707,9 @@ _ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit
-  %5 = ptrtoint ptr %1 to i64
-  %i.am = sub i64 %i.d, %5
+  %5 = ptrtoaddr ptr %i.b to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.am = sub i64 %5, %6
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -713,7 +718,7 @@ _ZNSt6vectorISt10unique_ptrIN4llvh13ErrorInfoBaseESt14default_deleteIS2_EESaIS5_
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
   %i.aq = add i64 %i.d, -8
-  %i.ar = sub i64 %i.aq, %3
+  %i.ar = sub i64 %i.aq, %i.m
   %i.as = and i64 %i.ar, -8                       ; 2 uses
   %i.at = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.as
   %scevgep40 = getelementptr i8, ptr %i.at, i64 16

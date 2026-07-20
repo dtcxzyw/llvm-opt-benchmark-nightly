@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.a
           to label %bb.z unwind label %bb.aj
 
 bb.j:                                             ; preds = %.lr.ph, %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit
-  %i.v = phi ptr [ null, %.lr.ph ], [ %i.ca, %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit ] ; 11 uses
-  %i.w = phi ptr [ null, %.lr.ph ], [ %i.cb, %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit ] ; 5 uses
+  %i.v = phi ptr [ null, %.lr.ph ], [ %i.ca, %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit ] ; 12 uses
+  %i.w = phi ptr [ null, %.lr.ph ], [ %i.cb, %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit ] ; 6 uses
   %i.x = phi ptr [ null, %.lr.ph ], [ %i.cc, %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit ] ; 3 uses
   %.sroa.046.050 = phi ptr [ %i.m, %.lr.ph ], [ %i.cd, %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #35
@@ -323,8 +323,8 @@ bb.v:                                             ; preds = %bb.u
   br label %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12emplace_backIJS5_EEERS5_DpOT_.exit
 
 bb.w:                                             ; preds = %bb.u
-  %i.at = ptrtoint ptr %i.w to i64                ; 3 uses
-  %i.au = ptrtoint ptr %i.v to i64                ; 3 uses
+  %i.at = ptrtoint ptr %i.w to i64                ; 2 uses
+  %i.au = ptrtoint ptr %i.v to i64                ; 2 uses
   %i.av = sub i64 %i.at, %i.au                    ; 4 uses
   %i.aw = icmp eq i64 %i.av, 9223372036854775800
   br i1 %i.aw, label %bb.x, label %_ZNKSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
@@ -358,7 +358,9 @@ _ZNKSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc45
-  %i.bg = sub i64 %i.at, %i.au
+  %12 = ptrtoaddr ptr %i.w to i64
+  %13 = ptrtoaddr ptr %i.v to i64
+  %i.bg = sub i64 %12, %13
   %i.bh = add i64 %i.bg, -8                       ; 2 uses
   %i.bi = lshr i64 %i.bh, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
@@ -761,10 +763,10 @@ bb.e:                                             ; preds = %._crit_edge, %.loop
           to label %bb.m unwind label %bb.q       ; 3 uses
 
 bb.f:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit
-  %i.r = phi ptr [ null, %.lr.ph ], [ %i.be, %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit ] ; 8 uses
+  %i.r = phi ptr [ null, %.lr.ph ], [ %i.be, %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit ] ; 9 uses
   %i.s = phi ptr [ null, %.lr.ph ], [ %i.bg, %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit ] ; 6 uses
   %.sroa.0101.0142 = phi ptr [ %i.j, %.lr.ph ], [ %i.bh, %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit ] ; 3 uses
-  %i.t = phi ptr [ null, %.lr.ph ], [ %i.bf, %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit ] ; 14 uses
+  %i.t = phi ptr [ null, %.lr.ph ], [ %i.bf, %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit ] ; 15 uses
   %i.u = load i64, ptr %.sroa.0101.0142, align 8, !tbaa !160 ; 3 uses
   store ptr null, ptr %.sroa.0101.0142, align 8, !tbaa !160
   %i.v = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #37
@@ -783,8 +785,8 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit
 
 bb.i:                                             ; preds = %bb.g
-  %i.y = ptrtoint ptr %i.r to i64                 ; 3 uses
-  %i.z = ptrtoint ptr %i.t to i64                 ; 3 uses
+  %i.y = ptrtoint ptr %i.r to i64                 ; 2 uses
+  %i.z = ptrtoint ptr %i.t to i64                 ; 2 uses
   %i.aa = sub i64 %i.y, %i.z                      ; 4 uses
   %i.ab = icmp eq i64 %i.aa, 9223372036854775800
   br i1 %i.ab, label %bb.j, label %_ZNKSt6vectorISt10unique_ptrIKN8facebook3jsi6BufferESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
@@ -820,7 +822,9 @@ _ZNKSt6vectorISt10unique_ptrIKN8facebook3jsi6BufferESt14default_deleteIS4_EESaIS
   br i1 %.not10.i.i.i.i81, label %_ZNSt6vectorISt10unique_ptrIKN8facebook3jsi6BufferESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i82.preheader
 
 .lr.ph.i.i.i.i82.preheader:                       ; preds = %.noexc86
-  %i.al = sub i64 %i.y, %i.z
+  %14 = ptrtoaddr ptr %i.r to i64
+  %15 = ptrtoaddr ptr %i.t to i64
+  %i.al = sub i64 %14, %15
   %i.am = add i64 %i.al, -8                       ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
@@ -1223,8 +1227,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.o
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN8facebook3jsi7PointerD2Ev.exit
-  %i.t = phi ptr [ null, %.lr.ph ], [ %i.ci, %_ZN8facebook3jsi7PointerD2Ev.exit ] ; 11 uses
-  %i.u = phi ptr [ null, %.lr.ph ], [ %i.cj, %_ZN8facebook3jsi7PointerD2Ev.exit ] ; 5 uses
+  %i.t = phi ptr [ null, %.lr.ph ], [ %i.ci, %_ZN8facebook3jsi7PointerD2Ev.exit ] ; 12 uses
+  %i.u = phi ptr [ null, %.lr.ph ], [ %i.cj, %_ZN8facebook3jsi7PointerD2Ev.exit ] ; 6 uses
   %i.v = phi ptr [ null, %.lr.ph ], [ %i.ck, %_ZN8facebook3jsi7PointerD2Ev.exit ] ; 3 uses
   %.sroa.026.034 = phi ptr [ %i.n, %.lr.ph ], [ %i.cl, %_ZN8facebook3jsi7PointerD2Ev.exit ] ; 2 uses
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !1121, !nonnull !68, !align !453 ; 5 uses
@@ -1294,8 +1298,8 @@ bb.h:                                             ; preds = %_ZN8facebook6hermes
   br label %_ZN8facebook3jsi7PointerD2Ev.exit
 
 bb.i:                                             ; preds = %_ZN8facebook6hermes7tracing16TraceInterpreter19getPropNameIDForUseEm.exit
-  %i.bd = ptrtoint ptr %i.u to i64                ; 3 uses
-  %i.be = ptrtoint ptr %i.t to i64                ; 3 uses
+  %i.bd = ptrtoint ptr %i.u to i64                ; 2 uses
+  %i.be = ptrtoint ptr %i.t to i64                ; 2 uses
   %i.bf = sub i64 %i.bd, %i.be                    ; 4 uses
   %i.bg = icmp eq i64 %i.bf, 9223372036854775800
   br i1 %i.bg, label %bb.j, label %_ZNKSt6vectorIN8facebook3jsi10PropNameIDESaIS2_EE12_M_check_lenEmPKc.exit.i
@@ -1327,7 +1331,9 @@ _ZNKSt6vectorIN8facebook3jsi10PropNameIDESaIS2_EE12_M_check_lenEmPKc.exit.i: ; p
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN8facebook3jsi10PropNameIDESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc20
-  %i.bp = sub i64 %i.bd, %i.be
+  %3 = ptrtoaddr ptr %i.u to i64
+  %4 = ptrtoaddr ptr %i.t to i64
+  %i.bp = sub i64 %3, %4
   %i.bq = add i64 %i.bp, -8                       ; 2 uses
   %i.br = lshr i64 %i.bq, 3
   %i.bs = add nuw nsw i64 %i.br, 1                ; 2 uses

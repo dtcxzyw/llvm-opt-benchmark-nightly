@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIZN5folly7TDigest9mergeImplIPKS1_EES1_NS0_5RangeIT_EEE6CursorSaIS8_EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.e = ptrtoint ptr %2 to i64
+  %i.f = ptrtoint ptr %1 to i64
   %i.g = sub i64 %i.e, %i.f                       ; 3 uses
   %i.h = ashr exact i64 %i.g, 6                   ; 2 uses
   %i.i = icmp eq i64 %i.g, 128
@@ -218,7 +218,9 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.preheader:                                 ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.l = load i64, ptr %i.k, align 8, !tbaa !11   ; 9 uses
-  %i.m = sub i64 %i.e, %i.f
+  %5 = ptrtoaddr ptr %2 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.m = sub i64 %5, %6
   %i.n = add i64 %i.m, -64                        ; 2 uses
   %min.iters.check = icmp ult i64 %i.n, 1024
   br i1 %min.iters.check, label %.lr.ph.preheader274, label %vector.ph
@@ -621,8 +623,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIZN5folly7TDigest9mergeImplIPPKS1_EES1_NS0_5RangeIT_EEE6CursorSaIS9_EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.e = ptrtoint ptr %2 to i64
+  %i.f = ptrtoint ptr %1 to i64
   %i.g = sub i64 %i.e, %i.f                       ; 3 uses
   %i.h = ashr exact i64 %i.g, 3                   ; 2 uses
   %i.i = icmp eq i64 %i.g, 16
@@ -638,7 +640,9 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.preheader:                                 ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.n = load i64, ptr %i.m, align 8, !tbaa !11   ; 9 uses
-  %i.o = sub i64 %i.e, %i.f
+  %5 = ptrtoaddr ptr %2 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.o = sub i64 %5, %6
   %i.p = add i64 %i.o, -8                         ; 2 uses
   %i.q = lshr i64 %i.p, 3
   %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses

@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i.i36, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.i, label %.lr.ph.i41.i, !llvm.loop !14
 
 _ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.i: ; preds = %.critedge.i42.i, %.lr.ph.i41.i
-  %.167.i = phi ptr [ %.470.i, %.lr.ph.i41.i ], [ %scevgep118.i, %.critedge.i42.i ] ; 2 uses
+  %.167.i = phi ptr [ %.470.i, %.lr.ph.i41.i ], [ %scevgep118.i, %.critedge.i42.i ] ; 3 uses
   %.0.i = phi i32 [ %.9.i, %.lr.ph.i41.i ], [ %.10.i, %.critedge.i42.i ] ; 3 uses
   %.not68 = icmp eq ptr %.167.i, %.066.i
   %i.al = select i1 %i.v, i32 -2147483648, i32 2147483647
@@ -258,7 +258,7 @@ _ZN8facebook5velox6StatusD2Ev.exit45:             ; preds = %bb.m, %_ZNKSt7__cxx
   br label %bb.s
 
 bb.o:                                             ; preds = %_ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.i
-  %i.ba = ptrtoint ptr %.167.i to i64             ; 2 uses
+  %i.ba = ptrtoint ptr %.167.i to i64
   %i.bb = ptrtoint ptr %i.s to i64
   %i.bc = sub i64 %i.ba, %i.bb                    ; 4 uses
   %i.bd = add i64 %i.bc, %i.e
@@ -273,11 +273,12 @@ bb.o:                                             ; preds = %_ZNSt8__detail22__f
   br i1 %.not72, label %._crit_edge, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader
-  %13 = ptrtoint ptr %1 to i64
+  %13 = ptrtoaddr ptr %1 to i64
   %i.bh = add i64 %i.a, %13
   %i.bi = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 2)
   %i.bj = add i64 %i.bh, %i.bi
-  %i.bk = sub i64 %i.bj, %i.ba                    ; 2 uses
+  %14 = ptrtoaddr ptr %.167.i to i64
+  %i.bk = sub i64 %i.bj, %14                      ; 2 uses
   %n.rnd.up = add i64 %i.bk, 5
   %n.vec = and i64 %n.rnd.up, -4
   %trip.count.minus.1 = add i64 %i.bk, 1

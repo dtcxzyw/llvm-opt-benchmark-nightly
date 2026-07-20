@@ -203,8 +203,8 @@ bb.cb:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.cc
 
 bb.cc:                                            ; preds = %bb.ec, %.lr.ph385.i
-  %i.lt = phi ptr [ null, %.lr.ph385.i ], [ %i.uo, %bb.ec ] ; 11 uses
-  %i.lu = phi ptr [ null, %.lr.ph385.i ], [ %i.up, %bb.ec ] ; 8 uses
+  %i.lt = phi ptr [ null, %.lr.ph385.i ], [ %i.uo, %bb.ec ] ; 12 uses
+  %i.lu = phi ptr [ null, %.lr.ph385.i ], [ %i.up, %bb.ec ] ; 9 uses
   %i.lv = phi ptr [ null, %.lr.ph385.i ], [ %i.uq, %bb.ec ] ; 6 uses
   %i.lw = phi i64 [ %i.kt, %.lr.ph385.i ], [ %i.ut, %bb.ec ]
   %i.lx = getelementptr inbounds i8, ptr %10, i64 %i.lw
@@ -607,8 +607,8 @@ bb.di:                                            ; preds = %bb.dh
   br label %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE9push_backEOS2_.exit.i
 
 bb.dj:                                            ; preds = %bb.dh
-  %i.ri = ptrtoint ptr %i.lu to i64               ; 2 uses
-  %i.rj = ptrtoint ptr %i.lt to i64               ; 3 uses
+  %i.ri = ptrtoint ptr %i.lu to i64
+  %i.rj = ptrtoint ptr %i.lt to i64               ; 2 uses
   %i.rk = sub i64 %i.ri, %i.rj                    ; 4 uses
   %i.rl = icmp eq i64 %i.rk, 9223372036854775800
   br i1 %i.rl, label %bb.dk, label %_ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i
@@ -642,7 +642,9 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc112.i
   %i.rv = ptrtoaddr ptr %i.rs to i64
-  %i.rw = sub i64 %i.ri, %i.rj
+  %43 = ptrtoaddr ptr %i.lu to i64
+  %44 = ptrtoaddr ptr %i.lt to i64
+  %i.rw = sub i64 %43, %44
   %i.rx = add i64 %i.rw, -8                       ; 2 uses
   %i.ry = lshr i64 %i.rx, 3
   %i.rz = add nuw nsw i64 %i.ry, 1                ; 2 uses
@@ -1045,8 +1047,8 @@ bb.ev:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.ew
 
 bb.ew:                                            ; preds = %.backedge.i, %.lr.ph.i
-  %i.yz = phi ptr [ null, %.lr.ph.i ], [ %i.acq, %.backedge.i ] ; 11 uses
-  %i.za = phi ptr [ null, %.lr.ph.i ], [ %i.acr, %.backedge.i ] ; 8 uses
+  %i.yz = phi ptr [ null, %.lr.ph.i ], [ %i.acq, %.backedge.i ] ; 12 uses
+  %i.za = phi ptr [ null, %.lr.ph.i ], [ %i.acr, %.backedge.i ] ; 9 uses
   %i.zb = phi ptr [ null, %.lr.ph.i ], [ %i.acs, %.backedge.i ] ; 6 uses
   %i.zc = phi i64 [ %i.yg, %.lr.ph.i ], [ %i.acv, %.backedge.i ]
   %i.zd = getelementptr inbounds i8, ptr %10, i64 %i.zc
@@ -1229,8 +1231,8 @@ bb.fl:                                            ; preds = %bb.fk
   br label %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE9push_backEOS2_.exit218.i
 
 bb.fm:                                            ; preds = %bb.fk
-  %i.aax = ptrtoint ptr %i.za to i64              ; 2 uses
-  %i.aay = ptrtoint ptr %i.yz to i64              ; 3 uses
+  %i.aax = ptrtoint ptr %i.za to i64
+  %i.aay = ptrtoint ptr %i.yz to i64              ; 2 uses
   %i.aaz = sub i64 %i.aax, %i.aay                 ; 4 uses
   %i.aba = icmp eq i64 %i.aaz, 9223372036854775800
   br i1 %i.aba, label %bb.fn, label %_ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i204.i
@@ -1264,7 +1266,9 @@ _ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.ex
 
 .lr.ph.i.i.i.i.i.i208.i.preheader:                ; preds = %.noexc217.i
   %i.abk = ptrtoaddr ptr %i.abh to i64
-  %i.abl = sub i64 %i.aax, %i.aay
+  %45 = ptrtoaddr ptr %i.za to i64
+  %46 = ptrtoaddr ptr %i.yz to i64
+  %i.abl = sub i64 %45, %46
   %i.abm = add i64 %i.abl, -8                     ; 2 uses
   %i.abn = lshr i64 %i.abm, 3
   %i.abo = add nuw nsw i64 %i.abn, 1              ; 2 uses
@@ -1667,10 +1671,10 @@ declare noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noun
 define linkonce_odr void @_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE17_M_realloc_insertIJNSt6chrono10time_pointINS6_3_V212system_clockENS6_8durationIlSt5ratioILl1ELl1EEEEEENS1_6detail12undocumentedEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 1 dereferenceable(1) %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !260  ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !25     ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !260  ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !25     ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE12_M_check_lenEmPKc.exit
@@ -1702,8 +1706,9 @@ _ZNSt16allocator_traitsISaIN14arrow_vendored4date11leap_secondEEE9constructIS2_J
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt16allocator_traitsISaIN14arrow_vendored4date11leap_secondEEE9constructIS2_JNSt6chrono10time_pointINS6_3_V212system_clockENS6_8durationIlSt5ratioILl1ELl1EEEEEENS1_6detail12undocumentedEEEEvRS3_PT_DpOT0_.exit
-  %4 = ptrtoint ptr %1 to i64
-  %i.s = sub i64 %4, %i.e
+  %4 = ptrtoaddr ptr %1 to i64
+  %5 = ptrtoaddr ptr %i.c to i64
+  %i.s = sub i64 %4, %5
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
@@ -1766,8 +1771,9 @@ _ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5
   br i1 %.not10.i.i.i27, label %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit33, label %.lr.ph.i.i.i28.preheader
 
 .lr.ph.i.i.i28.preheader:                         ; preds = %_ZNSt6vectorIN14arrow_vendored4date11leap_secondESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit
-  %5 = ptrtoint ptr %1 to i64
-  %i.ai = sub i64 %i.d, %5
+  %6 = ptrtoaddr ptr %i.b to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ai = sub i64 %6, %7
   %i.aj = add i64 %i.ai, -8                       ; 2 uses
   %i.ak = lshr i64 %i.aj, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses

@@ -203,9 +203,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.n, %bb.a
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ 0, %bb.a ] ; 4 uses
-  %.sroa.13.0 = phi ptr [ %.sroa.13.5, %bb.n ], [ null, %bb.a ] ; 7 uses
+  %.sroa.13.0 = phi ptr [ %.sroa.13.5, %bb.n ], [ null, %bb.a ] ; 8 uses
   %.sroa.9.0 = phi ptr [ %.sroa.9.3, %bb.n ], [ null, %bb.a ] ; 5 uses
-  %.sroa.076.0 = phi ptr [ %.sroa.076.5, %bb.n ], [ null, %bb.a ] ; 17 uses
+  %.sroa.076.0 = phi ptr [ %.sroa.076.5, %bb.n ], [ null, %bb.a ] ; 18 uses
   %i.n = invoke noundef i32 @_ZNK5arrow6Schema10num_fieldsEv(ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.c unwind label %bb.d
 
@@ -270,8 +270,8 @@ bb.h:                                             ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge
 
 bb.i:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit52
-  %i.y = ptrtoint ptr %.sroa.13.0 to i64          ; 2 uses
-  %i.z = ptrtoint ptr %.sroa.076.0 to i64         ; 3 uses
+  %i.y = ptrtoint ptr %.sroa.13.0 to i64
+  %i.z = ptrtoint ptr %.sroa.076.0 to i64         ; 2 uses
   %i.aa = sub i64 %i.y, %i.z                      ; 4 uses
   %i.ab = icmp eq i64 %i.aa, 9223372036854775804
   br i1 %i.ab, label %bb.j, label %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf5FieldEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i
@@ -305,7 +305,9 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc54
   %i.al = ptrtoaddr ptr %i.ai to i64
-  %i.am = sub i64 %i.y, %i.z
+  %10 = ptrtoaddr ptr %.sroa.13.0 to i64
+  %11 = ptrtoaddr ptr %.sroa.076.0 to i64
+  %i.am = sub i64 %10, %11
   %i.an = add i64 %i.am, -4                       ; 2 uses
   %i.ao = lshr i64 %i.an, 2
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -708,8 +710,8 @@ _ZN5arrow6StatusD2Ev.exit62:                      ; preds = %_ZNSt12__shared_ptr
 
 bb.z:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit ] ; 3 uses
-  %.sroa.088.0111 = phi ptr [ null, %.lr.ph ], [ %.sroa.088.1, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit ] ; 11 uses
-  %.sroa.10.0110 = phi ptr [ null, %.lr.ph ], [ %.sroa.10.1, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit ] ; 8 uses
+  %.sroa.088.0111 = phi ptr [ null, %.lr.ph ], [ %.sroa.088.1, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit ] ; 12 uses
+  %.sroa.10.0110 = phi ptr [ null, %.lr.ph ], [ %.sroa.10.1, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit ] ; 9 uses
   %.sroa.14.0109 = phi ptr [ null, %.lr.ph ], [ %.sroa.14.1, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit ] ; 10 uses
   %i.cs = trunc nuw nsw i64 %indvars.iv to i32
   %i.ct = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5arrow6Tensor8dim_nameB5cxx11Ei(ptr noundef nonnull align 8 dereferenceable(112) %1, i32 noundef %i.cs)
@@ -885,8 +887,8 @@ bb.ak:                                            ; preds = %_ZN3org6apache5arro
   br label %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit
 
 bb.al:                                            ; preds = %_ZN3org6apache5arrow7flatbuf15CreateTensorDimERN22arrow_vendored_private11flatbuffers21FlatBufferBuilderImplILb0EEElNS4_6OffsetINS4_6StringEEE.exit
-  %i.fk = ptrtoint ptr %.sroa.10.0110 to i64      ; 2 uses
-  %i.fl = ptrtoint ptr %.sroa.088.0111 to i64     ; 3 uses
+  %i.fk = ptrtoint ptr %.sroa.10.0110 to i64
+  %i.fl = ptrtoint ptr %.sroa.088.0111 to i64     ; 2 uses
   %i.fm = sub i64 %i.fk, %i.fl                    ; 4 uses
   %i.fn = icmp eq i64 %i.fm, 9223372036854775804
   br i1 %i.fn, label %bb.am, label %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -919,7 +921,9 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i69.preheader:                   ; preds = %.noexc71
   %i.fw = ptrtoaddr ptr %i.fu to i64
-  %i.fx = sub i64 %i.fk, %i.fl
+  %12 = ptrtoaddr ptr %.sroa.10.0110 to i64
+  %13 = ptrtoaddr ptr %.sroa.088.0111 to i64
+  %i.fx = sub i64 %12, %13
   %i.fy = add i64 %i.fx, -4                       ; 2 uses
   %i.fz = lshr i64 %i.fy, 2
   %i.ga = add nuw nsw i64 %i.fz, 1                ; 2 uses
@@ -1322,8 +1326,8 @@ _ZN5arrow6StatusD2Ev.exit63._crit_edge.i:         ; preds = %_ZNSt6vectorIN22arr
 
 bb.l:                                             ; preds = %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i ] ; 3 uses
-  %.sroa.0121.0179.i = phi ptr [ null, %.lr.ph.i ], [ %.sroa.0121.1.i, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i ] ; 11 uses
-  %.sroa.13.0178.i = phi ptr [ null, %.lr.ph.i ], [ %.sroa.13.1.i, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i ] ; 8 uses
+  %.sroa.0121.0179.i = phi ptr [ null, %.lr.ph.i ], [ %.sroa.0121.1.i, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i ] ; 12 uses
+  %.sroa.13.0178.i = phi ptr [ null, %.lr.ph.i ], [ %.sroa.13.1.i, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i ] ; 9 uses
   %.sroa.9.0177.i = phi ptr [ null, %.lr.ph.i ], [ %.sroa.9.1.i, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i ] ; 3 uses
   %i.bk = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.bl = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5arrow12SparseTensor8dim_nameB5cxx11Ei(ptr noundef nonnull align 8 dereferenceable(104) %1, i32 noundef %i.bk)
@@ -1499,8 +1503,8 @@ bb.w:                                             ; preds = %_ZN3org6apache5arro
   br label %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE9push_backEOS8_.exit.i
 
 bb.x:                                             ; preds = %_ZN3org6apache5arrow7flatbuf15CreateTensorDimERN22arrow_vendored_private11flatbuffers21FlatBufferBuilderImplILb0EEElNS4_6OffsetINS4_6StringEEE.exit.i
-  %i.ec = ptrtoint ptr %.sroa.13.0178.i to i64    ; 2 uses
-  %i.ed = ptrtoint ptr %.sroa.0121.0179.i to i64  ; 3 uses
+  %i.ec = ptrtoint ptr %.sroa.13.0178.i to i64
+  %i.ed = ptrtoint ptr %.sroa.0121.0179.i to i64  ; 2 uses
   %i.ee = sub i64 %i.ec, %i.ed                    ; 4 uses
   %i.ef = icmp eq i64 %i.ee, 9223372036854775804
   br i1 %i.ef, label %bb.y, label %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf9TensorDimEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i
@@ -1533,7 +1537,9 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i70.i.preheader:                 ; preds = %.noexc72.i
   %i.eo = ptrtoaddr ptr %i.em to i64
-  %i.ep = sub i64 %i.ec, %i.ed
+  %21 = ptrtoaddr ptr %.sroa.13.0178.i to i64
+  %22 = ptrtoaddr ptr %.sroa.0121.0179.i to i64
+  %i.ep = sub i64 %21, %22
   %i.eq = add i64 %i.ep, -4                       ; 2 uses
   %i.er = lshr i64 %i.eq, 2
   %i.es = add nuw nsw i64 %i.er, 1                ; 2 uses
@@ -1936,7 +1942,7 @@ bb.aa:                                            ; preds = %._crit_edge120, %_Z
 
 bb.ab:                                            ; preds = %.lr.ph, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE9push_backEOS8_.exit
   %.sroa.0104.0113 = phi ptr [ %.sroa.0104.0112, %.lr.ph ], [ %.sroa.0104.0, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE9push_backEOS8_.exit ] ; 5 uses
-  %i.cx = phi ptr [ %.promoted, %.lr.ph ], [ %i.er, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE9push_backEOS8_.exit ] ; 12 uses
+  %i.cx = phi ptr [ %.promoted, %.lr.ph ], [ %i.er, %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE9push_backEOS8_.exit ] ; 13 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.0104.0113, i64 8
   %i.cz = load ptr, ptr %1, align 8, !tbaa !838, !nonnull !73, !align !817 ; 4 uses
   %.val = load ptr, ptr %i.cy, align 8, !tbaa !103
@@ -1961,7 +1967,7 @@ bb.ab:                                            ; preds = %.lr.ph, %_ZNSt6vect
           to label %_ZN5arrow3ipc8internal12_GLOBAL__N_114AppendKeyValueERN22arrow_vendored_private11flatbuffers21FlatBufferBuilderImplILb0EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESF_.exit unwind label %.loopexit ; 2 uses
 
 _ZN5arrow3ipc8internal12_GLOBAL__N_114AppendKeyValueERN22arrow_vendored_private11flatbuffers21FlatBufferBuilderImplILb0EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESF_.exit: ; preds = %.noexc85
-  %i.dj = load ptr, ptr %.phi.trans.insert122, align 8, !tbaa !849 ; 6 uses
+  %i.dj = load ptr, ptr %.phi.trans.insert122, align 8, !tbaa !849 ; 7 uses
   %i.dk = load ptr, ptr %i.cu, align 8, !tbaa !382
   %.not.i.i87 = icmp eq ptr %i.dj, %i.dk
   br i1 %.not.i.i87, label %bb.ad, label %bb.ac
@@ -1973,8 +1979,8 @@ bb.ac:                                            ; preds = %_ZN5arrow3ipc8inter
   br label %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE9push_backEOS8_.exit
 
 bb.ad:                                            ; preds = %_ZN5arrow3ipc8internal12_GLOBAL__N_114AppendKeyValueERN22arrow_vendored_private11flatbuffers21FlatBufferBuilderImplILb0EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESF_.exit
-  %i.dm = ptrtoint ptr %i.dj to i64               ; 2 uses
-  %i.dn = ptrtoint ptr %i.cx to i64               ; 3 uses
+  %i.dm = ptrtoint ptr %i.dj to i64
+  %i.dn = ptrtoint ptr %i.cx to i64               ; 2 uses
   %i.do = sub i64 %i.dm, %i.dn                    ; 4 uses
   %i.dp = icmp eq i64 %i.do, 9223372036854775804
   br i1 %i.dp, label %bb.ae, label %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -2008,7 +2014,9 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc90
   %i.dy = ptrtoaddr ptr %i.dw to i64
-  %i.dz = sub i64 %i.dm, %i.dn
+  %9 = ptrtoaddr ptr %i.dj to i64
+  %10 = ptrtoaddr ptr %i.cx to i64
+  %i.dz = sub i64 %9, %10
   %i.ea = add i64 %i.dz, -4                       ; 2 uses
   %i.eb = lshr i64 %i.ea, 2
   %i.ec = add nuw nsw i64 %i.eb, 1                ; 2 uses
@@ -2411,9 +2419,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !382
-  %i.e = load ptr, ptr %2, align 8, !tbaa !380    ; 7 uses
+  %i.e = load ptr, ptr %2, align 8, !tbaa !380    ; 8 uses
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = ptrtoint ptr %i.e to i64                 ; 4 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = ashr exact i64 %i.h, 2
   %i.j = icmp ult i64 %i.i, %i.a
@@ -2431,8 +2439,9 @@ _ZNSt12_Vector_baseIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5a
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE11_M_allocateEm.exit.i
   %i.q = ptrtoaddr ptr %i.p to i64
-  %3 = ptrtoint ptr %i.l to i64
-  %i.r = sub i64 %3, %i.g
+  %3 = ptrtoaddr ptr %i.l to i64
+  %4 = ptrtoaddr ptr %i.e to i64
+  %i.r = sub i64 %3, %4
   %i.s = add i64 %i.r, -4                         ; 2 uses
   %i.t = lshr i64 %i.s, 2
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
@@ -2531,7 +2540,7 @@ bb.e:                                             ; preds = %.lr.ph, %_ZNSt6vect
   tail call void @_ZN22arrow_vendored_private11flatbuffers21FlatBufferBuilderImplILb0EE16CreateStringImplEPKcm(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef %i.aq, i64 noundef %i.as)
   %i.at = load i32, ptr %i.ak, align 8, !tbaa !301
   %i.au = tail call i32 @_ZN3org6apache5arrow7flatbuf14CreateKeyValueERN22arrow_vendored_private11flatbuffers21FlatBufferBuilderImplILb0EEENS4_6OffsetINS4_6StringEEESA_(ptr noundef nonnull align 8 dereferenceable(128) %0, i32 %i.ap, i32 %i.at) ; 2 uses
-  %i.av = load ptr, ptr %i.al, align 8, !tbaa !849 ; 6 uses
+  %i.av = load ptr, ptr %i.al, align 8, !tbaa !849 ; 7 uses
   %i.aw = load ptr, ptr %i.c, align 8, !tbaa !382
   %.not.i.i = icmp eq ptr %i.av, %i.aw
   br i1 %.not.i.i, label %bb.g, label %bb.f
@@ -2543,9 +2552,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE9push_backEOS8_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.ay = load ptr, ptr %2, align 8, !tbaa !380   ; 7 uses
-  %i.az = ptrtoint ptr %i.av to i64               ; 2 uses
-  %i.ba = ptrtoint ptr %i.ay to i64               ; 3 uses
+  %i.ay = load ptr, ptr %2, align 8, !tbaa !380   ; 8 uses
+  %i.az = ptrtoint ptr %i.av to i64
+  %i.ba = ptrtoint ptr %i.ay to i64               ; 2 uses
   %i.bb = sub i64 %i.az, %i.ba                    ; 4 uses
   %i.bc = icmp eq i64 %i.bb, 9223372036854775804
   br i1 %i.bc, label %bb.h, label %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -2572,7 +2581,9 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bl = ptrtoaddr ptr %i.bj to i64
-  %i.bm = sub i64 %i.az, %i.ba
+  %5 = ptrtoaddr ptr %i.av to i64
+  %6 = ptrtoaddr ptr %i.ay to i64
+  %i.bm = sub i64 %5, %6
   %i.bn = add i64 %i.bm, -4                       ; 2 uses
   %i.bo = lshr i64 %i.bn, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
@@ -2975,7 +2986,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.k
 
 _ZN5arrow6StatusD2Ev.exit26:                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %i.ah = load ptr, ptr %i.v, align 8, !tbaa !857 ; 6 uses
+  %i.ah = load ptr, ptr %i.v, align 8, !tbaa !857 ; 7 uses
   %i.ai = load ptr, ptr %i.w, align 8, !tbaa !375
   %.not.i27 = icmp eq ptr %i.ah, %i.ai
   br i1 %.not.i27, label %bb.e, label %bb.d
@@ -2988,9 +2999,9 @@ bb.d:                                             ; preds = %_ZN5arrow6StatusD2E
   br label %.critedge
 
 bb.e:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit26
-  %i.al = load ptr, ptr %i.u, align 8, !tbaa !372 ; 7 uses
-  %i.am = ptrtoint ptr %i.ah to i64               ; 2 uses
-  %i.an = ptrtoint ptr %i.al to i64               ; 3 uses
+  %i.al = load ptr, ptr %i.u, align 8, !tbaa !372 ; 8 uses
+  %i.am = ptrtoint ptr %i.ah to i64
+  %i.an = ptrtoint ptr %i.al to i64               ; 2 uses
   %i.ao = sub i64 %i.am, %i.an                    ; 4 uses
   %i.ap = icmp eq i64 %i.ao, 9223372036854775804
   br i1 %i.ap, label %bb.f, label %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf5FieldEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i
@@ -3024,7 +3035,9 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc28
   %i.az = ptrtoaddr ptr %i.aw to i64
-  %i.ba = sub i64 %i.am, %i.an
+  %6 = ptrtoaddr ptr %i.ah to i64
+  %7 = ptrtoaddr ptr %i.al to i64
+  %i.ba = sub i64 %6, %7
   %i.bb = add i64 %i.ba, -4                       ; 2 uses
   %i.bc = lshr i64 %i.bb, 2
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses

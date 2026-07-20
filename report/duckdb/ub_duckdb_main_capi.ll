@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %.noexc26
 bb.q:                                             ; preds = %.noexc26
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #36, !noalias !801
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.ak = load ptr, ptr %i.af, align 8, !tbaa !804 ; 6 uses
+  %i.ak = load ptr, ptr %i.af, align 8, !tbaa !804 ; 7 uses
   %i.al = load ptr, ptr %i.ag, align 8, !tbaa !807
   %.not.i.i = icmp eq ptr %i.ak, %i.al
   br i1 %.not.i.i, label %bb.s, label %bb.r
@@ -217,9 +217,9 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZNSt10unique_ptrIN6duckdb18ConstantExpressionESt14default_deleteIS1_EED2Ev.exit
 
 bb.s:                                             ; preds = %bb.q
-  %i.ao = load ptr, ptr %10, align 8, !tbaa !810  ; 10 uses
-  %i.ap = ptrtoint ptr %i.ak to i64               ; 3 uses
-  %i.aq = ptrtoint ptr %i.ao to i64               ; 3 uses
+  %i.ao = load ptr, ptr %10, align 8, !tbaa !810  ; 11 uses
+  %i.ap = ptrtoint ptr %i.ak to i64               ; 2 uses
+  %i.aq = ptrtoint ptr %i.ao to i64               ; 2 uses
   %i.ar = sub i64 %i.ap, %i.aq                    ; 3 uses
   %i.as = icmp eq i64 %i.ar, 9223372036854775800
   br i1 %i.as, label %bb.t, label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -252,7 +252,9 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_16ParsedExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc30
-  %i.bc = sub i64 %i.ap, %i.aq
+  %12 = ptrtoaddr ptr %i.ak to i64
+  %13 = ptrtoaddr ptr %i.ao to i64
+  %i.bc = sub i64 %12, %13
   %i.bd = add i64 %i.bc, -8                       ; 2 uses
   %i.be = lshr i64 %i.bd, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses

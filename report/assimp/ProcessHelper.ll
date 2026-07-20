@@ -37,7 +37,7 @@ bb.a:
   br i1 %.not32, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %3 = ptrtoint ptr %i.f to i64                   ; 2 uses
+  %3 = ptrtoaddr ptr %i.f to i64                  ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 12 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
@@ -46,7 +46,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.x
   %i.k = phi i8 [ %i.g, %.lr.ph ], [ %i.cb, %bb.x ]
   %.033 = phi ptr [ %i.c, %.lr.ph ], [ %.3, %bb.x ] ; 3 uses
-  %4 = ptrtoint ptr %.033 to i64
+  %4 = ptrtoaddr ptr %.033 to i64
   %i.l = sub i64 %3, %4
   %scevgep.i.i = getelementptr i8, ptr %.033, i64 %i.l ; 2 uses
   br label %bb.c
@@ -169,7 +169,7 @@ bb.l:                                             ; preds = %bb.h
 bb.m:                                             ; preds = %_ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   call void @llvm.experimental.noalias.scope.decl(metadata !6)
-  %5 = ptrtoint ptr %.0.lcssa.i.i to i64
+  %5 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.ap = sub i64 %3, %5
   %scevgep.i.i.i = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.ap
   br label %bb.n
@@ -572,7 +572,7 @@ bb.e:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.ae = getelementptr inbounds nuw [24 x i8], ptr %i.i, i64 %i.ad ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 4 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 3 uses
-  %i.ah = load ptr, ptr %i.ag, align 8            ; 7 uses
+  %i.ah = load ptr, ptr %i.ag, align 8            ; 8 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8
   %.not.i = icmp eq ptr %i.ah, %i.aj
@@ -588,9 +588,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorISt4pairIjfESaIS1_EE12emplace_backIJRjRKfEEERS1_DpOT_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.an = load ptr, ptr %i.ae, align 8            ; 7 uses
-  %i.ao = ptrtoint ptr %i.ah to i64               ; 2 uses
-  %i.ap = ptrtoint ptr %i.an to i64               ; 3 uses
+  %i.an = load ptr, ptr %i.ae, align 8            ; 8 uses
+  %i.ao = ptrtoint ptr %i.ah to i64
+  %i.ap = ptrtoint ptr %i.an to i64               ; 2 uses
   %i.aq = sub i64 %i.ao, %i.ap                    ; 4 uses
   %i.ar = icmp eq i64 %i.aq, 9223372036854775800
   br i1 %i.ar, label %bb.h, label %_ZNKSt6vectorISt4pairIjfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -620,7 +620,9 @@ _ZNKSt6vectorISt4pairIjfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.g
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt4pairIjfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.bc = ptrtoaddr ptr %i.ay to i64
-  %i.bd = sub i64 %i.ao, %i.ap
+  %1 = ptrtoaddr ptr %i.ah to i64
+  %2 = ptrtoaddr ptr %i.an to i64
+  %i.bd = sub i64 %1, %2
   %i.be = add i64 %i.bd, -8                       ; 2 uses
   %i.bf = lshr i64 %i.be, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses

@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN11OpenImageIO4v3_117TextureSystemImpl7textureEPNS0_13TextureSystem13TextureHandleEPNS2_9PerthreadERNS0_13TextureOpt_v2EffffffiPfS9_S9_(ptr noundef nonnull align 8 dereferenceable(188) %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(76) %3, float noundef %4, float noundef %5, float noundef %6, float noundef %7, float noundef %8, float noundef %9, i32 noundef %10, ptr noundef %11, ptr noundef %12, ptr noundef %13) local_unnamed_addr #11 align 2 {
 bb.a:
-  %14 = ptrtoaddr ptr %11 to i64
+  %14 = ptrtoint ptr %11 to i64
   %15 = alloca %"class.OpenImageIO::v3_1::ustring", align 8 ; 4 uses
   %16 = alloca %"class.OpenImageIO::v3_1::simd::vfloat4", align 16 ; 9 uses
   %17 = alloca %"class.OpenImageIO::v3_1::simd::vfloat4", align 16 ; 8 uses
@@ -607,8 +607,8 @@ bb.g:                                             ; preds = %bb.a
   br label %_ZNSt12__shared_ptrIN11OpenImageIO4v3_110ImageCacheELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit169
 
 bb.h:                                             ; preds = %bb.b, %_ZN11OpenImageIO4v3_113intrusive_ptrINS0_14ImageCacheFileEED2Ev.exit
-  %.sroa.0231.0372 = phi ptr [ null, %bb.b ], [ %.sroa.0231.1330, %_ZN11OpenImageIO4v3_113intrusive_ptrINS0_14ImageCacheFileEED2Ev.exit ] ; 12 uses
-  %.sroa.12.0371 = phi ptr [ null, %bb.b ], [ %.sroa.12.1329, %_ZN11OpenImageIO4v3_113intrusive_ptrINS0_14ImageCacheFileEED2Ev.exit ] ; 8 uses
+  %.sroa.0231.0372 = phi ptr [ null, %bb.b ], [ %.sroa.0231.1330, %_ZN11OpenImageIO4v3_113intrusive_ptrINS0_14ImageCacheFileEED2Ev.exit ] ; 13 uses
+  %.sroa.12.0371 = phi ptr [ null, %bb.b ], [ %.sroa.12.1329, %_ZN11OpenImageIO4v3_113intrusive_ptrINS0_14ImageCacheFileEED2Ev.exit ] ; 9 uses
   %.sroa.18.0370 = phi ptr [ null, %bb.b ], [ %.sroa.18.1328, %_ZN11OpenImageIO4v3_113intrusive_ptrINS0_14ImageCacheFileEED2Ev.exit ] ; 5 uses
   %i.p = invoke ptr @_ZN11OpenImageIO4v3_17ustring9fmtformatIJiEEES1_PKcDpRKT_(ptr noundef nonnull @.str.76, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
           to label %bb.i unwind label %bb.q
@@ -636,8 +636,8 @@ _ZNSt6vectorIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEESaIS4_EE9
   br label %_ZN11OpenImageIO4v3_113intrusive_ptrINS0_14ImageCacheFileEED2Ev.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.v = ptrtoint ptr %.sroa.12.0371 to i64       ; 3 uses
-  %i.w = ptrtoint ptr %.sroa.0231.0372 to i64     ; 3 uses
+  %i.v = ptrtoint ptr %.sroa.12.0371 to i64       ; 2 uses
+  %i.w = ptrtoint ptr %.sroa.0231.0372 to i64     ; 2 uses
   %i.x = sub i64 %i.v, %i.w                       ; 4 uses
   %i.y = icmp eq i64 %i.x, 9223372036854775800
   br i1 %i.y, label %bb.m, label %_ZNKSt6vectorIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEESaIS4_EE12_M_check_lenEmPKc.exit.i
@@ -671,7 +671,9 @@ _ZNKSt6vectorIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEESaIS4_EE
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc180
-  %i.ai = sub i64 %i.v, %i.w
+  %12 = ptrtoaddr ptr %.sroa.12.0371 to i64
+  %13 = ptrtoaddr ptr %.sroa.0231.0372 to i64
+  %i.ai = sub i64 %12, %13
   %i.aj = add i64 %i.ai, -8                       ; 2 uses
   %i.ak = lshr i64 %i.aj, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
@@ -1074,8 +1076,8 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %i.dj = phi ptr [ %i.dg, %.noexc170 ], [ %i.di, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.dk = phi ptr [ %i.df, %.noexc170 ], [ %i.dh, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 7 uses
   %i.dl = load ptr, ptr %7, align 8, !tbaa !926   ; 4 uses
-  %9 = ptrtoint ptr %i.dj to i64
-  %10 = ptrtoint ptr %i.dk to i64
+  %9 = ptrtoaddr ptr %i.dj to i64
+  %10 = ptrtoaddr ptr %i.dk to i64
   %i.dm = sub i64 %9, %10
   %i.dn = add i64 %i.dm, -4                       ; 2 uses
   %i.do = lshr i64 %i.dn, 2
@@ -1172,8 +1174,8 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %i.eo = phi ptr [ %i.el, %.noexc182 ], [ %i.em, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 2 uses
   %i.ep = phi ptr [ %i.ek, %.noexc182 ], [ %i.ed, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 5 uses
   %i.eq = load ptr, ptr %8, align 8, !tbaa !926   ; 7 uses
-  %11 = ptrtoint ptr %i.eo to i64
-  %12 = ptrtoint ptr %i.ep to i64
+  %11 = ptrtoaddr ptr %i.eo to i64
+  %12 = ptrtoaddr ptr %i.ep to i64
   %i.er = sub i64 %11, %12
   %i.es = add i64 %i.er, -4                       ; 2 uses
   %i.et = lshr i64 %i.es, 2
@@ -1576,7 +1578,7 @@ bb.i:                                             ; preds = %bb.h, %_ZZN3fmt3v12
 define linkonce_odr hidden noundef ptr @_ZN3fmt3v126detail12parse_arg_idIcRZNS1_23parse_replacement_fieldIcRNS1_14format_handlerIcEEEEPKT_S9_S9_OT0_E10id_adapterEES9_S9_S9_SB_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(12) %2) local_unnamed_addr #7 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 4 uses
-  %3 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.b = load i8, ptr %0, align 1, !tbaa !34      ; 5 uses
   %i.c = add i8 %i.b, -48
   %or.cond = icmp ult i8 %i.c, 10
@@ -1979,7 +1981,7 @@ bb.a:
   br i1 %or.cond23, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %6 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.d = ptrtoint ptr %0 to i64                   ; 2 uses
   %scevgep.i = getelementptr i8, ptr inttoptr (i64 -1 to ptr), i64 %6 ; 2 uses
   %i.e = sub i64 %6, %i.d
@@ -2127,7 +2129,7 @@ bb.q:                                             ; preds = %bb.f, %bb.o
 define linkonce_odr hidden noundef ptr @_ZN3fmt3v126detail12parse_arg_idIcNS1_20dynamic_spec_handlerIcEEEEPKT_S7_S7_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #7 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 4 uses
-  %3 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.b = load i8, ptr %0, align 1, !tbaa !34      ; 5 uses
   %i.c = add i8 %i.b, -48
   %or.cond = icmp ult i8 %i.c, 10
@@ -2530,7 +2532,7 @@ _ZN3fmt3v1214basic_appenderIcEaSEc.exit18:        ; preds = %.loopexit, %bb.h
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN3fmt3v126detail18for_each_codepointIZNS1_5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_SA_NS0_17basic_string_viewIS7_EERKNS0_12format_specsEEUljNSB_IcEEE_EEvSG_S7_(ptr %0, i64 %1, ptr noundef byval(%class.anon.282) align 8 %2) local_unnamed_addr #7 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %0 to i64
   %4 = alloca %class.anon.286, align 8            ; 5 uses
   %i.a = alloca [7 x i8], align 1                 ; 11 uses
   %i.b = ptrtoaddr ptr %i.a to i64
@@ -2694,7 +2696,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.08.i.ph = phi ptr [ %i.a, %iter.check ], [ %i.bw, %vec.epilog.iter.check ], [ %i.cb, %vec.epilog.middle.block ] ; 2 uses
   %.057.i.ph = phi ptr [ %.2, %iter.check ], [ %i.bx, %vec.epilog.iter.check ], [ %i.cc, %vec.epilog.middle.block ] ; 3 uses
   %i.ce = add i64 %1, %3                          ; 2 uses
-  %.057.i.ph64 = ptrtoint ptr %.057.i.ph to i64   ; 2 uses
+  %.057.i.ph64 = ptrtoaddr ptr %.057.i.ph to i64  ; 2 uses
   %i.cf = sub i64 %i.ce, %.057.i.ph64
   %xtraiter = and i64 %i.cf, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -3094,7 +3096,7 @@ bb.k:                                             ; preds = %bb.j, %_ZZN3fmt3v12
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_(ptr %0, i64 %1, ptr %2) local_unnamed_addr #7 {
 bb.a:
-  %3 = ptrtoint ptr %0 to i64
+  %3 = ptrtoaddr ptr %0 to i64
   %i.a = alloca [7 x i8], align 1                 ; 11 uses
   %i.b = ptrtoaddr ptr %i.a to i64
   %i.c = icmp ugt i64 %1, 3
@@ -3276,7 +3278,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.08.i.ph = phi ptr [ %i.a, %iter.check ], [ %i.by, %vec.epilog.iter.check ], [ %i.cd, %vec.epilog.middle.block ] ; 2 uses
   %.057.i.ph = phi ptr [ %.2, %iter.check ], [ %i.bz, %vec.epilog.iter.check ], [ %i.ce, %vec.epilog.middle.block ] ; 3 uses
   %i.cg = add i64 %1, %3                          ; 2 uses
-  %.057.i.ph135 = ptrtoint ptr %.057.i.ph to i64  ; 2 uses
+  %.057.i.ph135 = ptrtoaddr ptr %.057.i.ph to i64 ; 2 uses
   %i.ch = sub i64 %i.cg, %.057.i.ph135
   %xtraiter = and i64 %i.ch, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

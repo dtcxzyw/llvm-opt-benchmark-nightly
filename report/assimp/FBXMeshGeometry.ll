@@ -204,8 +204,8 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not4.i.i, label %"_ZSt8count_ifIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN6Assimp3FBX12MeshGeometry14ReadVertexDataERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiRKNS8_5ScopeEE3$_0ENSt15iterator_traitsIT_E15difference_typeESN_SN_T0_.exit", label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.af
-  %12 = ptrtoint ptr %i.ff to i64
-  %13 = ptrtoint ptr %i.fd to i64
+  %12 = ptrtoaddr ptr %i.ff to i64
+  %13 = ptrtoaddr ptr %i.fd to i64
   %i.fg = sub i64 %12, %13
   %i.fh = add i64 %i.fg, -4                       ; 2 uses
   %i.fi = lshr i64 %i.fh, 2
@@ -608,8 +608,8 @@ bb.o:                                             ; preds = %_ZNSt6vectorIiSaIiE
 
 _ZNSt6vectorIiSaIiEE2atEm.exit:                   ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit
   %i.cy = load i32, ptr %i.cx, align 4            ; 2 uses
-  %7 = ptrtoint ptr %i.cw to i64
-  %8 = ptrtoint ptr %i.cx to i64
+  %7 = ptrtoaddr ptr %i.cw to i64
+  %8 = ptrtoaddr ptr %i.cx to i64
   %i.cz = sub i64 %7, %8
   %i.da = add i64 %i.cz, -4                       ; 2 uses
   %i.db = lshr i64 %i.da, 2
@@ -1012,9 +1012,9 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 13 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 14 uses
   %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 5 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 2
   %.not65 = icmp ult i64 %i.h, %2
@@ -1022,7 +1022,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %3, align 4                ; 6 uses
-  %i.j = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.j = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.k = sub i64 %i.f, %i.j                       ; 6 uses
   %i.l = ashr exact i64 %i.k, 2                   ; 3 uses
   %i.m = icmp ugt i64 %i.l, %2
@@ -1194,7 +1194,9 @@ _ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPjjEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69
-  %i.bg = sub i64 %i.f, %i.j
+  %4 = ptrtoaddr ptr %i.d to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.bg = sub i64 %4, %5
   %i.bh = add i64 %i.bg, -4                       ; 2 uses
   %i.bi = lshr i64 %i.bh, 2
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
@@ -1597,10 +1599,10 @@ declare void @_ZN6Assimp3FBX20ParseVectorDataArrayERSt6vectorI10aiVector2tIfESaI
 define linkonce_odr hidden void @_ZNSt6vectorI10aiVector2tIfESaIS1_EE6resizeEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 6 uses
-  %i.c = load ptr, ptr %0, align 8                ; 8 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 7 uses
+  %i.c = load ptr, ptr %0, align 8                ; 9 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 7 uses
   %i.h = icmp ugt i64 %1, %i.g
@@ -1650,7 +1652,9 @@ _ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.c
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorI10aiVector2tIfESaIS1_EE12_M_check_lenEmPKc.exit.i
   %i.z = ptrtoaddr ptr %i.w to i64
-  %i.aa = sub i64 %i.d, %i.e
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.aa = sub i64 %2, %3
   %i.ab = add i64 %i.aa, -8                       ; 2 uses
   %i.ac = lshr i64 %i.ab, 3
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses

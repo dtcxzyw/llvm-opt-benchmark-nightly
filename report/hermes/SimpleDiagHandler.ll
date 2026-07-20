@@ -201,17 +201,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 5 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !131    ; 21 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 6 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !131    ; 22 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 8 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !132
-  %i.j = load ptr, ptr %0, align 8, !tbaa !131    ; 24 uses
+  %i.j = load ptr, ptr %0, align 8, !tbaa !131    ; 25 uses
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = ptrtoint ptr %i.j to i64                 ; 4 uses
+  %i.l = ptrtoint ptr %i.j to i64                 ; 3 uses
   %i.m = sub i64 %i.k, %i.l                       ; 2 uses
   %i.n = icmp ugt i64 %i.f, %i.m
   br i1 %i.n, label %bb.c, label %bb.f
@@ -253,8 +253,8 @@ _ZNSt12_Vector_baseISt4pairIjjESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_Z
 
 bb.f:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !130  ; 5 uses
-  %i.x = ptrtoint ptr %i.w to i64                 ; 2 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !130  ; 6 uses
+  %i.x = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %i.x, %i.l                       ; 5 uses
   %.not24 = icmp ult i64 %i.y, %i.f
   br i1 %.not24, label %bb.h, label %bb.g
@@ -406,8 +406,12 @@ _ZSt4copyIPSt4pairIjjES2_ET0_T_S4_S3_.exit:       ; preds = %.lr.ph.i.i.i.i.i26,
   br i1 %.not9.i.i.i.i, label %_ZSt22__uninitialized_copy_aIPSt4pairIjjES2_S1_ET0_T_S4_S3_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPSt4pairIjjES2_ET0_T_S4_S3_.exit
-  %i.bd = add i64 %i.l, %i.d
-  %i.be = add i64 %i.e, %i.x
+  %2 = ptrtoaddr ptr %i.j to i64
+  %3 = ptrtoaddr ptr %i.b to i64
+  %4 = ptrtoaddr ptr %i.c to i64
+  %5 = ptrtoaddr ptr %i.w to i64
+  %i.bd = add i64 %2, %3
+  %i.be = add i64 %4, %5
   %i.bf = sub i64 %i.bd, %i.be
   %i.bg = add i64 %i.bf, -8                       ; 2 uses
   %i.bh = lshr i64 %i.bg, 3

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.4.0..sroa_idx.i.i.i2.i = getelementptr inbounds nuw i8, ptr %i.i, i64 48
   store ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218container_internal11kEmptyGroupE, i64 16), ptr %.sroa.4.0..sroa_idx.i.i.i2.i, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 16 ; 3 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !113  ; 7 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !113  ; 8 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 24 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !114
   %.not.i = icmp eq ptr %i.l, %i.n
@@ -217,9 +217,9 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf10TextFormat13ParseInfoTreeESt14default_deleteIS4_EESaIS7_EE12emplace_backIJPS4_EEERS7_DpOT_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.p = load ptr, ptr %i.h, align 8, !tbaa !117  ; 10 uses
-  %i.q = ptrtoint ptr %i.l to i64                 ; 3 uses
-  %i.r = ptrtoint ptr %i.p to i64                 ; 3 uses
+  %i.p = load ptr, ptr %i.h, align 8, !tbaa !117  ; 11 uses
+  %i.q = ptrtoint ptr %i.l to i64                 ; 2 uses
+  %i.r = ptrtoint ptr %i.p to i64                 ; 2 uses
   %i.s = sub i64 %i.q, %i.r                       ; 4 uses
   %i.t = icmp eq i64 %i.s, 9223372036854775800
   br i1 %i.t, label %bb.f, label %_ZNKSt6vectorISt10unique_ptrIN6google8protobuf10TextFormat13ParseInfoTreeESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i.i
@@ -245,7 +245,9 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf10TextFormat13ParseInfoTreeESt14de
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf10TextFormat13ParseInfoTreeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN6google8protobuf10TextFormat13ParseInfoTreeESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i.i
-  %i.ac = sub i64 %i.q, %i.r
+  %3 = ptrtoaddr ptr %i.l to i64
+  %4 = ptrtoaddr ptr %i.p to i64
+  %i.ac = sub i64 %3, %4
   %i.ad = add i64 %i.ac, -8                       ; 2 uses
   %i.ae = lshr i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
@@ -648,9 +650,9 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.u
   %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.be = load ptr, ptr %i.bd, align 16, !tbaa !516
-  %i.bf = load ptr, ptr %4, align 16, !tbaa !510  ; 10 uses
+  %i.bf = load ptr, ptr %4, align 16, !tbaa !510  ; 11 uses
   %i.bg = ptrtoint ptr %i.be to i64
-  %i.bh = ptrtoint ptr %i.bf to i64               ; 4 uses
+  %i.bh = ptrtoint ptr %i.bf to i64               ; 3 uses
   %i.bi = sub i64 %i.bg, %i.bh                    ; 2 uses
   %i.bj = ashr exact i64 %i.bi, 3
   %i.bk = icmp ult i64 %i.bj, %i.bb
@@ -670,8 +672,9 @@ _ZNSt12_Vector_baseISt10unique_ptrIKN6google8protobuf7MessageESt14default_delete
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIKN6google8protobuf7MessageESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc66
-  %7 = ptrtoint ptr %i.bm to i64
-  %i.br = sub i64 %7, %i.bh
+  %7 = ptrtoaddr ptr %i.bm to i64
+  %8 = ptrtoaddr ptr %i.bf to i64
+  %i.br = sub i64 %7, %8
   %i.bs = add i64 %i.br, -8                       ; 2 uses
   %i.bt = lshr i64 %i.bs, 3
   %i.bu = add nuw nsw i64 %i.bt, 1                ; 2 uses
@@ -892,7 +895,7 @@ _ZNSt6vectorIPKN6google8protobuf7MessageESaIS4_EE9push_backEOS4_.exit78: ; preds
   %.pn = phi ptr [ %i.dj, %_ZNSt6vectorIPKN6google8protobuf7MessageESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i75 ], [ %.sroa.17.1, %bb.aj ]
   %.sroa.0114.13 = phi ptr [ %i.di, %_ZNSt6vectorIPKN6google8protobuf7MessageESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i75 ], [ %.sroa.0114.2, %bb.aj ] ; 3 uses
   %.sroa.17.6 = getelementptr inbounds nuw i8, ptr %.pn, i64 8
-  %i.dm = load ptr, ptr %i.cp, align 8, !tbaa !513 ; 6 uses
+  %i.dm = load ptr, ptr %i.cp, align 8, !tbaa !513 ; 7 uses
   %i.dn = load ptr, ptr %i.bd, align 16, !tbaa !516
   %.not.i.i79 = icmp eq ptr %i.dm, %i.dn
   br i1 %.not.i.i79, label %bb.ap, label %bb.ao
@@ -905,9 +908,9 @@ bb.ao:                                            ; preds = %_ZNSt6vectorIPKN6go
   br label %_ZNSt10unique_ptrIN6google8protobuf7MessageESt14default_deleteIS2_EED2Ev.exit
 
 bb.ap:                                            ; preds = %_ZNSt6vectorIPKN6google8protobuf7MessageESaIS4_EE9push_backEOS4_.exit78
-  %i.dq = load ptr, ptr %4, align 16, !tbaa !510  ; 10 uses
-  %i.dr = ptrtoint ptr %i.dm to i64               ; 3 uses
-  %i.ds = ptrtoint ptr %i.dq to i64               ; 3 uses
+  %i.dq = load ptr, ptr %4, align 16, !tbaa !510  ; 11 uses
+  %i.dr = ptrtoint ptr %i.dm to i64               ; 2 uses
+  %i.ds = ptrtoint ptr %i.dq to i64               ; 2 uses
   %i.dt = sub i64 %i.dr, %i.ds                    ; 4 uses
   %i.du = icmp eq i64 %i.dt, 9223372036854775800
   br i1 %i.du, label %bb.aq, label %_ZNKSt6vectorISt10unique_ptrIKN6google8protobuf7MessageESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
@@ -940,7 +943,9 @@ _ZNKSt6vectorISt10unique_ptrIKN6google8protobuf7MessageESt14default_deleteIS4_EE
   br i1 %.not10.i.i.i.i93, label %_ZNSt6vectorISt10unique_ptrIKN6google8protobuf7MessageESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i94.preheader
 
 .lr.ph.i.i.i.i94.preheader:                       ; preds = %.noexc101
-  %i.ee = sub i64 %i.dr, %i.ds
+  %9 = ptrtoaddr ptr %i.dm to i64
+  %10 = ptrtoaddr ptr %i.dq to i64
+  %i.ee = sub i64 %9, %10
   %i.ef = add i64 %i.ee, -8                       ; 2 uses
   %i.eg = lshr i64 %i.ef, 3
   %i.eh = add nuw nsw i64 %i.eg, 1                ; 2 uses
@@ -1343,10 +1348,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.e = sub i64 %i.c, %i.d
   %i.f = ashr exact i64 %i.e, 3                   ; 2 uses
-  %i.g = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.g = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.h = sub i64 %i.g, %i.d
   %i.i = ashr exact i64 %i.h, 3                   ; 3 uses
   %i.j = sub nsw i64 %i.f, %i.i
@@ -1354,7 +1359,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %.lr.ph.i.preheader, label %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %i.l = sub i64 %i.g, %i.d
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %3, %4
   %i.m = add i64 %i.l, -8                         ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses

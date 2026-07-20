@@ -203,7 +203,7 @@ bb.ad:                                            ; preds = %_ZN6duckdb15Selecti
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 7 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !313 ; 6 uses
+  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !313 ; 7 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !325
   %.not.i.i = icmp eq ptr %i.br, %i.bt
@@ -218,9 +218,9 @@ bb.ae:                                            ; preds = %bb.ad
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE9push_backEOS5_.exit
 
 bb.af:                                            ; preds = %bb.ad
-  %i.bw = load ptr, ptr %i.bo, align 8, !tbaa !312 ; 10 uses
-  %i.bx = ptrtoint ptr %i.br to i64               ; 3 uses
-  %i.by = ptrtoint ptr %i.bw to i64               ; 3 uses
+  %i.bw = load ptr, ptr %i.bo, align 8, !tbaa !312 ; 11 uses
+  %i.bx = ptrtoint ptr %i.br to i64               ; 2 uses
+  %i.by = ptrtoint ptr %i.bw to i64               ; 2 uses
   %i.bz = sub i64 %i.bx, %i.by                    ; 3 uses
   %i.ca = icmp eq i64 %i.bz, 9223372036854775800
   br i1 %i.ca, label %bb.ag, label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -248,7 +248,9 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_E
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
-  %i.ck = sub i64 %i.bx, %i.by
+  %5 = ptrtoaddr ptr %i.br to i64
+  %6 = ptrtoaddr ptr %i.bw to i64
+  %i.ck = sub i64 %5, %6
   %i.cl = add i64 %i.ck, -8                       ; 2 uses
   %i.cm = lshr i64 %i.cl, 3
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
@@ -651,9 +653,9 @@ bb.a:
   %i.f = fmul double %i.e, 1.000000e+05
   %i.g = fcmp olt double %i.f, %i.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %i.i = load ptr, ptr %i.h, align 8              ; 10 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 11 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 6 uses
-  %i.k = load ptr, ptr %i.j, align 8              ; 6 uses
+  %i.k = load ptr, ptr %i.j, align 8              ; 7 uses
   %i.l = icmp eq ptr %i.i, %i.k                   ; 2 uses
   %i.m = select i1 %i.g, i1 true, i1 %i.l
   %i.n = icmp ne i64 %i.b, 0
@@ -768,7 +770,7 @@ bb.o:                                             ; preds = %bb.j, %bb.i
   br label %bb.t
 
 .loopexit:                                        ; preds = %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit.thread
-  %i.ap = load ptr, ptr %i.j, align 8, !tbaa !313 ; 6 uses
+  %i.ap = load ptr, ptr %i.j, align 8, !tbaa !313 ; 7 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !325
   %.not.i.i = icmp eq ptr %i.ap, %i.ar
@@ -782,9 +784,9 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_EL
   br label %_ZNSt10unique_ptrIN6duckdb15ReservoirSampleESt14default_deleteIS1_EED2Ev.exit
 
 bb.p:                                             ; preds = %.loopexit
-  %i.au = load ptr, ptr %i.h, align 8, !tbaa !312 ; 10 uses
-  %i.av = ptrtoint ptr %i.ap to i64               ; 3 uses
-  %i.aw = ptrtoint ptr %i.au to i64               ; 3 uses
+  %i.au = load ptr, ptr %i.h, align 8, !tbaa !312 ; 11 uses
+  %i.av = ptrtoint ptr %i.ap to i64               ; 2 uses
+  %i.aw = ptrtoint ptr %i.au to i64               ; 2 uses
   %i.ax = sub i64 %i.av, %i.aw                    ; 3 uses
   %i.ay = icmp eq i64 %i.ax, 9223372036854775800
   br i1 %i.ay, label %bb.q, label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -818,7 +820,9 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_E
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc11
-  %i.bi = sub i64 %i.av, %i.aw
+  %3 = ptrtoaddr ptr %i.ap to i64
+  %4 = ptrtoaddr ptr %i.au to i64
+  %i.bi = sub i64 %3, %4
   %i.bj = add i64 %i.bi, -8                       ; 2 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
@@ -954,8 +958,8 @@ bb.v:                                             ; preds = %bb.u
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE9push_backEOS5_.exit29
 
 bb.w:                                             ; preds = %bb.u
-  %i.cq = ptrtoint ptr %i.k to i64                ; 3 uses
-  %i.cr = ptrtoint ptr %i.i to i64                ; 3 uses
+  %i.cq = ptrtoint ptr %i.k to i64                ; 2 uses
+  %i.cr = ptrtoint ptr %i.i to i64                ; 2 uses
   %i.cs = sub i64 %i.cq, %i.cr                    ; 3 uses
   %i.ct = icmp eq i64 %i.cs, 9223372036854775800
   br i1 %i.ct, label %bb.x, label %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i17
@@ -982,7 +986,9 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_E
   br i1 %i.l, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i25, label %.lr.ph.i.i.i.i.i.i.i21.preheader
 
 .lr.ph.i.i.i.i.i.i.i21.preheader:                 ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_15ReservoirSampleESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i17
-  %i.dd = sub i64 %i.cq, %i.cr
+  %5 = ptrtoaddr ptr %i.k to i64
+  %6 = ptrtoaddr ptr %i.i to i64
+  %i.dd = sub i64 %5, %6
   %i.de = add i64 %i.dd, -8                       ; 2 uses
   %i.df = lshr i64 %i.de, 3
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses

@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %_ZN4absl12lts_20250
   store i64 %.val.i.i.i.i.i.i, ptr %.sink.i.i.i.i.i.i, align 8, !tbaa !269, !noalias !370
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 3 uses
-  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !125 ; 6 uses
+  %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !125 ; 7 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !68
   %.not.i = icmp eq ptr %i.cf, %i.ch
@@ -217,9 +217,9 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZNSt6vectorIN6google8protobuf6SymbolESaIS2_EE9push_backERKS2_.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.cj = load ptr, ptr %i.cd, align 8, !tbaa !65 ; 7 uses
-  %i.ck = ptrtoint ptr %i.cf to i64               ; 2 uses
-  %i.cl = ptrtoint ptr %i.cj to i64               ; 3 uses
+  %i.cj = load ptr, ptr %i.cd, align 8, !tbaa !65 ; 8 uses
+  %i.ck = ptrtoint ptr %i.cf to i64
+  %i.cl = ptrtoint ptr %i.cj to i64               ; 2 uses
   %i.cm = sub i64 %i.ck, %i.cl                    ; 4 uses
   %i.cn = icmp eq i64 %i.cm, 9223372036854775800
   br i1 %i.cn, label %bb.n, label %_ZNKSt6vectorIN6google8protobuf6SymbolESaIS2_EE12_M_check_lenEmPKc.exit.i.i
@@ -246,7 +246,9 @@ _ZNKSt6vectorIN6google8protobuf6SymbolESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; p
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN6google8protobuf6SymbolESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %i.cw = ptrtoaddr ptr %i.cu to i64
-  %i.cx = sub i64 %i.ck, %i.cl
+  %5 = ptrtoaddr ptr %i.cf to i64
+  %6 = ptrtoaddr ptr %i.cj to i64
+  %i.cx = sub i64 %5, %6
   %i.cy = add i64 %i.cx, -8                       ; 2 uses
   %i.cz = lshr i64 %i.cy, 3
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
@@ -649,7 +651,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #45 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !90   ; 6 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !90   ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !94
   %.not.i = icmp eq ptr %i.g, %i.i
@@ -662,9 +664,9 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDeleterEESaIS6_EE12emplace_backIJRPiEEERS6_DpOT_.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.k = load ptr, ptr %i.e, align 8, !tbaa !87   ; 10 uses
-  %i.l = ptrtoint ptr %i.g to i64                 ; 3 uses
-  %i.m = ptrtoint ptr %i.k to i64                 ; 3 uses
+  %i.k = load ptr, ptr %i.e, align 8, !tbaa !87   ; 11 uses
+  %i.l = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.m = ptrtoint ptr %i.k to i64                 ; 2 uses
   %i.n = sub i64 %i.l, %i.m                       ; 4 uses
   %i.o = icmp eq i64 %i.n, 9223372036854775800
   br i1 %i.o, label %bb.e, label %_ZNKSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDeleterEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
@@ -690,7 +692,9 @@ _ZNKSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDele
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDeleterEESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDeleterEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
-  %i.x = sub i64 %i.l, %i.m
+  %2 = ptrtoaddr ptr %i.g to i64
+  %3 = ptrtoaddr ptr %i.k to i64
+  %i.x = sub i64 %2, %3
   %i.y = add i64 %i.x, -8                         ; 2 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
@@ -1093,8 +1097,8 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %.025.i32 = phi i64 [ %.025.i34, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE16GetFieldNameCaseESt17basic_string_viewIcS6_E.exit.thread.i ], [ %.025.i34, %bb.g ], [ %.025.i, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE16GetFieldNameCaseESt17basic_string_viewIcS6_E.exit.thread.i.thread ] ; 2 uses
   %i.ch = phi ptr [ null, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE16GetFieldNameCaseESt17basic_string_viewIcS6_E.exit.thread.i ], [ null, %bb.g ], [ %i.ce, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE16GetFieldNameCaseESt17basic_string_viewIcS6_E.exit.thread.i.thread ]
   %i.ci = phi ptr [ %i.cd, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE16GetFieldNameCaseESt17basic_string_viewIcS6_E.exit.thread.i ], [ %i.ay, %bb.g ], [ %i.cf, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE16GetFieldNameCaseESt17basic_string_viewIcS6_E.exit.thread.i.thread ] ; 4 uses
-  %4 = ptrtoint ptr %i.ci to i64
-  %5 = ptrtoint ptr %i.al to i64
+  %4 = ptrtoaddr ptr %i.ci to i64
+  %5 = ptrtoaddr ptr %i.al to i64
   %i.cj = sub i64 %4, %5                          ; 3 uses
   %min.iters.check70 = icmp ult i64 %i.cj, 4
   br i1 %min.iters.check70, label %.lr.ph.i.i.i.i35.i.preheader, label %vector.ph71
@@ -1149,8 +1153,8 @@ _ZN6google8protobuf12_GLOBAL__N_113CamelCaseSizeESt17basic_string_viewIcSt11char
   br i1 %i.cg, label %.lr.ph.i.i.i.i43.i.preheader, label %_ZN6google8protobuf12_GLOBAL__N_113CamelCaseSizeESt17basic_string_viewIcSt11char_traitsIcEE.exit41.i.thread64
 
 .lr.ph.i.i.i.i43.i.preheader:                     ; preds = %_ZN6google8protobuf12_GLOBAL__N_113CamelCaseSizeESt17basic_string_viewIcSt11char_traitsIcEE.exit41.i.thread
-  %6 = ptrtoint ptr %i.ci to i64
-  %7 = ptrtoint ptr %i.al to i64
+  %6 = ptrtoaddr ptr %i.ci to i64
+  %7 = ptrtoaddr ptr %i.al to i64
   %i.cy = sub i64 %6, %7                          ; 3 uses
   %min.iters.check = icmp ult i64 %i.cy, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i43.i.preheader105, label %vector.ph
@@ -1553,10 +1557,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !125  ; 6 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !65     ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !125  ; 7 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !65     ; 8 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1677,7 +1681,9 @@ _ZSt27__uninitialized_default_n_aIPN6google8protobuf6SymbolEmS2_ET_S4_T0_RSaIT1_
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN6google8protobuf6SymbolESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i37.preheader
 
 .lr.ph.i.i.i37.preheader:                         ; preds = %_ZSt27__uninitialized_default_n_aIPN6google8protobuf6SymbolEmS2_ET_S4_T0_RSaIT1_E.exit35
-  %i.am = sub i64 %i.d, %i.e
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.am = sub i64 %2, %3
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -2068,10 +2074,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !90   ; 5 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !87     ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 4 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !90   ; 6 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !87     ; 11 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -2115,7 +2121,9 @@ _ZNKSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDele
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDeleterEESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIiN6google8protobuf14DescriptorPool6Tables11MiscDeleterEESaIS6_EE12_M_check_lenEmPKc.exit
-  %i.x = sub i64 %i.d, %i.e
+  %2 = ptrtoaddr ptr %i.b to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.x = sub i64 %2, %3
   %i.y = add i64 %i.x, -8                         ; 2 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses

@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %_ZN9benchmark8inter
   unreachable
 
 _ZN9benchmark9MutexLockC2ERNS_5MutexE.exit.i:     ; preds = %_ZN9benchmark8internal17BenchmarkFamilies11GetInstanceEv.exit
-  %i.g = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN9benchmark8internal17BenchmarkFamilies11GetInstanceEvE8instance, i64 8), align 8, !tbaa !13 ; 6 uses
-  %i.h = load ptr, ptr @_ZZN9benchmark8internal17BenchmarkFamilies11GetInstanceEvE8instance, align 8, !tbaa !9 ; 10 uses
+  %i.g = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN9benchmark8internal17BenchmarkFamilies11GetInstanceEvE8instance, i64 8), align 8, !tbaa !13 ; 7 uses
+  %i.h = load ptr, ptr @_ZZN9benchmark8internal17BenchmarkFamilies11GetInstanceEvE8instance, align 8, !tbaa !9 ; 11 uses
   %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN9benchmark8internal17BenchmarkFamilies11GetInstanceEvE8instance, i64 16), align 8, !tbaa !21
   %.not.i.i.i = icmp eq ptr %i.g, %i.i
   br i1 %.not.i.i.i, label %bb.f, label %bb.e
@@ -217,8 +217,8 @@ bb.e:                                             ; preds = %_ZN9benchmark9Mutex
   br label %_ZNSt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS2_EED2Ev.exit9
 
 bb.f:                                             ; preds = %_ZN9benchmark9MutexLockC2ERNS_5MutexE.exit.i
-  %i.k = ptrtoint ptr %i.g to i64                 ; 3 uses
-  %i.l = ptrtoint ptr %i.h to i64                 ; 3 uses
+  %i.k = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.l = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.m = sub i64 %i.k, %i.l                       ; 4 uses
   %i.n = icmp eq i64 %i.m, 9223372036854775800
   br i1 %i.n, label %bb.g, label %_ZNKSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
@@ -250,7 +250,9 @@ _ZNKSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc17
-  %i.w = sub i64 %i.k, %i.l
+  %1 = ptrtoaddr ptr %i.g to i64
+  %2 = ptrtoaddr ptr %i.h to i64
+  %i.w = sub i64 %1, %2
   %i.x = add i64 %i.w, -8                         ; 2 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
@@ -653,7 +655,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 5 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !485
   %.not.i = icmp eq ptr %i.u, %i.w
@@ -668,9 +670,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE9push_backERKS3_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 7 uses
-  %i.aa = ptrtoint ptr %i.u to i64                ; 2 uses
-  %i.ab = ptrtoint ptr %i.z to i64                ; 3 uses
+  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 8 uses
+  %i.aa = ptrtoint ptr %i.u to i64
+  %i.ab = ptrtoint ptr %i.z to i64                ; 2 uses
   %i.ac = sub i64 %i.aa, %i.ab                    ; 4 uses
   %i.ad = icmp eq i64 %i.ac, 9223372036854775804
   br i1 %i.ad, label %bb.h, label %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
@@ -698,7 +700,9 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %i.an = sub i64 %i.aa, %i.ab
+  %3 = ptrtoaddr ptr %i.u to i64
+  %4 = ptrtoaddr ptr %i.z to i64
+  %i.an = sub i64 %3, %4
   %i.ao = add i64 %i.an, -4                       ; 2 uses
   %i.ap = lshr i64 %i.ao, 2
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
@@ -794,9 +798,9 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit: ; pr
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.a, ptr %i.c, i64 noundef %i.i)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.a, ptr %i.c)
   %.pre = load ptr, ptr %0, align 8, !tbaa !480   ; 4 uses
-  %.pre36 = ptrtoint ptr %.pre to i64             ; 2 uses
+  %.pre36 = ptrtoaddr ptr %.pre to i64            ; 2 uses
   %.pre13 = load ptr, ptr %i.b, align 8, !tbaa !480 ; 7 uses
-  %.pre1335 = ptrtoint ptr %.pre13 to i64         ; 2 uses
+  %.pre1335 = ptrtoaddr ptr %.pre13 to i64        ; 2 uses
   %i.j = icmp eq ptr %.pre, %.pre13
   %i.k = getelementptr inbounds nuw i8, ptr %.pre, i64 1 ; 2 uses
   %.not.i.i.i31 = icmp eq ptr %i.k, %.pre13
@@ -1199,18 +1203,17 @@ _ZNSt15__new_allocatorISt4pairIccEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.k
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.az
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !483
-  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !482 ; 8 uses
+  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !482 ; 7 uses
   %i.bh = load ptr, ptr %i.au, align 8, !tbaa !482 ; 3 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.bg, %i.bh
   br i1 %.not7.i.i.i.i.i, label %.loopexit30, label %iter.check
 
 iter.check:                                       ; preds = %.noexc17
-  %i.bi = ptrtoaddr ptr %i.bg to i64
+  %i.bi = ptrtoaddr ptr %i.bg to i64              ; 2 uses
   %i.bj = ptrtoaddr ptr %i.bc to i64
-  %2 = ptrtoint ptr %i.bh to i64
-  %3 = ptrtoint ptr %i.bg to i64
+  %2 = ptrtoaddr ptr %i.bh to i64
   %i.bk = add i64 %2, -2
-  %i.bl = sub i64 %i.bk, %3                       ; 3 uses
+  %i.bl = sub i64 %i.bk, %i.bi                    ; 3 uses
   %i.bm = lshr i64 %i.bl, 1
   %i.bn = add nuw i64 %i.bm, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.bl, 6
@@ -1338,9 +1341,9 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
 .lr.ph.i.i.i.i.i20.preheader:                     ; preds = %.noexc27
   %i.cu = ptrtoaddr ptr %i.cs to i64
   %i.cv = ptrtoaddr ptr %i.co to i64
-  %4 = ptrtoint ptr %i.ct to i64
-  %5 = ptrtoint ptr %i.cs to i64
-  %i.cw = sub i64 %4, %5
+  %3 = ptrtoaddr ptr %i.ct to i64
+  %4 = ptrtoaddr ptr %i.cs to i64
+  %i.cw = sub i64 %3, %4
   %i.cx = add i64 %i.cw, -4                       ; 2 uses
   %i.cy = lshr i64 %i.cx, 2
   %i.cz = add nuw nsw i64 %i.cy, 1                ; 2 uses
@@ -1612,7 +1615,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 5 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !485
   %.not.i = icmp eq ptr %i.u, %i.w
@@ -1627,9 +1630,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE9push_backERKS3_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 7 uses
-  %i.aa = ptrtoint ptr %i.u to i64                ; 2 uses
-  %i.ab = ptrtoint ptr %i.z to i64                ; 3 uses
+  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 8 uses
+  %i.aa = ptrtoint ptr %i.u to i64
+  %i.ab = ptrtoint ptr %i.z to i64                ; 2 uses
   %i.ac = sub i64 %i.aa, %i.ab                    ; 4 uses
   %i.ad = icmp eq i64 %i.ac, 9223372036854775804
   br i1 %i.ad, label %bb.h, label %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
@@ -1657,7 +1660,9 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %i.an = sub i64 %i.aa, %i.ab
+  %3 = ptrtoaddr ptr %i.u to i64
+  %4 = ptrtoaddr ptr %i.z to i64
+  %i.an = sub i64 %3, %4
   %i.ao = add i64 %i.an, -4                       ; 2 uses
   %i.ap = lshr i64 %i.ao, 2
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
@@ -1753,9 +1758,9 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit: ; pr
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.a, ptr %i.c, i64 noundef %i.i)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.a, ptr %i.c)
   %.pre = load ptr, ptr %0, align 8, !tbaa !480   ; 4 uses
-  %.pre36 = ptrtoint ptr %.pre to i64             ; 2 uses
+  %.pre36 = ptrtoaddr ptr %.pre to i64            ; 2 uses
   %.pre13 = load ptr, ptr %i.b, align 8, !tbaa !480 ; 7 uses
-  %.pre1335 = ptrtoint ptr %.pre13 to i64         ; 2 uses
+  %.pre1335 = ptrtoaddr ptr %.pre13 to i64        ; 2 uses
   %i.j = icmp eq ptr %.pre, %.pre13
   %i.k = getelementptr inbounds nuw i8, ptr %.pre, i64 1 ; 2 uses
   %.not.i.i.i31 = icmp eq ptr %i.k, %.pre13
@@ -2158,8 +2163,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc17
   %i.bk = ptrtoaddr ptr %i.bi to i64
   %i.bl = ptrtoaddr ptr %i.be to i64
-  %2 = ptrtoint ptr %i.bj to i64
-  %3 = ptrtoint ptr %i.bi to i64
+  %2 = ptrtoaddr ptr %i.bj to i64
+  %3 = ptrtoaddr ptr %i.bi to i64
   %i.bm = sub i64 %2, %3
   %i.bn = add i64 %i.bm, -4                       ; 2 uses
   %i.bo = lshr i64 %i.bn, 2
@@ -2511,7 +2516,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 5 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !485
   %.not.i = icmp eq ptr %i.u, %i.w
@@ -2526,9 +2531,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE9push_backERKS3_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 7 uses
-  %i.aa = ptrtoint ptr %i.u to i64                ; 2 uses
-  %i.ab = ptrtoint ptr %i.z to i64                ; 3 uses
+  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 8 uses
+  %i.aa = ptrtoint ptr %i.u to i64
+  %i.ab = ptrtoint ptr %i.z to i64                ; 2 uses
   %i.ac = sub i64 %i.aa, %i.ab                    ; 4 uses
   %i.ad = icmp eq i64 %i.ac, 9223372036854775804
   br i1 %i.ad, label %bb.h, label %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
@@ -2556,7 +2561,9 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %i.an = sub i64 %i.aa, %i.ab
+  %3 = ptrtoaddr ptr %i.u to i64
+  %4 = ptrtoaddr ptr %i.z to i64
+  %i.an = sub i64 %3, %4
   %i.ao = add i64 %i.an, -4                       ; 2 uses
   %i.ap = lshr i64 %i.ao, 2
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
@@ -2652,9 +2659,9 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit: ; pr
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.a, ptr %i.c, i64 noundef %i.i)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.a, ptr %i.c)
   %.pre = load ptr, ptr %0, align 8, !tbaa !480   ; 4 uses
-  %.pre36 = ptrtoint ptr %.pre to i64             ; 2 uses
+  %.pre36 = ptrtoaddr ptr %.pre to i64            ; 2 uses
   %.pre13 = load ptr, ptr %i.b, align 8, !tbaa !480 ; 7 uses
-  %.pre1335 = ptrtoint ptr %.pre13 to i64         ; 2 uses
+  %.pre1335 = ptrtoaddr ptr %.pre13 to i64        ; 2 uses
   %i.j = icmp eq ptr %.pre, %.pre13
   %i.k = getelementptr inbounds nuw i8, ptr %.pre, i64 1 ; 2 uses
   %.not.i.i.i31 = icmp eq ptr %i.k, %.pre13
@@ -3057,18 +3064,17 @@ _ZNSt15__new_allocatorISt4pairIccEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.k
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.az
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !483
-  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !482 ; 8 uses
+  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !482 ; 7 uses
   %i.bh = load ptr, ptr %i.au, align 8, !tbaa !482 ; 3 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.bg, %i.bh
   br i1 %.not7.i.i.i.i.i, label %.loopexit30, label %iter.check
 
 iter.check:                                       ; preds = %.noexc17
-  %i.bi = ptrtoaddr ptr %i.bg to i64
+  %i.bi = ptrtoaddr ptr %i.bg to i64              ; 2 uses
   %i.bj = ptrtoaddr ptr %i.bc to i64
-  %2 = ptrtoint ptr %i.bh to i64
-  %3 = ptrtoint ptr %i.bg to i64
+  %2 = ptrtoaddr ptr %i.bh to i64
   %i.bk = add i64 %2, -2
-  %i.bl = sub i64 %i.bk, %3                       ; 3 uses
+  %i.bl = sub i64 %i.bk, %i.bi                    ; 3 uses
   %i.bm = lshr i64 %i.bl, 1
   %i.bn = add nuw i64 %i.bm, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.bl, 6
@@ -3196,9 +3202,9 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
 .lr.ph.i.i.i.i.i20.preheader:                     ; preds = %.noexc27
   %i.cu = ptrtoaddr ptr %i.cs to i64
   %i.cv = ptrtoaddr ptr %i.co to i64
-  %4 = ptrtoint ptr %i.ct to i64
-  %5 = ptrtoint ptr %i.cs to i64
-  %i.cw = sub i64 %4, %5
+  %3 = ptrtoaddr ptr %i.ct to i64
+  %4 = ptrtoaddr ptr %i.cs to i64
+  %i.cw = sub i64 %3, %4
   %i.cx = add i64 %i.cw, -4                       ; 2 uses
   %i.cy = lshr i64 %i.cx, 2
   %i.cz = add nuw nsw i64 %i.cy, 1                ; 2 uses
@@ -3347,7 +3353,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 5 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !563  ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !485
   %.not.i = icmp eq ptr %i.u, %i.w
@@ -3362,9 +3368,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE9push_backERKS3_.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 7 uses
-  %i.aa = ptrtoint ptr %i.u to i64                ; 2 uses
-  %i.ab = ptrtoint ptr %i.z to i64                ; 3 uses
+  %i.z = load ptr, ptr %i.s, align 8, !tbaa !488  ; 8 uses
+  %i.aa = ptrtoint ptr %i.u to i64
+  %i.ab = ptrtoint ptr %i.z to i64                ; 2 uses
   %i.ac = sub i64 %i.aa, %i.ab                    ; 4 uses
   %i.ad = icmp eq i64 %i.ac, 9223372036854775804
   br i1 %i.ad, label %bb.h, label %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
@@ -3392,7 +3398,9 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %i.an = sub i64 %i.aa, %i.ab
+  %3 = ptrtoaddr ptr %i.u to i64
+  %4 = ptrtoaddr ptr %i.z to i64
+  %i.an = sub i64 %3, %4
   %i.ao = add i64 %i.an, -4                       ; 2 uses
   %i.ap = lshr i64 %i.ao, 2
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
@@ -3488,9 +3496,9 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEvT_S7_.exit: ; pr
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.a, ptr %i.c, i64 noundef %i.i)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.a, ptr %i.c)
   %.pre = load ptr, ptr %0, align 8, !tbaa !480   ; 4 uses
-  %.pre36 = ptrtoint ptr %.pre to i64             ; 2 uses
+  %.pre36 = ptrtoaddr ptr %.pre to i64            ; 2 uses
   %.pre13 = load ptr, ptr %i.b, align 8, !tbaa !480 ; 7 uses
-  %.pre1335 = ptrtoint ptr %.pre13 to i64         ; 2 uses
+  %.pre1335 = ptrtoaddr ptr %.pre13 to i64        ; 2 uses
   %i.j = icmp eq ptr %.pre, %.pre13
   %i.k = getelementptr inbounds nuw i8, ptr %.pre, i64 1 ; 2 uses
   %.not.i.i.i31 = icmp eq ptr %i.k, %.pre13
@@ -3893,8 +3901,8 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc17
   %i.bk = ptrtoaddr ptr %i.bi to i64
   %i.bl = ptrtoaddr ptr %i.be to i64
-  %2 = ptrtoint ptr %i.bj to i64
-  %3 = ptrtoint ptr %i.bi to i64
+  %2 = ptrtoaddr ptr %i.bj to i64
+  %3 = ptrtoaddr ptr %i.bi to i64
   %i.bm = sub i64 %2, %3
   %i.bn = add i64 %i.bm, -4                       ; 2 uses
   %i.bo = lshr i64 %i.bn, 2
@@ -4297,12 +4305,11 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERK
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !9      ; 10 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !9      ; 11 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
@@ -4318,7 +4325,7 @@ _ZNKSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -4332,8 +4339,9 @@ _ZNKSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit
-  %4 = ptrtoint ptr %1 to i64
-  %i.s = sub i64 %4, %i.e
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %i.c to i64
+  %i.s = sub i64 %3, %4
   %i.t = add i64 %i.s, -8                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
@@ -4341,7 +4349,7 @@ _ZNKSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %i.w = add i64 %3, -8
+  %i.w = add i64 %i.m, -8
   %i.x = sub i64 %i.w, %i.e
   %i.y = and i64 %i.x, -8
   %i.z = add i64 %i.y, 8                          ; 2 uses
@@ -4408,8 +4416,9 @@ _ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22, label %.lr.ph.i.i.i17.preheader
 
 .lr.ph.i.i.i17.preheader:                         ; preds = %_ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit
-  %5 = ptrtoint ptr %1 to i64
-  %i.am = sub i64 %i.d, %5
+  %5 = ptrtoaddr ptr %i.b to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.am = sub i64 %5, %6
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -4418,7 +4427,7 @@ _ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3
 
 vector.memcheck39:                                ; preds = %.lr.ph.i.i.i17.preheader
   %i.aq = add i64 %i.d, -8
-  %i.ar = sub i64 %i.aq, %3
+  %i.ar = sub i64 %i.aq, %i.m
   %i.as = and i64 %i.ar, -8                       ; 2 uses
   %i.at = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %i.as
   %scevgep40 = getelementptr i8, ptr %i.at, i64 16
@@ -4502,11 +4511,11 @@ _ZNSt12_Vector_baseISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_de
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNSt19__shrink_to_fit_auxISt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS4_EESaIS7_EELb1EE8_S_do_itERS9_(ptr noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !66     ; 11 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !66     ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !66   ; 4 uses
-  %i.d = ptrtoint ptr %i.c to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.a to i64                 ; 4 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !66   ; 5 uses
+  %i.d = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.a to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
   %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i
@@ -4535,7 +4544,9 @@ _ZNSt6vectorISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3
           to label %.lr.ph.i.i.i.i.i.i.preheader unwind label %_ZNSt12_Vector_baseISt10unique_ptrIN9benchmark8internal9BenchmarkESt14default_deleteIS3_EESaIS6_EED2Ev.exit.i ; 8 uses
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.lr.ph.i.i.i.i.preheader.i.i
-  %i.l = sub i64 %i.d, %i.e
+  %1 = ptrtoaddr ptr %i.c to i64
+  %2 = ptrtoaddr ptr %i.a to i64
+  %i.l = sub i64 %1, %2
   %i.m = add i64 %i.l, -8                         ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
@@ -4938,8 +4949,8 @@ _ZN9benchmark8internal18GetNullLogInstanceEv.exit16: ; preds = %_ZN9benchmark8in
   br i1 %.not4.i, label %_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEEZN9benchmark8internal16AddNegatedPowersIlEEvPS3_IT_SaISA_EESA_SA_iEUlRlE_ET0_SA_SA_SG_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit16
-  %4 = ptrtoint ptr %i.q to i64
-  %5 = ptrtoint ptr %i.o to i64
+  %4 = ptrtoaddr ptr %i.q to i64
+  %5 = ptrtoaddr ptr %i.o to i64
   %i.r = sub i64 %4, %5
   %i.s = add i64 %i.r, -8                         ; 2 uses
   %i.t = lshr i64 %i.s, 3
@@ -5342,16 +5353,16 @@ _ZN9benchmark8internal18GetNullLogInstanceEv.exit16: ; preds = %_ZN9benchmark8in
   %i.m = sub nsw i32 0, %1
   %i.n = sub nsw i32 0, %2
   %i.o = tail call ptr @_ZN9benchmark8internal9AddPowersIiEENSt6vectorIT_SaIS3_EE8iteratorEPS5_S3_S3_i(ptr noundef %0, i32 noundef %i.n, i32 noundef %i.m, i32 noundef %3) ; 15 uses
-  %4 = ptrtoint ptr %i.o to i64                   ; 3 uses
+  %4 = ptrtoaddr ptr %i.o to i64                  ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !79   ; 9 uses
-  %5 = ptrtoint ptr %i.q to i64
+  %5 = ptrtoaddr ptr %i.q to i64
   %.not4.i = icmp eq ptr %i.o, %i.q
   br i1 %.not4.i, label %_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8internal16AddNegatedPowersIiEEvPS3_IT_SaISA_EESA_SA_iEUlRiE_ET0_SA_SA_SG_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit16
-  %6 = ptrtoint ptr %i.q to i64
-  %7 = ptrtoint ptr %i.o to i64
+  %6 = ptrtoaddr ptr %i.q to i64
+  %7 = ptrtoaddr ptr %i.o to i64
   %i.r = sub i64 %6, %7
   %i.s = add i64 %i.r, -4                         ; 2 uses
   %i.t = lshr i64 %i.s, 2
@@ -5405,9 +5416,9 @@ _ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8i
   br i1 %or.cond.i.i, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8internal16AddNegatedPowersIiEEvPS3_IT_SaISA_EESA_SA_iEUlRiE_ET0_SA_SA_SG_.exit
-  %8 = ptrtoint ptr %i.q to i64
+  %8 = ptrtoaddr ptr %i.q to i64
   %i.ah = add i64 %8, -8
-  %9 = ptrtoint ptr %i.o to i64                   ; 2 uses
+  %9 = ptrtoaddr ptr %i.o to i64                  ; 2 uses
   %i.ai = add i64 %9, 4
   %i.aj = tail call i64 @llvm.umax.i64(i64 %i.ah, i64 %i.ai)
   %i.ak = sub i64 %i.aj, %9                       ; 2 uses
