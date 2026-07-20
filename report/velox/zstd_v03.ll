@@ -204,7 +204,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define internal fastcc i64 @ZSTD_decompressBlock(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4) unnamed_addr #3 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64
   %i.a = alloca [256 x i16], align 16             ; 6 uses
   %i.b = alloca i32, align 4                      ; 7 uses
   %i.c = alloca i32, align 4                      ; 7 uses
@@ -607,9 +606,7 @@ FSE_initDState.exit94.i:                          ; preds = %bb.by
   %i.tg = ptrtoint ptr %i.ck to i64               ; 2 uses
   %i.th = ptrtoint ptr %i.co to i64
   %i.ti = getelementptr inbounds i8, ptr %i.cj, i64 -12
-  %i.tj = ptrtoint ptr %i.te to i64               ; 3 uses
-  %6 = add i64 %2, %5
-  %7 = add i64 %6, -8
+  %i.tj = ptrtoint ptr %i.te to i64               ; 4 uses
   br label %bb.bz
 
 bb.bz:                                            ; preds = %ZSTD_execSequence.exit.i, %.lr.ph.i
@@ -1012,7 +1009,7 @@ iter.check:                                       ; preds = %bb.cz
 vector.memcheck:                                  ; preds = %iter.check
   %i.abs = add nsw i64 %.1.i.i, 8
   %i.abt = add i64 %i.abs, %i.xn
-  %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.abt)
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.tj, i64 %i.abt)
   %i.abu = sub i64 %.166.i.i101, %umax
   %diff.check = icmp ugt i64 %i.abu, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check

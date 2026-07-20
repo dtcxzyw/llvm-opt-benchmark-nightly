@@ -204,9 +204,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !1087 ; 4 uses
-  %1 = ptrtoint ptr %i.c to i64                   ; 2 uses
+  %1 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !1088 ; 7 uses
-  %2 = ptrtoint ptr %i.d to i64                   ; 2 uses
+  %2 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
   %i.e = icmp eq ptr %i.c, %i.d
   br i1 %i.e, label %bb.c, label %bb.b
 
@@ -609,18 +609,17 @@ bb.al:                                            ; preds = %_ZNSt6vectorIiSaIiE
 .lr.ph67:                                         ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, %._crit_edge63
   %.sroa.018.066 = phi ptr [ %.sroa.018.1.lcssa, %._crit_edge63 ], [ %i.ee, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 5 uses
   %.sroa.015.065 = phi ptr [ %i.fe, %._crit_edge63 ], [ %i.x, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 3 uses
-  %i.en = load ptr, ptr %.sroa.015.065, align 8, !tbaa !1289 ; 6 uses
+  %i.en = load ptr, ptr %.sroa.015.065, align 8, !tbaa !1289 ; 5 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %.sroa.015.065, i64 8
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !1289 ; 3 uses
   %i.eq = icmp eq ptr %i.en, %i.ep
   br i1 %i.eq, label %._crit_edge63, label %.lr.ph62.preheader
 
 .lr.ph62.preheader:                               ; preds = %.lr.ph67
-  %i.er = ptrtoaddr ptr %i.en to i64
+  %i.er = ptrtoaddr ptr %i.en to i64              ; 2 uses
   %.sroa.018.066121 = ptrtoaddr ptr %.sroa.018.066 to i64
-  %9 = ptrtoint ptr %i.ep to i64
-  %10 = ptrtoint ptr %i.en to i64
-  %i.es = sub i64 %9, %10
+  %9 = ptrtoaddr ptr %i.ep to i64
+  %i.es = sub i64 %9, %i.er
   %i.et = add i64 %i.es, -4                       ; 2 uses
   %i.eu = lshr i64 %i.et, 2
   %i.ev = add nuw nsw i64 %i.eu, 1                ; 2 uses

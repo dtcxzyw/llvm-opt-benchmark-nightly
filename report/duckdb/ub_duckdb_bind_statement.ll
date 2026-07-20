@@ -204,10 +204,10 @@ bb.fa:                                            ; preds = %bb.ez
   br label %bb.fd
 
 ._crit_edge860:                                   ; preds = %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit, %bb.fa
-  %i.px = phi ptr [ null, %bb.fa ], [ %i.rw, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 5 uses
+  %i.px = phi ptr [ null, %bb.fa ], [ %i.rw, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 4 uses
   %i.py = phi ptr [ null, %bb.fa ], [ %i.rv, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 10 uses
   %i.pz = phi ptr [ null, %bb.fa ], [ %i.rx, %_ZNSt10unique_ptrIN6duckdb24BoundColumnRefExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 4 uses
-  %61 = ptrtoint ptr %i.px to i64
+  %61 = ptrtoaddr ptr %i.px to i64                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #25
   invoke void @_ZN6duckdb5Value7INTEGEREi(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %44, i32 noundef 42)
@@ -527,8 +527,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EE
   br i1 %.not10.i.i.i.i.i.i.i351, label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i356, label %.lr.ph.i.i.i.i.i.i.i352.preheader
 
 .lr.ph.i.i.i.i.i.i.i352.preheader:                ; preds = %.noexc361
-  %62 = ptrtoint ptr %i.px to i64
-  %i.tj = sub i64 %62, %i.st
+  %i.tj = sub i64 %61, %i.st
   %i.tk = add i64 %i.tj, -8                       ; 2 uses
   %i.tl = lshr i64 %i.tk, 3
   %i.tm = add nuw nsw i64 %i.tl, 1                ; 2 uses
@@ -931,17 +930,16 @@ _ZSt4copyIPN6duckdb13PhysicalIndexES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m,
   %i.ae = phi ptr [ %.pre27, %bb.l ], [ %i.b, %bb.m ], [ %i.b, %bb.n ] ; 3 uses
   %i.af = phi ptr [ %.pre26, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.n ] ; 3 uses
   %i.ag = phi ptr [ %.pre25, %bb.l ], [ %i.v, %bb.m ], [ %i.v, %bb.n ] ; 5 uses
-  %i.ah = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ] ; 3 uses
+  %i.ah = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ] ; 2 uses
   %i.ai = ptrtoaddr ptr %i.ag to i64
-  %i.aj = ptrtoaddr ptr %i.ah to i64
+  %i.aj = ptrtoaddr ptr %i.ah to i64              ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.pre-phi33 ; 5 uses
   %.not9.i.i.i.i = icmp eq ptr %i.ak, %i.ae
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6duckdb13PhysicalIndexESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN6duckdb13PhysicalIndexES2_ET0_T_S4_S3_.exit
-  %2 = ptrtoint ptr %i.ae to i64
-  %3 = ptrtoint ptr %i.ah to i64
-  %i.al = add i64 %.pre-phi33, %3
+  %2 = ptrtoaddr ptr %i.ae to i64
+  %i.al = add i64 %.pre-phi33, %i.aj
   %i.am = sub i64 %2, %i.al
   %i.an = add i64 %i.am, -8                       ; 2 uses
   %i.ao = lshr i64 %i.an, 3
@@ -1344,7 +1342,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPSt17reference_wrapperIN6duckdb12CatalogEntryEES4_ET0_T_S6_S5_.exit
 
 _ZSt4copyIPSt17reference_wrapperIN6duckdb12CatalogEntryEES4_ET0_T_S6_S5_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !778   ; 3 uses
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !778   ; 2 uses
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !781 ; 4 uses
   %i.ag = load ptr, ptr %0, align 8, !tbaa !778
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
@@ -1356,11 +1354,10 @@ _ZSt4copyIPSt17reference_wrapperIN6duckdb12CatalogEntryEES4_ET0_T_S6_S5_.exit: ;
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKSt17reference_wrapperIN6duckdb12CatalogEntryEESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPSt17reference_wrapperIN6duckdb12CatalogEntryEES4_ET0_T_S6_S5_.exit
-  %i.am = ptrtoaddr ptr %i.ae to i64
-  %2 = ptrtoint ptr %i.al to i64
-  %3 = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoaddr ptr %i.ae to i64              ; 2 uses
+  %2 = ptrtoaddr ptr %i.al to i64
   %i.an = add i64 %i.ai, %2
-  %i.ao = add i64 %3, %i.ah
+  %i.ao = add i64 %i.am, %i.ah
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = add i64 %i.ap, -8                       ; 2 uses
   %i.ar = lshr i64 %i.aq, 3
@@ -1763,17 +1760,16 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i: ;
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.ao
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 88
   store ptr %i.at, ptr %i.au, align 8, !tbaa !1358
-  %i.av = load ptr, ptr %i.ai, align 8, !tbaa !1294 ; 6 uses
+  %i.av = load ptr, ptr %i.ai, align 8, !tbaa !1294 ; 5 uses
   %i.aw = load ptr, ptr %i.aj, align 8, !tbaa !1294 ; 3 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.av, %i.aw
   br i1 %.not7.i.i.i.i.i.i, label %.loopexit31, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc15
-  %i.ax = ptrtoaddr ptr %i.av to i64
+  %i.ax = ptrtoaddr ptr %i.av to i64              ; 2 uses
   %i.ay = ptrtoaddr ptr %i.ar to i64
-  %2 = ptrtoint ptr %i.aw to i64
-  %3 = ptrtoint ptr %i.av to i64
-  %i.az = sub i64 %2, %3
+  %2 = ptrtoaddr ptr %i.aw to i64
+  %i.az = sub i64 %2, %i.ax
   %i.ba = add i64 %i.az, -8                       ; 2 uses
   %i.bb = lshr i64 %i.ba, 3
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
@@ -1862,17 +1858,16 @@ _ZNSt15__new_allocatorIN6duckdb13PhysicalIndexEE8allocateEmPKv.exit.i.i.i.i.i17:
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.bv
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %i.ca, ptr %i.cb, align 8, !tbaa !1358
-  %i.cc = load ptr, ptr %i.bp, align 8, !tbaa !1294 ; 6 uses
+  %i.cc = load ptr, ptr %i.bp, align 8, !tbaa !1294 ; 5 uses
   %i.cd = load ptr, ptr %i.bq, align 8, !tbaa !1294 ; 3 uses
   %.not7.i.i.i.i.i.i18 = icmp eq ptr %i.cc, %i.cd
   br i1 %.not7.i.i.i.i.i.i18, label %.loopexit, label %.lr.ph.i.i.i.i.i.i19.preheader
 
 .lr.ph.i.i.i.i.i.i19.preheader:                   ; preds = %.noexc26
-  %i.ce = ptrtoaddr ptr %i.cc to i64
+  %i.ce = ptrtoaddr ptr %i.cc to i64              ; 2 uses
   %i.cf = ptrtoaddr ptr %i.by to i64
-  %4 = ptrtoint ptr %i.cd to i64
-  %5 = ptrtoint ptr %i.cc to i64
-  %i.cg = sub i64 %4, %5
+  %3 = ptrtoaddr ptr %i.cd to i64
+  %i.cg = sub i64 %3, %i.ce
   %i.ch = add i64 %i.cg, -8                       ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses

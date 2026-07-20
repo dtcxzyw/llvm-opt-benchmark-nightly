@@ -203,7 +203,7 @@ bb.a:
   br i1 %.not.i, label %_ZN6duckdb7AddNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %3 = ptrtoaddr ptr %i.h to i64
+  %3 = ptrtoint ptr %i.h to i64
   %i.i = load ptr, ptr %2, align 8, !tbaa !15, !noalias !244 ; 8 uses
   %min.iters.check = icmp ult i64 %i.f, 4
   %i.j = ptrtoaddr ptr %i.i to i64
@@ -606,7 +606,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.h,
   br i1 %.not.i, label %_ZN6duckdb7AddNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %7 = ptrtoaddr ptr %i.cu to i64
+  %7 = ptrtoint ptr %i.cu to i64
   %i.cv = load ptr, ptr %i.cq, align 8, !tbaa !15, !noalias !299 ; 8 uses
   %min.iters.check108 = icmp ult i64 %i.cs, 4
   %i.cw = ptrtoaddr ptr %i.cv to i64
@@ -1009,7 +1009,7 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_.e
   br i1 %.not.i, label %.loopexit, label %iter.check1248
 
 iter.check1248:                                   ; preds = %.noexc
-  %31 = ptrtoaddr ptr %i.bl to i64
+  %31 = ptrtoint ptr %i.bl to i64
   %i.bm = load ptr, ptr %5, align 8, !tbaa !15, !noalias !331 ; 8 uses
   %min.iters.check1234 = icmp ult i64 %i.bj, 4
   %i.bn = ptrtoaddr ptr %i.bm to i64
@@ -1412,7 +1412,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit393: ; preds = %_Z
   br i1 %.not.i394, label %.loopexit743, label %iter.check1195
 
 iter.check1195:                                   ; preds = %.noexc398
-  %32 = ptrtoaddr ptr %i.oi to i64
+  %32 = ptrtoint ptr %i.oi to i64
   %i.oj = load ptr, ptr %8, align 8, !tbaa !15, !noalias !377 ; 8 uses
   %min.iters.check1181 = icmp ult i64 %i.og, 4
   %i.ok = ptrtoaddr ptr %i.oj to i64
@@ -1815,7 +1815,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit477: ; preds = %bb
   br i1 %.not.i478, label %.loopexit744, label %iter.check1142
 
 iter.check1142:                                   ; preds = %.noexc482
-  %33 = ptrtoaddr ptr %i.yp to i64
+  %33 = ptrtoint ptr %i.yp to i64
   %i.yq = load ptr, ptr %17, align 8, !tbaa !15, !noalias !409 ; 8 uses
   %min.iters.check1128 = icmp ult i64 %i.yn, 4
   %i.yr = ptrtoaddr ptr %i.yq to i64
@@ -2218,7 +2218,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8pop_backEv.exit: ; preds =
   br i1 %.not.i556, label %.loopexit745, label %iter.check1089
 
 iter.check1089:                                   ; preds = %.noexc560
-  %34 = ptrtoaddr ptr %i.ais to i64
+  %34 = ptrtoint ptr %i.ais to i64
   %i.ait = load ptr, ptr %20, align 8, !tbaa !15, !noalias !432 ; 8 uses
   %min.iters.check1075 = icmp ult i64 %i.aiq, 4
   %i.aiu = ptrtoaddr ptr %i.ait to i64
@@ -2365,7 +2365,7 @@ bb.gh:                                            ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not.i569, label %.loopexit746, label %iter.check
 
 iter.check:                                       ; preds = %.noexc573
-  %35 = ptrtoaddr ptr %i.akj to i64
+  %35 = ptrtoint ptr %i.akj to i64
   %i.akk = load ptr, ptr %i.akf, align 8, !tbaa !15, !noalias !442 ; 8 uses
   %min.iters.check1053 = icmp ult i64 %i.akh, 4
   %i.akl = ptrtoaddr ptr %i.akk to i64
@@ -2768,7 +2768,7 @@ _ZNK6duckdb22ArrowExtensionMetadata14GetArrowFormatB5cxx11Ev.exit: ; preds = %._
           to label %bb.f unwind label %bb.n       ; 13 uses
 
 bb.f:                                             ; preds = %_ZNK6duckdb22ArrowExtensionMetadata14GetArrowFormatB5cxx11Ev.exit
-  %13 = ptrtoaddr ptr %i.x to i64
+  %13 = ptrtoint ptr %i.x to i64
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.x, i8 0, i64 %i.w, i1 false), !noalias !496
   %i.y = load ptr, ptr %5, align 8, !tbaa !15     ; 2 uses
   %i.z = icmp eq ptr %i.y, %i.i
@@ -2830,15 +2830,14 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %._cri
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.aj
   store i8 0, ptr %i.am, align 1, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #34, !noalias !499
-  %i.an = load ptr, ptr %6, align 8, !tbaa !15    ; 10 uses
-  %14 = ptrtoint ptr %i.an to i64
+  %i.an = load ptr, ptr %6, align 8, !tbaa !15    ; 9 uses
   %i.ao = load i64, ptr %i.ak, align 8, !tbaa !18 ; 12 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ao
   %.not176179 = icmp samesign eq i64 %i.ao, 0
   br i1 %.not176179, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.i
-  %i.aq = ptrtoaddr ptr %i.an to i64
+  %i.aq = ptrtoaddr ptr %i.an to i64              ; 2 uses
   %min.iters.check = icmp ult i64 %i.ao, 4
   %i.ar = sub i64 %i.aq, %13
   %diff.check = icmp ugt i64 %i.ar, -32
@@ -2900,8 +2899,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.033181.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec229, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.0151.0180.ph = phi ptr [ %i.an, %iter.check ], [ %i.as, %vec.epilog.iter.check ], [ %i.ax, %vec.epilog.middle.block ] ; 3 uses
-  %i.ba = add i64 %i.ao, %14                      ; 2 uses
-  %.sroa.0151.0180.ph279 = ptrtoint ptr %.sroa.0151.0180.ph to i64 ; 2 uses
+  %i.ba = add i64 %i.ao, %i.aq                    ; 2 uses
+  %.sroa.0151.0180.ph279 = ptrtoaddr ptr %.sroa.0151.0180.ph to i64 ; 2 uses
   %i.bb = sub i64 %i.ba, %.sroa.0151.0180.ph279
   %xtraiter = and i64 %i.bb, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -3304,7 +3303,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not.i47, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %.noexc48
-  %5 = ptrtoaddr ptr %i.bq to i64
+  %5 = ptrtoint ptr %i.bq to i64
   %i.br = load ptr, ptr %i.bm, align 8, !tbaa !15, !noalias !571 ; 8 uses
   %min.iters.check102 = icmp ult i64 %i.bo, 4
   %i.bs = ptrtoaddr ptr %i.br to i64
@@ -3707,7 +3706,7 @@ declare void @_ZN6duckdb22PhysicalBatchCollectorC2ERNS_12PhysicalPlanERNS_21Prep
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEESaIS5_EE15_M_range_insertISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS5_S7_EEEEEvSD_T_SF_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
   %.not116 = icmp eq ptr %2, %3
   br i1 %.not116, label %_ZSt4copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPN6duckdb10unique_ptrINS3_17ArrowArrayWrapperESt14default_deleteIS5_ELb1EEESt6vectorIS8_SaIS8_EEEEESD_ET0_T_SG_SF_.exit, label %bb.b
 
@@ -4076,8 +4075,7 @@ _ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_del
   br i1 %.not11.i.i.i.i.i72, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEES6_SaIS5_EET0_T_S9_S8_RT1_.exit, label %.lr.ph.i.i.i.i.i73.preheader
 
 .lr.ph.i.i.i.i.i73.preheader:                     ; preds = %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEESaIS5_EE11_M_allocateEm.exit
-  %4 = ptrtoint ptr %1 to i64
-  %i.ea = sub i64 %4, %i.do
+  %i.ea = sub i64 %i.a, %i.do
   %i.eb = add i64 %i.ea, -8                       ; 2 uses
   %i.ec = lshr i64 %i.eb, 3
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
@@ -4213,8 +4211,7 @@ _ZSt22__uninitialized_copy_aISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPN
   br i1 %.not11.i.i.i.i.i85, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6duckdb10unique_ptrINS0_17ArrowArrayWrapperESt14default_deleteIS2_ELb1EEES6_SaIS5_EET0_T_S9_S8_RT1_.exit91, label %.lr.ph.i.i.i.i.i86.preheader
 
 .lr.ph.i.i.i.i.i86.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPN6duckdb10unique_ptrINS3_17ArrowArrayWrapperESt14default_deleteIS5_ELb1EEESt6vectorIS8_SaIS8_EEEEES9_S8_ET0_T_SG_SF_RSaIT1_E.exit84
-  %5 = ptrtoint ptr %1 to i64
-  %i.fm = sub i64 %i.k, %5
+  %i.fm = sub i64 %i.k, %i.a
   %i.fn = add i64 %i.fm, -8                       ; 2 uses
   %i.fo = lshr i64 %i.fn, 3
   %i.fp = add nuw nsw i64 %i.fo, 1                ; 2 uses

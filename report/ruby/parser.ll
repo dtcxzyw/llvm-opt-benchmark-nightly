@@ -204,7 +204,7 @@ string_scan_simd_sse2.exit222.thread468:          ; preds = %bb.bd, %bb.bc
   br i1 %.not574730, label %.lr.ph732.preheader, label %string_scan.exit, !prof !65
 
 .lr.ph732.preheader:                              ; preds = %string_scan_simd_sse2.exit222.thread468
-  %.lcssa631.promoted728792 = ptrtoint ptr %.lcssa631.promoted728 to i64 ; 2 uses
+  %.lcssa631.promoted728792 = ptrtoaddr ptr %.lcssa631.promoted728 to i64 ; 2 uses
   %i.ia = sub i64 0, %.lcssa631.promoted728792
   %scevgep793 = getelementptr i8, ptr %.lcssa631.promoted728, i64 %i.ia
   %scevgep797 = getelementptr i8, ptr %scevgep793, i64 %.val229637.lcssa794796
@@ -607,7 +607,7 @@ bb.cu:                                            ; preds = %peek.exit391.thread
   %.val237622 = phi ptr [ %.val237.lcssa, %peek.exit391.thread ], [ %.val237803, %peek.exit391 ] ; 5 uses
   %.not.i386620 = phi i1 [ false, %peek.exit391.thread ], [ true, %peek.exit391 ]
   %i.qm = phi ptr [ %i.pr, %peek.exit391.thread ], [ %i.ps, %peek.exit391 ] ; 8 uses
-  %.val2376221172 = ptrtoint ptr %.val237622 to i64
+  %.val2376221173 = ptrtoaddr ptr %.val237622 to i64
   %.pn = load ptr, ptr %i.qm, align 8, !tbaa !58
   %.in = getelementptr inbounds nuw i8, ptr %.pn, i64 16
   %i.qn = load i64, ptr %.in, align 8, !tbaa !50
@@ -681,8 +681,8 @@ string_scan_simd_sse2.exit218.thread506:          ; preds = %bb.cy, %bb.cx
   br i1 %.not565652, label %.lr.ph654.preheader, label %string_scan.exit210, !prof !65
 
 .lr.ph654.preheader:                              ; preds = %string_scan_simd_sse2.exit218.thread506
-  %.lcssa631.promoted6501173 = ptrtoint ptr %.lcssa631.promoted650 to i64
-  %i.rm = sub i64 %.val2376221172, %.lcssa631.promoted6501173
+  %.lcssa631.promoted6501174 = ptrtoaddr ptr %.lcssa631.promoted650 to i64
+  %i.rm = sub i64 %.val2376221173, %.lcssa631.promoted6501174
   %i.rn = freeze i64 %i.rm                        ; 2 uses
   %i.ro = add i64 %i.rn, -1
   %xtraiter = and i64 %i.rn, 3                    ; 2 uses
@@ -1085,7 +1085,7 @@ bb.ea:                                            ; preds = %peek.exit427
   br i1 %.not.i425, label %peek.exit427, label %peek.exit433.thread, !prof !61
 
 json_eat_whitespace.exit174:                      ; preds = %peek.exit427
-  %.val243676.lcssa787789 = ptrtoint ptr %.val243813 to i64 ; 2 uses
+  %.val243676.lcssa787789 = ptrtoaddr ptr %.val243813 to i64 ; 2 uses
   %i.wu = load i8, ptr %i.um, align 1, !tbaa !37, !range !62, !noundef !63
   %i.wv = trunc nuw i8 %i.wu to i1
   %i.ww = icmp eq i8 %i.wd, 125
@@ -1142,7 +1142,7 @@ string_scan_simd_sse2.exit.thread545:             ; preds = %bb.ec, %bb.eb
   br i1 %.not569683, label %.lr.ph685.preheader, label %string_scan.exit213, !prof !65
 
 .lr.ph685.preheader:                              ; preds = %string_scan_simd_sse2.exit.thread545
-  %.lcssa631.promoted681785 = ptrtoint ptr %.lcssa631.promoted681 to i64 ; 2 uses
+  %.lcssa631.promoted681785 = ptrtoaddr ptr %.lcssa631.promoted681 to i64 ; 2 uses
   %i.xn = sub i64 0, %.lcssa631.promoted681785
   %scevgep786 = getelementptr i8, ptr %.lcssa631.promoted681, i64 %i.xn
   %scevgep790 = getelementptr i8, ptr %scevgep786, i64 %.val243676.lcssa787789
@@ -1545,22 +1545,22 @@ bb.a:
   %i.d = load i8, ptr %i.c, align 1, !tbaa !43
   %i.e = getelementptr i8, ptr %0, i64 24
   %.val42.i = load ptr, ptr %i.e, align 8, !tbaa !57 ; 11 uses
-  %i.f = ptrtoint ptr %.val42.i to i64            ; 6 uses
-  %i.g = ptrtoint ptr %i.c to i64                 ; 3 uses
-  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
+  %i.f = ptrtoint ptr %.val42.i to i64            ; 9 uses
+  %i.g = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.h = sub i64 %i.f, %i.g
   %i.i = icmp ugt i64 %i.h, 7
   br i1 %i.i, label %.lr.ph, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.e, %bb.a
   %.1139.lcssa = phi i64 [ 0, %bb.a ], [ %i.cg, %bb.e ] ; 2 uses
-  %.promoted54.i.lcssa = phi ptr [ %i.c, %bb.a ], [ %i.ch, %bb.e ] ; 4 uses
-  %.lcssa172 = phi i64 [ %i.g, %bb.a ], [ %i.ci, %bb.e ]
-  %.lcssa170 = phi i64 [ %i.h, %bb.a ], [ %i.cj, %bb.e ]
+  %.promoted54.i.lcssa = phi ptr [ %i.c, %bb.a ], [ %i.ch, %bb.e ] ; 6 uses
   %.not.i56.i = icmp ult ptr %.promoted54.i.lcssa, %.val42.i
   br i1 %.not.i56.i, label %peek.exit.preheader.i, label %json_parse_digits.exit, !prof !60
 
 peek.exit.preheader.i:                            ; preds = %.preheader.i
-  %scevgep.i = getelementptr i8, ptr %.promoted54.i.lcssa, i64 %.lcssa170
+  %.promoted5459.i = ptrtoaddr ptr %.promoted54.i.lcssa to i64
+  %4 = sub i64 %i.f, %.promoted5459.i
+  %scevgep.i = getelementptr i8, ptr %.promoted54.i.lcssa, i64 %4
   br label %peek.exit.i
 
 .lr.ph:                                           ; preds = %bb.a, %bb.e
@@ -1604,10 +1604,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.4142 = phi i64 [ %i.ag, %bb.c ], [ %.1139177, %bb.b ] ; 3 uses
-  %.promoted4853.i = phi ptr [ %i.ah, %bb.c ], [ %.promoted54.i178, %bb.b ] ; 3 uses
+  %.promoted4853.i = phi ptr [ %i.ah, %bb.c ], [ %.promoted54.i178, %bb.b ] ; 4 uses
   %.033.i = phi i32 [ %i.ai, %bb.c ], [ %i.s, %bb.b ] ; 5 uses
   %.not3946.i = icmp eq i32 %.033.i, 0
-  br i1 %.not3946.i, label %.loopexit.loopexit.i, label %.lr.ph.i.preheader
+  br i1 %.not3946.i, label %json_parse_digits.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.d
   %xtraiter = and i32 %.033.i, 3                  ; 2 uses
@@ -1633,12 +1633,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.lcssa346.unr = phi i64 [ poison, %.lr.ph.i.preheader ], [ %i.ap, %.lr.ph.i.prol ]
-  %.lcssa345.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %i.ar, %.lr.ph.i.prol ]
+  %.lcssa345.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %i.ar, %.lr.ph.i.prol ] ; 2 uses
   %.unr = phi ptr [ %.promoted4853.i, %.lr.ph.i.preheader ], [ %i.ar, %.lr.ph.i.prol ]
   %.unr356 = phi i64 [ %.4142, %.lr.ph.i.preheader ], [ %i.ap, %.lr.ph.i.prol ]
   %.13447.i.unr = phi i32 [ %.033.i, %.lr.ph.i.preheader ], [ %i.aq, %.lr.ph.i.prol ]
   %i.as = icmp ult i32 %.033.i, 4
-  br i1 %i.as, label %.loopexit.loopexit.i, label %.lr.ph.i
+  br i1 %i.as, label %json_parse_digits.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
   %i.at = phi ptr [ %i.bt, %.lr.ph.i ], [ %.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
@@ -1671,10 +1671,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bq = add i64 %i.bn, -48
   %i.br = add i64 %i.bq, %i.bp                    ; 2 uses
   %i.bs = add nsw i32 %.13447.i, -4               ; 2 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.at, i64 4 ; 3 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.at, i64 4 ; 4 uses
   store ptr %i.bt, ptr %i.b, align 8, !tbaa !56
   %.not39.i.3 = icmp eq i32 %i.bs, 0
-  br i1 %.not39.i.3, label %.loopexit.loopexit.i, label %.lr.ph.i
+  br i1 %.not39.i.3, label %json_parse_digits.exit, label %.lr.ph.i
 
 bb.e:                                             ; preds = %.lr.ph
   %i.bu = mul i64 %.1139177, 100000000
@@ -1692,8 +1692,8 @@ bb.e:                                             ; preds = %.lr.ph
   %i.cg = add i64 %i.cf, %i.bu                    ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.promoted54.i178, i64 8 ; 4 uses
   store ptr %i.ch, ptr %i.b, align 8, !tbaa !56
-  %i.ci = ptrtoint ptr %i.ch to i64               ; 2 uses
-  %i.cj = sub i64 %i.f, %i.ci                     ; 2 uses
+  %i.ci = ptrtoint ptr %i.ch to i64
+  %i.cj = sub i64 %i.f, %i.ci
   %i.ck = icmp ugt i64 %i.cj, 7
   br i1 %i.ck, label %.lr.ph, label %.preheader.i
 
@@ -1704,7 +1704,7 @@ peek.exit.i:                                      ; preds = %bb.f, %peek.exit.pr
   %i.cm = sext i8 %i.cl to i32
   %i.cn = add nsw i32 %i.cm, -48                  ; 2 uses
   %i.co = icmp ugt i32 %i.cn, 9
-  br i1 %i.co, label %peek.exit.thread.loopexit.i, label %bb.f
+  br i1 %i.co, label %json_parse_digits.exit, label %bb.f
 
 bb.f:                                             ; preds = %peek.exit.i
   %i.cp = mul i64 %.2140, 10
@@ -1713,26 +1713,14 @@ bb.f:                                             ; preds = %peek.exit.i
   %i.cs = getelementptr inbounds nuw i8, ptr %.val5557.i, i64 1 ; 4 uses
   store ptr %i.cs, ptr %i.b, align 8, !tbaa !56
   %exitcond.not.i = icmp eq ptr %i.cs, %.val42.i
-  br i1 %exitcond.not.i, label %peek.exit.thread.loopexit.i, label %peek.exit.i, !prof !89
+  br i1 %exitcond.not.i, label %json_parse_digits.exit, label %peek.exit.i, !prof !89
 
-peek.exit.thread.loopexit.i:                      ; preds = %bb.f, %peek.exit.i
-  %.val60231 = phi ptr [ %.val5557.i, %peek.exit.i ], [ %i.cs, %bb.f ]
-  %.3141 = phi i64 [ %.2140, %peek.exit.i ], [ %i.cr, %bb.f ]
-  %.val.lcssa.ph.i = phi ptr [ %.val5557.i, %peek.exit.i ], [ %scevgep.i, %bb.f ]
-  %.pre.i = ptrtoint ptr %.val.lcssa.ph.i to i64
-  br label %json_parse_digits.exit
-
-.loopexit.loopexit.i:                             ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.d
-  %.5143 = phi i64 [ %.4142, %bb.d ], [ %.lcssa346.unr, %.lr.ph.i.prol.loopexit ], [ %i.br, %.lr.ph.i ]
-  %.promoted4852.i = phi ptr [ %.promoted4853.i, %bb.d ], [ %.lcssa345.unr, %.lr.ph.i.prol.loopexit ], [ %i.bt, %.lr.ph.i ] ; 2 uses
-  %4 = ptrtoint ptr %.promoted4852.i to i64
-  br label %json_parse_digits.exit
-
-json_parse_digits.exit:                           ; preds = %.preheader.i, %peek.exit.thread.loopexit.i, %.loopexit.loopexit.i
-  %.val60 = phi ptr [ %.promoted4852.i, %.loopexit.loopexit.i ], [ %.val60231, %peek.exit.thread.loopexit.i ], [ %.promoted54.i.lcssa, %.preheader.i ] ; 5 uses
-  %.6 = phi i64 [ %.5143, %.loopexit.loopexit.i ], [ %.3141, %peek.exit.thread.loopexit.i ], [ %.1139.lcssa, %.preheader.i ] ; 4 uses
-  %.sink74.i = phi i64 [ %4, %.loopexit.loopexit.i ], [ %.pre.i, %peek.exit.thread.loopexit.i ], [ %.lcssa172, %.preheader.i ]
-  %i.ct = sub i64 %.sink74.i, %i.g
+json_parse_digits.exit:                           ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %peek.exit.i, %bb.f, %.preheader.i, %bb.d
+  %.val60 = phi ptr [ %.promoted4853.i, %bb.d ], [ %.promoted54.i.lcssa, %.preheader.i ], [ %i.cs, %bb.f ], [ %.val5557.i, %peek.exit.i ], [ %.lcssa345.unr, %.lr.ph.i.prol.loopexit ], [ %i.bt, %.lr.ph.i ] ; 5 uses
+  %.4 = phi i64 [ %.4142, %bb.d ], [ %.1139.lcssa, %.preheader.i ], [ %i.cr, %bb.f ], [ %.2140, %peek.exit.i ], [ %.lcssa346.unr, %.lr.ph.i.prol.loopexit ], [ %i.br, %.lr.ph.i ] ; 4 uses
+  %.promoted4852.sink.i = phi ptr [ %.promoted4853.i, %bb.d ], [ %.promoted54.i.lcssa, %.preheader.i ], [ %scevgep.i, %bb.f ], [ %.val5557.i, %peek.exit.i ], [ %.lcssa345.unr, %.lr.ph.i.prol.loopexit ], [ %i.bt, %.lr.ph.i ]
+  %5 = ptrtoint ptr %.promoted4852.sink.i to i64
+  %i.ct = sub i64 %5, %i.g
   %i.cu = trunc i64 %i.ct to i32                  ; 6 uses
   %i.cv = icmp eq i8 %i.d, 48
   %i.cw = icmp sgt i32 %i.cu, 1
@@ -1758,26 +1746,26 @@ peek.exit:                                        ; preds = %bb.g
 bb.h:                                             ; preds = %peek.exit
   %i.da = getelementptr inbounds nuw i8, ptr %.val60, i64 1 ; 4 uses
   store ptr %i.da, ptr %i.b, align 8, !tbaa !56
-  %i.db = ptrtoint ptr %i.da to i64               ; 3 uses
-  %i.dc = sub i64 %i.f, %i.db                     ; 2 uses
+  %i.db = ptrtoint ptr %i.da to i64               ; 2 uses
+  %i.dc = sub i64 %i.f, %i.db
   %i.dd = icmp ugt i64 %i.dc, 7
   br i1 %i.dd, label %.lr.ph184, label %.preheader.i64
 
 .preheader.i64:                                   ; preds = %bb.l, %bb.h
-  %.7.lcssa = phi i64 [ %.6, %bb.h ], [ %i.gb, %bb.l ] ; 2 uses
-  %.promoted54.i63.lcssa = phi ptr [ %i.da, %bb.h ], [ %i.gc, %bb.l ] ; 4 uses
-  %.lcssa163 = phi i64 [ %i.db, %bb.h ], [ %i.gd, %bb.l ]
-  %.lcssa161 = phi i64 [ %i.dc, %bb.h ], [ %i.ge, %bb.l ]
+  %.7.lcssa = phi i64 [ %.4, %bb.h ], [ %i.gb, %bb.l ] ; 2 uses
+  %.promoted54.i63.lcssa = phi ptr [ %i.da, %bb.h ], [ %i.gc, %bb.l ] ; 6 uses
   %.not.i56.i66 = icmp ult ptr %.promoted54.i63.lcssa, %.val42.i
   br i1 %.not.i56.i66, label %peek.exit.preheader.i68, label %json_parse_digits.exit86, !prof !60
 
 peek.exit.preheader.i68:                          ; preds = %.preheader.i64
-  %scevgep.i69 = getelementptr i8, ptr %.promoted54.i63.lcssa, i64 %.lcssa161
+  %.promoted5459.i68 = ptrtoaddr ptr %.promoted54.i63.lcssa to i64
+  %6 = sub i64 %i.f, %.promoted5459.i68
+  %scevgep.i69 = getelementptr i8, ptr %.promoted54.i63.lcssa, i64 %6
   br label %peek.exit.i70
 
 .lr.ph184:                                        ; preds = %bb.h, %bb.l
   %.promoted54.i63183 = phi ptr [ %i.gc, %bb.l ], [ %i.da, %bb.h ] ; 4 uses
-  %.7182 = phi i64 [ %i.gb, %bb.l ], [ %.6, %bb.h ] ; 3 uses
+  %.7182 = phi i64 [ %i.gb, %bb.l ], [ %.4, %bb.h ] ; 3 uses
   %.0.copyload.i76 = load i64, ptr %.promoted54.i63183, align 1 ; 4 uses
   %i.de = and i64 %.0.copyload.i76, -1085102592571150096
   %i.df = add i64 %.0.copyload.i76, 434041037028460038
@@ -1816,10 +1804,10 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.10 = phi i64 [ %i.eb, %bb.j ], [ %.7182, %bb.i ] ; 3 uses
-  %.promoted4853.i77 = phi ptr [ %i.ec, %bb.j ], [ %.promoted54.i63183, %bb.i ] ; 3 uses
+  %.promoted4853.i77 = phi ptr [ %i.ec, %bb.j ], [ %.promoted54.i63183, %bb.i ] ; 4 uses
   %.033.i78 = phi i32 [ %i.ed, %bb.j ], [ %i.dn, %bb.i ] ; 5 uses
   %.not3946.i79 = icmp eq i32 %.033.i78, 0
-  br i1 %.not3946.i79, label %.loopexit.loopexit.i84, label %.lr.ph.i80.preheader
+  br i1 %.not3946.i79, label %json_parse_digits.exit86, label %.lr.ph.i80.preheader
 
 .lr.ph.i80.preheader:                             ; preds = %bb.k
   %xtraiter357 = and i32 %.033.i78, 3             ; 2 uses
@@ -1845,12 +1833,12 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 .lr.ph.i80.prol.loopexit:                         ; preds = %.lr.ph.i80.prol, %.lr.ph.i80.preheader
   %.lcssa335.unr = phi i64 [ poison, %.lr.ph.i80.preheader ], [ %i.ek, %.lr.ph.i80.prol ]
-  %.lcssa334.unr = phi ptr [ poison, %.lr.ph.i80.preheader ], [ %i.em, %.lr.ph.i80.prol ]
+  %.lcssa334.unr = phi ptr [ poison, %.lr.ph.i80.preheader ], [ %i.em, %.lr.ph.i80.prol ] ; 2 uses
   %.unr360 = phi ptr [ %.promoted4853.i77, %.lr.ph.i80.preheader ], [ %i.em, %.lr.ph.i80.prol ]
   %.unr361 = phi i64 [ %.10, %.lr.ph.i80.preheader ], [ %i.ek, %.lr.ph.i80.prol ]
   %.13447.i82.unr = phi i32 [ %.033.i78, %.lr.ph.i80.preheader ], [ %i.el, %.lr.ph.i80.prol ]
   %i.en = icmp ult i32 %.033.i78, 4
-  br i1 %i.en, label %.loopexit.loopexit.i84, label %.lr.ph.i80
+  br i1 %i.en, label %json_parse_digits.exit86, label %.lr.ph.i80
 
 .lr.ph.i80:                                       ; preds = %.lr.ph.i80.prol.loopexit, %.lr.ph.i80
   %i.eo = phi ptr [ %i.fo, %.lr.ph.i80 ], [ %.unr360, %.lr.ph.i80.prol.loopexit ] ; 5 uses
@@ -1883,10 +1871,10 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.fl = add i64 %i.fi, -48
   %i.fm = add i64 %i.fl, %i.fk                    ; 2 uses
   %i.fn = add nsw i32 %.13447.i82, -4             ; 2 uses
-  %i.fo = getelementptr inbounds nuw i8, ptr %i.eo, i64 4 ; 3 uses
+  %i.fo = getelementptr inbounds nuw i8, ptr %i.eo, i64 4 ; 4 uses
   store ptr %i.fo, ptr %i.b, align 8, !tbaa !56
   %.not39.i83.3 = icmp eq i32 %i.fn, 0
-  br i1 %.not39.i83.3, label %.loopexit.loopexit.i84, label %.lr.ph.i80
+  br i1 %.not39.i83.3, label %json_parse_digits.exit86, label %.lr.ph.i80
 
 bb.l:                                             ; preds = %.lr.ph184
   %i.fp = mul i64 %.7182, 100000000
@@ -1904,8 +1892,8 @@ bb.l:                                             ; preds = %.lr.ph184
   %i.gb = add i64 %i.ga, %i.fp                    ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %.promoted54.i63183, i64 8 ; 4 uses
   store ptr %i.gc, ptr %i.b, align 8, !tbaa !56
-  %i.gd = ptrtoint ptr %i.gc to i64               ; 2 uses
-  %i.ge = sub i64 %i.f, %i.gd                     ; 2 uses
+  %i.gd = ptrtoint ptr %i.gc to i64
+  %i.ge = sub i64 %i.f, %i.gd
   %i.gf = icmp ugt i64 %i.ge, 7
   br i1 %i.gf, label %.lr.ph184, label %.preheader.i64
 
@@ -1916,7 +1904,7 @@ peek.exit.i70:                                    ; preds = %bb.m, %peek.exit.pr
   %i.gh = sext i8 %i.gg to i32
   %i.gi = add nsw i32 %i.gh, -48                  ; 2 uses
   %i.gj = icmp ugt i32 %i.gi, 9
-  br i1 %i.gj, label %peek.exit.thread.loopexit.i73, label %bb.m
+  br i1 %i.gj, label %json_parse_digits.exit86, label %bb.m
 
 bb.m:                                             ; preds = %peek.exit.i70
   %i.gk = mul i64 %.8.a, 10
@@ -1925,26 +1913,14 @@ bb.m:                                             ; preds = %peek.exit.i70
   %i.gn = getelementptr inbounds nuw i8, ptr %.val5557.i71, i64 1 ; 4 uses
   store ptr %i.gn, ptr %i.b, align 8, !tbaa !56
   %exitcond.not.i72 = icmp eq ptr %i.gn, %.val42.i
-  br i1 %exitcond.not.i72, label %peek.exit.thread.loopexit.i73, label %peek.exit.i70, !prof !89
+  br i1 %exitcond.not.i72, label %json_parse_digits.exit86, label %peek.exit.i70, !prof !89
 
-peek.exit.thread.loopexit.i73:                    ; preds = %bb.m, %peek.exit.i70
-  %.val58234 = phi ptr [ %.val5557.i71, %peek.exit.i70 ], [ %i.gn, %bb.m ]
-  %.9 = phi i64 [ %.8.a, %peek.exit.i70 ], [ %i.gm, %bb.m ]
-  %.val.lcssa.ph.i74 = phi ptr [ %.val5557.i71, %peek.exit.i70 ], [ %scevgep.i69, %bb.m ]
-  %.pre.i75 = ptrtoint ptr %.val.lcssa.ph.i74 to i64
-  br label %json_parse_digits.exit86
-
-.loopexit.loopexit.i84:                           ; preds = %.lr.ph.i80.prol.loopexit, %.lr.ph.i80, %bb.k
-  %.11 = phi i64 [ %.10, %bb.k ], [ %.lcssa335.unr, %.lr.ph.i80.prol.loopexit ], [ %i.fm, %.lr.ph.i80 ]
-  %.promoted4852.i85 = phi ptr [ %.promoted4853.i77, %bb.k ], [ %.lcssa334.unr, %.lr.ph.i80.prol.loopexit ], [ %i.fo, %.lr.ph.i80 ] ; 2 uses
-  %5 = ptrtoint ptr %.promoted4852.i85 to i64
-  br label %json_parse_digits.exit86
-
-json_parse_digits.exit86:                         ; preds = %.preheader.i64, %peek.exit.thread.loopexit.i73, %.loopexit.loopexit.i84
-  %.val58233 = phi ptr [ %.promoted4852.i85, %.loopexit.loopexit.i84 ], [ %.val58234, %peek.exit.thread.loopexit.i73 ], [ %.promoted54.i63.lcssa, %.preheader.i64 ]
-  %.12 = phi i64 [ %.11, %.loopexit.loopexit.i84 ], [ %.9, %peek.exit.thread.loopexit.i73 ], [ %.7.lcssa, %.preheader.i64 ]
-  %.sink74.i67 = phi i64 [ %5, %.loopexit.loopexit.i84 ], [ %.pre.i75, %peek.exit.thread.loopexit.i73 ], [ %.lcssa163, %.preheader.i64 ]
-  %i.go = sub i64 %.sink74.i67, %i.db
+json_parse_digits.exit86:                         ; preds = %.lr.ph.i80.prol.loopexit, %.lr.ph.i80, %peek.exit.i70, %bb.m, %.preheader.i64, %bb.k
+  %.val58203 = phi ptr [ %.promoted4853.i77, %bb.k ], [ %.promoted54.i63.lcssa, %.preheader.i64 ], [ %i.gn, %bb.m ], [ %.val5557.i71, %peek.exit.i70 ], [ %.lcssa334.unr, %.lr.ph.i80.prol.loopexit ], [ %i.fo, %.lr.ph.i80 ]
+  %.8 = phi i64 [ %.10, %bb.k ], [ %.7.lcssa, %.preheader.i64 ], [ %i.gm, %bb.m ], [ %.8.a, %peek.exit.i70 ], [ %.lcssa335.unr, %.lr.ph.i80.prol.loopexit ], [ %i.fm, %.lr.ph.i80 ]
+  %.promoted4852.sink.i66 = phi ptr [ %.promoted4853.i77, %bb.k ], [ %.promoted54.i63.lcssa, %.preheader.i64 ], [ %scevgep.i69, %bb.m ], [ %.val5557.i71, %peek.exit.i70 ], [ %.lcssa334.unr, %.lr.ph.i80.prol.loopexit ], [ %i.fo, %.lr.ph.i80 ]
+  %7 = ptrtoint ptr %.promoted4852.sink.i66 to i64
+  %i.go = sub i64 %7, %i.db
   %i.gp = trunc i64 %i.go to i32                  ; 2 uses
   %.not = icmp eq i32 %i.gp, 0
   br i1 %.not, label %bb.n, label %bb.o, !prof !67
@@ -1958,9 +1934,9 @@ bb.o:                                             ; preds = %json_parse_digits.e
   br label %peek.exit.thread
 
 peek.exit.thread:                                 ; preds = %bb.g, %bb.o, %peek.exit
-  %i.gr = phi ptr [ %.val60, %peek.exit ], [ %.val58233, %bb.o ], [ %.val60, %bb.g ] ; 6 uses
+  %i.gr = phi ptr [ %.val60, %peek.exit ], [ %.val58203, %bb.o ], [ %.val60, %bb.g ] ; 6 uses
   %i.gs = phi i1 [ true, %peek.exit ], [ false, %bb.o ], [ true, %bb.g ]
-  %.0138 = phi i64 [ %.6, %peek.exit ], [ %.12, %bb.o ], [ %.6, %bb.g ] ; 12 uses
+  %.0138 = phi i64 [ %.4, %peek.exit ], [ %.8, %bb.o ], [ %.4, %bb.g ] ; 12 uses
   %.053 = phi i32 [ -1, %peek.exit ], [ %i.cu, %bb.o ], [ -1, %bb.g ] ; 2 uses
   %.052 = phi i32 [ %i.cu, %peek.exit ], [ %i.gq, %bb.o ], [ %i.cu, %bb.g ] ; 4 uses
   %.not.i87 = icmp ult ptr %i.gr, %.val42.i
@@ -2002,21 +1978,21 @@ bb.r:                                             ; preds = %peek.exit92, %peek.
 peek.exit92.thread:                               ; preds = %bb.q, %peek.exit92, %bb.r
   %i.he = phi ptr [ %i.hd, %bb.r ], [ %i.ha, %peek.exit92 ], [ %i.ha, %bb.q ] ; 3 uses
   %.049 = phi i1 [ %i.hc, %bb.r ], [ false, %peek.exit92 ], [ false, %bb.q ]
-  %i.hf = ptrtoint ptr %i.he to i64               ; 3 uses
-  %i.hg = sub i64 %i.f, %i.hf                     ; 2 uses
+  %i.hf = ptrtoint ptr %i.he to i64               ; 2 uses
+  %i.hg = sub i64 %i.f, %i.hf
   %i.hh = icmp ugt i64 %i.hg, 7
   br i1 %i.hh, label %.lr.ph191, label %.preheader.i95
 
 .preheader.i95:                                   ; preds = %bb.v, %peek.exit92.thread
   %.0136.lcssa = phi i64 [ 0, %peek.exit92.thread ], [ %i.kf, %bb.v ] ; 2 uses
-  %.promoted54.i94.lcssa = phi ptr [ %i.he, %peek.exit92.thread ], [ %i.kg, %bb.v ] ; 4 uses
-  %.lcssa154 = phi i64 [ %i.hf, %peek.exit92.thread ], [ %i.kh, %bb.v ]
-  %.lcssa152 = phi i64 [ %i.hg, %peek.exit92.thread ], [ %i.ki, %bb.v ]
+  %.promoted54.i94.lcssa = phi ptr [ %i.he, %peek.exit92.thread ], [ %i.kg, %bb.v ] ; 6 uses
   %.not.i56.i97 = icmp ult ptr %.promoted54.i94.lcssa, %.val42.i
   br i1 %.not.i56.i97, label %peek.exit.preheader.i99, label %json_parse_digits.exit117, !prof !60
 
 peek.exit.preheader.i99:                          ; preds = %.preheader.i95
-  %scevgep.i100 = getelementptr i8, ptr %.promoted54.i94.lcssa, i64 %.lcssa152
+  %.promoted5459.i94 = ptrtoaddr ptr %.promoted54.i94.lcssa to i64
+  %8 = sub i64 %i.f, %.promoted5459.i94
+  %scevgep.i100 = getelementptr i8, ptr %.promoted54.i94.lcssa, i64 %8
   br label %peek.exit.i101
 
 .lr.ph191:                                        ; preds = %peek.exit92.thread, %bb.v
@@ -2060,10 +2036,10 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %.3.a = phi i64 [ %i.if, %bb.t ], [ %.0136189, %bb.s ] ; 3 uses
-  %.promoted4853.i108 = phi ptr [ %i.ig, %bb.t ], [ %.promoted54.i94190, %bb.s ] ; 3 uses
+  %.promoted4853.i108 = phi ptr [ %i.ig, %bb.t ], [ %.promoted54.i94190, %bb.s ] ; 4 uses
   %.033.i109 = phi i32 [ %i.ih, %bb.t ], [ %i.hr, %bb.s ] ; 5 uses
   %.not3946.i110 = icmp eq i32 %.033.i109, 0
-  br i1 %.not3946.i110, label %.loopexit.loopexit.i115, label %.lr.ph.i111.preheader
+  br i1 %.not3946.i110, label %json_parse_digits.exit117, label %.lr.ph.i111.preheader
 
 .lr.ph.i111.preheader:                            ; preds = %bb.u
   %xtraiter362 = and i32 %.033.i109, 3            ; 2 uses
@@ -2089,12 +2065,12 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 .lr.ph.i111.prol.loopexit:                        ; preds = %.lr.ph.i111.prol, %.lr.ph.i111.preheader
   %.lcssa324.unr = phi i64 [ poison, %.lr.ph.i111.preheader ], [ %i.io, %.lr.ph.i111.prol ]
-  %.lcssa.unr = phi ptr [ poison, %.lr.ph.i111.preheader ], [ %i.iq, %.lr.ph.i111.prol ]
+  %.lcssa.unr = phi ptr [ poison, %.lr.ph.i111.preheader ], [ %i.iq, %.lr.ph.i111.prol ] ; 2 uses
   %.unr365 = phi ptr [ %.promoted4853.i108, %.lr.ph.i111.preheader ], [ %i.iq, %.lr.ph.i111.prol ]
   %.unr366 = phi i64 [ %.3.a, %.lr.ph.i111.preheader ], [ %i.io, %.lr.ph.i111.prol ]
   %.13447.i113.unr = phi i32 [ %.033.i109, %.lr.ph.i111.preheader ], [ %i.ip, %.lr.ph.i111.prol ]
   %i.ir = icmp ult i32 %.033.i109, 4
-  br i1 %i.ir, label %.loopexit.loopexit.i115, label %.lr.ph.i111
+  br i1 %i.ir, label %json_parse_digits.exit117, label %.lr.ph.i111
 
 .lr.ph.i111:                                      ; preds = %.lr.ph.i111.prol.loopexit, %.lr.ph.i111
   %i.is = phi ptr [ %i.js, %.lr.ph.i111 ], [ %.unr365, %.lr.ph.i111.prol.loopexit ] ; 5 uses
@@ -2127,10 +2103,10 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.jp = add i64 %i.jm, -48
   %i.jq = add i64 %i.jp, %i.jo                    ; 2 uses
   %i.jr = add nsw i32 %.13447.i113, -4            ; 2 uses
-  %i.js = getelementptr inbounds nuw i8, ptr %i.is, i64 4 ; 3 uses
+  %i.js = getelementptr inbounds nuw i8, ptr %i.is, i64 4 ; 4 uses
   store ptr %i.js, ptr %i.b, align 8, !tbaa !56
   %.not39.i114.3 = icmp eq i32 %i.jr, 0
-  br i1 %.not39.i114.3, label %.loopexit.loopexit.i115, label %.lr.ph.i111
+  br i1 %.not39.i114.3, label %json_parse_digits.exit117, label %.lr.ph.i111
 
 bb.v:                                             ; preds = %.lr.ph191
   %i.jt = mul i64 %.0136189, 100000000
@@ -2148,8 +2124,8 @@ bb.v:                                             ; preds = %.lr.ph191
   %i.kf = add i64 %i.ke, %i.jt                    ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %.promoted54.i94190, i64 8 ; 4 uses
   store ptr %i.kg, ptr %i.b, align 8, !tbaa !56
-  %i.kh = ptrtoint ptr %i.kg to i64               ; 2 uses
-  %i.ki = sub i64 %i.f, %i.kh                     ; 2 uses
+  %i.kh = ptrtoint ptr %i.kg to i64
+  %i.ki = sub i64 %i.f, %i.kh
   %i.kj = icmp ugt i64 %i.ki, 7
   br i1 %i.kj, label %.lr.ph191, label %.preheader.i95
 
@@ -2160,7 +2136,7 @@ peek.exit.i101:                                   ; preds = %bb.w, %peek.exit.pr
   %i.kl = sext i8 %i.kk to i32
   %i.km = add nsw i32 %i.kl, -48                  ; 2 uses
   %i.kn = icmp ugt i32 %i.km, 9
-  br i1 %i.kn, label %peek.exit.thread.loopexit.i104, label %bb.w
+  br i1 %i.kn, label %json_parse_digits.exit117, label %bb.w
 
 bb.w:                                             ; preds = %peek.exit.i101
   %i.ko = mul i64 %.1137, 10
@@ -2169,26 +2145,14 @@ bb.w:                                             ; preds = %peek.exit.i101
   %i.kr = getelementptr inbounds nuw i8, ptr %.val5557.i102, i64 1 ; 3 uses
   store ptr %i.kr, ptr %i.b, align 8, !tbaa !56
   %exitcond.not.i103 = icmp eq ptr %i.kr, %.val42.i
-  br i1 %exitcond.not.i103, label %peek.exit.thread.loopexit.i104, label %peek.exit.i101, !prof !89
+  br i1 %exitcond.not.i103, label %json_parse_digits.exit117, label %peek.exit.i101, !prof !89
 
-peek.exit.thread.loopexit.i104:                   ; preds = %bb.w, %peek.exit.i101
-  %6 = phi ptr [ %.val5557.i102, %peek.exit.i101 ], [ %.val42.i, %bb.w ]
-  %.2 = phi i64 [ %.1137, %peek.exit.i101 ], [ %i.kq, %bb.w ]
-  %.val.lcssa.ph.i105 = phi ptr [ %.val5557.i102, %peek.exit.i101 ], [ %scevgep.i100, %bb.w ]
-  %.pre.i106 = ptrtoint ptr %.val.lcssa.ph.i105 to i64
-  br label %json_parse_digits.exit117
-
-.loopexit.loopexit.i115:                          ; preds = %.lr.ph.i111.prol.loopexit, %.lr.ph.i111, %bb.u
-  %.4 = phi i64 [ %.3.a, %bb.u ], [ %.lcssa324.unr, %.lr.ph.i111.prol.loopexit ], [ %i.jq, %.lr.ph.i111 ]
-  %.promoted4852.i116 = phi ptr [ %.promoted4853.i108, %bb.u ], [ %.lcssa.unr, %.lr.ph.i111.prol.loopexit ], [ %i.js, %.lr.ph.i111 ] ; 2 uses
-  %7 = ptrtoint ptr %.promoted4852.i116 to i64
-  br label %json_parse_digits.exit117
-
-json_parse_digits.exit117:                        ; preds = %.preheader.i95, %peek.exit.thread.loopexit.i104, %.loopexit.loopexit.i115
-  %8 = phi ptr [ %.promoted4852.i116, %.loopexit.loopexit.i115 ], [ %6, %peek.exit.thread.loopexit.i104 ], [ %.promoted54.i94.lcssa, %.preheader.i95 ]
-  %.5 = phi i64 [ %.4, %.loopexit.loopexit.i115 ], [ %.2, %peek.exit.thread.loopexit.i104 ], [ %.0136.lcssa, %.preheader.i95 ]
-  %.sink74.i98 = phi i64 [ %7, %.loopexit.loopexit.i115 ], [ %.pre.i106, %peek.exit.thread.loopexit.i104 ], [ %.lcssa154, %.preheader.i95 ]
-  %i.ks = sub i64 %.sink74.i98, %i.hf
+json_parse_digits.exit117:                        ; preds = %.lr.ph.i111.prol.loopexit, %.lr.ph.i111, %peek.exit.i101, %bb.w, %.preheader.i95, %bb.u
+  %9 = phi ptr [ %.promoted4853.i108, %bb.u ], [ %.promoted54.i94.lcssa, %.preheader.i95 ], [ %.val42.i, %bb.w ], [ %.val5557.i102, %peek.exit.i101 ], [ %.lcssa.unr, %.lr.ph.i111.prol.loopexit ], [ %i.js, %.lr.ph.i111 ]
+  %.3 = phi i64 [ %.3.a, %bb.u ], [ %.0136.lcssa, %.preheader.i95 ], [ %i.kq, %bb.w ], [ %.1137, %peek.exit.i101 ], [ %.lcssa324.unr, %.lr.ph.i111.prol.loopexit ], [ %i.jq, %.lr.ph.i111 ]
+  %.promoted4852.sink.i92 = phi ptr [ %.promoted4853.i108, %bb.u ], [ %.promoted54.i94.lcssa, %.preheader.i95 ], [ %scevgep.i100, %bb.w ], [ %.val5557.i102, %peek.exit.i101 ], [ %.lcssa.unr, %.lr.ph.i111.prol.loopexit ], [ %i.js, %.lr.ph.i111 ]
+  %10 = ptrtoint ptr %.promoted4852.sink.i92 to i64
+  %i.ks = sub i64 %10, %i.hf
   %i.kt = and i64 %i.ks, 4294967295
   %.not54 = icmp eq i64 %i.kt, 0
   br i1 %.not54, label %bb.x, label %.thread, !prof !67
@@ -2198,7 +2162,7 @@ bb.x:                                             ; preds = %json_parse_digits.e
   unreachable
 
 .thread:                                          ; preds = %json_parse_digits.exit117
-  %i.ku = trunc i64 %.5 to i32                    ; 2 uses
+  %i.ku = trunc i64 %.3 to i32                    ; 2 uses
   %i.kv = sub nsw i32 0, %i.ku
   %i.kw = select i1 %.049, i32 %i.kv, i32 %i.ku
   br label %bb.ai
@@ -2249,7 +2213,7 @@ bb.ah:                                            ; preds = %bb.z
   br label %json_decode_integer.exit
 
 bb.ai:                                            ; preds = %.thread, %bb.y
-  %i.lk = phi ptr [ %8, %.thread ], [ %i.gr, %bb.y ] ; 2 uses
+  %i.lk = phi ptr [ %9, %.thread ], [ %i.gr, %bb.y ] ; 2 uses
   %.050148 = phi i32 [ %i.kw, %.thread ], [ 0, %bb.y ]
   %.neg = sub i32 %.053, %.052
   %i.ll = icmp slt i32 %.053, 0
@@ -2652,7 +2616,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %.promoted3745.us, i64 1 ; 3 uses
   store ptr %i.w, ptr %i.e, align 8, !tbaa !56
   %i.x = load ptr, ptr %i.i, align 8, !tbaa !57   ; 5 uses
-  %5 = ptrtoint ptr %i.x to i64
+  %5 = ptrtoaddr ptr %i.x to i64
   %i.y = getelementptr inbounds nuw i8, ptr %.promoted3745.us, i64 17 ; 2 uses
   %.not.i1636.us = icmp ugt ptr %i.y, %i.x
   br i1 %.not.i1636.us, label %string_scan_simd_sse2.exit.thread27.loopexit.us, label %.lr.ph.us
@@ -2737,7 +2701,7 @@ string_scan_simd_sse2.exit.thread27.loopexit.us:  ; preds = %bb.h, %bb.g
   br i1 %.not38.us, label %.lr.ph39.us.preheader, label %string_scan_simd_sse2.exit.thread27._crit_edge
 
 .lr.ph39.us.preheader:                            ; preds = %string_scan_simd_sse2.exit.thread27.loopexit.us
-  %.promoted3742.us165 = ptrtoint ptr %.promoted3742.us to i64
+  %.promoted3742.us165 = ptrtoaddr ptr %.promoted3742.us to i64
   %i.bk = sub i64 %5, %.promoted3742.us165
   %i.bl = freeze i64 %i.bk                        ; 2 uses
   %i.bm = add i64 %i.bl, -1
@@ -2883,8 +2847,8 @@ string_scan_simd_sse2.exit.thread27:              ; preds = %bb.r, %bb.q
   br i1 %.not38, label %.lr.ph39.preheader, label %string_scan_simd_sse2.exit.thread27._crit_edge
 
 .lr.ph39.preheader:                               ; preds = %string_scan_simd_sse2.exit.thread27
-  %.val17160 = ptrtoint ptr %.val17 to i64
-  %.promoted3745161 = ptrtoint ptr %.promoted3745 to i64
+  %.val17160 = ptrtoaddr ptr %.val17 to i64
+  %.promoted3745161 = ptrtoaddr ptr %.promoted3745 to i64
   %i.dd = xor i64 %.promoted3745161, -1
   %i.de = add i64 %i.dd, %.val17160
   %i.df = freeze i64 %i.de                        ; 2 uses

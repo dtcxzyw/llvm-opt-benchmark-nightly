@@ -204,8 +204,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.d = load ptr, ptr %0, align 8                ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64
-  %3 = ptrtoint ptr %i.c to i64
+  %2 = ptrtoaddr ptr %i.d to i64
+  %3 = ptrtoaddr ptr %i.c to i64
   %i.e = sub i64 %3, %2
   %scevgep.i.i = getelementptr i8, ptr %i.d, i64 %i.e
   br label %bb.b
@@ -608,8 +608,8 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = load ptr, ptr %0, align 8                ; 3 uses
-  %4 = ptrtoint ptr %i.h to i64
-  %5 = ptrtoint ptr %i.g to i64
+  %4 = ptrtoaddr ptr %i.h to i64
+  %5 = ptrtoaddr ptr %i.g to i64
   %i.i = sub i64 %5, %4
   %scevgep.i.i = getelementptr i8, ptr %i.h, i64 %i.i
   br label %bb.b
@@ -1012,13 +1012,13 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
 _ZN6Assimp3ASE6Parser10LogWarningEPKc.exit:       ; preds = %.noexc49
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #27
   %i.aw = load ptr, ptr %i.k, align 8             ; 4 uses
-  %4 = ptrtoint ptr %i.aw to i64                  ; 3 uses
+  %4 = ptrtoaddr ptr %i.aw to i64                 ; 3 uses
   %.promoted184 = load ptr, ptr %0, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit, %_ZN6Assimp3ASE6Parser10LogWarningEPKc.exit
   %.1.lcssa.i.i185 = phi ptr [ %.1.lcssa.i.i, %_ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit ], [ %.promoted184, %_ZN6Assimp3ASE6Parser10LogWarningEPKc.exit ] ; 3 uses
-  %5 = ptrtoint ptr %.1.lcssa.i.i185 to i64
+  %5 = ptrtoaddr ptr %.1.lcssa.i.i185 to i64
   %i.ax = sub i64 %4, %5
   %scevgep.i.i = getelementptr i8, ptr %.1.lcssa.i.i185, i64 %i.ax
   br label %bb.o
@@ -1079,7 +1079,7 @@ switch.early.test:                                ; preds = %bb.t
   ]
 
 bb.u:                                             ; preds = %switch.early.test, %switch.early.test, %bb.t
-  %6 = ptrtoint ptr %.0.lcssa.i.i to i64
+  %6 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.bj = sub i64 %4, %6
   %scevgep.i.i52 = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.bj
   br label %bb.v
@@ -1105,7 +1105,7 @@ bb.x:                                             ; preds = %bb.w
 
 .critedge.i.i:                                    ; preds = %bb.w, %bb.v, %bb.v, %bb.v, %bb.v
   %.0.lcssa.i.i54 = phi ptr [ %.0.i.i53, %bb.v ], [ %.0.i.i53, %bb.v ], [ %.0.i.i53, %bb.v ], [ %.0.i.i53, %bb.v ], [ %scevgep.i.i52, %bb.w ] ; 3 uses
-  %.0.lcssa24.i.i = ptrtoint ptr %.0.lcssa.i.i54 to i64
+  %.0.lcssa24.i.i = ptrtoaddr ptr %.0.lcssa.i.i54 to i64
   %i.bm = sub i64 %4, %.0.lcssa24.i.i
   %scevgep25.i.i = getelementptr i8, ptr %.0.lcssa.i.i54, i64 %i.bm
   br label %bb.y
@@ -1134,8 +1134,8 @@ _ZN6Assimp8SkipLineIcEEbPPKT_S3_.exit:            ; preds = %bb.y, %bb.z
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread: ; preds = %bb.m, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   %i.bp = load ptr, ptr %i.k, align 8             ; 2 uses
   %i.bq = load ptr, ptr %0, align 8               ; 3 uses
-  %7 = ptrtoint ptr %i.bq to i64
-  %8 = ptrtoint ptr %i.bp to i64
+  %7 = ptrtoaddr ptr %i.bq to i64
+  %8 = ptrtoaddr ptr %i.bp to i64
   %i.br = sub i64 %8, %7
   %scevgep.i.i55 = getelementptr i8, ptr %i.bq, i64 %i.br
   br label %bb.ab
@@ -1248,8 +1248,8 @@ bb.ah:                                            ; preds = %.lr.ph183, %_ZNSt7_
   %.028182 = phi i32 [ 0, %.lr.ph183 ], [ %i.fp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80 ]
   %i.dc = load ptr, ptr %i.k, align 8             ; 3 uses
   %i.dd = load ptr, ptr %0, align 8               ; 3 uses
-  %9 = ptrtoint ptr %i.dd to i64
-  %10 = ptrtoint ptr %i.dc to i64                 ; 2 uses
+  %9 = ptrtoaddr ptr %i.dd to i64
+  %10 = ptrtoaddr ptr %i.dc to i64                ; 2 uses
   %i.de = sub i64 %10, %9
   %scevgep.i.i61 = getelementptr i8, ptr %i.dd, i64 %i.de
   br label %bb.ai
@@ -1275,7 +1275,7 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.aj, %bb.ai
   %.0.lcssa.i.i64 = phi ptr [ %.0.i.i62, %bb.ai ], [ %scevgep.i.i61, %bb.aj ] ; 4 uses
   store ptr %.0.lcssa.i.i64, ptr %0, align 8
-  %11 = ptrtoint ptr %.0.lcssa.i.i64 to i64
+  %11 = ptrtoaddr ptr %.0.lcssa.i.i64 to i64
   %i.dh = sub i64 %10, %11
   %scevgep.i.i.i = getelementptr i8, ptr %.0.lcssa.i.i64, i64 %i.dh
   br label %bb.am
@@ -1388,8 +1388,8 @@ _ZNSt6vectorIN6Assimp3ASE10BoneVertexESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit:
 
 _ZNSt12_Vector_baseISt4pairIifESaIS1_EE11_M_allocateEm.exit.i: ; preds = %_ZNSt6vectorIN6Assimp3ASE10BoneVertexESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit
   %i.en = getelementptr inbounds i8, ptr %i.ec, i64 -16 ; 2 uses
-  %i.eo = load ptr, ptr %i.en, align 8            ; 4 uses
-  %i.ep = ptrtoint ptr %i.eo to i64
+  %i.eo = load ptr, ptr %i.en, align 8            ; 3 uses
+  %i.ep = ptrtoint ptr %i.eo to i64               ; 2 uses
   %i.eq = sub i64 %i.ep, %i.ej
   %i.er = shl nuw nsw i64 %i.ee, 3
   %i.es = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.er) #32
@@ -1401,8 +1401,7 @@ _ZNSt12_Vector_baseISt4pairIifESaIS1_EE11_M_allocateEm.exit.i: ; preds = %_ZNSt6
 
 .lr.ph.i.i.i.i72.preheader:                       ; preds = %.noexc77
   %i.et = ptrtoaddr ptr %i.es to i64
-  %12 = ptrtoint ptr %i.eo to i64
-  %i.eu = sub i64 %12, %i.ej
+  %i.eu = sub i64 %i.ep, %i.ej
   %i.ev = add i64 %i.eu, -8                       ; 2 uses
   %i.ew = lshr i64 %i.ev, 3
   %i.ex = add nuw nsw i64 %i.ew, 1                ; 2 uses
@@ -1653,9 +1652,9 @@ bb.be:                                            ; preds = %thread-pre-split.th
 _ZNSt6vectorIN6Assimp3ASE4BoneESaIS2_EE12emplace_backIJRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERS2_DpOT_.exit: ; preds = %bb.be, %_ZN6Assimp3ASE4BoneC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i, %thread-pre-split
   %i.hi = load ptr, ptr %i.k, align 8             ; 2 uses
   %i.hj = load ptr, ptr %0, align 8               ; 3 uses
-  %13 = ptrtoint ptr %i.hj to i64
-  %14 = ptrtoint ptr %i.hi to i64
-  %i.hk = sub i64 %14, %13
+  %12 = ptrtoaddr ptr %i.hj to i64
+  %13 = ptrtoaddr ptr %i.hi to i64
+  %i.hk = sub i64 %13, %12
   %scevgep.i.i.i87 = getelementptr i8, ptr %i.hj, i64 %i.hk
   br label %bb.bf
 
@@ -1911,9 +1910,9 @@ bb.bq:                                            ; preds = %bb.bp
   %i.jv = getelementptr inbounds nuw i8, ptr %i.js, i64 1 ; 4 uses
   store ptr %i.jv, ptr %0, align 8
   %i.jw = load ptr, ptr %i.k, align 8             ; 2 uses
-  %15 = ptrtoint ptr %i.jv to i64
-  %16 = ptrtoint ptr %i.jw to i64
-  %i.jx = sub i64 %16, %15
+  %14 = ptrtoaddr ptr %i.jv to i64
+  %15 = ptrtoaddr ptr %i.jw to i64
+  %i.jx = sub i64 %15, %14
   %scevgep.i.i109 = getelementptr i8, ptr %i.jv, i64 %i.jx
   br label %bb.br
 
@@ -1951,8 +1950,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.d = load ptr, ptr %0, align 8                ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64
-  %3 = ptrtoint ptr %i.c to i64
+  %2 = ptrtoaddr ptr %i.d to i64
+  %3 = ptrtoaddr ptr %i.c to i64
   %i.e = sub i64 %3, %2
   %scevgep.i.i = getelementptr i8, ptr %i.d, i64 %i.e
   br label %bb.b
@@ -2015,8 +2014,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 9 uses
   %i.d = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.e = load ptr, ptr %0, align 8                ; 3 uses
-  %2 = ptrtoint ptr %i.e to i64
-  %3 = ptrtoint ptr %i.d to i64
+  %2 = ptrtoaddr ptr %i.e to i64
+  %3 = ptrtoaddr ptr %i.d to i64
   %i.f = sub i64 %3, %2
   %scevgep.i.i.i = getelementptr i8, ptr %i.e, i64 %i.f
   br label %bb.b
@@ -2071,8 +2070,8 @@ _ZN6Assimp3ASE6Parser17ParseLV4MeshFloatERf.exit: ; preds = %_ZN6Assimp10SkipSpa
   %i.p = phi ptr [ %.pre, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i ], [ %i.o, %bb.e ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.r = load ptr, ptr %i.b, align 8              ; 2 uses
-  %4 = ptrtoint ptr %i.p to i64
-  %5 = ptrtoint ptr %i.r to i64
+  %4 = ptrtoaddr ptr %i.p to i64
+  %5 = ptrtoaddr ptr %i.r to i64
   %i.s = sub i64 %5, %4
   %scevgep.i.i.i.1 = getelementptr i8, ptr %i.p, i64 %i.s
   br label %bb.f
@@ -2127,8 +2126,8 @@ _ZN6Assimp3ASE6Parser17ParseLV4MeshFloatERf.exit.1: ; preds = %bb.i, %_ZN6Assimp
   %i.ac = phi ptr [ %i.ab, %bb.i ], [ %.pre6, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.1 ] ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.ae = load ptr, ptr %i.b, align 8             ; 2 uses
-  %6 = ptrtoint ptr %i.ac to i64
-  %7 = ptrtoint ptr %i.ae to i64
+  %6 = ptrtoaddr ptr %i.ac to i64
+  %7 = ptrtoaddr ptr %i.ae to i64
   %i.af = sub i64 %7, %6
   %scevgep.i.i.i.2 = getelementptr i8, ptr %i.ac, i64 %i.af
   br label %bb.j
@@ -2531,8 +2530,8 @@ bb.y:                                             ; preds = %bb.x, %bb.x, %bb.x,
   %storemerge.i42 = select i1 %.not11.i41, ptr %i.cs, ptr %i.cu ; 4 uses
   store ptr %storemerge.i42, ptr %0, align 8
   %i.cv = load ptr, ptr %i.i, align 8             ; 2 uses
-  %4 = ptrtoint ptr %storemerge.i42 to i64
-  %5 = ptrtoint ptr %i.cv to i64
+  %4 = ptrtoaddr ptr %storemerge.i42 to i64
+  %5 = ptrtoaddr ptr %i.cv to i64
   %i.cw = sub i64 %5, %4
   %scevgep.i.i.i = getelementptr i8, ptr %storemerge.i42, i64 %i.cw
   br label %bb.z
@@ -2614,8 +2613,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ae, %bb.
   %storemerge.i49 = select i1 %.not11.i48, ptr %i.dh, ptr %i.dj ; 4 uses
   store ptr %storemerge.i49, ptr %0, align 8
   %i.dk = load ptr, ptr %i.i, align 8             ; 2 uses
-  %6 = ptrtoint ptr %storemerge.i49 to i64
-  %7 = ptrtoint ptr %i.dk to i64
+  %6 = ptrtoaddr ptr %storemerge.i49 to i64
+  %7 = ptrtoaddr ptr %i.dk to i64
   %i.dl = sub i64 %7, %6
   %scevgep.i.i.i51 = getelementptr i8, ptr %storemerge.i49, i64 %i.dl
   br label %bb.ag
@@ -2697,8 +2696,8 @@ bb.am:                                            ; preds = %bb.al, %bb.al, %bb.
   %storemerge.i64 = select i1 %.not11.i63, ptr %i.dw, ptr %i.dy ; 4 uses
   store ptr %storemerge.i64, ptr %0, align 8
   %i.dz = load ptr, ptr %i.i, align 8             ; 2 uses
-  %8 = ptrtoint ptr %storemerge.i64 to i64
-  %9 = ptrtoint ptr %i.dz to i64
+  %8 = ptrtoaddr ptr %storemerge.i64 to i64
+  %9 = ptrtoaddr ptr %i.dz to i64
   %i.ea = sub i64 %9, %8
   %scevgep.i.i.i66 = getelementptr i8, ptr %storemerge.i64, i64 %i.ea
   br label %bb.an
@@ -2780,8 +2779,8 @@ bb.at:                                            ; preds = %bb.as, %bb.as, %bb.
   %storemerge.i79 = select i1 %.not11.i78, ptr %i.el, ptr %i.en ; 4 uses
   store ptr %storemerge.i79, ptr %0, align 8
   %i.eo = load ptr, ptr %i.i, align 8             ; 2 uses
-  %10 = ptrtoint ptr %storemerge.i79 to i64
-  %11 = ptrtoint ptr %i.eo to i64
+  %10 = ptrtoaddr ptr %storemerge.i79 to i64
+  %11 = ptrtoaddr ptr %i.eo to i64
   %i.ep = sub i64 %11, %10
   %scevgep.i.i.i81 = getelementptr i8, ptr %storemerge.i79, i64 %i.ep
   br label %bb.au
@@ -2863,8 +2862,8 @@ bb.ba:                                            ; preds = %bb.az, %bb.az, %bb.
   %storemerge.i94 = select i1 %.not11.i93, ptr %i.fa, ptr %i.fc ; 4 uses
   store ptr %storemerge.i94, ptr %0, align 8
   %i.fd = load ptr, ptr %i.i, align 8             ; 2 uses
-  %12 = ptrtoint ptr %storemerge.i94 to i64
-  %13 = ptrtoint ptr %i.fd to i64
+  %12 = ptrtoaddr ptr %storemerge.i94 to i64
+  %13 = ptrtoaddr ptr %i.fd to i64
   %i.fe = sub i64 %13, %12
   %scevgep.i.i.i96 = getelementptr i8, ptr %storemerge.i94, i64 %i.fe
   br label %bb.bb
@@ -2946,8 +2945,8 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bg, %bb.
   %storemerge.i109 = select i1 %.not11.i108, ptr %i.fp, ptr %i.fr ; 4 uses
   store ptr %storemerge.i109, ptr %0, align 8
   %i.fs = load ptr, ptr %i.i, align 8             ; 2 uses
-  %14 = ptrtoint ptr %storemerge.i109 to i64
-  %15 = ptrtoint ptr %i.fs to i64
+  %14 = ptrtoaddr ptr %storemerge.i109 to i64
+  %15 = ptrtoaddr ptr %i.fs to i64
   %i.ft = sub i64 %15, %14
   %scevgep.i.i.i111 = getelementptr i8, ptr %storemerge.i109, i64 %i.ft
   br label %bb.bi
@@ -3350,8 +3349,8 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e,
   %storemerge.i11 = select i1 %.not11.i10, ptr %i.x, ptr %i.z ; 4 uses
   store ptr %storemerge.i11, ptr %0, align 8
   %i.aa = load ptr, ptr %i.f, align 8             ; 2 uses
-  %2 = ptrtoint ptr %storemerge.i11 to i64
-  %3 = ptrtoint ptr %i.aa to i64
+  %2 = ptrtoaddr ptr %storemerge.i11 to i64
+  %3 = ptrtoaddr ptr %i.aa to i64
   %i.ab = sub i64 %3, %2
   %scevgep.i.i.i = getelementptr i8, ptr %storemerge.i11, i64 %i.ab
   br label %bb.g
@@ -3424,8 +3423,8 @@ bb.m:                                             ; preds = %bb.l, %bb.l, %bb.l,
   %storemerge.i16 = select i1 %.not11.i15, ptr %i.am, ptr %i.ao ; 4 uses
   store ptr %storemerge.i16, ptr %0, align 8
   %i.ap = load ptr, ptr %i.f, align 8             ; 2 uses
-  %4 = ptrtoint ptr %storemerge.i16 to i64
-  %5 = ptrtoint ptr %i.ap to i64
+  %4 = ptrtoaddr ptr %storemerge.i16 to i64
+  %5 = ptrtoaddr ptr %i.ap to i64
   %i.aq = sub i64 %5, %4
   %scevgep.i.i.i18 = getelementptr i8, ptr %storemerge.i16, i64 %i.aq
   br label %bb.n
@@ -3498,8 +3497,8 @@ bb.t:                                             ; preds = %bb.s, %bb.s, %bb.s,
   %storemerge.i28 = select i1 %.not11.i27, ptr %i.bb, ptr %i.bd ; 4 uses
   store ptr %storemerge.i28, ptr %0, align 8
   %i.be = load ptr, ptr %i.f, align 8             ; 2 uses
-  %6 = ptrtoint ptr %storemerge.i28 to i64
-  %7 = ptrtoint ptr %i.be to i64
+  %6 = ptrtoaddr ptr %storemerge.i28 to i64
+  %7 = ptrtoaddr ptr %i.be to i64
   %i.bf = sub i64 %7, %6
   %scevgep.i.i.i30 = getelementptr i8, ptr %storemerge.i28, i64 %i.bf
   br label %bb.u
@@ -3700,8 +3699,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
   %storemerge.i = select i1 %.not11.i, ptr %i.p, ptr %i.r ; 4 uses
   store ptr %storemerge.i, ptr %0, align 8
   %i.s = load ptr, ptr %i.e, align 8              ; 2 uses
-  %2 = ptrtoint ptr %storemerge.i to i64
-  %3 = ptrtoint ptr %i.s to i64
+  %2 = ptrtoaddr ptr %storemerge.i to i64
+  %3 = ptrtoaddr ptr %i.s to i64
   %i.t = sub i64 %3, %2
   %scevgep.i.i.i = getelementptr i8, ptr %storemerge.i, i64 %i.t
   br label %bb.d
@@ -3780,8 +3779,8 @@ bb.j:                                             ; preds = %bb.i, %bb.i, %bb.i,
   %storemerge.i10 = select i1 %.not11.i9, ptr %i.ah, ptr %i.aj ; 4 uses
   store ptr %storemerge.i10, ptr %0, align 8
   %i.ak = load ptr, ptr %i.e, align 8             ; 2 uses
-  %4 = ptrtoint ptr %storemerge.i10 to i64
-  %5 = ptrtoint ptr %i.ak to i64
+  %4 = ptrtoaddr ptr %storemerge.i10 to i64
+  %5 = ptrtoaddr ptr %i.ak to i64
   %i.al = sub i64 %5, %4
   %scevgep.i.i.i12 = getelementptr i8, ptr %storemerge.i10, i64 %i.al
   br label %bb.k
@@ -3854,8 +3853,8 @@ bb.q:                                             ; preds = %bb.p, %bb.p, %bb.p,
   %storemerge.i22 = select i1 %.not11.i21, ptr %i.aw, ptr %i.ay ; 4 uses
   store ptr %storemerge.i22, ptr %0, align 8
   %i.az = load ptr, ptr %i.e, align 8             ; 2 uses
-  %6 = ptrtoint ptr %storemerge.i22 to i64
-  %7 = ptrtoint ptr %i.az to i64
+  %6 = ptrtoaddr ptr %storemerge.i22 to i64
+  %7 = ptrtoaddr ptr %i.az to i64
   %i.ba = sub i64 %7, %6
   %scevgep.i.i.i24 = getelementptr i8, ptr %storemerge.i22, i64 %i.ba
   br label %bb.r
@@ -4258,8 +4257,8 @@ _ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJEEERS0_DpOT_.exit: ; preds = %bb.
   call void @_ZN6Assimp3ASE6Parser22ParseLV4MeshRealTripleEPf(ptr noundef nonnull align 8 dereferenceable(188) %0, ptr noundef nonnull %2)
   %i.ak = load ptr, ptr %i.h, align 8             ; 2 uses
   %i.al = load ptr, ptr %0, align 8               ; 3 uses
-  %3 = ptrtoint ptr %i.al to i64
-  %4 = ptrtoint ptr %i.ak to i64
+  %3 = ptrtoaddr ptr %i.al to i64
+  %4 = ptrtoaddr ptr %i.ak to i64
   %i.am = sub i64 %4, %3
   %scevgep.i.i.i = getelementptr i8, ptr %i.al, i64 %i.am
   br label %bb.m
@@ -4575,8 +4574,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 9 uses
   %i.d = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.e = load ptr, ptr %0, align 8                ; 3 uses
-  %2 = ptrtoint ptr %i.e to i64
-  %3 = ptrtoint ptr %i.d to i64
+  %2 = ptrtoaddr ptr %i.e to i64
+  %3 = ptrtoaddr ptr %i.d to i64
   %i.f = sub i64 %3, %2
   %scevgep.i.i.i = getelementptr i8, ptr %i.e, i64 %i.f
   br label %bb.b
@@ -4631,8 +4630,8 @@ _ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit:  ; preds = %_ZN6Assimp10SkipSpa
   %i.p = phi ptr [ %.pre, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i ], [ %i.o, %bb.e ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.r = load ptr, ptr %i.b, align 8              ; 2 uses
-  %4 = ptrtoint ptr %i.p to i64
-  %5 = ptrtoint ptr %i.r to i64
+  %4 = ptrtoaddr ptr %i.p to i64
+  %5 = ptrtoaddr ptr %i.r to i64
   %i.s = sub i64 %5, %4
   %scevgep.i.i.i.1 = getelementptr i8, ptr %i.p, i64 %i.s
   br label %bb.f
@@ -4687,8 +4686,8 @@ _ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit.1: ; preds = %bb.i, %_ZN6Assimp1
   %i.ac = phi ptr [ %i.ab, %bb.i ], [ %.pre6, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.1 ] ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.ae = load ptr, ptr %i.b, align 8             ; 2 uses
-  %6 = ptrtoint ptr %i.ac to i64
-  %7 = ptrtoint ptr %i.ae to i64
+  %6 = ptrtoaddr ptr %i.ac to i64
+  %7 = ptrtoaddr ptr %i.ae to i64
   %i.af = sub i64 %7, %6
   %scevgep.i.i.i.2 = getelementptr i8, ptr %i.ac, i64 %i.af
   br label %bb.j
@@ -5091,8 +5090,8 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e,
   %storemerge.i = select i1 %.not11.i, ptr %i.ar, ptr %i.at ; 4 uses
   store ptr %storemerge.i, ptr %0, align 8
   %i.au = load ptr, ptr %i.ai, align 8            ; 2 uses
-  %5 = ptrtoint ptr %storemerge.i to i64
-  %6 = ptrtoint ptr %i.au to i64
+  %5 = ptrtoaddr ptr %storemerge.i to i64
+  %6 = ptrtoaddr ptr %i.au to i64
   %i.av = sub i64 %6, %5
   %scevgep.i.i = getelementptr i8, ptr %storemerge.i, i64 %i.av
   br label %bb.g
@@ -5495,8 +5494,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 _ZNSt6vectorISt4pairIifESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorISt4pairIifESaIS1_EE9push_backERKS1_.exit.backedge, %bb.k
   %i.bn = load ptr, ptr %i.y, align 8             ; 3 uses
   %i.bo = load ptr, ptr %0, align 8               ; 3 uses
-  %4 = ptrtoint ptr %i.bo to i64
-  %5 = ptrtoint ptr %i.bn to i64                  ; 2 uses
+  %4 = ptrtoaddr ptr %i.bo to i64
+  %5 = ptrtoaddr ptr %i.bn to i64                 ; 2 uses
   %i.bp = sub i64 %5, %4
   %scevgep.i.i = getelementptr i8, ptr %i.bo, i64 %i.bp
   br label %bb.l
@@ -5552,7 +5551,7 @@ _ZN6Assimp9strtoul10EPKcPS1_.exit25:              ; preds = %.lr.ph.i17, %bb.o
   %.0.lcssa.i23 = phi i32 [ 0, %bb.o ], [ %i.bx, %.lr.ph.i17 ]
   store ptr %.08.lcssa.i22, ptr %0, align 8
   store i32 %.0.lcssa.i23, ptr %3, align 8
-  %6 = ptrtoint ptr %.08.lcssa.i22 to i64
+  %6 = ptrtoaddr ptr %.08.lcssa.i22 to i64
   %i.cb = sub i64 %5, %6
   %scevgep.i.i26 = getelementptr i8, ptr %.08.lcssa.i22, i64 %i.cb
   br label %bb.p
@@ -5955,8 +5954,8 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
   %i.j = load ptr, ptr %0, align 8                ; 3 uses
-  %7 = ptrtoint ptr %i.j to i64
-  %8 = ptrtoint ptr %i.i to i64
+  %7 = ptrtoaddr ptr %i.j to i64
+  %8 = ptrtoaddr ptr %i.i to i64
   %i.k = sub i64 %8, %7
   %scevgep.i.i = getelementptr i8, ptr %i.j, i64 %i.k
   br label %bb.b
@@ -6072,8 +6071,8 @@ _ZN6Assimp9strtoul10EPKcPS1_.exit:                ; preds = %.lr.ph.i31, %bb.i
   store i32 %.0.lcssa.i, ptr %i.am, align 4
   %i.an = load ptr, ptr %i.h, align 8             ; 5 uses
   %i.ao = load ptr, ptr %0, align 8               ; 3 uses
-  %9 = ptrtoint ptr %i.ao to i64
-  %10 = ptrtoint ptr %i.an to i64                 ; 4 uses
+  %9 = ptrtoaddr ptr %i.ao to i64
+  %10 = ptrtoaddr ptr %i.an to i64                ; 4 uses
   %i.ap = sub i64 %10, %9
   %scevgep.i.i32 = getelementptr i8, ptr %i.ao, i64 %i.ap
   br label %bb.j
@@ -6170,7 +6169,7 @@ bb.q:                                             ; preds = %.critedge.i.i35
 
 bb.r:                                             ; preds = %.critedge.i.i35, %bb.q
   %i.bk = phi ptr [ %.0.lcssa.i.i36, %.critedge.i.i35 ], [ %i.bj, %bb.q ] ; 3 uses
-  %11 = ptrtoint ptr %i.bk to i64
+  %11 = ptrtoaddr ptr %i.bk to i64
   %i.bl = sub i64 %10, %11
   %scevgep.i.i47 = getelementptr i8, ptr %i.bk, i64 %i.bl
   br label %bb.s
@@ -6280,7 +6279,7 @@ bb.ac:                                            ; preds = %.critedge.i.i50, %.
   %.019 = phi i64 [ 0, %.critedge.i.i50 ], [ 0, %.critedge.i.i50 ], [ 1, %bb.z ], [ 2, %bb.aa ]
   %i.cg = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i51, i64 1 ; 4 uses
   store ptr %i.cg, ptr %0, align 8
-  %12 = ptrtoint ptr %i.cg to i64
+  %12 = ptrtoaddr ptr %i.cg to i64
   %i.ch = sub i64 %10, %12
   %scevgep.i.i62 = getelementptr i8, ptr %i.cg, i64 %i.ch
   br label %bb.ad
@@ -6368,7 +6367,7 @@ bb.aj:                                            ; preds = %_ZN6Assimp9IsLineEn
 bb.ak:                                            ; preds = %.critedge.i.i65
   %i.db = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i66, i64 1 ; 4 uses
   store ptr %i.db, ptr %0, align 8
-  %13 = ptrtoint ptr %i.db to i64
+  %13 = ptrtoaddr ptr %i.db to i64
   %i.dc = sub i64 %10, %13
   %scevgep.i.i77 = getelementptr i8, ptr %i.db, i64 %i.dc
   br label %bb.al
@@ -6484,8 +6483,8 @@ _ZN6Assimp9strtoul10EPKcPS1_.exit100:             ; preds = %.lr.ph.i93, %bb.as
   store i32 %.0.lcssa.i99, ptr %i.ee, align 4
   %i.ef = load ptr, ptr %i.h, align 8             ; 4 uses
   %i.eg = load ptr, ptr %0, align 8               ; 3 uses
-  %14 = ptrtoint ptr %i.eg to i64
-  %15 = ptrtoint ptr %i.ef to i64                 ; 3 uses
+  %14 = ptrtoaddr ptr %i.eg to i64
+  %15 = ptrtoaddr ptr %i.ef to i64                ; 3 uses
   %i.eh = sub i64 %15, %14
   %scevgep.i.i47.1 = getelementptr i8, ptr %i.eg, i64 %i.eh
   br label %bb.at
@@ -6533,7 +6532,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw, %.cr
   %.019.1 = phi i64 [ 0, %.critedge.i.i50.1 ], [ 0, %.critedge.i.i50.1 ], [ 1, %bb.ax ], [ 2, %bb.aw ]
   %i.el = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i51.1, i64 1 ; 4 uses
   store ptr %i.el, ptr %0, align 8
-  %16 = ptrtoint ptr %i.el to i64
+  %16 = ptrtoaddr ptr %i.el to i64
   %i.em = sub i64 %15, %16
   %scevgep.i.i62.1 = getelementptr i8, ptr %i.el, i64 %i.em
   br label %bb.az
@@ -6564,7 +6563,7 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %.critedge.i.i65.1
   %i.eq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i66.1, i64 1 ; 4 uses
   store ptr %i.eq, ptr %0, align 8
-  %17 = ptrtoint ptr %i.eq to i64
+  %17 = ptrtoaddr ptr %i.eq to i64
   %i.er = sub i64 %15, %17
   %scevgep.i.i77.1 = getelementptr i8, ptr %i.eq, i64 %i.er
   br label %bb.bd
@@ -6623,8 +6622,8 @@ _ZN6Assimp9strtoul10EPKcPS1_.exit100.1:           ; preds = %.lr.ph.i93.1, %bb.b
   store i32 %.0.lcssa.i99.1, ptr %i.fd, align 4
   %i.fe = load ptr, ptr %i.h, align 8             ; 4 uses
   %i.ff = load ptr, ptr %0, align 8               ; 3 uses
-  %18 = ptrtoint ptr %i.ff to i64
-  %19 = ptrtoint ptr %i.fe to i64                 ; 3 uses
+  %18 = ptrtoaddr ptr %i.ff to i64
+  %19 = ptrtoaddr ptr %i.fe to i64                ; 3 uses
   %i.fg = sub i64 %19, %18
   %scevgep.i.i47.2 = getelementptr i8, ptr %i.ff, i64 %i.fg
   br label %bb.bh
@@ -6672,7 +6671,7 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk, %.cr
   %.019.2 = phi i64 [ 0, %.critedge.i.i50.2 ], [ 0, %.critedge.i.i50.2 ], [ 1, %bb.bl ], [ 2, %bb.bk ]
   %i.fk = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i51.2, i64 1 ; 4 uses
   store ptr %i.fk, ptr %0, align 8
-  %20 = ptrtoint ptr %i.fk to i64
+  %20 = ptrtoaddr ptr %i.fk to i64
   %i.fl = sub i64 %19, %20
   %scevgep.i.i62.2 = getelementptr i8, ptr %i.fk, i64 %i.fl
   br label %bb.bn
@@ -6703,7 +6702,7 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %.critedge.i.i65.2
   %i.fp = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i66.2, i64 1 ; 4 uses
   store ptr %i.fp, ptr %0, align 8
-  %21 = ptrtoint ptr %i.fp to i64
+  %21 = ptrtoaddr ptr %i.fp to i64
   %i.fq = sub i64 %19, %21
   %scevgep.i.i77.2 = getelementptr i8, ptr %i.fp, i64 %i.fq
   br label %bb.br
@@ -6807,8 +6806,8 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bw, %bb.
   %storemerge.i101 = select i1 %.not11.i, ptr %i.gh, ptr %i.gj ; 4 uses
   store ptr %storemerge.i101, ptr %0, align 8
   %i.gk = load ptr, ptr %i.h, align 8             ; 2 uses
-  %22 = ptrtoint ptr %storemerge.i101 to i64
-  %23 = ptrtoint ptr %i.gk to i64
+  %22 = ptrtoaddr ptr %storemerge.i101 to i64
+  %23 = ptrtoaddr ptr %i.gk to i64
   %i.gl = sub i64 %23, %22
   %scevgep.i.i102 = getelementptr i8, ptr %storemerge.i101, i64 %i.gl
   br label %bb.by
@@ -7211,8 +7210,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit183: ; preds = %bb
 bb.cs:                                            ; preds = %_ZN6Assimp9strtoul10EPKcPS1_.exit127, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit168, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit107
   %i.mr = load ptr, ptr %i.h, align 8             ; 3 uses
   %i.ms = load ptr, ptr %0, align 8               ; 3 uses
-  %24 = ptrtoint ptr %i.ms to i64
-  %25 = ptrtoint ptr %i.mr to i64                 ; 2 uses
+  %24 = ptrtoaddr ptr %i.ms to i64
+  %25 = ptrtoaddr ptr %i.mr to i64                ; 2 uses
   %i.mt = sub i64 %25, %24
   %scevgep.i.i184 = getelementptr i8, ptr %i.ms, i64 %i.mt
   br label %bb.ct
@@ -7243,7 +7242,7 @@ bb.cv:                                            ; preds = %bb.cu
 bb.cw:                                            ; preds = %.critedge.i.i187
   %i.mx = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i188, i64 1 ; 4 uses
   store ptr %i.mx, ptr %0, align 8
-  %26 = ptrtoint ptr %i.mx to i64
+  %26 = ptrtoaddr ptr %i.mx to i64
   %i.my = sub i64 %25, %26
   %scevgep.i.i190 = getelementptr i8, ptr %i.mx, i64 %i.my
   br label %bb.cx
@@ -7310,8 +7309,8 @@ bb.dc:                                            ; preds = %bb.db, %bb.db, %bb.
   %storemerge.i200 = select i1 %.not11.i199, ptr %i.nf, ptr %i.nh ; 4 uses
   store ptr %storemerge.i200, ptr %0, align 8
   %i.ni = load ptr, ptr %i.h, align 8             ; 2 uses
-  %27 = ptrtoint ptr %storemerge.i200 to i64
-  %28 = ptrtoint ptr %i.ni to i64
+  %27 = ptrtoaddr ptr %storemerge.i200 to i64
+  %28 = ptrtoaddr ptr %i.ni to i64
   %i.nj = sub i64 %28, %27
   %scevgep.i.i202 = getelementptr i8, ptr %storemerge.i200, i64 %i.nj
   br label %bb.dd
@@ -7505,8 +7504,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.d = load ptr, ptr %0, align 8                ; 3 uses
-  %2 = ptrtoint ptr %i.d to i64
-  %3 = ptrtoint ptr %i.c to i64
+  %2 = ptrtoaddr ptr %i.d to i64
+  %3 = ptrtoaddr ptr %i.c to i64
   %i.e = sub i64 %3, %2
   %scevgep.i.i = getelementptr i8, ptr %i.d, i64 %i.e
   br label %bb.b

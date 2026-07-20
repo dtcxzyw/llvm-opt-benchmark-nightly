@@ -204,8 +204,8 @@ bb.a:
 
 _ZNSt12_Vector_baseIN6hermes2vm17PinnedHermesValueESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 9576 ; 2 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !465  ; 4 uses
-  %i.v = ptrtoint ptr %i.u to i64
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !465  ; 3 uses
+  %i.v = ptrtoint ptr %i.u to i64                 ; 2 uses
   %i.w = sub i64 %i.v, %i.q
   %i.x = call noalias noundef nonnull dereferenceable(2048) ptr @_Znwm(i64 noundef 2048) #31 ; 7 uses
   %.not10.i.i.i.i = icmp eq ptr %i.o, %i.u
@@ -213,8 +213,7 @@ _ZNSt12_Vector_baseIN6hermes2vm17PinnedHermesValueESaIS2_EE11_M_allocateEm.exit.
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN6hermes2vm17PinnedHermesValueESaIS2_EE11_M_allocateEm.exit.i
   %i.y = ptrtoaddr ptr %i.x to i64
-  %2 = ptrtoint ptr %i.u to i64
-  %i.z = sub i64 %2, %i.q
+  %i.z = sub i64 %i.v, %i.q
   %i.aa = add i64 %i.z, -8                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
@@ -617,7 +616,7 @@ vec.epilog.middle.block236:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.preheader:                               ; preds = %iter.check222, %vec.epilog.iter.check224, %vec.epilog.middle.block236
   %.010.i.ph = phi ptr [ %1, %iter.check222 ], [ %i.j, %vec.epilog.iter.check224 ], [ %i.o, %vec.epilog.middle.block236 ] ; 2 uses
   %.079.i.ph = phi ptr [ %0, %iter.check222 ], [ %i.k, %vec.epilog.iter.check224 ], [ %i.p, %vec.epilog.middle.block236 ] ; 3 uses
-  %.079.i.ph249 = ptrtoint ptr %.079.i.ph to i64  ; 2 uses
+  %.079.i.ph249 = ptrtoaddr ptr %.079.i.ph to i64 ; 2 uses
   %i.r = sub i64 %i.f, %.079.i.ph249
   %xtraiter250 = and i64 %i.r, 3                  ; 2 uses
   %lcmp.mod251.not = icmp eq i64 %xtraiter250, 0

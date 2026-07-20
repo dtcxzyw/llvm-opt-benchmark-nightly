@@ -204,7 +204,7 @@ _ZNKSt6vectorImN6duckdb19arena_stl_allocatorImEEE12_M_check_lenEmPKc.exit: ; pre
   %i.k = icmp ult i64 %i.j, %i.i
   %i.l = tail call i64 @llvm.umin.i64(i64 %i.j, i64 1152921504606846975)
   %i.m = select i1 %i.k, i64 1152921504606846975, i64 %i.l ; 3 uses
-  %i.n = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.n = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.o = sub i64 %i.n, %i.f
   %.not.i = icmp ne i64 %i.m, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -251,8 +251,7 @@ _ZNSt16allocator_traitsIN6duckdb19arena_stl_allocatorImEEE8allocateERS2_m.exit.i
   br i1 %.not13.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPmS0_N6duckdb19arena_stl_allocatorImEEET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt16allocator_traitsIN6duckdb19arena_stl_allocatorImEEE8allocateERS2_m.exit.i
-  %3 = ptrtoint ptr %1 to i64
-  %i.aj = sub i64 %3, %i.f
+  %i.aj = sub i64 %i.n, %i.f
   %i.ak = add i64 %i.aj, -8                       ; 2 uses
   %i.al = lshr i64 %i.ak, 3
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
@@ -314,8 +313,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPmS0_N6duckdb19arena_stl_allocatorImEEE
   br i1 %.not13.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPmS0_N6duckdb19arena_stl_allocatorImEEET0_T_S5_S4_RT1_.exit34, label %.lr.ph.i.i29.preheader
 
 .lr.ph.i.i29.preheader:                           ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPmS0_N6duckdb19arena_stl_allocatorImEEET0_T_S5_S4_RT1_.exit
-  %4 = ptrtoint ptr %1 to i64
-  %i.ba = sub i64 %i.e, %4
+  %i.ba = sub i64 %i.e, %i.n
   %i.bb = add i64 %i.ba, -8                       ; 2 uses
   %i.bc = lshr i64 %i.bb, 3
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses
@@ -718,17 +716,16 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.k, ptr %i.l, align 8, !tbaa !3164
-  %i.m = load ptr, ptr %1, align 8, !tbaa !2457   ; 6 uses
+  %i.m = load ptr, ptr %1, align 8, !tbaa !2457   ; 5 uses
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !2457 ; 3 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.m, %i.n
   br i1 %.not7.i.i.i.i.i.i, label %_ZN6duckdb6vectorISt17reference_wrapperINS_24BoundColumnRefExpressionEELb1ESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.c
-  %i.o = ptrtoaddr ptr %i.m to i64
+  %i.o = ptrtoaddr ptr %i.m to i64                ; 2 uses
   %i.p = ptrtoaddr ptr %i.i to i64
-  %3 = ptrtoint ptr %i.n to i64
-  %4 = ptrtoint ptr %i.m to i64
-  %i.q = sub i64 %3, %4
+  %3 = ptrtoaddr ptr %i.n to i64
+  %i.q = sub i64 %3, %i.o
   %i.r = add i64 %i.q, -8                         ; 2 uses
   %i.s = lshr i64 %i.r, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses

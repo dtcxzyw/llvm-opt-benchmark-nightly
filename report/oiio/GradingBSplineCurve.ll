@@ -201,17 +201,16 @@ _ZNSt15__new_allocatorIN16OpenColorIO_v2_519GradingControlPointEE8allocateEmPKv.
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.g
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %i.l, ptr %i.m, align 8, !tbaa !52
-  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 8 uses
+  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 7 uses
   %i.o = load ptr, ptr %i.b, align 8, !tbaa !70   ; 3 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.n, %i.o
   br i1 %.not7.i.i.i.i.i, label %.loopexit10, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc6
-  %2 = ptrtoaddr ptr %i.n to i64
+  %2 = ptrtoint ptr %i.n to i64                   ; 2 uses
   %i.p = ptrtoaddr ptr %i.j to i64
-  %3 = ptrtoint ptr %i.o to i64
-  %4 = ptrtoint ptr %i.n to i64
-  %i.q = sub i64 %3, %4
+  %3 = ptrtoaddr ptr %i.o to i64
+  %i.q = sub i64 %3, %2
   %i.r = add i64 %i.q, -8                         ; 2 uses
   %i.s = lshr i64 %i.r, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
@@ -363,17 +362,16 @@ _ZNSt15__new_allocatorIN16OpenColorIO_v2_519GradingControlPointEE8allocateEmPKv.
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.g
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %i.l, ptr %i.m, align 8, !tbaa !52
-  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 8 uses
+  %i.n = load ptr, ptr %1, align 8, !tbaa !70     ; 7 uses
   %i.o = load ptr, ptr %i.b, align 8, !tbaa !70   ; 3 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.n, %i.o
   br i1 %.not7.i.i.i.i.i, label %.loopexit11, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc7
-  %3 = ptrtoaddr ptr %i.n to i64
+  %3 = ptrtoint ptr %i.n to i64                   ; 2 uses
   %i.p = ptrtoaddr ptr %i.j to i64
-  %4 = ptrtoint ptr %i.o to i64
-  %5 = ptrtoint ptr %i.n to i64
-  %i.q = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %i.o to i64
+  %i.q = sub i64 %4, %3
   %i.r = add i64 %i.q, -8                         ; 2 uses
   %i.s = lshr i64 %i.r, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
@@ -710,7 +708,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit
 
 _ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !49    ; 3 uses
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !49    ; 2 uses
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !53  ; 4 uses
   %i.ag = load ptr, ptr %0, align 8, !tbaa !49
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
@@ -722,11 +720,10 @@ _ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit: ; pred
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN16OpenColorIO_v2_519GradingControlPointES2_ET0_T_S4_S3_.exit
-  %i.am = ptrtoaddr ptr %i.ae to i64
-  %2 = ptrtoint ptr %i.al to i64
-  %3 = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoaddr ptr %i.ae to i64              ; 2 uses
+  %2 = ptrtoaddr ptr %i.al to i64
   %i.an = add i64 %i.ai, %2
-  %i.ao = add i64 %3, %i.ah
+  %i.ao = add i64 %i.am, %i.ah
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = add i64 %i.ap, -8                       ; 2 uses
   %i.ar = lshr i64 %i.aq, 3

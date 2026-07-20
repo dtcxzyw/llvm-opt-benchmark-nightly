@@ -203,8 +203,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not4.i, label %_ZN9benchmark4fillIPddEEvT_S2_T0_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.thread
-  %2 = ptrtoint ptr %i.m to i64
-  %3 = ptrtoint ptr %i.l to i64
+  %2 = ptrtoaddr ptr %i.m to i64
+  %3 = ptrtoaddr ptr %i.l to i64
   %i.o = sub i64 %2, %3
   %i.p = add i64 %i.o, -8                         ; 2 uses
   %i.q = lshr i64 %i.p, 3
@@ -258,8 +258,8 @@ _ZN9benchmark4fillIPddEEvT_S2_T0_.exit:           ; preds = %_ZN9benchmark4fillI
   br i1 %.not3.i, label %_ZN9benchmark4fillIP12ValueWrapperIdES2_EEvT_S4_T0_.exit, label %.lr.ph.i68.preheader
 
 .lr.ph.i68.preheader:                             ; preds = %_ZN9benchmark4fillIPddEEvT_S2_T0_.exit
-  %4 = ptrtoint ptr %i.aa to i64
-  %5 = ptrtoint ptr %i.z to i64
+  %4 = ptrtoaddr ptr %i.aa to i64
+  %5 = ptrtoaddr ptr %i.z to i64
   %i.ab = sub i64 %4, %5
   %i.ac = add i64 %i.ab, -8                       ; 2 uses
   %i.ad = lshr i64 %i.ac, 3
@@ -313,8 +313,8 @@ _ZN9benchmark4fillIP12ValueWrapperIdES2_EEvT_S4_T0_.exit: ; preds = %_ZN9benchma
   br i1 %.not3.i70, label %_ZN9benchmark4fillIP12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEESB_EEvT_SD_T0_.exit, label %.lr.ph.i71.preheader
 
 .lr.ph.i71.preheader:                             ; preds = %_ZN9benchmark4fillIP12ValueWrapperIdES2_EEvT_S4_T0_.exit
-  %6 = ptrtoint ptr %i.an to i64
-  %7 = ptrtoint ptr %i.am to i64
+  %6 = ptrtoaddr ptr %i.an to i64
+  %7 = ptrtoaddr ptr %i.am to i64
   %i.ao = sub i64 %6, %7
   %i.ap = add i64 %i.ao, -8                       ; 2 uses
   %i.aq = lshr i64 %i.ap, 3
@@ -717,17 +717,16 @@ _ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit: ; preds = %.lr.ph.i139
   br label %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit
 
 _ZN9benchmark11fill_randomIPddEEvT_S2_.exit:      ; preds = %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit, %_Z15test_accumulateI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_T0_PKc.exit
-  %i.gs = phi ptr [ %.pre209, %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit ], [ %i.go, %_Z15test_accumulateI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_T0_PKc.exit ] ; 6 uses
-  %i.gt = phi ptr [ %.pre208, %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit ], [ %i.gn, %_Z15test_accumulateI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_T0_PKc.exit ] ; 11 uses
+  %i.gs = phi ptr [ %.pre209, %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit ], [ %i.go, %_Z15test_accumulateI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_T0_PKc.exit ] ; 5 uses
+  %i.gt = phi ptr [ %.pre208, %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit.loopexit ], [ %i.gn, %_Z15test_accumulateI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_T0_PKc.exit ] ; 9 uses
+  %8 = ptrtoaddr ptr %i.gt to i64                 ; 4 uses
   %.not5.i = icmp eq ptr %i.gt, %i.gs
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdP12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEEEvT_SE_T0_.exit, label %.lr.ph.i142.preheader
 
 .lr.ph.i142.preheader:                            ; preds = %_ZN9benchmark11fill_randomIPddEEvT_S2_.exit
-  %8 = ptrtoaddr ptr %i.gt to i64
   %i.gu = load ptr, ptr @DVMpb, align 8, !tbaa !39 ; 4 uses
-  %9 = ptrtoint ptr %i.gs to i64
-  %10 = ptrtoint ptr %i.gt to i64                 ; 2 uses
-  %i.gv = sub i64 %9, %10
+  %9 = ptrtoaddr ptr %i.gs to i64                 ; 2 uses
+  %i.gv = sub i64 %9, %8
   %i.gw = add i64 %i.gv, -8                       ; 2 uses
   %i.gx = lshr i64 %i.gw, 3
   %i.gy = add nuw nsw i64 %i.gx, 1                ; 2 uses
@@ -781,15 +780,13 @@ middle.block350:                                  ; preds = %vector.body344
 
 _ZN9benchmark4copyIPdP12ValueWrapperIdEEEvT_S5_T0_.exit: ; preds = %.lr.ph.i142, %middle.block350
   %i.hl = load ptr, ptr @DV10Mpb, align 8, !tbaa !43 ; 4 uses
-  %11 = ptrtoint ptr %i.gs to i64
-  %12 = ptrtoint ptr %i.gt to i64
-  %i.hm = sub i64 %11, %12
+  %i.hm = sub i64 %9, %8
   %i.hn = add i64 %i.hm, -8                       ; 2 uses
   %i.ho = lshr i64 %i.hn, 3
   %i.hp = add nuw nsw i64 %i.ho, 1                ; 2 uses
   %min.iters.check357 = icmp ult i64 %i.hn, 72
   %i.hq = ptrtoaddr ptr %i.hl to i64
-  %i.hr = sub i64 %10, %i.hq
+  %i.hr = sub i64 %8, %i.hq
   %diff.check355 = icmp ugt i64 %i.hr, -32
   %or.cond374 = select i1 %min.iters.check357, i1 true, i1 %diff.check355
   br i1 %or.cond374, label %.lr.ph.i146.preheader, label %vector.ph358
@@ -936,7 +933,7 @@ declare void @srand(i32 noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortIPddEvT_S1_S1_S1_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -952,9 +949,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -1067,9 +1063,8 @@ _Z13verify_sortedIPdEvT_S1_.exit.us:              ; preds = %_ZN9benchmark4copyI
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us12, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %8 = ptrtoint ptr %1 to i64
-  %9 = ptrtoint ptr %0 to i64
-  %i.al = sub i64 %8, %9
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.al = sub i64 %7, %i.a
   %i.am = add i64 %i.al, -8                       ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
@@ -1233,7 +1228,7 @@ _Z13verify_sortedIPdEvT_S1_.exit:                 ; preds = %_ZN9benchmark13inse
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortI14PointerWrapperIdEdEvT_S2_S2_S2_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double noundef %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -1249,9 +1244,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperIdES2_EEvT_S3_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -1364,9 +1358,8 @@ _Z13verify_sortedI14PointerWrapperIdEEvT_S2_.exit.us: ; preds = %_ZN9benchmark4c
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperIdES2_EEvT_S3_T0_.exit.us16, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %8 = ptrtoint ptr %1 to i64
-  %9 = ptrtoint ptr %0 to i64
-  %i.an = sub i64 %8, %9
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.an = sub i64 %7, %i.a
   %i.ao = add i64 %i.an, -8                       ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
@@ -1530,7 +1523,7 @@ _Z13verify_sortedI14PointerWrapperIdEEvT_S2_.exit: ; preds = %_ZN9benchmark13ins
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortIP12ValueWrapperIdES1_EvT_S3_S3_S3_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -1546,9 +1539,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIdES3_EEvT_S4_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -1661,9 +1653,8 @@ _Z13verify_sortedIP12ValueWrapperIdEEvT_S3_.exit.us: ; preds = %_ZN9benchmark4co
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIdES3_EEvT_S4_T0_.exit.us12, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %8 = ptrtoint ptr %1 to i64
-  %9 = ptrtoint ptr %0 to i64
-  %i.al = sub i64 %8, %9
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.al = sub i64 %7, %i.a
   %i.am = add i64 %i.al, -8                       ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
@@ -1829,7 +1820,7 @@ _Z13verify_sortedIP12ValueWrapperIdEEvT_S3_.exit: ; preds = %_ZN9benchmark13inse
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortI14PointerWrapperI12ValueWrapperIdEES2_EvT_S4_S4_S4_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -1845,9 +1836,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIdEES4_EEvT_S5_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -1960,9 +1950,8 @@ _Z13verify_sortedI14PointerWrapperI12ValueWrapperIdEEEvT_S4_.exit.us: ; preds = 
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIdEES4_EEvT_S5_T0_.exit.us17, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %8 = ptrtoint ptr %1 to i64
-  %9 = ptrtoint ptr %0 to i64
-  %i.an = sub i64 %8, %9
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.an = sub i64 %7, %i.a
   %i.ao = add i64 %i.an, -8                       ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
@@ -2128,7 +2117,7 @@ _Z13verify_sortedI14PointerWrapperI12ValueWrapperIdEEEvT_S4_.exit: ; preds = %_Z
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortIP12ValueWrapperIS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IdEEEEEEEEEESA_EvT_SC_SC_SC_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -2144,9 +2133,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEESC_EEvT_SD_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -2259,9 +2247,8 @@ _Z13verify_sortedIP12ValueWrapperIS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IdEEEEEEEEE
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEESC_EEvT_SD_T0_.exit.us12, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %8 = ptrtoint ptr %1 to i64
-  %9 = ptrtoint ptr %0 to i64
-  %i.al = sub i64 %8, %9
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.al = sub i64 %7, %i.a
   %i.am = add i64 %i.al, -8                       ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
@@ -2427,7 +2414,7 @@ _Z13verify_sortedIP12ValueWrapperIS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IdEEEEEEEEE
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z19test_insertion_sortI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_SD_SD_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
@@ -2443,9 +2430,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESD_EEvT_SE_T0_.exit.us.us, label %.lr.ph.i.preheader.us.preheader
 
 .lr.ph.i.preheader.us.preheader:                  ; preds = %.lr.ph.split.us
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -2558,9 +2544,8 @@ _Z13verify_sortedI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESD_EEvT_SE_T0_.exit.us17, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph.split
-  %8 = ptrtoint ptr %1 to i64
-  %9 = ptrtoint ptr %0 to i64
-  %i.an = sub i64 %8, %9
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.an = sub i64 %7, %i.a
   %i.ao = add i64 %i.an, -8                       ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
@@ -2726,7 +2711,7 @@ _Z13verify_sortedI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortIPddEvT_S1_S1_S1_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -2737,9 +2722,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -2853,7 +2837,7 @@ _Z13verify_sortedIPdEvT_S1_.exit:                 ; preds = %bb.d, %_ZN9benchmar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortI14PointerWrapperIdEdEvT_S2_S2_S2_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double noundef %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -2864,9 +2848,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperIdES2_EEvT_S3_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -2980,7 +2963,7 @@ _Z13verify_sortedI14PointerWrapperIdEEvT_S2_.exit: ; preds = %bb.d, %_ZN9benchma
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortIP12ValueWrapperIdES1_EvT_S3_S3_S3_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -2991,9 +2974,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIdES3_EEvT_S4_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3107,7 +3089,7 @@ _Z13verify_sortedIP12ValueWrapperIdEEvT_S3_.exit: ; preds = %bb.d, %_ZN9benchmar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortI14PointerWrapperI12ValueWrapperIdEES2_EvT_S4_S4_S4_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3118,9 +3100,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIdEES4_EEvT_S5_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3234,7 +3215,7 @@ _Z13verify_sortedI14PointerWrapperI12ValueWrapperIdEEEvT_S4_.exit: ; preds = %bb
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortIP12ValueWrapperIS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IdEEEEEEEEEESA_EvT_SC_SC_SC_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3245,9 +3226,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEESC_EEvT_SD_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3361,7 +3341,7 @@ _Z13verify_sortedIP12ValueWrapperIS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IdEEEEEEEEE
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_quicksortI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_SD_SD_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3372,9 +3352,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESD_EEvT_SE_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3488,7 +3467,7 @@ _Z13verify_sortedI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortIPddEvT_S1_S1_S1_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3499,9 +3478,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIPdS1_EEvT_S2_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3615,7 +3593,7 @@ _Z13verify_sortedIPdEvT_S1_.exit:                 ; preds = %bb.d, %_ZN9benchmar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortI14PointerWrapperIdEdEvT_S2_S2_S2_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double noundef %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3626,9 +3604,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperIdES2_EEvT_S3_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3742,7 +3719,7 @@ _Z13verify_sortedI14PointerWrapperIdEEvT_S2_.exit: ; preds = %bb.d, %_ZN9benchma
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortIP12ValueWrapperIdES1_EvT_S3_S3_S3_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3753,9 +3730,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIdES3_EEvT_S4_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3869,7 +3845,7 @@ _Z13verify_sortedIP12ValueWrapperIdEEvT_S3_.exit: ; preds = %bb.d, %_ZN9benchmar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortI14PointerWrapperI12ValueWrapperIdEES2_EvT_S4_S4_S4_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -3880,9 +3856,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIdEES4_EEvT_S5_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -3996,7 +3971,7 @@ _Z13verify_sortedI14PointerWrapperI12ValueWrapperIdEEEvT_S4_.exit: ; preds = %bb
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortIP12ValueWrapperIS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IdEEEEEEEEEESA_EvT_SC_SC_SC_T0_PKc(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -4007,9 +3982,8 @@ bb.a:
   br i1 %.not5.i, label %_ZN9benchmark4copyIP12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEESC_EEvT_SD_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -4123,7 +4097,7 @@ _Z13verify_sortedIP12ValueWrapperIS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IS0_IdEEEEEEEEE
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_Z14test_heap_sortI14PointerWrapperI12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEEEEEEEESB_EvT_SD_SD_SD_T0_PKc(ptr %0, ptr %1, ptr %2, ptr %3, double %4, ptr noundef %5) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr @iterations, align 4, !tbaa !4
   %i.d = icmp sgt i32 %i.c, 0
@@ -4134,9 +4108,8 @@ bb.a:
   br i1 %.not6.i, label %_ZN9benchmark4copyI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESD_EEvT_SE_T0_.exit.us, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %6 = ptrtoint ptr %1 to i64
-  %7 = ptrtoint ptr %0 to i64
-  %i.e = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %i.a
   %i.f = add i64 %i.e, -8                         ; 2 uses
   %i.g = lshr i64 %i.f, 3
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses

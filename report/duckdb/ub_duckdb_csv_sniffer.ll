@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPN6duckdb22QuoteEscapeCombinationES2_ET0_T_S4_S3_.exit
 
 _ZSt4copyIPN6duckdb22QuoteEscapeCombinationES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !728   ; 3 uses
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !728   ; 2 uses
   %i.af = load ptr, ptr %i.u, align 8, !tbaa !809 ; 6 uses
   %i.ag = load ptr, ptr %0, align 8, !tbaa !728
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
@@ -216,12 +216,11 @@ _ZSt4copyIPN6duckdb22QuoteEscapeCombinationES2_ET0_T_S4_S3_.exit: ; preds = %bb.
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6duckdb22QuoteEscapeCombinationESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZSt4copyIPN6duckdb22QuoteEscapeCombinationES2_ET0_T_S4_S3_.exit
-  %i.am = ptrtoaddr ptr %i.ae to i64
-  %2 = ptrtoint ptr %i.al to i64
-  %3 = ptrtoint ptr %i.ae to i64
+  %i.am = ptrtoaddr ptr %i.ae to i64              ; 2 uses
+  %2 = ptrtoaddr ptr %i.al to i64
   %i.an = add i64 %i.ai, %2
   %i.ao = add i64 %i.an, -2
-  %i.ap = add i64 %3, %i.ah
+  %i.ap = add i64 %i.am, %i.ah
   %i.aq = sub i64 %i.ao, %i.ap                    ; 3 uses
   %i.ar = lshr i64 %i.aq, 1
   %i.as = add nuw i64 %i.ar, 1                    ; 5 uses
@@ -624,7 +623,7 @@ declare noundef zeroext i1 @_ZN6duckdb7TryCast9OperationImmEEbT_RT0_b(i64 nounde
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr { ptr, i32 } @_ZN17duckdb_fast_float10from_charsIdEENS_17from_chars_resultEPKcS3_RT_bcNS_12chars_formatE(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, i1 noundef zeroext %3, i8 noundef signext %4, i32 noundef %5) local_unnamed_addr #3 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %6 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.bs, label %bb.b
 
@@ -791,7 +790,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   %.1179.i = phi i64 [ %i.bw, %bb.q ], [ %i.bf, %bb.p ], [ %i.bf, %bb.o ], [ %.us-phi, %bb.n ], [ %.us-phi, %bb.m ] ; 3 uses
   %.3.i = phi ptr [ %i.bg, %bb.q ], [ %i.ap, %bb.p ], [ %i.ap, %bb.o ], [ %i.ao, %bb.n ], [ %i.ao, %bb.m ] ; 6 uses
-  %.3.i407 = ptrtoint ptr %.3.i to i64
+  %.3.i407 = ptrtoaddr ptr %.3.i to i64
   br i1 %3, label %.outer.us, label %.outer
 
 .outer.us:                                        ; preds = %bb.r
@@ -865,7 +864,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cv, label %.outer, label %_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread, !llvm.loop !1757
 
 .outer._crit_edge.loopexit487.split.loop.exit527: ; preds = %bb.u
-  %.4.i.ph405.le = ptrtoint ptr %.4.i.ph to i64
+  %.4.i.ph405.le = ptrtoaddr ptr %.4.i.ph to i64
   %scevgep404.le = getelementptr i8, ptr %.4.i.ph, i64 %6
   %i.cw = sub i64 0, %.4.i.ph405.le
   %scevgep406.le = getelementptr i8, ptr %scevgep404.le, i64 %i.cw
@@ -1268,7 +1267,7 @@ bb.h:                                             ; preds = %.lr.ph.i48, %bb.g
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr { i64, i32 } @_ZN17duckdb_fast_float19parse_long_mantissaINS_13binary_formatIdEEEENS_17adjusted_mantissaEPKcS5_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %3 = alloca %"struct.duckdb_fast_float::decimal", align 4 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1763)
@@ -1286,7 +1285,7 @@ bb.a:
   br i1 %.not.i9, label %.critedge.i, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.g = sub i64 %2, %4
   %scevgep = getelementptr i8, ptr %0, i64 %i.g
   br label %.lr.ph
@@ -1304,7 +1303,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph, %bb.a
   %.1.i.lcssa = phi ptr [ %spec.select.i, %bb.a ], [ %.1.i10, %.lr.ph ], [ %scevgep, %bb.b ] ; 5 uses
-  %.1.i.lcssa60 = ptrtoint ptr %.1.i.lcssa to i64
+  %.1.i.lcssa60 = ptrtoaddr ptr %.1.i.lcssa to i64
   %.not99.i15 = icmp eq ptr %.1.i.lcssa, %1
   br i1 %.not99.i15, label %.critedge106.i.loopexit, label %.lr.ph17
 
@@ -1707,7 +1706,7 @@ bb.n:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr { ptr, i32 } @_ZN17duckdb_fast_float10from_charsIfEENS_17from_chars_resultEPKcS3_RT_bcNS_12chars_formatE(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 4 dereferenceable(4) %2, i1 noundef zeroext %3, i8 noundef signext %4, i32 noundef %5) local_unnamed_addr #3 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoint ptr %1 to i64                     ; 3 uses
+  %6 = ptrtoaddr ptr %1 to i64                    ; 3 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.bw, label %bb.b
 
@@ -1874,7 +1873,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   %.1179.i = phi i64 [ %i.bw, %bb.q ], [ %i.bf, %bb.p ], [ %i.bf, %bb.o ], [ %.us-phi, %bb.n ], [ %.us-phi, %bb.m ] ; 3 uses
   %.3.i = phi ptr [ %i.bg, %bb.q ], [ %i.ap, %bb.p ], [ %i.ap, %bb.o ], [ %i.ao, %bb.n ], [ %i.ao, %bb.m ] ; 6 uses
-  %.3.i400 = ptrtoint ptr %.3.i to i64
+  %.3.i400 = ptrtoaddr ptr %.3.i to i64
   br i1 %3, label %.outer.us, label %.outer
 
 .outer.us:                                        ; preds = %bb.r
@@ -1948,7 +1947,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cv, label %.outer, label %_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread, !llvm.loop !1757
 
 .outer._crit_edge.loopexit480.split.loop.exit520: ; preds = %bb.u
-  %.4.i.ph398.le = ptrtoint ptr %.4.i.ph to i64
+  %.4.i.ph398.le = ptrtoaddr ptr %.4.i.ph to i64
   %scevgep397.le = getelementptr i8, ptr %.4.i.ph, i64 %6
   %i.cw = sub i64 0, %.4.i.ph398.le
   %scevgep399.le = getelementptr i8, ptr %scevgep397.le, i64 %i.cw
@@ -2351,7 +2350,7 @@ bb.h:                                             ; preds = %.lr.ph.i48, %bb.g
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr { i64, i32 } @_ZN17duckdb_fast_float19parse_long_mantissaINS_13binary_formatIfEEEENS_17adjusted_mantissaEPKcS5_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %3 = alloca %"struct.duckdb_fast_float::decimal", align 4 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1791)
@@ -2369,7 +2368,7 @@ bb.a:
   br i1 %.not.i9, label %.critedge.i, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoint ptr %0 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.g = sub i64 %2, %4
   %scevgep = getelementptr i8, ptr %0, i64 %i.g
   br label %.lr.ph
@@ -2387,7 +2386,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge.i:                                      ; preds = %bb.b, %.lr.ph, %bb.a
   %.1.i.lcssa = phi ptr [ %spec.select.i, %bb.a ], [ %.1.i10, %.lr.ph ], [ %scevgep, %bb.b ] ; 5 uses
-  %.1.i.lcssa60 = ptrtoint ptr %.1.i.lcssa to i64
+  %.1.i.lcssa60 = ptrtoaddr ptr %.1.i.lcssa to i64
   %.not99.i15 = icmp eq ptr %.1.i.lcssa, %1
   br i1 %.not99.i15, label %.critedge106.i.loopexit, label %.lr.ph17
 

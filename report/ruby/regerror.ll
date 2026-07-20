@@ -203,9 +203,8 @@ declare void @llvm.va_end.p0(ptr) #3
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @onig_vsnprintf_with_pattern(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [6 x i8], align 1                 ; 20 uses
-  %7 = ptrtoint ptr %i.a to i64                   ; 4 uses
-  %i.b = ptrtoaddr ptr %i.a to i64                ; 2 uses
+  %i.a = alloca [6 x i8], align 1                 ; 19 uses
+  %i.b = ptrtoaddr ptr %i.a to i64                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.c = sext i32 %1 to i64                       ; 2 uses
   %i.d = tail call i32 @ruby_vsnprintf(ptr noundef %0, i64 noundef %i.c, ptr noundef %5, ptr noundef %6) #7
@@ -232,8 +231,8 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr i8, ptr %2, i64 16         ; 2 uses
   %i.s = getelementptr i8, ptr %2, i64 20         ; 3 uses
   %i.t = getelementptr i8, ptr %2, i64 88         ; 3 uses
-  %i.u = add i64 %7, -1
-  %i.v = add i64 %7, -1
+  %i.u = add i64 %i.b, -1
+  %i.v = add i64 %i.b, -1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph122, %.loopexit89
@@ -439,8 +438,8 @@ vec.epilog.middle.block283:                       ; preds = %vec.epilog.vector.b
 .lr.ph.preheader:                                 ; preds = %iter.check270, %vec.epilog.iter.check272, %vec.epilog.middle.block283
   %.07095.ph = phi ptr [ %i.a, %iter.check270 ], [ %i.bj, %vec.epilog.iter.check272 ], [ %i.bo, %vec.epilog.middle.block283 ] ; 3 uses
   %.394.ph = phi ptr [ %.298, %iter.check270 ], [ %i.bk, %vec.epilog.iter.check272 ], [ %i.bp, %vec.epilog.middle.block283 ] ; 2 uses
-  %i.br = add i64 %7, %i.bg
-  %.07095.ph298 = ptrtoint ptr %.07095.ph to i64  ; 2 uses
+  %i.br = add i64 %i.b, %i.bg
+  %.07095.ph298 = ptrtoaddr ptr %.07095.ph to i64 ; 2 uses
   %i.bs = sub i64 %i.br, %.07095.ph298
   %i.bt = add i64 %i.u, %i.bg
   %i.bu = sub i64 %i.bt, %.07095.ph298
@@ -730,8 +729,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph118.preheader:                              ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.1117.ph = phi ptr [ %i.a, %iter.check ], [ %i.ew, %vec.epilog.iter.check ], [ %i.fb, %vec.epilog.middle.block ] ; 3 uses
   %.5116.ph = phi ptr [ %.071121, %iter.check ], [ %i.ex, %vec.epilog.iter.check ], [ %i.fc, %vec.epilog.middle.block ] ; 2 uses
-  %i.fe = add i64 %7, %i.et
-  %.1117.ph299 = ptrtoint ptr %.1117.ph to i64    ; 2 uses
+  %i.fe = add i64 %i.b, %i.et
+  %.1117.ph299 = ptrtoaddr ptr %.1117.ph to i64   ; 2 uses
   %i.ff = sub i64 %i.fe, %.1117.ph299
   %i.fg = add i64 %i.v, %i.et
   %i.fh = sub i64 %i.fg, %.1117.ph299

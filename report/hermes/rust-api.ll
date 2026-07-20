@@ -203,17 +203,16 @@ _ZNSt12_Vector_baseISt4pairIjjESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt15__new
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bf
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 144
   store ptr %i.bk, ptr %i.bl, align 8, !tbaa !990
-  %i.bm = load ptr, ptr %i.az, align 8, !tbaa !991 ; 6 uses
+  %i.bm = load ptr, ptr %i.az, align 8, !tbaa !991 ; 5 uses
   %i.bn = load ptr, ptr %i.ba, align 8, !tbaa !991 ; 3 uses
   %.not7.i.i.i.i.i = icmp eq ptr %i.bm, %i.bn
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt4pairIjjESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt12_Vector_baseISt4pairIjjESaIS1_EEC2EmRKS2_.exit.i
-  %i.bo = ptrtoaddr ptr %i.bm to i64
+  %i.bo = ptrtoaddr ptr %i.bm to i64              ; 2 uses
   %i.bp = ptrtoaddr ptr %i.bi to i64
-  %2 = ptrtoint ptr %i.bn to i64
-  %3 = ptrtoint ptr %i.bm to i64
-  %i.bq = sub i64 %2, %3
+  %2 = ptrtoaddr ptr %i.bn to i64
+  %i.bq = sub i64 %2, %i.bo
   %i.br = add i64 %i.bq, -8                       ; 2 uses
   %i.bs = lshr i64 %i.br, 3
   %i.bt = add nuw nsw i64 %i.bs, 1                ; 2 uses

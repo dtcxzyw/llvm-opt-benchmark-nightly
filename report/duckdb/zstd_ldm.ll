@@ -203,17 +203,16 @@ bb.ac:                                            ; preds = %bb.ac, %bb.ab
   br i1 %i.ds, label %bb.ac, label %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i, !llvm.loop !90
 
 _ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i: ; preds = %bb.ac, %bb.aa, %bb.z
-  %.014.i = phi ptr [ %i.cu, %bb.z ], [ %i.y, %bb.aa ], [ %i.y, %bb.ac ] ; 8 uses
+  %.014.i = phi ptr [ %i.cu, %bb.z ], [ %i.y, %bb.aa ], [ %i.y, %bb.ac ] ; 7 uses
   %.0.i = phi ptr [ %i.cx, %bb.z ], [ %i.dm, %bb.aa ], [ %i.dm, %bb.ac ] ; 6 uses
   %i.dt = icmp ult ptr %.014.i, %i.cs
   br i1 %i.dt, label %iter.check, label %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit
 
 iter.check:                                       ; preds = %_ZN11duckdb_zstdL13ZSTD_wildcopyEPvPKvlNS_14ZSTD_overlap_eE.exit.i
-  %.014.i207 = ptrtoaddr ptr %.014.i to i64
+  %.014.i207 = ptrtoaddr ptr %.014.i to i64       ; 2 uses
   %.0.i206 = ptrtoaddr ptr %.0.i to i64
-  %.014.i208 = ptrtoint ptr %.014.i to i64
   %i.du = add i64 %.sroa.010.sroa.4.0.extract.shift.i, %i.ay
-  %i.dv = sub i64 %i.du, %.014.i208               ; 7 uses
+  %i.dv = sub i64 %i.du, %.014.i207               ; 7 uses
   %min.iters.check = icmp ult i64 %i.dv, 4
   %i.dw = sub i64 %.014.i207, %.0.i206
   %diff.check = icmp ugt i64 %i.dw, -32
@@ -278,11 +277,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.121.i.ph = phi ptr [ %.0.i, %iter.check ], [ %i.dx, %vec.epilog.iter.check ], [ %i.ec, %vec.epilog.middle.block ] ; 2 uses
   %.11520.i.ph = phi ptr [ %.014.i, %iter.check ], [ %i.dy, %vec.epilog.iter.check ], [ %i.ed, %vec.epilog.middle.block ] ; 3 uses
   %i.ef = add i64 %.sroa.010.sroa.4.0.extract.shift.i, %i.ay
-  %.11520.i.ph250 = ptrtoint ptr %.11520.i.ph to i64 ; 2 uses
-  %i.eg = sub i64 %i.ef, %.11520.i.ph250
+  %.11520.i.ph249 = ptrtoaddr ptr %.11520.i.ph to i64 ; 2 uses
+  %i.eg = sub i64 %i.ef, %.11520.i.ph249
   %i.eh = add i64 %i.ay, -1
   %i.ei = add i64 %i.eh, %.sroa.010.sroa.4.0.extract.shift.i
-  %i.ej = sub i64 %i.ei, %.11520.i.ph250
+  %i.ej = sub i64 %i.ei, %.11520.i.ph249
   %xtraiter = and i64 %i.eg, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i83.prol.loopexit, label %.lr.ph.i83.prol
