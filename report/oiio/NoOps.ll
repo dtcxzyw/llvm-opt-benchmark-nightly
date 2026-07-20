@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = mul i32 %2, %2
-  %i.f = mul i32 %i.e, %2                         ; 5 uses
+  %i.f = mul i32 %i.e, %2                         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
   %i.g = tail call noalias noundef nonnull dereferenceable(248) ptr @_Znwm(i64 noundef 248) #24, !noalias !46 ; 6 uses
@@ -263,7 +263,7 @@ bb.d:                                             ; preds = %.noexc
   %i.v = load ptr, ptr %3, align 8, !tbaa !52
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 200
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !34   ; 6 uses
-  %wide.trip.count = zext i32 %i.f to i64         ; 6 uses
+  %wide.trip.count = zext i32 %i.f to i64         ; 5 uses
   %min.iters.check = icmp ult i32 %i.f, 57
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
@@ -291,7 +291,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %wide.trip.count, -2
+  %4 = trunc i32 %i.f to i1
+  %.neg = select i1 %4, i64 -1, i64 -2
   %n.vec = add nsw i64 %.neg, %wide.trip.count    ; 2 uses
   br label %vector.body
 

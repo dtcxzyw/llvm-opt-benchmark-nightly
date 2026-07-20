@@ -201,7 +201,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call ptr %i.c(ptr noundef nonnull align 8 dereferenceable(280) %0, i32 noundef %.08) #20 ; 3 uses
   %i.e = ptrtoint ptr %i.d to i64
-  %i.f = trunc i64 %i.e to i1
+  %i.f = trunc nuw i64 %i.e to i1
   br i1 %i.f, label %bb.b, label %bb.c, !prof !53
 
 bb.b:                                             ; preds = %.lr.ph
@@ -604,7 +604,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c
   %.sroa.0.0 = phi ptr [ %i.ao, %bb.c ], [ %i.ab, %bb.b ] ; 4 uses
   %i.ap = ptrtoint ptr %.sroa.0.0 to i64
-  %i.aq = trunc i64 %i.ap to i1
+  %i.aq = trunc nuw i64 %i.ap to i1
   br i1 %i.aq, label %bb.e, label %bb.f, !prof !53
 
 bb.e:                                             ; preds = %bb.d
@@ -730,20 +730,21 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload = load i32, ptr %i.l, align 1, !tbaa !3
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 1, !tbaa !3
+  %2 = or i32 %.sroa.4.0.copyload, -2147483648
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.m = lshr i32 %i.e, 1
   %i.n = and i32 %i.m, 8388607
   %i.o = lshr i32 %i.e, 24
+  %3 = shl i32 %i.e, 31
+  %spec.select.i7 = or disjoint i32 %i.o, %3
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sink = phi i32 [ %i.o, %bb.c ], [ %.sroa.4.0.copyload, %bb.b ]
-  %.sroa.0.0 = phi i32 [ %i.n, %bb.c ], [ %.sroa.0.0.copyload, %bb.b ]
-  %2 = shl i32 %i.e, 31
-  %spec.select.i7 = or i32 %.sink, %2
-  %.sroa.3.0.insert.ext = zext i32 %spec.select.i7 to i64
+  %.sink = phi i32 [ %2, %bb.b ], [ %spec.select.i7, %bb.c ]
+  %.sroa.0.0 = phi i32 [ %.sroa.0.0.copyload, %bb.b ], [ %i.n, %bb.c ]
+  %.sroa.3.0.insert.ext = zext i32 %.sink to i64
   %.sroa.3.0.insert.shift = shl nuw i64 %.sroa.3.0.insert.ext, 32
   %.sroa.0.0.insert.ext = zext i32 %.sroa.0.0 to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.3.0.insert.shift, %.sroa.0.0.insert.ext
@@ -814,7 +815,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit: ; preds = %bb.a, %bb.b
   %.sroa.0.0.i = phi ptr [ %i.s, %bb.b ], [ %i.f, %bb.a ] ; 3 uses
   %i.t = ptrtoint ptr %.sroa.0.0.i to i64
-  %i.u = trunc i64 %i.t to i1
+  %i.u = trunc nuw i64 %i.t to i1
   br i1 %i.u, label %bb.c, label %bb.d, !prof !53
 
 bb.c:                                             ; preds = %_ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit

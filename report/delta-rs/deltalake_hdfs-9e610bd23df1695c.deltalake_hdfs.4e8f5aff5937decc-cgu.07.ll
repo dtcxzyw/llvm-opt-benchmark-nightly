@@ -201,10 +201,38 @@ _RNvXNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtB2_7AdapterNtNtNtNtB6_3sys5s
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvYINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtB9_3sys5stdio4unix6StderrENtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtCs6KaIMXx2hZw_14deltalake_hdfs(ptr noalias noundef align 8 dereferenceable(16) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #1 personality ptr @rust_eh_personality {
-_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit.a:
-  %3 = tail call noundef zeroext i1 @_RNvNtCsbvkFyIu7lgC_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @0, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !66
-  ret i1 %3
+define internal noundef zeroext i1 @_RNvYINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtB9_3sys5stdio4unix6StderrENtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtCs6KaIMXx2hZw_14deltalake_hdfs(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull captures(address, read_provenance) %1, ptr noundef nonnull %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
+  %4 = ptrtoint ptr %2 to i64
+  %5 = lshr i64 %4, 1
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !69)
+  %6 = load ptr, ptr %0, align 8, !alias.scope !72, !noalias !73, !nonnull !4, !noundef !4
+  %7 = tail call noundef ptr @_RNvYNtNtNtNtCs2pqxYH9ZEk8_3std3sys5stdio4unix6StderrNtNtBa_2io5Write9write_allCs6KaIMXx2hZw_14deltalake_hdfs(ptr noalias noundef nonnull %6, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %5), !noalias !72, !inline_history !75 ; 3 uses
+  %.not.i.i = icmp ne ptr %7, null                ; 2 uses
+  br i1 %.not.i.i, label %8, label %_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit
+
+8:                                                ; preds = %3
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %.val.i.i = load ptr, ptr %9, align 8, !alias.scope !72, !noalias !73, !noundef !4 ; 2 uses
+  %10 = icmp eq ptr %.val.i.i, null
+  br i1 %10, label %_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit.a, label %11
+
+11:                                               ; preds = %8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECs6KaIMXx2hZw_14deltalake_hdfs(ptr nonnull %.val.i.i)
+          to label %_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit.a unwind label %12, !noalias !72, !inline_history !75
+
+12:                                               ; preds = %11
+  %13 = landingpad { ptr, i32 }
+          cleanup
+  store ptr %7, ptr %9, align 8, !alias.scope !72, !noalias !73
+  resume { ptr, i32 } %13
+
+_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit.a: ; preds = %11, %8
+  store ptr %7, ptr %9, align 8, !alias.scope !72, !noalias !73
+  br label %_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit
+
+_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit: ; preds = %3, %_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs.exit.a
+  ret i1 %.not.i.i
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -372,5 +400,14 @@ attributes #16 = { noinline noreturn }
 !63 = distinct !{!63, !"_RNvXNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtB2_7AdapterNtNtNtNtB6_3sys5stdio4unix6StderrENtNtCsbvkFyIu7lgC_4core3fmt5Write9write_strCs6KaIMXx2hZw_14deltalake_hdfs"}
 !64 = !{!65}
 !65 = distinct !{!65, !63, !"_RNvXNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtB2_7AdapterNtNtNtNtB6_3sys5stdio4unix6StderrENtNtCsbvkFyIu7lgC_4core3fmt5Write9write_strCs6KaIMXx2hZw_14deltalake_hdfs: argument 1"}
-!66 = distinct !{null}
+!66 = !{!67}
+!67 = distinct !{!67, !68, !"_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs: argument 0"}
+!68 = distinct !{!68, !"_RNvXs_NvNtNtCsbvkFyIu7lgC_4core3fmt5Write9write_fmtQINtNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmt7AdapterNtNtNtNtBV_3sys5stdio4unix6StderrENtB4_12SpecWriteFmt14spec_write_fmtCs6KaIMXx2hZw_14deltalake_hdfs"}
+!69 = !{!70}
+!70 = distinct !{!70, !71, !"_RNvXNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtB2_7AdapterNtNtNtNtB6_3sys5stdio4unix6StderrENtNtCsbvkFyIu7lgC_4core3fmt5Write9write_strCs6KaIMXx2hZw_14deltalake_hdfs: argument 0"}
+!71 = distinct !{!71, !"_RNvXNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtB2_7AdapterNtNtNtNtB6_3sys5stdio4unix6StderrENtNtCsbvkFyIu7lgC_4core3fmt5Write9write_strCs6KaIMXx2hZw_14deltalake_hdfs"}
+!72 = !{!70, !67}
+!73 = !{!74}
+!74 = distinct !{!74, !71, !"_RNvXNvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtINtB2_7AdapterNtNtNtNtB6_3sys5stdio4unix6StderrENtNtCsbvkFyIu7lgC_4core3fmt5Write9write_strCs6KaIMXx2hZw_14deltalake_hdfs: argument 1"}
+!75 = distinct !{null}
 end_hunk_0

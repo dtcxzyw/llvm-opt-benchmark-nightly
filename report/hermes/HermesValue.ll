@@ -201,9 +201,9 @@ bb.be:                                            ; preds = %_ZN4llvh11raw_ostre
   br label %_ZN4llvh11raw_ostreamlsEc.exit
 
 bb.bf:                                            ; preds = %bb.a
-  %i.iz = trunc i64 %1 to i1                      ; 2 uses
+  %i.iz = trunc nuw i64 %1 to i1
   %i.ja = select i1 %i.iz, ptr @.str.14, ptr @.str.15 ; 2 uses
-  %8 = select i1 %i.iz, i64 4, i64 5              ; 4 uses
+  %8 = xor i64 %1, 5                              ; 4 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.jc = load ptr, ptr %i.jb, align 8, !tbaa !9
   %i.jd = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -212,14 +212,18 @@ bb.bf:                                            ; preds = %bb.a
   %i.jg = ptrtoint ptr %i.je to i64
   %i.jh = sub i64 %i.jf, %i.jg
   %i.ji = icmp ugt i64 %8, %i.jh
-  br i1 %i.ji, label %bb.bg, label %bb.bh
+  br i1 %i.ji, label %bb.bg, label %9
 
 bb.bg:                                            ; preds = %bb.bf
   %i.jj = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull %i.ja, i64 noundef %8) #7
   br label %_ZN4llvh11raw_ostreamlsEc.exit
 
-bb.bh:                                            ; preds = %bb.bf
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(4) %i.je, ptr noundef nonnull align 1 dereferenceable(4) %i.ja, i64 %8, i1 false)
+9:                                                ; preds = %bb.bf
+  %.not.i2.i124 = icmp eq i64 %1, 5
+  br i1 %.not.i2.i124, label %_ZN4llvh11raw_ostreamlsEc.exit, label %bb.bh
+
+bb.bh:                                            ; preds = %9
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.je, ptr nonnull align 1 %i.ja, i64 %8, i1 false)
   %i.jk = load ptr, ptr %i.jd, align 8, !tbaa !14
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 %8
   store ptr %i.jl, ptr %i.jd, align 8, !tbaa !14
@@ -352,8 +356,8 @@ bb.by:                                            ; preds = %_ZN4llvh11raw_ostre
   store ptr %i.lu, ptr %i.lp, align 8, !tbaa !14
   br label %_ZN4llvh11raw_ostreamlsEc.exit
 
-_ZN4llvh11raw_ostreamlsEc.exit:                   ; preds = %bb.by, %bb.bx, %bb.bq, %bb.bp, %bb.bn, %bb.bm, %bb.bk, %bb.bj, %bb.bh, %bb.bg, %bb.be, %bb.bd, %bb.av, %bb.au, %bb.aq, %bb.ap, %bb.ad, %bb.ac, %bb.bt, %_ZN4llvh11raw_ostreamlsEPKc.exit58
-  %.1 = phi ptr [ %i.lm, %bb.by ], [ %.0.i.i57, %_ZN4llvh11raw_ostreamlsEPKc.exit58 ], [ %i.kf, %bb.bm ], [ %0, %bb.ad ], [ %0, %bb.aq ], [ %0, %bb.bn ], [ %i.kq, %bb.bp ], [ %0, %bb.bq ], [ %i.ls, %bb.bx ], [ %i.la, %bb.bt ], [ %i.ec, %bb.ac ], [ %i.gp, %bb.ap ], [ %i.hj, %bb.au ], [ %i.hd, %bb.av ], [ %i.iw, %bb.bd ], [ %i.iq, %bb.be ], [ %i.jj, %bb.bg ], [ %0, %bb.bh ], [ %i.ju, %bb.bj ], [ %0, %bb.bk ]
+_ZN4llvh11raw_ostreamlsEc.exit:                   ; preds = %bb.by, %bb.bx, %bb.bq, %bb.bp, %bb.bn, %bb.bm, %bb.bk, %bb.bj, %bb.bh, %9, %bb.bg, %bb.be, %bb.bd, %bb.av, %bb.au, %bb.aq, %bb.ap, %bb.ad, %bb.ac, %bb.bt, %_ZN4llvh11raw_ostreamlsEPKc.exit58
+  %.1 = phi ptr [ %i.lm, %bb.by ], [ %.0.i.i57, %_ZN4llvh11raw_ostreamlsEPKc.exit58 ], [ %0, %bb.bn ], [ %0, %bb.ad ], [ %0, %bb.aq ], [ %i.kq, %bb.bp ], [ %0, %bb.bq ], [ %0, %9 ], [ %i.ls, %bb.bx ], [ %i.la, %bb.bt ], [ %i.ec, %bb.ac ], [ %i.gp, %bb.ap ], [ %i.hj, %bb.au ], [ %i.hd, %bb.av ], [ %i.iw, %bb.bd ], [ %i.iq, %bb.be ], [ %i.jj, %bb.bg ], [ %0, %bb.bh ], [ %i.ju, %bb.bj ], [ %0, %bb.bk ], [ %i.kf, %bb.bm ]
   ret ptr %.1
 }
 
