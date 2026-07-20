@@ -204,10 +204,9 @@ _ZN10aiVector3tIfEixEj.exit96:                    ; preds = %.lr.ph166
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hh, i64 16
   %i.hr = getelementptr inbounds nuw i8, ptr %.061165, i64 8
   %i.hs = load i32, ptr %i.hn, align 4
-  %9 = and i32 %i.hs, 1
-  %.not72 = icmp eq i32 %9, 0                     ; 2 uses
-  %spec.select = select i1 %.not72, ptr %.061165, ptr %i.gz
-  %spec.select226.idx = select i1 %.not72, i64 0, i64 4
+  %.not72 = trunc nuw i32 %i.hs to i1             ; 2 uses
+  %spec.select = select i1 %.not72, ptr %i.gz, ptr %.061165
+  %spec.select226.idx = select i1 %.not72, i64 4, i64 0
   %spec.select226 = getelementptr inbounds nuw i8, ptr %i.gz, i64 %spec.select226.idx ; 2 uses
   %storemerge = load float, ptr %spec.select, align 4
   store float %storemerge, ptr %i.ho, align 4

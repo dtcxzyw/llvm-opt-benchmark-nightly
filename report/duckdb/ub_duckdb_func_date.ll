@@ -204,9 +204,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit: ; preds = %bb.c
   %i.k = load i64, ptr %i.j, align 8, !tbaa !154
-  %6 = and i64 %i.k, 1
-  %.not = icmp eq i64 %6, 0
-  br i1 %.not, label %bb.d, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread
+  %.not = trunc nuw i64 %i.k to i1
+  br i1 %.not, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   invoke void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
@@ -280,7 +279,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i: ; preds = %.noexc13
   %i.u = load i64, ptr %i.t, align 8, !tbaa !154
-  %i.v = trunc i64 %i.u to i1
+  %i.v = trunc nuw i64 %i.u to i1
   br i1 %i.v, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i
@@ -683,7 +682,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit: ; preds = %bb.b
   %i.m = load i64, ptr %i.l, align 8, !tbaa !154
-  %i.n = trunc i64 %i.m to i1
+  %i.n = trunc nuw i64 %i.m to i1
   br i1 %i.n, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit
@@ -716,7 +715,7 @@ bb.d:                                             ; preds = %_ZN6duckdb14Constan
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i: ; preds = %bb.d
   %i.y = load i64, ptr %i.x, align 8, !tbaa !154
-  %i.z = trunc i64 %i.y to i1
+  %i.z = trunc nuw i64 %i.y to i1
   br i1 %i.z, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i
@@ -1119,9 +1118,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit: ; preds = %bb.c
   %i.k = load i64, ptr %i.j, align 8, !tbaa !154
-  %6 = and i64 %i.k, 1
-  %.not = icmp eq i64 %6, 0
-  br i1 %.not, label %bb.d, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread
+  %.not = trunc nuw i64 %i.k to i1
+  br i1 %.not, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   invoke void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
@@ -1195,7 +1193,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i: ; preds = %.noexc13
   %i.u = load i64, ptr %i.t, align 8, !tbaa !154
-  %i.v = trunc i64 %i.u to i1
+  %i.v = trunc nuw i64 %i.u to i1
   br i1 %i.v, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i
@@ -1598,7 +1596,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit: ; preds = %bb.b
   %i.m = load i64, ptr %i.l, align 8, !tbaa !154
-  %i.n = trunc i64 %i.m to i1
+  %i.n = trunc nuw i64 %i.m to i1
   br i1 %i.n, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit
@@ -1631,7 +1629,7 @@ bb.d:                                             ; preds = %_ZN6duckdb14Constan
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i: ; preds = %bb.d
   %i.y = load i64, ptr %i.x, align 8, !tbaa !154
-  %i.z = trunc i64 %i.y to i1
+  %i.z = trunc nuw i64 %i.y to i1
   br i1 %i.z, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i

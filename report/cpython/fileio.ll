@@ -201,8 +201,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g
   store ptr null, ptr %i.af, align 8, !tbaa !32
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !33 ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.ah, -1
-  br i1 %.not.i.i, label %bb.i, label %fileio_clear.exit
+  %.not.i.i = icmp slt i32 %i.ah, 0
+  br i1 %.not.i.i, label %fileio_clear.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
@@ -221,8 +221,8 @@ fileio_clear.exit:                                ; preds = %bb.g, %bb.h, %bb.i,
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !35
   tail call void %i.am(ptr noundef nonnull %0) #11
   %i.an = load i32, ptr %.val, align 8, !tbaa !33 ; 2 uses
-  %.not.i = icmp sgt i32 %i.an, -1
-  br i1 %.not.i, label %bb.k, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.an, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.k
 
 bb.k:                                             ; preds = %fileio_clear.exit
   %i.ao = add nsw i32 %i.an, -1                   ; 2 uses
@@ -270,9 +270,8 @@ bb.e:                                             ; preds = %bb.d
   %i.m = load i32, ptr %i.e, align 8, !tbaa !11
   %i.n = getelementptr i8, ptr %0, i64 20
   %.val23 = load i8, ptr %i.n, align 4            ; 7 uses
-  %1 = and i8 %.val23, 1
-  %.not.i24 = icmp eq i8 %1, 0
-  br i1 %.not.i24, label %bb.g, label %bb.f
+  %.not.i24 = trunc i8 %.val23 to i1
+  br i1 %.not.i24, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.o = and i8 %.val23, 2
@@ -307,8 +306,8 @@ bb.k:                                             ; preds = %bb.j
 
 mode_string.exit:                                 ; preds = %bb.f, %bb.h, %bb.i, %bb.j, %bb.k
   %.0.i = phi ptr [ %.str.9..str.8.i, %bb.f ], [ @.str.14, %bb.j ], [ %.str.11..str.10.i, %bb.h ], [ %.str.13..str.12.i, %bb.k ], [ @.str.15, %bb.i ]
-  %.not21 = icmp sgt i8 %.val23, -1
-  %i.t = select i1 %.not21, ptr @.str.5, ptr @.str.4
+  %.not21 = icmp slt i8 %.val23, 0
+  %i.t = select i1 %.not21, ptr @.str.4, ptr @.str.5
   %i.u = call ptr (ptr, ...) @PyUnicode_FromFormat(ptr noundef nonnull @.str.3, ptr noundef %i.d, i32 noundef %i.m, ptr noundef nonnull %.0.i, ptr noundef nonnull %i.t) #11
   br label %Py_DECREF.exit
 
@@ -321,9 +320,8 @@ bb.m:                                             ; preds = %bb.l
   %i.x = load ptr, ptr %i.a, align 8, !tbaa !32
   %i.y = getelementptr i8, ptr %0, i64 20
   %.val22 = load i8, ptr %i.y, align 4            ; 7 uses
-  %2 = and i8 %.val22, 1
-  %.not.i25 = icmp eq i8 %2, 0
-  br i1 %.not.i25, label %bb.o, label %bb.n
+  %.not.i25 = trunc i8 %.val22 to i1
+  br i1 %.not.i25, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.z = and i8 %.val22, 2
@@ -358,8 +356,8 @@ bb.s:                                             ; preds = %bb.r
 
 mode_string.exit35:                               ; preds = %bb.n, %bb.p, %bb.q, %bb.r, %bb.s
   %.0.i28 = phi ptr [ %.str.9..str.8.i27, %bb.n ], [ @.str.14, %bb.r ], [ %.str.11..str.10.i31, %bb.p ], [ %.str.13..str.12.i34, %bb.s ], [ @.str.15, %bb.q ]
-  %.not = icmp sgt i8 %.val22, -1
-  %i.ae = select i1 %.not, ptr @.str.5, ptr @.str.4
+  %.not = icmp slt i8 %.val22, 0
+  %i.ae = select i1 %.not, ptr @.str.4, ptr @.str.5
   %i.af = call ptr (ptr, ...) @PyUnicode_FromFormat(ptr noundef nonnull @.str.6, ptr noundef %i.d, ptr noundef %i.x, ptr noundef nonnull %.0.i28, ptr noundef nonnull %i.ae) #11
   call void @Py_ReprLeave(ptr noundef nonnull %0) #11
   br label %bb.v
@@ -377,8 +375,8 @@ bb.v:                                             ; preds = %bb.t, %bb.u, %mode_
   %.018 = phi ptr [ %i.af, %mode_string.exit35 ], [ null, %bb.u ], [ null, %bb.t ] ; 3 uses
   %i.aj = load ptr, ptr %i.a, align 8, !tbaa !32  ; 3 uses
   %i.ak = load i32, ptr %i.aj, align 8, !tbaa !33 ; 2 uses
-  %.not.i = icmp sgt i32 %i.ak, -1
-  br i1 %.not.i, label %bb.w, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.ak, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.al = add nsw i32 %i.ak, -1                   ; 2 uses
@@ -443,8 +441,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %i.a, align 8, !tbaa !32
   %i.c = load i32, ptr %i.b, align 8, !tbaa !33   ; 2 uses
-  %.not.i = icmp sgt i32 %i.c, -1
-  br i1 %.not.i, label %bb.c, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.c, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = add nsw i32 %i.c, -1                     ; 2 uses
@@ -583,8 +581,8 @@ bb.o:                                             ; preds = %bb.k, %bb.m, %.thre
 bb.p:                                             ; preds = %bb.o
   %i.aj = getelementptr i8, ptr %0, i64 20
   %i.ak = load i8, ptr %i.aj, align 4
-  %.not.i = icmp sgt i8 %i.ak, -1
-  br i1 %.not.i, label %bb.r, label %bb.q
+  %.not.i = icmp slt i8 %i.ak, 0
+  br i1 %.not.i, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   %i.al = call fastcc i32 @internal_close(ptr noundef nonnull %0)
@@ -731,8 +729,8 @@ bb.al:                                            ; preds = %bb.aj, %bb.ah, %bb.
   br i1 %.not126.i, label %._crit_edge.i, label %bb.z, !llvm.loop !52
 
 ._crit_edge.i:                                    ; preds = %bb.al
-  %3 = icmp eq i32 %.1.i, 0
-  br i1 %3, label %.loopexit175.i, label %bb.am
+  %3 = trunc nuw i32 %.1.i to i1
+  br i1 %3, label %bb.am, label %.loopexit175.i
 
 bb.am:                                            ; preds = %._crit_edge.i
   %i.bs = load i8, ptr %i.ay, align 4             ; 2 uses
@@ -820,8 +818,8 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   %i.cy = load i32, ptr %i.ct, align 8, !tbaa !33 ; 2 uses
-  %.not.i153.i = icmp sgt i32 %i.cy, -1
-  br i1 %.not.i153.i, label %bb.ay, label %Py_DECREF.exit154.i
+  %.not.i153.i = icmp slt i32 %i.cy, 0
+  br i1 %.not.i153.i, label %Py_DECREF.exit154.i, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.cz = add nsw i32 %i.cy, -1                   ; 2 uses
@@ -842,8 +840,8 @@ bb.ba:                                            ; preds = %bb.aw
   %i.dc = call i32 @PyLong_AsInt(ptr noundef nonnull %i.ct) #11 ; 2 uses
   store i32 %i.dc, ptr %i.ag, align 8, !tbaa !11
   %i.dd = load i32, ptr %i.ct, align 8, !tbaa !33 ; 2 uses
-  %.not.i151.i = icmp sgt i32 %i.dd, -1
-  br i1 %.not.i151.i, label %bb.bb, label %Py_DECREF.exit152.i
+  %.not.i151.i = icmp slt i32 %i.dd, 0
+  br i1 %.not.i151.i, label %Py_DECREF.exit152.i, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.de = add nsw i32 %i.dd, -1                   ; 2 uses
@@ -954,8 +952,8 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp
   %i.et = load i32, ptr %i.er, align 8, !tbaa !33 ; 2 uses
-  %.not.i149.i = icmp sgt i32 %i.et, -1
-  br i1 %.not.i149.i, label %bb.br, label %Py_DECREF.exit150.thread.i
+  %.not.i149.i = icmp slt i32 %i.et, 0
+  br i1 %.not.i149.i, label %Py_DECREF.exit150.thread.i, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.eu = add nsw i32 %i.et, -1                   ; 2 uses
@@ -1001,8 +999,8 @@ Py_DECREF.exit150.thread.i:                       ; preds = %bb.bu, %bb.bs, %bb.
 bb.bv:                                            ; preds = %Py_DECREF.exit150.thread.i
   store ptr null, ptr %i.a, align 8, !tbaa !32
   %i.fc = load i32, ptr %i.fb, align 8, !tbaa !33 ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.fc, -1
-  br i1 %.not.i.i, label %bb.bw, label %_io_FileIO___init___impl.exit
+  %.not.i.i = icmp slt i32 %i.fc, 0
+  br i1 %.not.i.i, label %_io_FileIO___init___impl.exit, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
   %i.fd = add nsw i32 %i.fc, -1                   ; 2 uses
@@ -1405,8 +1403,8 @@ Py_INCREF.exit.i:                                 ; preds = %bb.o, %bb.n, %porta
 
 bb.p:                                             ; preds = %Py_INCREF.exit.i
   %i.al = load i32, ptr %.020.i, align 8, !tbaa !33 ; 2 uses
-  %.not.i28.i = icmp sgt i32 %i.al, -1
-  br i1 %.not.i28.i, label %bb.q, label %_io_FileIO_truncate_impl.exit
+  %.not.i27.i = icmp slt i32 %i.al, 0
+  br i1 %.not.i27.i, label %_io_FileIO_truncate_impl.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.am = add nsw i32 %i.al, -1                   ; 2 uses
@@ -1431,8 +1429,8 @@ bb.t:                                             ; preds = %bb.s
   %i.ar = load ptr, ptr @PyExc_OSError, align 8, !tbaa !32
   %i.as = call ptr @PyErr_SetFromErrno(ptr noundef %i.ar) #11 ; 0 uses
   %i.at = load i32, ptr %.020.i, align 8, !tbaa !33 ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.at, -1
-  br i1 %.not.i.i, label %bb.u, label %_io_FileIO_truncate_impl.exit
+  %.not.i.i = icmp slt i32 %i.at, 0
+  br i1 %.not.i.i, label %_io_FileIO_truncate_impl.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.au = add nsw i32 %i.at, -1                   ; 2 uses
@@ -1498,8 +1496,8 @@ bb.e:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   %i.i = getelementptr i8, ptr %0, i64 20         ; 2 uses
   %i.j = load i8, ptr %i.i, align 4
-  %.not.i = icmp sgt i8 %i.j, -1
-  br i1 %.not.i, label %bb.f, label %bb.g
+  %.not.i = icmp slt i8 %i.j, 0
+  br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.k = getelementptr i8, ptr %0, i64 16
@@ -1529,8 +1527,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.s = load i8, ptr %i.i, align 4
-  %.not.i31.i = icmp sgt i8 %i.s, -1
-  br i1 %.not.i31.i, label %fileio_dealloc_warn.exit.i, label %bb.l
+  %.not.i31.i = icmp slt i8 %i.s, 0
+  br i1 %.not.i31.i, label %bb.l, label %fileio_dealloc_warn.exit.i
 
 bb.l:                                             ; preds = %bb.k
   %i.t = call ptr @PyErr_GetRaisedException() #11
@@ -1554,8 +1552,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
 
 fileio_dealloc_warn.exit.i:                       ; preds = %bb.o, %bb.k, %bb.j
   %i.x = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !33 ; 2 uses
-  %.not.i28.i = icmp sgt i32 %i.x, -1
-  br i1 %.not.i28.i, label %bb.p, label %Py_DECREF.exit29.i
+  %.not.i28.i = icmp slt i32 %i.x, 0
+  br i1 %.not.i28.i, label %Py_DECREF.exit29.i, label %bb.p
 
 bb.p:                                             ; preds = %fileio_dealloc_warn.exit.i
   %i.y = add nsw i32 %i.x, -1                     ; 2 uses
@@ -1581,8 +1579,8 @@ bb.r:                                             ; preds = %Py_DECREF.exit29.i
 
 .thread1.i:                                       ; preds = %.thread.i
   %i.ac = load i32, ptr %i.h, align 8, !tbaa !33  ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.ac, -1
-  br i1 %.not.i.i, label %bb.s, label %_io_FileIO_close_impl.exit
+  %.not.i.i = icmp slt i32 %i.ac, 0
+  br i1 %.not.i.i, label %_io_FileIO_close_impl.exit, label %bb.s
 
 bb.s:                                             ; preds = %.thread1.i
   %i.ad = add nsw i32 %i.ac, -1                   ; 2 uses
@@ -1660,8 +1658,8 @@ bb.i:                                             ; preds = %portable_lseek.exit
 
 bb.j:                                             ; preds = %portable_lseek.exit.i
   %i.s = load i32, ptr %.0.i.i, align 8, !tbaa !33 ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.s, -1
-  br i1 %.not.i.i, label %bb.k, label %Py_DECREF.exit.i
+  %.not.i.i = icmp slt i32 %i.s, 0
+  br i1 %.not.i.i, label %Py_DECREF.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.t = add nsw i32 %i.s, -1                     ; 2 uses
@@ -1841,8 +1839,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 20
   %i.e = load i8, ptr %i.d, align 4
-  %.not = icmp sgt i8 %i.e, -1
-  br i1 %.not, label %bb.g, label %bb.c
+  %.not = icmp slt i8 %i.e, 0
+  br i1 %.not, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call ptr @PyErr_GetRaisedException() #11
@@ -2232,9 +2230,8 @@ define internal ptr @fileio_get_mode(ptr nofree noundef readonly captures(none) 
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 20
   %.val = load i8, ptr %i.a, align 4              ; 6 uses
-  %2 = and i8 %.val, 1
-  %.not.i = icmp eq i8 %2, 0
-  br i1 %.not.i, label %bb.c, label %bb.b
+  %.not.i = trunc i8 %.val to i1
+  br i1 %.not.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.b = and i8 %.val, 2

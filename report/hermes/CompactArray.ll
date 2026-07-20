@@ -19,7 +19,7 @@ bb.a:
   %i.g = shl nuw i64 1, %i.f
   %i.h = tail call noalias noundef nonnull ptr @_ZN6hermes13checkedCallocEmm(i64 noundef %i.e, i64 noundef %i.g) #4 ; 92 uses
   %i.i = ptrtoaddr ptr %i.h to i64                ; 3 uses
-  %i.j = load i32, ptr %0, align 8, !tbaa !7      ; 15 uses
+  %i.j = load i32, ptr %0, align 8, !tbaa !7      ; 18 uses
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %.._crit_edge_crit_edge, label %.lr.ph
 
@@ -35,7 +35,7 @@ bb.a:
   %i.n = ptrtoaddr ptr %i.m to i64                ; 3 uses
   %switch = icmp ult i32 %i.k, 3
   tail call void @llvm.assume(i1 %switch)
-  %wide.trip.count85 = zext i32 %i.j to i64       ; 65 uses
+  %wide.trip.count85 = zext i32 %i.j to i64       ; 62 uses
   switch i32 %i.d, label %.lr.ph.split [
     i32 0, label %.lr.ph.split.us
     i32 1, label %.lr.ph.split.us11
@@ -348,9 +348,8 @@ vec.epilog.middle.block297:                       ; preds = %pred.store.continue
 
 _ZNK6hermes12CompactArray3getEj.exit.us.us23.preheader: ; preds = %vector.memcheck225, %iter.check278, %vec.epilog.iter.check280, %vec.epilog.middle.block297
   %indvars.iv72.ph = phi i64 [ 0, %iter.check278 ], [ 0, %vector.memcheck225 ], [ %n.vec237, %vec.epilog.iter.check280 ], [ %n.vec284, %vec.epilog.middle.block297 ] ; 5 uses
-  %xtraiter393 = and i64 %wide.trip.count85, 1
-  %lcmp.mod394.not = icmp eq i64 %xtraiter393, 0
-  br i1 %lcmp.mod394.not, label %_ZNK6hermes12CompactArray3getEj.exit.us.us23.prol.loopexit, label %_ZNK6hermes12CompactArray3getEj.exit.us.us23.prol
+  %lcmp.mod394.not = trunc i32 %i.j to i1
+  br i1 %lcmp.mod394.not, label %_ZNK6hermes12CompactArray3getEj.exit.us.us23.prol, label %_ZNK6hermes12CompactArray3getEj.exit.us.us23.prol.loopexit
 
 _ZNK6hermes12CompactArray3getEj.exit.us.us23.prol: ; preds = %_ZNK6hermes12CompactArray3getEj.exit.us.us23.preheader
   %i.dr = getelementptr inbounds nuw [2 x i8], ptr %i.m, i64 %indvars.iv72.ph
@@ -585,9 +584,8 @@ middle.block363:                                  ; preds = %pred.store.continue
 
 _ZNK6hermes12CompactArray3getEj.exit.us.preheader368: ; preds = %vector.memcheck331, %_ZNK6hermes12CompactArray3getEj.exit.us.preheader, %middle.block363
   %indvars.iv82.ph = phi i64 [ 0, %vector.memcheck331 ], [ 0, %_ZNK6hermes12CompactArray3getEj.exit.us.preheader ], [ %n.vec341, %middle.block363 ] ; 5 uses
-  %xtraiter399 = and i64 %wide.trip.count85, 1
-  %lcmp.mod400.not = icmp eq i64 %xtraiter399, 0
-  br i1 %lcmp.mod400.not, label %_ZNK6hermes12CompactArray3getEj.exit.us.prol.loopexit, label %_ZNK6hermes12CompactArray3getEj.exit.us.prol
+  %lcmp.mod400.not = trunc i32 %i.j to i1
+  br i1 %lcmp.mod400.not, label %_ZNK6hermes12CompactArray3getEj.exit.us.prol, label %_ZNK6hermes12CompactArray3getEj.exit.us.prol.loopexit
 
 _ZNK6hermes12CompactArray3getEj.exit.us.prol:     ; preds = %_ZNK6hermes12CompactArray3getEj.exit.us.preheader368
   %i.gf = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv82.ph
@@ -990,9 +988,8 @@ middle.block222:                                  ; preds = %pred.store.continue
 
 _ZNK6hermes12CompactArray3getEj.exit.us13.preheader371: ; preds = %vector.memcheck192, %_ZNK6hermes12CompactArray3getEj.exit.us13.preheader, %middle.block222
   %indvars.iv67.ph = phi i64 [ 0, %vector.memcheck192 ], [ 0, %_ZNK6hermes12CompactArray3getEj.exit.us13.preheader ], [ %n.vec202, %middle.block222 ] ; 5 uses
-  %xtraiter390 = and i64 %wide.trip.count85, 1
-  %lcmp.mod391.not = icmp eq i64 %xtraiter390, 0
-  br i1 %lcmp.mod391.not, label %_ZNK6hermes12CompactArray3getEj.exit.us13.prol.loopexit, label %_ZNK6hermes12CompactArray3getEj.exit.us13.prol
+  %lcmp.mod391.not = trunc i32 %i.j to i1
+  br i1 %lcmp.mod391.not, label %_ZNK6hermes12CompactArray3getEj.exit.us13.prol, label %_ZNK6hermes12CompactArray3getEj.exit.us13.prol.loopexit
 
 _ZNK6hermes12CompactArray3getEj.exit.us13.prol:   ; preds = %_ZNK6hermes12CompactArray3getEj.exit.us13.preheader371
   %i.ks = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv67.ph

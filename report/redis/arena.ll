@@ -204,11 +204,10 @@ bb.h:                                             ; preds = %.lr.ph
   %i.bv = sub i32 %i.bd, %.02751.i
   %i.bw = tail call range(i64 1, 65) i64 @llvm.ctpop.i64(i64 range(i64 1, 0) %.138.lcssa.i)
   %i.bx = trunc nuw nsw i64 %i.bw to i32
-  %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.bv, i32 %i.bx) ; 2 uses
-  %.029.i = zext nneg i32 %spec.select.i to i64   ; 3 uses
-  %xtraiter = and i64 %.029.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol.loopexit, label %.lr.ph46.i.prol
+  %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.bv, i32 %i.bx) ; 3 uses
+  %.029.i = zext nneg i32 %spec.select.i to i64   ; 2 uses
+  %lcmp.mod.not = trunc i32 %spec.select.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol, label %.lr.ph46.i.prol.loopexit
 
 .lr.ph46.i.prol:                                  ; preds = %.lr.ph46.preheader.i
   %i.by = add nsw i64 %.029.i, -1
@@ -611,11 +610,10 @@ bb.d:                                             ; preds = %.lr.ph
   %i.at = sub i32 %i.ac, %.02751.i
   %i.au = tail call range(i64 1, 65) i64 @llvm.ctpop.i64(i64 range(i64 1, 0) %.138.lcssa.i)
   %i.av = trunc nuw nsw i64 %i.au to i32
-  %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.at, i32 %i.av) ; 2 uses
-  %.029.i = zext nneg i32 %spec.select.i to i64   ; 3 uses
-  %xtraiter = and i64 %.029.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol.loopexit, label %.lr.ph46.i.prol
+  %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.at, i32 %i.av) ; 3 uses
+  %.029.i = zext nneg i32 %spec.select.i to i64   ; 2 uses
+  %lcmp.mod.not = trunc i32 %spec.select.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol, label %.lr.ph46.i.prol.loopexit
 
 .lr.ph46.i.prol:                                  ; preds = %.lr.ph46.preheader.i
   %i.aw = add nsw i64 %.029.i, -1
@@ -1018,9 +1016,9 @@ bb.j:                                             ; preds = %bb.h
   tail call void @je_tcache_bin_flush_stashed(ptr noundef %0, ptr noundef nonnull %5, ptr noundef nonnull %i.x, i32 noundef %.0.i, i1 noundef zeroext true) #16
   %i.ap = call ptr @je_tcache_alloc_small_hard(ptr noundef %0, ptr noundef nonnull %i.aj, ptr noundef nonnull %5, ptr noundef nonnull %i.x, i32 noundef %.0.i, ptr noundef nonnull %i.a) #16
   %i.aq = load i8, ptr %i.a, align 1, !tbaa !129, !range !124, !noundef !125
-  %.not = icmp eq i8 %i.aq, 0
+  %6 = trunc nuw i8 %i.aq to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  br i1 %.not, label %arena_malloc.exit, label %cache_bin_alloc_impl.exit.thread
+  br i1 %6, label %cache_bin_alloc_impl.exit.thread, label %arena_malloc.exit
 
 cache_bin_alloc_impl.exit.thread:                 ; preds = %bb.g, %bb.e, %bb.j
   %.131.i = phi ptr [ %i.ap, %bb.j ], [ %i.z, %bb.e ], [ %i.z, %bb.g ] ; 2 uses
@@ -1423,9 +1421,9 @@ bb.ad:                                            ; preds = %bb.ab
   tail call void @je_tcache_bin_flush_stashed(ptr noundef %0, ptr noundef nonnull %7, ptr noundef nonnull %i.cn, i32 noundef %.0.i.i, i1 noundef zeroext true) #16
   %i.df = call ptr @je_tcache_alloc_small_hard(ptr noundef %0, ptr noundef nonnull %i.cz, ptr noundef nonnull %7, ptr noundef nonnull %i.cn, i32 noundef %.0.i.i, ptr noundef nonnull %i.a) #16
   %i.dg = load i8, ptr %i.a, align 1, !tbaa !129, !range !124, !noundef !125
-  %.not.i = icmp eq i8 %i.dg, 0
+  %11 = trunc nuw i8 %i.dg to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  br i1 %.not.i, label %arena_sdalloc.exit, label %cache_bin_alloc_impl.exit.thread.i
+  br i1 %11, label %cache_bin_alloc_impl.exit.thread.i, label %arena_sdalloc.exit
 
 cache_bin_alloc_impl.exit.thread.i:               ; preds = %bb.ad, %bb.aa, %bb.y
   %.131.i.i = phi ptr [ %i.df, %bb.ad ], [ %i.cp, %bb.y ], [ %i.cp, %bb.aa ] ; 2 uses
@@ -1828,12 +1826,11 @@ percpu_arena_ind_limit.exit.i:                    ; preds = %bb.k
   %i.s = getelementptr i8, ptr %.037.i, i64 78928 ; 2 uses
   %.037.val48.i = load i32, ptr %i.s, align 8, !tbaa !126
   %i.t = icmp eq i32 %i.q, 4
-  %i.u = load i32, ptr @je_ncpus, align 4         ; 4 uses
+  %i.u = load i32, ptr @je_ncpus, align 4         ; 3 uses
   %i.v = icmp ugt i32 %i.u, 1
   %or.cond.i.i = and i1 %i.t, %i.v
-  %2 = and i32 %i.u, 1
   %i.w = lshr i32 %i.u, 1
-  %spec.select.i = add nuw i32 %i.w, %2
+  %spec.select.i = add nuw i32 %i.w, 1
   %.0.i.i = select i1 %or.cond.i.i, i32 %spec.select.i, i32 %i.u
   %i.x = icmp ult i32 %.037.val48.i, %.0.i.i
   br i1 %i.x, label %bb.l, label %arena_choose_impl.exit

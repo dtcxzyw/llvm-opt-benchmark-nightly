@@ -201,11 +201,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   store i64 %.0150, ptr %0, align 8, !tbaa !21
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 5 uses
   store i32 0, ptr %i.cy, align 4, !tbaa !22
-  %4 = and i32 %3, 3                              ; 2 uses
-  %5 = icmp ne i32 %4, 2
   %i.cz = icmp ult ptr %.3, %2
-  %or.cond = and i1 %5, %i.cz
-  br i1 %or.cond, label %bb.u, label %.thread
+  br i1 %i.cz, label %bb.u, label %.thread
 
 bb.u:                                             ; preds = %bb.t
   %i.da = load i8, ptr %.3, align 1, !tbaa !7
@@ -253,6 +250,7 @@ bb.aa:                                            ; preds = %.critedge104
   br i1 %.not158, label %.thread, label %bb.ab
 
 .thread:                                          ; preds = %bb.u, %bb.t, %bb.aa
+  %4 = and i32 %3, 3
   %i.dp = icmp eq i32 %4, 1
   br i1 %i.dp, label %bb.ac, label %bb.ab
 
@@ -655,11 +653,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   store i64 %spec.select157, ptr %0, align 8, !tbaa !21
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 5 uses
   store i32 0, ptr %i.de, align 4, !tbaa !22
-  %4 = and i32 %3, 3                              ; 2 uses
-  %5 = icmp ne i32 %4, 2
   %i.df = icmp ult ptr %.3, %2
-  %or.cond = and i1 %5, %i.df
-  br i1 %or.cond, label %bb.s, label %.thread
+  br i1 %i.df, label %bb.s, label %.thread
 
 bb.s:                                             ; preds = %bb.r
   %i.dg = load i8, ptr %.3, align 1, !tbaa !7
@@ -707,6 +702,7 @@ bb.y:                                             ; preds = %.critedge102
   br i1 %.not159, label %.thread, label %bb.z
 
 .thread:                                          ; preds = %bb.s, %bb.r, %bb.y
+  %4 = and i32 %3, 3
   %i.dv = icmp eq i32 %4, 1
   br i1 %i.dv, label %bb.aa, label %bb.z
 

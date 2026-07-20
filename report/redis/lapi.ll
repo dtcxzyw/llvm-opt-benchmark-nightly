@@ -123,13 +123,12 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.i = icmp eq i32 %2, 1
   br i1 %i.i, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %3 = and i32 %2, 2147483646
+  %unroll_iter = zext nneg i32 %3 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.new
@@ -164,8 +163,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !27
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.c
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %2 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ]
@@ -568,9 +567,8 @@ getcurrenv.exit:                                  ; preds = %bb.d, %bb.e
 
 .lr.ph:                                           ; preds = %getcurrenv.exit
   %i.x = getelementptr inbounds nuw i8, ptr %i.q, i64 40 ; 3 uses
-  %3 = and i32 %2, 1
-  %lcmp.mod.not = icmp eq i32 %3, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod.not = trunc i32 %2 to i1
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
   %indvars.iv.next.prol = add nsw i64 %i.u, -1    ; 3 uses

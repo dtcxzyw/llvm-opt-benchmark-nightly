@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !195)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !198)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !201)
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span5InnerECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.c
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.c, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span5InnerECs9rVkZwOUgsI_13deltalake_aws.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -223,8 +223,8 @@ bb.d:                                             ; preds = %bb.c
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal2FsEECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !211, !noundef !6
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal2FsECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal2FsECs9rVkZwOUgsI_13deltalake_aws.exit
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal2FsECs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
   ret void
@@ -252,8 +252,8 @@ bb.d:                                             ; preds = %bb.c
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !211, !noundef !6
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvECs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
   ret void
@@ -656,9 +656,9 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCsat9blWvDIpa_11aws_runtime10
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types8app_name7AppNameEINtNtCsat9blWvDIpa_11aws_runtime10env_config14EnvConfigErrorNtB1q_14InvalidAppNameEEECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !211, !noundef !6
-  %1 = icmp eq i64 %i.a, 0
+  %1 = trunc nuw i64 %i.a to i1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  br i1 %1, label %bb.b, label %bb.f
+  br i1 %1, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %i.b, align 8, !range !78, !alias.scope !238, !noundef !6
@@ -1061,8 +1061,8 @@ bb.bi:                                            ; preds = %bb.bh
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs9PsDcNHE0mC_16aws_smithy_async4time16SharedTimeSourceEECs9rVkZwOUgsI_13deltalake_aws.exit68.i: ; preds = %bb.bh, %bb.bg, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCsat9blWvDIpa_11aws_runtime10env_config4file14EnvConfigFilesEECs9rVkZwOUgsI_13deltalake_aws.exit.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !434)
   %i.dx = load i64, ptr %0, align 8, !range !211, !alias.scope !437, !noundef !6
-  %1 = icmp eq i64 %i.dx, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws.exit.i, label %bb.bj
+  %1 = trunc nuw i64 %i.dx to i1
+  br i1 %1, label %bb.bj, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws.exit.i
 
 bb.bj:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs9PsDcNHE0mC_16aws_smithy_async4time16SharedTimeSourceEECs9rVkZwOUgsI_13deltalake_aws.exit68.i
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1097,8 +1097,8 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYj
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !450)
   %i.eg = load i64, ptr %i.ef, align 8, !range !211, !alias.scope !453, !noundef !6
-  %2 = icmp eq i64 %i.eg, 0
-  br i1 %2, label %common.ret, label %bb.bo
+  %2 = trunc nuw i64 %i.eg to i1
+  br i1 %2, label %bb.bo, label %common.ret
 
 bb.bo:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws.exit.i
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -1501,8 +1501,8 @@ bb.q:                                             ; preds = %_RNvXs7_NtCscTw95cG
   call void @llvm.experimental.noalias.scope.decl(metadata !1737)
   call void @llvm.experimental.noalias.scope.decl(metadata !1740)
   call void @llvm.experimental.noalias.scope.decl(metadata !1743)
-  %1 = icmp eq i64 %i.bh, 0
-  br i1 %1, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCscTw95cGIolY_7tracing4span5InnerEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.r
+  %1 = trunc nuw i64 %i.bh to i1
+  br i1 %1, label %bb.r, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCscTw95cGIolY_7tracing4span5InnerEECs9rVkZwOUgsI_13deltalake_aws.exit
 
 bb.r:                                             ; preds = %bb.q
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1905,10 +1905,10 @@ bb.an:                                            ; preds = %bb.am
   %.sroa.6795.0..sroa_idx796 = getelementptr inbounds nuw i8, ptr %i.jk, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(184) %.sroa.6795.0..sroa_idx796, ptr noundef nonnull align 8 dereferenceable(184) %.sroa.6795.0..sroa_idx, i64 184, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !2597)
-  %3 = icmp eq i64 %i.ne, 0
-  %4 = icmp eq ptr %i.ng, null
-  %or.cond = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i, label %bb.ao
+  %3 = trunc nuw i64 %i.ne to i1
+  %4 = icmp ne ptr %i.ng, null
+  %or.cond = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond, label %bb.ao, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i
 
 bb.ao:                                            ; preds = %bb.an
   %i.no = atomicrmw sub ptr %i.ng, i64 1 release, align 8, !noalias !2600
@@ -1929,8 +1929,8 @@ bb.aq:                                            ; preds = %bb.ap
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i: ; preds = %bb.ap, %bb.ao, %bb.an
   call void @llvm.experimental.noalias.scope.decl(metadata !2611)
   %i.nr = load i64, ptr %i.nm, align 8, !range !211, !alias.scope !2614, !noalias !2596, !noundef !6
-  %5 = icmp eq i64 %i.nr, 0
-  br i1 %5, label %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionNtNtCsaB04DkjCm5a_10aws_config15provider_config14ProviderConfigE14unwrap_or_elseNCNCNvMNtBM_6loaderNtB27_12ConfigLoader4load00ECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.ar
+  %5 = trunc nuw i64 %i.nr to i1
+  br i1 %5, label %bb.ar, label %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionNtNtCsaB04DkjCm5a_10aws_config15provider_config14ProviderConfigE14unwrap_or_elseNCNCNvMNtBM_6loaderNtB27_12ConfigLoader4load00ECs9rVkZwOUgsI_13deltalake_aws.exit
 
 bb.ar:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsjPG5xYjJYir_9aws_types16os_shim_internal3EnvEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !2615)
@@ -2333,8 +2333,8 @@ bb.rm:                                            ; preds = %bb.pb, %bb.rl
   store i8 %.val248.sink, ptr %i.atq, align 1
   %i.atr = getelementptr inbounds nuw i8, ptr %1, i64 1000
   %.val249 = load i32, ptr %i.atr, align 8, !range !101, !noundef !6
-  %.not1136 = icmp eq i32 %.val249, 0
-  br i1 %.not1136, label %.thread1283, label %bb.rn
+  %6 = trunc nuw i32 %.val249 to i1
+  br i1 %6, label %bb.rn, label %.thread1283
 
 bb.rn:                                            ; preds = %bb.rm
   %i.ats = getelementptr inbounds nuw i8, ptr %1, i64 1944
@@ -2737,7 +2737,7 @@ bb.yk:                                            ; preds = %_RNCNCNvNtNtCsaB04D
 _RINvMNtCsbvkFyIu7lgC_4core6resultINtB3_6ResultINtNtB5_6option6OptionbEINtNtCsat9blWvDIpa_11aws_runtime10env_config14EnvConfigErrorNtNtCsaB04DkjCm5a_10aws_config11environment19InvalidBooleanValueEE7map_erruNCNCNvNtNtB28_16default_provider31ignore_configured_endpoint_urls40ignore_configured_endpoint_urls_provider00ECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.xp
   %i.bhn = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.bho = load i8, ptr %i.bhn, align 8, !range !19, !alias.scope !3220, !noalias !3183, !noundef !6
-  %i.bhp = trunc i8 %i.bho to i1
+  %i.bhp = trunc nuw i8 %i.bho to i1
   br label %bb.ym
 
 bb.yl:                                            ; preds = %_RNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider31ignore_configured_endpoint_urls40ignore_configured_endpoint_urls_provider00Cs9rVkZwOUgsI_13deltalake_aws.exit.i.i
@@ -3140,9 +3140,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @_RNvXs0_NtNtNtCs8CRAYtH5WmW_12futures_util6stream6stream4fuseINtB5_4FuseINtNtB7_3map3MapINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB1s_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB3K_5ErrorENtNtB1s_6marker4SendEL_EENCNvYNtNtCs9rVkZwOUgsI_13deltalake_aws7storage16S3StorageBackendNtB3K_11ObjectStore13delete_stream0EEB2t_9poll_nextB57_(ptr noalias noundef nonnull sret([136 x i8]) align 8 captures(address) dereferenceable(136) %i.f, ptr noalias noundef nonnull align 8 dereferenceable(32) %i.g, ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
   %i.u = load i64, ptr %i.f, align 8, !range !194, !noundef !6
-  %3 = and i64 %i.u, 1
-  %or.cond.not = icmp eq i64 %3, 0
-  br i1 %or.cond.not, label %bb.k, label %bb.l
+  %or.cond.not = trunc nuw i64 %i.u to i1
+  br i1 %or.cond.not, label %bb.l, label %bb.k
 
 .loopexit:                                        ; preds = %bb.l, %bb.a, %bb.k
   %i.v = phi i64 [ %.pre, %bb.k ], [ %i.m, %bb.a ], [ %i.aw, %bb.l ] ; 2 uses
@@ -3545,8 +3544,8 @@ define hidden void @_RNvXs2_NtNtNtCs8CRAYtH5WmW_12futures_util6stream17futures_u
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !range !211, !noundef !6
-  %.not = icmp eq i64 %i.b, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtNtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unordered5abort5abort(ptr noalias noundef nonnull readonly captures(address, read_provenance) @138, i64 noundef 31) #24

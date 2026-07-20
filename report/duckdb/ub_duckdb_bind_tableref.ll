@@ -203,7 +203,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   br i1 %.035.i, label %.sink.split.i, label %common.resume
 
 bb.j:                                             ; preds = %bb.e, %bb.d, %bb.c, %._crit_edge.i
-  %.156.i = phi i8 [ 1, %._crit_edge.i ], [ %.05531.i, %bb.e ], [ %.05531.i, %bb.d ], [ %.05531.i, %bb.c ] ; 3 uses
+  %.156.i = phi i8 [ 1, %._crit_edge.i ], [ %.05531.i, %bb.e ], [ %.05531.i, %bb.d ], [ %.05531.i, %bb.c ] ; 2 uses
   %.154.i = phi i1 [ %.05332.i, %._crit_edge.i ], [ true, %bb.e ], [ true, %bb.d ], [ true, %bb.c ] ; 2 uses
   %i.fz = add nuw i64 %.04934.i, 1                ; 2 uses
   %i.ga = load ptr, ptr %i.m, align 8, !tbaa !1783
@@ -263,7 +263,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69.i: ; preds = %b
   br i1 %.033.i, label %.sink.split.i, label %common.resume
 
 bb.p:                                             ; preds = %._crit_edge36.i
-  %i.gp = trunc nuw i8 %.156.i to i1
+  %i.gp = trunc nuw i8 %.156.i to i1              ; 2 uses
   %or.cond.i = select i1 %i.gp, i1 %.154.i, i1 false
   br i1 %or.cond.i, label %bb.q, label %_ZN6duckdbL24GetTableFunctionBindTypeERNS_25TableFunctionCatalogEntryERNS_6vectorINS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS4_ELb1EEELb1ESaIS7_EEE.exit
 
@@ -324,8 +324,7 @@ bb.u:                                             ; preds = %bb.s, %bb.n, %bb.h
   unreachable
 
 _ZN6duckdbL24GetTableFunctionBindTypeERNS_25TableFunctionCatalogEntryERNS_6vectorINS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS4_ELb1EEELb1ESaIS7_EEE.exit: ; preds = %bb.p
-  %.not221 = icmp eq i8 %.156.i, 0
-  br i1 %.not221, label %_ZN6duckdbL24GetTableFunctionBindTypeERNS_25TableFunctionCatalogEntryERNS_6vectorINS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS4_ELb1EEELb1ESaIS7_EEE.exit.thread213, label %bb.v
+  br i1 %i.gp, label %bb.v, label %_ZN6duckdbL24GetTableFunctionBindTypeERNS_25TableFunctionCatalogEntryERNS_6vectorINS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS4_ELb1EEELb1ESaIS7_EEE.exit.thread213
 
 bb.v:                                             ; preds = %_ZN6duckdbL24GetTableFunctionBindTypeERNS_25TableFunctionCatalogEntryERNS_6vectorINS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS4_ELb1EEELb1ESaIS7_EEE.exit
   tail call void @_ZN6duckdb6Binder27BindTableInTableOutFunctionERNS_6vectorINS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS3_ELb1EEELb1ESaIS6_EEERNS_14BoundStatementE(ptr noundef nonnull align 8 dereferenceable(472) %0, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(136) %6)

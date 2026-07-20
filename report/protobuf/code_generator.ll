@@ -201,25 +201,8 @@ bb.a:
   store i32 1, ptr %i.e, align 8, !tbaa !47
   %i.f = or i32 %i.c, 15
   store i32 %i.f, ptr %i.b, align 8, !tbaa !4
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %2 = load i64, ptr %i.g, align 8, !tbaa !53     ; 3 uses
-  %3 = trunc i64 %2 to i1
-  br i1 %3, label %4, label %8, !prof !46
-
-4:                                                ; preds = %bb.a
-  %5 = add nsw i64 %2, -1
-  %6 = inttoptr i64 %5 to ptr
-  %7 = load ptr, ptr %6, align 8, !tbaa !55
-  br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit
-
-8:                                                ; preds = %bb.a
-  %9 = inttoptr i64 %2 to ptr
-  br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit
-
-_ZNK6google8protobuf11MessageLite8GetArenaEv.exit: ; preds = %4, %8
-  %.0.i.i = phi ptr [ %7, %4 ], [ %9, %8 ]
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  tail call void @_ZN6google8protobuf8internal14ArenaStringPtr3SetESt17basic_string_viewIcSt11char_traitsIcEEPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(8) %10, i64 0, ptr nonnull @.str.5, ptr noundef %.0.i.i)
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
+  tail call void @_ZN6google8protobuf8internal14ArenaStringPtr3SetESt17basic_string_viewIcSt11char_traitsIcEEPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(8) %i.g, i64 0, ptr nonnull @.str.5, ptr noundef null)
   ret void
 }
 
@@ -433,9 +416,4 @@ attributes #17 = { cold }
 !50 = !{!"p2 _ZTSN6google8protobuf15FieldDescriptorE", !11, i64 0}
 !51 = !{!49, !50, i64 8}
 !52 = !{!49, !50, i64 16}
-!53 = !{!54, !24, i64 0}
-!54 = !{!"_ZTSN6google8protobuf8internal16InternalMetadataE", !24, i64 0}
-!55 = !{!56, !57, i64 0}
-!56 = !{!"_ZTSN6google8protobuf8internal16InternalMetadata13ContainerBaseE", !57, i64 0}
-!57 = !{!"p1 _ZTSN6google8protobuf5ArenaE", !12, i64 0}
 end_hunk_0

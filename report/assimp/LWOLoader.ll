@@ -204,9 +204,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit29: ; preds = %bb.
   resume { ptr, i32 } %i.ao
 
 bb.m:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.c
-  %3 = and i64 %i.l, 1
-  %i.at = sub nuw nsw i64 2, %3
-  %i.au = getelementptr inbounds nuw i8, ptr %.01833, i64 %i.at ; 2 uses
+  %i.at = sub i64 2, %i.l
+  %i.au = getelementptr inbounds i8, ptr %.01833, i64 %i.at ; 2 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.b
@@ -452,24 +451,23 @@ _ZSt8_DestroyIP10aiVector3tIfES1_EvT_S3_RSaIT0_E.exit.i.i19: ; preds = %bb.s
   br label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit20
 
 _ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit20: ; preds = %_ZSt8_DestroyIP10aiVector3tIfES1_EvT_S3_RSaIT0_E.exit.i.i19, %bb.s, %bb.r, %bb.q, %_ZNSt6vectorIjSaIjEE6resizeEmRKj.exit
-  %i.ce = lshr i32 %1, 2                          ; 4 uses
+  %i.ce = lshr i32 %1, 2                          ; 5 uses
   %.not24 = icmp eq i32 %i.ce, 0
   br i1 %.not24, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit20
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.ce to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.cg = icmp eq i32 %i.ce, 1
   br i1 %i.cg, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 1073741822
+  %2 = and i32 %i.ce, 1073741822
+  %unroll_iter = zext nneg i32 %2 to i64
   br label %bb.t
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.t
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.ce to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]
@@ -872,10 +870,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
-  %4 = and i64 %i.n, 1
   %i.au = load ptr, ptr %i.b, align 8
-  %i.av = sub nuw nsw i64 2, %4
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.av
+  %i.av = sub i64 2, %i.n
+  %i.aw = getelementptr inbounds i8, ptr %i.au, i64 %i.av
   store ptr %i.aw, ptr %i.b, align 8
   ret void
 }
@@ -1278,11 +1275,10 @@ bb.a:
   br i1 %.not34, label %tailrecurse, label %tailrecurse.us.preheader
 
 tailrecurse.us.preheader:                         ; preds = %bb.a
-  %wide.trip.count = zext i32 %2 to i64           ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %5 = icmp eq i32 %2, 1
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %6 = and i32 %2, -2
+  %unroll_iter = zext i32 %6 to i64
+  %lcmp.mod.not = trunc i32 %2 to i1
   %lcmp.mod48 = trunc i32 %2 to i1
   br label %tailrecurse.us
 
@@ -1344,7 +1340,7 @@ tailrecurse.us:                                   ; preds = %tailrecurse.us.preh
   br i1 %niter.ncmp.1, label %._crit_edge.us.unr-lcssa, label %.lr.ph.us.new, !llvm.loop !105
 
 ._crit_edge.us.unr-lcssa:                         ; preds = %.lr.ph.us.new
-  br i1 %lcmp.mod.not, label %._crit_edge.us, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.us
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.unr-lcssa, %.lr.ph.us
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next.1, %._crit_edge.us.unr-lcssa ] ; 2 uses

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %._crit_edge, %bb.b
 
 ._crit_edge55:                                    ; preds = %.preheader48, %bb.e
   %.141.lcssa = phi ptr [ %.040, %bb.e ], [ %i.dm, %.preheader48 ]
-  %i.do = srem i64 %.1, 8                         ; 6 uses
+  %i.do = srem i64 %.1, 8                         ; 4 uses
   %.not45 = icmp eq i64 %i.do, 0
   br i1 %.not45, label %bb.g, label %.preheader
 
@@ -220,7 +220,6 @@ bb.e:                                             ; preds = %._crit_edge, %bb.b
   %i.du = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !246, !nonnull !102, !align !245 ; 6 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 64 ; 6 uses
-  %xtraiter = and i64 %i.do, 1
   %i.dx = icmp eq i64 %i.do, 1
   br i1 %i.dx, label %.epil.preheader, label %.lr.ph60.new
 
@@ -256,21 +255,15 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph60.new
   %i.eo = add nsw i64 %i.en, %i.em
   store i64 %i.eo, ptr %i.dw, align 8, !tbaa !126
   %i.ep = select i1 %.not47.1, i8 0, i8 %i.eh
-  %i.eq = or i8 %i.ep, %i.eg                      ; 3 uses
+  %i.eq = or i8 %i.ep, %i.eg                      ; 2 uses
   %i.er = shl nuw i8 %.13758, 2                   ; 2 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1.not, label %._crit_edge61.loopexit.unr-lcssa, label %bb.f, !llvm.loop !249
+  br i1 %niter.ncmp.1.not, label %.epil.preheader, label %bb.f, !llvm.loop !249
 
-._crit_edge61.loopexit.unr-lcssa:                 ; preds = %bb.f
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge61, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge61.loopexit.unr-lcssa, %.lr.ph60
-  %.13758.epil.init = phi i8 [ 1, %.lr.ph60 ], [ %i.er, %._crit_edge61.loopexit.unr-lcssa ]
-  %.13957.epil.init = phi i8 [ 0, %.lr.ph60 ], [ %i.eq, %._crit_edge61.loopexit.unr-lcssa ]
-  %lcmp.mod86 = trunc i64 %i.do to i1
-  tail call void @llvm.assume(i1 %lcmp.mod86)
+.epil.preheader:                                  ; preds = %.lr.ph60, %bb.f
+  %.13758.epil.init = phi i8 [ 1, %.lr.ph60 ], [ %i.er, %bb.f ]
+  %.13957.epil.init = phi i8 [ 0, %.lr.ph60 ], [ %i.eq, %bb.f ]
   %i.es = load i64, ptr %i.dv, align 8, !tbaa !128 ; 2 uses
   %i.et = add nsw i64 %i.es, 1
   store i64 %i.et, ptr %i.dv, align 8, !tbaa !128
@@ -285,8 +278,8 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph60.new
   %i.fa = or i8 %i.ez, %.13957.epil.init
   br label %._crit_edge61
 
-._crit_edge61:                                    ; preds = %.epil.preheader, %._crit_edge61.loopexit.unr-lcssa, %.preheader
-  %.139.lcssa = phi i8 [ 0, %.preheader ], [ %i.eq, %._crit_edge61.loopexit.unr-lcssa ], [ %i.fa, %.epil.preheader ]
+._crit_edge61:                                    ; preds = %.epil.preheader, %.preheader
+  %.139.lcssa = phi i8 [ 0, %.preheader ], [ %i.fa, %.epil.preheader ]
   store i8 %.139.lcssa, ptr %.141.lcssa, align 1, !tbaa !52
   br label %bb.g
 

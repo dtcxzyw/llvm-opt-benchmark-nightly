@@ -201,9 +201,8 @@ _ZNK4llvh9StringRef6equalsES0_.exit.thread21.i:   ; preds = %_ZNK4llvh9StringRef
   store i32 0, ptr %3, align 8, !tbaa !3
   %.sroa.417.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.e, ptr %.sroa.417.0..sroa_idx.i, align 8, !tbaa !106
-  %10 = and i32 %6, 1
-  %.not16.i = icmp eq i32 %10, 0
-  br i1 %.not16.i, label %bb.b, label %_ZL5getFDN4llvh9StringRefERSt10error_codeNS_3sys2fs19CreationDispositionENS4_10FileAccessENS4_9OpenFlagsE.exit
+  %.not16.i = trunc nuw i32 %6 to i1
+  br i1 %.not16.i, label %_ZL5getFDN4llvh9StringRefERSt10error_codeNS_3sys2fs19CreationDispositionENS4_10FileAccessENS4_9OpenFlagsE.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit.thread21.i
   %i.f = tail call { i32, ptr } @_ZN4llvh3sys20ChangeStdoutToBinaryEv() #26 ; 0 uses
@@ -211,9 +210,8 @@ bb.b:                                             ; preds = %_ZNK4llvh9StringRef
 
 _ZNK4llvh9StringRef6equalsES0_.exit.thread.i:     ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit.i, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
-  %11 = and i32 %5, 1
-  %.not.i = icmp eq i32 %11, 0
-  br i1 %.not.i, label %bb.d, label %bb.c
+  %.not.i = trunc nuw i32 %5 to i1
+  br i1 %.not.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
@@ -238,7 +236,7 @@ bb.d:                                             ; preds = %_ZNK4llvh9StringRef
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.pn.i = phi { i32, ptr } [ %i.l, %bb.d ], [ %i.i, %bb.c ] ; 2 uses
+  %.pn.i = phi { i32, ptr } [ %i.i, %bb.c ], [ %i.l, %bb.d ] ; 2 uses
   %.sink.i = extractvalue { i32, ptr } %.pn.i, 1
   %.sink24.i = extractvalue { i32, ptr } %.pn.i, 0 ; 2 uses
   store i32 %.sink24.i, ptr %3, align 8, !tbaa !3

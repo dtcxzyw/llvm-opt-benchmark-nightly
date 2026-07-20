@@ -93,17 +93,16 @@ bb.e:                                             ; preds = %bb.c, %bb.a, %bb.d
 define hidden i32 @upb_MiniTable_GetSubList(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 10
-  %.val27 = load i16, ptr %i.a, align 2, !tbaa !14 ; 4 uses
+  %.val27 = load i16, ptr %i.a, align 2, !tbaa !14 ; 5 uses
   %.not = icmp eq i16 %.val27, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i16 %.val27 to i64      ; 3 uses
+  %wide.trip.count = zext i16 %.val27 to i64      ; 2 uses
   br label %.lr.ph
 
 .preheader:                                       ; preds = %.critedge
   %i.b = shl i32 %.123, 16
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.c = icmp eq i16 %.val27, 1
   br i1 %i.c, label %.lr.ph41.epil.preheader, label %.preheader.new
 
@@ -153,8 +152,8 @@ bb.c:                                             ; preds = %upb_MiniTableField_
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !18
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.g
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph41.epil.preheader
+  %lcmp.mod.not = trunc i16 %.val27 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph41.epil.preheader, label %._crit_edge.loopexit
 
 .lr.ph41.epil.preheader:                          ; preds = %._crit_edge.loopexit.unr-lcssa, %.preheader
   %indvars.iv45.epil.init = phi i64 [ 0, %.preheader ], [ %indvars.iv.next46.1, %._crit_edge.loopexit.unr-lcssa ]

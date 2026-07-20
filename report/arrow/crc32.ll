@@ -202,19 +202,14 @@ bb.b:                                             ; preds = %._crit_edge
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
-  %.374 = phi ptr [ %i.rq, %bb.b ], [ %.273.lcssa, %._crit_edge ] ; 3 uses
-  %.467 = phi i32 [ %i.sn, %bb.b ], [ %.366.lcssa, %._crit_edge ] ; 4 uses
-  %.3 = phi i64 [ %i.so, %bb.b ], [ %.2.lcssa, %._crit_edge ] ; 5 uses
+  %.374 = phi ptr [ %i.rq, %bb.b ], [ %.273.lcssa, %._crit_edge ] ; 2 uses
+  %.467 = phi i32 [ %i.sn, %bb.b ], [ %.366.lcssa, %._crit_edge ] ; 3 uses
+  %.3 = phi i64 [ %i.so, %bb.b ], [ %.2.lcssa, %._crit_edge ] ; 3 uses
   %.not100 = icmp eq i64 %.3, 0
-  br i1 %.not100, label %._crit_edge106, label %.lr.ph105.preheader
+  br i1 %.not100, label %._crit_edge106, label %.lr.ph105.prol
 
-.lr.ph105.preheader:                              ; preds = %bb.c
-  %xtraiter = and i64 %.3, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph105.prol.loopexit, label %.lr.ph105.prol
-
-.lr.ph105.prol:                                   ; preds = %.lr.ph105.preheader
-  %i.sp = add nsw i64 %.3, -1
+.lr.ph105.prol:                                   ; preds = %bb.c
+  %i.sp = add i64 %.3, -1
   %i.sq = lshr i32 %.467, 8
   %i.sr = and i32 %.467, 255
   %i.ss = getelementptr inbounds nuw i8, ptr %.374, i64 1
@@ -225,20 +220,13 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   %i.sx = getelementptr inbounds nuw [4 x i8], ptr @_ZN5arrow8internalL12crc32_lookupE, i64 %i.sw
   %i.sy = load i32, ptr %i.sx, align 4, !tbaa !3
   %i.sz = xor i32 %i.sy, %i.sq                    ; 2 uses
-  br label %.lr.ph105.prol.loopexit
-
-.lr.ph105.prol.loopexit:                          ; preds = %.lr.ph105.prol, %.lr.ph105.preheader
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph105.preheader ], [ %i.sz, %.lr.ph105.prol ]
-  %.4103.unr = phi i64 [ %.3, %.lr.ph105.preheader ], [ %i.sp, %.lr.ph105.prol ]
-  %.5102.unr = phi i32 [ %.467, %.lr.ph105.preheader ], [ %i.sz, %.lr.ph105.prol ]
-  %.170101.unr = phi ptr [ %.374, %.lr.ph105.preheader ], [ %i.ss, %.lr.ph105.prol ]
   %3 = icmp eq i64 %.3, 1
   br i1 %3, label %._crit_edge106, label %.lr.ph105
 
-.lr.ph105:                                        ; preds = %.lr.ph105.prol.loopexit, %.lr.ph105
-  %.4103 = phi i64 [ %i.tk, %.lr.ph105 ], [ %.4103.unr, %.lr.ph105.prol.loopexit ]
-  %.5102 = phi i32 [ %i.tu, %.lr.ph105 ], [ %.5102.unr, %.lr.ph105.prol.loopexit ] ; 2 uses
-  %.170101 = phi ptr [ %i.tn, %.lr.ph105 ], [ %.170101.unr, %.lr.ph105.prol.loopexit ] ; 3 uses
+.lr.ph105:                                        ; preds = %.lr.ph105.prol, %.lr.ph105
+  %.4103 = phi i64 [ %i.tk, %.lr.ph105 ], [ %i.sp, %.lr.ph105.prol ]
+  %.5102 = phi i32 [ %i.tu, %.lr.ph105 ], [ %i.sz, %.lr.ph105.prol ] ; 2 uses
+  %.170101 = phi ptr [ %i.tn, %.lr.ph105 ], [ %i.ss, %.lr.ph105.prol ] ; 3 uses
   %i.ta = lshr i32 %.5102, 8
   %i.tb = and i32 %.5102, 255
   %i.tc = getelementptr inbounds nuw i8, ptr %.170101, i64 1
@@ -263,8 +251,8 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   %.not.1 = icmp eq i64 %i.tk, 0
   br i1 %.not.1, label %._crit_edge106, label %.lr.ph105, !llvm.loop !11
 
-._crit_edge106:                                   ; preds = %.lr.ph105.prol.loopexit, %.lr.ph105, %bb.c
-  %.5.lcssa = phi i32 [ %.467, %bb.c ], [ %.lcssa.unr, %.lr.ph105.prol.loopexit ], [ %i.tu, %.lr.ph105 ]
+._crit_edge106:                                   ; preds = %.lr.ph105.prol, %.lr.ph105, %bb.c
+  %.5.lcssa = phi i32 [ %.467, %bb.c ], [ %i.sz, %.lr.ph105.prol ], [ %i.tu, %.lr.ph105 ]
   %i.tv = xor i32 %.5.lcssa, -1
   ret i32 %i.tv
 }

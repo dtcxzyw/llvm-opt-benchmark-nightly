@@ -203,12 +203,12 @@ bb.ao:                                            ; preds = %bb.al
 bb.ap:                                            ; preds = %._crit_edge180
   %i.gq = call noalias noundef nonnull dereferenceable(2048) ptr @_Znwm(i64 noundef 2048) #20 ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2048) %i.gq, i8 0, i64 2048, i1 false)
-  %i.gr = load ptr, ptr %i.h, align 8, !tbaa !418
-  %i.gs = load ptr, ptr %i.g, align 8, !tbaa !419
+  %i.gr = load ptr, ptr %i.h, align 8, !tbaa !418 ; 3 uses
+  %i.gs = load ptr, ptr %i.g, align 8, !tbaa !419 ; 3 uses
   %i.gt = ptrtoint ptr %i.gr to i64
   %i.gu = ptrtoint ptr %i.gs to i64
-  %i.gv = sub i64 %i.gt, %i.gu                    ; 3 uses
-  %i.gw = lshr exact i64 %i.gv, 4                 ; 3 uses
+  %i.gv = sub i64 %i.gt, %i.gu                    ; 2 uses
+  %i.gw = lshr exact i64 %i.gv, 4                 ; 2 uses
   %i.gx = trunc i64 %i.gw to i32
   %i.gy = icmp sgt i32 %i.gx, 0
   br i1 %i.gy, label %.lr.ph183, label %._crit_edge184
@@ -227,13 +227,12 @@ bb.ap:                                            ; preds = %._crit_edge180
   br label %bb.aq
 
 ._crit_edge184.loopexit.unr-lcssa:                ; preds = %bb.aq
-  %12 = and i64 %i.gv, 16
-  %lcmp.mod.not = icmp eq i64 %12, 0
+  %lcmp.mod.not = icmp eq ptr %i.gr, %i.gs
   br i1 %lcmp.mod.not, label %._crit_edge184, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge184.loopexit.unr-lcssa, %.lr.ph183
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph183 ], [ %indvars.iv.next.1, %._crit_edge184.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod284 = trunc i64 %i.gw to i1
+  %lcmp.mod284 = icmp ne ptr %i.gr, %i.gs
   call void @llvm.assume(i1 %lcmp.mod284)
   %i.hf = getelementptr inbounds nuw [16 x i8], ptr %i.hb, i64 %indvars.iv.epil.init
   %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !138

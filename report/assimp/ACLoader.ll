@@ -204,15 +204,14 @@ bb.cw:                                            ; preds = %.lr.ph698
   %i.tu = load ptr, ptr %i.to, align 8
   %i.tv = getelementptr inbounds nuw i8, ptr %i.tu, i64 8
   store i32 %i.tq, ptr %i.tv, align 4
-  %6 = and i64 %indvars.iv, 1
-  %.not301 = icmp eq i64 %6, 0
+  %.not301 = trunc i64 %indvars.iv to i1
   %i.tw = load ptr, ptr %i.c, align 8             ; 2 uses
   %i.tx = load <2 x float>, ptr %i.jw, align 4    ; 2 uses
   %i.ty = load float, ptr %i.jx, align 4          ; 2 uses
   %i.tz = getelementptr inbounds nuw i8, ptr %.2579695, i64 12 ; 2 uses
   %.sroa.543.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.2579695, i64 8 ; 2 uses
   %.not302 = icmp eq ptr %.4596693, null          ; 2 uses
-  br i1 %.not301, label %bb.cx, label %bb.da
+  br i1 %.not301, label %bb.da, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw
   %i.ua = load i32, ptr %i.th, align 4
@@ -324,7 +323,7 @@ bb.dc:                                            ; preds = %bb.da, %bb.db
   br label %bb.dd
 
 bb.dd:                                            ; preds = %.sink.split, %bb.dc, %bb.cz
-  %.7599 = phi ptr [ null, %bb.cz ], [ null, %bb.dc ], [ %i.wd, %.sink.split ] ; 4 uses
+  %.7599 = phi ptr [ null, %bb.dc ], [ null, %bb.cz ], [ %i.wd, %.sink.split ] ; 4 uses
   %.3580 = getelementptr inbounds nuw i8, ptr %.2579695, i64 24 ; 2 uses
   %i.we = load ptr, ptr %i.kn, align 8
   %i.wf = ptrtoint ptr %.3580 to i64

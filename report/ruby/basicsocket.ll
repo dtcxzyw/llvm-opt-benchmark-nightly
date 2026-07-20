@@ -74,7 +74,7 @@ bb.a:
   %i.d = load i64, ptr %1, align 8, !tbaa !10
   store i64 %i.d, ptr %i.b, align 8, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !10   ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !10
   %.not39 = icmp eq i32 %0, 2
   br i1 %.not39, label %rb_scan_args_set.exit.thread, label %bb.b
 
@@ -146,15 +146,15 @@ bb.g:                                             ; preds = %rb_scan_args_set.ex
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !25
   store i32 %i.ag, ptr %3, align 8, !tbaa !38
-  %i.ah = trunc i64 %i.f to i1
+  %i.ah = trunc nuw i64 %i.f to i1
   br i1 %i.ah, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ai = call i64 @rb_fix2int(i64 noundef %i.f) #9
+  %i.ai = call i64 @rb_fix2int(i64 noundef 1) #9
   br label %rb_num2int_inline.exit
 
 bb.i:                                             ; preds = %bb.g
-  %i.aj = call i64 @rb_num2int(i64 noundef %i.f) #9
+  %i.aj = call i64 @rb_num2int(i64 noundef 0) #9
   br label %rb_num2int_inline.exit
 
 rb_num2int_inline.exit:                           ; preds = %bb.h, %bb.i
@@ -318,15 +318,15 @@ bb.a:
 define internal noundef i64 @bsock_s_for_fd(i64 noundef %0, i64 noundef %1) #0 {
 bb.a:
   %2 = alloca %struct.stat, align 8               ; 4 uses
-  %i.a = trunc i64 %1 to i1
+  %i.a = trunc nuw i64 %1 to i1
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @rb_fix2int(i64 noundef %1) #9
+  %i.b = tail call i64 @rb_fix2int(i64 noundef 1) #9
   br label %rb_num2int_inline.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = tail call i64 @rb_num2int(i64 noundef %1) #9
+  %i.c = tail call i64 @rb_num2int(i64 noundef 0) #9
   br label %rb_num2int_inline.exit
 
 rb_num2int_inline.exit:                           ; preds = %bb.b, %bb.c
@@ -414,9 +414,8 @@ bb.a:
   tail call void @rb_io_check_closed(ptr noundef %i.d) #9
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 20 ; 3 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !43
-  %1 = and i32 %i.f, 1
-  %.not = icmp eq i32 %1, 0
-  br i1 %.not, label %bb.b, label %bb.c
+  %.not = trunc nuw i32 %i.f to i1
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call i64 @rb_io_close(i64 noundef %0) #9
@@ -567,7 +566,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   unreachable
 
 rb_scan_args_set.exit:                            ; preds = %bb.d, %rbimpl_intern_const.exit34
-  %i.t = phi i64 [ %i.r, %bb.d ], [ %i.l, %rbimpl_intern_const.exit34 ] ; 6 uses
+  %i.t = phi i64 [ %i.r, %bb.d ], [ %i.l, %rbimpl_intern_const.exit34 ] ; 5 uses
   %i.u = phi i64 [ %i.p, %bb.d ], [ %i.i, %rbimpl_intern_const.exit34 ]
   %i.v = phi i64 [ %i.n, %bb.d ], [ %i.f, %rbimpl_intern_const.exit34 ]
   %i.w = tail call i64 @rb_io_taint_check(i64 noundef %2) #9
@@ -585,16 +584,12 @@ rb_scan_args_set.exit:                            ; preds = %bb.d, %rbimpl_inter
   br i1 %i.ag, label %bb.f, label %rb_type.exit
 
 bb.f:                                             ; preds = %rb_scan_args_set.exit
-  switch i64 %i.t, label %3 [
+  switch i64 %i.t, label %rb_type.exit.thread38 [
     i64 0, label %rb_type.exit.thread40
     i64 4, label %rb_type.exit.thread
     i64 20, label %rb_type.exit.thread42
     i64 36, label %rb_type.exit.thread
   ]
-
-3:                                                ; preds = %bb.f
-  %4 = trunc i64 %i.t to i1
-  br i1 %4, label %rb_type.exit.thread38, label %rb_type.exit.thread
 
 rb_type.exit:                                     ; preds = %rb_scan_args_set.exit
   %i.ah = inttoptr i64 %i.t to ptr
@@ -607,7 +602,7 @@ rb_type.exit:                                     ; preds = %rb_scan_args_set.ex
     i32 18, label %rb_type.exit.thread42
   ]
 
-rb_type.exit.thread38:                            ; preds = %3, %rb_type.exit
+rb_type.exit.thread38:                            ; preds = %bb.f, %rb_type.exit
   %i.al = tail call i64 @rb_fix2int(i64 noundef %i.t) #9
   %i.am = trunc i64 %i.al to i32
   store i32 %i.am, ptr %i.b, align 4, !tbaa !6
@@ -621,7 +616,7 @@ rb_type.exit.thread42:                            ; preds = %bb.f, %rb_type.exit
   store i32 1, ptr %i.b, align 4, !tbaa !6
   br label %bb.i
 
-rb_type.exit.thread:                              ; preds = %3, %bb.f, %bb.f, %rb_type.exit
+rb_type.exit.thread:                              ; preds = %bb.f, %bb.f, %rb_type.exit
   %i.an = call i64 @rb_string_value(ptr noundef nonnull %i.a) #9 ; 0 uses
   %i.ao = load i64, ptr %i.a, align 8, !tbaa !10
   %i.ap = inttoptr i64 %i.ao to ptr               ; 3 uses

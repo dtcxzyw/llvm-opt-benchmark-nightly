@@ -204,8 +204,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.cj = sub nsw i64 %i.ay, %wide.trip.count.i
   %i.ck = add nsw i64 %i.ay, -1
   %i.cl = add nsw i64 %.lcssa196.i, -1
-  %xtraiter = and i64 %i.cj, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod.not = trunc nuw i64 %i.cj to i1
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %wide.trip.count.i
   %indvars.iv.next252.i.prol = add nuw nsw i64 %wide.trip.count.i, 1
   %i.cn = icmp eq i64 %i.ck, %wide.trip.count.i
@@ -555,7 +554,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   br i1 %i.ci, label %.lr.ph210.i.preheader, label %.preheader182.i
 
 .lr.ph210.i.preheader:                            ; preds = %.preheader183.i
-  br i1 %lcmp.mod.not, label %.lr.ph210.i.prol.loopexit, label %.lr.ph210.i.prol
+  br i1 %lcmp.mod.not, label %.lr.ph210.i.prol, label %.lr.ph210.i.prol.loopexit
 
 .lr.ph210.i.prol:                                 ; preds = %.lr.ph210.i.preheader
   %i.jn = load i32, ptr %i.cm, align 4, !tbaa !31
@@ -797,9 +796,8 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
 .lr.ph214.preheader.i:                            ; preds = %.preheader182.i
   %i.pk = zext i32 %.1.lcssa.i to i64             ; 5 uses
   %i.pl = sub nsw i64 %.lcssa196.i, %i.pk
-  %xtraiter303 = and i64 %i.pl, 1
-  %lcmp.mod304.not = icmp eq i64 %xtraiter303, 0
-  br i1 %lcmp.mod304.not, label %.lr.ph214.i.prol.loopexit, label %.lr.ph214.i.prol
+  %lcmp.mod304.not = trunc nuw i64 %i.pl to i1
+  br i1 %lcmp.mod304.not, label %.lr.ph214.i.prol, label %.lr.ph214.i.prol.loopexit
 
 .lr.ph214.i.prol:                                 ; preds = %.lr.ph214.preheader.i
   %i.pm = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.pk
@@ -1202,7 +1200,6 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
 .split.us.preheader.i:                            ; preds = %bb.e
   %wide.trip.count.i = and i64 %i.x, 2147483647
   %i.ab = add nsw i64 %wide.trip.count.i, -1      ; 3 uses
-  %xtraiter = and i64 %i.x, 1
   %i.ac = icmp eq i64 %i.ab, 0
   br i1 %i.ac, label %.preheader71.us.i.epil.preheader, label %.split.us.preheader.i.new
 
@@ -1533,8 +1530,8 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   br i1 %niter.ncmp.1, label %..preheader70_crit_edge.us.preheader.i.unr-lcssa, label %.preheader71.us.i, !llvm.loop !48
 
 ..preheader70_crit_edge.us.preheader.i.unr-lcssa: ; preds = %.preheader71.us.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %..preheader70_crit_edge.us.preheader.i, label %.preheader71.us.i.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %i.x to i1
+  br i1 %lcmp.mod.not, label %.preheader71.us.i.epil.preheader, label %..preheader70_crit_edge.us.preheader.i
 
 .preheader71.us.i.epil.preheader:                 ; preds = %..preheader70_crit_edge.us.preheader.i.unr-lcssa, %.split.us.preheader.i
   %.sroa.70.0.i.epil.init = phi <32 x i16> [ zeroinitializer, %.split.us.preheader.i ], [ %i.kq, %..preheader70_crit_edge.us.preheader.i.unr-lcssa ]
@@ -1554,7 +1551,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %.sroa.14.0.i.epil.init = phi <32 x i16> [ zeroinitializer, %.split.us.preheader.i ], [ %i.im, %..preheader70_crit_edge.us.preheader.i.unr-lcssa ]
   %.sroa.0.0.i.epil.init = phi <32 x i16> [ zeroinitializer, %.split.us.preheader.i ], [ %i.ii, %..preheader70_crit_edge.us.preheader.i.unr-lcssa ]
   %indvars.iv.i.epil.init = phi i64 [ 0, %.split.us.preheader.i ], [ %indvars.iv.next.i.1, %..preheader70_crit_edge.us.preheader.i.unr-lcssa ]
-  %lcmp.mod198 = trunc i64 %i.x to i1
+  %lcmp.mod198 = trunc nuw i64 %i.x to i1
   call void @llvm.assume(i1 %lcmp.mod198)
   %i.kr = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.i.epil.init
   %i.ks = load i32, ptr %i.kr, align 4, !tbaa !31
@@ -1675,7 +1672,6 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %.sroa.70.0.scevgep91.sroa_idx.i = getelementptr inbounds nuw i8, ptr %scevgep91.i, i64 960
   store <32 x i16> %.lcssa165, ptr %.sroa.70.0.scevgep91.sroa_idx.i, align 64, !tbaa !23
   %i.nh = getelementptr inbounds nuw i8, ptr %3, i64 46139904 ; 3 uses
-  %xtraiter199 = and i64 %i.x, 1
   %i.ni = icmp eq i64 %i.ab, 0
   br i1 %i.ni, label %.preheader71.us.1.i.epil.preheader, label %..preheader70_crit_edge.us.preheader.i.new
 
@@ -1688,8 +1684,8 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   br label %_ZN9Stockfish4Eval4NNUE12_GLOBAL__N_131update_threats_accumulator_fullILj1024EEEvNS_5ColorERKNS1_18FeatureTransformerIXT_EEERKNS_8PositionERNS1_16AccumulatorStateINS1_8Features11FullThreatsEEE.exit
 
 .preheader69.split81.us.preheader.i.unr-lcssa:    ; preds = %.preheader71.us.1.i
-  %lcmp.mod200.not = icmp eq i64 %xtraiter199, 0
-  br i1 %lcmp.mod200.not, label %.preheader69.split81.us.preheader.i, label %.preheader71.us.1.i.epil.preheader
+  %lcmp.mod200.not = trunc nuw i64 %i.x to i1
+  br i1 %lcmp.mod200.not, label %.preheader71.us.1.i.epil.preheader, label %.preheader69.split81.us.preheader.i
 
 .preheader71.us.1.i.epil.preheader:               ; preds = %.preheader69.split81.us.preheader.i.unr-lcssa, %..preheader70_crit_edge.us.preheader.i
   %.sroa.70.1.i.epil.init = phi <32 x i16> [ zeroinitializer, %..preheader70_crit_edge.us.preheader.i ], [ %i.fj, %.preheader69.split81.us.preheader.i.unr-lcssa ]
@@ -1709,7 +1705,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %.sroa.14.1.i.epil.init = phi <32 x i16> [ zeroinitializer, %..preheader70_crit_edge.us.preheader.i ], [ %i.df, %.preheader69.split81.us.preheader.i.unr-lcssa ]
   %.sroa.0.1.i.epil.init = phi <32 x i16> [ zeroinitializer, %..preheader70_crit_edge.us.preheader.i ], [ %i.db, %.preheader69.split81.us.preheader.i.unr-lcssa ]
   %indvars.iv.1.i.epil.init = phi i64 [ 0, %..preheader70_crit_edge.us.preheader.i ], [ %indvars.iv.next.1.i.1, %.preheader69.split81.us.preheader.i.unr-lcssa ]
-  %lcmp.mod217 = trunc i64 %i.x to i1
+  %lcmp.mod217 = trunc nuw i64 %i.x to i1
   call void @llvm.assume(i1 %lcmp.mod217)
   %i.nj = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.1.i.epil.init
   %i.nk = load i32, ptr %i.nj, align 4, !tbaa !31
@@ -2112,7 +2108,6 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.preheader112
   %wide.trip.count = and i64 %i.t, 2147483647
-  %xtraiter = and i64 %i.t, 1
   %i.w = icmp eq i64 %wide.trip.count, 1
   br i1 %i.w, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -2121,8 +2116,8 @@ bb.a:
   br label %.lr.ph
 
 .preheader111.loopexit.unr-lcssa:                 ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader111, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %i.t to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %.preheader111
 
 .lr.ph.epil.preheader:                            ; preds = %.preheader111.loopexit.unr-lcssa, %.lr.ph.preheader
   %.sroa.64.1.epil.init = phi <32 x i16> [ %.sroa.64.0.copyload, %.lr.ph.preheader ], [ %i.hx, %.preheader111.loopexit.unr-lcssa ]
@@ -2142,7 +2137,7 @@ bb.a:
   %.sroa.8.1.epil.init = phi <32 x i16> [ %.sroa.8.0.copyload, %.lr.ph.preheader ], [ %i.ff, %.preheader111.loopexit.unr-lcssa ]
   %.sroa.0.1.epil.init = phi <32 x i16> [ %.sroa.0.0.copyload, %.lr.ph.preheader ], [ %i.fa, %.preheader111.loopexit.unr-lcssa ]
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.preheader111.loopexit.unr-lcssa ]
-  %lcmp.mod310 = trunc i64 %i.t to i1
+  %lcmp.mod310 = trunc nuw i64 %i.t to i1
   tail call void @llvm.assume(i1 %lcmp.mod310)
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.epil.init
   %i.y = load i32, ptr %i.x, align 4, !tbaa !31
@@ -2238,7 +2233,6 @@ bb.a:
 
 .lr.ph122.preheader:                              ; preds = %.preheader111
   %wide.trip.count142 = and i64 %i.cn, 2147483647
-  %xtraiter311 = and i64 %i.cn, 1
   %i.cq = icmp eq i64 %wide.trip.count142, 1
   br i1 %i.cq, label %.lr.ph122.epil.preheader, label %.lr.ph122.preheader.new
 
@@ -2408,8 +2402,8 @@ bb.a:
   br i1 %niter.ncmp.1, label %.preheader111.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !119
 
 .preheader110.loopexit.unr-lcssa:                 ; preds = %.lr.ph122
-  %lcmp.mod312.not = icmp eq i64 %xtraiter311, 0
-  br i1 %lcmp.mod312.not, label %.preheader110, label %.lr.ph122.epil.preheader
+  %lcmp.mod312.not = trunc nuw i64 %i.cn to i1
+  br i1 %lcmp.mod312.not, label %.lr.ph122.epil.preheader, label %.preheader110
 
 .lr.ph122.epil.preheader:                         ; preds = %.preheader110.loopexit.unr-lcssa, %.lr.ph122.preheader
   %.sroa.64.3.epil.init = phi <32 x i16> [ %.sroa.64.0, %.lr.ph122.preheader ], [ %i.pv, %.preheader110.loopexit.unr-lcssa ]
@@ -2429,7 +2423,7 @@ bb.a:
   %.sroa.8.3.epil.init = phi <32 x i16> [ %.sroa.8.0, %.lr.ph122.preheader ], [ %i.nr, %.preheader110.loopexit.unr-lcssa ]
   %.sroa.0.3.epil.init = phi <32 x i16> [ %.sroa.0.0, %.lr.ph122.preheader ], [ %i.nn, %.preheader110.loopexit.unr-lcssa ]
   %indvars.iv139.epil.init = phi i64 [ 0, %.lr.ph122.preheader ], [ %indvars.iv.next140.1, %.preheader110.loopexit.unr-lcssa ]
-  %lcmp.mod329 = trunc i64 %i.cn to i1
+  %lcmp.mod329 = trunc nuw i64 %i.cn to i1
   tail call void @llvm.assume(i1 %lcmp.mod329)
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv139.epil.init
   %i.hz = load i32, ptr %i.hy, align 4, !tbaa !31

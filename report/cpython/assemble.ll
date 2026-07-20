@@ -35,14 +35,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr i8, ptr %4, i64 28         ; 7 uses
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !11   ; 4 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !11   ; 5 uses
   %i.n = icmp sgt i32 %i.m, 0
   br i1 %i.n, label %.lr.ph.i, label %resolve_jump_offsets.exit
 
 .lr.ph.i:                                         ; preds = %bb.b
   %i.o = getelementptr i8, ptr %4, i64 16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !19   ; 7 uses
-  %wide.trip.count.i = zext nneg i32 %i.m to i64  ; 5 uses
+  %wide.trip.count.i = zext nneg i32 %i.m to i64  ; 4 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %.lr.ph.i
@@ -108,7 +108,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   br i1 %exitcond.not.i, label %.lr.ph.i16.preheader, label %bb.c, !llvm.loop !27
 
 .lr.ph.i16.preheader:                             ; preds = %bb.h
-  %xtraiter = and i64 %wide.trip.count.i, 1
   %i.ao = icmp eq i32 %i.m, 1
   br i1 %i.ao, label %.lr.ph.i16.epil.preheader, label %.lr.ph.i16.preheader.new
 
@@ -275,8 +274,8 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph.i16.1
   br i1 %niter.ncmp.1, label %.lr.ph66.us.i.preheader.unr-lcssa, label %.lr.ph.i16, !llvm.loop !34
 
 .lr.ph66.us.i.preheader.unr-lcssa:                ; preds = %bb.r
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph66.us.i.preheader, label %.lr.ph.i16.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.m to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i16.epil.preheader, label %.lr.ph66.us.i.preheader
 
 .lr.ph.i16.epil.preheader:                        ; preds = %.lr.ph66.us.i.preheader.unr-lcssa, %.lr.ph.i16.preheader
   %indvars.iv.i18.epil.init = phi i64 [ 0, %.lr.ph.i16.preheader ], [ %indvars.iv.next.i19.1, %.lr.ph66.us.i.preheader.unr-lcssa ]
@@ -342,8 +341,8 @@ assemble_init.exit.preheader.i:                   ; preds = %bb.u
 
 bb.v:                                             ; preds = %bb.t, %bb.u
   %i.eq = load i32, ptr %i.eg, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i.i.i = icmp sgt i32 %i.eq, -1
-  br i1 %.not.i.i.i.i, label %bb.w, label %Py_XDECREF.exit.i.i
+  %.not.i.i.i.i = icmp slt i32 %i.eq, 0
+  br i1 %.not.i.i.i.i, label %Py_XDECREF.exit.i.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.er = add nsw i32 %i.eq, -1                   ; 2 uses
@@ -362,8 +361,8 @@ Py_XDECREF.exit.i.i:                              ; preds = %bb.x, %bb.w, %bb.v,
 
 bb.y:                                             ; preds = %Py_XDECREF.exit.i.i
   %i.eu = load i32, ptr %i.et, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i16.i.i = icmp sgt i32 %i.eu, -1
-  br i1 %.not.i.i16.i.i, label %bb.z, label %Py_XDECREF.exit17.i.i
+  %.not.i.i16.i.i = icmp slt i32 %i.eu, 0
+  br i1 %.not.i.i16.i.i, label %Py_XDECREF.exit17.i.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.ev = add nsw i32 %i.eu, -1                   ; 2 uses
@@ -382,8 +381,8 @@ Py_XDECREF.exit17.i.i:                            ; preds = %bb.aa, %bb.z, %bb.y
 
 bb.ab:                                            ; preds = %Py_XDECREF.exit17.i.i
   %i.ey = load i32, ptr %i.ex, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i19.i.i = icmp sgt i32 %i.ey, -1
-  br i1 %.not.i.i19.i.i, label %bb.ac, label %assemble_emit.exit.thread
+  %.not.i.i19.i.i = icmp slt i32 %i.ey, 0
+  br i1 %.not.i.i19.i.i, label %assemble_emit.exit.thread, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.ez = add nsw i32 %i.ey, -1                   ; 2 uses
@@ -786,8 +785,8 @@ bb.bf:                                            ; preds = %bb.be
 
 .critedge.i.i:                                    ; preds = %bb.bf
   %i.me = load i32, ptr %i.lw, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i.i32 = icmp sgt i32 %i.me, -1
-  br i1 %.not.i.i.i32, label %bb.bg, label %.thread.i
+  %.not.i.i.i32 = icmp slt i32 %i.me, 0
+  br i1 %.not.i.i.i32, label %.thread.i, label %bb.bg
 
 bb.bg:                                            ; preds = %.critedge.i.i
   %i.mf = add nsw i32 %i.me, -1                   ; 2 uses
@@ -1149,8 +1148,8 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce, %.lo
 
 bb.ch:                                            ; preds = %bb.cg
   %i.rq = load i32, ptr %.pr.i31, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i41.i = icmp sgt i32 %i.rq, -1
-  br i1 %.not.i.i41.i, label %bb.ci, label %Py_XDECREF.exit.i
+  %.not.i.i41.i = icmp slt i32 %i.rq, 0
+  br i1 %.not.i.i41.i, label %Py_XDECREF.exit.i, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
   %i.rr = add nsw i32 %i.rq, -1                   ; 2 uses
@@ -1171,8 +1170,8 @@ Py_XDECREF.exit.i:                                ; preds = %bb.cj, %bb.ci, %bb.
 
 bb.ck:                                            ; preds = %Py_XDECREF.exit.i
   %i.ru = load i32, ptr %i.rt, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i43.i = icmp sgt i32 %i.ru, -1
-  br i1 %.not.i.i43.i, label %bb.cl, label %Py_XDECREF.exit44.i
+  %.not.i.i43.i = icmp slt i32 %i.ru, 0
+  br i1 %.not.i.i43.i, label %Py_XDECREF.exit44.i, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
   %i.rv = add nsw i32 %i.ru, -1                   ; 2 uses
@@ -1191,8 +1190,8 @@ Py_XDECREF.exit44.i:                              ; preds = %bb.cm, %bb.cl, %bb.
 
 bb.cn:                                            ; preds = %Py_XDECREF.exit44.i
   %i.ry = load i32, ptr %i.rx, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i46.i = icmp sgt i32 %i.ry, -1
-  br i1 %.not.i.i46.i, label %bb.co, label %Py_XDECREF.exit47.i
+  %.not.i.i46.i = icmp slt i32 %i.ry, 0
+  br i1 %.not.i.i46.i, label %Py_XDECREF.exit47.i, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn
   %i.rz = add nsw i32 %i.ry, -1                   ; 2 uses
@@ -1210,8 +1209,8 @@ Py_XDECREF.exit47.i:                              ; preds = %bb.cp, %bb.co, %bb.
 
 bb.cq:                                            ; preds = %Py_XDECREF.exit47.i
   %i.sb = load i32, ptr %.03257.i, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i49.i = icmp sgt i32 %i.sb, -1
-  br i1 %.not.i.i49.i, label %bb.cr, label %makecode.exit
+  %.not.i.i49.i = icmp slt i32 %i.sb, 0
+  br i1 %.not.i.i49.i, label %makecode.exit, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
   %i.sc = add nsw i32 %i.sb, -1                   ; 2 uses
@@ -1238,8 +1237,8 @@ assemble_emit.exit.thread:                        ; preds = %bb.ag, %bb.af, %ass
 
 bb.ct:                                            ; preds = %assemble_emit.exit.thread
   %i.sf = load i32, ptr %i.se, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i.i34 = icmp sgt i32 %i.sf, -1
-  br i1 %.not.i.i.i34, label %bb.cu, label %Py_XDECREF.exit.i35
+  %.not.i.i.i34 = icmp slt i32 %i.sf, 0
+  br i1 %.not.i.i.i34, label %Py_XDECREF.exit.i35, label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct
   %i.sg = add nsw i32 %i.sf, -1                   ; 2 uses
@@ -1258,8 +1257,8 @@ Py_XDECREF.exit.i35:                              ; preds = %bb.cv, %bb.cu, %bb.
 
 bb.cw:                                            ; preds = %Py_XDECREF.exit.i35
   %i.sj = load i32, ptr %i.si, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i4.i = icmp sgt i32 %i.sj, -1
-  br i1 %.not.i.i4.i, label %bb.cx, label %Py_XDECREF.exit5.i
+  %.not.i.i4.i = icmp slt i32 %i.sj, 0
+  br i1 %.not.i.i4.i, label %Py_XDECREF.exit5.i, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw
   %i.sk = add nsw i32 %i.sj, -1                   ; 2 uses
@@ -1278,8 +1277,8 @@ Py_XDECREF.exit5.i:                               ; preds = %bb.cy, %bb.cx, %bb.
 
 bb.cz:                                            ; preds = %Py_XDECREF.exit5.i
   %i.sn = load i32, ptr %i.sm, align 8, !tbaa !29 ; 2 uses
-  %.not.i.i7.i = icmp sgt i32 %i.sn, -1
-  br i1 %.not.i.i7.i, label %bb.da, label %assemble_free.exit
+  %.not.i.i7.i = icmp slt i32 %i.sn, 0
+  br i1 %.not.i.i7.i, label %assemble_free.exit, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
   %i.so = add nsw i32 %i.sn, -1                   ; 2 uses

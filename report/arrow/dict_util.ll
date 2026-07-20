@@ -62,7 +62,6 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
   %i.z = load i64, ptr %i.y, align 8, !tbaa !43   ; 3 uses
-  %xtraiter240 = and i64 %i.f, 1
   %i.aa = icmp eq i64 %i.f, 1
   br i1 %i.aa, label %.epil.preheader239, label %.lr.ph.split.us.i.new
 
@@ -156,7 +155,6 @@ bb.i:                                             ; preds = %bb.d
 
 .lr.ph.split.us.i22:                              ; preds = %.lr.ph.i14
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !43 ; 3 uses
-  %xtraiter233 = and i64 %i.f, 1
   %i.cd = icmp eq i64 %i.f, 1
   br i1 %i.cd, label %.epil.preheader232, label %.lr.ph.split.us.i22.new
 
@@ -250,7 +248,6 @@ bb.m:                                             ; preds = %bb.d
 
 .lr.ph.split.us.i36:                              ; preds = %.lr.ph.i28
   %i.ef = load i64, ptr %i.ee, align 8, !tbaa !43 ; 3 uses
-  %xtraiter226 = and i64 %i.f, 1
   %i.eg = icmp eq i64 %i.f, 1
   br i1 %i.eg, label %.epil.preheader225, label %.lr.ph.split.us.i36.new
 
@@ -344,7 +341,6 @@ bb.q:                                             ; preds = %bb.d
 
 .lr.ph.split.us.i50:                              ; preds = %.lr.ph.i42
   %i.gi = load i64, ptr %i.gh, align 8, !tbaa !43 ; 3 uses
-  %xtraiter219 = and i64 %i.f, 1
   %i.gj = icmp eq i64 %i.f, 1
   br i1 %i.gj, label %.epil.preheader218, label %.lr.ph.split.us.i50.new
 
@@ -438,7 +434,6 @@ bb.u:                                             ; preds = %bb.d
 
 .lr.ph.split.us.i64:                              ; preds = %.lr.ph.i56
   %i.il = load i64, ptr %i.ik, align 8, !tbaa !43 ; 3 uses
-  %xtraiter212 = and i64 %i.f, 1
   %i.im = icmp eq i64 %i.f, 1
   br i1 %i.im, label %.epil.preheader211, label %.lr.ph.split.us.i64.new
 
@@ -532,7 +527,6 @@ bb.y:                                             ; preds = %bb.d
 
 .lr.ph.split.us.i78:                              ; preds = %.lr.ph.i70
   %i.ko = load i64, ptr %i.kn, align 8, !tbaa !43 ; 3 uses
-  %xtraiter205 = and i64 %i.f, 1
   %i.kp = icmp eq i64 %i.f, 1
   br i1 %i.kp, label %.epil.preheader204, label %.lr.ph.split.us.i78.new
 
@@ -626,7 +620,6 @@ bb.ac:                                            ; preds = %bb.d
 
 .lr.ph.split.us.i92:                              ; preds = %.lr.ph.i84
   %i.mr = load i64, ptr %i.mq, align 8, !tbaa !43 ; 3 uses
-  %xtraiter = and i64 %i.f, 1
   %i.ms = icmp eq i64 %i.f, 1
   br i1 %i.ms, label %.epil.preheader, label %.lr.ph.split.us.i92.new
 
@@ -717,7 +710,6 @@ bb.ag:                                            ; preds = %bb.d
 
 .lr.ph.split.us.i106:                             ; preds = %.lr.ph.i98
   %i.or = load i64, ptr %i.oq, align 8, !tbaa !43 ; 3 uses
-  %xtraiter247 = and i64 %i.f, 1
   %i.os = icmp eq i64 %i.f, 1
   br i1 %i.os, label %.epil.preheader246, label %.lr.ph.split.us.i106.new
 
@@ -798,13 +790,13 @@ bb.aj:                                            ; preds = %bb.ai, %.lr.ph.spli
   br i1 %exitcond.not.i105, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.lr.ph.split.i100, !llvm.loop !56
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit.unr-lcssa: ; preds = %bb.ah
-  %lcmp.mod248.not = icmp eq i64 %xtraiter247, 0
-  br i1 %lcmp.mod248.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader246
+  %lcmp.mod248.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod248.not, label %.epil.preheader246, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader246:                               ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit.unr-lcssa, %.lr.ph.split.us.i106
   %.021.us.i107.epil.init = phi i64 [ 0, %.lr.ph.split.us.i106 ], [ %.2.us.i109.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit.unr-lcssa ]
   %.01820.us.i108.epil.init = phi i64 [ 0, %.lr.ph.split.us.i106 ], [ %i.ps, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit.unr-lcssa ]
-  %lcmp.mod250 = trunc i64 %i.f to i1
+  %lcmp.mod250 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod250)
   %i.qp = getelementptr inbounds nuw [8 x i8], ptr %i.op, i64 %.01820.us.i108.epil.init
   %i.qq = load i64, ptr %i.qp, align 8, !tbaa !54
@@ -822,13 +814,13 @@ _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9Array
   br label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit188.unr-lcssa: ; preds = %bb.f
-  %lcmp.mod241.not = icmp eq i64 %xtraiter240, 0
-  br i1 %lcmp.mod241.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader239
+  %lcmp.mod241.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod241.not, label %.epil.preheader239, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader239:                               ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit188.unr-lcssa, %.lr.ph.split.us.i
   %.021.us.i.epil.init = phi i64 [ 0, %.lr.ph.split.us.i ], [ %.2.us.i.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit188.unr-lcssa ]
   %.01820.us.i.epil.init = phi i64 [ 0, %.lr.ph.split.us.i ], [ %i.bc, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit188.unr-lcssa ]
-  %lcmp.mod243 = trunc i64 %i.f to i1
+  %lcmp.mod243 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod243)
   %i.rb = getelementptr inbounds nuw i8, ptr %i.x, i64 %.01820.us.i.epil.init
   %i.rc = load i8, ptr %i.rb, align 1, !tbaa !44
@@ -847,13 +839,13 @@ _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9Array
   br label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit190.unr-lcssa: ; preds = %bb.j
-  %lcmp.mod234.not = icmp eq i64 %xtraiter233, 0
-  br i1 %lcmp.mod234.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader232
+  %lcmp.mod234.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod234.not, label %.epil.preheader232, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader232:                               ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit190.unr-lcssa, %.lr.ph.split.us.i22
   %.021.us.i23.epil.init = phi i64 [ 0, %.lr.ph.split.us.i22 ], [ %.2.us.i25.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit190.unr-lcssa ]
   %.01820.us.i24.epil.init = phi i64 [ 0, %.lr.ph.split.us.i22 ], [ %i.df, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit190.unr-lcssa ]
-  %lcmp.mod236 = trunc i64 %i.f to i1
+  %lcmp.mod236 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod236)
   %i.ro = getelementptr inbounds nuw i8, ptr %i.ca, i64 %.01820.us.i24.epil.init
   %i.rp = load i8, ptr %i.ro, align 1, !tbaa !44
@@ -872,13 +864,13 @@ _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9Array
   br label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit192.unr-lcssa: ; preds = %bb.n
-  %lcmp.mod227.not = icmp eq i64 %xtraiter226, 0
-  br i1 %lcmp.mod227.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader225
+  %lcmp.mod227.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod227.not, label %.epil.preheader225, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader225:                               ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit192.unr-lcssa, %.lr.ph.split.us.i36
   %.021.us.i37.epil.init = phi i64 [ 0, %.lr.ph.split.us.i36 ], [ %.2.us.i39.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit192.unr-lcssa ]
   %.01820.us.i38.epil.init = phi i64 [ 0, %.lr.ph.split.us.i36 ], [ %i.fi, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit192.unr-lcssa ]
-  %lcmp.mod229 = trunc i64 %i.f to i1
+  %lcmp.mod229 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod229)
   %i.sb = getelementptr inbounds nuw [2 x i8], ptr %i.ed, i64 %.01820.us.i38.epil.init
   %i.sc = load i16, ptr %i.sb, align 2, !tbaa !48
@@ -897,13 +889,13 @@ _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9Array
   br label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit194.unr-lcssa: ; preds = %bb.r
-  %lcmp.mod220.not = icmp eq i64 %xtraiter219, 0
-  br i1 %lcmp.mod220.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader218
+  %lcmp.mod220.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod220.not, label %.epil.preheader218, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader218:                               ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit194.unr-lcssa, %.lr.ph.split.us.i50
   %.021.us.i51.epil.init = phi i64 [ 0, %.lr.ph.split.us.i50 ], [ %.2.us.i53.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit194.unr-lcssa ]
   %.01820.us.i52.epil.init = phi i64 [ 0, %.lr.ph.split.us.i50 ], [ %i.hl, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit194.unr-lcssa ]
-  %lcmp.mod222 = trunc i64 %i.f to i1
+  %lcmp.mod222 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod222)
   %i.so = getelementptr inbounds nuw [2 x i8], ptr %i.gg, i64 %.01820.us.i52.epil.init
   %i.sp = load i16, ptr %i.so, align 2, !tbaa !48
@@ -922,13 +914,13 @@ _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9Array
   br label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit196.unr-lcssa: ; preds = %bb.v
-  %lcmp.mod213.not = icmp eq i64 %xtraiter212, 0
-  br i1 %lcmp.mod213.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader211
+  %lcmp.mod213.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod213.not, label %.epil.preheader211, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader211:                               ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit196.unr-lcssa, %.lr.ph.split.us.i64
   %.021.us.i65.epil.init = phi i64 [ 0, %.lr.ph.split.us.i64 ], [ %.2.us.i67.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit196.unr-lcssa ]
   %.01820.us.i66.epil.init = phi i64 [ 0, %.lr.ph.split.us.i64 ], [ %i.jo, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit196.unr-lcssa ]
-  %lcmp.mod215 = trunc i64 %i.f to i1
+  %lcmp.mod215 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod215)
   %i.tb = getelementptr inbounds nuw [4 x i8], ptr %i.ij, i64 %.01820.us.i66.epil.init
   %i.tc = load i32, ptr %i.tb, align 4, !tbaa !3
@@ -947,13 +939,13 @@ _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9Array
   br label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit198.unr-lcssa: ; preds = %bb.z
-  %lcmp.mod206.not = icmp eq i64 %xtraiter205, 0
-  br i1 %lcmp.mod206.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader204
+  %lcmp.mod206.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod206.not, label %.epil.preheader204, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader204:                               ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit198.unr-lcssa, %.lr.ph.split.us.i78
   %.021.us.i79.epil.init = phi i64 [ 0, %.lr.ph.split.us.i78 ], [ %.2.us.i81.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit198.unr-lcssa ]
   %.01820.us.i80.epil.init = phi i64 [ 0, %.lr.ph.split.us.i78 ], [ %i.lr, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit198.unr-lcssa ]
-  %lcmp.mod208 = trunc i64 %i.f to i1
+  %lcmp.mod208 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod208)
   %i.to = getelementptr inbounds nuw [4 x i8], ptr %i.km, i64 %.01820.us.i80.epil.init
   %i.tp = load i32, ptr %i.to, align 4, !tbaa !3
@@ -972,13 +964,13 @@ _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9Array
   br label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 _ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit200.unr-lcssa: ; preds = %bb.ad
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %i.f to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit
 
 .epil.preheader:                                  ; preds = %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit200.unr-lcssa, %.lr.ph.split.us.i92
   %.021.us.i93.epil.init = phi i64 [ 0, %.lr.ph.split.us.i92 ], [ %.2.us.i95.1, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit200.unr-lcssa ]
   %.01820.us.i94.epil.init = phi i64 [ 0, %.lr.ph.split.us.i92 ], [ %i.ns, %_ZN5arrow9dict_util12_GLOBAL__N_116LogicalNullCountINS_9UInt8TypeEEElRKNS_9ArraySpanE.exit.loopexit200.unr-lcssa ]
-  %lcmp.mod203 = trunc i64 %i.f to i1
+  %lcmp.mod203 = trunc nuw i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod203)
   %i.ub = getelementptr inbounds nuw [8 x i8], ptr %i.mp, i64 %.01820.us.i94.epil.init
   %i.uc = load i64, ptr %i.ub, align 8, !tbaa !54

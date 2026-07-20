@@ -204,9 +204,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.05074.ph = phi i64 [ %i.b, %iter.check ], [ %i.b, %vector.memcheck ], [ %i.i, %vec.epilog.iter.check ], [ %i.aa, %vec.epilog.middle.block ] ; 6 uses
   %i.al = sub i64 %2, %.05074.ph
   %.neg = add i64 %.05074.ph, 1
-  %xtraiter = and i64 %i.al, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %lcmp.mod.not = trunc nuw i64 %i.al to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %invariant.gep.prol = getelementptr i8, ptr %0, i64 %.05074.ph ; 2 uses
@@ -609,7 +608,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %conflict.rdx140, label %.lr.ph.preheader148, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.mod.vf = and i64 %2, 1                       ; 2 uses
+  %n.mod.vf = and i64 %2, 1
   %n.vec = sub i64 %i.k, %n.mod.vf                ; 2 uses
   %i.ab = add i64 %i.b, %n.vec
   br label %vector.body
@@ -663,8 +662,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bj, label %middle.block, label %vector.body, !llvm.loop !75
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.mod.vf, 0
-  br i1 %cmp.n, label %.preheader72, label %.lr.ph.preheader148
+  %cmp.n = trunc nuw i64 %2 to i1
+  br i1 %cmp.n, label %.lr.ph.preheader148, label %.preheader72
 
 .lr.ph.preheader148:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.05074.ph = phi i64 [ %i.b, %vector.memcheck ], [ %i.b, %.lr.ph.preheader ], [ %i.ab, %middle.block ]
@@ -1067,9 +1066,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.073102.ph = phi i64 [ %i.c, %iter.check ], [ %i.c, %vector.scevcheck ], [ %i.c, %vector.memcheck ], [ %i.s, %vec.epilog.iter.check ], [ %i.eu, %vec.epilog.middle.block ] ; 6 uses
   %i.hk = sub i64 %2, %.073102.ph
   %.neg = add i64 %.073102.ph, 1
-  %xtraiter = and i64 %i.hk, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader99.prol.loopexit, label %.preheader99.prol
+  %lcmp.mod.not = trunc nuw i64 %i.hk to i1
+  br i1 %lcmp.mod.not, label %.preheader99.prol, label %.preheader99.prol.loopexit
 
 .preheader99.prol:                                ; preds = %.preheader99.preheader
   %i.hl = shl nsw i64 %.073102.ph, 1

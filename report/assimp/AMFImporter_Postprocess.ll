@@ -203,8 +203,8 @@ bb.am:                                            ; preds = %bb.al, %.lr.ph.i193
   br i1 %i.go, label %.lr.ph34.split.i, label %bb.al
 
 .loopexit.i195.loopexit.unr-lcssa:                ; preds = %bb.an
-  %lcmp.mod3329.not = icmp eq i64 %xtraiter3327, 0
-  br i1 %lcmp.mod3329.not, label %.loopexit.i195, label %.epil.preheader3326
+  %lcmp.mod3329.not = trunc i32 %i.gu to i1
+  br i1 %lcmp.mod3329.not, label %.epil.preheader3326, label %.loopexit.i195
 
 .epil.preheader3326:                              ; preds = %.loopexit.i195.loopexit.unr-lcssa, %.lr.ph29.i
   %.028.i.epil.init = phi i64 [ 0, %.lr.ph29.i ], [ %i.hh, %.loopexit.i195.loopexit.unr-lcssa ]
@@ -231,20 +231,19 @@ bb.am:                                            ; preds = %bb.al, %.lr.ph.i193
   %.sroa.01.033.i = phi ptr [ %.sroa.01.0.i196, %.loopexit.i195 ], [ %.sroa.05.023.i1209, %bb.am ] ; 3 uses
   %.432.i = phi i64 [ %.5.lcssa.i, %.loopexit.i195 ], [ %i.gn, %bb.am ] ; 3 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.01.033.i, i64 16
-  %i.gu = load i32, ptr %i.gt, align 8            ; 4 uses
-  %11 = zext i32 %i.gu to i64                     ; 2 uses
+  %i.gu = load i32, ptr %i.gt, align 8            ; 5 uses
   %.not38.i = icmp eq i32 %i.gu, 0
   br i1 %.not38.i, label %.loopexit.i195, label %.lr.ph29.i
 
 .lr.ph29.i:                                       ; preds = %.lr.ph34.split.i
   %i.gv = getelementptr inbounds nuw i8, ptr %.sroa.01.033.i, i64 24
   %i.gw = load ptr, ptr %i.gv, align 8            ; 3 uses
-  %xtraiter3327 = and i64 %11, 1
   %i.gx = icmp eq i32 %i.gu, 1
   br i1 %i.gx, label %.epil.preheader3326, label %.lr.ph29.i.new
 
 .lr.ph29.i.new:                                   ; preds = %.lr.ph29.i
-  %unroll_iter3332 = and i64 %11, 4294967294
+  %11 = and i32 %i.gu, -2
+  %unroll_iter3332 = zext i32 %11 to i64
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.an, %.lr.ph29.i.new

@@ -203,9 +203,8 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 16 ; 2 uses
   %i.ae = load i8, ptr %i.ad, align 8
-  %2 = and i8 %i.ae, 1
-  %.not72 = icmp eq i8 %2, 0
-  br i1 %.not72, label %bb.n, label %bb.j
+  %.not72 = trunc i8 %i.ae to i1
+  br i1 %.not72, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %bb.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.z, i64 4
@@ -452,18 +451,17 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 16             ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   %.promoted10 = load ptr, ptr %i.g, align 8      ; 2 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.k = icmp eq i32 %1, 1
   br i1 %i.k, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %3 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %3 to i64
   br label %bb.d
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.j
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]

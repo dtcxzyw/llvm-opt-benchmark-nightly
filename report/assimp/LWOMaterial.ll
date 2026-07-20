@@ -203,10 +203,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
-  %4 = and i64 %i.n, 1
   %i.au = load ptr, ptr %i.b, align 8
-  %i.av = sub nuw nsw i64 2, %4
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.av
+  %i.av = sub i64 2, %i.n
+  %i.aw = getelementptr inbounds i8, ptr %i.au, i64 %i.av
   store ptr %i.aw, ptr %i.b, align 8
   ret void
 }

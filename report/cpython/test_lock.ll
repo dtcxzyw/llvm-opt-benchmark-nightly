@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.e = tail call i64 @PyLong_AsSsize_t(ptr noundef nonnull %i.d) #6 ; 2 uses
   %i.f = load i32, ptr %i.d, align 8, !tbaa !26   ; 2 uses
-  %.not.i89 = icmp sgt i32 %i.f, -1
-  br i1 %.not.i89, label %bb.e, label %Py_DECREF.exit90
+  %.not.i89 = icmp slt i32 %i.f, 0
+  br i1 %.not.i89, label %Py_DECREF.exit90, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.g = add nsw i32 %i.f, -1                     ; 2 uses
@@ -305,8 +305,8 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.am = tail call i64 @PyLong_AsSsize_t(ptr noundef nonnull %i.al) #6 ; 2 uses
   %i.an = load i32, ptr %i.al, align 8, !tbaa !26 ; 2 uses
-  %.not.i87 = icmp sgt i32 %i.an, -1
-  br i1 %.not.i87, label %bb.v, label %Py_DECREF.exit88
+  %.not.i87 = icmp slt i32 %i.an, 0
+  br i1 %.not.i87, label %Py_DECREF.exit88, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.ao = add nsw i32 %i.an, -1                   ; 2 uses
@@ -342,8 +342,8 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.aw = tail call i64 @PyLong_AsSsize_t(ptr noundef nonnull %i.av) #6 ; 2 uses
   %i.ax = load i32, ptr %i.av, align 8, !tbaa !26 ; 2 uses
-  %.not.i = icmp sgt i32 %i.ax, -1
-  br i1 %.not.i, label %bb.aa, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.ax, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.ay = add nsw i32 %i.ax, -1                   ; 2 uses
@@ -401,8 +401,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i32, ptr %i.a, align 8, !tbaa !26   ; 2 uses
-  %.not.i = icmp sgt i32 %i.c, -1
-  br i1 %.not.i, label %bb.c, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.c, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = add nsw i32 %i.c, -1                     ; 2 uses
@@ -750,9 +750,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.f = load atomic i8, ptr %2 seq_cst, align 8
-  %3 = and i8 %i.f, 1
-  %.not1 = icmp eq i8 %3, 0
-  br i1 %.not1, label %bb.f, label %bb.g
+  %.not1 = trunc i8 %i.f to i1
+  br i1 %.not1, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   call void @__assert_fail(ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.11, i32 noundef 537, ptr noundef nonnull @__PRETTY_FUNCTION__.test_lock_recursive) #7
@@ -791,9 +790,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.n = load atomic i8, ptr %2 seq_cst, align 8
-  %4 = and i8 %i.n, 1
-  %.not2 = icmp eq i8 %4, 0
-  br i1 %.not2, label %bb.o, label %bb.n
+  %.not2 = trunc i8 %i.n to i1
+  br i1 %.not2, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   call void @__assert_fail(ptr noundef nonnull @.str.42, ptr noundef nonnull @.str.11, i32 noundef 546, ptr noundef nonnull @__PRETTY_FUNCTION__.test_lock_recursive) #7
@@ -1172,8 +1170,8 @@ bb.p:                                             ; preds = %._crit_edge17
 
 bb.q:                                             ; preds = %.loopexit
   %i.bm = load i32, ptr %.054, align 8, !tbaa !26 ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.bm, -1
-  br i1 %.not.i.i, label %bb.r, label %Py_XDECREF.exit
+  %.not.i.i = icmp slt i32 %i.bm, 0
+  br i1 %.not.i.i, label %Py_XDECREF.exit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.bn = add nsw i32 %i.bm, -1                   ; 2 uses

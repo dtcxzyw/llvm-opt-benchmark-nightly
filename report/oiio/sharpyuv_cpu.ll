@@ -37,7 +37,6 @@ bb.c:                                             ; preds = %bb.b
   br label %CheckSlowModel.exit
 
 bb.d:                                             ; preds = %bb.b
-  %1 = and i32 %i.f, 1
   br label %CheckSlowModel.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -123,7 +122,7 @@ switch.lookup:                                    ; preds = %.preheader.preheade
   br label %CheckSlowModel.exit
 
 CheckSlowModel.exit:                              ; preds = %.preheader.preheader.i, %switch.lookup, %bb.j, %bb.i, %bb.g, %x86CPUInfo.exit, %bb.b, %bb.e, %bb.a, %bb.k, %bb.h, %bb.f, %bb.d, %bb.c
-  %.0 = phi i32 [ 0, %bb.e ], [ %.lobit17, %bb.c ], [ %1, %bb.d ], [ %switch.ext, %switch.lookup ], [ 0, %bb.a ], [ %.lobit16, %bb.f ], [ %i.ae, %bb.h ], [ %.lobit, %bb.k ], [ 0, %bb.j ], [ 0, %bb.b ], [ 0, %x86CPUInfo.exit ], [ 0, %bb.i ], [ 0, %bb.g ], [ 0, %.preheader.preheader.i ]
+  %.0 = phi i32 [ 0, %bb.e ], [ %.lobit17, %bb.c ], [ %i.f, %bb.d ], [ %switch.ext, %switch.lookup ], [ 0, %bb.a ], [ %.lobit16, %bb.f ], [ %i.ae, %bb.h ], [ %.lobit, %bb.k ], [ 0, %bb.j ], [ 0, %bb.b ], [ 0, %x86CPUInfo.exit ], [ 0, %bb.i ], [ 0, %bb.g ], [ 0, %.preheader.preheader.i ]
   ret i32 %.0
 }
 

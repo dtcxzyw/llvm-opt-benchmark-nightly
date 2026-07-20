@@ -203,10 +203,9 @@ bb.e:                                             ; preds = %_ZNSt3setImSt4lessI
   %i.j = lshr i64 %storemerge16, 6
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.j
   %i.l = load i64, ptr %i.k, align 8, !tbaa !26
-  %1 = shl nuw i64 1, %i.i
-  %2 = and i64 %i.l, %1
-  %.not13 = icmp eq i64 %2, 0
-  br i1 %.not13, label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit, label %bb.f
+  %1 = lshr i64 %i.l, %i.i
+  %.not13 = trunc i64 %1 to i1
+  br i1 %.not13, label %bb.f, label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit
 
 bb.f:                                             ; preds = %.preheader
   %.02022.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !38 ; 2 uses
@@ -609,31 +608,15 @@ declare i32 @pthread_create(ptr noundef, ptr noundef, ptr noundef, ptr noundef) 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt17_Function_handlerIFvvESt5_BindIFMN9Stockfish6ThreadEFvvEPS3_EEE9_M_invokeERKSt9_Any_data(ptr noundef nonnull align 8 dereferenceable(16) %0) #4 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !90     ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !90     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !89
-  %.unpack.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !tbaa !78 ; 3 uses
   %.elt2.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.unpack3.i.i.i.i.i.i = load i64, ptr %.elt2.i.i.i.i.i.i, align 8, !tbaa !78
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.unpack3.i.i.i.i.i.i ; 2 uses
-  %1 = and i64 %.unpack.i.i.i.i.i.i, 1
-  %.not.i.i.i.i.i.i = icmp eq i64 %1, 0
-  br i1 %.not.i.i.i.i.i.i, label %7, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = load ptr, ptr %i.d, align 8, !tbaa !42
-  %4 = getelementptr i8, ptr %3, i64 %.unpack.i.i.i.i.i.i
-  %5 = getelementptr i8, ptr %4, i64 -1
-  %6 = load ptr, ptr %5, align 8, !nosanitize !71
-  br label %_ZSt10__invoke_rIvRSt5_BindIFMN9Stockfish6ThreadEFvvEPS2_EEJEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit
-
-7:                                                ; preds = %bb.a
-  %8 = inttoptr i64 %.unpack.i.i.i.i.i.i to ptr
-  br label %_ZSt10__invoke_rIvRSt5_BindIFMN9Stockfish6ThreadEFvvEPS2_EEJEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit
-
-_ZSt10__invoke_rIvRSt5_BindIFMN9Stockfish6ThreadEFvvEPS2_EEJEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit: ; preds = %2, %7
-  %9 = phi ptr [ %6, %2 ], [ %8, %7 ]
-  tail call void %9(ptr noundef nonnull align 8 dereferenceable(192) %i.d) #26, !inline_history !439
+  %1 = load ptr, ptr %i.d, align 8, !tbaa !42
+  %2 = load ptr, ptr %1, align 8, !nosanitize !71
+  tail call void %2(ptr noundef nonnull align 8 dereferenceable(192) %i.d) #26, !inline_history !439
   ret void
 }
 

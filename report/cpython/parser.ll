@@ -203,9 +203,8 @@ bb.c:                                             ; preds = %bb.b
   br label %CHECK_CALL_NULL_ALLOWED.exit.thread
 
 CHECK_CALL_NULL_ALLOWED.exit:                     ; preds = %bb.a
-  %3 = and i32 %1, 1
-  %or.cond = icmp eq i32 %3, 0
-  %.str.60..str.61 = select i1 %or.cond, ptr @.str.60, ptr @.str.61
+  %or.cond = trunc nuw i32 %1 to i1
+  %.str.60..str.61 = select i1 %or.cond, ptr @.str.61, ptr @.str.60
   %i.e = load ptr, ptr @PyExc_SyntaxError, align 8, !tbaa !55
   %i.f = getelementptr i8, ptr %i.a, i64 40
   %i.g = load i32, ptr %i.f, align 8, !tbaa !59

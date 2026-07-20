@@ -203,34 +203,34 @@ _ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_
 
 bb.c:                                             ; preds = %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i
   %i.hz = load i64, ptr %i.f, align 8, !tbaa !26  ; 2 uses
-  %i.ia = or disjoint i16 %i.hc, -16384           ; 2 uses
+  %i.ia = or disjoint i16 %i.hc, -16384
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 488
   %i.ic = load i64, ptr %i.ib, align 8, !tbaa !26
   %i.id = and i64 %i.ic, %i.hz
   %i.ie = icmp eq i64 %i.id, 0
-  %i.if = trunc i32 %i.hx to i1
+  %i.if = trunc nuw i32 %i.hx to i1
   %or.cond.i = and i1 %i.ie, %i.if
-  br i1 %or.cond.i, label %bb.d, label %bb.e
+  br i1 %or.cond.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 465
-  %2 = load i8, ptr %i.ig, align 1, !tbaa !56
-  %3 = zext i8 %2 to i16
-  %4 = add nuw nsw i16 %i.ia, %3
-  %5 = getelementptr inbounds nuw i8, ptr %i.ht, i64 2
-  store i16 %4, ptr %i.ht, align 2, !tbaa !27
-  br label %bb.e
+  %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 496
+  %2 = load i64, ptr %i.ig, align 8, !tbaa !26
+  %3 = and i64 %2, %i.hz
+  %4 = icmp eq i64 %3, 0
+  %5 = and i32 %i.hx, 2
+  %6 = icmp ne i32 %5, 0
+  %or.cond.1.i = and i1 %6, %4
+  br i1 %or.cond.1.i, label %bb.e, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.1.i = phi ptr [ %i.ht, %bb.c ], [ %5, %bb.d ] ; 2 uses
-  %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 496
-  %6 = load i64, ptr %i.ih, align 8, !tbaa !26
-  %7 = and i64 %6, %i.hz
-  %8 = icmp eq i64 %7, 0
-  %9 = and i32 %i.hx, 2
-  %10 = icmp ne i32 %9, 0
-  %or.cond.1.i = and i1 %10, %8
-  br i1 %or.cond.1.i, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit
+  %.sink.i = phi i64 [ 465, %bb.c ], [ 466, %bb.d ]
+  %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 %.sink.i
+  %7 = load i8, ptr %i.ih, align 1, !tbaa !56
+  %8 = zext i8 %7 to i16
+  %9 = add nuw nsw i16 %i.ia, %8
+  %10 = getelementptr inbounds nuw i8, ptr %i.ht, i64 2
+  store i16 %9, ptr %i.ht, align 2, !tbaa !27
+  br label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit
 
 bb.f:                                             ; preds = %bb.a
   %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 5 uses
@@ -565,7 +565,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.1.i42 = phi ptr [ %i.qo, %bb.g ], [ %i.rg, %bb.h ] ; 2 uses
+  %.1.i42 = phi ptr [ %i.qo, %bb.g ], [ %i.rg, %bb.h ] ; 3 uses
   %i.rh = getelementptr inbounds nuw i8, ptr %0, i64 544
   %i.ri = load i64, ptr %i.rh, align 8, !tbaa !26
   %i.rj = and i64 %i.ri, %i.qu
@@ -575,20 +575,17 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %or.cond.1.i43 = and i1 %i.rm, %i.rk
   br i1 %or.cond.1.i43, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit
 
-_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split: ; preds = %bb.i, %bb.e
-  %.sink = phi i64 [ 466, %bb.e ], [ 472, %bb.i ]
-  %.sink84 = phi i16 [ %i.ia, %bb.e ], [ %i.qv, %bb.i ]
-  %.1.i42.sink83 = phi ptr [ %.1.i, %bb.e ], [ %.1.i42, %bb.i ] ; 2 uses
-  %i.rn = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
-  %i.ro = load i8, ptr %i.rn, align 2, !tbaa !56
+_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split: ; preds = %bb.i
+  %i.rn = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %i.ro = load i8, ptr %i.rn, align 8, !tbaa !56
   %i.rp = zext i8 %i.ro to i16
-  %i.rq = add nuw nsw i16 %.sink84, %i.rp
-  %i.rr = getelementptr inbounds nuw i8, ptr %.1.i42.sink83, i64 2
-  store i16 %i.rq, ptr %.1.i42.sink83, align 2, !tbaa !27
+  %i.rq = add nuw nsw i16 %i.qv, %i.rp
+  %i.rr = getelementptr inbounds nuw i8, ptr %.1.i42, i64 2
+  store i16 %i.rq, ptr %.1.i42, align 2, !tbaa !27
   br label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit
 
-_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit: ; preds = %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, %bb.i, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i, %bb.e, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i
-  %11 = phi ptr [ %.1.i42, %bb.i ], [ %i.ht, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %.1.i, %bb.e ], [ %i.qo, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %i.rr, %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split ]
+_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit: ; preds = %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, %bb.i, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i, %bb.e, %bb.d, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i
+  %11 = phi ptr [ %10, %bb.e ], [ %i.ht, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %i.ht, %bb.d ], [ %i.qo, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %.1.i42, %bb.i ], [ %i.rr, %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE1EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split ]
   ret ptr %11
 }
 
@@ -991,34 +988,34 @@ _ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_
 
 bb.f:                                             ; preds = %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i
   %i.lb = load i64, ptr %i.n, align 8, !tbaa !26  ; 2 uses
-  %i.lc = or disjoint i16 %i.kf, -16384           ; 2 uses
+  %i.lc = or disjoint i16 %i.kf, -16384
   %i.ld = getelementptr inbounds nuw i8, ptr %0, i64 488
   %i.le = load i64, ptr %i.ld, align 8, !tbaa !26
   %i.lf = and i64 %i.le, %i.lb
   %i.lg = icmp eq i64 %i.lf, 0
-  %i.lh = trunc i32 %i.kz to i1
+  %i.lh = trunc nuw i32 %i.kz to i1
   %or.cond.i = and i1 %i.lg, %i.lh
-  br i1 %or.cond.i, label %bb.g, label %bb.h
+  br i1 %or.cond.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.li = getelementptr inbounds nuw i8, ptr %0, i64 465
-  %2 = load i8, ptr %i.li, align 1, !tbaa !56
-  %3 = zext i8 %2 to i16
-  %4 = add nuw nsw i16 %i.lc, %3
-  %5 = getelementptr inbounds nuw i8, ptr %i.kw, i64 2
-  store i16 %4, ptr %i.kw, align 2, !tbaa !27
-  br label %bb.h
+  %i.li = getelementptr inbounds nuw i8, ptr %0, i64 496
+  %2 = load i64, ptr %i.li, align 8, !tbaa !26
+  %3 = and i64 %2, %i.lb
+  %4 = icmp eq i64 %3, 0
+  %5 = and i32 %i.kz, 2
+  %6 = icmp ne i32 %5, 0
+  %or.cond.1.i = and i1 %6, %4
+  br i1 %or.cond.1.i, label %bb.h, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.1.i = phi ptr [ %i.kw, %bb.f ], [ %5, %bb.g ] ; 2 uses
-  %i.lj = getelementptr inbounds nuw i8, ptr %0, i64 496
-  %6 = load i64, ptr %i.lj, align 8, !tbaa !26
-  %7 = and i64 %6, %i.lb
-  %8 = icmp eq i64 %7, 0
-  %9 = and i32 %i.kz, 2
-  %10 = icmp ne i32 %9, 0
-  %or.cond.1.i = and i1 %10, %8
-  br i1 %or.cond.1.i, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit
+  %.sink.i = phi i64 [ 465, %bb.f ], [ 466, %bb.g ]
+  %i.lj = getelementptr inbounds nuw i8, ptr %0, i64 %.sink.i
+  %7 = load i8, ptr %i.lj, align 1, !tbaa !56
+  %8 = zext i8 %7 to i16
+  %9 = add nuw nsw i16 %i.lc, %8
+  %10 = getelementptr inbounds nuw i8, ptr %i.kw, i64 2
+  store i16 %9, ptr %i.kw, align 2, !tbaa !27
+  br label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit
 
 bb.i:                                             ; preds = %bb.a
   %i.lk = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 5 uses
@@ -1421,7 +1418,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %.1.i63 = phi ptr [ %i.wt, %bb.m ], [ %i.xk, %bb.n ] ; 2 uses
+  %.1.i63 = phi ptr [ %i.wt, %bb.m ], [ %i.xk, %bb.n ] ; 3 uses
   %i.xl = getelementptr inbounds nuw i8, ptr %0, i64 544
   %i.xm = load i64, ptr %i.xl, align 8, !tbaa !26
   %i.xn = and i64 %i.xm, %i.wy
@@ -1431,20 +1428,17 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %or.cond.1.i64 = and i1 %i.xq, %i.xo
   br i1 %or.cond.1.i64, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit
 
-_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split: ; preds = %bb.o, %bb.h
-  %.sink = phi i64 [ 466, %bb.h ], [ 472, %bb.o ]
-  %.sink131 = phi i16 [ %i.lc, %bb.h ], [ %i.wz, %bb.o ]
-  %.1.i63.sink130 = phi ptr [ %.1.i, %bb.h ], [ %.1.i63, %bb.o ] ; 2 uses
-  %i.xr = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
-  %i.xs = load i8, ptr %i.xr, align 2, !tbaa !56
+_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split: ; preds = %bb.o
+  %i.xr = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %i.xs = load i8, ptr %i.xr, align 8, !tbaa !56
   %i.xt = zext i8 %i.xs to i16
-  %i.xu = add nuw nsw i16 %.sink131, %i.xt
-  %i.xv = getelementptr inbounds nuw i8, ptr %.1.i63.sink130, i64 2
-  store i16 %i.xu, ptr %.1.i63.sink130, align 2, !tbaa !27
+  %i.xu = add nuw nsw i16 %i.wz, %i.xt
+  %i.xv = getelementptr inbounds nuw i8, ptr %.1.i63, i64 2
+  store i16 %i.xu, ptr %.1.i63, align 2, !tbaa !27
   br label %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit
 
-_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit: ; preds = %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, %bb.o, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i, %bb.h, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i
-  %11 = phi ptr [ %.1.i63, %bb.o ], [ %i.kw, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %.1.i, %bb.h ], [ %i.wt, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %i.xv, %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split ]
+_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit: ; preds = %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split, %bb.o, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i, %bb.h, %bb.g, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i
+  %11 = phi ptr [ %10, %bb.h ], [ %i.kw, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE0ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %i.kw, %bb.g ], [ %i.wt, %_ZN9Stockfish12_GLOBAL__N_114generate_movesILNS_5ColorE1ELNS_9PieceTypeE5EEEPNS_4MoveERKNS_8PositionES5_m.exit.i ], [ %.1.i63, %bb.o ], [ %i.xv, %_ZN9Stockfish12_GLOBAL__N_112generate_allILNS_5ColorE0ELNS_7GenTypeE3EEEPNS_4MoveERKNS_8PositionES5_.exit.sink.split ]
   ret ptr %11
 }
 

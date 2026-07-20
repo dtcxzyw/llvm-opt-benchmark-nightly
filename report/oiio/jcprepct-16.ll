@@ -70,7 +70,7 @@ bb.g:                                             ; preds = %bb.f
   store ptr @pre_process_context, ptr %i.y, align 8, !tbaa !47
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !48
-  %.fr52.i = freeze i32 %i.aa                     ; 8 uses
+  %.fr52.i = freeze i32 %i.aa                     ; 9 uses
   %i.ab = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !26
@@ -108,7 +108,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bc = shl nuw i32 %.fr52.i, 1
   %i.bd = zext i32 %i.bc to i64                   ; 2 uses
   %i.be = zext i32 %i.bb to i64                   ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.fr52.i to i64 ; 5 uses
+  %wide.trip.count.i = zext nneg i32 %.fr52.i to i64 ; 4 uses
   %i.bf = shl nuw nsw i64 %i.be, 3
   %i.bg = mul nsw i64 %i.ba, -8
   %i.bh = shl nuw nsw i64 %i.bd, 3                ; 2 uses
@@ -117,8 +117,7 @@ bb.g:                                             ; preds = %bb.f
   %min.iters.check = icmp ult i32 %.fr52.i, 16
   %n.vec = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
-  %xtraiter = and i64 %wide.trip.count.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod.not = trunc i32 %.fr52.i to i1
   %i.bk = add nsw i64 %wide.trip.count.i, -1
   br label %.lr.ph.us.i
 
@@ -199,7 +198,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.us.i, %middle.block
   %indvars.iv55.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.us.i ], [ %n.vec, %middle.block ] ; 7 uses
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %gep.i.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.i, i64 %indvars.iv55.i.ph

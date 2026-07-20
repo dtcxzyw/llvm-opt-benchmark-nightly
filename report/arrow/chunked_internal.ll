@@ -203,13 +203,13 @@ _ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc16
   %.sroa.019.037 = phi ptr [ null, %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.i, %._crit_edge.loopexit ] ; 6 uses
   %.sroa.10.035 = phi i64 [ 0, %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.t, %._crit_edge.loopexit ]
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !116
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !116  ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !121  ; 4 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !121  ; 6 uses
   %i.y = ptrtoint ptr %i.v to i64
   %i.z = ptrtoint ptr %i.x to i64
-  %i.aa = sub i64 %i.y, %i.z                      ; 3 uses
-  %i.ab = ashr exact i64 %i.aa, 3                 ; 3 uses
+  %i.aa = sub i64 %i.y, %i.z                      ; 2 uses
+  %i.ab = ashr exact i64 %i.aa, 3                 ; 2 uses
   %i.ac = icmp sgt i64 %i.ab, 0
   br i1 %i.ac, label %.lr.ph26.preheader, label %._crit_edge27
 
@@ -293,13 +293,12 @@ _ZNSt6vectorIlSaIlEED2Ev.exit:                    ; preds = %._crit_edge27, %bb.
   br i1 %niter45.ncmp.1, label %._crit_edge27.thread.unr-lcssa, label %.lr.ph26, !llvm.loop !140
 
 ._crit_edge27.thread.unr-lcssa:                   ; preds = %.lr.ph26
-  %2 = and i64 %i.aa, 8
-  %lcmp.mod42.not = icmp eq i64 %2, 0
+  %lcmp.mod42.not = icmp eq ptr %i.v, %i.x
   br i1 %lcmp.mod42.not, label %._crit_edge27.thread, label %.lr.ph26.epil.preheader
 
 .lr.ph26.epil.preheader:                          ; preds = %._crit_edge27.thread.unr-lcssa, %.lr.ph26.preheader
   %.024.epil.init = phi i64 [ 0, %.lr.ph26.preheader ], [ %i.bp, %._crit_edge27.thread.unr-lcssa ]
-  %lcmp.mod43 = trunc i64 %i.ab to i1
+  %lcmp.mod43 = icmp ne ptr %i.v, %i.x
   tail call void @llvm.assume(i1 %lcmp.mod43)
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %.024.epil.init ; 2 uses
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !56 ; 2 uses

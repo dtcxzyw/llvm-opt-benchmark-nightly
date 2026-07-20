@@ -203,10 +203,9 @@ bb.k:                                             ; preds = %.lr.ph249, %_ZN6duc
           to label %bb.l unwind label %bb.t       ; 2 uses
 
 bb.l:                                             ; preds = %bb.k
-  %14 = and i64 %.0140248, 1
-  %15 = icmp eq i64 %14, 0                        ; 2 uses
-  %. = select i1 %15, ptr %6, ptr %7
-  %i.x = select i1 %15, ptr %7, ptr %6            ; 2 uses
+  %14 = trunc nuw i64 %.0140248 to i1             ; 2 uses
+  %. = select i1 %14, ptr %7, ptr %6
+  %i.x = select i1 %14, ptr %6, ptr %7            ; 2 uses
   %i.y = load i8, ptr %i.w, align 8, !tbaa !53
   %i.z = icmp eq i8 %i.y, 2
   %i.aa = select i1 %i.z, i8 30, i8 29
@@ -505,8 +504,7 @@ _ZN6duckdb10FlatVector8ValidityERNS_6VectorE.exit: ; preds = %bb.az
   %i.di = ptrtoint ptr %i.dg to i64
   %i.dj = sub i64 %i.dh, %i.di
   %i.dk = sdiv exact i64 %i.dj, 48
-  %16 = and i64 %i.dk, 1
-  %17 = icmp eq i64 %16, 0
+  %15 = trunc nuw i64 %i.dk to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
   %i.dl = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dl, i8 0, i64 16, i1 false)
@@ -709,9 +707,9 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit203: ; preds = %bb.bp, %_ZNK6duckdb
   %i.fo = phi i64 [ %i.fn, %bb.bp ], [ %.0139254, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit201.thread ]
   %i.fp = getelementptr inbounds nuw [16 x i8], ptr %i.cr, i64 %i.fo
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !156 ; 2 uses
-  %.val = load ptr, ptr %6, align 8
-  %.val233 = load ptr, ptr %7, align 8
-  %i.fr = select i1 %17, ptr %.val, ptr %.val233
+  %.val = load ptr, ptr %7, align 8
+  %.val233 = load ptr, ptr %6, align 8
+  %i.fr = select i1 %15, ptr %.val, ptr %.val233
   %i.fs = getelementptr inbounds nuw [4 x i8], ptr %i.fr, i64 %.0139254
   %i.ft = load i32, ptr %i.fs, align 4, !tbaa !3
   %i.fu = trunc i64 %i.fq to i32

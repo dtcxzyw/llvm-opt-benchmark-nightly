@@ -201,7 +201,7 @@ bb.a:
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses
   %i.c = getelementptr i8, ptr %i.b, i64 24
   %i.d = load i64, ptr %i.c, align 8, !tbaa !37
-  %i.e = trunc i64 %i.d to i1
+  %i.e = trunc nuw i64 %i.d to i1
   %i.f = getelementptr i8, ptr %i.b, i64 32       ; 2 uses
   br i1 %i.e, label %RTYPEDDATA_GET_DATA.exit, label %bb.b
 
@@ -310,7 +310,7 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !37   ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.d
 
@@ -474,7 +474,7 @@ bb.e:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !37 ; 2 uses
   %i.ad = and i64 %i.ac, -2                       ; 2 uses
   %i.ae = inttoptr i64 %i.ad to ptr
-  %i.af = trunc i64 %i.ac to i1
+  %i.af = trunc nuw i64 %i.ac to i1
   %i.ag = getelementptr i8, ptr %i.y, i64 32      ; 2 uses
   br i1 %i.af, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.f
 
@@ -855,7 +855,7 @@ bb.e:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.o = load i64, ptr %i.n, align 8, !tbaa !37   ; 2 uses
   %i.p = and i64 %i.o, -2                         ; 2 uses
   %i.q = inttoptr i64 %i.p to ptr
-  %i.r = trunc i64 %i.o to i1
+  %i.r = trunc nuw i64 %i.o to i1
   %i.s = getelementptr i8, ptr %i.k, i64 32       ; 2 uses
   br i1 %i.r, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.f
 
@@ -1258,7 +1258,7 @@ bb.d:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.p = load i64, ptr %i.o, align 8, !tbaa !37   ; 2 uses
   %i.q = and i64 %i.p, -2                         ; 2 uses
   %i.r = inttoptr i64 %i.q to ptr
-  %i.s = trunc i64 %i.p to i1
+  %i.s = trunc nuw i64 %i.p to i1
   %i.t = getelementptr i8, ptr %i.l, i64 32       ; 2 uses
   br i1 %i.s, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.e
 
@@ -1410,7 +1410,7 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !37   ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.d
 
@@ -1494,7 +1494,7 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !37   ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.d
 
@@ -1617,7 +1617,7 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !37   ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.d
 
@@ -1766,7 +1766,7 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.q = load i64, ptr %i.p, align 8, !tbaa !37   ; 2 uses
   %i.r = and i64 %i.q, -2                         ; 2 uses
   %i.s = inttoptr i64 %i.r to ptr
-  %i.t = trunc i64 %i.q to i1
+  %i.t = trunc nuw i64 %i.q to i1
   %i.u = getelementptr i8, ptr %i.m, i64 32       ; 2 uses
   br i1 %i.t, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.d
 
@@ -1844,7 +1844,7 @@ bb.d:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !37   ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.e
 
@@ -2137,12 +2137,11 @@ declare void @rb_st_free_table(ptr noundef) local_unnamed_addr #4
 ; Function Attrs: nounwind sspstrong uwtable
 define internal noundef i32 @free_loaded_feature_index_i(i64 %0, i64 noundef %1, i64 %2) #3 {
 bb.a:
-  %i.a = trunc i64 %1 to i1
+  %i.a = trunc nuw i64 %1 to i1
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = inttoptr i64 %1 to ptr
-  tail call void @ruby_xfree(ptr noundef %3) #25
+  tail call void @ruby_xfree(ptr noundef null) #25
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %i.g = phi i64 [ %i.f, %bb.b ], [ %i.e, %bb.a ] ; 4 uses
-  %.01857 = phi i32 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
-  %.01956 = phi i64 [ %i.g, %bb.b ], [ %2, %bb.a ] ; 2 uses
+  %.01857 = phi i32 [ %i.h, %bb.b ], [ 0, %bb.a ]
+  %.01956 = phi i64 [ %i.g, %bb.b ], [ %2, %bb.a ]
   %i.h = add nuw nsw i32 %.01857, 1               ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %i.g
   %i.j = load i8, ptr %i.i, align 1, !tbaa !18
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.k = lshr i32 %i.h, 1                         ; 3 uses
   %i.l = zext nneg i32 %i.k to i64                ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !178
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !178  ; 2 uses
   %i.o = zext i32 %i.n to i64
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
   %i.q = load i32, ptr %i.p, align 8, !tbaa !155  ; 2 uses
@@ -246,29 +246,25 @@ bb.e:                                             ; preds = %bb.d, %.thread.i.i
   %i.ad = phi ptr [ %i.z, %.thread.i.i ], [ %i.ab, %bb.d ]
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ad, i8 92, i64 %i.l, i1 false)
   %.pre.i.i = load i32, ptr %i.p, align 8, !tbaa !155
+  %.pre = load i32, ptr %i.m, align 4, !tbaa !178
   br label %_ZN4llvh11SmallStringILj128EE6appendEmc.exit
 
 _ZN4llvh11SmallStringILj128EE6appendEmc.exit:     ; preds = %bb.d, %bb.e
+  %4 = phi i32 [ %i.n, %bb.d ], [ %.pre, %bb.e ]
   %i.ae = phi i32 [ %i.q, %bb.d ], [ %.pre.i.i, %bb.e ]
   %i.af = add i32 %i.ae, %i.k                     ; 3 uses
   store i32 %i.af, ptr %i.p, align 8, !tbaa !155
-  %4 = and i32 %.01857, 1
-  %.not21 = icmp eq i32 %4, 0
-  br i1 %.not21, label %5, label %bb.h
-
-5:                                                ; preds = %_ZN4llvh11SmallStringILj128EE6appendEmc.exit
-  %6 = load i32, ptr %i.m, align 4, !tbaa !178
-  %.not.i = icmp ult i32 %i.af, %6
+  %.not.i = icmp ult i32 %i.af, %4
   br i1 %.not.i, label %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit, label %bb.f, !prof !180
 
-bb.f:                                             ; preds = %5
+bb.f:                                             ; preds = %_ZN4llvh11SmallStringILj128EE6appendEmc.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 16
   tail call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.ag, i64 noundef 0, i64 noundef 1) #28
   %.pre.i = load i32, ptr %i.p, align 8, !tbaa !155
   br label %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit
 
-_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit: ; preds = %5, %bb.f
-  %i.ah = phi i32 [ %.pre.i, %bb.f ], [ %i.af, %5 ]
+_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit: ; preds = %_ZN4llvh11SmallStringILj128EE6appendEmc.exit, %bb.f
+  %i.ah = phi i32 [ %.pre.i, %bb.f ], [ %i.af, %_ZN4llvh11SmallStringILj128EE6appendEmc.exit ]
   %i.ai = load ptr, ptr %3, align 8, !tbaa !177
   %i.aj = zext i32 %i.ah to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aj
@@ -315,8 +311,8 @@ _ZN4llvh11SmallStringILj128EE6appendEmc.exit26:   ; preds = %.thread.i.i25, %bb.
   store i32 %i.bf, ptr %i.ar, align 8, !tbaa !155
   br label %bb.h
 
-bb.h:                                             ; preds = %_ZN4llvh11SmallStringILj128EE6appendEmc.exit, %_ZN4llvh11SmallStringILj128EE6appendEmc.exit26, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit
-  %.0 = phi i64 [ %.019.lcssa, %_ZN4llvh11SmallStringILj128EE6appendEmc.exit26 ], [ %i.g, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit ], [ %.01956, %_ZN4llvh11SmallStringILj128EE6appendEmc.exit ]
+bb.h:                                             ; preds = %_ZN4llvh11SmallStringILj128EE6appendEmc.exit26, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit
+  %.0 = phi i64 [ %.019.lcssa, %_ZN4llvh11SmallStringILj128EE6appendEmc.exit26 ], [ %i.g, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit ]
   ret i64 %.0
 }
 

@@ -203,14 +203,13 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef i64 @_ZN10ODDLParser9Reference11sizeInBytesEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 5 uses
+  %i.a = load i64, ptr %0, align 8                ; 3 uses
   %i.b = icmp eq i64 %i.a, 0
   br i1 %i.b, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
-  %xtraiter = and i64 %i.a, 1
   %i.e = icmp eq i64 %i.a, 1
   br i1 %i.e, label %.epil.preheader, label %.preheader.new
 
@@ -252,21 +251,15 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1.1 = phi i64 [ %i.t, %bb.e ], [ %.1, %bb.d ] ; 3 uses
+  %.1.1 = phi i64 [ %i.t, %bb.e ], [ %.1, %bb.d ] ; 2 uses
   %i.u = add nuw i64 %.0812, 2                    ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !9
+  br i1 %niter.ncmp.1, label %.epil.preheader, label %bb.b, !llvm.loop !9
 
-.loopexit.loopexit.unr-lcssa:                     ; preds = %bb.f
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.preheader
-  %.0812.epil.init = phi i64 [ 0, %.preheader ], [ %i.u, %.loopexit.loopexit.unr-lcssa ]
-  %.0911.epil.init = phi i64 [ 0, %.preheader ], [ %.1.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod17 = trunc i64 %i.a to i1
-  tail call void @llvm.assume(i1 %lcmp.mod17)
+.epil.preheader:                                  ; preds = %.preheader, %bb.f
+  %.0812.epil.init = phi i64 [ 0, %.preheader ], [ %i.u, %bb.f ]
+  %.0911.epil.init = phi i64 [ 0, %.preheader ], [ %.1.1, %bb.f ] ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.0812.epil.init
   %i.w = load ptr, ptr %i.v, align 8              ; 2 uses
   %.not.epil = icmp eq ptr %i.w, null
@@ -280,8 +273,8 @@ bb.g:                                             ; preds = %.epil.preheader
   %i.ab = add i64 %i.aa, %.0911.epil.init
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %bb.g, %.epil.preheader, %bb.a
-  %.0 = phi i64 [ 0, %bb.a ], [ %.1.1, %.loopexit.loopexit.unr-lcssa ], [ %i.ab, %bb.g ], [ %.0911.epil.init, %.epil.preheader ]
+.loopexit:                                        ; preds = %bb.g, %.epil.preheader, %bb.a
+  %.0 = phi i64 [ 0, %bb.a ], [ %i.ab, %bb.g ], [ %.0911.epil.init, %.epil.preheader ]
   ret i64 %.0
 }
 

@@ -203,30 +203,13 @@ bb.a:
 define linkonce_odr hidden void @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJMN6hermes2vm16TimeLimitMonitorEFvvEPS5_EEEEE6_M_runEv(ptr noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !89
-  %.unpack.i.i.i.i = load i64, ptr %1, align 8, !tbaa !32 ; 3 uses
   %.elt2.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.unpack3.i.i.i.i = load i64, ptr %.elt2.i.i.i.i, align 8, !tbaa !32
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 %.unpack3.i.i.i.i ; 2 uses
-  %2 = and i64 %.unpack.i.i.i.i, 1
-  %.not.i.i.i.i = icmp eq i64 %2, 0
-  br i1 %.not.i.i.i.i, label %8, label %3
-
-3:                                                ; preds = %bb.a
-  %4 = load ptr, ptr %i.c, align 8, !tbaa !29
-  %5 = getelementptr i8, ptr %4, i64 %.unpack.i.i.i.i
-  %6 = getelementptr i8, ptr %5, i64 -1
-  %7 = load ptr, ptr %6, align 8, !nosanitize !64
-  br label %_ZNSt6thread8_InvokerISt5tupleIJMN6hermes2vm16TimeLimitMonitorEFvvEPS4_EEEclEv.exit
-
-8:                                                ; preds = %bb.a
-  %9 = inttoptr i64 %.unpack.i.i.i.i to ptr
-  br label %_ZNSt6thread8_InvokerISt5tupleIJMN6hermes2vm16TimeLimitMonitorEFvvEPS4_EEEclEv.exit
-
-_ZNSt6thread8_InvokerISt5tupleIJMN6hermes2vm16TimeLimitMonitorEFvvEPS4_EEEclEv.exit: ; preds = %3, %8
-  %10 = phi ptr [ %7, %3 ], [ %9, %8 ]
-  tail call void %10(ptr noundef nonnull align 8 dereferenceable(121) %i.c) #15, !inline_history !90
+  %1 = load ptr, ptr %i.c, align 8, !tbaa !29
+  %2 = load ptr, ptr %1, align 8, !nosanitize !64
+  tail call void %2(ptr noundef nonnull align 8 dereferenceable(121) %i.c) #15, !inline_history !90
   ret void
 }
 
@@ -629,17 +612,17 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes2vm7RuntimeENSt6chrono10time_pointI
 
 declare i32 @pthread_cond_clockwait(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #6
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #12
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #12
+declare i64 @llvm.smin.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #13
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
+declare void @llvm.experimental.noalias.scope.decl(metadata) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #12
+declare i32 @llvm.umax.i32(i32, i32) #13
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind }
@@ -653,9 +636,9 @@ attributes #8 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack
 attributes #9 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #15 = { nounwind }
 attributes #16 = { builtin nounwind allocsize(0) }
 attributes #17 = { noreturn nounwind }

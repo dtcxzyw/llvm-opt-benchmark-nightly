@@ -204,11 +204,10 @@ bb.ab:                                            ; preds = %.lr.ph169
   %i.hh = sub i32 %i.gp, %.02751.i
   %i.hi = call range(i64 1, 65) i64 @llvm.ctpop.i64(i64 range(i64 1, 0) %.138.lcssa.i)
   %i.hj = trunc nuw nsw i64 %i.hi to i32
-  %spec.select.i = call i32 @llvm.umin.i32(i32 %i.hh, i32 %i.hj) ; 2 uses
-  %.029.i = zext nneg i32 %spec.select.i to i64   ; 3 uses
-  %xtraiter = and i64 %.029.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol.loopexit, label %.lr.ph46.i.prol
+  %spec.select.i = call i32 @llvm.umin.i32(i32 %i.hh, i32 %i.hj) ; 3 uses
+  %.029.i = zext nneg i32 %spec.select.i to i64   ; 2 uses
+  %lcmp.mod.not = trunc i32 %spec.select.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol, label %.lr.ph46.i.prol.loopexit
 
 .lr.ph46.i.prol:                                  ; preds = %.lr.ph46.preheader.i
   %i.hk = add nsw i64 %.029.i, -1
@@ -611,11 +610,10 @@ bb.d:                                             ; preds = %.lr.ph
   %i.au = sub i32 %i.ad, %.02751.i
   %i.av = tail call range(i64 1, 65) i64 @llvm.ctpop.i64(i64 range(i64 1, 0) %.138.lcssa.i)
   %i.aw = trunc nuw nsw i64 %i.av to i32
-  %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.au, i32 %i.aw) ; 2 uses
-  %.029.i = zext nneg i32 %spec.select.i to i64   ; 3 uses
-  %xtraiter = and i64 %.029.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol.loopexit, label %.lr.ph46.i.prol
+  %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.au, i32 %i.aw) ; 3 uses
+  %.029.i = zext nneg i32 %spec.select.i to i64   ; 2 uses
+  %lcmp.mod.not = trunc i32 %spec.select.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph46.i.prol, label %.lr.ph46.i.prol.loopexit
 
 .lr.ph46.i.prol:                                  ; preds = %.lr.ph46.preheader.i
   %i.ax = add nsw i64 %.029.i, -1
@@ -1018,9 +1016,9 @@ bb.l:                                             ; preds = %bb.j
   tail call void @duckdb_je_tcache_bin_flush_stashed(ptr noundef %0, ptr noundef nonnull %6, ptr noundef nonnull %i.x, i32 noundef %.0.i, i1 noundef zeroext true) #18
   %i.an = call ptr @duckdb_je_tcache_alloc_small_hard(ptr noundef %0, ptr noundef nonnull %i.aj, ptr noundef nonnull %6, ptr noundef nonnull %i.x, i32 noundef %.0.i, ptr noundef nonnull %i.a) #18
   %i.ao = load i8, ptr %i.a, align 1, !tbaa !118, !range !113, !noundef !114
-  %.not = icmp eq i8 %i.ao, 0
+  %7 = trunc nuw i8 %i.ao to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
-  br i1 %.not, label %arena_malloc.exit, label %cache_bin_alloc_impl.exit.thread
+  br i1 %7, label %cache_bin_alloc_impl.exit.thread, label %arena_malloc.exit
 
 cache_bin_alloc_impl.exit.thread:                 ; preds = %bb.i, %bb.g, %bb.l
   %.132.i = phi ptr [ %i.an, %bb.l ], [ %i.z, %bb.g ], [ %i.z, %bb.i ] ; 2 uses
@@ -1423,9 +1421,9 @@ bb.ad:                                            ; preds = %bb.ab
   tail call void @duckdb_je_tcache_bin_flush_stashed(ptr noundef %0, ptr noundef nonnull %8, ptr noundef nonnull %i.cm, i32 noundef %.0.i.i, i1 noundef zeroext true) #18
   %i.dc = call ptr @duckdb_je_tcache_alloc_small_hard(ptr noundef %0, ptr noundef nonnull %i.cy, ptr noundef nonnull %8, ptr noundef nonnull %i.cm, i32 noundef %.0.i.i, ptr noundef nonnull %i.a) #18
   %i.dd = load i8, ptr %i.a, align 1, !tbaa !118, !range !113, !noundef !114
-  %.not61.i = icmp eq i8 %i.dd, 0
+  %12 = trunc nuw i8 %i.dd to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
-  br i1 %.not61.i, label %arena_sdalloc.exit, label %cache_bin_alloc_impl.exit.thread.i
+  br i1 %12, label %cache_bin_alloc_impl.exit.thread.i, label %arena_sdalloc.exit
 
 cache_bin_alloc_impl.exit.thread.i:               ; preds = %bb.ad, %bb.aa, %bb.y
   %.132.i.i = phi ptr [ %i.dc, %bb.ad ], [ %i.co, %bb.y ], [ %i.co, %bb.aa ] ; 2 uses

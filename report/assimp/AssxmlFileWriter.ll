@@ -203,22 +203,21 @@ bb.du:                                            ; preds = %bb.hp, %.lr.ph710.i
   %i.pz = load ptr, ptr %i.px, align 8
   %i.qa = getelementptr inbounds nuw [8 x i8], ptr %i.pz, i64 %indvars.iv855.i
   %i.qb = load ptr, ptr %i.qa, align 8            ; 22 uses
-  %i.qc = load i32, ptr %i.qb, align 8
-  %16 = insertelement <4 x i32> poison, i32 %i.qc, i64 0
-  %17 = shufflevector <4 x i32> %16, <4 x i32> poison, <4 x i32> zeroinitializer
-  %18 = and <4 x i32> %17, <i32 8, i32 4, i32 2, i32 1>
-  %19 = icmp eq <4 x i32> %18, zeroinitializer    ; 4 uses
-  %20 = extractelement <4 x i1> %19, i64 3
-  %i.qd = select i1 %20, ptr @.str.18, ptr @.str.53
-  %21 = extractelement <4 x i1> %19, i64 2
-  %22 = select i1 %21, ptr @.str.18, ptr @.str.54
-  %23 = extractelement <4 x i1> %19, i64 1
-  %24 = select i1 %23, ptr @.str.18, ptr @.str.55
-  %25 = extractelement <4 x i1> %19, i64 0
-  %i.qe = select i1 %25, ptr @.str.18, ptr @.str.56
+  %i.qc = load i32, ptr %i.qb, align 8            ; 4 uses
+  %.not476.i = trunc nuw i32 %i.qc to i1
+  %16 = select i1 %.not476.i, ptr @.str.53, ptr @.str.18
+  %17 = and i32 %i.qc, 2
+  %.not477.i = icmp eq i32 %17, 0
+  %i.qd = select i1 %.not477.i, ptr @.str.18, ptr @.str.54
+  %18 = and i32 %i.qc, 4
+  %.not478.i = icmp eq i32 %18, 0
+  %19 = select i1 %.not478.i, ptr @.str.18, ptr @.str.55
+  %20 = and i32 %i.qc, 8
+  %.not479.i = icmp eq i32 %20, 0
+  %i.qe = select i1 %.not479.i, ptr @.str.18, ptr @.str.56
   %i.qf = getelementptr inbounds nuw i8, ptr %i.qb, i64 232
   %i.qg = load i32, ptr %i.qf, align 8
-  invoke void (ptr, ptr, ...) @_ZN6Assimp16AssxmlFileWriterL8ioprintfEPNS_8IOStreamEPKcz(ptr noundef nonnull %i.h, ptr noundef nonnull @.str.52, ptr noundef nonnull %i.qd, ptr noundef nonnull %22, ptr noundef nonnull %24, ptr noundef nonnull %i.qe, i32 noundef %i.qg)
+  invoke void (ptr, ptr, ...) @_ZN6Assimp16AssxmlFileWriterL8ioprintfEPNS_8IOStreamEPKcz(ptr noundef nonnull %i.h, ptr noundef nonnull @.str.52, ptr noundef nonnull %16, ptr noundef nonnull %i.qd, ptr noundef nonnull %19, ptr noundef nonnull %i.qe, i32 noundef %i.qg)
           to label %bb.dv unwind label %bb.dx
 
 bb.dv:                                            ; preds = %bb.du

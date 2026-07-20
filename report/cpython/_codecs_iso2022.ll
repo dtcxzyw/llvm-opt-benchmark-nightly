@@ -161,8 +161,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.g
   %i.v = tail call ptr @PyErr_NoMemory() #16      ; 0 uses
   %i.w = load i32, ptr %i.o, align 8, !tbaa !40   ; 2 uses
-  %.not.i22.i = icmp sgt i32 %i.w, -1
-  br i1 %.not.i22.i, label %bb.k, label %.thread
+  %.not.i22.i = icmp slt i32 %i.w, 0
+  br i1 %.not.i22.i, label %.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.x = add nsw i32 %i.w, -1                     ; 2 uses
@@ -180,8 +180,8 @@ bb.l:                                             ; preds = %bb.i, %bb.h
 bb.m:                                             ; preds = %bb.l
   tail call void @PyMem_Free(ptr noundef nonnull %i.q) #16
   %i.ac = load i32, ptr %i.o, align 8, !tbaa !40  ; 2 uses
-  %.not.i20.i = icmp sgt i32 %i.ac, -1
-  br i1 %.not.i20.i, label %bb.n, label %.thread
+  %.not.i20.i = icmp slt i32 %i.ac, 0
+  br i1 %.not.i20.i, label %.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ad = add nsw i32 %i.ac, -1                   ; 2 uses
@@ -192,8 +192,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.l
   %i.af = tail call ptr @PyObject_CallOneArg(ptr noundef nonnull %i.o, ptr noundef nonnull %i.aa) #16 ; 3 uses
   %i.ag = load i32, ptr %i.aa, align 8, !tbaa !40 ; 2 uses
-  %.not.i18.i = icmp sgt i32 %i.ag, -1
-  br i1 %.not.i18.i, label %bb.p, label %Py_DECREF.exit19.i
+  %.not.i18.i = icmp slt i32 %i.ag, 0
+  br i1 %.not.i18.i, label %Py_DECREF.exit19.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ah = add nsw i32 %i.ag, -1                   ; 2 uses
@@ -207,8 +207,8 @@ bb.q:                                             ; preds = %bb.p
 
 Py_DECREF.exit19.i:                               ; preds = %bb.q, %bb.p, %bb.o
   %i.aj = load i32, ptr %i.o, align 8, !tbaa !40  ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.aj, -1
-  br i1 %.not.i.i, label %bb.r, label %.thread
+  %.not.i.i = icmp slt i32 %i.aj, 0
+  br i1 %.not.i.i, label %.thread, label %bb.r
 
 bb.r:                                             ; preds = %Py_DECREF.exit19.i
   %i.ak = add nsw i32 %i.aj, -1                   ; 2 uses
@@ -255,8 +255,8 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !41   ; 3 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !40   ; 2 uses
-  %.not.i = icmp sgt i32 %i.d, -1
-  br i1 %.not.i, label %bb.b, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.d, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = add nsw i32 %i.d, -1                     ; 2 uses
@@ -618,8 +618,7 @@ bb.a:
 .lr.ph199:                                        ; preds = %bb.a
   %i.e = getelementptr i8, ptr %1, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 4 uses
-  %9 = and i32 %8, 1
-  %.not152 = icmp eq i32 %9, 0
+  %.not152 = trunc i32 %8 to i1
   %i.g = getelementptr i8, ptr %0, i64 1          ; 2 uses
   %i.h = getelementptr i8, ptr %0, i64 4          ; 9 uses
   br label %bb.b
@@ -682,9 +681,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.f
   %.1139 = phi i64 [ %i.ab, %bb.h ], [ %.0138198, %bb.f ] ; 3 uses
   %i.ac = load i8, ptr %i.h, align 1, !tbaa !40
-  %10 = and i8 %i.ac, 1
-  %.not160 = icmp eq i8 %10, 0
-  br i1 %.not160, label %bb.l, label %bb.j
+  %.not160 = trunc i8 %i.ac to i1
+  br i1 %.not160, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
   %i.ad = icmp slt i64 %.1139, 1
@@ -750,7 +748,7 @@ bb.o:                                             ; preds = %.lr.ph.split.us
   %i.az = load i64, ptr %4, align 8, !tbaa !61    ; 2 uses
   %i.ba = sub i64 %5, %i.az
   %i.bb = icmp slt i64 %i.ba, 2
-  br i1 %i.bb, label %.split197.us, label %bb.p
+  br i1 %i.bb, label %PyUnicode_READ.exit163.us.a, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bc = add i64 %i.az, 1                        ; 3 uses
@@ -763,23 +761,27 @@ bb.q:                                             ; preds = %bb.p
   %i.bd = getelementptr [2 x i8], ptr %3, i64 %i.bc
   %i.be = load i16, ptr %i.bd, align 2, !tbaa !62
   %i.bf = zext i16 %i.be to i32
-  br label %PyUnicode_READ.exit163.us.a
+  br label %PyUnicode_READ.exit163.us
 
 bb.r:                                             ; preds = %bb.p
   %i.bg = getelementptr i8, ptr %3, i64 %i.bc
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !40
   %i.bi = zext i8 %i.bh to i32
-  br label %PyUnicode_READ.exit163.us.a
+  br label %PyUnicode_READ.exit163.us
 
 bb.s:                                             ; preds = %bb.p
   %i.bj = getelementptr [4 x i8], ptr %3, i64 %i.bc
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !6
-  br label %PyUnicode_READ.exit163.us.a
+  br label %PyUnicode_READ.exit163.us
 
-PyUnicode_READ.exit163.us.a:                      ; preds = %bb.s, %bb.r, %bb.q
+PyUnicode_READ.exit163.us:                        ; preds = %bb.s, %bb.r, %bb.q
   %.0.i162.us = phi i32 [ %i.bi, %bb.r ], [ %i.bf, %bb.q ], [ %i.bk, %bb.s ]
   store i32 %.0.i162.us, ptr %i.f, align 4, !tbaa !6
-  store i64 2, ptr %i.b, align 8, !tbaa !61
+  br label %PyUnicode_READ.exit163.us.a
+
+PyUnicode_READ.exit163.us.a:                      ; preds = %bb.o, %PyUnicode_READ.exit163.us
+  %storemerge.us = phi i64 [ 2, %PyUnicode_READ.exit163.us ], [ -1, %bb.o ]
+  store i64 %storemerge.us, ptr %i.b, align 8, !tbaa !61
   %i.bl = load ptr, ptr %i.aw, align 8, !tbaa !64
   %i.bm = call zeroext i16 %i.bl(ptr noundef %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #16 ; 2 uses
   %.not153.us = icmp eq i16 %i.bm, -1
@@ -813,7 +815,7 @@ bb.t:                                             ; preds = %.lr.ph.split
   %i.bt = load i64, ptr %4, align 8, !tbaa !61    ; 2 uses
   %i.bu = sub i64 %5, %i.bt
   %i.bv = icmp slt i64 %i.bu, 2
-  br i1 %i.bv, label %bb.y, label %bb.u
+  br i1 %i.bv, label %.split197.us, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.bw = add i64 %i.bt, 1                        ; 3 uses
@@ -826,34 +828,30 @@ bb.v:                                             ; preds = %bb.u
   %i.bx = getelementptr i8, ptr %3, i64 %i.bw
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !40
   %i.bz = zext i8 %i.by to i32
-  br label %PyUnicode_READ.exit163
+  br label %bb.y
 
 bb.w:                                             ; preds = %bb.u
   %i.ca = getelementptr [2 x i8], ptr %3, i64 %i.bw
   %i.cb = load i16, ptr %i.ca, align 2, !tbaa !62
   %i.cc = zext i16 %i.cb to i32
-  br label %PyUnicode_READ.exit163
+  br label %bb.y
 
 bb.x:                                             ; preds = %bb.u
   %i.cd = getelementptr [4 x i8], ptr %3, i64 %i.bw
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !6
-  br label %PyUnicode_READ.exit163
-
-PyUnicode_READ.exit163:                           ; preds = %bb.v, %bb.w, %bb.x
-  %.0.i162 = phi i32 [ %i.bz, %bb.v ], [ %i.cc, %bb.w ], [ %i.ce, %bb.x ]
-  store i32 %.0.i162, ptr %i.f, align 4, !tbaa !6
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.t, %PyUnicode_READ.exit163
-  %storemerge = phi i64 [ 2, %PyUnicode_READ.exit163 ], [ -1, %bb.t ]
-  store i64 %storemerge, ptr %i.b, align 8, !tbaa !61
+bb.y:                                             ; preds = %bb.v, %bb.w, %bb.x
+  %.0.i162 = phi i32 [ %i.bz, %bb.v ], [ %i.cc, %bb.w ], [ %i.ce, %bb.x ]
+  store i32 %.0.i162, ptr %i.f, align 4, !tbaa !6
+  store i64 2, ptr %i.b, align 8, !tbaa !61
   %i.cf = load ptr, ptr %i.bq, align 8, !tbaa !64
   %i.cg = call zeroext i16 %i.cf(ptr noundef %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #16 ; 2 uses
   %.not153 = icmp eq i16 %i.cg, -1
   %i.ch = load i64, ptr %i.b, align 8
   br i1 %.not153, label %select.unfold, label %.split.us
 
-.split197.us:                                     ; preds = %bb.o
+.split197.us:                                     ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   br label %.thread184
@@ -886,9 +884,8 @@ bb.z:                                             ; preds = %.split.us
 
 bb.aa:                                            ; preds = %bb.z
   %i.cm = load i8, ptr %i.h, align 1, !tbaa !40
-  %11 = and i8 %i.cm, 1
-  %.not157 = icmp eq i8 %11, 0
-  br i1 %.not157, label %bb.ad, label %bb.ab
+  %.not157 = trunc i8 %i.cm to i1
+  br i1 %.not157, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cn = icmp slt i64 %.0138198, 1
@@ -1052,9 +1049,8 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %.sink.split, %bb.am
   %.4142 = phi i64 [ %.0138198, %bb.am ], [ %i.ff, %.sink.split ] ; 3 uses
   %i.fg = load i8, ptr %i.h, align 1, !tbaa !40
-  %12 = and i8 %i.fg, 1
-  %.not156 = icmp eq i8 %12, 0
-  br i1 %.not156, label %bb.at, label %bb.av
+  %.not156 = trunc i8 %i.fg to i1
+  br i1 %.not156, label %bb.av, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.fh = icmp slt i64 %.4142, 1
@@ -1143,9 +1139,8 @@ define internal range(i64 -1, 1) i64 @iso2022_encode_reset(ptr nofree noundef ca
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 4          ; 3 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !40
-  %4 = and i8 %i.b, 1
-  %.not = icmp eq i8 %4, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %.not = trunc i8 %i.b to i1
+  br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp slt i64 %3, 1
@@ -1215,10 +1210,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ce
   %.0142168 = phi i64 [ %3, %.lr.ph ], [ %.2144, %bb.ce ] ; 14 uses
   %i.j = load ptr, ptr %2, align 8, !tbaa !43     ; 14 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !40    ; 5 uses
-  %i.l = load i8, ptr %i.b, align 1, !tbaa !40    ; 4 uses
-  %5 = zext i8 %i.l to i32                        ; 2 uses
-  %6 = and i32 %5, 2
-  %.not = icmp eq i32 %6, 0
+  %i.l = load i8, ptr %i.b, align 1, !tbaa !40    ; 5 uses
+  %5 = and i8 %i.l, 2
+  %.not = icmp eq i8 %5, 0
   %i.m = zext i8 %i.k to i32                      ; 2 uses
   br i1 %.not, label %bb.f, label %bb.c
 
@@ -1568,9 +1562,8 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.f
   %i.ec = load ptr, ptr %i.c, align 8, !tbaa !53
   %i.ed = load i32, ptr %i.ec, align 8, !tbaa !69
-  %7 = and i32 %i.ed, 1
-  %.not120 = icmp eq i32 %7, 0
-  br i1 %.not120, label %bb.az, label %bb.bh
+  %.not120 = trunc nuw i32 %i.ed to i1
+  br i1 %.not120, label %bb.bh, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   %i.ee = and i8 %i.l, -4
@@ -1584,9 +1577,8 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %bb.f
   %i.ei = load ptr, ptr %i.c, align 8, !tbaa !53
   %i.ej = load i32, ptr %i.ei, align 8, !tbaa !69
-  %8 = and i32 %i.ej, 1
-  %.not119 = icmp eq i32 %8, 0
-  br i1 %.not119, label %bb.bb, label %bb.bh
+  %.not119 = trunc nuw i32 %i.ej to i1
+  br i1 %.not119, label %bb.bh, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.ek = or i8 %i.l, 1
@@ -1620,8 +1612,8 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.ev, label %.thread159, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  %9 = and i32 %5, 1
-  %.0107.in.idx = zext nneg i32 %9 to i64
+  %6 = and i8 %i.l, 1
+  %.0107.in.idx = zext nneg i8 %6 to i64
   %.0107.in = getelementptr i8, ptr %0, i64 %.0107.in.idx
   %.0107 = load i8, ptr %.0107.in, align 1, !tbaa !40 ; 3 uses
   %i.ew = icmp eq i8 %.0107, 66
@@ -1993,8 +1985,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.l = load i32, ptr %i.c, align 8, !tbaa !40   ; 2 uses
-  %.not.i24 = icmp sgt i32 %i.l, -1
-  br i1 %.not.i24, label %bb.j, label %Py_DECREF.exit25
+  %.not.i24 = icmp slt i32 %i.l, 0
+  br i1 %.not.i24, label %Py_DECREF.exit25, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.m = add nsw i32 %i.l, -1                     ; 2 uses
@@ -2008,8 +2000,8 @@ bb.k:                                             ; preds = %bb.j
 
 Py_DECREF.exit25:                                 ; preds = %bb.i, %bb.j, %bb.k
   %i.o = load i32, ptr %i.a, align 8, !tbaa !40   ; 2 uses
-  %.not.i22 = icmp sgt i32 %i.o, -1
-  br i1 %.not.i22, label %bb.l, label %Py_DECREF.exit23
+  %.not.i22 = icmp slt i32 %i.o, 0
+  br i1 %.not.i22, label %Py_DECREF.exit23, label %bb.l
 
 bb.l:                                             ; preds = %Py_DECREF.exit25
   %i.p = add nsw i32 %i.o, -1                     ; 2 uses
@@ -2019,8 +2011,8 @@ bb.l:                                             ; preds = %Py_DECREF.exit25
 
 bb.m:                                             ; preds = %bb.b, %bb.d
   %i.r = load i32, ptr %i.a, align 8, !tbaa !40   ; 2 uses
-  %.not.i = icmp sgt i32 %i.r, -1
-  br i1 %.not.i, label %bb.n, label %Py_DECREF.exit23
+  %.not.i = icmp slt i32 %i.r, 0
+  br i1 %.not.i, label %Py_DECREF.exit23, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.s = add nsw i32 %i.r, -1                     ; 2 uses

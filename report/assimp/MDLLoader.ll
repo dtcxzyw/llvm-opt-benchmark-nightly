@@ -204,33 +204,22 @@ bb.a:
   %i.y = ptrtoint ptr %i.w to i64
   %i.z = ptrtoint ptr %i.u to i64
   %i.aa = sub i64 %i.y, %i.z                      ; 2 uses
-  %3 = sdiv exact i64 %i.aa, 24                   ; 3 uses
-  %xtraiter = and i64 %3, 1
   %i.ab = icmp eq i64 %i.aa, 24
   br i1 %i.ab, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %3 = sdiv exact i64 %i.aa, 24
   %unroll_iter = and i64 %3, -2
   br label %.lr.ph
 
-._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
-  %.epil.init = phi double [ %i.q, %.lr.ph.preheader ], [ %.sroa.speculated.1, %._crit_edge.unr-lcssa ] ; 2 uses
-  %.06168.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ak, %._crit_edge.unr-lcssa ]
-  %lcmp.mod98 = trunc i64 %3 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod98)
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.preheader, %.lr.ph
+  %.epil.init = phi double [ %i.q, %.lr.ph.preheader ], [ %.sroa.speculated.1, %.lr.ph ] ; 2 uses
+  %.06168.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ak, %.lr.ph ]
   %4 = getelementptr inbounds nuw [24 x i8], ptr %i.u, i64 %.06168.epil.init
   %5 = load double, ptr %4, align 8               ; 2 uses
   %6 = fcmp olt double %.epil.init, %5
   %.sroa.speculated.epil = select i1 %6, double %5, double %.epil.init ; 2 uses
   store double %.sroa.speculated.epil, ptr %i.d, align 8
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.lr.ph.epil.preheader
-  %.sroa.speculated.lcssa = phi double [ %.sroa.speculated.1, %._crit_edge.unr-lcssa ], [ %.sroa.speculated.epil, %.lr.ph.epil.preheader ]
   %7 = add i32 %i.p, 1                            ; 2 uses
   store i32 %7, ptr %i.e, align 8
   br label %bb.b
@@ -248,16 +237,16 @@ bb.a:
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %i.ai = load double, ptr %i.ah, align 8         ; 2 uses
   %i.aj = fcmp olt double %.sroa.speculated, %i.ai
-  %.sroa.speculated.1 = select i1 %i.aj, double %i.ai, double %.sroa.speculated ; 4 uses
+  %.sroa.speculated.1 = select i1 %i.aj, double %i.ai, double %.sroa.speculated ; 3 uses
   store double %.sroa.speculated.1, ptr %i.d, align 8
   %i.ak = add nuw i64 %.06168, 2                  ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1.not, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !78
+  br i1 %niter.ncmp.1.not, label %.lr.ph.epil.preheader, label %.lr.ph, !llvm.loop !78
 
-bb.b:                                             ; preds = %.lr.ph71, %._crit_edge
-  %i.al = phi i32 [ %i.p, %.lr.ph71 ], [ %7, %._crit_edge ] ; 2 uses
-  %i.am = phi double [ %i.q, %.lr.ph71 ], [ %.sroa.speculated.lcssa, %._crit_edge ] ; 2 uses
+bb.b:                                             ; preds = %.lr.ph71, %.lr.ph.epil.preheader
+  %i.al = phi i32 [ %i.p, %.lr.ph71 ], [ %7, %.lr.ph.epil.preheader ] ; 2 uses
+  %i.am = phi double [ %i.q, %.lr.ph71 ], [ %.sroa.speculated.epil, %.lr.ph.epil.preheader ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.an = icmp samesign ult i64 %indvars.iv.next, %i.n
   br i1 %i.an, label %.lr.ph71, label %._crit_edge72, !llvm.loop !79

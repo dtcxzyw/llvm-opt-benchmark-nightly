@@ -203,18 +203,17 @@ activeDefragAlloc.exit36.thread:                  ; preds = %activeDefragAllocWi
 define dso_local void @zslUpdateNode(ptr nofree noundef captures(none) %0, ptr nofree noundef readnone captures(address) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !58   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !58   ; 5 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %i.b to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.d = icmp eq i32 %i.b, 1
   br i1 %i.d, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %4 = and i32 %i.b, 2147483646
+  %unroll_iter = zext nneg i32 %4 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %.lr.ph.preheader.new
@@ -253,8 +252,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.1
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !64
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.b to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -657,8 +656,8 @@ bb.d:                                             ; preds = %._crit_edge
 
 .sink.split:                                      ; preds = %bb.d
   %i.ah = load i64, ptr @defrag.7, align 8, !tbaa !193
-  %0 = icmp slt i64 %i.ah, 1
-  %.str.29..str.28 = select i1 %0, ptr @.str.29, ptr @.str.28
+  %0 = icmp sgt i64 %i.ah, 0
+  %.str.29..str.28 = select i1 %0, ptr @.str.28, ptr @.str.29
   %i.ai = fpext float %i.b to double
   %i.aj = load i64, ptr %i.a, align 8, !tbaa !87
   call void (i32, ptr, ...) @_serverLog(i32 noundef 1, ptr noundef nonnull %.str.29..str.28, double noundef %i.ai, i64 noundef %i.aj, i32 noundef %i.ab) #11
@@ -822,14 +821,14 @@ declare i32 @calculateKeySlot(ptr noundef) local_unnamed_addr #2
 define dso_local void @defragWhileBlocked() local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr @defrag.7, align 8, !tbaa !193 ; 2 uses
-  %0 = icmp slt i64 %i.a, 1
-  br i1 %0, label %bb.b, label %.thread
+  %0 = icmp sgt i64 %i.a, 0
+  br i1 %0, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @activeDefragCycle()
   %.pre = load i64, ptr @defrag.7, align 8, !tbaa !193 ; 2 uses
-  %1 = icmp slt i64 %.pre, 1
-  br i1 %1, label %bb.d, label %.thread
+  %1 = icmp sgt i64 %.pre, 0
+  br i1 %1, label %.thread, label %bb.d
 
 .thread:                                          ; preds = %bb.a, %bb.b
   %i.b = phi i64 [ %.pre, %bb.b ], [ %i.a, %bb.a ]
@@ -862,11 +861,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   tail call void @computeDefragCycles()
   %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 140), align 4, !tbaa !183
-  %1 = icmp sgt i32 %i.c, 0
+  %1 = icmp slt i32 %i.c, 1
   %i.d = load i64, ptr @defrag.7, align 8
-  %2 = icmp slt i64 %i.d, 1
-  %or.cond = select i1 %1, i1 %2, i1 false
-  br i1 %or.cond, label %bb.d, label %bb.j
+  %2 = icmp sgt i64 %i.d, 0
+  %or.cond = select i1 %1, i1 true, i1 %2
+  br i1 %or.cond, label %bb.j, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @moduleDefragStart() #11, !inline_history !196
@@ -1269,8 +1268,8 @@ declare i32 @llvm.ctpop.i32(i32) #7
 define internal fastcc void @endDefragCycle(i32 noundef range(i32 0, 2) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %.not = icmp eq i32 %0, 0
-  br i1 %.not, label %bb.f, label %bb.b
+  %.not = trunc nuw i32 %0 to i1
+  br i1 %.not, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr @defrag.6, align 8, !tbaa !219

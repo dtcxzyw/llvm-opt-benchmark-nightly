@@ -203,8 +203,7 @@ bb.t:                                             ; preds = %_ZN4llvh11SmallVect
   %i.co = icmp slt i32 %i.cn, 1
   %i.cp = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL12GCPrintStatsE, i64 152), align 8, !range !83
   %i.cq = or i8 %i.cp, %i.cl
-  %13 = icmp ne i8 %i.cq, 0
-  %.043 = select i1 %i.co, i1 true, i1 %13
+  %.043 = select i1 %i.co, i8 1, i8 %i.cq
   %_ZN2clL11MinHeapSizeE.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL11MinHeapSizeE, i64 8), align 8, !tbaa !8
   %_ZN2clL11MinHeapSizeE.val74 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL11MinHeapSizeE, i64 152), align 8
   %i.cr = icmp sgt i32 %_ZN2clL11MinHeapSizeE.val, 0
@@ -248,8 +247,7 @@ bb.t:                                             ; preds = %_ZN4llvh11SmallVect
   %i.di = icmp sgt i32 %_ZN2clL14GCSanitizeRateE.val, 0
   %i.dj = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL20GCSanitizeRandomSeedE, i64 152), align 8, !tbaa !50 ; 3 uses
   %.not46.not = icmp eq i64 %i.dj, 0              ; 2 uses
-  %14 = zext i1 %.043 to i8
-  store i8 %14, ptr %i.l, align 8, !tbaa !188
+  store i8 %.043, ptr %i.l, align 8, !tbaa !188
   %i.dk = getelementptr inbounds nuw i8, ptr %3, i64 206 ; 2 uses
   store i8 1, ptr %i.dk, align 2, !tbaa !189
   br i1 %i.cr, label %bb.u, label %bb.v
@@ -652,9 +650,8 @@ _ZN4llvh11safe_mallocEm.exit:                     ; preds = %bb.c, %bb.d
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZN4llvh11safe_mallocEm.exit
   %i.ab = add nsw i64 %.idx, -48                  ; 2 uses
   %i.ac = udiv i64 %i.ab, 48
-  %2 = and i64 %i.ac, 1
-  %lcmp.mod.not.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.prol, label %.lr.ph.i.i.i.i.prol.loopexit
+  %2 = trunc i64 %i.ac to i1
+  br i1 %2, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.prol:                              ; preds = %.lr.ph.i.i.i.i.preheader
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.u, ptr noundef nonnull align 8 dereferenceable(48) %i.w, i64 32, i1 false), !tbaa.struct !299
@@ -973,9 +970,8 @@ _ZN4llvh11safe_mallocEm.exit:                     ; preds = %bb.c, %bb.d
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZN4llvh11safe_mallocEm.exit
   %i.ab = add nsw i64 %.idx, -48                  ; 2 uses
   %i.ac = udiv i64 %i.ab, 48
-  %2 = and i64 %i.ac, 1
-  %lcmp.mod.not.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.prol, label %.lr.ph.i.i.i.i.prol.loopexit
+  %2 = trunc i64 %i.ac to i1
+  br i1 %2, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.prol:                              ; preds = %.lr.ph.i.i.i.i.preheader
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.u, ptr noundef nonnull align 8 dereferenceable(48) %i.w, i64 32, i1 false), !tbaa.struct !299

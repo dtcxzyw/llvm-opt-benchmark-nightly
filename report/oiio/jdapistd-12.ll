@@ -201,7 +201,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
 bb.v:                                             ; preds = %.lr.ph, %bb.v
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.v ] ; 3 uses
   %i.ct = phi i32 [ %i.cn, %.lr.ph ], [ %i.ei, %bb.v ]
-  %.097110 = phi i32 [ 0, %.lr.ph ], [ %spec.select, %bb.v ]
+  %.097110 = phi i1 [ false, %.lr.ph ], [ %spec.select, %bb.v ]
   %.098109 = phi ptr [ %i.cq, %.lr.ph ], [ %i.eh, %bb.v ] ; 4 uses
   %i.cu = load i32, ptr %i.au, align 8, !tbaa !44
   %i.cv = icmp eq i32 %i.cu, 1
@@ -229,7 +229,7 @@ bb.v:                                             ; preds = %.lr.ph, %bb.v
   %i.dm = icmp ult i32 %i.dl, 2
   %i.dn = icmp sgt i32 %i.cy, 1
   %or.cond3 = select i1 %i.dm, i1 %i.dn, i1 false
-  %spec.select = select i1 %or.cond3, i32 1, i32 %.097110 ; 2 uses
+  %spec.select = select i1 %or.cond3, i1 true, i1 %.097110 ; 2 uses
   %i.do = load i32, ptr %1, align 4, !tbaa !3
   %i.dp = mul i32 %i.do, %..pre117
   %i.dq = zext i32 %i.dp to i64
@@ -259,8 +259,7 @@ bb.v:                                             ; preds = %.lr.ph, %bb.v
   br i1 %i.ek, label %bb.v, label %._crit_edge, !llvm.loop !65
 
 ._crit_edge:                                      ; preds = %bb.v
-  %3 = icmp eq i32 %spec.select, 0
-  br i1 %3, label %._crit_edge.thread, label %bb.w
+  br i1 %spec.select, label %bb.w, label %._crit_edge.thread
 
 bb.w:                                             ; preds = %._crit_edge
   %i.el = getelementptr inbounds nuw i8, ptr %i.ee, i64 112

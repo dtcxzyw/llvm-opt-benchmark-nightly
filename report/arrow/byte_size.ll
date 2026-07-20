@@ -204,14 +204,14 @@ bb.a:
   store ptr %i.a, ptr %1, align 8, !tbaa !213, !alias.scope !212
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !110, !noalias !212 ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !110, !noalias !212 ; 3 uses
   store ptr null, ptr %i.c, align 8, !tbaa !110, !noalias !212
   store ptr %i.d, ptr %i.b, align 8, !tbaa !110, !alias.scope !212
   store ptr null, ptr %2, align 8, !tbaa !78, !noalias !212
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !73   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !142  ; 6 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !142  ; 4 uses
   %.not31 = icmp eq i64 %i.h, 0
   br i1 %.not31, label %._crit_edge, label %.lr.ph
 
@@ -225,7 +225,6 @@ bb.a:
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.n = load i64, ptr %i.m, align 8, !tbaa !120  ; 3 uses
-  %xtraiter = and i64 %i.h, 1
   %i.o = icmp eq i64 %i.h, 1
   br i1 %i.o, label %.epil.preheader, label %.lr.ph.split.us.new
 
@@ -275,25 +274,19 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.0.0.i.us.1 = phi i64 [ %i.am, %bb.e ], [ undef, %bb.d ]
-  %i.an = add nsw i64 %.sroa.0.0.i.us.1, %i.aa    ; 3 uses
+  %i.an = add nsw i64 %.sroa.0.0.i.us.1, %i.aa    ; 2 uses
   %i.ao = add nuw nsw i64 %.sroa.626.032.us, 2    ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit45.unr-lcssa, label %bb.b
+  br i1 %niter.ncmp.1, label %.epil.preheader, label %bb.b
 
 ._crit_edge.loopexit:                             ; preds = %bb.t
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !110
   br label %._crit_edge
 
-._crit_edge.loopexit45.unr-lcssa:                 ; preds = %bb.f
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.loopexit45.unr-lcssa, %.lr.ph.split.us
-  %.0933.us.epil.init = phi i64 [ 0, %.lr.ph.split.us ], [ %i.an, %._crit_edge.loopexit45.unr-lcssa ]
-  %.sroa.626.032.us.epil.init = phi i64 [ 0, %.lr.ph.split.us ], [ %i.ao, %._crit_edge.loopexit45.unr-lcssa ] ; 2 uses
-  %lcmp.mod48 = trunc i64 %i.h to i1
-  call void @llvm.assume(i1 %lcmp.mod48)
+.epil.preheader:                                  ; preds = %.lr.ph.split.us, %bb.f
+  %.0933.us.epil.init = phi i64 [ 0, %.lr.ph.split.us ], [ %i.an, %bb.f ]
+  %.sroa.626.032.us.epil.init = phi i64 [ 0, %.lr.ph.split.us ], [ %i.ao, %bb.f ] ; 2 uses
   %i.ap = add nsw i64 %i.n, %.sroa.626.032.us.epil.init ; 2 uses
   %i.aq = lshr i64 %i.ap, 3
   %i.ar = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.aq
@@ -315,9 +308,9 @@ bb.g:                                             ; preds = %.epil.preheader
   %i.ba = add nsw i64 %.sroa.0.0.i.us.epil, %.0933.us.epil.init
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit45.epilog-lcssa, %._crit_edge.loopexit45.unr-lcssa, %._crit_edge.loopexit, %bb.a
-  %3 = phi ptr [ %i.d, %bb.a ], [ %.pre, %._crit_edge.loopexit ], [ %i.d, %._crit_edge.loopexit45.unr-lcssa ], [ %i.d, %._crit_edge.loopexit45.epilog-lcssa ] ; 8 uses
-  %.09.lcssa = phi i64 [ 0, %bb.a ], [ %i.cq, %._crit_edge.loopexit ], [ %i.an, %._crit_edge.loopexit45.unr-lcssa ], [ %i.ba, %._crit_edge.loopexit45.epilog-lcssa ]
+._crit_edge:                                      ; preds = %._crit_edge.loopexit45.epilog-lcssa, %._crit_edge.loopexit, %bb.a
+  %3 = phi ptr [ %i.d, %bb.a ], [ %.pre, %._crit_edge.loopexit ], [ %i.d, %._crit_edge.loopexit45.epilog-lcssa ] ; 8 uses
+  %.09.lcssa = phi i64 [ 0, %bb.a ], [ %i.cq, %._crit_edge.loopexit ], [ %i.ba, %._crit_edge.loopexit45.epilog-lcssa ]
   %.not.i.i14 = icmp eq ptr %3, null
   br i1 %.not.i.i14, label %_ZNSt12__shared_ptrIN5arrow12NumericArrayINS0_10UInt64TypeEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.h
 

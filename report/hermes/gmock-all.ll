@@ -203,7 +203,7 @@ _ZNSt6vectorIcSaIcEEC2EmRKcRKS0_.exit:            ; preds = %.noexc38, %_ZNSt6ve
   %.sroa.15105.0 = phi i64 [ %i.e, %.noexc38 ], [ 0, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
   %.sroa.099.0 = phi ptr [ %i.c, %.noexc38 ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i ] ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !160  ; 18 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !160  ; 17 uses
   %i.h = icmp slt i64 %i.g, 0
   br i1 %i.h, label %bb.b, label %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i39
 
@@ -253,9 +253,7 @@ _ZNSt6vectorIcSaIcEEC2EmRKcRKS0_.exit45.thread:   ; preds = %bb.c
   %cmp.n = icmp eq i64 %i.g, %n.vec
   %min.epilog.iters.check = icmp eq i64 %n.mod.vf, 0
   %n.vec202 = and i64 %i.g, 9223372036854775804   ; 3 uses
-  %cmp.n208 = icmp eq i64 %i.g, %n.vec202
-  %xtraiter = and i64 %i.g, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %i.g, %n.vec202
   br label %iter.check
 
 iter.check:                                       ; preds = %.preheader130.lr.ph.split, %._crit_edge
@@ -265,7 +263,7 @@ iter.check:                                       ; preds = %.preheader130.lr.ph
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.099.0, i64 %.026137 ; 6 uses
   %.promoted = load i8, ptr %i.q, align 1, !tbaa !14 ; 3 uses
   %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx195
-  br i1 %brmerge, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %brmerge, label %vec.epilog.scalar.ph.prol, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check196, label %vec.epilog.ph, label %vector.ph
@@ -307,7 +305,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !231
+  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.prol, label %vec.epilog.ph, !prof !231
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -334,15 +332,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.ao = tail call i8 @llvm.vector.reduce.or.v4i8(<4 x i8> %i.ak) ; 2 uses
   store i8 %i.ao, ptr %i.q, align 1, !tbaa !14, !alias.scope !228, !noalias !230
-  br i1 %cmp.n208, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge, label %vec.epilog.scalar.ph.prol
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.ph = phi i8 [ %.promoted, %iter.check ], [ %i.ao, %vec.epilog.middle.block ], [ %i.af, %vec.epilog.iter.check ] ; 2 uses
-  %.025136.ph = phi i64 [ 0, %iter.check ], [ %n.vec202, %vec.epilog.middle.block ], [ %n.vec, %vec.epilog.iter.check ] ; 5 uses
+vec.epilog.scalar.ph.prol:                        ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.ph = phi i8 [ %.promoted, %iter.check ], [ %i.ao, %vec.epilog.middle.block ], [ %i.af, %vec.epilog.iter.check ]
+  %.025136.ph = phi i64 [ 0, %iter.check ], [ %n.vec202, %vec.epilog.middle.block ], [ %n.vec, %vec.epilog.iter.check ] ; 4 uses
   %.neg = or disjoint i64 %.025136.ph, 1
-  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
-
-vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.ap = getelementptr i8, ptr %i.p, i64 %.025136.ph
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !14
   %i.ar = icmp eq i8 %i.aq, 1
@@ -354,11 +349,6 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.aw = or i8 %i.av, %i.as
   store i8 %i.aw, ptr %i.au, align 1, !tbaa !14
   %i.ax = or disjoint i64 %.025136.ph, 1
-  br label %vec.epilog.scalar.ph.prol.loopexit
-
-vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
-  %.unr = phi i8 [ %.ph, %vec.epilog.scalar.ph.preheader ], [ %i.at, %vec.epilog.scalar.ph.prol ]
-  %.025136.unr = phi i64 [ %.025136.ph, %vec.epilog.scalar.ph.preheader ], [ %i.ax, %vec.epilog.scalar.ph.prol ]
   %4 = icmp eq i64 %i.g, %.neg
   br i1 %4, label %._crit_edge, label %vec.epilog.scalar.ph
 
@@ -379,14 +369,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
           cleanup
   br label %_ZNSt6vectorIcSaIcEED2Ev.exit78
 
-._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %i.bc = add nuw i64 %.026137, 1                 ; 2 uses
   %exitcond156.not = icmp eq i64 %i.bc, %i.a
   br i1 %exitcond156.not, label %.preheader, label %iter.check, !llvm.loop !233
 
-vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
-  %i.bd = phi i8 [ %i.br, %vec.epilog.scalar.ph ], [ %.unr, %vec.epilog.scalar.ph.prol.loopexit ]
-  %.025136 = phi i64 [ %i.bv, %vec.epilog.scalar.ph ], [ %.025136.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 4 uses
+vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph
+  %i.bd = phi i8 [ %i.br, %vec.epilog.scalar.ph ], [ %i.at, %vec.epilog.scalar.ph.prol ]
+  %.025136 = phi i64 [ %i.bv, %vec.epilog.scalar.ph ], [ %i.ax, %vec.epilog.scalar.ph.prol ] ; 4 uses
   %i.be = getelementptr i8, ptr %i.p, i64 %.025136
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !14
   %i.bg = icmp eq i8 %i.bf, 1

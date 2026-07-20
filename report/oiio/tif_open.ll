@@ -201,8 +201,7 @@ define range(i32 0, 2) i32 @TIFFIsMSB2LSB(ptr nofree noundef readonly captures(n
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !52
-  %1 = and i32 %i.b, 1
-  ret i32 %1
+  ret i32 %i.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

@@ -203,13 +203,13 @@ _ZN4absl12lts_2025051213cord_internal11SkipCrcNodeEPNS1_7CordRepE.exit.i.i.i.i: 
 
 bb.e:                                             ; preds = %_ZN4absl12lts_2025051213cord_internal11SkipCrcNodeEPNS1_7CordRepE.exit.i.i.i.i
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 13
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !36, !noalias !76 ; 4 uses
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !36, !noalias !76 ; 5 uses
   %i.r = zext i8 %i.q to i32
   store i32 %i.r, ptr %i.c, align 8, !tbaa !77, !alias.scope !76
   %i.s = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 14
   %i.t = load i8, ptr %i.s, align 1, !noalias !76 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 5 uses
-  %i.v = zext i8 %i.q to i64                      ; 5 uses
+  %i.v = zext i8 %i.q to i64                      ; 4 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.v
   store ptr %.0.i.i.i.i.i, ptr %i.w, align 8, !tbaa !94, !alias.scope !76
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 4 uses
@@ -220,9 +220,8 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20250
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator9InitFirstEPNS1_12CordRepBtreeE.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.e
-  %xtraiter = and i64 %i.v, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.i.prol
+  %lcmp.mod.not = trunc i8 %i.q to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.i.i.i.i.prol:                        ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
   %indvars.iv.next.i.i.i.i.i.i.i.prol = add nsw i64 %i.v, -1 ; 3 uses
@@ -625,13 +624,13 @@ _ZN4absl12lts_2025051213cord_internal11SkipCrcNodeEPNS1_7CordRepE.exit.i.i: ; pr
 
 bb.e:                                             ; preds = %_ZN4absl12lts_2025051213cord_internal11SkipCrcNodeEPNS1_7CordRepE.exit.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 13
-  %i.r = load i8, ptr %i.q, align 1, !tbaa !36    ; 4 uses
+  %i.r = load i8, ptr %i.q, align 1, !tbaa !36    ; 5 uses
   %i.s = zext i8 %i.r to i32
   store i32 %i.s, ptr %i.d, align 8, !tbaa !77
   %i.t = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 14
   %i.u = load i8, ptr %i.t, align 1               ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
-  %i.w = zext i8 %i.r to i64                      ; 5 uses
+  %i.w = zext i8 %i.r to i64                      ; 4 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.w
   store ptr %.0.i.i.i, ptr %i.x, align 8, !tbaa !94
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 4 uses
@@ -642,9 +641,8 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20250
   br i1 %.not.i.i.i.i.i, label %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator9InitFirstEPNS1_12CordRepBtreeE.exit.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.e
-  %xtraiter = and i64 %i.w, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
+  %lcmp.mod.not = trunc i8 %i.r to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.i.i.i.i.i.preheader
   %indvars.iv.next.i.i.i.i.i.prol = add nsw i64 %i.w, -1 ; 3 uses

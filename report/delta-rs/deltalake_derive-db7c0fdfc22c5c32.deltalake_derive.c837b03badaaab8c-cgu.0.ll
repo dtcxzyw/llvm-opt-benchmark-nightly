@@ -203,10 +203,10 @@ bb.g:                                             ; preds = %bb.f
   %.val7.i = load i64, ptr %0, align 8, !range !450, !alias.scope !451, !noundef !4
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val8.i = load ptr, ptr %i.p, align 8, !alias.scope !451 ; 2 uses
-  %1 = icmp eq i64 %.val7.i, 0
-  %2 = icmp eq ptr %.val8.i, null
-  %or.cond.i2 = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i2, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit4, label %bb.h
+  %1 = trunc nuw i64 %.val7.i to i1
+  %2 = icmp ne ptr %.val8.i, null
+  %or.cond.i2 = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond.i2, label %bb.h, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit4
 
 bb.h:                                             ; preds = %bb.g
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtCs7nQiqFc7Txl_3syn3lit7LitReprEECshbKHpCRGxgC_16deltalake_derive(ptr nonnull %.val8.i)
@@ -216,10 +216,10 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc
   %.val.i = phi i64 [ %.val.i.pre, %._RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn8generics14BoundLifetimesEECshbKHpCRGxgC_16deltalake_derive.exit_crit_edge ], [ %i.a, %bb.e ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val6.i = load ptr, ptr %i.q, align 8, !alias.scope !451 ; 2 uses
-  %3 = icmp eq i64 %.val.i, 0
-  %4 = icmp eq ptr %.val6.i, null
-  %or.cond.i = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond.i, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit, label %bb.i
+  %3 = trunc nuw i64 %.val.i to i1
+  %4 = icmp ne ptr %.val6.i, null
+  %or.cond.i = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond.i, label %bb.i, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn2ty3AbiEECshbKHpCRGxgC_16deltalake_derive.exit
 
 bb.i:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs7nQiqFc7Txl_3syn8generics14BoundLifetimesEECshbKHpCRGxgC_16deltalake_derive.exit
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtCs7nQiqFc7Txl_3syn3lit7LitReprEECshbKHpCRGxgC_16deltalake_derive(ptr nonnull %.val6.i)
@@ -622,10 +622,9 @@ bb.ao:                                            ; preds = %bb.aq, %.lr.ph.i14
   %i.ie = load i8, ptr %i.id, align 1, !alias.scope !1378, !noalias !1384, !noundef !4
   %i.if = and i8 %i.ie, 63
   %i.ig = zext nneg i8 %i.if to i64
-  %4 = shl nuw i64 1, %i.ig
-  %5 = and i64 %4, %i.hw
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.ap, label %.preheader90.preheader
+  %4 = lshr i64 %i.hw, %i.ig
+  %5 = trunc nuw i64 %4 to i1
+  br i1 %5, label %.preheader90.preheader, label %bb.ap
 
 .preheader90.preheader:                           ; preds = %bb.ao
   br i1 %exitcond.not.i19269.not, label %.lr.ph271, label %.preheader.preheader
@@ -734,10 +733,9 @@ bb.ba:                                            ; preds = %.sink.split.i, %.lr
   %i.jo = load i8, ptr %i.jn, align 1, !alias.scope !1390, !noalias !1396, !noundef !4
   %i.jp = and i8 %i.jo, 63
   %i.jq = zext nneg i8 %i.jp to i64
-  %7 = shl nuw i64 1, %i.jq
-  %8 = and i64 %7, %i.jf
-  %9 = icmp eq i64 %8, 0
-  br i1 %9, label %bb.bb, label %bb.bc
+  %6 = lshr i64 %i.jf, %i.jq
+  %7 = trunc nuw i64 %6 to i1
+  br i1 %7, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.jr = add i64 %i.jk, %i.gy

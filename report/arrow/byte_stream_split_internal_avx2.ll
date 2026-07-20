@@ -190,7 +190,6 @@ vec.epilog.middle.block167:                       ; preds = %vec.epilog.vector.b
   br i1 %i.bi, label %.preheader71.i.preheader, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit
 
 .preheader71.i.preheader:                         ; preds = %.preheader72.i
-  %xtraiter174 = and i64 %i.b, 1
   %i.bj = and i64 %2, 9223372036854775792
   %i.bk = icmp eq i64 %i.bj, 16
   br i1 %i.bk, label %.preheader71.i.epil.preheader, label %.preheader71.i.preheader.new
@@ -286,7 +285,7 @@ vec.epilog.middle.block167:                       ; preds = %vec.epilog.vector.b
   br i1 %niter178.ncmp.1, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit.unr-lcssa, label %.preheader71.i, !llvm.loop !25
 
 bb.c:                                             ; preds = %bb.a
-  %i.cx = lshr i64 %2, 5                          ; 4 uses
+  %i.cx = lshr i64 %2, 5                          ; 5 uses
   %i.cy = and i64 %2, 9223372036854775776         ; 12 uses
   %.not = icmp eq i64 %i.cy, %2
   br i1 %.not, label %.preheader75.preheader, label %iter.check
@@ -486,12 +485,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %niter.ncmp.1, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit170.unr-lcssa, label %.preheader75, !llvm.loop !42
 
 _ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit.unr-lcssa: ; preds = %.preheader71.i
-  %lcmp.mod175.not = icmp eq i64 %xtraiter174, 0
-  br i1 %lcmp.mod175.not, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit, label %.preheader71.i.epil.preheader
+  %lcmp.mod175.not = trunc nuw i64 %i.b to i1
+  br i1 %lcmp.mod175.not, label %.preheader71.i.epil.preheader, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit
 
 .preheader71.i.epil.preheader:                    ; preds = %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit.unr-lcssa, %.preheader71.i.preheader
   %.05577.i.epil.init = phi i64 [ 0, %.preheader71.i.preheader ], [ %i.cw, %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod176 = trunc i64 %i.b to i1
+  %lcmp.mod176 = trunc nuw i64 %i.b to i1
   tail call void @llvm.assume(i1 %lcmp.mod176)
   %i.ge = shl nuw i64 %.05577.i.epil.init, 5
   %scevgep.i.epil = getelementptr i8, ptr %4, i64 %i.ge ; 2 uses
@@ -508,13 +507,12 @@ _ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi
   br label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit
 
 _ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit170.unr-lcssa: ; preds = %.preheader75
-  %5 = and i64 %2, 32
-  %lcmp.mod.not = icmp eq i64 %5, 0
-  br i1 %lcmp.mod.not, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit, label %.preheader75.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %i.cx to i1
+  br i1 %lcmp.mod.not, label %.preheader75.epil.preheader, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit
 
 .preheader75.epil.preheader:                      ; preds = %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit170.unr-lcssa, %.preheader75.preheader
   %.05782.epil.init = phi i64 [ 0, %.preheader75.preheader ], [ %i.gd, %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit170.unr-lcssa ] ; 2 uses
-  %lcmp.mod171 = trunc i64 %i.cx to i1
+  %lcmp.mod171 = trunc nuw i64 %i.cx to i1
   tail call void @llvm.assume(i1 %lcmp.mod171)
   %i.gm = shl i64 %.05782.epil.init, 6
   %scevgep.epil = getelementptr i8, ptr %4, i64 %i.gm ; 2 uses
@@ -636,9 +634,8 @@ middle.block164:                                  ; preds = %vector.body157
   %.05074.i.ph = phi i64 [ %i.c, %vector.memcheck126 ], [ %i.c, %.lr.ph.preheader.i ], [ %i.q, %middle.block164 ] ; 6 uses
   %i.aj = sub i64 %2, %.05074.i.ph
   %.neg171 = add i64 %.05074.i.ph, 1
-  %xtraiter169 = and i64 %i.aj, 1
-  %lcmp.mod170.not = icmp eq i64 %xtraiter169, 0
-  br i1 %lcmp.mod170.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %lcmp.mod170.not = trunc nuw i64 %i.aj to i1
+  br i1 %lcmp.mod170.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
   %invariant.gep.i.prol = getelementptr i8, ptr %0, i64 %.05074.i.ph ; 4 uses
@@ -853,9 +850,8 @@ middle.block:                                     ; preds = %vector.body
   %.05879.ph = phi i64 [ %i.ce, %vector.memcheck ], [ %i.ce, %.lr.ph.preheader ], [ %i.cs, %middle.block ] ; 6 uses
   %i.dl = sub i64 %2, %.05879.ph
   %.neg = add i64 %.05879.ph, 1
-  %xtraiter = and i64 %i.dl, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %lcmp.mod.not = trunc nuw i64 %i.dl to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader168
   %invariant.gep.prol = getelementptr i8, ptr %0, i64 %.05879.ph ; 4 uses
@@ -1258,7 +1254,6 @@ vec.epilog.middle.block90:                        ; preds = %vec.epilog.vector.b
   br i1 %i.bt, label %.preheader.preheader.i.i.preheader, label %_ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4avx2ELi2EEEvPKhilPh.exit
 
 .preheader.preheader.i.i.preheader:               ; preds = %.preheader98.i.i
-  %xtraiter94 = and i64 %i.c, 1
   %i.bu = and i64 %2, 9223372036854775792
   %i.bv = icmp eq i64 %i.bu, 16
   br i1 %i.bv, label %.preheader.preheader.i.i.epil.preheader, label %.preheader.preheader.i.i.preheader.new
@@ -1483,12 +1478,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.i, label %_ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4avx2ELi2EEEvPKhilPh.exit, label %.preheader.preheader.i, !llvm.loop !153
 
 _ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4avx2ELi2EEEvPKhilPh.exit.loopexit.unr-lcssa: ; preds = %.preheader.preheader.i.i
-  %lcmp.mod95.not = icmp eq i64 %xtraiter94, 0
-  br i1 %lcmp.mod95.not, label %_ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4avx2ELi2EEEvPKhilPh.exit, label %.preheader.preheader.i.i.epil.preheader
+  %lcmp.mod95.not = trunc nuw i64 %i.c to i1
+  br i1 %lcmp.mod95.not, label %.preheader.preheader.i.i.epil.preheader, label %_ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4avx2ELi2EEEvPKhilPh.exit
 
 .preheader.preheader.i.i.epil.preheader:          ; preds = %_ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4avx2ELi2EEEvPKhilPh.exit.loopexit.unr-lcssa, %.preheader.preheader.i.i.preheader
   %.079106.i.i.epil.init = phi i64 [ 0, %.preheader.preheader.i.i.preheader ], [ %i.cr, %_ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4avx2ELi2EEEvPKhilPh.exit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod96 = trunc i64 %i.c to i1
+  %lcmp.mod96 = trunc nuw i64 %i.c to i1
   tail call void @llvm.assume(i1 %lcmp.mod96)
   %i.fo = shl nuw i64 %.079106.i.i.epil.init, 5
   %i.fp = getelementptr i8, ptr %0, i64 %i.fo     ; 2 uses
@@ -1694,9 +1689,8 @@ vec.epilog.middle.block164:                       ; preds = %vec.epilog.vector.b
   %.073104.i.i.ph = phi i64 [ %i.h, %iter.check149 ], [ %i.h, %vector.scevcheck ], [ %i.h, %vector.memcheck82 ], [ %i.ah, %vec.epilog.iter.check151 ], [ %i.aq, %vec.epilog.middle.block164 ] ; 6 uses
   %i.az = sub i64 %2, %.073104.i.i.ph
   %.neg170 = add i64 %.073104.i.i.ph, 1
-  %xtraiter168 = and i64 %i.az, 1
-  %lcmp.mod169.not = icmp eq i64 %xtraiter168, 0
-  br i1 %lcmp.mod169.not, label %.preheader101.i.i.prol.loopexit, label %.preheader101.i.i.prol
+  %lcmp.mod169.not = trunc nuw i64 %i.az to i1
+  br i1 %lcmp.mod169.not, label %.preheader101.i.i.prol, label %.preheader101.i.i.prol.loopexit
 
 .preheader101.i.i.prol:                           ; preds = %.preheader101.i.i.preheader
   %i.ba = shl nsw i64 %.073104.i.i.ph, 2
@@ -1951,9 +1945,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.08193.i.ph = phi i64 [ %i.dj, %iter.check ], [ %i.dj, %vector.memcheck ], [ %i.dr, %vec.epilog.iter.check ], [ %i.ea, %vec.epilog.middle.block ] ; 6 uses
   %i.ej = sub i64 %2, %.08193.i.ph
   %.neg = add i64 %.08193.i.ph, 1
-  %xtraiter = and i64 %i.ej, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader90.i.prol.loopexit, label %.preheader90.i.prol
+  %lcmp.mod.not = trunc nuw i64 %i.ej to i1
+  br i1 %lcmp.mod.not, label %.preheader90.i.prol, label %.preheader90.i.prol.loopexit
 
 .preheader90.i.prol:                              ; preds = %.preheader90.i.preheader
   %i.ek = shl nuw nsw i64 %.08193.i.ph, 2

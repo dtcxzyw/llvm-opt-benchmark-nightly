@@ -204,7 +204,7 @@ bb.jc:                                            ; preds = %_ZNSt6vectorIN6Assi
   %i.bxt = phi ptr [ %.pre3771, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit2069 ], [ %i.aaw, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit1351 ] ; 4 uses
   %.3358 = phi i32 [ %i.bfl, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit2069 ], [ %i.aav, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit1351 ] ; 3 uses
   %i.bxu = getelementptr inbounds nuw i8, ptr %i.bxt, i64 16
-  %i.bxv = load i32, ptr %i.bxu, align 8          ; 7 uses
+  %i.bxv = load i32, ptr %i.bxu, align 8          ; 8 uses
   store i32 %i.bxv, ptr %i.ay, align 4
   %.not3759 = icmp eq i32 %i.bxv, 0
   br i1 %.not3759, label %._crit_edge.thread, label %.lr.ph
@@ -212,18 +212,17 @@ bb.jc:                                            ; preds = %_ZNSt6vectorIN6Assi
 .lr.ph:                                           ; preds = %bb.jc
   %i.bxw = getelementptr inbounds nuw i8, ptr %i.bxt, i64 24
   %.pre3772 = load ptr, ptr %i.bxw, align 8       ; 3 uses
-  %286 = zext i32 %i.bxv to i64                   ; 2 uses
-  %xtraiter = and i64 %286, 1
   %i.bxx = icmp eq i32 %i.bxv, 1
   br i1 %i.bxx, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %286, 4294967294
+  %286 = and i32 %i.bxv, -2
+  %unroll_iter = zext i32 %286 to i64
   br label %bb.je
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.ji
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.bxv to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %.03693749.epil.init = phi i32 [ 0, %.lr.ph ], [ %.1370.1, %._crit_edge.unr-lcssa ] ; 2 uses
@@ -626,25 +625,24 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3398: ; preds = %b
   %.9364 = phi i32 [ %i.ebs, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit3392 ], [ %i.eaw, %bb.se ], [ %.7362, %_ZL14count_texturesPK7aiScene.exit.thread ] ; 3 uses
   store i32 0, ptr %i.ay, align 4
   %i.ece = getelementptr inbounds nuw i8, ptr %i.ecd, i64 16
-  %i.ecf = load i32, ptr %i.ece, align 8          ; 5 uses
+  %i.ecf = load i32, ptr %i.ece, align 8          ; 6 uses
   %.not3760 = icmp eq i32 %i.ecf, 0
   br i1 %.not3760, label %_ZL15count_deformersPK7aiScene.exit, label %.lr.ph3753
 
 .lr.ph3753:                                       ; preds = %.thread4847
   %i.ecg = getelementptr inbounds nuw i8, ptr %i.ecd, i64 24
   %.pre3779 = load ptr, ptr %i.ecg, align 8       ; 3 uses
-  %287 = zext i32 %i.ecf to i64                   ; 2 uses
-  %xtraiter4867 = and i64 %287, 1
   %i.ech = icmp eq i32 %i.ecf, 1
   br i1 %i.ech, label %.epil.preheader4866, label %.lr.ph3753.new
 
 .lr.ph3753.new:                                   ; preds = %.lr.ph3753
-  %unroll_iter4873 = and i64 %287, 4294967294
+  %287 = and i32 %i.ecf, -2
+  %unroll_iter4873 = zext i32 %287 to i64
   br label %bb.sm
 
 ._crit_edge3754.unr-lcssa:                        ; preds = %bb.sq
-  %lcmp.mod4870.not = icmp eq i64 %xtraiter4867, 0
-  br i1 %lcmp.mod4870.not, label %._crit_edge3754, label %.epil.preheader4866
+  %lcmp.mod4870.not = trunc i32 %i.ecf to i1
+  br i1 %lcmp.mod4870.not, label %.epil.preheader4866, label %._crit_edge3754
 
 .epil.preheader4866:                              ; preds = %._crit_edge3754.unr-lcssa, %.lr.ph3753
   %.03683751.epil.init = phi i64 [ 0, %.lr.ph3753 ], [ %i.edo, %._crit_edge3754.unr-lcssa ]
@@ -834,22 +832,21 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3423: ; preds = %b
   br label %.body
 
 bb.sx:                                            ; preds = %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit3417, %._crit_edge3754
-  %i.eeu = phi i32 [ %.pre3782, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit3417 ], [ %i.ecf, %._crit_edge3754 ] ; 4 uses
+  %i.eeu = phi i32 [ %.pre3782, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit3417 ], [ %i.ecf, %._crit_edge3754 ] ; 5 uses
   %i.eev = phi ptr [ %.pre3780, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit3417 ], [ %i.ecd, %._crit_edge3754 ]
   %.10365 = phi i32 [ %i.eej, %_ZNSt6vectorIN6Assimp3FBX4NodeESaIS2_EE9push_backERKS2_.exit3417 ], [ %.9364, %._crit_edge3754 ] ; 3 uses
-  %288 = zext i32 %i.eeu to i64                   ; 2 uses
   %.not12.i = icmp eq i32 %i.eeu, 0
   br i1 %.not12.i, label %_ZL15count_deformersPK7aiScene.exit, label %.lr.ph.i3424
 
 .lr.ph.i3424:                                     ; preds = %bb.sx
   %i.eew = getelementptr inbounds nuw i8, ptr %i.eev, i64 24
   %i.eex = load ptr, ptr %i.eew, align 8          ; 3 uses
-  %xtraiter4876 = and i64 %288, 1
   %i.eey = icmp eq i32 %i.eeu, 1
   br i1 %i.eey, label %.epil.preheader4875, label %.lr.ph.i3424.new
 
 .lr.ph.i3424.new:                                 ; preds = %.lr.ph.i3424
-  %unroll_iter4880 = and i64 %288, 4294967294
+  %288 = and i32 %i.eeu, -2
+  %unroll_iter4880 = zext i32 %288 to i64
   br label %bb.sy
 
 bb.sy:                                            ; preds = %bb.sy, %.lr.ph.i3424.new
@@ -879,8 +876,8 @@ bb.sy:                                            ; preds = %bb.sy, %.lr.ph.i342
   br i1 %niter4881.ncmp.1, label %_ZL15count_deformersPK7aiScene.exit.loopexit.unr-lcssa, label %bb.sy, !llvm.loop !60
 
 _ZL15count_deformersPK7aiScene.exit.loopexit.unr-lcssa: ; preds = %bb.sy
-  %lcmp.mod4877.not = icmp eq i64 %xtraiter4876, 0
-  br i1 %lcmp.mod4877.not, label %_ZL15count_deformersPK7aiScene.exit, label %.epil.preheader4875
+  %lcmp.mod4877.not = trunc i32 %i.eeu to i1
+  br i1 %lcmp.mod4877.not, label %.epil.preheader4875, label %_ZL15count_deformersPK7aiScene.exit
 
 .epil.preheader4875:                              ; preds = %_ZL15count_deformersPK7aiScene.exit.loopexit.unr-lcssa, %.lr.ph.i3424
   %.011.i.epil.init = phi i32 [ 0, %.lr.ph.i3424 ], [ %.1.i.1, %_ZL15count_deformersPK7aiScene.exit.loopexit.unr-lcssa ]

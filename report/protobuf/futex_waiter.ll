@@ -17,8 +17,10 @@ bb.a:
   %4 = alloca %"struct.absl::lts_20250512::synchronization_internal::FutexTimespec", align 8 ; 5 uses
   %5 = alloca %"class.absl::lts_20250512::synchronization_internal::KernelTimeout", align 8 ; 3 uses
   store i64 %2, ptr %5, align 8
-  %.not = icmp eq i64 %2, -1
-  br i1 %.not, label %bb.b, label %6
+  switch i64 %2, label %bb.d [
+    i64 -1, label %bb.b
+    i64 0, label %bb.f
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef %0, i32 noundef 393, i32 noundef %1, ptr noundef null, ptr noundef null, i32 noundef -1) #5
@@ -31,11 +33,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = sub nsw i32 0, %i.c
   br label %_ZN4absl12lts_2025051224synchronization_internal9FutexImpl4WaitEPSt6atomicIiEi.exit
 
-6:                                                ; preds = %bb.a
-  %7 = trunc i64 %2 to i1
-  br i1 %7, label %bb.d, label %bb.f
-
-bb.d:                                             ; preds = %6
+bb.d:                                             ; preds = %bb.a
   %i.e = call { i64, i64 } @_ZNK4absl12lts_2025051224synchronization_internal13KernelTimeout20MakeRelativeTimespecEv(ptr noundef nonnull align 8 dereferenceable(8) %5) ; 2 uses
   %i.f = extractvalue { i64, i64 } %i.e, 0
   %i.g = extractvalue { i64, i64 } %i.e, 1
@@ -58,7 +56,7 @@ _ZN4absl12lts_2025051224synchronization_internal9FutexImpl19WaitRelativeTimeoutE
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %_ZN4absl12lts_2025051224synchronization_internal9FutexImpl4WaitEPSt6atomicIiEi.exit
 
-bb.f:                                             ; preds = %6
+bb.f:                                             ; preds = %bb.a
   %i.m = call { i64, i64 } @_ZNK4absl12lts_2025051224synchronization_internal13KernelTimeout15MakeAbsTimespecEv(ptr noundef nonnull align 8 dereferenceable(8) %5) ; 2 uses
   %i.n = extractvalue { i64, i64 } %i.m, 0
   %i.o = extractvalue { i64, i64 } %i.m, 1

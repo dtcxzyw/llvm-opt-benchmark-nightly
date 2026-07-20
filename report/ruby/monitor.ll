@@ -61,7 +61,7 @@ bb.a:
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.d = load i64, ptr %i.c, align 8, !tbaa !12
-  %i.e = trunc i64 %i.d to i1
+  %i.e = trunc nuw i64 %i.d to i1
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   br i1 %i.e, label %RTYPEDDATA_GET_DATA.exit, label %bb.b
 
@@ -114,7 +114,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.c
 
@@ -288,7 +288,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.c
 
@@ -380,7 +380,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.c
 
@@ -470,7 +470,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -527,7 +527,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.c
 
@@ -593,7 +593,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -664,7 +664,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !12   ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.c
 
@@ -863,7 +863,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.k = load i64, ptr %i.j, align 8, !tbaa !12   ; 2 uses
   %i.l = and i64 %i.k, -2                         ; 2 uses
   %i.m = inttoptr i64 %i.l to ptr
-  %i.n = trunc i64 %i.k to i1
+  %i.n = trunc nuw i64 %i.k to i1
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 2 uses
   br i1 %i.n, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -941,7 +941,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.k = load i64, ptr %i.j, align 8, !tbaa !12   ; 2 uses
   %i.l = and i64 %i.k, -2                         ; 2 uses
   %i.m = inttoptr i64 %i.l to ptr
-  %i.n = trunc i64 %i.k to i1
+  %i.n = trunc nuw i64 %i.k to i1
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 2 uses
   br i1 %i.n, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -988,20 +988,16 @@ bb.e:                                             ; preds = %monitor_ptr.exit
 
 rb_obj_write.exit:                                ; preds = %monitor_ptr.exit, %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !41 ; 3 uses
-  %i.af = trunc i64 %i.ae to i1
-  br i1 %i.af, label %1, label %bb.f
-
-1:                                                ; preds = %rb_obj_write.exit
-  %2 = ashr i64 %i.ae, 1
-  br label %rb_num2long_inline.exit
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !41
+  %i.af = trunc nuw i64 %i.ae to i1
+  br i1 %i.af, label %rb_num2long_inline.exit, label %bb.f
 
 bb.f:                                             ; preds = %rb_obj_write.exit
-  %i.ag = tail call i64 @rb_num2long(i64 noundef %i.ae) #5
+  %i.ag = tail call i64 @rb_num2long(i64 noundef 0) #5
   br label %rb_num2long_inline.exit
 
-rb_num2long_inline.exit:                          ; preds = %1, %bb.f
-  %.0.i = phi i64 [ %2, %1 ], [ %i.ag, %bb.f ]
+rb_num2long_inline.exit:                          ; preds = %rb_obj_write.exit, %bb.f
+  %.0.i = phi i64 [ %i.ag, %bb.f ], [ 0, %rb_obj_write.exit ]
   store i64 %.0.i, ptr %.1.i.i, align 8, !tbaa !17
   ret i64 4
 }

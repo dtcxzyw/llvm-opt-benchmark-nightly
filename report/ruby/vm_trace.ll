@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %bb.m
   tail call fastcc void @clean_hooks(ptr noundef nonnull %1)
   br label %exec_hooks_postcheck.exit
 
-exec_hooks_postcheck.exit:                        ; preds = %bb.a, %bb.n, %bb.m, %exec_hooks_body.exit
+exec_hooks_postcheck.exit:                        ; preds = %bb.n, %bb.m, %exec_hooks_body.exit, %bb.a
   ret void
 }
 
@@ -606,7 +606,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !132  ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr i8, ptr %i.e, i64 32       ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -702,7 +702,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.k = load i64, ptr %i.j, align 8, !tbaa !132  ; 2 uses
   %i.l = and i64 %i.k, -2                         ; 2 uses
   %i.m = inttoptr i64 %i.l to ptr
-  %i.n = trunc i64 %i.k to i1
+  %i.n = trunc nuw i64 %i.k to i1
   %i.o = getelementptr i8, ptr %i.g, i64 32       ; 2 uses
   br i1 %i.n, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -850,7 +850,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !132  ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -1209,7 +1209,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !132  ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -1402,7 +1402,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !132  ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr i8, ptr %i.e, i64 32       ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -1544,7 +1544,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !132  ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr i8, ptr %i.e, i64 32       ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -1614,7 +1614,7 @@ bb.d:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.n = load i64, ptr %i.m, align 8, !tbaa !132  ; 2 uses
   %i.o = and i64 %i.n, -2                         ; 2 uses
   %i.p = inttoptr i64 %i.o to ptr
-  %i.q = trunc i64 %i.n to i1
+  %i.q = trunc nuw i64 %i.n to i1
   %i.r = getelementptr i8, ptr %i.j, i64 32       ; 2 uses
   br i1 %i.q, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.e
 
@@ -1991,7 +1991,7 @@ bb.y:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !132 ; 2 uses
   %i.ch = and i64 %i.cg, -2                       ; 2 uses
   %i.ci = inttoptr i64 %i.ch to ptr
-  %i.cj = trunc i64 %i.cg to i1
+  %i.cj = trunc nuw i64 %i.cg to i1
   %i.ck = getelementptr i8, ptr %i.cc, i64 32     ; 2 uses
   br i1 %i.cj, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.z
 
@@ -2089,7 +2089,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.j = load i64, ptr %i.i, align 8, !tbaa !132  ; 2 uses
   %i.k = and i64 %i.j, -2                         ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr
-  %i.m = trunc i64 %i.j to i1
+  %i.m = trunc nuw i64 %i.j to i1
   %i.n = getelementptr i8, ptr %i.f, i64 32       ; 2 uses
   br i1 %i.m, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -2492,7 +2492,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.l = load i64, ptr %i.k, align 8, !tbaa !132  ; 2 uses
   %i.m = and i64 %i.l, -2                         ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr
-  %i.o = trunc i64 %i.l to i1
+  %i.o = trunc nuw i64 %i.l to i1
   %i.p = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   br i1 %i.o, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -2606,7 +2606,7 @@ bb.p:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.au = load i64, ptr %i.at, align 8, !tbaa !132 ; 2 uses
   %i.av = and i64 %i.au, -2                       ; 2 uses
   %i.aw = inttoptr i64 %i.av to ptr
-  %i.ax = trunc i64 %i.au to i1
+  %i.ax = trunc nuw i64 %i.au to i1
   %i.ay = getelementptr i8, ptr %i.aq, i64 32     ; 2 uses
   br i1 %i.ax, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.q
 
@@ -2699,9 +2699,8 @@ bb.w:                                             ; preds = %rb_current_ractor.e
 
 bb.x:                                             ; preds = %bb.w
   %i.bx = load i32, ptr %.1.i.i.i, align 8, !tbaa !146
-  %5 = and i32 %i.bx, 1
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.y, label %bb.z
+  %5 = trunc nuw i32 %i.bx to i1
+  br i1 %5, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.by = load i64, ptr @rb_eArgError, align 8, !tbaa !34
@@ -2922,7 +2921,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !132  ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr i8, ptr %i.e, i64 32       ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
@@ -3008,7 +3007,7 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = load i64, ptr %i.h, align 8, !tbaa !132  ; 2 uses
   %i.j = and i64 %i.i, -2                         ; 2 uses
   %i.k = inttoptr i64 %i.j to ptr
-  %i.l = trunc i64 %i.i to i1
+  %i.l = trunc nuw i64 %i.i to i1
   %i.m = getelementptr i8, ptr %i.e, i64 32       ; 2 uses
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i.i, label %bb.c
 

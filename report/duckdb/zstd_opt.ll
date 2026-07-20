@@ -158,10 +158,9 @@ bb.a:
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
   %wide.trip.count = zext nneg i32 %i.z to i64
   %i.bs = add nsw i64 %wide.trip.count, -1        ; 3 uses
-  %xtraiter = and i64 %i.bs, 1
   %unroll_iter = and i64 %i.bs, -2
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod427 = trunc i64 %i.bs to i1
+  %lcmp.mod.not = trunc nuw i64 %i.bs to i1
+  %lcmp.mod427 = trunc nuw i64 %i.bs to i1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph241, %bb.ca
@@ -298,7 +297,7 @@ _ZN11duckdb_zstdL19ZSTD_litLengthPriceEjPKNS_10optState_tEi.exit: ; preds = %bb.
   br i1 %niter.ncmp.1, label %.preheader188.preheader.unr-lcssa, label %.preheader189.a, !llvm.loop !49
 
 .preheader188.preheader.unr-lcssa:                ; preds = %.preheader189.a
-  br i1 %lcmp.mod.not, label %.preheader188.preheader, label %.preheader189.epil.preheader
+  br i1 %lcmp.mod.not, label %.preheader189.epil.preheader, label %.preheader188.preheader
 
 .preheader189.epil.preheader:                     ; preds = %.preheader188.preheader.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod427)
@@ -701,10 +700,9 @@ bb.a:
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
   %wide.trip.count = zext nneg i32 %i.z to i64
   %i.bt = add nsw i64 %wide.trip.count, -1        ; 3 uses
-  %xtraiter = and i64 %i.bt, 1
   %unroll_iter = and i64 %i.bt, -2
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod553 = trunc i64 %i.bt to i1
+  %lcmp.mod.not = trunc nuw i64 %i.bt to i1
+  %lcmp.mod553 = trunc nuw i64 %i.bt to i1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph354, %bb.cs
@@ -851,7 +849,7 @@ _ZN11duckdb_zstdL19ZSTD_litLengthPriceEjPKNS_10optState_tEi.exit: ; preds = %bb.
   br i1 %niter.ncmp.1, label %.preheader306.preheader.unr-lcssa, label %.preheader307.a, !llvm.loop !49
 
 .preheader306.preheader.unr-lcssa:                ; preds = %.preheader307.a
-  br i1 %lcmp.mod.not, label %.preheader306.preheader, label %.preheader307.epil.preheader
+  br i1 %lcmp.mod.not, label %.preheader307.epil.preheader, label %.preheader306.preheader
 
 .preheader307.epil.preheader:                     ; preds = %.preheader306.preheader.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod553)
@@ -1254,7 +1252,7 @@ _ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit:       ; preds = %bb.b, %bb.c, %bb.d,
 
 .lr.ph:                                           ; preds = %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit
   %i.bn = shl nuw i32 1, %i.bm
-  %.not = icmp ne i32 %5, 0
+  %.not = trunc nuw i32 %5 to i1
   %i.bo = getelementptr inbounds i8, ptr %2, i64 -7 ; 2 uses
   %i.bp = getelementptr inbounds i8, ptr %2, i64 -3
   %i.bq = getelementptr inbounds i8, ptr %2, i64 -1

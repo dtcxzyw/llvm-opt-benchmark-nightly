@@ -66,7 +66,6 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = and i64 %i.g, 4294967295
-  %xtraiter = and i64 %i.g, 1
   %i.k = icmp eq i64 %wide.trip.count, 1
   br i1 %i.k, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -75,13 +74,13 @@ bb.a:
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %i.g to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]
   %.046.epil.init = phi i32 [ %i.j, %.lr.ph.preheader ], [ %i.bg, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod83 = trunc i64 %i.g to i1
+  %lcmp.mod83 = trunc nuw i64 %i.g to i1
   tail call void @llvm.assume(i1 %lcmp.mod83)
   %i.l = getelementptr inbounds nuw [40 x i8], ptr %i.c, i64 %indvars.iv.epil.init ; 3 uses
   store i32 %.046.epil.init, ptr %i.l, align 8, !tbaa !12

@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !10
-  %i.h = tail call i32 @PyLong_AsInt(ptr noundef %i.g) #6 ; 6 uses
+  %i.h = tail call i32 @PyLong_AsInt(ptr noundef %i.g) #6 ; 4 uses
   %i.i = icmp eq i32 %i.h, -1
   br i1 %i.i, label %bb.e, label %bb.f
 
@@ -252,27 +252,22 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h,
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
-  %4 = icmp eq i32 %i.h, 8
-  br i1 %4, label %bb.o, label %5
+  switch i32 %i.h, label %bb.m [
+    i32 8, label %bb.o
+    i32 0, label %bb.n
+  ]
 
-5:                                                ; preds = %bb.l
-  %6 = and i32 %i.h, 1
-  %.not29.i = icmp eq i32 %6, 0
-  br i1 %.not29.i, label %bb.m, label %bb.o
+bb.m:                                             ; preds = %bb.l
+  br label %bb.o
 
-bb.m:                                             ; preds = %5
-  %7 = and i32 %i.h, 2
-  %.not30.i = icmp eq i32 %7, 0
-  br i1 %.not30.i, label %bb.n, label %bb.o
-
-bb.n:                                             ; preds = %bb.m
+bb.n:                                             ; preds = %bb.l
   %i.aa = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !10
   tail call void @PyErr_SetString(ptr noundef %i.aa, ptr noundef nonnull @.str.26) #6
   br label %.critedge37.i
 
-bb.o:                                             ; preds = %bb.m, %5, %bb.l
-  %.sink.i = phi i16 [ 2, %bb.l ], [ 0, %5 ], [ 1, %bb.m ]
-  store i16 %.sink.i, ptr %3, align 8, !tbaa !39
+bb.o:                                             ; preds = %bb.m, %bb.l
+  %storemerge.i = phi i16 [ 0, %bb.m ], [ 2, %bb.l ]
+  store i16 %storemerge.i, ptr %3, align 8, !tbaa !39
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i8 0, i64 16, i1 false)

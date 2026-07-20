@@ -204,31 +204,28 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.b, %bb.a
   %i.s = mul i32 %i.o, %i.n                       ; 4 uses
-  %i.t = zext i32 %i.s to i64                     ; 3 uses
+  %i.t = zext i32 %i.s to i64                     ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.u) #22 ; 4 uses
   store ptr %i.v, ptr %i.l, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   call void @_ZN6Assimp11MDLImporter13SearchPaletteEPPKh(ptr noundef nonnull align 8 dereferenceable(159) %0, ptr noundef nonnull %i.a)
-  %.not51 = icmp eq i32 %i.s, 0
   %.pre = load ptr, ptr %i.a, align 8             ; 6 uses
-  br i1 %.not51, label %._crit_edge, label %.lr.ph.preheader
+  switch i32 %i.s, label %.lr.ph.preheader.new [
+    i32 0, label %._crit_edge
+    i32 1, label %.lr.ph.epil.preheader
+  ]
 
-.lr.ph.preheader:                                 ; preds = %bb.f
-  %xtraiter = and i64 %i.t, 1
-  %2 = icmp eq i32 %i.s, 1
-  br i1 %2, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+.lr.ph.preheader.new:                             ; preds = %bb.f
   %unroll_iter = and i64 %i.t, 4294967294
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.s to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %._crit_edge
 
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+.lr.ph.epil.preheader:                            ; preds = %bb.f, %._crit_edge.loopexit.unr-lcssa
+  %indvars.iv.epil.init = phi i64 [ 0, %bb.f ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod66 = trunc i32 %i.s to i1
   tail call void @llvm.assume(i1 %lcmp.mod66)
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.epil.init

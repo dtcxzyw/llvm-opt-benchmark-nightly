@@ -20,9 +20,8 @@ bb.a:
   %i.d = zext i8 %i.c to i64
   %i.e = getelementptr i8, ptr @pm_byte_table, i64 %i.d
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11
-  %2 = and i8 %i.f, 1
-  %.not.i = icmp eq i8 %2, 0
-  br i1 %.not.i, label %pm_strspn_char_kind.exit, label %bb.b
+  %.not.i = trunc nuw i8 %i.f to i1
+  br i1 %.not.i, label %bb.b, label %pm_strspn_char_kind.exit
 
 bb.b:                                             ; preds = %.preheader.i
   %i.g = add nuw nsw i64 %.0911.i, 1              ; 2 uses
@@ -47,9 +46,8 @@ bb.a:
   %i.d = zext i8 %i.c to i64
   %i.e = getelementptr i8, ptr @pm_byte_table, i64 %i.d
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11
-  %3 = and i8 %i.f, 1
-  %.not = icmp eq i8 %3, 0
-  br i1 %.not, label %.critedge, label %bb.b
+  %.not = trunc i8 %i.f to i1
+  br i1 %.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.preheader
   %i.g = icmp eq i8 %i.c, 10
@@ -131,7 +129,7 @@ bb.a:
   %i.a = zext i8 %0 to i64
   %i.b = getelementptr i8, ptr @pm_byte_table, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1, !tbaa !11
-  %i.d = trunc i8 %i.c to i1
+  %i.d = trunc nuw i8 %i.c to i1
   ret i1 %i.d
 }
 
@@ -414,7 +412,7 @@ bb.a:
   %i.a = zext i8 %0 to i64
   %i.b = getelementptr i8, ptr @pm_number_table, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1, !tbaa !11
-  %i.d = trunc i8 %i.c to i1
+  %i.d = trunc nuw i8 %i.c to i1
   ret i1 %i.d
 }
 

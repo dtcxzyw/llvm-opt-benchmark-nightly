@@ -128,9 +128,8 @@ bb.k:                                             ; preds = %bb.k, %bb.j
   br i1 %i.an, label %.loopexit.sink.split, label %.lr.ph82.preheader
 
 .lr.ph82.preheader:                               ; preds = %.preheader59
-  %3 = and i32 %.046, 1
-  %lcmp.mod.not.not = icmp eq i32 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph82.prol, label %.lr.ph82.prol.loopexit
+  %3 = trunc i32 %.046 to i1
+  br i1 %3, label %.lr.ph82.prol.loopexit, label %.lr.ph82.prol
 
 .lr.ph82.prol:                                    ; preds = %.lr.ph82.preheader
   %i.ao = add nsw i32 %.046, -1

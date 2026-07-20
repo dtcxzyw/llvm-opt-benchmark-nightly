@@ -13,7 +13,6 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i32 %1, 1
   %i.b = icmp eq i32 %1, 1
   br i1 %i.b, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -44,20 +43,14 @@ bb.a:
   %i.s = zext nneg i16 %i.r to i64
   %i.t = getelementptr inbounds nuw [2 x i8], ptr @crc16tab, i64 %i.s
   %i.u = load i16, ptr %i.t, align 2, !tbaa !14
-  %i.v = xor i16 %i.u, %i.m                       ; 3 uses
+  %i.v = xor i16 %i.u, %i.m                       ; 2 uses
   %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !16
+  br i1 %niter.ncmp.1, label %.lr.ph.epil.preheader, label %.lr.ph, !llvm.loop !16
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.010.epil.init = phi i16 [ 0, %.lr.ph.preheader ], [ %i.v, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %.078.epil.init = phi ptr [ %0, %.lr.ph.preheader ], [ %i.o, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod12 = trunc i32 %1 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod12)
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.preheader, %.lr.ph
+  %.010.epil.init = phi i16 [ 0, %.lr.ph.preheader ], [ %i.v, %.lr.ph ] ; 2 uses
+  %.078.epil.init = phi ptr [ %0, %.lr.ph.preheader ], [ %i.o, %.lr.ph ]
   %i.w = shl i16 %.010.epil.init, 8
   %i.x = lshr i16 %.010.epil.init, 8
   %i.y = load i8, ptr %.078.epil.init, align 1, !tbaa !13
@@ -69,16 +62,12 @@ bb.a:
   %i.ae = xor i16 %i.ad, %i.w
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
-  %.0.lcssa = phi i16 [ 0, %bb.a ], [ %i.v, %._crit_edge.loopexit.unr-lcssa ], [ %i.ae, %.lr.ph.epil.preheader ]
+._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %bb.a
+  %.0.lcssa = phi i16 [ 0, %bb.a ], [ %i.ae, %.lr.ph.epil.preheader ]
   ret i16 %.0.lcssa
 }
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #1
-
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6, !7}
 !llvm.ident = !{!8}

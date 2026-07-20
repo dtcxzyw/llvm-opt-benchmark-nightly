@@ -204,7 +204,7 @@ bb.dd:                                            ; preds = %bb.dc
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i.i.i: ; preds = %bb.dd
   %i.iw = load i64, ptr %i.iv, align 8, !tbaa !104
-  %i.ix = trunc i64 %i.iw to i1
+  %i.ix = trunc nuw i64 %i.iw to i1
   br i1 %i.ix, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i.i, label %bb.de
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i.i: ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i.i.i, %bb.dd
@@ -215,7 +215,7 @@ _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i.i: ; preds = %
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit16.i.i.i.i: ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i.i
   %i.ja = load i64, ptr %i.iz, align 8, !tbaa !104
-  %i.jb = trunc i64 %i.ja to i1
+  %i.jb = trunc nuw i64 %i.ja to i1
   br i1 %i.jb, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit16.thread.i.i.i.i, label %bb.de
 
 bb.de:                                            ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit16.i.i.i.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i.i.i
@@ -254,7 +254,7 @@ bb.dg:                                            ; preds = %bb.df
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i41.i.i.i: ; preds = %bb.dg
   %i.jn = load i64, ptr %i.jm, align 8, !tbaa !104
-  %i.jo = trunc i64 %i.jn to i1
+  %i.jo = trunc nuw i64 %i.jn to i1
   br i1 %i.jo, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i42.i.i.i, label %bb.dh
 
 bb.dh:                                            ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i41.i.i.i
@@ -501,7 +501,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i44.i.i.i: ; preds = %bb.dz
   %i.ms = load i64, ptr %i.mr, align 8, !tbaa !104
-  %i.mt = trunc i64 %i.ms to i1
+  %i.mt = trunc nuw i64 %i.ms to i1
   br i1 %i.mt, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i45.i.i.i, label %bb.ea
 
 bb.ea:                                            ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i44.i.i.i
@@ -904,7 +904,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us: ; preds = %_ZNK6duckdb15Sel
   br i1 %.not.i164, label %.lr.ph.split.us.split.split.us.preheader, label %.lr.ph.split.us.split.split.preheader
 
 .lr.ph.split.us.split.split.preheader:            ; preds = %.lr.ph.split.us.split
-  %xtraiter = and i64 %i.g, 1
   %i.cw = icmp eq i64 %i.g, 1
   br i1 %i.cw, label %.lr.ph.split.us.split.split.epil.preheader, label %.lr.ph.split.us.split.split.preheader.new
 
@@ -913,7 +912,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us: ; preds = %_ZNK6duckdb15Sel
   br label %.lr.ph.split.us.split.split
 
 .lr.ph.split.us.split.split.us.preheader:         ; preds = %.lr.ph.split.us.split
-  %xtraiter429 = and i64 %i.g, 1
   %i.cx = icmp eq i64 %i.g, 1
   br i1 %i.cx, label %.lr.ph.split.us.split.split.us.epil.preheader, label %.lr.ph.split.us.split.split.us.preheader.new
 
@@ -1199,13 +1197,13 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.epil: ; preds = %_ZNK6duckdb
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.epil, !llvm.loop !247
 
 ._crit_edge.loopexit421.unr-lcssa:                ; preds = %bb.k
-  %lcmp.mod430.not = icmp eq i64 %xtraiter429, 0
-  br i1 %lcmp.mod430.not, label %._crit_edge, label %.lr.ph.split.us.split.split.us.epil.preheader
+  %lcmp.mod430.not = trunc nuw i64 %i.g to i1
+  br i1 %lcmp.mod430.not, label %.lr.ph.split.us.split.split.us.epil.preheader, label %._crit_edge
 
 .lr.ph.split.us.split.split.us.epil.preheader:    ; preds = %._crit_edge.loopexit421.unr-lcssa, %.lr.ph.split.us.split.split.us.preheader
   %.0121235.us.us268.epil.init = phi i64 [ 0, %.lr.ph.split.us.split.split.us.preheader ], [ %.1122.us.us273.1, %._crit_edge.loopexit421.unr-lcssa ] ; 2 uses
   %.0123234.us.us269.epil.init = phi i64 [ 0, %.lr.ph.split.us.split.split.us.preheader ], [ %i.do, %._crit_edge.loopexit421.unr-lcssa ] ; 3 uses
-  %lcmp.mod432 = trunc i64 %i.g to i1
+  %lcmp.mod432 = trunc nuw i64 %i.g to i1
   call void @llvm.assume(i1 %lcmp.mod432)
   %i.hi = lshr i64 %.0123234.us.us269.epil.init, 6
   %i.hj = and i64 %.0123234.us.us269.epil.init, 63
@@ -1223,13 +1221,13 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit169.thread.us.us272.epil
   br label %._crit_edge
 
 ._crit_edge.loopexit422.unr-lcssa:                ; preds = %bb.l
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.split.us.split.split.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %i.g to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.split.us.split.split.epil.preheader, label %._crit_edge
 
 .lr.ph.split.us.split.split.epil.preheader:       ; preds = %._crit_edge.loopexit422.unr-lcssa, %.lr.ph.split.us.split.split.preheader
   %.0121235.us.epil.init = phi i64 [ 0, %.lr.ph.split.us.split.split.preheader ], [ %.1122.us.1, %._crit_edge.loopexit422.unr-lcssa ] ; 2 uses
   %.0123234.us.epil.init = phi i64 [ 0, %.lr.ph.split.us.split.split.preheader ], [ %i.eo, %._crit_edge.loopexit422.unr-lcssa ]
-  %lcmp.mod428 = trunc i64 %i.g to i1
+  %lcmp.mod428 = trunc nuw i64 %i.g to i1
   call void @llvm.assume(i1 %lcmp.mod428)
   %i.hr = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %.0123234.us.epil.init
   %i.hs = load i32, ptr %i.hr, align 4, !tbaa !3

@@ -162,8 +162,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.g
   %i.v = tail call ptr @PyErr_NoMemory() #10      ; 0 uses
   %i.w = load i32, ptr %i.o, align 8, !tbaa !38   ; 2 uses
-  %.not.i22.i = icmp sgt i32 %i.w, -1
-  br i1 %.not.i22.i, label %bb.k, label %.thread
+  %.not.i22.i = icmp slt i32 %i.w, 0
+  br i1 %.not.i22.i, label %.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.x = add nsw i32 %i.w, -1                     ; 2 uses
@@ -181,8 +181,8 @@ bb.l:                                             ; preds = %bb.i, %bb.h
 bb.m:                                             ; preds = %bb.l
   tail call void @PyMem_Free(ptr noundef nonnull %i.q) #10
   %i.ac = load i32, ptr %i.o, align 8, !tbaa !38  ; 2 uses
-  %.not.i20.i = icmp sgt i32 %i.ac, -1
-  br i1 %.not.i20.i, label %bb.n, label %.thread
+  %.not.i20.i = icmp slt i32 %i.ac, 0
+  br i1 %.not.i20.i, label %.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ad = add nsw i32 %i.ac, -1                   ; 2 uses
@@ -193,8 +193,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.l
   %i.af = tail call ptr @PyObject_CallOneArg(ptr noundef nonnull %i.o, ptr noundef nonnull %i.aa) #10 ; 3 uses
   %i.ag = load i32, ptr %i.aa, align 8, !tbaa !38 ; 2 uses
-  %.not.i18.i = icmp sgt i32 %i.ag, -1
-  br i1 %.not.i18.i, label %bb.p, label %Py_DECREF.exit19.i
+  %.not.i18.i = icmp slt i32 %i.ag, 0
+  br i1 %.not.i18.i, label %Py_DECREF.exit19.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ah = add nsw i32 %i.ag, -1                   ; 2 uses
@@ -208,8 +208,8 @@ bb.q:                                             ; preds = %bb.p
 
 Py_DECREF.exit19.i:                               ; preds = %bb.q, %bb.p, %bb.o
   %i.aj = load i32, ptr %i.o, align 8, !tbaa !38  ; 2 uses
-  %.not.i.i = icmp sgt i32 %i.aj, -1
-  br i1 %.not.i.i, label %bb.r, label %.thread
+  %.not.i.i = icmp slt i32 %i.aj, 0
+  br i1 %.not.i.i, label %.thread, label %bb.r
 
 bb.r:                                             ; preds = %Py_DECREF.exit19.i
   %i.ak = add nsw i32 %i.aj, -1                   ; 2 uses
@@ -256,8 +256,8 @@ bb.a:
   %i.b = getelementptr i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !39   ; 3 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !38   ; 2 uses
-  %.not.i = icmp sgt i32 %i.d, -1
-  br i1 %.not.i, label %bb.b, label %Py_DECREF.exit
+  %.not.i = icmp slt i32 %i.d, 0
+  br i1 %.not.i, label %Py_DECREF.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = add nsw i32 %i.d, -1                     ; 2 uses
@@ -660,9 +660,8 @@ bb.q:                                             ; preds = %bb.o
   %i.ak = lshr i16 %.260, 8
   %i.al = zext nneg i16 %i.ak to i32
   %i.am = add nsw i32 %i.al, -33                  ; 3 uses
-  %9 = and i32 %i.am, 1
-  %.not72 = icmp eq i32 %9, 0
-  %i.an = select i1 %.not72, i32 0, i32 94
+  %.not72 = trunc nuw i32 %i.am to i1
+  %i.an = select i1 %.not72, i32 94, i32 0
   %narrow = add nuw i16 %.260, 223
   %i.ao = zext i16 %narrow to i32
   %i.ap = add nuw nsw i32 %i.an, %i.ao            ; 2 uses
@@ -1001,9 +1000,8 @@ bb.y:                                             ; preds = %bb.x
   %i.bi = lshr i16 %i.bh, 8
   %i.bj = zext nneg i16 %i.bi to i32
   %i.bk = add nsw i32 %i.bj, -33                  ; 3 uses
-  %9 = and i32 %i.bk, 1
-  %.not107 = icmp eq i32 %9, 0
-  %i.bl = select i1 %.not107, i32 0, i32 94
+  %.not107 = trunc nuw i32 %i.bk to i1
+  %i.bl = select i1 %.not107, i32 94, i32 0
   %narrow = add nuw i16 %i.bh, 223
   %i.bm = zext i16 %narrow to i32
   %i.bn = add nuw nsw i32 %i.bl, %i.bm            ; 2 uses
@@ -1406,9 +1404,8 @@ bb.a:
   br i1 %i.b, label %.lr.ph, label %.thread233
 
 .lr.ph:                                           ; preds = %bb.a
-  %9 = and i32 %8, 1
   %i.c = getelementptr i8, ptr %1, i64 8          ; 2 uses
-  %.not186 = icmp eq i32 %9, 0
+  %.not186 = trunc nuw i32 %8 to i1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.as
@@ -1568,7 +1565,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.at, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %bb.t
-  br i1 %.not186, label %.thread233, label %bb.v
+  br i1 %.not186, label %bb.v, label %.thread233
 
 bb.v:                                             ; preds = %bb.u
   %i.au = trunc nuw i32 %.0.i.fr to i16
@@ -1747,10 +1744,9 @@ bb.ar:                                            ; preds = %.thread226, %bb.ap,
   %i.do = phi i32 [ %i.dc, %.thread226 ], [ %i.cy, %bb.ao ], [ %i.cy, %bb.ap ], [ %i.dk, %bb.aq ]
   %.2145214 = phi i64 [ %.2145224231, %.thread226 ], [ %.2145, %bb.ao ], [ %.2145, %bb.ap ], [ %.2145215, %bb.aq ]
   %.0147 = phi i32 [ %i.de, %.thread226 ], [ %i.dh, %bb.ao ], [ %i.di, %bb.ap ], [ %i.dm, %bb.aq ] ; 2 uses
-  %10 = and i32 %.0147, 1
-  %.not188 = icmp eq i32 %10, 0
+  %.not188 = trunc nuw i32 %.0147 to i1
   %i.dp = add nuw nsw i32 %i.do, 61
-  %spec.select189 = select i1 %.not188, i32 %i.dn, i32 %i.dp ; 2 uses
+  %spec.select189 = select i1 %.not188, i32 %i.dp, i32 %i.dn ; 2 uses
   %i.dq = ashr i32 %.0147, 1                      ; 2 uses
   %i.dr = icmp slt i32 %i.dq, 31
   %i.ds = select i1 %i.dr, i32 129, i32 193
@@ -2153,9 +2149,8 @@ bb.a:
   br i1 %i.b, label %.lr.ph, label %.thread194
 
 .lr.ph:                                           ; preds = %bb.a
-  %9 = and i32 %8, 1
   %i.c = getelementptr i8, ptr %1, i64 8          ; 2 uses
-  %.not163 = icmp eq i32 %9, 0
+  %.not163 = trunc nuw i32 %8 to i1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.as
@@ -2265,7 +2260,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ak, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  br i1 %.not163, label %.thread194, label %bb.q
+  br i1 %.not163, label %bb.q, label %.thread194
 
 bb.q:                                             ; preds = %bb.p
   %i.al = trunc nuw i32 %.0.i to i16

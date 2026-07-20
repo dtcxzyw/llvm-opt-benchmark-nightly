@@ -19,40 +19,18 @@ declare extern_weak void @rb_define_singleton_method(i64 noundef, ptr noundef, p
 
 ; Function Attrs: nounwind uwtable
 define internal i64 @invalid_call(i64 noundef %0, i64 noundef %1) #0 {
-  %3 = trunc i64 %1 to i1
-  br i1 %3, label %4, label %6
-
-4:                                                ; preds = %2
-  %5 = ashr i64 %1, 1
-  br label %rb_num2ulong_inline.exit
-
-6:                                                ; preds = %2
-  %7 = tail call i64 @rb_num2ulong(i64 noundef %1) #2
-  br label %rb_num2ulong_inline.exit
-
-rb_num2ulong_inline.exit:                         ; preds = %4, %6
-  %.0.i = phi i64 [ %5, %4 ], [ %7, %6 ]
-  %i.a = inttoptr i64 %.0.i to ptr
+rb_num2ulong_inline.exit:
+  %2 = tail call i64 @rb_num2ulong(i64 noundef 0) #2
+  %i.a = inttoptr i64 %2 to ptr
   %i.b = tail call i64 %i.a(i64 noundef %0) #2
   ret i64 %i.b
 }
 
 ; Function Attrs: nounwind uwtable
 define internal range(i64 0, 21) i64 @invalid_access(i64 noundef %0, i64 noundef %1) #0 {
-  %3 = trunc i64 %1 to i1
-  br i1 %3, label %4, label %6
-
-4:                                                ; preds = %2
-  %5 = ashr i64 %1, 1
-  br label %rb_num2ulong_inline.exit
-
-6:                                                ; preds = %2
-  %7 = tail call i64 @rb_num2ulong(i64 noundef %1) #2
-  br label %rb_num2ulong_inline.exit
-
-rb_num2ulong_inline.exit:                         ; preds = %4, %6
-  %.0.i = phi i64 [ %5, %4 ], [ %7, %6 ]
-  %i.a = inttoptr i64 %.0.i to ptr
+rb_num2ulong_inline.exit:
+  %2 = tail call i64 @rb_num2ulong(i64 noundef 0) #2
+  %i.a = inttoptr i64 %2 to ptr
   %i.b = load i64, ptr %i.a, align 8, !tbaa !10
   %i.c = icmp eq i64 %i.b, %0
   %i.d = select i1 %i.c, i64 20, i64 0

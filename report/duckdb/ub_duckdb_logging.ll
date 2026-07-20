@@ -203,7 +203,7 @@ bb.a:
   br label %bb.b
 
 ._crit_edge.i.i:                                  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105, %bb.a
-  %.039.lcssa = phi i8 [ 0, %bb.a ], [ %.140, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ]
+  %.039.lcssa = phi i1 [ false, %bb.a ], [ %.140, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ]
   %.0.lcssa = phi i8 [ %i.p, %bb.a ], [ %.2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #29
   %i.z = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 4 uses
@@ -219,7 +219,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105
   %.0181 = phi i8 [ %i.p, %.lr.ph ], [ %.2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ] ; 6 uses
   %.037180 = phi i1 [ false, %.lr.ph ], [ %.138, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ] ; 6 uses
-  %.039179 = phi i8 [ 0, %.lr.ph ], [ %.140, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ] ; 7 uses
+  %.039179 = phi i1 [ false, %.lr.ph ], [ %.140, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ] ; 7 uses
   %.sroa.0143.0177 = phi ptr [ %i.q, %.lr.ph ], [ %i.cp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105 ] ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0143.0177, i64 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #29
@@ -479,11 +479,11 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %bcmp.i101 = call i32 @bcmp(ptr %.pre196, ptr nonnull @.str.26, i64 %i.ae)
   %bcmp.i101.fr = freeze i32 %bcmp.i101
   %i.cm = icmp eq i32 %bcmp.i101.fr, 0
-  %spec.select160 = select i1 %i.cm, i8 1, i8 %.039179
+  %spec.select160 = select i1 %i.cm, i1 true, i1 %.039179
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit100
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit100: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit93, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit102, %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i96, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88
-  %.140 = phi i8 [ %.039179, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88 ], [ %.039179, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i96 ], [ %.039179, %bb.s ], [ %.039179, %bb.c ], [ %spec.select160, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit102 ], [ %.039179, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ %.039179, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit93 ] ; 2 uses
+  %.140 = phi i1 [ %.039179, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88 ], [ %.039179, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i96 ], [ %.039179, %bb.s ], [ %.039179, %bb.c ], [ %spec.select160, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit102 ], [ %.039179, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ %.039179, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit93 ] ; 2 uses
   %.138 = phi i1 [ %.037180, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i96 ], [ true, %bb.s ], [ %.037180, %bb.c ], [ %.037180, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit102 ], [ %.037180, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ %.037180, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit93 ]
   %.2 = phi i8 [ %i.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88 ], [ %i.bu, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i96 ], [ %i.bu, %bb.s ], [ %.0181, %bb.c ], [ %.0181, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit102 ], [ %.0181, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ %.0181, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit93 ] ; 2 uses
   %i.cn = load ptr, ptr %7, align 8, !tbaa !69    ; 2 uses
@@ -600,16 +600,15 @@ bb.ab:                                            ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not156183, label %_ZN6duckdb19BufferingLogStorage16FlushAllInternalEv.exit, label %.lr.ph186
 
 ._crit_edge:                                      ; preds = %.lr.ph186
-  br i1 %15, label %bb.ac, label %_ZN6duckdb19BufferingLogStorage16FlushAllInternalEv.exit
+  br i1 %14, label %bb.ac, label %_ZN6duckdb19BufferingLogStorage16FlushAllInternalEv.exit
 
 .lr.ph186:                                        ; preds = %bb.ab, %.lr.ph186
-  %.054185 = phi i1 [ %15, %.lr.ph186 ], [ false, %bb.ab ]
+  %.054185 = phi i1 [ %14, %.lr.ph186 ], [ false, %bb.ab ]
   %.sroa.0137.0184 = phi ptr [ %i.dk, %.lr.ph186 ], [ %i.dg, %bb.ab ] ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.0137.0184, i64 80
   %i.dj = load i8, ptr %i.di, align 8, !tbaa !482, !range !46, !noundef !47
-  %13 = zext i1 %.054185 to i8
-  %14 = or i8 %i.dj, %13
-  %15 = icmp ne i8 %14, 0                         ; 2 uses
+  %13 = trunc nuw i8 %i.dj to i1
+  %14 = or i1 %.054185, %13                       ; 2 uses
   %i.dk = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.0137.0184) #34 ; 2 uses
   %.not156 = icmp eq ptr %i.dk, %i.dh
   br i1 %.not156, label %._crit_edge, label %.lr.ph186
@@ -636,11 +635,9 @@ bb.ae:                                            ; preds = %_ZStneIcSt11char_tr
 _ZN6duckdb19BufferingLogStorage16FlushAllInternalEv.exit: ; preds = %bb.ab, %.noexc118, %._crit_edge
   %i.do = load i8, ptr %i.o, align 8, !tbaa !271, !range !46, !noundef !47
   %i.dp = icmp ne i8 %i.do, %.0.lcssa
-  %16 = zext i1 %i.dp to i8
-  %17 = or i8 %.039.lcssa, %16
-  %.not = icmp eq i8 %17, 0
+  %.not = or i1 %.039.lcssa, %i.dp
   store i8 %.0.lcssa, ptr %i.o, align 8, !tbaa !271
-  br i1 %.not, label %.loopexit, label %bb.af
+  br i1 %.not, label %bb.af, label %.loopexit
 
 bb.af:                                            ; preds = %_ZN6duckdb19BufferingLogStorage16FlushAllInternalEv.exit
   %i.dq = load ptr, ptr %0, align 8, !tbaa !53

@@ -203,10 +203,8 @@ bb.a:
   store i8 %i.a, ptr %i.b, align 2, !tbaa !51
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 191 ; 2 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !52, !range !38, !noundef !39
-  %2 = icmp ne i8 %i.d, 0
-  %3 = and i1 %1, %2
-  %4 = zext i1 %3 to i8
-  store i8 %4, ptr %i.c, align 1, !tbaa !52
+  %2 = select i1 %1, i8 %i.d, i8 0
+  store i8 %2, ptr %i.c, align 1, !tbaa !52
   ret void
 }
 

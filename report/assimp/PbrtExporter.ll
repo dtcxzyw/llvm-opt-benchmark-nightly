@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 .preheader40:                                     ; preds = %bb.c
-  %i.l = load i32, ptr %i.b, align 4              ; 4 uses
+  %i.l = load i32, ptr %i.b, align 4              ; 5 uses
   %i.m = icmp sgt i32 %i.l, 0
   br i1 %i.m, label %.preheader39.lr.ph, label %.loopexit
 
@@ -215,13 +215,12 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader39.us.preheader:                        ; preds = %.preheader39.lr.ph
   %i.p = zext nneg i32 %i.n to i64                ; 6 uses
-  %wide.trip.count67 = zext nneg i32 %i.l to i64  ; 2 uses
-  %xtraiter = and i64 %wide.trip.count67, 1
   %i.q = icmp eq i32 %i.l, 1
   br i1 %i.q, label %.preheader39.us.epil.preheader, label %.preheader39.us.preheader.new
 
 .preheader39.us.preheader.new:                    ; preds = %.preheader39.us.preheader
-  %unroll_iter = and i64 %wide.trip.count67, 2147483646
+  %1 = and i32 %i.l, 2147483646
+  %unroll_iter = zext nneg i32 %1 to i64
   br label %.preheader39.us
 
 .preheader39.us:                                  ; preds = %._crit_edge.us.1, %.preheader39.us.preheader.new
@@ -277,7 +276,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %niter.ncmp.1, label %.loopexit.loopexit93.unr-lcssa, label %.preheader39.us, !llvm.loop !103
 
 .preheader37:                                     ; preds = %bb.c
-  %i.af = load i32, ptr %i.b, align 4             ; 4 uses
+  %i.af = load i32, ptr %i.b, align 4             ; 5 uses
   %i.ag = icmp sgt i32 %i.af, 0
   br i1 %i.ag, label %.preheader36.lr.ph, label %.loopexit
 
@@ -288,13 +287,12 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader36.us.preheader:                        ; preds = %.preheader36.lr.ph
   %i.aj = zext nneg i32 %i.ah to i64              ; 6 uses
-  %wide.trip.count76 = zext nneg i32 %i.af to i64 ; 2 uses
-  %xtraiter96 = and i64 %wide.trip.count76, 1
   %i.ak = icmp eq i32 %i.af, 1
   br i1 %i.ak, label %.preheader36.us.epil.preheader, label %.preheader36.us.preheader.new
 
 .preheader36.us.preheader.new:                    ; preds = %.preheader36.us.preheader
-  %unroll_iter100 = and i64 %wide.trip.count76, 2147483646
+  %2 = and i32 %i.af, 2147483646
+  %unroll_iter100 = zext nneg i32 %2 to i64
   br label %.preheader36.us
 
 .preheader36.us:                                  ; preds = %._crit_edge.us54.1, %.preheader36.us.preheader.new
@@ -380,8 +378,8 @@ bb.l:                                             ; preds = %bb.c
   br label %.loopexit
 
 .loopexit.loopexit92.unr-lcssa:                   ; preds = %._crit_edge.us54.1
-  %lcmp.mod97.not = icmp eq i64 %xtraiter96, 0
-  br i1 %lcmp.mod97.not, label %.loopexit, label %.preheader36.us.epil.preheader
+  %lcmp.mod97.not = trunc i32 %i.af to i1
+  br i1 %lcmp.mod97.not, label %.preheader36.us.epil.preheader, label %.loopexit
 
 .preheader36.us.epil.preheader:                   ; preds = %.loopexit.loopexit92.unr-lcssa, %.preheader36.us.preheader
   %indvars.iv74.epil.init = phi i64 [ 0, %.preheader36.us.preheader ], [ %indvars.iv.next75.1, %.loopexit.loopexit92.unr-lcssa ]
@@ -407,8 +405,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %exitcond73.not.epil, label %.loopexit, label %bb.m, !llvm.loop !104
 
 .loopexit.loopexit93.unr-lcssa:                   ; preds = %._crit_edge.us.1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.preheader39.us.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.l to i1
+  br i1 %lcmp.mod.not, label %.preheader39.us.epil.preheader, label %.loopexit
 
 .preheader39.us.epil.preheader:                   ; preds = %.loopexit.loopexit93.unr-lcssa, %.preheader39.us.preheader
   %indvars.iv65.epil.init = phi i64 [ 0, %.preheader39.us.preheader ], [ %indvars.iv.next66.1, %.loopexit.loopexit93.unr-lcssa ]
@@ -811,9 +809,8 @@ define hidden void @_ZN6Assimp12PbrtExporter9WriteMeshEP6aiMesh(ptr noundef nonn
   %i.k = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull %spec.select, i64 noundef %i.j) ; 0 uses
   %i.l = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull @.str.3, i64 noundef 1) ; 0 uses
   %i.m = load i32, ptr %1, align 8
-  %16 = and i32 %i.m, 11
-  %or.cond119 = icmp eq i32 %16, 0
-  br i1 %or.cond119, label %bb.b, label %bb.a
+  %.not = trunc nuw i32 %i.m to i1
+  br i1 %.not, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %._crit_edge.i.i
   %i.n = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str.136, i64 noundef 44) ; 0 uses

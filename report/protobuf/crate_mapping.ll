@@ -203,13 +203,12 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.ab
 
 _ZN4absl12lts_202505128StatusOrINS0_13flat_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_NS0_18container_internal10StringHashENS9_8StringEqESaISt4pairIKS8_S8_EEEEEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0ESG_T_EE5valueEiE4typeELi0EEEOSL_.exit47: ; preds = %bb.v
-  %.pre = load i64, ptr %14, align 8, !tbaa !13   ; 2 uses
-  %i.cu = trunc i64 %.pre to i1
+  %.pre = load i64, ptr %14, align 8, !tbaa !13
+  %i.cu = trunc nuw i64 %.pre to i1
   br i1 %i.cu, label %.thread98, label %bb.w
 
 bb.w:                                             ; preds = %_ZN4absl12lts_202505128StatusOrINS0_13flat_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_NS0_18container_internal10StringHashENS9_8StringEqESaISt4pairIKS8_S8_EEEEEC2INS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0ESG_T_EE5valueEiE4typeELi0EEEOSL_.exit47
-  %18 = inttoptr i64 %.pre to ptr
-  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) %18)
+  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) null)
           to label %.thread98 unwind label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -612,13 +611,12 @@ _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit74: ; pr
 
 bb.bh:                                            ; preds = %bb.be, %bb.bd
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #23
-  %.pre185 = load i64, ptr %11, align 8, !tbaa !13 ; 2 uses
-  %i.lk = trunc i64 %.pre185 to i1
+  %.pre185 = load i64, ptr %11, align 8, !tbaa !13
+  %i.lk = trunc nuw i64 %.pre185 to i1
   br i1 %i.lk, label %_ZN4absl12lts_202505126StatusD2Ev.exit75, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  %19 = inttoptr i64 %.pre185 to ptr
-  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) %19)
+  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) null)
           to label %_ZN4absl12lts_202505126StatusD2Ev.exit75 unwind label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -713,13 +711,12 @@ declare void @_ZN4absl12lts_2025051220InvalidArgumentErrorESt17basic_string_view
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !13     ; 2 uses
-  %i.b = trunc i64 %i.a to i1
+  %i.a = load i64, ptr %0, align 8, !tbaa !13
+  %i.b = trunc nuw i64 %i.a to i1
   br i1 %i.b, label %_ZN4absl12lts_202505126Status5UnrefEm.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = inttoptr i64 %i.a to ptr
-  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
+  invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) null)
           to label %_ZN4absl12lts_202505126Status5UnrefEm.exit unwind label %bb.c
 
 _ZN4absl12lts_202505126Status5UnrefEm.exit:       ; preds = %bb.a, %bb.b

@@ -204,7 +204,6 @@ bb.f:                                             ; preds = %.preheader29.i
   br i1 %.not34.i, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
-  %xtraiter163 = and i64 %indvars.iv.i, 1
   %i.x = icmp eq i64 %indvars.iv.i, 1
   br i1 %i.x, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
@@ -213,13 +212,13 @@ bb.f:                                             ; preds = %.preheader29.i
   br label %.lr.ph.i
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
-  %lcmp.mod164.not = icmp eq i64 %xtraiter163, 0
-  br i1 %lcmp.mod164.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
+  %lcmp.mod164.not = trunc nuw i64 %indvars.iv.i to i1
+  br i1 %lcmp.mod164.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i.preheader
   %.033.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.al, %._crit_edge.i.loopexit.unr-lcssa ]
   %.02332.i.epil.init = phi i64 [ %2, %.lr.ph.i.preheader ], [ %i.ak, %._crit_edge.i.loopexit.unr-lcssa ]
-  %lcmp.mod165 = trunc i64 %indvars.iv.i to i1
+  %lcmp.mod165 = trunc nuw i64 %indvars.iv.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod165)
   %i.y = urem i64 %.02332.i.epil.init, %3
   %i.z = trunc nuw i64 %i.y to i32
@@ -314,7 +313,6 @@ bb.j:                                             ; preds = %.preheader29.i67
   br i1 %.not34.i74, label %._crit_edge.i79, label %.lr.ph.i75.preheader
 
 .lr.ph.i75.preheader:                             ; preds = %.preheader.i73
-  %xtraiter = and i64 %indvars.iv.i68, 1
   %i.bl = icmp eq i64 %indvars.iv.i68, 1
   br i1 %i.bl, label %.lr.ph.i75.epil.preheader, label %.lr.ph.i75.preheader.new
 
@@ -323,13 +321,13 @@ bb.j:                                             ; preds = %.preheader29.i67
   br label %.lr.ph.i75
 
 ._crit_edge.i79.loopexit.unr-lcssa:               ; preds = %.lr.ph.i75
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i79, label %.lr.ph.i75.epil.preheader
+  %lcmp.mod.not = trunc nuw i64 %indvars.iv.i68 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i75.epil.preheader, label %._crit_edge.i79
 
 .lr.ph.i75.epil.preheader:                        ; preds = %._crit_edge.i79.loopexit.unr-lcssa, %.lr.ph.i75.preheader
   %.033.i76.epil.init = phi i64 [ 0, %.lr.ph.i75.preheader ], [ %i.bz, %._crit_edge.i79.loopexit.unr-lcssa ]
   %.02332.i77.epil.init = phi i64 [ %i.ba, %.lr.ph.i75.preheader ], [ %i.by, %._crit_edge.i79.loopexit.unr-lcssa ]
-  %lcmp.mod162 = trunc i64 %indvars.iv.i68 to i1
+  %lcmp.mod162 = trunc nuw i64 %indvars.iv.i68 to i1
   tail call void @llvm.assume(i1 %lcmp.mod162)
   %i.bm = urem i64 %.02332.i77.epil.init, %3
   %i.bn = trunc nuw i64 %i.bm to i32

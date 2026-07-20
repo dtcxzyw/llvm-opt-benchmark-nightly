@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %._crit_edge
   %i.bg = load ptr, ptr %3, align 8               ; 5 uses
   %i.bh = ptrtoint ptr %i.bf to i64
   %i.bi = ptrtoint ptr %i.bg to i64
-  %i.bj = sub i64 %i.bh, %i.bi                    ; 4 uses
+  %i.bj = sub i64 %i.bh, %i.bi                    ; 3 uses
   %i.bk = tail call i64 @llvm.smax.i64(i64 %i.bj, i64 -1)
   %i.bl = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.bk) #24
           to label %bb.m unwind label %bb.i
@@ -216,11 +216,11 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not110, label %.loopexit98, label %.lr.ph105.preheader
 
 .lr.ph105.preheader:                              ; preds = %bb.m
-  %5 = ashr exact i64 %i.bj, 3                    ; 2 uses
   %i.bn = icmp eq i64 %i.bj, 8
   br i1 %i.bn, label %.lr.ph105.epil.preheader, label %.lr.ph105.preheader.new
 
 .lr.ph105.preheader.new:                          ; preds = %.lr.ph105.preheader
+  %5 = ashr exact i64 %i.bj, 3
   %unroll_iter = and i64 %5, -2
   br label %.lr.ph105
 
@@ -243,17 +243,10 @@ bb.m:                                             ; preds = %bb.l
   %i.bx = add nuw i64 %.070103, 2                 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1.not, label %.loopexit98.loopexit.unr-lcssa, label %.lr.ph105, !llvm.loop !16
+  br i1 %niter.ncmp.1.not, label %.lr.ph105.epil.preheader, label %.lr.ph105, !llvm.loop !16
 
-.loopexit98.loopexit.unr-lcssa:                   ; preds = %.lr.ph105
-  %6 = and i64 %i.bj, 8
-  %lcmp.mod.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not, label %.loopexit98, label %.lr.ph105.epil.preheader
-
-.lr.ph105.epil.preheader:                         ; preds = %.loopexit98.loopexit.unr-lcssa, %.lr.ph105.preheader
-  %.070103.epil.init = phi i64 [ 0, %.lr.ph105.preheader ], [ %i.bx, %.loopexit98.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod127 = trunc i64 %5 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod127)
+.lr.ph105.epil.preheader:                         ; preds = %.lr.ph105.preheader, %.lr.ph105
+  %.070103.epil.init = phi i64 [ 0, %.lr.ph105.preheader ], [ %i.bx, %.lr.ph105 ] ; 2 uses
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %.070103.epil.init ; 2 uses
   %i.bz = load ptr, ptr %i.by, align 8
   store ptr null, ptr %i.by, align 8
@@ -262,7 +255,7 @@ bb.m:                                             ; preds = %bb.l
   store ptr %i.bz, ptr %i.cb, align 8
   br label %.loopexit98
 
-.loopexit98:                                      ; preds = %.lr.ph105.epil.preheader, %.loopexit98.loopexit.unr-lcssa, %bb.m, %._crit_edge
+.loopexit98:                                      ; preds = %.lr.ph105.epil.preheader, %bb.m, %._crit_edge
   invoke void @_ZN6Assimp15ObjFileImporter15createMaterialsEPKNS_7ObjFile5ModelEP7aiScene(ptr nonnull align 8 poison, ptr noundef nonnull %1, ptr noundef nonnull %2)
           to label %bb.n unwind label %bb.i
 

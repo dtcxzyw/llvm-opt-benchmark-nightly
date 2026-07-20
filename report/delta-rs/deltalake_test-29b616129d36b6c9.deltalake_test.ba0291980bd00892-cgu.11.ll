@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.c, label %bb.e
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14)
@@ -605,8 +605,8 @@ bb.h:                                             ; preds = %_RINvNtCsbvkFyIu7lg
   tail call void @llvm.experimental.noalias.scope.decl(metadata !456)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !459)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %1 = icmp eq i64 %i.o, 0
-  br i1 %1, label %bb.i, label %bb.k
+  %1 = trunc nuw i64 %i.o to i1
+  br i1 %1, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !462)
@@ -1009,8 +1009,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !604)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !607)
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %_RINvNtNtCs2pqxYH9ZEk8_3std3sys12thread_local20abort_on_dtor_unwindNCINvNtNtB2_6native5eager7destroyNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher5StateE0ECsfY7SmN0bPrO_14deltalake_test.exit, label %bb.c
+  %1 = trunc nuw i64 %i.c to i1
+  br i1 %1, label %bb.c, label %_RINvNtNtCs2pqxYH9ZEk8_3std3sys12thread_local20abort_on_dtor_unwindNCINvNtNtB2_6native5eager7destroyNtNtCs2y6mmZ7bjoM_12tracing_core10dispatcher5StateE0ECsfY7SmN0bPrO_14deltalake_test.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1063,8 +1063,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !633)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %bb.c, label %bb.e
+  %1 = trunc nuw i64 %i.c to i1
+  br i1 %1, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !636)
@@ -1467,14 +1467,12 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11Contr
   %i.a = alloca [0 x i8], align 1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !714, !nonnull !3, !align !4, !noundef !3
-  %i.d = call { i64, ptr } @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENCINvMs_NtB1Z_6fieldsNtB2N_6Fields17try_filter_leavesNCINvB2K_13filter_leavesNCNvMs2_NtNtCs4tdlwR1I4n2_7parquet5arrow12async_readerINtNtB44_12arrow_reader18ArrowReaderBuilderINtB42_11AsyncReaderNtNtB42_5store19ParquetObjectReaderEE5builds_0E0Es_0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBN_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1Z_5error10ArrowErrorEEB6E_8try_folduNCINvNvB6E_12try_for_each4callINtNtBc_6option6OptionB1n_EINtNtNtBc_3ops12control_flow11ControlFlowB9P_ENcNtBag_5Break0E0Bag_E0IBah_Bag_EECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(32) %0, ptr noalias noundef nonnull %i.a, ptr noalias noundef nonnull align 8 dereferenceable(32) %i.c) ; 2 uses
+  %i.d = call { i64, ptr } @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENCINvMs_NtB1Z_6fieldsNtB2N_6Fields17try_filter_leavesNCINvB2K_13filter_leavesNCNvMs2_NtNtCs4tdlwR1I4n2_7parquet5arrow12async_readerINtNtB44_12arrow_reader18ArrowReaderBuilderINtB42_11AsyncReaderNtNtB42_5store19ParquetObjectReaderEE5builds_0E0Es_0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBN_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1Z_5error10ArrowErrorEEB6E_8try_folduNCINvNvB6E_12try_for_each4callINtNtBc_6option6OptionB1n_EINtNtNtBc_3ops12control_flow11ControlFlowB9P_ENcNtBag_5Break0E0Bag_E0IBah_Bag_EECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(32) %0, ptr noalias noundef nonnull %i.a, ptr noalias noundef nonnull align 8 dereferenceable(32) %i.c) ; 3 uses
   %i.e = extractvalue { i64, ptr } %i.d, 0
-  %1 = and i64 %i.e, 1                            ; 2 uses
-  %.not.not = icmp eq i64 %1, 0
+  %.not = trunc nuw i64 %i.e to i1
   %i.f = extractvalue { i64, ptr } %i.d, 1
-  %. = select i1 %.not.not, ptr undef, ptr %i.f
-  %2 = insertvalue { i64, ptr } poison, i64 %1, 0
-  %i.g = insertvalue { i64, ptr } %2, ptr %., 1
+  %. = select i1 %.not, ptr %i.f, ptr undef
+  %i.g = insertvalue { i64, ptr } %i.d, ptr %., 1
   ret { i64, ptr } %i.g
 }
 
@@ -1507,14 +1505,12 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11Contr
   %i.a = alloca [0 x i8], align 1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !717, !nonnull !3, !align !4, !noundef !3
-  %i.d = call { i64, ptr } @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENCINvNvMs_NtB1Z_6fieldsNtB2P_6Fields17try_filter_leaves12filter_fieldNCIB2K_NCINvB2M_13filter_leavesNCNvMs2_NtNtCs4tdlwR1I4n2_7parquet5arrow12async_readerINtNtB4r_12arrow_reader18ArrowReaderBuilderINtB4p_11AsyncReaderNtNtB4p_5store19ParquetObjectReaderEE5builds_0E0E0E0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBN_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1Z_5error10ArrowErrorEEB71_8try_folduNCINvNvB71_12try_for_each4callINtNtBc_6option6OptionB1n_EINtNtNtBc_3ops12control_flow11ControlFlowBac_ENcNtBaD_5Break0E0BaD_E0IBaE_BaD_EECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(32) %0, ptr noalias noundef nonnull %i.a, ptr noalias noundef nonnull align 8 dereferenceable(32) %i.c) ; 2 uses
+  %i.d = call { i64, ptr } @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEENCINvNvMs_NtB1Z_6fieldsNtB2P_6Fields17try_filter_leaves12filter_fieldNCIB2K_NCINvB2M_13filter_leavesNCNvMs2_NtNtCs4tdlwR1I4n2_7parquet5arrow12async_readerINtNtB4r_12arrow_reader18ArrowReaderBuilderINtB4p_11AsyncReaderNtNtB4p_5store19ParquetObjectReaderEE5builds_0E0E0E0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBN_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1Z_5error10ArrowErrorEEB71_8try_folduNCINvNvB71_12try_for_each4callINtNtBc_6option6OptionB1n_EINtNtNtBc_3ops12control_flow11ControlFlowBac_ENcNtBaD_5Break0E0BaD_E0IBaE_BaD_EECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(32) %0, ptr noalias noundef nonnull %i.a, ptr noalias noundef nonnull align 8 dereferenceable(32) %i.c) ; 3 uses
   %i.e = extractvalue { i64, ptr } %i.d, 0
-  %1 = and i64 %i.e, 1                            ; 2 uses
-  %.not.not = icmp eq i64 %1, 0
+  %.not = trunc nuw i64 %i.e to i1
   %i.f = extractvalue { i64, ptr } %i.d, 1
-  %. = select i1 %.not.not, ptr undef, ptr %i.f
-  %2 = insertvalue { i64, ptr } poison, i64 %1, 0
-  %i.g = insertvalue { i64, ptr } %2, ptr %., 1
+  %. = select i1 %.not, ptr %i.f, ptr undef
+  %i.g = insertvalue { i64, ptr } %i.d, ptr %., 1
   ret { i64, ptr } %i.g
 }
 

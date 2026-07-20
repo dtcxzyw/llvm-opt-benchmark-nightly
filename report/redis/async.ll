@@ -203,12 +203,11 @@ bb.bm:                                            ; preds = %.loopexit201
 .preheader202.outer:                              ; preds = %bb.at, %bb.bm
   %.sroa.15.0.ph = phi ptr [ %i.ka, %bb.bm ], [ null, %bb.at ]
   %.sroa.5.0.ph = phi i32 [ %.sroa.5.2, %bb.bm ], [ -1, %bb.at ]
-  %.sroa.11149.0.ph = phi i1 [ false, %bb.bm ], [ true, %bb.at ]
-  %.not84 = phi i1 [ true, %bb.bm ], [ false, %bb.at ]
+  %.sroa.11149.0.ph = phi i1 [ false, %bb.bm ], [ true, %bb.at ] ; 2 uses
   br label %.preheader202
 
 .loopexit200:                                     ; preds = %bb.bi, %.peel.next.i, %bb.bl
-  br i1 %.not84, label %nextArgument.exit95.thread, label %bb.bn
+  br i1 %.sroa.11149.0.ph, label %bb.bn, label %nextArgument.exit95.thread
 
 bb.bn:                                            ; preds = %.loopexit200
   %i.kh = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 2 uses

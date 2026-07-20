@@ -201,10 +201,13 @@ bb.cn:                                            ; preds = %bb.cm
   %i.in = load i8, ptr %i.im, align 1, !alias.scope !83, !noalias !88, !noundef !8
   %i.io = and i8 %i.in, 63
   %i.ip = zext nneg i8 %i.io to i64
-  %2 = shl nuw i64 1, %i.ip
-  %3 = and i64 %2, %.sroa.036.sroa.7.0.copyload.i.i.i
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.cu, label %bb.co
+  %2 = lshr i64 %.sroa.036.sroa.7.0.copyload.i.i.i, %i.ip
+  %3 = trunc nuw i64 %2 to i1
+  br i1 %3, label %bb.co, label %4
+
+4:                                                ; preds = %.lr.ph.i.us.i.i.i
+  %5 = add i64 %i.il, %.sroa.036.sroa.15.0.copyload.i.i.i
+  br label %.sink.split.i87.us.i.i.i
 
 bb.co:                                            ; preds = %.lr.ph.i.us.i.i.i
   %.sroa.0.0.i.i.us.i.i.i = call i64 @llvm.umax.i64(i64 %i.ij, i64 %.sroa.036.sroa.4.0.copyload.i.i.i) ; 4 uses
@@ -265,19 +268,15 @@ bb.ct:                                            ; preds = %bb.cs
   %i.jh = getelementptr inbounds nuw i8, ptr %.sroa.036.sroa.12.0.copyload.i.i.i, i64 %i.jd
   %i.ji = load i8, ptr %i.jh, align 1, !alias.scope !83, !noalias !88, !noundef !8
   %.not.i88.us.i.i.i = icmp eq i8 %i.jg, %i.ji
-  br i1 %.not.i88.us.i.i.i, label %.preheader197.us.i.i.i, label %5
+  br i1 %.not.i88.us.i.i.i, label %.preheader197.us.i.i.i, label %bb.cu
 
-5:                                                ; preds = %bb.ct
-  %6 = add i64 %i.il, %.sroa.036.sroa.6.0.copyload.i.i.i
+bb.cu:                                            ; preds = %bb.ct
+  %i.jj = add i64 %i.il, %.sroa.036.sroa.6.0.copyload.i.i.i
   br label %.sink.split.i87.us.i.i.i
 
-bb.cu:                                            ; preds = %.lr.ph.i.us.i.i.i
-  %i.jj = add i64 %i.il, %.sroa.036.sroa.15.0.copyload.i.i.i
-  br label %.sink.split.i87.us.i.i.i
-
-.sink.split.i87.us.i.i.i:                         ; preds = %bb.cu, %5, %bb.cr
-  %.sink.i.us.i.i.i = phi i64 [ %i.ie, %5 ], [ 0, %bb.cr ], [ 0, %bb.cu ] ; 2 uses
-  %.ph71.i.us.i.i.i = phi i64 [ %6, %5 ], [ %i.iy, %bb.cr ], [ %i.jj, %bb.cu ] ; 2 uses
+.sink.split.i87.us.i.i.i:                         ; preds = %bb.cu, %bb.cr, %4
+  %.sink.i.us.i.i.i = phi i64 [ %i.ie, %bb.cu ], [ 0, %bb.cr ], [ 0, %4 ] ; 2 uses
+  %.ph71.i.us.i.i.i = phi i64 [ %i.jj, %bb.cu ], [ %i.iy, %bb.cr ], [ %5, %4 ] ; 2 uses
   %i.jk = add i64 %.ph71.i.us.i.i.i, %i.ct        ; 2 uses
   %i.jl = icmp ult i64 %i.jk, %.sroa.036.sroa.13.0.copyload.i.i.i
   br i1 %i.jl, label %.lr.ph.i.us.i.i.i, label %.sink.split.i.us.i.i.i
@@ -294,13 +293,16 @@ bb.cv:                                            ; preds = %bb.cm
   %i.jp = load i8, ptr %i.jo, align 1, !alias.scope !92, !noalias !97, !noundef !8
   %i.jq = and i8 %i.jp, 63
   %i.jr = zext nneg i8 %i.jq to i64
-  %7 = shl nuw i64 1, %i.jr
-  %8 = and i64 %7, %.sroa.036.sroa.7.0.copyload.i.i.i
-  %9 = icmp eq i64 %8, 0
-  br i1 %9, label %11, label %.preheader.i.i.i.preheader
+  %6 = lshr i64 %.sroa.036.sroa.7.0.copyload.i.i.i, %i.jr
+  %7 = trunc nuw i64 %6 to i1
+  br i1 %7, label %.preheader.i.i.i.preheader, label %8
 
 .preheader.i.i.i.preheader:                       ; preds = %.lr.ph.i95.us.i.i.i
   br i1 %exitcond.not.i100.us.i.i.i192.not, label %.lr.ph194, label %.preheader.us.i.preheader.i.i
+
+8:                                                ; preds = %.lr.ph.i95.us.i.i.i
+  %9 = add i64 %i.jn, %.sroa.036.sroa.15.0.copyload.i.i.i
+  br label %bb.cz
 
 .preheader.i.i.i:                                 ; preds = %bb.cx
   %i.js = add i64 %.sroa.02.0.i99.us.i.i.i193, 1  ; 2 uses
@@ -358,19 +360,15 @@ bb.cy:                                            ; preds = %bb.cx
   %i.kh = add i64 %.reass354.i.reass.i.reass.i.reass.reass, %.sroa.02.0.i99.us.i.i.i193
   br label %bb.cz
 
-.split.us.i.i:                                    ; preds = %.preheader.us.i.us.i.i.preheader, %.preheader.us.i.us.i.i, %.preheader.us.i.preheader.split.i.i
-  %10 = add i64 %i.jn, %.sroa.036.sroa.15.0.copyload.i.i.i ; 2 uses
-  br label %.sink.split.i.us.i.i.i
-
-11:                                               ; preds = %.lr.ph.i95.us.i.i.i
-  %12 = add i64 %i.jn, %.sroa.036.sroa.15.0.copyload.i.i.i
-  br label %bb.cz
-
-bb.cz:                                            ; preds = %11, %bb.cy, %.split74.us.i.i
-  %i.ki = phi i64 [ %i.kh, %bb.cy ], [ %12, %11 ], [ %i.ka, %.split74.us.i.i ] ; 2 uses
+bb.cz:                                            ; preds = %bb.cy, %.split74.us.i.i, %8
+  %i.ki = phi i64 [ %i.kh, %bb.cy ], [ %9, %8 ], [ %i.ka, %.split74.us.i.i ] ; 2 uses
   %i.kj = add i64 %i.ki, %i.ct                    ; 2 uses
   %i.kk = icmp ult i64 %i.kj, %.sroa.036.sroa.13.0.copyload.i.i.i
   br i1 %i.kk, label %.lr.ph.i95.us.i.i.i, label %.sink.split.i.us.i.i.i
+
+.split.us.i.i:                                    ; preds = %.preheader.us.i.us.i.i.preheader, %.preheader.us.i.us.i.i, %.preheader.us.i.preheader.split.i.i
+  %10 = add i64 %i.jn, %.sroa.036.sroa.15.0.copyload.i.i.i ; 2 uses
+  br label %.sink.split.i.us.i.i.i
 
 .sink.split.i.us.i.i.i:                           ; preds = %.sink.split.i87.us.i.i.i, %bb.cz, %.split.us.i.i, %bb.cv, %.preheader197.us.i.i.i.preheader._crit_edge, %bb.cn
   %.sroa.51.2.us.i.i.i = phi i1 [ false, %.preheader197.us.i.i.i.preheader._crit_edge ], [ false, %.split.us.i.i ], [ true, %bb.cz ], [ true, %bb.cn ], [ true, %bb.cv ], [ true, %.sink.split.i87.us.i.i.i ]
@@ -774,9 +772,11 @@ bb.m:                                             ; preds = %bb.h, %.thread
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef ptr @_RNvYNtNtNtNtCs2pqxYH9ZEk8_3std3sys5stdio4unix6StderrNtNtBa_2io5Write9write_fmtCs7JU2D1aBbVY_15deltalake_mount(ptr noalias noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 {
+define hidden noundef ptr @_RNvYNtNtNtNtCs2pqxYH9ZEk8_3std3sys5stdio4unix6StderrNtNtBa_2io5Write9write_fmtCs7JU2D1aBbVY_15deltalake_mount(ptr noalias noundef nonnull %0, ptr nofree noundef nonnull readonly captures(address, read_provenance) %1, ptr noundef nonnull %2) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noundef ptr @_RINvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtNtNtNtNtB4_3sys5stdio4unix6StderrECs7JU2D1aBbVY_15deltalake_mount(ptr noalias noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %2)
+  %3 = ptrtoint ptr %2 to i64
+  %4 = lshr i64 %3, 1
+  %i.a = tail call noundef ptr @_RNvYNtNtNtNtCs2pqxYH9ZEk8_3std3sys5stdio4unix6StderrNtNtBa_2io5Write9write_allCs7JU2D1aBbVY_15deltalake_mount(ptr noalias noundef nonnull %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %4)
   ret ptr %i.a
 }
 
@@ -1052,9 +1052,6 @@ declare { i64, ptr } @_RNvXs3_NtNtNtCs2pqxYH9ZEk8_3std3sys5stdio4unixNtB5_6Stder
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
 declare void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef, i64 noundef, i64 noundef, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #11
-
-; Function Attrs: nonlazybind uwtable
-declare hidden noundef ptr @_RINvNtCs2pqxYH9ZEk8_3std2io17default_write_fmtNtNtNtNtB4_3sys5stdio4unix6StderrECs7JU2D1aBbVY_15deltalake_mount(ptr noalias noundef nonnull, ptr noundef nonnull, ptr noundef nonnull) unnamed_addr #0
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #13

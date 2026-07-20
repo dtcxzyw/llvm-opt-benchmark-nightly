@@ -203,13 +203,12 @@ bb.aw:                                            ; preds = %bb.av
 
 .lr.ph143:                                        ; preds = %._crit_edge
   %i.fu = load ptr, ptr %i.bi, align 8, !tbaa !110 ; 3 uses
-  %wide.trip.count = zext nneg i32 %6 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.fv = icmp eq i32 %6, 1
   br i1 %i.fv, label %.epil.preheader, label %.lr.ph143.new
 
 .lr.ph143.new:                                    ; preds = %.lr.ph143
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %11 = and i32 %6, 2147483646
+  %unroll_iter = zext nneg i32 %11 to i64
   br label %bb.ba
 
 bb.ax:                                            ; preds = %.lr.ph, %_ZN10duckdb_re23NFA6DecrefEPNS0_6ThreadE.exit107
@@ -275,8 +274,8 @@ bb.ba:                                            ; preds = %bb.ba, %.lr.ph143.n
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.ba, !llvm.loop !179
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.ba
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %6 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph143
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph143 ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses

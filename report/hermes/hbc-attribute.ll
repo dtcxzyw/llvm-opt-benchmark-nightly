@@ -204,7 +204,7 @@ _ZN4llvh8DenseMapIjjNS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjjEEEC2Ej.exit
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 4
   store i32 %.03.i.i, ptr %i.hx, align 4, !tbaa !4
   %i.hy = ptrtoint ptr %i.hv to i64
-  %i.hz = trunc i64 %i.hy to i1
+  %i.hz = trunc nuw i64 %i.hy to i1
   br i1 %i.hz, label %bb.af, label %bb.ag, !prof !125
 
 bb.af:                                            ; preds = %.lr.ph.i.i
@@ -607,7 +607,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapISt4pairINS_9StringRefEjEjNS_12DenseMapInfoIS
   %i.as = load ptr, ptr %i.ar, align 8
   %i.at = tail call ptr %i.as(ptr noundef nonnull align 8 dereferenceable(280) %i.ap, i32 noundef %1) #24 ; 3 uses
   %i.au = ptrtoint ptr %i.at to i64
-  %i.av = trunc i64 %i.au to i1
+  %i.av = trunc nuw i64 %i.au to i1
   br i1 %i.av, label %bb.e, label %bb.f, !prof !125
 
 bb.e:                                             ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapISt4pairINS_9StringRefEjEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E5clearEv.exit
@@ -735,7 +735,7 @@ bb.l:                                             ; preds = %bb.k, %bb.h, %_ZNK6
   %i.de = load ptr, ptr %i.dd, align 8
   %i.df = call ptr %i.de(ptr noundef nonnull align 8 dereferenceable(280) %i.da, i32 noundef %i.db) #24, !inline_history !218 ; 3 uses
   %i.dg = ptrtoint ptr %i.df to i64
-  %i.dh = trunc i64 %i.dg to i1
+  %i.dh = trunc nuw i64 %i.dg to i1
   br i1 %i.dh, label %bb.m, label %bb.n, !prof !125
 
 bb.m:                                             ; preds = %bb.l
@@ -792,7 +792,7 @@ bb.a:
   %i.x = load i32, ptr %i.k, align 8, !tbaa !202
   tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter12appendRecordEN4llvh9StringRefEjj(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr nonnull @.str.22, i64 22, i32 noundef %i.x, i32 noundef 16)
   %i.y = ptrtoint ptr %i.p to i64
-  %i.z = trunc i64 %i.y to i1                     ; 4 uses
+  %i.z = trunc nuw i64 %i.y to i1                 ; 4 uses
   %..i = select i1 %i.z, i64 29, i64 15, !prof !125
   %i.aa = getelementptr inbounds nuw i8, ptr %i.p, i64 %..i ; 2 uses
   %.sroa.0.0.i = load i8, ptr %i.aa, align 1, !tbaa !16
@@ -935,9 +935,8 @@ _ZNK6hermes3hbc14BCProviderBase12getDebugInfoEv.exit.i: ; preds = %bb.n, %bb.m
   %i.ci = call noundef i32 @_ZN6hermes16readSignedLEB128EN4llvh8ArrayRefIhEEjPl(ptr %.sroa.068.0.copyload.i, i64 %.sroa.8.0.copyload.i, i32 noundef %i.ch, ptr noundef nonnull %i.a) #24
   %i.cj = add i32 %i.ci, %i.ch                    ; 3 uses
   %i.ck = load i64, ptr %i.a, align 8, !tbaa !147
-  %1 = and i64 %i.ck, 1
-  %.not95.i = icmp eq i64 %1, 0
-  br i1 %.not95.i, label %bb.p, label %bb.o
+  %.not95.i = trunc nuw i64 %i.ck to i1
+  br i1 %.not95.i, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %.lr.ph.i
   %i.cl = call noundef i32 @_ZN6hermes16readSignedLEB128EN4llvh8ArrayRefIhEEjPl(ptr %.sroa.068.0.copyload.i, i64 %.sroa.8.0.copyload.i, i32 noundef %i.cj, ptr noundef nonnull %i.a) #24

@@ -201,15 +201,9 @@ define void @_ZN6google8protobuf8internal26UnknownFieldSerializerLiteEPKhjjjPNS0
 bb.a:
   %i.a = zext i32 %1 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %i.a
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !58   ; 2 uses
-  %i.d = trunc i64 %i.c to i1
-  br i1 %i.d, label %5, label %bb.b, !prof !60
-
-5:                                                ; preds = %bb.a
-  %6 = add nsw i64 %i.c, -1
-  %7 = inttoptr i64 %6 to ptr
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  br label %_ZNK6google8protobuf8internal16InternalMetadata14unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKT_PFSC_vE.exit
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !58
+  %i.d = trunc nuw i64 %i.c to i1
+  br i1 %i.d, label %_ZNK6google8protobuf8internal16InternalMetadata14unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKT_PFSC_vE.exit, label %bb.b, !prof !60
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load atomic i8, ptr @_ZN6google8protobuf8internal28init_protobuf_defaults_stateE acquire, align 1, !range !37, !noundef !38
@@ -220,8 +214,8 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_ZN6google8protobuf8internal24InitProtobufDefaultsSlowEv()
   br label %_ZNK6google8protobuf8internal16InternalMetadata14unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKT_PFSC_vE.exit
 
-_ZNK6google8protobuf8internal16InternalMetadata14unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKT_PFSC_vE.exit: ; preds = %bb.c, %bb.b, %5
-  %.0.i = phi ptr [ %8, %5 ], [ @_ZN6google8protobuf8internal26fixed_address_empty_stringE, %bb.b ], [ @_ZN6google8protobuf8internal26fixed_address_empty_stringE, %bb.c ] ; 2 uses
+_ZNK6google8protobuf8internal16InternalMetadata14unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKT_PFSC_vE.exit: ; preds = %bb.a, %bb.c, %bb.b
+  %.0.i = phi ptr [ @_ZN6google8protobuf8internal26fixed_address_empty_stringE, %bb.c ], [ @_ZN6google8protobuf8internal26fixed_address_empty_stringE, %bb.b ], [ inttoptr (i64 8 to ptr), %bb.a ] ; 2 uses
   %i.g = load ptr, ptr %.0.i, align 8, !tbaa !7   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   %i.i = load i64, ptr %i.h, align 8, !tbaa !16   ; 3 uses
