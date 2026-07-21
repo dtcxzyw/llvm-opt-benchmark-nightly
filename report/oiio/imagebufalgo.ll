@@ -204,21 +204,21 @@ define linkonce_odr hidden void @_ZN7kissfftIfN13kissfft_utils6traitsIfEEE8kf_bf
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1041 ; 6 uses
-  %4 = mul i64 %3, %2
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %4 ; 2 uses
-  %6 = load float, ptr %5, align 4                ; 4 uses
-  %.sroa_idx166 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %7 = load float, ptr %.sroa_idx166, align 4     ; 4 uses
   %i.c = shl i64 %2, 1                            ; 2 uses
-  %8 = mul i64 %i.c, %3
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %8 ; 2 uses
-  %10 = load float, ptr %9, align 4               ; 4 uses
-  %.sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 4
-  %11 = load float, ptr %.sroa_idx, align 4       ; 4 uses
   %.not = icmp eq i64 %3, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %4 = mul i64 %i.c, %3
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %4 ; 2 uses
+  %.sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %6 = load float, ptr %.sroa_idx, align 4        ; 2 uses
+  %7 = load float, ptr %5, align 4
+  %8 = mul i64 %3, %2
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %8 ; 2 uses
+  %.sroa_idx166 = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %10 = load float, ptr %.sroa_idx166, align 4    ; 3 uses
+  %11 = load float, ptr %9, align 4
   %.idx61 = shl i64 %3, 5
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.idx61
   %.idx60 = mul i64 %3, 24
@@ -228,7 +228,18 @@ bb.a:
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3
   %i.h = mul i64 %2, 3
   %i.i = shl i64 %2, 2
-  %i.j = fneg float %7
+  %i.j = fneg float %10
+  %12 = insertelement <2 x float> poison, float %11, i64 0
+  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %14 = insertelement <2 x float> poison, float %7, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %16 = insertelement <2 x float> poison, float %i.j, i64 0
+  %17 = insertelement <2 x float> %16, float %10, i64 1
+  %18 = insertelement <2 x float> poison, float %6, i64 0
+  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
+  %20 = insertelement <2 x float> poison, float %10, i64 0
+  %21 = insertelement <2 x float> %20, float %6, i64 1 ; 2 uses
+  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82
@@ -241,191 +252,172 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN7kissff
   %i.k = load <2 x float>, ptr %.0181, align 4, !tbaa !96 ; 2 uses
   %i.l = mul i64 %.056177, %2
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.l ; 2 uses
-  %i.n = load <2 x float>, ptr %.053180, align 4, !tbaa !96 ; 2 uses
-  %i.o = load float, ptr %i.m, align 4            ; 3 uses
+  %i.n = load <2 x float>, ptr %.053180, align 4, !tbaa !96 ; 4 uses
+  %i.o = load float, ptr %i.m, align 4            ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 4
-  %i.q = load float, ptr %i.p, align 4            ; 3 uses
-  %.sroa.0.0.vec.extract.i.i = extractelement <2 x float> %i.n, i64 0 ; 3 uses
-  %.sroa.0.4.vec.extract.i.i = extractelement <2 x float> %i.n, i64 1 ; 3 uses
-  %12 = fmul float %i.o, %.sroa.0.0.vec.extract.i.i
-  %13 = fmul float %.sroa.0.4.vec.extract.i.i, %i.q
-  %14 = fmul float %.sroa.0.0.vec.extract.i.i, %i.q
-  %15 = fmul float %i.o, %.sroa.0.4.vec.extract.i.i
-  %16 = fsub float %12, %13                       ; 3 uses
-  %17 = fadd float %15, %14                       ; 3 uses
-  %i.r = fcmp uno float %16, 0.000000e+00
+  %i.q = load float, ptr %i.p, align 4            ; 2 uses
+  %.sroa.0.0.vec.extract.i.i = extractelement <2 x float> %i.n, i64 0
+  %.sroa.0.4.vec.extract.i.i = extractelement <2 x float> %i.n, i64 1
+  %23 = insertelement <2 x float> poison, float %i.q, i64 0
+  %24 = shufflevector <2 x float> %i.n, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %25 = shufflevector <2 x float> %23, <2 x float> poison, <2 x i32> zeroinitializer
+  %26 = fmul <2 x float> %24, %25                 ; 2 uses
+  %27 = insertelement <2 x float> poison, float %i.o, i64 0
+  %28 = shufflevector <2 x float> %27, <2 x float> poison, <2 x i32> zeroinitializer
+  %29 = fmul <2 x float> %28, %i.n                ; 2 uses
+  %30 = fsub <2 x float> %29, %26                 ; 2 uses
+  %31 = fadd <2 x float> %29, %26                 ; 2 uses
+  %32 = shufflevector <2 x float> %30, <2 x float> %31, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %33 = extractelement <2 x float> %30, i64 0
+  %i.r = fcmp uno float %33, 0.000000e+00
   br i1 %i.r, label %bb.c, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit, !prof !1086
 
 bb.c:                                             ; preds = %bb.b
-  %i.s = fcmp uno float %17, 0.000000e+00
+  %34 = extractelement <2 x float> %31, i64 1
+  %i.s = fcmp uno float %34, 0.000000e+00
   br i1 %i.s, label %bb.d, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit, !prof !1086
 
 bb.d:                                             ; preds = %bb.c
-  %i.t = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i, float noundef %.sroa.0.4.vec.extract.i.i, float noundef %i.o, float noundef %i.q) #32 ; 2 uses
-  %.sroa.0.0.vec.extract.i.i.i = extractelement <2 x float> %i.t, i64 0
-  %.sroa.0.4.vec.extract.i.i.i = extractelement <2 x float> %i.t, i64 1
+  %i.t = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i, float noundef %.sroa.0.4.vec.extract.i.i, float noundef %i.o, float noundef %i.q) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit: ; preds = %bb.b, %bb.c, %bb.d
-  %18 = phi float [ %16, %bb.b ], [ %16, %bb.c ], [ %.sroa.0.0.vec.extract.i.i.i, %bb.d ] ; 2 uses
-  %19 = phi float [ %17, %bb.b ], [ %17, %bb.c ], [ %.sroa.0.4.vec.extract.i.i.i, %bb.d ] ; 2 uses
+  %35 = phi <2 x float> [ %32, %bb.b ], [ %32, %bb.c ], [ %i.t, %bb.d ] ; 2 uses
   %i.u = mul i64 %i.c, %.056177
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.u ; 2 uses
-  %i.w = load <2 x float>, ptr %.054179, align 4, !tbaa !96 ; 2 uses
-  %i.x = load float, ptr %i.v, align 4            ; 3 uses
+  %i.w = load <2 x float>, ptr %.054179, align 4, !tbaa !96 ; 4 uses
+  %i.x = load float, ptr %i.v, align 4            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 4
-  %i.z = load float, ptr %i.y, align 4            ; 3 uses
-  %.sroa.0.0.vec.extract.i.i62 = extractelement <2 x float> %i.w, i64 0 ; 3 uses
-  %.sroa.0.4.vec.extract.i.i63 = extractelement <2 x float> %i.w, i64 1 ; 3 uses
-  %20 = fmul float %i.x, %.sroa.0.0.vec.extract.i.i62
-  %21 = fmul float %.sroa.0.4.vec.extract.i.i63, %i.z
-  %22 = fmul float %.sroa.0.0.vec.extract.i.i62, %i.z
-  %23 = fmul float %i.x, %.sroa.0.4.vec.extract.i.i63
-  %24 = fsub float %20, %21                       ; 3 uses
-  %25 = fadd float %23, %22                       ; 3 uses
-  %i.aa = fcmp uno float %24, 0.000000e+00
+  %i.z = load float, ptr %i.y, align 4            ; 2 uses
+  %.sroa.0.0.vec.extract.i.i62 = extractelement <2 x float> %i.w, i64 0
+  %.sroa.0.4.vec.extract.i.i63 = extractelement <2 x float> %i.w, i64 1
+  %36 = insertelement <2 x float> poison, float %i.z, i64 0
+  %37 = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %38 = shufflevector <2 x float> %36, <2 x float> poison, <2 x i32> zeroinitializer
+  %39 = fmul <2 x float> %37, %38                 ; 2 uses
+  %40 = insertelement <2 x float> poison, float %i.x, i64 0
+  %41 = shufflevector <2 x float> %40, <2 x float> poison, <2 x i32> zeroinitializer
+  %42 = fmul <2 x float> %41, %i.w                ; 2 uses
+  %43 = fsub <2 x float> %42, %39                 ; 2 uses
+  %44 = fadd <2 x float> %42, %39                 ; 2 uses
+  %45 = shufflevector <2 x float> %43, <2 x float> %44, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %46 = extractelement <2 x float> %43, i64 0
+  %i.aa = fcmp uno float %46, 0.000000e+00
   br i1 %i.aa, label %bb.e, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68, !prof !1086
 
 bb.e:                                             ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit
-  %i.ab = fcmp uno float %25, 0.000000e+00
+  %47 = extractelement <2 x float> %44, i64 1
+  %i.ab = fcmp uno float %47, 0.000000e+00
   br i1 %i.ab, label %bb.f, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68, !prof !1086
 
 bb.f:                                             ; preds = %bb.e
-  %i.ac = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i62, float noundef %.sroa.0.4.vec.extract.i.i63, float noundef %i.x, float noundef %i.z) #32 ; 2 uses
-  %.sroa.0.0.vec.extract.i.i.i66 = extractelement <2 x float> %i.ac, i64 0
-  %.sroa.0.4.vec.extract.i.i.i67 = extractelement <2 x float> %i.ac, i64 1
+  %i.ac = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i62, float noundef %.sroa.0.4.vec.extract.i.i63, float noundef %i.x, float noundef %i.z) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68: ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit, %bb.e, %bb.f
-  %26 = phi float [ %24, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit ], [ %24, %bb.e ], [ %.sroa.0.0.vec.extract.i.i.i66, %bb.f ] ; 2 uses
-  %27 = phi float [ %25, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit ], [ %25, %bb.e ], [ %.sroa.0.4.vec.extract.i.i.i67, %bb.f ] ; 2 uses
+  %48 = phi <2 x float> [ %45, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit ], [ %45, %bb.e ], [ %i.ac, %bb.f ] ; 2 uses
   %i.ad = mul i64 %i.h, %.056177
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ad ; 2 uses
-  %i.af = load <2 x float>, ptr %.055178, align 4, !tbaa !96 ; 2 uses
-  %i.ag = load float, ptr %i.ae, align 4          ; 3 uses
+  %i.af = load <2 x float>, ptr %.055178, align 4, !tbaa !96 ; 4 uses
+  %i.ag = load float, ptr %i.ae, align 4          ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
-  %i.ai = load float, ptr %i.ah, align 4          ; 3 uses
-  %.sroa.0.0.vec.extract.i.i69 = extractelement <2 x float> %i.af, i64 0 ; 3 uses
-  %.sroa.0.4.vec.extract.i.i70 = extractelement <2 x float> %i.af, i64 1 ; 3 uses
-  %28 = fmul float %i.ag, %.sroa.0.0.vec.extract.i.i69
-  %29 = fmul float %.sroa.0.4.vec.extract.i.i70, %i.ai
-  %30 = fmul float %.sroa.0.0.vec.extract.i.i69, %i.ai
-  %31 = fmul float %i.ag, %.sroa.0.4.vec.extract.i.i70
-  %32 = fsub float %28, %29                       ; 3 uses
-  %33 = fadd float %31, %30                       ; 3 uses
-  %i.aj = fcmp uno float %32, 0.000000e+00
+  %i.ai = load float, ptr %i.ah, align 4          ; 2 uses
+  %.sroa.0.0.vec.extract.i.i69 = extractelement <2 x float> %i.af, i64 0
+  %.sroa.0.4.vec.extract.i.i70 = extractelement <2 x float> %i.af, i64 1
+  %49 = insertelement <2 x float> poison, float %i.ai, i64 0
+  %50 = shufflevector <2 x float> %i.af, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %51 = shufflevector <2 x float> %49, <2 x float> poison, <2 x i32> zeroinitializer
+  %52 = fmul <2 x float> %50, %51                 ; 2 uses
+  %53 = insertelement <2 x float> poison, float %i.ag, i64 0
+  %54 = shufflevector <2 x float> %53, <2 x float> poison, <2 x i32> zeroinitializer
+  %55 = fmul <2 x float> %54, %i.af               ; 2 uses
+  %56 = fsub <2 x float> %55, %52                 ; 2 uses
+  %57 = fadd <2 x float> %55, %52                 ; 2 uses
+  %58 = shufflevector <2 x float> %56, <2 x float> %57, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %59 = extractelement <2 x float> %56, i64 0
+  %i.aj = fcmp uno float %59, 0.000000e+00
   br i1 %i.aj, label %bb.g, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75, !prof !1086
 
 bb.g:                                             ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68
-  %i.ak = fcmp uno float %33, 0.000000e+00
+  %60 = extractelement <2 x float> %57, i64 1
+  %i.ak = fcmp uno float %60, 0.000000e+00
   br i1 %i.ak, label %bb.h, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75, !prof !1086
 
 bb.h:                                             ; preds = %bb.g
-  %i.al = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i69, float noundef %.sroa.0.4.vec.extract.i.i70, float noundef %i.ag, float noundef %i.ai) #32 ; 2 uses
-  %.sroa.0.0.vec.extract.i.i.i73 = extractelement <2 x float> %i.al, i64 0
-  %.sroa.0.4.vec.extract.i.i.i74 = extractelement <2 x float> %i.al, i64 1
+  %i.al = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i69, float noundef %.sroa.0.4.vec.extract.i.i70, float noundef %i.ag, float noundef %i.ai) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75: ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68, %bb.g, %bb.h
-  %34 = phi float [ %32, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68 ], [ %32, %bb.g ], [ %.sroa.0.0.vec.extract.i.i.i73, %bb.h ] ; 2 uses
-  %35 = phi float [ %33, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68 ], [ %33, %bb.g ], [ %.sroa.0.4.vec.extract.i.i.i74, %bb.h ] ; 2 uses
+  %61 = phi <2 x float> [ %58, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit68 ], [ %58, %bb.g ], [ %i.al, %bb.h ] ; 2 uses
   %i.am = mul i64 %i.i, %.056177
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.am ; 2 uses
-  %i.ao = load <2 x float>, ptr %.057176, align 4, !tbaa !96 ; 2 uses
-  %36 = load float, ptr %i.an, align 4            ; 3 uses
-  %37 = getelementptr inbounds nuw i8, ptr %i.an, i64 4
-  %38 = load float, ptr %37, align 4              ; 3 uses
-  %.sroa.0.0.vec.extract.i.i76 = extractelement <2 x float> %i.ao, i64 0 ; 3 uses
-  %.sroa.0.4.vec.extract.i.i77 = extractelement <2 x float> %i.ao, i64 1 ; 3 uses
-  %39 = fmul float %36, %.sroa.0.0.vec.extract.i.i76
-  %40 = fmul float %.sroa.0.4.vec.extract.i.i77, %38
-  %41 = fmul float %.sroa.0.0.vec.extract.i.i76, %38
-  %42 = fmul float %36, %.sroa.0.4.vec.extract.i.i77
-  %43 = fsub float %39, %40                       ; 3 uses
-  %44 = fadd float %42, %41                       ; 3 uses
-  %i.ap = fcmp uno float %43, 0.000000e+00
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.am
+  %i.ao = load <2 x float>, ptr %.057176, align 4, !tbaa !96 ; 4 uses
+  %62 = shufflevector <2 x float> %i.ao, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %.sroa.0.0.vec.extract.i.i76 = extractelement <2 x float> %i.ao, i64 0
+  %63 = load <2 x float>, ptr %i.an, align 4      ; 4 uses
+  %64 = fmul <2 x float> %63, %i.ao               ; 2 uses
+  %65 = fmul <2 x float> %62, %63                 ; 2 uses
+  %66 = shufflevector <2 x float> %64, <2 x float> %65, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %67 = shufflevector <2 x float> %64, <2 x float> %65, <2 x i32> <i32 1, i32 3> ; 2 uses
+  %68 = fsub <2 x float> %66, %67                 ; 2 uses
+  %69 = fadd <2 x float> %66, %67                 ; 2 uses
+  %70 = shufflevector <2 x float> %68, <2 x float> %69, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %71 = extractelement <2 x float> %68, i64 0
+  %i.ap = fcmp uno float %71, 0.000000e+00
   br i1 %i.ap, label %bb.i, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82, !prof !1086
 
 bb.i:                                             ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75
-  %i.aq = fcmp uno float %44, 0.000000e+00
+  %72 = extractelement <2 x float> %69, i64 1
+  %i.aq = fcmp uno float %72, 0.000000e+00
   br i1 %i.aq, label %bb.j, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82, !prof !1086
 
 bb.j:                                             ; preds = %bb.i
-  %45 = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i76, float noundef %.sroa.0.4.vec.extract.i.i77, float noundef %36, float noundef %38) #32 ; 2 uses
-  %.sroa.0.0.vec.extract.i.i.i80 = extractelement <2 x float> %45, i64 0
-  %.sroa.0.4.vec.extract.i.i.i81 = extractelement <2 x float> %45, i64 1
+  %73 = extractelement <2 x float> %63, i64 0
+  %.sroa.0.0.vec.extract.i.i.i80 = extractelement <2 x float> %63, i64 1
+  %.sroa.0.4.vec.extract.i.i.i81 = extractelement <2 x float> %i.ao, i64 1
+  %74 = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i76, float noundef %.sroa.0.4.vec.extract.i.i.i81, float noundef %73, float noundef %.sroa.0.0.vec.extract.i.i.i80) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82: ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75, %bb.i, %bb.j
-  %46 = phi float [ %43, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75 ], [ %43, %bb.i ], [ %.sroa.0.0.vec.extract.i.i.i80, %bb.j ] ; 2 uses
-  %47 = phi float [ %44, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75 ], [ %44, %bb.i ], [ %.sroa.0.4.vec.extract.i.i.i81, %bb.j ] ; 2 uses
-  %48 = fadd float %18, %46                       ; 3 uses
-  %49 = fadd float %19, %47                       ; 3 uses
-  %50 = fsub float %18, %46                       ; 2 uses
-  %51 = fsub float %19, %47                       ; 2 uses
-  %52 = fadd float %26, %34                       ; 3 uses
-  %53 = fadd float %27, %35                       ; 3 uses
-  %54 = fsub float %26, %34                       ; 2 uses
-  %55 = fsub float %27, %35                       ; 2 uses
-  %56 = load float, ptr %.0181, align 4
-  %i.ar = getelementptr inbounds nuw i8, ptr %.0181, i64 4 ; 2 uses
-  %57 = load float, ptr %i.ar, align 4
-  %58 = fadd float %48, %56
-  %59 = fadd float %49, %57
-  %60 = fadd float %58, %52
-  %61 = fadd float %59, %53
-  store float %60, ptr %.0181, align 4
-  store float %61, ptr %i.ar, align 4
-  %62 = fmul float %6, %48
-  %63 = fmul float %10, %52
-  %64 = fadd float %62, %63
-  %65 = fmul float %6, %49
-  %66 = fmul float %10, %53
-  %67 = fadd float %65, %66
-  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %i.k, i64 0 ; 2 uses
-  %.sroa.0.4.vec.extract.i = extractelement <2 x float> %i.k, i64 1 ; 2 uses
-  %68 = fadd float %64, %.sroa.0.0.vec.extract.i  ; 2 uses
-  %69 = fadd float %67, %.sroa.0.4.vec.extract.i  ; 2 uses
-  %70 = fmul float %7, %51
-  %71 = fmul float %11, %55
-  %72 = fadd float %70, %71                       ; 2 uses
-  %73 = fmul float %50, %i.j
-  %74 = fmul float %11, %54
-  %75 = fsub float %73, %74                       ; 2 uses
-  %76 = fsub float %68, %72
-  %77 = fsub float %69, %75
-  %.sroa.0.0.vec.insert.i.i101 = insertelement <2 x float> poison, float %76, i64 0
-  %.sroa.0.4.vec.insert.i.i102 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i101, float %77, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i102, ptr %.053180, align 4, !tbaa !96
-  %78 = fadd float %68, %72
-  %79 = fadd float %69, %75
-  %.sroa.0.0.vec.insert.i.i105 = insertelement <2 x float> poison, float %78, i64 0
-  %.sroa.0.4.vec.insert.i.i106 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i105, float %79, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i106, ptr %.057176, align 4, !tbaa !96
-  %80 = fmul float %10, %48
-  %81 = fmul float %6, %52
-  %82 = fadd float %80, %81
-  %83 = fmul float %10, %49
-  %84 = fmul float %6, %53
-  %85 = fadd float %83, %84
-  %86 = fadd float %82, %.sroa.0.0.vec.extract.i  ; 2 uses
-  %87 = fadd float %85, %.sroa.0.4.vec.extract.i  ; 2 uses
-  %88 = fmul float %11, %51
-  %89 = fmul float %7, %55
-  %90 = fsub float %89, %88                       ; 2 uses
-  %91 = fmul float %11, %50
-  %92 = fmul float %7, %54
-  %93 = fsub float %91, %92                       ; 2 uses
-  %94 = fadd float %86, %90
-  %95 = fadd float %87, %93
-  %.sroa.0.0.vec.insert.i.i113 = insertelement <2 x float> poison, float %94, i64 0
-  %.sroa.0.4.vec.insert.i.i114 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i113, float %95, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i114, ptr %.054179, align 4, !tbaa !96
-  %96 = fsub float %86, %90
-  %97 = fsub float %87, %93
-  %.sroa.0.0.vec.insert.i.i117 = insertelement <2 x float> poison, float %96, i64 0
-  %.sroa.0.4.vec.insert.i.i118 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i117, float %97, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i118, ptr %.055178, align 4, !tbaa !96
+  %75 = phi <2 x float> [ %70, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75 ], [ %70, %bb.i ], [ %74, %bb.j ] ; 2 uses
+  %76 = fadd <2 x float> %35, %75                 ; 3 uses
+  %77 = fsub <2 x float> %35, %75                 ; 3 uses
+  %78 = fadd <2 x float> %48, %61                 ; 3 uses
+  %79 = fsub <2 x float> %48, %61                 ; 3 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %.0181, i64 4
+  %80 = load <2 x float>, ptr %.0181, align 4
+  %81 = fadd <2 x float> %76, %80
+  %82 = fadd <2 x float> %81, %78                 ; 2 uses
+  %83 = extractelement <2 x float> %82, i64 0
+  store float %83, ptr %.0181, align 4
+  %.sroa.0.4.vec.extract.i = extractelement <2 x float> %82, i64 1
+  store float %.sroa.0.4.vec.extract.i, ptr %i.ar, align 4
+  %84 = fmul <2 x float> %13, %76
+  %85 = fmul <2 x float> %15, %78
+  %86 = fadd <2 x float> %84, %85
+  %87 = fadd <2 x float> %86, %i.k                ; 2 uses
+  %88 = fmul <2 x float> %17, %77                 ; 2 uses
+  %89 = fmul <2 x float> %19, %79                 ; 2 uses
+  %90 = fadd <2 x float> %88, %89
+  %91 = fsub <2 x float> %88, %89
+  %92 = shufflevector <2 x float> %90, <2 x float> %91, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %93 = fsub <2 x float> %87, %92
+  store <2 x float> %93, ptr %.053180, align 4, !tbaa !96
+  %94 = fadd <2 x float> %87, %92
+  store <2 x float> %94, ptr %.057176, align 4, !tbaa !96
+  %95 = fmul <2 x float> %15, %76
+  %96 = fmul <2 x float> %13, %78
+  %97 = fadd <2 x float> %95, %96
+  %98 = fadd <2 x float> %97, %i.k                ; 2 uses
+  %99 = shufflevector <2 x float> %79, <2 x float> %77, <2 x i32> <i32 1, i32 2>
+  %100 = fmul <2 x float> %21, %99
+  %101 = shufflevector <2 x float> %79, <2 x float> %77, <2 x i32> <i32 3, i32 0>
+  %102 = fmul <2 x float> %22, %101
+  %103 = fsub <2 x float> %100, %102              ; 2 uses
+  %104 = fadd <2 x float> %98, %103
+  store <2 x float> %104, ptr %.054179, align 4, !tbaa !96
+  %105 = fsub <2 x float> %98, %103
+  store <2 x float> %105, ptr %.055178, align 4, !tbaa !96
   %i.as = getelementptr inbounds nuw i8, ptr %.0181, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %.053180, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %.054179, i64 8

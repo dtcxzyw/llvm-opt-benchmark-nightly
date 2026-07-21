@@ -204,9 +204,9 @@ bb.a:
   %13 = alloca %"class.facebook::velox::exec::MapView<true, facebook::velox::Generic<facebook::velox::TypeVariable<1>>, facebook::velox::Generic<facebook::velox::TypeVariable<2>>>::Element", align 8 ; 10 uses
   %14 = alloca %"class.std::tuple.3444", align 8  ; 6 uses
   %15 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 8 uses
-  %16 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 8 uses
+  %16 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %17 = alloca %"class.std::tuple.3444", align 8  ; 6 uses
-  %18 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 8 uses
+  %18 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %19 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 5 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !12079 ; 3 uses
@@ -609,14 +609,12 @@ bb.bh:                                            ; preds = %bb.bf, %bb.ay
 .lr.ph295:                                        ; preds = %._crit_edge291
   %i.ky = load i32, ptr %i.bg, align 8, !tbaa !12102, !noalias !22495
   %i.kz = load i32, ptr %i.bi, align 8, !tbaa !22502, !noalias !22499
-  %20 = getelementptr inbounds nuw i8, ptr %i.kv, i64 8 ; 2 uses
-  %21 = getelementptr inbounds nuw i8, ptr %i.kv, i64 56 ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %16, i64 8
-  %23 = getelementptr inbounds nuw i8, ptr %16, i64 16
-  %i.la = getelementptr inbounds nuw i8, ptr %16, i64 24
-  %i.lb = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %i.lc = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %i.ld = getelementptr inbounds nuw i8, ptr %18, i64 16
+  %20 = getelementptr inbounds nuw i8, ptr %i.kv, <2 x i64> <i64 8, i64 56>
+  %21 = getelementptr inbounds nuw i8, ptr %i.kv, <2 x i64> <i64 8, i64 56>
+  %i.la = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %i.lb = getelementptr inbounds nuw i8, ptr %16, i64 24
+  %i.lc = getelementptr inbounds nuw i8, ptr %17, i64 8
+  %i.ld = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.le = getelementptr inbounds nuw i8, ptr %18, i64 24
   %i.lf = getelementptr inbounds nuw i8, ptr %i.kw, <2 x i64> <i64 8, i64 56>
   %i.lg = getelementptr inbounds nuw i8, ptr %19, i64 8
@@ -753,10 +751,9 @@ bb.bw:                                            ; preds = %bb.bv
   call void @llvm.experimental.noalias.scope.decl(metadata !22506)
   %i.nz = load ptr, ptr %i.kv, align 8, !tbaa !8393, !noalias !22509, !nonnull !552, !align !674
   store ptr %i.nz, ptr %16, align 8, !tbaa !1034, !alias.scope !22509
-  store ptr %20, ptr %22, align 8, !tbaa !12117, !alias.scope !22509
-  store ptr %21, ptr %23, align 8, !tbaa !12118, !alias.scope !22509
+  store <2 x ptr> %21, ptr %i.la, align 8, !tbaa !533, !alias.scope !22509
   %i.oa = trunc nsw i64 %indvars.iv304 to i32
-  store i32 %i.oa, ptr %i.la, align 8, !tbaa !8646, !alias.scope !22509
+  store i32 %i.oa, ptr %i.lb, align 8, !tbaa !8646, !alias.scope !22509
   invoke void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %i.ny, ptr noundef nonnull align 8 dereferenceable(28) %16)
           to label %bb.bx unwind label %bb.bz
 
@@ -781,15 +778,14 @@ bb.bz:                                            ; preds = %bb.bw
           to label %bb.ca unwind label %bb.cd
 
 bb.ca:                                            ; preds = %.thread274
-  %i.od = load ptr, ptr %i.lb, align 8, !tbaa !12119, !nonnull !552, !align !674
+  %i.od = load ptr, ptr %i.lc, align 8, !tbaa !12119, !nonnull !552, !align !674
   %i.oe = load ptr, ptr %17, align 8, !tbaa !8636, !nonnull !552, !align !674
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #34
   call void @llvm.experimental.noalias.scope.decl(metadata !22510)
   call void @llvm.experimental.noalias.scope.decl(metadata !22513)
   %i.of = load ptr, ptr %i.kv, align 8, !tbaa !8393, !noalias !22516, !nonnull !552, !align !674
   store ptr %i.of, ptr %18, align 8, !tbaa !1034, !alias.scope !22516
-  store ptr %20, ptr %i.lc, align 8, !tbaa !12117, !alias.scope !22516
-  store ptr %21, ptr %i.ld, align 8, !tbaa !12118, !alias.scope !22516
+  store <2 x ptr> %20, ptr %i.ld, align 8, !tbaa !533, !alias.scope !22516
   %i.og = trunc nsw i64 %indvars.iv304 to i32
   store i32 %i.og, ptr %i.le, align 8, !tbaa !8646, !alias.scope !22516
   invoke void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %i.od, ptr noundef nonnull align 8 dereferenceable(28) %18)
@@ -1192,9 +1188,9 @@ bb.a:
   %14 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 8 uses
   %15 = alloca %"class.std::tuple.3444", align 8  ; 6 uses
   %16 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 8 uses
-  %17 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 8 uses
+  %17 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %18 = alloca %"class.std::tuple.3444", align 8  ; 6 uses
-  %19 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 8 uses
+  %19 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %20 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 4 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !12079 ; 4 uses
@@ -1597,14 +1593,12 @@ bb.bt:                                            ; preds = %bb.bk, %bb.ay, %bb.
   %i.mr = load i32, ptr %i.mn, align 8, !tbaa !12102, !noalias !26009
   %i.ms = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.mt = load i32, ptr %i.ms, align 8, !tbaa !22502, !noalias !26012
-  %21 = getelementptr inbounds nuw i8, ptr %i.mo, i64 8 ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %i.mo, i64 56 ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %24 = getelementptr inbounds nuw i8, ptr %17, i64 16
-  %i.mu = getelementptr inbounds nuw i8, ptr %17, i64 24
-  %i.mv = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %i.mw = getelementptr inbounds nuw i8, ptr %19, i64 8
-  %i.mx = getelementptr inbounds nuw i8, ptr %19, i64 16
+  %21 = getelementptr inbounds nuw i8, ptr %i.mo, <2 x i64> <i64 8, i64 56>
+  %22 = getelementptr inbounds nuw i8, ptr %i.mo, <2 x i64> <i64 8, i64 56>
+  %i.mu = getelementptr inbounds nuw i8, ptr %17, i64 8
+  %i.mv = getelementptr inbounds nuw i8, ptr %17, i64 24
+  %i.mw = getelementptr inbounds nuw i8, ptr %18, i64 8
+  %i.mx = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.my = getelementptr inbounds nuw i8, ptr %19, i64 24
   %i.mz = getelementptr inbounds nuw i8, ptr %i.mp, <2 x i64> <i64 8, i64 56>
   %i.na = getelementptr inbounds nuw i8, ptr %20, i64 8
@@ -1920,10 +1914,9 @@ bb.cu:                                            ; preds = %bb.ct
   call void @llvm.experimental.noalias.scope.decl(metadata !26022)
   %i.tl = load ptr, ptr %i.mo, align 8, !tbaa !8393, !noalias !26025, !nonnull !552, !align !674
   store ptr %i.tl, ptr %17, align 8, !tbaa !1034, !alias.scope !26025
-  store ptr %21, ptr %23, align 8, !tbaa !12117, !alias.scope !26025
-  store ptr %22, ptr %24, align 8, !tbaa !12118, !alias.scope !26025
+  store <2 x ptr> %22, ptr %i.mu, align 8, !tbaa !533, !alias.scope !26025
   %i.tm = trunc nsw i64 %indvars.iv410 to i32
-  store i32 %i.tm, ptr %i.mu, align 8, !tbaa !8646, !alias.scope !26025
+  store i32 %i.tm, ptr %i.mv, align 8, !tbaa !8646, !alias.scope !26025
   invoke void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %i.tk, ptr noundef nonnull align 8 dereferenceable(28) %17)
           to label %bb.cv unwind label %bb.cx
 
@@ -1963,15 +1956,14 @@ bb.cx:                                            ; preds = %bb.cu
           to label %bb.cy unwind label %bb.db
 
 bb.cy:                                            ; preds = %.thread371
-  %i.tp = load ptr, ptr %i.mv, align 8, !tbaa !12119, !nonnull !552, !align !674
+  %i.tp = load ptr, ptr %i.mw, align 8, !tbaa !12119, !nonnull !552, !align !674
   %i.tq = load ptr, ptr %18, align 8, !tbaa !8636, !nonnull !552, !align !674
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #34
   call void @llvm.experimental.noalias.scope.decl(metadata !26026)
   call void @llvm.experimental.noalias.scope.decl(metadata !26029)
   %i.tr = load ptr, ptr %i.mo, align 8, !tbaa !8393, !noalias !26032, !nonnull !552, !align !674
   store ptr %i.tr, ptr %19, align 8, !tbaa !1034, !alias.scope !26032
-  store ptr %21, ptr %i.mw, align 8, !tbaa !12117, !alias.scope !26032
-  store ptr %22, ptr %i.mx, align 8, !tbaa !12118, !alias.scope !26032
+  store <2 x ptr> %21, ptr %i.mx, align 8, !tbaa !533, !alias.scope !26032
   %i.ts = trunc nsw i64 %indvars.iv410 to i32
   store i32 %i.ts, ptr %i.my, align 8, !tbaa !8646, !alias.scope !26032
   invoke void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %i.tp, ptr noundef nonnull align 8 dereferenceable(28) %19)

@@ -204,12 +204,12 @@ bb.bi:                                            ; preds = %bb.bh
   %i.ma = getelementptr inbounds nuw [12 x i8], ptr %i.lz, i64 %i.iu
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ma, ptr noundef nonnull align 4 dereferenceable(12) %i.ly, i64 12, i1 false)
   %i.mb = load ptr, ptr %5, align 8
-  %i.mc = getelementptr inbounds nuw [12 x i8], ptr %i.mb, i64 %i.iu ; 4 uses
-  %7 = load float, ptr %i.mc, align 4             ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.mc, i64 4 ; 2 uses
-  %9 = load float, ptr %8, align 4                ; 3 uses
-  %10 = fmul float %9, %9
-  %i.md = call float @llvm.fmuladd.f32(float %7, float %7, float %10)
+  %i.mc = getelementptr inbounds nuw [12 x i8], ptr %i.mb, i64 %i.iu ; 3 uses
+  %7 = load <2 x float>, ptr %i.mc, align 4       ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %7, %7
+  %8 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %9 = extractelement <2 x float> %7, i64 0       ; 2 uses
+  %i.md = call float @llvm.fmuladd.f32(float %9, float %9, float %8)
   %i.me = getelementptr inbounds nuw i8, ptr %i.mc, i64 8 ; 2 uses
   %i.mf = load float, ptr %i.me, align 4          ; 3 uses
   %i.mg = call noundef float @llvm.fmuladd.f32(float %i.mf, float %i.mf, float %i.md) ; 2 uses
@@ -218,11 +218,11 @@ bb.bi:                                            ; preds = %bb.bh
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %bb.bi
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.mg)
-  %i.mi = fdiv float 1.000000e+00, %sqrt.i.i      ; 3 uses
-  %11 = fmul float %7, %i.mi
-  store float %11, ptr %i.mc, align 4
-  %12 = fmul float %9, %i.mi
-  store float %12, ptr %8, align 4
+  %i.mi = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
+  %10 = insertelement <2 x float> poison, float %i.mi, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x float> %7, %11
+  store <2 x float> %12, ptr %i.mc, align 4
   %i.mj = fmul float %i.mf, %i.mi
   store float %i.mj, ptr %i.me, align 4
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit
@@ -625,23 +625,19 @@ bb.u:                                             ; preds = %.lr.ph240, %bb.u
 
 _ZN10aiVector3tIfE13NormalizeSafeEv.exit:         ; preds = %_ZN10aiVector3tIfEdVEf.exit.i, %._crit_edge241
   %.sroa.14.1 = phi float [ %i.gs, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %.sroa.14.0.lcssa, %._crit_edge241 ]
-  %i.hf = phi <2 x float> [ %i.gr, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %i.gi, %._crit_edge241 ] ; 2 uses
+  %i.hf = phi <2 x float> [ %i.gr, %_ZN10aiVector3tIfEdVEf.exit.i ], [ %i.gi, %._crit_edge241 ]
   br i1 %.not210234, label %.loopexit, label %.lr.ph247.preheader
 
 .lr.ph247.preheader:                              ; preds = %_ZN10aiVector3tIfE13NormalizeSafeEv.exit
   %i.hg = load ptr, ptr %i.fi, align 8
-  %5 = extractelement <2 x float> %i.hf, i64 0
-  %6 = extractelement <2 x float> %i.hf, i64 1
   br label %.lr.ph247
 
 .lr.ph247:                                        ; preds = %.lr.ph247.preheader, %.lr.ph247
   %.sroa.0137.0246 = phi ptr [ %i.hq, %.lr.ph247 ], [ %i.gf, %.lr.ph247.preheader ] ; 2 uses
   %i.hh = load i32, ptr %.sroa.0137.0246, align 4 ; 2 uses
   %i.hi = zext i32 %i.hh to i64                   ; 2 uses
-  %i.hj = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.hi ; 3 uses
-  store float %5, ptr %i.hj, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hj, i64 4
-  store float %6, ptr %.sroa.9.0..sroa_idx, align 4
+  %i.hj = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.hi ; 2 uses
+  store <2 x float> %i.hf, ptr %i.hj, align 4
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hj, i64 8
   store float %.sroa.14.1, ptr %.sroa.14.0..sroa_idx, align 4
   %i.hk = lshr i32 %i.hh, 6
@@ -725,23 +721,19 @@ _ZN10aiVector3tIfEdVEf.exit.i.1:                  ; preds = %._crit_edge241.1
 
 _ZN10aiVector3tIfE13NormalizeSafeEv.exit.1:       ; preds = %_ZN10aiVector3tIfEdVEf.exit.i.1, %._crit_edge241.1
   %.sroa.14.1.1 = phi float [ %i.ja, %_ZN10aiVector3tIfEdVEf.exit.i.1 ], [ %.sroa.14.0.lcssa.1, %._crit_edge241.1 ]
-  %i.jb = phi <2 x float> [ %i.iz, %_ZN10aiVector3tIfEdVEf.exit.i.1 ], [ %i.iq, %._crit_edge241.1 ] ; 2 uses
+  %i.jb = phi <2 x float> [ %i.iz, %_ZN10aiVector3tIfEdVEf.exit.i.1 ], [ %i.iq, %._crit_edge241.1 ]
   br i1 %.not210234.1, label %.loopexit.1, label %.lr.ph247.preheader.1
 
 .lr.ph247.preheader.1:                            ; preds = %_ZN10aiVector3tIfE13NormalizeSafeEv.exit.1
   %i.jc = load ptr, ptr %i.fi, align 8
-  %7 = extractelement <2 x float> %i.jb, i64 0
-  %8 = extractelement <2 x float> %i.jb, i64 1
   br label %.lr.ph247.1
 
 .lr.ph247.1:                                      ; preds = %.lr.ph247.1, %.lr.ph247.preheader.1
   %.sroa.0137.0246.1 = phi ptr [ %i.jm, %.lr.ph247.1 ], [ %i.id, %.lr.ph247.preheader.1 ] ; 2 uses
   %i.jd = load i32, ptr %.sroa.0137.0246.1, align 4 ; 2 uses
   %i.je = zext i32 %i.jd to i64                   ; 2 uses
-  %i.jf = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.je ; 3 uses
-  store float %7, ptr %i.jf, align 4
-  %.sroa.9.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.jf, i64 4
-  store float %8, ptr %.sroa.9.0..sroa_idx.1, align 4
+  %i.jf = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.je ; 2 uses
+  store <2 x float> %i.jb, ptr %i.jf, align 4
   %.sroa.14.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.jf, i64 8
   store float %.sroa.14.1.1, ptr %.sroa.14.0..sroa_idx.1, align 4
   %i.jg = lshr i32 %i.jd, 6

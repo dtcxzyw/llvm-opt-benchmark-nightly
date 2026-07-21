@@ -204,9 +204,11 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   %i.t = shl nuw nsw i32 1, %i.s                  ; 2 uses
   store i32 %i.t, ptr @wp_luma_round, align 4, !tbaa !4
   store i32 %i.t, ptr @wp_chroma_round, align 4, !tbaa !4
-  %i.u = shl nuw nsw i32 1, %.                    ; 31 uses
+  %i.u = shl nuw nsw i32 1, %.                    ; 22 uses
   %i.v = load ptr, ptr @wp_weight, align 8
   %i.w = load ptr, ptr @wp_offset, align 8
+  %1 = insertelement <2 x i32> poison, i32 %i.u, i64 0
+  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.preheader303
 
 .preheader303:                                    ; preds = %bb.d, %._crit_edge
@@ -249,16 +251,14 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   %indvar368 = phi i64 [ 0, %.preheader302.lr.ph ], [ %indvar.next369, %.preheader302 ] ; 4 uses
   %i.ap = mul nuw nsw i64 %indvar368, 12
   %i.aq = add nuw nsw i64 %i.x, %i.ap             ; 2 uses
-  %scevgep370 = getelementptr nuw i8, ptr %i.a, i64 %i.aq ; 3 uses
+  %scevgep370 = getelementptr nuw i8, ptr %i.a, i64 %i.aq ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.b, i64 %i.aq
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvar368
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !46 ; 3 uses
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvar368
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !46 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %scevgep, i8 0, i64 12, i1 false), !tbaa !4
-  store i32 %i.u, ptr %scevgep370, align 4, !tbaa !4
-  %.sroa.7.0.scevgep370.sroa_idx = getelementptr inbounds nuw i8, ptr %scevgep370, i64 4
-  store i32 %i.u, ptr %.sroa.7.0.scevgep370.sroa_idx, align 4, !tbaa !4
+  store <2 x i32> %2, ptr %scevgep370, align 4, !tbaa !4
   %.sroa.11.0.scevgep370.sroa_idx = getelementptr inbounds nuw i8, ptr %scevgep370, i64 8
   store i32 %i.u, ptr %.sroa.11.0.scevgep370.sroa_idx, align 4, !tbaa !4
   store i32 %i.u, ptr %i.as, align 4, !tbaa !4
@@ -476,6 +476,8 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
 .preheader280:                                    ; preds = %._crit_edge348, %._crit_edge313.split.thread, %.preheader283.lr.ph
   %i.ei = load ptr, ptr @wp_weight, align 8
   %i.ej = load ptr, ptr @wp_offset, align 8
+  %3 = insertelement <2 x i32> poison, i32 %i.u, i64 0
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.preheader279
 
 .preheader282:                                    ; preds = %.preheader282.lr.ph, %.preheader282
@@ -541,10 +543,8 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
 bb.g:                                             ; preds = %.lr.ph351, %bb.g
   %indvars.iv476 = phi i64 [ 0, %.lr.ph351 ], [ %indvars.iv.next477, %bb.g ] ; 3 uses
   %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.fp, i64 %indvars.iv476
-  %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !46 ; 3 uses
-  store i32 %i.u, ptr %i.ft, align 4, !tbaa !4
-  %1 = getelementptr inbounds nuw i8, ptr %i.ft, i64 4
-  store i32 %i.u, ptr %1, align 4, !tbaa !4
+  %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !46 ; 2 uses
+  store <2 x i32> %4, ptr %i.ft, align 4, !tbaa !4
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
   store i32 %i.u, ptr %i.fu, align 4, !tbaa !4
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.fr, i64 %indvars.iv476
@@ -574,6 +574,10 @@ bb.g:                                             ; preds = %.lr.ph351, %bb.g
   %smax423 = tail call i32 @llvm.smax.i32(i32 %i.gf, i32 20)
   %i.gg = add nuw i32 %smax423, 1
   %wide.trip.count424 = zext i32 %i.gg to i64
+  %5 = insertelement <2 x i32> poison, i32 %i.u, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer ; 3 uses
+  %7 = insertelement <2 x i32> poison, i32 %i.u, i64 0
+  %8 = shufflevector <2 x i32> %7, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.preheader296
 
 .preheader296:                                    ; preds = %.preheader297, %bb.i
@@ -703,12 +707,10 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   %i.il = add i32 %.0248.us, -128
   %or.cond.us = icmp ult i32 %i.il, -192
   %spec.select.us = select i1 %or.cond.us, i32 %i.u, i32 %.0248.us
-  %i.im = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv428 ; 3 uses
+  %i.im = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv428 ; 2 uses
   store i32 %spec.select.us, ptr %i.im, align 4, !tbaa !4
-  %2 = getelementptr inbounds nuw i8, ptr %i.im, i64 4
-  store i32 %i.u, ptr %2, align 4, !tbaa !4
-  %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 8
-  store i32 %i.u, ptr %i.in, align 4, !tbaa !4
+  %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 4
+  store <2 x i32> %8, ptr %i.in, align 4, !tbaa !4
   %indvars.iv.next429 = add nuw nsw i64 %indvars.iv428, 1 ; 2 uses
   %exitcond432.not = icmp eq i64 %indvars.iv.next429, %i.gu
   br i1 %exitcond432.not, label %._crit_edge330, label %.preheader295.lr.ph.us, !llvm.loop !135
@@ -716,10 +718,8 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 .lr.ph.split:                                     ; preds = %.lr.ph.split, %.lr.ph.split.preheader.new
   %indvars.iv410 = phi i64 [ 0, %.lr.ph.split.preheader.new ], [ %indvars.iv.next411.1, %.lr.ph.split ] ; 3 uses
   %niter567 = phi i64 [ 0, %.lr.ph.split.preheader.new ], [ %niter567.next.1, %.lr.ph.split ]
-  %i.io = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv410 ; 3 uses
-  store i32 %i.u, ptr %i.io, align 8, !tbaa !4
-  %3 = getelementptr inbounds nuw i8, ptr %i.io, i64 4
-  store i32 %i.u, ptr %3, align 4, !tbaa !4
+  %i.io = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv410 ; 2 uses
+  store <2 x i32> %6, ptr %i.io, align 8, !tbaa !4
   %i.ip = getelementptr inbounds nuw i8, ptr %i.io, i64 8
   store i32 %i.u, ptr %i.ip, align 8, !tbaa !4
   %indvars.iv.next411 = or disjoint i64 %indvars.iv410, 1 ; 2 uses
@@ -727,10 +727,8 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !52
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 6448
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !54
-  %i.iu = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv.next411 ; 3 uses
-  store i32 %i.u, ptr %i.iu, align 4, !tbaa !4
-  %4 = getelementptr inbounds nuw i8, ptr %i.iu, i64 4
-  store i32 %i.u, ptr %4, align 8, !tbaa !4
+  %i.iu = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv.next411 ; 2 uses
+  store <2 x i32> %6, ptr %i.iu, align 4, !tbaa !4
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iu, i64 8
   store i32 %i.u, ptr %i.iv, align 4, !tbaa !4
   %indvars.iv.next411.1 = add nuw nsw i64 %indvars.iv410, 2 ; 2 uses
@@ -750,10 +748,8 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   %i.ix = load ptr, ptr %i.iw, align 8, !tbaa !52
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 6448
   %i.iz = load ptr, ptr %i.iy, align 8, !tbaa !54
-  %i.ja = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv410.epil.init ; 3 uses
-  store i32 %i.u, ptr %i.ja, align 4, !tbaa !4
-  %5 = getelementptr inbounds nuw i8, ptr %i.ja, i64 4
-  store i32 %i.u, ptr %5, align 4, !tbaa !4
+  %i.ja = getelementptr inbounds nuw [12 x i8], ptr %i.gn, i64 %indvars.iv410.epil.init ; 2 uses
+  store <2 x i32> %6, ptr %i.ja, align 4, !tbaa !4
   %i.jb = getelementptr inbounds nuw i8, ptr %i.ja, i64 8
   store i32 %i.u, ptr %i.jb, align 4, !tbaa !4
   br label %._crit_edge330
@@ -772,7 +768,12 @@ bb.j:                                             ; preds = %bb.i
   %i.jc = icmp eq i32 %0, 0
   %i.jd = load ptr, ptr @wp_weight, align 8       ; 2 uses
   %i.je = load ptr, ptr @wp_offset, align 8       ; 2 uses
-  br i1 %i.jc, label %.preheader289, label %.preheader292
+  br i1 %i.jc, label %.preheader289, label %.preheader292.preheader
+
+.preheader292.preheader:                          ; preds = %bb.j
+  %9 = insertelement <2 x i32> poison, i32 %i.u, i64 0
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <2 x i32> zeroinitializer
+  br label %.preheader292
 
 .preheader289:                                    ; preds = %bb.j, %._crit_edge340
   %indvars.iv451 = phi i64 [ %indvars.iv.next452, %._crit_edge340 ], [ 0, %bb.j ] ; 6 uses
@@ -829,8 +830,8 @@ bb.j:                                             ; preds = %bb.i
   %exitcond455.not = icmp eq i64 %indvars.iv.next452, %wide.trip.count
   br i1 %exitcond455.not, label %.loopexit291, label %.preheader289, !llvm.loop !138
 
-.preheader292:                                    ; preds = %bb.j, %._crit_edge336
-  %indvars.iv439 = phi i64 [ %indvars.iv.next440, %._crit_edge336 ], [ 0, %bb.j ] ; 4 uses
+.preheader292:                                    ; preds = %.preheader292.preheader, %._crit_edge336
+  %indvars.iv439 = phi i64 [ %indvars.iv.next440, %._crit_edge336 ], [ 0, %.preheader292.preheader ] ; 4 uses
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr @listXsize, i64 %indvars.iv439 ; 2 uses
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !4
   %i.kn = icmp sgt i32 %i.km, 0
@@ -846,10 +847,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.lr.ph335, %bb.k
   %indvars.iv436 = phi i64 [ 0, %.lr.ph335 ], [ %indvars.iv.next437, %bb.k ] ; 3 uses
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.kp, i64 %indvars.iv436
-  %i.kt = load ptr, ptr %i.ks, align 8, !tbaa !46 ; 3 uses
-  store i32 %i.u, ptr %i.kt, align 4, !tbaa !4
-  %6 = getelementptr inbounds nuw i8, ptr %i.kt, i64 4
-  store i32 %i.u, ptr %6, align 4, !tbaa !4
+  %i.kt = load ptr, ptr %i.ks, align 8, !tbaa !46 ; 2 uses
+  store <2 x i32> %10, ptr %i.kt, align 4, !tbaa !4
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 8
   store i32 %i.u, ptr %i.ku, align 4, !tbaa !4
   %i.kv = getelementptr inbounds nuw [8 x i8], ptr %i.kr, i64 %indvars.iv436

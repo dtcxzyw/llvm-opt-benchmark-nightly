@@ -203,7 +203,7 @@ bb.a:
 define hidden void @_ZN2v88internal8compiler10turboshaft14MemoryAnalyzer3RunEv(ptr noundef nonnull align 8 dereferenceable(220) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %1 = alloca %"struct.absl::container_internal::HashKey", align 8 ; 5 uses
-  %2 = alloca %"struct.absl::container_internal::HashKey", align 8 ; 5 uses
+  %2 = alloca %"struct.absl::container_internal::HashKey", align 16 ; 4 uses
   %3 = alloca %"struct.std::pair.636", align 8    ; 5 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %4 = alloca %"struct.absl::container_internal::HashKey.659", align 8 ; 5 uses
@@ -243,7 +243,7 @@ _ZNSt8optionalIN2v88internal8compiler10turboshaft14MemoryAnalyzer10BlockStateEEa
   br i1 %i.v, label %.lr.ph127, label %._crit_edge
 
 .lr.ph127:                                        ; preds = %_ZNSt8optionalIN2v88internal8compiler10turboshaft14MemoryAnalyzer10BlockStateEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 10 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 9 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 5 uses
@@ -257,11 +257,11 @@ _ZNSt8optionalIN2v88internal8compiler10turboshaft14MemoryAnalyzer10BlockStateEEa
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 7 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, <2 x i64> <i64 152, i64 200>
+  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 6 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 5 uses
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   br label %bb.c
@@ -541,8 +541,7 @@ bb.y:                                             ; preds = %bb.w
 
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17, !noalias !49
-  store ptr %i.ak, ptr %2, align 8, !noalias !49
-  store ptr %i.w, ptr %6, align 8, !noalias !49
+  store <2 x ptr> %6, ptr %2, align 16, !noalias !49
   %i.es = call noundef i64 @_ZN4absl18container_internal42GrowSooTableToNextCapacityAndPrepareInsertILm16ELb1EEEmRNS0_12CommonFieldsERKNS0_15PolicyFunctionsENS_11FunctionRefIFmmEEEb(ptr noundef nonnull align 8 dereferenceable(40) %i.ak, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal8compiler10turboshaft10AllocateOpEjEENS0_6HashEqIS9_vE4HashENSC_2EqENS4_13ZoneAllocatorISt4pairIKS9_jEEEE18GetPolicyFunctionsEvE5value, ptr nonnull %2, ptr nonnull @_ZN4absl19functional_internal12InvokeObjectINS_18container_internal7HashKeyINS2_6HashEqIPKN2v88internal8compiler10turboshaft10AllocateOpEvE4HashESB_Lb0EEEmJmEEET0_NS0_7VoidPtrEDpNS0_8ForwardTIT1_E4typeE, i1 noundef zeroext false) #17, !noalias !49
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17, !noalias !49
   %.sroa.0.0.copyload.i.i.i2.i.i.i.i.i.i.i = load ptr, ptr %i.an, align 8, !noalias !49

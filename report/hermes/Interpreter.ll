@@ -203,7 +203,7 @@ bb.a:
 ; Function Attrs: mustprogress noinline nounwind uwtable
 define linkonce_odr hidden { i32, i64 } @_ZN6hermes2vm11Interpreter17interpretFunctionILb0ELb0EEENS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEERNS0_7RuntimeERNS0_16InterpreterStateE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr noundef nonnull align 8 dereferenceable(12) %1) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %2 = alloca %"class.hermes::vm::GCScope", align 8 ; 13 uses
+  %2 = alloca %"class.hermes::vm::GCScope", align 8 ; 95 uses
   %3 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %4 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %5 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
@@ -240,7 +240,89 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 10 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !46
   store ptr %i.m, ptr %i.k, align 8, !tbaa !416
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 144 ; 87 uses
+  %17 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %18 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %19 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %20 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %21 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %22 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %23 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %24 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %25 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %26 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %27 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %28 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %29 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %30 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %31 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %32 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %33 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %34 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %35 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %36 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %37 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %38 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %39 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %40 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %41 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %42 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %43 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %44 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %45 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %46 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %47 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %48 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %49 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %50 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %51 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %52 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %53 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %54 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %55 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %56 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %57 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %58 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %59 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %60 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %61 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %62 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %63 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %64 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %65 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %66 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %67 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %68 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %69 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %70 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %71 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %72 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %73 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %74 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %75 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %76 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %77 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %78 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %79 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %80 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %81 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %82 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %83 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %84 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %85 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %86 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %87 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %88 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %89 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %90 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %91 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %92 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %93 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %94 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %95 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %96 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %97 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %98 = getelementptr inbounds nuw i8, ptr %2, <2 x i64> <i64 24, i64 144>
+  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 144 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 32 uses
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 160 ; 2 uses
   store ptr %i.p, ptr %i.n, align 8, !tbaa !353
@@ -250,12 +332,12 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
   store ptr %i.o, ptr %i.p, align 8
   store i32 1, ptr %i.q, align 8, !tbaa !354
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 86 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 200 ; 86 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 200
   store ptr %i.n, ptr %i.t, align 8, !tbaa !59
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 208 ; 86 uses
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store ptr %2, ptr %i.l, align 8, !tbaa !46
-  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 86 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %i.v, ptr %i.s, align 8, !tbaa !49
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !61
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 9736
@@ -305,6 +387,8 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
   %i.bo = getelementptr inbounds nuw i8, ptr %16, i64 32
   %i.bp = getelementptr inbounds nuw i8, ptr %16, i64 40
   %i.bq = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %99 = insertelement <2 x ptr> poison, ptr %i.v, i64 0
+  %100 = insertelement <2 x ptr> %99, ptr %i.n, i64 1 ; 3 uses
   br label %.backedge3766
 
 .backedge3766:                                    ; preds = %.backedge3766.backedge, %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit
@@ -613,8 +697,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.gy = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.gx
   store i64 %i.gu, ptr %i.gy, align 8, !tbaa !69
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %65, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -852,8 +935,7 @@ bb.aq:                                            ; preds = %_ZN6hermes2vm11Inte
   %i.me = zext i8 %i.md to i64
   %i.mf = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.me
   store i64 %i.mb, ptr %i.mf, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %56, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -949,8 +1031,7 @@ bb.ax:                                            ; preds = %.backedge
   br i1 %i.oi, label %.loopexitthread-pre-split.loopexit4189, label %bb.ay, !prof !65
 
 bb.ay:                                            ; preds = %bb.ax
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %57, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.oj = getelementptr inbounds nuw i8, ptr %i.oh, i64 4
   br label %.backedge.backedge
@@ -965,8 +1046,7 @@ bb.az:                                            ; preds = %.backedge
   br i1 %i.oo, label %.loopexitthread-pre-split.loopexit4189, label %bb.ba, !prof !65
 
 bb.ba:                                            ; preds = %bb.az
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %58, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.op = getelementptr inbounds nuw i8, ptr %i.on, i64 7
   br label %.backedge.backedge
@@ -1304,8 +1384,7 @@ bb.ce:                                            ; preds = %_ZN6hermes2vm7Runti
 
 _ZN6hermes2vm7Runtime36testAndClearTimeoutAsyncBreakRequestEv.exit.thread: ; preds = %bb.cd, %_ZN6hermes2vm7Runtime36testAndClearTimeoutAsyncBreakRequestEv.exit, %bb.ce, %bb.cc
   %.22596 = phi ptr [ %i.ur, %bb.ce ], [ %.sink4083.sink.in, %_ZN6hermes2vm7Runtime36testAndClearTimeoutAsyncBreakRequestEv.exit ], [ %.sink4083.sink.in, %bb.cc ], [ %.sink4083.sink.in, %bb.cd ]
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %60, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ut = getelementptr inbounds nuw i8, ptr %.22596, i64 1
   br label %.backedge.backedge
@@ -1400,8 +1479,7 @@ _ZN6hermes2vm13RuntimeModule23getCodeBlockMayAllocateEj.exit2810: ; preds = %_ZN
   %i.wj = zext i8 %i.wi to i64
   %i.wk = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.wj
   store i64 %i.wg, ptr %i.wk, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %61, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -1487,8 +1565,7 @@ _ZN6hermes2vm13RuntimeModule23getCodeBlockMayAllocateEj.exit2819: ; preds = %_ZN
   %i.xz = zext i8 %i.xy to i64
   %i.ya = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.xz
   store i64 %i.xw, ptr %i.ya, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %63, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -1574,8 +1651,7 @@ _ZN6hermes2vm13RuntimeModule23getCodeBlockMayAllocateEj.exit2828: ; preds = %_ZN
   %i.zp = zext i8 %i.zo to i64
   %i.zq = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.zp
   store i64 %i.zm, ptr %i.zq, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %62, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -1611,8 +1687,7 @@ bb.dd:                                            ; preds = %bb.dc
   %i.aak = zext i8 %i.aaj to i64
   %i.aal = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.aak
   store i64 %i.aah, ptr %i.aal, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %74, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aaf, i64 5
   br label %.backedge.backedge
@@ -1648,8 +1723,7 @@ bb.df:                                            ; preds = %bb.de
   %i.abf = zext i8 %i.abe to i64
   %i.abg = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.abf
   store i64 %i.abc, ptr %i.abg, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %75, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.abh = getelementptr inbounds nuw i8, ptr %i.aba, i64 7
   br label %.backedge.backedge
@@ -2052,8 +2126,7 @@ bb.fp:                                            ; preds = %bb.fo, %.critedge26
   %i.ats = zext i8 %i.atr to i64
   %i.att = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.ats
   store i64 %.sroa.21.0, ptr %i.att, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %44, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -2350,8 +2423,7 @@ bb.gs:                                            ; preds = %bb.fu
   br i1 %i.azg, label %.loopexitthread-pre-split.loopexit4189, label %bb.gt
 
 bb.gt:                                            ; preds = %bb.gs, %.critedge2668
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %45, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -2390,8 +2462,7 @@ bb.gx:                                            ; preds = %bb.gw, %bb.gv
   %.pn3736 = phi { i32, i64 } [ %i.azu, %bb.gv ], [ %i.azy, %bb.gw ]
   %.5 = phi ptr [ %i.azw, %bb.gv ], [ %i.baa, %bb.gw ] ; 2 uses
   %.sroa.21.1 = extractvalue { i32, i64 } %.pn3736, 1
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %50, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bac = getelementptr inbounds nuw i8, ptr %.5, i64 1
   %i.bad = load i8, ptr %i.bac, align 1, !tbaa !81
@@ -2439,8 +2510,7 @@ bb.ha:                                            ; preds = %bb.gy
 
 bb.hb:                                            ; preds = %bb.ha, %bb.gz
   %.6 = phi ptr [ %i.baz, %bb.gz ], [ %i.bbd, %bb.ha ]
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %51, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bbf = getelementptr inbounds nuw i8, ptr %.6, i64 4
   br label %.backedge.backedge
@@ -2473,8 +2543,7 @@ bb.he:                                            ; preds = %bb.hd, %bb.hc
   %i.bbu = zext i8 %i.bbt to i64
   %i.bbv = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bbu
   %i.bbw = call i32 @_ZN6hermes2vm8JSObject26defineOwnComputedPrimitiveENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_19DefinePropertyFlagsES7_NS0_11PropOpFlagsE(ptr %i.bbr, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %i.o, i32 319, ptr %i.bbv, i32 0) #10 ; 0 uses
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %47, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   br label %.backedge.backedge
@@ -2487,8 +2556,7 @@ bb.hf:                                            ; preds = %.backedge
   br i1 %i.bbz, label %.loopexitthread-pre-split.loopexit4189, label %bb.hg, !prof !65
 
 bb.hg:                                            ; preds = %bb.hf
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %54, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bca = getelementptr inbounds nuw i8, ptr %i.bby, i64 5
   br label %.backedge.backedge
@@ -2647,8 +2715,7 @@ bb.hr:                                            ; preds = %bb.hq, %bb.hp
   %i.bey = zext i8 %i.bex to i64
   %i.bez = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bey
   store i64 %.sink4091, ptr %i.bez, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %55, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   %i.bfa = getelementptr inbounds nuw i8, ptr %.7.lcssa.sink, i64 6
@@ -2676,8 +2743,7 @@ bb.ht:                                            ; preds = %bb.hs
 
 bb.hu:                                            ; preds = %bb.ht
   %i.bfo = extractvalue { i32, i64 } %i.bfk, 1
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %66, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %bb.hv
 
@@ -2714,8 +2780,7 @@ bb.hx:                                            ; preds = %bb.hw
 
 bb.hy:                                            ; preds = %bb.hx
   %i.bgg = extractvalue { i32, i64 } %i.bgc, 1
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %67, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %bb.hz
 
@@ -2744,8 +2809,7 @@ bb.ia:                                            ; preds = %.backedge
 
 bb.ib:                                            ; preds = %bb.ia
   %i.bgt = extractvalue { i32, i64 } %i.bgp, 1
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %68, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bgu = getelementptr inbounds nuw i8, ptr %i.bgr, i64 1
   %i.bgv = load i8, ptr %i.bgu, align 1, !tbaa !81
@@ -2786,8 +2850,7 @@ bb.ie:                                            ; preds = %bb.id
 
 bb.if:                                            ; preds = %bb.ie
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %69, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bhp = ptrtoint ptr %i.bhn to i64
   %i.bhq = or i64 %i.bhp, -844424930131968
@@ -2978,8 +3041,7 @@ bb.je:                                            ; preds = %bb.jd
   %i.ble = zext i8 %i.bld to i64
   %i.blf = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.ble
   store i64 %i.blb, ptr %i.blf, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %40, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.blg = getelementptr inbounds nuw i8, ptr %i.bkz, i64 3
   br label %.backedge.backedge
@@ -3022,8 +3084,7 @@ bb.ji:                                            ; preds = %bb.jh
   %i.bme = zext i8 %i.bmd to i64
   %i.bmf = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bme
   store i64 %i.bmb, ptr %i.bmf, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %41, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bmg = getelementptr inbounds nuw i8, ptr %i.blz, i64 3
   br label %.backedge.backedge
@@ -3083,8 +3144,7 @@ bb.jl:                                            ; preds = %bb.jk, %.backedge
 
 bb.jm:                                            ; preds = %.critedge2673
   %i.bnu = extractvalue { i32, i64 } %i.bnq, 1
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %29, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bnv = getelementptr inbounds nuw i8, ptr %i.bns, i64 1
   %i.bnw = load i8, ptr %i.bnv, align 1, !tbaa !81
@@ -3147,8 +3207,7 @@ bb.jr:                                            ; preds = %bb.jq
   %i.bpf = zext i8 %i.bpe to i64
   %i.bpg = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bpf
   store i64 %i.bpc, ptr %i.bpg, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %23, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bph = getelementptr inbounds nuw i8, ptr %i.bpa, i64 3
   br label %.backedge.backedge
@@ -3189,8 +3248,7 @@ bb.ju:                                            ; preds = %bb.js
 
 bb.jv:                                            ; preds = %bb.ju
   %i.bqe = extractvalue { i32, i64 } %i.bqa, 1
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %71, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bqf = getelementptr inbounds nuw i8, ptr %i.bqc, i64 1
   %i.bqg = load i8, ptr %i.bqf, align 1, !tbaa !81
@@ -3274,8 +3332,7 @@ _ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit.thread: ; preds = %b
 
 bb.ka:                                            ; preds = %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit.thread
   %i.bse = extractvalue { i32, i64 } %i.bsa, 1
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %70, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bsf = getelementptr inbounds nuw i8, ptr %i.bsc, i64 1
   %i.bsg = load i8, ptr %i.bsf, align 1, !tbaa !81
@@ -3315,8 +3372,7 @@ bb.ke:                                            ; preds = %bb.kd
   %i.bsx = zext i8 %i.bsw to i64
   %i.bsy = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bsx
   store i64 %.sroa.0.0.copyload.i2946, ptr %i.bsy, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %72, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bsz = getelementptr inbounds nuw i8, ptr %i.bsu, i64 2
   br label %.backedge.backedge
@@ -3383,8 +3439,7 @@ bb.ki:                                            ; preds = %bb.kh
   %i.bup = zext i8 %i.buo to i64
   %i.buq = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bup
   store i64 %i.bum, ptr %i.buq, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %17, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bur = getelementptr inbounds nuw i8, ptr %i.buk, i64 10
   br label %.backedge.backedge
@@ -3411,8 +3466,7 @@ bb.kk:                                            ; preds = %bb.kj
   %i.bvg = zext i8 %i.bvf to i64
   %i.bvh = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bvg
   store i64 %i.bvd, ptr %i.bvh, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %18, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bvi = getelementptr inbounds nuw i8, ptr %i.bvb, i64 14
   br label %.backedge.backedge
@@ -3434,8 +3488,7 @@ bb.km:                                            ; preds = %bb.kl
   %i.bvq = zext i8 %i.bvp to i64
   %i.bvr = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bvq
   store i64 %.sroa.0.0.copyload.i2955, ptr %i.bvr, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %21, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bvs = getelementptr inbounds nuw i8, ptr %i.bvn, i64 4
   br label %.backedge.backedge
@@ -3464,8 +3517,7 @@ bb.ko:                                            ; preds = %bb.kn
   %i.bwj = zext i8 %i.bwi to i64
   %i.bwk = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bwj
   store i64 %i.bwg, ptr %i.bwk, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %19, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   %i.bwl = getelementptr inbounds nuw i8, ptr %i.bwe, i64 8
@@ -3494,8 +3546,7 @@ bb.kq:                                            ; preds = %bb.kp
   %i.bxb = zext i8 %i.bxa to i64
   %i.bxc = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.bxb
   store i64 %i.bwy, ptr %i.bxc, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %20, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   %i.bxd = getelementptr inbounds nuw i8, ptr %i.bww, i64 10
@@ -3558,8 +3609,7 @@ bb.ks:                                            ; preds = %_ZN6hermes2vm5vmisa
   br i1 %.not3726, label %.loopexitthread-pre-split.loopexit4189, label %bb.kt, !prof !65
 
 bb.kt:                                            ; preds = %bb.ks
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %64, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.byj = ptrtoint ptr %i.byh to i64
   %i.byk = or i64 %i.byj, -281474976710656
@@ -3609,8 +3659,7 @@ bb.kv:                                            ; preds = %.backedge
   br i1 %i.bzn, label %.loopexitthread-pre-split.loopexit4189, label %bb.kw
 
 bb.kw:                                            ; preds = %bb.kv
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %24, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.bzo = load i8, ptr %i.bzm, align 1, !tbaa !81
   %i.bzp = icmp eq i8 %i.bzo, 14
@@ -3731,8 +3780,7 @@ bb.ld:                                            ; preds = %bb.lc
   %i.ccs = zext i8 %i.ccr to i64
   %i.cct = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.ccs
   store i64 %i.ccp, ptr %i.cct, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %22, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ccu = getelementptr inbounds nuw i8, ptr %i.ccn, i64 3
   br label %.backedge.backedge
@@ -3808,8 +3856,7 @@ bb.li:                                            ; preds = %.critedge2675
   %i.ceq = zext i8 %i.cep to i64
   %i.cer = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.ceq
   store i64 %i.cen, ptr %i.cer, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %32, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ces = getelementptr inbounds nuw i8, ptr %i.cel, i64 4
   br label %.backedge.backedge
@@ -3840,8 +3887,7 @@ bb.lk:                                            ; preds = %bb.lj
   %i.cfj = zext i8 %i.cfi to i64
   %i.cfk = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cfj
   store i64 %i.cfg, ptr %i.cfk, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %42, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.cfl = getelementptr inbounds nuw i8, ptr %i.cfc, i64 4
   br label %.backedge.backedge
@@ -3891,8 +3937,7 @@ bb.ln:                                            ; preds = %bb.lm
   %i.cgi = zext i8 %i.cgh to i64
   %i.cgj = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cgi
   store i64 %i.cgf, ptr %i.cgj, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %43, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.cgk = getelementptr inbounds nuw i8, ptr %i.cgb, i64 4
   br label %.backedge.backedge
@@ -3944,8 +3989,7 @@ bb.lr:                                            ; preds = %bb.lq, %bb.lp, %bb.
   br i1 %i.chn, label %.loopexitthread-pre-split.loopexit4189, label %bb.ls, !prof !65
 
 bb.ls:                                            ; preds = %bb.lr
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %46, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -4053,8 +4097,7 @@ bb.mb:                                            ; preds = %bb.ma
   br label %bb.mc
 
 bb.mc:                                            ; preds = %bb.mb, %bb.lx
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %49, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %.backedge.backedge
 
@@ -4116,8 +4159,7 @@ bb.mh:                                            ; preds = %bb.mg, %bb.me
   %i.cld = zext i8 %i.clc to i64
   %i.cle = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cld
   store i64 %i.cla, ptr %i.cle, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %52, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   %i.clf = getelementptr inbounds nuw i8, ptr %.sink4126, i64 4
@@ -4200,8 +4242,7 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT
   %i.cnb = extractvalue { ptr, i64 } %i.cmz, 1
   call void @_ZN6hermes2vm8JSRegExp10initializeENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEES7_N4llvh8ArrayRefIhEE(ptr nonnull %i.clr, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %.0.i.i.i.i.i.i2990, ptr %.0.i.i.i.i.i.i2991, ptr %i.cna, i64 %i.cnb) #10
   %i.cnc = load ptr, ptr %i.a, align 8, !tbaa !108
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %73, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.cnd = getelementptr inbounds nuw i8, ptr %i.cnc, i64 14
   br label %.backedge.backedge
@@ -4482,8 +4523,7 @@ bb.nl:                                            ; preds = %.critedge2677
   %i.ctx = zext i8 %i.ctw to i64
   %i.cty = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.ctx
   store i64 %i.ctu, ptr %i.cty, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %33, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ctz = getelementptr inbounds nuw i8, ptr %i.cts, i64 4
   br label %.backedge.backedge
@@ -4548,8 +4588,7 @@ bb.np:                                            ; preds = %.critedge2679
   %i.cvq = zext i8 %i.cvp to i64
   %i.cvr = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cvq
   store i64 %i.cvn, ptr %i.cvr, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %30, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.cvs = getelementptr inbounds nuw i8, ptr %i.cvl, i64 4
   br label %.backedge.backedge
@@ -4614,8 +4653,7 @@ bb.nt:                                            ; preds = %.critedge2681
   %i.cxj = zext i8 %i.cxi to i64
   %i.cxk = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.cxj
   store i64 %i.cxg, ptr %i.cxk, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %31, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.cxl = getelementptr inbounds nuw i8, ptr %i.cxe, i64 4
   br label %.backedge.backedge
@@ -4706,8 +4744,7 @@ bb.nz:                                            ; preds = %.critedge2683
   %i.czk = zext i8 %i.czj to i64
   %i.czl = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.czk
   store i64 %i.czh, ptr %i.czl, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %37, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.czm = getelementptr inbounds nuw i8, ptr %i.czf, i64 4
   br label %.backedge.backedge
@@ -4798,8 +4835,7 @@ bb.of:                                            ; preds = %.critedge2685
   %i.dbl = zext i8 %i.dbk to i64
   %i.dbm = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.dbl
   store i64 %i.dbi, ptr %i.dbm, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %39, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dbn = getelementptr inbounds nuw i8, ptr %i.dbg, i64 4
   br label %.backedge.backedge
@@ -4890,8 +4926,7 @@ bb.ol:                                            ; preds = %.critedge2687
   %i.ddm = zext i8 %i.ddl to i64
   %i.ddn = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.ddm
   store i64 %i.ddj, ptr %i.ddn, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %38, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ddo = getelementptr inbounds nuw i8, ptr %i.ddh, i64 4
   br label %.backedge.backedge
@@ -4983,8 +5018,7 @@ bb.or:                                            ; preds = %.critedge2689
   %i.dfo = zext i8 %i.dfn to i64
   %i.dfp = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.dfo
   store i64 %i.dfl, ptr %i.dfp, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %34, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dfq = getelementptr inbounds nuw i8, ptr %i.dfj, i64 4
   br label %.backedge.backedge
@@ -5076,8 +5110,7 @@ bb.ox:                                            ; preds = %.critedge2691
   %i.dhq = zext i8 %i.dhp to i64
   %i.dhr = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.dhq
   store i64 %i.dhn, ptr %i.dhr, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %35, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dhs = getelementptr inbounds nuw i8, ptr %i.dhl, i64 4
   br label %.backedge.backedge
@@ -5169,8 +5202,7 @@ bb.pd:                                            ; preds = %.critedge2693
   %i.djs = zext i8 %i.djr to i64
   %i.djt = getelementptr inbounds nuw [8 x i8], ptr %.32602, i64 %i.djs
   store i64 %i.djp, ptr %i.djt, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %36, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dju = getelementptr inbounds nuw i8, ptr %i.djn, i64 4
   br label %.backedge.backedge
@@ -5223,8 +5255,7 @@ bb.pg:                                            ; preds = %bb.pf
   br i1 %i.dla, label %.loopexitthread-pre-split.loopexit4189, label %bb.ph
 
 bb.ph:                                            ; preds = %.critedge2695
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %25, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dlb = lshr i32 %i.dky, 8
   %.lobit3758 = and i32 %i.dlb, 1
@@ -5286,8 +5317,7 @@ bb.pk:                                            ; preds = %bb.pj
   br i1 %i.dmo, label %.loopexitthread-pre-split.loopexit4189, label %bb.pl
 
 bb.pl:                                            ; preds = %.critedge2697
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %26, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dmp = lshr i32 %i.dmm, 8
   %.lobit3756 = and i32 %i.dmp, 1
@@ -5349,8 +5379,7 @@ bb.po:                                            ; preds = %bb.pn
   br i1 %i.doc, label %.loopexitthread-pre-split.loopexit4189, label %bb.pp
 
 bb.pp:                                            ; preds = %.critedge2699
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %27, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dod = lshr i32 %i.doa, 8
   %.lobit3754 = and i32 %i.dod, 1
@@ -5412,8 +5441,7 @@ bb.ps:                                            ; preds = %bb.pr
   br i1 %i.dpq, label %.loopexitthread-pre-split.loopexit4189, label %bb.pt
 
 bb.pt:                                            ; preds = %.critedge2701
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %28, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dpr = lshr i32 %i.dpo, 8
   %.lobit3752 = and i32 %i.dpr, 1
@@ -5486,8 +5514,7 @@ bb.py:                                            ; preds = %bb.pw
   br i1 %i.drk, label %.loopexitthread-pre-split.loopexit4189, label %bb.pz
 
 bb.pz:                                            ; preds = %.critedge2703
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %79, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.drl = and i32 %i.dri, 256
   %.not3720 = icmp eq i32 %i.drl, 0
@@ -5563,8 +5590,7 @@ bb.qg:                                            ; preds = %bb.qe
   br i1 %i.dtc, label %.loopexitthread-pre-split.loopexit4189, label %bb.qh
 
 bb.qh:                                            ; preds = %.critedge2705
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %80, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dtd = and i32 %i.dta, 256
   %.not3718 = icmp eq i32 %i.dtd, 0
@@ -5640,8 +5666,7 @@ bb.qo:                                            ; preds = %bb.qm
   br i1 %i.duu, label %.loopexitthread-pre-split.loopexit4189, label %bb.qp
 
 bb.qp:                                            ; preds = %.critedge2707
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %81, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.duv = and i32 %i.dus, 256
   %.not3716 = icmp eq i32 %i.duv, 0
@@ -5717,8 +5742,7 @@ bb.qw:                                            ; preds = %bb.qu
   br i1 %i.dwm, label %.loopexitthread-pre-split.loopexit4189, label %bb.qx
 
 bb.qx:                                            ; preds = %.critedge2709
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %82, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dwn = and i32 %i.dwk, 256
   %.not3714 = icmp eq i32 %i.dwn, 0
@@ -5794,8 +5818,7 @@ bb.re:                                            ; preds = %bb.rc
   br i1 %i.dye, label %.loopexitthread-pre-split.loopexit4189, label %bb.rf
 
 bb.rf:                                            ; preds = %.critedge2711
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %83, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dyf = and i32 %i.dyc, 256
   %.not3712 = icmp eq i32 %i.dyf, 0
@@ -5871,8 +5894,7 @@ bb.rm:                                            ; preds = %bb.rk
   br i1 %i.dzw, label %.loopexitthread-pre-split.loopexit4189, label %bb.rn
 
 bb.rn:                                            ; preds = %.critedge2713
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %84, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.dzx = and i32 %i.dzu, 256
   %.not3710 = icmp eq i32 %i.dzx, 0
@@ -5948,8 +5970,7 @@ bb.ru:                                            ; preds = %bb.rs
   br i1 %i.ebo, label %.loopexitthread-pre-split.loopexit4189, label %bb.rv
 
 bb.rv:                                            ; preds = %.critedge2715
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %85, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ebp = and i32 %i.ebm, 256
   %.not3708 = icmp eq i32 %i.ebp, 0
@@ -6025,8 +6046,7 @@ bb.sc:                                            ; preds = %bb.sa
   br i1 %i.edg, label %.loopexitthread-pre-split.loopexit4189, label %bb.sd
 
 bb.sd:                                            ; preds = %.critedge2717
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %86, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.edh = and i32 %i.ede, 256
   %.not3706 = icmp eq i32 %i.edh, 0
@@ -6102,8 +6122,7 @@ bb.sk:                                            ; preds = %bb.si
   br i1 %i.eey, label %.loopexitthread-pre-split.loopexit4189, label %bb.sl
 
 bb.sl:                                            ; preds = %.critedge2719
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %87, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.eez = and i32 %i.eew, 256
   %.not3704 = icmp eq i32 %i.eez, 0
@@ -6179,8 +6198,7 @@ bb.ss:                                            ; preds = %bb.sq
   br i1 %i.egq, label %.loopexitthread-pre-split.loopexit4189, label %bb.st
 
 bb.st:                                            ; preds = %.critedge2721
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %88, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.egr = and i32 %i.ego, 256
   %.not3702 = icmp eq i32 %i.egr, 0
@@ -6256,8 +6274,7 @@ bb.ta:                                            ; preds = %bb.sy
   br i1 %i.eii, label %.loopexitthread-pre-split.loopexit4189, label %bb.tb
 
 bb.tb:                                            ; preds = %.critedge2723
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %89, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.eij = and i32 %i.eig, 256
   %.not3700 = icmp eq i32 %i.eij, 0
@@ -6333,8 +6350,7 @@ bb.ti:                                            ; preds = %bb.tg
   br i1 %i.eka, label %.loopexitthread-pre-split.loopexit4189, label %bb.tj
 
 bb.tj:                                            ; preds = %.critedge2725
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %90, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ekb = and i32 %i.ejy, 256
   %.not3698 = icmp eq i32 %i.ekb, 0
@@ -6410,8 +6426,7 @@ bb.tq:                                            ; preds = %bb.to
   br i1 %i.els, label %.loopexitthread-pre-split.loopexit4189, label %bb.tr
 
 bb.tr:                                            ; preds = %.critedge2727
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %91, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.elt = and i32 %i.elq, 256
   %.not3696 = icmp eq i32 %i.elt, 0
@@ -6487,8 +6502,7 @@ bb.ty:                                            ; preds = %bb.tw
   br i1 %i.enk, label %.loopexitthread-pre-split.loopexit4189, label %bb.tz
 
 bb.tz:                                            ; preds = %.critedge2729
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %92, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.enl = and i32 %i.eni, 256
   %.not3694 = icmp eq i32 %i.enl, 0
@@ -6564,8 +6578,7 @@ bb.ug:                                            ; preds = %bb.ue
   br i1 %i.epc, label %.loopexitthread-pre-split.loopexit4189, label %bb.uh
 
 bb.uh:                                            ; preds = %.critedge2731
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %93, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.epd = and i32 %i.epa, 256
   %.not3692 = icmp eq i32 %i.epd, 0
@@ -6641,8 +6654,7 @@ bb.uo:                                            ; preds = %bb.um
   br i1 %i.equ, label %.loopexitthread-pre-split.loopexit4189, label %bb.up
 
 bb.up:                                            ; preds = %.critedge2733
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %94, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.eqv = and i32 %i.eqs, 256
   %.not3690 = icmp eq i32 %i.eqv, 0
@@ -6776,8 +6788,7 @@ bb.ve:                                            ; preds = %.backedge
   br i1 %i.etp, label %.loopexitthread-pre-split.loopexit4189, label %bb.vf
 
 bb.vf:                                            ; preds = %bb.ve
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %95, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.etq = and i32 %i.etn, 256
   %.not3688 = icmp eq i32 %i.etq, 0
@@ -6811,8 +6822,7 @@ bb.vi:                                            ; preds = %.backedge
   br i1 %i.eug, label %.loopexitthread-pre-split.loopexit4189, label %bb.vj
 
 bb.vj:                                            ; preds = %bb.vi
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %96, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.euh = and i32 %i.eue, 256
   %.not3686 = icmp eq i32 %i.euh, 0
@@ -6846,8 +6856,7 @@ bb.vm:                                            ; preds = %.backedge
   br i1 %i.eux, label %.loopexitthread-pre-split.loopexit4189, label %bb.vn
 
 bb.vn:                                            ; preds = %bb.vm
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %97, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.euy = and i32 %i.euv, 256
   %.not3684 = icmp eq i32 %i.euy, 0
@@ -6881,8 +6890,7 @@ bb.vq:                                            ; preds = %.backedge
   br i1 %i.evo, label %.loopexitthread-pre-split.loopexit4189, label %bb.vr
 
 bb.vr:                                            ; preds = %bb.vq
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %98, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.evp = and i32 %i.evm, 256
   %.not3682 = icmp eq i32 %i.evp, 0
@@ -6907,8 +6915,7 @@ bb.vu:                                            ; preds = %.backedge
   br i1 %i.evx, label %.loopexitthread-pre-split.loopexit4189, label %bb.vv, !prof !65
 
 bb.vv:                                            ; preds = %bb.vu
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %48, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.evy = getelementptr inbounds nuw i8, ptr %i.evw, i64 5
   br label %.backedge.backedge
@@ -6921,8 +6928,7 @@ bb.vw:                                            ; preds = %.backedge
   br i1 %i.ewb, label %.loopexitthread-pre-split.loopexit4189, label %bb.vx, !prof !65
 
 bb.vx:                                            ; preds = %bb.vw
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %53, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ewc = getelementptr inbounds nuw i8, ptr %i.ewa, i64 6
   br label %.backedge.backedge
@@ -6935,8 +6941,7 @@ bb.vy:                                            ; preds = %.backedge
   br i1 %i.ewf, label %.loopexitthread-pre-split.loopexit4189, label %bb.vz, !prof !65
 
 bb.vz:                                            ; preds = %bb.vy
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %59, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ewg = getelementptr inbounds nuw i8, ptr %i.ewe, i64 4
   br label %.backedge.backedge
@@ -6949,8 +6954,7 @@ bb.wa:                                            ; preds = %.backedge
   br i1 %i.ewj, label %.loopexitthread-pre-split.loopexit4189, label %bb.wb, !prof !65
 
 bb.wb:                                            ; preds = %bb.wa
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %76, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ewk = getelementptr inbounds nuw i8, ptr %i.ewi, i64 3
   br label %.backedge.backedge
@@ -6963,8 +6967,7 @@ bb.wc:                                            ; preds = %.backedge
   br i1 %i.ewn, label %.loopexitthread-pre-split.loopexit4189, label %bb.wd, !prof !65
 
 bb.wd:                                            ; preds = %bb.wc
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %77, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   %i.ewo = getelementptr inbounds nuw i8, ptr %i.ewm, i64 4
   br label %.backedge.backedge
@@ -7004,8 +7007,7 @@ bb.wi:                                            ; preds = %bb.wh
   br label %bb.wj
 
 bb.wj:                                            ; preds = %bb.wi, %bb.wf
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %78, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   br label %bb.wk
 
@@ -7108,22 +7110,19 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_7JSErrorEEENS0_6HandleIT_EEPS5_.e
   %i.eyl = load ptr, ptr %i.a, align 8, !tbaa !108 ; 2 uses
   %.sroa.0.0.copyload.i3070 = load i64, ptr %.0.i.i.i.i.i.i3069, align 8, !tbaa !61
   store i64 %.sroa.0.0.copyload.i3070, ptr %i.ai, align 8, !tbaa !69
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %100, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   br i1 %i.exx, label %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread.split.preheader, label %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread.split.us
 
 _ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread.thread: ; preds = %bb.wn, %.loopexit
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %100, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   br label %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread.split.preheader
 
 _ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread: ; preds = %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !49
-  store ptr %i.n, ptr %i.t, align 8, !tbaa !59
+  store <2 x ptr> %100, ptr %i.s, align 8, !tbaa !68
   store i32 0, ptr %i.u, align 8, !tbaa !404
   store i64 -1688849860263936, ptr %i.o, align 8, !tbaa !69
   br i1 %i.exx, label %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread.split.preheader, label %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread.split.us

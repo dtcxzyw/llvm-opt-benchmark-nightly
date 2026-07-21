@@ -181,14 +181,14 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef double @_ZNK4geos9linearref18LengthIndexOfPoint16indexOfFromStartERKNS_4geom10CoordinateEd(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, double noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %3 = alloca %"class.geos::geom::LineSegment", align 8 ; 12 uses
+  %3 = alloca %"class.geos::geom::LineSegment", align 16 ; 10 uses
   %4 = alloca %"class.geos::linearref::LinearIterator", align 8 ; 9 uses
   %5 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %6 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, i8 0, i64 16, i1 false)
-  store double +qnan, ptr %i.a, align 8, !tbaa !18
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %3, i8 0, i64 16, i1 false)
+  store double +qnan, ptr %i.a, align 16, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 16, i1 false)
@@ -197,24 +197,19 @@ bb.a:
   %i.d = load ptr, ptr %0, align 8, !tbaa !7
   call void @_ZN4geos9linearref14LinearIteratorC1EPKNS_4geom8GeometryE(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef %i.d)
   %i.e = call noundef zeroext i1 @_ZNK4geos9linearref14LinearIterator7hasNextEv(ptr noundef nonnull align 8 dereferenceable(40) %4)
-  br i1 %i.e, label %.lr.ph, label %._crit_edge
+  br i1 %i.e, label %bb.b, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %.022 = phi double [ +inf, %.lr.ph ], [ %.2, %bb.g ] ; 3 uses
-  %.01321 = phi double [ %2, %.lr.ph ], [ %.215, %bb.g ] ; 2 uses
-  %.01620 = phi double [ 0.000000e+00, %.lr.ph ], [ %.117, %bb.g ] ; 5 uses
+bb.b:                                             ; preds = %bb.a, %bb.g
+  %.022 = phi double [ %.2, %bb.g ], [ +inf, %bb.a ] ; 3 uses
+  %.01321 = phi double [ %.215, %bb.g ], [ %2, %bb.a ] ; 2 uses
+  %.01620 = phi double [ %.117, %bb.g ], [ 0.000000e+00, %bb.a ] ; 5 uses
   %i.f = call noundef zeroext i1 @_ZNK4geos9linearref14LinearIterator11isEndOfLineEv(ptr noundef nonnull align 8 dereferenceable(40) %4)
   br i1 %i.f, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call void @_ZNK4geos9linearref14LinearIterator15getSegmentStartEv(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %5, ptr noundef nonnull align 8 dereferenceable(40) %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false), !tbaa.struct !21
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false), !tbaa.struct !21
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   call void @_ZNK4geos9linearref14LinearIterator13getSegmentEndEv(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %6, ptr noundef nonnull align 8 dereferenceable(40) %4)
@@ -223,29 +218,29 @@ bb.c:                                             ; preds = %bb.b
   %i.g = call noundef double @_ZN4geos9algorithm8Distance14pointToSegmentERKNS_4geom10CoordinateES5_S5_(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.b) ; 2 uses
   %i.h = call noundef double @_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(24) %1) ; 3 uses
   %i.i = fcmp ugt double %i.h, 0.000000e+00
-  %.pre = load double, ptr %3, align 8, !tbaa !23 ; 2 uses
-  %.pre23 = load double, ptr %i.b, align 8, !tbaa !23 ; 2 uses
-  %.pre24 = load double, ptr %7, align 8, !tbaa !24 ; 2 uses
-  %.pre25 = load double, ptr %8, align 8, !tbaa !24 ; 2 uses
+  %7 = load <2 x double>, ptr %3, align 16, !tbaa !22 ; 3 uses
+  %8 = load <2 x double>, ptr %i.b, align 8, !tbaa !22 ; 3 uses
   br i1 %i.i, label %bb.d, label %._ZNK4geos9linearref18LengthIndexOfPoint21segmentNearestMeasureEPKNS_4geom11LineSegmentERKNS2_10CoordinateEd.exit_crit_edge
 
 ._ZNK4geos9linearref18LengthIndexOfPoint21segmentNearestMeasureEPKNS_4geom11LineSegmentERKNS2_10CoordinateEd.exit_crit_edge: ; preds = %bb.c
-  %.pre26 = fsub double %.pre, %.pre23            ; 2 uses
-  %.pre27 = fsub double %.pre24, %.pre25          ; 2 uses
-  %.pre29 = fmul double %.pre26, %.pre26
-  %.pre31 = fmul double %.pre27, %.pre27
-  %.pre33 = fadd double %.pre29, %.pre31
+  %9 = fsub <2 x double> %7, %8                   ; 2 uses
+  %10 = fmul <2 x double> %9, %9                  ; 2 uses
+  %shift = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %10, %shift
+  %.pre33 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %.pre35 = call noundef double @llvm.sqrt.f64(double %.pre33)
   br label %_ZNK4geos9linearref18LengthIndexOfPoint21segmentNearestMeasureEPKNS_4geom11LineSegmentERKNS2_10CoordinateEd.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.j = fcmp ugt double %i.h, 1.000000e+00
-  %9 = fsub double %.pre, %.pre23                 ; 2 uses
-  %10 = fsub double %.pre24, %.pre25              ; 2 uses
-  %11 = fmul double %9, %9
-  %12 = fmul double %10, %10
-  %13 = fadd double %11, %12
-  %sqrt.i.i12.i = call noundef double @llvm.sqrt.f64(double %13) ; 4 uses
+  %foldExtExtBinop37 = fsub <2 x double> %7, %8   ; 2 uses
+  %foldExtExtBinop39 = fsub <2 x double> %7, %8   ; 2 uses
+  %foldExtExtBinop41 = fmul <2 x double> %foldExtExtBinop37, %foldExtExtBinop37
+  %foldExtExtBinop43 = fmul <2 x double> %foldExtExtBinop39, %foldExtExtBinop39
+  %shift45 = shufflevector <2 x double> %foldExtExtBinop43, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop46 = fadd <2 x double> %foldExtExtBinop41, %shift45
+  %11 = extractelement <2 x double> %foldExtExtBinop46, i64 0
+  %sqrt.i.i12.i = call noundef double @llvm.sqrt.f64(double %11) ; 4 uses
   br i1 %i.j, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -274,7 +269,7 @@ bb.g:                                             ; preds = %_ZNK4geos9linearref
   %.2 = phi double [ %.022, %bb.b ], [ %.1, %_ZNK4geos9linearref18LengthIndexOfPoint21segmentNearestMeasureEPKNS_4geom11LineSegmentERKNS2_10CoordinateEd.exit ]
   call void @_ZN4geos9linearref14LinearIterator4nextEv(ptr noundef nonnull align 8 dereferenceable(40) %4)
   %i.q = call noundef zeroext i1 @_ZNK4geos9linearref14LinearIterator7hasNextEv(ptr noundef nonnull align 8 dereferenceable(40) %4)
-  br i1 %i.q, label %bb.b, label %._crit_edge, !llvm.loop !25
+  br i1 %i.q, label %bb.b, label %._crit_edge, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
   %.013.lcssa = phi double [ %2, %bb.a ], [ %.215, %bb.g ]
@@ -297,19 +292,19 @@ define linkonce_odr void @_ZN4geos4util24IllegalArgumentExceptionC2ERKNSt7__cxx1
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
-  store ptr %i.b, ptr %2, align 8, !tbaa !27
+  store ptr %i.b, ptr %2, align 8, !tbaa !25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  store i64 24, ptr %i.a, align 8, !tbaa !28
+  store i64 24, ptr %i.a, align 8, !tbaa !26
   %i.c = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.c, ptr %2, align 8, !tbaa !13
-  %i.d = load i64, ptr %i.a, align 8, !tbaa !28   ; 3 uses
-  store i64 %i.d, ptr %i.b, align 8, !tbaa !29
+  %i.d = load i64, ptr %i.a, align 8, !tbaa !26   ; 3 uses
+  store i64 %i.d, ptr %i.b, align 8, !tbaa !27
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.c, ptr noundef nonnull align 1 dereferenceable(24) @.str.1, i64 24, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %i.d, ptr %i.e, align 8, !tbaa !30
+  store i64 %i.d, ptr %i.e, align 8, !tbaa !28
   %i.f = load ptr, ptr %2, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.d
-  store i8 0, ptr %i.g, align 1, !tbaa !29
+  store i8 0, ptr %i.g, align 1, !tbaa !27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   invoke void @_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
           to label %bb.a unwind label %bb.b
@@ -375,13 +370,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = fcmp ugt double %i.a, 1.000000e+00
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.e = load double, ptr %1, align 8, !tbaa !23
-  %i.f = load double, ptr %i.d, align 8, !tbaa !23
+  %i.e = load double, ptr %1, align 8, !tbaa !29
+  %i.f = load double, ptr %i.d, align 8, !tbaa !29
   %i.g = fsub double %i.e, %i.f                   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.i = load double, ptr %i.h, align 8, !tbaa !24
+  %i.i = load double, ptr %i.h, align 8, !tbaa !30
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.k = load double, ptr %i.j, align 8, !tbaa !24
+  %i.k = load double, ptr %i.j, align 8, !tbaa !30
   %i.l = fsub double %i.i, %i.k                   ; 2 uses
   %i.m = fmul double %i.g, %i.g
   %i.n = fmul double %i.l, %i.l
@@ -417,18 +412,18 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31)
   %i.a = load ptr, ptr %1, align 8, !tbaa !13, !noalias !31
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !30, !noalias !31 ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !28, !noalias !31 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
-  store ptr %i.d, ptr %4, align 8, !tbaa !27, !alias.scope !34
+  store ptr %i.d, ptr %4, align 8, !tbaa !25, !alias.scope !34
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
-  store i64 0, ptr %i.e, align 8, !tbaa !30, !alias.scope !34
-  store i8 0, ptr %i.d, align 8, !tbaa !29, !alias.scope !34
+  store i64 0, ptr %i.e, align 8, !tbaa !28, !alias.scope !34
+  store i8 0, ptr %i.d, align 8, !tbaa !27, !alias.scope !34
   %i.f = add i64 %i.c, 2
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32) %4, i64 noundef %i.f)
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = load i64, ptr %i.e, align 8, !tbaa !30, !alias.scope !34
+  %i.g = load i64, ptr %i.e, align 8, !tbaa !28, !alias.scope !34
   %i.h = sub i64 4611686018427387903, %i.g
   %i.i = icmp ult i64 %i.h, %i.c
   br i1 %i.i, label %.invoke.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i
@@ -438,7 +433,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i
-  %i.k = load i64, ptr %i.e, align 8, !tbaa !30, !alias.scope !34
+  %i.k = load i64, ptr %i.e, align 8, !tbaa !28, !alias.scope !34
   %i.l = and i64 %i.k, -2
   %i.m = icmp eq i64 %i.l, 4611686018427387902
   br i1 %i.m, label %.invoke.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
@@ -472,8 +467,8 @@ common.resume:                                    ; preds = %bb.c, %_ZNKSt7__cxx
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !37)
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !30, !noalias !37 ; 2 uses
-  %i.t = load i64, ptr %i.e, align 8, !tbaa !30, !noalias !37
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !28, !noalias !37 ; 2 uses
+  %i.t = load i64, ptr %i.e, align 8, !tbaa !28, !noalias !37
   %i.u = sub i64 4611686018427387903, %i.t
   %i.v = icmp ult i64 %i.u, %i.s
   br i1 %i.v, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
@@ -492,7 +487,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
 
 .noexc6:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
-  store ptr %i.y, ptr %3, align 8, !tbaa !27, !alias.scope !37
+  store ptr %i.y, ptr %3, align 8, !tbaa !25, !alias.scope !37
   %i.z = load ptr, ptr %i.x, align 8, !tbaa !13   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 16 ; 5 uses
   %i.ab = icmp eq ptr %i.z, %i.aa
@@ -500,7 +495,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
 
 bb.e:                                             ; preds = %.noexc6
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !30 ; 3 uses
+  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !28 ; 3 uses
   %i.ae = icmp ult i64 %i.ad, 16
   call void @llvm.assume(i1 %i.ae)
   %i.af = add nuw nsw i64 %i.ad, 1
@@ -509,20 +504,20 @@ bb.e:                                             ; preds = %.noexc6
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %.noexc6
   store ptr %i.z, ptr %3, align 8, !tbaa !13, !alias.scope !37
-  %i.ag = load i64, ptr %i.aa, align 8, !tbaa !29
-  store i64 %i.ag, ptr %i.y, align 8, !tbaa !29, !alias.scope !37
+  %i.ag = load i64, ptr %i.aa, align 8, !tbaa !27
+  store i64 %i.ag, ptr %i.y, align 8, !tbaa !27, !alias.scope !37
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !30
+  %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !28
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %bb.e
   %i.ah = phi i64 [ %i.ad, %bb.e ], [ %.pre.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %i.ah, ptr %i.aj, align 8, !tbaa !30, !alias.scope !37
+  store i64 %i.ah, ptr %i.aj, align 8, !tbaa !28, !alias.scope !37
   store ptr %i.aa, ptr %i.x, align 8, !tbaa !13
-  store i64 0, ptr %i.ai, align 8, !tbaa !30
-  store i8 0, ptr %i.aa, align 8, !tbaa !29
+  store i64 0, ptr %i.ai, align 8, !tbaa !28
+  store i8 0, ptr %i.aa, align 8, !tbaa !27
   invoke void @_ZNSt13runtime_errorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %bb.g unwind label %bb.i
 
@@ -674,14 +669,14 @@ attributes #16 = { builtin nounwind }
 !20 = !{!"double", !5, i64 0}
 !21 = !{i64 0, i64 8, !22, i64 8, i64 8, !22, i64 16, i64 8, !22}
 !22 = !{!20, !20, i64 0}
-!23 = !{!19, !20, i64 0}
-!24 = !{!19, !20, i64 8}
-!25 = distinct !{!25, !26}
-!26 = !{!"llvm.loop.mustprogress"}
-!27 = !{!15, !16, i64 0}
-!28 = !{!17, !17, i64 0}
-!29 = !{!5, !5, i64 0}
-!30 = !{!14, !17, i64 8}
+!23 = distinct !{!23, !24}
+!24 = !{!"llvm.loop.mustprogress"}
+!25 = !{!15, !16, i64 0}
+!26 = !{!17, !17, i64 0}
+!27 = !{!5, !5, i64 0}
+!28 = !{!14, !17, i64 8}
+!29 = !{!19, !20, i64 0}
+!30 = !{!19, !20, i64 8}
 !31 = !{!32}
 !32 = distinct !{!32, !33, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
 !33 = distinct !{!33, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}

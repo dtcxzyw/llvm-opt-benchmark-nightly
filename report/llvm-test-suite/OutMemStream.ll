@@ -158,7 +158,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef i32 @_ZN13COutMemStream5WriteEPKvjPj(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, i32 noundef %2, ptr noundef %3) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [3 x ptr], align 16               ; 7 uses
+  %i.a = alloca [3 x ptr], align 16               ; 6 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !35, !range !39, !noundef !40
@@ -186,9 +186,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %4 = getelementptr inbounds nuw i8, ptr %0, <2 x i64> <i64 48, i64 72>
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -271,8 +269,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %.outer.split
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  store ptr %4, ptr %i.a, align 16, !tbaa !49
-  store ptr %6, ptr %5, align 8, !tbaa !49
+  store <2 x ptr> %4, ptr %i.a, align 16, !tbaa !49
   %i.az = load ptr, ptr %i.p, align 8, !tbaa !8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 64
   store ptr %i.ba, ptr %i.o, align 16, !tbaa !49
