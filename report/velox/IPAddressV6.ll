@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %struct.addrinfo, align 8           ; 7 uses
   %i.b = ptrtoint ptr %2 to i64
   %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.d = sub i64 %i.b, %i.c                       ; 3 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = icmp ult i64 %i.d, 2
   br i1 %i.e, label %bb.b, label %bb.c
 
@@ -228,7 +228,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.l = add i64 %i.d, -2
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.l, i64 45)
+  %5 = add i64 %i.d, -1
+  %.sroa.speculated13 = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %5)
+  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %.sroa.speculated13, i64 45)
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.speculated.i
   %.pre = ptrtoint ptr %i.m to i64
   br label %bb.g

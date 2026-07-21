@@ -201,12 +201,12 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.ja = zext i32 %i.iy to i64
   %i.jb = sub i64 %i.iz, %i.ja
   %spec.select246259 = tail call i64 @llvm.umin.i64(i64 %i.jb, i64 65535)
-  %spec.select246 = trunc nuw nsw i64 %spec.select246259 to i32 ; 3 uses
+  %spec.select246 = trunc nuw nsw i64 %spec.select246259 to i32 ; 4 uses
   %i.jc = load i32, ptr %i.d, align 8, !tbaa !32
   %i.jd = tail call i32 @llvm.umin.i32(i32 %i.jc, i32 %spec.select246)
   %i.je = load i64, ptr %i.n, align 8, !tbaa !63  ; 2 uses
   %i.jf = trunc i64 %i.je to i32                  ; 2 uses
-  %i.jg = sub i32 %i.is, %i.jf                    ; 3 uses
+  %i.jg = sub i32 %i.is, %i.jf                    ; 4 uses
   %.not241 = icmp ult i32 %i.jg, %i.jd
   br i1 %.not241, label %bb.ao, label %bb.aq
 
@@ -220,8 +220,10 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ji = load ptr, ptr %0, align 8, !tbaa !19
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 8
   %i.jk = load i32, ptr %i.jj, align 8, !tbaa !71
-  %.not260 = icmp eq i32 %i.jk, 0
-  br i1 %.not260, label %bb.aq, label %bb.aw
+  %2 = icmp ne i32 %i.jk, 0
+  %.not242 = icmp samesign ugt i32 %i.jg, %spec.select246
+  %or.cond247 = or i1 %.not242, %2
+  br i1 %or.cond247, label %bb.aw, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.an
   %i.jl = tail call i32 @llvm.umin.i32(i32 %i.jg, i32 %spec.select246)

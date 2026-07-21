@@ -204,9 +204,9 @@ bb.cb:                                            ; preds = %bb.ca
   br label %bb.ev
 
 bb.cc:                                            ; preds = %bb.ca
-  %i.vb = load ptr, ptr %i.qy, align 8            ; 7 uses
+  %i.vb = load ptr, ptr %i.qy, align 8            ; 10 uses
   %i.vc = ptrtoint ptr %i.te to i64
-  %i.vd = ptrtoint ptr %i.vb to i64               ; 3 uses
+  %i.vd = ptrtoint ptr %i.vb to i64               ; 4 uses
   %i.ve = sub i64 %i.vc, %i.vd
   %i.vf = ashr exact i64 %i.ve, 3                 ; 3 uses
   %i.vg = icmp ne ptr %i.te, null
@@ -251,27 +251,50 @@ bb.cf:                                            ; preds = %bb.ce
   %i.wc = sub i64 %i.vz, %i.vy
   %i.wd = lshr i64 %i.wc, 1
   %i.we = getelementptr inbounds nuw [8 x i8], ptr %i.vv, i64 %i.wd
-  %24 = getelementptr inbounds nuw i8, ptr %i.we, i64 8 ; 4 uses
-  %i.wf = getelementptr inbounds nuw i8, ptr %i.te, i64 8
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %24, i64 %i.vx ; 2 uses
-  %26 = ptrtoint ptr %i.wf to i64
-  %27 = sub i64 %26, %i.vd                        ; 3 uses
-  %28 = ashr exact i64 %27, 3                     ; 2 uses
-  %29 = icmp sgt i64 %28, 1
-  br i1 %29, label %bb.cg, label %bb.ch, !prof !118
+  %i.wf = getelementptr inbounds nuw i8, ptr %i.we, i64 8 ; 10 uses
+  %24 = icmp ult ptr %i.wf, %i.vb
+  %25 = getelementptr inbounds nuw i8, ptr %i.te, i64 8 ; 2 uses
+  br i1 %24, label %26, label %35
 
-bb.cg:                                            ; preds = %bb.cf
-  %i.wg = sub nsw i64 0, %28
-  %i.wh = getelementptr inbounds [8 x i8], ptr %25, i64 %i.wg
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.wh, ptr align 8 %i.vb, i64 %27, i1 false)
+26:                                               ; preds = %bb.cf
+  %27 = ptrtoint ptr %25 to i64
+  %28 = sub i64 %27, %i.vd                        ; 3 uses
+  %29 = icmp sgt i64 %28, 8
+  br i1 %29, label %30, label %31, !prof !118
+
+30:                                               ; preds = %26
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.wf, ptr nonnull align 8 %i.vb, i64 %28, i1 false)
   br label %.noexc306
 
-bb.ch:                                            ; preds = %bb.cf
-  %i.wi = icmp eq i64 %27, 8
+31:                                               ; preds = %26
+  %32 = icmp eq i64 %28, 8
+  br i1 %32, label %33, label %.noexc306
+
+33:                                               ; preds = %31
+  %34 = load ptr, ptr %i.vb, align 8
+  store ptr %34, ptr %i.wf, align 8
+  br label %.noexc306
+
+35:                                               ; preds = %bb.cf
+  %36 = getelementptr inbounds nuw [8 x i8], ptr %i.wf, i64 %i.vx ; 2 uses
+  %37 = ptrtoint ptr %25 to i64
+  %38 = sub i64 %37, %i.vd                        ; 3 uses
+  %39 = ashr exact i64 %38, 3                     ; 2 uses
+  %40 = icmp sgt i64 %39, 1
+  br i1 %40, label %bb.cg, label %bb.ch, !prof !118
+
+bb.cg:                                            ; preds = %35
+  %i.wg = sub nsw i64 0, %39
+  %i.wh = getelementptr inbounds [8 x i8], ptr %36, i64 %i.wg
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.wh, ptr align 8 %i.vb, i64 %38, i1 false)
+  br label %.noexc306
+
+bb.ch:                                            ; preds = %35
+  %i.wi = icmp eq i64 %38, 8
   br i1 %i.wi, label %bb.ci, label %.noexc306
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.wj = getelementptr inbounds i8, ptr %25, i64 -8
+  %i.wj = getelementptr inbounds i8, ptr %36, i64 -8
   %i.wk = load ptr, ptr %i.vb, align 8
   store ptr %i.wk, ptr %i.wj, align 8
   br label %.noexc306
@@ -337,8 +360,8 @@ _ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i: ; preds = %bb.cn, %bb.cm, %
   store i64 %i.wm, ptr %i.rf, align 8
   br label %.noexc306
 
-.noexc306:                                        ; preds = %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i, %bb.ci, %bb.ch, %bb.cg
-  %.0.i = phi ptr [ %i.wu, %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i ], [ %24, %bb.ch ], [ %24, %bb.cg ], [ %24, %bb.ci ] ; 4 uses
+.noexc306:                                        ; preds = %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i, %bb.ci, %bb.ch, %bb.cg, %33, %31, %30
+  %.0.i = phi ptr [ %i.wu, %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i ], [ %i.wf, %33 ], [ %i.wf, %30 ], [ %i.wf, %31 ], [ %i.wf, %bb.cg ], [ %i.wf, %bb.ch ], [ %i.wf, %bb.ci ] ; 4 uses
   store ptr %.0.i, ptr %i.qy, align 8
   %i.xc = load ptr, ptr %.0.i, align 8            ; 2 uses
   store ptr %i.xc, ptr %i.rg, align 8
@@ -397,9 +420,9 @@ bb.cq:                                            ; preds = %bb.cp
   br label %bb.ev
 
 bb.cr:                                            ; preds = %bb.cp
-  %i.yb = load ptr, ptr %i.qy, align 8            ; 7 uses
+  %i.yb = load ptr, ptr %i.qy, align 8            ; 10 uses
   %i.yc = ptrtoint ptr %i.te to i64
-  %i.yd = ptrtoint ptr %i.yb to i64               ; 3 uses
+  %i.yd = ptrtoint ptr %i.yb to i64               ; 4 uses
   %i.ye = sub i64 %i.yc, %i.yd
   %i.yf = ashr exact i64 %i.ye, 3                 ; 3 uses
   %i.yg = icmp ne ptr %i.te, null
@@ -437,27 +460,50 @@ bb.cu:                                            ; preds = %bb.ct
   %i.zc = sub i64 %i.yz, %i.yy
   %i.zd = lshr i64 %i.zc, 1
   %i.ze = getelementptr inbounds nuw [8 x i8], ptr %i.yv, i64 %i.zd
-  %30 = getelementptr inbounds nuw i8, ptr %i.ze, i64 8 ; 4 uses
-  %i.zf = getelementptr inbounds nuw i8, ptr %i.te, i64 8
-  %31 = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %i.yx ; 2 uses
-  %32 = ptrtoint ptr %i.zf to i64
-  %33 = sub i64 %32, %i.yd                        ; 3 uses
-  %34 = ashr exact i64 %33, 3                     ; 2 uses
-  %35 = icmp sgt i64 %34, 1
-  br i1 %35, label %bb.cv, label %bb.cw, !prof !118
+  %i.zf = getelementptr inbounds nuw i8, ptr %i.ze, i64 8 ; 10 uses
+  %41 = icmp ult ptr %i.zf, %i.yb
+  %42 = getelementptr inbounds nuw i8, ptr %i.te, i64 8 ; 2 uses
+  br i1 %41, label %43, label %52
 
-bb.cv:                                            ; preds = %bb.cu
-  %i.zg = sub nsw i64 0, %34
-  %i.zh = getelementptr inbounds [8 x i8], ptr %31, i64 %i.zg
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.zh, ptr align 8 %i.yb, i64 %33, i1 false)
+43:                                               ; preds = %bb.cu
+  %44 = ptrtoint ptr %42 to i64
+  %45 = sub i64 %44, %i.yd                        ; 3 uses
+  %46 = icmp sgt i64 %45, 8
+  br i1 %46, label %47, label %48, !prof !118
+
+47:                                               ; preds = %43
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.zf, ptr nonnull align 8 %i.yb, i64 %45, i1 false)
   br label %.noexc312
 
-bb.cw:                                            ; preds = %bb.cu
-  %i.zi = icmp eq i64 %33, 8
+48:                                               ; preds = %43
+  %49 = icmp eq i64 %45, 8
+  br i1 %49, label %50, label %.noexc312
+
+50:                                               ; preds = %48
+  %51 = load ptr, ptr %i.yb, align 8
+  store ptr %51, ptr %i.zf, align 8
+  br label %.noexc312
+
+52:                                               ; preds = %bb.cu
+  %53 = getelementptr inbounds nuw [8 x i8], ptr %i.zf, i64 %i.yx ; 2 uses
+  %54 = ptrtoint ptr %42 to i64
+  %55 = sub i64 %54, %i.yd                        ; 3 uses
+  %56 = ashr exact i64 %55, 3                     ; 2 uses
+  %57 = icmp sgt i64 %56, 1
+  br i1 %57, label %bb.cv, label %bb.cw, !prof !118
+
+bb.cv:                                            ; preds = %52
+  %i.zg = sub nsw i64 0, %56
+  %i.zh = getelementptr inbounds [8 x i8], ptr %53, i64 %i.zg
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.zh, ptr align 8 %i.yb, i64 %55, i1 false)
+  br label %.noexc312
+
+bb.cw:                                            ; preds = %52
+  %i.zi = icmp eq i64 %55, 8
   br i1 %i.zi, label %bb.cx, label %.noexc312
 
 bb.cx:                                            ; preds = %bb.cw
-  %i.zj = getelementptr inbounds i8, ptr %31, i64 -8
+  %i.zj = getelementptr inbounds i8, ptr %53, i64 -8
   %i.zk = load ptr, ptr %i.yb, align 8
   store ptr %i.zk, ptr %i.zj, align 8
   br label %.noexc312
@@ -509,8 +555,8 @@ _ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i417: ; preds = %bb.dc, %bb.db
   store i64 %i.zm, ptr %i.rf, align 8
   br label %.noexc312
 
-.noexc312:                                        ; preds = %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i417, %bb.cx, %bb.cw, %bb.cv
-  %.0.i418 = phi ptr [ %i.zu, %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i417 ], [ %30, %bb.cw ], [ %30, %bb.cv ], [ %30, %bb.cx ] ; 4 uses
+.noexc312:                                        ; preds = %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i417, %bb.cx, %bb.cw, %bb.cv, %50, %48, %47
+  %.0.i418 = phi ptr [ %i.zu, %_ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i417 ], [ %i.zf, %50 ], [ %i.zf, %47 ], [ %i.zf, %48 ], [ %i.zf, %bb.cv ], [ %i.zf, %bb.cw ], [ %i.zf, %bb.cx ] ; 4 uses
   store ptr %.0.i418, ptr %i.qy, align 8
   %i.aac = load ptr, ptr %.0.i418, align 8        ; 2 uses
   store ptr %i.aac, ptr %i.rg, align 8

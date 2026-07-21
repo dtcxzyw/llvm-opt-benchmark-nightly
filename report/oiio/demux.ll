@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   %i.u = add nuw i32 %i.t, %.val3.i.i70           ; 5 uses
   %i.v = zext i32 %i.u to i64                     ; 6 uses
   %.val69 = load i64, ptr %i.g, align 8, !tbaa !79
-  %i.w = sub i64 %.val69, %i.r
+  %i.w = sub i64 %.val69, %i.r                    ; 2 uses
   %.not = icmp ult i64 %i.w, %i.v
   br i1 %.not, label %.thread81, label %bb.d
 
@@ -270,8 +270,10 @@ bb.l:                                             ; preds = %bb.k
   %i.an = and i32 %i.am, 2
   %i.ao = icmp ne i32 %i.an, 0
   %i.ap = add i32 %i.u, -16                       ; 2 uses
+  %1 = icmp ult i64 %i.w, 16
   %i.aq = icmp ult i32 %i.u, 16
-  br i1 %i.aq, label %ParseAnimationFrame.exit, label %bb.m
+  %or.cond.i.i = or i1 %i.aq, %1
+  br i1 %or.cond.i.i, label %ParseAnimationFrame.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %.val8.i.i = load i64, ptr %i.e, align 8, !tbaa !80
