@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.w
 .thread:                                          ; preds = %bb.u, %bb.aa
   %i.eh = ptrtoint ptr %.sroa.20.0267 to i64
   %i.ei = ptrtoint ptr %.sroa.0163.0268 to i64    ; 3 uses
-  %i.ej = sub i64 %i.eh, %i.ei                    ; 15 uses
+  %i.ej = sub i64 %i.eh, %i.ei                    ; 16 uses
   %i.ek = icmp ult i64 %i.ej, %i.cp
   %i.el = getelementptr inbounds nuw i8, ptr %i.da, i64 16
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !1547 ; 5 uses
@@ -397,8 +397,9 @@ bb.aq:                                            ; preds = %bb.ap
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i44: ; preds = %bb.ap
-  %7 = shl i64 %i.ej, 1
-  %8 = icmp slt i64 %i.ej, 0
+  %.sroa.speculated.i.i.i.i.i45 = call i64 @llvm.umax.i64(i64 %i.ej, i64 1)
+  %7 = add i64 %.sroa.speculated.i.i.i.i.i45, %i.ej ; 2 uses
+  %8 = icmp ult i64 %7, %i.ej
   %i.hc = call i64 @llvm.umin.i64(i64 %7, i64 9223372036854775807)
   %i.hd = select i1 %8, i64 9223372036854775807, i64 %i.hc ; 3 uses
   %.not.i.i.i.i.i46 = icmp ne i64 %i.hd, 0
@@ -801,7 +802,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.p
 .thread:                                          ; preds = %bb.n, %bb.t
   %i.do = ptrtoint ptr %.sroa.20.0274 to i64
   %i.dp = ptrtoint ptr %.sroa.0169.0275 to i64    ; 3 uses
-  %i.dq = sub i64 %i.do, %i.dp                    ; 15 uses
+  %i.dq = sub i64 %i.do, %i.dp                    ; 16 uses
   %i.dr = icmp ult i64 %i.dq, %i.bw
   %i.ds = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !1547 ; 5 uses
@@ -994,8 +995,9 @@ bb.aj:                                            ; preds = %bb.ai
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i50: ; preds = %bb.ai
-  %8 = shl i64 %i.dq, 1
-  %9 = icmp slt i64 %i.dq, 0
+  %.sroa.speculated.i.i.i.i.i51 = call i64 @llvm.umax.i64(i64 %i.dq, i64 1)
+  %8 = add i64 %.sroa.speculated.i.i.i.i.i51, %i.dq ; 2 uses
+  %9 = icmp ult i64 %8, %i.dq
   %i.gj = call i64 @llvm.umin.i64(i64 %8, i64 9223372036854775807)
   %i.gk = select i1 %9, i64 9223372036854775807, i64 %i.gj ; 3 uses
   %.not.i.i.i.i.i52 = icmp ne i64 %i.gk, 0
@@ -1398,7 +1400,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.q
 .thread:                                          ; preds = %bb.o, %bb.u
   %i.du = ptrtoint ptr %.sroa.20469.0659 to i64
   %i.dv = ptrtoint ptr %.sroa.0457.0660 to i64    ; 3 uses
-  %i.dw = sub i64 %i.du, %i.dv                    ; 15 uses
+  %i.dw = sub i64 %i.du, %i.dv                    ; 16 uses
   %i.dx = icmp ult i64 %i.dw, %i.cc
   %i.dy = getelementptr inbounds nuw i8, ptr %i.cn, i64 16
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !1547, !noalias !27469 ; 5 uses
@@ -1591,8 +1593,9 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i71: ; preds = %bb.aj
-  %12 = shl i64 %i.dw, 1
-  %13 = icmp slt i64 %i.dw, 0
+  %.sroa.speculated.i.i.i.i.i72 = call i64 @llvm.umax.i64(i64 %i.dw, i64 1)
+  %12 = add i64 %.sroa.speculated.i.i.i.i.i72, %i.dw ; 2 uses
+  %13 = icmp ult i64 %12, %i.dw
   %i.gp = call i64 @llvm.umin.i64(i64 %12, i64 9223372036854775807)
   %i.gq = select i1 %13, i64 9223372036854775807, i64 %i.gp ; 3 uses
   %.not.i.i.i.i.i73 = icmp ne i64 %i.gq, 0
@@ -1995,7 +1998,7 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv, %bb.
 .thread500:                                       ; preds = %bb.cr, %bb.cx
   %i.vz = ptrtoint ptr %.sroa.20.0644 to i64
   %i.wa = ptrtoint ptr %.sroa.0375.0645 to i64    ; 3 uses
-  %i.wb = sub i64 %i.vz, %i.wa                    ; 15 uses
+  %i.wb = sub i64 %i.vz, %i.wa                    ; 16 uses
   %i.wc = icmp ult i64 %i.wb, %i.uh
   %i.wd = getelementptr inbounds nuw i8, ptr %i.us, i64 16
   %i.we = load ptr, ptr %i.wd, align 8, !tbaa !1547 ; 5 uses
@@ -2188,8 +2191,9 @@ bb.dn:                                            ; preds = %bb.dm
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i215: ; preds = %bb.dm
-  %14 = shl i64 %i.wb, 1
-  %15 = icmp slt i64 %i.wb, 0
+  %.sroa.speculated.i.i.i.i.i216 = call i64 @llvm.umax.i64(i64 %i.wb, i64 1)
+  %14 = add i64 %.sroa.speculated.i.i.i.i.i216, %i.wb ; 2 uses
+  %15 = icmp ult i64 %14, %i.wb
   %i.yu = call i64 @llvm.umin.i64(i64 %14, i64 9223372036854775807)
   %i.yv = select i1 %15, i64 9223372036854775807, i64 %i.yu ; 3 uses
   %.not.i.i.i.i.i217 = icmp ne i64 %i.yv, 0
@@ -2592,7 +2596,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.
 .thread:                                          ; preds = %bb.x, %bb.ad
   %i.et = ptrtoint ptr %.sroa.20.0265 to i64
   %i.eu = ptrtoint ptr %.sroa.0161.0266 to i64    ; 3 uses
-  %i.ev = sub i64 %i.et, %i.eu                    ; 15 uses
+  %i.ev = sub i64 %i.et, %i.eu                    ; 16 uses
   %i.ew = icmp ult i64 %i.ev, %i.db
   %i.ex = getelementptr inbounds nuw i8, ptr %i.dm, i64 16
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !1547, !noalias !27510 ; 5 uses
@@ -2785,8 +2789,9 @@ bb.at:                                            ; preds = %bb.as
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i42: ; preds = %bb.as
-  %7 = shl i64 %i.ev, 1
-  %8 = icmp slt i64 %i.ev, 0
+  %.sroa.speculated.i.i.i.i.i43 = call i64 @llvm.umax.i64(i64 %i.ev, i64 1)
+  %7 = add i64 %.sroa.speculated.i.i.i.i.i43, %i.ev ; 2 uses
+  %8 = icmp ult i64 %7, %i.ev
   %i.ho = call i64 @llvm.umin.i64(i64 %7, i64 9223372036854775807)
   %i.hp = select i1 %8, i64 9223372036854775807, i64 %i.ho ; 3 uses
   %.not.i.i.i.i.i44 = icmp ne i64 %i.hp, 0
@@ -3189,7 +3194,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s
 .thread:                                          ; preds = %bb.q, %bb.w
   %i.ea = ptrtoint ptr %.sroa.20.0272 to i64
   %i.eb = ptrtoint ptr %.sroa.0167.0273 to i64    ; 3 uses
-  %i.ec = sub i64 %i.ea, %i.eb                    ; 15 uses
+  %i.ec = sub i64 %i.ea, %i.eb                    ; 16 uses
   %i.ed = icmp ult i64 %i.ec, %i.ci
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !1547, !noalias !27535 ; 5 uses
@@ -3382,8 +3387,9 @@ bb.am:                                            ; preds = %bb.al
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i48: ; preds = %bb.al
-  %8 = shl i64 %i.ec, 1
-  %9 = icmp slt i64 %i.ec, 0
+  %.sroa.speculated.i.i.i.i.i49 = call i64 @llvm.umax.i64(i64 %i.ec, i64 1)
+  %8 = add i64 %.sroa.speculated.i.i.i.i.i49, %i.ec ; 2 uses
+  %9 = icmp ult i64 %8, %i.ec
   %i.gv = call i64 @llvm.umin.i64(i64 %8, i64 9223372036854775807)
   %i.gw = select i1 %9, i64 9223372036854775807, i64 %i.gv ; 3 uses
   %.not.i.i.i.i.i50 = icmp ne i64 %i.gw, 0
@@ -3786,7 +3792,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.t
 .thread:                                          ; preds = %bb.r, %bb.x
   %i.eg = ptrtoint ptr %.sroa.20471.0661 to i64
   %i.eh = ptrtoint ptr %.sroa.0459.0662 to i64    ; 3 uses
-  %i.ei = sub i64 %i.eg, %i.eh                    ; 15 uses
+  %i.ei = sub i64 %i.eg, %i.eh                    ; 16 uses
   %i.ej = icmp ult i64 %i.ei, %i.co
   %i.ek = getelementptr inbounds nuw i8, ptr %i.cz, i64 16
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !1547, !noalias !27556 ; 5 uses
@@ -3979,8 +3985,9 @@ bb.an:                                            ; preds = %bb.am
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i70: ; preds = %bb.am
-  %12 = shl i64 %i.ei, 1
-  %13 = icmp slt i64 %i.ei, 0
+  %.sroa.speculated.i.i.i.i.i71 = call i64 @llvm.umax.i64(i64 %i.ei, i64 1)
+  %12 = add i64 %.sroa.speculated.i.i.i.i.i71, %i.ei ; 2 uses
+  %13 = icmp ult i64 %12, %i.ei
   %i.hb = call i64 @llvm.umin.i64(i64 %12, i64 9223372036854775807)
   %i.hc = select i1 %13, i64 9223372036854775807, i64 %i.hb ; 3 uses
   %.not.i.i.i.i.i72 = icmp ne i64 %i.hc, 0
@@ -4383,7 +4390,7 @@ bb.dd:                                            ; preds = %bb.dc, %bb.db, %bb.
 .thread502:                                       ; preds = %bb.cx, %bb.dd
   %i.wx = ptrtoint ptr %.sroa.20.0646 to i64
   %i.wy = ptrtoint ptr %.sroa.0377.0647 to i64    ; 3 uses
-  %i.wz = sub i64 %i.wx, %i.wy                    ; 15 uses
+  %i.wz = sub i64 %i.wx, %i.wy                    ; 16 uses
   %i.xa = icmp ult i64 %i.wz, %i.vf
   %i.xb = getelementptr inbounds nuw i8, ptr %i.vq, i64 16
   %i.xc = load ptr, ptr %i.xb, align 8, !tbaa !1547, !noalias !27574 ; 5 uses
@@ -4576,8 +4583,9 @@ bb.dt:                                            ; preds = %bb.ds
   unreachable
 
 _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i217: ; preds = %bb.ds
-  %14 = shl i64 %i.wz, 1
-  %15 = icmp slt i64 %i.wz, 0
+  %.sroa.speculated.i.i.i.i.i218 = call i64 @llvm.umax.i64(i64 %i.wz, i64 1)
+  %14 = add i64 %.sroa.speculated.i.i.i.i.i218, %i.wz ; 2 uses
+  %15 = icmp ult i64 %14, %i.wz
   %i.zs = call i64 @llvm.umin.i64(i64 %14, i64 9223372036854775807)
   %i.zt = select i1 %15, i64 9223372036854775807, i64 %i.zs ; 3 uses
   %.not.i.i.i.i.i219 = icmp ne i64 %i.zt, 0

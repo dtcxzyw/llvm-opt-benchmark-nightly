@@ -204,11 +204,11 @@ bb.m:                                             ; preds = %.loopexit311.i
   br i1 %.not353.i, label %.loopexit309.i, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %bb.m
+  %umax375.i = tail call i32 @llvm.umax.i32(i32 %i.kw, i32 1)
   %wide.trip.count381.i = zext i32 %i.dc to i64
-  %wide.trip.count376.i = zext i32 %i.kw to i64   ; 2 uses
+  %wide.trip.count376.i = zext i32 %umax375.i to i64 ; 2 uses
   %xtraiter211 = and i64 %wide.trip.count376.i, 3 ; 3 uses
-  %7 = add i32 %i.kw, -1
-  %i.kx = icmp ult i32 %7, 3
+  %i.kx = icmp ult i32 %i.kw, 4
   %unroll_iter214 = and i64 %wide.trip.count376.i, 4294967292
   %lcmp.mod212.not = icmp eq i64 %xtraiter211, 0
   %lcmp.mod213 = icmp ne i64 %xtraiter211, 0
@@ -611,7 +611,7 @@ bb.ah:                                            ; preds = %._crit_edge269.i, %
   %i.vf = load i32, ptr %i.ve, align 4, !tbaa !30, !noalias !309
   %i.vg = getelementptr inbounds nuw i8, ptr %.0155273.i, i64 196
   %i.vh = load i32, ptr %i.vg, align 4, !tbaa !31, !noalias !309 ; 2 uses
-  %i.vi = sub nsw i32 %i.vf, %i.vh                ; 9 uses
+  %i.vi = sub nsw i32 %i.vf, %i.vh                ; 10 uses
   %i.vj = sub i32 %i.vd, %.0156272.i              ; 2 uses
   store i32 %i.vj, ptr %i.uf, align 8, !tbaa !237, !noalias !309
   %i.vk = srem i32 %i.vc, 2                       ; 3 uses
@@ -777,24 +777,28 @@ bb.al:                                            ; preds = %bb.ak, %opj_dwt_get
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.aq, %.lr.ph.i19
-  %.0164266.i = phi i32 [ 0, %.lr.ph.i19 ], [ %.pre-phi.i21, %bb.aq ] ; 8 uses
+  %.0164266.i = phi i32 [ 0, %.lr.ph.i19 ], [ %.pre-phi.i21, %bb.aq ] ; 9 uses
   %i.zv = or disjoint i32 %.0164266.i, 7          ; 2 uses
   %.not177.i = icmp uge i32 %i.zv, %i.ye
   %i.zw = icmp ult i32 %.0164266.i, %i.yg
   %or.cond.i20 = and i1 %i.zw, %.not177.i
-  br i1 %or.cond.i20, label %.lr.ph.i198.i, label %bb.an
+  br i1 %or.cond.i20, label %7, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %.not178.i = icmp uge i32 %i.zv, %i.zf
   %i.zx = icmp ult i32 %.0164266.i, %i.zg
   %or.cond261.i = and i1 %i.zx, %.not178.i
-  br i1 %or.cond261.i, label %.lr.ph.i198.i, label %._crit_edge282.i
+  br i1 %or.cond261.i, label %7, label %._crit_edge282.i
 
 ._crit_edge282.i:                                 ; preds = %bb.an
   %.pre.i = add i32 %.0164266.i, 8
   br label %bb.aq
 
-.lr.ph.i198.i:                                    ; preds = %bb.an, %bb.am
+7:                                                ; preds = %bb.an, %bb.am
+  %.not.i197.i = icmp eq i32 %i.vi, %.0164266.i
+  br i1 %.not.i197.i, label %opj_v8dwt_interleave_partial_h.exit.loopexit.i, label %.lr.ph.i198.i
+
+.lr.ph.i198.i:                                    ; preds = %7
   %i.zy = sub i32 %i.vi, %.0164266.i
   %i.zz = tail call noundef i32 @llvm.umin.i32(i32 %i.zy, i32 8)
   %wide.trip.count.i.i22 = zext nneg i32 %i.zz to i64
@@ -813,7 +817,7 @@ bb.ao:                                            ; preds = %bb.ao, %.lr.ph.i198
   %exitcond.not.i.i25 = icmp eq i64 %indvars.iv.next.i.i24, %wide.trip.count.i.i22
   br i1 %exitcond.not.i.i25, label %opj_v8dwt_interleave_partial_h.exit.loopexit.i, label %bb.ao, !llvm.loop !315
 
-opj_v8dwt_interleave_partial_h.exit.loopexit.i:   ; preds = %bb.ao
+opj_v8dwt_interleave_partial_h.exit.loopexit.i:   ; preds = %bb.ao, %7
   call fastcc void @opj_v8dwt_decode(ptr noundef nonnull %3), !noalias !309
   %i.aah = add i32 %.0164266.i, 8                 ; 2 uses
   %i.aai = tail call i32 @opj_sparse_array_int32_write(ptr noundef nonnull %i.sa, i32 noundef %i.yo, i32 noundef %.0164266.i, i32 noundef %i.yt, i32 noundef %i.aah, ptr noundef nonnull %i.zu, i32 noundef 8, i32 noundef 1, i32 noundef 1) #15, !noalias !309

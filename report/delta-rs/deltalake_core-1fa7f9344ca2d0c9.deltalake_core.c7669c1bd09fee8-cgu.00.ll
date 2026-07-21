@@ -204,6 +204,12 @@ bb.l:                                             ; preds = %_RINvMNtCsbvkFyIu7l
   %i.aq = call i64 @llvm.uadd.sat.i64(i64 %.sroa.7.0.i.i.i.i.i.i, i64 %spec.select.i.i.i.i65.i.i.i.i.i.i)
   br label %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit66.i.i.i.i.i.i
 
+_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit66.i.i.i.i.i.i: ; preds = %bb.l, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit.i.i.i.i.i.i
+  %.sroa.073.0.i.i.i.i.i.i = phi i64 [ %i.aq, %bb.l ], [ %.sroa.7.0.i.i.i.i.i.i, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit.i.i.i.i.i.i ]
+  %2 = call i64 @llvm.uadd.sat.i64(i64 %.sroa.073.0.i.i.i.i.i.i, i64 1)
+  invoke void @_RINvNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ak, i64 noundef %2, i64 noundef 8, i64 noundef 272)
+          to label %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddE7reserveBM_.exit.i.i.i unwind label %bb.m, !noalias !21890
+
 _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddE7reserveBM_.exit.i.i.i: ; preds = %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit66.i.i.i.i.i.i, %bb.i
   %i.ar = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !21889, !noalias !21890, !nonnull !8, !noundef !8
   %i.as = getelementptr inbounds nuw [272 x i8], ptr %i.ar, i64 %i.ak
@@ -224,12 +230,6 @@ bb.m:                                             ; preds = %_RINvMNtCsbvkFyIu7l
           cleanup
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddEBO_(ptr noalias noundef align 8 dereferenceable(272) %i.b) #29
           to label %.body.i unwind label %bb.n, !noalias !21890
-
-_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit66.i.i.i.i.i.i: ; preds = %bb.l, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit.i.i.i.i.i.i
-  %.sroa.073.0.i.i.i.i.i.i = phi i64 [ %i.aq, %bb.l ], [ %.sroa.7.0.i.i.i.i.i.i, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_3ops5range5RangejENCNCNvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_dataNtB1T_14LogDataHandler4iter00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit.i.i.i.i.i.i ]
-  %2 = call i64 @llvm.uadd.sat.i64(i64 %.sroa.073.0.i.i.i.i.i.i, i64 1)
-  invoke void @_RINvNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ak, i64 noundef %2, i64 noundef 8, i64 noundef 272)
-          to label %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddE7reserveBM_.exit.i.i.i unwind label %bb.m, !noalias !21890
 
 bb.n:                                             ; preds = %bb.m
   %i.aw = landingpad { ptr, i32 }

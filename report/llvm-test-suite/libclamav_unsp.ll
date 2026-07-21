@@ -204,7 +204,7 @@ get_byte.exit.4:                                  ; preds = %get_byte.exit.3
   %i.bj = and i32 %2, 255
   %i.bk = sub i32 8, %2
   %i.bl = and i32 %i.bk, 255
-  %i.bm = zext i32 %8 to i64                      ; 2 uses
+  %i.bm = zext i32 %8 to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 1606 ; 4 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1608
   br label %bb.j
@@ -217,7 +217,7 @@ bb.j:                                             ; preds = %.lr.ph, %select.unf
   %.0259555 = phi i32 [ 1, %.lr.ph ], [ %.3262, %select.unfold ] ; 11 uses
   %.0263552 = phi i32 [ 1, %.lr.ph ], [ %.2265, %select.unfold ] ; 11 uses
   %.0266548 = phi i32 [ 1, %.lr.ph ], [ %.2268, %select.unfold ] ; 7 uses
-  %.0269547 = phi i32 [ 0, %.lr.ph ], [ %.3272, %select.unfold ] ; 25 uses
+  %.0269547 = phi i32 [ 0, %.lr.ph ], [ %.3272, %select.unfold ] ; 27 uses
   %.0273546 = phi i32 [ 0, %.lr.ph ], [ %.3276, %select.unfold ]
   %.0279541 = phi i32 [ %6, %.lr.ph ], [ %.3282, %select.unfold ] ; 4 uses
   %i.bq = shl i32 %.0251561, 4                    ; 2 uses
@@ -620,7 +620,7 @@ bb.fj:                                            ; preds = %get_n_bits_from_tab
   br label %bb.fk
 
 bb.fk:                                            ; preds = %bb.bw, %getbit_from_table.exit391, %bb.fj
-  %.1267 = phi i32 [ %.1242, %getbit_from_table.exit391 ], [ %.0266548, %bb.bw ], [ %i.yo, %bb.fj ] ; 7 uses
+  %.1267 = phi i32 [ %.1242, %getbit_from_table.exit391 ], [ %.0266548, %bb.bw ], [ %i.yo, %bb.fj ] ; 8 uses
   %.1264 = phi i32 [ %.0266548, %getbit_from_table.exit391 ], [ %.0263552, %bb.bw ], [ %.0266548, %bb.fj ]
   %.2261 = phi i32 [ %.1260, %getbit_from_table.exit391 ], [ %.0259555, %bb.bw ], [ %.0263552, %bb.fj ]
   %.3258 = phi i32 [ %.2257, %getbit_from_table.exit391 ], [ %.0255558, %bb.bw ], [ %.0259555, %bb.fj ]
@@ -634,27 +634,18 @@ bb.fl:                                            ; preds = %bb.fk
   br i1 %i.yp, label %.thread490, label %bb.fm
 
 bb.fm:                                            ; preds = %bb.fl
-  %i.yq = add i32 %.0243, 2                       ; 6 uses
+  %i.yq = add i32 %.0243, 2                       ; 7 uses
   %i.yr = add i32 %.0243, 1                       ; 3 uses
   %i.ys = icmp uge i32 %i.yr, %8
   %or.cond = select i1 %.not325, i1 true, i1 %i.ys
   %.pre = zext i32 %.0269547 to i64               ; 3 uses
-  br i1 %or.cond, label %split, label %10
+  %10 = zext i32 %i.yq to i64
+  %11 = add nuw nsw i64 %10, %.pre
+  %.not334 = icmp samesign ugt i64 %11, %i.bm
+  %or.cond590 = select i1 %or.cond, i1 true, i1 %.not334
+  br i1 %or.cond590, label %split, label %iter.check813
 
-10:                                               ; preds = %bb.fm
-  %11 = zext i32 %i.yq to i64                     ; 2 uses
-  %12 = add nuw nsw i64 %11, %.pre
-  %.not334 = icmp samesign ugt i64 %12, %i.bm
-  br i1 %.not334, label %split, label %13
-
-13:                                               ; preds = %10
-  %14 = sub i32 %.0269547, %.1267                 ; 2 uses
-  %15 = zext i32 %14 to i64                       ; 2 uses
-  %16 = add nuw nsw i64 %11, %15
-  %.not336 = icmp samesign ugt i64 %16, %i.bm
-  br i1 %.not336, label %split, label %iter.check813
-
-iter.check813:                                    ; preds = %13
+iter.check813:                                    ; preds = %bb.fm
   %i.yt = add i32 %.0269547, 1
   %umax796 = tail call i32 @llvm.umax.i32(i32 %8, i32 %i.yt)
   %i.yu = xor i32 %.0269547, -1
@@ -672,15 +663,20 @@ vector.scevcheck:                                 ; preds = %iter.check813
   %umin = tail call i32 @llvm.umin.i32(i32 %i.yz, i32 %i.yr) ; 2 uses
   %i.za = xor i32 %.0269547, -1
   %i.zb = icmp ugt i32 %umin, %i.za
-  %i.zc = xor i32 %14, -1
-  %17 = icmp ugt i32 %umin, %i.zc
-  %18 = or i1 %i.zb, %17
-  %19 = sub nsw i64 %15, %.pre
-  %diff.check = icmp ugt i64 %19, -32
-  %or.cond836 = select i1 %18, i1 true, i1 %diff.check
-  br i1 %or.cond836, label %.preheader.preheader, label %vector.main.loop.iter.check798
+  %i.zc = xor i32 %.0269547, -1
+  %12 = add i32 %.1267, %i.zc
+  %13 = icmp ult i32 %12, %umin
+  %14 = or i1 %i.zb, %13
+  br i1 %14, label %.preheader.preheader, label %vector.memcheck
 
-vector.main.loop.iter.check798:                   ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %vector.scevcheck
+  %15 = sub i32 %.0269547, %.1267
+  %16 = zext i32 %15 to i64
+  %17 = sub nsw i64 %16, %.pre
+  %diff.check = icmp ugt i64 %17, -32
+  br i1 %diff.check, label %.preheader.preheader, label %vector.main.loop.iter.check798
+
+vector.main.loop.iter.check798:                   ; preds = %vector.memcheck
   %min.iters.check799 = icmp ult i32 %i.yw, 32
   br i1 %min.iters.check799, label %vec.epilog.ph817, label %vector.ph800
 
@@ -755,12 +751,12 @@ vec.epilog.middle.block831:                       ; preds = %vec.epilog.vector.b
   %cmp.n832 = icmp eq i32 %i.yw, %n.vec819
   br i1 %cmp.n832, label %.loopexit, label %.preheader.preheader
 
-.preheader.preheader:                             ; preds = %vector.scevcheck, %iter.check813, %vec.epilog.iter.check815, %vec.epilog.middle.block831
-  %.2271.ph = phi i32 [ %.0269547, %vector.scevcheck ], [ %.0269547, %iter.check813 ], [ %i.zd, %vec.epilog.iter.check815 ], [ %i.zu, %vec.epilog.middle.block831 ]
-  %.1244.ph = phi i32 [ %i.yq, %vector.scevcheck ], [ %i.yq, %iter.check813 ], [ %i.ze, %vec.epilog.iter.check815 ], [ %i.zv, %vec.epilog.middle.block831 ]
+.preheader.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck, %iter.check813, %vec.epilog.iter.check815, %vec.epilog.middle.block831
+  %.2271.ph = phi i32 [ %.0269547, %iter.check813 ], [ %.0269547, %vector.scevcheck ], [ %.0269547, %vector.memcheck ], [ %i.zd, %vec.epilog.iter.check815 ], [ %i.zu, %vec.epilog.middle.block831 ]
+  %.1244.ph = phi i32 [ %i.yq, %iter.check813 ], [ %i.yq, %vector.scevcheck ], [ %i.yq, %vector.memcheck ], [ %i.ze, %vec.epilog.iter.check815 ], [ %i.zv, %vec.epilog.middle.block831 ]
   br label %.preheader
 
-split:                                            ; preds = %13, %10, %bb.fm
+split:                                            ; preds = %bb.fm
   %i.aaj = getelementptr inbounds nuw i8, ptr %7, i64 %.pre
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1, ptr noundef %7, i32 noundef %8, ptr noundef %i.aaj, i32 noundef %i.yq) #8
   br label %.thread490

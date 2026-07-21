@@ -201,19 +201,15 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 1
-  %reass.sub.i = sub i64 %i.d, %3                 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 2 ; 2 uses
+  %reass.sub.i = sub i64 %i.d, %3
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 2
   store i8 2, ptr %i.i, align 1, !tbaa !22
-  %.not52.i = icmp eq i64 %reass.sub.i, 3
-  br i1 %.not52.i, label %._crit_edge.i, label %.preheader.preheader.i
-
-.preheader.preheader.i:                           ; preds = %bb.d
   %6 = add i64 %reass.sub.i, -4
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %bb.g, %.preheader.preheader.i
-  %i.k = phi i64 [ %i.v, %bb.g ], [ %6, %.preheader.preheader.i ] ; 2 uses
-  %.03553.i = phi ptr [ %i.u, %bb.g ], [ %i.j, %.preheader.preheader.i ] ; 3 uses
+.preheader.i:                                     ; preds = %bb.g, %bb.d
+  %i.k = phi i64 [ %i.v, %bb.g ], [ %6, %bb.d ]   ; 2 uses
+  %.03553.i = phi ptr [ %i.u, %bb.g ], [ %i.j, %bb.d ] ; 4 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.preheader.i
@@ -247,14 +243,13 @@ bb.g:                                             ; preds = %.critedge.i
   %.not.i = icmp eq i64 %i.k, 0
   br i1 %.not.i, label %._crit_edge.i, label %.preheader.i
 
-._crit_edge.i:                                    ; preds = %bb.g, %bb.d
-  %.035.lcssa.i = phi ptr [ %i.j, %bb.d ], [ %i.u, %bb.g ] ; 2 uses
-  store i8 0, ptr %.035.lcssa.i, align 1, !tbaa !22
+._crit_edge.i:                                    ; preds = %bb.g
+  store i8 0, ptr %i.u, align 1, !tbaa !22
   %.not45.i = icmp eq i64 %3, 0
   br i1 %.not45.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %i.w = getelementptr inbounds nuw i8, ptr %.035.lcssa.i, i64 1
+  %i.w = getelementptr inbounds nuw i8, ptr %.03553.i, i64 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.w, ptr readonly align 1 %4, i64 %3, i1 false)
   br label %bb.i
 
