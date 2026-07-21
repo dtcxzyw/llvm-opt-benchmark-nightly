@@ -201,7 +201,7 @@ bb.az:                                            ; preds = %_ZN16OpenColorIO_v2
 
 bb.ba:                                            ; preds = %bb.az
   %.val = load ptr, ptr %i.a, align 8             ; 2 uses
-  %.val68 = load ptr, ptr %7, align 8             ; 4 uses
+  %.val68 = load ptr, ptr %7, align 8             ; 2 uses
   %.val69 = load ptr, ptr %3, align 8, !tbaa !54  ; 7 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %.val70 = load ptr, ptr %i.jg, align 8, !tbaa !60 ; 3 uses
@@ -232,7 +232,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.jp, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %.lr.ph.i72
-  %i.jq = add i64 %.0676.i, 1                     ; 5 uses
+  %i.jq = add i64 %.0676.i, 1                     ; 3 uses
   %i.jr = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %i.jq ; 2 uses
   %i.js = load float, ptr %i.jr, align 4, !tbaa !97 ; 2 uses
   %i.jt = getelementptr inbounds nuw i8, ptr %i.jl, i64 4
@@ -242,15 +242,15 @@ bb.bb:                                            ; preds = %.lr.ph.i72
   %i.jx = fsub float %i.jw, %i.ju                 ; 2 uses
   %i.jy = fsub float %i.jo, %i.jm                 ; 2 uses
   %i.jz = getelementptr inbounds nuw [4 x i8], ptr %.val68, i64 %.0676.i
-  %8 = load float, ptr %i.jz, align 4, !tbaa !58  ; 4 uses
-  %9 = fneg float %8
-  %10 = fmul float %i.jy, %9
-  %11 = call float @llvm.fmuladd.f32(float %i.jx, float 2.000000e+00, float %10)
-  %12 = fsub float %i.js, %i.jo                   ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %.val68, i64 %i.jq
-  %14 = load float, ptr %13, align 4, !tbaa !58   ; 4 uses
-  %15 = fneg float %12
-  %i.ka = call float @llvm.fmuladd.f32(float %15, float %14, float %11)
+  %8 = fsub float %i.js, %i.jo                    ; 2 uses
+  %9 = load <2 x float>, ptr %i.jz, align 4, !tbaa !58 ; 3 uses
+  %10 = extractelement <2 x float> %9, i64 0      ; 3 uses
+  %11 = fneg float %10
+  %12 = fmul float %i.jy, %11
+  %13 = call float @llvm.fmuladd.f32(float %i.jx, float 2.000000e+00, float %12)
+  %14 = fneg float %8
+  %15 = extractelement <2 x float> %9, i64 1      ; 3 uses
+  %i.ka = call float @llvm.fmuladd.f32(float %14, float %15, float %13)
   %i.kb = fsub float %i.js, %i.jm                 ; 3 uses
   %i.kc = fdiv float %i.ka, %i.kb
   %i.kd = fcmp olt float %i.kc, 0.000000e+00
@@ -264,22 +264,21 @@ bb.bc:                                            ; preds = %bb.bb, %.lr.ph.i72
 
 .thread:                                          ; preds = %bb.bb
   %i.kf = getelementptr inbounds nuw [4 x i8], ptr %.val68, i64 %.0676.i
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %.val68, i64 %i.jq
   %i.kg = fdiv float %i.jx, %i.kb                 ; 3 uses
-  %i.kh = fmul float %12, %14
-  %i.ki = call float @llvm.fmuladd.f32(float %i.jy, float %8, float %i.kh)
+  %i.kh = fmul float %8, %15
+  %i.ki = call float @llvm.fmuladd.f32(float %i.jy, float %10, float %i.kh)
   %i.kj = fdiv float %i.ki, %i.kb
-  %i.kk = fadd float %8, %14
+  %i.kk = fadd float %10, %15
   %i.kl = fmul float %i.kk, 5.000000e-03          ; 2 uses
   %i.km = fcmp ogt float %i.kl, %i.kg
   %.066.i = select i1 %i.km, float %i.kg, float %i.kl
   %i.kn = fneg float %.066.i
   %i.ko = call float @llvm.fmuladd.f32(float %i.kg, float 2.000000e+00, float %i.kn)
-  %i.kp = fdiv float %i.ko, %i.kj                 ; 2 uses
-  %17 = fmul float %8, %i.kp
-  store float %17, ptr %i.kf, align 4, !tbaa !58
-  %18 = fmul float %14, %i.kp
-  store float %18, ptr %16, align 4, !tbaa !58
+  %i.kp = fdiv float %i.ko, %i.kj
+  %16 = insertelement <2 x float> poison, float %i.kp, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = fmul <2 x float> %9, %17
+  store <2 x float> %18, ptr %i.kf, align 4, !tbaa !58
   %i.kq = add nuw i64 %.0695.i, 1                 ; 2 uses
   %exitcond.not.i73230 = icmp eq i64 %i.kq, %i.jk
   br i1 %exitcond.not.i73230, label %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, label %.lr.ph.i72.outer, !llvm.loop !115
@@ -682,18 +681,15 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit:          ; preds = %bb.b, %_ZNSt6vector
 bb.g:                                             ; preds = %.lr.ph, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit166
   %.0196 = phi i64 [ 0, %.lr.ph ], [ %i.an, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit166 ] ; 7 uses
   %i.al = load ptr, ptr %0, align 8, !tbaa !49    ; 2 uses
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.0196 ; 2 uses
-  %6 = load float, ptr %i.am, align 4, !tbaa !97  ; 4 uses
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.0196
   %i.an = add nuw i64 %.0196, 1                   ; 6 uses
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.an ; 2 uses
-  %7 = load float, ptr %i.ao, align 4, !tbaa !97  ; 6 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.am, i64 4
-  %9 = load float, ptr %8, align 4, !tbaa !100    ; 6 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
-  %11 = load float, ptr %10, align 4, !tbaa !100
-  %12 = fsub float %7, %6                         ; 5 uses
-  %13 = fsub float %11, %9
-  %i.ap = fdiv float %13, %12                     ; 4 uses
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.an
+  %6 = load <2 x float>, ptr %i.am, align 4, !tbaa !58 ; 9 uses
+  %7 = load <2 x float>, ptr %i.ao, align 4, !tbaa !58 ; 6 uses
+  %8 = fsub <2 x float> %7, %6                    ; 2 uses
+  %9 = extractelement <2 x float> %8, i64 0       ; 5 uses
+  %10 = extractelement <2 x float> %8, i64 1
+  %i.ap = fdiv float %10, %9                      ; 4 uses
   %i.aq = load ptr, ptr %1, align 8, !tbaa !54    ; 4 uses
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %.0196
   %i.as = load float, ptr %i.ar, align 4, !tbaa !58 ; 5 uses
@@ -712,7 +708,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i87, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  store float %9, ptr %i.az, align 4, !tbaa !58
+  %11 = extractelement <2 x float> %6, i64 1
+  store float %11, ptr %i.az, align 4, !tbaa !58
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 4
   store ptr %i.bb, ptr %i.af, align 8, !tbaa !60
   br label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit94
@@ -741,7 +738,8 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i88: ; preds = %bb.j
   %i.bm = shl nuw nsw i64 %i.bl, 2
   %i.bn = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bm) #23 ; 4 uses
   %i.bo = getelementptr inbounds i8, ptr %i.bn, i64 %i.bf ; 2 uses
-  store float %9, ptr %i.bo, align 4, !tbaa !58
+  %12 = extractelement <2 x float> %6, i64 1
+  store float %12, ptr %i.bo, align 4, !tbaa !58
   %i.bp = icmp sgt i64 %i.bf, 0
   br i1 %i.bp, label %bb.l, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i91
 
@@ -840,7 +838,7 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit102:       ; preds = %bb.n, %_ZNSt6vector
   %i.cs = load float, ptr %i.cr, align 4, !tbaa !58
   %i.ct = fsub float %i.cs, %i.cp
   %i.cu = fmul float %i.ct, 5.000000e-01
-  %i.cv = fdiv float %i.cu, %12                   ; 2 uses
+  %i.cv = fdiv float %i.cu, %9                    ; 2 uses
   %i.cw = load ptr, ptr %i.aj, align 8, !tbaa !60 ; 4 uses
   %i.cx = load ptr, ptr %i.ak, align 8, !tbaa !57
   %.not.i.i = icmp eq ptr %i.cw, %i.cx
@@ -908,8 +906,9 @@ bb.x:                                             ; preds = %bb.g
   br i1 %i.ds, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %14 = fadd float %6, %7
-  %i.dt = fmul float %14, 5.000000e-01
+  %foldExtExtBinop = fadd <2 x float> %6, %7
+  %13 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.dt = fmul float %13, 5.000000e-01
   %.pre200 = fsub float %i.au, %i.as
   br label %bb.ac
 
@@ -921,15 +920,17 @@ bb.z:                                             ; preds = %bb.x
   br i1 %i.dw, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.dy = fmul float %12, %i.dp
+  %i.dy = fmul float %9, %i.dp
   %i.dz = fdiv float %i.dy, %i.dx
-  %i.ea = fadd float %7, %i.dz
+  %14 = extractelement <2 x float> %7, i64 0
+  %i.ea = fadd float %14, %i.dz
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.z
-  %i.eb = fmul float %12, %i.dq
+  %i.eb = fmul float %9, %i.dq
   %i.ec = fdiv float %i.eb, %i.dx
-  %i.ed = fadd float %6, %i.ec
+  %15 = extractelement <2 x float> %6, i64 0
+  %i.ed = fadd float %15, %i.ec
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.aa, %bb.ab, %bb.y
@@ -937,9 +938,10 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab, %bb.
   %.0195 = phi float [ %i.ea, %bb.aa ], [ %i.ed, %bb.ab ], [ %i.dt, %bb.y ] ; 4 uses
   %i.ee = fneg float %i.au
   %i.ef = tail call float @llvm.fmuladd.f32(float %i.ap, float 2.000000e+00, float %i.ee)
-  %i.eg = fsub float %.0195, %6                   ; 5 uses
+  %16 = extractelement <2 x float> %6, i64 0
+  %i.eg = fsub float %.0195, %16                  ; 5 uses
   %i.eh = fmul float %.pre-phi, %i.eg
-  %i.ei = fdiv float %i.eh, %12
+  %i.ei = fdiv float %i.eh, %9
   %i.ej = fadd float %i.ef, %i.ei                 ; 4 uses
   %i.ek = fsub float %i.ej, %i.as
   %i.el = fdiv float %i.ek, %i.eg
@@ -949,7 +951,8 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab, %bb.
   br i1 %.not.i103, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  store float %9, ptr %i.em, align 4, !tbaa !58
+  %17 = extractelement <2 x float> %6, i64 1
+  store float %17, ptr %i.em, align 4, !tbaa !58
   %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 4
   store ptr %i.eo, ptr %i.af, align 8, !tbaa !60
   br label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit110
@@ -978,7 +981,8 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i104: ; preds = %bb.ae
   %i.ez = shl nuw nsw i64 %i.ey, 2
   %i.fa = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ez) #23 ; 4 uses
   %i.fb = getelementptr inbounds i8, ptr %i.fa, i64 %i.es ; 2 uses
-  store float %9, ptr %i.fb, align 4, !tbaa !58
+  %18 = extractelement <2 x float> %6, i64 1
+  store float %18, ptr %i.fb, align 4, !tbaa !58
   %i.fc = icmp sgt i64 %i.es, 0
   br i1 %i.fc, label %bb.ag, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i107
 
@@ -1132,7 +1136,8 @@ _ZNSt6vectorIfSaIfEE9push_backEOf.exit126:        ; preds = %bb.an, %_ZNSt6vecto
   %i.gw = load ptr, ptr %1, align 8, !tbaa !54
   %i.gx = getelementptr inbounds nuw [4 x i8], ptr %i.gw, i64 %.0196
   %i.gy = load float, ptr %i.gx, align 4, !tbaa !58
-  %i.gz = tail call float @llvm.fmuladd.f32(float %i.gy, float %i.eg, float %9)
+  %19 = extractelement <2 x float> %6, i64 1
+  %i.gz = tail call float @llvm.fmuladd.f32(float %i.gy, float %i.eg, float %19)
   %i.ha = fmul float %i.eg, %i.gc
   %i.hb = tail call float @llvm.fmuladd.f32(float %i.ha, float %i.eg, float %i.gz) ; 2 uses
   %i.hc = load ptr, ptr %i.af, align 8, !tbaa !60 ; 4 uses
@@ -1260,7 +1265,8 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit142:       ; preds = %bb.ax, %_ZNSt6vecto
   %i.iq = load float, ptr %i.ip, align 4, !tbaa !58
   %i.ir = fsub float %i.iq, %i.ej
   %i.is = fmul float %i.ir, 5.000000e-01
-  %i.it = fsub float %7, %.0195
+  %20 = extractelement <2 x float> %7, i64 0
+  %i.it = fsub float %20, %.0195
   %i.iu = fdiv float %i.is, %i.it                 ; 2 uses
   %i.iv = load ptr, ptr %i.aj, align 8, !tbaa !60 ; 4 uses
   %i.iw = load ptr, ptr %i.ak, align 8, !tbaa !57
@@ -1388,7 +1394,8 @@ _ZNSt6vectorIfSaIfEE9push_backEOf.exit:           ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %.not.i159, label %bb.bn, label %bb.bm
 
 bb.bm:                                            ; preds = %_ZNSt6vectorIfSaIfEE9push_backEOf.exit
-  store float %7, ptr %i.kh, align 4, !tbaa !58
+  %21 = extractelement <2 x float> %7, i64 0
+  store float %21, ptr %i.kh, align 4, !tbaa !58
   %i.kj = getelementptr inbounds nuw i8, ptr %i.kh, i64 4
   store ptr %i.kj, ptr %i.h, align 8, !tbaa !60
   br label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit166
@@ -1417,7 +1424,8 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i160: ; preds = %bb.bn
   %i.ku = shl nuw nsw i64 %i.kt, 2
   %i.kv = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ku) #23 ; 4 uses
   %i.kw = getelementptr inbounds i8, ptr %i.kv, i64 %i.kn ; 2 uses
-  store float %7, ptr %i.kw, align 4, !tbaa !58
+  %22 = extractelement <2 x float> %7, i64 0
+  store float %22, ptr %i.kw, align 4, !tbaa !58
   %i.kx = icmp sgt i64 %i.kn, 0
   br i1 %i.kx, label %bb.bp, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i163
 

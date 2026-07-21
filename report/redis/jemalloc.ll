@@ -204,7 +204,7 @@ je_malloc_usable_size_impl.exit:                  ; preds = %tsdn_fetch.exit.i.t
 ; Function Attrs: nounwind uwtable
 define hidden i64 @je_batch_alloc(ptr noundef %0, i64 noundef %1, i64 noundef %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = alloca %struct.te_ctx_s, align 8           ; 5 uses
+  %4 = alloca %struct.te_ctx_s, align 8           ; 6 uses
   %i.a = tail call nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @je_tsd_tls) ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 832
   %i.c = load i8, ptr %i.b, align 8, !tbaa !14
@@ -217,7 +217,7 @@ tsd_fetch_impl.exit:                              ; preds = %bb.a
   br i1 %i.e, label %.critedge, label %tsd_fetch_impl.exit.thread, !prof !12
 
 tsd_fetch_impl.exit.thread:                       ; preds = %bb.a, %tsd_fetch_impl.exit
-  %.0.i125142 = phi ptr [ %i.d, %tsd_fetch_impl.exit ], [ %i.a, %bb.a ] ; 11 uses
+  %.0.i125142 = phi ptr [ %i.d, %tsd_fetch_impl.exit ], [ %i.a, %bb.a ] ; 12 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 1
   %i.g = load i8, ptr %i.f, align 1, !tbaa !14
   %i.h = icmp sgt i8 %i.g, 0
@@ -403,10 +403,16 @@ bb.q:                                             ; preds = %bb.p, %sz_size2inde
   %i.cz = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 880
   %i.da = getelementptr inbounds nuw [24 x i8], ptr %i.cz, i64 %i.cm
   %i.db = zext nneg i32 %i.cy to i64
-  %i.dc = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 840 ; 2 uses
-  %i.dd = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.de = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %.0.i125142, <4 x i64> <i64 840, i64 8, i64 16, i64 848>
+  %i.dc = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 840 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.dd = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 8
+  %i.de = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 16 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %7 = getelementptr inbounds nuw i8, ptr %.0.i125142, i64 848
+  %8 = insertelement <2 x ptr> poison, ptr %i.dc, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.dd, i64 1
+  %10 = insertelement <2 x ptr> poison, ptr %i.de, i64 0
+  %11 = insertelement <2 x ptr> %10, ptr %7, i64 1
   br label %bb.r
 
 bb.r:                                             ; preds = %select.unfold170, %bb.q
@@ -640,7 +646,8 @@ tcache_get_from_ind.exit.thread:                  ; preds = %bb.y, %mallocx_tcac
   %i.gh = mul i64 %.198, %storemerge.i            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   store i8 1, ptr %4, align 8, !tbaa !109
-  store <4 x ptr> %5, ptr %i.dd, align 8, !tbaa !161
+  store <2 x ptr> %9, ptr %5, align 8, !tbaa !161
+  store <2 x ptr> %11, ptr %6, align 8, !tbaa !161
   %i.gi = load i64, ptr %i.dc, align 8, !tbaa !27 ; 2 uses
   %i.gj = add i64 %i.gi, %i.gh
   store i64 %i.gj, ptr %i.dc, align 8, !tbaa !27

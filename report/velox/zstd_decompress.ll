@@ -203,12 +203,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 29920
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 29976
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 29888
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 10296
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 10296 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 30200
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 29992
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 30176
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 26684
-  %11 = getelementptr inbounds nuw i8, ptr %0, <4 x i64> <i64 32, i64 6192, i64 4136, i64 10296>
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 6192
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 4136
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 30232
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 29944 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -227,6 +230,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.am = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.an = getelementptr inbounds nuw i8, ptr %8, i64 56
+  %15 = insertelement <2 x ptr> poison, ptr %11, i64 0
+  %16 = insertelement <2 x ptr> %15, ptr %12, i64 1
+  %17 = insertelement <2 x ptr> poison, ptr %13, i64 0
+  %18 = insertelement <2 x ptr> %17, ptr %i.r, i64 1
   br label %.lr.ph.lr.ph
 
 .lr.ph.lr.ph:                                     ; preds = %.lr.ph.lr.ph.lr.ph, %.outer
@@ -451,7 +458,8 @@ ZSTD_decompressBegin_usingDDict.exit:             ; preds = %bb.w, %bb.v
   store <4 x i32> <i32 3, i32 0, i32 0, i32 0>, ptr %i.t, align 8, !tbaa !3
   store i32 1, ptr %i.u, align 8, !tbaa !29
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.v, ptr noundef nonnull align 4 dereferenceable(12) @repStartValue, i64 12, i1 false)
-  store <4 x ptr> %11, ptr %0, align 8, !tbaa !45
+  store <2 x ptr> %16, ptr %0, align 8, !tbaa !45
+  store <2 x ptr> %18, ptr %14, align 8, !tbaa !45
   call void @ZSTD_copyDDictParameters(ptr noundef nonnull %0, ptr noundef nonnull %7) #16
   br label %bb.y
 
@@ -854,11 +862,14 @@ ZSTD_checkOutBuffer.exit:                         ; preds = %bb.e, %bb.c, %bb.d
   %i.bd = getelementptr i8, ptr %0, i64 29996     ; 5 uses
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 29976
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 29888
-  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 10296
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 10296 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 29992 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 30176
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 26684
-  %4 = getelementptr inbounds nuw i8, ptr %0, <4 x i64> <i64 32, i64 6192, i64 4136, i64 10296>
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 6192
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4136
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 95960
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 29936 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 30264
@@ -870,6 +881,10 @@ ZSTD_checkOutBuffer.exit:                         ; preds = %bb.e, %bb.c, %bb.d
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 30128
   %i.bt = getelementptr i8, ptr %0, i64 30136
   %i.bu = getelementptr i8, ptr %0, i64 30144     ; 2 uses
+  %8 = insertelement <2 x ptr> poison, ptr %4, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %5, i64 1
+  %10 = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %11 = insertelement <2 x ptr> %10, ptr %i.bg, i64 1
   br label %.thread559.outer
 
 .thread559.outer:                                 ; preds = %.thread559.outer.backedge, %ZSTD_checkOutBuffer.exit
@@ -1272,7 +1287,8 @@ ZSTD_decompressBegin.exit.i:                      ; preds = %bb.bj, %bb.bi
   store <4 x i32> <i32 3, i32 0, i32 0, i32 0>, ptr %i.bh, align 8, !tbaa !3
   store i32 1, ptr %i.bi, align 8, !tbaa !29
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bj, ptr noundef nonnull align 4 dereferenceable(12) @repStartValue, i64 12, i1 false)
-  store <4 x ptr> %4, ptr %0, align 8, !tbaa !45
+  store <2 x ptr> %9, ptr %0, align 8, !tbaa !45
+  store <2 x ptr> %11, ptr %7, align 8, !tbaa !45
   br i1 %.not.i468547, label %ZSTD_decompressBegin_usingDDict.exit, label %bb.bk
 
 bb.bk:                                            ; preds = %ZSTD_decompressBegin.exit.i

@@ -203,13 +203,15 @@ declare i32 @uv__io_init_start(ptr noundef, ptr noundef, ptr noundef, i32 nounde
 ; Function Attrs: nounwind uwtable
 define internal void @uv__inotify_read(ptr nofree noundef captures(none) %0, ptr nofree readnone captures(none) %1, i32 %2) #0 {
 bb.a:
-  %3 = alloca %struct.uv__queue, align 8          ; 13 uses
+  %3 = alloca %struct.uv__queue, align 16         ; 12 uses
   %i.a = alloca [4096 x i8], align 16             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 840
   %i.c = getelementptr i8, ptr %0, i64 832        ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %4 = insertelement <2 x ptr> poison, ptr %3, i64 0
+  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.backedge, %bb.a
@@ -313,8 +315,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not.i, label %uv__queue_move.exit.thread, label %uv__queue_move.exit
 
 uv__queue_move.exit.thread:                       ; preds = %bb.j
-  store ptr %3, ptr %3, align 8
-  store ptr %3, ptr %i.d, align 8
+  store <2 x ptr> %5, ptr %3, align 16
   br label %._crit_edge
 
 uv__queue_move.exit:                              ; preds = %bb.j
@@ -322,13 +323,13 @@ uv__queue_move.exit:                              ; preds = %bb.j
   %i.aj = load ptr, ptr %i.ai, align 8            ; 2 uses
   store ptr %i.aj, ptr %i.d, align 8
   store ptr %3, ptr %i.aj, align 8
-  store ptr %i.ah, ptr %3, align 8
+  store ptr %i.ah, ptr %3, align 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses
   %i.al = load ptr, ptr %i.ak, align 8            ; 2 uses
   store ptr %i.al, ptr %i.ai, align 8
   store ptr %i.ag, ptr %i.al, align 8
   store ptr %3, ptr %i.ak, align 8
-  %.pre = load ptr, ptr %3, align 8               ; 2 uses
+  %.pre = load ptr, ptr %3, align 16              ; 2 uses
   %.not4044 = icmp eq ptr %3, %.pre
   br i1 %.not4044, label %._crit_edge, label %.lr.ph
 
@@ -354,7 +355,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.k
   %i.av = getelementptr inbounds i8, ptr %i.an, i64 -8
   %i.aw = load ptr, ptr %i.av, align 8
   call void %i.aw(ptr noundef nonnull %i.ao, ptr noundef %i.ae, i32 noundef %.1, i32 noundef 0) #16
-  %i.ax = load ptr, ptr %3, align 8               ; 2 uses
+  %i.ax = load ptr, ptr %3, align 16              ; 2 uses
   %.not40 = icmp eq ptr %3, %i.ax
   br i1 %.not40, label %._crit_edge, label %bb.k, !llvm.loop !43
 

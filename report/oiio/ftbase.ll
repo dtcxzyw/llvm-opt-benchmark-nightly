@@ -204,8 +204,9 @@ bb.a:
   br i1 %.not, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv i64 %1, 2                             ; 3 uses
-  %4 = sdiv i64 %2, 2                             ; 3 uses
+  %3 = insertelement <2 x i64> poison, i64 %1, i64 0
+  %4 = insertelement <2 x i64> %3, i64 %2, i64 1
+  %5 = sdiv <2 x i64> %4, splat (i64 2)           ; 3 uses
   %.off = add i64 %1, 1
   %i.a = icmp ult i64 %.off, 3
   %.off117 = add i64 %2, 1
@@ -236,13 +237,15 @@ bb.e:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !139
   %i.l = icmp eq i32 %i.c, 0                      ; 3 uses
-  %sext.i130 = shl i64 %3, 32
+  %6 = extractelement <2 x i64> %5, i64 0         ; 2 uses
+  %sext.i130 = shl i64 %6, 32
   %i.m = ashr exact i64 %sext.i130, 32
-  %.023.i = tail call i64 @llvm.abs.i64(i64 %3, i1 true)
+  %.023.i = tail call i64 @llvm.abs.i64(i64 %6, i1 true)
   %i.n = icmp slt i64 %1, -1
-  %sext.i144 = shl i64 %4, 32
+  %7 = extractelement <2 x i64> %5, i64 1         ; 2 uses
+  %sext.i144 = shl i64 %7, 32
   %i.o = ashr exact i64 %sext.i144, 32
-  %.023.i150 = tail call i64 @llvm.abs.i64(i64 %4, i1 true)
+  %.023.i150 = tail call i64 @llvm.abs.i64(i64 %7, i1 true)
   %i.p = icmp slt i64 %2, -1
   br label %bb.f
 
@@ -572,10 +575,9 @@ bb.ab:                                            ; preds = %bb.u, %FT_MulDiv.ex
   br i1 %.not122180, label %FT_Vector_NormLen.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ab
-  %5 = add nsw i64 %.sroa.0.2, %3
-  %6 = add nsw i64 %.sroa.11.1, %4
-  %i.gm = insertelement <2 x i64> poison, i64 %5, i64 0
-  %7 = insertelement <2 x i64> %i.gm, i64 %6, i64 1
+  %8 = insertelement <2 x i64> poison, i64 %.sroa.0.2, i64 0
+  %i.gm = insertelement <2 x i64> %8, i64 %.sroa.11.1, i64 1
+  %9 = add nsw <2 x i64> %i.gm, %5
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph, %bb.ac
@@ -583,7 +585,7 @@ bb.ac:                                            ; preds = %.lr.ph, %bb.ac
   %i.gn = sext i32 %.199181 to i64
   %i.go = getelementptr inbounds [16 x i8], ptr %i.g, i64 %i.gn ; 2 uses
   %i.gp = load <2 x i64>, ptr %i.go, align 8, !tbaa !39
-  %i.gq = add nsw <2 x i64> %7, %i.gp
+  %i.gq = add nsw <2 x i64> %9, %i.gp
   store <2 x i64> %i.gq, ptr %i.go, align 8, !tbaa !39
   %i.gr = icmp slt i32 %.199181, %i.t
   %i.gs = add nsw i32 %.199181, 1

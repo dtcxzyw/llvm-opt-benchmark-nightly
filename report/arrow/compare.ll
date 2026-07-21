@@ -201,13 +201,15 @@ bb.j:                                             ; preds = %bb.f
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.dg = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  %i.di = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  %i.di = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.dn = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.do = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %5 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.j, i64 1
   br label %bb.k
 
 _ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareListViewINS_12ListViewTypeEEENS_6StatusERKT_ENKUlllE_clEll.exit14.i.loopexit: ; preds = %.thread19, %bb.k
@@ -250,8 +252,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ek = sext i32 %i.dy to i64                   ; 6 uses
   store ptr %i.ec, ptr %2, align 8, !tbaa !86, !noalias !1002
   store i8 %i.ed, ptr %i.dg, align 8, !tbaa !88, !noalias !1002
-  store ptr %i.e, ptr %i.dh, align 8, !tbaa !90, !noalias !1002
-  store ptr %i.j, ptr %i.di, align 8, !tbaa !90, !noalias !1002
+  store <2 x ptr> %6, ptr %i.dh, align 8, !tbaa !90, !noalias !1002
   store i64 %i.eg, ptr %i.dj, align 8, !tbaa !91, !noalias !1002
   store i64 %i.ej, ptr %i.dk, align 8, !tbaa !92, !noalias !1002
   store i64 %i.ek, ptr %i.dl, align 8, !tbaa !93, !noalias !1002
@@ -534,13 +535,15 @@ bb.j:                                             ; preds = %bb.f
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.de = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  %i.df = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.dk = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.dl = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %5 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.j, i64 1
   br label %bb.k
 
 _ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareListViewINS_17LargeListViewTypeEEENS_6StatusERKT_ENKUlllE_clEll.exit14.i.loopexit: ; preds = %.thread19, %bb.k
@@ -580,8 +583,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ee = load i64, ptr %i.ed, align 8, !tbaa !228, !noalias !1013 ; 3 uses
   store ptr %i.dz, ptr %2, align 8, !tbaa !86, !noalias !1013
   store i8 %i.ea, ptr %i.dd, align 8, !tbaa !88, !noalias !1013
-  store ptr %i.e, ptr %i.de, align 8, !tbaa !90, !noalias !1013
-  store ptr %i.j, ptr %i.df, align 8, !tbaa !90, !noalias !1013
+  store <2 x ptr> %6, ptr %i.de, align 8, !tbaa !90, !noalias !1013
   store i64 %i.ec, ptr %i.dg, align 8, !tbaa !91, !noalias !1013
   store i64 %i.ee, ptr %i.dh, align 8, !tbaa !92, !noalias !1013
   store i64 %i.dv, ptr %i.di, align 8, !tbaa !93, !noalias !1013

@@ -93,7 +93,7 @@ bb.a:
   %i.q = alloca i64, align 8                      ; 3 uses
   %i.r = alloca i64, align 8                      ; 3 uses
   %i.s = alloca i64, align 8                      ; 3 uses
-  %6 = alloca %"class.v8::internal::ZoneLinkedList.541", align 8 ; 8 uses
+  %6 = alloca %"class.v8::internal::ZoneLinkedList.541", align 8 ; 7 uses
   %i.t = alloca i32, align 4                      ; 5 uses
   %i.u = alloca i32, align 4                      ; 4 uses
   %i.v = alloca i32, align 4                      ; 5 uses
@@ -136,13 +136,13 @@ _ZN2v88internal4Zone3NewINS0_12_GLOBAL__N_120BytecodeSequenceNodeEJRKiRPS1_EEEPT
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 4 uses
   %i.aq = ptrtoint ptr %1 to i64                  ; 5 uses
   store i64 %i.aq, ptr %i.ap, align 8
-  %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 56 ; 19 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 56 ; 18 uses
   store i32 0, ptr %i.ar, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 8 uses
   store ptr null, ptr %i.as, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %7, i64 72 ; 4 uses
   store ptr %i.ar, ptr %i.at, align 8
-  %i.au = getelementptr inbounds nuw i8, ptr %7, i64 80 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %7, i64 80
   store ptr %i.ar, ptr %i.au, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %7, i64 88 ; 4 uses
   store i64 0, ptr %i.av, align 8
@@ -545,10 +545,13 @@ _ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeepholeC2EPNS0_4ZoneEmRKNS0_16Zone
   br i1 %i.bbg, label %.lr.ph.preheader.i.lr.ph.i, label %_ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeephole16OptimizeBytecodeEPKhi.exit
 
 .lr.ph.preheader.i.lr.ph.i:                       ; preds = %_ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeepholeC2EPNS0_4ZoneEmRKNS0_16ZoneUnorderedMapIiiNS_4base4hashIiEESt8equal_toIiEEE.exit
-  %i.bbh = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 8 uses
-  %i.bbi = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.bbj = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 5 uses
-  %10 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 14 uses
+  %i.bbh = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 7 uses
+  %i.bbi = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 5 uses
+  %i.bbj = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 14 uses
+  %10 = insertelement <2 x ptr> poison, ptr %i.bbh, i64 0
+  %11 = shufflevector <2 x ptr> %10, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %12 = insertelement <2 x ptr> poison, ptr %i.ar, i64 0
+  %13 = shufflevector <2 x ptr> %12, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.preheader.i.i.outer
 
 .lr.ph.preheader.i.i.outer:                       ; preds = %.thread, %.lr.ph.preheader.i.lr.ph.i
@@ -788,12 +791,11 @@ bb.by:                                            ; preds = %_ZNK2v88internal12_
   %.val.i.i.i = load ptr, ptr %i.bu, align 8
   %i.beu = ptrtoint ptr %.val.i.i.i to i64
   store i64 %i.beu, ptr %6, align 8
-  store ptr %i.bbh, ptr %i.bbi, align 8
-  store ptr %i.bbh, ptr %i.bbh, align 8
-  store i64 0, ptr %i.bbj, align 8
+  store <2 x ptr> %11, ptr %i.bbh, align 8
+  store i64 0, ptr %i.bbi, align 8
   %i.bev = getelementptr inbounds nuw i8, ptr %.02148.i.i, i64 4
   %.val53.i.i.i = load i32, ptr %i.bev, align 4   ; 2 uses
-  %i.bew = load ptr, ptr %10, align 8
+  %i.bew = load ptr, ptr %i.bbj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #11
   %i.bex = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bew, i64 noundef 4, ptr noundef nonnull %i.s)
   store i32 %.val53.i.i.i, ptr %i.bex, align 1
@@ -858,7 +860,7 @@ bb.bz:                                            ; preds = %_ZNSt3mapIiiSt4less
   store i32 %i.bfl, ptr %i.t, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u) #11
   %.val60.i.i.i = load ptr, ptr %i.ae, align 8
-  %.val61.i.i.i = load ptr, ptr %10, align 8
+  %.val61.i.i.i = load ptr, ptr %i.bbj, align 8
   %i.bfm = ptrtoint ptr %.val61.i.i.i to i64
   %i.bfn = ptrtoint ptr %.val60.i.i.i to i64
   %i.bfo = sub i64 %i.bfm, %i.bfn
@@ -888,9 +890,9 @@ _ZNSt7__cxx114listIiN2v88internal13ZoneAllocatorIiEEE9push_backERKi.exit.i.i.i: 
   %i.bgb = getelementptr inbounds nuw i8, ptr %i.bfz, i64 16
   store i32 %i.bfj, ptr %i.bgb, align 4
   call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.bfz, ptr noundef nonnull %i.bbh) #11
-  %i.bgc = load i64, ptr %i.bbj, align 8
+  %i.bgc = load i64, ptr %i.bbi, align 8
   %i.bgd = add i64 %i.bgc, 1
-  store i64 %i.bgd, ptr %i.bbj, align 8
+  store i64 %i.bgd, ptr %i.bbi, align 8
   %i.bge = load ptr, ptr %i.be, align 8           ; 2 uses
   %.not10.i.i.i81.i.i.i = icmp eq ptr %i.bge, null
   br i1 %.not10.i.i.i81.i.i.i, label %_ZNSt3mapIiiSt4lessIiEN2v88internal13ZoneAllocatorISt4pairIKiiEEEE4findERS6_.exit93.i.i.i, label %.lr.ph.i.i.i82.i.i.i
@@ -948,7 +950,7 @@ bb.cd:                                            ; preds = %_ZNSt3mapIiiSt4less
   %i.bgp = sext i32 %i.bfd to i64
   %i.bgq = getelementptr inbounds i8, ptr %3, i64 %i.bgp
   %i.bgr = load i8, ptr %i.bgq, align 1
-  %i.bgs = load ptr, ptr %10, align 8
+  %i.bgs = load ptr, ptr %i.bbj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #11
   %i.bgt = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bgs, i64 noundef 1, ptr noundef nonnull %i.r)
   store i8 %i.bgr, ptr %i.bgt, align 1
@@ -959,7 +961,7 @@ bb.ce:                                            ; preds = %_ZNSt3mapIiiSt4less
   %i.bgu = sext i32 %i.bfd to i64
   %i.bgv = getelementptr inbounds i8, ptr %3, i64 %i.bgu
   %i.bgw = load i16, ptr %i.bgv, align 2
-  %i.bgx = load ptr, ptr %10, align 8
+  %i.bgx = load ptr, ptr %i.bbj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #11
   %i.bgy = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bgx, i64 noundef 2, ptr noundef nonnull %i.q)
   store i16 %i.bgw, ptr %i.bgy, align 1
@@ -980,7 +982,7 @@ bb.cf:                                            ; preds = %_ZNSt3mapIiiSt4less
 
 bb.cg:                                            ; preds = %bb.cf
   %i.bhe = trunc i32 %i.bhd to i16
-  %i.bhf = load ptr, ptr %10, align 8
+  %i.bhf = load ptr, ptr %i.bbj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #11
   %i.bhg = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bhf, i64 noundef 2, ptr noundef nonnull %i.p)
   store i16 %i.bhe, ptr %i.bhg, align 1
@@ -989,7 +991,7 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cf
   %i.bhh = load ptr, ptr %i.ae, align 8           ; 2 uses
-  %.val20.i.i.i.i = load ptr, ptr %10, align 8
+  %.val20.i.i.i.i = load ptr, ptr %i.bbj, align 8
   %i.bhi = ptrtoint ptr %.val20.i.i.i.i to i64
   %i.bhj = ptrtoint ptr %i.bhh to i64
   %i.bhk = sub i64 %i.bhi, %i.bhj
@@ -1021,7 +1023,7 @@ bb.ch:                                            ; preds = %bb.cf
   br label %_ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeephole12EmitArgumentEiPKhNS1_23BytecodeArgumentMappingE.exit.i.i.i
 
 bb.ci:                                            ; preds = %bb.cf
-  %i.bhy = load ptr, ptr %10, align 8
+  %i.bhy = load ptr, ptr %i.bbj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #11
   %i.bhz = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bhy, i64 noundef 4, ptr noundef nonnull %i.o)
   store i32 %i.bhd, ptr %i.bhz, align 1
@@ -1032,7 +1034,7 @@ bb.cj:                                            ; preds = %_ZNSt3mapIiiSt4less
   %i.bia = sext i32 %i.bfd to i64
   %i.bib = getelementptr inbounds i8, ptr %3, i64 %i.bia
   %i.bic = load i32, ptr %i.bib, align 4
-  %i.bid = load ptr, ptr %10, align 8
+  %i.bid = load ptr, ptr %i.bbj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #11
   %i.bie = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bid, i64 noundef 4, ptr noundef nonnull %i.n)
   store i32 %i.bic, ptr %i.bie, align 1
@@ -1043,7 +1045,7 @@ bb.ck:                                            ; preds = %_ZNSt3mapIiiSt4less
   %i.bif = sext i32 %i.bfd to i64
   %i.big = getelementptr inbounds i8, ptr %3, i64 %i.bif
   %i.bih = load i64, ptr %i.big, align 8
-  %i.bii = load ptr, ptr %10, align 8
+  %i.bii = load ptr, ptr %i.bbj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #11
   %i.bij = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bii, i64 noundef 8, ptr noundef nonnull %i.m)
   store i64 %i.bih, ptr %i.bij, align 1
@@ -1052,7 +1054,7 @@ bb.ck:                                            ; preds = %_ZNSt3mapIiiSt4less
 
 bb.cl:                                            ; preds = %_ZNSt3mapIiiSt4lessIiEN2v88internal13ZoneAllocatorISt4pairIKiiEEEE4findERS6_.exit.thread.i.i.i
   %.sroa.speculated.i.i.i.i = call i32 @llvm.smin.i32(i32 %.sroa.22.0.copyload.i.i.i.i, i32 %.sroa.2.0.extract.trunc.i.i.i.i) ; 2 uses
-  %i.bik = load ptr, ptr %10, align 8
+  %i.bik = load ptr, ptr %i.bbj, align 8
   %i.bil = sext i32 %.sroa.speculated.i.i.i.i to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #11
   %i.bim = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bik, i64 noundef %i.bil, ptr noundef nonnull %i.l)
@@ -1072,7 +1074,7 @@ _ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeephole17CopyRangeToOutputEPKhii.e
 
 bb.cn:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeephole17CopyRangeToOutputEPKhii.exit.i.i.i.i
   %i.biq = sub nsw i32 %.sroa.22.0.copyload.i.i.i.i, %.sroa.2.0.extract.trunc.i.i.i.i
-  %i.bir = load ptr, ptr %10, align 8
+  %i.bir = load ptr, ptr %i.bbj, align 8
   %i.bis = zext nneg i32 %i.biq to i64            ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #11
   %i.bit = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bir, i64 noundef %i.bis, ptr noundef nonnull %i.k) ; 5 uses
@@ -1194,9 +1196,9 @@ _ZNSt7__cxx114listIiN2v88internal13ZoneAllocatorIiEEE9push_backERKi.exit109.i.i.
   %i.bkk = getelementptr inbounds nuw i8, ptr %i.bki, i64 16
   store i32 %i.bjx, ptr %i.bkk, align 4
   call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.bki, ptr noundef nonnull %i.bbh) #11
-  %i.bkl = load i64, ptr %i.bbj, align 8
+  %i.bkl = load i64, ptr %i.bbi, align 8
   %i.bkm = add i64 %i.bkl, 1
-  store i64 %i.bkm, ptr %i.bbj, align 8
+  store i64 %i.bkm, ptr %i.bbi, align 8
   %i.bkn = load ptr, ptr %i.be, align 8           ; 2 uses
   %.not10.i.i.i110.i.i.i = icmp eq ptr %i.bkn, null
   br i1 %.not10.i.i.i110.i.i.i, label %_ZNSt3mapIiiSt4lessIiEN2v88internal13ZoneAllocatorISt4pairIKiiEEEE4findERS6_.exit122.i.i.i, label %.lr.ph.i.i.i111.i.i.i
@@ -1396,7 +1398,7 @@ _ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeephole23AddJumpDestinationFixupEi
   store i32 %i.bmu, ptr %i.bmv, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %.val58.i.i.i = load ptr, ptr %i.ae, align 8
-  %.val59.i.i.i = load ptr, ptr %10, align 8
+  %.val59.i.i.i = load ptr, ptr %i.bbj, align 8
   %i.bmw = ptrtoint ptr %.val59.i.i.i to i64
   %i.bmx = ptrtoint ptr %.val58.i.i.i to i64
   %i.bmy = sub i64 %i.bmw, %i.bmx
@@ -1440,7 +1442,7 @@ _ZN2v88internal12_GLOBAL__N_122RegExpBytecodePeephole23SetJumpDestinationFixupEi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %i.bnm = load ptr, ptr %10, align 8
+  %i.bnm = load ptr, ptr %i.bbj, align 8
   %i.bnn = sext i32 %i.bmc to i64                 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
   %i.bno = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bnm, i64 noundef %i.bnn, ptr noundef nonnull %i.d)
@@ -1624,8 +1626,7 @@ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiEN2v88internal13ZoneAllo
 bb.da:                                            ; preds = %_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiEN2v88internal13ZoneAllocatorIS2_EEE11equal_rangeERS1_.exit.i.i
   call void @_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiEN2v88internal13ZoneAllocatorIS2_EEE8_M_eraseEPSt13_Rb_tree_nodeIS2_E(ptr noundef nonnull align 8 dereferenceable(56) %i.ap, ptr noundef %.041.i.i.i)
   store ptr null, ptr %i.as, align 8
-  store ptr %i.ar, ptr %i.at, align 8
-  store ptr %i.ar, ptr %i.au, align 8
+  store <2 x ptr> %13, ptr %i.at, align 8
   store i64 0, ptr %i.av, align 8
   br label %_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiEN2v88internal13ZoneAllocatorIS2_EEE5eraseERS1_.exit.i
 
@@ -1666,7 +1667,7 @@ bb.db:                                            ; preds = %_ZNK2v88internal12_
   %i.bqi = zext i8 %i.bqh to i64
   %i.bqj = getelementptr inbounds nuw [4 x i8], ptr @_ZN2v88internalL22kRegExpBytecodeLengthsE, i64 %i.bqi
   %i.bqk = load i32, ptr %i.bqj, align 4          ; 2 uses
-  %i.bql = load ptr, ptr %10, align 8
+  %i.bql = load ptr, ptr %i.bbj, align 8
   %i.bqm = sext i32 %i.bqk to i64                 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.bqn = call noundef ptr @_ZN2v88internal10ZoneVectorIhE19PrepareForInsertionEPKhmPm(ptr noundef nonnull align 8 dereferenceable(328) %7, ptr noundef %i.bql, i64 noundef %i.bqm, ptr noundef nonnull %i.a)

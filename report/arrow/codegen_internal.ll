@@ -203,7 +203,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = alloca i32, align 4                      ; 9 uses
   %4 = alloca %"class.arrow::Result.42", align 8  ; 12 uses
-  %5 = alloca %"class.arrow::Result.38", align 8  ; 12 uses
+  %5 = alloca %"class.arrow::Result.38", align 8  ; 13 uses
   %.idx = mul nuw nsw i64 %2, 24
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 4 uses
   %.not165 = icmp eq i64 %2, 0                    ; 2 uses
@@ -264,7 +264,7 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %._crit_edge
   %i.j = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow7float64Ev() ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !84   ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !84
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !34   ; 12 uses
   %.not.i.i.i = icmp eq ptr %i.m, null            ; 3 uses
@@ -288,13 +288,13 @@ bb.j:                                             ; preds = %bb.h
 
 .lr.ph.i.preheader:                               ; preds = %bb.j, %bb.i, %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 3 uses
+  %6 = insertelement <2 x ptr> poison, ptr %i.k, i64 0
+  %7 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZN5arrow10TypeHolderaSERKS0_.exit.i
-  %.08.i = phi ptr [ %i.ap, %_ZN5arrow10TypeHolderaSERKS0_.exit.i ], [ %1, %.lr.ph.i.preheader ] ; 4 uses
-  store ptr %i.k, ptr %.08.i, align 8, !tbaa !113
-  %6 = getelementptr inbounds nuw i8, ptr %.08.i, i64 8
-  store ptr %i.k, ptr %6, align 8, !tbaa !84
+  %.08.i = phi ptr [ %i.ap, %_ZN5arrow10TypeHolderaSERKS0_.exit.i ], [ %1, %.lr.ph.i.preheader ] ; 3 uses
+  store <2 x ptr> %7, ptr %.08.i, align 8, !tbaa !77
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i, i64 16 ; 3 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !34   ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.m, %i.u
@@ -602,24 +602,26 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %.thread212
   %i.cw = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %7 = load <2 x ptr>, ptr %i.cw, align 8, !tbaa !38, !noalias !226 ; 3 uses
-  %8 = extractelement <2 x ptr> %7, i64 1         ; 10 uses
+  %8 = load ptr, ptr %i.cw, align 8, !tbaa !84, !noalias !226
+  %9 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %10 = load ptr, ptr %9, align 8, !tbaa !34, !noalias !226 ; 11 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cw, i8 0, i64 16, i1 false)
   br i1 %.not165, label %._crit_edge180, label %.lr.ph179
 
 .lr.ph179:                                        ; preds = %bb.aq
-  %.not.i.i.i94 = icmp eq ptr %8, null
-  %i.cx = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
-  %9 = extractelement <2 x ptr> %7, i64 0
+  %.not.i.i.i94 = icmp eq ptr %10, null
+  %i.cx = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
+  %11 = insertelement <2 x ptr> poison, ptr %8, i64 0
+  %12 = shufflevector <2 x ptr> %11, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.ax
 
 ._crit_edge180:                                   ; preds = %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit110, %bb.aq
   store ptr null, ptr %0, align 8, !tbaa !74, !alias.scope !231
-  %.not.i.i89 = icmp eq ptr %8, null
+  %.not.i.i89 = icmp eq ptr %10, null
   br i1 %.not.i.i89, label %_ZN5arrow6StatusC2ERKS0_.exit88, label %bb.ar
 
 bb.ar:                                            ; preds = %._crit_edge180
-  %i.cy = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
   %i.cz = load atomic i64, ptr %i.cy acquire, align 8 ; 2 uses
   %i.da = icmp eq i64 %i.cz, 4294967297
   %i.db = trunc i64 %i.cz to i32                  ; 2 uses
@@ -627,16 +629,16 @@ bb.ar:                                            ; preds = %._crit_edge180
 
 bb.as:                                            ; preds = %bb.ar
   store i32 0, ptr %i.cy, align 8, !tbaa !61
-  %i.dc = getelementptr inbounds nuw i8, ptr %8, i64 12
+  %i.dc = getelementptr inbounds nuw i8, ptr %10, i64 12
   store i32 0, ptr %i.dc, align 4, !tbaa !63
-  %i.dd = load ptr, ptr %8, align 8, !tbaa !64
+  %i.dd = load ptr, ptr %10, align 8, !tbaa !64
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
   %i.df = load ptr, ptr %i.de, align 8
-  call void %i.df(ptr noundef nonnull align 8 dereferenceable(16) %8) #25, !inline_history !142
-  %i.dg = load ptr, ptr %8, align 8, !tbaa !64
+  call void %i.df(ptr noundef nonnull align 8 dereferenceable(16) %10) #25, !inline_history !142
+  %i.dg = load ptr, ptr %10, align 8, !tbaa !64
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 24
   %i.di = load ptr, ptr %i.dh, align 8
-  call void %i.di(ptr noundef nonnull align 8 dereferenceable(16) %8) #25, !inline_history !142
+  call void %i.di(ptr noundef nonnull align 8 dereferenceable(16) %10) #25, !inline_history !142
   br label %_ZN5arrow6StatusC2ERKS0_.exit88
 
 bb.at:                                            ; preds = %bb.ar
@@ -659,11 +661,11 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i91: ; preds = %bb.av, %
   br i1 %i.dm, label %bb.aw, label %_ZN5arrow6StatusC2ERKS0_.exit88, !prof !48
 
 bb.aw:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i91
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %8) #25
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %10) #25
   br label %_ZN5arrow6StatusC2ERKS0_.exit88
 
 bb.ax:                                            ; preds = %.lr.ph179, %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit110
-  %.0177 = phi ptr [ %1, %.lr.ph179 ], [ %i.ei, %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit110 ] ; 4 uses
+  %.0177 = phi ptr [ %1, %.lr.ph179 ], [ %i.ei, %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit110 ] ; 3 uses
   br i1 %.not.i.i.i94, label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit96, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
@@ -682,11 +684,10 @@ bb.ba:                                            ; preds = %bb.ay
   br label %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit96
 
 _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit96: ; preds = %bb.ax, %bb.az, %bb.ba
-  store ptr %9, ptr %.0177, align 8, !tbaa !113
-  %10 = getelementptr inbounds nuw i8, ptr %.0177, i64 8
-  %i.dr = getelementptr inbounds nuw i8, ptr %.0177, i64 16
+  store <2 x ptr> %12, ptr %.0177, align 8, !tbaa !77
+  %i.dr = getelementptr inbounds nuw i8, ptr %.0177, i64 16 ; 2 uses
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !34 ; 8 uses
-  store <2 x ptr> %7, ptr %10, align 8, !tbaa !38
+  store ptr %10, ptr %i.dr, align 8, !tbaa !34
   %.not.i.i.i.i.i97 = icmp eq ptr %i.ds, null
   br i1 %.not.i.i.i.i.i97, label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit110, label %bb.bb
 

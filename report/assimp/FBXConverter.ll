@@ -204,12 +204,12 @@ bb.dj:                                            ; preds = %.lr.ph656
   %i.zb = fadd float %.sroa.8.0, %i.za
   store float %i.zb, ptr %i.yz, align 4
   %i.zc = load ptr, ptr %i.xa, align 8
-  %i.zd = getelementptr inbounds nuw [12 x i8], ptr %i.zc, i64 %i.yo ; 4 uses
-  %13 = load float, ptr %i.zd, align 4            ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.zd, i64 4 ; 2 uses
-  %15 = load float, ptr %14, align 4              ; 3 uses
-  %16 = fmul float %15, %15
-  %i.ze = call float @llvm.fmuladd.f32(float %13, float %13, float %16)
+  %i.zd = getelementptr inbounds nuw [12 x i8], ptr %i.zc, i64 %i.yo ; 3 uses
+  %13 = load <2 x float>, ptr %i.zd, align 4      ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %13, %13
+  %14 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %15 = extractelement <2 x float> %13, i64 0     ; 2 uses
+  %i.ze = call float @llvm.fmuladd.f32(float %15, float %15, float %14)
   %i.zf = getelementptr inbounds nuw i8, ptr %i.zd, i64 8 ; 2 uses
   %i.zg = load float, ptr %i.zf, align 4          ; 3 uses
   %i.zh = call noundef float @llvm.fmuladd.f32(float %i.zg, float %i.zg, float %i.ze) ; 2 uses
@@ -218,11 +218,11 @@ bb.dj:                                            ; preds = %.lr.ph656
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %bb.dj
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.zh)
-  %i.zj = fdiv float 1.000000e+00, %sqrt.i.i      ; 3 uses
-  %17 = fmul float %13, %i.zj
-  store float %17, ptr %i.zd, align 4
-  %18 = fmul float %15, %i.zj
-  store float %18, ptr %14, align 4
+  %i.zj = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
+  %16 = insertelement <2 x float> poison, float %i.zj, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = fmul <2 x float> %13, %17
+  store <2 x float> %18, ptr %i.zd, align 4
   %i.zk = fmul float %i.zg, %i.zj
   store float %i.zk, ptr %i.zf, align 4
   br label %_ZN10aiVector3tIfE13NormalizeSafeEv.exit
@@ -625,12 +625,12 @@ bb.eo:                                            ; preds = %bb.en
   %i.tx = fadd float %.sroa.8.0, %i.tw
   store float %i.tx, ptr %i.tv, align 4
   %i.ty = load ptr, ptr %i.qn, align 8
-  %i.tz = getelementptr inbounds nuw [12 x i8], ptr %i.ty, i64 %i.tk ; 4 uses
-  %10 = load float, ptr %i.tz, align 4            ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.tz, i64 4 ; 2 uses
-  %12 = load float, ptr %11, align 4              ; 3 uses
-  %13 = fmul float %12, %12
-  %i.ua = call float @llvm.fmuladd.f32(float %10, float %10, float %13)
+  %i.tz = getelementptr inbounds nuw [12 x i8], ptr %i.ty, i64 %i.tk ; 3 uses
+  %10 = load <2 x float>, ptr %i.tz, align 4      ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %10, %10
+  %11 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %12 = extractelement <2 x float> %10, i64 0     ; 2 uses
+  %i.ua = call float @llvm.fmuladd.f32(float %12, float %12, float %11)
   %i.ub = getelementptr inbounds nuw i8, ptr %i.tz, i64 8 ; 2 uses
   %i.uc = load float, ptr %i.ub, align 4          ; 3 uses
   %i.ud = call noundef float @llvm.fmuladd.f32(float %i.uc, float %i.uc, float %i.ua) ; 2 uses
@@ -639,11 +639,11 @@ bb.eo:                                            ; preds = %bb.en
 
 _ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %bb.eo
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.ud)
-  %i.uf = fdiv float 1.000000e+00, %sqrt.i.i      ; 3 uses
-  %14 = fmul float %10, %i.uf
-  store float %14, ptr %i.tz, align 4
-  %15 = fmul float %12, %i.uf
-  store float %15, ptr %11, align 4
+  %i.uf = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
+  %13 = insertelement <2 x float> poison, float %i.uf, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %15 = fmul <2 x float> %10, %14
+  store <2 x float> %15, ptr %i.tz, align 4
   %i.ug = fmul float %i.uc, %i.uf
   store float %i.ug, ptr %i.ub, align 4
   br label %_ZN10aiVector3tIfE13NormalizeSafeEv.exit
@@ -1046,7 +1046,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit91:                  ; preds = %bb.v, %bb.w
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp3FBX12FBXConverter15InterpolateKeysEP9aiQuatKeyRKSt6vectorIlSaIlEERKS4_ISt5tupleIJSt10shared_ptrIS6_ESA_IS4_IfSaIfEEEjEESaISF_EERK10aiVector3tIfERdSO_NS0_5Model8RotOrderE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(529) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %4, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %5, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %6, i32 noundef %7) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %8 = alloca %class.aiMatrix4x4t, align 4        ; 16 uses
+  %8 = alloca %class.aiMatrix4x4t, align 4        ; 14 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = load ptr, ptr %2, align 8                ; 2 uses
@@ -1104,10 +1104,8 @@ bb.d:                                             ; preds = %.loopexit
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = sub i64 %i.aa, %i.ab
   %i.ad = ashr exact i64 %i.ac, 3
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %i.af = getelementptr inbounds nuw i8, ptr %8, i64 36
+  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.af = getelementptr inbounds nuw i8, ptr %8, i64 32
   br label %bb.f
 
 _ZNSt10unique_ptrIA_11aiVectorKeySt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZN13aiQuaterniontIfEC2ERK12aiMatrix3x3tIfE.exit, %bb.d
@@ -1136,13 +1134,11 @@ bb.f:                                             ; preds = %.lr.ph, %_ZN13aiQua
 
 bb.g:                                             ; preds = %bb.f
   %i.al = load float, ptr %8, align 4             ; 6 uses
-  %i.am = load float, ptr %10, align 4            ; 4 uses
+  %i.am = load float, ptr %i.ae, align 4          ; 4 uses
   %i.an = load float, ptr %i.t, align 4           ; 6 uses
   %i.ao = load float, ptr %i.u, align 4           ; 4 uses
-  %11 = load float, ptr %9, align 4               ; 4 uses
-  %12 = load float, ptr %i.s, align 4             ; 4 uses
-  %13 = load float, ptr %i.af, align 4            ; 4 uses
-  %14 = load float, ptr %i.ae, align 4            ; 4 uses
+  %9 = load <2 x float>, ptr %i.s, align 4        ; 7 uses
+  %10 = load <2 x float>, ptr %i.af, align 4      ; 7 uses
   %i.ap = load float, ptr %i.v, align 4           ; 6 uses
   %i.aq = fadd float %i.al, %i.an
   %i.ar = fadd float %i.aq, %i.ap                 ; 2 uses
@@ -1152,13 +1148,17 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.at = fadd float %i.ar, 1.000000e+00
   %i.au = tail call noundef float @sqrtf(float noundef %i.at) #27
-  %i.av = fsub float %i.am, %12
-  %15 = fsub float %11, %14
+  %11 = extractelement <2 x float> %9, i64 0
+  %i.av = fsub float %i.am, %11
+  %shift = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %10
+  %12 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %13 = extractelement <2 x float> %10, i64 1
   %i.aw = fsub float %13, %i.ao
   %i.ax = fmul float %i.au, 2.000000e+00
   %i.ay = insertelement <4 x float> poison, float %i.ax, i64 0 ; 2 uses
   %i.az = insertelement <4 x float> %i.ay, float %i.aw, i64 1
-  %i.ba = insertelement <4 x float> %i.az, float %15, i64 2
+  %i.ba = insertelement <4 x float> %i.az, float %12, i64 2
   %i.bb = insertelement <4 x float> %i.ba, float %i.av, i64 3 ; 2 uses
   %i.bc = shufflevector <4 x float> %i.ay, <4 x float> <float 2.500000e-01, float poison, float poison, float poison>, <4 x i32> <i32 4, i32 0, i32 0, i32 0> ; 2 uses
   %i.bd = fmul <4 x float> %i.bb, %i.bc
@@ -1180,13 +1180,15 @@ bb.j:                                             ; preds = %bb.i
   %.scalar = fmul float %i.bl, 2.000000e+00
   %i.bm = insertelement <2 x float> <float poison, float 2.500000e-01>, float %.scalar, i64 0
   %i.bn = shufflevector <2 x float> %i.bm, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 0> ; 3 uses
-  %16 = fadd float %12, %i.am
-  %17 = fadd float %11, %14
-  %i.bo = fsub float %13, %i.ao
+  %14 = insertelement <2 x float> poison, float %i.am, i64 0
+  %15 = extractelement <2 x float> %10, i64 1
+  %i.bo = fsub float %15, %i.ao
   %i.bp = insertelement <4 x float> poison, float %i.bo, i64 0
   %i.bq = shufflevector <4 x float> %i.bp, <4 x float> %i.bn, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
-  %18 = insertelement <4 x float> %i.bq, float %16, i64 2
-  %19 = insertelement <4 x float> %18, float %17, i64 3 ; 2 uses
+  %16 = shufflevector <2 x float> %9, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %17 = shufflevector <2 x float> %14, <2 x float> %10, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+  %18 = fadd <4 x float> %16, %17
+  %19 = shufflevector <4 x float> %i.bq, <4 x float> %18, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
   %i.br = fdiv <4 x float> %19, %i.bn
   %i.bs = fmul <4 x float> %19, %i.bn
   %i.bt = shufflevector <4 x float> %i.br, <4 x float> %i.bs, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
@@ -1202,10 +1204,14 @@ bb.l:                                             ; preds = %bb.k
   %i.bx = fsub float %i.bw, %i.ap
   %i.by = tail call noundef float @sqrtf(float noundef %i.bx) #27
   %i.bz = fmul float %i.by, 2.000000e+00
-  %i.ca = fadd float %12, %i.am
-  %i.cb = fadd float %i.ao, %13
-  %20 = fsub float %11, %14
-  %i.cc = insertelement <4 x float> <float poison, float poison, float 2.500000e-01, float poison>, float %20, i64 0
+  %20 = extractelement <2 x float> %9, i64 0
+  %i.ca = fadd float %20, %i.am
+  %21 = extractelement <2 x float> %10, i64 1
+  %i.cb = fadd float %i.ao, %21
+  %shift75 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop76 = fsub <2 x float> %shift75, %10
+  %22 = extractelement <2 x float> %foldExtExtBinop76, i64 0
+  %i.cc = insertelement <4 x float> <float poison, float poison, float 2.500000e-01, float poison>, float %22, i64 0
   %i.cd = insertelement <4 x float> %i.cc, float %i.ca, i64 1
   %i.ce = insertelement <4 x float> %i.cd, float %i.cb, i64 3 ; 2 uses
   %i.cf = insertelement <4 x float> poison, float %i.bz, i64 0
@@ -1221,16 +1227,18 @@ bb.m:                                             ; preds = %bb.k
   %i.cm = fsub float %i.cl, %i.an
   %i.cn = tail call noundef float @sqrtf(float noundef %i.cm) #27
   %i.co = fmul float %i.cn, 2.000000e+00
-  %21 = fadd float %11, %14
-  %22 = fadd float %i.ao, %13
-  %i.cp = fsub float %i.am, %12
+  %23 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %24 = insertelement <2 x float> %23, float %i.ao, i64 1
+  %25 = fadd <2 x float> %24, %10
+  %26 = extractelement <2 x float> %9, i64 0
+  %i.cp = fsub float %i.am, %26
   %i.cq = insertelement <4 x float> <float poison, float poison, float poison, float 2.500000e-01>, float %i.cp, i64 0
-  %23 = insertelement <4 x float> %i.cq, float %21, i64 1
-  %24 = insertelement <4 x float> %23, float %22, i64 2 ; 2 uses
+  %27 = shufflevector <2 x float> %25, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %28 = shufflevector <4 x float> %i.cq, <4 x float> %27, <4 x i32> <i32 0, i32 4, i32 5, i32 3> ; 2 uses
   %i.cr = insertelement <4 x float> poison, float %i.co, i64 0
   %i.cs = shufflevector <4 x float> %i.cr, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.ct = fdiv <4 x float> %24, %i.cs
-  %i.cu = fmul <4 x float> %24, %i.cs
+  %i.ct = fdiv <4 x float> %28, %i.cs
+  %i.cu = fmul <4 x float> %28, %i.cs
   %i.cv = shufflevector <4 x float> %i.ct, <4 x float> %i.cu, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
   br label %_ZN13aiQuaterniontIfEC2ERK12aiMatrix3x3tIfE.exit
 

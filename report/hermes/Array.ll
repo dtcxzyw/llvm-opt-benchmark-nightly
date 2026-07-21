@@ -201,7 +201,7 @@ define hidden { i32, i64 } @_ZN6hermes2vm18arrayPrototypeJoinEPvRNS0_7RuntimeENS
 bb.a:
   %3 = alloca %"class.hermes::vm::GCScope", align 8 ; 14 uses
   %4 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
-  %5 = alloca %"class.hermes::vm::GCScope", align 8 ; 18 uses
+  %5 = alloca %"class.hermes::vm::GCScope", align 8 ; 17 uses
   %6 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %7 = alloca %"class.hermes::vm::CallResult.167", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
@@ -461,8 +461,9 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
   %i.dg = getelementptr inbounds nuw i8, ptr %5, i64 152
   %i.dh = getelementptr inbounds nuw i8, ptr %5, i64 156
   %i.di = getelementptr inbounds nuw i8, ptr %5, i64 192
-  %i.dj = getelementptr inbounds nuw i8, ptr %5, i64 200
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 208
+  %i.dj = getelementptr inbounds nuw i8, ptr %5, i64 208
+  %8 = insertelement <2 x ptr> poison, ptr %i.de, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.dd, i64 1
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph, %bb.aj
@@ -496,9 +497,8 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   store i32 4, ptr %i.dh, align 4, !tbaa !36
   store ptr %i.de, ptr %i.df, align 8
   store i32 1, ptr %i.dg, align 8, !tbaa !37
-  store ptr %i.de, ptr %i.di, align 8, !tbaa !21
-  store ptr %i.dd, ptr %i.dj, align 8, !tbaa !30
-  store i32 0, ptr %8, align 8, !tbaa !38
+  store <2 x ptr> %9, ptr %i.di, align 8, !tbaa !42
+  store i32 0, ptr %i.dj, align 8, !tbaa !38
   store ptr %5, ptr %i.b, align 8, !tbaa !18
   %i.dw = call { i32, i64 } @_ZN6hermes2vm8JSObject27getComputedWithReceiver_RJSENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEES7_(ptr nonnull %.0.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.0.i.i.i.i.i.i74, ptr nonnull %.0.i.i.i.i.i.i) #9 ; 2 uses
   %i.dx = extractvalue { i32, i64 } %i.dw, 0
@@ -901,22 +901,23 @@ bb.az:                                            ; preds = %bb.ay
   %i.ib = uitofp i32 %spec.select to double
   %i.ic = getelementptr inbounds nuw i8, ptr %10, i64 4
   %i.id = zext i32 %i.eo to i64
+  %11 = insertelement <2 x double> poison, double %i.cm, i64 0
+  %12 = insertelement <2 x double> %11, double %i.ib, i64 1
   br label %bb.ba
 
 bb.ba:                                            ; preds = %.lr.ph417, %bb.be
-  %.0197416 = phi double [ %i.hz, %.lr.ph417 ], [ %i.is, %bb.be ] ; 3 uses
-  %11 = fadd double %.0197416, %i.cm
-  %12 = fadd double %11, -1.000000e+00            ; 2 uses
-  %13 = fcmp uno double %12, 0.000000e+00
-  %14 = bitcast double %12 to i64
-  %.sroa.0.0.i259 = select i1 %13, i64 9221120237041090560, i64 %14, !prof !7
-  store i64 %.sroa.0.0.i259, ptr %.0.i.i.i.i.i.i219, align 8, !tbaa !8
-  %15 = fadd double %.0197416, %i.ib
-  %16 = fadd double %15, -1.000000e+00            ; 2 uses
-  %17 = fcmp uno double %16, 0.000000e+00
-  %18 = bitcast double %16 to i64
-  %.sroa.0.0.i260 = select i1 %17, i64 9221120237041090560, i64 %18, !prof !7
-  store i64 %.sroa.0.0.i260, ptr %.0.i.i.i.i.i.i220, align 8, !tbaa !8
+  %.0197416 = phi double [ %i.hz, %.lr.ph417 ], [ %i.is, %bb.be ] ; 2 uses
+  %13 = insertelement <2 x double> poison, double %.0197416, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = fadd <2 x double> %14, %12
+  %16 = fadd <2 x double> %15, splat (double -1.000000e+00) ; 2 uses
+  %17 = fcmp uno <2 x double> %16, zeroinitializer
+  %18 = bitcast <2 x double> %16 to <2 x i64>
+  %19 = select <2 x i1> %17, <2 x i64> splat (i64 9221120237041090560), <2 x i64> %18 ; 2 uses
+  %20 = extractelement <2 x i64> %19, i64 0
+  store i64 %20, ptr %.0.i.i.i.i.i.i219, align 8, !tbaa !8
+  %21 = extractelement <2 x i64> %19, i64 1
+  store i64 %21, ptr %.0.i.i.i.i.i.i220, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #9
   store i32 0, ptr %10, align 8, !tbaa !54
   store i32 -1, ptr %i.ic, align 4, !tbaa !110

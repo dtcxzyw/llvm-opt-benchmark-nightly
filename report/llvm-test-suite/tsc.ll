@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.a, %bb.b
 
 .preheader86:                                     ; preds = %bb.b, %bb.c
   %indvars.iv117 = phi i64 [ %indvars.iv.next118, %bb.c ], [ 0, %bb.b ] ; 4 uses
-  %.075100 = phi float [ %i.ab, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %.07699 = phi float [ %10, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %.07898 = phi float [ %7, %bb.c ], [ 0.000000e+00, %bb.b ]
+  %.07699 = phi float [ %i.ab, %bb.c ], [ 0.000000e+00, %bb.b ]
+  %1 = phi <2 x float> [ %14, %bb.c ], [ zeroinitializer, %bb.b ]
   %i.r = getelementptr inbounds nuw [1024 x i8], ptr getelementptr inbounds nuw (i8, ptr @global_data, i64 640192), i64 %indvars.iv117 ; 2 uses
   %i.s = getelementptr inbounds nuw [1024 x i8], ptr getelementptr inbounds nuw (i8, ptr @global_data, i64 902416), i64 %indvars.iv117 ; 2 uses
   %i.t = getelementptr inbounds nuw [1024 x i8], ptr getelementptr inbounds nuw (i8, ptr @global_data, i64 1164640), i64 %indvars.iv117 ; 2 uses
@@ -217,25 +216,26 @@ bb.c:                                             ; preds = %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.preheader86
   %indvars.iv113 = phi i64 [ 0, %.preheader86 ], [ %indvars.iv.next114.1, %bb.d ] ; 5 uses
-  %.196 = phi float [ %.075100, %.preheader86 ], [ %i.ab, %bb.d ]
-  %.17795 = phi float [ %.07699, %.preheader86 ], [ %10, %bb.d ]
-  %.17994 = phi float [ %.07898, %.preheader86 ], [ %7, %bb.d ]
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv113
-  %2 = load float, ptr %1, align 8, !tbaa !8
-  %3 = fadd float %.17994, %2
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv113
-  %5 = load float, ptr %4, align 8, !tbaa !8
-  %6 = fadd float %.17795, %5
+  %.196 = phi float [ %.07699, %.preheader86 ], [ %i.ab, %bb.d ]
+  %2 = phi <2 x float> [ %1, %.preheader86 ], [ %14, %bb.d ]
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv113
+  %4 = load float, ptr %3, align 8, !tbaa !8
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv113
+  %6 = load float, ptr %5, align 8, !tbaa !8
+  %7 = insertelement <2 x float> poison, float %6, i64 0
+  %8 = insertelement <2 x float> %7, float %4, i64 1
+  %9 = fadd <2 x float> %2, %8
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv113
   %i.v = load float, ptr %i.u, align 8, !tbaa !8
   %i.w = fadd float %.196, %i.v
   %indvars.iv.next114 = or disjoint i64 %indvars.iv113, 1 ; 3 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv.next114
   %i.y = load float, ptr %i.x, align 4, !tbaa !8
-  %7 = fadd float %3, %i.y                        ; 6 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.next114
-  %9 = load float, ptr %8, align 4, !tbaa !8
-  %10 = fadd float %6, %9                         ; 5 uses
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.next114
+  %11 = load float, ptr %10, align 4, !tbaa !8
+  %12 = insertelement <2 x float> poison, float %11, i64 0
+  %13 = insertelement <2 x float> %12, float %i.y, i64 1
+  %14 = fadd <2 x float> %9, %13                  ; 9 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv.next114
   %i.aa = load float, ptr %i.z, align 4, !tbaa !8
   %i.ab = fadd float %i.w, %i.aa                  ; 4 uses
@@ -320,9 +320,11 @@ bb.i:                                             ; preds = %bb.e
   br label %.sink.split
 
 bb.j:                                             ; preds = %bb.e
+  %15 = extractelement <2 x float> %14, i64 1
   br label %.sink.split
 
 bb.k:                                             ; preds = %bb.e
+  %16 = extractelement <2 x float> %14, i64 0
   br label %.sink.split
 
 bb.l:                                             ; preds = %bb.e
@@ -355,16 +357,21 @@ bb.q:                                             ; preds = %bb.e
   br label %.sink.split
 
 bb.r:                                             ; preds = %bb.e
-  %11 = fadd float %7, %10
+  %shift144 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop145 = fadd <2 x float> %shift144, %14
+  %17 = extractelement <2 x float> %foldExtExtBinop145, i64 0
   br label %.sink.split
 
 bb.s:                                             ; preds = %bb.e
-  %12 = fadd float %7, %10
-  %i.bu = fadd float %12, %i.ab
+  %shift147 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop148 = fadd <2 x float> %shift147, %14
+  %18 = extractelement <2 x float> %foldExtExtBinop148, i64 0
+  %i.bu = fadd float %18, %i.ab
   br label %.sink.split
 
 bb.t:                                             ; preds = %bb.e
-  %i.bv = fadd float %i.d, %7
+  %19 = extractelement <2 x float> %14, i64 1
+  %i.bv = fadd float %i.d, %19
   br label %.sink.split
 
 bb.u:                                             ; preds = %bb.e
@@ -378,7 +385,7 @@ bb.v:                                             ; preds = %bb.e
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.e, %bb.v, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u
-  %.sink134 = phi float [ %i.bw, %bb.u ], [ %i.bv, %bb.t ], [ %i.bu, %bb.s ], [ %11, %bb.r ], [ %i.bt, %bb.q ], [ %i.bp, %bb.p ], [ %i.bn, %bb.o ], [ %i.bm, %bb.n ], [ %i.bg, %bb.m ], [ %i.ab, %bb.l ], [ %10, %bb.k ], [ %7, %bb.j ], [ %i.bk, %bb.i ], [ %i.bj, %bb.h ], [ %i.bi, %bb.g ], [ %i.bh, %bb.f ], [ %i.bz, %bb.v ], [ %i.d, %bb.e ]
+  %.sink134 = phi float [ %i.bw, %bb.u ], [ %i.bv, %bb.t ], [ %i.bu, %bb.s ], [ %17, %bb.r ], [ %i.bt, %bb.q ], [ %i.bp, %bb.p ], [ %i.bn, %bb.o ], [ %i.bm, %bb.n ], [ %i.bg, %bb.m ], [ %i.ab, %bb.l ], [ %16, %bb.k ], [ %15, %bb.j ], [ %i.bk, %bb.i ], [ %i.bj, %bb.h ], [ %i.bi, %bb.g ], [ %i.bh, %bb.f ], [ %i.bz, %bb.v ], [ %i.d, %bb.e ]
   %.sink = load i32, ptr @digits, align 4, !tbaa !4
   %i.ca = fpext float %.sink134 to double
   %i.cb = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, i32 noundef %.sink, double noundef %i.ca) ; 0 uses

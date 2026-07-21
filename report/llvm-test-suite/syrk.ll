@@ -143,7 +143,7 @@ polybench_alloc_data.exit22:                      ; preds = %polybench_alloc_dat
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store ptr null, ptr %i.a, align 8, !tbaa !10
   %i.r = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 4096, i64 noundef 9600000) #12
-  %i.s = load ptr, ptr %i.a, align 8, !tbaa !10   ; 13 uses
+  %i.s = load ptr, ptr %i.a, align 8, !tbaa !10   ; 12 uses
   %i.t = icmp eq ptr %i.s, null
   %i.u = icmp ne i32 %i.r, 0
   %or.cond.i.i23 = select i1 %i.t, i1 true, i1 %i.u
@@ -251,19 +251,23 @@ scalar.ph:                                        ; preds = %.preheader.i, %scal
 middle.block92:                                   ; preds = %vector.body87, %scalar.ph
   %indvars.iv.next50.i = add nuw nsw i64 %indvars.iv49.i, 1 ; 2 uses
   %exitcond52.not.i = icmp eq i64 %indvars.iv.next50.i, 1200
-  br i1 %exitcond52.not.i, label %.preheader29.i, label %.preheader.i, !llvm.loop !21
+  br i1 %exitcond52.not.i, label %.preheader29.i.preheader, label %.preheader.i, !llvm.loop !21
 
-.preheader29.i:                                   ; preds = %middle.block92, %bb.e
-  %indvars.iv48.i = phi i64 [ %indvars.iv.next49.i, %bb.e ], [ 0, %middle.block92 ] ; 7 uses
-  %indvars.iv46.i = phi i64 [ %indvars.iv.next47.i, %bb.e ], [ 1, %middle.block92 ] ; 10 uses
+.preheader29.i.preheader:                         ; preds = %middle.block92
+  %2 = insertelement <2 x ptr> poison, ptr %i.s, i64 0 ; 2 uses
+  br label %.preheader29.i
+
+.preheader29.i:                                   ; preds = %.preheader29.i.preheader, %bb.e
+  %indvars.iv48.i = phi i64 [ %indvars.iv.next49.i, %bb.e ], [ 0, %.preheader29.i.preheader ] ; 7 uses
+  %indvars.iv46.i = phi i64 [ %indvars.iv.next47.i, %bb.e ], [ 1, %.preheader29.i.preheader ] ; 10 uses
   %i.bi = mul nuw nsw i64 %indvars.iv48.i, 9600
-  %scevgep = getelementptr nuw i8, ptr %i.e, i64 %i.bi ; 2 uses
+  %scevgep = getelementptr nuw i8, ptr %i.e, i64 %i.bi
   %i.bj = mul nuw nsw i64 %indvars.iv48.i, 9608
   %i.bk = getelementptr i8, ptr %i.e, i64 %i.bj
-  %scevgep94 = getelementptr i8, ptr %i.bk, i64 8 ; 2 uses
+  %scevgep94 = getelementptr i8, ptr %i.bk, i64 8
   %i.bl = mul nuw nsw i64 %indvars.iv48.i, 8000   ; 2 uses
   %i.bm = getelementptr i8, ptr %i.s, i64 %i.bl
-  %scevgep95 = getelementptr i8, ptr %i.bm, i64 8000 ; 2 uses
+  %scevgep95 = getelementptr i8, ptr %i.bm, i64 8000
   %scevgep96 = getelementptr i8, ptr %i.s, i64 %i.bl
   %i.bn = getelementptr inbounds nuw [9600 x i8], ptr %i.e, i64 %indvars.iv48.i ; 6 uses
   %min.iters.check110 = icmp samesign ult i64 %indvars.iv46.i, 4
@@ -297,14 +301,18 @@ scalar.ph109.preheader:                           ; preds = %.preheader29.i, %mi
 
 .preheader28.i:                                   ; preds = %scalar.ph109, %middle.block119
   %i.bt = getelementptr inbounds nuw [8000 x i8], ptr %i.s, i64 %indvars.iv48.i
-  %min.iters.check = icmp samesign ult i64 %indvars.iv46.i, 4
-  %bound0 = icmp ult ptr %scevgep, %scevgep95
-  %bound1 = icmp ult ptr %i.s, %scevgep94
-  %found.conflict = and i1 %bound0, %bound1
-  %bound097 = icmp ult ptr %scevgep, %scevgep95
-  %bound198 = icmp ult ptr %scevgep96, %scevgep94
-  %found.conflict99 = and i1 %bound097, %bound198
-  %conflict.rdx = or i1 %found.conflict, %found.conflict99
+  %3 = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
+  %4 = insertelement <2 x ptr> poison, ptr %scevgep95, i64 0
+  %5 = insertelement <2 x ptr> %2, ptr %scevgep96, i64 1
+  %6 = insertelement <2 x ptr> poison, ptr %scevgep94, i64 0
+  %7 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %bound0 = icmp samesign ult i64 %indvars.iv46.i, 4
+  %8 = icmp ult <2 x ptr> %3, %4
+  %9 = shufflevector <2 x i1> %8, <2 x i1> poison, <2 x i32> zeroinitializer
+  %10 = icmp ult <2 x ptr> %5, %7
+  %11 = and <2 x i1> %9, %10
+  %12 = bitcast <2 x i1> %11 to i2
+  %conflict.rdx.not = icmp eq i2 %12, 0
   %n.vec = and i64 %indvars.iv46.i, 9223372036854775804 ; 3 uses
   %cmp.n = icmp eq i64 %indvars.iv46.i, %n.vec
   %xtraiter = and i64 %indvars.iv46.i, 1
@@ -325,7 +333,8 @@ scalar.ph109:                                     ; preds = %scalar.ph109.prehea
   %indvars.iv42.i = phi i64 [ 0, %.preheader28.i ], [ %indvars.iv.next43.i, %.loopexit162 ] ; 3 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv42.i ; 4 uses
   %invariant.gep.i = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv42.i ; 7 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx
+  %conflict.rdx.not.not = xor i1 %conflict.rdx.not, true
+  %brmerge = select i1 %bound0, i1 true, i1 %conflict.rdx.not.not
   br i1 %brmerge, label %scalar.ph100.preheader, label %vector.ph101
 
 vector.ph101:                                     ; preds = %.preheader.i28
@@ -426,13 +435,13 @@ bb.e:                                             ; preds = %.loopexit162
   %indvars.iv48.i30 = phi i64 [ %indvars.iv.next49.i45, %bb.f ], [ 0, %bb.e ] ; 7 uses
   %indvars.iv46.i31 = phi i64 [ %indvars.iv.next47.i46, %bb.f ], [ 1, %bb.e ] ; 10 uses
   %i.dn = mul nuw nsw i64 %indvars.iv48.i30, 9600
-  %scevgep123 = getelementptr nuw i8, ptr %i.l, i64 %i.dn ; 2 uses
+  %scevgep123 = getelementptr nuw i8, ptr %i.l, i64 %i.dn
   %i.do = mul nuw nsw i64 %indvars.iv48.i30, 9608
   %i.dp = getelementptr i8, ptr %i.l, i64 %i.do
-  %scevgep124 = getelementptr i8, ptr %i.dp, i64 8 ; 2 uses
+  %scevgep124 = getelementptr i8, ptr %i.dp, i64 8
   %i.dq = mul nuw nsw i64 %indvars.iv48.i30, 8000 ; 2 uses
   %i.dr = getelementptr i8, ptr %i.s, i64 %i.dq
-  %scevgep125 = getelementptr i8, ptr %i.dr, i64 8000 ; 2 uses
+  %scevgep125 = getelementptr i8, ptr %i.dr, i64 8000
   %scevgep126 = getelementptr i8, ptr %i.s, i64 %i.dq
   %i.ds = getelementptr inbounds nuw [9600 x i8], ptr %i.l, i64 %indvars.iv48.i30 ; 6 uses
   %min.iters.check150 = icmp samesign ult i64 %indvars.iv46.i31, 4
@@ -466,14 +475,18 @@ scalar.ph149.preheader:                           ; preds = %.preheader29.i29, %
 
 .preheader28.i35:                                 ; preds = %scalar.ph149, %middle.block159
   %i.dy = getelementptr inbounds nuw [8000 x i8], ptr %i.s, i64 %indvars.iv48.i30
-  %min.iters.check135 = icmp samesign ult i64 %indvars.iv46.i31, 4
-  %bound0127 = icmp ult ptr %scevgep123, %scevgep125
-  %bound1128 = icmp ult ptr %i.s, %scevgep124
-  %found.conflict129 = and i1 %bound0127, %bound1128
-  %bound0130 = icmp ult ptr %scevgep123, %scevgep125
-  %bound1131 = icmp ult ptr %scevgep126, %scevgep124
-  %found.conflict132 = and i1 %bound0130, %bound1131
-  %conflict.rdx133 = or i1 %found.conflict129, %found.conflict132
+  %13 = insertelement <2 x ptr> poison, ptr %scevgep123, i64 0
+  %14 = insertelement <2 x ptr> poison, ptr %scevgep125, i64 0
+  %15 = insertelement <2 x ptr> %2, ptr %scevgep126, i64 1
+  %16 = insertelement <2 x ptr> poison, ptr %scevgep124, i64 0
+  %17 = shufflevector <2 x ptr> %16, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %bound0127 = icmp samesign ult i64 %indvars.iv46.i31, 4
+  %18 = icmp ult <2 x ptr> %13, %14
+  %19 = shufflevector <2 x i1> %18, <2 x i1> poison, <2 x i32> zeroinitializer
+  %20 = icmp ult <2 x ptr> %15, %17
+  %21 = and <2 x i1> %19, %20
+  %22 = bitcast <2 x i1> %21 to i2
+  %conflict.rdx133.not = icmp eq i2 %22, 0
   %n.vec138 = and i64 %indvars.iv46.i31, 9223372036854775804 ; 3 uses
   %cmp.n147 = icmp eq i64 %indvars.iv46.i31, %n.vec138
   %xtraiter170 = and i64 %indvars.iv46.i31, 1
@@ -494,7 +507,8 @@ scalar.ph149:                                     ; preds = %scalar.ph149.prehea
   %indvars.iv42.i37 = phi i64 [ 0, %.preheader28.i35 ], [ %indvars.iv.next43.i43, %.loopexit ] ; 3 uses
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.dy, i64 %indvars.iv42.i37 ; 4 uses
   %invariant.gep.i38 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv42.i37 ; 7 uses
-  %brmerge173 = select i1 %min.iters.check135, i1 true, i1 %conflict.rdx133
+  %conflict.rdx133.not.not = xor i1 %conflict.rdx133.not, true
+  %brmerge173 = select i1 %bound0127, i1 true, i1 %conflict.rdx133.not.not
   br i1 %brmerge173, label %scalar.ph134.preheader, label %vector.ph136
 
 vector.ph136:                                     ; preds = %.preheader.i36

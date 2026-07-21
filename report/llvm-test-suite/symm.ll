@@ -105,7 +105,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   store ptr null, ptr %i.c, align 8, !tbaa !10
   %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.c, i64 noundef 4096, i64 noundef 38400) #11
-  %i.e = load ptr, ptr %i.c, align 8, !tbaa !10   ; 10 uses
+  %i.e = load ptr, ptr %i.c, align 8, !tbaa !10   ; 9 uses
   %i.f = ptrtoaddr ptr %i.e to i64
   %i.g = icmp eq ptr %i.e, null
   %i.h = icmp ne i32 %i.d, 0
@@ -123,7 +123,7 @@ polybench_alloc_data.exit:                        ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   store ptr null, ptr %i.b, align 8, !tbaa !10
   %i.k = call i32 @posix_memalign(ptr noundef nonnull %i.b, i64 noundef 4096, i64 noundef 28800) #11
-  %i.l = load ptr, ptr %i.b, align 8, !tbaa !10   ; 6 uses
+  %i.l = load ptr, ptr %i.b, align 8, !tbaa !10   ; 5 uses
   %i.m = icmp eq ptr %i.l, null
   %i.n = icmp ne i32 %i.k, 0
   %or.cond.i.i15 = select i1 %i.m, i1 true, i1 %i.n
@@ -140,7 +140,7 @@ polybench_alloc_data.exit16:                      ; preds = %polybench_alloc_dat
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store ptr null, ptr %i.a, align 8, !tbaa !10
   %i.q = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 4096, i64 noundef 38400) #11
-  %i.r = load ptr, ptr %i.a, align 8, !tbaa !10   ; 8 uses
+  %i.r = load ptr, ptr %i.a, align 8, !tbaa !10   ; 7 uses
   %i.s = icmp eq ptr %i.r, null
   %i.t = icmp ne i32 %i.q, 0
   %or.cond.i.i17 = select i1 %i.s, i1 true, i1 %i.t
@@ -229,16 +229,19 @@ middle.block:                                     ; preds = %vector.body, %scala
   br i1 %exitcond73.not.i, label %.preheader44.i.preheader, label %.preheader.i, !llvm.loop !20
 
 .preheader44.i.preheader:                         ; preds = %.loopexit.i
-  %scevgep = getelementptr i8, ptr %i.e, i64 38400 ; 2 uses
-  %scevgep58 = getelementptr i8, ptr %i.r, i64 38400
-  %scevgep59 = getelementptr i8, ptr %i.l, i64 28800
-  %bound0 = icmp ult ptr %i.e, %scevgep58
-  %bound1 = icmp ult ptr %i.r, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
-  %bound060 = icmp ult ptr %i.e, %scevgep59
-  %bound161 = icmp ult ptr %i.l, %scevgep
-  %found.conflict62 = and i1 %bound060, %bound161
-  %conflict.rdx = or i1 %found.conflict, %found.conflict62
+  %scevgep = getelementptr i8, ptr %i.e, i64 38400
+  %2 = insertelement <2 x ptr> poison, ptr %i.r, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.l, i64 1 ; 2 uses
+  %4 = getelementptr i8, <2 x ptr> %3, <2 x i64> <i64 38400, i64 28800>
+  %5 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
+  %6 = shufflevector <2 x ptr> %5, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
+  %8 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %9 = icmp ult <2 x ptr> %6, %4
+  %10 = icmp ult <2 x ptr> %3, %8
+  %11 = and <2 x i1> %9, %10
+  %12 = bitcast <2 x i1> %11 to i2
+  %conflict.rdx.not = icmp eq i2 %12, 0
   br label %.preheader44.i
 
 .preheader.i:                                     ; preds = %middle.block, %.loopexit.i
@@ -342,7 +345,7 @@ middle.block41:                                   ; preds = %vector.body38
   br i1 %.not.i, label %vector.memcheck57, label %.preheader.us.i
 
 vector.memcheck57:                                ; preds = %.preheader44.i
-  br i1 %conflict.rdx, label %.preheader.i22, label %vector.ph64
+  br i1 %conflict.rdx.not, label %vector.ph64, label %.preheader.i22
 
 vector.ph64:                                      ; preds = %vector.memcheck57
   %i.cd = load double, ptr %i.cc, align 8, !tbaa !8, !alias.scope !25

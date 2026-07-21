@@ -203,9 +203,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc range(i32 0, 2) i32 @evp_pkey_ctx_setget_params_to_ctrl(ptr noundef %0, i32 noundef range(i32 1, 3) %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.translation_ctx_st, align 8 ; 13 uses
-  %4 = alloca %struct.translation_st, align 8     ; 10 uses
+  %4 = alloca %struct.translation_st, align 8     ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 3 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 2 uses
   %i.c = load i32, ptr %0, align 8, !tbaa !42     ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
   %spec.select = select i1 %i.d, i32 -1, i32 %i.c ; 2 uses
@@ -213,8 +213,7 @@ bb.a:
   br i1 %.not47, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 40
@@ -226,7 +225,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.o = load ptr, ptr %2, align 8, !tbaa !63     ; 2 uses
   %.not4056 = icmp eq ptr %i.o, null
-  br i1 %.not4056, label %.critedge, label %.lr.ph58
+  br i1 %.not4056, label %.critedge, label %.lr.ph58.preheader
+
+.lr.ph58.preheader:                               ; preds = %.lr.ph
+  %5 = insertelement <2 x i32> poison, i32 %i.b, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph58
 
 bb.b:                                             ; preds = %cleanup_translation_ctx.exit
   %i.p = getelementptr inbounds nuw i8, ptr %.0364857, i64 40 ; 2 uses
@@ -234,17 +238,16 @@ bb.b:                                             ; preds = %cleanup_translation
   %.not40 = icmp eq ptr %i.q, null
   br i1 %.not40, label %.critedge, label %.lr.ph58
 
-.lr.ph58:                                         ; preds = %.lr.ph, %bb.b
-  %i.r = phi ptr [ %i.q, %bb.b ], [ %i.o, %.lr.ph ]
-  %.0364857 = phi ptr [ %i.p, %bb.b ], [ %2, %.lr.ph ] ; 2 uses
+.lr.ph58:                                         ; preds = %.lr.ph58.preheader, %bb.b
+  %i.r = phi ptr [ %i.q, %bb.b ], [ %i.o, %.lr.ph58.preheader ]
+  %.0364857 = phi ptr [ %i.p, %bb.b ], [ %2, %.lr.ph58.preheader ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %3, i8 0, i64 144, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.n, i8 0, i64 48, i1 false)
   store i32 %1, ptr %4, align 8, !tbaa !31
-  store i32 %1, ptr %5, align 8, !tbaa !32
-  store i32 %i.b, ptr %i.e, align 8, !tbaa !24
-  store i32 %i.b, ptr %i.f, align 4, !tbaa !25
+  store i32 %1, ptr %i.e, align 8, !tbaa !32
+  store <2 x i32> %6, ptr %i.f, align 4, !tbaa !5
   store i32 %spec.select, ptr %i.g, align 4, !tbaa !26
   store ptr %i.r, ptr %i.h, align 8, !tbaa !45
   %i.s = call fastcc ptr @lookup_translation(ptr noundef nonnull %4, ptr noundef nonnull @evp_pkey_ctx_translations, i64 noundef 86) ; 5 uses
@@ -267,7 +270,7 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph58
   store ptr %.0364857, ptr %i.j, align 8, !tbaa !40
   %i.x = call i32 %.133(i32 noundef 7, ptr noundef %i.s, ptr noundef nonnull %3) #7 ; 2 uses
   %i.y = icmp sgt i32 %i.x, 0
-  %i.z = load i32, ptr %5, align 8
+  %i.z = load i32, ptr %i.e, align 8
   %i.aa = icmp ne i32 %i.z, 0
   %or.cond = select i1 %i.y, i1 %i.aa, i1 false
   br i1 %or.cond, label %bb.e, label %bb.f

@@ -204,12 +204,12 @@ bb.o:                                             ; preds = %._crit_edge114
   br i1 %.not96115, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %.lr.ph118
 
 .lr.ph118:                                        ; preds = %bb.o, %_ZN10aiVector3tIdE9NormalizeEv.exit
-  %.sroa.065.0116 = phi ptr [ %i.gt, %_ZN10aiVector3tIdE9NormalizeEv.exit ], [ %i.gk, %bb.o ] ; 5 uses
-  %4 = load double, ptr %.sroa.065.0116, align 8  ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.065.0116, i64 8 ; 2 uses
-  %6 = load double, ptr %5, align 8               ; 3 uses
-  %7 = fmul double %6, %6
-  %i.gm = tail call double @llvm.fmuladd.f64(double %4, double %4, double %7)
+  %.sroa.065.0116 = phi ptr [ %i.gt, %_ZN10aiVector3tIdE9NormalizeEv.exit ], [ %i.gk, %bb.o ] ; 4 uses
+  %4 = load <2 x double>, ptr %.sroa.065.0116, align 8 ; 4 uses
+  %foldExtExtBinop = fmul <2 x double> %4, %4
+  %5 = extractelement <2 x double> %foldExtExtBinop, i64 1
+  %6 = extractelement <2 x double> %4, i64 0      ; 2 uses
+  %i.gm = tail call double @llvm.fmuladd.f64(double %6, double %6, double %5)
   %i.gn = getelementptr inbounds nuw i8, ptr %.sroa.065.0116, i64 16 ; 2 uses
   %i.go = load double, ptr %i.gn, align 8         ; 3 uses
   %i.gp = tail call noundef double @llvm.fmuladd.f64(double %i.go, double %i.go, double %i.gm) ; 2 uses
@@ -218,11 +218,11 @@ bb.o:                                             ; preds = %._crit_edge114
 
 _ZN10aiVector3tIdEdVEd.exit.i:                    ; preds = %.lr.ph118
   %sqrt.i.i = tail call noundef double @llvm.sqrt.f64(double %i.gp)
-  %i.gr = fdiv double 1.000000e+00, %sqrt.i.i     ; 3 uses
-  %8 = fmul double %4, %i.gr
-  store double %8, ptr %.sroa.065.0116, align 8
-  %9 = fmul double %6, %i.gr
-  store double %9, ptr %5, align 8
+  %i.gr = fdiv double 1.000000e+00, %sqrt.i.i     ; 2 uses
+  %7 = insertelement <2 x double> poison, double %i.gr, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = fmul <2 x double> %4, %8
+  store <2 x double> %9, ptr %.sroa.065.0116, align 8
   %i.gs = fmul double %i.go, %i.gr
   store double %i.gs, ptr %i.gn, align 8
   br label %_ZN10aiVector3tIdE9NormalizeEv.exit
@@ -515,7 +515,7 @@ _ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPK10aiVector3tIdESt6vectorIS3_Sa
 
 _ZNK6Assimp3IFC8TempMesh6CenterEv.exit:           ; preds = %bb.a, %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPK10aiVector3tIdESt6vectorIS3_SaIS3_EEEES3_ET0_T_SB_SA_.exit.i
   %.sroa.0518.0 = phi double [ %i.s, %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPK10aiVector3tIdESt6vectorIS3_SaIS3_EEEES3_ET0_T_SB_SA_.exit.i ], [ 0.000000e+00, %bb.a ] ; 2 uses
-  %i.w = phi <2 x double> [ %i.v, %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPK10aiVector3tIdESt6vectorIS3_SaIS3_EEEES3_ET0_T_SB_SA_.exit.i ], [ zeroinitializer, %bb.a ] ; 2 uses
+  %i.w = phi <2 x double> [ %i.v, %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPK10aiVector3tIdESt6vectorIS3_SaIS3_EEEES3_ET0_T_SB_SA_.exit.i ], [ zeroinitializer, %bb.a ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.z = load ptr, ptr %i.y, align 8              ; 4 uses
@@ -918,8 +918,8 @@ _ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit:            ; preds = %bb.z, %.noexc197, %
 _ZNSt13_Bit_iteratorppEv.exit.i.i.preheader.lr.ph: ; preds = %_ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit
   %i.qm = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.qn = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.qo = extractelement <2 x double> %i.w, i64 0 ; 2 uses
-  %i.qp = extractelement <2 x double> %i.w, i64 1 ; 2 uses
+  %i.qo = extractelement <2 x double> %i.w, i64 0
+  %i.qp = extractelement <2 x double> %i.w, i64 1
   br label %_ZNSt13_Bit_iteratorppEv.exit.i.i
 
 _ZNSt13_Bit_iteratorppEv.exit.i.i:                ; preds = %_ZNSt13_Bit_iteratorppEv.exit.i.i.backedge, %_ZNSt13_Bit_iteratorppEv.exit.i.i.preheader.lr.ph
@@ -1183,41 +1183,43 @@ bb.bx:                                            ; preds = %._crit_edge631
 
 .loopexit568:                                     ; preds = %.lr.ph.i259.prol.loopexit, %.lr.ph.i259, %bb.bx
   %.lcssa.i265 = phi double [ 0.000000e+00, %bb.bx ], [ %.lcssa843.unr.a, %.lr.ph.i259.prol.loopexit ], [ %i.vu, %.lr.ph.i259 ]
-  %i.vz = phi <2 x double> [ zeroinitializer, %bb.bx ], [ %.lcssa842.unr, %.lr.ph.i259.prol.loopexit ], [ %i.vx, %.lr.ph.i259 ] ; 2 uses
+  %i.vz = phi <2 x double> [ zeroinitializer, %bb.bx ], [ %.lcssa842.unr, %.lr.ph.i259.prol.loopexit ], [ %i.vx, %.lr.ph.i259 ]
   %i.wa = uitofp i32 %i.uk to double
-  %i.wb = fdiv double 1.000000e+00, %i.wa         ; 3 uses
+  %i.wb = fdiv double 1.000000e+00, %i.wa         ; 2 uses
   %i.wc = fmul double %i.wb, %.lcssa.i265
-  %6 = extractelement <2 x double> %i.vz, i64 0
-  %7 = fmul double %i.wb, %6
-  %8 = extractelement <2 x double> %i.vz, i64 1
-  %9 = fmul double %i.wb, %8
-  %10 = fsub double %i.wc, %.sroa.0518.0          ; 4 uses
-  %11 = fsub double %7, %i.qo                     ; 4 uses
-  %12 = fsub double %9, %i.qp                     ; 4 uses
-  %13 = fmul double %11, %11
-  %14 = call double @llvm.fmuladd.f64(double %10, double %10, double %13)
-  %i.wd = call noundef double @llvm.fmuladd.f64(double %12, double %12, double %14) ; 2 uses
+  %6 = fsub double %i.wc, %.sroa.0518.0           ; 4 uses
+  %7 = insertelement <2 x double> poison, double %i.wb, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = fmul <2 x double> %8, %i.vz
+  %10 = fsub <2 x double> %9, %i.w                ; 5 uses
+  %foldExtExtBinop = fmul <2 x double> %10, %10
+  %11 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %12 = call double @llvm.fmuladd.f64(double %6, double %6, double %11)
+  %13 = extractelement <2 x double> %10, i64 1    ; 2 uses
+  %i.wd = call noundef double @llvm.fmuladd.f64(double %13, double %13, double %12) ; 2 uses
   %i.we = fcmp oeq double %i.wd, 0.000000e+00
   br i1 %i.we, label %_ZN10aiVector3tIdE9NormalizeEv.exit, label %_ZN10aiVector3tIdEdVEd.exit.i
 
 _ZN10aiVector3tIdEdVEd.exit.i:                    ; preds = %.loopexit568
   %sqrt.i.i = call noundef double @llvm.sqrt.f64(double %i.wd)
-  %i.wf = fdiv double 1.000000e+00, %sqrt.i.i     ; 3 uses
-  %i.wg = fmul double %10, %i.wf
-  %15 = fmul double %11, %i.wf
-  %16 = fmul double %12, %i.wf
+  %i.wf = fdiv double 1.000000e+00, %sqrt.i.i     ; 2 uses
+  %i.wg = fmul double %6, %i.wf
+  %14 = insertelement <2 x double> poison, double %i.wf, i64 0
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  %16 = fmul <2 x double> %10, %15
   br label %_ZN10aiVector3tIdE9NormalizeEv.exit
 
 _ZN10aiVector3tIdE9NormalizeEv.exit:              ; preds = %_ZN10aiVector3tIdEdVEd.exit.i, %.loopexit568
-  %.sroa.11419.0 = phi double [ %12, %.loopexit568 ], [ %16, %_ZN10aiVector3tIdEdVEd.exit.i ]
-  %.sroa.7.0 = phi double [ %11, %.loopexit568 ], [ %15, %_ZN10aiVector3tIdEdVEd.exit.i ]
-  %.sroa.0416.0 = phi double [ %10, %.loopexit568 ], [ %i.wg, %_ZN10aiVector3tIdEdVEd.exit.i ]
-  %i.wh = load double, ptr %5, align 8
-  %17 = load double, ptr %i.qm, align 8
-  %i.wi = fmul double %.sroa.7.0, %17
-  %i.wj = call double @llvm.fmuladd.f64(double %i.wh, double %.sroa.0416.0, double %i.wi)
+  %.sroa.11419.0 = phi double [ %6, %.loopexit568 ], [ %i.wg, %_ZN10aiVector3tIdEdVEd.exit.i ]
+  %17 = phi <2 x double> [ %10, %.loopexit568 ], [ %16, %_ZN10aiVector3tIdEdVEd.exit.i ] ; 2 uses
+  %18 = load double, ptr %5, align 8
+  %i.wh = load double, ptr %i.qm, align 8
+  %19 = extractelement <2 x double> %17, i64 0
+  %i.wi = fmul double %19, %i.wh
+  %i.wj = call double @llvm.fmuladd.f64(double %18, double %.sroa.11419.0, double %i.wi)
   %i.wk = load double, ptr %i.qn, align 8
-  %i.wl = call noundef double @llvm.fmuladd.f64(double %i.wk, double %.sroa.11419.0, double %i.wj)
+  %20 = extractelement <2 x double> %17, i64 1
+  %i.wl = call noundef double @llvm.fmuladd.f64(double %i.wk, double %20, double %i.wj)
   %i.wm = fcmp olt double %i.wl, -4.000000e-01
   br i1 %i.wm, label %bb.by, label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i280
 

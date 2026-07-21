@@ -202,6 +202,8 @@ bb.m:                                             ; preds = %bb.i
   %i.n = uitofp i64 %3 to float
   %i.o = fdiv float %spec.store.select, %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+  %5 = insertelement <2 x float> poison, float %2, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.o
@@ -213,14 +215,13 @@ bb.o:                                             ; preds = %bb.m, %bb.o
   %i.r = uitofp i64 %.03036 to float
   %i.s = tail call float @llvm.fmuladd.f32(float %i.r, float %i.o, float %0) ; 2 uses
   %i.t = tail call noundef float @cosf(float noundef %i.s) #21
-  %5 = fmul float %2, %i.t
   %i.u = tail call noundef float @sinf(float noundef %i.s) #21
-  %6 = fmul float %2, %i.u
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %5, i64 0
-  %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %6, i64 1
+  %7 = insertelement <2 x float> poison, float %i.t, i64 0
+  %.sroa.0.0.vec.insert.i = insertelement <2 x float> %7, float %i.u, i64 1
+  %8 = fmul <2 x float> %6, %.sroa.0.0.vec.insert.i
   %i.v = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #23 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %i.w, align 4
+  store <2 x float> %8, ptr %i.w, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   store float 0.000000e+00, ptr %.sroa.4.0..sroa_idx, align 4
   tail call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %4) #21

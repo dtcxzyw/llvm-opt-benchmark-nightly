@@ -201,28 +201,31 @@ bb.o:                                             ; preds = %bb.n, %_ZNK2v88inte
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal8compiler10turboshaft25JSONTurboshaftGraphWriter10PrintEdgesEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %1 = alloca %"class.v8::base::SmallVector", align 8 ; 13 uses
-  %2 = alloca %"class.v8::base::SmallVector", align 8 ; 10 uses
+  %1 = alloca %"class.v8::base::SmallVector", align 16 ; 13 uses
+  %2 = alloca %"class.v8::base::SmallVector", align 16 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
-  %.sink16.i.sroa.gep = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %.sink16.i.sroa.gep = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %.sink16.i.sroa.gep54 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = icmp eq ptr %i.d, %i.f
   br i1 %i.g, label %._crit_edge98, label %.lr.ph97
 
 .lr.ph97:                                         ; preds = %bb.a
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 152
-  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 152
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 28
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 152
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 28
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %3 = insertelement <2 x ptr> poison, ptr %i.j, i64 0
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x ptr> poison, ptr %i.h, i64 0
+  %6 = shufflevector <2 x ptr> %5, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
 ._crit_edge98:                                    ; preds = %._crit_edge93, %bb.a
@@ -275,15 +278,14 @@ bb.c:                                             ; preds = %.lr.ph92, %._crit_e
   %i.am = getelementptr inbounds nuw i8, ptr %i.z, i64 2 ; 2 uses
   %i.an = load i16, ptr %i.am, align 2            ; 3 uses
   %i.ao = zext i16 %i.an to i64                   ; 3 uses
-  store ptr %i.h, ptr %1, align 8
-  store ptr %i.h, ptr %.sink16.i.sroa.gep, align 8
-  store ptr %i.i, ptr %.sink16.i.sroa.gep54, align 8
+  store <2 x ptr> %6, ptr %1, align 16
+  store ptr %i.i, ptr %.sink16.i.sroa.gep54, align 16
   %i.ap = icmp ugt i16 %i.an, 32
   br i1 %i.ap, label %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EEC2ENS0_6VectorIKS5_EERKS6_.exit.thread, label %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EEC2ENS0_6VectorIKS5_EERKS6_.exit
 
 _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EEC2ENS0_6VectorIKS5_EERKS6_.exit.thread: ; preds = %bb.c
   call preserve_mostcc void @_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EE4GrowEm(ptr noundef nonnull align 8 dereferenceable(152) %1, i64 noundef %i.ao)
-  %.pre = load ptr, ptr %1, align 8
+  %.pre = load ptr, ptr %1, align 16
   br label %.lr.ph.i.i.i.preheader
 
 _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EEC2ENS0_6VectorIKS5_EERKS6_.exit: ; preds = %bb.c
@@ -349,7 +351,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i.i, label %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit, label %.lr.ph.i.i.i, !llvm.loop !19
 
 _ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit: ; preds = %.lr.ph.i.i.i, %middle.block
-  %.pre100 = load ptr, ptr %1, align 8
+  %.pre100 = load ptr, ptr %1, align 16
   br label %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit
 
 _ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit: ; preds = %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit, %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EEC2ENS0_6VectorIKS5_EERKS6_.exit
@@ -378,18 +380,17 @@ _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EE
   %i.bp = getelementptr inbounds nuw i8, ptr %i.z, i64 20
   %.sroa.0.0.copyload.i.i48 = load i32, ptr %i.bp, align 4
   store i32 %.sroa.0.0.copyload.i.i43, ptr %i.j, align 8
-  store i32 %.sroa.0.0.copyload.i.i, ptr %.sroa.4.0..sroa_idx, align 4
-  store i32 %.sroa.0.0.copyload.i.i48, ptr %.sroa.5.0..sroa_idx, align 8
+  store i32 %.sroa.0.0.copyload.i.i, ptr %i.m, align 4
+  store i32 %.sroa.0.0.copyload.i.i48, ptr %.sroa.4.0..sroa_idx, align 16
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bi, ptr noundef nonnull align 8 dereferenceable(12) %i.j, i64 12, i1 false)
-  %i.bq = load ptr, ptr %1, align 8
+  %i.bq = load ptr, ptr %1, align 16
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 12
   store ptr %i.br, ptr %.sink16.i.sroa.gep, align 8
-  store ptr %i.j, ptr %2, align 8
-  store ptr %i.j, ptr %i.k, align 8
-  store ptr %i.m, ptr %i.l, align 8
+  store <2 x ptr> %4, ptr %2, align 16
+  store ptr %i.l, ptr %i.k, align 16
   call preserve_mostcc void @_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EE11FreeStorageEv(ptr noundef nonnull align 8 dereferenceable(152) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
-  %.pre101 = load ptr, ptr %1, align 8
+  %.pre101 = load ptr, ptr %1, align 16
   %.pre102 = load ptr, ptr %.sink16.i.sroa.gep, align 8
   br label %_ZNK2v88internal8compiler10turboshaft7StoreOp5indexEv.exit.thread
 
@@ -475,8 +476,10 @@ bb.a:
 .lr.ph31:                                         ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %2 = insertelement <2 x ptr> poison, ptr %i.i, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.l, i64 1
   br label %bb.b
 
 ._crit_edge32:                                    ; preds = %._crit_edge, %bb.a
@@ -515,8 +518,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #17
   call void @llvm.experimental.noalias.scope.decl(metadata !22)
   store ptr %i.i, ptr %1, align 8, !alias.scope !22
-  store ptr %i.i, ptr %i.j, align 8, !alias.scope !22
-  store ptr %i.l, ptr %i.k, align 8, !alias.scope !22
+  store <2 x ptr> %3, ptr %i.j, align 8, !alias.scope !22
   %i.ad = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %.05.i = load ptr, ptr %i.ad, align 8, !noalias !22 ; 2 uses
   %.not6.i = icmp eq ptr %.05.i, null
